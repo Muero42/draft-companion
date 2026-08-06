@@ -1,232 +1,161 @@
 const $=id=>document.getElementById(id);
-const els=Object.fromEntries(['apiKey','season','scoring','diagnoseBtn','loadExpertsBtn','diagnostic','panelName','expertsList','savePanelBtn','loadRanksBtn','panelStatus','adpFile','adpStatus','draftInput','slot','topN','refreshBtn','draftStatus','draftSummary','currentPick','nextPick','untilPick','snapshot','copyBtn','shareBtn','onlineState','dataAge'].map(id=>[id,$(id)]));
+const ids=['apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','diagnoseBtn','loadExpertsBtn','diagnostic','expertSearch','activePanel','newPanelBtn','renamePanelBtn','deletePanelBtn','expertsList','savePanelBtn','loadRanksBtn','panelStatus','qbPanel','rbPanel','wrPanel','tePanel','adpFile','adpStatus','qualityStatus','backupBtn','restoreFile','clearDraftDataBtn','draftInput','slot','topN','refreshBtn','autoRefresh','draftStatus','draftSummary','currentPick','nextPick','untilPick','teamFit','coachList','snapshot','copyBtn','shareBtn','onlineState','dataAge','updateNotice','reloadAppBtn'];
+const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
+const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
+const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
+const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+const esc=v=>String(v).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 
-const store={
-  get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},
-  set(k,v){localStorage.setItem(k,JSON.stringify(v))},
-  text(k,f=''){return localStorage.getItem(k)??f},
-  setText(k,v){localStorage.setItem(k,v)}
-};
-const normName=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
+let experts=store.get('v50_experts',[]);
+let panels=store.get('v50_panels',{standard:{name:'Standard',members:{}},pat:{name:'Pat einzeln',members:{}}});
+let activePanelId=store.text('v50_activePanel','standard');
+let positionPanels=store.get('v50_positionPanels',{QB:'standard',RB:'standard',WR:'standard',TE:'standard'});
+let rankCache=store.get('v50_rankCache',{}); // expertId -> player map
+let panelRanks=store.get('v50_panelRanks',{}); // panelId -> player map
+let adp=store.get('v50_adp',{});
+let lastFetch=null;let autoTimer=null;
 
-let experts=store.get('v41_experts',[]);
-let panel=store.get('v41_panel',{name:'Standard',members:{}});
-let panelRanks=store.get('v41_panelRanks',{});
-let adp=store.get('v41_sleeperAdp',{});
-let lastFetch=null;
+els.apiKey.value=store.text('v50_apiKey','');els.season.value=store.text('v50_season','2026');els.scoring.value=store.text('v50_scoring','HALF');els.draftInput.value=store.text('v50_draft','');els.autoRefresh.checked=store.get('v51_autoRefresh',false);
+for(let i=1;i<=16;i++)els.slot.add(new Option(i,i));els.slot.value=store.text('v50_slot','9');
 
-els.apiKey.value=store.text('v41_apiKey','');
-els.season.value=store.text('v41_season','2026');
-els.scoring.value=store.text('v41_scoring','HALF');
-els.panelName.value=panel.name||'Standard';
-els.draftInput.value=store.text('v41_draft','');
-for(let i=1;i<=16;i++) els.slot.add(new Option(i,i));
-els.slot.value=store.text('v41_slot','9');
+function persist(){store.setText('v50_apiKey',els.apiKey.value.trim());store.setText('v50_season',els.season.value.trim());store.setText('v50_scoring',els.scoring.value);store.setText('v50_draft',els.draftInput.value.trim());store.setText('v50_slot',els.slot.value);store.set('v50_experts',experts);store.set('v50_panels',panels);store.setText('v50_activePanel',activePanelId);store.set('v50_positionPanels',positionPanels);store.set('v50_rankCache',rankCache);store.set('v50_panelRanks',panelRanks);store.set('v50_adp',adp);store.set('v51_autoRefresh',els.autoRefresh.checked)}
 
-function persist(){
-  store.setText('v41_apiKey',els.apiKey.value.trim());
-  store.setText('v41_season',els.season.value.trim());
-  store.setText('v41_scoring',els.scoring.value);
-  store.setText('v41_draft',els.draftInput.value.trim());
-  store.setText('v41_slot',els.slot.value);
-  store.set('v41_experts',experts);store.set('v41_panel',panel);store.set('v41_panelRanks',panelRanks);store.set('v41_sleeperAdp',adp);
-}
-
-async function proxyCall(path,key){
-  const response=await fetch(`/api/fantasypros?path=${encodeURIComponent(path)}`,{headers:{'x-fp-key':key},cache:'no-store'});
-  const text=await response.text();let data;
-  try{data=JSON.parse(text)}catch{data={raw:text.slice(0,1200)}}
-  if(!response.ok){const error=new Error(data?.error||data?.message||`HTTP ${response.status}`);error.status=response.status;error.payload=data;throw error}
-  return {data,status:response.status,upstream:response.headers.get('x-upstream-status')};
-}
-
-function findArrays(value,depth=0){
-  if(depth>4||value==null) return [];
-  if(Array.isArray(value)) return [value];
-  if(typeof value!=='object') return [];
-  return Object.values(value).flatMap(v=>findArrays(v,depth+1));
-}
-function field(obj,names){
-  const keys=Object.keys(obj||{});
-  for(const name of names){
-    const target=name.toLowerCase().replace(/[^a-z0-9]/g,'');
-    const key=keys.find(k=>k.toLowerCase().replace(/[^a-z0-9]/g,'')===target);
-    if(key&&obj[key]!==''&&obj[key]!=null) return obj[key];
+function updateQuality(){
+  const loadedPanels=Object.keys(panelRanks).length;
+  const configuredPanels=Object.keys(panels).length;
+  const adpCount=Object.keys(adp).length;
+  const expertCount=experts.length;
+  const issues=[];
+  if(!els.apiKey.value.trim())issues.push('API-Key fehlt');
+  if(!expertCount)issues.push('Expertenliste fehlt');
+  if(!loadedPanels)issues.push('Panel-Rankings fehlen');
+  if(!adpCount)issues.push('Sleeper-ADP fehlt');
+  if(issues.length){
+    els.qualityStatus.className='notice warn';
+    els.qualityStatus.textContent=`Noch nicht draftbereit: ${issues.join(' · ')}`;
+  }else{
+    els.qualityStatus.className='notice ok';
+    els.qualityStatus.textContent=`Draftbereit: ${expertCount} Experten · ${loadedPanels}/${configuredPanels} Panels geladen · ${adpCount} verifizierte Sleeper-ADPs.`;
   }
-  return null;
 }
-function extractExperts(payload){
-  const arrays=findArrays(payload).sort((a,b)=>b.length-a.length);
-  for(const rows of arrays){
-    const mapped=rows.map(row=>{
-      const id=field(row,['expert_id','expertid','id']);
-      const name=field(row,['expert_name','expertname','name','full_name']);
-      const site=field(row,['site_name','sitename','site','affiliation']);
-      return id&&name?{id:String(id),name:String(name),site:site?String(site):''}:null;
-    }).filter(Boolean);
-    if(mapped.length) return [...new Map(mapped.map(x=>[x.id,x])).values()];
-  }
-  return [];
+function safeBackup(){
+  return {
+    format:'draft-companion-final-2026',
+    version:'5.1.0',
+    createdAt:new Date().toISOString(),
+    season:els.season.value,
+    scoring:els.scoring.value,
+    experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,
+    draftInput:els.draftInput.value,
+    slot:els.slot.value,
+    topN:els.topN.value
+  };
 }
-function extractRankRows(payload){
-  const arrays=findArrays(payload).sort((a,b)=>b.length-a.length);
-  for(const rows of arrays){
-    const mapped=rows.map(row=>{
-      const name=field(row,['player_name','playername','name','full_name']);
-      const rank=Number(field(row,['rank','rank_ecr','rankexpert','expert_rank','overall_rank']));
-      const pos=field(row,['position','pos']);
-      return name&&Number.isFinite(rank)&&rank>0?{name:String(name),rank,pos:pos?String(pos).toUpperCase():''}:null;
-    }).filter(Boolean);
-    if(mapped.length) return mapped;
-  }
-  return [];
+function downloadJson(name,value){
+  const blob=new Blob([JSON.stringify(value,null,2)],{type:'application/json'});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;a.download=name;a.click();
+  setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
-
-async function diagnose(){
-  const key=els.apiKey.value.trim(),season=els.season.value.trim(),scoring=els.scoring.value;
-  const tests=[
-    {name:'Cloudflare-Proxy',health:true},
-    {name:'Expertenliste',path:`/nfl/${season}/rankings/experts`},
-    {name:'RB-Rankings',path:`/nfl/${season}/consensus-rankings?position=RB&scoring=${encodeURIComponent(scoring)}`},
-    {name:'Spielerdaten',path:'/nfl/players'}
-  ];
-  const rows=[];
-  for(const test of tests){
-    const start=performance.now();
-    try{
-      let result;
-      if(test.health){
-        const r=await fetch('/api/fantasypros?health=1',{cache:'no-store'});result={status:r.status,data:await r.json()};
-      }else result=await proxyCall(test.path,key);
-      const arrays=findArrays(result.data);const largest=Math.max(0,...arrays.map(a=>a.length));
-      rows.push({ok:true,name:test.name,status:result.status,ms:Math.round(performance.now()-start),largest,keys:Object.keys(result.data||{}).slice(0,8)});
-    }catch(error){rows.push({ok:false,name:test.name,status:error.status||0,ms:Math.round(performance.now()-start),error:error.message,detail:error.payload?.detail||''})}
-  }
-  return rows;
+function applyBackup(value){
+  if(!value||value.format!=='draft-companion-final-2026')throw new Error('Keine gültige Draft-Companion-Sicherung.');
+  experts=Array.isArray(value.experts)?value.experts:[];
+  panels=value.panels||{standard:{name:'Standard',members:{}},pat:{name:'Pat einzeln',members:{}}};
+  activePanelId=value.activePanelId||'standard';
+  positionPanels=value.positionPanels||{QB:'standard',RB:'standard',WR:'standard',TE:'standard'};
+  rankCache=value.rankCache||{};
+  panelRanks=value.panelRanks||{};
+  adp=value.adp||{};
+  els.season.value=value.season||'2026';
+  els.scoring.value=value.scoring||'HALF';
+  els.draftInput.value=value.draftInput||'';
+  els.slot.value=String(value.slot||9);
+  els.topN.value=String(value.topN||35);
+  persist();renderAll();updateQuality();
 }
-function diagText(rows){
-  return rows.map(x=>x.ok
-    ?`✓ ${x.name}: HTTP ${x.status} · ${x.ms} ms · größtes Array ${x.largest} · Felder ${x.keys.join(', ')||'–'}`
-    :`✗ ${x.name}: ${x.error}${x.status?` · HTTP ${x.status}`:''}${x.detail?` · ${x.detail}`:''}`
-  ).join('\n');
-}
-
-els.diagnoseBtn.onclick=async()=>{
-  persist();els.diagnostic.className='diagnostic';els.diagnostic.textContent='Teste Cloudflare-Proxy und FantasyPros …';els.diagnoseBtn.disabled=true;
-  try{const rows=await diagnose();els.diagnostic.textContent=diagText(rows);els.diagnostic.className='diagnostic '+(rows.every(x=>x.ok)?'ok':'warn')}
-  catch(error){els.diagnostic.textContent=`Diagnosefehler: ${error.message}`;els.diagnostic.className='diagnostic bad'}
-  finally{els.diagnoseBtn.disabled=false}
-};
-
-els.loadExpertsBtn.onclick=async()=>{
-  persist();const key=els.apiKey.value.trim(),season=els.season.value.trim();els.diagnostic.textContent='Lade Expertenliste …';els.loadExpertsBtn.disabled=true;
-  try{
-    const result=await proxyCall(`/nfl/${season}/rankings/experts`,key);
-    experts=extractExperts(result.data);
-    if(!experts.length) throw new Error(`Antwort erhalten, aber keine Experten erkannt. Oberste Felder: ${Object.keys(result.data||{}).join(', ')||'keine'}`);
-    persist();renderExperts();els.diagnostic.textContent=`${experts.length} Experten geladen.`;els.diagnostic.className='diagnostic ok';
-  }catch(error){els.diagnostic.textContent=`Fehler: ${error.message}`;els.diagnostic.className='diagnostic bad'}
-  finally{els.loadExpertsBtn.disabled=false}
-};
-
-function renderExperts(){
-  if(!experts.length){els.expertsList.className='empty';els.expertsList.textContent='Noch keine Experten geladen.';return}
-  els.expertsList.className='';
-  els.expertsList.innerHTML=experts.map(e=>`<div class="expert"><label><input type="checkbox" data-id="${escapeHtml(e.id)}" ${panel.members[e.id]!=null?'checked':''}> ${escapeHtml(e.name)}${e.site?` · ${escapeHtml(e.site)}`:''}</label><input type="number" min="0" max="100" value="${panel.members[e.id]??25}" data-weight="${escapeHtml(e.id)}" aria-label="Gewicht"></div>`).join('');
-}
-function escapeHtml(value){return String(value).replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]))}
-renderExperts();
-
-els.savePanelBtn.onclick=()=>{
-  const members={};document.querySelectorAll('[data-id]').forEach(cb=>{if(cb.checked){const id=cb.dataset.id;const weight=Number(document.querySelector(`[data-weight="${CSS.escape(id)}"]`)?.value||0);if(weight>0)members[id]=weight}});
-  panel={name:els.panelName.value.trim()||'Standard',members};persist();els.panelStatus.textContent=`Panel gespeichert: ${Object.keys(members).length} Experten.`;els.panelStatus.className='notice ok';
-};
-
-async function loadExpertRanks(expertId){
-  const key=els.apiKey.value.trim(),season=els.season.value.trim(),scoring=els.scoring.value;
-  const candidates=[];
-  for(const position of ['QB','RB','WR','TE']){
-    candidates.push(`/nfl/${season}/rankings?position=${position}&scoring=${encodeURIComponent(scoring)}&expert_id=${encodeURIComponent(expertId)}`);
-  }
-  const result={};
-  for(const path of candidates){
-    const response=await proxyCall(path,key);const rows=extractRankRows(response.data);
-    if(!rows.length) throw new Error(`Keine Rankings im Endpunkt ${path} erkannt.`);
-    for(const row of rows) result[normName(row.name)]={rank:row.rank,name:row.name,pos:row.pos};
-  }
-  return result;
-}
-
-els.loadRanksBtn.onclick=async()=>{
-  els.savePanelBtn.click();const ids=Object.keys(panel.members);if(!ids.length){alert('Mindestens einen Experten auswählen.');return}
-  els.panelStatus.textContent='Lade und kombiniere Rankings …';els.panelStatus.className='notice';els.loadRanksBtn.disabled=true;
-  try{
-    const weighted={};
-    for(const id of ids){
-      const weight=Number(panel.members[id]);if(weight<=0)continue;
-      const ranks=await loadExpertRanks(id);
-      for(const [key,value] of Object.entries(ranks)){
-        weighted[key]??={sum:0,weight:0,name:value.name,pos:value.pos};weighted[key].sum+=value.rank*weight;weighted[key].weight+=weight;
+function setAutoRefresh(){
+  if(autoTimer){clearInterval(autoTimer);autoTimer=null}
+  persist();
+  if(els.autoRefresh.checked){
+    autoTimer=setInterval(()=>{
+      if(!document.hidden&&!els.refreshBtn.disabled&&els.draftInput.value.trim()){
+        refresh().catch(e=>{els.draftStatus.textContent=`Auto-Refresh: ${e.message}`;els.draftStatus.className='notice bad'})
       }
-    }
-    panelRanks={};for(const [key,value] of Object.entries(weighted)){if(value.weight)panelRanks[key]={rank:value.sum/value.weight,name:value.name,pos:value.pos}}
-    persist();els.panelStatus.textContent=`${Object.keys(panelRanks).length} gewichtete Panel-Ränge geladen.`;els.panelStatus.className='notice ok';
-  }catch(error){els.panelStatus.textContent=`Fehler: ${error.message}`;els.panelStatus.className='notice bad'}
-  finally{els.loadRanksBtn.disabled=false}
-};
-
-function parseCsv(text){
-  const rows=[];let row=[],cell='',quoted=false;
-  for(let i=0;i<text.length;i++){
-    const char=text[i],next=text[i+1];
-    if(char==='"'&&quoted&&next==='"'){cell+='"';i++}
-    else if(char==='"')quoted=!quoted;
-    else if(char===','&&!quoted){row.push(cell.trim());cell=''}
-    else if((char==='\n'||char==='\r')&&!quoted){if(char==='\r'&&next==='\n')i++;row.push(cell.trim());cell='';if(row.some(x=>x!==''))rows.push(row);row=[]}
-    else cell+=char;
+    },10000);
   }
-  if(cell||row.length){row.push(cell.trim());rows.push(row)}
-  if(!rows.length)return[];const headers=rows[0];return rows.slice(1).map(r=>Object.fromEntries(headers.map((h,i)=>[h,r[i]??''])));
 }
-function getField(obj,names){const keys=Object.keys(obj||{});for(const n of names){const target=n.toLowerCase().replace(/[^a-z0-9]/g,'');const key=keys.find(k=>k.toLowerCase().replace(/[^a-z0-9]/g,'')===target);if(key&&obj[key]!==''&&obj[key]!=null)return obj[key]}return null}
-async function parseAdpFile(file){
-  const text=await file.text();let rows;
-  if(file.name.toLowerCase().endsWith('.json')){const value=JSON.parse(text);rows=Array.isArray(value)?value:(value.players||Object.values(value))}else rows=parseCsv(text);
-  const map={};for(const row of rows){const name=getField(row,['player_name','player','name','full_name']);const raw=getField(row,['sleeper_adp','adp_sleeper','sleeper']);const value=Number(String(raw??'').replace(',','.'));if(name&&Number.isFinite(value)&&value>0)map[normName(name)]=value}
-  if(!Object.keys(map).length)throw new Error('Keine Spalten player_name + sleeper_adp erkannt.');return map;
-}
-els.adpFile.onchange=async()=>{
-  try{adp=await parseAdpFile(els.adpFile.files[0]);persist();els.adpStatus.textContent=`${Object.keys(adp).length} verifizierte Sleeper-ADPs importiert.`;els.adpStatus.className='notice ok'}
-  catch(error){els.adpStatus.textContent=error.message;els.adpStatus.className='notice bad'}
+
+async function proxyCall(path,key){const r=await fetch(`/api/fantasypros?path=${encodeURIComponent(path)}`,{headers:{'x-fp-key':key},cache:'no-store'});const text=await r.text();let data;try{data=JSON.parse(text)}catch{data={raw:text.slice(0,1200)}}if(!r.ok){const e=new Error(data?.error||data?.message||`HTTP ${r.status}`);e.status=r.status;e.payload=data;throw e}return{data,status:r.status}}
+function arrays(v,d=0){if(d>5||v==null)return[];if(Array.isArray(v))return[v];if(typeof v!=='object')return[];return Object.values(v).flatMap(x=>arrays(x,d+1))}
+function field(o,names){const keys=Object.keys(o||{});for(const n of names){const t=n.toLowerCase().replace(/[^a-z0-9]/g,'');const k=keys.find(x=>x.toLowerCase().replace(/[^a-z0-9]/g,'')===t);if(k&&o[k]!==''&&o[k]!=null)return o[k]}return null}
+function extractExperts(payload){for(const rows of arrays(payload).sort((a,b)=>b.length-a.length)){const mapped=rows.map(row=>{const id=field(row,['expert_id','expertid','id']),name=field(row,['expert_name','expertname','name','full_name']),site=field(row,['site_name','sitename','site','affiliation']);const accuracy=Number(field(row,['accuracy_draft_season','accuracy','draft_accuracy','accuracy_weekly_season']));return id&&name?{id:String(id),name:String(name),site:site?String(site):'',accuracy:Number.isFinite(accuracy)?accuracy:null}:null}).filter(Boolean);if(mapped.length)return[...new Map(mapped.map(x=>[x.id,x])).values()]}return[]}
+function extractRankRows(payload){for(const rows of arrays(payload).sort((a,b)=>b.length-a.length)){const mapped=rows.map(row=>{const name=field(row,['player_name','playername','name','full_name']);const rank=Number(field(row,['rank','rank_ecr','rankexpert','expert_rank','overall_rank']));const pos=field(row,['position','pos']);return name&&Number.isFinite(rank)&&rank>0?{name:String(name),rank,pos:pos?String(pos).toUpperCase():''}:null}).filter(Boolean);if(mapped.length)return mapped}return[]}
+
+async function diagnose(){const key=els.apiKey.value.trim(),season=els.season.value.trim(),scoring=els.scoring.value;const tests=[{name:'Cloudflare-Proxy',health:true},{name:'Expertenliste',path:`/nfl/${season}/rankings/experts`},{name:'RB-Rankings',path:`/nfl/${season}/consensus-rankings?position=RB&scoring=${encodeURIComponent(scoring)}`},{name:'Spielerdaten',path:'/nfl/players'}],out=[];for(const t of tests){const start=performance.now();try{const result=t.health?await (async()=>{const r=await fetch('/api/fantasypros?health=1',{cache:'no-store'});return{status:r.status,data:await r.json()}})():await proxyCall(t.path,key);const aa=arrays(result.data);out.push({ok:true,name:t.name,status:result.status,ms:Math.round(performance.now()-start),largest:Math.max(0,...aa.map(a=>a.length)),keys:Object.keys(result.data||{}).slice(0,8)})}catch(e){out.push({ok:false,name:t.name,status:e.status||0,error:e.message})}}return out}
+els.diagnoseBtn.onclick=async()=>{persist();els.diagnostic.textContent='Teste …';try{const rows=await diagnose();els.diagnostic.textContent=rows.map(x=>x.ok?`✓ ${x.name}: HTTP ${x.status} · ${x.ms} ms · Array ${x.largest} · ${x.keys.join(', ')}`:`✗ ${x.name}: ${x.error}`).join('\n');els.diagnostic.className='diagnostic '+(rows.every(x=>x.ok)?'ok':'warn')}catch(e){els.diagnostic.textContent=e.message;els.diagnostic.className='diagnostic bad'}};
+
+els.loadExpertsBtn.onclick=async()=>{persist();els.loadExpertsBtn.disabled=true;els.diagnostic.textContent='Lade Experten …';try{const r=await proxyCall(`/nfl/${els.season.value.trim()}/rankings/experts`,els.apiKey.value.trim());experts=extractExperts(r.data).sort((a,b)=>(b.accuracy??-999)-(a.accuracy??-999)||a.name.localeCompare(b.name));if(!experts.length)throw new Error('Keine Experten erkannt.');const pat=experts.find(e=>e.name.toLowerCase().includes('pat fitz'));if(pat&&!Object.keys(panels.pat.members).length)panels.pat.members={[pat.id]:100};persist();renderAll();els.diagnostic.textContent=`${experts.length} Experten geladen.`;els.diagnostic.className='diagnostic ok'}catch(e){els.diagnostic.textContent=`Fehler: ${e.message}`;els.diagnostic.className='diagnostic bad'}finally{els.loadExpertsBtn.disabled=false}};
+
+function panelOptions(select,value){select.innerHTML='';for(const[id,p]of Object.entries(panels)){const o=new Option(p.name,id);o.selected=id===value;select.add(o)}}
+function renderAll(){if(!panels[activePanelId])activePanelId=Object.keys(panels)[0];panelOptions(els.activePanel,activePanelId);for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])panelOptions(el,positionPanels[pos]||activePanelId);renderExperts();updatePanelStatus()}
+function renderExperts(){const q=els.expertSearch.value.trim().toLowerCase(),members=panels[activePanelId]?.members||{};const filtered=experts.filter(e=>!q||`${e.name} ${e.site}`.toLowerCase().includes(q));if(!filtered.length){els.expertsList.className='empty';els.expertsList.textContent=experts.length?'Keine Treffer.':'Noch keine Experten geladen.';return}els.expertsList.className='';els.expertsList.innerHTML=filtered.map(e=>`<div class="expert"><label><input type="checkbox" data-id="${esc(e.id)}" ${members[e.id]!=null?'checked':''}> ${esc(e.name)}<small>${esc(e.site||'Quelle unbekannt')}${e.accuracy!=null?` · Accuracy ${e.accuracy}`:''}</small></label><input type="number" min="0" max="100" value="${members[e.id]??25}" data-weight="${esc(e.id)}"></div>`).join('')}
+function updatePanelStatus(){const counts=Object.entries(panelRanks).map(([id,r])=>`${panels[id]?.name||id}: ${Object.keys(r).length}`).join(' · ');els.panelStatus.textContent=counts||'Keine Panel-Ränge gespeichert.';els.panelStatus.className='notice '+(counts?'ok':'')}
+els.expertSearch.oninput=renderExperts;els.activePanel.onchange=()=>{saveCurrentPanel();activePanelId=els.activePanel.value;persist();renderAll()};
+function saveCurrentPanel(){const p=panels[activePanelId];if(!p)return;const members={};document.querySelectorAll('[data-id]').forEach(cb=>{if(cb.checked){const id=cb.dataset.id,w=Number(document.querySelector(`[data-weight="${CSS.escape(id)}"]`)?.value||0);if(w>0)members[id]=w}});p.members=members;persist()}
+els.savePanelBtn.onclick=()=>{saveCurrentPanel();els.panelStatus.textContent=`${panels[activePanelId].name}: ${Object.keys(panels[activePanelId].members).length} Experten gespeichert.`;els.panelStatus.className='notice ok'};
+els.newPanelBtn.onclick=()=>{const name=prompt('Name des neuen Panels:','WR');if(!name)return;let id=norm(name)||`panel${Date.now()}`;while(panels[id])id+=Math.floor(Math.random()*10);panels[id]={name,members:{}};activePanelId=id;persist();renderAll()};
+els.renamePanelBtn.onclick=()=>{const p=panels[activePanelId],name=prompt('Neuer Panelname:',p.name);if(name){p.name=name.trim();persist();renderAll()}};
+els.deletePanelBtn.onclick=()=>{if(['standard','pat'].includes(activePanelId))return alert('Standard und Pat einzeln bleiben erhalten.');if(!confirm(`${panels[activePanelId].name} löschen?`))return;delete panels[activePanelId];delete panelRanks[activePanelId];for(const pos of ['QB','RB','WR','TE'])if(positionPanels[pos]===activePanelId)positionPanels[pos]='standard';activePanelId='standard';persist();renderAll()};
+for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])el.onchange=()=>{positionPanels[pos]=el.value;persist()};
+
+async function loadExpertRanks(id){if(rankCache[id]?.season===els.season.value&&rankCache[id]?.scoring===els.scoring.value&&Date.now()-rankCache[id].updated<12*3600e3)return rankCache[id].ranks;const ranks={};for(const position of ['QB','RB','WR','TE']){const path=`/nfl/${els.season.value.trim()}/rankings?position=${position}&scoring=${encodeURIComponent(els.scoring.value)}&expert_id=${encodeURIComponent(id)}`;const r=await proxyCall(path,els.apiKey.value.trim()),rows=extractRankRows(r.data);if(!rows.length)throw new Error(`Keine ${position}-Ränge für ${experts.find(e=>e.id===id)?.name||id}.`);for(const row of rows)ranks[norm(row.name)]={rank:row.rank,name:row.name,pos:row.pos||position}}rankCache[id]={season:els.season.value,scoring:els.scoring.value,updated:Date.now(),ranks};return ranks}
+function computePanel(id){const p=panels[id],all={};for(const[eid,w0]of Object.entries(p.members||{})){const ranks=rankCache[eid]?.ranks||{},w=Number(w0);for(const[k,v]of Object.entries(ranks)){all[k]??={name:v.name,pos:v.pos,values:[]};all[k].values.push({rank:v.rank,w})}}const out={};for(const[k,v]of Object.entries(all)){const sw=v.values.reduce((s,x)=>s+x.w,0);if(!sw)continue;const mean=v.values.reduce((s,x)=>s+x.rank*x.w,0)/sw;const variance=v.values.reduce((s,x)=>s+x.w*(x.rank-mean)**2,0)/sw;out[k]={name:v.name,pos:v.pos,rank:mean,sd:Math.sqrt(variance),n:v.values.length}}assignTiers(out);return out}
+function assignTiers(map){for(const pos of ['QB','RB','WR','TE']){const rows=Object.values(map).filter(x=>x.pos===pos).sort((a,b)=>a.rank-b.rank);let tier=1,prev=null;for(const row of rows){if(prev!=null&&row.rank-prev>=4)tier++;row.tier=tier;prev=row.rank}}}
+els.loadRanksBtn.onclick=async()=>{saveCurrentPanel();const expertIds=[...new Set(Object.values(panels).flatMap(p=>Object.keys(p.members||{})))];if(!expertIds.length)return alert('Mindestens einen Experten auswählen.');els.loadRanksBtn.disabled=true;els.panelStatus.textContent=`Lade ${expertIds.length} Experten …`;try{let i=0;for(const id of expertIds){i++;els.panelStatus.textContent=`Lade ${i}/${expertIds.length}: ${experts.find(e=>e.id===id)?.name||id}`;await loadExpertRanks(id)}panelRanks={};for(const id of Object.keys(panels))panelRanks[id]=computePanel(id);persist();updatePanelStatus()}catch(e){els.panelStatus.textContent=`Fehler: ${e.message}`;els.panelStatus.className='notice bad'}finally{els.loadRanksBtn.disabled=false}};
+
+function parseCsv(text){const rows=[];let row=[],cell='',quoted=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'&&quoted&&n==='"'){cell+='"';i++}else if(c==='"')quoted=!quoted;else if(c===','&&!quoted){row.push(cell.trim());cell=''}else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&n==='\n')i++;row.push(cell.trim());cell='';if(row.some(x=>x!==''))rows.push(row);row=[]}else cell+=c}if(cell||row.length){row.push(cell.trim());rows.push(row)}if(!rows.length)return[];const h=rows[0];return rows.slice(1).map(r=>Object.fromEntries(h.map((x,i)=>[x,r[i]??''])))}
+async function parseAdp(file){const text=await file.text();let rows;if(file.name.toLowerCase().endsWith('.json')){const v=JSON.parse(text);rows=Array.isArray(v)?v:(v.players||Object.values(v))}else rows=parseCsv(text);const m={};for(const row of rows){const name=field(row,['player_name','player','name','full_name']),raw=field(row,['sleeper_adp','adp_sleeper','sleeper']);const val=Number(String(raw??'').replace(',','.'));if(name&&Number.isFinite(val)&&val>0)m[norm(name)]=val}if(!Object.keys(m).length)throw new Error('Keine player_name + sleeper_adp Spalten erkannt.');return m}
+els.adpFile.onchange=async()=>{try{adp=await parseAdp(els.adpFile.files[0]);persist();els.adpStatus.textContent=`${Object.keys(adp).length} Sleeper-ADPs gespeichert.`;els.adpStatus.className='notice ok';updateQuality()}catch(e){els.adpStatus.textContent=e.message;els.adpStatus.className='notice bad'}};
+
+
+els.toggleKeyBtn.onclick=()=>{
+  const show=els.apiKey.type==='password';
+  els.apiKey.type=show?'text':'password';
+  els.toggleKeyBtn.textContent=show?'Key verbergen':'Key anzeigen';
 };
-if(Object.keys(adp).length){els.adpStatus.textContent=`${Object.keys(adp).length} verifizierte Sleeper-ADPs gespeichert.`;els.adpStatus.className='notice ok'}
-if(Object.keys(panelRanks).length){els.panelStatus.textContent=`${Object.keys(panelRanks).length} Panel-Ränge gespeichert.`;els.panelStatus.className='notice ok'}
-
-const SLEEPER='https://api.sleeper.app/v1';
-function draftId(value){return (String(value||'').match(/(\d{10,})/)||[])[1]||String(value||'').trim()}
-async function fetchJson(url,label){const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw new Error(`${label}: HTTP ${response.status}`);return response.json()}
-async function fetchDraft(id){const [draft,picks,players]=await Promise.all([fetchJson(`${SLEEPER}/draft/${id}`,'Draft'),fetchJson(`${SLEEPER}/draft/${id}/picks`,'Picks'),fetchJson(`${SLEEPER}/players/nfl`,'Spieler')]);return{draft,picks,players}}
-function playerInfo(id,meta,players){const p=players?.[id]||{};return{name:meta?.first_name&&meta?.last_name?`${meta.first_name} ${meta.last_name}`:(p.full_name||meta?.player_name||id),pos:(meta?.position||p.position||'?').toUpperCase(),team:(meta?.team||p.team||'FA').toUpperCase(),searchRank:Number(p.search_rank),injury:p.injury_status||null}}
-function nextOwnPick(current,teams,slot,total){for(let p=current;p<=total;p++){const round=Math.floor((p-1)/teams)+1,within=((p-1)%teams)+1,draftSlot=round%2?within:teams-within+1;if(draftSlot===slot)return p}return null}
-function valueText(current,playerAdp){if(!Number.isFinite(playerAdp))return'ADP FEHLT';const delta=Math.round(playerAdp-current);if(delta>=15)return`WARTEN: ${delta} Picks vor ADP`;if(delta>=8)return`Reach: ${delta} Picks vor ADP`;if(delta<=-15)return`Elite Value: ${Math.abs(delta)} Picks gefallen`;if(delta<=-8)return`Value: ${Math.abs(delta)} Picks gefallen`;return'Fair zum ADP'}
-
-async function refresh(){
-  persist();const id=draftId(els.draftInput.value);if(!id)throw new Error('Draft-ID fehlt.');els.draftStatus.textContent='Lade Draft …';els.refreshBtn.disabled=true;
+els.clearKeyBtn.onclick=()=>{
+  if(!confirm('Gespeicherten API-Key auf diesem Gerät löschen?'))return;
+  els.apiKey.value='';persist();updateQuality();
+};
+els.backupBtn.onclick=()=>downloadJson(`draft-companion-backup-${new Date().toISOString().slice(0,10)}.json`,safeBackup());
+els.restoreFile.onchange=async()=>{
   try{
-    const {draft,picks,players}=await fetchDraft(id);const teams=Number(draft.settings?.teams||10),rounds=Number(draft.settings?.rounds||15),slot=Number(els.slot.value),total=teams*rounds,current=Math.min(picks.length+1,total),next=nextOwnPick(current,teams,slot,total);
-    const mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no);const drafted=new Set(picks.map(p=>String(p.player_id)));
-    const available=Object.entries(players).filter(([pid,p])=>!drafted.has(pid)&&['QB','RB','WR','TE'].includes(p.position)&&p.active!==false).map(([pid,p])=>[pid,{name:p.full_name,pos:p.position,team:p.team||'FA',searchRank:Number(p.search_rank),injury:p.injury_status||null}]).sort((a,b)=>(a[1].searchRank||9999)-(b[1].searchRank||9999)).slice(0,Number(els.topN.value));
-    const lines=[];lines.push('===== SLEEPER DRAFT SNAPSHOT =====',`Draft-ID: ${id}`,`Status: ${draft.status}`,`Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,`Aktueller Pick: ${current}`,`Mein nächster Pick: ${next??'keiner'} | Picks bis dahin: ${next==null?'–':next-current}`,'','DATENSTATUS',`Panel: ${panel.name} | Panel-Ränge: ${Object.keys(panelRanks).length}`,`Verifizierte Sleeper-ADP: ${Object.keys(adp).length}`,'','MEIN TEAM');
-    if(!mine.length)lines.push('Noch keine Picks.');for(const pick of mine){const p=playerInfo(String(pick.player_id),pick.metadata,players);lines.push(`${pick.pick_no}. ${p.name} — ${p.pos}, ${p.team}`)}
-    lines.push('','LETZTE PICKS');for(const pick of [...picks].sort((a,b)=>b.pick_no-a.pick_no).slice(0,12).reverse()){const p=playerInfo(String(pick.player_id),pick.metadata,players);lines.push(`${pick.pick_no}. Slot ${pick.draft_slot}: ${p.name} — ${p.pos}, ${p.team}`)}
-    lines.push('','VERFÜGBARE SPIELER');available.forEach(([,p],index)=>{const key=normName(p.name),rank=panelRanks[key]?.rank,playerAdp=Number(adp[key]);lines.push(`${index+1}. ${p.name} — ${p.pos}, ${p.team} | Panel ${Number.isFinite(rank)?rank.toFixed(1):'FEHLT'} | Sleeper-ADP ${Number.isFinite(playerAdp)?playerAdp.toFixed(1):'FEHLT'} | ${valueText(current,playerAdp)}${p.injury?` | Injury ${p.injury}`:''} | search_rank ${Number.isFinite(p.searchRank)?p.searchRank:'–'} (nur Sortierung)`)});
-    lines.push('','HARTE REGEL','search_rank ist keine ADP. Keine Empfehlung ohne Panel-Rang und verifizierte Sleeper-ADP ohne ausdrücklichen Unsicherheitshinweis. Reaches über 15 Picks nur mit außergewöhnlicher aktueller Begründung.','','AUFGABE','Prüfe aktuelle Verletzungen, Depth Charts, Camp-News sowie Breakout-/Sleeper-/League-Winner-Analysen. Gib Empfehlung, 2–3 Alternativen, Return-Chancen und Confidence. Abweichungen vom Panel ausdrücklich begründen.');
-    els.snapshot.value=lines.join('\n');els.draftStatus.textContent=`${picks.length} Picks geladen.`;els.draftStatus.className='notice ok';els.draftSummary.hidden=false;els.currentPick.textContent=current;els.nextPick.textContent=next??'–';els.untilPick.textContent=next==null?'–':next-current;els.copyBtn.disabled=false;els.shareBtn.disabled=false;lastFetch=new Date();return els.snapshot.value;
-  }finally{els.refreshBtn.disabled=false}
-}
-els.refreshBtn.onclick=()=>refresh().catch(error=>{els.draftStatus.textContent=`Fehler: ${error.message}`;els.draftStatus.className='notice bad'});
-els.copyBtn.onclick=async()=>{await navigator.clipboard.writeText(els.snapshot.value);els.copyBtn.textContent='Kopiert';setTimeout(()=>els.copyBtn.textContent='Kopieren',1200)};
-els.shareBtn.onclick=async()=>{if(navigator.share)await navigator.share({title:'Sleeper Draft Snapshot',text:els.snapshot.value});else await navigator.clipboard.writeText(els.snapshot.value)};
+    const file=els.restoreFile.files?.[0];if(!file)return;
+    applyBackup(JSON.parse(await file.text()));
+    els.qualityStatus.textContent='Sicherung erfolgreich eingelesen.';
+    els.qualityStatus.className='notice ok';
+  }catch(e){
+    els.qualityStatus.textContent=`Sicherung konnte nicht gelesen werden: ${e.message}`;
+    els.qualityStatus.className='notice bad';
+  }finally{els.restoreFile.value=''}
+};
+els.clearDraftDataBtn.onclick=()=>{
+  if(!confirm('Nur Draft-Link, Slot und Snapshot zurücksetzen? Rankings und ADP bleiben erhalten.'))return;
+  els.draftInput.value='';els.snapshot.value='';els.draftSummary.hidden=true;els.copyBtn.disabled=true;els.shareBtn.disabled=true;
+  persist();
+};
+els.autoRefresh.onchange=setAutoRefresh;
 
-function updateStatus(){els.onlineState.textContent=navigator.onLine?'Online':'Offline';els.onlineState.className=navigator.onLine?'ok':'bad';if(!lastFetch)els.dataAge.textContent='–';else{const seconds=Math.floor((Date.now()-lastFetch)/1000);els.dataAge.textContent=seconds<60?`${seconds}s`:`${Math.floor(seconds/60)}m`}}
-setInterval(updateStatus,1000);window.addEventListener('online',updateStatus);window.addEventListener('offline',updateStatus);updateStatus();
+const S='https://api.sleeper.app/v1';const draftId=v=>(String(v||'').match(/(\d{10,})/)||[])[1]||String(v||'').trim();async function jsonFetch(url,label){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error(`${label}: HTTP ${r.status}`);return r.json()}async function fetchDraft(id){const[draft,picks,players]=await Promise.all([jsonFetch(`${S}/draft/${id}`,'Draft'),jsonFetch(`${S}/draft/${id}/picks`,'Picks'),jsonFetch(`${S}/players/nfl`,'Spieler')]);return{draft,picks,players}}
+function pinfo(id,m,players){const p=players[id]||{};return{name:m?.first_name&&m?.last_name?`${m.first_name} ${m.last_name}`:(p.full_name||m?.player_name||id),pos:(m?.position||p.position||'?').toUpperCase(),team:(m?.team||p.team||'FA').toUpperCase(),searchRank:Number(p.search_rank),injury:p.injury_status||null,bye:p.bye_week||null}}
+function nextOwn(current,teams,slot,total){for(let p=current;p<=total;p++){const r=Math.floor((p-1)/teams)+1,w=(p-1)%teams+1,s=r%2?w:teams-w+1;if(s===slot)return p}return null}
+function panelFor(pos){return positionPanels[pos]||activePanelId}function rankFor(name,pos){const id=panelFor(pos),r=panelRanks[id]?.[norm(name)];return r?{...r,panel:panels[id]?.name||id}:null}
+function returnChance(next,playerAdp){if(!Number.isFinite(next)||!Number.isFinite(playerAdp))return null;return clamp(1/(1+Math.exp((next-playerAdp)/6)),.01,.99)}
+function agreement(sd,n){if(!n||n<2)return'Einzelmeinung';if(sd<=3)return'Sehr hoch';if(sd<=7)return'Hoch';if(sd<=12)return'Mittel';return'Niedrig'}
+function rosterState(mine,players){const counts={QB:0,RB:0,WR:0,TE:0};for(const pick of mine){const p=pinfo(String(pick.player_id),pick.metadata,players);if(counts[p.pos]!=null)counts[p.pos]++}const need={QB:counts.QB===0?8:counts.QB===1?0:-6,TE:counts.TE===0?7:counts.TE===1?0:-5,RB:counts.RB<2?8:counts.RB<4?4:counts.RB<6?1:-2,WR:counts.WR<3?8:counts.WR<5?4:counts.WR<7?1:-2};return{counts,need}}
+function candidateScore(p,current,next,state,available){const r=rankFor(p.name,p.pos),a=Number(adp[norm(p.name)]);if(!r)return{score:-999,r:null,a,reason:['Panel-Rang fehlt']};let score=100-clamp((r.rank-1)*.65,0,70);const reasons=[];if(Number.isFinite(a)){const delta=current-a;score+=clamp(delta*.45,-12,14);if(delta>=8)reasons.push(`Value +${Math.round(delta)}`);else if(delta<=-12)reasons.push(`Reach ${Math.abs(Math.round(delta))}`)}else reasons.push('ADP fehlt');score+=state.need[p.pos]||0;if((state.need[p.pos]||0)>=7)reasons.push(`${p.pos}-Need`);const sameTier=available.filter(x=>x.pos===p.pos&&rankFor(x.name,x.pos)?.tier===r.tier).length;if(sameTier<=2){score+=5;reasons.push(`Tier fast leer (${sameTier})`)}const agree=agreement(r.sd,r.n);if(agree==='Sehr hoch')score+=4;else if(agree==='Niedrig')score-=4;if(p.injury){score-=10;reasons.push(`Injury ${p.injury}`)}const ret=returnChance(next,a);if(ret!=null&&ret>0.8)reasons.push('Sehr hohe Return-Chance');if(ret!=null&&ret<0.25)reasons.push('Kaum Return-Chance');return{score:Math.round(clamp(score,0,100)),r,a,ret,agree,sameTier,reasons}}
+function coachHtml(rows){els.coachList.innerHTML=rows.slice(0,8).map((x,i)=>`<div class="coach"><div class="coach-head"><div><h3>${i+1}. ${esc(x.p.name)} · ${x.p.pos}</h3><div class="tiny">${esc(x.r.panel)} · Tier ${x.r.tier||'–'} · ${esc(x.agree)}</div></div><div class="score">${x.score}</div></div><div class="metrics"><div class="metric"><b>${x.r.rank.toFixed(1)}</b><span>Panel</span></div><div class="metric"><b>${Number.isFinite(x.a)?x.a.toFixed(1):'–'}</b><span>ADP</span></div><div class="metric"><b>${x.ret!=null?Math.round(x.ret*100)+'%':'–'}</b><span>Return</span></div><div class="metric"><b>${x.r.sd.toFixed(1)}</b><span>Streuung</span></div></div><div class="tags">${x.reasons.map(r=>`<span class="tag ${r.startsWith('Reach')||r.startsWith('Injury')?'bad':r.includes('Return-Chance')?'warn':'ok'}">${esc(r)}</span>`).join('')}</div></div>`).join('')}
+
+async function refresh(){persist();const id=draftId(els.draftInput.value);if(!id)throw new Error('Draft-ID fehlt.');els.refreshBtn.disabled=true;els.draftStatus.textContent='Lade Draft …';try{const{draft,picks,players}=await fetchDraft(id),teams=Number(draft.settings?.teams||10),rounds=Number(draft.settings?.rounds||15),slot=Number(els.slot.value),total=teams*rounds,current=Math.min(picks.length+1,total),next=nextOwn(current,teams,slot,total),mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no),drafted=new Set(picks.map(p=>String(p.player_id)));const available=Object.entries(players).filter(([pid,p])=>!drafted.has(pid)&&['QB','RB','WR','TE'].includes(p.position)&&p.active!==false).map(([pid,p])=>({id:pid,name:p.full_name,pos:p.position,team:p.team||'FA',searchRank:Number(p.search_rank),injury:p.injury_status||null,bye:p.bye_week||null})).sort((a,b)=>(a.searchRank||9999)-(b.searchRank||9999)).slice(0,Number(els.topN.value));const state=rosterState(mine,players),scored=available.map(p=>({p,...candidateScore(p,current,next,state,available)})).filter(x=>x.r).sort((a,b)=>b.score-a.score);coachHtml(scored);els.teamFit.textContent=`Kader: QB ${state.counts.QB} · RB ${state.counts.RB} · WR ${state.counts.WR} · TE ${state.counts.TE}\nPriorität: ${Object.entries(state.need).sort((a,b)=>b[1]-a[1]).map(([p,n])=>`${p} ${n>=7?'hoch':n>=3?'mittel':n<0?'niedrig':'neutral'}`).join(' · ')}`;const lines=['===== SLEEPER DRAFT SNAPSHOT =====',`Draft-ID: ${id}`,`Status: ${draft.status}`,`Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,`Aktueller Pick: ${current}`,`Mein nächster Pick: ${next??'keiner'} | Picks bis dahin: ${next==null?'–':next-current}`,'','DATENSTATUS',`Panels: ${Object.keys(panelRanks).length}/${Object.keys(panels).length} geladen | Sleeper-ADP: ${Object.keys(adp).length}`,`Positionspanels: QB=${panels[positionPanels.QB]?.name} | RB=${panels[positionPanels.RB]?.name} | WR=${panels[positionPanels.WR]?.name} | TE=${panels[positionPanels.TE]?.name}`,'','TEAMSTATUS',els.teamFit.textContent,'','MEIN TEAM'];if(!mine.length)lines.push('Noch keine Picks.');for(const pick of mine){const p=pinfo(String(pick.player_id),pick.metadata,players);lines.push(`${pick.pick_no}. ${p.name} — ${p.pos}, ${p.team}`)}lines.push('','LETZTE PICKS');for(const pick of [...picks].sort((a,b)=>b.pick_no-a.pick_no).slice(0,12).reverse()){const p=pinfo(String(pick.player_id),pick.metadata,players);lines.push(`${pick.pick_no}. Slot ${pick.draft_slot}: ${p.name} — ${p.pos}, ${p.team}`)}lines.push('','DRAFT COACH TOP 8');scored.slice(0,8).forEach((x,i)=>lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Score ${x.score} | ${x.r.panel} ${x.r.rank.toFixed(1)} Tier ${x.r.tier||'–'} | Streuung ${x.r.sd.toFixed(1)} (${x.agree}) | Sleeper-ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | ${x.reasons.join(', ')||'neutral'}`));lines.push('','VERFÜGBARE SPIELER');available.forEach((p,i)=>{const x=candidateScore(p,current,next,state,available),r=x.r;lines.push(`${i+1}. ${p.name} — ${p.pos}, ${p.team} | Panel ${r?r.rank.toFixed(1):'FEHLT'}${r?` Tier ${r.tier||'–'} · SD ${r.sd.toFixed(1)}`:''} | Sleeper-ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Coach ${x.score>=0?x.score:'–'}${p.injury?` | Injury ${p.injury}`:''} | search_rank ${Number.isFinite(p.searchRank)?p.searchRank:'–'} (nur Sortierung)`)});lines.push('','MODELLHINWEIS','Return ist eine transparente ADP-basierte Schätzung, keine Garantie. Draft-Coach-Scores sind Entscheidungshilfe; Expertenpanel und verifizierte Sleeper-ADP bleiben die Basis. Mock-Bot-Picks sind kein Verhalten echter Ligagegner.','','HARTE REGEL','Kein großer Reach ohne konkrete aktuelle Begründung. Fehlende Panel- oder ADP-Daten ausdrücklich als Unsicherheit behandeln. K und DST werden nicht gedraftet.','','AUFGABE','Prüfe aktuelle Rankings des verwendeten Panels, Verletzungen, Depth Charts und News. Gib 1) Empfehlung, 2) 2–3 Alternativen, 3) Return-Chancen, 4) Confidence. Abweichungen vom Panel oder der Sleeper-ADP ausdrücklich begründen.');els.snapshot.value=lines.join('\n');els.draftStatus.textContent=`${picks.length} Picks geladen · ${scored.length} Kandidaten bewertet.`;els.draftStatus.className='notice ok';els.draftSummary.hidden=false;els.currentPick.textContent=current;els.nextPick.textContent=next??'–';els.untilPick.textContent=next==null?'–':next-current;els.copyBtn.disabled=false;els.shareBtn.disabled=false;lastFetch=new Date()}finally{els.refreshBtn.disabled=false}}
+els.refreshBtn.onclick=()=>refresh().catch(e=>{els.draftStatus.textContent=`Fehler: ${e.message}`;els.draftStatus.className='notice bad'});els.copyBtn.onclick=async()=>{await navigator.clipboard.writeText(els.snapshot.value);els.copyBtn.textContent='Kopiert';setTimeout(()=>els.copyBtn.textContent='Kopieren',1200)};els.shareBtn.onclick=async()=>navigator.share?navigator.share({title:'Sleeper Draft Snapshot',text:els.snapshot.value}):navigator.clipboard.writeText(els.snapshot.value);
+function status(){els.onlineState.textContent=navigator.onLine?'Online':'Offline';els.onlineState.className=navigator.onLine?'ok':'bad';els.dataAge.className=!lastFetch?'':(Date.now()-lastFetch<30000?'ok':Date.now()-lastFetch<90000?'warn':'bad');els.dataAge.textContent=!lastFetch?'–':Math.floor((Date.now()-lastFetch)/1000)<60?`${Math.floor((Date.now()-lastFetch)/1000)}s`:`${Math.floor((Date.now()-lastFetch)/60000)}m`}setInterval(status,1000);addEventListener('online',status);addEventListener('offline',status);if(Object.keys(adp).length){els.adpStatus.textContent=`${Object.keys(adp).length} Sleeper-ADPs gespeichert.`;els.adpStatus.className='notice ok'}renderAll();updateQuality();setAutoRefresh();status();

@@ -7,23 +7,33 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <title>Draft Companion v4.1.0</title>
+  <title>Draft Companion – Final 2026</title>
 </head>
 <body>
 <main>
   <section class="card status-grid">
-    <div><b>v4.1.0</b><span>Version</span></div>
+    <div><b>Final 2026 · v5.1.0</b><span>Version</span></div>
     <div><b id="onlineState">–</b><span>Status</span></div>
     <div><b id="dataAge">–</b><span>Datenalter</span></div>
   </section>
 
+  <div id="updateNotice" class="card update-notice" hidden>
+    <b>Neue Version geladen</b>
+    <span>App einmal neu öffnen, um sie zu übernehmen.</span>
+    <button id="reloadAppBtn" class="secondary" type="button">Jetzt neu laden</button>
+  </div>
+
   <h1>Draft Companion</h1>
-  <p class="sub">Expertenpanel + verifizierte Sleeper-ADP + Live-Draft.</p>
+  <p class="sub">Eigene Expertenpanels · echte Sleeper-ADP · Live-Draft-Coach.</p>
 
   <details class="card" open>
     <summary>1. FantasyPros-API</summary>
     <label for="apiKey">API-Key</label>
-    <input id="apiKey" type="password" autocomplete="off" placeholder="Wird nur lokal gespeichert">
+    <input id="apiKey" type="password" autocomplete="off" placeholder="Nur lokal auf diesem Gerät gespeichert">
+    <div class="two">
+      <button id="toggleKeyBtn" class="secondary" type="button">Key anzeigen</button>
+      <button id="clearKeyBtn" class="danger" type="button">Key löschen</button>
+    </div>
     <div class="two">
       <div><label for="season">Saison</label><input id="season" value="2026" inputmode="numeric"></div>
       <div><label for="scoring">Scoring</label><select id="scoring"><option value="HALF">Half PPR</option><option value="PPR">PPR</option><option value="STD">Standard</option></select></div>
@@ -33,19 +43,34 @@
       <button id="loadExpertsBtn" class="secondary">Experten laden</button>
     </div>
     <pre id="diagnostic" class="diagnostic">Noch kein Test durchgeführt.</pre>
-    <p class="tiny">Der Browser ruft nur deine eigene Cloudflare-Seite auf. <code>_worker.js</code> leitet die Anfrage an FantasyPros weiter und beseitigt das CORS-Problem.</p>
   </details>
 
   <details class="card" open>
-    <summary>2. Expertenpanel</summary>
-    <label for="panelName">Panelname</label>
-    <input id="panelName" value="Standard">
+    <summary>2. Experten & Panels</summary>
+    <div class="two">
+      <div><label for="expertSearch">Experten suchen</label><input id="expertSearch" placeholder="Name oder Seite"></div>
+      <div><label for="activePanel">Aktives Panel</label><select id="activePanel"></select></div>
+    </div>
+    <div class="three">
+      <button id="newPanelBtn" class="secondary">Neues Panel</button>
+      <button id="renamePanelBtn" class="secondary">Umbenennen</button>
+      <button id="deletePanelBtn" class="danger">Löschen</button>
+    </div>
     <div id="expertsList" class="empty">Noch keine Experten geladen.</div>
     <div class="two">
       <button id="savePanelBtn" class="secondary">Panel speichern</button>
-      <button id="loadRanksBtn">Panel-Rankings laden</button>
+      <button id="loadRanksBtn">Alle Panel-Rankings laden</button>
     </div>
     <div id="panelStatus" class="notice">Keine Panel-Ränge gespeichert.</div>
+
+    <h3>Positionszuordnung</h3>
+    <div class="four">
+      <div><label for="qbPanel">QB</label><select id="qbPanel"></select></div>
+      <div><label for="rbPanel">RB</label><select id="rbPanel"></select></div>
+      <div><label for="wrPanel">WR</label><select id="wrPanel"></select></div>
+      <div><label for="tePanel">TE</label><select id="tePanel"></select></div>
+    </div>
+    <p class="tiny">Der Draft-Coach verwendet für jede Position automatisch das zugeordnete Panel. Pat kann als eigenes Einzelpanel geführt werden.</p>
   </details>
 
   <details class="card" open>
@@ -53,18 +78,31 @@
     <label for="adpFile">CSV/JSON mit echter Sleeper-ADP</label>
     <input id="adpFile" type="file" accept=".csv,.json,text/csv,application/json">
     <div id="adpStatus" class="notice">Keine verifizierte Sleeper-ADP gespeichert.</div>
-    <p class="tiny"><strong>Wichtig:</strong> Sleeper <code>search_rank</code> bleibt nur Sortierhilfe und wird nie als ADP behandelt.</p>
+    <p class="tiny"><strong>Schutzregel:</strong> Sleeper <code>search_rank</code> ist nur Sortierhilfe und niemals ADP.</p>
+  </details>
+
+  <details class="card">
+    <summary>4. Sicherung & Datenqualität</summary>
+    <div id="qualityStatus" class="notice">Datenprüfung läuft …</div>
+    <div class="two">
+      <button id="backupBtn" class="secondary" type="button">Einstellungen sichern</button>
+      <label class="file-button" for="restoreFile">Sicherung einlesen</label>
+    </div>
+    <input id="restoreFile" type="file" accept=".json,application/json" hidden>
+    <button id="clearDraftDataBtn" class="danger" type="button">Nur Draft-Verbindung zurücksetzen</button>
+    <p class="tiny">Die Sicherung enthält Panels, Rankings, ADP und Einstellungen – niemals deinen API-Key.</p>
   </details>
 
   <details class="card" open>
-    <summary>4. Draft verbinden</summary>
+    <summary>5. Draft verbinden</summary>
     <label for="draftInput">Sleeper-Draft-Link oder Draft-ID</label>
     <input id="draftInput" placeholder="https://sleeper.app/draft/nfl/…">
     <div class="two">
       <div><label for="slot">Mein Slot</label><select id="slot"></select></div>
       <div><label for="topN">Top Spieler</label><select id="topN"><option>25</option><option selected>35</option><option>50</option></select></div>
     </div>
-    <button id="refreshBtn">Aktualisieren</button>
+    <button id="refreshBtn">Draft analysieren</button>
+    <label class="switch-row"><input id="autoRefresh" type="checkbox"> Automatisch alle 10 Sekunden aktualisieren</label>
     <div id="draftStatus" class="notice">Noch nicht verbunden.</div>
   </details>
 
@@ -74,6 +112,9 @@
       <div><b id="nextPick">–</b><span>Nächster eigener</span></div>
       <div><b id="untilPick">–</b><span>Picks bis dahin</span></div>
     </div>
+    <h2>Draft Coach</h2>
+    <div id="teamFit" class="notice"></div>
+    <div id="coachList"></div>
   </section>
 
   <section class="card">
@@ -87,8 +128,6 @@
   </div>
 </main>
 <script type="module" src="app.js"></script>
-<script>
-if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}
-</script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>
 </html>

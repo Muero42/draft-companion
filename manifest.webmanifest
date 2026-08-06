@@ -1,9 +1,17 @@
 {
-  "name": "Sleeper Draft Companion v4.1",
+  "name": "Draft Companion – Final 2026",
   "short_name": "Draft Companion",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#0b1020",
   "theme_color": "#111827",
-  "icons": [{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
+  "icons": [
+    {
+      "src": "icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "description": "Finale Draft-Version mit Expertenpanels, FantasyPros-API, Sleeper-ADP und Live-Draft-Coach."
 }

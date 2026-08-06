@@ -1,22 +1,32 @@
-# Sleeper Draft Companion v4.1.0
+# Draft Companion – Final 2026 (v5.1.0)
 
-Diese Version ist für die Bedienung am Handy optimiert: **alle Dateien liegen im Root**, es müssen keine Ordner hochgeladen werden.
+Stabile Draft-Version für Mock-Drafts und den echten Sleeper-Draft.
 
-## Neu
+## Enthalten
 
-- Cloudflare-Proxy als Root-Datei `_worker.js`
-- kein direkter Browserzugriff auf FantasyPros, daher kein CORS-Fehler
-- ausführliche API-Diagnose mit HTTP-Status, Antwortzeit und Antwortstruktur
-- Expertenliste automatisch laden
-- frei gewichtetes Expertenpanel
-- Rankings ausgewählter Experten automatisch laden und kombinieren
-- echte Sleeper-ADP bleibt strikt getrennt von `search_rank`
-- vollständiger Sleeper-Live-Snapshot
-- API-Key bleibt lokal im Browser gespeichert
+- FantasyPros-HOF-API über Cloudflare-Proxy
+- API-Diagnose
+- frei gewichtete Expertenpanels
+- separate Positionspanels für QB, RB, WR und TE
+- Pat Fitzmaurice als vorbereitetes Einzelpanel
+- verifizierter Sleeper-ADP-Import; `search_rank` wird niemals als ADP behandelt
+- Panel-Rang, Tier, Streuung und Experten-Einigkeit
+- Value-/Reach-Schutz
+- transparente ADP-basierte Return-Schätzung
+- Live-Sleeper-Draft und kompakter ChatGPT-Snapshot
+- Auto-Refresh
+- lokale Datenspeicherung
+- Backup und Wiederherstellung ohne API-Key
+- installierbare PWA
 
-## Einmaliges Update
+## Eingefrorener Funktionsumfang
 
-Im GitHub-Repository auf `main` diese Dateien hochladen/ersetzen:
+Bis nach dem echten Draft werden keine großen Funktionen mehr ergänzt. Weitere Releases
+sind nur für klar reproduzierbare Fehler oder zwingende Datenkorrekturen vorgesehen.
+
+## Aktualisierung
+
+Alle acht Dateien liegen im Repository-Hauptverzeichnis:
 
 - `_worker.js`
 - `app.js`
@@ -25,18 +35,6 @@ Im GitHub-Repository auf `main` diese Dateien hochladen/ersetzen:
 - `sw.js`
 - `manifest.webmanifest`
 - `icon.svg`
-- `README.md` (optional)
+- `README.md`
 
-Cloudflare Pages veröffentlicht danach automatisch.
-
-## Erster Test
-
-1. Cloudflare-App öffnen.
-2. Prüfen, dass oben `v4.1.0` steht.
-3. Der vorhandene API-Key sollte aus der vorherigen App eventuell nicht übernommen werden, da ein neuer lokaler Speicherschlüssel verwendet wird. Falls das Feld leer ist, Key erneut einfügen.
-4. `API diagnostizieren` antippen.
-5. Das Diagnoseergebnis teilen – niemals den Key.
-
-## Sicherheit
-
-Der Key wird im lokalen Browser-Speicher gehalten und an `/api/fantasypros` auf derselben Cloudflare-Domain geschickt. `_worker.js` leitet ihn an FantasyPros weiter. Der Key wird nicht in GitHub gespeichert.
+Cloudflare veröffentlicht nach einem Commit auf `main` automatisch.
