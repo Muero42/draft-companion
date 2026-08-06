@@ -20,3 +20,15 @@
 @media(max-width:540px){.expert-rank{grid-template-columns:1fr auto}.expert-rank .delta{grid-column:1/-1}}
 
 .ready-note{color:#8fd3ff}
+
+.panel-summary{display:grid;gap:8px;margin-top:10px}
+.panel-summary-card{background:#101a2d;border:1px solid #2a3b5c;border-radius:12px;padding:10px}
+.panel-summary-card b{display:block;margin-bottom:5px}
+.panel-summary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:6px}
+.panel-summary-item{display:flex;justify-content:space-between;gap:8px;color:var(--muted);font-size:.82rem}
+.panel-summary-item strong{color:var(--text)}
+.status-ok{color:var(--ok)}
+.status-warn{color:var(--warn)}
+.status-bad{color:var(--bad)}
+.section-collapsed>*:not(.section-heading){display:none}
+#coachSection.coach-active{border-color:var(--accent);box-shadow:0 0 0 1px rgba(91,140,255,.2),0 14px 40px rgba(0,0,0,.18)}
