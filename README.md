@@ -1,31 +1,20 @@
-# Sleeper Draft Companion v1.1.0
+# Sleeper Draft Companion v2.0.0
 
-Build: 2026-08-06
+## Neu
+- offizielle FantasyPros-API-Anbindung
+- Basispanel/ECR und Pat-Fitzmaurice-Ansicht
+- API-Key nur lokal im Browser
+- Datenstatus mit Zeitstempel
+- CSV/JSON-Import für exakte Sleeper-ADP
+- strikte Trennung von Sleeper search_rank und echter ADP
+- automatische Value-/Reach-Klassifizierung
+- fehlende Daten werden als FEHLT markiert statt geschätzt
 
-## Neu in v1.1.0
+## Einmalige Einrichtung
+1. Dateien in GitHub ersetzen.
+2. App öffnen.
+3. FantasyPros API-Key eintragen.
+4. API testen.
+5. Rankings aktualisieren.
 
-- sichtbare Versions- und Statusanzeige
-- Datenalter in Sekunden/Minuten
-- automatische Update-Erkennung mit Ein-Klick-Aktualisierung
-- Network-first-Laden der App-Seite gegen Cache-Probleme
-- automatischer Draftmodus, sobald du in höchstens zwei Picks dran bist
-- Positionszählung im Snapshot
-- Erkennung deutlicher Positions-Runs
-- Zahl der Teams ohne QB bzw. TE bis zu deinem nächsten Pick
-- Online-/Offline-Anzeige
-- kompakter und vollständiger Snapshot bleiben erhalten
-
-## Einmaliges GitHub-Update
-
-Die Dateien aus diesem Ordner ins bestehende Repository hochladen und die vorhandenen
-Dateien überschreiben:
-
-- index.html
-- manifest.webmanifest
-- sw.js
-- icon.svg
-- README.md (optional)
-
-Danach prüft die App künftige veröffentlichte Versionen selbst und zeigt einen
-Aktualisieren-Button an. Das Veröffentlichen neuer Dateien im GitHub-Repository kann
-die App aus Sicherheitsgründen nicht selbst übernehmen.
+Die offizielle Sleeper-API dokumentiert keine ADP-Schnittstelle. Liefert FantasyPros keine eindeutig erkennbare Sleeper-ADP-Spalte, muss eine aktuelle ADP-Datei importiert werden. Dadurch werden falsche scheinpräzise ADP-Angaben verhindert.

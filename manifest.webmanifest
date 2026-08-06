@@ -1,7 +1,7 @@
 {
-  "name": "Sleeper Draft Companion v1.1.0",
+  "name": "Sleeper Draft Companion v2",
   "short_name": "Draft Companion",
-  "description": "Mobile PWA mit Live-Draftmodus, Updateprüfung und Draft-Intelligenz.",
+  "description": "Draft Companion mit verifizierten Expertenrankings, Sleeper-ADP und Reach-Schutz.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

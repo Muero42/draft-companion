@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-title" content="Draft Companion">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <title>Draft Companion v1.1.0</title>
+  <title>Draft Companion v2.0.0</title>
   <style>
     :root {
       color-scheme: dark;
@@ -78,19 +78,40 @@
 <main>
   <section class="card" id="appStatusCard">
     <div class="stats">
-      <div class="stat"><b id="appVersion">v1.1.0</b><span>App-Version</span></div>
+      <div class="stat"><b id="appVersion">v2.0.0</b><span>App-Version</span></div>
       <div class="stat"><b id="dataAge">–</b><span>Datenalter</span></div>
       <div class="stat"><b id="connectionState">Offline</b><span>Status</span></div>
     </div>
   </section>
+  <section class="card"><b>Datenqualität</b><div id="dataQuality" class="status bad">Rankings und Sleeper-ADP noch nicht verifiziert.</div></section>
   <div id="updateBanner" class="card" hidden>
     <b>Neue App-Version verfügbar</b>
     <button id="reloadBtn" class="secondary">Jetzt aktualisieren</button>
   </div>
   <h1>Draft Companion</h1>
-  <p class="sub">Für schnelle Sleeper-Mocks auf dem Handy. <span class="pill">v1.1.0</span></p>
+  <p class="sub">Für schnelle Sleeper-Mocks auf dem Handy. <span class="pill">v2.0.0</span></p>
 
-  <section class="card">
+  
+  <details class="card" open>
+    <summary>Datenquellen</summary>
+    <label for="fpApiKey">FantasyPros API-Key (nur lokal gespeichert)</label>
+    <input id="fpApiKey" type="password" placeholder="x-api-key">
+    <div class="compact-row">
+      <div><label for="season">Saison</label><input id="season" inputmode="numeric" value="2026"></div>
+      <div><label for="scoring">Scoring</label><select id="scoring"><option value="HALF" selected>Half PPR</option><option value="PPR">PPR</option><option value="STD">Standard</option></select></div>
+    </div>
+    <label for="panelMode">Ranking-Ansicht</label>
+    <select id="panelMode"><option value="consensus" selected>Basispanel / ECR</option><option value="pat">Pat Fitzmaurice</option></select>
+    <div class="compact-row"><button id="refreshRankingsBtn" class="secondary">Rankings aktualisieren</button><button id="testApiBtn" class="secondary">API testen</button></div>
+    <div id="rankingStatus" class="status">Noch keine verifizierten Rankings geladen.</div>
+    <label for="adpFile">Optionale Sleeper-ADP-Datei (CSV/JSON, maßgeblich)</label>
+    <input id="adpFile" type="file" accept=".csv,.json,text/csv,application/json">
+    <div class="tiny">Die App übernimmt eine eindeutig erkannte Sleeper-ADP aus der API automatisch. Fehlt sie, ist diese Datei die sichere Ersatzquelle. Ohne verifizierte ADP werden Reach und Return als „FEHLT“ markiert.</div>
+    <label for="expertFile">Optionales eigenes Expertenranking (CSV/JSON)</label>
+    <input id="expertFile" type="file" accept=".csv,.json,text/csv,application/json">
+    <div class="compact-row"><button id="exportDataBtn" class="secondary">Daten sichern</button><button id="clearDataBtn" class="secondary">Rankingdaten löschen</button></div>
+  </details>
+<section class="card">
     <div class="muted-box">Einmal Link und Slot setzen. Danach reicht während des Mocks meist <b>„Aktualisieren & kopieren“</b>.</div>
     <label for="draftInput">Sleeper-Draft-Link oder Draft-ID</label>
     <input id="draftInput" placeholder="https://sleeper.app/draft/nfl/…" autocomplete="off">
@@ -185,6 +206,10 @@
   const API = "https://api.sleeper.app/v1";
   const $ = id => document.getElementById(id);
   const draftInput = $("draftInput"), slotSel = $("slot"), topNSel = $("topN"), snapshotModeSel = $("snapshotMode");
+  const fpApiKeyEl=$("fpApiKey"), seasonEl=$("season"), scoringEl=$("scoring"), panelModeEl=$("panelMode");
+  const rankingStatusEl=$("rankingStatus"), dataQualityEl=$("dataQuality");
+  const refreshRankingsBtn=$("refreshRankingsBtn"), testApiBtn=$("testApiBtn");
+  const adpFileEl=$("adpFile"), expertFileEl=$("expertFile"), exportDataBtn=$("exportDataBtn"), clearDataBtn=$("clearDataBtn");
   const statusEl = $("status"), snapshotEl = $("snapshot"), copyBtn = $("copyBtn"), shareBtn = $("shareBtn");
   const connectBtn = $("connectBtn"), autoBtn = $("autoBtn");
   const draftModeBtn=$("draftModeBtn"), clearHistoryBtn=$("clearHistoryBtn");
@@ -197,6 +222,13 @@
   manualPlayers.value=localStorage.getItem("sdc_manualplayers")||"";
   manualPlayers.addEventListener("input",()=>localStorage.setItem("sdc_manualplayers",manualPlayers.value));
   let timer = null, playerMap = null, latestDraft = null, latestPicks = [], lastFetchAt = null;
+  let expertRanks=JSON.parse(localStorage.getItem("sdc_expert_ranks_v2")||"{}");
+  let sleeperAdp=JSON.parse(localStorage.getItem("sdc_sleeper_adp_v2")||"{}");
+  let rankingMeta=JSON.parse(localStorage.getItem("sdc_ranking_meta_v2")||"{}");
+  fpApiKeyEl.value=localStorage.getItem("sdc_fp_api_key")||"";
+  seasonEl.value=localStorage.getItem("sdc_season")||"2026";
+  scoringEl.value=localStorage.getItem("sdc_scoring")||"HALF";
+  panelModeEl.value=localStorage.getItem("sdc_panel_mode")||"consensus";
 
   for (let i=1;i<=16;i++) {
     const o=document.createElement("option"); o.value=i; o.textContent=`Slot ${i}`; slotSel.appendChild(o);
@@ -206,6 +238,21 @@
   topNSel.value = localStorage.getItem("sdc_topn") || "35";
   snapshotModeSel.value = localStorage.getItem("sdc_snapshotmode") || "compact";
   snapshotModeSel.addEventListener("change",()=>localStorage.setItem("sdc_snapshotmode", snapshotModeSel.value));
+
+
+  function normalizeName(v){return String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,"").replace(/[^a-z0-9]/g,"");}
+  function persistRankingData(){localStorage.setItem("sdc_expert_ranks_v2",JSON.stringify(expertRanks));localStorage.setItem("sdc_sleeper_adp_v2",JSON.stringify(sleeperAdp));localStorage.setItem("sdc_ranking_meta_v2",JSON.stringify(rankingMeta));localStorage.setItem("sdc_fp_api_key",fpApiKeyEl.value.trim());localStorage.setItem("sdc_season",seasonEl.value.trim());localStorage.setItem("sdc_scoring",scoringEl.value);localStorage.setItem("sdc_panel_mode",panelModeEl.value);updateDataQuality();}
+  function updateDataQuality(){const rc=Object.keys(expertRanks).length,ac=Object.keys(sleeperAdp).length;const rd=rankingMeta.rankUpdated?new Date(rankingMeta.rankUpdated).toLocaleString("de-DE"):"–",ad=rankingMeta.adpUpdated?new Date(rankingMeta.adpUpdated).toLocaleString("de-DE"):"–";if(rc&&ac){dataQualityEl.className="status ok";dataQualityEl.textContent=`VERIFIZIERT: ${rc} Rankings (${rd}) · ${ac} Sleeper-ADPs (${ad})`;}else if(rc||ac){dataQualityEl.className="status warn";dataQualityEl.textContent=`TEILWEISE: Rankings ${rc?"vorhanden":"FEHLEN"} · Sleeper-ADP ${ac?"vorhanden":"FEHLT"}`;}else{dataQualityEl.className="status bad";dataQualityEl.textContent="NICHT VERIFIZIERT: Rankings und Sleeper-ADP fehlen.";}}
+  function parseCsv(text){const rows=[];let row=[],cell="",quoted=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'&&quoted&&n==='"'){cell+='"';i++;}else if(c==='"'){quoted=!quoted;}else if(c===','&&!quoted){row.push(cell.trim());cell="";}else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&n==='\n')i++;row.push(cell.trim());cell="";if(row.some(x=>x!==""))rows.push(row);row=[];}else cell+=c;}if(cell||row.length){row.push(cell.trim());rows.push(row);}if(!rows.length)return[];const h=rows[0];return rows.slice(1).map(r=>Object.fromEntries(h.map((x,i)=>[x,r[i]??""])));}
+  function rowsFromFileText(text,name){if(name.toLowerCase().endsWith('.json')){const o=JSON.parse(text);if(Array.isArray(o))return o;if(Array.isArray(o.players))return o.players;return Object.values(o);}return parseCsv(text);}
+  function getField(o,names){const ks=Object.keys(o||{});for(const name of names){const target=name.toLowerCase().replace(/[^a-z0-9]/g,"");const k=ks.find(x=>x.toLowerCase().replace(/[^a-z0-9]/g,"")===target);if(k&&o[k]!==""&&o[k]!=null)return o[k];}return null;}
+  function ingestRows(rows,mode){let c=0;for(const r of rows){const name=getField(r,["player_name","player","name","full_name"]);if(!name)continue;const key=normalizeName(name);if(mode==='adp'){const raw=getField(r,["sleeper_adp","adp_sleeper","sleeper"]);const n=Number(String(raw??"").replace(",","."));if(Number.isFinite(n)&&n>0){sleeperAdp[key]=n;c++;}}else{const raw=getField(r,["rank_ecr","ecr","overall_rank","rank","expert_rank"]);const n=Number(String(raw??"").replace(",","."));const t=Number(getField(r,["tier","expert_tier"]));if(Number.isFinite(n)&&n>0){expertRanks[key]={rank:n,tier:Number.isFinite(t)?t:null,source:mode};c++;}}}return c;}
+  function extractApiPlayers(p){if(Array.isArray(p))return p;for(const k of ["players","rankings","data","results"]){if(Array.isArray(p?.[k]))return p[k];if(Array.isArray(p?.data?.[k]))return p.data[k];}return[];}
+  function detectSleeperAdp(r){const raw=getField(r,["sleeper_adp","adp_sleeper","adp_sleeper_half_ppr","sleeper"]);const n=Number(String(raw??"").replace(",","."));return Number.isFinite(n)&&n>0?n:null;}
+  async function fpFetch(path){const key=fpApiKeyEl.value.trim();if(!key)throw new Error("FantasyPros API-Key fehlt.");const r=await fetch(`https://api.fantasypros.com/public/v2/json${path}`,{headers:{"x-api-key":key},cache:"no-store"});if(!r.ok)throw new Error(`FantasyPros API: ${r.status} ${r.statusText}`);return r.json();}
+  async function findPatExpertId(season){const p=await fpFetch(`/nfl/${season}/rankings/experts`);const rows=Array.isArray(p?.experts)?p.experts:Array.isArray(p?.data?.experts)?p.data.experts:extractApiPlayers(p);const pat=rows.find(x=>String(getField(x,["name","expert_name","full_name"])||"").toLowerCase().includes("pat fitz"));return pat?getField(pat,["expert_id","id"]):null;}
+  async function refreshFantasyProsRankings(){const season=seasonEl.value.trim(),scoring=scoringEl.value,positions=["QB","RB","WR","TE"],nr={},fa={};let patId=null;if(panelModeEl.value==='pat')patId=await findPatExpertId(season);for(const pos of positions){const path=panelModeEl.value==='pat'&&patId?`/nfl/${season}/rankings?position=${pos}&scoring=${scoring}&expert_id=${encodeURIComponent(patId)}`:`/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}`;const rows=extractApiPlayers(await fpFetch(path));for(const r of rows){const name=getField(r,["player_name","name","full_name"]),rank=Number(getField(r,["rank_ecr","rank","overall_rank","rank_expert"]));if(!name||!Number.isFinite(rank))continue;const key=normalizeName(name),tier=Number(getField(r,["tier"]));nr[key]={rank,tier:Number.isFinite(tier)?tier:null,source:panelModeEl.value};const adp=detectSleeperAdp(r);if(adp)fa[key]=adp;}}if(!Object.keys(nr).length)throw new Error("API-Antwort enthielt keine erkennbaren Rankings.");expertRanks=nr;rankingMeta.rankUpdated=new Date().toISOString();rankingMeta.rankSource=panelModeEl.value==='pat'?"FantasyPros: Pat Fitzmaurice":"FantasyPros ECR";if(Object.keys(fa).length){sleeperAdp={...sleeperAdp,...fa};rankingMeta.adpUpdated=new Date().toISOString();rankingMeta.adpSource="FantasyPros API: erkannte Sleeper-Spalte";}persistRankingData();rankingStatusEl.className="status ok";rankingStatusEl.textContent=`${Object.keys(nr).length} Rankings geladen. ${Object.keys(fa).length?Object.keys(fa).length+" Sleeper-ADPs erkannt.":"Keine Sleeper-ADP-Spalte erkannt."}`;}
+  function valueLabel(current,adp){if(!Number.isFinite(adp))return{label:"ADP FEHLT"};const d=Math.round(adp-current);if(d>=15)return{label:`WARTEN / ${d} Picks vor ADP`};if(d>=8)return{label:`Leichter Reach / ${d}`};if(d<=-15)return{label:`Elite Value / ${Math.abs(d)}`};if(d<=-8)return{label:`Value / ${Math.abs(d)}`};return{label:"Fair"};}
 
   function draftIdFrom(value) {
     const m = String(value).trim().match(/(\d{12,})/);
@@ -240,7 +287,8 @@
         rank: Number.isFinite(+p.search_rank) && +p.search_rank > 0 ? +p.search_rank : 999999,
         active: p.active !== false,
         status: p.status || "",
-        years: Number.isFinite(+p.years_exp) ? +p.years_exp : null
+        years: Number.isFinite(+p.years_exp) ? +p.years_exp : null,
+        injury: p.injury_status || null, bye: p.bye_week || null, depth: p.depth_chart_order || null
       };
     }
     playerMap = compact;
@@ -327,8 +375,10 @@
     } else {
       lines.push(`TOP ${available.length} VERFÜGBARE SPIELER (automatisch aus Sleeper-Spielerdaten)`);
       for (let i=0;i<available.length;i++) {
-        const [id,p]=available[i];
-        lines.push(`${i+1}. ${p.n} — ${p.pos}, ${p.team} | Sleeper-Rang ${p.rank}`);
+        const [id,p]=available[i], key=normalizeName(p.n), er=expertRanks[key], adp=Number(sleeperAdp[key]), val=valueLabel(current,adp);
+        const expertText=er?`Expert ${er.rank}${er.tier?` (Tier ${er.tier})`:""}`:"Expert FEHLT";
+        const adpText=Number.isFinite(adp)?`Sleeper-ADP ${adp.toFixed(1)}`:"Sleeper-ADP FEHLT";
+        lines.push(`${i+1}. ${p.n} — ${p.pos}, ${p.team} | ${expertText} | ${adpText} | ${val.label}${p.injury?` | Injury ${p.injury}`:""}`);
       }
     }
     lines.push("");
@@ -337,6 +387,13 @@
     lines.push("DRAFT-INTELLIGENZ");
     lines.push(`Gedraftet: QB ${counts.QB} | RB ${counts.RB} | WR ${counts.WR} | TE ${counts.TE}`);
     lines.push(run ? `Positions-Run: ${run.pos} (${run.n} der letzten ${run.lookback} Picks)` : "Positions-Run: keiner");
+    lines.push("");
+    lines.push("DATENSTATUS");
+    lines.push(`Ranking: ${rankingMeta.rankSource || "FEHLT"} | Stand: ${rankingMeta.rankUpdated || "–"}`);
+    lines.push(`Sleeper-ADP: ${rankingMeta.adpSource || "FEHLT"} | Stand: ${rankingMeta.adpUpdated || "–"}`);
+    lines.push("");
+    lines.push("HARTE REGEL");
+    lines.push("Keine Empfehlung bei fehlender Experten- oder Sleeper-ADP ohne Unsicherheitshinweis. Reaches >15 Picks nur mit außergewöhnlicher aktueller Begründung.");
     lines.push("");
     lines.push("AUFGABE");
     lines.push("Prüfe aktuelle Expertenrankings, Depth Charts, Verletzungen und News.");
@@ -542,6 +599,14 @@
   });
 
 
+
+  refreshRankingsBtn.addEventListener("click",async()=>{try{refreshRankingsBtn.disabled=true;rankingStatusEl.className="status warn";rankingStatusEl.textContent="Lade aktuelle FantasyPros-Daten …";await refreshFantasyProsRankings();if(latestDraft)await refresh();}catch(e){rankingStatusEl.className="status bad";rankingStatusEl.textContent=`Fehler: ${e.message}`;}finally{refreshRankingsBtn.disabled=false;}});
+  testApiBtn.addEventListener("click",async()=>{try{testApiBtn.disabled=true;await fpFetch(`/nfl/${seasonEl.value.trim()}/consensus-rankings?position=RB&scoring=${scoringEl.value}`);rankingStatusEl.className="status ok";rankingStatusEl.textContent="FantasyPros API-Verbindung funktioniert.";persistRankingData();}catch(e){rankingStatusEl.className="status bad";rankingStatusEl.textContent=`API-Test fehlgeschlagen: ${e.message}`;}finally{testApiBtn.disabled=false;}});
+  adpFileEl.addEventListener("change",async()=>{const f=adpFileEl.files?.[0];if(!f)return;try{const c=ingestRows(rowsFromFileText(await f.text(),f.name),"adp");if(!c)throw new Error("Keine Sleeper-ADP-Spalte erkannt.");rankingMeta.adpUpdated=new Date().toISOString();rankingMeta.adpSource=`Datei: ${f.name}`;persistRankingData();rankingStatusEl.className="status ok";rankingStatusEl.textContent=`${c} Sleeper-ADPs importiert.`;if(latestDraft)await refresh();}catch(e){rankingStatusEl.className="status bad";rankingStatusEl.textContent=`ADP-Import fehlgeschlagen: ${e.message}`;}});
+  expertFileEl.addEventListener("change",async()=>{const f=expertFileEl.files?.[0];if(!f)return;try{expertRanks={};const c=ingestRows(rowsFromFileText(await f.text(),f.name),"custom");if(!c)throw new Error("Keine Ranking-Spalte erkannt.");rankingMeta.rankUpdated=new Date().toISOString();rankingMeta.rankSource=`Datei: ${f.name}`;persistRankingData();rankingStatusEl.className="status ok";rankingStatusEl.textContent=`${c} Expertenrankings importiert.`;if(latestDraft)await refresh();}catch(e){rankingStatusEl.className="status bad";rankingStatusEl.textContent=`Ranking-Import fehlgeschlagen: ${e.message}`;}});
+  exportDataBtn.addEventListener("click",()=>{const b=new Blob([JSON.stringify({expertRanks,sleeperAdp,rankingMeta},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="draft-companion-daten.json";a.click();URL.revokeObjectURL(a.href);});
+  clearDataBtn.addEventListener("click",()=>{if(!confirm("Gespeicherte Ranking- und ADP-Daten wirklich löschen?"))return;expertRanks={};sleeperAdp={};rankingMeta={};persistRankingData();rankingStatusEl.className="status warn";rankingStatusEl.textContent="Rankingdaten gelöscht.";});
+  panelModeEl.addEventListener("change",persistRankingData);scoringEl.addEventListener("change",persistRankingData);seasonEl.addEventListener("change",persistRankingData);fpApiKeyEl.addEventListener("change",persistRankingData);updateDataQuality();
   window.addEventListener("load", () => {
     if (draftInput.value.trim()) {
       setTimeout(() => refresh(), 250);
