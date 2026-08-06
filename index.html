@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-title" content="Draft Companion">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <title>Sleeper Draft Companion</title>
+  <title>Draft Companion</title>
   <style>
     :root {
       color-scheme: dark;
@@ -52,6 +52,17 @@
     .primary-action { background:var(--accent); }
     .share-action { background:#26324f; }
     .compact-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    
+    body.draft-mode .sub,
+    body.draft-mode details.card,
+    body.draft-mode #installBtn,
+    body.draft-mode #clearHistoryBtn { display:none !important; }
+    body.draft-mode main { max-width:540px; padding-top:8px; }
+    body.draft-mode .card { margin:8px 0; padding:11px; }
+    body.draft-mode h1 { font-size:1.15rem; margin-bottom:3px; }
+    body.draft-mode #snapshot { min-height:160px; }
+    .change-out { color:var(--bad); display:block; margin-top:4px; }
+    .change-in { color:var(--ok); display:block; margin-top:4px; }
     .muted-box { background:#0f172a; border:1px dashed var(--border); border-radius:12px; padding:10px; color:var(--muted); font-size:.84rem; }
     @media (max-width:480px) {
       .grid { grid-template-columns:1fr 92px; }
@@ -61,8 +72,12 @@
 </head>
 <body>
 <main>
+  <div id="updateBanner" class="card" hidden>
+    <b>Neue App-Version verfügbar</b>
+    <button id="reloadBtn" class="secondary">Jetzt aktualisieren</button>
+  </div>
   <h1>Draft Companion</h1>
-  <p class="sub">Für schnelle Sleeper-Mocks auf dem Handy. <span class="pill">Mobile v1.3</span></p>
+  <p class="sub">Für schnelle Sleeper-Mocks auf dem Handy. <span class="pill">Final v1.0</span></p>
 
   <section class="card">
     <div class="muted-box">Einmal Link und Slot setzen. Danach reicht während des Mocks meist <b>„Aktualisieren & kopieren“</b>.</div>
@@ -80,6 +95,11 @@
         </select>
       </div>
     </div>
+    <label for="snapshotMode">Snapshot-Umfang</label>
+    <select id="snapshotMode">
+      <option value="compact" selected>Kompakt (empfohlen)</option>
+      <option value="full">Vollständig</option>
+    </select>
     
     <div class="compact-row">
       <button id="connectBtn">Aktualisieren</button>
@@ -87,6 +107,19 @@
     </div>
     <button id="installBtn" class="secondary" hidden>Als App installieren</button>
     <div id="status" class="status">Noch nicht verbunden.</div>
+  </section>
+
+  
+  <section class="card">
+    <div class="compact-row">
+      <button id="draftModeBtn" class="secondary">Draftmodus: AUS</button>
+      <button id="clearHistoryBtn" class="secondary">Vergleich zurücksetzen</button>
+    </div>
+  </section>
+
+  <section class="card" id="changesCard" hidden>
+    <b>Seit dem letzten Aktualisieren</b>
+    <div id="changesText" class="status">Noch keine Vergleichsdaten.</div>
   </section>
 
   <section class="card" id="summaryCard" hidden>
@@ -119,7 +152,7 @@
   </div>
 
   <details class="card">
-    <summary>Hinweise und Fehlerbehebung</summary>
+    <summary>Hinweise und Datenschutz</summary>
     <p class="tiny">
       Die Seite ruft ausschließlich die öffentliche Read-only-API von Sleeper auf. Es werden keine Zugangsdaten benötigt
       oder gespeichert. Draft-Link, Slot und Spieler-Datenbank-Zeitpunkt werden nur lokal im Browser gespeichert.
@@ -135,9 +168,13 @@
 (() => {
   const API = "https://api.sleeper.app/v1";
   const $ = id => document.getElementById(id);
-  const draftInput = $("draftInput"), slotSel = $("slot"), topNSel = $("topN");
+  const draftInput = $("draftInput"), slotSel = $("slot"), topNSel = $("topN"), snapshotModeSel = $("snapshotMode");
   const statusEl = $("status"), snapshotEl = $("snapshot"), copyBtn = $("copyBtn"), shareBtn = $("shareBtn");
   const connectBtn = $("connectBtn"), autoBtn = $("autoBtn");
+  const draftModeBtn=$("draftModeBtn"), clearHistoryBtn=$("clearHistoryBtn");
+  const changesCard=$("changesCard"), changesText=$("changesText");
+  let previousDraftedIds = new Set(JSON.parse(localStorage.getItem("sdc_prev_drafted") || "[]"));
+  let draftMode = localStorage.getItem("sdc_draftmode") === "1";
   const manualPlayers=$("manualPlayers");
   manualPlayers.value=localStorage.getItem("sdc_manualplayers")||"";
   manualPlayers.addEventListener("input",()=>localStorage.setItem("sdc_manualplayers",manualPlayers.value));
@@ -149,6 +186,8 @@
   draftInput.value = localStorage.getItem("sdc_draft") || "";
   slotSel.value = localStorage.getItem("sdc_slot") || "9";
   topNSel.value = localStorage.getItem("sdc_topn") || "35";
+  snapshotModeSel.value = localStorage.getItem("sdc_snapshotmode") || "compact";
+  snapshotModeSel.addEventListener("change",()=>localStorage.setItem("sdc_snapshotmode", snapshotModeSel.value));
 
   function draftIdFrom(value) {
     const m = String(value).trim().match(/(\d{12,})/);
@@ -219,7 +258,8 @@
     const teams = +settings.teams || Math.max(10, ...picks.map(p=>+p.draft_slot||0));
     const rounds = +settings.rounds || 16;
     const reversal = +settings.reversal_round || 0;
-    const current = picks.length + 1;
+    const totalPicks = teams * rounds;
+    const current = Math.min(picks.length + 1, totalPicks);
     const mine = myPickNumbers(teams, rounds, mySlot, reversal);
     const next = mine.find(x => x >= current) || null;
     const until = next == null ? null : Math.max(0, next-current);
@@ -243,7 +283,8 @@
       .sort((a,b)=>(a[1].rank-b[1].rank) || a[1].n.localeCompare(b[1].n))
       .slice(0, topN);
 
-    const recent = [...picks].sort((a,b)=>b.pick_no-a.pick_no).slice(0,20).reverse();
+    const recentLimit = snapshotModeSel.value === "compact" ? 12 : 30;
+    const recent = [...picks].sort((a,b)=>b.pick_no-a.pick_no).slice(0,recentLimit).reverse();
     const lines = [];
     lines.push("===== SLEEPER DRAFT SNAPSHOT =====");
     lines.push(`Draft-ID: ${draft.draft_id}`);
@@ -273,10 +314,36 @@
       }
     }
     lines.push("");
-    lines.push("Bitte prüfe aktuelle Expertenrankings, Depth Charts, Verletzungen und News und gib:");
-    lines.push("1) Empfehlung, 2) 2–3 Alternativen, 3) Return-Chancen bis zu meinem nächsten Pick, 4) Confidence.");
+    lines.push("AUFGABE");
+    lines.push("Prüfe aktuelle Expertenrankings, Depth Charts, Verletzungen und News.");
+    lines.push("Gib: 1) Empfehlung, 2) 2–3 Alternativen, 3) Return-Chancen, 4) Confidence.");
     return {text:lines.join("\n"), current, next, until, myPicks, teams};
   }
+
+  function applyDraftMode() {
+    document.body.classList.toggle("draft-mode", draftMode);
+    draftModeBtn.textContent = `Draftmodus: ${draftMode ? "AN" : "AUS"}`;
+    draftModeBtn.style.background = draftMode ? "var(--accent)" : "#26324f";
+  }
+  function updateChanges(picks) {
+    const currentIds = new Set(picks.map(p => String(p.player_id)));
+    const newIds = [...currentIds].filter(id => !previousDraftedIds.has(id));
+    if (previousDraftedIds.size === 0) {
+      changesText.textContent = "Vergleichsbasis gespeichert. Beim nächsten Aktualisieren werden neue Picks angezeigt.";
+    } else if (newIds.length === 0) {
+      changesText.textContent = "Keine neuen Picks seit dem letzten Aktualisieren.";
+    } else {
+      const byId = new Map(picks.map(p => [String(p.player_id), p]));
+      changesText.innerHTML = newIds.map(id => {
+        const p = byId.get(id);
+        return `<span class="change-out">❌ Pick ${p.pick_no}: ${playerLabel(id, p.metadata || {})}</span>`;
+      }).join("");
+    }
+    changesCard.hidden = false;
+    previousDraftedIds = currentIds;
+    localStorage.setItem("sdc_prev_drafted", JSON.stringify([...currentIds]));
+  }
+
   async function refresh() {
     try {
       connectBtn.disabled = true;
@@ -285,6 +352,7 @@
       localStorage.setItem("sdc_draft", draftInput.value.trim());
       localStorage.setItem("sdc_slot", slot);
       localStorage.setItem("sdc_topn", topN);
+      localStorage.setItem("sdc_snapshotmode", snapshotModeSel.value);
       setStatus("Lade Draft und Picks …", "warn");
       const [draft,picks,players] = await Promise.all([
         getJSON(`${API}/draft/${id}`),
@@ -292,12 +360,19 @@
         playerMap ? Promise.resolve(playerMap) : loadPlayers()
       ]);
       playerMap = players; latestDraft=draft; latestPicks=picks;
+      updateChanges(picks);
       const s = buildSnapshot(draft,picks,slot,topN);
       snapshotEl.value = s.text; copyBtn.disabled=false; shareBtn.disabled=false;
       $("summaryCard").hidden=false;
       $("currentPick").textContent=s.current;
       $("nextMyPick").textContent=s.next ?? "–";
       $("untilPick").textContent=s.until ?? "–";
+      if (s.until === 0) {
+        $("untilPick").textContent = "JETZT";
+        $("untilPick").style.color = "var(--ok)";
+      } else {
+        $("untilPick").style.color = "";
+      }
       $("teamPills").innerHTML = s.myPicks.map(p=>`<span class="pill">${playerLabel(String(p.player_id), p.metadata||{})}</span>`).join("") || '<span class="tiny">Noch kein eigener Pick.</span>';
       setStatus(`Aktuell: ${picks.length} Picks · ${new Date().toLocaleTimeString("de-DE")}`, "ok");
       return s;
@@ -362,6 +437,30 @@
       setTimeout(() => refresh(), 250);
     }
   });
+
+
+  draftModeBtn.addEventListener("click", () => {
+    draftMode = !draftMode;
+    localStorage.setItem("sdc_draftmode", draftMode ? "1" : "0");
+    applyDraftMode();
+  });
+  clearHistoryBtn.addEventListener("click", () => {
+    previousDraftedIds = new Set();
+    localStorage.removeItem("sdc_prev_drafted");
+    changesCard.hidden = true;
+    setStatus("Vergleich wurde zurückgesetzt.", "warn");
+  });
+  applyDraftMode();
+
+
+  const updateBanner = $("updateBanner");
+  const reloadBtn = $("reloadBtn");
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      updateBanner.hidden = false;
+    });
+  }
+  reloadBtn.addEventListener("click", () => window.location.reload());
 
   let deferredInstallPrompt = null;
   const installBtn = $("installBtn");

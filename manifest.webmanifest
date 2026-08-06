@@ -1,7 +1,7 @@
 {
-  "name": "Sleeper Draft Companion Mobile",
+  "name": "Sleeper Draft Companion",
   "short_name": "Draft Companion",
-  "description": "Mobile Begleit-App für Sleeper Fantasy Football Drafts.",
+  "description": "Mobile PWA für Sleeper Fantasy Football Drafts.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
