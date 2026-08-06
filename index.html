@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-title" content="Draft Companion">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <title>Draft Companion v2.0.0</title>
+  <title>Draft Companion v3.0.0</title>
   <style>
     :root {
       color-scheme: dark;
@@ -64,6 +64,9 @@
     .change-out { color:var(--bad); display:block; margin-top:4px; }
     .change-in { color:var(--ok); display:block; margin-top:4px; }
     .intelligence-line { display:block; margin-top:5px; }
+    .expert-row { display:grid;grid-template-columns:1fr 90px 78px;gap:8px;align-items:center;margin-top:8px; }
+    .expert-row input[type="number"] { text-align:right; }
+    .source-badge { display:inline-block;padding:2px 7px;border-radius:999px;background:#26324f;font-size:.72rem;margin-left:5px; }
     .status-fresh { color:var(--ok); }
     .status-stale { color:var(--warn); }
     .status-offline { color:var(--bad); }
@@ -78,7 +81,7 @@
 <main>
   <section class="card" id="appStatusCard">
     <div class="stats">
-      <div class="stat"><b id="appVersion">v2.0.0</b><span>App-Version</span></div>
+      <div class="stat"><b id="appVersion">v3.0.0</b><span>App-Version</span></div>
       <div class="stat"><b id="dataAge">–</b><span>Datenalter</span></div>
       <div class="stat"><b id="connectionState">Offline</b><span>Status</span></div>
     </div>
@@ -89,7 +92,7 @@
     <button id="reloadBtn" class="secondary">Jetzt aktualisieren</button>
   </div>
   <h1>Draft Companion</h1>
-  <p class="sub">Für schnelle Sleeper-Mocks auf dem Handy. <span class="pill">v2.0.0</span></p>
+  <p class="sub">Für schnelle Sleeper-Mocks auf dem Handy. <span class="pill">v3.0.0</span></p>
 
   
   <details class="card" open>
@@ -389,7 +392,7 @@
     lines.push(run ? `Positions-Run: ${run.pos} (${run.n} der letzten ${run.lookback} Picks)` : "Positions-Run: keiner");
     lines.push("");
     lines.push("DATENSTATUS");
-    lines.push(`Ranking: ${rankingMeta.rankSource || "FEHLT"} | Stand: ${rankingMeta.rankUpdated || "–"}`);
+    lines.push(`Panel: ${panels[activePanelId]?.name || "FEHLT"} | Positionsmodus: ${positionPanelMode === "on" ? "AN" : "AUS"} | Stand: ${rankingMeta.rankUpdated || "–"}`);
     lines.push(`Sleeper-ADP: ${rankingMeta.adpSource || "FEHLT"} | Stand: ${rankingMeta.adpUpdated || "–"}`);
     lines.push("");
     lines.push("HARTE REGEL");

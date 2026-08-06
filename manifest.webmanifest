@@ -1,7 +1,7 @@
 {
-  "name": "Sleeper Draft Companion v2",
+  "name": "Sleeper Draft Companion v3",
   "short_name": "Draft Companion",
-  "description": "Draft Companion mit verifizierten Expertenrankings, Sleeper-ADP und Reach-Schutz.",
+  "description": "Konfigurierbare Expertenpanels, echte Sleeper-ADP und Reach-Schutz.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

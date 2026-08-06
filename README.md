@@ -1,20 +1,24 @@
-# Sleeper Draft Companion v2.0.0
+# Sleeper Draft Companion v3.0.0
 
 ## Neu
-- offizielle FantasyPros-API-Anbindung
-- Basispanel/ECR und Pat-Fitzmaurice-Ansicht
-- API-Key nur lokal im Browser
-- Datenstatus mit Zeitstempel
-- CSV/JSON-Import für exakte Sleeper-ADP
-- strikte Trennung von Sleeper search_rank und echter ADP
-- automatische Value-/Reach-Klassifizierung
-- fehlende Daten werden als FEHLT markiert statt geschätzt
 
-## Einmalige Einrichtung
-1. Dateien in GitHub ersetzen.
-2. App öffnen.
-3. FantasyPros API-Key eintragen.
-4. API testen.
-5. Rankings aktualisieren.
+- ECR ist nicht mehr die fest verdrahtete Standardquelle.
+- Beliebig viele Experten können angelegt und per CSV/JSON importiert werden.
+- Pat Fitzmaurice ist als feste Einzelansicht vorbereitet.
+- Beliebig viele Panels: Standard, RB, WR, QB, TE, Rookie usw.
+- Gewichtung jedes Experten pro Panel frei einstellbar.
+- Optional automatische Panelwahl nach Spielerposition.
+- Der Snapshot zeigt den gewichteten Rang des tatsächlich verwendeten Panels.
+- FantasyPros-API bleibt optional und aktualisiert derzeit gezielt Pat, sofern der persönliche API-Zugang dies unterstützt.
+- Echte Sleeper-ADP bleibt eine getrennte, zwingend verifizierte Datenquelle.
+- Bei fehlendem Panel-Rang oder fehlender ADP wird kein scheinpräziser Reach erzeugt.
 
-Die offizielle Sleeper-API dokumentiert keine ADP-Schnittstelle. Liefert FantasyPros keine eindeutig erkennbare Sleeper-ADP-Spalte, muss eine aktuelle ADP-Datei importiert werden. Dadurch werden falsche scheinpräzise ADP-Angaben verhindert.
+## Empfohlener Ablauf
+
+1. Experten anlegen.
+2. Rankings pro Experte importieren.
+3. Standard- und Positionspanels konfigurieren.
+4. Sleeper-ADP importieren oder über eine eindeutig erkannte Quelle laden.
+5. Draft verbinden und Snapshot kopieren.
+
+Alle importierten Daten und Panels werden ausschließlich lokal im Browser gespeichert.

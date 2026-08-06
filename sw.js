@@ -1,4 +1,4 @@
-const CACHE = "sleeper-draft-companion-v2.0.0";
+const CACHE = "sleeper-draft-companion-v3.0.0";
 const APP_SHELL = ["./", "./index.html", "./manifest.webmanifest", "./icon.svg"];
 
 self.addEventListener("install", event => {
