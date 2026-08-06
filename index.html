@@ -2,689 +2,93 @@
 <html lang="de">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#111827">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Draft Companion">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <title>Draft Companion v3.0.0</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg:#0b1020; --card:#151c2f; --muted:#9ca3af; --text:#f9fafb;
-      --accent:#7c3aed; --border:#2b3551; --ok:#34d399; --warn:#fbbf24; --bad:#fb7185;
-    }
-    * { box-sizing:border-box; }
-    body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--text); }
-    main { max-width:760px; margin:auto; padding:16px 14px 40px; }
-    h1 { font-size:1.45rem; margin:4px 0 4px; }
-    .sub { color:var(--muted); margin:0 0 16px; font-size:.94rem; }
-    .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:14px; margin:12px 0; }
-    label { display:block; color:#d1d5db; font-size:.86rem; margin:10px 0 6px; }
-    input, select, button, textarea {
-      width:100%; border-radius:12px; border:1px solid var(--border); background:#0f172a; color:var(--text);
-      padding:12px; font-size:16px;
-    }
-    .grid { display:grid; grid-template-columns:1fr 110px; gap:10px; }
-    button { cursor:pointer; font-weight:700; background:var(--accent); border:none; margin-top:10px; }
-    button.secondary { background:#26324f; }
-    button:disabled { opacity:.55; cursor:not-allowed; }
-    .status { margin-top:10px; color:var(--muted); font-size:.9rem; white-space:pre-wrap; }
-    .status.ok { color:var(--ok); } .status.warn { color:var(--warn); } .status.bad { color:var(--bad); }
-    .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-    .stat { background:#0f172a; border-radius:12px; padding:10px; text-align:center; }
-    .stat b { display:block; font-size:1.1rem; }
-    .stat span { color:var(--muted); font-size:.78rem; }
-    textarea { min-height:270px; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:12.5px; resize:vertical; }
-    details summary { cursor:pointer; color:#d1d5db; font-weight:650; }
-    .tiny { font-size:.78rem; color:var(--muted); line-height:1.45; }
-    .pill { display:inline-block; padding:4px 8px; margin:2px; border-radius:999px; background:#26324f; font-size:.78rem; }
-    
-    .sticky-actions {
-      position: sticky; bottom: 0; z-index: 20;
-      background: linear-gradient(180deg, rgba(11,16,32,0), var(--bg) 28%);
-      padding: 18px 0 calc(8px + env(safe-area-inset-bottom));
-      display:grid; grid-template-columns:1fr 1fr; gap:10px;
-    }
-    .sticky-actions button { margin:0; min-height:52px; }
-    .primary-action { background:var(--accent); }
-    .share-action { background:#26324f; }
-    .compact-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-    
-    body.draft-mode .sub,
-    body.draft-mode details.card,
-    body.draft-mode #installBtn,
-    body.draft-mode #clearHistoryBtn { display:none !important; }
-    body.draft-mode main { max-width:540px; padding-top:8px; }
-    body.draft-mode .card { margin:8px 0; padding:11px; }
-    body.draft-mode h1 { font-size:1.15rem; margin-bottom:3px; }
-    body.draft-mode #snapshot { min-height:160px; }
-    .change-out { color:var(--bad); display:block; margin-top:4px; }
-    .change-in { color:var(--ok); display:block; margin-top:4px; }
-    .intelligence-line { display:block; margin-top:5px; }
-    .expert-row { display:grid;grid-template-columns:1fr 90px 78px;gap:8px;align-items:center;margin-top:8px; }
-    .expert-row input[type="number"] { text-align:right; }
-    .source-badge { display:inline-block;padding:2px 7px;border-radius:999px;background:#26324f;font-size:.72rem;margin-left:5px; }
-    .status-fresh { color:var(--ok); }
-    .status-stale { color:var(--warn); }
-    .status-offline { color:var(--bad); }
-    .muted-box { background:#0f172a; border:1px dashed var(--border); border-radius:12px; padding:10px; color:var(--muted); font-size:.84rem; }
-    @media (max-width:480px) {
-      .grid { grid-template-columns:1fr 92px; }
-      .stats { grid-template-columns:1fr 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
+  <title>Draft Companion v4.1.0</title>
 </head>
 <body>
 <main>
-  <section class="card" id="appStatusCard">
-    <div class="stats">
-      <div class="stat"><b id="appVersion">v3.0.0</b><span>App-Version</span></div>
-      <div class="stat"><b id="dataAge">–</b><span>Datenalter</span></div>
-      <div class="stat"><b id="connectionState">Offline</b><span>Status</span></div>
-    </div>
+  <section class="card status-grid">
+    <div><b>v4.1.0</b><span>Version</span></div>
+    <div><b id="onlineState">–</b><span>Status</span></div>
+    <div><b id="dataAge">–</b><span>Datenalter</span></div>
   </section>
-  <section class="card"><b>Datenqualität</b><div id="dataQuality" class="status bad">Rankings und Sleeper-ADP noch nicht verifiziert.</div></section>
-  <div id="updateBanner" class="card" hidden>
-    <b>Neue App-Version verfügbar</b>
-    <button id="reloadBtn" class="secondary">Jetzt aktualisieren</button>
-  </div>
+
   <h1>Draft Companion</h1>
-  <p class="sub">Für schnelle Sleeper-Mocks auf dem Handy. <span class="pill">v3.0.0</span></p>
+  <p class="sub">Expertenpanel + verifizierte Sleeper-ADP + Live-Draft.</p>
 
-  
   <details class="card" open>
-    <summary>Datenquellen</summary>
-    <label for="fpApiKey">FantasyPros API-Key (nur lokal gespeichert)</label>
-    <input id="fpApiKey" type="password" placeholder="x-api-key">
-    <div class="compact-row">
-      <div><label for="season">Saison</label><input id="season" inputmode="numeric" value="2026"></div>
-      <div><label for="scoring">Scoring</label><select id="scoring"><option value="HALF" selected>Half PPR</option><option value="PPR">PPR</option><option value="STD">Standard</option></select></div>
+    <summary>1. FantasyPros-API</summary>
+    <label for="apiKey">API-Key</label>
+    <input id="apiKey" type="password" autocomplete="off" placeholder="Wird nur lokal gespeichert">
+    <div class="two">
+      <div><label for="season">Saison</label><input id="season" value="2026" inputmode="numeric"></div>
+      <div><label for="scoring">Scoring</label><select id="scoring"><option value="HALF">Half PPR</option><option value="PPR">PPR</option><option value="STD">Standard</option></select></div>
     </div>
-    <label for="panelMode">Ranking-Ansicht</label>
-    <select id="panelMode"><option value="consensus" selected>Basispanel / ECR</option><option value="pat">Pat Fitzmaurice</option></select>
-    <div class="compact-row"><button id="refreshRankingsBtn" class="secondary">Rankings aktualisieren</button><button id="testApiBtn" class="secondary">API testen</button></div>
-    <div id="rankingStatus" class="status">Noch keine verifizierten Rankings geladen.</div>
-    <label for="adpFile">Optionale Sleeper-ADP-Datei (CSV/JSON, maßgeblich)</label>
+    <div class="two">
+      <button id="diagnoseBtn">API diagnostizieren</button>
+      <button id="loadExpertsBtn" class="secondary">Experten laden</button>
+    </div>
+    <pre id="diagnostic" class="diagnostic">Noch kein Test durchgeführt.</pre>
+    <p class="tiny">Der Browser ruft nur deine eigene Cloudflare-Seite auf. <code>_worker.js</code> leitet die Anfrage an FantasyPros weiter und beseitigt das CORS-Problem.</p>
+  </details>
+
+  <details class="card" open>
+    <summary>2. Expertenpanel</summary>
+    <label for="panelName">Panelname</label>
+    <input id="panelName" value="Standard">
+    <div id="expertsList" class="empty">Noch keine Experten geladen.</div>
+    <div class="two">
+      <button id="savePanelBtn" class="secondary">Panel speichern</button>
+      <button id="loadRanksBtn">Panel-Rankings laden</button>
+    </div>
+    <div id="panelStatus" class="notice">Keine Panel-Ränge gespeichert.</div>
+  </details>
+
+  <details class="card" open>
+    <summary>3. Sleeper-ADP</summary>
+    <label for="adpFile">CSV/JSON mit echter Sleeper-ADP</label>
     <input id="adpFile" type="file" accept=".csv,.json,text/csv,application/json">
-    <div class="tiny">Die App übernimmt eine eindeutig erkannte Sleeper-ADP aus der API automatisch. Fehlt sie, ist diese Datei die sichere Ersatzquelle. Ohne verifizierte ADP werden Reach und Return als „FEHLT“ markiert.</div>
-    <label for="expertFile">Optionales eigenes Expertenranking (CSV/JSON)</label>
-    <input id="expertFile" type="file" accept=".csv,.json,text/csv,application/json">
-    <div class="compact-row"><button id="exportDataBtn" class="secondary">Daten sichern</button><button id="clearDataBtn" class="secondary">Rankingdaten löschen</button></div>
+    <div id="adpStatus" class="notice">Keine verifizierte Sleeper-ADP gespeichert.</div>
+    <p class="tiny"><strong>Wichtig:</strong> Sleeper <code>search_rank</code> bleibt nur Sortierhilfe und wird nie als ADP behandelt.</p>
   </details>
-<section class="card">
-    <div class="muted-box">Einmal Link und Slot setzen. Danach reicht während des Mocks meist <b>„Aktualisieren & kopieren“</b>.</div>
+
+  <details class="card" open>
+    <summary>4. Draft verbinden</summary>
     <label for="draftInput">Sleeper-Draft-Link oder Draft-ID</label>
-    <input id="draftInput" placeholder="https://sleeper.app/draft/nfl/…" autocomplete="off">
-    <div class="grid">
-      <div>
-        <label for="slot">Dein Draftslot</label>
-        <select id="slot"></select>
-      </div>
-      <div>
-        <label for="topN">Top Spieler</label>
-        <select id="topN">
-          <option>20</option><option selected>35</option><option>50</option><option>75</option>
-        </select>
-      </div>
+    <input id="draftInput" placeholder="https://sleeper.app/draft/nfl/…">
+    <div class="two">
+      <div><label for="slot">Mein Slot</label><select id="slot"></select></div>
+      <div><label for="topN">Top Spieler</label><select id="topN"><option>25</option><option selected>35</option><option>50</option></select></div>
     </div>
-    <label for="snapshotMode">Snapshot-Umfang</label>
-    <select id="snapshotMode">
-      <option value="compact" selected>Kompakt (empfohlen)</option>
-      <option value="full">Vollständig</option>
-    </select>
-    
-    <div class="compact-row">
-      <button id="connectBtn">Aktualisieren</button>
-      <button id="autoBtn" class="secondary">Auto-Refresh</button>
-    </div>
-    <button id="installBtn" class="secondary" hidden>Als App installieren</button>
-    <div id="status" class="status">Noch nicht verbunden.</div>
-  </section>
-
-  
-  <section class="card">
-    <div class="compact-row">
-      <button id="draftModeBtn" class="secondary">Draftmodus: AUS</button>
-      <button id="clearHistoryBtn" class="secondary">Vergleich zurücksetzen</button>
-    </div>
-  </section>
-
-  <section class="card" id="changesCard" hidden>
-    <b>Seit dem letzten Aktualisieren</b>
-    <div id="changesText" class="status">Noch keine Vergleichsdaten.</div>
-  </section>
-
-  <section class="card" id="intelligenceCard" hidden>
-    <b>Draft-Intelligenz</b>
-    <div id="intelligenceText" class="status"></div>
-  </section>
-
-  <section class="card" id="summaryCard" hidden>
-    <div class="stats">
-      <div class="stat"><b id="currentPick">–</b><span>Aktueller Pick</span></div>
-      <div class="stat"><b id="nextMyPick">–</b><span>Dein nächster Pick</span></div>
-      <div class="stat"><b id="untilPick">–</b><span>Picks bis du dran bist</span></div>
-    </div>
-    <div style="margin-top:10px" id="teamPills"></div>
-  </section>
-
-  
-  
-  <details class="card">
-    <summary>Manuelle Spielerliste (nur bei Problemen)</summary>
-    <label for="manualPlayers">Überschreibt die automatische Liste</label>
-    <textarea id="manualPlayers" placeholder="Normalerweise leer lassen."></textarea>
+    <button id="refreshBtn">Aktualisieren</button>
+    <div id="draftStatus" class="notice">Noch nicht verbunden.</div>
   </details>
 
-  <section class="card">
-    <details>
-      <summary>Snapshot-Vorschau</summary>
-      <textarea id="snapshot" readonly placeholder="Der Snapshot erscheint nach dem Verbinden."></textarea>
-    </details>
+  <section id="draftSummary" class="card" hidden>
+    <div class="status-grid">
+      <div><b id="currentPick">–</b><span>Aktueller Pick</span></div>
+      <div><b id="nextPick">–</b><span>Nächster eigener</span></div>
+      <div><b id="untilPick">–</b><span>Picks bis dahin</span></div>
+    </div>
   </section>
 
-  <div class="sticky-actions">
-    <button id="copyBtn" class="primary-action" disabled>Aktualisieren & kopieren</button>
-    <button id="shareBtn" class="share-action" disabled>Teilen</button>
+  <section class="card">
+    <label for="snapshot">Snapshot</label>
+    <textarea id="snapshot" readonly placeholder="Nach dem Aktualisieren erscheint hier der Snapshot."></textarea>
+  </section>
+
+  <div class="sticky">
+    <button id="copyBtn" disabled>Kopieren</button>
+    <button id="shareBtn" class="secondary" disabled>Teilen</button>
   </div>
-
-  <details class="card">
-    <summary>Hinweise und Datenschutz</summary>
-    <p class="tiny">
-      Die Seite ruft ausschließlich die öffentliche Read-only-API von Sleeper auf. Es werden keine Zugangsdaten benötigt
-      oder gespeichert. Draft-Link, Slot und Spieler-Datenbank-Zeitpunkt werden nur lokal im Browser gespeichert.
-    </p>
-    <p class="tiny">
-      Falls „Netzwerkfehler/CORS“ erscheint, öffne die Datei nicht direkt als <code>file://</code>, sondern hoste sie
-      über GitHub Pages, Netlify oder Cloudflare Pages. Die Spieler-Datenbank ist groß und wird nur einmal pro Tag geladen.
-    </p>
-  </details>
 </main>
-
+<script type="module" src="app.js"></script>
 <script>
-(() => {
-  const API = "https://api.sleeper.app/v1";
-  const $ = id => document.getElementById(id);
-  const draftInput = $("draftInput"), slotSel = $("slot"), topNSel = $("topN"), snapshotModeSel = $("snapshotMode");
-  const fpApiKeyEl=$("fpApiKey"), seasonEl=$("season"), scoringEl=$("scoring"), panelModeEl=$("panelMode");
-  const rankingStatusEl=$("rankingStatus"), dataQualityEl=$("dataQuality");
-  const refreshRankingsBtn=$("refreshRankingsBtn"), testApiBtn=$("testApiBtn");
-  const adpFileEl=$("adpFile"), expertFileEl=$("expertFile"), exportDataBtn=$("exportDataBtn"), clearDataBtn=$("clearDataBtn");
-  const statusEl = $("status"), snapshotEl = $("snapshot"), copyBtn = $("copyBtn"), shareBtn = $("shareBtn");
-  const connectBtn = $("connectBtn"), autoBtn = $("autoBtn");
-  const draftModeBtn=$("draftModeBtn"), clearHistoryBtn=$("clearHistoryBtn");
-  const changesCard=$("changesCard"), changesText=$("changesText");
-  const intelligenceCard=$("intelligenceCard"), intelligenceText=$("intelligenceText");
-  const dataAgeEl=$("dataAge"), connectionStateEl=$("connectionState");
-  let previousDraftedIds = new Set(JSON.parse(localStorage.getItem("sdc_prev_drafted") || "[]"));
-  let draftMode = localStorage.getItem("sdc_draftmode") === "1";
-  const manualPlayers=$("manualPlayers");
-  manualPlayers.value=localStorage.getItem("sdc_manualplayers")||"";
-  manualPlayers.addEventListener("input",()=>localStorage.setItem("sdc_manualplayers",manualPlayers.value));
-  let timer = null, playerMap = null, latestDraft = null, latestPicks = [], lastFetchAt = null;
-  let expertRanks=JSON.parse(localStorage.getItem("sdc_expert_ranks_v2")||"{}");
-  let sleeperAdp=JSON.parse(localStorage.getItem("sdc_sleeper_adp_v2")||"{}");
-  let rankingMeta=JSON.parse(localStorage.getItem("sdc_ranking_meta_v2")||"{}");
-  fpApiKeyEl.value=localStorage.getItem("sdc_fp_api_key")||"";
-  seasonEl.value=localStorage.getItem("sdc_season")||"2026";
-  scoringEl.value=localStorage.getItem("sdc_scoring")||"HALF";
-  panelModeEl.value=localStorage.getItem("sdc_panel_mode")||"consensus";
-
-  for (let i=1;i<=16;i++) {
-    const o=document.createElement("option"); o.value=i; o.textContent=`Slot ${i}`; slotSel.appendChild(o);
-  }
-  draftInput.value = localStorage.getItem("sdc_draft") || "";
-  slotSel.value = localStorage.getItem("sdc_slot") || "9";
-  topNSel.value = localStorage.getItem("sdc_topn") || "35";
-  snapshotModeSel.value = localStorage.getItem("sdc_snapshotmode") || "compact";
-  snapshotModeSel.addEventListener("change",()=>localStorage.setItem("sdc_snapshotmode", snapshotModeSel.value));
-
-
-  function normalizeName(v){return String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,"").replace(/[^a-z0-9]/g,"");}
-  function persistRankingData(){localStorage.setItem("sdc_expert_ranks_v2",JSON.stringify(expertRanks));localStorage.setItem("sdc_sleeper_adp_v2",JSON.stringify(sleeperAdp));localStorage.setItem("sdc_ranking_meta_v2",JSON.stringify(rankingMeta));localStorage.setItem("sdc_fp_api_key",fpApiKeyEl.value.trim());localStorage.setItem("sdc_season",seasonEl.value.trim());localStorage.setItem("sdc_scoring",scoringEl.value);localStorage.setItem("sdc_panel_mode",panelModeEl.value);updateDataQuality();}
-  function updateDataQuality(){const rc=Object.keys(expertRanks).length,ac=Object.keys(sleeperAdp).length;const rd=rankingMeta.rankUpdated?new Date(rankingMeta.rankUpdated).toLocaleString("de-DE"):"–",ad=rankingMeta.adpUpdated?new Date(rankingMeta.adpUpdated).toLocaleString("de-DE"):"–";if(rc&&ac){dataQualityEl.className="status ok";dataQualityEl.textContent=`VERIFIZIERT: ${rc} Rankings (${rd}) · ${ac} Sleeper-ADPs (${ad})`;}else if(rc||ac){dataQualityEl.className="status warn";dataQualityEl.textContent=`TEILWEISE: Rankings ${rc?"vorhanden":"FEHLEN"} · Sleeper-ADP ${ac?"vorhanden":"FEHLT"}`;}else{dataQualityEl.className="status bad";dataQualityEl.textContent="NICHT VERIFIZIERT: Rankings und Sleeper-ADP fehlen.";}}
-  function parseCsv(text){const rows=[];let row=[],cell="",quoted=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'&&quoted&&n==='"'){cell+='"';i++;}else if(c==='"'){quoted=!quoted;}else if(c===','&&!quoted){row.push(cell.trim());cell="";}else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&n==='\n')i++;row.push(cell.trim());cell="";if(row.some(x=>x!==""))rows.push(row);row=[];}else cell+=c;}if(cell||row.length){row.push(cell.trim());rows.push(row);}if(!rows.length)return[];const h=rows[0];return rows.slice(1).map(r=>Object.fromEntries(h.map((x,i)=>[x,r[i]??""])));}
-  function rowsFromFileText(text,name){if(name.toLowerCase().endsWith('.json')){const o=JSON.parse(text);if(Array.isArray(o))return o;if(Array.isArray(o.players))return o.players;return Object.values(o);}return parseCsv(text);}
-  function getField(o,names){const ks=Object.keys(o||{});for(const name of names){const target=name.toLowerCase().replace(/[^a-z0-9]/g,"");const k=ks.find(x=>x.toLowerCase().replace(/[^a-z0-9]/g,"")===target);if(k&&o[k]!==""&&o[k]!=null)return o[k];}return null;}
-  function ingestRows(rows,mode){let c=0;for(const r of rows){const name=getField(r,["player_name","player","name","full_name"]);if(!name)continue;const key=normalizeName(name);if(mode==='adp'){const raw=getField(r,["sleeper_adp","adp_sleeper","sleeper"]);const n=Number(String(raw??"").replace(",","."));if(Number.isFinite(n)&&n>0){sleeperAdp[key]=n;c++;}}else{const raw=getField(r,["rank_ecr","ecr","overall_rank","rank","expert_rank"]);const n=Number(String(raw??"").replace(",","."));const t=Number(getField(r,["tier","expert_tier"]));if(Number.isFinite(n)&&n>0){expertRanks[key]={rank:n,tier:Number.isFinite(t)?t:null,source:mode};c++;}}}return c;}
-  function extractApiPlayers(p){if(Array.isArray(p))return p;for(const k of ["players","rankings","data","results"]){if(Array.isArray(p?.[k]))return p[k];if(Array.isArray(p?.data?.[k]))return p.data[k];}return[];}
-  function detectSleeperAdp(r){const raw=getField(r,["sleeper_adp","adp_sleeper","adp_sleeper_half_ppr","sleeper"]);const n=Number(String(raw??"").replace(",","."));return Number.isFinite(n)&&n>0?n:null;}
-  async function fpFetch(path){const key=fpApiKeyEl.value.trim();if(!key)throw new Error("FantasyPros API-Key fehlt.");const r=await fetch(`https://api.fantasypros.com/public/v2/json${path}`,{headers:{"x-api-key":key},cache:"no-store"});if(!r.ok)throw new Error(`FantasyPros API: ${r.status} ${r.statusText}`);return r.json();}
-  async function findPatExpertId(season){const p=await fpFetch(`/nfl/${season}/rankings/experts`);const rows=Array.isArray(p?.experts)?p.experts:Array.isArray(p?.data?.experts)?p.data.experts:extractApiPlayers(p);const pat=rows.find(x=>String(getField(x,["name","expert_name","full_name"])||"").toLowerCase().includes("pat fitz"));return pat?getField(pat,["expert_id","id"]):null;}
-  async function refreshFantasyProsRankings(){const season=seasonEl.value.trim(),scoring=scoringEl.value,positions=["QB","RB","WR","TE"],nr={},fa={};let patId=null;if(panelModeEl.value==='pat')patId=await findPatExpertId(season);for(const pos of positions){const path=panelModeEl.value==='pat'&&patId?`/nfl/${season}/rankings?position=${pos}&scoring=${scoring}&expert_id=${encodeURIComponent(patId)}`:`/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}`;const rows=extractApiPlayers(await fpFetch(path));for(const r of rows){const name=getField(r,["player_name","name","full_name"]),rank=Number(getField(r,["rank_ecr","rank","overall_rank","rank_expert"]));if(!name||!Number.isFinite(rank))continue;const key=normalizeName(name),tier=Number(getField(r,["tier"]));nr[key]={rank,tier:Number.isFinite(tier)?tier:null,source:panelModeEl.value};const adp=detectSleeperAdp(r);if(adp)fa[key]=adp;}}if(!Object.keys(nr).length)throw new Error("API-Antwort enthielt keine erkennbaren Rankings.");expertRanks=nr;rankingMeta.rankUpdated=new Date().toISOString();rankingMeta.rankSource=panelModeEl.value==='pat'?"FantasyPros: Pat Fitzmaurice":"FantasyPros ECR";if(Object.keys(fa).length){sleeperAdp={...sleeperAdp,...fa};rankingMeta.adpUpdated=new Date().toISOString();rankingMeta.adpSource="FantasyPros API: erkannte Sleeper-Spalte";}persistRankingData();rankingStatusEl.className="status ok";rankingStatusEl.textContent=`${Object.keys(nr).length} Rankings geladen. ${Object.keys(fa).length?Object.keys(fa).length+" Sleeper-ADPs erkannt.":"Keine Sleeper-ADP-Spalte erkannt."}`;}
-  function valueLabel(current,adp){if(!Number.isFinite(adp))return{label:"ADP FEHLT"};const d=Math.round(adp-current);if(d>=15)return{label:`WARTEN / ${d} Picks vor ADP`};if(d>=8)return{label:`Leichter Reach / ${d}`};if(d<=-15)return{label:`Elite Value / ${Math.abs(d)}`};if(d<=-8)return{label:`Value / ${Math.abs(d)}`};return{label:"Fair"};}
-
-  function draftIdFrom(value) {
-    const m = String(value).trim().match(/(\d{12,})/);
-    if (!m) throw new Error("Keine gültige Draft-ID gefunden.");
-    return m[1];
-  }
-  function setStatus(msg, cls="") {
-    statusEl.className = "status " + cls; statusEl.textContent = msg;
-  }
-  async function getJSON(url) {
-    const r = await fetch(url, {cache:"no-store"});
-    if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
-    return r.json();
-  }
-  async function loadPlayers() {
-    const day = "v2-" + new Date().toISOString().slice(0,10);
-    const cachedDay = localStorage.getItem("sdc_players_day");
-    const cached = localStorage.getItem("sdc_players");
-    if (cached && cachedDay === day) {
-      try { return JSON.parse(cached); } catch {}
-    }
-    setStatus("Lade Sleeper-Spielerdatenbank …", "warn");
-    const data = await getJSON(`${API}/players/nfl`);
-    // Keep only fields needed by this app to reduce localStorage size.
-    const compact = {};
-    for (const [id,p] of Object.entries(data)) {
-      if (!p) continue;
-      compact[id] = {
-        n: p.full_name || [p.first_name,p.last_name].filter(Boolean).join(" ") || p.player_id || id,
-        pos: p.fantasy_positions?.[0] || p.position || "?",
-        team: p.team || "FA",
-        rank: Number.isFinite(+p.search_rank) && +p.search_rank > 0 ? +p.search_rank : 999999,
-        active: p.active !== false,
-        status: p.status || "",
-        years: Number.isFinite(+p.years_exp) ? +p.years_exp : null,
-        injury: p.injury_status || null, bye: p.bye_week || null, depth: p.depth_chart_order || null
-      };
-    }
-    playerMap = compact;
-    try {
-      localStorage.setItem("sdc_players_day", day);
-      localStorage.setItem("sdc_players", JSON.stringify(compact));
-    } catch (e) {
-      // Storage may be too small; app still works in memory.
-    }
-    return compact;
-  }
-  function playerLabel(id, meta={}) {
-    const p = playerMap?.[id];
-    const name = meta.first_name && meta.last_name ? `${meta.first_name} ${meta.last_name}` :
-                 meta.first_name || meta.last_name || p?.n || `ID ${id}`;
-    const pos = meta.position || p?.pos || "?";
-    const team = meta.team || p?.team || "FA";
-    return `${name} — ${pos}, ${team}`;
-  }
-  function myPickNumbers(teams, rounds, slot, reversalRound) {
-    const picks = [];
-    for (let round=1; round<=rounds; round++) {
-      let s = slot;
-      const reversed = reversalRound && round >= reversalRound;
-      const snakeReverse = round % 2 === 0;
-      if (snakeReverse !== reversed) s = teams - slot + 1;
-      picks.push((round-1)*teams + s);
-    }
-    return picks;
-  }
-  function buildSnapshot(draft, picks, mySlot, topN) {
-    const settings = draft.settings || {};
-    const teams = +settings.teams || Math.max(10, ...picks.map(p=>+p.draft_slot||0));
-    const rounds = +settings.rounds || 16;
-    const reversal = +settings.reversal_round || 0;
-    const totalPicks = teams * rounds;
-    const current = Math.min(picks.length + 1, totalPicks);
-    const mine = myPickNumbers(teams, rounds, mySlot, reversal);
-    const next = mine.find(x => x >= current) || null;
-    const until = next == null ? null : Math.max(0, next-current);
-
-    const myPicks = picks.filter(p => +p.draft_slot === +mySlot).sort((a,b)=>a.pick_no-b.pick_no);
-    const draftedIds = new Set(picks.map(p=>String(p.player_id)));
-    const positions = new Set(["QB","RB","WR","TE"]);
-    const nflTeams = new Set([
-      "ARI","ATL","BAL","BUF","CAR","CHI","CIN","CLE","DAL","DEN","DET","GB",
-      "HOU","IND","JAX","KC","LAC","LAR","LV","MIA","MIN","NE","NO","NYG","NYJ",
-      "PHI","PIT","SEA","SF","TB","TEN","WAS"
-    ]);
-    const available = Object.entries(playerMap || {})
-      .filter(([id,p]) =>
-        !draftedIds.has(id) &&
-        p.active &&
-        positions.has(p.pos) &&
-        nflTeams.has(p.team) &&
-        p.rank < 999999
-      )
-      .sort((a,b)=>(a[1].rank-b[1].rank) || a[1].n.localeCompare(b[1].n))
-      .slice(0, topN);
-
-    const recentLimit = snapshotModeSel.value === "compact" ? 12 : 30;
-    const recent = [...picks].sort((a,b)=>b.pick_no-a.pick_no).slice(0,recentLimit).reverse();
-    const lines = [];
-    lines.push("===== SLEEPER DRAFT SNAPSHOT =====");
-    lines.push(`Draft-ID: ${draft.draft_id}`);
-    lines.push(`Status: ${draft.status || "unbekannt"}`);
-    lines.push(`Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${mySlot}`);
-    lines.push(`Aktueller Pick: ${current}`);
-    lines.push(`Mein nächster Pick: ${next ?? "keiner"} | Picks bis dahin: ${until ?? "–"}`);
-    lines.push("");
-    lines.push("MEIN TEAM");
-    if (!myPicks.length) lines.push("(noch kein Pick)");
-    for (const p of myPicks) lines.push(`${p.pick_no}. ${playerLabel(String(p.player_id), p.metadata || {})}`);
-    lines.push("");
-    lines.push("LETZTE PICKS");
-    if (!recent.length) lines.push("(Draft noch nicht gestartet)");
-    for (const p of recent) lines.push(`${p.pick_no}. Slot ${p.draft_slot}: ${playerLabel(String(p.player_id), p.metadata || {})}`);
-    lines.push("");
-    lines.push("VERFÜGBARE SPIELER");
-    if (manualPlayers.value.trim()) {
-      lines.push(manualPlayers.value.trim());
-      lines.push("");
-      lines.push("(manuelle Liste verwendet)");
-    } else {
-      lines.push(`TOP ${available.length} VERFÜGBARE SPIELER (automatisch aus Sleeper-Spielerdaten)`);
-      for (let i=0;i<available.length;i++) {
-        const [id,p]=available[i], key=normalizeName(p.n), er=expertRanks[key], adp=Number(sleeperAdp[key]), val=valueLabel(current,adp);
-        const expertText=er?`Expert ${er.rank}${er.tier?` (Tier ${er.tier})`:""}`:"Expert FEHLT";
-        const adpText=Number.isFinite(adp)?`Sleeper-ADP ${adp.toFixed(1)}`:"Sleeper-ADP FEHLT";
-        lines.push(`${i+1}. ${p.n} — ${p.pos}, ${p.team} | ${expertText} | ${adpText} | ${val.label}${p.injury?` | Injury ${p.injury}`:""}`);
-      }
-    }
-    lines.push("");
-    const counts = positionCounts(picks);
-    const run = recentRun(picks, 8);
-    lines.push("DRAFT-INTELLIGENZ");
-    lines.push(`Gedraftet: QB ${counts.QB} | RB ${counts.RB} | WR ${counts.WR} | TE ${counts.TE}`);
-    lines.push(run ? `Positions-Run: ${run.pos} (${run.n} der letzten ${run.lookback} Picks)` : "Positions-Run: keiner");
-    lines.push("");
-    lines.push("DATENSTATUS");
-    lines.push(`Panel: ${panels[activePanelId]?.name || "FEHLT"} | Positionsmodus: ${positionPanelMode === "on" ? "AN" : "AUS"} | Stand: ${rankingMeta.rankUpdated || "–"}`);
-    lines.push(`Sleeper-ADP: ${rankingMeta.adpSource || "FEHLT"} | Stand: ${rankingMeta.adpUpdated || "–"}`);
-    lines.push("");
-    lines.push("HARTE REGEL");
-    lines.push("Keine Empfehlung bei fehlender Experten- oder Sleeper-ADP ohne Unsicherheitshinweis. Reaches >15 Picks nur mit außergewöhnlicher aktueller Begründung.");
-    lines.push("");
-    lines.push("AUFGABE");
-    lines.push("Prüfe aktuelle Expertenrankings, Depth Charts, Verletzungen und News.");
-    lines.push("Gib: 1) Empfehlung, 2) 2–3 Alternativen, 3) Return-Chancen, 4) Confidence.");
-    return {text:lines.join("\n"), current, next, until, myPicks, teams};
-  }
-
-  function applyDraftMode() {
-    document.body.classList.toggle("draft-mode", draftMode);
-    draftModeBtn.textContent = `Draftmodus: ${draftMode ? "AN" : "AUS"}`;
-    draftModeBtn.style.background = draftMode ? "var(--accent)" : "#26324f";
-  }
-  function updateChanges(picks) {
-    const currentIds = new Set(picks.map(p => String(p.player_id)));
-    const newIds = [...currentIds].filter(id => !previousDraftedIds.has(id));
-    if (previousDraftedIds.size === 0) {
-      changesText.textContent = "Vergleichsbasis gespeichert. Beim nächsten Aktualisieren werden neue Picks angezeigt.";
-    } else if (newIds.length === 0) {
-      changesText.textContent = "Keine neuen Picks seit dem letzten Aktualisieren.";
-    } else {
-      const byId = new Map(picks.map(p => [String(p.player_id), p]));
-      changesText.innerHTML = newIds.map(id => {
-        const p = byId.get(id);
-        return `<span class="change-out">❌ Pick ${p.pick_no}: ${playerLabel(id, p.metadata || {})}</span>`;
-      }).join("");
-    }
-    changesCard.hidden = false;
-    previousDraftedIds = currentIds;
-    localStorage.setItem("sdc_prev_drafted", JSON.stringify([...currentIds]));
-  }
-
-
-  function positionCounts(picks) {
-    const counts = {QB:0,RB:0,WR:0,TE:0,K:0,DEF:0,OTHER:0};
-    for (const p of picks) {
-      const pos = (p.metadata?.position || playerMap?.[String(p.player_id)]?.pos || "OTHER").toUpperCase();
-      if (counts[pos] !== undefined) counts[pos]++; else counts.OTHER++;
-    }
-    return counts;
-  }
-
-  function recentRun(picks, lookback=8) {
-    const recent = [...picks].sort((a,b)=>b.pick_no-a.pick_no).slice(0,lookback);
-    const counts = {};
-    for (const p of recent) {
-      const pos = (p.metadata?.position || playerMap?.[String(p.player_id)]?.pos || "?").toUpperCase();
-      counts[pos] = (counts[pos] || 0) + 1;
-    }
-    const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
-    if (!sorted.length) return null;
-    const [pos,n] = sorted[0];
-    return n >= 4 ? {pos,n,lookback} : null;
-  }
-
-  function teamRosterNeeds(picks, teams) {
-    const rosters = {};
-    for (let s=1;s<=teams;s++) rosters[s] = {QB:0,RB:0,WR:0,TE:0};
-    for (const p of picks) {
-      const slot = +p.draft_slot;
-      const pos = (p.metadata?.position || playerMap?.[String(p.player_id)]?.pos || "").toUpperCase();
-      if (rosters[slot] && rosters[slot][pos] !== undefined) rosters[slot][pos]++;
-    }
-    return rosters;
-  }
-
-  function buildIntelligence(picks, teams, mySlot, currentPick, nextMyPick) {
-    const counts = positionCounts(picks);
-    const run = recentRun(picks, 8);
-    const rosters = teamRosterNeeds(picks, teams);
-    const lines = [];
-    lines.push(`<span class="intelligence-line">Gedraftet: QB ${counts.QB} · RB ${counts.RB} · WR ${counts.WR} · TE ${counts.TE}</span>`);
-    if (run) lines.push(`<span class="intelligence-line">⚠️ ${run.pos}-Run: ${run.n} der letzten ${run.lookback} Picks</span>`);
-    else lines.push(`<span class="intelligence-line">Kein deutlicher Positions-Run in den letzten 8 Picks.</span>`);
-
-    if (nextMyPick != null) {
-      const interveningSlots = [];
-      for (let p=currentPick; p<nextMyPick; p++) {
-        const round = Math.floor((p-1)/teams)+1;
-        const within = ((p-1)%teams)+1;
-        const slot = round % 2 === 1 ? within : teams-within+1;
-        if (slot !== mySlot && !interveningSlots.includes(slot)) interveningSlots.push(slot);
-      }
-      const qbless = interveningSlots.filter(s => rosters[s]?.QB === 0).length;
-      const teless = interveningSlots.filter(s => rosters[s]?.TE === 0).length;
-      lines.push(`<span class="intelligence-line">Bis zu deinem nächsten Pick kommen ${interveningSlots.length} andere Teams dran; davon ohne QB: ${qbless}, ohne TE: ${teless}.</span>`);
-    }
-    return lines.join("");
-  }
-
-  function updateFreshness() {
-    if (!lastFetchAt) {
-      dataAgeEl.textContent = "–";
-      connectionStateEl.textContent = navigator.onLine ? "Bereit" : "Offline";
-      connectionStateEl.className = navigator.onLine ? "" : "status-offline";
-      return;
-    }
-    const sec = Math.max(0, Math.floor((Date.now()-lastFetchAt.getTime())/1000));
-    dataAgeEl.textContent = sec < 60 ? `${sec}s` : `${Math.floor(sec/60)}m`;
-    dataAgeEl.className = sec <= 20 ? "status-fresh" : sec <= 60 ? "status-stale" : "status-offline";
-    connectionStateEl.textContent = navigator.onLine ? "Online" : "Offline";
-    connectionStateEl.className = navigator.onLine ? "status-fresh" : "status-offline";
-  }
-  setInterval(updateFreshness, 1000);
-  window.addEventListener("online", updateFreshness);
-  window.addEventListener("offline", updateFreshness);
-
-  async function refresh() {
-    try {
-      connectBtn.disabled = true;
-      const id = draftIdFrom(draftInput.value);
-      const slot = +slotSel.value, topN = +topNSel.value;
-      localStorage.setItem("sdc_draft", draftInput.value.trim());
-      localStorage.setItem("sdc_slot", slot);
-      localStorage.setItem("sdc_topn", topN);
-      localStorage.setItem("sdc_snapshotmode", snapshotModeSel.value);
-      setStatus("Lade Draft und Picks …", "warn");
-      const [draft,picks,players] = await Promise.all([
-        getJSON(`${API}/draft/${id}`),
-        getJSON(`${API}/draft/${id}/picks`),
-        playerMap ? Promise.resolve(playerMap) : loadPlayers()
-      ]);
-      playerMap = players; latestDraft=draft; latestPicks=picks;
-      lastFetchAt = new Date();
-      updateFreshness();
-      updateChanges(picks);
-      const s = buildSnapshot(draft,picks,slot,topN);
-      intelligenceCard.hidden = false;
-      intelligenceText.innerHTML = buildIntelligence(picks, s.teams, slot, s.current, s.next);
-      const autoDraftMode = s.until !== null && s.until <= 2;
-      if (autoDraftMode && !draftMode) {
-        draftMode = true;
-        localStorage.setItem("sdc_draftmode","1");
-        applyDraftMode();
-      }
-      snapshotEl.value = s.text; copyBtn.disabled=false; shareBtn.disabled=false;
-      $("summaryCard").hidden=false;
-      $("currentPick").textContent=s.current;
-      $("nextMyPick").textContent=s.next ?? "–";
-      $("untilPick").textContent=s.until ?? "–";
-      if (s.until === 0) {
-        $("untilPick").textContent = "JETZT";
-        $("untilPick").style.color = "var(--ok)";
-      } else {
-        $("untilPick").style.color = "";
-      }
-      $("teamPills").innerHTML = s.myPicks.map(p=>`<span class="pill">${playerLabel(String(p.player_id), p.metadata||{})}</span>`).join("") || '<span class="tiny">Noch kein eigener Pick.</span>';
-      setStatus(`Aktuell: ${picks.length} Picks · ${new Date().toLocaleTimeString("de-DE")}`, "ok");
-      return s;
-    } catch (e) {
-      console.error(e);
-      setStatus(`Fehler: ${e.message}\nFalls die Datei direkt geöffnet wurde, bitte über einen Webhost (z. B. GitHub Pages) bereitstellen.`, "bad");
-    } finally {
-      connectBtn.disabled = false;
-    }
-  }
-  connectBtn.addEventListener("click", refresh);
-  copyBtn.addEventListener("click", async () => {
-    try {
-      copyBtn.disabled = true;
-      copyBtn.textContent = "Aktualisiere …";
-      await refresh();
-      await navigator.clipboard.writeText(snapshotEl.value);
-      copyBtn.textContent = "Kopiert ✓";
-      setStatus("Snapshot aktualisiert und kopiert. Jetzt in ChatGPT einfügen.", "ok");
-      setTimeout(() => { copyBtn.textContent = "Aktualisieren & kopieren"; copyBtn.disabled = false; }, 1200);
-    } catch {
-      snapshotEl.focus(); snapshotEl.select();
-      document.execCommand("copy");
-      copyBtn.textContent = "Kopiert ✓";
-      setTimeout(() => { copyBtn.textContent = "Aktualisieren & kopieren"; copyBtn.disabled = false; }, 1200);
-    }
-  });
-
-  shareBtn.addEventListener("click", async () => {
-    try {
-      await refresh();
-      if (navigator.share) {
-        await navigator.share({
-          title: "Sleeper Draft Snapshot",
-          text: snapshotEl.value
-        });
-        setStatus("Snapshot geteilt.", "ok");
-      } else {
-        await navigator.clipboard.writeText(snapshotEl.value);
-        setStatus("Teilen wird nicht unterstützt; Snapshot wurde kopiert.", "warn");
-      }
-    } catch (e) {
-      if (e?.name !== "AbortError") setStatus("Teilen fehlgeschlagen: " + e.message, "bad");
-    }
-  });
-
-  autoBtn.addEventListener("click", () => {
-    if (timer) {
-      clearInterval(timer); timer=null; autoBtn.textContent="Auto-Refresh";
-      setStatus("Auto-Refresh gestoppt.", "warn");
-    } else {
-      refresh();
-      const cadence = (latestDraft && latestPicks) ? 5000 : 15000;
-      timer=setInterval(refresh, cadence);
-      autoBtn.textContent="Auto: AN";
-      setStatus("Auto-Refresh läuft.", "ok");
-    }
-  });
-
-
-
-  refreshRankingsBtn.addEventListener("click",async()=>{try{refreshRankingsBtn.disabled=true;rankingStatusEl.className="status warn";rankingStatusEl.textContent="Lade aktuelle FantasyPros-Daten …";await refreshFantasyProsRankings();if(latestDraft)await refresh();}catch(e){rankingStatusEl.className="status bad";rankingStatusEl.textContent=`Fehler: ${e.message}`;}finally{refreshRankingsBtn.disabled=false;}});
-  testApiBtn.addEventListener("click",async()=>{try{testApiBtn.disabled=true;await fpFetch(`/nfl/${seasonEl.value.trim()}/consensus-rankings?position=RB&scoring=${scoringEl.value}`);rankingStatusEl.className="status ok";rankingStatusEl.textContent="FantasyPros API-Verbindung funktioniert.";persistRankingData();}catch(e){rankingStatusEl.className="status bad";rankingStatusEl.textContent=`API-Test fehlgeschlagen: ${e.message}`;}finally{testApiBtn.disabled=false;}});
-  adpFileEl.addEventListener("change",async()=>{const f=adpFileEl.files?.[0];if(!f)return;try{const c=ingestRows(rowsFromFileText(await f.text(),f.name),"adp");if(!c)throw new Error("Keine Sleeper-ADP-Spalte erkannt.");rankingMeta.adpUpdated=new Date().toISOString();rankingMeta.adpSource=`Datei: ${f.name}`;persistRankingData();rankingStatusEl.className="status ok";rankingStatusEl.textContent=`${c} Sleeper-ADPs importiert.`;if(latestDraft)await refresh();}catch(e){rankingStatusEl.className="status bad";rankingStatusEl.textContent=`ADP-Import fehlgeschlagen: ${e.message}`;}});
-  expertFileEl.addEventListener("change",async()=>{const f=expertFileEl.files?.[0];if(!f)return;try{expertRanks={};const c=ingestRows(rowsFromFileText(await f.text(),f.name),"custom");if(!c)throw new Error("Keine Ranking-Spalte erkannt.");rankingMeta.rankUpdated=new Date().toISOString();rankingMeta.rankSource=`Datei: ${f.name}`;persistRankingData();rankingStatusEl.className="status ok";rankingStatusEl.textContent=`${c} Expertenrankings importiert.`;if(latestDraft)await refresh();}catch(e){rankingStatusEl.className="status bad";rankingStatusEl.textContent=`Ranking-Import fehlgeschlagen: ${e.message}`;}});
-  exportDataBtn.addEventListener("click",()=>{const b=new Blob([JSON.stringify({expertRanks,sleeperAdp,rankingMeta},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="draft-companion-daten.json";a.click();URL.revokeObjectURL(a.href);});
-  clearDataBtn.addEventListener("click",()=>{if(!confirm("Gespeicherte Ranking- und ADP-Daten wirklich löschen?"))return;expertRanks={};sleeperAdp={};rankingMeta={};persistRankingData();rankingStatusEl.className="status warn";rankingStatusEl.textContent="Rankingdaten gelöscht.";});
-  panelModeEl.addEventListener("change",persistRankingData);scoringEl.addEventListener("change",persistRankingData);seasonEl.addEventListener("change",persistRankingData);fpApiKeyEl.addEventListener("change",persistRankingData);updateDataQuality();
-  window.addEventListener("load", () => {
-    if (draftInput.value.trim()) {
-      setTimeout(() => refresh(), 250);
-    }
-  });
-
-
-  draftModeBtn.addEventListener("click", () => {
-    draftMode = !draftMode;
-    localStorage.setItem("sdc_draftmode", draftMode ? "1" : "0");
-    applyDraftMode();
-  });
-  clearHistoryBtn.addEventListener("click", () => {
-    previousDraftedIds = new Set();
-    localStorage.removeItem("sdc_prev_drafted");
-    changesCard.hidden = true;
-    setStatus("Vergleich wurde zurückgesetzt.", "warn");
-  });
-  applyDraftMode();
-
-
-  const updateBanner = $("updateBanner");
-  const reloadBtn = $("reloadBtn");
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-      updateBanner.hidden = false;
-    });
-  }
-
-  let deferredInstallPrompt = null;
-  const installBtn = $("installBtn");
-  window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredInstallPrompt = event;
-    installBtn.hidden = false;
-  });
-  installBtn.addEventListener("click", async () => {
-    if (!deferredInstallPrompt) {
-      setStatus("Im Browser-Menü „Zum Startbildschirm hinzufügen“ wählen.", "warn");
-      return;
-    }
-    deferredInstallPrompt.prompt();
-    await deferredInstallPrompt.userChoice;
-    deferredInstallPrompt = null;
-    installBtn.hidden = true;
-  });
-  window.addEventListener("appinstalled", () => {
-    setStatus("Draft Companion wurde installiert.", "ok");
-  });
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", async () => {
-      try {
-        const reg = await navigator.serviceWorker.register("./sw.js");
-        reg.update();
-        if (reg.waiting) updateBanner.hidden = false;
-        reg.addEventListener("updatefound", () => {
-          const worker = reg.installing;
-          if (!worker) return;
-          worker.addEventListener("statechange", () => {
-            if (worker.state === "installed" && navigator.serviceWorker.controller) {
-              updateBanner.hidden = false;
-            }
-          });
-        });
-        reloadBtn.addEventListener("click", () => {
-          if (reg.waiting) reg.waiting.postMessage({type:"SKIP_WAITING"});
-          else window.location.reload();
-        });
-      } catch (err) {
-        console.warn("Service Worker:", err);
-      }
-    });
-  }
-
-})();
+if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}
 </script>
 </body>
 </html>

@@ -1,24 +1,42 @@
-# Sleeper Draft Companion v3.0.0
+# Sleeper Draft Companion v4.1.0
+
+Diese Version ist für die Bedienung am Handy optimiert: **alle Dateien liegen im Root**, es müssen keine Ordner hochgeladen werden.
 
 ## Neu
 
-- ECR ist nicht mehr die fest verdrahtete Standardquelle.
-- Beliebig viele Experten können angelegt und per CSV/JSON importiert werden.
-- Pat Fitzmaurice ist als feste Einzelansicht vorbereitet.
-- Beliebig viele Panels: Standard, RB, WR, QB, TE, Rookie usw.
-- Gewichtung jedes Experten pro Panel frei einstellbar.
-- Optional automatische Panelwahl nach Spielerposition.
-- Der Snapshot zeigt den gewichteten Rang des tatsächlich verwendeten Panels.
-- FantasyPros-API bleibt optional und aktualisiert derzeit gezielt Pat, sofern der persönliche API-Zugang dies unterstützt.
-- Echte Sleeper-ADP bleibt eine getrennte, zwingend verifizierte Datenquelle.
-- Bei fehlendem Panel-Rang oder fehlender ADP wird kein scheinpräziser Reach erzeugt.
+- Cloudflare-Proxy als Root-Datei `_worker.js`
+- kein direkter Browserzugriff auf FantasyPros, daher kein CORS-Fehler
+- ausführliche API-Diagnose mit HTTP-Status, Antwortzeit und Antwortstruktur
+- Expertenliste automatisch laden
+- frei gewichtetes Expertenpanel
+- Rankings ausgewählter Experten automatisch laden und kombinieren
+- echte Sleeper-ADP bleibt strikt getrennt von `search_rank`
+- vollständiger Sleeper-Live-Snapshot
+- API-Key bleibt lokal im Browser gespeichert
 
-## Empfohlener Ablauf
+## Einmaliges Update
 
-1. Experten anlegen.
-2. Rankings pro Experte importieren.
-3. Standard- und Positionspanels konfigurieren.
-4. Sleeper-ADP importieren oder über eine eindeutig erkannte Quelle laden.
-5. Draft verbinden und Snapshot kopieren.
+Im GitHub-Repository auf `main` diese Dateien hochladen/ersetzen:
 
-Alle importierten Daten und Panels werden ausschließlich lokal im Browser gespeichert.
+- `_worker.js`
+- `app.js`
+- `index.html`
+- `styles.css`
+- `sw.js`
+- `manifest.webmanifest`
+- `icon.svg`
+- `README.md` (optional)
+
+Cloudflare Pages veröffentlicht danach automatisch.
+
+## Erster Test
+
+1. Cloudflare-App öffnen.
+2. Prüfen, dass oben `v4.1.0` steht.
+3. Der vorhandene API-Key sollte aus der vorherigen App eventuell nicht übernommen werden, da ein neuer lokaler Speicherschlüssel verwendet wird. Falls das Feld leer ist, Key erneut einfügen.
+4. `API diagnostizieren` antippen.
+5. Das Diagnoseergebnis teilen – niemals den Key.
+
+## Sicherheit
+
+Der Key wird im lokalen Browser-Speicher gehalten und an `/api/fantasypros` auf derselben Cloudflare-Domain geschickt. `_worker.js` leitet ihn an FantasyPros weiter. Der Key wird nicht in GitHub gespeichert.
