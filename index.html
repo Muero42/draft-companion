@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#111827">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Draft Companion">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <title>Sleeper Draft Companion</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg:#0b1020; --card:#151c2f; --muted:#9ca3af; --text:#f9fafb;
+      --accent:#7c3aed; --border:#2b3551; --ok:#34d399; --warn:#fbbf24; --bad:#fb7185;
+    }
+    * { box-sizing:border-box; }
+    body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--text); }
+    main { max-width:760px; margin:auto; padding:16px 14px 40px; }
+    h1 { font-size:1.45rem; margin:4px 0 4px; }
+    .sub { color:var(--muted); margin:0 0 16px; font-size:.94rem; }
+    .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:14px; margin:12px 0; }
+    label { display:block; color:#d1d5db; font-size:.86rem; margin:10px 0 6px; }
+    input, select, button, textarea {
+      width:100%; border-radius:12px; border:1px solid var(--border); background:#0f172a; color:var(--text);
+      padding:12px; font-size:16px;
+    }
+    .grid { display:grid; grid-template-columns:1fr 110px; gap:10px; }
+    button { cursor:pointer; font-weight:700; background:var(--accent); border:none; margin-top:10px; }
+    button.secondary { background:#26324f; }
+    button:disabled { opacity:.55; cursor:not-allowed; }
+    .status { margin-top:10px; color:var(--muted); font-size:.9rem; white-space:pre-wrap; }
+    .status.ok { color:var(--ok); } .status.warn { color:var(--warn); } .status.bad { color:var(--bad); }
+    .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
+    .stat { background:#0f172a; border-radius:12px; padding:10px; text-align:center; }
+    .stat b { display:block; font-size:1.1rem; }
+    .stat span { color:var(--muted); font-size:.78rem; }
+    textarea { min-height:270px; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:12.5px; resize:vertical; }
+    details summary { cursor:pointer; color:#d1d5db; font-weight:650; }
+    .tiny { font-size:.78rem; color:var(--muted); line-height:1.45; }
+    .pill { display:inline-block; padding:4px 8px; margin:2px; border-radius:999px; background:#26324f; font-size:.78rem; }
+    
+    .sticky-actions {
+      position: sticky; bottom: 0; z-index: 20;
+      background: linear-gradient(180deg, rgba(11,16,32,0), var(--bg) 28%);
+      padding: 18px 0 calc(8px + env(safe-area-inset-bottom));
+      display:grid; grid-template-columns:1fr 1fr; gap:10px;
+    }
+    .sticky-actions button { margin:0; min-height:52px; }
+    .primary-action { background:var(--accent); }
+    .share-action { background:#26324f; }
+    .compact-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .muted-box { background:#0f172a; border:1px dashed var(--border); border-radius:12px; padding:10px; color:var(--muted); font-size:.84rem; }
+    @media (max-width:480px) {
+      .grid { grid-template-columns:1fr 92px; }
+      .stats { grid-template-columns:1fr 1fr; }
+    }
+  </style>
+</head>
+<body>
+<main>
+  <h1>Draft Companion</h1>
+  <p class="sub">Für schnelle Sleeper-Mocks auf dem Handy. <span class="pill">Mobile v1.3</span></p>
+
+  <section class="card">
+    <div class="muted-box">Einmal Link und Slot setzen. Danach reicht während des Mocks meist <b>„Aktualisieren & kopieren“</b>.</div>
+    <label for="draftInput">Sleeper-Draft-Link oder Draft-ID</label>
+    <input id="draftInput" placeholder="https://sleeper.app/draft/nfl/…" autocomplete="off">
+    <div class="grid">
+      <div>
+        <label for="slot">Dein Draftslot</label>
+        <select id="slot"></select>
+      </div>
+      <div>
+        <label for="topN">Top Spieler</label>
+        <select id="topN">
+          <option>20</option><option selected>35</option><option>50</option><option>75</option>
+        </select>
+      </div>
+    </div>
+    
+    <div class="compact-row">
+      <button id="connectBtn">Aktualisieren</button>
+      <button id="autoBtn" class="secondary">Auto-Refresh</button>
+    </div>
+    <button id="installBtn" class="secondary" hidden>Als App installieren</button>
+    <div id="status" class="status">Noch nicht verbunden.</div>
+  </section>
+
+  <section class="card" id="summaryCard" hidden>
+    <div class="stats">
+      <div class="stat"><b id="currentPick">–</b><span>Aktueller Pick</span></div>
+      <div class="stat"><b id="nextMyPick">–</b><span>Dein nächster Pick</span></div>
+      <div class="stat"><b id="untilPick">–</b><span>Picks bis du dran bist</span></div>
+    </div>
+    <div style="margin-top:10px" id="teamPills"></div>
+  </section>
+
+  
+  
+  <details class="card">
+    <summary>Manuelle Spielerliste (nur bei Problemen)</summary>
+    <label for="manualPlayers">Überschreibt die automatische Liste</label>
+    <textarea id="manualPlayers" placeholder="Normalerweise leer lassen."></textarea>
+  </details>
+
+  <section class="card">
+    <details>
+      <summary>Snapshot-Vorschau</summary>
+      <textarea id="snapshot" readonly placeholder="Der Snapshot erscheint nach dem Verbinden."></textarea>
+    </details>
+  </section>
+
+  <div class="sticky-actions">
+    <button id="copyBtn" class="primary-action" disabled>Aktualisieren & kopieren</button>
+    <button id="shareBtn" class="share-action" disabled>Teilen</button>
+  </div>
+
+  <details class="card">
+    <summary>Hinweise und Fehlerbehebung</summary>
+    <p class="tiny">
+      Die Seite ruft ausschließlich die öffentliche Read-only-API von Sleeper auf. Es werden keine Zugangsdaten benötigt
+      oder gespeichert. Draft-Link, Slot und Spieler-Datenbank-Zeitpunkt werden nur lokal im Browser gespeichert.
+    </p>
+    <p class="tiny">
+      Falls „Netzwerkfehler/CORS“ erscheint, öffne die Datei nicht direkt als <code>file://</code>, sondern hoste sie
+      über GitHub Pages, Netlify oder Cloudflare Pages. Die Spieler-Datenbank ist groß und wird nur einmal pro Tag geladen.
+    </p>
+  </details>
+</main>
+
+<script>
+(() => {
+  const API = "https://api.sleeper.app/v1";
+  const $ = id => document.getElementById(id);
+  const draftInput = $("draftInput"), slotSel = $("slot"), topNSel = $("topN");
+  const statusEl = $("status"), snapshotEl = $("snapshot"), copyBtn = $("copyBtn"), shareBtn = $("shareBtn");
+  const connectBtn = $("connectBtn"), autoBtn = $("autoBtn");
+  const manualPlayers=$("manualPlayers");
+  manualPlayers.value=localStorage.getItem("sdc_manualplayers")||"";
+  manualPlayers.addEventListener("input",()=>localStorage.setItem("sdc_manualplayers",manualPlayers.value));
+  let timer = null, playerMap = null, latestDraft = null, latestPicks = [];
+
+  for (let i=1;i<=16;i++) {
+    const o=document.createElement("option"); o.value=i; o.textContent=`Slot ${i}`; slotSel.appendChild(o);
+  }
+  draftInput.value = localStorage.getItem("sdc_draft") || "";
+  slotSel.value = localStorage.getItem("sdc_slot") || "9";
+  topNSel.value = localStorage.getItem("sdc_topn") || "35";
+
+  function draftIdFrom(value) {
+    const m = String(value).trim().match(/(\d{12,})/);
+    if (!m) throw new Error("Keine gültige Draft-ID gefunden.");
+    return m[1];
+  }
+  function setStatus(msg, cls="") {
+    statusEl.className = "status " + cls; statusEl.textContent = msg;
+  }
+  async function getJSON(url) {
+    const r = await fetch(url, {cache:"no-store"});
+    if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
+    return r.json();
+  }
+  async function loadPlayers() {
+    const day = "v2-" + new Date().toISOString().slice(0,10);
+    const cachedDay = localStorage.getItem("sdc_players_day");
+    const cached = localStorage.getItem("sdc_players");
+    if (cached && cachedDay === day) {
+      try { return JSON.parse(cached); } catch {}
+    }
+    setStatus("Lade Sleeper-Spielerdatenbank …", "warn");
+    const data = await getJSON(`${API}/players/nfl`);
+    // Keep only fields needed by this app to reduce localStorage size.
+    const compact = {};
+    for (const [id,p] of Object.entries(data)) {
+      if (!p) continue;
+      compact[id] = {
+        n: p.full_name || [p.first_name,p.last_name].filter(Boolean).join(" ") || p.player_id || id,
+        pos: p.fantasy_positions?.[0] || p.position || "?",
+        team: p.team || "FA",
+        rank: Number.isFinite(+p.search_rank) && +p.search_rank > 0 ? +p.search_rank : 999999,
+        active: p.active !== false,
+        status: p.status || "",
+        years: Number.isFinite(+p.years_exp) ? +p.years_exp : null
+      };
+    }
+    playerMap = compact;
+    try {
+      localStorage.setItem("sdc_players_day", day);
+      localStorage.setItem("sdc_players", JSON.stringify(compact));
+    } catch (e) {
+      // Storage may be too small; app still works in memory.
+    }
+    return compact;
+  }
+  function playerLabel(id, meta={}) {
+    const p = playerMap?.[id];
+    const name = meta.first_name && meta.last_name ? `${meta.first_name} ${meta.last_name}` :
+                 meta.first_name || meta.last_name || p?.n || `ID ${id}`;
+    const pos = meta.position || p?.pos || "?";
+    const team = meta.team || p?.team || "FA";
+    return `${name} — ${pos}, ${team}`;
+  }
+  function myPickNumbers(teams, rounds, slot, reversalRound) {
+    const picks = [];
+    for (let round=1; round<=rounds; round++) {
+      let s = slot;
+      const reversed = reversalRound && round >= reversalRound;
+      const snakeReverse = round % 2 === 0;
+      if (snakeReverse !== reversed) s = teams - slot + 1;
+      picks.push((round-1)*teams + s);
+    }
+    return picks;
+  }
+  function buildSnapshot(draft, picks, mySlot, topN) {
+    const settings = draft.settings || {};
+    const teams = +settings.teams || Math.max(10, ...picks.map(p=>+p.draft_slot||0));
+    const rounds = +settings.rounds || 16;
+    const reversal = +settings.reversal_round || 0;
+    const current = picks.length + 1;
+    const mine = myPickNumbers(teams, rounds, mySlot, reversal);
+    const next = mine.find(x => x >= current) || null;
+    const until = next == null ? null : Math.max(0, next-current);
+
+    const myPicks = picks.filter(p => +p.draft_slot === +mySlot).sort((a,b)=>a.pick_no-b.pick_no);
+    const draftedIds = new Set(picks.map(p=>String(p.player_id)));
+    const positions = new Set(["QB","RB","WR","TE"]);
+    const nflTeams = new Set([
+      "ARI","ATL","BAL","BUF","CAR","CHI","CIN","CLE","DAL","DEN","DET","GB",
+      "HOU","IND","JAX","KC","LAC","LAR","LV","MIA","MIN","NE","NO","NYG","NYJ",
+      "PHI","PIT","SEA","SF","TB","TEN","WAS"
+    ]);
+    const available = Object.entries(playerMap || {})
+      .filter(([id,p]) =>
+        !draftedIds.has(id) &&
+        p.active &&
+        positions.has(p.pos) &&
+        nflTeams.has(p.team) &&
+        p.rank < 999999
+      )
+      .sort((a,b)=>(a[1].rank-b[1].rank) || a[1].n.localeCompare(b[1].n))
+      .slice(0, topN);
+
+    const recent = [...picks].sort((a,b)=>b.pick_no-a.pick_no).slice(0,20).reverse();
+    const lines = [];
+    lines.push("===== SLEEPER DRAFT SNAPSHOT =====");
+    lines.push(`Draft-ID: ${draft.draft_id}`);
+    lines.push(`Status: ${draft.status || "unbekannt"}`);
+    lines.push(`Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${mySlot}`);
+    lines.push(`Aktueller Pick: ${current}`);
+    lines.push(`Mein nächster Pick: ${next ?? "keiner"} | Picks bis dahin: ${until ?? "–"}`);
+    lines.push("");
+    lines.push("MEIN TEAM");
+    if (!myPicks.length) lines.push("(noch kein Pick)");
+    for (const p of myPicks) lines.push(`${p.pick_no}. ${playerLabel(String(p.player_id), p.metadata || {})}`);
+    lines.push("");
+    lines.push("LETZTE PICKS");
+    if (!recent.length) lines.push("(Draft noch nicht gestartet)");
+    for (const p of recent) lines.push(`${p.pick_no}. Slot ${p.draft_slot}: ${playerLabel(String(p.player_id), p.metadata || {})}`);
+    lines.push("");
+    lines.push("VERFÜGBARE SPIELER");
+    if (manualPlayers.value.trim()) {
+      lines.push(manualPlayers.value.trim());
+      lines.push("");
+      lines.push("(manuelle Liste verwendet)");
+    } else {
+      lines.push(`TOP ${available.length} VERFÜGBARE SPIELER (automatisch aus Sleeper-Spielerdaten)`);
+      for (let i=0;i<available.length;i++) {
+        const [id,p]=available[i];
+        lines.push(`${i+1}. ${p.n} — ${p.pos}, ${p.team} | Sleeper-Rang ${p.rank}`);
+      }
+    }
+    lines.push("");
+    lines.push("Bitte prüfe aktuelle Expertenrankings, Depth Charts, Verletzungen und News und gib:");
+    lines.push("1) Empfehlung, 2) 2–3 Alternativen, 3) Return-Chancen bis zu meinem nächsten Pick, 4) Confidence.");
+    return {text:lines.join("\n"), current, next, until, myPicks, teams};
+  }
+  async function refresh() {
+    try {
+      connectBtn.disabled = true;
+      const id = draftIdFrom(draftInput.value);
+      const slot = +slotSel.value, topN = +topNSel.value;
+      localStorage.setItem("sdc_draft", draftInput.value.trim());
+      localStorage.setItem("sdc_slot", slot);
+      localStorage.setItem("sdc_topn", topN);
+      setStatus("Lade Draft und Picks …", "warn");
+      const [draft,picks,players] = await Promise.all([
+        getJSON(`${API}/draft/${id}`),
+        getJSON(`${API}/draft/${id}/picks`),
+        playerMap ? Promise.resolve(playerMap) : loadPlayers()
+      ]);
+      playerMap = players; latestDraft=draft; latestPicks=picks;
+      const s = buildSnapshot(draft,picks,slot,topN);
+      snapshotEl.value = s.text; copyBtn.disabled=false; shareBtn.disabled=false;
+      $("summaryCard").hidden=false;
+      $("currentPick").textContent=s.current;
+      $("nextMyPick").textContent=s.next ?? "–";
+      $("untilPick").textContent=s.until ?? "–";
+      $("teamPills").innerHTML = s.myPicks.map(p=>`<span class="pill">${playerLabel(String(p.player_id), p.metadata||{})}</span>`).join("") || '<span class="tiny">Noch kein eigener Pick.</span>';
+      setStatus(`Aktuell: ${picks.length} Picks · ${new Date().toLocaleTimeString("de-DE")}`, "ok");
+      return s;
+    } catch (e) {
+      console.error(e);
+      setStatus(`Fehler: ${e.message}\nFalls die Datei direkt geöffnet wurde, bitte über einen Webhost (z. B. GitHub Pages) bereitstellen.`, "bad");
+    } finally {
+      connectBtn.disabled = false;
+    }
+  }
+  connectBtn.addEventListener("click", refresh);
+  copyBtn.addEventListener("click", async () => {
+    try {
+      copyBtn.disabled = true;
+      copyBtn.textContent = "Aktualisiere …";
+      await refresh();
+      await navigator.clipboard.writeText(snapshotEl.value);
+      copyBtn.textContent = "Kopiert ✓";
+      setStatus("Snapshot aktualisiert und kopiert. Jetzt in ChatGPT einfügen.", "ok");
+      setTimeout(() => { copyBtn.textContent = "Aktualisieren & kopieren"; copyBtn.disabled = false; }, 1200);
+    } catch {
+      snapshotEl.focus(); snapshotEl.select();
+      document.execCommand("copy");
+      copyBtn.textContent = "Kopiert ✓";
+      setTimeout(() => { copyBtn.textContent = "Aktualisieren & kopieren"; copyBtn.disabled = false; }, 1200);
+    }
+  });
+
+  shareBtn.addEventListener("click", async () => {
+    try {
+      await refresh();
+      if (navigator.share) {
+        await navigator.share({
+          title: "Sleeper Draft Snapshot",
+          text: snapshotEl.value
+        });
+        setStatus("Snapshot geteilt.", "ok");
+      } else {
+        await navigator.clipboard.writeText(snapshotEl.value);
+        setStatus("Teilen wird nicht unterstützt; Snapshot wurde kopiert.", "warn");
+      }
+    } catch (e) {
+      if (e?.name !== "AbortError") setStatus("Teilen fehlgeschlagen: " + e.message, "bad");
+    }
+  });
+
+  autoBtn.addEventListener("click", () => {
+    if (timer) {
+      clearInterval(timer); timer=null; autoBtn.textContent="Auto-Refresh";
+      setStatus("Auto-Refresh gestoppt.", "warn");
+    } else {
+      refresh();
+      timer=setInterval(refresh, 10000);
+      autoBtn.textContent="Auto: AN";
+      setStatus("Auto-Refresh läuft alle 10 Sekunden.", "ok");
+    }
+  });
+
+
+  window.addEventListener("load", () => {
+    if (draftInput.value.trim()) {
+      setTimeout(() => refresh(), 250);
+    }
+  });
+
+  let deferredInstallPrompt = null;
+  const installBtn = $("installBtn");
+  window.addEventListener("beforeinstallprompt", (event) => {
+    event.preventDefault();
+    deferredInstallPrompt = event;
+    installBtn.hidden = false;
+  });
+  installBtn.addEventListener("click", async () => {
+    if (!deferredInstallPrompt) {
+      setStatus("Im Browser-Menü „Zum Startbildschirm hinzufügen“ wählen.", "warn");
+      return;
+    }
+    deferredInstallPrompt.prompt();
+    await deferredInstallPrompt.userChoice;
+    deferredInstallPrompt = null;
+    installBtn.hidden = true;
+  });
+  window.addEventListener("appinstalled", () => {
+    setStatus("Draft Companion wurde installiert.", "ok");
+  });
+  if ("serviceWorker" in navigator) {
+    window.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js").catch(err => console.warn("Service Worker:", err));
+    });
+  }
+
+})();
+</script>
+</body>
+</html>
