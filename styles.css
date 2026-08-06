@@ -6,3 +6,8 @@
 .switch-row input{width:auto;margin:0;accent-color:var(--accent)}
 .update-notice{border-color:var(--ok);display:grid;gap:5px}
 .update-notice span{color:var(--muted);font-size:.84rem}
+
+.expert input[type="number"]{max-width:82px}
+.expert::after{content:"Gewicht";font-size:.68rem;color:var(--muted);justify-self:end}
+.favorite-box{border:1px solid var(--ok);background:rgba(34,197,94,.08);border-radius:12px;padding:11px;margin-bottom:12px}
+.favorite-box b{display:block;margin-bottom:5px}

@@ -12,7 +12,7 @@
 <body>
 <main>
   <section class="card status-grid">
-    <div><b>Final 2026 · v5.1.0</b><span>Version</span></div>
+    <div><b>Final 2026 · v5.2.0</b><span>Version</span></div>
     <div><b id="onlineState">–</b><span>Status</span></div>
     <div><b id="dataAge">–</b><span>Datenalter</span></div>
   </section>
@@ -51,6 +51,8 @@
       <div><label for="expertSearch">Experten suchen</label><input id="expertSearch" placeholder="Name oder Seite"></div>
       <div><label for="activePanel">Aktives Panel</label><select id="activePanel"></select></div>
     </div>
+    <button id="applyRecommendedBtn">Empfohlene Experten & Gewichte einrichten</button>
+    <div id="presetStatus" class="notice">Noch kein Preset angewendet.</div>
     <div class="three">
       <button id="newPanelBtn" class="secondary">Neues Panel</button>
       <button id="renamePanelBtn" class="secondary">Umbenennen</button>
@@ -70,7 +72,8 @@
       <div><label for="wrPanel">WR</label><select id="wrPanel"></select></div>
       <div><label for="tePanel">TE</label><select id="tePanel"></select></div>
     </div>
-    <p class="tiny">Der Draft-Coach verwendet für jede Position automatisch das zugeordnete Panel. Pat kann als eigenes Einzelpanel geführt werden.</p>
+    <p class="tiny"><strong>Gewichtung:</strong> Rechts neben jedem Experten steht sein Anteil im aktiven Panel. Die Werte müssen nicht exakt 100 ergeben; die App normalisiert sie automatisch. Der Draft-Coach verwendet je Position das zugeordnete Panel.</p>
+    <p class="tiny"><strong>Bye Weeks:</strong> werden angezeigt, aber nur als sehr kleiner Tiebreaker berücksichtigt. Ein klar stärkerer Spieler bleibt immer vorne.</p>
   </details>
 
   <details class="card" open>

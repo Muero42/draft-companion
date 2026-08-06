@@ -1,40 +1,22 @@
-# Draft Companion – Final 2026 (v5.1.0)
+# Draft Companion – Final 2026 (v5.2.0)
 
-Stabile Draft-Version für Mock-Drafts und den echten Sleeper-Draft.
+## Neu in v5.2.0
 
-## Enthalten
+- Ein-Klick-Preset für Standard-, RB-, WR-, QB-, TE- und Pat-Panels
+- gewünschte Experten werden automatisch in der FantasyPros-Expertenliste gesucht
+- nicht verfügbare Experten werden transparent genannt und nicht erfunden
+- sichtbare Gewichte und normalisierte effektive Prozentanteile
+- Rankings älter als 24 Stunden werden aktiv angemahnt
+- mehrere nahezu gleichwertige Favoriten pro Pick statt erzwungener Einzelentscheidung
+- Bye Weeks werden angezeigt und höchstens als sehr kleiner Tiebreaker berücksichtigt
+- klare stärkere Spieler werden niemals wegen einer Bye Week ausgeschlossen
 
-- FantasyPros-HOF-API über Cloudflare-Proxy
-- API-Diagnose
-- frei gewichtete Expertenpanels
-- separate Positionspanels für QB, RB, WR und TE
-- Pat Fitzmaurice als vorbereitetes Einzelpanel
-- verifizierter Sleeper-ADP-Import; `search_rank` wird niemals als ADP behandelt
-- Panel-Rang, Tier, Streuung und Experten-Einigkeit
-- Value-/Reach-Schutz
-- transparente ADP-basierte Return-Schätzung
-- Live-Sleeper-Draft und kompakter ChatGPT-Snapshot
-- Auto-Refresh
-- lokale Datenspeicherung
-- Backup und Wiederherstellung ohne API-Key
-- installierbare PWA
+## Vorgesehenes Experten-Preset
 
-## Eingefrorener Funktionsumfang
+Die App versucht – sofern über FantasyPros verfügbar – unter anderem:
+Pat Fitzmaurice, Justin Boone, Nick Mariano, Sean Koerner, Andrew Erickson,
+Derek Brown und Matt Harmon zuzuordnen. Fehlende Experten werden gemeldet;
+die App verwendet nur tatsächlich von der API gelieferte Ranglisten.
 
-Bis nach dem echten Draft werden keine großen Funktionen mehr ergänzt. Weitere Releases
-sind nur für klar reproduzierbare Fehler oder zwingende Datenkorrekturen vorgesehen.
-
-## Aktualisierung
-
-Alle acht Dateien liegen im Repository-Hauptverzeichnis:
-
-- `_worker.js`
-- `app.js`
-- `index.html`
-- `styles.css`
-- `sw.js`
-- `manifest.webmanifest`
-- `icon.svg`
-- `README.md`
-
-Cloudflare veröffentlicht nach einem Commit auf `main` automatisch.
+Der Funktionsumfang bleibt bis nach dem echten Draft eingefroren. Weitere Versionen
+gibt es nur bei reproduzierbaren Fehlern oder zwingenden Datenkorrekturen.
