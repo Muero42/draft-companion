@@ -17,7 +17,7 @@
       <h1>Draft Companion</h1>
       <p>Expertenpanels, echte Sleeper-ADP und Live-Draft-Coach.</p>
     </div>
-    <span class="version">v7.0.0</span>
+    <span class="version">v7.1.0</span>
   </header>
 
   <section class="status-card">
@@ -32,17 +32,15 @@
       <div><span class="step">1</span><h2>Daten aktualisieren</h2></div>
       <button id="refreshAllBtn" class="primary">Alles aktualisieren</button>
     </div>
-    <div id="qualityStatus" class="notice">Datenprüfung läuft …</div>
+    <div id="apiQuickStatus" class="notice"></div><div id="qualityStatus" class="notice">Datenprüfung läuft …</div>
     <div class="button-grid">
-      <button id="loadExpertsBtn" class="secondary">Experten laden</button>
-      <button id="applyPresetBtn" class="secondary">Empfohlenes Preset</button>
-      <button id="loadAllRanksBtn" class="secondary">Panel-Rankings laden</button>
+      
     </div>
     <div id="presetStatus" class="notice">Noch kein Preset angewendet.</div>
     <div id="panelStatus" class="notice">Noch keine Panel-Rankings geladen.</div>
-    <label class="file-button" for="adpFile">Sleeper-ADP importieren</label>
-    <input id="adpFile" type="file" accept=".csv,.json,text/csv,application/json" hidden>
+    
     <div id="adpStatus" class="notice">Noch keine verifizierte Sleeper-ADP geladen.</div>
+    <p class="tiny">Die offizielle Sleeper-API stellt keine echte ADP bereit. Bereits importierte, verifizierte Sleeper-ADP bleibt lokal gespeichert und wird automatisch verwendet. Der Notfall-Import liegt unter „Erweitert“.</p>
     <p class="tiny">Rankings einmal täglich aktualisieren; am Drafttag erneut kurz vor Beginn. Bye Weeks sind nur ein kleiner Tiebreaker.</p>
   </section>
 
@@ -132,6 +130,11 @@
     </div>
 
     <div class="advanced-section">
+      <h3>Verifizierte Sleeper-ADP</h3>
+      <p class="tiny">Nur nötig, wenn eine neue verifizierte Sleeper-ADP-Datei vorliegt. Sleeper-„search_rank“ wird niemals als ADP ausgegeben.</p>
+      <label class="file-button" for="adpFile">ADP-Datei auswählen</label>
+      <input id="adpFile" type="file" accept=".csv,.json,text/csv,application/json" hidden>
+      <hr class="soft-separator">
       <h3>Sicherung</h3>
       <div class="two"><button id="backupBtn" class="secondary">Einstellungen sichern</button><label class="file-button" for="restoreFile">Sicherung einlesen</label></div>
       <input id="restoreFile" type="file" accept=".json,application/json" hidden>

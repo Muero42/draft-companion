@@ -1,33 +1,36 @@
-# Draft Companion – Final Draft Edition 2026 (v7.0.0)
+# Draft Companion – Mock-Ready Final 2026 (v7.1.0)
 
-Diese Version friert den Funktionsumfang bis nach dem echten Draft ein.
+Diese Version ist für die Mock-Draft-Phase eingefroren.
 
-## Kernfunktionen
+## Ein-Klick-Workflow
 
-- FantasyPros-HOF-API über Cloudflare-Proxy
-- frei gewichtete Expertenpanels
-- Positionspanels für QB, RB, WR und TE
-- robuste Verarbeitung fehlender Positionsrankings einzelner Experten
-- Einzelranking jedes verwendeten Experten direkt in jeder Spielerkarte
-- Konsens-/Streitindikator und datenbasierte Confidence
-- mehrere gleichwertige Favoriten statt erzwungener Einzelentscheidung
-- Tier-Drop, Value, Reach, Return und Verletzungsstatus
-- Bye Weeks nur als kleiner Tiebreaker
-- Live-Sleeper-Draft und ChatGPT-Snapshot
-- Decision Log und einfache Mock-Nachbereitung
-- Backup ohne API-Key
+Der Button **Alles aktualisieren**:
 
-## Update
+1. prüft den FantasyPros-API-Zugang,
+2. lädt die aktuelle Expertenliste,
+3. verwendet das empfohlene Preset,
+4. lädt alle verfügbaren Panel-Rankings,
+5. prüft die aktuellen Sleeper-Spielerdaten.
 
-Alle acht Dateien ins Repository-Hauptverzeichnis hochladen:
+## Sleeper-ADP
 
-- `_worker.js`
-- `app.js`
-- `index.html`
-- `styles.css`
-- `sw.js`
-- `manifest.webmanifest`
-- `icon.svg`
-- `README.md`
+Die offizielle Sleeper-API stellt keinen dokumentierten echten ADP-Endpunkt bereit.
+Daher wird `search_rank` ausdrücklich **nicht** als ADP ausgegeben.
 
-Danach veröffentlicht Cloudflare automatisch.
+Eine einmal importierte, verifizierte Sleeper-ADP bleibt lokal gespeichert und wird
+bei jedem Mock automatisch verwendet. Der Import befindet sich nur noch unter
+**Erweitert → Verifizierte Sleeper-ADP**.
+
+Fehlt diese Datenquelle, funktionieren Expertenpanels und Draft-Coach weiterhin;
+Reach und Return werden aber bewusst als unsicher beziehungsweise fehlend markiert.
+
+## Diagnose
+
+Die Diagnose prüft nun korrekt:
+
+- FantasyPros Experten
+- FantasyPros Rankings
+- Sleeper Spielerdaten
+- Status der lokal gespeicherten verifizierten ADP
+
+Der frühere fehlerhafte FantasyPros-Spieler-Endpunkt wurde entfernt.
