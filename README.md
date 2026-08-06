@@ -1,36 +1,33 @@
-# Draft Companion – Mock-Ready Final 2026 (v7.1.0)
+# Draft Companion – Mock-Ready Final 2026 (v7.2.0)
 
-Diese Version ist für die Mock-Draft-Phase eingefroren.
+## Neu
 
-## Ein-Klick-Workflow
+### Positionsränge
 
-Der Button **Alles aktualisieren**:
+Für jeden Experten wird zuerst das Overall-Ranking geladen.
 
-1. prüft den FantasyPros-API-Zugang,
-2. lädt die aktuelle Expertenliste,
-3. verwendet das empfohlene Preset,
-4. lädt alle verfügbaren Panel-Rankings,
-5. prüft die aktuellen Sleeper-Spielerdaten.
+- Overall-Rang bleibt die primäre Bewertungsgrundlage.
+- QB-, RB-, WR- und TE-Ränge werden daraus zuverlässig abgeleitet.
+- Ein separates Positionsranking überschreibt nur den Positionsrang, wenn es verfügbar ist.
+- Fehlende QB-/RB-/WR-/TE-Endpunkte brechen das Panel nicht mehr ab.
 
-## Sleeper-ADP
+Im Draft Coach erscheint je Experte beispielsweise:
 
-Die offizielle Sleeper-API stellt keinen dokumentierten echten ADP-Endpunkt bereit.
-Daher wird `search_rank` ausdrücklich **nicht** als ADP ausgegeben.
+`Pat Fitzmaurice #28 (QB4)`
 
-Eine einmal importierte, verifizierte Sleeper-ADP bleibt lokal gespeichert und wird
-bei jedem Mock automatisch verwendet. Der Import befindet sich nur noch unter
-**Erweitert → Verifizierte Sleeper-ADP**.
+### Sleeper-ADP
 
-Fehlt diese Datenquelle, funktionieren Expertenpanels und Draft-Coach weiterhin;
-Reach und Return werden aber bewusst als unsicher beziehungsweise fehlend markiert.
+„Alles aktualisieren“ prüft automatisch mehrere FantasyPros-API-Varianten.
 
-## Diagnose
+Eine ADP wird nur übernommen, wenn sie in der Antwort ausdrücklich als **Sleeper**
+gekennzeichnet ist. Ein generischer FantasyPros-Composite oder Sleeper-`search_rank`
+wird niemals als Sleeper-ADP ausgegeben.
 
-Die Diagnose prüft nun korrekt:
+Falls die API keine eindeutige Sleeper-Quelle liefert, bleibt der manuelle,
+verifizierte Import unter **Erweitert** erhalten. Eine bereits gespeicherte ADP
+wird automatisch weiterverwendet.
 
-- FantasyPros Experten
-- FantasyPros Rankings
-- Sleeper Spielerdaten
-- Status der lokal gespeicherten verifizierten ADP
+## Eingefrorener Stand
 
-Der frühere fehlerhafte FantasyPros-Spieler-Endpunkt wurde entfernt.
+Diese Version ist für die Mock-Draft-Phase bestimmt. Weitere Änderungen erfolgen
+nur bei reproduzierbaren Fehlern oder zwingenden Datenkorrekturen.

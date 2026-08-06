@@ -5,7 +5,7 @@
   "display": "standalone",
   "background_color": "#08111f",
   "theme_color": "#0b1220",
-  "description": "Ein-Klick-Aktualisierung für Expertenpanels und Sleeper-Live-Drafts; verifizierte ADP wird lokal wiederverwendet.",
+  "description": "Overall-Ranking-Fallback für Positionsränge und automatische Übernahme eindeutig gekennzeichneter Sleeper-ADP aus FantasyPros.",
   "icons": [
     {
       "src": "icon.svg",
