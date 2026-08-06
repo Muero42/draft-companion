@@ -9,7 +9,7 @@
   <meta name="apple-mobile-web-app-title" content="Draft Companion">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <title>Draft Companion</title>
+  <title>Draft Companion v1.1.0</title>
   <style>
     :root {
       color-scheme: dark;
@@ -63,6 +63,10 @@
     body.draft-mode #snapshot { min-height:160px; }
     .change-out { color:var(--bad); display:block; margin-top:4px; }
     .change-in { color:var(--ok); display:block; margin-top:4px; }
+    .intelligence-line { display:block; margin-top:5px; }
+    .status-fresh { color:var(--ok); }
+    .status-stale { color:var(--warn); }
+    .status-offline { color:var(--bad); }
     .muted-box { background:#0f172a; border:1px dashed var(--border); border-radius:12px; padding:10px; color:var(--muted); font-size:.84rem; }
     @media (max-width:480px) {
       .grid { grid-template-columns:1fr 92px; }
@@ -72,12 +76,19 @@
 </head>
 <body>
 <main>
+  <section class="card" id="appStatusCard">
+    <div class="stats">
+      <div class="stat"><b id="appVersion">v1.1.0</b><span>App-Version</span></div>
+      <div class="stat"><b id="dataAge">–</b><span>Datenalter</span></div>
+      <div class="stat"><b id="connectionState">Offline</b><span>Status</span></div>
+    </div>
+  </section>
   <div id="updateBanner" class="card" hidden>
     <b>Neue App-Version verfügbar</b>
     <button id="reloadBtn" class="secondary">Jetzt aktualisieren</button>
   </div>
   <h1>Draft Companion</h1>
-  <p class="sub">Für schnelle Sleeper-Mocks auf dem Handy. <span class="pill">Final v1.0</span></p>
+  <p class="sub">Für schnelle Sleeper-Mocks auf dem Handy. <span class="pill">v1.1.0</span></p>
 
   <section class="card">
     <div class="muted-box">Einmal Link und Slot setzen. Danach reicht während des Mocks meist <b>„Aktualisieren & kopieren“</b>.</div>
@@ -120,6 +131,11 @@
   <section class="card" id="changesCard" hidden>
     <b>Seit dem letzten Aktualisieren</b>
     <div id="changesText" class="status">Noch keine Vergleichsdaten.</div>
+  </section>
+
+  <section class="card" id="intelligenceCard" hidden>
+    <b>Draft-Intelligenz</b>
+    <div id="intelligenceText" class="status"></div>
   </section>
 
   <section class="card" id="summaryCard" hidden>
@@ -173,12 +189,14 @@
   const connectBtn = $("connectBtn"), autoBtn = $("autoBtn");
   const draftModeBtn=$("draftModeBtn"), clearHistoryBtn=$("clearHistoryBtn");
   const changesCard=$("changesCard"), changesText=$("changesText");
+  const intelligenceCard=$("intelligenceCard"), intelligenceText=$("intelligenceText");
+  const dataAgeEl=$("dataAge"), connectionStateEl=$("connectionState");
   let previousDraftedIds = new Set(JSON.parse(localStorage.getItem("sdc_prev_drafted") || "[]"));
   let draftMode = localStorage.getItem("sdc_draftmode") === "1";
   const manualPlayers=$("manualPlayers");
   manualPlayers.value=localStorage.getItem("sdc_manualplayers")||"";
   manualPlayers.addEventListener("input",()=>localStorage.setItem("sdc_manualplayers",manualPlayers.value));
-  let timer = null, playerMap = null, latestDraft = null, latestPicks = [];
+  let timer = null, playerMap = null, latestDraft = null, latestPicks = [], lastFetchAt = null;
 
   for (let i=1;i<=16;i++) {
     const o=document.createElement("option"); o.value=i; o.textContent=`Slot ${i}`; slotSel.appendChild(o);
@@ -314,6 +332,12 @@
       }
     }
     lines.push("");
+    const counts = positionCounts(picks);
+    const run = recentRun(picks, 8);
+    lines.push("DRAFT-INTELLIGENZ");
+    lines.push(`Gedraftet: QB ${counts.QB} | RB ${counts.RB} | WR ${counts.WR} | TE ${counts.TE}`);
+    lines.push(run ? `Positions-Run: ${run.pos} (${run.n} der letzten ${run.lookback} Picks)` : "Positions-Run: keiner");
+    lines.push("");
     lines.push("AUFGABE");
     lines.push("Prüfe aktuelle Expertenrankings, Depth Charts, Verletzungen und News.");
     lines.push("Gib: 1) Empfehlung, 2) 2–3 Alternativen, 3) Return-Chancen, 4) Confidence.");
@@ -344,6 +368,81 @@
     localStorage.setItem("sdc_prev_drafted", JSON.stringify([...currentIds]));
   }
 
+
+  function positionCounts(picks) {
+    const counts = {QB:0,RB:0,WR:0,TE:0,K:0,DEF:0,OTHER:0};
+    for (const p of picks) {
+      const pos = (p.metadata?.position || playerMap?.[String(p.player_id)]?.pos || "OTHER").toUpperCase();
+      if (counts[pos] !== undefined) counts[pos]++; else counts.OTHER++;
+    }
+    return counts;
+  }
+
+  function recentRun(picks, lookback=8) {
+    const recent = [...picks].sort((a,b)=>b.pick_no-a.pick_no).slice(0,lookback);
+    const counts = {};
+    for (const p of recent) {
+      const pos = (p.metadata?.position || playerMap?.[String(p.player_id)]?.pos || "?").toUpperCase();
+      counts[pos] = (counts[pos] || 0) + 1;
+    }
+    const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
+    if (!sorted.length) return null;
+    const [pos,n] = sorted[0];
+    return n >= 4 ? {pos,n,lookback} : null;
+  }
+
+  function teamRosterNeeds(picks, teams) {
+    const rosters = {};
+    for (let s=1;s<=teams;s++) rosters[s] = {QB:0,RB:0,WR:0,TE:0};
+    for (const p of picks) {
+      const slot = +p.draft_slot;
+      const pos = (p.metadata?.position || playerMap?.[String(p.player_id)]?.pos || "").toUpperCase();
+      if (rosters[slot] && rosters[slot][pos] !== undefined) rosters[slot][pos]++;
+    }
+    return rosters;
+  }
+
+  function buildIntelligence(picks, teams, mySlot, currentPick, nextMyPick) {
+    const counts = positionCounts(picks);
+    const run = recentRun(picks, 8);
+    const rosters = teamRosterNeeds(picks, teams);
+    const lines = [];
+    lines.push(`<span class="intelligence-line">Gedraftet: QB ${counts.QB} · RB ${counts.RB} · WR ${counts.WR} · TE ${counts.TE}</span>`);
+    if (run) lines.push(`<span class="intelligence-line">⚠️ ${run.pos}-Run: ${run.n} der letzten ${run.lookback} Picks</span>`);
+    else lines.push(`<span class="intelligence-line">Kein deutlicher Positions-Run in den letzten 8 Picks.</span>`);
+
+    if (nextMyPick != null) {
+      const interveningSlots = [];
+      for (let p=currentPick; p<nextMyPick; p++) {
+        const round = Math.floor((p-1)/teams)+1;
+        const within = ((p-1)%teams)+1;
+        const slot = round % 2 === 1 ? within : teams-within+1;
+        if (slot !== mySlot && !interveningSlots.includes(slot)) interveningSlots.push(slot);
+      }
+      const qbless = interveningSlots.filter(s => rosters[s]?.QB === 0).length;
+      const teless = interveningSlots.filter(s => rosters[s]?.TE === 0).length;
+      lines.push(`<span class="intelligence-line">Bis zu deinem nächsten Pick kommen ${interveningSlots.length} andere Teams dran; davon ohne QB: ${qbless}, ohne TE: ${teless}.</span>`);
+    }
+    return lines.join("");
+  }
+
+  function updateFreshness() {
+    if (!lastFetchAt) {
+      dataAgeEl.textContent = "–";
+      connectionStateEl.textContent = navigator.onLine ? "Bereit" : "Offline";
+      connectionStateEl.className = navigator.onLine ? "" : "status-offline";
+      return;
+    }
+    const sec = Math.max(0, Math.floor((Date.now()-lastFetchAt.getTime())/1000));
+    dataAgeEl.textContent = sec < 60 ? `${sec}s` : `${Math.floor(sec/60)}m`;
+    dataAgeEl.className = sec <= 20 ? "status-fresh" : sec <= 60 ? "status-stale" : "status-offline";
+    connectionStateEl.textContent = navigator.onLine ? "Online" : "Offline";
+    connectionStateEl.className = navigator.onLine ? "status-fresh" : "status-offline";
+  }
+  setInterval(updateFreshness, 1000);
+  window.addEventListener("online", updateFreshness);
+  window.addEventListener("offline", updateFreshness);
+
   async function refresh() {
     try {
       connectBtn.disabled = true;
@@ -360,8 +459,18 @@
         playerMap ? Promise.resolve(playerMap) : loadPlayers()
       ]);
       playerMap = players; latestDraft=draft; latestPicks=picks;
+      lastFetchAt = new Date();
+      updateFreshness();
       updateChanges(picks);
       const s = buildSnapshot(draft,picks,slot,topN);
+      intelligenceCard.hidden = false;
+      intelligenceText.innerHTML = buildIntelligence(picks, s.teams, slot, s.current, s.next);
+      const autoDraftMode = s.until !== null && s.until <= 2;
+      if (autoDraftMode && !draftMode) {
+        draftMode = true;
+        localStorage.setItem("sdc_draftmode","1");
+        applyDraftMode();
+      }
       snapshotEl.value = s.text; copyBtn.disabled=false; shareBtn.disabled=false;
       $("summaryCard").hidden=false;
       $("currentPick").textContent=s.current;
@@ -425,9 +534,10 @@
       setStatus("Auto-Refresh gestoppt.", "warn");
     } else {
       refresh();
-      timer=setInterval(refresh, 10000);
+      const cadence = (latestDraft && latestPicks) ? 5000 : 15000;
+      timer=setInterval(refresh, cadence);
       autoBtn.textContent="Auto: AN";
-      setStatus("Auto-Refresh läuft alle 10 Sekunden.", "ok");
+      setStatus("Auto-Refresh läuft.", "ok");
     }
   });
 
@@ -460,7 +570,6 @@
       updateBanner.hidden = false;
     });
   }
-  reloadBtn.addEventListener("click", () => window.location.reload());
 
   let deferredInstallPrompt = null;
   const installBtn = $("installBtn");
@@ -483,8 +592,27 @@
     setStatus("Draft Companion wurde installiert.", "ok");
   });
   if ("serviceWorker" in navigator) {
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js").catch(err => console.warn("Service Worker:", err));
+    window.addEventListener("load", async () => {
+      try {
+        const reg = await navigator.serviceWorker.register("./sw.js");
+        reg.update();
+        if (reg.waiting) updateBanner.hidden = false;
+        reg.addEventListener("updatefound", () => {
+          const worker = reg.installing;
+          if (!worker) return;
+          worker.addEventListener("statechange", () => {
+            if (worker.state === "installed" && navigator.serviceWorker.controller) {
+              updateBanner.hidden = false;
+            }
+          });
+        });
+        reloadBtn.addEventListener("click", () => {
+          if (reg.waiting) reg.waiting.postMessage({type:"SKIP_WAITING"});
+          else window.location.reload();
+        });
+      } catch (err) {
+        console.warn("Service Worker:", err);
+      }
     });
   }
 

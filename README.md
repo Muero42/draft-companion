@@ -1,27 +1,24 @@
-# Sleeper Draft Companion – Final v1.0
+# Sleeper Draft Companion v1.1.0
 
-Stabile mobile PWA für Sleeper-Mock- und Live-Drafts.
+Build: 2026-08-06
 
-## Enthalten
+## Neu in v1.1.0
 
-- Sleeper-Link oder Draft-ID
-- frei wählbarer Draftslot
-- Erkennung von aktuellem und nächstem eigenem Pick
-- eigenes Team
-- letzte Picks
-- verfügbare QB/RB/WR/TE
-- ein Klick für Aktualisieren + Kopieren
-- Android-Teilen-Menü
-- Draftmodus
-- Anzeige neuer Picks seit dem letzten Aktualisieren
-- kompakter oder vollständiger Snapshot
-- lokale Speicherung der Einstellungen
-- installierbar über den Startbildschirm
-- keine Logins, Tokens, Werbung oder Tracker
+- sichtbare Versions- und Statusanzeige
+- Datenalter in Sekunden/Minuten
+- automatische Update-Erkennung mit Ein-Klick-Aktualisierung
+- Network-first-Laden der App-Seite gegen Cache-Probleme
+- automatischer Draftmodus, sobald du in höchstens zwei Picks dran bist
+- Positionszählung im Snapshot
+- Erkennung deutlicher Positions-Runs
+- Zahl der Teams ohne QB bzw. TE bis zu deinem nächsten Pick
+- Online-/Offline-Anzeige
+- kompakter und vollständiger Snapshot bleiben erhalten
 
-## Einmaliges Update auf GitHub Pages
+## Einmaliges GitHub-Update
 
-Die vorhandenen Dateien im Repository durch diese fünf Dateien ersetzen:
+Die Dateien aus diesem Ordner ins bestehende Repository hochladen und die vorhandenen
+Dateien überschreiben:
 
 - index.html
 - manifest.webmanifest
@@ -29,10 +26,6 @@ Die vorhandenen Dateien im Repository durch diese fünf Dateien ersetzen:
 - icon.svg
 - README.md (optional)
 
-Danach bleibt die URL unverändert.
-
-## Wichtige Grenze
-
-Die App sammelt und strukturiert Draftdaten. Aktuelle Expertenrankings, Verletzungen,
-Depth Charts und News werden weiterhin in ChatGPT geprüft, weil diese Daten laufend
-ändern und nicht zuverlässig statisch in der App gepflegt werden können.
+Danach prüft die App künftige veröffentlichte Versionen selbst und zeigt einen
+Aktualisieren-Button an. Das Veröffentlichen neuer Dateien im GitHub-Repository kann
+die App aus Sicherheitsgründen nicht selbst übernehmen.
