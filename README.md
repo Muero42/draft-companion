@@ -1,33 +1,33 @@
-# Draft Companion – Mock-Ready Final 2026 (v7.2.0)
+# Draft Companion – Final Draft Edition 2026 (v8.0.0)
 
-## Neu
+Dies ist die eingefrorene Funktionsversion für die Mock-Draft-Phase und den echten Draft.
 
-### Positionsränge
+## Draft Coach
 
-Für jeden Experten wird zuerst das Overall-Ranking geladen.
+- mehrere gleichwertige Favoriten statt erzwungener Einzelentscheidung
+- getrennte Top-Kandidaten und Alternativen
+- Overall- und Positionsrang
+- Einzelranking jedes verwendeten Experten
+- Abweichung jedes Experten vom gewichteten Panel
+- Konsens und Confidence
+- Value, Reach und faire Draftbereiche
+- Tier-Drop und „letzter Spieler im Tier“
+- Return-Chance
+- Verletzungswarnungen
+- Bye Weeks nur als kleiner Tiebreaker
 
-- Overall-Rang bleibt die primäre Bewertungsgrundlage.
-- QB-, RB-, WR- und TE-Ränge werden daraus zuverlässig abgeleitet.
-- Ein separates Positionsranking überschreibt nur den Positionsrang, wenn es verfügbar ist.
-- Fehlende QB-/RB-/WR-/TE-Endpunkte brechen das Panel nicht mehr ab.
+## Mock Review
 
-Im Draft Coach erscheint je Experte beispielsweise:
+Nach eigenen Picks zeigt die App laufend:
 
-`Pat Fitzmaurice #28 (QB4)`
+- besten bisherigen Pick
+- größtes bisheriges Risiko
+- Value/Reach je eigenem Pick
+- Panel-Rang und ADP, soweit verfügbar
 
-### Sleeper-ADP
+Das Decision Log bleibt für bewusste Abweichungen vom Coach erhalten.
 
-„Alles aktualisieren“ prüft automatisch mehrere FantasyPros-API-Varianten.
+## Entwicklungsstopp
 
-Eine ADP wird nur übernommen, wenn sie in der Antwort ausdrücklich als **Sleeper**
-gekennzeichnet ist. Ein generischer FantasyPros-Composite oder Sleeper-`search_rank`
-wird niemals als Sleeper-ADP ausgegeben.
-
-Falls die API keine eindeutige Sleeper-Quelle liefert, bleibt der manuelle,
-verifizierte Import unter **Erweitert** erhalten. Eine bereits gespeicherte ADP
-wird automatisch weiterverwendet.
-
-## Eingefrorener Stand
-
-Diese Version ist für die Mock-Draft-Phase bestimmt. Weitere Änderungen erfolgen
-nur bei reproduzierbaren Fehlern oder zwingenden Datenkorrekturen.
+Ab v8.0.0 werden bis nach dem echten Draft ausschließlich klar reproduzierbare Fehler
+oder zwingende Datenkorrekturen behoben. Keine weiteren Funktionsversionen.

@@ -15,9 +15,9 @@
     <div>
       <div class="eyebrow">Final Draft Edition 2026</div>
       <h1>Draft Companion</h1>
-      <p>Expertenpanels, echte Sleeper-ADP und Live-Draft-Coach.</p>
+      <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
     </div>
-    <span class="version">v7.2.0</span>
+    <span class="version">v8.0.0</span>
   </header>
 
   <section class="status-card">
@@ -88,6 +88,7 @@
           <button id="logDecisionBtn" class="secondary">Entscheidung protokollieren</button>
           <button id="clearLogBtn" class="danger">Log löschen</button>
         </div>
+        <div id="mockReview" class="review-grid"><div class="notice">Nach dem ersten eigenen Pick erscheint hier die laufende Mock-Auswertung.</div></div>
         <div id="decisionLog" class="log-list"></div>
       </div>
     </details>
@@ -142,6 +143,7 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
+<div class="freeze-note">v8.0 ist die eingefrorene Funktionsversion. Ab jetzt nur noch reproduzierbare Fehlerkorrekturen.</div>
 </main>
 <script type="module" src="app.js"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>

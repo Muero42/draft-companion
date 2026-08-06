@@ -12,7 +12,7 @@ export default {
 async function handleFantasyPros(request,url){
   if(request.method==='OPTIONS') return new Response(null,{headers:cors()});
   if(request.method!=='GET') return json({error:'Nur GET ist erlaubt.'},405);
-  if(url.searchParams.get('health')==='1') return json({ok:true,service:'fantasypros-proxy',version:'7.2.0-overall-fallback-adp-2026'});
+  if(url.searchParams.get('health')==='1') return json({ok:true,service:'fantasypros-proxy',version:'8.0.0-final-draft-edition-2026'});
 
   const path=url.searchParams.get('path')||'';
   if(!path.startsWith('/')||!ALLOWED_PREFIXES.some(prefix=>path.startsWith(prefix))){
