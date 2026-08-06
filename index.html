@@ -17,35 +17,31 @@
       <h1>Draft Companion</h1>
       <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
     </div>
-    <span class="version">v8.1.0</span>
+    <span class="version">v9.0.0</span>
   </header>
 
   <section class="status-card">
     <div><span>FantasyPros</span><b id="onlineState">–</b></div>
     <div><span>Rankings</span><b id="rankingAge">–</b></div>
-    <div><span>Sleeper Draft</span><b id="adpCount">–</b></div>
+    <div><span>Sleeper-ADP</span><b id="adpCount">–</b></div>
     <div><span>Coach bereit</span><b id="qualityMini">–</b></div>
   </section>
 
-  <section class="card">
-    <div class="section-head">
+  <section id="dataSection" class="card collapsible-section">
+    <div class="section-head section-toggle" role="button" tabindex="0" aria-expanded="true">
       <div><span class="step">1</span><h2>Daten aktualisieren</h2></div>
-      <button id="refreshAllBtn" class="primary">Alles aktualisieren</button>
+      <div class="section-actions"><button id="refreshAllBtn" class="primary">Alles aktualisieren</button><span class="toggle-icon">⌃</span></div>
     </div>
-    <div id="apiQuickStatus" class="notice"></div><div id="qualityStatus" class="notice">Datenprüfung läuft …</div>
-    <div class="button-grid">
-      
-    </div>
-    <div id="presetStatus" class="notice">Noch kein Preset angewendet.</div>
-    <div id="panelStatus" class="notice">Noch keine Panel-Rankings geladen.</div>
-    
-    <div id="adpStatus" class="notice">Noch keine verifizierte Sleeper-ADP geladen.</div>
-    <p class="tiny">Keine verifizierte Sleeper-ADP vorhanden. Die App nutzt FantasyPros-Rankings; Reach und Return werden ohne ADP bewusst konservativ behandelt.</p>
-    <p class="tiny">Rankings einmal täglich aktualisieren; am Drafttag erneut kurz vor Beginn. Bye Weeks sind nur ein kleiner Tiebreaker.</p>
+    <div id="dataStatus" class="notice">Datenstatus wird geprüft …</div>
+    <div id="panelSummary" class="panel-summary"></div>
+    <div id="adpStatus" class="notice">Sleeper-ADP wird geprüft …</div>
+    <div id="presetStatus" hidden></div>
+    <div id="panelStatus" hidden></div>
+    <p class="tiny">Rankings einmal täglich aktualisieren; am Drafttag erneut kurz vor Beginn. Sleeper-ADP ist für Reach und Return hilfreich, aber nicht erforderlich. Bye Weeks sind nur ein kleiner Tiebreaker.</p>
   </section>
 
-  <section class="card">
-    <div class="section-head"><div><span class="step">2</span><h2>Draft verbinden</h2></div></div>
+  <section id="draftSection" class="card collapsible-section">
+    <div class="section-head section-toggle" role="button" tabindex="0" aria-expanded="true"><div><span class="step">2</span><h2>Draft verbinden</h2></div><span class="toggle-icon">⌃</span></div>
     <label for="draftInput">Sleeper-Draft-Link oder Draft-ID</label>
     <input id="draftInput" placeholder="https://sleeper.app/draft/nfl/…">
     <div class="three">
@@ -62,7 +58,7 @@
     <div id="draftStatus" class="notice">Noch nicht verbunden.</div>
   </section>
 
-  <section class="card">
+  <section id="coachSection" class="card coach-section">
     <div class="section-head"><div><span class="step">3</span><h2>Draft Coach</h2></div></div>
     <div id="emptyCoach" class="empty-state">
       <b>Hier erscheinen nach dem Verbinden:</b>
@@ -132,7 +128,7 @@
 
     <div class="advanced-section">
       <h3>Verifizierte Sleeper-ADP</h3>
-      <p class="tiny">Nur als Fallback nötig. Die App übernimmt automatisch nur eindeutig als Sleeper gekennzeichnete ADP-Werte. Sleeper-„search_rank“ wird niemals als ADP ausgegeben.</p>
+      <p class="tiny">Optionaler Fallback. Nur eindeutig als Sleeper gekennzeichnete ADP-Werte werden übernommen; „search_rank“ wird niemals als ADP verwendet.</p>
       <label class="file-button" for="adpFile">ADP-Datei auswählen</label>
       <input id="adpFile" type="file" accept=".csv,.json,text/csv,application/json" hidden>
       <hr class="soft-separator">
@@ -143,7 +139,7 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v8.1.0 ist die eingefrorene Funktionsversion. Ab jetzt nur noch reproduzierbare Fehlerkorrekturen.</div>
+<div class="freeze-note">v9.0.0 ist die eingefrorene Funktionsversion. Ab jetzt nur noch reproduzierbare Fehlerkorrekturen.</div>
 </main>
 <script type="module" src="app.js"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>

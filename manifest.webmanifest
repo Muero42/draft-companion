@@ -1,11 +1,11 @@
 {
-  "name": "Draft Companion – Final Draft Edition 2026",
+  "name": "Draft Companion – Final Refactor 2026",
   "short_name": "Draft Companion",
   "start_url": "./",
   "display": "standalone",
   "background_color": "#08111f",
   "theme_color": "#0b1220",
-  "description": "Final Draft Edition 2026 v8.1.0 mit vereinfachtem Status, Panelübersicht und automatischem Coach-Fokus.",
+  "description": "Bereinigte finale Draft-Version mit verständlichem Status und automatischem Coach-Fokus.",
   "icons": [
     {
       "src": "icon.svg",
