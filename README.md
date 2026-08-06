@@ -1,30 +1,33 @@
-# Draft Companion – Draft Edition 2026 (v6.0.0)
+# Draft Companion – Final Draft Edition 2026 (v7.0.0)
 
-Dies ist die aufgeräumte und funktional eingefrorene Draft-Version.
+Diese Version friert den Funktionsumfang bis nach dem echten Draft ein.
 
-## Hauptansicht
+## Kernfunktionen
 
-1. Daten aktualisieren
-2. Draft verbinden
-3. Draft Coach
-
-API-Diagnose, Expertenverwaltung, Gewichtung, Positionspanels und Backups befinden sich unter **Erweitert**.
-
-## Wichtige Verbesserungen
-
-- „Jetzt neu laden“-Hinweis entfernt
-- Buttons logisch gruppiert
-- Ein zentraler Button „Alles aktualisieren“
+- FantasyPros-HOF-API über Cloudflare-Proxy
+- frei gewichtete Expertenpanels
+- Positionspanels für QB, RB, WR und TE
+- robuste Verarbeitung fehlender Positionsrankings einzelner Experten
+- Einzelranking jedes verwendeten Experten direkt in jeder Spielerkarte
+- Konsens-/Streitindikator und datenbasierte Confidence
 - mehrere gleichwertige Favoriten statt erzwungener Einzelentscheidung
-- Bye Weeks nur als schwacher Tiebreaker
-- Rankings älter als 24 Stunden werden markiert
-- fehlende Positionsrankings einzelner Experten brechen nicht mehr das gesamte Panel ab
-- fehlende Experten werden transparent protokolliert
-- Panels werden mit den verfügbaren Experten weiterberechnet
-- Standard-, RB-, WR-, QB-, TE- und Pat-Panels bleiben vorbereitet
-- verifizierte Sleeper-ADP bleibt zwingend getrennt von `search_rank`
-- Backup enthält niemals den API-Key
+- Tier-Drop, Value, Reach, Return und Verletzungsstatus
+- Bye Weeks nur als kleiner Tiebreaker
+- Live-Sleeper-Draft und ChatGPT-Snapshot
+- Decision Log und einfache Mock-Nachbereitung
+- Backup ohne API-Key
 
-## Eingefrorener Funktionsumfang
+## Update
 
-Bis nach dem echten Draft werden nur noch reproduzierbare Fehler und zwingende Datenprobleme korrigiert.
+Alle acht Dateien ins Repository-Hauptverzeichnis hochladen:
+
+- `_worker.js`
+- `app.js`
+- `index.html`
+- `styles.css`
+- `sw.js`
+- `manifest.webmanifest`
+- `icon.svg`
+- `README.md`
+
+Danach veröffentlicht Cloudflare automatisch.

@@ -1,17 +1,10 @@
 {
-  "name": "Draft Companion – Draft Edition 2026",
-  "short_name": "Draft Companion",
-  "start_url": "./",
-  "display": "standalone",
-  "background_color": "#0b1020",
-  "theme_color": "#111827",
-  "icons": [
-    {
-      "src": "icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
-  ],
-  "description": "Aufgeräumte finale Draft-Version mit Expertenpanels, verifizierter ADP und robustem Live-Draft-Coach."
+  "name":"Draft Companion – Final Draft Edition 2026",
+  "short_name":"Draft Companion",
+  "start_url":"./",
+  "display":"standalone",
+  "background_color":"#08111f",
+  "theme_color":"#0b1220",
+  "description":"Finale Draft-Version mit Expertenvergleich, verifizierter Sleeper-ADP und Live-Draft-Coach.",
+  "icons":[{"src":"icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}]
 }
