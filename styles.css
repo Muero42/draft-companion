@@ -18,3 +18,5 @@
 .review-score{font-weight:900;font-size:1.1rem}
 .tag.info{background:#172b4f;color:#bdd3ff}
 @media(max-width:540px){.expert-rank{grid-template-columns:1fr auto}.expert-rank .delta{grid-column:1/-1}}
+
+.ready-note{color:#8fd3ff}
