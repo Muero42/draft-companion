@@ -1,4 +1,4 @@
-# Draft Companion – Final Draft Edition 2026 (v8.0.0)
+# Draft Companion – Final Draft Edition 2026 (v8.0.1)
 
 Dies ist die eingefrorene Funktionsversion für die Mock-Draft-Phase und den echten Draft.
 
@@ -29,5 +29,5 @@ Das Decision Log bleibt für bewusste Abweichungen vom Coach erhalten.
 
 ## Entwicklungsstopp
 
-Ab v8.0.0 werden bis nach dem echten Draft ausschließlich klar reproduzierbare Fehler
+Ab v8.0.1 werden bis nach dem echten Draft ausschließlich klar reproduzierbare Fehler
 oder zwingende Datenkorrekturen behoben. Keine weiteren Funktionsversionen.

@@ -5,7 +5,7 @@
   "display": "standalone",
   "background_color": "#08111f",
   "theme_color": "#0b1220",
-  "description": "Eingefrorene Finalversion mit mehreren Favoriten, Einzelrankings, Tier-Drops, Value, Return und laufender Mock-Auswertung.",
+  "description": "Final Draft Edition 2026 v8.0.1 mit UI-Feinschliff.",
   "icons": [
     {
       "src": "icon.svg",
