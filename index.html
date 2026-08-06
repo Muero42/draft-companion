@@ -7,128 +7,219 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <title>Draft Companion – Final 2026</title>
+  <title>Draft Companion – Draft Edition 2026</title>
 </head>
 <body>
 <main>
-  <section class="card status-grid">
-    <div><b>Final 2026 · v5.2.0</b><span>Version</span></div>
-    <div><b id="onlineState">–</b><span>Status</span></div>
-    <div><b id="dataAge">–</b><span>Datenalter</span></div>
+<main class="app-shell">
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Finale Draft-Version 2026</div>
+      <h1>Draft Companion</h1>
+      <p>Expertenpanels, verifizierte Sleeper-ADP und Live-Draft-Coach.</p>
+    </div>
+    <div class="version-pill">v6.0.0</div>
+  </header>
+
+  <section class="status-grid">
+    <div class="mini-card">
+      <span>Verbindung</span>
+      <b id="onlineState">–</b>
+    </div>
+    <div class="mini-card">
+      <span>Datenalter</span>
+      <b id="dataAge">–</b>
+    </div>
+    <div class="mini-card">
+      <span>Datenqualität</span>
+      <b id="qualityMini">–</b>
+    </div>
   </section>
 
-  <div id="updateNotice" class="card update-notice" hidden>
-    <b>Neue Version geladen</b>
-    <span>App einmal neu öffnen, um sie zu übernehmen.</span>
-    <button id="reloadAppBtn" class="secondary" type="button">Jetzt neu laden</button>
-  </div>
+  <section class="card primary-card">
+    <div class="section-heading">
+      <div>
+        <span class="step">1</span>
+        <h2>Daten aktualisieren</h2>
+      </div>
+      <button id="refreshAllBtn" class="primary">Alles aktualisieren</button>
+    </div>
 
-  <h1>Draft Companion</h1>
-  <p class="sub">Eigene Expertenpanels · echte Sleeper-ADP · Live-Draft-Coach.</p>
-
-  <details class="card" open>
-    <summary>1. FantasyPros-API</summary>
-    <label for="apiKey">API-Key</label>
-    <input id="apiKey" type="password" autocomplete="off" placeholder="Nur lokal auf diesem Gerät gespeichert">
-    <div class="two">
-      <button id="toggleKeyBtn" class="secondary" type="button">Key anzeigen</button>
-      <button id="clearKeyBtn" class="danger" type="button">Key löschen</button>
-    </div>
-    <div class="two">
-      <div><label for="season">Saison</label><input id="season" value="2026" inputmode="numeric"></div>
-      <div><label for="scoring">Scoring</label><select id="scoring"><option value="HALF">Half PPR</option><option value="PPR">PPR</option><option value="STD">Standard</option></select></div>
-    </div>
-    <div class="two">
-      <button id="diagnoseBtn">API diagnostizieren</button>
-      <button id="loadExpertsBtn" class="secondary">Experten laden</button>
-    </div>
-    <pre id="diagnostic" class="diagnostic">Noch kein Test durchgeführt.</pre>
-  </details>
-
-  <details class="card" open>
-    <summary>2. Experten & Panels</summary>
-    <div class="two">
-      <div><label for="expertSearch">Experten suchen</label><input id="expertSearch" placeholder="Name oder Seite"></div>
-      <div><label for="activePanel">Aktives Panel</label><select id="activePanel"></select></div>
-    </div>
-    <button id="applyRecommendedBtn">Empfohlene Experten & Gewichte einrichten</button>
-    <div id="presetStatus" class="notice">Noch kein Preset angewendet.</div>
-    <div class="three">
-      <button id="newPanelBtn" class="secondary">Neues Panel</button>
-      <button id="renamePanelBtn" class="secondary">Umbenennen</button>
-      <button id="deletePanelBtn" class="danger">Löschen</button>
-    </div>
-    <div id="expertsList" class="empty">Noch keine Experten geladen.</div>
-    <div class="two">
-      <button id="savePanelBtn" class="secondary">Panel speichern</button>
-      <button id="loadRanksBtn">Alle Panel-Rankings laden</button>
-    </div>
-    <div id="panelStatus" class="notice">Keine Panel-Ränge gespeichert.</div>
-
-    <h3>Positionszuordnung</h3>
-    <div class="four">
-      <div><label for="qbPanel">QB</label><select id="qbPanel"></select></div>
-      <div><label for="rbPanel">RB</label><select id="rbPanel"></select></div>
-      <div><label for="wrPanel">WR</label><select id="wrPanel"></select></div>
-      <div><label for="tePanel">TE</label><select id="tePanel"></select></div>
-    </div>
-    <p class="tiny"><strong>Gewichtung:</strong> Rechts neben jedem Experten steht sein Anteil im aktiven Panel. Die Werte müssen nicht exakt 100 ergeben; die App normalisiert sie automatisch. Der Draft-Coach verwendet je Position das zugeordnete Panel.</p>
-    <p class="tiny"><strong>Bye Weeks:</strong> werden angezeigt, aber nur als sehr kleiner Tiebreaker berücksichtigt. Ein klar stärkerer Spieler bleibt immer vorne.</p>
-  </details>
-
-  <details class="card" open>
-    <summary>3. Sleeper-ADP</summary>
-    <label for="adpFile">CSV/JSON mit echter Sleeper-ADP</label>
-    <input id="adpFile" type="file" accept=".csv,.json,text/csv,application/json">
-    <div id="adpStatus" class="notice">Keine verifizierte Sleeper-ADP gespeichert.</div>
-    <p class="tiny"><strong>Schutzregel:</strong> Sleeper <code>search_rank</code> ist nur Sortierhilfe und niemals ADP.</p>
-  </details>
-
-  <details class="card">
-    <summary>4. Sicherung & Datenqualität</summary>
     <div id="qualityStatus" class="notice">Datenprüfung läuft …</div>
-    <div class="two">
-      <button id="backupBtn" class="secondary" type="button">Einstellungen sichern</button>
-      <label class="file-button" for="restoreFile">Sicherung einlesen</label>
-    </div>
-    <input id="restoreFile" type="file" accept=".json,application/json" hidden>
-    <button id="clearDraftDataBtn" class="danger" type="button">Nur Draft-Verbindung zurücksetzen</button>
-    <p class="tiny">Die Sicherung enthält Panels, Rankings, ADP und Einstellungen – niemals deinen API-Key.</p>
-  </details>
 
-  <details class="card" open>
-    <summary>5. Draft verbinden</summary>
+    <div class="action-grid">
+      <button id="loadExpertsBtn" class="secondary">Experten laden</button>
+      <button id="applyRecommendedBtn" class="secondary">Empfohlenes Preset anwenden</button>
+      <button id="loadAllRanksBtn" class="secondary">Panel-Rankings laden</button>
+    </div>
+
+    <div id="presetStatus" class="notice">Noch kein Preset angewendet.</div>
+    <div id="panelStatus" class="notice">Keine Panel-Ränge gespeichert.</div>
+    <div id="adpStatus" class="notice">Noch keine verifizierte Sleeper-ADP geladen.</div>
+
+    <label class="file-button" for="adpFile">Sleeper-ADP importieren</label>
+    <input id="adpFile" type="file" accept=".csv,.json,text/csv,application/json" hidden>
+
+    <p class="tiny">
+      Rankings werden mindestens einmal täglich empfohlen. Am Drafttag erneut kurz vor Beginn aktualisieren.
+      Bye Weeks dienen nur als schwacher Tiebreaker.
+    </p>
+  </section>
+
+  <section class="card primary-card">
+    <div class="section-heading">
+      <div>
+        <span class="step">2</span>
+        <h2>Draft verbinden</h2>
+      </div>
+    </div>
+
     <label for="draftInput">Sleeper-Draft-Link oder Draft-ID</label>
     <input id="draftInput" placeholder="https://sleeper.app/draft/nfl/…">
-    <div class="two">
-      <div><label for="slot">Mein Slot</label><select id="slot"></select></div>
-      <div><label for="topN">Top Spieler</label><select id="topN"><option>25</option><option selected>35</option><option>50</option></select></div>
+
+    <div class="three">
+      <div>
+        <label for="slot">Mein Slot</label>
+        <select id="slot"></select>
+      </div>
+      <div>
+        <label for="topN">Spieler anzeigen</label>
+        <select id="topN">
+          <option value="25">25</option>
+          <option value="35" selected>35</option>
+          <option value="50">50</option>
+        </select>
+      </div>
+      <div>
+        <label for="snapshotMode">Snapshot</label>
+        <select id="snapshotMode">
+          <option value="compact" selected>Kompakt</option>
+          <option value="full">Vollständig</option>
+        </select>
+      </div>
     </div>
-    <button id="refreshBtn">Draft analysieren</button>
-    <label class="switch-row"><input id="autoRefresh" type="checkbox"> Automatisch alle 10 Sekunden aktualisieren</label>
+
+    <div class="action-grid">
+      <button id="refreshBtn" class="primary">Draft analysieren</button>
+      <button id="copyBtn" class="secondary" disabled>Snapshot kopieren</button>
+      <button id="shareBtn" class="secondary" disabled>Teilen</button>
+    </div>
+
+    <label class="switch-row">
+      <input id="autoRefresh" type="checkbox">
+      Automatisch alle 10 Sekunden aktualisieren
+    </label>
+
     <div id="draftStatus" class="notice">Noch nicht verbunden.</div>
-  </details>
+  </section>
 
-  <section id="draftSummary" class="card" hidden>
-    <div class="status-grid">
-      <div><b id="currentPick">–</b><span>Aktueller Pick</span></div>
-      <div><b id="nextPick">–</b><span>Nächster eigener</span></div>
-      <div><b id="untilPick">–</b><span>Picks bis dahin</span></div>
+  <section class="card primary-card">
+    <div class="section-heading">
+      <div>
+        <span class="step">3</span>
+        <h2>Draft Coach</h2>
+      </div>
     </div>
-    <h2>Draft Coach</h2>
-    <div id="teamFit" class="notice"></div>
-    <div id="coachList"></div>
+
+    <div id="draftSummary" hidden>
+      <div id="teamSummary" class="summary-grid"></div>
+      <div id="coachList"></div>
+
+      <details class="details-clean">
+        <summary>Snapshot anzeigen</summary>
+        <textarea id="snapshot" rows="20" readonly></textarea>
+      </details>
+    </div>
+
+    <div id="emptyCoach" class="empty-state">
+      Draft verbinden, um Favoriten, Value, Return und Alternativen zu sehen.
+    </div>
   </section>
 
-  <section class="card">
-    <label for="snapshot">Snapshot</label>
-    <textarea id="snapshot" readonly placeholder="Nach dem Aktualisieren erscheint hier der Snapshot."></textarea>
-  </section>
+  <details class="card advanced-card">
+    <summary>⚙️ Erweitert</summary>
 
-  <div class="sticky">
-    <button id="copyBtn" disabled>Kopieren</button>
-    <button id="shareBtn" class="secondary" disabled>Teilen</button>
-  </div>
+    <div class="advanced-section">
+      <h3>FantasyPros API</h3>
+      <label for="apiKey">API-Key</label>
+      <input id="apiKey" type="password" autocomplete="off" placeholder="Nur lokal auf diesem Gerät gespeichert">
+      <div class="two">
+        <button id="toggleKeyBtn" class="secondary" type="button">Key anzeigen</button>
+        <button id="clearKeyBtn" class="danger" type="button">Key löschen</button>
+      </div>
+
+      <div class="three">
+        <div>
+          <label for="season">Saison</label>
+          <input id="season" value="2026" inputmode="numeric">
+        </div>
+        <div>
+          <label for="scoring">Scoring</label>
+          <select id="scoring">
+            <option value="STD">Standard</option>
+            <option value="HALF" selected>Half PPR</option>
+            <option value="PPR">PPR</option>
+          </select>
+        </div>
+        <div>
+          <label for="activePanel">Aktives Panel</label>
+          <select id="activePanel"></select>
+        </div>
+      </div>
+
+      <div class="action-grid">
+        <button id="diagnoseBtn" class="secondary">API diagnostizieren</button>
+        <button id="newPanelBtn" class="secondary">Neues Panel</button>
+        <button id="renamePanelBtn" class="secondary">Umbenennen</button>
+        <button id="deletePanelBtn" class="danger">Panel löschen</button>
+      </div>
+
+      <pre id="diagnostic" class="diagnostic">Noch keine Diagnose ausgeführt.</pre>
+    </div>
+
+    <div class="advanced-section">
+      <h3>Experten & Gewichtung</h3>
+
+      <label for="expertSearch">Experten suchen</label>
+      <input id="expertSearch" placeholder="Name oder Quelle">
+
+      <div id="expertsList"></div>
+
+      <div class="two">
+        <button id="savePanelBtn" class="secondary">Gewichte speichern</button>
+        <button id="loadPanelRanksBtn" class="secondary">Aktives Panel laden</button>
+      </div>
+
+      <p class="tiny">
+        Die Zahlen rechts neben den Experten sind Gewichte. Sie müssen nicht exakt 100 ergeben;
+        die App normalisiert automatisch.
+      </p>
+    </div>
+
+    <div class="advanced-section">
+      <h3>Positionspanels</h3>
+      <div class="two">
+        <div><label for="qbPanel">QB</label><select id="qbPanel"></select></div>
+        <div><label for="rbPanel">RB</label><select id="rbPanel"></select></div>
+      </div>
+      <div class="two">
+        <div><label for="wrPanel">WR</label><select id="wrPanel"></select></div>
+        <div><label for="tePanel">TE</label><select id="tePanel"></select></div>
+      </div>
+    </div>
+
+    <div class="advanced-section">
+      <h3>Sicherung</h3>
+      <div class="two">
+        <button id="backupBtn" class="secondary" type="button">Einstellungen sichern</button>
+        <label class="file-button" for="restoreFile">Sicherung einlesen</label>
+      </div>
+      <input id="restoreFile" type="file" accept=".json,application/json" hidden>
+      <button id="clearDraftDataBtn" class="danger" type="button">Nur Draft-Verbindung zurücksetzen</button>
+      <p class="tiny">Backups enthalten niemals den API-Key.</p>
+    </div>
+  </details>
+</main>
 </main>
 <script type="module" src="app.js"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>

@@ -1,5 +1,5 @@
 {
-  "name": "Draft Companion – Final 2026",
+  "name": "Draft Companion – Draft Edition 2026",
   "short_name": "Draft Companion",
   "start_url": "./",
   "display": "standalone",
@@ -13,5 +13,5 @@
       "purpose": "any maskable"
     }
   ],
-  "description": "Finale Draft-Version mit voreingestellten Expertenpanels, sichtbaren Gewichtungen und mehreren Pick-Favoriten."
+  "description": "Aufgeräumte finale Draft-Version mit Expertenpanels, verifizierter ADP und robustem Live-Draft-Coach."
 }

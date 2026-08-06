@@ -1,4 +1,4 @@
-const CACHE="draft-companion-final-2026-v5.2.0";
+const CACHE="draft-companion-v6.0.0-draft-edition";
 const FILES=['./','index.html','styles.css','app.js','manifest.webmanifest','icon.svg'];
 self.addEventListener('install',e=>{self.skipWaiting();e.waitUntil(caches.open(CACHE).then(c=>c.addAll(FILES)))});
 self.addEventListener('activate',e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==CACHE).map(x=>caches.delete(x)))));self.clients.claim()});

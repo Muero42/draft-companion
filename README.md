@@ -1,22 +1,30 @@
-# Draft Companion – Final 2026 (v5.2.0)
+# Draft Companion – Draft Edition 2026 (v6.0.0)
 
-## Neu in v5.2.0
+Dies ist die aufgeräumte und funktional eingefrorene Draft-Version.
 
-- Ein-Klick-Preset für Standard-, RB-, WR-, QB-, TE- und Pat-Panels
-- gewünschte Experten werden automatisch in der FantasyPros-Expertenliste gesucht
-- nicht verfügbare Experten werden transparent genannt und nicht erfunden
-- sichtbare Gewichte und normalisierte effektive Prozentanteile
-- Rankings älter als 24 Stunden werden aktiv angemahnt
-- mehrere nahezu gleichwertige Favoriten pro Pick statt erzwungener Einzelentscheidung
-- Bye Weeks werden angezeigt und höchstens als sehr kleiner Tiebreaker berücksichtigt
-- klare stärkere Spieler werden niemals wegen einer Bye Week ausgeschlossen
+## Hauptansicht
 
-## Vorgesehenes Experten-Preset
+1. Daten aktualisieren
+2. Draft verbinden
+3. Draft Coach
 
-Die App versucht – sofern über FantasyPros verfügbar – unter anderem:
-Pat Fitzmaurice, Justin Boone, Nick Mariano, Sean Koerner, Andrew Erickson,
-Derek Brown und Matt Harmon zuzuordnen. Fehlende Experten werden gemeldet;
-die App verwendet nur tatsächlich von der API gelieferte Ranglisten.
+API-Diagnose, Expertenverwaltung, Gewichtung, Positionspanels und Backups befinden sich unter **Erweitert**.
 
-Der Funktionsumfang bleibt bis nach dem echten Draft eingefroren. Weitere Versionen
-gibt es nur bei reproduzierbaren Fehlern oder zwingenden Datenkorrekturen.
+## Wichtige Verbesserungen
+
+- „Jetzt neu laden“-Hinweis entfernt
+- Buttons logisch gruppiert
+- Ein zentraler Button „Alles aktualisieren“
+- mehrere gleichwertige Favoriten statt erzwungener Einzelentscheidung
+- Bye Weeks nur als schwacher Tiebreaker
+- Rankings älter als 24 Stunden werden markiert
+- fehlende Positionsrankings einzelner Experten brechen nicht mehr das gesamte Panel ab
+- fehlende Experten werden transparent protokolliert
+- Panels werden mit den verfügbaren Experten weiterberechnet
+- Standard-, RB-, WR-, QB-, TE- und Pat-Panels bleiben vorbereitet
+- verifizierte Sleeper-ADP bleibt zwingend getrennt von `search_rank`
+- Backup enthält niemals den API-Key
+
+## Eingefrorener Funktionsumfang
+
+Bis nach dem echten Draft werden nur noch reproduzierbare Fehler und zwingende Datenprobleme korrigiert.
