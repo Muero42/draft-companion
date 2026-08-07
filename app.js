@@ -381,6 +381,28 @@ const PRESETS={
   te:{name:'TE',list:[['Pat Fitzmaurice',40],['Justin Boone',25],['Andrew Erickson',20],['Derek Brown',15],['Sean Koerner',15]],max:4}
 };
 function findExpert(name){const n=norm(name);return experts.find(e=>norm(e.name)===n)||experts.find(e=>name.toLowerCase().split(/\s+/).filter(x=>x.length>2).every(p=>e.name.toLowerCase().includes(p)))}
+function presetCandidateIds(){
+  return [...new Set(Object.values(PRESETS).flatMap(p=>p.list.map(([name])=>findExpert(name)?.id).filter(Boolean)))];
+}
+function backfillPresetPanels(){
+  const changes=[];
+  for(const[id,p]of Object.entries(PRESETS)){
+    const before=Object.keys(panels[id]?.members||{});
+    const members={};
+    for(const[name,w]of p.list){
+      const e=findExpert(name);
+      if(!e)continue;
+      const c=rankCache[e.id];
+      if(c?.verifiedIndividual&&!c?.duplicateOf&&Object.keys(members).length<p.max)members[e.id]=w;
+    }
+    panels[id]={name:p.name,members};
+    const after=Object.keys(members);
+    if(before.join('|')!==after.join('|'))changes.push(`${p.name}: ${after.map(eid=>rankCache[eid]?.expertName||experts.find(e=>String(e.id)===String(eid))?.name||eid).join(' + ')||'keine'}`);
+  }
+  const pat=findExpert('Pat Fitzmaurice');
+  panels.pat={name:'Pat einzeln',members:pat&&rankCache[pat.id]?.verifiedIndividual&&!rankCache[pat.id]?.duplicateOf?{[pat.id]:100}:{}};
+  return changes;
+}
 function applyPreset(){if(!experts.length)throw new Error('Zuerst Experten laden.');const missing=[];for(const[id,p]of Object.entries(PRESETS)){const members={};for(const[name,w]of p.list){const e=findExpert(name);if(e&&Object.keys(members).length<p.max)members[e.id]=w;else if(!e)missing.push(name)}panels[id]={name:p.name,members}}const pat=findExpert('Pat Fitzmaurice');panels.pat={name:'Pat einzeln',members:pat?{[pat.id]:100}:{}};positionPanels={QB:'qb',RB:'rb',WR:'wr',TE:'te'};activePanelId='standard';panelRanks={};persist();renderAll();els.presetStatus.className='notice ok';els.presetStatus.textContent=`Preset eingerichtet.${missing.length?` Nicht gefunden: ${[...new Set(missing)].join(', ')}.`:''}`}
 
 function panelOptions(el,value){el.innerHTML='';for(const[id,p]of Object.entries(panels)){const o=new Option(p.name,id);o.selected=id===value;el.add(o)}}
@@ -558,7 +580,8 @@ function computePanel(panelId,candidateKeys=null){
 function assignTiers(map){for(const pos of ['QB','RB','WR','TE']){const rows=Object.values(map).filter(x=>x.pos===pos).sort((a,b)=>a.rank-b.rank);let tier=1,prev=null;for(const row of rows){if(prev!=null&&row.rank-prev>=4)tier++;row.tier=tier;prev=row.rank}}}
 async function loadAllRanks(){
   saveCurrentPanel();
-  const ids=[...new Set(Object.values(panels).flatMap(p=>Object.keys(p.members||{})))];
+  const selectedIds=[...new Set(Object.values(panels).flatMap(p=>Object.keys(p.members||{})))];
+  const ids=[...new Set([...selectedIds,...presetCandidateIds()])];
   if(!ids.length)throw new Error('Preset oder Expertenauswahl fehlt.');
   if(els.loadAllRanksBtn)els.loadAllRanksBtn.disabled=true;
   const skipped=[];
@@ -578,6 +601,8 @@ async function loadAllRanks(){
       }
     }
     skipped.push(...flagDuplicateExpertRankings(ids));
+    const backfilled=backfillPresetPanels();
+    if(backfilled.length)skipped.push(`Preset-Backfill: ${backfilled.join(' · ')}`);
     const failedExperts=ids.filter(id=>!rankCache[id]?.verifiedIndividual);
     if(failedExperts.length)skipped.push(...failedExperts.map(id=>`${rankCache[id]?.expertName||id}: derzeit nicht automatisch verfügbar – übersprungen${rankCache[id]?.error?` (${rankCache[id].error})`:''}`));
     const verifiedIds=ids.filter(id=>rankCache[id]?.verifiedIndividual&&!rankCache[id]?.duplicateOf);
@@ -862,7 +887,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,coach,chosen,reason,at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'9.6.0',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'9.6.1',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
