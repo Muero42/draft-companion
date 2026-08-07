@@ -689,25 +689,29 @@ function valueLabel(current,adp){
 function scoreCandidate(p,current,next,state,available){
   const r=rankFor(p.name,p.pos),a=Number(adp[norm(p.name)]);
   if(!r)return{score:-999,r:null,a,reasons:['Panel-Rang fehlt']};
-  /* Kein 100er-Deckel als Ausgangspunkt: Ranking, Value, Need und Tier sollen sichtbar differenzieren. */
-  let score=85-clamp((r.rank-1)*.55,0,62),reasons=[];
+  /* v9.7.1: Panel-first. Return ist Urgency, kein Bonus fürs Warten. */
+  let score=96-clamp((r.rank-current)*1.05,0,70)-clamp((current-r.rank)*.18,0,4),reasons=[];
   const value=valueLabel(current,a);
-  if(Number.isFinite(value.value))score+=clamp(value.value*.45,-12,14);
+  if(Number.isFinite(value.value))score+=clamp(value.value*.18,-5,5);
   reasons.push(value.label);
-  score+=state.need[p.pos]||0;
-  if((state.need[p.pos]||0)>=7)reasons.push(`${p.pos}-Need`);
+  score+=clamp((state.need[p.pos]||0)*.30,-2,2.5);
+  if((state.need[p.pos]||0)>=7)reasons.push(`${p.pos}-Need (kleiner Faktor)`);
   const tier=tierContext(p,r,available);
-  if(tier.isLastInTier){score+=7;reasons.push(`Letzter Spieler in Tier ${r.tier}`)}
-  else if(tier.sameTierCount<=2){score+=5;reasons.push(`Tier fast leer (${tier.sameTierCount})`)}
-  if(tier.tierGap!=null&&tier.tierGap>=8){score+=4;reasons.push(`Tier-Drop +${tier.tierGap.toFixed(0)}`)}
+  if(tier.isLastInTier){score+=3;reasons.push(`Letzter Spieler in Tier ${r.tier}`)}
+  else if(tier.sameTierCount<=2){score+=2;reasons.push(`Tier fast leer (${tier.sameTierCount})`)}
+  if(tier.tierGap!=null&&tier.tierGap>=8){score+=2;reasons.push(`Tier-Drop +${tier.tierGap.toFixed(0)}`)}
   const agree=agreement(r.sd,r.n);
-  if(agree==='Sehr hoher Konsens')score+=4;
-  else if(agree==='Stark umstritten')score-=4;
+  if(agree==='Sehr hoher Konsens')score+=2;
+  else if(agree==='Stark umstritten')score-=3;
   if(p.injury){score-=10;reasons.push(`Injury ${p.injury}`)}
   if(p.bye&&(state.byes[p.pos]?.[p.bye]||0)>=2){score-=1;reasons.push(`Bye ${p.bye} (nur Tiebreaker)`)}
   const ret=returnChance(next,a);
-  if(ret!=null&&ret>.8)reasons.push('Sehr hohe Return-Chance');
-  if(ret!=null&&ret<.25)reasons.push('Kaum Return-Chance');
+  if(ret!=null){
+    score+=clamp((.50-ret)*18,-9,9);
+    if(ret>=.80)reasons.push(`Warten attraktiv (${Math.round(ret*100)}% Return)`);
+    else if(ret<=.25)reasons.push(`Jetzt-Pick dringlich (${Math.round(ret*100)}% Return)`);
+    else if(ret>=.65)reasons.push(`Gute Return-Chance (${Math.round(ret*100)}%)`);
+  }
   const expertBase=r.n>=5?4:r.n>=3?1:r.n===2?-5:-12;
   const confidence=clamp(Math.round(88-r.sd*2+(Number.isFinite(a)?4:-10)+expertBase),35,96);
   return{score:Math.round(clamp(score,0,100)),r,a,ret,reasons,agree,sameTier:tier.sameTierCount,tierGap:tier.tierGap,confidence,valueKind:value.kind};
@@ -909,7 +913,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,coach,chosen,reason,at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'9.7.0',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'9.7.1',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
