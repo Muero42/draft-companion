@@ -1,4 +1,4 @@
-# Draft Companion – Final Draft Edition 2026 (v8.1.0)
+# Draft Companion – Final Draft Edition 2026 (v9.0.1)
 
 ## Letzter UI-Feinschliff vor den Mocks
 
@@ -12,5 +12,5 @@
 
 ## Entwicklungsstopp
 
-Ab v8.1.0 werden bis nach dem echten Draft ausschließlich klar reproduzierbare Fehler
+Ab v9.0.1 werden bis nach dem echten Draft ausschließlich klar reproduzierbare Fehler
 oder zwingende Datenkorrekturen behoben.
