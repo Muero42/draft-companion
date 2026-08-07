@@ -667,7 +667,7 @@ function panelFor(pos){
 }
 function rankFor(name,pos){const id=panelFor(pos),r=panelRanks[id]?.[norm(name)];return r?{...r,panel:panels[id]?.name||id,panelId:id}:null}
 function agreement(sd,n){if(!n||n<2)return'Einzelmeinung';if(sd<=3)return'Sehr hoher Konsens';if(sd<=7)return'Hoher Konsens';if(sd<=12)return'Umstritten';return'Stark umstritten'}
-function returnChance(next,a){if(!Number.isFinite(next)||!Number.isFinite(a))return null;return clamp(1/(1+Math.exp((next-a)/6)),.01,.99)}
+function returnChance(next,a){if(!Number.isFinite(next)||!Number.isFinite(a))return null;/* P(Spieler ist am Folgepick noch da): ADP als Marktmittel, bewusst enger als die alte Kurve. */return clamp(1/(1+Math.exp((next-a)/4)),.01,.99)}
 function rosterState(mine,players){const c={QB:0,RB:0,WR:0,TE:0},byes={QB:{},RB:{},WR:{},TE:{}};for(const pick of mine){const p=pinfo(String(pick.player_id),pick.metadata,players);if(c[p.pos]!=null){c[p.pos]++;if(p.bye)byes[p.pos][p.bye]=(byes[p.pos][p.bye]||0)+1}}const need={QB:c.QB===0?8:c.QB===1?0:-7,TE:c.TE===0?7:c.TE===1?0:-6,RB:c.RB<2?8:c.RB<4?4:c.RB<6?1:-2,WR:c.WR<3?8:c.WR<5?4:c.WR<7?1:-2};return{counts:c,need,byes}}
 
 function tierContext(player,rank,available){
@@ -689,7 +689,8 @@ function valueLabel(current,adp){
 function scoreCandidate(p,current,next,state,available){
   const r=rankFor(p.name,p.pos),a=Number(adp[norm(p.name)]);
   if(!r)return{score:-999,r:null,a,reasons:['Panel-Rang fehlt']};
-  let score=100-clamp((r.rank-1)*.65,0,70),reasons=[];
+  /* Kein 100er-Deckel als Ausgangspunkt: Ranking, Value, Need und Tier sollen sichtbar differenzieren. */
+  let score=85-clamp((r.rank-1)*.55,0,62),reasons=[];
   const value=valueLabel(current,a);
   if(Number.isFinite(value.value))score+=clamp(value.value*.45,-12,14);
   reasons.push(value.label);
@@ -741,6 +742,7 @@ async function refresh(){
       total=teams*rounds,
       current=Math.min(picks.length+1,total),
       next=nextOwn(current,teams,slot,total),
+      returnPick=next===current?nextOwn(current+1,teams,slot,total):next,
       mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no),
       drafted=new Set(picks.map(p=>String(p.player_id)));
 
@@ -761,11 +763,11 @@ async function refresh(){
 
     const state=rosterState(mine,players);
     const scored=rankedAvailable
-      .map(p=>({p,...scoreCandidate(p,current,next,state,rankedAvailable)}))
+      .map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable)}))
       .filter(x=>x.r)
       .sort((a,b)=>b.score-a.score||a.r.rank-b.r.rank);
 
-    renderCoach(scored,state,current,next);
+    renderCoach(scored,state,current,returnPick);
     renderMockReview(mine,players);
 
     const best=scored[0]?.score??0,
@@ -778,6 +780,19 @@ async function refresh(){
       rankingStamp=rankingUpdated?new Date(rankingUpdated).toLocaleString('de-DE'):'unbekannt',
       adpStamp=adpMeta.updated?new Date(adpMeta.updated).toLocaleString('de-DE'):'nicht geladen';
 
+    const researchCandidates=scored.filter((x,i)=>{
+      const marketGap=Number.isFinite(x.a)?Math.abs(x.a-x.r.rank):0;
+      const lateRb=x.p.pos==='RB'&&x.r.rank>=45&&x.r.rank<=140;
+      return i<12&&(x.p.injury||x.r.sd>=8||marketGap>=8)||lateRb&&i<45;
+    }).slice(0,12).map(x=>{
+      const flags=[];
+      if(x.p.injury)flags.push(`Injury ${x.p.injury}`);
+      if(x.r.sd>=8)flags.push(`Expertenstreuung ${x.r.sd.toFixed(1)}`);
+      if(Number.isFinite(x.a)&&Math.abs(x.a-x.r.rank)>=8)flags.push(`Panel/ADP Gap ${Math.round(x.a-x.r.rank)}`);
+      if(x.p.pos==='RB'&&x.r.rank>=45)flags.push('Late-RB/Upside prüfen');
+      return{x,flags};
+    });
+
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
       `Draft-ID: ${id}`,
@@ -785,6 +800,7 @@ async function refresh(){
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
       `Aktueller Pick: ${current}`,
       `Mein nächster Pick: ${next??'keiner'} | Picks bis dahin: ${next==null?'–':next-current}`,
+      `Return-Modell: Folgepick ${returnPick??'keiner'}${returnPick!=null?` | ${Math.max(0,returnPick-current-1)} gegnerische Picks bis dahin`:''}`, 
       '',
       'DATENSTATUS',
       `Verwendete Panels: ${usedPanelIds.map(pid=>panels[pid]?.name||pid).join(' / ')||'FEHLT'}`,
@@ -835,6 +851,12 @@ async function refresh(){
       diagnosticAvailable.forEach((p,i)=>lines.push(`${i+1}. ${p.name} — ${p.pos}, ${p.team} | Sleeper SearchRank ${Number.isFinite(p.searchRank)?p.searchRank:'–'} | ADP ${Number.isFinite(adp[norm(p.name)])?Number(adp[norm(p.name)]).toFixed(1):'FEHLT'}`));
     }
 
+    lines.push('','RESEARCH-KANDIDATEN FÜR LIVE-ANALYSE');
+    lines.push('Diese Spieler gezielt auf aktuelle Sleeper-/Breakout-/League-Winner-/Bust-Artikel, Camp-News, Rollenänderungen, Verletzungen und Depth Chart prüfen. Artikel sind Kontext; Expertenpanel bleibt Baseline.');
+    if(researchCandidates.length){
+      researchCandidates.forEach(({x,flags},i)=>lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Panel ${x.r.rank.toFixed(1)} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | ${flags.join(' · ')}`));
+    }else lines.push('Keine besonderen Research-Signale im aktuellen Kandidatenfeld.');
+
     lines.push('','VERFÜGBARE SPIELER NACH PANEL');
     if(availableSnapshot.length){
       availableSnapshot.forEach((x,i)=>{
@@ -849,7 +871,7 @@ async function refresh(){
       'Kein großer Reach ohne konkrete aktuelle Begründung. Fehlende Panel- oder ADP-Daten ausdrücklich als Unsicherheit behandeln. K und DST werden nicht gedraftet. Bye Weeks sind nur ein kleiner Tiebreaker.',
       '',
       'AUFGABE',
-      'Prüfe aktuelle Verletzungen, Depth Charts und News. Nutze das Expertenpanel als Baseline und Sleeper-ADP als Marktindikator, sofern vorhanden. Nenne alle nahezu gleichwertigen Favoriten, danach 2–3 Alternativen, Return-Chancen und Confidence. Erzwinge keine Einzelentscheidung, wenn mehrere Spieler nahezu gleichauf liegen. Abweichungen vom Expertenpanel oder der Sleeper-ADP ausdrücklich begründen.'
+      'Prüfe aktuelle Verletzungen, Depth Charts und News sowie gezielt die Research-Kandidaten auf aktuelle Sleeper-, Breakout-, League-Winner- und Bust-Analysen. Artikel dienen als begründungspflichtiger Kontext; das Expertenpanel bleibt Baseline. Nutze das Expertenpanel als Baseline und Sleeper-ADP als Marktindikator, sofern vorhanden. Nenne alle nahezu gleichwertigen Favoriten, danach 2–3 Alternativen, Return-Chancen und Confidence. Erzwinge keine Einzelentscheidung, wenn mehrere Spieler nahezu gleichauf liegen. Abweichungen vom Expertenpanel oder der Sleeper-ADP ausdrücklich begründen.'
     );
 
     els.snapshot.value=lines.join('\n');
@@ -887,7 +909,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,coach,chosen,reason,at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'9.6.1',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'9.7.0',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
