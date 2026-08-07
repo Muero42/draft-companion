@@ -58,6 +58,29 @@ function extractRankRows(payload){
   }
   return []
 }
+function filteredForExpert(payload,expertId){
+  const ids=String(payload?.filters??'').match(/\d+/g)||[];
+  const total=Number(payload?.total_experts);
+  return ids.includes(String(expertId)) && (!Number.isFinite(total)||total===1);
+}
+function extractSingleExpertRows(payload,expertId){
+  // Preferred path: FantasyPros confirms that the response was filtered to exactly this expert.
+  if(filteredForExpert(payload,expertId))return extractRankRows(payload);
+
+  // Safe fallback for /rankings: with exactly one expert, rank_min and rank_max collapse to the same value.
+  for(const rows of arrays(payload).sort((a,b)=>b.length-a.length)){
+    const m=rows.map(row=>{
+      const name=field(row,['player_name','playername','name','full_name']);
+      const min=Number(field(row,['rank_min','min_rank','rankmin']));
+      const max=Number(field(row,['rank_max','max_rank','rankmax']));
+      if(!name||!Number.isFinite(min)||!Number.isFinite(max)||min<=0||Math.abs(min-max)>.001)return null;
+      const pos=String(field(row,['player_position_id','position_id','position','pos'])||'').toUpperCase().replace(/[0-9]/g,'');
+      return {name:String(name),rank:min,posRank:null,pos};
+    }).filter(Boolean);
+    if(m.length>=25)return m
+  }
+  return []
+}
 
 function derivePositionRanks(rows){
   const groups={QB:[],RB:[],WR:[],TE:[]};
@@ -75,35 +98,23 @@ function derivePositionRanks(rows){
 async function fetchExpertOverall(expertId){
   const season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value),eid=encodeURIComponent(expertId);
   const attempts=[
-    `/nfl/${season}/consensus-rankings?position=ALL&scoring=${scoring}&type=DRAFT&filters=${eid}&experts=show`,
-    `/nfl/${season}/consensus-rankings?position=ALL&scoring=${scoring}&filters=${eid}&experts=show`,
-    `/nfl/${season}/rankings?week=0&filters=${eid}&range=true&rankstats=true`
+    `/nfl/${season}/rankings?week=0&filters=${eid}&range=true&rankstats=true`,
+    `/nfl/${season}/consensus-rankings?position=ALL&scoring=${scoring}&type=DRAFT&filters=${eid}&experts=show`
   ];
   let last=null;
   for(const path of attempts){
     try{
-      const data=await proxyCall(path),rows=extractRankRows(data);
+      const data=await proxyCall(path),rows=extractSingleExpertRows(data,expertId);
       if(rows.length)return rows;
     }catch(e){last=e}
   }
   if(last)throw last;
-  return [];
+  throw new Error('FantasyPros lieferte kein verifizierbares Einzelranking für diesen Experten.');
 }
 async function fetchExpertPosition(expertId,pos){
-  const season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value),eid=encodeURIComponent(expertId),p=encodeURIComponent(pos);
-  const attempts=[
-    `/nfl/${season}/consensus-rankings?position=${p}&scoring=${scoring}&type=DRAFT&filters=${eid}&experts=show`,
-    `/nfl/${season}/consensus-rankings?position=${p}&scoring=${scoring}&filters=${eid}&experts=show`
-  ];
-  let last=null;
-  for(const path of attempts){
-    try{
-      const data=await proxyCall(path),rows=extractRankRows(data).filter(x=>!x.pos||x.pos===pos);
-      if(rows.length)return rows;
-    }catch(e){last=e}
-  }
-  if(last)throw last;
-  return [];
+  // Position ranks are derived from the verified overall list to avoid mixing in a consensus response.
+  const rows=await fetchExpertOverall(expertId);
+  return rows.filter(x=>x.pos===pos).sort((a,b)=>a.rank-b.rank).map((x,i)=>({...x,posRank:i+1}));
 }
 
 function sourceMentionsSleeper(payload){
@@ -147,22 +158,25 @@ function sleeperProjectionName(row){
 }
 async function loadSleeperAdpDirect(){
   const season=els.season.value.trim();
-  const positions=['QB','RB','WR','TE'].map(p=>`position%5B%5D=${p}`).join('&');
-  const orders=['adp_half_ppr','adp_half','adp_ppr','adp_std'],errors=[];
-  for(const order of orders){
-    const url=`https://api.sleeper.app/projections/nfl/${encodeURIComponent(season)}?season_type=regular&${positions}&order_by=${order}`;
-    try{
-      const r=await fetch(url,{cache:'no-store'});
-      if(!r.ok)throw new Error(`HTTP ${r.status}`);
-      const data=await r.json(),rows=Array.isArray(data)?data:(data?.players||data?.projections||[]),values={};
-      for(const row of rows){const name=sleeperProjectionName(row),v=sleeperAdpValue(row);if(name&&v!=null)values[norm(name)]=v}
-      if(Object.keys(values).length>=50){
-        adp=values;adpMeta={source:`Sleeper Draft ADP (${order})`,updated:Date.now(),count:Object.keys(values).length};persist();
-        return{ok:true,count:Object.keys(values).length,order}
-      }
-    }catch(e){errors.push(`${order}: ${e.message}`)}
+  try{
+    const r=await fetch(`/api/sleeper-adp?season=${encodeURIComponent(season)}&format=half_ppr`,{cache:'no-store'});
+    const data=await r.json();
+    if(!r.ok)throw new Error(data?.error||`HTTP ${r.status}`);
+    const values={};
+    for(const row of data.players||[]){
+      const v=Number(row.adp);
+      if(row.name&&Number.isFinite(v)&&v>0&&v<999)values[norm(row.name)]=v;
+    }
+    if(Object.keys(values).length>=50){
+      adp=values;
+      adpMeta={source:'Sleeper Draft ADP (half-PPR)',updated:Date.now(),count:Object.keys(values).length};
+      persist();
+      return {ok:true,count:Object.keys(values).length};
+    }
+    return {ok:false,count:Object.keys(values).length,errors:['Sleeper lieferte zu wenige ADP-Werte.']};
+  }catch(e){
+    return {ok:false,count:0,errors:[e.message]};
   }
-  return{ok:false,count:0,errors}
 }
 
 async function loadSleeperAdpFromFantasyPros(){
@@ -209,7 +223,7 @@ async function loadExperts(){if(els.loadExpertsBtn)els.loadExpertsBtn.disabled=t
 async function loadExpertRanks(expertId){
   const cache=rankCache[expertId];
   // Empty caches from earlier builds were able to survive for 12 hours. Only reuse a cache that actually contains rankings.
-  if(cache&&cache.schemaVersion>=3&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&Object.keys(cache.ranks||{}).length&&Date.now()-cache.updated<12*3600e3)return cache;
+  if(cache&&cache.schemaVersion>=4&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&Object.keys(cache.ranks||{}).length&&Date.now()-cache.updated<12*3600e3)return cache;
   const expert=experts.find(e=>e.id===expertId),ranks={},missing=[],derived=[],counts={};
   let overallRows=[];
   try{overallRows=await fetchExpertOverall(expertId)}catch(e){}
@@ -242,7 +256,7 @@ async function loadExpertRanks(expertId){
       else missing.push(pos);
     }
   }
-  const result={schemaVersion:3,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),expertId,expertName:expert?.name||expertId,ranks,missing,derived,overallCount:overallRows.length,counts};
+  const result={schemaVersion:4,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),expertId,expertName:expert?.name||expertId,ranks,missing,derived,overallCount:overallRows.length,counts};
   // Never replace a previously valid cache with an empty network result.
   if(Object.keys(ranks).length){rankCache[expertId]=result;return result}
   if(cache&&Object.keys(cache.ranks||{}).length)return {...cache,staleFallback:true,missing:[...new Set([...(cache.missing||[]),...missing])]};
@@ -250,10 +264,30 @@ async function loadExpertRanks(expertId){
   return result;
 }
 
+function rankingSignature(cache,limit=80){
+  return Object.values(cache?.ranks||{}).filter(x=>Number.isFinite(x.rank)).sort((a,b)=>a.rank-b.rank).slice(0,limit).map(x=>`${norm(x.name)}:${x.rank}`).join('|');
+}
+function flagDuplicateExpertRankings(ids){
+  const seen=new Map(),warnings=[];
+  for(const id of ids){
+    const c=rankCache[id];
+    if(!c)continue;
+    delete c.duplicateOf;
+    const sig=rankingSignature(c);
+    if(!sig)continue;
+    if(seen.has(sig)){
+      c.duplicateOf=seen.get(sig);
+      warnings.push(`${c.expertName}: identisch zu ${rankCache[c.duplicateOf]?.expertName||c.duplicateOf} – nicht als eigener Experte gewertet`);
+    }else seen.set(sig,id);
+  }
+  return warnings;
+}
+
 function computePanel(panelId){
   const panel=panels[panelId],all={};
   for(const[eid,w0]of Object.entries(panel?.members||{})){
     const cache=rankCache[eid],w=Number(w0);
+    if(cache?.duplicateOf)continue;
     for(const[k,v]of Object.entries(cache?.ranks||{})){
       all[k]??={name:v.name,pos:v.pos,values:[]};
       all[k].values.push({expertId:eid,expertName:cache.expertName,rank:v.rank,posRank:v.posRank||null,w,source:v.source||'unknown'});
@@ -289,6 +323,7 @@ async function loadAllRanks(){
       if(c.derived?.length)skipped.push(`${c.expertName}: ${c.derived.join('/')} aus Overall abgeleitet`);
       if(c.staleFallback)skipped.push(`${c.expertName}: letztes gültiges Ranking beibehalten`);
     }
+    skipped.push(...flagDuplicateExpertRankings(ids));
     const candidate={};
     for(const id of Object.keys(panels))candidate[id]=computePanel(id);
     const usable=Object.values(candidate).reduce((n,r)=>n+Object.keys(r||{}).length,0);
@@ -546,7 +581,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,coach,chosen,reason,at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'9.0.4',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'9.0.5',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
