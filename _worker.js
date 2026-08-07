@@ -15,7 +15,7 @@ export default {
 async function handleFantasyPros(request,url){
   if(request.method==='OPTIONS') return new Response(null,{headers:cors()});
   if(request.method!=='GET') return json({error:'Nur GET ist erlaubt.'},405);
-  if(url.searchParams.get('health')==='1') return json({ok:true,service:'fantasypros-proxy',version:'9.7.1-coach-return-research-2026'});
+  if(url.searchParams.get('health')==='1') return json({ok:true,service:'fantasypros-proxy',version:'9.8.0-coach-return-research-2026'});
 
   const path=url.searchParams.get('path')||'';
   if(!path.startsWith('/')||!ALLOWED_PREFIXES.some(prefix=>path.startsWith(prefix))){
@@ -208,12 +208,27 @@ function scoringCode(raw){
   const s=String(raw||'HALF').toUpperCase();
   return s==='PPR'?'PPR':(s==='STD'||s==='STANDARD')?'STD':'HALF';
 }
-async function tryFantasyProsDirect(name,scoring){
+function expectedScoringLabel(scoring){return scoring==='PPR'?'PPR':scoring==='STD'?'Standard':'Half Point PPR'}
+function validateFantasyProsContext(html,season,scoring){
+  const plain=stripHtml(html),expected=expectedScoringLabel(scoring);
+  const yearOk=new RegExp(`\\b${String(season)}\\b`).test(plain);
+  const scoringOk=scoring==='HALF'
+    ?/Half Point PPR Rankings|Half PPR Rankings/i.test(plain)
+    :scoring==='PPR'
+      ?/\\bPPR Rankings\\b/i.test(plain)&&!/Half Point PPR/i.test(plain)
+      :/Standard Rankings|Non-PPR Rankings/i.test(plain);
+  const draftOk=/Overall .*Rankings|Draft Rankings/i.test(plain);
+  const updated=plain.match(/Rankings\\s*-\\s*([A-Z][a-z]{2,8}\\s+\\d{1,2},\\s+20\\d{2})/i)?.[1]||'';
+  return {ok:yearOk&&scoringOk&&draftOk,yearOk,scoringOk,draftOk,expected,updated};
+}
+async function tryFantasyProsDirect(name,scoring,season='2026'){
   const slug=slugify(name),url=`https://www.fantasypros.com/nfl/rankings/${slug}.php?scoring=${scoring}&type=draft`;
   try{
-    const html=await fetchHtml(url),players=parseFantasyProsDirect(html);
-    if(players.length>=80)return {ok:true,source:'FantasyPros direkte Einzelrangliste',sourceUrl:url,players,updated:''};
-    return {ok:false,error:`FantasyPros direkt: ${players.length} Spieler`};
+    const html=await fetchHtml(url),context=validateFantasyProsContext(html,season,scoring),players=parseFantasyProsDirect(html);
+    if(!context.ok)return {ok:false,error:`FantasyPros direkt: Scoring/Saison nicht verifiziert (${context.expected}, ${season})`,context};
+    if(players.length>=80)return {ok:true,source:'FantasyPros direkte Einzelrangliste',sourceUrl:url,players,updated:context.updated,
+      sourceContextVerified:true,sourceSeason:String(season),sourceScoring:scoring,sourceContext:context};
+    return {ok:false,error:`FantasyPros direkt: ${players.length} Spieler`,context};
   }catch(e){return {ok:false,error:`FantasyPros direkt: ${e.message}`}}
 }
 const YAHOO_BOONE_URLS=[
@@ -304,8 +319,8 @@ async function fetchComparisonPair(targetName,anchorName,scoring){
   }
   return {ok:false,errors};
 }
-async function directRankingForAnchor(name,scoring){
-  const res=await tryFantasyProsDirect(name,scoring);
+async function directRankingForAnchor(name,scoring,season='2026'){
+  const res=await tryFantasyProsDirect(name,scoring,season);
   if(!res.ok)return null;
   // Keep every ranked position here. Original Overall numbers include K/DST.
   // Draft filtering happens later in app.js, never inside the source reconstruction.
@@ -343,12 +358,12 @@ function reconstructionQuality(players,exactCount,reconstructedCount){
   };
 }
 
-async function tryFantasyProsReconstruction(name,scoring){
+async function tryFantasyProsReconstruction(name,scoring,season='2026'){
   const anchors=['Pat Fitzmaurice','Andrew Erickson','Derek Brown'];
   const anchorLists={},comparisons=[],exact=new Map();
 
   for(const anchor of anchors){
-    const list=await directRankingForAnchor(anchor,scoring);
+    const list=await directRankingForAnchor(anchor,scoring,season);
     if(list&&list.length>=80)anchorLists[anchor]=list;
   }
   const usableAnchors=Object.keys(anchorLists);
@@ -415,6 +430,8 @@ async function tryFantasyProsReconstruction(name,scoring){
     quality,
     confidence:quality.exactCoverage>=.70?'reconstructed-strong':'reconstructed',
     updated:'',
+    sourceContextVerified:true,sourceSeason:String(season),sourceScoring:scoring,
+    sourceContext:{ok:true,method:'validated direct anchors + scoring-param comparison'},
     comparisons
   };
 }
@@ -430,13 +447,13 @@ async function handleExpertRanking(request,url){
   const attempts=[];
 
   // 1) Exact public individual list.
-  const fp=await tryFantasyProsDirect(name,scoring);attempts.push(fp.error||fp.source);
+  const fp=await tryFantasyProsDirect(name,scoring,season);attempts.push(fp.error||fp.source);
   if(fp.ok){
     return json({...fp,exactCount:fp.players.length,reconstructedCount:0,coverage:1,confidence:'exact'});
   }
 
   // 2) Generic FantasyPros reconstruction against several exact anchor experts.
-  const rec=await tryFantasyProsReconstruction(name,scoring);attempts.push(rec.error||rec.source);
+  const rec=await tryFantasyProsReconstruction(name,scoring,season);attempts.push(rec.error||rec.source);
   if(rec.ok)return json(rec);
 
   // 3) External official source as final fallback, where available.

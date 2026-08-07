@@ -463,13 +463,15 @@ async function loadExperts(){
 }
 async function loadExpertRanks(expertId){
   const cache=rankCache[expertId];
-  if(cache&&cache.schemaVersion>=12&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&cache.verifiedIndividual&&Object.keys(cache.ranks||{}).length&&Date.now()-cache.updated<12*3600e3)return cache;
+  if(cache&&cache.schemaVersion>=13&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&cache.verifiedIndividual&&Object.keys(cache.ranks||{}).length&&Date.now()-cache.updated<12*3600e3)return cache;
 
   const expert=experts.find(e=>String(e.id)===String(expertId));
   if(!expert)throw new Error(`Experte ${expertId} nicht gefunden.`);
 
   try{
     const data=await fetchMultiSourceExpertRanking(expert);
+    if(/^FantasyPros/.test(String(data.source||''))&&data.sourceContextVerified!==true)
+      throw new Error(`${expert.name}: FantasyPros Scoring/Saison konnte nicht eindeutig verifiziert werden.`);
     const ranks={},counts={QB:0,RB:0,WR:0,TE:0};
     for(const row of data.players){
       const pos=String(row.pos||'').toUpperCase();
@@ -494,7 +496,7 @@ async function loadExpertRanks(expertId){
     if(total<80)throw new Error(`${expert.name}: nur ${total} verwertbare QB/RB/WR/TE-Spieler.`);
 
     const result={
-      schemaVersion:12,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),
+      schemaVersion:13,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),
       expertId:String(expertId),expertName:expert.name,ranks,
       missing:Object.entries(counts).filter(([,n])=>!n).map(([p])=>p),
       derived:[],overallCount:total,counts,
@@ -507,19 +509,22 @@ async function loadExpertRanks(expertId){
       exactCount:Number(data.exactCount)||Object.values(ranks).filter(x=>x.exact).length,
       reconstructedCount:Number(data.reconstructedCount)||Object.values(ranks).filter(x=>x.reconstructed).length,
       coverage:Number(data.coverage)||0,
-      quality:data.quality||null
+      quality:data.quality||null,
+      sourceContextVerified:data.sourceContextVerified===true,
+      sourceSeason:data.sourceSeason||'',sourceScoring:data.sourceScoring||'',
+      sourceContext:data.sourceContext||null
     };
     rankCache[expertId]=result;
     store.set('v7_rank_'+expertId,result);
     return result;
   }catch(e){
-    if(cache&&cache.schemaVersion>=12&&cache.verifiedIndividual&&Object.keys(cache.ranks||{}).length){
+    if(cache&&cache.schemaVersion>=13&&cache.verifiedIndividual&&Object.keys(cache.ranks||{}).length){
       const fallback={...cache,staleFallback:true,error:e.message};
       rankCache[expertId]=fallback;
       return fallback;
     }
     const failed={
-      schemaVersion:12,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),
+      schemaVersion:13,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),
       expertId:String(expertId),expertName:expert.name,ranks:{},missing:['SOURCE'],derived:[],
       overallCount:0,counts:{QB:0,RB:0,WR:0,TE:0},verifiedIndividual:false,error:e.message
     };
@@ -670,6 +675,18 @@ function agreement(sd,n){if(!n||n<2)return'Einzelmeinung';if(sd<=3)return'Sehr h
 function returnChance(next,a){if(!Number.isFinite(next)||!Number.isFinite(a))return null;/* P(Spieler ist am Folgepick noch da): ADP als Marktmittel, bewusst enger als die alte Kurve. */return clamp(1/(1+Math.exp((next-a)/4)),.01,.99)}
 function rosterState(mine,players){const c={QB:0,RB:0,WR:0,TE:0},byes={QB:{},RB:{},WR:{},TE:{}};for(const pick of mine){const p=pinfo(String(pick.player_id),pick.metadata,players);if(c[p.pos]!=null){c[p.pos]++;if(p.bye)byes[p.pos][p.bye]=(byes[p.pos][p.bye]||0)+1}}const need={QB:c.QB===0?8:c.QB===1?0:-7,TE:c.TE===0?7:c.TE===1?0:-6,RB:c.RB<2?8:c.RB<4?4:c.RB<6?1:-2,WR:c.WR<3?8:c.WR<5?4:c.WR<7?1:-2};return{counts:c,need,byes}}
 
+function draftPhaseNeedFactor(current){
+  if(current<=20)return .15;
+  if(current<=50)return .28;
+  if(current<=90)return .42;
+  return .58;
+}
+function normalizeCoachScores(rows){
+  if(!rows.length)return rows;
+  const bestRaw=Math.max(...rows.map(x=>x.rawScore));
+  for(const x of rows)x.score=Math.round(clamp(100-Math.max(0,bestRaw-x.rawScore)*2.15,0,100));
+  return rows;
+}
 function tierContext(player,rank,available){
   const same=available.map(x=>({p:x,r:rankFor(x.name,x.pos)})).filter(x=>x.r&&x.p.pos===player.pos&&x.r.tier===rank.tier).sort((a,b)=>a.r.rank-b.r.rank);
   const later=available.map(x=>({p:x,r:rankFor(x.name,x.pos)})).filter(x=>x.r&&x.p.pos===player.pos&&x.r.rank>rank.rank).sort((a,b)=>a.r.rank-b.r.rank);
@@ -689,32 +706,34 @@ function valueLabel(current,adp){
 function scoreCandidate(p,current,next,state,available){
   const r=rankFor(p.name,p.pos),a=Number(adp[norm(p.name)]);
   if(!r)return{score:-999,r:null,a,reasons:['Panel-Rang fehlt']};
-  /* v9.7.1: Panel-first. Return ist Urgency, kein Bonus fürs Warten. */
-  let score=96-clamp((r.rank-current)*1.05,0,70)-clamp((current-r.rank)*.18,0,4),reasons=[];
+  /* v9.8.0: Panel-first Raw Utility. Sichtbarer Coach-Score wird relativ zum besten aktuellen Kandidaten normiert. */
+  let score=100-clamp((r.rank-current)*1.10,0,74)-clamp((current-r.rank)*.15,0,3),reasons=[];
   const value=valueLabel(current,a);
-  if(Number.isFinite(value.value))score+=clamp(value.value*.18,-5,5);
+  if(Number.isFinite(value.value))score+=clamp(value.value*.16,-4.5,4.5);
   reasons.push(value.label);
-  score+=clamp((state.need[p.pos]||0)*.30,-2,2.5);
-  if((state.need[p.pos]||0)>=7)reasons.push(`${p.pos}-Need (kleiner Faktor)`);
+  score+=clamp((state.need[p.pos]||0)*draftPhaseNeedFactor(current),-3,4);
+  if((state.need[p.pos]||0)>=7)reasons.push(`${p.pos}-Need (${current<=20?'klein':'draftphasenabhängig'})`);
   const tier=tierContext(p,r,available);
-  if(tier.isLastInTier){score+=3;reasons.push(`Letzter Spieler in Tier ${r.tier}`)}
-  else if(tier.sameTierCount<=2){score+=2;reasons.push(`Tier fast leer (${tier.sameTierCount})`)}
-  if(tier.tierGap!=null&&tier.tierGap>=8){score+=2;reasons.push(`Tier-Drop +${tier.tierGap.toFixed(0)}`)}
+  let scarcityBonus=0;
+  if(tier.isLastInTier){scarcityBonus+=.75;reasons.push(`Letzter Spieler in Tier ${r.tier}`)}
+  else if(tier.sameTierCount<=2){scarcityBonus+=.5;reasons.push(`Tier fast leer (${tier.sameTierCount})`)}
+  if(tier.tierGap!=null&&tier.tierGap>=8){scarcityBonus+=Math.min(.75,tier.tierGap/20);reasons.push(`Tier-Drop +${tier.tierGap.toFixed(0)}`)}
+  score+=Math.min(1.5,scarcityBonus);
   const agree=agreement(r.sd,r.n);
-  if(agree==='Sehr hoher Konsens')score+=2;
+  if(agree==='Sehr hoher Konsens')score+=1.5;
   else if(agree==='Stark umstritten')score-=3;
   if(p.injury){score-=10;reasons.push(`Injury ${p.injury}`)}
   if(p.bye&&(state.byes[p.pos]?.[p.bye]||0)>=2){score-=1;reasons.push(`Bye ${p.bye} (nur Tiebreaker)`)}
   const ret=returnChance(next,a);
   if(ret!=null){
-    score+=clamp((.50-ret)*18,-9,9);
+    score+=clamp((.50-ret)*12,-6,6);
     if(ret>=.80)reasons.push(`Warten attraktiv (${Math.round(ret*100)}% Return)`);
     else if(ret<=.25)reasons.push(`Jetzt-Pick dringlich (${Math.round(ret*100)}% Return)`);
     else if(ret>=.65)reasons.push(`Gute Return-Chance (${Math.round(ret*100)}%)`);
   }
   const expertBase=r.n>=5?4:r.n>=3?1:r.n===2?-5:-12;
   const confidence=clamp(Math.round(88-r.sd*2+(Number.isFinite(a)?4:-10)+expertBase),35,96);
-  return{score:Math.round(clamp(score,0,100)),r,a,ret,reasons,agree,sameTier:tier.sameTierCount,tierGap:tier.tierGap,confidence,valueKind:value.kind};
+  return{score:0,rawScore:score,r,a,ret,reasons,agree,sameTier:tier.sameTierCount,tierGap:tier.tierGap,confidence,valueKind:value.kind};
 }
 function expertRanksHtml(r){
   return `<div class="coach-section-title">Einzelrankings</div><div class="expert-grid">${r.individual.map(x=>{
@@ -766,10 +785,18 @@ async function refresh(){
       .slice(0,25);
 
     const state=rosterState(mine,players);
-    const scored=rankedAvailable
-      .map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable)}))
-      .filter(x=>x.r)
-      .sort((a,b)=>b.score-a.score||a.r.rank-b.r.rank);
+    const scored=rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable)})).filter(x=>x.r);
+    const boardTop=scored.slice().sort((x,y)=>x.r.rank-y.r.rank).slice(0,12).filter(x=>x.ret!=null);
+    const sortedReturns=boardTop.map(x=>x.ret).sort((x,y)=>x-y);
+    const medianReturn=sortedReturns.length?sortedReturns[Math.floor(sortedReturns.length/2)]:null;
+    if(medianReturn!=null)for(const x of scored){
+      if(x.ret==null)continue;
+      const rel=clamp((medianReturn-x.ret)*6,-3,3);
+      x.rawScore+=rel;
+      if(Math.abs(rel)>=1.5)x.reasons.push(rel>0?'Dringlicher als Board':'Mehr Wartepotenzial als Board');
+    }
+    normalizeCoachScores(scored);
+    scored.sort((x,y)=>y.score-x.score||y.rawScore-x.rawScore||x.r.rank-y.r.rank);
 
     renderCoach(scored,state,current,returnPick);
     renderMockReview(mine,players);
@@ -814,7 +841,8 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Aktive Expertenquellen: ${[...new Set(usedPanelIds.flatMap(pid=>Object.keys(panels[pid]?.members||{})))].filter(eid=>rankCache[eid]?.verifiedIndividual).map(eid=>`${rankCache[eid]?.expertName}: ${rankCache[eid]?.source||'verifiziert'}${rankCache[eid]?.sourceUpdated?` (${rankCache[eid].sourceUpdated})`:''}`).join(' · ')||'KEINE'}`,
+      `Coach-Modell: Panel-first · relativer Pick-Score (Bestwert 100) · Return absolut + relativ zum Board · Roster-Need draftphasenabhängig`,
+      `Aktive Expertenquellen: ${[...new Set(usedPanelIds.flatMap(pid=>Object.keys(panels[pid]?.members||{})))].filter(eid=>rankCache[eid]?.verifiedIndividual).map(eid=>`${rankCache[eid]?.expertName}: ${rankCache[eid]?.source||'verifiziert'}${rankCache[eid]?.sourceScoring?` [${rankCache[eid].sourceScoring}${rankCache[eid]?.sourceContextVerified?' ✓':' ?'}]`:''}${rankCache[eid]?.sourceUpdated?` (${rankCache[eid].sourceUpdated})`:''}`).join(' · ')||'KEINE'}`,
       `Panel-Stand: ${rankingStamp}`,
       `Sleeper-ADP: ${Object.keys(adp).length} | Quelle: ${adpMeta.source||'none'} | Stand: ${adpStamp}`,
       `Bewertbare verfügbare Spieler: ${scored.length}`,
@@ -913,7 +941,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,coach,chosen,reason,at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'9.7.1',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'9.8.0',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
@@ -969,7 +997,7 @@ els.diagnoseBtn.onclick=async()=>{els.diagnostic.textContent='Teste …';try{
     try{
       const data=await fetchMultiSourceExpertRanking(e);
       const aj=data.players.find(x=>norm(x.name)===norm('A.J. Brown'));
-      out.push(`✓ ${name}: ${data.players.length} Spieler · ${data.source}${data.updated?` · ${data.updated}`:''}${aj?` · A.J. Brown #${aj.rank}`:''}`);
+      out.push(`✓ ${name}: ${data.players.length} Spieler · ${data.source} · ${data.sourceContextVerified?'Scoring verifiziert':'Scoring NICHT verifiziert'}${data.sourceScoring?` ${data.sourceScoring}`:''}${data.updated?` · ${data.updated}`:''}${aj?` · A.J. Brown #${aj.rank}`:''}`);
     }catch(err){out.push(`! ${name}: ${err.message}`)}
   }
   try{
