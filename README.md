@@ -1,4 +1,4 @@
-# Draft Companion – Final Draft Edition 2026 (v9.0.7)
+# Draft Companion – Final Draft Edition 2026 (v9.1.0)
 
 ## v9.0.2 – Snapshot-Datenqualität
 
@@ -26,7 +26,7 @@ Ab v9.0.1 werden bis nach dem echten Draft ausschließlich klar reproduzierbare 
 oder zwingende Datenkorrekturen behoben.
 
 
-## v9.0.7 – FantasyPros Ranking-Fix
+## v9.1.0 – FantasyPros Ranking-Fix
 
 - Einzel-Expertenrankings werden über den dokumentierten `consensus-rankings`-Endpunkt mit `filters=<expert_id>` geladen.
 - FantasyPros-Felder `position_id` und `rank_ecr_pos` werden erkannt.
@@ -35,7 +35,7 @@ oder zwingende Datenkorrekturen behoben.
 - Diagnose prüft jetzt den verwendeten Consensus-Rankings-Endpunkt.
 
 
-## v9.0.7 – Expert-Overall + Sleeper-ADP
+## v9.1.0 – Expert-Overall + Sleeper-ADP
 
 - `rank_ecr` hat Vorrang als FantasyPros-Overall-Rang; alte v9.0.3-Ranking-Caches werden verworfen.
 - `pos_rank`-Strings wie `WR8` werden korrekt gelesen.
@@ -43,17 +43,17 @@ oder zwingende Datenkorrekturen behoben.
 - Falls Sleeper keine nutzbaren ADPs liefert, bleibt der FantasyPros-Fallback bzw. die klare FEHLT-Kennzeichnung aktiv.
 
 
-## v9.0.7 – verifizierte Experten + Sleeper-ADP
+## v9.1.0 – verifizierte Experten + Sleeper-ADP
 
 - Einzelrankings werden nur akzeptiert, wenn FantasyPros die Filterung auf den konkreten Experten nachweisbar bestätigt oder `rank_min == rank_max` ein echtes Einzelranking belegt.
 - Identische Expertenlisten werden erkannt und nicht mehrfach als Konsens gezählt.
 - Alte v9.0.4-Ranking-Caches werden verworfen.
 - Sleeper-ADP läuft serverseitig über den Worker, damit Browser-CORS die versteckte Sleeper-Projections-Quelle nicht blockiert.
 - ADP wird aus `adp_half_ppr` geladen und über Sleeper-Spieler-IDs auf Namen gemappt.
-- Service-Worker-Cache wurde auf v9.0.7 angehoben, damit alte JS-Dateien nicht weiter ausgeliefert werden.
+- Service-Worker-Cache wurde auf v9.1.0 angehoben, damit alte JS-Dateien nicht weiter ausgeliefert werden.
 
 
-## v9.0.7 – echtes Expertenranking statt ECR-Spalte
+## v9.1.0 – echtes Expertenranking statt ECR-Spalte
 
 Der entscheidende Fehler aus v9.0.5 wurde isoliert:
 
@@ -68,7 +68,7 @@ Der entscheidende Fehler aus v9.0.5 wurde isoliert:
 Referenzkontrolle für Half-PPR: Pat Fitzmaurices öffentliche FantasyPros-Seite muss mit den vom Companion ausgegebenen Einzelrängen übereinstimmen; ECR und Pat-Rang dürfen auseinanderliegen.
 
 
-## v9.0.7 – keine unverifizierten Rankings mehr im Panel
+## v9.1.0 – keine unverifizierten Rankings mehr im Panel
 
 Der v9.0.6-Test hat gezeigt: `0/x verifiziert`, aber alte Pat-Werte wurden noch als Panel ausgegeben. Das war ein Logikfehler.
 
@@ -79,3 +79,18 @@ Der v9.0.6-Test hat gezeigt: `0/x verifiziert`, aber alte Pat-Werte wurden noch 
 - Wenn kein Expertenpanel verifiziert ist, bleibt der Draft Coach bewusst leer statt alte ECR/Pat-Werte vorzutäuschen.
 - Für die technische Kontrolle wird dann separat eine `DIAGNOSE OHNE EXPERTENPANEL` mit Sleeper SearchRank + echter Sleeper-ADP ausgegeben.
 - Sleeper-ADP, Draft-Picks und Verfügbarkeit bleiben unverändert.
+
+
+## v9.1.0 – Architekturwechsel: öffentliche Expertenranglisten
+
+Die Einzelranking-Pipeline nutzt nicht mehr die mehrdeutigen FantasyPros-API-Rankingfelder.
+
+- Die FantasyPros-API wird nur noch verwendet, um die verfügbaren Experten zu erkennen.
+- Für jeden ausgewählten Experten wird dessen öffentliche FantasyPros-Draft-Rankingseite geladen.
+- Aus dieser Seite wird die sichtbare `Rank`-Spalte extrahiert – genau die Rangfolge, die der Nutzer auf FantasyPros sieht.
+- Half-PPR und Draft werden explizit gesetzt.
+- Jede Liste muss mindestens 40 verwertbare Spieler enthalten und zur angeforderten Expertenseite passen.
+- Nur so validierte Listen erhalten `verifiedIndividual=true` und dürfen ins Panel.
+- Alte API-Rankingcaches werden verworfen (Schema v7).
+- Sleeper-Draft, Sleeper-ADP und Pick-Erkennung bleiben unverändert.
+- Der Snapshot zeigt Quelle und Aktualisierungsstand jedes verwendeten Experten.
