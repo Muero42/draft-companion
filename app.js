@@ -43,7 +43,21 @@ async function proxyCall(path){
 function arrays(v,d=0){if(d>5||v==null)return[];if(Array.isArray(v))return[v];if(typeof v!=='object')return[];return Object.values(v).flatMap(x=>arrays(x,d+1))}
 function field(o,names){const keys=Object.keys(o||{});for(const n of names){const t=n.toLowerCase().replace(/[^a-z0-9]/g,'');const k=keys.find(x=>x.toLowerCase().replace(/[^a-z0-9]/g,'')===t);if(k&&o[k]!==''&&o[k]!=null)return o[k]}return null}
 function extractExperts(payload){for(const rows of arrays(payload).sort((a,b)=>b.length-a.length)){const m=rows.map(row=>{const id=field(row,['expert_id','expertid','id']),name=field(row,['expert_name','expertname','name','full_name']),site=field(row,['site_name','sitename','site','affiliation']);const accuracy=Number(field(row,['accuracy_draft_season','accuracy','draft_accuracy']));return id&&name?{id:String(id),name:String(name),site:String(site||''),accuracy:Number.isFinite(accuracy)?accuracy:null}:null}).filter(Boolean);if(m.length)return[...new Map(m.map(x=>[x.id,x])).values()]}return[]}
-function extractRankRows(payload){for(const rows of arrays(payload).sort((a,b)=>b.length-a.length)){const m=rows.map(row=>{const name=field(row,['player_name','playername','name','full_name']),rank=Number(field(row,['rank','rank_ecr','rankexpert','expert_rank','overall_rank'])),posRank=Number(field(row,['rank_position','position_rank','pos_rank','rank_pos','rank_ecr_pos','rank_pos_ecr'])),pos=String(field(row,['position','pos','position_id','player_position_id'])||'').toUpperCase().replace(/[0-9]/g,'');return name&&Number.isFinite(rank)&&rank>0?{name:String(name),rank,posRank:Number.isFinite(posRank)&&posRank>0?posRank:null,pos}:null}).filter(Boolean);if(m.length)return m}return[]}
+function extractRankRows(payload){
+  for(const rows of arrays(payload).sort((a,b)=>b.length-a.length)){
+    const m=rows.map(row=>{
+      const name=field(row,['player_name','playername','name','full_name']);
+      const rank=Number(field(row,['rank_ecr','overall_rank','expert_rank','rankexpert','rank']));
+      let posRankRaw=field(row,['pos_rank','rank_ecr_pos','rank_position','position_rank','rank_pos','rank_pos_ecr']);
+      if(typeof posRankRaw==='string'){const hit=posRankRaw.match(/(\d+(?:\.\d+)?)/);posRankRaw=hit?hit[1]:posRankRaw}
+      const posRank=Number(posRankRaw);
+      const pos=String(field(row,['player_position_id','position_id','position','pos'])||'').toUpperCase().replace(/[0-9]/g,'');
+      return name&&Number.isFinite(rank)&&rank>0?{name:String(name),rank,posRank:Number.isFinite(posRank)&&posRank>0?posRank:null,pos}:null
+    }).filter(Boolean);
+    if(m.length)return m
+  }
+  return []
+}
 
 function derivePositionRanks(rows){
   const groups={QB:[],RB:[],WR:[],TE:[]};
@@ -114,6 +128,43 @@ function extractSleeperAdp(payload){
   }
   return out;
 }
+
+function sleeperAdpValue(row){
+  const stats=row?.stats||row?.projection||row?.projections||{};
+  for(const raw of [
+    field(row,['adp_half_ppr','adp_half','half_ppr_adp','adp_hppr','adp']),
+    field(stats,['adp_half_ppr','adp_half','half_ppr_adp','adp_hppr','adp'])
+  ]){
+    const v=Number(String(raw??'').replace(',','.'));
+    if(Number.isFinite(v)&&v>0)return v;
+  }
+  return null;
+}
+function sleeperProjectionName(row){
+  return field(row,['player_name','full_name','name'])||
+    [field(row,['first_name']),field(row,['last_name'])].filter(Boolean).join(' ')||
+    field(row?.player||{},['full_name','player_name','name']);
+}
+async function loadSleeperAdpDirect(){
+  const season=els.season.value.trim();
+  const positions=['QB','RB','WR','TE'].map(p=>`position%5B%5D=${p}`).join('&');
+  const orders=['adp_half_ppr','adp_half','adp_ppr','adp_std'],errors=[];
+  for(const order of orders){
+    const url=`https://api.sleeper.app/projections/nfl/${encodeURIComponent(season)}?season_type=regular&${positions}&order_by=${order}`;
+    try{
+      const r=await fetch(url,{cache:'no-store'});
+      if(!r.ok)throw new Error(`HTTP ${r.status}`);
+      const data=await r.json(),rows=Array.isArray(data)?data:(data?.players||data?.projections||[]),values={};
+      for(const row of rows){const name=sleeperProjectionName(row),v=sleeperAdpValue(row);if(name&&v!=null)values[norm(name)]=v}
+      if(Object.keys(values).length>=50){
+        adp=values;adpMeta={source:`Sleeper Draft ADP (${order})`,updated:Date.now(),count:Object.keys(values).length};persist();
+        return{ok:true,count:Object.keys(values).length,order}
+      }
+    }catch(e){errors.push(`${order}: ${e.message}`)}
+  }
+  return{ok:false,count:0,errors}
+}
+
 async function loadSleeperAdpFromFantasyPros(){
   const season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value);
   const attempts=[
@@ -158,7 +209,7 @@ async function loadExperts(){if(els.loadExpertsBtn)els.loadExpertsBtn.disabled=t
 async function loadExpertRanks(expertId){
   const cache=rankCache[expertId];
   // Empty caches from earlier builds were able to survive for 12 hours. Only reuse a cache that actually contains rankings.
-  if(cache&&cache.schemaVersion>=2&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&Object.keys(cache.ranks||{}).length&&Date.now()-cache.updated<12*3600e3)return cache;
+  if(cache&&cache.schemaVersion>=3&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&Object.keys(cache.ranks||{}).length&&Date.now()-cache.updated<12*3600e3)return cache;
   const expert=experts.find(e=>e.id===expertId),ranks={},missing=[],derived=[],counts={};
   let overallRows=[];
   try{overallRows=await fetchExpertOverall(expertId)}catch(e){}
@@ -191,7 +242,7 @@ async function loadExpertRanks(expertId){
       else missing.push(pos);
     }
   }
-  const result={schemaVersion:2,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),expertId,expertName:expert?.name||expertId,ranks,missing,derived,overallCount:overallRows.length,counts};
+  const result={schemaVersion:3,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),expertId,expertName:expert?.name||expertId,ranks,missing,derived,overallCount:overallRows.length,counts};
   // Never replace a previously valid cache with an empty network result.
   if(Object.keys(ranks).length){rankCache[expertId]=result;return result}
   if(cache&&Object.keys(cache.ranks||{}).length)return {...cache,staleFallback:true,missing:[...new Set([...(cache.missing||[]),...missing])]};
@@ -495,7 +546,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,coach,chosen,reason,at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'9.0.3',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'9.0.4',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
@@ -508,7 +559,8 @@ els.refreshAllBtn.onclick=async()=>{els.refreshAllBtn.disabled=true;els.refreshA
   await loadExperts();
   if(!Object.values(panels).some(p=>Object.keys(p.members||{}).length))applyPreset();
   await loadAllRanks();
-  const adpResult=await loadSleeperAdpFromFantasyPros();
+  let adpResult=await loadSleeperAdpDirect();
+  if(!adpResult.ok)adpResult=await loadSleeperAdpFromFantasyPros();
   const sleeperPlayers=await fetch('https://api.sleeper.app/v1/players/nfl',{cache:'no-store'});
   if(!sleeperPlayers.ok)throw new Error('Sleeper-Spielerdaten nicht erreichbar.');
   store.set('v7_lastFullUpdate',Date.now());
@@ -516,7 +568,7 @@ els.refreshAllBtn.onclick=async()=>{els.refreshAllBtn.disabled=true;els.refreshA
   els.qualityStatus.className=Object.keys(adp).length?'notice ok':'notice warn';
   els.qualityStatus.textContent=Object.keys(adp).length
     ?`Alles aktuell: Experten, Panels, Rankings, Sleeper-Spielerdaten und ${Object.keys(adp).length} Sleeper-ADPs (${adpMeta.source}).`
-    :'Experten, Panels, Rankings und Sleeper-Spielerdaten aktuell. FantasyPros lieferte keine eindeutig als Sleeper gekennzeichnete ADP; Reach und Return bleiben deshalb bewusst unsicher.';
+    :'Experten, Panels, Rankings und Sleeper-Spielerdaten aktuell. Weder Sleeper noch FantasyPros lieferten eine verifizierbare Sleeper-ADP; Reach und Return bleiben deshalb bewusst unsicher.';
 }catch(e){els.qualityStatus.className='notice bad';els.qualityStatus.textContent=e.message}finally{els.refreshAllBtn.disabled=false;els.refreshAllBtn.textContent='Alles aktualisieren'}};
 if(els.adpFile)els.adpFile.onchange=async()=>{try{adp=await parseAdp(els.adpFile.files[0]);adpMeta={source:'verifizierter Datei-Import',updated:Date.now(),count:Object.keys(adp).length};persist();updateStatus()}catch(e){els.adpStatus.className='notice bad';els.adpStatus.textContent=e.message}};
 for(const section of [els.dataSection,els.draftSection]){
