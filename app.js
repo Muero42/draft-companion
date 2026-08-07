@@ -228,8 +228,13 @@ async function jf(url,label){const r=await fetch(url,{cache:'no-store'});if(!r.o
 async function fetchDraft(id){const[draft,picks,players]=await Promise.all([jf(`${S}/draft/${id}`,'Draft'),jf(`${S}/draft/${id}/picks`,'Picks'),jf(`${S}/players/nfl`,'Spieler')]);return{draft,picks,players}}
 function pinfo(id,m,players){const p=players[id]||{};return{name:m?.first_name&&m?.last_name?`${m.first_name} ${m.last_name}`:(p.full_name||m?.player_name||id),pos:String(m?.position||p.position||'?').toUpperCase(),team:String(m?.team||p.team||'FA').toUpperCase(),searchRank:Number(p.search_rank),injury:p.injury_status||null,bye:p.bye_week||null}}
 function nextOwn(current,teams,slot,total){for(let p=current;p<=total;p++){const r=Math.floor((p-1)/teams)+1,w=(p-1)%teams+1,s=r%2?w:teams-w+1;if(s===slot)return p}return null}
-function panelFor(pos){return positionPanels[pos]||activePanelId}
-function rankFor(name,pos){const id=panelFor(pos),r=panelRanks[id]?.[norm(name)];return r?{...r,panel:panels[id]?.name||id}:null}
+function panelFor(pos){
+  const preferred=positionPanels[pos];
+  if(preferred&&Object.keys(panelRanks[preferred]||{}).length)return preferred;
+  if(activePanelId&&Object.keys(panelRanks[activePanelId]||{}).length)return activePanelId;
+  return Object.keys(panelRanks).find(id=>Object.keys(panelRanks[id]||{}).length)||preferred||activePanelId;
+}
+function rankFor(name,pos){const id=panelFor(pos),r=panelRanks[id]?.[norm(name)];return r?{...r,panel:panels[id]?.name||id,panelId:id}:null}
 function agreement(sd,n){if(!n||n<2)return'Einzelmeinung';if(sd<=3)return'Sehr hoher Konsens';if(sd<=7)return'Hoher Konsens';if(sd<=12)return'Umstritten';return'Stark umstritten'}
 function returnChance(next,a){if(!Number.isFinite(next)||!Number.isFinite(a))return null;return clamp(1/(1+Math.exp((next-a)/6)),.01,.99)}
 function rosterState(mine,players){const c={QB:0,RB:0,WR:0,TE:0},byes={QB:{},RB:{},WR:{},TE:{}};for(const pick of mine){const p=pinfo(String(pick.player_id),pick.metadata,players);if(c[p.pos]!=null){c[p.pos]++;if(p.bye)byes[p.pos][p.bye]=(byes[p.pos][p.bye]||0)+1}}const need={QB:c.QB===0?8:c.QB===1?0:-7,TE:c.TE===0?7:c.TE===1?0:-6,RB:c.RB<2?8:c.RB<4?4:c.RB<6?1:-2,WR:c.WR<3?8:c.WR<5?4:c.WR<7?1:-2};return{counts:c,need,byes}}
@@ -290,7 +295,126 @@ function renderCoach(rows,state,current,next){
   els.coachList.innerHTML=`<div class="coach-section-title">Top-Kandidaten</div>${cards(favorites)}${alternatives.length?`<div class="coach-section-title">Nächste Alternativen</div>${cards(alternatives,favorites.length)}`:''}`;
   els.teamSummary.innerHTML=Object.entries(state.counts).map(([p,n])=>`<div class="summary-item"><b>${n}</b><span>${p}</span></div>`).join('')+`<div class="summary-item"><b>${current}</b><span>Pick</span></div><div class="summary-item"><b>${next??'–'}</b><span>Nächster</span></div>`;
 }
-async function refresh(){persist();const id=draftId(els.draftInput.value);if(!id)throw new Error('Draft-ID fehlt.');els.refreshBtn.disabled=true;els.draftStatus.textContent='Lade Draft …';try{const{draft,picks,players}=await fetchDraft(id),teams=Number(draft.settings?.teams||10),rounds=Number(draft.settings?.rounds||15),slot=Number(els.slot.value),total=teams*rounds,current=Math.min(picks.length+1,total),next=nextOwn(current,teams,slot,total),mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no),drafted=new Set(picks.map(p=>String(p.player_id)));const available=Object.entries(players).filter(([pid,p])=>!drafted.has(pid)&&['QB','RB','WR','TE'].includes(p.position)&&p.active!==false&&p.full_name).map(([pid,p])=>({id:pid,name:p.full_name,pos:p.position,team:p.team||'FA',searchRank:Number(p.search_rank),injury:p.injury_status||null,bye:p.bye_week||null})).sort((a,b)=>(a.searchRank||9999)-(b.searchRank||9999)).slice(0,Number(els.topN.value));const state=rosterState(mine,players),scored=available.map(p=>({p,...scoreCandidate(p,current,next,state,available)})).filter(x=>x.r).sort((a,b)=>b.score-a.score);renderCoach(scored,state,current,next);renderMockReview(mine,players);const best=scored[0]?.score??0,favorites=scored.filter(x=>best-x.score<=3).slice(0,4),lines=['===== SLEEPER DRAFT SNAPSHOT =====',`Draft-ID: ${id}`,`Status: ${draft.status}`,`Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,`Aktueller Pick: ${current}`,`Mein nächster Pick: ${next??'keiner'} | Picks bis dahin: ${next==null?'–':next-current}`,'','DATENSTATUS',`Panel-Rankings: ${Object.keys(panelRanks).length} | Sleeper-ADP: ${Object.keys(adp).length}`,'','MEIN TEAM'];for(const pick of mine){const p=pinfo(String(pick.player_id),pick.metadata,players);lines.push(`${pick.pick_no}. ${p.name} — ${p.pos}, ${p.team}`)}if(!mine.length)lines.push('Noch keine Picks.');lines.push('','GLEICHWERTIGE FAVORITEN');favorites.forEach((x,i)=>lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Coach ${x.score} | Panel ${x.r.rank.toFixed(1)} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Confidence ${x.confidence}%`));lines.push('','DRAFT COACH TOP 8');scored.slice(0,8).forEach((x,i)=>{lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Coach ${x.score} | ${x.r.panel} ${x.r.rank.toFixed(1)} Tier ${x.r.tier||'–'} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Confidence ${x.confidence}% | ${x.agree}`);lines.push(`   Einzelrankings: ${x.r.individual.map(v=>`${v.expertName} #${Math.round(v.rank)}${Number.isFinite(v.posRank)?` (${x.p.pos}${Math.round(v.posRank)})`:''}`).join(' · ')}`)});lines.push('','HARTE REGEL','Kein großer Reach ohne konkrete aktuelle Begründung. Fehlende Panel- oder ADP-Daten ausdrücklich als Unsicherheit behandeln. K und DST werden nicht gedraftet. Bye Weeks sind nur ein kleiner Tiebreaker.','','AUFGABE','Prüfe aktuelle Verletzungen, Depth Charts und News. Nenne alle nahezu gleichwertigen Favoriten, danach 2–3 Alternativen, Return-Chancen und Confidence. Erzwinge keine Einzelentscheidung, wenn mehrere Spieler nahezu gleichauf liegen. Abweichungen vom Expertenpanel oder der Sleeper-ADP ausdrücklich begründen.');els.snapshot.value=lines.join('\n');els.draftStatus.className='notice ok';els.draftStatus.textContent=`${picks.length} Picks geladen · ${scored.length} Kandidaten bewertet.`;els.draftSummary.hidden=false;els.emptyCoach.hidden=true;els.copyBtn.disabled=false;els.shareBtn.disabled=false;lastDraftContext={id,current,next,favorites,scored,picks,mine};}finally{els.refreshBtn.disabled=false}}
+async function refresh(){
+  persist();
+  const id=draftId(els.draftInput.value);
+  if(!id)throw new Error('Draft-ID fehlt.');
+  els.refreshBtn.disabled=true;
+  els.draftStatus.textContent='Lade Draft …';
+  try{
+    const{draft,picks,players}=await fetchDraft(id),
+      teams=Number(draft.settings?.teams||10),
+      rounds=Number(draft.settings?.rounds||15),
+      slot=Number(els.slot.value),
+      total=teams*rounds,
+      current=Math.min(picks.length+1,total),
+      next=nextOwn(current,teams,slot,total),
+      mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no),
+      drafted=new Set(picks.map(p=>String(p.player_id)));
+
+    const allAvailable=Object.entries(players)
+      .filter(([pid,p])=>!drafted.has(pid)&&['QB','RB','WR','TE'].includes(p.position)&&p.active!==false&&p.full_name)
+      .map(([pid,p])=>({id:pid,name:p.full_name,pos:p.position,team:p.team||'FA',searchRank:Number(p.search_rank),injury:p.injury_status||null,bye:p.bye_week||null}));
+
+    const rankedAvailable=allAvailable
+      .map(p=>({p,r:rankFor(p.name,p.pos)}))
+      .filter(x=>x.r)
+      .sort((a,b)=>a.r.rank-b.r.rank||(a.p.searchRank||9999)-(b.p.searchRank||9999))
+      .map(x=>x.p);
+
+    const state=rosterState(mine,players);
+    const scored=rankedAvailable
+      .map(p=>({p,...scoreCandidate(p,current,next,state,rankedAvailable)}))
+      .filter(x=>x.r)
+      .sort((a,b)=>b.score-a.score||a.r.rank-b.r.rank);
+
+    renderCoach(scored,state,current,next);
+    renderMockReview(mine,players);
+
+    const best=scored[0]?.score??0,
+      favorites=scored.filter(x=>best-x.score<=3).slice(0,4),
+      snapshotLimit=els.snapshotMode.value==='full'?40:25,
+      availableSnapshot=scored.slice().sort((a,b)=>a.r.rank-b.r.rank).slice(0,snapshotLimit),
+      usedPanelIds=[...new Set(['QB','RB','WR','TE'].map(panelFor).filter(Boolean))],
+      rankedCounts=usedPanelIds.map(pid=>`${panels[pid]?.name||pid}: ${Object.keys(panelRanks[pid]||{}).length}`).join(' · '),
+      rankingUpdated=Number(store.get('v7_lastRankingUpdate',0)),
+      rankingStamp=rankingUpdated?new Date(rankingUpdated).toLocaleString('de-DE'):'unbekannt',
+      adpStamp=adpMeta.updated?new Date(adpMeta.updated).toLocaleString('de-DE'):'nicht geladen';
+
+    const lines=[
+      '===== SLEEPER DRAFT SNAPSHOT =====',
+      `Draft-ID: ${id}`,
+      `Status: ${draft.status}`,
+      `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
+      `Aktueller Pick: ${current}`,
+      `Mein nächster Pick: ${next??'keiner'} | Picks bis dahin: ${next==null?'–':next-current}`,
+      '',
+      'DATENSTATUS',
+      `Verwendete Panels: ${usedPanelIds.map(pid=>panels[pid]?.name||pid).join(' / ')||'FEHLT'}`,
+      `Geladene Panel-Spieler: ${rankedCounts||'FEHLT'}`,
+      `Panel-Stand: ${rankingStamp}`,
+      `Sleeper-ADP: ${Object.keys(adp).length} | Quelle: ${adpMeta.source||'none'} | Stand: ${adpStamp}`,
+      `Bewertbare verfügbare Spieler: ${scored.length}`,
+      '',
+      'BISHERIGE PICKS'
+    ];
+
+    if(picks.length){
+      for(const pick of picks.slice().sort((a,b)=>a.pick_no-b.pick_no)){
+        const p=pinfo(String(pick.player_id),pick.metadata,players);
+        lines.push(`${pick.pick_no}. ${p.name} — ${p.pos}, ${p.team}${Number(pick.draft_slot)===slot?' [MEIN PICK]':''}`);
+      }
+    }else lines.push('Noch keine Picks.');
+
+    lines.push('','MEIN TEAM');
+    for(const pick of mine){
+      const p=pinfo(String(pick.player_id),pick.metadata,players);
+      lines.push(`${pick.pick_no}. ${p.name} — ${p.pos}, ${p.team}`);
+    }
+    if(!mine.length)lines.push('Noch keine Picks.');
+
+    lines.push('','GLEICHWERTIGE FAVORITEN');
+    if(favorites.length){
+      favorites.forEach((x,i)=>lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Coach ${x.score} | Panel ${x.r.rank.toFixed(1)} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Confidence ${x.confidence}%`));
+    }else lines.push('KEINE — Panel-Zuordnung/Rankings prüfen.');
+
+    lines.push('','DRAFT COACH TOP 8');
+    if(scored.length){
+      scored.slice(0,8).forEach((x,i)=>{
+        lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Coach ${x.score} | ${x.r.panel} ${x.r.rank.toFixed(1)} Tier ${x.r.tier||'–'} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Confidence ${x.confidence}% | ${x.agree}`);
+        lines.push(`   Einzelrankings: ${x.r.individual.map(v=>`${v.expertName} #${Math.round(v.rank)}${Number.isFinite(v.posRank)?` (${x.p.pos}${Math.round(v.posRank)})`:''}`).join(' · ')||'FEHLT'}`);
+      });
+    }else lines.push('KEINE — keine verfügbaren Spieler konnten einem geladenen Panel-Ranking zugeordnet werden.');
+
+    lines.push('','VERFÜGBARE SPIELER NACH PANEL');
+    if(availableSnapshot.length){
+      availableSnapshot.forEach((x,i)=>{
+        lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Panel ${x.r.rank.toFixed(1)} (${x.r.panel}) | Pos ${Number.isFinite(x.r.posRank)?x.p.pos+x.r.posRank.toFixed(1):'–'} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Sleeper SearchRank ${Number.isFinite(x.p.searchRank)?x.p.searchRank:'–'}${x.p.injury?` | Injury ${x.p.injury}`:''}`);
+        if(els.snapshotMode.value==='full')lines.push(`   Einzelrankings: ${x.r.individual.map(v=>`${v.expertName} #${Math.round(v.rank)}`).join(' · ')||'FEHLT'}`);
+      });
+    }else lines.push('KEINE.');
+
+    lines.push(
+      '',
+      'HARTE REGEL',
+      'Kein großer Reach ohne konkrete aktuelle Begründung. Fehlende Panel- oder ADP-Daten ausdrücklich als Unsicherheit behandeln. K und DST werden nicht gedraftet. Bye Weeks sind nur ein kleiner Tiebreaker.',
+      '',
+      'AUFGABE',
+      'Prüfe aktuelle Verletzungen, Depth Charts und News. Nutze das Expertenpanel als Baseline und Sleeper-ADP als Marktindikator, sofern vorhanden. Nenne alle nahezu gleichwertigen Favoriten, danach 2–3 Alternativen, Return-Chancen und Confidence. Erzwinge keine Einzelentscheidung, wenn mehrere Spieler nahezu gleichauf liegen. Abweichungen vom Expertenpanel oder der Sleeper-ADP ausdrücklich begründen.'
+    );
+
+    els.snapshot.value=lines.join('\n');
+    els.draftStatus.className=scored.length?'notice ok':'notice warn';
+    els.draftStatus.textContent=`${picks.length} Picks geladen · ${scored.length} Kandidaten bewertet · ${allAvailable.length} Spieler verfügbar.`;
+    els.draftSummary.hidden=false;
+    els.emptyCoach.hidden=true;
+    els.copyBtn.disabled=false;
+    els.shareBtn.disabled=false;
+    lastDraftContext={id,current,next,favorites,scored,picks,mine};
+  }finally{
+    els.refreshBtn.disabled=false;
+  }
+}
 
 
 function renderMockReview(mine,players){
@@ -314,7 +438,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,coach,chosen,reason,at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'8.0.0',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'9.0.2',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}

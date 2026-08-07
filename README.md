@@ -1,4 +1,14 @@
-# Draft Companion – Final Draft Edition 2026 (v9.0.1)
+# Draft Companion – Final Draft Edition 2026 (v9.0.2)
+
+## v9.0.2 – Snapshot-Datenqualität
+
+- vollständige bisherige Picks im Chat-Snapshot
+- Top 25 (kompakt) bzw. Top 40 (vollständig) verfügbare Spieler nach Expertenpanel
+- verwendete Panels, Ranking-Stand und echte Anzahl geladener Ranking-Spieler
+- Einzelrankings für Coach-Favoriten; im vollständigen Snapshot auch für die Verfügbarkeitsliste
+- kein vorzeitiges Abschneiden der Kandidaten durch Sleeper `search_rank`
+- Fallback auf ein tatsächlich geladenes Panel bei leerer/veralteter Positionspanel-Zuordnung
+- fehlende Sleeper-ADP bleibt ausdrücklich als Unsicherheit markiert; `search_rank` wird nicht als ADP ausgegeben
 
 ## Letzter UI-Feinschliff vor den Mocks
 
