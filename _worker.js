@@ -15,7 +15,7 @@ export default {
 async function handleFantasyPros(request,url){
   if(request.method==='OPTIONS') return new Response(null,{headers:cors()});
   if(request.method!=='GET') return json({error:'Nur GET ist erlaubt.'},405);
-  if(url.searchParams.get('health')==='1') return json({ok:true,service:'fantasypros-proxy',version:'9.4.0-verified-api-panel-2026'});
+  if(url.searchParams.get('health')==='1') return json({ok:true,service:'fantasypros-proxy',version:'9.5.0-verified-api-panel-2026'});
 
   const path=url.searchParams.get('path')||'';
   if(!path.startsWith('/')||!ALLOWED_PREFIXES.some(prefix=>path.startsWith(prefix))){
@@ -250,6 +250,132 @@ async function tryFantasyProsComparison(name,scoring){
     return {ok:/2026 Draft|Overall Fantasy Football Rankings/i.test(plain),sourceUrl:url};
   }catch{return {ok:false}}
 }
+
+function median(nums){
+  const a=nums.filter(Number.isFinite).sort((x,y)=>x-y);
+  if(!a.length)return null;
+  const m=Math.floor(a.length/2);
+  return a.length%2?a[m]:(a[m-1]+a[m])/2;
+}
+function comparisonTables(html,targetName){
+  const target=String(targetName||'').toLowerCase();
+  const out=new Map();
+  for(const tm of String(html||'').matchAll(/<table\b[^>]*>([\s\S]*?)<\/table>/gi)){
+    const table=tm[1],rows=tableRows(table);
+    if(!rows.length)continue;
+    let header=null,targetCol=-1,playerCol=-1;
+    for(const row of rows){
+      const lower=row.cells.map(x=>x.toLowerCase());
+      const pc=lower.findIndex(x=>x==='player'||x.includes('player'));
+      const tc=lower.findIndex(x=>x.includes(target)&&x.includes('rank'));
+      if(pc>=0&&tc>=0){header=row;playerCol=pc;targetCol=tc;break}
+    }
+    if(!header)continue;
+    let after=false;
+    for(const row of rows){
+      if(row===header){after=true;continue}
+      if(!after||row.cells.length<=Math.max(playerCol,targetCol))continue;
+      const rank=Number(String(row.cells[targetCol]||'').match(/(\d{1,3})/)?.[1]);
+      const ptxt=String(row.cells[playerCol]||'').trim();
+      if(!Number.isFinite(rank)||!ptxt)continue;
+      const pm=ptxt.match(/^(.*?)\s+[A-Z]{2,3}\s*-\s*(QB|RB|WR|TE|K|DST)\b/i);
+      const name=(pm?pm[1]:ptxt).trim(),pos=(pm?pm[2]:'').toUpperCase();
+      if(!name||!['QB','RB','WR','TE'].includes(pos))continue;
+      out.set(name.toLowerCase(),{name,pos,rank,exact:true});
+    }
+  }
+  return out;
+}
+async function fetchComparisonPair(targetName,anchorName,scoring){
+  const target=slugify(targetName),anchor=slugify(anchorName);
+  const urls=[
+    `https://www.fantasypros.com/nfl/rankings/${anchor}-${target}.php?scoring=${scoring}&type=draft`,
+    `https://www.fantasypros.com/nfl/rankings/${target}-${anchor}.php?scoring=${scoring}&type=draft`
+  ];
+  const errors=[];
+  for(const url of urls){
+    try{
+      const html=await fetchHtml(url),rows=comparisonTables(html,targetName);
+      if(rows.size)return {ok:true,url,rows};
+      errors.push(`${url}: 0 exakte Zeilen`);
+    }catch(e){errors.push(`${url}: ${e.message}`)}
+  }
+  return {ok:false,errors};
+}
+async function directRankingForAnchor(name,scoring){
+  const res=await tryFantasyProsDirect(name,scoring);
+  if(!res.ok)return null;
+  return res.players.filter(x=>['QB','RB','WR','TE'].includes(x.pos));
+}
+async function tryFantasyProsReconstruction(name,scoring){
+  const anchors=['Pat Fitzmaurice','Andrew Erickson','Derek Brown'];
+  const anchorLists={},comparisons=[],exact=new Map();
+
+  for(const anchor of anchors){
+    const list=await directRankingForAnchor(anchor,scoring);
+    if(list&&list.length>=80)anchorLists[anchor]=list;
+  }
+  const usableAnchors=Object.keys(anchorLists);
+  if(usableAnchors.length<2)return {ok:false,error:`Rekonstruktion: nur ${usableAnchors.length} Ankerlisten verfügbar`};
+
+  for(const anchor of usableAnchors){
+    const cmp=await fetchComparisonPair(name,anchor,scoring);
+    if(cmp.ok){
+      comparisons.push({anchor,url:cmp.url,count:cmp.rows.size});
+      for(const [k,v] of cmp.rows){
+        const prev=exact.get(k);
+        if(!prev||prev.rank===v.rank)exact.set(k,v);
+      }
+    }
+  }
+  if(!comparisons.length||exact.size<20)return {ok:false,error:`Rekonstruktion: nur ${exact.size} exakte Comparison-Ränge`};
+
+  // Candidate universe from the trusted direct anchors. Missing target rows on a dissent page
+  // mean "no large disagreement", not "no ranking". Estimate those from the anchor median and
+  // mark them explicitly as reconstructed; exact comparison ranks always override estimates.
+  const universe=new Map();
+  for(const [anchor,list] of Object.entries(anchorLists)){
+    for(const row of list){
+      const k=row.name.toLowerCase(),u=universe.get(k)||{name:row.name,pos:row.pos,anchorRanks:[]};
+      u.anchorRanks.push(Number(row.rank));
+      universe.set(k,u);
+    }
+  }
+
+  const players=[];
+  for(const [k,u] of universe){
+    if(exact.has(k)){
+      const e=exact.get(k);
+      const anchorRanks=u.anchorRanks.filter(Number.isFinite);
+      const spread=anchorRanks.length?Math.max(...anchorRanks)-Math.min(...anchorRanks):0;
+      players.push({...e,pos:e.pos||u.pos,posRank:null,spread,anchors:anchorRanks.length});
+    }else{
+      const ar=u.anchorRanks.filter(Number.isFinite);
+      if(ar.length<2)continue;
+      const m=median(ar),spread=Math.max(...ar)-Math.min(...ar);
+      // Conservative inclusion: if the trusted anchors strongly disagree, this is too uncertain
+      // to impute for the target expert.
+      if(!Number.isFinite(m)||spread>14)continue;
+      players.push({name:u.name,pos:u.pos,rank:m,posRank:null,exact:false,spread,anchors:ar.length});
+    }
+  }
+
+  players.sort((a,b)=>a.rank-b.rank||Number(b.exact)-Number(a.exact)||a.name.localeCompare(b.name));
+  const exactCount=players.filter(x=>x.exact).length,reconstructedCount=players.length-exactCount;
+  const coverage=players.length?exactCount/players.length:0;
+  if(players.length<100||exactCount<25)return {ok:false,error:`Rekonstruktion unzureichend: ${players.length} Spieler, ${exactCount} exakt`};
+
+  return {
+    ok:true,
+    source:'FantasyPros Comparison-Rekonstruktion',
+    sourceUrl:comparisons.map(x=>x.url).join(' | '),
+    players,
+    exactCount,reconstructedCount,coverage,
+    confidence:coverage>=.55?'reconstructed-strong':'reconstructed',
+    updated:'',
+    comparisons
+  };
+}
 async function handleExpertRanking(request,url){
   if(request.method!=='GET')return json({error:'Nur GET ist erlaubt.'},405);
   const name=String(url.searchParams.get('name')||'').trim();
@@ -257,21 +383,24 @@ async function handleExpertRanking(request,url){
   const season=String(url.searchParams.get('season')||new Date().getFullYear());
   const scoring=scoringCode(url.searchParams.get('scoring'));
   if(!name||name.length<3)return json({error:'Expertenname fehlt.'},400);
-  if(season!=='2026')return json({error:`Öffentliche Multi-Source-Adapter sind derzeit für Saison ${season} nicht validiert.`},422);
+  if(season!=='2026')return json({error:`Multi-Source-Adapter derzeit nur für Saison ${season} validiert.`},422);
 
   const attempts=[];
+
+  // 1) Exact public individual list.
   const fp=await tryFantasyProsDirect(name,scoring);attempts.push(fp.error||fp.source);
   if(fp.ok){
-    const cross=await tryFantasyProsComparison(name,scoring);
-    return json({...fp,crosscheck:{ok:cross.ok,sourceUrl:cross.sourceUrl||''},confidence:cross.ok?'primary+crosscheck':'primary'});
+    return json({...fp,exactCount:fp.players.length,reconstructedCount:0,coverage:1,confidence:'exact'});
   }
 
+  // 2) Generic FantasyPros reconstruction against several exact anchor experts.
+  const rec=await tryFantasyProsReconstruction(name,scoring);attempts.push(rec.error||rec.source);
+  if(rec.ok)return json(rec);
+
+  // 3) External official source as final fallback, where available.
   if(/yahoo/i.test(site)||/Justin Boone|Matt Harmon/i.test(name)){
     const yh=await tryYahooExpert(name);attempts.push(yh.error||yh.source);
-    if(yh.ok){
-      const cross=await tryFantasyProsComparison(name,scoring);
-      return json({...yh,crosscheck:{ok:cross.ok,sourceUrl:cross.sourceUrl||''},confidence:cross.ok?'primary+crosscheck':'primary'});
-    }
+    if(yh.ok)return json({...yh,exactCount:yh.players.length,reconstructedCount:0,coverage:1,confidence:'external-exact'});
   }
 
   return json({error:`${name}: keine ausreichend vollständige automatische Overall-Quelle. ${attempts.filter(Boolean).join(' | ')}`},404);

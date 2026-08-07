@@ -441,7 +441,7 @@ async function loadExperts(){
 }
 async function loadExpertRanks(expertId){
   const cache=rankCache[expertId];
-  if(cache&&cache.schemaVersion>=10&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&cache.verifiedIndividual&&Object.keys(cache.ranks||{}).length&&Date.now()-cache.updated<12*3600e3)return cache;
+  if(cache&&cache.schemaVersion>=11&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&cache.verifiedIndividual&&Object.keys(cache.ranks||{}).length&&Date.now()-cache.updated<12*3600e3)return cache;
 
   const expert=experts.find(e=>String(e.id)===String(expertId));
   if(!expert)throw new Error(`Experte ${expertId} nicht gefunden.`);
@@ -460,7 +460,11 @@ async function loadExpertRanks(expertId){
         pos,
         source:data.source,
         sourceUrl:data.sourceUrl||'',
-        sourceUpdated:data.updated||''
+        sourceUpdated:data.updated||'',
+        exact:row.exact!==false,
+        reconstructed:row.exact===false,
+        reconstructionSpread:Number(row.spread)||0,
+        reconstructionAnchors:Number(row.anchors)||0
       };
       counts[pos]++;
     }
@@ -468,7 +472,7 @@ async function loadExpertRanks(expertId){
     if(total<80)throw new Error(`${expert.name}: nur ${total} verwertbare QB/RB/WR/TE-Spieler.`);
 
     const result={
-      schemaVersion:10,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),
+      schemaVersion:11,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),
       expertId:String(expertId),expertName:expert.name,ranks,
       missing:Object.entries(counts).filter(([,n])=>!n).map(([p])=>p),
       derived:[],overallCount:total,counts,
@@ -477,19 +481,22 @@ async function loadExpertRanks(expertId){
       source:data.source,
       sourceUrl:data.sourceUrl||'',
       sourceUpdated:data.updated||'',
-      sourceConfidence:data.confidence||'primary'
+      sourceConfidence:data.confidence||'primary',
+      exactCount:Number(data.exactCount)||Object.values(ranks).filter(x=>x.exact).length,
+      reconstructedCount:Number(data.reconstructedCount)||Object.values(ranks).filter(x=>x.reconstructed).length,
+      coverage:Number(data.coverage)||0
     };
     rankCache[expertId]=result;
     store.set('v7_rank_'+expertId,result);
     return result;
   }catch(e){
-    if(cache&&cache.schemaVersion>=10&&cache.verifiedIndividual&&Object.keys(cache.ranks||{}).length){
+    if(cache&&cache.schemaVersion>=11&&cache.verifiedIndividual&&Object.keys(cache.ranks||{}).length){
       const fallback={...cache,staleFallback:true,error:e.message};
       rankCache[expertId]=fallback;
       return fallback;
     }
     const failed={
-      schemaVersion:10,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),
+      schemaVersion:11,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),
       expertId:String(expertId),expertName:expert.name,ranks:{},missing:['SOURCE'],derived:[],
       overallCount:0,counts:{QB:0,RB:0,WR:0,TE:0},verifiedIndividual:false,error:e.message
     };
@@ -526,7 +533,13 @@ function computePanel(panelId,candidateKeys=null){
     for(const[k,v]of Object.entries(cache?.ranks||{})){
       if(candidateKeys&&!candidateKeys.has(k))continue;
       all[k]??={name:v.name,pos:v.pos,values:[]};
-      all[k].values.push({expertId:eid,expertName:cache.expertName,rank:v.rank,posRank:v.posRank||null,w,source:v.source||'unknown'});
+      const sourceWeight=v.reconstructed?Math.max(.55,1-Math.min(10,Number(v.reconstructionSpread)||0)/25):1;
+      all[k].values.push({
+        expertId:eid,expertName:cache.expertName,rank:v.rank,posRank:v.posRank||null,
+        w:w*sourceWeight,baseWeight:w,source:v.source||'unknown',
+        exact:v.exact!==false,reconstructed:!!v.reconstructed,
+        spread:Number(v.reconstructionSpread)||0,anchors:Number(v.reconstructionAnchors)||0
+      });
     }
   }
   const out={};
@@ -558,6 +571,7 @@ async function loadAllRanks(){
       if(c.missing.length)skipped.push(`${c.expertName}: fehlt ${c.missing.join('/')}`);
       if(c.derived?.length)skipped.push(`${c.expertName}: ${c.derived.join('/')} aus Overall abgeleitet`);
       if(c.staleFallback)skipped.push(`${c.expertName}: letztes gültiges Ranking beibehalten`);
+      if(c.reconstructedCount)skipped.push(`${c.expertName}: ${c.exactCount} exakte + ${c.reconstructedCount} rekonstruierte Overall-Ränge (${Math.round((c.coverage||0)*100)}% exakte Abdeckung)`);
     }
     skipped.push(...flagDuplicateExpertRankings(ids));
     const failedExperts=ids.filter(id=>!rankCache[id]?.verifiedIndividual);
@@ -780,7 +794,7 @@ async function refresh(){
     if(scored.length){
       scored.slice(0,8).forEach((x,i)=>{
         lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Coach ${x.score} | ${x.r.panel} ${x.r.rank.toFixed(1)} Tier ${x.r.tier||'–'} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Confidence ${x.confidence}% | ${x.agree}`);
-        lines.push(`   Einzelrankings: ${x.r.individual.filter(v=>rankCache[v.expertId]?.verifiedIndividual).map(v=>`${v.expertName} #${Math.round(v.rank)}${Number.isFinite(v.posRank)?` (${x.p.pos}${Math.round(v.posRank)})`:''}`).join(' · ')||'KEINE VERIFIZIERT'}`);
+        lines.push(`   Einzelrankings: ${x.r.individual.filter(v=>rankCache[v.expertId]?.verifiedIndividual).map(v=>`${v.expertName} ${v.reconstructed?'≈':'#'}${Math.round(v.rank)}${Number.isFinite(v.posRank)?` (${x.p.pos}${Math.round(v.posRank)})`:''}${v.reconstructed?` [rekonstr., ${v.anchors} Anker]`:''}`).join(' · ')||'KEINE VERIFIZIERT'}`);
       });
     }else lines.push('KEINE — keine verfügbaren Spieler konnten einem geladenen Panel-Ranking zugeordnet werden.');
 
@@ -794,7 +808,7 @@ async function refresh(){
     if(availableSnapshot.length){
       availableSnapshot.forEach((x,i)=>{
         lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Panel ${x.r.rank.toFixed(1)} (${x.r.panel}) | Pos ${Number.isFinite(x.r.posRank)?x.p.pos+x.r.posRank.toFixed(1):'–'} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Sleeper SearchRank ${Number.isFinite(x.p.searchRank)?x.p.searchRank:'–'}${x.p.injury?` | Injury ${x.p.injury}`:''}`);
-        if(els.snapshotMode.value==='full')lines.push(`   Einzelrankings: ${x.r.individual.map(v=>`${v.expertName} #${Math.round(v.rank)}`).join(' · ')||'FEHLT'}`);
+        if(els.snapshotMode.value==='full')lines.push(`   Einzelrankings: ${x.r.individual.map(v=>`${v.expertName} ${v.reconstructed?'≈':'#'}${Math.round(v.rank)}${v.reconstructed?' [rekonstr.]':''}`).join(' · ')||'FEHLT'}`);
       });
     }else lines.push('KEINE.');
 
@@ -842,7 +856,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,coach,chosen,reason,at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'9.4.0',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'9.5.0',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
