@@ -15,7 +15,7 @@ export default {
 async function handleFantasyPros(request,url){
   if(request.method==='OPTIONS') return new Response(null,{headers:cors()});
   if(request.method!=='GET') return json({error:'Nur GET ist erlaubt.'},405);
-  if(url.searchParams.get('health')==='1') return json({ok:true,service:'fantasypros-proxy',version:'9.5.0-verified-api-panel-2026'});
+  if(url.searchParams.get('health')==='1') return json({ok:true,service:'fantasypros-proxy',version:'9.6.0-verified-api-panel-2026'});
 
   const path=url.searchParams.get('path')||'';
   if(!path.startsWith('/')||!ALLOWED_PREFIXES.some(prefix=>path.startsWith(prefix))){
@@ -102,7 +102,9 @@ function tableRows(html){
   }).filter(x=>x.cells.length);
 }
 function parsePosToken(text){
-  const m=String(text||'').toUpperCase().match(/\b(QB|RB|WR|TE)\s*[-#]?\s*(\d+)?\b/);
+  // Source parsing intentionally keeps K/DST so original Overall rank numbers
+  // are never altered by removing non-draftable positions too early.
+  const m=String(text||'').toUpperCase().match(/\b(QB|RB|WR|TE|K|DST)\s*[-#]?\s*(\d+)?\b/);
   return m?{pos:m[1],posRank:m[2]?Number(m[2]):null}:null;
 }
 function parseFantasyProsDirect(html){
@@ -280,7 +282,7 @@ function comparisonTables(html,targetName){
       if(!Number.isFinite(rank)||!ptxt)continue;
       const pm=ptxt.match(/^(.*?)\s+[A-Z]{2,3}\s*-\s*(QB|RB|WR|TE|K|DST)\b/i);
       const name=(pm?pm[1]:ptxt).trim(),pos=(pm?pm[2]:'').toUpperCase();
-      if(!name||!['QB','RB','WR','TE'].includes(pos))continue;
+      if(!name||!['QB','RB','WR','TE','K','DST'].includes(pos))continue;
       out.set(name.toLowerCase(),{name,pos,rank,exact:true});
     }
   }
@@ -305,8 +307,42 @@ async function fetchComparisonPair(targetName,anchorName,scoring){
 async function directRankingForAnchor(name,scoring){
   const res=await tryFantasyProsDirect(name,scoring);
   if(!res.ok)return null;
-  return res.players.filter(x=>['QB','RB','WR','TE'].includes(x.pos));
+  // Keep every ranked position here. Original Overall numbers include K/DST.
+  // Draft filtering happens later in app.js, never inside the source reconstruction.
+  return res.players.filter(x=>['QB','RB','WR','TE','K','DST'].includes(x.pos));
 }
+
+function reconstructionQuality(players,exactCount,reconstructedCount){
+  const draftable=players.filter(x=>['QB','RB','WR','TE'].includes(x.pos));
+  const exactDraftable=draftable.filter(x=>x.exact!==false);
+  const reconstructedDraftable=draftable.filter(x=>x.exact===false);
+  const exactCoverage=draftable.length?exactDraftable.length/draftable.length:0;
+  const avgSpread=reconstructedDraftable.length
+    ?reconstructedDraftable.reduce((s,x)=>s+(Number(x.spread)||0),0)/reconstructedDraftable.length
+    :0;
+  const maxSpread=reconstructedDraftable.length
+    ?Math.max(...reconstructedDraftable.map(x=>Number(x.spread)||0))
+    :0;
+
+  const reasons=[];
+  if(draftable.length<120)reasons.push(`nur ${draftable.length} draftbare Spieler`);
+  if(exactDraftable.length<50)reasons.push(`nur ${exactDraftable.length} exakte draftbare Ränge`);
+  if(exactCoverage<0.55)reasons.push(`nur ${Math.round(exactCoverage*100)}% exakte Abdeckung`);
+  if(avgSpread>9)reasons.push(`mittlerer Rekonstruktions-Spread ${avgSpread.toFixed(1)} > 9`);
+  if(maxSpread>14)reasons.push(`maximaler Spread ${maxSpread} > 14`);
+
+  return {
+    ok:reasons.length===0,
+    reasons,
+    draftableCount:draftable.length,
+    exactDraftableCount:exactDraftable.length,
+    reconstructedDraftableCount:reconstructedDraftable.length,
+    exactCoverage,
+    avgSpread,
+    maxSpread
+  };
+}
+
 async function tryFantasyProsReconstruction(name,scoring){
   const anchors=['Pat Fitzmaurice','Andrew Erickson','Derek Brown'];
   const anchorLists={},comparisons=[],exact=new Map();
@@ -363,7 +399,12 @@ async function tryFantasyProsReconstruction(name,scoring){
   players.sort((a,b)=>a.rank-b.rank||Number(b.exact)-Number(a.exact)||a.name.localeCompare(b.name));
   const exactCount=players.filter(x=>x.exact).length,reconstructedCount=players.length-exactCount;
   const coverage=players.length?exactCount/players.length:0;
-  if(players.length<100||exactCount<25)return {ok:false,error:`Rekonstruktion unzureichend: ${players.length} Spieler, ${exactCount} exakt`};
+  const quality=reconstructionQuality(players,exactCount,reconstructedCount);
+  if(!quality.ok)return {
+    ok:false,
+    error:`Rekonstruktion Qualitätsprüfung nicht bestanden: ${quality.reasons.join(', ')}`,
+    quality
+  };
 
   return {
     ok:true,
@@ -371,7 +412,8 @@ async function tryFantasyProsReconstruction(name,scoring){
     sourceUrl:comparisons.map(x=>x.url).join(' | '),
     players,
     exactCount,reconstructedCount,coverage,
-    confidence:coverage>=.55?'reconstructed-strong':'reconstructed',
+    quality,
+    confidence:quality.exactCoverage>=.70?'reconstructed-strong':'reconstructed',
     updated:'',
     comparisons
   };
