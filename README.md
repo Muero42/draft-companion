@@ -1,4 +1,4 @@
-# Draft Companion – Final Draft Edition 2026 (v9.0.2)
+# Draft Companion – Final Draft Edition 2026 (v9.0.3)
 
 ## v9.0.2 – Snapshot-Datenqualität
 
@@ -24,3 +24,12 @@
 
 Ab v9.0.1 werden bis nach dem echten Draft ausschließlich klar reproduzierbare Fehler
 oder zwingende Datenkorrekturen behoben.
+
+
+## v9.0.3 – FantasyPros Ranking-Fix
+
+- Einzel-Expertenrankings werden über den dokumentierten `consensus-rankings`-Endpunkt mit `filters=<expert_id>` geladen.
+- FantasyPros-Felder `position_id` und `rank_ecr_pos` werden erkannt.
+- Leere/fehlerhafte Ranking-Caches aus älteren Builds werden nicht mehr 12 Stunden weiterverwendet.
+- Ein fehlgeschlagenes Update kann gültige vorhandene Panel-Rankings nicht mehr mit leeren Panels überschreiben.
+- Diagnose prüft jetzt den verwendeten Consensus-Rankings-Endpunkt.

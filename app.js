@@ -43,7 +43,7 @@ async function proxyCall(path){
 function arrays(v,d=0){if(d>5||v==null)return[];if(Array.isArray(v))return[v];if(typeof v!=='object')return[];return Object.values(v).flatMap(x=>arrays(x,d+1))}
 function field(o,names){const keys=Object.keys(o||{});for(const n of names){const t=n.toLowerCase().replace(/[^a-z0-9]/g,'');const k=keys.find(x=>x.toLowerCase().replace(/[^a-z0-9]/g,'')===t);if(k&&o[k]!==''&&o[k]!=null)return o[k]}return null}
 function extractExperts(payload){for(const rows of arrays(payload).sort((a,b)=>b.length-a.length)){const m=rows.map(row=>{const id=field(row,['expert_id','expertid','id']),name=field(row,['expert_name','expertname','name','full_name']),site=field(row,['site_name','sitename','site','affiliation']);const accuracy=Number(field(row,['accuracy_draft_season','accuracy','draft_accuracy']));return id&&name?{id:String(id),name:String(name),site:String(site||''),accuracy:Number.isFinite(accuracy)?accuracy:null}:null}).filter(Boolean);if(m.length)return[...new Map(m.map(x=>[x.id,x])).values()]}return[]}
-function extractRankRows(payload){for(const rows of arrays(payload).sort((a,b)=>b.length-a.length)){const m=rows.map(row=>{const name=field(row,['player_name','playername','name','full_name']),rank=Number(field(row,['rank','rank_ecr','rankexpert','expert_rank','overall_rank'])),posRank=Number(field(row,['rank_position','position_rank','pos_rank','rank_pos'])),pos=String(field(row,['position','pos','player_position_id'])||'').toUpperCase().replace(/[0-9]/g,'');return name&&Number.isFinite(rank)&&rank>0?{name:String(name),rank,posRank:Number.isFinite(posRank)&&posRank>0?posRank:null,pos}:null}).filter(Boolean);if(m.length)return m}return[]}
+function extractRankRows(payload){for(const rows of arrays(payload).sort((a,b)=>b.length-a.length)){const m=rows.map(row=>{const name=field(row,['player_name','playername','name','full_name']),rank=Number(field(row,['rank','rank_ecr','rankexpert','expert_rank','overall_rank'])),posRank=Number(field(row,['rank_position','position_rank','pos_rank','rank_pos','rank_ecr_pos','rank_pos_ecr'])),pos=String(field(row,['position','pos','position_id','player_position_id'])||'').toUpperCase().replace(/[0-9]/g,'');return name&&Number.isFinite(rank)&&rank>0?{name:String(name),rank,posRank:Number.isFinite(posRank)&&posRank>0?posRank:null,pos}:null}).filter(Boolean);if(m.length)return m}return[]}
 
 function derivePositionRanks(rows){
   const groups={QB:[],RB:[],WR:[],TE:[]};
@@ -61,9 +61,9 @@ function derivePositionRanks(rows){
 async function fetchExpertOverall(expertId){
   const season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value),eid=encodeURIComponent(expertId);
   const attempts=[
-    `/nfl/${season}/rankings?scoring=${scoring}&expert_id=${eid}`,
-    `/nfl/${season}/rankings?position=ALL&scoring=${scoring}&expert_id=${eid}`,
-    `/nfl/${season}/rankings?position=OVERALL&scoring=${scoring}&expert_id=${eid}`
+    `/nfl/${season}/consensus-rankings?position=ALL&scoring=${scoring}&type=DRAFT&filters=${eid}&experts=show`,
+    `/nfl/${season}/consensus-rankings?position=ALL&scoring=${scoring}&filters=${eid}&experts=show`,
+    `/nfl/${season}/rankings?week=0&filters=${eid}&range=true&rankstats=true`
   ];
   let last=null;
   for(const path of attempts){
@@ -75,6 +75,23 @@ async function fetchExpertOverall(expertId){
   if(last)throw last;
   return [];
 }
+async function fetchExpertPosition(expertId,pos){
+  const season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value),eid=encodeURIComponent(expertId),p=encodeURIComponent(pos);
+  const attempts=[
+    `/nfl/${season}/consensus-rankings?position=${p}&scoring=${scoring}&type=DRAFT&filters=${eid}&experts=show`,
+    `/nfl/${season}/consensus-rankings?position=${p}&scoring=${scoring}&filters=${eid}&experts=show`
+  ];
+  let last=null;
+  for(const path of attempts){
+    try{
+      const data=await proxyCall(path),rows=extractRankRows(data).filter(x=>!x.pos||x.pos===pos);
+      if(rows.length)return rows;
+    }catch(e){last=e}
+  }
+  if(last)throw last;
+  return [];
+}
+
 function sourceMentionsSleeper(payload){
   const text=JSON.stringify(payload).toLowerCase();
   return text.includes('"sleeper"')||text.includes('sleeper adp')||text.includes('sleeper_adp');
@@ -140,8 +157,9 @@ function saveCurrentPanel(){const p=panels[activePanelId];if(!p)return;const mem
 async function loadExperts(){if(els.loadExpertsBtn)els.loadExpertsBtn.disabled=true;try{const data=await proxyCall(`/nfl/${els.season.value.trim()}/rankings/experts`);experts=extractExperts(data).sort((a,b)=>(b.accuracy??-999)-(a.accuracy??-999)||a.name.localeCompare(b.name));if(!experts.length)throw new Error('Keine Experten erkannt.');persist();renderAll();els.presetStatus.className='notice ok';els.presetStatus.textContent=`${experts.length} Experten geladen.`}finally{if(els.loadExpertsBtn)els.loadExpertsBtn.disabled=false}}
 async function loadExpertRanks(expertId){
   const cache=rankCache[expertId];
-  if(cache&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&Date.now()-cache.updated<12*3600e3)return cache;
-  const expert=experts.find(e=>e.id===expertId),ranks={},missing=[],derived=[];
+  // Empty caches from earlier builds were able to survive for 12 hours. Only reuse a cache that actually contains rankings.
+  if(cache&&cache.schemaVersion>=2&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&Object.keys(cache.ranks||{}).length&&Date.now()-cache.updated<12*3600e3)return cache;
+  const expert=experts.find(e=>e.id===expertId),ranks={},missing=[],derived=[],counts={};
   let overallRows=[];
   try{overallRows=await fetchExpertOverall(expertId)}catch(e){}
   const overallMap=derivePositionRanks(overallRows);
@@ -150,12 +168,13 @@ async function loadExpertRanks(expertId){
   }
   for(const pos of ['QB','RB','WR','TE']){
     try{
-      const data=await proxyCall(`/nfl/${els.season.value.trim()}/rankings?position=${pos}&scoring=${encodeURIComponent(els.scoring.value)}&expert_id=${encodeURIComponent(expertId)}`);
-      const rows=extractRankRows(data).filter(x=>!x.pos||x.pos===pos);
+      const rows=await fetchExpertPosition(expertId,pos);
+      counts[pos]=rows.length;
       if(rows.length){
         rows.sort((a,b)=>a.rank-b.rank).forEach((row,i)=>{
           const key=norm(row.name),existing=ranks[key];
           ranks[key]={
+            // If an overall list exists, keep its overall rank. Otherwise create a stable draft-board rank from the positional list.
             rank:existing?.rank??row.rank,
             posRank:row.posRank||i+1,
             name:row.name,
@@ -167,14 +186,19 @@ async function loadExpertRanks(expertId){
         derived.push(pos);
       }else missing.push(pos);
     }catch(e){
+      counts[pos]=0;
       if(Object.values(ranks).some(x=>x.pos===pos))derived.push(pos);
       else missing.push(pos);
     }
   }
-  const result={season:els.season.value,scoring:els.scoring.value,updated:Date.now(),expertId,expertName:expert?.name||expertId,ranks,missing,derived,overallCount:overallRows.length};
+  const result={schemaVersion:2,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),expertId,expertName:expert?.name||expertId,ranks,missing,derived,overallCount:overallRows.length,counts};
+  // Never replace a previously valid cache with an empty network result.
+  if(Object.keys(ranks).length){rankCache[expertId]=result;return result}
+  if(cache&&Object.keys(cache.ranks||{}).length)return {...cache,staleFallback:true,missing:[...new Set([...(cache.missing||[]),...missing])]};
   rankCache[expertId]=result;
   return result;
 }
+
 function computePanel(panelId){
   const panel=panels[panelId],all={};
   for(const[eid,w0]of Object.entries(panel?.members||{})){
@@ -197,7 +221,40 @@ function computePanel(panelId){
   assignTiers(out);return out
 }
 function assignTiers(map){for(const pos of ['QB','RB','WR','TE']){const rows=Object.values(map).filter(x=>x.pos===pos).sort((a,b)=>a.rank-b.rank);let tier=1,prev=null;for(const row of rows){if(prev!=null&&row.rank-prev>=4)tier++;row.tier=tier;prev=row.rank}}}
-async function loadAllRanks(){saveCurrentPanel();const ids=[...new Set(Object.values(panels).flatMap(p=>Object.keys(p.members||{})))];if(!ids.length)throw new Error('Preset oder Expertenauswahl fehlt.');if(els.loadAllRanksBtn)els.loadAllRanksBtn.disabled=true;const skipped=[];try{let i=0;for(const id of ids){i++;els.panelStatus.textContent=`Lade ${i}/${ids.length}: ${experts.find(e=>e.id===id)?.name||id}`;const c=await loadExpertRanks(id);if(c.missing.length)skipped.push(`${c.expertName}: fehlt ${c.missing.join('/')}`);if(c.derived?.length)skipped.push(`${c.expertName}: ${c.derived.join('/')} aus Overall abgeleitet`)}panelRanks={};for(const id of Object.keys(panels))panelRanks[id]=computePanel(id);store.set('v7_lastRankingUpdate',Date.now());persist();els.panelStatus.className=skipped.length?'notice warn':'notice ok';els.panelStatus.textContent=`Panels geladen: ${Object.entries(panelRanks).map(([id,r])=>`${panels[id]?.name}: ${Object.keys(r).length}`).join(' · ')}${skipped.length?` · Fehlende Positionen übersprungen: ${skipped.join(', ')}`:''}`;updateStatus()}finally{if(els.loadAllRanksBtn)els.loadAllRanksBtn.disabled=false}}
+async function loadAllRanks(){
+  saveCurrentPanel();
+  const ids=[...new Set(Object.values(panels).flatMap(p=>Object.keys(p.members||{})))];
+  if(!ids.length)throw new Error('Preset oder Expertenauswahl fehlt.');
+  if(els.loadAllRanksBtn)els.loadAllRanksBtn.disabled=true;
+  const skipped=[];
+  const previousPanelRanks=panelRanks;
+  try{
+    let i=0;
+    for(const id of ids){
+      i++;
+      els.panelStatus.textContent=`Lade ${i}/${ids.length}: ${experts.find(e=>e.id===id)?.name||id}`;
+      const c=await loadExpertRanks(id);
+      if(c.missing.length)skipped.push(`${c.expertName}: fehlt ${c.missing.join('/')}`);
+      if(c.derived?.length)skipped.push(`${c.expertName}: ${c.derived.join('/')} aus Overall abgeleitet`);
+      if(c.staleFallback)skipped.push(`${c.expertName}: letztes gültiges Ranking beibehalten`);
+    }
+    const candidate={};
+    for(const id of Object.keys(panels))candidate[id]=computePanel(id);
+    const usable=Object.values(candidate).reduce((n,r)=>n+Object.keys(r||{}).length,0);
+    if(!usable){
+      panelRanks=previousPanelRanks;
+      persist();
+      throw new Error('FantasyPros lieferte keine verwertbaren Spieler-Rankings. Vorhandene Rankings wurden aus Sicherheitsgründen NICHT überschrieben.');
+    }
+    panelRanks=candidate;
+    store.set('v7_lastRankingUpdate',Date.now());
+    persist();
+    els.panelStatus.className=skipped.length?'notice warn':'notice ok';
+    els.panelStatus.textContent=`Panels geladen: ${Object.entries(panelRanks).map(([id,r])=>`${panels[id]?.name}: ${Object.keys(r).length}`).join(' · ')}${skipped.length?` · Hinweise: ${skipped.join(', ')}`:''}`;
+    updateStatus();
+  }finally{if(els.loadAllRanksBtn)els.loadAllRanksBtn.disabled=false}
+}
+
 
 function parseCsv(text){const rows=[];let row=[],cell='',q=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'&&q&&n==='"'){cell+='"';i++}else if(c==='"')q=!q;else if(c===','&&!q){row.push(cell.trim());cell=''}else if((c==='\n'||c==='\r')&&!q){if(c==='\r'&&n==='\n')i++;row.push(cell.trim());cell='';if(row.some(x=>x!==''))rows.push(row);row=[]}else cell+=c}if(cell||row.length){row.push(cell.trim());rows.push(row)}if(!rows.length)return[];const h=rows[0];return rows.slice(1).map(r=>Object.fromEntries(h.map((x,i)=>[x,r[i]??''])))}
 async function parseAdp(file){const text=await file.text();let rows;if(file.name.toLowerCase().endsWith('.json')){const v=JSON.parse(text);rows=Array.isArray(v)?v:(v.players||Object.values(v))}else rows=parseCsv(text);const m={};for(const row of rows){const name=field(row,['player_name','player','name','full_name']),raw=field(row,['sleeper_adp','adp_sleeper','sleeper']);const val=Number(String(raw??'').replace(',','.'));if(name&&Number.isFinite(val)&&val>0)m[norm(name)]=val}if(!Object.keys(m).length)throw new Error('Keine Spalten player_name + sleeper_adp erkannt.');return m}
@@ -438,7 +495,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,coach,chosen,reason,at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'9.0.2',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'9.0.3',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
@@ -482,7 +539,7 @@ els.deletePanelBtn.onclick=()=>{if(['standard','pat'].includes(activePanelId))re
 for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])el.onchange=()=>{positionPanels[pos]=el.value;persist()};
 els.diagnoseBtn.onclick=async()=>{els.diagnostic.textContent='Teste …';try{
   const out=[];
-  for(const[n,p]of [['Experten',`/nfl/${els.season.value}/rankings/experts`],['RB-Rankings',`/nfl/${els.season.value}/rankings?position=RB&scoring=${els.scoring.value}`]]){
+  for(const[n,p]of [['Experten',`/nfl/${els.season.value}/rankings/experts`],['RB-Consensus',`/nfl/${els.season.value}/consensus-rankings?position=RB&scoring=${els.scoring.value}&type=DRAFT&experts=show`]]){
     try{const d=await proxyCall(p);out.push(`✓ FantasyPros ${n}: Array ${Math.max(0,...arrays(d).map(a=>a.length))}`)}
     catch(e){out.push(`✗ FantasyPros ${n}: ${e.message}`)}
   }
