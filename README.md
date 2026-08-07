@@ -1,4 +1,4 @@
-# Draft Companion – Final Draft Edition 2026 (v9.2.1)
+# Draft Companion – Final Draft Edition 2026 (v9.3.0)
 
 ## v9.0.2 – Snapshot-Datenqualität
 
@@ -26,7 +26,7 @@ Ab v9.0.1 werden bis nach dem echten Draft ausschließlich klar reproduzierbare 
 oder zwingende Datenkorrekturen behoben.
 
 
-## v9.2.1 – FantasyPros Ranking-Fix
+## v9.3.0 – FantasyPros Ranking-Fix
 
 - Einzel-Expertenrankings werden über den dokumentierten `consensus-rankings`-Endpunkt mit `filters=<expert_id>` geladen.
 - FantasyPros-Felder `position_id` und `rank_ecr_pos` werden erkannt.
@@ -35,7 +35,7 @@ oder zwingende Datenkorrekturen behoben.
 - Diagnose prüft jetzt den verwendeten Consensus-Rankings-Endpunkt.
 
 
-## v9.2.1 – Expert-Overall + Sleeper-ADP
+## v9.3.0 – Expert-Overall + Sleeper-ADP
 
 - `rank_ecr` hat Vorrang als FantasyPros-Overall-Rang; alte v9.0.3-Ranking-Caches werden verworfen.
 - `pos_rank`-Strings wie `WR8` werden korrekt gelesen.
@@ -43,17 +43,17 @@ oder zwingende Datenkorrekturen behoben.
 - Falls Sleeper keine nutzbaren ADPs liefert, bleibt der FantasyPros-Fallback bzw. die klare FEHLT-Kennzeichnung aktiv.
 
 
-## v9.2.1 – verifizierte Experten + Sleeper-ADP
+## v9.3.0 – verifizierte Experten + Sleeper-ADP
 
 - Einzelrankings werden nur akzeptiert, wenn FantasyPros die Filterung auf den konkreten Experten nachweisbar bestätigt oder `rank_min == rank_max` ein echtes Einzelranking belegt.
 - Identische Expertenlisten werden erkannt und nicht mehrfach als Konsens gezählt.
 - Alte v9.0.4-Ranking-Caches werden verworfen.
 - Sleeper-ADP läuft serverseitig über den Worker, damit Browser-CORS die versteckte Sleeper-Projections-Quelle nicht blockiert.
 - ADP wird aus `adp_half_ppr` geladen und über Sleeper-Spieler-IDs auf Namen gemappt.
-- Service-Worker-Cache wurde auf v9.2.1 angehoben, damit alte JS-Dateien nicht weiter ausgeliefert werden.
+- Service-Worker-Cache wurde auf v9.3.0 angehoben, damit alte JS-Dateien nicht weiter ausgeliefert werden.
 
 
-## v9.2.1 – echtes Expertenranking statt ECR-Spalte
+## v9.3.0 – echtes Expertenranking statt ECR-Spalte
 
 Der entscheidende Fehler aus v9.0.5 wurde isoliert:
 
@@ -68,7 +68,7 @@ Der entscheidende Fehler aus v9.0.5 wurde isoliert:
 Referenzkontrolle für Half-PPR: Pat Fitzmaurices öffentliche FantasyPros-Seite muss mit den vom Companion ausgegebenen Einzelrängen übereinstimmen; ECR und Pat-Rang dürfen auseinanderliegen.
 
 
-## v9.2.1 – keine unverifizierten Rankings mehr im Panel
+## v9.3.0 – keine unverifizierten Rankings mehr im Panel
 
 Der v9.0.6-Test hat gezeigt: `0/x verifiziert`, aber alte Pat-Werte wurden noch als Panel ausgegeben. Das war ein Logikfehler.
 
@@ -81,7 +81,7 @@ Der v9.0.6-Test hat gezeigt: `0/x verifiziert`, aber alte Pat-Werte wurden noch 
 - Sleeper-ADP, Draft-Picks und Verfügbarkeit bleiben unverändert.
 
 
-## v9.2.1 – verifizierte API-Einzelrankings
+## v9.3.0 – verifizierte API-Einzelrankings
 
 Die Expertenpipeline nutzt ausschließlich die offizielle FantasyPros-API:
 
@@ -94,3 +94,16 @@ Die Expertenpipeline nutzt ausschließlich die offizielle FantasyPros-API:
 7. Alte Cache-Schemata werden nicht als verifizierte Quelle übernommen.
 
 Hinweis: `compare-players` wird absichtlich nur als Positionsrang-Crosscheck verwendet. Die NFL-Dokumentation führt dort QB/RB/WR/TE/FLX als Positionen, nicht ALL; deshalb darf dieser Endpunkt nicht als Quelle für Overall-Ränge missverstanden werden.
+
+
+## v9.3.0 – Draft-Expertenquelle korrigiert
+
+Root-Cause-Fix nach Live-Diagnose:
+
+- `/rankings/experts` wird nun ausdrücklich mit `position=ALL`, `type=DRAFT`, gewähltem Scoring und `include_overall=true` geladen.
+- Das Preset wird nach dem Laden der Draft-Experten anhand der ExpertenNAMEN neu gebunden; alte IDs aus weekly/default Expertenlisten können nicht fortleben.
+- Einzel-Overall wird primär als `week=0` Preseason/Draft-Consensus mit EINER Expert-ID und ohne erzwungenes `type=DRAFT` geladen.
+- Erst `total_experts=1` plus bestätigte Expert-ID machen eine Liste verifiziert.
+- `compare-players?ranking_type=draft` bleibt als unabhängiger Positionsrang-Crosscheck.
+- Diagnose zeigt die Größe der Draft-Expertenliste sowie ID/Verfügbarkeit von Pat Fitzmaurice, Justin Boone, Sean Koerner, Andrew Erickson, Derek Brown und Matt Harmon.
+- Sleeper-Draft und Sleeper Half-PPR ADP bleiben unverändert.

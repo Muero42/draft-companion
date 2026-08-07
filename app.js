@@ -42,7 +42,7 @@ async function proxyCall(path){
 }
 function arrays(v,d=0){if(d>5||v==null)return[];if(Array.isArray(v))return[v];if(typeof v!=='object')return[];return Object.values(v).flatMap(x=>arrays(x,d+1))}
 function field(o,names){const keys=Object.keys(o||{});for(const n of names){const t=n.toLowerCase().replace(/[^a-z0-9]/g,'');const k=keys.find(x=>x.toLowerCase().replace(/[^a-z0-9]/g,'')===t);if(k&&o[k]!==''&&o[k]!=null)return o[k]}return null}
-function extractExperts(payload){for(const rows of arrays(payload).sort((a,b)=>b.length-a.length)){const m=rows.map(row=>{const id=field(row,['expert_id','expertid','id']),name=field(row,['expert_name','expertname','name','full_name']),site=field(row,['site_name','sitename','site','affiliation']);const accuracy=Number(field(row,['accuracy_draft_season','accuracy','draft_accuracy']));return id&&name?{id:String(id),name:String(name),site:String(site||''),accuracy:Number.isFinite(accuracy)?accuracy:null}:null}).filter(Boolean);if(m.length)return[...new Map(m.map(x=>[x.id,x])).values()]}return[]}
+function extractExperts(payload){for(const rows of arrays(payload).sort((a,b)=>b.length-a.length)){const m=rows.map(row=>{const id=field(row,['expert_id','expertid','id']),name=field(row,['expert_name','expertname','name','full_name']),site=field(row,['source','site_name','sitename','site','affiliation','expert_source_name']);const accuracy=Number(field(row,['accuracy_draft_season','accuracy','draft_accuracy','accuracy_overall']));return id&&name?{id:String(id),name:String(name),site:String(site||''),accuracy:Number.isFinite(accuracy)?accuracy:null}:null}).filter(Boolean);if(m.length)return[...new Map(m.map(x=>[x.id,x])).values()]}return[]}
 
 const DRAFT_POOL_LIMITS={QB:30,RB:90,WR:80,TE:30};
 
@@ -88,25 +88,23 @@ function compareRanksFor(payload,expertId,scoring){
 }
 async function fetchVerifiedExpertOverall(expert){
   const season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value),eid=encodeURIComponent(expert.id);
-  // FantasyPros' docs/response behavior around expert filtering has varied.
-  // Never trust the request alone: try the documented single-expert forms and
-  // accept only a response that explicitly proves one requested expert.
   const attempts=[
-    `/nfl/${season}/consensus-rankings?position=ALL&scoring=${scoring}&type=DRAFT&filters=${eid}&experts=show`,
-    `/nfl/${season}/consensus-rankings?position=ALL&scoring=${scoring}&type=DRAFT&filters=${eid}%3A&experts=show`,
-    `/nfl/${season}/consensus-rankings?position=ALL&scoring=${scoring}&type=DRAFT&experts=${eid}`,
-    `/nfl/${season}/rankings?week=0&position=ALL&scoring=${scoring}&ranking_type=DRAFT&filters=${eid}&range=true&rankstats=true&experts=show`
+    // FantasyPros preseason/draft consensus: week 0, no explicit type is the canonical legacy form.
+    `/nfl/${season}/consensus-rankings?position=ALL&scoring=${scoring}&week=0&filters=${eid}&experts=show`,
+    `/nfl/${season}/consensus-rankings?position=ALL&scoring=${scoring}&week=0&type=PRESEASON&filters=${eid}&experts=show`,
+    `/nfl/${season}/consensus-rankings?position=ALL&scoring=${scoring}&week=0&type=DRAFT&filters=${eid}&experts=show`
   ];
   const failures=[];
   for(const path of attempts){
     try{
       const data=await proxyCall(path);
       const rows=extractVerifiedOverall(data,expert.id);
-      if(confirmedSingleExpert(data,expert.id)&&rows.length>=120)return {data,rows,path};
-      failures.push(`${path.includes('/consensus-rankings')?'consensus':'rankings'}: total_experts=${data?.total_experts??'?'}, filters=${data?.filters??'leer'}, rows=${rows.length}`);
+      const verified=confirmedSingleExpert(data,expert.id);
+      if(verified&&rows.length>=80)return {data,rows,path};
+      failures.push(`ranking_type=${data?.ranking_type_name||data?.type||'?'} total_experts=${data?.total_experts??'?'} filters=${data?.filters??'leer'} rows=${rows.length}`);
     }catch(e){failures.push(e?.message||String(e))}
   }
-  throw new Error(`${expert.name}: kein API-Aufruf bestätigte einen echten Einzel-Expertenfilter. ${failures.join(' | ')}`);
+  throw new Error(`${expert.name}: kein echter Einzel-Overall-Response. ${failures.join(' | ')}`);
 }
 async function validateExpertWithCompare(expert,rows){
   // Independent API cross-check: compare-players is positional, so compare against pos_rank.
@@ -370,10 +368,44 @@ function renderAll(){if(!panels[activePanelId])activePanelId='standard';panelOpt
 function renderExperts(){const q=els.expertSearch.value.trim().toLowerCase(),members=panels[activePanelId]?.members||{},total=Object.values(members).reduce((s,w)=>s+Number(w||0),0);const list=experts.filter(e=>!q||`${e.name} ${e.site}`.toLowerCase().includes(q));els.expertsList.innerHTML=list.length?list.map(e=>{const on=members[e.id]!=null,w=Number(members[e.id]??25),pct=on&&total?Math.round(w/total*100):0;return `<div class="expert"><label><input type="checkbox" data-id="${esc(e.id)}" ${on?'checked':''}> ${esc(e.name)}<small>${esc(e.site||'Quelle unbekannt')}${e.accuracy!=null?` · Accuracy ${e.accuracy}`:''}${on?` · effektiv ${pct}%`:''}</small></label><input type="number" min="0" max="100" value="${w}" data-weight="${esc(e.id)}"></div>`}).join(''):'<div class="notice">Noch keine Experten geladen oder keine Treffer.</div>'}
 function saveCurrentPanel(){const p=panels[activePanelId];if(!p)return;const members={};els.expertsList.querySelectorAll('[data-id]').forEach(cb=>{if(cb.checked){const id=cb.dataset.id,w=Number(els.expertsList.querySelector(`[data-weight="${CSS.escape(id)}"]`)?.value||0);if(w>0)members[id]=w}});p.members=members;persist()}
 
-async function loadExperts(){if(els.loadExpertsBtn)els.loadExpertsBtn.disabled=true;try{const data=await proxyCall(`/nfl/${els.season.value.trim()}/rankings/experts`);experts=extractExperts(data).sort((a,b)=>(b.accuracy??-999)-(a.accuracy??-999)||a.name.localeCompare(b.name));if(!experts.length)throw new Error('Keine Experten erkannt.');persist();renderAll();els.presetStatus.className='notice ok';els.presetStatus.textContent=`${experts.length} Experten geladen.`}finally{if(els.loadExpertsBtn)els.loadExpertsBtn.disabled=false}}
+async function loadExperts(){
+  if(els.loadExpertsBtn)els.loadExpertsBtn.disabled=true;
+  try{
+    const season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value);
+    const attempts=[
+      `/nfl/${season}/rankings/experts?position=ALL&type=DRAFT&scoring=${scoring}&include_overall=true`,
+      `/nfl/${season}/rankings/experts?position=ALL&scoring=${scoring}&include_overall=true`,
+      `/nfl/${season}/rankings/experts?type=DRAFT&scoring=${scoring}&include_overall=true`
+    ];
+    let best=[],used='',errors=[];
+    for(const path of attempts){
+      try{
+        const data=await proxyCall(path),list=extractExperts(data);
+        if(list.length>best.length){best=list;used=path}
+        const targetHits=['Pat Fitzmaurice','Justin Boone','Sean Koerner','Andrew Erickson','Derek Brown','Matt Harmon'].filter(n=>list.some(e=>norm(e.name)===norm(n))).length;
+        if(list.length>=20&&targetHits>=3){best=list;used=path;break}
+      }catch(e){errors.push(e.message)}
+    }
+    experts=best.sort((a,b)=>(b.accuracy??-999)-(a.accuracy??-999)||a.name.localeCompare(b.name));
+    if(!experts.length)throw new Error(`Keine Draft-Experten erkannt.${errors.length?' '+errors.join(' | '):''}`);
+
+    // Re-bind the preset by NAME after loading the correct draft-expert universe.
+    // This prevents stale expert IDs from older/weekly expert lists from surviving.
+    applyPreset();
+
+    persist();renderAll();
+    const wanted=['Pat Fitzmaurice','Justin Boone','Sean Koerner','Andrew Erickson','Derek Brown','Matt Harmon'];
+    const found=wanted.filter(n=>findExpert(n)).length;
+    els.presetStatus.className=found>=4?'notice ok':'notice warn';
+    els.presetStatus.textContent=`${experts.length} Draft-Experten geladen · Ziel-Experten ${found}/${wanted.length} · Quelle ${used.includes('type=DRAFT')?'DRAFT/ALL':'Fallback'}.`;
+    return {count:experts.length,found,used};
+  }finally{
+    if(els.loadExpertsBtn)els.loadExpertsBtn.disabled=false;
+  }
+}
 async function loadExpertRanks(expertId){
   const cache=rankCache[expertId];
-  if(cache&&cache.schemaVersion>=8&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&cache.verifiedIndividual&&cache.crosscheck?.ok&&Object.keys(cache.ranks||{}).length&&Date.now()-cache.updated<12*3600e3)return cache;
+  if(cache&&cache.schemaVersion>=9&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&cache.verifiedIndividual&&cache.crosscheck?.ok&&Object.keys(cache.ranks||{}).length&&Date.now()-cache.updated<12*3600e3)return cache;
 
   const expert=experts.find(e=>e.id===expertId);
   if(!expert)throw new Error(`Experte ${expertId} nicht gefunden.`);
@@ -398,7 +430,7 @@ async function loadExpertRanks(expertId){
     const counts={QB:0,RB:0,WR:0,TE:0};
     Object.values(ranks).forEach(x=>{if(counts[x.pos]!=null)counts[x.pos]++});
     const result={
-      schemaVersion:8,
+      schemaVersion:9,
       season:els.season.value,
       scoring:els.scoring.value,
       updated:Date.now(),
@@ -422,13 +454,13 @@ async function loadExpertRanks(expertId){
     return result;
   }catch(e){
     // Stale fallback is allowed only if it was previously verified by BOTH API paths.
-    if(cache&&cache.schemaVersion>=8&&cache.verifiedIndividual&&cache.crosscheck?.ok&&Object.keys(cache.ranks||{}).length){
+    if(cache&&cache.schemaVersion>=9&&cache.verifiedIndividual&&cache.crosscheck?.ok&&Object.keys(cache.ranks||{}).length){
       const fallback={...cache,staleFallback:true,error:e.message};
       rankCache[expertId]=fallback;
       return fallback;
     }
     const failed={
-      schemaVersion:8,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),
+      schemaVersion:9,season:els.season.value,scoring:els.scoring.value,updated:Date.now(),
       expertId:String(expertId),expertName:expert.name,ranks:{},missing:['API'],derived:[],
       overallCount:0,counts:{QB:0,RB:0,WR:0,TE:0},verifiedIndividual:false,crosscheck:{ok:false},error:e.message
     };
@@ -780,7 +812,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,coach,chosen,reason,at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'9.2.1',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'9.3.0',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
@@ -825,24 +857,36 @@ els.deletePanelBtn.onclick=()=>{if(['standard','pat'].includes(activePanelId))re
 for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])el.onchange=()=>{positionPanels[pos]=el.value;persist()};
 els.diagnoseBtn.onclick=async()=>{els.diagnostic.textContent='Teste …';try{
   const out=[];
-  for(const[n,p]of [['Experten',`/nfl/${els.season.value}/rankings/experts`],['RB-Consensus',`/nfl/${els.season.value}/consensus-rankings?position=RB&scoring=${els.scoring.value}&type=DRAFT&experts=show`]]){
-    try{const d=await proxyCall(p);out.push(`✓ FantasyPros ${n}: Array ${Math.max(0,...arrays(d).map(a=>a.length))}`)}
-    catch(e){out.push(`✗ FantasyPros ${n}: ${e.message}`)}
-  }
   try{
-    if(!experts.length)await loadExperts();
-    const preferred=findExpert('Pat Fitzmaurice')||experts[0];
-    if(!preferred)throw new Error('Kein Experte für Einzelranking-Test verfügbar.');
+    const info=await loadExperts();
+    out.push(`✓ Draft-Experten: ${info.count} · Ziel-Experten ${info.found}/6`);
+    for(const name of ['Pat Fitzmaurice','Justin Boone','Sean Koerner','Andrew Erickson','Derek Brown','Matt Harmon']){
+      const e=findExpert(name);
+      out.push(`${e?'✓':'!'} ${name}: ${e?`ID ${e.id} · ${e.site||'Quelle unbekannt'}`:'nicht in aktueller Draft-Expertenliste'}`);
+    }
+  }catch(e){out.push(`✗ Draft-Expertenliste: ${e.message}`)}
+  try{
+    const d=await proxyCall(`/nfl/${els.season.value}/consensus-rankings?position=RB&scoring=${els.scoring.value}&week=0&experts=show`);
+    out.push(`✓ FantasyPros RB-Consensus: ${Array.isArray(d?.players)?d.players.length:Math.max(0,...arrays(d).map(a=>a.length))} · ${d?.ranking_type_name||d?.type||'?'} · ${d?.total_experts??'?'} Experten`);
+  }catch(e){out.push(`✗ FantasyPros RB-Consensus: ${e.message}`)}
+  try{
+    const preferred=findExpert('Pat Fitzmaurice')||findExpert('Andrew Erickson')||experts[0];
+    if(!preferred)throw new Error('Kein Ziel-Experte für Einzelranking-Test verfügbar.');
     const one=await fetchVerifiedExpertOverall(preferred);
-    out.push(`✓ Einzel-Overall ${preferred.name}: ${one.rows.length} Spieler · total_experts=${one.data?.total_experts} · filter=${one.data?.filters??'–'}`);
+    out.push(`✓ Einzel-Overall ${preferred.name}: ${one.rows.length} Spieler · ${one.data?.ranking_type_name||one.data?.type||'?'} · total_experts=${one.data?.total_experts} · filters=${one.data?.filters??'–'}`);
     const cc=await validateExpertWithCompare(preferred,one.rows);
     out.push(cc.ok?`✓ Compare-Players Crosscheck ${preferred.name}: ${cc.matched}/${cc.checked} ${cc.pos}-Ränge stimmen`:`✗ Compare-Players Crosscheck ${preferred.name}: ${cc.matched||0}/${cc.checked||0}${cc.reason?` · ${cc.reason}`:''}`);
     const aj=one.rows.find(x=>norm(x.name)===norm('A.J. Brown'));
     if(aj)out.push(`ℹ ${preferred.name} · A.J. Brown Overall #${aj.rank} · ${aj.pos}${aj.posRank||'?'}`);
   }catch(e){out.push(`✗ Einzelranking-Pipeline: ${e.message}`)}
-  try{const r=await fetch('https://api.sleeper.app/v1/players/nfl',{cache:'no-store'});const d=await r.json();out.push(`✓ Sleeper Spielerdaten: ${Object.keys(d||{}).length}`)}
-  catch(e){out.push(`✗ Sleeper Spielerdaten: ${e.message}`)}
-  try{const result=await loadSleeperAdpDirect();out.push(result.ok?`✓ Sleeper Half-PPR ADP: ${result.count}`:`✗ Sleeper Half-PPR ADP: ${result.errors?.join('; ')||'nicht verfügbar'}`)}catch(e){out.push(`✗ Sleeper-ADP-Prüfung: ${e.message}`)}
+  try{
+    const r=await fetch('https://api.sleeper.app/v1/players/nfl',{cache:'no-store'}),d=await r.json();
+    out.push(`✓ Sleeper Spielerdaten: ${Object.keys(d||{}).length}`);
+  }catch(e){out.push(`✗ Sleeper Spielerdaten: ${e.message}`)}
+  try{
+    const result=await loadSleeperAdpDirect();
+    out.push(result.ok?`✓ Sleeper Half-PPR ADP: ${result.count}`:`✗ Sleeper Half-PPR ADP: ${result.errors?.join('; ')||'nicht verfügbar'}`);
+  }catch(e){out.push(`✗ Sleeper-ADP-Prüfung: ${e.message}`)}
   els.diagnostic.textContent=out.join('\n')
 }catch(e){els.diagnostic.textContent=e.message}};
 els.toggleKeyBtn.onclick=()=>{const show=els.apiKey.type==='password';els.apiKey.type=show?'text':'password';els.toggleKeyBtn.textContent=show?'Key verbergen':'Key anzeigen'};
