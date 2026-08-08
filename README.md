@@ -1,4 +1,4 @@
-# Draft Companion – Final Draft Edition 2026 (v9.8.0)
+# Draft Companion – Final Draft Edition 2026 (v10.0.0)
 
 ## v9.0.2 – Snapshot-Datenqualität
 
@@ -26,7 +26,7 @@ Ab v9.0.1 werden bis nach dem echten Draft ausschließlich klar reproduzierbare 
 oder zwingende Datenkorrekturen behoben.
 
 
-## v9.8.0 – FantasyPros Ranking-Fix
+## v10.0.0 – FantasyPros Ranking-Fix
 
 - Einzel-Expertenrankings werden über den dokumentierten `consensus-rankings`-Endpunkt mit `filters=<expert_id>` geladen.
 - FantasyPros-Felder `position_id` und `rank_ecr_pos` werden erkannt.
@@ -35,7 +35,7 @@ oder zwingende Datenkorrekturen behoben.
 - Diagnose prüft jetzt den verwendeten Consensus-Rankings-Endpunkt.
 
 
-## v9.8.0 – Expert-Overall + Sleeper-ADP
+## v10.0.0 – Expert-Overall + Sleeper-ADP
 
 - `rank_ecr` hat Vorrang als FantasyPros-Overall-Rang; alte v9.0.3-Ranking-Caches werden verworfen.
 - `pos_rank`-Strings wie `WR8` werden korrekt gelesen.
@@ -43,17 +43,17 @@ oder zwingende Datenkorrekturen behoben.
 - Falls Sleeper keine nutzbaren ADPs liefert, bleibt der FantasyPros-Fallback bzw. die klare FEHLT-Kennzeichnung aktiv.
 
 
-## v9.8.0 – verifizierte Experten + Sleeper-ADP
+## v10.0.0 – verifizierte Experten + Sleeper-ADP
 
 - Einzelrankings werden nur akzeptiert, wenn FantasyPros die Filterung auf den konkreten Experten nachweisbar bestätigt oder `rank_min == rank_max` ein echtes Einzelranking belegt.
 - Identische Expertenlisten werden erkannt und nicht mehrfach als Konsens gezählt.
 - Alte v9.0.4-Ranking-Caches werden verworfen.
 - Sleeper-ADP läuft serverseitig über den Worker, damit Browser-CORS die versteckte Sleeper-Projections-Quelle nicht blockiert.
 - ADP wird aus `adp_half_ppr` geladen und über Sleeper-Spieler-IDs auf Namen gemappt.
-- Service-Worker-Cache wurde auf v9.8.0 angehoben, damit alte JS-Dateien nicht weiter ausgeliefert werden.
+- Service-Worker-Cache wurde auf v10.0.0 angehoben, damit alte JS-Dateien nicht weiter ausgeliefert werden.
 
 
-## v9.8.0 – echtes Expertenranking statt ECR-Spalte
+## v10.0.0 – echtes Expertenranking statt ECR-Spalte
 
 Der entscheidende Fehler aus v9.0.5 wurde isoliert:
 
@@ -68,7 +68,7 @@ Der entscheidende Fehler aus v9.0.5 wurde isoliert:
 Referenzkontrolle für Half-PPR: Pat Fitzmaurices öffentliche FantasyPros-Seite muss mit den vom Companion ausgegebenen Einzelrängen übereinstimmen; ECR und Pat-Rang dürfen auseinanderliegen.
 
 
-## v9.8.0 – keine unverifizierten Rankings mehr im Panel
+## v10.0.0 – keine unverifizierten Rankings mehr im Panel
 
 Der v9.0.6-Test hat gezeigt: `0/x verifiziert`, aber alte Pat-Werte wurden noch als Panel ausgegeben. Das war ein Logikfehler.
 
@@ -81,7 +81,7 @@ Der v9.0.6-Test hat gezeigt: `0/x verifiziert`, aber alte Pat-Werte wurden noch 
 - Sleeper-ADP, Draft-Picks und Verfügbarkeit bleiben unverändert.
 
 
-## v9.8.0 – verifizierte API-Einzelrankings
+## v10.0.0 – verifizierte API-Einzelrankings
 
 Die Expertenpipeline nutzt ausschließlich die offizielle FantasyPros-API:
 
@@ -96,7 +96,7 @@ Die Expertenpipeline nutzt ausschließlich die offizielle FantasyPros-API:
 Hinweis: `compare-players` wird absichtlich nur als Positionsrang-Crosscheck verwendet. Die NFL-Dokumentation führt dort QB/RB/WR/TE/FLX als Positionen, nicht ALL; deshalb darf dieser Endpunkt nicht als Quelle für Overall-Ränge missverstanden werden.
 
 
-## v9.8.0 – Draft-Expertenquelle korrigiert
+## v10.0.0 – Draft-Expertenquelle korrigiert
 
 Root-Cause-Fix nach Live-Diagnose:
 
@@ -109,7 +109,7 @@ Root-Cause-Fix nach Live-Diagnose:
 - Sleeper-Draft und Sleeper Half-PPR ADP bleiben unverändert.
 
 
-## v9.8.0 – Multi-Source Expertenpipeline
+## v10.0.0 – Multi-Source Expertenpipeline
 
 - Experten werden aus FantasyPros API + öffentlichem FantasyPros-Draft-Verzeichnis zusammengeführt.
 - Preset-Experten bleiben auswählbar, selbst wenn die API sie vorübergehend nicht listet.
@@ -123,7 +123,7 @@ Root-Cause-Fix nach Live-Diagnose:
 - Sleeper ADP/Draft bleiben unverändert.
 
 
-## v9.8.0 – generische Comparison-Rekonstruktion
+## v10.0.0 – generische Comparison-Rekonstruktion
 
 Für Experten ohne vollständige öffentliche Einzelrangliste:
 
@@ -138,7 +138,7 @@ Für Experten ohne vollständige öffentliche Einzelrangliste:
 - Das Verfahren ist namens-/quellenbasiert und funktioniert damit auch für künftig ausgewählte FantasyPros-Experten, sofern FantasyPros Vergleichsdaten bereitstellt.
 
 
-## v9.8.0 – Original-Overall + Qualitätsgate
+## v10.0.0 – Original-Overall + Qualitätsgate
 
 - FantasyPros-Quellparser behalten QB/RB/WR/TE **und K/DST**, damit die originale Overall-Nummerierung eines Experten unverändert bleibt.
 - K/DST werden erst beim App-Import bzw. Draft-Kandidatenpool entfernt. Dadurch bleiben z. B. Overall #185 und #186 genau die Originalränge des Experten.
@@ -153,14 +153,14 @@ Für Experten ohne vollständige öffentliche Einzelrangliste:
 - Status und Snapshot unterscheiden exakte und rekonstruierte Ränge weiterhin klar.
 
 
-## v9.8.0 – Coach/Return/Research
+## v10.0.0 – Coach/Return/Research
 - Expertenranking- und Rekonstruktionspipeline aus v9.6.1 unverändert.
 - Coach-Score startet nicht mehr am 100er-Deckel; Favoriten bleiben vergleichbar, Unterschiede werden sichtbar.
 - Return-Chance wird am echten Folgepick nach dem aktuellen eigenen Pick berechnet (Snake-Draft-Bug behoben) und mit engerer ADP-Kurve kalibriert.
 - Snapshot enthält Research-Kandidaten für gezielte Live-Prüfung von Sleeper-/Breakout-/League-Winner-/Bust-Artikeln, Camp-News, Rollenänderungen, Verletzungen und Depth Charts.
 - Artikelkontext überschreibt die Expertenbaseline nicht automatisch; Abweichungen müssen begründet werden.
 
-## v9.8.0 – Scoring Guard + Relative Coach
+## v10.0.0 – Scoring Guard + Relative Coach
 - FantasyPros-Direktlisten nur bei explizit verifiziertem Saison-/Overall-/Scoring-Kontext.
 - Half-PPR muss im Quellinhalt als Half Point PPR/Half PPR erkennbar sein; kein stiller Scoring-Fallback.
 - Quell-Scoring und Aktualisierungsdatum werden im Snapshot sichtbar.

@@ -17,7 +17,7 @@
       <h1>Draft Companion</h1>
       <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
     </div>
-    <span class="version">v9.8.0</span>
+    <span class="version">v10.0.0</span>
   </header>
 
   <section class="status-card">
@@ -53,6 +53,12 @@
       <div><label for="topN">Spieler</label><select id="topN"><option>25</option><option selected>35</option><option>50</option></select></div>
       <div><label for="snapshotMode">Snapshot</label><select id="snapshotMode"><option value="compact" selected>Kompakt</option><option value="full">Vollständig</option></select></div>
     </div>
+    <div class="three">
+      <div><label for="draftMode">Modus</label><select id="draftMode"><option value="mock" selected>Mock/Test</option><option value="live">LIVE LEAGUE</option><option value="replay">Replay</option></select></div>
+      <div><label for="replayCutoff">Replay bis Pick</label><input id="replayCutoff" type="number" min="0" placeholder="z. B. 70"></div>
+      <div><label for="managerMap">Slot→Manager (Live)</label><input id="managerMap" placeholder="1=Basti,2=Thomas,…"></div>
+    </div>
+    <div id="modeStatus" class="notice">Mock/Test: Managerhistorie ist deaktiviert.</div>
     <div class="button-grid">
       <button id="refreshBtn" class="primary">Draft analysieren</button>
       <button id="copyBtn" class="secondary" disabled>Snapshot kopieren</button>
@@ -143,7 +149,7 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v9.8.0 kalibriert Coach-Score und Return-Chance und ergänzt Research-Kandidaten; die Expertenpipeline bleibt unverändert.</div>
+<div class="freeze-note">v10.0.0: Mock/Live/Replay-Trennung, Top-5 Live-Coach, Gegner-Roster, Return-Confidence, Loss-if-Gone, Manager-Layer, Fallback-Status und erweitertes Decision Log.</div>
 </main>
 <script type="module" src="app.js"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
