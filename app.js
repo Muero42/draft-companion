@@ -26,13 +26,13 @@ for(let i=1;i<=16;i++)els.slot.add(new Option(i,i));
 els.slot.value=store.text('v7_slot','9');
 els.topN.value=store.text('v7_topN','35');
 els.snapshotMode.value=store.text('v7_snapshotMode','compact');
-els.draftMode.value=store.text('v10_draftMode','mock');
-els.replayCutoff.value=store.text('v10_replayCutoff','');
-els.managerMap.value=store.text('v10_managerMap','');
+els.draftMode.value=store.text('v11_draftMode',store.text('v10_draftMode','mock'));
+els.replayCutoff.value=store.text('v11_replayCutoff',store.text('v10_replayCutoff',''));
+els.managerMap.value=store.text('v11_managerMap',store.text('v10_managerMap',''));
 
 function persist(){
   store.setText('v7_apiKey',els.apiKey.value.trim());store.setText('v7_season',els.season.value.trim());store.setText('v7_scoring',els.scoring.value);
-  store.setText('v7_draft',els.draftInput.value.trim());store.setText('v7_slot',els.slot.value);store.setText('v7_topN',els.topN.value);store.setText('v7_snapshotMode',els.snapshotMode.value);store.setText('v10_draftMode',els.draftMode.value);store.setText('v10_replayCutoff',els.replayCutoff.value);store.setText('v10_managerMap',els.managerMap.value);
+  store.setText('v7_draft',els.draftInput.value.trim());store.setText('v7_slot',els.slot.value);store.setText('v7_topN',els.topN.value);store.setText('v7_snapshotMode',els.snapshotMode.value);store.setText('v11_draftMode',els.draftMode.value);store.setText('v11_replayCutoff',els.replayCutoff.value);store.setText('v11_managerMap',els.managerMap.value);
   store.set('v7_autoRefresh',els.autoRefresh.checked);store.set('v7_experts',experts);store.set('v7_panels',panels);store.setText('v7_activePanel',activePanelId);
   store.set('v7_positionPanels',positionPanels);store.set('v7_rankCache',rankCache);store.set('v7_panelRanks',panelRanks);store.set('v7_adp',adp);store.set('v72_adpMeta',adpMeta);store.set('v7_decisionLog',decisionLog);
 }
@@ -661,7 +661,14 @@ function updateStatus(){const rankTime=Number(store.get('v7_lastRankingUpdate',0
 const S='https://api.sleeper.app/v1';
 const draftId=v=>(String(v||'').match(/(\d{10,})/)||[])[1]||String(v||'').trim();
 async function jf(url,label){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error(`${label}: HTTP ${r.status}`);return r.json()}
-async function fetchDraft(id){const[draft,picks,players]=await Promise.all([jf(`${S}/draft/${id}`,'Draft'),jf(`${S}/draft/${id}/picks`,'Picks'),jf(`${S}/players/nfl`,'Spieler')]);return{draft,picks,players}}
+async function fetchDraft(id){const bust=`${Date.now()}-${Math.random().toString(36).slice(2)}`;const[draft,picks,players]=await Promise.all([jf(`${S}/draft/${id}?_=${bust}`,'Draft'),jf(`${S}/draft/${id}/picks?_=${bust}`,'Picks'),jf(`${S}/players/nfl?_=${bust}`,'Spieler')]);return{draft,picks,players}}
+async function fetchDraftFresh(id){
+  const first=await fetchDraft(id);
+  // Sleeper kann den Picks-Endpunkt unmittelbar nach einem Pick kurz verzögert ausliefern.
+  // Eine zweite, kurze Kontrollabfrage innerhalb desselben Klicks verhindert den beobachteten "zweimal drücken"-Effekt.
+  await new Promise(r=>setTimeout(r,220));
+  try{const second=await fetchDraft(id);return (second.picks?.length||0)>=(first.picks?.length||0)?second:first}catch{return first}
+}
 function pinfo(id,m,players){const p=players[id]||{};return{name:m?.first_name&&m?.last_name?`${m.first_name} ${m.last_name}`:(p.full_name||m?.player_name||id),pos:String(m?.position||p.position||'?').toUpperCase(),team:String(m?.team||p.team||'FA').toUpperCase(),searchRank:Number(p.search_rank),injury:p.injury_status||null,bye:p.bye_week||null}}
 function nextOwn(current,teams,slot,total){for(let p=current;p<=total;p++){const r=Math.floor((p-1)/teams)+1,w=(p-1)%teams+1,s=r%2?w:teams-w+1;if(s===slot)return p}return null}
 function panelHasVerifiedExperts(id){
@@ -676,7 +683,41 @@ function panelFor(pos){
 function rankFor(name,pos){const id=panelFor(pos),r=panelRanks[id]?.[norm(name)];return r?{...r,panel:panels[id]?.name||id,panelId:id}:null}
 function agreement(sd,n){if(!n||n<2)return'Einzelmeinung';if(sd<=3)return'Sehr hoher Konsens';if(sd<=7)return'Hoher Konsens';if(sd<=12)return'Umstritten';return'Stark umstritten'}
 function returnChance(next,a){if(!Number.isFinite(next)||!Number.isFinite(a))return null;/* P(Spieler ist am Folgepick noch da): ADP als Marktmittel, bewusst enger als die alte Kurve. */return clamp(1/(1+Math.exp((next-a)/4)),.01,.99)}
-function rosterState(mine,players){const c={QB:0,RB:0,WR:0,TE:0},byes={QB:{},RB:{},WR:{},TE:{}};for(const pick of mine){const p=pinfo(String(pick.player_id),pick.metadata,players);if(c[p.pos]!=null){c[p.pos]++;if(p.bye)byes[p.pos][p.bye]=(byes[p.pos][p.bye]||0)+1}}const need={QB:c.QB===0?8:c.QB===1?0:-7,TE:c.TE===0?7:c.TE===1?0:-6,RB:c.RB<2?8:c.RB<4?4:c.RB<6?1:-2,WR:c.WR<3?8:c.WR<5?4:c.WR<7?1:-2};return{counts:c,need,byes}}
+function rosterState(mine,players,current=1){
+  const c={QB:0,RB:0,WR:0,TE:0},byes={QB:{},RB:{},WR:{},TE:{}};
+  for(const pick of mine){const p=pinfo(String(pick.player_id),pick.metadata,players);if(c[p.pos]!=null){c[p.pos]++;if(p.bye)byes[p.pos][p.bye]=(byes[p.pos][p.bye]||0)+1}}
+  // v11: Replacement-Level statt bloßer leerer Startposition. In 10-Team/1QB ist QB1
+  // aufschiebbar, QB2 fast immer verschwendeter Bench-Value. TE1 ist sogar bis nach dem
+  // Draft aufschiebbar; TE2 wird ähnlich hart wie QB2 behandelt.
+  const qbNeed=c.QB===0?(current>=125?13:current>=95?9:current>=65?4:1):-24;
+  const teNeed=c.TE===0?(current>=130?1.5:current>=80?1:0.5):-22;
+  const rbNeed=c.RB<2?9:c.RB<4?6:c.RB<6?3.5:c.RB<8?1.5:0;
+  const wrNeed=c.WR<3?8:c.WR<5?4:c.WR<6?1.5:c.WR<7?0:-2;
+  return{counts:c,need:{QB:qbNeed,RB:rbNeed,WR:wrNeed,TE:teNeed},byes};
+}
+function rosterExceptionPenalty(pos,state,current,rank,adp){
+  if(pos==='QB'&&state.counts.QB>=1){
+    // Ausnahme nur bei absurd gefallenem Elite-Value; normale QB12-20 sollen nie RB/WR-Lottery-Tickets verdrängen.
+    const elite=rank<=45&&Number.isFinite(adp)&&current-adp>=35;
+    return elite?-8:-42;
+  }
+  if(pos==='TE'&&state.counts.TE>=1){
+    const elite=rank<=35&&Number.isFinite(adp)&&current-adp>=30;
+    return elite?-7:-38;
+  }
+  return 0;
+}
+function lateUpsideBonus(p,current,state){
+  let b=0;
+  if(current>=90&&p.pos==='RB')b+=current>=125?5:3;
+  if(current>=120&&p.pos==='WR'&&state.counts.WR>=6)b-=2;
+  return b;
+}
+function irStashBonus(p,current){
+  // Nur PUP bekommt einen kleinen Zusatzwert; IR selbst wird NICHT positiv gewertet, weil
+  // season-ending ohne externe News nicht sicher auszuschließen ist.
+  return current>=80&&String(p.injury||'').toUpperCase()==='PUP'?2.5:0;
+}
 
 
 const MANAGER_PROFILES={
@@ -746,8 +787,13 @@ function scoreCandidate(p,current,next,state,available){
   const value=valueLabel(current,a);
   if(Number.isFinite(value.value))score+=clamp(value.value*.16,-4.5,4.5);
   reasons.push(value.label);
-  score+=clamp((state.need[p.pos]||0)*draftPhaseNeedFactor(current),-3,4);
-  if((state.need[p.pos]||0)>=7)reasons.push(`${p.pos}-Need (${current<=20?'klein':'draftphasenabhängig'})`);
+  const needContribution=clamp((state.need[p.pos]||0)*draftPhaseNeedFactor(current),-16,7);
+  score+=needContribution;
+  if((state.need[p.pos]||0)>=7)reasons.push(`${p.pos}-Need (${p.pos==='QB'?'aufschiebbar':'draftphasenabhängig'})`);
+  const exceptionPenalty=rosterExceptionPenalty(p.pos,state,current,r.rank,a);
+  if(exceptionPenalty){score+=exceptionPenalty;reasons.push(p.pos==='QB'?'QB2 nur Ausnahmefall':'TE2 nur Ausnahmefall')}
+  const upside=lateUpsideBonus(p,current,state);if(upside){score+=upside;reasons.push(upside>0?'Late-RB Upside-Bonus':'WR-Sättigung')}
+  const stash=irStashBonus(p,current);if(stash){score+=stash;reasons.push('PUP-Stash-Zusatzwert (kein Reach)')}
   const tier=tierContext(p,r,available);
   let scarcityBonus=0;
   if(tier.isLastInTier){scarcityBonus+=.75;reasons.push(`Letzter Spieler in Tier ${r.tier}`)}
@@ -757,7 +803,7 @@ function scoreCandidate(p,current,next,state,available){
   const agree=agreement(r.sd,r.n);
   if(agree==='Sehr hoher Konsens')score+=1.5;
   else if(agree==='Stark umstritten')score-=3;
-  if(p.injury){score-=10;reasons.push(`Injury ${p.injury}`)}
+  if(p.injury){const st=String(p.injury).toUpperCase();const pen=st==='PUP'?2:st==='QUESTIONABLE'?3:st==='DOUBTFUL'?7:st==='IR'?18:8;score-=pen;reasons.push(`Injury ${p.injury}${st==='IR'?' · Season-ending prüfen':''}`)}
   if(p.bye&&(state.byes[p.pos]?.[p.bye]||0)>=2){score-=1;reasons.push(`Bye ${p.bye} (nur Tiebreaker)`)}
   const ret=returnChance(next,a);
   if(ret!=null){
@@ -788,9 +834,9 @@ async function refresh(){
   const id=draftId(els.draftInput.value);
   if(!id)throw new Error('Draft-ID fehlt.');
   els.refreshBtn.disabled=true;
-  els.draftStatus.textContent='Lade Draft …';
+  els.draftStatus.textContent='Aktualisiere Sleeper … nächster eigener Pick wird zuerst geprüft.';
   try{
-    const fetched=await fetchDraft(id),draft=fetched.draft,players=fetched.players,mode=els.draftMode.value,map=parseManagerMap(els.managerMap.value),cutoff=Number(els.replayCutoff.value),picks=(mode==='replay'&&Number.isFinite(cutoff)&&cutoff>=0?fetched.picks.filter(p=>Number(p.pick_no)<=cutoff):fetched.picks),
+    const fetched=await fetchDraftFresh(id),draft=fetched.draft,players=fetched.players,mode=els.draftMode.value,map=parseManagerMap(els.managerMap.value),cutoff=Number(els.replayCutoff.value),picks=(mode==='replay'&&Number.isFinite(cutoff)&&cutoff>=0?fetched.picks.filter(p=>Number(p.pick_no)<=cutoff):fetched.picks),
       teams=Number(draft.settings?.teams||10),
       rounds=Number(draft.settings?.rounds||15),
       slot=Number(els.slot.value),
@@ -816,7 +862,7 @@ async function refresh(){
       .sort((a,b)=>(a.searchRank||9999)-(b.searchRank||9999))
       .slice(0,25);
 
-    const state=rosterState(mine,players);
+    const state=rosterState(mine,players,current);
     const scored=rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable)})).filter(x=>x.r);
     for(const x of scored){x.intel=liveIntel(x.p.pos,current,returnPick,picks,players,teams,mode,map);x.ret=adjustedReturn(x.ret,x.intel);x.returnConfidence=returnConfidence(x.ret,x.intel,mode,Number.isFinite(x.a));x.loss=lossIfGone(x);x.action=actionLabel(x);if(x.intel.plausible)x.reasons.push(`${x.intel.plausible} plausible Abnehmer`);if(mode==='live'&&x.intel.mods.length)x.reasons.push(`Manager: ${x.intel.mods.join(', ')}`);x.reasons.push(`Loss if gone: ${x.loss}`);}
     els.modeStatus.className=`notice ${mode==='live'&&!Object.keys(map).length?'warn':'ok'}`;els.modeStatus.textContent=modeStatusText(mode,map);
@@ -832,7 +878,12 @@ async function refresh(){
     normalizeCoachScores(scored);
     scored.sort((x,y)=>y.score-x.score||y.rawScore-x.rawScore||x.r.rank-y.r.rank);
 
-    renderCoach(scored,state,current,returnPick);
+    const draftComplete=String(draft.status||'').toLowerCase()==='complete'||picks.length>=total;
+    if(draftComplete){
+      els.favoritesBlock.innerHTML='<div class="favorite-box"><b>Draft abgeschlossen</b><div class="tiny">Keine Live-Empfehlungen mehr. Mock Review und Snapshot bleiben verfügbar.</div></div>';
+      els.coachList.innerHTML='';
+      els.teamSummary.innerHTML=Object.entries(state.counts).map(([p,n])=>`<div class="summary-item"><b>${n}</b><span>${p}</span></div>`).join('')+`<div class="summary-item"><b>✓</b><span>Fertig</span></div>`;
+    }else renderCoach(scored,state,current,returnPick);
     renderMockReview(mine,players);
 
     const best=scored[0]?.score??0,
@@ -937,12 +988,14 @@ async function refresh(){
       'Kein großer Reach ohne konkrete aktuelle Begründung. Fehlende Panel- oder ADP-Daten ausdrücklich als Unsicherheit behandeln. K und DST werden nicht gedraftet. Bye Weeks sind nur ein kleiner Tiebreaker.',
       '',
       'AUFGABE',
-      'Prüfe aktuelle Verletzungen, Depth Charts und News sowie gezielt die Research-Kandidaten auf aktuelle Sleeper-, Breakout-, League-Winner- und Bust-Analysen. Artikel dienen als begründungspflichtiger Kontext; das Expertenpanel bleibt Baseline. Nutze das Expertenpanel als Baseline und Sleeper-ADP als Marktindikator, sofern vorhanden. Nenne alle nahezu gleichwertigen Favoriten, danach 2–3 Alternativen, Return-Chancen und Confidence. Erzwinge keine Einzelentscheidung, wenn mehrere Spieler nahezu gleichauf liegen. Abweichungen vom Expertenpanel oder der Sleeper-ADP ausdrücklich begründen.'
+      'Prüfe aktuelle Verletzungen, Depth Charts und News, einschließlich angekündigter/geplanter IR- oder PUP-Moves und ob IR season-ending ist, sowie gezielt die Research-Kandidaten auf aktuelle Sleeper-, Breakout-, League-Winner- und Bust-Analysen. Artikel dienen als begründungspflichtiger Kontext; das Expertenpanel bleibt Baseline. Nutze das Expertenpanel als Baseline und Sleeper-ADP als Marktindikator, sofern vorhanden. Nenne alle nahezu gleichwertigen Favoriten, danach 2–3 Alternativen, Return-Chancen und Confidence. Erzwinge keine Einzelentscheidung, wenn mehrere Spieler nahezu gleichauf liegen. Abweichungen vom Expertenpanel oder der Sleeper-ADP ausdrücklich begründen. In dieser 10-Team-1QB-Liga QB2 und TE2 nur in absoluten Ausnahmefällen empfehlen; TE1 darf bei einem Run bis nach dem Draft aufgeschoben werden. Bei ähnlich guten QB1-Kandidaten Rushing-Upside bevorzugen. Späte Bench-Picks primär auf RB-Upside optimieren.'
     );
 
     els.snapshot.value=lines.join('\n');
     els.draftStatus.className=scored.length?'notice ok':'notice warn';
-    const dataState=scored.length?(navigator.onLine?'LIVE':'VERALTET'):'FALLBACK';els.draftStatus.textContent=`${dataState} · ${picks.length} Picks geladen · ${scored.length} Kandidaten bewertet · ${allAvailable.length} Spieler verfügbar · Modus ${mode.toUpperCase()}.`;
+    const dataState=scored.length?(navigator.onLine?'LIVE':'VERALTET'):'FALLBACK';
+    const nextText=draftComplete?'DRAFT ABGESCHLOSSEN':`NÄCHSTER EIGENER PICK: ${next??'keiner'}${next===current?' · DU BIST DRAN':''}`;
+    els.draftStatus.textContent=`${nextText} · ${dataState} · Sleeper-Picks ${picks.length}/${total} · ${scored.length} Kandidaten bewertet · Modus ${mode.toUpperCase()}.`;
     els.draftSummary.hidden=false;
     els.emptyCoach.hidden=true;
     els.copyBtn.disabled=false;
@@ -975,7 +1028,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'10.0.0',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'11.0.0',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}

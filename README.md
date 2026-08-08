@@ -1,3 +1,19 @@
+# Draft Companion – Final Draft Edition 2026 (v11.0.0)
+
+## v11 – Replacement-Level & Upside
+
+- 10-Team/1QB-spezifische Rosterlogik statt allgemeinem Overall-BPA.
+- QB2 und TE2 werden nach dem ersten Starter nahezu gesperrt; nur extremer Elite-Value kann die Sperre lockern.
+- QB1 bleibt Pflichtziel, darf aber bewusst spät kommen; im Snapshot wird bei ähnlichem Value Rushing-Upside als Vorteil verlangt.
+- TE1 ist optional und darf bei einem TE-Run bis nach dem Draft/auf Waiver verschoben werden.
+- Späte Bench-Picks erhalten einen RB-Upside-Bonus; ein sechster/weiterer WR braucht entsprechend mehr Value.
+- PUP ist bei ansonsten draftbarem Spieler ein kleiner Stash-Vorteil, kein Reach-Grund. IR erhält keinen Bonus und muss auf season-ending geprüft werden.
+- Snapshot fordert ausdrücklich aktuelle sowie angekündigte/geplante IR/PUP-Moves an.
+- „Draft analysieren“ macht innerhalb eines Klicks einen kurzen zweiten Sleeper-Picks-Check, um verzögerte Pick-Daten abzufangen.
+- Der Status beginnt mit „NÄCHSTER EIGENER PICK“, damit sofort sichtbar ist, ob Sleeper aktuell ist.
+- Nach Draftende werden Live-Empfehlungen ausgeblendet; Review und Snapshot bleiben erhalten.
+- Bestehende v7/v10 LocalStorage-Daten werden weiterverwendet/migriert.
+
 # Draft Companion – Final Draft Edition 2026 (v10.0.0)
 
 ## v9.0.2 – Snapshot-Datenqualität
