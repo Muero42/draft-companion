@@ -5,7 +5,7 @@
   "display": "standalone",
   "background_color": "#08111f",
   "theme_color": "#0b1220",
-  "description": "Final Draft Edition 2026 v9.0.1 mit vereinfachtem Status, Panelübersicht und automatischem Coach-Fokus.",
+  "description": "Final Draft Edition 2026 v11.5.0 mit Strategy Switch, Opponent Model v2, historischem Timing-Layer und Simulation Lab v2.",
   "icons": [
     {
       "src": "icon.svg",

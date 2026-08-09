@@ -1,3 +1,15 @@
+# Draft Companion – Final Draft Edition 2026 (v11.5.0)
+
+## Strategy Switch
+
+- **Progressive Upside (v11)** ist die neue Standardstrategie.
+- **Balanced / Anti-Reach (v10)** bleibt als eingefrorene Referenz auswählbar.
+- Progressive Upside greift erst ab Runde 9 und erhöht die Ceiling-/Breakout-Gewichtung graduell in R9–10, R11–12 und R13–15.
+- Panel bleibt Baseline; späte ADP-/Return-Bremsen werden schrittweise gelockert statt abgeschaltet.
+- Rookie-/Year-2-RB/WR bekommen spät einen kleinen zusätzlichen Upside-Bonus; ein tiefer WR-Room bleibt nur Tiebreaker.
+- Bei aktivem v11 zeigt die Coach-Karte zusätzlich den v10-Referenzscore an.
+- Strategieauswahl wird lokal gespeichert und im Snapshot dokumentiert.
+
 # Draft Companion – Final Draft Edition 2026 (v11.0.0)
 
 ## v11 – Replacement-Level & Upside
@@ -184,3 +196,19 @@ Für Experten ohne vollständige öffentliche Einzelrangliste:
 - Return absolut + relativ zum aktuellen Board.
 - Roster-Need steigt mit der Draftphase; Runde 1/2 bewusst kleiner Faktor.
 - Tier/Scarcity zusammen maximal 1,5 Punkte, damit TE1/Tier-Drop die Panelbaseline nicht überstimmt.
+
+
+## v11.4.0 – Opponent Model v2 / Stress Tests
+- Kontrollierte Szenarien: Baseline, RB-Druck, TE-Run, Rookie-RB-Reach, Late-Round-Upside.
+- Stressfaktoren wirken ausschließlich auf Return-/Abnehmerdruck; Expertenpanel bleibt Baseline.
+- Managerprofile bleiben evidenzgewichtet und werden im Live-Modus zusätzlich berücksichtigt.
+- Balanced / Anti-Reach v10 bleibt unverändert als Referenzstrategie.
+
+
+## v11.5.0 – Historical Timing Layer + Simulation Lab v2
+- Historische Drafts 2017–2024 wurden positionsbezogen ausgewertet; 2021 bleibt bei Björn als bestätigter Rookie-Themendraft aus dem Normalprofil ausgeschlossen.
+- QB-/TE-Managerdruck berücksichtigt nun zusätzlich die historische erste Besetzungsrunde, mit stärkerem Gewicht auf 2022–2024. Das ist nur ein weicher Hazard-Modifikator; aktuelle Aussagen/Strategiewechsel bleiben separat und können historische Muster abschwächen.
+- Simulation Lab nutzt 5 Szenarien × 1.200 Läufe und einen deterministischen Seed: identischer Draftzustand erzeugt identische Gegenprobe.
+- Ausgabe ergänzt Szenario-Mittelwert und Spanne; große Spanne markiert fragile Return-Annahmen.
+- Expertenpanel bleibt unverändert Baseline; Simulation/Managerhistorie beeinflussen ausschließlich Return-/Abnehmerdruck.
+- UI-Versionsbadge korrigiert (v11.4 zeigte dort noch v11.3).
