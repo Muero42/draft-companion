@@ -718,10 +718,10 @@ function lateUpsideBonus(p,current,state){
 
 function strategyLabel(mode){return mode==='balanced'?'Balanced / Anti-Reach (v10)':'Progressive Upside (v11)'}
 function progressiveStage(current){
-  if(current<81)return 0;      // vor Runde 9 bleibt v10 praktisch unverändert
-  if(current<101)return 1;     // R9–10
-  if(current<121)return 2;     // R11–12
-  return 3;                    // R13–15
+  if(current<81)return 0;      // Starter-Value dominiert
+  if(current<101)return 1;     // Übergang: Startertiefe + Ceiling
+  if(current<121)return 2;     // Bench-Aufbau: asymmetrischer Upside-Pfad
+  return 3;                    // Endgame: Trigger-EV + Opportunity Cost
 }
 function progressiveUpsideBonus(p,current,state){
   const stage=progressiveStage(current);if(!stage)return 0;
@@ -739,10 +739,22 @@ function strategyStatusText(mode){
     ? 'BALANCED / ANTI-REACH: eingefrorene Referenzstrategie. Panel/ADP und Warten bleiben auch spät stark gewichtet.'
     : 'PROGRESSIVE UPSIDE: Standard. Ab Runde 9 steigt Ceiling-Gewichtung graduell; späte Reaches werden bei plausiblen Breakout-Pfaden toleranter.';
 }
-function irStashBonus(p,current){
-  // Nur PUP bekommt einen kleinen Zusatzwert; IR selbst wird NICHT positiv gewertet, weil
-  // season-ending ohne externe News nicht sicher auszuschließen ist.
-  return current>=80&&String(p.injury||'').toUpperCase()==='PUP'?2.5:0;
+function injuryStashAdjustment(p,current){
+  // Replay-Kalibrierung: PUP/IR ist kein Upside-Bonus. Verpasste Wochen und belegter Benchplatz
+  // haben Opportunity Cost; IR bleibt stark negativ, bis season-ending/return timetable extern geklärt ist.
+  const st=String(p.injury||'').toUpperCase();
+  if(st==='PUP')return current>=121?-4.0:-5.0;
+  if(st==='IR')return -12;
+  return 0;
+}
+function marginalRosterUtility(p,current,state){
+  // Keine starre Sollverteilung: nur gradueller Grenznutzen. Eure Flex-Regeln erlauben 1–3 RB und 2–4 WR Starter.
+  const c=state.counts||{},n=Number(c[p.pos]||0);let x=0;
+  if(p.pos==='RB'&&current>=81){if(n>=7)x-=3.5;else if(n>=6)x-=2;else if(n<=3)x+=1;}
+  if(p.pos==='WR'&&current>=81){if(n>=7)x-=2.5;else if(n>=6)x-=1;else if(n<=4)x+=.5;}
+  if(p.pos==='QB'&&n===0&&current>=130)x+=7;
+  if(p.pos==='TE'&&n===0&&current>=120)x+=4;
+  return x;
 }
 
 
@@ -763,9 +775,15 @@ const MANAGER_PROFILES={
 };
 function parseManagerMap(text){const out={};for(const part of String(text||'').split(',')){const m=part.trim().match(/^(\d+)\s*=\s*(.+)$/);if(m)out[Number(m[1])]=m[2].trim()}return out}
 function managerProfile(name){const n=norm(name).replace(/oe/g,'o').replace(/ue/g,'u');return Object.entries(MANAGER_PROFILES).find(([k])=>n.includes(norm(k).replace(/oe/g,'o').replace(/ue/g,'u')))?.[1]||null}
-function rosterBySlot(picks,players,teams){const out={};for(let s=1;s<=teams;s++)out[s]={QB:0,RB:0,WR:0,TE:0};for(const pick of picks){const s=Number(pick.draft_slot),pos=pinfo(String(pick.player_id),pick.metadata,players).pos;if(out[s]&&out[s][pos]!=null)out[s][pos]++}return out}
+function rosterBySlot(picks,players,teams){const out={};for(let s=1;s<=teams;s++)out[s]={QB:0,RB:0,WR:0,TE:0,K:0,DEF:0};for(const pick of picks){const s=Number(pick.draft_slot),pos=pinfo(String(pick.player_id),pick.metadata,players).pos;if(out[s]&&out[s][pos]!=null)out[s][pos]++}return out}
 function slotsBetween(current,next,teams){const a=[];if(!Number.isFinite(next))return a;for(let p=current;p<next;p++){const r=Math.floor((p-1)/teams)+1,w=(p-1)%teams+1,s=r%2?w:teams-w+1;a.push(s)}return a}
-function plausibleFor(pos,c){if(pos==='QB')return c.QB===0?1:c.QB===1?.18:.03;if(pos==='TE')return c.TE===0?1:c.TE===1?.20:.04;if(pos==='RB')return c.RB<3?1:c.RB<5?.72:.35;if(pos==='WR')return c.WR<4?1:c.WR<6?.78:.40;return .2}
+function endgameSkillShare(c,current){
+  if(current<120)return 1;
+  // Gegner mit noch offenen K/DST-Slots verbrauchen im Endgame einen erheblichen Teil ihrer Picks dort.
+  const openSpecial=(c.K===0?1:0)+(c.DEF===0?1:0);
+  return openSpecial===2?.34:openSpecial===1?.62:.92;
+}
+function plausibleFor(pos,c,current=1){let v;if(pos==='QB')v=c.QB===0?1:c.QB===1?.18:.03;else if(pos==='TE')v=c.TE===0?1:c.TE===1?.20:.04;else if(pos==='RB')v=c.RB<3?1:c.RB<5?.72:.35;else if(pos==='WR')v=c.WR<4?1:c.WR<6?.78:.40;else v=.2;return v*endgameSkillShare(c,current)}
 function candidateManagerMod(prof,p,current){
   if(!prof||!p)return{mult:1,labels:[]};
   const t=prof.traits||{},labels=[];let delta=0;
@@ -793,13 +811,14 @@ function stressProfile(mode,p,current){
 function stressLabel(mode){return({baseline:'Baseline',rb:'RB-Run / RB-Druck',te:'TE-Run',rookie:'Rookie-RB-Reach',late:'Late-Round-Upside'})[mode]||'Baseline'}
 function liveIntel(p,current,next,picks,players,teams,mode,map,stress='baseline'){
   const pos=p.pos,between=slotsBetween(current+1,next,teams),rosters=rosterBySlot(picks,players,teams);let hazard=0,plausible=0,uncertain=0,mods=[];
-  for(const s of between){const base=plausibleFor(pos,rosters[s]||{QB:0,RB:0,WR:0,TE:0});if(base>=.6)plausible++;let mult=1;
+  for(const s of between){const base=plausibleFor(pos,rosters[s]||{QB:0,RB:0,WR:0,TE:0,K:0,DEF:0},current);if(base>=.6)plausible++;let mult=1;
     if(mode==='live'){const prof=managerProfile(map[s]);if(prof){const m=prof.pos[pos]||0;mult*=1+m;const cm=candidateManagerMod(prof,p,current);mult*=cm.mult;if(m||cm.labels.length)mods.push(`${prof.label}${m?` ${m>0?'+':''}${Math.round(m*100)}% ${pos}`:''}${cm.labels.length?` · ${cm.labels.join(' · ')}`:''}`);if(prof.uncertain)uncertain++}}
     const sp=stressProfile(stress,p,current);mult*=sp.mult;if(sp.label)mods.push(`Stress: ${sp.label}`);hazard+=base*mult;
   }
-  return{between:between.length,plausible,hazard,uncertain,mods:[...new Set(mods)]};
+  const effectiveSkillPicks=between.reduce((a,s)=>a+endgameSkillShare(rosters[s]||{K:0,DEF:0},current),0);
+  return{between:between.length,effectiveSkillPicks,plausible,hazard,uncertain,mods:[...new Set(mods)]};
 }
-function adjustedReturn(base,intel){if(base==null)return null;const pressure=clamp((intel.hazard-Math.max(1,intel.between)*.45)*.07,-.12,.15);return clamp(base-pressure,.02,.98)}
+function adjustedReturn(base,intel){if(base==null)return null;const eff=Math.max(.5,intel.effectiveSkillPicks??intel.between);const pressure=clamp((intel.hazard-eff*.45)*.07,-.12,.15);const endgameRelief=clamp((intel.between-eff)*.035,0,.30);return clamp(base-pressure+endgameRelief,.02,.98)}
 function returnConfidence(ret,intel,mode,hasAdp){let score=hasAdp?82:52;score-=Math.min(22,intel.between*1.7);score-=intel.uncertain*5;if(mode==='replay')score+=4;return clamp(Math.round(score),30,94)}
 function lossIfGone(x){let loss=0;if(x.sameTier<=2)loss+=2;if(Number.isFinite(x.tierGap))loss+=Math.min(4,x.tierGap/4);if(x.p.pos==='RB'&&x.r.rank>=70)loss+=1;return loss>=5?'hoch':loss>=2.5?'mittel':'niedrig'}
 function actionLabel(x){if(x.loss==='hoch'&&(x.ret??1)<.65)return'JETZT';if((x.ret??0)>=.72)return'WARTEN';if((x.ret??1)<.35)return'EHER JETZT';return'ABWÄGEN'}
@@ -839,12 +858,21 @@ function simulateToReturn(ctx,stress='baseline',runs=1200){
     const rng=seededRng(seedBase+run*2654435761);
     let pool=rankedAvailable.slice(),rosters=cloneRosters(baseRosters);
     for(let i=0;i<slots.length&&pool.length;i++){
-      const slot=slots[i],pickNo=current+1+i,prof=managerProfile(map[slot]);
+      const slot=slots[i],pickNo=current+1+i,prof=managerProfile(map[slot]),roster=rosters[slot];
+      // Replay calibration: in the endgame opponents often spend nominal picks on K/DST.
+      // Those picks must consume a turn without removing a QB/RB/WR/TE from the simulated pool.
+      const skillShare=endgameSkillShare(roster,pickNo);
+      if(pickNo>=120&&rng()>skillShare){
+        if(roster.DEF===0&&roster.K===0){if(rng()<.5)roster.DEF++;else roster.K++;}
+        else if(roster.DEF===0)roster.DEF++;
+        else if(roster.K===0)roster.K++;
+        continue;
+      }
       // Evaluate a deep but bounded board; random tail gives late reaches a path without dominating runtime.
-      const board=pool.slice(0,70).map(p=>({p,w:simCandidateWeight(p,pickNo,rosters[slot],prof,stress)}));
+      const board=pool.slice(0,70).map(p=>({p,w:simCandidateWeight(p,pickNo,roster,prof,stress)}));
       const chosen=weightedChoice(board,rng);if(!chosen)break;
       const idx=pool.indexOf(chosen.p);if(idx>=0)pool.splice(idx,1);
-      if(rosters[slot][chosen.p.pos]!=null)rosters[slot][chosen.p.pos]++;
+      if(roster[chosen.p.pos]!=null)roster[chosen.p.pos]++;
     }
     const left=new Set(pool.map(p=>norm(p.name)));for(const n of targetNames)if(left.has(n))survive[n]++;
   }
@@ -914,7 +942,8 @@ function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   if(exceptionPenalty){score+=exceptionPenalty;reasons.push(p.pos==='QB'?'QB2 nur Ausnahmefall':'TE2 nur Ausnahmefall')}
   const upside=lateUpsideBonus(p,current,state);if(upside){score+=upside;reasons.push(upside>0?'Late-RB Upside-Bonus':'WR-Sättigung')}
   if(strategy==='progressive'){const prog=progressiveUpsideBonus(p,current,state);if(prog){score+=prog;reasons.push(prog>0?`Progressive-Upside +${prog.toFixed(1)}`:'Progressive WR-Sättigung')}}
-  const stash=irStashBonus(p,current);if(stash){score+=stash;reasons.push('PUP-Stash-Zusatzwert (kein Reach)')}
+  const stash=injuryStashAdjustment(p,current);if(stash){score+=stash;reasons.push(stash<0?'Injury-Stash Opportunity Cost':'Injury-Stash')};
+  const mru=marginalRosterUtility(p,current,state);if(mru){score+=mru;reasons.push(`Marginal Roster Utility ${mru>0?'+':''}${mru.toFixed(1)}`)}
   const tier=tierContext(p,r,available);
   let scarcityBonus=0;
   if(tier.isLastInTier){scarcityBonus+=.75;reasons.push(`Letzter Spieler in Tier ${r.tier}`)}
@@ -924,7 +953,7 @@ function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   const agree=agreement(r.sd,r.n);
   if(agree==='Sehr hoher Konsens')score+=1.5;
   else if(agree==='Stark umstritten')score-=3;
-  if(p.injury){const st=String(p.injury).toUpperCase();const pen=st==='PUP'?2:st==='QUESTIONABLE'?3:st==='DOUBTFUL'?7:st==='IR'?18:8;score-=pen;reasons.push(`Injury ${p.injury}${st==='IR'?' · Season-ending prüfen':''}`)}
+  if(p.injury){const st=String(p.injury).toUpperCase();const pen=st==='PUP'?3:st==='QUESTIONABLE'?3:st==='DOUBTFUL'?7:st==='IR'?18:8;score-=pen;reasons.push(`Injury ${p.injury}${st==='PUP'?' · Return-Timetable prüfen':''}${st==='IR'?' · Season-ending prüfen':''}`)}
   if(p.bye&&(state.byes[p.pos]?.[p.bye]||0)>=2){score-=1;reasons.push(`Bye ${p.bye} (nur Tiebreaker)`)}
   const ret=returnChance(next,a);
   if(ret!=null){
@@ -951,12 +980,56 @@ function renderCoach(rows,state,current,next){
   els.coachList.innerHTML=`<div class="coach-section-title">Empfehlung + 4 Alternativen</div>`+top.map((x,i)=>`<article class="coach"><div class="coach-head"><div><h3>${i+1}. ${esc(x.p.name)} · ${x.p.pos}</h3><div class="tiny">${i===0?'EMPFEHLUNG · ':''}${x.action} · Tier ${x.r.tier||'–'} · Loss ${x.loss}</div></div><div class="score">${x.score}${Number.isFinite(x.balancedScore)?`<small class="strategy-compare">v10 ${x.balancedScore}</small>`:''}</div></div><div class="metrics"><div class="metric"><b>${x.r.rank.toFixed(1)}</b><span>Overall</span></div><div class="metric"><b>${Number.isFinite(x.a)?x.a.toFixed(1):'–'}</b><span>ADP</span></div><div class="metric"><b>${x.ret!=null?Math.round(x.ret*100)+'%':'–'}</b><span>Return</span></div><div class="metric"><b>${x.returnConfidence}%</b><span>Return-Conf.</span></div><div class="metric"><b>${x.intel.plausible}</b><span>Abnehmer</span></div></div>${expertRanksHtml(x.r)}<div class="tags">${x.reasons.slice(-7).map(reason=>`<span class="tag info">${esc(reason)}</span>`).join('')}</div></article>`).join('');
   els.teamSummary.innerHTML=Object.entries(state.counts).map(([p,n])=>`<div class="summary-item"><b>${n}</b><span>${p}</span></div>`).join('')+`<div class="summary-item"><b>${current}</b><span>Pick</span></div><div class="summary-item"><b>${next??'–'}</b><span>Nächster</span></div>`;
 }
+
+let analysisBusy=false,lastSnapshotFingerprint=store.text('v116_lastSnapshotFingerprint',''),lastSnapshotPickCount=Number(store.text('v116_lastSnapshotPickCount','-1'));
+function snapshotFingerprint(id,picks,slot){
+  const tail=picks.slice(-8).map(p=>`${p.pick_no}:${p.player_id}:${p.draft_slot}`).join('|');
+  return `${id}|${slot}|${picks.length}|${tail}`;
+}
+function setAnalysisBusy(busy){
+  analysisBusy=busy;
+  els.refreshBtn.disabled=busy;
+  els.copyBtn.disabled=busy || !els.snapshot.value;
+  els.shareBtn.disabled=busy || !els.snapshot.value;
+  els.refreshBtn.textContent=busy?'Analysiere …':'Analysieren & Snapshot kopieren';
+}
+function speedTier(current,next){
+  if(next==null)return {key:'complete',label:'Draft abgeschlossen',budget:0};
+  const picks=Math.max(0,next-current);
+  if(picks<=1)return {key:'emergency',label:'EMERGENCY',budget:8};
+  if(picks<=4)return {key:'focused',label:'FOCUSED',budget:20};
+  return {key:'full',label:'FULL',budget:45};
+}
+function researchCacheKey(){return 'v116_researchCache';}
+function loadResearchCache(){try{return JSON.parse(localStorage.getItem(researchCacheKey())||'{}')}catch{return {}}}
+function researchHint(p){
+  const c=loadResearchCache()[norm(p.name)];
+  if(!c)return '';
+  const age=c.updated?Math.round((Date.now()-Number(c.updated))/3600000):999;
+  const flags=Array.isArray(c.flags)?c.flags.slice(0,4).join(', '):'';
+  return flags?`${flags}${age<48?` · Cache ${age}h`:' · Cache veraltet'}`:'';
+}
+function positionDecisionPath(state,scored,current,next){
+  const out=[];
+  if(state.counts.QB===0){
+    const q=scored.filter(x=>x.p.pos==='QB').slice(0,4);
+    if(q.length)out.push(`QB-Pfad: ${q.map(x=>`${x.p.name} (${x.action})`).join(' → ')}`);
+  }
+  if(state.counts.TE===0){
+    const t=scored.filter(x=>x.p.pos==='TE').slice(0,3);
+    if(t.length)out.push(`TE-Pfad: ${t.map(x=>`${x.p.name} (${x.action})`).join(' → ')}`);
+  }
+  const r=scored.filter(x=>x.p.pos==='RB').slice(0,5);
+  if(current>=81&&r.length)out.push(`Late-RB-Pfad: ${r.map(x=>x.p.name).join(' / ')}`);
+  return out;
+}
+
 async function refresh(){
   persist();
   const id=draftId(els.draftInput.value);
   if(!id)throw new Error('Draft-ID fehlt.');
-  els.refreshBtn.disabled=true;
-  els.draftStatus.textContent='Aktualisiere Sleeper … nächster eigener Pick wird zuerst geprüft.';
+  setAnalysisBusy(true);
+  els.draftStatus.textContent='Aktualisiere Sleeper … Snapshot-Kopie ist bis zum Abschluss gesperrt.';
   try{
     const fetched=await fetchDraftFresh(id),draft=fetched.draft,players=fetched.players,mode=els.draftMode.value,strategy=els.strategyMode.value,stress=els.stressMode.value,map=parseManagerMap(els.managerMap.value),cutoff=Number(els.replayCutoff.value),picks=(mode==='replay'&&Number.isFinite(cutoff)&&cutoff>=0?fetched.picks.filter(p=>Number(p.pick_no)<=cutoff):fetched.picks),
       teams=Number(draft.settings?.teams||10),
@@ -967,7 +1040,10 @@ async function refresh(){
       next=nextOwn(current,teams,slot,total),
       returnPick=next===current?nextOwn(current+1,teams,slot,total):next,
       mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no),
-      drafted=new Set(picks.map(p=>String(p.player_id)));
+      drafted=new Set(picks.map(p=>String(p.player_id))),
+      fingerprint=snapshotFingerprint(id,picks,slot),
+      duplicateSnapshot=fingerprint===lastSnapshotFingerprint,
+      tier=speedTier(current,next);
 
     const allAvailable=Object.entries(players)
       .filter(([pid,p])=>!drafted.has(pid)&&['QB','RB','WR','TE'].includes(p.position)&&p.active!==false&&p.full_name)
@@ -1047,7 +1123,9 @@ async function refresh(){
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
       `Aktueller Pick: ${current}`,
       `Mein nächster Pick: ${next??'keiner'} | Picks bis dahin: ${next==null?'–':next-current}`,
-      `Return-Modell: Folgepick ${returnPick??'keiner'}${returnPick!=null?` | ${Math.max(0,returnPick-current-1)} gegnerische Picks bis dahin`:''}`, 
+      `Return-Modell: Folgepick ${returnPick??'keiner'}${returnPick!=null?` | ${Math.max(0,returnPick-current-1)} gegnerische Picks bis dahin`:''}`,
+      `Snapshot-Fingerprint: ${fingerprint} | ${duplicateSnapshot?'DUPLIKAT/UNVERÄNDERT':'NEU'}`,
+      `Live-Speed: ${tier.label} | Analysebudget ${tier.budget}s`, 
       '',
       'DATENSTATUS',
       `Verwendete Panels: ${usedPanelIds.map(pid=>panels[pid]?.name||pid).join(' / ')||'FEHLT'}`,
@@ -1057,7 +1135,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.5 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.6.2 Replay-Calibrated · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
       `Aktive Expertenquellen: ${[...new Set(usedPanelIds.flatMap(pid=>Object.keys(panels[pid]?.members||{})))].filter(eid=>rankCache[eid]?.verifiedIndividual).map(eid=>`${rankCache[eid]?.expertName}: ${rankCache[eid]?.source||'verifiziert'}${rankCache[eid]?.sourceScoring?` [${rankCache[eid].sourceScoring}${rankCache[eid]?.sourceContextVerified?' ✓':' ?'}]`:''}${rankCache[eid]?.sourceUpdated?` (${rankCache[eid].sourceUpdated})`:''}`).join(' · ')||'KEINE'}`,
       `Panel-Stand: ${rankingStamp}`,
       `Sleeper-ADP: ${Object.keys(adp).length} | Quelle: ${adpMeta.source||'none'} | Stand: ${adpStamp}`,
@@ -1102,9 +1180,13 @@ async function refresh(){
     lines.push('','RESEARCH-KANDIDATEN FÜR LIVE-ANALYSE');
     lines.push('Diese Spieler gezielt auf aktuelle Sleeper-/Breakout-/League-Winner-/Bust-Artikel, Camp-News, Rollenänderungen, Verletzungen und Depth Chart prüfen. Artikel sind Kontext; Expertenpanel bleibt Baseline.');
     if(researchCandidates.length){
-      researchCandidates.forEach(({x,flags},i)=>lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Panel ${x.r.rank.toFixed(1)} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | ${flags.join(' · ')}`));
+      researchCandidates.forEach(({x,flags},i)=>{const rh=researchHint(x.p);lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Panel ${x.r.rank.toFixed(1)} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | ${flags.join(' · ')}${rh?` · PRE-CACHE: ${rh}`:''}`)});
     }else lines.push('Keine besonderen Research-Signale im aktuellen Kandidatenfeld.');
 
+    const decisionPaths=positionDecisionPath(state,scored,current,returnPick);
+    lines.push('','VORAB-ENTSCHEIDUNGSPFADE');
+    if(decisionPaths.length)decisionPaths.forEach(x=>lines.push(x));else lines.push('Keine besondere QB/TE/Late-RB-Weiche.');
+    lines.push('Live-Regel: vorhandenen Pre-Draft-Cache nutzen; Web nur für entscheidungsändernde neue Verletzung/PUP/IR/Depth-Chart-News oder echten Gleichstand.');
     lines.push('','VERFÜGBARE SPIELER NACH PANEL');
     if(availableSnapshot.length){
       availableSnapshot.forEach((x,i)=>{
@@ -1123,6 +1205,7 @@ async function refresh(){
     );
 
     els.snapshot.value=lines.join('\n');
+    lastSnapshotFingerprint=fingerprint;lastSnapshotPickCount=picks.length;store.setText('v116_lastSnapshotFingerprint',fingerprint);store.setText('v116_lastSnapshotPickCount',String(picks.length));
     els.draftStatus.className=scored.length?'notice ok':'notice warn';
     const dataState=scored.length?(navigator.onLine?'LIVE':'VERALTET'):'FALLBACK';
     const nextText=draftComplete?'DRAFT ABGESCHLOSSEN':`NÄCHSTER EIGENER PICK: ${next??'keiner'}${next===current?' · DU BIST DRAN':''}`;
@@ -1134,7 +1217,7 @@ async function refresh(){
     lastDraftContext={id,current,next:returnPick,favorites,scored,picks,mine,mode,strategy,stress,map,dataState,players,teams,rankedAvailable};
     if(els.simulateBtn)els.simulateBtn.disabled=!(Number.isFinite(returnPick)&&returnPick>current);
   }finally{
-    els.refreshBtn.disabled=false;
+    setAnalysisBusy(false);
   }
 }
 
@@ -1160,7 +1243,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.0.0',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'11.6.2',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
@@ -1190,9 +1273,9 @@ for(const section of [els.dataSection,els.draftSection]){
   if(heading)heading.addEventListener('click',()=>section.classList.toggle('section-collapsed'));
 }
 
-els.refreshBtn.onclick=()=>refresh().catch(e=>{els.draftStatus.className='notice bad';els.draftStatus.textContent=e.message});
-els.copyBtn.onclick=async()=>{await navigator.clipboard.writeText(els.snapshot.value);els.copyBtn.textContent='Kopiert';setTimeout(()=>els.copyBtn.textContent='Snapshot kopieren',1200)};
-els.shareBtn.onclick=()=>navigator.share?navigator.share({title:'Sleeper Draft Snapshot',text:els.snapshot.value}):navigator.clipboard.writeText(els.snapshot.value);
+els.refreshBtn.onclick=async()=>{try{await refresh();if(!els.snapshot.value)throw new Error('Kein frischer Snapshot erzeugt.');await navigator.clipboard.writeText(els.snapshot.value);els.draftStatus.className='notice ok';els.draftStatus.textContent+=' · Frischer Snapshot kopiert ✓';}catch(e){els.draftStatus.className='notice bad';els.draftStatus.textContent=e.message}};
+els.copyBtn.onclick=async()=>{if(analysisBusy)return;await navigator.clipboard.writeText(els.snapshot.value);els.copyBtn.textContent='Kopiert ✓';setTimeout(()=>els.copyBtn.textContent='Snapshot erneut kopieren',1200)};
+els.shareBtn.onclick=()=>{if(analysisBusy)return;return navigator.share?navigator.share({title:'Sleeper Draft Snapshot',text:els.snapshot.value}):navigator.clipboard.writeText(els.snapshot.value)};
 els.autoRefresh.onchange=setAuto;
 els.logDecisionBtn.onclick=logDecision;
 els.clearLogBtn.onclick=()=>{if(confirm('Decision Log löschen?')){decisionLog=[];persist();renderLog()}};

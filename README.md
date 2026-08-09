@@ -212,3 +212,29 @@ Für Experten ohne vollständige öffentliche Einzelrangliste:
 - Ausgabe ergänzt Szenario-Mittelwert und Spanne; große Spanne markiert fragile Return-Annahmen.
 - Expertenpanel bleibt unverändert Baseline; Simulation/Managerhistorie beeinflussen ausschließlich Return-/Abnehmerdruck.
 - UI-Versionsbadge korrigiert (v11.4 zeigte dort noch v11.3).
+
+## v11.6.2 – Live-Speed / Snapshot Guard
+
+- Hauptaktion ist atomar: **Analysieren → frischen Snapshot erzeugen → kopieren**.
+- Während `refresh()` sind Kopieren und Teilen gesperrt; dadurch kann nicht versehentlich der alte Snapshot kopiert werden.
+- Jeder Snapshot enthält einen Fingerprint aus Draft-ID, Slot, Pick-Anzahl und den letzten Picks und markiert unveränderte Wiederholungen als `DUPLIKAT/UNVERÄNDERT`.
+- Draft-ID-Eingabe nutzt explizit normale Text-/URL-Semantik und deaktiviert Autofill/Passwortmanager-Hinweise.
+- Live-Speed-Tiers: FULL, FOCUSED, EMERGENCY. Der Snapshot gibt das Zeitbudget mit.
+- Vorab-Research-Cache vorgesehen (`localStorage: v116_researchCache`): pro Spieler `updated` + `flags` wie ROLE_UP, ROLE_DOWN, INJURY, PUP, IR, CONTINGENT_UPSIDE, STANDALONE_ROLE, BREAKOUT, BUST_RISK, CAMP_BUZZ.
+- QB-/TE-/Late-RB-Entscheidungspfade werden im Snapshot vorbereitet. Live-Websuche soll nur neue, entscheidungsändernde Informationen prüfen.
+- v11.5 Opponent Model, Manager-Layer, Historical Timing, Simulation Lab und Progressive-Upside/v10-Referenz bleiben erhalten.
+
+
+## v11.6.2 Replay-Calibrated
+- Return v2: Effective Competition Picks; offene K/DST-Slots der Gegner reduzieren im Endgame die erwarteten Skill-Position-Picks.
+- Opponent roster zählt nun QB/RB/WR/TE/K/DEF für die Endgame-Nachfrage.
+- Progressive Upside ist phasenbasiert statt rein monoton.
+- Marginal Roster Utility ist graduell und respektiert flexible 1–3 RB / 2–4 WR Startkonstruktionen; keine starre FantasyPros-Sollverteilung.
+- PUP/IR erzeugen keinen automatischen Upside-Bonus mehr; Stash-/Opportunity-Cost und Return-Timetable werden explizit berücksichtigt.
+- FantasyPros Post-Draft Grade bleibt Diagnose-Benchmark, kein Optimierungsziel.
+- Replay-Referenz: letzter vollständiger 10-Team-Half-PPR-Mock, insbesondere Turns 109/112, 129/132 und 149.
+
+
+## v11.6.2 regression fix
+- Simulation Lab now consumes opponent endgame K/DST selections as nominal turns without falsely removing skill-position players.
+- This aligns simulation return pressure with Effective Competition Picks used by the live return layer.
