@@ -1,4 +1,4 @@
-# Draft Companion – Final Draft Edition 2026 (v11.5.0)
+# Draft Companion – Final Draft Edition 2026 (v11.6.2)
 
 ## Strategy Switch
 
