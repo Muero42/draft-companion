@@ -8,6 +8,10 @@
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
   <title>Draft Companion – Final Draft Edition 2026</title>
+
+<style id="workspaceStyles">
+.workspace-nav{display:flex;gap:7px;overflow-x:auto;padding:4px 0 12px;position:sticky;top:0;z-index:20;background:linear-gradient(180deg,var(--bg,#0b1220) 75%,transparent);scrollbar-width:none}.workspace-nav::-webkit-scrollbar{display:none}.workspace-tab{white-space:nowrap;min-width:max-content;padding:9px 13px;border-radius:999px;opacity:.72}.workspace-tab.active{opacity:1;outline:2px solid currentColor}.workspace-panel[hidden]{display:none!important}.phase-intro{margin-bottom:12px}.phase-intro h2{margin-bottom:4px}.phase-grid{display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}.phase-tile{padding:12px;border:1px solid rgba(148,163,184,.22);border-radius:12px}.phase-tile b{display:block;margin-bottom:4px}@media(max-width:640px){.phase-grid{grid-template-columns:1fr}.workspace-nav{margin-left:-4px;margin-right:-4px}}
+</style>
 </head>
 <body>
 <main class="shell">
@@ -17,8 +21,16 @@
       <h1>Draft Companion</h1>
       <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
     </div>
-    <span class="version">v11.6.2</span>
+    <span class="version">v11.7.0</span>
   </header>
+
+  <nav class="workspace-nav" aria-label="Arbeitsbereich">
+    <button class="workspace-tab active" data-workspace-target="draft">🏈 Draft</button>
+    <button class="workspace-tab" data-workspace-target="roster">👥 Kader</button>
+    <button class="workspace-tab" data-workspace-target="waiver">⚡ Waiver / FA</button>
+    <button class="workspace-tab" data-workspace-target="trade">🔁 Trades</button>
+    <button class="workspace-tab" data-workspace-target="live">📡 Live / News</button>
+  </nav>
 
   <section class="status-card">
     <div><span>FantasyPros</span><b id="onlineState">–</b></div>
@@ -27,7 +39,7 @@
     <div><span>Coach bereit</span><b id="qualityMini">–</b></div>
   </section>
 
-  <section class="card">
+  <section class="card" data-workspace="draft">
     <div class="section-head">
       <div><span class="step">1</span><h2>Daten aktualisieren</h2></div>
       <button id="refreshAllBtn" class="primary">Alles aktualisieren</button>
@@ -44,7 +56,7 @@
     <p class="tiny">Rankings einmal täglich aktualisieren; am Drafttag erneut kurz vor Beginn. Bye Weeks sind nur ein kleiner Tiebreaker.</p>
   </section>
 
-  <section class="card">
+  <section class="card" data-workspace="draft">
     <div class="section-head"><div><span class="step">2</span><h2>Draft verbinden</h2></div></div>
     <label for="draftInput">Sleeper-Draft-Link oder Draft-ID</label>
     <input id="draftInput" type="text" inputmode="url" name="sleeper-draft-id" placeholder="https://sleeper.app/draft/nfl/…" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" data-lpignore="true" data-1p-ignore="true">
@@ -85,7 +97,7 @@
     <div id="draftStatus" class="notice">Noch nicht verbunden.</div>
   </section>
 
-  <section class="card">
+  <section class="card" data-workspace="draft">
     <div class="section-head"><div><span class="step">3</span><h2>Draft Coach</h2></div></div>
     <div id="emptyCoach" class="empty-state">
       <b>Wartet auf Draft-Verbindung:</b>
@@ -103,7 +115,7 @@
     </div>
   </section>
 
-  <section class="card" id="reviewCard">
+  <section class="card" id="reviewCard" data-workspace="draft">
     <details>
       <summary>Mock Review & Decision Log</summary>
       <div class="advanced-section">
@@ -115,6 +127,28 @@
         <div id="decisionLog" class="log-list"></div>
       </div>
     </details>
+  </section>
+
+
+  <section class="card workspace-panel" data-workspace="roster" hidden>
+    <div class="phase-intro"><h2>👥 Kader</h2><p class="tiny">Saisonansicht für Hold/Drop/Protect-Entscheidungen. Dieselbe Player Intelligence wie im Draft, aber ohne Draft-Noise.</p></div>
+    <div class="phase-grid"><div class="phase-tile"><b>Roster State</b><span class="tiny">Starter, Bench-Kapital und Playoff-Zweck werden hier gebündelt.</span></div><div class="phase-tile"><b>Thesis Protection</b><span class="tiny">Offene Breakout-Pfade und Activation Locks schützen vor vorschnellen Drops/Throw-ins.</span></div></div>
+    <div class="notice">Struktur in v11.7.0 vorbereitet. Live-Roster-Anbindung folgt auf derselben Datenbasis.</div>
+  </section>
+  <section class="card workspace-panel" data-workspace="waiver" hidden>
+    <div class="phase-intro"><h2>⚡ Waiver / Free Agents</h2><p class="tiny">Nur Akquisitionsentscheidungen: Add, FAAB, Drop-Kandidat, Market Window und nächste Informationsauflösung.</p></div>
+    <div class="phase-grid"><div class="phase-tile"><b>Opportunity</b><span class="tiny">Organic, Contingency und Informational Acquisition.</span></div><div class="phase-tile"><b>Acquisition Utility</b><span class="tiny">FAAB, Bench Opportunity Cost und lokale Marktgefahr.</span></div></div>
+    <div class="notice">Struktur in v11.7.0 vorbereitet. Keine erfundenen Live-Daten.</div>
+  </section>
+  <section class="card workspace-panel" data-workspace="trade" hidden>
+    <div class="phase-intro"><h2>🔁 Trades</h2><p class="tiny">Trade-Wert getrennt vom Player Belief State: Gegenwert, Roster-Effekt und Throw-In Protection.</p></div>
+    <div class="phase-grid"><div class="phase-tile"><b>Trade Compare</b><span class="tiny">Beide Seiten plus beste realistische Alternative.</span></div><div class="phase-tile"><b>Protection Check</b><span class="tiny">ACTIVATING-/unterpreiste Spieler nicht zum alten Marktwert abgeben.</span></div></div>
+    <div class="notice">Struktur in v11.7.0 vorbereitet. Trade-Engine wird als eigener View ergänzt.</div>
+  </section>
+  <section class="card workspace-panel" data-workspace="live" hidden>
+    <div class="phase-intro"><h2>📡 Live / News</h2><p class="tiny">Event-getriebene Ansicht für Injury-, Inactive-, Usage- und Market-Window-Trigger.</p></div>
+    <div class="phase-grid"><div class="phase-tile"><b>Trigger Queue</b><span class="tiny">Welche gespeicherte These wurde gerade aktiviert oder invalidiert?</span></div><div class="phase-tile"><b>Research Cache</b><span class="tiny" id="researchCacheStatus">Noch keine versionierte Evidence gespeichert.</span></div></div>
+    <div class="notice">v11.7.0 legt den timestamp-sicheren Cache-Grundstein; Quellen-Ingestion wird separat angeschlossen.</div>
   </section>
 
   <details class="card advanced-card">
@@ -166,7 +200,7 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v11.6.2: Simulation Lab v2 mit reproduzierbaren 1.200-Lauf-Szenarien, Ø-Return und Sensitivität; historische QB/TE-Timingprofile ergänzen den Manager-Layer. v11.4.0: Simulation Lab v1 ergänzt Monte-Carlo-Gegenproben bis zum Folgepick; Opponent Model v2 ergänzt kontrollierte Stresstest-Szenarien für RB-Druck, TE-Runs, Rookie-RB-Reaches und Late-Round-Upside. Die Szenarien verändern nur Return-/Abnehmerdruck; Panel und v10-Referenz bleiben unangetastet.</div>
+<div class="freeze-note">v11.7.0: Phase Views (Draft/Kader/Waiver/Trades/Live) und Research Cache v2 mit append-only Evidence, Dedupe- und Replay-Cutoff-Grundschutz. v11.6.2 bleibt die unveränderte Draft-Baseline für Simulation Lab v2 und Live-Speed/Snapshot Guard.</div>
 </main>
 <script type="module" src="app.js?v=11.6.2"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
