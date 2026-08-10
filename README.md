@@ -1,4 +1,14 @@
-# Draft Companion – Final Draft Edition 2026 (v11.6.2)
+# Draft Companion – Final Draft Edition 2026 (v11.7.1)
+
+## v11.7.1 – Konsolidierung / Phase Views / Requirement Guard
+
+- Hauptnavigation in fünf Arbeitsbereiche getrennt: **Draft**, **Kader**, **Waiver / FA**, **Trades** und **Live / News**. Die Nicht-Draft-Bereiche sind als klar gekennzeichnete vorbereitete Views angelegt; sie behaupten noch keine angeschlossenen Live-Engines.
+- **Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt.** Der lange Status „Panels geladen …“ bleibt erreichbar, blockiert aber nicht mehr dauerhaft den mobilen Draft-Bildschirm.
+- Research Cache v2 speichert Evidence append-only mit `observedAt`, `sourcePublishedAt`, `ingestedAt`, Player-/Thesis-Zuordnung, Source-Originalität und Confidence; identische Events werden dedupliziert.
+- Replay-Schutz: Research-Evidence darf nur bis zum jeweiligen Cutoff berücksichtigt werden; automatische Quellen-Ingestion ist weiterhin bewusst als offen markiert.
+- Release-Synchronität: sichtbare Version, Coach-Modell, Backup-Metadaten, Manifest, Service-Worker-Cache und `app.js`-Cache-Buster sind auf v11.7.1 synchronisiert.
+- Ab v11.7.1 gilt ein Requirement-/Release-Guard: vorgemerkte Punkte werden vor Freigabe als **umgesetzt**, **bewusst verschoben** oder **blockiert** klassifiziert und nicht stillschweigend aus Folgereleases entfernt.
+
 
 ## Strategy Switch
 
@@ -19,7 +29,7 @@
 - QB1 bleibt Pflichtziel, darf aber bewusst spät kommen; im Snapshot wird bei ähnlichem Value Rushing-Upside als Vorteil verlangt.
 - TE1 ist optional und darf bei einem TE-Run bis nach dem Draft/auf Waiver verschoben werden.
 - Späte Bench-Picks erhalten einen RB-Upside-Bonus; ein sechster/weiterer WR braucht entsprechend mehr Value.
-- PUP ist bei ansonsten draftbarem Spieler ein kleiner Stash-Vorteil, kein Reach-Grund. IR erhält keinen Bonus und muss auf season-ending geprüft werden.
+- Historischer v11.0-Stand: PUP wurde damals als kleiner Stash-Vorteil behandelt. **Seit v11.6.2 überholt:** PUP/IR erzeugen keinen automatischen Upside-Bonus; Opportunity Cost und Return-Timetable werden berücksichtigt.
 - Snapshot fordert ausdrücklich aktuelle sowie angekündigte/geplante IR/PUP-Moves an.
 - „Draft analysieren“ macht innerhalb eines Klicks einen kurzen zweiten Sleeper-Picks-Check, um verzögerte Pick-Daten abzufangen.
 - Der Status beginnt mit „NÄCHSTER EIGENER PICK“, damit sofort sichtbar ist, ob Sleeper aktuell ist.
@@ -238,3 +248,38 @@ Für Experten ohne vollständige öffentliche Einzelrangliste:
 ## v11.6.2 regression fix
 - Simulation Lab now consumes opponent endgame K/DST selections as nominal turns without falsely removing skill-position players.
 - This aligns simulation return pressure with Effective Competition Picks used by the live return layer.
+
+
+## Kanonisches Requirements- & Release-Ledger
+
+Ab v11.7.1 wird dieses Ledger vor jeder GitHub-Freigabe gegen den tatsächlichen Code geprüft. Ein vorgemerkter Punkt darf nicht stillschweigend verschwinden.
+
+### UMGESETZT
+- Lange „Panels geladen …“-Anzeige standardmäßig eingeklappt; Panel-/Preset-/ADP-Details bleiben aufklappbar.
+- Phase-spezifische Hauptnavigation: Draft, Kader, Waiver/FA, Trades, Live/News.
+- Draft-Sicht von nicht benötigten Saisonfunktionen getrennt; bestehende Draft-Funktionalität bleibt erhalten.
+- Live-Speed/Snapshot Guard: kein Kopieren/Teilen eines veralteten Snapshots während laufender Analyse.
+- Progressive Upside als Standard; Balanced/v10 bleibt eingefrorene Referenz.
+- Bye Weeks nur kleiner Tiebreaker.
+- PUP/IR ohne künstlichen Upside-Bonus; Opportunity Cost / Return-Timetable werden berücksichtigt.
+- Flexible Roster-Utility statt starrer RB/WR-Sollverteilung.
+- Mehrere nahezu gleichwertige Favoriten bleiben sichtbar; keine erzwungene Eindeutigkeit.
+- Opponent Model / Historical Timing / Simulation Lab bleiben Druck-/Return-Layer und überschreiben das Expertenpanel nicht.
+- Research Cache v2: append-only Evidence, Timestamps, Dedupe, Player/Thesis-Zuordnung und Replay-Cutoff-Grundschutz.
+- Versions-Synchronitätscheck: UI, Coach-Modell, Backup-Version, Manifest, Service Worker und Cache-Buster.
+
+### BEWUSST VERSCHOBEN – Roadmap, nicht vergessen
+- Automatische Research-Cache-Befüllung aus Primär-/Beat-/Analyse-/Market-Quellen.
+- Vollständige Kader-Engine für Hold/Drop/Protect inklusive Thesis Protection und Bench Opportunity Cost.
+- Waiver/Free-Agent-Engine inklusive FAAB, Informational Acquisition, Market Window Closing und lokaler Gegner-/Auktionsumgebung.
+- Trade-Engine inklusive Counterfactual Set, Throw-in Protection und Belief/Value/Action-Trennung.
+- Live-/News-Engine für Verletzungen, Inactives, Usage, Depth Chart, Market Acceleration und vorberechnete Trigger-Aktionen.
+- Automatische Archivierung zeitabhängiger Trending-/Market-Snapshots für den prospektiven Shadow Backtest.
+- Vollständiger historischer Evidence-Replay mit unveränderlichen Decision-Time Snapshots, Model-Version, Alternatives/Counterfactual Set und No-Action-Snapshots.
+- Opportunity-Conversion-/Contingency-Modell: Player Confirmation getrennt von Team Response / Hierarchy Revision.
+- Team-State-/Playoff-Zweck im Decision Utility: Playoff-Qualifikation vs. spätere Championship-Upside.
+- Regelabhängiger Roster-Liquidity-/Option-Throughput-/Sequencing-Layer für Free-Agent-Cycling.
+- News-Quellenhierarchie, Source Originality und getrennte Fundamental-vs.-Market-Recognition-Signale.
+
+### RELEASE GUARD
+Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Dateien; Versionsreferenzen synchron; JavaScript-Syntax; Service-Worker-Assets/Cache-Buster; zentrale DOM-Elemente; UI-Vormerkungen im HTML; Roadmap-Status; keine stillschweigende Überschreibung bestehender Modellregeln.
