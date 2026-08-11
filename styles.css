@@ -37,3 +37,6 @@
 .expert-chip,.chip{font-size:.76rem;padding:5px 8px}
 
 .strategy-box{margin-top:10px;padding:10px 12px;border:1px solid #304264;border-radius:14px;background:#0e1829}.strategy-box label{margin-top:0}.strategy-compare{display:block;font-size:.62rem;color:var(--muted);font-weight:700;margin-top:2px}
+
+/* v11.7.2: URL/ID field uses a single-line textarea to avoid Android password-manager credential heuristics. */
+#draftInput{resize:none;overflow:hidden;white-space:nowrap;min-height:46px;height:46px;line-height:20px}

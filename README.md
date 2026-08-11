@@ -1,13 +1,20 @@
-# Draft Companion – Final Draft Edition 2026 (v11.7.1)
+# Draft Companion – Final Draft Edition 2026 (v11.7.2)
 
-## v11.7.1 – Konsolidierung / Phase Views / Requirement Guard
+## v11.7.2 – Post-Audit Mobile Correction
+
+- **Sleeper-Draft-Link / Android-Passwortmanager:** Das bisherige normale `<input>` war trotz `autocomplete=off` und Password-Manager-Ignore-Attributen auf dem Samsung/Android-Livetest weiterhin als Credential-Feld erkannt worden. v11.7.2 verwendet deshalb bewusst ein einzeilig gestyltes `<textarea>` mit derselben `.value`-Schnittstelle. Das vermeidet die Input-Credential-Heuristik, ohne Draft-ID/URL-Parsing, LocalStorage oder Snapshot-Logik umzubauen.
+- **ADP-Status-Widerspruch behoben:** Der statische Hilfetext „Keine verifizierte Sleeper-ADP vorhanden“ wurde durch einen dynamischen Hinweis ersetzt. Bei geladenen ADPs zeigt er nun die aktive ADP-Nutzung; ohne ADP bleibt die konservative Fallback-Erklärung sichtbar.
+- Keine Änderungen an Expertenpanels, Ranking-Rekonstruktion, Opponent Model, Return-Engine, Simulation Lab, Strategieprofilen oder Research Cache.
+- Release-Guard: die beiden Post-Audit-Fehler sind ausdrücklich als Regression/fehlgeschlagene Live-Verifikation dokumentiert; Roadmap-Punkte bleiben unverändert erhalten.
+
+## v11.7.2 – Konsolidierung / Phase Views / Requirement Guard
 
 - Hauptnavigation in fünf Arbeitsbereiche getrennt: **Draft**, **Kader**, **Waiver / FA**, **Trades** und **Live / News**. Die Nicht-Draft-Bereiche sind als klar gekennzeichnete vorbereitete Views angelegt; sie behaupten noch keine angeschlossenen Live-Engines.
 - **Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt.** Der lange Status „Panels geladen …“ bleibt erreichbar, blockiert aber nicht mehr dauerhaft den mobilen Draft-Bildschirm.
 - Research Cache v2 speichert Evidence append-only mit `observedAt`, `sourcePublishedAt`, `ingestedAt`, Player-/Thesis-Zuordnung, Source-Originalität und Confidence; identische Events werden dedupliziert.
 - Replay-Schutz: Research-Evidence darf nur bis zum jeweiligen Cutoff berücksichtigt werden; automatische Quellen-Ingestion ist weiterhin bewusst als offen markiert.
-- Release-Synchronität: sichtbare Version, Coach-Modell, Backup-Metadaten, Manifest, Service-Worker-Cache und `app.js`-Cache-Buster sind auf v11.7.1 synchronisiert.
-- Ab v11.7.1 gilt ein Requirement-/Release-Guard: vorgemerkte Punkte werden vor Freigabe als **umgesetzt**, **bewusst verschoben** oder **blockiert** klassifiziert und nicht stillschweigend aus Folgereleases entfernt.
+- Release-Synchronität: sichtbare Version, Coach-Modell, Backup-Metadaten, Manifest, Service-Worker-Cache und `app.js`-Cache-Buster sind auf v11.7.2 synchronisiert.
+- Ab v11.7.2 gilt ein Requirement-/Release-Guard: vorgemerkte Punkte werden vor Freigabe als **umgesetzt**, **bewusst verschoben** oder **blockiert** klassifiziert und nicht stillschweigend aus Folgereleases entfernt.
 
 
 ## Strategy Switch
@@ -252,9 +259,11 @@ Für Experten ohne vollständige öffentliche Einzelrangliste:
 
 ## Kanonisches Requirements- & Release-Ledger
 
-Ab v11.7.1 wird dieses Ledger vor jeder GitHub-Freigabe gegen den tatsächlichen Code geprüft. Ein vorgemerkter Punkt darf nicht stillschweigend verschwinden.
+Ab v11.7.2 wird dieses Ledger vor jeder GitHub-Freigabe gegen den tatsächlichen Code geprüft. Ein vorgemerkter Punkt darf nicht stillschweigend verschwinden.
 
 ### UMGESETZT
+- ADP-Hilfetext ist dynamisch und kann nicht mehr gleichzeitig „keine ADP“ behaupten, wenn ADP geladen ist.
+- Sleeper-Draft-Link nutzt ab v11.7.2 ein einzeiliges Textarea statt eines Input-Felds, nachdem die bisherigen Autofill-Ignore-Attribute den Android/Samsung-Passwortmanager im Livetest nicht zuverlässig unterdrückten; **Live-Verifikation auf dem Nutzergerät steht noch aus.**
 - Lange „Panels geladen …“-Anzeige standardmäßig eingeklappt; Panel-/Preset-/ADP-Details bleiben aufklappbar.
 - Phase-spezifische Hauptnavigation: Draft, Kader, Waiver/FA, Trades, Live/News.
 - Draft-Sicht von nicht benötigten Saisonfunktionen getrennt; bestehende Draft-Funktionalität bleibt erhalten.
