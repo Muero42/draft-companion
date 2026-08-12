@@ -1,4 +1,14 @@
-# Draft Companion – Final Draft Edition 2026 (v11.7.2)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc1)
+
+## v11.8.0-rc1 – Return-v2 controlled validation release
+- Rebased onto complete v11.7.2 production package; Android single-line textarea fix preserved.
+- Return-v2 sequential Monte Carlo with exact turn geometry and sequential opponent roster state.
+- Player-Quality / Value-Safety regression gate integrated.
+- 2026 LIVE manager map corrected; stale inactive managers blocked from active mapping.
+- Basti Target Collision diagnostic integrated.
+- Frozen return forecasts/calibration instrumentation integrated.
+- Research Cache v2 and workspace/phase UI from v11.7.2 preserved.
+- RC only: requires fresh Sleeper end-to-end validation before production promotion.
 
 ## v11.7.2 – Post-Audit Mobile Correction
 

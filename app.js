@@ -28,7 +28,8 @@ els.topN.value=store.text('v7_topN','35');
 els.snapshotMode.value=store.text('v7_snapshotMode','compact');
 els.draftMode.value=store.text('v11_draftMode',store.text('v10_draftMode','mock'));
 els.replayCutoff.value=store.text('v11_replayCutoff',store.text('v10_replayCutoff',''));
-els.managerMap.value=store.text('v11_managerMap',store.text('v10_managerMap',''));
+const ACTIVE_2026_MANAGER_MAP_TEXT='1=Michael, 2=Pascal Voerde, 3=Marc Düsseldorf, 4=Thomas, 5=Bjoern, 6=Pascal Gelderner, 7=Giuliano, 8=Basti, 9=Tim, 10=Dutch Marc';
+els.managerMap.value=store.text('v11_managerMap',store.text('v10_managerMap',ACTIVE_2026_MANAGER_MAP_TEXT));
 els.stressMode.value=store.text('v113_stressMode','baseline');
 els.strategyMode.value=store.text('v111_strategyMode','progressive');
 
@@ -761,19 +762,26 @@ function marginalRosterUtility(p,current,state){
 // Opponent Model v1. Evidence-weighted: only tendencies supported by historical review/user observations.
 // Candidate-specific traits stay deliberately modest; they modify return pressure, never override the panel.
 const MANAGER_PROFILES={
-  basti:{label:'Basti',pos:{WR:.10,RB:.05},confidence:'mittel-hoch',history:{years:8,firstQB:6.1,firstTE:7.8,recentQB:7.0,recentTE:8.7},traits:{rookieRB:.18,bears:.14,lateReach:.12}},
+  basti:{label:'Basti',pos:{WR:.10,RB:.05},confidence:'mittel-hoch',history:{years:8,firstQB:6.1,firstTE:7.8,recentQB:7.0,recentTE:8.7},traits:{rookieRB:.18,bears:.06,lateReach:.12,bearsTargets:.08}},
   michael:{label:'Michael',pos:{TE:-.08,RB:.03,WR:.06},confidence:'hoch',history:{years:7,firstQB:6.4,firstTE:8.0,recentQB:7.7,recentTE:12.0},traits:{knownNames:.10,rookie:-.10}},
-  'pascal voerde':{label:'Pascal / Voerde',pos:{QB:-.05,TE:-.08},confidence:'mittel',history:{years:8,firstQB:5.4,firstTE:5.3,recentQB:7.0,recentTE:3.7},traits:{waitQBTE:.10,unconventional:.05}},
+  'pascal voerde':{label:'Pascal / Voerde',pos:{},confidence:'mittel',history:{years:8,firstQB:5.4,firstTE:5.3,recentQB:7.0,recentTE:3.7},traits:{unconventional:.05}},
   'dutch marc':{label:'Dutch-Marc',pos:{QB:.06,TE:.06},confidence:'mittel-hoch',history:{years:8,firstQB:5.1,firstTE:4.5,recentQB:5.3,recentTE:5.0},traits:{}},
-  'pascal geldern':{label:'Pascal / Gelderner',pos:{QB:.06},confidence:'mittel',history:{years:2,firstQB:3.0,firstTE:4.5,recentQB:3.0,recentTE:4.5},traits:{unconventional:.05}},
+  'pascal geldern':{label:'Pascal / Gelderner',pos:{WR:.05},confidence:'mittel',history:{years:2,firstQB:3.0,firstTE:4.5,recentQB:3.0,recentTE:4.5},traits:{waitQBTE:.07,wrEarly:.05,unconventional:.05}},
   thomas:{label:'Thomas',pos:{QB:.03,TE:.03},confidence:'mittel',traits:{}},
   giuliano:{label:'Giuliano',pos:{QB:.04,TE:.04},confidence:'mittel',history:{years:6,firstQB:5.7,firstTE:5.3,recentQB:6.0,recentTE:5.5},traits:{}},
   // 2021 all-rookie was a confirmed one-season theme and is intentionally excluded from normal Björn tendencies.
-  bjorn:{label:'Björn',pos:{},confidence:'niedrig',uncertain:true,history:{years:7,firstQB:8.2,firstTE:8.4,recentQB:9.0,recentTE:9.0,excludeTheme2021:true},traits:{}},
-  bjoern:{label:'Björn',pos:{},confidence:'niedrig',uncertain:true,history:{years:7,firstQB:8.2,firstTE:8.4,recentQB:9.0,recentTE:9.0,excludeTheme2021:true},traits:{}},
+  bjorn:{label:'Björn',pos:{RB:.10},confidence:'mittel-hoch',history:{years:7,firstQB:8.2,firstTE:8.4,recentQB:9.0,recentTE:9.0,excludeTheme2021:true},traits:{recentEarlyRB:.08}},
+  bjoern:{label:'Björn',pos:{RB:.10},confidence:'mittel-hoch',history:{years:7,firstQB:8.2,firstTE:8.4,recentQB:9.0,recentTE:9.0,excludeTheme2021:true},traits:{recentEarlyRB:.08}},
   'dusseldorf marc':{label:'Düsseldorf-Marc',pos:{},confidence:'niedrig',traits:{}}
 };
 function parseManagerMap(text){const out={};for(const part of String(text||'').split(',')){const m=part.trim().match(/^(\d+)\s*=\s*(.+)$/);if(m)out[Number(m[1])]=m[2].trim()}return out}
+const ACTIVE_2026_MANAGER_MAP=Object.freeze(parseManagerMap(ACTIVE_2026_MANAGER_MAP_TEXT));
+function resolvedManagerMap(mode,season,teams,text){
+  // The real 2026 league composition/order is confirmed. Never let stale historical/localStorage maps
+  // (e.g. Kai) leak into LIVE Return-v2. Replay/mock keep their explicit mapping semantics.
+  if(mode==='live'&&String(season)==='2026'&&Number(teams)===10)return {...ACTIVE_2026_MANAGER_MAP};
+  return parseManagerMap(text);
+}
 function managerProfile(name){const n=norm(name).replace(/oe/g,'o').replace(/ue/g,'u');return Object.entries(MANAGER_PROFILES).find(([k])=>n.includes(norm(k).replace(/oe/g,'o').replace(/ue/g,'u')))?.[1]||null}
 function rosterBySlot(picks,players,teams){const out={};for(let s=1;s<=teams;s++)out[s]={QB:0,RB:0,WR:0,TE:0,K:0,DEF:0};for(const pick of picks){const s=Number(pick.draft_slot),pos=pinfo(String(pick.player_id),pick.metadata,players).pos;if(out[s]&&out[s][pos]!=null)out[s][pos]++}return out}
 function slotsBetween(current,next,teams){const a=[];if(!Number.isFinite(next))return a;for(let p=current;p<next;p++){const r=Math.floor((p-1)/teams)+1,w=(p-1)%teams+1,s=r%2?w:teams-w+1;a.push(s)}return a}
@@ -796,9 +804,14 @@ function candidateManagerMod(prof,p,current){
   if(t.rookie&&rookie){delta+=t.rookie;labels.push(`Rookie ${t.rookie>0?'+':''}${Math.round(t.rookie*100)}%`)}
   if(t.rookieRB&&rookie&&p.pos==='RB'){delta+=t.rookieRB;labels.push(`Rookie-RB +${Math.round(t.rookieRB*100)}%`)}
   if(t.bears&&p.team==='CHI'){delta+=t.bears;labels.push(`Bears +${Math.round(t.bears*100)}%`)}
+  if(t.bearsTargets&&['caleb williams','colston loveland'].includes(norm(p.name))){delta+=t.bearsTargets;labels.push(`Bears-Ziel/Stack-Hypothese +${Math.round(t.bearsTargets*100)}%`)}
+  if(t.wrEarly&&p.pos==='WR'&&current<=60){delta+=t.wrEarly;labels.push(`früher WR-Prior +${Math.round(t.wrEarly*100)}%`)}
+  if(t.recentEarlyRB&&p.pos==='RB'&&current<=50){delta+=t.recentEarlyRB;labels.push(`2025-RB-Regime +${Math.round(t.recentEarlyRB*100)}%`)}
   if(t.lateReach&&current>=81){delta+=t.lateReach;labels.push(`Late-Reach +${Math.round(t.lateReach*100)}%`)}
   if(t.waitQBTE&&(p.pos==='QB'||p.pos==='TE')&&current<100){delta-=t.waitQBTE;labels.push(`QB/TE warten -${Math.round(t.waitQBTE*100)}%`)}
   // knownNames/unconventional are retained as profile evidence but not auto-scored without a robust player-level proxy.
+  // Correlated qualitative signals are capped so fandom, player target and stack narratives cannot double-count without bound.
+  delta=clamp(delta,-.25,.25);
   return{mult:Math.max(.65,1+delta),labels};
 }
 function stressProfile(mode,p,current){
@@ -839,16 +852,128 @@ function seededRng(seed){let x=seed>>>0;return()=>{x=(x+0x6D2B79F5)|0;let t=x;t=
 function weightedChoice(rows,rng=Math.random){let total=rows.reduce((a,x)=>a+x.w,0),r=rng()*total;for(const x of rows){r-=x.w;if(r<=0)return x}return rows[rows.length-1]}
 function simCandidateWeight(p,pickNo,roster,profile,stress){
   const r=rankFor(p.name,p.pos);if(!r)return 0;
-  const a=adpFor(p.name),market=Number.isFinite(a)?a:r.rank;
-  // Broad enough for real reaches, but panel remains the center of gravity.
-  const distance=Math.max(0,Math.min(r.rank,market)-pickNo);
-  let w=Math.exp(-distance/19)*simNeedWeight(p.pos,roster);
-  if(Number.isFinite(a))w*=Math.exp(-Math.max(0,a-pickNo)/55);
+  const a=adpFor(p.name);
+  // Selection pressure must remain ordered even after players become overdue.
+  // The old one-sided distance collapsed every overdue player to the same market weight,
+  // making e.g. rank 5 and rank 50 nearly equivalent at pick 60 apart from roster need.
+  // Panel is the primary anchor; Sleeper ADP supplies a smaller market correction.
+  const panelDelta=clamp((pickNo-r.rank)/18,-4,4);
+  let w=Math.exp(panelDelta)*simNeedWeight(p.pos,roster);
+  if(Number.isFinite(a)){
+    const adpDelta=clamp((pickNo-a)/38,-2.5,2.5);
+    w*=Math.exp(adpDelta);
+  }
   if(profile){w*=1+(profile.pos[p.pos]||0);w*=candidateManagerMod(profile,p,pickNo).mult;}
   w*=stressProfile(stress,p,pickNo).mult;
   return Math.max(.0001,w);
 }
 function cloneRosters(x){const o={};for(const[k,v]of Object.entries(x))o[k]={...v};return o}
+function returnV2Confidence(ret,runs,mode,hasAdp,mapCoverage,slotCount){
+  if(!Number.isFinite(ret))return 30;
+  // Monte-Carlo sampling uncertainty + evidence quality. Manager mapping matters only in live mode.
+  const se=Math.sqrt(Math.max(.000001,ret*(1-ret))/Math.max(1,runs));
+  let score=92-Math.min(24,se*100*5);
+  if(!hasAdp)score-=18;
+  if(mode==='live')score-=Math.round((1-clamp(mapCoverage,0,1))*18);
+  if(slotCount>=12)score-=3;
+  return clamp(Math.round(score),35,95);
+}
+function simulateReturnV2(ctx,stress='baseline',runs=900){
+  const {current,next,picks,players,teams,map,rankedAvailable,mode='mock'}=ctx;
+  if(!Number.isFinite(next)||next<=current)return null;
+  const targets=rankedAvailable.slice(0,24),targetNames=targets.map(p=>norm(p.name));
+  const survive=Object.fromEntries(targetNames.map(n=>[n,0]));
+  const takenBy=Object.fromEntries(targetNames.map(n=>[n,{}]));
+  // Target Collision Probability: per-manager probability of taking >=1 current target
+  // before the user's return. Count once per manager/run even if that manager has
+  // two sequential picks and takes two targets.
+  const collisionByManager={};
+  const collisionTargetCounts={};
+  const baseRosters=rosterBySlot(picks,players,teams),slots=slotsBetween(current+1,next,teams);
+  const mappedSlots=new Set(slots.filter(s=>managerProfile(map[s])));
+  const mapCoverage=slots.length?mappedSlots.size/new Set(slots).size:0;
+  const seedBase=(current*1009+next*9176+stress.split('').reduce((a,c)=>a+c.charCodeAt(0),0)*131+731)>>>0;
+  for(let run=0;run<runs;run++){
+    const rng=seededRng(seedBase+run*2654435761);
+    let pool=rankedAvailable.slice(),rosters=cloneRosters(baseRosters);
+    const collidedManagers=new Set();
+    for(let i=0;i<slots.length&&pool.length;i++){
+      const slot=slots[i],pickNo=current+1+i,prof=mode==='live'?managerProfile(map[slot]):null,roster=rosters[slot];
+      const skillShare=endgameSkillShare(roster,pickNo);
+      if(pickNo>=120&&rng()>skillShare){
+        if(roster.DEF===0&&roster.K===0){if(rng()<.5)roster.DEF++;else roster.K++;}
+        else if(roster.DEF===0)roster.DEF++;else if(roster.K===0)roster.K++;
+        continue;
+      }
+      const board=pool.slice(0,70).map(p=>({p,w:simCandidateWeight(p,pickNo,roster,prof,stress)}));
+      const chosen=weightedChoice(board,rng);if(!chosen)break;
+      const key=norm(chosen.p.name),idx=pool.indexOf(chosen.p);if(idx>=0)pool.splice(idx,1);
+      if(roster[chosen.p.pos]!=null)roster[chosen.p.pos]++;
+      if(takenBy[key]){
+        const label=prof?.label||`Slot ${slot}`;
+        const k=`${label}|${slot}`;
+        takenBy[key][k]=(takenBy[key][k]||0)+1;
+        collidedManagers.add(k);
+        collisionTargetCounts[k]=collisionTargetCounts[k]||{};
+        collisionTargetCounts[k][key]=(collisionTargetCounts[k][key]||0)+1;
+      }
+    }
+    for(const k of collidedManagers)collisionByManager[k]=(collisionByManager[k]||0)+1;
+    const left=new Set(pool.map(p=>norm(p.name)));for(const n of targetNames)if(left.has(n))survive[n]++;
+  }
+  const result={};
+  for(const p of targets){
+    const n=norm(p.name),ret=survive[n]/runs,entries=Object.entries(takenBy[n]||{}).sort((a,b)=>b[1]-a[1]);
+    const top=entries[0];
+    result[n]={
+      ret,
+      runs,
+      topRisk:top?{label:top[0].split('|')[0],slot:Number(top[0].split('|')[1]),prob:top[1]/runs}:null,
+      takers:Object.fromEntries(entries.map(([k,v])=>[k,v/runs])),
+      confidence:returnV2Confidence(ret,runs,mode,Number.isFinite(adpFor(p.name)),mapCoverage,slots.length)
+    };
+  }
+  const collisions=Object.fromEntries(
+    Object.entries(collisionByManager)
+      .sort((a,b)=>b[1]-a[1])
+      .map(([k,v])=>{
+        const [label,slotText]=k.split('|');
+        const targets=Object.entries(collisionTargetCounts[k]||{})
+          .sort((a,b)=>b[1]-a[1])
+          .slice(0,8)
+          .map(([key,count])=>({key,name:targets.find(p=>norm(p.name)===key)?.name||key,prob:count/runs}));
+        return[k,{label,slot:Number(slotText),prob:v/runs,targets}];
+      })
+  );
+  return{players:result,runs,slots,mapCoverage,collisions};
+}
+function returnValidationKey(){return 'v118_returnValidation'}
+function loadReturnValidation(){try{return JSON.parse(localStorage.getItem(returnValidationKey())||'[]')}catch{return []}}
+function saveReturnValidation(rows){try{localStorage.setItem(returnValidationKey(),JSON.stringify(rows.slice(-500)))}catch{}}
+function resolveReturnValidation(draftId,picks){
+  const rows=loadReturnValidation();let changed=false;
+  for(const row of rows){
+    if(row.draftId!==draftId||row.resolved||!Number.isFinite(row.returnPick))continue;
+    if((picks?.length||0)<row.returnPick-1)continue;
+    const window=picks.filter(p=>p.pick_no>row.current&&p.pick_no<row.returnPick);
+    for(const pred of row.predictions){
+      const hit=window.find(p=>norm(p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||''))===pred.key);
+      pred.actualSurvived=!hit;
+      pred.actualTakenPick=hit?.pick_no??null;
+      pred.actualTakenSlot=hit?.draft_slot??null;
+      pred.brier=(pred.returnProb-(pred.actualSurvived?1:0))**2;
+    }
+    row.resolved=true;row.resolvedAt=Date.now();changed=true;
+  }
+  if(changed)saveReturnValidation(rows);
+}
+function freezeReturnValidation(draftId,current,returnPick,rv2,rankedAvailable){
+  if(!rv2||!Number.isFinite(returnPick)||returnPick<=current)return;
+  const rows=loadReturnValidation(),id=`${draftId}|${current}|${returnPick}`;
+  if(rows.some(r=>r.id===id))return;
+  const predictions=rankedAvailable.slice(0,12).map(p=>{const x=rv2.players[norm(p.name)];return x?{key:norm(p.name),name:p.name,pos:p.pos,returnProb:x.ret,confidence:x.confidence,topRisk:x.topRisk}:null}).filter(Boolean);
+  rows.push({id,draftId,current,returnPick,createdAt:Date.now(),resolved:false,predictions});saveReturnValidation(rows);
+}
 function simulateToReturn(ctx,stress='baseline',runs=1200){
   const {current,next,picks,players,teams,map,rankedAvailable}=ctx;
   if(!Number.isFinite(next)||next<=current)return null;
@@ -905,6 +1030,91 @@ function normalizeCoachScores(rows){
   for(const x of rows)x.score=Math.round(clamp(100-Math.max(0,bestRaw-x.rawScore)*2.15,0,100));
   return rows;
 }
+
+/*
+ * v11.8-dev: Player-Quality / Value-Safety gate.
+ *
+ * Canonical invariant:
+ * Market price, roster need, upside and Return-v2 may decide WHEN to take a player,
+ * but they may not silently make a materially superior selected-panel player disappear.
+ *
+ * This gate does not replace the selected panel with ADP/ECR and does not remove
+ * alternatives. It only prevents the final recommendation from bypassing a clearly
+ * stronger panel band without an explicit evidence-based override layer.
+ */
+function playerQualitySafetyThreshold(current){
+  // Slightly wider later because roster construction/upside legitimately matters more,
+  // while still preventing large unexplained panel-quality skips.
+  if(current<=30)return 7;
+  if(current<=70)return 9;
+  if(current<=110)return 11;
+  return 13;
+}
+function applyPlayerQualitySafetyGate(rows,current){
+  const valid=rows.filter(x=>x?.r&&Number.isFinite(x.r.rank)&&Number.isFinite(x.rawScore));
+  if(!valid.length)return{triggered:false,reason:'no-valid-candidates'};
+
+  const naturalLeader=valid.slice().sort((a,b)=>b.rawScore-a.rawScore||a.r.rank-b.r.rank)[0];
+  const bestPanelRank=Math.min(...valid.map(x=>x.r.rank));
+  const threshold=playerQualitySafetyThreshold(current);
+  const gap=naturalLeader.r.rank-bestPanelRank;
+
+  if(gap<threshold){
+    for(const x of valid)x.valueSafety={triggered:false,bestPanelRank,threshold,naturalLeaderRank:naturalLeader.r.rank};
+    return{triggered:false,bestPanelRank,threshold,naturalLeaderRank:naturalLeader.r.rank};
+  }
+
+  // Keep a narrow panel-quality band admissible for the top recommendation.
+  // Within that band normal utility/Return logic may still choose among peers.
+  const qualityBandMax=bestPanelRank+Math.max(3,Math.floor(threshold/2));
+  const qualityBand=valid.filter(x=>x.r.rank<=qualityBandMax);
+  const safetyLeader=qualityBand.slice().sort((a,b)=>b.rawScore-a.rawScore||a.r.rank-b.r.rank)[0];
+  const maxRaw=Math.max(...valid.map(x=>x.rawScore));
+
+  // A future research override can bypass this only by setting an explicit,
+  // evidence-backed override object. Current development code has no such
+  // validated override path, so the gate is deliberately fail-safe.
+  const override=naturalLeader?.qualityOverride;
+  const overrideValid=Boolean(
+    override?.approved===true &&
+    typeof override.reason==='string' &&
+    override.reason.trim().length>=12 &&
+    Number(override.confidence)>=70
+  );
+
+  if(!overrideValid&&safetyLeader){
+    safetyLeader.rawScore=Math.max(safetyLeader.rawScore,maxRaw+.25);
+    safetyLeader.reasons=safetyLeader.reasons||[];
+    safetyLeader.reasons.push(
+      `Value-Safety Gate: Panel #${safetyLeader.r.rank.toFixed(1)} vor natürlichem Leader #${naturalLeader.r.rank.toFixed(1)}`
+    );
+  }else if(overrideValid){
+    naturalLeader.reasons=naturalLeader.reasons||[];
+    naturalLeader.reasons.push(`Value-Safety Override: ${override.reason}`);
+  }
+
+  for(const x of valid)x.valueSafety={
+    triggered:true,
+    bestPanelRank,
+    threshold,
+    qualityBandMax,
+    naturalLeaderRank:naturalLeader.r.rank,
+    safetyLeaderRank:safetyLeader?.r?.rank??null,
+    promoted:!overrideValid&&x===safetyLeader,
+    overrideValid
+  };
+
+  return{
+    triggered:true,
+    bestPanelRank,
+    threshold,
+    qualityBandMax,
+    naturalLeaderRank:naturalLeader.r.rank,
+    safetyLeaderRank:safetyLeader?.r?.rank??null,
+    promoted:!overrideValid,
+    overrideValid
+  };
+}
 function tierContext(player,rank,available){
   const same=available.map(x=>({p:x,r:rankFor(x.name,x.pos)})).filter(x=>x.r&&x.p.pos===player.pos&&x.r.tier===rank.tier).sort((a,b)=>a.r.rank-b.r.rank);
   const later=available.map(x=>({p:x,r:rankFor(x.name,x.pos)})).filter(x=>x.r&&x.p.pos===player.pos&&x.r.rank>rank.rank).sort((a,b)=>a.r.rank-b.r.rank);
@@ -955,18 +1165,25 @@ function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   else if(agree==='Stark umstritten')score-=3;
   if(p.injury){const st=String(p.injury).toUpperCase();const pen=st==='PUP'?3:st==='QUESTIONABLE'?3:st==='DOUBTFUL'?7:st==='IR'?18:8;score-=pen;reasons.push(`Injury ${p.injury}${st==='PUP'?' · Return-Timetable prüfen':''}${st==='IR'?' · Season-ending prüfen':''}`)}
   if(p.bye&&(state.byes[p.pos]?.[p.bye]||0)>=2){score-=1;reasons.push(`Bye ${p.bye} (nur Tiebreaker)`)}
+  // Return is scored only after Return-v2 / fallback resolution in the coach loop.
+  // Keeping the legacy ADP curve here as a score input would double-count return pressure
+  // and could make the displayed Return-v2 probability disagree with the actual ranking.
   const ret=returnChance(next,a);
-  if(ret!=null){
-    const returnWeight=strategy==='progressive'?[12,10,7,4][stage]:12;
-    score+=clamp((.50-ret)*returnWeight,-6,6);
-    if(ret>=.80)reasons.push(`Warten attraktiv (${Math.round(ret*100)}% Return)`);
-    else if(ret<=.25)reasons.push(`Jetzt-Pick dringlich (${Math.round(ret*100)}% Return)`);
-    else if(ret>=.65)reasons.push(`Gute Return-Chance (${Math.round(ret*100)}%)`);
-  }
   const expertBase=r.n>=5?4:r.n>=3?1:r.n===2?-5:-12;
   const confidence=clamp(Math.round(88-r.sd*2+(Number.isFinite(a)?4:-10)+expertBase),35,96);
   return{score:0,rawScore:score,r,a,ret,reasons,agree,sameTier:tier.sameTierCount,tierGap:tier.tierGap,confidence,valueKind:value.kind};
 }
+function applyResolvedReturnScore(x,current,strategy){
+  if(x.ret==null)return;
+  const stage=progressiveStage(current);
+  const returnWeight=strategy==='progressive'?[12,10,7,4][stage]:12;
+  x.rawScore+=clamp((.50-x.ret)*returnWeight,-6,6);
+  // Reasons must describe the same resolved probability that the UI displays.
+  if(x.ret>=.80)x.reasons.push(`Warten attraktiv (${Math.round(x.ret*100)}% Return)`);
+  else if(x.ret<=.25)x.reasons.push(`Jetzt-Pick dringlich (${Math.round(x.ret*100)}% Return)`);
+  else if(x.ret>=.65)x.reasons.push(`Gute Return-Chance (${Math.round(x.ret*100)}%)`);
+}
+
 function expertRanksHtml(r){
   return `<div class="coach-section-title">Einzelrankings</div><div class="expert-grid">${r.individual.map(x=>{
     const delta=x.rank-r.rank,cls=delta<=-4?'high':delta>=4?'low':'';
@@ -1033,9 +1250,10 @@ async function refresh(){
   setAnalysisBusy(true);
   els.draftStatus.textContent='Aktualisiere Sleeper … Snapshot-Kopie ist bis zum Abschluss gesperrt.';
   try{
-    const fetched=await fetchDraftFresh(id),draft=fetched.draft,players=fetched.players,mode=els.draftMode.value,strategy=els.strategyMode.value,stress=els.stressMode.value,map=parseManagerMap(els.managerMap.value),cutoff=Number(els.replayCutoff.value),picks=(mode==='replay'&&Number.isFinite(cutoff)&&cutoff>=0?fetched.picks.filter(p=>Number(p.pick_no)<=cutoff):fetched.picks),
+    const fetched=await fetchDraftFresh(id),draft=fetched.draft,players=fetched.players,mode=els.draftMode.value,strategy=els.strategyMode.value,stress=els.stressMode.value,cutoff=Number(els.replayCutoff.value),picks=(mode==='replay'&&Number.isFinite(cutoff)&&cutoff>=0?fetched.picks.filter(p=>Number(p.pick_no)<=cutoff):fetched.picks),
       teams=Number(draft.settings?.teams||10),
       rounds=Number(draft.settings?.rounds||15),
+      map=resolvedManagerMap(mode,els.season.value,teams,els.managerMap.value),
       slot=Number(els.slot.value),
       total=teams*rounds,
       current=Math.min(picks.length+1,total),
@@ -1065,8 +1283,20 @@ async function refresh(){
     const state=rosterState(mine,players,current);
     const scored=rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,strategy)})).filter(x=>x.r);
     const referenceBalanced=strategy==='progressive'?rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,'balanced')})).filter(x=>x.r):null;
-    for(const x of scored){x.intel=liveIntel(x.p,current,returnPick,picks,players,teams,mode,map,stress);x.ret=adjustedReturn(x.ret,x.intel);x.returnConfidence=returnConfidence(x.ret,x.intel,mode,Number.isFinite(x.a));x.loss=lossIfGone(x);x.action=actionLabel(x);if(x.intel.plausible)x.reasons.push(`${x.intel.plausible} plausible Abnehmer`);if(mode==='live'&&x.intel.mods.length)x.reasons.push(`Manager: ${x.intel.mods.join(', ')}`);x.reasons.push(`Loss if gone: ${x.loss}`);}
-    if(referenceBalanced){for(const x of referenceBalanced){x.intel=liveIntel(x.p,current,returnPick,picks,players,teams,mode,map,stress);x.ret=adjustedReturn(x.ret,x.intel);}}
+    const returnCtx={current,next:returnPick,picks,players,teams,map,rankedAvailable,mode};
+    const rv2=Number.isFinite(returnPick)&&returnPick>current?simulateReturnV2(returnCtx,stress,900):null;
+    for(const x of scored){
+      x.intel=liveIntel(x.p,current,returnPick,picks,players,teams,mode,map,stress);
+      const v2=rv2?.players?.[norm(x.p.name)];
+      if(v2){x.ret=v2.ret;x.returnConfidence=v2.confidence;x.topRisk=v2.topRisk;if(v2.topRisk)x.reasons.push(`Top-Risiko: ${v2.topRisk.label} ${Math.round(v2.topRisk.prob*100)}%`);}
+      else{x.ret=adjustedReturn(x.ret,x.intel);x.returnConfidence=returnConfidence(x.ret,x.intel,mode,Number.isFinite(x.a));}
+      applyResolvedReturnScore(x,current,strategy);
+      x.loss=lossIfGone(x);x.action=actionLabel(x);
+      if(mode==='live'&&x.intel.mods.length)x.reasons.push(`Manager-Kontext: ${x.intel.mods.join(', ')}`);
+      x.reasons.push(`Loss if gone: ${x.loss}`);
+    }
+    if(referenceBalanced){for(const x of referenceBalanced){const v2=rv2?.players?.[norm(x.p.name)];x.ret=v2?v2.ret:adjustedReturn(x.ret,liveIntel(x.p,current,returnPick,picks,players,teams,mode,map,stress));applyResolvedReturnScore(x,current,'balanced');}}
+    resolveReturnValidation(id,picks);freezeReturnValidation(id,current,returnPick,rv2,rankedAvailable);
     els.modeStatus.className=`notice ${mode==='live'&&!Object.keys(map).length?'warn':'ok'}`;els.modeStatus.textContent=modeStatusText(mode,map);
     const boardTop=scored.slice().sort((x,y)=>x.r.rank-y.r.rank).slice(0,12).filter(x=>x.ret!=null);
     const sortedReturns=boardTop.map(x=>x.ret).sort((x,y)=>x-y);
@@ -1082,8 +1312,14 @@ async function refresh(){
       const refReturns=refBoard.map(x=>x.ret).sort((x,y)=>x-y),refMedian=refReturns.length?refReturns[Math.floor(refReturns.length/2)]:null;
       if(refMedian!=null)for(const x of referenceBalanced){if(x.ret==null)continue;x.rawScore+=clamp((refMedian-x.ret)*6,-3,3);}
     }
+    const valueSafety=applyPlayerQualitySafetyGate(scored,current);
     normalizeCoachScores(scored);
-    if(referenceBalanced){normalizeCoachScores(referenceBalanced);const bm=new Map(referenceBalanced.map(x=>[norm(x.p.name),x.score]));for(const x of scored)x.balancedScore=bm.get(norm(x.p.name));}
+    if(referenceBalanced){
+      applyPlayerQualitySafetyGate(referenceBalanced,current);
+      normalizeCoachScores(referenceBalanced);
+      const bm=new Map(referenceBalanced.map(x=>[norm(x.p.name),x.score]));
+      for(const x of scored)x.balancedScore=bm.get(norm(x.p.name));
+    }
     els.strategyStatus.className='notice ok';els.strategyStatus.textContent=strategyStatusText(strategy);
     scored.sort((x,y)=>y.score-x.score||y.rawScore-x.rawScore||x.r.rank-y.r.rank);
 
@@ -1137,7 +1373,11 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.7.2 Replay-Calibrated · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc1 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
+      ...(mode==='live'&&rv2?.collisions?(()=>{
+        const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
+        return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
+      })():[]),
       `Aktive Expertenquellen: ${[...new Set(usedPanelIds.flatMap(pid=>Object.keys(panels[pid]?.members||{})))].filter(eid=>rankCache[eid]?.verifiedIndividual).map(eid=>`${rankCache[eid]?.expertName}: ${rankCache[eid]?.source||'verifiziert'}${rankCache[eid]?.sourceScoring?` [${rankCache[eid].sourceScoring}${rankCache[eid]?.sourceContextVerified?' ✓':' ?'}]`:''}${rankCache[eid]?.sourceUpdated?` (${rankCache[eid].sourceUpdated})`:''}`).join(' · ')||'KEINE'}`,
       `Panel-Stand: ${rankingStamp}`,
       `Sleeper-ADP: ${Object.keys(adp).length} | Quelle: ${adpMeta.source||'none'} | Stand: ${adpStamp}`,
@@ -1245,7 +1485,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.7.2',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc1',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
@@ -1323,7 +1563,6 @@ if(els.draftInput)els.draftInput.addEventListener('keydown',e=>{if(e.key==='Ente
 for(const el of [els.apiKey,els.season,els.scoring,els.draftInput,els.slot,els.topN,els.snapshotMode,els.draftMode,els.replayCutoff,els.managerMap,els.stressMode])el.addEventListener('change',()=>{persist();updateStatus()});
 addEventListener('online',updateStatus);addEventListener('offline',updateStatus);
 setInterval(updateStatus,60000);
-
 function setWorkspace(name){
   const valid=['draft','roster','waiver','trade','live'];if(!valid.includes(name))name='draft';
   localStorage.setItem('v117_workspace',name);
