@@ -1,6 +1,11 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc2)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc3)
 
-## v11.8.0-rc2 – Return-v2 controlled validation release
+## v11.8.0-rc3 – Return-v2 controlled validation release
+### rc3 integration hardening
+- Fixes the RC2 Target-Collision temporal-dead-zone failure caused by a local `targets` declaration shadowing the outer target-player array during collision serialization.
+- Adds a release-gate runtime regression that executes the actual `simulateReturnV2` implementation and forces the collision serialization path.
+- Release discipline: after any runtime failure, diagnose the complete affected path and related integration boundaries before producing another RC; no one-error-at-a-time patch loop.
+
 - Rebased onto complete v11.7.2 production package; Android single-line textarea fix preserved.
 - Return-v2 sequential Monte Carlo with exact turn geometry and sequential opponent roster state.
 - Player-Quality / Value-Safety regression gate integrated.
