@@ -1,6 +1,6 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc1)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc2)
 
-## v11.8.0-rc1 – Return-v2 controlled validation release
+## v11.8.0-rc2 – Return-v2 controlled validation release
 - Rebased onto complete v11.7.2 production package; Android single-line textarea fix preserved.
 - Return-v2 sequential Monte Carlo with exact turn geometry and sequential opponent roster state.
 - Player-Quality / Value-Safety regression gate integrated.
