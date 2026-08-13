@@ -958,7 +958,7 @@ function resolveReturnValidation(draftId,picks){
   const rows=loadReturnValidation();let changed=false;
   for(const row of rows){
     if(row.draftId!==draftId||row.resolved||!Number.isFinite(row.returnPick))continue;
-    const ownPick=picks.find(p=>Number(p.pick_no)===Number(row.current));
+    const ownPick=picks.find(p=>Number(p.pick_no)===Number(row.current)&&(!Number.isFinite(Number(row.slot))||Number(p.draft_slot)===Number(row.slot)));
     const chosenKey=ownPick?norm(ownPick.metadata?.first_name&&ownPick.metadata?.last_name?`${ownPick.metadata.first_name} ${ownPick.metadata.last_name}`:(ownPick.metadata?.player_name||'')):'';
     if((picks?.length||0)<row.returnPick-1&&!chosenKey)continue;
     const window=picks.filter(p=>p.pick_no>row.current&&p.pick_no<row.returnPick);
@@ -974,12 +974,12 @@ function resolveReturnValidation(draftId,picks){
   }
   if(changed)saveReturnValidation(rows);
 }
-function freezeReturnValidation(draftId,current,returnPick,rv2,rankedAvailable){
+function freezeReturnValidation(draftId,current,returnPick,rv2,rankedAvailable,slot){
   if(!rv2||!Number.isFinite(returnPick)||returnPick<=current)return;
   const rows=loadReturnValidation(),id=`${draftId}|${current}|${returnPick}`;
   if(rows.some(r=>r.id===id))return;
   const predictions=rankedAvailable.slice(0,12).map(p=>{const x=rv2.players[norm(p.name)];return x?{key:norm(p.name),name:p.name,pos:p.pos,returnProb:x.ret,confidence:x.confidence,topRisk:x.topRisk,forecastResolution:'pending',brier:null}:null}).filter(Boolean);
-  rows.push({id,draftId,current,returnPick,createdAt:Date.now(),resolved:false,predictions});saveReturnValidation(rows);
+  rows.push({id,draftId,current,returnPick,slot:Number.isFinite(Number(slot))?Number(slot):null,createdAt:Date.now(),resolved:false,predictions});saveReturnValidation(rows);
 }
 function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvailable,scored,rv2,mode,strategy,stress,teams,slot,fingerprint}){
   const rows=loadDecisionFixtures(),id=`${draftId}|${current}|${fingerprint}`;if(rows.some(r=>r.id===id))return;
@@ -987,14 +987,14 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.2',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     candidates:scored.slice(0,16).map(x=>({playerId:String(x.p.id||''),name:x.p.name,pos:x.p.pos,panelRank:x.r?.rank??null,panelId:x.r?.panelId??null,adp:Number.isFinite(x.a)?x.a:null,injury:x.p.injury||null,researchEvidence:researchPlayerState(x.p,evidenceCutoff).slice(-4),returnProb:x.ret??null,returnConfidence:x.returnConfidence??null,topRisk:x.topRisk??null,coachScore:x.score??null,action:x.action??null})),
     forecastResolution:endOfDraft?'unresolved_end_of_draft':'pending',chosenPlayer:null
   });saveDecisionFixtures(rows);
 }
-function resolveDecisionFixtures(draftId,picks){const rows=loadDecisionFixtures();let changed=false;for(const f of rows){if(f.draftId!==draftId||f.chosenPlayer)continue;const hit=picks.find(p=>Number(p.pick_no)===Number(f.current));if(hit){f.chosenPlayer={playerId:String(hit.player_id),name:hit.metadata?.first_name&&hit.metadata?.last_name?`${hit.metadata.first_name} ${hit.metadata.last_name}`:(hit.metadata?.player_name||'')};if(f.forecastResolution==='pending')f.forecastResolution='chosen';changed=true}}if(changed)saveDecisionFixtures(rows)}
+function resolveDecisionFixtures(draftId,picks){const rows=loadDecisionFixtures();let changed=false;for(const f of rows){if(f.draftId!==draftId||f.chosenPlayer)continue;const hit=picks.find(p=>Number(p.pick_no)===Number(f.current)&&Number(p.draft_slot)===Number(f.slot));if(hit){f.chosenPlayer={playerId:String(hit.player_id),name:hit.metadata?.first_name&&hit.metadata?.last_name?`${hit.metadata.first_name} ${hit.metadata.last_name}`:(hit.metadata?.player_name||'')};if(f.forecastResolution==='pending')f.forecastResolution='chosen';changed=true}}if(changed)saveDecisionFixtures(rows)}
 function simulateToReturn(ctx,stress='baseline',runs=1200){
   const {current,next,picks,players,teams,map,rankedAvailable}=ctx;
   if(!Number.isFinite(next)||next<=current)return null;
@@ -1320,7 +1320,7 @@ async function refresh(){
       x.reasons.push(`Loss if gone: ${x.loss}`);
     }
     if(referenceBalanced){for(const x of referenceBalanced){const v2=rv2?.players?.[norm(x.p.name)];x.ret=v2?v2.ret:adjustedReturn(x.ret,liveIntel(x.p,current,returnPick,picks,players,teams,mode,map,stress));applyResolvedReturnScore(x,current,'balanced');}}
-    resolveReturnValidation(id,picks);resolveDecisionFixtures(id,picks);freezeReturnValidation(id,current,returnPick,rv2,rankedAvailable);
+    resolveReturnValidation(id,picks);resolveDecisionFixtures(id,picks);freezeReturnValidation(id,current,returnPick,rv2,rankedAvailable,slot);
     els.modeStatus.className=`notice ${mode==='live'&&!Object.keys(map).length?'warn':'ok'}`;els.modeStatus.textContent=modeStatusText(mode,map);
     const boardTop=scored.slice().sort((x,y)=>x.r.rank-y.r.rank).slice(0,12).filter(x=>x.ret!=null);
     const sortedReturns=boardTop.map(x=>x.ret).sort((x,y)=>x-y);
@@ -1397,7 +1397,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.2 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
@@ -1424,13 +1424,20 @@ async function refresh(){
     }
     if(!mine.length)lines.push('Noch keine Picks.');
 
+    if(draftComplete){
+      lines.push('', 'POST-DRAFT STATUS', 'DRAFT ABGESCHLOSSEN — keine Live-Pick-Entscheidung, keine Return-Prognose und keine Live-Research-Aufgabe mehr.', 'Der Snapshot dient nur noch der abgeschlossenen Board-/Roster-Dokumentation. Für Retrospektive/FA-Analyse den separaten Post-Draft-Workflow verwenden.');
+    }else{
     lines.push('','TOP 5 LIVE-ENTSCHEIDUNG');
-    if(favorites.length){
+    if(draftComplete){
+      lines.push('DRAFT ABGESCHLOSSEN — keine Pick-Entscheidung und keine Return-Prognose mehr.');
+    }else if(favorites.length){
       favorites.forEach((x,i)=>lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Coach ${x.score}${Number.isFinite(x.balancedScore)?` | v10-Ref ${x.balancedScore}`:''} | Panel ${x.r.rank.toFixed(1)} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Return-Confidence ${x.returnConfidence}% | ${x.action} | Loss ${x.loss}`));
     }else lines.push('KEINE — Panel-Zuordnung/Rankings prüfen.');
 
     lines.push('','DRAFT COACH TOP 8');
-    if(scored.length){
+    if(draftComplete){
+      lines.push('NICHT ANWENDBAR — Draft abgeschlossen. Verfügbare Spieler unten sind nur noch Post-Draft/FA-Kontext.');
+    }else if(scored.length){
       scored.slice(0,8).forEach((x,i)=>{
         lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Coach ${x.score}${Number.isFinite(x.balancedScore)?` | v10-Ref ${x.balancedScore}`:''} | ${x.r.panel} ${x.r.rank.toFixed(1)} Tier ${x.r.tier||'–'} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Confidence ${x.confidence}% | ${x.agree}`);
         lines.push(`   Einzelrankings: ${x.r.individual.filter(v=>rankCache[v.expertId]?.verifiedIndividual).map(v=>`${v.expertName} ${v.reconstructed?'≈':'#'}${Math.round(v.rank)}${Number.isFinite(v.posRank)?` (${x.p.pos}${Math.round(v.posRank)})`:''}${v.reconstructed?` [rekonstr., ${v.anchors} Anker]`:''}`).join(' · ')||'KEINE VERIFIZIERT'}`);
@@ -1467,8 +1474,9 @@ async function refresh(){
       strategy==='balanced'?'Kein großer Reach ohne konkrete aktuelle Begründung. Fehlende Panel- oder ADP-Daten ausdrücklich als Unsicherheit behandeln. K und DST werden nicht gedraftet. Bye Weeks sind nur ein kleiner Tiebreaker.':'Panel bleibt Baseline. Ab Runde 9 graduell mehr Ceiling/Breakout-EV und höhere Reach-Toleranz; ein Reach braucht weiterhin einen plausiblen Upside-Pfad. K und DST werden nicht gedraftet. Bye Weeks sind nur ein kleiner Tiebreaker.',
       '',
       'AUFGABE',
-      'Prüfe aktuelle Verletzungen, Depth Charts und News, einschließlich angekündigter/geplanter IR- oder PUP-Moves und ob IR season-ending ist, sowie gezielt die Research-Kandidaten auf aktuelle Sleeper-, Breakout-, League-Winner- und Bust-Analysen. Artikel dienen als begründungspflichtiger Kontext; das Expertenpanel bleibt Baseline. Nutze das Expertenpanel als Baseline und Sleeper-ADP als Marktindikator, sofern vorhanden. Nenne alle nahezu gleichwertigen Favoriten, danach 2–3 Alternativen, Return-Chancen und Confidence. Erzwinge keine Einzelentscheidung, wenn mehrere Spieler nahezu gleichauf liegen. Abweichungen vom Expertenpanel oder der Sleeper-ADP ausdrücklich begründen. In dieser 10-Team-1QB-Liga QB2 und TE2 nur in absoluten Ausnahmefällen empfehlen; TE1 darf bei einem Run bis nach dem Draft aufgeschoben werden. Bei ähnlich guten QB1-Kandidaten Rushing-Upside bevorzugen. Späte Bench-Picks primär auf RB-Upside optimieren.'
+      'Prüfe aktuelle Verletzungen, Depth Charts und News, einschließlich angekündigter/geplanter IR- oder PUP-Moves und ob IR season-ending ist, sowie gezielt die Research-Kandidaten auf aktuelle Sleeper-, Breakout-, League-Winner- und Bust-Analysen. Artikel dienen als begründungspflichtiger Kontext; das Expertenpanel bleibt Baseline. Nutze das Expertenpanel als Baseline und Sleeper-ADP als Marktindikator, sofern vorhanden. Nenne alle nahezu gleichwertigen Favoriten, danach 2–3 Alternativen, Return-Chancen und Confidence. Erzwinge keine Einzelentscheidung, wenn mehrere Spieler nahezu gleichauf liegen. Abweichungen vom Expertenpanel oder der Sleeper-ADP ausdrücklich begründen. In dieser 10-Team-1QB-Liga QB2 und TE2 nur in absoluten Ausnahmefällen empfehlen; TE1 darf bei einem Run bis nach dem Draft aufgeschoben werden. Bei ähnlich guten QB1-Kandidaten Rushing-Upside bevorzugen. Späte Bench-Picks primär auf RB-Upside optimieren. Override-Guard: Weiche vom Coach-Topfavoriten oder dessen TAKE/WAIT-Sequenz nur bei konkreter entscheidungsändernder Evidenz ab. Eine allgemeine Positions-/Upside-Präferenz allein reicht insbesondere dann nicht, wenn die Alternative laut Return-v2 sehr wahrscheinlich bis zum nächsten Pick zurückkommt und als WARTEN markiert ist.'
     );
+    }
 
     els.snapshot.value=lines.join('\n');
     lastSnapshotFingerprint=fingerprint;lastSnapshotPickCount=picks.length;store.setText('v116_lastSnapshotFingerprint',fingerprint);store.setText('v116_lastSnapshotPickCount',String(picks.length));
@@ -1480,7 +1488,7 @@ async function refresh(){
     els.emptyCoach.hidden=true;
     els.copyBtn.disabled=false;
     els.shareBtn.disabled=false;
-    freezeDecisionFixture({draftId:id,current,returnPick,picks,mine,rankedAvailable,scored,rv2,mode,strategy,stress,teams,slot,fingerprint});
+    if(!draftComplete)freezeDecisionFixture({draftId:id,current,returnPick,picks,mine,rankedAvailable,scored,rv2,mode,strategy,stress,teams,slot,fingerprint});
     lastDraftContext={id,current,next:returnPick,favorites,scored,picks,mine,mode,strategy,stress,map,dataState,players,teams,rankedAvailable};
     if(els.simulateBtn)els.simulateBtn.disabled=!(Number.isFinite(returnPick)&&returnPick>current);
   }finally{
@@ -1510,7 +1518,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc3',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.2',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}

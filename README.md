@@ -1,6 +1,13 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.2)
 
-## v11.8.0-rc4 – Return-v2 controlled validation release
+## v11.8.0-rc4.2 – Return-v2 controlled validation release
+
+### rc4.2 follow-up hardening
+- Completed drafts now emit a dedicated post-draft snapshot only; no live research task, available-player recommendation list, or Return prompt survives completion.
+- Return-validation ownership now stores/checks the user draft slot before treating a pick as the user's selected target.
+- Snapshot task includes an assistant override guard: a generic roster/upside preference must not override a higher Companion choice when Return-v2 explicitly says the alternative is highly likely to return.
+- Controlled-mock lesson preserved: at 11.09 the Companion had Josh Downs #1 and Jordan Mason at 91% Return/WARTEN; the user's Downs pick followed the Companion and Mason did return at 11.12.
+
 ### rc4 post-mock hardening
 - Critical injury/IR/PUP research evidence now requires explicit event/publication chronology before it can become actionable; stale/unverified critical reports are retained only for audit.
 - Return calibration is censor-aware: user-selected targets are excluded from Brier scoring.
