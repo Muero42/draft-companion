@@ -386,6 +386,46 @@ const PRESETS={
   qb:{name:'QB',list:[['Pat Fitzmaurice',45],['Justin Boone',30],['Sean Koerner',25],['Andrew Erickson',15]],max:3},
   te:{name:'TE',list:[['Pat Fitzmaurice',40],['Justin Boone',25],['Andrew Erickson',20],['Derek Brown',15],['Sean Koerner',15]],max:4}
 };
+const DESIRED_EXPERT_POOL=['Pat Fitzmaurice','Justin Boone','Sean Koerner','Andrew Erickson','Derek Brown','Matt Harmon'];
+
+function desiredExpertPoolHealth(){
+  const rows=DESIRED_EXPERT_POOL.map(name=>{
+    const e=findExpert(name),c=e?rankCache[e.id]:null;
+    let status='unavailable';
+    if(c?.duplicateOf)status='duplicate';
+    else if(c?.verifiedIndividual&&c?.staleFallback)status='stale-fallback';
+    else if(c?.verifiedIndividual)status='verified';
+    else if(c?.error)status='unavailable';
+    const source=c?.source||'none';
+    const sourceUpdated=c?.sourceUpdated||'';
+    const refreshed=Number(c?.updated||0);
+    return{name,id:e?.id||null,status,source,sourceUpdated,refreshed,error:c?.error||'',counts:c?.counts||{}};
+  });
+  // Strict health semantics: stale fallback is usable computation evidence, but not current verification.
+  const verified=rows.filter(x=>x.status==='verified').length;
+  const stale=rows.filter(x=>x.status==='stale-fallback').length;
+  const usable=verified+stale;
+  return{verified,stale,usable,total:rows.length,degraded:verified<rows.length,rows};
+}
+function expertHealthDetailLine(row){
+  const status=row.status==='verified'?'VERIFIED':row.status==='stale-fallback'?'STALE-FALLBACK':row.status==='duplicate'?'DUPLICATE':'UNAVAILABLE';
+  const refreshed=row.refreshed?new Date(row.refreshed).toLocaleString('de-DE'):'';
+  const times=[row.sourceUpdated?`Quelle ${row.sourceUpdated}`:'',refreshed?`lokal ${refreshed}`:''].filter(Boolean).join(' · ');
+  return`${row.name}: ${status} · ${row.source||'keine Quelle'}${times?` · ${times}`:''}${row.error?` · ${row.error}`:''}`;
+}
+function effectivePanelHealthLine(pos){
+  const pid=panelFor(pos),panel=panels[pid]||{},members=Object.entries(panel.members||{}).filter(([eid])=>rankCache[eid]?.verifiedIndividual&&!rankCache[eid]?.duplicateOf);
+  const total=members.reduce((sum,[,w])=>sum+Number(w||0),0);
+  const effective=members.map(([eid,w])=>{
+    const name=rankCache[eid]?.expertName||experts.find(e=>String(e.id)===String(eid))?.name||eid;
+    const pct=total?Math.round(Number(w||0)/total*100):0;
+    const stale=rankCache[eid]?.staleFallback?' [STALE]':'';
+    return`${name} ${pct}%${stale}`;
+  });
+  const preset=PRESETS[pid];
+  const priority=preset?preset.list.map(([name,w])=>`${name} ${w}`).join(' > '):'';
+  return`${pos}: ${effective.join(' + ')||'keine'}${priority?` | Soll-Priorität (max ${preset.max}): ${priority}`:''}`;
+}
 function findExpert(name){const n=norm(name);return experts.find(e=>norm(e.name)===n)||experts.find(e=>name.toLowerCase().split(/\s+/).filter(x=>x.length>2).every(p=>e.name.toLowerCase().includes(p)))}
 function presetCandidateIds(){
   return [...new Set(Object.values(PRESETS).flatMap(p=>p.list.map(([name])=>findExpert(name)?.id).filter(Boolean)))];
@@ -652,14 +692,16 @@ function renderPanelSummary(){
     const ready=Boolean(panelRanks[pid]&&Object.keys(panelRanks[pid]).length);
     return `<div class="panel-summary-item"><span>${pos}</span><strong class="${ready?'status-ok':'status-warn'}">${ready?'✓':'Nicht geladen'}</strong></div>`;
   }).join('');
+  const health=desiredExpertPoolHealth();
   els.panelSummary.innerHTML=`<div class="panel-summary-card">
     <b>Aktives Panel: ${esc(active)}</b>
-    <div class="panel-summary-item"><span>Experten</span><strong>${expertCount}</strong></div>
+    <div class="panel-summary-item"><span>Experten verfügbar</span><strong>${expertCount}</strong></div>
+    <div class="panel-summary-item"><span>Gewünschter Pool</span><strong class="${health.degraded?'status-warn':'status-ok'}">${health.verified}/${health.total}</strong></div>
     <div class="panel-summary-grid">${posItems}</div>
   </div>`;
 }
 
-function updateStatus(){const rankTime=Number(store.get('v7_lastRankingUpdate',0)),hours=rankTime?(Date.now()-rankTime)/3600000:null;const hasKey=Boolean(els.apiKey.value.trim());if(els.apiQuickStatus){els.apiQuickStatus.className=`notice ${hasKey?'ok':'bad'}`;els.apiQuickStatus.textContent=hasKey?'FantasyPros API-Key gespeichert. „Alles aktualisieren“ lädt Experten, Preset und Rankings.':'FantasyPros API-Key fehlt. Unter „Erweitert“ einmalig eintragen.';}els.onlineState.textContent=navigator.onLine?'Online':'Offline';els.onlineState.className=navigator.onLine?'ok':'bad';els.rankingAge.textContent=hours==null?'Wartet auf Draft':hours<1?`${Math.max(1,Math.round(hours*60))} Min.`:hours<24?`${Math.round(hours)} Std.`:`${Math.floor(hours/24)} Tag(e)`;els.rankingAge.className=hours==null?'bad':hours>24?'warn':'ok';els.adpCount.textContent=Object.keys(adp).length?String(Object.keys(adp).length):'Wartet auf Draft';els.adpCount.className=Object.keys(adp).length?'ok':'bad';const ready=experts.length&&Object.keys(panelRanks).length&&Object.keys(adp).length;els.qualityMini.textContent=ready?'Bereit':'Unvollständig';els.qualityMini.className=ready?'ok':'warn';const issues=[];if(!els.apiKey.value.trim())issues.push('API-Key fehlt');if(!experts.length)issues.push('Experten fehlen');if(!Object.keys(panelRanks).length)issues.push('Panel-Rankings fehlen');if(!Object.keys(adp).length)issues.push('Sleeper-ADP fehlt');els.qualityStatus.className=`notice ${issues.length?'warn':'ok'}`;els.qualityStatus.textContent=issues.length?`Noch nicht draftbereit: ${issues.join(' · ')}`:`Draftbereit: ${experts.length} Experten · ${Object.keys(panelRanks).length} Panels · ${Object.keys(adp).length} Sleeper-ADPs.`;if(Object.keys(adp).length){els.adpStatus.className='notice ok';els.adpStatus.textContent=`${Object.keys(adp).length} Sleeper-ADPs aktiv · Quelle: ${adpMeta.source||'verifizierter Import'}.`;if(els.adpHelper)els.adpHelper.textContent=`Sleeper-ADP aktiv (${Object.keys(adp).length}). Reach und Return nutzen diese Marktwerte zusätzlich zum Expertenpanel.`}else{els.adpStatus.className='notice warn';els.adpStatus.textContent='Keine verifizierte Sleeper-ADP vorhanden. Reach und Return werden konservativ behandelt.';if(els.adpHelper)els.adpHelper.textContent='Keine verifizierte Sleeper-ADP vorhanden. Das Expertenpanel bleibt Baseline; Reach und Return werden bewusst konservativ behandelt.'}}
+function updateStatus(){const rankTime=Number(store.get('v7_lastRankingUpdate',0)),hours=rankTime?(Date.now()-rankTime)/3600000:null;const hasKey=Boolean(els.apiKey.value.trim());if(els.apiQuickStatus){els.apiQuickStatus.className=`notice ${hasKey?'ok':'bad'}`;els.apiQuickStatus.textContent=hasKey?'FantasyPros API-Key gespeichert. „Alles aktualisieren“ lädt Experten, Preset und Rankings.':'FantasyPros API-Key fehlt. Unter „Erweitert“ einmalig eintragen.';}els.onlineState.textContent=navigator.onLine?'Online':'Offline';els.onlineState.className=navigator.onLine?'ok':'bad';els.rankingAge.textContent=hours==null?'Wartet auf Draft':hours<1?`${Math.max(1,Math.round(hours*60))} Min.`:hours<24?`${Math.round(hours)} Std.`:`${Math.floor(hours/24)} Tag(e)`;els.rankingAge.className=hours==null?'bad':hours>24?'warn':'ok';els.adpCount.textContent=Object.keys(adp).length?String(Object.keys(adp).length):'Wartet auf Draft';els.adpCount.className=Object.keys(adp).length?'ok':'bad';const ready=experts.length&&Object.keys(panelRanks).length&&Object.keys(adp).length;els.qualityMini.textContent=ready?'Bereit':'Unvollständig';els.qualityMini.className=ready?'ok':'warn';const issues=[];if(!els.apiKey.value.trim())issues.push('API-Key fehlt');if(!experts.length)issues.push('Experten fehlen');if(!Object.keys(panelRanks).length)issues.push('Panel-Rankings fehlen');if(!Object.keys(adp).length)issues.push('Sleeper-ADP fehlt');const poolHealth=desiredExpertPoolHealth();els.qualityStatus.className=`notice ${issues.length||poolHealth.degraded?'warn':'ok'}`;els.qualityStatus.textContent=issues.length?`Noch nicht draftbereit: ${issues.join(' · ')}`:`Draftbereit${poolHealth.degraded?' (Expertenpool degradiert)':''}: ${experts.length} Experten · gewünschter Pool ${poolHealth.verified}/${poolHealth.total} · ${Object.keys(panelRanks).length} Panels · ${Object.keys(adp).length} Sleeper-ADPs.`;if(Object.keys(adp).length){els.adpStatus.className='notice ok';els.adpStatus.textContent=`${Object.keys(adp).length} Sleeper-ADPs aktiv · Quelle: ${adpMeta.source||'verifizierter Import'}.`;if(els.adpHelper)els.adpHelper.textContent=`Sleeper-ADP aktiv (${Object.keys(adp).length}). Reach und Return nutzen diese Marktwerte zusätzlich zum Expertenpanel.`}else{els.adpStatus.className='notice warn';els.adpStatus.textContent='Keine verifizierte Sleeper-ADP vorhanden. Reach und Return werden konservativ behandelt.';if(els.adpHelper)els.adpHelper.textContent='Keine verifizierte Sleeper-ADP vorhanden. Das Expertenpanel bleibt Baseline; Reach und Return werden bewusst konservativ behandelt.'}}
 
 const S='https://api.sleeper.app/v1';
 const draftId=v=>(String(v||'').match(/(\d{10,})/)||[])[1]||String(v||'').trim();
@@ -985,7 +1027,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.9',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.11',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     candidates:scored.slice(0,16).map(x=>({playerId:String(x.p.id||''),name:x.p.name,pos:x.p.pos,panelRank:x.r?.rank??null,panelId:x.r?.panelId??null,adp:Number.isFinite(x.a)?x.a:null,injury:x.p.injury||null,researchEvidence:researchPlayerState(x.p,evidenceCutoff).slice(-4),returnProb:x.ret??null,returnConfidence:x.returnConfidence??null,topRisk:x.topRisk??null,coachScore:x.score??null,action:x.action??null})),
@@ -1166,13 +1208,24 @@ function valueLabel(current,adp){
   return{label:'Fairer Bereich',kind:'info',value};
 }
 
+function bestAvailablePanelRank(available){
+  const ranks=available.map(x=>rankFor(x.name,x.pos)?.rank).filter(Number.isFinite);
+  return ranks.length?Math.min(...ranks):null;
+}
+function playerQualityBaseScore(panelRank,available){
+  const best=bestAvailablePanelRank(available);
+  if(!Number.isFinite(panelRank)||!Number.isFinite(best))return null;
+  // Player Quality is independent of current pick/ADP. A better selected-panel rank
+  // can never reduce this component. Market timing belongs to the separate ADP/Return layers.
+  return 100-clamp((panelRank-best)*1.0,0,74);
+}
 function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   const r=rankFor(p.name,p.pos),a=Number(adp[norm(p.name)]);
   if(!r)return{score:-999,r:null,a,reasons:['Panel-Rang fehlt']};
-  /* v9.8.0: Panel-first Raw Utility. Sichtbarer Coach-Score wird relativ zum besten aktuellen Kandidaten normiert. */
+  /* rc4.10: monotonic selected-panel Player Quality, anchored to best available panel rank. */
   const stage=strategy==='progressive'?progressiveStage(current):0;
-  const panelPenaltyRate=strategy==='progressive'?[1.10,1.00,.90,.78][stage]:1.10;
-  let score=100-clamp((r.rank-current)*panelPenaltyRate,0,74)-clamp((current-r.rank)*.15,0,3),reasons=[];
+  let score=playerQualityBaseScore(r.rank,available),reasons=[];
+  if(!Number.isFinite(score))return{score:-999,r:null,a,reasons:['Player-Quality-Basis fehlt']};
   const value=valueLabel(current,a);
   if(Number.isFinite(value.value)){
     const reachScale=strategy==='progressive'?[1,.85,.65,.45][stage]:1;
@@ -1418,9 +1471,16 @@ async function refresh(){
       return{x,flags};
     });
 
+    const expertHealth=desiredExpertPoolHealth();
+    const expertMissing=expertHealth.rows.filter(x=>x.status!=='verified'&&x.status!=='stale-fallback');
+    const expertDegraded=expertHealth.rows.filter(x=>x.status==='stale-fallback');
+    const expertHealthSummary=`Gewünschter Expertenpool: ${expertHealth.verified}/${expertHealth.total} aktuell verifiziert${expertHealth.stale?` · ${expertHealth.stale} stale fallback`:''}${expertMissing.length?` · fehlt: ${expertMissing.map(x=>`${x.name}${x.error?` (${x.error})`:''}`).join(', ')}`:''}`;
+    const expertHealthDetails=expertHealth.rows.map(expertHealthDetailLine);
+    const panelHealthLines=['QB','RB','WR','TE'].map(effectivePanelHealthLine);
+
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.9',
+      'App-Version: v11.8.0-rc4.11',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -1434,11 +1494,14 @@ async function refresh(){
       `Verwendete Panels: ${usedPanelIds.map(pid=>panels[pid]?.name||pid).join(' / ')||'FEHLT'}`,
       `Geladene Panel-Spieler: ${rankedCounts||'FEHLT'}`,
       `Verifizierte Einzelrankings: ${usedPanelIds.map(pid=>{const ids=Object.keys(panels[pid]?.members||{}).filter(eid=>rankCache[eid]?.verifiedIndividual&&!rankCache[eid]?.duplicateOf);return `${panels[pid]?.name||pid}: ${ids.length}/${Object.keys(panels[pid]?.members||{}).length}`}).join(' · ')||'FEHLT'}`,
+      expertHealthSummary,
+      `Expertenpool-Details: ${expertHealthDetails.join(' | ')}`,
+      `Panel-Health: ${expertHealth.degraded?'DEGRADED':'OK'} · ${panelHealthLines.join(' · ')}`,
       `Expertenquelle: automatische Multi-Source-Pipeline (vollständige öffentliche Einzelrankings; Vergleichsseiten nur Kontrolle)`,
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.9 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.11 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
@@ -1559,7 +1622,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.9',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.11',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
