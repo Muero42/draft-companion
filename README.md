@@ -1,13 +1,13 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.5)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.7)
 
-## v11.8.0-rc4.5 – Mock-retrospective scarcity correction
+## v11.8.0-rc4.7 – Mock-retrospective scarcity correction
 
 - Adds positional alternative/replacement scarcity to Draft Utility: passing a player is more costly when the next same-position option is materially worse; multiple near-equal alternatives reduce urgency.
 - `Loss-if-Gone` now incorporates replacement gap and near-equal alternative count, not only tier geometry.
 - Strengthens late WR saturation marginal utility after seven WR so an eighth WR does not beat a comparable upside RB on panel rank alone.
 - Regression fixture covers the LaPorta→Herbert scarcity pattern and late 7-WR roster saturation.
 
-## v11.8.0-rc4.5 – Return-v2 controlled validation release
+## v11.8.0-rc4.7 – Return-v2 controlled validation release
 
 ### rc4.3 temporal-relevance hardening
 - Critical injury/IR/PUP evidence now rejects old reports even when crawl/site placement is current. Reports older than 45 days require explicit current-status corroboration from the last 14 days.
@@ -335,3 +335,9 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - Promotion audit found one contradictory visible historical-baseline sentence in the RC4.3 freeze note: it described v11.6.2 as the unchanged Draft baseline even though the package is explicitly rebased on production v11.7.2.
 - The stale sentence is replaced with version-neutral preservation wording; no model behavior changes.
 - Release/version identifiers synchronized to rc4.4.
+
+
+## rc4.7 no-PC audit
+- Positional scarcity double-count correction: tier geometry remains diagnostic; replacement-aware alternative scarcity is the single scored positional-scarcity channel.
+- Added deterministic `Draft_Companion_Scarcity_Double_Count_Regression_2026-08-13.js`.
+- Production remains v11.7.2; rc4.7 is test-only and inherits the natural prospective validation gate.
