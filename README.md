@@ -1,6 +1,13 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.4)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.5)
 
-## v11.8.0-rc4.4 – Return-v2 controlled validation release
+## v11.8.0-rc4.5 – Mock-retrospective scarcity correction
+
+- Adds positional alternative/replacement scarcity to Draft Utility: passing a player is more costly when the next same-position option is materially worse; multiple near-equal alternatives reduce urgency.
+- `Loss-if-Gone` now incorporates replacement gap and near-equal alternative count, not only tier geometry.
+- Strengthens late WR saturation marginal utility after seven WR so an eighth WR does not beat a comparable upside RB on panel rank alone.
+- Regression fixture covers the LaPorta→Herbert scarcity pattern and late 7-WR roster saturation.
+
+## v11.8.0-rc4.5 – Return-v2 controlled validation release
 
 ### rc4.3 temporal-relevance hardening
 - Critical injury/IR/PUP evidence now rejects old reports even when crawl/site placement is current. Reports older than 45 days require explicit current-status corroboration from the last 14 days.
