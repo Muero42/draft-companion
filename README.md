@@ -1,8 +1,13 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc3)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4)
 
-## v11.8.0-rc3 – Return-v2 controlled validation release
-### rc3 integration hardening
-- Fixes the RC2 Target-Collision temporal-dead-zone failure caused by a local `targets` declaration shadowing the outer target-player array during collision serialization.
+## v11.8.0-rc4 – Return-v2 controlled validation release
+### rc4 post-mock hardening
+- Critical injury/IR/PUP research evidence now requires explicit event/publication chronology before it can become actionable; stale/unverified critical reports are retained only for audit.
+- Return calibration is censor-aware: user-selected targets are excluded from Brier scoring.
+- Immutable per-decision fixtures persist board/roster/candidate/Return/research/model metadata for no-future-leak replay.
+- Final-pick Return is explicitly unresolved by construction.
+- Late-round K/DST opponent-turn hazard remains active and is regression-gated.
+- Preserves the RC3 fix for the RC2 Target-Collision temporal-dead-zone failure caused by a local `targets` declaration shadowing the outer target-player array during collision serialization.
 - Adds a release-gate runtime regression that executes the actual `simulateReturnV2` implementation and forces the collision serialization path.
 - Release discipline: after any runtime failure, diagnose the complete affected path and related integration boundaries before producing another RC; no one-error-at-a-time patch loop.
 

@@ -949,22 +949,28 @@ function simulateReturnV2(ctx,stress='baseline',runs=900){
   return{players:result,runs,slots,mapCoverage,collisions};
 }
 function returnValidationKey(){return 'v118_returnValidation'}
+function decisionFixtureKey(){return 'v118_decisionFixtures'}
 function loadReturnValidation(){try{return JSON.parse(localStorage.getItem(returnValidationKey())||'[]')}catch{return []}}
 function saveReturnValidation(rows){try{localStorage.setItem(returnValidationKey(),JSON.stringify(rows.slice(-500)))}catch{}}
+function loadDecisionFixtures(){try{const v=JSON.parse(localStorage.getItem(decisionFixtureKey())||'[]');return Array.isArray(v)?v:[]}catch{return []}}
+function saveDecisionFixtures(rows){try{localStorage.setItem(decisionFixtureKey(),JSON.stringify(rows.slice(-250)))}catch{}}
 function resolveReturnValidation(draftId,picks){
   const rows=loadReturnValidation();let changed=false;
   for(const row of rows){
     if(row.draftId!==draftId||row.resolved||!Number.isFinite(row.returnPick))continue;
-    if((picks?.length||0)<row.returnPick-1)continue;
+    const ownPick=picks.find(p=>Number(p.pick_no)===Number(row.current));
+    const chosenKey=ownPick?norm(ownPick.metadata?.first_name&&ownPick.metadata?.last_name?`${ownPick.metadata.first_name} ${ownPick.metadata.last_name}`:(ownPick.metadata?.player_name||'')):'';
+    if((picks?.length||0)<row.returnPick-1&&!chosenKey)continue;
     const window=picks.filter(p=>p.pick_no>row.current&&p.pick_no<row.returnPick);
+    let allResolved=(picks?.length||0)>=row.returnPick-1;
     for(const pred of row.predictions){
+      if(chosenKey&&pred.key===chosenKey){pred.forecastResolution='censored_user_pick';pred.brier=null;pred.actualSurvived=null;continue}
+      if(!allResolved){pred.forecastResolution='pending';continue}
       const hit=window.find(p=>norm(p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||''))===pred.key);
-      pred.actualSurvived=!hit;
-      pred.actualTakenPick=hit?.pick_no??null;
-      pred.actualTakenSlot=hit?.draft_slot??null;
-      pred.brier=(pred.returnProb-(pred.actualSurvived?1:0))**2;
+      pred.actualSurvived=!hit;pred.actualTakenPick=hit?.pick_no??null;pred.actualTakenSlot=hit?.draft_slot??null;
+      pred.forecastResolution='resolved';pred.brier=(pred.returnProb-(pred.actualSurvived?1:0))**2;
     }
-    row.resolved=true;row.resolvedAt=Date.now();changed=true;
+    if(allResolved){row.resolved=true;row.resolvedAt=Date.now()}changed=true;
   }
   if(changed)saveReturnValidation(rows);
 }
@@ -972,9 +978,23 @@ function freezeReturnValidation(draftId,current,returnPick,rv2,rankedAvailable){
   if(!rv2||!Number.isFinite(returnPick)||returnPick<=current)return;
   const rows=loadReturnValidation(),id=`${draftId}|${current}|${returnPick}`;
   if(rows.some(r=>r.id===id))return;
-  const predictions=rankedAvailable.slice(0,12).map(p=>{const x=rv2.players[norm(p.name)];return x?{key:norm(p.name),name:p.name,pos:p.pos,returnProb:x.ret,confidence:x.confidence,topRisk:x.topRisk}:null}).filter(Boolean);
+  const predictions=rankedAvailable.slice(0,12).map(p=>{const x=rv2.players[norm(p.name)];return x?{key:norm(p.name),name:p.name,pos:p.pos,returnProb:x.ret,confidence:x.confidence,topRisk:x.topRisk,forecastResolution:'pending',brier:null}:null}).filter(Boolean);
   rows.push({id,draftId,current,returnPick,createdAt:Date.now(),resolved:false,predictions});saveReturnValidation(rows);
 }
+function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvailable,scored,rv2,mode,strategy,stress,teams,slot,fingerprint}){
+  const rows=loadDecisionFixtures(),id=`${draftId}|${current}|${fingerprint}`;if(rows.some(r=>r.id===id))return;
+  const endOfDraft=!Number.isFinite(returnPick)||returnPick<=current;
+  const evidenceCutoff=Date.now();
+  rows.push({
+    id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
+    modelVersion:'v11.8.0-rc4',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
+    userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
+    candidates:scored.slice(0,16).map(x=>({playerId:String(x.p.id||''),name:x.p.name,pos:x.p.pos,panelRank:x.r?.rank??null,panelId:x.r?.panelId??null,adp:Number.isFinite(x.a)?x.a:null,injury:x.p.injury||null,researchEvidence:researchPlayerState(x.p,evidenceCutoff).slice(-4),returnProb:x.ret??null,returnConfidence:x.returnConfidence??null,topRisk:x.topRisk??null,coachScore:x.score??null,action:x.action??null})),
+    forecastResolution:endOfDraft?'unresolved_end_of_draft':'pending',chosenPlayer:null
+  });saveDecisionFixtures(rows);
+}
+function resolveDecisionFixtures(draftId,picks){const rows=loadDecisionFixtures();let changed=false;for(const f of rows){if(f.draftId!==draftId||f.chosenPlayer)continue;const hit=picks.find(p=>Number(p.pick_no)===Number(f.current));if(hit){f.chosenPlayer={playerId:String(hit.player_id),name:hit.metadata?.first_name&&hit.metadata?.last_name?`${hit.metadata.first_name} ${hit.metadata.last_name}`:(hit.metadata?.player_name||'')};if(f.forecastResolution==='pending')f.forecastResolution='chosen';changed=true}}if(changed)saveDecisionFixtures(rows)}
 function simulateToReturn(ctx,stress='baseline',runs=1200){
   const {current,next,picks,players,teams,map,rankedAvailable}=ctx;
   if(!Number.isFinite(next)||next<=current)return null;
@@ -1222,12 +1242,15 @@ function researchCacheKey(){return 'v117_researchEvidence';}
 function loadResearchEvents(){try{const v=JSON.parse(localStorage.getItem(researchCacheKey())||'[]');return Array.isArray(v)?v:[]}catch{return []}}
 function evidenceIdentity(e){return [e.sourceId||'',e.playerId||e.playerKey||'',e.evidenceType||'',e.sourcePublishedAt||e.observedAt||'',e.thesisPath||''].join('|')}
 function appendResearchEvidence(input){
-  const now=Date.now(),e={id:input.id||`ev_${now}_${Math.random().toString(36).slice(2,8)}`,observedAt:Number(input.observedAt||now),sourcePublishedAt:Number(input.sourcePublishedAt||input.observedAt||now),ingestedAt:Number(input.ingestedAt||now),playerId:String(input.playerId||''),playerKey:norm(input.playerName||input.playerKey||''),evidenceType:String(input.evidenceType||'unknown'),thesisPath:String(input.thesisPath||''),sourceId:String(input.sourceId||''),sourceOriginality:String(input.sourceOriginality||'unknown'),confidence:clamp(Number(input.confidence??.5),0,1),flags:Array.isArray(input.flags)?input.flags.slice(0,8):[],payload:input.payload||{}};
+  const now=Date.now(),published=Number(input.sourcePublishedAt||0),eventAt=Number(input.eventOccurredAt||input.payload?.eventOccurredAt||0),critical=/injury|ir|pup|suspension|inactive/i.test(String(input.evidenceType||''));
+  const freshnessVerified=Boolean(published&&eventAt&&eventAt<=published+7*86400000&&published<=now+3600000);
+  const e={id:input.id||`ev_${now}_${Math.random().toString(36).slice(2,8)}`,observedAt:Number(input.observedAt||now),sourcePublishedAt:published||Number(input.observedAt||now),eventOccurredAt:eventAt||null,ingestedAt:Number(input.ingestedAt||now),playerId:String(input.playerId||''),playerKey:norm(input.playerName||input.playerKey||''),evidenceType:String(input.evidenceType||'unknown'),thesisPath:String(input.thesisPath||''),sourceId:String(input.sourceId||''),sourceOriginality:String(input.sourceOriginality||'unknown'),confidence:clamp(Number(input.confidence??.5),0,1),flags:Array.isArray(input.flags)?input.flags.slice(0,8):[],payload:input.payload||{},freshnessVerified:critical?freshnessVerified:true,critical};
   const events=loadResearchEvents();if(events.some(x=>evidenceIdentity(x)===evidenceIdentity(e)))return {added:false,event:e};events.push(e);localStorage.setItem(researchCacheKey(),JSON.stringify(events));updateResearchCacheStatus();return {added:true,event:e};
 }
 function researchEventsAt(cutoff=Infinity){return loadResearchEvents().filter(e=>Number(e.sourcePublishedAt||e.observedAt||0)<=cutoff)}
 function researchPlayerState(p,cutoff=Infinity){const key=norm(p.name),pid=String(p.id||'');return researchEventsAt(cutoff).filter(e=>(pid&&e.playerId===pid)||e.playerKey===key).sort((a,b)=>a.sourcePublishedAt-b.sourcePublishedAt)}
-function researchHint(p,cutoff=Infinity){const ev=researchPlayerState(p,cutoff);if(!ev.length)return '';const latest=ev[ev.length-1],age=Math.round((Date.now()-Number(latest.sourcePublishedAt||latest.observedAt))/3600000),flags=[...new Set(ev.flatMap(x=>x.flags||[]))].slice(-4).join(', ');return flags?`${flags}${age<48?` · Cache ${age}h`:' · Cache veraltet'}`:`${ev.length} Evidence-Event(s)`}
+function actionableResearchEvents(p,cutoff=Infinity){return researchPlayerState(p,cutoff).filter(e=>!e.critical||e.freshnessVerified===true)}
+function researchHint(p,cutoff=Infinity){const all=researchPlayerState(p,cutoff),ev=actionableResearchEvents(p,cutoff);if(!all.length)return '';const rejected=all.length-ev.length;if(!ev.length)return rejected?`${rejected} kritische Meldung(en) wegen ungeprüfter Ereignis-Aktualität ignoriert`:'';const latest=ev[ev.length-1],age=Math.round((Date.now()-Number(latest.sourcePublishedAt||latest.observedAt))/3600000),flags=[...new Set(ev.flatMap(x=>x.flags||[]))].slice(-4).join(', '),suffix=rejected?` · ${rejected} stale/unverifiziert ignoriert`:'';return flags?`${flags}${age<48?` · Cache ${age}h`:' · Cache veraltet'}${suffix}`:`${ev.length} Evidence-Event(s)${suffix}`}
 function updateResearchCacheStatus(){if(!els.researchCacheStatus)return;const e=loadResearchEvents();const players=new Set(e.map(x=>x.playerId||x.playerKey).filter(Boolean));els.researchCacheStatus.textContent=e.length?`${e.length} Evidence-Events · ${players.size} Spieler · append-only`:'Noch keine versionierte Evidence gespeichert.'}
 function positionDecisionPath(state,scored,current,next){
   const out=[];
@@ -1297,7 +1320,7 @@ async function refresh(){
       x.reasons.push(`Loss if gone: ${x.loss}`);
     }
     if(referenceBalanced){for(const x of referenceBalanced){const v2=rv2?.players?.[norm(x.p.name)];x.ret=v2?v2.ret:adjustedReturn(x.ret,liveIntel(x.p,current,returnPick,picks,players,teams,mode,map,stress));applyResolvedReturnScore(x,current,'balanced');}}
-    resolveReturnValidation(id,picks);freezeReturnValidation(id,current,returnPick,rv2,rankedAvailable);
+    resolveReturnValidation(id,picks);resolveDecisionFixtures(id,picks);freezeReturnValidation(id,current,returnPick,rv2,rankedAvailable);
     els.modeStatus.className=`notice ${mode==='live'&&!Object.keys(map).length?'warn':'ok'}`;els.modeStatus.textContent=modeStatusText(mode,map);
     const boardTop=scored.slice().sort((x,y)=>x.r.rank-y.r.rank).slice(0,12).filter(x=>x.ret!=null);
     const sortedReturns=boardTop.map(x=>x.ret).sort((x,y)=>x-y);
@@ -1374,7 +1397,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc3 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
@@ -1457,6 +1480,7 @@ async function refresh(){
     els.emptyCoach.hidden=true;
     els.copyBtn.disabled=false;
     els.shareBtn.disabled=false;
+    freezeDecisionFixture({draftId:id,current,returnPick,picks,mine,rankedAvailable,scored,rv2,mode,strategy,stress,teams,slot,fingerprint});
     lastDraftContext={id,current,next:returnPick,favorites,scored,picks,mine,mode,strategy,stress,map,dataState,players,teams,rankedAvailable};
     if(els.simulateBtn)els.simulateBtn.disabled=!(Number.isFinite(returnPick)&&returnPick>current);
   }finally{
