@@ -1,19 +1,19 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.8)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.9)
 
-## v11.8.0-rc4.8 – Snapshot-discovered Return-v2 calibration correction
+## v11.8.0-rc4.9 – Snapshot-discovered Return-v2 calibration correction
 - Fixes pre-draft/off-turn opponent-window geometry: if the current upcoming pick belongs to an opponent, that pick is now included. Slot 9 pre-draft correctly sees 8 opponent picks before 1.09; at 1.09 the short return to 2.02 remains 2 opponent picks.
 - Re-anchors opponent candidate sampling to a tight Sleeper-ADP-dominant market center with panel rank as secondary signal, while preserving roster need, stress and manager modifiers. Elite ADP 1–4 players can no longer receive ~50% survival to pick 9 merely from an overly diffuse 70-player sampling pool.
 - Snapshot opponent-pick count now uses the actual Return-v2 simulated window.
 - Added deterministic geometry + early-market survival regression.
 
-## v11.8.0-rc4.8 – Mock-retrospective scarcity correction
+## v11.8.0-rc4.9 – Mock-retrospective scarcity correction
 
 - Adds positional alternative/replacement scarcity to Draft Utility: passing a player is more costly when the next same-position option is materially worse; multiple near-equal alternatives reduce urgency.
 - `Loss-if-Gone` now incorporates replacement gap and near-equal alternative count, not only tier geometry.
 - Strengthens late WR saturation marginal utility after seven WR so an eighth WR does not beat a comparable upside RB on panel rank alone.
 - Regression fixture covers the LaPorta→Herbert scarcity pattern and late 7-WR roster saturation.
 
-## v11.8.0-rc4.8 – Return-v2 controlled validation release
+## v11.8.0-rc4.9 – Return-v2 controlled validation release
 
 ### rc4.3 temporal-relevance hardening
 - Critical injury/IR/PUP evidence now rejects old reports even when crawl/site placement is current. Reports older than 45 days require explicit current-status corroboration from the last 14 days.
@@ -343,7 +343,7 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - Release/version identifiers synchronized to rc4.4.
 
 
-## rc4.8 no-PC audit
+## rc4.9 no-PC audit
 - Positional scarcity double-count correction: tier geometry remains diagnostic; replacement-aware alternative scarcity is the single scored positional-scarcity channel.
 - Added deterministic `Draft_Companion_Scarcity_Double_Count_Regression_2026-08-13.js`.
-- Production remains v11.7.2; rc4.8 is test-only and inherits the natural prospective validation gate.
+- Production remains v11.7.2; rc4.9 is test-only and inherits the natural prospective validation gate.

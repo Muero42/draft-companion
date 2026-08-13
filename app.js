@@ -985,7 +985,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.8',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.9',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     candidates:scored.slice(0,16).map(x=>({playerId:String(x.p.id||''),name:x.p.name,pos:x.p.pos,panelRank:x.r?.rank??null,panelId:x.r?.panelId??null,adp:Number.isFinite(x.a)?x.a:null,injury:x.p.injury||null,researchEvidence:researchPlayerState(x.p,evidenceCutoff).slice(-4),returnProb:x.ret??null,returnConfidence:x.returnConfidence??null,topRisk:x.topRisk??null,coachScore:x.score??null,action:x.action??null})),
@@ -1275,14 +1275,31 @@ function researchPlayerState(p,cutoff=Infinity){const key=norm(p.name),pid=Strin
 function actionableResearchEvents(p,cutoff=Infinity){return researchPlayerState(p,cutoff).filter(e=>!e.critical||e.freshnessVerified===true)}
 function researchHint(p,cutoff=Infinity){const all=researchPlayerState(p,cutoff),ev=actionableResearchEvents(p,cutoff);if(!all.length)return '';const rejected=all.length-ev.length;if(!ev.length)return rejected?`${rejected} kritische Meldung(en) wegen ungeprüfter Ereignis-Aktualität ignoriert`:'';const latest=ev[ev.length-1],age=Math.round((Date.now()-Number(latest.sourcePublishedAt||latest.observedAt))/3600000),flags=[...new Set(ev.flatMap(x=>x.flags||[]))].slice(-4).join(', '),suffix=rejected?` · ${rejected} stale/unverifiziert ignoriert`:'';return flags?`${flags}${age<48?` · Cache ${age}h`:' · Cache veraltet'}${suffix}`:`${ev.length} Evidence-Event(s)${suffix}`}
 function updateResearchCacheStatus(){if(!els.researchCacheStatus)return;const e=loadResearchEvents();const players=new Set(e.map(x=>x.playerId||x.playerKey).filter(Boolean));els.researchCacheStatus.textContent=e.length?`${e.length} Evidence-Events · ${players.size} Spieler · append-only`:'Noch keine versionierte Evidence gespeichert.'}
+function positionPathCandidates(scored,pos,limit){
+  // Position paths are availability/quality ladders, not a second Coach ranking.
+  // Do not let late-QB/TE need penalties, Return timing or roster utility promote
+  // deep positional options over materially better panel-ranked starters.
+  return scored.filter(x=>x.p.pos===pos).slice().sort((a,b)=>{
+    const ap=Number.isFinite(a.r?.posRank)?a.r.posRank:Infinity;
+    const bp=Number.isFinite(b.r?.posRank)?b.r.posRank:Infinity;
+    if(ap!==bp)return ap-bp;
+    const ar=Number.isFinite(a.r?.rank)?a.r.rank:Infinity;
+    const br=Number.isFinite(b.r?.rank)?b.r.rank:Infinity;
+    if(ar!==br)return ar-br;
+    const aa=Number.isFinite(a.a)?a.a:Infinity;
+    const ba=Number.isFinite(b.a)?b.a:Infinity;
+    if(aa!==ba)return aa-ba;
+    return (b.score??-999)-(a.score??-999);
+  }).slice(0,limit);
+}
 function positionDecisionPath(state,scored,current,next){
   const out=[];
   if(state.counts.QB===0){
-    const q=scored.filter(x=>x.p.pos==='QB').slice(0,4);
+    const q=positionPathCandidates(scored,'QB',4);
     if(q.length)out.push(`QB-Pfad: ${q.map(x=>`${x.p.name} (${x.action})`).join(' → ')}`);
   }
   if(state.counts.TE===0){
-    const t=scored.filter(x=>x.p.pos==='TE').slice(0,3);
+    const t=positionPathCandidates(scored,'TE',3);
     if(t.length)out.push(`TE-Pfad: ${t.map(x=>`${x.p.name} (${x.action})`).join(' → ')}`);
   }
   const r=scored.filter(x=>x.p.pos==='RB').slice(0,5);
@@ -1403,7 +1420,7 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.8',
+      'App-Version: v11.8.0-rc4.9',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -1421,7 +1438,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.8 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.9 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
@@ -1542,7 +1559,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.8',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.9',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
