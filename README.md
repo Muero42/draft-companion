@@ -1,6 +1,10 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.2)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.4)
 
-## v11.8.0-rc4.2 – Return-v2 controlled validation release
+## v11.8.0-rc4.4 – Return-v2 controlled validation release
+
+### rc4.3 temporal-relevance hardening
+- Critical injury/IR/PUP evidence now rejects old reports even when crawl/site placement is current. Reports older than 45 days require explicit current-status corroboration from the last 14 days.
+- Crawl/observed time never substitutes for publication/event chronology.
 
 ### rc4.2 follow-up hardening
 - Completed drafts now emit a dedicated post-draft snapshot only; no live research task, available-player recommendation list, or Return prompt survives completion.
@@ -319,3 +323,8 @@ Ab v11.7.2 wird dieses Ledger vor jeder GitHub-Freigabe gegen den tatsächlichen
 
 ### RELEASE GUARD
 Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Dateien; Versionsreferenzen synchron; JavaScript-Syntax; Service-Worker-Assets/Cache-Buster; zentrale DOM-Elemente; UI-Vormerkungen im HTML; Roadmap-Status; keine stillschweigende Überschreibung bestehender Modellregeln.
+
+## v11.8.0-rc4.4 – release-ledger consistency correction
+- Promotion audit found one contradictory visible historical-baseline sentence in the RC4.3 freeze note: it described v11.6.2 as the unchanged Draft baseline even though the package is explicitly rebased on production v11.7.2.
+- The stale sentence is replaced with version-neutral preservation wording; no model behavior changes.
+- Release/version identifiers synchronized to rc4.4.
