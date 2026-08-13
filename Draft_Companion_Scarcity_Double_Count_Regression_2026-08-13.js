@@ -11,6 +11,6 @@ function legacyTierScore(sameTierCount,tierGap){let b=0;if(sameTierCount===1)b+=
 function rc46ScarcityScore(rank,alts){return alt(rank,alts).bonus;}
 const rank=80, alts=[96,103,111], legacy=legacyTierScore(1,16), replacement=alt(rank,alts).bonus;
 if(!(legacy>0&&replacement>0))throw new Error('fixture must expose prior duplicate signal');
-if(rc46ScarcityScore(rank,alts)!==replacement)throw new Error('rc4.7 must score replacement scarcity exactly once');
+if(rc46ScarcityScore(rank,alts)!==replacement)throw new Error('rc4.8 must score replacement scarcity exactly once');
 if(rc46ScarcityScore(rank,[82,84,87])>0)throw new Error('deep near-equal alternatives must not gain tier-boundary urgency');
 console.log('PASS scarcity single-channel: tier geometry diagnostic, replacement scarcity scored once');

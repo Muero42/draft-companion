@@ -673,7 +673,8 @@ async function fetchDraftFresh(id){
   try{const second=await fetchDraft(id);return (second.picks?.length||0)>=(first.picks?.length||0)?second:first}catch{return first}
 }
 function pinfo(id,m,players){const p=players[id]||{};return{name:m?.first_name&&m?.last_name?`${m.first_name} ${m.last_name}`:(p.full_name||m?.player_name||id),pos:String(m?.position||p.position||'?').toUpperCase(),team:String(m?.team||p.team||'FA').toUpperCase(),searchRank:Number(p.search_rank),injury:p.injury_status||null,bye:p.bye_week||null,yearsExp:Number.isFinite(Number(p.years_exp))?Number(p.years_exp):null}}
-function nextOwn(current,teams,slot,total){for(let p=current;p<=total;p++){const r=Math.floor((p-1)/teams)+1,w=(p-1)%teams+1,s=r%2?w:teams-w+1;if(s===slot)return p}return null}
+function draftSlotAtPick(p,teams){const r=Math.floor((p-1)/teams)+1,w=(p-1)%teams+1;return r%2?w:teams-w+1}
+function nextOwn(current,teams,slot,total){for(let p=current;p<=total;p++){if(draftSlotAtPick(p,teams)===slot)return p}return null}
 function panelHasVerifiedExperts(id){
   return !!id && Object.keys(panels[id]?.members||{}).some(eid=>rankCache[eid]?.verifiedIndividual&&!rankCache[eid]?.duplicateOf);
 }
@@ -854,16 +855,13 @@ function weightedChoice(rows,rng=Math.random){let total=rows.reduce((a,x)=>a+x.w
 function simCandidateWeight(p,pickNo,roster,profile,stress){
   const r=rankFor(p.name,p.pos);if(!r)return 0;
   const a=adpFor(p.name);
-  // Selection pressure must remain ordered even after players become overdue.
-  // The old one-sided distance collapsed every overdue player to the same market weight,
-  // making e.g. rank 5 and rank 50 nearly equivalent at pick 60 apart from roster need.
-  // Panel is the primary anchor; Sleeper ADP supplies a smaller market correction.
-  const panelDelta=clamp((pickNo-r.rank)/18,-4,4);
-  let w=Math.exp(panelDelta)*simNeedWeight(p.pos,roster);
-  if(Number.isFinite(a)){
-    const adpDelta=clamp((pickNo-a)/38,-2.5,2.5);
-    w*=Math.exp(adpDelta);
-  }
+  // Opponent market timing must be much tighter than our own Player-Quality utility.
+  // Use a blended market center (Sleeper ADP dominant, panel rank secondary) and an
+  // asymmetric overdue hazard: future players are strongly suppressed, while players
+  // who slide past market become increasingly likely to be taken rather than fading again.
+  const center=Number.isFinite(a)?a*.72+r.rank*.28:r.rank;
+  const tau=pickNo<=30?3.25:pickNo<=80?5.5:8.5;
+  let w=Math.exp(clamp((pickNo-center)/tau,-8,3.5))*simNeedWeight(p.pos,roster);
   if(profile){w*=1+(profile.pos[p.pos]||0);w*=candidateManagerMod(profile,p,pickNo).mult;}
   w*=stressProfile(stress,p,pickNo).mult;
   return Math.max(.0001,w);
@@ -880,7 +878,7 @@ function returnV2Confidence(ret,runs,mode,hasAdp,mapCoverage,slotCount){
   return clamp(Math.round(score),35,95);
 }
 function simulateReturnV2(ctx,stress='baseline',runs=900){
-  const {current,next,picks,players,teams,map,rankedAvailable,mode='mock'}=ctx;
+  const {current,next,picks,players,teams,map,rankedAvailable,mode='mock',userSlot}=ctx;
   if(!Number.isFinite(next)||next<=current)return null;
   const targets=rankedAvailable.slice(0,24),targetNames=targets.map(p=>norm(p.name));
   const survive=Object.fromEntries(targetNames.map(n=>[n,0]));
@@ -890,7 +888,7 @@ function simulateReturnV2(ctx,stress='baseline',runs=900){
   // two sequential picks and takes two targets.
   const collisionByManager={};
   const collisionTargetCounts={};
-  const baseRosters=rosterBySlot(picks,players,teams),slots=slotsBetween(current+1,next,teams);
+  const baseRosters=rosterBySlot(picks,players,teams),firstOpponentPick=(Number(userSlot)>0&&draftSlotAtPick(current,teams)===Number(userSlot))?current+1:current,slots=slotsBetween(firstOpponentPick,next,teams);
   const mappedSlots=new Set(slots.filter(s=>managerProfile(map[s])));
   const mapCoverage=slots.length?mappedSlots.size/new Set(slots).size:0;
   const seedBase=(current*1009+next*9176+stress.split('').reduce((a,c)=>a+c.charCodeAt(0),0)*131+731)>>>0;
@@ -987,7 +985,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.7',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.8',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     candidates:scored.slice(0,16).map(x=>({playerId:String(x.p.id||''),name:x.p.name,pos:x.p.pos,panelRank:x.r?.rank??null,panelId:x.r?.panelId??null,adp:Number.isFinite(x.a)?x.a:null,injury:x.p.injury||null,researchEvidence:researchPlayerState(x.p,evidenceCutoff).slice(-4),returnProb:x.ret??null,returnConfidence:x.returnConfidence??null,topRisk:x.topRisk??null,coachScore:x.score??null,action:x.action??null})),
@@ -1332,7 +1330,7 @@ async function refresh(){
     const state=rosterState(mine,players,current);
     const scored=rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,strategy)})).filter(x=>x.r);
     const referenceBalanced=strategy==='progressive'?rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,'balanced')})).filter(x=>x.r):null;
-    const returnCtx={current,next:returnPick,picks,players,teams,map,rankedAvailable,mode};
+    const returnCtx={current,next:returnPick,picks,players,teams,map,rankedAvailable,mode,userSlot:slot};
     const rv2=Number.isFinite(returnPick)&&returnPick>current?simulateReturnV2(returnCtx,stress,900):null;
     for(const x of scored){
       x.intel=liveIntel(x.p,current,returnPick,picks,players,teams,mode,map,stress);
@@ -1405,13 +1403,13 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.7',
+      'App-Version: v11.8.0-rc4.8',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
       `Aktueller Pick: ${current}`,
       `Mein nächster Pick: ${next??'keiner'} | Picks bis dahin: ${next==null?'–':next-current}`,
-      `Return-Modell: Folgepick ${returnPick??'keiner'}${returnPick!=null?` | ${Math.max(0,returnPick-current-1)} gegnerische Picks bis dahin`:''}`,
+      `Return-Modell: Folgepick ${returnPick??'keiner'}${returnPick!=null?` | ${rv2?.slots?.length??Math.max(0,returnPick-current-1)} gegnerische Picks bis dahin`:''}`,
       `Snapshot-Fingerprint: ${fingerprint} | ${duplicateSnapshot?'DUPLIKAT/UNVERÄNDERT':'NEU'}`,
       `Live-Speed: ${tier.label} | Analysebudget ${tier.budget}s`, 
       '',
@@ -1423,7 +1421,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.7 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.8 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
@@ -1544,7 +1542,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.7',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.8',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
