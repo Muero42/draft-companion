@@ -705,15 +705,25 @@ function updateStatus(){const rankTime=Number(store.get('v7_lastRankingUpdate',0
 
 const S='https://api.sleeper.app/v1';
 const draftId=v=>(String(v||'').match(/(\d{10,})/)||[])[1]||String(v||'').trim();
-async function jf(url,label){const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error(`${label}: HTTP ${r.status}`);return r.json()}
-async function fetchDraft(id){const bust=`${Date.now()}-${Math.random().toString(36).slice(2)}`;const[draft,picks,players]=await Promise.all([jf(`${S}/draft/${id}?_=${bust}`,'Draft'),jf(`${S}/draft/${id}/picks?_=${bust}`,'Picks'),jf(`${S}/players/nfl?_=${bust}`,'Spieler')]);return{draft,picks,players}}
+async function jf(url,label,timeoutMs=6500){
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);
+  try{const r=await fetch(url,{cache:'no-store',signal:controller.signal});if(!r.ok)throw new Error(`${label}: HTTP ${r.status}`);return await r.json()}
+  catch(e){if(e?.name==='AbortError')throw new Error(`${label}: Timeout nach ${Math.round(timeoutMs/1000)}s`);throw e}
+  finally{clearTimeout(timer)}
+}
+async function fetchDraft(id){const bust=`${Date.now()}-${Math.random().toString(36).slice(2)}`;const[draft,picks,players]=await Promise.all([jf(`${S}/draft/${id}?_=${bust}`,'Draft'),jf(`${S}/draft/${id}/picks?_=${bust}`,'Picks'),jf(`${S}/players/nfl?_=${bust}`,'Spieler',9000)]);return{draft,picks,players}}
 async function fetchDraftFresh(id){
   const first=await fetchDraft(id);
-  // Sleeper kann den Picks-Endpunkt unmittelbar nach einem Pick kurz verzögert ausliefern.
-  // Eine zweite, kurze Kontrollabfrage innerhalb desselben Klicks verhindert den beobachteten "zweimal drücken"-Effekt.
+  // Die Kontrollabfrage darf nicht erneut den ~NFL-Spielerpool laden: genau dieser doppelte
+  // Großrequest konnte den Snapshot-Pfad unnötig blockieren. Nur Draft+Picks werden verifiziert.
   await new Promise(r=>setTimeout(r,220));
-  try{const second=await fetchDraft(id);return (second.picks?.length||0)>=(first.picks?.length||0)?second:first}catch{return first}
+  try{
+    const bust=`${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const[draft,picks]=await Promise.all([jf(`${S}/draft/${id}?_=${bust}`,'Draft-Kontrolle',3500),jf(`${S}/draft/${id}/picks?_=${bust}`,'Picks-Kontrolle',3500)]);
+    return (picks?.length||0)>=(first.picks?.length||0)?{draft,picks,players:first.players}:first;
+  }catch{return first}
 }
+
 function pinfo(id,m,players){const p=players[id]||{};return{name:m?.first_name&&m?.last_name?`${m.first_name} ${m.last_name}`:(p.full_name||m?.player_name||id),pos:String(m?.position||p.position||'?').toUpperCase(),team:String(m?.team||p.team||'FA').toUpperCase(),searchRank:Number(p.search_rank),injury:p.injury_status||null,bye:p.bye_week||null,yearsExp:Number.isFinite(Number(p.years_exp))?Number(p.years_exp):null}}
 function draftSlotAtPick(p,teams){const r=Math.floor((p-1)/teams)+1,w=(p-1)%teams+1;return r%2?w:teams-w+1}
 function nextOwn(current,teams,slot,total){for(let p=current;p<=total;p++){if(draftSlotAtPick(p,teams)===slot)return p}return null}
@@ -731,7 +741,7 @@ function adpFor(name){const v=Number(adp[norm(name)]);return Number.isFinite(v)&
 function agreement(sd,n){if(!n||n<2)return'Einzelmeinung';if(sd<=3)return'Sehr hoher Konsens';if(sd<=7)return'Hoher Konsens';if(sd<=12)return'Umstritten';return'Stark umstritten'}
 function returnChance(next,a){if(!Number.isFinite(next)||!Number.isFinite(a))return null;/* P(Spieler ist am Folgepick noch da): ADP als Marktmittel, bewusst enger als die alte Kurve. */return clamp(1/(1+Math.exp((next-a)/4)),.01,.99)}
 function rosterState(mine,players,current=1){
-  const c={QB:0,RB:0,WR:0,TE:0},byes={QB:{},RB:{},WR:{},TE:{}};
+  const c={QB:0,RB:0,WR:0,TE:0},byes={QB:{},RB:{},WR:{},TE:{}},irEligible=mine.filter(pick=>{const st=String(pinfo(String(pick.player_id),pick.metadata,players).injury||'').toUpperCase();return st==='PUP'||st==='IR'}).length;
   for(const pick of mine){const p=pinfo(String(pick.player_id),pick.metadata,players);if(c[p.pos]!=null){c[p.pos]++;if(p.bye)byes[p.pos][p.bye]=(byes[p.pos][p.bye]||0)+1}}
   // v11: Replacement-Level statt bloßer leerer Startposition. In 10-Team/1QB ist QB1
   // aufschiebbar, QB2 fast immer verschwendeter Bench-Value. TE1 ist sogar bis nach dem
@@ -740,7 +750,7 @@ function rosterState(mine,players,current=1){
   const teNeed=c.TE===0?(current>=130?1.5:current>=80?1:0.5):-22;
   const rbNeed=c.RB<2?9:c.RB<4?6:c.RB<6?3.5:c.RB<8?1.5:0;
   const wrNeed=c.WR<3?8:c.WR<5?4:c.WR<6?1.5:c.WR<7?0:-2;
-  return{counts:c,need:{QB:qbNeed,RB:rbNeed,WR:wrNeed,TE:teNeed},byes};
+  return{counts:c,need:{QB:qbNeed,RB:rbNeed,WR:wrNeed,TE:teNeed},byes,irEligible,irSlots:1};
 }
 function rosterExceptionPenalty(pos,state,current,rank,adp){
   if(pos==='QB'&&state.counts.QB>=1){
@@ -784,14 +794,16 @@ function strategyStatusText(mode){
     ? 'BALANCED / ANTI-REACH: eingefrorene Referenzstrategie. Panel/ADP und Warten bleiben auch spät stark gewichtet.'
     : 'PROGRESSIVE UPSIDE: Standard. Ab Runde 9 steigt Ceiling-Gewichtung graduell; späte Reaches werden bei plausiblen Breakout-Pfaden toleranter.';
 }
-function injuryStashAdjustment(p,current){
-  // Replay-Kalibrierung: PUP/IR ist kein Upside-Bonus. Verpasste Wochen und belegter Benchplatz
-  // haben Opportunity Cost; IR bleibt stark negativ, bis season-ending/return timetable extern geklärt ist.
-  const st=String(p.injury||'').toUpperCase();
-  if(st==='PUP')return current>=121?-4.0:-5.0;
-  if(st==='IR')return -12;
+function injuryStashAdjustment(p,current,state){
+  // Liga: ein IR-Slot; PUP ist nach den verifizierten aktuellen Einstellungen IR-eligible.
+  // Ein freier Slot erzeugt keinen künstlichen Ceiling-Bonus, reduziert aber im Endgame die
+  // Opportunity Cost und darf als Tiebreaker wirken, weil direkt nach dem Draft ein FA nachrücken kann.
+  const st=String(p.injury||'').toUpperCase(),freeIr=(state.irEligible||0)<(state.irSlots||0);
+  if(st==='PUP')return freeIr?(current>=121?2.5:0):-4.0;
+  if(st==='IR')return freeIr?-6:-12; // IR bleibt vorsichtig, bis Return/season-ending extern geklärt ist.
   return 0;
 }
+
 function marginalRosterUtility(p,current,state){
   // Keine starre Sollverteilung: nur gradueller Grenznutzen. Eure Flex-Regeln erlauben 1–3 RB und 2–4 WR Starter.
   const c=state.counts||{},n=Number(c[p.pos]||0);let x=0;
@@ -1027,7 +1039,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.11',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.12',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     candidates:scored.slice(0,16).map(x=>({playerId:String(x.p.id||''),name:x.p.name,pos:x.p.pos,panelRank:x.r?.rank??null,panelId:x.r?.panelId??null,adp:Number.isFinite(x.a)?x.a:null,injury:x.p.injury||null,researchEvidence:researchPlayerState(x.p,evidenceCutoff).slice(-4),returnProb:x.ret??null,returnConfidence:x.returnConfidence??null,topRisk:x.topRisk??null,coachScore:x.score??null,action:x.action??null})),
@@ -1240,7 +1252,7 @@ function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   if(exceptionPenalty){score+=exceptionPenalty;reasons.push(p.pos==='QB'?'QB2 nur Ausnahmefall':'TE2 nur Ausnahmefall')}
   const upside=lateUpsideBonus(p,current,state);if(upside){score+=upside;reasons.push(upside>0?'Late-RB Upside-Bonus':'WR-Sättigung')}
   if(strategy==='progressive'){const prog=progressiveUpsideBonus(p,current,state);if(prog){score+=prog;reasons.push(prog>0?`Progressive-Upside +${prog.toFixed(1)}`:'Progressive WR-Sättigung')}}
-  const stash=injuryStashAdjustment(p,current);if(stash){score+=stash;reasons.push(stash<0?'Injury-Stash Opportunity Cost':'Injury-Stash')};
+  const stash=injuryStashAdjustment(p,current,state);if(stash){score+=stash;reasons.push(stash<0?'Injury-Stash Opportunity Cost':'Injury-Stash')};
   const mru=marginalRosterUtility(p,current,state);if(mru){score+=mru;reasons.push(`Marginal Roster Utility ${mru>0?'+':''}${mru.toFixed(1)}`)}
   const tier=tierContext(p,r,available);
   // Tier geometry is diagnostic only here. Replacement-aware alternative scarcity below
@@ -1254,7 +1266,7 @@ function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   const agree=agreement(r.sd,r.n);
   if(agree==='Sehr hoher Konsens')score+=1.5;
   else if(agree==='Stark umstritten')score-=3;
-  if(p.injury){const st=String(p.injury).toUpperCase();const pen=st==='PUP'?3:st==='QUESTIONABLE'?3:st==='DOUBTFUL'?7:st==='IR'?18:8;score-=pen;reasons.push(`Injury ${p.injury}${st==='PUP'?' · Return-Timetable prüfen':''}${st==='IR'?' · Season-ending prüfen':''}`)}
+  if(p.injury){const st=String(p.injury).toUpperCase(),freeIr=(state.irEligible||0)<(state.irSlots||0);const pen=st==='PUP'&&freeIr&&current>=121?0:st==='PUP'?3:st==='QUESTIONABLE'?3:st==='DOUBTFUL'?7:st==='IR'&&freeIr?12:st==='IR'?18:8;score-=pen;reasons.push(`Injury ${p.injury}${st==='PUP'?' · Return-Timetable prüfen':''}${st==='IR'?' · Season-ending prüfen':''}`)}
   if(p.bye&&(state.byes[p.pos]?.[p.bye]||0)>=2){score-=1;reasons.push(`Bye ${p.bye} (nur Tiebreaker)`)}
   // Return is scored only after Return-v2 / fallback resolution in the coach loop.
   // Keeping the legacy ADP curve here as a score input would double-count return pressure
@@ -1480,7 +1492,7 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.11',
+      'App-Version: v11.8.0-rc4.12',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -1501,7 +1513,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.11 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.12 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];

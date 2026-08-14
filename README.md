@@ -356,3 +356,10 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - Positional scarcity double-count correction: tier geometry remains diagnostic; replacement-aware alternative scarcity is the single scored positional-scarcity channel.
 - Added deterministic `Draft_Companion_Scarcity_Double_Count_Regression_2026-08-13.js`.
 - Production remains v11.7.2; rc4.10 is test-only and inherits the natural prospective validation gate.
+
+## v11.8.0-rc4.12 — Snapshot fail-soft + one-slot PUP stash tiebreaker
+- Snapshot refresh no longer downloads the full Sleeper NFL player pool twice. The anti-stale second read checks only draft + picks and reuses the first player payload.
+- Sleeper requests are bounded by AbortController timeouts; a failed short control read falls back to the successful first read instead of blocking the whole Snapshot path indefinitely.
+- League-specific draft assumption preserved: one IR slot; PUP is IR-eligible under the currently verified league settings. When that slot is still free, a late PUP player can receive a small stash/tiebreak value because the roster spot can be refilled immediately after the draft.
+- This is deliberately not a generic injury upside bonus. Once the IR slot is already consumed, the stash benefit disappears. IR remains materially penalized until current evidence confirms that it is not season-ending and provides a plausible return timetable.
+- Draft-day emergency fallback remains: if live Snapshot/Companion loading fails, a Sleeper available-player screenshot is sufficient for a degraded-confidence emergency recommendation; Return-v2/opponent outputs must never be invented when unavailable.
