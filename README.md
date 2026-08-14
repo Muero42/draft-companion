@@ -1,4 +1,12 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.11)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.13)
+
+## v11.8.0-rc4.13 — dress-rehearsal hardening
+- Snapshot freshness guard: a duplicate/unmodified fingerprint already analyzed in chat must not trigger a second live analysis; request a fresh/current snapshot instead.
+- Roster semantics are explicit: max 4 WR / 3 RB / 2 TE are simultaneous starter limits, not roster caps.
+- Pre-analysis must use the same Player Quality, injury, Return/TAKE-WAIT and Championship Utility rules as live analysis.
+- MOCK/TEST endgame K/DST hazard is strengthened from pick 130 onward after two natural mocks each showed 13 K/DEF selections in a 16-pick endgame window; LIVE rates remain unchanged pending real-league evidence.
+- Active UI/cache/backup/version references synchronized; rc4.12 contained stale rc4.11 release identifiers outside the copied Snapshot.
+
 
 ## v11.8.0-rc4.11 – monotonic Player Quality + Expert Pool Health
 

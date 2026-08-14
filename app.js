@@ -841,13 +841,17 @@ function resolvedManagerMap(mode,season,teams,text){
 function managerProfile(name){const n=norm(name).replace(/oe/g,'o').replace(/ue/g,'u');return Object.entries(MANAGER_PROFILES).find(([k])=>n.includes(norm(k).replace(/oe/g,'o').replace(/ue/g,'u')))?.[1]||null}
 function rosterBySlot(picks,players,teams){const out={};for(let s=1;s<=teams;s++)out[s]={QB:0,RB:0,WR:0,TE:0,K:0,DEF:0};for(const pick of picks){const s=Number(pick.draft_slot),pos=pinfo(String(pick.player_id),pick.metadata,players).pos;if(out[s]&&out[s][pos]!=null)out[s][pos]++}return out}
 function slotsBetween(current,next,teams){const a=[];if(!Number.isFinite(next))return a;for(let p=current;p<next;p++){const r=Math.floor((p-1)/teams)+1,w=(p-1)%teams+1,s=r%2?w:teams-w+1;a.push(s)}return a}
-function endgameSkillShare(c,current){
+function endgameSkillShare(c,current,mode='live'){
   if(current<120)return 1;
-  // Gegner mit noch offenen K/DST-Slots verbrauchen im Endgame einen erheblichen Teil ihrer Picks dort.
+  // Opponents with open K/DST slots consume many endgame picks there. Two consecutive
+  // natural Sleeper mocks showed 13 K/DEF picks in the final 16-pick window, so MOCK/TEST
+  // gets a stronger round-14/15 special-teams hazard. LIVE keeps the prior conservative
+  // rate until real-league prospective evidence supports a change.
   const openSpecial=(c.K===0?1:0)+(c.DEF===0?1:0);
+  if(mode==='mock'&&current>=130)return openSpecial===2?.20:openSpecial===1?.45:.92;
   return openSpecial===2?.34:openSpecial===1?.62:.92;
 }
-function plausibleFor(pos,c,current=1){let v;if(pos==='QB')v=c.QB===0?1:c.QB===1?.18:.03;else if(pos==='TE')v=c.TE===0?1:c.TE===1?.20:.04;else if(pos==='RB')v=c.RB<3?1:c.RB<5?.72:.35;else if(pos==='WR')v=c.WR<4?1:c.WR<6?.78:.40;else v=.2;return v*endgameSkillShare(c,current)}
+function plausibleFor(pos,c,current=1,mode='live'){let v;if(pos==='QB')v=c.QB===0?1:c.QB===1?.18:.03;else if(pos==='TE')v=c.TE===0?1:c.TE===1?.20:.04;else if(pos==='RB')v=c.RB<3?1:c.RB<5?.72:.35;else if(pos==='WR')v=c.WR<4?1:c.WR<6?.78:.40;else v=.2;return v*endgameSkillShare(c,current,mode)}
 function candidateManagerMod(prof,p,current){
   if(!prof||!p)return{mult:1,labels:[]};
   const t=prof.traits||{},labels=[];let delta=0;
@@ -880,11 +884,11 @@ function stressProfile(mode,p,current){
 function stressLabel(mode){return({baseline:'Baseline',rb:'RB-Run / RB-Druck',te:'TE-Run',rookie:'Rookie-RB-Reach',late:'Late-Round-Upside'})[mode]||'Baseline'}
 function liveIntel(p,current,next,picks,players,teams,mode,map,stress='baseline'){
   const pos=p.pos,between=slotsBetween(current+1,next,teams),rosters=rosterBySlot(picks,players,teams);let hazard=0,plausible=0,uncertain=0,mods=[];
-  for(const s of between){const base=plausibleFor(pos,rosters[s]||{QB:0,RB:0,WR:0,TE:0,K:0,DEF:0},current);if(base>=.6)plausible++;let mult=1;
+  for(const s of between){const base=plausibleFor(pos,rosters[s]||{QB:0,RB:0,WR:0,TE:0,K:0,DEF:0},current,mode);if(base>=.6)plausible++;let mult=1;
     if(mode==='live'){const prof=managerProfile(map[s]);if(prof){const m=prof.pos[pos]||0;mult*=1+m;const cm=candidateManagerMod(prof,p,current);mult*=cm.mult;if(m||cm.labels.length)mods.push(`${prof.label}${m?` ${m>0?'+':''}${Math.round(m*100)}% ${pos}`:''}${cm.labels.length?` · ${cm.labels.join(' · ')}`:''}`);if(prof.uncertain)uncertain++}}
     const sp=stressProfile(stress,p,current);mult*=sp.mult;if(sp.label)mods.push(`Stress: ${sp.label}`);hazard+=base*mult;
   }
-  const effectiveSkillPicks=between.reduce((a,s)=>a+endgameSkillShare(rosters[s]||{K:0,DEF:0},current),0);
+  const effectiveSkillPicks=between.reduce((a,s)=>a+endgameSkillShare(rosters[s]||{K:0,DEF:0},current,mode),0);
   return{between:between.length,effectiveSkillPicks,plausible,hazard,uncertain,mods:[...new Set(mods)]};
 }
 function adjustedReturn(base,intel){if(base==null)return null;const eff=Math.max(.5,intel.effectiveSkillPicks??intel.between);const pressure=clamp((intel.hazard-eff*.45)*.07,-.12,.15);const endgameRelief=clamp((intel.between-eff)*.035,0,.30);return clamp(base-pressure+endgameRelief,.02,.98)}
@@ -952,7 +956,7 @@ function simulateReturnV2(ctx,stress='baseline',runs=900){
     const collidedManagers=new Set();
     for(let i=0;i<slots.length&&pool.length;i++){
       const slot=slots[i],pickNo=current+1+i,prof=mode==='live'?managerProfile(map[slot]):null,roster=rosters[slot];
-      const skillShare=endgameSkillShare(roster,pickNo);
+      const skillShare=endgameSkillShare(roster,pickNo,mode);
       if(pickNo>=120&&rng()>skillShare){
         if(roster.DEF===0&&roster.K===0){if(rng()<.5)roster.DEF++;else roster.K++;}
         else if(roster.DEF===0)roster.DEF++;else if(roster.K===0)roster.K++;
@@ -1039,7 +1043,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.12',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.13',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     candidates:scored.slice(0,16).map(x=>({playerId:String(x.p.id||''),name:x.p.name,pos:x.p.pos,panelRank:x.r?.rank??null,panelId:x.r?.panelId??null,adp:Number.isFinite(x.a)?x.a:null,injury:x.p.injury||null,researchEvidence:researchPlayerState(x.p,evidenceCutoff).slice(-4),returnProb:x.ret??null,returnConfidence:x.returnConfidence??null,topRisk:x.topRisk??null,coachScore:x.score??null,action:x.action??null})),
@@ -1048,7 +1052,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
 }
 function resolveDecisionFixtures(draftId,picks){const rows=loadDecisionFixtures();let changed=false;for(const f of rows){if(f.draftId!==draftId||f.chosenPlayer)continue;const hit=picks.find(p=>Number(p.pick_no)===Number(f.current)&&Number(p.draft_slot)===Number(f.slot));if(hit){f.chosenPlayer={playerId:String(hit.player_id),name:hit.metadata?.first_name&&hit.metadata?.last_name?`${hit.metadata.first_name} ${hit.metadata.last_name}`:(hit.metadata?.player_name||'')};if(f.forecastResolution==='pending')f.forecastResolution='chosen';changed=true}}if(changed)saveDecisionFixtures(rows)}
 function simulateToReturn(ctx,stress='baseline',runs=1200){
-  const {current,next,picks,players,teams,map,rankedAvailable}=ctx;
+  const {current,next,picks,players,teams,map,rankedAvailable,mode='mock'}=ctx;
   if(!Number.isFinite(next)||next<=current)return null;
   const targetNames=rankedAvailable.slice(0,24).map(p=>norm(p.name)),survive=Object.fromEntries(targetNames.map(n=>[n,0]));
   const baseRosters=rosterBySlot(picks,players,teams),slots=slotsBetween(current+1,next,teams),seedBase=(current*1009+next*9176+stress.split('').reduce((a,c)=>a+c.charCodeAt(0),0)*131)>>>0;
@@ -1059,7 +1063,7 @@ function simulateToReturn(ctx,stress='baseline',runs=1200){
       const slot=slots[i],pickNo=current+1+i,prof=managerProfile(map[slot]),roster=rosters[slot];
       // Replay calibration: in the endgame opponents often spend nominal picks on K/DST.
       // Those picks must consume a turn without removing a QB/RB/WR/TE from the simulated pool.
-      const skillShare=endgameSkillShare(roster,pickNo);
+      const skillShare=endgameSkillShare(roster,pickNo,mode);
       if(pickNo>=120&&rng()>skillShare){
         if(roster.DEF===0&&roster.K===0){if(rng()<.5)roster.DEF++;else roster.K++;}
         else if(roster.DEF===0)roster.DEF++;
@@ -1492,7 +1496,7 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.12',
+      'App-Version: v11.8.0-rc4.13',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -1513,7 +1517,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.12 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.13 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
@@ -1522,6 +1526,8 @@ async function refresh(){
       `Panel-Stand: ${rankingStamp}`,
       `Sleeper-ADP: ${Object.keys(adp).length} | Quelle: ${adpMeta.source||'none'} | Stand: ${adpStamp}`,
       `Bewertbare verfügbare Spieler: ${scored.length}`,
+      `Roster-Regel: max. 4 WR / 3 RB / 2 TE gleichzeitig startbar; das sind KEINE Draft-/Roster-Caps. Bench-Spieler dieser Positionen bleiben legal und können Value/Upside sein.`,
+      `Snapshot-Guard: ${duplicateSnapshot?'DUPLIKAT/UNVERÄNDERT — wenn dieser Pick/Fingerprint im Chat bereits ausgewertet wurde, NICHT erneut analysieren; sofort einen aktuellen/neuen Snapshot anfordern.':'NEU — normal analysieren.'}`,
       '',
       'BISHERIGE PICKS'
     ];
@@ -1590,7 +1596,7 @@ async function refresh(){
       strategy==='balanced'?'Kein großer Reach ohne konkrete aktuelle Begründung. Fehlende Panel- oder ADP-Daten ausdrücklich als Unsicherheit behandeln. K und DST werden nicht gedraftet. Bye Weeks sind nur ein kleiner Tiebreaker.':'Panel bleibt Baseline. Ab Runde 9 graduell mehr Ceiling/Breakout-EV und höhere Reach-Toleranz; ein Reach braucht weiterhin einen plausiblen Upside-Pfad. K und DST werden nicht gedraftet. Bye Weeks sind nur ein kleiner Tiebreaker.',
       '',
       'AUFGABE',
-      'Prüfe aktuelle Verletzungen, Depth Charts und News, einschließlich angekündigter/geplanter IR- oder PUP-Moves und ob IR season-ending ist, sowie gezielt die Research-Kandidaten auf aktuelle Sleeper-, Breakout-, League-Winner- und Bust-Analysen. Artikel dienen als begründungspflichtiger Kontext; das Expertenpanel bleibt Baseline. Nutze das Expertenpanel als Baseline und Sleeper-ADP als Marktindikator, sofern vorhanden. Nenne alle nahezu gleichwertigen Favoriten, danach 2–3 Alternativen, Return-Chancen und Confidence. Erzwinge keine Einzelentscheidung, wenn mehrere Spieler nahezu gleichauf liegen. Abweichungen vom Expertenpanel oder der Sleeper-ADP ausdrücklich begründen. In dieser 10-Team-1QB-Liga QB2 und TE2 nur in absoluten Ausnahmefällen empfehlen; TE1 darf bei einem Run bis nach dem Draft aufgeschoben werden. Bei ähnlich guten QB1-Kandidaten Rushing-Upside bevorzugen. Späte Bench-Picks primär auf RB-Upside optimieren. Override-Guard: Weiche vom Coach-Topfavoriten oder dessen TAKE/WAIT-Sequenz nur bei konkreter entscheidungsändernder Evidenz ab. Eine allgemeine Positions-/Upside-Präferenz allein reicht insbesondere dann nicht, wenn die Alternative laut Return-v2 sehr wahrscheinlich bis zum nächsten Pick zurückkommt und als WARTEN markiert ist.'
+      'Prüfe aktuelle Verletzungen, Depth Charts und News, einschließlich angekündigter/geplanter IR- oder PUP-Moves und ob IR season-ending ist, sowie gezielt die Research-Kandidaten auf aktuelle Sleeper-, Breakout-, League-Winner- und Bust-Analysen. Artikel dienen als begründungspflichtiger Kontext; das Expertenpanel bleibt Baseline. Nutze das Expertenpanel als Baseline und Sleeper-ADP als Marktindikator, sofern vorhanden. Nenne alle nahezu gleichwertigen Favoriten, danach 2–3 Alternativen, Return-Chancen und Confidence. Erzwinge keine Einzelentscheidung, wenn mehrere Spieler nahezu gleichauf liegen. Abweichungen vom Expertenpanel oder der Sleeper-ADP ausdrücklich begründen. In dieser 10-Team-1QB-Liga QB2 und TE2 nur in absoluten Ausnahmefällen empfehlen; TE1 darf bei einem Run bis nach dem Draft aufgeschoben werden. Bei ähnlich guten QB1-Kandidaten Rushing-Upside bevorzugen. Späte Bench-Picks primär auf RB-Upside optimieren. Override-Guard: Weiche vom Coach-Topfavoriten oder dessen TAKE/WAIT-Sequenz nur bei konkreter entscheidungsändernder Evidenz ab. Eine allgemeine Positions-/Upside-Präferenz allein reicht insbesondere dann nicht, wenn die Alternative laut Return-v2 sehr wahrscheinlich bis zum nächsten Pick zurückkommt und als WARTEN markiert ist. Snapshot-Freshness-Guard: Wenn dieser Snapshot als DUPLIKAT/UNVERÄNDERT markiert ist UND derselbe Pick/Fingerprint im Chat bereits ausgewertet wurde, keine zweite Analyse liefern; nur den aktuellen/neuen Snapshot anfordern. Voranalyse-Regel: gleiche Player-Quality-, Roster-, Injury-, Return-/TAKE-WAIT- und Championship-Utility-Regeln wie in der Live-Analyse verwenden; Starter-Maxima niemals als Roster-Caps behandeln.'
     );
     }
 
@@ -1634,7 +1640,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.11',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.13',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,draft:els.draftInput.value,slot:els.slot.value}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}

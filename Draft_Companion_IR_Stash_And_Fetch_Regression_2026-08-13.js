@@ -1,6 +1,6 @@
 const fs=require('fs'); const s=fs.readFileSync('app.js','utf8');
 const checks=[
- ['version',/v11\.8\.0-rc4\.12/.test(s)],
+ ['version',/v11\.8\.0-rc4\.13/.test(s)],
  ['bounded fetch',/AbortController/.test(s)&&/Timeout nach/.test(s)],
  ['no second full player fetch',/players:first\.players/.test(s)&&/Draft-Kontrolle/.test(s)&&/Picks-Kontrolle/.test(s)],
  ['one IR slot modeled',/irSlots:1/.test(s)],
