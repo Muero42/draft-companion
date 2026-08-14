@@ -1,6 +1,15 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.13)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.13.1)
+### rc4.13.1 — validation-export only
 
-## v11.8.0-rc4.13 — dress-rehearsal hardening
+### Paketstruktur
+Diese Auslieferungs-ZIP enthält nur die 8 für Deployment/Dokumentation benötigten Dateien. Deterministische Regressionstests bleiben als Entwicklungs-/Release-Gates in `/Pitti/Development` und werden nicht mehr in jede Handy-/Deployment-ZIP dupliziert.
+
+- No Draft Coach, Return-v2, panel, ADP, opponent, injury, scarcity, or scoring behavior changed.
+- Existing Backup now also exports frozen `decisionFixtures` and `returnValidation`, plus mode/strategy/stress/manager-map state.
+- Purpose: after a natural mock, one normal Backup preserves the decision-time evidence needed for strict no-future-leak full-draft counterfactual replay.
+
+
+## v11.8.0-rc4.13.1 — dress-rehearsal hardening
 - Snapshot freshness guard: a duplicate/unmodified fingerprint already analyzed in chat must not trigger a second live analysis; request a fresh/current snapshot instead.
 - Roster semantics are explicit: max 4 WR / 3 RB / 2 TE are simultaneous starter limits, not roster caps.
 - Pre-analysis must use the same Player Quality, injury, Return/TAKE-WAIT and Championship Utility rules as live analysis.
