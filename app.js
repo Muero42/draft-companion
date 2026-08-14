@@ -830,15 +830,48 @@ const MANAGER_PROFILES={
   bjoern:{label:'Björn',pos:{RB:.10},confidence:'mittel-hoch',history:{years:7,firstQB:8.2,firstTE:8.4,recentQB:9.0,recentTE:9.0,excludeTheme2021:true},traits:{recentEarlyRB:.08}},
   'dusseldorf marc':{label:'Düsseldorf-Marc',pos:{},confidence:'niedrig',traits:{}}
 };
+const MANAGER_PROFILE_DATA={"generated":"2026-08-14","leaguePhaseShares":{"early":{"DEF":0.0,"K":0.0,"QB":0.0787,"RB":0.4618,"TE":0.0657,"WR":0.3938},"end":{"DEF":0.1347,"K":0.1281,"QB":0.1043,"RB":0.2084,"TE":0.0888,"WR":0.3357},"late":{"DEF":0.0898,"K":0.0626,"QB":0.1249,"RB":0.2627,"TE":0.1254,"WR":0.3347},"mid1":{"DEF":0.0013,"K":0.0007,"QB":0.1273,"RB":0.2784,"TE":0.1364,"WR":0.4559},"mid2":{"DEF":0.0731,"K":0.0752,"QB":0.0963,"RB":0.2616,"TE":0.1014,"WR":0.3924}},"profiles":{"Basti":{"excludedYears":[],"identity":"Bastian","phaseShares":{"early":{"DEF":0.0,"K":0.0,"QB":0.0648,"RB":0.3657,"TE":0.216,"WR":0.3536},"end":{"DEF":0.144,"K":0.2242,"QB":0.0238,"RB":0.3335,"TE":0.0064,"WR":0.2682},"late":{"DEF":0.0,"K":0.0,"QB":0.1423,"RB":0.3593,"TE":0.1958,"WR":0.3026},"mid1":{"DEF":0.0,"K":0.0,"QB":0.0731,"RB":0.2195,"TE":0.0746,"WR":0.6328},"mid2":{"DEF":0.0,"K":0.0,"QB":0.097,"RB":0.0949,"TE":0.0367,"WR":0.7713}},"positions":{"DEF":{"finalCount":0.48,"firstRound":14.49,"firstRoundSd":1.17,"recentTaken":0.481,"takenRate":0.556},"K":{"finalCount":0.75,"firstRound":14.67,"firstRoundSd":0.66,"recentTaken":0.749,"takenRate":0.667},"QB":{"finalCount":1.21,"firstRound":7.92,"firstRoundSd":3.4,"recentTaken":1.0,"takenRate":1.0},"RB":{"finalCount":4.23,"firstRound":1.7,"firstRoundSd":0.93,"recentTaken":1.0,"takenRate":1.0},"TE":{"finalCount":1.59,"firstRound":6.18,"firstRoundSd":3.67,"recentTaken":1.0,"takenRate":1.0},"WR":{"finalCount":7.08,"firstRound":2.48,"firstRoundSd":1.49,"recentTaken":1.0,"takenRate":1.0}},"sampleYears":9,"years":[2017,2018,2019,2020,2021,2022,2023,2024,2025]},"Bjoern":{"excludedYears":[2021,2023],"identity":"Bjoern","phaseShares":{"early":{"DEF":0.0,"K":0.0,"QB":0.0179,"RB":0.671,"TE":0.0,"WR":0.3112},"end":{"DEF":0.1483,"K":0.0514,"QB":0.1376,"RB":0.1504,"TE":0.1715,"WR":0.3408},"late":{"DEF":0.1647,"K":0.0,"QB":0.1495,"RB":0.1231,"TE":0.1283,"WR":0.4345},"mid1":{"DEF":0.0,"K":0.0,"QB":0.0,"RB":0.194,"TE":0.1195,"WR":0.6865},"mid2":{"DEF":0.0,"K":0.0179,"QB":0.1375,"RB":0.3333,"TE":0.1283,"WR":0.383}},"positions":{"DEF":{"finalCount":0.99,"firstRound":13.34,"firstRoundSd":1.49,"recentTaken":0.961,"takenRate":0.857},"K":{"finalCount":0.23,"firstRound":13.73,"firstRoundSd":3.78,"recentTaken":0.225,"takenRate":0.429},"QB":{"finalCount":1.37,"firstRound":9.53,"firstRoundSd":2.9,"recentTaken":0.961,"takenRate":0.857},"RB":{"finalCount":4.47,"firstRound":2.16,"firstRoundSd":1.77,"recentTaken":1.0,"takenRate":1.0},"TE":{"finalCount":1.7,"firstRound":8.66,"firstRoundSd":3.84,"recentTaken":1.0,"takenRate":1.0},"WR":{"finalCount":6.58,"firstRound":3.04,"firstRoundSd":1.32,"recentTaken":1.0,"takenRate":1.0}},"sampleYears":7,"years":[2017,2018,2019,2020,2022,2024,2025]},"Dutch Marc":{"excludedYears":[],"identity":"Marc_Dutch","phaseShares":{"early":{"DEF":0.0,"K":0.0,"QB":0.0985,"RB":0.4744,"TE":0.0455,"WR":0.3816},"end":{"DEF":0.187,"K":0.2324,"QB":0.0089,"RB":0.1602,"TE":0.2301,"WR":0.1813},"late":{"DEF":0.1745,"K":0.0719,"QB":0.2113,"RB":0.2572,"TE":0.0,"WR":0.2851},"mid1":{"DEF":0.0,"K":0.0,"QB":0.2387,"RB":0.2021,"TE":0.2741,"WR":0.2851},"mid2":{"DEF":0.017,"K":0.0236,"QB":0.0099,"RB":0.4438,"TE":0.0909,"WR":0.4148}},"positions":{"DEF":{"finalCount":1.2,"firstRound":11.8,"firstRoundSd":1.42,"recentTaken":1.0,"takenRate":1.0},"K":{"finalCount":1.06,"firstRound":13.14,"firstRoundSd":1.41,"recentTaken":1.0,"takenRate":1.0},"QB":{"finalCount":1.7,"firstRound":4.43,"firstRoundSd":1.13,"recentTaken":1.0,"takenRate":1.0},"RB":{"finalCount":4.67,"firstRound":1.81,"firstRoundSd":0.68,"recentTaken":1.0,"takenRate":1.0},"TE":{"finalCount":2.0,"firstRound":4.52,"firstRoundSd":1.16,"recentTaken":1.0,"takenRate":1.0},"WR":{"finalCount":4.71,"firstRound":1.46,"firstRoundSd":0.73,"recentTaken":1.0,"takenRate":1.0}},"sampleYears":9,"years":[2017,2018,2019,2020,2021,2022,2023,2024,2025]},"Giuliano":{"excludedYears":[],"identity":"Giuliano","phaseShares":{"early":{"DEF":0.0,"K":0.0,"QB":0.0158,"RB":0.493,"TE":0.0816,"WR":0.4096},"end":{"DEF":0.2128,"K":0.1982,"QB":0.2194,"RB":0.1211,"TE":0.0632,"WR":0.1853},"late":{"DEF":0.1121,"K":0.0816,"QB":0.0377,"RB":0.2261,"TE":0.214,"WR":0.3285},"mid1":{"DEF":0.0,"K":0.0,"QB":0.1404,"RB":0.3333,"TE":0.0638,"WR":0.4625},"mid2":{"DEF":0.0491,"K":0.0377,"QB":0.1771,"RB":0.1438,"TE":0.3283,"WR":0.2639}},"positions":{"DEF":{"finalCount":1.17,"firstRound":12.67,"firstRoundSd":2.13,"recentTaken":1.0,"takenRate":1.0},"K":{"finalCount":1.0,"firstRound":13.17,"firstRoundSd":2.36,"recentTaken":1.0,"takenRate":1.0},"QB":{"finalCount":1.82,"firstRound":6.19,"firstRoundSd":1.8,"recentTaken":1.0,"takenRate":1.0},"RB":{"finalCount":3.98,"firstRound":1.38,"firstRoundSd":0.61,"recentTaken":1.0,"takenRate":1.0},"TE":{"finalCount":2.27,"firstRound":5.73,"firstRoundSd":1.67,"recentTaken":1.0,"takenRate":1.0},"WR":{"finalCount":4.99,"firstRound":1.92,"firstRoundSd":0.91,"recentTaken":1.0,"takenRate":1.0}},"sampleYears":7,"years":[2018,2019,2020,2021,2023,2024,2025]},"Marc Düsseldorf":{"excludedYears":[],"identity":"Marc_Duesseldorf","phaseShares":{"early":{"DEF":0.0,"K":0.0,"QB":0.3349,"RB":0.1433,"TE":0.0379,"WR":0.4839},"end":{"DEF":0.1777,"K":0.0831,"QB":0.0348,"RB":0.0,"TE":0.1178,"WR":0.5866},"late":{"DEF":0.0379,"K":0.0,"QB":0.1543,"RB":0.2427,"TE":0.2954,"WR":0.2696},"mid1":{"DEF":0.0,"K":0.0,"QB":0.1395,"RB":0.3333,"TE":0.0,"WR":0.5271},"mid2":{"DEF":0.1016,"K":0.1016,"QB":0.0527,"RB":0.4613,"TE":0.1543,"WR":0.1285}},"positions":{"DEF":{"finalCount":1.0,"firstRound":12.51,"firstRoundSd":2.54,"recentTaken":1.0,"takenRate":1.0},"K":{"finalCount":0.58,"firstRound":11.3,"firstRoundSd":3.49,"recentTaken":0.577,"takenRate":0.75},"QB":{"finalCount":2.16,"firstRound":3.45,"firstRoundSd":1.8,"recentTaken":1.0,"takenRate":1.0},"RB":{"finalCount":3.54,"firstRound":4.45,"firstRoundSd":1.92,"recentTaken":1.0,"takenRate":1.0},"TE":{"finalCount":1.85,"firstRound":8.01,"firstRoundSd":3.14,"recentTaken":1.0,"takenRate":1.0},"WR":{"finalCount":6.15,"firstRound":1.86,"firstRoundSd":1.5,"recentTaken":1.0,"takenRate":1.0}},"sampleYears":4,"years":[2021,2022,2024,2025]},"Michael":{"excludedYears":[],"identity":"Michael_Polk","phaseShares":{"early":{"DEF":0.0,"K":0.0,"QB":0.0,"RB":0.3765,"TE":0.0,"WR":0.6235},"end":{"DEF":0.2204,"K":0.1644,"QB":0.0803,"RB":0.1115,"TE":0.0655,"WR":0.3578},"late":{"DEF":0.0,"K":0.0,"QB":0.06,"RB":0.0911,"TE":0.3022,"WR":0.5467},"mid1":{"DEF":0.0,"K":0.0,"QB":0.1576,"RB":0.3225,"TE":0.0311,"WR":0.4887},"mid2":{"DEF":0.0,"K":0.0,"QB":0.1157,"RB":0.3752,"TE":0.0,"WR":0.5091}},"positions":{"DEF":{"finalCount":0.75,"firstRound":15.54,"firstRoundSd":0.5,"recentTaken":0.75,"takenRate":0.8},"K":{"finalCount":0.56,"firstRound":15.0,"firstRoundSd":0.0,"recentTaken":0.56,"takenRate":0.6},"QB":{"finalCount":1.27,"firstRound":6.75,"firstRoundSd":2.3,"recentTaken":1.0,"takenRate":1.0},"RB":{"finalCount":3.88,"firstRound":1.96,"firstRoundSd":0.63,"recentTaken":1.0,"takenRate":1.0},"TE":{"finalCount":1.22,"firstRound":9.78,"firstRoundSd":1.59,"recentTaken":1.0,"takenRate":1.0},"WR":{"finalCount":7.72,"firstRound":1.22,"firstRoundSd":0.42,"recentTaken":1.0,"takenRate":1.0}},"sampleYears":5,"years":[2020,2021,2022,2023,2024]},"Pascal Gelderner":{"excludedYears":[],"identity":"Pascal_Gelderner","phaseShares":{"early":{"DEF":0.0,"K":0.0,"QB":0.1844,"RB":0.3333,"TE":0.0772,"WR":0.4051},"end":{"DEF":0.1489,"K":0.0,"QB":0.3333,"RB":0.1489,"TE":0.0,"WR":0.3688},"late":{"DEF":0.1072,"K":0.2261,"QB":0.0,"RB":0.1072,"TE":0.3333,"WR":0.2261},"mid1":{"DEF":0.0,"K":0.0,"QB":0.1489,"RB":0.1844,"TE":0.2561,"WR":0.4105},"mid2":{"DEF":0.0772,"K":0.1072,"QB":0.0,"RB":0.4051,"TE":0.0,"WR":0.4105}},"positions":{"DEF":{"finalCount":1.0,"firstRound":10.88,"firstRoundSd":2.04,"recentTaken":1.0,"takenRate":1.0},"K":{"finalCount":1.0,"firstRound":10.25,"firstRoundSd":1.74,"recentTaken":1.0,"takenRate":1.0},"QB":{"finalCount":2.0,"firstRound":3.45,"firstRoundSd":0.5,"recentTaken":1.0,"takenRate":1.0},"RB":{"finalCount":3.54,"firstRound":2.13,"firstRoundSd":0.87,"recentTaken":1.0,"takenRate":1.0},"TE":{"finalCount":2.0,"firstRound":4.84,"firstRoundSd":2.11,"recentTaken":1.0,"takenRate":1.0},"WR":{"finalCount":5.46,"firstRound":2.02,"firstRoundSd":1.17,"recentTaken":1.0,"takenRate":1.0}},"sampleYears":3,"years":[2023,2024,2025]},"Pascal Voerde":{"excludedYears":[],"identity":"Pascal_Voerde","phaseShares":{"early":{"DEF":0.0,"K":0.0,"QB":0.1489,"RB":0.3333,"TE":0.1844,"WR":0.3333},"end":{"DEF":0.0,"K":0.0772,"QB":0.1489,"RB":0.1072,"TE":0.0,"WR":0.6667},"late":{"DEF":0.2561,"K":0.2561,"QB":0.1844,"RB":0.0,"TE":0.2261,"WR":0.0772},"mid1":{"DEF":0.0,"K":0.0,"QB":0.1844,"RB":0.3333,"TE":0.1489,"WR":0.3333},"mid2":{"DEF":0.0772,"K":0.0,"QB":0.0,"RB":0.2261,"TE":0.1072,"WR":0.5895}},"positions":{"DEF":{"finalCount":1.0,"firstRound":10.31,"firstRoundSd":1.27,"recentTaken":1.0,"takenRate":1.0},"K":{"finalCount":1.0,"firstRound":12.46,"firstRoundSd":0.84,"recentTaken":1.0,"takenRate":1.0},"QB":{"finalCount":2.0,"firstRound":4.02,"firstRoundSd":1.17,"recentTaken":1.0,"takenRate":1.0},"RB":{"finalCount":3.0,"firstRound":1.68,"firstRoundSd":0.47,"recentTaken":1.0,"takenRate":1.0},"TE":{"finalCount":2.0,"firstRound":4.34,"firstRoundSd":1.49,"recentTaken":1.0,"takenRate":1.0},"WR":{"finalCount":6.0,"firstRound":1.32,"firstRoundSd":0.47,"recentTaken":1.0,"takenRate":1.0}},"sampleYears":3,"years":[2023,2024,2025]},"Thomas":{"excludedYears":[],"identity":"Thomas","phaseShares":{"early":{"DEF":0.0,"K":0.0,"QB":0.0772,"RB":0.4406,"TE":0.0,"WR":0.4822},"end":{"DEF":0.2261,"K":0.2261,"QB":0.1072,"RB":0.1844,"TE":0.0,"WR":0.2561},"late":{"DEF":0.1072,"K":0.0,"QB":0.0,"RB":0.4105,"TE":0.0,"WR":0.4822},"mid1":{"DEF":0.0,"K":0.0,"QB":0.0,"RB":0.3333,"TE":0.3333,"WR":0.3333},"mid2":{"DEF":0.0,"K":0.1072,"QB":0.2561,"RB":0.4822,"TE":0.0,"WR":0.1544}},"positions":{"DEF":{"finalCount":1.0,"firstRound":12.71,"firstRoundSd":1.87,"recentTaken":1.0,"takenRate":1.0},"K":{"finalCount":1.0,"firstRound":12.75,"firstRoundSd":3.27,"recentTaken":1.0,"takenRate":1.0},"QB":{"finalCount":1.32,"firstRound":6.07,"firstRoundSd":1.69,"recentTaken":1.0,"takenRate":1.0},"RB":{"finalCount":5.55,"firstRound":2.13,"firstRoundSd":0.87,"recentTaken":1.0,"takenRate":1.0},"TE":{"finalCount":1.0,"firstRound":6.0,"firstRoundSd":0.0,"recentTaken":1.0,"takenRate":1.0},"WR":{"finalCount":5.13,"firstRound":1.32,"firstRoundSd":0.47,"recentTaken":1.0,"takenRate":1.0}},"sampleYears":3,"years":[2023,2024,2025]}},"recencyDecay":0.72,"schema":2};
+const MANAGER_PROFILE_SOURCE_HASH='c5f601051850185b81801aaaa3efe554d9214f6cfa15999a0beec6cb0b192493';
 function parseManagerMap(text){const out={};for(const part of String(text||'').split(',')){const m=part.trim().match(/^(\d+)\s*=\s*(.+)$/);if(m)out[Number(m[1])]=m[2].trim()}return out}
 const ACTIVE_2026_MANAGER_MAP=Object.freeze(parseManagerMap(ACTIVE_2026_MANAGER_MAP_TEXT));
 function resolvedManagerMap(mode,season,teams,text){
   // The real 2026 league composition/order is confirmed. Never let stale historical/localStorage maps
   // (e.g. Kai) leak into LIVE Return-v2. Replay/mock keep their explicit mapping semantics.
-  if(mode==='live'&&String(season)==='2026'&&Number(teams)===10)return {...ACTIVE_2026_MANAGER_MAP};
+  if((mode==='live'||mode==='mock')&&String(season)==='2026'&&Number(teams)===10)return {...ACTIVE_2026_MANAGER_MAP};
   return parseManagerMap(text);
 }
-function managerProfile(name){const n=norm(name).replace(/oe/g,'o').replace(/ue/g,'u');return Object.entries(MANAGER_PROFILES).find(([k])=>n.includes(norm(k).replace(/oe/g,'o').replace(/ue/g,'u')))?.[1]||null}
+function managerProfile(name){
+  const n=norm(name).replace(/oe/g,'o').replace(/ue/g,'u');
+  const base=Object.entries(MANAGER_PROFILES).find(([k])=>n.includes(norm(k).replace(/oe/g,'o').replace(/ue/g,'u')))?.[1]||null;
+  const histEntry=Object.entries(MANAGER_PROFILE_DATA.profiles).find(([k])=>n.includes(norm(k).replace(/oe/g,'o').replace(/ue/g,'u')))?.[1]||null;
+  if(!base&&!histEntry)return null;
+  return {...(base||{}),label:base?.label||histEntry?.identity||name,historical:histEntry||null};
+}
+function managerProfilesActive(mode,season=els.season.value,teams=10){return mode==='live'||(mode==='mock'&&String(season)==='2026'&&Number(teams)===10)}
+function managerPhase(round){return round<=3?'early':round<=6?'mid1':round<=9?'mid2':round<=12?'late':'end'}
+function managerHistoryPosMult(profile,pos,pickNo){
+  const h=profile?.historical;if(!h)return 1;
+  const round=Math.floor((pickNo-1)/10)+1,phase=managerPhase(round),own=h.phaseShares?.[phase]?.[pos]??0,league=MANAGER_PROFILE_DATA.leaguePhaseShares?.[phase]?.[pos]??0;
+  if(!(league>0))return 1;
+  const raw=own/league,shrink=clamp((h.sampleYears||0)/8,.25,.8);
+  return clamp(1+(raw-1)*shrink,.55,1.85);
+}
+function specialPositionHazard(profile,pos,pickNo,teams=10){
+  const d=profile?.historical?.positions?.[pos];if(!d||!Number.isFinite(d.firstRound)||!(d.recentTaken>0))return 0;
+  const round=(pickNo-1)/teams+1,sd=Math.max(1.15,Number(d.firstRoundSd)||1.8),scale=Math.max(.8,sd*.72),take=clamp(Number(d.recentTaken),0,1);
+  const logistic=x=>1/(1+Math.exp(-x));
+  const f=take*logistic((round-d.firstRound)/scale),prev=take*logistic(((round-1)-d.firstRound)/scale);
+  let h=clamp((f-prev)/Math.max(.06,1-prev),0,.62);
+  // 15-round 2026 draft: managers who historically almost always fill the slot get
+  // an endgame urgency floor, while low-take managers remain genuinely likely to skip it.
+  if(round>=14){const floor=take>=.9?(round>=15?.78:.38):take>=.7?(round>=15?.42:.16):0;h=Math.max(h,floor)}
+  return clamp(h,0,.85);
+}
+function chooseSpecialTeamPick(profile,roster,pickNo,teams,rng){
+  const hk=roster.K===0?specialPositionHazard(profile,'K',pickNo,teams):0,hd=roster.DEF===0?specialPositionHazard(profile,'DEF',pickNo,teams):0;
+  const any=1-(1-hk)*(1-hd);if(rng()>=any)return null;
+  if(hk<=0)return'DEF';if(hd<=0)return'K';return rng()<hk/(hk+hd)?'K':'DEF';
+}
 function rosterBySlot(picks,players,teams){const out={};for(let s=1;s<=teams;s++)out[s]={QB:0,RB:0,WR:0,TE:0,K:0,DEF:0};for(const pick of picks){const s=Number(pick.draft_slot),pos=pinfo(String(pick.player_id),pick.metadata,players).pos;if(out[s]&&out[s][pos]!=null)out[s][pos]++}return out}
 function slotsBetween(current,next,teams){const a=[];if(!Number.isFinite(next))return a;for(let p=current;p<next;p++){const r=Math.floor((p-1)/teams)+1,w=(p-1)%teams+1,s=r%2?w:teams-w+1;a.push(s)}return a}
 function endgameSkillShare(c,current,mode='live'){
@@ -851,15 +884,15 @@ function endgameSkillShare(c,current,mode='live'){
   if(mode==='mock'&&current>=130)return openSpecial===2?.20:openSpecial===1?.45:.92;
   return openSpecial===2?.34:openSpecial===1?.62:.92;
 }
-function plausibleFor(pos,c,current=1,mode='live'){let v;if(pos==='QB')v=c.QB===0?1:c.QB===1?.18:.03;else if(pos==='TE')v=c.TE===0?1:c.TE===1?.20:.04;else if(pos==='RB')v=c.RB<3?1:c.RB<5?.72:.35;else if(pos==='WR')v=c.WR<4?1:c.WR<6?.78:.40;else v=.2;return v*endgameSkillShare(c,current,mode)}
+function basePositionPlausible(pos,c){let v;if(pos==='QB')v=c.QB===0?1:c.QB===1?.18:.03;else if(pos==='TE')v=c.TE===0?1:c.TE===1?.20:.04;else if(pos==='RB')v=c.RB<3?1:c.RB<5?.72:.35;else if(pos==='WR')v=c.WR<4?1:c.WR<6?.78:.40;else v=.2;return v}
+function expectedSkillShare(profile,roster,pickNo,teams=10){if(!profile)return null;const hk=roster.K===0?specialPositionHazard(profile,'K',pickNo,teams):0,hd=roster.DEF===0?specialPositionHazard(profile,'DEF',pickNo,teams):0;return clamp((1-hk)*(1-hd),.05,1)}
+function plausibleFor(pos,c,current=1,mode='live'){return basePositionPlausible(pos,c)*endgameSkillShare(c,current,mode)}
 function candidateManagerMod(prof,p,current){
   if(!prof||!p)return{mult:1,labels:[]};
   const t=prof.traits||{},labels=[];let delta=0;
-  // Historical timing is used as a soft hazard layer, never as a deterministic rule.
-  // Recent seasons get more weight, but explicit current-year intel (e.g. Pascal waiting at QB/TE) remains separate below.
-  const h=prof.history||{},round=Math.floor((current-1)/10)+1;
-  if(p.pos==='QB'&&Number.isFinite(h.recentQB)){const d=round-h.recentQB;if(d>=0){const z=Math.min(.22,.06+d*.035);delta+=z;labels.push(`QB-Timing +${Math.round(z*100)}%`)}else if(d<=-2){delta-=.05;labels.push('QB-Timing -5%')}}
-  if(p.pos==='TE'&&Number.isFinite(h.recentTE)){const d=round-h.recentTE;if(d>=0){const z=Math.min(.22,.06+d*.035);delta+=z;labels.push(`TE-Timing +${Math.round(z*100)}%`)}else if(d<=-2){delta-=.05;labels.push('TE-Timing -5%')}}
+  // Historical position/timing evidence is scored exactly once by managerHistoryPosMult().
+  // This layer is reserved for capped qualitative/current-regime evidence so old profile
+  // summaries cannot double-count the same historical QB/TE/position signal.
   const rookie=p.yearsExp===0;
   if(t.rookie&&rookie){delta+=t.rookie;labels.push(`Rookie ${t.rookie>0?'+':''}${Math.round(t.rookie*100)}%`)}
   if(t.rookieRB&&rookie&&p.pos==='RB'){delta+=t.rookieRB;labels.push(`Rookie-RB +${Math.round(t.rookieRB*100)}%`)}
@@ -883,19 +916,19 @@ function stressProfile(mode,p,current){
 }
 function stressLabel(mode){return({baseline:'Baseline',rb:'RB-Run / RB-Druck',te:'TE-Run',rookie:'Rookie-RB-Reach',late:'Late-Round-Upside'})[mode]||'Baseline'}
 function liveIntel(p,current,next,picks,players,teams,mode,map,stress='baseline'){
-  const pos=p.pos,between=slotsBetween(current+1,next,teams),rosters=rosterBySlot(picks,players,teams);let hazard=0,plausible=0,uncertain=0,mods=[];
-  for(const s of between){const base=plausibleFor(pos,rosters[s]||{QB:0,RB:0,WR:0,TE:0,K:0,DEF:0},current,mode);if(base>=.6)plausible++;let mult=1;
-    if(mode==='live'){const prof=managerProfile(map[s]);if(prof){const m=prof.pos[pos]||0;mult*=1+m;const cm=candidateManagerMod(prof,p,current);mult*=cm.mult;if(m||cm.labels.length)mods.push(`${prof.label}${m?` ${m>0?'+':''}${Math.round(m*100)}% ${pos}`:''}${cm.labels.length?` · ${cm.labels.join(' · ')}`:''}`);if(prof.uncertain)uncertain++}}
-    const sp=stressProfile(stress,p,current);mult*=sp.mult;if(sp.label)mods.push(`Stress: ${sp.label}`);hazard+=base*mult;
+  const pos=p.pos,between=slotsBetween(current+1,next,teams),rosters=rosterBySlot(picks,players,teams);let hazard=0,plausible=0,uncertain=0,mods=[],effectiveSkillPicks=0;
+  for(let i=0;i<between.length;i++){const s=between[i],pickNo=current+1+i,roster=rosters[s]||{QB:0,RB:0,WR:0,TE:0,K:0,DEF:0},prof=managerProfilesActive(mode,els.season.value,teams)?managerProfile(map[s]):null;
+    const skillShare=prof?(expectedSkillShare(prof,roster,pickNo,teams)??1):endgameSkillShare(roster,pickNo,mode),base=basePositionPlausible(pos,roster)*skillShare;if(base>=.6)plausible++;effectiveSkillPicks+=skillShare;let mult=1;
+    if(prof){mult*=managerHistoryPosMult(prof,pos,pickNo);const cm=candidateManagerMod(prof,p,pickNo);mult*=cm.mult;if(cm.labels.length)mods.push(`${prof.label} · ${cm.labels.join(' · ')}`);if(prof.uncertain)uncertain++}
+    const sp=stressProfile(stress,p,pickNo);mult*=sp.mult;if(sp.label)mods.push(`Stress: ${sp.label}`);hazard+=base*mult;
   }
-  const effectiveSkillPicks=between.reduce((a,s)=>a+endgameSkillShare(rosters[s]||{K:0,DEF:0},current,mode),0);
   return{between:between.length,effectiveSkillPicks,plausible,hazard,uncertain,mods:[...new Set(mods)]};
 }
 function adjustedReturn(base,intel){if(base==null)return null;const eff=Math.max(.5,intel.effectiveSkillPicks??intel.between);const pressure=clamp((intel.hazard-eff*.45)*.07,-.12,.15);const endgameRelief=clamp((intel.between-eff)*.035,0,.30);return clamp(base-pressure+endgameRelief,.02,.98)}
 function returnConfidence(ret,intel,mode,hasAdp){let score=hasAdp?82:52;score-=Math.min(22,intel.between*1.7);score-=intel.uncertain*5;if(mode==='replay')score+=4;return clamp(Math.round(score),30,94)}
 function lossIfGone(x){let loss=0;if(x.sameTier<=2)loss+=2;if(Number.isFinite(x.tierGap))loss+=Math.min(4,x.tierGap/4);if(Number.isFinite(x.alternativeGap))loss+=Math.min(3,x.alternativeGap/6);if((x.nearAlternatives||0)>=2)loss-=1.5;else if((x.nearAlternatives||0)===1)loss-=.5;if(x.p.pos==='RB'&&x.r.rank>=70)loss+=1;return loss>=5?'hoch':loss>=2.5?'mittel':'niedrig'}
 function actionLabel(x){if(x.loss==='hoch'&&(x.ret??1)<.65)return'JETZT';if((x.ret??0)>=.72)return'WARTEN';if((x.ret??1)<.35)return'EHER JETZT';return'ABWÄGEN'}
-function modeStatusText(mode,map){if(mode==='live')return `LIVE LEAGUE: Managerhistorie aktiv${Object.keys(map).length?` · ${Object.keys(map).length} Slots zugeordnet`:' · WARNUNG: keine Slot→Manager-Zuordnung'}`;if(mode==='replay')return 'REPLAY: historische Picks werden nur bis zum gewählten Cutoff sichtbar.';return 'MOCK/TEST: Managerhistorie ist vollständig deaktiviert.'}
+function modeStatusText(mode,map){if(mode==='live')return `LIVE LEAGUE: Managerhistorie aktiv${Object.keys(map).length?` · ${Object.keys(map).length} Slots zugeordnet`:' · WARNUNG: keine Slot→Manager-Zuordnung'}`;if(mode==='mock')return `MOCK/TEST: 2026-Managerprofile aktiv · Markt-Prior + Roster-State + Profilvarianz${Object.keys(map).length?` · ${Object.keys(map).length} Slots zugeordnet`:''}`;if(mode==='replay')return 'REPLAY: historische Picks werden nur bis zum gewählten Cutoff sichtbar.';return 'Managerprofil-Status unbekannt.'}
 
 
 
@@ -913,16 +946,17 @@ function weightedChoice(rows,rng=Math.random){let total=rows.reduce((a,x)=>a+x.w
 function simCandidateWeight(p,pickNo,roster,profile,stress){
   const r=rankFor(p.name,p.pos);if(!r)return 0;
   const a=adpFor(p.name);
-  // Opponent market timing must be much tighter than our own Player-Quality utility.
-  // Use a blended market center (Sleeper ADP dominant, panel rank secondary) and an
-  // asymmetric overdue hazard: future players are strongly suppressed, while players
-  // who slide past market become increasingly likely to be taken rather than fading again.
-  const center=Number.isFinite(a)?a*.72+r.rank*.28:r.rank;
-  const tau=pickNo<=30?3.25:pickNo<=80?5.5:8.5;
-  let w=Math.exp(clamp((pickNo-center)/tau,-8,3.5))*simNeedWeight(p.pos,roster);
-  if(profile){w*=1+(profile.pos[p.pos]||0);w*=candidateManagerMod(profile,p,pickNo).mult;}
+  // Market is a plausibility prior, not the opponent decision model. Sleeper ADP dominates
+  // because it is visible in the room; panel rank is only a light stabilizer/fallback.
+  const center=Number.isFinite(a)?a*.90+r.rank*.10:r.rank;
+  const tauBase=pickNo<=30?1.35:pickNo<=80?4.5:7.5,tau=tauBase*(stress==='baseline'?1:1.18);
+  let w=Math.exp(clamp((pickNo-center)/tau,-9,3.8))*simNeedWeight(p.pos,roster);
+  if(profile){
+    w*=managerHistoryPosMult(profile,p.pos,pickNo);
+    w*=candidateManagerMod(profile,p,pickNo).mult;
+  }
   w*=stressProfile(stress,p,pickNo).mult;
-  return Math.max(.0001,w);
+  return Math.max(.00005,w);
 }
 function cloneRosters(x){const o={};for(const[k,v]of Object.entries(x))o[k]={...v};return o}
 function returnV2Confidence(ret,runs,mode,hasAdp,mapCoverage,slotCount){
@@ -955,13 +989,10 @@ function simulateReturnV2(ctx,stress='baseline',runs=900){
     let pool=rankedAvailable.slice(),rosters=cloneRosters(baseRosters);
     const collidedManagers=new Set();
     for(let i=0;i<slots.length&&pool.length;i++){
-      const slot=slots[i],pickNo=current+1+i,prof=mode==='live'?managerProfile(map[slot]):null,roster=rosters[slot];
-      const skillShare=endgameSkillShare(roster,pickNo,mode);
-      if(pickNo>=120&&rng()>skillShare){
-        if(roster.DEF===0&&roster.K===0){if(rng()<.5)roster.DEF++;else roster.K++;}
-        else if(roster.DEF===0)roster.DEF++;else if(roster.K===0)roster.K++;
-        continue;
-      }
+      const slot=slots[i],pickNo=current+1+i,prof=managerProfilesActive(mode,els.season.value,teams)?managerProfile(map[slot]):null,roster=rosters[slot];
+      const special=prof?chooseSpecialTeamPick(prof,roster,pickNo,teams,rng):null;
+      if(special){roster[special]++;continue;}
+      if(!prof){const skillShare=endgameSkillShare(roster,pickNo,mode);if(pickNo>=120&&rng()>skillShare){if(roster.DEF===0&&roster.K===0){if(rng()<.5)roster.DEF++;else roster.K++;}else if(roster.DEF===0)roster.DEF++;else if(roster.K===0)roster.K++;continue;}}
       const board=pool.slice(0,70).map(p=>({p,w:simCandidateWeight(p,pickNo,roster,prof,stress)}));
       const chosen=weightedChoice(board,rng);if(!chosen)break;
       const key=norm(chosen.p.name),idx=pool.indexOf(chosen.p);if(idx>=0)pool.splice(idx,1);
@@ -1043,10 +1074,10 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.13.1',rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.15',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
-    candidates:scored.slice(0,16).map(x=>({playerId:String(x.p.id||''),name:x.p.name,pos:x.p.pos,panelRank:x.r?.rank??null,panelId:x.r?.panelId??null,adp:Number.isFinite(x.a)?x.a:null,injury:x.p.injury||null,researchEvidence:researchPlayerState(x.p,evidenceCutoff).slice(-4),returnProb:x.ret??null,returnConfidence:x.returnConfidence??null,topRisk:x.topRisk??null,coachScore:x.score??null,action:x.action??null})),
+    candidates:scored.slice(0,16).map(x=>({playerId:String(x.p.id||''),name:x.p.name,pos:x.p.pos,panelRank:x.r?.rank??null,panelId:x.r?.panelId??null,adp:Number.isFinite(x.a)?x.a:null,injury:x.p.injury||null,researchEvidence:researchPlayerState(x.p,evidenceCutoff).slice(-4),researchResidual:x.researchResidual||null,shadowCoachScore:x.shadowScore??null,shadowRank:x.shadowRank??null,returnProb:x.ret??null,returnConfidence:x.returnConfidence??null,topRisk:x.topRisk??null,coachScore:x.score??null,action:x.action??null})),
     forecastResolution:endOfDraft?'unresolved_end_of_draft':'pending',chosenPlayer:null
   });saveDecisionFixtures(rows);
 }
@@ -1060,16 +1091,15 @@ function simulateToReturn(ctx,stress='baseline',runs=1200){
     const rng=seededRng(seedBase+run*2654435761);
     let pool=rankedAvailable.slice(),rosters=cloneRosters(baseRosters);
     for(let i=0;i<slots.length&&pool.length;i++){
-      const slot=slots[i],pickNo=current+1+i,prof=managerProfile(map[slot]),roster=rosters[slot];
-      // Replay calibration: in the endgame opponents often spend nominal picks on K/DST.
-      // Those picks must consume a turn without removing a QB/RB/WR/TE from the simulated pool.
-      const skillShare=endgameSkillShare(roster,pickNo,mode);
-      if(pickNo>=120&&rng()>skillShare){
+      const slot=slots[i],pickNo=current+1+i,prof=managerProfilesActive(mode,els.season.value,teams)?managerProfile(map[slot]):null,roster=rosters[slot];
+      // K/DST timing is manager-specific when historical profiles are active.
+      // Generic endgame hazard remains only as a fallback for unprofiled/replay contexts.
+      const special=prof?chooseSpecialTeamPick(prof,roster,pickNo,teams,rng):null;
+      if(special){roster[special]++;continue;}
+      if(!prof){const skillShare=endgameSkillShare(roster,pickNo,mode);if(pickNo>=120&&rng()>skillShare){
         if(roster.DEF===0&&roster.K===0){if(rng()<.5)roster.DEF++;else roster.K++;}
-        else if(roster.DEF===0)roster.DEF++;
-        else if(roster.K===0)roster.K++;
-        continue;
-      }
+        else if(roster.DEF===0)roster.DEF++;else if(roster.K===0)roster.K++;continue;
+      }}
       // Evaluate a deep but bounded board; random tail gives late reaches a path without dominating runtime.
       const board=pool.slice(0,70).map(p=>({p,w:simCandidateWeight(p,pickNo,roster,prof,stress)}));
       const chosen=weightedChoice(board,rng);if(!chosen)break;
@@ -1278,7 +1308,8 @@ function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   const ret=returnChance(next,a);
   const expertBase=r.n>=5?4:r.n>=3?1:r.n===2?-5:-12;
   const confidence=clamp(Math.round(88-r.sd*2+(Number.isFinite(a)?4:-10)+expertBase),35,96);
-  return{score:0,rawScore:score,r,a,ret,reasons,agree,sameTier:tier.sameTierCount,tierGap:tier.tierGap,alternativeGap:alt.bestGap,nearAlternatives:alt.nearEqual,confidence,valueKind:value.kind};
+  const researchResidual=researchResidualShadow(p,r,a,current);
+  return{score:0,rawScore:score,r,a,ret,reasons,agree,sameTier:tier.sameTierCount,tierGap:tier.tierGap,alternativeGap:alt.bestGap,nearAlternatives:alt.nearEqual,confidence,valueKind:value.kind,researchResidual};
 }
 function applyResolvedReturnScore(x,current,strategy){
   if(x.ret==null)return;
@@ -1344,6 +1375,82 @@ function researchPlayerState(p,cutoff=Infinity){const key=norm(p.name),pid=Strin
 function actionableResearchEvents(p,cutoff=Infinity){return researchPlayerState(p,cutoff).filter(e=>!e.critical||e.freshnessVerified===true)}
 function researchHint(p,cutoff=Infinity){const all=researchPlayerState(p,cutoff),ev=actionableResearchEvents(p,cutoff);if(!all.length)return '';const rejected=all.length-ev.length;if(!ev.length)return rejected?`${rejected} kritische Meldung(en) wegen ungeprüfter Ereignis-Aktualität ignoriert`:'';const latest=ev[ev.length-1],age=Math.round((Date.now()-Number(latest.sourcePublishedAt||latest.observedAt))/3600000),flags=[...new Set(ev.flatMap(x=>x.flags||[]))].slice(-4).join(', '),suffix=rejected?` · ${rejected} stale/unverifiziert ignoriert`:'';return flags?`${flags}${age<48?` · Cache ${age}h`:' · Cache veraltet'}${suffix}`:`${ev.length} Evidence-Event(s)${suffix}`}
 function updateResearchCacheStatus(){if(!els.researchCacheStatus)return;const e=loadResearchEvents();const players=new Set(e.map(x=>x.playerId||x.playerKey).filter(Boolean));els.researchCacheStatus.textContent=e.length?`${e.length} Evidence-Events · ${players.size} Spieler · append-only`:'Noch keine versionierte Evidence gespeichert.'}
+/*
+ * rc4.15 — Research Residual Shadow v2.
+ *
+ * This is deliberately orthogonal to Player Quality, Market Price, Return-v2 and
+ * roster utility. It computes a counterfactual SHADOW score only; the live Coach
+ * rawScore is untouched. The purpose is to collect prospective decision-time
+ * evidence before any residual modifier is promoted to live weighting.
+ *
+ * Static 2026 priors below are short-lived research hypotheses, not timeless
+ * player rankings. They expire before the draft freeze unless refreshed by the
+ * versioned Research Cache. Structured cache events can supersede/extend them.
+ */
+const RESEARCH_RESIDUAL_MODEL_VERSION='shadow-v2.0';
+const RESEARCH_PRIOR_EXPIRY=Date.parse('2026-08-24T00:00:00Z');
+const RESEARCH_RESIDUAL_PRIORS={
+  [norm('Parker Washington')]:{pos:'WR',components:[{kind:'ascension',dir:1,strength:.82,confidence:.78,pricing:'PARTLY_PRICED',causal:'2025 efficiency + projected full-time route path',invalidator:'route share falls behind healthy target competition'}]},
+  [norm('Matthew Golden')]:{pos:'WR',components:[{kind:'ascension',dir:1,strength:.70,confidence:.70,pricing:'POSSIBLY_UNPRICED',causal:'first-round talent + clearer Year-2 route path',invalidator:'remains rotational'}]},
+  [norm('Quinshon Judkins')]:{pos:'RB',components:[{kind:'role_environment',dir:1,strength:.58,confidence:.66,pricing:'PARTLY_PRICED',causal:'larger workload + improved blocking environment',invalidator:'committee/receiving cap persists'}]},
+  [norm('Bhayshul Tuten')]:{pos:'RB',components:[{kind:'efficiency',dir:1,strength:.55,confidence:.63,pricing:'POSSIBLY_UNPRICED',causal:'per-touch efficiency',invalidator:'efficiency fails with volume'},{kind:'role_uncertainty',dir:-1,strength:.52,confidence:.66,pricing:'PARTLY_PRICED',causal:'contested early-down/goal-line role',invalidator:'clear lead role emerges'}]},
+  [norm('Jonathon Brooks')]:{pos:'RB',components:[{kind:'ascension',dir:1,strength:.67,confidence:.68,pricing:'PARTLY_PRICED',causal:'healthy role expansion / Hubbard opportunity delta',invalidator:'Hubbard retains dominant role'},{kind:'injury_recurrence',dir:-1,strength:.58,confidence:.78,pricing:'PARTLY_PRICED',causal:'second ACL recovery risk',invalidator:'sustained healthy efficiency/availability'}]},
+  [norm('Colston Loveland')]:{pos:'TE',components:[{kind:'ascension',dir:1,strength:.78,confidence:.82,pricing:'LIKELY_PRICED',causal:'strong rookie receiving efficiency + route/target growth',invalidator:'late-season role does not persist'}]},
+  [norm('Harold Fannin Jr.')]:{pos:'TE',components:[{kind:'talent',dir:1,strength:.66,confidence:.74,pricing:'LIKELY_PRICED',causal:'rookie target/YPRR profile',invalidator:'target share falls'},{kind:'competition',dir:-1,strength:.38,confidence:.62,pricing:'PARTLY_PRICED',causal:'added target competition',invalidator:'target command remains elite'}]},
+  [norm('Christian McCaffrey')]:{pos:'RB',components:[{kind:'decline_tail',dir:-1,strength:.55,confidence:.66,pricing:'LIKELY_PRICED',causal:'age + extreme recent workload + durability interaction',invalidator:'healthy camp + maintained efficiency/role'}]},
+  [norm('Derrick Henry')]:{pos:'RB',components:[{kind:'decline_tail',dir:-1,strength:.42,confidence:.61,pricing:'LIKELY_PRICED',causal:'age + cumulative workload interaction',invalidator:'continued elite efficiency/goal-line role'}]},
+  [norm('Josh Jacobs')]:{pos:'RB',components:[{kind:'current_injury_role',dir:-1,strength:.72,confidence:.82,pricing:'PARTLY_PRICED',causal:'current groin absence + backup opportunity',invalidator:'full healthy return with normal first-team workload'}]},
+  [norm('Saquon Barkley')]:{pos:'RB',components:[{kind:'decline_tail',dir:-1,strength:.48,confidence:.62,pricing:'LIKELY_PRICED',causal:'age + recent extreme workload interaction',invalidator:'stable efficiency/health and unchanged dominant role'}]},
+  [norm('A.J. Brown')]:{pos:'WR',components:[{kind:'decline_risk',dir:-1,strength:.45,confidence:.58,pricing:'PARTLY_PRICED',causal:'age + soft-tissue/separation trend watch',invalidator:'healthy camp + stable separation/target command'}]}
+};
+function researchResidualCap(current){if(current<=30)return 1.5;if(current<=70)return 2.0;if(current<=110)return 2.6;return 3.2}
+function researchPricingFactor(state){return state==='POSSIBLY_UNPRICED'?1:state==='PARTLY_PRICED'?.62:state==='LIKELY_PRICED'?.28:.45}
+function structuredResidualComponents(p,cutoff=Infinity){
+  const now=Date.now(),out=[];
+  for(const e of actionableResearchEvents(p,cutoff)){
+    const q=e?.payload?.residual||e?.payload?.residualSignal;
+    if(!q||typeof q!=='object')continue;
+    const expires=Number(q.expiresAt||e?.payload?.expiresAt||0);if(expires&&expires<now)continue;
+    const dir=String(q.direction||'').toLowerCase();
+    const d=dir==='up'||dir==='positive'||Number(q.direction)>0?1:dir==='down'||dir==='negative'||Number(q.direction)<0?-1:0;
+    const strength=clamp(Number(q.strength??q.magnitude??0),0,1),confidence=clamp(Number(q.confidence??e.confidence??0),0,1);
+    if(!d||strength<=0||confidence<.55||!String(q.causalPath||e.thesisPath||'').trim()||!String(q.invalidator||'').trim())continue;
+    out.push({kind:String(q.kind||e.evidenceType||'structured'),dir:d,strength,confidence,pricing:String(q.pricing||'PARTLY_PRICED').toUpperCase(),causal:String(q.causalPath||e.thesisPath),invalidator:String(q.invalidator),source:'cache'});
+  }
+  return out;
+}
+function researchResidualShadow(p,r,a,current,cutoff=Infinity){
+  const now=Date.now(),prior=RESEARCH_RESIDUAL_PRIORS[norm(p.name)];
+  const components=[];
+  if(prior&&prior.pos===p.pos&&now<RESEARCH_PRIOR_EXPIRY)components.push(...prior.components.map(x=>({...x,source:'2026-prior'})));
+  components.push(...structuredResidualComponents(p,cutoff));
+  if(!components.length)return{model:RESEARCH_RESIDUAL_MODEL_VERSION,delta:0,active:false,components:[],expired:Boolean(prior&&now>=RESEARCH_PRIOR_EXPIRY)};
+  let raw=0;const used=[];
+  for(const c of components){
+    let pricing=researchPricingFactor(c.pricing);
+    if(Number.isFinite(a)&&Number.isFinite(r?.rank)){
+      const gap=a-r.rank; // +gap: market is cheaper/later than selected panel.
+      const marketAdj=clamp(gap/50,-.20,.20);
+      pricing=clamp(pricing+(c.dir>0?marketAdj:-marketAdj),.12,1.10);
+    }
+    // Current Sleeper injury status can reinforce downside and suppress bullish priors,
+    // but never manufacture an injury thesis on its own.
+    let statusAdj=1;
+    if(p.injury&&c.dir>0)statusAdj=.70;
+    if(p.injury&&c.dir<0&&/injury|decline|recurrence/i.test(c.kind))statusAdj=1.12;
+    const contribution=c.dir*c.strength*c.confidence*pricing*statusAdj;
+    raw+=contribution;used.push({...c,pricingFactor:Number(pricing.toFixed(3)),contribution:Number(contribution.toFixed(3))});
+  }
+  const cap=researchResidualCap(current),delta=clamp(raw*3.0,-cap,cap);
+  return{model:RESEARCH_RESIDUAL_MODEL_VERSION,delta:Number(delta.toFixed(2)),raw:Number(raw.toFixed(3)),cap,active:Math.abs(delta)>=.05,components:used,expiresAt:prior?RESEARCH_PRIOR_EXPIRY:null};
+}
+function assignResearchShadowScores(rows,current){
+  const clones=rows.map(x=>({...x,reasons:[...(x.reasons||[])],rawScore:x.rawScore+Number(x.researchResidual?.delta||0)}));
+  applyPlayerQualitySafetyGate(clones,current);normalizeCoachScores(clones);
+  clones.sort((a,b)=>b.score-a.score||b.rawScore-a.rawScore||a.r.rank-b.r.rank);
+  const map=new Map(clones.map((x,i)=>[norm(x.p.name),{score:x.score,rawScore:x.rawScore,rank:i+1}]));
+  for(const x of rows){const z=map.get(norm(x.p.name));x.shadowScore=z?.score??x.score;x.shadowRawScore=z?.rawScore??x.rawScore;x.shadowRank=z?.rank??null}
+}
 function positionPathCandidates(scored,pos,limit){
   // Position paths are availability/quality ladders, not a second Coach ranking.
   // Do not let late-QB/TE need penalties, Return timing or roster utility promote
@@ -1445,6 +1552,9 @@ async function refresh(){
       const refReturns=refBoard.map(x=>x.ret).sort((x,y)=>x-y),refMedian=refReturns.length?refReturns[Math.floor(refReturns.length/2)]:null;
       if(refMedian!=null)for(const x of referenceBalanced){if(x.ret==null)continue;x.rawScore+=clamp((refMedian-x.ret)*6,-3,3);}
     }
+    // Counterfactual Research Residual v2 is computed in parallel and never mutates
+    // the live Coach score in rc4.15. This preserves a clean prospective baseline.
+    assignResearchShadowScores(scored,current);
     const valueSafety=applyPlayerQualitySafetyGate(scored,current);
     normalizeCoachScores(scored);
     if(referenceBalanced){
@@ -1496,7 +1606,7 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.13.1',
+      'App-Version: v11.8.0-rc4.15',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -1517,7 +1627,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.13.1 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${mode==='live'?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.15 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
@@ -1528,6 +1638,9 @@ async function refresh(){
       `Bewertbare verfügbare Spieler: ${scored.length}`,
       `Roster-Regel: max. 4 WR / 3 RB / 2 TE gleichzeitig startbar; das sind KEINE Draft-/Roster-Caps. Bench-Spieler dieser Positionen bleiben legal und können Value/Upside sein.`,
       `Snapshot-Guard: ${duplicateSnapshot?'DUPLIKAT/UNVERÄNDERT — wenn dieser Pick/Fingerprint im Chat bereits ausgewertet wurde, NICHT erneut analysieren; sofort einen aktuellen/neuen Snapshot anfordern.':'NEU — normal analysieren.'}`,
+      '',
+      `RESEARCH RESIDUAL SHADOW: ${RESEARCH_RESIDUAL_MODEL_VERSION} · NICHT live im Coach · statische Priors verfallen ${new Date(RESEARCH_PRIOR_EXPIRY).toLocaleDateString('de-DE')}`,
+      ...scored.filter(x=>x.researchResidual?.active).slice().sort((a,b)=>Math.abs(b.researchResidual.delta)-Math.abs(a.researchResidual.delta)).slice(0,10).map(x=>`${x.p.name} — ${x.p.pos} | Shadow ${x.researchResidual.delta>0?'+':''}${x.researchResidual.delta.toFixed(2)} | Coach ${x.score} -> Shadow ${x.shadowScore} | Shadow-Rang ${x.shadowRank??'–'} | ${x.researchResidual.components.slice(0,2).map(c=>`${c.kind}:${c.contribution>0?'+':''}${c.contribution}`).join(' · ')}`),
       '',
       'BISHERIGE PICKS'
     ];
@@ -1640,7 +1753,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.13.1',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.15',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
 function downloadJson(name,v){const b=new Blob([JSON.stringify(v,null,2)],{type:'application/json'}),u=URL.createObjectURL(b),a=document.createElement('a');a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1000)}
 function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=v.decisionLog||[];els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}

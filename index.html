@@ -21,7 +21,7 @@
       <h1>Draft Companion</h1>
       <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
     </div>
-    <span class="version">v11.8.0-rc4.13.1</span>
+    <span class="version">v11.8.0-rc4.15</span>
   </header>
 
   <nav class="workspace-nav" aria-label="Arbeitsbereich">
@@ -72,13 +72,13 @@
     <div class="three">
       <div><label for="draftMode">Modus</label><select id="draftMode"><option value="mock" selected>Mock/Test</option><option value="live">LIVE LEAGUE</option><option value="replay">Replay</option></select></div>
       <div><label for="replayCutoff">Replay bis Pick</label><input id="replayCutoff" type="number" min="0" placeholder="z. B. 70"></div>
-      <div><label for="managerMap">Slot→Manager (Live)</label><input id="managerMap" placeholder="1=Basti,2=Thomas,…"></div>
+      <div><label for="managerMap">Slot→Manager (2026 Live/Mock)</label><input id="managerMap" placeholder="1=Basti,2=Thomas,…"></div>
     </div>
     <div style="margin-top:10px"><label for="stressMode">Stresstest-Szenario</label><select id="stressMode"><option value="baseline" selected>Baseline</option><option value="rb">RB-Run / erhöhter RB-Druck</option><option value="te">TE-Run</option><option value="rookie">Rookie-RB-Reach</option><option value="late">Late-Round-Upside / Reach</option></select><p class="tiny">Szenarien verändern nur die Return-/Abnehmergefahr. Expertenpanel und Spielerbewertung bleiben die Baseline.</p></div>
-    <div id="modeStatus" class="notice">Mock/Test: Managerhistorie ist deaktiviert.</div>
+    <div id="modeStatus" class="notice">Mock/Test: 2026-Managerprofile aktiv.</div>
     <div class="strategy-box">
       <b>Simulationslabor</b>
-      <p class="tiny">Monte-Carlo-Gegenprobe für den Weg bis zu deinem Folgepick. Vergleicht Baseline, RB-Druck, TE-Run, Rookie-RB-Reach und Late-Upside mit denselben Managerprofilen.</p>
+      <p class="tiny">Monte-Carlo-Gegenprobe bis zum Folgepick. 2026 Live und Mock nutzen dieselben historischen Managerprofile; Baseline und Stressszenarien ändern nur die Varianz/Druckannahmen.</p>
       <button id="simulateBtn" class="secondary" disabled>5 Szenarien simulieren</button>
       <div id="simulationStatus" class="notice">Erst Draft analysieren.</div>
       <div id="simulationResults"></div>
@@ -204,9 +204,9 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v11.8.0-rc4.13.1: Return-v2 / Value-Safety / Target-Collision Test-Release auf v11.7.2-Basis. Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt; Phase Views und Research Cache v2 bleiben erhalten. Die bewährten Simulation-Lab-v2- und Live-Speed/Snapshot-Guard-Regeln der Produktionsbasis bleiben erhalten.</div>
+<div class="freeze-note">v11.8.0-rc4.15: Return-v2 / Value-Safety / Target-Collision Test-Release auf v11.7.2-Basis. Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt; Phase Views und Research Cache v2 bleiben erhalten. Die bewährten Simulation-Lab-v2- und Live-Speed/Snapshot-Guard-Regeln der Produktionsbasis bleiben erhalten.</div>
 </main>
-<script type="module" src="app.js?v=11.8.0-rc4.13.1"></script>
+<script type="module" src="app.js?v=11.8.0-rc4.15"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>
 </html>

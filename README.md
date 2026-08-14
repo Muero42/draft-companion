@@ -1,4 +1,15 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.13.1)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.15)
+### rc4.15 — Research Residual Shadow v2
+- Preserves rc4.14.1 Manager Model v2.1 as the live decision baseline.
+- Adds a separate, bounded Breakout/Decline residual counterfactual score with position/price-sensitive caps.
+- Static 2026 research priors are explicitly short-lived and expire before the draft freeze unless refreshed.
+- Structured Research Cache events can provide direction/strength/confidence/pricing/causal-path/invalidator metadata; critical injury chronology still fails closed.
+- Shadow values are exported in decision fixtures and Snapshot for prospective no-future-leak comparison.
+- **No Shadow delta changes the live Coach ordering in rc4.15.** Promotion requires incremental validation over panel+ADP plus full-roster utility checks.
+
+### rc4.14.1 — Unified Manager Model v2.1
+Historische Manager-Positions-/Timing-Signale werden nur noch einmal gewertet; legacy Doppelzählung wurde entfernt. Live-Diagnostik verwendet jetzt für jedes Gegnerfenster den tatsächlichen Pick-Zeitpunkt. Qualitative/current-regime Managerhinweise bleiben als gekappte Sekundärsignale erhalten.
+2026 Live/Mock verwenden dieselbe recency-weighted Managerprofil-Quelle (2017–2025, Sonderjahre maskiert), manager-spezifische K/DST-Hazards und einen Sleeper-ADP-dominierten Markt-Prior als Plausibilitätsrahmen. Profil-Hash wird in Decision Fixtures/Backup exportiert.
 ### rc4.13.1 — validation-export only
 
 ### Paketstruktur
@@ -9,7 +20,7 @@ Diese Auslieferungs-ZIP enthält nur die 8 für Deployment/Dokumentation benöti
 - Purpose: after a natural mock, one normal Backup preserves the decision-time evidence needed for strict no-future-leak full-draft counterfactual replay.
 
 
-## v11.8.0-rc4.13.1 — dress-rehearsal hardening
+## v11.8.0-rc4.14.1 — Unified Manager Model v2.1
 - Snapshot freshness guard: a duplicate/unmodified fingerprint already analyzed in chat must not trigger a second live analysis; request a fresh/current snapshot instead.
 - Roster semantics are explicit: max 4 WR / 3 RB / 2 TE are simultaneous starter limits, not roster caps.
 - Pre-analysis must use the same Player Quality, injury, Return/TAKE-WAIT and Championship Utility rules as live analysis.
