@@ -1,4 +1,9 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.18)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.19)
+### rc4.19 — Android backup export hardening
+
+- Backup export now prefers Web Share with a real JSON File on supported Android/PWA environments, allowing direct share to ChatGPT or Save-to-Files.
+- Browser download remains as a hardened fallback with a DOM-attached download anchor and delayed object-URL cleanup.
+
 ### rc4.18 — Lossless Backup/Restore hardening
 - Restores validation state (`returnValidation`, `decisionFixtures`) that was already exported but previously not re-applied.
 - Restores draft/strategy/stress modes and manager map from the backup.
