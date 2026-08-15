@@ -1,5 +1,32 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.19)
-### rc4.19 — Android backup export hardening
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.25)
+### rc4.25 — backup provenance coherence hotfix
+- Fixes a deterministic rc4.24 evidence-provenance defect: normal Backup incorrectly labeled itself `11.8.0-rc4.23` although runtime/fixtures were rc4.24.
+- Backup version now matches active runtime `11.8.0-rc4.25`.
+- No Player Quality, expert aggregation, Return-v2, Manager Model, ADP, Research Residual, roster/championship utility, opponent, or queue behavior changed.
+- rc4.24 robust-panel shadow evidence fields are preserved unchanged.
+
+### rc4.23 — ranking objective correction / no player blacklist
+- Removes the rc4.21 player-specific Geno Smith/Aaron Rodgers user blacklist after clarification that they were examples of prior ranking distortion, not permanent exclusions.
+- User candidates again come from the complete selected-panel ranked pool. Low-value players remain draftable but should naturally sit low through Player Quality, market/timing, roster/championship utility and validated evidence.
+- Preserves the rc4.22 **Emergency Queue kopieren** generator: manual-only, capped at 35 skill players, no K/DST, at most one QB and one TE while those starter positions are open; after QB1/TE1 is rostered, that position is omitted.
+- Objective remains maximizing championship probability rather than enforcing player preferences: strong initial roster, asymmetric later-season upside, and validated residual value beyond panel + market. No model coefficient is retuned by this correction.
+
+### rc4.22 — Emergency Sleeper Queue generator
+- Added the dedicated **Emergency Queue kopieren** action derived from the current user Coach order.
+- Queue output is manual-only, capped at 35 skill players, excludes K/DST, and contains at most one QB and one TE while those starter positions are still open; after QB1/TE1 is rostered, that position is omitted.
+- The rc4.21 player blacklist described below was subsequently removed in rc4.23.
+
+### rc4.21 — superseded player-specific exclusion interpretation
+- Temporarily excluded Geno Smith and Aaron Rodgers from the user path after their earlier mention was misread as a permanent blacklist.
+- This interpretation is explicitly superseded by rc4.23. Their current ranking should be determined by the selected expert panel and validated evidence, not a hard-coded exclusion.
+
+### rc4.20 — validation geometry + frozen-pool evidence hardening
+- Corrects Return-validation windows for pre-draft/paused snapshots so an opponent pick at `current` is not skipped.
+- Aligns Return-v2 simulated `pickNo` with `firstOpponentPick` for non-user-turn snapshots.
+- Freezes the complete ranked skill-player pool and resolved manager-map snapshot into each new decision fixture, enabling strict post-mock counterfactual reruns without later Sleeper metadata.
+- Live Coach ranking/weights, Player Quality, Research Residual Shadow, ADP source and manager-model coefficients are unchanged.
+
+### rc4.20 — Android backup export hardening
 
 - Backup export now prefers Web Share with a real JSON File on supported Android/PWA environments, allowing direct share to ChatGPT or Save-to-Files.
 - Browser download remains as a hardened fallback with a DOM-attached download anchor and delayed object-URL cleanup.
