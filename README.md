@@ -1,11 +1,11 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.15)
-### rc4.15 — Research Residual Shadow v2
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.16)
+### rc4.16 — Research Residual Shadow v2
 - Preserves rc4.14.1 Manager Model v2.1 as the live decision baseline.
 - Adds a separate, bounded Breakout/Decline residual counterfactual score with position/price-sensitive caps.
 - Static 2026 research priors are explicitly short-lived and expire before the draft freeze unless refreshed.
 - Structured Research Cache events can provide direction/strength/confidence/pricing/causal-path/invalidator metadata; critical injury chronology still fails closed.
 - Shadow values are exported in decision fixtures and Snapshot for prospective no-future-leak comparison.
-- **No Shadow delta changes the live Coach ordering in rc4.15.** Promotion requires incremental validation over panel+ADP plus full-roster utility checks.
+- **No Shadow delta changes the live Coach ordering in rc4.16.** Promotion requires incremental validation over panel+ADP plus full-roster utility checks.
 
 ### rc4.14.1 — Unified Manager Model v2.1
 Historische Manager-Positions-/Timing-Signale werden nur noch einmal gewertet; legacy Doppelzählung wurde entfernt. Live-Diagnostik verwendet jetzt für jedes Gegnerfenster den tatsächlichen Pick-Zeitpunkt. Qualitative/current-regime Managerhinweise bleiben als gekappte Sekundärsignale erhalten.
