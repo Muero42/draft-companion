@@ -1,4 +1,4 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.39)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.40)
 ### rc4.25 — backup provenance coherence hotfix
 - Fixes a deterministic rc4.24 evidence-provenance defect: normal Backup incorrectly labeled itself `11.8.0-rc4.23` although runtime/fixtures were rc4.24.
 - Backup version now matches active runtime `11.8.0-rc4.29`.
@@ -467,10 +467,18 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - Watcher v0.1.5 deployment is a separate external gate; rc4.33 fails closed while the endpoint is unavailable.
 
 
-## v11.8.0-rc4.39 — Mock/LIVE phased Draft views + read-only rehearsal
+## v11.8.0-rc4.40 — Mock/LIVE phased Draft views + read-only rehearsal
 - Adds separate Mock/Vorbereitung and LIVE Draft views over the same Decision Engine; no duplicate Coach/Return/Player Quality path exists.
 - LIVE hides expert/panel/strategy/stress/simulation configuration and Advanced settings to reduce draft-day misnavigation; switching to LIVE sets the existing canonical draft mode to `live`.
 - Adds a read-only LIVE preview using the current connected draft plus a historical pick cutoff while retaining LIVE manager/Return behavior. Preview does not resolve/freeze Return validation, Decision Fixtures, or duplicate-Snapshot state.
 - Mock/Vorbereitung retains the full configuration and Simulation Lab.
-- Fixes a discovered stale `index.html` app cache-buster (`rc4.28`) so index, service worker, runtime and package now coherently request rc4.39.
+- Fixes a discovered stale `index.html` app cache-buster (`rc4.28`) so index, service worker, runtime and package now coherently request rc4.40.
 - No Coach, Player Quality, Return-v2, Manager Model, Research Residual, FAAB, Trade or Waiver scoring coefficients changed.
+
+
+## v11.8.0-rc4.40 — Trade Target Board v2: marginal lineup geometry
+
+- Fixes a target-discovery defect in Trade Target Board v1: an opponent asset was compared only with the user's best player at the same position, which could hide real WR3/WR4 or RB2/RB3 lineup/flex upgrades.
+- Target discovery now compares an asset with the marginal practical lineup depth for this league (WR up to 4, RB up to 3; QB/TE 1 by default).
+- QB2/TE2 remain suppressed unless the target materially improves QB1/TE1.
+- This changes target discovery only. Boone redraft/ROS market value, acceptance plausibility and ACCEPT/DECLINE/fairness remain fail-closed. No Draft Coach, Return-v2, panel/ADP or FAAB coefficient changed.
