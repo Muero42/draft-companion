@@ -1088,7 +1088,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.34',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.35',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     // Full frozen skill-player pool makes post-mock counterfactuals reproducible without
@@ -1287,7 +1287,7 @@ function buildEmergencyQueueText(scored,state,current,draftId){
   }
   const lines=[
     '===== PITTI EMERGENCY SLEEPER QUEUE =====',
-    'App-Version: v11.8.0-rc4.34',
+    'App-Version: v11.8.0-rc4.35',
     `Draft-ID: ${draftId}`,
     `Stand: Pick ${current}`,
     'Nur manueller Sleeper-Queue-Fallback; keine API-/Import-Automation.',
@@ -1377,8 +1377,9 @@ function expertRanksHtml(r){
 function renderCoach(rows,state,current,next){
   const top=rows.slice(0,5);
   els.favoritesBlock.innerHTML=top.length?`<div class="favorite-box"><b>${top[0].action}: ${esc(top[0].p.name)} · ${top[0].p.pos}</b><div class="tiny">Top 5 sichtbar · 10–15 Kandidaten werden intern weitergeführt.</div></div>`:'';
-  els.coachList.innerHTML=`<div class="coach-section-title">Empfehlung + 4 Alternativen</div>`+top.map((x,i)=>`<article class="coach"><div class="coach-head"><div><h3>${i+1}. ${esc(x.p.name)} · ${x.p.pos}</h3><div class="tiny">${i===0?'EMPFEHLUNG · ':''}${x.action} · Tier ${x.r.tier||'–'} · Loss ${x.loss}</div></div><div class="score">${x.score}${Number.isFinite(x.balancedScore)?`<small class="strategy-compare">v10 ${x.balancedScore}</small>`:''}</div></div><div class="metrics"><div class="metric"><b>${x.r.rank.toFixed(1)}</b><span>Overall</span></div><div class="metric"><b>${Number.isFinite(x.a)?x.a.toFixed(1):'–'}</b><span>ADP</span></div><div class="metric"><b>${x.ret!=null?Math.round(x.ret*100)+'%':'–'}</b><span>Return</span></div><div class="metric"><b>${x.returnConfidence}%</b><span>Return-Conf.</span></div><div class="metric"><b>${x.intel.plausible}</b><span>Abnehmer</span></div></div>${expertRanksHtml(x.r)}<div class="tags">${x.reasons.slice(-7).map(reason=>`<span class="tag info">${esc(reason)}</span>`).join('')}</div></article>`).join('');
+  els.coachList.innerHTML=`<div class="coach-section-title">Empfehlung + 4 Alternativen</div>`+top.map((x,i)=>`<article class="coach"><div class="coach-head"><div><h3>${i+1}. ${esc(x.p.name)} · ${x.p.pos}</h3><div class="tiny">${i===0?'EMPFEHLUNG · ':''}${x.action} · Tier ${x.r.tier||'–'} · Loss ${x.loss}</div></div><div class="score">${x.score}${Number.isFinite(x.balancedScore)?`<small class="strategy-compare">v10 ${x.balancedScore}</small>`:''}</div></div><div class="metrics"><div class="metric"><b>${x.r.rank.toFixed(1)}</b><span>Overall</span></div><div class="metric"><b>${Number.isFinite(x.a)?x.a.toFixed(1):'–'}</b><span>ADP</span></div><div class="metric"><b>${x.ret!=null?Math.round(x.ret*100)+'%':'–'}</b><span>Return</span></div><div class="metric"><b>${x.returnConfidence}%</b><span>Return-Conf.</span></div><div class="metric"><b>${x.intel.plausible}</b><span>Abnehmer</span></div></div>${expertRanksHtml(x.r)}<div class="tags">${x.reasons.slice(-7).map(reason=>`<span class="tag info">${esc(reason)}</span>`).join('')}</div><button class="secondary live-only live-detail-toggle" type="button" data-live-detail-toggle>${i===0?'Details ausblenden':'Details anzeigen'}</button></article>`).join('');
   els.teamSummary.innerHTML=Object.entries(state.counts).map(([p,n])=>`<div class="summary-item"><b>${n}</b><span>${p}</span></div>`).join('')+`<div class="summary-item"><b>${current}</b><span>Pick</span></div><div class="summary-item"><b>${next??'–'}</b><span>Nächster</span></div>`;
+  els.coachList.querySelectorAll('[data-live-detail-toggle]').forEach(btn=>btn.onclick=()=>{const card=btn.closest('.coach');card.classList.toggle('live-detail-open');btn.textContent=card.classList.contains('live-detail-open')?'Details ausblenden':'Details anzeigen';});
 }
 
 const FP_ANALYZER_URL='https://dw.fantasypros.com/football/draft-analyzer/';
@@ -1880,7 +1881,7 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.34',
+      'App-Version: v11.8.0-rc4.35',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -1902,7 +1903,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.34 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.35 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
@@ -2041,7 +2042,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.34',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.35',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
 async function downloadJson(name,v){
   const text=JSON.stringify(v,null,2),file=new File([text],name,{type:'application/json'});
   // Android/PWA: Web Share with a real File is more reliable than navigating to a blob URL.
@@ -2155,7 +2156,7 @@ function populateLivePreviewPoints(){
 }
 function setDraftSurface(name){
   if(name!=='live')name='mock';
-  document.body.classList.toggle('draft-live-view',name==='live');
+  document.body.classList.toggle('draft-live-view',name==='live');if(name!=='live')document.body.classList.remove('live-coach-active');
   els.mockViewBtn?.classList.toggle('active',name==='mock');els.liveViewBtn?.classList.toggle('active',name==='live');
   localStorage.setItem('v118_draftSurface',name);
   if(name==='live'){
@@ -2172,8 +2173,8 @@ function setDraftSurface(name){
 }
 if(els.mockViewBtn)els.mockViewBtn.onclick=()=>setDraftSurface('mock');
 if(els.liveViewBtn)els.liveViewBtn.onclick=()=>setDraftSurface('live');
-if(els.livePreviewBtn)els.livePreviewBtn.onclick=async()=>{try{livePreviewActive=true;els.draftMode.value='live';els.livePreviewExitBtn.hidden=false;els.livePreviewStatus.className='notice warn';els.livePreviewStatus.textContent='Read-only Vorschau aktiv …';await refresh();els.livePreviewStatus.className='notice ok';els.livePreviewStatus.textContent=`Read-only LIVE-Vorschau bei Pick ${Number(els.livePreviewCutoff.value)+1}. Keine Forecast-/Decision-Fixtures geschrieben.`;}catch(e){livePreviewActive=false;els.livePreviewStatus.className='notice bad';els.livePreviewStatus.textContent=e.message;}};
-if(els.livePreviewExitBtn)els.livePreviewExitBtn.onclick=()=>{livePreviewActive=false;els.livePreviewExitBtn.hidden=true;els.livePreviewStatus.className='notice';els.livePreviewStatus.textContent='Vorschau inaktiv. Nächste Analyse verwendet den echten Draftzustand.';};
+if(els.livePreviewBtn)els.livePreviewBtn.onclick=async()=>{try{livePreviewActive=true;els.draftMode.value='live';els.livePreviewExitBtn.hidden=false;els.livePreviewStatus.className='notice warn';els.livePreviewStatus.textContent='Read-only Vorschau aktiv …';await refresh();document.body.classList.add('live-coach-active');els.livePreviewStatus.className='notice ok';els.livePreviewStatus.textContent=`Read-only LIVE-Vorschau bei Pick ${Number(els.livePreviewCutoff.value)+1}. Keine Forecast-/Decision-Fixtures geschrieben.`;}catch(e){livePreviewActive=false;els.livePreviewStatus.className='notice bad';els.livePreviewStatus.textContent=e.message;}};
+if(els.livePreviewExitBtn)els.livePreviewExitBtn.onclick=()=>{livePreviewActive=false;document.body.classList.remove('live-coach-active');els.livePreviewExitBtn.hidden=true;els.livePreviewStatus.className='notice';els.livePreviewStatus.textContent='Vorschau inaktiv. Nächste Analyse verwendet den echten Draftzustand.';};
 function setWorkspace(name){
   const valid=['draft','roster','waiver','trade','live'];if(!valid.includes(name))name='draft';
   localStorage.setItem('v117_workspace',name);

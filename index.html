@@ -10,7 +10,7 @@
   <title>Draft Companion – Final Draft Edition 2026</title>
 
 <style id="workspaceStyles">
-.workspace-nav{display:flex;gap:7px;overflow-x:auto;padding:4px 0 12px;position:sticky;top:0;z-index:20;background:linear-gradient(180deg,var(--bg,#0b1220) 75%,transparent);scrollbar-width:none}.workspace-nav::-webkit-scrollbar{display:none}.workspace-tab{white-space:nowrap;min-width:max-content;padding:9px 13px;border-radius:999px;opacity:.72}.workspace-tab.active{opacity:1;outline:2px solid currentColor}.workspace-panel[hidden]{display:none!important}.draft-surface-nav{display:flex;gap:8px;margin:0 0 12px}.draft-surface-tab{flex:1;padding:10px 12px;border-radius:12px}.draft-surface-tab.active{outline:2px solid currentColor}.live-only{display:none}.draft-live-view .mock-only{display:none!important}.draft-live-view .live-only{display:block}.draft-live-view .advanced-card{display:none!important}.live-lock{border:1px solid rgba(96,165,250,.35);padding:10px;border-radius:10px;margin:10px 0}.preview-box{border:1px dashed rgba(250,204,21,.55);padding:10px;border-radius:10px;margin:10px 0}.preview-box .two{align-items:end}.phase-intro{margin-bottom:12px}.phase-intro h2{margin-bottom:4px}.phase-grid{display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}.phase-tile{padding:12px;border:1px solid rgba(148,163,184,.22);border-radius:12px}.phase-tile b{display:block;margin-bottom:4px}.compact-details{margin-top:8px}.compact-details>summary{cursor:pointer;font-weight:700;list-style:none;display:flex;align-items:center;gap:7px}.compact-details>summary::-webkit-details-marker{display:none}.compact-details>summary::before{content:"▸";font-size:.9em;transition:transform .15s ease}.compact-details[open]>summary::before{transform:rotate(90deg)}.compact-details .details-body{margin-top:8px}@media(max-width:640px){.phase-grid{grid-template-columns:1fr}.workspace-nav{margin-left:-4px;margin-right:-4px}}
+.workspace-nav{display:flex;gap:7px;overflow-x:auto;padding:4px 0 12px;position:sticky;top:0;z-index:20;background:linear-gradient(180deg,var(--bg,#0b1220) 75%,transparent);scrollbar-width:none}.workspace-nav::-webkit-scrollbar{display:none}.workspace-tab{white-space:nowrap;min-width:max-content;padding:9px 13px;border-radius:999px;opacity:.72}.workspace-tab.active{opacity:1;outline:2px solid currentColor}.workspace-panel[hidden]{display:none!important}.draft-surface-nav{display:flex;gap:8px;margin:0 0 12px}.draft-surface-tab{flex:1;padding:10px 12px;border-radius:12px}.draft-surface-tab.active{outline:2px solid currentColor}.live-only{display:none}.draft-live-view .mock-only{display:none!important}.draft-live-view .live-only{display:block}.draft-live-view .advanced-card{display:none!important}.live-lock{border:1px solid rgba(96,165,250,.35);padding:10px;border-radius:10px;margin:10px 0}.preview-box{border:1px dashed rgba(250,204,21,.55);padding:10px;border-radius:10px;margin:10px 0}.preview-box .two{align-items:end}.live-compact-only{display:none}.draft-live-view .live-compact-only{display:block}.draft-live-view.live-coach-active .live-setup-copy{display:none!important}.draft-live-view.live-coach-active .preview-box{padding:8px;margin:6px 0}.draft-live-view.live-coach-active .preview-box>p,.draft-live-view.live-coach-active .preview-box>div.two,.draft-live-view.live-coach-active .preview-box>b{display:none}.draft-live-view.live-coach-active .preview-box #livePreviewStatus{margin:0}.draft-live-view.live-coach-active #draftInput,.draft-live-view.live-coach-active label[for="draftInput"]{display:none}.draft-live-view.live-coach-active [data-workspace="draft"].card{margin:8px 0}.draft-live-view.live-coach-active #coachSectionCard{scroll-margin-top:88px}.draft-live-view .coach .expert-grid,.draft-live-view .coach .coach-section-title,.draft-live-view .coach .tags{display:none}.draft-live-view .coach.live-detail-open .expert-grid,.draft-live-view .coach.live-detail-open .coach-section-title,.draft-live-view .coach.live-detail-open .tags{display:grid}.draft-live-view .coach.live-detail-open .tags{display:flex}.draft-live-view .live-detail-toggle{display:block;width:100%;min-height:34px;margin-top:8px;padding:6px 9px;font-size:.76rem}.draft-live-view .coach:first-of-type .expert-grid,.draft-live-view .coach:first-of-type .coach-section-title,.draft-live-view .coach:first-of-type .tags{display:grid}.draft-live-view .coach:first-of-type .tags{display:flex}.draft-live-view .freeze-note{display:none!important}.phase-intro{margin-bottom:12px}.phase-intro h2{margin-bottom:4px}.phase-grid{display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}.phase-tile{padding:12px;border:1px solid rgba(148,163,184,.22);border-radius:12px}.phase-tile b{display:block;margin-bottom:4px}.compact-details{margin-top:8px}.compact-details>summary{cursor:pointer;font-weight:700;list-style:none;display:flex;align-items:center;gap:7px}.compact-details>summary::-webkit-details-marker{display:none}.compact-details>summary::before{content:"▸";font-size:.9em;transition:transform .15s ease}.compact-details[open]>summary::before{transform:rotate(90deg)}.compact-details .details-body{margin-top:8px}@media(max-width:640px){.phase-grid{grid-template-columns:1fr}.workspace-nav{margin-left:-4px;margin-right:-4px}}
 </style>
 </head>
 <body>
@@ -21,7 +21,7 @@
       <h1>Draft Companion</h1>
       <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
     </div>
-    <span class="version">v11.8.0-rc4.34</span>
+    <span class="version">v11.8.0-rc4.35</span>
   </header>
 
   <nav class="workspace-nav" aria-label="Arbeitsbereich">
@@ -69,7 +69,7 @@
     <div class="section-head"><div><span class="step">2</span><h2>Draft verbinden</h2></div></div>
     <label for="draftInput">Sleeper-Draft-Link oder Draft-ID</label>
     <textarea id="draftInput" rows="1" inputmode="url" name="draft-link" placeholder="https://sleeper.app/draft/nfl/…" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" data-lpignore="true" data-1p-ignore="true" data-form-type="other" aria-label="Sleeper-Draft-Link oder Draft-ID"></textarea>
-    <div class="live-only live-lock"><b>LIVE-Konfiguration gesperrt</b><p class="tiny">Dieselbe Decision Engine wie im Mock. Expertenpanel, Strategie, Managerprofile und Stresstest bleiben unverändert; hier werden sie nicht versehentlich bearbeitet.</p><div id="liveLockStatus" class="notice">Live-Ansicht bereit.</div></div>
+    <div class="live-only live-lock"><b>LIVE-Konfiguration gesperrt</b><p class="tiny live-setup-copy">Dieselbe Decision Engine wie im Mock. Expertenpanel, Strategie, Managerprofile und Stresstest bleiben unverändert; hier werden sie nicht versehentlich bearbeitet.</p><div id="liveLockStatus" class="notice">Live-Ansicht bereit.</div></div>
     <div class="live-only preview-box"><b>Read-only Live-Vorschau</b><p class="tiny">Spielt einen bereits eingefrorenen Entscheidungspunkt mit der echten LIVE-Engine ab. Keine Forecast-/Decision-Fixtures werden geschrieben.</p><div class="two"><div><label for="livePreviewCutoff">Gespeicherter Entscheidungspunkt</label><select id="livePreviewCutoff"></select></div><button id="livePreviewBtn" class="secondary" type="button">Vorschau laden</button></div><button id="livePreviewExitBtn" class="secondary" type="button" hidden>Echte Live-Verbindung verwenden</button><div id="livePreviewStatus" class="notice">Vorschau inaktiv.</div></div>
     <div class="three mock-only">
       <div><label for="slot">Mein Slot</label><select id="slot"></select></div>
@@ -109,7 +109,7 @@
     <div id="draftStatus" class="notice">Noch nicht verbunden.</div>
   </section>
 
-  <section class="card" data-workspace="draft">
+  <section class="card" id="coachSectionCard" data-workspace="draft">
     <div class="section-head"><div><span class="step">3</span><h2>Draft Coach</h2></div></div>
     <div id="emptyCoach" class="empty-state">
       <b>Wartet auf Draft-Verbindung:</b>
@@ -228,9 +228,9 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v11.8.0-rc4.34: Return-v2 / Value-Safety / Target-Collision Test-Release auf v11.7.2-Basis. Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt; Phase Views und Research Cache v2 bleiben erhalten. Die bewährten Simulation-Lab-v2- und Live-Speed/Snapshot-Guard-Regeln der Produktionsbasis bleiben erhalten.</div>
+<div class="freeze-note">v11.8.0-rc4.35: Return-v2 / Value-Safety / Target-Collision Test-Release auf v11.7.2-Basis. Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt; Phase Views und Research Cache v2 bleiben erhalten. Die bewährten Simulation-Lab-v2- und Live-Speed/Snapshot-Guard-Regeln der Produktionsbasis bleiben erhalten.</div>
 </main>
-<script type="module" src="app.js?v=11.8.0-rc4.34"></script>
+<script type="module" src="app.js?v=11.8.0-rc4.35"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>
 </html>
