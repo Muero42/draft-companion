@@ -1,7 +1,7 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.25)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.33)
 ### rc4.25 — backup provenance coherence hotfix
 - Fixes a deterministic rc4.24 evidence-provenance defect: normal Backup incorrectly labeled itself `11.8.0-rc4.23` although runtime/fixtures were rc4.24.
-- Backup version now matches active runtime `11.8.0-rc4.25`.
+- Backup version now matches active runtime `11.8.0-rc4.29`.
 - No Player Quality, expert aggregation, Return-v2, Manager Model, ADP, Research Residual, roster/championship utility, opponent, or queue behavior changed.
 - rc4.24 robust-panel shadow evidence fields are preserved unchanged.
 
@@ -429,3 +429,39 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - League-specific draft assumption preserved: one IR slot; PUP is IR-eligible under the currently verified league settings. When that slot is still free, a late PUP player can receive a small stash/tiebreak value because the roster spot can be refilled immediately after the draft.
 - This is deliberately not a generic injury upside bonus. Once the IR slot is already consumed, the stash benefit disappears. IR remains materially penalized until current evidence confirms that it is not season-ending and provides a plausible return timetable.
 - Draft-day emergency fallback remains: if live Snapshot/Companion loading fails, a Sleeper available-player screenshot is sufficient for a degraded-confidence emergency recommendation; Return-v2/opponent outputs must never be invented when unavailable.
+
+
+## rc4.29
+- Roster/Team v1.1 adds conservative bench-capital review after draft completion.
+- Review is not a drop recommendation: every candidate remains REVIEW ONLY until compared against a materially better free agent.
+- High-upside contingent RBs receive explicit preservation bias.
+- No Coach/Return-v2/panel/ADP coefficient changes.
+
+
+## v11.8.0-rc4.33 — Post-Draft FA-vs-Roster v1
+- Adds read-only concrete available-pool vs roster swap analysis with CLEAR ADD / WATCH / HOLD thresholds.
+- Selected expert panel remains Player Quality baseline; Sleeper ADP is market context.
+- CLEAR ADD requires current Research Cache evidence; missing evidence caps action at WATCH.
+- Preserves contingent RBs and strongly penalizes QB2/TE2 in 10-team 1QB context.
+- No transactions, FAAB, Trade logic, Coach/Return/model coefficient changes.
+- Fixes Backup provenance version to current package version.
+
+
+## v11.8.0-rc4.31 — Trade Target Board v1
+- Adds automatic read-only target discovery across opponent draft rosters.
+- Uses selected-panel quality, positional upgrade and current Research Cache hints.
+- Explicitly withholds ACCEPT/DECLINE and fairness until Boone ROS/market and opponent-utility inputs are available.
+- No transactions or draft-model changes.
+
+
+## v11.8.0-rc4.33 — Waiver/FA Priority v1
+- Reuses FA-vs-Roster swap results for claim priority; no second Player Quality engine.
+- Numeric FAAB intentionally fail-closed until current waiver-week/market evidence exists.
+- No transactions or draft-model changes.
+
+
+## v11.8.0-rc4.33 — Watcher public feed bridge (prepared)
+- Background read-only sync to `/companion-feed`; only schema-valid gate PASS is ingested.
+- No WATCHER_TOKEN is stored in Draft Companion.
+- Critical player-state changes without true source publication/event chronology remain non-actionable provenance.
+- Watcher v0.1.5 deployment is a separate external gate; rc4.33 fails closed while the endpoint is unavailable.

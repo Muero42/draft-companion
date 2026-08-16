@@ -21,7 +21,7 @@
       <h1>Draft Companion</h1>
       <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
     </div>
-    <span class="version">v11.8.0-rc4.25</span>
+    <span class="version">v11.8.0-rc4.33</span>
   </header>
 
   <nav class="workspace-nav" aria-label="Arbeitsbereich">
@@ -147,23 +147,29 @@
 
   <section class="card workspace-panel" data-workspace="roster" hidden>
     <div class="phase-intro"><h2>👥 Kader</h2><p class="tiny">Saisonansicht für Hold/Drop/Protect-Entscheidungen. Dieselbe Player Intelligence wie im Draft, aber ohne Draft-Noise.</p></div>
-    <div class="phase-grid"><div class="phase-tile"><b>Roster State</b><span class="tiny">Starter, Bench-Kapital und Playoff-Zweck werden hier gebündelt.</span></div><div class="phase-tile"><b>Thesis Protection</b><span class="tiny">Offene Breakout-Pfade und Activation Locks schützen vor vorschnellen Drops/Throw-ins.</span></div></div>
-    <div class="notice">Struktur vorbereitet. Live-Roster-Anbindung folgt auf derselben Datenbasis.</div>
+    <div class="phase-grid"><div class="phase-tile"><b>Roster State</b><span class="tiny">Aktueller Sleeper-Draftkader mit Panel-/ADP-Baseline und Positionskapital.</span></div><div class="phase-tile"><b>Thesis Protection</b><span class="tiny">Frühe Picks und Spieler mit starkem Panel-/Marktwert werden vor vorschnellen Drops geschützt.</span></div></div>
+    <div id="rosterStatus" class="notice">Noch kein Draft geladen.</div>
+    <div id="rosterSummary" class="summary-grid"></div>
+    <div id="rosterList" class="coach-list"></div>
+    <div id="rosterBenchStatus" class="notice"></div>
+    <div id="rosterBenchList" class="coach-list"></div>
+    <div id="rosterFaStatus" class="notice"></div>
+    <div id="rosterFaList" class="coach-list"></div>
   </section>
   <section class="card workspace-panel" data-workspace="waiver" hidden>
     <div class="phase-intro"><h2>⚡ Waiver / Free Agents</h2><p class="tiny">Nur Akquisitionsentscheidungen: Add, FAAB, Drop-Kandidat, Market Window und nächste Informationsauflösung.</p></div>
     <div class="phase-grid"><div class="phase-tile"><b>Opportunity</b><span class="tiny">Organic, Contingency und Informational Acquisition.</span></div><div class="phase-tile"><b>Acquisition Utility</b><span class="tiny">FAAB, Bench Opportunity Cost und lokale Marktgefahr.</span></div></div>
-    <div class="notice">Struktur vorbereitet. Keine erfundenen Live-Daten.</div>
+    <div id="waiverStatus" class="notice">Noch kein abgeschlossener Draft geladen.</div><div id="waiverList" class="coach-list"></div>
   </section>
   <section class="card workspace-panel" data-workspace="trade" hidden>
     <div class="phase-intro"><h2>🔁 Trades</h2><p class="tiny">Trade-Wert getrennt vom Player Belief State: Gegenwert, Roster-Effekt und Throw-In Protection.</p></div>
     <div class="phase-grid"><div class="phase-tile"><b>Trade Compare</b><span class="tiny">Beide Seiten plus beste realistische Alternative.</span></div><div class="phase-tile"><b>Protection Check</b><span class="tiny">ACTIVATING-/unterpreiste Spieler nicht zum alten Marktwert abgeben.</span></div></div>
-    <div class="notice">Struktur vorbereitet. Trade-Engine wird als eigener View ergänzt.</div>
+    <div id="tradeStatus" class="notice">Noch kein abgeschlossener Draft geladen.</div><div id="tradeList" class="coach-list"></div>
   </section>
   <section class="card workspace-panel" data-workspace="live" hidden>
     <div class="phase-intro"><h2>📡 Live / News</h2><p class="tiny">Event-getriebene Ansicht für Injury-, Inactive-, Usage- und Market-Window-Trigger.</p></div>
     <div class="phase-grid"><div class="phase-tile"><b>Trigger Queue</b><span class="tiny">Welche gespeicherte These wurde gerade aktiviert oder invalidiert?</span></div><div class="phase-tile"><b>Research Cache</b><span class="tiny" id="researchCacheStatus">Noch keine versionierte Evidence gespeichert.</span></div></div>
-    <div class="notice">Der timestamp-sichere Cache-Grundstein ist gelegt; Quellen-Ingestion wird separat angeschlossen.</div>
+    <div id="watcherSyncStatus" class="notice">Pitti Watcher: Feed noch nicht geprüft.</div><div class="notice">Watcher-Ingestion ist read-only und fail-closed: nur ein source-proven scheduled-health PASS darf Evidence übernehmen. Kritische Injury/IR/PUP-State-Deltas ohne echte Quellenchronologie bleiben nicht-actionable.</div>
   </section>
 
   <details class="card advanced-card">
@@ -215,9 +221,9 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v11.8.0-rc4.25: Return-v2 / Value-Safety / Target-Collision Test-Release auf v11.7.2-Basis. Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt; Phase Views und Research Cache v2 bleiben erhalten. Die bewährten Simulation-Lab-v2- und Live-Speed/Snapshot-Guard-Regeln der Produktionsbasis bleiben erhalten.</div>
+<div class="freeze-note">v11.8.0-rc4.33: Return-v2 / Value-Safety / Target-Collision Test-Release auf v11.7.2-Basis. Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt; Phase Views und Research Cache v2 bleiben erhalten. Die bewährten Simulation-Lab-v2- und Live-Speed/Snapshot-Guard-Regeln der Produktionsbasis bleiben erhalten.</div>
 </main>
-<script type="module" src="app.js?v=11.8.0-rc4.25"></script>
+<script type="module" src="app.js?v=11.8.0-rc4.28"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>
 </html>

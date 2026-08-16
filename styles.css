@@ -40,3 +40,4 @@
 
 /* v11.7.2: URL/ID field uses a single-line textarea to avoid Android password-manager credential heuristics. */
 #draftInput{resize:none;overflow:hidden;white-space:nowrap;min-height:46px;height:46px;line-height:20px}
+.coach-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;background:#0f192b;border:1px solid #2a3e61;border-radius:12px;padding:10px;margin:8px 0}.coach-row>div:last-child{text-align:right;min-width:125px}.coach-section-title{font-size:.82rem;font-weight:900;color:#dce5f8;margin:12px 0 7px}@media(max-width:600px){.coach-row{gap:8px}.coach-row>div:last-child{min-width:105px}}
