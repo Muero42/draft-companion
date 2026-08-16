@@ -10,7 +10,7 @@
   <title>Draft Companion – Final Draft Edition 2026</title>
 
 <style id="workspaceStyles">
-.workspace-nav{display:flex;gap:7px;overflow-x:auto;padding:4px 0 12px;position:sticky;top:0;z-index:20;background:linear-gradient(180deg,var(--bg,#0b1220) 75%,transparent);scrollbar-width:none}.workspace-nav::-webkit-scrollbar{display:none}.workspace-tab{white-space:nowrap;min-width:max-content;padding:9px 13px;border-radius:999px;opacity:.72}.workspace-tab.active{opacity:1;outline:2px solid currentColor}.workspace-panel[hidden]{display:none!important}.phase-intro{margin-bottom:12px}.phase-intro h2{margin-bottom:4px}.phase-grid{display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}.phase-tile{padding:12px;border:1px solid rgba(148,163,184,.22);border-radius:12px}.phase-tile b{display:block;margin-bottom:4px}.compact-details{margin-top:8px}.compact-details>summary{cursor:pointer;font-weight:700;list-style:none;display:flex;align-items:center;gap:7px}.compact-details>summary::-webkit-details-marker{display:none}.compact-details>summary::before{content:"▸";font-size:.9em;transition:transform .15s ease}.compact-details[open]>summary::before{transform:rotate(90deg)}.compact-details .details-body{margin-top:8px}@media(max-width:640px){.phase-grid{grid-template-columns:1fr}.workspace-nav{margin-left:-4px;margin-right:-4px}}
+.workspace-nav{display:flex;gap:7px;overflow-x:auto;padding:4px 0 12px;position:sticky;top:0;z-index:20;background:linear-gradient(180deg,var(--bg,#0b1220) 75%,transparent);scrollbar-width:none}.workspace-nav::-webkit-scrollbar{display:none}.workspace-tab{white-space:nowrap;min-width:max-content;padding:9px 13px;border-radius:999px;opacity:.72}.workspace-tab.active{opacity:1;outline:2px solid currentColor}.workspace-panel[hidden]{display:none!important}.draft-surface-nav{display:flex;gap:8px;margin:0 0 12px}.draft-surface-tab{flex:1;padding:10px 12px;border-radius:12px}.draft-surface-tab.active{outline:2px solid currentColor}.live-only{display:none}.draft-live-view .mock-only{display:none!important}.draft-live-view .live-only{display:block}.draft-live-view .advanced-card{display:none!important}.live-lock{border:1px solid rgba(96,165,250,.35);padding:10px;border-radius:10px;margin:10px 0}.preview-box{border:1px dashed rgba(250,204,21,.55);padding:10px;border-radius:10px;margin:10px 0}.preview-box .two{align-items:end}.phase-intro{margin-bottom:12px}.phase-intro h2{margin-bottom:4px}.phase-grid{display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}.phase-tile{padding:12px;border:1px solid rgba(148,163,184,.22);border-radius:12px}.phase-tile b{display:block;margin-bottom:4px}.compact-details{margin-top:8px}.compact-details>summary{cursor:pointer;font-weight:700;list-style:none;display:flex;align-items:center;gap:7px}.compact-details>summary::-webkit-details-marker{display:none}.compact-details>summary::before{content:"▸";font-size:.9em;transition:transform .15s ease}.compact-details[open]>summary::before{transform:rotate(90deg)}.compact-details .details-body{margin-top:8px}@media(max-width:640px){.phase-grid{grid-template-columns:1fr}.workspace-nav{margin-left:-4px;margin-right:-4px}}
 </style>
 </head>
 <body>
@@ -21,7 +21,7 @@
       <h1>Draft Companion</h1>
       <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
     </div>
-    <span class="version">v11.8.0-rc4.33</span>
+    <span class="version">v11.8.0-rc4.34</span>
   </header>
 
   <nav class="workspace-nav" aria-label="Arbeitsbereich">
@@ -32,6 +32,11 @@
     <button class="workspace-tab" data-workspace-target="live">📡 Live / News</button>
   </nav>
 
+  <div class="draft-surface-nav" data-workspace="draft" aria-label="Draft-Ansicht">
+    <button id="mockViewBtn" class="draft-surface-tab active" type="button">Mock / Vorbereitung</button>
+    <button id="liveViewBtn" class="draft-surface-tab" type="button">LIVE Draft</button>
+  </div>
+
   <section class="status-card">
     <div><span>FantasyPros</span><b id="onlineState">–</b></div>
     <div><span>Rankings</span><b id="rankingAge">–</b></div>
@@ -39,7 +44,7 @@
     <div><span>Coach bereit</span><b id="qualityMini">–</b></div>
   </section>
 
-  <section class="card" data-workspace="draft">
+  <section class="card mock-only" data-workspace="draft">
     <div class="section-head">
       <div><span class="step">1</span><h2>Daten aktualisieren</h2></div>
       <button id="refreshAllBtn" class="primary">Alles aktualisieren</button>
@@ -64,26 +69,28 @@
     <div class="section-head"><div><span class="step">2</span><h2>Draft verbinden</h2></div></div>
     <label for="draftInput">Sleeper-Draft-Link oder Draft-ID</label>
     <textarea id="draftInput" rows="1" inputmode="url" name="draft-link" placeholder="https://sleeper.app/draft/nfl/…" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" data-lpignore="true" data-1p-ignore="true" data-form-type="other" aria-label="Sleeper-Draft-Link oder Draft-ID"></textarea>
-    <div class="three">
+    <div class="live-only live-lock"><b>LIVE-Konfiguration gesperrt</b><p class="tiny">Dieselbe Decision Engine wie im Mock. Expertenpanel, Strategie, Managerprofile und Stresstest bleiben unverändert; hier werden sie nicht versehentlich bearbeitet.</p><div id="liveLockStatus" class="notice">Live-Ansicht bereit.</div></div>
+    <div class="live-only preview-box"><b>Read-only Live-Vorschau</b><p class="tiny">Spielt einen bereits eingefrorenen Entscheidungspunkt mit der echten LIVE-Engine ab. Keine Forecast-/Decision-Fixtures werden geschrieben.</p><div class="two"><div><label for="livePreviewCutoff">Gespeicherter Entscheidungspunkt</label><select id="livePreviewCutoff"></select></div><button id="livePreviewBtn" class="secondary" type="button">Vorschau laden</button></div><button id="livePreviewExitBtn" class="secondary" type="button" hidden>Echte Live-Verbindung verwenden</button><div id="livePreviewStatus" class="notice">Vorschau inaktiv.</div></div>
+    <div class="three mock-only">
       <div><label for="slot">Mein Slot</label><select id="slot"></select></div>
       <div><label for="topN">Spieler</label><select id="topN"><option>25</option><option selected>35</option><option>50</option></select></div>
       <div><label for="snapshotMode">Snapshot</label><select id="snapshotMode"><option value="compact" selected>Kompakt</option><option value="full">Vollständig</option></select></div>
     </div>
-    <div class="three">
+    <div class="three mock-only">
       <div><label for="draftMode">Modus</label><select id="draftMode"><option value="mock" selected>Mock/Test</option><option value="live">LIVE LEAGUE</option><option value="replay">Replay</option></select></div>
       <div><label for="replayCutoff">Replay bis Pick</label><input id="replayCutoff" type="number" min="0" placeholder="z. B. 70"></div>
       <div><label for="managerMap">Slot→Manager (2026 Live/Mock)</label><input id="managerMap" placeholder="1=Basti,2=Thomas,…"></div>
     </div>
-    <div style="margin-top:10px"><label for="stressMode">Stresstest-Szenario</label><select id="stressMode"><option value="baseline" selected>Baseline</option><option value="rb">RB-Run / erhöhter RB-Druck</option><option value="te">TE-Run</option><option value="rookie">Rookie-RB-Reach</option><option value="late">Late-Round-Upside / Reach</option></select><p class="tiny">Szenarien verändern nur die Return-/Abnehmergefahr. Expertenpanel und Spielerbewertung bleiben die Baseline.</p></div>
-    <div id="modeStatus" class="notice">Mock/Test: 2026-Managerprofile aktiv.</div>
-    <div class="strategy-box">
+    <div class="mock-only" style="margin-top:10px"><label for="stressMode">Stresstest-Szenario</label><select id="stressMode"><option value="baseline" selected>Baseline</option><option value="rb">RB-Run / erhöhter RB-Druck</option><option value="te">TE-Run</option><option value="rookie">Rookie-RB-Reach</option><option value="late">Late-Round-Upside / Reach</option></select><p class="tiny">Szenarien verändern nur die Return-/Abnehmergefahr. Expertenpanel und Spielerbewertung bleiben die Baseline.</p></div>
+    <div id="modeStatus" class="notice mock-only">Mock/Test: 2026-Managerprofile aktiv.</div>
+    <div class="strategy-box mock-only">
       <b>Simulationslabor</b>
       <p class="tiny">Monte-Carlo-Gegenprobe bis zum Folgepick. 2026 Live und Mock nutzen dieselben historischen Managerprofile; Baseline und Stressszenarien ändern nur die Varianz/Druckannahmen.</p>
       <button id="simulateBtn" class="secondary" disabled>5 Szenarien simulieren</button>
       <div id="simulationStatus" class="notice">Erst Draft analysieren.</div>
       <div id="simulationResults"></div>
     </div>
-    <div class="strategy-box">
+    <div class="strategy-box mock-only">
       <label for="strategyMode">Draftstrategie</label>
       <select id="strategyMode">
         <option value="progressive" selected>Progressive Upside (v11) – Standard</option>
@@ -130,7 +137,7 @@
     </div>
   </section>
 
-  <section class="card" id="reviewCard" data-workspace="draft">
+  <section class="card mock-only" id="reviewCard" data-workspace="draft">
     <details>
       <summary>Mock Review & Decision Log</summary>
       <div class="advanced-section">
@@ -172,7 +179,7 @@
     <div id="watcherSyncStatus" class="notice">Pitti Watcher: Feed noch nicht geprüft.</div><div class="notice">Watcher-Ingestion ist read-only und fail-closed: nur ein source-proven scheduled-health PASS darf Evidence übernehmen. Kritische Injury/IR/PUP-State-Deltas ohne echte Quellenchronologie bleiben nicht-actionable.</div>
   </section>
 
-  <details class="card advanced-card">
+  <details class="card advanced-card mock-only">
     <summary>⚙️ Erweitert</summary>
     <div class="advanced-section">
       <h3>FantasyPros API</h3>
@@ -221,9 +228,9 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v11.8.0-rc4.33: Return-v2 / Value-Safety / Target-Collision Test-Release auf v11.7.2-Basis. Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt; Phase Views und Research Cache v2 bleiben erhalten. Die bewährten Simulation-Lab-v2- und Live-Speed/Snapshot-Guard-Regeln der Produktionsbasis bleiben erhalten.</div>
+<div class="freeze-note">v11.8.0-rc4.34: Return-v2 / Value-Safety / Target-Collision Test-Release auf v11.7.2-Basis. Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt; Phase Views und Research Cache v2 bleiben erhalten. Die bewährten Simulation-Lab-v2- und Live-Speed/Snapshot-Guard-Regeln der Produktionsbasis bleiben erhalten.</div>
 </main>
-<script type="module" src="app.js?v=11.8.0-rc4.28"></script>
+<script type="module" src="app.js?v=11.8.0-rc4.34"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>
 </html>

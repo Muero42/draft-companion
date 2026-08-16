@@ -1,5 +1,5 @@
 const $=id=>document.getElementById(id);
-const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn'];
+const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
@@ -1088,7 +1088,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.33',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.34',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     // Full frozen skill-player pool makes post-mock counterfactuals reproducible without
@@ -1287,7 +1287,7 @@ function buildEmergencyQueueText(scored,state,current,draftId){
   }
   const lines=[
     '===== PITTI EMERGENCY SLEEPER QUEUE =====',
-    'App-Version: v11.8.0-rc4.33',
+    'App-Version: v11.8.0-rc4.34',
     `Draft-ID: ${draftId}`,
     `Stand: Pick ${current}`,
     'Nur manueller Sleeper-Queue-Fallback; keine API-/Import-Automation.',
@@ -1756,7 +1756,7 @@ async function refresh(){
   setAnalysisBusy(true);
   els.draftStatus.textContent='Aktualisiere Sleeper … Snapshot-Kopie ist bis zum Abschluss gesperrt.';
   try{
-    const fetched=await fetchDraftFresh(id),draft=fetched.draft,players=fetched.players,mode=els.draftMode.value,strategy=els.strategyMode.value,stress=els.stressMode.value,cutoff=Number(els.replayCutoff.value),picks=(mode==='replay'&&Number.isFinite(cutoff)&&cutoff>=0?fetched.picks.filter(p=>Number(p.pick_no)<=cutoff):fetched.picks),
+    const fetched=await fetchDraftFresh(id),draft=fetched.draft,players=fetched.players,mode=els.draftMode.value,strategy=els.strategyMode.value,stress=els.stressMode.value,cutoff=Number(els.replayCutoff.value),preview=livePreviewActive&&mode==='live',previewCutoff=Number(els.livePreviewCutoff?.value),picks=(preview&&Number.isFinite(previewCutoff)&&previewCutoff>=0?fetched.picks.filter(p=>Number(p.pick_no)<=previewCutoff):(mode==='replay'&&Number.isFinite(cutoff)&&cutoff>=0?fetched.picks.filter(p=>Number(p.pick_no)<=cutoff):fetched.picks)),
       teams=Number(draft.settings?.teams||10),
       rounds=Number(draft.settings?.rounds||15),
       map=resolvedManagerMap(mode,els.season.value,teams,els.managerMap.value),
@@ -1803,7 +1803,7 @@ async function refresh(){
       x.reasons.push(`Loss if gone: ${x.loss}`);
     }
     if(referenceBalanced){for(const x of referenceBalanced){const v2=rv2?.players?.[norm(x.p.name)];x.ret=v2?v2.ret:adjustedReturn(x.ret,liveIntel(x.p,current,returnPick,picks,players,teams,mode,map,stress));applyResolvedReturnScore(x,current,'balanced');}}
-    resolveReturnValidation(id,picks);resolveDecisionFixtures(id,picks);freezeReturnValidation(id,current,returnPick,rv2,rankedAvailable,slot);
+    if(!preview){resolveReturnValidation(id,picks);resolveDecisionFixtures(id,picks);freezeReturnValidation(id,current,returnPick,rv2,rankedAvailable,slot);}
     els.modeStatus.className=`notice ${mode==='live'&&!Object.keys(map).length?'warn':'ok'}`;els.modeStatus.textContent=modeStatusText(mode,map);
     const boardTop=scored.slice().sort((x,y)=>x.r.rank-y.r.rank).slice(0,12).filter(x=>x.ret!=null);
     const sortedReturns=boardTop.map(x=>x.ret).sort((x,y)=>x-y);
@@ -1833,7 +1833,7 @@ async function refresh(){
     els.strategyStatus.className='notice ok';els.strategyStatus.textContent=strategyStatusText(strategy);
     scored.sort((x,y)=>y.score-x.score||y.rawScore-x.rawScore||x.r.rank-y.r.rank);
 
-    const draftComplete=String(draft.status||'').toLowerCase()==='complete'||picks.length>=total;
+    const draftComplete=(!preview&&String(draft.status||'').toLowerCase()==='complete')||picks.length>=total;
     lastEmergencyQueueText=draftComplete?'':buildEmergencyQueueText(scored,state,current,id);
     if(els.queueBtn)els.queueBtn.disabled=!lastEmergencyQueueText;
     if(draftComplete){
@@ -1880,7 +1880,7 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.33',
+      'App-Version: v11.8.0-rc4.34',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -1888,7 +1888,8 @@ async function refresh(){
       `Mein nächster Pick: ${next??'keiner'} | Picks bis dahin: ${next==null?'–':next-current}`,
       `Return-Modell: Folgepick ${returnPick??'keiner'}${returnPick!=null?` | ${rv2?.slots?.length??Math.max(0,returnPick-current-1)} gegnerische Picks bis dahin`:''}`,
       `Snapshot-Fingerprint: ${fingerprint} | ${duplicateSnapshot?'DUPLIKAT/UNVERÄNDERT':'NEU'}`,
-      `Live-Speed: ${tier.label} | Analysebudget ${tier.budget}s`, 
+      `Live-Speed: ${tier.label} | Analysebudget ${tier.budget}s`,
+      ...(preview?[`LIVE-PREVIEW: READ-ONLY · Cutoff ${previewCutoff} · keine Validierungs-Fixtures geschrieben`]:[]), 
       '',
       'DATENSTATUS',
       `Verwendete Panels: ${usedPanelIds.map(pid=>panels[pid]?.name||pid).join(' / ')||'FEHLT'}`,
@@ -1901,7 +1902,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.33 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.34 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
@@ -1998,7 +1999,7 @@ async function refresh(){
     }
 
     els.snapshot.value=lines.join('\n');
-    lastSnapshotFingerprint=fingerprint;lastSnapshotPickCount=picks.length;store.setText('v116_lastSnapshotFingerprint',fingerprint);store.setText('v116_lastSnapshotPickCount',String(picks.length));
+    if(!preview){lastSnapshotFingerprint=fingerprint;lastSnapshotPickCount=picks.length;store.setText('v116_lastSnapshotFingerprint',fingerprint);store.setText('v116_lastSnapshotPickCount',String(picks.length));}
     els.draftStatus.className=scored.length?'notice ok':'notice warn';
     const dataState=scored.length?(navigator.onLine?'LIVE':'VERALTET'):'FALLBACK';
     const nextText=draftComplete?'DRAFT ABGESCHLOSSEN':`NÄCHSTER EIGENER PICK: ${next??'keiner'}${next===current?' · DU BIST DRAN':''}`;
@@ -2010,7 +2011,7 @@ async function refresh(){
     // Evidence retention must follow the actual user decision geometry, not whether a future return pick exists.
     // The final own pick has no return window but still needs a frozen fixture for post-draft retrospective.
     const userDecisionNow=!draftComplete&&next===current;
-    if(userDecisionNow)freezeDecisionFixture({draftId:id,current,returnPick,picks,mine,rankedAvailable,scored,rv2,mode,strategy,stress,teams,slot,fingerprint,map});
+    if(userDecisionNow)if(!preview)freezeDecisionFixture({draftId:id,current,returnPick,picks,mine,rankedAvailable,scored,rv2,mode,strategy,stress,teams,slot,fingerprint,map});
     lastDraftContext={id,current,next:returnPick,favorites,scored,picks,mine,mode,strategy,stress,map,dataState,players,teams,rankedAvailable};
     if(els.simulateBtn)els.simulateBtn.disabled=!(Number.isFinite(returnPick)&&returnPick>current);
   }finally{
@@ -2040,7 +2041,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.33',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.34',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
 async function downloadJson(name,v){
   const text=JSON.stringify(v,null,2),file=new File([text],name,{type:'application/json'});
   // Android/PWA: Web Share with a real File is more reliable than navigating to a blob URL.
@@ -2143,6 +2144,36 @@ if(els.draftInput)els.draftInput.addEventListener('keydown',e=>{if(e.key==='Ente
 for(const el of [els.apiKey,els.season,els.scoring,els.draftInput,els.slot,els.topN,els.snapshotMode,els.draftMode,els.replayCutoff,els.managerMap,els.stressMode])el.addEventListener('change',()=>{persist();updateStatus()});
 addEventListener('online',updateStatus);addEventListener('offline',updateStatus);
 setInterval(updateStatus,60000);
+let livePreviewActive=false;
+function populateLivePreviewPoints(){
+  if(!els.livePreviewCutoff)return;
+  const fixtures=loadDecisionFixtures().filter(f=>Number.isFinite(Number(f.current))&&String(f.draftId||'')===draftId(els.draftInput.value));
+  const points=[...new Map(fixtures.map(f=>[Number(f.current),f])).values()].sort((a,b)=>Number(a.current)-Number(b.current));
+  els.livePreviewCutoff.innerHTML='';
+  if(points.length){for(const f of points){const current=Number(f.current),cut=Math.max(0,current-1);els.livePreviewCutoff.add(new Option(`Pick ${current} · Cutoff ${cut}`,String(cut)));}}
+  else{for(const current of [9,12,29,32,49,52,69,72,89,92,109,112,129,132,149])els.livePreviewCutoff.add(new Option(`Pick ${current} · Cutoff ${current-1}`,String(current-1)));}
+}
+function setDraftSurface(name){
+  if(name!=='live')name='mock';
+  document.body.classList.toggle('draft-live-view',name==='live');
+  els.mockViewBtn?.classList.toggle('active',name==='mock');els.liveViewBtn?.classList.toggle('active',name==='live');
+  localStorage.setItem('v118_draftSurface',name);
+  if(name==='live'){
+    els.draftMode.value='live';
+    if(els.autoRefresh.checked){els.autoRefresh.checked=false;setAuto();}
+    populateLivePreviewPoints();
+    if(els.liveLockStatus){els.liveLockStatus.className='notice ok';els.liveLockStatus.textContent=`LIVE-Engine aktiv · Slot ${els.slot.value} · Progressive/Panel-/Manager-State unverändert.`;}
+  }else{
+    livePreviewActive=false;if(els.livePreviewExitBtn)els.livePreviewExitBtn.hidden=true;
+    if(els.livePreviewStatus)els.livePreviewStatus.textContent='Vorschau inaktiv.';
+    if(els.draftMode.value==='live')els.draftMode.value='mock';
+  }
+  persist();updateStatus();
+}
+if(els.mockViewBtn)els.mockViewBtn.onclick=()=>setDraftSurface('mock');
+if(els.liveViewBtn)els.liveViewBtn.onclick=()=>setDraftSurface('live');
+if(els.livePreviewBtn)els.livePreviewBtn.onclick=async()=>{try{livePreviewActive=true;els.draftMode.value='live';els.livePreviewExitBtn.hidden=false;els.livePreviewStatus.className='notice warn';els.livePreviewStatus.textContent='Read-only Vorschau aktiv …';await refresh();els.livePreviewStatus.className='notice ok';els.livePreviewStatus.textContent=`Read-only LIVE-Vorschau bei Pick ${Number(els.livePreviewCutoff.value)+1}. Keine Forecast-/Decision-Fixtures geschrieben.`;}catch(e){livePreviewActive=false;els.livePreviewStatus.className='notice bad';els.livePreviewStatus.textContent=e.message;}};
+if(els.livePreviewExitBtn)els.livePreviewExitBtn.onclick=()=>{livePreviewActive=false;els.livePreviewExitBtn.hidden=true;els.livePreviewStatus.className='notice';els.livePreviewStatus.textContent='Vorschau inaktiv. Nächste Analyse verwendet den echten Draftzustand.';};
 function setWorkspace(name){
   const valid=['draft','roster','waiver','trade','live'];if(!valid.includes(name))name='draft';
   localStorage.setItem('v117_workspace',name);
@@ -2150,6 +2181,7 @@ function setWorkspace(name){
   document.querySelectorAll('[data-workspace-target]').forEach(btn=>{btn.classList.toggle('active',btn.dataset.workspaceTarget===name);btn.setAttribute('aria-pressed',btn.dataset.workspaceTarget===name?'true':'false')});
 }
 document.querySelectorAll('[data-workspace-target]').forEach(btn=>btn.addEventListener('click',()=>setWorkspace(btn.dataset.workspaceTarget)));
+setDraftSurface(localStorage.getItem('v118_draftSurface')||'mock');
 setWorkspace(localStorage.getItem('v117_workspace')||'draft');
 updateResearchCacheStatus();
 void syncWatcherFeed();

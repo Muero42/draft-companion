@@ -1,4 +1,4 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.33)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.34)
 ### rc4.25 — backup provenance coherence hotfix
 - Fixes a deterministic rc4.24 evidence-provenance defect: normal Backup incorrectly labeled itself `11.8.0-rc4.23` although runtime/fixtures were rc4.24.
 - Backup version now matches active runtime `11.8.0-rc4.29`.
@@ -438,7 +438,7 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - No Coach/Return-v2/panel/ADP coefficient changes.
 
 
-## v11.8.0-rc4.33 — Post-Draft FA-vs-Roster v1
+## v11.8.0-rc4.30 — Post-Draft FA-vs-Roster v1
 - Adds read-only concrete available-pool vs roster swap analysis with CLEAR ADD / WATCH / HOLD thresholds.
 - Selected expert panel remains Player Quality baseline; Sleeper ADP is market context.
 - CLEAR ADD requires current Research Cache evidence; missing evidence caps action at WATCH.
@@ -454,7 +454,7 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - No transactions or draft-model changes.
 
 
-## v11.8.0-rc4.33 — Waiver/FA Priority v1
+## v11.8.0-rc4.32 — Waiver/FA Priority v1
 - Reuses FA-vs-Roster swap results for claim priority; no second Player Quality engine.
 - Numeric FAAB intentionally fail-closed until current waiver-week/market evidence exists.
 - No transactions or draft-model changes.
@@ -465,3 +465,12 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - No WATCHER_TOKEN is stored in Draft Companion.
 - Critical player-state changes without true source publication/event chronology remain non-actionable provenance.
 - Watcher v0.1.5 deployment is a separate external gate; rc4.33 fails closed while the endpoint is unavailable.
+
+
+## v11.8.0-rc4.34 — Mock/LIVE phased Draft views + read-only rehearsal
+- Adds separate Mock/Vorbereitung and LIVE Draft views over the same Decision Engine; no duplicate Coach/Return/Player Quality path exists.
+- LIVE hides expert/panel/strategy/stress/simulation configuration and Advanced settings to reduce draft-day misnavigation; switching to LIVE sets the existing canonical draft mode to `live`.
+- Adds a read-only LIVE preview using the current connected draft plus a historical pick cutoff while retaining LIVE manager/Return behavior. Preview does not resolve/freeze Return validation, Decision Fixtures, or duplicate-Snapshot state.
+- Mock/Vorbereitung retains the full configuration and Simulation Lab.
+- Fixes a discovered stale `index.html` app cache-buster (`rc4.28`) so index, service worker, runtime and package now coherently request rc4.34.
+- No Coach, Player Quality, Return-v2, Manager Model, Research Residual, FAAB, Trade or Waiver scoring coefficients changed.
