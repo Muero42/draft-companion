@@ -1088,7 +1088,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.40',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.41',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     // Full frozen skill-player pool makes post-mock counterfactuals reproducible without
@@ -1287,7 +1287,7 @@ function buildEmergencyQueueText(scored,state,current,draftId){
   }
   const lines=[
     '===== PITTI EMERGENCY SLEEPER QUEUE =====',
-    'App-Version: v11.8.0-rc4.40',
+    'App-Version: v11.8.0-rc4.41',
     `Draft-ID: ${draftId}`,
     `Stand: Pick ${current}`,
     'Nur manueller Sleeper-Queue-Fallback; keine API-/Import-Automation.',
@@ -1618,7 +1618,24 @@ function speedTier(current,next){
   return {key:'full',label:'FULL',budget:45};
 }
 function researchCacheKey(){return 'v117_researchEvidence';}
+const RESEARCH_CACHE_MAX_EVENTS=320;
 function loadResearchEvents(){try{const v=JSON.parse(localStorage.getItem(researchCacheKey())||'[]');return Array.isArray(v)?v:[]}catch{return []}}
+function compactResearchEvents(events){
+  const rows=Array.isArray(events)?events:[],seen=new Set(),out=[];
+  for(let i=rows.length-1;i>=0;i--){const e=rows[i],id=evidenceIdentity(e);if(seen.has(id))continue;seen.add(id);out.push(e);if(out.length>=RESEARCH_CACHE_MAX_EVENTS)break}
+  return out.reverse();
+}
+function saveResearchEvents(events){
+  const key=researchCacheKey(),previous=localStorage.getItem(key),compact=compactResearchEvents(events);
+  try{localStorage.setItem(key,JSON.stringify(compact));return{ok:true,count:compact.length,compacted:compact.length<(events?.length||0)}}
+  catch(err){
+    // Quota recovery is fail-safe: never delete the existing evidence cache. Retry with progressively smaller tails.
+    for(const limit of [240,180,120,80]){try{const smaller=compact.slice(-limit);localStorage.setItem(key,JSON.stringify(smaller));return{ok:true,count:smaller.length,compacted:true,quotaRecovered:true}}catch{}}
+    // Best effort restore if a browser partially disturbed the key; normally setItem is atomic and previous remains intact.
+    if(previous!==null&&localStorage.getItem(key)!==previous){try{localStorage.setItem(key,previous)}catch{}}
+    return{ok:false,error:err,count:loadResearchEvents().length};
+  }
+}
 function evidenceIdentity(e){return [e.sourceId||'',e.playerId||e.playerKey||'',e.evidenceType||'',e.sourcePublishedAt||e.observedAt||'',e.thesisPath||''].join('|')}
 function appendResearchEvidence(input){
   const now=Date.now(),published=Number(input.sourcePublishedAt||0),eventAt=Number(input.eventOccurredAt||input.payload?.eventOccurredAt||0),corroboratedAt=Number(input.currentStatusCorroboratedAt||input.payload?.currentStatusCorroboratedAt||0),critical=/injury|ir|pup|suspension|inactive/i.test(String(input.evidenceType||''));
@@ -1630,7 +1647,7 @@ function appendResearchEvidence(input){
   const currentCorroboration=Boolean(corroboratedAt&&corroboratedAt<=now+3600000&&now-corroboratedAt<=14*86400000);
   const freshnessVerified=Boolean(chronologyValid&&(publicationRecent||currentCorroboration));
   const e={id:input.id||`ev_${now}_${Math.random().toString(36).slice(2,8)}`,observedAt:Number(input.observedAt||now),sourcePublishedAt:critical?(published||0):(published||Number(input.observedAt||now)),eventOccurredAt:eventAt||null,currentStatusCorroboratedAt:corroboratedAt||null,ingestedAt:Number(input.ingestedAt||now),playerId:String(input.playerId||''),playerKey:norm(input.playerName||input.playerKey||''),evidenceType:String(input.evidenceType||'unknown'),thesisPath:String(input.thesisPath||''),sourceId:String(input.sourceId||''),sourceOriginality:String(input.sourceOriginality||'unknown'),confidence:clamp(Number(input.confidence??.5),0,1),flags:Array.isArray(input.flags)?input.flags.slice(0,8):[],payload:input.payload||{},freshnessVerified:critical?freshnessVerified:true,critical};
-  const events=loadResearchEvents();if(events.some(x=>evidenceIdentity(x)===evidenceIdentity(e)))return {added:false,event:e};events.push(e);localStorage.setItem(researchCacheKey(),JSON.stringify(events));updateResearchCacheStatus();return {added:true,event:e};
+  const events=loadResearchEvents();if(events.some(x=>evidenceIdentity(x)===evidenceIdentity(e)))return {added:false,event:e};events.push(e);const saved=saveResearchEvents(events);if(!saved.ok)return {added:false,event:e,storageFull:true,error:saved.error};updateResearchCacheStatus();return {added:true,event:e,compacted:saved.compacted,quotaRecovered:saved.quotaRecovered};
 }
 function researchEventsAt(cutoff=Infinity){return loadResearchEvents().filter(e=>Number(e.sourcePublishedAt||e.observedAt||0)<=cutoff)}
 function researchPlayerState(p,cutoff=Infinity){const key=norm(p.name),pid=String(p.id||'');return researchEventsAt(cutoff).filter(e=>(pid&&e.playerId===pid)||e.playerKey===key).sort((a,b)=>a.sourcePublishedAt-b.sourcePublishedAt)}
@@ -1660,16 +1677,18 @@ async function syncWatcherFeed(){
       if(els.watcherSyncStatus){els.watcherSyncStatus.className=gate==='FAIL'?'notice bad':'notice warn';els.watcherSyncStatus.textContent=`Pitti Watcher: ${gate} · automatische Research-Ingestion bleibt AUS.`}
       return{ok:false,gate,added:0};
     }
-    let added=0,rejectedCritical=0;
+    let added=0,rejectedCritical=0,storageFull=false,quotaRecovered=false;
     for(const row of Array.isArray(v.events)?v.events:[]){
       const input=watcherEvidenceInput(row),out=appendResearchEvidence(input);
       if(out.added)added++;
+      if(out.storageFull)storageFull=true;
+      if(out.quotaRecovered)quotaRecovered=true;
       if(out.event?.critical&&!out.event?.freshnessVerified)rejectedCritical++;
     }
-    store.set(WATCHER_SYNC_META_KEY,{at:Date.now(),gate,watcherVersion:v.watcherVersion||null,generatedAt:v.generatedAt||null,added,rejectedCritical});
+    try{store.set(WATCHER_SYNC_META_KEY,{at:Date.now(),gate,watcherVersion:v.watcherVersion||null,generatedAt:v.generatedAt||null,added,rejectedCritical,storageFull,quotaRecovered})}catch{};
     if(added>0){updateResearchCacheStatus();rerenderPostDraftFromContext();}
-    if(els.watcherSyncStatus){els.watcherSyncStatus.className='notice ok';els.watcherSyncStatus.textContent=`Pitti Watcher: PASS · ${added} neue Evidence-Events · kritische State-Deltas ohne Quellenchronologie bleiben nicht-actionable (${rejectedCritical}).`}
-    return{ok:true,gate,added,rejectedCritical};
+    if(els.watcherSyncStatus){els.watcherSyncStatus.className=storageFull?'notice warn':'notice ok';els.watcherSyncStatus.textContent=storageFull?`Pitti Watcher: PASS · lokaler Evidence-Speicher voll; bestehender Cache bleibt erhalten, neue Events werden bis zur Speicherbereinigung nicht persistiert.`:`Pitti Watcher: PASS · ${added} neue Evidence-Events${quotaRecovered?' · Cache automatisch kompaktiert':''} · kritische State-Deltas ohne Quellenchronologie bleiben nicht-actionable (${rejectedCritical}).`}
+    return{ok:true,gate,added,rejectedCritical,storageFull,quotaRecovered};
   }catch(e){
     if(els.watcherSyncStatus){els.watcherSyncStatus.className='notice warn';els.watcherSyncStatus.textContent=`Pitti Watcher nicht automatisch verfügbar (${e?.name==='AbortError'?'Timeout':e.message}). Bestehender Cache bleibt unverändert.`}
     return{ok:false,gate:'UNAVAILABLE',added:0};
@@ -1915,7 +1934,7 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.40',
+      'App-Version: v11.8.0-rc4.41',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -1937,7 +1956,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.40 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.41 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
@@ -2076,7 +2095,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.40',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.41',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
 async function downloadJson(name,v){
   const text=JSON.stringify(v,null,2),file=new File([text],name,{type:'application/json'});
   // Android/PWA: Web Share with a real File is more reliable than navigating to a blob URL.

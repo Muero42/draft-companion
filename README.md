@@ -482,3 +482,9 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - Target discovery now compares an asset with the marginal practical lineup depth for this league (WR up to 4, RB up to 3; QB/TE 1 by default).
 - QB2/TE2 remain suppressed unless the target materially improves QB1/TE1.
 - This changes target discovery only. Boone redraft/ROS market value, acceptance plausibility and ACCEPT/DECLINE/fairness remain fail-closed. No Draft Coach, Return-v2, panel/ADP or FAAB coefficient changed.
+
+## v11.8.0-rc4.41 — Research Cache quota hardening
+- Bounds and de-duplicates the local Research Cache before persistence and retries with smaller recent tails on browser-storage quota pressure.
+- Existing evidence is retained fail-safe when quota recovery cannot persist a new event; Watcher ingestion no longer misclassifies storage exhaustion as a Watcher/feed outage.
+- Critical injury/IR/PUP/suspension chronology and fail-closed actionability rules are unchanged.
+- No Coach, Player Quality, Return-v2, Manager Model, Trade, Waiver/FAAB or panel/ADP scoring coefficients changed.
