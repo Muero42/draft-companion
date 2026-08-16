@@ -10,7 +10,13 @@ let experts=store.get('v7_experts',[]);
 let panels=store.get('v7_panels',{standard:{name:'Standard',members:{}},pat:{name:'Pat einzeln',members:{}}});
 let activePanelId=store.text('v7_activePanel','standard');
 let positionPanels=store.get('v7_positionPanels',{QB:'qb',RB:'rb',WR:'wr',TE:'te'});
-let rankCache=store.get('v7_rankCache',{});
+function loadRankCacheCompact(){
+  const legacy=store.get('v7_rankCache',{}),out={};
+  if(legacy&&typeof legacy==='object')Object.assign(out,legacy);
+  try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(!k?.startsWith('v7_rank_'))continue;const id=k.slice(8);if(id&&!out[id]){const v=store.get(k,null);if(v&&typeof v==='object')out[id]=v}}}catch{}
+  return out;
+}
+let rankCache=loadRankCacheCompact();
 let panelRanks=store.get('v7_panelRanks',{});
 let adp=store.get('v7_adp',{});let adpMeta=store.get('v72_adpMeta',{source:'none',updated:0,count:0});
 let decisionLog=store.get('v7_decisionLog',[]);
@@ -37,7 +43,7 @@ function persist(){
   store.setText('v7_apiKey',els.apiKey.value.trim());store.setText('v7_season',els.season.value.trim());store.setText('v7_scoring',els.scoring.value);
   store.setText('v7_draft',els.draftInput.value.trim());store.setText('v7_slot',els.slot.value);store.setText('v7_topN',els.topN.value);store.setText('v7_snapshotMode',els.snapshotMode.value);store.setText('v11_draftMode',els.draftMode.value);store.setText('v11_replayCutoff',els.replayCutoff.value);store.setText('v11_managerMap',els.managerMap.value);store.setText('v113_stressMode',els.stressMode.value);store.setText('v111_strategyMode',els.strategyMode.value);
   store.set('v7_autoRefresh',els.autoRefresh.checked);store.set('v7_experts',experts);store.set('v7_panels',panels);store.setText('v7_activePanel',activePanelId);
-  store.set('v7_positionPanels',positionPanels);store.set('v7_rankCache',rankCache);store.set('v7_panelRanks',panelRanks);store.set('v7_adp',adp);store.set('v72_adpMeta',adpMeta);store.set('v7_decisionLog',decisionLog);
+  store.set('v7_positionPanels',positionPanels);store.set('v7_adp',adp);store.set('v72_adpMeta',adpMeta);store.set('v7_decisionLog',decisionLog);
 }
 
 async function proxyCall(path){
@@ -452,6 +458,15 @@ function backfillPresetPanels(){
 function applyPreset(){if(!experts.length)throw new Error('Zuerst Experten laden.');const missing=[];for(const[id,p]of Object.entries(PRESETS)){const members={};for(const[name,w]of p.list){const e=findExpert(name);if(e&&Object.keys(members).length<p.max)members[e.id]=w;else if(!e)missing.push(name)}panels[id]={name:p.name,members}}const pat=findExpert('Pat Fitzmaurice');panels.pat={name:'Pat einzeln',members:pat?{[pat.id]:100}:{}};positionPanels={QB:'qb',RB:'rb',WR:'wr',TE:'te'};activePanelId='standard';panelRanks={};persist();renderAll();els.presetStatus.className='notice ok';els.presetStatus.textContent=`Preset eingerichtet.${missing.length?` Nicht gefunden: ${[...new Set(missing)].join(', ')}.`:''}`}
 
 function panelOptions(el,value){el.innerHTML='';for(const[id,p]of Object.entries(panels)){const o=new Option(p.name,id);o.selected=id===value;el.add(o)}}
+function rebuildPanelRanksFromCache(){
+  const verifiedIds=Object.keys(rankCache).filter(id=>rankCache[id]?.verifiedIndividual&&!rankCache[id]?.duplicateOf);
+  if(!verifiedIds.length)return false;
+  const pool=buildDraftCandidatePool(verifiedIds);if(pool.total<120)return false;
+  const rebuilt={};for(const id of Object.keys(panels))rebuilt[id]=computePanel(id,pool.keep);
+  if(!Object.values(rebuilt).some(r=>Object.keys(r||{}).length))return false;
+  panelRanks=rebuilt;return true;
+}
+if(!Object.keys(panelRanks).length)rebuildPanelRanksFromCache();
 function renderAll(){if(!panels[activePanelId])activePanelId='standard';panelOptions(els.activePanel,activePanelId);for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])panelOptions(el,positionPanels[pos]||activePanelId);renderExperts();renderLog();updateStatus()}
 function renderExperts(){const q=els.expertSearch.value.trim().toLowerCase(),members=panels[activePanelId]?.members||{},total=Object.values(members).reduce((s,w)=>s+Number(w||0),0);const list=experts.filter(e=>!q||`${e.name} ${e.site}`.toLowerCase().includes(q));els.expertsList.innerHTML=list.length?list.map(e=>{const on=members[e.id]!=null,w=Number(members[e.id]??25),pct=on&&total?Math.round(w/total*100):0;return `<div class="expert"><label><input type="checkbox" data-id="${esc(e.id)}" ${on?'checked':''}> ${esc(e.name)}<small>${esc(e.site||'Quelle unbekannt')}${e.accuracy!=null?` · Accuracy ${e.accuracy}`:''}${on?` · effektiv ${pct}%`:''}</small></label><input type="number" min="0" max="100" value="${w}" data-weight="${esc(e.id)}"></div>`}).join(''):'<div class="notice">Noch keine Experten geladen oder keine Treffer.</div>'}
 function saveCurrentPanel(){const p=panels[activePanelId];if(!p)return;const members={};els.expertsList.querySelectorAll('[data-id]').forEach(cb=>{if(cb.checked){const id=cb.dataset.id,w=Number(els.expertsList.querySelector(`[data-weight="${CSS.escape(id)}"]`)?.value||0);if(w>0)members[id]=w}});p.members=members;persist()}
@@ -668,8 +683,11 @@ async function loadAllRanks(){
       persist();
       throw new Error('FantasyPros lieferte keine verwertbaren Spieler-Rankings. Vorhandene Rankings wurden aus Sicherheitsgründen NICHT überschrieben.');
     }
+    // Panel ranks are derived deterministically from the verified per-expert caches. Keeping a second full copy
+    // in localStorage caused quota exhaustion on Android. Persist only the compact source caches and rebuild panels in memory.
     panelRanks=candidate;
     store.set('v7_lastRankingUpdate',Date.now());
+    try{localStorage.removeItem('v7_panelRanks');localStorage.removeItem('v7_rankCache')}catch{}
     persist();
     els.panelStatus.className=skipped.length?'notice warn':'notice ok';
     els.panelStatus.textContent=`Panels geladen · Expertenpool ${pool.total} (QB ${pool.counts.QB}, RB ${pool.counts.RB}, WR ${pool.counts.WR}, TE ${pool.counts.TE}) · ${Object.entries(panelRanks).map(([id,r])=>`${panels[id]?.name}: ${Object.keys(r).length}`).join(' · ')}${skipped.length?` · Hinweise: ${skipped.join(', ')}`:''}`;
@@ -1088,7 +1106,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.41',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.42',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     // Full frozen skill-player pool makes post-mock counterfactuals reproducible without
@@ -1287,7 +1305,7 @@ function buildEmergencyQueueText(scored,state,current,draftId){
   }
   const lines=[
     '===== PITTI EMERGENCY SLEEPER QUEUE =====',
-    'App-Version: v11.8.0-rc4.41',
+    'App-Version: v11.8.0-rc4.42',
     `Draft-ID: ${draftId}`,
     `Stand: Pick ${current}`,
     'Nur manueller Sleeper-Queue-Fallback; keine API-/Import-Automation.',
@@ -1934,7 +1952,7 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.41',
+      'App-Version: v11.8.0-rc4.42',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -1956,7 +1974,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.41 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.42 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
@@ -2095,7 +2113,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.41',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.42',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
 async function downloadJson(name,v){
   const text=JSON.stringify(v,null,2),file=new File([text],name,{type:'application/json'});
   // Android/PWA: Web Share with a real File is more reliable than navigating to a blob URL.
@@ -2113,7 +2131,7 @@ async function downloadJson(name,v){
   a.href=u;a.download=name;a.rel='noopener';a.style.display='none';document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(u),10000);
 }
-function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=Array.isArray(v.decisionLog)?v.decisionLog:[];saveReturnValidation(Array.isArray(v.returnValidation)?v.returnValidation:[]);saveDecisionFixtures(Array.isArray(v.decisionFixtures)?v.decisionFixtures:[]);restoreFpBenchmarks(v.fpBenchmarks);els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);if(['mock','live','replay'].includes(v.draftMode))els.draftMode.value=v.draftMode;if(['progressive','balanced'].includes(v.strategyMode))els.strategyMode.value=v.strategyMode;if(['baseline','rb','te','rookie','late'].includes(v.stressMode))els.stressMode.value=v.stressMode;if(typeof v.managerMap==='string')els.managerMap.value=v.managerMap;persist();renderAll()}
+function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};for(const[id,c]of Object.entries(rankCache)){try{store.set('v7_rank_'+id,c)}catch{}}try{localStorage.removeItem('v7_rankCache');localStorage.removeItem('v7_panelRanks')}catch{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=Array.isArray(v.decisionLog)?v.decisionLog:[];saveReturnValidation(Array.isArray(v.returnValidation)?v.returnValidation:[]);saveDecisionFixtures(Array.isArray(v.decisionFixtures)?v.decisionFixtures:[]);restoreFpBenchmarks(v.fpBenchmarks);els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);if(['mock','live','replay'].includes(v.draftMode))els.draftMode.value=v.draftMode;if(['progressive','balanced'].includes(v.strategyMode))els.strategyMode.value=v.strategyMode;if(['baseline','rb','te','rookie','late'].includes(v.stressMode))els.stressMode.value=v.stressMode;if(typeof v.managerMap==='string')els.managerMap.value=v.managerMap;persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
 
 if(els.loadExpertsBtn)els.loadExpertsBtn.onclick=()=>loadExperts().catch(e=>{els.presetStatus.className='notice bad';els.presetStatus.textContent=e.message});

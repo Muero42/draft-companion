@@ -488,3 +488,12 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - Existing evidence is retained fail-safe when quota recovery cannot persist a new event; Watcher ingestion no longer misclassifies storage exhaustion as a Watcher/feed outage.
 - Critical injury/IR/PUP/suspension chronology and fail-closed actionability rules are unchanged.
 - No Coach, Player Quality, Return-v2, Manager Model, Trade, Waiver/FAAB or panel/ADP scoring coefficients changed.
+
+
+## v11.8.0-rc4.42 — Ranking persistence quota fix
+- Fixes the Android localStorage quota failure observed in rc4.41 while writing `v7_panelRanks`.
+- Removes redundant persistence of the full aggregate `v7_rankCache` and derived `v7_panelRanks`; verified per-expert `v7_rank_<id>` caches remain the compact persistent source of truth.
+- Rebuilds panel ranks deterministically in memory from those verified expert caches after startup.
+- On a successful ranking refresh, legacy oversized aggregate keys are removed before normal state persistence.
+- Backup/restore remains compatible: backups still contain `rankCache` and `panelRanks`; restore seeds the per-expert caches and drops the redundant aggregate keys.
+- No Coach, Player Quality, Return-v2, Manager Model, Research Residual, Trade, Waiver/FAAB or ranking coefficients changed.
