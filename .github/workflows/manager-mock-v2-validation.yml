@@ -12,16 +12,16 @@ permissions:
 jobs:
   validate:
     runs-on: ubuntu-latest
-    timeout-minutes: 10
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
       - name: Run empirical manager-mock validation
-        run: python research/manager_mock_v2.py --app app.js --runs 100 --out manager_mock_v2_report.json
-      - name: Run tail calibration grid
-        run: python research/manager_mock_v2_grid.py --app app.js --runs 30 --out manager_mock_v2_grid.json
+        run: python research/manager_mock_v2.py --app app.js --runs 300 --out manager_mock_v2_report.json
+      - name: Run OOS tail and bias calibration
+        run: python research/manager_mock_v2_grid.py --app app.js --runs 200 --out manager_mock_v2_grid.json
       - uses: actions/upload-artifact@v4
         with:
           name: manager-mock-v2-report
