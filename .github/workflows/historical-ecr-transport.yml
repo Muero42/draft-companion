@@ -1,0 +1,60 @@
+name: Historical ECR transport
+
+on:
+  push:
+    branches:
+      - pitti-auto/historical-validation-20260817
+    paths:
+      - .github/workflows/historical-ecr-transport.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fetch-ecr:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+      - name: Install ffpros
+        shell: Rscript {0}
+        run: |
+          install.packages("remotes", repos="https://cloud.r-project.org")
+          remotes::install_github("ffverse/ffpros", upgrade="never", dependencies=TRUE)
+      - name: Fetch historical FantasyPros draft ECR
+        shell: Rscript {0}
+        run: |
+          dir.create("historical-ecr", showWarnings=FALSE)
+          library(ffpros)
+          pages <- c("half-point-ppr-cheatsheets", "consensus-cheatsheets")
+          years <- 2018:2024
+          log <- character()
+          for (year in years) {
+            ok <- FALSE
+            for (page in pages) {
+              out <- try(fp_rankings(page=page, year=year, include_metadata=TRUE), silent=TRUE)
+              if (!inherits(out, "try-error") && is.data.frame(out$ecr) && nrow(out$ecr) > 20) {
+                out$ecr$season <- year
+                out$ecr$page <- page
+                write.csv(out$ecr, sprintf("historical-ecr/fantasypros_ecr_%d.csv", year), row.names=FALSE, na="")
+                log <- c(log, sprintf("%d PASS page=%s rows=%d", year, page, nrow(out$ecr)))
+                ok <- TRUE
+                break
+              }
+              log <- c(log, sprintf("%d FAIL page=%s %s", year, page, if (inherits(out,"try-error")) as.character(out) else paste0("rows=", nrow(out$ecr))))
+            }
+            if (!ok) log <- c(log, sprintf("%d NO_USABLE_ECR", year))
+          }
+          writeLines(log, "historical-ecr/FETCH_LOG.txt")
+          cat(paste(log, collapse="\n"), "\n")
+          files <- list.files("historical-ecr", pattern="\\.csv$", full.names=TRUE)
+          if (length(files) == 0) stop("No usable ECR tables fetched")
+      - name: Upload historical ECR
+        uses: actions/upload-artifact@v4
+        with:
+          name: fantasypros-historical-ecr-2018-2024
+          path: historical-ecr/
+          if-no-files-found: error
+          retention-days: 7
