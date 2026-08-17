@@ -21,17 +21,17 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p historical-rosters
-          for year in 2017 2018 2019 2020 2021 2022; do
+          for year in 2017 2018 2019 2020 2021 2022 2023 2024; do
             url="https://github.com/nflverse/nflverse-data/releases/download/rosters/roster_${year}.csv"
             echo "Fetching ${url}"
             curl --fail --location --retry 3 --retry-delay 2 --output "historical-rosters/roster_${year}.csv" "${url}"
           done
           sha256sum historical-rosters/*.csv > historical-rosters/SHA256SUMS.txt
-          head -n 2 historical-rosters/roster_2022.csv
+          head -n 2 historical-rosters/roster_2024.csv
       - name: Upload historical rosters
         uses: actions/upload-artifact@v4
         with:
-          name: nflverse-rosters-2017-2022
+          name: nflverse-rosters-2017-2024
           path: historical-rosters/
           if-no-files-found: error
           retention-days: 7
