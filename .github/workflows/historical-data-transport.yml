@@ -1,0 +1,37 @@
+name: Historical data transport
+
+on:
+  push:
+    branches:
+      - pitti-auto/historical-validation-20260817
+    paths:
+      - .github/workflows/historical-data-transport.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fetch-nflverse:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch historical nflverse player stats
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p historical-data
+          for year in 2018 2019 2020 2021 2022 2023 2024; do
+            url="https://github.com/nflverse/nflverse-data/releases/download/player_stats/stats_player_reg_${year}.csv"
+            echo "Fetching ${url}"
+            curl --fail --location --retry 3 --retry-delay 2 --output "historical-data/stats_player_reg_${year}.csv" "${url}"
+          done
+          sha256sum historical-data/*.csv > historical-data/SHA256SUMS.txt
+          ls -lh historical-data
+      - name: Upload historical tables
+        uses: actions/upload-artifact@v4
+        with:
+          name: nflverse-player-stats-2018-2024
+          path: historical-data/
+          if-no-files-found: error
+          retention-days: 7
