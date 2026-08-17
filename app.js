@@ -1058,7 +1058,21 @@ function decisionFixtureKey(){return 'v118_decisionFixtures'}
 function loadReturnValidation(){try{return JSON.parse(localStorage.getItem(returnValidationKey())||'[]')}catch{return []}}
 function saveReturnValidation(rows){try{localStorage.setItem(returnValidationKey(),JSON.stringify(rows.slice(-500)))}catch{}}
 function loadDecisionFixtures(){try{const v=JSON.parse(localStorage.getItem(decisionFixtureKey())||'[]');return Array.isArray(v)?v:[]}catch{return []}}
-function saveDecisionFixtures(rows){try{localStorage.setItem(decisionFixtureKey(),JSON.stringify(rows.slice(-250)))}catch{}}
+function compactDecisionFixtureForStorage(f){
+  if(!f||typeof f!=='object')return f;
+  // Full per-expert rows inside every ranked-pool player dominate localStorage and are
+  // redundant for replay: frozen panel/pos/tier/ADP + robust summaries are retained,
+  // while detailed expert rows remain on the decision candidates and in Backup rankCache.
+  return{...f,rankedPool:Array.isArray(f.rankedPool)?f.rankedPool.map(p=>{if(!p||typeof p!=='object')return p;const{panelIndividuals,...rest}=p;return rest}):f.rankedPool};
+}
+function saveDecisionFixtures(rows){
+  const compact=(Array.isArray(rows)?rows:[]).map(compactDecisionFixtureForStorage);
+  // Keep a bounded rolling evidence cache. The current full 15-pick draft plus several
+  // prior drafts fit comfortably after compaction; quota pressure degrades by history,
+  // never by silently dropping the newest decision points.
+  for(const keep of[120,80,45,30,15]){try{localStorage.setItem(decisionFixtureKey(),JSON.stringify(compact.slice(-keep)));return true}catch{}}
+  return false;
+}
 function resolveReturnValidation(draftId,picks){
   const rows=loadReturnValidation();let changed=false;
   for(const row of rows){
@@ -1106,7 +1120,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.42',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.46',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     // Full frozen skill-player pool makes post-mock counterfactuals reproducible without
@@ -1305,7 +1319,7 @@ function buildEmergencyQueueText(scored,state,current,draftId){
   }
   const lines=[
     '===== PITTI EMERGENCY SLEEPER QUEUE =====',
-    'App-Version: v11.8.0-rc4.42',
+    'App-Version: v11.8.0-rc4.46',
     `Draft-ID: ${draftId}`,
     `Stand: Pick ${current}`,
     'Nur manueller Sleeper-Queue-Fallback; keine API-/Import-Automation.',
@@ -1392,10 +1406,23 @@ function expertRanksHtml(r){
     return `<div class="expert-rank"><b>${esc(x.expertName)}</b><span>#${Number(x.rank).toFixed(0)}${Number.isFinite(x.posRank)?` (${r.pos}${Math.round(x.posRank)})`:''}</span><span class="delta ${cls}">${deltaText}</span></div>`;
   }).join('')}</div>`;
 }
+function researchBadgesHtml(x){
+  const rr=x?.researchResidual;if(!rr?.active||!Array.isArray(rr.components)||!rr.components.length)return '';
+  const pos=rr.components.filter(c=>Number(c.dir)>0),neg=rr.components.filter(c=>Number(c.dir)<0);
+  const peak=a=>a.length?Math.max(...a.map(c=>Number(c.strength||0)*Number(c.confidence||0))):0;
+  const arrows=(v,dir=1)=>v>=.58?(dir<0?'↓↓':'↑↑'):v>=.30?(dir<0?'↓':'↑'):'';
+  const priced=a=>a.some(c=>c.pricing==='POSSIBLY_UNPRICED')?'EDGE OFFEN':a.some(c=>c.pricing==='PARTLY_PRICED')?'TEILW. EINGEPREIST':'WEITG. EINGEPREIST';
+  const out=[];
+  if(pos.length){const a=arrows(peak(pos));if(a)out.push(`<span class="tag research-up">BREAKOUT ${a}</span>`);}
+  if(neg.length){const a=arrows(peak(neg),-1);if(a)out.push(`<span class="tag research-down">DECLINE/RISK ${a}</span>`);}
+  out.push(`<span class="tag research-price">${priced(rr.components)}</span>`);
+  out.push(`<span class="tag research-shadow">Research ${rr.delta>0?'+':''}${Number(rr.delta).toFixed(2)} · Shadow</span>`);
+  return `<div class="research-badges">${out.join('')}</div>`;
+}
 function renderCoach(rows,state,current,next){
   const top=rows.slice(0,5);
   els.favoritesBlock.innerHTML=top.length?`<div class="favorite-box"><b>${top[0].action}: ${esc(top[0].p.name)} · ${top[0].p.pos}</b><div class="tiny">Top 5 sichtbar · 10–15 Kandidaten werden intern weitergeführt.</div></div>`:'';
-  els.coachList.innerHTML=`<div class="coach-section-title">Empfehlung + 4 Alternativen</div>`+top.map((x,i)=>`<article class="coach"><div class="coach-head"><div><h3>${i+1}. ${esc(x.p.name)} · ${x.p.pos}</h3><div class="tiny">${i===0?'EMPFEHLUNG · ':''}${x.action} · Tier ${x.r.tier||'–'} · Loss ${x.loss}</div></div><div class="score">${x.score}${Number.isFinite(x.balancedScore)?`<small class="strategy-compare">v10 ${x.balancedScore}</small>`:''}</div></div><div class="metrics"><div class="metric"><b>${x.r.rank.toFixed(1)}</b><span>Overall</span></div><div class="metric"><b>${Number.isFinite(x.a)?x.a.toFixed(1):'–'}</b><span>ADP</span></div><div class="metric"><b>${x.ret!=null?Math.round(x.ret*100)+'%':'–'}</b><span>Return</span></div><div class="metric"><b>${x.returnConfidence}%</b><span>Return-Conf.</span></div><div class="metric"><b>${x.intel.plausible}</b><span>Abnehmer</span></div></div>${expertRanksHtml(x.r)}<div class="tags">${x.reasons.slice(-7).map(reason=>`<span class="tag info">${esc(reason)}</span>`).join('')}</div><button class="secondary live-only live-detail-toggle" type="button" data-live-detail-toggle>${i===0?'Details ausblenden':'Details anzeigen'}</button></article>`).join('');
+  els.coachList.innerHTML=`<div class="coach-section-title">Empfehlung + 4 Alternativen</div>`+top.map((x,i)=>`<article class="coach"><div class="coach-head"><div><h3>${i+1}. ${esc(x.p.name)} · ${x.p.pos}</h3><div class="tiny">${i===0?'EMPFEHLUNG · ':''}${x.action} · Tier ${x.r.tier||'–'} · Loss ${x.loss}</div></div><div class="score">${x.score}${Number.isFinite(x.balancedScore)?`<small class="strategy-compare">v10 ${x.balancedScore}</small>`:''}</div></div><div class="metrics"><div class="metric"><b>${x.r.rank.toFixed(1)}</b><span>Overall</span></div><div class="metric"><b>${Number.isFinite(x.a)?x.a.toFixed(1):'–'}</b><span>ADP</span></div><div class="metric"><b>${x.ret!=null?Math.round(x.ret*100)+'%':'–'}</b><span>Return</span></div><div class="metric"><b>${x.returnConfidence}%</b><span>Return-Conf.</span></div><div class="metric"><b>${x.intel.plausible}</b><span>Abnehmer</span></div></div>${researchBadgesHtml(x)}${expertRanksHtml(x.r)}<div class="tags">${x.reasons.slice(-7).map(reason=>`<span class="tag info">${esc(reason)}</span>`).join('')}</div><button class="secondary live-only live-detail-toggle" type="button" data-live-detail-toggle>${i===0?'Details ausblenden':'Details anzeigen'}</button></article>`).join('');
   els.teamSummary.innerHTML=Object.entries(state.counts).map(([p,n])=>`<div class="summary-item"><b>${n}</b><span>${p}</span></div>`).join('')+`<div class="summary-item"><b>${current}</b><span>Pick</span></div><div class="summary-item"><b>${next??'–'}</b><span>Nächster</span></div>`;
   els.coachList.querySelectorAll('[data-live-detail-toggle]').forEach(btn=>btn.onclick=()=>{const card=btn.closest('.coach');card.classList.toggle('live-detail-open');btn.textContent=card.classList.contains('live-detail-open')?'Details ausblenden':'Details anzeigen';});
 }
@@ -1728,6 +1755,12 @@ const RESEARCH_RESIDUAL_MODEL_VERSION='shadow-v2.0';
 const RESEARCH_PRIOR_EXPIRY=Date.parse('2026-08-24T00:00:00Z');
 const RESEARCH_RESIDUAL_PRIORS={
   [norm('Parker Washington')]:{pos:'WR',components:[{kind:'ascension',dir:1,strength:.82,confidence:.78,pricing:'PARTLY_PRICED',causal:'2025 efficiency + projected full-time route path',invalidator:'route share falls behind healthy target competition'}]},
+  [norm('Jalen Coker')]:{pos:'WR',components:[{kind:'ascension',dir:1,strength:.72,confidence:.72,pricing:'PARTLY_PRICED',causal:'strong healthy-sample production + established Carolina WR2 role + Year-3 breakout window',invalidator:'route share falls materially or Bryce Young/pass-volume ceiling persists'}]},
+  [norm('Zay Flowers')]:{pos:'WR',components:[{kind:'ascension',dir:1,strength:.68,confidence:.78,pricing:'LIKELY_PRICED',causal:'career-high efficiency/target share + vacated targets + explicit expanded-usage plan',invalidator:'red-zone role and pass volume remain capped'}]},
+  [norm('DeVonta Smith')]:{pos:'WR',components:[{kind:'ascension',dir:1,strength:.78,confidence:.82,pricing:'PARTLY_PRICED',causal:'clear Philadelphia WR1 target path + strong prior efficiency without A.J. Brown',invalidator:'target tree stays diffuse or new scheme suppresses pass volume'}]},
+  [norm('Malik Nabers')]:{pos:'WR',components:[{kind:'elite_ceiling',dir:1,strength:.86,confidence:.86,pricing:'LIKELY_PRICED',causal:'elite pre-injury target/first-read/YPRR profile + improved QB ceiling',invalidator:'post-ACL explosiveness/target command does not return'},{kind:'injury_recurrence',dir:-1,strength:.82,confidence:.88,pricing:'PARTLY_PRICED',causal:'complex ACL/meniscus recovery with second procedure and possible early-season ramp',invalidator:'full team-work return with sustained pre-injury movement/usage'}]},
+  [norm('Jeremiyah Love')]:{pos:'RB',components:[{kind:'elite_rookie_role',dir:1,strength:.88,confidence:.86,pricing:'LIKELY_PRICED',causal:'No. 3 overall draft capital + starter usage + 11-58 preseason efficiency',invalidator:'role becomes committee-heavy or efficiency/receiving role disappoints'},{kind:'current_ankle',dir:-1,strength:.58,confidence:.90,pricing:'PARTLY_PRICED',causal:'ankle soreness after preseason opener; ruled out at least one week',invalidator:'full practice return without limitation before Week 1'}]},
+  [norm('George Kittle')]:{pos:'TE',components:[{kind:'elite_role',dir:1,strength:.74,confidence:.86,pricing:'LIKELY_PRICED',causal:'established elite TE receiving role if physically restored',invalidator:'route/target share materially reduced after return'},{kind:'achilles_recovery',dir:-1,strength:.86,confidence:.92,pricing:'PARTLY_PRICED',causal:'January Achilles tear creates early-season availability and post-injury efficiency uncertainty despite encouraging rehab',invalidator:'full-pads return plus sustained pre-injury movement/route usage'}]},
   [norm('Matthew Golden')]:{pos:'WR',components:[{kind:'ascension',dir:1,strength:.70,confidence:.70,pricing:'POSSIBLY_UNPRICED',causal:'first-round talent + clearer Year-2 route path',invalidator:'remains rotational'}]},
   [norm('Quinshon Judkins')]:{pos:'RB',components:[{kind:'role_environment',dir:1,strength:.58,confidence:.66,pricing:'PARTLY_PRICED',causal:'larger workload + improved blocking environment',invalidator:'committee/receiving cap persists'}]},
   [norm('Bhayshul Tuten')]:{pos:'RB',components:[{kind:'efficiency',dir:1,strength:.55,confidence:.63,pricing:'POSSIBLY_UNPRICED',causal:'per-touch efficiency',invalidator:'efficiency fails with volume'},{kind:'role_uncertainty',dir:-1,strength:.52,confidence:.66,pricing:'PARTLY_PRICED',causal:'contested early-down/goal-line role',invalidator:'clear lead role emerges'}]},
@@ -1952,7 +1985,7 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.42',
+      'App-Version: v11.8.0-rc4.46',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -1974,7 +2007,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.42 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.46 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
@@ -2113,7 +2146,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.42',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.46',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
 async function downloadJson(name,v){
   const text=JSON.stringify(v,null,2),file=new File([text],name,{type:'application/json'});
   // Android/PWA: Web Share with a real File is more reliable than navigating to a blob URL.
