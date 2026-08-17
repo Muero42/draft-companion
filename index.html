@@ -2,689 +2,235 @@
 <html lang="de">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#111827">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Draft Companion">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#0b1220">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
-  <title>Draft Companion v3.0.0</title>
-  <style>
-    :root {
-      color-scheme: dark;
-      --bg:#0b1020; --card:#151c2f; --muted:#9ca3af; --text:#f9fafb;
-      --accent:#7c3aed; --border:#2b3551; --ok:#34d399; --warn:#fbbf24; --bad:#fb7185;
-    }
-    * { box-sizing:border-box; }
-    body { margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif; background:var(--bg); color:var(--text); }
-    main { max-width:760px; margin:auto; padding:16px 14px 40px; }
-    h1 { font-size:1.45rem; margin:4px 0 4px; }
-    .sub { color:var(--muted); margin:0 0 16px; font-size:.94rem; }
-    .card { background:var(--card); border:1px solid var(--border); border-radius:16px; padding:14px; margin:12px 0; }
-    label { display:block; color:#d1d5db; font-size:.86rem; margin:10px 0 6px; }
-    input, select, button, textarea {
-      width:100%; border-radius:12px; border:1px solid var(--border); background:#0f172a; color:var(--text);
-      padding:12px; font-size:16px;
-    }
-    .grid { display:grid; grid-template-columns:1fr 110px; gap:10px; }
-    button { cursor:pointer; font-weight:700; background:var(--accent); border:none; margin-top:10px; }
-    button.secondary { background:#26324f; }
-    button:disabled { opacity:.55; cursor:not-allowed; }
-    .status { margin-top:10px; color:var(--muted); font-size:.9rem; white-space:pre-wrap; }
-    .status.ok { color:var(--ok); } .status.warn { color:var(--warn); } .status.bad { color:var(--bad); }
-    .stats { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; }
-    .stat { background:#0f172a; border-radius:12px; padding:10px; text-align:center; }
-    .stat b { display:block; font-size:1.1rem; }
-    .stat span { color:var(--muted); font-size:.78rem; }
-    textarea { min-height:270px; font-family:ui-monospace,SFMono-Regular,Consolas,monospace; font-size:12.5px; resize:vertical; }
-    details summary { cursor:pointer; color:#d1d5db; font-weight:650; }
-    .tiny { font-size:.78rem; color:var(--muted); line-height:1.45; }
-    .pill { display:inline-block; padding:4px 8px; margin:2px; border-radius:999px; background:#26324f; font-size:.78rem; }
-    
-    .sticky-actions {
-      position: sticky; bottom: 0; z-index: 20;
-      background: linear-gradient(180deg, rgba(11,16,32,0), var(--bg) 28%);
-      padding: 18px 0 calc(8px + env(safe-area-inset-bottom));
-      display:grid; grid-template-columns:1fr 1fr; gap:10px;
-    }
-    .sticky-actions button { margin:0; min-height:52px; }
-    .primary-action { background:var(--accent); }
-    .share-action { background:#26324f; }
-    .compact-row { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
-    
-    body.draft-mode .sub,
-    body.draft-mode details.card,
-    body.draft-mode #installBtn,
-    body.draft-mode #clearHistoryBtn { display:none !important; }
-    body.draft-mode main { max-width:540px; padding-top:8px; }
-    body.draft-mode .card { margin:8px 0; padding:11px; }
-    body.draft-mode h1 { font-size:1.15rem; margin-bottom:3px; }
-    body.draft-mode #snapshot { min-height:160px; }
-    .change-out { color:var(--bad); display:block; margin-top:4px; }
-    .change-in { color:var(--ok); display:block; margin-top:4px; }
-    .intelligence-line { display:block; margin-top:5px; }
-    .expert-row { display:grid;grid-template-columns:1fr 90px 78px;gap:8px;align-items:center;margin-top:8px; }
-    .expert-row input[type="number"] { text-align:right; }
-    .source-badge { display:inline-block;padding:2px 7px;border-radius:999px;background:#26324f;font-size:.72rem;margin-left:5px; }
-    .status-fresh { color:var(--ok); }
-    .status-stale { color:var(--warn); }
-    .status-offline { color:var(--bad); }
-    .muted-box { background:#0f172a; border:1px dashed var(--border); border-radius:12px; padding:10px; color:var(--muted); font-size:.84rem; }
-    @media (max-width:480px) {
-      .grid { grid-template-columns:1fr 92px; }
-      .stats { grid-template-columns:1fr 1fr; }
-    }
-  </style>
+  <link rel="stylesheet" href="styles.css">
+  <title>Draft Companion – Final Draft Edition 2026</title>
+
+<style id="workspaceStyles">
+.workspace-nav{display:flex;gap:7px;overflow-x:auto;padding:4px 0 12px;position:sticky;top:0;z-index:20;background:linear-gradient(180deg,var(--bg,#0b1220) 75%,transparent);scrollbar-width:none}.workspace-nav::-webkit-scrollbar{display:none}.workspace-tab{white-space:nowrap;min-width:max-content;padding:9px 13px;border-radius:999px;opacity:.72}.workspace-tab.active{opacity:1;outline:2px solid currentColor}.workspace-panel[hidden]{display:none!important}.draft-surface-nav{display:flex;gap:8px;margin:0 0 12px}.draft-surface-tab{flex:1;padding:10px 12px;border-radius:12px}.draft-surface-tab.active{outline:2px solid currentColor}.live-only{display:none}.draft-live-view .mock-only{display:none!important}.draft-live-view .live-only{display:block}.draft-live-view .advanced-card{display:none!important}.live-lock{border:1px solid rgba(96,165,250,.35);padding:10px;border-radius:10px;margin:10px 0}.preview-box{border:1px dashed rgba(250,204,21,.55);padding:10px;border-radius:10px;margin:10px 0}.preview-box .two{align-items:end}.live-compact-only{display:none}.draft-live-view .live-compact-only{display:block}.draft-live-view.live-coach-active .live-setup-copy{display:none!important}.draft-live-view.live-coach-active .preview-box{padding:8px;margin:6px 0}.draft-live-view.live-coach-active .preview-box>p,.draft-live-view.live-coach-active .preview-box>div.two,.draft-live-view.live-coach-active .preview-box>b{display:none}.draft-live-view.live-coach-active .preview-box #livePreviewStatus{margin:0}.draft-live-view.live-coach-active #draftInput,.draft-live-view.live-coach-active label[for="draftInput"]{display:none}.draft-live-view.live-coach-active [data-workspace="draft"].card{margin:8px 0}.draft-live-view.live-coach-active #coachSectionCard{scroll-margin-top:88px}.draft-live-view .coach .expert-grid,.draft-live-view .coach .coach-section-title,.draft-live-view .coach .tags{display:none}.draft-live-view .coach.live-detail-open .expert-grid,.draft-live-view .coach.live-detail-open .coach-section-title,.draft-live-view .coach.live-detail-open .tags{display:grid}.draft-live-view .coach.live-detail-open .tags{display:flex}.draft-live-view .live-detail-toggle{display:block;width:100%;min-height:34px;margin-top:8px;padding:6px 9px;font-size:.76rem}.draft-live-view .coach:first-of-type .expert-grid,.draft-live-view .coach:first-of-type .coach-section-title,.draft-live-view .coach:first-of-type .tags{display:grid}.draft-live-view .coach:first-of-type .tags{display:flex}.draft-live-view .freeze-note{display:none!important}.phase-intro{margin-bottom:12px}.phase-intro h2{margin-bottom:4px}.phase-grid{display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}.phase-tile{padding:12px;border:1px solid rgba(148,163,184,.22);border-radius:12px}.phase-tile b{display:block;margin-bottom:4px}.compact-details{margin-top:8px}.compact-details>summary{cursor:pointer;font-weight:700;list-style:none;display:flex;align-items:center;gap:7px}.compact-details>summary::-webkit-details-marker{display:none}.compact-details>summary::before{content:"▸";font-size:.9em;transition:transform .15s ease}.compact-details[open]>summary::before{transform:rotate(90deg)}.compact-details .details-body{margin-top:8px}@media(max-width:640px){.phase-grid{grid-template-columns:1fr}.workspace-nav{margin-left:-4px;margin-right:-4px}}
+</style>
 </head>
 <body>
-<main>
-  <section class="card" id="appStatusCard">
-    <div class="stats">
-      <div class="stat"><b id="appVersion">v3.0.0</b><span>App-Version</span></div>
-      <div class="stat"><b id="dataAge">–</b><span>Datenalter</span></div>
-      <div class="stat"><b id="connectionState">Offline</b><span>Status</span></div>
+<main class="shell">
+  <header class="hero">
+    <div>
+      <div class="eyebrow">Final Draft Edition 2026</div>
+      <h1>Draft Companion</h1>
+      <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
     </div>
-  </section>
-  <section class="card"><b>Datenqualität</b><div id="dataQuality" class="status bad">Rankings und Sleeper-ADP noch nicht verifiziert.</div></section>
-  <div id="updateBanner" class="card" hidden>
-    <b>Neue App-Version verfügbar</b>
-    <button id="reloadBtn" class="secondary">Jetzt aktualisieren</button>
+    <span class="version">v11.8.0-rc4.46</span>
+  </header>
+
+  <nav class="workspace-nav" aria-label="Arbeitsbereich">
+    <button class="workspace-tab active" data-workspace-target="draft">🏈 Draft</button>
+    <button class="workspace-tab" data-workspace-target="roster">👥 Kader</button>
+    <button class="workspace-tab" data-workspace-target="waiver">⚡ Waiver / FA</button>
+    <button class="workspace-tab" data-workspace-target="trade">🔁 Trades</button>
+    <button class="workspace-tab" data-workspace-target="live">📡 Live / News</button>
+  </nav>
+
+  <div class="draft-surface-nav" data-workspace="draft" aria-label="Draft-Ansicht">
+    <button id="mockViewBtn" class="draft-surface-tab active" type="button">Mock / Vorbereitung</button>
+    <button id="liveViewBtn" class="draft-surface-tab" type="button">LIVE Draft</button>
   </div>
-  <h1>Draft Companion</h1>
-  <p class="sub">Für schnelle Sleeper-Mocks auf dem Handy. <span class="pill">v3.0.0</span></p>
 
-  
-  <details class="card" open>
-    <summary>Datenquellen</summary>
-    <label for="fpApiKey">FantasyPros API-Key (nur lokal gespeichert)</label>
-    <input id="fpApiKey" type="password" placeholder="x-api-key">
-    <div class="compact-row">
-      <div><label for="season">Saison</label><input id="season" inputmode="numeric" value="2026"></div>
-      <div><label for="scoring">Scoring</label><select id="scoring"><option value="HALF" selected>Half PPR</option><option value="PPR">PPR</option><option value="STD">Standard</option></select></div>
+  <section class="status-card">
+    <div><span>FantasyPros</span><b id="onlineState">–</b></div>
+    <div><span>Rankings</span><b id="rankingAge">–</b></div>
+    <div><span>Sleeper Draft</span><b id="adpCount">–</b></div>
+    <div><span>Coach bereit</span><b id="qualityMini">–</b></div>
+  </section>
+
+  <section class="card mock-only" data-workspace="draft">
+    <div class="section-head">
+      <div><span class="step">1</span><h2>Daten aktualisieren</h2></div>
+      <button id="refreshAllBtn" class="primary">Alles aktualisieren</button>
     </div>
-    <label for="panelMode">Ranking-Ansicht</label>
-    <select id="panelMode"><option value="consensus" selected>Basispanel / ECR</option><option value="pat">Pat Fitzmaurice</option></select>
-    <div class="compact-row"><button id="refreshRankingsBtn" class="secondary">Rankings aktualisieren</button><button id="testApiBtn" class="secondary">API testen</button></div>
-    <div id="rankingStatus" class="status">Noch keine verifizierten Rankings geladen.</div>
-    <label for="adpFile">Optionale Sleeper-ADP-Datei (CSV/JSON, maßgeblich)</label>
-    <input id="adpFile" type="file" accept=".csv,.json,text/csv,application/json">
-    <div class="tiny">Die App übernimmt eine eindeutig erkannte Sleeper-ADP aus der API automatisch. Fehlt sie, ist diese Datei die sichere Ersatzquelle. Ohne verifizierte ADP werden Reach und Return als „FEHLT“ markiert.</div>
-    <label for="expertFile">Optionales eigenes Expertenranking (CSV/JSON)</label>
-    <input id="expertFile" type="file" accept=".csv,.json,text/csv,application/json">
-    <div class="compact-row"><button id="exportDataBtn" class="secondary">Daten sichern</button><button id="clearDataBtn" class="secondary">Rankingdaten löschen</button></div>
-  </details>
-<section class="card">
-    <div class="muted-box">Einmal Link und Slot setzen. Danach reicht während des Mocks meist <b>„Aktualisieren & kopieren“</b>.</div>
+    <div id="apiQuickStatus" class="notice"></div><div id="qualityStatus" class="notice">Datenprüfung läuft …</div>
+    <div class="button-grid">
+      
+    </div>
+    <details class="compact-details">
+      <summary>Panel-, Preset- & ADP-Details</summary>
+      <div class="details-body">
+        <div id="presetStatus" class="notice">Noch kein Preset angewendet.</div>
+        <div id="panelStatus" class="notice">Noch keine Panel-Rankings geladen.</div>
+        <div id="adpStatus" class="notice">Noch keine verifizierte Sleeper-ADP geladen.</div>
+      </div>
+    </details>
+    <p id="adpHelper" class="tiny">Sleeper-ADP wird beim Datenupdate automatisch geprüft. Ohne verifizierte ADP werden Reach und Return bewusst konservativ behandelt.</p>
+    <p class="tiny">Rankings einmal täglich aktualisieren; am Drafttag erneut kurz vor Beginn. Bye Weeks sind nur ein kleiner Tiebreaker.</p>
+  </section>
+
+  <section class="card" data-workspace="draft">
+    <div class="section-head"><div><span class="step">2</span><h2>Draft verbinden</h2></div></div>
     <label for="draftInput">Sleeper-Draft-Link oder Draft-ID</label>
-    <input id="draftInput" placeholder="https://sleeper.app/draft/nfl/…" autocomplete="off">
-    <div class="grid">
-      <div>
-        <label for="slot">Dein Draftslot</label>
-        <select id="slot"></select>
+    <textarea id="draftInput" rows="1" inputmode="url" name="draft-link" placeholder="https://sleeper.app/draft/nfl/…" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" data-lpignore="true" data-1p-ignore="true" data-form-type="other" aria-label="Sleeper-Draft-Link oder Draft-ID"></textarea>
+    <div class="live-only live-lock"><b>LIVE-Konfiguration gesperrt</b><p class="tiny live-setup-copy">Dieselbe Decision Engine wie im Mock. Expertenpanel, Strategie, Managerprofile und Stresstest bleiben unverändert; hier werden sie nicht versehentlich bearbeitet.</p><div id="liveLockStatus" class="notice">Live-Ansicht bereit.</div></div>
+    <div class="live-only preview-box"><b>Read-only Live-Vorschau</b><p class="tiny">Spielt einen bereits eingefrorenen Entscheidungspunkt mit der echten LIVE-Engine ab. Keine Forecast-/Decision-Fixtures werden geschrieben.</p><div class="two"><div><label for="livePreviewCutoff">Gespeicherter Entscheidungspunkt</label><select id="livePreviewCutoff"></select></div><button id="livePreviewBtn" class="secondary" type="button">Vorschau laden</button></div><button id="livePreviewExitBtn" class="secondary" type="button" hidden>Echte Live-Verbindung verwenden</button><div id="livePreviewStatus" class="notice">Vorschau inaktiv.</div></div>
+    <div class="three mock-only">
+      <div><label for="slot">Mein Slot</label><select id="slot"></select></div>
+      <div><label for="topN">Spieler</label><select id="topN"><option>25</option><option selected>35</option><option>50</option></select></div>
+      <div><label for="snapshotMode">Snapshot</label><select id="snapshotMode"><option value="compact" selected>Kompakt</option><option value="full">Vollständig</option></select></div>
+    </div>
+    <div class="three mock-only">
+      <div><label for="draftMode">Modus</label><select id="draftMode"><option value="mock" selected>Mock/Test</option><option value="live">LIVE LEAGUE</option><option value="replay">Replay</option></select></div>
+      <div><label for="replayCutoff">Replay bis Pick</label><input id="replayCutoff" type="number" min="0" placeholder="z. B. 70"></div>
+      <div><label for="managerMap">Slot→Manager (2026 Live/Mock)</label><input id="managerMap" placeholder="1=Basti,2=Thomas,…"></div>
+    </div>
+    <div class="mock-only" style="margin-top:10px"><label for="stressMode">Stresstest-Szenario</label><select id="stressMode"><option value="baseline" selected>Baseline</option><option value="rb">RB-Run / erhöhter RB-Druck</option><option value="te">TE-Run</option><option value="rookie">Rookie-RB-Reach</option><option value="late">Late-Round-Upside / Reach</option></select><p class="tiny">Szenarien verändern nur die Return-/Abnehmergefahr. Expertenpanel und Spielerbewertung bleiben die Baseline.</p></div>
+    <div id="modeStatus" class="notice mock-only">Mock/Test: 2026-Managerprofile aktiv.</div>
+    <div class="strategy-box mock-only">
+      <b>Simulationslabor</b>
+      <p class="tiny">Monte-Carlo-Gegenprobe bis zum Folgepick. 2026 Live und Mock nutzen dieselben historischen Managerprofile; Baseline und Stressszenarien ändern nur die Varianz/Druckannahmen.</p>
+      <button id="simulateBtn" class="secondary" disabled>5 Szenarien simulieren</button>
+      <div id="simulationStatus" class="notice">Erst Draft analysieren.</div>
+      <div id="simulationResults"></div>
+    </div>
+    <div class="strategy-box mock-only">
+      <label for="strategyMode">Draftstrategie</label>
+      <select id="strategyMode">
+        <option value="progressive" selected>Progressive Upside (v11) – Standard</option>
+        <option value="balanced">Balanced / Anti-Reach (v10) – Referenz</option>
+      </select>
+      <div id="strategyStatus" class="notice ok">Progressive Upside ist aktiv.</div>
+      <p class="tiny">v10 bleibt als eingefrorene Referenz erhalten. v11 verändert die Gewichtung erst ab Runde 9 zunehmend in Richtung Ceiling/Breakout-EV.</p><p class="tiny"><b>Live-Speed:</b> Der Snapshot kann während einer laufenden Analyse nicht kopiert werden. Der Hauptbutton aktualisiert zuerst Sleeper und kopiert anschließend ausschließlich den frisch erzeugten Snapshot.</p>
+    </div>
+    <div class="button-grid">
+      <button id="refreshBtn" class="primary">Analysieren & Snapshot kopieren</button>
+      <button id="copyBtn" class="secondary" disabled>Snapshot erneut kopieren</button>
+      <button id="shareBtn" class="secondary" disabled>Teilen</button>
+      <button id="queueBtn" class="secondary" disabled>Emergency Queue kopieren</button>
+    </div>
+    <label class="switch-row"><input id="autoRefresh" type="checkbox"> Automatisch alle 10 Sekunden aktualisieren</label>
+    <div id="draftStatus" class="notice">Noch nicht verbunden.</div>
+  </section>
+
+  <section class="card" id="coachSectionCard" data-workspace="draft">
+    <div class="section-head"><div><span class="step">3</span><h2>Draft Coach</h2></div></div>
+    <div id="emptyCoach" class="empty-state">
+      <b>Wartet auf Draft-Verbindung:</b>
+      <span>⭐ Favoriten —</span>
+      <span>💎 Value & Reach —</span>
+      <span>🎯 Return-Chancen —</span>
+      <span>📊 Expertenvergleich —</span>
+      <span>⚠️ Tier-Drop und Verletzungen</span>
+    </div>
+    <div id="draftSummary" hidden>
+      <div id="teamSummary" class="summary-grid"></div>
+      <div id="favoritesBlock"></div>
+      <div id="coachList"></div>
+      <details class="clean-details"><summary>Snapshot anzeigen</summary><textarea id="snapshot" rows="22" readonly></textarea></details>
+      <div id="fpHandoff" class="strategy-box" hidden>
+        <b>FantasyPros Benchmark</b>
+        <p class="tiny">Post-Draft-Handoff: Companion kennt Draft, Picks und Kader bereits. FantasyPros liefert nur noch die externe Analyzer-Bewertung.</p>
+        <div class="button-grid">
+          <button id="fpOpenBtn" class="secondary">FantasyPros Analyzer öffnen</button>
+          <button id="fpSetupBtn" class="secondary">PITTI-FP-Capture kopieren</button>
+        </div>
+        <label class="file-label">FantasyPros-Capture importieren<input id="fpImportFile" type="file" accept="application/json,.json"></label>
+        <div id="fpStatus" class="notice">Noch kein FantasyPros-Benchmark für diesen Draft importiert.</div>
       </div>
-      <div>
-        <label for="topN">Top Spieler</label>
-        <select id="topN">
-          <option>20</option><option selected>35</option><option>50</option><option>75</option>
-        </select>
-      </div>
-    </div>
-    <label for="snapshotMode">Snapshot-Umfang</label>
-    <select id="snapshotMode">
-      <option value="compact" selected>Kompakt (empfohlen)</option>
-      <option value="full">Vollständig</option>
-    </select>
-    
-    <div class="compact-row">
-      <button id="connectBtn">Aktualisieren</button>
-      <button id="autoBtn" class="secondary">Auto-Refresh</button>
-    </div>
-    <button id="installBtn" class="secondary" hidden>Als App installieren</button>
-    <div id="status" class="status">Noch nicht verbunden.</div>
-  </section>
-
-  
-  <section class="card">
-    <div class="compact-row">
-      <button id="draftModeBtn" class="secondary">Draftmodus: AUS</button>
-      <button id="clearHistoryBtn" class="secondary">Vergleich zurücksetzen</button>
     </div>
   </section>
 
-  <section class="card" id="changesCard" hidden>
-    <b>Seit dem letzten Aktualisieren</b>
-    <div id="changesText" class="status">Noch keine Vergleichsdaten.</div>
-  </section>
-
-  <section class="card" id="intelligenceCard" hidden>
-    <b>Draft-Intelligenz</b>
-    <div id="intelligenceText" class="status"></div>
-  </section>
-
-  <section class="card" id="summaryCard" hidden>
-    <div class="stats">
-      <div class="stat"><b id="currentPick">–</b><span>Aktueller Pick</span></div>
-      <div class="stat"><b id="nextMyPick">–</b><span>Dein nächster Pick</span></div>
-      <div class="stat"><b id="untilPick">–</b><span>Picks bis du dran bist</span></div>
-    </div>
-    <div style="margin-top:10px" id="teamPills"></div>
-  </section>
-
-  
-  
-  <details class="card">
-    <summary>Manuelle Spielerliste (nur bei Problemen)</summary>
-    <label for="manualPlayers">Überschreibt die automatische Liste</label>
-    <textarea id="manualPlayers" placeholder="Normalerweise leer lassen."></textarea>
-  </details>
-
-  <section class="card">
+  <section class="card mock-only" id="reviewCard" data-workspace="draft">
     <details>
-      <summary>Snapshot-Vorschau</summary>
-      <textarea id="snapshot" readonly placeholder="Der Snapshot erscheint nach dem Verbinden."></textarea>
+      <summary>Mock Review & Decision Log</summary>
+      <div class="advanced-section">
+        <div class="two">
+          <button id="logDecisionBtn" class="secondary">Entscheidung protokollieren</button>
+          <button id="clearLogBtn" class="danger">Log löschen</button>
+        </div>
+        <div id="mockReview" class="review-grid"><div class="notice">Nach dem ersten eigenen Pick erscheint hier die laufende Mock-Auswertung.</div></div>
+        <div id="decisionLog" class="log-list"></div>
+      </div>
     </details>
   </section>
 
-  <div class="sticky-actions">
-    <button id="copyBtn" class="primary-action" disabled>Aktualisieren & kopieren</button>
-    <button id="shareBtn" class="share-action" disabled>Teilen</button>
-  </div>
 
-  <details class="card">
-    <summary>Hinweise und Datenschutz</summary>
-    <p class="tiny">
-      Die Seite ruft ausschließlich die öffentliche Read-only-API von Sleeper auf. Es werden keine Zugangsdaten benötigt
-      oder gespeichert. Draft-Link, Slot und Spieler-Datenbank-Zeitpunkt werden nur lokal im Browser gespeichert.
-    </p>
-    <p class="tiny">
-      Falls „Netzwerkfehler/CORS“ erscheint, öffne die Datei nicht direkt als <code>file://</code>, sondern hoste sie
-      über GitHub Pages, Netlify oder Cloudflare Pages. Die Spieler-Datenbank ist groß und wird nur einmal pro Tag geladen.
-    </p>
+  <section class="card workspace-panel" data-workspace="roster" hidden>
+    <div class="phase-intro"><h2>👥 Kader</h2><p class="tiny">Saisonansicht für Hold/Drop/Protect-Entscheidungen. Dieselbe Player Intelligence wie im Draft, aber ohne Draft-Noise.</p></div>
+    <div class="phase-grid"><div class="phase-tile"><b>Roster State</b><span class="tiny">Aktueller Sleeper-Draftkader mit Panel-/ADP-Baseline und Positionskapital.</span></div><div class="phase-tile"><b>Thesis Protection</b><span class="tiny">Frühe Picks und Spieler mit starkem Panel-/Marktwert werden vor vorschnellen Drops geschützt.</span></div></div>
+    <div id="rosterStatus" class="notice">Noch kein Draft geladen.</div>
+    <div id="rosterSummary" class="summary-grid"></div>
+    <div id="rosterList" class="coach-list"></div>
+    <div id="rosterBenchStatus" class="notice"></div>
+    <div id="rosterBenchList" class="coach-list"></div>
+    <div id="rosterFaStatus" class="notice"></div>
+    <div id="rosterFaList" class="coach-list"></div>
+  </section>
+  <section class="card workspace-panel" data-workspace="waiver" hidden>
+    <div class="phase-intro"><h2>⚡ Waiver / Free Agents</h2><p class="tiny">Nur Akquisitionsentscheidungen: Add, FAAB, Drop-Kandidat, Market Window und nächste Informationsauflösung.</p></div>
+    <div class="phase-grid"><div class="phase-tile"><b>Opportunity</b><span class="tiny">Organic, Contingency und Informational Acquisition.</span></div><div class="phase-tile"><b>Acquisition Utility</b><span class="tiny">FAAB, Bench Opportunity Cost und lokale Marktgefahr.</span></div></div>
+    <div id="waiverStatus" class="notice">Noch kein abgeschlossener Draft geladen.</div><div id="waiverList" class="coach-list"></div>
+  </section>
+  <section class="card workspace-panel" data-workspace="trade" hidden>
+    <div class="phase-intro"><h2>🔁 Trades</h2><p class="tiny">Trade-Wert getrennt vom Player Belief State: Gegenwert, Roster-Effekt und Throw-In Protection.</p></div>
+    <div class="phase-grid"><div class="phase-tile"><b>Trade Compare</b><span class="tiny">Beide Seiten plus beste realistische Alternative.</span></div><div class="phase-tile"><b>Protection Check</b><span class="tiny">ACTIVATING-/unterpreiste Spieler nicht zum alten Marktwert abgeben.</span></div></div>
+    <div id="tradeStatus" class="notice">Noch kein abgeschlossener Draft geladen.</div><div id="tradeList" class="coach-list"></div>
+  </section>
+  <section class="card workspace-panel" data-workspace="live" hidden>
+    <div class="phase-intro"><h2>📡 Live / News</h2><p class="tiny">Event-getriebene Ansicht für Injury-, Inactive-, Usage- und Market-Window-Trigger.</p></div>
+    <div class="phase-grid"><div class="phase-tile"><b>Trigger Queue</b><span class="tiny">Welche gespeicherte These wurde gerade aktiviert oder invalidiert?</span></div><div class="phase-tile"><b>Research Cache</b><span class="tiny" id="researchCacheStatus">Noch keine versionierte Evidence gespeichert.</span></div></div>
+    <div id="watcherSyncStatus" class="notice">Pitti Watcher: Feed noch nicht geprüft.</div><div id="seasonActionStatus" class="notice">Action Board wartet auf abgeschlossenen Draft.</div><div id="seasonActionList" class="coach-list"></div><div class="notice">Watcher-Ingestion ist read-only und fail-closed: nur ein source-proven scheduled-health PASS darf Evidence übernehmen. Kritische Injury/IR/PUP-State-Deltas ohne echte Quellenchronologie bleiben nicht-actionable.</div>
+  </section>
+
+  <details class="card advanced-card mock-only">
+    <summary>⚙️ Erweitert</summary>
+    <div class="advanced-section">
+      <h3>FantasyPros API</h3>
+      <label for="apiKey">API-Key</label>
+      <input id="apiKey" type="password" autocomplete="off" placeholder="Nur lokal auf diesem Gerät gespeichert">
+      <div class="two"><button id="toggleKeyBtn" class="secondary">Key anzeigen</button><button id="clearKeyBtn" class="danger">Key löschen</button></div>
+      <div class="three">
+        <div><label for="season">Saison</label><input id="season" value="2026" inputmode="numeric"></div>
+        <div><label for="scoring">Scoring</label><select id="scoring"><option value="STD">Standard</option><option value="HALF" selected>Half PPR</option><option value="PPR">PPR</option></select></div>
+        <div><label for="activePanel">Aktives Panel</label><select id="activePanel"></select></div>
+      </div>
+      <button id="diagnoseBtn" class="secondary">API diagnostizieren</button>
+      <pre id="diagnostic" class="diagnostic">Noch keine Diagnose ausgeführt.</pre>
+    </div>
+
+    <div class="advanced-section">
+      <h3>Experten & Gewichtung</h3>
+      <label for="expertSearch">Experten suchen</label>
+      <input id="expertSearch" placeholder="Name oder Quelle">
+      <div id="expertsList"></div>
+      <div class="button-grid">
+        <button id="savePanelBtn" class="secondary">Gewichte speichern</button>
+        <button id="newPanelBtn" class="secondary">Neues Panel</button>
+        <button id="renamePanelBtn" class="secondary">Umbenennen</button>
+        <button id="deletePanelBtn" class="danger">Löschen</button>
+      </div>
+      <p class="tiny">Gewichte werden automatisch normalisiert. Fehlende Positionsrankings einzelner Experten werden übersprungen und transparent angezeigt.</p>
+    </div>
+
+    <div class="advanced-section">
+      <h3>Positionspanels</h3>
+      <div class="two"><div><label for="qbPanel">QB</label><select id="qbPanel"></select></div><div><label for="rbPanel">RB</label><select id="rbPanel"></select></div></div>
+      <div class="two"><div><label for="wrPanel">WR</label><select id="wrPanel"></select></div><div><label for="tePanel">TE</label><select id="tePanel"></select></div></div>
+    </div>
+
+    <div class="advanced-section">
+      <h3>Verifizierte Sleeper-ADP</h3>
+      <p class="tiny">Nur als Fallback nötig. Die App übernimmt automatisch nur eindeutig als Sleeper gekennzeichnete ADP-Werte. Sleeper-„search_rank“ wird niemals als ADP ausgegeben.</p>
+      <label class="file-button" for="adpFile">ADP-Datei auswählen</label>
+      <input id="adpFile" type="file" accept=".csv,.json,text/csv,application/json" hidden>
+      <hr class="soft-separator">
+      <h3>Sicherung</h3>
+      <div class="two"><button id="backupBtn" class="secondary">Einstellungen sichern</button><label class="file-button" for="restoreFile">Sicherung einlesen</label></div>
+      <input id="restoreFile" type="file" accept=".json,application/json" hidden>
+      <button id="clearDraftDataBtn" class="danger">Nur Draft-Verbindung zurücksetzen</button>
+      <p class="tiny">Backups enthalten niemals den API-Key.</p>
+    </div>
   </details>
+<div class="freeze-note">v11.8.0-rc4.46: Research-Residual-UI + aktualisierte Breakout/Decline-Hypothesen; Live-Coach-Score unverändert auf rc4.44-Basis. Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt; Phase Views und Research Cache v2 bleiben erhalten. Die bewährten Simulation-Lab-v2- und Live-Speed/Snapshot-Guard-Regeln der Produktionsbasis bleiben erhalten.</div>
 </main>
-
-<script>
-(() => {
-  const API = "https://api.sleeper.app/v1";
-  const $ = id => document.getElementById(id);
-  const draftInput = $("draftInput"), slotSel = $("slot"), topNSel = $("topN"), snapshotModeSel = $("snapshotMode");
-  const fpApiKeyEl=$("fpApiKey"), seasonEl=$("season"), scoringEl=$("scoring"), panelModeEl=$("panelMode");
-  const rankingStatusEl=$("rankingStatus"), dataQualityEl=$("dataQuality");
-  const refreshRankingsBtn=$("refreshRankingsBtn"), testApiBtn=$("testApiBtn");
-  const adpFileEl=$("adpFile"), expertFileEl=$("expertFile"), exportDataBtn=$("exportDataBtn"), clearDataBtn=$("clearDataBtn");
-  const statusEl = $("status"), snapshotEl = $("snapshot"), copyBtn = $("copyBtn"), shareBtn = $("shareBtn");
-  const connectBtn = $("connectBtn"), autoBtn = $("autoBtn");
-  const draftModeBtn=$("draftModeBtn"), clearHistoryBtn=$("clearHistoryBtn");
-  const changesCard=$("changesCard"), changesText=$("changesText");
-  const intelligenceCard=$("intelligenceCard"), intelligenceText=$("intelligenceText");
-  const dataAgeEl=$("dataAge"), connectionStateEl=$("connectionState");
-  let previousDraftedIds = new Set(JSON.parse(localStorage.getItem("sdc_prev_drafted") || "[]"));
-  let draftMode = localStorage.getItem("sdc_draftmode") === "1";
-  const manualPlayers=$("manualPlayers");
-  manualPlayers.value=localStorage.getItem("sdc_manualplayers")||"";
-  manualPlayers.addEventListener("input",()=>localStorage.setItem("sdc_manualplayers",manualPlayers.value));
-  let timer = null, playerMap = null, latestDraft = null, latestPicks = [], lastFetchAt = null;
-  let expertRanks=JSON.parse(localStorage.getItem("sdc_expert_ranks_v2")||"{}");
-  let sleeperAdp=JSON.parse(localStorage.getItem("sdc_sleeper_adp_v2")||"{}");
-  let rankingMeta=JSON.parse(localStorage.getItem("sdc_ranking_meta_v2")||"{}");
-  fpApiKeyEl.value=localStorage.getItem("sdc_fp_api_key")||"";
-  seasonEl.value=localStorage.getItem("sdc_season")||"2026";
-  scoringEl.value=localStorage.getItem("sdc_scoring")||"HALF";
-  panelModeEl.value=localStorage.getItem("sdc_panel_mode")||"consensus";
-
-  for (let i=1;i<=16;i++) {
-    const o=document.createElement("option"); o.value=i; o.textContent=`Slot ${i}`; slotSel.appendChild(o);
-  }
-  draftInput.value = localStorage.getItem("sdc_draft") || "";
-  slotSel.value = localStorage.getItem("sdc_slot") || "9";
-  topNSel.value = localStorage.getItem("sdc_topn") || "35";
-  snapshotModeSel.value = localStorage.getItem("sdc_snapshotmode") || "compact";
-  snapshotModeSel.addEventListener("change",()=>localStorage.setItem("sdc_snapshotmode", snapshotModeSel.value));
-
-
-  function normalizeName(v){return String(v||"").toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g,"").replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,"").replace(/[^a-z0-9]/g,"");}
-  function persistRankingData(){localStorage.setItem("sdc_expert_ranks_v2",JSON.stringify(expertRanks));localStorage.setItem("sdc_sleeper_adp_v2",JSON.stringify(sleeperAdp));localStorage.setItem("sdc_ranking_meta_v2",JSON.stringify(rankingMeta));localStorage.setItem("sdc_fp_api_key",fpApiKeyEl.value.trim());localStorage.setItem("sdc_season",seasonEl.value.trim());localStorage.setItem("sdc_scoring",scoringEl.value);localStorage.setItem("sdc_panel_mode",panelModeEl.value);updateDataQuality();}
-  function updateDataQuality(){const rc=Object.keys(expertRanks).length,ac=Object.keys(sleeperAdp).length;const rd=rankingMeta.rankUpdated?new Date(rankingMeta.rankUpdated).toLocaleString("de-DE"):"–",ad=rankingMeta.adpUpdated?new Date(rankingMeta.adpUpdated).toLocaleString("de-DE"):"–";if(rc&&ac){dataQualityEl.className="status ok";dataQualityEl.textContent=`VERIFIZIERT: ${rc} Rankings (${rd}) · ${ac} Sleeper-ADPs (${ad})`;}else if(rc||ac){dataQualityEl.className="status warn";dataQualityEl.textContent=`TEILWEISE: Rankings ${rc?"vorhanden":"FEHLEN"} · Sleeper-ADP ${ac?"vorhanden":"FEHLT"}`;}else{dataQualityEl.className="status bad";dataQualityEl.textContent="NICHT VERIFIZIERT: Rankings und Sleeper-ADP fehlen.";}}
-  function parseCsv(text){const rows=[];let row=[],cell="",quoted=false;for(let i=0;i<text.length;i++){const c=text[i],n=text[i+1];if(c==='"'&&quoted&&n==='"'){cell+='"';i++;}else if(c==='"'){quoted=!quoted;}else if(c===','&&!quoted){row.push(cell.trim());cell="";}else if((c==='\n'||c==='\r')&&!quoted){if(c==='\r'&&n==='\n')i++;row.push(cell.trim());cell="";if(row.some(x=>x!==""))rows.push(row);row=[];}else cell+=c;}if(cell||row.length){row.push(cell.trim());rows.push(row);}if(!rows.length)return[];const h=rows[0];return rows.slice(1).map(r=>Object.fromEntries(h.map((x,i)=>[x,r[i]??""])));}
-  function rowsFromFileText(text,name){if(name.toLowerCase().endsWith('.json')){const o=JSON.parse(text);if(Array.isArray(o))return o;if(Array.isArray(o.players))return o.players;return Object.values(o);}return parseCsv(text);}
-  function getField(o,names){const ks=Object.keys(o||{});for(const name of names){const target=name.toLowerCase().replace(/[^a-z0-9]/g,"");const k=ks.find(x=>x.toLowerCase().replace(/[^a-z0-9]/g,"")===target);if(k&&o[k]!==""&&o[k]!=null)return o[k];}return null;}
-  function ingestRows(rows,mode){let c=0;for(const r of rows){const name=getField(r,["player_name","player","name","full_name"]);if(!name)continue;const key=normalizeName(name);if(mode==='adp'){const raw=getField(r,["sleeper_adp","adp_sleeper","sleeper"]);const n=Number(String(raw??"").replace(",","."));if(Number.isFinite(n)&&n>0){sleeperAdp[key]=n;c++;}}else{const raw=getField(r,["rank_ecr","ecr","overall_rank","rank","expert_rank"]);const n=Number(String(raw??"").replace(",","."));const t=Number(getField(r,["tier","expert_tier"]));if(Number.isFinite(n)&&n>0){expertRanks[key]={rank:n,tier:Number.isFinite(t)?t:null,source:mode};c++;}}}return c;}
-  function extractApiPlayers(p){if(Array.isArray(p))return p;for(const k of ["players","rankings","data","results"]){if(Array.isArray(p?.[k]))return p[k];if(Array.isArray(p?.data?.[k]))return p.data[k];}return[];}
-  function detectSleeperAdp(r){const raw=getField(r,["sleeper_adp","adp_sleeper","adp_sleeper_half_ppr","sleeper"]);const n=Number(String(raw??"").replace(",","."));return Number.isFinite(n)&&n>0?n:null;}
-  async function fpFetch(path){const key=fpApiKeyEl.value.trim();if(!key)throw new Error("FantasyPros API-Key fehlt.");const r=await fetch(`https://api.fantasypros.com/public/v2/json${path}`,{headers:{"x-api-key":key},cache:"no-store"});if(!r.ok)throw new Error(`FantasyPros API: ${r.status} ${r.statusText}`);return r.json();}
-  async function findPatExpertId(season){const p=await fpFetch(`/nfl/${season}/rankings/experts`);const rows=Array.isArray(p?.experts)?p.experts:Array.isArray(p?.data?.experts)?p.data.experts:extractApiPlayers(p);const pat=rows.find(x=>String(getField(x,["name","expert_name","full_name"])||"").toLowerCase().includes("pat fitz"));return pat?getField(pat,["expert_id","id"]):null;}
-  async function refreshFantasyProsRankings(){const season=seasonEl.value.trim(),scoring=scoringEl.value,positions=["QB","RB","WR","TE"],nr={},fa={};let patId=null;if(panelModeEl.value==='pat')patId=await findPatExpertId(season);for(const pos of positions){const path=panelModeEl.value==='pat'&&patId?`/nfl/${season}/rankings?position=${pos}&scoring=${scoring}&expert_id=${encodeURIComponent(patId)}`:`/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}`;const rows=extractApiPlayers(await fpFetch(path));for(const r of rows){const name=getField(r,["player_name","name","full_name"]),rank=Number(getField(r,["rank_ecr","rank","overall_rank","rank_expert"]));if(!name||!Number.isFinite(rank))continue;const key=normalizeName(name),tier=Number(getField(r,["tier"]));nr[key]={rank,tier:Number.isFinite(tier)?tier:null,source:panelModeEl.value};const adp=detectSleeperAdp(r);if(adp)fa[key]=adp;}}if(!Object.keys(nr).length)throw new Error("API-Antwort enthielt keine erkennbaren Rankings.");expertRanks=nr;rankingMeta.rankUpdated=new Date().toISOString();rankingMeta.rankSource=panelModeEl.value==='pat'?"FantasyPros: Pat Fitzmaurice":"FantasyPros ECR";if(Object.keys(fa).length){sleeperAdp={...sleeperAdp,...fa};rankingMeta.adpUpdated=new Date().toISOString();rankingMeta.adpSource="FantasyPros API: erkannte Sleeper-Spalte";}persistRankingData();rankingStatusEl.className="status ok";rankingStatusEl.textContent=`${Object.keys(nr).length} Rankings geladen. ${Object.keys(fa).length?Object.keys(fa).length+" Sleeper-ADPs erkannt.":"Keine Sleeper-ADP-Spalte erkannt."}`;}
-  function valueLabel(current,adp){if(!Number.isFinite(adp))return{label:"ADP FEHLT"};const d=Math.round(adp-current);if(d>=15)return{label:`WARTEN / ${d} Picks vor ADP`};if(d>=8)return{label:`Leichter Reach / ${d}`};if(d<=-15)return{label:`Elite Value / ${Math.abs(d)}`};if(d<=-8)return{label:`Value / ${Math.abs(d)}`};return{label:"Fair"};}
-
-  function draftIdFrom(value) {
-    const m = String(value).trim().match(/(\d{12,})/);
-    if (!m) throw new Error("Keine gültige Draft-ID gefunden.");
-    return m[1];
-  }
-  function setStatus(msg, cls="") {
-    statusEl.className = "status " + cls; statusEl.textContent = msg;
-  }
-  async function getJSON(url) {
-    const r = await fetch(url, {cache:"no-store"});
-    if (!r.ok) throw new Error(`${r.status} ${r.statusText}`);
-    return r.json();
-  }
-  async function loadPlayers() {
-    const day = "v2-" + new Date().toISOString().slice(0,10);
-    const cachedDay = localStorage.getItem("sdc_players_day");
-    const cached = localStorage.getItem("sdc_players");
-    if (cached && cachedDay === day) {
-      try { return JSON.parse(cached); } catch {}
-    }
-    setStatus("Lade Sleeper-Spielerdatenbank …", "warn");
-    const data = await getJSON(`${API}/players/nfl`);
-    // Keep only fields needed by this app to reduce localStorage size.
-    const compact = {};
-    for (const [id,p] of Object.entries(data)) {
-      if (!p) continue;
-      compact[id] = {
-        n: p.full_name || [p.first_name,p.last_name].filter(Boolean).join(" ") || p.player_id || id,
-        pos: p.fantasy_positions?.[0] || p.position || "?",
-        team: p.team || "FA",
-        rank: Number.isFinite(+p.search_rank) && +p.search_rank > 0 ? +p.search_rank : 999999,
-        active: p.active !== false,
-        status: p.status || "",
-        years: Number.isFinite(+p.years_exp) ? +p.years_exp : null,
-        injury: p.injury_status || null, bye: p.bye_week || null, depth: p.depth_chart_order || null
-      };
-    }
-    playerMap = compact;
-    try {
-      localStorage.setItem("sdc_players_day", day);
-      localStorage.setItem("sdc_players", JSON.stringify(compact));
-    } catch (e) {
-      // Storage may be too small; app still works in memory.
-    }
-    return compact;
-  }
-  function playerLabel(id, meta={}) {
-    const p = playerMap?.[id];
-    const name = meta.first_name && meta.last_name ? `${meta.first_name} ${meta.last_name}` :
-                 meta.first_name || meta.last_name || p?.n || `ID ${id}`;
-    const pos = meta.position || p?.pos || "?";
-    const team = meta.team || p?.team || "FA";
-    return `${name} — ${pos}, ${team}`;
-  }
-  function myPickNumbers(teams, rounds, slot, reversalRound) {
-    const picks = [];
-    for (let round=1; round<=rounds; round++) {
-      let s = slot;
-      const reversed = reversalRound && round >= reversalRound;
-      const snakeReverse = round % 2 === 0;
-      if (snakeReverse !== reversed) s = teams - slot + 1;
-      picks.push((round-1)*teams + s);
-    }
-    return picks;
-  }
-  function buildSnapshot(draft, picks, mySlot, topN) {
-    const settings = draft.settings || {};
-    const teams = +settings.teams || Math.max(10, ...picks.map(p=>+p.draft_slot||0));
-    const rounds = +settings.rounds || 16;
-    const reversal = +settings.reversal_round || 0;
-    const totalPicks = teams * rounds;
-    const current = Math.min(picks.length + 1, totalPicks);
-    const mine = myPickNumbers(teams, rounds, mySlot, reversal);
-    const next = mine.find(x => x >= current) || null;
-    const until = next == null ? null : Math.max(0, next-current);
-
-    const myPicks = picks.filter(p => +p.draft_slot === +mySlot).sort((a,b)=>a.pick_no-b.pick_no);
-    const draftedIds = new Set(picks.map(p=>String(p.player_id)));
-    const positions = new Set(["QB","RB","WR","TE"]);
-    const nflTeams = new Set([
-      "ARI","ATL","BAL","BUF","CAR","CHI","CIN","CLE","DAL","DEN","DET","GB",
-      "HOU","IND","JAX","KC","LAC","LAR","LV","MIA","MIN","NE","NO","NYG","NYJ",
-      "PHI","PIT","SEA","SF","TB","TEN","WAS"
-    ]);
-    const available = Object.entries(playerMap || {})
-      .filter(([id,p]) =>
-        !draftedIds.has(id) &&
-        p.active &&
-        positions.has(p.pos) &&
-        nflTeams.has(p.team) &&
-        p.rank < 999999
-      )
-      .sort((a,b)=>(a[1].rank-b[1].rank) || a[1].n.localeCompare(b[1].n))
-      .slice(0, topN);
-
-    const recentLimit = snapshotModeSel.value === "compact" ? 12 : 30;
-    const recent = [...picks].sort((a,b)=>b.pick_no-a.pick_no).slice(0,recentLimit).reverse();
-    const lines = [];
-    lines.push("===== SLEEPER DRAFT SNAPSHOT =====");
-    lines.push(`Draft-ID: ${draft.draft_id}`);
-    lines.push(`Status: ${draft.status || "unbekannt"}`);
-    lines.push(`Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${mySlot}`);
-    lines.push(`Aktueller Pick: ${current}`);
-    lines.push(`Mein nächster Pick: ${next ?? "keiner"} | Picks bis dahin: ${until ?? "–"}`);
-    lines.push("");
-    lines.push("MEIN TEAM");
-    if (!myPicks.length) lines.push("(noch kein Pick)");
-    for (const p of myPicks) lines.push(`${p.pick_no}. ${playerLabel(String(p.player_id), p.metadata || {})}`);
-    lines.push("");
-    lines.push("LETZTE PICKS");
-    if (!recent.length) lines.push("(Draft noch nicht gestartet)");
-    for (const p of recent) lines.push(`${p.pick_no}. Slot ${p.draft_slot}: ${playerLabel(String(p.player_id), p.metadata || {})}`);
-    lines.push("");
-    lines.push("VERFÜGBARE SPIELER");
-    if (manualPlayers.value.trim()) {
-      lines.push(manualPlayers.value.trim());
-      lines.push("");
-      lines.push("(manuelle Liste verwendet)");
-    } else {
-      lines.push(`TOP ${available.length} VERFÜGBARE SPIELER (automatisch aus Sleeper-Spielerdaten)`);
-      for (let i=0;i<available.length;i++) {
-        const [id,p]=available[i], key=normalizeName(p.n), er=expertRanks[key], adp=Number(sleeperAdp[key]), val=valueLabel(current,adp);
-        const expertText=er?`Expert ${er.rank}${er.tier?` (Tier ${er.tier})`:""}`:"Expert FEHLT";
-        const adpText=Number.isFinite(adp)?`Sleeper-ADP ${adp.toFixed(1)}`:"Sleeper-ADP FEHLT";
-        lines.push(`${i+1}. ${p.n} — ${p.pos}, ${p.team} | ${expertText} | ${adpText} | ${val.label}${p.injury?` | Injury ${p.injury}`:""}`);
-      }
-    }
-    lines.push("");
-    const counts = positionCounts(picks);
-    const run = recentRun(picks, 8);
-    lines.push("DRAFT-INTELLIGENZ");
-    lines.push(`Gedraftet: QB ${counts.QB} | RB ${counts.RB} | WR ${counts.WR} | TE ${counts.TE}`);
-    lines.push(run ? `Positions-Run: ${run.pos} (${run.n} der letzten ${run.lookback} Picks)` : "Positions-Run: keiner");
-    lines.push("");
-    lines.push("DATENSTATUS");
-    lines.push(`Panel: ${panels[activePanelId]?.name || "FEHLT"} | Positionsmodus: ${positionPanelMode === "on" ? "AN" : "AUS"} | Stand: ${rankingMeta.rankUpdated || "–"}`);
-    lines.push(`Sleeper-ADP: ${rankingMeta.adpSource || "FEHLT"} | Stand: ${rankingMeta.adpUpdated || "–"}`);
-    lines.push("");
-    lines.push("HARTE REGEL");
-    lines.push("Keine Empfehlung bei fehlender Experten- oder Sleeper-ADP ohne Unsicherheitshinweis. Reaches >15 Picks nur mit außergewöhnlicher aktueller Begründung.");
-    lines.push("");
-    lines.push("AUFGABE");
-    lines.push("Prüfe aktuelle Expertenrankings, Depth Charts, Verletzungen und News.");
-    lines.push("Gib: 1) Empfehlung, 2) 2–3 Alternativen, 3) Return-Chancen, 4) Confidence.");
-    return {text:lines.join("\n"), current, next, until, myPicks, teams};
-  }
-
-  function applyDraftMode() {
-    document.body.classList.toggle("draft-mode", draftMode);
-    draftModeBtn.textContent = `Draftmodus: ${draftMode ? "AN" : "AUS"}`;
-    draftModeBtn.style.background = draftMode ? "var(--accent)" : "#26324f";
-  }
-  function updateChanges(picks) {
-    const currentIds = new Set(picks.map(p => String(p.player_id)));
-    const newIds = [...currentIds].filter(id => !previousDraftedIds.has(id));
-    if (previousDraftedIds.size === 0) {
-      changesText.textContent = "Vergleichsbasis gespeichert. Beim nächsten Aktualisieren werden neue Picks angezeigt.";
-    } else if (newIds.length === 0) {
-      changesText.textContent = "Keine neuen Picks seit dem letzten Aktualisieren.";
-    } else {
-      const byId = new Map(picks.map(p => [String(p.player_id), p]));
-      changesText.innerHTML = newIds.map(id => {
-        const p = byId.get(id);
-        return `<span class="change-out">❌ Pick ${p.pick_no}: ${playerLabel(id, p.metadata || {})}</span>`;
-      }).join("");
-    }
-    changesCard.hidden = false;
-    previousDraftedIds = currentIds;
-    localStorage.setItem("sdc_prev_drafted", JSON.stringify([...currentIds]));
-  }
-
-
-  function positionCounts(picks) {
-    const counts = {QB:0,RB:0,WR:0,TE:0,K:0,DEF:0,OTHER:0};
-    for (const p of picks) {
-      const pos = (p.metadata?.position || playerMap?.[String(p.player_id)]?.pos || "OTHER").toUpperCase();
-      if (counts[pos] !== undefined) counts[pos]++; else counts.OTHER++;
-    }
-    return counts;
-  }
-
-  function recentRun(picks, lookback=8) {
-    const recent = [...picks].sort((a,b)=>b.pick_no-a.pick_no).slice(0,lookback);
-    const counts = {};
-    for (const p of recent) {
-      const pos = (p.metadata?.position || playerMap?.[String(p.player_id)]?.pos || "?").toUpperCase();
-      counts[pos] = (counts[pos] || 0) + 1;
-    }
-    const sorted = Object.entries(counts).sort((a,b)=>b[1]-a[1]);
-    if (!sorted.length) return null;
-    const [pos,n] = sorted[0];
-    return n >= 4 ? {pos,n,lookback} : null;
-  }
-
-  function teamRosterNeeds(picks, teams) {
-    const rosters = {};
-    for (let s=1;s<=teams;s++) rosters[s] = {QB:0,RB:0,WR:0,TE:0};
-    for (const p of picks) {
-      const slot = +p.draft_slot;
-      const pos = (p.metadata?.position || playerMap?.[String(p.player_id)]?.pos || "").toUpperCase();
-      if (rosters[slot] && rosters[slot][pos] !== undefined) rosters[slot][pos]++;
-    }
-    return rosters;
-  }
-
-  function buildIntelligence(picks, teams, mySlot, currentPick, nextMyPick) {
-    const counts = positionCounts(picks);
-    const run = recentRun(picks, 8);
-    const rosters = teamRosterNeeds(picks, teams);
-    const lines = [];
-    lines.push(`<span class="intelligence-line">Gedraftet: QB ${counts.QB} · RB ${counts.RB} · WR ${counts.WR} · TE ${counts.TE}</span>`);
-    if (run) lines.push(`<span class="intelligence-line">⚠️ ${run.pos}-Run: ${run.n} der letzten ${run.lookback} Picks</span>`);
-    else lines.push(`<span class="intelligence-line">Kein deutlicher Positions-Run in den letzten 8 Picks.</span>`);
-
-    if (nextMyPick != null) {
-      const interveningSlots = [];
-      for (let p=currentPick; p<nextMyPick; p++) {
-        const round = Math.floor((p-1)/teams)+1;
-        const within = ((p-1)%teams)+1;
-        const slot = round % 2 === 1 ? within : teams-within+1;
-        if (slot !== mySlot && !interveningSlots.includes(slot)) interveningSlots.push(slot);
-      }
-      const qbless = interveningSlots.filter(s => rosters[s]?.QB === 0).length;
-      const teless = interveningSlots.filter(s => rosters[s]?.TE === 0).length;
-      lines.push(`<span class="intelligence-line">Bis zu deinem nächsten Pick kommen ${interveningSlots.length} andere Teams dran; davon ohne QB: ${qbless}, ohne TE: ${teless}.</span>`);
-    }
-    return lines.join("");
-  }
-
-  function updateFreshness() {
-    if (!lastFetchAt) {
-      dataAgeEl.textContent = "–";
-      connectionStateEl.textContent = navigator.onLine ? "Bereit" : "Offline";
-      connectionStateEl.className = navigator.onLine ? "" : "status-offline";
-      return;
-    }
-    const sec = Math.max(0, Math.floor((Date.now()-lastFetchAt.getTime())/1000));
-    dataAgeEl.textContent = sec < 60 ? `${sec}s` : `${Math.floor(sec/60)}m`;
-    dataAgeEl.className = sec <= 20 ? "status-fresh" : sec <= 60 ? "status-stale" : "status-offline";
-    connectionStateEl.textContent = navigator.onLine ? "Online" : "Offline";
-    connectionStateEl.className = navigator.onLine ? "status-fresh" : "status-offline";
-  }
-  setInterval(updateFreshness, 1000);
-  window.addEventListener("online", updateFreshness);
-  window.addEventListener("offline", updateFreshness);
-
-  async function refresh() {
-    try {
-      connectBtn.disabled = true;
-      const id = draftIdFrom(draftInput.value);
-      const slot = +slotSel.value, topN = +topNSel.value;
-      localStorage.setItem("sdc_draft", draftInput.value.trim());
-      localStorage.setItem("sdc_slot", slot);
-      localStorage.setItem("sdc_topn", topN);
-      localStorage.setItem("sdc_snapshotmode", snapshotModeSel.value);
-      setStatus("Lade Draft und Picks …", "warn");
-      const [draft,picks,players] = await Promise.all([
-        getJSON(`${API}/draft/${id}`),
-        getJSON(`${API}/draft/${id}/picks`),
-        playerMap ? Promise.resolve(playerMap) : loadPlayers()
-      ]);
-      playerMap = players; latestDraft=draft; latestPicks=picks;
-      lastFetchAt = new Date();
-      updateFreshness();
-      updateChanges(picks);
-      const s = buildSnapshot(draft,picks,slot,topN);
-      intelligenceCard.hidden = false;
-      intelligenceText.innerHTML = buildIntelligence(picks, s.teams, slot, s.current, s.next);
-      const autoDraftMode = s.until !== null && s.until <= 2;
-      if (autoDraftMode && !draftMode) {
-        draftMode = true;
-        localStorage.setItem("sdc_draftmode","1");
-        applyDraftMode();
-      }
-      snapshotEl.value = s.text; copyBtn.disabled=false; shareBtn.disabled=false;
-      $("summaryCard").hidden=false;
-      $("currentPick").textContent=s.current;
-      $("nextMyPick").textContent=s.next ?? "–";
-      $("untilPick").textContent=s.until ?? "–";
-      if (s.until === 0) {
-        $("untilPick").textContent = "JETZT";
-        $("untilPick").style.color = "var(--ok)";
-      } else {
-        $("untilPick").style.color = "";
-      }
-      $("teamPills").innerHTML = s.myPicks.map(p=>`<span class="pill">${playerLabel(String(p.player_id), p.metadata||{})}</span>`).join("") || '<span class="tiny">Noch kein eigener Pick.</span>';
-      setStatus(`Aktuell: ${picks.length} Picks · ${new Date().toLocaleTimeString("de-DE")}`, "ok");
-      return s;
-    } catch (e) {
-      console.error(e);
-      setStatus(`Fehler: ${e.message}\nFalls die Datei direkt geöffnet wurde, bitte über einen Webhost (z. B. GitHub Pages) bereitstellen.`, "bad");
-    } finally {
-      connectBtn.disabled = false;
-    }
-  }
-  connectBtn.addEventListener("click", refresh);
-  copyBtn.addEventListener("click", async () => {
-    try {
-      copyBtn.disabled = true;
-      copyBtn.textContent = "Aktualisiere …";
-      await refresh();
-      await navigator.clipboard.writeText(snapshotEl.value);
-      copyBtn.textContent = "Kopiert ✓";
-      setStatus("Snapshot aktualisiert und kopiert. Jetzt in ChatGPT einfügen.", "ok");
-      setTimeout(() => { copyBtn.textContent = "Aktualisieren & kopieren"; copyBtn.disabled = false; }, 1200);
-    } catch {
-      snapshotEl.focus(); snapshotEl.select();
-      document.execCommand("copy");
-      copyBtn.textContent = "Kopiert ✓";
-      setTimeout(() => { copyBtn.textContent = "Aktualisieren & kopieren"; copyBtn.disabled = false; }, 1200);
-    }
-  });
-
-  shareBtn.addEventListener("click", async () => {
-    try {
-      await refresh();
-      if (navigator.share) {
-        await navigator.share({
-          title: "Sleeper Draft Snapshot",
-          text: snapshotEl.value
-        });
-        setStatus("Snapshot geteilt.", "ok");
-      } else {
-        await navigator.clipboard.writeText(snapshotEl.value);
-        setStatus("Teilen wird nicht unterstützt; Snapshot wurde kopiert.", "warn");
-      }
-    } catch (e) {
-      if (e?.name !== "AbortError") setStatus("Teilen fehlgeschlagen: " + e.message, "bad");
-    }
-  });
-
-  autoBtn.addEventListener("click", () => {
-    if (timer) {
-      clearInterval(timer); timer=null; autoBtn.textContent="Auto-Refresh";
-      setStatus("Auto-Refresh gestoppt.", "warn");
-    } else {
-      refresh();
-      const cadence = (latestDraft && latestPicks) ? 5000 : 15000;
-      timer=setInterval(refresh, cadence);
-      autoBtn.textContent="Auto: AN";
-      setStatus("Auto-Refresh läuft.", "ok");
-    }
-  });
-
-
-
-  refreshRankingsBtn.addEventListener("click",async()=>{try{refreshRankingsBtn.disabled=true;rankingStatusEl.className="status warn";rankingStatusEl.textContent="Lade aktuelle FantasyPros-Daten …";await refreshFantasyProsRankings();if(latestDraft)await refresh();}catch(e){rankingStatusEl.className="status bad";rankingStatusEl.textContent=`Fehler: ${e.message}`;}finally{refreshRankingsBtn.disabled=false;}});
-  testApiBtn.addEventListener("click",async()=>{try{testApiBtn.disabled=true;await fpFetch(`/nfl/${seasonEl.value.trim()}/consensus-rankings?position=RB&scoring=${scoringEl.value}`);rankingStatusEl.className="status ok";rankingStatusEl.textContent="FantasyPros API-Verbindung funktioniert.";persistRankingData();}catch(e){rankingStatusEl.className="status bad";rankingStatusEl.textContent=`API-Test fehlgeschlagen: ${e.message}`;}finally{testApiBtn.disabled=false;}});
-  adpFileEl.addEventListener("change",async()=>{const f=adpFileEl.files?.[0];if(!f)return;try{const c=ingestRows(rowsFromFileText(await f.text(),f.name),"adp");if(!c)throw new Error("Keine Sleeper-ADP-Spalte erkannt.");rankingMeta.adpUpdated=new Date().toISOString();rankingMeta.adpSource=`Datei: ${f.name}`;persistRankingData();rankingStatusEl.className="status ok";rankingStatusEl.textContent=`${c} Sleeper-ADPs importiert.`;if(latestDraft)await refresh();}catch(e){rankingStatusEl.className="status bad";rankingStatusEl.textContent=`ADP-Import fehlgeschlagen: ${e.message}`;}});
-  expertFileEl.addEventListener("change",async()=>{const f=expertFileEl.files?.[0];if(!f)return;try{expertRanks={};const c=ingestRows(rowsFromFileText(await f.text(),f.name),"custom");if(!c)throw new Error("Keine Ranking-Spalte erkannt.");rankingMeta.rankUpdated=new Date().toISOString();rankingMeta.rankSource=`Datei: ${f.name}`;persistRankingData();rankingStatusEl.className="status ok";rankingStatusEl.textContent=`${c} Expertenrankings importiert.`;if(latestDraft)await refresh();}catch(e){rankingStatusEl.className="status bad";rankingStatusEl.textContent=`Ranking-Import fehlgeschlagen: ${e.message}`;}});
-  exportDataBtn.addEventListener("click",()=>{const b=new Blob([JSON.stringify({expertRanks,sleeperAdp,rankingMeta},null,2)],{type:"application/json"}),a=document.createElement("a");a.href=URL.createObjectURL(b);a.download="draft-companion-daten.json";a.click();URL.revokeObjectURL(a.href);});
-  clearDataBtn.addEventListener("click",()=>{if(!confirm("Gespeicherte Ranking- und ADP-Daten wirklich löschen?"))return;expertRanks={};sleeperAdp={};rankingMeta={};persistRankingData();rankingStatusEl.className="status warn";rankingStatusEl.textContent="Rankingdaten gelöscht.";});
-  panelModeEl.addEventListener("change",persistRankingData);scoringEl.addEventListener("change",persistRankingData);seasonEl.addEventListener("change",persistRankingData);fpApiKeyEl.addEventListener("change",persistRankingData);updateDataQuality();
-  window.addEventListener("load", () => {
-    if (draftInput.value.trim()) {
-      setTimeout(() => refresh(), 250);
-    }
-  });
-
-
-  draftModeBtn.addEventListener("click", () => {
-    draftMode = !draftMode;
-    localStorage.setItem("sdc_draftmode", draftMode ? "1" : "0");
-    applyDraftMode();
-  });
-  clearHistoryBtn.addEventListener("click", () => {
-    previousDraftedIds = new Set();
-    localStorage.removeItem("sdc_prev_drafted");
-    changesCard.hidden = true;
-    setStatus("Vergleich wurde zurückgesetzt.", "warn");
-  });
-  applyDraftMode();
-
-
-  const updateBanner = $("updateBanner");
-  const reloadBtn = $("reloadBtn");
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-      updateBanner.hidden = false;
-    });
-  }
-
-  let deferredInstallPrompt = null;
-  const installBtn = $("installBtn");
-  window.addEventListener("beforeinstallprompt", (event) => {
-    event.preventDefault();
-    deferredInstallPrompt = event;
-    installBtn.hidden = false;
-  });
-  installBtn.addEventListener("click", async () => {
-    if (!deferredInstallPrompt) {
-      setStatus("Im Browser-Menü „Zum Startbildschirm hinzufügen“ wählen.", "warn");
-      return;
-    }
-    deferredInstallPrompt.prompt();
-    await deferredInstallPrompt.userChoice;
-    deferredInstallPrompt = null;
-    installBtn.hidden = true;
-  });
-  window.addEventListener("appinstalled", () => {
-    setStatus("Draft Companion wurde installiert.", "ok");
-  });
-  if ("serviceWorker" in navigator) {
-    window.addEventListener("load", async () => {
-      try {
-        const reg = await navigator.serviceWorker.register("./sw.js");
-        reg.update();
-        if (reg.waiting) updateBanner.hidden = false;
-        reg.addEventListener("updatefound", () => {
-          const worker = reg.installing;
-          if (!worker) return;
-          worker.addEventListener("statechange", () => {
-            if (worker.state === "installed" && navigator.serviceWorker.controller) {
-              updateBanner.hidden = false;
-            }
-          });
-        });
-        reloadBtn.addEventListener("click", () => {
-          if (reg.waiting) reg.waiting.postMessage({type:"SKIP_WAITING"});
-          else window.location.reload();
-        });
-      } catch (err) {
-        console.warn("Service Worker:", err);
-      }
-    });
-  }
-
-})();
-</script>
+<script type="module" src="app.js?v=11.8.0-rc4.46"></script>
+<script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>
 </html>
