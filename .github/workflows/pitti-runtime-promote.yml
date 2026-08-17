@@ -18,12 +18,19 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat .pitti_payload/part00 .pitti_payload/part01 .pitti_payload/part02 .pitti_payload/part03 .pitti_payload/part04 .pitti_payload/part05 .pitti_payload/part06 .pitti_payload/part07a .pitti_payload/part07b0 .pitti_payload/part07b1 .pitti_payload/part07b2 .pitti_payload/part07b3a .pitti_payload/part07b3b .pitti_payload/part07b3c .pitti_payload/part07b3d .pitti_payload/part07b4 .pitti_payload/part07b5 .pitti_payload/part07b6 .pitti_payload/part07b7 | base64 -d > /tmp/rc446.zip
+          cat .pitti_payload/part00 .pitti_payload/part01 .pitti_payload/part02 .pitti_payload/part03 .pitti_payload/part04 .pitti_payload/part05 .pitti_payload/part06 .pitti_payload/part07a .pitti_payload/part07b0 .pitti_payload/part07b1 .pitti_payload/part07b2 .pitti_payload/part07b3a .pitti_payload/part07b3b0 .pitti_payload/part07b3b1 .pitti_payload/part07b3b2 .pitti_payload/part07b3b3 .pitti_payload/part07b3c .pitti_payload/part07b3d .pitti_payload/part07b4 .pitti_payload/part07b5 .pitti_payload/part07b6 .pitti_payload/part07b7 | base64 -d > /tmp/rc446.zip
           echo '73efa5a3c7383b66f5abf85f391ff43eb6d2e4177a75f56696a3102268c362ef  /tmp/rc446.zip' | sha256sum -c -
           test "$(unzip -Z1 /tmp/rc446.zip | wc -l)" -eq 8
           unzip -qo /tmp/rc446.zip -d /tmp/rc446
           for f in README.md _worker.js app.js sw.js icon.svg index.html manifest.webmanifest styles.css; do cp "/tmp/rc446/$f" "$f"; done
-          sha256sum README.md _worker.js app.js sw.js icon.svg index.html manifest.webmanifest styles.css
+          echo '7d9092bbf5866968c16191746da7451040201ba17f28a8dcd81dca904ca9968b  README.md' | sha256sum -c -
+          echo '4cbcc439c2ba155251240d389da2e39dbd6881cc63b80330d78edc8613cfd16c  _worker.js' | sha256sum -c -
+          echo '1c5ee768f8a85f2c9ee02d75db4c1bb176bd9e9a3d6d25bb8b34ca233ffd4153  app.js' | sha256sum -c -
+          echo '32a2f2d7f4311f9bfdbb347f1d9e8a08b9ddb2be076e5d26ee65597c30d6a0f1  sw.js' | sha256sum -c -
+          echo '44edb509133d81cf975775978bf0597775295cd5a7d5f1ba87c3ed216e15a7e7  icon.svg' | sha256sum -c -
+          echo '8512de80e19f58a17b7c3793b8a56d90e79a3c9fd3a6954142dbab54bb4c0098  index.html' | sha256sum -c -
+          echo '1c34579e5d0542fd9c373f2920f7afd02cb84e36eb49d215c13f164595de804c  manifest.webmanifest' | sha256sum -c -
+          echo 'ca1b360867908d9051286d168ad966c950e272587dc2d0be333f50e12232168d  styles.css' | sha256sum -c -
       - name: Commit exact runtime and remove transport payload
         shell: bash
         run: |
