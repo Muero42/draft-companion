@@ -30,40 +30,20 @@ def weight_factory(lam,tail,shift):
 
 def empirical_targets(drafts):
  loo=m.loo_metrics(drafts)
- return {
-  'loo_mean_mae':statistics.mean(r['mae'] for r in loo),
-  'loo_slide_rate':statistics.mean(r['extreme_slide_rate_per_draft'] for r in loo),
-  'loo':loo,
- }
+ return {'loo_mean_mae':statistics.mean(r['mae'] for r in loo),'loo_slide_rate':statistics.mean(r['extreme_slide_rate_per_draft'] for r in loo),'loo':loo}
 
 def main():
- ap=argparse.ArgumentParser();ap.add_argument('--app',default='app.js');ap.add_argument('--runs',type=int,default=300);ap.add_argument('--out',default='manager_mock_v2_grid.json');a=ap.parse_args()
+ ap=argparse.ArgumentParser();ap.add_argument('--app',default='app.js');ap.add_argument('--runs',type=int,default=300);ap.add_argument('--out',default='manager_mock_v2_grid.json');ap.add_argument('--shard',type=int,default=0);ap.add_argument('--shards',type=int,default=1);a=ap.parse_args()
+ if a.shards<1 or not 0<=a.shard<a.shards: raise SystemExit('invalid shard')
  drafts,errors=m.collect(m.DEFAULT_DRAFT_IDS);stats,_=m.build_empirical(drafts);data=m.load_profiles(Path(a.app));target=empirical_targets(drafts)
- rows=[];i=0
- # Around the previous lambda~.25 optimum, explicitly tune late-tail strength and center shift.
- for lam in [.15,.20,.25,.30,.35]:
-  for tail in [.75,1.0,1.25,1.5,2.0]:
-   for shift in [0.0,1.0,2.0,3.0]:
-    i+=1;m.market_weight=weight_factory(lam,tail,shift)
-    s,slides,invalid=m.simulate(stats,data,a.runs,280000+i,'auto',False)
-    cal=m.calibration(stats,s);sr=len(slides)/a.runs
-    # Bias is a calibration target, not a free reward for merely matching tail count.
-    obj=(abs(sr-target['loo_slide_rate'])/max(1,target['loo_slide_rate'])+
-         .50*abs(cal['mean_bias'])/max(1,target['loo_mean_mae'])+
-         .20*abs(cal['mean_abs_center_error']-target['loo_mean_mae'])/max(1,target['loo_mean_mae']))
-    rows.append({'lambda':lam,'tail':tail,'shift':shift,'runs':a.runs,'center_mae':cal['mean_abs_center_error'],'bias':cal['mean_bias'],'slide_rate':sr,'invalid':len(invalid),'objective':obj})
- best=min(rows,key=lambda x:x['objective'])
- # Robustness: shortlist must not rely on one seed. Re-run five independent seeds at larger aggregate N.
- finalists=sorted(rows,key=lambda x:x['objective'])[:5];rob=[]
- for j,r in enumerate(finalists):
-  vals=[]
-  for k in range(5):
-   m.market_weight=weight_factory(r['lambda'],r['tail'],r['shift']);s,sl,inv=m.simulate(stats,data,max(100,a.runs),390000+j*10+k,'auto',False);c=m.calibration(stats,s)
-   vals.append({'mae':c['mean_abs_center_error'],'bias':c['mean_bias'],'slide_rate':len(sl)/max(100,a.runs),'invalid':len(inv)})
-  agg={x:statistics.mean(v[x] for v in vals) for x in ['mae','bias','slide_rate','invalid']}
-  agg.update({q:r[q] for q in ['lambda','tail','shift']});agg['objective']=abs(agg['slide_rate']-target['loo_slide_rate'])/max(1,target['loo_slide_rate'])+.50*abs(agg['bias'])/max(1,target['loo_mean_mae'])+.20*abs(agg['mae']-target['loo_mean_mae'])/max(1,target['loo_mean_mae']);rob.append(agg)
- robust_best=min(rob,key=lambda x:x['objective'])
- report={'schema':'draft-companion.manager-mock-v2.grid.v2','errors':errors,'target':target,'rows':rows,'best_single_seed':best,'robustness':rob,'best_robust':robust_best,'gate':{'geometry_pass':all(r['invalid']==0 for r in rows) and all(r['invalid']==0 for r in rob),'research_only':True}}
- Path(a.out).write_text(json.dumps(report,indent=2),encoding='utf-8');print(json.dumps(report,indent=2))
- assert report['gate']['geometry_pass']
+ combos=[(lam,tail,shift) for lam in [.15,.20,.25,.30,.35] for tail in [.75,1.0,1.25,1.5,2.0] for shift in [0.0,1.0,2.0,3.0]]
+ rows=[]
+ for i,(lam,tail,shift) in enumerate(combos):
+  if i%a.shards!=a.shard: continue
+  m.market_weight=weight_factory(lam,tail,shift)
+  s,slides,invalid=m.simulate(stats,data,a.runs,280000+i+1,'auto',False);cal=m.calibration(stats,s);sr=len(slides)/a.runs
+  obj=(abs(sr-target['loo_slide_rate'])/max(1,target['loo_slide_rate'])+.50*abs(cal['mean_bias'])/max(1,target['loo_mean_mae'])+.20*abs(cal['mean_abs_center_error']-target['loo_mean_mae'])/max(1,target['loo_mean_mae']))
+  rows.append({'lambda':lam,'tail':tail,'shift':shift,'runs':a.runs,'center_mae':cal['mean_abs_center_error'],'bias':cal['mean_bias'],'slide_rate':sr,'invalid':len(invalid),'objective':obj})
+ report={'schema':'draft-companion.manager-mock-v2.grid-shard.v3','errors':errors,'target':target,'shard':a.shard,'shards':a.shards,'rows':rows,'best':min(rows,key=lambda x:x['objective']),'gate':{'geometry_pass':all(r['invalid']==0 for r in rows),'research_only':True}}
+ Path(a.out).write_text(json.dumps(report,indent=2),encoding='utf-8');print(json.dumps(report,indent=2));assert report['gate']['geometry_pass']
 if __name__=='__main__':main()
