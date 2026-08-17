@@ -1,0 +1,37 @@
+name: PITTI runtime rc4.46 staging finalize
+on:
+  push:
+    branches:
+      - pitti-auto/runtime-rc4.46-promotion-20260817
+    paths:
+      - '.github/workflows/pitti-runtime-promote.yml'
+permissions:
+  contents: write
+jobs:
+  finalize:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Reconstruct sealed rc4.46 package
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat .pitti_payload/part00 .pitti_payload/part01 .pitti_payload/part02 .pitti_payload/part03 .pitti_payload/part04 .pitti_payload/part05 .pitti_payload/part06 .pitti_payload/part07a .pitti_payload/part07b0 .pitti_payload/part07b1 .pitti_payload/part07b2 .pitti_payload/part07b3a .pitti_payload/part07b3b .pitti_payload/part07b3c .pitti_payload/part07b3d .pitti_payload/part07b4 .pitti_payload/part07b5 .pitti_payload/part07b6 .pitti_payload/part07b7 | base64 -d > /tmp/rc446.zip
+          echo '73efa5a3c7383b66f5abf85f391ff43eb6d2e4177a75f56696a3102268c362ef  /tmp/rc446.zip' | sha256sum -c -
+          test "$(unzip -Z1 /tmp/rc446.zip | wc -l)" -eq 8
+          unzip -qo /tmp/rc446.zip -d /tmp/rc446
+          for f in README.md _worker.js app.js sw.js icon.svg index.html manifest.webmanifest styles.css; do cp "/tmp/rc446/$f" "$f"; done
+          sha256sum README.md _worker.js app.js sw.js icon.svg index.html manifest.webmanifest styles.css
+      - name: Commit exact runtime and remove transport payload
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf .pitti_payload
+          rm -f .github/workflows/pitti-runtime-promote.yml
+          git config user.name 'PITTI AUTO'
+          git config user.email 'pitti-auto@users.noreply.github.com'
+          git add -A
+          git commit -m 'Stage exact sealed Draft Companion rc4.46 runtime'
+          git push origin HEAD:pitti-auto/runtime-rc4.46-promotion-20260817
