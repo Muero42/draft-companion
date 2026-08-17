@@ -1,0 +1,37 @@
+name: Historical injuries transport
+
+on:
+  push:
+    branches:
+      - pitti-auto/historical-validation-20260817
+    paths:
+      - .github/workflows/historical-injuries-transport.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fetch-injuries:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Fetch nflverse historical injury reports
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p historical-injuries
+          for year in 2017 2018 2019 2020 2021 2022 2023 2024; do
+            url="https://github.com/nflverse/nflverse-data/releases/download/injuries/injuries_${year}.csv"
+            echo "Fetching ${url}"
+            curl --fail --location --retry 3 --retry-delay 2 --output "historical-injuries/injuries_${year}.csv" "${url}"
+          done
+          sha256sum historical-injuries/*.csv > historical-injuries/SHA256SUMS.txt
+          head -n 3 historical-injuries/injuries_2024.csv
+      - name: Upload historical injuries
+        uses: actions/upload-artifact@v4
+        with:
+          name: nflverse-injuries-2017-2024
+          path: historical-injuries/
+          if-no-files-found: error
+          retention-days: 7
