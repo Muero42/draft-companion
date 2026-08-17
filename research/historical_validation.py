@@ -230,8 +230,10 @@ def main():
     d=add_market(add_rank_history(read_stats(a.stats_dir),a.rank_history),a.market)
     x=build_rows(d,load_rosters(a.roster_dir))
     market=[]; market_label=[]
+    if "ecr" in x and x.ecr.notna().mean()>0:
+        market.append("ecr"); market_label.append("historical FantasyPros Half-PPR overall ECR proxy")
     if "ecr_quality_pct" in x and x.ecr_quality_pct.notna().mean()>0:
-        market.append("ecr_quality_pct"); market_label.append("historical FantasyPros positional ECR proxy")
+        market.append("ecr_quality_pct"); market_label.append("within-position historical FantasyPros ECR quality")
     for c,label in [("sleeper_adp","historical Sleeper ADP"),("market_adp","historical market ADP")]:
         if c in x and x[c].notna().mean()>0:
             market.append(c); market_label.append(label)
