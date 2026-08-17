@@ -1,0 +1,25 @@
+name: Manager Mock v2 validation
+on:
+  push:
+    branches: [pitti-auto/historical-validation-20260817]
+    paths:
+      - 'research/manager_mock_v2.py'
+      - '.github/workflows/manager-mock-v2-validation.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run empirical manager-mock validation
+        run: python research/manager_mock_v2.py --app app.js --runs 2500 --out manager_mock_v2_report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: manager-mock-v2-report
+          path: manager_mock_v2_report.json
