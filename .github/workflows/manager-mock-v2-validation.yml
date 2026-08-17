@@ -25,16 +25,20 @@ jobs:
           name: manager-mock-v2-baseline
           path: manager_mock_v2_report.json
   calibrate:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3, 4]
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - name: Run OOS tail and bias calibration
-        run: python research/manager_mock_v2_grid.py --app app.js --runs 200 --out manager_mock_v2_grid.json
+      - name: Run OOS calibration shard
+        run: python research/manager_mock_v2_grid.py --app app.js --runs 200 --shards 5 --shard ${{ matrix.shard }} --out manager_mock_v2_grid_${{ matrix.shard }}.json
       - uses: actions/upload-artifact@v4
         with:
-          name: manager-mock-v2-calibration
-          path: manager_mock_v2_grid.json
+          name: manager-mock-v2-calibration-${{ matrix.shard }}
+          path: manager_mock_v2_grid_${{ matrix.shard }}.json
