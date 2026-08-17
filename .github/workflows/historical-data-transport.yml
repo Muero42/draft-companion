@@ -21,7 +21,7 @@ jobs:
         run: |
           set -euo pipefail
           mkdir -p historical-data
-          for year in 2018 2019 2020 2021 2022 2023 2024; do
+          for year in 2017 2018 2019 2020 2021 2022 2023 2024; do
             url="https://github.com/nflverse/nflverse-data/releases/download/player_stats/stats_player_reg_${year}.csv"
             echo "Fetching ${url}"
             curl --fail --location --retry 3 --retry-delay 2 --output "historical-data/stats_player_reg_${year}.csv" "${url}"
@@ -31,7 +31,7 @@ jobs:
       - name: Upload historical tables
         uses: actions/upload-artifact@v4
         with:
-          name: nflverse-player-stats-2018-2024
+          name: nflverse-player-stats-2017-2024
           path: historical-data/
           if-no-files-found: error
           retention-days: 7
