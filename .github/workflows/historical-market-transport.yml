@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - name: Fetch archived FantasyPros Half-PPR ADP pages
+      - name: Fetch archived FantasyPros Half-PPR ADP pages and report client
         shell: bash
         run: |
           set -euo pipefail
@@ -26,12 +26,13 @@ jobs:
             echo "Fetching ${url}"
             curl --fail --location --retry 3 --retry-delay 2 --user-agent "Mozilla/5.0" --output "historical-market/fantasypros_half_ppr_adp_${year}.html" "${url}"
           done
-          sha256sum historical-market/*.html > historical-market/SHA256SUMS.txt
+          curl --fail --location --retry 3 --retry-delay 2 --user-agent "Mozilla/5.0" --output "historical-market/reports_bundle.js" "https://cdn.fantasypros.com/assets/js/min/pages/reports/bundle-b9fede7148ec22fb8959.js"
+          sha256sum historical-market/* > historical-market/SHA256SUMS.txt
           ls -lh historical-market
       - name: Upload archived market pages
         uses: actions/upload-artifact@v4
         with:
-          name: fantasypros-half-ppr-adp-2021-2024
+          name: fantasypros-half-ppr-adp-2021-2024-with-client
           path: historical-market/
           if-no-files-found: error
           retention-days: 7
