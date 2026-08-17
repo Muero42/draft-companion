@@ -13,7 +13,7 @@ DEFAULT_DRAFT_IDS=["1393362700163096576","1393522165596303360","1393907487035375
 USER_SLOT=9;TEAMS=10;ROUNDS=15;SKILL={"QB","RB","WR","TE"};ALL_POS=SKILL|{"K","DEF"}
 MANAGER_MAP={1:"Michael",2:"Pascal Voerde",3:"Marc Düsseldorf",4:"Thomas",5:"Bjoern",6:"Pascal Gelderner",7:"Giuliano",8:"Basti",9:"Tim",10:"Dutch Marc"}
 def get_json(url):
- req=urllib.request.Request(url,headers={"User-Agent":"draft-companion-manager-mock-v2/0.3"})
+ req=urllib.request.Request(url,headers={"User-Agent":"draft-companion-manager-mock-v2/0.4"})
  with urllib.request.urlopen(req,timeout=30) as r:return json.load(r)
 def slot_at_pick(p,teams=TEAMS):
  rnd=(p-1)//teams+1;w=(p-1)%teams+1;return w if rnd%2 else teams-w+1
@@ -79,8 +79,7 @@ def manager_phase_multiplier(data,mgr,pos,ph,shrink=.30):
  a=float(prof.get("phaseShares",{}).get(ph,{}).get(pos,0)or 0);b=float(league.get(pos,0)or 0)
  if b<=0:return 1.0
  return math.exp(shrink*math.log(max(.45,min(2.0,a/b))))
-def eligible(pos,r):
- return not((pos=="QB"and r[pos]>=2)or(pos=="TE"and r[pos]>=2)or(pos in{"K","DEF"}and r[pos]>=1))
+def eligible(pos,r):return not((pos=="QB"and r[pos]>=2)or(pos=="TE"and r[pos]>=2)or(pos in{"K","DEF"}and r[pos]>=1))
 def roster_mult(pos,r,pn):
  c=r[pos]
  if pos=="QB":return 1.15 if c==0 else .16
@@ -93,8 +92,7 @@ def bjorn_mode_mult(mgr,pos,mode):
  if mgr!="Bjoern"or mode=="auto":return 1.0
  return 1.12 if mode=="manual_rb"and pos=="RB"else .96 if mode=="manual_rb"and pos=="WR"else 1.0
 def market_weight(st,pn):
- sparse=1+.16*max(0,4-st.n);scale=max(2,st.sd*.78*sparse);delta=abs(pn-st.mean)/scale;w=math.exp(-.5*delta*delta)
- guard=st.mean+max(7,1.55*st.sd)
+ sparse=1+.16*max(0,4-st.n);scale=max(2,st.sd*.78*sparse);delta=abs(pn-st.mean)/scale;w=math.exp(-.5*delta*delta);guard=st.mean+max(7,1.55*st.sd)
  if pn>guard:w*=1+min(7,(pn-guard)/max(2.5,scale)*2)
  if st.source=="user_tail":w*=.22
  return max(1e-10,w)
@@ -120,8 +118,9 @@ def simulate(stats,data,runs=100,seed=260817,bjorn_mode="auto",use_manager=True)
     for st,w in weighted:
      x-=w
      if x<=0:chosen=st;break
-   samples[chosen.name].append(pn);rosters[slot][chosen.pos]+=1;avail.remove(chosen.name)
-   if chosen.source=="opponent"and pn>chosen.mean+max(10,2*chosen.sd):slides.append(pn-chosen.mean)
+   if slot!=USER_SLOT:samples[chosen.name].append(pn)
+   rosters[slot][chosen.pos]+=1;avail.remove(chosen.name)
+   if slot!=USER_SLOT and chosen.source=="opponent"and pn>chosen.mean+max(10,2*chosen.sd):slides.append(pn-chosen.mean)
  return samples,slides,invalid
 def calibration(stats,samples):
  errs=[];bias=[];n=0
@@ -134,14 +133,11 @@ def calibration(stats,samples):
 def scenario(stats,data,runs,mode,use_manager,seed):
  samples,slides,invalid=simulate(stats,data,runs,seed,mode,use_manager);return{"runs":runs,"bjorn_mode":mode,"manager_layer":use_manager,"calibration":calibration(stats,samples),"extreme_slide_count":len(slides),"extreme_slide_rate_per_draft":len(slides)/runs,"invalid":invalid[:10],"invalid_count":len(invalid)}
 def main():
- ap=argparse.ArgumentParser();ap.add_argument("--app",default="app.js");ap.add_argument("--runs",type=int,default=100);ap.add_argument("--out",default="manager_mock_v2_report.json");args=ap.parse_args()
- drafts,errors=collect(DEFAULT_DRAFT_IDS)
+ ap=argparse.ArgumentParser();ap.add_argument("--app",default="app.js");ap.add_argument("--runs",type=int,default=100);ap.add_argument("--out",default="manager_mock_v2_report.json");args=ap.parse_args();drafts,errors=collect(DEFAULT_DRAFT_IDS)
  if len(drafts)<4:raise SystemExit(f"Need >=4 mocks, got {len(drafts)} {errors}")
  stats,shares=build_empirical(drafts);data=load_manager_profile_data(Path(args.app));loo=loo_metrics(drafts);emp=statistics.mean(r["extreme_slide_rate_per_draft"]for r in loo)
  scenarios={"market_only":scenario(stats,data,args.runs,"auto",False,260817),"manager_bjorn_auto":scenario(stats,data,args.runs,"auto",True,260818),"manager_bjorn_manual_rb":scenario(stats,data,args.runs,"manual_rb",True,260819)}
- report={"schema":"draft-companion.manager-mock-v2.validation.v3","draft_ids":list(drafts),"errors":errors,"geometry":{"teams":TEAMS,"rounds":ROUNDS,"user_slot":USER_SLOT,"own_picks":own_picks()},"empirical":{"opponent_players":sum(s.source=="opponent"for s in stats.values()),"user_tail_players":sum(s.source=="user_tail"for s in stats.values()),"total_universe":len(stats),"phase_position_shares":shares,"loo_mean_extreme_slide_rate_per_draft":emp},"leave_one_mock_out":loo,"scenarios":scenarios,"policy":{"market_baseline":"completed 2026 Sleeper mocks; user slot excluded from opponent timing","user_tail":"user-only players are emergency universe only at 0.22 weight; never preference evidence","manager_layer":"historical phase shares log-shrunk 30%; Bjorn auto bypasses personal profile","bjorn_sensitivity":["auto","manual_rb"],"hard_invariants":["snake geometry","availability","QB<=2","TE<=2","K<=1","DEF<=1"],"status":"RESEARCH_ONLY_NOT_LIVE"}}
+ report={"schema":"draft-companion.manager-mock-v2.validation.v4","draft_ids":list(drafts),"errors":errors,"geometry":{"teams":TEAMS,"rounds":ROUNDS,"user_slot":USER_SLOT,"own_picks":own_picks()},"empirical":{"opponent_players":sum(s.source=="opponent"for s in stats.values()),"user_tail_players":sum(s.source=="user_tail"for s in stats.values()),"total_universe":len(stats),"phase_position_shares":shares,"loo_mean_extreme_slide_rate_per_draft":emp},"leave_one_mock_out":loo,"scenarios":scenarios,"policy":{"market_baseline":"completed 2026 Sleeper mocks; user slot excluded from opponent timing and calibration","user_tail":"user-only players are emergency universe only at 0.22 weight; never preference evidence","manager_layer":"historical phase shares log-shrunk 30%; Bjorn auto bypasses personal profile","bjorn_sensitivity":["auto","manual_rb"],"hard_invariants":["snake geometry","availability","QB<=2","TE<=2","K<=1","DEF<=1"],"status":"RESEARCH_ONLY_NOT_LIVE"}}
  Path(args.out).write_text(json.dumps(report,indent=2,ensure_ascii=False),encoding="utf-8");print(json.dumps(report,indent=2,ensure_ascii=False))
- assert report["geometry"]["own_picks"]==[9,12,29,32,49,52,69,72,89,92,109,112,129,132,149]
- assert all(r["coverage"]>.75 for r in loo),loo
- assert all(v["invalid_count"]==0 for v in scenarios.values()),scenarios
+ assert report["geometry"]["own_picks"]==[9,12,29,32,49,52,69,72,89,92,109,112,129,132,149];assert all(r["coverage"]>.75 for r in loo),loo;assert all(v["invalid_count"]==0 for v in scenarios.values()),scenarios
 if __name__=="__main__":main()
