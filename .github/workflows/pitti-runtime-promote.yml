@@ -18,7 +18,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          cat .pitti_payload/part00 .pitti_payload/part01 .pitti_payload/part02 .pitti_payload/part03 .pitti_payload/part04 .pitti_payload/part05 .pitti_payload/part06 .pitti_payload/part07a .pitti_payload/part07b0 .pitti_payload/part07b1 .pitti_payload/part07b2 .pitti_payload/part07b3a .pitti_payload/part07b3b0 .pitti_payload/part07b3b1 .pitti_payload/part07b3b2 .pitti_payload/part07b3b3 .pitti_payload/part07b3c .pitti_payload/part07b3d .pitti_payload/part07b4 .pitti_payload/part07b5 .pitti_payload/part07b6 .pitti_payload/part07b7 | base64 -d > /tmp/rc446.zip
+          cat .pitti_payload/part00 .pitti_payload/part01 .pitti_payload/part02 .pitti_payload/part03 .pitti_payload/part04 .pitti_payload/part05 .pitti_payload/part06 .pitti_payload/part07a .pitti_payload/part07b0 .pitti_payload/part07b1 .pitti_payload/part07b2 .pitti_payload/part07b3a .pitti_payload/part07b3b0 .pitti_payload/part07b3b1 .pitti_payload/part07b3b2 .pitti_payload/part07b3b30 .pitti_payload/part07b3b31 .pitti_payload/part07b3b32 .pitti_payload/part07b3c .pitti_payload/part07b3d .pitti_payload/part07b4 .pitti_payload/part07b5 .pitti_payload/part07b6 .pitti_payload/part07b7 | base64 -d > /tmp/rc446.zip
           echo '73efa5a3c7383b66f5abf85f391ff43eb6d2e4177a75f56696a3102268c362ef  /tmp/rc446.zip' | sha256sum -c -
           test "$(unzip -Z1 /tmp/rc446.zip | wc -l)" -eq 8
           unzip -qo /tmp/rc446.zip -d /tmp/rc446
