@@ -4,6 +4,7 @@ on:
     branches: [pitti-auto/historical-validation-20260817]
     paths:
       - 'research/manager_mock_v2.py'
+      - 'research/manager_mock_v2_grid.py'
       - '.github/workflows/manager-mock-v2-validation.yml'
   workflow_dispatch:
 permissions:
@@ -19,7 +20,11 @@ jobs:
           python-version: '3.12'
       - name: Run empirical manager-mock validation
         run: python research/manager_mock_v2.py --app app.js --runs 100 --out manager_mock_v2_report.json
+      - name: Run tail calibration grid
+        run: python research/manager_mock_v2_grid.py --app app.js --runs 30 --out manager_mock_v2_grid.json
       - uses: actions/upload-artifact@v4
         with:
           name: manager-mock-v2-report
-          path: manager_mock_v2_report.json
+          path: |
+            manager_mock_v2_report.json
+            manager_mock_v2_grid.json
