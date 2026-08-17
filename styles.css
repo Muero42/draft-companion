@@ -41,3 +41,5 @@
 /* v11.7.2: URL/ID field uses a single-line textarea to avoid Android password-manager credential heuristics. */
 #draftInput{resize:none;overflow:hidden;white-space:nowrap;min-height:46px;height:46px;line-height:20px}
 .coach-row{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;background:#0f192b;border:1px solid #2a3e61;border-radius:12px;padding:10px;margin:8px 0}.coach-row>div:last-child{text-align:right;min-width:125px}.coach-section-title{font-size:.82rem;font-weight:900;color:#dce5f8;margin:12px 0 7px}@media(max-width:600px){.coach-row{gap:8px}.coach-row>div:last-child{min-width:105px}}
+
+.research-badges{display:flex;flex-wrap:wrap;gap:6px;margin-top:9px}.tag.research-up{background:#143f34;color:#b6f2dd;border:1px solid #286b58}.tag.research-down{background:#4b2029;color:#ffc4cc;border:1px solid #7a3442}.tag.research-price{background:#3d351d;color:#ffe4aa;border:1px solid #6d5c2c}.tag.research-shadow{background:#27294a;color:#d9d6ff;border:1px solid #4d5188}

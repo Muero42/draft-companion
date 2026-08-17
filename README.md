@@ -490,10 +490,33 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - No Coach, Player Quality, Return-v2, Manager Model, Trade, Waiver/FAAB or panel/ADP scoring coefficients changed.
 
 
-## v11.8.0-rc4.42 — Ranking persistence quota fix
+## v11.8.0-rc4.43 — Ranking persistence quota fix
 - Fixes the Android localStorage quota failure observed in rc4.41 while writing `v7_panelRanks`.
 - Removes redundant persistence of the full aggregate `v7_rankCache` and derived `v7_panelRanks`; verified per-expert `v7_rank_<id>` caches remain the compact persistent source of truth.
 - Rebuilds panel ranks deterministically in memory from those verified expert caches after startup.
 - On a successful ranking refresh, legacy oversized aggregate keys are removed before normal state persistence.
 - Backup/restore remains compatible: backups still contain `rankCache` and `panelRanks`; restore seeds the per-expert caches and drops the redundant aggregate keys.
 - No Coach, Player Quality, Return-v2, Manager Model, Research Residual, Trade, Waiver/FAAB or ranking coefficients changed.
+
+
+## v11.8.0-rc4.44 — Decision-Fixture quota fallback correction
+
+- Evidence-only successor to rc4.43; no Coach, Panel, ADP, Return-v2, Manager Model, Research Residual, roster/championship utility or scoring coefficients changed.
+- Keeps rc4.43 ranked-pool compaction.
+- Corrects the quota fallback retention ladder from 250/180/120 to 120/80/45/30/15. With the existing ~95 historical fixtures, the old ladder retried the same full payload three times and therefore did not actually reduce storage pressure.
+- Final 15-fixture fallback deliberately preserves at least one complete 15-pick draft's newest decision history under quota pressure.
+- Runtime package remains eight files; development regressions remain outside the install ZIP.
+
+
+## v11.8.0-rc4.45 — Research Residual visibility
+- Draft-Coach cards now show compact BREAKOUT / DECLINE-RISK research badges, pricing state and bounded Shadow delta beside the existing expert-panel details.
+- Badges are informational Shadow evidence only; the live Coach score/order remains unchanged.
+- Refreshed short-lived 2026 hypotheses add Jalen Coker, Zay Flowers, DeVonta Smith and Malik Nabers; Nabers explicitly carries both elite-ceiling and ACL-recovery downside components.
+- Static priors still expire at the 2026-08-24 freeze unless refreshed by structured Research Cache evidence.
+
+
+## v11.8.0-rc4.46 — Fresh two-sided residual refresh
+- Adds Jeremiyah Love as a two-sided elite-rookie-role + current ankle-risk Shadow hypothesis.
+- Adds George Kittle as a two-sided elite-role + Achilles-recovery Shadow hypothesis.
+- No live Coach/Player Quality/ADP/Return/Manager/roster/scarcity/Value-Safety coefficient changes.
+- Static 2026 priors still expire at the 2026-08-24 freeze unless refreshed by structured Research Cache evidence.
