@@ -20,11 +20,21 @@ jobs:
           python-version: '3.12'
       - name: Run empirical manager-mock validation
         run: python research/manager_mock_v2.py --app app.js --runs 300 --out manager_mock_v2_report.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: manager-mock-v2-baseline
+          path: manager_mock_v2_report.json
+  calibrate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
       - name: Run OOS tail and bias calibration
         run: python research/manager_mock_v2_grid.py --app app.js --runs 200 --out manager_mock_v2_grid.json
       - uses: actions/upload-artifact@v4
         with:
-          name: manager-mock-v2-report
-          path: |
-            manager_mock_v2_report.json
-            manager_mock_v2_grid.json
+          name: manager-mock-v2-calibration
+          path: manager_mock_v2_grid.json
