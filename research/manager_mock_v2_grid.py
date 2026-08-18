@@ -1,9 +1,15 @@
 #!/usr/bin/env python3
 """Research-only OOS calibration for Manager Mock v2 market tails and center bias.
 
-Each CI unit may evaluate one exact grid combination. This preserves the original
+Each CI unit evaluates one exact grid combination. This preserves the original
 100-combination OOS target while removing the 20-simulations-per-job timeout
 failure mode and makes every result independently resumable.
+
+A geometrically invalid parameter combination is a calibration result, not an
+infrastructure failure. The unit therefore always persists its report and exits
+successfully after a completed simulation; downstream selection must exclude
+rows with ``geometry_pass == False``. Genuine execution errors still fail the
+job normally because they prevent report creation.
 """
 import argparse,json,math,statistics
 from pathlib import Path
@@ -60,6 +66,7 @@ def main():
   indices=[i for i in range(len(COMBOS)) if i%a.shards==a.shard]
  drafts,errors=m.collect(m.DEFAULT_DRAFT_IDS);stats,_=m.build_empirical(drafts);data=m.load_profiles(Path(a.app));target=empirical_targets(drafts)
  rows=[evaluate(stats,data,target,i,a.runs) for i in indices]
- report={'schema':'draft-companion.manager-mock-v2.grid-unit.v4','errors':errors,'target':target,'combo_indices':indices,'grid_size':len(COMBOS),'rows':rows,'best':min(rows,key=lambda x:x['objective']),'gate':{'geometry_pass':all(r['invalid']==0 for r in rows),'research_only':True}}
- Path(a.out).write_text(json.dumps(report,indent=2),encoding='utf-8');print(json.dumps(report,indent=2));assert report['gate']['geometry_pass']
+ geometry_pass=all(r['invalid']==0 for r in rows)
+ report={'schema':'draft-companion.manager-mock-v2.grid-unit.v5','errors':errors,'target':target,'combo_indices':indices,'grid_size':len(COMBOS),'rows':rows,'best':min(rows,key=lambda x:x['objective']),'gate':{'geometry_pass':geometry_pass,'eligible_for_selection':geometry_pass,'research_only':True}}
+ Path(a.out).write_text(json.dumps(report,indent=2),encoding='utf-8');print(json.dumps(report,indent=2))
 if __name__=='__main__':main()
