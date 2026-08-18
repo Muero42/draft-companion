@@ -1,9 +1,9 @@
-const CACHE='draft-companion-v11.8.0-rc4.50';
+const CACHE='draft-companion-v11.8.0-rc4.51';
 const BACKUP_CACHE='draft-companion-backup-export-v1';
-const ASSETS=['./','./index.html','./styles.css','./app.js?v=11.8.0-rc4.50','./manifest.webmanifest','./icon.svg'];
-const BASE='v11.8.0-rc4.46',TARGET='v11.8.0-rc4.50';
+const ASSETS=['./','./index.html','./styles.css','./app.js?v=11.8.0-rc4.51','./manifest.webmanifest','./icon.svg'];
+const BASE='v11.8.0-rc4.46',TARGET='v11.8.0-rc4.51';
 function patchApp(s){
-  s=s.replaceAll(BASE,TARGET).replaceAll('11.8.0-rc4.46','11.8.0-rc4.50');
+  s=s.replaceAll(BASE,TARGET).replaceAll('11.8.0-rc4.46','11.8.0-rc4.51');
   const old1="      snapshotLimit=els.snapshotMode.value==='full'?40:25,\n      availableSnapshot=scored.slice().sort((a,b)=>a.r.rank-b.r.rank).slice(0,snapshotLimit),";
   const new1="      snapshotLimit=els.snapshotMode.value==='full'?40:25,\n      preDraftSimulationPool=!picks.length&&current===1,\n      availableSnapshot=scored.slice().sort((a,b)=>a.r.rank-b.r.rank).slice(0,preDraftSimulationPool?scored.length:snapshotLimit),";
   const old2="    lines.push('','VERFÜGBARE SPIELER NACH PANEL');";
@@ -33,23 +33,46 @@ function patchApp(s){
     ch.port1.onmessage=e=>{clearTimeout(timer);e.data?.ok?resolve():reject(new Error(e.data?.error||'Backup-Download fehlgeschlagen.'))};
     navigator.serviceWorker.controller.postMessage({type:'PITTI_BACKUP_STORE',token,name,text},[ch.port2]);
   });
+  const handoff={
+    format:'draft-companion-chatgpt-handoff-v1',
+    version:v.version||'',
+    createdAt:v.createdAt||new Date().toISOString(),
+    season:v.season,scoring:v.scoring,
+    experts:v.experts,panels:v.panels,activePanelId:v.activePanelId,positionPanels:v.positionPanels,
+    adpMeta:v.adpMeta,decisionLog:v.decisionLog,
+    returnValidation:v.returnValidation,decisionFixtures:v.decisionFixtures,fpBenchmarks:v.fpBenchmarks,
+    draft:v.draft,slot:v.slot,draftMode:v.draftMode,strategyMode:v.strategyMode,stressMode:v.stressMode,
+    managerMap:v.managerMap,managerProfileHash:v.managerProfileHash
+  };
+  const handoffText='PITTI-DRAFT-COMPANION-HANDOFF\n'+JSON.stringify(handoff);
   document.getElementById('pitti-backup-export')?.remove();
   const box=document.createElement('div');box.id='pitti-backup-export';
   box.style='position:fixed;z-index:2147483647;left:12px;right:12px;bottom:12px;padding:14px;background:#101b2d;color:#fff;border:2px solid #6f8fca;border-radius:14px;box-shadow:0 6px 28px #000a;font:16px sans-serif';
   const title=document.createElement('b');title.textContent='Sicherung bereit';
-  const info=document.createElement('div');info.textContent='Die JSON-Datei liegt als echter Download bereit.';info.style='margin-top:8px;font-size:14px;line-height:1.35';
-  const save=document.createElement('a');save.textContent='Sicherung herunterladen';save.href=path;save.target='_blank';save.rel='noopener';save.style='display:block;margin-top:12px;padding:12px;background:#eef1f6;color:#111;text-align:center;text-decoration:none;border-radius:8px;font-weight:700';
-  const copy=document.createElement('button');copy.type='button';copy.textContent='Notfall-Fallback: JSON kopieren';copy.style='display:block;width:100%;margin-top:8px;padding:10px';
-  copy.onclick=async()=>{try{await navigator.clipboard.writeText(text);copy.textContent='JSON kopiert';}catch{copy.textContent='Kopieren nicht möglich';}};
+  const info=document.createElement('div');info.textContent='Für ChatGPT ist kein Datei-Upload nötig: die kompakte Diagnose kann direkt geteilt oder kopiert werden. Die vollständige Sicherung bleibt separat downloadbar.';info.style='margin-top:8px;font-size:14px;line-height:1.35';
+  const share=document.createElement('button');share.type='button';share.textContent='Direkt an ChatGPT senden';share.style='display:block;width:100%;margin-top:12px;padding:12px;font-weight:700';
+  share.onclick=async()=>{
+    try{
+      if(navigator.share){await navigator.share({title:'Draft Companion Diagnose',text:handoffText});return;}
+      throw new Error('Teilen nicht verfügbar');
+    }catch(e){
+      if(e?.name==='AbortError')return;
+      try{await navigator.clipboard.writeText(handoffText);share.textContent='Kopiert – in ChatGPT einfügen';}
+      catch{share.textContent='Teilen/Kopieren nicht verfügbar';}
+    }
+  };
+  const copy=document.createElement('button');copy.type='button';copy.textContent='Für ChatGPT kopieren';copy.style='display:block;width:100%;margin-top:8px;padding:10px';
+  copy.onclick=async()=>{try{await navigator.clipboard.writeText(handoffText);copy.textContent='Kopiert – jetzt hier einfügen';}catch{copy.textContent='Kopieren nicht möglich';}};
+  const save=document.createElement('a');save.textContent='Vollständige Sicherung herunterladen';save.href=path;save.target='_blank';save.rel='noopener';save.style='display:block;margin-top:8px;padding:10px;background:#2d4267;color:#fff;text-align:center;text-decoration:none;border-radius:8px;font-weight:700';
   const close=document.createElement('button');close.type='button';close.textContent='Schließen';close.style='display:block;width:100%;margin-top:8px;padding:9px';close.onclick=()=>box.remove();
-  box.append(title,info,save,copy,close);document.body.append(box);
+  box.append(title,info,share,copy,save,close);document.body.append(box);
 }`;
-  if(!s.includes(old1)||!s.includes(old2)||!s.includes(old3))throw new Error('rc4.50 patch anchors missing');
+  if(!s.includes(old1)||!s.includes(old2)||!s.includes(old3))throw new Error('rc4.51 patch anchors missing');
   return s.replace(old1,new1).replace(old2,new2).replace(old3,new3);
 }
 function patchText(path,s){
   if(path.endsWith('/app.js'))return patchApp(s);
-  if(path.endsWith('/index.html')||path.endsWith('/manifest.webmanifest')||path.endsWith('/'))return s.replaceAll(BASE,TARGET).replaceAll('11.8.0-rc4.46','11.8.0-rc4.50');
+  if(path.endsWith('/index.html')||path.endsWith('/manifest.webmanifest')||path.endsWith('/'))return s.replaceAll(BASE,TARGET).replaceAll('11.8.0-rc4.46','11.8.0-rc4.51');
   return s;
 }
 async function transformed(req){
