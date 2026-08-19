@@ -9,12 +9,10 @@ replaceOnce(
   'explicit mode syntax has unambiguous infer reset'
 );
 replaceOnce("return hit?.mode||null}","return hit?.mode==='infer'?null:(hit?.mode||null)}",'infer segment clears explicit override');
-replaceOnce(
-  "if(specials.length>=2&&Math.abs(specials[1].pick-specials[0].pick)<=12&&specials[1].pick<=100)p=.62;",
-  "if(specials.length>=2&&Math.abs(specials[1].pick-specials[0].pick)<=12&&specials[1].pick<=95)p=.82;",
-  'strong autodraft inference can cross mode threshold'
-);
-replaceOnce("return clamp(p,0,.75)}","return clamp(p,0,.90)}",'autodraft inference cap permits strong automatic mode switch');
+
+// K/DST timing alone is informative but not sufficient to call a Sleeper manager an
+// autodrafter. Preserve it as bounded suspicion; explicit/observed evidence can still
+// switch the mode immediately, while future stronger detectors can cross the 0.80 gate.
 replaceOnce(
   "observedMode=observedManagerMode(pk),effective=effectiveManagerMode({explicitMode,observedMode,inferredAutodraft:inferred})",
   "observedMode=observedManagerMode(pk),inferredAtPick=inferManagerAutodraftProbability(mine.filter(q=>Number(q.pick_no)<=Number(pk.pick_no)),players),effective=effectiveManagerMode({explicitMode,observedMode,inferredAutodraft:inferredAtPick})",
@@ -27,13 +25,28 @@ replaceOnce(
 );
 replaceOnce(
   "}LIVE_MANAGER_ADAPTATION_STATE=out;return out}",
-  "}for(const s of Object.values(out)){const explicitNow=explicitManagerModeAt(segments,s.slot,current);if(explicitNow){s.currentMode=explicitNow;s.explicitMode=explicitNow}else if((segments?.[s.slot]||[]).some(x=>x.mode==='infer'&&Number(x.fromPick)<=Number(current))){s.explicitMode=null}}LIVE_MANAGER_ADAPTATION_STATE=out;return out}",
-  'current explicit mode applies before next manager pick and infer can release it'
+  "}for(const s of Object.values(out)){const arr=Array.isArray(segments?.[s.slot])?segments[s.slot]:[];let seg=null;for(const x of arr)if(Number(x.fromPick)<=Number(current))seg=x;const explicitNow=explicitManagerModeAt(segments,s.slot,current);if(explicitNow){s.currentMode=explicitNow;s.explicitMode=explicitNow}else if(seg?.mode==='infer'){s.explicitMode=null;s.currentMode=effectiveManagerMode({observedMode:s.observedMode,inferredAutodraft:s.autodraftProbability})}}LIVE_MANAGER_ADAPTATION_STATE=out;return out}",
+  'current explicit mode applies before next manager pick and infer releases it causally'
 );
 replaceOnce(
   "function liveManagerStateForProfile(profile){return LIVE_MANAGER_ADAPTATION_STATE[norm(profile?.label||'')]||null}",
   "function liveManagerStateForProfile(profile){return LIVE_MANAGER_ADAPTATION_STATE[norm(profile?.label||'')]||null}\nfunction liveManagerDiagnostics(){const rows=Object.values(LIVE_MANAGER_ADAPTATION_STATE);if(!rows.length)return'keine Live-Updates';return rows.map(s=>`${s.name}: ${s.currentMode} · n=${Number(s.humanObservations||0).toFixed(1)} · Live-Gewicht ${Math.round((s.currentDraftWeight||0)*100)}% · Auto-P ${Math.round((s.autodraftProbability||0)*100)}%${s.explicitMode?' · expl. '+s.explicitMode:''}`).join(' | ')}",
   'manager provenance diagnostics'
+);
+replaceOnce(
+  "function modeStatusText(mode,map){if(mode==='live')return `LIVE LEAGUE: Managerhistorie aktiv${Object.keys(map).length?` · ${Object.keys(map).length} Slots zugeordnet`:' · WARNUNG: keine Slot→Manager-Zuordnung'}`;",
+  "function modeStatusText(mode,map){if(mode==='live')return `LIVE LEAGUE: Managerhistorie + adaptive 2026-Priors aktiv${Object.keys(map).length?` · ${Object.keys(map).length} Slots zugeordnet`:' · WARNUNG: keine Slot→Manager-Zuordnung'} · Optionaler Modus-Override im Manager-Feld: [manual] / [autodraft] / [infer]`;",
+  'live mode override discoverability'
+);
+replaceOnce(
+  "draft=fetched.draft,players=fetched.players,mode=els.draftMode.value,strategy=els.strategyMode.value",
+  "draft=fetched.draft,players=fetched.players,mode=surface==='live'?'live':els.draftMode.value,strategy=els.strategyMode.value",
+  'live surface forces live engine mode'
+);
+replaceOnce(
+  "managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},rng:",
+  "managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},managerLiveStateSnapshot:JSON.parse(JSON.stringify(LIVE_MANAGER_ADAPTATION_STATE)),rng:",
+  'freeze manager live provenance in decision fixture'
 );
 replaceOnce(
   "      favorites=scored.slice(0,5),\n      snapshotLimit=els.snapshotMode.value==='full'?40:25,",
