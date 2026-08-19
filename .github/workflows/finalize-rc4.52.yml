@@ -20,24 +20,42 @@ jobs:
         with:
           node-version: '22'
       - name: Validate runtime generator syntax
-        run: node --check tools/apply-finalization-runtime.mjs
+        run: |
+          set -o pipefail
+          node --check tools/apply-finalization-runtime.mjs 2>&1 | tee /tmp/finalize-rc4.52.log
       - name: Apply deterministic runtime patch
-        run: node tools/apply-finalization-runtime.mjs
+        run: |
+          set -o pipefail
+          node tools/apply-finalization-runtime.mjs 2>&1 | tee -a /tmp/finalize-rc4.52.log
       - name: Syntax and contract gates
         run: |
-          node --check app.js
-          node --check _worker.js
-          node --check sw.js
-          node tests/live-draft-id-guard.test.js
-          node tests/top10-candidate-visibility.test.js
-          node tests/manager-live-adaptation.test.js
-          node tests/manager-live-adaptation-regression.js
-          node tests/finalization-release-readiness.test.js
+          set -o pipefail
+          {
+            node --check app.js
+            node --check _worker.js
+            node --check sw.js
+            node tests/live-draft-id-guard.test.js
+            node tests/top10-candidate-visibility.test.js
+            node tests/manager-live-adaptation.test.js
+            node tests/manager-live-adaptation-regression.js
+            node tests/finalization-release-readiness.test.js
+          } 2>&1 | tee -a /tmp/finalize-rc4.52.log
+      - name: Persist fail-closed diagnostic
+        if: failure()
+        run: |
+          printf '%s\n' '=== finalize-rc4.52 fail-closed diagnostic ===' > tests/last-finalization-error.txt
+          printf 'head=%s\nrun=%s\n' "$GITHUB_SHA" "$GITHUB_RUN_ID" >> tests/last-finalization-error.txt
+          if [ -f /tmp/finalize-rc4.52.log ]; then cat /tmp/finalize-rc4.52.log >> tests/last-finalization-error.txt; else echo 'No step log captured; failure occurred before diagnostic log creation.' >> tests/last-finalization-error.txt; fi
+          git config user.name 'pitti-auto'
+          git config user.email 'actions@users.noreply.github.com'
+          git add tests/last-finalization-error.txt
+          git commit -m 'ci: persist rc4.52 fail-closed diagnostic' || exit 0
+          git push
       - name: Commit generated runtime candidate
         run: |
           if git diff --quiet; then echo 'No runtime delta'; exit 0; fi
           git config user.name 'pitti-auto'
           git config user.email 'actions@users.noreply.github.com'
           git add app.js index.html manifest.webmanifest sw.js _worker.js README.md
-          git commit -m 'Integrate rc4.52 LIVE guard and top-10 runtime UX'
+          git commit -m 'Integrate rc4.52 LIVE guard, dynamic candidates and live manager adaptation'
           git push
