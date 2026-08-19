@@ -8,6 +8,7 @@ replaceOnce(
   "if(specials.length>=2&&Math.abs(specials[1].pick-specials[0].pick)<=12&&specials[1].pick<=95)p=.82;",
   'strong autodraft inference can cross mode threshold'
 );
+replaceOnce("return clamp(p,0,.75)}","return clamp(p,0,.90)}",'autodraft inference cap permits strong automatic mode switch');
 replaceOnce(
   "}LIVE_MANAGER_ADAPTATION_STATE=out;return out}",
   "}for(const s of Object.values(out)){const explicitNow=explicitManagerModeAt(segments,s.slot,current);if(explicitNow){s.currentMode=explicitNow;s.explicitMode=explicitNow}}LIVE_MANAGER_ADAPTATION_STATE=out;return out}",
