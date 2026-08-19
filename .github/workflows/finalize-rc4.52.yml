@@ -64,9 +64,43 @@ jobs:
           git push
       - name: Commit generated runtime candidate
         run: |
-          if git diff --quiet; then echo 'No runtime delta'; exit 0; fi
+          if ! git diff --quiet; then
+            git config user.name 'pitti-auto'
+            git config user.email 'actions@users.noreply.github.com'
+            git add app.js index.html manifest.webmanifest sw.js _worker.js README.md
+            git commit -m 'Integrate rc4.52 final draft-readiness runtime'
+            git push
+          fi
+      - name: Build deterministic eight-file candidate
+        run: |
+          python - <<'PY'
+          import zipfile
+          files=['app.js','index.html','styles.css','manifest.webmanifest','sw.js','_worker.js','README.md','icon.svg']
+          with zipfile.ZipFile('Draft_Companion_v11.8.0-rc4.52_FULL_TEST.zip','w',zipfile.ZIP_DEFLATED,compresslevel=9) as z:
+              for path in files:
+                  data=open(path,'rb').read()
+                  info=zipfile.ZipInfo(path,(2026,8,19,0,0,0))
+                  info.compress_type=zipfile.ZIP_DEFLATED
+                  info.external_attr=0o644 << 16
+                  z.writestr(info,data)
+          PY
+          test "$(unzip -Z1 Draft_Companion_v11.8.0-rc4.52_FULL_TEST.zip | wc -l)" -eq 8
+          unzip -t Draft_Companion_v11.8.0-rc4.52_FULL_TEST.zip
+      - name: Persist successful candidate provenance
+        run: |
+          ZIP_SHA=$(sha256sum Draft_Companion_v11.8.0-rc4.52_FULL_TEST.zip | awk '{print $1}')
+          RUNTIME_SHA=$(git rev-parse HEAD)
+          printf '{\n  "status": "PASS",\n  "run_id": %s,\n  "trigger_sha": "%s",\n  "runtime_commit": "%s",\n  "zip_sha256": "%s",\n  "runtime_file_count": 8\n}\n' "$GITHUB_RUN_ID" "$GITHUB_SHA" "$RUNTIME_SHA" "$ZIP_SHA" > tests/last-finalization-success.json
           git config user.name 'pitti-auto'
           git config user.email 'actions@users.noreply.github.com'
-          git add app.js index.html manifest.webmanifest sw.js _worker.js README.md
-          git commit -m 'Integrate rc4.52 final draft-readiness runtime'
+          git rm -f tests/last-finalization-error.txt 2>/dev/null || true
+          git add tests/last-finalization-success.json
+          git commit -m 'ci: seal successful rc4.52 candidate provenance'
           git push
+      - name: Upload rc4.52 candidate artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Draft_Companion_v11.8.0-rc4.52_FULL_TEST
+          path: Draft_Companion_v11.8.0-rc4.52_FULL_TEST.zip
+          if-no-files-found: error
+          retention-days: 14
