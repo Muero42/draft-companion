@@ -5,6 +5,7 @@ on:
     branches: [pitti-auto/finalization-rc4.52]
     paths:
       - tools/apply-finalization-runtime.mjs
+      - tests/finalization-release-readiness.test.js
       - .github/workflows/finalize-rc4.52.yml
 permissions:
   contents: write
@@ -31,6 +32,7 @@ jobs:
           node tests/top10-candidate-visibility.test.js
           node tests/manager-live-adaptation.test.js
           node tests/manager-live-adaptation-regression.js
+          node tests/finalization-release-readiness.test.js
       - name: Commit generated runtime candidate
         run: |
           if git diff --quiet; then echo 'No runtime delta'; exit 0; fi
