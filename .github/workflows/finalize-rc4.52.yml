@@ -5,6 +5,7 @@ on:
     branches: [pitti-auto/finalization-rc4.52]
     paths:
       - tools/apply-finalization-runtime.mjs
+      - tools/apply-finalization-hardening.mjs
       - tests/finalization-release-readiness.test.js
       - .github/workflows/finalize-rc4.52.yml
 permissions:
@@ -23,14 +24,20 @@ jobs:
       - name: Restore deterministic rc4.50 runtime baseline
         run: |
           git checkout 9a57b03a36d1b7fa6658e27214c32c44275ff0ff -- app.js index.html manifest.webmanifest sw.js _worker.js README.md
-      - name: Validate runtime generator syntax
+      - name: Validate finalization scripts
         run: |
           set -o pipefail
-          node --check tools/apply-finalization-runtime.mjs 2>&1 | tee /tmp/finalize-rc4.52.log
+          {
+            node --check tools/apply-finalization-runtime.mjs
+            node --check tools/apply-finalization-hardening.mjs
+          } 2>&1 | tee /tmp/finalize-rc4.52.log
       - name: Apply deterministic runtime patch
         run: |
           set -o pipefail
-          node tools/apply-finalization-runtime.mjs 2>&1 | tee -a /tmp/finalize-rc4.52.log
+          {
+            node tools/apply-finalization-runtime.mjs
+            node tools/apply-finalization-hardening.mjs
+          } 2>&1 | tee -a /tmp/finalize-rc4.52.log
       - name: Syntax and contract gates
         run: |
           set -o pipefail
@@ -61,5 +68,5 @@ jobs:
           git config user.name 'pitti-auto'
           git config user.email 'actions@users.noreply.github.com'
           git add app.js index.html manifest.webmanifest sw.js _worker.js README.md
-          git commit -m 'Integrate rc4.52 LIVE guard, dynamic candidates and live manager adaptation'
+          git commit -m 'Integrate rc4.52 final draft-readiness runtime'
           git push
