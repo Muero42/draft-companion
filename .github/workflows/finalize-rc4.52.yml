@@ -18,6 +18,8 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Validate runtime generator syntax
+        run: node --check tools/apply-finalization-runtime.mjs
       - name: Apply deterministic runtime patch
         run: node tools/apply-finalization-runtime.mjs
       - name: Syntax and contract gates
