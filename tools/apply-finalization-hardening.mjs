@@ -4,15 +4,31 @@ let app=fs.readFileSync('app.js','utf8');
 function replaceOnce(from,to,label){const i=app.indexOf(from);if(i<0)throw new Error(`missing hardening anchor: ${label}`);if(app.indexOf(from,i+from.length)>=0)throw new Error(`ambiguous hardening anchor: ${label}`);app=app.slice(0,i)+to+app.slice(i+from.length);console.log(`hardening anchor OK: ${label}`)}
 
 replaceOnce(
+  "const m=part.trim().match(/^(\\d+)\\s*=.*?\\[(manual|autodraft|auto)\\]\\s*$/i);if(m)out[Number(m[1])]=m[2].toLowerCase()==='manual'?'manual':'autodraft'",
+  "const m=part.trim().match(/^(\\d+)\\s*=.*?\\[(manual|autodraft|infer)\\]\\s*$/i);if(m){const v=m[2].toLowerCase();out[Number(m[1])]=v==='manual'?'manual':v==='autodraft'?'autodraft':'infer'}",
+  'explicit mode syntax has unambiguous infer reset'
+);
+replaceOnce("return hit?.mode||null}","return hit?.mode==='infer'?null:(hit?.mode||null)}",'infer segment clears explicit override');
+replaceOnce(
   "if(specials.length>=2&&Math.abs(specials[1].pick-specials[0].pick)<=12&&specials[1].pick<=100)p=.62;",
   "if(specials.length>=2&&Math.abs(specials[1].pick-specials[0].pick)<=12&&specials[1].pick<=95)p=.82;",
   'strong autodraft inference can cross mode threshold'
 );
 replaceOnce("return clamp(p,0,.75)}","return clamp(p,0,.90)}",'autodraft inference cap permits strong automatic mode switch');
 replaceOnce(
+  "observedMode=observedManagerMode(pk),effective=effectiveManagerMode({explicitMode,observedMode,inferredAutodraft:inferred})",
+  "observedMode=observedManagerMode(pk),inferredAtPick=inferManagerAutodraftProbability(mine.filter(q=>Number(q.pick_no)<=Number(pk.pick_no)),players),effective=effectiveManagerMode({explicitMode,observedMode,inferredAutodraft:inferredAtPick})",
+  'autodraft inference is prefix-causal per pick'
+);
+replaceOnce(
+  "const weight=explicitMode==='manual'||observedMode==='manual'?1:Math.max(.15,1-.85*inferred);",
+  "const weight=explicitMode==='manual'||observedMode==='manual'?1:Math.max(.15,1-.85*inferredAtPick);",
+  'manual learning weight uses only evidence available at that pick'
+);
+replaceOnce(
   "}LIVE_MANAGER_ADAPTATION_STATE=out;return out}",
-  "}for(const s of Object.values(out)){const explicitNow=explicitManagerModeAt(segments,s.slot,current);if(explicitNow){s.currentMode=explicitNow;s.explicitMode=explicitNow}}LIVE_MANAGER_ADAPTATION_STATE=out;return out}",
-  'current explicit mode applies before next manager pick'
+  "}for(const s of Object.values(out)){const explicitNow=explicitManagerModeAt(segments,s.slot,current);if(explicitNow){s.currentMode=explicitNow;s.explicitMode=explicitNow}else if((segments?.[s.slot]||[]).some(x=>x.mode==='infer'&&Number(x.fromPick)<=Number(current))){s.explicitMode=null}}LIVE_MANAGER_ADAPTATION_STATE=out;return out}",
+  'current explicit mode applies before next manager pick and infer can release it'
 );
 replaceOnce(
   "function liveManagerStateForProfile(profile){return LIVE_MANAGER_ADAPTATION_STATE[norm(profile?.label||'')]||null}",
