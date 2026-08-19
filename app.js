@@ -5,6 +5,12 @@ const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
 const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
+const LIVE_DRAFT_ID_2026='1366053132970233856';
+function activeDraftSurface(){return localStorage.getItem('v118_draftSurface')==='live'?'live':'mock'}
+function resolveActiveDraftId(){return activeDraftSurface()==='live'?LIVE_DRAFT_ID_2026:draftId(els.draftInput.value)}
+function validateCanonicalLiveDraft({id,season,teams,rounds,slot}){const errors=[];if(String(id)!==LIVE_DRAFT_ID_2026)errors.push('Draft-ID');if(String(season)!=='2026')errors.push('Saison');if(Number(teams)!==10)errors.push('Teams');if(Number(rounds)!==15)errors.push('Runden');if(Number(slot)!==9)errors.push('Slot');return{ok:!errors.length,errors}}
+function normalCandidateAdmissible(row){const v=row?.valueSafety;if(!row?.r||!Number.isFinite(row.r.rank)||!v)return false;const max=v.triggered&&Number.isFinite(v.qualityBandMax)?v.qualityBandMax:Number(v.bestPanelRank)+Number(v.threshold);return Number.isFinite(max)&&row.r.rank<=max}
+function visibleCoachCandidates(rows){const source=(rows||[]).filter(x=>x?.p&&x?.r);const normal=source.filter(normalCandidateAdmissible),fallback=source.filter(x=>!normalCandidateAdmissible(x)),normalShown=normal.slice(0,10),room=Math.max(0,10-normalShown.length);return normalShown.map(row=>({...row,outsideNormalCut:false})).concat(fallback.slice(0,room).map(row=>({...row,outsideNormalCut:true})))}
 
 let experts=store.get('v7_experts',[]);
 let panels=store.get('v7_panels',{standard:{name:'Standard',members:{}},pat:{name:'Pat einzeln',members:{}}});
@@ -867,14 +873,25 @@ function managerProfile(name){
 }
 function managerProfilesActive(mode,season=els.season.value,teams=10){return mode==='live'||(mode==='mock'&&String(season)==='2026'&&Number(teams)===10)}
 function managerPhase(round){return round<=3?'early':round<=6?'mid1':round<=9?'mid2':round<=12?'late':'end'}
+let LIVE_MANAGER_ADAPTATION_STATE={};
+const LIVE_MANAGER_MODE_SEGMENTS_KEY='v118_managerModeSegments';
+function parseManagerModeOverrides(text){const out={};for(const part of String(text||'').split(',')){const m=part.trim().match(/^(\d+)\s*=.*?\[(manual|autodraft|auto)\]\s*$/i);if(m)out[Number(m[1])]=m[2].toLowerCase()==='manual'?'manual':'autodraft'}return out}
+function loadManagerModeSegments(){try{const v=JSON.parse(localStorage.getItem(LIVE_MANAGER_MODE_SEGMENTS_KEY)||'{}');return v&&typeof v==='object'?v:{}}catch{return {}}}
+function saveManagerModeSegments(v){try{localStorage.setItem(LIVE_MANAGER_MODE_SEGMENTS_KEY,JSON.stringify(v))}catch{}}
+function syncManagerModeSegments(text,current){const overrides=parseManagerModeOverrides(text),segments=loadManagerModeSegments();for(const [slotText,mode] of Object.entries(overrides)){const slot=Number(slotText),arr=Array.isArray(segments[slot])?segments[slot]:[],last=arr[arr.length-1];if(!last||last.mode!==mode){arr.push({fromPick:Number(current)||1,mode,source:'user-explicit'});segments[slot]=arr}}saveManagerModeSegments(segments);return segments}
+function explicitManagerModeAt(segments,slot,pickNo){const arr=Array.isArray(segments?.[slot])?segments[slot]:[];let hit=null;for(const x of arr)if(Number(x.fromPick)<=Number(pickNo))hit=x;return hit?.mode||null}
+function observedManagerMode(pk){const m=pk?.metadata||{};if(m.autodraft===true||m.is_autodraft===true||String(m.pick_mode||'').toLowerCase()==='autodraft')return'autodraft';if(String(m.pick_mode||'').toLowerCase()==='manual')return'manual';return null}
+function inferManagerAutodraftProbability(rows,players){const obs=(rows||[]).map(pk=>({pick:Number(pk.pick_no)||999,pos:players?.[String(pk.player_id)]?.position||pk?.metadata?.position||''}));const specials=obs.filter(x=>x.pos==='K'||x.pos==='DEF');let p=0;if(specials.length>=1&&specials[0].pick<=100)p=.18;if(specials.length>=2&&specials[1].pick<=110)p=.42;if(specials.length>=2&&Math.abs(specials[1].pick-specials[0].pick)<=12&&specials[1].pick<=100)p=.62;return clamp(p,0,.75)}
+function effectiveManagerMode({explicitMode=null,observedMode=null,inferredAutodraft=0}){if(explicitMode==='manual'||explicitMode==='autodraft')return explicitMode;if(observedMode==='manual'||observedMode==='autodraft')return observedMode;return inferredAutodraft>=.80?'autodraft':'manual'}
+function rebuildLiveManagerAdaptation({mode,picks,players,map,current,modeText}){if(mode!=='live'){LIVE_MANAGER_ADAPTATION_STATE={};return LIVE_MANAGER_ADAPTATION_STATE}const segments=syncManagerModeSegments(modeText,current),out={};for(const [slotText,name] of Object.entries(map||{})){const slot=Number(slotText);if(slot===9)continue;const prof=managerProfile(name),key=norm(prof?.label||name),mine=(picks||[]).filter(pk=>Number(pk.draft_slot)===slot).sort((a,b)=>Number(a.pick_no)-Number(b.pick_no)),inferred=inferManagerAutodraftProbability(mine,players);let humanObservations=0;const phaseCounts={QB:0,RB:0,WR:0,TE:0};let latestMode='manual',latestExplicit=null,latestObserved=null;for(const pk of mine){const pos=players?.[String(pk.player_id)]?.position||pk?.metadata?.position||'',explicitMode=explicitManagerModeAt(segments,slot,pk.pick_no),observedMode=observedManagerMode(pk),effective=effectiveManagerMode({explicitMode,observedMode,inferredAutodraft:inferred});latestMode=effective;if(explicitMode)latestExplicit=explicitMode;if(observedMode)latestObserved=observedMode;if(effective==='autodraft'||!['QB','RB','WR','TE'].includes(pos))continue;const weight=explicitMode==='manual'||observedMode==='manual'?1:Math.max(.15,1-.85*inferred);humanObservations+=weight;phaseCounts[pos]+=weight}const liveWeight=clamp(humanObservations*.12,0,.72);out[key]={slot,name:prof?.label||name,humanObservations,phaseCounts,currentDraftWeight:liveWeight,autodraftProbability:inferred,currentMode:latestMode,explicitMode:latestExplicit,observedMode:latestObserved,provenance:{pickCount:mine.length,segments:Array.isArray(segments?.[slot])?segments[slot]:[]}}}LIVE_MANAGER_ADAPTATION_STATE=out;return out}
+function liveManagerStateForProfile(profile){return LIVE_MANAGER_ADAPTATION_STATE[norm(profile?.label||'')]||null}
 function managerHistoryPosMult(profile,pos,pickNo){
-  const h=profile?.historical;if(!h)return 1;
-  const round=Math.floor((pickNo-1)/10)+1,phase=managerPhase(round),own=h.phaseShares?.[phase]?.[pos]??0,league=MANAGER_PROFILE_DATA.leaguePhaseShares?.[phase]?.[pos]??0;
-  if(!(league>0))return 1;
-  const raw=own/league,shrink=clamp((h.sampleYears||0)/8,.25,.8);
-  return clamp(1+(raw-1)*shrink,.55,1.85);
+  const h=profile?.historical;let historical=1;
+  if(h){const round=Math.floor((pickNo-1)/10)+1,phase=managerPhase(round),own=h.phaseShares?.[phase]?.[pos]??0,league=MANAGER_PROFILE_DATA.leaguePhaseShares?.[phase]?.[pos]??0;if(league>0){const raw=own/league,shrink=clamp((h.sampleYears||0)/8,.25,.8);historical=clamp(1+(raw-1)*shrink,.55,1.85)}}
+  const live=liveManagerStateForProfile(profile);if(!live)return historical;if(live.currentMode==='autodraft')return 1;const n=live.humanObservations||0;if(!n)return historical;const observed=(live.phaseCounts?.[pos]||0)/n,neutral=.25,currentMult=clamp(1+(observed-neutral)*1.2,.70,1.60),w=live.currentDraftWeight||0;return clamp(historical*(1-w)+currentMult*w,.55,1.85);
 }
 function specialPositionHazard(profile,pos,pickNo,teams=10){
+  if(liveManagerStateForProfile(profile)?.currentMode==='autodraft')return 0;
   const d=profile?.historical?.positions?.[pos];if(!d||!Number.isFinite(d.firstRound)||!(d.recentTaken>0))return 0;
   const round=(pickNo-1)/teams+1,sd=Math.max(1.15,Number(d.firstRoundSd)||1.8),scale=Math.max(.8,sd*.72),take=clamp(Number(d.recentTaken),0,1);
   const logistic=x=>1/(1+Math.exp(-x));
@@ -907,6 +924,8 @@ function expectedSkillShare(profile,roster,pickNo,teams=10){if(!profile)return n
 function plausibleFor(pos,c,current=1,mode='live'){return basePositionPlausible(pos,c)*endgameSkillShare(c,current,mode)}
 function candidateManagerMod(prof,p,current){
   if(!prof||!p)return{mult:1,labels:[]};
+  const live=liveManagerStateForProfile(prof);if(live?.currentMode==='autodraft')return{mult:1,labels:['Autodraft · persönliche Traits aus']};
+  const personalWeight=live?clamp(1-live.autodraftProbability*.75,.35,1):1;
   const t=prof.traits||{},labels=[];let delta=0;
   // Historical position/timing evidence is scored exactly once by managerHistoryPosMult().
   // This layer is reserved for capped qualitative/current-regime evidence so old profile
@@ -922,7 +941,7 @@ function candidateManagerMod(prof,p,current){
   if(t.waitQBTE&&(p.pos==='QB'||p.pos==='TE')&&current<100){delta-=t.waitQBTE;labels.push(`QB/TE warten -${Math.round(t.waitQBTE*100)}%`)}
   // knownNames/unconventional are retained as profile evidence but not auto-scored without a robust player-level proxy.
   // Correlated qualitative signals are capped so fandom, player target and stack narratives cannot double-count without bound.
-  delta=clamp(delta,-.25,.25);
+  delta=clamp(delta,-.25,.25)*personalWeight;
   return{mult:Math.max(.65,1+delta),labels};
 }
 function stressProfile(mode,p,current){
@@ -1420,9 +1439,9 @@ function researchBadgesHtml(x){
   return `<div class="research-badges">${out.join('')}</div>`;
 }
 function renderCoach(rows,state,current,next){
-  const top=rows.slice(0,5);
-  els.favoritesBlock.innerHTML=top.length?`<div class="favorite-box"><b>${top[0].action}: ${esc(top[0].p.name)} · ${top[0].p.pos}</b><div class="tiny">Top 5 sichtbar · 10–15 Kandidaten werden intern weitergeführt.</div></div>`:'';
-  els.coachList.innerHTML=`<div class="coach-section-title">Empfehlung + 4 Alternativen</div>`+top.map((x,i)=>`<article class="coach"><div class="coach-head"><div><h3>${i+1}. ${esc(x.p.name)} · ${x.p.pos}</h3><div class="tiny">${i===0?'EMPFEHLUNG · ':''}${x.action} · Tier ${x.r.tier||'–'} · Loss ${x.loss}</div></div><div class="score">${x.score}${Number.isFinite(x.balancedScore)?`<small class="strategy-compare">v10 ${x.balancedScore}</small>`:''}</div></div><div class="metrics"><div class="metric"><b>${x.r.rank.toFixed(1)}</b><span>Overall</span></div><div class="metric"><b>${Number.isFinite(x.a)?x.a.toFixed(1):'–'}</b><span>ADP</span></div><div class="metric"><b>${x.ret!=null?Math.round(x.ret*100)+'%':'–'}</b><span>Return</span></div><div class="metric"><b>${x.returnConfidence}%</b><span>Return-Conf.</span></div><div class="metric"><b>${x.intel.plausible}</b><span>Abnehmer</span></div></div>${researchBadgesHtml(x)}${expertRanksHtml(x.r)}<div class="tags">${x.reasons.slice(-7).map(reason=>`<span class="tag info">${esc(reason)}</span>`).join('')}</div><button class="secondary live-only live-detail-toggle" type="button" data-live-detail-toggle>${i===0?'Details ausblenden':'Details anzeigen'}</button></article>`).join('');
+  const top=visibleCoachCandidates(rows);
+  els.favoritesBlock.innerHTML=top.length?`<div class="favorite-box"><b>${top[0].action}: ${esc(top[0].p.name)} · ${top[0].p.pos}</b><div class="tiny">Bis zu 10 nützliche Kandidaten sichtbar · Normalbereich und Fallbacks klar getrennt.</div></div>`:'';
+  els.coachList.innerHTML=`<div class="coach-section-title">Empfehlung + Alternativen</div>`+top.map((x,i)=>`${x.outsideNormalCut&&(i===0||!top[i-1]?.outsideNormalCut)?'<div class="coach-section-title">Weitere sichtbare Kandidaten · außerhalb Normal-Cut</div>':''}<article class="coach"><div class="coach-head"><div><h3>${i+1}. ${esc(x.p.name)} · ${x.p.pos}</h3><div class="tiny">${x.outsideNormalCut?'FALLBACK · AUSSERHALB NORMAL-CUT · '+x.action+' NUR KONTEXT · ':i===0?'EMPFEHLUNG · ':''}${x.outsideNormalCut?'':x.action+' · '}Tier ${x.r.tier||'–'} · Loss ${x.loss}</div></div><div class="score">${x.score}${Number.isFinite(x.balancedScore)?`<small class="strategy-compare">v10 ${x.balancedScore}</small>`:''}</div></div><div class="metrics"><div class="metric"><b>${x.r.rank.toFixed(1)}</b><span>Overall</span></div><div class="metric"><b>${Number.isFinite(x.a)?x.a.toFixed(1):'–'}</b><span>ADP</span></div><div class="metric"><b>${x.ret!=null?Math.round(x.ret*100)+'%':'–'}</b><span>Return</span></div><div class="metric"><b>${x.returnConfidence}%</b><span>Return-Conf.</span></div><div class="metric"><b>${x.intel.plausible}</b><span>Abnehmer</span></div></div>${researchBadgesHtml(x)}${expertRanksHtml(x.r)}<div class="tags">${x.reasons.slice(-7).map(reason=>`<span class="tag info">${esc(reason)}</span>`).join('')}</div><button class="secondary live-only live-detail-toggle" type="button" data-live-detail-toggle>${i===0?'Details ausblenden':'Details anzeigen'}</button></article>`).join('');
   els.teamSummary.innerHTML=Object.entries(state.counts).map(([p,n])=>`<div class="summary-item"><b>${n}</b><span>${p}</span></div>`).join('')+`<div class="summary-item"><b>${current}</b><span>Pick</span></div><div class="summary-item"><b>${next??'–'}</b><span>Nächster</span></div>`;
   els.coachList.querySelectorAll('[data-live-detail-toggle]').forEach(btn=>btn.onclick=()=>{const card=btn.closest('.coach');card.classList.toggle('live-detail-open');btn.textContent=card.classList.contains('live-detail-open')?'Details ausblenden':'Details anzeigen';});
 }
@@ -1855,8 +1874,8 @@ function positionDecisionPath(state,scored,current,next){
 
 async function refresh(){
   persist();
-  const id=draftId(els.draftInput.value);
-  if(!id)throw new Error('Draft-ID fehlt.');
+  const surface=activeDraftSurface(),id=resolveActiveDraftId();
+  if(!id)throw new Error(surface==='live'?'LIVE-Draft-ID fehlt.':'Draft-ID fehlt.');
   setAnalysisBusy(true);
   els.draftStatus.textContent='Aktualisiere Sleeper … Snapshot-Kopie ist bis zum Abschluss gesperrt.';
   try{
@@ -1865,9 +1884,11 @@ async function refresh(){
       rounds=Number(draft.settings?.rounds||15),
       map=resolvedManagerMap(mode,els.season.value,teams,els.managerMap.value),
       slot=Number(els.slot.value),
+      liveGuard=surface==='live'?validateCanonicalLiveDraft({id,season:els.season.value,teams,rounds,slot}):{ok:true,errors:[]},
       total=teams*rounds,
       current=Math.min(picks.length+1,total),
       next=nextOwn(current,teams,slot,total),
+      liveGuardMessage=!liveGuard.ok?`LIVE-Draft blockiert: ${liveGuard.errors.join(', ')} stimmen nicht mit 2026/10 Teams/15 Runden/Slot 9 überein.`:'',
       returnPick=next===current?nextOwn(current+1,teams,slot,total):next,
       mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no),
       drafted=new Set(picks.map(p=>String(p.player_id))),
@@ -1889,6 +1910,9 @@ async function refresh(){
       .slice()
       .sort((a,b)=>(a.searchRank||9999)-(b.searchRank||9999))
       .slice(0,25);
+
+    if(liveGuardMessage)throw new Error(liveGuardMessage);
+    rebuildLiveManagerAdaptation({mode,picks,players,map,current,modeText:els.managerMap.value});
 
     const state=rosterState(mine,players,current);
     // No player-specific blacklist: all selected-panel candidates remain eligible.
