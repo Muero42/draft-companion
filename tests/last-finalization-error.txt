@@ -1,0 +1,27 @@
+=== finalize-rc4.52 fail-closed diagnostic ===
+head=5a1f8a06f506ee4790f0b195a2f69782c186468c
+run=32226178982
+anchor OK: core helpers
+anchor OK: live manager adaptation core
+anchor OK: manager qualitative live boundary
+anchor OK: manager qualitative live weighting
+anchor OK: manager autodraft special-team boundary
+anchor OK: refresh id isolation
+anchor OK: live metadata guard binding
+anchor OK: live guard message
+anchor OK: live guard and manager adaptation enforcement
+anchor OK: top10 source
+anchor OK: top10 favorite hint
+anchor OK: top10 heading
+anchor OK: top10 authority label
+anchor OK: top10 dynamic separator
+rc4.52 runtime patch applied
+/home/runner/work/draft-companion/draft-companion/app.js:1444
+  els.coachList.innerHTML=`<div class="coach-section-title">Empfehlung + Alternativen</div>`+top.map((x,i)=>`${x.outsideNormalCut&&(i===0||!top[i-1]?.outsideNormalCut)?'<div class="coach-section-title">Weitere sichtbare Kandidaten · außerhalb Normal-Cut</div>':''}<article class="coach">`<div class="coach-head"><div><h3>${i+1}. ${esc(x.p.name)} · ${x.p.pos}</h3><div class="tiny">${x.outsideNormalCut?'FALLBACK · AUSSERHALB NORMAL-CUT · '+x.action+' NUR KONTEXT · ':i===0?'EMPFEHLUNG · ':''}${x.outsideNormalCut?'':x.action+' · '}Tier ${x.r.tier||'–'} · Loss ${x.loss}</div></div><div class="score">${x.score}${Number.isFinite(x.balancedScore)?`<small class="strategy-compare">v10 ${x.balancedScore}</small>`:''}</div></div><div class="metrics"><div class="metric"><b>${x.r.rank.toFixed(1)}</b><span>Overall</span></div><div class="metric"><b>${Number.isFinite(x.a)?x.a.toFixed(1):'–'}</b><span>ADP</span></div><div class="metric"><b>${x.ret!=null?Math.round(x.ret*100)+'%':'–'}</b><span>Return</span></div><div class="metric"><b>${x.returnConfidence}%</b><span>Return-Conf.</span></div><div class="metric"><b>${x.intel.plausible}</b><span>Abnehmer</span></div></div>${researchBadgesHtml(x)}${expertRanksHtml(x.r)}<div class="tags">${x.reasons.slice(-7).map(reason=>`<span class="tag info">${esc(reason)}</span>`).join('')}</div><button class="secondary live-only live-detail-toggle" type="button" data-live-detail-toggle>${i===0?'Details ausblenden':'Details anzeigen'}</button></article>`).join('');
+                                                                                                                                                                                                                                                                                                 ^^^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1713:18)
+    at checkSyntax (node:internal/main/check_syntax:78:3)
+
+Node.js v22.23.2
