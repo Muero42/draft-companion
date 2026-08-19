@@ -1,6 +1,6 @@
 === finalize-rc4.52 fail-closed diagnostic ===
-head=5a1f8a06f506ee4790f0b195a2f69782c186468c
-run=32226178982
+head=a6ebd6ff0a51588c540ab0648bf323b07221e9f3
+run=32229434893
 anchor OK: core helpers
 anchor OK: live manager adaptation core
 anchor OK: manager qualitative live boundary
@@ -16,12 +16,25 @@ anchor OK: top10 heading
 anchor OK: top10 authority label
 anchor OK: top10 dynamic separator
 rc4.52 runtime patch applied
-/home/runner/work/draft-companion/draft-companion/app.js:1444
-  els.coachList.innerHTML=`<div class="coach-section-title">Empfehlung + Alternativen</div>`+top.map((x,i)=>`${x.outsideNormalCut&&(i===0||!top[i-1]?.outsideNormalCut)?'<div class="coach-section-title">Weitere sichtbare Kandidaten · außerhalb Normal-Cut</div>':''}<article class="coach">`<div class="coach-head"><div><h3>${i+1}. ${esc(x.p.name)} · ${x.p.pos}</h3><div class="tiny">${x.outsideNormalCut?'FALLBACK · AUSSERHALB NORMAL-CUT · '+x.action+' NUR KONTEXT · ':i===0?'EMPFEHLUNG · ':''}${x.outsideNormalCut?'':x.action+' · '}Tier ${x.r.tier||'–'} · Loss ${x.loss}</div></div><div class="score">${x.score}${Number.isFinite(x.balancedScore)?`<small class="strategy-compare">v10 ${x.balancedScore}</small>`:''}</div></div><div class="metrics"><div class="metric"><b>${x.r.rank.toFixed(1)}</b><span>Overall</span></div><div class="metric"><b>${Number.isFinite(x.a)?x.a.toFixed(1):'–'}</b><span>ADP</span></div><div class="metric"><b>${x.ret!=null?Math.round(x.ret*100)+'%':'–'}</b><span>Return</span></div><div class="metric"><b>${x.returnConfidence}%</b><span>Return-Conf.</span></div><div class="metric"><b>${x.intel.plausible}</b><span>Abnehmer</span></div></div>${researchBadgesHtml(x)}${expertRanksHtml(x.r)}<div class="tags">${x.reasons.slice(-7).map(reason=>`<span class="tag info">${esc(reason)}</span>`).join('')}</div><button class="secondary live-only live-detail-toggle" type="button" data-live-detail-toggle>${i===0?'Details ausblenden':'Details anzeigen'}</button></article>`).join('');
-                                                                                                                                                                                                                                                                                                 ^^^
-
-SyntaxError: missing ) after argument list
-    at wrapSafe (node:internal/modules/cjs/loader:1713:18)
-    at checkSyntax (node:internal/main/check_syntax:78:3)
-
-Node.js v22.23.2
+hardening anchor OK: explicit mode syntax has unambiguous infer reset
+hardening anchor OK: infer segment clears explicit override
+hardening anchor OK: autodraft inference is prefix-causal per pick
+hardening anchor OK: manual learning weight uses only evidence available at that pick
+hardening anchor OK: current explicit mode applies before next manager pick and infer releases it causally
+hardening anchor OK: manager provenance diagnostics
+hardening anchor OK: live mode override discoverability
+hardening anchor OK: live surface forces live engine mode
+hardening anchor OK: freeze manager live provenance in decision fixture
+hardening anchor OK: snapshot dynamic candidate set
+hardening anchor OK: snapshot manager provenance line
+hardening anchor OK: snapshot candidate heading
+hardening anchor OK: snapshot candidate source
+hardening anchor OK: snapshot fallback authority label
+hardening anchor OK: backup manager mode segments
+hardening anchor OK: restore manager mode segments
+rc4.52 finalization hardening applied
+live-draft-id-guard gate: OK
+top10-candidate-visibility gate: OK
+manager-live-adaptation gate: OK
+PASS manager-live-adaptation-regression
+PASS finalization release-readiness gate
