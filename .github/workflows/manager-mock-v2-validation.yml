@@ -1,7 +1,7 @@
 name: Manager Mock v2 validation
 on:
   push:
-    branches: [pitti-auto/historical-validation-20260817]
+    branches: [pitti-auto/manager-mock-v2-oos-20260819]
     paths:
       - 'research/manager_mock_v2.py'
       - 'research/manager_mock_v2_grid.py'
