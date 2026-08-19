@@ -10,9 +10,15 @@ replaceOnce(
 );
 replaceOnce("return hit?.mode||null}","return hit?.mode==='infer'?null:(hit?.mode||null)}",'infer segment clears explicit override');
 
-// K/DST timing alone is informative but not sufficient to call a Sleeper manager an
-// autodrafter. Preserve it as bounded suspicion; explicit/observed evidence can still
-// switch the mode immediately, while future stronger detectors can cross the 0.80 gate.
+// Automatic inference remains deliberately conservative. A single early K/DST pick or
+// two merely early special-team picks only damp human-learning. The hard autodraft branch
+// becomes reachable only for the stronger machine-like signature: both special-team slots
+// are filled unusually early and close together. Explicit/observed mode always outranks it.
+replaceOnce(
+  "if(specials.length>=2&&Math.abs(specials[1].pick-specials[0].pick)<=12&&specials[1].pick<=100)p=.62;return clamp(p,0,.75)}",
+  "if(specials.length>=2&&Math.abs(specials[1].pick-specials[0].pick)<=12&&specials[1].pick<=95)p=.82;return clamp(p,0,.90)}",
+  'strong autodraft signature crosses hard mode threshold'
+);
 replaceOnce(
   "observedMode=observedManagerMode(pk),effective=effectiveManagerMode({explicitMode,observedMode,inferredAutodraft:inferred})",
   "observedMode=observedManagerMode(pk),inferredAtPick=inferManagerAutodraftProbability(mine.filter(q=>Number(q.pick_no)<=Number(pk.pick_no)),players),effective=effectiveManagerMode({explicitMode,observedMode,inferredAutodraft:inferredAtPick})",
