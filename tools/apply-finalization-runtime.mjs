@@ -25,7 +25,7 @@ app=replaceOnce(app,"function renderCoach(rows,state,current,next){\n  const top
 app=replaceOnce(app,"Top 5 sichtbar · 10–15 Kandidaten werden intern weitergeführt.","Bis zu 10 Kandidaten sichtbar · unterhalb des Normal-Cuts klar getrennt.",'top10 favorite hint');
 app=replaceOnce(app,"<div class=\"coach-section-title\">Empfehlung + 4 Alternativen</div>","<div class=\"coach-section-title\">Empfehlung + Alternativen</div>",'top10 heading');
 app=replaceOnce(app,"${i===0?'EMPFEHLUNG · ':''}${x.action} · Tier ${x.r.tier||'–'} · Loss ${x.loss}","${i===0?'EMPFEHLUNG · ':''}${x.outsideNormalCut?'UNTER NORMAL-CUT · ':''}${x.action} · Tier ${x.r.tier||'–'} · Loss ${x.loss}",'top10 label');
-app=replaceOnce(app,"+top.map((x,i)=>`<article class=\"coach\">","+top.map((x,i)=>`${i===7?'<div class=\"coach-section-title\">Weitere sichtbare Kandidaten · unter Normal-Cut</div>':''}<article class=\"coach\">`,'top10 separator');
+app=replaceOnce(app,"+top.map((x,i)=>`<article class=\"coach\">","+top.map((x,i)=>`${i===7?'<div class=\"coach-section-title\">Weitere sichtbare Kandidaten · unter Normal-Cut</div>':''}<article class=\"coach\">`",'top10 separator');
 
 fs.writeFileSync('app.js',app);
 for(const f of files){if(!fs.existsSync(f))throw new Error(`required runtime file missing: ${f}`);let s=fs.readFileSync(f,'utf8');s=s.replaceAll(VERSION_FROM,VERSION_TO);fs.writeFileSync(f,s);}
