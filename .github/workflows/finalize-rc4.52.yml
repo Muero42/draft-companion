@@ -16,9 +16,13 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: pitti-auto/finalization-rc4.52
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+      - name: Restore deterministic rc4.50 runtime baseline
+        run: |
+          git checkout 9a57b03a36d1b7fa6658e27214c32c44275ff0ff -- app.js index.html manifest.webmanifest sw.js _worker.js README.md
       - name: Validate runtime generator syntax
         run: |
           set -o pipefail
