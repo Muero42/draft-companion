@@ -35,7 +35,7 @@ app=replaceOnce(app,"function renderCoach(rows,state,current,next){\n  const top
 app=replaceOnce(app,"Top 5 sichtbar · 10–15 Kandidaten werden intern weitergeführt.","Bis zu 10 nützliche Kandidaten sichtbar · Normalbereich und Fallbacks klar getrennt.",'top10 favorite hint');
 app=replaceOnce(app,"<div class=\"coach-section-title\">Empfehlung + 4 Alternativen</div>","<div class=\"coach-section-title\">Empfehlung + Alternativen</div>",'top10 heading');
 app=replaceOnce(app,"${i===0?'EMPFEHLUNG · ':''}${x.action} · Tier ${x.r.tier||'–'} · Loss ${x.loss}","${x.outsideNormalCut?'FALLBACK · AUSSERHALB NORMAL-CUT · '+x.action+' NUR KONTEXT · ':i===0?'EMPFEHLUNG · ':''}${x.outsideNormalCut?'':x.action+' · '}Tier ${x.r.tier||'–'} · Loss ${x.loss}",'top10 authority label');
-app=replaceOnce(app,"+top.map((x,i)=>`<article class=\"coach\">","+top.map((x,i)=>`${x.outsideNormalCut&&(i===0||!top[i-1]?.outsideNormalCut)?'<div class=\"coach-section-title\">Weitere sichtbare Kandidaten · außerhalb Normal-Cut</div>':''}<article class=\"coach\">`",'top10 dynamic separator');
+app=replaceOnce(app,"+top.map((x,i)=>`<article class=\"coach\">","+top.map((x,i)=>`${x.outsideNormalCut&&(i===0||!top[i-1]?.outsideNormalCut)?'<div class=\"coach-section-title\">Weitere sichtbare Kandidaten · außerhalb Normal-Cut</div>':''}<article class=\"coach\">",'top10 dynamic separator');
 
 fs.writeFileSync('app.js',app);
 for(const f of files){if(!fs.existsSync(f))throw new Error(`required runtime file missing: ${f}`);let s=fs.readFileSync(f,'utf8');s=s.replaceAll(VERSION_FROM,VERSION_TO);fs.writeFileSync(f,s);}
