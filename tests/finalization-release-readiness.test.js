@@ -29,6 +29,8 @@ assert(app.includes('[manual] / [autodraft] / [infer]'), 'explicit mode control 
 assert(app.includes('syncManagerModeSegments'), 'generated runtime missing segment-switch provenance');
 assert(app.includes("hit?.mode==='infer'?null"), 'explicit mode cannot be released back to inference');
 assert(app.includes('inferredAtPick=inferManagerAutodraftProbability'), 'autodraft inference is not prefix-causal');
+assert(app.includes("specials[1].pick<=95)p=.82"), 'strong automatic autodraft signature cannot reach the hard mode branch');
+assert(app.includes('return clamp(p,0,.90)'), 'autodraft inference cap is below the hard 0.80 mode threshold');
 assert(app.includes('effectiveManagerMode'), 'generated runtime missing mode-precedence resolver');
 assert(app.includes('rebuildLiveManagerAdaptation({mode,picks,players,map,current,modeText:els.managerMap.value})'), 'live manager adaptation not invoked from refresh');
 assert(app.includes("if(live?.currentMode==='autodraft')return{mult:1"), 'autodraft personal-trait boundary missing');
