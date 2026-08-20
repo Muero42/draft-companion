@@ -1,3 +1,7 @@
+## v11.8.0-rc4.53 — Live context display candidate
+
+Display-only Opportunity Role, market team outlook, Research arrows and compact P/ADP/R/Pick-Confidence in Coach/Snapshot. Research Residual remains Shadow-only; no Coach/Return ranking weights changed.
+
 # Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.40)
 ### rc4.25 — backup provenance coherence hotfix
 - Fixes a deterministic rc4.24 evidence-provenance defect: normal Backup incorrectly labeled itself `11.8.0-rc4.23` although runtime/fixtures were rc4.24.
@@ -520,3 +524,11 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - Adds George Kittle as a two-sided elite-role + Achilles-recovery Shadow hypothesis.
 - No live Coach/Player Quality/ADP/Return/Manager/roster/scarcity/Value-Safety coefficient changes.
 - Static 2026 priors still expire at the 2026-08-24 freeze unless refreshed by structured Research Cache evidence.
+
+
+## v11.8.0-rc4.54 candidate
+- Adds configurable private ChatGPT draft-chat target (`https://chatgpt.com/c/...`).
+- New primary `Snapshot → Draft-Chat`: refreshes Sleeper, creates a fresh snapshot, copies it, then navigates to the saved draft chat.
+- Existing `Analysieren & Snapshot kopieren` remains directly below on mobile; separate `Draft-Chat öffnen` fallback retained.
+- Share links are rejected. Chat target is stored locally, included in backup/restore, and is shared by Mock and LIVE modes.
+- No Coach/Return/manager/research weighting change from rc4.53.

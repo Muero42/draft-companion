@@ -100,11 +100,23 @@
       <p class="tiny">v10 bleibt als eingefrorene Referenz erhalten. v11 verändert die Gewichtung erst ab Runde 9 zunehmend in Richtung Ceiling/Breakout-EV.</p><p class="tiny"><b>Live-Speed:</b> Der Snapshot kann während einer laufenden Analyse nicht kopiert werden. Der Hauptbutton aktualisiert zuerst Sleeper und kopiert anschließend ausschließlich den frisch erzeugten Snapshot.</p>
     </div>
     <div class="button-grid">
-      <button id="refreshBtn" class="primary">Analysieren & Snapshot kopieren</button>
+      <button id="chatSnapshotBtn" class="primary">Snapshot → Draft-Chat</button>
+      <button id="refreshBtn" class="secondary">Analysieren & Snapshot kopieren</button>
+      <button id="chatOpenBtn" class="secondary">Draft-Chat öffnen</button>
       <button id="copyBtn" class="secondary" disabled>Snapshot erneut kopieren</button>
       <button id="shareBtn" class="secondary" disabled>Teilen</button>
       <button id="queueBtn" class="secondary" disabled>Emergency Queue kopieren</button>
     </div>
+    <details class="compact-details" id="chatTargetDetails">
+      <summary>Draft-Chat-Ziel einrichten</summary>
+      <div class="details-body">
+        <label for="chatUrl">Private ChatGPT-Unterhaltung</label>
+        <input id="chatUrl" type="url" inputmode="url" autocomplete="off" autocapitalize="none" autocorrect="off" spellcheck="false" placeholder="https://chatgpt.com/c/…">
+        <button id="chatSaveBtn" class="secondary" type="button" style="width:100%;margin-top:8px">Chat-Ziel speichern</button>
+        <div id="chatStatus" class="notice">Noch kein Draft-Chat hinterlegt.</div>
+        <p class="tiny">Nur private Chat-URLs <b>chatgpt.com/c/…</b>; Share-Links werden absichtlich abgelehnt. Das Ziel gilt für Mock und LIVE und kann ohne neue App-Version geändert werden.</p>
+      </div>
+    </details>
     <label class="switch-row"><input id="autoRefresh" type="checkbox"> Automatisch alle 10 Sekunden aktualisieren</label>
     <div id="draftStatus" class="notice">Noch nicht verbunden.</div>
   </section>
