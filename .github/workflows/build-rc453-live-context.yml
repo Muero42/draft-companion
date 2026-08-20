@@ -1,0 +1,45 @@
+name: Build rc4.53 live context
+on:
+  push:
+    branches: [pitti-auto/rc4.53-live-context]
+    paths:
+      - '.github/workflows/build-rc453-live-context.yml'
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-auto/rc4.53-live-context
+      - name: Generate exact rc4.53 service worker
+        run: |
+          python .pitti-rc453/apply_rc453.py
+          test "$(sha256sum sw.js | awk '{print $1}')" = "8d86273481f234742a2659ae913b140f06ce67e37778482b927c98547a15d208"
+          node --check sw.js
+      - name: Verify effective transformed app
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),vm=require('vm');
+          const sw=fs.readFileSync('sw.js','utf8'),cut=sw.indexOf('async function transformed');
+          if(cut<0)throw new Error('transform anchor missing');
+          const ctx={console};vm.createContext(ctx);vm.runInContext(sw.slice(0,cut)+'\nthis.__patchApp=patchApp;',ctx);
+          const out=ctx.__patchApp(fs.readFileSync('app.js','utf8'));fs.writeFileSync('/tmp/rc453-app.js',out);
+          for(const m of ['App-Version: v11.8.0-rc4.53','TEAM_OUTLOOK_2026','Pick-Confidence','depthOrder','AUSSERHALB NORMAL-CUT'])if(!out.includes(m))throw new Error('missing marker '+m);
+          NODE
+          node --check /tmp/rc453-app.js
+          test "$(sha256sum /tmp/rc453-app.js | awk '{print $1}')" = "3f3822c58b660b3c8b648e295db6135a435c2308cac0fff35921fa4f2189ef18"
+      - name: Package runtime
+        run: |
+          zip -q rc453.zip index.html styles.css app.js manifest.webmanifest icon.svg sw.js _worker.js README.md
+          test "$(zipinfo -1 rc453.zip | wc -l)" = "8"
+      - name: Commit generated runtime and cleanup
+        run: |
+          rm -rf .pitti-rc453
+          rm -f .github/workflows/build-rc453-live-context.yml rc453.zip
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git add -A
+          git commit -m "Prepare rc4.53 live-context runtime"
+          git push origin HEAD:pitti-auto/rc4.53-live-context
