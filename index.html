@@ -83,30 +83,37 @@
     </div>
     <div class="mock-only" style="margin-top:10px"><label for="stressMode">Stresstest-Szenario</label><select id="stressMode"><option value="baseline" selected>Baseline</option><option value="rb">RB-Run / erhöhter RB-Druck</option><option value="te">TE-Run</option><option value="rookie">Rookie-RB-Reach</option><option value="late">Late-Round-Upside / Reach</option></select><p class="tiny">Szenarien verändern nur die Return-/Abnehmergefahr. Expertenpanel und Spielerbewertung bleiben die Baseline.</p></div>
     <div id="modeStatus" class="notice mock-only">Mock/Test: 2026-Managerprofile aktiv.</div>
-    <div class="strategy-box mock-only">
-      <b>Simulationslabor</b>
-      <p class="tiny">Monte-Carlo-Gegenprobe bis zum Folgepick. 2026 Live und Mock nutzen dieselben historischen Managerprofile; Baseline und Stressszenarien ändern nur die Varianz/Druckannahmen.</p>
-      <button id="simulateBtn" class="secondary" disabled>5 Szenarien simulieren</button>
-      <div id="simulationStatus" class="notice">Erst Draft analysieren.</div>
-      <div id="simulationResults"></div>
-    </div>
-    <div class="strategy-box mock-only">
-      <label for="strategyMode">Draftstrategie</label>
-      <select id="strategyMode">
-        <option value="progressive" selected>Progressive Upside (v11) – Standard</option>
-        <option value="balanced">Balanced / Anti-Reach (v10) – Referenz</option>
-      </select>
-      <div id="strategyStatus" class="notice ok">Progressive Upside ist aktiv.</div>
-      <p class="tiny">v10 bleibt als eingefrorene Referenz erhalten. v11 verändert die Gewichtung erst ab Runde 9 zunehmend in Richtung Ceiling/Breakout-EV.</p><p class="tiny"><b>Live-Speed:</b> Der Snapshot kann während einer laufenden Analyse nicht kopiert werden. Der Hauptbutton aktualisiert zuerst Sleeper und kopiert anschließend ausschließlich den frisch erzeugten Snapshot.</p>
-    </div>
-    <div class="button-grid">
+    <details class="compact-details strategy-box mock-only">
+      <summary>Simulation & Strategie <span class="summary-hint">optional</span></summary>
+      <div class="details-body">
+        <b>Simulationslabor</b>
+        <p class="tiny">Monte-Carlo-Gegenprobe bis zum Folgepick. Baseline und Stressszenarien ändern nur Varianz/Druckannahmen.</p>
+        <button id="simulateBtn" class="secondary" disabled>5 Szenarien simulieren</button>
+        <div id="simulationStatus" class="notice">Erst Draft analysieren.</div>
+        <div id="simulationResults"></div>
+        <label for="strategyMode">Draftstrategie</label>
+        <select id="strategyMode">
+          <option value="progressive" selected>Progressive Upside (v11) – Standard</option>
+          <option value="balanced">Balanced / Anti-Reach (v10) – Referenz</option>
+        </select>
+        <div id="strategyStatus" class="notice ok">Progressive Upside ist aktiv.</div>
+        <p class="tiny">v11 erhöht erst ab Runde 9 graduell Ceiling/Breakout-EV; v10 bleibt Referenz.</p>
+      </div>
+    </details>
+    <div class="draft-primary-actions">
       <button id="chatSnapshotBtn" class="primary">Snapshot → Draft-Chat</button>
       <button id="refreshBtn" class="secondary">Analysieren & Snapshot kopieren</button>
-      <button id="chatOpenBtn" class="secondary">Draft-Chat öffnen</button>
-      <button id="copyBtn" class="secondary" disabled>Snapshot erneut kopieren</button>
-      <button id="shareBtn" class="secondary" disabled>Teilen</button>
-      <button id="queueBtn" class="secondary" disabled>Emergency Queue kopieren</button>
+      <p class="tiny action-help"><b>Live-Speed:</b> Der Hauptbutton aktualisiert Sleeper, erzeugt einen frischen Snapshot, kopiert ihn und öffnet danach den hinterlegten Draft-Chat.</p>
     </div>
+    <details class="compact-details auxiliary-actions">
+      <summary>Weitere Aktionen / Notfall</summary>
+      <div class="details-body button-grid">
+        <button id="chatOpenBtn" class="secondary">Draft-Chat öffnen</button>
+        <button id="copyBtn" class="secondary" disabled>Snapshot erneut kopieren</button>
+        <button id="shareBtn" class="secondary" disabled>Teilen</button>
+        <button id="queueBtn" class="secondary" disabled>Emergency Queue kopieren</button>
+      </div>
+    </details>
     <details class="compact-details" id="chatTargetDetails">
       <summary>Draft-Chat-Ziel einrichten</summary>
       <div class="details-body">

@@ -532,3 +532,11 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - Existing `Analysieren & Snapshot kopieren` remains directly below on mobile; separate `Draft-Chat öffnen` fallback retained.
 - Share links are rejected. Chat target is stored locally, included in backup/restore, and is shared by Mock and LIVE modes.
 - No Coach/Return/manager/research weighting change from rc4.53.
+
+
+## v11.8.0-rc4.55 candidate — final pre-freeze mobile UI hierarchy
+- Display-only finalization on rc4.54 lineage; no Coach/Return/manager/research weighting change.
+- Primary Draft surface now keeps only `Snapshot → Draft-Chat` and `Analysieren & Snapshot kopieren` immediately visible.
+- `Draft-Chat öffnen`, re-copy, share and Emergency Queue are preserved unchanged under `Weitere Aktionen / Notfall`.
+- Simulation Lab + strategy controls are preserved unchanged under an optional collapsed section.
+- No proven fallback or control is removed; all existing element IDs/handlers remain intact.
