@@ -21,9 +21,9 @@ jobs:
           curl -fL --retry 3 -o ids.csv https://raw.githubusercontent.com/dynastyprocess/data/master/files/db_playerids.csv
           curl -fL --retry 3 -o players.json https://api.sleeper.app/v1/players/nfl
           for w in $(seq 1 14); do curl -fsSL --retry 3 -o matchup_${w}.json https://api.sleeper.app/v1/league/1224396747309076480/matchups/${w}; done
-      - name: Run Utility v3
-        run: python research/independent_utility_v3_2025.py
-      - name: Persist certification
+      - name: Run Utility v3.1
+        run: python research/independent_utility_v3_2025_v2.py
+      - name: Persist certification result
         shell: bash
         run: |
           mkdir -p outcome_certification
@@ -32,5 +32,5 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add outcome_certification/INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json
           git diff --cached --quiet && exit 0
-          git commit -m 'Certify Independent Championship Utility v3 [skip ci]'
+          git commit -m 'Record Independent Championship Utility v3.1 result [skip ci]'
           git push origin HEAD:pitti-outcome-bridge-20250821
