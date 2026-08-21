@@ -1,0 +1,1107 @@
+{
+  "season": 2025,
+  "draft_id": "1225769229928648704",
+  "league_id": "1224396747309076480",
+  "drafted_skill_players": 136,
+  "mapped_unique": 0,
+  "unmapped": [
+    {
+      "pick": 1,
+      "roster_id": 5,
+      "sleeper_id": "7564",
+      "player": "Ja'Marr Chase",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 2,
+      "roster_id": 9,
+      "sleeper_id": "4866",
+      "player": "Saquon Barkley",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 3,
+      "roster_id": 1,
+      "sleeper_id": "9509",
+      "player": "Bijan Robinson",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 4,
+      "roster_id": 2,
+      "sleeper_id": "6794",
+      "player": "Justin Jefferson",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 5,
+      "roster_id": 7,
+      "sleeper_id": "4034",
+      "player": "Christian McCaffrey",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 6,
+      "roster_id": 8,
+      "sleeper_id": "9493",
+      "player": "Puka Nacua",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 7,
+      "roster_id": 3,
+      "sleeper_id": "6786",
+      "player": "CeeDee Lamb",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 8,
+      "roster_id": 6,
+      "sleeper_id": "3198",
+      "player": "Derrick Henry",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 9,
+      "roster_id": 10,
+      "sleeper_id": "7547",
+      "player": "Amon-Ra St. Brown",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 10,
+      "roster_id": 4,
+      "sleeper_id": "9221",
+      "player": "Jahmyr Gibbs",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 11,
+      "roster_id": 4,
+      "sleeper_id": "12527",
+      "player": "Ashton Jeanty",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 12,
+      "roster_id": 10,
+      "sleeper_id": "11632",
+      "player": "Malik Nabers",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 13,
+      "roster_id": 6,
+      "sleeper_id": "7569",
+      "player": "Nico Collins",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 14,
+      "roster_id": 3,
+      "sleeper_id": "5859",
+      "player": "A.J. Brown",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 15,
+      "roster_id": 8,
+      "sleeper_id": "6813",
+      "player": "Jonathan Taylor",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 16,
+      "roster_id": 7,
+      "sleeper_id": "11584",
+      "player": "Bucky Irving",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 17,
+      "roster_id": 2,
+      "sleeper_id": "8150",
+      "player": "Kyren Williams",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 18,
+      "roster_id": 1,
+      "sleeper_id": "11604",
+      "player": "Brock Bowers",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 19,
+      "roster_id": 9,
+      "sleeper_id": "5850",
+      "player": "Josh Jacobs",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 20,
+      "roster_id": 5,
+      "sleeper_id": "4984",
+      "player": "Josh Allen",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 21,
+      "roster_id": 5,
+      "sleeper_id": "4881",
+      "player": "Lamar Jackson",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 22,
+      "roster_id": 9,
+      "sleeper_id": "11631",
+      "player": "Brian Thomas",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 23,
+      "roster_id": 1,
+      "sleeper_id": "8130",
+      "player": "Trey McBride",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 24,
+      "roster_id": 2,
+      "sleeper_id": "6904",
+      "player": "Jalen Hurts",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 25,
+      "roster_id": 7,
+      "sleeper_id": "8155",
+      "player": "Breece Hall",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 26,
+      "roster_id": 8,
+      "sleeper_id": "11566",
+      "player": "Jayden Daniels",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 27,
+      "roster_id": 3,
+      "sleeper_id": "9226",
+      "player": "De'Von Achane",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 28,
+      "roster_id": 6,
+      "sleeper_id": "9224",
+      "player": "Chase Brown",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 29,
+      "roster_id": 10,
+      "sleeper_id": "8138",
+      "player": "James Cook",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 30,
+      "roster_id": 4,
+      "sleeper_id": "12507",
+      "player": "Omarion Hampton",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 31,
+      "roster_id": 4,
+      "sleeper_id": "8112",
+      "player": "Drake London",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 32,
+      "roster_id": 10,
+      "sleeper_id": "6770",
+      "player": "Joe Burrow",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 33,
+      "roster_id": 6,
+      "sleeper_id": "11635",
+      "player": "Ladd McConkey",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 34,
+      "roster_id": 3,
+      "sleeper_id": "3321",
+      "player": "Tyreek Hill",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 35,
+      "roster_id": 8,
+      "sleeper_id": "6801",
+      "player": "Tee Higgins",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 36,
+      "roster_id": 7,
+      "sleeper_id": "11628",
+      "player": "Marvin Harrison",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 37,
+      "roster_id": 2,
+      "sleeper_id": "4035",
+      "player": "Alvin Kamara",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 38,
+      "roster_id": 1,
+      "sleeper_id": "8146",
+      "player": "Garrett Wilson",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 39,
+      "roster_id": 9,
+      "sleeper_id": "4217",
+      "player": "George Kittle",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 40,
+      "roster_id": 5,
+      "sleeper_id": "2216",
+      "player": "Mike Evans",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 41,
+      "roster_id": 5,
+      "sleeper_id": "2133",
+      "player": "Davante Adams",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 42,
+      "roster_id": 9,
+      "sleeper_id": "8151",
+      "player": "Kenneth Walker",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 43,
+      "roster_id": 1,
+      "sleeper_id": "12529",
+      "player": "TreVeyon Henderson",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 44,
+      "roster_id": 2,
+      "sleeper_id": "9488",
+      "player": "Jaxon Smith-Njigba",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 45,
+      "roster_id": 7,
+      "sleeper_id": "5045",
+      "player": "Courtland Sutton",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 46,
+      "roster_id": 8,
+      "sleeper_id": "10859",
+      "player": "Sam LaPorta",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 47,
+      "roster_id": 3,
+      "sleeper_id": "4137",
+      "player": "James Conner",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 48,
+      "roster_id": 6,
+      "sleeper_id": "7594",
+      "player": "Chuba Hubbard",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 49,
+      "roster_id": 10,
+      "sleeper_id": "5927",
+      "player": "Terry McLaurin",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 50,
+      "roster_id": 4,
+      "sleeper_id": "12526",
+      "player": "Tetairoa McMillan",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 51,
+      "roster_id": 4,
+      "sleeper_id": "12489",
+      "player": "RJ Harvey",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 52,
+      "roster_id": 10,
+      "sleeper_id": "1466",
+      "player": "Travis Kelce",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 53,
+      "roster_id": 6,
+      "sleeper_id": "5846",
+      "player": "DK Metcalf",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 54,
+      "roster_id": 3,
+      "sleeper_id": "5012",
+      "player": "Mark Andrews",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 55,
+      "roster_id": 8,
+      "sleeper_id": "4199",
+      "player": "Aaron Jones",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 56,
+      "roster_id": 7,
+      "sleeper_id": "12530",
+      "player": "Travis Hunter",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 57,
+      "roster_id": 2,
+      "sleeper_id": "5844",
+      "player": "T.J. Hockenson",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 58,
+      "roster_id": 1,
+      "sleeper_id": "7526",
+      "player": "Jaylen Waddle",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 59,
+      "roster_id": 9,
+      "sleeper_id": "5892",
+      "player": "David Montgomery",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 60,
+      "roster_id": 5,
+      "sleeper_id": "5967",
+      "player": "Tony Pollard",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 61,
+      "roster_id": 5,
+      "sleeper_id": "8154",
+      "player": "Brian Robinson",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 62,
+      "roster_id": 9,
+      "sleeper_id": "4983",
+      "player": "DJ Moore",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 63,
+      "roster_id": 1,
+      "sleeper_id": "11620",
+      "player": "Rome Odunze",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 64,
+      "roster_id": 2,
+      "sleeper_id": "10229",
+      "player": "Rashee Rice",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 65,
+      "roster_id": 7,
+      "sleeper_id": "11624",
+      "player": "Xavier Worthy",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 66,
+      "roster_id": 8,
+      "sleeper_id": "9997",
+      "player": "Zay Flowers",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 67,
+      "roster_id": 3,
+      "sleeper_id": "4046",
+      "player": "Patrick Mahomes",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 68,
+      "roster_id": 6,
+      "sleeper_id": "4033",
+      "player": "David Njoku",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 69,
+      "roster_id": 10,
+      "sleeper_id": "7525",
+      "player": "DeVonta Smith",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 70,
+      "roster_id": 4,
+      "sleeper_id": "4981",
+      "player": "Calvin Ridley",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 71,
+      "roster_id": 4,
+      "sleeper_id": "8137",
+      "player": "George Pickens",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 72,
+      "roster_id": 10,
+      "sleeper_id": "6790",
+      "player": "D'Andre Swift",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 73,
+      "roster_id": 6,
+      "sleeper_id": "4892",
+      "player": "Baker Mayfield",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 74,
+      "roster_id": 3,
+      "sleeper_id": "8205",
+      "player": "Isiah Pacheco",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 75,
+      "roster_id": 8,
+      "sleeper_id": "12504",
+      "player": "Kaleb Johnson",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 76,
+      "roster_id": 7,
+      "sleeper_id": "5849",
+      "player": "Kyler Murray",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 77,
+      "roster_id": 2,
+      "sleeper_id": "4018",
+      "player": "Joe Mixon",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 78,
+      "roster_id": 1,
+      "sleeper_id": "9756",
+      "player": "Jordan Addison",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 79,
+      "roster_id": 9,
+      "sleeper_id": "8148",
+      "player": "Jameson Williams",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 80,
+      "roster_id": 5,
+      "sleeper_id": "6806",
+      "player": "J.K. Dobbins",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 81,
+      "roster_id": 5,
+      "sleeper_id": "8228",
+      "player": "Jaylen Warren",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 82,
+      "roster_id": 9,
+      "sleeper_id": "8144",
+      "player": "Chris Olave",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 83,
+      "roster_id": 1,
+      "sleeper_id": "11638",
+      "player": "Ricky Pearsall",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 84,
+      "roster_id": 2,
+      "sleeper_id": "6783",
+      "player": "Jerry Jeudy",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 85,
+      "roster_id": 7,
+      "sleeper_id": "12518",
+      "player": "Tyler Warren",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 86,
+      "roster_id": 8,
+      "sleeper_id": "4039",
+      "player": "Cooper Kupp",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 87,
+      "roster_id": 3,
+      "sleeper_id": "7543",
+      "player": "Travis Etienne",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 88,
+      "roster_id": 6,
+      "sleeper_id": "11655",
+      "player": "Tyrone Tracy",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 89,
+      "roster_id": 10,
+      "sleeper_id": "12512",
+      "player": "Quinshon Judkins",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 90,
+      "roster_id": 4,
+      "sleeper_id": "12514",
+      "player": "Emeka Egbuka",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 91,
+      "roster_id": 4,
+      "sleeper_id": "5947",
+      "player": "Jakobi Meyers",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 92,
+      "roster_id": 10,
+      "sleeper_id": "4066",
+      "player": "Evan Engram",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 93,
+      "roster_id": 6,
+      "sleeper_id": "5872",
+      "player": "Deebo Samuel",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 94,
+      "roster_id": 3,
+      "sleeper_id": "2449",
+      "player": "Stefon Diggs",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 95,
+      "roster_id": 8,
+      "sleeper_id": "10222",
+      "player": "Jayden Reed",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 96,
+      "roster_id": 7,
+      "sleeper_id": "8134",
+      "player": "Khalil Shakir",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 97,
+      "roster_id": 2,
+      "sleeper_id": "7553",
+      "player": "Kyle Pitts",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 98,
+      "roster_id": 1,
+      "sleeper_id": "12517",
+      "player": "Colston Loveland",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 99,
+      "roster_id": 9,
+      "sleeper_id": "12501",
+      "player": "Matthew Golden",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 100,
+      "roster_id": 5,
+      "sleeper_id": "12481",
+      "player": "Cam Skattebo",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 101,
+      "roster_id": 5,
+      "sleeper_id": "10236",
+      "player": "Dalton Kincaid",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 102,
+      "roster_id": 9,
+      "sleeper_id": "3163",
+      "player": "Jared Goff",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 103,
+      "roster_id": 1,
+      "sleeper_id": "12484",
+      "player": "Jayden Higgins",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 105,
+      "roster_id": 7,
+      "sleeper_id": "4144",
+      "player": "Jonnu Smith",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 106,
+      "roster_id": 8,
+      "sleeper_id": "9753",
+      "player": "Zach Charbonnet",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 107,
+      "roster_id": 3,
+      "sleeper_id": "9757",
+      "player": "Kendre Miller",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 108,
+      "roster_id": 6,
+      "sleeper_id": "9484",
+      "player": "Tucker Kraft",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 109,
+      "roster_id": 10,
+      "sleeper_id": "9500",
+      "player": "Josh Downs",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 110,
+      "roster_id": 4,
+      "sleeper_id": "8408",
+      "player": "Jordan Mason",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 111,
+      "roster_id": 4,
+      "sleeper_id": "11564",
+      "player": "Drake Maye",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 113,
+      "roster_id": 6,
+      "sleeper_id": "6819",
+      "player": "Michael Pittman",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 114,
+      "roster_id": 3,
+      "sleeper_id": "4037",
+      "player": "Chris Godwin",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 115,
+      "roster_id": 8,
+      "sleeper_id": "12457",
+      "player": "Jaydon Blue",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 118,
+      "roster_id": 1,
+      "sleeper_id": "11560",
+      "player": "Caleb Williams",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 119,
+      "roster_id": 9,
+      "sleeper_id": "7588",
+      "player": "Javonte Williams",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 120,
+      "roster_id": 5,
+      "sleeper_id": "7049",
+      "player": "Jauan Jennings",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 121,
+      "roster_id": 5,
+      "sleeper_id": "9494",
+      "player": "Marvin Mims",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 122,
+      "roster_id": 9,
+      "sleeper_id": "12509",
+      "player": "Tre' Harris",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 123,
+      "roster_id": 1,
+      "sleeper_id": "11637",
+      "player": "Keon Coleman",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 124,
+      "roster_id": 2,
+      "sleeper_id": "12519",
+      "player": "Luther Burden",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 125,
+      "roster_id": 7,
+      "sleeper_id": "1479",
+      "player": "Keenan Allen",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 127,
+      "roster_id": 3,
+      "sleeper_id": "6803",
+      "player": "Brandon Aiyuk",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 128,
+      "roster_id": 6,
+      "sleeper_id": "11563",
+      "player": "Bo Nix",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 130,
+      "roster_id": 4,
+      "sleeper_id": "11576",
+      "player": "Braelon Allen",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 131,
+      "roster_id": 4,
+      "sleeper_id": "12533",
+      "player": "Jacory Croskey-Merritt",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 132,
+      "roster_id": 10,
+      "sleeper_id": "6797",
+      "player": "Justin Herbert",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 136,
+      "roster_id": 7,
+      "sleeper_id": "7090",
+      "player": "Darnell Mooney",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 137,
+      "roster_id": 2,
+      "sleeper_id": "7571",
+      "player": "Rashod Bateman",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 139,
+      "roster_id": 9,
+      "sleeper_id": "7528",
+      "player": "Najee Harris",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 140,
+      "roster_id": 5,
+      "sleeper_id": "1689",
+      "player": "Adam Thielen",
+      "pos": "WR",
+      "gsis_ids": []
+    },
+    {
+      "pick": 143,
+      "roster_id": 1,
+      "sleeper_id": "4988",
+      "player": "Nick Chubb",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 144,
+      "roster_id": 2,
+      "sleeper_id": "3294",
+      "player": "Dak Prescott",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 145,
+      "roster_id": 7,
+      "sleeper_id": "7591",
+      "player": "Justin Fields",
+      "pos": "QB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 146,
+      "roster_id": 8,
+      "sleeper_id": "8110",
+      "player": "Jake Ferguson",
+      "pos": "TE",
+      "gsis_ids": []
+    },
+    {
+      "pick": 149,
+      "roster_id": 10,
+      "sleeper_id": "12534",
+      "player": "Kyle Monangai",
+      "pos": "RB",
+      "gsis_ids": []
+    },
+    {
+      "pick": 150,
+      "roster_id": 4,
+      "sleeper_id": "9511",
+      "player": "Keaton Mitchell",
+      "pos": "RB",
+      "gsis_ids": []
+    }
+  ],
+  "ambiguous": [],
+  "duplicate_source_player_weeks": [],
+  "player_weeks": [],
+  "overlap_n": 0,
+  "overlap_bad_n": 0,
+  "overlap_max_abs_delta": null,
+  "overlap_bad_examples": [],
+  "certification_ready": false,
+  "source": "canonical nflverse stats_player/stats_player_week_2025.csv",
+  "scoring": "Half-PPR = fantasy_points_ppr - 0.5*receptions; QB/RB/WR/TE only; K/DST separate replacement layer"
+}
