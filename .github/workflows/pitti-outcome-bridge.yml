@@ -24,14 +24,13 @@ jobs:
         shell: bash
         run: |
           python - <<'PY'
-          import csv,json,re,unicodedata,urllib.request,collections,math
+          import csv,json,re,unicodedata,urllib.request,collections
           SKILL={'QB','RB','WR','TE'}
           def norm(x):
             x=unicodedata.normalize('NFKD',str(x)).encode('ascii','ignore').decode().lower()
             x=re.sub(r'\b(jr|sr|ii|iii|iv)\.?\b','',x)
             return re.sub(r'[^a-z0-9]+','',x)
-          picks=json.load(open('sleeper_draft.json',encoding='utf-8'))
-          draft=[]
+          picks=json.load(open('sleeper_draft.json',encoding='utf-8')); draft=[]
           for p in picks:
             m=p.get('metadata') or {}; pos=(m.get('position') or '').upper()
             if pos not in SKILL: continue
@@ -40,61 +39,41 @@ jobs:
           rows=[]
           with open('stats_player_week_2025.csv',newline='',encoding='utf-8-sig') as f:
             for r in csv.DictReader(f):
-              if (r.get('position') or '').upper() not in SKILL: continue
-              if (r.get('season_type') or 'REG')!='REG': continue
-              try: w=int(float(r['week']))
+              if (r.get('position') or '').upper() not in SKILL or (r.get('season_type') or 'REG')!='REG': continue
+              try: w=int(float(r['week'])); hp=float(r.get('fantasy_points_ppr'))-0.5*float(r.get('receptions') or 0)
               except: continue
               if not 1<=w<=17: continue
-              ppr=r.get('fantasy_points_ppr'); rec=r.get('receptions')
-              try: hp=float(ppr)-0.5*float(rec or 0)
-              except: continue
-              rows.append({'gid':r.get('player_id') or '', 'name':r.get('player_name') or '', 'norm':norm(r.get('player_name') or ''),'pos':(r.get('position') or '').upper(),'week':w,'half_ppr':hp})
+              fullname=r.get('player_display_name') or r.get('player_name') or ''
+              rows.append({'gid':r.get('player_id') or '','norm':norm(fullname),'week':w,'half_ppr':hp})
           byname=collections.defaultdict(set)
           for r in rows: byname[r['norm']].add(r['gid'])
           unmapped=[]; ambiguous=[]; mapping=[]
           for d in draft:
-            ids=sorted(x for x in byname.get(d['norm'],set()) if x)
-            rec={k:d[k] for k in ['pick','roster_id','sleeper_id','player','pos']}; rec['gsis_ids']=ids; mapping.append(rec)
+            ids=sorted(x for x in byname.get(d['norm'],set()) if x); rec={k:d[k] for k in ['pick','roster_id','sleeper_id','player','pos']}; rec['gsis_ids']=ids; mapping.append(rec)
             if not ids: unmapped.append(rec)
             elif len(ids)>1: ambiguous.append(rec)
-          gid_for={m['pick']:m['gsis_ids'][0] for m in mapping if len(m['gsis_ids'])==1}
-          source=collections.defaultdict(list)
+          gid_for={m['pick']:m['gsis_ids'][0] for m in mapping if len(m['gsis_ids'])==1}; source=collections.defaultdict(list)
           for r in rows: source[(r['gid'],r['week'])].append(r['half_ppr'])
-          duplicates=[{'gsis_id':g,'week':w,'rows':len(v)} for (g,w),v in source.items() if len(v)>1]
-          pw=[]
+          duplicates=[{'gsis_id':g,'week':w,'rows':len(v)} for (g,w),v in source.items() if len(v)>1]; pw=[]
           for d in draft:
             gid=gid_for.get(d['pick'])
             if not gid: continue
             for w in range(1,18):
-              vals=source.get((gid,w),[])
-              hp=sum(vals) if vals else None
-              pw.append({'pick':d['pick'],'roster_id':d['roster_id'],'sleeper_id':d['sleeper_id'],'player':d['player'],'pos':d['pos'],'gsis_id':gid,'week':w,'half_ppr':hp,'source_row_present':bool(vals)})
-          # Sleeper overlap: union players_points from actual 2025 league matchups.
-          # Draft endpoint itself is sufficient to discover the league id.
-          meta=json.load(urllib.request.urlopen('https://api.sleeper.app/v1/draft/1225769229928648704'))
-          league_id=str(meta.get('league_id') or '')
-          sleeper={}
+              vals=source.get((gid,w),[]); pw.append({'pick':d['pick'],'roster_id':d['roster_id'],'sleeper_id':d['sleeper_id'],'player':d['player'],'pos':d['pos'],'gsis_id':gid,'week':w,'half_ppr':sum(vals) if vals else None,'source_row_present':bool(vals)})
+          meta=json.load(urllib.request.urlopen('https://api.sleeper.app/v1/draft/1225769229928648704')); league_id=str(meta.get('league_id') or ''); sleeper={}
           if league_id:
             for w in range(1,18):
               try: games=json.load(urllib.request.urlopen(f'https://api.sleeper.app/v1/league/{league_id}/matchups/{w}'))
               except Exception: continue
               for g in games:
-                for pid,pts in (g.get('players_points') or {}).items():
-                  sleeper[(str(pid),w)]=float(pts)
+                for pid,pts in (g.get('players_points') or {}).items(): sleeper[(str(pid),w)]=float(pts)
           overlap=[]
           for x in pw:
             k=(x['sleeper_id'],x['week'])
-            if x['half_ppr'] is not None and k in sleeper:
-              delta=x['half_ppr']-sleeper[k]
-              overlap.append({'player':x['player'],'week':x['week'],'canonical':x['half_ppr'],'sleeper':sleeper[k],'delta':delta})
-          absd=[abs(x['delta']) for x in overlap]
-          bad=[x for x in overlap if abs(x['delta'])>0.011]
+            if x['half_ppr'] is not None and k in sleeper: overlap.append({'player':x['player'],'week':x['week'],'canonical':x['half_ppr'],'sleeper':sleeper[k],'delta':x['half_ppr']-sleeper[k]})
+          absd=[abs(x['delta']) for x in overlap]; bad=[x for x in overlap if abs(x['delta'])>0.011]
           out={'season':2025,'draft_id':'1225769229928648704','league_id':league_id,'drafted_skill_players':len(draft),'mapped_unique':sum(len(m['gsis_ids'])==1 for m in mapping),'unmapped':unmapped,'ambiguous':ambiguous,'duplicate_source_player_weeks':duplicates,'player_weeks':pw,'overlap_n':len(overlap),'overlap_bad_n':len(bad),'overlap_max_abs_delta':max(absd) if absd else None,'overlap_bad_examples':bad[:30],'certification_ready':not unmapped and not ambiguous and len(overlap)>0 and not bad,'source':'canonical nflverse stats_player/stats_player_week_2025.csv','scoring':'Half-PPR = fantasy_points_ppr - 0.5*receptions; QB/RB/WR/TE only; K/DST separate replacement layer'}
-          open('OUTCOME_CERTIFICATION_2025.json','w',encoding='utf-8').write(json.dumps(out,indent=2,ensure_ascii=False))
-          summary={k:out[k] for k in ['drafted_skill_players','mapped_unique','overlap_n','overlap_bad_n','overlap_max_abs_delta','certification_ready']}
-          summary['unmapped_players']=[x['player'] for x in unmapped]; summary['ambiguous_players']=[x['player'] for x in ambiguous]
-          open('OUTCOME_CERTIFICATION_SUMMARY_2025.json','w').write(json.dumps(summary,indent=2))
-          print(json.dumps(summary,indent=2))
+          open('OUTCOME_CERTIFICATION_2025.json','w',encoding='utf-8').write(json.dumps(out,indent=2,ensure_ascii=False)); summary={k:out[k] for k in ['drafted_skill_players','mapped_unique','overlap_n','overlap_bad_n','overlap_max_abs_delta','certification_ready']}; summary['unmapped_players']=[x['player'] for x in unmapped]; summary['ambiguous_players']=[x['player'] for x in ambiguous]; open('OUTCOME_CERTIFICATION_SUMMARY_2025.json','w').write(json.dumps(summary,indent=2)); print(json.dumps(summary,indent=2))
           PY
       - name: Commit certification outputs
         shell: bash
