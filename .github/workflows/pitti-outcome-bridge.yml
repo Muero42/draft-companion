@@ -1,0 +1,30 @@
+name: PITTI Outcome Bridge
+on:
+  push:
+    branches: [pitti-outcome-bridge-20250821]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  fetch-outcome:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Download canonical nflverse 2025 weekly player stats
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl --fail --location --retry 3 --retry-all-errors \
+            -o stats_player_week_2025.csv \
+            https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2025.csv
+          test -s stats_player_week_2025.csv
+          head -n 1 stats_player_week_2025.csv
+          sha256sum stats_player_week_2025.csv | tee SHA256SUMS.txt
+      - name: Upload canonical dataset artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: nflverse-stats-player-week-2025
+          path: |
+            stats_player_week_2025.csv
+            SHA256SUMS.txt
+          if-no-files-found: error
+          retention-days: 1
