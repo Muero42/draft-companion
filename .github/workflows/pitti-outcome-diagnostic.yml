@@ -1,0 +1,69 @@
+name: PITTI Outcome Diagnostic
+on:
+  push:
+    branches: [pitti-outcome-bridge-20250821]
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  diagnose:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-outcome-bridge-20250821}
+      - name: Diagnose mapping and scoring overlap
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 -o stats.csv https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2025.csv
+          curl -fL --retry 3 -o picks.json https://api.sleeper.app/v1/draft/1225769229928648704/picks
+          curl -fL --retry 3 -o ids.csv https://raw.githubusercontent.com/dynastyprocess/data/master/files/db_playerids.csv
+          curl -fL --retry 3 -o league.json https://api.sleeper.app/v1/league/1224396747309076480
+          python - <<'PY'
+          import csv,json,urllib.request,collections,re,unicodedata
+          def n(x):
+            x=unicodedata.normalize('NFKD',str(x)).encode('ascii','ignore').decode().lower(); x=re.sub(r'\b(jr|sr|ii|iii|iv)\.?\b','',x); return re.sub('[^a-z0-9]+','',x)
+          picks=json.load(open('picks.json')); skill=[]
+          for p in picks:
+            m=p.get('metadata') or {}; pos=(m.get('position') or '').upper()
+            if pos in {'QB','RB','WR','TE'}: skill.append((int(p['pick_no']),str(p['player_id']),((m.get('first_name') or '')+' '+(m.get('last_name') or '')).strip(),pos))
+          # robust sleeper -> gsis crosswalk; discover exact column names
+          with open('ids.csv',newline='',encoding='utf-8-sig') as f:
+            rr=list(csv.DictReader(f)); cols=list(rr[0])
+          sidcol=next(c for c in cols if c.lower() in {'sleeper_id','sleeperid'}); gidcol=next(c for c in cols if c.lower() in {'gsis_id','gsisid'})
+          cross={str(r.get(sidcol) or '').strip():str(r.get(gidcol) or '').strip() for r in rr if r.get(sidcol) and r.get(gidcol)}
+          stats={}; byname={}
+          with open('stats.csv',newline='',encoding='utf-8-sig') as f:
+            for r in csv.DictReader(f):
+              if (r.get('position') or '').upper() not in {'QB','RB','WR','TE'} or (r.get('season_type') or 'REG')!='REG': continue
+              try: w=int(float(r['week'])); hp=float(r['fantasy_points_ppr'])-.5*float(r.get('receptions') or 0)
+              except: continue
+              if 1<=w<=17:
+                gid=str(r.get('player_id') or ''); stats[(gid,w)]=stats.get((gid,w),0)+hp; byname[n(r.get('player_display_name') or r.get('player_name') or '')]=gid
+          mapping=[]
+          for pick,sid,name,pos in skill:
+            gid=cross.get(sid) or byname.get(n(name)); mapping.append({'pick':pick,'sleeper_id':sid,'player':name,'pos':pos,'gsis_id':gid or None,'crosswalk':bool(cross.get(sid)),'has_stat_row':any(k[0]==gid for k in stats) if gid else False})
+          sleeper={}
+          for w in range(1,18):
+            games=json.load(urllib.request.urlopen(f'https://api.sleeper.app/v1/league/1224396747309076480/matchups/{w}'))
+            for g in games:
+              for pid,pts in (g.get('players_points') or {}).items(): sleeper[(str(pid),w)]=float(pts)
+          bad=[]; overlap=0
+          for m in mapping:
+            if not m['gsis_id']: continue
+            for w in range(1,18):
+              a=stats.get((m['gsis_id'],w)); b=sleeper.get((m['sleeper_id'],w))
+              if a is not None and b is not None:
+                overlap+=1; d=a-b
+                if abs(d)>.011: bad.append({'player':m['player'],'week':w,'canonical_half_ppr':a,'sleeper':b,'delta':d})
+          league=json.load(open('league.json'))
+          out={'drafted_skill_players':len(skill),'mapped':sum(bool(x['gsis_id']) for x in mapping),'no_stat_row':[x for x in mapping if x['gsis_id'] and not x['has_stat_row']],'unmapped':[x for x in mapping if not x['gsis_id']],'overlap_n':overlap,'bad_n':len(bad),'bad':bad,'scoring_settings':league.get('scoring_settings',{})}
+          open('OUTCOME_DIAGNOSTIC_2025.json','w').write(json.dumps(out,indent=2)); print(json.dumps(out,indent=2))
+          PY
+          mkdir -p outcome_certification; cp OUTCOME_DIAGNOSTIC_2025.json outcome_certification/
+          git config user.name github-actions[bot]; git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add outcome_certification/OUTCOME_DIAGNOSTIC_2025.json
+          git diff --cached --quiet && exit 0
+          git commit -m 'Diagnose canonical outcome mapping and overlap [skip ci]'
+          git push origin HEAD:pitti-outcome-bridge-20250821
