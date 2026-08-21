@@ -1,0 +1,626 @@
+{
+  "status": "FAIL_CLOSED",
+  "method": "Independent Championship Utility v3 / frozen 2025 opening draft / exact Half-PPR / leave-week-out win CDF",
+  "drafted_skill_players": 136,
+  "kd_neutral_baseline_mean": 17.242857142857144,
+  "replacement_pool_sizes": {
+    "QB": 5,
+    "WR": 12,
+    "TE": 5,
+    "RB": 10
+  },
+  "criteria": {
+    "all_136_mapped": true,
+    "win_transform_prevalidated": true,
+    "no_postdraft_ownership_used": true,
+    "replacement_sensitivity_sign_stable": false,
+    "top_realized_player_removal_never_improves": false,
+    "rank_stability_max_span_le_3": false
+  },
+  "corr_actual_wins_range": [
+    -0.11243634432083166,
+    0.17734312391227552
+  ],
+  "corr_actual_points_range": [
+    -0.13430357714816077,
+    0.2918499020678897
+  ],
+  "rank_ranges": {
+    "1": [
+      2,
+      5
+    ],
+    "2": [
+      2,
+      9
+    ],
+    "3": [
+      4,
+      9
+    ],
+    "4": [
+      1,
+      1
+    ],
+    "5": [
+      2,
+      9
+    ],
+    "6": [
+      2,
+      8
+    ],
+    "7": [
+      9,
+      10
+    ],
+    "8": [
+      4,
+      9
+    ],
+    "9": [
+      3,
+      10
+    ],
+    "10": [
+      3,
+      9
+    ]
+  },
+  "central_expected_wins": {
+    "1": 10.454545454545455,
+    "2": 9.742424242424242,
+    "3": 9.886363636363637,
+    "4": 11.772727272727273,
+    "5": 10.0,
+    "6": 10.242424242424242,
+    "7": 9.280303030303031,
+    "8": 9.856060606060606,
+    "9": 10.022727272727273,
+    "10": 9.901515151515152
+  },
+  "central_availability": {
+    "1": 0.8163265306122449,
+    "2": 0.7967032967032966,
+    "3": 0.631868131868132,
+    "4": 0.780952380952381,
+    "5": 0.7602040816326531,
+    "6": 0.8571428571428571,
+    "7": 0.729591836734694,
+    "8": 0.6978021978021979,
+    "9": 0.8112244897959184,
+    "10": 0.7692307692307693
+  },
+  "perturbation": [
+    {
+      "rid": 1,
+      "removed": "Caleb Williams",
+      "base": 10.454545454545455,
+      "after": 10.909090909090908,
+      "delta": 0.45454545454545325
+    },
+    {
+      "rid": 2,
+      "removed": "Dak Prescott",
+      "base": 9.742424242424242,
+      "after": 8.818181818181818,
+      "delta": -0.9242424242424239
+    },
+    {
+      "rid": 3,
+      "removed": "Patrick Mahomes",
+      "base": 9.886363636363637,
+      "after": 9.43939393939394,
+      "delta": -0.44696969696969724
+    },
+    {
+      "rid": 4,
+      "removed": "Jahmyr Gibbs",
+      "base": 11.772727272727273,
+      "after": 10.098484848484848,
+      "delta": -1.6742424242424256
+    },
+    {
+      "rid": 5,
+      "removed": "Josh Allen",
+      "base": 10.0,
+      "after": 8.553030303030303,
+      "delta": -1.4469696969696972
+    },
+    {
+      "rid": 6,
+      "removed": "Bo Nix",
+      "base": 10.242424242424242,
+      "after": 9.530303030303031,
+      "delta": -0.712121212121211
+    },
+    {
+      "rid": 7,
+      "removed": "Christian McCaffrey",
+      "base": 9.280303030303031,
+      "after": 6.954545454545455,
+      "delta": -2.325757575757576
+    },
+    {
+      "rid": 8,
+      "removed": "Jonathan Taylor",
+      "base": 9.856060606060606,
+      "after": 7.628787878787879,
+      "delta": -2.2272727272727266
+    },
+    {
+      "rid": 9,
+      "removed": "Jared Goff",
+      "base": 10.022727272727273,
+      "after": 10.363636363636363,
+      "delta": 0.34090909090908994
+    },
+    {
+      "rid": 10,
+      "removed": "Justin Herbert",
+      "base": 9.901515151515152,
+      "after": 9.840909090909092,
+      "delta": -0.06060606060606055
+    }
+  ],
+  "sensitivity": [
+    {
+      "q": 0.25,
+      "kd_mult": 0.5,
+      "corr_actual_wins": 0.07588828505236386,
+      "corr_actual_points": 0.13938857049865522,
+      "rank_order": [
+        4,
+        1,
+        6,
+        9,
+        8,
+        10,
+        5,
+        2,
+        3,
+        7
+      ]
+    },
+    {
+      "q": 0.25,
+      "kd_mult": 0.75,
+      "corr_actual_wins": 0.03463225816844863,
+      "corr_actual_points": 0.09629419591550295,
+      "rank_order": [
+        4,
+        1,
+        6,
+        9,
+        8,
+        10,
+        5,
+        2,
+        3,
+        7
+      ]
+    },
+    {
+      "q": 0.25,
+      "kd_mult": 1.0,
+      "corr_actual_wins": 0.007775858757439353,
+      "corr_actual_points": 0.02911456927187638,
+      "rank_order": [
+        4,
+        1,
+        6,
+        9,
+        8,
+        10,
+        5,
+        2,
+        3,
+        7
+      ]
+    },
+    {
+      "q": 0.25,
+      "kd_mult": 1.25,
+      "corr_actual_wins": -0.059300336436851016,
+      "corr_actual_points": -0.04422110906079886,
+      "rank_order": [
+        4,
+        1,
+        6,
+        9,
+        10,
+        8,
+        2,
+        5,
+        3,
+        7
+      ]
+    },
+    {
+      "q": 0.25,
+      "kd_mult": 1.5,
+      "corr_actual_wins": -0.10488824102975869,
+      "corr_actual_points": -0.11881736718838654,
+      "rank_order": [
+        4,
+        6,
+        9,
+        1,
+        10,
+        2,
+        3,
+        5,
+        8,
+        7
+      ]
+    },
+    {
+      "q": 0.35,
+      "kd_mult": 0.5,
+      "corr_actual_wins": 0.10454207053278856,
+      "corr_actual_points": 0.17749663056716358,
+      "rank_order": [
+        4,
+        1,
+        6,
+        8,
+        9,
+        10,
+        5,
+        2,
+        3,
+        7
+      ]
+    },
+    {
+      "q": 0.35,
+      "kd_mult": 0.75,
+      "corr_actual_wins": 0.0534723001246359,
+      "corr_actual_points": 0.11748115032435207,
+      "rank_order": [
+        4,
+        1,
+        6,
+        9,
+        8,
+        10,
+        5,
+        3,
+        2,
+        7
+      ]
+    },
+    {
+      "q": 0.35,
+      "kd_mult": 1.0,
+      "corr_actual_wins": 0.03268940267593386,
+      "corr_actual_points": 0.05110431978468787,
+      "rank_order": [
+        4,
+        1,
+        6,
+        9,
+        8,
+        10,
+        5,
+        2,
+        3,
+        7
+      ]
+    },
+    {
+      "q": 0.35,
+      "kd_mult": 1.25,
+      "corr_actual_wins": -0.016476785661859086,
+      "corr_actual_points": -0.010015111457046005,
+      "rank_order": [
+        4,
+        1,
+        6,
+        9,
+        8,
+        3,
+        2,
+        5,
+        10,
+        7
+      ]
+    },
+    {
+      "q": 0.35,
+      "kd_mult": 1.5,
+      "corr_actual_wins": -0.07353151519579605,
+      "corr_actual_points": -0.08305217211640141,
+      "rank_order": [
+        4,
+        6,
+        9,
+        1,
+        3,
+        2,
+        10,
+        8,
+        5,
+        7
+      ]
+    },
+    {
+      "q": 0.5,
+      "kd_mult": 0.5,
+      "corr_actual_wins": 0.08737597845800171,
+      "corr_actual_points": 0.16954864312944512,
+      "rank_order": [
+        4,
+        1,
+        6,
+        8,
+        5,
+        10,
+        9,
+        3,
+        2,
+        7
+      ]
+    },
+    {
+      "q": 0.5,
+      "kd_mult": 0.75,
+      "corr_actual_wins": 0.06509733348430502,
+      "corr_actual_points": 0.1014758012542233,
+      "rank_order": [
+        4,
+        1,
+        6,
+        5,
+        8,
+        9,
+        10,
+        3,
+        2,
+        7
+      ]
+    },
+    {
+      "q": 0.5,
+      "kd_mult": 1.0,
+      "corr_actual_wins": 0.02568339925460677,
+      "corr_actual_points": 0.0488147246990894,
+      "rank_order": [
+        4,
+        1,
+        6,
+        9,
+        5,
+        10,
+        3,
+        8,
+        2,
+        7
+      ]
+    },
+    {
+      "q": 0.5,
+      "kd_mult": 1.25,
+      "corr_actual_wins": -0.03645758484898038,
+      "corr_actual_points": -0.04007687544004865,
+      "rank_order": [
+        4,
+        6,
+        1,
+        5,
+        9,
+        3,
+        2,
+        10,
+        8,
+        7
+      ]
+    },
+    {
+      "q": 0.5,
+      "kd_mult": 1.5,
+      "corr_actual_wins": -0.11243634432083166,
+      "corr_actual_points": -0.13430357714816077,
+      "rank_order": [
+        4,
+        6,
+        1,
+        3,
+        9,
+        5,
+        2,
+        10,
+        8,
+        7
+      ]
+    },
+    {
+      "q": 0.65,
+      "kd_mult": 0.5,
+      "corr_actual_wins": 0.12035785177943532,
+      "corr_actual_points": 0.1985235292839102,
+      "rank_order": [
+        4,
+        1,
+        5,
+        10,
+        8,
+        6,
+        3,
+        2,
+        9,
+        7
+      ]
+    },
+    {
+      "q": 0.65,
+      "kd_mult": 0.75,
+      "corr_actual_wins": 0.0867108477002225,
+      "corr_actual_points": 0.12859395367801643,
+      "rank_order": [
+        4,
+        1,
+        5,
+        10,
+        6,
+        8,
+        3,
+        2,
+        9,
+        7
+      ]
+    },
+    {
+      "q": 0.65,
+      "kd_mult": 1.0,
+      "corr_actual_wins": 0.023251218447364903,
+      "corr_actual_points": 0.06802664987913092,
+      "rank_order": [
+        4,
+        1,
+        5,
+        10,
+        6,
+        2,
+        3,
+        8,
+        9,
+        7
+      ]
+    },
+    {
+      "q": 0.65,
+      "kd_mult": 1.25,
+      "corr_actual_wins": 0.017756293238658717,
+      "corr_actual_points": 0.030872328625250408,
+      "rank_order": [
+        4,
+        5,
+        1,
+        2,
+        10,
+        3,
+        6,
+        9,
+        8,
+        7
+      ]
+    },
+    {
+      "q": 0.65,
+      "kd_mult": 1.5,
+      "corr_actual_wins": -0.004640713098321464,
+      "corr_actual_points": -0.029153768416739383,
+      "rank_order": [
+        4,
+        5,
+        2,
+        1,
+        3,
+        10,
+        6,
+        9,
+        8,
+        7
+      ]
+    },
+    {
+      "q": 0.75,
+      "kd_mult": 0.5,
+      "corr_actual_wins": 0.16585420602573991,
+      "corr_actual_points": 0.2918499020678897,
+      "rank_order": [
+        4,
+        5,
+        1,
+        10,
+        8,
+        2,
+        6,
+        3,
+        7,
+        9
+      ]
+    },
+    {
+      "q": 0.75,
+      "kd_mult": 0.75,
+      "corr_actual_wins": 0.15387888035422861,
+      "corr_actual_points": 0.2652977163619154,
+      "rank_order": [
+        4,
+        5,
+        1,
+        10,
+        8,
+        2,
+        6,
+        3,
+        7,
+        9
+      ]
+    },
+    {
+      "q": 0.75,
+      "kd_mult": 1.0,
+      "corr_actual_wins": 0.14404346375613966,
+      "corr_actual_points": 0.25326939284764494,
+      "rank_order": [
+        4,
+        5,
+        10,
+        1,
+        2,
+        8,
+        3,
+        6,
+        7,
+        9
+      ]
+    },
+    {
+      "q": 0.75,
+      "kd_mult": 1.25,
+      "corr_actual_wins": 0.17734312391227552,
+      "corr_actual_points": 0.22976881940080165,
+      "rank_order": [
+        4,
+        5,
+        10,
+        2,
+        1,
+        3,
+        8,
+        6,
+        9,
+        7
+      ]
+    },
+    {
+      "q": 0.75,
+      "kd_mult": 1.5,
+      "corr_actual_wins": 0.1631365335098597,
+      "corr_actual_points": 0.20196258922179428,
+      "rank_order": [
+        4,
+        2,
+        5,
+        10,
+        1,
+        3,
+        6,
+        9,
+        8,
+        7
+      ]
+    }
+  ],
+  "limitations": [
+    "Outcome evaluator is hindsight realized production, not a 2026 forecast.",
+    "Weekly lineup is optimized within the frozen drafted skill roster and legal league starter topology; this measures roster ceiling/coverage rather than manager start-sit skill.",
+    "A missing nflverse stat row cannot perfectly distinguish inactive/bye from active zero-stat participation; replacement enters only when legal lineup slots cannot be filled by drafted players with rows, and replacement strength is broadly sensitivity-tested.",
+    "Replacement candidate pools are undrafted players selected by realized season mean; quantile sensitivity tests baseline strength but this remains a hindsight functional-form validator, not a 2026 waiver forecast.",
+    "K/DST are neutralized with empirical league starter baseline and 0.5x-1.5x sensitivity; they do not create a draft incentive.",
+    "Actual standings include waivers/trades, so correlation is a noisy external sanity check, not the sole certification target."
+  ]
+}
