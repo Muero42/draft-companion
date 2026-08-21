@@ -4,27 +4,36 @@ on:
     branches: [pitti-outcome-bridge-20250821]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
 jobs:
   fetch-outcome:
+    if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-outcome-bridge-20250821
       - name: Download canonical nflverse 2025 weekly player stats
         shell: bash
         run: |
           set -euo pipefail
-          curl --fail --location --retry 3 --retry-all-errors \
-            -o stats_player_week_2025.csv \
-            https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2025.csv
+          curl --fail --location --retry 3 --retry-all-errors -o stats_player_week_2025.csv https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2025.csv
           test -s stats_player_week_2025.csv
-          head -n 1 stats_player_week_2025.csv
-          sha256sum stats_player_week_2025.csv | tee SHA256SUMS.txt
-      - name: Upload canonical dataset artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: nflverse-stats-player-week-2025
-          path: |
-            stats_player_week_2025.csv
-            SHA256SUMS.txt
-          if-no-files-found: error
-          retention-days: 1
+          sha256sum stats_player_week_2025.csv > SHA256SUMS.txt
+          rm -rf outcome_bridge_parts
+          mkdir outcome_bridge_parts
+          head -n 1 stats_player_week_2025.csv > outcome_bridge_parts/header.csv
+          tail -n +2 stats_player_week_2025.csv | split -l 500 -d -a 2 - outcome_bridge_parts/part_
+          for f in outcome_bridge_parts/part_*; do mv "$f" "$f.csv"; done
+          cp SHA256SUMS.txt outcome_bridge_parts/
+          wc -l stats_player_week_2025.csv > outcome_bridge_parts/ROWCOUNT.txt
+      - name: Commit split canonical bridge
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add outcome_bridge_parts
+          git diff --cached --quiet && exit 0
+          git commit -m 'Materialize canonical 2025 outcome bridge parts [skip ci]'
+          git push origin HEAD:pitti-outcome-bridge-20250821
