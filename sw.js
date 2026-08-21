@@ -1,7 +1,7 @@
-const CACHE='draft-companion-v11.8.0-rc4.56';
+const CACHE='draft-companion-v11.8.0-rc4.57';
 const BACKUP_CACHE='draft-companion-backup-export-v1';
-const ASSETS=['./','./index.html','./styles.css','./app.js?v=11.8.0-rc4.55','./manifest.webmanifest','./icon.svg'];
-const BASE='v11.8.0-rc4.46',TARGET='v11.8.0-rc4.56';
+const ASSETS=['./','./index.html','./styles.css','./app.js?v=11.8.0-rc4.57','./manifest.webmanifest','./icon.svg'];
+const BASE='v11.8.0-rc4.57',TARGET='v11.8.0-rc4.57';
 const APP_PATCHES=[
   ["      snapshotLimit=els.snapshotMode.value==='full'?40:25,\n      availableSnapshot=scored.slice().sort((a,b)=>a.r.rank-b.r.rank).slice(0,snapshotLimit),","      snapshotLimit=els.snapshotMode.value==='full'?40:25,\n      preDraftSimulationPool=!picks.length&&current===1,\n      availableSnapshot=scored.slice().sort((a,b)=>a.r.rank-b.r.rank).slice(0,preDraftSimulationPool?scored.length:snapshotLimit),","rc4.52 pre-draft full pool"],
   ["    lines.push('','VERFÜGBARE SPIELER NACH PANEL');","    lines.push('',preDraftSimulationPool?'VOLLSTÄNDIGER SIMULATIONSPOOL (NUR PRE-DRAFT)':'VERFÜGBARE SPIELER NACH PANEL');","rc4.52 pool heading"],
@@ -15,21 +15,9 @@ const APP_PATCHES=[
   ["      snapshotCandidates.forEach((x,i)=>lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Coach ${x.score}${Number.isFinite(x.balancedScore)?` | v10-Ref ${x.balancedScore}`:''} | Panel ${x.r.rank.toFixed(1)} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Return-Confidence ${x.returnConfidence}% | ${x.outsideNormalCut?'FALLBACK AUSSERHALB NORMAL-CUT · '+x.action+' NUR KONTEXT':x.action} | Loss ${x.loss}`));","      snapshotCandidates.forEach((x,i)=>{if(x.outsideNormalCut&&(i===0||!snapshotCandidates[i-1]?.outsideNormalCut))lines.push('━━━━━━━━━━━━ AUSSERHALB NORMAL-CUT ━━━━━━━━━━━━');const c=decisionContext(x,players),pc=pickConfidenceFor(x,snapshotCandidates);lines.push(`${i+1}. ${x.p.name}${c.arrows?' '+c.arrows:''} (${c.label}) | P ${x.r.rank.toFixed(1)} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | R ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Pick-Confidence ${pc}% | Coach ${x.score} | ${x.outsideNormalCut?'FALLBACK · '+x.action+' NUR KONTEXT':x.action} | Loss ${x.loss}${c.reason?` | Research ${c.reason}`:''}`)});","rc4.53 snapshot compact candidate line + separator"],
   ["        lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Coach ${x.score}${Number.isFinite(x.balancedScore)?` | v10-Ref ${x.balancedScore}`:''} | ${x.r.panel} ${x.r.rank.toFixed(1)} Tier ${x.r.tier||'–'} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Confidence ${x.confidence}% | ${x.agree}`);","        const c=decisionContext(x,players),pc=pickConfidenceFor(x,scored);lines.push(`${i+1}. ${x.p.name}${c.arrows?' '+c.arrows:''} (${c.label}) | Coach ${x.score}${Number.isFinite(x.balancedScore)?` | v10-Ref ${x.balancedScore}`:''} | ${x.r.panel} ${x.r.rank.toFixed(1)} Tier ${x.r.tier||'–'} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Pick-Confidence ${pc}% | Panel-Confidence ${x.confidence}% | ${x.agree}`);","rc4.53 top8 context line"]
 ];
-function patchApp(s){
-  s=s.replaceAll(BASE,TARGET).replaceAll('11.8.0-rc4.46','11.8.0-rc4.56');
-  for(const [oldText,newText,label] of APP_PATCHES){if(!s.includes(oldText))throw new Error('rc4.56 patch anchor missing: '+label);s=s.replace(oldText,newText)}
-  return s;
-}
-function patchText(path,s){
-  if(path.endsWith('/app.js'))return patchApp(s);
-  if(path.endsWith('/index.html')||path.endsWith('/manifest.webmanifest')||path.endsWith('/'))return s.replaceAll(BASE,TARGET).replaceAll('11.8.0-rc4.46','11.8.0-rc4.56');
-  return s;
-}
-async function transformed(req){
-  const net=await fetch(req,{cache:'no-store'});if(!net.ok)return net;
-  const u=new URL(req.url),path=u.pathname;if(!(path.endsWith('/app.js')||path.endsWith('/index.html')||path.endsWith('/manifest.webmanifest')||path.endsWith('/')))return net;
-  const text=patchText(path,await net.text()),h=new Headers(net.headers);h.delete('content-length');h.delete('content-encoding');return new Response(text,{status:net.status,statusText:net.statusText,headers:h});
-}
+function patchApp(s){return s;}
+function patchText(path,s){return s;}
+async function transformed(req){return fetch(req,{cache:'no-store'});}
 self.addEventListener('message',e=>{
   const d=e.data||{};if(d.type!=='PITTI_BACKUP_STORE')return;
   e.waitUntil((async()=>{try{
