@@ -1,5 +1,5 @@
 const $=id=>document.getElementById(id);
-const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','chatSnapshotBtn','refreshBtn','chatOpenBtn','chatUrl','chatSaveBtn','chatStatus','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus'];
+const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
@@ -44,7 +44,6 @@ const ACTIVE_2026_MANAGER_MAP_TEXT='1=Michael, 2=Pascal Voerde, 3=Marc Düsseldo
 els.managerMap.value=store.text('v11_managerMap',store.text('v10_managerMap',ACTIVE_2026_MANAGER_MAP_TEXT));
 els.stressMode.value=store.text('v113_stressMode','baseline');
 els.strategyMode.value=store.text('v111_strategyMode','progressive');
-els.chatUrl.value=store.text('v118_chatTargetUrl','');
 
 function persist(){
   store.setText('v7_apiKey',els.apiKey.value.trim());store.setText('v7_season',els.season.value.trim());store.setText('v7_scoring',els.scoring.value);
@@ -1671,8 +1670,6 @@ function snapshotFingerprint(id,picks,slot){
 function setAnalysisBusy(busy){
   analysisBusy=busy;
   els.refreshBtn.disabled=busy;
-  if(els.chatSnapshotBtn)els.chatSnapshotBtn.disabled=busy;
-  if(els.chatOpenBtn)els.chatOpenBtn.disabled=busy;
   els.copyBtn.disabled=busy || !els.snapshot.value;
   els.shareBtn.disabled=busy || !els.snapshot.value;
   if(els.queueBtn)els.queueBtn.disabled=busy || !lastEmergencyQueueText;
@@ -2176,7 +2173,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.46',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerModeSegments:loadManagerModeSegments(),chatTarget:store.text('v118_chatTargetUrl',''),managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.46',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerModeSegments:loadManagerModeSegments(),managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
 async function downloadJson(name,v){
   const text=JSON.stringify(v,null,2),file=new File([text],name,{type:'application/json'});
   // Android/PWA: Web Share with a real File is more reliable than navigating to a blob URL.
@@ -2194,7 +2191,7 @@ async function downloadJson(name,v){
   a.href=u;a.download=name;a.rel='noopener';a.style.display='none';document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(u),10000);
 }
-function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};for(const[id,c]of Object.entries(rankCache)){try{store.set('v7_rank_'+id,c)}catch{}}try{localStorage.removeItem('v7_rankCache');localStorage.removeItem('v7_panelRanks')}catch{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=Array.isArray(v.decisionLog)?v.decisionLog:[];saveReturnValidation(Array.isArray(v.returnValidation)?v.returnValidation:[]);saveDecisionFixtures(Array.isArray(v.decisionFixtures)?v.decisionFixtures:[]);restoreFpBenchmarks(v.fpBenchmarks);els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);if(['mock','live','replay'].includes(v.draftMode))els.draftMode.value=v.draftMode;if(['progressive','balanced'].includes(v.strategyMode))els.strategyMode.value=v.strategyMode;if(['baseline','rb','te','rookie','late'].includes(v.stressMode))els.stressMode.value=v.stressMode;if(typeof v.managerMap==='string')els.managerMap.value=v.managerMap;if(v.managerModeSegments&&typeof v.managerModeSegments==='object')saveManagerModeSegments(v.managerModeSegments);if(typeof v.chatTarget==='string'){store.setText('v118_chatTargetUrl',v.chatTarget);els.chatUrl.value=v.chatTarget}persist();renderAll();renderChatTargetStatus()}
+function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};for(const[id,c]of Object.entries(rankCache)){try{store.set('v7_rank_'+id,c)}catch{}}try{localStorage.removeItem('v7_rankCache');localStorage.removeItem('v7_panelRanks')}catch{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=Array.isArray(v.decisionLog)?v.decisionLog:[];saveReturnValidation(Array.isArray(v.returnValidation)?v.returnValidation:[]);saveDecisionFixtures(Array.isArray(v.decisionFixtures)?v.decisionFixtures:[]);restoreFpBenchmarks(v.fpBenchmarks);els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);if(['mock','live','replay'].includes(v.draftMode))els.draftMode.value=v.draftMode;if(['progressive','balanced'].includes(v.strategyMode))els.strategyMode.value=v.strategyMode;if(['baseline','rb','te','rookie','late'].includes(v.stressMode))els.stressMode.value=v.stressMode;if(typeof v.managerMap==='string')els.managerMap.value=v.managerMap;if(v.managerModeSegments&&typeof v.managerModeSegments==='object')saveManagerModeSegments(v.managerModeSegments);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
 
 if(els.loadExpertsBtn)els.loadExpertsBtn.onclick=()=>loadExperts().catch(e=>{els.presetStatus.className='notice bad';els.presetStatus.textContent=e.message});
@@ -2221,37 +2218,6 @@ for(const section of [els.dataSection,els.draftSection]){
   const heading=section?.querySelector('.section-heading');
   if(heading)heading.addEventListener('click',()=>section.classList.toggle('section-collapsed'));
 }
-
-const CHAT_TARGET_KEY='v118_chatTargetUrl';
-function normalizeChatTarget(raw){
-  const text=String(raw||'').trim();if(!text)return'';
-  let u;try{u=new URL(text)}catch{throw new Error('Ungültige Chat-URL.')}
-  const host=u.hostname.toLowerCase();
-  if(u.protocol!=='https:'||!['chatgpt.com','chat.openai.com'].includes(host))throw new Error('Nur private ChatGPT-URLs sind erlaubt.');
-  if(u.pathname.startsWith('/share/'))throw new Error('Share-Link ungeeignet: Bitte die private Unterhaltung /c/… verwenden.');
-  if(!u.pathname.startsWith('/c/'))throw new Error('Bitte die private Unterhaltung als chatgpt.com/c/… hinterlegen.');
-  u.hash='';return u.toString();
-}
-function currentChatTarget(){const raw=store.text(CHAT_TARGET_KEY,'');if(!raw)return'';try{return normalizeChatTarget(raw)}catch{return''}}
-function renderChatTargetStatus(){
-  const target=currentChatTarget();if(!els.chatStatus)return;
-  els.chatStatus.className=target?'notice ok':'notice warn';
-  els.chatStatus.textContent=target?'Draft-Chat gespeichert ✓ · für Mock und LIVE':'Noch kein Draft-Chat hinterlegt.';
-}
-function saveChatTarget(){const target=normalizeChatTarget(els.chatUrl.value);store.setText(CHAT_TARGET_KEY,target);els.chatUrl.value=target;renderChatTargetStatus();return target}
-function requireChatTarget(){const target=currentChatTarget();if(!target)throw new Error('Zuerst unter „Draft-Chat-Ziel einrichten“ die private Chat-URL speichern.');return target}
-function openDraftChat(){const target=requireChatTarget();window.location.assign(target)}
-if(els.chatSaveBtn)els.chatSaveBtn.onclick=()=>{try{saveChatTarget()}catch(e){els.chatStatus.className='notice bad';els.chatStatus.textContent=e.message}};
-if(els.chatOpenBtn)els.chatOpenBtn.onclick=()=>{try{openDraftChat()}catch(e){els.chatStatus.className='notice bad';els.chatStatus.textContent=e.message}};
-if(els.chatSnapshotBtn)els.chatSnapshotBtn.onclick=async()=>{try{
-  const target=requireChatTarget();
-  await refresh();
-  if(!els.snapshot.value)throw new Error('Kein frischer Snapshot erzeugt.');
-  await navigator.clipboard.writeText(els.snapshot.value);
-  els.draftStatus.className='notice ok';els.draftStatus.textContent+=' · Frischer Snapshot kopiert ✓ · öffne Draft-Chat …';
-  window.location.assign(target);
-}catch(e){els.draftStatus.className='notice bad';els.draftStatus.textContent=e.message}};
-renderChatTargetStatus();
 
 els.queueBtn.onclick=async()=>{if(analysisBusy||!lastEmergencyQueueText)return;await navigator.clipboard.writeText(lastEmergencyQueueText);els.queueBtn.textContent='Queue kopiert ✓';setTimeout(()=>els.queueBtn.textContent='Emergency Queue kopieren',1200)};
 els.refreshBtn.onclick=async()=>{try{await refresh();if(!els.snapshot.value)throw new Error('Kein frischer Snapshot erzeugt.');await navigator.clipboard.writeText(els.snapshot.value);els.draftStatus.className='notice ok';els.draftStatus.textContent+=' · Frischer Snapshot kopiert ✓';}catch(e){els.draftStatus.className='notice bad';els.draftStatus.textContent=e.message}};

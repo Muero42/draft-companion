@@ -534,9 +534,15 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - No Coach/Return/manager/research weighting change from rc4.53.
 
 
-## v11.8.0-rc4.55 candidate — final pre-freeze mobile UI hierarchy
+## v11.8.0-rc4.56 candidate — final pre-freeze mobile UI hierarchy
 - Display-only finalization on rc4.54 lineage; no Coach/Return/manager/research weighting change.
 - Primary Draft surface now keeps only `Snapshot → Draft-Chat` and `Analysieren & Snapshot kopieren` immediately visible.
 - `Draft-Chat öffnen`, re-copy, share and Emergency Queue are preserved unchanged under `Weitere Aktionen / Notfall`.
 - Simulation Lab + strategy controls are preserved unchanged under an optional collapsed section.
 - No proven fallback or control is removed; all existing element IDs/handlers remain intact.
+
+
+## v11.8.0-rc4.56 candidate — remove superseded in-app Draft-Chat target
+- Removes Snapshot → Draft-Chat, Draft-Chat öffnen, URL target setup/status and associated in-app navigation code.
+- Keeps Analysieren & Snapshot kopieren as the single primary action; verified Android home-screen ChatGPT shortcut is the navigation path.
+- Existing re-copy/share/Emergency Queue remain under Weitere Aktionen / Notfall. No Coach/Return/manager/ranking/research logic change.
