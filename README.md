@@ -534,7 +534,7 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - No Coach/Return/manager/research weighting change from rc4.53.
 
 
-## v11.8.0-rc4.57 candidate — final pre-freeze mobile UI hierarchy
+## v11.8.0-rc4.59 candidate — final pre-freeze mobile UI hierarchy
 - Display-only finalization on rc4.54 lineage; no Coach/Return/manager/research weighting change.
 - Primary Draft surface now keeps only `Snapshot → Draft-Chat` and `Analysieren & Snapshot kopieren` immediately visible.
 - `Draft-Chat öffnen`, re-copy, share and Emergency Queue are preserved unchanged under `Weitere Aktionen / Notfall`.
@@ -542,13 +542,28 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - No proven fallback or control is removed; all existing element IDs/handlers remain intact.
 
 
-## v11.8.0-rc4.57 candidate — remove superseded in-app Draft-Chat target
+## v11.8.0-rc4.59 candidate — remove superseded in-app Draft-Chat target
 - Removes Snapshot → Draft-Chat, Draft-Chat öffnen, URL target setup/status and associated in-app navigation code.
 - Keeps Analysieren & Snapshot kopieren as the single primary action; verified Android home-screen ChatGPT shortcut is the navigation path.
 - Existing re-copy/share/Emergency Queue remain under Weitere Aktionen / Notfall. No Coach/Return/manager/ranking/research logic change.
 
 
-## v11.8.0-rc4.57 candidate — Snapshot jump control
+## v11.8.0-rc4.59 candidate — Snapshot jump control
 - Adds one context-sensitive floating arrow while the primary Snapshot action is off-screen.
 - Arrow points toward `Analysieren & Snapshot kopieren`, hides when that action is visible, and smooth-scrolls it to the viewport center.
 - UI-only; no Coach, Return-v2, panel, ADP, research, roster, manager, or TAKE/WAIT logic changed.
+
+
+## v11.8.0-rc4.59 candidate — panel-first fantasy role labels
+- Corrects display semantics: WR1/RB1/TE1/QB1 labels now represent the selected expert-panel consensus within the NFL team/position group, rather than Sleeper depth-chart order.
+- Sleeper depth-chart order remains a fallback only when the panel cannot place a player.
+- This prevents slot/outside depth-chart lanes from being misread as fantasy hierarchy (for example Parker Washington vs Brian Thomas Jr.).
+- Research ascension arrows remain separate, so a player can correctly display WR2 + upside/ascension toward WR1 without prematurely rewriting the baseline role.
+- Display-only; no Coach, Return-v2, panel ranking, ADP, research weight, roster, manager or TAKE/WAIT coefficient changes.
+
+
+## v11.8.0-rc4.59 — LIVE-ID UI isolation
+
+- LIVE Draft now hides the editable Mock draft-link field and displays the canonical real 2026 Sleeper draft as a read-only direct link.
+- Canonical LIVE draft ID remains `1366053132970233856`; Mock draft input remains separately persisted and cannot overwrite LIVE resolution.
+- Snapshot/runtime mode-ID guard remains unchanged. No Coach, Return-v2, panel, ADP, manager or Research scoring change.
