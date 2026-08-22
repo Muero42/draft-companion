@@ -1,8 +1,8 @@
 {
   "schema": 1,
   "job": "utility_v3_2",
-  "run_id": "2026-08-22-pr-probe-01",
-  "requested_at": "2026-08-22T07:37:00+02:00",
+  "run_id": "2026-08-22-pr-probe-02",
+  "requested_at": "2026-08-22T07:44:00+02:00",
   "research_ref": "pitti-outcome-bridge-20250821",
-  "purpose": "Observable PR-event probe for PITTI Research Runner"
+  "purpose": "Observable PR-event probe for PITTI Research Runner after adding pull_request trigger"
 }
