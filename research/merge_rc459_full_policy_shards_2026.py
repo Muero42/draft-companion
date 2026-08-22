@@ -3,8 +3,13 @@ from __future__ import annotations
 import glob,json,pathlib
 EXPECTED_OFFSETS=[0,10,20,30,40,50]
 EXPECTED_COUNT=10
-files=sorted(glob.glob('policy_shards/RC459_FULL_POLICY_PAIRED_DRAFTS_2026_SHARD_*.json'))
-if len(files)!=len(EXPECTED_OFFSETS): raise RuntimeError(f'shard count {len(files)}')
+# upload-artifact preserves the common directory hierarchy because each artifact also
+# contains its root-level shard log. download-artifact --merge-multiple therefore
+# extracts JSONs under policy_shards/policy_certification_2026/, not necessarily the
+# policy_shards root. Search recursively but retain strict count/offset gates so a
+# duplicate or stale shard fails closed rather than being silently accepted.
+files=sorted(glob.glob('policy_shards/**/RC459_FULL_POLICY_PAIRED_DRAFTS_2026_SHARD_*.json',recursive=True))
+if len(files)!=len(EXPECTED_OFFSETS): raise RuntimeError(f'shard count {len(files)} paths={files}')
 parts=[json.load(open(p)) for p in files]
 off=sorted(int(x.get('seed_offset',-1)) for x in parts)
 if off!=EXPECTED_OFFSETS: raise RuntimeError(f'offsets {off}')
@@ -29,5 +34,5 @@ out={k:base[k] for k in keys}
 out.update({'schema':2,'status':'PASS','runs_per_regime':60,'seed_offsets':EXPECTED_OFFSETS,'shard_run_count':EXPECTED_COUNT,'total_full_drafts':len(rows),'coach_full_drafts':120,'policy_ranking_certified':False,'rows':rows})
 pathlib.Path('policy_certification_2026').mkdir(exist_ok=True)
 pathlib.Path('policy_certification_2026/RC459_FULL_POLICY_PAIRED_DRAFTS_2026.json').write_text(json.dumps(out,separators=(',',':')))
-pathlib.Path('policy_certification_2026/RC459_FULL_POLICY_PAIRED_DRAFTS_2026_MERGE_GATE.json').write_text(json.dumps({'status':'PASS','runs_per_regime':60,'total_full_drafts':len(rows),'coach_full_drafts':120,'offsets':EXPECTED_OFFSETS,'common_random_numbers_exact':True},indent=2))
+pathlib.Path('policy_certification_2026/RC459_FULL_POLICY_PAIRED_DRAFTS_2026_MERGE_GATE.json').write_text(json.dumps({'status':'PASS','runs_per_regime':60,'total_full_drafts':len(rows),'coach_full_drafts':120,'offsets':EXPECTED_OFFSETS,'common_random_numbers_exact':True,'recursive_artifact_discovery':True},indent=2))
 print(json.dumps({'status':'PASS','runs_per_regime':60,'total_full_drafts':len(rows),'coach_full_drafts':120,'common_random_numbers_exact':True},indent=2))
