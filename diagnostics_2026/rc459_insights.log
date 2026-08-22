@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "freeze_package_sha256": "5339a37d275505f2a3a6fe0b84785f435d840d02cc7472a2b8bd934244e884fd",
+  "turns": {
+    "9->12": 12,
+    "29->32": 6,
+    "49->52": 8,
+    "69->72": 9
+  },
+  "bridge_coverage": {
+    "QB": 30,
+    "RB": 90,
+    "WR": 80,
+    "TE": 30
+  },
+  "policy_ranking_certified": false
+}
