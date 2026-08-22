@@ -1,0 +1,53 @@
+name: PITTI rc4.59 Full Policy Source Parity
+on:
+  push:
+    branches: [pitti-outcome-bridge-20250821]
+    paths:
+      - '.github/workflows/pitti-rc459-full-policy-parity.yml'
+  workflow_dispatch:
+concurrency:
+  group: pitti-rc459-full-policy-parity
+  cancel-in-progress: true
+permissions:
+  contents: write
+jobs:
+  parity:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-outcome-bridge-20250821
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Run fail-closed source parity
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile research/rc459_full_policy_source_parity_2026.py
+          python research/rc459_full_policy_source_parity_2026.py | tee /tmp/rc459_full_policy_parity.log
+      - name: Persist parity result
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/pitti-policy-parity
+          mkdir -p /tmp/pitti-policy-parity/diagnostics_2026
+          cp RC459_FULL_POLICY_SOURCE_PARITY_2026.json RC459_FULL_POLICY_SOURCE_PARITY_2026_GATE.json /tmp/pitti-policy-parity/diagnostics_2026/
+          cp /tmp/rc459_full_policy_parity.log /tmp/pitti-policy-parity/diagnostics_2026/rc459_full_policy_parity.log
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git reset --hard
+          git clean -fd
+          git fetch origin pitti-outcome-bridge-20250821
+          git checkout -B pitti-outcome-bridge-20250821 origin/pitti-outcome-bridge-20250821
+          mkdir -p diagnostics_2026
+          cp -a /tmp/pitti-policy-parity/diagnostics_2026/. diagnostics_2026/
+          git add diagnostics_2026/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record rc4.59 full decision dependency parity [skip ci]'
+            git push origin HEAD:pitti-outcome-bridge-20250821
+          fi
+      - name: Report gate
+        run: cat diagnostics_2026/RC459_FULL_POLICY_SOURCE_PARITY_2026_GATE.json
