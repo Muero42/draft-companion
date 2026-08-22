@@ -1,0 +1,13 @@
+{
+  "status": "PASS",
+  "freeze_package_sha256": "395056a6b068965a1943efea7beb5e7b89e3238bcf4b7c80c0a2c14a0b967944",
+  "total_full_drafts": 12600,
+  "cells": 18,
+  "runs_per_cell": 700,
+  "max_split_half_delta": 0.1029,
+  "mean_opponent_kdst_range": [
+    16.743,
+    16.901
+  ],
+  "policy_ranking_certified": false
+}
