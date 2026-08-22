@@ -4,7 +4,7 @@
 This handoff supplements the canonical project state. On continuation, read the canonical PITTI_PROJECT_STATE.md to EOF first, then this handoff and the referenced research files. Verify current GitHub/runtime artifacts before assuming a prepared version is installed on Android.
 
 ## Immediate objective
-Reach trustworthy, realistic full-draft simulations soon enough to extract actionable draft strategy for the real 10-team Half-PPR Sleeper draft on 2026-08-31 (user slot 9). Simulation realism and evidence from mocks are high priority. Avoid major risky production changes as draft day approaches; after 2026-08-24 prefer necessary low-risk fixes only.
+Reach trustworthy, realistic full-draft simulations soon enough to extract actionable draft strategy for the real 10-team Half-PPR Sleeper draft on 2026-08-31 (user slot 9). Simulation realism and evidence from mocks are high priority. Avoid unnecessary/high-risk large production changes as draft day approaches, but **do not treat 2026-08-24 as a hard ban on large changes**: if evidence indicates a material Championship-Utility / league-win benefit and the change can still be implemented, tested and rolled back safely, a larger change remains explicitly allowed and desirable even after 2026-08-24. Prefer the smallest change that captures the benefit; change size itself is not the optimization target.
 
 ## Latest critical result: RB2_BY52 diagnosis
 GitHub Actions run 32590945054 (`PITTI rc4.59 RB2 Core Diagnostic`, run #2) completed with intentional failure at the final fail-closed gate.
@@ -57,6 +57,13 @@ Parallel realism research verified current official Sleeper support behavior and
 - Sleeper still has no supported custom pre-draft-ranking upload; the league-specific Draft Queue is the supported workaround.
 Model consequence: AUTODRAFT is now explicitly a two-stage latent policy `QUEUE_IF_AVAILABLE -> SLEEPER_RANK_PLUS_ROSTER_NEED`, not pure ADP/rank sampling. Opponent private queues are normally unobserved and therefore belong in sensitivity analysis, not personal-manager learning. Baseline remains MANUAL absent current contrary evidence.
 
+### Autodraft effort priority — clarified 2026-08-22
+Autodraft is a low-probability contingency. A robust, low-effort fallback is valuable, but it is **not** allowed to consume substantial time from higher-value work.
+- Keep autodraft work parallel/secondary while it is cheap and reusable.
+- Stop at a simple robust fallback (deep Sleeper queue + MANUAL/AUTODRAFT state handling + verified queue-first semantics) if deeper calibration or integration becomes expensive.
+- Do not invest in elaborate private-queue inference or extensive autodraft modeling unless new evidence materially increases expected value.
+- Critical-path priority remains Coach-policy validation, realistic simulation, current player/market research, TAKE/WAIT mapping and draft-day readiness.
+
 ## AUTO operating rule
 On every AUTO block maintain two queues:
 1. serial critical path;
@@ -74,7 +81,7 @@ The diagnostic workflow intentionally uploads raw output before evaluator/core f
 1. Treat RB2_BY52 as invalid in its current form; use the persisted raw/core evidence to determine why late TE feasibility was not guaranteed and design a generic final-roster feasibility safeguard rather than an early hard-TE mandate.
 2. Build the small research harness for the preregistered dynamic elite-TE variants (`TE_RETURN_GATE`, `TE_SOFT_PENALTY`, optional tightly localized PICK12 gate if diagnostics justify it) using existing Return-v2/scoring ingredients and identical CRN controls.
 3. Pick-level diagnose QB1_TE1_DEFER_TE69 after 2.02 to locate the remaining baseline/stress deficit (turns 3.09/4.02 onward, RB/WR allocation, TE timing, bench construction).
-4. Implement/test the universal MANUAL/AUTODRAFT state machine using the now-verified queue-first -> rank+roster-need semantics; keep it independent of the Coach-policy critical path.
+4. Keep the universal MANUAL/AUTODRAFT state machine and deep-queue fallback as a cheap parallel contingency only; do not let this low-probability scenario displace higher-value work.
 5. Once a simple Coach candidate passes small screen + legality, run fresh held-out certification, then realistic full mocks. Do not calibrate from one illustrative mock.
 6. Prepare slot-9 turn maps / TAKE-WAIT opportunity-cost outputs and deep Sleeper Queue fallback before the real draft; K/DST omitted, QB2/TE2 deprioritized.
 
@@ -87,4 +94,4 @@ The diagnostic workflow intentionally uploads raw output before evaluator/core f
 - Candidate lists during interactive mocks should be somewhat broad but only viable names; clearly mark favorites and alternatives.
 - After a simulated draft ends, AUTO performs post-draft analysis/counterfactuals/validation; it does NOT automatically start a new mock.
 - Before real draft: fresh data/rankings and backups; FantasyPros can be parallel when PC is available but own model assessment comes first.
-- Freeze discipline: focus on testing/fine-tuning; by 2026-08-24 avoid major changes unless necessary and low-risk.
+- Change-size discipline: avoid unnecessary/high-risk large changes, especially late, but **large changes remain explicitly allowed even after 2026-08-24 when expected material benefit is supported by evidence and sufficient test/rollback time remains**. Prefer the smallest change that captures the benefit; do not reject a materially better redesign merely because it is large.
