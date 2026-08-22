@@ -1,6 +1,7 @@
 {
   "status": "PASS",
   "fixture_count": 16,
+  "reps": 4,
   "deterministic": true,
   "shadowInvariant": true,
   "top1": {

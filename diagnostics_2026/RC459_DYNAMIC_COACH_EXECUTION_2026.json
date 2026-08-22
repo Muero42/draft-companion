@@ -1,5 +1,5 @@
 {
-  "schema": 3,
+  "schema": 4,
   "status": "PASS",
   "numbered_rc459_app_sha256": "1de9c6dcbd39bec35dffd2b43575260da6601abf3a9a29fe329ffeb8a4065fa3",
   "source_lock": "transitive 58/58 + embedded assignTiers exact numbered hash",
@@ -14,6 +14,12 @@
     52,
     69,
     72
+  ],
+  "repeat_shadow_validation_fixtures": [
+    "46891028-9",
+    "48891088-29",
+    "50891148-49",
+    "52891208-69"
   ],
   "deterministic_repeatability": true,
   "shadow_live_order_invariant": true,

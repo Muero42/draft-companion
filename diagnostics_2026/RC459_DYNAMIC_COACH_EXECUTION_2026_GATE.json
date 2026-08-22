@@ -14,6 +14,12 @@
     69,
     72
   ],
+  "repeat_shadow_validation_fixtures": [
+    "46891028-9",
+    "48891088-29",
+    "50891148-49",
+    "52891208-69"
+  ],
   "deterministic_repeatability": true,
   "shadow_live_order_invariant": true,
   "all_return_runs_900": true,
