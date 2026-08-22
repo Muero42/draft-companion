@@ -36,31 +36,38 @@ Result: all reproduced approximately -0.630 baseline / -0.722 stress; no meaning
 Conclusion: blind TE threshold/penalty tuning is the wrong level of abstraction.
 Do not repeat: stronger/larger TE penalties on the same mechanism/seeds without new causal evidence.
 
-## Turn-start pair lookahead
+## Turn-start pair lookahead — INVALIDATED
 Variants: PAIR_FIRST (9->12) and PAIR_FIRST_TWO (9->12 plus 29->32).
-Results:
-- PAIR_FIRST ~-0.510 baseline / -0.702 stress vs MARKET_ROSTER, both 95% dominated.
-- PAIR_FIRST_TWO ~-0.470 / -0.671, both 95% dominated.
-- both materially worse than DEFER_TE69 diagnostic anchor.
-Behavior:
-- Chase Brown 1.09 in 20/20 for both candidate arms;
-- Brock Bowers still 2.02 in 18/20;
-- second pair arm mainly altered WR ordering at 3.09.
-Conclusion: turn-start-only temporal unit is wrong. Second turn picks have their own next-own-pick opportunity cost, especially long gaps 12->29, 32->49, 52->69.
-Do not repeat: same pair lambda/frontier tuning on these seeds.
+Previously reported outcome deltas (~-0.510/-0.702 and ~-0.470/-0.671 vs MARKET_ROSTER) are **not valid policy evidence**.
+
+Root cause found 2026-08-22 after the implausible Chase Brown 1.09 lock was challenged:
+- `qualitySorted=scored.slice()` and `frontier=...` contain references to the same score objects;
+- candidate loop writes `a.rawScore=pairScore` in place;
+- later candidates' `retPool` therefore consumes earlier candidates' synthetic/mutated pair scores;
+- utility becomes loop-order dependent and canonical player scores are destroyed during evaluation.
+
+Observed symptom: Chase Brown 1.09 in 20/20 and contaminated synthetic raw values above 300. This is a research-harness mutation bug, not a real Chase Brown valuation and not evidence that opportunity-cost modeling itself fails.
+
+Decision:
+- PR #6 closed unmerged and explicitly marked INVALIDATED;
+- retain artifacts only for bug forensics;
+- do not tune player rankings, RB weights or market gates from these outcomes;
+- any future lookahead must pass score immutability + frontier-permutation/order-invariance tests.
 
 ## Rolling NEXT-own-pick lookahead — ACTIVE
 Branch: `pitti-rolling-lookahead-probe`; Draft PR #7.
 Run: 32597626663.
 Fixed arms: CONTROL, ROLL_LONG, ROLL_EARLY4, ROLL_ALL.
-Design: candidate selection within canonical quality-safe top five, current quality + expected next-own-pick quality + small symmetric starter coverage; no positional quota; does not overwrite canonical individual scores.
-Status at ledger creation: all four jobs running the 10-seed/regime simulation.
-Promotion rule: candidate must be competitive with/better than DEFER_TE69 anchor, legal, plausible and robust; then freeze exact rule -> fresh holdout -> joint-state/dependence validation -> realistic mocks.
+Design: candidate selection within canonical quality-safe top five, current quality + expected next-own-pick quality + small symmetric starter coverage; no positional quota; **does not overwrite canonical individual score/rawScore**, so it is not affected by the specific turn-pair mutation bug.
+Status at ledger correction: all four jobs running the 10-seed/regime simulation.
+Promotion rule: candidate must be competitive with/better than DEFER_TE69 anchor, legal, plausible and robust; then freeze exact rule -> instrumentation parity -> fresh holdout -> joint-state/dependence validation -> realistic mocks.
+Additional gate: after results, inspect whether any implausible large reach remains. Only residual reaches after correct immutable math may motivate a market-plausibility safety rule.
 
-## Global anti-overfit rules
+## Global anti-overfit / research-integrity rules
 - No parameter grid-search on seeds already used to choose a mechanism.
-- Negative variants are evidence; do not silently recycle them with renamed constants.
+- Negative variants are evidence; invalid variants are labeled invalid rather than treated as negative causal evidence.
 - Named-player observations diagnose mechanisms but never become named-player hard code.
 - Roster-construction labels (Hero RB, Zero RB, Late TE, Robust RB, etc.) are descriptive, not objectives.
 - MARKET_ROSTER remains the independent primary baseline; BRIDGE_GREEDY is diagnostic upper-bound style context only.
 - Current outcome-v2 replacement model remains the comparable conservative anchor; separately preregistered shallow-league sensitivity must not be used to tune the draft policy on the same seeds.
+- Every future lookahead implementation must freeze/clone canonical candidate scores and prove iteration-order invariance before outcome testing.
