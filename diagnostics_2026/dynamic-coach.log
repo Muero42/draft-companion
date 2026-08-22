@@ -1,16 +1,36 @@
-/home/runner/work/draft-companion/draft-companion/research/rc459_dynamic_coach_execution_2026_v3.js:14
-function run(f,shadow=0){const c=context(shadow),mine=f.picks.filter(p=>+p.draft_slot===9),state=c.rosterState(mine,f.players,f.current),ranked=f.available.map(p=>({p,r:c.rankFor(p.name,p.pos)})).filter(x=>x.r).sort((a,b)=>a.r.rank-b.r.rank).map(x=>x.p);if(ranked.length<24)throw Error('pool '+f.id);for(const pos of['QB','RB','WR','TE'])if(state.counts[pos]!==+(f.expected_rosters['9'][pos]||0))throw Error('user map '+f.id+' '+pos);const rr=c.rosterBySlot(f.picks,f.players,10);for(let s=1;s<=10;s++)for(const pos of['QB','RB','WR','TE','K','DEF'])if(+(rr[s][pos]||0)!==+(f.expected_rosters[String(s)][pos]||0))throw Error('roster map '+f.id+' '+s+' '+pos);let scored=ranked.map(p=>({p,...c.scoreCandidate(p,f.current,f.next,state,ranked,'progressive')}));const rv=c.simulateReturnV2({current:f.current,next:f.next,picks:f.picks,players:f.players,teams:10,map:f.managerMap,rankedAvailable:ranked,mode:'mock',userSlot:9},'baseline',900);for(const x of scored){const q=rv.players[c.norm(x.p.name)];if(q){x.ret=q.ret;x.returnConfidence=q.confidence;x.topRisk=q.topRisk}c.applyResolvedReturnScore(x,f.current,'progressive')}const rs=scored.slice().sort((a,b)=>a.r.rank-b.r.rank).slice(0,12).map(x=>x.ret).filter(Number.isFinite).sort((a,b)=>a-b),med=rs.length?rs[Math.floor(rs.length/2)]:null;if(Number.isFinite(med))for(const x of scored)if(Number.isFinite(x.ret))x.rawScore+=c.clamp((med-x.ret)*6,-3,3);const safety=c.applyPlayerQualitySafetyGate(scored,f.current);c.normalizeCoachScores(scored);scored.sort((a,b)=>b.score-a.score||b.rawScore-a.rawScore||a.r.rank-b.r.rank);return{id:f.id,current:f.current,next:f.next,state,ranked_pool:ranked.length,return_runs:rv.runs,map_coverage:rv.mapCoverage,quality_safety:safety,top:scored.slice(0,10).map((x,i)=>({rank:i+1,name:x.p.name,pos:x.p.pos,panel_rank:x.r.rank,adp:Number.isFinite(x.a)?x.a:null,return_prob:Number.isFinite(x.ret)?+x.ret.toFixed(4):null,return_confidence:x.returnConfidence??null,raw_score:+x.rawScore.toFixed(4),score:x.score}))}}
-                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      ^
-
-TypeError: c.norm is not a function
-    at run (/home/runner/work/draft-companion/draft-companion/research/rc459_dynamic_coach_execution_2026_v3.js:14:983)
-    at Object.<anonymous> (/home/runner/work/draft-companion/draft-companion/research/rc459_dynamic_coach_execution_2026_v3.js:15:95)
-    at Module._compile (node:internal/modules/cjs/loader:1781:14)
-    at Object..js (node:internal/modules/cjs/loader:1913:10)
-    at Module.load (node:internal/modules/cjs/loader:1505:32)
-    at Function._load (node:internal/modules/cjs/loader:1309:12)
-    at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
-    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
-    at node:internal/main/run_main_module:36:49
-
-Node.js v22.23.2
+{
+  "status": "PASS",
+  "fixture_count": 16,
+  "deterministic": true,
+  "shadowInvariant": true,
+  "top1": {
+    "9": {
+      "Amon-Ra St. Brown": 1,
+      "James Cook III": 1
+    },
+    "12": {
+      "Brock Bowers": 2
+    },
+    "29": {
+      "Chris Olave": 1,
+      "Kyren Williams": 1
+    },
+    "32": {
+      "Zay Flowers": 2
+    },
+    "49": {
+      "Tyler Warren": 2
+    },
+    "52": {
+      "Terry McLaurin": 1,
+      "Jameson Williams": 1
+    },
+    "69": {
+      "Christian Watson": 1,
+      "Parker Washington": 1
+    },
+    "72": {
+      "Marvin Harrison Jr.": 2
+    }
+  }
+}

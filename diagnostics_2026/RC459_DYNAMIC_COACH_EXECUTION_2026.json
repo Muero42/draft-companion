@@ -1,0 +1,2423 @@
+{
+  "schema": 3,
+  "status": "PASS",
+  "numbered_rc459_app_sha256": "1de9c6dcbd39bec35dffd2b43575260da6601abf3a9a29fe329ffeb8a4065fa3",
+  "source_lock": "transitive 58/58 + embedded assignTiers exact numbered hash",
+  "freeze_package_sha256": "5339a37d275505f2a3a6fe0b84785f435d840d02cc7472a2b8bd934244e884fd",
+  "fixture_count": 16,
+  "turns": [
+    9,
+    12,
+    29,
+    32,
+    49,
+    52,
+    69,
+    72
+  ],
+  "deterministic_repeatability": true,
+  "shadow_live_order_invariant": true,
+  "all_return_runs_900": true,
+  "all_input_rosters_exact": true,
+  "top1_by_turn": {
+    "9": {
+      "Amon-Ra St. Brown": 1,
+      "James Cook III": 1
+    },
+    "12": {
+      "Brock Bowers": 2
+    },
+    "29": {
+      "Chris Olave": 1,
+      "Kyren Williams": 1
+    },
+    "32": {
+      "Zay Flowers": 2
+    },
+    "49": {
+      "Tyler Warren": 2
+    },
+    "52": {
+      "Terry McLaurin": 1,
+      "Jameson Williams": 1
+    },
+    "69": {
+      "Christian Watson": 1,
+      "Parker Washington": 1
+    },
+    "72": {
+      "Marvin Harrison Jr.": 2
+    }
+  },
+  "policy_ranking_certified": false,
+  "fixtures": [
+    {
+      "id": "46891028-9",
+      "current": 9,
+      "next": 12,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 0,
+          "WR": 0,
+          "TE": 0
+        },
+        "need": {
+          "QB": 1,
+          "RB": 9,
+          "WR": 8,
+          "TE": 0.5
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 222,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 5.839400428265526,
+        "threshold": 7,
+        "naturalLeaderRank": 5.839400428265526
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Amon-Ra St. Brown",
+          "pos": "WR",
+          "panel_rank": 5.839400428265526,
+          "adp": 8,
+          "return_prob": 0.0244,
+          "return_confidence": 89,
+          "raw_score": 112.4292,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "CeeDee Lamb",
+          "pos": "WR",
+          "panel_rank": 14.036866359447005,
+          "adp": 10.5,
+          "return_prob": 0.5111,
+          "return_confidence": 84,
+          "raw_score": 94.9825,
+          "score": 62
+        },
+        {
+          "rank": 3,
+          "name": "Ashton Jeanty",
+          "pos": "RB",
+          "panel_rank": 12.397435897435898,
+          "adp": 12.6,
+          "return_prob": 0.8544,
+          "return_confidence": 86,
+          "raw_score": 88.756,
+          "score": 49
+        },
+        {
+          "rank": 4,
+          "name": "Brock Bowers",
+          "pos": "TE",
+          "panel_rank": 14,
+          "adp": 22.1,
+          "return_prob": 1,
+          "return_confidence": 92,
+          "raw_score": 88.7384,
+          "score": 49
+        },
+        {
+          "rank": 5,
+          "name": "Chase Brown",
+          "pos": "RB",
+          "panel_rank": 11.892857142857142,
+          "adp": 16.6,
+          "return_prob": 0.9889,
+          "return_confidence": 90,
+          "raw_score": 87.8216,
+          "score": 47
+        },
+        {
+          "rank": 6,
+          "name": "Justin Jefferson",
+          "pos": "WR",
+          "panel_rank": 13.6,
+          "adp": 13.7,
+          "return_prob": 0.9389,
+          "return_confidence": 88,
+          "raw_score": 87.2074,
+          "score": 46
+        },
+        {
+          "rank": 7,
+          "name": "Saquon Barkley",
+          "pos": "RB",
+          "panel_rank": 15.88888888888889,
+          "adp": 11.5,
+          "return_prob": 0.7656,
+          "return_confidence": 85,
+          "raw_score": 87.0405,
+          "score": 45
+        },
+        {
+          "rank": 8,
+          "name": "Kenneth Walker III",
+          "pos": "RB",
+          "panel_rank": 12.479166666666666,
+          "adp": 18.1,
+          "return_prob": 0.9956,
+          "return_confidence": 91,
+          "raw_score": 86.7542,
+          "score": 45
+        },
+        {
+          "rank": 9,
+          "name": "De'Von Achane",
+          "pos": "RB",
+          "panel_rank": 16.325980392156865,
+          "adp": 13.6,
+          "return_prob": 0.94,
+          "return_confidence": 88,
+          "raw_score": 84.6274,
+          "score": 40
+        },
+        {
+          "rank": 10,
+          "name": "Omarion Hampton",
+          "pos": "RB",
+          "panel_rank": 16.228310502283104,
+          "adp": 15.6,
+          "return_prob": 0.9867,
+          "return_confidence": 90,
+          "raw_score": 83.5651,
+          "score": 38
+        }
+      ]
+    },
+    {
+      "id": "47191037-12",
+      "current": 12,
+      "next": 29,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 0,
+          "WR": 1,
+          "TE": 0
+        },
+        "need": {
+          "QB": 1,
+          "RB": 9,
+          "WR": 8,
+          "TE": 0.5
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 219,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 11.892857142857142,
+        "threshold": 7,
+        "naturalLeaderRank": 14
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Brock Bowers",
+          "pos": "TE",
+          "panel_rank": 14,
+          "adp": 22.1,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 107.3519,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "Chase Brown",
+          "pos": "RB",
+          "panel_rank": 11.892857142857142,
+          "adp": 16.6,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 106.2547,
+          "score": 98
+        },
+        {
+          "rank": 3,
+          "name": "Justin Jefferson",
+          "pos": "WR",
+          "panel_rank": 13.6,
+          "adp": 13.7,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 106.1779,
+          "score": 97
+        },
+        {
+          "rank": 4,
+          "name": "Kenneth Walker III",
+          "pos": "RB",
+          "panel_rank": 12.479166666666666,
+          "adp": 18.1,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 105.2877,
+          "score": 96
+        },
+        {
+          "rank": 5,
+          "name": "De'Von Achane",
+          "pos": "RB",
+          "panel_rank": 16.325980392156865,
+          "adp": 13.6,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 102.1609,
+          "score": 89
+        },
+        {
+          "rank": 6,
+          "name": "Omarion Hampton",
+          "pos": "RB",
+          "panel_rank": 16.228310502283104,
+          "adp": 15.6,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 101.9385,
+          "score": 88
+        },
+        {
+          "rank": 7,
+          "name": "Saquon Barkley",
+          "pos": "RB",
+          "panel_rank": 15.88888888888889,
+          "adp": 11.5,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 101.434,
+          "score": 87
+        },
+        {
+          "rank": 8,
+          "name": "Drake London",
+          "pos": "WR",
+          "panel_rank": 19.671052631578945,
+          "adp": 20.6,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 97.5458,
+          "score": 79
+        },
+        {
+          "rank": 9,
+          "name": "Nico Collins",
+          "pos": "WR",
+          "panel_rank": 19.686192468619247,
+          "adp": 23.1,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 97.1307,
+          "score": 78
+        },
+        {
+          "rank": 10,
+          "name": "Derrick Henry",
+          "pos": "RB",
+          "panel_rank": 23.483091787439616,
+          "adp": 17.8,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 94.3318,
+          "score": 72
+        }
+      ]
+    },
+    {
+      "id": "48891088-29",
+      "current": 29,
+      "next": 32,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 1,
+          "WR": 1,
+          "TE": 0
+        },
+        "need": {
+          "QB": 1,
+          "RB": 9,
+          "WR": 8,
+          "TE": 0.5
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 202,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 25.046511627906977,
+        "threshold": 7,
+        "naturalLeaderRank": 25.046511627906977
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Chris Olave",
+          "pos": "WR",
+          "panel_rank": 25.046511627906977,
+          "adp": 32.3,
+          "return_prob": 0.8244,
+          "return_confidence": 86,
+          "raw_score": 98.6371,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "Malik Nabers",
+          "pos": "WR",
+          "panel_rank": 27.11627906976744,
+          "adp": 30.1,
+          "return_prob": 0.64,
+          "return_confidence": 84,
+          "raw_score": 95.3476,
+          "score": 93
+        },
+        {
+          "rank": 3,
+          "name": "Zay Flowers",
+          "pos": "WR",
+          "panel_rank": 26.67880085653105,
+          "adp": 41.6,
+          "return_prob": 0.9889,
+          "return_confidence": 90,
+          "raw_score": 92.165,
+          "score": 86
+        },
+        {
+          "rank": 4,
+          "name": "Breece Hall",
+          "pos": "RB",
+          "panel_rank": 33.25,
+          "adp": 31.3,
+          "return_prob": 0.7778,
+          "return_confidence": 85,
+          "raw_score": 91.3618,
+          "score": 84
+        },
+        {
+          "rank": 5,
+          "name": "Rashee Rice",
+          "pos": "WR",
+          "panel_rank": 39.1,
+          "adp": 28,
+          "return_prob": 0.4322,
+          "return_confidence": 84,
+          "raw_score": 90.1598,
+          "score": 82
+        },
+        {
+          "rank": 6,
+          "name": "DeVonta Smith",
+          "pos": "WR",
+          "panel_rank": 29.328947368421055,
+          "adp": 34.5,
+          "return_prob": 0.9189,
+          "return_confidence": 87,
+          "raw_score": 88.9109,
+          "score": 79
+        },
+        {
+          "rank": 7,
+          "name": "Colston Loveland",
+          "pos": "TE",
+          "panel_rank": 31.53846153846154,
+          "adp": 44.4,
+          "return_prob": 0.9789,
+          "return_confidence": 90,
+          "raw_score": 88.1013,
+          "score": 77
+        },
+        {
+          "rank": 8,
+          "name": "Jaylen Waddle",
+          "pos": "WR",
+          "panel_rank": 31.96153846153846,
+          "adp": 47.5,
+          "return_prob": 0.9956,
+          "return_confidence": 91,
+          "raw_score": 85.8183,
+          "score": 72
+        },
+        {
+          "rank": 9,
+          "name": "Tee Higgins",
+          "pos": "WR",
+          "panel_rank": 32.74579831932773,
+          "adp": 38.6,
+          "return_prob": 0.9789,
+          "return_confidence": 90,
+          "raw_score": 85.258,
+          "score": 71
+        },
+        {
+          "rank": 10,
+          "name": "Ladd McConkey",
+          "pos": "WR",
+          "panel_rank": 36.1,
+          "adp": 40.5,
+          "return_prob": 0.9833,
+          "return_confidence": 90,
+          "raw_score": 83.0198,
+          "score": 66
+        }
+      ]
+    },
+    {
+      "id": "49191097-32",
+      "current": 32,
+      "next": 49,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 2,
+          "WR": 1,
+          "TE": 0
+        },
+        "need": {
+          "QB": 1,
+          "RB": 6,
+          "WR": 8,
+          "TE": 0.5
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 199,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 26.67880085653105,
+        "threshold": 9,
+        "naturalLeaderRank": 26.67880085653105
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Zay Flowers",
+          "pos": "WR",
+          "panel_rank": 26.67880085653105,
+          "adp": 41.6,
+          "return_prob": 0.0633,
+          "return_confidence": 85,
+          "raw_score": 105.88,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "DeVonta Smith",
+          "pos": "WR",
+          "panel_rank": 29.328947368421055,
+          "adp": 34.5,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 101.8699,
+          "score": 91
+        },
+        {
+          "rank": 3,
+          "name": "Tee Higgins",
+          "pos": "WR",
+          "panel_rank": 32.74579831932773,
+          "adp": 38.6,
+          "return_prob": 0.0144,
+          "return_confidence": 87,
+          "raw_score": 99.037,
+          "score": 85
+        },
+        {
+          "rank": 4,
+          "name": "Breece Hall",
+          "pos": "RB",
+          "panel_rank": 33.25,
+          "adp": 31.3,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 98.0341,
+          "score": 83
+        },
+        {
+          "rank": 5,
+          "name": "Colston Loveland",
+          "pos": "TE",
+          "panel_rank": 31.53846153846154,
+          "adp": 44.4,
+          "return_prob": 0.2833,
+          "return_confidence": 81,
+          "raw_score": 97.0403,
+          "score": 81
+        },
+        {
+          "rank": 6,
+          "name": "Ladd McConkey",
+          "pos": "WR",
+          "panel_rank": 36.1,
+          "adp": 40.5,
+          "return_prob": 0.03,
+          "return_confidence": 86,
+          "raw_score": 96.5988,
+          "score": 80
+        },
+        {
+          "rank": 7,
+          "name": "Javonte Williams",
+          "pos": "RB",
+          "panel_rank": 35.888888888888886,
+          "adp": 33.6,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 96.3939,
+          "score": 80
+        },
+        {
+          "rank": 8,
+          "name": "Tetairoa McMillan",
+          "pos": "WR",
+          "panel_rank": 36.6,
+          "adp": 36.2,
+          "return_prob": 0.0044,
+          "return_confidence": 88,
+          "raw_score": 95.7468,
+          "score": 78
+        },
+        {
+          "rank": 9,
+          "name": "Emeka Egbuka",
+          "pos": "WR",
+          "panel_rank": 34.806451612903224,
+          "adp": 39.4,
+          "return_prob": 0.0289,
+          "return_confidence": 86,
+          "raw_score": 93.5883,
+          "score": 74
+        },
+        {
+          "rank": 10,
+          "name": "Jaylen Waddle",
+          "pos": "WR",
+          "panel_rank": 31.96153846153846,
+          "adp": 47.5,
+          "return_prob": 0.3978,
+          "return_confidence": 81,
+          "raw_score": 92.9973,
+          "score": 72
+        }
+      ]
+    },
+    {
+      "id": "50891148-49",
+      "current": 49,
+      "next": 52,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 2,
+          "WR": 2,
+          "TE": 0
+        },
+        "need": {
+          "QB": 1,
+          "RB": 6,
+          "WR": 8,
+          "TE": 0.5
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 182,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 42.638297872340424,
+        "threshold": 9,
+        "naturalLeaderRank": 42.638297872340424
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Tyler Warren",
+          "pos": "TE",
+          "panel_rank": 42.638297872340424,
+          "adp": 50.7,
+          "return_prob": 0.5811,
+          "return_confidence": 84,
+          "raw_score": 104.6747,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "Travis Etienne Jr.",
+          "pos": "RB",
+          "panel_rank": 47.52564102564103,
+          "adp": 41.7,
+          "return_prob": 0.3844,
+          "return_confidence": 84,
+          "raw_score": 102.7678,
+          "score": 96
+        },
+        {
+          "rank": 3,
+          "name": "Terry McLaurin",
+          "pos": "WR",
+          "panel_rank": 45.45,
+          "adp": 53.6,
+          "return_prob": 0.92,
+          "return_confidence": 87,
+          "raw_score": 92.583,
+          "score": 74
+        },
+        {
+          "rank": 4,
+          "name": "Bucky Irving",
+          "pos": "RB",
+          "panel_rank": 53.44444444444444,
+          "adp": 45.8,
+          "return_prob": 0.71,
+          "return_confidence": 84,
+          "raw_score": 88.3725,
+          "score": 65
+        },
+        {
+          "rank": 5,
+          "name": "Jameson Williams",
+          "pos": "WR",
+          "panel_rank": 48.3,
+          "adp": 57.6,
+          "return_prob": 0.9611,
+          "return_confidence": 89,
+          "raw_score": 87.669,
+          "score": 63
+        },
+        {
+          "rank": 6,
+          "name": "Luther Burden III",
+          "pos": "WR",
+          "panel_rank": 49.15,
+          "adp": 55.1,
+          "return_prob": 0.9344,
+          "return_confidence": 88,
+          "raw_score": 84.699,
+          "score": 57
+        },
+        {
+          "rank": 7,
+          "name": "DJ Moore",
+          "pos": "WR",
+          "panel_rank": 52.95,
+          "adp": 55.6,
+          "return_prob": 0.9478,
+          "return_confidence": 88,
+          "raw_score": 83.579,
+          "score": 55
+        },
+        {
+          "rank": 8,
+          "name": "Christian Watson",
+          "pos": "WR",
+          "panel_rank": 50.715811965811966,
+          "adp": 68.8,
+          "return_prob": 0.9967,
+          "return_confidence": 91,
+          "raw_score": 82.8212,
+          "score": 53
+        },
+        {
+          "rank": 9,
+          "name": "Mike Evans",
+          "pos": "WR",
+          "panel_rank": 51.94759825327511,
+          "adp": 60.3,
+          "return_prob": 0.9778,
+          "return_confidence": 90,
+          "raw_score": 80.2894,
+          "score": 48
+        },
+        {
+          "rank": 10,
+          "name": "Quinshon Judkins",
+          "pos": "RB",
+          "panel_rank": 58.388888888888886,
+          "adp": 46,
+          "return_prob": 0.7411,
+          "return_confidence": 85,
+          "raw_score": 79.8361,
+          "score": 47
+        }
+      ]
+    },
+    {
+      "id": "51191157-52",
+      "current": 52,
+      "next": 69,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 2,
+          "WR": 2,
+          "TE": 1
+        },
+        "need": {
+          "QB": 1,
+          "RB": 6,
+          "WR": 8,
+          "TE": -22
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 179,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 45.45,
+        "threshold": 9,
+        "naturalLeaderRank": 45.45
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Terry McLaurin",
+          "pos": "WR",
+          "panel_rank": 45.45,
+          "adp": 53.6,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 107.888,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "Jameson Williams",
+          "pos": "WR",
+          "panel_rank": 48.3,
+          "adp": 57.6,
+          "return_prob": 0.0111,
+          "return_confidence": 87,
+          "raw_score": 103.514,
+          "score": 91
+        },
+        {
+          "rank": 3,
+          "name": "David Montgomery",
+          "pos": "RB",
+          "panel_rank": 51.72222222222222,
+          "adp": 48,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 103.1672,
+          "score": 90
+        },
+        {
+          "rank": 4,
+          "name": "Luther Burden III",
+          "pos": "WR",
+          "panel_rank": 49.15,
+          "adp": 55.1,
+          "return_prob": 0.0022,
+          "return_confidence": 88,
+          "raw_score": 100.224,
+          "score": 84
+        },
+        {
+          "rank": 5,
+          "name": "DJ Moore",
+          "pos": "WR",
+          "panel_rank": 52.95,
+          "adp": 55.6,
+          "return_prob": 0.0011,
+          "return_confidence": 88,
+          "raw_score": 99.364,
+          "score": 82
+        },
+        {
+          "rank": 6,
+          "name": "Drake Maye",
+          "pos": "QB",
+          "panel_rank": 56,
+          "adp": 51.5,
+          "return_prob": 0.0022,
+          "return_confidence": 88,
+          "raw_score": 98.25,
+          "score": 79
+        },
+        {
+          "rank": 7,
+          "name": "Mike Evans",
+          "pos": "WR",
+          "panel_rank": 51.94759825327511,
+          "adp": 60.3,
+          "return_prob": 0.0467,
+          "return_confidence": 85,
+          "raw_score": 95.7944,
+          "score": 74
+        },
+        {
+          "rank": 8,
+          "name": "Bhayshul Tuten",
+          "pos": "RB",
+          "panel_rank": 56.63657407407407,
+          "adp": 59.9,
+          "return_prob": 0.0722,
+          "return_confidence": 85,
+          "raw_score": 95.3694,
+          "score": 73
+        },
+        {
+          "rank": 9,
+          "name": "Rome Odunze",
+          "pos": "WR",
+          "panel_rank": 56.9,
+          "adp": 62.9,
+          "return_prob": 0.1644,
+          "return_confidence": 83,
+          "raw_score": 91.306,
+          "score": 64
+        },
+        {
+          "rank": 10,
+          "name": "Davante Adams",
+          "pos": "WR",
+          "panel_rank": 60.4,
+          "adp": 58,
+          "return_prob": 0.0167,
+          "return_confidence": 87,
+          "raw_score": 91.25,
+          "score": 64
+        }
+      ]
+    },
+    {
+      "id": "52891208-69",
+      "current": 69,
+      "next": 72,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 3,
+          "WR": 3,
+          "TE": 0
+        },
+        "need": {
+          "QB": 4,
+          "RB": 6,
+          "WR": 4,
+          "TE": 0.5
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 163,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 50.715811965811966,
+        "threshold": 9,
+        "naturalLeaderRank": 50.715811965811966
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Christian Watson",
+          "pos": "WR",
+          "panel_rank": 50.715811965811966,
+          "adp": 68.8,
+          "return_prob": 0.5733,
+          "return_confidence": 84,
+          "raw_score": 103.5817,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "Tucker Kraft",
+          "pos": "TE",
+          "panel_rank": 64.375,
+          "adp": 67.1,
+          "return_prob": 0.64,
+          "return_confidence": 84,
+          "raw_score": 87.5555,
+          "score": 66
+        },
+        {
+          "rank": 3,
+          "name": "Jalen Hurts",
+          "pos": "QB",
+          "panel_rank": 65.33333333333333,
+          "adp": 62.3,
+          "return_prob": 0.8922,
+          "return_confidence": 87,
+          "raw_score": 85.7811,
+          "score": 62
+        },
+        {
+          "rank": 4,
+          "name": "Parker Washington",
+          "pos": "WR",
+          "panel_rank": 58.22838137472284,
+          "adp": 74.4,
+          "return_prob": 0.8833,
+          "return_confidence": 87,
+          "raw_score": 84.7901,
+          "score": 60
+        },
+        {
+          "rank": 5,
+          "name": "Marvin Harrison Jr.",
+          "pos": "WR",
+          "panel_rank": 69.25,
+          "adp": 73.7,
+          "return_prob": 0.8978,
+          "return_confidence": 87,
+          "raw_score": 77.1205,
+          "score": 43
+        },
+        {
+          "rank": 6,
+          "name": "Jaylen Warren",
+          "pos": "RB",
+          "panel_rank": 72.72222222222223,
+          "adp": 69.1,
+          "return_prob": 0.7767,
+          "return_confidence": 85,
+          "raw_score": 76.2776,
+          "score": 41
+        },
+        {
+          "rank": 7,
+          "name": "Rhamondre Stevenson",
+          "pos": "RB",
+          "panel_rank": 74.27777777777777,
+          "adp": 78.6,
+          "return_prob": 0.9711,
+          "return_confidence": 89,
+          "raw_score": 69.3287,
+          "score": 26
+        },
+        {
+          "rank": 8,
+          "name": "Justin Herbert",
+          "pos": "QB",
+          "panel_rank": 75,
+          "adp": 79.4,
+          "return_prob": 0.9989,
+          "return_confidence": 91,
+          "raw_score": 68.6385,
+          "score": 25
+        },
+        {
+          "rank": 9,
+          "name": "Jonathon Brooks",
+          "pos": "RB",
+          "panel_rank": 74.55555555555556,
+          "adp": 90.2,
+          "return_prob": 0.9967,
+          "return_confidence": 91,
+          "raw_score": 66.7349,
+          "score": 21
+        },
+        {
+          "rank": 10,
+          "name": "Harold Fannin Jr.",
+          "pos": "TE",
+          "panel_rank": 74.1,
+          "adp": 72.2,
+          "return_prob": 0.9089,
+          "return_confidence": 87,
+          "raw_score": 66.3405,
+          "score": 20
+        }
+      ]
+    },
+    {
+      "id": "53191217-72",
+      "current": 72,
+      "next": 89,
+      "state": {
+        "counts": {
+          "QB": 1,
+          "RB": 2,
+          "WR": 3,
+          "TE": 1
+        },
+        "need": {
+          "QB": -24,
+          "RB": 6,
+          "WR": 4,
+          "TE": -22
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 159,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 69.25,
+        "threshold": 11,
+        "naturalLeaderRank": 69.25
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Marvin Harrison Jr.",
+          "pos": "WR",
+          "panel_rank": 69.25,
+          "adp": 73.7,
+          "return_prob": 0.0033,
+          "return_confidence": 88,
+          "raw_score": 111.84,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "Jaylen Warren",
+          "pos": "RB",
+          "panel_rank": 72.72222222222223,
+          "adp": 69.1,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 104.5251,
+          "score": 84
+        },
+        {
+          "rank": 3,
+          "name": "Rhamondre Stevenson",
+          "pos": "RB",
+          "panel_rank": 74.27777777777777,
+          "adp": 78.6,
+          "return_prob": 0.1067,
+          "return_confidence": 84,
+          "raw_score": 99.1562,
+          "score": 73
+        },
+        {
+          "rank": 4,
+          "name": "DK Metcalf",
+          "pos": "WR",
+          "panel_rank": 79.05,
+          "adp": 76.5,
+          "return_prob": 0.0344,
+          "return_confidence": 86,
+          "raw_score": 93.68,
+          "score": 61
+        },
+        {
+          "rank": 5,
+          "name": "Jonathon Brooks",
+          "pos": "RB",
+          "panel_rank": 74.55555555555556,
+          "adp": 90.2,
+          "return_prob": 0.63,
+          "return_confidence": 81,
+          "raw_score": 87.7424,
+          "score": 48
+        },
+        {
+          "rank": 6,
+          "name": "Tony Pollard",
+          "pos": "RB",
+          "panel_rank": 88.05555555555556,
+          "adp": 80.5,
+          "return_prob": 0.2233,
+          "return_confidence": 82,
+          "raw_score": 82.9744,
+          "score": 38
+        },
+        {
+          "rank": 7,
+          "name": "Rico Dowdle",
+          "pos": "RB",
+          "panel_rank": 87.66666666666667,
+          "adp": 83.2,
+          "return_prob": 0.3311,
+          "return_confidence": 81,
+          "raw_score": 80.9913,
+          "score": 34
+        },
+        {
+          "rank": 8,
+          "name": "Stefon Diggs",
+          "pos": "WR",
+          "panel_rank": 83.15384615384616,
+          "adp": 116.3,
+          "return_prob": 0.9833,
+          "return_confidence": 87,
+          "raw_score": 72.4762,
+          "score": 15
+        },
+        {
+          "rank": 9,
+          "name": "Blake Corum",
+          "pos": "RB",
+          "panel_rank": 89.66666666666667,
+          "adp": 93.5,
+          "return_prob": 0.7722,
+          "return_confidence": 82,
+          "raw_score": 70.3967,
+          "score": 11
+        },
+        {
+          "rank": 10,
+          "name": "Chuba Hubbard",
+          "pos": "RB",
+          "panel_rank": 103,
+          "adp": 75.5,
+          "return_prob": 0.0331,
+          "return_confidence": null,
+          "raw_score": 69.2545,
+          "score": 8
+        }
+      ]
+    },
+    {
+      "id": "46892028-9",
+      "current": 9,
+      "next": 12,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 0,
+          "WR": 0,
+          "TE": 0
+        },
+        "need": {
+          "QB": 1,
+          "RB": 9,
+          "WR": 8,
+          "TE": 0.5
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 222,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 8.450980392156863,
+        "threshold": 7,
+        "naturalLeaderRank": 8.450980392156863
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "James Cook III",
+          "pos": "RB",
+          "panel_rank": 8.450980392156863,
+          "adp": 9.6,
+          "return_prob": 0.14,
+          "return_confidence": 86,
+          "raw_score": 107.4001,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "CeeDee Lamb",
+          "pos": "WR",
+          "panel_rank": 14.036866359447005,
+          "adp": 10.5,
+          "return_prob": 0.46,
+          "return_confidence": 84,
+          "raw_score": 98.3541,
+          "score": 81
+        },
+        {
+          "rank": 3,
+          "name": "Ashton Jeanty",
+          "pos": "RB",
+          "panel_rank": 12.397435897435898,
+          "adp": 12.6,
+          "return_prob": 0.8333,
+          "return_confidence": 86,
+          "raw_score": 91.7275,
+          "score": 66
+        },
+        {
+          "rank": 4,
+          "name": "Brock Bowers",
+          "pos": "TE",
+          "panel_rank": 14,
+          "adp": 22.1,
+          "return_prob": 1,
+          "return_confidence": 92,
+          "raw_score": 91.33,
+          "score": 65
+        },
+        {
+          "rank": 5,
+          "name": "Chase Brown",
+          "pos": "RB",
+          "panel_rank": 11.892857142857142,
+          "adp": 16.6,
+          "return_prob": 0.9878,
+          "return_confidence": 90,
+          "raw_score": 90.3121,
+          "score": 63
+        },
+        {
+          "rank": 6,
+          "name": "Saquon Barkley",
+          "pos": "RB",
+          "panel_rank": 15.88888888888889,
+          "adp": 11.5,
+          "return_prob": 0.7422,
+          "return_confidence": 85,
+          "raw_score": 90.0521,
+          "score": 63
+        },
+        {
+          "rank": 7,
+          "name": "Justin Jefferson",
+          "pos": "WR",
+          "panel_rank": 13.6,
+          "adp": 13.7,
+          "return_prob": 0.9333,
+          "return_confidence": 88,
+          "raw_score": 90.0038,
+          "score": 63
+        },
+        {
+          "rank": 8,
+          "name": "Kenneth Walker III",
+          "pos": "RB",
+          "panel_rank": 12.479166666666666,
+          "adp": 18.1,
+          "return_prob": 0.9944,
+          "return_confidence": 91,
+          "raw_score": 89.3658,
+          "score": 61
+        },
+        {
+          "rank": 9,
+          "name": "De'Von Achane",
+          "pos": "RB",
+          "panel_rank": 16.325980392156865,
+          "adp": 13.6,
+          "return_prob": 0.9311,
+          "return_confidence": 88,
+          "raw_score": 87.379,
+          "score": 57
+        },
+        {
+          "rank": 10,
+          "name": "Omarion Hampton",
+          "pos": "RB",
+          "panel_rank": 16.228310502283104,
+          "adp": 15.6,
+          "return_prob": 0.9833,
+          "return_confidence": 90,
+          "raw_score": 86.2167,
+          "score": 54
+        }
+      ]
+    },
+    {
+      "id": "47192037-12",
+      "current": 12,
+      "next": 29,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 1,
+          "WR": 0,
+          "TE": 0
+        },
+        "need": {
+          "QB": 1,
+          "RB": 9,
+          "WR": 8,
+          "TE": 0.5
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 219,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 11.892857142857142,
+        "threshold": 7,
+        "naturalLeaderRank": 14
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Brock Bowers",
+          "pos": "TE",
+          "panel_rank": 14,
+          "adp": 22.1,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 107.3519,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "Chase Brown",
+          "pos": "RB",
+          "panel_rank": 11.892857142857142,
+          "adp": 16.6,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 106.2351,
+          "score": 98
+        },
+        {
+          "rank": 3,
+          "name": "Justin Jefferson",
+          "pos": "WR",
+          "panel_rank": 13.6,
+          "adp": 13.7,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 106.1779,
+          "score": 97
+        },
+        {
+          "rank": 4,
+          "name": "Kenneth Walker III",
+          "pos": "RB",
+          "panel_rank": 12.479166666666666,
+          "adp": 18.1,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 105.2877,
+          "score": 96
+        },
+        {
+          "rank": 5,
+          "name": "Ashton Jeanty",
+          "pos": "RB",
+          "panel_rank": 12.397435897435898,
+          "adp": 12.6,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 104.7494,
+          "score": 94
+        },
+        {
+          "rank": 6,
+          "name": "Omarion Hampton",
+          "pos": "RB",
+          "panel_rank": 16.228310502283104,
+          "adp": 15.6,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 101.9385,
+          "score": 88
+        },
+        {
+          "rank": 7,
+          "name": "Saquon Barkley",
+          "pos": "RB",
+          "panel_rank": 15.88888888888889,
+          "adp": 11.5,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 101.434,
+          "score": 87
+        },
+        {
+          "rank": 8,
+          "name": "Drake London",
+          "pos": "WR",
+          "panel_rank": 19.671052631578945,
+          "adp": 20.6,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 97.5458,
+          "score": 79
+        },
+        {
+          "rank": 9,
+          "name": "Nico Collins",
+          "pos": "WR",
+          "panel_rank": 19.686192468619247,
+          "adp": 23.1,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 97.1307,
+          "score": 78
+        },
+        {
+          "rank": 10,
+          "name": "Derrick Henry",
+          "pos": "RB",
+          "panel_rank": 23.483091787439616,
+          "adp": 17.8,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 94.3318,
+          "score": 72
+        }
+      ]
+    },
+    {
+      "id": "48892088-29",
+      "current": 29,
+      "next": 32,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 2,
+          "WR": 0,
+          "TE": 0
+        },
+        "need": {
+          "QB": 1,
+          "RB": 6,
+          "WR": 8,
+          "TE": 0.5
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 202,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 25.046511627906977,
+        "threshold": 7,
+        "naturalLeaderRank": 28.88888888888889
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Kyren Williams",
+          "pos": "RB",
+          "panel_rank": 28.88888888888889,
+          "adp": 27.4,
+          "return_prob": 0.27,
+          "return_confidence": 85,
+          "raw_score": 102.9003,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "Chris Olave",
+          "pos": "WR",
+          "panel_rank": 25.046511627906977,
+          "adp": 32.3,
+          "return_prob": 0.8578,
+          "return_confidence": 86,
+          "raw_score": 98.0104,
+          "score": 89
+        },
+        {
+          "rank": 3,
+          "name": "Zay Flowers",
+          "pos": "WR",
+          "panel_rank": 26.67880085653105,
+          "adp": 41.6,
+          "return_prob": 0.9878,
+          "return_confidence": 90,
+          "raw_score": 92.1584,
+          "score": 77
+        },
+        {
+          "rank": 4,
+          "name": "DeVonta Smith",
+          "pos": "WR",
+          "panel_rank": 29.328947368421055,
+          "adp": 34.5,
+          "return_prob": 0.9356,
+          "return_confidence": 88,
+          "raw_score": 88.5842,
+          "score": 69
+        },
+        {
+          "rank": 5,
+          "name": "Colston Loveland",
+          "pos": "TE",
+          "panel_rank": 31.53846153846154,
+          "adp": 44.4,
+          "return_prob": 0.98,
+          "return_confidence": 90,
+          "raw_score": 88.0547,
+          "score": 68
+        },
+        {
+          "rank": 6,
+          "name": "Rashee Rice",
+          "pos": "WR",
+          "panel_rank": 39.1,
+          "adp": 28,
+          "return_prob": 0.64,
+          "return_confidence": 84,
+          "raw_score": 86.6732,
+          "score": 65
+        },
+        {
+          "rank": 7,
+          "name": "Jaylen Waddle",
+          "pos": "WR",
+          "panel_rank": 31.96153846153846,
+          "adp": 47.5,
+          "return_prob": 0.9956,
+          "return_confidence": 91,
+          "raw_score": 85.7916,
+          "score": 63
+        },
+        {
+          "rank": 8,
+          "name": "Tee Higgins",
+          "pos": "WR",
+          "panel_rank": 32.74579831932773,
+          "adp": 38.6,
+          "return_prob": 0.9744,
+          "return_confidence": 89,
+          "raw_score": 85.3114,
+          "score": 62
+        },
+        {
+          "rank": 9,
+          "name": "Breece Hall",
+          "pos": "RB",
+          "panel_rank": 33.25,
+          "adp": 31.3,
+          "return_prob": 0.8644,
+          "return_confidence": 86,
+          "raw_score": 84.3952,
+          "score": 60
+        },
+        {
+          "rank": 10,
+          "name": "Javonte Williams",
+          "pos": "RB",
+          "panel_rank": 35.888888888888886,
+          "adp": 33.6,
+          "return_prob": 0.9333,
+          "return_confidence": 88,
+          "raw_score": 83.1483,
+          "score": 58
+        }
+      ]
+    },
+    {
+      "id": "49192097-32",
+      "current": 32,
+      "next": 49,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 1,
+          "WR": 2,
+          "TE": 0
+        },
+        "need": {
+          "QB": 1,
+          "RB": 9,
+          "WR": 8,
+          "TE": 0.5
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 199,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 26.67880085653105,
+        "threshold": 9,
+        "naturalLeaderRank": 26.67880085653105
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Zay Flowers",
+          "pos": "WR",
+          "panel_rank": 26.67880085653105,
+          "adp": 41.6,
+          "return_prob": 0.0444,
+          "return_confidence": 86,
+          "raw_score": 106.2867,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "DeVonta Smith",
+          "pos": "WR",
+          "panel_rank": 29.328947368421055,
+          "adp": 34.5,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 101.9365,
+          "score": 91
+        },
+        {
+          "rank": 3,
+          "name": "Javonte Williams",
+          "pos": "RB",
+          "panel_rank": 35.888888888888886,
+          "adp": 33.6,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 100.2072,
+          "score": 87
+        },
+        {
+          "rank": 4,
+          "name": "Tee Higgins",
+          "pos": "WR",
+          "panel_rank": 32.74579831932773,
+          "adp": 38.6,
+          "return_prob": 0.0078,
+          "return_confidence": 88,
+          "raw_score": 99.2237,
+          "score": 85
+        },
+        {
+          "rank": 5,
+          "name": "Colston Loveland",
+          "pos": "TE",
+          "panel_rank": 31.53846153846154,
+          "adp": 44.4,
+          "return_prob": 0.3144,
+          "return_confidence": 81,
+          "raw_score": 96.547,
+          "score": 79
+        },
+        {
+          "rank": 6,
+          "name": "Ladd McConkey",
+          "pos": "WR",
+          "panel_rank": 36.1,
+          "adp": 40.5,
+          "return_prob": 0.0411,
+          "return_confidence": 86,
+          "raw_score": 96.4655,
+          "score": 79
+        },
+        {
+          "rank": 7,
+          "name": "Tetairoa McMillan",
+          "pos": "WR",
+          "panel_rank": 36.6,
+          "adp": 36.2,
+          "return_prob": 0.0022,
+          "return_confidence": 88,
+          "raw_score": 95.8535,
+          "score": 78
+        },
+        {
+          "rank": 8,
+          "name": "Emeka Egbuka",
+          "pos": "WR",
+          "panel_rank": 34.806451612903224,
+          "adp": 39.4,
+          "return_prob": 0.0278,
+          "return_confidence": 86,
+          "raw_score": 93.675,
+          "score": 73
+        },
+        {
+          "rank": 9,
+          "name": "Jaylen Waddle",
+          "pos": "WR",
+          "panel_rank": 31.96153846153846,
+          "adp": 47.5,
+          "return_prob": 0.3689,
+          "return_confidence": 81,
+          "raw_score": 93.5839,
+          "score": 73
+        },
+        {
+          "rank": 10,
+          "name": "Garrett Wilson",
+          "pos": "WR",
+          "panel_rank": 38.481798715203425,
+          "adp": 43.1,
+          "return_prob": 0.1333,
+          "return_confidence": 83,
+          "raw_score": 92.0077,
+          "score": 69
+        }
+      ]
+    },
+    {
+      "id": "50892148-49",
+      "current": 49,
+      "next": 52,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 1,
+          "WR": 3,
+          "TE": 0
+        },
+        "need": {
+          "QB": 1,
+          "RB": 9,
+          "WR": 4,
+          "TE": 0.5
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 182,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 42.638297872340424,
+        "threshold": 9,
+        "naturalLeaderRank": 42.638297872340424
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Tyler Warren",
+          "pos": "TE",
+          "panel_rank": 42.638297872340424,
+          "adp": 50.7,
+          "return_prob": 0.4822,
+          "return_confidence": 84,
+          "raw_score": 106.3613,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "D'Andre Swift",
+          "pos": "RB",
+          "panel_rank": 44.476190476190474,
+          "adp": 52.4,
+          "return_prob": 0.8756,
+          "return_confidence": 86,
+          "raw_score": 98.2905,
+          "score": 83
+        },
+        {
+          "rank": 3,
+          "name": "Bucky Irving",
+          "pos": "RB",
+          "panel_rank": 53.44444444444444,
+          "adp": 45.8,
+          "return_prob": 0.6267,
+          "return_confidence": 84,
+          "raw_score": 90.6192,
+          "score": 66
+        },
+        {
+          "rank": 4,
+          "name": "David Montgomery",
+          "pos": "RB",
+          "panel_rank": 51.72222222222222,
+          "adp": 48,
+          "return_prob": 0.7533,
+          "return_confidence": 85,
+          "raw_score": 89.7094,
+          "score": 64
+        },
+        {
+          "rank": 5,
+          "name": "Jameson Williams",
+          "pos": "WR",
+          "panel_rank": 48.3,
+          "adp": 57.6,
+          "return_prob": 0.9456,
+          "return_confidence": 88,
+          "raw_score": 86.9396,
+          "score": 58
+        },
+        {
+          "rank": 6,
+          "name": "Luther Burden III",
+          "pos": "WR",
+          "panel_rank": 49.15,
+          "adp": 55.1,
+          "return_prob": 0.9222,
+          "return_confidence": 88,
+          "raw_score": 83.7056,
+          "score": 51
+        },
+        {
+          "rank": 7,
+          "name": "DJ Moore",
+          "pos": "WR",
+          "panel_rank": 52.95,
+          "adp": 55.6,
+          "return_prob": 0.9422,
+          "return_confidence": 88,
+          "raw_score": 82.4656,
+          "score": 49
+        },
+        {
+          "rank": 8,
+          "name": "Christian Watson",
+          "pos": "WR",
+          "panel_rank": 50.715811965811966,
+          "adp": 68.8,
+          "return_prob": 0.9978,
+          "return_confidence": 91,
+          "raw_score": 81.5878,
+          "score": 47
+        },
+        {
+          "rank": 9,
+          "name": "Bhayshul Tuten",
+          "pos": "RB",
+          "panel_rank": 56.63657407407407,
+          "adp": 59.9,
+          "return_prob": 0.9778,
+          "return_confidence": 90,
+          "raw_score": 80.3511,
+          "score": 44
+        },
+        {
+          "rank": 10,
+          "name": "Mike Evans",
+          "pos": "WR",
+          "panel_rank": 51.94759825327511,
+          "adp": 60.3,
+          "return_prob": 0.9822,
+          "return_confidence": 90,
+          "raw_score": 78.996,
+          "score": 41
+        }
+      ]
+    },
+    {
+      "id": "51192157-52",
+      "current": 52,
+      "next": 69,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 2,
+          "WR": 3,
+          "TE": 0
+        },
+        "need": {
+          "QB": 1,
+          "RB": 6,
+          "WR": 4,
+          "TE": 0.5
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 179,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 48.3,
+        "threshold": 9,
+        "naturalLeaderRank": 48.3
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Jameson Williams",
+          "pos": "WR",
+          "panel_rank": 48.3,
+          "adp": 57.6,
+          "return_prob": 0.0067,
+          "return_confidence": 88,
+          "raw_score": 105.028,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "David Montgomery",
+          "pos": "RB",
+          "panel_rank": 51.72222222222222,
+          "adp": 48,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 104.3111,
+          "score": 98
+        },
+        {
+          "rank": 3,
+          "name": "Bucky Irving",
+          "pos": "RB",
+          "panel_rank": 53.44444444444444,
+          "adp": 45.8,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 102.5276,
+          "score": 95
+        },
+        {
+          "rank": 4,
+          "name": "Luther Burden III",
+          "pos": "WR",
+          "panel_rank": 49.15,
+          "adp": 55.1,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 101.494,
+          "score": 92
+        },
+        {
+          "rank": 5,
+          "name": "DJ Moore",
+          "pos": "WR",
+          "panel_rank": 52.95,
+          "adp": 55.6,
+          "return_prob": 0,
+          "return_confidence": 89,
+          "raw_score": 100.614,
+          "score": 91
+        },
+        {
+          "rank": 6,
+          "name": "Bhayshul Tuten",
+          "pos": "RB",
+          "panel_rank": 56.63657407407407,
+          "adp": 59.9,
+          "return_prob": 0.0622,
+          "return_confidence": 85,
+          "raw_score": 97.4594,
+          "score": 84
+        },
+        {
+          "rank": 7,
+          "name": "Mike Evans",
+          "pos": "WR",
+          "panel_rank": 51.94759825327511,
+          "adp": 60.3,
+          "return_prob": 0.0267,
+          "return_confidence": 86,
+          "raw_score": 97.3844,
+          "score": 84
+        },
+        {
+          "rank": 8,
+          "name": "Rome Odunze",
+          "pos": "WR",
+          "panel_rank": 56.9,
+          "adp": 62.9,
+          "return_prob": 0.1333,
+          "return_confidence": 83,
+          "raw_score": 93.096,
+          "score": 74
+        },
+        {
+          "rank": 9,
+          "name": "Davante Adams",
+          "pos": "WR",
+          "panel_rank": 60.4,
+          "adp": 58,
+          "return_prob": 0.01,
+          "return_confidence": 87,
+          "raw_score": 92.6,
+          "score": 73
+        },
+        {
+          "rank": 10,
+          "name": "Christian Watson",
+          "pos": "WR",
+          "panel_rank": 50.715811965811966,
+          "adp": 68.8,
+          "return_prob": 0.4622,
+          "return_confidence": 81,
+          "raw_score": 92.4162,
+          "score": 73
+        }
+      ]
+    },
+    {
+      "id": "52892208-69",
+      "current": 69,
+      "next": 72,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 3,
+          "WR": 2,
+          "TE": 1
+        },
+        "need": {
+          "QB": 4,
+          "RB": 6,
+          "WR": 8,
+          "TE": -22
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 162,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 58.22838137472284,
+        "threshold": 9,
+        "naturalLeaderRank": 58.22838137472284
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Parker Washington",
+          "pos": "WR",
+          "panel_rank": 58.22838137472284,
+          "adp": 74.4,
+          "return_prob": 0.8744,
+          "return_confidence": 86,
+          "raw_score": 97.7545,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "Jayden Daniels",
+          "pos": "QB",
+          "panel_rank": 67,
+          "adp": 66.9,
+          "return_prob": 0.7311,
+          "return_confidence": 85,
+          "raw_score": 91.0777,
+          "score": 86
+        },
+        {
+          "rank": 3,
+          "name": "Marvin Harrison Jr.",
+          "pos": "WR",
+          "panel_rank": 69.25,
+          "adp": 73.7,
+          "return_prob": 0.8922,
+          "return_confidence": 87,
+          "raw_score": 87.3797,
+          "score": 78
+        },
+        {
+          "rank": 4,
+          "name": "Jaylen Warren",
+          "pos": "RB",
+          "panel_rank": 72.72222222222223,
+          "adp": 69.1,
+          "return_prob": 0.6689,
+          "return_confidence": 84,
+          "raw_score": 86.7635,
+          "score": 76
+        },
+        {
+          "rank": 5,
+          "name": "Caleb Williams",
+          "pos": "QB",
+          "panel_rank": 73.83333333333333,
+          "adp": 76.2,
+          "return_prob": 0.96,
+          "return_confidence": 89,
+          "raw_score": 78.4964,
+          "score": 59
+        },
+        {
+          "rank": 6,
+          "name": "Justin Herbert",
+          "pos": "QB",
+          "panel_rank": 75,
+          "adp": 79.4,
+          "return_prob": 0.9778,
+          "return_confidence": 90,
+          "raw_score": 76.4977,
+          "score": 54
+        },
+        {
+          "rank": 7,
+          "name": "Jonathon Brooks",
+          "pos": "RB",
+          "panel_rank": 74.55555555555556,
+          "adp": 90.2,
+          "return_prob": 0.9978,
+          "return_confidence": 91,
+          "raw_score": 75.1942,
+          "score": 51
+        },
+        {
+          "rank": 8,
+          "name": "Brian Thomas Jr.",
+          "pos": "WR",
+          "panel_rank": 79.75,
+          "adp": 69.3,
+          "return_prob": 0.7811,
+          "return_confidence": 85,
+          "raw_score": 74.0837,
+          "score": 49
+        },
+        {
+          "rank": 9,
+          "name": "Trevor Lawrence",
+          "pos": "QB",
+          "panel_rank": 76.25373134328358,
+          "adp": 97.7,
+          "return_prob": 0.9989,
+          "return_confidence": 91,
+          "raw_score": 72.028,
+          "score": 45
+        },
+        {
+          "rank": 10,
+          "name": "DK Metcalf",
+          "pos": "WR",
+          "panel_rank": 79.05,
+          "adp": 76.5,
+          "return_prob": 0.96,
+          "return_confidence": 89,
+          "raw_score": 71.9117,
+          "score": 44
+        }
+      ]
+    },
+    {
+      "id": "53192217-72",
+      "current": 72,
+      "next": 89,
+      "state": {
+        "counts": {
+          "QB": 0,
+          "RB": 3,
+          "WR": 3,
+          "TE": 1
+        },
+        "need": {
+          "QB": 4,
+          "RB": 6,
+          "WR": 4,
+          "TE": -22
+        },
+        "byes": {
+          "QB": {},
+          "RB": {},
+          "WR": {},
+          "TE": {}
+        },
+        "irEligible": 0,
+        "irSlots": 1
+      },
+      "ranked_pool": 161,
+      "return_runs": 900,
+      "map_coverage": 1,
+      "quality_safety": {
+        "triggered": false,
+        "bestPanelRank": 64.375,
+        "threshold": 11,
+        "naturalLeaderRank": 69.25
+      },
+      "top": [
+        {
+          "rank": 1,
+          "name": "Marvin Harrison Jr.",
+          "pos": "WR",
+          "panel_rank": 69.25,
+          "adp": 73.7,
+          "return_prob": 0.0256,
+          "return_confidence": 86,
+          "raw_score": 106.6117,
+          "score": 100
+        },
+        {
+          "rank": 2,
+          "name": "Jayden Daniels",
+          "pos": "QB",
+          "panel_rank": 67,
+          "adp": 66.9,
+          "return_prob": 0.0056,
+          "return_confidence": 88,
+          "raw_score": 106.0977,
+          "score": 99
+        },
+        {
+          "rank": 3,
+          "name": "Rhamondre Stevenson",
+          "pos": "RB",
+          "panel_rank": 74.27777777777777,
+          "adp": 78.6,
+          "return_prob": 0.15,
+          "return_confidence": 83,
+          "raw_score": 94.6146,
+          "score": 74
+        },
+        {
+          "rank": 4,
+          "name": "Caleb Williams",
+          "pos": "QB",
+          "panel_rank": 73.83333333333333,
+          "adp": 76.2,
+          "return_prob": 0.2733,
+          "return_confidence": 82,
+          "raw_score": 92.8163,
+          "score": 70
+        },
+        {
+          "rank": 5,
+          "name": "Justin Herbert",
+          "pos": "QB",
+          "panel_rank": 75,
+          "adp": 79.4,
+          "return_prob": 0.41,
+          "return_confidence": 81,
+          "raw_score": 88.6777,
+          "score": 61
+        },
+        {
+          "rank": 6,
+          "name": "Brian Thomas Jr.",
+          "pos": "WR",
+          "panel_rank": 79.75,
+          "adp": 69.3,
+          "return_prob": 0.0044,
+          "return_confidence": 88,
+          "raw_score": 88.3437,
+          "score": 61
+        },
+        {
+          "rank": 7,
+          "name": "DK Metcalf",
+          "pos": "WR",
+          "panel_rank": 79.05,
+          "adp": 76.5,
+          "return_prob": 0.1144,
+          "return_confidence": 84,
+          "raw_score": 87.4117,
+          "score": 59
+        },
+        {
+          "rank": 8,
+          "name": "Jonathon Brooks",
+          "pos": "RB",
+          "panel_rank": 74.55555555555556,
+          "adp": 90.2,
+          "return_prob": 0.6789,
+          "return_confidence": 81,
+          "raw_score": 83.2808,
+          "score": 50
+        },
+        {
+          "rank": 9,
+          "name": "Trevor Lawrence",
+          "pos": "QB",
+          "panel_rank": 76.25373134328358,
+          "adp": 97.7,
+          "return_prob": 0.9333,
+          "return_confidence": 85,
+          "raw_score": 76.9893,
+          "score": 36
+        },
+        {
+          "rank": 10,
+          "name": "Tony Pollard",
+          "pos": "RB",
+          "panel_rank": 88.05555555555556,
+          "adp": 80.5,
+          "return_prob": 0.3078,
+          "return_confidence": 81,
+          "raw_score": 76.6261,
+          "score": 36
+        }
+      ]
+    }
+  ]
+}

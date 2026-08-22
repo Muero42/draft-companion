@@ -1,1 +1,52 @@
-{"status":"FAIL_CLOSED","fixture_exit":0,"coach_exit":1,"policy_ranking_certified":false}
+{
+  "status": "PASS",
+  "numbered_rc459_app_sha256": "1de9c6dcbd39bec35dffd2b43575260da6601abf3a9a29fe329ffeb8a4065fa3",
+  "source_lock": "transitive 58/58 + embedded assignTiers exact numbered hash",
+  "freeze_package_sha256": "5339a37d275505f2a3a6fe0b84785f435d840d02cc7472a2b8bd934244e884fd",
+  "fixture_count": 16,
+  "turns": [
+    9,
+    12,
+    29,
+    32,
+    49,
+    52,
+    69,
+    72
+  ],
+  "deterministic_repeatability": true,
+  "shadow_live_order_invariant": true,
+  "all_return_runs_900": true,
+  "all_input_rosters_exact": true,
+  "top1_by_turn": {
+    "9": {
+      "Amon-Ra St. Brown": 1,
+      "James Cook III": 1
+    },
+    "12": {
+      "Brock Bowers": 2
+    },
+    "29": {
+      "Chris Olave": 1,
+      "Kyren Williams": 1
+    },
+    "32": {
+      "Zay Flowers": 2
+    },
+    "49": {
+      "Tyler Warren": 2
+    },
+    "52": {
+      "Terry McLaurin": 1,
+      "Jameson Williams": 1
+    },
+    "69": {
+      "Christian Watson": 1,
+      "Parker Washington": 1
+    },
+    "72": {
+      "Marvin Harrison Jr.": 2
+    }
+  },
+  "policy_ranking_certified": false
+}
