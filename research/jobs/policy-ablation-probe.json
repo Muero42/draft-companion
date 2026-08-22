@@ -1,1 +1,1 @@
-{"run":"2026-08-22-policy-ablation-01","purpose":"screen minimal Coach policy fixes after full-policy FAIL_CLOSED","variants":["QB1_ONLY","QB1_TE1","QB1_TE1_DEFER_TE69","QB1_TE1_RB2_BY52"],"count_per_regime":10}
+{"run":"2026-08-22-policy-ablation-02","purpose":"screen minimal Coach policy fixes after full-policy FAIL_CLOSED","variants":["QB1_ONLY","QB1_TE1","QB1_TE1_DEFER_TE69","QB1_TE1_RB2_BY52"],"count_per_regime":10,"harness_fix":"EXPECT variable corrected"}
