@@ -1,0 +1,47 @@
+name: PITTI rc4.59 Full Policy Smoke Diagnostics
+on:
+  push:
+    branches: [pitti-outcome-bridge-20250821]
+    paths:
+      - '.github/workflows/pitti-rc459-full-policy-smoke.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  smoke:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-outcome-bridge-20250821, fetch-depth: 0}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Capture syntax and one-seed runtime
+        shell: bash
+        run: |
+          set +e
+          mkdir -p /tmp/policy-smoke
+          node --check research/rc459_full_policy_paired_2026.js > /tmp/policy-smoke/node-check.log 2>&1; echo $? > /tmp/policy-smoke/node-check.exit
+          python -m py_compile research/rc459_full_policy_outcome_certification_2026.py > /tmp/policy-smoke/python-check.log 2>&1; echo $? > /tmp/policy-smoke/python-check.exit
+          node research/rc459_full_policy_paired_2026.js 1 > /tmp/policy-smoke/runtime.log 2>&1; echo $? > /tmp/policy-smoke/runtime.exit
+          cat /tmp/policy-smoke/node-check.log /tmp/policy-smoke/python-check.log /tmp/policy-smoke/runtime.log || true
+          exit 0
+      - name: Persist smoke diagnostics only
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git reset --hard && git clean -fd
+          git fetch origin pitti-outcome-bridge-20250821
+          git checkout -B pitti-outcome-bridge-20250821 origin/pitti-outcome-bridge-20250821
+          mkdir -p diagnostics_2026/full_policy_smoke
+          cp -a /tmp/policy-smoke/. diagnostics_2026/full_policy_smoke/
+          git add diagnostics_2026/full_policy_smoke/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record rc4.59 full-policy smoke diagnostics [skip ci]'
+            git push origin HEAD:pitti-outcome-bridge-20250821
+          fi
