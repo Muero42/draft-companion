@@ -1,0 +1,59 @@
+name: PITTI rc4.59 Decision Insights
+on:
+  push:
+    branches: [pitti-outcome-bridge-20250821]
+    paths:
+      - '.github/workflows/pitti-rc459-insights.yml'
+  workflow_dispatch:
+concurrency:
+  group: pitti-rc459-insights
+  cancel-in-progress: true
+permissions:
+  contents: write
+jobs:
+  insights:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-outcome-bridge-20250821
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Verify and run extractor
+        shell: bash
+        run: |
+          set -euo pipefail
+          python -m py_compile research/rc459_decision_insights_2026.py
+          python research/rc459_decision_insights_2026.py | tee /tmp/rc459_insights.log
+          test "$(python - <<'PY'
+          import json
+          print(json.load(open('RC459_DECISION_INSIGHTS_2026_GATE.json'))['status'])
+          PY
+          )" = PASS
+      - name: Persist outputs safely
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/pitti-insights
+          mkdir -p /tmp/pitti-insights/simulation_2026 /tmp/pitti-insights/diagnostics_2026
+          cp RC459_DECISION_INSIGHTS_2026.json RC459_DECISION_INSIGHTS_2026_GATE.json /tmp/pitti-insights/simulation_2026/
+          cp /tmp/rc459_insights.log /tmp/pitti-insights/diagnostics_2026/rc459_insights.log
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git reset --hard
+          git clean -fd
+          git fetch origin pitti-outcome-bridge-20250821
+          git checkout -B pitti-outcome-bridge-20250821 origin/pitti-outcome-bridge-20250821
+          mkdir -p simulation_2026 diagnostics_2026
+          cp -a /tmp/pitti-insights/simulation_2026/. simulation_2026/
+          cp -a /tmp/pitti-insights/diagnostics_2026/. diagnostics_2026/
+          git add simulation_2026/ diagnostics_2026/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record compact rc4.59 decision insights [skip ci]'
+            git push origin HEAD:pitti-outcome-bridge-20250821
+          fi
+      - name: Report gate
+        run: cat simulation_2026/RC459_DECISION_INSIGHTS_2026_GATE.json
