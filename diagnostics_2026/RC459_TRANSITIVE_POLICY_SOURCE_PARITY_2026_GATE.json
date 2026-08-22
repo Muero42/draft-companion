@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "numbered_rc459_app_sha256": "1de9c6dcbd39bec35dffd2b43575260da6601abf3a9a29fe329ffeb8a4065fa3",
+  "scope": "58 source items: prior 40-function PASS plus transitive named dependencies, norm/clamp, MANAGER_PROFILES and MANAGER_PROFILE_DATA",
+  "source_item_count": 58,
+  "matching_count": 58,
+  "missing": [],
+  "mismatch": [],
+  "manager_profile_expected": "c5f601051850185b81801aaaa3efe554d9214f6cfa15999a0beec6cb0b192493",
+  "manager_profile_actual": "c5f601051850185b81801aaaa3efe554d9214f6cfa15999a0beec6cb0b192493",
+  "interpretation": "PASS source-locks the broader transitive decision dependency graph. Dynamic fixture/input equivalence, explicit fresh health-scenario integration and policy superiority remain separate gates."
+}
