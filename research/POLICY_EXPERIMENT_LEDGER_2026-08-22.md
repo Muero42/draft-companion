@@ -54,14 +54,44 @@ Decision:
 - do not tune player rankings, RB weights or market gates from these outcomes;
 - any future lookahead must pass score immutability + frontier-permutation/order-invariance tests.
 
-## Rolling NEXT-own-pick lookahead — ACTIVE
-Branch: `pitti-rolling-lookahead-probe`; Draft PR #7.
-Run: 32597626663.
-Fixed arms: CONTROL, ROLL_LONG, ROLL_EARLY4, ROLL_ALL.
-Design: candidate selection within canonical quality-safe top five, current quality + expected next-own-pick quality + small symmetric starter coverage; no positional quota; **does not overwrite canonical individual score/rawScore**, so it is not affected by the specific turn-pair mutation bug.
-Status at ledger correction: all four jobs running the 10-seed/regime simulation.
-Promotion rule: candidate must be competitive with/better than DEFER_TE69 anchor, legal, plausible and robust; then freeze exact rule -> instrumentation parity -> fresh holdout -> joint-state/dependence validation -> realistic mocks.
-Additional gate: after results, inspect whether any implausible large reach remains. Only residual reaches after correct immutable math may motivate a market-plausibility safety rule.
+## Rolling NEXT-own-pick lookahead v1 — INVALIDATED
+Branch: `pitti-rolling-lookahead-probe`; PR #7 closed unmerged.
+This harness did preserve canonical score/rawScore and therefore did **not** contain the Turn-Pair mutation defect. It failed for a different reason: long-horizon `expectedNext` was inferred only from the current canonical top-five return probabilities. If those candidates all had Return-v2 near zero for a long gap such as 2.02->3.09, the residual probability mass was assigned to the current fifth candidate. The actual later-round candidate pool was omitted.
+
+Forensic ROLL_EARLY4 result:
+- 1.09 returned to plausible names (James Cook III 11/20, Amon-Ra 7/20, Jonathan Taylor 2/20, Chase Brown 0/20), confirming the Brown 20/20 lock was specific to the pair mutation bug;
+- Brock Bowers remained 2.02 in 20/20;
+- outcome remained poor, but those deltas cannot select/reject a policy because the long-horizon state model is invalid.
+
+Decision: do not retune the rolling coefficients/activation set. Replace marginal top-five horizon arithmetic with actual simulated full-board next-own-pick states.
+
+## Joint full-board next-own-pick lookahead — ACTIVE
+Branch: `pitti-joint-lookahead-probe`; Draft PR #8; Actions run `32598923886`.
+Smoke completed SUCCESS, including a nested JOINT_LONG2 one-draft exercise. At latest ledger update the three matrix jobs CONTROL / JOINT_LONG2 / JOINT_EARLY4 are healthy in the preregistered 5-seed/regime simulation.
+
+Fixed design:
+- current admissible frontier = canonical quality-safe top five after Return-v2 + Player Quality Safety Gate + normalization;
+- for each candidate A, clone/freeze state, insert/remove A, then simulate every intervening opponent pick to the actual next user pick with exact snake, sequential roster state, manager modifiers and K/DST hazards;
+- common random numbers across A branches;
+- evaluate the best player actually remaining across the FULL skill-player board at next own pick;
+- initial utility = z(canonical current normalized Coach score) + z(-expected best-next selected-panel rank), no position/roster-construction bonus;
+- initial 120 nested rollouts/candidate; 5 outer drafts/regime = causal screen only, never certification.
+
+Mandatory validity gates before any outcome interpretation:
+- canonical score/rawScore byte/numerically unchanged;
+- forward/reverse frontier evaluation gives identical expected-next values/winner;
+- candidate A removed before rollout;
+- legal unique exact-snake intervening picks;
+- next-best calculated from actual full remaining board;
+- nested CRN seed independent of candidate iteration order;
+- 9->12 nested results must broadly match the already-persisted rc4.59 turn-market reference before long-gap 12->29 / 32->49 results are trusted.
+
+Because outcome-v2 certification requires >=50 runs/regime, this n=5 causal screen may intentionally produce a FAIL_CLOSED sample-size gate. Do not weaken that criterion; inspect paired diagnostics/behavior only.
+
+## Existing rc4.59 timing anchor — use before inventing new timing models
+PASS `simulation_2026/RC459_TURN_PAIR_MARKET_2026.json`, 2,000 parent runs, fresh freeze `5339a37d...`, rc4.59 profiled-baseline opponent kernel.
+Key 1.09->2.02 return_if_wait: JSN 0%, Jonathan Taylor 0%, Amon-Ra 1.79%, James Cook III 11.96%, Ashton Jeanty 68.86%, Chase Brown 97.5%.
+Chase Brown is therefore a legitimate high-end player but normally a WAIT-to-2.02 sequencing candidate when materially stronger low-return alternatives are present. Do not hard-code a Brown penalty or an ADP reach cap.
 
 ## Global anti-overfit / research-integrity rules
 - No parameter grid-search on seeds already used to choose a mechanism.
@@ -71,3 +101,4 @@ Additional gate: after results, inspect whether any implausible large reach rema
 - MARKET_ROSTER remains the independent primary baseline; BRIDGE_GREEDY is diagnostic upper-bound style context only.
 - Current outcome-v2 replacement model remains the comparable conservative anchor; separately preregistered shallow-league sensitivity must not be used to tune the draft policy on the same seeds.
 - Every future lookahead implementation must freeze/clone canonical candidate scores and prove iteration-order invariance before outcome testing.
+- `QUALITY_TIMING_DOMINANCE` is a validation diagnostic, not a scoring rule: repeated unexplained choice of a candidate materially worse on both selected-panel Player Quality and Sleeper timing/ADP than another available quality-safe candidate invalidates the experiment even if aggregate outcome happens to improve. Evidence/health/feasibility can legitimately explain an override.
