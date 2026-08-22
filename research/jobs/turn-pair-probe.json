@@ -1,0 +1,7 @@
+{
+  "schema": 1,
+  "purpose": "trigger preregistered rc4.59 turn-pair CRN research screen",
+  "variants": ["CONTROL", "PAIR_FIRST", "PAIR_FIRST_TWO"],
+  "seeds_per_regime": 10,
+  "production_effect": false
+}
