@@ -1,0 +1,42 @@
+name: PITTI rc4.59 Outcome Challenger
+on:
+  push:
+    branches: [pitti-outcome-bridge-20250821]
+    paths:
+      - '.github/workflows/pitti-rc459-outcome-challenger.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  challenger:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-outcome-bridge-20250821, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Verify exact dynamic gate
+        run: python - <<'PY'
+          import json
+          g=json.load(open('diagnostics_2026/RC459_DYNAMIC_COACH_EXECUTION_2026_GATE.json'))
+          assert g['status']=='PASS' and g['fixture_count']==16 and g['all_return_runs_900'] and g['all_input_rosters_exact']
+          assert g['deterministic_repeatability'] and g['shadow_live_order_invariant']
+          PY
+      - name: Run independent challenger
+        run: python research/rc459_dynamic_outcome_challenger_2026.py | tee /tmp/challenger.log
+      - name: Persist challenger
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/challenger
+          cp diagnostics_2026/RC459_DYNAMIC_OUTCOME_CHALLENGER_2026.json diagnostics_2026/RC459_DYNAMIC_OUTCOME_CHALLENGER_2026_GATE.json /tmp/challenger/
+          cp /tmp/challenger.log /tmp/challenger/
+          git config user.name github-actions[bot]; git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git reset --hard && git clean -fd && git fetch origin pitti-outcome-bridge-20250821 && git checkout -B pitti-outcome-bridge-20250821 origin/pitti-outcome-bridge-20250821
+          mkdir -p diagnostics_2026
+          cp /tmp/challenger/RC459_DYNAMIC_OUTCOME_CHALLENGER_2026.json /tmp/challenger/RC459_DYNAMIC_OUTCOME_CHALLENGER_2026_GATE.json /tmp/challenger/challenger.log diagnostics_2026/
+          git add diagnostics_2026/
+          if ! git diff --cached --quiet; then git commit -m 'Record independent rc4.59 outcome challenger [skip ci]' && git push origin HEAD:pitti-outcome-bridge-20250821; fi
+      - run: cat diagnostics_2026/RC459_DYNAMIC_OUTCOME_CHALLENGER_2026_GATE.json
