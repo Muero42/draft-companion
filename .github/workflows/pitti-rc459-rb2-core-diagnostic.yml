@@ -1,0 +1,90 @@
+name: PITTI rc4.59 RB2 Core Diagnostic
+
+on:
+  pull_request:
+    branches: [pitti-outcome-bridge-20250821]
+    paths:
+      - 'research/jobs/rb2-core-diagnostic-probe.json'
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-outcome-bridge-20250821
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Run only RB2_BY52 ablation
+        run: node research/rc459_policy_ablation_screen_2026.js QB1_TE1_RB2_BY52 10
+
+      - name: Persist raw draft artifact before any evaluator
+        uses: actions/upload-artifact@v4
+        with:
+          name: rb2-by52-raw-drafts
+          path: policy_certification_2026/ABLATION_QB1_TE1_RB2_BY52.json
+          if-no-files-found: error
+          retention-days: 3
+
+      - name: Audit 15-pick core feasibility
+        id: audit
+        shell: bash
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          const p='policy_certification_2026/ABLATION_QB1_TE1_RB2_BY52.json';
+          const x=JSON.parse(fs.readFileSync(p,'utf8'));
+          const bad=[];
+          for(const row of x.rows||[]){
+            if(row.policy!=='COACH') continue;
+            const c={QB:0,RB:0,WR:0,TE:0};
+            for(const q of row.roster||[]){ if(c[q.pos]!==undefined) c[q.pos]++; }
+            const ok=(c.QB>=1&&c.RB>=1&&c.WR>=2&&c.TE>=1&&Array.isArray(row.roster)&&row.roster.length===15);
+            if(!ok) bad.push({stress:row.stress,seed:row.seed,counts:c,roster:(row.roster||[]).map(q=>({name:q.name,pos:q.pos}))});
+          }
+          const out={status:bad.length?'FAIL_CORE':'PASS_CORE',coach_rows:(x.rows||[]).filter(r=>r.policy==='COACH').length,bad_count:bad.length,bad};
+          fs.writeFileSync('policy_certification_2026/RB2_BY52_CORE_AUDIT.json',JSON.stringify(out,null,2));
+          fs.appendFileSync(process.env.GITHUB_OUTPUT,`valid=${bad.length?'false':'true'}\n`);
+          console.log(JSON.stringify(out,null,2));
+          NODE
+
+      - name: Persist core audit
+        uses: actions/upload-artifact@v4
+        with:
+          name: rb2-by52-core-audit
+          path: policy_certification_2026/RB2_BY52_CORE_AUDIT.json
+          if-no-files-found: error
+          retention-days: 3
+
+      - name: Run outcome-v2 only for valid 15-pick cores
+        if: steps.audit.outputs.valid == 'true'
+        shell: bash
+        run: |
+          cp policy_certification_2026/ABLATION_QB1_TE1_RB2_BY52.json policy_certification_2026/RC459_FULL_POLICY_PAIRED_DRAFTS_2026.json
+          python research/rc459_full_policy_outcome_certification_v2_2026.py
+
+      - name: Persist outcome diagnostic if produced
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rb2-by52-outcome
+          path: |
+            policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_V2_2026.json
+            policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_V2_2026_GATE.json
+          if-no-files-found: ignore
+          retention-days: 3
+
+      - name: Fail closed on invalid draft core
+        if: steps.audit.outputs.valid == 'false'
+        run: |
+          echo 'RB2_BY52 generated one or more invalid 15-pick skill cores; see persisted audit artifact.'
+          exit 1
