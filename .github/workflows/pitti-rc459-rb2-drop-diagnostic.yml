@@ -1,0 +1,35 @@
+name: PITTI rc4.59 RB2-by-52 Drop Diagnostic
+on:
+  pull_request:
+    branches: [pitti-outcome-bridge-20250821]
+    paths:
+      - 'research/jobs/rb2-drop-diagnostic-probe.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-outcome-bridge-20250821
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Reproduce RB2-by-52 screen
+        run: node research/rc459_policy_ablation_screen_2026.js QB1_TE1_RB2_BY52 10
+      - name: Preserve simulation output before evaluator
+        uses: actions/upload-artifact@v4
+        with:
+          name: rb2-by52-raw-drafts
+          path: policy_certification_2026/ABLATION_QB1_TE1_RB2_BY52.json
+          if-no-files-found: error
+          retention-days: 3
+      - name: Run outcome evaluator (expected diagnostic may fail)
+        shell: bash
+        run: |
+          cp policy_certification_2026/ABLATION_QB1_TE1_RB2_BY52.json policy_certification_2026/RC459_FULL_POLICY_PAIRED_DRAFTS_2026.json
+          python research/rc459_full_policy_outcome_certification_v2_2026.py
