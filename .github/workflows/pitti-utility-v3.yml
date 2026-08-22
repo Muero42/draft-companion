@@ -7,6 +7,7 @@ on:
       - 'research/independent_utility_v3_3_2025.py'
       - 'research/independent_utility_v3_5_2025.py'
       - 'research/freeze_2026_fetch.mjs'
+      - 'research/yahoo_rank_probe.mjs'
   workflow_dispatch:
 permissions:
   contents: write
@@ -34,6 +35,9 @@ jobs:
       - name: Acquire fresh 2026 panel and Sleeper ADP
         continue-on-error: true
         run: node research/freeze_2026_fetch.mjs
+      - name: Probe unavailable Yahoo ranking sources
+        continue-on-error: true
+        run: node research/yahoo_rank_probe.mjs
       - name: Persist research outputs
         if: always()
         shell: bash
@@ -43,10 +47,11 @@ jobs:
           if [ -f INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json ]; then cp INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json outcome_certification/; fi
           if [ -f FRESH_2026_MARKET_PANEL_RAW.json ]; then cp FRESH_2026_MARKET_PANEL_RAW.json freeze_2026/; fi
           if [ -f FRESH_2026_MARKET_PANEL_GATE.json ]; then cp FRESH_2026_MARKET_PANEL_GATE.json freeze_2026/; else printf '%s\n' '{"status":"RUNNER_ERROR","reason":"fresh 2026 acquisition produced no gate"}' > freeze_2026/FRESH_2026_MARKET_PANEL_GATE.json; fi
+          if [ -f YAHOO_RANK_PROBE.json ]; then cp YAHOO_RANK_PROBE.json freeze_2026/; fi
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add outcome_certification/ freeze_2026/
-          if ! git diff --cached --quiet; then git commit -m 'Record utility and fresh 2026 market freeze [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
+          if ! git diff --cached --quiet; then git commit -m 'Record utility and fresh 2026 market freeze diagnostics [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
       - name: Enforce gates
         run: |
           python - <<'PY'
