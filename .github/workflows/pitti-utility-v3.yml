@@ -11,20 +11,32 @@ on:
       - 'research/finalize_freeze_2026.py'
       - 'research/policy_simulator_2026_realistic.py'
       - 'research/summarize_simulation_2026.py'
+      - 'research/turn_pair_counterfactual_2026.py'
+      - 'research/market_outcome_bridge_2026.py'
       - 'freeze_2026/FRESH_2026_HEALTH_ROLE_2026-08-22.json'
       - 'freeze_2026/FRESH_2026_STATIC_LAYERS_2026-08-22.json'
   workflow_dispatch:
+concurrency:
+  group: pitti-research-pipeline
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
   certify:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
-        with: {ref: pitti-outcome-bridge-20250821}
+        with:
+          ref: pitti-outcome-bridge-20250821
+          fetch-depth: 0
       - uses: actions/setup-node@v4
         with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Install research Python dependencies
+        run: python -m pip install --disable-pip-version-check requests beautifulsoup4 lxml
       - name: Fetch independent 2025 inputs
         shell: bash
         run: |
@@ -48,7 +60,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p outcome_certification freeze_2026 simulation_2026
+          mkdir -p outcome_certification freeze_2026 simulation_2026 bridge_2026
           if [ -f INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json ]; then cp INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json outcome_certification/; fi
           if [ -f FRESH_2026_MARKET_PANEL_RAW.json ]; then cp FRESH_2026_MARKET_PANEL_RAW.json freeze_2026/; fi
           if [ -f FRESH_2026_MARKET_PANEL_GATE.json ]; then cp FRESH_2026_MARKET_PANEL_GATE.json freeze_2026/; else printf '%s\n' '{"status":"RUNNER_ERROR","reason":"fresh 2026 acquisition produced no gate"}' > freeze_2026/FRESH_2026_MARKET_PANEL_GATE.json; fi
@@ -72,16 +84,44 @@ jobs:
           cp SIMULATION_2026_REALISTIC_GATE.json simulation_2026/
           python research/summarize_simulation_2026.py
           cp SIMULATION_2026_ROBUST_SUMMARY.json simulation_2026/
-      - name: Persist research outputs
+      - name: Run conditional early/mid turn-pair counterfactuals
+        continue-on-error: true
+        run: |
+          python research/turn_pair_counterfactual_2026.py 250
+          if [ -f TURN_PAIR_COUNTERFACTUAL_2026.json ]; then cp TURN_PAIR_COUNTERFACTUAL_2026.json simulation_2026/; fi
+          if [ -f TURN_PAIR_COUNTERFACTUAL_2026_GATE.json ]; then cp TURN_PAIR_COUNTERFACTUAL_2026_GATE.json simulation_2026/; else printf '%s\n' '{"status":"RUNNER_ERROR","reason":"turn-pair output missing"}' > simulation_2026/TURN_PAIR_COUNTERFACTUAL_2026_GATE.json; fi
+      - name: Run independent historical market-to-outcome bridge
+        continue-on-error: true
+        run: |
+          python research/market_outcome_bridge_2026.py
+          if [ -f MARKET_OUTCOME_BRIDGE_2026.json ]; then cp MARKET_OUTCOME_BRIDGE_2026.json bridge_2026/; fi
+          if [ -f MARKET_OUTCOME_BRIDGE_2026_GATE.json ]; then cp MARKET_OUTCOME_BRIDGE_2026_GATE.json bridge_2026/; else printf '%s\n' '{"status":"RUNNER_ERROR","reason":"market outcome bridge output missing"}' > bridge_2026/MARKET_OUTCOME_BRIDGE_2026_GATE.json; fi
+      - name: Snapshot outputs before branch reconciliation
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/pitti-persist
+          mkdir -p /tmp/pitti-persist
+          for d in outcome_certification freeze_2026 simulation_2026 bridge_2026; do if [ -d "$d" ]; then cp -a "$d" /tmp/pitti-persist/; fi; done
+      - name: Persist research outputs safely after concurrent branch changes
         if: always()
         shell: bash
         run: |
           set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add outcome_certification/ freeze_2026/ simulation_2026/
-          if ! git diff --cached --quiet; then git commit -m 'Record scaled realistic 2026 simulations and robust summary [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
-      - name: Enforce simulation output
+          git reset --hard
+          git clean -fd
+          git fetch origin pitti-outcome-bridge-20250821
+          git checkout -B pitti-outcome-bridge-20250821 origin/pitti-outcome-bridge-20250821
+          for d in outcome_certification freeze_2026 simulation_2026 bridge_2026; do rm -rf "$d"; if [ -d "/tmp/pitti-persist/$d" ]; then cp -a "/tmp/pitti-persist/$d" ./; fi; done
+          git add outcome_certification/ freeze_2026/ simulation_2026/ bridge_2026/ 2>/dev/null || true
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record scaled simulations, turn-pair diagnostics and independent bridge [skip ci]'
+            git push origin HEAD:pitti-outcome-bridge-20250821
+          fi
+      - name: Enforce structural simulation output
         run: |
           python - <<'PY'
           import json
