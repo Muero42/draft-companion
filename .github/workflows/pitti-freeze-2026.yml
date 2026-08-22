@@ -1,0 +1,49 @@
+name: PITTI Fresh 2026 Market Panel Freeze
+on:
+  push:
+    branches: [pitti-outcome-bridge-20250821]
+    paths:
+      - '.github/workflows/pitti-freeze-2026.yml'
+      - 'research/freeze_2026_fetch.mjs'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  acquire:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-outcome-bridge-20250821}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Acquire current 2026 panel and Sleeper ADP
+        continue-on-error: true
+        run: node research/freeze_2026_fetch.mjs
+      - name: Persist acquisition outputs
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p freeze_2026
+          if [ -f FRESH_2026_MARKET_PANEL_RAW.json ]; then cp FRESH_2026_MARKET_PANEL_RAW.json freeze_2026/; fi
+          if [ -f FRESH_2026_MARKET_PANEL_GATE.json ]; then
+            cp FRESH_2026_MARKET_PANEL_GATE.json freeze_2026/
+          else
+            printf '%s\n' '{"status":"RUNNER_ERROR","reason":"market/panel acquisition produced no gate output"}' > freeze_2026/FRESH_2026_MARKET_PANEL_GATE.json
+          fi
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add freeze_2026/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record fresh 2026 market/panel acquisition [skip ci]'
+            git push origin HEAD:pitti-outcome-bridge-20250821
+          fi
+      - name: Enforce acquisition gate
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('freeze_2026/FRESH_2026_MARKET_PANEL_GATE.json'))
+          print('Fresh market/panel gate:', x.get('status'))
+          if x.get('status')!='PASS': raise SystemExit(2)
+          PY
