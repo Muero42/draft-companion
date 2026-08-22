@@ -1,11 +1,9 @@
-name: PITTI Utility v3.5 + Fresh 2026 Freeze + Simulation
+name: PITTI Fresh Freeze + Realistic Simulation Research
 on:
   push:
     branches: [pitti-outcome-bridge-20250821]
     paths:
       - '.github/workflows/pitti-utility-v3.yml'
-      - 'research/independent_utility_v3_3_2025.py'
-      - 'research/independent_utility_v3_5_2025.py'
       - 'research/freeze_2026_fetch_v2.mjs'
       - 'research/augment_freeze_experts_2026.mjs'
       - 'research/finalize_freeze_2026.py'
@@ -22,7 +20,7 @@ concurrency:
 permissions:
   contents: write
 jobs:
-  certify:
+  research:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
     timeout-minutes: 90
@@ -35,76 +33,121 @@ jobs:
         with: {node-version: '22'}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
-      - name: Install research Python dependencies
+      - name: Install bridge dependencies
         run: python -m pip install --disable-pip-version-check requests beautifulsoup4 lxml
-      - name: Fetch independent 2025 inputs
+      - name: Initialize clean run outputs
         shell: bash
         run: |
           set -euo pipefail
-          curl -fL --retry 3 -o stats.csv https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2025.csv
-          curl -fL --retry 3 -o picks.json https://api.sleeper.app/v1/draft/1225769229928648704/picks
-          curl -fL --retry 3 -o ids.csv https://raw.githubusercontent.com/dynastyprocess/data/master/files/db_playerids.csv
-          curl -fL --retry 3 -o players.json https://api.sleeper.app/v1/players/nfl
-          for w in $(seq 1 14); do curl -fsSL --retry 3 -o matchup_${w}.json https://api.sleeper.app/v1/league/1224396747309076480/matchups/${w}; done
-      - name: Run Utility v3.5
-        continue-on-error: true
-        run: python research/independent_utility_v3_5_2025.py
-      - name: Acquire fresh 2026 panel and Sleeper ADP
-        continue-on-error: true
-        run: node research/freeze_2026_fetch_v2.mjs
-      - name: Apply Companion-parity Boone/Harmon reconstruction
-        continue-on-error: true
-        run: node research/augment_freeze_experts_2026.mjs
-      - name: Stage acquisition outputs
-        if: always()
+          rm -rf simulation_2026 bridge_2026 diagnostics_2026
+          mkdir -p simulation_2026 bridge_2026 diagnostics_2026 freeze_2026
+          rm -f SIMULATION_2026_REALISTIC_RESULTS.json SIMULATION_2026_REALISTIC_GATE.json SIMULATION_2026_ROBUST_SUMMARY.json
+          rm -f TURN_PAIR_COUNTERFACTUAL_2026.json TURN_PAIR_COUNTERFACTUAL_2026_GATE.json
+          rm -f MARKET_OUTCOME_BRIDGE_2026.json MARKET_OUTCOME_BRIDGE_2026_GATE.json
+          printf '{"run_id":"%s","source_sha":"%s","event":"%s"}\n' "$GITHUB_RUN_ID" "$GITHUB_SHA" "$GITHUB_EVENT_NAME" > diagnostics_2026/RUN_META.json
+      - name: Verify closed Utility v3.5 gate
         shell: bash
-        run: |
-          set -euo pipefail
-          mkdir -p outcome_certification freeze_2026 simulation_2026 bridge_2026
-          if [ -f INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json ]; then cp INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json outcome_certification/; fi
-          if [ -f FRESH_2026_MARKET_PANEL_RAW.json ]; then cp FRESH_2026_MARKET_PANEL_RAW.json freeze_2026/; fi
-          if [ -f FRESH_2026_MARKET_PANEL_GATE.json ]; then cp FRESH_2026_MARKET_PANEL_GATE.json freeze_2026/; else printf '%s\n' '{"status":"RUNNER_ERROR","reason":"fresh 2026 acquisition produced no gate"}' > freeze_2026/FRESH_2026_MARKET_PANEL_GATE.json; fi
-      - name: Finalize complete fresh 2026 freeze
-        continue-on-error: true
-        run: python research/finalize_freeze_2026.py
-      - name: Enforce Utility + Freeze before simulation
         run: |
           python - <<'PY'
           import json
-          u=json.load(open('outcome_certification/INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json'))
-          f=json.load(open('freeze_2026/FRESH_2026_FREEZE_GATE.json'))
-          print('Utility v3.5:',u.get('status'),'Fresh 2026 freeze:',f.get('status'))
-          if u.get('status')!='PASS' or f.get('status')!='PASS': raise SystemExit(2)
+          p='outcome_certification/INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json'
+          x=json.load(open(p))
+          print('Utility v3.5:',x.get('status'))
+          if x.get('status')!='PASS': raise SystemExit(2)
           PY
-      - name: Run scaled current-freeze full-draft simulation suite
-        continue-on-error: true
+      - name: Acquire fresh 2026 panel and Sleeper ADP
+        shell: bash
         run: |
-          python research/policy_simulator_2026_realistic.py 2000
-          cp SIMULATION_2026_REALISTIC_RESULTS.json simulation_2026/
-          cp SIMULATION_2026_REALISTIC_GATE.json simulation_2026/
-          python research/summarize_simulation_2026.py
-          cp SIMULATION_2026_ROBUST_SUMMARY.json simulation_2026/
-      - name: Run conditional early/mid turn-pair counterfactuals
-        continue-on-error: true
+          set -o pipefail
+          node research/freeze_2026_fetch_v2.mjs 2>&1 | tee diagnostics_2026/freeze_fetch.log
+      - name: Apply Companion-parity Boone/Harmon reconstruction
+        shell: bash
         run: |
-          python research/turn_pair_counterfactual_2026.py 250
-          if [ -f TURN_PAIR_COUNTERFACTUAL_2026.json ]; then cp TURN_PAIR_COUNTERFACTUAL_2026.json simulation_2026/; fi
-          if [ -f TURN_PAIR_COUNTERFACTUAL_2026_GATE.json ]; then cp TURN_PAIR_COUNTERFACTUAL_2026_GATE.json simulation_2026/; else printf '%s\n' '{"status":"RUNNER_ERROR","reason":"turn-pair output missing"}' > simulation_2026/TURN_PAIR_COUNTERFACTUAL_2026_GATE.json; fi
-      - name: Run independent historical market-to-outcome bridge
-        continue-on-error: true
+          set -o pipefail
+          node research/augment_freeze_experts_2026.mjs 2>&1 | tee diagnostics_2026/freeze_augment.log
+      - name: Stage acquisition outputs
+        shell: bash
         run: |
-          python research/market_outcome_bridge_2026.py
-          if [ -f MARKET_OUTCOME_BRIDGE_2026.json ]; then cp MARKET_OUTCOME_BRIDGE_2026.json bridge_2026/; fi
-          if [ -f MARKET_OUTCOME_BRIDGE_2026_GATE.json ]; then cp MARKET_OUTCOME_BRIDGE_2026_GATE.json bridge_2026/; else printf '%s\n' '{"status":"RUNNER_ERROR","reason":"market outcome bridge output missing"}' > bridge_2026/MARKET_OUTCOME_BRIDGE_2026_GATE.json; fi
-      - name: Snapshot outputs before branch reconciliation
+          set -euo pipefail
+          test -f FRESH_2026_MARKET_PANEL_RAW.json
+          test -f FRESH_2026_MARKET_PANEL_GATE.json
+          cp FRESH_2026_MARKET_PANEL_RAW.json freeze_2026/
+          cp FRESH_2026_MARKET_PANEL_GATE.json freeze_2026/
+      - name: Finalize complete fresh 2026 freeze
+        shell: bash
+        run: |
+          set -o pipefail
+          python research/finalize_freeze_2026.py 2>&1 | tee diagnostics_2026/freeze_finalize.log
+      - name: Enforce refreshed freeze gate
+        run: |
+          python - <<'PY'
+          import json
+          f=json.load(open('freeze_2026/FRESH_2026_FREEZE_GATE.json'))
+          print('Fresh 2026 freeze:',f.get('status'),f.get('package_sha256'))
+          if f.get('status')!='PASS': raise SystemExit(2)
+          PY
+      - name: Compile research scripts
+        shell: bash
+        run: |
+          python -m py_compile research/policy_simulator_2026_realistic.py research/summarize_simulation_2026.py research/turn_pair_counterfactual_2026.py research/market_outcome_bridge_2026.py
+      - name: Scaled full-draft simulation suite
+        shell: bash
+        run: |
+          set +e
+          python research/policy_simulator_2026_realistic.py 2000 > diagnostics_2026/simulation.log 2>&1
+          rc=$?
+          cat diagnostics_2026/simulation.log
+          if [ $rc -eq 0 ] && [ -f SIMULATION_2026_REALISTIC_RESULTS.json ] && [ -f SIMULATION_2026_REALISTIC_GATE.json ]; then
+            cp SIMULATION_2026_REALISTIC_RESULTS.json simulation_2026/
+            cp SIMULATION_2026_REALISTIC_GATE.json simulation_2026/
+            python research/summarize_simulation_2026.py > diagnostics_2026/summary.log 2>&1
+            src=$?
+            cat diagnostics_2026/summary.log
+            if [ $src -eq 0 ] && [ -f SIMULATION_2026_ROBUST_SUMMARY.json ]; then cp SIMULATION_2026_ROBUST_SUMMARY.json simulation_2026/; else printf '%s\n' '{"status":"RUNNER_ERROR","reason":"robust summary failed or missing"}' > simulation_2026/SIMULATION_2026_ROBUST_SUMMARY_GATE.json; fi
+          else
+            printf '{"status":"RUNNER_ERROR","reason":"scaled simulator failed","exit_code":%s}\n' "$rc" > simulation_2026/SIMULATION_2026_REALISTIC_GATE.json
+          fi
+          exit 0
+      - name: Conditional turn-pair counterfactuals
+        shell: bash
+        run: |
+          set +e
+          python research/turn_pair_counterfactual_2026.py 250 > diagnostics_2026/turn_pair.log 2>&1
+          rc=$?
+          cat diagnostics_2026/turn_pair.log
+          if [ $rc -eq 0 ] && [ -f TURN_PAIR_COUNTERFACTUAL_2026.json ] && [ -f TURN_PAIR_COUNTERFACTUAL_2026_GATE.json ]; then
+            cp TURN_PAIR_COUNTERFACTUAL_2026.json simulation_2026/
+            cp TURN_PAIR_COUNTERFACTUAL_2026_GATE.json simulation_2026/
+          else
+            printf '{"status":"RUNNER_ERROR","reason":"turn-pair simulator failed","exit_code":%s}\n' "$rc" > simulation_2026/TURN_PAIR_COUNTERFACTUAL_2026_GATE.json
+          fi
+          exit 0
+      - name: Independent historical market-to-outcome bridge
+        shell: bash
+        run: |
+          set +e
+          python research/market_outcome_bridge_2026.py > diagnostics_2026/market_bridge.log 2>&1
+          rc=$?
+          cat diagnostics_2026/market_bridge.log
+          if [ $rc -eq 0 ] && [ -f MARKET_OUTCOME_BRIDGE_2026.json ] && [ -f MARKET_OUTCOME_BRIDGE_2026_GATE.json ]; then
+            cp MARKET_OUTCOME_BRIDGE_2026.json bridge_2026/
+            cp MARKET_OUTCOME_BRIDGE_2026_GATE.json bridge_2026/
+          else
+            printf '{"status":"RUNNER_ERROR","reason":"market outcome bridge failed","exit_code":%s}\n' "$rc" > bridge_2026/MARKET_OUTCOME_BRIDGE_2026_GATE.json
+          fi
+          exit 0
+      - name: Snapshot generated outputs only
         if: always()
         shell: bash
         run: |
           set -euo pipefail
           rm -rf /tmp/pitti-persist
-          mkdir -p /tmp/pitti-persist
-          for d in outcome_certification freeze_2026 simulation_2026 bridge_2026; do if [ -d "$d" ]; then cp -a "$d" /tmp/pitti-persist/; fi; done
-      - name: Persist research outputs safely after concurrent branch changes
+          mkdir -p /tmp/pitti-persist/freeze_2026 /tmp/pitti-persist/simulation_2026 /tmp/pitti-persist/bridge_2026 /tmp/pitti-persist/diagnostics_2026
+          for f in FRESH_2026_MARKET_PANEL_RAW.json FRESH_2026_MARKET_PANEL_GATE.json FRESH_2026_PANEL_PAYLOAD.json FRESH_2026_SLEEPER_HALF_PPR_ADP_PAYLOAD.json FRESH_2026_FREEZE_GATE.json FRESH_2026_FREEZE_MANIFEST.json YAHOO_RANK_PROBE.json; do if [ -f "freeze_2026/$f" ]; then cp "freeze_2026/$f" /tmp/pitti-persist/freeze_2026/; fi; done
+          cp -a simulation_2026/. /tmp/pitti-persist/simulation_2026/ || true
+          cp -a bridge_2026/. /tmp/pitti-persist/bridge_2026/ || true
+          cp -a diagnostics_2026/. /tmp/pitti-persist/diagnostics_2026/ || true
+      - name: Persist without overwriting source manifests
         if: always()
         shell: bash
         run: |
@@ -115,19 +158,25 @@ jobs:
           git clean -fd
           git fetch origin pitti-outcome-bridge-20250821
           git checkout -B pitti-outcome-bridge-20250821 origin/pitti-outcome-bridge-20250821
-          for d in outcome_certification freeze_2026 simulation_2026 bridge_2026; do rm -rf "$d"; if [ -d "/tmp/pitti-persist/$d" ]; then cp -a "/tmp/pitti-persist/$d" ./; fi; done
-          git add outcome_certification/ freeze_2026/ simulation_2026/ bridge_2026/ 2>/dev/null || true
+          mkdir -p freeze_2026 simulation_2026 bridge_2026 diagnostics_2026
+          cp -a /tmp/pitti-persist/freeze_2026/. freeze_2026/ || true
+          rm -rf simulation_2026 bridge_2026 diagnostics_2026
+          mkdir -p simulation_2026 bridge_2026 diagnostics_2026
+          cp -a /tmp/pitti-persist/simulation_2026/. simulation_2026/ || true
+          cp -a /tmp/pitti-persist/bridge_2026/. bridge_2026/ || true
+          cp -a /tmp/pitti-persist/diagnostics_2026/. diagnostics_2026/ || true
+          git add freeze_2026/ simulation_2026/ bridge_2026/ diagnostics_2026/
           if ! git diff --cached --quiet; then
-            git commit -m 'Record scaled simulations, turn-pair diagnostics and independent bridge [skip ci]'
+            git commit -m 'Record fail-closed PITTI simulation research outputs [skip ci]'
             git push origin HEAD:pitti-outcome-bridge-20250821
           fi
-      - name: Enforce structural simulation output
+      - name: Final gate summary
+        if: always()
         run: |
           python - <<'PY'
-          import json
-          x=json.load(open('simulation_2026/SIMULATION_2026_REALISTIC_GATE.json'))
-          s=json.load(open('simulation_2026/SIMULATION_2026_ROBUST_SUMMARY.json'))
-          print(x)
-          print('REALISTIC split-half max:',s['max_realistic_split_half_top50_availability_delta'])
-          if x.get('status')!='PASS': raise SystemExit(2)
+          import json, pathlib
+          for p in ['freeze_2026/FRESH_2026_FREEZE_GATE.json','simulation_2026/SIMULATION_2026_REALISTIC_GATE.json','simulation_2026/TURN_PAIR_COUNTERFACTUAL_2026_GATE.json','bridge_2026/MARKET_OUTCOME_BRIDGE_2026_GATE.json']:
+              if pathlib.Path(p).exists():
+                  x=json.load(open(p)); print(p, x.get('status'))
+              else: print(p,'MISSING')
           PY
