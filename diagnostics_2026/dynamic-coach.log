@@ -1,9 +1,9 @@
-/home/runner/work/draft-companion/draft-companion/research/rc459_dynamic_coach_execution_2026_v2.js:9
-if(crypto.createHash('sha256').update(fn('assignTiers')).digest('hex')!==TIER_SHA)throw new Error('assignTiers differs from numbered rc4.59');
-                                                                                  ^
+/home/runner/work/draft-companion/draft-companion/research/rc459_dynamic_coach_execution_2026_v3.js:10
+if(crypto.createHash('sha256').update(exactAssignTiers).digest('hex')!==TIER_SHA)throw Error('embedded numbered assignTiers hash');
+                                                                                 ^
 
-Error: assignTiers differs from numbered rc4.59
-    at Object.<anonymous> (/home/runner/work/draft-companion/draft-companion/research/rc459_dynamic_coach_execution_2026_v2.js:9:89)
+Error: embedded numbered assignTiers hash
+    at Object.<anonymous> (/home/runner/work/draft-companion/draft-companion/research/rc459_dynamic_coach_execution_2026_v3.js:10:88)
     at Module._compile (node:internal/modules/cjs/loader:1781:14)
     at Object..js (node:internal/modules/cjs/loader:1913:10)
     at Module.load (node:internal/modules/cjs/loader:1505:32)
