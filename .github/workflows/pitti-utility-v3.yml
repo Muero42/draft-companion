@@ -6,7 +6,7 @@ on:
     paths:
       - 'research/jobs/current.json'
 permissions:
-  contents: read
+  contents: write
 jobs:
   certify:
     runs-on: ubuntu-latest
@@ -25,11 +25,37 @@ jobs:
           for w in $(seq 1 14); do curl -fsSL --retry 3 -o matchup_${w}.json https://api.sleeper.app/v1/league/1224396747309076480/matchups/${w}; done
       - name: Run Utility v3.2
         run: python research/independent_utility_v3_2025.py
-      - name: Show certification
+      - name: Persist certification to results branch
         if: always()
         shell: bash
         run: |
-          if [ -f INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json ]; then cat INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json; else echo 'certification output missing'; fi
+          set -euo pipefail
+          if [ ! -f INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json ]; then
+            printf '%s\n' '{"status":"RUNNER_ERROR","reason":"certification output missing"}' > INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json
+          fi
+          mkdir -p /tmp/pitti-result/research/results
+          cp INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json /tmp/pitti-result/research/results/utility_v3_2_latest.json
+          cd /tmp/pitti-result
+          git init
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          git fetch --depth=1 origin pitti-research-results || true
+          if git show-ref --verify --quiet refs/remotes/origin/pitti-research-results; then
+            git checkout -B pitti-research-results origin/pitti-research-results
+          else
+            git checkout --orphan pitti-research-results
+            git rm -rf . 2>/dev/null || true
+          fi
+          mkdir -p research/results
+          cp /tmp/pitti-result/research/results/utility_v3_2_latest.json research/results/utility_v3_2_latest.json
+          git add research/results/utility_v3_2_latest.json
+          if ! git diff --cached --quiet; then
+            git commit -m "Persist PITTI Utility v3.2 result"
+            git push origin HEAD:pitti-research-results
+          fi
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
       - name: Upload certification
         if: always()
         uses: actions/upload-artifact@v4
