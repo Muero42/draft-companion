@@ -1,18 +1,10 @@
 {
   "status": "FAIL_CLOSED",
-  "as_of": "2026-08-22T06:05:07.553Z",
+  "as_of": "2026-08-22T06:10:27.950Z",
   "minCoreExperts": false,
   "pool_total": 230,
   "sleeper_adp_count": 723,
   "expert_sources": {
-    "Andrew Erickson": {
-      "ok": true,
-      "source": "FantasyPros direct",
-      "url": "https://www.fantasypros.com/nfl/rankings/andrew-erickson.php?scoring=HALF&type=draft",
-      "updated": "Aug 21, 2026",
-      "count": 196,
-      "error": ""
-    },
     "Pat Fitzmaurice": {
       "ok": true,
       "source": "FantasyPros direct",
@@ -27,6 +19,14 @@
       "url": "https://www.fantasypros.com/nfl/rankings/derek-brown.php?scoring=HALF&type=draft",
       "updated": "Aug 21, 2026",
       "count": 297,
+      "error": ""
+    },
+    "Andrew Erickson": {
+      "ok": true,
+      "source": "FantasyPros direct",
+      "url": "https://www.fantasypros.com/nfl/rankings/andrew-erickson.php?scoring=HALF&type=draft",
+      "updated": "Aug 21, 2026",
+      "count": 196,
       "error": ""
     },
     "Matt Harmon": {
@@ -83,5 +83,5 @@
       }
     }
   ],
-  "payload_sha256": "984e96f8ebbaa9a871cd11e57aa9a1d1a717de3642a7fdb38cdf2ed0207b7480"
+  "payload_sha256": "0dd8072a5d23e340b5805a8bd15417b962cb88e901e912b26298014e53cf863d"
 }

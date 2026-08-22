@@ -1,0 +1,18 @@
+{
+  "status": "FAIL_CLOSED",
+  "criteria": {
+    "utility_v3_5_pass_precondition": true,
+    "market_panel_gate_pass": false,
+    "panel_pool_230": true,
+    "sleeper_half_ppr_pool_adp_ge_200": true,
+    "identity_unique_player_keys": true,
+    "identity_unresolved_count_zero": true,
+    "hard_exclusions_valid": true,
+    "material_watches_dated_or_explicit_unknown": true,
+    "health_role_hash_present": true,
+    "manager_profile_hash_present": true,
+    "k_dst_calibration_present": true,
+    "research_residual_shadow_only": true
+  },
+  "package_sha256": "af563a622eb1ac45946dfa358504453bc317d2750169b36b79556e2b9766fc43"
+}

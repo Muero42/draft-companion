@@ -1,0 +1,196 @@
+{
+  "schema_version": 1,
+  "status": "FAIL_CLOSED",
+  "package_as_of": "2026-08-22T06:11:58.341578+00:00",
+  "utility": {
+    "version": "v3.5",
+    "status": "PASS"
+  },
+  "panel": {
+    "as_of": "2026-08-22T06:10:27.950Z",
+    "source": "deterministic current configured expert feeds with explicit source health",
+    "payload_sha256": "e12b773856e33957d5934dd94b0f134b99a649721eb127fe50e3d703cdb76a13",
+    "player_count": 230,
+    "expert_sources": {
+      "Pat Fitzmaurice": {
+        "ok": true,
+        "source": "FantasyPros direct",
+        "url": "https://www.fantasypros.com/nfl/rankings/pat-fitzmaurice.php?scoring=HALF&type=draft",
+        "updated": "Aug 20, 2026",
+        "count": 296,
+        "error": ""
+      },
+      "Derek Brown": {
+        "ok": true,
+        "source": "FantasyPros direct",
+        "url": "https://www.fantasypros.com/nfl/rankings/derek-brown.php?scoring=HALF&type=draft",
+        "updated": "Aug 21, 2026",
+        "count": 297,
+        "error": ""
+      },
+      "Andrew Erickson": {
+        "ok": true,
+        "source": "FantasyPros direct",
+        "url": "https://www.fantasypros.com/nfl/rankings/andrew-erickson.php?scoring=HALF&type=draft",
+        "updated": "Aug 21, 2026",
+        "count": 196,
+        "error": ""
+      },
+      "Matt Harmon": {
+        "ok": false,
+        "source": "",
+        "url": "",
+        "updated": "",
+        "count": 0,
+        "error": "0 rows | 0 rows"
+      },
+      "Justin Boone": {
+        "ok": false,
+        "source": "",
+        "url": "",
+        "updated": "",
+        "count": 0,
+        "error": "0 rows | 0 rows"
+      },
+      "Sean Koerner": {
+        "ok": false,
+        "source": "",
+        "url": "",
+        "updated": "",
+        "count": 0,
+        "error": "No deterministic complete current all-position public feed configured; retain degraded/unavailable status."
+      }
+    },
+    "effective_members": {
+      "standard": [
+        [
+          "Pat Fitzmaurice",
+          30
+        ],
+        [
+          "Andrew Erickson",
+          15
+        ],
+        [
+          "Derek Brown",
+          10
+        ]
+      ],
+      "rb": [
+        [
+          "Pat Fitzmaurice",
+          35
+        ],
+        [
+          "Andrew Erickson",
+          15
+        ],
+        [
+          "Derek Brown",
+          10
+        ]
+      ],
+      "wr": [
+        [
+          "Pat Fitzmaurice",
+          30
+        ],
+        [
+          "Andrew Erickson",
+          15
+        ],
+        [
+          "Derek Brown",
+          10
+        ]
+      ],
+      "qb": [
+        [
+          "Pat Fitzmaurice",
+          45
+        ],
+        [
+          "Andrew Erickson",
+          15
+        ]
+      ],
+      "te": [
+        [
+          "Pat Fitzmaurice",
+          40
+        ],
+        [
+          "Andrew Erickson",
+          20
+        ],
+        [
+          "Derek Brown",
+          15
+        ]
+      ]
+    }
+  },
+  "sleeper_half_ppr_adp": {
+    "as_of": "2026-08-22T06:10:27.950Z",
+    "source": {
+      "id": "legacy-season-api-sleeper-app",
+      "url": "https://api.sleeper.app/projections/nfl/2026?season_type=regular&position[]=QB&position[]=RB&position[]=WR&position[]=TE&order_by=adp_half_ppr",
+      "count": 723,
+      "fieldCounts": {
+        "adp_half_ppr": 723
+      }
+    },
+    "payload_sha256": "a8841079df194772245ff49f7e8b66c02624026edc4f23c9c3e0dd98a9852468",
+    "player_count": 230
+  },
+  "health_role": {
+    "as_of": "2026-08-22T08:10:00+02:00",
+    "source_manifest": "freeze_2026/FRESH_2026_HEALTH_ROLE_2026-08-22.json",
+    "payload_sha256": "dcd31753c043da6530eba78aec44324e244257211a67d343b12242d98134e1be"
+  },
+  "static_layers": {
+    "as_of": "2026-08-22T08:11:00+02:00",
+    "source_manifest": "freeze_2026/FRESH_2026_STATIC_LAYERS_2026-08-22.json",
+    "payload_sha256": "bd38ff3421765f5c2754f1ac52ce635af92a44bb8711ffad66e48b4873838b03"
+  },
+  "identity": {
+    "unique_player_keys": true,
+    "unresolved_count": 0
+  },
+  "hard_exclusions": [
+    "Jayden Higgins",
+    "Ricky Pearsall"
+  ],
+  "material_watch": [
+    "Jordyn Tyson",
+    "Jeremiyah Love",
+    "Malik Nabers",
+    "Sam LaPorta",
+    "Tyler Warren",
+    "Breece Hall",
+    "George Kittle",
+    "Zach Charbonnet",
+    "Alvin Kamara",
+    "Tucker Kraft"
+  ],
+  "criteria": {
+    "utility_v3_5_pass_precondition": true,
+    "market_panel_gate_pass": false,
+    "panel_pool_230": true,
+    "sleeper_half_ppr_pool_adp_ge_200": true,
+    "identity_unique_player_keys": true,
+    "identity_unresolved_count_zero": true,
+    "hard_exclusions_valid": true,
+    "material_watches_dated_or_explicit_unknown": true,
+    "health_role_hash_present": true,
+    "manager_profile_hash_present": true,
+    "k_dst_calibration_present": true,
+    "research_residual_shadow_only": true
+  },
+  "fail_closed_notes": [
+    "Historical Aug-17/18 fixtures are not labeled fresh.",
+    "Generic Questionable is not a mechanical penalty.",
+    "Unavailable expert feeds remain explicitly degraded; no stale row is silently relabeled fresh."
+  ],
+  "package_sha256": "af563a622eb1ac45946dfa358504453bc317d2750169b36b79556e2b9766fc43"
+}
