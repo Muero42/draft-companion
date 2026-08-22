@@ -1,11 +1,11 @@
-name: PITTI Independent Utility v3.4
+name: PITTI Independent Utility v3.5
 on:
   push:
     branches: [pitti-outcome-bridge-20250821]
     paths:
       - '.github/workflows/pitti-utility-v3.yml'
       - 'research/independent_utility_v3_3_2025.py'
-      - 'research/independent_utility_v3_4_2025.py'
+      - 'research/independent_utility_v3_5_2025.py'
   workflow_dispatch:
 permissions:
   contents: write
@@ -25,32 +25,32 @@ jobs:
           curl -fL --retry 3 -o ids.csv https://raw.githubusercontent.com/dynastyprocess/data/master/files/db_playerids.csv
           curl -fL --retry 3 -o players.json https://api.sleeper.app/v1/players/nfl
           for w in $(seq 1 14); do curl -fsSL --retry 3 -o matchup_${w}.json https://api.sleeper.app/v1/league/1224396747309076480/matchups/${w}; done
-      - name: Run Utility v3.4
+      - name: Run Utility v3.5
         continue-on-error: true
-        run: python research/independent_utility_v3_4_2025.py
+        run: python research/independent_utility_v3_5_2025.py
       - name: Persist certification or runner error
         if: always()
         shell: bash
         run: |
           set -euo pipefail
           mkdir -p outcome_certification
-          if [ -f INDEPENDENT_UTILITY_V3_4_CERTIFICATION_2025.json ]; then
-            cp INDEPENDENT_UTILITY_V3_4_CERTIFICATION_2025.json outcome_certification/
+          if [ -f INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json ]; then
+            cp INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json outcome_certification/
           else
-            printf '%s\n' '{"status":"RUNNER_ERROR","method":"Independent Championship Utility v3.4","reason":"script exited before certification output"}' > outcome_certification/INDEPENDENT_UTILITY_V3_4_CERTIFICATION_2025.json
+            printf '%s\n' '{"status":"RUNNER_ERROR","method":"Independent Championship Utility v3.5","reason":"script exited before certification output"}' > outcome_certification/INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json
           fi
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add outcome_certification/INDEPENDENT_UTILITY_V3_4_CERTIFICATION_2025.json
+          git add outcome_certification/INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Record Independent Championship Utility v3.4 result [skip ci]'
+            git commit -m 'Record Independent Championship Utility v3.5 result [skip ci]'
             git push origin HEAD:pitti-outcome-bridge-20250821
           fi
       - name: Enforce certification gate
         run: |
           python - <<'PY'
           import json
-          x=json.load(open('outcome_certification/INDEPENDENT_UTILITY_V3_4_CERTIFICATION_2025.json'))
-          print('Utility v3.4:',x['status'])
+          x=json.load(open('outcome_certification/INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json'))
+          print('Utility v3.5:',x['status'])
           if x['status']!='PASS': raise SystemExit(2)
           PY
