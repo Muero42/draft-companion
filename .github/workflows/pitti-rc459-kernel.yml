@@ -4,6 +4,8 @@ on:
     branches: [pitti-outcome-bridge-20250821]
     paths:
       - '.github/workflows/pitti-rc459-kernel.yml'
+      - 'research/rc459_opponent_kernel_sim_2026.py'
+      - 'research/rc459_opponent_kernel_baseline_2026.py'
   workflow_dispatch:
 concurrency:
   group: pitti-rc459-kernel
