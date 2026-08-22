@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - 'research/jobs/current.json'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/jobs/current.json'
 permissions:
   contents: write
 jobs:
@@ -26,7 +30,7 @@ jobs:
       - name: Run Utility v3.2
         run: python research/independent_utility_v3_2025.py
       - name: Persist certification to results branch
-        if: always()
+        if: always() && github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
@@ -41,19 +45,11 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git remote add origin "https://x-access-token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
           git fetch --depth=1 origin pitti-research-results || true
-          if git show-ref --verify --quiet refs/remotes/origin/pitti-research-results; then
-            git checkout -B pitti-research-results origin/pitti-research-results
-          else
-            git checkout --orphan pitti-research-results
-            git rm -rf . 2>/dev/null || true
-          fi
+          if git show-ref --verify --quiet refs/remotes/origin/pitti-research-results; then git checkout -B pitti-research-results origin/pitti-research-results; else git checkout --orphan pitti-research-results; git rm -rf . 2>/dev/null || true; fi
           mkdir -p research/results
           cp /tmp/pitti-result/research/results/utility_v3_2_latest.json research/results/utility_v3_2_latest.json
           git add research/results/utility_v3_2_latest.json
-          if ! git diff --cached --quiet; then
-            git commit -m "Persist PITTI Utility v3.2 result"
-            git push origin HEAD:pitti-research-results
-          fi
+          if ! git diff --cached --quiet; then git commit -m "Persist PITTI Utility v3.2 result"; git push origin HEAD:pitti-research-results; fi
         env:
           GITHUB_TOKEN: ${{ github.token }}
       - name: Upload certification
