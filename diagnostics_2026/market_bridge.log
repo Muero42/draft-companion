@@ -1,0 +1,13 @@
+Traceback (most recent call last):
+  File "/home/runner/work/draft-companion/draft-companion/research/market_outcome_bridge_2026.py", line 158, in <module>
+    yr,diag=build_year(year);rows+=yr;source_health[str(year)]=diag
+            ^^^^^^^^^^^^^^^^
+  File "/home/runner/work/draft-companion/draft-companion/research/market_outcome_bridge_2026.py", line 105, in build_year
+    a=parse_adp(year);o=parse_outcomes(year);rows=[]
+      ^^^^^^^^^^^^^^^
+  File "/home/runner/work/draft-companion/draft-companion/research/market_outcome_bridge_2026.py", line 41, in parse_adp
+    t,heads=table_with(get(url),['player','sleeper'])
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/runner/work/draft-companion/draft-companion/research/market_outcome_bridge_2026.py", line 37, in table_with
+    raise RuntimeError(f'table not found: {need}')
+RuntimeError: table not found: ['player', 'sleeper']

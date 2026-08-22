@@ -1,0 +1,4807 @@
+{
+  "schema": 1,
+  "freeze_package_sha256": "5339a37d275505f2a3a6fe0b84785f435d840d02cc7472a2b8bd934244e884fd",
+  "total_full_drafts": 36000,
+  "runs_per_cell": 2000,
+  "realistic_cells": 9,
+  "policy_ranking_certified": false,
+  "policy_ranking_note": "Current simulations certify market/availability/roster-construction behavior. They do not use the circular Utility-v2 ranking; a separately validated 2026 forecast-to-weekly-outcome bridge is still required for independent policy superiority claims.",
+  "max_realistic_split_half_top50_availability_delta": 0.069,
+  "availability": {
+    "9": [
+      {
+        "name": "Bijan Robinson",
+        "pos": "RB",
+        "quality_rank": 1.17,
+        "adp": 2.7,
+        "min": 0.1995,
+        "mean": 0.2263,
+        "max": 0.241,
+        "range": 0.0415
+      },
+      {
+        "name": "Jahmyr Gibbs",
+        "pos": "RB",
+        "quality_rank": 1.83,
+        "adp": 1.8,
+        "min": 0.2455,
+        "mean": 0.2553,
+        "max": 0.2685,
+        "range": 0.023
+      },
+      {
+        "name": "Ja'Marr Chase",
+        "pos": "WR",
+        "quality_rank": 3.0,
+        "adp": 3.2,
+        "min": 0.2005,
+        "mean": 0.2093,
+        "max": 0.22,
+        "range": 0.0195
+      },
+      {
+        "name": "Puka Nacua",
+        "pos": "WR",
+        "quality_rank": 4.0,
+        "adp": 4.1,
+        "min": 0.169,
+        "mean": 0.1881,
+        "max": 0.2,
+        "range": 0.031
+      },
+      {
+        "name": "Amon-Ra St. Brown",
+        "pos": "WR",
+        "quality_rank": 5.84,
+        "adp": 8.0,
+        "min": 0.2475,
+        "mean": 0.2616,
+        "max": 0.2735,
+        "range": 0.026
+      },
+      {
+        "name": "Jaxon Smith-Njigba",
+        "pos": "WR",
+        "quality_rank": 6.52,
+        "adp": 6.6,
+        "min": 0.184,
+        "mean": 0.2039,
+        "max": 0.2185,
+        "range": 0.0345
+      },
+      {
+        "name": "Jonathan Taylor",
+        "pos": "RB",
+        "quality_rank": 8.3,
+        "adp": 6.2,
+        "min": 0.1895,
+        "mean": 0.1949,
+        "max": 0.205,
+        "range": 0.0155
+      },
+      {
+        "name": "James Cook III",
+        "pos": "RB",
+        "quality_rank": 8.45,
+        "adp": 9.6,
+        "min": 0.481,
+        "mean": 0.4981,
+        "max": 0.511,
+        "range": 0.03
+      },
+      {
+        "name": "Christian McCaffrey",
+        "pos": "RB",
+        "quality_rank": 9.22,
+        "adp": 5.1,
+        "min": 0.181,
+        "mean": 0.1891,
+        "max": 0.1985,
+        "range": 0.0175
+      },
+      {
+        "name": "Chase Brown",
+        "pos": "RB",
+        "quality_rank": 11.89,
+        "adp": 16.6,
+        "min": 0.9555,
+        "mean": 0.9624,
+        "max": 0.9685,
+        "range": 0.013
+      },
+      {
+        "name": "Ashton Jeanty",
+        "pos": "RB",
+        "quality_rank": 12.4,
+        "adp": 12.6,
+        "min": 0.8125,
+        "mean": 0.824,
+        "max": 0.835,
+        "range": 0.0225
+      },
+      {
+        "name": "Kenneth Walker III",
+        "pos": "RB",
+        "quality_rank": 12.48,
+        "adp": 18.1,
+        "min": 0.975,
+        "mean": 0.9801,
+        "max": 0.9835,
+        "range": 0.0085
+      },
+      {
+        "name": "Justin Jefferson",
+        "pos": "WR",
+        "quality_rank": 13.6,
+        "adp": 13.7,
+        "min": 0.875,
+        "mean": 0.8871,
+        "max": 0.8965,
+        "range": 0.0215
+      },
+      {
+        "name": "Brock Bowers",
+        "pos": "TE",
+        "quality_rank": 14.0,
+        "adp": 22.1,
+        "min": 0.995,
+        "mean": 0.9961,
+        "max": 0.997,
+        "range": 0.002
+      },
+      {
+        "name": "CeeDee Lamb",
+        "pos": "WR",
+        "quality_rank": 14.04,
+        "adp": 10.5,
+        "min": 0.582,
+        "mean": 0.6174,
+        "max": 0.6365,
+        "range": 0.0545
+      }
+    ],
+    "12": [
+      {
+        "name": "Jahmyr Gibbs",
+        "pos": "RB",
+        "quality_rank": 1.83,
+        "adp": 1.8,
+        "min": 0.0305,
+        "mean": 0.0357,
+        "max": 0.04,
+        "range": 0.0095
+      },
+      {
+        "name": "Ja'Marr Chase",
+        "pos": "WR",
+        "quality_rank": 3.0,
+        "adp": 3.2,
+        "min": 0.046,
+        "mean": 0.0581,
+        "max": 0.066,
+        "range": 0.02
+      },
+      {
+        "name": "Puka Nacua",
+        "pos": "WR",
+        "quality_rank": 4.0,
+        "adp": 4.1,
+        "min": 0.0625,
+        "mean": 0.0752,
+        "max": 0.085,
+        "range": 0.0225
+      },
+      {
+        "name": "Amon-Ra St. Brown",
+        "pos": "WR",
+        "quality_rank": 5.84,
+        "adp": 8.0,
+        "min": 0.1035,
+        "mean": 0.1086,
+        "max": 0.114,
+        "range": 0.0105
+      },
+      {
+        "name": "Jaxon Smith-Njigba",
+        "pos": "WR",
+        "quality_rank": 6.52,
+        "adp": 6.6,
+        "min": 0.0925,
+        "mean": 0.1117,
+        "max": 0.126,
+        "range": 0.0335
+      },
+      {
+        "name": "Jonathan Taylor",
+        "pos": "RB",
+        "quality_rank": 8.3,
+        "adp": 6.2,
+        "min": 0.113,
+        "mean": 0.1217,
+        "max": 0.1325,
+        "range": 0.0195
+      },
+      {
+        "name": "James Cook III",
+        "pos": "RB",
+        "quality_rank": 8.45,
+        "adp": 9.6,
+        "min": 0.232,
+        "mean": 0.2392,
+        "max": 0.2485,
+        "range": 0.0165
+      },
+      {
+        "name": "Christian McCaffrey",
+        "pos": "RB",
+        "quality_rank": 9.22,
+        "adp": 5.1,
+        "min": 0.1265,
+        "mean": 0.1412,
+        "max": 0.157,
+        "range": 0.0305
+      },
+      {
+        "name": "Chase Brown",
+        "pos": "RB",
+        "quality_rank": 11.89,
+        "adp": 16.6,
+        "min": 0.878,
+        "mean": 0.8942,
+        "max": 0.9105,
+        "range": 0.0325
+      },
+      {
+        "name": "Ashton Jeanty",
+        "pos": "RB",
+        "quality_rank": 12.4,
+        "adp": 12.6,
+        "min": 0.5295,
+        "mean": 0.5476,
+        "max": 0.5605,
+        "range": 0.031
+      },
+      {
+        "name": "Kenneth Walker III",
+        "pos": "RB",
+        "quality_rank": 12.48,
+        "adp": 18.1,
+        "min": 0.939,
+        "mean": 0.9437,
+        "max": 0.948,
+        "range": 0.009
+      },
+      {
+        "name": "Justin Jefferson",
+        "pos": "WR",
+        "quality_rank": 13.6,
+        "adp": 13.7,
+        "min": 0.6795,
+        "mean": 0.6933,
+        "max": 0.7035,
+        "range": 0.024
+      },
+      {
+        "name": "Brock Bowers",
+        "pos": "TE",
+        "quality_rank": 14.0,
+        "adp": 22.1,
+        "min": 0.987,
+        "mean": 0.9895,
+        "max": 0.992,
+        "range": 0.005
+      },
+      {
+        "name": "CeeDee Lamb",
+        "pos": "WR",
+        "quality_rank": 14.04,
+        "adp": 10.5,
+        "min": 0.28,
+        "mean": 0.2947,
+        "max": 0.3145,
+        "range": 0.0345
+      },
+      {
+        "name": "Saquon Barkley",
+        "pos": "RB",
+        "quality_rank": 15.89,
+        "adp": 11.5,
+        "min": 0.3705,
+        "mean": 0.3861,
+        "max": 0.4005,
+        "range": 0.03
+      }
+    ],
+    "29": [
+      {
+        "name": "Jonathan Taylor",
+        "pos": "RB",
+        "quality_rank": 8.3,
+        "adp": 6.2,
+        "min": 0.0,
+        "mean": 0.0034,
+        "max": 0.031,
+        "range": 0.031
+      },
+      {
+        "name": "James Cook III",
+        "pos": "RB",
+        "quality_rank": 8.45,
+        "adp": 9.6,
+        "min": 0.049,
+        "mean": 0.0594,
+        "max": 0.076,
+        "range": 0.027
+      },
+      {
+        "name": "Christian McCaffrey",
+        "pos": "RB",
+        "quality_rank": 9.22,
+        "adp": 5.1,
+        "min": 0.0,
+        "mean": 0.0381,
+        "max": 0.057,
+        "range": 0.057
+      },
+      {
+        "name": "Chase Brown",
+        "pos": "RB",
+        "quality_rank": 11.89,
+        "adp": 16.6,
+        "min": 0.0655,
+        "mean": 0.0889,
+        "max": 0.1035,
+        "range": 0.038
+      },
+      {
+        "name": "Ashton Jeanty",
+        "pos": "RB",
+        "quality_rank": 12.4,
+        "adp": 12.6,
+        "min": 0.087,
+        "mean": 0.1229,
+        "max": 0.1735,
+        "range": 0.0865
+      },
+      {
+        "name": "Kenneth Walker III",
+        "pos": "RB",
+        "quality_rank": 12.48,
+        "adp": 18.1,
+        "min": 0.093,
+        "mean": 0.1014,
+        "max": 0.1065,
+        "range": 0.0135
+      },
+      {
+        "name": "Justin Jefferson",
+        "pos": "WR",
+        "quality_rank": 13.6,
+        "adp": 13.7,
+        "min": 0.122,
+        "mean": 0.1381,
+        "max": 0.154,
+        "range": 0.032
+      },
+      {
+        "name": "Brock Bowers",
+        "pos": "TE",
+        "quality_rank": 14.0,
+        "adp": 22.1,
+        "min": 0.0775,
+        "mean": 0.0865,
+        "max": 0.102,
+        "range": 0.0245
+      },
+      {
+        "name": "CeeDee Lamb",
+        "pos": "WR",
+        "quality_rank": 14.04,
+        "adp": 10.5,
+        "min": 0.1625,
+        "mean": 0.1757,
+        "max": 0.196,
+        "range": 0.0335
+      },
+      {
+        "name": "Saquon Barkley",
+        "pos": "RB",
+        "quality_rank": 15.89,
+        "adp": 11.5,
+        "min": 0.172,
+        "mean": 0.1803,
+        "max": 0.1905,
+        "range": 0.0185
+      },
+      {
+        "name": "Omarion Hampton",
+        "pos": "RB",
+        "quality_rank": 16.23,
+        "adp": 15.6,
+        "min": 0.1105,
+        "mean": 0.1169,
+        "max": 0.127,
+        "range": 0.0165
+      },
+      {
+        "name": "De'Von Achane",
+        "pos": "RB",
+        "quality_rank": 16.33,
+        "adp": 13.6,
+        "min": 0.1365,
+        "mean": 0.1485,
+        "max": 0.1635,
+        "range": 0.027
+      },
+      {
+        "name": "Drake London",
+        "pos": "WR",
+        "quality_rank": 19.67,
+        "adp": 20.6,
+        "min": 0.077,
+        "mean": 0.0844,
+        "max": 0.092,
+        "range": 0.015
+      },
+      {
+        "name": "Nico Collins",
+        "pos": "WR",
+        "quality_rank": 19.69,
+        "adp": 23.1,
+        "min": 0.0685,
+        "mean": 0.0787,
+        "max": 0.087,
+        "range": 0.0185
+      },
+      {
+        "name": "George Pickens",
+        "pos": "WR",
+        "quality_rank": 23.37,
+        "adp": 26.1,
+        "min": 0.0925,
+        "mean": 0.1004,
+        "max": 0.1075,
+        "range": 0.015
+      },
+      {
+        "name": "Derrick Henry",
+        "pos": "RB",
+        "quality_rank": 23.48,
+        "adp": 17.8,
+        "min": 0.0,
+        "mean": 0.0901,
+        "max": 0.1085,
+        "range": 0.1085
+      },
+      {
+        "name": "A.J. Brown",
+        "pos": "WR",
+        "quality_rank": 24.6,
+        "adp": 19.5,
+        "min": 0.0,
+        "mean": 0.0098,
+        "max": 0.088,
+        "range": 0.088
+      }
+    ],
+    "32": [
+      {
+        "name": "Kenneth Walker III",
+        "pos": "RB",
+        "quality_rank": 12.48,
+        "adp": 18.1,
+        "min": 0.0,
+        "mean": 0.0289,
+        "max": 0.048,
+        "range": 0.048
+      },
+      {
+        "name": "Justin Jefferson",
+        "pos": "WR",
+        "quality_rank": 13.6,
+        "adp": 13.7,
+        "min": 0.036,
+        "mean": 0.0413,
+        "max": 0.045,
+        "range": 0.009
+      },
+      {
+        "name": "Brock Bowers",
+        "pos": "TE",
+        "quality_rank": 14.0,
+        "adp": 22.1,
+        "min": 0.0335,
+        "mean": 0.0547,
+        "max": 0.079,
+        "range": 0.0455
+      },
+      {
+        "name": "CeeDee Lamb",
+        "pos": "WR",
+        "quality_rank": 14.04,
+        "adp": 10.5,
+        "min": 0.0,
+        "mean": 0.0344,
+        "max": 0.0725,
+        "range": 0.0725
+      },
+      {
+        "name": "Saquon Barkley",
+        "pos": "RB",
+        "quality_rank": 15.89,
+        "adp": 11.5,
+        "min": 0.068,
+        "mean": 0.0796,
+        "max": 0.0955,
+        "range": 0.0275
+      },
+      {
+        "name": "Omarion Hampton",
+        "pos": "RB",
+        "quality_rank": 16.23,
+        "adp": 15.6,
+        "min": 0.0665,
+        "mean": 0.0716,
+        "max": 0.083,
+        "range": 0.0165
+      },
+      {
+        "name": "De'Von Achane",
+        "pos": "RB",
+        "quality_rank": 16.33,
+        "adp": 13.6,
+        "min": 0.0745,
+        "mean": 0.082,
+        "max": 0.0975,
+        "range": 0.023
+      },
+      {
+        "name": "Drake London",
+        "pos": "WR",
+        "quality_rank": 19.67,
+        "adp": 20.6,
+        "min": 0.0515,
+        "mean": 0.0593,
+        "max": 0.065,
+        "range": 0.0135
+      },
+      {
+        "name": "Nico Collins",
+        "pos": "WR",
+        "quality_rank": 19.69,
+        "adp": 23.1,
+        "min": 0.051,
+        "mean": 0.0577,
+        "max": 0.0635,
+        "range": 0.0125
+      },
+      {
+        "name": "George Pickens",
+        "pos": "WR",
+        "quality_rank": 23.37,
+        "adp": 26.1,
+        "min": 0.068,
+        "mean": 0.0746,
+        "max": 0.081,
+        "range": 0.013
+      },
+      {
+        "name": "Derrick Henry",
+        "pos": "RB",
+        "quality_rank": 23.48,
+        "adp": 17.8,
+        "min": 0.068,
+        "mean": 0.0786,
+        "max": 0.0835,
+        "range": 0.0155
+      },
+      {
+        "name": "A.J. Brown",
+        "pos": "WR",
+        "quality_rank": 24.6,
+        "adp": 19.5,
+        "min": 0.064,
+        "mean": 0.0721,
+        "max": 0.0815,
+        "range": 0.0175
+      },
+      {
+        "name": "Chris Olave",
+        "pos": "WR",
+        "quality_rank": 25.05,
+        "adp": 32.3,
+        "min": 0.4135,
+        "mean": 0.4242,
+        "max": 0.433,
+        "range": 0.0195
+      },
+      {
+        "name": "Zay Flowers",
+        "pos": "WR",
+        "quality_rank": 26.68,
+        "adp": 41.6,
+        "min": 0.975,
+        "mean": 0.9812,
+        "max": 0.9885,
+        "range": 0.0135
+      },
+      {
+        "name": "Malik Nabers",
+        "pos": "WR",
+        "quality_rank": 27.12,
+        "adp": 30.1,
+        "min": 0.189,
+        "mean": 0.2034,
+        "max": 0.2175,
+        "range": 0.0285
+      },
+      {
+        "name": "Kyren Williams",
+        "pos": "RB",
+        "quality_rank": 28.89,
+        "adp": 27.4,
+        "min": 0.0,
+        "mean": 0.0741,
+        "max": 0.1275,
+        "range": 0.1275
+      }
+    ],
+    "49": [
+      {
+        "name": "George Pickens",
+        "pos": "WR",
+        "quality_rank": 23.37,
+        "adp": 26.1,
+        "min": 0.0,
+        "mean": 0.0069,
+        "max": 0.0325,
+        "range": 0.0325
+      },
+      {
+        "name": "A.J. Brown",
+        "pos": "WR",
+        "quality_rank": 24.6,
+        "adp": 19.5,
+        "min": 0.0,
+        "mean": 0.0034,
+        "max": 0.0305,
+        "range": 0.0305
+      },
+      {
+        "name": "Chris Olave",
+        "pos": "WR",
+        "quality_rank": 25.05,
+        "adp": 32.3,
+        "min": 0.07,
+        "mean": 0.0792,
+        "max": 0.0915,
+        "range": 0.0215
+      },
+      {
+        "name": "Zay Flowers",
+        "pos": "WR",
+        "quality_rank": 26.68,
+        "adp": 41.6,
+        "min": 0.051,
+        "mean": 0.0557,
+        "max": 0.061,
+        "range": 0.01
+      },
+      {
+        "name": "Malik Nabers",
+        "pos": "WR",
+        "quality_rank": 27.12,
+        "adp": 30.1,
+        "min": 0.08,
+        "mean": 0.0985,
+        "max": 0.1335,
+        "range": 0.0535
+      },
+      {
+        "name": "Kyren Williams",
+        "pos": "RB",
+        "quality_rank": 28.89,
+        "adp": 27.4,
+        "min": 0.06,
+        "mean": 0.0761,
+        "max": 0.105,
+        "range": 0.045
+      },
+      {
+        "name": "DeVonta Smith",
+        "pos": "WR",
+        "quality_rank": 29.33,
+        "adp": 34.5,
+        "min": 0.094,
+        "mean": 0.1057,
+        "max": 0.119,
+        "range": 0.025
+      },
+      {
+        "name": "Colston Loveland",
+        "pos": "TE",
+        "quality_rank": 31.54,
+        "adp": 44.4,
+        "min": 0.0935,
+        "mean": 0.0998,
+        "max": 0.106,
+        "range": 0.0125
+      },
+      {
+        "name": "Jaylen Waddle",
+        "pos": "WR",
+        "quality_rank": 31.96,
+        "adp": 47.5,
+        "min": 0.1115,
+        "mean": 0.1195,
+        "max": 0.129,
+        "range": 0.0175
+      },
+      {
+        "name": "Trey McBride",
+        "pos": "TE",
+        "quality_rank": 32.17,
+        "adp": 24.1,
+        "min": 0.0615,
+        "mean": 0.0745,
+        "max": 0.087,
+        "range": 0.0255
+      },
+      {
+        "name": "Tee Higgins",
+        "pos": "WR",
+        "quality_rank": 32.75,
+        "adp": 38.6,
+        "min": 0.061,
+        "mean": 0.068,
+        "max": 0.076,
+        "range": 0.015
+      },
+      {
+        "name": "Breece Hall",
+        "pos": "RB",
+        "quality_rank": 33.25,
+        "adp": 31.3,
+        "min": 0.1315,
+        "mean": 0.1437,
+        "max": 0.154,
+        "range": 0.0225
+      },
+      {
+        "name": "Emeka Egbuka",
+        "pos": "WR",
+        "quality_rank": 34.81,
+        "adp": 39.4,
+        "min": 0.058,
+        "mean": 0.0655,
+        "max": 0.073,
+        "range": 0.015
+      },
+      {
+        "name": "Jeremiyah Love",
+        "pos": "RB",
+        "quality_rank": 35.22,
+        "adp": 25.3,
+        "min": 0.066,
+        "mean": 0.0761,
+        "max": 0.084,
+        "range": 0.018
+      },
+      {
+        "name": "Javonte Williams",
+        "pos": "RB",
+        "quality_rank": 35.89,
+        "adp": 33.6,
+        "min": 0.1125,
+        "mean": 0.1177,
+        "max": 0.1275,
+        "range": 0.015
+      },
+      {
+        "name": "Ladd McConkey",
+        "pos": "WR",
+        "quality_rank": 36.1,
+        "adp": 40.5,
+        "min": 0.061,
+        "mean": 0.0653,
+        "max": 0.07,
+        "range": 0.009
+      },
+      {
+        "name": "Tetairoa McMillan",
+        "pos": "WR",
+        "quality_rank": 36.6,
+        "adp": 36.2,
+        "min": 0.0,
+        "mean": 0.0521,
+        "max": 0.085,
+        "range": 0.085
+      }
+    ],
+    "52": [
+      {
+        "name": "DeVonta Smith",
+        "pos": "WR",
+        "quality_rank": 29.33,
+        "adp": 34.5,
+        "min": 0.0,
+        "mean": 0.0225,
+        "max": 0.0365,
+        "range": 0.0365
+      },
+      {
+        "name": "Colston Loveland",
+        "pos": "TE",
+        "quality_rank": 31.54,
+        "adp": 44.4,
+        "min": 0.039,
+        "mean": 0.0533,
+        "max": 0.065,
+        "range": 0.026
+      },
+      {
+        "name": "Jaylen Waddle",
+        "pos": "WR",
+        "quality_rank": 31.96,
+        "adp": 47.5,
+        "min": 0.038,
+        "mean": 0.056,
+        "max": 0.072,
+        "range": 0.034
+      },
+      {
+        "name": "Trey McBride",
+        "pos": "TE",
+        "quality_rank": 32.17,
+        "adp": 24.1,
+        "min": 0.0,
+        "mean": 0.0121,
+        "max": 0.042,
+        "range": 0.042
+      },
+      {
+        "name": "Tee Higgins",
+        "pos": "WR",
+        "quality_rank": 32.75,
+        "adp": 38.6,
+        "min": 0.0,
+        "mean": 0.031,
+        "max": 0.04,
+        "range": 0.04
+      },
+      {
+        "name": "Breece Hall",
+        "pos": "RB",
+        "quality_rank": 33.25,
+        "adp": 31.3,
+        "min": 0.046,
+        "mean": 0.0627,
+        "max": 0.0755,
+        "range": 0.0295
+      },
+      {
+        "name": "Emeka Egbuka",
+        "pos": "WR",
+        "quality_rank": 34.81,
+        "adp": 39.4,
+        "min": 0.0355,
+        "mean": 0.0429,
+        "max": 0.0485,
+        "range": 0.013
+      },
+      {
+        "name": "Jeremiyah Love",
+        "pos": "RB",
+        "quality_rank": 35.22,
+        "adp": 25.3,
+        "min": 0.0,
+        "mean": 0.0156,
+        "max": 0.0525,
+        "range": 0.0525
+      },
+      {
+        "name": "Javonte Williams",
+        "pos": "RB",
+        "quality_rank": 35.89,
+        "adp": 33.6,
+        "min": 0.0665,
+        "mean": 0.0738,
+        "max": 0.085,
+        "range": 0.0185
+      },
+      {
+        "name": "Ladd McConkey",
+        "pos": "WR",
+        "quality_rank": 36.1,
+        "adp": 40.5,
+        "min": 0.047,
+        "mean": 0.0501,
+        "max": 0.055,
+        "range": 0.008
+      },
+      {
+        "name": "Tetairoa McMillan",
+        "pos": "WR",
+        "quality_rank": 36.6,
+        "adp": 36.2,
+        "min": 0.0495,
+        "mean": 0.0607,
+        "max": 0.0665,
+        "range": 0.017
+      },
+      {
+        "name": "Josh Allen",
+        "pos": "QB",
+        "quality_rank": 37.15,
+        "adp": 21.0,
+        "min": 0.0,
+        "mean": 0.0446,
+        "max": 0.0635,
+        "range": 0.0635
+      },
+      {
+        "name": "Garrett Wilson",
+        "pos": "WR",
+        "quality_rank": 38.48,
+        "adp": 43.1,
+        "min": 0.037,
+        "mean": 0.0447,
+        "max": 0.053,
+        "range": 0.016
+      },
+      {
+        "name": "Rashee Rice",
+        "pos": "WR",
+        "quality_rank": 39.1,
+        "adp": 28.0,
+        "min": 0.062,
+        "mean": 0.0702,
+        "max": 0.08,
+        "range": 0.018
+      },
+      {
+        "name": "Tyler Warren",
+        "pos": "TE",
+        "quality_rank": 42.64,
+        "adp": 50.7,
+        "min": 0.1865,
+        "mean": 0.1964,
+        "max": 0.204,
+        "range": 0.0175
+      },
+      {
+        "name": "Josh Jacobs",
+        "pos": "RB",
+        "quality_rank": 43.83,
+        "adp": 29.6,
+        "min": 0.0,
+        "mean": 0.0731,
+        "max": 0.1135,
+        "range": 0.1135
+      },
+      {
+        "name": "D'Andre Swift",
+        "pos": "RB",
+        "quality_rank": 44.48,
+        "adp": 52.4,
+        "min": 0.0,
+        "mean": 0.2788,
+        "max": 0.432,
+        "range": 0.432
+      },
+      {
+        "name": "Terry McLaurin",
+        "pos": "WR",
+        "quality_rank": 45.45,
+        "adp": 53.6,
+        "min": 0.0,
+        "mean": 0.1947,
+        "max": 0.587,
+        "range": 0.587
+      },
+      {
+        "name": "Travis Etienne Jr.",
+        "pos": "RB",
+        "quality_rank": 47.53,
+        "adp": 41.7,
+        "min": 0.0,
+        "mean": 0.0106,
+        "max": 0.0505,
+        "range": 0.0505
+      }
+    ],
+    "69": [
+      {
+        "name": "Tyler Warren",
+        "pos": "TE",
+        "quality_rank": 42.64,
+        "adp": 50.7,
+        "min": 0.059,
+        "mean": 0.0712,
+        "max": 0.0815,
+        "range": 0.0225
+      },
+      {
+        "name": "Josh Jacobs",
+        "pos": "RB",
+        "quality_rank": 43.83,
+        "adp": 29.6,
+        "min": 0.033,
+        "mean": 0.0407,
+        "max": 0.0545,
+        "range": 0.0215
+      },
+      {
+        "name": "D'Andre Swift",
+        "pos": "RB",
+        "quality_rank": 44.48,
+        "adp": 52.4,
+        "min": 0.08,
+        "mean": 0.0906,
+        "max": 0.0985,
+        "range": 0.0185
+      },
+      {
+        "name": "Terry McLaurin",
+        "pos": "WR",
+        "quality_rank": 45.45,
+        "adp": 53.6,
+        "min": 0.0765,
+        "mean": 0.0866,
+        "max": 0.0975,
+        "range": 0.021
+      },
+      {
+        "name": "Travis Etienne Jr.",
+        "pos": "RB",
+        "quality_rank": 47.53,
+        "adp": 41.7,
+        "min": 0.0,
+        "mean": 0.024,
+        "max": 0.0515,
+        "range": 0.0515
+      },
+      {
+        "name": "Jameson Williams",
+        "pos": "WR",
+        "quality_rank": 48.3,
+        "adp": 57.6,
+        "min": 0.0535,
+        "mean": 0.0619,
+        "max": 0.072,
+        "range": 0.0185
+      },
+      {
+        "name": "Luther Burden III",
+        "pos": "WR",
+        "quality_rank": 49.15,
+        "adp": 55.1,
+        "min": 0.074,
+        "mean": 0.0801,
+        "max": 0.0895,
+        "range": 0.0155
+      },
+      {
+        "name": "Lamar Jackson",
+        "pos": "QB",
+        "quality_rank": 49.46,
+        "adp": 34.2,
+        "min": 0.047,
+        "mean": 0.0977,
+        "max": 0.1295,
+        "range": 0.0825
+      },
+      {
+        "name": "Christian Watson",
+        "pos": "WR",
+        "quality_rank": 50.72,
+        "adp": 68.8,
+        "min": 0.198,
+        "mean": 0.2251,
+        "max": 0.241,
+        "range": 0.043
+      },
+      {
+        "name": "David Montgomery",
+        "pos": "RB",
+        "quality_rank": 51.72,
+        "adp": 48.0,
+        "min": 0.0705,
+        "mean": 0.0812,
+        "max": 0.0925,
+        "range": 0.022
+      },
+      {
+        "name": "Mike Evans",
+        "pos": "WR",
+        "quality_rank": 51.95,
+        "adp": 60.3,
+        "min": 0.046,
+        "mean": 0.0526,
+        "max": 0.0585,
+        "range": 0.0125
+      },
+      {
+        "name": "DJ Moore",
+        "pos": "WR",
+        "quality_rank": 52.95,
+        "adp": 55.6,
+        "min": 0.0655,
+        "mean": 0.0776,
+        "max": 0.0905,
+        "range": 0.025
+      },
+      {
+        "name": "Bucky Irving",
+        "pos": "RB",
+        "quality_rank": 53.44,
+        "adp": 45.8,
+        "min": 0.048,
+        "mean": 0.0586,
+        "max": 0.0645,
+        "range": 0.0165
+      },
+      {
+        "name": "Cam Skattebo",
+        "pos": "RB",
+        "quality_rank": 53.78,
+        "adp": 37.7,
+        "min": 0.06,
+        "mean": 0.0671,
+        "max": 0.073,
+        "range": 0.013
+      },
+      {
+        "name": "Drake Maye",
+        "pos": "QB",
+        "quality_rank": 56.0,
+        "adp": 51.5,
+        "min": 0.159,
+        "mean": 0.174,
+        "max": 0.1875,
+        "range": 0.0285
+      },
+      {
+        "name": "Bhayshul Tuten",
+        "pos": "RB",
+        "quality_rank": 56.64,
+        "adp": 59.9,
+        "min": 0.0,
+        "mean": 0.0242,
+        "max": 0.0645,
+        "range": 0.0645
+      }
+    ],
+    "72": [
+      {
+        "name": "Luther Burden III",
+        "pos": "WR",
+        "quality_rank": 49.15,
+        "adp": 55.1,
+        "min": 0.0,
+        "mean": 0.0083,
+        "max": 0.0375,
+        "range": 0.0375
+      },
+      {
+        "name": "Lamar Jackson",
+        "pos": "QB",
+        "quality_rank": 49.46,
+        "adp": 34.2,
+        "min": 0.0,
+        "mean": 0.0123,
+        "max": 0.0415,
+        "range": 0.0415
+      },
+      {
+        "name": "Christian Watson",
+        "pos": "WR",
+        "quality_rank": 50.72,
+        "adp": 68.8,
+        "min": 0.0615,
+        "mean": 0.0866,
+        "max": 0.1045,
+        "range": 0.043
+      },
+      {
+        "name": "David Montgomery",
+        "pos": "RB",
+        "quality_rank": 51.72,
+        "adp": 48.0,
+        "min": 0.0,
+        "mean": 0.0169,
+        "max": 0.0435,
+        "range": 0.0435
+      },
+      {
+        "name": "Mike Evans",
+        "pos": "WR",
+        "quality_rank": 51.95,
+        "adp": 60.3,
+        "min": 0.0,
+        "mean": 0.0187,
+        "max": 0.037,
+        "range": 0.037
+      },
+      {
+        "name": "DJ Moore",
+        "pos": "WR",
+        "quality_rank": 52.95,
+        "adp": 55.6,
+        "min": 0.0345,
+        "mean": 0.0431,
+        "max": 0.052,
+        "range": 0.0175
+      },
+      {
+        "name": "Bucky Irving",
+        "pos": "RB",
+        "quality_rank": 53.44,
+        "adp": 45.8,
+        "min": 0.0,
+        "mean": 0.0113,
+        "max": 0.0365,
+        "range": 0.0365
+      },
+      {
+        "name": "Cam Skattebo",
+        "pos": "RB",
+        "quality_rank": 53.78,
+        "adp": 37.7,
+        "min": 0.0,
+        "mean": 0.0153,
+        "max": 0.0485,
+        "range": 0.0485
+      },
+      {
+        "name": "Drake Maye",
+        "pos": "QB",
+        "quality_rank": 56.0,
+        "adp": 51.5,
+        "min": 0.0995,
+        "mean": 0.1121,
+        "max": 0.1265,
+        "range": 0.027
+      },
+      {
+        "name": "Bhayshul Tuten",
+        "pos": "RB",
+        "quality_rank": 56.64,
+        "adp": 59.9,
+        "min": 0.0,
+        "mean": 0.0328,
+        "max": 0.046,
+        "range": 0.046
+      },
+      {
+        "name": "Rome Odunze",
+        "pos": "WR",
+        "quality_rank": 56.9,
+        "adp": 62.9,
+        "min": 0.0,
+        "mean": 0.0249,
+        "max": 0.043,
+        "range": 0.043
+      },
+      {
+        "name": "Parker Washington",
+        "pos": "WR",
+        "quality_rank": 58.23,
+        "adp": 74.4,
+        "min": 0.5385,
+        "mean": 0.5886,
+        "max": 0.609,
+        "range": 0.0705
+      },
+      {
+        "name": "Quinshon Judkins",
+        "pos": "RB",
+        "quality_rank": 58.39,
+        "adp": 46.0,
+        "min": 0.0325,
+        "mean": 0.0429,
+        "max": 0.058,
+        "range": 0.0255
+      },
+      {
+        "name": "Davante Adams",
+        "pos": "WR",
+        "quality_rank": 60.4,
+        "adp": 58.0,
+        "min": 0.035,
+        "mean": 0.0491,
+        "max": 0.061,
+        "range": 0.026
+      },
+      {
+        "name": "Tucker Kraft",
+        "pos": "TE",
+        "quality_rank": 64.38,
+        "adp": 67.1,
+        "min": 0.1265,
+        "mean": 0.1321,
+        "max": 0.138,
+        "range": 0.0115
+      },
+      {
+        "name": "Jalen Hurts",
+        "pos": "QB",
+        "quality_rank": 65.33,
+        "adp": 62.3,
+        "min": 0.08,
+        "mean": 0.088,
+        "max": 0.091,
+        "range": 0.011
+      },
+      {
+        "name": "Joe Burrow",
+        "pos": "QB",
+        "quality_rank": 66.33,
+        "adp": 54.4,
+        "min": 0.0,
+        "mean": 0.1146,
+        "max": 0.1575,
+        "range": 0.1575
+      },
+      {
+        "name": "TreVeyon Henderson",
+        "pos": "RB",
+        "quality_rank": 66.72,
+        "adp": 48.9,
+        "min": 0.0,
+        "mean": 0.0668,
+        "max": 0.095,
+        "range": 0.095
+      },
+      {
+        "name": "Jayden Daniels",
+        "pos": "QB",
+        "quality_rank": 67.0,
+        "adp": 66.9,
+        "min": 0.0,
+        "mean": 0.0871,
+        "max": 0.163,
+        "range": 0.163
+      },
+      {
+        "name": "Jadarian Price",
+        "pos": "RB",
+        "quality_rank": 67.0,
+        "adp": 61.0,
+        "min": 0.0,
+        "mean": 0.0258,
+        "max": 0.0495,
+        "range": 0.0495
+      },
+      {
+        "name": "Marvin Harrison Jr.",
+        "pos": "WR",
+        "quality_rank": 69.25,
+        "adp": 73.7,
+        "min": 0.0,
+        "mean": 0.3024,
+        "max": 0.5485,
+        "range": 0.5485
+      }
+    ],
+    "89": [
+      {
+        "name": "Drake Maye",
+        "pos": "QB",
+        "quality_rank": 56.0,
+        "adp": 51.5,
+        "min": 0.0,
+        "mean": 0.0254,
+        "max": 0.0445,
+        "range": 0.0445
+      },
+      {
+        "name": "Parker Washington",
+        "pos": "WR",
+        "quality_rank": 58.23,
+        "adp": 74.4,
+        "min": 0.0,
+        "mean": 0.0182,
+        "max": 0.0355,
+        "range": 0.0355
+      },
+      {
+        "name": "Quinshon Judkins",
+        "pos": "RB",
+        "quality_rank": 58.39,
+        "adp": 46.0,
+        "min": 0.0,
+        "mean": 0.0069,
+        "max": 0.032,
+        "range": 0.032
+      },
+      {
+        "name": "Davante Adams",
+        "pos": "WR",
+        "quality_rank": 60.4,
+        "adp": 58.0,
+        "min": 0.0,
+        "mean": 0.0073,
+        "max": 0.033,
+        "range": 0.033
+      },
+      {
+        "name": "Tucker Kraft",
+        "pos": "TE",
+        "quality_rank": 64.38,
+        "adp": 67.1,
+        "min": 0.091,
+        "mean": 0.0975,
+        "max": 0.103,
+        "range": 0.012
+      },
+      {
+        "name": "Jalen Hurts",
+        "pos": "QB",
+        "quality_rank": 65.33,
+        "adp": 62.3,
+        "min": 0.061,
+        "mean": 0.0667,
+        "max": 0.071,
+        "range": 0.01
+      },
+      {
+        "name": "Joe Burrow",
+        "pos": "QB",
+        "quality_rank": 66.33,
+        "adp": 54.4,
+        "min": 0.094,
+        "mean": 0.1064,
+        "max": 0.123,
+        "range": 0.029
+      },
+      {
+        "name": "TreVeyon Henderson",
+        "pos": "RB",
+        "quality_rank": 66.72,
+        "adp": 48.9,
+        "min": 0.0,
+        "mean": 0.0234,
+        "max": 0.072,
+        "range": 0.072
+      },
+      {
+        "name": "Jayden Daniels",
+        "pos": "QB",
+        "quality_rank": 67.0,
+        "adp": 66.9,
+        "min": 0.114,
+        "mean": 0.122,
+        "max": 0.1315,
+        "range": 0.0175
+      },
+      {
+        "name": "Jadarian Price",
+        "pos": "RB",
+        "quality_rank": 67.0,
+        "adp": 61.0,
+        "min": 0.0,
+        "mean": 0.0296,
+        "max": 0.0355,
+        "range": 0.0355
+      },
+      {
+        "name": "Marvin Harrison Jr.",
+        "pos": "WR",
+        "quality_rank": 69.25,
+        "adp": 73.7,
+        "min": 0.045,
+        "mean": 0.0524,
+        "max": 0.06,
+        "range": 0.015
+      },
+      {
+        "name": "Carnell Tate",
+        "pos": "WR",
+        "quality_rank": 71.0,
+        "adp": 65.8,
+        "min": 0.0365,
+        "mean": 0.0403,
+        "max": 0.045,
+        "range": 0.0085
+      },
+      {
+        "name": "Jaylen Warren",
+        "pos": "RB",
+        "quality_rank": 72.72,
+        "adp": 69.1,
+        "min": 0.0745,
+        "mean": 0.0847,
+        "max": 0.096,
+        "range": 0.0215
+      },
+      {
+        "name": "Caleb Williams",
+        "pos": "QB",
+        "quality_rank": 73.83,
+        "adp": 76.2,
+        "min": 0.13,
+        "mean": 0.1506,
+        "max": 0.164,
+        "range": 0.034
+      },
+      {
+        "name": "Harold Fannin Jr.",
+        "pos": "TE",
+        "quality_rank": 74.1,
+        "adp": 72.2,
+        "min": 0.1815,
+        "mean": 0.1889,
+        "max": 0.203,
+        "range": 0.0215
+      },
+      {
+        "name": "Sam LaPorta",
+        "pos": "TE",
+        "quality_rank": 74.15,
+        "adp": 64.1,
+        "min": 0.102,
+        "mean": 0.1075,
+        "max": 0.116,
+        "range": 0.014
+      },
+      {
+        "name": "Rhamondre Stevenson",
+        "pos": "RB",
+        "quality_rank": 74.28,
+        "adp": 78.6,
+        "min": 0.0,
+        "mean": 0.0384,
+        "max": 0.052,
+        "range": 0.052
+      },
+      {
+        "name": "Jonathon Brooks",
+        "pos": "RB",
+        "quality_rank": 74.56,
+        "adp": 90.2,
+        "min": 0.0,
+        "mean": 0.2372,
+        "max": 0.3895,
+        "range": 0.3895
+      },
+      {
+        "name": "Justin Herbert",
+        "pos": "QB",
+        "quality_rank": 75.0,
+        "adp": 79.4,
+        "min": 0.0,
+        "mean": 0.0566,
+        "max": 0.178,
+        "range": 0.178
+      },
+      {
+        "name": "Trevor Lawrence",
+        "pos": "QB",
+        "quality_rank": 76.25,
+        "adp": 97.7,
+        "min": 0.0,
+        "mean": 0.2047,
+        "max": 0.929,
+        "range": 0.929
+      }
+    ],
+    "92": [
+      {
+        "name": "Joe Burrow",
+        "pos": "QB",
+        "quality_rank": 66.33,
+        "adp": 54.4,
+        "min": 0.0,
+        "mean": 0.0071,
+        "max": 0.033,
+        "range": 0.033
+      },
+      {
+        "name": "Jayden Daniels",
+        "pos": "QB",
+        "quality_rank": 67.0,
+        "adp": 66.9,
+        "min": 0.037,
+        "mean": 0.0481,
+        "max": 0.0595,
+        "range": 0.0225
+      },
+      {
+        "name": "Jaylen Warren",
+        "pos": "RB",
+        "quality_rank": 72.72,
+        "adp": 69.1,
+        "min": 0.0,
+        "mean": 0.0149,
+        "max": 0.0365,
+        "range": 0.0365
+      },
+      {
+        "name": "Caleb Williams",
+        "pos": "QB",
+        "quality_rank": 73.83,
+        "adp": 76.2,
+        "min": 0.0895,
+        "mean": 0.1038,
+        "max": 0.1155,
+        "range": 0.026
+      },
+      {
+        "name": "Harold Fannin Jr.",
+        "pos": "TE",
+        "quality_rank": 74.1,
+        "adp": 72.2,
+        "min": 0.1115,
+        "mean": 0.1206,
+        "max": 0.129,
+        "range": 0.0175
+      },
+      {
+        "name": "Sam LaPorta",
+        "pos": "TE",
+        "quality_rank": 74.15,
+        "adp": 64.1,
+        "min": 0.0405,
+        "mean": 0.0548,
+        "max": 0.074,
+        "range": 0.0335
+      },
+      {
+        "name": "Jonathon Brooks",
+        "pos": "RB",
+        "quality_rank": 74.56,
+        "adp": 90.2,
+        "min": 0.118,
+        "mean": 0.1426,
+        "max": 0.1725,
+        "range": 0.0545
+      },
+      {
+        "name": "Justin Herbert",
+        "pos": "QB",
+        "quality_rank": 75.0,
+        "adp": 79.4,
+        "min": 0.119,
+        "mean": 0.1318,
+        "max": 0.1425,
+        "range": 0.0235
+      },
+      {
+        "name": "Trevor Lawrence",
+        "pos": "QB",
+        "quality_rank": 76.25,
+        "adp": 97.7,
+        "min": 0.8095,
+        "mean": 0.8344,
+        "max": 0.847,
+        "range": 0.0375
+      },
+      {
+        "name": "Kyle Pitts Sr.",
+        "pos": "TE",
+        "quality_rank": 78.95,
+        "adp": 71.2,
+        "min": 0.1205,
+        "mean": 0.1423,
+        "max": 0.171,
+        "range": 0.0505
+      },
+      {
+        "name": "DK Metcalf",
+        "pos": "WR",
+        "quality_rank": 79.05,
+        "adp": 76.5,
+        "min": 0.0,
+        "mean": 0.0303,
+        "max": 0.0375,
+        "range": 0.0375
+      },
+      {
+        "name": "Brian Thomas Jr.",
+        "pos": "WR",
+        "quality_rank": 79.75,
+        "adp": 69.3,
+        "min": 0.046,
+        "mean": 0.0551,
+        "max": 0.0655,
+        "range": 0.0195
+      },
+      {
+        "name": "Stefon Diggs",
+        "pos": "WR",
+        "quality_rank": 83.15,
+        "adp": 116.3,
+        "min": 0.9695,
+        "mean": 0.9888,
+        "max": 0.9975,
+        "range": 0.028
+      },
+      {
+        "name": "Dak Prescott",
+        "pos": "QB",
+        "quality_rank": 85.33,
+        "adp": 88.1,
+        "min": 0.3205,
+        "mean": 0.3344,
+        "max": 0.348,
+        "range": 0.0275
+      },
+      {
+        "name": "Brock Purdy",
+        "pos": "QB",
+        "quality_rank": 85.75,
+        "adp": 117.4,
+        "min": 0.997,
+        "mean": 0.9984,
+        "max": 0.999,
+        "range": 0.002
+      },
+      {
+        "name": "Rico Dowdle",
+        "pos": "RB",
+        "quality_rank": 87.67,
+        "adp": 83.2,
+        "min": 0.0,
+        "mean": 0.0594,
+        "max": 0.083,
+        "range": 0.083
+      },
+      {
+        "name": "Tony Pollard",
+        "pos": "RB",
+        "quality_rank": 88.06,
+        "adp": 80.5,
+        "min": 0.0,
+        "mean": 0.0281,
+        "max": 0.056,
+        "range": 0.056
+      }
+    ],
+    "109": [
+      {
+        "name": "Caleb Williams",
+        "pos": "QB",
+        "quality_rank": 73.83,
+        "adp": 76.2,
+        "min": 0.0,
+        "mean": 0.0367,
+        "max": 0.065,
+        "range": 0.065
+      },
+      {
+        "name": "Harold Fannin Jr.",
+        "pos": "TE",
+        "quality_rank": 74.1,
+        "adp": 72.2,
+        "min": 0.0,
+        "mean": 0.0222,
+        "max": 0.0475,
+        "range": 0.0475
+      },
+      {
+        "name": "Sam LaPorta",
+        "pos": "TE",
+        "quality_rank": 74.15,
+        "adp": 64.1,
+        "min": 0.0,
+        "mean": 0.0034,
+        "max": 0.031,
+        "range": 0.031
+      },
+      {
+        "name": "Justin Herbert",
+        "pos": "QB",
+        "quality_rank": 75.0,
+        "adp": 79.4,
+        "min": 0.0435,
+        "mean": 0.0648,
+        "max": 0.093,
+        "range": 0.0495
+      },
+      {
+        "name": "Trevor Lawrence",
+        "pos": "QB",
+        "quality_rank": 76.25,
+        "adp": 97.7,
+        "min": 0.277,
+        "mean": 0.2928,
+        "max": 0.3185,
+        "range": 0.0415
+      },
+      {
+        "name": "Kyle Pitts Sr.",
+        "pos": "TE",
+        "quality_rank": 78.95,
+        "adp": 71.2,
+        "min": 0.052,
+        "mean": 0.0771,
+        "max": 0.12,
+        "range": 0.068
+      },
+      {
+        "name": "Brian Thomas Jr.",
+        "pos": "WR",
+        "quality_rank": 79.75,
+        "adp": 69.3,
+        "min": 0.0,
+        "mean": 0.0074,
+        "max": 0.035,
+        "range": 0.035
+      },
+      {
+        "name": "Stefon Diggs",
+        "pos": "WR",
+        "quality_rank": 83.15,
+        "adp": 116.3,
+        "min": 0.5995,
+        "mean": 0.7336,
+        "max": 0.812,
+        "range": 0.2125
+      },
+      {
+        "name": "Dak Prescott",
+        "pos": "QB",
+        "quality_rank": 85.33,
+        "adp": 88.1,
+        "min": 0.251,
+        "mean": 0.2658,
+        "max": 0.274,
+        "range": 0.023
+      },
+      {
+        "name": "Brock Purdy",
+        "pos": "QB",
+        "quality_rank": 85.75,
+        "adp": 117.4,
+        "min": 0.944,
+        "mean": 0.9523,
+        "max": 0.9615,
+        "range": 0.0175
+      },
+      {
+        "name": "Rico Dowdle",
+        "pos": "RB",
+        "quality_rank": 87.67,
+        "adp": 83.2,
+        "min": 0.036,
+        "mean": 0.0459,
+        "max": 0.055,
+        "range": 0.019
+      },
+      {
+        "name": "Tony Pollard",
+        "pos": "RB",
+        "quality_rank": 88.06,
+        "adp": 80.5,
+        "min": 0.0,
+        "mean": 0.0224,
+        "max": 0.039,
+        "range": 0.039
+      },
+      {
+        "name": "Josh Downs",
+        "pos": "WR",
+        "quality_rank": 89.3,
+        "adp": 110.3,
+        "min": 0.482,
+        "mean": 0.4999,
+        "max": 0.528,
+        "range": 0.046
+      },
+      {
+        "name": "Blake Corum",
+        "pos": "RB",
+        "quality_rank": 89.67,
+        "adp": 93.5,
+        "min": 0.0705,
+        "mean": 0.0791,
+        "max": 0.1005,
+        "range": 0.03
+      },
+      {
+        "name": "George Kittle",
+        "pos": "TE",
+        "quality_rank": 89.9,
+        "adp": 90.8,
+        "min": 0.237,
+        "mean": 0.2517,
+        "max": 0.277,
+        "range": 0.04
+      },
+      {
+        "name": "Jaxson Dart",
+        "pos": "QB",
+        "quality_rank": 92.17,
+        "adp": 96.5,
+        "min": 0.0,
+        "mean": 0.3028,
+        "max": 0.358,
+        "range": 0.358
+      },
+      {
+        "name": "Jacory Croskey-Merritt",
+        "pos": "RB",
+        "quality_rank": 92.56,
+        "adp": 99.5,
+        "min": 0.0,
+        "mean": 0.0915,
+        "max": 0.126,
+        "range": 0.126
+      },
+      {
+        "name": "Michael Pittman Jr.",
+        "pos": "WR",
+        "quality_rank": 93.85,
+        "adp": 100.0,
+        "min": 0.0,
+        "mean": 0.0493,
+        "max": 0.1205,
+        "range": 0.1205
+      },
+      {
+        "name": "Jordan Addison",
+        "pos": "WR",
+        "quality_rank": 94.75,
+        "adp": 101.1,
+        "min": 0.0,
+        "mean": 0.0526,
+        "max": 0.1305,
+        "range": 0.1305
+      },
+      {
+        "name": "Chris Godwin Jr.",
+        "pos": "WR",
+        "quality_rank": 95.35,
+        "adp": 95.3,
+        "min": 0.0,
+        "mean": 0.0078,
+        "max": 0.0705,
+        "range": 0.0705
+      }
+    ],
+    "112": [
+      {
+        "name": "Justin Herbert",
+        "pos": "QB",
+        "quality_rank": 75.0,
+        "adp": 79.4,
+        "min": 0.0,
+        "mean": 0.0114,
+        "max": 0.0365,
+        "range": 0.0365
+      },
+      {
+        "name": "Trevor Lawrence",
+        "pos": "QB",
+        "quality_rank": 76.25,
+        "adp": 97.7,
+        "min": 0.1625,
+        "mean": 0.1891,
+        "max": 0.2125,
+        "range": 0.05
+      },
+      {
+        "name": "Kyle Pitts Sr.",
+        "pos": "TE",
+        "quality_rank": 78.95,
+        "adp": 71.2,
+        "min": 0.0,
+        "mean": 0.0204,
+        "max": 0.0655,
+        "range": 0.0655
+      },
+      {
+        "name": "Stefon Diggs",
+        "pos": "WR",
+        "quality_rank": 83.15,
+        "adp": 116.3,
+        "min": 0.1725,
+        "mean": 0.2854,
+        "max": 0.356,
+        "range": 0.1835
+      },
+      {
+        "name": "Dak Prescott",
+        "pos": "QB",
+        "quality_rank": 85.33,
+        "adp": 88.1,
+        "min": 0.234,
+        "mean": 0.2407,
+        "max": 0.2495,
+        "range": 0.0155
+      },
+      {
+        "name": "Brock Purdy",
+        "pos": "QB",
+        "quality_rank": 85.75,
+        "adp": 117.4,
+        "min": 0.892,
+        "mean": 0.9148,
+        "max": 0.9335,
+        "range": 0.0415
+      },
+      {
+        "name": "Rico Dowdle",
+        "pos": "RB",
+        "quality_rank": 87.67,
+        "adp": 83.2,
+        "min": 0.0,
+        "mean": 0.0133,
+        "max": 0.042,
+        "range": 0.042
+      },
+      {
+        "name": "Tony Pollard",
+        "pos": "RB",
+        "quality_rank": 88.06,
+        "adp": 80.5,
+        "min": 0.0,
+        "mean": 0.0034,
+        "max": 0.0305,
+        "range": 0.0305
+      },
+      {
+        "name": "Josh Downs",
+        "pos": "WR",
+        "quality_rank": 89.3,
+        "adp": 110.3,
+        "min": 0.296,
+        "mean": 0.3353,
+        "max": 0.369,
+        "range": 0.073
+      },
+      {
+        "name": "Blake Corum",
+        "pos": "RB",
+        "quality_rank": 89.67,
+        "adp": 93.5,
+        "min": 0.0,
+        "mean": 0.0395,
+        "max": 0.0895,
+        "range": 0.0895
+      },
+      {
+        "name": "George Kittle",
+        "pos": "TE",
+        "quality_rank": 89.9,
+        "adp": 90.8,
+        "min": 0.1875,
+        "mean": 0.2136,
+        "max": 0.266,
+        "range": 0.0785
+      },
+      {
+        "name": "Jaxson Dart",
+        "pos": "QB",
+        "quality_rank": 92.17,
+        "adp": 96.5,
+        "min": 0.31,
+        "mean": 0.3352,
+        "max": 0.3555,
+        "range": 0.0455
+      },
+      {
+        "name": "Jacory Croskey-Merritt",
+        "pos": "RB",
+        "quality_rank": 92.56,
+        "adp": 99.5,
+        "min": 0.0925,
+        "mean": 0.1054,
+        "max": 0.123,
+        "range": 0.0305
+      },
+      {
+        "name": "Michael Pittman Jr.",
+        "pos": "WR",
+        "quality_rank": 93.85,
+        "adp": 100.0,
+        "min": 0.092,
+        "mean": 0.1054,
+        "max": 0.1135,
+        "range": 0.0215
+      },
+      {
+        "name": "Jordan Addison",
+        "pos": "WR",
+        "quality_rank": 94.75,
+        "adp": 101.1,
+        "min": 0.099,
+        "mean": 0.1161,
+        "max": 0.133,
+        "range": 0.034
+      },
+      {
+        "name": "Chris Godwin Jr.",
+        "pos": "WR",
+        "quality_rank": 95.35,
+        "adp": 95.3,
+        "min": 0.0,
+        "mean": 0.0684,
+        "max": 0.088,
+        "range": 0.088
+      },
+      {
+        "name": "Alec Pierce",
+        "pos": "WR",
+        "quality_rank": 97.2,
+        "adp": 92.8,
+        "min": 0.0,
+        "mean": 0.0483,
+        "max": 0.078,
+        "range": 0.078
+      },
+      {
+        "name": "Courtland Sutton",
+        "pos": "WR",
+        "quality_rank": 98.8,
+        "adp": 83.5,
+        "min": 0.0,
+        "mean": 0.037,
+        "max": 0.063,
+        "range": 0.063
+      },
+      {
+        "name": "Isaiah Likely",
+        "pos": "TE",
+        "quality_rank": 101.4,
+        "adp": 114.9,
+        "min": 0.0,
+        "mean": 0.5733,
+        "max": 0.869,
+        "range": 0.869
+      },
+      {
+        "name": "Quentin Johnston",
+        "pos": "WR",
+        "quality_rank": 101.9,
+        "adp": 102.5,
+        "min": 0.0,
+        "mean": 0.0306,
+        "max": 0.1385,
+        "range": 0.1385
+      }
+    ],
+    "129": [
+      {
+        "name": "Trevor Lawrence",
+        "pos": "QB",
+        "quality_rank": 76.25,
+        "adp": 97.7,
+        "min": 0.0365,
+        "mean": 0.0539,
+        "max": 0.0645,
+        "range": 0.028
+      },
+      {
+        "name": "Dak Prescott",
+        "pos": "QB",
+        "quality_rank": 85.33,
+        "adp": 88.1,
+        "min": 0.147,
+        "mean": 0.1584,
+        "max": 0.1745,
+        "range": 0.0275
+      },
+      {
+        "name": "Brock Purdy",
+        "pos": "QB",
+        "quality_rank": 85.75,
+        "adp": 117.4,
+        "min": 0.3925,
+        "mean": 0.4573,
+        "max": 0.5005,
+        "range": 0.108
+      },
+      {
+        "name": "Josh Downs",
+        "pos": "WR",
+        "quality_rank": 89.3,
+        "adp": 110.3,
+        "min": 0.0825,
+        "mean": 0.1018,
+        "max": 0.117,
+        "range": 0.0345
+      },
+      {
+        "name": "Blake Corum",
+        "pos": "RB",
+        "quality_rank": 89.67,
+        "adp": 93.5,
+        "min": 0.0,
+        "mean": 0.0139,
+        "max": 0.0495,
+        "range": 0.0495
+      },
+      {
+        "name": "George Kittle",
+        "pos": "TE",
+        "quality_rank": 89.9,
+        "adp": 90.8,
+        "min": 0.147,
+        "mean": 0.1703,
+        "max": 0.2145,
+        "range": 0.0675
+      },
+      {
+        "name": "Jaxson Dart",
+        "pos": "QB",
+        "quality_rank": 92.17,
+        "adp": 96.5,
+        "min": 0.2715,
+        "mean": 0.3033,
+        "max": 0.3485,
+        "range": 0.077
+      },
+      {
+        "name": "Jacory Croskey-Merritt",
+        "pos": "RB",
+        "quality_rank": 92.56,
+        "adp": 99.5,
+        "min": 0.0425,
+        "mean": 0.0571,
+        "max": 0.079,
+        "range": 0.0365
+      },
+      {
+        "name": "Michael Pittman Jr.",
+        "pos": "WR",
+        "quality_rank": 93.85,
+        "adp": 100.0,
+        "min": 0.0625,
+        "mean": 0.0755,
+        "max": 0.082,
+        "range": 0.0195
+      },
+      {
+        "name": "Jordan Addison",
+        "pos": "WR",
+        "quality_rank": 94.75,
+        "adp": 101.1,
+        "min": 0.0795,
+        "mean": 0.0884,
+        "max": 0.102,
+        "range": 0.0225
+      },
+      {
+        "name": "Chris Godwin Jr.",
+        "pos": "WR",
+        "quality_rank": 95.35,
+        "adp": 95.3,
+        "min": 0.044,
+        "mean": 0.0578,
+        "max": 0.068,
+        "range": 0.024
+      },
+      {
+        "name": "Alec Pierce",
+        "pos": "WR",
+        "quality_rank": 97.2,
+        "adp": 92.8,
+        "min": 0.0525,
+        "mean": 0.0629,
+        "max": 0.0745,
+        "range": 0.022
+      },
+      {
+        "name": "Courtland Sutton",
+        "pos": "WR",
+        "quality_rank": 98.8,
+        "adp": 83.5,
+        "min": 0.0325,
+        "mean": 0.0411,
+        "max": 0.056,
+        "range": 0.0235
+      },
+      {
+        "name": "Isaiah Likely",
+        "pos": "TE",
+        "quality_rank": 101.4,
+        "adp": 114.9,
+        "min": 0.4465,
+        "mean": 0.4618,
+        "max": 0.4755,
+        "range": 0.029
+      },
+      {
+        "name": "Quentin Johnston",
+        "pos": "WR",
+        "quality_rank": 101.9,
+        "adp": 102.5,
+        "min": 0.1045,
+        "mean": 0.1162,
+        "max": 0.126,
+        "range": 0.0215
+      },
+      {
+        "name": "Makai Lemon",
+        "pos": "WR",
+        "quality_rank": 102.1,
+        "adp": 85.2,
+        "min": 0.0,
+        "mean": 0.0306,
+        "max": 0.051,
+        "range": 0.051
+      }
+    ],
+    "132": [
+      {
+        "name": "Dak Prescott",
+        "pos": "QB",
+        "quality_rank": 85.33,
+        "adp": 88.1,
+        "min": 0.037,
+        "mean": 0.0467,
+        "max": 0.056,
+        "range": 0.019
+      },
+      {
+        "name": "Brock Purdy",
+        "pos": "QB",
+        "quality_rank": 85.75,
+        "adp": 117.4,
+        "min": 0.1865,
+        "mean": 0.3167,
+        "max": 0.39,
+        "range": 0.2035
+      },
+      {
+        "name": "Josh Downs",
+        "pos": "WR",
+        "quality_rank": 89.3,
+        "adp": 110.3,
+        "min": 0.0,
+        "mean": 0.0036,
+        "max": 0.032,
+        "range": 0.032
+      },
+      {
+        "name": "George Kittle",
+        "pos": "TE",
+        "quality_rank": 89.9,
+        "adp": 90.8,
+        "min": 0.07,
+        "mean": 0.0896,
+        "max": 0.1195,
+        "range": 0.0495
+      },
+      {
+        "name": "Jaxson Dart",
+        "pos": "QB",
+        "quality_rank": 92.17,
+        "adp": 96.5,
+        "min": 0.1705,
+        "mean": 0.2118,
+        "max": 0.286,
+        "range": 0.1155
+      },
+      {
+        "name": "Michael Pittman Jr.",
+        "pos": "WR",
+        "quality_rank": 93.85,
+        "adp": 100.0,
+        "min": 0.0,
+        "mean": 0.0114,
+        "max": 0.0375,
+        "range": 0.0375
+      },
+      {
+        "name": "Jordan Addison",
+        "pos": "WR",
+        "quality_rank": 94.75,
+        "adp": 101.1,
+        "min": 0.041,
+        "mean": 0.0476,
+        "max": 0.0535,
+        "range": 0.0125
+      },
+      {
+        "name": "Chris Godwin Jr.",
+        "pos": "WR",
+        "quality_rank": 95.35,
+        "adp": 95.3,
+        "min": 0.0,
+        "mean": 0.0084,
+        "max": 0.0385,
+        "range": 0.0385
+      },
+      {
+        "name": "Alec Pierce",
+        "pos": "WR",
+        "quality_rank": 97.2,
+        "adp": 92.8,
+        "min": 0.0,
+        "mean": 0.0179,
+        "max": 0.047,
+        "range": 0.047
+      },
+      {
+        "name": "Courtland Sutton",
+        "pos": "WR",
+        "quality_rank": 98.8,
+        "adp": 83.5,
+        "min": 0.0,
+        "mean": 0.0117,
+        "max": 0.038,
+        "range": 0.038
+      },
+      {
+        "name": "Isaiah Likely",
+        "pos": "TE",
+        "quality_rank": 101.4,
+        "adp": 114.9,
+        "min": 0.407,
+        "mean": 0.4341,
+        "max": 0.455,
+        "range": 0.048
+      },
+      {
+        "name": "Quentin Johnston",
+        "pos": "WR",
+        "quality_rank": 101.9,
+        "adp": 102.5,
+        "min": 0.077,
+        "mean": 0.0897,
+        "max": 0.1065,
+        "range": 0.0295
+      },
+      {
+        "name": "Makai Lemon",
+        "pos": "WR",
+        "quality_rank": 102.1,
+        "adp": 85.2,
+        "min": 0.0,
+        "mean": 0.0154,
+        "max": 0.055,
+        "range": 0.055
+      },
+      {
+        "name": "Bo Nix",
+        "pos": "QB",
+        "quality_rank": 102.5,
+        "adp": 118.9,
+        "min": 0.4905,
+        "mean": 0.5053,
+        "max": 0.5135,
+        "range": 0.023
+      },
+      {
+        "name": "Chuba Hubbard",
+        "pos": "RB",
+        "quality_rank": 103.0,
+        "adp": 75.5,
+        "min": 0.0,
+        "mean": 0.0115,
+        "max": 0.0375,
+        "range": 0.0375
+      },
+      {
+        "name": "Rachaad White",
+        "pos": "RB",
+        "quality_rank": 103.06,
+        "adp": 115.7,
+        "min": 0.144,
+        "mean": 0.1598,
+        "max": 0.178,
+        "range": 0.034
+      },
+      {
+        "name": "Kenny Gainwell",
+        "pos": "RB",
+        "quality_rank": 103.5,
+        "adp": 108.5,
+        "min": 0.0,
+        "mean": 0.1329,
+        "max": 0.194,
+        "range": 0.194
+      },
+      {
+        "name": "Jayden Reed",
+        "pos": "WR",
+        "quality_rank": 103.6,
+        "adp": 103.8,
+        "min": 0.0,
+        "mean": 0.0722,
+        "max": 0.1145,
+        "range": 0.1145
+      },
+      {
+        "name": "Jordan Mason",
+        "pos": "RB",
+        "quality_rank": 104.22,
+        "adp": 104.2,
+        "min": 0.0,
+        "mean": 0.0828,
+        "max": 0.13,
+        "range": 0.13
+      },
+      {
+        "name": "Wan'Dale Robinson",
+        "pos": "WR",
+        "quality_rank": 104.4,
+        "adp": 111.8,
+        "min": 0.0,
+        "mean": 0.1189,
+        "max": 0.1905,
+        "range": 0.1905
+      },
+      {
+        "name": "KC Concepcion",
+        "pos": "WR",
+        "quality_rank": 106.35,
+        "adp": 113.5,
+        "min": 0.0,
+        "mean": 0.1049,
+        "max": 0.174,
+        "range": 0.174
+      },
+      {
+        "name": "Travis Kelce",
+        "pos": "TE",
+        "quality_rank": 107.45,
+        "adp": 97.9,
+        "min": 0.0,
+        "mean": 0.1265,
+        "max": 0.3095,
+        "range": 0.3095
+      }
+    ],
+    "149": [
+      {
+        "name": "Brock Purdy",
+        "pos": "QB",
+        "quality_rank": 85.75,
+        "adp": 117.4,
+        "min": 0.07,
+        "mean": 0.1682,
+        "max": 0.2295,
+        "range": 0.1595
+      },
+      {
+        "name": "George Kittle",
+        "pos": "TE",
+        "quality_rank": 89.9,
+        "adp": 90.8,
+        "min": 0.0,
+        "mean": 0.0149,
+        "max": 0.0505,
+        "range": 0.0505
+      },
+      {
+        "name": "Jaxson Dart",
+        "pos": "QB",
+        "quality_rank": 92.17,
+        "adp": 96.5,
+        "min": 0.079,
+        "mean": 0.1098,
+        "max": 0.169,
+        "range": 0.09
+      },
+      {
+        "name": "Isaiah Likely",
+        "pos": "TE",
+        "quality_rank": 101.4,
+        "adp": 114.9,
+        "min": 0.29,
+        "mean": 0.3103,
+        "max": 0.3295,
+        "range": 0.0395
+      },
+      {
+        "name": "Quentin Johnston",
+        "pos": "WR",
+        "quality_rank": 101.9,
+        "adp": 102.5,
+        "min": 0.044,
+        "mean": 0.0569,
+        "max": 0.0685,
+        "range": 0.0245
+      },
+      {
+        "name": "Makai Lemon",
+        "pos": "WR",
+        "quality_rank": 102.1,
+        "adp": 85.2,
+        "min": 0.0,
+        "mean": 0.0076,
+        "max": 0.038,
+        "range": 0.038
+      },
+      {
+        "name": "Bo Nix",
+        "pos": "QB",
+        "quality_rank": 102.5,
+        "adp": 118.9,
+        "min": 0.437,
+        "mean": 0.456,
+        "max": 0.4755,
+        "range": 0.0385
+      },
+      {
+        "name": "Rachaad White",
+        "pos": "RB",
+        "quality_rank": 103.06,
+        "adp": 115.7,
+        "min": 0.091,
+        "mean": 0.1129,
+        "max": 0.134,
+        "range": 0.043
+      },
+      {
+        "name": "Kenny Gainwell",
+        "pos": "RB",
+        "quality_rank": 103.5,
+        "adp": 108.5,
+        "min": 0.111,
+        "mean": 0.1237,
+        "max": 0.145,
+        "range": 0.034
+      },
+      {
+        "name": "Jayden Reed",
+        "pos": "WR",
+        "quality_rank": 103.6,
+        "adp": 103.8,
+        "min": 0.0605,
+        "mean": 0.0778,
+        "max": 0.0945,
+        "range": 0.034
+      },
+      {
+        "name": "Jordan Mason",
+        "pos": "RB",
+        "quality_rank": 104.22,
+        "adp": 104.2,
+        "min": 0.084,
+        "mean": 0.0943,
+        "max": 0.108,
+        "range": 0.024
+      },
+      {
+        "name": "Wan'Dale Robinson",
+        "pos": "WR",
+        "quality_rank": 104.4,
+        "adp": 111.8,
+        "min": 0.123,
+        "mean": 0.1342,
+        "max": 0.1545,
+        "range": 0.0315
+      },
+      {
+        "name": "KC Concepcion",
+        "pos": "WR",
+        "quality_rank": 106.35,
+        "adp": 113.5,
+        "min": 0.117,
+        "mean": 0.1289,
+        "max": 0.144,
+        "range": 0.027
+      },
+      {
+        "name": "RJ Harvey",
+        "pos": "RB",
+        "quality_rank": 106.5,
+        "adp": 81.2,
+        "min": 0.0,
+        "mean": 0.0086,
+        "max": 0.0385,
+        "range": 0.0385
+      },
+      {
+        "name": "Travis Kelce",
+        "pos": "TE",
+        "quality_rank": 107.45,
+        "adp": 97.9,
+        "min": 0.217,
+        "mean": 0.2396,
+        "max": 0.268,
+        "range": 0.051
+      },
+      {
+        "name": "Kyle Monangai",
+        "pos": "RB",
+        "quality_rank": 110.08,
+        "adp": 87.2,
+        "min": 0.0,
+        "mean": 0.0291,
+        "max": 0.0675,
+        "range": 0.0675
+      },
+      {
+        "name": "Michael Wilson",
+        "pos": "WR",
+        "quality_rank": 110.6,
+        "adp": 89.5,
+        "min": 0.0,
+        "mean": 0.0327,
+        "max": 0.055,
+        "range": 0.055
+      },
+      {
+        "name": "Dalton Kincaid",
+        "pos": "TE",
+        "quality_rank": 110.7,
+        "adp": 94.2,
+        "min": 0.0,
+        "mean": 0.1501,
+        "max": 0.2415,
+        "range": 0.2415
+      },
+      {
+        "name": "Dallas Goedert",
+        "pos": "TE",
+        "quality_rank": 111.65,
+        "adp": 120.3,
+        "min": 0.0,
+        "mean": 0.0897,
+        "max": 0.411,
+        "range": 0.411
+      }
+    ]
+  },
+  "selection_rates": {
+    "9": [
+      {
+        "name": "Bijan Robinson",
+        "pos": "RB",
+        "min": 0.1995,
+        "mean": 0.2263,
+        "max": 0.241
+      },
+      {
+        "name": "Jahmyr Gibbs",
+        "pos": "RB",
+        "min": 0.213,
+        "mean": 0.2187,
+        "max": 0.229
+      },
+      {
+        "name": "Ja'Marr Chase",
+        "pos": "WR",
+        "min": 0.1345,
+        "mean": 0.1476,
+        "max": 0.158
+      },
+      {
+        "name": "Amon-Ra St. Brown",
+        "pos": "WR",
+        "min": 0.0965,
+        "mean": 0.1077,
+        "max": 0.112
+      },
+      {
+        "name": "Puka Nacua",
+        "pos": "WR",
+        "min": 0.0995,
+        "mean": 0.1068,
+        "max": 0.1235
+      },
+      {
+        "name": "Jaxon Smith-Njigba",
+        "pos": "WR",
+        "min": 0.054,
+        "mean": 0.0679,
+        "max": 0.0765
+      },
+      {
+        "name": "Jonathan Taylor",
+        "pos": "RB",
+        "min": 0.0425,
+        "mean": 0.0499,
+        "max": 0.0545
+      },
+      {
+        "name": "James Cook III",
+        "pos": "RB",
+        "min": 0.0285,
+        "mean": 0.0456,
+        "max": 0.064
+      },
+      {
+        "name": "Christian McCaffrey",
+        "pos": "RB",
+        "min": 0.01,
+        "mean": 0.0295,
+        "max": 0.0415
+      }
+    ],
+    "12": [
+      {
+        "name": "Chase Brown",
+        "pos": "RB",
+        "min": 0.078,
+        "mean": 0.1576,
+        "max": 0.2985
+      },
+      {
+        "name": "Ashton Jeanty",
+        "pos": "RB",
+        "min": 0.016,
+        "mean": 0.1553,
+        "max": 0.2325
+      },
+      {
+        "name": "James Cook III",
+        "pos": "RB",
+        "min": 0.127,
+        "mean": 0.1504,
+        "max": 0.1675
+      },
+      {
+        "name": "Christian McCaffrey",
+        "pos": "RB",
+        "min": 0.0885,
+        "mean": 0.0971,
+        "max": 0.1035
+      },
+      {
+        "name": "Amon-Ra St. Brown",
+        "pos": "WR",
+        "min": 0.086,
+        "mean": 0.0937,
+        "max": 0.099
+      },
+      {
+        "name": "Jonathan Taylor",
+        "pos": "RB",
+        "min": 0.082,
+        "mean": 0.0934,
+        "max": 0.104
+      },
+      {
+        "name": "Jaxon Smith-Njigba",
+        "pos": "WR",
+        "min": 0.075,
+        "mean": 0.091,
+        "max": 0.106
+      },
+      {
+        "name": "Puka Nacua",
+        "pos": "WR",
+        "min": 0.0585,
+        "mean": 0.0687,
+        "max": 0.0775
+      },
+      {
+        "name": "Ja'Marr Chase",
+        "pos": "WR",
+        "min": 0.0455,
+        "mean": 0.0549,
+        "max": 0.0625
+      },
+      {
+        "name": "Jahmyr Gibbs",
+        "pos": "RB",
+        "min": 0.0305,
+        "mean": 0.0357,
+        "max": 0.04
+      }
+    ],
+    "29": [
+      {
+        "name": "CeeDee Lamb",
+        "pos": "WR",
+        "min": 0.098,
+        "mean": 0.1326,
+        "max": 0.165
+      },
+      {
+        "name": "Ashton Jeanty",
+        "pos": "RB",
+        "min": 0.074,
+        "mean": 0.1079,
+        "max": 0.154
+      },
+      {
+        "name": "Saquon Barkley",
+        "pos": "RB",
+        "min": 0.0765,
+        "mean": 0.1006,
+        "max": 0.1125
+      },
+      {
+        "name": "Justin Jefferson",
+        "pos": "WR",
+        "min": 0.086,
+        "mean": 0.0967,
+        "max": 0.1085
+      },
+      {
+        "name": "Chase Brown",
+        "pos": "RB",
+        "min": 0.0575,
+        "mean": 0.0736,
+        "max": 0.0905
+      },
+      {
+        "name": "De'Von Achane",
+        "pos": "RB",
+        "min": 0.052,
+        "mean": 0.0665,
+        "max": 0.084
+      },
+      {
+        "name": "Kenneth Walker III",
+        "pos": "RB",
+        "min": 0.056,
+        "mean": 0.0637,
+        "max": 0.08
+      },
+      {
+        "name": "James Cook III",
+        "pos": "RB",
+        "min": 0.0435,
+        "mean": 0.0538,
+        "max": 0.068
+      },
+      {
+        "name": "Omarion Hampton",
+        "pos": "RB",
+        "min": 0.0375,
+        "mean": 0.0452,
+        "max": 0.0565
+      },
+      {
+        "name": "Christian McCaffrey",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0357,
+        "max": 0.0525
+      },
+      {
+        "name": "Brock Bowers",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.0218,
+        "max": 0.0525
+      },
+      {
+        "name": "Chris Olave",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0209,
+        "max": 0.0375
+      },
+      {
+        "name": "Jonathan Taylor",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0093,
+        "max": 0.0295
+      },
+      {
+        "name": "Drake London",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0086,
+        "max": 0.027
+      },
+      {
+        "name": "Derrick Henry",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0063,
+        "max": 0.0295
+      }
+    ],
+    "32": [
+      {
+        "name": "Chris Olave",
+        "pos": "WR",
+        "min": 0.1555,
+        "mean": 0.1749,
+        "max": 0.1955
+      },
+      {
+        "name": "Zay Flowers",
+        "pos": "WR",
+        "min": 0.079,
+        "mean": 0.1279,
+        "max": 0.1945
+      },
+      {
+        "name": "Saquon Barkley",
+        "pos": "RB",
+        "min": 0.0595,
+        "mean": 0.0695,
+        "max": 0.0845
+      },
+      {
+        "name": "De'Von Achane",
+        "pos": "RB",
+        "min": 0.0635,
+        "mean": 0.0686,
+        "max": 0.0815
+      },
+      {
+        "name": "Omarion Hampton",
+        "pos": "RB",
+        "min": 0.0505,
+        "mean": 0.0576,
+        "max": 0.068
+      },
+      {
+        "name": "Derrick Henry",
+        "pos": "RB",
+        "min": 0.044,
+        "mean": 0.0551,
+        "max": 0.0655
+      },
+      {
+        "name": "A.J. Brown",
+        "pos": "WR",
+        "min": 0.0425,
+        "mean": 0.0481,
+        "max": 0.055
+      },
+      {
+        "name": "Drake London",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0411,
+        "max": 0.0535
+      },
+      {
+        "name": "George Pickens",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0408,
+        "max": 0.0505
+      },
+      {
+        "name": "Malik Nabers",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0396,
+        "max": 0.066
+      },
+      {
+        "name": "Nico Collins",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0366,
+        "max": 0.0435
+      },
+      {
+        "name": "Brock Bowers",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.0319,
+        "max": 0.0555
+      },
+      {
+        "name": "CeeDee Lamb",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0211,
+        "max": 0.065
+      },
+      {
+        "name": "Justin Jefferson",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0183,
+        "max": 0.0425
+      },
+      {
+        "name": "Kenneth Walker III",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0099,
+        "max": 0.046
+      }
+    ],
+    "49": [
+      {
+        "name": "Malik Nabers",
+        "pos": "WR",
+        "min": 0.068,
+        "mean": 0.0845,
+        "max": 0.1175
+      },
+      {
+        "name": "Breece Hall",
+        "pos": "RB",
+        "min": 0.0585,
+        "mean": 0.0809,
+        "max": 0.097
+      },
+      {
+        "name": "DeVonta Smith",
+        "pos": "WR",
+        "min": 0.063,
+        "mean": 0.0746,
+        "max": 0.0825
+      },
+      {
+        "name": "Chris Olave",
+        "pos": "WR",
+        "min": 0.059,
+        "mean": 0.0663,
+        "max": 0.0755
+      },
+      {
+        "name": "Kyren Williams",
+        "pos": "RB",
+        "min": 0.048,
+        "mean": 0.0619,
+        "max": 0.0815
+      },
+      {
+        "name": "Trey McBride",
+        "pos": "TE",
+        "min": 0.0405,
+        "mean": 0.0551,
+        "max": 0.071
+      },
+      {
+        "name": "Javonte Williams",
+        "pos": "RB",
+        "min": 0.0325,
+        "mean": 0.0438,
+        "max": 0.0515
+      },
+      {
+        "name": "Colston Loveland",
+        "pos": "TE",
+        "min": 0.0345,
+        "mean": 0.0412,
+        "max": 0.0505
+      },
+      {
+        "name": "Jeremiyah Love",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0408,
+        "max": 0.06
+      },
+      {
+        "name": "Zay Flowers",
+        "pos": "WR",
+        "min": 0.033,
+        "mean": 0.0392,
+        "max": 0.043
+      },
+      {
+        "name": "Jaylen Waddle",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0317,
+        "max": 0.0615
+      },
+      {
+        "name": "Tee Higgins",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0271,
+        "max": 0.0395
+      },
+      {
+        "name": "Josh Allen",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.0157,
+        "max": 0.053
+      },
+      {
+        "name": "Tyler Warren",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.0085,
+        "max": 0.041
+      },
+      {
+        "name": "Rashee Rice",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0043,
+        "max": 0.039
+      },
+      {
+        "name": "Josh Jacobs",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0041,
+        "max": 0.037
+      }
+    ],
+    "52": [
+      {
+        "name": "D'Andre Swift",
+        "pos": "RB",
+        "min": 0.1055,
+        "mean": 0.1204,
+        "max": 0.1355
+      },
+      {
+        "name": "Terry McLaurin",
+        "pos": "WR",
+        "min": 0.0625,
+        "mean": 0.0832,
+        "max": 0.1015
+      },
+      {
+        "name": "Tyler Warren",
+        "pos": "TE",
+        "min": 0.062,
+        "mean": 0.0736,
+        "max": 0.078
+      },
+      {
+        "name": "Josh Jacobs",
+        "pos": "RB",
+        "min": 0.064,
+        "mean": 0.0734,
+        "max": 0.0785
+      },
+      {
+        "name": "Javonte Williams",
+        "pos": "RB",
+        "min": 0.0525,
+        "mean": 0.0581,
+        "max": 0.0645
+      },
+      {
+        "name": "Breece Hall",
+        "pos": "RB",
+        "min": 0.0415,
+        "mean": 0.0553,
+        "max": 0.0625
+      },
+      {
+        "name": "Rashee Rice",
+        "pos": "WR",
+        "min": 0.0425,
+        "mean": 0.0507,
+        "max": 0.055
+      },
+      {
+        "name": "Tetairoa McMillan",
+        "pos": "WR",
+        "min": 0.0345,
+        "mean": 0.0424,
+        "max": 0.0495
+      },
+      {
+        "name": "Colston Loveland",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.0376,
+        "max": 0.0485
+      },
+      {
+        "name": "Jaylen Waddle",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0348,
+        "max": 0.0535
+      },
+      {
+        "name": "Josh Allen",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.0244,
+        "max": 0.0405
+      },
+      {
+        "name": "Ladd McConkey",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0241,
+        "max": 0.041
+      },
+      {
+        "name": "Lamar Jackson",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.019,
+        "max": 0.067
+      },
+      {
+        "name": "Emeka Egbuka",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0163,
+        "max": 0.0395
+      },
+      {
+        "name": "Jeremiyah Love",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0089,
+        "max": 0.0405
+      }
+    ],
+    "69": [
+      {
+        "name": "Lamar Jackson",
+        "pos": "QB",
+        "min": 0.039,
+        "mean": 0.0787,
+        "max": 0.12
+      },
+      {
+        "name": "D'Andre Swift",
+        "pos": "RB",
+        "min": 0.058,
+        "mean": 0.0694,
+        "max": 0.079
+      },
+      {
+        "name": "Terry McLaurin",
+        "pos": "WR",
+        "min": 0.0555,
+        "mean": 0.0641,
+        "max": 0.072
+      },
+      {
+        "name": "Drake Maye",
+        "pos": "QB",
+        "min": 0.043,
+        "mean": 0.0618,
+        "max": 0.0755
+      },
+      {
+        "name": "Parker Washington",
+        "pos": "WR",
+        "min": 0.04,
+        "mean": 0.0606,
+        "max": 0.0935
+      },
+      {
+        "name": "Christian Watson",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0569,
+        "max": 0.1065
+      },
+      {
+        "name": "Tyler Warren",
+        "pos": "TE",
+        "min": 0.044,
+        "mean": 0.0527,
+        "max": 0.0625
+      },
+      {
+        "name": "Luther Burden III",
+        "pos": "WR",
+        "min": 0.0405,
+        "mean": 0.0507,
+        "max": 0.0615
+      },
+      {
+        "name": "David Montgomery",
+        "pos": "RB",
+        "min": 0.034,
+        "mean": 0.0499,
+        "max": 0.0635
+      },
+      {
+        "name": "Cam Skattebo",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0355,
+        "max": 0.059
+      },
+      {
+        "name": "Jameson Williams",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0353,
+        "max": 0.0445
+      },
+      {
+        "name": "DJ Moore",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0259,
+        "max": 0.0435
+      },
+      {
+        "name": "Josh Jacobs",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0158,
+        "max": 0.0495
+      },
+      {
+        "name": "Travis Etienne Jr.",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0141,
+        "max": 0.044
+      },
+      {
+        "name": "Bucky Irving",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0083,
+        "max": 0.038
+      }
+    ],
+    "72": [
+      {
+        "name": "Parker Washington",
+        "pos": "WR",
+        "min": 0.251,
+        "mean": 0.2661,
+        "max": 0.288
+      },
+      {
+        "name": "Drake Maye",
+        "pos": "QB",
+        "min": 0.075,
+        "mean": 0.0784,
+        "max": 0.0865
+      },
+      {
+        "name": "Christian Watson",
+        "pos": "WR",
+        "min": 0.049,
+        "mean": 0.0638,
+        "max": 0.0745
+      },
+      {
+        "name": "TreVeyon Henderson",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0433,
+        "max": 0.065
+      },
+      {
+        "name": "Joe Burrow",
+        "pos": "QB",
+        "min": 0.028,
+        "mean": 0.0399,
+        "max": 0.049
+      },
+      {
+        "name": "Marvin Harrison Jr.",
+        "pos": "WR",
+        "min": 0.0285,
+        "mean": 0.0377,
+        "max": 0.0435
+      },
+      {
+        "name": "DJ Moore",
+        "pos": "WR",
+        "min": 0.0295,
+        "mean": 0.0361,
+        "max": 0.045
+      },
+      {
+        "name": "Quinshon Judkins",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0234,
+        "max": 0.0375
+      },
+      {
+        "name": "Davante Adams",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0213,
+        "max": 0.0385
+      },
+      {
+        "name": "David Montgomery",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0211,
+        "max": 0.037
+      },
+      {
+        "name": "Mike Evans",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0188,
+        "max": 0.033
+      },
+      {
+        "name": "Luther Burden III",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0162,
+        "max": 0.035
+      },
+      {
+        "name": "Bhayshul Tuten",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0134,
+        "max": 0.0365
+      },
+      {
+        "name": "Cam Skattebo",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0123,
+        "max": 0.0395
+      },
+      {
+        "name": "Lamar Jackson",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.0106,
+        "max": 0.0355
+      },
+      {
+        "name": "Rome Odunze",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0072,
+        "max": 0.033
+      },
+      {
+        "name": "Bucky Irving",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0062,
+        "max": 0.029
+      },
+      {
+        "name": "Jameson Williams",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0056,
+        "max": 0.025
+      },
+      {
+        "name": "D'Andre Swift",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0027,
+        "max": 0.024
+      }
+    ],
+    "89": [
+      {
+        "name": "Joe Burrow",
+        "pos": "QB",
+        "min": 0.074,
+        "mean": 0.0892,
+        "max": 0.099
+      },
+      {
+        "name": "Tucker Kraft",
+        "pos": "TE",
+        "min": 0.072,
+        "mean": 0.0765,
+        "max": 0.0805
+      },
+      {
+        "name": "Jayden Daniels",
+        "pos": "QB",
+        "min": 0.062,
+        "mean": 0.0738,
+        "max": 0.0865
+      },
+      {
+        "name": "Harold Fannin Jr.",
+        "pos": "TE",
+        "min": 0.057,
+        "mean": 0.0679,
+        "max": 0.0785
+      },
+      {
+        "name": "Jonathon Brooks",
+        "pos": "RB",
+        "min": 0.0485,
+        "mean": 0.0664,
+        "max": 0.096
+      },
+      {
+        "name": "Jaylen Warren",
+        "pos": "RB",
+        "min": 0.0445,
+        "mean": 0.0549,
+        "max": 0.0615
+      },
+      {
+        "name": "Sam LaPorta",
+        "pos": "TE",
+        "min": 0.0355,
+        "mean": 0.0527,
+        "max": 0.0675
+      },
+      {
+        "name": "Jalen Hurts",
+        "pos": "QB",
+        "min": 0.0445,
+        "mean": 0.0488,
+        "max": 0.055
+      },
+      {
+        "name": "Caleb Williams",
+        "pos": "QB",
+        "min": 0.0385,
+        "mean": 0.0448,
+        "max": 0.0545
+      },
+      {
+        "name": "Kyle Pitts Sr.",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.027,
+        "max": 0.046
+      },
+      {
+        "name": "Marvin Harrison Jr.",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0253,
+        "max": 0.048
+      },
+      {
+        "name": "TreVeyon Henderson",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0192,
+        "max": 0.06
+      },
+      {
+        "name": "Drake Maye",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.0173,
+        "max": 0.0415
+      },
+      {
+        "name": "Trevor Lawrence",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.0131,
+        "max": 0.04
+      },
+      {
+        "name": "Justin Herbert",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.0114,
+        "max": 0.0395
+      },
+      {
+        "name": "Carnell Tate",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0077,
+        "max": 0.0345
+      }
+    ],
+    "92": [
+      {
+        "name": "Stefon Diggs",
+        "pos": "WR",
+        "min": 0.0585,
+        "mean": 0.1291,
+        "max": 0.268
+      },
+      {
+        "name": "Trevor Lawrence",
+        "pos": "QB",
+        "min": 0.104,
+        "mean": 0.1212,
+        "max": 0.143
+      },
+      {
+        "name": "Jonathon Brooks",
+        "pos": "RB",
+        "min": 0.0795,
+        "mean": 0.0906,
+        "max": 0.1075
+      },
+      {
+        "name": "Harold Fannin Jr.",
+        "pos": "TE",
+        "min": 0.07,
+        "mean": 0.0857,
+        "max": 0.101
+      },
+      {
+        "name": "Justin Herbert",
+        "pos": "QB",
+        "min": 0.0465,
+        "mean": 0.0653,
+        "max": 0.0795
+      },
+      {
+        "name": "Kyle Pitts Sr.",
+        "pos": "TE",
+        "min": 0.0425,
+        "mean": 0.0649,
+        "max": 0.091
+      },
+      {
+        "name": "Caleb Williams",
+        "pos": "QB",
+        "min": 0.0285,
+        "mean": 0.0605,
+        "max": 0.083
+      },
+      {
+        "name": "Jayden Daniels",
+        "pos": "QB",
+        "min": 0.035,
+        "mean": 0.0414,
+        "max": 0.0475
+      },
+      {
+        "name": "Sam LaPorta",
+        "pos": "TE",
+        "min": 0.0315,
+        "mean": 0.04,
+        "max": 0.0465
+      },
+      {
+        "name": "Blake Corum",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0394,
+        "max": 0.0635
+      },
+      {
+        "name": "Brian Thomas Jr.",
+        "pos": "WR",
+        "min": 0.0295,
+        "mean": 0.0373,
+        "max": 0.0465
+      },
+      {
+        "name": "George Kittle",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.0279,
+        "max": 0.045
+      },
+      {
+        "name": "Jaylen Warren",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0093,
+        "max": 0.0305
+      },
+      {
+        "name": "Joe Burrow",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.0084,
+        "max": 0.03
+      }
+    ],
+    "109": [
+      {
+        "name": "Stefon Diggs",
+        "pos": "WR",
+        "min": 0.4065,
+        "mean": 0.4207,
+        "max": 0.4405
+      },
+      {
+        "name": "Trevor Lawrence",
+        "pos": "QB",
+        "min": 0.086,
+        "mean": 0.1025,
+        "max": 0.119
+      },
+      {
+        "name": "Kyle Pitts Sr.",
+        "pos": "TE",
+        "min": 0.046,
+        "mean": 0.0522,
+        "max": 0.059
+      },
+      {
+        "name": "Justin Herbert",
+        "pos": "QB",
+        "min": 0.034,
+        "mean": 0.0477,
+        "max": 0.0575
+      },
+      {
+        "name": "Josh Downs",
+        "pos": "WR",
+        "min": 0.029,
+        "mean": 0.0445,
+        "max": 0.0665
+      },
+      {
+        "name": "Caleb Williams",
+        "pos": "QB",
+        "min": 0.0245,
+        "mean": 0.0335,
+        "max": 0.045
+      },
+      {
+        "name": "George Kittle",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.0332,
+        "max": 0.057
+      },
+      {
+        "name": "Harold Fannin Jr.",
+        "pos": "TE",
+        "min": 0.025,
+        "mean": 0.0313,
+        "max": 0.041
+      },
+      {
+        "name": "Blake Corum",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0302,
+        "max": 0.0515
+      },
+      {
+        "name": "Dak Prescott",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.0236,
+        "max": 0.0315
+      },
+      {
+        "name": "Rico Dowdle",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0217,
+        "max": 0.043
+      },
+      {
+        "name": "Jonathon Brooks",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0127,
+        "max": 0.027
+      },
+      {
+        "name": "Brian Thomas Jr.",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0088,
+        "max": 0.029
+      },
+      {
+        "name": "Tony Pollard",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0081,
+        "max": 0.0255
+      },
+      {
+        "name": "Brock Purdy",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.0079,
+        "max": 0.0275
+      },
+      {
+        "name": "Sam LaPorta",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.0069,
+        "max": 0.024
+      },
+      {
+        "name": "DK Metcalf",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0043,
+        "max": 0.0205
+      }
+    ],
+    "112": [
+      {
+        "name": "Stefon Diggs",
+        "pos": "WR",
+        "min": 0.154,
+        "mean": 0.2343,
+        "max": 0.2885
+      },
+      {
+        "name": "Josh Downs",
+        "pos": "WR",
+        "min": 0.1225,
+        "mean": 0.1349,
+        "max": 0.1505
+      },
+      {
+        "name": "Trevor Lawrence",
+        "pos": "QB",
+        "min": 0.1205,
+        "mean": 0.1341,
+        "max": 0.154
+      },
+      {
+        "name": "Dak Prescott",
+        "pos": "QB",
+        "min": 0.063,
+        "mean": 0.0821,
+        "max": 0.09
+      },
+      {
+        "name": "Brock Purdy",
+        "pos": "QB",
+        "min": 0.038,
+        "mean": 0.0793,
+        "max": 0.1585
+      },
+      {
+        "name": "Jacory Croskey-Merritt",
+        "pos": "RB",
+        "min": 0.0355,
+        "mean": 0.0444,
+        "max": 0.051
+      },
+      {
+        "name": "George Kittle",
+        "pos": "TE",
+        "min": 0.0355,
+        "mean": 0.0423,
+        "max": 0.0485
+      },
+      {
+        "name": "Jaxson Dart",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.0261,
+        "max": 0.0455
+      },
+      {
+        "name": "Blake Corum",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0246,
+        "max": 0.0385
+      },
+      {
+        "name": "Michael Pittman Jr.",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0186,
+        "max": 0.0285
+      },
+      {
+        "name": "Kyle Pitts Sr.",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.0142,
+        "max": 0.048
+      },
+      {
+        "name": "Jordan Addison",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0118,
+        "max": 0.026
+      },
+      {
+        "name": "Justin Herbert",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.0099,
+        "max": 0.0335
+      },
+      {
+        "name": "Chris Godwin Jr.",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0098,
+        "max": 0.024
+      },
+      {
+        "name": "Courtland Sutton",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0087,
+        "max": 0.022
+      },
+      {
+        "name": "Rico Dowdle",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0081,
+        "max": 0.025
+      },
+      {
+        "name": "Chuba Hubbard",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0046,
+        "max": 0.0215
+      }
+    ],
+    "129": [
+      {
+        "name": "Brock Purdy",
+        "pos": "QB",
+        "min": 0.0915,
+        "mean": 0.1334,
+        "max": 0.2015
+      },
+      {
+        "name": "Dak Prescott",
+        "pos": "QB",
+        "min": 0.101,
+        "mean": 0.1117,
+        "max": 0.12
+      },
+      {
+        "name": "Jaxson Dart",
+        "pos": "QB",
+        "min": 0.0565,
+        "mean": 0.0914,
+        "max": 0.117
+      },
+      {
+        "name": "George Kittle",
+        "pos": "TE",
+        "min": 0.07,
+        "mean": 0.0808,
+        "max": 0.095
+      },
+      {
+        "name": "Josh Downs",
+        "pos": "WR",
+        "min": 0.065,
+        "mean": 0.0775,
+        "max": 0.0905
+      },
+      {
+        "name": "Trevor Lawrence",
+        "pos": "QB",
+        "min": 0.0345,
+        "mean": 0.052,
+        "max": 0.0635
+      },
+      {
+        "name": "Michael Pittman Jr.",
+        "pos": "WR",
+        "min": 0.0395,
+        "mean": 0.0475,
+        "max": 0.055
+      },
+      {
+        "name": "Jacory Croskey-Merritt",
+        "pos": "RB",
+        "min": 0.033,
+        "mean": 0.0423,
+        "max": 0.053
+      },
+      {
+        "name": "Jordan Addison",
+        "pos": "WR",
+        "min": 0.0355,
+        "mean": 0.0408,
+        "max": 0.0485
+      },
+      {
+        "name": "Chris Godwin Jr.",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0316,
+        "max": 0.0465
+      },
+      {
+        "name": "Alec Pierce",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0239,
+        "max": 0.0345
+      },
+      {
+        "name": "Quentin Johnston",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0174,
+        "max": 0.034
+      },
+      {
+        "name": "Blake Corum",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.011,
+        "max": 0.0375
+      },
+      {
+        "name": "Isaiah Likely",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.0088,
+        "max": 0.0465
+      },
+      {
+        "name": "RJ Harvey",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0032,
+        "max": 0.0285
+      },
+      {
+        "name": "Courtland Sutton",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0031,
+        "max": 0.028
+      }
+    ],
+    "132": [
+      {
+        "name": "Brock Purdy",
+        "pos": "QB",
+        "min": 0.1025,
+        "mean": 0.1376,
+        "max": 0.1615
+      },
+      {
+        "name": "Isaiah Likely",
+        "pos": "TE",
+        "min": 0.1,
+        "mean": 0.1102,
+        "max": 0.1205
+      },
+      {
+        "name": "Jaxson Dart",
+        "pos": "QB",
+        "min": 0.091,
+        "mean": 0.1019,
+        "max": 0.1255
+      },
+      {
+        "name": "George Kittle",
+        "pos": "TE",
+        "min": 0.0525,
+        "mean": 0.0614,
+        "max": 0.0755
+      },
+      {
+        "name": "Travis Kelce",
+        "pos": "TE",
+        "min": 0.026,
+        "mean": 0.0434,
+        "max": 0.057
+      },
+      {
+        "name": "Kenny Gainwell",
+        "pos": "RB",
+        "min": 0.0335,
+        "mean": 0.0405,
+        "max": 0.0485
+      },
+      {
+        "name": "Dak Prescott",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.0314,
+        "max": 0.041
+      },
+      {
+        "name": "Quentin Johnston",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0287,
+        "max": 0.0355
+      },
+      {
+        "name": "Jordan Mason",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0263,
+        "max": 0.042
+      },
+      {
+        "name": "Jayden Reed",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0235,
+        "max": 0.04
+      },
+      {
+        "name": "Wan'Dale Robinson",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0222,
+        "max": 0.031
+      },
+      {
+        "name": "Dalton Kincaid",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.021,
+        "max": 0.0365
+      },
+      {
+        "name": "Jordan Addison",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0193,
+        "max": 0.0305
+      },
+      {
+        "name": "Rachaad White",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0166,
+        "max": 0.042
+      },
+      {
+        "name": "Jalen Coker",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0072,
+        "max": 0.033
+      }
+    ],
+    "149": [
+      {
+        "name": "Brock Purdy",
+        "pos": "QB",
+        "min": 0.0565,
+        "mean": 0.1138,
+        "max": 0.152
+      },
+      {
+        "name": "Isaiah Likely",
+        "pos": "TE",
+        "min": 0.077,
+        "mean": 0.0869,
+        "max": 0.0955
+      },
+      {
+        "name": "Jaxson Dart",
+        "pos": "QB",
+        "min": 0.062,
+        "mean": 0.0797,
+        "max": 0.117
+      },
+      {
+        "name": "Kenny Gainwell",
+        "pos": "RB",
+        "min": 0.0515,
+        "mean": 0.0596,
+        "max": 0.065
+      },
+      {
+        "name": "Bo Nix",
+        "pos": "QB",
+        "min": 0.0,
+        "mean": 0.0517,
+        "max": 0.0965
+      },
+      {
+        "name": "Wan'Dale Robinson",
+        "pos": "WR",
+        "min": 0.045,
+        "mean": 0.0514,
+        "max": 0.057
+      },
+      {
+        "name": "Rachaad White",
+        "pos": "RB",
+        "min": 0.0375,
+        "mean": 0.0484,
+        "max": 0.054
+      },
+      {
+        "name": "Jordan Mason",
+        "pos": "RB",
+        "min": 0.043,
+        "mean": 0.0481,
+        "max": 0.0545
+      },
+      {
+        "name": "KC Concepcion",
+        "pos": "WR",
+        "min": 0.0345,
+        "mean": 0.0418,
+        "max": 0.0485
+      },
+      {
+        "name": "Travis Kelce",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.038,
+        "max": 0.06
+      },
+      {
+        "name": "Dalton Kincaid",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.0271,
+        "max": 0.0455
+      },
+      {
+        "name": "Jayden Reed",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0267,
+        "max": 0.046
+      },
+      {
+        "name": "Aaron Jones Sr.",
+        "pos": "RB",
+        "min": 0.0,
+        "mean": 0.0133,
+        "max": 0.043
+      },
+      {
+        "name": "Quentin Johnston",
+        "pos": "WR",
+        "min": 0.0,
+        "mean": 0.0133,
+        "max": 0.043
+      },
+      {
+        "name": "George Kittle",
+        "pos": "TE",
+        "min": 0.0,
+        "mean": 0.0107,
+        "max": 0.035
+      }
+    ]
+  },
+  "roster_position_distribution": [
+    {
+      "counts": {
+        "QB": 3,
+        "RB": 5,
+        "TE": 1,
+        "WR": 6
+      },
+      "mean_rate": 0.0607
+    },
+    {
+      "counts": {
+        "QB": 3,
+        "RB": 4,
+        "TE": 1,
+        "WR": 7
+      },
+      "mean_rate": 0.0413
+    },
+    {
+      "counts": {
+        "QB": 2,
+        "RB": 6,
+        "TE": 1,
+        "WR": 6
+      },
+      "mean_rate": 0.041
+    },
+    {
+      "counts": {
+        "QB": 3,
+        "RB": 4,
+        "TE": 2,
+        "WR": 6
+      },
+      "mean_rate": 0.0398
+    },
+    {
+      "counts": {
+        "QB": 3,
+        "RB": 6,
+        "TE": 1,
+        "WR": 5
+      },
+      "mean_rate": 0.0378
+    },
+    {
+      "counts": {
+        "QB": 2,
+        "RB": 5,
+        "TE": 2,
+        "WR": 6
+      },
+      "mean_rate": 0.037
+    },
+    {
+      "counts": {
+        "QB": 2,
+        "RB": 5,
+        "TE": 1,
+        "WR": 7
+      },
+      "mean_rate": 0.0369
+    },
+    {
+      "counts": {
+        "QB": 3,
+        "RB": 5,
+        "TE": 2,
+        "WR": 5
+      },
+      "mean_rate": 0.0329
+    },
+    {
+      "counts": {
+        "QB": 2,
+        "RB": 4,
+        "TE": 1,
+        "WR": 8
+      },
+      "mean_rate": 0.0244
+    },
+    {
+      "counts": {
+        "QB": 4,
+        "RB": 4,
+        "TE": 1,
+        "WR": 6
+      },
+      "mean_rate": 0.0214
+    },
+    {
+      "counts": {
+        "QB": 2,
+        "RB": 4,
+        "TE": 2,
+        "WR": 7
+      },
+      "mean_rate": 0.0202
+    },
+    {
+      "counts": {
+        "QB": 2,
+        "RB": 6,
+        "TE": 2,
+        "WR": 5
+      },
+      "mean_rate": 0.0192
+    },
+    {
+      "counts": {
+        "QB": 3,
+        "RB": 3,
+        "TE": 1,
+        "WR": 8
+      },
+      "mean_rate": 0.0096
+    },
+    {
+      "counts": {
+        "QB": 3,
+        "RB": 3,
+        "TE": 2,
+        "WR": 7
+      },
+      "mean_rate": 0.0087
+    },
+    {
+      "counts": {
+        "QB": 4,
+        "RB": 5,
+        "TE": 1,
+        "WR": 5
+      },
+      "mean_rate": 0.0082
+    },
+    {
+      "counts": {
+        "QB": 3,
+        "RB": 6,
+        "TE": 2,
+        "WR": 4
+      },
+      "mean_rate": 0.0027
+    }
+  ],
+  "early_path_clusters": [
+    {
+      "players": [
+        "Bijan Robinson",
+        "Chase Brown",
+        "CeeDee Lamb",
+        "Saquon Barkley"
+      ],
+      "mean_rate": 0.0007
+    },
+    {
+      "players": [
+        "Ja'Marr Chase",
+        "Chase Brown",
+        "Ashton Jeanty",
+        "CeeDee Lamb"
+      ],
+      "mean_rate": 0.0006
+    },
+    {
+      "players": [
+        "Jahmyr Gibbs",
+        "Chase Brown",
+        "CeeDee Lamb",
+        "Saquon Barkley"
+      ],
+      "mean_rate": 0.0006
+    },
+    {
+      "players": [
+        "James Cook III",
+        "Chase Brown",
+        "Ashton Jeanty",
+        "Justin Jefferson"
+      ],
+      "mean_rate": 0.0006
+    },
+    {
+      "players": [
+        "Bijan Robinson",
+        "Chase Brown",
+        "CeeDee Lamb",
+        "Chris Olave"
+      ],
+      "mean_rate": 0.0006
+    },
+    {
+      "players": [
+        "Puka Nacua",
+        "Ashton Jeanty",
+        "CeeDee Lamb",
+        "De'Von Achane"
+      ],
+      "mean_rate": 0.0005
+    },
+    {
+      "players": [
+        "Bijan Robinson",
+        "Ashton Jeanty",
+        "Saquon Barkley",
+        "Chris Olave"
+      ],
+      "mean_rate": 0.0004
+    },
+    {
+      "players": [
+        "Puka Nacua",
+        "Chase Brown",
+        "CeeDee Lamb",
+        "Chris Olave"
+      ],
+      "mean_rate": 0.0004
+    },
+    {
+      "players": [
+        "Ja'Marr Chase",
+        "Ashton Jeanty",
+        "Saquon Barkley",
+        "De'Von Achane"
+      ],
+      "mean_rate": 0.0004
+    },
+    {
+      "players": [
+        "Jahmyr Gibbs",
+        "Ashton Jeanty",
+        "CeeDee Lamb",
+        "De'Von Achane"
+      ],
+      "mean_rate": 0.0004
+    },
+    {
+      "players": [
+        "Bijan Robinson",
+        "Chase Brown",
+        "Chris Olave",
+        "Zay Flowers"
+      ],
+      "mean_rate": 0.0004
+    },
+    {
+      "players": [
+        "James Cook III",
+        "Chase Brown",
+        "CeeDee Lamb",
+        "Zay Flowers"
+      ],
+      "mean_rate": 0.0004
+    },
+    {
+      "players": [
+        "Ja'Marr Chase",
+        "Chase Brown",
+        "CeeDee Lamb",
+        "Chris Olave"
+      ],
+      "mean_rate": 0.0004
+    },
+    {
+      "players": [
+        "Puka Nacua",
+        "Chase Brown",
+        "CeeDee Lamb",
+        "Saquon Barkley"
+      ],
+      "mean_rate": 0.0004
+    },
+    {
+      "players": [
+        "Jahmyr Gibbs",
+        "Ashton Jeanty",
+        "Saquon Barkley",
+        "Chris Olave"
+      ],
+      "mean_rate": 0.0004
+    },
+    {
+      "players": [
+        "Jahmyr Gibbs",
+        "Chase Brown",
+        "Saquon Barkley",
+        "Zay Flowers"
+      ],
+      "mean_rate": 0.0004
+    },
+    {
+      "players": [
+        "Puka Nacua",
+        "Chase Brown",
+        "Justin Jefferson",
+        "CeeDee Lamb"
+      ],
+      "mean_rate": 0.0003
+    },
+    {
+      "players": [
+        "Bijan Robinson",
+        "Chase Brown",
+        "Ashton Jeanty",
+        "Chris Olave"
+      ],
+      "mean_rate": 0.0003
+    },
+    {
+      "players": [
+        "Jahmyr Gibbs",
+        "Chase Brown",
+        "Ashton Jeanty",
+        "Saquon Barkley"
+      ],
+      "mean_rate": 0.0003
+    },
+    {
+      "players": [
+        "Amon-Ra St. Brown",
+        "Ashton Jeanty",
+        "Saquon Barkley",
+        "Chris Olave"
+      ],
+      "mean_rate": 0.0003
+    },
+    {
+      "players": [
+        "Ja'Marr Chase",
+        "James Cook III",
+        "Chris Olave",
+        "Zay Flowers"
+      ],
+      "mean_rate": 0.0003
+    },
+    {
+      "players": [
+        "Amon-Ra St. Brown",
+        "Jaxon Smith-Njigba",
+        "Chris Olave",
+        "Zay Flowers"
+      ],
+      "mean_rate": 0.0003
+    },
+    {
+      "players": [
+        "Ja'Marr Chase",
+        "Chase Brown",
+        "Justin Jefferson",
+        "CeeDee Lamb"
+      ],
+      "mean_rate": 0.0003
+    },
+    {
+      "players": [
+        "Christian McCaffrey",
+        "Chase Brown",
+        "CeeDee Lamb",
+        "De'Von Achane"
+      ],
+      "mean_rate": 0.0003
+    },
+    {
+      "players": [
+        "Ja'Marr Chase",
+        "Chase Brown",
+        "Ashton Jeanty",
+        "Saquon Barkley"
+      ],
+      "mean_rate": 0.0003
+    },
+    {
+      "players": [
+        "Amon-Ra St. Brown",
+        "Chase Brown",
+        "De'Von Achane",
+        "Zay Flowers"
+      ],
+      "mean_rate": 0.0003
+    },
+    {
+      "players": [
+        "Amon-Ra St. Brown",
+        "Ashton Jeanty",
+        "CeeDee Lamb",
+        "De'Von Achane"
+      ],
+      "mean_rate": 0.0003
+    },
+    {
+      "players": [
+        "Bijan Robinson",
+        "Jahmyr Gibbs",
+        "Saquon Barkley",
+        "Chris Olave"
+      ],
+      "mean_rate": 0.0003
+    },
+    {
+      "players": [
+        "Ja'Marr Chase",
+        "Chase Brown",
+        "Ashton Jeanty",
+        "Justin Jefferson"
+      ],
+      "mean_rate": 0.0003
+    },
+    {
+      "players": [
+        "James Cook III",
+        "Christian McCaffrey",
+        "De'Von Achane",
+        "Zay Flowers"
+      ],
+      "mean_rate": 0.0003
+    }
+  ],
+  "cell_diagnostics": {
+    "REALISTIC|MARKET_CONTROL|PANEL_FIRST": {
+      "mean_completion_forces": 0.162,
+      "mean_opponent_kdst": 16.86,
+      "split_half_delta": 0.052
+    },
+    "REALISTIC|MARKET_CONTROL|QUALITY_MARKET": {
+      "mean_completion_forces": 0.187,
+      "mean_opponent_kdst": 16.839,
+      "split_half_delta": 0.044
+    },
+    "REALISTIC|MARKET_CONTROL|USER_LATE_QB_TE": {
+      "mean_completion_forces": 0.169,
+      "mean_opponent_kdst": 16.823,
+      "split_half_delta": 0.05
+    },
+    "REALISTIC|FULL_MANAGER_BJOERN_AUTO|PANEL_FIRST": {
+      "mean_completion_forces": 0.159,
+      "mean_opponent_kdst": 16.836,
+      "split_half_delta": 0.069
+    },
+    "REALISTIC|FULL_MANAGER_BJOERN_AUTO|QUALITY_MARKET": {
+      "mean_completion_forces": 0.1615,
+      "mean_opponent_kdst": 16.811,
+      "split_half_delta": 0.043
+    },
+    "REALISTIC|FULL_MANAGER_BJOERN_AUTO|USER_LATE_QB_TE": {
+      "mean_completion_forces": 0.1735,
+      "mean_opponent_kdst": 16.817,
+      "split_half_delta": 0.046
+    },
+    "REALISTIC|FULL_MANAGER_BJOERN_MANUAL|PANEL_FIRST": {
+      "mean_completion_forces": 0.157,
+      "mean_opponent_kdst": 16.794,
+      "split_half_delta": 0.067
+    },
+    "REALISTIC|FULL_MANAGER_BJOERN_MANUAL|QUALITY_MARKET": {
+      "mean_completion_forces": 0.173,
+      "mean_opponent_kdst": 16.823,
+      "split_half_delta": 0.051
+    },
+    "REALISTIC|FULL_MANAGER_BJOERN_MANUAL|USER_LATE_QB_TE": {
+      "mean_completion_forces": 0.1705,
+      "mean_opponent_kdst": 16.797,
+      "split_half_delta": 0.044
+    }
+  }
+}

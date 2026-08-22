@@ -1,13 +1,8 @@
 {
-  "status": "PASS",
   "freeze_package_sha256": "5339a37d275505f2a3a6fe0b84785f435d840d02cc7472a2b8bd934244e884fd",
   "total_full_drafts": 36000,
-  "cells": 18,
   "runs_per_cell": 2000,
-  "max_split_half_delta": 0.069,
-  "mean_opponent_kdst_range": [
-    16.794,
-    16.86
-  ],
+  "realistic_cells": 9,
+  "max_realistic_split_half_top50_availability_delta": 0.069,
   "policy_ranking_certified": false
 }

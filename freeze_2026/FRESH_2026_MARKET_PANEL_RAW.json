@@ -1,6 +1,6 @@
 {
   "schema": 3,
-  "as_of": "2026-08-22T06:55:31.028Z",
+  "as_of": "2026-08-22T06:58:45.020Z",
   "season": 2026,
   "scoring": "HALF_PPR",
   "expert_sources": {
@@ -47,7 +47,7 @@
       "ok": true,
       "source": "FantasyPros Comparison reconstruction",
       "url": "https://www.fantasypros.com/nfl/rankings/pat-fitzmaurice-justin-boone.php?scoring=HALF&type=draft | https://www.fantasypros.com/nfl/rankings/andrew-erickson-justin-boone.php?scoring=HALF&type=draft | https://www.fantasypros.com/nfl/rankings/derek-brown-justin-boone.php?scoring=HALF&type=draft",
-      "updated": "2026-08-22T06:55:31.028Z",
+      "updated": "2026-08-22T06:58:45.020Z",
       "count": 216,
       "error": "",
       "confidence": "reconstructed-strong",
@@ -68,7 +68,7 @@
       "ok": true,
       "source": "FantasyPros Comparison reconstruction",
       "url": "https://www.fantasypros.com/nfl/rankings/pat-fitzmaurice-matt-harmon.php?scoring=HALF&type=draft | https://www.fantasypros.com/nfl/rankings/andrew-erickson-matt-harmon.php?scoring=HALF&type=draft | https://www.fantasypros.com/nfl/rankings/derek-brown-matt-harmon.php?scoring=HALF&type=draft",
-      "updated": "2026-08-22T06:55:31.028Z",
+      "updated": "2026-08-22T06:58:45.020Z",
       "count": 197,
       "error": "",
       "confidence": "reconstructed-strong",
@@ -57872,5 +57872,5 @@
       }
     }
   },
-  "payload_sha256": "7abfbd1bd0e42074e98246a749717d34f85faf3f814101db40bb4c7817254a17"
+  "payload_sha256": "619232752982a9466be0d07b7cfd85296b591b57b7f0d5ccd31e157644637d20"
 }

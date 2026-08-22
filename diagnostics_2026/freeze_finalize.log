@@ -14,5 +14,7 @@
     "k_dst_calibration_present": true,
     "research_residual_shadow_only": true
   },
+  "adp_count": 230,
+  "unresolved": 0,
   "package_sha256": "5339a37d275505f2a3a6fe0b84785f435d840d02cc7472a2b8bd934244e884fd"
 }
