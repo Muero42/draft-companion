@@ -1,8 +1,8 @@
 {
-  "status": "FAIL_CLOSED",
+  "status": "PASS",
   "criteria": {
     "utility_v3_5_pass_precondition": true,
-    "market_panel_gate_pass": false,
+    "market_panel_gate_pass": true,
     "panel_pool_230": true,
     "sleeper_half_ppr_pool_adp_ge_200": true,
     "identity_unique_player_keys": true,
@@ -14,5 +14,5 @@
     "k_dst_calibration_present": true,
     "research_residual_shadow_only": true
   },
-  "package_sha256": "3e887d20e88d2945804b62832342bbe44cc7d7ecfa2180d22626f58719bdde4b"
+  "package_sha256": "cbc68c263263b3dc29d82942e08c5fbb14fe07f2ea267fe16a99e7808d384594"
 }
