@@ -4,13 +4,14 @@
    independent GitHub jobs can execute disjoint common-random-number pairs. */
 const fs=require('fs'),cp=require('child_process'),crypto=require('crypto'),path=require('path');
 const CORE='research/rc459_full_policy_paired_2026.js';
-const EXPECTED_CORE_SHA='8d15f271e192fe8202968515858fdaeea9bdf8cd5f5f2e14e7ccf9343b0c5b5d';
+const EXPECTED_CORE_GIT_BLOB='5c313bb54538139145761c3885d29f480e138b45';
 const count=+(process.argv[2]||10),offset=+(process.argv[3]||0);
 if(!Number.isInteger(count)||count<1||!Number.isInteger(offset)||offset<0)throw Error('invalid count/offset');
 const src=fs.readFileSync(CORE,'utf8');
-const actual=crypto.createHash('sha256').update(src).digest('hex');
-// Fail closed if the core changes without re-auditing this lexical wrapper.
-if(actual!==EXPECTED_CORE_SHA)throw Error(`core hash mismatch ${actual}`);
+const body=Buffer.from(src,'utf8');
+const actual=crypto.createHash('sha1').update(Buffer.from(`blob ${body.length}\0`)).update(body).digest('hex');
+// Fail closed if the audited core changes without re-auditing this lexical wrapper.
+if(actual!==EXPECTED_CORE_GIT_BLOB)throw Error(`core git-blob mismatch ${actual}`);
 const needle="const seed=459260000+(stress==='stress'?1000000:0)+i;";
 const hits=src.split(needle).length-1;if(hits!==1)throw Error(`seed expression matches ${hits}`);
 const patched=src.replace(needle,`const seed=459260000+(stress==='stress'?1000000:0)+${offset}+i;`);
