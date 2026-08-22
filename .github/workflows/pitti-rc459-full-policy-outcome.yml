@@ -1,0 +1,69 @@
+name: PITTI rc4.59 Full Policy Outcome Gate
+on:
+  push:
+    branches: [pitti-outcome-bridge-20250821]
+    paths:
+      - '.github/workflows/pitti-rc459-full-policy-outcome.yml'
+      - 'research/rc459_full_policy_paired_2026.js'
+      - 'research/rc459_full_policy_outcome_certification_2026.py'
+  workflow_dispatch:
+concurrency:
+  group: pitti-rc459-full-policy-outcome
+  cancel-in-progress: true
+permissions:
+  contents: write
+jobs:
+  certify:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-outcome-bridge-20250821, fetch-depth: 0}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Verify scripts
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check research/rc459_full_policy_paired_2026.js
+          python -m py_compile research/rc459_full_policy_outcome_certification_2026.py
+      - name: Paired full drafts
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p policy_certification_2026
+          node research/rc459_full_policy_paired_2026.js 60 2>&1 | tee /tmp/full-policy-drafts.log
+      - name: Independent outcome utility gate
+        shell: bash
+        run: |
+          set -o pipefail
+          python research/rc459_full_policy_outcome_certification_2026.py 2>&1 | tee /tmp/full-policy-outcome.log
+      - name: Persist certification diagnostics
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/policy-save && mkdir -p /tmp/policy-save/policy_certification_2026 /tmp/policy-save/diagnostics_2026
+          cp -a policy_certification_2026/. /tmp/policy-save/policy_certification_2026/ || true
+          cp /tmp/full-policy-drafts.log /tmp/policy-save/diagnostics_2026/full-policy-drafts.log 2>/dev/null || true
+          cp /tmp/full-policy-outcome.log /tmp/policy-save/diagnostics_2026/full-policy-outcome.log 2>/dev/null || true
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git reset --hard && git clean -fd
+          git fetch origin pitti-outcome-bridge-20250821
+          git checkout -B pitti-outcome-bridge-20250821 origin/pitti-outcome-bridge-20250821
+          mkdir -p policy_certification_2026 diagnostics_2026
+          cp -a /tmp/policy-save/policy_certification_2026/. policy_certification_2026/ || true
+          cp -a /tmp/policy-save/diagnostics_2026/. diagnostics_2026/ || true
+          git add policy_certification_2026/ diagnostics_2026/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record rc4.59 paired full-policy outcome gate [skip ci]'
+            git push origin HEAD:pitti-outcome-bridge-20250821
+          fi
+      - name: Report gate
+        if: always()
+        run: |
+          test -f policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_2026_GATE.json && cat policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_2026_GATE.json || true
