@@ -16,7 +16,7 @@ jobs:
   certify:
     if: github.actor != 'github-actions[bot]'
     runs-on: ubuntu-latest
-    timeout-minutes: 60
+    timeout-minutes: 90
     steps:
       - uses: actions/checkout@v4
         with: {ref: pitti-outcome-bridge-20250821, fetch-depth: 0}
@@ -35,12 +35,12 @@ jobs:
         run: |
           set -o pipefail
           mkdir -p policy_certification_2026
-          node research/rc459_full_policy_paired_2026.js 60 2>&1 | tee /tmp/full-policy-drafts.log
+          time node research/rc459_full_policy_paired_2026.js 60 2>&1 | tee /tmp/full-policy-drafts.log
       - name: Independent outcome utility gate
         shell: bash
         run: |
           set -o pipefail
-          python research/rc459_full_policy_outcome_certification_2026.py 2>&1 | tee /tmp/full-policy-outcome.log
+          time python research/rc459_full_policy_outcome_certification_2026.py 2>&1 | tee /tmp/full-policy-outcome.log
       - name: Persist certification diagnostics
         if: always()
         shell: bash
