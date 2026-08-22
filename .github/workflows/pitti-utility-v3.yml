@@ -7,6 +7,7 @@ on:
       - 'research/independent_utility_v3_3_2025.py'
       - 'research/independent_utility_v3_5_2025.py'
       - 'research/freeze_2026_fetch_v2.mjs'
+      - 'research/augment_freeze_experts_2026.mjs'
       - 'research/finalize_freeze_2026.py'
       - 'freeze_2026/FRESH_2026_HEALTH_ROLE_2026-08-22.json'
       - 'freeze_2026/FRESH_2026_STATIC_LAYERS_2026-08-22.json'
@@ -37,6 +38,9 @@ jobs:
       - name: Acquire fresh 2026 panel and Sleeper ADP
         continue-on-error: true
         run: node research/freeze_2026_fetch_v2.mjs
+      - name: Apply Companion-parity Boone/Harmon reconstruction
+        continue-on-error: true
+        run: node research/augment_freeze_experts_2026.mjs
       - name: Stage acquisition outputs
         if: always()
         shell: bash
