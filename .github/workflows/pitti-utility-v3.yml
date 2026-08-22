@@ -1,0 +1,43 @@
+name: PITTI Independent Utility v3.2
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  certify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-outcome-bridge-20250821
+      - name: Fetch independent inputs
+        shell: bash
+        run: |
+          set -euo pipefail
+          curl -fL --retry 3 -o stats.csv https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_2025.csv
+          curl -fL --retry 3 -o picks.json https://api.sleeper.app/v1/draft/1225769229928648704/picks
+          curl -fL --retry 3 -o ids.csv https://raw.githubusercontent.com/dynastyprocess/data/master/files/db_playerids.csv
+          curl -fL --retry 3 -o players.json https://api.sleeper.app/v1/players/nfl
+          for w in $(seq 1 14); do curl -fsSL --retry 3 -o matchup_${w}.json https://api.sleeper.app/v1/league/1224396747309076480/matchups/${w}; done
+      - name: Run Utility v3.2
+        run: python research/independent_utility_v3_2025.py
+      - name: Show certification
+        if: always()
+        shell: bash
+        run: |
+          if [ -f INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json ]; then cat INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json; else echo 'certification output missing'; fi
+      - name: Upload certification
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pitti-utility-v3-2-certification
+          path: INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json
+          if-no-files-found: error
+      - name: Enforce certification gate
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json'))
+          print('Utility v3.2:', x['status'])
+          if x['status']!='PASS': raise SystemExit(2)
+          PY
