@@ -1,0 +1,38 @@
+name: PITTI rc4.59 Rolling Lookahead Screen
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  screen:
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        variant: [CONTROL, ROLL_LONG, ROLL_EARLY4, ROLL_ALL]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rolling-lookahead-probe
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Run preregistered rolling 10-seed/regime screen
+        run: node research/rc459_rolling_lookahead_screen_2026.js ${{ matrix.variant }} 10
+      - name: Roster/bye-aware diagnostic outcome
+        shell: bash
+        run: |
+          cp policy_certification_2026/ROLLING_${{ matrix.variant }}.json policy_certification_2026/RC459_FULL_POLICY_PAIRED_DRAFTS_2026.json
+          python research/rc459_full_policy_outcome_certification_v2_2026.py > rolling-${{ matrix.variant }}-outcome.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rolling-${{ matrix.variant }}
+          path: |
+            policy_certification_2026/ROLLING_${{ matrix.variant }}.json
+            policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_V2_2026_GATE.json
+            rolling-${{ matrix.variant }}-outcome.log
+          if-no-files-found: error
+          retention-days: 3
