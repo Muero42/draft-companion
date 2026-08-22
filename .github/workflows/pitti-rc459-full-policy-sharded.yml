@@ -6,7 +6,6 @@ on:
       - '.github/workflows/pitti-rc459-full-policy-sharded.yml'
   workflow_dispatch:
 concurrency:
-  # Same group intentionally supersedes the slower monolithic full-policy run.
   group: pitti-rc459-full-policy-outcome
   cancel-in-progress: true
 permissions:
@@ -26,7 +25,10 @@ jobs:
           set -euo pipefail
           node --check research/rc459_full_policy_paired_2026.js
           node --check research/rc459_full_policy_shard_runner_2026.js
-          python -m py_compile research/merge_rc459_full_policy_shards_2026.py research/rc459_full_policy_outcome_certification_2026.py
+          python -m py_compile \
+            research/merge_rc459_full_policy_shards_2026.py \
+            research/rc459_full_policy_outcome_certification_v2_2026.py \
+            research/rc459_full_policy_health_sensitivity_2026.py
           python - <<'PY'
           import json
           for p in ['diagnostics_2026/RC459_DYNAMIC_COACH_EXECUTION_2026_GATE.json','bridge_2026/MARKET_OUTCOME_BRIDGE_2026_GATE.json','outcome_certification/INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json','freeze_2026/FRESH_2026_FREEZE_GATE.json']:
@@ -49,7 +51,7 @@ jobs:
       - name: Run disjoint paired shard
         shell: bash
         run: |
-          set -o pipefail
+          set -euo pipefail
           mkdir -p policy_certification_2026
           time node research/rc459_full_policy_shard_runner_2026.js 10 ${{ matrix.offset }} 2>&1 | tee shard-${{ matrix.offset }}.log
       - uses: actions/upload-artifact@v4
@@ -63,7 +65,7 @@ jobs:
   certify:
     needs: shard
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with: {ref: pitti-outcome-bridge-20250821, fetch-depth: 0}
@@ -74,16 +76,26 @@ jobs:
           pattern: full-policy-shard-*
           path: policy_shards
           merge-multiple: true
+      - name: Diagnose downloaded shard layout
+        shell: bash
+        run: |
+          set -euo pipefail
+          find policy_shards -maxdepth 4 -type f -print | sort | tee /tmp/full-policy-artifact-layout.log
       - name: Merge and verify paired coverage
         shell: bash
         run: |
-          set -o pipefail
+          set -euo pipefail
           python research/merge_rc459_full_policy_shards_2026.py 2>&1 | tee /tmp/full-policy-merge.log
-      - name: Independent championship outcome gate
+      - name: Roster-valid and bye-aware outcome gate v2
         shell: bash
         run: |
-          set -o pipefail
-          time python research/rc459_full_policy_outcome_certification_2026.py 2>&1 | tee /tmp/full-policy-outcome.log
+          set -euo pipefail
+          time python research/rc459_full_policy_outcome_certification_v2_2026.py 2>&1 | tee /tmp/full-policy-outcome-v2.log
+      - name: Explicit dated health-timeline sensitivity
+        shell: bash
+        run: |
+          set -euo pipefail
+          time python research/rc459_full_policy_health_sensitivity_2026.py 2>&1 | tee /tmp/full-policy-health.log
       - name: Persist canonical certification
         if: always()
         shell: bash
@@ -91,8 +103,7 @@ jobs:
           set -euo pipefail
           rm -rf /tmp/policy-save && mkdir -p /tmp/policy-save/policy_certification_2026 /tmp/policy-save/diagnostics_2026
           cp -a policy_certification_2026/. /tmp/policy-save/policy_certification_2026/ || true
-          cp /tmp/full-policy-merge.log /tmp/policy-save/diagnostics_2026/full-policy-merge.log 2>/dev/null || true
-          cp /tmp/full-policy-outcome.log /tmp/policy-save/diagnostics_2026/full-policy-outcome.log 2>/dev/null || true
+          for f in artifact-layout merge outcome-v2 health; do cp /tmp/full-policy-$f.log /tmp/policy-save/diagnostics_2026/full-policy-$f.log 2>/dev/null || true; done
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git reset --hard && git clean -fd
@@ -103,11 +114,12 @@ jobs:
           cp -a /tmp/policy-save/diagnostics_2026/. diagnostics_2026/ || true
           git add policy_certification_2026/ diagnostics_2026/
           if ! git diff --cached --quiet; then
-            git commit -m 'Record sharded rc4.59 full-policy certification [skip ci]'
+            git commit -m 'Record repaired rc4.59 full-policy certification [skip ci]'
             git push origin HEAD:pitti-outcome-bridge-20250821
           fi
-      - name: Report gate
+      - name: Report final gates
         if: always()
         run: |
           cat policy_certification_2026/RC459_FULL_POLICY_PAIRED_DRAFTS_2026_MERGE_GATE.json || true
-          cat policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_2026_GATE.json || true
+          cat policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_V2_2026_GATE.json || true
+          cat policy_certification_2026/RC459_FULL_POLICY_HEALTH_SENSITIVITY_2026_GATE.json || true
