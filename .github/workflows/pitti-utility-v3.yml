@@ -10,6 +10,7 @@ on:
       - 'research/augment_freeze_experts_2026.mjs'
       - 'research/finalize_freeze_2026.py'
       - 'research/policy_simulator_2026_realistic.py'
+      - 'research/summarize_simulation_2026.py'
       - 'freeze_2026/FRESH_2026_HEALTH_ROLE_2026-08-22.json'
       - 'freeze_2026/FRESH_2026_STATIC_LAYERS_2026-08-22.json'
   workflow_dispatch:
@@ -63,12 +64,14 @@ jobs:
           print('Utility v3.5:',u.get('status'),'Fresh 2026 freeze:',f.get('status'))
           if u.get('status')!='PASS' or f.get('status')!='PASS': raise SystemExit(2)
           PY
-      - name: Run current-freeze realistic full-draft simulation suite
+      - name: Run scaled current-freeze full-draft simulation suite
         continue-on-error: true
         run: |
-          python research/policy_simulator_2026_realistic.py 700
+          python research/policy_simulator_2026_realistic.py 2000
           cp SIMULATION_2026_REALISTIC_RESULTS.json simulation_2026/
           cp SIMULATION_2026_REALISTIC_GATE.json simulation_2026/
+          python research/summarize_simulation_2026.py
+          cp SIMULATION_2026_ROBUST_SUMMARY.json simulation_2026/
       - name: Persist research outputs
         if: always()
         shell: bash
@@ -77,12 +80,14 @@ jobs:
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add outcome_certification/ freeze_2026/ simulation_2026/
-          if ! git diff --cached --quiet; then git commit -m 'Record fresh freeze and realistic 2026 simulations [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
+          if ! git diff --cached --quiet; then git commit -m 'Record scaled realistic 2026 simulations and robust summary [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
       - name: Enforce simulation output
         run: |
           python - <<'PY'
           import json
           x=json.load(open('simulation_2026/SIMULATION_2026_REALISTIC_GATE.json'))
+          s=json.load(open('simulation_2026/SIMULATION_2026_ROBUST_SUMMARY.json'))
           print(x)
+          print('REALISTIC split-half max:',s['max_realistic_split_half_top50_availability_delta'])
           if x.get('status')!='PASS': raise SystemExit(2)
           PY
