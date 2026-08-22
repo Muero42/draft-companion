@@ -31,7 +31,7 @@ if(x.status!=='PASS'||x.rows.length!==count*x.regimes.length*x.policies.length)t
 // Tag only after the audited core has completed, so screen provenance cannot depend on a brittle lexical patch.
 x.ablation_variant=variant;
 x.ablation_screen=true;
-x.ablation_core_git_blob=EXPECTED;
+x.ablation_core_git_blob=EXPECT;
 const out=`policy_certification_2026/ABLATION_${variant}.json`;
 fs.writeFileSync(out,JSON.stringify(x));
 fs.unlinkSync(canonical);
