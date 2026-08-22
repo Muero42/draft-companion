@@ -1,9 +1,9 @@
-/home/runner/work/draft-companion/draft-companion/research/rc459_dynamic_coach_execution_2026.js:8
-if(crypto.createHash('sha256').update(app).digest('hex')!==APP_SHA)throw new Error('app.js is not numbered rc4.59 source');
-                                                                   ^
+/home/runner/work/draft-companion/draft-companion/research/rc459_dynamic_coach_execution_2026_v2.js:9
+if(crypto.createHash('sha256').update(fn('assignTiers')).digest('hex')!==TIER_SHA)throw new Error('assignTiers differs from numbered rc4.59');
+                                                                                  ^
 
-Error: app.js is not numbered rc4.59 source
-    at Object.<anonymous> (/home/runner/work/draft-companion/draft-companion/research/rc459_dynamic_coach_execution_2026.js:8:74)
+Error: assignTiers differs from numbered rc4.59
+    at Object.<anonymous> (/home/runner/work/draft-companion/draft-companion/research/rc459_dynamic_coach_execution_2026_v2.js:9:89)
     at Module._compile (node:internal/modules/cjs/loader:1781:14)
     at Object..js (node:internal/modules/cjs/loader:1913:10)
     at Module.load (node:internal/modules/cjs/loader:1505:32)
