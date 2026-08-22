@@ -1,0 +1,87 @@
+{
+  "status": "FAIL_CLOSED",
+  "as_of": "2026-08-22T06:05:07.553Z",
+  "minCoreExperts": false,
+  "pool_total": 230,
+  "sleeper_adp_count": 723,
+  "expert_sources": {
+    "Andrew Erickson": {
+      "ok": true,
+      "source": "FantasyPros direct",
+      "url": "https://www.fantasypros.com/nfl/rankings/andrew-erickson.php?scoring=HALF&type=draft",
+      "updated": "Aug 21, 2026",
+      "count": 196,
+      "error": ""
+    },
+    "Pat Fitzmaurice": {
+      "ok": true,
+      "source": "FantasyPros direct",
+      "url": "https://www.fantasypros.com/nfl/rankings/pat-fitzmaurice.php?scoring=HALF&type=draft",
+      "updated": "Aug 20, 2026",
+      "count": 296,
+      "error": ""
+    },
+    "Derek Brown": {
+      "ok": true,
+      "source": "FantasyPros direct",
+      "url": "https://www.fantasypros.com/nfl/rankings/derek-brown.php?scoring=HALF&type=draft",
+      "updated": "Aug 21, 2026",
+      "count": 297,
+      "error": ""
+    },
+    "Matt Harmon": {
+      "ok": false,
+      "source": "",
+      "url": "",
+      "updated": "",
+      "count": 0,
+      "error": "0 rows | 0 rows"
+    },
+    "Justin Boone": {
+      "ok": false,
+      "source": "",
+      "url": "",
+      "updated": "",
+      "count": 0,
+      "error": "0 rows | 0 rows"
+    },
+    "Sean Koerner": {
+      "ok": false,
+      "source": "",
+      "url": "",
+      "updated": "",
+      "count": 0,
+      "error": "No deterministic complete current all-position public feed configured; retain degraded/unavailable status."
+    }
+  },
+  "sleeper_diagnostics": [
+    {
+      "id": "legacy-season-api-sleeper-app",
+      "url": "https://api.sleeper.app/projections/nfl/2026?season_type=regular&position[]=QB&position[]=RB&position[]=WR&position[]=TE&order_by=adp_half_ppr",
+      "http_rows": 3112,
+      "count": 723,
+      "fieldCounts": {
+        "adp_half_ppr": 723
+      }
+    },
+    {
+      "id": "week1-api-sleeper-com",
+      "url": "https://api.sleeper.com/projections/nfl/2026/1?season_type=regular&position[]=QB&position[]=RB&position[]=WR&position[]=TE&order_by=adp_dd_ppr",
+      "http_rows": 3112,
+      "count": 470,
+      "fieldCounts": {
+        "adp_dd_ppr": 470
+      }
+    },
+    {
+      "id": "week1-api-sleeper-app",
+      "url": "https://api.sleeper.app/projections/nfl/2026/1?season_type=regular&position[]=QB&position[]=RB&position[]=WR&position[]=TE&order_by=adp_dd_ppr",
+      "http_rows": 3112,
+      "count": 470,
+      "fieldCounts": {
+        "adp_dd_ppr": 470
+      }
+    }
+  ],
+  "payload_sha256": "984e96f8ebbaa9a871cd11e57aa9a1d1a717de3642a7fdb38cdf2ed0207b7480"
+}
