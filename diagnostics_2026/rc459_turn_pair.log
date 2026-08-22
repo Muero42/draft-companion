@@ -1,0 +1,15 @@
+{
+  "status": "PASS",
+  "parent_runs": 2000,
+  "pair_candidate_counts": [
+    18,
+    18,
+    18,
+    18
+  ],
+  "min_eligible_runs": 115,
+  "criteria": {
+    "each_pair_ge_8_candidates": true,
+    "every_reported_candidate_ge_100_eligible": true
+  }
+}

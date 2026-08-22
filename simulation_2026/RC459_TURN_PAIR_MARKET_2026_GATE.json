@@ -1,0 +1,17 @@
+{
+  "status": "PASS",
+  "freeze_package_sha256": "5339a37d275505f2a3a6fe0b84785f435d840d02cc7472a2b8bd934244e884fd",
+  "parent_runs": 2000,
+  "pair_candidate_counts": [
+    18,
+    18,
+    18,
+    18
+  ],
+  "min_eligible_runs": 115,
+  "criteria": {
+    "each_pair_ge_8_candidates": true,
+    "every_reported_candidate_ge_100_eligible": true
+  },
+  "policy_ranking_certified": false
+}
