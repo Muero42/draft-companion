@@ -1,4 +1,4 @@
-name: PITTI Independent Utility v3
+name: PITTI Independent Utility v3.2
 on:
   push:
     branches: [pitti-outcome-bridge-20250821]
@@ -24,7 +24,7 @@ jobs:
           curl -fL --retry 3 -o ids.csv https://raw.githubusercontent.com/dynastyprocess/data/master/files/db_playerids.csv
           curl -fL --retry 3 -o players.json https://api.sleeper.app/v1/players/nfl
           for w in $(seq 1 14); do curl -fsSL --retry 3 -o matchup_${w}.json https://api.sleeper.app/v1/league/1224396747309076480/matchups/${w}; done
-      - name: Run Utility v3
+      - name: Run Utility v3.2
         run: python research/independent_utility_v3_2025.py
       - name: Persist certification even when fail-closed
         shell: bash
@@ -36,7 +36,7 @@ jobs:
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add outcome_certification/INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json
           if ! git diff --cached --quiet; then
-            git commit -m 'Record Independent Championship Utility v3 result [skip ci]'
+            git commit -m 'Record Independent Championship Utility v3.2 result [skip ci]'
             git push origin HEAD:pitti-outcome-bridge-20250821
           fi
       - name: Enforce certification gate
@@ -44,6 +44,6 @@ jobs:
           python - <<'PY'
           import json
           x=json.load(open('INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json'))
-          print('Utility v3:',x['status'])
+          print('Utility v3.2:',x['status'])
           if x['status']!='PASS': raise SystemExit(2)
           PY
