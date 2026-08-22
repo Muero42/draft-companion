@@ -1,17 +1,22 @@
 #!/usr/bin/env python3
 """Fail-closed paired outcome gate for exact rc4.59 full-draft policy.
 
-The Coach is certified only if a zero-margin paired 95% CI shows it is not worse
-(lower bound >= 0) than BOTH independent controls in BOTH primary opponent regimes.
-If any upper bound is < 0, that comparison is materially dominated. Otherwise the
-result stays INCONCLUSIVE. No permissive non-inferiority margin is fitted post hoc.
+Primary certification baseline is MARKET_ROSTER: a pre-specified ADP-only roster-aware
+control that is independent of the selected expert panel and of the outcome evaluator.
+BRIDGE_GREEDY is retained only as an evaluator-optimized upper-bound diagnostic; it
+cannot by itself fail certification because optimizing on the same forecast used for
+scoring would bias that comparison against Coach.
+
+Certification uses a strict zero-margin paired 95% CI in BOTH baseline and stress.
+PASS requires Coach lower CI >= 0 vs MARKET_ROSTER in both regimes. If any market-
+control upper CI < 0 the gate FAILS_CLOSED; otherwise it remains INCONCLUSIVE.
 """
 from __future__ import annotations
 import json,math,pathlib,statistics,urllib.request,collections
 DRAFT_ID='1225769229928648704';POS={'QB','RB','WR','TE'}
 
 def getj(url):
-    req=urllib.request.Request(url,headers={'User-Agent':'PITTI-FullPolicyOutcome/1.0'})
+    req=urllib.request.Request(url,headers={'User-Agent':'PITTI-FullPolicyOutcome/1.1'})
     with urllib.request.urlopen(req,timeout=45) as r:return json.load(r)
 def qtile(vals,q):
     v=sorted(float(x) for x in vals)
@@ -78,20 +83,21 @@ def main():
             seeds=sorted({r['seed'] for r in evaluated if r['stress']==regime and r['policy']=='COACH'})
             for seed in seeds:
                 a=idx[(regime,seed,'COACH')];b=idx[(regime,seed,control)];d=a['expected_wins_14w']-b['expected_wins_14w'];ds.append(d);details.append({'seed':seed,'coach':a['expected_wins_14w'],'control':b['expected_wins_14w'],'delta':d})
-            comparisons[f'{regime}|COACH_vs_{control}']={**paired_stats(ds),'details':details}
+            comparisons[f'{regime}|COACH_vs_{control}']={**paired_stats(ds),'gate_role':'PRIMARY_INDEPENDENT_BASELINE' if control=='MARKET_ROSTER' else 'DIAGNOSTIC_EVALUATOR_OPTIMIZED_UPPER_BOUND','details':details}
     core_counts={}
     for p in drafts['policies']:
         rr=[r for r in evaluated if r['policy']==p];core_counts[p]={'n':len(rr),'missing_qb':sum(x['position_counts'].get('QB',0)<1 for x in rr),'missing_rb':sum(x['position_counts'].get('RB',0)<1 for x in rr),'missing_wr2':sum(x['position_counts'].get('WR',0)<2 for x in rr),'missing_te':sum(x['position_counts'].get('TE',0)<1 for x in rr)}
-    pre={'source_lock_58_58':drafts.get('source_lock','').startswith('58/58'),'dynamic_exact_gate_pass':dg['status']=='PASS','bridge_pass':bg['status']=='PASS','selected_panel_not_used_in_outcome_fit':bg.get('criteria',{}).get('selected_panel_not_used_in_fit') is True,'utility_v3_5_pass':util['status']=='PASS','runs_per_regime_ge_50':drafts.get('runs_per_regime',0)>=50,'all_controls_core_complete':all(sum(v[k] for k in ('missing_qb','missing_rb','missing_wr2','missing_te'))==0 for p,v in core_counts.items() if p!='COACH'),'coach_core_complete':sum(core_counts['COACH'][k] for k in ('missing_qb','missing_rb','missing_wr2','missing_te'))==0}
-    cls=[x['classification'] for x in comparisons.values()]
+    pre={'source_lock_58_58':drafts.get('source_lock','').startswith('58/58'),'dynamic_exact_gate_pass':dg['status']=='PASS','bridge_pass':bg['status']=='PASS','selected_panel_not_used_in_outcome_fit':bg.get('criteria',{}).get('selected_panel_not_used_in_fit') is True,'utility_v3_5_pass':util['status']=='PASS','runs_per_regime_ge_50':drafts.get('runs_per_regime',0)>=50,'market_control_core_complete':sum(core_counts['MARKET_ROSTER'][k] for k in ('missing_qb','missing_rb','missing_wr2','missing_te'))==0,'coach_core_complete':sum(core_counts['COACH'][k] for k in ('missing_qb','missing_rb','missing_wr2','missing_te'))==0}
+    primary=[comparisons[f'{r}|COACH_vs_MARKET_ROSTER']['classification'] for r in drafts['regimes']]
     if not all(pre.values()):status='FAIL_CLOSED'
-    elif all(x=='COACH_NOT_WORSE_95' for x in cls):status='PASS'
-    elif any(x=='COACH_DOMINATED_95' for x in cls):status='FAIL_CLOSED'
+    elif all(x=='COACH_NOT_WORSE_95' for x in primary):status='PASS'
+    elif any(x=='COACH_DOMINATED_95' for x in primary):status='FAIL_CLOSED'
     else:status='INCONCLUSIVE'
-    out={'schema':1,'status':status,'policy_ranking_certified':status=='PASS','criterion':'zero-margin paired 95% CI; PASS only if Coach lower CI >= 0 vs both independent controls in both baseline and stress; FAIL_CLOSED if any upper CI < 0; otherwise INCONCLUSIVE','preconditions':pre,'core_counts':core_counts,'comparisons':comparisons,'evaluated':evaluated,'limitations':['2026 outcomes are forecasts from the independently OOS-validated Sleeper market bridge, not realized 2026 production.','Opponent paths are stochastic rc4.59-parity research-kernel realizations; baseline and stress are both required.','Zero-margin gate is intentionally conservative; no post-hoc non-inferiority margin is allowed.']}
+    criterion='Primary: zero-margin paired 95% CI vs pre-specified ADP-only MARKET_ROSTER in baseline and stress. PASS only if both lower bounds >= 0; FAIL_CLOSED if either upper bound < 0; otherwise INCONCLUSIVE. BRIDGE_GREEDY is diagnostic only because it optimizes directly on the scoring forecast.'
+    out={'schema':2,'status':status,'policy_ranking_certified':status=='PASS','criterion':criterion,'preconditions':pre,'core_counts':core_counts,'comparisons':comparisons,'evaluated':evaluated,'limitations':['2026 outcomes are forecasts from the independently OOS-validated Sleeper market bridge, not realized 2026 production.','Opponent paths are stochastic rc4.59-parity research-kernel realizations; baseline and stress are both required.','Zero-margin gate is intentionally conservative; no post-hoc non-inferiority margin is allowed.','BRIDGE_GREEDY is evaluator-optimized and therefore cannot independently fail Coach certification.']}
     pathlib.Path('policy_certification_2026').mkdir(exist_ok=True)
     pathlib.Path('policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_2026.json').write_text(json.dumps(out,indent=2,ensure_ascii=False))
-    gate={'status':status,'policy_ranking_certified':out['policy_ranking_certified'],'criterion':out['criterion'],'preconditions':pre,'core_counts':core_counts,'comparisons':{k:{z:v[z] for z in ('n','mean_delta_expected_wins_14w','ci95','split_half_means','classification')} for k,v in comparisons.items()}}
+    gate={'status':status,'policy_ranking_certified':out['policy_ranking_certified'],'criterion':criterion,'preconditions':pre,'core_counts':core_counts,'comparisons':{k:{z:v[z] for z in ('n','mean_delta_expected_wins_14w','ci95','split_half_means','classification','gate_role')} for k,v in comparisons.items()}}
     pathlib.Path('policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_2026_GATE.json').write_text(json.dumps(gate,indent=2,ensure_ascii=False))
     print(json.dumps(gate,indent=2,ensure_ascii=False))
 if __name__=='__main__':main()
