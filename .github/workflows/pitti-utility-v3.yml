@@ -1,4 +1,4 @@
-name: PITTI Utility v3.5 + Fresh 2026 Freeze
+name: PITTI Utility v3.5 + Fresh 2026 Freeze + Simulation
 on:
   push:
     branches: [pitti-outcome-bridge-20250821]
@@ -9,6 +9,7 @@ on:
       - 'research/freeze_2026_fetch_v2.mjs'
       - 'research/augment_freeze_experts_2026.mjs'
       - 'research/finalize_freeze_2026.py'
+      - 'research/policy_simulator_2026_realistic.py'
       - 'freeze_2026/FRESH_2026_HEALTH_ROLE_2026-08-22.json'
       - 'freeze_2026/FRESH_2026_STATIC_LAYERS_2026-08-22.json'
   workflow_dispatch:
@@ -46,23 +47,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p outcome_certification freeze_2026
+          mkdir -p outcome_certification freeze_2026 simulation_2026
           if [ -f INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json ]; then cp INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json outcome_certification/; fi
           if [ -f FRESH_2026_MARKET_PANEL_RAW.json ]; then cp FRESH_2026_MARKET_PANEL_RAW.json freeze_2026/; fi
           if [ -f FRESH_2026_MARKET_PANEL_GATE.json ]; then cp FRESH_2026_MARKET_PANEL_GATE.json freeze_2026/; else printf '%s\n' '{"status":"RUNNER_ERROR","reason":"fresh 2026 acquisition produced no gate"}' > freeze_2026/FRESH_2026_MARKET_PANEL_GATE.json; fi
       - name: Finalize complete fresh 2026 freeze
         continue-on-error: true
         run: python research/finalize_freeze_2026.py
-      - name: Persist research outputs
-        if: always()
-        shell: bash
-        run: |
-          set -euo pipefail
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add outcome_certification/ freeze_2026/
-          if ! git diff --cached --quiet; then git commit -m 'Record utility and complete fresh 2026 freeze diagnostics [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
-      - name: Enforce final gates
+      - name: Enforce Utility + Freeze before simulation
         run: |
           python - <<'PY'
           import json
@@ -70,4 +62,27 @@ jobs:
           f=json.load(open('freeze_2026/FRESH_2026_FREEZE_GATE.json'))
           print('Utility v3.5:',u.get('status'),'Fresh 2026 freeze:',f.get('status'))
           if u.get('status')!='PASS' or f.get('status')!='PASS': raise SystemExit(2)
+          PY
+      - name: Run current-freeze realistic full-draft simulation suite
+        continue-on-error: true
+        run: |
+          python research/policy_simulator_2026_realistic.py 700
+          cp SIMULATION_2026_REALISTIC_RESULTS.json simulation_2026/
+          cp SIMULATION_2026_REALISTIC_GATE.json simulation_2026/
+      - name: Persist research outputs
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add outcome_certification/ freeze_2026/ simulation_2026/
+          if ! git diff --cached --quiet; then git commit -m 'Record fresh freeze and realistic 2026 simulations [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
+      - name: Enforce simulation output
+        run: |
+          python - <<'PY'
+          import json
+          x=json.load(open('simulation_2026/SIMULATION_2026_REALISTIC_GATE.json'))
+          print(x)
+          if x.get('status')!='PASS': raise SystemExit(2)
           PY
