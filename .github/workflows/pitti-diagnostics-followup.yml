@@ -1,0 +1,96 @@
+name: PITTI Diagnostics Follow-up
+on:
+  push:
+    branches: [pitti-outcome-bridge-20250821]
+    paths:
+      - '.github/workflows/pitti-diagnostics-followup.yml'
+  workflow_dispatch:
+concurrency:
+  group: pitti-diagnostics-followup
+  cancel-in-progress: true
+permissions:
+  contents: write
+jobs:
+  followup:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-outcome-bridge-20250821
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Install dependencies
+        run: python -m pip install --disable-pip-version-check requests
+      - name: Verify frozen preconditions
+        run: |
+          python - <<'PY'
+          import json
+          f=json.load(open('freeze_2026/FRESH_2026_FREEZE_GATE.json'))
+          s=json.load(open('simulation_2026/SIMULATION_2026_REALISTIC_GATE.json'))
+          print('freeze',f.get('status'),f.get('package_sha256'))
+          print('scaled simulation',s.get('status'),s.get('total_full_drafts'))
+          if f.get('status')!='PASS' or s.get('status')!='PASS' or s.get('total_full_drafts')!=36000: raise SystemExit(2)
+          if f.get('package_sha256')!=s.get('freeze_package_sha256'): raise SystemExit('freeze/simulation hash mismatch')
+          PY
+      - name: Compile follow-up scripts
+        run: python -m py_compile research/turn_pair_counterfactual_2026_v2.py research/market_outcome_bridge_2026_v2.py
+      - name: Run exposure-aware turn-pair analysis
+        shell: bash
+        run: |
+          set +e
+          python research/turn_pair_counterfactual_2026_v2.py 400 > /tmp/turn_pair_v2.log 2>&1
+          rc=$?
+          cat /tmp/turn_pair_v2.log
+          if [ $rc -ne 0 ] || [ ! -f TURN_PAIR_COUNTERFACTUAL_2026_GATE.json ]; then
+            printf '{"status":"RUNNER_ERROR","reason":"turn-pair v2 failed","exit_code":%s}\n' "$rc" > TURN_PAIR_COUNTERFACTUAL_2026_GATE.json
+          fi
+          exit 0
+      - name: Run direct Sleeper historical market bridge
+        shell: bash
+        run: |
+          set +e
+          python research/market_outcome_bridge_2026_v2.py > /tmp/market_bridge_v2.log 2>&1
+          rc=$?
+          cat /tmp/market_bridge_v2.log
+          if [ $rc -ne 0 ] || [ ! -f MARKET_OUTCOME_BRIDGE_2026_GATE.json ]; then
+            printf '{"status":"RUNNER_ERROR","reason":"direct Sleeper market bridge v2 failed","exit_code":%s}\n' "$rc" > MARKET_OUTCOME_BRIDGE_2026_GATE.json
+          fi
+          exit 0
+      - name: Persist follow-up outputs safely
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/pitti-followup
+          mkdir -p /tmp/pitti-followup/simulation_2026 /tmp/pitti-followup/bridge_2026 /tmp/pitti-followup/diagnostics_2026
+          [ -f TURN_PAIR_COUNTERFACTUAL_2026.json ] && cp TURN_PAIR_COUNTERFACTUAL_2026.json /tmp/pitti-followup/simulation_2026/ || true
+          cp TURN_PAIR_COUNTERFACTUAL_2026_GATE.json /tmp/pitti-followup/simulation_2026/
+          [ -f MARKET_OUTCOME_BRIDGE_2026.json ] && cp MARKET_OUTCOME_BRIDGE_2026.json /tmp/pitti-followup/bridge_2026/ || true
+          cp MARKET_OUTCOME_BRIDGE_2026_GATE.json /tmp/pitti-followup/bridge_2026/
+          cp /tmp/turn_pair_v2.log /tmp/pitti-followup/diagnostics_2026/turn_pair_v2.log
+          cp /tmp/market_bridge_v2.log /tmp/pitti-followup/diagnostics_2026/market_bridge_v2.log
+          printf '{"run_id":"%s","source_sha":"%s"}\n' "$GITHUB_RUN_ID" "$GITHUB_SHA" > /tmp/pitti-followup/diagnostics_2026/FOLLOWUP_RUN_META.json
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git reset --hard
+          git clean -fd
+          git fetch origin pitti-outcome-bridge-20250821
+          git checkout -B pitti-outcome-bridge-20250821 origin/pitti-outcome-bridge-20250821
+          mkdir -p simulation_2026 bridge_2026 diagnostics_2026
+          cp -a /tmp/pitti-followup/simulation_2026/. simulation_2026/
+          cp -a /tmp/pitti-followup/bridge_2026/. bridge_2026/
+          cp -a /tmp/pitti-followup/diagnostics_2026/. diagnostics_2026/
+          git add simulation_2026/ bridge_2026/ diagnostics_2026/
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record PITTI turn-pair v2 and direct market bridge [skip ci]'
+            git push origin HEAD:pitti-outcome-bridge-20250821
+          fi
+      - name: Summarize gates
+        run: |
+          python - <<'PY'
+          import json
+          for p in ['simulation_2026/TURN_PAIR_COUNTERFACTUAL_2026_GATE.json','bridge_2026/MARKET_OUTCOME_BRIDGE_2026_GATE.json']:
+            x=json.load(open(p));print(p,x.get('status'),x)
+          PY
