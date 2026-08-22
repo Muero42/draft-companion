@@ -10,7 +10,7 @@ const count=+(process.argv[3]||10);
 if(!Number.isInteger(count)||count<1)throw Error('count');
 const src=fs.readFileSync(CORE,'utf8'),body=Buffer.from(src);
 const actual=crypto.createHash('sha1').update(Buffer.from(`blob ${body.length}\0`)).update(body).digest('hex');
-if(actual!==EXPECTED)throw Error(`core blob mismatch ${actual}`);
+if(actual!==EXPECT)throw Error(`core blob mismatch ${actual}`);
 const needle='let scored=ranked.map(p=>({p,...C.scoreCandidate(p,pn,next,state,ranked,\'progressive\')}));';
 if(src.split(needle).length-1!==1)throw Error('coach scoring needle mismatch');
 const guard=`const priorPos=(pos)=>mine.filter(x=>String(x?.metadata?.position||'').toUpperCase()===pos).length;\n`+
