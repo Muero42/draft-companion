@@ -1,6 +1,10 @@
-name: PITTI Independent Utility v3.2
+name: PITTI Research Runner
 on:
   workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - 'research/jobs/current.json'
 permissions:
   contents: read
 jobs:
