@@ -1,0 +1,96 @@
+{
+  "status": "FAIL_CLOSED",
+  "policy_ranking_certified": false,
+  "criterion": "Primary: zero-margin paired 95% CI vs pre-specified ADP-only MARKET_ROSTER in baseline and stress. PASS only if both lower bounds >= 0; FAIL_CLOSED if either upper bound < 0; otherwise INCONCLUSIVE. BRIDGE_GREEDY is diagnostic only because it optimizes directly on the scoring forecast.",
+  "preconditions": {
+    "source_lock_58_58": true,
+    "dynamic_exact_gate_pass": true,
+    "bridge_pass": true,
+    "selected_panel_not_used_in_outcome_fit": true,
+    "utility_v3_5_pass": true,
+    "runs_per_regime_ge_50": false,
+    "market_control_core_complete": true,
+    "coach_core_complete": true
+  },
+  "core_counts": {
+    "COACH": {
+      "n": 2,
+      "missing_qb": 0,
+      "missing_rb": 0,
+      "missing_wr2": 0,
+      "missing_te": 0
+    },
+    "BRIDGE_GREEDY": {
+      "n": 2,
+      "missing_qb": 0,
+      "missing_rb": 0,
+      "missing_wr2": 0,
+      "missing_te": 0
+    },
+    "MARKET_ROSTER": {
+      "n": 2,
+      "missing_qb": 0,
+      "missing_rb": 0,
+      "missing_wr2": 0,
+      "missing_te": 0
+    }
+  },
+  "comparisons": {
+    "baseline|COACH_vs_BRIDGE_GREEDY": {
+      "n": 1,
+      "mean_delta_expected_wins_14w": -1.6742424242424239,
+      "ci95": [
+        -1.6742424242424239,
+        -1.6742424242424239
+      ],
+      "split_half_means": [
+        null,
+        -1.6742424242424239
+      ],
+      "classification": "COACH_DOMINATED_95",
+      "gate_role": "DIAGNOSTIC_EVALUATOR_OPTIMIZED_UPPER_BOUND"
+    },
+    "baseline|COACH_vs_MARKET_ROSTER": {
+      "n": 1,
+      "mean_delta_expected_wins_14w": -0.7954545454545454,
+      "ci95": [
+        -0.7954545454545454,
+        -0.7954545454545454
+      ],
+      "split_half_means": [
+        null,
+        -0.7954545454545454
+      ],
+      "classification": "COACH_DOMINATED_95",
+      "gate_role": "PRIMARY_INDEPENDENT_BASELINE"
+    },
+    "stress|COACH_vs_BRIDGE_GREEDY": {
+      "n": 1,
+      "mean_delta_expected_wins_14w": -1.6136363636363633,
+      "ci95": [
+        -1.6136363636363633,
+        -1.6136363636363633
+      ],
+      "split_half_means": [
+        null,
+        -1.6136363636363633
+      ],
+      "classification": "COACH_DOMINATED_95",
+      "gate_role": "DIAGNOSTIC_EVALUATOR_OPTIMIZED_UPPER_BOUND"
+    },
+    "stress|COACH_vs_MARKET_ROSTER": {
+      "n": 1,
+      "mean_delta_expected_wins_14w": -0.25757575757575735,
+      "ci95": [
+        -0.25757575757575735,
+        -0.25757575757575735
+      ],
+      "split_half_means": [
+        null,
+        -0.25757575757575735
+      ],
+      "classification": "COACH_DOMINATED_95",
+      "gate_role": "PRIMARY_INDEPENDENT_BASELINE"
+    }
+  }
+}
