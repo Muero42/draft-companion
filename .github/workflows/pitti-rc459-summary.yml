@@ -1,0 +1,25 @@
+name: PITTI rc4.59 Kernel Summary
+on:
+  push:
+    branches: [pitti-outcome-bridge-20250821]
+    paths: ['.github/workflows/pitti-rc459-summary.yml']
+permissions: {contents: write}
+jobs:
+  summary:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-outcome-bridge-20250821, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python research/summarize_rc459_kernel.py
+      - shell: bash
+        run: |
+          set -euo pipefail
+          cp simulation_2026/RC459_OPPONENT_KERNEL_DELTA_SUMMARY.json /tmp/summary.json
+          git config user.name github-actions[bot]; git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git reset --hard; git clean -fd; git fetch origin pitti-outcome-bridge-20250821; git checkout -B pitti-outcome-bridge-20250821 origin/pitti-outcome-bridge-20250821
+          cp /tmp/summary.json simulation_2026/RC459_OPPONENT_KERNEL_DELTA_SUMMARY.json
+          git add simulation_2026/RC459_OPPONENT_KERNEL_DELTA_SUMMARY.json
+          if ! git diff --cached --quiet; then git commit -m 'Record compact rc4.59 kernel delta summary [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
