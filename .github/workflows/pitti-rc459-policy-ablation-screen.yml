@@ -1,0 +1,42 @@
+name: PITTI rc4.59 Policy Ablation Screen
+on:
+  pull_request:
+    branches: [pitti-outcome-bridge-20250821]
+    paths:
+      - 'research/jobs/policy-ablation-probe.json'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  screen:
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        variant: [QB1_ONLY, QB1_TE1, QB1_TE1_DEFER_TE69, QB1_TE1_RB2_BY52]
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-outcome-bridge-20250821
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Run 10-seed/regime ablation
+        run: node research/rc459_policy_ablation_screen_2026.js ${{ matrix.variant }} 10
+      - name: Roster/bye-aware diagnostic outcome
+        shell: bash
+        run: |
+          cp policy_certification_2026/ABLATION_${{ matrix.variant }}.json policy_certification_2026/RC459_FULL_POLICY_PAIRED_DRAFTS_2026.json
+          python research/rc459_full_policy_outcome_certification_v2_2026.py > ablation-${{ matrix.variant }}-outcome.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: policy-ablation-${{ matrix.variant }}
+          path: |
+            policy_certification_2026/ABLATION_${{ matrix.variant }}.json
+            policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_V2_2026_GATE.json
+            ablation-${{ matrix.variant }}-outcome.log
+          if-no-files-found: error
+          retention-days: 3
