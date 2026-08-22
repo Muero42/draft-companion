@@ -1,0 +1,5 @@
+Traceback (most recent call last):
+  File "/home/runner/work/draft-companion/draft-companion/research/merge_rc459_full_policy_shards_2026.py", line 7, in <module>
+    if len(files)!=len(EXPECTED_OFFSETS): raise RuntimeError(f'shard count {len(files)}')
+                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: shard count 0
