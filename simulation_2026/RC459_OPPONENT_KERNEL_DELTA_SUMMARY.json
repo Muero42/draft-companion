@@ -1,0 +1,490 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "freeze_package_sha256": "5339a37d275505f2a3a6fe0b84785f435d840d02cc7472a2b8bd934244e884fd",
+  "runs": 2500,
+  "split_half": 0.0352,
+  "mean_opponent_kdst": 13.746,
+  "early_availability": {
+    "pick9": {
+      "Amon-Ra St. Brown": 0.276,
+      "Jaxon Smith-Njigba": 0.0808,
+      "Jonathan Taylor": 0.0636,
+      "James Cook III": 0.77,
+      "Chase Brown": 0.9988,
+      "Ashton Jeanty": 0.9796,
+      "Justin Jefferson": 0.99,
+      "Brock Bowers": 1.0,
+      "CeeDee Lamb": 0.9088,
+      "Saquon Barkley": 0.9664
+    },
+    "pick12": {
+      "Chase Brown": 0.9744,
+      "Ashton Jeanty": 0.682,
+      "Justin Jefferson": 0.8508,
+      "Brock Bowers": 0.9996,
+      "CeeDee Lamb": 0.2132,
+      "Saquon Barkley": 0.508
+    },
+    "pick29": {},
+    "pick32": {}
+  },
+  "turn_delta_summary": {
+    "9": {
+      "material_delta_ge_5pp": [
+        {
+          "name": "CeeDee Lamb",
+          "pos": "WR",
+          "old_mean": 0.6174,
+          "rc459_kernel": 0.9088,
+          "delta": 0.2914
+        },
+        {
+          "name": "James Cook III",
+          "pos": "RB",
+          "old_mean": 0.4981,
+          "rc459_kernel": 0.77,
+          "delta": 0.2719
+        },
+        {
+          "name": "Ashton Jeanty",
+          "pos": "RB",
+          "old_mean": 0.824,
+          "rc459_kernel": 0.9796,
+          "delta": 0.1556
+        },
+        {
+          "name": "Jonathan Taylor",
+          "pos": "RB",
+          "old_mean": 0.1949,
+          "rc459_kernel": 0.0636,
+          "delta": -0.1313
+        },
+        {
+          "name": "Jaxon Smith-Njigba",
+          "pos": "WR",
+          "old_mean": 0.2039,
+          "rc459_kernel": 0.0808,
+          "delta": -0.1231
+        },
+        {
+          "name": "Justin Jefferson",
+          "pos": "WR",
+          "old_mean": 0.8871,
+          "rc459_kernel": 0.99,
+          "delta": 0.1029
+        }
+      ],
+      "max_abs_delta": 0.2914,
+      "compared_players": 10
+    },
+    "12": {
+      "material_delta_ge_5pp": [
+        {
+          "name": "Justin Jefferson",
+          "pos": "WR",
+          "old_mean": 0.6933,
+          "rc459_kernel": 0.8508,
+          "delta": 0.1575
+        },
+        {
+          "name": "Ashton Jeanty",
+          "pos": "RB",
+          "old_mean": 0.5476,
+          "rc459_kernel": 0.682,
+          "delta": 0.1344
+        },
+        {
+          "name": "Saquon Barkley",
+          "pos": "RB",
+          "old_mean": 0.3861,
+          "rc459_kernel": 0.508,
+          "delta": 0.1219
+        },
+        {
+          "name": "CeeDee Lamb",
+          "pos": "WR",
+          "old_mean": 0.2947,
+          "rc459_kernel": 0.2132,
+          "delta": -0.0815
+        },
+        {
+          "name": "Chase Brown",
+          "pos": "RB",
+          "old_mean": 0.8942,
+          "rc459_kernel": 0.9744,
+          "delta": 0.0802
+        }
+      ],
+      "max_abs_delta": 0.1575,
+      "compared_players": 7
+    },
+    "29": {
+      "material_delta_ge_5pp": [],
+      "max_abs_delta": 0,
+      "compared_players": 0
+    },
+    "32": {
+      "material_delta_ge_5pp": [
+        {
+          "name": "Malik Nabers",
+          "pos": "WR",
+          "old_mean": 0.2034,
+          "rc459_kernel": 0.3612,
+          "delta": 0.1578
+        },
+        {
+          "name": "Zay Flowers",
+          "pos": "WR",
+          "old_mean": 0.9812,
+          "rc459_kernel": 0.8904,
+          "delta": -0.0908
+        }
+      ],
+      "max_abs_delta": 0.1578,
+      "compared_players": 2
+    },
+    "49": {
+      "material_delta_ge_5pp": [
+        {
+          "name": "Jaylen Waddle",
+          "pos": "WR",
+          "old_mean": 0.1195,
+          "rc459_kernel": 0.3076,
+          "delta": 0.1881
+        },
+        {
+          "name": "Colston Loveland",
+          "pos": "TE",
+          "old_mean": 0.0998,
+          "rc459_kernel": 0.2176,
+          "delta": 0.1178
+        }
+      ],
+      "max_abs_delta": 0.1881,
+      "compared_players": 2
+    },
+    "52": {
+      "material_delta_ge_5pp": [
+        {
+          "name": "Terry McLaurin",
+          "pos": "WR",
+          "old_mean": 0.1947,
+          "rc459_kernel": 0.6688,
+          "delta": 0.4741
+        },
+        {
+          "name": "D'Andre Swift",
+          "pos": "RB",
+          "old_mean": 0.2788,
+          "rc459_kernel": 0.5788,
+          "delta": 0.3
+        }
+      ],
+      "max_abs_delta": 0.4741,
+      "compared_players": 5
+    },
+    "69": {
+      "material_delta_ge_5pp": [
+        {
+          "name": "Christian Watson",
+          "pos": "WR",
+          "old_mean": 0.2251,
+          "rc459_kernel": 0.3884,
+          "delta": 0.1633
+        }
+      ],
+      "max_abs_delta": 0.1633,
+      "compared_players": 2
+    },
+    "72": {
+      "material_delta_ge_5pp": [
+        {
+          "name": "Marvin Harrison Jr.",
+          "pos": "WR",
+          "old_mean": 0.3024,
+          "rc459_kernel": 0.6728,
+          "delta": 0.3704
+        },
+        {
+          "name": "Parker Washington",
+          "pos": "WR",
+          "old_mean": 0.5886,
+          "rc459_kernel": 0.288,
+          "delta": -0.3006
+        },
+        {
+          "name": "Jayden Daniels",
+          "pos": "QB",
+          "old_mean": 0.0871,
+          "rc459_kernel": 0.358,
+          "delta": 0.2709
+        },
+        {
+          "name": "Tucker Kraft",
+          "pos": "TE",
+          "old_mean": 0.1321,
+          "rc459_kernel": 0.3312,
+          "delta": 0.1991
+        }
+      ],
+      "max_abs_delta": 0.3704,
+      "compared_players": 5
+    },
+    "89": {
+      "material_delta_ge_5pp": [
+        {
+          "name": "Trevor Lawrence",
+          "pos": "QB",
+          "old_mean": 0.2047,
+          "rc459_kernel": 0.8932,
+          "delta": 0.6885
+        },
+        {
+          "name": "Jonathon Brooks",
+          "pos": "RB",
+          "old_mean": 0.2372,
+          "rc459_kernel": 0.572,
+          "delta": 0.3348
+        },
+        {
+          "name": "Justin Herbert",
+          "pos": "QB",
+          "old_mean": 0.0566,
+          "rc459_kernel": 0.2288,
+          "delta": 0.1722
+        },
+        {
+          "name": "Caleb Williams",
+          "pos": "QB",
+          "old_mean": 0.1506,
+          "rc459_kernel": 0.0912,
+          "delta": -0.0594
+        }
+      ],
+      "max_abs_delta": 0.6885,
+      "compared_players": 5
+    },
+    "92": {
+      "material_delta_ge_5pp": [
+        {
+          "name": "Dak Prescott",
+          "pos": "QB",
+          "old_mean": 0.3344,
+          "rc459_kernel": 0.6116,
+          "delta": 0.2772
+        },
+        {
+          "name": "Stefon Diggs",
+          "pos": "WR",
+          "old_mean": 0.9888,
+          "rc459_kernel": 0.8424,
+          "delta": -0.1464
+        },
+        {
+          "name": "Trevor Lawrence",
+          "pos": "QB",
+          "old_mean": 0.8344,
+          "rc459_kernel": 0.694,
+          "delta": -0.1404
+        },
+        {
+          "name": "Rico Dowdle",
+          "pos": "RB",
+          "old_mean": 0.0594,
+          "rc459_kernel": 0.198,
+          "delta": 0.1386
+        },
+        {
+          "name": "Tony Pollard",
+          "pos": "RB",
+          "old_mean": 0.0281,
+          "rc459_kernel": 0.1128,
+          "delta": 0.0847
+        },
+        {
+          "name": "Jonathon Brooks",
+          "pos": "RB",
+          "old_mean": 0.1426,
+          "rc459_kernel": 0.0612,
+          "delta": -0.0814
+        }
+      ],
+      "max_abs_delta": 0.2772,
+      "compared_players": 8
+    },
+    "109": {
+      "material_delta_ge_5pp": [
+        {
+          "name": "Stefon Diggs",
+          "pos": "WR",
+          "old_mean": 0.7336,
+          "rc459_kernel": 0.282,
+          "delta": -0.4516
+        },
+        {
+          "name": "Jordan Addison",
+          "pos": "WR",
+          "old_mean": 0.0526,
+          "rc459_kernel": 0.246,
+          "delta": 0.1934
+        },
+        {
+          "name": "Dak Prescott",
+          "pos": "QB",
+          "old_mean": 0.2658,
+          "rc459_kernel": 0.0896,
+          "delta": -0.1762
+        },
+        {
+          "name": "George Kittle",
+          "pos": "TE",
+          "old_mean": 0.2517,
+          "rc459_kernel": 0.078,
+          "delta": -0.1737
+        },
+        {
+          "name": "Michael Pittman Jr.",
+          "pos": "WR",
+          "old_mean": 0.0493,
+          "rc459_kernel": 0.1976,
+          "delta": 0.1483
+        },
+        {
+          "name": "Jacory Croskey-Merritt",
+          "pos": "RB",
+          "old_mean": 0.0915,
+          "rc459_kernel": 0.2376,
+          "delta": 0.1461
+        },
+        {
+          "name": "Trevor Lawrence",
+          "pos": "QB",
+          "old_mean": 0.2928,
+          "rc459_kernel": 0.1656,
+          "delta": -0.1272
+        },
+        {
+          "name": "Jaxson Dart",
+          "pos": "QB",
+          "old_mean": 0.3028,
+          "rc459_kernel": 0.4208,
+          "delta": 0.118
+        },
+        {
+          "name": "Josh Downs",
+          "pos": "WR",
+          "old_mean": 0.4999,
+          "rc459_kernel": 0.6052,
+          "delta": 0.1053
+        },
+        {
+          "name": "Chris Godwin Jr.",
+          "pos": "WR",
+          "old_mean": 0.0078,
+          "rc459_kernel": 0.0672,
+          "delta": 0.0594
+        }
+      ],
+      "max_abs_delta": 0.4516,
+      "compared_players": 12
+    },
+    "112": {
+      "material_delta_ge_5pp": [
+        {
+          "name": "Isaiah Likely",
+          "pos": "TE",
+          "old_mean": 0.5733,
+          "rc459_kernel": 0.8784,
+          "delta": 0.3051
+        },
+        {
+          "name": "Quentin Johnston",
+          "pos": "WR",
+          "old_mean": 0.0306,
+          "rc459_kernel": 0.2388,
+          "delta": 0.2082
+        },
+        {
+          "name": "Dak Prescott",
+          "pos": "QB",
+          "old_mean": 0.2407,
+          "rc459_kernel": 0.0424,
+          "delta": -0.1983
+        },
+        {
+          "name": "George Kittle",
+          "pos": "TE",
+          "old_mean": 0.2136,
+          "rc459_kernel": 0.0568,
+          "delta": -0.1568
+        },
+        {
+          "name": "Brock Purdy",
+          "pos": "QB",
+          "old_mean": 0.9148,
+          "rc459_kernel": 0.7864,
+          "delta": -0.1284
+        },
+        {
+          "name": "Josh Downs",
+          "pos": "WR",
+          "old_mean": 0.3353,
+          "rc459_kernel": 0.2444,
+          "delta": -0.0909
+        }
+      ],
+      "max_abs_delta": 0.3051,
+      "compared_players": 11
+    },
+    "129": {
+      "material_delta_ge_5pp": [
+        {
+          "name": "Brock Purdy",
+          "pos": "QB",
+          "old_mean": 0.4573,
+          "rc459_kernel": 0.202,
+          "delta": -0.2553
+        },
+        {
+          "name": "Isaiah Likely",
+          "pos": "TE",
+          "old_mean": 0.4618,
+          "rc459_kernel": 0.3976,
+          "delta": -0.0642
+        }
+      ],
+      "max_abs_delta": 0.2553,
+      "compared_players": 2
+    },
+    "132": {
+      "material_delta_ge_5pp": [
+        {
+          "name": "Isaiah Likely",
+          "pos": "TE",
+          "old_mean": 0.4341,
+          "rc459_kernel": 0.0884,
+          "delta": -0.3457
+        },
+        {
+          "name": "Bo Nix",
+          "pos": "QB",
+          "old_mean": 0.5053,
+          "rc459_kernel": 0.3736,
+          "delta": -0.1317
+        }
+      ],
+      "max_abs_delta": 0.3457,
+      "compared_players": 2
+    },
+    "149": {
+      "material_delta_ge_5pp": [],
+      "max_abs_delta": 0,
+      "compared_players": 0
+    }
+  },
+  "max_abs_delta_vs_36k": 0.6885,
+  "conclusion": "MATERIAL_KERNEL_SENSITIVITY",
+  "policy_ranking_certified": false,
+  "interpretation": "If material, replace simplified 36k opponent sampler for decision/timing work. 36k remains descriptive historical research, not discarded."
+}
