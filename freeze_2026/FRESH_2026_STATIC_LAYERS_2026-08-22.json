@@ -1,0 +1,38 @@
+{
+  "schema": 1,
+  "as_of": "2026-08-22T08:11:00+02:00",
+  "manager_model": {
+    "version": "v2.1",
+    "profile_snapshot_sha256": "c5f601051850185b81801aaaa3efe554d9214f6cfa15999a0beec6cb0b192493",
+    "recency_decay": 0.72,
+    "generic_effects": "SHRUNK_CAPPED",
+    "research_manager_shrinkage": 0.10,
+    "market_role": "Sleeper ADP is timing/plausibility prior; not manager decision model",
+    "state_rules": ["exact snake geometry","sequential roster state","target collision","autodraft no-learn separation"]
+  },
+  "market_calibration": {
+    "real_2026_control_mocks": 6,
+    "control_adp_mae_total": 4.56,
+    "control_zone_mae": {"1_80":3.44,"81_120":5.87,"121_150":7.87},
+    "realistic_sampling_scales": {"1_80":2.45,"81_120":4.2,"121_150":6.5},
+    "calibrated_zone_mae_approx": {"1_80":3.38,"81_120":5.96,"121_150":8.67},
+    "stress_temperature_multiplier": 1.18
+  },
+  "k_dst": {
+    "user_drafts_k_dst": false,
+    "opponent_mean_k_dst_consumption_per_draft": 16.7,
+    "manager_specific_hazards": true,
+    "generic_hazard_fallback_only": true
+  },
+  "research": {
+    "breakout_decline_layer_required": true,
+    "research_residual": "SHADOW_ONLY",
+    "no_live_coach_coefficient_promotion": true,
+    "price_movement_directionally_neutral": true
+  },
+  "simulation_regimes": {
+    "primary": "REALISTIC",
+    "secondary": "STRESS",
+    "opponent_controls": ["FULL_MANAGER","MARKET_PLUS_ROSTER_CONTROL"]
+  }
+}
