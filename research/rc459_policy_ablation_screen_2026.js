@@ -22,13 +22,17 @@ const guard=`const priorPos=(pos)=>mine.filter(x=>String(x?.metadata?.position||
 `if('${variant}'==='QB1_TE1_RB2_BY52'){coachPool=ranked.filter(p=>!(p.pos==='QB'&&qb>=1)&&!(p.pos==='TE'&&te>=1));if(pn===12&&rb===0)coachPool=coachPool.filter(p=>p.pos==='RB');if((pn===49||pn===52)&&rb<2)coachPool=coachPool.filter(p=>p.pos==='RB');}\n`+
 `if(!coachPool.length)coachPool=ranked;\n`+
 `let scored=coachPool.map(p=>({p,...C.scoreCandidate(p,pn,next,state,ranked,'progressive')}));`;
-let patched=src.replace(needle,guard);
-// Tag output so artifacts cannot be confused with canonical policy certification.
-patched=patched.replace("const out={schema:2,status:'PASS'",`const out={schema:2,ablation_variant:'${variant}',status:'PASS'`);
+const patched=src.replace(needle,guard);
 const tmp=path.join('/tmp',`rc459_ablation_${variant}.js`);fs.writeFileSync(tmp,patched);
 const r=cp.spawnSync(process.execPath,[tmp,String(count)],{cwd:process.cwd(),stdio:'inherit'});if(r.status!==0)process.exit(r.status??2);
 const canonical='policy_certification_2026/RC459_FULL_POLICY_PAIRED_DRAFTS_2026.json';
-const x=JSON.parse(fs.readFileSync(canonical));
-if(x.ablation_variant!==variant||x.rows.length!==count*x.regimes.length*x.policies.length)throw Error('output invariant');
-const out=`policy_certification_2026/ABLATION_${variant}.json`;fs.renameSync(canonical,out);
+const x=JSON.parse(fs.readFileSync(canonical,'utf8'));
+if(x.status!=='PASS'||x.rows.length!==count*x.regimes.length*x.policies.length)throw Error('output invariant');
+// Tag only after the audited core has completed, so screen provenance cannot depend on a brittle lexical patch.
+x.ablation_variant=variant;
+x.ablation_screen=true;
+x.ablation_core_git_blob=EXPECTED;
+const out=`policy_certification_2026/ABLATION_${variant}.json`;
+fs.writeFileSync(out,JSON.stringify(x));
+fs.unlinkSync(canonical);
 console.log(JSON.stringify({status:'PASS',variant,count,rows:x.rows.length,out},null,2));
