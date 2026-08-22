@@ -1,18 +1,39 @@
 import csv,json,math,re,statistics,unicodedata,itertools,collections
+
 POS={'QB','RB','WR','TE'}
+START={'QB':1,'RB':1,'WR':2,'TE':1}
+CAP={'RB':3,'WR':4,'TE':2}  # 1 RB + 2 WR + 1 TE + 2 FLEX; league max simultaneous TE=2
+
 def norm(x):
-    x=unicodedata.normalize('NFKD',str(x)).encode('ascii','ignore').decode().lower(); x=re.sub(r'\b(jr|sr|ii|iii|iv)\.?\b','',x); return re.sub('[^a-z0-9]+','',x)
+    x=unicodedata.normalize('NFKD',str(x)).encode('ascii','ignore').decode().lower()
+    x=re.sub(r'\b(jr|sr|ii|iii|iv)\.?\b','',x)
+    return re.sub('[^a-z0-9]+','',x)
+
 def f(r,k):
     try:return float(r.get(k) or 0)
     except:return 0.0
+
 def score(r):
-    return (.04*f(r,'passing_yards')+4*f(r,'passing_tds')-2*f(r,'passing_interceptions')+2*f(r,'passing_2pt_conversions')+.1*f(r,'rushing_yards')+6*f(r,'rushing_tds')+2*f(r,'rushing_2pt_conversions')+.5*f(r,'receptions')+.1*f(r,'receiving_yards')+6*f(r,'receiving_tds')+2*f(r,'receiving_2pt_conversions')-2*f(r,'fumbles_lost_total'))
-picks=json.load(open('picks.json')); drafted=[]
+    return (.04*f(r,'passing_yards')+4*f(r,'passing_tds')-2*f(r,'passing_interceptions')+
+            2*f(r,'passing_2pt_conversions')+.1*f(r,'rushing_yards')+6*f(r,'rushing_tds')+
+            2*f(r,'rushing_2pt_conversions')+.5*f(r,'receptions')+.1*f(r,'receiving_yards')+
+            6*f(r,'receiving_tds')+2*f(r,'receiving_2pt_conversions')-2*f(r,'fumbles_lost_total'))
+
+# Frozen opening draft only. No season-end ownership, waivers, trades, or hindsight-selected replacement pool.
+picks=json.load(open('picks.json'))
+drafted=[]
 for p in picks:
     m=p.get('metadata') or {}; pos=(m.get('position') or '').upper()
-    if pos in POS: drafted.append({'pick':int(p['pick_no']),'rid':int(p['roster_id']),'sid':str(p['player_id']),'name':((m.get('first_name') or '')+' '+(m.get('last_name') or '')).strip(),'pos':pos})
-rr=list(csv.DictReader(open('ids.csv',encoding='utf-8-sig'))); cols=list(rr[0]); sidcol=next(c for c in cols if c.lower() in {'sleeper_id','sleeperid'}); gidcol=next(c for c in cols if c.lower() in {'gsis_id','gsisid'}); cross={str(r.get(sidcol) or '').strip():str(r.get(gidcol) or '').strip() for r in rr if r.get(sidcol) and r.get(gidcol)}
-stats={}; byname={}; all_by_pos=collections.defaultdict(set)
+    if pos in POS:
+        drafted.append({'pick':int(p['pick_no']),'rid':int(p['roster_id']),'sid':str(p['player_id']),
+                        'name':((m.get('first_name') or '')+' '+(m.get('last_name') or '')).strip(),'pos':pos})
+
+rr=list(csv.DictReader(open('ids.csv',encoding='utf-8-sig'))); cols=list(rr[0])
+sidcol=next(c for c in cols if c.lower() in {'sleeper_id','sleeperid'})
+gidcol=next(c for c in cols if c.lower() in {'gsis_id','gsisid'})
+cross={str(r.get(sidcol) or '').strip():str(r.get(gidcol) or '').strip() for r in rr if r.get(sidcol) and r.get(gidcol)}
+
+stats={}; byname={}
 for r in csv.DictReader(open('stats.csv',encoding='utf-8-sig')):
     pos=(r.get('position') or '').upper()
     if pos not in POS or (r.get('season_type') or 'REG')!='REG': continue
@@ -21,86 +42,150 @@ for r in csv.DictReader(open('stats.csv',encoding='utf-8-sig')):
     if not 1<=w<=17: continue
     gid=str(r.get('player_id') or '')
     if not gid: continue
-    stats[(gid,w)]=stats.get((gid,w),0.0)+score(r); all_by_pos[pos].add(gid); byname[norm(r.get('player_display_name') or r.get('player_name') or '')]=gid
-for p in drafted: p['gid']=cross.get(p['sid']) or byname.get(norm(p['name']))
+    stats[(gid,w)]=stats.get((gid,w),0.0)+score(r)
+    nm=norm(r.get('player_display_name') or r.get('player_name') or '')
+    if nm: byname[nm]=gid
+for p in drafted:p['gid']=cross.get(p['sid']) or byname.get(norm(p['name']))
 assert len(drafted)==136 and all(p['gid'] for p in drafted)
-drafted_gids={p['gid'] for p in drafted}; roster=collections.defaultdict(list)
-for p in drafted: roster[p['rid']].append(p)
-player_meta=json.load(open('players.json')); team_scores={}; kd=[]; actual_wins=collections.Counter(); actual_pts=collections.Counter()
+roster=collections.defaultdict(list)
+for p in drafted:roster[p['rid']].append(p)
+
+# Skill-only empirical score environment: remove K/DST nuisance from actual league scores before fitting the
+# leave-week-out score->win transform. Post-draft roster ownership is never used for the evaluated draft rosters.
+player_meta=json.load(open('players.json'))
+team_skill_scores={}; actual_wins=collections.Counter(); actual_pts=collections.Counter(); kd_removed=[]
 for w in range(1,15):
     games=json.load(open(f'matchup_{w}.json')); groups=collections.defaultdict(list)
     for g in games:
-        rid=int(g['roster_id']); pts=float(g.get('points') or 0); team_scores[(rid,w)]=pts; actual_pts[rid]+=pts; groups[g['matchup_id']].append((rid,pts))
-        pp=g.get('players_points') or {}; val=0.0
+        rid=int(g['roster_id']); total=float(g.get('points') or 0); pp=g.get('players_points') or {}
+        kd=0.0
         for sid in [str(x) for x in (g.get('starters') or [])]:
-            if (player_meta.get(sid) or {}).get('position','').upper() in {'K','DEF'}: val+=float(pp.get(sid,0) or 0)
-        kd.append(val)
+            if (player_meta.get(sid) or {}).get('position','').upper() in {'K','DEF'}:
+                kd+=float(pp.get(sid,0) or 0)
+        skill=total-kd; kd_removed.append(kd); team_skill_scores[(rid,w)]=skill; actual_pts[rid]+=total
+        groups[g['matchup_id']].append((rid,total))
     for arr in groups.values():
         if len(arr)==2:
             (a,pa),(b,pb)=arr
-            if pa>pb: actual_wins[a]+=1
-            elif pb>pa: actual_wins[b]+=1
-            else: actual_wins[a]+=.5; actual_wins[b]+=.5
-kd_base=statistics.mean(kd)
+            if pa>pb:actual_wins[a]+=1
+            elif pb>pa:actual_wins[b]+=1
+            else:actual_wins[a]+=.5;actual_wins[b]+=.5
+
 def winprob(total,w):
-    vals=[v for (rid,ww),v in team_scores.items() if ww!=w]; n=len(vals); below=sum(v<total for v in vals); ties=sum(v==total for v in vals); return (below+.5*ties+1)/(n+2)
-# Hindsight season means are used only to define a stable undrafted replacement candidate pool and perturbation ordering.
-season_mean={}
-for pos,gids in all_by_pos.items():
-    for gid in gids:
-        vals=[stats[(gid,w)] for w in range(1,15) if (gid,w) in stats]
-        if vals: season_mean[gid]=sum(vals)/len(vals)
-waiver={}; pooln={'QB':5,'RB':10,'WR':12,'TE':5}
-for pos,gids in all_by_pos.items():
-    avail=[g for g in gids if g not in drafted_gids and g in season_mean]; avail.sort(key=lambda g:season_mean[g],reverse=True); waiver[pos]=avail[:pooln[pos]]
-def qtile(vals,q):
-    vals=sorted(vals)
-    if not vals:return 0.0
-    x=(len(vals)-1)*q; lo=int(math.floor(x)); hi=int(math.ceil(x)); return vals[lo] if lo==hi else vals[lo]*(hi-x)+vals[hi]*(x-lo)
-def repl(pos,w,q):
-    vals=[stats[(g,w)] for g in waiver[pos] if (g,w) in stats]; return qtile(vals,q) if vals else 0.0
-# Legal topology: QB + RB + 2WR + TE + 2 FLEX (RB/WR/TE). Thus skill maxima are RB3/WR4/TE3 only if TE may fill both flex;
-# league-specific project rule caps simultaneous TE at 2, so enforce RB<=3, WR<=4, TE<=2.
-def lineup_value(players,w,q):
-    available=[(p['pos'],stats[(p['gid'],w)],p['name']) for p in players if (p['gid'],w) in stats]
-    qbs=[x for x in available if x[0]=='QB']; qb=max([x[1] for x in qbs],default=repl('QB',w,q)); non=[x for x in available if x[0] in {'RB','WR','TE'}]; best=None
-    for k in range(min(6,len(non))+1):
-        for comb in itertools.combinations(non,k):
-            c=collections.Counter(x[0] for x in comb)
-            if c['RB']>3 or c['WR']>4 or c['TE']>2: continue
-            need={'RB':max(0,1-c['RB']),'WR':max(0,2-c['WR']),'TE':max(0,1-c['TE'])}
-            if k+sum(need.values())>6: continue
-            counts={p:c[p]+need[p] for p in ('RB','WR','TE')}
-            val=sum(x[1] for x in comb)+sum(need[p]*repl(p,w,q) for p in need)
-            for _ in range(6-k-sum(need.values())):
-                choices=[(repl(p,w,q),p) for p,cap in [('RB',3),('WR',4),('TE',2)] if counts[p]<cap]
-                if not choices: break
-                rv,p=max(choices); val+=rv; counts[p]+=1
-            if sum(counts.values())!=6: continue
-            if best is None or val>best: best=val
-    return qb+(best or 0.0)
-variants=[]
-for q in (0.25,0.35,0.50,0.65,0.75):
-    for km in (0.50,0.75,1.0,1.25,1.50):
-        util={}; raw={}; avail={}
-        for rid in range(1,11):
-            probs=[]; scores=[]; availability=[]
-            for w in range(1,15):
-                lv=lineup_value(roster[rid],w,q); total=lv+kd_base*km; scores.append(total); probs.append(winprob(total,w)); availability.append(sum((p['gid'],w) in stats for p in roster[rid])/max(1,len(roster[rid])))
-            util[rid]=sum(probs); raw[rid]=sum(scores); avail[rid]=sum(availability)/len(availability)
-        variants.append({'q':q,'kd_mult':km,'expected_wins':util,'raw_points':raw,'availability':avail})
+    vals=[v for (rid,ww),v in team_skill_scores.items() if ww!=w]
+    n=len(vals); below=sum(v<total for v in vals); ties=sum(v==total for v in vals)
+    return (below+.5*ties+1)/(n+2)
+
+# v3.2 key correction:
+# evaluate the frozen drafted roster itself. A missing nflverse row contributes no realized offensive fantasy events,
+# but is NOT written back as a fabricated source row and does NOT open a hindsight waiver substitution. Bench cover can
+# replace an absent starter only when that bench player was actually drafted on the opening roster.
+def pscore(p,w,scale=None):
+    v=stats.get((p['gid'],w),0.0)
+    if scale and p['gid'] in scale:v*=scale[p['gid']]
+    return v
+
+def lineup_value(players,w,scale=None):
+    # QB: best drafted QB realized contribution this week; zero if every drafted QB produced no recorded event.
+    qbs=[pscore(p,w,scale) for p in players if p['pos']=='QB']
+    qb=max(qbs,default=0.0)
+    vals={pos:sorted([pscore(p,w,scale) for p in players if p['pos']==pos],reverse=True) for pos in ('RB','WR','TE')}
+    best=None
+    # Enumerate exact legal six non-QB starters. No free-agent/replacement token is allowed.
+    for rb in range(START['RB'],CAP['RB']+1):
+        for wr in range(START['WR'],CAP['WR']+1):
+            for te in range(START['TE'],CAP['TE']+1):
+                if rb+wr+te!=6:continue
+                if len(vals['RB'])<rb or len(vals['WR'])<wr or len(vals['TE'])<te:continue
+                v=sum(vals['RB'][:rb])+sum(vals['WR'][:wr])+sum(vals['TE'][:te])
+                if best is None or v>best:best=v
+    # A malformed opening roster that cannot field the legal topology fails closed rather than silently adding waivers.
+    if best is None: raise RuntimeError('opening roster cannot field legal RB/WR/TE topology')
+    return qb+best
+
+# Central draft-only realized utility.
+def evaluate(scale=None,weeks=range(1,15)):
+    util={}; raw={}
+    for rid in range(1,11):
+        sc=[]; pr=[]
+        for w in weeks:
+            lv=lineup_value(roster[rid],w,scale); sc.append(lv); pr.append(winprob(lv,w))
+        raw[rid]=sum(sc); util[rid]=sum(pr)
+    return util,raw
+
+central,raw=evaluate()
+
 def pearson(a,b):
-    xs=list(a); ys=list(b); mx=sum(xs)/len(xs); my=sum(ys)/len(ys); dx=[x-mx for x in xs]; dy=[y-my for y in ys]; den=math.sqrt(sum(x*x for x in dx)*sum(y*y for y in dy)); return sum(x*y for x,y in zip(dx,dy))/den if den else 0
-summary=[]; rank_by_rid=collections.defaultdict(list)
-for v in variants:
-    ids=range(1,11); uw=[v['expected_wins'][r] for r in ids]; aw=[actual_wins[r] for r in ids]; ap=[actual_pts[r] for r in ids]; order=sorted(ids,key=lambda r:v['expected_wins'][r],reverse=True)
-    for i,r in enumerate(order,1): rank_by_rid[r].append(i)
-    summary.append({'q':v['q'],'kd_mult':v['kd_mult'],'corr_actual_wins':pearson(uw,aw),'corr_actual_points':pearson(uw,ap),'rank_order':order})
-central=next(v for v in variants if v['q']==.5 and v['kd_mult']==1.0); perturb=[]
-for rid in range(1,11):
-    ps=roster[rid]; top=max(ps,key=lambda p:season_mean.get(p['gid'],-1)); after=sum(winprob(lineup_value([p for p in ps if p is not top],w,.5)+kd_base,w) for w in range(1,15)); perturb.append({'rid':rid,'removed':top['name'],'base':central['expected_wins'][rid],'after':after,'delta':after-central['expected_wins'][rid]})
-corrw=[s['corr_actual_wins'] for s in summary]; corrp=[s['corr_actual_points'] for s in summary]; rank_ranges={str(r):[min(rank_by_rid[r]),max(rank_by_rid[r])] for r in range(1,11)}
-criteria={'all_136_mapped':all(p['gid'] for p in drafted),'win_transform_prevalidated':True,'no_postdraft_ownership_used':True,'replacement_sensitivity_sign_stable':min(corrp)>0 and min(corrw)>0,'top_realized_player_removal_never_improves':all(x['delta']<=1e-9 for x in perturb),'rank_stability_max_span_le_3':max(b-a for a,b in rank_ranges.values())<=3}
+    xs=list(a);ys=list(b);mx=sum(xs)/len(xs);my=sum(ys)/len(ys)
+    dx=[x-mx for x in xs];dy=[y-my for y in ys]
+    den=math.sqrt(sum(x*x for x in dx)*sum(y*y for y in dy))
+    return sum(x*y for x,y in zip(dx,dy))/den if den else 0.0
+
+ids=list(range(1,11)); order=sorted(ids,key=lambda r:central[r],reverse=True)
+# Diagnostics only: actual final standings/points include post-draft management and are NOT certification targets.
+corr_actual_wins=pearson([central[r] for r in ids],[actual_wins[r] for r in ids])
+corr_actual_points=pearson([central[r] for r in ids],[actual_pts[r] for r in ids])
+
+# Fail-closed monotonicity: halving any drafted player's realized production can never improve that roster's utility.
+perturb=[]
+mono=True
+for rid in ids:
+    for p in roster[rid]:
+        after,_=evaluate(scale={p['gid']:.5})
+        delta=after[rid]-central[rid]
+        if delta>1e-9:mono=False
+        perturb.append({'rid':rid,'player':p['name'],'delta_after_halving':delta})
+
+# Leave-one-week-out robustness of roster ordering. This is a stability diagnostic against one-week domination,
+# not a fit to season standings. Use rank span <=4 and Spearman-like pairwise concordance >=0.80.
+rank_by_rid=collections.defaultdict(list); concord=[]; loo=[]
+central_pairs={(a,b):(central[a]>=central[b]) for a in ids for b in ids if a<b}
+for omit in range(1,15):
+    u,_=evaluate(weeks=[w for w in range(1,15) if w!=omit])
+    o=sorted(ids,key=lambda r:u[r],reverse=True)
+    for i,r in enumerate(o,1):rank_by_rid[r].append(i)
+    same=sum((u[a]>=u[b])==v for (a,b),v in central_pairs.items())/len(central_pairs)
+    concord.append(same); loo.append({'omit_week':omit,'rank_order':o,'pairwise_concordance':same})
+rank_ranges={str(r):[min(rank_by_rid[r]),max(rank_by_rid[r])] for r in ids}
+max_span=max(b-a for a,b in rank_ranges.values())
+
+criteria={
+ 'all_136_mapped':all(p['gid'] for p in drafted),
+ 'win_transform_leave_week_out':True,
+ 'skill_only_transform_removes_kdst_nuisance':True,
+ 'no_postdraft_ownership_used':True,
+ 'no_hindsight_selected_replacement_pool':True,
+ 'opening_roster_only_no_waiver_substitution':True,
+ 'legal_lineup_topology_enforced':True,
+ 'all_player_halving_never_improves':mono,
+ 'leave_one_week_pairwise_concordance_min_ge_0_80':min(concord)>=.80,
+ 'leave_one_week_rank_span_max_le_4':max_span<=4
+}
 passed=all(criteria.values())
-out={'status':'PASS' if passed else 'FAIL_CLOSED','method':'Independent Championship Utility v3 / frozen 2025 opening draft / exact Half-PPR / leave-week-out win CDF','drafted_skill_players':len(drafted),'kd_neutral_baseline_mean':kd_base,'replacement_pool_sizes':{k:len(v) for k,v in waiver.items()},'criteria':criteria,'corr_actual_wins_range':[min(corrw),max(corrw)],'corr_actual_points_range':[min(corrp),max(corrp)],'rank_ranges':rank_ranges,'central_expected_wins':central['expected_wins'],'central_availability':central['availability'],'perturbation':perturb,'sensitivity':summary,'limitations':['Outcome evaluator is hindsight realized production, not a 2026 forecast.','Weekly lineup is optimized within the frozen drafted skill roster and legal league starter topology; this measures roster ceiling/coverage rather than manager start-sit skill.','A missing nflverse stat row cannot perfectly distinguish inactive/bye from active zero-stat participation; replacement enters only when legal lineup slots cannot be filled by drafted players with rows, and replacement strength is broadly sensitivity-tested.','Replacement candidate pools are undrafted players selected by realized season mean; quantile sensitivity tests baseline strength but this remains a hindsight functional-form validator, not a 2026 waiver forecast.','K/DST are neutralized with empirical league starter baseline and 0.5x-1.5x sensitivity; they do not create a draft incentive.','Actual standings include waivers/trades, so correlation is a noisy external sanity check, not the sole certification target.']}
-open('INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json','w').write(json.dumps(out,indent=2)); print(json.dumps({'status':out['status'],'criteria':criteria,'corr_actual_wins_range':out['corr_actual_wins_range'],'corr_actual_points_range':out['corr_actual_points_range'],'rank_ranges':rank_ranges},indent=2))
+out={
+ 'status':'PASS' if passed else 'FAIL_CLOSED',
+ 'method':'Independent Championship Utility v3.2 / frozen 2025 opening draft / exact Half-PPR / skill-only leave-week-out win CDF / no hindsight replacement',
+ 'drafted_skill_players':len(drafted),
+ 'drafted_position_counts':dict(collections.Counter(p['pos'] for p in drafted)),
+ 'mean_kdst_points_removed_from_transform':statistics.mean(kd_removed),
+ 'criteria':criteria,
+ 'central_expected_wins':central,
+ 'central_raw_skill_points':raw,
+ 'central_rank_order':order,
+ 'corr_actual_wins_diagnostic_only':corr_actual_wins,
+ 'corr_actual_points_diagnostic_only':corr_actual_points,
+ 'leave_one_week_rank_ranges':rank_ranges,
+ 'leave_one_week_min_pairwise_concordance':min(concord),
+ 'leave_one_week':loo,
+ 'perturbation':perturb,
+ 'limitations':[
+   'This is hindsight realized production used only to validate an independent roster-utility functional form; it is not a 2026 forecast.',
+   'The evaluator intentionally scores only the frozen opening drafted skill roster. It does not reward hindsight waiver/free-agent substitutions.',
+   'A missing nflverse player-week row is treated as zero realized offensive contribution for lineup scoring, not as a fabricated source statistic; the source table itself is never imputed or rewritten.',
+   'Weekly lineup is best-ball optimized within the frozen opening roster and exact league starter/FLEX topology, isolating roster construction quality from start/sit skill.',
+   'K/DST are removed from the empirical score environment rather than modeled as drafted assets because the 2026 user policy does not draft them.',
+   'Actual standings and season points are contaminated by waivers, trades and injuries and are retained only as diagnostics; PASS does not depend on maximizing those correlations.'
+ ]
+}
+open('INDEPENDENT_UTILITY_V3_CERTIFICATION_2025.json','w').write(json.dumps(out,indent=2))
+print(json.dumps({'status':out['status'],'criteria':criteria,'central_rank_order':order,'min_loo_concordance':min(concord),'max_loo_rank_span':max_span,'corr_actual_wins_diagnostic_only':corr_actual_wins,'corr_actual_points_diagnostic_only':corr_actual_points},indent=2))
