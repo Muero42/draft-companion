@@ -7,7 +7,7 @@ there maps to the verified rc4.59 equations. This avoids treating the explorator
 temperature-only stress control as an exact named rc4.59 stress regime.
 """
 import json, pathlib, sys
-import research.rc459_opponent_kernel_sim_2026 as k
+import rc459_opponent_kernel_sim_2026 as k
 
 runs=int(sys.argv[1]) if len(sys.argv)>1 else 2500
 gate,players,k.MANAGER_DATA,mhash=k.load()
