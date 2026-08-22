@@ -5,6 +5,9 @@ on:
     paths:
       - '.github/workflows/pitti-rc459-outcome-challenger.yml'
   workflow_dispatch:
+concurrency:
+  group: pitti-rc459-outcome-challenger
+  cancel-in-progress: true
 permissions:
   contents: write
 jobs:
