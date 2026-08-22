@@ -1,0 +1,2330 @@
+{
+  "status": "PASS",
+  "method": "Independent Championship Utility v3.5 / frozen 2025 opening draft / exact Half-PPR / draft-cutline vacancy replacement / jackknife uncertainty stability",
+  "criteria": {
+    "all_136_mapped": true,
+    "no_postdraft_ownership_used": true,
+    "replacement_cohort_selected_only_by_frozen_draft_cutline": true,
+    "replacement_never_selected_by_realized_season_mean": true,
+    "replacement_is_vacancy_only_not_hindsight_upgrade": true,
+    "skill_only_transform_removes_kdst_nuisance": true,
+    "all_player_halving_never_improves": true,
+    "replacement_sensitivity_rank_span_max_le_4": true,
+    "leave_one_week_pairwise_concordance_min_ge_0_80": true,
+    "leave_one_week_pairwise_concordance_median_ge_0_90": true,
+    "leave_one_week_top1_stable": true,
+    "jackknife_significant_pairs_exist": true,
+    "jackknife_95pct_significant_pairs_have_no_loo_sign_flip": true
+  },
+  "drafted_skill_players": 136,
+  "drafted_position_counts": {
+    "WR": 59,
+    "RB": 46,
+    "TE": 16,
+    "QB": 15
+  },
+  "opening_roster_position_counts": {
+    "1": {
+      "RB": 3,
+      "TE": 3,
+      "WR": 7,
+      "QB": 1
+    },
+    "2": {
+      "WR": 6,
+      "RB": 3,
+      "QB": 2,
+      "TE": 2
+    },
+    "3": {
+      "WR": 6,
+      "RB": 5,
+      "TE": 1,
+      "QB": 1
+    },
+    "4": {
+      "RB": 8,
+      "WR": 6,
+      "QB": 1
+    },
+    "5": {
+      "WR": 6,
+      "QB": 2,
+      "RB": 5,
+      "TE": 1
+    },
+    "6": {
+      "RB": 4,
+      "WR": 5,
+      "TE": 2,
+      "QB": 2
+    },
+    "7": {
+      "RB": 3,
+      "WR": 7,
+      "QB": 2,
+      "TE": 2
+    },
+    "8": {
+      "WR": 5,
+      "RB": 5,
+      "QB": 1,
+      "TE": 2
+    },
+    "9": {
+      "RB": 6,
+      "WR": 6,
+      "TE": 1,
+      "QB": 1
+    },
+    "10": {
+      "WR": 5,
+      "RB": 4,
+      "QB": 2,
+      "TE": 2
+    }
+  },
+  "central_expected_wins": {
+    "1": 9.75,
+    "2": 8.856060606060606,
+    "3": 8.318181818181818,
+    "4": 11.643939393939394,
+    "5": 9.106060606060606,
+    "6": 9.617424242424242,
+    "7": 8.234848484848484,
+    "8": 9.242424242424242,
+    "9": 9.68560606060606,
+    "10": 8.719696969696969
+  },
+  "central_rank_order": [
+    4,
+    1,
+    9,
+    6,
+    8,
+    5,
+    2,
+    10,
+    3,
+    7
+  ],
+  "replacement_sensitivity_rank_ranges": {
+    "1": [
+      2,
+      3
+    ],
+    "2": [
+      7,
+      8
+    ],
+    "3": [
+      9,
+      9
+    ],
+    "4": [
+      1,
+      1
+    ],
+    "5": [
+      6,
+      6
+    ],
+    "6": [
+      3,
+      4
+    ],
+    "7": [
+      10,
+      10
+    ],
+    "8": [
+      5,
+      5
+    ],
+    "9": [
+      2,
+      4
+    ],
+    "10": [
+      7,
+      8
+    ]
+  },
+  "replacement_sensitivity_max_span": 2,
+  "leave_one_week_rank_ranges": {
+    "1": [
+      2,
+      5
+    ],
+    "2": [
+      5,
+      9
+    ],
+    "3": [
+      8,
+      10
+    ],
+    "4": [
+      1,
+      1
+    ],
+    "5": [
+      4,
+      7
+    ],
+    "6": [
+      2,
+      6
+    ],
+    "7": [
+      8,
+      10
+    ],
+    "8": [
+      2,
+      8
+    ],
+    "9": [
+      2,
+      4
+    ],
+    "10": [
+      5,
+      9
+    ]
+  },
+  "leave_one_week_max_span": 6,
+  "leave_one_week_min_pairwise_concordance": 0.8444444444444444,
+  "variants": [
+    {
+      "tail_frac": 0.15,
+      "quantile": 0.4,
+      "expected_wins": {
+        "1": 9.71969696969697,
+        "2": 8.727272727272727,
+        "3": 8.212121212121213,
+        "4": 11.484848484848484,
+        "5": 8.901515151515152,
+        "6": 9.617424242424242,
+        "7": 8.136363636363637,
+        "8": 8.984848484848484,
+        "9": 9.575757575757576,
+        "10": 8.704545454545455
+      },
+      "raw_skill_points": {
+        "1": 1482.984,
+        "2": 1386.28,
+        "3": 1349.096,
+        "4": 1626.8120000000001,
+        "5": 1421.416,
+        "6": 1461.0600000000002,
+        "7": 1363.336,
+        "8": 1401.272,
+        "9": 1446.252,
+        "10": 1436.7
+      },
+      "rank_order": [
+        4,
+        1,
+        6,
+        9,
+        8,
+        5,
+        2,
+        10,
+        3,
+        7
+      ],
+      "corr_actual_wins_diagnostic_only": 0.10992423894321574,
+      "corr_actual_points_diagnostic_only": 0.09148892082505372
+    },
+    {
+      "tail_frac": 0.15,
+      "quantile": 0.5,
+      "expected_wins": {
+        "1": 9.75,
+        "2": 8.780303030303031,
+        "3": 8.318181818181818,
+        "4": 11.636363636363637,
+        "5": 9.098484848484848,
+        "6": 9.617424242424242,
+        "7": 8.18939393939394,
+        "8": 9.178030303030303,
+        "9": 9.68560606060606,
+        "10": 8.81060606060606
+      },
+      "raw_skill_points": {
+        "1": 1485.3600000000001,
+        "2": 1390.28,
+        "3": 1358.45,
+        "4": 1640.38,
+        "5": 1435.06,
+        "6": 1462.29,
+        "7": 1368.23,
+        "8": 1414.9,
+        "9": 1454.97,
+        "10": 1441.3500000000001
+      },
+      "rank_order": [
+        4,
+        1,
+        9,
+        6,
+        8,
+        5,
+        10,
+        2,
+        3,
+        7
+      ],
+      "corr_actual_wins_diagnostic_only": 0.10201026236551683,
+      "corr_actual_points_diagnostic_only": 0.09846158599510965
+    },
+    {
+      "tail_frac": 0.15,
+      "quantile": 0.6,
+      "expected_wins": {
+        "1": 9.757575757575758,
+        "2": 8.96969696969697,
+        "3": 8.696969696969697,
+        "4": 11.90909090909091,
+        "5": 9.113636363636363,
+        "6": 9.625,
+        "7": 8.318181818181818,
+        "8": 9.356060606060606,
+        "9": 9.818181818181818,
+        "10": 8.901515151515152
+      },
+      "raw_skill_points": {
+        "1": 1485.952,
+        "2": 1402.04,
+        "3": 1374.464,
+        "4": 1662.1080000000002,
+        "5": 1441.6480000000001,
+        "6": 1463.54,
+        "7": 1379.2440000000001,
+        "8": 1428.4,
+        "9": 1462.564,
+        "10": 1446.4
+      },
+      "rank_order": [
+        4,
+        9,
+        1,
+        6,
+        8,
+        5,
+        2,
+        10,
+        3,
+        7
+      ],
+      "corr_actual_wins_diagnostic_only": 0.0970260946316585,
+      "corr_actual_points_diagnostic_only": 0.11332657380492923
+    },
+    {
+      "tail_frac": 0.2,
+      "quantile": 0.4,
+      "expected_wins": {
+        "1": 9.696969696969697,
+        "2": 8.742424242424242,
+        "3": 8.212121212121213,
+        "4": 11.484848484848484,
+        "5": 8.924242424242424,
+        "6": 9.617424242424242,
+        "7": 8.143939393939394,
+        "8": 8.992424242424242,
+        "9": 9.575757575757576,
+        "10": 8.696969696969697
+      },
+      "raw_skill_points": {
+        "1": 1480.944,
+        "2": 1386.88,
+        "3": 1348.1960000000001,
+        "4": 1626.8120000000001,
+        "5": 1423.176,
+        "6": 1461.0600000000002,
+        "7": 1364.6960000000001,
+        "8": 1402.792,
+        "9": 1446.252,
+        "10": 1436.7
+      },
+      "rank_order": [
+        4,
+        1,
+        6,
+        9,
+        8,
+        5,
+        2,
+        10,
+        3,
+        7
+      ],
+      "corr_actual_wins_diagnostic_only": 0.11032844151482248,
+      "corr_actual_points_diagnostic_only": 0.09030608149364133
+    },
+    {
+      "tail_frac": 0.2,
+      "quantile": 0.5,
+      "expected_wins": {
+        "1": 9.75,
+        "2": 8.856060606060606,
+        "3": 8.318181818181818,
+        "4": 11.643939393939394,
+        "5": 9.106060606060606,
+        "6": 9.617424242424242,
+        "7": 8.234848484848484,
+        "8": 9.242424242424242,
+        "9": 9.68560606060606,
+        "10": 8.719696969696969
+      },
+      "raw_skill_points": {
+        "1": 1485.16,
+        "2": 1392.13,
+        "3": 1356.6000000000001,
+        "4": 1641.38,
+        "5": 1435.36,
+        "6": 1462.29,
+        "7": 1369.53,
+        "8": 1419.45,
+        "9": 1454.97,
+        "10": 1437.6000000000001
+      },
+      "rank_order": [
+        4,
+        1,
+        9,
+        6,
+        8,
+        5,
+        2,
+        10,
+        3,
+        7
+      ],
+      "corr_actual_wins_diagnostic_only": 0.12437101911270444,
+      "corr_actual_points_diagnostic_only": 0.11178956161777219
+    },
+    {
+      "tail_frac": 0.2,
+      "quantile": 0.6,
+      "expected_wins": {
+        "1": 9.757575757575758,
+        "2": 8.901515151515152,
+        "3": 8.568181818181818,
+        "4": 11.90909090909091,
+        "5": 9.113636363636363,
+        "6": 9.625,
+        "7": 8.295454545454545,
+        "8": 9.5,
+        "9": 9.818181818181818,
+        "10": 8.742424242424242
+      },
+      "raw_skill_points": {
+        "1": 1485.792,
+        "2": 1396.72,
+        "3": 1372.564,
+        "4": 1662.1080000000002,
+        "5": 1442.008,
+        "6": 1463.54,
+        "7": 1374.864,
+        "8": 1435.7,
+        "9": 1462.564,
+        "10": 1439.52
+      },
+      "rank_order": [
+        4,
+        9,
+        1,
+        6,
+        8,
+        5,
+        2,
+        10,
+        3,
+        7
+      ],
+      "corr_actual_wins_diagnostic_only": 0.11676096456693638,
+      "corr_actual_points_diagnostic_only": 0.12967342553838992
+    },
+    {
+      "tail_frac": 0.25,
+      "quantile": 0.4,
+      "expected_wins": {
+        "1": 9.643939393939394,
+        "2": 8.727272727272727,
+        "3": 8.170454545454545,
+        "4": 11.5,
+        "5": 8.893939393939394,
+        "6": 9.579545454545455,
+        "7": 8.068181818181818,
+        "8": 9.030303030303031,
+        "9": 9.674242424242424,
+        "10": 8.696969696969697
+      },
+      "raw_skill_points": {
+        "1": 1473.968,
+        "2": 1383.8600000000001,
+        "3": 1343.708,
+        "4": 1625.356,
+        "5": 1425.028,
+        "6": 1457.1000000000001,
+        "7": 1358.212,
+        "8": 1402.4840000000002,
+        "9": 1445.044,
+        "10": 1436.8600000000001
+      },
+      "rank_order": [
+        4,
+        9,
+        1,
+        6,
+        8,
+        5,
+        2,
+        10,
+        3,
+        7
+      ],
+      "corr_actual_wins_diagnostic_only": 0.09491972462442222,
+      "corr_actual_points_diagnostic_only": 0.0846485402929744
+    },
+    {
+      "tail_frac": 0.25,
+      "quantile": 0.5,
+      "expected_wins": {
+        "1": 9.674242424242424,
+        "2": 8.81060606060606,
+        "3": 8.412878787878787,
+        "4": 11.65909090909091,
+        "5": 9.068181818181818,
+        "6": 9.579545454545455,
+        "7": 8.106060606060606,
+        "8": 9.155303030303031,
+        "9": 9.821969696969697,
+        "10": 8.712121212121213
+      },
+      "raw_skill_points": {
+        "1": 1477.49,
+        "2": 1388.28,
+        "3": 1358.23,
+        "4": 1643.6100000000001,
+        "5": 1435.33,
+        "6": 1458.99,
+        "7": 1362.15,
+        "8": 1413.0900000000001,
+        "9": 1456.43,
+        "10": 1437.3500000000001
+      },
+      "rank_order": [
+        4,
+        9,
+        1,
+        6,
+        8,
+        5,
+        2,
+        10,
+        3,
+        7
+      ],
+      "corr_actual_wins_diagnostic_only": 0.07540457640144835,
+      "corr_actual_points_diagnostic_only": 0.06734980154100553
+    },
+    {
+      "tail_frac": 0.25,
+      "quantile": 0.6,
+      "expected_wins": {
+        "1": 9.696969696969697,
+        "2": 9.053030303030303,
+        "3": 8.65909090909091,
+        "4": 11.780303030303031,
+        "5": 9.151515151515152,
+        "6": 9.587121212121213,
+        "7": 8.272727272727273,
+        "8": 9.43939393939394,
+        "9": 10.022727272727273,
+        "10": 8.803030303030303
+      },
+      "raw_skill_points": {
+        "1": 1480.992,
+        "2": 1399.78,
+        "3": 1374.688,
+        "4": 1658.0320000000002,
+        "5": 1443.592,
+        "6": 1460.9,
+        "7": 1374.3600000000001,
+        "8": 1427.804,
+        "9": 1468.476,
+        "10": 1442.22
+      },
+      "rank_order": [
+        4,
+        9,
+        1,
+        6,
+        8,
+        5,
+        2,
+        10,
+        3,
+        7
+      ],
+      "corr_actual_wins_diagnostic_only": 0.08334925726402843,
+      "corr_actual_points_diagnostic_only": 0.09052531351562286
+    }
+  ],
+  "leave_one_week": [
+    {
+      "omit_week": 1,
+      "rank_order": [
+        4,
+        9,
+        1,
+        6,
+        5,
+        8,
+        10,
+        2,
+        3,
+        7
+      ],
+      "pairwise_concordance": 0.9333333333333333
+    },
+    {
+      "omit_week": 2,
+      "rank_order": [
+        4,
+        6,
+        1,
+        9,
+        2,
+        8,
+        5,
+        7,
+        10,
+        3
+      ],
+      "pairwise_concordance": 0.8666666666666667
+    },
+    {
+      "omit_week": 3,
+      "rank_order": [
+        4,
+        6,
+        9,
+        1,
+        8,
+        5,
+        10,
+        2,
+        3,
+        7
+      ],
+      "pairwise_concordance": 0.9111111111111111
+    },
+    {
+      "omit_week": 4,
+      "rank_order": [
+        4,
+        9,
+        1,
+        6,
+        5,
+        8,
+        2,
+        10,
+        3,
+        7
+      ],
+      "pairwise_concordance": 0.9555555555555556
+    },
+    {
+      "omit_week": 5,
+      "rank_order": [
+        4,
+        1,
+        9,
+        6,
+        8,
+        5,
+        10,
+        2,
+        3,
+        7
+      ],
+      "pairwise_concordance": 0.9777777777777777
+    },
+    {
+      "omit_week": 6,
+      "rank_order": [
+        4,
+        1,
+        6,
+        9,
+        8,
+        5,
+        2,
+        10,
+        7,
+        3
+      ],
+      "pairwise_concordance": 0.9555555555555556
+    },
+    {
+      "omit_week": 7,
+      "rank_order": [
+        4,
+        1,
+        9,
+        6,
+        8,
+        2,
+        5,
+        10,
+        7,
+        3
+      ],
+      "pairwise_concordance": 0.9555555555555556
+    },
+    {
+      "omit_week": 8,
+      "rank_order": [
+        4,
+        1,
+        9,
+        5,
+        8,
+        6,
+        2,
+        3,
+        10,
+        7
+      ],
+      "pairwise_concordance": 0.9111111111111111
+    },
+    {
+      "omit_week": 9,
+      "rank_order": [
+        4,
+        6,
+        9,
+        1,
+        8,
+        2,
+        5,
+        3,
+        10,
+        7
+      ],
+      "pairwise_concordance": 0.8888888888888888
+    },
+    {
+      "omit_week": 10,
+      "rank_order": [
+        4,
+        6,
+        1,
+        9,
+        5,
+        10,
+        2,
+        8,
+        7,
+        3
+      ],
+      "pairwise_concordance": 0.8444444444444444
+    },
+    {
+      "omit_week": 11,
+      "rank_order": [
+        4,
+        9,
+        8,
+        6,
+        1,
+        5,
+        10,
+        2,
+        7,
+        3
+      ],
+      "pairwise_concordance": 0.8666666666666667
+    },
+    {
+      "omit_week": 12,
+      "rank_order": [
+        4,
+        1,
+        6,
+        9,
+        5,
+        8,
+        2,
+        3,
+        10,
+        7
+      ],
+      "pairwise_concordance": 0.9333333333333333
+    },
+    {
+      "omit_week": 13,
+      "rank_order": [
+        4,
+        8,
+        1,
+        9,
+        6,
+        5,
+        2,
+        10,
+        7,
+        3
+      ],
+      "pairwise_concordance": 0.9111111111111111
+    },
+    {
+      "omit_week": 14,
+      "rank_order": [
+        4,
+        1,
+        9,
+        6,
+        10,
+        8,
+        5,
+        7,
+        2,
+        3
+      ],
+      "pairwise_concordance": 0.8888888888888888
+    }
+  ],
+  "perturbation": [
+    {
+      "rid": 1,
+      "player": "Bijan Robinson",
+      "delta_after_halving": -1.7121212121212128
+    },
+    {
+      "rid": 1,
+      "player": "Brock Bowers",
+      "delta_after_halving": -0.3939393939393945
+    },
+    {
+      "rid": 1,
+      "player": "Trey McBride",
+      "delta_after_halving": -0.9393939393939394
+    },
+    {
+      "rid": 1,
+      "player": "Garrett Wilson",
+      "delta_after_halving": -0.4090909090909083
+    },
+    {
+      "rid": 1,
+      "player": "TreVeyon Henderson",
+      "delta_after_halving": -0.42424242424242387
+    },
+    {
+      "rid": 1,
+      "player": "Jaylen Waddle",
+      "delta_after_halving": -0.7159090909090917
+    },
+    {
+      "rid": 1,
+      "player": "Rome Odunze",
+      "delta_after_halving": -0.7727272727272734
+    },
+    {
+      "rid": 1,
+      "player": "Jordan Addison",
+      "delta_after_halving": -0.5378787878787872
+    },
+    {
+      "rid": 1,
+      "player": "Ricky Pearsall",
+      "delta_after_halving": -0.1287878787878789
+    },
+    {
+      "rid": 1,
+      "player": "Colston Loveland",
+      "delta_after_halving": -0.18939393939393945
+    },
+    {
+      "rid": 1,
+      "player": "Jayden Higgins",
+      "delta_after_halving": -0.31818181818181834
+    },
+    {
+      "rid": 1,
+      "player": "Caleb Williams",
+      "delta_after_halving": -1.4393939393939394
+    },
+    {
+      "rid": 1,
+      "player": "Keon Coleman",
+      "delta_after_halving": -0.15151515151515227
+    },
+    {
+      "rid": 1,
+      "player": "Nick Chubb",
+      "delta_after_halving": -0.20454545454545503
+    },
+    {
+      "rid": 2,
+      "player": "Justin Jefferson",
+      "delta_after_halving": -0.8939393939393936
+    },
+    {
+      "rid": 2,
+      "player": "Kyren Williams",
+      "delta_after_halving": -1.4924242424242422
+    },
+    {
+      "rid": 2,
+      "player": "Jalen Hurts",
+      "delta_after_halving": -0.7803030303030294
+    },
+    {
+      "rid": 2,
+      "player": "Alvin Kamara",
+      "delta_after_halving": -0.5833333333333321
+    },
+    {
+      "rid": 2,
+      "player": "Jaxon Smith-Njigba",
+      "delta_after_halving": -1.9924242424242422
+    },
+    {
+      "rid": 2,
+      "player": "T.J. Hockenson",
+      "delta_after_halving": -0.2575757575757578
+    },
+    {
+      "rid": 2,
+      "player": "Rashee Rice",
+      "delta_after_halving": -1.007575757575757
+    },
+    {
+      "rid": 2,
+      "player": "Joe Mixon",
+      "delta_after_halving": 0.0
+    },
+    {
+      "rid": 2,
+      "player": "Jerry Jeudy",
+      "delta_after_halving": -0.34090909090908994
+    },
+    {
+      "rid": 2,
+      "player": "Kyle Pitts",
+      "delta_after_halving": -0.6666666666666661
+    },
+    {
+      "rid": 2,
+      "player": "Luther Burden",
+      "delta_after_halving": -0.21969696969696884
+    },
+    {
+      "rid": 2,
+      "player": "Rashod Bateman",
+      "delta_after_halving": -0.1515151515151505
+    },
+    {
+      "rid": 2,
+      "player": "Dak Prescott",
+      "delta_after_halving": -1.1060606060606055
+    },
+    {
+      "rid": 3,
+      "player": "CeeDee Lamb",
+      "delta_after_halving": -1.1060606060606064
+    },
+    {
+      "rid": 3,
+      "player": "A.J. Brown",
+      "delta_after_halving": -0.8787878787878789
+    },
+    {
+      "rid": 3,
+      "player": "De'Von Achane",
+      "delta_after_halving": -2.0
+    },
+    {
+      "rid": 3,
+      "player": "Tyreek Hill",
+      "delta_after_halving": -0.3484848484848486
+    },
+    {
+      "rid": 3,
+      "player": "James Conner",
+      "delta_after_halving": -0.09848484848484773
+    },
+    {
+      "rid": 3,
+      "player": "Mark Andrews",
+      "delta_after_halving": -0.7878787878787881
+    },
+    {
+      "rid": 3,
+      "player": "Patrick Mahomes",
+      "delta_after_halving": -2.2803030303030303
+    },
+    {
+      "rid": 3,
+      "player": "Isiah Pacheco",
+      "delta_after_halving": -0.018939393939394478
+    },
+    {
+      "rid": 3,
+      "player": "Travis Etienne",
+      "delta_after_halving": -1.3560606060606064
+    },
+    {
+      "rid": 3,
+      "player": "Stefon Diggs",
+      "delta_after_halving": -0.8787878787878789
+    },
+    {
+      "rid": 3,
+      "player": "Kendre Miller",
+      "delta_after_halving": -0.022727272727273373
+    },
+    {
+      "rid": 3,
+      "player": "Chris Godwin",
+      "delta_after_halving": -0.09848484848484773
+    },
+    {
+      "rid": 3,
+      "player": "Brandon Aiyuk",
+      "delta_after_halving": 0.0
+    },
+    {
+      "rid": 4,
+      "player": "Jahmyr Gibbs",
+      "delta_after_halving": -1.363636363636365
+    },
+    {
+      "rid": 4,
+      "player": "Ashton Jeanty",
+      "delta_after_halving": -0.28787878787878896
+    },
+    {
+      "rid": 4,
+      "player": "Omarion Hampton",
+      "delta_after_halving": -0.18939393939393945
+    },
+    {
+      "rid": 4,
+      "player": "Drake London",
+      "delta_after_halving": -0.5681818181818183
+    },
+    {
+      "rid": 4,
+      "player": "Tetairoa McMillan",
+      "delta_after_halving": -0.45454545454545503
+    },
+    {
+      "rid": 4,
+      "player": "RJ Harvey",
+      "delta_after_halving": -0.7272727272727284
+    },
+    {
+      "rid": 4,
+      "player": "Calvin Ridley",
+      "delta_after_halving": 0.0
+    },
+    {
+      "rid": 4,
+      "player": "George Pickens",
+      "delta_after_halving": -0.7803030303030312
+    },
+    {
+      "rid": 4,
+      "player": "Emeka Egbuka",
+      "delta_after_halving": -0.5075757575757578
+    },
+    {
+      "rid": 4,
+      "player": "Jakobi Meyers",
+      "delta_after_halving": -0.41666666666666785
+    },
+    {
+      "rid": 4,
+      "player": "Jordan Mason",
+      "delta_after_halving": -0.2196969696969706
+    },
+    {
+      "rid": 4,
+      "player": "Drake Maye",
+      "delta_after_halving": -1.4469696969696972
+    },
+    {
+      "rid": 4,
+      "player": "Braelon Allen",
+      "delta_after_halving": 0.0
+    },
+    {
+      "rid": 4,
+      "player": "Jacory Croskey-Merritt",
+      "delta_after_halving": -0.14393939393939448
+    },
+    {
+      "rid": 4,
+      "player": "Keaton Mitchell",
+      "delta_after_halving": 0.0
+    },
+    {
+      "rid": 5,
+      "player": "Ja'Marr Chase",
+      "delta_after_halving": -0.8863636363636367
+    },
+    {
+      "rid": 5,
+      "player": "Josh Allen",
+      "delta_after_halving": -1.7727272727272725
+    },
+    {
+      "rid": 5,
+      "player": "Lamar Jackson",
+      "delta_after_halving": -0.1287878787878789
+    },
+    {
+      "rid": 5,
+      "player": "Mike Evans",
+      "delta_after_halving": -0.1401515151515138
+    },
+    {
+      "rid": 5,
+      "player": "Davante Adams",
+      "delta_after_halving": -1.166666666666666
+    },
+    {
+      "rid": 5,
+      "player": "Tony Pollard",
+      "delta_after_halving": -0.3636363636363633
+    },
+    {
+      "rid": 5,
+      "player": "Brian Robinson",
+      "delta_after_halving": -0.09848484848484773
+    },
+    {
+      "rid": 5,
+      "player": "J.K. Dobbins",
+      "delta_after_halving": -0.4848484848484844
+    },
+    {
+      "rid": 5,
+      "player": "Jaylen Warren",
+      "delta_after_halving": -0.8333333333333321
+    },
+    {
+      "rid": 5,
+      "player": "Cam Skattebo",
+      "delta_after_halving": -0.545454545454545
+    },
+    {
+      "rid": 5,
+      "player": "Dalton Kincaid",
+      "delta_after_halving": -0.5833333333333321
+    },
+    {
+      "rid": 5,
+      "player": "Jauan Jennings",
+      "delta_after_halving": -0.6060606060606055
+    },
+    {
+      "rid": 5,
+      "player": "Marvin Mims",
+      "delta_after_halving": -0.16666666666666607
+    },
+    {
+      "rid": 5,
+      "player": "Adam Thielen",
+      "delta_after_halving": 0.0
+    },
+    {
+      "rid": 6,
+      "player": "Derrick Henry",
+      "delta_after_halving": -1.1325757575757578
+    },
+    {
+      "rid": 6,
+      "player": "Nico Collins",
+      "delta_after_halving": -1.0757575757575761
+    },
+    {
+      "rid": 6,
+      "player": "Chase Brown",
+      "delta_after_halving": -0.8030303030303028
+    },
+    {
+      "rid": 6,
+      "player": "Ladd McConkey",
+      "delta_after_halving": -0.4962121212121211
+    },
+    {
+      "rid": 6,
+      "player": "Chuba Hubbard",
+      "delta_after_halving": -0.42424242424242387
+    },
+    {
+      "rid": 6,
+      "player": "DK Metcalf",
+      "delta_after_halving": -0.7803030303030294
+    },
+    {
+      "rid": 6,
+      "player": "David Njoku",
+      "delta_after_halving": -0.34848484848484773
+    },
+    {
+      "rid": 6,
+      "player": "Baker Mayfield",
+      "delta_after_halving": -0.6856060606060606
+    },
+    {
+      "rid": 6,
+      "player": "Tyrone Tracy",
+      "delta_after_halving": -0.3712121212121211
+    },
+    {
+      "rid": 6,
+      "player": "Deebo Samuel",
+      "delta_after_halving": -0.6818181818181817
+    },
+    {
+      "rid": 6,
+      "player": "Tucker Kraft",
+      "delta_after_halving": -0.5265151515151505
+    },
+    {
+      "rid": 6,
+      "player": "Michael Pittman",
+      "delta_after_halving": -0.7083333333333339
+    },
+    {
+      "rid": 6,
+      "player": "Bo Nix",
+      "delta_after_halving": -0.7613636363636367
+    },
+    {
+      "rid": 7,
+      "player": "Christian McCaffrey",
+      "delta_after_halving": -2.041666666666666
+    },
+    {
+      "rid": 7,
+      "player": "Bucky Irving",
+      "delta_after_halving": -0.3863636363636358
+    },
+    {
+      "rid": 7,
+      "player": "Breece Hall",
+      "delta_after_halving": -0.7727272727272725
+    },
+    {
+      "rid": 7,
+      "player": "Marvin Harrison",
+      "delta_after_halving": -0.4015151515151514
+    },
+    {
+      "rid": 7,
+      "player": "Courtland Sutton",
+      "delta_after_halving": -0.6363636363636358
+    },
+    {
+      "rid": 7,
+      "player": "Travis Hunter",
+      "delta_after_halving": 0.0
+    },
+    {
+      "rid": 7,
+      "player": "Xavier Worthy",
+      "delta_after_halving": -0.11363636363636331
+    },
+    {
+      "rid": 7,
+      "player": "Kyler Murray",
+      "delta_after_halving": -0.2651515151515147
+    },
+    {
+      "rid": 7,
+      "player": "Tyler Warren",
+      "delta_after_halving": -0.7499999999999991
+    },
+    {
+      "rid": 7,
+      "player": "Khalil Shakir",
+      "delta_after_halving": -0.5530303030303028
+    },
+    {
+      "rid": 7,
+      "player": "Jonnu Smith",
+      "delta_after_halving": -0.030303030303029388
+    },
+    {
+      "rid": 7,
+      "player": "Keenan Allen",
+      "delta_after_halving": -0.6060606060606055
+    },
+    {
+      "rid": 7,
+      "player": "Darnell Mooney",
+      "delta_after_halving": -0.16666666666666607
+    },
+    {
+      "rid": 7,
+      "player": "Justin Fields",
+      "delta_after_halving": -0.7575757575757569
+    },
+    {
+      "rid": 8,
+      "player": "Puka Nacua",
+      "delta_after_halving": -1.458333333333333
+    },
+    {
+      "rid": 8,
+      "player": "Jonathan Taylor",
+      "delta_after_halving": -1.9015151515151514
+    },
+    {
+      "rid": 8,
+      "player": "Jayden Daniels",
+      "delta_after_halving": -0.7348484848484844
+    },
+    {
+      "rid": 8,
+      "player": "Tee Higgins",
+      "delta_after_halving": -0.9886363636363633
+    },
+    {
+      "rid": 8,
+      "player": "Sam LaPorta",
+      "delta_after_halving": -0.4166666666666661
+    },
+    {
+      "rid": 8,
+      "player": "Aaron Jones",
+      "delta_after_halving": -0.29545454545454497
+    },
+    {
+      "rid": 8,
+      "player": "Zay Flowers",
+      "delta_after_halving": -0.8674242424242422
+    },
+    {
+      "rid": 8,
+      "player": "Kaleb Johnson",
+      "delta_after_halving": 0.0
+    },
+    {
+      "rid": 8,
+      "player": "Cooper Kupp",
+      "delta_after_halving": -0.2386363636363633
+    },
+    {
+      "rid": 8,
+      "player": "Jayden Reed",
+      "delta_after_halving": -0.022727272727271597
+    },
+    {
+      "rid": 8,
+      "player": "Zach Charbonnet",
+      "delta_after_halving": -0.3333333333333339
+    },
+    {
+      "rid": 8,
+      "player": "Jaydon Blue",
+      "delta_after_halving": 0.0
+    },
+    {
+      "rid": 8,
+      "player": "Jake Ferguson",
+      "delta_after_halving": -0.8068181818181817
+    },
+    {
+      "rid": 9,
+      "player": "Saquon Barkley",
+      "delta_after_halving": -0.6363636363636367
+    },
+    {
+      "rid": 9,
+      "player": "Josh Jacobs",
+      "delta_after_halving": -1.09090909090909
+    },
+    {
+      "rid": 9,
+      "player": "Brian Thomas",
+      "delta_after_halving": -0.21590909090909172
+    },
+    {
+      "rid": 9,
+      "player": "George Kittle",
+      "delta_after_halving": -0.6666666666666661
+    },
+    {
+      "rid": 9,
+      "player": "Kenneth Walker",
+      "delta_after_halving": -0.3560606060606055
+    },
+    {
+      "rid": 9,
+      "player": "David Montgomery",
+      "delta_after_halving": -0.43939393939393945
+    },
+    {
+      "rid": 9,
+      "player": "DJ Moore",
+      "delta_after_halving": -0.5189393939393945
+    },
+    {
+      "rid": 9,
+      "player": "Jameson Williams",
+      "delta_after_halving": -0.8522727272727266
+    },
+    {
+      "rid": 9,
+      "player": "Chris Olave",
+      "delta_after_halving": -0.670454545454545
+    },
+    {
+      "rid": 9,
+      "player": "Matthew Golden",
+      "delta_after_halving": -0.049242424242423866
+    },
+    {
+      "rid": 9,
+      "player": "Jared Goff",
+      "delta_after_halving": -1.5492424242424239
+    },
+    {
+      "rid": 9,
+      "player": "Javonte Williams",
+      "delta_after_halving": -0.8219696969696972
+    },
+    {
+      "rid": 9,
+      "player": "Tre' Harris",
+      "delta_after_halving": 0.0
+    },
+    {
+      "rid": 9,
+      "player": "Najee Harris",
+      "delta_after_halving": 0.0
+    },
+    {
+      "rid": 10,
+      "player": "Amon-Ra St. Brown",
+      "delta_after_halving": -1.1363636363636358
+    },
+    {
+      "rid": 10,
+      "player": "Malik Nabers",
+      "delta_after_halving": -0.10606060606060552
+    },
+    {
+      "rid": 10,
+      "player": "James Cook",
+      "delta_after_halving": -1.0378787878787872
+    },
+    {
+      "rid": 10,
+      "player": "Joe Burrow",
+      "delta_after_halving": -0.18939393939393945
+    },
+    {
+      "rid": 10,
+      "player": "Terry McLaurin",
+      "delta_after_halving": -0.16666666666666607
+    },
+    {
+      "rid": 10,
+      "player": "Travis Kelce",
+      "delta_after_halving": -0.6477272727272716
+    },
+    {
+      "rid": 10,
+      "player": "DeVonta Smith",
+      "delta_after_halving": -0.5151515151515138
+    },
+    {
+      "rid": 10,
+      "player": "D'Andre Swift",
+      "delta_after_halving": -0.6060606060606055
+    },
+    {
+      "rid": 10,
+      "player": "Quinshon Judkins",
+      "delta_after_halving": -0.5681818181818166
+    },
+    {
+      "rid": 10,
+      "player": "Evan Engram",
+      "delta_after_halving": -0.09848484848484773
+    },
+    {
+      "rid": 10,
+      "player": "Josh Downs",
+      "delta_after_halving": -0.32575757575757436
+    },
+    {
+      "rid": 10,
+      "player": "Justin Herbert",
+      "delta_after_halving": -1.2878787878787872
+    },
+    {
+      "rid": 10,
+      "player": "Kyle Monangai",
+      "delta_after_halving": -0.34090909090908994
+    }
+  ],
+  "limitations": [
+    "Hindsight realized production is used only to validate functional form, not as a 2026 forecast.",
+    "Replacement identities are never chosen using realized production; replacement cohorts are fixed solely by the frozen opening-draft positional cutline.",
+    "Replacement is vacancy-only. It does not upgrade an active drafted player using hindsight waiver scoring.",
+    "A roster that intentionally drafts no TE/QB receives a neutral draft-cutline replacement baseline for that structurally vacant mandatory slot rather than an impossible season-long zero.",
+    "Actual standings/points remain diagnostics only because waivers, trades and injuries contaminate them.",
+    "Absolute ordinal rank span and fixed expected-win gap thresholds are diagnostic only. Material pairwise stability is certified using a 14-week delete-one jackknife: pair ordering is treated as distinguishable only when the 95% jackknife interval of the expected-win gap excludes zero; every such pair must retain sign in each leave-one-week sample."
+  ],
+  "diagnostics": {
+    "leave_one_week_rank_span_max_diagnostic_only": 6,
+    "leave_one_week_rank_ranges_diagnostic_only": {
+      "1": [
+        2,
+        5
+      ],
+      "2": [
+        5,
+        9
+      ],
+      "3": [
+        8,
+        10
+      ],
+      "4": [
+        1,
+        1
+      ],
+      "5": [
+        4,
+        7
+      ],
+      "6": [
+        2,
+        6
+      ],
+      "7": [
+        8,
+        10
+      ],
+      "8": [
+        2,
+        8
+      ],
+      "9": [
+        2,
+        4
+      ],
+      "10": [
+        5,
+        9
+      ]
+    },
+    "leave_one_week_pairwise_concordance_median": 0.9111111111111111,
+    "leave_one_week_top1_by_omit": [
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4,
+      4
+    ],
+    "jackknife_pair_count": 45,
+    "jackknife_significant_pair_count": 7,
+    "jackknife_significant_pairs_with_flip": [],
+    "jackknife_pairs": [
+      {
+        "a": 1,
+        "b": 2,
+        "central_gap": 0.8939393939393945,
+        "jackknife_se": 1.2551947865320858,
+        "ci95": [
+          -1.5662423876634937,
+          3.3541211755422826
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 1,
+        "b": 3,
+        "central_gap": 1.4318181818181817,
+        "jackknife_se": 1.1699781179174307,
+        "ci95": [
+          -0.8613389292999822,
+          3.7249752929363456
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 1,
+        "b": 4,
+        "central_gap": -1.8939393939393945,
+        "jackknife_se": 1.117231228678955,
+        "ci95": [
+          -4.083712602150146,
+          0.295833814271357
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 1,
+        "b": 5,
+        "central_gap": 0.6439393939393945,
+        "jackknife_se": 1.4038941891813896,
+        "ci95": [
+          -2.1076932168561293,
+          3.3955720047349183
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 1,
+        "b": 6,
+        "central_gap": 0.1325757575757578,
+        "jackknife_se": 1.3287610921865822,
+        "ci95": [
+          -2.4717959831099434,
+          2.736947498261459
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 2,
+            "loo_gap": -0.026515151515150492
+          },
+          {
+            "omit_week": 3,
+            "loo_gap": -0.31439393939393945
+          },
+          {
+            "omit_week": 9,
+            "loo_gap": -0.4848484848484844
+          },
+          {
+            "omit_week": 10,
+            "loo_gap": -0.22348484848484773
+          },
+          {
+            "omit_week": 11,
+            "loo_gap": -0.026515151515150492
+          }
+        ]
+      },
+      {
+        "a": 1,
+        "b": 7,
+        "central_gap": 1.5151515151515156,
+        "jackknife_se": 1.429100157960632,
+        "ci95": [
+          -1.2858847944513232,
+          4.316187824754355
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 1,
+        "b": 8,
+        "central_gap": 0.5075757575757578,
+        "jackknife_se": 1.3503139238975934,
+        "ci95": [
+          -2.1390395332635253,
+          3.154191048415041
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 11,
+            "loo_gap": -0.1212121212121211
+          },
+          {
+            "omit_week": 13,
+            "loo_gap": -0.20833333333333393
+          }
+        ]
+      },
+      {
+        "a": 1,
+        "b": 9,
+        "central_gap": 0.06439393939393945,
+        "jackknife_se": 1.1267634900564214,
+        "ci95": [
+          -2.1440625011166463,
+          2.272850379904525
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 1,
+            "loo_gap": -0.4583333333333339
+          },
+          {
+            "omit_week": 3,
+            "loo_gap": -0.2689393939393927
+          },
+          {
+            "omit_week": 4,
+            "loo_gap": -0.018939393939394478
+          },
+          {
+            "omit_week": 9,
+            "loo_gap": -0.32954545454545503
+          },
+          {
+            "omit_week": 11,
+            "loo_gap": -0.3598484848484844
+          }
+        ]
+      },
+      {
+        "a": 1,
+        "b": 10,
+        "central_gap": 1.0303030303030312,
+        "jackknife_se": 1.7074447959200565,
+        "ci95": [
+          -2.3162887697002796,
+          4.376894830306342
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 2,
+        "b": 3,
+        "central_gap": 0.5378787878787872,
+        "jackknife_se": 1.0712860382258365,
+        "ci95": [
+          -1.5618418470438522,
+          2.6375994228014266
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 2,
+        "b": 4,
+        "central_gap": -2.787878787878789,
+        "jackknife_se": 0.6950470577403584,
+        "ci95": [
+          -4.150171021049891,
+          -1.4255865547076867
+        ],
+        "significant": true,
+        "sign_flips": []
+      },
+      {
+        "a": 2,
+        "b": 5,
+        "central_gap": -0.25,
+        "jackknife_se": 1.0424500905113208,
+        "ci95": [
+          -2.2932021774021885,
+          1.7932021774021885
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 2,
+            "loo_gap": 0.42424242424242387
+          },
+          {
+            "omit_week": 7,
+            "loo_gap": 0.05303030303030276
+          },
+          {
+            "omit_week": 9,
+            "loo_gap": 0.06818181818181834
+          }
+        ]
+      },
+      {
+        "a": 2,
+        "b": 6,
+        "central_gap": -0.7613636363636367,
+        "jackknife_se": 1.1274659711298323,
+        "ci95": [
+          -2.9711969397781077,
+          1.4484696670508344
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 2,
+        "b": 7,
+        "central_gap": 0.6212121212121211,
+        "jackknife_se": 1.1188042430884884,
+        "ci95": [
+          -1.571644195241316,
+          2.8140684376655583
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 14,
+            "loo_gap": -0.09848484848484951
+          }
+        ]
+      },
+      {
+        "a": 2,
+        "b": 8,
+        "central_gap": -0.3863636363636367,
+        "jackknife_se": 1.1922276568905952,
+        "ci95": [
+          -2.723129843869203,
+          1.9504025711419297
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 2,
+            "loo_gap": 0.2575757575757578
+          },
+          {
+            "omit_week": 10,
+            "loo_gap": 0.05303030303030454
+          }
+        ]
+      },
+      {
+        "a": 2,
+        "b": 9,
+        "central_gap": -0.829545454545455,
+        "jackknife_se": 1.1189968873781866,
+        "ci95": [
+          -3.0227793538067007,
+          1.3636884447157906
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 2,
+        "b": 10,
+        "central_gap": 0.1363636363636367,
+        "jackknife_se": 1.367432700830561,
+        "ci95": [
+          -2.5438044572642626,
+          2.816531729991536
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 1,
+            "loo_gap": -0.06060606060606055
+          },
+          {
+            "omit_week": 3,
+            "loo_gap": -0.22727272727272751
+          },
+          {
+            "omit_week": 5,
+            "loo_gap": -0.29545454545454497
+          },
+          {
+            "omit_week": 10,
+            "loo_gap": -0.1439393939393927
+          },
+          {
+            "omit_week": 11,
+            "loo_gap": -0.2196969696969706
+          },
+          {
+            "omit_week": 14,
+            "loo_gap": -0.4848484848484862
+          }
+        ]
+      },
+      {
+        "a": 3,
+        "b": 4,
+        "central_gap": -3.325757575757576,
+        "jackknife_se": 0.9116526534900398,
+        "ci95": [
+          -5.112596776598054,
+          -1.5389183749170983
+        ],
+        "significant": true,
+        "sign_flips": []
+      },
+      {
+        "a": 3,
+        "b": 5,
+        "central_gap": -0.7878787878787872,
+        "jackknife_se": 1.1567375797049084,
+        "ci95": [
+          -3.0550844441004075,
+          1.4793268683428331
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 3,
+        "b": 6,
+        "central_gap": -1.2992424242424239,
+        "jackknife_se": 0.9108678408535718,
+        "ci95": [
+          -3.0845433923154246,
+          0.4860585438305767
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 3,
+        "b": 7,
+        "central_gap": 0.08333333333333393,
+        "jackknife_se": 1.2855444895314085,
+        "ci95": [
+          -2.436333866148227,
+          2.6030005328148946
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 2,
+            "loo_gap": -0.31818181818181746
+          },
+          {
+            "omit_week": 6,
+            "loo_gap": -0.4848484848484844
+          },
+          {
+            "omit_week": 7,
+            "loo_gap": -0.022727272727273373
+          },
+          {
+            "omit_week": 10,
+            "loo_gap": -0.09090909090909083
+          },
+          {
+            "omit_week": 11,
+            "loo_gap": -0.32575757575757613
+          },
+          {
+            "omit_week": 13,
+            "loo_gap": -0.2727272727272725
+          },
+          {
+            "omit_week": 14,
+            "loo_gap": -0.18939393939393945
+          }
+        ]
+      },
+      {
+        "a": 3,
+        "b": 8,
+        "central_gap": -0.9242424242424239,
+        "jackknife_se": 1.3512706566109463,
+        "ci95": [
+          -3.5727329111998785,
+          1.7242480627150307
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 3,
+        "b": 9,
+        "central_gap": -1.3674242424242422,
+        "jackknife_se": 1.075113673663198,
+        "ci95": [
+          -3.4746470428041105,
+          0.7397985579556261
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 3,
+        "b": 10,
+        "central_gap": -0.4015151515151505,
+        "jackknife_se": 1.2966480206179276,
+        "ci95": [
+          -2.9429452719262885,
+          2.1399149688959875
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 8,
+            "loo_gap": 0.3333333333333339
+          },
+          {
+            "omit_week": 9,
+            "loo_gap": 0.030303030303030276
+          },
+          {
+            "omit_week": 12,
+            "loo_gap": 0.2348484848484853
+          }
+        ]
+      },
+      {
+        "a": 4,
+        "b": 5,
+        "central_gap": 2.537878787878789,
+        "jackknife_se": 1.1154461386248147,
+        "ci95": [
+          0.3516043561741524,
+          4.7241532195834255
+        ],
+        "significant": true,
+        "sign_flips": []
+      },
+      {
+        "a": 4,
+        "b": 6,
+        "central_gap": 2.0265151515151523,
+        "jackknife_se": 1.1312006824196958,
+        "ci95": [
+          -0.19063818602745153,
+          4.243668489057756
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 4,
+        "b": 7,
+        "central_gap": 3.40909090909091,
+        "jackknife_se": 1.3507057167170673,
+        "ci95": [
+          0.7617077043254583,
+          6.056474113856362
+        ],
+        "significant": true,
+        "sign_flips": []
+      },
+      {
+        "a": 4,
+        "b": 8,
+        "central_gap": 2.4015151515151523,
+        "jackknife_se": 1.060003473133656,
+        "ci95": [
+          0.32390834417318626,
+          4.479121958857118
+        ],
+        "significant": true,
+        "sign_flips": []
+      },
+      {
+        "a": 4,
+        "b": 9,
+        "central_gap": 1.958333333333334,
+        "jackknife_se": 0.9198876763013586,
+        "ci95": [
+          0.15535348778267122,
+          3.761313178883997
+        ],
+        "significant": true,
+        "sign_flips": []
+      },
+      {
+        "a": 4,
+        "b": 10,
+        "central_gap": 2.9242424242424256,
+        "jackknife_se": 1.403637931737999,
+        "ci95": [
+          0.17311207803594764,
+          5.675372770448904
+        ],
+        "significant": true,
+        "sign_flips": []
+      },
+      {
+        "a": 5,
+        "b": 6,
+        "central_gap": -0.5113636363636367,
+        "jackknife_se": 1.229334364837743,
+        "ci95": [
+          -2.920858991445613,
+          1.8981317187183397
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 8,
+            "loo_gap": 0.17045454545454497
+          }
+        ]
+      },
+      {
+        "a": 5,
+        "b": 7,
+        "central_gap": 0.8712121212121211,
+        "jackknife_se": 1.4901022475073518,
+        "ci95": [
+          -2.0493882839022883,
+          3.7918125263265305
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 5,
+        "b": 8,
+        "central_gap": -0.1363636363636367,
+        "jackknife_se": 0.8290885665271045,
+        "ci95": [
+          -1.7613772267567616,
+          1.4886499540294882
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 4,
+            "loo_gap": 0.08333333333333215
+          },
+          {
+            "omit_week": 8,
+            "loo_gap": 0.01136363636363491
+          },
+          {
+            "omit_week": 10,
+            "loo_gap": 0.43181818181818343
+          },
+          {
+            "omit_week": 12,
+            "loo_gap": 0.03787878787878718
+          }
+        ]
+      },
+      {
+        "a": 5,
+        "b": 9,
+        "central_gap": -0.579545454545455,
+        "jackknife_se": 1.2291052033691814,
+        "ci95": [
+          -2.9885916531490504,
+          1.8295007440581403
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 5,
+        "b": 10,
+        "central_gap": 0.3863636363636367,
+        "jackknife_se": 1.4525935362579256,
+        "ci95": [
+          -2.4607196947018974,
+          3.233446967429171
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 14,
+            "loo_gap": -0.3409090909090917
+          }
+        ]
+      },
+      {
+        "a": 6,
+        "b": 7,
+        "central_gap": 1.3825757575757578,
+        "jackknife_se": 1.0862130199246254,
+        "ci95": [
+          -0.7464017614765077,
+          3.5115532766280233
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 6,
+        "b": 8,
+        "central_gap": 0.375,
+        "jackknife_se": 1.1183520578672532,
+        "ci95": [
+          -1.8169700334198162,
+          2.566970033419816
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 8,
+            "loo_gap": -0.15909090909091006
+          },
+          {
+            "omit_week": 11,
+            "loo_gap": -0.09469696969697061
+          },
+          {
+            "omit_week": 13,
+            "loo_gap": -0.2575757575757578
+          }
+        ]
+      },
+      {
+        "a": 6,
+        "b": 9,
+        "central_gap": -0.06818181818181834,
+        "jackknife_se": 0.931072814799291,
+        "ci95": [
+          -1.8930845351884287,
+          1.756720898824792
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 2,
+            "loo_gap": 0.21969696969696884
+          },
+          {
+            "omit_week": 3,
+            "loo_gap": 0.045454545454546746
+          },
+          {
+            "omit_week": 6,
+            "loo_gap": 0.2765151515151505
+          },
+          {
+            "omit_week": 9,
+            "loo_gap": 0.1553030303030294
+          },
+          {
+            "omit_week": 10,
+            "loo_gap": 0.2575757575757578
+          },
+          {
+            "omit_week": 12,
+            "loo_gap": 0.07575757575757613
+          }
+        ]
+      },
+      {
+        "a": 6,
+        "b": 10,
+        "central_gap": 0.8977272727272734,
+        "jackknife_se": 1.3261487021333533,
+        "ci95": [
+          -1.701524183454099,
+          3.496978728908646
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 7,
+        "b": 8,
+        "central_gap": -1.0075757575757578,
+        "jackknife_se": 1.4246769853756538,
+        "ci95": [
+          -3.7999426489120394,
+          1.7847911337605238
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 7,
+        "b": 9,
+        "central_gap": -1.4507575757575761,
+        "jackknife_se": 1.459576614051336,
+        "ci95": [
+          -4.311527739298194,
+          1.4100125877830423
+        ],
+        "significant": false,
+        "sign_flips": []
+      },
+      {
+        "a": 7,
+        "b": 10,
+        "central_gap": -0.4848484848484844,
+        "jackknife_se": 1.1757924615000643,
+        "ci95": [
+          -2.7894017093886103,
+          1.8197047396916415
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 2,
+            "loo_gap": 0.17424242424242387
+          }
+        ]
+      },
+      {
+        "a": 8,
+        "b": 9,
+        "central_gap": -0.44318181818181834,
+        "jackknife_se": 1.1012950068450824,
+        "ci95": [
+          -2.60172003159818,
+          1.7153563952345432
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 13,
+            "loo_gap": 0.24242424242424399
+          }
+        ]
+      },
+      {
+        "a": 8,
+        "b": 10,
+        "central_gap": 0.5227272727272734,
+        "jackknife_se": 1.5843318629857002,
+        "ci95": [
+          -2.582563178724699,
+          3.6280177241792457
+        ],
+        "significant": false,
+        "sign_flips": [
+          {
+            "omit_week": 10,
+            "loo_gap": -0.19696969696969724
+          },
+          {
+            "omit_week": 14,
+            "loo_gap": -0.11363636363636331
+          }
+        ]
+      },
+      {
+        "a": 9,
+        "b": 10,
+        "central_gap": 0.9659090909090917,
+        "jackknife_se": 1.2172951007194301,
+        "ci95": [
+          -1.4199893065009914,
+          3.351807488319175
+        ],
+        "significant": false,
+        "sign_flips": []
+      }
+    ]
+  }
+}
