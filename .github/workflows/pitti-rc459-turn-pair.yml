@@ -1,0 +1,40 @@
+name: PITTI rc4.59 Turn Pair Market
+on:
+  push:
+    branches: [pitti-outcome-bridge-20250821]
+    paths: ['.github/workflows/pitti-rc459-turn-pair.yml']
+permissions: {contents: write}
+jobs:
+  turnpair:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-outcome-bridge-20250821, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - run: python -m pip install --disable-pip-version-check requests
+      - name: Run and capture
+        shell: bash
+        run: |
+          set +e
+          python -m py_compile research/rc459_turn_pair_market_2026.py
+          python research/rc459_turn_pair_market_2026.py 2000 > /tmp/turnpair459.log 2>&1
+          rc=$?; cat /tmp/turnpair459.log
+          if [ $rc -ne 0 ] || [ ! -f RC459_TURN_PAIR_MARKET_2026_GATE.json ]; then printf '{"status":"RUNNER_ERROR","exit_code":%s}\n' "$rc" > RC459_TURN_PAIR_MARKET_2026_GATE.json; fi
+          exit 0
+      - name: Persist safely
+        shell: bash
+        run: |
+          set -euo pipefail
+          rm -rf /tmp/tp459; mkdir -p /tmp/tp459/simulation_2026 /tmp/tp459/diagnostics_2026
+          [ -f RC459_TURN_PAIR_MARKET_2026.json ] && cp RC459_TURN_PAIR_MARKET_2026.json /tmp/tp459/simulation_2026/ || true
+          cp RC459_TURN_PAIR_MARKET_2026_GATE.json /tmp/tp459/simulation_2026/
+          cp /tmp/turnpair459.log /tmp/tp459/diagnostics_2026/rc459_turn_pair.log
+          printf '{"run_id":"%s","source_sha":"%s"}\n' "$GITHUB_RUN_ID" "$GITHUB_SHA" > /tmp/tp459/diagnostics_2026/RC459_TURN_PAIR_RUN_META.json
+          git config user.name github-actions[bot]; git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git reset --hard; git clean -fd; git fetch origin pitti-outcome-bridge-20250821; git checkout -B pitti-outcome-bridge-20250821 origin/pitti-outcome-bridge-20250821
+          mkdir -p simulation_2026 diagnostics_2026; cp -a /tmp/tp459/simulation_2026/. simulation_2026/; cp -a /tmp/tp459/diagnostics_2026/. diagnostics_2026/
+          git add simulation_2026/ diagnostics_2026/
+          if ! git diff --cached --quiet; then git commit -m 'Record rc4.59 slot-9 conditional turn-pair study [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
