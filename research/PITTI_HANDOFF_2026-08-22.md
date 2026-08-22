@@ -49,6 +49,14 @@ Every opponent defaults to MANUAL whenever there is no current contrary informat
 - AUTODRAFT or unresolved UNKNOWN picks must never train the manager's personal manual profile.
 Realistic simulation should separately stress-test one/multiple autodrafter and mid-draft switches using Sleeper-2026 calibrated autodraft behavior.
 
+### 2026-08-22 official Sleeper grounding added
+Parallel realism research verified current official Sleeper support behavior and updated `research/UNIVERSAL_AUTODRAFT_STATE_MODEL_2026-08-22.md` at commit `31caa0079a282c405e7998b1fd9e26e62f6ecf84`.
+- CPU auto-pick uses the team's ordered Draft Queue when available.
+- Drafted players are removed from the queue automatically.
+- When the queue is empty, CPU falls back to a higher-ranked available player while considering roster needs.
+- Sleeper still has no supported custom pre-draft-ranking upload; the league-specific Draft Queue is the supported workaround.
+Model consequence: AUTODRAFT is now explicitly a two-stage latent policy `QUEUE_IF_AVAILABLE -> SLEEPER_RANK_PLUS_ROSTER_NEED`, not pure ADP/rank sampling. Opponent private queues are normally unobserved and therefore belong in sensitivity analysis, not personal-manager learning. Baseline remains MANUAL absent current contrary evidence.
+
 ## AUTO operating rule
 On every AUTO block maintain two queues:
 1. serial critical path;
@@ -66,7 +74,7 @@ The diagnostic workflow intentionally uploads raw output before evaluator/core f
 1. Treat RB2_BY52 as invalid in its current form; use the persisted raw/core evidence to determine why late TE feasibility was not guaranteed and design a generic final-roster feasibility safeguard rather than an early hard-TE mandate.
 2. Build the small research harness for the preregistered dynamic elite-TE variants (`TE_RETURN_GATE`, `TE_SOFT_PENALTY`, optional tightly localized PICK12 gate if diagnostics justify it) using existing Return-v2/scoring ingredients and identical CRN controls.
 3. Pick-level diagnose QB1_TE1_DEFER_TE69 after 2.02 to locate the remaining baseline/stress deficit (turns 3.09/4.02 onward, RB/WR allocation, TE timing, bench construction).
-4. Continue universal MANUAL/AUTODRAFT state-machine implementation/research and Sleeper-2026 autodraft calibration as an independent realism track.
+4. Implement/test the universal MANUAL/AUTODRAFT state machine using the now-verified queue-first -> rank+roster-need semantics; keep it independent of the Coach-policy critical path.
 5. Once a simple Coach candidate passes small screen + legality, run fresh held-out certification, then realistic full mocks. Do not calibrate from one illustrative mock.
 6. Prepare slot-9 turn maps / TAKE-WAIT opportunity-cost outputs and deep Sleeper Queue fallback before the real draft; K/DST omitted, QB2/TE2 deprioritized.
 
