@@ -1,1 +1,9 @@
-{"status":"RUNNER_ERROR","reason":"rc4.59 baseline kernel failed","exit_code":1}
+{
+  "status": "PASS",
+  "freeze_package_sha256": "5339a37d275505f2a3a6fe0b84785f435d840d02cc7472a2b8bd934244e884fd",
+  "runs": 2500,
+  "policy_ranking_certified": false,
+  "scope": "rc4.59 PROFILED BASELINE opponent-kernel parity; neutral user selected-panel control; not Coach-policy parity",
+  "rc459_numbered_artifact_app_sha256": "1de9c6dcbd39bec35dffd2b43575260da6601abf3a9a29fe329ffeb8a4065fa3",
+  "manager_profile_source_hash": "c5f601051850185b81801aaaa3efe554d9214f6cfa15999a0beec6cb0b192493"
+}

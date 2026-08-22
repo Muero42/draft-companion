@@ -1,4 +1,6 @@
-Traceback (most recent call last):
-  File "/home/runner/work/draft-companion/draft-companion/research/rc459_opponent_kernel_baseline_2026.py", line 10, in <module>
-    import research.rc459_opponent_kernel_sim_2026 as k
-ModuleNotFoundError: No module named 'research'
+{
+  "status": "PASS",
+  "runs": 2500,
+  "split_half": 0.0352,
+  "mean_kdst": 13.746
+}
