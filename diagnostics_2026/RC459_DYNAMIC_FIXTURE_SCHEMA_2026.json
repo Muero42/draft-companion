@@ -1,0 +1,134 @@
+{
+  "raw_top_keys": [
+    "as_of",
+    "augmentation",
+    "candidate_pool_counts",
+    "candidate_pool_total",
+    "effective_members",
+    "expert_sources",
+    "panels",
+    "payload_sha256",
+    "pool_rows",
+    "schema",
+    "scoring",
+    "season",
+    "sleeper_adp"
+  ],
+  "pool_count": 230,
+  "pool_row_keys": [
+    "adp",
+    "key",
+    "name",
+    "panel_position",
+    "panel_standard",
+    "pos"
+  ],
+  "pool_samples": [
+    {
+      "key": "bijanrobinson",
+      "name": "Bijan Robinson",
+      "pos": "RB",
+      "panel_standard": 1.1898734177215189,
+      "panel_position": 1.1689189189189189,
+      "adp": 2.7
+    },
+    {
+      "key": "jahmyrgibbs",
+      "name": "Jahmyr Gibbs",
+      "pos": "RB",
+      "panel_standard": 1.8101265822784811,
+      "panel_position": 1.8310810810810811,
+      "adp": 1.8
+    },
+    {
+      "key": "jamarrchase",
+      "name": "Ja'Marr Chase",
+      "pos": "WR",
+      "panel_standard": 3.1265822784810124,
+      "panel_position": 3,
+      "adp": 3.2
+    }
+  ],
+  "panel_top_type": "dict",
+  "panel_top_keys": [
+    "as_of",
+    "candidate_pool_counts",
+    "candidate_pool_total",
+    "effective_members",
+    "expert_sources",
+    "panels",
+    "scoring",
+    "season"
+  ],
+  "panel_summary": {
+    "as_of": {
+      "type": "str",
+      "value": "2026-08-22T06:58:45.020Z"
+    },
+    "season": {
+      "type": "int",
+      "value": 2026
+    },
+    "scoring": {
+      "type": "str",
+      "value": "HALF_PPR"
+    },
+    "expert_sources": {
+      "type": "dict",
+      "keys": [
+        "Andrew Erickson",
+        "Derek Brown",
+        "Justin Boone",
+        "Matt Harmon",
+        "Pat Fitzmaurice",
+        "Sean Koerner"
+      ],
+      "len": 6
+    },
+    "effective_members": {
+      "type": "dict",
+      "keys": [
+        "qb",
+        "rb",
+        "standard",
+        "te",
+        "wr"
+      ],
+      "len": 5
+    },
+    "candidate_pool_counts": {
+      "type": "dict",
+      "keys": [
+        "QB",
+        "RB",
+        "TE",
+        "WR"
+      ],
+      "len": 4
+    },
+    "candidate_pool_total": {
+      "type": "int",
+      "value": 230
+    },
+    "panels": {
+      "type": "dict",
+      "keys": [
+        "qb",
+        "rb",
+        "standard",
+        "te",
+        "wr"
+      ],
+      "len": 5
+    }
+  },
+  "health_top_keys": [
+    "as_of",
+    "hard_exclusions",
+    "material_watch",
+    "policy",
+    "research_rules",
+    "role_rules",
+    "schema"
+  ]
+}
