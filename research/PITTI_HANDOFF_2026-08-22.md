@@ -6,7 +6,20 @@ This handoff supplements the canonical project state. On continuation, read the 
 ## Immediate objective
 Reach trustworthy, realistic full-draft simulations soon enough to extract actionable draft strategy for the real 10-team Half-PPR Sleeper draft on 2026-08-31 (user slot 9). Simulation realism and evidence from mocks are high priority. Avoid unnecessary/high-risk large production changes as draft day approaches, but **do not treat 2026-08-24 as a hard ban on large changes**: if evidence indicates a material Championship-Utility / league-win benefit and the change can still be implemented, tested and rolled back safely, a larger change remains explicitly allowed and desirable even after 2026-08-24. Prefer the smallest change that captures the benefit; change size itself is not the optimization target.
 
-## Latest critical result: RB2_BY52 diagnosis
+## Latest critical result: dynamic TE screen failed; turn-pair probe is current critical path
+The completed 5-variant dynamic TE/opportunity-cost screen did NOT produce a promotable dynamic TE rule.
+- TE_SOFT2, TE_SOFT4, TE_SOFT6 and TE_RETURN_GATE all reproduced the same poor outcome: about -0.630 expected wins baseline / -0.722 stress vs MARKET_ROSTER.
+- The hard DEFER_TE69 diagnostic improved materially to about -0.148 baseline / -0.283 stress, but remains inferior and is diagnostic only.
+- Representative bad Coach path remained Amon-Ra -> Bowers -> Olave -> Flowers -> Swift -> McLaurin, with RB1 delayed to 5.09.
+Interpretation: do NOT keep grid-searching TE penalties. The structural defect is broader opportunity cost / snake-turn composition, not proof that elite TE itself is bad.
+
+Current research response: Draft PR #6 / branch `pitti-turn-pair-probe` preregisters a position-agnostic two-pick lookahead at slot-9 turns. It evaluates current-player quality + expected return-pick quality + bounded starter-state coverage, with no Hero-RB/Late-TE objective and no named-player hard coding. First screen variants are CONTROL, PAIR_FIRST (1.09->2.02) and PAIR_FIRST_TWO (also 3.09->4.02). Production promotion is forbidden from this screen alone; a passing rule must be frozen and validated on fresh holdout seeds and realistic mocks.
+
+GitHub Actions run 32596679736 is the active 3-arm 10-seed/regime turn-pair screen. At the latest checkpoint all three jobs are still in the simulation step, with Python pair-core invariant tests already PASS and no job failure. Do not restart or duplicate while healthy. Continue independent parallel work while it runs.
+
+Methodological caveat: existing Return-v2 exposes calibrated marginal player return probabilities, not a true joint return-board distribution. The first turn-pair screen therefore uses a preregistered ordered-survival approximation over marginal Return-v2 probabilities. Even a positive screen must receive joint-state / conservative dependence validation before production promotion.
+
+## Earlier RB2_BY52 diagnosis retained
 GitHub Actions run 32590945054 (`PITTI rc4.59 RB2 Core Diagnostic`, run #2) completed with intentional failure at the final fail-closed gate.
 - Simulation step: PASS.
 - Raw draft artifact persisted: artifact 9480559792 `rb2-by52-raw-drafts`.
@@ -14,76 +27,44 @@ GitHub Actions run 32590945054 (`PITTI rc4.59 RB2 Core Diagnostic`, run #2) comp
 - Outcome-v2 correctly SKIPPED because the core audit found an invalid Coach roster.
 - Exact failing Coach row: stress=`baseline`, seed=`459260006`.
 - Final 15-pick position counts: QB=1, RB=6, WR=8, TE=0.
-- Roster: Amon-Ra St. Brown; Chase Brown; Malik Nabers; Zay Flowers; D'Andre Swift; Jaylen Waddle; Christian Watson; Parker Washington; Justin Herbert; Rico Dowdle; Jacory Croskey-Merritt; Stefon Diggs; Rachaad White; KC Concepcion; Keaton Mitchell.
-Interpretation: the previous `no legal pre-Week1 drop` was not primarily a retain13 bug. The RB2_BY52 candidate can finish a legal-length draft without any TE, so it fails starter/core feasibility before outcome evaluation. Do NOT relax retain13 to make this pass. Investigate/ensure late-draft TE feasibility in candidate policies, but do not infer that a hard early-TE rule is desirable.
-
-## Completed rc4.59 ablation evidence
-Small CRN screen, 10 seeds/regime, MARKET_ROSTER control:
-- QB1_ONLY: expected-wins delta about -0.572 baseline / -0.711 stress.
-- QB1_TE1: about -0.630 baseline / -0.722 stress.
-- QB1_TE1_DEFER_TE69: about -0.148 baseline / -0.283 stress; large improvement but not certification-ready.
-- QB1_TE1_RB2_BY52: draft simulation passed but is invalid as policy evidence because one Coach roster has TE=0; outcome intentionally not evaluated in the new diagnostic.
-Key causal observation: QB1_TE1 selected Brock Bowers essentially 20/20 at pick 12; DEFER_TE69 instead selected Chase Brown 20/20 there. Evidence is against deterministic early-TE behavior, NOT proof that Bowers/elite TE is intrinsically bad.
-QB cap fixes redundant QB accumulation but QB1_ONLY remains clearly inferior, so QB overdrafting is only one defect.
-
-## Elite-TE next path
-Research plan exists at `research/ELITE_TE_OPPORTUNITY_COST_GATE_PLAN_2026-08-22.md`.
-Do NOT promote DEFER_TE69 as production rule. Preferred candidate is a dynamic elite-TE opportunity-cost / Return-v2 gate or soft penalty:
-- early elite TE remains available when its marginal value exceeds the expected value lost by passing the best RB/WR until the return pick;
-- use existing Coach score + Return-v2 + slot-9 next-pick geometry + roster opportunity cost;
-- personal Late-TE preference is context/tiebreaker, not hard suppression;
-- preregister small CRN research variants, select simple robust rule, then fresh held-out certification seeds.
-Also diagnose the remaining deficit after the 2.02 correction rather than stacking positional hard rules.
+Interpretation: do NOT relax retain13 to make this pass. Ensure generic final-roster starter feasibility, not a hard early-TE mandate.
 
 ## Realistic simulation validation matrix
-Research spec: `research/REALISTIC_MOCK_VALIDATION_MATRIX_2026-08-22.md` (commit 152d515d16967f59e887296f1a49dbc48258df1b).
-Required ladder: small causal CRN screen -> simple candidate -> fresh held-out larger certification -> full realistic mock matrix -> pick-level sanity review -> production integration.
-Persist raw simulation before downstream evaluators; persist legality/core audit separately. Downstream failures must never destroy expensive simulation evidence.
+Research spec: `research/REALISTIC_MOCK_VALIDATION_MATRIX_2026-08-22.md`.
+Required ladder: small causal CRN screen -> simple candidate -> fresh held-out larger certification -> full realistic mock matrix -> pick-level sanity review -> production integration. Persist raw simulation before downstream evaluators; persist legality/core audit separately. Downstream failures must never destroy expensive simulation evidence.
 
-## Opponent draft-mode semantics (important user correction)
-Every opponent defaults to MANUAL whenever there is no current contrary information. Do NOT probabilistically mix autodraft into the baseline merely because an interruption is possible.
-- User can report shortly before/during draft which Sleeper managers show AUTODRAFT.
-- Switch those managers prospectively to AUTODRAFT immediately.
-- If a manager later drafts manually / user reports manual, switch future picks back to MANUAL.
-- UNKNOWN exists only for genuinely conflicting/transition evidence; it is not the default.
-- AUTODRAFT or unresolved UNKNOWN picks must never train the manager's personal manual profile.
-Realistic simulation should separately stress-test one/multiple autodrafter and mid-draft switches using Sleeper-2026 calibrated autodraft behavior.
+## Opponent draft-mode semantics
+Every opponent defaults to MANUAL whenever there is no current contrary information. Do NOT probabilistically mix autodraft into the baseline merely because an interruption is possible. Switch prospectively to AUTODRAFT only from current evidence; switch back if manual behavior resumes. AUTODRAFT/UNKNOWN picks must not train personal manager profiles.
 
-### 2026-08-22 official Sleeper grounding added
-Parallel realism research verified current official Sleeper support behavior and updated `research/UNIVERSAL_AUTODRAFT_STATE_MODEL_2026-08-22.md` at commit `31caa0079a282c405e7998b1fd9e26e62f6ecf84`.
-- CPU auto-pick uses the team's ordered Draft Queue when available.
-- Drafted players are removed from the queue automatically.
-- When the queue is empty, CPU falls back to a higher-ranked available player while considering roster needs.
-- Sleeper still has no supported custom pre-draft-ranking upload; the league-specific Draft Queue is the supported workaround.
-Model consequence: AUTODRAFT is now explicitly a two-stage latent policy `QUEUE_IF_AVAILABLE -> SLEEPER_RANK_PLUS_ROSTER_NEED`, not pure ADP/rank sampling. Opponent private queues are normally unobserved and therefore belong in sensitivity analysis, not personal-manager learning. Baseline remains MANUAL absent current contrary evidence.
+Official Sleeper grounding: CPU auto-pick uses ordered Draft Queue when available; drafted players are removed automatically; with empty queue it falls back toward higher-ranked available players while considering roster needs. No supported custom ranking upload. Model consequence: AUTODRAFT is `QUEUE_IF_AVAILABLE -> SLEEPER_RANK_PLUS_ROSTER_NEED`.
 
-### Autodraft effort priority — clarified 2026-08-22
-Autodraft is a low-probability contingency. A robust, low-effort fallback is valuable, but it is **not** allowed to consume substantial time from higher-value work.
-- Keep autodraft work parallel/secondary while it is cheap and reusable.
-- Stop at a simple robust fallback (deep Sleeper queue + MANUAL/AUTODRAFT state handling + verified queue-first semantics) if deeper calibration or integration becomes expensive.
-- Do not invest in elaborate private-queue inference or extensive autodraft modeling unless new evidence materially increases expected value.
-- Critical-path priority remains Coach-policy validation, realistic simulation, current player/market research, TAKE/WAIT mapping and draft-day readiness.
+## Autodraft effort priority
+Autodraft is a low-probability contingency. Keep only the cheap robust minimum: deep Sleeper queue + MANUAL/AUTODRAFT state handling + queue-first semantics. Do not spend material engineering time on private-queue inference or elaborate autodraft modeling while Coach policy, realistic mocks, Player Evidence or TAKE/WAIT remain higher-EV.
 
-## AUTO operating rule
+## Player-evidence gates — latest 2026-08-22
+Treat current camp/injury news as probability/evidence gates, not automatic ranking coefficients.
+- Malik Nabers: trend is positive after return to 11-on-11/team work, but full contact/medical clearance remains the decisive gate. Do not equate non-contact team work with full return.
+- Chris Olave: no new standalone health downgrade in the latest pass. Saints rookie WR Jordyn Tyson's hamstring absence can increase target concentration around Olave, but quantify only after role evidence stabilizes.
+- Parker Washington: day-to-day with an undisclosed injury and expected back soon; preserve the value thesis for now, but mandatory draft-day recheck.
+- Zay Flowers: quad contusion/day-to-day evidence reduces concern versus an unspecified serious injury; no major downgrade absent setback.
+- Chase Brown: current Bengals camp evidence remains compatible with a lead/high-volume role; no new health/role warning that explains Coach's early-RB avoidance.
+- D'Andre Swift: Chicago backfield evidence remains consistent with a tandem rather than a true workhorse; do not artificially boost him to solve roster-construction defects.
+- Sam LaPorta: hip injury is a current TE evidence gate; Week-1 expectation is not completely certain. Recheck before using him as stable high-end-TE input.
+- Other current recheck names include Breece Hall (groin), Chuba Hubbard (hamstring), Kyle Monangai (knee), Puka Nacua (groin), Emeka Egbuka (toe), Tucker Kraft (knee), Tyler Warren (groin) and George Kittle (Achilles/PUP). Do not convert list membership into a ranking penalty without severity/timeline evidence.
+
+## AUTO operating rule — general and mandatory
 On every AUTO block maintain two queues:
 1. serial critical path;
 2. independent parallel work.
-Automatically ask what useful work can proceed in parallel and execute it when it cannot contaminate the critical path. Do not merely poll/wait while useful independent work exists. Diagnose failures before retrying; do not repeat failed approaches without new evidence.
-
-## Current GitHub research infrastructure
-Repository: Muero42/draft-companion.
-Main research branch used for specs: `pitti-outcome-bridge-20250821`.
-RB2 diagnostic probe branch: `pitti-rb2-core-diagnostic-probe`, diagnostic head SHA `46a605fbb1c4f6ee9aee8e70e3789722992fb4da`.
-Fresh Draft PR #3 was used to trigger the isolated diagnostic.
-The diagnostic workflow intentionally uploads raw output before evaluator/core failure.
+Whenever any critical simulation, CI, research, deployment or other operation is running/waiting, automatically ask what useful independent work can proceed and execute it if it cannot contaminate the critical path. Repeated polling/waiting is allowed only when no worthwhile independent task exists. Prioritize by expected Championship-Utility / user-time benefit, not ease of execution. Diagnose failures before retrying; do not repeat failed approaches without new evidence.
 
 ## Immediate next actions (ordered)
-1. Treat RB2_BY52 as invalid in its current form; use the persisted raw/core evidence to determine why late TE feasibility was not guaranteed and design a generic final-roster feasibility safeguard rather than an early hard-TE mandate.
-2. Build the small research harness for the preregistered dynamic elite-TE variants (`TE_RETURN_GATE`, `TE_SOFT_PENALTY`, optional tightly localized PICK12 gate if diagnostics justify it) using existing Return-v2/scoring ingredients and identical CRN controls.
-3. Pick-level diagnose QB1_TE1_DEFER_TE69 after 2.02 to locate the remaining baseline/stress deficit (turns 3.09/4.02 onward, RB/WR allocation, TE timing, bench construction).
-4. Keep the universal MANUAL/AUTODRAFT state machine and deep-queue fallback as a cheap parallel contingency only; do not let this low-probability scenario displace higher-value work.
+1. Let healthy turn-pair run 32596679736 finish; do not duplicate it. On first completed arm, inspect raw pick behavior as well as outcome rather than waiting for all arms if useful evidence is available.
+2. If turn-pair candidate passes small screen, freeze the exact rule and run fresh held-out certification; also validate the marginal-return approximation against joint-state simulation or conservative dependence bounds before production promotion.
+3. If it fails, diagnose mechanism/pick paths before changing lambda/frontier. Do not tune those parameters on the same outcome screen.
+4. In parallel continue targeted Player Evidence for likely slot-9 windows, TAKE/WAIT mapping and realistic-mock infrastructure. Do not merely poll CI.
 5. Once a simple Coach candidate passes small screen + legality, run fresh held-out certification, then realistic full mocks. Do not calibrate from one illustrative mock.
-6. Prepare slot-9 turn maps / TAKE-WAIT opportunity-cost outputs and deep Sleeper Queue fallback before the real draft; K/DST omitted, QB2/TE2 deprioritized.
+6. Prepare slot-9 turn maps / TAKE-WAIT outputs and deep Sleeper Queue fallback before the real draft; K/DST omitted, QB2/TE2 deprioritized.
 
 ## Hard user/project constraints to preserve
 - League: 10 teams, Half-PPR; QB, 2 WR, RB, TE, 2 Flex, K, DST; bench 6. Max four WR can START (2 WR + 2 Flex), not a roster cap.
