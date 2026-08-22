@@ -4,6 +4,10 @@ on:
     branches: [pitti-outcome-bridge-20250821]
     paths:
       - '.github/workflows/pitti-rc459-full-policy-sharded.yml'
+  pull_request:
+    branches: [pitti-outcome-bridge-20250821]
+    paths:
+      - 'research/jobs/full-policy-observable-probe.json'
   workflow_dispatch:
 concurrency:
   group: pitti-rc459-full-policy-outcome
@@ -25,10 +29,7 @@ jobs:
           set -euo pipefail
           node --check research/rc459_full_policy_paired_2026.js
           node --check research/rc459_full_policy_shard_runner_2026.js
-          python -m py_compile \
-            research/merge_rc459_full_policy_shards_2026.py \
-            research/rc459_full_policy_outcome_certification_v2_2026.py \
-            research/rc459_full_policy_health_sensitivity_2026.py
+          python -m py_compile research/merge_rc459_full_policy_shards_2026.py research/rc459_full_policy_outcome_certification_v2_2026.py research/rc459_full_policy_health_sensitivity_2026.py
           python - <<'PY'
           import json
           for p in ['diagnostics_2026/RC459_DYNAMIC_COACH_EXECUTION_2026_GATE.json','bridge_2026/MARKET_OUTCOME_BRIDGE_2026_GATE.json','outcome_certification/INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json','freeze_2026/FRESH_2026_FREEZE_GATE.json']:
@@ -97,7 +98,7 @@ jobs:
           set -euo pipefail
           time python research/rc459_full_policy_health_sensitivity_2026.py 2>&1 | tee /tmp/full-policy-health.log
       - name: Persist canonical certification
-        if: always()
+        if: always() && github.event_name != 'pull_request'
         shell: bash
         run: |
           set -euo pipefail
@@ -113,10 +114,7 @@ jobs:
           cp -a /tmp/policy-save/policy_certification_2026/. policy_certification_2026/ || true
           cp -a /tmp/policy-save/diagnostics_2026/. diagnostics_2026/ || true
           git add policy_certification_2026/ diagnostics_2026/
-          if ! git diff --cached --quiet; then
-            git commit -m 'Record repaired rc4.59 full-policy certification [skip ci]'
-            git push origin HEAD:pitti-outcome-bridge-20250821
-          fi
+          if ! git diff --cached --quiet; then git commit -m 'Record repaired rc4.59 full-policy certification [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
       - name: Report final gates
         if: always()
         run: |
