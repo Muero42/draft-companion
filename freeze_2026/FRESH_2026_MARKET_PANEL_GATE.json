@@ -1,6 +1,6 @@
 {
   "status": "FAIL_CLOSED",
-  "as_of": "2026-08-22T06:10:27.950Z",
+  "as_of": "2026-08-22T06:15:45.855Z",
   "minCoreExperts": false,
   "pool_total": 230,
   "sleeper_adp_count": 723,
@@ -11,15 +11,12 @@
       "url": "https://www.fantasypros.com/nfl/rankings/pat-fitzmaurice.php?scoring=HALF&type=draft",
       "updated": "Aug 20, 2026",
       "count": 296,
-      "error": ""
-    },
-    "Derek Brown": {
-      "ok": true,
-      "source": "FantasyPros direct",
-      "url": "https://www.fantasypros.com/nfl/rankings/derek-brown.php?scoring=HALF&type=draft",
-      "updated": "Aug 21, 2026",
-      "count": 297,
-      "error": ""
+      "error": "",
+      "confidence": "exact",
+      "exactCount": 335,
+      "reconstructedCount": 0,
+      "coverage": 1,
+      "quality": null
     },
     "Andrew Erickson": {
       "ok": true,
@@ -27,15 +24,25 @@
       "url": "https://www.fantasypros.com/nfl/rankings/andrew-erickson.php?scoring=HALF&type=draft",
       "updated": "Aug 21, 2026",
       "count": 196,
-      "error": ""
+      "error": "",
+      "confidence": "exact",
+      "exactCount": 235,
+      "reconstructedCount": 0,
+      "coverage": 1,
+      "quality": null
     },
-    "Matt Harmon": {
-      "ok": false,
-      "source": "",
-      "url": "",
-      "updated": "",
-      "count": 0,
-      "error": "0 rows | 0 rows"
+    "Derek Brown": {
+      "ok": true,
+      "source": "FantasyPros direct",
+      "url": "https://www.fantasypros.com/nfl/rankings/derek-brown.php?scoring=HALF&type=draft",
+      "updated": "Aug 21, 2026",
+      "count": 297,
+      "error": "",
+      "confidence": "exact",
+      "exactCount": 336,
+      "reconstructedCount": 0,
+      "coverage": 1,
+      "quality": null
     },
     "Justin Boone": {
       "ok": false,
@@ -43,7 +50,41 @@
       "url": "",
       "updated": "",
       "count": 0,
-      "error": "0 rows | 0 rows"
+      "error": "reconstruction quality fail {\"draftableCount\":321,\"exactDraftableCount\":215,\"reconstructedDraftableCount\":106,\"exactCoverage\":0.6697819314641744,\"avgSpread\":12.056603773584905,\"maxSpread\":97,\"ok\":false}",
+      "confidence": "",
+      "exactCount": 0,
+      "reconstructedCount": 0,
+      "coverage": 0,
+      "quality": {
+        "draftableCount": 321,
+        "exactDraftableCount": 215,
+        "reconstructedDraftableCount": 106,
+        "exactCoverage": 0.6697819314641744,
+        "avgSpread": 12.056603773584905,
+        "maxSpread": 97,
+        "ok": false
+      }
+    },
+    "Matt Harmon": {
+      "ok": false,
+      "source": "",
+      "url": "",
+      "updated": "",
+      "count": 0,
+      "error": "reconstruction quality fail {\"draftableCount\":321,\"exactDraftableCount\":176,\"reconstructedDraftableCount\":145,\"exactCoverage\":0.5482866043613707,\"avgSpread\":15.137931034482758,\"maxSpread\":90,\"ok\":false}",
+      "confidence": "",
+      "exactCount": 0,
+      "reconstructedCount": 0,
+      "coverage": 0,
+      "quality": {
+        "draftableCount": 321,
+        "exactDraftableCount": 176,
+        "reconstructedDraftableCount": 145,
+        "exactCoverage": 0.5482866043613707,
+        "avgSpread": 15.137931034482758,
+        "maxSpread": 90,
+        "ok": false
+      }
     },
     "Sean Koerner": {
       "ok": false,
@@ -51,8 +92,39 @@
       "url": "",
       "updated": "",
       "count": 0,
-      "error": "No deterministic complete current all-position public feed configured; retain degraded/unavailable status."
+      "error": "No deterministic complete current all-position public feed configured; retain degraded/unavailable status.",
+      "confidence": "",
+      "exactCount": 0,
+      "reconstructedCount": 0,
+      "coverage": 0,
+      "quality": null
     }
+  },
+  "effective_members": {
+    "standard": [
+      "Pat Fitzmaurice",
+      "Andrew Erickson",
+      "Derek Brown"
+    ],
+    "rb": [
+      "Pat Fitzmaurice",
+      "Andrew Erickson",
+      "Derek Brown"
+    ],
+    "wr": [
+      "Pat Fitzmaurice",
+      "Andrew Erickson",
+      "Derek Brown"
+    ],
+    "qb": [
+      "Pat Fitzmaurice",
+      "Andrew Erickson"
+    ],
+    "te": [
+      "Pat Fitzmaurice",
+      "Andrew Erickson",
+      "Derek Brown"
+    ]
   },
   "sleeper_diagnostics": [
     {
@@ -83,5 +155,5 @@
       }
     }
   ],
-  "payload_sha256": "0dd8072a5d23e340b5805a8bd15417b962cb88e901e912b26298014e53cf863d"
+  "payload_sha256": "480a023f13dce634b64ae6bb43f9221b7926f92a1ec7af08b97105b766076d60"
 }

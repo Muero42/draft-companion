@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "status": "FAIL_CLOSED",
-  "package_as_of": "2026-08-22T06:11:58.341578+00:00",
+  "package_as_of": "2026-08-22T06:15:45.962595+00:00",
   "utility": {
     "version": "v3.5",
     "status": "PASS"
   },
   "panel": {
-    "as_of": "2026-08-22T06:10:27.950Z",
+    "as_of": "2026-08-22T06:15:45.855Z",
     "source": "deterministic current configured expert feeds with explicit source health",
-    "payload_sha256": "e12b773856e33957d5934dd94b0f134b99a649721eb127fe50e3d703cdb76a13",
+    "payload_sha256": "e95ad6003446e17aa8f545f811e09b21f7e5aba09b116f85a888bad9cdedb489",
     "player_count": 230,
     "expert_sources": {
       "Pat Fitzmaurice": {
@@ -18,15 +18,12 @@
         "url": "https://www.fantasypros.com/nfl/rankings/pat-fitzmaurice.php?scoring=HALF&type=draft",
         "updated": "Aug 20, 2026",
         "count": 296,
-        "error": ""
-      },
-      "Derek Brown": {
-        "ok": true,
-        "source": "FantasyPros direct",
-        "url": "https://www.fantasypros.com/nfl/rankings/derek-brown.php?scoring=HALF&type=draft",
-        "updated": "Aug 21, 2026",
-        "count": 297,
-        "error": ""
+        "error": "",
+        "confidence": "exact",
+        "exactCount": 335,
+        "reconstructedCount": 0,
+        "coverage": 1,
+        "quality": null
       },
       "Andrew Erickson": {
         "ok": true,
@@ -34,15 +31,25 @@
         "url": "https://www.fantasypros.com/nfl/rankings/andrew-erickson.php?scoring=HALF&type=draft",
         "updated": "Aug 21, 2026",
         "count": 196,
-        "error": ""
+        "error": "",
+        "confidence": "exact",
+        "exactCount": 235,
+        "reconstructedCount": 0,
+        "coverage": 1,
+        "quality": null
       },
-      "Matt Harmon": {
-        "ok": false,
-        "source": "",
-        "url": "",
-        "updated": "",
-        "count": 0,
-        "error": "0 rows | 0 rows"
+      "Derek Brown": {
+        "ok": true,
+        "source": "FantasyPros direct",
+        "url": "https://www.fantasypros.com/nfl/rankings/derek-brown.php?scoring=HALF&type=draft",
+        "updated": "Aug 21, 2026",
+        "count": 297,
+        "error": "",
+        "confidence": "exact",
+        "exactCount": 336,
+        "reconstructedCount": 0,
+        "coverage": 1,
+        "quality": null
       },
       "Justin Boone": {
         "ok": false,
@@ -50,7 +57,41 @@
         "url": "",
         "updated": "",
         "count": 0,
-        "error": "0 rows | 0 rows"
+        "error": "reconstruction quality fail {\"draftableCount\":321,\"exactDraftableCount\":215,\"reconstructedDraftableCount\":106,\"exactCoverage\":0.6697819314641744,\"avgSpread\":12.056603773584905,\"maxSpread\":97,\"ok\":false}",
+        "confidence": "",
+        "exactCount": 0,
+        "reconstructedCount": 0,
+        "coverage": 0,
+        "quality": {
+          "draftableCount": 321,
+          "exactDraftableCount": 215,
+          "reconstructedDraftableCount": 106,
+          "exactCoverage": 0.6697819314641744,
+          "avgSpread": 12.056603773584905,
+          "maxSpread": 97,
+          "ok": false
+        }
+      },
+      "Matt Harmon": {
+        "ok": false,
+        "source": "",
+        "url": "",
+        "updated": "",
+        "count": 0,
+        "error": "reconstruction quality fail {\"draftableCount\":321,\"exactDraftableCount\":176,\"reconstructedDraftableCount\":145,\"exactCoverage\":0.5482866043613707,\"avgSpread\":15.137931034482758,\"maxSpread\":90,\"ok\":false}",
+        "confidence": "",
+        "exactCount": 0,
+        "reconstructedCount": 0,
+        "coverage": 0,
+        "quality": {
+          "draftableCount": 321,
+          "exactDraftableCount": 176,
+          "reconstructedDraftableCount": 145,
+          "exactCoverage": 0.5482866043613707,
+          "avgSpread": 15.137931034482758,
+          "maxSpread": 90,
+          "ok": false
+        }
       },
       "Sean Koerner": {
         "ok": false,
@@ -58,7 +99,12 @@
         "url": "",
         "updated": "",
         "count": 0,
-        "error": "No deterministic complete current all-position public feed configured; retain degraded/unavailable status."
+        "error": "No deterministic complete current all-position public feed configured; retain degraded/unavailable status.",
+        "confidence": "",
+        "exactCount": 0,
+        "reconstructedCount": 0,
+        "coverage": 0,
+        "quality": null
       }
     },
     "effective_members": {
@@ -131,7 +177,7 @@
     }
   },
   "sleeper_half_ppr_adp": {
-    "as_of": "2026-08-22T06:10:27.950Z",
+    "as_of": "2026-08-22T06:15:45.855Z",
     "source": {
       "id": "legacy-season-api-sleeper-app",
       "url": "https://api.sleeper.app/projections/nfl/2026?season_type=regular&position[]=QB&position[]=RB&position[]=WR&position[]=TE&order_by=adp_half_ppr",
@@ -140,7 +186,7 @@
         "adp_half_ppr": 723
       }
     },
-    "payload_sha256": "a8841079df194772245ff49f7e8b66c02624026edc4f23c9c3e0dd98a9852468",
+    "payload_sha256": "6cba0090b367962dc8ffcb60f754407337e2c376e18def04e574d226bc26c9ce",
     "player_count": 230
   },
   "health_role": {
@@ -192,5 +238,5 @@
     "Generic Questionable is not a mechanical penalty.",
     "Unavailable expert feeds remain explicitly degraded; no stale row is silently relabeled fresh."
   ],
-  "package_sha256": "af563a622eb1ac45946dfa358504453bc317d2750169b36b79556e2b9766fc43"
+  "package_sha256": "3e887d20e88d2945804b62832342bbe44cc7d7ecfa2180d22626f58719bdde4b"
 }
