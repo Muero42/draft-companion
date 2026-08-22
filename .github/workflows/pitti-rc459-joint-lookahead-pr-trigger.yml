@@ -1,0 +1,57 @@
+name: PITTI rc4.59 Joint Lookahead PR Trigger
+on:
+  pull_request:
+    branches: [pitti-outcome-bridge-20250821]
+    paths:
+      - 'research/JOINT_NEXT_PICK_LOOKAHEAD_PLAN_2026-08-22.md'
+      - 'research/rc459_joint_next_pick_screen_2026.js'
+      - '.github/workflows/pitti-rc459-joint-lookahead-screen.yml'
+permissions:
+  contents: read
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Syntax check
+        run: node --check research/rc459_joint_next_pick_screen_2026.js
+      - name: Exercise nested joint rollout path
+        run: node research/rc459_joint_next_pick_screen_2026.js JOINT_LONG2 1
+  screen:
+    needs: smoke
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        variant: [CONTROL, JOINT_LONG2, JOINT_EARLY4]
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha }}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Run preregistered joint 5-seed/regime screen
+        run: node research/rc459_joint_next_pick_screen_2026.js ${{ matrix.variant }} 5
+      - name: Roster/bye-aware diagnostic outcome
+        shell: bash
+        run: |
+          cp policy_certification_2026/JOINT_${{ matrix.variant }}.json policy_certification_2026/RC459_FULL_POLICY_PAIRED_DRAFTS_2026.json
+          python research/rc459_full_policy_outcome_certification_v2_2026.py > joint-${{ matrix.variant }}-outcome.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: joint-${{ matrix.variant }}
+          path: |
+            policy_certification_2026/JOINT_${{ matrix.variant }}.json
+            policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_V2_2026_GATE.json
+            joint-${{ matrix.variant }}-outcome.log
+          if-no-files-found: error
+          retention-days: 3
