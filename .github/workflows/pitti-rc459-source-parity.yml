@@ -1,0 +1,40 @@
+name: PITTI rc4.59 Source Function Parity
+on:
+  push:
+    branches: [pitti-outcome-bridge-20250821]
+    paths:
+      - '.github/workflows/pitti-rc459-source-parity.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  verify:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-outcome-bridge-20250821, fetch-depth: 0}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Verify hashes
+        shell: bash
+        run: |
+          set +e
+          python research/verify_rc459_source_parity.py > /tmp/parity.log 2>&1
+          rc=$?
+          cat /tmp/parity.log
+          if [ ! -f RC459_SOURCE_FUNCTION_PARITY.json ]; then printf '{"status":"RUNNER_ERROR","exit_code":%s}\n' "$rc" > RC459_SOURCE_FUNCTION_PARITY.json; fi
+          exit 0
+      - name: Persist
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/source-parity/diagnostics_2026
+          cp RC459_SOURCE_FUNCTION_PARITY.json /tmp/source-parity/diagnostics_2026/
+          cp /tmp/parity.log /tmp/source-parity/diagnostics_2026/rc459_source_parity.log
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git reset --hard; git clean -fd; git fetch origin pitti-outcome-bridge-20250821; git checkout -B pitti-outcome-bridge-20250821 origin/pitti-outcome-bridge-20250821
+          mkdir -p diagnostics_2026; cp -a /tmp/source-parity/diagnostics_2026/. diagnostics_2026/
+          git add diagnostics_2026/
+          if ! git diff --cached --quiet; then git commit -m 'Record rc4.59 source-function parity [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
