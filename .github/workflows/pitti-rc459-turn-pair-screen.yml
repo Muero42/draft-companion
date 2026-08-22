@@ -1,0 +1,40 @@
+name: PITTI rc4.59 Turn Pair Screen
+on:
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  screen:
+    strategy:
+      fail-fast: false
+      max-parallel: 3
+      matrix:
+        variant: [CONTROL, PAIR_FIRST, PAIR_FIRST_TWO]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-turn-pair-probe
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Python pair-core invariant self-test
+        run: python research/turn_pair_probe_2026.py
+      - name: Run preregistered 10-seed/regime turn-pair screen
+        run: node research/rc459_turn_pair_screen_2026.js ${{ matrix.variant }} 10
+      - name: Roster/bye-aware diagnostic outcome
+        shell: bash
+        run: |
+          cp policy_certification_2026/TURN_PAIR_${{ matrix.variant }}.json policy_certification_2026/RC459_FULL_POLICY_PAIRED_DRAFTS_2026.json
+          python research/rc459_full_policy_outcome_certification_v2_2026.py > turn-pair-${{ matrix.variant }}-outcome.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: turn-pair-${{ matrix.variant }}
+          path: |
+            policy_certification_2026/TURN_PAIR_${{ matrix.variant }}.json
+            policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_V2_2026_GATE.json
+            turn-pair-${{ matrix.variant }}-outcome.log
+          if-no-files-found: error
+          retention-days: 3
