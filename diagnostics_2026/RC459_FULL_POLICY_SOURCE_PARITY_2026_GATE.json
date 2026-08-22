@@ -1,0 +1,12 @@
+{
+  "status": "PASS",
+  "numbered_rc459_app_sha256": "1de9c6dcbd39bec35dffd2b43575260da6601abf3a9a29fe329ffeb8a4065fa3",
+  "function_count": 40,
+  "matching_function_count": 40,
+  "missing": [],
+  "mismatch": [],
+  "manager_profile_expected": "c5f601051850185b81801aaaa3efe554d9214f6cfa15999a0beec6cb0b192493",
+  "manager_profile_actual": "c5f601051850185b81801aaaa3efe554d9214f6cfa15999a0beec6cb0b192493",
+  "whole_app_equal_not_required": true,
+  "interpretation": "PASS source-locks the named Coach/Return-v2/opponent/state dependency functions and manager profile hash to the numbered rc4.59 artifact. It does not certify dynamic fixture equivalence, fresh health-scenario integration, or policy superiority."
+}
