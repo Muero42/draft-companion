@@ -1,0 +1,48 @@
+{
+  "status": "PASS",
+  "fixture_count": 16,
+  "material_bridge_dominance_count": 9,
+  "material_bridge_dominance_rate": 0.5625,
+  "by_turn": {
+    "9": {
+      "n": 2,
+      "material": 0,
+      "mean_delta": 0.2729
+    },
+    "12": {
+      "n": 2,
+      "material": 2,
+      "mean_delta": 4.3451
+    },
+    "29": {
+      "n": 2,
+      "material": 1,
+      "mean_delta": 0.5338
+    },
+    "32": {
+      "n": 2,
+      "material": 1,
+      "mean_delta": 0.929
+    },
+    "49": {
+      "n": 2,
+      "material": 2,
+      "mean_delta": 1.7429
+    },
+    "52": {
+      "n": 2,
+      "material": 1,
+      "mean_delta": 3.6122
+    },
+    "69": {
+      "n": 2,
+      "material": 2,
+      "mean_delta": 7.5854
+    },
+    "72": {
+      "n": 2,
+      "material": 0,
+      "mean_delta": 0.0761
+    }
+  }
+}
