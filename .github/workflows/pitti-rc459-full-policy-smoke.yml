@@ -19,15 +19,25 @@ jobs:
         with: {node-version: '22'}
       - uses: actions/setup-python@v5
         with: {python-version: '3.12'}
-      - name: Capture syntax and one-seed runtime
+      - name: Capture syntax, one-seed runtime, and outcome gate
         shell: bash
         run: |
           set +e
           mkdir -p /tmp/policy-smoke
           node --check research/rc459_full_policy_paired_2026.js > /tmp/policy-smoke/node-check.log 2>&1; echo $? > /tmp/policy-smoke/node-check.exit
           python -m py_compile research/rc459_full_policy_outcome_certification_2026.py > /tmp/policy-smoke/python-check.log 2>&1; echo $? > /tmp/policy-smoke/python-check.exit
-          node research/rc459_full_policy_paired_2026.js 1 > /tmp/policy-smoke/runtime.log 2>&1; echo $? > /tmp/policy-smoke/runtime.exit
-          cat /tmp/policy-smoke/node-check.log /tmp/policy-smoke/python-check.log /tmp/policy-smoke/runtime.log || true
+          rm -rf policy_certification_2026 && mkdir -p policy_certification_2026
+          node research/rc459_full_policy_paired_2026.js 1 > /tmp/policy-smoke/runtime.log 2>&1; r=$?; echo $r > /tmp/policy-smoke/runtime.exit
+          if [ $r -eq 0 ]; then
+            python research/rc459_full_policy_outcome_certification_2026.py > /tmp/policy-smoke/outcome.log 2>&1; o=$?
+          else
+            o=97; echo 'outcome skipped: paired runtime failed' > /tmp/policy-smoke/outcome.log
+          fi
+          echo $o > /tmp/policy-smoke/outcome.exit
+          if [ -f policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_2026_GATE.json ]; then
+            cp policy_certification_2026/RC459_FULL_POLICY_OUTCOME_CERTIFICATION_2026_GATE.json /tmp/policy-smoke/outcome-gate.json
+          fi
+          cat /tmp/policy-smoke/node-check.log /tmp/policy-smoke/python-check.log /tmp/policy-smoke/runtime.log /tmp/policy-smoke/outcome.log || true
           exit 0
       - name: Persist smoke diagnostics only
         shell: bash
