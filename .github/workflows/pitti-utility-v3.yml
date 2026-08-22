@@ -1,4 +1,4 @@
-name: PITTI Independent Utility v3.5
+name: PITTI Utility v3.5 + Fresh 2026 Freeze
 on:
   push:
     branches: [pitti-outcome-bridge-20250821]
@@ -6,6 +6,7 @@ on:
       - '.github/workflows/pitti-utility-v3.yml'
       - 'research/independent_utility_v3_3_2025.py'
       - 'research/independent_utility_v3_5_2025.py'
+      - 'research/freeze_2026_fetch.mjs'
   workflow_dispatch:
 permissions:
   contents: write
@@ -16,7 +17,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with: {ref: pitti-outcome-bridge-20250821}
-      - name: Fetch independent inputs
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Fetch independent 2025 inputs
         shell: bash
         run: |
           set -euo pipefail
@@ -28,29 +31,28 @@ jobs:
       - name: Run Utility v3.5
         continue-on-error: true
         run: python research/independent_utility_v3_5_2025.py
-      - name: Persist certification or runner error
+      - name: Acquire fresh 2026 panel and Sleeper ADP
+        continue-on-error: true
+        run: node research/freeze_2026_fetch.mjs
+      - name: Persist research outputs
         if: always()
         shell: bash
         run: |
           set -euo pipefail
-          mkdir -p outcome_certification
-          if [ -f INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json ]; then
-            cp INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json outcome_certification/
-          else
-            printf '%s\n' '{"status":"RUNNER_ERROR","method":"Independent Championship Utility v3.5","reason":"script exited before certification output"}' > outcome_certification/INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json
-          fi
+          mkdir -p outcome_certification freeze_2026
+          if [ -f INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json ]; then cp INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json outcome_certification/; fi
+          if [ -f FRESH_2026_MARKET_PANEL_RAW.json ]; then cp FRESH_2026_MARKET_PANEL_RAW.json freeze_2026/; fi
+          if [ -f FRESH_2026_MARKET_PANEL_GATE.json ]; then cp FRESH_2026_MARKET_PANEL_GATE.json freeze_2026/; else printf '%s\n' '{"status":"RUNNER_ERROR","reason":"fresh 2026 acquisition produced no gate"}' > freeze_2026/FRESH_2026_MARKET_PANEL_GATE.json; fi
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add outcome_certification/INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json
-          if ! git diff --cached --quiet; then
-            git commit -m 'Record Independent Championship Utility v3.5 result [skip ci]'
-            git push origin HEAD:pitti-outcome-bridge-20250821
-          fi
-      - name: Enforce certification gate
+          git add outcome_certification/ freeze_2026/
+          if ! git diff --cached --quiet; then git commit -m 'Record utility and fresh 2026 market freeze [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
+      - name: Enforce gates
         run: |
           python - <<'PY'
           import json
-          x=json.load(open('outcome_certification/INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json'))
-          print('Utility v3.5:',x['status'])
-          if x['status']!='PASS': raise SystemExit(2)
+          u=json.load(open('outcome_certification/INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json'))
+          f=json.load(open('freeze_2026/FRESH_2026_MARKET_PANEL_GATE.json'))
+          print('Utility v3.5:',u.get('status'),'Market freeze:',f.get('status'))
+          if u.get('status')!='PASS' or f.get('status')!='PASS': raise SystemExit(2)
           PY
