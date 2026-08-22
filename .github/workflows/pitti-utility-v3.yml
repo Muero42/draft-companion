@@ -8,6 +8,9 @@ on:
       - 'research/independent_utility_v3_5_2025.py'
       - 'research/freeze_2026_fetch.mjs'
       - 'research/yahoo_rank_probe.mjs'
+      - 'research/finalize_freeze_2026.py'
+      - 'freeze_2026/FRESH_2026_HEALTH_ROLE_2026-08-22.json'
+      - 'freeze_2026/FRESH_2026_STATIC_LAYERS_2026-08-22.json'
   workflow_dispatch:
 permissions:
   contents: write
@@ -38,7 +41,7 @@ jobs:
       - name: Probe unavailable Yahoo ranking sources
         continue-on-error: true
         run: node research/yahoo_rank_probe.mjs
-      - name: Persist research outputs
+      - name: Stage acquisition outputs
         if: always()
         shell: bash
         run: |
@@ -48,16 +51,24 @@ jobs:
           if [ -f FRESH_2026_MARKET_PANEL_RAW.json ]; then cp FRESH_2026_MARKET_PANEL_RAW.json freeze_2026/; fi
           if [ -f FRESH_2026_MARKET_PANEL_GATE.json ]; then cp FRESH_2026_MARKET_PANEL_GATE.json freeze_2026/; else printf '%s\n' '{"status":"RUNNER_ERROR","reason":"fresh 2026 acquisition produced no gate"}' > freeze_2026/FRESH_2026_MARKET_PANEL_GATE.json; fi
           if [ -f YAHOO_RANK_PROBE.json ]; then cp YAHOO_RANK_PROBE.json freeze_2026/; fi
+      - name: Finalize complete fresh 2026 freeze
+        continue-on-error: true
+        run: python research/finalize_freeze_2026.py
+      - name: Persist research outputs
+        if: always()
+        shell: bash
+        run: |
+          set -euo pipefail
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add outcome_certification/ freeze_2026/
-          if ! git diff --cached --quiet; then git commit -m 'Record utility and fresh 2026 market freeze diagnostics [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
-      - name: Enforce gates
+          if ! git diff --cached --quiet; then git commit -m 'Record utility and complete fresh 2026 freeze diagnostics [skip ci]'; git push origin HEAD:pitti-outcome-bridge-20250821; fi
+      - name: Enforce final gates
         run: |
           python - <<'PY'
           import json
           u=json.load(open('outcome_certification/INDEPENDENT_UTILITY_V3_5_CERTIFICATION_2025.json'))
-          f=json.load(open('freeze_2026/FRESH_2026_MARKET_PANEL_GATE.json'))
-          print('Utility v3.5:',u.get('status'),'Market freeze:',f.get('status'))
+          f=json.load(open('freeze_2026/FRESH_2026_FREEZE_GATE.json'))
+          print('Utility v3.5:',u.get('status'),'Fresh 2026 freeze:',f.get('status'))
           if u.get('status')!='PASS' or f.get('status')!='PASS': raise SystemExit(2)
           PY
