@@ -1,7 +1,6 @@
 {
   "schema": 1,
   "job": "probe_closed",
-  "run_id": "2026-08-22-pr-probe-closed",
-  "requested_at": "2026-08-22T07:37:00+02:00",
-  "purpose": "Probe superseded by direct v3.3 fail-safe research-branch workflow"
+  "run_id": "2026-08-22-pr-probe-closed-final",
+  "purpose": "No further runner probe activity"
 }
