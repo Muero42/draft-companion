@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "as_of": "2026-08-22T08:10:00+02:00",
+  "as_of": "2026-08-22T08:46:00+02:00",
   "policy": {
     "generic_questionable_mechanical_penalty": false,
     "unknown_is_explicit": true,
@@ -8,137 +8,23 @@
     "role_uncertainty_preserved": true
   },
   "hard_exclusions": [
-    {
-      "name": "Jayden Higgins",
-      "status": "OUT_2026",
-      "injury": "ACL tear",
-      "recommendation_eligible": false,
-      "as_of": "2026-08-21",
-      "source": "NFL.com current injury reporting",
-      "note": "Out for 2026 season."
-    },
-    {
-      "name": "Ricky Pearsall",
-      "status": "OUT_2026",
-      "injury": "PCL surgery",
-      "recommendation_eligible": false,
-      "as_of": "2026-08-21",
-      "source": "NFL.com / 49ers current reporting",
-      "note": "Will miss 2026 season; IR."
-    }
+    {"name":"Jayden Higgins","status":"OUT_2026","injury":"ACL tear","recommendation_eligible":false,"as_of":"2026-08-21","source":"NFL.com current injury reporting","note":"Out for 2026 season."},
+    {"name":"Ricky Pearsall","status":"OUT_2026","injury":"PCL surgery","recommendation_eligible":false,"as_of":"2026-08-21","source":"NFL.com / 49ers current reporting","note":"Will miss 2026 season; IR."}
   ],
   "material_watch": [
-    {
-      "name": "Jordyn Tyson",
-      "status": "OUT_APPROX_TWO_MONTHS",
-      "injury": "hamstring",
-      "recommendation_eligible": true,
-      "as_of": "2026-08-17",
-      "source": "NFL Network current reporting",
-      "availability": "Expected absence roughly two months; major early-season availability discount.",
-      "role": "Do not use stale pre-injury ADP without repricing."
-    },
-    {
-      "name": "Jeremiyah Love",
-      "status": "WEEK1_UNCERTAIN",
-      "injury": "high ankle sprain",
-      "recommendation_eligible": true,
-      "as_of": "2026-08-21",
-      "source": "NFL.com current reporting",
-      "availability": "Unlikely to play again in preseason; team hopeful for regular-season opener.",
-      "role": "Arizona hierarchy/committee remains fluid; do not mechanically label Tyler Allgeier as Love's RB2."
-    },
-    {
-      "name": "Malik Nabers",
-      "status": "RETURN_RAMP",
-      "injury": "ACL/cartilage recovery",
-      "recommendation_eligible": true,
-      "as_of": "2026-08-17",
-      "source": "NFL.com current reporting",
-      "availability": "Reached full-speed team-period milestone; contact/return ramp remains a watch.",
-      "role": "High-end role preserved subject to recovery progression."
-    },
-    {
-      "name": "Sam LaPorta",
-      "status": "INJURY_TIMETABLE_UNKNOWN",
-      "injury": "hip",
-      "recommendation_eligible": true,
-      "as_of": "2026-08-20",
-      "source": "NFL.com current reporting",
-      "availability": "Current hip issue; reliable severity/timetable not established in the frozen evidence.",
-      "role": "UNKNOWN availability modifier until stronger dated evidence."
-    },
-    {
-      "name": "Tyler Warren",
-      "status": "GROIN_WATCH",
-      "injury": "groin",
-      "recommendation_eligible": true,
-      "as_of": "2026-08-20",
-      "source": "Indianapolis Colts / NFL current reporting",
-      "availability": "Exited practice and missed subsequent joint practice; long-term timetable not established.",
-      "role": "Preserve high TE role if healthy; availability uncertainty explicit."
-    },
-    {
-      "name": "Breece Hall",
-      "status": "EXPECTED_WEEK1",
-      "injury": "groin strain",
-      "recommendation_eligible": true,
-      "as_of": "2026-08-21",
-      "source": "NFL.com current reporting",
-      "availability": "Expected to be ready for Week 1.",
-      "role": "Short-term health watch; no automatic ranking penalty from status label alone."
-    },
-    {
-      "name": "George Kittle",
-      "status": "ACHILLES_RETURN_RAMP",
-      "injury": "Achilles recovery",
-      "recommendation_eligible": true,
-      "as_of": "2026-08-17",
-      "source": "NFL.com current reporting",
-      "availability": "Realistic Week 1 chance; running at high speed and confident about avoiding opening PUP, but padded-practice/ramp uncertainty remains.",
-      "role": "Elite role if active; preserve recovery downside separately from role quality."
-    },
-    {
-      "name": "Zach Charbonnet",
-      "status": "PUP_RETURN_UNKNOWN",
-      "injury": "PUP",
-      "recommendation_eligible": true,
-      "as_of": "2026-08-22",
-      "source": "Seattle Seahawks transaction history; no stronger fresh return evidence recovered in this freeze pass",
-      "availability": "Current return timetable UNKNOWN.",
-      "role": "Do not infer active Week 1 status from stale projection data."
-    },
-    {
-      "name": "Alvin Kamara",
-      "status": "OUT_4_TO_6_WEEKS",
-      "injury": "Grade 2 MCL sprain",
-      "recommendation_eligible": true,
-      "as_of": "2026-08-19",
-      "source": "New Orleans Saints / NFL current reporting",
-      "availability": "Expected absence approximately four to six weeks; material early-season discount.",
-      "role": "Season role value must incorporate missed-time distribution."
-    },
-    {
-      "name": "Tucker Kraft",
-      "status": "RETURNED_TEAM_DRILLS",
-      "injury": "knee",
-      "recommendation_eligible": true,
-      "as_of": "2026-08-16",
-      "source": "NFL.com current reporting",
-      "availability": "Returned to team drills; recovery trend positive but remains a health watch.",
-      "role": "No automatic penalty after positive return milestone."
-    }
+    {"name":"Puka Nacua","status":"PSOAS_SORENESS_EXPECTED_RETURN_NEXT_WEEK","injury":"psoas soreness","recommendation_eligible":true,"as_of":"2026-08-17","source":"Los Angeles Rams / Sean McVay current reporting","availability":"Still dealing with soreness; McVay expected him back at practice the following week and ready to go.","role":"Elite role preserved; track actual return-to-practice progression rather than applying a generic Questionable penalty."},
+    {"name":"Jordyn Tyson","status":"OUT_APPROX_TWO_MONTHS","injury":"hamstring","recommendation_eligible":true,"as_of":"2026-08-17","source":"NFL Network current reporting","availability":"Expected absence roughly two months; major early-season availability discount.","role":"Do not use stale pre-injury ADP without repricing."},
+    {"name":"Jeremiyah Love","status":"WEEK1_UNCERTAIN","injury":"high ankle sprain","recommendation_eligible":true,"as_of":"2026-08-21","source":"NFL.com current reporting","availability":"Unlikely to play again in preseason; team hopeful for regular-season opener.","role":"Arizona hierarchy/committee remains fluid; do not mechanically label Tyler Allgeier as Love's RB2."},
+    {"name":"Malik Nabers","status":"RETURN_RAMP","injury":"ACL/cartilage recovery","recommendation_eligible":true,"as_of":"2026-08-17","source":"NFL.com current reporting","availability":"Reached full-speed team-period milestone; contact/return ramp remains a watch.","role":"High-end role preserved subject to recovery progression."},
+    {"name":"Sam LaPorta","status":"INJURY_TIMETABLE_UNKNOWN","injury":"hip","recommendation_eligible":true,"as_of":"2026-08-20","source":"NFL.com current reporting","availability":"Current hip issue; reliable severity/timetable not established in the frozen evidence.","role":"UNKNOWN availability modifier until stronger dated evidence."},
+    {"name":"Tyler Warren","status":"EXPECTED_SHORT_ABSENCE","injury":"groin","recommendation_eligible":true,"as_of":"2026-08-20","source":"NFL Network / current reporting","availability":"Expected to miss roughly one week; current reporting indicates the injury should not threaten Week 1.","role":"Preserve high TE role if healthy; short-term availability watch remains explicit."},
+    {"name":"Breece Hall","status":"EXPECTED_WEEK1","injury":"groin strain","recommendation_eligible":true,"as_of":"2026-08-21","source":"NFL.com current reporting","availability":"Expected to be ready for Week 1.","role":"Short-term health watch; no automatic ranking penalty from status label alone."},
+    {"name":"George Kittle","status":"ACHILLES_RETURN_RAMP","injury":"Achilles recovery","recommendation_eligible":true,"as_of":"2026-08-17","source":"NFL.com current reporting","availability":"Realistic Week 1 chance; running at high speed and confident about avoiding opening PUP, but padded-practice/ramp uncertainty remains.","role":"Elite role if active; preserve recovery downside separately from role quality."},
+    {"name":"Zach Charbonnet","status":"PUP_RETURN_UNKNOWN","injury":"PUP","recommendation_eligible":true,"as_of":"2026-08-22","source":"Seattle Seahawks transaction history; no stronger fresh return evidence recovered in this freeze pass","availability":"Current return timetable UNKNOWN.","role":"Do not infer active Week 1 status from stale projection data."},
+    {"name":"Alvin Kamara","status":"OUT_4_TO_6_WEEKS","injury":"Grade 2 MCL sprain","recommendation_eligible":true,"as_of":"2026-08-19","source":"New Orleans Saints / NFL current reporting","availability":"Expected absence approximately four to six weeks; material early-season discount.","role":"Season role value must incorporate missed-time distribution."},
+    {"name":"Tucker Kraft","status":"RETURNED_TEAM_DRILLS","injury":"knee","recommendation_eligible":true,"as_of":"2026-08-16","source":"NFL.com current reporting","availability":"Returned to team drills; recovery trend positive but remains a health watch.","role":"No automatic penalty after positive return milestone."},
+    {"name":"Tyrone Tracy Jr.","status":"BACKFIELD_COMPETITION_INCREASED","injury":"none","recommendation_eligible":true,"as_of":"2026-08-18","source":"New York Giants official signing/quotes","availability":"No new injury limitation established.","role":"Giants added Najee Harris, who explicitly cited opportunity as a reason for signing. Preserve Tracy's upside but do not assume an uncontested lead role or fixed committee hierarchy."}
   ],
-  "role_rules": {
-    "panel_first_fantasy_role": true,
-    "sleeper_depth_chart_fallback_only": true,
-    "committee_uncertainty_not_forced_to_rb1_rb2": true,
-    "backfield_relationship_is_informational_not_ranking_bonus": true
-  },
-  "research_rules": {
-    "breakout_decline_layer_required": true,
-    "research_residual_status": "SHADOW_ONLY",
-    "price_movement_directionally_neutral": true,
-    "fundamentals_then_acquisition_cost": true
-  }
+  "role_rules": {"panel_first_fantasy_role":true,"sleeper_depth_chart_fallback_only":true,"committee_uncertainty_not_forced_to_rb1_rb2":true,"backfield_relationship_is_informational_not_ranking_bonus":true},
+  "research_rules": {"breakout_decline_layer_required":true,"research_residual_status":"SHADOW_ONLY","price_movement_directionally_neutral":true,"fundamentals_then_acquisition_cost":true}
 }
