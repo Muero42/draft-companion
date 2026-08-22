@@ -2,37 +2,37 @@
 
 Purpose: improve championship utility in the managed 10-team Half-PPR league without turning external sleeper lists into automatic ranking boosts. This is an evidence/research layer only. Waivers + FAAB + active lineup management mean late bench slots should be judged partly by asymmetric upside, time-to-information, and drop flexibility rather than median projection alone.
 
-## Fresh external signals (2026-08-22 scan)
+## Fresh external signals and primary-source verification
 
-### Chris Rodriguez Jr. — RB, Jacksonville
-NFL.com (Matt Okada, mid-August) identifies Rodriguez as a Round-10 sleeper. Supporting thesis: 2025 rushing efficiency, two-year $10m Jacksonville contract, camp reps reportedly similar to Bhayshul Tuten, and plausible red-zone advantage. This is relevant to our existing interest in Rodriguez. Treat as independent support for ambiguous-backfield / touchdown-access upside, not proof he should outrank Tuten or earlier RBs.
+### Chris Rodriguez Jr. / Bhayshul Tuten — Jacksonville RB
+NFL.com (Matt Okada, mid-August) identifies Rodriguez as a Round-10 sleeper. Primary Jaguars evidence materially strengthens the ambiguous-backfield thesis without resolving it in Rodriguez's favor: Jacksonville's first unofficial depth chart lists **Tuten OR Rodriguez as co-starters**; on Aug. 18 OC Grant Udinski described the run game and pass-game RB usage as **by committee**; on Aug. 13 Liam Coen specifically praised Rodriguez's increasingly physical/downhill work. This is stronger evidence than generic sleeper opinion, but it argues against assuming either back owns a workhorse role.
 
-Research implication: explicitly compare Rodriguez vs Tuten using acquisition cost, receiving ceiling, red-zone role, contingent workload and earliest likely role-resolution date. A cheap player whose role becomes clear early can have extra managed-redraft value because a miss is easy to churn via FAAB.
+Research implication: Rodriguez is a legitimate late-round asymmetric-upside candidate because price may be lower than Tuten while the starting split is unresolved. Compare acquisition cost, receiving work, red-zone role, contingent workload and time-to-information. Do **not** encode Rodriguez > Tuten as a fact. Committee risk lowers standalone floor for both.
 
-### Denzel Boston — WR, Cleveland
-NFL.com flags the rookie as a Round-12+ sleeper after first-team promotion and strong camp reviews. Size/red-zone profile plus possible path to Cleveland WR1 creates a high-tail outcome at low acquisition cost. Offense quality is a material downside.
+### Denzel Boston — Cleveland WR
+NFL.com flags the rookie as a Round-12+ sleeper. Browns primary reporting confirms Boston took first-team reps on Aug. 10, and the club's camp coverage repeatedly featured him making plays including an end-zone catch. This validates that the first-team promotion is real rather than solely analyst hype. It does not establish target leadership; Jerry Jeudy, KC Concepcion and the unsettled QB situation remain major context.
 
-Research implication: add to late-round candidate watchlist; do not force into queue until current ADP/role and target competition are reconciled with our own quality model.
+Research implication: promote from generic watchlist to **verified late-round role-upside candidate**, but no numeric ranking boost until target hierarchy/current market are reconciled.
 
-### Ja'Kobi Lane — WR, Baltimore
-NFL.com final-round sleeper. Rookie has size/vertical/red-zone traits that differ from Zay Flowers and could compete for WR2 / red-zone work. This is a classic low-cost role-breakout profile but likely volatile and lower-floor.
+### Ja'Kobi Lane — Baltimore WR
+NFL.com final-round sleeper. Ravens primary reporting provides unusually persistent camp evidence: highlight plays began by Day 2, continued across multiple practices, and Lane scored in the preseason opener. Team reporting explicitly describes him as one of the camp's major buzz players. This validates the talent/camp signal, but does not yet prove regular-season first-team route share behind Zay Flowers/Rashod Bateman or a stable red-zone role.
 
-Research implication: candidate for final bench slots where ceiling + early role information dominate replacement-level floor.
+Research implication: strong final-round ceiling candidate with low floor. Need first-team personnel/route evidence before moving him materially above other late darts. Distinguish repeated team highlight coverage from actual snap hierarchy.
 
-### Dalton Kincaid — TE, Buffalo
-NFL.com notes TE1-per-game performance before the 2025 hamstring injury and strong career yards/route among qualifying TEs, while current acquisition cost is around Round 11+. This is relevant to our broader early-TE opportunity-cost work: if later TEs with plausible top-tier tails remain cheap, the replacement value of passing early TE rises.
+### Dalton Kincaid — Buffalo TE
+NFL.com notes TE1-per-game performance before the 2025 hamstring injury and strong career yards/route among qualifying TEs, while current acquisition cost is around Round 11+. This is relevant to our early-TE opportunity-cost work: if later TEs with plausible top-tier tails remain cheap, the replacement value of passing early TE rises.
 
-Research implication: include Kincaid explicitly in late-TE fallback / opportunity-cost mapping. Health and Buffalo target competition require separate evidence review.
+Research implication: include explicitly in late-TE fallback / opportunity-cost mapping. Health, route participation and Buffalo target competition still require primary-source verification before any board move.
 
-### Tank Dell — WR, Houston
+### Tank Dell — Houston WR
 NFL.com treats Dell as a final-round/deep sleeper after return to full-pads practice following the catastrophic 2024 knee injury. Fresh 2026 context is complicated by Houston losing Jayden Higgins for the season (Reuters, 2026-08-22) and signing veteran depth. Dell has genuine prior high-end production but unusually large medical uncertainty.
 
-Research implication: high-tail / high-medical-risk watchlist only. Require current snap/contact/role evidence before any material board move. In a shallow managed league he may be more valuable as an early waiver watch than as a forced draft pick if recovery remains uncertain.
+Research implication: high-tail / high-medical-risk watchlist only. Require current contact, first-team reps and expected Week-1 workload before a material board move. In a shallow managed league he may be more valuable as an early waiver watch than a forced draft pick if recovery remains uncertain.
 
-### Parker Washington — WR, Jacksonville
-A fresh Big Cat Country article independently labels Washington a potential league-winner, citing late-2025 efficiency and a possible top-target path. This agrees directionally with our pre-existing Parker Washington value thesis but is not independent enough to justify a large boost by itself because team-site/community analysis can be optimistic.
+### Parker Washington — Jacksonville WR
+Fresh external sleeper/league-winner discussion agrees directionally with our pre-existing value thesis. More importantly, Jacksonville's first unofficial 2026 depth chart lists Parker Washington as a starting WR. That is useful primary role evidence, though his current day-to-day injury remains unresolved and the Jaguars also have Brian Thomas Jr., Travis Hunter and Jakobi Meyers in the receiving ecosystem.
 
-Research implication: preserve existing target/value thesis; current day-to-day injury remains a draft-day evidence gate. Do not let positive sleeper-list repetition double-count the same underlying role thesis.
+Research implication: preserve existing target/value thesis and treat the starting designation as supporting evidence, not a reason for a large automatic boost. Injury return and post-return usage remain draft-day gates. Avoid double-counting repeated sleeper articles.
 
 ## Portfolio rule to test, not assume
 For late bench selections, compare candidates on:
@@ -54,12 +54,13 @@ This should favor some ambiguous-backfield RBs and young WRs without hard-coding
 - Do not double-count evidence already embedded in panel rankings/ADP.
 - Final board changes require reconciliation with current Sleeper market, our quality score, injury layer, Return-v2, and roster opportunity cost.
 
-## Next evidence checks
-- Rodriguez vs Tuten: receiving work, goal-line reps, first-team split, market price.
-- Denzel Boston / KC Concepcion: first-team alignment and target hierarchy.
-- Ja'Kobi Lane: actual first-team usage vs camp-highlight noise.
-- Kincaid: health + route participation + target competition.
-- Tank Dell: contact clearance, first-team reps and expected Week-1 workload.
-- Parker Washington: return to practice and role after return.
+## Current evidence priorities
+1. Rodriguez/Tuten: red-zone and passing-down split; current Sleeper price gap.
+2. Boston/Concepcion: first-team alignment and target hierarchy after preseason reps.
+3. Lane: first-team route/personnel usage, not further highlight counting.
+4. Kincaid: health + route participation + target competition.
+5. Tank Dell: contact clearance, first-team reps and expected Week-1 workload.
+6. Parker Washington: return to practice and role after return.
 
-Sources consulted in the 2026-08-22 scan: NFL.com 2026 late-round sleepers; Reuters 2026-08-22 Texans WR transactions/injury report; Big Cat Country 2026-08-20 league-winner feature; fresh Yahoo/ESPN/FantasyPros breakout/bust discovery used as leads for subsequent primary-source verification.
+## Sources
+Primary verification: Jaguars official camp reports Aug. 13 and Aug. 18 plus first unofficial depth chart; Browns official Day-11 camp observations and training-camp coverage; Ravens official practice reports/transcripts July 30 through Aug. 16. Discovery/context: NFL.com 2026 late-round sleepers; Reuters 2026-08-22 Texans WR transactions/injury report; fresh Yahoo/ESPN/FantasyPros breakout/bust discovery used only as leads for primary-source verification.
