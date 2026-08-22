@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "fixture_count": 16,
+  "material_challenger_count": 6,
+  "material_challenger_rate": 0.375,
+  "mean_gap_expected_wins_14w": 0.22964015151515152,
+  "max_gap_expected_wins_14w": 0.8939393939393938,
+  "selected_panel_used_in_outcome_fit": false,
+  "policy_ranking_certified": false
+}

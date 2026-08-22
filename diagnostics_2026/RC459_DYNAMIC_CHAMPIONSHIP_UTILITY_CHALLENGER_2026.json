@@ -1,0 +1,1682 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "method": "Exact rc4.59 Coach dynamic top10 -> independent Sleeper market/outcome bridge -> Utility-v3.5 lineup topology + empirical 2025 skill-score CDF",
+  "dynamic_gate_status": "PASS",
+  "bridge_gate_status": "PASS",
+  "selected_panel_used_in_outcome_fit": false,
+  "fixture_count": 16,
+  "material_gap_threshold_expected_wins_14w": 0.1,
+  "material_challenger_count": 6,
+  "material_challenger_rate": 0.375,
+  "mean_gap_expected_wins_14w": 0.22964015151515152,
+  "max_gap_expected_wins_14w": 0.8939393939393938,
+  "policy_ranking_certified": false,
+  "interpretation": "Position-aware independent challenger only. Partial-roster candidate utility omits downstream draft-path opportunity cost; material gaps require full paired downstream policy evaluation before any Coach certification or tuning.",
+  "rows": [
+    {
+      "id": "46891028-9",
+      "current": 9,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Amon-Ra St. Brown",
+        "pos": "WR",
+        "coach_score": 100,
+        "utility_expected_wins": 0.10606060606060606,
+        "weekly_lineup_mean": 42.29081413746255
+      },
+      "utility_best": {
+        "coach_rank": 1,
+        "name": "Amon-Ra St. Brown",
+        "pos": "WR",
+        "coach_score": 100,
+        "utility_expected_wins": 0.10606060606060606,
+        "weekly_lineup_mean": 42.29081413746255
+      },
+      "utility_gap_expected_wins_14w": 0.0,
+      "material_gt_0_10_expected_wins": false,
+      "candidates": [
+        {
+          "coach_rank": 1,
+          "name": "Amon-Ra St. Brown",
+          "pos": "WR",
+          "coach_score": 100,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 42.29081413746255
+        },
+        {
+          "coach_rank": 2,
+          "name": "CeeDee Lamb",
+          "pos": "WR",
+          "coach_score": 62,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 41.50346160455367
+        },
+        {
+          "coach_rank": 3,
+          "name": "Ashton Jeanty",
+          "pos": "RB",
+          "coach_score": 49,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 44.27884861406997
+        },
+        {
+          "coach_rank": 4,
+          "name": "Brock Bowers",
+          "pos": "TE",
+          "coach_score": 49,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 37.684135470015896
+        },
+        {
+          "coach_rank": 5,
+          "name": "Chase Brown",
+          "pos": "RB",
+          "coach_score": 47,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 44.19873676743439
+        },
+        {
+          "coach_rank": 6,
+          "name": "Justin Jefferson",
+          "pos": "WR",
+          "coach_score": 46,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 41.064036354915515
+        },
+        {
+          "coach_rank": 7,
+          "name": "Saquon Barkley",
+          "pos": "RB",
+          "coach_score": 45,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 44.237851957147136
+        },
+        {
+          "coach_rank": 8,
+          "name": "Kenneth Walker III",
+          "pos": "RB",
+          "coach_score": 45,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 44.273575981302834
+        },
+        {
+          "coach_rank": 9,
+          "name": "De'Von Achane",
+          "pos": "RB",
+          "coach_score": 40,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 44.21811183537724
+        },
+        {
+          "coach_rank": 10,
+          "name": "Omarion Hampton",
+          "pos": "RB",
+          "coach_score": 38,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 44.48992559696708
+        }
+      ]
+    },
+    {
+      "id": "47191037-12",
+      "current": 12,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Brock Bowers",
+        "pos": "TE",
+        "coach_score": 100,
+        "utility_expected_wins": 0.10606060606060606,
+        "weekly_lineup_mean": 46.71047998316258
+      },
+      "utility_best": {
+        "coach_rank": 2,
+        "name": "Chase Brown",
+        "pos": "RB",
+        "coach_score": 98,
+        "utility_expected_wins": 0.13636363636363635,
+        "weekly_lineup_mean": 53.225081280581065
+      },
+      "utility_gap_expected_wins_14w": 0.03030303030303029,
+      "material_gt_0_10_expected_wins": false,
+      "candidates": [
+        {
+          "coach_rank": 2,
+          "name": "Chase Brown",
+          "pos": "RB",
+          "coach_score": 98,
+          "utility_expected_wins": 0.13636363636363635,
+          "weekly_lineup_mean": 53.225081280581065
+        },
+        {
+          "coach_rank": 4,
+          "name": "Kenneth Walker III",
+          "pos": "RB",
+          "coach_score": 96,
+          "utility_expected_wins": 0.13636363636363635,
+          "weekly_lineup_mean": 53.29992049444951
+        },
+        {
+          "coach_rank": 5,
+          "name": "De'Von Achane",
+          "pos": "RB",
+          "coach_score": 89,
+          "utility_expected_wins": 0.13636363636363635,
+          "weekly_lineup_mean": 53.24445634852392
+        },
+        {
+          "coach_rank": 6,
+          "name": "Omarion Hampton",
+          "pos": "RB",
+          "coach_score": 88,
+          "utility_expected_wins": 0.13636363636363635,
+          "weekly_lineup_mean": 53.51627011011376
+        },
+        {
+          "coach_rank": 7,
+          "name": "Saquon Barkley",
+          "pos": "RB",
+          "coach_score": 87,
+          "utility_expected_wins": 0.13636363636363635,
+          "weekly_lineup_mean": 53.26419647029381
+        },
+        {
+          "coach_rank": 10,
+          "name": "Derrick Henry",
+          "pos": "RB",
+          "coach_score": 72,
+          "utility_expected_wins": 0.13636363636363635,
+          "weekly_lineup_mean": 53.50553371734485
+        },
+        {
+          "coach_rank": 1,
+          "name": "Brock Bowers",
+          "pos": "TE",
+          "coach_score": 100,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 46.71047998316258
+        },
+        {
+          "coach_rank": 3,
+          "name": "Justin Jefferson",
+          "pos": "WR",
+          "coach_score": 97,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 50.09038086806219
+        },
+        {
+          "coach_rank": 8,
+          "name": "Drake London",
+          "pos": "WR",
+          "coach_score": 79,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 47.85409298529744
+        },
+        {
+          "coach_rank": 9,
+          "name": "Nico Collins",
+          "pos": "WR",
+          "coach_score": 78,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 47.28691825202816
+        }
+      ]
+    },
+    {
+      "id": "48891088-29",
+      "current": 29,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Chris Olave",
+        "pos": "WR",
+        "coach_score": 100,
+        "utility_expected_wins": 0.29545454545454547,
+        "weekly_lineup_mean": 58.040231832107054
+      },
+      "utility_best": {
+        "coach_rank": 8,
+        "name": "Jaylen Waddle",
+        "pos": "WR",
+        "coach_score": 72,
+        "utility_expected_wins": 0.33333333333333337,
+        "weekly_lineup_mean": 58.301160626757344
+      },
+      "utility_gap_expected_wins_14w": 0.0378787878787879,
+      "material_gt_0_10_expected_wins": false,
+      "candidates": [
+        {
+          "coach_rank": 8,
+          "name": "Jaylen Waddle",
+          "pos": "WR",
+          "coach_score": 72,
+          "utility_expected_wins": 0.33333333333333337,
+          "weekly_lineup_mean": 58.301160626757344
+        },
+        {
+          "coach_rank": 2,
+          "name": "Malik Nabers",
+          "pos": "WR",
+          "coach_score": 93,
+          "utility_expected_wins": 0.3106060606060606,
+          "weekly_lineup_mean": 58.1315367156453
+        },
+        {
+          "coach_rank": 3,
+          "name": "Zay Flowers",
+          "pos": "WR",
+          "coach_score": 86,
+          "utility_expected_wins": 0.3106060606060606,
+          "weekly_lineup_mean": 57.9977216290066
+        },
+        {
+          "coach_rank": 6,
+          "name": "DeVonta Smith",
+          "pos": "WR",
+          "coach_score": 79,
+          "utility_expected_wins": 0.3106060606060606,
+          "weekly_lineup_mean": 58.33116719333824
+        },
+        {
+          "coach_rank": 9,
+          "name": "Tee Higgins",
+          "pos": "WR",
+          "coach_score": 71,
+          "utility_expected_wins": 0.3106060606060606,
+          "weekly_lineup_mean": 57.957350274647375
+        },
+        {
+          "coach_rank": 5,
+          "name": "Rashee Rice",
+          "pos": "WR",
+          "coach_score": 82,
+          "utility_expected_wins": 0.30303030303030304,
+          "weekly_lineup_mean": 57.90709219285738
+        },
+        {
+          "coach_rank": 1,
+          "name": "Chris Olave",
+          "pos": "WR",
+          "coach_score": 100,
+          "utility_expected_wins": 0.29545454545454547,
+          "weekly_lineup_mean": 58.040231832107054
+        },
+        {
+          "coach_rank": 4,
+          "name": "Breece Hall",
+          "pos": "RB",
+          "coach_score": 84,
+          "utility_expected_wins": 0.29545454545454547,
+          "weekly_lineup_mean": 59.10782500406382
+        },
+        {
+          "coach_rank": 10,
+          "name": "Ladd McConkey",
+          "pos": "WR",
+          "coach_score": 66,
+          "utility_expected_wins": 0.29545454545454547,
+          "weekly_lineup_mean": 57.92608987336831
+        },
+        {
+          "coach_rank": 7,
+          "name": "Colston Loveland",
+          "pos": "TE",
+          "coach_score": 77,
+          "utility_expected_wins": 0.19696969696969696,
+          "weekly_lineup_mean": 56.31839896680202
+        }
+      ]
+    },
+    {
+      "id": "49191097-32",
+      "current": 32,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Zay Flowers",
+        "pos": "WR",
+        "coach_score": 100,
+        "utility_expected_wins": 0.5909090909090909,
+        "weekly_lineup_mean": 62.14296636051965
+      },
+      "utility_best": {
+        "coach_rank": 2,
+        "name": "DeVonta Smith",
+        "pos": "WR",
+        "coach_score": 91,
+        "utility_expected_wins": 0.6818181818181819,
+        "weekly_lineup_mean": 62.476411924851284
+      },
+      "utility_gap_expected_wins_14w": 0.09090909090909094,
+      "material_gt_0_10_expected_wins": false,
+      "candidates": [
+        {
+          "coach_rank": 2,
+          "name": "DeVonta Smith",
+          "pos": "WR",
+          "coach_score": 91,
+          "utility_expected_wins": 0.6818181818181819,
+          "weekly_lineup_mean": 62.476411924851284
+        },
+        {
+          "coach_rank": 8,
+          "name": "Tetairoa McMillan",
+          "pos": "WR",
+          "coach_score": 78,
+          "utility_expected_wins": 0.6439393939393939,
+          "weekly_lineup_mean": 62.51560833616604
+        },
+        {
+          "coach_rank": 7,
+          "name": "Javonte Williams",
+          "pos": "RB",
+          "coach_score": 80,
+          "utility_expected_wins": 0.6136363636363636,
+          "weekly_lineup_mean": 62.41836217720621
+        },
+        {
+          "coach_rank": 9,
+          "name": "Emeka Egbuka",
+          "pos": "WR",
+          "coach_score": 74,
+          "utility_expected_wins": 0.6136363636363636,
+          "weekly_lineup_mean": 62.081495733924314
+        },
+        {
+          "coach_rank": 10,
+          "name": "Jaylen Waddle",
+          "pos": "WR",
+          "coach_score": 72,
+          "utility_expected_wins": 0.6136363636363636,
+          "weekly_lineup_mean": 62.4464053582704
+        },
+        {
+          "coach_rank": 3,
+          "name": "Tee Higgins",
+          "pos": "WR",
+          "coach_score": 85,
+          "utility_expected_wins": 0.6060606060606061,
+          "weekly_lineup_mean": 62.10259500616043
+        },
+        {
+          "coach_rank": 4,
+          "name": "Breece Hall",
+          "pos": "RB",
+          "coach_score": 83,
+          "utility_expected_wins": 0.5984848484848485,
+          "weekly_lineup_mean": 62.78051147096074
+        },
+        {
+          "coach_rank": 1,
+          "name": "Zay Flowers",
+          "pos": "WR",
+          "coach_score": 100,
+          "utility_expected_wins": 0.5909090909090909,
+          "weekly_lineup_mean": 62.14296636051965
+        },
+        {
+          "coach_rank": 6,
+          "name": "Ladd McConkey",
+          "pos": "WR",
+          "coach_score": 80,
+          "utility_expected_wins": 0.5909090909090909,
+          "weekly_lineup_mean": 62.07133460488136
+        },
+        {
+          "coach_rank": 5,
+          "name": "Colston Loveland",
+          "pos": "TE",
+          "coach_score": 81,
+          "utility_expected_wins": 0.38636363636363635,
+          "weekly_lineup_mean": 60.46364369831507
+        }
+      ]
+    },
+    {
+      "id": "50891148-49",
+      "current": 49,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Tyler Warren",
+        "pos": "TE",
+        "coach_score": 100,
+        "utility_expected_wins": 0.946969696969697,
+        "weekly_lineup_mean": 64.97060351557525
+      },
+      "utility_best": {
+        "coach_rank": 2,
+        "name": "Travis Etienne Jr.",
+        "pos": "RB",
+        "coach_score": 96,
+        "utility_expected_wins": 1.2575757575757576,
+        "weekly_lineup_mean": 66.46505937215488
+      },
+      "utility_gap_expected_wins_14w": 0.31060606060606055,
+      "material_gt_0_10_expected_wins": true,
+      "candidates": [
+        {
+          "coach_rank": 2,
+          "name": "Travis Etienne Jr.",
+          "pos": "RB",
+          "coach_score": 96,
+          "utility_expected_wins": 1.2575757575757576,
+          "weekly_lineup_mean": 66.46505937215488
+        },
+        {
+          "coach_rank": 4,
+          "name": "Bucky Irving",
+          "pos": "RB",
+          "coach_score": 65,
+          "utility_expected_wins": 1.1515151515151516,
+          "weekly_lineup_mean": 65.92510238199829
+        },
+        {
+          "coach_rank": 9,
+          "name": "Mike Evans",
+          "pos": "WR",
+          "coach_score": 48,
+          "utility_expected_wins": 1.143939393939394,
+          "weekly_lineup_mean": 65.92156710703306
+        },
+        {
+          "coach_rank": 10,
+          "name": "Quinshon Judkins",
+          "pos": "RB",
+          "coach_score": 47,
+          "utility_expected_wins": 1.143939393939394,
+          "weekly_lineup_mean": 65.92086852427514
+        },
+        {
+          "coach_rank": 5,
+          "name": "Jameson Williams",
+          "pos": "WR",
+          "coach_score": 63,
+          "utility_expected_wins": 1.1363636363636365,
+          "weekly_lineup_mean": 66.17655943594178
+        },
+        {
+          "coach_rank": 6,
+          "name": "Luther Burden III",
+          "pos": "WR",
+          "coach_score": 57,
+          "utility_expected_wins": 1.1363636363636365,
+          "weekly_lineup_mean": 66.26830129598403
+        },
+        {
+          "coach_rank": 7,
+          "name": "DJ Moore",
+          "pos": "WR",
+          "coach_score": 55,
+          "utility_expected_wins": 1.1363636363636365,
+          "weekly_lineup_mean": 66.26615055465186
+        },
+        {
+          "coach_rank": 8,
+          "name": "Christian Watson",
+          "pos": "WR",
+          "coach_score": 53,
+          "utility_expected_wins": 1.0984848484848484,
+          "weekly_lineup_mean": 65.64362418472933
+        },
+        {
+          "coach_rank": 3,
+          "name": "Terry McLaurin",
+          "pos": "WR",
+          "coach_score": 74,
+          "utility_expected_wins": 1.0757575757575757,
+          "weekly_lineup_mean": 66.10885312497055
+        },
+        {
+          "coach_rank": 1,
+          "name": "Tyler Warren",
+          "pos": "TE",
+          "coach_score": 100,
+          "utility_expected_wins": 0.946969696969697,
+          "weekly_lineup_mean": 64.97060351557525
+        }
+      ]
+    },
+    {
+      "id": "51191157-52",
+      "current": 52,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Terry McLaurin",
+        "pos": "WR",
+        "coach_score": 100,
+        "utility_expected_wins": 1.628787878787879,
+        "weekly_lineup_mean": 69.14829272573111
+      },
+      "utility_best": {
+        "coach_rank": 6,
+        "name": "Drake Maye",
+        "pos": "QB",
+        "coach_score": 79,
+        "utility_expected_wins": 1.893939393939394,
+        "weekly_lineup_mean": 70.26148981190956
+      },
+      "utility_gap_expected_wins_14w": 0.26515151515151514,
+      "material_gt_0_10_expected_wins": true,
+      "candidates": [
+        {
+          "coach_rank": 6,
+          "name": "Drake Maye",
+          "pos": "QB",
+          "coach_score": 79,
+          "utility_expected_wins": 1.893939393939394,
+          "weekly_lineup_mean": 70.26148981190956
+        },
+        {
+          "coach_rank": 9,
+          "name": "Rome Odunze",
+          "pos": "WR",
+          "coach_score": 64,
+          "utility_expected_wins": 1.6363636363636362,
+          "weekly_lineup_mean": 69.1393342553371
+        },
+        {
+          "coach_rank": 1,
+          "name": "Terry McLaurin",
+          "pos": "WR",
+          "coach_score": 100,
+          "utility_expected_wins": 1.628787878787879,
+          "weekly_lineup_mean": 69.14829272573111
+        },
+        {
+          "coach_rank": 8,
+          "name": "Bhayshul Tuten",
+          "pos": "RB",
+          "coach_score": 73,
+          "utility_expected_wins": 1.621212121212121,
+          "weekly_lineup_mean": 68.76577738363477
+        },
+        {
+          "coach_rank": 3,
+          "name": "David Montgomery",
+          "pos": "RB",
+          "coach_score": 90,
+          "utility_expected_wins": 1.6136363636363635,
+          "weekly_lineup_mean": 68.68301920098543
+        },
+        {
+          "coach_rank": 4,
+          "name": "Luther Burden III",
+          "pos": "WR",
+          "coach_score": 84,
+          "utility_expected_wins": 1.5606060606060606,
+          "weekly_lineup_mean": 69.30774089674458
+        },
+        {
+          "coach_rank": 5,
+          "name": "DJ Moore",
+          "pos": "WR",
+          "coach_score": 82,
+          "utility_expected_wins": 1.5606060606060606,
+          "weekly_lineup_mean": 69.3055901554124
+        },
+        {
+          "coach_rank": 2,
+          "name": "Jameson Williams",
+          "pos": "WR",
+          "coach_score": 91,
+          "utility_expected_wins": 1.5378787878787878,
+          "weekly_lineup_mean": 69.21599903670233
+        },
+        {
+          "coach_rank": 7,
+          "name": "Mike Evans",
+          "pos": "WR",
+          "coach_score": 74,
+          "utility_expected_wins": 1.5378787878787878,
+          "weekly_lineup_mean": 68.96100670779362
+        },
+        {
+          "coach_rank": 10,
+          "name": "Davante Adams",
+          "pos": "WR",
+          "coach_score": 64,
+          "utility_expected_wins": 1.5151515151515151,
+          "weekly_lineup_mean": 68.96527751147006
+        }
+      ]
+    },
+    {
+      "id": "52891208-69",
+      "current": 69,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Christian Watson",
+        "pos": "WR",
+        "coach_score": 100,
+        "utility_expected_wins": 1.4772727272727273,
+        "weekly_lineup_mean": 67.68936903478453
+      },
+      "utility_best": {
+        "coach_rank": 3,
+        "name": "Jalen Hurts",
+        "pos": "QB",
+        "coach_score": 62,
+        "utility_expected_wins": 2.2954545454545454,
+        "weekly_lineup_mean": 72.17700214020459
+      },
+      "utility_gap_expected_wins_14w": 0.8181818181818181,
+      "material_gt_0_10_expected_wins": true,
+      "candidates": [
+        {
+          "coach_rank": 3,
+          "name": "Jalen Hurts",
+          "pos": "QB",
+          "coach_score": 62,
+          "utility_expected_wins": 2.2954545454545454,
+          "weekly_lineup_mean": 72.17700214020459
+        },
+        {
+          "coach_rank": 8,
+          "name": "Justin Herbert",
+          "pos": "QB",
+          "coach_score": 25,
+          "utility_expected_wins": 2.0833333333333335,
+          "weekly_lineup_mean": 70.72567936703477
+        },
+        {
+          "coach_rank": 10,
+          "name": "Harold Fannin Jr.",
+          "pos": "TE",
+          "coach_score": 20,
+          "utility_expected_wins": 1.8712121212121213,
+          "weekly_lineup_mean": 69.81610354365966
+        },
+        {
+          "coach_rank": 2,
+          "name": "Tucker Kraft",
+          "pos": "TE",
+          "coach_score": 66,
+          "utility_expected_wins": 1.8560606060606062,
+          "weekly_lineup_mean": 69.79011723304788
+        },
+        {
+          "coach_rank": 6,
+          "name": "Jaylen Warren",
+          "pos": "RB",
+          "coach_score": 41,
+          "utility_expected_wins": 1.5075757575757576,
+          "weekly_lineup_mean": 67.62815403292215
+        },
+        {
+          "coach_rank": 1,
+          "name": "Christian Watson",
+          "pos": "WR",
+          "coach_score": 100,
+          "utility_expected_wins": 1.4772727272727273,
+          "weekly_lineup_mean": 67.68936903478453
+        },
+        {
+          "coach_rank": 4,
+          "name": "Parker Washington",
+          "pos": "WR",
+          "coach_score": 60,
+          "utility_expected_wins": 1.4772727272727273,
+          "weekly_lineup_mean": 67.70884311283997
+        },
+        {
+          "coach_rank": 5,
+          "name": "Marvin Harrison Jr.",
+          "pos": "WR",
+          "coach_score": 43,
+          "utility_expected_wins": 1.4772727272727273,
+          "weekly_lineup_mean": 67.9139305711593
+        },
+        {
+          "coach_rank": 7,
+          "name": "Rhamondre Stevenson",
+          "pos": "RB",
+          "coach_score": 26,
+          "utility_expected_wins": 1.4696969696969697,
+          "weekly_lineup_mean": 67.38148253569078
+        },
+        {
+          "coach_rank": 9,
+          "name": "Jonathon Brooks",
+          "pos": "RB",
+          "coach_score": 21,
+          "utility_expected_wins": 1.4318181818181819,
+          "weekly_lineup_mean": 67.41933922321279
+        }
+      ]
+    },
+    {
+      "id": "53191217-72",
+      "current": 72,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Marvin Harrison Jr.",
+        "pos": "WR",
+        "coach_score": 100,
+        "utility_expected_wins": 3.0833333333333335,
+        "weekly_lineup_mean": 75.53968268623011
+      },
+      "utility_best": {
+        "coach_rank": 1,
+        "name": "Marvin Harrison Jr.",
+        "pos": "WR",
+        "coach_score": 100,
+        "utility_expected_wins": 3.0833333333333335,
+        "weekly_lineup_mean": 75.53968268623011
+      },
+      "utility_gap_expected_wins_14w": 0.0,
+      "material_gt_0_10_expected_wins": false,
+      "candidates": [
+        {
+          "coach_rank": 1,
+          "name": "Marvin Harrison Jr.",
+          "pos": "WR",
+          "coach_score": 100,
+          "utility_expected_wins": 3.0833333333333335,
+          "weekly_lineup_mean": 75.53968268623011
+        },
+        {
+          "coach_rank": 7,
+          "name": "Rico Dowdle",
+          "pos": "RB",
+          "coach_score": 34,
+          "utility_expected_wins": 3.015151515151515,
+          "weekly_lineup_mean": 75.29403429063105
+        },
+        {
+          "coach_rank": 10,
+          "name": "Chuba Hubbard",
+          "pos": "RB",
+          "coach_score": 8,
+          "utility_expected_wins": 3.015151515151515,
+          "weekly_lineup_mean": 75.41795739743421
+        },
+        {
+          "coach_rank": 3,
+          "name": "Rhamondre Stevenson",
+          "pos": "RB",
+          "coach_score": 73,
+          "utility_expected_wins": 3.0,
+          "weekly_lineup_mean": 75.20226060447699
+        },
+        {
+          "coach_rank": 4,
+          "name": "DK Metcalf",
+          "pos": "WR",
+          "coach_score": 61,
+          "utility_expected_wins": 2.984848484848485,
+          "weekly_lineup_mean": 75.34767846920403
+        },
+        {
+          "coach_rank": 6,
+          "name": "Tony Pollard",
+          "pos": "RB",
+          "coach_score": 38,
+          "utility_expected_wins": 2.962121212121212,
+          "weekly_lineup_mean": 75.18440218630619
+        },
+        {
+          "coach_rank": 2,
+          "name": "Jaylen Warren",
+          "pos": "RB",
+          "coach_score": 84,
+          "utility_expected_wins": 2.9393939393939394,
+          "weekly_lineup_mean": 75.2526207508233
+        },
+        {
+          "coach_rank": 5,
+          "name": "Jonathon Brooks",
+          "pos": "RB",
+          "coach_score": 48,
+          "utility_expected_wins": 2.840909090909091,
+          "weekly_lineup_mean": 74.8787099789818
+        },
+        {
+          "coach_rank": 9,
+          "name": "Blake Corum",
+          "pos": "RB",
+          "coach_score": 11,
+          "utility_expected_wins": 2.8333333333333335,
+          "weekly_lineup_mean": 74.82415389495581
+        },
+        {
+          "coach_rank": 8,
+          "name": "Stefon Diggs",
+          "pos": "WR",
+          "coach_score": 15,
+          "utility_expected_wins": 2.7424242424242427,
+          "weekly_lineup_mean": 74.56351781239249
+        }
+      ]
+    },
+    {
+      "id": "46892028-9",
+      "current": 9,
+      "coach": {
+        "coach_rank": 1,
+        "name": "James Cook III",
+        "pos": "RB",
+        "coach_score": 100,
+        "utility_expected_wins": 0.10606060606060606,
+        "weekly_lineup_mean": 43.981481485277676
+      },
+      "utility_best": {
+        "coach_rank": 1,
+        "name": "James Cook III",
+        "pos": "RB",
+        "coach_score": 100,
+        "utility_expected_wins": 0.10606060606060606,
+        "weekly_lineup_mean": 43.981481485277676
+      },
+      "utility_gap_expected_wins_14w": 0.0,
+      "material_gt_0_10_expected_wins": false,
+      "candidates": [
+        {
+          "coach_rank": 1,
+          "name": "James Cook III",
+          "pos": "RB",
+          "coach_score": 100,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 43.981481485277676
+        },
+        {
+          "coach_rank": 2,
+          "name": "CeeDee Lamb",
+          "pos": "WR",
+          "coach_score": 81,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 41.50346160455367
+        },
+        {
+          "coach_rank": 3,
+          "name": "Ashton Jeanty",
+          "pos": "RB",
+          "coach_score": 66,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 44.27884861406997
+        },
+        {
+          "coach_rank": 4,
+          "name": "Brock Bowers",
+          "pos": "TE",
+          "coach_score": 65,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 37.684135470015896
+        },
+        {
+          "coach_rank": 5,
+          "name": "Chase Brown",
+          "pos": "RB",
+          "coach_score": 63,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 44.19873676743439
+        },
+        {
+          "coach_rank": 6,
+          "name": "Saquon Barkley",
+          "pos": "RB",
+          "coach_score": 63,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 44.237851957147136
+        },
+        {
+          "coach_rank": 7,
+          "name": "Justin Jefferson",
+          "pos": "WR",
+          "coach_score": 63,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 41.064036354915515
+        },
+        {
+          "coach_rank": 8,
+          "name": "Kenneth Walker III",
+          "pos": "RB",
+          "coach_score": 61,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 44.273575981302834
+        },
+        {
+          "coach_rank": 9,
+          "name": "De'Von Achane",
+          "pos": "RB",
+          "coach_score": 57,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 44.21811183537724
+        },
+        {
+          "coach_rank": 10,
+          "name": "Omarion Hampton",
+          "pos": "RB",
+          "coach_score": 54,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 44.48992559696708
+        }
+      ]
+    },
+    {
+      "id": "47192037-12",
+      "current": 12,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Brock Bowers",
+        "pos": "TE",
+        "coach_score": 100,
+        "utility_expected_wins": 0.10606060606060606,
+        "weekly_lineup_mean": 48.40114733097771
+      },
+      "utility_best": {
+        "coach_rank": 2,
+        "name": "Chase Brown",
+        "pos": "RB",
+        "coach_score": 98,
+        "utility_expected_wins": 0.13636363636363635,
+        "weekly_lineup_mean": 52.47506361393254
+      },
+      "utility_gap_expected_wins_14w": 0.03030303030303029,
+      "material_gt_0_10_expected_wins": false,
+      "candidates": [
+        {
+          "coach_rank": 2,
+          "name": "Chase Brown",
+          "pos": "RB",
+          "coach_score": 98,
+          "utility_expected_wins": 0.13636363636363635,
+          "weekly_lineup_mean": 52.47506361393254
+        },
+        {
+          "coach_rank": 3,
+          "name": "Justin Jefferson",
+          "pos": "WR",
+          "coach_score": 97,
+          "utility_expected_wins": 0.13636363636363635,
+          "weekly_lineup_mean": 51.78104821587732
+        },
+        {
+          "coach_rank": 4,
+          "name": "Kenneth Walker III",
+          "pos": "RB",
+          "coach_score": 96,
+          "utility_expected_wins": 0.13636363636363635,
+          "weekly_lineup_mean": 52.54990282780099
+        },
+        {
+          "coach_rank": 5,
+          "name": "Ashton Jeanty",
+          "pos": "RB",
+          "coach_score": 94,
+          "utility_expected_wins": 0.13636363636363635,
+          "weekly_lineup_mean": 52.55517546056813
+        },
+        {
+          "coach_rank": 6,
+          "name": "Omarion Hampton",
+          "pos": "RB",
+          "coach_score": 88,
+          "utility_expected_wins": 0.13636363636363635,
+          "weekly_lineup_mean": 52.76625244346524
+        },
+        {
+          "coach_rank": 10,
+          "name": "Derrick Henry",
+          "pos": "RB",
+          "coach_score": 72,
+          "utility_expected_wins": 0.13636363636363635,
+          "weekly_lineup_mean": 52.75551605069633
+        },
+        {
+          "coach_rank": 7,
+          "name": "Saquon Barkley",
+          "pos": "RB",
+          "coach_score": 87,
+          "utility_expected_wins": 0.12121212121212122,
+          "weekly_lineup_mean": 52.514178803645294
+        },
+        {
+          "coach_rank": 1,
+          "name": "Brock Bowers",
+          "pos": "TE",
+          "coach_score": 100,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 48.40114733097771
+        },
+        {
+          "coach_rank": 8,
+          "name": "Drake London",
+          "pos": "WR",
+          "coach_score": 79,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 49.54476033311257
+        },
+        {
+          "coach_rank": 9,
+          "name": "Nico Collins",
+          "pos": "WR",
+          "coach_score": 78,
+          "utility_expected_wins": 0.10606060606060606,
+          "weekly_lineup_mean": 48.977585599843295
+        }
+      ]
+    },
+    {
+      "id": "48892088-29",
+      "current": 29,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Kyren Williams",
+        "pos": "RB",
+        "coach_score": 100,
+        "utility_expected_wins": 0.2272727272727273,
+        "weekly_lineup_mean": 59.198239889303395
+      },
+      "utility_best": {
+        "coach_rank": 7,
+        "name": "Jaylen Waddle",
+        "pos": "WR",
+        "coach_score": 63,
+        "utility_expected_wins": 0.3181818181818182,
+        "weekly_lineup_mean": 58.62350131749463
+      },
+      "utility_gap_expected_wins_14w": 0.09090909090909088,
+      "material_gt_0_10_expected_wins": false,
+      "candidates": [
+        {
+          "coach_rank": 7,
+          "name": "Jaylen Waddle",
+          "pos": "WR",
+          "coach_score": 63,
+          "utility_expected_wins": 0.3181818181818182,
+          "weekly_lineup_mean": 58.62350131749463
+        },
+        {
+          "coach_rank": 3,
+          "name": "Zay Flowers",
+          "pos": "WR",
+          "coach_score": 77,
+          "utility_expected_wins": 0.26515151515151514,
+          "weekly_lineup_mean": 58.32006231974388
+        },
+        {
+          "coach_rank": 8,
+          "name": "Tee Higgins",
+          "pos": "WR",
+          "coach_score": 62,
+          "utility_expected_wins": 0.25757575757575757,
+          "weekly_lineup_mean": 58.27969096538467
+        },
+        {
+          "coach_rank": 4,
+          "name": "DeVonta Smith",
+          "pos": "WR",
+          "coach_score": 69,
+          "utility_expected_wins": 0.25,
+          "weekly_lineup_mean": 58.653507884075516
+        },
+        {
+          "coach_rank": 6,
+          "name": "Rashee Rice",
+          "pos": "WR",
+          "coach_score": 65,
+          "utility_expected_wins": 0.25,
+          "weekly_lineup_mean": 58.22943288359466
+        },
+        {
+          "coach_rank": 10,
+          "name": "Javonte Williams",
+          "pos": "RB",
+          "coach_score": 58,
+          "utility_expected_wins": 0.23484848484848486,
+          "weekly_lineup_mean": 58.595458136430445
+        },
+        {
+          "coach_rank": 1,
+          "name": "Kyren Williams",
+          "pos": "RB",
+          "coach_score": 100,
+          "utility_expected_wins": 0.2272727272727273,
+          "weekly_lineup_mean": 59.198239889303395
+        },
+        {
+          "coach_rank": 2,
+          "name": "Chris Olave",
+          "pos": "WR",
+          "coach_score": 89,
+          "utility_expected_wins": 0.21212121212121213,
+          "weekly_lineup_mean": 58.36257252284434
+        },
+        {
+          "coach_rank": 9,
+          "name": "Breece Hall",
+          "pos": "RB",
+          "coach_score": 60,
+          "utility_expected_wins": 0.21212121212121213,
+          "weekly_lineup_mean": 58.95760743018497
+        },
+        {
+          "coach_rank": 5,
+          "name": "Colston Loveland",
+          "pos": "TE",
+          "coach_score": 68,
+          "utility_expected_wins": 0.19696969696969696,
+          "weekly_lineup_mean": 56.64073965753931
+        }
+      ]
+    },
+    {
+      "id": "49192097-32",
+      "current": 32,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Zay Flowers",
+        "pos": "WR",
+        "coach_score": 100,
+        "utility_expected_wins": 0.7196969696969697,
+        "weekly_lineup_mean": 62.81287218053259
+      },
+      "utility_best": {
+        "coach_rank": 2,
+        "name": "DeVonta Smith",
+        "pos": "WR",
+        "coach_score": 91,
+        "utility_expected_wins": 0.7424242424242424,
+        "weekly_lineup_mean": 63.14631774486422
+      },
+      "utility_gap_expected_wins_14w": 0.022727272727272707,
+      "material_gt_0_10_expected_wins": false,
+      "candidates": [
+        {
+          "coach_rank": 2,
+          "name": "DeVonta Smith",
+          "pos": "WR",
+          "coach_score": 91,
+          "utility_expected_wins": 0.7424242424242424,
+          "weekly_lineup_mean": 63.14631774486422
+        },
+        {
+          "coach_rank": 10,
+          "name": "Garrett Wilson",
+          "pos": "WR",
+          "coach_score": 69,
+          "utility_expected_wins": 0.7424242424242424,
+          "weekly_lineup_mean": 63.01866700482029
+        },
+        {
+          "coach_rank": 9,
+          "name": "Jaylen Waddle",
+          "pos": "WR",
+          "coach_score": 73,
+          "utility_expected_wins": 0.7348484848484849,
+          "weekly_lineup_mean": 63.11631117828333
+        },
+        {
+          "coach_rank": 7,
+          "name": "Tetairoa McMillan",
+          "pos": "WR",
+          "coach_score": 78,
+          "utility_expected_wins": 0.7272727272727273,
+          "weekly_lineup_mean": 63.18551415617898
+        },
+        {
+          "coach_rank": 1,
+          "name": "Zay Flowers",
+          "pos": "WR",
+          "coach_score": 100,
+          "utility_expected_wins": 0.7196969696969697,
+          "weekly_lineup_mean": 62.81287218053259
+        },
+        {
+          "coach_rank": 3,
+          "name": "Javonte Williams",
+          "pos": "RB",
+          "coach_score": 87,
+          "utility_expected_wins": 0.7121212121212122,
+          "weekly_lineup_mean": 63.56082626183528
+        },
+        {
+          "coach_rank": 6,
+          "name": "Ladd McConkey",
+          "pos": "WR",
+          "coach_score": 79,
+          "utility_expected_wins": 0.6893939393939394,
+          "weekly_lineup_mean": 62.74124042489429
+        },
+        {
+          "coach_rank": 4,
+          "name": "Tee Higgins",
+          "pos": "WR",
+          "coach_score": 85,
+          "utility_expected_wins": 0.6590909090909091,
+          "weekly_lineup_mean": 62.77250082617337
+        },
+        {
+          "coach_rank": 8,
+          "name": "Emeka Egbuka",
+          "pos": "WR",
+          "coach_score": 73,
+          "utility_expected_wins": 0.6590909090909091,
+          "weekly_lineup_mean": 62.75140155393725
+        },
+        {
+          "coach_rank": 5,
+          "name": "Colston Loveland",
+          "pos": "TE",
+          "coach_score": 79,
+          "utility_expected_wins": 0.46212121212121215,
+          "weekly_lineup_mean": 61.133549518328
+        }
+      ]
+    },
+    {
+      "id": "50892148-49",
+      "current": 49,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Tyler Warren",
+        "pos": "TE",
+        "coach_score": 100,
+        "utility_expected_wins": 1.053030303030303,
+        "weekly_lineup_mean": 65.62931629868552
+      },
+      "utility_best": {
+        "coach_rank": 6,
+        "name": "Luther Burden III",
+        "pos": "WR",
+        "coach_score": 51,
+        "utility_expected_wins": 1.2803030303030303,
+        "weekly_lineup_mean": 66.96444087717215
+      },
+      "utility_gap_expected_wins_14w": 0.2272727272727273,
+      "material_gt_0_10_expected_wins": true,
+      "candidates": [
+        {
+          "coach_rank": 6,
+          "name": "Luther Burden III",
+          "pos": "WR",
+          "coach_score": 51,
+          "utility_expected_wins": 1.2803030303030303,
+          "weekly_lineup_mean": 66.96444087717215
+        },
+        {
+          "coach_rank": 7,
+          "name": "DJ Moore",
+          "pos": "WR",
+          "coach_score": 49,
+          "utility_expected_wins": 1.2803030303030303,
+          "weekly_lineup_mean": 66.96229013583998
+        },
+        {
+          "coach_rank": 3,
+          "name": "Bucky Irving",
+          "pos": "RB",
+          "coach_score": 66,
+          "utility_expected_wins": 1.2651515151515151,
+          "weekly_lineup_mean": 66.62656197568015
+        },
+        {
+          "coach_rank": 8,
+          "name": "Christian Watson",
+          "pos": "WR",
+          "coach_score": 47,
+          "utility_expected_wins": 1.2575757575757576,
+          "weekly_lineup_mean": 66.33976376591745
+        },
+        {
+          "coach_rank": 2,
+          "name": "D'Andre Swift",
+          "pos": "RB",
+          "coach_score": 83,
+          "utility_expected_wins": 1.25,
+          "weekly_lineup_mean": 66.01278527810653
+        },
+        {
+          "coach_rank": 4,
+          "name": "David Montgomery",
+          "pos": "RB",
+          "coach_score": 64,
+          "utility_expected_wins": 1.25,
+          "weekly_lineup_mean": 66.38246599198457
+        },
+        {
+          "coach_rank": 5,
+          "name": "Jameson Williams",
+          "pos": "WR",
+          "coach_score": 58,
+          "utility_expected_wins": 1.2424242424242424,
+          "weekly_lineup_mean": 66.8726990171299
+        },
+        {
+          "coach_rank": 9,
+          "name": "Bhayshul Tuten",
+          "pos": "RB",
+          "coach_score": 44,
+          "utility_expected_wins": 1.2348484848484849,
+          "weekly_lineup_mean": 66.4652241746339
+        },
+        {
+          "coach_rank": 10,
+          "name": "Mike Evans",
+          "pos": "WR",
+          "coach_score": 41,
+          "utility_expected_wins": 1.2196969696969697,
+          "weekly_lineup_mean": 66.61770668822118
+        },
+        {
+          "coach_rank": 1,
+          "name": "Tyler Warren",
+          "pos": "TE",
+          "coach_score": 100,
+          "utility_expected_wins": 1.053030303030303,
+          "weekly_lineup_mean": 65.62931629868552
+        }
+      ]
+    },
+    {
+      "id": "51192157-52",
+      "current": 52,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Jameson Williams",
+        "pos": "WR",
+        "coach_score": 100,
+        "utility_expected_wins": 1.4545454545454546,
+        "weekly_lineup_mean": 68.07052594386464
+      },
+      "utility_best": {
+        "coach_rank": 3,
+        "name": "Bucky Irving",
+        "pos": "RB",
+        "coach_score": 95,
+        "utility_expected_wins": 1.5303030303030303,
+        "weekly_lineup_mean": 67.77893090041906
+      },
+      "utility_gap_expected_wins_14w": 0.07575757575757569,
+      "material_gt_0_10_expected_wins": false,
+      "candidates": [
+        {
+          "coach_rank": 3,
+          "name": "Bucky Irving",
+          "pos": "RB",
+          "coach_score": 95,
+          "utility_expected_wins": 1.5303030303030303,
+          "weekly_lineup_mean": 67.77893090041906
+        },
+        {
+          "coach_rank": 6,
+          "name": "Bhayshul Tuten",
+          "pos": "RB",
+          "coach_score": 84,
+          "utility_expected_wins": 1.5,
+          "weekly_lineup_mean": 67.55230843740193
+        },
+        {
+          "coach_rank": 4,
+          "name": "Luther Burden III",
+          "pos": "WR",
+          "coach_score": 92,
+          "utility_expected_wins": 1.4924242424242424,
+          "weekly_lineup_mean": 68.13406785945497
+        },
+        {
+          "coach_rank": 5,
+          "name": "DJ Moore",
+          "pos": "WR",
+          "coach_score": 91,
+          "utility_expected_wins": 1.4924242424242424,
+          "weekly_lineup_mean": 68.13585121647661
+        },
+        {
+          "coach_rank": 8,
+          "name": "Rome Odunze",
+          "pos": "WR",
+          "coach_score": 74,
+          "utility_expected_wins": 1.4924242424242424,
+          "weekly_lineup_mean": 68.04441564847572
+        },
+        {
+          "coach_rank": 2,
+          "name": "David Montgomery",
+          "pos": "RB",
+          "coach_score": 98,
+          "utility_expected_wins": 1.4696969696969697,
+          "weekly_lineup_mean": 67.60601377721903
+        },
+        {
+          "coach_rank": 7,
+          "name": "Mike Evans",
+          "pos": "WR",
+          "coach_score": 84,
+          "utility_expected_wins": 1.4621212121212122,
+          "weekly_lineup_mean": 67.95315023492873
+        },
+        {
+          "coach_rank": 1,
+          "name": "Jameson Williams",
+          "pos": "WR",
+          "coach_score": 100,
+          "utility_expected_wins": 1.4545454545454546,
+          "weekly_lineup_mean": 68.07052594386464
+        },
+        {
+          "coach_rank": 9,
+          "name": "Davante Adams",
+          "pos": "WR",
+          "coach_score": 73,
+          "utility_expected_wins": 1.4545454545454546,
+          "weekly_lineup_mean": 67.970940654894
+        },
+        {
+          "coach_rank": 10,
+          "name": "Christian Watson",
+          "pos": "WR",
+          "coach_score": 73,
+          "utility_expected_wins": 1.393939393939394,
+          "weekly_lineup_mean": 67.4571708375208
+        }
+      ]
+    },
+    {
+      "id": "52892208-69",
+      "current": 69,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Parker Washington",
+        "pos": "WR",
+        "coach_score": 100,
+        "utility_expected_wins": 1.7575757575757576,
+        "weekly_lineup_mean": 69.49140677924235
+      },
+      "utility_best": {
+        "coach_rank": 2,
+        "name": "Jayden Daniels",
+        "pos": "QB",
+        "coach_score": 86,
+        "utility_expected_wins": 2.537878787878788,
+        "weekly_lineup_mean": 73.1438850495667
+      },
+      "utility_gap_expected_wins_14w": 0.7803030303030305,
+      "material_gt_0_10_expected_wins": true,
+      "candidates": [
+        {
+          "coach_rank": 2,
+          "name": "Jayden Daniels",
+          "pos": "QB",
+          "coach_score": 86,
+          "utility_expected_wins": 2.537878787878788,
+          "weekly_lineup_mean": 73.1438850495667
+        },
+        {
+          "coach_rank": 5,
+          "name": "Caleb Williams",
+          "pos": "QB",
+          "coach_score": 59,
+          "utility_expected_wins": 2.265151515151515,
+          "weekly_lineup_mean": 71.94502730618797
+        },
+        {
+          "coach_rank": 6,
+          "name": "Justin Herbert",
+          "pos": "QB",
+          "coach_score": 54,
+          "utility_expected_wins": 2.234848484848485,
+          "weekly_lineup_mean": 71.84344930839879
+        },
+        {
+          "coach_rank": 9,
+          "name": "Trevor Lawrence",
+          "pos": "QB",
+          "coach_score": 45,
+          "utility_expected_wins": 1.9621212121212122,
+          "weekly_lineup_mean": 70.3431965681626
+        },
+        {
+          "coach_rank": 1,
+          "name": "Parker Washington",
+          "pos": "WR",
+          "coach_score": 100,
+          "utility_expected_wins": 1.7575757575757576,
+          "weekly_lineup_mean": 69.49140677924235
+        },
+        {
+          "coach_rank": 3,
+          "name": "Marvin Harrison Jr.",
+          "pos": "WR",
+          "coach_score": 78,
+          "utility_expected_wins": 1.7575757575757576,
+          "weekly_lineup_mean": 69.69901637261705
+        },
+        {
+          "coach_rank": 10,
+          "name": "DK Metcalf",
+          "pos": "WR",
+          "coach_score": 44,
+          "utility_expected_wins": 1.75,
+          "weekly_lineup_mean": 69.36750121458343
+        },
+        {
+          "coach_rank": 8,
+          "name": "Brian Thomas Jr.",
+          "pos": "WR",
+          "coach_score": 49,
+          "utility_expected_wins": 1.7272727272727273,
+          "weekly_lineup_mean": 69.41198569663001
+        },
+        {
+          "coach_rank": 4,
+          "name": "Jaylen Warren",
+          "pos": "RB",
+          "coach_score": 76,
+          "utility_expected_wins": 1.7045454545454546,
+          "weekly_lineup_mean": 69.20007763659663
+        },
+        {
+          "coach_rank": 7,
+          "name": "Jonathon Brooks",
+          "pos": "RB",
+          "coach_score": 51,
+          "utility_expected_wins": 1.6212121212121213,
+          "weekly_lineup_mean": 68.81173771904554
+        }
+      ]
+    },
+    {
+      "id": "53192217-72",
+      "current": 72,
+      "coach": {
+        "coach_rank": 1,
+        "name": "Marvin Harrison Jr.",
+        "pos": "WR",
+        "coach_score": 100,
+        "utility_expected_wins": 1.8712121212121213,
+        "weekly_lineup_mean": 70.21229093971364
+      },
+      "utility_best": {
+        "coach_rank": 2,
+        "name": "Jayden Daniels",
+        "pos": "QB",
+        "coach_score": 99,
+        "utility_expected_wins": 2.765151515151515,
+        "weekly_lineup_mean": 74.32195334170167
+      },
+      "utility_gap_expected_wins_14w": 0.8939393939393938,
+      "material_gt_0_10_expected_wins": true,
+      "candidates": [
+        {
+          "coach_rank": 2,
+          "name": "Jayden Daniels",
+          "pos": "QB",
+          "coach_score": 99,
+          "utility_expected_wins": 2.765151515151515,
+          "weekly_lineup_mean": 74.32195334170167
+        },
+        {
+          "coach_rank": 4,
+          "name": "Caleb Williams",
+          "pos": "QB",
+          "coach_score": 70,
+          "utility_expected_wins": 2.537878787878788,
+          "weekly_lineup_mean": 73.12309559832292
+        },
+        {
+          "coach_rank": 5,
+          "name": "Justin Herbert",
+          "pos": "QB",
+          "coach_score": 61,
+          "utility_expected_wins": 2.5075757575757573,
+          "weekly_lineup_mean": 73.02151760053374
+        },
+        {
+          "coach_rank": 9,
+          "name": "Trevor Lawrence",
+          "pos": "QB",
+          "coach_score": 36,
+          "utility_expected_wins": 2.1969696969696972,
+          "weekly_lineup_mean": 71.52126486029756
+        },
+        {
+          "coach_rank": 1,
+          "name": "Marvin Harrison Jr.",
+          "pos": "WR",
+          "coach_score": 100,
+          "utility_expected_wins": 1.8712121212121213,
+          "weekly_lineup_mean": 70.21229093971364
+        },
+        {
+          "coach_rank": 7,
+          "name": "DK Metcalf",
+          "pos": "WR",
+          "coach_score": 59,
+          "utility_expected_wins": 1.8636363636363638,
+          "weekly_lineup_mean": 69.9331476634242
+        },
+        {
+          "coach_rank": 8,
+          "name": "Jonathon Brooks",
+          "pos": "RB",
+          "coach_score": 50,
+          "utility_expected_wins": 1.8181818181818181,
+          "weekly_lineup_mean": 69.80228505034954
+        },
+        {
+          "coach_rank": 3,
+          "name": "Rhamondre Stevenson",
+          "pos": "RB",
+          "coach_score": 74,
+          "utility_expected_wins": 1.8106060606060606,
+          "weekly_lineup_mean": 70.01721747838354
+        },
+        {
+          "coach_rank": 6,
+          "name": "Brian Thomas Jr.",
+          "pos": "WR",
+          "coach_score": 61,
+          "utility_expected_wins": 1.7954545454545454,
+          "weekly_lineup_mean": 70.06919990391478
+        },
+        {
+          "coach_rank": 10,
+          "name": "Tony Pollard",
+          "pos": "RB",
+          "coach_score": 36,
+          "utility_expected_wins": 1.7954545454545454,
+          "weekly_lineup_mean": 69.97843545762738
+        }
+      ]
+    }
+  ]
+}
