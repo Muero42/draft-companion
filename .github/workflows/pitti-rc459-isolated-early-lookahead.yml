@@ -1,0 +1,25 @@
+name: PITTI rc4.59 isolated early-lookahead causal
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/rc459_isolated_early_lookahead_2026.js'
+      - '.github/workflows/pitti-rc459-isolated-early-lookahead.yml'
+  workflow_dispatch:
+jobs:
+  isolated:
+    runs-on: ubuntu-latest
+    timeout-minutes: 48
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Isolate 2.02 PairSum decision under common continuation
+        run: node research/rc459_isolated_early_lookahead_2026.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-isolated-early-lookahead
+          path: counterfactual_2026/RC459_ISOLATED_EARLY_LOOKAHEAD_2026.json
+          if-no-files-found: error
