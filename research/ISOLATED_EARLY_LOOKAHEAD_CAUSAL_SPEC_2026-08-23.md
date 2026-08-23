@@ -22,8 +22,22 @@ Primary decision points:
 - 2.02 (pick 12), conditioned across multiple plausible forced 1.09 treatments.
 - 4.02 (pick 32), conditioned across multiple plausible earlier paths after the 2.02 diagnostic.
 
-## Candidate/path selection
-Outcome-blind only. Use the already preregistered quality/market frontier and plausible early paths. No candidate/path may be added or removed because of downstream results.
+## Candidate/path selection — corrected before outcome inspection
+Outcome-blind only. The realistic forced 1.09 strategy frontier is frozen as:
+- James Cook III
+- Amon-Ra St. Brown
+- Jaxon Smith-Njigba
+- Jonathan Taylor
+- Justin Jefferson
+- Ashton Jeanty
+
+A name is omitted for a seed when already drafted/unavailable. This list reflects the independently plausible elite 1.09 window rather than previous anomalous PairSum/Coach outputs.
+
+Chase Brown and Brock Bowers are **not** equal-plausibility 1.09 strategy paths. They remain useful negative-control/stress concepts because earlier invalid/rejected experiments over-selected them. They must not be used to estimate the normal 1.09 strategy frontier unless later independent news/evidence materially changes their draft value.
+
+This candidate correction was made before any isolated-lookahead outcome artifact was produced or inspected, after a direct plausibility challenge. It is therefore a design correction, not winner-driven pruning.
+
+No candidate/path may subsequently be added or removed because of downstream results.
 
 ## Required invariants
 - Shared-prefix fingerprint identical before divergent user decision.
