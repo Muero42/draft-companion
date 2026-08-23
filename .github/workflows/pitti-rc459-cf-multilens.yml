@@ -1,10 +1,5 @@
 name: PITTI rc4.59 counterfactual multi-lens diagnostic
 on:
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'research/rc459_cf_multilens_eval_2026.py'
-      - '.github/workflows/pitti-rc459-cf-multilens.yml'
   workflow_dispatch:
 jobs:
   evaluate:
