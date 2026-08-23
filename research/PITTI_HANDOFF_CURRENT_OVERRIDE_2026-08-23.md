@@ -15,42 +15,46 @@ Existing ADP-neighbor outcome anchor: CONTROL ~-0.644 baseline/-0.729 stress vs 
 ## Evaluator alignment warning
 `MARKET_OUTCOME_BRIDGE_2026.json` is historical Sleeper ADP -> realized weekly Half-PPR neighbor forecasting; MARKET_ROSTER also selects mainly by current Sleeper ADP. Thus this outcome anchor structurally favors ADP-like policies and is only a market-regret guardrail, not sole strategic truth. Do not tune PITTI toward MARKET_ROSTER merely to close this gap.
 
-## Direct decision counterfactual path — actual kernel gates PASS
-Actual validated kernel source is `research/rc459_full_policy_paired_2026.js` (58/58 source lock + exact rc4.59 Coach execution, profiled opponent kernel).
-Research branch/PR #12: `pitti-decision-counterfactual-kernel`. No production ranking/scoring change.
+## Direct decision counterfactual path — actual-kernel gates PASS
+Actual validated kernel source is `research/rc459_full_policy_paired_2026.js` (58/58 source lock + exact rc4.59 Coach execution, profiled opponent kernel). Research branch/PR #12: `pitti-decision-counterfactual-kernel`. No production ranking/scoring change.
 
-### Actual-kernel RNG parity
-`research/rc459_actual_kernel_rng_parity_2026.js`, Actions run `32620973626` PASS.
-One captured Sleeper metadata fixture (12,221 players) was used for both runs. Only the exact legacy RNG definition was replaced by the snapshot-capable bit-equivalent form. Complete full-policy JSON outputs were byte-identical across 6 full drafts (COACH, BRIDGE_GREEDY, MARKET_ROSTER × baseline/stress). Output SHA-256 `20e0b698978d1ee40988ba53132381f7193ab5469c2976333d6fac4d70bc574f`.
+Actual-kernel RNG parity run `32620973626` PASS: complete full-policy outputs byte-identical across COACH/BRIDGE_GREEDY/MARKET_ROSTER × baseline/stress after only replacing legacy RNG with snapshot-capable bit-equivalent RNG. Output SHA-256 `20e0b698978d1ee40988ba53132381f7193ab5469c2976333d6fac4d70bc574f`.
 
-### Actual-kernel causal plumbing
-`research/rc459_decision_counterfactual_plumbing_2026.js`, Actions run `32621088496` PASS.
-Fresh seeds 459271001/459271002; treatment picks 9 and 12; 4 states / 40 full-draft branches. Verified shared-prefix identity, cloned RNG identity, zero treatment RNG consumption, order-independent deterministic treatment, legal full drafts, complete picks and actual post-draft FA pools.
+Actual-kernel causal plumbing run `32621088496` PASS: fresh seeds, treatment picks 9/12, shared-prefix identity, cloned RNG identity, zero treatment RNG consumption, legal complete drafts and actual FA pools.
 
 ## Direct counterfactual evidence
 ### MARKET_NEUTRAL breadth-100 — PASS
-Workflow run `32623713022`, artifact `rc459-cf-market-breadth100` (digest `sha256:fbc78b672851c895548f52d6ac77a6e0297ae614d1ab6860427c71cdfc603a38`). Generated 100 fresh causal states per treatment (200 states total) and 2,000 complete MARKET_NEUTRAL branches, then evaluated through frozen multi-lens diagnostics. This is a broad diagnostic/robustness reference, not production certification.
+Run `32623713022`, artifact `rc459-cf-market-breadth100`, digest `sha256:fbc78b672851c895548f52d6ac77a6e0297ae614d1ab6860427c71cdfc603a38`: 200 fresh states and 2,000 complete MARKET_NEUTRAL branches. Broad direct A/B evidence does NOT reproduce Brown-always-1.09 or Bowers-always-2.02. Evaluator lenses disagree materially, confirming no single evaluator should dictate strategy.
 
-Key interpretation: the broad direct A/B screen does NOT reproduce either invalid extreme pattern (Brown-always-1.09 or Bowers-always-2.02). Different lenses disagree materially in some player comparisons, confirming that no single evaluator should be allowed to dictate the strategy. Existing ADP-neighbor outcome bridge remains a market-regret guardrail rather than sole objective.
+### Targeted PairSum-vs-neutral — PASS
+Run `32623556347`, artifact `rc459-cf-targeted-pairsum`, digest `sha256:0aa62faa7d210397a7f83bdaf9d97eedc60bc3842c7098b59aa10e6e7ae142bf`: 3 fresh seeds, 56 complete raw causal branches, `outcome_evaluated=false`. PairSum consistently improves aggregate selected-panel rank while worsening aggregate ADP, reproducing the panel-vs-market disagreement under causal controls. It can also yield 7-RB/8-WR rosters; do not interpret raw panel-sum improvement as championship utility.
 
-### Fresh external market/expert sanity — 2026-08-21 snapshot
-Fresh FantasyPros Half-PPR consensus (Derek Brown, Andrew Erickson, Pat Fitzmaurice; Aug 20-21) continues to place the elite 1.09 window around Amon-Ra/JSN/Cook/Taylor rather than Chase Brown/Bowers. Position consensus has Cook RB3, Taylor RB4, Chase Brown RB7, while WR consensus has JSN WR3 and Amon-Ra WR4. Derek Brown's Aug-21 overall ranks Cook 5, JSN 6, Amon-Ra 7, Taylor 12, Chase Brown 15, Bowers 16. Most-accurate-expert aggregate from the prior week similarly had Amon-Ra 5, JSN 6, Taylor 8, Cook 10, Chase Brown 14 and Bowers 19. This is a sanity anchor, not an instruction to copy ECR.
+## 1.09 plausibility correction — IMPORTANT
+A direct plausibility challenge identified that Chase Brown and Brock Bowers had been incorrectly carried into an isolated 1.09 strategy-path test as equal-plausibility candidates. This was corrected BEFORE any isolated-lookahead outcome artifact was produced/inspected.
 
-Implication: any future policy again producing deterministic Brown 1.09 or Bowers 1.09/2.02 across diverse states requires extraordinary independent evidence and should fail plausibility audit by default. Conversely, Cook/Amon-Ra/JSN/Taylor mixtures at 1.09 are externally plausible and should be distinguished by direct causal/return evidence rather than forced into one universal pick.
+Frozen realistic 1.09 path frontier is now: James Cook III, Amon-Ra St. Brown, Jaxon Smith-Njigba, Jonathan Taylor, Justin Jefferson, Ashton Jeanty; unavailable names are omitted per seed. Chase Brown and Brock Bowers remain negative-control/stress concepts only at 1.09 unless later independent evidence materially changes their value.
 
-## Targeted PairSum-vs-neutral run — still active
-Run `32623556347` remains in the expensive `Fresh targeted MARKET_NEUTRAL vs frozen PairSum-LONG2 raw branches` step as of the latest check. Do not interrupt while active. This is the important continuation-policy cross-check against breadth-100 MARKET_NEUTRAL evidence.
+Persistent spec: `research/ISOLATED_EARLY_LOOKAHEAD_CAUSAL_SPEC_2026-08-23.md`. Harness `research/rc459_isolated_early_lookahead_2026.js`, run `32625856926` is currently in progress using fresh seeds 459277001-005. Design: compare MARKET_NEUTRAL vs PairSum choice at 2.02 from the exact same state, then BOTH children receive identical MARKET_NEUTRAL continuation through pick 150.
 
-## Independent outcome stack still required
-Keep existing ADP-conditioned anchor as conservative market-regret lens. Add where reliable: (1) non-ADP-only player forecast/statistical challenger, (2) shallow-league replacement/waiver model using actual post-draft FA pools, (3) championship-tail simulation using actual league playoff rules. Existing `independent_utility_v3_3_2025.py` is useful as historical functional-form validation but uses realized 2025 production and therefore is NOT a 2026 player forecast.
+## FA-enriched shallow-league evidence — instrumentation PASS
+Run `32625856925` PASS; artifact `rc459-cf-fa-enriched20`, digest `sha256:1e32b530322ed5e673092b7186669149c5fbaefac11fa97a5c066a535665cbff`.
+20 fresh seeds, 40 states, 399 complete branches. Player-pool snapshot contains 230 skill players and gives 100% metadata coverage for every actual post-draft FA id in all branches (93-95 FAs/branch). This fixes the prior ~43.5% reconstruction problem without rerunning the older expensive drafts.
+
+Descriptive FA cutline (NOT yet utility calibration): across 399 branches, best available by ADP averages roughly RB 152.2 (median 150.3), WR 157.1 (157.2), TE 135.3 (125.8), QB 148.6 (149.9). By selected-panel rank the best available averages roughly RB 132.2, WR 137.2, TE 131.8, QB 114.4. These are availability facts, not proof that a bench player is replaceable at zero cost; actual weekly/role/title utility still required.
+
+## Outcome/title layer correction
+Existing `rc459_dynamic_championship_utility_challenger_2026.py` is NOT a true P(title) model: it sums weeks 1-14 empirical weekly win probabilities. Treat it as a regular-season/startability utility lens only. True title-probability requirements are preregistered in `research/TITLE_PROBABILITY_CHALLENGER_SPEC_2026-08-23.md`. Actual playoff team count/start week/byes/seeding/bracket rules remain unresolved in reliable artifacts, so `TITLE_RULES_UNRESOLVED` must fail closed rather than invent defaults.
+
+## Fresh external market/expert sanity — 2026-08-21 snapshot
+Current external sanity continues to place the elite 1.09 window around Amon-Ra/JSN/Cook/Taylor rather than Chase Brown/Bowers. This is a plausibility guardrail, not an instruction to copy ECR.
 
 ## Parallel-work rule
 Whenever a long Actions/simulation job is active, automatically use independent capacity on outcome-challenger, shallow-league FA/waiver, panel-vs-market disagreement, TAKE/WAIT, health/role, opponent-realism, championship-tail, harness/audit and draft-day usability work where useful. Do not return merely because a healthy long run is still computing.
 
 ## Immediate next actions
-1. Let targeted run `32623556347` finish; inspect raw causal/plausibility invariants before outcome interpretation.
-2. Compare its PairSum-vs-MARKET_NEUTRAL signs against the completed breadth-100 reference; preserve continuation/evaluator conflicts rather than tuning them away.
-3. Expand conditional 2.02 states from multiple plausible 1.09 treatments, then 3.09/4.02/5.09/6.02 on fresh seeds only after the targeted cross-check.
-4. Parallel: build shallow-league actual-FA replacement diagnostics from persisted breadth-100 FA pools; continue non-ADP forecast and championship-tail work.
-5. Keep current external expert/market sanity snapshot as plausibility guardrail; refresh again close to 2026-08-31 or on material news.
+1. Let isolated run `32625856926` finish; audit raw invariants and how often PairSum actually differs from MARKET_NEUTRAL at 2.02 across realistic 1.09 paths BEFORE any outcome scoring.
+2. Use FA-enriched 399-branch dataset to build actual shallow-league replacement/startability diagnostics; do not use raw ADP cutlines as utility by themselves.
+3. Apply regular-season/startability, panel and market-regret lenses to isolated divergent pairs; preserve conflicts.
+4. Resolve real league playoff settings from canonical/Sleeper evidence before implementing/reporting true P(title).
+5. Only after 2.02 isolation is understood extend to 4.02 and then later turns on fresh held-out states.
 6. No production promotion yet.
