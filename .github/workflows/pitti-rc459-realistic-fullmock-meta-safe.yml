@@ -6,6 +6,8 @@ on:
       - 'research/rc459_meta_safe_fullmock_shard_2026.js'
       - '.github/workflows/pitti-rc459-realistic-fullmock-meta-safe.yml'
   workflow_dispatch:
+permissions:
+  contents: write
 jobs:
   shard:
     runs-on: ubuntu-latest
@@ -38,3 +40,64 @@ jobs:
           path: simulation_2026/RC459_REALISTIC_FULLMOCK_TIER_AUDIT_SHARD_${{ matrix.shard }}_2026.json
           if-no-files-found: error
           retention-days: 7
+  aggregate:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-realistic-fullmock-meta-safe
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: rc459-realistic-fullmock-meta-safe-shard-*
+          path: /tmp/meta-safe-shards
+          merge-multiple: true
+      - name: Validate exact seed union and aggregate decisions
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json,glob,hashlib,collections,pathlib
+          files=sorted(glob.glob('/tmp/meta-safe-shards/*.json'))
+          if len(files)!=6: raise SystemExit(f'expected 6 shards, got {len(files)}')
+          shards=[]; seeds=[]; choices=collections.defaultdict(collections.Counter); flags=collections.Counter(); hashes={}
+          for p in files:
+            b=open(p,'rb').read(); hashes[pathlib.Path(p).name]=hashlib.sha256(b).hexdigest(); x=json.loads(b); shards.append(x)
+            if x.get('status')!='PASS' or x.get('seeds')!=10 or len(x.get('drafts',[]))!=10: raise SystemExit('bad shard '+p)
+            if x.get('metadata_mapping')!='normalized-name + position, unique-match fail-closed' or not x.get('metadata_collision_source_bug_quarantined'): raise SystemExit('metadata-safe marker missing '+p)
+            for d in x['drafts']:
+              seeds.append(d['seed'])
+              if len(d.get('decisions',[]))!=15: raise SystemExit('decision count '+str(d.get('seed')))
+              if sum(d.get('position_counts',{}).values())!=15: raise SystemExit('roster count '+str(d.get('seed')))
+              for z in d['decisions']:
+                choices[str(z['pick'])][z['name']]+=1
+                flags.update(z.get('flags',[]))
+          expected=list(range(459710001,459710061))
+          if sorted(seeds)!=expected or len(set(seeds))!=60: raise SystemExit('seed union mismatch')
+          out={'schema':1,'status':'PASS','research_only':True,'metadata_safe':True,'production_mutation':False,
+               'seed_union_exact':True,'seeds':60,'seed_min':min(seeds),'seed_max':max(seeds),'shard_sha256':hashes,
+               'all_flags':dict(flags),'choices_by_pick':{p:dict(c) for p,c in sorted(choices.items(),key=lambda kv:int(kv[0]))},
+               'metadata_collision_stats':[x.get('metadata_collision_stats') for x in shards],
+               'interpretation':'Corrected identity-safe diagnostic only; no policy promotion is authorized by this aggregate.'}
+          pathlib.Path('diagnostics_2026').mkdir(exist_ok=True)
+          pathlib.Path('diagnostics_2026/RC459_META_SAFE_FULLMOCK_60_SUMMARY_2026.json').write_text(json.dumps(out,indent=2))
+          print(json.dumps(out,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc459-realistic-fullmock-meta-safe-summary
+          path: diagnostics_2026/RC459_META_SAFE_FULLMOCK_60_SUMMARY_2026.json
+          retention-days: 14
+      - name: Persist validated summary on research branch
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add diagnostics_2026/RC459_META_SAFE_FULLMOCK_60_SUMMARY_2026.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record metadata-safe rc4.59 60-fullmock summary [skip ci]'
+            git pull --rebase origin pitti-realistic-fullmock-meta-safe
+            git push origin HEAD:pitti-realistic-fullmock-meta-safe
+          fi
