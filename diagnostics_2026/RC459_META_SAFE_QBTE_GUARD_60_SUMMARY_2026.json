@@ -1,0 +1,159 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "research_only": true,
+  "production_mutation": false,
+  "metadata_safe": true,
+  "seed_union_exact": true,
+  "seeds": 60,
+  "qbte_repeat_policy": "hard admissibility except existing rc4.59 elite-slide exception",
+  "repeat_qbte_picks": {},
+  "repeat_exceptions": [],
+  "choices_by_pick": {
+    "9": {
+      "Jonathan Taylor": 3,
+      "Jaxon Smith-Njigba": 8,
+      "Amon-Ra St. Brown": 23,
+      "James Cook III": 26
+    },
+    "12": {
+      "Brock Bowers": 57,
+      "James Cook III": 3
+    },
+    "29": {
+      "Chris Olave": 43,
+      "Kyren Williams": 11,
+      "George Pickens": 3,
+      "Malik Nabers": 3
+    },
+    "32": {
+      "Zay Flowers": 49,
+      "Chris Olave": 11
+    },
+    "49": {
+      "Jaylen Waddle": 18,
+      "D'Andre Swift": 26,
+      "Tyler Warren": 1,
+      "Garrett Wilson": 5,
+      "Zay Flowers": 1,
+      "Terry McLaurin": 2,
+      "Travis Etienne Jr.": 5,
+      "Emeka Egbuka": 1,
+      "Ladd McConkey": 1
+    },
+    "52": {
+      "Jameson Williams": 9,
+      "David Montgomery": 6,
+      "D'Andre Swift": 16,
+      "Terry McLaurin": 26,
+      "Bucky Irving": 1,
+      "Tyler Warren": 1,
+      "Travis Etienne Jr.": 1
+    },
+    "69": {
+      "Jalen Hurts": 3,
+      "Christian Watson": 19,
+      "Rome Odunze": 2,
+      "Jadarian Price": 5,
+      "Parker Washington": 29,
+      "Joe Burrow": 1,
+      "Bhayshul Tuten": 1
+    },
+    "72": {
+      "Rhamondre Stevenson": 5,
+      "Marvin Harrison Jr.": 17,
+      "Parker Washington": 16,
+      "Jalen Hurts": 2,
+      "Jayden Daniels": 13,
+      "Rome Odunze": 1,
+      "Carnell Tate": 2,
+      "Jaylen Warren": 3,
+      "Caleb Williams": 1
+    },
+    "89": {
+      "Jonathon Brooks": 33,
+      "Caleb Williams": 3,
+      "Trevor Lawrence": 8,
+      "Tony Pollard": 3,
+      "Stefon Diggs": 1,
+      "Blake Corum": 2,
+      "Rico Dowdle": 4,
+      "Rhamondre Stevenson": 3,
+      "Justin Herbert": 3
+    },
+    "92": {
+      "Blake Corum": 16,
+      "Jonathon Brooks": 5,
+      "Jacory Croskey-Merritt": 9,
+      "Trevor Lawrence": 17,
+      "Justin Herbert": 5,
+      "Dak Prescott": 1,
+      "Stefon Diggs": 1,
+      "Tony Pollard": 3,
+      "Rico Dowdle": 3
+    },
+    "109": {
+      "Stefon Diggs": 34,
+      "Jacory Croskey-Merritt": 12,
+      "Josh Downs": 7,
+      "Brock Purdy": 1,
+      "Jordan Addison": 2,
+      "Blake Corum": 1,
+      "Trevor Lawrence": 1,
+      "Jordan Mason": 1,
+      "Kenny Gainwell": 1
+    },
+    "112": {
+      "Josh Downs": 21,
+      "Stefon Diggs": 9,
+      "Jaxson Dart": 1,
+      "Jordan Mason": 9,
+      "Jordan Addison": 2,
+      "Rachaad White": 5,
+      "Kenny Gainwell": 10,
+      "Michael Pittman Jr.": 1,
+      "Jacory Croskey-Merritt": 2
+    },
+    "129": {
+      "Jalen Coker": 49,
+      "Kenny Gainwell": 1,
+      "Wan'Dale Robinson": 2,
+      "Jakobi Meyers": 1,
+      "Rachaad White": 4,
+      "KC Concepcion": 1,
+      "De'Zhaun Stribling": 1,
+      "Travis Kelce": 1
+    },
+    "132": {
+      "Jonah Coleman": 40,
+      "Jalen Coker": 7,
+      "Matthew Golden": 1,
+      "De'Zhaun Stribling": 11,
+      "Jakobi Meyers": 1
+    },
+    "149": {
+      "Keaton Mitchell": 43,
+      "Tank Bigsby": 7,
+      "Chris Rodriguez Jr.": 7,
+      "Jonah Coleman": 2,
+      "Jalen Coker": 1
+    }
+  },
+  "position_count_distribution": {
+    "1/6/7/1": 16,
+    "1/7/6/1": 14,
+    "1/5/8/1": 22,
+    "1/4/9/1": 6,
+    "1/2/11/1": 1,
+    "1/8/5/1": 1
+  },
+  "shard_sha256": {
+    "RC459_META_SAFE_QBTE_GUARD_SHARD_0_2026.json": "8954ec5bae0f42e9c00684bd37723bd724aa1bcf285d5090a549529280b671a3",
+    "RC459_META_SAFE_QBTE_GUARD_SHARD_1_2026.json": "3e02cb5122efcb21f136235b6333900fa924aa730d45d4832659b566fcf49207",
+    "RC459_META_SAFE_QBTE_GUARD_SHARD_2_2026.json": "fc8c8f97da5cedb2ae6953ada487f80e0fccd5088ee851df9a2d57536369e979",
+    "RC459_META_SAFE_QBTE_GUARD_SHARD_3_2026.json": "711d2bbef4759c2108b47302f84ffb673167af321ec442d2abf2e7ec3681d17c",
+    "RC459_META_SAFE_QBTE_GUARD_SHARD_4_2026.json": "a927281fd660b072387c1ef88e1b666df3481b44c104151a6074bfc2172f8e78",
+    "RC459_META_SAFE_QBTE_GUARD_SHARD_5_2026.json": "8c388e76eae922809cca64d8ff9b81cb24a3d23f57fb616a4bcb99ec53bc377a"
+  },
+  "interpretation": "Policy challenger only. Compare against corrected metadata-safe exact rc4.59 baseline; do not promote without outcome/tier/realism review."
+}
