@@ -2,8 +2,8 @@
 /* Research-only audit for normalized-name metadata collisions in the rc4.59 research kernel.
    The legacy research harness indexes current Sleeper metadata by normalized full name only.
    This audit compares that behavior with position-aware matching against the frozen fantasy pool.
-   No Companion/runtime policy is changed. */
-const fs=require('fs'),crypto=require('crypto');
+   No Companion/runtime policy is changed. Triggered as an isolated push audit. */
+const fs=require('fs');
 const RAW='freeze_2026/FRESH_2026_MARKET_PANEL_RAW.json';
 const OUT='diagnostics_2026/RC459_METADATA_COLLISION_AUDIT_2026.json';
 const nrm=s=>String(s||'').toLowerCase().replaceAll('’',"'").replaceAll('é','e').replaceAll('ö','o').replaceAll('ü','u').replaceAll('ä','a').replace(/\b(jr|sr|ii|iii|iv)\.?\b/g,'').replace(/[^a-z0-9]+/g,'');
