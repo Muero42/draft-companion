@@ -1,0 +1,23 @@
+name: PITTI NoPunt independent projection freeze
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/nopunt_independent_projection_fetch_2026.js'
+      - '.github/workflows/pitti-nopunt-independent-projection.yml'
+  workflow_dispatch:
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fetch and validate independent projections
+        run: node research/nopunt_independent_projection_fetch_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: nopunt-independent-half-ppr-2026
+          path: independent_2026/NOPUNT_PURE_MODEL_HALF_PPR_2026.json
