@@ -1,0 +1,28 @@
+name: PITTI rc4.59 realistic full-mock tier audit
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/rc459_realistic_fullmock_tier_audit_2026.js'
+      - '.github/workflows/pitti-rc459-realistic-fullmock-tier-audit.yml'
+  workflow_dispatch:
+jobs:
+  fullmock-tier-audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check
+        run: node --check research/rc459_realistic_fullmock_tier_audit_2026.js
+      - name: Run 60 complete realistic rc4.59 Coach mocks
+        run: node research/rc459_realistic_fullmock_tier_audit_2026.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-realistic-fullmock-tier-audit
+          path: simulation_2026/RC459_REALISTIC_FULLMOCK_TIER_AUDIT_2026.json
+          if-no-files-found: error
+          retention-days: 3
