@@ -1,0 +1,25 @@
+name: PITTI rc4.59 direct 2.02 candidates
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/rc459_direct_2_02_candidates_2026.js'
+      - '.github/workflows/pitti-rc459-direct-2-02-candidates.yml'
+  workflow_dispatch:
+jobs:
+  direct-202:
+    runs-on: ubuntu-latest
+    timeout-minutes: 55
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Direct 2.02 multi-candidate raw counterfactual
+        run: node research/rc459_direct_2_02_candidates_2026.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-direct-2-02-candidates
+          path: counterfactual_2026/RC459_DIRECT_2_02_CANDIDATES_2026.json
+          if-no-files-found: error
