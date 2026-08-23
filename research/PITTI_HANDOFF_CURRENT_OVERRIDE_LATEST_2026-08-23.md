@@ -55,3 +55,27 @@ Christian McCaffrey has recently missed 49ers practice with soreness/tightness. 
 4. Run full realistic mocks once first-turn map is stable; then move to 3.09/4.02 (Olave/Nabers/Flowers plus real fallers).
 5. Continue current injury/role/news monitoring in parallel; integrate only material changes.
 6. No production strategy overhaul. Existing Late-QB / late-TE preference remains baseline unless unusually strong evidence clears the high promotion threshold.
+
+## 2026-08-23 operational-authority / AUTO hardening override
+The canonical Library `PITTI_CURRENT_STATE.json` generation `20260823T210148Z-v57` and append-only `PITTI_PROJECT_STATE.md` remain authoritative for current operational facts. This research-branch handoff is subordinate to that current state. Never revive an older branch conclusion when it conflicts with v57 or newer verified evidence.
+
+Mandatory stale-error guards for every subsequent AUTO block:
+- Tier-first is mandatory: a meaningful intrinsic quality/health/role tier boundary beats timing/lookahead. TAKE/WAIT/Return only sequences genuinely close candidates.
+- Turn-Pair Brown-at-1.09 result is INVALID; Rolling-v1 is INVALID; PairSum-v2 aggregation is REJECTED for policy promotion. The full-board simulator may be reused only as research infrastructure, not as a rank-replacement policy.
+- Chase Brown is not a normal 1.09 recommendation. Josh Allen is not a normal 2.02 candidate. Brown/Bowers/Walker/Hampton/Henry are 2.02 comparisons only when state-realistic.
+- Name-only later-round research lineage is contaminated by player-identity collisions. Position-aware metadata-safe evidence is required for 29/32-and-later player-specific or full-roster certification; do not infer a production defect from the research defect.
+- Global/near-hard QB2/TE2 guard is REJECTED by paired full-roster utility. Research calibrated marginal-value/opportunity-cost treatment instead; do not resurrect the blanket-ban path.
+- Bowers at 2.02 remains a defensible candidate; the problem to test is excessive concentration / 10-team TE economics, not a mechanical ban.
+- Research-only outcomes never authorize production promotion. Do not equate branch/prepared artifacts with the Android-installed runtime.
+- AUTO never starts an interactive mock unless explicitly requested.
+
+Mandatory AUTO execution protocol:
+1. At the start of each AUTO cycle, reconcile the newest canonical current state/checkpoint against accessible artifacts/results before acting; newer evidence overrides older NEXT_ACTION text.
+2. Maintain two work queues continuously: (a) serial critical path/dependencies and (b) independent parallel work ranked by expected championship-utility gain, urgency, and contamination risk.
+3. Whenever CI/simulation/fetch/external work is pending, immediately execute useful independent work that cannot contaminate the running experiment: player/health/role/decline evidence, Tier-first intrinsic adjudication, TAKE/WAIT mapping, metadata-safe later-turn preparation, realistic-mock readiness, data hygiene/regression checks, checkpoint/handoff integrity, and other draft-critical validation. Waiting/polling alone is permitted only when no genuinely valuable independent work remains.
+4. Do not create low-value busywork merely to avoid waiting. Do not restart/duplicate a healthy long-running job.
+5. On failure, diagnose root cause and re-evaluate the end-to-end path before retrying; never loop through an already failed route without new evidence.
+6. Before any user-visible interruption, check whether the work can continue autonomously or via another reliable route. Continue if it can.
+7. Interrupt the user only for a genuine user/device/external-decision gate, consequential confirmation requirement, diagnosed hard blocker with no reliable autonomous alternative, or when proceeding would materially risk carrying an unresolved error/ambiguous state forward. If a likely error cannot be safely resolved autonomously, prefer interruption and a precise question over contaminating later work.
+8. Material findings, invalidations, changed requirements, artifact/version boundaries and exact continuation must be checkpointed promptly so a chat switch cannot revive stale paths.
+9. No status-only chatter during AUTO. Return only for a material result or a genuinely necessary user action/question.
