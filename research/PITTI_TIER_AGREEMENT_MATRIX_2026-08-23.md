@@ -19,10 +19,11 @@ Recent independent Half-PPR ranks show the normal turn core is tightly overlappi
 Interpretation: Cook/Lamb/Jefferson/Jeanty have strongly overlapping fresh ordinal support. Their exact order is unstable across credible current sources, so differences of a few overall slots are weak evidence. Achane/Saquon/Brown/Bowers/Hampton/Walker overlap the back of the turn but generally have less consistent top-12 support.
 
 ## Explicit-tier evidence
-- Adam Pelletier (Aug 19 Half-PPR, previously verified): Cook Tier 1; Amon-Ra/Jefferson/Taylor/Jeanty/Hampton Tier 2; Chase Brown/Bowers Tier 3.
-- Wolf of Roto Street / Roto Street Journal (Aug 19 Half-PPR, freshly rechecked Aug 23): Tier 3 = JSN, Amon-Ra, Cook, Taylor, CMC; Tier 4 includes Jeanty, Walker, Chase Brown, Lamb and Achane in the currently returned segment. This source therefore creates a real boundary between Cook/Taylor/JSN/Amon-Ra/CMC and Jeanty/Lamb/Achane/Walker/Brown. Do not infer a Jefferson tier when it is not visible in the retrieved segment.
+- Adam Pelletier (Aug 19 Half-PPR, freshly verified): Tier 1 includes JSN and Cook alongside Chase/Gibbs/Bijan; Tier 2 includes Amon-Ra, Jefferson, Taylor, Jeanty and Hampton; Tier 3 includes Chase Brown and Bowers. Lamb is not visible in the retrieved segment, so no tier vote is inferred for Lamb from this source.
+- Wolf of Roto Street / Roto Street Journal (Aug 19 Half-PPR, freshly verified): Tier 3 = JSN, Amon-Ra, Cook, Taylor, CMC; Tier 4 includes Jeanty, Walker, Chase Brown, Lamb and Achane in the returned overall segment. Jefferson is not visible in the retrieved segment, so no tier vote is inferred for Jefferson from this source.
+- FantasyPros Aug-2026 draft tiers article (current supporting tier source): Lamb is Tier 1 at overall 9; Jefferson, Cook, Jeanty, London, Saquon, Chase Brown, A.J. Brown, Bowers, Hampton, Achane and Nico are all Tier 2 in the returned table. This is direct evidence that ordinal gaps such as 10 vs 17 can coexist inside one published tier.
 
-These explicit-tier sources disagree materially, including on Jeanty relative to Cook and on the breadth of the next tier. Therefore no single published tier boundary is sufficiently robust to force Cook > Jefferson/Jeanty/Lamb or similar by itself.
+These explicit-tier sources disagree materially: Pelletier separates Cook from Jefferson/Jeanty; Wolf separates Cook from Jeanty/Lamb; the FantasyPros tier article groups Jefferson/Cook/Jeanty and many later turn players together while placing Lamb one tier higher. Therefore no single published tier boundary is sufficiently robust to force a universal ordering by itself.
 
 ## PITTI provisional boundary map
 This is a decision cluster, not a numeric ranking.
@@ -58,7 +59,7 @@ Within this cluster:
 - Brock Bowers
 - plus any actual available London/A.J. Brown/Nico/other superior faller at 2.02.
 
-This is deliberately NOT a declaration that all six are equal. It means evidence does not justify treating raw overall slots as exact utility gaps. At 2.02 rebuild the actual board and compare intrinsic tier/boundary evidence before TAKE/WAIT or positional economics.
+This is deliberately NOT a declaration that all six are equal. The fresh FantasyPros tier article explicitly groups several of them with Cook/Jefferson/Jeanty, which weakens any blanket core-vs-next-turn boundary. At 2.02 rebuild the actual board and compare PLAYER-SPECIFIC intrinsic tier/boundary evidence before TAKE/WAIT or positional economics.
 
 ## Boundary-confidence rules
 - HIGH: multiple independent explicit-tier/intrinsic signals support separation and fresh contrary evidence is limited.
@@ -67,7 +68,7 @@ This is deliberately NOT a declaration that all six are equal. It means evidence
 
 Current core Cook/Lamb/Jefferson/Jeanty internal boundary confidence = LOW.
 Superior-faller vs core boundary = generally MEDIUM-HIGH, player-specific and health-dependent.
-Core vs next-turn cluster = MEDIUM overall, but must be player-specific; do not apply one blanket boundary.
+Core vs next-turn cluster = LOW-MEDIUM overall after fresh tier evidence; must be player-specific. Do not apply one blanket boundary.
 
 ## Draft-day output contract
 At each own pick show, for realistic candidates only:
@@ -82,6 +83,11 @@ Order of operations:
 6. roster construction/preferences only as final tiebreaker.
 
 No scalar tier score. No averaging tier numbers across experts. No fabricated tier for rank-only sources.
+
+## Validation consequence — 2026-08-23
+Fresh explicit-tier evidence supports the user's concern directly: rank #12 vs #17 is not intrinsically meaningful when credible tier sources group those players together. Therefore the forthcoming pair validation must count a TAKE/WAIT change as legitimate only when the candidates share/overlap a LOW-confidence boundary. Any sequencing choice that crosses a MEDIUM/HIGH player-specific intrinsic boundary is blocked and sent to evidence review.
+
+The broad 2.02 cluster is NOT permission to treat all candidates as equal. Bowers/Brown/Hampton/Achane/Saquon/Walker must each earn shared-tier status against the best remaining core player through player-specific evidence.
 
 ## Next validation
 Apply this matrix to the verified-current-market pair dataset and quantify how often TAKE/WAIT changes a decision only INSIDE low-confidence/shared boundaries. Flag any case where sequencing would cross a medium/high intrinsic boundary for manual evidence review. Then proceed to realistic full mocks.
