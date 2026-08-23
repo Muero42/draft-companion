@@ -1,0 +1,36 @@
+{
+  "status": "VERIFIED_FROM_USER_SCREENSHOT_2026_08_23",
+  "league_name": "NFL Elite",
+  "teams": 10,
+  "rounds": 15,
+  "snake": true,
+  "user_slot": 9,
+  "user_team": {"team_name":"Muerotechnik","handle":"Muero","research_alias":"Tim"},
+  "draft_order": [
+    {"slot":1,"team_name":"Niederrhein Tractors","handle":"GringoWhiteman82","research_alias":"Michael"},
+    {"slot":2,"team_name":"Voerde Eagles","handle":"Pascal1109","research_alias":"Pascal Voerde"},
+    {"slot":3,"team_name":"Düsseldorfer Sentinels","handle":"marcw90","research_alias":"Marc Düsseldorf"},
+    {"slot":4,"team_name":"Tönisvorst Dripping Blues","handle":"ThomasToevo","research_alias":"Thomas"},
+    {"slot":5,"team_name":"Rumeln Fireflies","handle":"Schumi1705","research_alias":"Bjoern"},
+    {"slot":6,"team_name":"Team GeldernerGoofys","handle":"GeldernerGoofys","research_alias":"Pascal Gelderner"},
+    {"slot":7,"team_name":"Italian Warriors","handle":"GiulianoVe","research_alias":"Giuliano"},
+    {"slot":8,"team_name":"Oeding Bears","handle":"RhenishBear","research_alias":"Basti"},
+    {"slot":9,"team_name":"Muerotechnik","handle":"Muero","research_alias":"Tim"},
+    {"slot":10,"team_name":"Dutch High Flyers","handle":"Gipfelstuermer","research_alias":"Dutch Marc"}
+  ],
+  "user_picks": [9,12,29,32,49,52,69,72,89,92,109,112,129,132,149],
+  "turn_1_09_to_2_02": {
+    "pick_9":{"slot":9,"research_alias":"Tim"},
+    "pick_10":{"slot":10,"research_alias":"Dutch Marc"},
+    "pick_11":{"slot":10,"research_alias":"Dutch Marc"},
+    "pick_12":{"slot":9,"research_alias":"Tim"},
+    "require_same_manager_roster_dependency_at_10_11": true
+  },
+  "roster": {
+    "QB":1,"RB":1,"WR":2,"TE":1,"FLEX_W_R_T":1,"FLEX_W_R":1,"K":1,"DEF":1,"BN":6,"IR":1,
+    "active_roster_slots_excluding_IR":15,
+    "skill_start_topology":{"QB":1,"RB_min":1,"RB_max":3,"WR_min":2,"WR_max":4,"TE_min":1,"TE_max":2,"RB_WR_TE_total":6},
+    "note":"Second FLEX is W/R only; TE is eligible only for the W/R/T flex."
+  },
+  "verification_policy": "If a future screenshot or artifact is unreadable or conflicts with this record, fail closed and request/obtain a clearer verified source. Never infer league geometry from memory or public defaults."
+}
