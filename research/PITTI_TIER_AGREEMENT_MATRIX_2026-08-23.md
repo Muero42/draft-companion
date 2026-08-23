@@ -8,7 +8,7 @@ Purpose: operationalize tier-first decisions for the verified 1.09 -> 2.02 turn 
 - PITTI intrinsic evidence (role, usage, receiving/GL, health, workload/decline, upside/downside) is separate from both expert tier and market availability.
 - Sleeper ADP is availability evidence only.
 
-## Fresh ordinal cross-check (Aug 18-22)
+## Fresh ordinal cross-check (Aug 18-23)
 Recent independent Half-PPR ranks show the normal turn core is tightly overlapping rather than separated by a stable ordinal gap:
 - Fantasy BR (Aug 20): Jefferson 8, Lamb 9, Cook 10, Jeanty 13, Brown 15, Achane 17, Walker 20.
 - Justin Fuhr (Aug 22): Lamb 7, Cook 9, Jefferson 11, Achane 12, Jeanty 13, Bowers 16, Saquon 17, Walker 18.
@@ -18,11 +18,11 @@ Recent independent Half-PPR ranks show the normal turn core is tightly overlappi
 
 Interpretation: Cook/Lamb/Jefferson/Jeanty have strongly overlapping fresh ordinal support. Their exact order is unstable across credible current sources, so differences of a few overall slots are weak evidence. Achane/Saquon/Brown/Bowers/Hampton/Walker overlap the back of the turn but generally have less consistent top-12 support.
 
-## Explicit-tier evidence already verified
-- Adam Pelletier (Aug 19 Half-PPR): Cook Tier 1; Amon-Ra/Jefferson/Taylor/Jeanty/Hampton Tier 2; Chase Brown/Bowers Tier 3.
-- Wolf of Roto Street (Aug 19 Half-PPR): JSN/Amon-Ra/Cook/Taylor/CMC Tier 3; Jeanty/Walker/Chase Brown Tier 4. Jefferson/Lamb were not visible in the returned segment and therefore receive NO inferred vote from this source.
+## Explicit-tier evidence
+- Adam Pelletier (Aug 19 Half-PPR, previously verified): Cook Tier 1; Amon-Ra/Jefferson/Taylor/Jeanty/Hampton Tier 2; Chase Brown/Bowers Tier 3.
+- Wolf of Roto Street / Roto Street Journal (Aug 19 Half-PPR, freshly rechecked Aug 23): Tier 3 = JSN, Amon-Ra, Cook, Taylor, CMC; Tier 4 includes Jeanty, Walker, Chase Brown, Lamb and Achane in the currently returned segment. This source therefore creates a real boundary between Cook/Taylor/JSN/Amon-Ra/CMC and Jeanty/Lamb/Achane/Walker/Brown. Do not infer a Jefferson tier when it is not visible in the retrieved segment.
 
-These tier sources disagree materially. Therefore no single published tier boundary is sufficiently robust to force Cook > Jefferson/Jeanty or similar by itself.
+These explicit-tier sources disagree materially, including on Jeanty relative to Cook and on the breadth of the next tier. Therefore no single published tier boundary is sufficiently robust to force Cook > Jefferson/Jeanty/Lamb or similar by itself.
 
 ## PITTI provisional boundary map
 This is a decision cluster, not a numeric ranking.
