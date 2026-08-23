@@ -1,10 +1,5 @@
 name: PITTI rc4.59 targeted PairSum causal breadth
 on:
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'research/rc459_cf_targeted_pairsum_breadth_2026.js'
-      - '.github/workflows/pitti-rc459-cf-targeted-pairsum.yml'
   workflow_dispatch:
 jobs:
   targeted:
