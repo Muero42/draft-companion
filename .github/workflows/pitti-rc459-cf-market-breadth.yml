@@ -1,10 +1,5 @@
 name: PITTI rc4.59 MARKET counterfactual breadth
 on:
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'research/rc459_cf_market_breadth_2026.js'
-      - '.github/workflows/pitti-rc459-cf-market-breadth.yml'
   workflow_dispatch:
 jobs:
   breadth:
