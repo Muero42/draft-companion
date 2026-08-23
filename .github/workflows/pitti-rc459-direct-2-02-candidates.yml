@@ -5,6 +5,7 @@ on:
     paths:
       - 'research/rc459_direct_2_02_candidates_2026.js'
       - 'research/rc459_direct_2_02_diagnostic_2026.js'
+      - 'research/rc459_direct_2_02_regular_season_utility_2026.py'
       - '.github/workflows/pitti-rc459-direct-2-02-candidates.yml'
   workflow_dispatch:
 jobs:
@@ -20,6 +21,8 @@ jobs:
         run: node research/rc459_direct_2_02_candidates_2026.js
       - name: Diagnostic-only multi-lens summary
         run: node research/rc459_direct_2_02_diagnostic_2026.js
+      - name: Independent weeks 1-14 regular-season utility
+        run: python3 research/rc459_direct_2_02_regular_season_utility_2026.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:
@@ -27,4 +30,5 @@ jobs:
           path: |
             counterfactual_2026/RC459_DIRECT_2_02_CANDIDATES_2026.json
             counterfactual_2026/RC459_DIRECT_2_02_DIAGNOSTIC_2026.json
+            counterfactual_2026/RC459_DIRECT_2_02_REGULAR_SEASON_UTILITY_2026.json
           if-no-files-found: error
