@@ -1,0 +1,30 @@
+name: PITTI rc4.59 MARKET causal breadth 100
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/rc459_cf_market_breadth100_2026.js'
+      - 'research/rc459_cf_multilens100_eval_2026.py'
+      - '.github/workflows/pitti-rc459-cf-market-breadth100.yml'
+  workflow_dispatch:
+jobs:
+  breadth100:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate 100 fresh MARKET_NEUTRAL causal states per treatment
+        run: node research/rc459_cf_market_breadth100_2026.js
+      - name: Evaluate through frozen multi-lens diagnostics
+        run: python research/rc459_cf_multilens100_eval_2026.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-cf-market-breadth100
+          path: |
+            counterfactual_2026/RC459_CF_MARKET_BREADTH100_2026.json
+            counterfactual_2026/RC459_CF_MARKET_BREADTH100_MULTILENS_2026.json
+          if-no-files-found: error
