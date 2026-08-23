@@ -1,0 +1,25 @@
+name: PITTI rc4.59 CF FA enriched
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/rc459_cf_market_breadth100_fa_enriched_2026.js'
+      - '.github/workflows/pitti-rc459-cf-fa-enriched.yml'
+  workflow_dispatch:
+jobs:
+  fa-enriched:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Generate fresh FA-enriched causal branches and require complete metadata coverage
+        run: node research/rc459_cf_market_breadth100_fa_enriched_2026.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-cf-fa-enriched20
+          path: counterfactual_2026/RC459_CF_MARKET_FA_ENRICHED20_2026.json
+          if-no-files-found: error
