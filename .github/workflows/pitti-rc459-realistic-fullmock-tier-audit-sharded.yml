@@ -1,0 +1,38 @@
+name: PITTI rc4.59 realistic full-mock tier audit sharded
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/rc459_realistic_fullmock_tier_audit_2026.js'
+      - 'research/rc459_realistic_fullmock_tier_audit_shard_2026.js'
+      - '.github/workflows/pitti-rc459-realistic-fullmock-tier-audit-sharded.yml'
+  workflow_dispatch:
+jobs:
+  fullmock-tier-audit-shard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax checks
+        run: |
+          node --check research/rc459_realistic_fullmock_tier_audit_2026.js
+          node --check research/rc459_realistic_fullmock_tier_audit_shard_2026.js
+      - name: Run deterministic 10-draft shard
+        env:
+          PITTI_SHARD: ${{ matrix.shard }}
+        run: node research/rc459_realistic_fullmock_tier_audit_shard_2026.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-realistic-fullmock-tier-audit-shard-${{ matrix.shard }}
+          path: simulation_2026/RC459_REALISTIC_FULLMOCK_TIER_AUDIT_SHARD_${{ matrix.shard }}_2026.json
+          if-no-files-found: error
+          retention-days: 3
