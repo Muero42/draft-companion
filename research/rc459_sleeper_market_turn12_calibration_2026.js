@@ -16,10 +16,20 @@ const skill=new Set(['RB','WR']);
 (async()=>{const fix=await C.getFixture(),api=C.apiFrom(fix);await api.loadMeta();install(api);const players=api.buildPlayers();C.ok(Object.keys(players).length>=225,'pool');api.initRepl(players);const pByName=Object.fromEntries(Object.values(players).map(p=>[p.name,p]));
 const avail9={},turn12={},dutchPairs={};let stateN=0;
 for(const [n,a] of Object.entries(market))if(a<=pick9Max&&skill.has(pByName[n]?.pos)&&!control9.has(n))avail9[n]={eligible:seedN,available:0,rate:0};
-for(const seed of seeds){const pre9=C.advance(api,players,C.init(api,players,seed),9,'MARKET_NEUTRAL');for(const n of Object.keys(avail9))if([...pre9.available].some(k=>players[k]?.name===n))avail9[n].available++;
+for(const seed of seeds){
+ const pre9=C.advance(api,players,C.init(api,players,seed),9,'MARKET_NEUTRAL');
+ for(const n of Object.keys(avail9))if([...pre9.available].some(k=>players[k]?.name===n))avail9[n].available++;
  const candidates=[...pre9.available].map(k=>players[k]).filter(Boolean).filter(p=>skill.has(p.pos)&&Number.isFinite(market[p.name])&&market[p.name]<=pick9Max&&!control9.has(p.name)).sort((a,b)=>market[a.name]-market[b.name]);
- for(const c9 of candidates){const s=C.clone(pre9);C.force(api,s,c9,9);C.advance(api,players,s,12,'MARKET_NEUTRAL');stateN++;const dutch=s.picks.filter(x=>[10,11].includes(+x.pick_no)).map(x=>x.metadata?.player_name);C.ok(dutch.length===2,'Dutch picks');const pk=dutch.join(' + ');dutchPairs[pk]=(dutchPairs[pk]||0)+1;const av=new Set([...s.available].map(k=>players[k]?.name).filter(Boolean));for(const [n,a] of Object.entries(market)){if(n===c9.name||a>pick12Max||control12.has(n)||!pByName[n]||!['RB','WR','TE'].includes(pByName[n].pos))continue;const key=c9.name+' -> '+n,z=turn12[key]||(turn12[key]={pick9:c9.name,pick12:n,market9:market[c9.name],market12:a,eligible:0,survived:0});z.eligible++;if(av.has(n))z.survived++}}
- }}
+ for(const c9 of candidates){
+  const s=C.clone(pre9);C.force(api,s,c9,9);C.advance(api,players,s,12,'MARKET_NEUTRAL');stateN++;
+  const dutch=s.picks.filter(x=>[10,11].includes(+x.pick_no)).map(x=>x.metadata?.player_name);C.ok(dutch.length===2,'Dutch picks');const pk=dutch.join(' + ');dutchPairs[pk]=(dutchPairs[pk]||0)+1;
+  const av=new Set([...s.available].map(k=>players[k]?.name).filter(Boolean));
+  for(const [n,a] of Object.entries(market)){
+   if(n===c9.name||a>pick12Max||control12.has(n)||!pByName[n]||!['RB','WR','TE'].includes(pByName[n].pos))continue;
+   const key=c9.name+' -> '+n,z=turn12[key]||(turn12[key]={pick9:c9.name,pick12:n,market9:market[c9.name],market12:a,eligible:0,survived:0});z.eligible++;if(av.has(n))z.survived++;
+  }
+ }
+}
 for(const z of Object.values(avail9))z.rate=z.available/z.eligible;for(const z of Object.values(turn12))z.rate=z.survived/z.eligible;
 C.ok(stateN>=1000,'too few conditioned states '+stateN);const core=['CeeDee Lamb','James Cook III','Saquon Barkley','Ashton Jeanty','Justin Jefferson'];for(const n of core){const rows=Object.values(turn12).filter(z=>z.pick12===n);C.ok(rows.length>=3,'missing core '+n);const tot=rows.reduce((a,z)=>a+z.eligible,0),sur=rows.reduce((a,z)=>a+z.survived,0),r=sur/tot;C.ok(r>0&&r<.995,'degenerate aggregate '+n+' '+r)}
 const aggregate12={};for(const z of Object.values(turn12)){const a=aggregate12[z.pick12]||(aggregate12[z.pick12]={eligible:0,survived:0});a.eligible+=z.eligible;a.survived+=z.survived}for(const z of Object.values(aggregate12))z.rate=z.survived/z.eligible;
