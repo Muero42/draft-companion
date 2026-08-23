@@ -1,0 +1,45 @@
+{
+  "schema": 1,
+  "frozen_at": "2026-08-23",
+  "source": {
+    "name": "Hashtag Football Sleeper ADP",
+    "updated": "2026-08-22",
+    "scoring": "Half PPR",
+    "platform": "Sleeper",
+    "note": "Verified public Sleeper-derived half-PPR ADP used as primary availability anchor; strategy quality remains independent."
+  },
+  "adp": {
+    "Jahmyr Gibbs": 1.8,
+    "Bijan Robinson": 2.7,
+    "Ja'Marr Chase": 3.2,
+    "Puka Nacua": 4.1,
+    "Christian McCaffrey": 5.1,
+    "Jonathan Taylor": 6.2,
+    "Jaxon Smith-Njigba": 6.6,
+    "Amon-Ra St. Brown": 8.0,
+    "James Cook III": 9.6,
+    "CeeDee Lamb": 10.5,
+    "Saquon Barkley": 11.5,
+    "Ashton Jeanty": 12.6,
+    "De'Von Achane": 13.6,
+    "Justin Jefferson": 13.7,
+    "Omarion Hampton": 15.6,
+    "Chase Brown": 16.6,
+    "Derrick Henry": 17.8,
+    "Kenneth Walker III": 18.1,
+    "A.J. Brown": 19.5,
+    "Drake London": 20.6,
+    "Josh Allen": 21.0,
+    "Brock Bowers": 22.1,
+    "Nico Collins": 23.1,
+    "Trey McBride": 24.1,
+    "George Pickens": 26.1,
+    "Malik Nabers": 30.1,
+    "Chris Olave": 32.3,
+    "Zay Flowers": 41.6
+  },
+  "strategy_exclusions": {
+    "1.09_major_reach_controls": ["Chase Brown", "Brock Bowers"],
+    "2.02_major_reach_controls": ["Josh Allen"]
+  }
+}
