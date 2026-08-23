@@ -1,0 +1,29 @@
+name: PITTI rc4.59 counterfactual multi-lens diagnostic
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/rc459_cf_multilens_eval_2026.py'
+      - '.github/workflows/pitti-rc459-cf-multilens.yml'
+  workflow_dispatch:
+jobs:
+  evaluate:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Recreate frozen ten-seed MARKET_NEUTRAL causal breadth
+        run: node research/rc459_cf_market_breadth_2026.js
+      - name: Multi-lens diagnostic evaluation
+        run: python research/rc459_cf_multilens_eval_2026.py
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-cf-multilens
+          path: |
+            counterfactual_2026/RC459_CF_MARKET_BREADTH_2026.json
+            counterfactual_2026/RC459_CF_MARKET_BREADTH_MULTILENS_2026.json
+          if-no-files-found: error
