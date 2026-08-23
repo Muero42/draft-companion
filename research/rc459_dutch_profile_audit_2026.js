@@ -1,0 +1,5 @@
+'use strict';
+const fs=require('fs'),crypto=require('crypto');
+const CORE='research/rc459_decision_counterfactual_screen_2026.js',raw=fs.readFileSync(CORE,'utf8'),buf=Buffer.from(raw),EXPECT='8cd71b5d01af8fe0f03ab0ff9ee3573486d4b5c3';
+const blob=crypto.createHash('sha1').update(Buffer.from(`blob ${buf.length}\0`)).update(buf).digest('hex');if(blob!==EXPECT)throw Error('CORE_DRIFT');const main=raw.indexOf('(async()=>');const exp=`\nreturn {getFixture,apiFrom,ok};`;const C=new Function('require','fetch','structuredClone',raw.slice(0,main)+exp)(require,fetch,structuredClone);
+(async()=>{const fix=await C.getFixture(),api=C.apiFrom(fix),man=api.C.__MANAGER_PROFILE_DATA;const profile=man?.profiles?.['Dutch Marc'];C.ok(profile,'Dutch profile missing');const out={status:'PASS',manager:'Dutch Marc',profile,leaguePhaseShares:man.leaguePhaseShares};fs.mkdirSync('diagnostics_2026',{recursive:true});fs.writeFileSync('diagnostics_2026/RC459_DUTCH_PROFILE_AUDIT_2026.json',JSON.stringify(out,null,2));console.log(JSON.stringify(out,null,2))})().catch(e=>{console.error(e.stack||e);process.exit(2)});
