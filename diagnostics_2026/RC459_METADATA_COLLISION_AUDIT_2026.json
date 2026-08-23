@@ -1,0 +1,7432 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "research_only": true,
+  "legacy_key": "normalized full name only; last Sleeper iteration wins",
+  "recommended_key": "normalized full name + fantasy position; fail closed when same-position match is not unique",
+  "sleeper_records": 12221,
+  "frozen_pool_rows": 230,
+  "duplicate_normalized_name_groups": 227,
+  "affected_fantasy_pool_rows": 7,
+  "ambiguous_same_position_pool_rows": 0,
+  "justin_jefferson_wr": {
+    "legacy_wrong": true,
+    "pool": {
+      "key": "justinjefferson",
+      "name": "Justin Jefferson",
+      "pos": "WR",
+      "adp": 13.7
+    },
+    "legacy": {
+      "id": "13524",
+      "name": "Justin Jefferson",
+      "position": "LB",
+      "team": "CLE",
+      "years_exp": 0,
+      "active": true,
+      "search_rank": 9999999,
+      "injury_status": null
+    },
+    "position_matches": [
+      {
+        "id": "6794",
+        "name": "Justin Jefferson",
+        "position": "WR",
+        "team": "MIN",
+        "years_exp": 6,
+        "active": true,
+        "search_rank": 11,
+        "injury_status": null
+      }
+    ],
+    "all_same_name": [
+      {
+        "id": "6794",
+        "name": "Justin Jefferson",
+        "position": "WR",
+        "team": "MIN",
+        "years_exp": 6,
+        "active": true,
+        "search_rank": 11,
+        "injury_status": null
+      },
+      {
+        "id": "13524",
+        "name": "Justin Jefferson",
+        "position": "LB",
+        "team": "CLE",
+        "years_exp": 0,
+        "active": true,
+        "search_rank": 9999999,
+        "injury_status": null
+      }
+    ],
+    "legacy_mismatch": true,
+    "position_match_count": 1,
+    "unresolved": false
+  },
+  "affected": [
+    {
+      "pool": {
+        "key": "kennethwalker",
+        "name": "Kenneth Walker III",
+        "pos": "RB",
+        "adp": 18.1
+      },
+      "legacy": {
+        "id": "8151",
+        "name": "Kenneth Walker",
+        "position": "RB",
+        "team": "KC",
+        "years_exp": 4,
+        "active": true,
+        "search_rank": 18,
+        "injury_status": null
+      },
+      "position_matches": [
+        {
+          "id": "8151",
+          "name": "Kenneth Walker",
+          "position": "RB",
+          "team": "KC",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 18,
+          "injury_status": null
+        }
+      ],
+      "all_same_name": [
+        {
+          "id": "4634",
+          "name": "Kenneth Walker",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8151",
+          "name": "Kenneth Walker",
+          "position": "RB",
+          "team": "KC",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 18,
+          "injury_status": null
+        }
+      ],
+      "legacy_mismatch": false,
+      "position_match_count": 1,
+      "unresolved": false
+    },
+    {
+      "pool": {
+        "key": "justinjefferson",
+        "name": "Justin Jefferson",
+        "pos": "WR",
+        "adp": 13.7
+      },
+      "legacy": {
+        "id": "13524",
+        "name": "Justin Jefferson",
+        "position": "LB",
+        "team": "CLE",
+        "years_exp": 0,
+        "active": true,
+        "search_rank": 9999999,
+        "injury_status": null
+      },
+      "position_matches": [
+        {
+          "id": "6794",
+          "name": "Justin Jefferson",
+          "position": "WR",
+          "team": "MIN",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 11,
+          "injury_status": null
+        }
+      ],
+      "all_same_name": [
+        {
+          "id": "6794",
+          "name": "Justin Jefferson",
+          "position": "WR",
+          "team": "MIN",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 11,
+          "injury_status": null
+        },
+        {
+          "id": "13524",
+          "name": "Justin Jefferson",
+          "position": "LB",
+          "team": "CLE",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ],
+      "legacy_mismatch": true,
+      "position_match_count": 1,
+      "unresolved": false
+    },
+    {
+      "pool": {
+        "key": "devontasmith",
+        "name": "DeVonta Smith",
+        "pos": "WR",
+        "adp": 34.5
+      },
+      "legacy": {
+        "id": "13977",
+        "name": "Devonta Smith",
+        "position": "CB",
+        "team": "CAR",
+        "years_exp": 0,
+        "active": true,
+        "search_rank": 9999999,
+        "injury_status": null
+      },
+      "position_matches": [
+        {
+          "id": "7525",
+          "name": "DeVonta Smith",
+          "position": "WR",
+          "team": "PHI",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 34,
+          "injury_status": "Questionable"
+        }
+      ],
+      "all_same_name": [
+        {
+          "id": "7525",
+          "name": "DeVonta Smith",
+          "position": "WR",
+          "team": "PHI",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 34,
+          "injury_status": "Questionable"
+        },
+        {
+          "id": "13977",
+          "name": "Devonta Smith",
+          "position": "CB",
+          "team": "CAR",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ],
+      "legacy_mismatch": true,
+      "position_match_count": 1,
+      "unresolved": false
+    },
+    {
+      "pool": {
+        "key": "joshallen",
+        "name": "Josh Allen",
+        "pos": "QB",
+        "adp": 21
+      },
+      "legacy": {
+        "id": "4984",
+        "name": "Josh Allen",
+        "position": "QB",
+        "team": "BUF",
+        "years_exp": 8,
+        "active": true,
+        "search_rank": 3,
+        "injury_status": null
+      },
+      "position_matches": [
+        {
+          "id": "4984",
+          "name": "Josh Allen",
+          "position": "QB",
+          "team": "BUF",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 3,
+          "injury_status": null
+        }
+      ],
+      "all_same_name": [
+        {
+          "id": "2212",
+          "name": "Josh Allen",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 8,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4984",
+          "name": "Josh Allen",
+          "position": "QB",
+          "team": "BUF",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 3,
+          "injury_status": null
+        }
+      ],
+      "legacy_mismatch": false,
+      "position_match_count": 1,
+      "unresolved": false
+    },
+    {
+      "pool": {
+        "key": "lamarjackson",
+        "name": "Lamar Jackson",
+        "pos": "QB",
+        "adp": 34.2
+      },
+      "legacy": {
+        "id": "6994",
+        "name": "Lamar Jackson",
+        "position": "CB",
+        "team": "FA",
+        "years_exp": 5,
+        "active": true,
+        "search_rank": 1059,
+        "injury_status": null
+      },
+      "position_matches": [
+        {
+          "id": "4881",
+          "name": "Lamar Jackson",
+          "position": "QB",
+          "team": "BAL",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 11,
+          "injury_status": null
+        }
+      ],
+      "all_same_name": [
+        {
+          "id": "4881",
+          "name": "Lamar Jackson",
+          "position": "QB",
+          "team": "BAL",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 11,
+          "injury_status": null
+        },
+        {
+          "id": "6994",
+          "name": "Lamar Jackson",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 1059,
+          "injury_status": null
+        }
+      ],
+      "legacy_mismatch": true,
+      "position_match_count": 1,
+      "unresolved": false
+    },
+    {
+      "pool": {
+        "key": "djmoore",
+        "name": "DJ Moore",
+        "pos": "WR",
+        "adp": 55.6
+      },
+      "legacy": {
+        "id": "4983",
+        "name": "DJ Moore",
+        "position": "WR",
+        "team": "BUF",
+        "years_exp": 8,
+        "active": true,
+        "search_rank": 55,
+        "injury_status": null
+      },
+      "position_matches": [
+        {
+          "id": "4983",
+          "name": "DJ Moore",
+          "position": "WR",
+          "team": "BUF",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 55,
+          "injury_status": null
+        }
+      ],
+      "all_same_name": [
+        {
+          "id": "4961",
+          "name": "DJ Moore",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 11,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4983",
+          "name": "DJ Moore",
+          "position": "WR",
+          "team": "BUF",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 55,
+          "injury_status": null
+        }
+      ],
+      "legacy_mismatch": false,
+      "position_match_count": 1,
+      "unresolved": false
+    },
+    {
+      "pool": {
+        "key": "devinneal",
+        "name": "Devin Neal",
+        "pos": "RB",
+        "adp": 685.9
+      },
+      "legacy": {
+        "id": "13649",
+        "name": "Devin Neal",
+        "position": "DB",
+        "team": "JAX",
+        "years_exp": 0,
+        "active": true,
+        "search_rank": 9999999,
+        "injury_status": null
+      },
+      "position_matches": [
+        {
+          "id": "12476",
+          "name": "Devin Neal",
+          "position": "RB",
+          "team": "NO",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 169,
+          "injury_status": "Questionable"
+        }
+      ],
+      "all_same_name": [
+        {
+          "id": "12476",
+          "name": "Devin Neal",
+          "position": "RB",
+          "team": "NO",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 169,
+          "injury_status": "Questionable"
+        },
+        {
+          "id": "13649",
+          "name": "Devin Neal",
+          "position": "DB",
+          "team": "JAX",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ],
+      "legacy_mismatch": true,
+      "position_match_count": 1,
+      "unresolved": false
+    }
+  ],
+  "duplicate_groups": [
+    {
+      "key": "charlesjohnson",
+      "records": [
+        {
+          "id": "37",
+          "name": "Charles Johnson",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 13,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "1530",
+          "name": "Charles Johnson",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "michaelgriffin",
+      "records": [
+        {
+          "id": "46",
+          "name": "Michael Griffin",
+          "position": "FS",
+          "team": "FA",
+          "years_exp": 13,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8541",
+          "name": "Michael Griffin",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mikeadams",
+      "records": [
+        {
+          "id": "74",
+          "name": "Mike Adams",
+          "position": "FS",
+          "team": "FA",
+          "years_exp": 18,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "1087",
+          "name": "Mike Adams",
+          "position": "OT",
+          "team": "FA",
+          "years_exp": 4,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "kylewilliams",
+      "records": [
+        {
+          "id": "94",
+          "name": "Kyle Williams",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 16,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "638",
+          "name": "Kyle Williams",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7437",
+          "name": "Kyle Williams",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 2,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12547",
+          "name": "Kyle Williams",
+          "position": "WR",
+          "team": "NE",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 195,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "freddavis",
+      "records": [
+        {
+          "id": "98",
+          "name": "Fred Davis",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 6,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13675",
+          "name": "Fred Davis",
+          "position": "CB",
+          "team": "WAS",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "zachmiller",
+      "records": [
+        {
+          "id": "171",
+          "name": "Zach Miller",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 8,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "749",
+          "name": "Zach Miller",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 11,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jacobyjones",
+      "records": [
+        {
+          "id": "203",
+          "name": "Jacoby Jones",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 13,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13120",
+          "name": "Jacoby Jones",
+          "position": "WR",
+          "team": "WAS",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mariowilliams",
+      "records": [
+        {
+          "id": "219",
+          "name": "Mario Williams",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 14,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13001",
+          "name": "Mario Williams",
+          "position": "WR",
+          "team": "LAR",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        }
+      ]
+    },
+    {
+      "key": "frankgore",
+      "records": [
+        {
+          "id": "232",
+          "name": "Frank Gore",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 17,
+          "active": true,
+          "search_rank": 187,
+          "injury_status": null
+        },
+        {
+          "id": "11573",
+          "name": "Frank Gore",
+          "position": "RB",
+          "team": "BUF",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 346,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "ronniebrown",
+      "records": [
+        {
+          "id": "258",
+          "name": "Ronnie Brown",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 9,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11413",
+          "name": "Ronnie Brown",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "joshjohnson",
+      "records": [
+        {
+          "id": "260",
+          "name": "Josh Johnson",
+          "position": "QB",
+          "team": "CIN",
+          "years_exp": 18,
+          "active": true,
+          "search_rank": 544,
+          "injury_status": null
+        },
+        {
+          "id": "1625",
+          "name": "Josh Johnson",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 9,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8051",
+          "name": "Josh Johnson",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 559,
+          "injury_status": null
+        },
+        {
+          "id": "8222",
+          "name": "Josh Johnson",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 446,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "alexsmith",
+      "records": [
+        {
+          "id": "268",
+          "name": "Alex Smith",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 17,
+          "active": true,
+          "search_rank": 425,
+          "injury_status": null
+        },
+        {
+          "id": "661",
+          "name": "Alex Smith",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 15,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "chrisjohnson",
+      "records": [
+        {
+          "id": "272",
+          "name": "Chris Johnson",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 12,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6087",
+          "name": "Chris Johnson",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13370",
+          "name": "Chris Johnson",
+          "position": "DB",
+          "team": "MIA",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 559,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "joethomas",
+      "records": [
+        {
+          "id": "327",
+          "name": "Joe Thomas",
+          "position": "T",
+          "team": "FA",
+          "years_exp": 13,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2147",
+          "name": "Joe Thomas",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 9,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "derrickjohnson",
+      "records": [
+        {
+          "id": "329",
+          "name": "Derrick Johnson",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 17,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "1842",
+          "name": "Derrick Johnson",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 11,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "chrisclemons",
+      "records": [
+        {
+          "id": "337",
+          "name": "Chris Clemons",
+          "position": "FS",
+          "team": "FA",
+          "years_exp": 11,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "696",
+          "name": "Chris Clemons",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 17,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "michaeljohnson",
+      "records": [
+        {
+          "id": "354",
+          "name": "Michael Johnson",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 13,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2754",
+          "name": "Michael Johnson",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "andresmith",
+      "records": [
+        {
+          "id": "358",
+          "name": "Andre Smith",
+          "position": "T",
+          "team": "FA",
+          "years_exp": 13,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5340",
+          "name": "Andre Smith",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "davidjohnson",
+      "records": [
+        {
+          "id": "362",
+          "name": "David Johnson",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 11,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2391",
+          "name": "David Johnson",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "seansmith",
+      "records": [
+        {
+          "id": "467",
+          "name": "Sean Smith",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6736",
+          "name": "Sean Smith",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 11,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": "NA"
+        }
+      ]
+    },
+    {
+      "key": "lardariuswebb",
+      "records": [
+        {
+          "id": "478",
+          "name": "Lardarius Webb",
+          "position": "FS",
+          "team": "FA",
+          "years_exp": 11,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13727",
+          "name": "Lardarius Webb",
+          "position": "DB",
+          "team": "BAL",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "michaelbennett",
+      "records": [
+        {
+          "id": "495",
+          "name": "Michael Bennett",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 13,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2482",
+          "name": "Michael Bennett",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2969",
+          "name": "Michael Bennett",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "kylewilson",
+      "records": [
+        {
+          "id": "524",
+          "name": "Kyle Wilson",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 10,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5749",
+          "name": "Kyle Wilson",
+          "position": "OLB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "brandonmarshall",
+      "records": [
+        {
+          "id": "648",
+          "name": "Brandon Marshall",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 16,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "1118",
+          "name": "Brandon Marshall",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "joeyporter",
+      "records": [
+        {
+          "id": "693",
+          "name": "Joey Porter",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "10913",
+          "name": "Joey Porter",
+          "position": "DB",
+          "team": "PIT",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "PUP"
+        }
+      ]
+    },
+    {
+      "key": "reggiewalker",
+      "records": [
+        {
+          "id": "694",
+          "name": "Reggie Walker",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 13,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7398",
+          "name": "Reggie Walker",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 1998,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "cjmosley",
+      "records": [
+        {
+          "id": "743",
+          "name": "C.J. Mosley",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 15,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "1875",
+          "name": "C.J. Mosley",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 11,
+          "active": true,
+          "search_rank": 216,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mikewilliams",
+      "records": [
+        {
+          "id": "748",
+          "name": "Mike Williams",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 9,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4068",
+          "name": "Mike Williams",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 297,
+          "injury_status": "DNR"
+        }
+      ]
+    },
+    {
+      "key": "justinrogers",
+      "records": [
+        {
+          "id": "797",
+          "name": "Justin Rogers",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 9,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11839",
+          "name": "Justin Rogers",
+          "position": "DL",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "danielthomas",
+      "records": [
+        {
+          "id": "806",
+          "name": "Daniel Thomas",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7053",
+          "name": "Daniel Thomas",
+          "position": "DB",
+          "team": "CLE",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "ajgreen",
+      "records": [
+        {
+          "id": "830",
+          "name": "A.J. Green",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 12,
+          "active": true,
+          "search_rank": 216,
+          "injury_status": null
+        },
+        {
+          "id": "6876",
+          "name": "A.J. Green",
+          "position": "CB",
+          "team": "MIA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 663,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "greglittle",
+      "records": [
+        {
+          "id": "835",
+          "name": "Greg Little",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 9,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5868",
+          "name": "Greg Little",
+          "position": "T",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "taiwanjones",
+      "records": [
+        {
+          "id": "886",
+          "name": "Taiwan Jones",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 12,
+          "active": true,
+          "search_rank": 618,
+          "injury_status": null
+        },
+        {
+          "id": "2575",
+          "name": "Taiwan Jones",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "chrisjones",
+      "records": [
+        {
+          "id": "903",
+          "name": "Chris Jones",
+          "position": "P",
+          "team": "FA",
+          "years_exp": 11,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "1430",
+          "name": "Chris Jones",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 9,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "3558",
+          "name": "Chris Jones",
+          "position": "DT",
+          "team": "KC",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 551,
+          "injury_status": null
+        },
+        {
+          "id": "5815",
+          "name": "Chris Jones",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "joshthomas",
+      "records": [
+        {
+          "id": "907",
+          "name": "Josh Thomas",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 9,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7208",
+          "name": "Josh Thomas",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "djwilliams",
+      "records": [
+        {
+          "id": "935",
+          "name": "DJ Williams",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 4,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11989",
+          "name": "D.J. Williams",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 999,
+          "injury_status": "Questionable"
+        }
+      ]
+    },
+    {
+      "key": "akeemdent",
+      "records": [
+        {
+          "id": "946",
+          "name": "Akeem Dent",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 9,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11871",
+          "name": "Akeem Dent",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jamescarpenter",
+      "records": [
+        {
+          "id": "989",
+          "name": "James Carpenter",
+          "position": "T",
+          "team": "FA",
+          "years_exp": 11,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12915",
+          "name": "James Carpenter",
+          "position": "DL",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "marvinjones",
+      "records": [
+        {
+          "id": "1067",
+          "name": "Marvin Jones",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 11,
+          "active": true,
+          "search_rank": 505,
+          "injury_status": null
+        },
+        {
+          "id": "13687",
+          "name": "Marvin Jones",
+          "position": "DE",
+          "team": "SEA",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mikeharris",
+      "records": [
+        {
+          "id": "1117",
+          "name": "Mike Harris",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "1140",
+          "name": "Mike Harris",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 8,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "aaronbrewer",
+      "records": [
+        {
+          "id": "1122",
+          "name": "Aaron Brewer",
+          "position": "LS",
+          "team": "FA",
+          "years_exp": 14,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7440",
+          "name": "Aaron Brewer",
+          "position": "OL",
+          "team": "MIA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "nickperry",
+      "records": [
+        {
+          "id": "1177",
+          "name": "Nick Perry",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 10,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2759",
+          "name": "Nick Perry",
+          "position": "FS",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "leonardjohnson",
+      "records": [
+        {
+          "id": "1194",
+          "name": "Leonard Johnson",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 10,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "10868",
+          "name": "Leonard Johnson",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "austindavis",
+      "records": [
+        {
+          "id": "1200",
+          "name": "Austin Davis",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 10,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5482",
+          "name": "Austin Davis",
+          "position": "C",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "dominiquedavis",
+      "records": [
+        {
+          "id": "1237",
+          "name": "Dominique Davis",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2782",
+          "name": "Dominique Davis",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "joshharris",
+      "records": [
+        {
+          "id": "1238",
+          "name": "Josh Harris",
+          "position": "LS",
+          "team": "LAC",
+          "years_exp": 14,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2303",
+          "name": "Josh Harris",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "willjohnson",
+      "records": [
+        {
+          "id": "1250",
+          "name": "Will Johnson",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 8,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2984",
+          "name": "Will Johnson",
+          "position": "P",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12565",
+          "name": "Will Johnson",
+          "position": "DB",
+          "team": "ARI",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 697,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "joshrobinson",
+      "records": [
+        {
+          "id": "1254",
+          "name": "Josh Robinson",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2506",
+          "name": "Josh Robinson",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "francisowusu",
+      "records": [
+        {
+          "id": "1273",
+          "name": "Francis Owusu",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4879",
+          "name": "Francis Owusu",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 3,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": "NA"
+        }
+      ]
+    },
+    {
+      "key": "ryandavis",
+      "records": [
+        {
+          "id": "1282",
+          "name": "Ryan Davis",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 8,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6036",
+          "name": "Ryan Davis",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mikebrown",
+      "records": [
+        {
+          "id": "1321",
+          "name": "Mike Brown",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 3,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7906",
+          "name": "Mike Brown",
+          "position": "OL",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8532",
+          "name": "Mike Brown",
+          "position": "DB",
+          "team": "NE",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "camjohnson",
+      "records": [
+        {
+          "id": "1328",
+          "name": "Cam Johnson",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 8,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12086",
+          "name": "Cam Johnson",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "dukewilliams",
+      "records": [
+        {
+          "id": "1351",
+          "name": "Duke Williams",
+          "position": "SS",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "3846",
+          "name": "Duke Williams",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "brandonwilliams",
+      "records": [
+        {
+          "id": "1383",
+          "name": "Brandon Williams",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "1696",
+          "name": "Brandon Williams",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "3557",
+          "name": "Brandon Williams",
+          "position": "CB",
+          "team": "NYG",
+          "years_exp": 4,
+          "active": false,
+          "search_rank": 1060,
+          "injury_status": null
+        },
+        {
+          "id": "3653",
+          "name": "Brandon Williams",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "nickwilliams",
+      "records": [
+        {
+          "id": "1414",
+          "name": "Nick Williams",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 11,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "1604",
+          "name": "Nick Williams",
+          "position": "WR",
+          "team": "DEN",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11530",
+          "name": "Nick Williams",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 472,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "ryangriffin",
+      "records": [
+        {
+          "id": "1425",
+          "name": "Ryan Griffin",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "1550",
+          "name": "Ryan Griffin",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 292,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "christhompson",
+      "records": [
+        {
+          "id": "1502",
+          "name": "Chris Thompson",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 9,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4719",
+          "name": "Chris Thompson",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        }
+      ]
+    },
+    {
+      "key": "austinjohnson",
+      "records": [
+        {
+          "id": "1551",
+          "name": "Austin Johnson",
+          "position": "FB",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "3560",
+          "name": "Austin Johnson",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "marcuscooper",
+      "records": [
+        {
+          "id": "1583",
+          "name": "Marcus Cooper",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 9,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11222",
+          "name": "Marcus Cooper",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "chrisharper",
+      "records": [
+        {
+          "id": "1595",
+          "name": "Chris Harper",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2721",
+          "name": "Chris Harper",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "rodneysmith",
+      "records": [
+        {
+          "id": "1631",
+          "name": "Rodney Smith",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2892",
+          "name": "Rodney Smith",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7101",
+          "name": "Rodney Smith",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 420,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "devintaylor",
+      "records": [
+        {
+          "id": "1641",
+          "name": "Devin Taylor",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8596",
+          "name": "Devin Taylor",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "ericrogers",
+      "records": [
+        {
+          "id": "1701",
+          "name": "Eric Rogers",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 9,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12840",
+          "name": "Eric Rogers",
+          "position": "DB",
+          "team": "LAC",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "myleswhite",
+      "records": [
+        {
+          "id": "1765",
+          "name": "Myles White",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "3050",
+          "name": "Myles White",
+          "position": "WR",
+          "team": "NYJ",
+          "years_exp": 3,
+          "active": false,
+          "search_rank": 699,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "devinsmith",
+      "records": [
+        {
+          "id": "1783",
+          "name": "Devin Smith",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2342",
+          "name": "Devin Smith",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 698,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "anthonyjohnson",
+      "records": [
+        {
+          "id": "1823",
+          "name": "Anthony Johnson",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 8,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5929",
+          "name": "Anthony Johnson",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11036",
+          "name": "Anthony Johnson",
+          "position": "DB",
+          "team": "CHI",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11112",
+          "name": "Anthony Johnson",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "marcuswilliams",
+      "records": [
+        {
+          "id": "1960",
+          "name": "Marcus Williams",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 8,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4091",
+          "name": "Marcus Williams",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 9,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "tonywashington",
+      "records": [
+        {
+          "id": "1978",
+          "name": "Tony Washington",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 6,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2563",
+          "name": "Tony Washington",
+          "position": "OLB",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "chrissmith",
+      "records": [
+        {
+          "id": "1994",
+          "name": "Chris Smith",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "10967",
+          "name": "Chris Smith",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        },
+        {
+          "id": "11249",
+          "name": "Chris Smith",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11345",
+          "name": "Chris Smith",
+          "position": "DL",
+          "team": "DET",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "kylefuller",
+      "records": [
+        {
+          "id": "2108",
+          "name": "Kyle Fuller",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 9,
+          "active": true,
+          "search_rank": 688,
+          "injury_status": null
+        },
+        {
+          "id": "4245",
+          "name": "Kyle Fuller",
+          "position": "OL",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "christianjones",
+      "records": [
+        {
+          "id": "2110",
+          "name": "Christian Jones",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11768",
+          "name": "Christian Jones",
+          "position": "OL",
+          "team": "ARI",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13947",
+          "name": "Christian Jones",
+          "position": "OT",
+          "team": "CIN",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jordanthompson",
+      "records": [
+        {
+          "id": "2129",
+          "name": "Jordan Thompson",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6440",
+          "name": "Jordan Thompson",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "duplicateplayer",
+      "records": [
+        {
+          "id": "2136",
+          "name": "Duplicate Player",
+          "position": "OLB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2574",
+          "name": "Duplicate Player",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2618",
+          "name": "Duplicate Player",
+          "position": "DL",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 720,
+          "injury_status": null
+        },
+        {
+          "id": "2743",
+          "name": "Duplicate Player",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2924",
+          "name": "Duplicate Player",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "3639",
+          "name": "Duplicate Player",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 3,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "3964",
+          "name": "Duplicate Player",
+          "position": "OT",
+          "team": "FA",
+          "years_exp": 2,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4510",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": null,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "4754",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "BUF",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4770",
+          "name": "Duplicate Player",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": "Out"
+        },
+        {
+          "id": "4776",
+          "name": "Duplicate Player",
+          "position": "OT",
+          "team": "FA",
+          "years_exp": 3,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4788",
+          "name": "Duplicate Player",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4796",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "BUF",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4824",
+          "name": "Duplicate Player",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5109",
+          "name": "Duplicate Player",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5114",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5282",
+          "name": "Duplicate Player",
+          "position": "WR",
+          "team": "CHI",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5308",
+          "name": "Duplicate Player",
+          "position": "DE",
+          "team": "LAR",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 1769,
+          "injury_status": "Out"
+        },
+        {
+          "id": "5524",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "ARI",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5649",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": null,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "5755",
+          "name": "Duplicate Player",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 2,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5797",
+          "name": "Duplicate Player",
+          "position": "ILB",
+          "team": "DEN",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6313",
+          "name": "Duplicate Player",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6441",
+          "name": "Duplicate Player",
+          "position": "NT",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": "NA"
+        },
+        {
+          "id": "6477",
+          "name": "Duplicate Player",
+          "position": "ILB",
+          "team": "DEN",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": "COV"
+        },
+        {
+          "id": "6647",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "6690",
+          "name": "Duplicate Player",
+          "position": "CB",
+          "team": "PHI",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6735",
+          "name": "Duplicate Player",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": "NA"
+        },
+        {
+          "id": "6745",
+          "name": "Duplicate Player",
+          "position": "G",
+          "team": "MIA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6746",
+          "name": "Duplicate Player",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6751",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7505",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "7506",
+          "name": "Duplicate Player",
+          "position": "DB",
+          "team": "DAL",
+          "years_exp": 4,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "7507",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "7517",
+          "name": "Duplicate Player",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8534",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": null,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8671",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": null,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8682",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": null,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8688",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": null,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8804",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": null,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11057",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": null,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11110",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": null,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "12368",
+          "name": "Duplicate Player",
+          "position": "",
+          "team": "FA",
+          "years_exp": null,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "adariustaylor",
+      "records": [
+        {
+          "id": "2190",
+          "name": "Adarius Taylor",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 835,
+          "injury_status": null
+        },
+        {
+          "id": "5813",
+          "name": "Adarius Taylor",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "brandoncoleman",
+      "records": [
+        {
+          "id": "2196",
+          "name": "Brandon Coleman",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 6,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11702",
+          "name": "Brandon Coleman",
+          "position": "OL",
+          "team": "WAS",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "joshallen",
+      "records": [
+        {
+          "id": "2212",
+          "name": "Josh Allen",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 8,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4984",
+          "name": "Josh Allen",
+          "position": "QB",
+          "team": "BUF",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 3,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mauricealexander",
+      "records": [
+        {
+          "id": "2224",
+          "name": "Maurice Alexander",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8921",
+          "name": "Maurice Alexander",
+          "position": "WR",
+          "team": "CHI",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 657,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "marcusmartin",
+      "records": [
+        {
+          "id": "2260",
+          "name": "Marcus Martin",
+          "position": "C",
+          "team": "FA",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5558",
+          "name": "Marcus Martin",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "kevinwhite",
+      "records": [
+        {
+          "id": "2312",
+          "name": "Kevin White",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "2626",
+          "name": "Kevin White",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "3930",
+          "name": "Kevin White",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jordanphillips",
+      "records": [
+        {
+          "id": "2357",
+          "name": "Jordan Phillips",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 11,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        },
+        {
+          "id": "12679",
+          "name": "Jordan Phillips",
+          "position": "DL",
+          "team": "MIA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "johnmiller",
+      "records": [
+        {
+          "id": "2386",
+          "name": "John Miller",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "14014",
+          "name": "John Miller",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mattjones",
+      "records": [
+        {
+          "id": "2400",
+          "name": "Matt Jones",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12988",
+          "name": "Matt Jones",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "marcusmurphy",
+      "records": [
+        {
+          "id": "2529",
+          "name": "Marcus Murphy",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 906,
+          "injury_status": null
+        },
+        {
+          "id": "7745",
+          "name": "Marcus Murphy",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": null,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "coreyrobinson",
+      "records": [
+        {
+          "id": "2539",
+          "name": "Corey Robinson",
+          "position": "T",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13719",
+          "name": "Corey Robinson",
+          "position": "OL",
+          "team": "CIN",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jordanwilliams",
+      "records": [
+        {
+          "id": "2630",
+          "name": "Jordan Williams",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 917,
+          "injury_status": null
+        },
+        {
+          "id": "7186",
+          "name": "Jordan Williams",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8853",
+          "name": "Jordan Williams",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12881",
+          "name": "Jordan Williams",
+          "position": "OL",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "tonyjones",
+      "records": [
+        {
+          "id": "2639",
+          "name": "Tony Jones",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6984",
+          "name": "Tony Jones",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 630,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "isaiahjohnson",
+      "records": [
+        {
+          "id": "2640",
+          "name": "Isaiah Johnson",
+          "position": "FS",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "3592",
+          "name": "Isaiah Johnson",
+          "position": "FS",
+          "team": "FA",
+          "years_exp": 6,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5951",
+          "name": "Isaiah Johnson",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12124",
+          "name": "Isaiah Johnson",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        }
+      ]
+    },
+    {
+      "key": "brianparker",
+      "records": [
+        {
+          "id": "2653",
+          "name": "Brian Parker",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13546",
+          "name": "Brian Parker",
+          "position": "OT",
+          "team": "CIN",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "xavierwilliams",
+      "records": [
+        {
+          "id": "2668",
+          "name": "Xavier Williams",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "14078",
+          "name": "Xavier Williams",
+          "position": "DB",
+          "team": "TB",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jordantaylor",
+      "records": [
+        {
+          "id": "2685",
+          "name": "Jordan Taylor",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 7,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12994",
+          "name": "Jordan Taylor",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "terrywilliams",
+      "records": [
+        {
+          "id": "2706",
+          "name": "Terry Williams",
+          "position": "NT",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "3929",
+          "name": "Terry Williams",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "brandonking",
+      "records": [
+        {
+          "id": "2724",
+          "name": "Brandon King",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7508",
+          "name": "Brandon King",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 10,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "chasewilliams",
+      "records": [
+        {
+          "id": "2883",
+          "name": "Chase Williams",
+          "position": "ILB",
+          "team": "CLE",
+          "years_exp": 9,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12441",
+          "name": "Chase Williams",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "beaugardner",
+      "records": [
+        {
+          "id": "2909",
+          "name": "Beau Gardner",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13715",
+          "name": "Beau Gardner",
+          "position": "LS",
+          "team": "CHI",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "miltonwilliams",
+      "records": [
+        {
+          "id": "2941",
+          "name": "Milton Williams",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 10,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7696",
+          "name": "Milton Williams",
+          "position": "DT",
+          "team": "NE",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 510,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "takobycofield",
+      "records": [
+        {
+          "id": "2958",
+          "name": "Takoby Cofield",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4944",
+          "name": "Takoby Cofield",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "kalebjohnson",
+      "records": [
+        {
+          "id": "2967",
+          "name": "Kaleb Johnson",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12504",
+          "name": "Kaleb Johnson",
+          "position": "RB",
+          "team": "PIT",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 173,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "reesedismukes",
+      "records": [
+        {
+          "id": "2976",
+          "name": "Reese Dismukes",
+          "position": "C",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4946",
+          "name": "Reese Dismukes",
+          "position": "C",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "antoineeverett",
+      "records": [
+        {
+          "id": "3011",
+          "name": "Antoine Everett",
+          "position": "OT",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4945",
+          "name": "Antoine Everett",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "darrellwilliams",
+      "records": [
+        {
+          "id": "3014",
+          "name": "Darrell Williams",
+          "position": "T",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4467",
+          "name": "Darrell Williams",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6170",
+          "name": "Darrell Williams",
+          "position": "OLB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jamesbutler",
+      "records": [
+        {
+          "id": "3019",
+          "name": "James Butler",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5785",
+          "name": "James Butler",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mikesmith",
+      "records": [
+        {
+          "id": "3123",
+          "name": "Mike Smith",
+          "position": "",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12444",
+          "name": "Mike Smith",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12854",
+          "name": "Mike Smith",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "nickmartin",
+      "records": [
+        {
+          "id": "3221",
+          "name": "Nick Martin",
+          "position": "C",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        },
+        {
+          "id": "12630",
+          "name": "Nick Martin",
+          "position": "LB",
+          "team": "SF",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 516,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "chrismoore",
+      "records": [
+        {
+          "id": "3269",
+          "name": "Chris Moore",
+          "position": "WR",
+          "team": "BAL",
+          "years_exp": 10,
+          "active": true,
+          "search_rank": 999,
+          "injury_status": null
+        },
+        {
+          "id": "8548",
+          "name": "Chris Moore",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "connormcgovern",
+      "records": [
+        {
+          "id": "3301",
+          "name": "Connor McGovern",
+          "position": "OL",
+          "team": "FA",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5913",
+          "name": "Connor McGovern",
+          "position": "G",
+          "team": "BUF",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        }
+      ]
+    },
+    {
+      "key": "anthonybrown",
+      "records": [
+        {
+          "id": "3345",
+          "name": "Anthony Brown",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8241",
+          "name": "Anthony Brown",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 633,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "kylemurphy",
+      "records": [
+        {
+          "id": "3356",
+          "name": "Kyle Murphy",
+          "position": "OT",
+          "team": "NO",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7377",
+          "name": "Kyle Murphy",
+          "position": "OL",
+          "team": "NYG",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "dariusjackson",
+      "records": [
+        {
+          "id": "3371",
+          "name": "Darius Jackson",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 670,
+          "injury_status": null
+        },
+        {
+          "id": "5186",
+          "name": "Darius Jackson",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "joewalker",
+      "records": [
+        {
+          "id": "3406",
+          "name": "Joe Walker",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6727",
+          "name": "Joe Walker",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "averyyoung",
+      "records": [
+        {
+          "id": "3458",
+          "name": "Avery Young",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11177",
+          "name": "Avery Young",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mikerose",
+      "records": [
+        {
+          "id": "3483",
+          "name": "Mike Rose",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 9,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8346",
+          "name": "Mike Rose",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "chrisbrown",
+      "records": [
+        {
+          "id": "3486",
+          "name": "Chris Brown",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6561",
+          "name": "Chris Brown",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "michaeljordan",
+      "records": [
+        {
+          "id": "3487",
+          "name": "Michael Jordan",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 6,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5869",
+          "name": "Michael Jordan",
+          "position": "G",
+          "team": "PHI",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "ryansmith",
+      "records": [
+        {
+          "id": "3559",
+          "name": "Ryan Smith",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5547",
+          "name": "Ryan Smith",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "dariuswhite",
+      "records": [
+        {
+          "id": "3591",
+          "name": "Darius White",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 9,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "3945",
+          "name": "Darius White",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "ryanlangford",
+      "records": [
+        {
+          "id": "3829",
+          "name": "Ryan Langford",
+          "position": "ILB",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4836",
+          "name": "Ryan Langford",
+          "position": "",
+          "team": "ARI",
+          "years_exp": null,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "sambrown",
+      "records": [
+        {
+          "id": "3854",
+          "name": "Sam Brown",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13225",
+          "name": "Sam Brown",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "brandonjohnson",
+      "records": [
+        {
+          "id": "3901",
+          "name": "Brandon Johnson",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8756",
+          "name": "Brandon Johnson",
+          "position": "WR",
+          "team": "LV",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 633,
+          "injury_status": null
+        },
+        {
+          "id": "12877",
+          "name": "Brandon Johnson",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        }
+      ]
+    },
+    {
+      "key": "isaiahwilliams",
+      "records": [
+        {
+          "id": "3931",
+          "name": "Isaiah Williams",
+          "position": "OL",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11608",
+          "name": "Isaiah Williams",
+          "position": "WR",
+          "team": "NYJ",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 522,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "justinevans",
+      "records": [
+        {
+          "id": "4096",
+          "name": "Justin Evans",
+          "position": "SS",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5525",
+          "name": "Justin Evans",
+          "position": "OT",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "ryananderson",
+      "records": [
+        {
+          "id": "4097",
+          "name": "Ryan Anderson",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6504",
+          "name": "Ryan Anderson",
+          "position": "P",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6537",
+          "name": "Ryan Anderson",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "joshjones",
+      "records": [
+        {
+          "id": "4109",
+          "name": "Josh Jones",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6808",
+          "name": "Josh Jones",
+          "position": "OL",
+          "team": "SEA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jordanmorgan",
+      "records": [
+        {
+          "id": "4193",
+          "name": "Jordan Morgan",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11660",
+          "name": "Jordan Morgan",
+          "position": "OL",
+          "team": "GB",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "brianallen",
+      "records": [
+        {
+          "id": "4215",
+          "name": "Brian Allen",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5304",
+          "name": "Brian Allen",
+          "position": "OL",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "davidmoore",
+      "records": [
+        {
+          "id": "4274",
+          "name": "David Moore",
+          "position": "WR",
+          "team": "CAR",
+          "years_exp": 9,
+          "active": true,
+          "search_rank": 576,
+          "injury_status": null
+        },
+        {
+          "id": "7869",
+          "name": "David Moore",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jtjones",
+      "records": [
+        {
+          "id": "4296",
+          "name": "JT Jones",
+          "position": "OLB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8091",
+          "name": "J.T. Jones",
+          "position": "DE",
+          "team": "PIT",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": null,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jordanmoore",
+      "records": [
+        {
+          "id": "4303",
+          "name": "Jordan Moore",
+          "position": "FS",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12761",
+          "name": "Jordan Moore",
+          "position": "WR",
+          "team": "CIN",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "chaseallen",
+      "records": [
+        {
+          "id": "4389",
+          "name": "Chase Allen",
+          "position": "OLB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8182",
+          "name": "Chase Allen",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "ericwilson",
+      "records": [
+        {
+          "id": "4413",
+          "name": "Eric Wilson",
+          "position": "LB",
+          "team": "MIN",
+          "years_exp": 9,
+          "active": true,
+          "search_rank": 337,
+          "injury_status": null
+        },
+        {
+          "id": "8667",
+          "name": "Eric Wilson",
+          "position": "OL",
+          "team": "FA",
+          "years_exp": 4,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "reesefleming",
+      "records": [
+        {
+          "id": "4471",
+          "name": "Reese Fleming",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4840",
+          "name": "Reese Fleming",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "alexgray",
+      "records": [
+        {
+          "id": "4473",
+          "name": "Alex Gray",
+          "position": "FS",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4733",
+          "name": "Alex Gray",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "dechavonhayes",
+      "records": [
+        {
+          "id": "4525",
+          "name": "De'Chavon Hayes",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": "Out"
+        },
+        {
+          "id": "4777",
+          "name": "De'Chavon Hayes",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "dantebarnett",
+      "records": [
+        {
+          "id": "4580",
+          "name": "Dante Barnett",
+          "position": "FS",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13087",
+          "name": "Dante Barnett",
+          "position": "DL",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "averywilliams",
+      "records": [
+        {
+          "id": "4620",
+          "name": "Avery Williams",
+          "position": "OLB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7809",
+          "name": "Avery Williams",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 648,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "kennethwalker",
+      "records": [
+        {
+          "id": "4634",
+          "name": "Kenneth Walker",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8151",
+          "name": "Kenneth Walker",
+          "position": "RB",
+          "team": "KC",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 18,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "charmeacheallemoore",
+      "records": [
+        {
+          "id": "4667",
+          "name": "Charmeachealle Moore",
+          "position": "OLB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4755",
+          "name": "Charmeachealle Moore",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "reggiedavis",
+      "records": [
+        {
+          "id": "4681",
+          "name": "Reggie Davis",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4778",
+          "name": "Reggie Davis",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "carlosdavis",
+      "records": [
+        {
+          "id": "4837",
+          "name": "Carlos Davis",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6995",
+          "name": "Carlos Davis",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "elijahmitchell",
+      "records": [
+        {
+          "id": "4844",
+          "name": "Elijah Mitchell",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7561",
+          "name": "Elijah Mitchell",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 999,
+          "injury_status": "Questionable"
+        }
+      ]
+    },
+    {
+      "key": "lamarjackson",
+      "records": [
+        {
+          "id": "4881",
+          "name": "Lamar Jackson",
+          "position": "QB",
+          "team": "BAL",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 11,
+          "injury_status": null
+        },
+        {
+          "id": "6994",
+          "name": "Lamar Jackson",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 1059,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "ronaldjones",
+      "records": [
+        {
+          "id": "4955",
+          "name": "Ronald Jones",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5052",
+          "name": "Ronald Jones",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 620,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "djmoore",
+      "records": [
+        {
+          "id": "4961",
+          "name": "DJ Moore",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 11,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "4983",
+          "name": "DJ Moore",
+          "position": "WR",
+          "team": "BUF",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 55,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mikehughes",
+      "records": [
+        {
+          "id": "4982",
+          "name": "Mike Hughes",
+          "position": "CB",
+          "team": "ATL",
+          "years_exp": 8,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5187",
+          "name": "Mike Hughes",
+          "position": "NT",
+          "team": "FA",
+          "years_exp": 4,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": "NA"
+        },
+        {
+          "id": "5811",
+          "name": "Mike Hughes",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "justinjones",
+      "records": [
+        {
+          "id": "5063",
+          "name": "Justin Jones",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "14076",
+          "name": "Justin Jones",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "chriscampbell",
+      "records": [
+        {
+          "id": "5105",
+          "name": "Chris Campbell",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "5350",
+          "name": "Chris Campbell",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jordanthomas",
+      "records": [
+        {
+          "id": "5117",
+          "name": "Jordan Thomas",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 442,
+          "injury_status": null
+        },
+        {
+          "id": "5653",
+          "name": "Jordan Thomas",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "malikwilliams",
+      "records": [
+        {
+          "id": "5144",
+          "name": "Malik Williams",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8770",
+          "name": "Malik Williams",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "daltonkeene",
+      "records": [
+        {
+          "id": "5173",
+          "name": "Dalton Keene",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7082",
+          "name": "Dalton Keene",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 556,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "ervinphilips",
+      "records": [
+        {
+          "id": "5216",
+          "name": "Ervin Philips",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": "NA"
+        },
+        {
+          "id": "5407",
+          "name": "Ervin Philips",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "tylerdavis",
+      "records": [
+        {
+          "id": "5251",
+          "name": "Tyler Davis",
+          "position": "K",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7131",
+          "name": "Tyler Davis",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 706,
+          "injury_status": null
+        },
+        {
+          "id": "11799",
+          "name": "Tyler Davis",
+          "position": "DT",
+          "team": "LAR",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jjjones",
+      "records": [
+        {
+          "id": "5267",
+          "name": "JJ Jones",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 2,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12913",
+          "name": "J.J. Jones",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "austinallen",
+      "records": [
+        {
+          "id": "5286",
+          "name": "Austin Allen",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8215",
+          "name": "Austin Allen",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "anthonyaverett",
+      "records": [
+        {
+          "id": "5301",
+          "name": "Anthony Averett",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12377",
+          "name": "Anthony Averett",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "marcusallen",
+      "records": [
+        {
+          "id": "5360",
+          "name": "Marcus Allen",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13611",
+          "name": "Marcus Allen",
+          "position": "CB",
+          "team": "MIN",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "sergiobailey",
+      "records": [
+        {
+          "id": "5396",
+          "name": "Sergio Bailey II",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": "NA"
+        },
+        {
+          "id": "5408",
+          "name": "Sergio Bailey",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "tonybrown",
+      "records": [
+        {
+          "id": "5424",
+          "name": "Tony Brown",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7078",
+          "name": "Tony Brown",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "leonjohnson",
+      "records": [
+        {
+          "id": "5440",
+          "name": "Leon Johnson",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11863",
+          "name": "Leon Johnson",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 302,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "tonyadams",
+      "records": [
+        {
+          "id": "5472",
+          "name": "Tony Adams",
+          "position": "C",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8860",
+          "name": "Tony Adams",
+          "position": "DB",
+          "team": "TEN",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "trentonthompson",
+      "records": [
+        {
+          "id": "5533",
+          "name": "Trenton Thompson",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8763",
+          "name": "Trenton Thompson",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "cjjohnson",
+      "records": [
+        {
+          "id": "5543",
+          "name": "C.J. Johnson",
+          "position": "ILB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "9759",
+          "name": "C.J. Johnson",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 669,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mikejones",
+      "records": [
+        {
+          "id": "5713",
+          "name": "Mike Jones",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11187",
+          "name": "Mike Jones",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "brandonsmith",
+      "records": [
+        {
+          "id": "5716",
+          "name": "Brandon Smith",
+          "position": "OT",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7865",
+          "name": "Brandon Smith",
+          "position": "WR",
+          "team": "PIT",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 645,
+          "injury_status": "Questionable"
+        },
+        {
+          "id": "8324",
+          "name": "Brandon Smith",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "joshsmith",
+      "records": [
+        {
+          "id": "5762",
+          "name": "Josh Smith",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 1137,
+          "injury_status": null
+        },
+        {
+          "id": "6741",
+          "name": "Josh Smith",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 1772,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "seanryan",
+      "records": [
+        {
+          "id": "5834",
+          "name": "Sean Ryan",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11387",
+          "name": "Sean Ryan",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 328,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "byronmurphy",
+      "records": [
+        {
+          "id": "5864",
+          "name": "Byron Murphy",
+          "position": "CB",
+          "team": "MIN",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 999,
+          "injury_status": null
+        },
+        {
+          "id": "11668",
+          "name": "Byron Murphy",
+          "position": "DL",
+          "team": "SEA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 426,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "davidlong",
+      "records": [
+        {
+          "id": "5914",
+          "name": "David Long",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        },
+        {
+          "id": "5928",
+          "name": "David Long",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 548,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mikeedwards",
+      "records": [
+        {
+          "id": "5959",
+          "name": "Mike Edwards",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12381",
+          "name": "Mike Edwards",
+          "position": "OL",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jordanmiller",
+      "records": [
+        {
+          "id": "6009",
+          "name": "Jordan Miller",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12103",
+          "name": "Jordan Miller",
+          "position": "DT",
+          "team": "DEN",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jonahwilliams",
+      "records": [
+        {
+          "id": "6122",
+          "name": "Jonah Williams",
+          "position": "T",
+          "team": "FA",
+          "years_exp": 7,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        },
+        {
+          "id": "7344",
+          "name": "Jonah Williams",
+          "position": "DE",
+          "team": "ARI",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jameswilliams",
+      "records": [
+        {
+          "id": "6169",
+          "name": "James Williams",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11847",
+          "name": "James Williams",
+          "position": "DB",
+          "team": "TEN",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 657,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "johnlovett",
+      "records": [
+        {
+          "id": "6231",
+          "name": "John Lovett",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8568",
+          "name": "John Lovett",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mattcolburn",
+      "records": [
+        {
+          "id": "6352",
+          "name": "Matt Colburn",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6385",
+          "name": "Matt Colburn",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jaylenjohnson",
+      "records": [
+        {
+          "id": "6397",
+          "name": "Jaylen Johnson",
+          "position": "DL",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11874",
+          "name": "Jaylen Johnson",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 404,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "larryallen",
+      "records": [
+        {
+          "id": "6471",
+          "name": "Larry Allen Jr.",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6719",
+          "name": "Larry Allen",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "NA"
+        }
+      ]
+    },
+    {
+      "key": "trewatson",
+      "records": [
+        {
+          "id": "6571",
+          "name": "Tre Watson",
+          "position": "ILB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13116",
+          "name": "Tre Watson",
+          "position": "TE",
+          "team": "KC",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "derrickkelly",
+      "records": [
+        {
+          "id": "6635",
+          "name": "Derrick Kelly",
+          "position": "OL",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6752",
+          "name": "Derrick Kelly II",
+          "position": "",
+          "team": "NO",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "joehorn",
+      "records": [
+        {
+          "id": "6686",
+          "name": "Joe Horn",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "6692",
+          "name": "Joe Horn",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "justinjefferson",
+      "records": [
+        {
+          "id": "6794",
+          "name": "Justin Jefferson",
+          "position": "WR",
+          "team": "MIN",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 11,
+          "injury_status": null
+        },
+        {
+          "id": "13524",
+          "name": "Justin Jefferson",
+          "position": "LB",
+          "team": "CLE",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "tylerjohnson",
+      "records": [
+        {
+          "id": "6960",
+          "name": "Tyler Johnson",
+          "position": "WR",
+          "team": "DAL",
+          "years_exp": 6,
+          "active": true,
+          "search_rank": 538,
+          "injury_status": null
+        },
+        {
+          "id": "8550",
+          "name": "Tyler Johnson",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "damarhamlin",
+      "records": [
+        {
+          "id": "6979",
+          "name": "Damar Hamlin",
+          "position": "S",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7787",
+          "name": "Damar Hamlin",
+          "position": "DB",
+          "team": "BUF",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "cambrown",
+      "records": [
+        {
+          "id": "7020",
+          "name": "Cam Brown",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11503",
+          "name": "Cam Brown",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "michaelpinckney",
+      "records": [
+        {
+          "id": "7037",
+          "name": "Michael Pinckney",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7514",
+          "name": "Michael Pinckney",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": null,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "michaelturk",
+      "records": [
+        {
+          "id": "7072",
+          "name": "Michael Turk",
+          "position": "P",
+          "team": "FA",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "NA"
+        },
+        {
+          "id": "11397",
+          "name": "Michael Turk",
+          "position": "P",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "tjcarter",
+      "records": [
+        {
+          "id": "7166",
+          "name": "T.J. Carter",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8748",
+          "name": "TJ Carter",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jaylonmoore",
+      "records": [
+        {
+          "id": "7191",
+          "name": "Jaylon Moore",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7834",
+          "name": "Jaylon Moore",
+          "position": "OL",
+          "team": "KC",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "antoniowilliams",
+      "records": [
+        {
+          "id": "7203",
+          "name": "Antonio Williams",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": false,
+          "search_rank": 615,
+          "injury_status": null
+        },
+        {
+          "id": "13301",
+          "name": "Antonio Williams",
+          "position": "WR",
+          "team": "WAS",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 156,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jordanjones",
+      "records": [
+        {
+          "id": "7264",
+          "name": "Jordan Jones",
+          "position": "FB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11153",
+          "name": "Jordan Jones",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "nateevans",
+      "records": [
+        {
+          "id": "7291",
+          "name": "Nate Evans",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 1968,
+          "injury_status": null
+        },
+        {
+          "id": "13953",
+          "name": "Nate Evans",
+          "position": "CB",
+          "team": "CLE",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        }
+      ]
+    },
+    {
+      "key": "dejonharris",
+      "records": [
+        {
+          "id": "7493",
+          "name": "De'Jon Harris",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 2020,
+          "injury_status": null
+        },
+        {
+          "id": "7504",
+          "name": "De'Jon Harris",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "aaronsmith",
+      "records": [
+        {
+          "id": "7512",
+          "name": "Aaron Smith",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "13148",
+          "name": "Aaron Smith",
+          "position": "LB",
+          "team": "SEA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 691,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "playerinvalid",
+      "records": [
+        {
+          "id": "7524",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "7544",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "7557",
+          "name": "Player Invalid",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "7566",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "7570",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8113",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8124",
+          "name": "Player Invalid",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8128",
+          "name": "Player Invalid",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8133",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8141",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8156",
+          "name": "Player Invalid",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8163",
+          "name": "Player Invalid",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8216",
+          "name": "Player Invalid",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8231",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8237",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8244",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8256",
+          "name": "Player Invalid",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8257",
+          "name": "Player Invalid",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8304",
+          "name": "Player Invalid",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8354",
+          "name": "Player Invalid",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8401",
+          "name": "Player Invalid",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8417",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8422",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8425",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8426",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8427",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8430",
+          "name": "Player Invalid",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8432",
+          "name": "Player Invalid",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8434",
+          "name": "Player Invalid",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8440",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "9485",
+          "name": "Player Invalid",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "9755",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "10864",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11572",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11578",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11585",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11587",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11591",
+          "name": "Player Invalid",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11594",
+          "name": "Player Invalid",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11602",
+          "name": "Player Invalid",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11609",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11611",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11612",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11613",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11614",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11622",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11634",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "11639",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "12454",
+          "name": "Player Invalid",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "12456",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "12458",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "12459",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "12461",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "12463",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "12464",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "12465",
+          "name": "Player Invalid",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "12466",
+          "name": "Player Invalid",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "12468",
+          "name": "Player Invalid",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "12525",
+          "name": "Player Invalid",
+          "position": "ATH",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "13332",
+          "name": "Player Invalid",
+          "position": "QB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": null,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "devontasmith",
+      "records": [
+        {
+          "id": "7525",
+          "name": "DeVonta Smith",
+          "position": "WR",
+          "team": "PHI",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 34,
+          "injury_status": "Questionable"
+        },
+        {
+          "id": "13977",
+          "name": "Devonta Smith",
+          "position": "CB",
+          "team": "CAR",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "michaelcarter",
+      "records": [
+        {
+          "id": "7607",
+          "name": "Michael Carter",
+          "position": "RB",
+          "team": "TEN",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 660,
+          "injury_status": null
+        },
+        {
+          "id": "7835",
+          "name": "Michael Carter",
+          "position": "CB",
+          "team": "PHI",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "spencerbrown",
+      "records": [
+        {
+          "id": "7691",
+          "name": "Spencer Brown",
+          "position": "OT",
+          "team": "BUF",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "7867",
+          "name": "Spencer Brown",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "calebjohnson",
+      "records": [
+        {
+          "id": "7846",
+          "name": "Caleb Johnson",
+          "position": "LB",
+          "team": "HOU",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11303",
+          "name": "Caleb Johnson",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "drakejackson",
+      "records": [
+        {
+          "id": "7886",
+          "name": "Drake Jackson",
+          "position": "C",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        },
+        {
+          "id": "8351",
+          "name": "Drake Jackson",
+          "position": "DL",
+          "team": "WAS",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 693,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "elijahponder",
+      "records": [
+        {
+          "id": "7963",
+          "name": "Elijah Ponder",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12978",
+          "name": "Elijah Ponder",
+          "position": "DE",
+          "team": "NE",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "trewalker",
+      "records": [
+        {
+          "id": "7978",
+          "name": "Tre Walker",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": null,
+          "injury_status": null
+        },
+        {
+          "id": "8591",
+          "name": "Tre Walker",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "djturner",
+      "records": [
+        {
+          "id": "7989",
+          "name": "DJ Turner",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 5,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        },
+        {
+          "id": "10894",
+          "name": "DJ Turner",
+          "position": "DB",
+          "team": "CIN",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jordanmurray",
+      "records": [
+        {
+          "id": "8106",
+          "name": "Jordan Murray",
+          "position": "T",
+          "team": "FA",
+          "years_exp": 5,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11493",
+          "name": "Jordan Murray",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 658,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "joshthompson",
+      "records": [
+        {
+          "id": "8379",
+          "name": "Josh Thompson",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13792",
+          "name": "Josh Thompson",
+          "position": "G",
+          "team": "KC",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "tylersmith",
+      "records": [
+        {
+          "id": "8449",
+          "name": "Tyler Smith",
+          "position": "OL",
+          "team": "DAL",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11889",
+          "name": "Tyler Smith",
+          "position": "OL",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "dylanparham",
+      "records": [
+        {
+          "id": "8458",
+          "name": "Dylan Parham",
+          "position": "OL",
+          "team": "NYJ",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "8751",
+          "name": "Dylan Parham",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 378,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "chrispaul",
+      "records": [
+        {
+          "id": "8522",
+          "name": "Chris Paul",
+          "position": "OL",
+          "team": "WAS",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12659",
+          "name": "Chris Paul",
+          "position": "LB",
+          "team": "SEA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jacobifrancis",
+      "records": [
+        {
+          "id": "8546",
+          "name": "Jacobi Francis",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12432",
+          "name": "Jacobi Francis",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "chuckwiley",
+      "records": [
+        {
+          "id": "8555",
+          "name": "Chuck Wiley",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11541",
+          "name": "Chuck Wiley",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "danielwhelan",
+      "records": [
+        {
+          "id": "8674",
+          "name": "Daniel Whelan",
+          "position": "P",
+          "team": "GB",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11525",
+          "name": "Daniel Whelan",
+          "position": "P",
+          "team": "FA",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "jaylonjones",
+      "records": [
+        {
+          "id": "8702",
+          "name": "Jaylon Jones",
+          "position": "CB",
+          "team": "CHI",
+          "years_exp": 4,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11052",
+          "name": "Jaylon Jones",
+          "position": "DB",
+          "team": "IND",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "elijahjones",
+      "records": [
+        {
+          "id": "8896",
+          "name": "Elijah Jones",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11717",
+          "name": "Elijah Jones",
+          "position": "DB",
+          "team": "ARI",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "mylesmurphy",
+      "records": [
+        {
+          "id": "10875",
+          "name": "Myles Murphy",
+          "position": "DL",
+          "team": "CIN",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        },
+        {
+          "id": "12195",
+          "name": "Myles Murphy",
+          "position": "DL",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "byronyoung",
+      "records": [
+        {
+          "id": "10917",
+          "name": "Byron Young",
+          "position": "LB",
+          "team": "LAR",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 175,
+          "injury_status": null
+        },
+        {
+          "id": "10925",
+          "name": "Byron Young",
+          "position": "DL",
+          "team": "PHI",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": "Questionable"
+        }
+      ]
+    },
+    {
+      "key": "robertburns",
+      "records": [
+        {
+          "id": "11060",
+          "name": "Robert Burns",
+          "position": "RB",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11260",
+          "name": "Robert Burns",
+          "position": "FB",
+          "team": "CHI",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "andrecarter",
+      "records": [
+        {
+          "id": "11084",
+          "name": "Andre Carter",
+          "position": "LB",
+          "team": "LAC",
+          "years_exp": 3,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12221",
+          "name": "Andre Carter",
+          "position": "DL",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "stevenjones",
+      "records": [
+        {
+          "id": "11100",
+          "name": "Steven Jones",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12216",
+          "name": "Steven Jones",
+          "position": "OL",
+          "team": "PIT",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "leonardtaylor",
+      "records": [
+        {
+          "id": "11140",
+          "name": "Leonard Taylor",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12031",
+          "name": "Leonard Taylor",
+          "position": "DL",
+          "team": "NE",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "codychrest",
+      "records": [
+        {
+          "id": "11284",
+          "name": "Cody Chrest",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11523",
+          "name": "Cody Chrest",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "chasecota",
+      "records": [
+        {
+          "id": "11347",
+          "name": "Chase Cota",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 403,
+          "injury_status": null
+        },
+        {
+          "id": "11554",
+          "name": "Chase Cota",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "gavinholmes",
+      "records": [
+        {
+          "id": "11478",
+          "name": "Gavin Holmes",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 284,
+          "injury_status": null
+        },
+        {
+          "id": "13109",
+          "name": "Gavin Holmes",
+          "position": "CB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "lwaluguak",
+      "records": [
+        {
+          "id": "11641",
+          "name": "Lwal  Uguak",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 0,
+          "active": false,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "11642",
+          "name": "Lwal Uguak",
+          "position": "DL",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "marcusharris",
+      "records": [
+        {
+          "id": "11828",
+          "name": "Marcus Harris",
+          "position": "DL",
+          "team": "KC",
+          "years_exp": 2,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12712",
+          "name": "Marcus Harris",
+          "position": "DB",
+          "team": "TEN",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "xzauveagadlin",
+      "records": [
+        {
+          "id": "11958",
+          "name": "X'Zauvea Gadlin",
+          "position": "G",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12367",
+          "name": "X'Zauvea Gadlin",
+          "position": "OL",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "deangelohardy",
+      "records": [
+        {
+          "id": "11979",
+          "name": "DeAngelo Hardy",
+          "position": "DB",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12244",
+          "name": "DeAngelo Hardy",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "joeevans",
+      "records": [
+        {
+          "id": "11983",
+          "name": "Joe Evans",
+          "position": "DE",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "12823",
+          "name": "Joe Evans",
+          "position": "DT",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "reggiebrown",
+      "records": [
+        {
+          "id": "12169",
+          "name": "Reggie Brown",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13160",
+          "name": "Reggie Brown",
+          "position": "TE",
+          "team": "FA",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "devinneal",
+      "records": [
+        {
+          "id": "12476",
+          "name": "Devin Neal",
+          "position": "RB",
+          "team": "NO",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 169,
+          "injury_status": "Questionable"
+        },
+        {
+          "id": "13649",
+          "name": "Devin Neal",
+          "position": "DB",
+          "team": "JAX",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "cammiller",
+      "records": [
+        {
+          "id": "12688",
+          "name": "Cam Miller",
+          "position": "QB",
+          "team": "MIA",
+          "years_exp": 1,
+          "active": true,
+          "search_rank": 422,
+          "injury_status": null
+        },
+        {
+          "id": "13853",
+          "name": "Cam Miller",
+          "position": "CB",
+          "team": "CAR",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        }
+      ]
+    },
+    {
+      "key": "seanbrown",
+      "records": [
+        {
+          "id": "13867",
+          "name": "Sean Brown",
+          "position": "WR",
+          "team": "FA",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 9999999,
+          "injury_status": null
+        },
+        {
+          "id": "13875",
+          "name": "Sean Brown",
+          "position": "LB",
+          "team": "FA",
+          "years_exp": 0,
+          "active": true,
+          "search_rank": 633,
+          "injury_status": "Questionable"
+        }
+      ]
+    }
+  ]
+}
