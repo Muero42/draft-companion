@@ -1,0 +1,24 @@
+name: PITTI rc4.59 turn12 market dispersion
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/rc459_turn12_market_dispersion_sensitivity_2026.js'
+      - '.github/workflows/pitti-rc459-turn12-market-dispersion.yml'
+  workflow_dispatch:
+jobs:
+  sensitivity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node research/rc459_turn12_market_dispersion_sensitivity_2026.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-turn12-market-dispersion
+          path: counterfactual_2026/RC459_TURN12_MARKET_DISPERSION_SENSITIVITY_2026.json
+          if-no-files-found: error
