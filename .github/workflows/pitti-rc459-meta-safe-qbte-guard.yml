@@ -1,0 +1,98 @@
+name: PITTI rc4.59 meta-safe QB2 TE2 guard challenger
+on:
+  push:
+    branches: [pitti-meta-safe-qbte-guard-challenger]
+    paths:
+      - 'research/rc459_meta_safe_qbte_guard_fullmock_shard_2026.js'
+      - '.github/workflows/pitti-rc459-meta-safe-qbte-guard.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  shard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        shard: [0, 1, 2, 3, 4, 5]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-meta-safe-qbte-guard-challenger
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Syntax check
+        run: node --check research/rc459_meta_safe_qbte_guard_fullmock_shard_2026.js
+      - name: Run deterministic challenger shard
+        env:
+          PITTI_SHARD: ${{ matrix.shard }}
+        run: node research/rc459_meta_safe_qbte_guard_fullmock_shard_2026.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-meta-safe-qbte-guard-${{ matrix.shard }}
+          path: simulation_2026/RC459_META_SAFE_QBTE_GUARD_SHARD_${{ matrix.shard }}_2026.json
+          if-no-files-found: error
+          retention-days: 7
+  aggregate:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-meta-safe-qbte-guard-challenger
+          fetch-depth: 0
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: rc459-meta-safe-qbte-guard-*
+          path: /tmp/qbte
+          merge-multiple: true
+      - name: Validate and summarize
+        shell: bash
+        run: |
+          python - <<'PY'
+          import json,glob,collections,pathlib,hashlib
+          fs=sorted(glob.glob('/tmp/qbte/*.json'))
+          if len(fs)!=6: raise SystemExit(f'expected 6 shards, got {len(fs)}')
+          seeds=[]; choices=collections.defaultdict(collections.Counter); posdist=collections.Counter(); repeats=collections.Counter(); exceptions=[]; hashes={}
+          for p in fs:
+            b=open(p,'rb').read(); hashes[pathlib.Path(p).name]=hashlib.sha256(b).hexdigest(); x=json.loads(b)
+            if x.get('status')!='PASS' or x.get('seeds')!=10 or len(x.get('drafts',[]))!=10: raise SystemExit('bad shard '+p)
+            if x.get('qbte_repeat_policy')!='hard admissibility except existing rc4.59 elite-slide exception': raise SystemExit('guard marker missing')
+            for d in x['drafts']:
+              seeds.append(d['seed']); c=collections.Counter()
+              for z in d['decisions']:
+                choices[str(z['pick'])][z['name']]+=1
+                if z['pos'] in ('QB','TE') and c[z['pos']]>=1:
+                  repeats[z['pos']]+=1; exceptions.append({'seed':d['seed'],'pick':z['pick'],'pos':z['pos'],'name':z['name'],'panel':z.get('panel'),'adp':z.get('adp')})
+                c[z['pos']]+=1
+              pc=d.get('position_counts',{});posdist[(pc.get('QB',0),pc.get('RB',0),pc.get('WR',0),pc.get('TE',0))]+=1
+          exp=list(range(459710001,459710061))
+          if sorted(seeds)!=exp or len(set(seeds))!=60: raise SystemExit('seed union mismatch')
+          out={'schema':1,'status':'PASS','research_only':True,'production_mutation':False,'metadata_safe':True,'seed_union_exact':True,'seeds':60,
+               'qbte_repeat_policy':'hard admissibility except existing rc4.59 elite-slide exception','repeat_qbte_picks':dict(repeats),'repeat_exceptions':exceptions,
+               'choices_by_pick':{p:dict(c) for p,c in sorted(choices.items(),key=lambda kv:int(kv[0]))},
+               'position_count_distribution':{'/'.join(map(str,k)):v for k,v in posdist.items()},'shard_sha256':hashes,
+               'interpretation':'Policy challenger only. Compare against corrected metadata-safe exact rc4.59 baseline; do not promote without outcome/tier/realism review.'}
+          pathlib.Path('diagnostics_2026').mkdir(exist_ok=True);q=pathlib.Path('diagnostics_2026/RC459_META_SAFE_QBTE_GUARD_60_SUMMARY_2026.json');q.write_text(json.dumps(out,indent=2));print(json.dumps(out,indent=2))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc459-meta-safe-qbte-guard-summary
+          path: diagnostics_2026/RC459_META_SAFE_QBTE_GUARD_60_SUMMARY_2026.json
+          retention-days: 14
+      - name: Persist summary
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add diagnostics_2026/RC459_META_SAFE_QBTE_GUARD_60_SUMMARY_2026.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'Record meta-safe QB2 TE2 guard challenger summary [skip ci]'
+            git pull --rebase origin pitti-meta-safe-qbte-guard-challenger
+            git push origin HEAD:pitti-meta-safe-qbte-guard-challenger
+          fi
