@@ -4,6 +4,7 @@ on:
     branches: [ main ]
     paths:
       - 'research/rc459_direct_2_02_candidates_2026.js'
+      - 'research/rc459_direct_2_02_diagnostic_2026.js'
       - '.github/workflows/pitti-rc459-direct-2-02-candidates.yml'
   workflow_dispatch:
 jobs:
@@ -17,9 +18,13 @@ jobs:
           node-version: '22'
       - name: Direct 2.02 multi-candidate raw counterfactual
         run: node research/rc459_direct_2_02_candidates_2026.js
+      - name: Diagnostic-only multi-lens summary
+        run: node research/rc459_direct_2_02_diagnostic_2026.js
       - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: rc459-direct-2-02-candidates
-          path: counterfactual_2026/RC459_DIRECT_2_02_CANDIDATES_2026.json
+          path: |
+            counterfactual_2026/RC459_DIRECT_2_02_CANDIDATES_2026.json
+            counterfactual_2026/RC459_DIRECT_2_02_DIAGNOSTIC_2026.json
           if-no-files-found: error
