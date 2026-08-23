@@ -1,5 +1,10 @@
 name: PITTI NoPunt independent projection freeze
 on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/nopunt_independent_projection_fetch_2026.js'
+      - '.github/workflows/pitti-nopunt-independent-projection.yml'
   workflow_dispatch:
 jobs:
   fetch:
