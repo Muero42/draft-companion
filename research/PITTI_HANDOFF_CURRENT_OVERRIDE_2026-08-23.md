@@ -24,7 +24,7 @@ Frozen file: `research/SLEEPER_HALF_PPR_MARKET_ANCHORS_2026-08-23.json` (commit 
 
 Relevant current Sleeper-derived ADPs: CMC 5.1, Taylor 6.2, JSN 6.6, Amon-Ra 8.0, Cook 9.6, Lamb 10.5, Saquon 11.5, Jeanty 12.6, Achane 13.6, Jefferson 13.7, Hampton 15.6, Chase Brown 16.6, Henry 17.8, Walker 18.1, A.J. Brown 19.5, London 20.6, Bowers 22.1, Nico 23.1, McBride 24.1, Nabers 30.1, Olave 32.3, Flowers 41.6. Josh Allen's Sleeper-derived ADP is ~21 but he remains CONTROL/MAJOR REACH at pick 12 for this 1QB strategy; market availability alone cannot override the strategic/value gate.
 
-This confirms the user's correction: Jeanty/Jefferson are normal/plausible 1.09 options, Cook/Lamb are also turn-core, while Amon-Ra/Taylor/JSN are progressively more favorable fallers.
+This confirms the user's correction: Jeanty/Jefferson are normal/plausible 1.09 options, Cook/Lamb are also normal turn-core, while Amon-Ra/Taylor/JSN are progressively more favorable fallers.
 
 ## SLEEPER-MARKET 1.09 -> 2.02 CALIBRATION — PASS, AVAILABILITY ONLY
 Harness `research/rc459_sleeper_market_turn12_calibration_2026.js`, corrected after a diagnosed syntax-scope failure, now PASSes. Run `32631519844`: 400 seeds, 2,416 conditioned states. It uses the verified Sleeper half-PPR anchors for early opponent availability while retaining canonical manager roster/history/trait modifiers. It does NOT certify strategy.
@@ -54,6 +54,17 @@ Practical TAKE/WAIT implication, conditional on players being judged close enoug
 - A genuine Amon-Ra/Taylor/JSN/CMC faller at 1.09 should normally be treated as TAKE/value and not sacrificed merely to optimize the return sequence, subject to independent value evidence.
 
 Do not convert these ranges into exact probabilities for draft-day display until dispersion is empirically calibrated from comparable Sleeper draft-history data. Use confidence bands / LOW-MID-HIGH return risk rather than false point precision.
+
+## FRESH ROLE / HEALTH EVIDENCE AUDIT — 2026-08-23
+This layer is intrinsic-value evidence only. It must NOT redefine market availability.
+
+- Chase Brown: current Bengals camp evidence is positive rather than alarming. Joe Burrow explicitly praised his year-over-year growth; Bengals camp reports note explosive runs. This supports Brown as a legitimate 2.02 comparison candidate, not a 1.09 primary candidate.
+- Omarion Hampton: current evidence supports RB1/high-upside status, but Mike McDaniel has explicitly said the Chargers may ride the `hot hand` among Hampton, Keaton Mitchell and Kimani Vidal. Hampton remains the lead profile, but a pure bellcow assumption is too aggressive. This is a meaningful downside/role uncertainty to retain at 2.02.
+- Kenneth Walker III: current evidence supports Kansas City lead-back status and strong efficiency/upside; recent preseason non-use appears consistent with veteran/starter management rather than an identified injury. Prior injury history remains part of downside risk. Treat as a real 2.02 RB comparison, not an automatic winner.
+- Brock Bowers: current evidence says he is healthy after the 2025 knee issue and remains a centerpiece of the Raiders offense. This strengthens his intrinsic case at a market-realistic 2.02, but does not override roster economics/TE opportunity cost and does not promote him to 1.09.
+- Jeanty: Raiders are developing Mike Washington Jr. specifically as a complement in Klint Kubiak's two-back system. Jeanty remains the lead back, but committee/touch-ceiling uncertainty is real and should remain in the Jeanty-vs-Jefferson/Cook/Lamb intrinsic comparison.
+
+No fresh evidence in this audit justifies a first-turn strategy overhaul. The correct action is to carry these role/downside adjustments into the verified-current-market pair evaluation.
 
 ## REALISTIC 1.09 -> 2.02 OLD TURN RUN — QUARANTINED FOR STRATEGY
 Harness `research/rc459_realistic_turn12_2026.js`, raw SHA-256 `290ec8a9d09e00f3c66d7a470a14535367704519eba781a7ba15eb9f32e4639e`, produced 81 states / 893 branches and had correct league geometry, but its user frontier used newer market anchors while opponents still sampled the older 90%-frozen-ADP/10%-panel market. Preserve it for diagnostics, but do not aggregate it into current strategy evidence.
@@ -95,8 +106,8 @@ Existing weeks 1-14 utility is NOT P(title). The regular-season evaluator encode
 Whenever a long job is active, use independent capacity on realistic availability calibration, opponent realism, current player/role/injury evidence, conditional TAKE/WAIT maps, FA marginal value, harness/audit, and draft-day usability. Research infrastructure must not crowd out realistic draft preparation.
 
 ## Immediate next actions — priority order
-1. Build a new **verified-current-market pair harness**, not reuse the quarantined 893 branches: actual Sleeper-derived market for opponent sampling; verified geometry; realistic available 1.09/2.02 candidates; identical continuation; full actual-FA metadata.
-2. Evaluate realistic 9+12 PAIRS with separate lenses: selected-expert/player-quality, independent weeks-1-14/startability, actual-FA marginal depth, market/return regret. Preserve disagreements; no exotic scalar optimizer.
+1. Build/complete the new **verified-current-market pair harness**, not reuse the quarantined 893 branches: actual Sleeper-derived market for opponent sampling; verified geometry; realistic available 1.09/2.02 candidates; identical continuation; full actual-FA metadata.
+2. Evaluate realistic 9+12 PAIRS with separate lenses: selected-expert/player-quality, independent weeks-1-14/startability, actual-FA marginal depth, market/return regret. Carry the fresh Brown/Hampton/Walker/Bowers/Jeanty role-risk evidence above into this layer. Preserve disagreements; no exotic scalar optimizer.
 3. Center first decision map on real cases: faller TAKE; Cook/Lamb vs Jefferson sequencing; Jeanty vs Jefferson close sequencing; then remaining realistic 2.02 value options.
 4. Empirically calibrate market dispersion if comparable Sleeper draft-history data already exist in project artifacts; otherwise keep return as robust ranges rather than fitted point probabilities.
 5. After first-turn map stabilizes, run realistic complete mocks and move to 3.09->4.02, including Olave/Flowers/Nabers and genuine fallers.
