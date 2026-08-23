@@ -1,0 +1,1 @@
+{"schema":1,"experiment":"JOINT_PAIRSUM_V2","preregistered":"2026-08-23","outer_seed_base":459263000,"arms":["CONTROL","PAIRSUM_LONG2","PAIRSUM_EARLY4"],"drafts_per_regime":10,"nested_rollouts":120,"no_same_screen_tuning":true}
