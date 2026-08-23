@@ -1,0 +1,25 @@
+name: PITTI rc4.59 targeted PairSum causal breadth
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/rc459_cf_targeted_pairsum_breadth_2026.js'
+      - '.github/workflows/pitti-rc459-cf-targeted-pairsum.yml'
+  workflow_dispatch:
+jobs:
+  targeted:
+    runs-on: ubuntu-latest
+    timeout-minutes: 48
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Fresh targeted MARKET_NEUTRAL vs frozen PairSum-LONG2 raw branches
+        run: node research/rc459_cf_targeted_pairsum_breadth_2026.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-cf-targeted-pairsum
+          path: counterfactual_2026/RC459_CF_TARGETED_PAIRSUM_BREADTH_2026.json
+          if-no-files-found: error
