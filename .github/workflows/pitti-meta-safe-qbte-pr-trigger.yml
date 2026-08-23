@@ -4,7 +4,11 @@ on:
     branches: [main]
     paths:
       - 'research/rc459_meta_safe_qbte_guard_fullmock_shard_2026.js'
+      - 'research/rc459_qbte_paired_complete_roster_utility_2026.py'
       - '.github/workflows/pitti-meta-safe-qbte-pr-trigger.yml'
+permissions:
+  actions: read
+  contents: read
 jobs:
   shard:
     runs-on: ubuntu-latest
@@ -31,3 +35,28 @@ jobs:
           path: simulation_2026/RC459_META_SAFE_QBTE_GUARD_SHARD_${{ matrix.shard }}_2026.json
           if-no-files-found: error
           retention-days: 3
+  utility:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-meta-safe-qbte-guard-challenger
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Download exact prior baseline and current-run challenger artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/base /tmp/chal
+          gh run download 32651366239 -D /tmp/base
+          gh run download ${{ github.run_id }} -D /tmp/chal --pattern 'pitti-meta-safe-qbte-*'
+      - name: Evaluate independent paired complete-roster utility
+        run: python research/rc459_qbte_paired_complete_roster_utility_2026.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pitti-qbte-paired-complete-roster-utility
+          path: diagnostics_2026/RC459_META_SAFE_QBTE_PAIRED_COMPLETE_ROSTER_UTILITY_2026.json
+          if-no-files-found: error
+          retention-days: 7
