@@ -5,7 +5,7 @@
    downstream outcome. PairSum itself remains byte-for-byte defined by the source screen. */
 const fs=require('fs'),cp=require('child_process'),crypto=require('crypto'),path=require('path');
 const CORE='research/rc459_decision_counterfactual_screen_2026.js';
-const EXPECT='f60c03176ac01293468ff33324dd3ea9b742af24';
+const EXPECT='8cd71b5d01af8fe0f03ab0ff9ee3573486d4b5c3';
 let src=fs.readFileSync(CORE,'utf8'),buf=Buffer.from(src);const blob=crypto.createHash('sha1').update(Buffer.from(`blob ${buf.length}\0`)).update(buf).digest('hex');if(blob!==EXPECT)throw Error('raw-screen core drift '+blob);
 const seedOld='const seeds=[459272001],policies=';
 const seeds=[459276001,459276002,459276003];
