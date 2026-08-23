@@ -1,0 +1,181 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "research_only": true,
+  "metadata_safe": true,
+  "production_mutation": false,
+  "seed_union_exact": true,
+  "seeds": 60,
+  "seed_min": 459710001,
+  "seed_max": 459710060,
+  "shard_sha256": {
+    "RC459_REALISTIC_FULLMOCK_TIER_AUDIT_SHARD_0_2026.json": "49a53c51327f271ac1544545c0bd37865429d87855de44646bcca4f706a10f8b",
+    "RC459_REALISTIC_FULLMOCK_TIER_AUDIT_SHARD_1_2026.json": "b64bb630bf9e09b3afdc5e63ff959a5c1c2b2422413f7fe22283b808e56da58d",
+    "RC459_REALISTIC_FULLMOCK_TIER_AUDIT_SHARD_2_2026.json": "423303114053916151fcc869d82784fdaf7e1b4de47326f2543fb03d0e82c477",
+    "RC459_REALISTIC_FULLMOCK_TIER_AUDIT_SHARD_3_2026.json": "2549e73bd4c6b93bca9028b7654bdf9904b3229ec5885da5a94aaf1adf7a0154",
+    "RC459_REALISTIC_FULLMOCK_TIER_AUDIT_SHARD_4_2026.json": "bc9bc84ba1265a59c0f8bda2635867ca9753ba755e8357550d0968f0c7a58344",
+    "RC459_REALISTIC_FULLMOCK_TIER_AUDIT_SHARD_5_2026.json": "3b0e5b669c88bdf4b253ca1d8e0ceef3a11903809f9862e7a6b8401ba1a2c9bf"
+  },
+  "all_flags": {},
+  "choices_by_pick": {
+    "9": {
+      "Jonathan Taylor": 3,
+      "Jaxon Smith-Njigba": 8,
+      "Amon-Ra St. Brown": 23,
+      "James Cook III": 26
+    },
+    "12": {
+      "Brock Bowers": 57,
+      "James Cook III": 3
+    },
+    "29": {
+      "Chris Olave": 43,
+      "Kyren Williams": 11,
+      "George Pickens": 3,
+      "Malik Nabers": 3
+    },
+    "32": {
+      "Zay Flowers": 49,
+      "Chris Olave": 11
+    },
+    "49": {
+      "Jaylen Waddle": 18,
+      "D'Andre Swift": 20,
+      "Tyler Warren": 1,
+      "Garrett Wilson": 5,
+      "Zay Flowers": 1,
+      "Colston Loveland": 8,
+      "Travis Etienne Jr.": 5,
+      "Emeka Egbuka": 1,
+      "Ladd McConkey": 1
+    },
+    "52": {
+      "Jameson Williams": 4,
+      "Tyler Warren": 5,
+      "D'Andre Swift": 22,
+      "Terry McLaurin": 25,
+      "David Montgomery": 2,
+      "Bucky Irving": 1,
+      "Travis Etienne Jr.": 1
+    },
+    "69": {
+      "Jalen Hurts": 4,
+      "Christian Watson": 20,
+      "Rome Odunze": 3,
+      "Jadarian Price": 4,
+      "Parker Washington": 28,
+      "Bhayshul Tuten": 1
+    },
+    "72": {
+      "Rhamondre Stevenson": 5,
+      "Parker Washington": 18,
+      "Marvin Harrison Jr.": 18,
+      "Jayden Daniels": 12,
+      "Rome Odunze": 1,
+      "Carnell Tate": 2,
+      "Jaylen Warren": 3,
+      "Jalen Hurts": 1
+    },
+    "89": {
+      "Jonathon Brooks": 32,
+      "Trevor Lawrence": 16,
+      "Stefon Diggs": 1,
+      "Caleb Williams": 4,
+      "Blake Corum": 1,
+      "Rhamondre Stevenson": 4,
+      "Justin Herbert": 2
+    },
+    "92": {
+      "Trevor Lawrence": 25,
+      "Caleb Williams": 1,
+      "Jacory Croskey-Merritt": 1,
+      "Blake Corum": 10,
+      "Justin Herbert": 8,
+      "Tony Pollard": 3,
+      "Jonathon Brooks": 4,
+      "Dak Prescott": 1,
+      "Rico Dowdle": 6,
+      "Stefon Diggs": 1
+    },
+    "109": {
+      "Stefon Diggs": 35,
+      "Jacory Croskey-Merritt": 10,
+      "Josh Downs": 8,
+      "Trevor Lawrence": 4,
+      "Brock Purdy": 2,
+      "Jordan Addison": 1
+    },
+    "112": {
+      "Josh Downs": 22,
+      "Trevor Lawrence": 2,
+      "Jaxson Dart": 1,
+      "Brock Purdy": 18,
+      "Stefon Diggs": 7,
+      "Jacory Croskey-Merritt": 4,
+      "Michael Pittman Jr.": 2,
+      "Dak Prescott": 2,
+      "Jordan Mason": 1,
+      "Kenny Gainwell": 1
+    },
+    "129": {
+      "Bo Nix": 12,
+      "Brock Purdy": 16,
+      "Jalen Coker": 8,
+      "Rachaad White": 4,
+      "Wan'Dale Robinson": 2,
+      "Isaiah Likely": 16,
+      "De'Zhaun Stribling": 1,
+      "KC Concepcion": 1
+    },
+    "132": {
+      "Jalen Coker": 26,
+      "Isaiah Likely": 7,
+      "Bo Nix": 14,
+      "De'Zhaun Stribling": 8,
+      "Jakobi Meyers": 2,
+      "Wan'Dale Robinson": 1,
+      "Dallas Goedert": 2
+    },
+    "149": {
+      "Kyler Murray": 44,
+      "Jalen Coker": 5,
+      "Keaton Mitchell": 8,
+      "Bo Nix": 1,
+      "Jonah Coleman": 1,
+      "De'Zhaun Stribling": 1
+    }
+  },
+  "metadata_collision_stats": [
+    {
+      "validated_by": "diagnostics_2026/RC459_METADATA_COLLISION_AUDIT_2026.json",
+      "frozen_pool_affected_rows": 7,
+      "same_position_ambiguous_rows": 0
+    },
+    {
+      "validated_by": "diagnostics_2026/RC459_METADATA_COLLISION_AUDIT_2026.json",
+      "frozen_pool_affected_rows": 7,
+      "same_position_ambiguous_rows": 0
+    },
+    {
+      "validated_by": "diagnostics_2026/RC459_METADATA_COLLISION_AUDIT_2026.json",
+      "frozen_pool_affected_rows": 7,
+      "same_position_ambiguous_rows": 0
+    },
+    {
+      "validated_by": "diagnostics_2026/RC459_METADATA_COLLISION_AUDIT_2026.json",
+      "frozen_pool_affected_rows": 7,
+      "same_position_ambiguous_rows": 0
+    },
+    {
+      "validated_by": "diagnostics_2026/RC459_METADATA_COLLISION_AUDIT_2026.json",
+      "frozen_pool_affected_rows": 7,
+      "same_position_ambiguous_rows": 0
+    },
+    {
+      "validated_by": "diagnostics_2026/RC459_METADATA_COLLISION_AUDIT_2026.json",
+      "frozen_pool_affected_rows": 7,
+      "same_position_ambiguous_rows": 0
+    }
+  ],
+  "interpretation": "Corrected identity-safe diagnostic only; no policy promotion is authorized by this aggregate."
+}
