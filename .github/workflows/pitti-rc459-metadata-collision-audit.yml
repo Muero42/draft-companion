@@ -1,0 +1,30 @@
+name: PITTI rc4.59 metadata collision audit
+on:
+  push:
+    branches: [pitti-meta-collision-audit]
+    paths:
+      - 'research/rc459_metadata_collision_audit_2026.js'
+      - '.github/workflows/pitti-rc459-metadata-collision-audit.yml'
+  workflow_dispatch:
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-meta-collision-audit
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax check
+        run: node --check research/rc459_metadata_collision_audit_2026.js
+      - name: Run collision audit
+        run: node research/rc459_metadata_collision_audit_2026.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-metadata-collision-audit
+          path: diagnostics_2026/RC459_METADATA_COLLISION_AUDIT_2026.json
+          if-no-files-found: error
+          retention-days: 7
