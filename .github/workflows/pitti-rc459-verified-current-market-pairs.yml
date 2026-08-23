@@ -1,0 +1,25 @@
+name: PITTI rc4.59 verified current-market pairs
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/rc459_verified_current_market_pair_harness_2026.js'
+      - 'research/SLEEPER_HALF_PPR_MARKET_ANCHORS_2026-08-23.json'
+      - '.github/workflows/pitti-rc459-verified-current-market-pairs.yml'
+  workflow_dispatch:
+jobs:
+  pairs:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node research/rc459_verified_current_market_pair_harness_2026.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-verified-current-market-pairs
+          path: counterfactual_2026/RC459_VERIFIED_CURRENT_MARKET_PAIRS_2026.json
+          if-no-files-found: error
