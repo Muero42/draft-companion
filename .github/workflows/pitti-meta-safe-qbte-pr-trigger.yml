@@ -1,0 +1,33 @@
+name: PITTI metadata-safe QB2 TE2 challenger PR trigger
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/rc459_meta_safe_qbte_guard_fullmock_shard_2026.js'
+      - '.github/workflows/pitti-meta-safe-qbte-pr-trigger.yml'
+jobs:
+  shard:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        shard: [0,1,2,3,4,5]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-meta-safe-qbte-guard-challenger
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check research/rc459_meta_safe_qbte_guard_fullmock_shard_2026.js
+      - name: Run challenger shard
+        env:
+          PITTI_SHARD: ${{ matrix.shard }}
+        run: node research/rc459_meta_safe_qbte_guard_fullmock_shard_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pitti-meta-safe-qbte-${{ matrix.shard }}
+          path: simulation_2026/RC459_META_SAFE_QBTE_GUARD_SHARD_${{ matrix.shard }}_2026.json
+          if-no-files-found: error
+          retention-days: 3
