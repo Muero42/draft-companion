@@ -1,11 +1,5 @@
 name: PITTI rc4.59 counterfactual plumbing
 on:
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'research/rc459_decision_counterfactual_plumbing_2026.js'
-      - 'research/rc459_full_policy_paired_2026.js'
-      - '.github/workflows/pitti-rc459-counterfactual-plumbing.yml'
   workflow_dispatch:
 jobs:
   plumbing:
