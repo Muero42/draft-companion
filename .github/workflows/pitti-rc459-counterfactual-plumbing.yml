@@ -1,0 +1,26 @@
+name: PITTI rc4.59 counterfactual plumbing
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/rc459_decision_counterfactual_plumbing_2026.js'
+      - 'research/rc459_full_policy_paired_2026.js'
+      - '.github/workflows/pitti-rc459-counterfactual-plumbing.yml'
+  workflow_dispatch:
+jobs:
+  plumbing:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Shared-prefix treatment branch gate
+        run: node research/rc459_decision_counterfactual_plumbing_2026.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-counterfactual-plumbing
+          path: counterfactual_2026/RC459_DECISION_COUNTERFACTUAL_PLUMBING_2026.json
+          if-no-files-found: ignore
