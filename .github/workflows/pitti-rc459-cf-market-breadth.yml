@@ -1,0 +1,23 @@
+name: PITTI rc4.59 MARKET counterfactual breadth
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/rc459_cf_market_breadth_2026.js'
+      - '.github/workflows/pitti-rc459-cf-market-breadth.yml'
+  workflow_dispatch:
+jobs:
+  breadth:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Ten-seed MARKET_NEUTRAL raw breadth
+        run: node research/rc459_cf_market_breadth_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc459-cf-market-breadth
+          path: counterfactual_2026/RC459_CF_MARKET_BREADTH_2026.json
