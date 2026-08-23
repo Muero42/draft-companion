@@ -22,34 +22,35 @@ Research branch/PR #12: `pitti-decision-counterfactual-kernel`. No production ra
 ### Actual-kernel RNG parity
 `research/rc459_actual_kernel_rng_parity_2026.js`, Actions run `32620973626` PASS.
 One captured Sleeper metadata fixture (12,221 players) was used for both runs. Only the exact legacy RNG definition was replaced by the snapshot-capable bit-equivalent form. Complete full-policy JSON outputs were byte-identical across 6 full drafts (COACH, BRIDGE_GREEDY, MARKET_ROSTER × baseline/stress). Output SHA-256 `20e0b698978d1ee40988ba53132381f7193ab5469c2976333d6fac4d70bc574f`.
-This closes the previous caveat: stateful RNG instrumentation is now verified directly on the actual validated rc4.59 full-policy kernel, not merely a synthetic control-flow mirror.
 
 ### Actual-kernel causal plumbing
 `research/rc459_decision_counterfactual_plumbing_2026.js`, Actions run `32621088496` PASS.
-Fresh seeds 459271001/459271002; treatment picks 9 and 12; 4 states / 40 full-draft branches. Verified on actual kernel:
-- shared-prefix fingerprints identical across candidate branches;
-- cloned RNG snapshots identical at treatment;
-- forced treatment consumes zero outer RNG;
-- candidate execution is order-independent/deterministic;
-- full drafts remain legal with 15 user skill players and starter feasibility;
-- complete picks and actual post-draft FA pools are persisted.
-This plumbing screen intentionally used MARKET_ROSTER continuation only and made no outcome claim.
+Fresh seeds 459271001/459271002; treatment picks 9 and 12; 4 states / 40 full-draft branches. Verified shared-prefix identity, cloned RNG identity, zero treatment RNG consumption, order-independent deterministic treatment, legal full drafts, complete picks and actual post-draft FA pools.
 
-Observed diagnostic states were realistic: seed 459271001 picks 1-8 = Bijan, CMC, Gibbs, Chase, Puka, JSN, Taylor, Amon-Ra; seed 459271002 = Chase, Gibbs, Puka, Bijan, CMC, Taylor, JSN, Amon-Ra. MARKET_ROSTER then selected James Cook at 1.09 in both diagnostic states. At 2.02 after Cook, the outcome-blind panel/ADP frontier included Chase Brown, Jeanty, Walker, Jefferson, Bowers, Hampton, Achane, London, Henry and A.J. Brown.
+## Direct counterfactual evidence
+### MARKET_NEUTRAL breadth-100 — PASS
+Workflow run `32623713022`, artifact `rc459-cf-market-breadth100` (digest `sha256:fbc78b672851c895548f52d6ac77a6e0297ae614d1ab6860427c71cdfc603a38`). Generated 100 fresh causal states per treatment (200 states total) and 2,000 complete MARKET_NEUTRAL branches, then evaluated through frozen multi-lens diagnostics. This is a broad diagnostic/robustness reference, not production certification.
 
-## Raw direct decision screen — RUNNING
-`research/rc459_decision_counterfactual_screen_2026.js`; workflow `PITTI rc4.59 raw decision counterfactual screen`, current run `32621203190`.
-Fresh seed family 459272xxx. First diagnostic seed only. Treatment picks 1.09 and 2.02. Candidate frontier = outcome-blind union top-8 selected-panel + top-8 Sleeper ADP; Bowers retained at 2.02 if legal. Two frozen continuations:
-1. `MARKET_NEUTRAL` = roster-aware MARKET_ROSTER continuation; no downstream evaluator.
-2. `PAIRSUM_LONG2` = exact screened PairSum-v2 mechanism: canonical Coach except package-cost lookahead at picks 12 and 32, frontier 5, 120 inner CRN rollouts, `current selected-panel rank + expected best legal next-own-pick selected-panel rank`.
-The raw workflow persists complete picks, roster, FA pool, prefix/RNG fingerprints and continuation decisions BEFORE any outcome evaluator. For this first plumbing/diagnostic state, 2.02 prefix uses MARKET_NEUTRAL at 1.09; later strategic certification must condition 2.02 across multiple plausible 1.09 branches.
+Key interpretation: the broad direct A/B screen does NOT reproduce either invalid extreme pattern (Brown-always-1.09 or Bowers-always-2.02). Different lenses disagree materially in some player comparisons, confirming that no single evaluator should be allowed to dictate the strategy. Existing ADP-neighbor outcome bridge remains a market-regret guardrail rather than sole objective.
+
+### Fresh external market/expert sanity — 2026-08-21 snapshot
+Fresh FantasyPros Half-PPR consensus (Derek Brown, Andrew Erickson, Pat Fitzmaurice; Aug 20-21) continues to place the elite 1.09 window around Amon-Ra/JSN/Cook/Taylor rather than Chase Brown/Bowers. Position consensus has Cook RB3, Taylor RB4, Chase Brown RB7, while WR consensus has JSN WR3 and Amon-Ra WR4. Derek Brown's Aug-21 overall ranks Cook 5, JSN 6, Amon-Ra 7, Taylor 12, Chase Brown 15, Bowers 16. Most-accurate-expert aggregate from the prior week similarly had Amon-Ra 5, JSN 6, Taylor 8, Cook 10, Chase Brown 14 and Bowers 19. This is a sanity anchor, not an instruction to copy ECR.
+
+Implication: any future policy again producing deterministic Brown 1.09 or Bowers 1.09/2.02 across diverse states requires extraordinary independent evidence and should fail plausibility audit by default. Conversely, Cook/Amon-Ra/JSN/Taylor mixtures at 1.09 are externally plausible and should be distinguished by direct causal/return evidence rather than forced into one universal pick.
+
+## Targeted PairSum-vs-neutral run — still active
+Run `32623556347` remains in the expensive `Fresh targeted MARKET_NEUTRAL vs frozen PairSum-LONG2 raw branches` step as of the latest check. Do not interrupt while active. This is the important continuation-policy cross-check against breadth-100 MARKET_NEUTRAL evidence.
 
 ## Independent outcome stack still required
 Keep existing ADP-conditioned anchor as conservative market-regret lens. Add where reliable: (1) non-ADP-only player forecast/statistical challenger, (2) shallow-league replacement/waiver model using actual post-draft FA pools, (3) championship-tail simulation using actual league playoff rules. Existing `independent_utility_v3_3_2025.py` is useful as historical functional-form validation but uses realized 2025 production and therefore is NOT a 2026 player forecast.
 
+## Parallel-work rule
+Whenever a long Actions/simulation job is active, automatically use independent capacity on outcome-challenger, shallow-league FA/waiver, panel-vs-market disagreement, TAKE/WAIT, health/role, opponent-realism, championship-tail, harness/audit and draft-day usability work where useful. Do not return merely because a healthy long run is still computing.
+
 ## Immediate next actions
-1. Let raw screen `32621203190` finish; inspect causal/plausibility invariants and raw picks BEFORE evaluating outcomes.
-2. If raw PASS, download raw artifact and audit candidate/continuation behavior, especially Brown/Bowers/Cook sanity and PairSum outer-RNG isolation.
-3. Only after raw audit, evaluate branches through multiple lenses; never let the ADP-neighbor anchor alone choose the winner.
-4. Expand 2.02 to conditional states from multiple plausible 1.09 treatments, then extend to 3.09/4.02/5.09/6.02 on fresh seeds.
-5. In parallel continue independent forecast/shallow-waiver/championship-tail work and health/role evidence refresh. No production promotion yet.
+1. Let targeted run `32623556347` finish; inspect raw causal/plausibility invariants before outcome interpretation.
+2. Compare its PairSum-vs-MARKET_NEUTRAL signs against the completed breadth-100 reference; preserve continuation/evaluator conflicts rather than tuning them away.
+3. Expand conditional 2.02 states from multiple plausible 1.09 treatments, then 3.09/4.02/5.09/6.02 on fresh seeds only after the targeted cross-check.
+4. Parallel: build shallow-league actual-FA replacement diagnostics from persisted breadth-100 FA pools; continue non-ADP forecast and championship-tail work.
+5. Keep current external expert/market sanity snapshot as plausibility guardrail; refresh again close to 2026-08-31 or on material news.
+6. No production promotion yet.
