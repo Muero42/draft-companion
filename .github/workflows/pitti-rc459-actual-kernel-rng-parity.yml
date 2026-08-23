@@ -1,0 +1,26 @@
+name: PITTI rc4.59 actual kernel RNG parity
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/rc459_actual_kernel_rng_parity_2026.js'
+      - 'research/rc459_full_policy_paired_2026.js'
+      - '.github/workflows/pitti-rc459-actual-kernel-rng-parity.yml'
+  workflow_dispatch:
+jobs:
+  parity:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Actual validated rc4.59 kernel legacy/stateful byte parity
+        run: node research/rc459_actual_kernel_rng_parity_2026.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-actual-kernel-rng-parity
+          path: diagnostics_2026/RC459_ACTUAL_KERNEL_RNG_PARITY_2026_GATE.json
+          if-no-files-found: ignore
