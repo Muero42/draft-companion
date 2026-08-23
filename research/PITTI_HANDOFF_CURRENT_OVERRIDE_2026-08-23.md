@@ -31,7 +31,7 @@ This is not narrow train/test leakage and the selected expert panel is not used 
 
 Persisted audit: `research/OUTCOME_ANCHOR_ADP_ALIGNMENT_AUDIT_2026-08-23.md`.
 
-## Decision-counterfactual path — IMPLEMENTATION STARTED
+## Decision-counterfactual path — CAUSAL CORE + STATEFUL RNG GATES PASS
 Do not invent another global coefficient. Direct decision-level counterfactuals are the next strategic method: same realistic pre-pick state, force each quality-plausible candidate, continue the full draft under frozen continuation policies with CRN, then compare downstream outcomes and roster consequences.
 
 Candidate frontier is NOT only canonical Coach top-5. It is the outcome-blind union of selected-panel quality, market/ADP, material Return-v2 pressure, and independently documented PITTI targets. Bowers remains explicitly eligible at 2.02 when quality-plausible; no Brown/Cook/Bowers special rule.
@@ -39,15 +39,28 @@ Candidate frontier is NOT only canonical Coach top-5. It is the outcome-blind un
 Persistent preregistration: `research/DECISION_COUNTERFACTUAL_NEXT_PLAN_2026-08-23.md`.
 Persistent implementation contract: `research/DECISION_COUNTERFACTUAL_HARNESS_SPEC_2026-08-23.md`.
 
-New isolated branch: `pitti-decision-counterfactual`, draft PR #10. Research-only; no production scoring/ranking change.
-Implemented causal core:
+Isolated branch: `pitti-decision-counterfactual`, draft PR #10. Research-only; no production scoring/ranking change.
+Implemented/tested:
 - `research/decision_counterfactual_core_2026.js`
 - `research/decision_counterfactual_core_test_2026.js`
+- `research/stateful_rng_2026.js`
+- `research/stateful_rng_test_2026.js`
+- `research/counterfactual_state_machine_test_2026.js`
 - `.github/workflows/pitti-decision-counterfactual-core.yml`
-Core provides stable state/prefix fingerprints, deep-cloned treatment branches, candidate availability/legality fail-closed checks, treatment outer-RNG isolation, final roster audit, and raw-row persistence helpers including complete picks and actual post-draft free-agent ids.
-Core test deliberately verifies base immutability and negative fail-closed cases for unknown candidate, prefix RNG mismatch and treatment RNG advancement.
 
-First target turns remain 1.09 and 2.02 for plumbing/plausibility; only after causal invariants pass extend to 3.09/4.02/5.09/6.02. Raw causal artifacts must be uploaded before downstream evaluator execution.
+Actions run `32620561415` PASS. Verified gates:
+1. immutable shared-prefix clone / base immutability;
+2. forced-treatment availability + legality fail-closed plumbing;
+3. prefix RNG mismatch fail-closed;
+4. treatment may not advance outer opponent RNG;
+5. new stateful RNG is bit-exact against legacy rc4.59 research RNG for 5 seeds x 10,000 draws;
+6. snapshot/resume parity for 5,000 subsequent draws;
+7. clone does not advance parent RNG;
+8. synthetic snapshot -> branch -> resume state machine gives deterministic same-treatment replay, immutable base, equal outer RNG draw consumption and legitimate divergent boards after different treatment.
+
+The stateful wrapper changes no random-number mathematics; it only exposes `{a,draws}` snapshot/clone so the real rc4.59 kernel can branch at picks 9/12 without replay ambiguity.
+
+First target turns remain 1.09 and 2.02 for plumbing/plausibility; only after full-kernel causal invariants pass extend to 3.09/4.02/5.09/6.02. Raw causal artifacts must be uploaded before downstream evaluator execution.
 
 ## Independent outcome stack required
 Retain existing ADP-conditioned historical anchor as conservative market-regret lens, but before production strategy certification add independent lenses where feasible:
@@ -61,8 +74,9 @@ If a sufficiently independent forecast cannot be built reliably before 2026-08-3
 Outer opponent RNG is recreated from the same seed per policy. Branches must match exactly before their forced user decision. After different user decisions, opponent boards may legitimately diverge because availability changed. Nested Return-v2 / joint rollouts must use separate deterministic streams and never advance outer opponent RNG. Counterfactual harness persists opponent picks and fails closed on shared-prefix mismatch.
 
 ## Immediate next actions
-1. Verify PR #10 invariant-core Actions result. If PASS, integrate the validated rc4.59 opponent/full-draft kernel for 1.09/2.02 only; do not rewrite it.
-2. Persist complete opponent picks, FA pool, continuation fingerprint and shared-prefix audit in the first raw screen; upload raw artifact before evaluation.
-3. Run small fresh diagnostic seed family under frozen PairSum-LONG2 plus MARKET_NEUTRAL continuation; inspect causal/plausibility gates before outcomes.
-4. In parallel audit selected-panel vs ADP-conditioned forecast disagreements and pursue a genuinely non-ADP-only outcome challenger.
-5. Preserve PairSum LONG2 unchanged as research candidate until fresh held-out evidence; no production promotion yet.
+1. Integrate the validated rc4.59 opponent/full-draft kernel with the now-PASS stateful RNG for 1.09/2.02 only; preserve exact opponent weighting and special-position draw order.
+2. Add a legacy-vs-stateful whole-draft parity gate BEFORE branching: same seeds must produce byte-identical complete drafts when no treatment is forced.
+3. Persist complete opponent picks, FA pool, continuation fingerprint and shared-prefix audit in first raw screen; upload raw artifact before evaluation.
+4. Run small fresh diagnostic seed family under frozen PairSum-LONG2 plus MARKET_NEUTRAL continuation; inspect causal/plausibility gates before outcomes.
+5. In parallel audit selected-panel vs ADP-conditioned forecast disagreements and pursue a genuinely non-ADP-only outcome challenger.
+6. Preserve PairSum LONG2 unchanged as research candidate until fresh held-out evidence; no production promotion yet.
