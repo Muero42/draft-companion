@@ -1,0 +1,25 @@
+name: PITTI rc4.59 Sleeper market turn12 calibration
+on:
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'research/SLEEPER_HALF_PPR_MARKET_ANCHORS_2026-08-23.json'
+      - 'research/rc459_sleeper_market_turn12_calibration_2026.js'
+      - '.github/workflows/pitti-rc459-sleeper-market-turn12-calibration.yml'
+  workflow_dispatch:
+jobs:
+  calibration:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node research/rc459_sleeper_market_turn12_calibration_2026.js
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: rc459-sleeper-market-turn12-calibration
+          path: counterfactual_2026/RC459_SLEEPER_MARKET_TURN12_CALIBRATION_2026.json
+          if-no-files-found: error
