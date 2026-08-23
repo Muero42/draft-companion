@@ -2,58 +2,54 @@
 
 This file supersedes stale immediate-next-action sections in `PITTI_HANDOFF_2026-08-22.md`. Canonical `/Pitti/PITTI_PROJECT_STATE.md` remains Source of Truth and should be read to EOF first when available.
 
-## Invalidated experiments
-- Original turn-pair probe: INVALID. Candidate score mutation caused recursive/order-dependent score inflation and the 20/20 Chase Brown 1.09 artifact. Do not reuse its outcomes.
-- Rolling-v1: INVALID. Long-gap future quality used an inadequate current top-5 fallback instead of the actual future board.
-- Joint-v1 z-score aggregation: REJECTED. Separately standardized current quality and tiny future-board differences, allowing implausible Bowers 1.09 choices.
+## Invalidated/rejected research paths
+- Original turn-pair probe: INVALID. Candidate-score mutation caused recursive/order-dependent inflation and the 20/20 Chase Brown 1.09 artifact. Never reuse its outcomes.
+- Rolling-v1: INVALID. Long-gap future quality used current top-5 fallback instead of actual future board.
+- Joint-v1 z-score aggregation: REJECTED. Separate z-scaling amplified tiny future-board differences and allowed implausible Bowers 1.09 choices.
 
-## PairSum-v2 result
-Research branch / draft PR #9: `pitti-joint-pairsum-probe`.
-Actions run `32615699210` completed successfully for CONTROL, PAIRSUM_LONG2, PAIRSUM_EARLY4 plus smoke test.
+## PairSum-v2 status
+PR #9 / `pitti-joint-pairsum-probe`, run `32615699210`.
+1.09 across 20 Coach drafts: Cook 9, Amon-Ra 5, Taylor 4, JSN 2, Brown 0, Bowers 0. CONTROL 2.02 Bowers 20/20; PairSum 2.02 Brown 18/20, Jeanty 1, Walker 1.
+Existing ADP-neighbor outcome anchor: CONTROL ~-0.644 baseline/-0.729 stress vs MARKET_ROSTER; PAIRSUM_LONG2 ~-0.380/-0.170; PAIRSUM_EARLY4 ~-0.396/-0.279. n=10/regime only; no certification. PairSum LONG2 remains frozen research candidate.
 
-Pick plausibility improved materially:
-- 1.09 across 20 Coach drafts: James Cook III 9, Amon-Ra St. Brown 5, Jonathan Taylor 4, Jaxon Smith-Njigba 2; Chase Brown 0; Brock Bowers 0.
-- CONTROL 2.02: Brock Bowers 20/20.
-- PairSum 2.02: Chase Brown 18/20, Ashton Jeanty 1, Kenneth Walker III 1.
+## Evaluator alignment warning
+`MARKET_OUTCOME_BRIDGE_2026.json` is historical Sleeper ADP -> realized weekly Half-PPR neighbor forecasting; MARKET_ROSTER also selects mainly by current Sleeper ADP. Thus this outcome anchor structurally favors ADP-like policies and is only a market-regret guardrail, not sole strategic truth. Do not tune PITTI toward MARKET_ROSTER merely to close this gap.
 
-Outcome-anchor screen (n=10/regime; intentionally not certification-sized):
-- CONTROL vs MARKET_ROSTER: about -0.644 baseline / -0.729 stress expected wins.
-- PAIRSUM_LONG2: about -0.380 baseline / -0.170 stress.
-- PAIRSUM_EARLY4: about -0.396 baseline / -0.279 stress.
-LONG2 is the best current research mechanism but is NOT production-certified. Baseline remains dominated on the existing anchor and n<50.
+## Direct decision counterfactual path — actual kernel gates PASS
+Actual validated kernel source is `research/rc459_full_policy_paired_2026.js` (58/58 source lock + exact rc4.59 Coach execution, profiled opponent kernel).
+Research branch/PR #12: `pitti-decision-counterfactual-kernel`. No production ranking/scoring change.
 
-PairSum LONG2 changes average Coach construction from about 5.5 RB / 7.5 WR / 1 TE / 1 QB to 6.05 RB / 6.95 WR / 1 TE / 1 QB. This supports the causal importance of sequencing/early opportunity cost without proving a hard RB strategy.
+### Actual-kernel RNG parity
+`research/rc459_actual_kernel_rng_parity_2026.js`, Actions run `32620973626` PASS.
+One captured Sleeper metadata fixture (12,221 players) was used for both runs. Only the exact legacy RNG definition was replaced by the snapshot-capable bit-equivalent form. Complete full-policy JSON outputs were byte-identical across 6 full drafts (COACH, BRIDGE_GREEDY, MARKET_ROSTER × baseline/stress). Output SHA-256 `20e0b698978d1ee40988ba53132381f7193ab5469c2976333d6fac4d70bc574f`.
+This closes the previous caveat: stateful RNG instrumentation is now verified directly on the actual validated rc4.59 full-policy kernel, not merely a synthetic control-flow mirror.
 
-## Critical new evaluator audit
-The existing `MARKET_OUTCOME_BRIDGE_2026.json` is explicitly a `historical Sleeper Half-PPR ADP -> realized weekly Half-PPR neighbor bridge` (2022-2025, k=24). MARKET_ROSTER directly selects mainly by current Sleeper ADP. Therefore Coach-vs-MARKET_ROSTER under this anchor has structural evaluator/comparator feature alignment toward ADP.
+### Actual-kernel causal plumbing
+`research/rc459_decision_counterfactual_plumbing_2026.js`, Actions run `32621088496` PASS.
+Fresh seeds 459271001/459271002; treatment picks 9 and 12; 4 states / 40 full-draft branches. Verified on actual kernel:
+- shared-prefix fingerprints identical across candidate branches;
+- cloned RNG snapshots identical at treatment;
+- forced treatment consumes zero outer RNG;
+- candidate execution is order-independent/deterministic;
+- full drafts remain legal with 15 user skill players and starter feasibility;
+- complete picks and actual post-draft FA pools are persisted.
+This plumbing screen intentionally used MARKET_ROSTER continuation only and made no outcome claim.
 
-This is not narrow train/test leakage and the selected expert panel is not used in the fit, but it means the remaining -0.38 gap must NOT be tuned away mechanically. PairSum-LONG2 Coach rosters have materially better aggregate selected-panel rank (~975 vs ~1144, lower better) while MARKET_ROSTER has better aggregate ADP (~1065 vs ~1165). The ADP-neighbor anchor preferring MARKET_ROSTER is therefore expected and cannot alone adjudicate panel-vs-market disagreements.
+Observed diagnostic states were realistic: seed 459271001 picks 1-8 = Bijan, CMC, Gibbs, Chase, Puka, JSN, Taylor, Amon-Ra; seed 459271002 = Chase, Gibbs, Puka, Bijan, CMC, Taylor, JSN, Amon-Ra. MARKET_ROSTER then selected James Cook at 1.09 in both diagnostic states. At 2.02 after Cook, the outcome-blind panel/ADP frontier included Chase Brown, Jeanty, Walker, Jefferson, Bowers, Hampton, Achane, London, Henry and A.J. Brown.
 
-Persisted audit: `research/OUTCOME_ANCHOR_ADP_ALIGNMENT_AUDIT_2026-08-23.md`.
+## Raw direct decision screen — RUNNING
+`research/rc459_decision_counterfactual_screen_2026.js`; workflow `PITTI rc4.59 raw decision counterfactual screen`, current run `32621203190`.
+Fresh seed family 459272xxx. First diagnostic seed only. Treatment picks 1.09 and 2.02. Candidate frontier = outcome-blind union top-8 selected-panel + top-8 Sleeper ADP; Bowers retained at 2.02 if legal. Two frozen continuations:
+1. `MARKET_NEUTRAL` = roster-aware MARKET_ROSTER continuation; no downstream evaluator.
+2. `PAIRSUM_LONG2` = exact screened PairSum-v2 mechanism: canonical Coach except package-cost lookahead at picks 12 and 32, frontier 5, 120 inner CRN rollouts, `current selected-panel rank + expected best legal next-own-pick selected-panel rank`.
+The raw workflow persists complete picks, roster, FA pool, prefix/RNG fingerprints and continuation decisions BEFORE any outcome evaluator. For this first plumbing/diagnostic state, 2.02 prefix uses MARKET_NEUTRAL at 1.09; later strategic certification must condition 2.02 across multiple plausible 1.09 branches.
 
-## Next strategic method
-Do not invent another global coefficient. Use direct decision-level counterfactuals: at the same realistic draft state, force each quality-plausible candidate, continue the full draft under frozen continuation policies with CRN, then compare downstream outcomes and roster consequences.
-
-Candidate frontier must NOT be only canonical Coach top-5 because that frontier is under investigation. Use union of quality-plausible selected-panel, market/ADP, material Return-v2 pressure, and independently evidence-supported PITTI targets.
-
-Persisted preregistration: `research/DECISION_COUNTERFACTUAL_NEXT_PLAN_2026-08-23.md`.
-
-First target turns: 1.09, 2.02, 3.09, 4.02, 5.09, 6.02. Explicitly compare Bowers when plausible; do not suppress him. Goal is to measure Bowers vs RB/WR alternatives, not encode Late TE.
-
-## Independent outcome stack required
-Retain existing ADP-conditioned historical anchor as conservative market-regret lens, but before production strategy certification add independent lenses where feasible:
-1. player forecast/statistical challenger not generated solely from current ADP;
-2. shallow-league replacement/waiver model using actual post-draft FA pools;
-3. championship-tail simulation using actual league playoff rules.
-
-If a sufficiently independent forecast cannot be built reliably before 2026-08-31, do not fake precision: treat ADP anchor as a guardrail and combine panel quality + market timing + Return-v2/joint availability + direct counterfactual evidence.
-
-## CRN invariant
-Outer opponent RNG is recreated from the same seed per policy. Branches must match exactly before their forced user decision. After different user decisions, opponent boards may legitimately diverge because availability changed. Nested Return-v2 / joint rollouts must use separate deterministic streams and never advance outer opponent RNG. Future counterfactual harness must persist opponent picks and fail closed on shared-prefix mismatch.
+## Independent outcome stack still required
+Keep existing ADP-conditioned anchor as conservative market-regret lens. Add where reliable: (1) non-ADP-only player forecast/statistical challenger, (2) shallow-league replacement/waiver model using actual post-draft FA pools, (3) championship-tail simulation using actual league playoff rules. Existing `independent_utility_v3_3_2025.py` is useful as historical functional-form validation but uses realized 2025 production and therefore is NOT a 2026 player forecast.
 
 ## Immediate next actions
-1. Build decision-counterfactual harness rather than tune PairSum weights.
-2. Audit selected-panel vs ADP-conditioned forecast disagreements by player/position, especially where Coach repeatedly reaches relative to market.
-3. Seek/build a genuinely non-ADP-only outcome challenger before interpreting MARKET_ROSTER dominance as true championship superiority.
-4. Preserve PairSum LONG2 unchanged as a research candidate until fresh held-out evidence; no production promotion yet.
-5. Continue health/role/breakout/decline-risk refresh and realistic mock preparation in parallel.
+1. Let raw screen `32621203190` finish; inspect causal/plausibility invariants and raw picks BEFORE evaluating outcomes.
+2. If raw PASS, download raw artifact and audit candidate/continuation behavior, especially Brown/Bowers/Cook sanity and PairSum outer-RNG isolation.
+3. Only after raw audit, evaluate branches through multiple lenses; never let the ADP-neighbor anchor alone choose the winner.
+4. Expand 2.02 to conditional states from multiple plausible 1.09 treatments, then extend to 3.09/4.02/5.09/6.02 on fresh seeds.
+5. In parallel continue independent forecast/shallow-waiver/championship-tail work and health/role evidence refresh. No production promotion yet.
