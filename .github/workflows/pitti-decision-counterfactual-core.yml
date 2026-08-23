@@ -7,6 +7,7 @@ on:
       - 'research/decision_counterfactual_core_test_2026.js'
       - 'research/stateful_rng_2026.js'
       - 'research/stateful_rng_test_2026.js'
+      - 'research/counterfactual_state_machine_test_2026.js'
       - 'research/DECISION_COUNTERFACTUAL_HARNESS_SPEC_2026-08-23.md'
       - '.github/workflows/pitti-decision-counterfactual-core.yml'
   workflow_dispatch:
@@ -23,3 +24,5 @@ jobs:
         run: node research/decision_counterfactual_core_test_2026.js
       - name: Stateful RNG exact parity and branching
         run: node research/stateful_rng_test_2026.js
+      - name: Snapshot branch resume state machine
+        run: node research/counterfactual_state_machine_test_2026.js
