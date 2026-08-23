@@ -1,11 +1,5 @@
 name: PITTI rc4.59 MARKET causal breadth 100
 on:
-  pull_request:
-    branches: [ main ]
-    paths:
-      - 'research/rc459_cf_market_breadth100_2026.js'
-      - 'research/rc459_cf_multilens100_eval_2026.py'
-      - '.github/workflows/pitti-rc459-cf-market-breadth100.yml'
   workflow_dispatch:
 jobs:
   breadth100:
