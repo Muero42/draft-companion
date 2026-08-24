@@ -1,0 +1,36 @@
+{
+  "status": "PASS",
+  "baseline": {
+    "drafts": 60,
+    "qb_counts": {
+      "3": 26,
+      "4": 16,
+      "5": 4,
+      "2": 14
+    },
+    "te_counts": {
+      "1": 29,
+      "2": 26,
+      "3": 5
+    },
+    "qb3plus": 46,
+    "te3plus": 5,
+    "extra_qb": 130,
+    "extra_te": 36
+  },
+  "cap2": {
+    "drafts": 60,
+    "qb_counts": {
+      "2": 60
+    },
+    "te_counts": {
+      "2": 33,
+      "1": 27
+    },
+    "qb3plus": 0,
+    "te3plus": 0,
+    "extra_qb": 60,
+    "extra_te": 33
+  },
+  "promotion_authorized": false
+}
