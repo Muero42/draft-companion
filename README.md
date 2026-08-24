@@ -515,7 +515,7 @@ Vor Freigabe müssen vollständig geprüft sein: vollständige acht Release-Date
 - Static priors still expire at the 2026-08-24 freeze unless refreshed by structured Research Cache evidence.
 
 
-## v11.8.0-rc4.46 — Fresh two-sided residual refresh
+## v11.8.0-rc4.60 — Fresh two-sided residual refresh
 - Adds Jeremiyah Love as a two-sided elite-rookie-role + current ankle-risk Shadow hypothesis.
 - Adds George Kittle as a two-sided elite-role + Achilles-recovery Shadow hypothesis.
 - No live Coach/Player Quality/ADP/Return/Manager/roster/scarcity/Value-Safety coefficient changes.

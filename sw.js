@@ -1,9 +1,9 @@
-const CACHE='draft-companion-v11.8.0-rc4.50';
+const CACHE='draft-companion-v11.8.0-rc4.60';
 const BACKUP_CACHE='draft-companion-backup-export-v1';
-const ASSETS=['./','./index.html','./styles.css','./app.js?v=11.8.0-rc4.50','./manifest.webmanifest','./icon.svg'];
-const BASE='v11.8.0-rc4.46',TARGET='v11.8.0-rc4.50';
+const ASSETS=['./','./index.html','./styles.css','./app.js?v=11.8.0-rc4.60','./manifest.webmanifest','./icon.svg'];
+const BASE='v11.8.0-rc4.60',TARGET='v11.8.0-rc4.60';
 function patchApp(s){
-  s=s.replaceAll(BASE,TARGET).replaceAll('11.8.0-rc4.46','11.8.0-rc4.50');
+  s=s.replaceAll(BASE,TARGET).replaceAll('11.8.0-rc4.60','11.8.0-rc4.60');
   const old1="      snapshotLimit=els.snapshotMode.value==='full'?40:25,\n      availableSnapshot=scored.slice().sort((a,b)=>a.r.rank-b.r.rank).slice(0,snapshotLimit),";
   const new1="      snapshotLimit=els.snapshotMode.value==='full'?40:25,\n      preDraftSimulationPool=!picks.length&&current===1,\n      availableSnapshot=scored.slice().sort((a,b)=>a.r.rank-b.r.rank).slice(0,preDraftSimulationPool?scored.length:snapshotLimit),";
   const old2="    lines.push('','VERFÜGBARE SPIELER NACH PANEL');";
@@ -44,12 +44,12 @@ function patchApp(s){
   const close=document.createElement('button');close.type='button';close.textContent='Schließen';close.style='display:block;width:100%;margin-top:8px;padding:9px';close.onclick=()=>box.remove();
   box.append(title,info,save,copy,close);document.body.append(box);
 }`;
-  if(!s.includes(old1)||!s.includes(old2)||!s.includes(old3))throw new Error('rc4.50 patch anchors missing');
+  if(!s.includes(old1)||!s.includes(old2)||!s.includes(old3))throw new Error('rc4.60 patch anchors missing');
   return s.replace(old1,new1).replace(old2,new2).replace(old3,new3);
 }
 function patchText(path,s){
   if(path.endsWith('/app.js'))return patchApp(s);
-  if(path.endsWith('/index.html')||path.endsWith('/manifest.webmanifest')||path.endsWith('/'))return s.replaceAll(BASE,TARGET).replaceAll('11.8.0-rc4.46','11.8.0-rc4.50');
+  if(path.endsWith('/index.html')||path.endsWith('/manifest.webmanifest')||path.endsWith('/'))return s.replaceAll(BASE,TARGET).replaceAll('11.8.0-rc4.60','11.8.0-rc4.60');
   return s;
 }
 async function transformed(req){
