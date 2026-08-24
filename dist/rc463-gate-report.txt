@@ -1,0 +1,43 @@
+PASS syntax_app
+PASS syntax_sw
+PASS syntax_live_surface
+PASS canonical_state_export
+PASS same_candidate_source
+PASS decision_first_top10
+PASS surface_active_marker
+PASS legacy_coach_hidden
+PASS canonical_heading
+PASS top10
+PASS normal_cut_warning
+PASS return_is_timing
+PASS hard_qb_exclusions
+PASS acute_status_guard
+PASS old_normal_cut_sort_absent
+PASS app.js contains rc4.63
+PASS app.js no stale rc4.62
+PASS index.html contains rc4.63
+PASS index.html no stale rc4.62
+PASS manifest.webmanifest contains rc4.63
+PASS manifest.webmanifest no stale rc4.62
+PASS sw.js contains rc4.63
+PASS sw.js no stale rc4.62
+PASS live-surface-v3.js contains rc4.63
+PASS live-surface-v3.js no stale rc4.62
+PASS index cache app.js?v=11.8.0-rc4.63
+PASS index cache live-surface-v3.js?v=11.8.0-rc4.63
+PASS index cache live-surface-v3.css?v=11.8.0-rc4.63
+Archive:  Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip
+    testing: README.md                OK
+    testing: _worker.js               OK
+    testing: app.js                   OK
+    testing: icon.svg                 OK
+    testing: index.html               OK
+    testing: manifest.webmanifest     OK
+    testing: styles.css               OK
+    testing: sw.js                    OK
+    testing: live-surface-v3.js       OK
+    testing: live-surface-v3.css      OK
+No errors detected in compressed data of Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip.
+RUNTIME_FILE_COUNT 10
+82cde8112bdc2fe691afeaed3f97cab903f517eb24ad4682c9d5e5408cac50c8  Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip
+FINAL_STATUS=PASS
