@@ -1,6 +1,6 @@
 === finalize-rc4.60 fail-closed diagnostic ===
-head=ad6fc53e8f988b38840446d0a7b6d1469e9665a3
-run=32700444361
+head=d2875e9649f1780b2dfae109d5a09cf2b8ae9b1d
+run=32700471956
 anchor OK: core helpers
 anchor OK: live manager adaptation core
 anchor OK: manager qualitative live boundary
@@ -50,8 +50,8 @@ node:internal/assert/utils:77
     throw err;
     ^
 
-AssertionError [ERR_ASSERTION]: permanent QB2 exception penalty survived
-    at Object.<anonymous> (/home/runner/work/draft-companion/draft-companion/tests/final-rc-policy.test.js:20:1)
+AssertionError [ERR_ASSERTION]: final RC version marker missing
+    at Object.<anonymous> (/home/runner/work/draft-companion/draft-companion/tests/final-rc-policy.test.js:25:1)
     at Module._compile (node:internal/modules/cjs/loader:1781:14)
     at Object..js (node:internal/modules/cjs/loader:1913:10)
     at Module.load (node:internal/modules/cjs/loader:1505:32)
