@@ -1,0 +1,56 @@
+name: rc4.61 live surface
+on:
+  push:
+    branches: [pitti-auto/rc4.61-live-surface-v2]
+    paths:
+      - 'tools/apply-rc461-live-surface.mjs'
+      - 'live-surface-v2.js'
+      - 'live-surface-v2.css'
+      - '.github/workflows/rc461-live-surface.yml'
+permissions:
+  contents: write
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Stage locked surface and patch rc4.60
+        run: |
+          cp live-surface-v2.js live-surface.js
+          cp live-surface-v2.css live-surface.css
+          node tools/apply-rc461-live-surface.mjs
+      - name: Regression gates
+        run: |
+          node --check app.js
+          node --check sw.js
+          node --check live-surface.js
+          grep -q "window.PITTI_LIVE_DECISION_STATE" app.js
+          grep -q "id=\"liveDecisionSurface\"" index.html
+          grep -q "id=\"snapshotJumpBtn\"" index.html
+          grep -q "10ER-ÜBERSICHT" live-surface.js
+          grep -q "Pick-Confidence" live-surface.js
+          grep -q "AUSSERHALB NORMAL-CUT" live-surface.js
+          grep -q "Chat-Handoff kopieren" live-surface.js
+          grep -q "Full Diagnostic" live-surface.js
+          grep -q "USER_HARD_QB_EXCLUSIONS" app.js
+          grep -q "DRAFT_ACUTE_STATUS_2026" app.js
+          grep -q "v11.8.0-rc4.61" app.js index.html sw.js live-surface.js
+      - name: Package deterministic candidate
+        run: |
+          rm -f Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip
+          zip -X -q Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip README.md _worker.js app.js icon.svg index.html manifest.webmanifest styles.css sw.js live-surface.js live-surface.css
+          unzip -t Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip
+          sha256sum Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip | tee rc461.sha256
+      - name: Commit generated runtime
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add app.js index.html sw.js live-surface.js live-surface.css
+          git diff --cached --quiet || git commit -m 'rc4.61: generate locked live decision runtime'
+          git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Draft_Companion_v11.8.0-rc4.61_FULL_TEST
+          path: |
+            Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip
+            rc461.sha256
