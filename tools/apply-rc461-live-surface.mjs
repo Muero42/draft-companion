@@ -1,0 +1,21 @@
+import fs from 'node:fs';
+const appPath='app.js', indexPath='index.html', swPath='sw.js';
+let app=fs.readFileSync(appPath,'utf8'), index=fs.readFileSync(indexPath,'utf8'), sw=fs.readFileSync(swPath,'utf8');
+const must=(ok,msg)=>{if(!ok)throw new Error(msg)};
+must(app.includes("modelVersion:'v11.8.0-rc4.60'"),'rc4.60 app anchor missing');
+must(app.includes("const USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers'])"),'rc4.60 hard-exclusion anchor missing');
+if(!app.includes('window.PITTI_LIVE_DECISION_STATE')){
+  const anchor="function renderCoach(rows,state,current,next){"; must(app.includes(anchor),'renderCoach anchor missing');
+  const api=`function pittiFantasyRole(p,players){\n  const pos=String(p?.pos||'').toUpperCase(),team=String(p?.team||'').toUpperCase();if(!['QB','RB','WR','TE'].includes(pos))return pos||'?';\n  const same=[];for(const q of Object.values(players||{})){if(String(q?.team||'').toUpperCase()!==team||String(q?.position||'').toUpperCase()!==pos)continue;const name=q?.full_name||[q?.first_name,q?.last_name].filter(Boolean).join(' ');if(!name)continue;const r=rankFor(name,pos),sr=Number(q?.search_rank);if(r&&Number.isFinite(r.rank))same.push({name,rank:r.rank,sr});}\n  same.sort((a,b)=>a.rank-b.rank||(a.sr||9999)-(b.sr||9999));const idx=same.findIndex(q=>norm(q.name)===norm(p?.name));if(idx>=0)return pos+(idx+1);const d=Number(p?.depthOrder);return Number.isFinite(d)&&d>=1&&d<=6?pos+Math.round(d):pos;\n}\nfunction pittiResearchArrows(x){const rr=x?.researchResidual;if(!rr?.active||!Array.isArray(rr.components))return'';const c=rr.components.filter(c=>Number(c.dir)!==0).sort((a,b)=>Number(b.strength||0)*Number(b.confidence||0)-Number(a.strength||0)*Number(a.confidence||0))[0];if(!c)return'';const s=Number(c.strength||0)*Number(c.confidence||0),up=Number(c.dir)>0;return s>=.58?(up?'↑↑':'↓↓'):s>=.30?(up?'↑':'↓'):'';}\nwindow.PITTI_LIVE_DECISION_STATE=()=>{const c=lastDraftContext;if(!c?.scored)return null;const top=visibleCoachCandidates(c.scored).filter(x=>!x.hardExcluded&&!x.recommendationBlocked).slice(0,10);return{version:'v11.8.0-rc4.61',current:c.current,next:c.next,mode:c.mode,rows:top.map(x=>({name:x.p.name,pos:x.p.pos,team:x.p.team,injury:x.p.injury||null,panel:x.r.rank,individual:(x.r.individual||[]).map(r=>({expertName:r.expertName,rank:r.rank,posRank:r.posRank})),adp:Number.isFinite(x.a)?x.a:null,ret:x.ret,returnConfidence:x.returnConfidence,confidence:x.confidence,score:x.score,action:x.action,loss:x.loss,outsideNormalCut:!!x.outsideNormalCut,role:pittiFantasyRole(x.p,c.players),arrows:pittiResearchArrows(x),reasons:(x.reasons||[]).slice(-7)}))};};\n\n`;
+  app=app.replace(anchor,api+anchor);
+}
+app=app.replaceAll('v11.8.0-rc4.60','v11.8.0-rc4.61');
+if(!index.includes('live-surface.css'))index=index.replace('<link rel="stylesheet" href="styles.css">','<link rel="stylesheet" href="styles.css">\n  <link rel="stylesheet" href="live-surface.css?v=11.8.0-rc4.61">');
+index=index.replaceAll('v11.8.0-rc4.60','v11.8.0-rc4.61');
+if(!index.includes('id="liveDecisionSurface"'))index=index.replace('<section class="card" id="coachSectionCard" data-workspace="draft">','<section id="liveDecisionSurface" class="card live-only live-decision-surface" data-workspace="draft"><div class="notice">Analyse starten; danach erscheint hier die kompakte Live-Entscheidung.</div></section>\n  <section class="card" id="coachSectionCard" data-workspace="draft">');
+if(!index.includes('id="snapshotJumpBtn"'))index=index.replace('</main>','<button id="snapshotJumpBtn" class="snapshot-jump" type="button" aria-label="Zur Analyse" title="Zur Analyse" hidden>↓</button>\n</main>');
+if(!index.includes('live-surface.js'))index=index.replace('<script type="module" src="app.js', '<script src="live-surface.js?v=11.8.0-rc4.61" defer></script>\n<script type="module" src="app.js');
+index=index.replace(/app\.js\?v=[^\"]+/,'app.js?v=11.8.0-rc4.61');
+sw=sw.replaceAll('v11.8.0-rc4.60','v11.8.0-rc4.61');
+if(sw.includes("const ASSETS=[")&&!sw.includes("'./live-surface.js'"))sw=sw.replace("'./icon.svg']","'./icon.svg','./live-surface.js','./live-surface.css']");
+fs.writeFileSync(appPath,app);fs.writeFileSync(indexPath,index);fs.writeFileSync(swPath,sw);
