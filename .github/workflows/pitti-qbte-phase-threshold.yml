@@ -3,6 +3,8 @@ on:
   workflow_dispatch:
   push:
     branches: [pitti-qbte-threshold-challenger]
+  pull_request:
+    branches: [main]
     paths:
       - research/rc459_meta_safe_qbte_phase_threshold_fullmock_shard_2026.js
       - research/rc459_qbte_paired_complete_roster_utility_2026.py
