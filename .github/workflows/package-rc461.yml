@@ -54,10 +54,11 @@ jobs:
         run: |
           mkdir -p dist
           cp Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip dist/
+          cp Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip dist/PITTI-rc461.zip
           cp rc461.sha256 dist/
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dist/Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip dist/rc461.sha256
+          git add dist/Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip dist/PITTI-rc461.zip dist/rc461.sha256
           git diff --cached --quiet && exit 0
           git commit -m "Publish rc4.61 Android test package"
           git push
