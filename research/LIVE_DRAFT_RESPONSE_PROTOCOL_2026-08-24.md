@@ -1,51 +1,77 @@
-# PITTI Live-Draft Response Protocol — 2026-08-24
+# PITTI Live-Draft Response Protocol — canonical fixed layout
 
-Status: MANDATORY for real/live 2-minute draft decisions and dress rehearsals.
+Status: MANDATORY for mocks, Generalprobe/dress rehearsal, and real live draft. Supersedes the erroneous ultra-short protocol previously written on 2026-08-24.
 
-## Objective
-Minimize user reading time and interaction latency while preserving the decision information actually needed on the clock. Research and reasoning happen internally; the live message is an execution surface, not an analysis report.
+## Non-negotiable presentation rule
+The response format MUST NOT change between mock, Generalprobe, EMERGENCY, FULL, or the real draft. Time pressure is solved by the already-designed scannable layout, NOT by deleting decision information. Format changes are allowed only after an explicit joint decision with the user.
 
-## Trigger
-Apply whenever a fresh Sleeper snapshot says `Status: drafting` and the user is on or immediately approaching their own pick, especially when `Live-Speed: EMERGENCY` or `FULL` during a real/dress-rehearsal draft.
+Target: complete decision surface scannable in roughly 60–90 seconds.
 
-## Mandatory layout
-The first visible line must contain the actionable pick. No preamble, no heading above it, no explanation before it.
+## Canonical order
 
-Preferred form:
+### 1. KLARE KANDIDATEN
+Show every genuinely near-equivalent favorite, not an arbitrarily forced single pick.
 
-`👉 JAMES COOK — JETZT`
+For each clear candidate:
+`NAME ↑/↓ — POS, TEAM (role / concise outlook)`
+`P <panel> · ADP <market> · R <return probability> · Pick-Confidence <confidence>`
+`+ <one-line strongest case>`
+`− <one-line decisive risk/opportunity cost>`
+`Fazit: TAKE / WAIT / sequencing instruction`
 
-Then at most two compact follow-up lines when useful:
+Rules:
+- Upside/decline arrows go directly after the player name when justified.
+- Role + team + short outlook stay in parentheses/on the identity line.
+- P/ADP/R/Confidence values always appear on the following compact line.
+- Include injury/role/news only when decision-relevant; do not narrate research.
+- If candidates are nearly equal, say so; do not manufacture scalar precision.
 
-`Lamb 38% Return · Jefferson 80% Return`
-`Danach: frischer Snapshot bei 2.02`
+### 2. HIERARCHIE
+One compact line using:
+- `≥` for near-equivalent candidates / no meaningful separation;
+- `>` only for a real decision-relevant gap.
+Include TAKE/WAIT sequencing where it changes which close candidate should be selected first.
 
-If two players are genuinely near-equal and forcing one would be false precision:
+### 3. 10ER-AUSWAHL — MANDATORY
+Always show the fixed numbered 10-player decision list. It MUST NOT disappear in EMERGENCY or the real draft. Its purpose is specifically to prevent overlooked alternatives/fallers.
 
-`👉 COOK / LAMB — beide OK; leichter Vorteil Cook`
-`Cook 13% Return · Lamb 38%`
+Each entry:
+`1. Name — POS/TEAM · short decision keyword`
+`   P <panel> · ADP <market> · R <return>`
 
-## Hard constraints
-- Normal live answer: target 2–4 visible lines, roughly <= 40 words.
-- Emergency answer: target 1–3 visible lines, roughly <= 25 words.
-- No paragraphs of player analysis.
-- No restatement of league format, panel composition, methodology, injuries already accounted for, or snapshot metadata unless a newly discovered fact changes the decision.
-- No web-research narration on the clock. If a material new fact was checked, incorporate only its decision consequence in a few words.
-- Do not list 5–10 candidates. Show the pick plus at most 1–2 alternatives if they are genuinely live.
-- TAKE/WAIT information should be compressed to return probability or one short label.
-- Confidence only if materially useful; do not spend a separate paragraph on it.
-- The next required user action must be one short final line.
-- Never make the user parse the reasoning before seeing whom to draft.
+Rules:
+- Do NOT repeat Pick-Confidence in the 10-player list; it belongs in `KLARE KANDIDATEN`.
+- Keep entries compact enough that the full answer remains 60–90-second scannable.
+- The list is a decision board, not ten mini-essays.
+- Include relevant RB/WR/TE/QB fallers even when they sit outside the nominal normal cut; do not let a cut hide a championship-relevant alternative.
 
-## Decision ordering behind the compact surface
-Internally preserve all existing guards: intrinsic tier first; current injury/acute status; roster/championship utility; Return-v2/TAKE-WAIT; manager/opponent layer; no starter-maxima-as-roster-caps; hard QB exclusions; no K/DST; QB2/TE2 rules. Compact output changes presentation only, not decision quality.
+### 4. AUSSERHALB NORMAL-CUT
+When relevant, insert the explicit separator `AUSSERHALB NORMAL-CUT` before contextual fallers/outliers in the 10-player board. Being outside normal cut is context, not permission to omit the player.
 
-## Example from validated dress rehearsal at pick 1.09
-Instead of a long explanation, output:
+### 5. NEXT ACTION
+One short final line only, e.g. `Pick X → pausieren → frischer Snapshot.`
 
-`👉 JAMES COOK — JETZT`
-`Lamb 38% Return · Jefferson 80% Return`
-`Danach: pausieren + 2.02-Snapshot`
+## Decision content that must remain intact behind the layout
+- panel is baseline;
+- intrinsic tier/player quality before TAKE/WAIT timing;
+- Return-v2 and opponent/manager collision;
+- championship utility / roster construction;
+- current injury, PUP/IR, role/depth-chart evidence when decision-changing;
+- explicit reasoning for material deviation from panel or Sleeper ADP;
+- all nearly equivalent favorites plus alternatives;
+- no starter maxima as roster caps;
+- QB2/TE2 only exceptional in this 10-team 1QB league; TE1 can be deferred through a run;
+- rushing upside tiebreaker among similar QB1s;
+- late bench increasingly RB/upside/optionality;
+- Geno Smith and Aaron Rodgers hard exclusions;
+- no K/DST;
+- Override Guard: do not override Coach TAKE/WAIT without concrete decision-changing evidence.
 
-## Non-live analysis
-Outside the clock, detailed explanations remain allowed and preferred when useful. This protocol applies specifically to time-critical draft execution.
+## Latency rule
+Do the expensive reasoning/research before or internally during the response. Do NOT solve latency by removing the 10-player list, alternatives, P/ADP/R, risks, or sequencing. The user must not have to ask for omitted information during a two-minute pick clock.
+
+## Freshness / duplicate rule
+If the same pick/fingerprint has already been analyzed and the snapshot is marked duplicate/unchanged, request only a fresh snapshot. Otherwise use this exact layout.
+
+## Regression guard
+The following is explicitly INVALID and must never be restored as the live protocol: `1–3 lines`, `<=25 words`, `at most 1–2 alternatives`, or `do not list 5–10 candidates`. That was a mistaken overwrite of the previously agreed canonical layout.
