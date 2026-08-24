@@ -1,0 +1,20 @@
+import fs from 'node:fs';
+let app=fs.readFileSync('app.js','utf8'),index=fs.readFileSync('index.html','utf8'),sw=fs.readFileSync('sw.js','utf8');
+const must=(ok,msg)=>{if(!ok)throw new Error(msg)};
+must(app.includes("USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers'])"),'rc4.60 policy baseline missing');
+if(!app.includes('window.PITTI_LIVE_DECISION_STATE')){
+  must(app.includes("modelVersion:'v11.8.0-rc4.60'"),'expected rc4.60 model anchor missing');
+  const a="function renderCoach(rows,state,current,next){";must(app.includes(a),'renderCoach anchor missing');
+  const api=`function pittiFantasyRole(p,players){\n const pos=String(p?.pos||'').toUpperCase(),team=String(p?.team||'').toUpperCase();if(!['QB','RB','WR','TE'].includes(pos))return pos||'?';const same=[];for(const q of Object.values(players||{})){if(String(q?.team||'').toUpperCase()!==team||String(q?.position||'').toUpperCase()!==pos)continue;const name=q?.full_name||[q?.first_name,q?.last_name].filter(Boolean).join(' ');if(!name)continue;const r=rankFor(name,pos),sr=Number(q?.search_rank);if(r&&Number.isFinite(r.rank))same.push({name,rank:r.rank,sr});}same.sort((a,b)=>a.rank-b.rank||(a.sr||9999)-(b.sr||9999));const i=same.findIndex(q=>norm(q.name)===norm(p?.name));if(i>=0)return pos+(i+1);const d=Number(p?.depthOrder);return Number.isFinite(d)&&d>=1&&d<=6?pos+Math.round(d):pos;}\nfunction pittiResearchArrows(x){const rr=x?.researchResidual;if(!rr?.active||!Array.isArray(rr.components))return'';const c=rr.components.filter(c=>Number(c.dir)!==0).sort((a,b)=>Number(b.strength||0)*Number(b.confidence||0)-Number(a.strength||0)*Number(a.confidence||0))[0];if(!c)return'';const s=Number(c.strength||0)*Number(c.confidence||0),up=Number(c.dir)>0;return s>=.58?(up?'↑↑':'↓↓'):s>=.30?(up?'↑':'↓'):'';}\nwindow.PITTI_LIVE_DECISION_STATE=()=>{const c=lastDraftContext;if(!c?.scored)return null;const rows=visibleCoachCandidates(c.scored).filter(x=>!x.hardExcluded&&!x.recommendationBlocked).slice(0,10);return{version:'v11.8.0-rc4.61',current:c.current,next:c.next,rows:rows.map(x=>({name:x.p.name,pos:x.p.pos,team:x.p.team,injury:x.p.injury||null,panel:x.r.rank,individual:x.r.individual||[],adp:Number.isFinite(x.a)?x.a:null,ret:x.ret,returnConfidence:x.returnConfidence,confidence:x.confidence,score:x.score,action:x.action,loss:x.loss,outsideNormalCut:!!x.outsideNormalCut,role:pittiFantasyRole(x.p,c.players),arrows:pittiResearchArrows(x)}))};};\n\n`;
+  app=app.replace(a,api+a);
+}
+app=app.replaceAll('v11.8.0-rc4.60','v11.8.0-rc4.61');
+if(!index.includes('live-surface-v3.css'))index=index.replace('<link rel="stylesheet" href="styles.css">','<link rel="stylesheet" href="styles.css">\n  <link rel="stylesheet" href="live-surface-v3.css?v=11.8.0-rc4.61">');
+index=index.replaceAll('v11.8.0-rc4.60','v11.8.0-rc4.61');
+if(!index.includes('id="liveDecisionSurfaceV3"'))index=index.replace('<section class="card" id="coachSectionCard" data-workspace="draft">','<section id="liveDecisionSurfaceV3" class="card live-only live-decision-surface" data-workspace="draft"><div class="notice">Analyse starten; danach erscheint hier die kompakte Live-Entscheidung.</div></section>\n  <section class="card" id="coachSectionCard" data-workspace="draft">');
+if(!index.includes('id="analysisJumpV3"'))index=index.replace('</main>','<button id="analysisJumpV3" class="snapshot-jump" type="button" aria-label="Zur Analyse" hidden>↓</button>\n</main>');
+if(!index.includes('live-surface-v3.js'))index=index.replace('<script type="module" src="app.js','<script src="live-surface-v3.js?v=11.8.0-rc4.61" defer></script>\n<script type="module" src="app.js');
+index=index.replace(/app\.js\?v=[^\"]+/,'app.js?v=11.8.0-rc4.61');
+sw=sw.replaceAll('v11.8.0-rc4.60','v11.8.0-rc4.61');
+if(sw.includes("const ASSETS=[")&&!sw.includes("'./live-surface-v3.js'"))sw=sw.replace("'./icon.svg']","'./icon.svg','./live-surface-v3.js','./live-surface-v3.css']");
+fs.writeFileSync('app.js',app);fs.writeFileSync('index.html',index);fs.writeFileSync('sw.js',sw);
