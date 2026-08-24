@@ -1,0 +1,17 @@
+const fs=require('fs');
+const js=fs.readFileSync('live-surface.js','utf8');
+const css=fs.readFileSync('live-surface.css','utf8');
+const app=fs.readFileSync('app.js','utf8');
+const html=fs.readFileSync('index.html','utf8');
+const must=(ok,msg)=>{if(!ok)throw new Error(msg)};
+must(js.includes("const VERSION='v11.8.0-rc4.61'"),'rc4.61 module version missing');
+must(js.includes('PITTI LIVE DECISION'),'compact handoff missing');
+must(js.includes('Full Diagnostic Snapshot kopiert.'),'full diagnostic path missing');
+must(js.includes("scrollIntoView({behavior:'smooth',block:'start'})"),'analysis jump missing');
+must(js.includes("slice(0,5)"),'live candidate surface must stay compact');
+must(css.includes('.draft-live-view .live-decision-surface'),'live-only surface CSS missing');
+must(css.includes('position:sticky'),'decision surface must remain reachable on mobile');
+must(app.includes('visibleCoachCandidates(scored)'),'canonical candidate safety gate missing');
+must(app.includes("'App-Version: v11.8.0-rc4.60'"),'unexpected canonical app baseline; integrate only after explicit version bump');
+must(html.includes('v11.8.0-rc4.60'),'unexpected canonical HTML baseline');
+console.log('RC4_61_LIVE_SURFACE_REGRESSION PASS (module staged; integration intentionally gated)');
