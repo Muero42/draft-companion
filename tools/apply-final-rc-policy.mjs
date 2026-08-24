@@ -16,6 +16,13 @@ replaceOnce(
   'fail-closed hard exclusion / acute status in candidate scoring'
 );
 
+// Blocked/excluded candidates must not distort the selected-panel safety band itself.
+replaceOnce(
+  "  const valid=rows.filter(x=>x?.r&&Number.isFinite(x.r.rank)&&Number.isFinite(x.rawScore));",
+  "  const valid=rows.filter(x=>x?.r&&Number.isFinite(x.r.rank)&&Number.isFinite(x.rawScore)&&!x.hardExcluded&&!x.recommendationBlocked);",
+  'quality-safety excludes blocked candidates'
+);
+
 // The prior rc4.52 runtime permanently suppressed QB2/TE2. Metadata-safe mechanism
 // audits showed that early/mid duplicates are generally poor but very late QB2 (and
 // exceptional TE2) can carry real option/startability value. Use broad draft phases,
@@ -37,7 +44,8 @@ replaceOnce(
   'phase-sensitive TE2 exception'
 );
 
-// Version is intentionally distinct from the prepared rc4.52 baseline and rc4.59 research line.
+// Write patched app before the common version bump so app.js cannot accidentally retain rc4.52.
+fs.writeFileSync('app.js',app);
 for(const f of ['app.js','index.html','manifest.webmanifest','sw.js','_worker.js','README.md']){
   if(!fs.existsSync(f))throw new Error(`required runtime file missing: ${f}`);
   let s=fs.readFileSync(f,'utf8');
@@ -45,5 +53,4 @@ for(const f of ['app.js','index.html','manifest.webmanifest','sw.js','_worker.js
   fs.writeFileSync(f,s);
 }
 
-fs.writeFileSync('app.js',app);
 console.log('rc4.60 final RC policy applied');
