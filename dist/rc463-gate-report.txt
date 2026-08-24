@@ -24,6 +24,20 @@ PASS sw.js no stale rc4.62
 PASS live-surface-v3.js contains rc4.63
 PASS live-surface-v3.js no stale rc4.62
 PASS index cache app.js?v=11.8.0-rc4.63
-FAIL index cache live-surface-v3.js?v=11.8.0-rc4.63
-FAIL index cache live-surface-v3.css?v=11.8.0-rc4.63
-FINAL_STATUS=FAIL
+PASS index cache live-surface-v3.js?v=11.8.0-rc4.63
+PASS index cache live-surface-v3.css?v=11.8.0-rc4.63
+Archive:  Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip
+    testing: README.md                OK
+    testing: _worker.js               OK
+    testing: app.js                   OK
+    testing: icon.svg                 OK
+    testing: index.html               OK
+    testing: manifest.webmanifest     OK
+    testing: styles.css               OK
+    testing: sw.js                    OK
+    testing: live-surface-v3.js       OK
+    testing: live-surface-v3.css      OK
+No errors detected in compressed data of Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip.
+RUNTIME_FILE_COUNT 10
+82cde8112bdc2fe691afeaed3f97cab903f517eb24ad4682c9d5e5408cac50c8  Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip
+FINAL_STATUS=PASS
