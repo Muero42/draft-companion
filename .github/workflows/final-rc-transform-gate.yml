@@ -1,0 +1,24 @@
+name: final-rc-transform-gate
+on:
+  workflow_dispatch:
+  push:
+    branches: [pitti-auto/final-rc-20260824]
+    paths:
+      - app.js
+      - sw.js
+      - tests/service-worker-transform.test.js
+      - .github/workflows/final-rc-transform-gate.yml
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-auto/final-rc-20260824
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: |
+          node --check app.js
+          node --check sw.js
+          node tests/service-worker-transform.test.js
