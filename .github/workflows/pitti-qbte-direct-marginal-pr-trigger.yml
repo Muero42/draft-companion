@@ -1,0 +1,35 @@
+name: PITTI QBTE direct marginal diagnostic
+on:
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/rc459_qbte_direct_marginal_diagnostic_2026.py'
+      - '.github/workflows/pitti-qbte-direct-marginal-pr-trigger.yml'
+permissions:
+  actions: read
+  contents: read
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-decision-counterfactual-kernel
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Download exact metadata-safe baseline audit shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/base
+          gh run download 32651366239 -D /tmp/base
+          find /tmp/base -type f -maxdepth 3 -print
+      - name: Run direct marginal mechanism diagnostic
+        run: python research/rc459_qbte_direct_marginal_diagnostic_2026.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pitti-qbte-direct-marginal-diagnostic
+          path: diagnostics_2026/RC459_QBTE_DIRECT_MARGINAL_DIAGNOSTIC_2026.json
+          if-no-files-found: error
+          retention-days: 7
