@@ -1,0 +1,76 @@
+name: rc4.63 Mock LIVE parity gate
+on:
+  push:
+    branches: [pitti-auto/rc4.63-mock-live-parity]
+    paths:
+      - 'live-surface-v3.js'
+      - 'live-surface-v3.css'
+      - '.github/workflows/rc463-mock-live-parity.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  gate-and-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Synchronize rc4.63 release metadata
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          for name in ['app.js','index.html','manifest.webmanifest','sw.js','README.md']:
+              p=Path(name)
+              s=p.read_text()
+              s=s.replace('v11.8.0-rc4.62','v11.8.0-rc4.63')
+              if name in ('index.html','sw.js'):
+                  s=s.replace('app.js?v=11.8.0-rc4.61','app.js?v=11.8.0-rc4.63')
+              if name=='app.js':
+                  s=s.replace("version:'11.8.0-rc4.60'","version:'11.8.0-rc4.63'")
+              p.write_text(s)
+          PY
+      - name: Deterministic semantic gates
+        run: |
+          node --check app.js
+          node --check sw.js
+          node --check live-surface-v3.js
+          grep -q "window.PITTI_LIVE_DECISION_STATE" app.js
+          grep -q "visibleCoachCandidates(c.scored)" app.js
+          grep -q "source.slice(0,10)" app.js
+          grep -q "pitti-decision-surface-active" live-surface-v3.js
+          grep -q ".pitti-decision-surface-active #coachSectionCard{display:none!important}" live-surface-v3.css
+          grep -q "DRAFT-ENTSCHEIDUNG" live-surface-v3.js
+          grep -q "10ER-ÜBERSICHT" live-surface-v3.js
+          grep -q "NORMAL-CUT WARNUNG" live-surface-v3.js
+          grep -q "Return ist Timing-Kennzahl, nicht allein das Draft-Fazit" live-surface-v3.js
+          grep -q "USER_HARD_QB_EXCLUSIONS" app.js
+          grep -q "DRAFT_ACUTE_STATUS_2026" app.js
+          ! grep -q "const normal=source.filter(normalCandidateAdmissible)" app.js
+          grep -q "v11.8.0-rc4.63" app.js index.html manifest.webmanifest sw.js live-surface-v3.js
+          ! grep -q "v11.8.0-rc4.62" app.js index.html manifest.webmanifest sw.js live-surface-v3.js
+          grep -q "app.js?v=11.8.0-rc4.63" index.html
+          grep -q "live-surface-v3.js?v=11.8.0-rc4.63" index.html
+          grep -q "live-surface-v3.css?v=11.8.0-rc4.63" index.html
+      - name: Package and verify runtime
+        run: |
+          zip -X -q Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip README.md _worker.js app.js icon.svg index.html manifest.webmanifest styles.css sw.js live-surface-v3.js live-surface-v3.css
+          unzip -t Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip
+          test "$(unzip -Z1 Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip | wc -l)" -eq 10
+          sha256sum Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip > rc463.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Draft_Companion_v11.8.0-rc4.63_FULL_TEST
+          path: |
+            Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip
+            rc463.sha256
+      - name: Commit synchronized candidate and direct package
+        run: |
+          mkdir -p dist
+          cp Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip dist/
+          cp Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip dist/PITTI-rc463.zip
+          cp rc463.sha256 dist/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.js index.html manifest.webmanifest sw.js README.md dist/Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip dist/PITTI-rc463.zip dist/rc463.sha256
+          git diff --cached --quiet && exit 0
+          git commit -m "rc4.63: synchronize and package Mock LIVE parity candidate"
+          git push
