@@ -1,36 +1,39 @@
-# rc4.61 Live Decision Surface — current checkpoint
+# rc4.62 Decision UI — current checkpoint
 
 Date: 2026-08-24
 
 ## Current canonical state
-- rc4.61 live-surface v3 is integrated on `main` and runtime-active.
-- `index.html`, `app.js`, `sw.js`, `live-surface-v3.js` and `live-surface-v3.css` are the active rc4.61 runtime assets.
-- The analysis jump control is restored.
-- The live decision surface uses the existing canonical decision state; it does not introduce a second scoring engine.
-- Normal full Snapshot remains available as diagnostic/audit output; compact Chat-Handoff is the preferred external live handoff.
+- rc4.62 is generated and published on `main` by the regression-gated release workflow.
+- Publish commit: `9c3d6387a44350050dc190b53cd2b1875b630f2c`.
+- Active runtime assets: `index.html`, `app.js`, `sw.js`, `manifest.webmanifest`, `live-surface-v3.js`, `live-surface-v3.css`.
+- Same canonical Draft/Return/Player-Quality engine remains active; no second scoring engine was introduced.
 
-## Android hotfix
-- The first published rc4.61 Android candidate could enter a self-triggering render loop on Android because the live-surface MutationObserver reacted to DOM mutations caused by its own render.
-- Commit `8379c4e821904692a4710f9eba5fce961172d00e` fixes this render loop.
-- The package was rebuilt and republished afterward.
+## rc4.62 changes
+- Candidate ordering no longer groups normal-cut candidates ahead of fallback candidates. The canonical scored Draft-Utility order is preserved for the visible top 10; `outsideNormalCut` is now a warning annotation only. This prevents a high-value/falling player such as Jeremiyah Love from being hidden below otherwise weaker candidates solely because of the normal-cut gate.
+- `WARTEN` is no longer presented as the UI's global draft verdict. Return remains a timing signal; the decision surface exposes short decision labels such as TOP-PICK, JETZT, EHER JETZT, KNAPPES RETURN-FENSTER, HOHE RETURN-CHANCE, LOSS HOCH, INJURY-CHECK and ECHTE ALTERNATIVE.
+- Top candidate is explicitly marked TOP-PICK even when the underlying Return engine says WARTEN.
+- P/ADP/R/Confidence numeric values are bold for scan speed.
+- 10ER-ÜBERSICHT uses larger mobile typography and spacing comparable to the main decision cards.
+- Normal-cut exceptions are marked per candidate (`NORMAL-CUT WARNUNG`) rather than creating a separator that incorrectly implies every later candidate is fallback.
+- Analysis jump control remains retained.
+
+## Release verification
+- Workflow completed successfully and committed the generated runtime/package.
+- JavaScript syntax gates passed for `app.js`, `sw.js`, `live-surface-v3.js`.
+- Required version, top-10, decision-signal, numeric-emphasis, normal-cut-warning, hard-QB and acute-status gates passed.
+- Package integrity test (`unzip -t`) passed in CI.
 
 ## Current Android test package
-- Repository path: `dist/Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip`
-- Size: 106293 bytes.
-- SHA-256: `971d0d8a84bae47a0fc28360bdae0dd7a72aa2ba869a15ccf66f65edf6c3b022`
-- Publish commit: `02cb35308fa0e64ab985edbaf9108c8a8163b015`.
-- This package supersedes the earlier rc4.61 package with SHA-256 `c0862a12a7f2c1fdcce1595b6a48d593764d248ff66df8d8b5ff796ecd88b139`.
+- Repository path: `dist/Draft_Companion_v11.8.0-rc4.62_FULL_TEST.zip`
+- Convenience copy: `dist/PITTI-rc462.zip`
+- SHA-256: `de7059794444319aa3a4345c4976a4df43c6f01617bd16ca5ef38bb469f803d4`.
 
 ## Safety constraints retained
-- No alternate scoring engine.
-- No removal of Return-v2, Player Quality, panel ranks, ADP, roster rules, decision fixtures, hard-QB rules or acute injury/uncertainty guards.
-- Android runtime verification is still required; repository/package verification must not be equated with successful phone verification.
+- No removal or retuning of Return-v2, Player Quality, expert panel ranks, ADP, roster rules, decision fixtures, hard-QB rules or acute injury/uncertainty guards.
+- Repository/CI verification is not Android runtime verification.
 
 ## Immediate next action
-1. Obtain the current package above on Android.
-2. Open/reload the installed app and verify that the splash screen exits normally.
-3. Verify analysis jump, compact live decision layout, scroll burden, top-10 visibility, injury/risk visibility, compact Chat-Handoff and Full Diagnostic.
-4. Run a 2-minute mock stress test after the UI/runtime gate passes.
-
-## Download note
-If Android/Chrome does not complete a direct `raw.githubusercontent.com` download, use the normal GitHub file page for `dist/Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip` and invoke GitHub's Download raw file action instead of repeatedly retrying the raw-host browser prompt.
+1. Install/open rc4.62 on Android.
+2. Re-run the same paused/mock decision point if convenient.
+3. Verify: splash exits; jump arrow; top candidate label; Love/other fallback-value candidates remain in true top-10 order; bold metrics; larger 10er list; no misleading all-WARTEN display.
+4. After this UI/runtime gate, run a 2-minute mock stress test.
