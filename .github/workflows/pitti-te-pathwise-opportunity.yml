@@ -1,0 +1,29 @@
+name: PITTI TE pathwise opportunity diagnostic
+on:
+  pull_request:
+    paths:
+      - 'research/rc459_te_pathwise_opportunity_2026.py'
+      - '.github/workflows/pitti-te-pathwise-opportunity.yml'
+  workflow_dispatch:
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download exact metadata-safe baseline audit shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/base
+          for run in 32637152797 32637152802 32637152796; do
+            gh run download "$run" -n rc459-coach-baseline-audit -D "/tmp/base/$run"
+          done
+      - name: Run TE pathwise opportunity diagnostic
+        run: python research/rc459_te_pathwise_opportunity_2026.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: pitti-te-pathwise-opportunity
+          path: diagnostics_2026/RC459_TE_PATHWISE_OPPORTUNITY_2026.json
