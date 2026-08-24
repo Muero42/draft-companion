@@ -1,0 +1,31 @@
+name: PITTI QBTE phase threshold
+on:
+  workflow_dispatch:
+  push:
+    branches: [pitti-qbte-threshold-challenger]
+    paths:
+      - research/rc459_meta_safe_qbte_phase_threshold_fullmock_shard_2026.js
+      - .github/workflows/pitti-qbte-phase-threshold.yml
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3,4,5]
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Run metadata-safe rc4.60-parity phase threshold shard
+        env:
+          PITTI_SHARD: ${{ matrix.shard }}
+        run: node research/rc459_meta_safe_qbte_phase_threshold_fullmock_shard_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qbte-phase-threshold-${{ matrix.shard }}
+          path: simulation_2026/RC459_META_SAFE_QBTE_PHASE_THRESHOLD_SHARD_${{ matrix.shard }}_2026.json
+          if-no-files-found: error
+          retention-days: 14
