@@ -1,0 +1,22 @@
+'use strict';
+const assert=require('assert');
+const fs=require('fs');
+const vm=require('vm');
+const app=fs.readFileSync('app.js','utf8');
+const sw=fs.readFileSync('sw.js','utf8');
+
+const start=sw.indexOf("const BASE=");
+const end=sw.indexOf('\nfunction patchText',start);
+assert(start>=0&&end>start,'cannot extract service-worker patchApp block');
+const ctx={};vm.createContext(ctx);vm.runInContext(sw.slice(start,end),ctx);
+assert.strictEqual(typeof ctx.patchApp,'function','patchApp missing from service worker');
+const transformed=ctx.patchApp(app);
+assert.notStrictEqual(transformed,app,'service worker patch is a no-op');
+assert(transformed.includes('preDraftSimulationPool'),'pre-draft full simulation pool patch missing');
+assert(transformed.includes("type:'PITTI_BACKUP_STORE'"),'backup download bridge patch missing');
+assert(transformed.includes("const DRAFT_ACUTE_STATUS_2026={ashtonjeanty"),'acute Jeanty guard lost during transform');
+assert(transformed.includes("const USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers'])"),'hard QB exclusions lost during transform');
+assert(transformed.includes("if(current>=141)return elite?0:-8"),'QB2 endgame phase policy lost during transform');
+assert(transformed.includes("if(current>=141)return elite?0:-10"),'TE2 endgame phase policy lost during transform');
+new vm.Script(transformed,{filename:'app.transformed.js'});
+console.log('PASS service-worker transformed-runtime gate');
