@@ -18,11 +18,15 @@ Exact 60-seed metadata-safe hard-guard comparison rejects the blanket ban, but t
 ## Bowers / 10-team TE economics
 Baseline concentration remains 57/60 Bowers at pick 12, with nearly invariant Coach raw gap over Chase Brown. Historical bridge replacement construction is unsuitable for early elite-TE adjudication because bottom-20%-of-position replacement creates implausibly weak RB replacement and mechanically inflates RB VOR. Bowers remains a legitimate 2.02 candidate but superior fallers/stronger intrinsic RB/WR values beat scarcity.
 
-IMPORTANT correction: the schema-1 descriptive TE-supply harness (`research/rc459_te_pathwise_opportunity_2026.py`) is QUARANTINED / NOT AUTHORIZED FOR EVIDENCE. `decision.top` may be truncated and can omit the selected player, so it cannot be treated as the complete available-board supply. Do not wait for, interpret, or cite any output from that harness. A repaired descriptive diagnostic is optional and secondary; the critical path is the true causal pick-12 branch.
+IMPORTANT correction: the schema-1 descriptive TE-supply harness (`research/rc459_te_pathwise_opportunity_2026.py`) is QUARANTINED / NOT AUTHORIZED FOR EVIDENCE. `decision.top` may be truncated and can omit the selected player, so it cannot be treated as the complete available-board supply. Its Aug-24 workflow failed before the diagnostic because referenced historical artifacts returned HTTP 404; no result exists to interpret. Do not repair it unless a later need is demonstrated.
 
 True pick-12 causal specification is preserved: start from the same pre-pick-12 prefix, clone identical RNG/opponent state, force Bowers versus every state-local plausible intrinsic-tier/superior-faller RB/WR candidate, then continue with the same neutral opponent kernel. Preserve position-aware identity and capture actual later TE/RBWR supply at 29/32/49/52/69/72 plus final roster. Do not insert Chase Brown merely because old Coach raw ranks him highest. No scalar collapse across expert quality, projections/startability, replacement-aware utility, roster construction, market regret/return risk, and health/role uncertainty.
 
-Fresh Aug-24 public evidence does not justify an injury demotion of Bowers: current reports describe full-speed offseason work and encouraging joint-practice/preseason handling; his 2025 PCL history remains a downside prior, not an acute red flag. Market/ranking sources remain heterogeneous, reinforcing that TE1 status alone must not decide 2.02.
+The completed `isolated early-lookahead causal` workflow is also QUARANTINED AS STRATEGY EVIDENCE. Although it used common continuation, its treatment decision is explicitly `PAIRSUM_LONG2_DECISION`; therefore it cannot validate a successor policy. Diagnostic-only negative-control finding: all 16 divergent states chose Chase Brown under PairSum while neutral chose CeeDee Lamb (8), Saquon Barkley (5), or Ashton Jeanty (3). This reinforces the rejection of PairSum/Brown-overpromotion but must not be converted into a fitted anti-Brown or pro-neutral rule.
+
+A separate 484-state / 5,835-branch current-market pair harness completed mechanism-PASS but self-identifies `strategy_certified: false`. It is research evidence only. Its strong anti-default-Bowers signal is hypothesis-strengthening, not promotion evidence; the true pick-12 causal gate remains required.
+
+Fresh Aug-24 public evidence does not justify a performance injury demotion of Bowers: current reports describe active/full-speed offseason work; tape on the previously injured left knee is a small watch item given the 2025 PCL history, not an acute penalty absent limitation/setback.
 
 ## Fresh health/role — Aug 24 AM
 - Christian McCaffrey: Aug 23 return to practice/team drills and his planned-ramp explanation materially lower the acute current-health gate. Keep separate age/workload/injury-history downside prior.
@@ -34,7 +38,7 @@ Nabers/Olave/Flowers timing remains 47.44% / 80.17% / 97.75% for 29->32, sequenc
 
 ## Exact continuation
 Serial critical path:
-1. Implement the true pick-12 causal branch harness from the preserved specification; do not wait on the quarantined descriptive TE-supply harness.
+1. Implement the true pick-12 causal branch harness from the preserved specification; do not wait on or revive quarantined PairSum/descriptive harnesses.
 2. Build disjoint/outcome-blind QB2/TE2 challenger; quarantined 60 seeds only for mechanism regression, calibration/certification on disjoint/fresh evidence.
 3. Continue 1.09->2.02 intrinsic adjudication with expert/role/health/current-projection/market timing lenses separate.
 4. Advance 29/32 and draft-window health freshness.
