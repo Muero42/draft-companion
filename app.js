@@ -1,18 +1,10 @@
 const $=id=>document.getElementById(id);
-const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','canonicalLiveDraftLink'];
+const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
-const snapshotJumpBtn=$('snapshotJumpBtn');
-function updateSnapshotJump(){
-  if(!snapshotJumpBtn||!els.refreshBtn||els.refreshBtn.offsetParent===null){if(snapshotJumpBtn)snapshotJumpBtn.hidden=true;return}
-  const r=els.refreshBtn.getBoundingClientRect(),vh=window.innerHeight||document.documentElement.clientHeight;
-  const visible=r.bottom>0&&r.top<vh;
-  snapshotJumpBtn.hidden=visible;
-  if(!visible){const targetAbove=r.bottom<=0;snapshotJumpBtn.textContent=targetAbove?'↑':'↓';snapshotJumpBtn.setAttribute('aria-label',targetAbove?'Nach oben zum Snapshot-Button':'Nach unten zum Snapshot-Button');snapshotJumpBtn.title=snapshotJumpBtn.getAttribute('aria-label');}
-}
-if(snapshotJumpBtn){snapshotJumpBtn.onclick=()=>els.refreshBtn?.scrollIntoView({behavior:'smooth',block:'center'});addEventListener('scroll',updateSnapshotJump,{passive:true});addEventListener('resize',updateSnapshotJump);}
-
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
+const USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers']);
+const DRAFT_ACUTE_STATUS_2026={ashtonjeanty:{label:'AKUTER STATUS: Sprunggelenkverletzung · Teilnahme/Belastbarkeit vor Draft prüfen',blockRecommendation:true,asOf:'2026-08-24'}};
 const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const LIVE_DRAFT_ID_2026='1366053132970233856';
@@ -780,8 +772,8 @@ function rosterState(mine,players,current=1){
   // v11: Replacement-Level statt bloßer leerer Startposition. In 10-Team/1QB ist QB1
   // aufschiebbar, QB2 fast immer verschwendeter Bench-Value. TE1 ist sogar bis nach dem
   // Draft aufschiebbar; TE2 wird ähnlich hart wie QB2 behandelt.
-  const qbNeed=c.QB===0?(current>=125?13:current>=95?9:current>=65?4:1):-24;
-  const teNeed=c.TE===0?(current>=130?1.5:current>=80?1:0.5):-22;
+  const qbNeed=c.QB===0?(current>=125?13:current>=95?9:current>=65?4:1):(current>=141?-2:current>=121?-10:-24);
+  const teNeed=c.TE===0?(current>=130?1.5:current>=80?1:0.5):(current>=141?-4:current>=121?-12:-22);
   const rbNeed=c.RB<2?9:c.RB<4?6:c.RB<6?3.5:c.RB<8?1.5:0;
   const wrNeed=c.WR<3?8:c.WR<5?4:c.WR<6?1.5:c.WR<7?0:-2;
   return{counts:c,need:{QB:qbNeed,RB:rbNeed,WR:wrNeed,TE:teNeed},byes,irEligible,irSlots:1};
@@ -790,10 +782,14 @@ function rosterExceptionPenalty(pos,state,current,rank,adp){
   if(pos==='QB'&&state.counts.QB>=1){
     // Ausnahme nur bei absurd gefallenem Elite-Value; normale QB12-20 sollen nie RB/WR-Lottery-Tickets verdrängen.
     const elite=rank<=45&&Number.isFinite(adp)&&current-adp>=35;
+    if(current>=141)return elite?0:-8;
+    if(current>=121)return elite?-4:-24;
     return elite?-8:-42;
   }
   if(pos==='TE'&&state.counts.TE>=1){
     const elite=rank<=35&&Number.isFinite(adp)&&current-adp>=30;
+    if(current>=141)return elite?0:-10;
+    if(current>=121)return elite?-5:-26;
     return elite?-7:-38;
   }
   return 0;
@@ -1150,7 +1146,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.59',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},managerLiveStateSnapshot:JSON.parse(JSON.stringify(LIVE_MANAGER_ADAPTATION_STATE)),rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.60',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},managerLiveStateSnapshot:JSON.parse(JSON.stringify(LIVE_MANAGER_ADAPTATION_STATE)),rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     // Full frozen skill-player pool makes post-mock counterfactuals reproducible without
@@ -1238,7 +1234,7 @@ function playerQualitySafetyThreshold(current){
   return 13;
 }
 function applyPlayerQualitySafetyGate(rows,current){
-  const valid=rows.filter(x=>x?.r&&Number.isFinite(x.r.rank)&&Number.isFinite(x.rawScore));
+  const valid=rows.filter(x=>x?.r&&Number.isFinite(x.r.rank)&&Number.isFinite(x.rawScore)&&!x.hardExcluded&&!x.recommendationBlocked);
   if(!valid.length)return{triggered:false,reason:'no-valid-candidates'};
 
   const naturalLeader=valid.slice().sort((a,b)=>b.rawScore-a.rawScore||a.r.rank-b.r.rank)[0];
@@ -1349,7 +1345,7 @@ function buildEmergencyQueueText(scored,state,current,draftId){
   }
   const lines=[
     '===== PITTI EMERGENCY SLEEPER QUEUE =====',
-    'App-Version: v11.8.0-rc4.59',
+    'App-Version: v11.8.0-rc4.60',
     `Draft-ID: ${draftId}`,
     `Stand: Pick ${current}`,
     'Nur manueller Sleeper-Queue-Fallback; keine API-/Import-Automation.',
@@ -1375,6 +1371,9 @@ function playerQualityBaseScore(panelRank,available){
 function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   const r=rankFor(p.name,p.pos),a=Number(adp[norm(p.name)]);
   if(!r)return{score:-999,r:null,a,reasons:['Panel-Rang fehlt']};
+  if(p.pos==='QB'&&USER_HARD_QB_EXCLUSIONS.has(norm(p.name)))return{score:-999,rawScore:-999,r,a,reasons:['USER HARD EXCLUSION'],hardExcluded:true};
+  const acuteStatus=DRAFT_ACUTE_STATUS_2026[norm(p.name)];
+  if(acuteStatus?.blockRecommendation)return{score:-998,rawScore:-998,r,a,reasons:[acuteStatus.label],acuteStatus,recommendationBlocked:true};
   /* rc4.10: monotonic selected-panel Player Quality, anchored to best available panel rank. */
   const stage=strategy==='progressive'?progressiveStage(current):0;
   let score=playerQualityBaseScore(r.rank,available),reasons=[];
@@ -2021,7 +2020,7 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.59',
+      'App-Version: v11.8.0-rc4.60',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -2043,7 +2042,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.59 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.60 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'?[`Manager-Live-Adaption: ${liveManagerDiagnostics()}`]:[]),
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
@@ -2183,7 +2182,7 @@ function renderMockReview(mine,players){
 function renderLog(){els.decisionLog.innerHTML=decisionLog.length?decisionLog.slice().reverse().map(x=>`<div class="log-item"><b>Pick ${x.pick}: ${esc(x.chosen)}</b><div class="tiny">Coach: ${esc(x.coach)} · Grund: ${esc(x.reason)} · ${new Date(x.at).toLocaleString('de-DE')}</div></div>`).join(''):'<div class="notice">Noch keine Entscheidungen protokolliert.</div>'}
 function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysieren.');const coach=lastDraftContext.favorites.map(x=>x.p.name).join(' / ')||'–',chosen=prompt('Welchen Spieler hast du gewählt?',lastDraftContext.favorites[0]?.p.name||'');if(!chosen)return;const reason=prompt('Grund (Coach gefolgt, Upside, Value, Stack, Positionsbedarf, Bauchgefühl):','Coach gefolgt')||'ohne Angabe';decisionLog.push({draftId:lastDraftContext.id,pick:lastDraftContext.current,mode:lastDraftContext.mode,dataState:lastDraftContext.dataState,coach,chosen,reason,top5:lastDraftContext.scored.slice(0,5).map(x=>({name:x.p.name,pos:x.p.pos,score:x.score,return:x.ret,returnConfidence:x.returnConfidence,loss:x.loss,action:x.action,plausible:x.intel?.plausible||0})),at:Date.now()});persist();renderLog()}
 
-function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.59',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerModeSegments:loadManagerModeSegments(),managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
+function backup(){return{format:'draft-companion-v7',version:'11.8.0-rc4.60',createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerModeSegments:loadManagerModeSegments(),managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
 async function downloadJson(name,v){
   const text=JSON.stringify(v,null,2),file=new File([text],name,{type:'application/json'});
   // Android/PWA: Web Share with a real File is more reliable than navigating to a blob URL.
@@ -2302,16 +2301,15 @@ function setDraftSurface(name){
   localStorage.setItem('v118_draftSurface',name);
   if(name==='live'){
     els.draftMode.value='live';
-    if(els.canonicalLiveDraftLink)els.canonicalLiveDraftLink.href=`https://sleeper.app/draft/nfl/${LIVE_DRAFT_ID_2026}`;
     if(els.autoRefresh.checked){els.autoRefresh.checked=false;setAuto();}
     populateLivePreviewPoints();
-    if(els.liveLockStatus){els.liveLockStatus.className='notice ok';els.liveLockStatus.textContent=`LIVE-Engine aktiv · Draft ${LIVE_DRAFT_ID_2026} · Slot ${els.slot.value} · Mock-Link bleibt separat gespeichert.`;}
+    if(els.liveLockStatus){els.liveLockStatus.className='notice ok';els.liveLockStatus.textContent=`LIVE-Engine aktiv · Slot ${els.slot.value} · Progressive/Panel-/Manager-State unverändert.`;}
   }else{
     livePreviewActive=false;if(els.livePreviewExitBtn)els.livePreviewExitBtn.hidden=true;
     if(els.livePreviewStatus)els.livePreviewStatus.textContent='Vorschau inaktiv.';
     if(els.draftMode.value==='live')els.draftMode.value='mock';
   }
-  persist();updateStatus();requestAnimationFrame(updateSnapshotJump);
+  persist();updateStatus();
 }
 if(els.mockViewBtn)els.mockViewBtn.onclick=()=>setDraftSurface('mock');
 if(els.liveViewBtn)els.liveViewBtn.onclick=()=>setDraftSurface('live');
@@ -2322,7 +2320,6 @@ function setWorkspace(name){
   localStorage.setItem('v117_workspace',name);
   document.querySelectorAll('[data-workspace]').forEach(el=>{el.hidden=el.dataset.workspace!==name});
   document.querySelectorAll('[data-workspace-target]').forEach(btn=>{btn.classList.toggle('active',btn.dataset.workspaceTarget===name);btn.setAttribute('aria-pressed',btn.dataset.workspaceTarget===name?'true':'false')});
-  requestAnimationFrame(updateSnapshotJump);
 }
 document.querySelectorAll('[data-workspace-target]').forEach(btn=>btn.addEventListener('click',()=>setWorkspace(btn.dataset.workspaceTarget)));
 setDraftSurface(localStorage.getItem('v118_draftSurface')||'mock');
@@ -2331,4 +2328,4 @@ updateResearchCacheStatus();
 void syncWatcherFeed();
 setInterval(()=>{if(!document.hidden)void syncWatcherFeed()},15*60*1000);
 
-renderAll();setAuto();updateStatus();requestAnimationFrame(updateSnapshotJump);
+renderAll();setAuto();updateStatus();
