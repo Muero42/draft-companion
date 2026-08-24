@@ -1,6 +1,6 @@
 === finalize-rc4.60 fail-closed diagnostic ===
-head=c85361f0e2c21b0c865e467a8719c31519ea01c8
-run=32700290170
+head=ad6fc53e8f988b38840446d0a7b6d1469e9665a3
+run=32700444361
 anchor OK: core helpers
 anchor OK: live manager adaptation core
 anchor OK: manager qualitative live boundary
@@ -36,6 +36,7 @@ hardening anchor OK: restore manager mode segments
 rc4.52 finalization hardening applied
 final-RC anchor OK: hard QB exclusions and acute-status registry
 final-RC anchor OK: fail-closed hard exclusion / acute status in candidate scoring
+final-RC anchor OK: quality-safety excludes blocked candidates
 final-RC anchor OK: phase-sensitive duplicate need
 final-RC anchor OK: phase-sensitive QB2 exception
 final-RC anchor OK: phase-sensitive TE2 exception
