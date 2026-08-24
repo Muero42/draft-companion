@@ -1,6 +1,6 @@
 {
   "status": "PASS",
-  "method": "2026 market-outcome bridge pred_weekly_mean; best expected starter topology; no synthetic week-by-week max; TE vacancy replacement allowed",
+  "method": "2026 market-outcome bridge pred_weekly_mean; ADP-cutline vacancy replacement; best expected starter topology; no synthetic week-by-week max; TE0 allowed",
   "warning": "sensitivity/control only; bench option value, injury insurance and trade/waiver value not fully modeled",
   "mean_delta_points_per_week": -0.02115370481230793,
   "median_delta": 0.0,
