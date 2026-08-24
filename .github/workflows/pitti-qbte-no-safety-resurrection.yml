@@ -1,0 +1,109 @@
+name: PITTI QBTE no safety resurrection
+on:
+  workflow_dispatch:
+  push:
+    branches: [pitti-qbte-no-safety-resurrection]
+    paths:
+      - research/rc459_meta_safe_qbte_no_safety_resurrection_shard_2026.js
+      - research/rc459_qbte_paired_complete_roster_utility_2026.py
+      - .github/workflows/pitti-qbte-no-safety-resurrection.yml
+permissions:
+  actions: read
+  contents: write
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        shard: [0,1,2,3,4,5]
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-qbte-no-safety-resurrection
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check research/rc459_meta_safe_qbte_no_safety_resurrection_shard_2026.js
+      - name: Run challenger shard
+        env:
+          PITTI_SHARD: ${{ matrix.shard }}
+        run: node research/rc459_meta_safe_qbte_no_safety_resurrection_shard_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qbte-nosafety-${{ matrix.shard }}
+          path: simulation_2026/RC459_META_SAFE_QBTE_NO_SAFETY_RESURRECTION_SHARD_${{ matrix.shard }}_2026.json
+          if-no-files-found: error
+          retention-days: 14
+  evaluate:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-qbte-no-safety-resurrection
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Download exact metadata-safe baseline and challenger artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/base /tmp/chal
+          gh run download 32651366239 -D /tmp/base
+          gh run download ${{ github.run_id }} -D /tmp/chal --pattern 'qbte-nosafety-*'
+      - name: Roster-reality and mechanism diagnostics
+        run: |
+          python - <<'PY'
+          import json,glob,collections,pathlib,statistics
+          def load(root):
+              out=[]
+              for p in glob.glob(root+'/**/*.json',recursive=True):
+                  try:x=json.load(open(p))
+                  except:continue
+                  if x.get('status')=='PASS' and isinstance(x.get('drafts'),list):out += x['drafts']
+              return sorted(out,key=lambda d:int(d['seed']))
+          B,C=load('/tmp/base'),load('/tmp/chal')
+          if len(B)!=60 or len(C)!=60: raise RuntimeError(f'draft count {len(B)} {len(C)}')
+          def summary(ds):
+              q=[d['position_counts']['QB'] for d in ds]; t=[d['position_counts']['TE'] for d in ds]
+              q2p=[]; t2p=[]; promoted_q=[]; promoted_t=[]; qnames=collections.Counter(); tnames=collections.Counter()
+              for d in ds:
+                  seen={'QB':0,'TE':0}
+                  for dec in d['decisions']:
+                      pos=dec['pos']
+                      if pos not in seen: continue
+                      seen[pos]+=1
+                      if seen[pos]==2:
+                          (q2p if pos=='QB' else t2p).append(dec['pick'])
+                          (qnames if pos=='QB' else tnames)[dec['name']]+=1
+                          if (dec.get('safety') or {}).get('promoted'):
+                              (promoted_q if pos=='QB' else promoted_t).append(dec['pick'])
+              return {'drafts':len(ds),'qb_counts':dict(collections.Counter(q)),'te_counts':dict(collections.Counter(t)),'qb3plus':sum(x>=3 for x in q),'te3plus':sum(x>=3 for x in t),'extra_qb':sum(max(0,x-1) for x in q),'extra_te':sum(max(0,x-1) for x in t),'qb2_rate':sum(x>=2 for x in q)/len(q),'te2_rate':sum(x>=2 for x in t)/len(t),'qb2_pick_counts':dict(collections.Counter(q2p)),'te2_pick_counts':dict(collections.Counter(t2p)),'qb2_names':dict(qnames.most_common()),'te2_names':dict(tnames.most_common()),'qb2_safety_promoted_pick_count':len(promoted_q),'te2_safety_promoted_pick_count':len(promoted_t)}
+          out={'status':'PASS','baseline':summary(B),'challenger':summary(C),'historical_target_context':{'recent_league_2023_2025_mean_qb':1.588,'recent_league_qb3plus':0,'user_recent_2022_2025_qb_counts':[1,1,1,1]},'promotion_authorized':False}
+          pathlib.Path('diagnostics_2026').mkdir(exist_ok=True)
+          pathlib.Path('diagnostics_2026/RC459_QBTE_NO_SAFETY_RESURRECTION_REALITY_2026.json').write_text(json.dumps(out,indent=2))
+          print(json.dumps(out,indent=2))
+          PY
+      - name: Evaluate independent paired complete-roster utility
+        run: python research/rc459_qbte_paired_complete_roster_utility_2026.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qbte-nosafety-evaluation
+          path: |
+            diagnostics_2026/RC459_QBTE_NO_SAFETY_RESURRECTION_REALITY_2026.json
+            diagnostics_2026/RC459_META_SAFE_QBTE_PAIRED_COMPLETE_ROSTER_UTILITY_2026.json
+          if-no-files-found: error
+          retention-days: 14
+      - name: Persist AUTO-readable research results
+        run: |
+          git config user.name 'pitti-auto'
+          git config user.email 'pitti-auto@users.noreply.github.com'
+          git add diagnostics_2026/RC459_QBTE_NO_SAFETY_RESURRECTION_REALITY_2026.json diagnostics_2026/RC459_META_SAFE_QBTE_PAIRED_COMPLETE_ROSTER_UTILITY_2026.json
+          if git diff --cached --quiet; then
+            echo 'No diagnostic delta.'
+          else
+            git commit -m 'research: persist QBTE no-safety-resurrection evaluation'
+            git push origin HEAD:pitti-qbte-no-safety-resurrection
+          fi
