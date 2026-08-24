@@ -56,7 +56,7 @@ jobs:
       - name: Roster-reality and mechanism diagnostics
         run: |
           python - <<'PY'
-          import json,glob,collections,pathlib,statistics
+          import json,glob,collections,pathlib
           def load(root):
               out=[]
               for p in glob.glob(root+'/**/*.json',recursive=True):
@@ -80,19 +80,68 @@ jobs:
                           (qnames if pos=='QB' else tnames)[dec['name']]+=1
                           if (dec.get('safety') or {}).get('promoted'):
                               (promoted_q if pos=='QB' else promoted_t).append(dec['pick'])
-              return {'drafts':len(ds),'qb_counts':dict(collections.Counter(q)),'te_counts':dict(collections.Counter(t)),'qb3plus':sum(x>=3 for x in q),'te3plus':sum(x>=3 for x in t),'extra_qb':sum(max(0,x-1) for x in q),'extra_te':sum(max(0,x-1) for x in t),'qb2_rate':sum(x>=2 for x in q)/len(q),'te2_rate':sum(x>=2 for x in t)/len(t),'qb2_pick_counts':dict(collections.Counter(q2p)),'te2_pick_counts':dict(collections.Counter(t2p)),'qb2_names':dict(qnames.most_common()),'te2_names':dict(tnames.most_common()),'qb2_safety_promoted_pick_count':len(promoted_q),'te2_safety_promoted_pick_count':len(promoted_t)}
-          out={'status':'PASS','baseline':summary(B),'challenger':summary(C),'historical_target_context':{'recent_league_2023_2025_mean_qb':1.588,'recent_league_qb3plus':0,'user_recent_2022_2025_qb_counts':[1,1,1,1]},'promotion_authorized':False}
+              return {'drafts':len(ds),'qb_counts':dict(collections.Counter(q)),'te_counts':dict(collections.Counter(t)),'qb3plus':sum(x>=3 for x in q),'te3plus':sum(x>=3 for x in t),'extra_qb':sum(max(0,x-1) for x in q),'extra_te':sum(max(0,x-1) for x in t),'qb2_rate':sum(x>=2 for x in q)/len(q),'te0_rate':sum(x==0 for x in t)/len(t),'te2_rate':sum(x>=2 for x in t)/len(t),'qb2_pick_counts':dict(collections.Counter(q2p)),'te2_pick_counts':dict(collections.Counter(t2p)),'qb2_names':dict(qnames.most_common()),'te2_names':dict(tnames.most_common()),'qb2_safety_promoted_pick_count':len(promoted_q),'te2_safety_promoted_pick_count':len(promoted_t)}
+          out={'status':'PASS','baseline':summary(B),'challenger':summary(C),'historical_target_context':{'recent_league_2023_2025_mean_qb':1.588,'recent_league_qb3plus':0,'recent_league_qb2_round_median':12.5,'recent_league_qb2_round10plus_rate':0.95,'user_recent_2022_2025_qb_counts':[1,1,1,1],'user_2023_2025_te_counts':[0,0,0]},'promotion_authorized':False}
           pathlib.Path('diagnostics_2026').mkdir(exist_ok=True)
           pathlib.Path('diagnostics_2026/RC459_QBTE_NO_SAFETY_RESURRECTION_REALITY_2026.json').write_text(json.dumps(out,indent=2))
           print(json.dumps(out,indent=2))
           PY
-      - name: Evaluate independent paired complete-roster utility
+      - name: Managed season-mean lineup utility sensitivity
+        run: |
+          python - <<'PY'
+          import json,glob,collections,pathlib,statistics
+          def load(root):
+              out={}
+              for p in glob.glob(root+'/**/*.json',recursive=True):
+                  try:x=json.load(open(p))
+                  except:continue
+                  if x.get('status')=='PASS' and isinstance(x.get('drafts'),list):
+                      for d in x['drafts']: out[int(d['seed'])]=d
+              return out
+          B,C=load('/tmp/base'),load('/tmp/chal')
+          bridge=json.load(open('bridge_2026/MARKET_OUTCOME_BRIDGE_2026.json')); fc=bridge['forecasts']
+          byname=collections.defaultdict(list)
+          for v in fc.values(): byname[(v.get('name','').strip().lower(),v.get('pos'))].append(v)
+          repl={}
+          for pos in ['RB','WR','TE']:
+              vals=sorted(float(v['pred_weekly_mean']) for v in fc.values() if v.get('pos')==pos and isinstance(v.get('sleeper_adp'),(int,float)) and isinstance(v.get('pred_weekly_mean'),(int,float)))
+              repl[pos]=statistics.median(vals[:max(1,len(vals)//5)]) if vals else 0.0
+          def roster(d):
+              out=[]
+              for p in d['user_roster']:
+                  m=byname[(p['name'].strip().lower(),p['pos'])]
+                  if len(m)!=1: raise RuntimeError('mapping '+p['name'])
+                  out.append((p['pos'],float(m[0]['pred_weekly_mean'])))
+              return out
+          def lineup(r):
+              vals={p:sorted([v for pp,v in r if pp==p],reverse=True) for p in ['QB','RB','WR','TE']}
+              if not vals['QB']: raise RuntimeError('QB0')
+              qb=vals['QB'][0]; best=-1e9
+              for rb in range(1,4):
+                for wr in range(2,5):
+                  for te in range(1,3):
+                    if rb+wr+te!=6: continue
+                    tot=0
+                    for pos,n in [('RB',rb),('WR',wr),('TE',te)]:
+                      have=min(len(vals[pos]),n); tot+=sum(vals[pos][:have])+(n-have)*repl[pos]
+                    best=max(best,tot)
+              return qb+best
+          rows=[]
+          for seed in sorted(B):
+              b=lineup(roster(B[seed])); c=lineup(roster(C[seed])); rows.append({'seed':seed,'baseline':b,'challenger':c,'delta':c-b})
+          ds=[r['delta'] for r in rows]
+          out={'status':'PASS','method':'2026 market-outcome bridge pred_weekly_mean; best expected starter topology; no synthetic week-by-week max; TE vacancy replacement allowed','warning':'sensitivity/control only; bench option value, injury insurance and trade/waiver value not fully modeled','mean_delta_points_per_week':statistics.mean(ds),'median_delta':statistics.median(ds),'better':sum(x>1e-12 for x in ds),'same':sum(abs(x)<=1e-12 for x in ds),'worse':sum(x<-1e-12 for x in ds),'rows':rows,'promotion_authorized':False}
+          pathlib.Path('diagnostics_2026/RC459_QBTE_NO_SAFETY_RESURRECTION_MANAGED_MEAN_UTILITY_2026.json').write_text(json.dumps(out,indent=2))
+          print(json.dumps({k:v for k,v in out.items() if k!='rows'},indent=2))
+          PY
+      - name: Existing week-profile paired utility sensitivity
         run: python research/rc459_qbte_paired_complete_roster_utility_2026.py
       - uses: actions/upload-artifact@v4
         with:
           name: qbte-nosafety-evaluation
           path: |
             diagnostics_2026/RC459_QBTE_NO_SAFETY_RESURRECTION_REALITY_2026.json
+            diagnostics_2026/RC459_QBTE_NO_SAFETY_RESURRECTION_MANAGED_MEAN_UTILITY_2026.json
             diagnostics_2026/RC459_META_SAFE_QBTE_PAIRED_COMPLETE_ROSTER_UTILITY_2026.json
           if-no-files-found: error
           retention-days: 14
@@ -100,7 +149,7 @@ jobs:
         run: |
           git config user.name 'pitti-auto'
           git config user.email 'pitti-auto@users.noreply.github.com'
-          git add diagnostics_2026/RC459_QBTE_NO_SAFETY_RESURRECTION_REALITY_2026.json diagnostics_2026/RC459_META_SAFE_QBTE_PAIRED_COMPLETE_ROSTER_UTILITY_2026.json
+          git add diagnostics_2026/RC459_QBTE_NO_SAFETY_RESURRECTION_REALITY_2026.json diagnostics_2026/RC459_QBTE_NO_SAFETY_RESURRECTION_MANAGED_MEAN_UTILITY_2026.json diagnostics_2026/RC459_META_SAFE_QBTE_PAIRED_COMPLETE_ROSTER_UTILITY_2026.json
           if git diff --cached --quiet; then
             echo 'No diagnostic delta.'
           else
