@@ -104,8 +104,9 @@ jobs:
           for v in fc.values(): byname[(v.get('name','').strip().lower(),v.get('pos'))].append(v)
           repl={}
           for pos in ['RB','WR','TE']:
-              vals=sorted(float(v['pred_weekly_mean']) for v in fc.values() if v.get('pos')==pos and isinstance(v.get('sleeper_adp'),(int,float)) and isinstance(v.get('pred_weekly_mean'),(int,float)))
-              repl[pos]=statistics.median(vals[:max(1,len(vals)//5)]) if vals else 0.0
+              a=[(float(v['sleeper_adp']),float(v['pred_weekly_mean'])) for v in fc.values() if v.get('pos')==pos and isinstance(v.get('sleeper_adp'),(int,float)) and isinstance(v.get('pred_weekly_mean'),(int,float))]
+              a.sort(key=lambda z:z[0]); tail=a[max(0,int(len(a)*.80)):]
+              repl[pos]=statistics.median([m for _,m in tail]) if tail else 0.0
           def roster(d):
               out=[]
               for p in d['user_roster']:
@@ -130,7 +131,7 @@ jobs:
           for seed in sorted(B):
               b=lineup(roster(B[seed])); c=lineup(roster(C[seed])); rows.append({'seed':seed,'baseline':b,'challenger':c,'delta':c-b})
           ds=[r['delta'] for r in rows]
-          out={'status':'PASS','method':'2026 market-outcome bridge pred_weekly_mean; best expected starter topology; no synthetic week-by-week max; TE vacancy replacement allowed','warning':'sensitivity/control only; bench option value, injury insurance and trade/waiver value not fully modeled','mean_delta_points_per_week':statistics.mean(ds),'median_delta':statistics.median(ds),'better':sum(x>1e-12 for x in ds),'same':sum(abs(x)<=1e-12 for x in ds),'worse':sum(x<-1e-12 for x in ds),'rows':rows,'promotion_authorized':False}
+          out={'status':'PASS','method':'2026 market-outcome bridge pred_weekly_mean; ADP-cutline vacancy replacement; best expected starter topology; no synthetic week-by-week max; TE0 allowed','warning':'sensitivity/control only; bench option value, injury insurance and trade/waiver value not fully modeled','mean_delta_points_per_week':statistics.mean(ds),'median_delta':statistics.median(ds),'better':sum(x>1e-12 for x in ds),'same':sum(abs(x)<=1e-12 for x in ds),'worse':sum(x<-1e-12 for x in ds),'rows':rows,'promotion_authorized':False}
           pathlib.Path('diagnostics_2026/RC459_QBTE_NO_SAFETY_RESURRECTION_MANAGED_MEAN_UTILITY_2026.json').write_text(json.dumps(out,indent=2))
           print(json.dumps({k:v for k,v in out.items() if k!='rows'},indent=2))
           PY
