@@ -13,16 +13,24 @@ Target: complete decision surface scannable in roughly 60–90 seconds.
 Show every genuinely near-equivalent favorite, not an arbitrarily forced single pick.
 
 For each clear candidate:
-`NAME ↑/↓ — POS, TEAM (role / concise outlook)`
+`NAME ↑/↓ — TEAM • TEAM-ROLE [• concise role/upside qualifier when useful]`
 `P <panel> · ADP <market> · R <return probability> · Pick-Confidence <confidence>`
 `+ <one-line strongest case>`
 `− <one-line decisive risk/opportunity cost>`
 `Fazit: TAKE / WAIT / sequencing instruction`
 
+Examples of the compact identity line:
+- `Justin Jefferson — MIN • WR1`
+- `Parker Washington ↑ — JAX • WR2/WR1-Upside`
+- `RB Name — TEAM • RB1`
+
 Rules:
+- Do NOT repeat the generic fantasy position before the team; the team-role token already carries it and horizontal space is reserved for useful context.
+- Team abbreviation comes first, then `•`, then the current expert/depth-chart team role (WR1/WR2, RB1/RB2, TE1, etc.).
+- When decision-useful, append a concise role/upside qualifier on the same line, e.g. `WR2/WR1-Upside`, committee/receiving/goal-line role, or another compact expert-supported outlook.
+- Team role means the player's role within his NFL team, NOT fantasy positional rank. Do not invent a role if evidence is unclear; mark uncertainty compactly.
 - Upside/decline arrows go directly after the player name when justified.
-- Role + team + short outlook stay in parentheses/on the identity line.
-- P/ADP/R/Confidence values always appear on the following compact line.
+- P/ADP/R/Confidence values always appear on the separate compact line immediately below the player identity line.
 - Include injury/role/news only when decision-relevant; do not narrate research.
 - If candidates are nearly equal, say so; do not manufacture scalar precision.
 
@@ -36,10 +44,11 @@ Include TAKE/WAIT sequencing where it changes which close candidate should be se
 Always show the fixed numbered 10-player decision list. It MUST NOT disappear in EMERGENCY or the real draft. Its purpose is specifically to prevent overlooked alternatives/fallers.
 
 Each entry:
-`1. Name — POS/TEAM · short decision keyword`
+`1. Name — TEAM • TEAM-ROLE [• concise qualifier] · short decision keyword`
 `   P <panel> · ADP <market> · R <return>`
 
 Rules:
+- Do NOT repeat the generic fantasy position before the team here either.
 - Do NOT repeat Pick-Confidence in the 10-player list; it belongs in `KLARE KANDIDATEN`.
 - Keep entries compact enough that the full answer remains 60–90-second scannable.
 - The list is a decision board, not ten mini-essays.
