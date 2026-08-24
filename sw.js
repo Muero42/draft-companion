@@ -1,6 +1,6 @@
 const CACHE='draft-companion-v11.8.0-rc4.61';
 const BACKUP_CACHE='draft-companion-backup-export-v1';
-const ASSETS=['./','./index.html','./styles.css','./app.js?v=11.8.0-rc4.60','./manifest.webmanifest','./icon.svg','./live-surface-v3.js','./live-surface-v3.css'];
+const ASSETS=['./','./index.html','./styles.css','./app.js?v=11.8.0-rc4.61','./manifest.webmanifest','./icon.svg','./live-surface-v3.js','./live-surface-v3.css'];
 const BASE='v11.8.0-rc4.61',TARGET='v11.8.0-rc4.61';
 function patchApp(s){
   s=s.replaceAll(BASE,TARGET).replaceAll('11.8.0-rc4.60','11.8.0-rc4.60');
