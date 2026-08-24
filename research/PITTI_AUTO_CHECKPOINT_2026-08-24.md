@@ -18,25 +18,27 @@ Exact 60-seed metadata-safe hard-guard comparison rejects the blanket ban, but t
 ## Bowers / 10-team TE economics
 Baseline concentration remains 57/60 Bowers at pick 12, with nearly invariant Coach raw gap over Chase Brown. Historical bridge replacement construction is unsuitable for early elite-TE adjudication because bottom-20%-of-position replacement creates implausibly weak RB replacement and mechanically inflates RB VOR. Bowers remains a legitimate 2.02 candidate but superior fallers/stronger intrinsic RB/WR values beat scarcity.
 
-A new fail-closed descriptive TE-supply harness is now committed (`research/rc459_te_pathwise_opportunity_2026.py`, workflow `pitti-te-pathwise-opportunity.yml`). It requires exact 60-seed baseline union and exact 57 Bowers states, then records best visible TE and RB/WR supply at 29/32/49/52/69/72. Critical guard: this baseline-path supply view is DESCRIPTIVE ONLY and cannot be called a Bowers-vs-RB causal result because passing Bowers changes opponent availability and later boards. True promotion evidence still requires a pick-12 branch with cloned RNG/opponents and common continuation.
+IMPORTANT correction: the schema-1 descriptive TE-supply harness (`research/rc459_te_pathwise_opportunity_2026.py`) is QUARANTINED / NOT AUTHORIZED FOR EVIDENCE. `decision.top` may be truncated and can omit the selected player, so it cannot be treated as the complete available-board supply. Do not wait for, interpret, or cite any output from that harness. A repaired descriptive diagnostic is optional and secondary; the critical path is the true causal pick-12 branch.
+
+True pick-12 causal specification is preserved: start from the same pre-pick-12 prefix, clone identical RNG/opponent state, force Bowers versus every state-local plausible intrinsic-tier/superior-faller RB/WR candidate, then continue with the same neutral opponent kernel. Preserve position-aware identity and capture actual later TE/RBWR supply at 29/32/49/52/69/72 plus final roster. Do not insert Chase Brown merely because old Coach raw ranks him highest. No scalar collapse across expert quality, projections/startability, replacement-aware utility, roster construction, market regret/return risk, and health/role uncertainty.
+
+Fresh Aug-24 public evidence does not justify an injury demotion of Bowers: current reports describe full-speed offseason work and encouraging joint-practice/preseason handling; his 2025 PCL history remains a downside prior, not an acute red flag. Market/ranking sources remain heterogeneous, reinforcing that TE1 status alone must not decide 2.02.
 
 ## Fresh health/role — Aug 24 AM
 - Christian McCaffrey: Aug 23 return to practice/team drills and his planned-ramp explanation materially lower the acute current-health gate. Keep separate age/workload/injury-history downside prior.
 - Malik Nabers: red non-contact jersey may come off this week, but contact-clearance milestone not yet crossed. Positive trend, wider recovery distribution remains.
 - Tyler Warren: current reporting says roughly one-week groin/abductor absence and no expected Week-1 threat. Watch remains open until actual return-to-practice milestone; low severity, no invented large penalty.
-Persistent note: `research/HEALTH_FRESHNESS_2026-08-24_AM.md`.
 
 ## Pick 29/32
 Nabers/Olave/Flowers timing remains 47.44% / 80.17% / 97.75% for 29->32, sequencing-only after intrinsic tier and health. Flowers acute quad concern closed absent setback; Olave Aug 20 absence was rest; Nabers still carries materially wider recovery uncertainty.
 
 ## Exact continuation
 Serial critical path:
-1. Let the fail-closed descriptive TE-supply harness complete; inspect coverage and supply distributions.
-2. Build the true pick-12 causal branch harness (Bowers vs plausible RB/WR frontier) with identical opponent/RNG continuation and explicit later TE/RBWR supply capture. Do not infer causality from baseline-path supply.
-3. Build disjoint/outcome-blind QB2/TE2 challenger; quarantined 60 seeds only for mechanism regression, calibration/certification on disjoint/fresh evidence.
-4. Continue 1.09->2.02 intrinsic adjudication with expert/role/health/current-projection/market timing lenses separate.
-5. Advance 29/32 and draft-window health freshness.
-6. Once stable, complete realistic mocks and frequency audits; no interactive mock from AUTO.
+1. Implement the true pick-12 causal branch harness from the preserved specification; do not wait on the quarantined descriptive TE-supply harness.
+2. Build disjoint/outcome-blind QB2/TE2 challenger; quarantined 60 seeds only for mechanism regression, calibration/certification on disjoint/fresh evidence.
+3. Continue 1.09->2.02 intrinsic adjudication with expert/role/health/current-projection/market timing lenses separate.
+4. Advance 29/32 and draft-window health freshness.
+5. Once stable, complete realistic mocks and frequency audits; no interactive mock from AUTO.
 
 Parallel queue whenever compute/fetch is pending:
 - health/role/injury freshness;
@@ -45,5 +47,7 @@ Parallel queue whenever compute/fetch is pending:
 - realistic-mock readiness and deterministic-artifact audits;
 - checkpoint/source/artifact hygiene;
 - Watcher/UI/autodraft only when draft-critical EV justifies it.
+
+AUTO scheduling rule: never idle merely because a serial experiment or external job is pending. Work the independent parallel queue unless doing so could contaminate the experiment or create repository-write conflicts. If a suspected state/error cannot be resolved reliably and proceeding risks contaminating evidence, fail closed and ask the user only when no autonomous verification path remains.
 
 No user action currently required.
