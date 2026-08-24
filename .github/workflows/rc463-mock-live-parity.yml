@@ -14,7 +14,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Synchronize rc4.63 release metadata
+
+      - name: Synchronize rc4.63 release metadata in worktree
         run: |
           python3 - <<'PY'
           from pathlib import Path
@@ -22,24 +23,42 @@ jobs:
               p=Path(name)
               s=p.read_text()
               s=s.replace('v11.8.0-rc4.62','v11.8.0-rc4.63')
-              if name in ('index.html','sw.js'):
-                  s=s.replace('app.js?v=11.8.0-rc4.61','app.js?v=11.8.0-rc4.63')
+              s=s.replace('app.js?v=11.8.0-rc4.61','app.js?v=11.8.0-rc4.63')
               if name=='app.js':
                   s=s.replace("version:'11.8.0-rc4.60'","version:'11.8.0-rc4.63'")
               p.write_text(s)
           PY
-      - name: JS syntax gates
+
+      - name: Run deterministic gates and write machine-readable report
+        id: gates
+        shell: bash
         run: |
-          node --check app.js
-          node --check sw.js
-          node --check live-surface-v3.js
-      - name: Decision-state parity invariants
-        run: |
-          python3 - <<'PY'
+          set +e
+          mkdir -p dist
+          REPORT=dist/rc463-gate-report.txt
+          : > "$REPORT"
+          FAIL=0
+
+          check_cmd() {
+            NAME="$1"; shift
+            "$@" >/tmp/rc463.out 2>&1
+            RC=$?
+            if [ $RC -eq 0 ]; then
+              echo "PASS $NAME" | tee -a "$REPORT"
+            else
+              echo "FAIL $NAME rc=$RC" | tee -a "$REPORT"
+              sed 's/^/  /' /tmp/rc463.out | tee -a "$REPORT"
+              FAIL=1
+            fi
+          }
+
+          check_cmd syntax_app node --check app.js
+          check_cmd syntax_sw node --check sw.js
+          check_cmd syntax_live_surface node --check live-surface-v3.js
+
+          python3 - <<'PY' > /tmp/semantic.out 2>&1
           from pathlib import Path
-          app=Path('app.js').read_text()
-          js=Path('live-surface-v3.js').read_text()
-          css=Path('live-surface-v3.css').read_text()
+          app=Path('app.js').read_text(); js=Path('live-surface-v3.js').read_text(); css=Path('live-surface-v3.css').read_text()
           checks={
             'canonical_state_export':'window.PITTI_LIVE_DECISION_STATE' in app,
             'same_candidate_source':'visibleCoachCandidates(c.scored)' in app,
@@ -54,61 +73,76 @@ jobs:
             'acute_status_guard':'DRAFT_ACUTE_STATUS_2026' in app,
             'old_normal_cut_sort_absent':'const normal=source.filter(normalCandidateAdmissible)' not in app,
           }
-          failed=[k for k,v in checks.items() if not v]
-          for k,v in checks.items(): print(('PASS ' if v else 'FAIL ')+k)
-          if failed: raise SystemExit('semantic invariant failure: '+', '.join(failed))
+          failed=[]
+          for k,v in checks.items():
+              print(('PASS ' if v else 'FAIL ')+k)
+              if not v: failed.append(k)
+          raise SystemExit(1 if failed else 0)
           PY
-      - name: Version and cache coherence
-        run: |
-          python3 - <<'PY'
+          RC=$?
+          cat /tmp/semantic.out | tee -a "$REPORT"
+          [ $RC -eq 0 ] || FAIL=1
+
+          python3 - <<'PY' > /tmp/version.out 2>&1
           from pathlib import Path
           names=['app.js','index.html','manifest.webmanifest','sw.js','live-surface-v3.js']
           data={n:Path(n).read_text() for n in names}
-          required={
-            'app.js':'v11.8.0-rc4.63',
-            'index.html':'v11.8.0-rc4.63',
-            'manifest.webmanifest':'v11.8.0-rc4.63',
-            'sw.js':'v11.8.0-rc4.63',
-            'live-surface-v3.js':'v11.8.0-rc4.63',
-          }
           failed=[]
-          for n,needle in required.items():
-              ok=needle in data[n]
+          for n in names:
+              ok='v11.8.0-rc4.63' in data[n]
               print(('PASS ' if ok else 'FAIL ')+n+' contains rc4.63')
               if not ok: failed.append(n+':missing rc4.63')
-          for n,s in data.items():
-              if 'v11.8.0-rc4.62' in s:
-                  print('FAIL '+n+' still contains rc4.62')
-                  failed.append(n+':stale rc4.62')
+              stale='v11.8.0-rc4.62' in data[n]
+              print(('FAIL ' if stale else 'PASS ')+n+' no stale rc4.62')
+              if stale: failed.append(n+':stale rc4.62')
           index=data['index.html']
           for needle in ['app.js?v=11.8.0-rc4.63','live-surface-v3.js?v=11.8.0-rc4.63','live-surface-v3.css?v=11.8.0-rc4.63']:
               ok=needle in index
               print(('PASS ' if ok else 'FAIL ')+'index cache '+needle)
               if not ok: failed.append('index:'+needle)
-          if failed: raise SystemExit('version/cache coherence failure: '+', '.join(failed))
+          raise SystemExit(1 if failed else 0)
           PY
-      - name: Package and verify runtime
+          RC=$?
+          cat /tmp/version.out | tee -a "$REPORT"
+          [ $RC -eq 0 ] || FAIL=1
+
+          if [ $FAIL -eq 0 ]; then
+            zip -X -q Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip README.md _worker.js app.js icon.svg index.html manifest.webmanifest styles.css sw.js live-surface-v3.js live-surface-v3.css
+            unzip -t Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip >> "$REPORT" 2>&1 || FAIL=1
+            COUNT=$(unzip -Z1 Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip | wc -l)
+            echo "RUNTIME_FILE_COUNT $COUNT" | tee -a "$REPORT"
+            [ "$COUNT" -eq 10 ] || FAIL=1
+            sha256sum Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip | tee rc463.sha256 | tee -a "$REPORT"
+            cp Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip dist/
+            cp Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip dist/PITTI-rc463.zip
+            cp rc463.sha256 dist/
+          fi
+
+          echo "FINAL_STATUS=$([ $FAIL -eq 0 ] && echo PASS || echo FAIL)" | tee -a "$REPORT"
+          echo "failed=$FAIL" >> "$GITHUB_OUTPUT"
+
+      - name: Commit diagnostic report and synchronized candidate/package when valid
+        if: always()
         run: |
-          zip -X -q Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip README.md _worker.js app.js icon.svg index.html manifest.webmanifest styles.css sw.js live-surface-v3.js live-surface-v3.css
-          unzip -t Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip
-          test "$(unzip -Z1 Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip | wc -l)" -eq 10
-          sha256sum Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip > rc463.sha256
-          cat rc463.sha256
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/rc463-gate-report.txt
+          if grep -q '^FINAL_STATUS=PASS$' dist/rc463-gate-report.txt; then
+            git add app.js index.html manifest.webmanifest sw.js README.md dist/Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip dist/PITTI-rc463.zip dist/rc463.sha256
+          fi
+          git diff --cached --quiet && exit 0
+          git commit -m "rc4.63: persist deterministic gate result"
+          git push
+
+      - name: Fail workflow if deterministic gate failed
+        if: always()
+        run: |
+          grep -q '^FINAL_STATUS=PASS$' dist/rc463-gate-report.txt
+
       - uses: actions/upload-artifact@v4
+        if: success()
         with:
           name: Draft_Companion_v11.8.0-rc4.63_FULL_TEST
           path: |
             Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip
             rc463.sha256
-      - name: Commit synchronized candidate and direct package
-        run: |
-          mkdir -p dist
-          cp Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip dist/
-          cp Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip dist/PITTI-rc463.zip
-          cp rc463.sha256 dist/
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add app.js index.html manifest.webmanifest sw.js README.md dist/Draft_Companion_v11.8.0-rc4.63_FULL_TEST.zip dist/PITTI-rc463.zip dist/rc463.sha256
-          git diff --cached --quiet && exit 0
-          git commit -m "rc4.63: synchronize and package Mock LIVE parity candidate"
-          git push
