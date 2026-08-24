@@ -7,6 +7,12 @@ on:
       - research/rc459_meta_safe_qbte_hybrid_v2_fullmock_shard_2026.js
       - research/rc459_qbte_paired_complete_roster_utility_2026.py
       - .github/workflows/pitti-qbte-hybrid.yml
+  pull_request:
+    branches: [pitti-qbte-threshold-challenger]
+    paths:
+      - research/rc459_meta_safe_qbte_hybrid_v2_fullmock_shard_2026.js
+      - research/rc459_qbte_paired_complete_roster_utility_2026.py
+      - .github/workflows/pitti-qbte-hybrid.yml
 permissions:
   actions: read
   contents: read
