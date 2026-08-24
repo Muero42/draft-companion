@@ -1,0 +1,20 @@
+name: Injury uncertainty guard
+on:
+  push:
+    branches: [pitti-auto/injury-uncertainty-guard]
+    paths:
+      - 'research/injury_uncertainty_guard.js'
+      - 'research/test_injury_uncertainty_guard.js'
+      - '.github/workflows/injury-uncertainty-guard.yml'
+  workflow_dispatch:
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: node --check research/injury_uncertainty_guard.js
+      - run: node --check research/test_injury_uncertainty_guard.js
+      - run: node research/test_injury_uncertainty_guard.js
