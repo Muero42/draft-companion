@@ -32,7 +32,7 @@ Source: `research/FIRST_TURN_INTRINSIC_FINALIZATION_2026-08-24.md`.
 First-turn research is CLOSED unless material news or a replicated acceptance failure reopens it.
 
 ## Pick 29/32 — DECISION-SUFFICIENT as of Aug 24
-New source: `research/ROUND34_FINAL_DECISION_MAP_2026-08-24.md`.
+Source: `research/ROUND34_FINAL_DECISION_MAP_2026-08-24.md`.
 - Olave has strongest current median case: elite 2025 target/efficiency profile and healthy WR1 role.
 - Nabers has the highest championship ceiling of the focal trio but materially wider ACL/meniscus recovery distribution until contact clearance.
 - Flowers is healthy/usable but generally the most waitable of the focal trio.
@@ -42,31 +42,49 @@ New source: `research/ROUND34_FINAL_DECISION_MAP_2026-08-24.md`.
 Round 3/4 focal research is CLOSED unless material news or acceptance pathology reopens it.
 
 ## Later windows — RELEASE PRIORITIES
-New source: `research/LATER_WINDOWS_RELEASE_BOARD_2026-08-24.md`.
+Source: `research/LATER_WINDOWS_RELEASE_BOARD_2026-08-24.md`.
 - 49/52: RB/WR still primary; true fallers override quotas. Explicitly preserve visibility for high-upside/value names such as Tuten/Judkins/Henderson and Egbuka/Tet/DeVonta/Garrett as board-appropriate, without hard-coding them.
 - 69/72 onward: increasingly buy asymmetric upside in a shallow 10-team league; RB contingency/receiving/goal-line paths are preferred when tiers are close, but clear WR tier fallers remain valid.
 - QB1 becomes increasingly live from this zone; Late-QB is a preference/tiebreaker, not a hard suppression. Geno Smith/Aaron Rodgers remain hard exclusions.
 - Later bench: ceiling/role-change optionality over replaceable veteran floor. Parker Washington remains a price-sensitive preferred target, not a forced pick.
 
 ## Stable release lineage audit
-Source: `research/FINAL_RELEASE_ACCEPTANCE_PLAN_2026-08-24.md`.
-Known prepared baseline `pitti-auto/finalization-rc4.52` has deterministic workflow: restore rc4.50 runtime, apply rc4.52 runtime+hardening, syntax/contract gates, deterministic eight-file ZIP, unzip integrity, SHA-256 and provenance. Last recorded PASS: run 32230244548; runtime commit 8adb47c363785df54a06a96a831268939e1812e7; ZIP SHA-256 38e46c942e2b95c862587fdab1bd5bf71b2da524e5efc1ef0107acaad2c7bf32. This is prepared provenance only, not Android-installed proof.
+Known prepared baseline `pitti-auto/finalization-rc4.52` has deterministic workflow: restore rc4.50 runtime, apply rc4.52 runtime+hardening, syntax/contract gates, deterministic eight-file ZIP, unzip integrity, SHA-256 and provenance. Last recorded PASS: run 32230244548; runtime commit 8adb47c363785df54a06a96a831268939e1812e7; ZIP SHA-256 38e46c942e2b95c862587fdab1bd5bf71b2da524e5efc1ef0107acaad2c7bf32. Prepared provenance only, not Android-installed proof.
 
-### Stable-lineage code audit Aug 24
-- Existing `rosterState` and `rosterExceptionPenalty` on rc4.52 still contain effectively global QB2/TE2 suppression (`need` roughly -24/-22 plus exception penalties reaching -42). This is stale versus the metadata-safe mechanism audit: early/mid duplicates are usually bad, but very late QB2 can have real option/startability value. Final RC must make duplicate suppression phase-sensitive rather than a permanent blanket ban.
-- Existing quality safety gate is valuable and must stay; do not replace it with hard player ranking or opaque scalar collapse.
-- Best low-risk insertion path is via deterministic finalization scripts/tests, not wholesale rc4.59 simulator code.
+### rc4.60 candidate — PRE-CANDIDATE, NOT YET PROMOTED
+Branch `pitti-auto/final-rc-20260824` builds deterministic rc4.60 and all local/runtime/service-worker syntax/contract gates pass. Eight-file ZIP SHA-256: `9f67b17b9f7ab53bf2ef8d643de6a6330f4f3ed1fc48763cc9835a776da1d454`. It contains hard Geno/Rodgers exclusions, Jeanty acute-status fail-closed recommendation block, and phase-sensitive QB2/TE2 soft penalties. Do NOT ask user to install yet: full-draft mechanism validation uncovered a harness invalidation described below.
+
+## CRITICAL INVALIDATION — prior rc4.60 phase-threshold full-draft run is NO-OP
+Run `32701499038` / branch `pitti-qbte-threshold-challenger` must be quarantined even if every shard reports PASS.
+- Shard 0 was compared against exact position-safe baseline shard 0 from run `32651366239`; roster geometry and choices were identical.
+- Root cause: `scoreCandidate` is created inside the VM context and closes lexically over the original `rosterExceptionPenalty`. The challenger assigned `C.rosterExceptionPenalty = ...` only after `context()` returned. Reassigning that exported object property cannot alter the lexical binding used by `scoreCandidate`.
+- Therefore PASS from that run proves execution/integrity only, NOT that the rc4.60 phase policy was tested.
+- Baseline itself exposes the motivating pathology: some complete drafts contain 2–4 QBs and up to 3 TEs. This means a purely soft duplicate penalty needs a real structural acceptance test before release.
+- Never infer strategy from `32701499038`; do not wait for it on the serial critical path.
+
+## Corrected QB2/TE2 validation — current serial gate
+Branch `pitti-qbte-hybrid-challenger`, draft PR #20, workflow `PITTI QBTE corrected capped phase hybrid v2`.
+Corrected harness `research/rc459_meta_safe_qbte_hybrid_v2_fullmock_shard_2026.js`:
+1. patches `app` source BEFORE `context()` extracts lexical helpers, so `rosterState`, `rosterExceptionPenalty`, and `scoreCandidate` see the intended rc4.60 phase policy;
+2. exports lexical helpers only for canary verification;
+3. fail-closed canaries verify exact early/mid/late QB/TE penalty behavior before any full draft;
+4. uses position-safe metadata mapping;
+5. applies an effective caller-level admissibility layer: QB3/TE3 always forbidden; before pick 121 QB2/TE2 only when the existing absurd-elite-slide exception is met; at 121+ a second QB/TE may remain available under the phase-sensitive penalty;
+6. each shard fails if QB>2 or TE>2 appears.
+Run id when created: `32703572114` (60 seeds, six shards + paired complete-roster Utility-v3.5 against exact metadata-safe baseline run `32651366239`).
+Promotion requires exact seed union, canary PASS, position-safe metadata, no QB>2/TE>2, plausible roster geometry, and no unacceptable paired utility loss. Average utility alone is insufficient; inspect displaced RB/WR/upside and concentration.
+
+## Global hard QB2/TE2 guard remains REJECTED
+The previously tested global admissibility guard (essentially one QB/one TE except narrow elite slide) reduced paired complete-roster expected wins by about 0.1165 across the exact 60-seed comparison (better 9/60, worse 51/60). Do not solve the baseline multi-QB pathology by restoring a permanent one-QB/one-TE ban. The corrected hybrid explicitly tests a count-capped, phase-sensitive compromise.
 
 ## Serial critical path NOW
-1. Create release-candidate branch from verified stable rc4.52 lineage.
-2. Implement minimal transparent policy hardening only: acute-status guard/provenance, phase-sensitive QB2/TE2 handling, preserve tier-first quality safety, no hard-coded first-turn player winner.
-3. Add targeted regression tests before large simulation: no active acute-HOLD recommendation as healthy; early QB2/TE2 strongly suppressed; late exceptional duplicate can remain visible; Geno/Rodgers exclusions; K/DST policy; top candidate visibility.
-4. Run deterministic build/syntax/contract tests.
-5. Run large fresh complete-draft acceptance battery at slot 9 with position-aware metadata. Frequency audit: pathological players, true-faller capture, early QB/TE duplicates, RB/WR construction, late upside, acute-status violations.
-6. Fix only replicated explainable defects; rerun acceptance on fresh/disjoint seeds.
-7. Build deterministic RC ZIP, regression/audit provenance.
-8. Android install + natural 2-minute dress rehearsal only when runtime verification becomes necessary.
-9. Freeze passed RC for Aug 31; afterward only material data/injury refresh and necessary low-risk bug fixes.
+1. Complete corrected hybrid-v2 60-seed run and paired utility; ignore/no-op run `32701499038` for strategy evidence.
+2. If hybrid improves roster geometry without unacceptable utility loss, port the minimal structural rule to stable finalization lineage as rc4.61; also fix the stale user-facing `index.html` text claiming Live-Coach score is unchanged on rc4.44 basis.
+3. Add executable production gates for QB3/TE3 cap, pre-121 duplicate admissibility, late second-QB/TE exception, acute status, hard QB exclusions, transformed service-worker runtime.
+4. Run deterministic build/syntax/contracts + fresh complete-draft acceptance on disjoint seeds.
+5. Fix only replicated explainable defects, then package/seal rc4.61.
+6. Android install + natural 2-minute dress rehearsal only when device runtime is the remaining gate.
+7. Freeze passed RC for Aug 31; afterward only material data/injury refresh and necessary low-risk bug fixes.
 
 ## Acceptance hard fails
 - repeated Chase Brown 1.09 without explicit new re-tier;
@@ -74,6 +92,7 @@ Known prepared baseline `pitti-auto/finalization-rc4.52` has deterministic workf
 - acute-status player presented as normal healthy recommendation while restriction is active;
 - deterministic Bowers 2.02 concentration;
 - repeated early QB2/TE2 without exceptional-value evidence;
+- QB3 or TE3 roster accumulation;
 - permanent late QB2/TE2 ban despite clear exceptional value;
 - user K/DST drafting policy;
 - deterministic player/position domination caused by artifact rather than board state.
