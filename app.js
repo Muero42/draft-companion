@@ -12,7 +12,7 @@ function activeDraftSurface(){return localStorage.getItem('v118_draftSurface')==
 function resolveActiveDraftId(){return activeDraftSurface()==='live'?LIVE_DRAFT_ID_2026:draftId(els.draftInput.value)}
 function validateCanonicalLiveDraft({id,season,teams,rounds,slot}){const errors=[];if(String(id)!==LIVE_DRAFT_ID_2026)errors.push('Draft-ID');if(String(season)!=='2026')errors.push('Saison');if(Number(teams)!==10)errors.push('Teams');if(Number(rounds)!==15)errors.push('Runden');if(Number(slot)!==9)errors.push('Slot');return{ok:!errors.length,errors}}
 function normalCandidateAdmissible(row){const v=row?.valueSafety;if(!row?.r||!Number.isFinite(row.r.rank)||!v)return false;const max=v.triggered&&Number.isFinite(v.qualityBandMax)?v.qualityBandMax:Number(v.bestPanelRank)+Number(v.threshold);return Number.isFinite(max)&&row.r.rank<=max}
-function visibleCoachCandidates(rows){const source=(rows||[]).filter(x=>x?.p&&x?.r);const normal=source.filter(normalCandidateAdmissible),fallback=source.filter(x=>!normalCandidateAdmissible(x)),normalShown=normal.slice(0,10),room=Math.max(0,10-normalShown.length);return normalShown.map(row=>({...row,outsideNormalCut:false})).concat(fallback.slice(0,room).map(row=>({...row,outsideNormalCut:true})))}
+function visibleCoachCandidates(rows){const source=(rows||[]).filter(x=>x?.p&&x?.r);return source.slice(0,10).map(row=>({...row,outsideNormalCut:!normalCandidateAdmissible(row)}))}
 
 let experts=store.get('v7_experts',[]);
 let panels=store.get('v7_panels',{standard:{name:'Standard',members:{}},pat:{name:'Pat einzeln',members:{}}});
@@ -1146,7 +1146,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.61',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},managerLiveStateSnapshot:JSON.parse(JSON.stringify(LIVE_MANAGER_ADAPTATION_STATE)),rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.62',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},managerLiveStateSnapshot:JSON.parse(JSON.stringify(LIVE_MANAGER_ADAPTATION_STATE)),rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     // Full frozen skill-player pool makes post-mock counterfactuals reproducible without
@@ -1345,7 +1345,7 @@ function buildEmergencyQueueText(scored,state,current,draftId){
   }
   const lines=[
     '===== PITTI EMERGENCY SLEEPER QUEUE =====',
-    'App-Version: v11.8.0-rc4.61',
+    'App-Version: v11.8.0-rc4.62',
     `Draft-ID: ${draftId}`,
     `Stand: Pick ${current}`,
     'Nur manueller Sleeper-Queue-Fallback; keine API-/Import-Automation.',
@@ -1451,7 +1451,7 @@ function researchBadgesHtml(x){
 function pittiFantasyRole(p,players){
  const pos=String(p?.pos||'').toUpperCase(),team=String(p?.team||'').toUpperCase();if(!['QB','RB','WR','TE'].includes(pos))return pos||'?';const same=[];for(const q of Object.values(players||{})){if(String(q?.team||'').toUpperCase()!==team||String(q?.position||'').toUpperCase()!==pos)continue;const name=q?.full_name||[q?.first_name,q?.last_name].filter(Boolean).join(' ');if(!name)continue;const r=rankFor(name,pos),sr=Number(q?.search_rank);if(r&&Number.isFinite(r.rank))same.push({name,rank:r.rank,sr});}same.sort((a,b)=>a.rank-b.rank||(a.sr||9999)-(b.sr||9999));const i=same.findIndex(q=>norm(q.name)===norm(p?.name));if(i>=0)return pos+(i+1);const d=Number(p?.depthOrder);return Number.isFinite(d)&&d>=1&&d<=6?pos+Math.round(d):pos;}
 function pittiResearchArrows(x){const rr=x?.researchResidual;if(!rr?.active||!Array.isArray(rr.components))return'';const c=rr.components.filter(c=>Number(c.dir)!==0).sort((a,b)=>Number(b.strength||0)*Number(b.confidence||0)-Number(a.strength||0)*Number(a.confidence||0))[0];if(!c)return'';const s=Number(c.strength||0)*Number(c.confidence||0),up=Number(c.dir)>0;return s>=.58?(up?'↑↑':'↓↓'):s>=.30?(up?'↑':'↓'):'';}
-window.PITTI_LIVE_DECISION_STATE=()=>{const c=lastDraftContext;if(!c?.scored)return null;const rows=visibleCoachCandidates(c.scored).filter(x=>!x.hardExcluded&&!x.recommendationBlocked).slice(0,10);return{version:'v11.8.0-rc4.61',current:c.current,next:c.next,rows:rows.map(x=>({name:x.p.name,pos:x.p.pos,team:x.p.team,injury:x.p.injury||null,panel:x.r.rank,individual:x.r.individual||[],adp:Number.isFinite(x.a)?x.a:null,ret:x.ret,returnConfidence:x.returnConfidence,confidence:x.confidence,score:x.score,action:x.action,loss:x.loss,outsideNormalCut:!!x.outsideNormalCut,role:pittiFantasyRole(x.p,c.players),arrows:pittiResearchArrows(x)}))};};
+window.PITTI_LIVE_DECISION_STATE=()=>{const c=lastDraftContext;if(!c?.scored)return null;const rows=visibleCoachCandidates(c.scored).filter(x=>!x.hardExcluded&&!x.recommendationBlocked).slice(0,10);return{version:'v11.8.0-rc4.62',current:c.current,next:c.next,rows:rows.map(x=>({name:x.p.name,pos:x.p.pos,team:x.p.team,injury:x.p.injury||null,panel:x.r.rank,individual:x.r.individual||[],adp:Number.isFinite(x.a)?x.a:null,ret:x.ret,returnConfidence:x.returnConfidence,confidence:x.confidence,score:x.score,action:x.action,loss:x.loss,outsideNormalCut:!!x.outsideNormalCut,role:pittiFantasyRole(x.p,c.players),arrows:pittiResearchArrows(x)}))};};
 
 function renderCoach(rows,state,current,next){
   const top=visibleCoachCandidates(rows);
@@ -2025,7 +2025,7 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.61',
+      'App-Version: v11.8.0-rc4.62',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -2047,7 +2047,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.61 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.62 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'?[`Manager-Live-Adaption: ${liveManagerDiagnostics()}`]:[]),
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
