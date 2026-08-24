@@ -2,7 +2,19 @@ name: package rc4.61
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/package-rc461.yml']
+    paths:
+      - 'README.md'
+      - '_worker.js'
+      - 'app.js'
+      - 'icon.svg'
+      - 'index.html'
+      - 'manifest.webmanifest'
+      - 'styles.css'
+      - 'sw.js'
+      - 'live-surface-v3.js'
+      - 'live-surface-v3.css'
+      - '.github/workflows/package-rc461.yml'
+  workflow_dispatch:
 permissions:
   contents: read
 jobs:
@@ -18,7 +30,15 @@ jobs:
           grep -q "window.PITTI_LIVE_DECISION_STATE" app.js
           grep -q "id=\"liveDecisionSurfaceV3\"" index.html
           grep -q "id=\"analysisJumpV3\"" index.html
-          grep -q "v11.8.0-rc4.61" app.js index.html sw.js
+          grep -q "10ER-ÜBERSICHT" live-surface-v3.js
+          grep -q "Pick-Confidence" live-surface-v3.js
+          grep -q "AUSSERHALB NORMAL-CUT" live-surface-v3.js
+          grep -q "Chat-Handoff kopieren" live-surface-v3.js
+          grep -q "Full Diagnostic" live-surface-v3.js
+          grep -q "USER_HARD_QB_EXCLUSIONS" app.js
+          grep -q "DRAFT_ACUTE_STATUS_2026" app.js
+          grep -q "v11.8.0-rc4.61" app.js index.html sw.js live-surface-v3.js
+          grep -q "app.js?v=11.8.0-rc4.61" index.html sw.js
       - name: Package
         run: |
           zip -X -q Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip README.md _worker.js app.js icon.svg index.html manifest.webmanifest styles.css sw.js live-surface-v3.js live-surface-v3.css
