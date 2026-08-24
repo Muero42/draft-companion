@@ -9,7 +9,7 @@ on:
       - .github/workflows/pitti-qbte-roster-reality-cap2.yml
 permissions:
   actions: read
-  contents: read
+  contents: write
 jobs:
   shard:
     strategy:
@@ -81,3 +81,14 @@ jobs:
             diagnostics_2026/RC459_META_SAFE_QBTE_PAIRED_COMPLETE_ROSTER_UTILITY_2026.json
           if-no-files-found: error
           retention-days: 14
+      - name: Persist AUTO-readable research results
+        run: |
+          git config user.name 'pitti-auto'
+          git config user.email 'pitti-auto@users.noreply.github.com'
+          git add diagnostics_2026/RC459_QBTE_CAP2_REALITY_2026.json diagnostics_2026/RC459_META_SAFE_QBTE_PAIRED_COMPLETE_ROSTER_UTILITY_2026.json
+          if git diff --cached --quiet; then
+            echo 'No diagnostic delta to persist.'
+          else
+            git commit -m 'research: persist QBTE cap2 evaluation'
+            git push origin HEAD:pitti-qbte-roster-reality-cap2
+          fi
