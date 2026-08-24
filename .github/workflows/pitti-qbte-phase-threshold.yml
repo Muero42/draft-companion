@@ -5,17 +5,24 @@ on:
     branches: [pitti-qbte-threshold-challenger]
     paths:
       - research/rc459_meta_safe_qbte_phase_threshold_fullmock_shard_2026.js
+      - research/rc459_qbte_paired_complete_roster_utility_2026.py
       - .github/workflows/pitti-qbte-phase-threshold.yml
+permissions:
+  actions: read
+  contents: read
 jobs:
   shard:
     strategy:
       fail-fast: false
+      max-parallel: 6
       matrix:
         shard: [0,1,2,3,4,5]
     runs-on: ubuntu-latest
     timeout-minutes: 22
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: pitti-qbte-threshold-challenger
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
@@ -27,5 +34,31 @@ jobs:
         with:
           name: qbte-phase-threshold-${{ matrix.shard }}
           path: simulation_2026/RC459_META_SAFE_QBTE_PHASE_THRESHOLD_SHARD_${{ matrix.shard }}_2026.json
+          if-no-files-found: error
+          retention-days: 14
+  utility:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-qbte-threshold-challenger
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Download metadata-safe baseline and current phase-threshold artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/base /tmp/chal
+          gh run download 32651366239 -D /tmp/base
+          gh run download ${{ github.run_id }} -D /tmp/chal --pattern 'qbte-phase-threshold-*'
+      - name: Evaluate independent paired complete-roster utility
+        run: python research/rc459_qbte_paired_complete_roster_utility_2026.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qbte-phase-threshold-paired-utility
+          path: diagnostics_2026/RC459_META_SAFE_QBTE_PAIRED_COMPLETE_ROSTER_UTILITY_2026.json
           if-no-files-found: error
           retention-days: 14
