@@ -13,13 +13,14 @@ async function loadMeta(){const res=await fetch('https://api.sleeper.app/v1/play
 function buildPlayers(){const out={};for(const x of raw.pool_rows){if(!['QB','RB','WR','TE'].includes(x.pos))continue;if(['jaydenhiggins','rickypearsall'].includes(nrm(x.name)))continue;const r=C.rankFor(x.name,x.pos);if(!r)continue;const matches=meta[nrm(x.name)+'|'+String(x.pos).toUpperCase()]||[];if(matches.length>1)throw Error('AMBIGUOUS_POSITION_METADATA '+x.name+' '+x.pos);const md=matches[0]||{};if(nrm(x.name)==='justinjefferson'&&String(x.pos).toUpperCase()==='WR'&&(md.position!=='WR'||md.team!=='MIN'||md.sleeperId!=='6794'))throw Error('JUSTIN_JEFFERSON_WR_METADATA_NOT_RESOLVED');out[String(x.key)]={key:String(x.key),id:String(x.key),name:x.name,pos:x.pos,team:md.team||'FA',yearsExp:md.yearsExp,injury:md.injury,bye:md.bye,searchRank:md.searchRank,panel:+r.rank,adp:Number.isFinite(x.adp)?+x.adp:+r.rank}}return out}
 function pmeta`;
 let policy=policy0.replace(metaRe,safeMeta);if(policy===policy0)throw Error('META_PATCH_NOOP');
-const penRe=/function rosterExceptionPenalty\(pos,state,current,rank,adp\)\{[\s\S]*?\n\}/;const hits=policy.match(new RegExp(penRe.source,'g'))||[];if(hits.length!==1)throw Error('PENALTY_ANCHOR_DRIFT '+hits.length);
-const phasePenalty=`function rosterExceptionPenalty(pos,state,current,rank,adp){
+const ctxAnchor='const C=context(), MAN=C.__MANAGER_PROFILE_DATA;';if(policy.split(ctxAnchor).length!==2)throw Error('CONTEXT_ANCHOR_DRIFT');
+const override=`${ctxAnchor}
+C.rosterExceptionPenalty=function(pos,state,current,rank,adp){
   if(pos==='QB'&&state.counts.QB>=1){const elite=rank<=45&&Number.isFinite(adp)&&current-adp>=35;if(current>=141)return elite?0:-8;if(current>=121)return elite?-4:-24;return elite?-8:-42;}
   if(pos==='TE'&&state.counts.TE>=1){const elite=rank<=35&&Number.isFinite(adp)&&current-adp>=30;if(current>=141)return elite?0:-10;if(current>=121)return elite?-5:-26;return elite?-7:-38;}
   return 0;
-}`;
-policy=policy.replace(penRe,phasePenalty);
+};`;
+policy=policy.replace(ctxAnchor,override);
 const shard=Number(process.env.PITTI_SHARD);if(!Number.isInteger(shard)||shard<0||shard>5)throw Error('PITTI_SHARD 0..5 required');const seedAnchor="const seeds=Array.from({length:60},(_,i)=>459710001+i),drafts=[];";if(full0.split(seedAnchor).length!==2)throw Error('SEED_ANCHOR_DRIFT');const start=459710001+10*shard;const full=full0.replace(seedAnchor,`const seeds=Array.from({length:10},(_,i)=>${start}+i),drafts=[];`);
 fs.writeFileSync(POLICY,policy);const tmp=path.join('/tmp',`pitti_meta_safe_qbte_phase_threshold_${shard}.js`);fs.writeFileSync(tmp,full);let status=2;
 try{const r=cp.spawnSync(process.execPath,[tmp],{stdio:'inherit',env:process.env});if(r.error)throw r.error;status=r.status??2;if(status===0){const src='simulation_2026/RC459_REALISTIC_FULLMOCK_TIER_AUDIT_2026.json';if(!fs.existsSync(src))throw Error('OUTPUT_MISSING');const x=JSON.parse(fs.readFileSync(src,'utf8'));if(x.status!=='PASS'||x.seeds!==10||x.drafts?.length!==10)throw Error('OUTPUT_INVALID');const expected=Array.from({length:10},(_,i)=>start+i);if(JSON.stringify(x.drafts.map(d=>d.seed))!==JSON.stringify(expected))throw Error('SEED_MISMATCH');x.metadata_mapping='normalized-name + position, unique-match fail-closed';x.metadata_collision_source_bug_quarantined=true;x.qbte_repeat_policy='rc4.60 phase-sensitive duplicate opportunity-cost penalty';x.production_mutation=false;const dst=`simulation_2026/RC459_META_SAFE_QBTE_PHASE_THRESHOLD_SHARD_${shard}_2026.json`;fs.renameSync(src,dst);fs.writeFileSync(dst,JSON.stringify(x));console.log(JSON.stringify({status:'PASS',shard,start,end:start+9,output:dst},null,2))}}finally{fs.writeFileSync(POLICY,policy0)}
