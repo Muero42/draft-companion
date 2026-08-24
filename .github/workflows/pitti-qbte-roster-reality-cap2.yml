@@ -1,0 +1,83 @@
+name: PITTI QBTE roster reality cap2
+on:
+  workflow_dispatch:
+  push:
+    branches: [pitti-qbte-roster-reality-cap2]
+    paths:
+      - research/rc459_meta_safe_qbte_cap2_fullmock_shard_2026.js
+      - research/rc459_qbte_paired_complete_roster_utility_2026.py
+      - .github/workflows/pitti-qbte-roster-reality-cap2.yml
+permissions:
+  actions: read
+  contents: read
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        shard: [0,1,2,3,4,5]
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-qbte-roster-reality-cap2
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check research/rc459_meta_safe_qbte_cap2_fullmock_shard_2026.js
+      - name: Run metadata-safe cap2 reality shard
+        env:
+          PITTI_SHARD: ${{ matrix.shard }}
+        run: node research/rc459_meta_safe_qbte_cap2_fullmock_shard_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qbte-cap2-${{ matrix.shard }}
+          path: simulation_2026/RC459_META_SAFE_QBTE_CAP2_SHARD_${{ matrix.shard }}_2026.json
+          if-no-files-found: error
+          retention-days: 14
+  utility:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-qbte-roster-reality-cap2
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Download exact metadata-safe baseline and cap2 artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/base /tmp/chal
+          gh run download 32651366239 -D /tmp/base
+          gh run download ${{ github.run_id }} -D /tmp/chal --pattern 'qbte-cap2-*'
+      - name: Reality diagnostics
+        run: |
+          python - <<'PY'
+          import json,glob,collections,pathlib
+          def load(root):
+              out=[]
+              for p in glob.glob(root+'/**/*.json',recursive=True):
+                  try:x=json.load(open(p))
+                  except:continue
+                  if x.get('status')=='PASS' and isinstance(x.get('drafts'),list):out+=x['drafts']
+              return out
+          B,C=load('/tmp/base'),load('/tmp/chal')
+          def s(ds):
+              q=[d['position_counts']['QB'] for d in ds]; t=[d['position_counts']['TE'] for d in ds]
+              return {'drafts':len(ds),'qb_counts':dict(collections.Counter(q)),'te_counts':dict(collections.Counter(t)),'qb3plus':sum(x>=3 for x in q),'te3plus':sum(x>=3 for x in t),'extra_qb':sum(max(0,x-1) for x in q),'extra_te':sum(max(0,x-1) for x in t)}
+          out={'status':'PASS','baseline':s(B),'cap2':s(C),'promotion_authorized':False}
+          pathlib.Path('diagnostics_2026').mkdir(exist_ok=True);pathlib.Path('diagnostics_2026/RC459_QBTE_CAP2_REALITY_2026.json').write_text(json.dumps(out,indent=2));print(json.dumps(out,indent=2))
+          PY
+      - name: Evaluate independent paired complete-roster utility
+        run: python research/rc459_qbte_paired_complete_roster_utility_2026.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: qbte-cap2-evaluation
+          path: |
+            diagnostics_2026/RC459_QBTE_CAP2_REALITY_2026.json
+            diagnostics_2026/RC459_META_SAFE_QBTE_PAIRED_COMPLETE_ROSTER_UTILITY_2026.json
+          if-no-files-found: error
+          retention-days: 14
