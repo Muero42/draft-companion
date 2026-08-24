@@ -1,0 +1,69 @@
+=== finalize-rc4.60 fail-closed diagnostic ===
+head=c85361f0e2c21b0c865e467a8719c31519ea01c8
+run=32700290170
+anchor OK: core helpers
+anchor OK: live manager adaptation core
+anchor OK: manager qualitative live boundary
+anchor OK: manager qualitative live weighting
+anchor OK: manager autodraft special-team boundary
+anchor OK: refresh id isolation
+anchor OK: live metadata guard binding
+anchor OK: live guard message
+anchor OK: live guard and manager adaptation enforcement
+anchor OK: top10 source
+anchor OK: top10 favorite hint
+anchor OK: top10 heading
+anchor OK: top10 authority label
+anchor OK: top10 dynamic separator
+rc4.52 runtime patch applied
+hardening anchor OK: explicit mode syntax has unambiguous infer reset
+hardening anchor OK: infer segment clears explicit override
+hardening anchor OK: strong autodraft signature crosses hard mode threshold
+hardening anchor OK: autodraft inference is prefix-causal per pick
+hardening anchor OK: manual learning weight uses only evidence available at that pick
+hardening anchor OK: current explicit mode applies before next manager pick and infer releases it causally
+hardening anchor OK: manager provenance diagnostics
+hardening anchor OK: live mode override discoverability
+hardening anchor OK: live surface forces live engine mode
+hardening anchor OK: freeze manager live provenance in decision fixture
+hardening anchor OK: snapshot dynamic candidate set
+hardening anchor OK: snapshot manager provenance line
+hardening anchor OK: snapshot candidate heading
+hardening anchor OK: snapshot candidate source
+hardening anchor OK: snapshot fallback authority label
+hardening anchor OK: backup manager mode segments
+hardening anchor OK: restore manager mode segments
+rc4.52 finalization hardening applied
+final-RC anchor OK: hard QB exclusions and acute-status registry
+final-RC anchor OK: fail-closed hard exclusion / acute status in candidate scoring
+final-RC anchor OK: phase-sensitive duplicate need
+final-RC anchor OK: phase-sensitive QB2 exception
+final-RC anchor OK: phase-sensitive TE2 exception
+rc4.60 final RC policy applied
+live-draft-id-guard gate: OK
+top10-candidate-visibility gate: OK
+manager-live-adaptation gate: OK
+PASS manager-live-adaptation-regression
+PASS finalization release-readiness gate
+node:internal/assert/utils:77
+    throw err;
+    ^
+
+AssertionError [ERR_ASSERTION]: permanent QB2 exception penalty survived
+    at Object.<anonymous> (/home/runner/work/draft-companion/draft-companion/tests/final-rc-policy.test.js:20:1)
+    at Module._compile (node:internal/modules/cjs/loader:1781:14)
+    at Object..js (node:internal/modules/cjs/loader:1913:10)
+    at Module.load (node:internal/modules/cjs/loader:1505:32)
+    at Function._load (node:internal/modules/cjs/loader:1309:12)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:254:19)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)
+    at node:internal/main/run_main_module:36:49 {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v22.23.2
