@@ -24,7 +24,7 @@ def bridge():
 def f(by,n,p):
  m=by[(n.strip().lower(),p.upper())]
  if len(m)!=1:raise RuntimeError(f'map {n} {p} {len(m)}')
- return {'name':n,'pos':p,'weeks':m[0]['pred_weeks_1_14']}
+ return {'name':n,'pos':p,'weeks':m[0]['pred_weeks_1_14'],'sleeper_adp':m[0].get('sleeper_adp')}
 def lineup(players,w,repl):
  vals={p:sorted([x['weeks'][w] for x in players if x['pos']==p],reverse=True) for p in POS}; qb=vals['QB'][0] if vals['QB'] else repl['QB'][w]; best=-1e9
  for rb in range(1,4):
@@ -37,13 +37,13 @@ def lineup(players,w,repl):
     best=max(best,t)
  return qb+best
 def main():
- D=load();by,repl=bridge();rows=[]
+ D=load();by,repl=bridge();rows=[]; bow=f(by,'Brock Bowers','TE'); br=f(by,'Chase Brown','RB')
  for seed,d in sorted(D.items()):
   d9=next(x for x in d['decisions'] if x['pick']==9); d12=next(x for x in d['decisions'] if x['pick']==12)
   if d12['name']!='Brock Bowers':continue
   brown=next((r for r in d12['top'] if r['name']=='Chase Brown'),None)
   if not brown:raise RuntimeError(f'Brown missing seed {seed}')
-  prior=[f(by,d9['name'],d9['pos'])]; bow=f(by,'Brock Bowers','TE'); br=f(by,'Chase Brown','RB')
+  prior=[f(by,d9['name'],d9['pos'])]
   sb=[lineup(prior+[bow],w,repl) for w in range(14)]; sr=[lineup(prior+[br],w,repl) for w in range(14)]; ds=[sb[w]-sr[w] for w in range(14)]
   rows.append({'seed':seed,'pick9':d9['name'],'bowers_raw':d12['raw'],'brown_raw':brown['raw'],'coach_raw_gap_bowers_minus_brown':d12['raw']-brown['raw'],'direct_mean_weekly_points_delta_bowers_minus_brown':statistics.mean(ds),'direct_total_14w_points_delta':sum(ds),'bowers_better_weeks':sum(x>1e-9 for x in ds),'brown_better_weeks':sum(x<-1e-9 for x in ds)})
  if len(rows)!=57:raise RuntimeError(f'Bowers coverage {len(rows)} expected 57')
@@ -51,6 +51,7 @@ def main():
  by9={}
  for n in sorted(set(r['pick9'] for r in rows)):
   q=[r for r in rows if r['pick9']==n];x=[r['direct_mean_weekly_points_delta_bowers_minus_brown'] for r in q];by9[n]={'n':len(q),'mean_direct_delta':statistics.mean(x),'median_direct_delta':statistics.median(x),'bowers_direct_better':sum(v>1e-9 for v in x)}
- out={'schema':1,'status':'PASS','research_only':True,'production_mutation':False,'threshold_calibration_authorized':False,'purpose':'Isolate Bowers-vs-Chase-Brown direct startability/value at pick 12 without later draft cascade on the 57 metadata-safe baseline states where rc4.59 selected Bowers.','states':57,'coach_raw_gap_mean':statistics.mean(rg),'coach_raw_gap_min':min(rg),'coach_raw_gap_max':max(rg),'direct_mean_weekly_points_delta_bowers_minus_brown':statistics.mean(ds),'direct_median_weekly_points_delta':statistics.median(ds),'bowers_direct_better_states':sum(x>1e-9 for x in ds),'brown_direct_better_states':sum(x<-1e-9 for x in ds),'ties':sum(abs(x)<=1e-9 for x in ds),'by_pick9':by9,'rows':rows}
+ comp={'bowers_forecast_mean_weekly':statistics.mean(bow['weeks']),'brown_forecast_mean_weekly':statistics.mean(br['weeks']),'replacement_te_mean_weekly':statistics.mean(repl['TE']),'replacement_rb_mean_weekly':statistics.mean(repl['RB']),'replacement_wr_mean_weekly':statistics.mean(repl['WR']),'bowers_over_replacement_te':statistics.mean(bow['weeks'][w]-repl['TE'][w] for w in range(14)),'brown_over_replacement_rb':statistics.mean(br['weeks'][w]-repl['RB'][w] for w in range(14)),'bowers_sleeper_adp':bow.get('sleeper_adp'),'brown_sleeper_adp':br.get('sleeper_adp')}
+ out={'schema':2,'status':'PASS','research_only':True,'production_mutation':False,'threshold_calibration_authorized':False,'purpose':'Audit Bowers-vs-Chase-Brown direct startability/value at pick 12 without later draft cascade on the 57 metadata-safe baseline states where rc4.59 selected Bowers.','states':57,'coach_raw_gap_mean':statistics.mean(rg),'coach_raw_gap_min':min(rg),'coach_raw_gap_max':max(rg),'direct_mean_weekly_points_delta_bowers_minus_brown':statistics.mean(ds),'direct_median_weekly_points_delta':statistics.median(ds),'bowers_direct_better_states':sum(x>1e-9 for x in ds),'brown_direct_better_states':sum(x<-1e-9 for x in ds),'ties':sum(abs(x)<=1e-9 for x in ds),'bridge_component_audit':comp,'by_pick9':by9,'rows':rows}
  pathlib.Path(OUT).parent.mkdir(exist_ok=True);pathlib.Path(OUT).write_text(json.dumps(out,indent=2));print(json.dumps({k:v for k,v in out.items() if k!='rows'},indent=2))
 if __name__=='__main__':main()
