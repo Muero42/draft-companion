@@ -9,6 +9,7 @@ on:
       - tools/apply-final-rc-policy.mjs
       - tests/finalization-release-readiness.test.js
       - tests/final-rc-policy.test.js
+      - tests/final-rc-behavior.test.js
       - .github/workflows/finalize-rc4.60.yml
 permissions:
   contents: write
@@ -55,6 +56,7 @@ jobs:
             node tests/manager-live-adaptation-regression.js
             node tests/finalization-release-readiness.test.js
             node tests/final-rc-policy.test.js
+            node tests/final-rc-behavior.test.js
           } 2>&1 | tee -a /tmp/finalize-rc4.60.log
       - name: Commit generated runtime candidate
         run: |
