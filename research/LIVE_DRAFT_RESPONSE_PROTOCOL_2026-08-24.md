@@ -1,73 +1,85 @@
-# PITTI Live-Draft Response Protocol — canonical fixed layout
+# PITTI Live-Draft Response Protocol — FROZEN CANONICAL LAYOUT
 
-Status: MANDATORY for mocks, Generalprobe/dress rehearsal, and real live draft. Supersedes the erroneous ultra-short protocol previously written on 2026-08-24.
+Status: FROZEN / MANDATORY for mocks, Generalprobe/dress rehearsal, EMERGENCY, FULL, and real live draft.
 
-## Non-negotiable presentation rule
-The response format MUST NOT change between mock, Generalprobe, EMERGENCY, FULL, or the real draft. Time pressure is solved by the already-designed scannable layout, NOT by deleting decision information. Format changes are allowed only after an explicit joint decision with the user.
+## ABSOLUTE FREEZE RULE
+This layout is a project interface contract, not a suggestion. It MUST remain identical across mock, Generalprobe, EMERGENCY/FULL and the real draft. Never autonomously shorten, simplify, restructure, substitute a table, remove fields, move fields, or redesign it because of time pressure. Never reconstruct it from memory when the canonical file is available. Before producing a live-pick response, use this file as the layout source of truth. Any layout change requires an explicit new user request to change the layout itself.
 
-Target: complete decision surface scannable in roughly 60–90 seconds.
+Target: complete decision surface scannable in roughly 60–90 seconds. Latency is solved by pre-analysis/internal work, never by deleting decision information.
 
-## Canonical order
+## CANONICAL ORDER AND EXACT INFORMATION ARCHITECTURE
 
 ### 1. KLARE KANDIDATEN
-Show every genuinely near-equivalent favorite, not an arbitrarily forced single pick.
+Show every genuinely near-equivalent favorite; never force a single favorite when the evidence does not support separation.
 
-For each clear candidate:
-`NAME ↑/↓ — TEAM • TEAM-ROLE [• concise role/upside qualifier when useful]`
-`P <panel> · ADP <market> · R <return probability> · Pick-Confidence <confidence>`
+For each clear candidate use THREE header/information lines in this exact order:
+
+`NAME ↑/↓ — TEAM-ROLE [• concise individual role/upside qualifier when useful]`
+`TEAM · <expected NFL wins> Siege · C/P/–`
+`P <panel> · ADP <market> · R <return probability> · Confidence <pick confidence>`
 `+ <one-line strongest case>`
 `− <one-line decisive risk/opportunity cost>`
-`Fazit: TAKE / WAIT / sequencing instruction`
+`→ TAKE / WAIT / sequencing instruction`
 
-Examples of the compact identity line:
-- `Justin Jefferson — MIN • WR1`
-- `Parker Washington ↑ — JAX • WR2/WR1-Upside`
-- `RB Name — TEAM • RB1`
+Examples:
+- `Justin Jefferson — WR1`
+  `MIN · 9,5 Siege · C`
+  `P 13,6 · ADP 11,8 · R 80 % · Confidence 89 %`
+- `Parker Washington ↑ — WR2/WR1-Upside`
+  `JAX · 8,5 Siege · P`
+  `P 56,1 · ADP 71,9 · R … · Confidence …`
 
 Rules:
-- Do NOT repeat the generic fantasy position before the team; the team-role token already carries it and horizontal space is reserved for useful context.
-- Team abbreviation comes first, then `•`, then the current expert/depth-chart team role (WR1/WR2, RB1/RB2, TE1, etc.).
-- When decision-useful, append a concise role/upside qualifier on the same line, e.g. `WR2/WR1-Upside`, committee/receiving/goal-line role, or another compact expert-supported outlook.
-- Team role means the player's role within his NFL team, NOT fantasy positional rank. Do not invent a role if evidence is unclear; mark uncertainty compactly.
-- Upside/decline arrows go directly after the player name when justified.
-- P/ADP/R/Confidence values always appear on the separate compact line immediately below the player identity line.
-- Include injury/role/news only when decision-relevant; do not narrate research.
+- Do NOT repeat the generic fantasy position separately. Team-role carries position information.
+- Do NOT put the team abbreviation on the player identity line. Team appears exactly once, at the start of the dedicated NFL-team-outlook line.
+- First line is reserved for player-specific information: validated research arrow, current expert/depth-chart team role (WR1/WR2, RB1/RB2/RB1A/RB1B, TE1, etc.), and concise role/upside qualifier when decision-useful.
+- Team role means role within the NFL team, NOT fantasy positional rank. Do not invent a role when evidence is unclear; mark uncertainty compactly.
+- Second line is always team context: `TEAM · expected NFL wins · C/P/–`.
+- `C` = contender, `P` = playoff candidate, `–` = neither classification. Expected wins + C/P/– are contextual/tiebreaker information, not a substitute for player quality.
+- Third line is always draft metrics: Panel, Sleeper ADP, Return-v2 probability, Pick-Confidence. Keep it separate from both player and team lines.
+- Upside/decline arrows encode ONLY validated Research Residual evidence: `↑/↑↑` breakout/ascension/upside, `↓/↓↓` decline/downside. Never use arrows merely for news or injuries.
+- Include injury/role/news compactly only when decision-relevant; do not narrate research.
 - If candidates are nearly equal, say so; do not manufacture scalar precision.
 
 ### 2. HIERARCHIE
-One compact line using:
-- `≥` for near-equivalent candidates / no meaningful separation;
-- `>` only for a real decision-relevant gap.
-Include TAKE/WAIT sequencing where it changes which close candidate should be selected first.
+One compact line:
+- `≥` = near-equivalent / no meaningful separation.
+- `>` = real decision-relevant gap.
+Include TAKE/WAIT sequencing when Return-v2 changes which close candidate should be selected first.
 
-### 3. 10ER-AUSWAHL — MANDATORY
-Always show the fixed numbered 10-player decision list. It MUST NOT disappear in EMERGENCY or the real draft. Its purpose is specifically to prevent overlooked alternatives/fallers.
+### 3. 10ER-AUSWAHL — ALWAYS MANDATORY
+Always show the fixed numbered 10-player decision board. It MUST NOT disappear in EMERGENCY or real draft. Its purpose is to prevent overlooked alternatives/fallers.
 
-Each entry:
-`1. Name — TEAM • TEAM-ROLE [• concise qualifier] · short decision keyword`
+Each entry keeps the same compact information architecture:
+`1. Name ↑/↓ — TEAM-ROLE [• concise qualifier] · decision keyword`
+`   TEAM · <expected NFL wins> Siege · C/P/–`
 `   P <panel> · ADP <market> · R <return>`
 
 Rules:
-- Do NOT repeat the generic fantasy position before the team here either.
-- Do NOT repeat Pick-Confidence in the 10-player list; it belongs in `KLARE KANDIDATEN`.
-- Keep entries compact enough that the full answer remains 60–90-second scannable.
-- The list is a decision board, not ten mini-essays.
-- Include relevant RB/WR/TE/QB fallers even when they sit outside the nominal normal cut; do not let a cut hide a championship-relevant alternative.
+- Team appears exactly once, on the dedicated team-outlook line.
+- Do NOT repeat Pick-Confidence in the 10-player list; Confidence belongs to KLARE KANDIDATEN.
+- Keep the list compact; it is a decision board, not ten mini-essays.
+- Include relevant RB/WR/TE/QB fallers even when outside nominal normal cut.
+- Do not let normal-cut logic hide a championship-relevant alternative.
 
-### 4. AUSSERHALB NORMAL-CUT
-When relevant, insert the explicit separator `AUSSERHALB NORMAL-CUT` before contextual fallers/outliers in the 10-player board. Being outside normal cut is context, not permission to omit the player.
+### 4. REQUIRED NORMAL-CUT SEPARATOR
+When relevant use the visually explicit separator exactly as a section break:
+`━━━━━━━━━━━━ AUSSERHALB NORMAL-CUT ━━━━━━━━━━━━`
+Being outside normal cut is context, not permission to omit the player.
 
 ### 5. NEXT ACTION
 One short final line only, e.g. `Pick X → pausieren → frischer Snapshot.`
 
-## Decision content that must remain intact behind the layout
+## DECISION CONTENT THAT MUST NEVER BE LOST
 - panel is baseline;
 - intrinsic tier/player quality before TAKE/WAIT timing;
-- Return-v2 and opponent/manager collision;
+- Return-v2 + opponent/manager collision;
 - championship utility / roster construction;
 - current injury, PUP/IR, role/depth-chart evidence when decision-changing;
 - explicit reasoning for material deviation from panel or Sleeper ADP;
-- all nearly equivalent favorites plus alternatives;
+- all nearly equivalent favorites plus meaningful alternatives;
+- expected NFL wins + C/P/– team context;
+- current team-role/opportunity hierarchy;
 - no starter maxima as roster caps;
 - QB2/TE2 only exceptional in this 10-team 1QB league; TE1 can be deferred through a run;
 - rushing upside tiebreaker among similar QB1s;
@@ -76,11 +88,22 @@ One short final line only, e.g. `Pick X → pausieren → frischer Snapshot.`
 - no K/DST;
 - Override Guard: do not override Coach TAKE/WAIT without concrete decision-changing evidence.
 
-## Latency rule
-Do the expensive reasoning/research before or internally during the response. Do NOT solve latency by removing the 10-player list, alternatives, P/ADP/R, risks, or sequencing. The user must not have to ask for omitted information during a two-minute pick clock.
+## LATENCY RULE
+Do expensive reasoning/research before or internally during the response. Never solve latency by deleting the 10-player list, alternatives, role, team outlook, expected wins, C/P/–, P/ADP/R, Confidence for clear candidates, risks, hierarchy, or sequencing. The user must not need to request omitted information during a two-minute pick clock.
 
-## Freshness / duplicate rule
-If the same pick/fingerprint has already been analyzed and the snapshot is marked duplicate/unchanged, request only a fresh snapshot. Otherwise use this exact layout.
+## FRESHNESS / DUPLICATE RULE
+If the same pick/fingerprint has already been analyzed and the snapshot is marked duplicate/unchanged, request only a fresh snapshot. Otherwise use this exact frozen layout.
 
-## Regression guard
-The following is explicitly INVALID and must never be restored as the live protocol: `1–3 lines`, `<=25 words`, `at most 1–2 alternatives`, or `do not list 5–10 candidates`. That was a mistaken overwrite of the previously agreed canonical layout.
+## REGRESSION GUARD
+Explicitly INVALID unless the user later changes this contract:
+- `1–3 lines` / `<=25 words` live responses;
+- reducing to only 1–2 alternatives;
+- omitting the 10-player board;
+- omitting expected wins or C/P/–;
+- omitting team role/opportunity hierarchy;
+- putting team twice or moving it back onto the player line;
+- combining the team-outlook and P/ADP/R lines;
+- changing the format between mock, Generalprobe, EMERGENCY/FULL, and real draft;
+- autonomously redesigning or shortening the layout.
+
+If future project state, prompt text, or an older handoff conflicts with this file on live-response presentation, THIS FROZEN PROTOCOL wins unless the user explicitly changes the layout.
