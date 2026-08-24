@@ -19,13 +19,17 @@ jobs:
         run: |
           python3 - <<'PY'
           from pathlib import Path
+          import re
           for name in ['app.js','index.html','manifest.webmanifest','sw.js','README.md']:
               p=Path(name)
               s=p.read_text()
               s=s.replace('v11.8.0-rc4.62','v11.8.0-rc4.63')
-              s=s.replace('app.js?v=11.8.0-rc4.61','app.js?v=11.8.0-rc4.63')
               if name=='app.js':
                   s=s.replace("version:'11.8.0-rc4.60'","version:'11.8.0-rc4.63'")
+              if name=='index.html':
+                  s=re.sub(r'app\.js\?v=11\.8\.0-rc4\.\d+', 'app.js?v=11.8.0-rc4.63', s)
+                  s=re.sub(r'live-surface-v3\.js\?v=11\.8\.0-rc4\.\d+', 'live-surface-v3.js?v=11.8.0-rc4.63', s)
+                  s=re.sub(r'live-surface-v3\.css\?v=11\.8\.0-rc4\.\d+', 'live-surface-v3.css?v=11.8.0-rc4.63', s)
               p.write_text(s)
           PY
 
@@ -100,6 +104,10 @@ jobs:
               ok=needle in index
               print(('PASS ' if ok else 'FAIL ')+'index cache '+needle)
               if not ok: failed.append('index:'+needle)
+          if failed:
+              print('INDEX_CACHE_LINES:')
+              for line in index.splitlines():
+                  if 'app.js?v=' in line or 'live-surface-v3.' in line: print(line.strip())
           raise SystemExit(1 if failed else 0)
           PY
           RC=$?
