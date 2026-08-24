@@ -7,6 +7,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="live-surface.css?v=11.8.0-rc4.61">
   <title>Draft Companion – Final Draft Edition 2026</title>
 
 <style id="workspaceStyles">
@@ -21,7 +22,7 @@
       <h1>Draft Companion</h1>
       <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
     </div>
-    <span class="version">v11.8.0-rc4.60</span>
+    <span class="version">v11.8.0-rc4.61</span>
   </header>
 
   <nav class="workspace-nav" aria-label="Arbeitsbereich">
@@ -109,6 +110,7 @@
     <div id="draftStatus" class="notice">Noch nicht verbunden.</div>
   </section>
 
+  <section id="liveDecisionSurface" class="card live-only live-decision-surface" data-workspace="draft"><div class="notice">Analyse starten; danach erscheint hier die kompakte Live-Entscheidung.</div></section>
   <section class="card" id="coachSectionCard" data-workspace="draft">
     <div class="section-head"><div><span class="step">3</span><h2>Draft Coach</h2></div></div>
     <div id="emptyCoach" class="empty-state">
@@ -228,9 +230,11 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v11.8.0-rc4.60: Research-Residual-UI + aktualisierte Breakout/Decline-Hypothesen; Live-Coach-Score unverändert auf rc4.44-Basis. Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt; Phase Views und Research Cache v2 bleiben erhalten. Die bewährten Simulation-Lab-v2- und Live-Speed/Snapshot-Guard-Regeln der Produktionsbasis bleiben erhalten.</div>
+<div class="freeze-note">v11.8.0-rc4.61: Research-Residual-UI + aktualisierte Breakout/Decline-Hypothesen; Live-Coach-Score unverändert auf rc4.44-Basis. Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt; Phase Views und Research Cache v2 bleiben erhalten. Die bewährten Simulation-Lab-v2- und Live-Speed/Snapshot-Guard-Regeln der Produktionsbasis bleiben erhalten.</div>
+<button id="snapshotJumpBtn" class="snapshot-jump" type="button" aria-label="Zur Analyse" title="Zur Analyse" hidden>↓</button>
 </main>
-<script type="module" src="app.js?v=11.8.0-rc4.60"></script>
+<script src="live-surface.js?v=11.8.0-rc4.61" defer></script>
+<script type="module" src="app.js?v=11.8.0-rc4.61"></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>
 </html>
