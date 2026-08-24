@@ -18,6 +18,7 @@
     "extra_qb": 130,
     "extra_te": 36,
     "qb2_rate": 1.0,
+    "te0_rate": 0.0,
     "te2_rate": 0.5166666666666667,
     "qb2_pick_counts": {
       "92": 11,
@@ -65,6 +66,7 @@
     "extra_qb": 0,
     "extra_te": 0,
     "qb2_rate": 0.0,
+    "te0_rate": 0.0,
     "te2_rate": 0.0,
     "qb2_pick_counts": {},
     "te2_pick_counts": {},
@@ -76,11 +78,18 @@
   "historical_target_context": {
     "recent_league_2023_2025_mean_qb": 1.588,
     "recent_league_qb3plus": 0,
+    "recent_league_qb2_round_median": 12.5,
+    "recent_league_qb2_round10plus_rate": 0.95,
     "user_recent_2022_2025_qb_counts": [
       1,
       1,
       1,
       1
+    ],
+    "user_2023_2025_te_counts": [
+      0,
+      0,
+      0
     ]
   },
   "promotion_authorized": false
