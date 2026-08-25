@@ -1,0 +1,193 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "research_only": true,
+  "production_mutation": false,
+  "seed_family": "459820001..459820120",
+  "seeds": 120,
+  "treatment": "late-WR near-tie only on production-like Full Safety; QB/TE Safety unchanged",
+  "mean_position_counts": {
+    "QB": 3.1083333333333334,
+    "RB": 3.8833333333333333,
+    "WR": 6.45,
+    "TE": 1.5583333333333333,
+    "K": 0.0,
+    "DEF": 0.0
+  },
+  "qb_counts": {
+    "3": 48,
+    "2": 31,
+    "5": 9,
+    "4": 30,
+    "1": 2
+  },
+  "te_counts": {
+    "3": 7,
+    "1": 60,
+    "2": 53
+  },
+  "pick_choice_counts": {
+    "9": {
+      "James Cook III": 61,
+      "Amon-Ra St. Brown": 40,
+      "Jonathan Taylor": 10,
+      "Jaxon Smith-Njigba": 9
+    },
+    "12": {
+      "Brock Bowers": 118,
+      "James Cook III": 2
+    },
+    "29": {
+      "Chris Olave": 95,
+      "Kyren Williams": 17,
+      "Malik Nabers": 7,
+      "George Pickens": 1
+    },
+    "32": {
+      "Zay Flowers": 106,
+      "DeVonta Smith": 2,
+      "Chris Olave": 12
+    },
+    "49": {
+      "Tyler Warren": 3,
+      "Terry McLaurin": 8,
+      "D'Andre Swift": 38,
+      "Jaylen Waddle": 32,
+      "Travis Etienne Jr.": 13,
+      "Colston Loveland": 18,
+      "Garrett Wilson": 6,
+      "Ladd McConkey": 1,
+      "Zay Flowers": 1
+    },
+    "52": {
+      "Jameson Williams": 22,
+      "David Montgomery": 8,
+      "Terry McLaurin": 42,
+      "Luther Burden III": 1,
+      "Tyler Warren": 4,
+      "D'Andre Swift": 40,
+      "Travis Etienne Jr.": 1,
+      "Colston Loveland": 2
+    },
+    "69": {
+      "Parker Washington": 45,
+      "Christian Watson": 38,
+      "Bhayshul Tuten": 5,
+      "Jadarian Price": 9,
+      "Rome Odunze": 4,
+      "Carnell Tate": 6,
+      "Davante Adams": 1,
+      "Jalen Hurts": 6,
+      "Joe Burrow": 1,
+      "Jayden Daniels": 2,
+      "Mike Evans": 2,
+      "Marvin Harrison Jr.": 1
+    },
+    "72": {
+      "Marvin Harrison Jr.": 49,
+      "Jayden Daniels": 20,
+      "Parker Washington": 39,
+      "Jaylen Warren": 5,
+      "Rhamondre Stevenson": 2,
+      "Jadarian Price": 1,
+      "Jalen Hurts": 3,
+      "Caleb Williams": 1
+    },
+    "89": {
+      "Jonathon Brooks": 59,
+      "Rhamondre Stevenson": 9,
+      "Trevor Lawrence": 20,
+      "Caleb Williams": 12,
+      "Blake Corum": 3,
+      "Justin Herbert": 13,
+      "Tony Pollard": 2,
+      "Stefon Diggs": 2
+    },
+    "92": {
+      "Trevor Lawrence": 55,
+      "DK Metcalf": 1,
+      "Stefon Diggs": 4,
+      "Jonathon Brooks": 9,
+      "Caleb Williams": 6,
+      "Justin Herbert": 11,
+      "Tony Pollard": 3,
+      "Jacory Croskey-Merritt": 6,
+      "Blake Corum": 14,
+      "Rico Dowdle": 7,
+      "Dak Prescott": 2,
+      "Harold Fannin Jr.": 2
+    },
+    "109": {
+      "Stefon Diggs": 63,
+      "Blake Corum": 5,
+      "George Kittle": 1,
+      "Jacory Croskey-Merritt": 21,
+      "Josh Downs": 7,
+      "Trevor Lawrence": 7,
+      "Brock Purdy": 12,
+      "Michael Pittman Jr.": 1,
+      "Jordan Addison": 2,
+      "Chris Godwin Jr.": 1
+    },
+    "112": {
+      "Josh Downs": 36,
+      "Stefon Diggs": 24,
+      "Rachaad White": 4,
+      "Brock Purdy": 35,
+      "Jordan Mason": 4,
+      "George Kittle": 3,
+      "Jaxson Dart": 2,
+      "Michael Pittman Jr.": 2,
+      "Jordan Addison": 3,
+      "Jacory Croskey-Merritt": 5,
+      "Kenny Gainwell": 1,
+      "Blake Corum": 1
+    },
+    "129": {
+      "Brock Purdy": 36,
+      "Isaiah Likely": 26,
+      "Rachaad White": 14,
+      "Jalen Coker": 5,
+      "KC Concepcion": 3,
+      "Bo Nix": 21,
+      "Jayden Reed": 2,
+      "Jonah Coleman": 9,
+      "Kenny Gainwell": 1,
+      "Chris Rodriguez Jr.": 1,
+      "Aaron Jones Sr.": 1,
+      "Wan'Dale Robinson": 1
+    },
+    "132": {
+      "Isaiah Likely": 9,
+      "Jonah Coleman": 38,
+      "Patrick Mahomes II": 1,
+      "Bo Nix": 27,
+      "Wan'Dale Robinson": 2,
+      "De'Zhaun Stribling": 5,
+      "Rachaad White": 2,
+      "Chris Rodriguez Jr.": 15,
+      "Jalen Coker": 15,
+      "KC Concepcion": 1,
+      "Kyler Murray": 1,
+      "Dallas Goedert": 1,
+      "Aaron Jones Sr.": 2,
+      "Jakobi Meyers": 1
+    },
+    "149": {
+      "Kyler Murray": 77,
+      "Denzel Boston": 1,
+      "Chris Rodriguez Jr.": 4,
+      "Tank Bigsby": 8,
+      "Jalen Coker": 20,
+      "Jared Goff": 1,
+      "De'Zhaun Stribling": 2,
+      "Jonah Coleman": 5,
+      "Bo Nix": 1,
+      "Keaton Mitchell": 1
+    }
+  },
+  "checks": {
+    "no_k_def": true
+  },
+  "next_gate": "paired exact Full-Safety baseline delta + independent complete-roster Championship Utility"
+}
