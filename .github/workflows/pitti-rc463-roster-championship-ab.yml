@@ -1,0 +1,119 @@
+name: PITTI rc4.63 roster championship A/B
+on:
+  workflow_dispatch:
+  push:
+    branches: [pitti-rc463-roster-championship-ab]
+    paths:
+      - research/rc463_roster_championship_scale_shard_2026.js
+      - .github/workflows/pitti-rc463-roster-championship-ab.yml
+permissions:
+  actions: read
+  contents: write
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix:
+        shard: [0,1,2,3,4,5,6,7,8,9,10,11]
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-roster-championship-ab}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check research/rc463_roster_championship_scale_shard_2026.js
+      - name: Run paired challenger shard
+        env:
+          PITTI_SHARD: ${{ matrix.shard }}
+        run: node research/rc463_roster_championship_scale_shard_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc463-roster-championship-ab-${{ matrix.shard }}
+          path: simulation_2026/RC463_ROSTER_CHAMPIONSHIP_AB_SHARD_${{ matrix.shard }}_2026.json
+          if-no-files-found: error
+          retention-days: 14
+  evaluate:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-roster-championship-ab}
+      - name: Download current-run shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/ab
+          gh run download ${{ github.run_id }} -D /tmp/ab --pattern 'rc463-roster-championship-ab-*'
+      - name: Evaluate paired 120-seed challenger
+        run: |
+          python - <<'PY'
+          import json,glob,collections,pathlib
+          drafts=[]
+          for p in glob.glob('/tmp/ab/**/*.json',recursive=True):
+              x=json.load(open(p))
+              if x.get('status')!='PASS' or not x.get('rc463_roster_championship_decision_priority'):
+                  raise RuntimeError('invalid challenger shard '+p)
+              drafts += x.get('drafts',[])
+          drafts=sorted(drafts,key=lambda d:int(d['seed']))
+          seeds=[int(d['seed']) for d in drafts]
+          expected=list(range(459820001,459820121))
+          if len(drafts)!=120 or seeds!=expected: raise RuntimeError('paired seed union mismatch')
+          baseline=json.load(open('diagnostics_2026/REALISTIC_SCALE_120_20260824.json'))
+          if baseline.get('status')!='PASS' or baseline.get('seed_family')!='459820001..459820120':
+              raise RuntimeError('baseline provenance mismatch')
+          pos=collections.Counter(); qbc=collections.Counter(); tec=collections.Counter(); bypick={}; pairs=collections.Counter()
+          for d in drafts:
+              c=d['position_counts']; qbc[c['QB']]+=1; tec[c['TE']]+=1
+              for k,v in c.items(): pos[k]+=v
+              own={int(x['pick']):x for x in d['decisions']}
+              for x in d['decisions']: bypick.setdefault(str(x['pick']),collections.Counter())[x['name']]+=1
+              if 9 in own and 12 in own: pairs[(own[9]['name'],own[12]['name'])]+=1
+          means={k:v/120 for k,v in pos.items()}
+          base_means=baseline['mean_position_counts']
+          deltas={k:means.get(k,0)-base_means.get(k,0) for k in sorted(set(means)|set(base_means))}
+          pick_counts={k:dict(v.most_common()) for k,v in sorted(bypick.items(),key=lambda z:int(z[0]))}
+          base_pick=baseline['pick_choice_counts']
+          pick_l1={}
+          for k in sorted(set(pick_counts)|set(base_pick),key=int):
+              names=set(pick_counts.get(k,{}))|set(base_pick.get(k,{}))
+              pick_l1[k]=sum(abs(pick_counts.get(k,{}).get(n,0)-base_pick.get(k,{}).get(n,0)) for n in names)/240
+          invariant_pass=(sum(v for k,v in qbc.items() if int(k)>=2)==0 and sum(v for k,v in tec.items() if int(k)>=2)==0 and means.get('K',0)==0 and means.get('DEF',0)==0)
+          early_l1=max(pick_l1.get(k,0) for k in ['9','12','29','32','49','52'])
+          out={
+            'schema':1,'status':'PASS' if invariant_pass else 'FAIL','research_only':True,'production_mutation':False,
+            'paired_seed_family':'459820001..459820120','seeds':120,
+            'baseline_file':'diagnostics_2026/REALISTIC_SCALE_120_20260824.json',
+            'qb_counts':dict(sorted(qbc.items())),'te_counts':dict(sorted(tec.items())),
+            'mean_position_counts':means,'baseline_mean_position_counts':base_means,'mean_position_deltas':deltas,
+            'pick_choice_counts':pick_counts,'baseline_pick_choice_counts':base_pick,'pick_distribution_l1':pick_l1,
+            'first_turn_pair_counts':[{'pick9':a,'pick12':b,'n':n} for (a,b),n in pairs.most_common()],
+            'checks':{
+              'paired_seed_union':True,
+              'qb2plus_zero':sum(v for k,v in qbc.items() if int(k)>=2)==0,
+              'te2plus_zero':sum(v for k,v in tec.items() if int(k)>=2)==0,
+              'no_k_def':means.get('K',0)==0 and means.get('DEF',0)==0,
+              'max_early_pick_distribution_l1':early_l1
+            },
+            'interpretation_gate':{
+              'late_roster_shift_direction':'inspect WR/RB deltas and picks 109/112/129/132/149',
+              'early_round_stability':'diagnostic; do not promote if material unexplained shifts',
+              'promotion_authorized':False
+            }
+          }
+          pathlib.Path('diagnostics_2026').mkdir(exist_ok=True)
+          pathlib.Path('diagnostics_2026/RC463_ROSTER_CHAMPIONSHIP_AB_120_20260825.json').write_text(json.dumps(out,indent=2))
+          print(json.dumps(out,indent=2))
+          if out['status']!='PASS': raise SystemExit(2)
+          PY
+      - name: Persist AUTO-readable A/B result
+        run: |
+          git config user.name 'pitti-auto'
+          git config user.email 'pitti-auto@users.noreply.github.com'
+          git add diagnostics_2026/RC463_ROSTER_CHAMPIONSHIP_AB_120_20260825.json
+          if ! git diff --cached --quiet; then
+            git commit -m 'research: persist rc4.63 roster championship 120-seed A/B'
+            git push origin HEAD:pitti-rc463-roster-championship-ab
+          fi
