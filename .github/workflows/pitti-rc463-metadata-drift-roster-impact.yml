@@ -1,0 +1,50 @@
+name: PITTI rc4.63 metadata-drift roster impact audit
+on:
+  push:
+    branches: [pitti-rc463-sameinput-guard-utility]
+    paths:
+      - 'research/rc463_metadata_drift_roster_impact_2026.py'
+      - '.github/workflows/pitti-rc463-metadata-drift-roster-impact.yml'
+permissions:
+  contents: write
+  actions: read
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc463-sameinput-guard-utility
+      - name: Wait for new same-input roster source
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,subprocess,time,os
+          run=32866136332;repo=os.environ['GITHUB_REPOSITORY'];deadline=time.time()+2400
+          while True:
+            x=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/runs/{run}']));print(x.get('status'),x.get('conclusion'),flush=True)
+            if x.get('status')=='completed':
+              if x.get('conclusion')!='success':raise SystemExit('source run failure '+str(x.get('conclusion')))
+              break
+            if time.time()>deadline:raise SystemExit('wait timeout')
+            time.sleep(20)
+          PY
+      - name: Download old and new exact roster artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/oldfull /tmp/oldguard /tmp/newpair
+          gh run download 32839901036 -D /tmp/oldfull --pattern 'rc463-full-safety-baseline-*'
+          gh run download 32832269866 -D /tmp/oldguard --pattern 'rc463-baseline-roster-*'
+          gh run download 32866136332 -D /tmp/newpair --pattern 'rc463-sameinput-full-guard-*'
+      - run: python -m py_compile research/rc463_metadata_drift_roster_impact_2026.py
+      - run: python research/rc463_metadata_drift_roster_impact_2026.py
+      - name: Persist audit
+        run: |
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git pull --rebase origin pitti-rc463-sameinput-guard-utility
+          git add diagnostics_2026/RC463_METADATA_DRIFT_ROSTER_IMPACT_120_20260825.json
+          if ! git diff --cached --quiet; then git commit -m 'research: persist metadata-drift roster impact' && git push origin HEAD:pitti-rc463-sameinput-guard-utility; fi
