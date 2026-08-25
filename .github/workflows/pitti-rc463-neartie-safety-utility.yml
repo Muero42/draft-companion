@@ -48,5 +48,6 @@ jobs:
         run: |
           git config user.name pitti-auto
           git config user.email pitti-auto@users.noreply.github.com
+          git pull --rebase origin pitti-rc463-safety-neartie-ab
           git add diagnostics_2026/RC463_NEARTIE_SAFETY_PAIRED_CHAMPIONSHIP_UTILITY_120_20260825.json
           if ! git diff --cached --quiet; then git commit -m 'research: persist near-tie paired Championship Utility' && git push origin HEAD:pitti-rc463-safety-neartie-ab; fi
