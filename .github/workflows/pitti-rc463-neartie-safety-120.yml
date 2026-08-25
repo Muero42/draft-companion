@@ -1,0 +1,34 @@
+name: PITTI rc4.63 near-tie safety 120
+on:
+  push:
+    branches: [pitti-rc463-safety-neartie-ab]
+    paths:
+      - 'research/rc463_neartie_safety_roster_120_shard_2026.js'
+      - '.github/workflows/pitti-rc463-neartie-safety-120.yml'
+permissions:
+  contents: read
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3,4,5,6,7,8,9,10,11]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc463-safety-neartie-ab
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node --check research/rc463_neartie_safety_roster_120_shard_2026.js
+      - name: Export near-tie challenger shard
+        env:
+          PITTI_SHARD: ${{ matrix.shard }}
+        run: node research/rc463_neartie_safety_roster_120_shard_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc463-neartie-safety-${{ matrix.shard }}
+          path: simulation_2026/RC463_NEARTIE_SAFETY_ROSTER_SHARD_${{ matrix.shard }}_2026.json
+          retention-days: 14
