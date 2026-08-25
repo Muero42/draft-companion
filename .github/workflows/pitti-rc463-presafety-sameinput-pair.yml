@@ -1,0 +1,67 @@
+name: PITTI rc4.63 pre-safety same-input parity 120
+on:
+  push:
+    branches: [pitti-rc463-pre-safety-instrumentation]
+    paths:
+      - 'research/rc463_presafety_sameinput_pair_shard_2026.js'
+      - '.github/workflows/pitti-rc463-presafety-sameinput-pair.yml'
+permissions:
+  contents: read
+jobs:
+  snapshot:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Freeze one Sleeper player metadata snapshot
+        run: |
+          mkdir -p /tmp/meta
+          python - <<'PY'
+          import urllib.request,json,pathlib
+          req=urllib.request.Request('https://api.sleeper.app/v1/players/nfl',headers={'User-Agent':'PITTI-PreSafety-SameInput/1.0'})
+          with urllib.request.urlopen(req,timeout=30) as r: data=r.read()
+          json.loads(data)
+          pathlib.Path('/tmp/meta/players.json').write_bytes(data)
+          print(len(data))
+          PY
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc463-presafety-shared-metadata
+          path: /tmp/meta/players.json
+          retention-days: 14
+  shard:
+    needs: snapshot
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3,4,5,6,7,8,9,10,11]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc463-pre-safety-instrumentation
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - uses: actions/download-artifact@v4
+        with:
+          name: rc463-presafety-shared-metadata
+          path: /tmp/meta
+      - name: Serve exact shared snapshot locally
+        run: |
+          cd /tmp/meta
+          python -m http.server 8765 >/tmp/pitti-meta-http.log 2>&1 &
+          echo $! >/tmp/pitti-meta-http.pid
+          for i in {1..20}; do curl -fsS http://127.0.0.1:8765/players.json >/dev/null && exit 0; sleep 0.25; done
+          cat /tmp/pitti-meta-http.log
+          exit 1
+      - run: node --check research/rc463_presafety_sameinput_pair_shard_2026.js
+      - name: Run exact paired shard
+        env:
+          PITTI_SHARD: ${{ matrix.shard }}
+          PITTI_META_SNAPSHOT: /tmp/meta/players.json
+        run: node research/rc463_presafety_sameinput_pair_shard_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc463-presafety-sameinput-${{ matrix.shard }}
+          path: simulation_2026/RC463_PRESAFETY_SAMEINPUT_PAIR_SHARD_${{ matrix.shard }}_2026.json
+          retention-days: 14
