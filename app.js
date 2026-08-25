@@ -1250,7 +1250,17 @@ function applyPlayerQualitySafetyGate(rows,current){
   // Keep a narrow panel-quality band admissible for the top recommendation.
   // Within that band normal utility/Return logic may still choose among peers.
   const qualityBandMax=bestPanelRank+Math.max(3,Math.floor(threshold/2));
-  const qualityBand=valid.filter(x=>x.r.rank<=qualityBandMax);
+  // rc4.64: Safety must not resurrect a repeated QB/TE after roster scoring demoted it.
+  // Existing exceptional-slide thresholds are reused exactly; no new numeric penalty family.
+  const safetyPromotionEligible=x=>{
+    if(x.p.pos==='QB'&&(x.stateCounts?.QB??0)>=1)return x.r.rank<=45&&Number.isFinite(x.a)&&current-x.a>=35;
+    if(x.p.pos==='TE'&&(x.stateCounts?.TE??0)>=1)return x.r.rank<=35&&Number.isFinite(x.a)&&current-x.a>=30;
+    return true;
+  };
+  const eligible=valid.filter(safetyPromotionEligible);
+  const eligibleBestPanelRank=eligible.length?Math.min(...eligible.map(x=>x.r.rank)):bestPanelRank;
+  const eligibleBandMax=eligibleBestPanelRank+Math.max(3,Math.floor(threshold/2));
+  const qualityBand=eligible.filter(x=>x.r.rank<=eligibleBandMax);
   const safetyLeader=qualityBand.slice().sort((a,b)=>b.rawScore-a.rawScore||a.r.rank-b.r.rank)[0];
   const maxRaw=Math.max(...valid.map(x=>x.rawScore));
 
@@ -1931,8 +1941,8 @@ async function refresh(){
 
     const state=rosterState(mine,players,current);
     // No player-specific blacklist: all selected-panel candidates remain eligible.
-    const scored=rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,strategy)})).filter(x=>x.r);
-    const referenceBalanced=strategy==='progressive'?rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,'balanced')})).filter(x=>x.r):null;
+    const scored=rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,strategy),stateCounts:{...state.counts}})).filter(x=>x.r);
+    const referenceBalanced=strategy==='progressive'?rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,'balanced'),stateCounts:{...state.counts}})).filter(x=>x.r):null;
     const returnCtx={current,next:returnPick,picks,players,teams,map,rankedAvailable,mode,userSlot:slot};
     const rv2=Number.isFinite(returnPick)&&returnPick>current?simulateReturnV2(returnCtx,stress,900):null;
     for(const x of scored){
