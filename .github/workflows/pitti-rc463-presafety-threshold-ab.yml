@@ -5,6 +5,11 @@ on:
     paths:
       - 'research/rc463_presafety_threshold_arm_shard_2026.js'
       - '.github/workflows/pitti-rc463-presafety-threshold-ab.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'research/rc463_presafety_threshold_arm_shard_2026.js'
+      - '.github/workflows/pitti-rc463-presafety-threshold-ab.yml'
   workflow_dispatch:
 permissions:
   contents: read
