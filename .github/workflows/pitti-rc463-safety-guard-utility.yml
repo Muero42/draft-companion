@@ -12,16 +12,17 @@ permissions:
 jobs:
   utility:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 35
     steps:
       - uses: actions/checkout@v4
         with: {ref: pitti-rc463-roster-championship-v5-marginal}
-      - name: Wait for full-safety comparator
+      - name: Wait for exact source runs
         env: {GH_TOKEN: "${{ github.token }}"}
         run: |
           python - <<'PY'
           import json,subprocess,time,os
-          runs=[32835358363,32832269866];repo=os.environ['GITHUB_REPOSITORY'];deadline=time.time()+1200
+          # Corrected production-like full-safety comparator + frozen minimal-guard 120 export.
+          runs=[32839901036,32832269866];repo=os.environ['GITHUB_REPOSITORY'];deadline=time.time()+1800
           while True:
             st=[]
             for r in runs:
@@ -38,7 +39,7 @@ jobs:
         env: {GH_TOKEN: "${{ github.token }}"}
         run: |
           mkdir -p /tmp/full /tmp/guard
-          gh run download 32835358363 -D /tmp/full --pattern 'rc463-full-safety-baseline-*'
+          gh run download 32839901036 -D /tmp/full --pattern 'rc463-full-safety-baseline-*'
           gh run download 32832269866 -D /tmp/guard --pattern 'rc463-baseline-roster-*'
       - run: python research/rc463_safety_guard_championship_utility_2026.py
       - name: Persist safety-guard utility
@@ -46,4 +47,4 @@ jobs:
           git config user.name pitti-auto
           git config user.email pitti-auto@users.noreply.github.com
           git add diagnostics_2026/RC463_SAFETY_GUARD_PAIRED_CHAMPIONSHIP_UTILITY_120_20260825.json
-          if ! git diff --cached --quiet; then git commit -m 'research: persist safety-guard paired Championship Utility' && git push origin HEAD:pitti-rc463-roster-championship-v5-marginal; fi
+          if ! git diff --cached --quiet; then git commit -m 'research: persist corrected safety-guard paired Championship Utility' && git push origin HEAD:pitti-rc463-roster-championship-v5-marginal; fi
