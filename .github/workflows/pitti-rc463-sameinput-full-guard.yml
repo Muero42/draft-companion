@@ -1,0 +1,46 @@
+name: PITTI rc4.63 same-input full vs minimal guard 120
+on:
+  push:
+    branches: [pitti-rc463-sameinput-guard-utility]
+    paths:
+      - 'research/rc463_sameinput_full_guard_pair_shard_2026.js'
+      - '.github/workflows/pitti-rc463-sameinput-full-guard.yml'
+permissions:
+  contents: read
+  actions: read
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3,4,5,6,7,8,9,10,11]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc463-sameinput-guard-utility
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Download exact frozen metadata snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/meta
+          gh run download 32865478995 -D /tmp/meta --pattern 'rc463-presafety-shared-metadata'
+          test -f /tmp/meta/rc463-presafety-shared-metadata/players.json
+      - run: node --check research/rc463_sameinput_full_guard_pair_shard_2026.js
+      - name: Run paired roster shard
+        env:
+          PITTI_SHARD: ${{ matrix.shard }}
+          PITTI_META_SNAPSHOT: /tmp/meta/rc463-presafety-shared-metadata/players.json
+        run: node research/rc463_sameinput_full_guard_pair_shard_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc463-sameinput-full-guard-${{ matrix.shard }}
+          path: |
+            simulation_2026/RC463_FULL_SAFETY_BASELINE_ROSTER_SHARD_${{ matrix.shard }}_2026.json
+            simulation_2026/RC463_BASELINE_ROSTER_SHARD_${{ matrix.shard }}_2026.json
+            simulation_2026/RC463_SAMEINPUT_FULL_GUARD_MANIFEST_${{ matrix.shard }}_2026.json
+          retention-days: 14
