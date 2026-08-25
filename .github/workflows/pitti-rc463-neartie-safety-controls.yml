@@ -1,0 +1,21 @@
+name: PITTI rc4.63 near-tie safety mechanism controls
+on:
+  push:
+    branches: [pitti-rc463-safety-neartie-ab]
+    paths:
+      - 'research/rc463_neartie_safety_mechanism_controls_2026.js'
+      - '.github/workflows/pitti-rc463-neartie-safety-controls.yml'
+permissions:
+  contents: read
+jobs:
+  controls:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc463-safety-neartie-ab
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node --check research/rc463_neartie_safety_mechanism_controls_2026.js
+      - run: node research/rc463_neartie_safety_mechanism_controls_2026.js
