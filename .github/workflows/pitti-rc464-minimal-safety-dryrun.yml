@@ -6,6 +6,7 @@ on:
     paths:
       - research/rc464_minimal_safety_transform.js
       - research/rc464_minimal_safety_static_regression.js
+      - research/rc464_transformed_safety_function_regression.js
       - .github/workflows/pitti-rc464-minimal-safety-dryrun.yml
 permissions:
   contents: read
@@ -22,3 +23,5 @@ jobs:
       - run: node research/rc464_minimal_safety_transform.js
       - run: node --check research/rc464_minimal_safety_static_regression.js
       - run: node research/rc464_minimal_safety_static_regression.js
+      - run: node --check research/rc464_transformed_safety_function_regression.js
+      - run: node research/rc464_transformed_safety_function_regression.js
