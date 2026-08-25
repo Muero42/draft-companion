@@ -1,0 +1,40 @@
+name: PITTI rc4.63 PreSafety Threshold Repair Utility
+on:
+  push:
+    branches: [pitti-rc463-presafety-threshold-ab]
+    paths:
+      - 'research/rc463_presafety_threshold_repair_utility_2026.py'
+      - '.github/workflows/pitti-rc463-presafety-threshold-repair-utility.yml'
+permissions:
+  actions: read
+  contents: read
+jobs:
+  utility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc463-presafety-threshold-ab
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Download exact threshold artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/threshold-artifacts
+          gh run download 32870106661 -D /tmp/threshold-artifacts
+      - name: Evaluate symmetric repair sensitivity
+        run: |
+          set -euo pipefail
+          python -m py_compile research/rc463_presafety_threshold_repair_utility_2026.py
+          python research/rc463_presafety_threshold_repair_utility_2026.py | tee /tmp/threshold-repair-utility.log
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc463-presafety-threshold-repair-utility
+          path: |
+            diagnostics_2026/RC463_PRESAFETY_THRESHOLD_REPAIR_UTILITY_2026.json
+            /tmp/threshold-repair-utility.log
+          if-no-files-found: error
+          retention-days: 14
