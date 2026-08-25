@@ -1,0 +1,11 @@
+'use strict';
+/* Aggregate audit for completed threshold artifacts. Expects 24 JSON files in PITTI_THRESHOLD_DIR.
+   Fails closed on missing seeds/thresholds and reports only observable treatment effects. */
+const fs=require('fs'),path=require('path');const dir=process.env.PITTI_THRESHOLD_DIR||'simulation_2026';
+const files=fs.readdirSync(dir).filter(f=>/^RC463_PRESAFETY_THRESHOLD_(M15|ZERO)_SHARD_\d+_2026\.json$/.test(f));if(files.length!==24)throw Error('EXPECTED_24_THRESHOLD_FILES got '+files.length);
+const arms={[-15]:[],0:[]};for(const f of files){const x=JSON.parse(fs.readFileSync(path.join(dir,f)));if(x.status!=='PASS'||![-15,0].includes(x.threshold)||x.drafts?.length!==10)throw Error('BAD '+f);arms[x.threshold].push(...x.drafts)}
+for(const t of[-15,0]){arms[t].sort((a,b)=>a.seed-b.seed);if(arms[t].length!==120)throw Error('ARM_SIZE '+t);for(let i=0;i<120;i++)if(arms[t][i].seed!==459820001+i)throw Error('SEED_GAP '+t+' '+i)}
+const count=(d,p)=>Number(d.position_counts?.[p]||0);const avg=(a)=>a.reduce((s,x)=>s+x,0)/a.length;
+function summary(ds){return{avgQB:avg(ds.map(d=>count(d,'QB'))),avgTE:avg(ds.map(d=>count(d,'TE'))),avgRB:avg(ds.map(d=>count(d,'RB'))),avgWR:avg(ds.map(d=>count(d,'WR'))),qb3plus:ds.filter(d=>count(d,'QB')>=3).length,te3plus:ds.filter(d=>count(d,'TE')>=3).length,qb2plus:ds.filter(d=>count(d,'QB')>=2).length,te2plus:ds.filter(d=>count(d,'TE')>=2).length}}
+let same=0,diff=0;const examples=[];for(let i=0;i<120;i++){const a=arms[-15][i],b=arms[0][i];const da=JSON.stringify(a.decisions),db=JSON.stringify(b.decisions),ra=JSON.stringify(a.user_roster),rb=JSON.stringify(b.user_roster);if(da===db&&ra===rb)same++;else{diff++;if(examples.length<20)examples.push({seed:a.seed,m15:a.user_roster,zero:b.user_roster})}}
+const out={schema:1,status:'PASS',research_only:true,production_mutation:false,seeds:120,thresholds:{m15:summary(arms[-15]),zero:summary(arms[0])},m15_vs_zero:{identical_seed_outcomes:same,different_seed_outcomes:diff,examples},interpretation:'Descriptive only. Championship Utility and Natural-State gates remain required.'};fs.mkdirSync('diagnostics_2026',{recursive:true});fs.writeFileSync('diagnostics_2026/RC463_PRESAFETY_THRESHOLD_AB_AGGREGATE_2026.json',JSON.stringify(out,null,2));console.log(JSON.stringify(out,null,2));
