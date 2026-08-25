@@ -1,0 +1,38 @@
+name: rc464-recovery-v2
+on:
+  push:
+    branches:
+      - pitti-rc464-recovery-fixtures
+    paths:
+      - .github/workflows/rc464-recovery-v2.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Patch
+        shell: bash
+        run: |
+          python3 scripts_rc464_patch.py
+      - name: Test
+        shell: bash
+        run: |
+          node --check app.js
+          node RC4_64_SAFETY_RESURRECTION_REGRESSION.js
+          node Draft_Companion_Dress_Rehearsal_Regression_2026-08-14.js
+          node Draft_Companion_Position_Path_Regression_2026-08-13.js
+          node Draft_Companion_Player_Quality_Expert_Health_Regression_2026-08-13.js
+          node Draft_Companion_Return_Geometry_Market_Regression_2026-08-13.js
+          node Draft_Companion_Scarcity_Double_Count_Regression_2026-08-13.js
+      - name: Commit
+        shell: bash
+        run: |
+          git config user.name github-actions-bot
+          git config user.email github-actions-bot@users.noreply.github.com
+          git add app.js
+          git diff --cached --quiet && exit 0
+          git commit -m 'rc4.64: prevent QB2 TE2 Safety resurrection'
+          git push
