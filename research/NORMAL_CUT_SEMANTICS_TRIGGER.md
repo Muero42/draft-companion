@@ -1,0 +1,1 @@
+Trigger the isolated NORMAL-CUT warning semantics repair. Evidence: the UI can mark a legitimate safety leader as outside the normal cut when a repeated QB/TE owns the global best panel rank but is ineligible for safety promotion. Preserve scoring and promotion behavior; only make the warning use the effective eligible safety band.
