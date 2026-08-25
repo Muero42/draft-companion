@@ -1,0 +1,18 @@
+'use strict';
+/* Research-only identical-state determinism gate v2.
+   The first gate instrumented the outer v3 wrapper instead of the generated full-mock source.
+   This version patches the base-shard wrapper so its generated full source is instrumented
+   immediately before execution. No runtime/production mutation. */
+const fs=require('fs'),crypto=require('crypto'),cp=require('child_process'),path=require('path');
+const SRC='research/rc463_roster_championship_v3_neartie_scale_2026.js';
+const EXPECT='47bbe51f07510fba762d24ca75cc52844f6c7b81';
+function gitBlob(s){const b=Buffer.from(s);return crypto.createHash('sha1').update(Buffer.from(`blob ${b.length}\0`)).update(b).digest('hex')}
+const src0=fs.readFileSync(SRC,'utf8');if(gitBlob(src0)!==EXPECT)throw Error('V3_SOURCE_DRIFT '+gitBlob(src0));
+const beforeWrite="const shard=String(process.env.PITTI_SHARD??'');const tmp=path.join('/tmp',`pitti_rc463_roster_championship_v3_${shard}.js`);";
+if(src0.split(beforeWrite).length!==2)throw Error('V3_FINAL_WRAPPER_ANCHOR_DRIFT');
+const inject=`const __baseSpawnAnchor="const r=cp.spawnSync(process.execPath,[tmp],{stdio:'inherit',env:process.env});";\nif(s.split(__baseSpawnAnchor).length!==2)throw Error('V3_BASE_SPAWN_ANCHOR_DRIFT');\nconst __baseInstrumentation=\`let __full=fs.readFileSync(tmp,'utf8');\nconst __userAnchor=\"function userPick(api,players,s,pn){const before=s.r.snapshot(),d=coachDecision(api,players,s,pn);H.ok(H.stable(before)===H.stable(s.r.snapshot()),'Coach decision advanced outer RNG '+pn);\";\nif(__full.split(__userAnchor).length!==2)throw Error('STATE_REPLAY_V2_USER_ANCHOR_DRIFT');\nconst __userPatch=\"function userPick(api,players,s,pn){const before=s.r.snapshot(),d=coachDecision(api,players,s,pn);const afterFirst=s.r.snapshot();H.ok(H.stable(before)===H.stable(afterFirst),'Coach decision advanced outer RNG '+pn);const dReplay=coachDecision(api,players,s,pn);H.ok(H.stable(afterFirst)===H.stable(s.r.snapshot()),'Replay Coach decision advanced outer RNG '+pn);const sig=x=>H.stable({chosen:x.chosen?.key,top:x.top,safety:x.safety,medianReturn:x.medianReturn,state:x.state});H.ok(sig(d)===sig(dReplay),'IDENTICAL_STATE_NONDETERMINISM '+pn);\";\n__full=__full.replace(__userAnchor,__userPatch);fs.writeFileSync(tmp,__full);\n\${__baseSpawnAnchor}\`;\ns=s.replace(__baseSpawnAnchor,__baseInstrumentation);\n${beforeWrite}`;
+let src=src0.replace(beforeWrite,inject);
+const shard=Number(process.env.PITTI_SHARD);if(!Number.isInteger(shard)||shard<0||shard>11)throw Error('PITTI_SHARD 0..11 required');
+const wrapped=path.join('/tmp',`pitti_rc463_v3_state_replay_v2_outer_${shard}.js`);fs.writeFileSync(wrapped,src);
+const r=cp.spawnSync(process.execPath,[wrapped],{stdio:'inherit',env:process.env});if(r.error)throw r.error;if((r.status??2)!==0)process.exit(r.status??2);
+const out=`simulation_2026/RC463_ROSTER_CHAMPIONSHIP_V3_NEARTIE_SHARD_${shard}_2026.json`;if(!fs.existsSync(out))throw Error('STATE_REPLAY_V2_OUTPUT_MISSING');const x=JSON.parse(fs.readFileSync(out,'utf8'));if(x.status!=='PASS'||x.drafts?.length!==10)throw Error('STATE_REPLAY_V2_OUTPUT_INVALID');const checks=x.drafts.reduce((n,d)=>n+(d.decisions?.length||0),0);if(checks!==150)throw Error('STATE_REPLAY_V2_CHECK_COUNT '+checks);x.identical_state_replay_v2='PASS';x.identical_state_replay_checks=checks;x.identical_state_replay_contract='same frozen outer state -> identical chosen key + ordered Top-10 + safety + medianReturn + roster state; neither evaluation advances outer RNG';x.production_mutation=false;const dst=`simulation_2026/RC463_V3_STATE_REPLAY_V2_SHARD_${shard}_2026.json`;fs.writeFileSync(dst,JSON.stringify(x));console.log(JSON.stringify({status:'PASS',shard,checks,output:dst},null,2));
