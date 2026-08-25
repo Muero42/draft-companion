@@ -1,4 +1,5 @@
 name: PITTI rc4.63 full-safety pre-safety instrumentation 120
+# exact-policy instrumentation trigger 2026-08-25
 on:
   push:
     branches: [pitti-rc463-pre-safety-instrumentation]
