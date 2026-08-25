@@ -1,0 +1,115 @@
+name: rc464-candidate-gate-package
+on:
+  push:
+    branches:
+      - pitti-rc464-recovery-fixtures
+    paths:
+      - .github/workflows/rc464-candidate-gate-package.yml
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  gate-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Synchronize candidate version
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          for name in ['app.js','index.html','manifest.webmanifest','sw.js','README.md','live-surface-v3.js']:
+              p=Path(name); s=p.read_text()
+              s=re.sub(r'v11\.8\.0-rc4\.\d+', 'v11.8.0-rc4.64', s)
+              if name=='app.js': s=re.sub(r"version:'11\.8\.0-rc4\.\d+'", "version:'11.8.0-rc4.64'", s)
+              p.write_text(s)
+          p=Path('index.html'); s=p.read_text()
+          s=re.sub(r'app\.js\?v=11\.8\.0-rc4\.\d+', 'app.js?v=11.8.0-rc4.64', s)
+          s=re.sub(r'live-surface-v3\.js\?v=11\.8\.0-rc4\.\d+', 'live-surface-v3.js?v=11.8.0-rc4.64', s)
+          s=re.sub(r'live-surface-v3\.css\?v=11\.8\.0-rc4\.\d+', 'live-surface-v3.css?v=11.8.0-rc4.64', s)
+          p.write_text(s)
+          PY
+      - name: Full deterministic regression gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --check app.js
+          node --check sw.js
+          node --check live-surface-v3.js
+          node RC4_64_SAFETY_RESURRECTION_REGRESSION.js
+          node Draft_Companion_Dress_Rehearsal_Regression_2026-08-14.js
+          node Draft_Companion_Position_Path_Regression_2026-08-13.js
+          node Draft_Companion_Player_Quality_Expert_Health_Regression_2026-08-13.js
+          node Draft_Companion_Return_Geometry_Market_Regression_2026-08-13.js
+          node Draft_Companion_Scarcity_Double_Count_Regression_2026-08-13.js
+          node Draft_Companion_Alternative_Scarcity_Regression_2026-08-13.js
+          node Draft_Companion_IR_Stash_And_Fetch_Regression_2026-08-13.js
+          node RC4_41_RESEARCH_CACHE_QUOTA_REGRESSION.js
+          node RC4_42_RANKING_STORAGE_QUOTA_REGRESSION.js
+          node RC4_61_LIVE_SURFACE_REGRESSION.js
+      - name: Semantic parity and stale-version gate
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          import re
+          app=Path('app.js').read_text(); js=Path('live-surface-v3.js').read_text(); css=Path('live-surface-v3.css').read_text(); idx=Path('index.html').read_text()
+          checks={
+            'canonical_state_export':'window.PITTI_LIVE_DECISION_STATE' in app,
+            'same_candidate_source':'visibleCoachCandidates(c.scored)' in app,
+            'decision_first_top10':'source.slice(0,10)' in app,
+            'surface_active_marker':'pitti-decision-surface-active' in js,
+            'legacy_coach_hidden':'.pitti-decision-surface-active #coachSectionCard{display:none!important}' in css,
+            'canonical_heading':'DRAFT-ENTSCHEIDUNG' in js,
+            'top10':'10ER-ÜBERSICHT' in js,
+            'normal_cut_warning':'NORMAL-CUT WARNUNG' in js,
+            'return_is_timing':'Return ist Timing-Kennzahl, nicht allein das Draft-Fazit' in js,
+            'hard_qb_exclusions':'USER_HARD_QB_EXCLUSIONS' in app,
+            'acute_status_guard':'DRAFT_ACUTE_STATUS_2026' in app,
+            'snapshot_fingerprint':'snapshotFingerprint' in app,
+            'return_v2':'simulateReturnV2' in app,
+            'recovery_marker':'const safetyPromotionEligible=x=>' in app,
+          }
+          bad=[k for k,v in checks.items() if not v]
+          for k,v in checks.items(): print(('PASS ' if v else 'FAIL ')+k)
+          for name in ['app.js','index.html','manifest.webmanifest','sw.js','live-surface-v3.js']:
+              s=Path(name).read_text(); ok='v11.8.0-rc4.64' in s
+              print(('PASS ' if ok else 'FAIL ')+name+' rc4.64')
+              if not ok: bad.append(name+' version')
+          for needle in ['app.js?v=11.8.0-rc4.64','live-surface-v3.js?v=11.8.0-rc4.64','live-surface-v3.css?v=11.8.0-rc4.64']:
+              if needle not in idx: bad.append('cache '+needle)
+          stale=re.findall(r'v11\.8\.0-rc4\.(?:6[0-3])', ''.join(Path(n).read_text() for n in ['app.js','index.html','manifest.webmanifest','sw.js','README.md','live-surface-v3.js']))
+          if stale: bad.append('stale versions '+','.join(sorted(set(stale))))
+          if bad: print('FAILURES',bad); raise SystemExit(1)
+          print('PASS semantic/version/cache gate')
+          PY
+      - name: Package and integrity gate
+        shell: bash
+        run: |
+          set -euo pipefail
+          mkdir -p dist
+          ZIP=Draft_Companion_v11.8.0-rc4.64_FULL_TEST.zip
+          rm -f "$ZIP"
+          zip -X -q "$ZIP" README.md _worker.js app.js icon.svg index.html manifest.webmanifest styles.css sw.js live-surface-v3.js live-surface-v3.css
+          unzip -t "$ZIP"
+          test "$(unzip -Z1 "$ZIP" | wc -l)" -eq 10
+          sha256sum "$ZIP" > rc464.sha256
+          cp "$ZIP" dist/
+          cp "$ZIP" dist/PITTI-rc464.zip
+          cp rc464.sha256 dist/
+          printf 'FINAL_STATUS=PASS\nBASELINE=a106b39dcf72fed6e0ac151382bc9ba19316fdb6\nCANDIDATE_SOURCE=4df014a9d63fa4bbff293b27e26685c585f22229\n' > dist/rc464-gate-report.txt
+      - name: Persist candidate package
+        shell: bash
+        run: |
+          git config user.name github-actions-bot
+          git config user.email github-actions-bot@users.noreply.github.com
+          git add app.js index.html manifest.webmanifest sw.js README.md live-surface-v3.js dist/Draft_Companion_v11.8.0-rc4.64_FULL_TEST.zip dist/PITTI-rc464.zip dist/rc464.sha256 dist/rc464-gate-report.txt
+          git commit -m 'rc4.64: persist gated test package'
+          git push
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Draft_Companion_v11.8.0-rc4.64_FULL_TEST
+          path: |
+            Draft_Companion_v11.8.0-rc4.64_FULL_TEST.zip
+            rc464.sha256
