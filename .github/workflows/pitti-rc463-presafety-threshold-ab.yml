@@ -1,0 +1,47 @@
+name: PITTI rc4.63 PreSafety Threshold A-B
+on:
+  push:
+    branches: [pitti-rc463-presafety-threshold-ab]
+    paths:
+      - 'research/rc463_presafety_threshold_arm_shard_2026.js'
+      - '.github/workflows/pitti-rc463-presafety-threshold-ab.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+  actions: read
+jobs:
+  threshold:
+    strategy:
+      fail-fast: false
+      matrix:
+        threshold: [-15, 0]
+        shard: [0,1,2,3,4,5,6,7,8,9,10,11]
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+      - name: Download exact previously parity-validated Sleeper metadata snapshot
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/pitti-meta
+          gh api repos/${{ github.repository }}/actions/artifacts/9569895117/zip > /tmp/pitti-meta/meta.zip
+          unzip -q /tmp/pitti-meta/meta.zip -d /tmp/pitti-meta/unpacked
+          META=$(find /tmp/pitti-meta/unpacked -type f -name '*.json' | head -1)
+          test -n "$META"
+          cp "$META" /tmp/pitti-meta/players.json
+          sha256sum /tmp/pitti-meta/players.json
+      - name: Syntax check treatment harness
+        run: node --check research/rc463_presafety_threshold_arm_shard_2026.js
+      - name: Run threshold arm
+        env:
+          PITTI_SHARD: ${{ matrix.shard }}
+          PITTI_SAFETY_GAP_THRESHOLD: ${{ matrix.threshold }}
+          PITTI_META_SNAPSHOT: /tmp/pitti-meta/players.json
+        run: node research/rc463_presafety_threshold_arm_shard_2026.js
+      - name: Upload shard
+        uses: actions/upload-artifact@v4
+        with:
+          name: rc463-presafety-threshold-${{ matrix.threshold }}-${{ matrix.shard }}
+          path: simulation_2026/RC463_PRESAFETY_THRESHOLD_*_SHARD_${{ matrix.shard }}_2026.json
+          retention-days: 14
