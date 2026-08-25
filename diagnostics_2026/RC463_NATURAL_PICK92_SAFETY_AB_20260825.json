@@ -1,0 +1,153 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "research_only": true,
+  "production_mutation": false,
+  "fixture": {
+    "draft_id": "1397557585325891584",
+    "pick": 92,
+    "modelVersion": "v11.8.0-rc4.63",
+    "picks": 91
+  },
+  "user_counts": {
+    "QB": 1,
+    "RB": 2,
+    "WR": 5,
+    "TE": 1
+  },
+  "median_return": 0.43444444444444447,
+  "natural_pre_safety_leader": {
+    "name": "Blake Corum",
+    "pos": "RB",
+    "panel": 89.66666666666667,
+    "adp": 93.5,
+    "raw": 102.167509,
+    "score": 100,
+    "valueSafety": {
+      "triggered": false,
+      "bestPanelRank": 83.15384615384616,
+      "threshold": 11,
+      "naturalLeaderRank": 89.66666666666667
+    }
+  },
+  "production_full_safety": {
+    "gate": {
+      "triggered": true,
+      "bestPanelRank": 76.25373134328358,
+      "threshold": 11,
+      "qualityBandMax": 81.25373134328358,
+      "naturalLeaderRank": 89.66666666666667,
+      "safetyLeaderRank": 76.25373134328358,
+      "promoted": true,
+      "overrideValid": false
+    },
+    "leader": {
+      "name": "Trevor Lawrence",
+      "pos": "QB",
+      "panel": 76.25373134328358,
+      "adp": 97.7,
+      "raw": 102.417509,
+      "score": 100,
+      "valueSafety": {
+        "triggered": true,
+        "bestPanelRank": 76.25373134328358,
+        "threshold": 11,
+        "qualityBandMax": 81.25373134328358,
+        "naturalLeaderRank": 89.66666666666667,
+        "safetyLeaderRank": 76.25373134328358,
+        "promoted": true,
+        "overrideValid": false
+      }
+    },
+    "trevor": {
+      "name": "Trevor Lawrence",
+      "pos": "QB",
+      "panel": 76.25373134328358,
+      "adp": 97.7,
+      "raw": 102.417509,
+      "score": 100,
+      "valueSafety": {
+        "triggered": true,
+        "bestPanelRank": 76.25373134328358,
+        "threshold": 11,
+        "qualityBandMax": 81.25373134328358,
+        "naturalLeaderRank": 89.66666666666667,
+        "safetyLeaderRank": 76.25373134328358,
+        "promoted": true,
+        "overrideValid": false
+      }
+    },
+    "corum": {
+      "name": "Blake Corum",
+      "pos": "RB",
+      "panel": 89.66666666666667,
+      "adp": 93.5,
+      "raw": 102.167509,
+      "score": 99,
+      "valueSafety": {
+        "triggered": true,
+        "bestPanelRank": 76.25373134328358,
+        "threshold": 11,
+        "qualityBandMax": 81.25373134328358,
+        "naturalLeaderRank": 89.66666666666667,
+        "safetyLeaderRank": 76.25373134328358,
+        "promoted": false,
+        "overrideValid": false
+      }
+    }
+  },
+  "minimal_repeat_qbte_safety_guard": {
+    "gate": {
+      "triggered": false,
+      "bestPanelRank": 83.15384615384616,
+      "threshold": 11,
+      "naturalLeaderRank": 89.66666666666667
+    },
+    "leader": {
+      "name": "Blake Corum",
+      "pos": "RB",
+      "panel": 89.66666666666667,
+      "adp": 93.5,
+      "raw": 102.167509,
+      "score": 100,
+      "valueSafety": {
+        "triggered": false,
+        "bestPanelRank": 83.15384615384616,
+        "threshold": 11,
+        "naturalLeaderRank": 89.66666666666667
+      }
+    },
+    "trevor": {
+      "name": "Trevor Lawrence",
+      "pos": "QB",
+      "panel": 76.25373134328358,
+      "adp": 97.7,
+      "raw": 47.73946,
+      "score": 0,
+      "valueSafety": null
+    },
+    "corum": {
+      "name": "Blake Corum",
+      "pos": "RB",
+      "panel": 89.66666666666667,
+      "adp": 93.5,
+      "raw": 102.167509,
+      "score": 100,
+      "valueSafety": {
+        "triggered": false,
+        "bestPanelRank": 83.15384615384616,
+        "threshold": 11,
+        "naturalLeaderRank": 89.66666666666667
+      }
+    }
+  },
+  "checks": {
+    "same_recomputed_pre_safety_rows": true,
+    "full_safety_reproduces_trevor_qb2_leader": true,
+    "trevor_is_safety_promoted": true,
+    "minimal_guard_restores_corum_raw_leader": true,
+    "no_hard_qb2_ban": true
+  },
+  "interpretation": "Exact frozen natural pick92 causal A/B isolates PlayerQualitySafety safety-only resurrection as the mechanism: production full safety promotes Trevor Lawrence QB2 above natural raw leader Blake Corum; the minimal repeat-QB/TE safety guard restores Corum without removing QB2 from the normal board.",
+  "promotion_authorized": false
+}
