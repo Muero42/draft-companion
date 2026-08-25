@@ -1,0 +1,405 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "research_only": true,
+  "production_mutation": false,
+  "fixture": {
+    "draft_id": "1397557585325891584",
+    "pick": 92,
+    "modelVersion": "v11.8.0-rc4.63",
+    "fingerprint": "1397557585325891584|9|91|84:6806:4|85:12506:5|86:13281:6|87:12534:7|88:10236:8|89:6797:9|90:4217:10|91:3294:10",
+    "picks": 91
+  },
+  "user_counts": {
+    "QB": 1,
+    "RB": 2,
+    "WR": 5,
+    "TE": 1,
+    "K": 0,
+    "DEF": 0
+  },
+  "resolution": {
+    "all_91_accounted": true,
+    "placeholders": [
+      {
+        "pick": 84,
+        "sleeper_id": "6806",
+        "fixture_name": "J.K. Dobbins",
+        "resolved_name": "J.K. Dobbins",
+        "key": "__frozen_6806",
+        "placeholder": true
+      }
+    ],
+    "last_12": [
+      {
+        "pick": 80,
+        "sleeper_id": "11560",
+        "fixture_name": "Caleb Williams",
+        "resolved_name": "Caleb Williams",
+        "key": "calebwilliams",
+        "placeholder": false
+      },
+      {
+        "pick": 81,
+        "sleeper_id": "7611",
+        "fixture_name": "Rhamondre Stevenson",
+        "resolved_name": "Rhamondre Stevenson",
+        "key": "rhamondrestevenson",
+        "placeholder": false
+      },
+      {
+        "pick": 82,
+        "sleeper_id": "13294",
+        "fixture_name": "Makai Lemon",
+        "resolved_name": "Makai Lemon",
+        "key": "makailemon",
+        "placeholder": false
+      },
+      {
+        "pick": 83,
+        "sleeper_id": "11583",
+        "fixture_name": "Jonathon Brooks",
+        "resolved_name": "Jonathon Brooks",
+        "key": "jonathonbrooks",
+        "placeholder": false
+      },
+      {
+        "pick": 84,
+        "sleeper_id": "6806",
+        "fixture_name": "J.K. Dobbins",
+        "resolved_name": "J.K. Dobbins",
+        "key": "__frozen_6806",
+        "placeholder": true
+      },
+      {
+        "pick": 85,
+        "sleeper_id": "12506",
+        "fixture_name": "Harold Fannin",
+        "resolved_name": "Harold Fannin Jr.",
+        "key": "haroldfannin",
+        "placeholder": false
+      },
+      {
+        "pick": 86,
+        "sleeper_id": "13281",
+        "fixture_name": "Jordyn Tyson",
+        "resolved_name": "Jordyn Tyson",
+        "key": "jordyntyson",
+        "placeholder": false
+      },
+      {
+        "pick": 87,
+        "sleeper_id": "12534",
+        "fixture_name": "Kyle Monangai",
+        "resolved_name": "Kyle Monangai",
+        "key": "kylemonangai",
+        "placeholder": false
+      },
+      {
+        "pick": 88,
+        "sleeper_id": "10236",
+        "fixture_name": "Dalton Kincaid",
+        "resolved_name": "Dalton Kincaid",
+        "key": "daltonkincaid",
+        "placeholder": false
+      },
+      {
+        "pick": 89,
+        "sleeper_id": "6797",
+        "fixture_name": "Justin Herbert",
+        "resolved_name": "Justin Herbert",
+        "key": "justinherbert",
+        "placeholder": false
+      },
+      {
+        "pick": 90,
+        "sleeper_id": "4217",
+        "fixture_name": "George Kittle",
+        "resolved_name": "George Kittle",
+        "key": "georgekittle",
+        "placeholder": false
+      },
+      {
+        "pick": 91,
+        "sleeper_id": "3294",
+        "fixture_name": "Dak Prescott",
+        "resolved_name": "Dak Prescott",
+        "key": "dakprescott",
+        "placeholder": false
+      }
+    ]
+  },
+  "serialized_fixture_top": [
+    {
+      "name": "Trevor Lawrence",
+      "pos": "QB",
+      "coachScore": 100,
+      "returnProb": 0.3711111111111111
+    },
+    {
+      "name": "Blake Corum",
+      "pos": "RB",
+      "coachScore": 99,
+      "returnProb": 0.04777777777777778
+    },
+    {
+      "name": "Jacory Croskey-Merritt",
+      "pos": "RB",
+      "coachScore": 74,
+      "returnProb": 0.18888888888888888
+    },
+    {
+      "name": "Stefon Diggs",
+      "pos": "WR",
+      "coachScore": 66,
+      "returnProb": 0.7355555555555555
+    },
+    {
+      "name": "Josh Downs",
+      "pos": "WR",
+      "coachScore": 62,
+      "returnProb": 0.39444444444444443
+    }
+  ],
+  "recomputed": {
+    "leader": {
+      "name": "Blake Corum",
+      "pos": "RB",
+      "panel": 89.66666666666667,
+      "adp": 93.5,
+      "raw": 102.167509,
+      "normalized_score": 100,
+      "priority": 100,
+      "ret": 0.062222,
+      "hurdle_applied": false,
+      "exceptional": false,
+      "hardExcluded": false,
+      "recommendationBlocked": false
+    },
+    "trevor_lawrence": {
+      "name": "Trevor Lawrence",
+      "pos": "QB",
+      "panel": 76.25373134328358,
+      "adp": 97.7,
+      "raw": 47.73946,
+      "normalized_score": 0,
+      "priority": 0,
+      "ret": 0.434444,
+      "hurdle_applied": true,
+      "exceptional": false,
+      "hardExcluded": false,
+      "recommendationBlocked": false
+    },
+    "blake_corum": {
+      "name": "Blake Corum",
+      "pos": "RB",
+      "panel": 89.66666666666667,
+      "adp": 93.5,
+      "raw": 102.167509,
+      "normalized_score": 100,
+      "priority": 100,
+      "ret": 0.062222,
+      "hurdle_applied": false,
+      "exceptional": false,
+      "hardExcluded": false,
+      "recommendationBlocked": false
+    },
+    "best_legal_rbwr": {
+      "name": "Blake Corum",
+      "pos": "RB",
+      "panel": 89.66666666666667,
+      "adp": 93.5,
+      "raw": 102.167509,
+      "normalized_score": 100,
+      "priority": 100,
+      "ret": 0.062222,
+      "hurdle_applied": false,
+      "exceptional": false,
+      "hardExcluded": false,
+      "recommendationBlocked": false
+    },
+    "median_return": 0.43444444444444447,
+    "top": [
+      {
+        "name": "Blake Corum",
+        "pos": "RB",
+        "panel": 89.66666666666667,
+        "adp": 93.5,
+        "raw": 102.167509,
+        "normalized_score": 100,
+        "priority": 100,
+        "ret": 0.062222,
+        "hurdle_applied": false,
+        "exceptional": false,
+        "hardExcluded": false,
+        "recommendationBlocked": false
+      },
+      {
+        "name": "Jacory Croskey-Merritt",
+        "pos": "RB",
+        "panel": 92.55555555555556,
+        "adp": 99.5,
+        "raw": 89.30262,
+        "normalized_score": 72,
+        "priority": 72,
+        "ret": 0.278889,
+        "hurdle_applied": false,
+        "exceptional": false,
+        "hardExcluded": false,
+        "recommendationBlocked": false
+      },
+      {
+        "name": "Stefon Diggs",
+        "pos": "WR",
+        "panel": 83.15384615384616,
+        "adp": 116.3,
+        "raw": 86.65794,
+        "normalized_score": 67,
+        "priority": 67,
+        "ret": 0.755556,
+        "hurdle_applied": false,
+        "exceptional": false,
+        "hardExcluded": false,
+        "recommendationBlocked": false
+      },
+      {
+        "name": "Jordan Addison",
+        "pos": "WR",
+        "panel": 94.75,
+        "adp": 101.1,
+        "raw": 83.258354,
+        "normalized_score": 59,
+        "priority": 59,
+        "ret": 0.217778,
+        "hurdle_applied": false,
+        "exceptional": false,
+        "hardExcluded": false,
+        "recommendationBlocked": false
+      },
+      {
+        "name": "Chris Godwin Jr.",
+        "pos": "WR",
+        "panel": 95.35,
+        "adp": 95.3,
+        "raw": 82.989376,
+        "normalized_score": 59,
+        "priority": 59,
+        "ret": 0.058889,
+        "hurdle_applied": false,
+        "exceptional": false,
+        "hardExcluded": false,
+        "recommendationBlocked": false
+      },
+      {
+        "name": "Alec Pierce",
+        "pos": "WR",
+        "panel": 97.2,
+        "adp": 92.8,
+        "raw": 82.030487,
+        "normalized_score": 57,
+        "priority": 57,
+        "ret": 0.024444,
+        "hurdle_applied": false,
+        "exceptional": false,
+        "hardExcluded": false,
+        "recommendationBlocked": false
+      },
+      {
+        "name": "Michael Pittman Jr.",
+        "pos": "WR",
+        "panel": 93.85,
+        "adp": 100,
+        "raw": 81.699065,
+        "normalized_score": 56,
+        "priority": 56,
+        "ret": 0.193333,
+        "hurdle_applied": false,
+        "exceptional": false,
+        "hardExcluded": false,
+        "recommendationBlocked": false
+      },
+      {
+        "name": "Josh Downs",
+        "pos": "WR",
+        "panel": 89.3,
+        "adp": 110.3,
+        "raw": 81.661598,
+        "normalized_score": 56,
+        "priority": 56,
+        "ret": 0.58,
+        "hurdle_applied": false,
+        "exceptional": false,
+        "hardExcluded": false,
+        "recommendationBlocked": false
+      },
+      {
+        "name": "Jordan Mason",
+        "pos": "RB",
+        "panel": 104.22222222222223,
+        "adp": 104.2,
+        "raw": 77.707865,
+        "normalized_score": 47,
+        "priority": 47,
+        "ret": 0.484444,
+        "hurdle_applied": false,
+        "exceptional": false,
+        "hardExcluded": false,
+        "recommendationBlocked": false
+      },
+      {
+        "name": "Kenny Gainwell",
+        "pos": "RB",
+        "panel": 103.5,
+        "adp": 108.5,
+        "raw": 74.645287,
+        "normalized_score": 41,
+        "priority": 41,
+        "ret": 0.684444,
+        "hurdle_applied": false,
+        "exceptional": false,
+        "hardExcluded": false,
+        "recommendationBlocked": false
+      },
+      {
+        "name": "Quentin Johnston",
+        "pos": "WR",
+        "panel": 101.9,
+        "adp": 102.5,
+        "raw": 71.42462,
+        "normalized_score": 34,
+        "priority": 34,
+        "ret": 0.311111,
+        "hurdle_applied": false,
+        "exceptional": false,
+        "hardExcluded": false,
+        "recommendationBlocked": false
+      },
+      {
+        "name": "Aaron Jones Sr.",
+        "pos": "RB",
+        "panel": 113,
+        "adp": 107.7,
+        "raw": 69.493875,
+        "normalized_score": 30,
+        "priority": 30,
+        "ret": 0.419458,
+        "hurdle_applied": false,
+        "exceptional": false,
+        "hardExcluded": false,
+        "recommendationBlocked": false
+      }
+    ]
+  },
+  "checks": {
+    "exact_frozen_pick_prefix": true,
+    "all_frozen_picks_accounted": true,
+    "rawScore_recomputed_not_serialized": true,
+    "ordinary_qb2": true,
+    "qb2_hurdle_activated": true,
+    "qb2_below_best_skill": true,
+    "skill_player_leads": true
+  },
+  "interpretation": "Executable frozen natural pick92 state confirms the v5 repeat-QB marginal hurdle activates on ordinary QB2 and preserves a skill-position leader. Players absent from the current research candidate pool are retained as already-drafted metadata placeholders only; they cannot re-enter availability. Serialized coachScore was diagnostic only; rawScore was recomputed.",
+  "policy_promotion_authorized": false,
+  "next_gate": "freeze-risk review + broader natural-state/exceptional-slide regression before any production mutation"
+}
