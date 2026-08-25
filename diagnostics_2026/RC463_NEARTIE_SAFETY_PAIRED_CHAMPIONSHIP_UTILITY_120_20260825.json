@@ -1,0 +1,3020 @@
+{
+  "schema": 2,
+  "status": "PASS",
+  "research_only": true,
+  "production_mutation": false,
+  "comparison": "near-tie safety-resurrection policy minus production-like full PlayerQualitySafety candidate board",
+  "seeds": 120,
+  "seed_family": "459820001..459820120",
+  "changed_rosters": 119,
+  "full_safety_mean_position_counts": {
+    "QB": 3.216666666666667,
+    "RB": 3.375,
+    "WR": 6.841666666666667,
+    "TE": 1.5666666666666667,
+    "K": 0.0,
+    "DEF": 0.0
+  },
+  "guard_mean_position_counts": {
+    "QB": 1.0,
+    "RB": 5.808333333333334,
+    "WR": 7.191666666666666,
+    "TE": 1.0,
+    "K": 0.0,
+    "DEF": 0.0
+  },
+  "roster_reality": {
+    "full_safety": {
+      "qb3plus_rate": 0.7916666666666666,
+      "te3plus_rate": 0.058333333333333334,
+      "user_policy_invalid_rate": 0.008333333333333333,
+      "position_count_histograms": {
+        "QB": {
+          "1": 2,
+          "2": 23,
+          "3": 52,
+          "4": 33,
+          "5": 10
+        },
+        "RB": {
+          "0": 1,
+          "1": 4,
+          "2": 27,
+          "3": 34,
+          "4": 29,
+          "5": 21,
+          "6": 4
+        },
+        "TE": {
+          "1": 59,
+          "2": 54,
+          "3": 7
+        },
+        "WR": {
+          "4": 4,
+          "5": 12,
+          "6": 32,
+          "7": 34,
+          "8": 27,
+          "9": 11
+        }
+      }
+    },
+    "guard": {
+      "qb3plus_rate": 0.0,
+      "te3plus_rate": 0.0,
+      "user_policy_invalid_rate": 0.0,
+      "position_count_histograms": {
+        "QB": {
+          "1": 120
+        },
+        "RB": {
+          "4": 8,
+          "5": 38,
+          "6": 44,
+          "7": 29,
+          "8": 1
+        },
+        "TE": {
+          "1": 120
+        },
+        "WR": {
+          "5": 1,
+          "6": 29,
+          "7": 44,
+          "8": 38,
+          "9": 8
+        }
+      }
+    }
+  },
+  "pick_l1_guard_vs_full_safety": {
+    "9": 0.0,
+    "12": 0.0,
+    "29": 0.0,
+    "32": 0.0,
+    "49": 0.15833333333333333,
+    "52": 0.08333333333333333,
+    "69": 0.041666666666666664,
+    "72": 0.06666666666666667,
+    "89": 0.08333333333333333,
+    "92": 0.2916666666666667,
+    "109": 0.125,
+    "112": 0.38333333333333336,
+    "129": 0.725,
+    "132": 0.6916666666666667,
+    "149": 0.8166666666666667
+  },
+  "mean_delta_expected_wins_14w": -0.1311868686868687,
+  "median_delta": -0.14015151515151536,
+  "downside_tail_delta": {
+    "p01": -0.6414393939393943,
+    "p05": -0.4265151515151511,
+    "p10": -0.3265151515151514,
+    "p25": -0.25757575757575746
+  },
+  "upside_tail_delta": {
+    "p75": -0.03787878787878807,
+    "p90": 0.041666666666666755,
+    "p95": 0.13749999999999984,
+    "p99": 0.7034090909090925
+  },
+  "sd_delta": 0.23120063704506685,
+  "mean_delta_ci95_normal_diagnostic": [
+    -0.17255391139845694,
+    -0.08981982597528047
+  ],
+  "guard_better": 15,
+  "same": 4,
+  "guard_worse": 101,
+  "min_delta": -0.6666666666666665,
+  "max_delta": 1.3863636363636365,
+  "full_safety_mean_expected_wins_14w": 2.3988636363636364,
+  "guard_mean_expected_wins_14w": 2.2676767676767677,
+  "selected_panel_used_in_outcome_fit": false,
+  "replacement_policy": "Missing QB/RB/WR/TE starter slots use the same precomputed replacement-level weekly series; pathological full-safety roster composition is measured, not rejected by harness.",
+  "promotion_authorized": false,
+  "interpretation": "Direct paired gate for repeat-QB/TE safety-only resurrection when natural leader, existing elite slide, or within 1.0 rawScore of best legal RB/WR. No late-WR patch bundled. Research only.",
+  "rows": [
+    {
+      "seed": 459820001,
+      "full_safety_expected_wins_14w": 2.227272727272727,
+      "guard_expected_wins_14w": 2.0,
+      "delta_guard_minus_full_safety": -0.22727272727272707,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 2,
+        "WR": 7,
+        "TE": 3,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820002,
+      "full_safety_expected_wins_14w": 2.772727272727273,
+      "guard_expected_wins_14w": 2.6893939393939394,
+      "delta_guard_minus_full_safety": -0.08333333333333348,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 3,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820003,
+      "full_safety_expected_wins_14w": 2.257575757575758,
+      "guard_expected_wins_14w": 2.128787878787879,
+      "delta_guard_minus_full_safety": -0.1287878787878789,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 5,
+        "WR": 5,
+        "TE": 3,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820004,
+      "full_safety_expected_wins_14w": 2.5454545454545454,
+      "guard_expected_wins_14w": 2.2196969696969697,
+      "delta_guard_minus_full_safety": -0.3257575757575757,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 3,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820005,
+      "full_safety_expected_wins_14w": 2.356060606060606,
+      "guard_expected_wins_14w": 2.3106060606060606,
+      "delta_guard_minus_full_safety": -0.045454545454545414,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 5,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820006,
+      "full_safety_expected_wins_14w": 2.3181818181818183,
+      "guard_expected_wins_14w": 2.1818181818181817,
+      "delta_guard_minus_full_safety": -0.1363636363636367,
+      "full_safety_position_counts": {
+        "QB": 5,
+        "RB": 4,
+        "WR": 5,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820007,
+      "full_safety_expected_wins_14w": 2.893939393939394,
+      "guard_expected_wins_14w": 2.787878787878788,
+      "delta_guard_minus_full_safety": -0.10606060606060597,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 3,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820008,
+      "full_safety_expected_wins_14w": 2.621212121212121,
+      "guard_expected_wins_14w": 2.1515151515151514,
+      "delta_guard_minus_full_safety": -0.4696969696969697,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 5,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820009,
+      "full_safety_expected_wins_14w": 2.4924242424242427,
+      "guard_expected_wins_14w": 2.5757575757575757,
+      "delta_guard_minus_full_safety": 0.08333333333333304,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 2,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820010,
+      "full_safety_expected_wins_14w": 2.2803030303030303,
+      "guard_expected_wins_14w": 2.022727272727273,
+      "delta_guard_minus_full_safety": -0.25757575757575735,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 1,
+        "WR": 9,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 4,
+        "WR": 9,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820011,
+      "full_safety_expected_wins_14w": 2.1666666666666665,
+      "guard_expected_wins_14w": 2.3484848484848486,
+      "delta_guard_minus_full_safety": 0.1818181818181821,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 2,
+        "WR": 9,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820012,
+      "full_safety_expected_wins_14w": 2.378787878787879,
+      "guard_expected_wins_14w": 2.234848484848485,
+      "delta_guard_minus_full_safety": -0.14393939393939403,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 3,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820013,
+      "full_safety_expected_wins_14w": 2.371212121212121,
+      "guard_expected_wins_14w": 2.1742424242424243,
+      "delta_guard_minus_full_safety": -0.1969696969696968,
+      "full_safety_position_counts": {
+        "QB": 5,
+        "RB": 2,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820014,
+      "full_safety_expected_wins_14w": 1.9166666666666667,
+      "guard_expected_wins_14w": 1.9166666666666667,
+      "delta_guard_minus_full_safety": 0.0,
+      "full_safety_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 7,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820015,
+      "full_safety_expected_wins_14w": 2.3181818181818183,
+      "guard_expected_wins_14w": 2.196969696969697,
+      "delta_guard_minus_full_safety": -0.12121212121212155,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 3,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820016,
+      "full_safety_expected_wins_14w": 2.143939393939394,
+      "guard_expected_wins_14w": 1.962121212121212,
+      "delta_guard_minus_full_safety": -0.1818181818181821,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 2,
+        "WR": 8,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820017,
+      "full_safety_expected_wins_14w": 2.4393939393939394,
+      "guard_expected_wins_14w": 2.4166666666666665,
+      "delta_guard_minus_full_safety": -0.02272727272727293,
+      "full_safety_position_counts": {
+        "QB": 5,
+        "RB": 2,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820018,
+      "full_safety_expected_wins_14w": 2.4242424242424243,
+      "guard_expected_wins_14w": 2.25,
+      "delta_guard_minus_full_safety": -0.1742424242424243,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 4,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820019,
+      "full_safety_expected_wins_14w": 2.5303030303030303,
+      "guard_expected_wins_14w": 2.606060606060606,
+      "delta_guard_minus_full_safety": 0.07575757575757569,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 2,
+        "WR": 7,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820020,
+      "full_safety_expected_wins_14w": 2.4545454545454546,
+      "guard_expected_wins_14w": 2.3106060606060606,
+      "delta_guard_minus_full_safety": -0.14393939393939403,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 5,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820021,
+      "full_safety_expected_wins_14w": 2.0984848484848486,
+      "guard_expected_wins_14w": 1.8409090909090908,
+      "delta_guard_minus_full_safety": -0.2575757575757578,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820022,
+      "full_safety_expected_wins_14w": 2.4393939393939394,
+      "guard_expected_wins_14w": 2.4393939393939394,
+      "delta_guard_minus_full_safety": 0.0,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 3,
+        "WR": 8,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820023,
+      "full_safety_expected_wins_14w": 2.643939393939394,
+      "guard_expected_wins_14w": 2.0833333333333335,
+      "delta_guard_minus_full_safety": -0.5606060606060606,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 3,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 4,
+        "WR": 9,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820024,
+      "full_safety_expected_wins_14w": 2.234848484848485,
+      "guard_expected_wins_14w": 2.0303030303030303,
+      "delta_guard_minus_full_safety": -0.20454545454545459,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 2,
+        "WR": 9,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 4,
+        "WR": 9,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820025,
+      "full_safety_expected_wins_14w": 2.0984848484848486,
+      "guard_expected_wins_14w": 2.037878787878788,
+      "delta_guard_minus_full_safety": -0.06060606060606055,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 5,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820026,
+      "full_safety_expected_wins_14w": 2.409090909090909,
+      "guard_expected_wins_14w": 2.143939393939394,
+      "delta_guard_minus_full_safety": -0.26515151515151514,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 5,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820027,
+      "full_safety_expected_wins_14w": 2.5,
+      "guard_expected_wins_14w": 2.621212121212121,
+      "delta_guard_minus_full_safety": 0.1212121212121211,
+      "full_safety_position_counts": {
+        "QB": 5,
+        "RB": 2,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820028,
+      "full_safety_expected_wins_14w": 2.409090909090909,
+      "guard_expected_wins_14w": 2.340909090909091,
+      "delta_guard_minus_full_safety": -0.06818181818181834,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820029,
+      "full_safety_expected_wins_14w": 2.1742424242424243,
+      "guard_expected_wins_14w": 1.9696969696969697,
+      "delta_guard_minus_full_safety": -0.20454545454545459,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 4,
+        "WR": 7,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820030,
+      "full_safety_expected_wins_14w": 2.787878787878788,
+      "guard_expected_wins_14w": 2.765151515151515,
+      "delta_guard_minus_full_safety": -0.02272727272727293,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820031,
+      "full_safety_expected_wins_14w": 2.3106060606060606,
+      "guard_expected_wins_14w": 2.0984848484848486,
+      "delta_guard_minus_full_safety": -0.21212121212121193,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 5,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820032,
+      "full_safety_expected_wins_14w": 2.4772727272727275,
+      "guard_expected_wins_14w": 2.4318181818181817,
+      "delta_guard_minus_full_safety": -0.04545454545454586,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 3,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820033,
+      "full_safety_expected_wins_14w": 2.590909090909091,
+      "guard_expected_wins_14w": 2.462121212121212,
+      "delta_guard_minus_full_safety": -0.1287878787878789,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 5,
+        "WR": 5,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820034,
+      "full_safety_expected_wins_14w": 2.212121212121212,
+      "guard_expected_wins_14w": 1.9393939393939394,
+      "delta_guard_minus_full_safety": -0.2727272727272725,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820035,
+      "full_safety_expected_wins_14w": 2.492424242424242,
+      "guard_expected_wins_14w": 2.0681818181818183,
+      "delta_guard_minus_full_safety": -0.42424242424242387,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 3,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820036,
+      "full_safety_expected_wins_14w": 1.878787878787879,
+      "guard_expected_wins_14w": 1.878787878787879,
+      "delta_guard_minus_full_safety": 0.0,
+      "full_safety_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820037,
+      "full_safety_expected_wins_14w": 2.371212121212121,
+      "guard_expected_wins_14w": 2.106060606060606,
+      "delta_guard_minus_full_safety": -0.26515151515151514,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820038,
+      "full_safety_expected_wins_14w": 2.257575757575758,
+      "guard_expected_wins_14w": 2.0,
+      "delta_guard_minus_full_safety": -0.2575757575757578,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 4,
+        "WR": 7,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820039,
+      "full_safety_expected_wins_14w": 2.787878787878788,
+      "guard_expected_wins_14w": 2.734848484848485,
+      "delta_guard_minus_full_safety": -0.053030303030303205,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 2,
+        "WR": 9,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820040,
+      "full_safety_expected_wins_14w": 2.8106060606060606,
+      "guard_expected_wins_14w": 2.7727272727272725,
+      "delta_guard_minus_full_safety": -0.03787878787878807,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820041,
+      "full_safety_expected_wins_14w": 2.159090909090909,
+      "guard_expected_wins_14w": 2.121212121212121,
+      "delta_guard_minus_full_safety": -0.03787878787878807,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 3,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 4,
+        "WR": 9,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820042,
+      "full_safety_expected_wins_14w": 2.393939393939394,
+      "guard_expected_wins_14w": 2.121212121212121,
+      "delta_guard_minus_full_safety": -0.27272727272727293,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 3,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820043,
+      "full_safety_expected_wins_14w": 2.4545454545454546,
+      "guard_expected_wins_14w": 2.25,
+      "delta_guard_minus_full_safety": -0.20454545454545459,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 5,
+        "WR": 5,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820044,
+      "full_safety_expected_wins_14w": 2.8636363636363638,
+      "guard_expected_wins_14w": 2.621212121212121,
+      "delta_guard_minus_full_safety": -0.24242424242424265,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820045,
+      "full_safety_expected_wins_14w": 2.5606060606060606,
+      "guard_expected_wins_14w": 2.507575757575758,
+      "delta_guard_minus_full_safety": -0.05303030303030276,
+      "full_safety_position_counts": {
+        "QB": 5,
+        "RB": 4,
+        "WR": 5,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820046,
+      "full_safety_expected_wins_14w": 2.727272727272727,
+      "guard_expected_wins_14w": 2.7196969696969697,
+      "delta_guard_minus_full_safety": -0.007575757575757347,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 5,
+        "WR": 5,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820047,
+      "full_safety_expected_wins_14w": 2.3636363636363638,
+      "guard_expected_wins_14w": 2.083333333333333,
+      "delta_guard_minus_full_safety": -0.2803030303030307,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 2,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820048,
+      "full_safety_expected_wins_14w": 2.4924242424242427,
+      "guard_expected_wins_14w": 2.4545454545454546,
+      "delta_guard_minus_full_safety": -0.03787878787878807,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 4,
+        "WR": 5,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820049,
+      "full_safety_expected_wins_14w": 2.371212121212121,
+      "guard_expected_wins_14w": 2.1742424242424243,
+      "delta_guard_minus_full_safety": -0.1969696969696968,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 5,
+        "WR": 4,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 8,
+        "WR": 5,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820050,
+      "full_safety_expected_wins_14w": 1.7424242424242424,
+      "guard_expected_wins_14w": 2.5681818181818183,
+      "delta_guard_minus_full_safety": 0.8257575757575759,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 1,
+        "WR": 9,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820051,
+      "full_safety_expected_wins_14w": 2.4545454545454546,
+      "guard_expected_wins_14w": 2.2803030303030303,
+      "delta_guard_minus_full_safety": -0.1742424242424243,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 4,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820052,
+      "full_safety_expected_wins_14w": 2.4242424242424243,
+      "guard_expected_wins_14w": 2.2878787878787876,
+      "delta_guard_minus_full_safety": -0.1363636363636367,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 4,
+        "WR": 7,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820053,
+      "full_safety_expected_wins_14w": 2.227272727272727,
+      "guard_expected_wins_14w": 2.0606060606060606,
+      "delta_guard_minus_full_safety": -0.16666666666666652,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820054,
+      "full_safety_expected_wins_14w": 2.3333333333333335,
+      "guard_expected_wins_14w": 2.0,
+      "delta_guard_minus_full_safety": -0.3333333333333335,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820055,
+      "full_safety_expected_wins_14w": 2.6818181818181817,
+      "guard_expected_wins_14w": 2.3257575757575757,
+      "delta_guard_minus_full_safety": -0.35606060606060597,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820056,
+      "full_safety_expected_wins_14w": 2.0303030303030303,
+      "guard_expected_wins_14w": 1.9318181818181819,
+      "delta_guard_minus_full_safety": -0.0984848484848484,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 5,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820057,
+      "full_safety_expected_wins_14w": 2.393939393939394,
+      "guard_expected_wins_14w": 2.5757575757575757,
+      "delta_guard_minus_full_safety": 0.18181818181818166,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 2,
+        "WR": 7,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820058,
+      "full_safety_expected_wins_14w": 2.0757575757575757,
+      "guard_expected_wins_14w": 2.212121212121212,
+      "delta_guard_minus_full_safety": 0.13636363636363624,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 3,
+        "WR": 8,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820059,
+      "full_safety_expected_wins_14w": 2.2045454545454546,
+      "guard_expected_wins_14w": 1.9015151515151516,
+      "delta_guard_minus_full_safety": -0.303030303030303,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 3,
+        "WR": 7,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820060,
+      "full_safety_expected_wins_14w": 2.507575757575758,
+      "guard_expected_wins_14w": 2.5454545454545454,
+      "delta_guard_minus_full_safety": 0.03787878787878762,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 3,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820061,
+      "full_safety_expected_wins_14w": 2.6742424242424243,
+      "guard_expected_wins_14w": 2.5833333333333335,
+      "delta_guard_minus_full_safety": -0.09090909090909083,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 2,
+        "WR": 8,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820062,
+      "full_safety_expected_wins_14w": 2.0833333333333335,
+      "guard_expected_wins_14w": 1.9848484848484849,
+      "delta_guard_minus_full_safety": -0.09848484848484862,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 6,
+        "WR": 5,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820063,
+      "full_safety_expected_wins_14w": 2.3636363636363638,
+      "guard_expected_wins_14w": 2.0075757575757573,
+      "delta_guard_minus_full_safety": -0.3560606060606064,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 1,
+        "WR": 7,
+        "TE": 3,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820064,
+      "full_safety_expected_wins_14w": 2.25,
+      "guard_expected_wins_14w": 1.9393939393939394,
+      "delta_guard_minus_full_safety": -0.31060606060606055,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820065,
+      "full_safety_expected_wins_14w": 2.507575757575758,
+      "guard_expected_wins_14w": 2.4545454545454546,
+      "delta_guard_minus_full_safety": -0.053030303030303205,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 3,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820066,
+      "full_safety_expected_wins_14w": 2.477272727272727,
+      "guard_expected_wins_14w": 2.0984848484848486,
+      "delta_guard_minus_full_safety": -0.37878787878787845,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 3,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820067,
+      "full_safety_expected_wins_14w": 2.0606060606060606,
+      "guard_expected_wins_14w": 2.2196969696969697,
+      "delta_guard_minus_full_safety": 0.15909090909090917,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 3,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820068,
+      "full_safety_expected_wins_14w": 2.1515151515151514,
+      "guard_expected_wins_14w": 2.0681818181818183,
+      "delta_guard_minus_full_safety": -0.08333333333333304,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 5,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820069,
+      "full_safety_expected_wins_14w": 2.303030303030303,
+      "guard_expected_wins_14w": 2.1893939393939394,
+      "delta_guard_minus_full_safety": -0.11363636363636376,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 6,
+        "WR": 5,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820070,
+      "full_safety_expected_wins_14w": 2.5,
+      "guard_expected_wins_14w": 2.356060606060606,
+      "delta_guard_minus_full_safety": -0.14393939393939403,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 2,
+        "WR": 8,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820071,
+      "full_safety_expected_wins_14w": 2.3333333333333335,
+      "guard_expected_wins_14w": 2.4242424242424243,
+      "delta_guard_minus_full_safety": 0.09090909090909083,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 3,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820072,
+      "full_safety_expected_wins_14w": 2.734848484848485,
+      "guard_expected_wins_14w": 2.234848484848485,
+      "delta_guard_minus_full_safety": -0.5,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 2,
+        "WR": 8,
+        "TE": 3,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820073,
+      "full_safety_expected_wins_14w": 2.893939393939394,
+      "guard_expected_wins_14w": 2.242424242424242,
+      "delta_guard_minus_full_safety": -0.6515151515151518,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 2,
+        "WR": 7,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820074,
+      "full_safety_expected_wins_14w": 2.75,
+      "guard_expected_wins_14w": 2.6818181818181817,
+      "delta_guard_minus_full_safety": -0.06818181818181834,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 2,
+        "WR": 8,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820075,
+      "full_safety_expected_wins_14w": 2.2196969696969697,
+      "guard_expected_wins_14w": 2.3863636363636362,
+      "delta_guard_minus_full_safety": 0.16666666666666652,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 5,
+        "WR": 4,
+        "TE": 3,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820076,
+      "full_safety_expected_wins_14w": 2.3636363636363638,
+      "guard_expected_wins_14w": 2.340909090909091,
+      "delta_guard_minus_full_safety": -0.02272727272727293,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 3,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820077,
+      "full_safety_expected_wins_14w": 2.6363636363636362,
+      "guard_expected_wins_14w": 2.5984848484848486,
+      "delta_guard_minus_full_safety": -0.03787878787878762,
+      "full_safety_position_counts": {
+        "QB": 5,
+        "RB": 3,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820078,
+      "full_safety_expected_wins_14w": 2.356060606060606,
+      "guard_expected_wins_14w": 2.3106060606060606,
+      "delta_guard_minus_full_safety": -0.045454545454545414,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 1,
+        "WR": 9,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820079,
+      "full_safety_expected_wins_14w": 2.3484848484848486,
+      "guard_expected_wins_14w": 2.0454545454545454,
+      "delta_guard_minus_full_safety": -0.3030303030303032,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 4,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820080,
+      "full_safety_expected_wins_14w": 2.5454545454545454,
+      "guard_expected_wins_14w": 2.507575757575758,
+      "delta_guard_minus_full_safety": -0.03787878787878762,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 2,
+        "WR": 7,
+        "TE": 3,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820081,
+      "full_safety_expected_wins_14w": 2.3257575757575757,
+      "guard_expected_wins_14w": 2.3257575757575757,
+      "delta_guard_minus_full_safety": 0.0,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 2,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 4,
+        "WR": 9,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820082,
+      "full_safety_expected_wins_14w": 2.4545454545454546,
+      "guard_expected_wins_14w": 2.287878787878788,
+      "delta_guard_minus_full_safety": -0.16666666666666652,
+      "full_safety_position_counts": {
+        "QB": 5,
+        "RB": 3,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820083,
+      "full_safety_expected_wins_14w": 2.409090909090909,
+      "guard_expected_wins_14w": 2.2954545454545454,
+      "delta_guard_minus_full_safety": -0.11363636363636376,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 3,
+        "WR": 9,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820084,
+      "full_safety_expected_wins_14w": 2.522727272727273,
+      "guard_expected_wins_14w": 2.606060606060606,
+      "delta_guard_minus_full_safety": 0.08333333333333304,
+      "full_safety_position_counts": {
+        "QB": 5,
+        "RB": 3,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820085,
+      "full_safety_expected_wins_14w": 2.4166666666666665,
+      "guard_expected_wins_14w": 2.4242424242424243,
+      "delta_guard_minus_full_safety": 0.007575757575757791,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820086,
+      "full_safety_expected_wins_14w": 2.5757575757575757,
+      "guard_expected_wins_14w": 2.507575757575758,
+      "delta_guard_minus_full_safety": -0.0681818181818179,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 5,
+        "WR": 5,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820087,
+      "full_safety_expected_wins_14w": 2.356060606060606,
+      "guard_expected_wins_14w": 2.1818181818181817,
+      "delta_guard_minus_full_safety": -0.1742424242424243,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 4,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820088,
+      "full_safety_expected_wins_14w": 2.606060606060606,
+      "guard_expected_wins_14w": 2.537878787878788,
+      "delta_guard_minus_full_safety": -0.0681818181818179,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 5,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820089,
+      "full_safety_expected_wins_14w": 2.765151515151515,
+      "guard_expected_wins_14w": 2.492424242424242,
+      "delta_guard_minus_full_safety": -0.27272727272727293,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 5,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820090,
+      "full_safety_expected_wins_14w": 3.0681818181818183,
+      "guard_expected_wins_14w": 2.984848484848485,
+      "delta_guard_minus_full_safety": -0.08333333333333348,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 5,
+        "WR": 5,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820091,
+      "full_safety_expected_wins_14w": 2.606060606060606,
+      "guard_expected_wins_14w": 2.340909090909091,
+      "delta_guard_minus_full_safety": -0.26515151515151514,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 4,
+        "WR": 4,
+        "TE": 3,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820092,
+      "full_safety_expected_wins_14w": 2.4166666666666665,
+      "guard_expected_wins_14w": 2.378787878787879,
+      "delta_guard_minus_full_safety": -0.03787878787878762,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 4,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820093,
+      "full_safety_expected_wins_14w": 2.5378787878787876,
+      "guard_expected_wins_14w": 2.446969696969697,
+      "delta_guard_minus_full_safety": -0.09090909090909083,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 2,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820094,
+      "full_safety_expected_wins_14w": 2.878787878787879,
+      "guard_expected_wins_14w": 2.2803030303030303,
+      "delta_guard_minus_full_safety": -0.5984848484848486,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820095,
+      "full_safety_expected_wins_14w": 2.3333333333333335,
+      "guard_expected_wins_14w": 2.3636363636363638,
+      "delta_guard_minus_full_safety": 0.030303030303030276,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 3,
+        "WR": 8,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820096,
+      "full_safety_expected_wins_14w": 1.1666666666666667,
+      "guard_expected_wins_14w": 2.553030303030303,
+      "delta_guard_minus_full_safety": 1.3863636363636365,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 0,
+        "WR": 9,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": false,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820097,
+      "full_safety_expected_wins_14w": 2.303030303030303,
+      "guard_expected_wins_14w": 2.0757575757575757,
+      "delta_guard_minus_full_safety": -0.22727272727272751,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 3,
+        "WR": 7,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820098,
+      "full_safety_expected_wins_14w": 2.9166666666666665,
+      "guard_expected_wins_14w": 2.8636363636363638,
+      "delta_guard_minus_full_safety": -0.05303030303030276,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 3,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820099,
+      "full_safety_expected_wins_14w": 2.015151515151515,
+      "guard_expected_wins_14w": 1.8636363636363638,
+      "delta_guard_minus_full_safety": -0.15151515151515138,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 4,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820100,
+      "full_safety_expected_wins_14w": 2.121212121212121,
+      "guard_expected_wins_14w": 1.8484848484848486,
+      "delta_guard_minus_full_safety": -0.2727272727272725,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 4,
+        "WR": 7,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820101,
+      "full_safety_expected_wins_14w": 2.371212121212121,
+      "guard_expected_wins_14w": 2.1818181818181817,
+      "delta_guard_minus_full_safety": -0.18939393939393945,
+      "full_safety_position_counts": {
+        "QB": 5,
+        "RB": 2,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820102,
+      "full_safety_expected_wins_14w": 2.3106060606060606,
+      "guard_expected_wins_14w": 2.287878787878788,
+      "delta_guard_minus_full_safety": -0.022727272727272485,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 3,
+        "WR": 8,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820103,
+      "full_safety_expected_wins_14w": 2.2803030303030303,
+      "guard_expected_wins_14w": 2.0833333333333335,
+      "delta_guard_minus_full_safety": -0.1969696969696968,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 5,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820104,
+      "full_safety_expected_wins_14w": 2.4393939393939394,
+      "guard_expected_wins_14w": 2.25,
+      "delta_guard_minus_full_safety": -0.18939393939393945,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 2,
+        "WR": 8,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820105,
+      "full_safety_expected_wins_14w": 2.227272727272727,
+      "guard_expected_wins_14w": 1.946969696969697,
+      "delta_guard_minus_full_safety": -0.28030303030303005,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 2,
+        "WR": 9,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 4,
+        "WR": 9,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820106,
+      "full_safety_expected_wins_14w": 2.3636363636363638,
+      "guard_expected_wins_14w": 2.1818181818181817,
+      "delta_guard_minus_full_safety": -0.1818181818181821,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 3,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820107,
+      "full_safety_expected_wins_14w": 2.4015151515151514,
+      "guard_expected_wins_14w": 2.25,
+      "delta_guard_minus_full_safety": -0.15151515151515138,
+      "full_safety_position_counts": {
+        "QB": 5,
+        "RB": 2,
+        "WR": 6,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820108,
+      "full_safety_expected_wins_14w": 2.0984848484848486,
+      "guard_expected_wins_14w": 1.946969696969697,
+      "delta_guard_minus_full_safety": -0.1515151515151516,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 4,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820109,
+      "full_safety_expected_wins_14w": 2.212121212121212,
+      "guard_expected_wins_14w": 2.106060606060606,
+      "delta_guard_minus_full_safety": -0.10606060606060597,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 6,
+        "WR": 4,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820110,
+      "full_safety_expected_wins_14w": 2.4772727272727275,
+      "guard_expected_wins_14w": 2.2803030303030303,
+      "delta_guard_minus_full_safety": -0.19696969696969724,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 2,
+        "WR": 9,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 4,
+        "WR": 9,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820111,
+      "full_safety_expected_wins_14w": 2.2954545454545454,
+      "guard_expected_wins_14w": 1.9848484848484849,
+      "delta_guard_minus_full_safety": -0.31060606060606055,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 2,
+        "WR": 9,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 4,
+        "WR": 9,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820112,
+      "full_safety_expected_wins_14w": 2.984848484848485,
+      "guard_expected_wins_14w": 2.3181818181818183,
+      "delta_guard_minus_full_safety": -0.6666666666666665,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 3,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820113,
+      "full_safety_expected_wins_14w": 3.015151515151515,
+      "guard_expected_wins_14w": 2.9924242424242427,
+      "delta_guard_minus_full_safety": -0.022727272727272485,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 3,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820114,
+      "full_safety_expected_wins_14w": 2.2803030303030303,
+      "guard_expected_wins_14w": 1.9393939393939394,
+      "delta_guard_minus_full_safety": -0.34090909090909083,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 3,
+        "WR": 7,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820115,
+      "full_safety_expected_wins_14w": 2.2045454545454546,
+      "guard_expected_wins_14w": 1.9015151515151516,
+      "delta_guard_minus_full_safety": -0.303030303030303,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 3,
+        "WR": 8,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820116,
+      "full_safety_expected_wins_14w": 2.515151515151515,
+      "guard_expected_wins_14w": 2.2803030303030303,
+      "delta_guard_minus_full_safety": -0.23484848484848486,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 6,
+        "WR": 5,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820117,
+      "full_safety_expected_wins_14w": 2.287878787878788,
+      "guard_expected_wins_14w": 1.9848484848484849,
+      "delta_guard_minus_full_safety": -0.3030303030303032,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 3,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820118,
+      "full_safety_expected_wins_14w": 2.242424242424242,
+      "guard_expected_wins_14w": 2.1136363636363638,
+      "delta_guard_minus_full_safety": -0.12878787878787845,
+      "full_safety_position_counts": {
+        "QB": 4,
+        "RB": 2,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 7,
+        "WR": 6,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820119,
+      "full_safety_expected_wins_14w": 2.0303030303030303,
+      "guard_expected_wins_14w": 1.8106060606060606,
+      "delta_guard_minus_full_safety": -0.21969696969696972,
+      "full_safety_position_counts": {
+        "QB": 2,
+        "RB": 4,
+        "WR": 7,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 5,
+        "WR": 8,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    },
+    {
+      "seed": 459820120,
+      "full_safety_expected_wins_14w": 2.121212121212121,
+      "guard_expected_wins_14w": 1.9545454545454546,
+      "delta_guard_minus_full_safety": -0.16666666666666652,
+      "full_safety_position_counts": {
+        "QB": 3,
+        "RB": 3,
+        "WR": 7,
+        "TE": 2,
+        "K": 0,
+        "DEF": 0
+      },
+      "guard_position_counts": {
+        "QB": 1,
+        "RB": 6,
+        "WR": 7,
+        "TE": 1,
+        "K": 0,
+        "DEF": 0
+      },
+      "full_safety_user_policy_feasible": true,
+      "guard_user_policy_feasible": true
+    }
+  ]
+}
