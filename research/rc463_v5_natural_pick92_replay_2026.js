@@ -1,0 +1,71 @@
+'use strict';
+/* Executable natural-state control for v5 at the frozen rc4.63 pick-92 decision.
+   Research only. Rebuilds the exact available/roster/pick state from the persisted
+   decision fixture, recomputes rawScore using the same meta-safe Coach kernel used
+   by the v5 simulation family, then applies the v5 marginal QB/TE hurdle.
+   It does NOT infer rawScore from serialized coachScore. */
+const fs=require('fs'),crypto=require('crypto');
+const CORE='research/rc459_decision_counterfactual_screen_2026.js';
+const POLICY='research/rc459_full_policy_paired_2026.js';
+const FIX='research/fixtures/rc463_natural_pick92_20260824.json';
+const core=fs.readFileSync(CORE,'utf8'),policy0=fs.readFileSync(POLICY,'utf8'),fixture=JSON.parse(fs.readFileSync(FIX,'utf8'));
+function ok(x,m){if(!x)throw Error('RC463_NATURAL_PICK92: '+m)}
+function gitBlob(s){const b=Buffer.from(s);return crypto.createHash('sha1').update(Buffer.from(`blob ${b.length}\0`)).update(b).digest('hex')}
+ok(gitBlob(policy0)==='5c313bb54538139145761c3885d29f480e138b45','policy drift '+gitBlob(policy0));
+ok(fixture.source_draft_id==='1397557585325891584'&&fixture.current===92&&fixture.modelVersion==='v11.8.0-rc4.63','fixture provenance');
+ok(fixture.picks.length===91,'fixture pick count');
+
+/* Load helpers from the existing locked counterfactual harness. */
+const main=core.indexOf('(async()=>');ok(main>0,'core main boundary');
+const exp='\nreturn {getFixture,apiFrom,init,stable,sha,ok};';
+const H=new Function('require','fetch','structuredClone',core.slice(0,main)+exp)(require,fetch,structuredClone);
+
+function buildState(api,players){
+  const s=H.init(api,players,463092001);
+  for(const q of fixture.picks){
+    const p=players[String(q.player_id)];
+    ok(p,`fixture player missing ${q.pick_no} ${q.player_id} ${q.player_name}`);
+    ok(s.available.has(p.key),`fixture duplicate/unavailable ${q.pick_no} ${p.name}`);
+    s.available.delete(p.key);s.rosters[+q.draft_slot].push(p);api.addPick(s.picks,s.pm,+q.pick_no,+q.draft_slot,p);
+  }
+  s.nextPn=92;
+  return s;
+}
+
+function decision(api,players,s){
+  const C=api.C,pn=92,next=109,mine=s.picks.filter(p=>+p.draft_slot===api.USER_SLOT),state=C.rosterState(mine,s.pm,pn);
+  const ranked=[...s.available].map(k=>players[k]).filter(Boolean).map(p=>({p,r:C.rankFor(p.name,p.pos)})).filter(x=>x.r).sort((a,b)=>a.r.rank-b.r.rank||(a.p.searchRank||9999)-(b.p.searchRank||9999)).map(x=>x.p);
+  let scored=ranked.map(p=>({p,...C.scoreCandidate(p,pn,next,state,ranked,'progressive')})).filter(x=>x.r);
+  const rv=C.simulateReturnV2({current:pn,next,picks:s.picks,players:s.pm,teams:10,map:api.MAP,rankedAvailable:ranked,mode:'mock',userSlot:api.USER_SLOT},'baseline',900);
+  for(const x of scored){const q=rv?.players?.[C.__norm(x.p.name)];if(q){x.ret=q.ret;x.returnConfidence=q.confidence;x.topRisk=q.topRisk}C.applyResolvedReturnScore(x,pn,'progressive')}
+  const boardTop=scored.slice().sort((x,y)=>x.r.rank-y.r.rank).slice(0,12).filter(x=>x.ret!=null),rets=boardTop.map(x=>x.ret).sort((a,b)=>a-b),med=rets.length?rets[Math.floor(rets.length/2)]:null;
+  if(med!=null)for(const x of scored){if(x.ret==null)continue;x.rawScore+=C.__clamp((med-x.ret)*6,-3,3)}
+
+  /* Same safety-resurrection quarantine as the v5 simulation base. */
+  const preSafetyValid=scored.filter(x=>x?.r&&Number.isFinite(x.r.rank)&&Number.isFinite(x.rawScore)&&!x.hardExcluded&&!x.recommendationBlocked);
+  const naturalPreSafety=preSafetyValid.slice().sort((a,b)=>b.rawScore-a.rawScore||a.r.rank-b.r.rank)[0];
+  const safetyRows=scored.filter(x=>{const pos=x.p.pos,n=Number(state.counts?.[pos]||0);if((pos==='QB'||pos==='TE')&&n>=1){const elite=pos==='QB'?(x.r.rank<=45&&Number.isFinite(x.a)&&pn-x.a>=35):(x.r.rank<=35&&Number.isFinite(x.a)&&pn-x.a>=30);return x===naturalPreSafety||elite}return true});
+  C.applyPlayerQualitySafetyGate(safetyRows,pn);
+  C.normalizeCoachScores(scored);
+  for(const x of scored)x.__decisionPriorityV5=Number(x.score||0);
+  const valid=scored.filter(x=>!x.hardExcluded&&!x.recommendationBlocked&&Number.isFinite(x.rawScore));
+  const bestSkill=valid.filter(x=>['RB','WR'].includes(String(x.p.pos||''))).sort((a,b)=>b.rawScore-a.rawScore||a.r.rank-b.r.rank)[0];
+  ok(bestSkill,'best skill missing');
+  for(const x of valid){const pos=String(x.p.pos||''),n=Number(state.counts?.[pos]||0);if(!((pos==='QB'||pos==='TE')&&n>=1))continue;const panel=Number(x.r.rank),slide=Number.isFinite(x.a)?pn-Number(x.a):0;const exceptional=pos==='QB'?(panel<=45&&slide>=35):(panel<=35&&slide>=30);x.__v5Exceptional=exceptional;if(!exceptional&&Number(x.rawScore)<Number(bestSkill.rawScore)+1.0){x.__v5HurdleApplied=true;x.__decisionPriorityV5=Math.min(x.__decisionPriorityV5,bestSkill.__decisionPriorityV5-0.01)}}
+  scored.sort((a,b)=>b.__decisionPriorityV5-a.__decisionPriorityV5||b.score-a.score||b.rawScore-a.rawScore||a.r.rank-b.r.rank);
+  const row=x=>({name:x.p.name,pos:x.p.pos,panel:+x.r.rank,adp:Number.isFinite(x.a)?+x.a:null,raw:+x.rawScore.toFixed(6),normalized_score:x.score,priority:+x.__decisionPriorityV5.toFixed(6),ret:Number.isFinite(x.ret)?+x.ret.toFixed(6):null,hurdle_applied:!!x.__v5HurdleApplied,exceptional:!!x.__v5Exceptional,hardExcluded:!!x.hardExcluded,recommendationBlocked:!!x.recommendationBlocked});
+  return {state,medianReturn:med,bestSkill,scored,top:scored.slice(0,12).map(row),row};
+}
+
+(async()=>{
+  const meta=await H.getFixture(),api=H.apiFrom(meta);await api.loadMeta();const players=api.buildPlayers();api.initRepl(players);const s=buildState(api,players);
+  const counts=api.counts(s.rosters[9]);ok(counts.QB===1&&counts.RB===2&&counts.WR===5&&counts.TE===1,'user counts '+JSON.stringify(counts));
+  const d=decision(api,players,s),tl=d.scored.find(x=>x.p.name==='Trevor Lawrence'),corum=d.scored.find(x=>x.p.name==='Blake Corum');ok(tl&&corum,'natural control candidates missing');
+  ok(tl.p.pos==='QB'&&tl.__v5Exceptional===false,'Trevor must be ordinary repeat QB');
+  ok(tl.__v5HurdleApplied===true,'ordinary natural QB2 hurdle did not activate');
+  ok(tl.__decisionPriorityV5<d.bestSkill.__decisionPriorityV5,'QB2 not demoted below best skill');
+  ok(['RB','WR'].includes(d.scored[0].p.pos),'v5 natural pick92 leader is not skill player: '+d.scored[0].p.name);
+  const serialized=fixture.expected_serialized_top.map(x=>({name:x.name,pos:x.pos,coachScore:x.coachScore,returnProb:x.returnProb}));
+  const out={schema:1,status:'PASS',research_only:true,production_mutation:false,fixture:{draft_id:fixture.source_draft_id,pick:92,modelVersion:fixture.modelVersion,fingerprint:fixture.fingerprint,picks:fixture.picks.length},user_counts:counts,serialized_fixture_top:serialized,recomputed:{leader:d.row(d.scored[0]),trevor_lawrence:d.row(tl),blake_corum:d.row(corum),best_legal_rbwr:d.row(d.bestSkill),median_return:d.medianReturn,top:d.top},checks:{exact_frozen_pick_prefix:true,rawScore_recomputed_not_serialized:true,ordinary_qb2:true,qb2_hurdle_activated:true,qb2_below_best_skill:true,skill_player_leads:true},interpretation:'Executable frozen natural pick92 state confirms the v5 repeat-QB marginal hurdle activates on ordinary QB2 and preserves a skill-position leader. Serialized coachScore was diagnostic only; rawScore was recomputed.',policy_promotion_authorized:false,next_gate:'freeze-risk review + broader natural-state/exceptional-slide regression before any production mutation'};
+  fs.mkdirSync('diagnostics_2026',{recursive:true});fs.writeFileSync('diagnostics_2026/RC463_V5_NATURAL_PICK92_EXECUTABLE_CONTROL_20260825.json',JSON.stringify(out,null,2));console.log(JSON.stringify(out,null,2));
+})().catch(e=>{console.error(e.stack||e);process.exit(2)});
