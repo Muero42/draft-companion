@@ -16,7 +16,7 @@ const swaps=[
  ["PITTI_SHARD 0..5 required","PITTI_SHARD 0..11 required"],
  ["const start=459710001+10*shard;","const start=459820001+10*shard;"],
  ["RC459_META_SAFE_QBTE_NO_SAFETY_RESURRECTION_SHARD_${shard}_2026.json","RC463_TWO_DEEP_SAFETY_ROSTER_SHARD_${shard}_2026.json"],
- ["x.metadata_collision_source_bug_quarantined=true;x.qbte_repeat_policy='soft QB2/TE2 retained; no safety-only resurrection unless natural pre-safety leader or existing elite-slide exception';x.draft_end_feasibility","x.metadata_collision_source_bug_quarantined=true;x.rc463_two_deep_roster_export=true;x.rc463_seed_family='459820001..459820120';x.qbte_repeat_policy='full safety through QB2/TE2; third-or-later QB/TE cannot be safety-only resurrected unless natural pre-safety leader or existing elite-slide exception';x.draft_end_feasibility"
+ ["x.metadata_collision_source_bug_quarantined=true;x.qbte_repeat_policy='soft QB2/TE2 retained; no safety-only resurrection unless natural pre-safety leader or existing elite-slide exception';x.draft_end_feasibility","x.metadata_collision_source_bug_quarantined=true;x.rc463_two_deep_roster_export=true;x.rc463_seed_family='459820001..459820120';x.qbte_repeat_policy='full safety through QB2/TE2; third-or-later QB/TE cannot be safety-only resurrected unless natural pre-safety leader or existing elite-slide exception';x.draft_end_feasibility"]
 ];
 for(const [a,b] of swaps){if(!s.includes(a))throw Error('ANCHOR_DRIFT '+a);s=s.replace(a,b)}
 const shard=String(process.env.PITTI_SHARD??'');const tmp=path.join('/tmp',`pitti_rc463_two_deep_${shard}.js`);fs.writeFileSync(tmp,s);
