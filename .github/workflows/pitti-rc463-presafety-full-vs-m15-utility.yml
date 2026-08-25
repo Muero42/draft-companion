@@ -1,0 +1,38 @@
+name: PITTI rc4.63 SameInput Full Safety vs M15 Utility
+on:
+  push:
+    branches: [pitti-rc463-presafety-threshold-ab]
+    paths:
+      - '.github/workflows/pitti-rc463-presafety-full-vs-m15-utility.yml'
+      - 'research/rc463_presafety_full_vs_m15_utility_2026.py'
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+jobs:
+  utility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc463-presafety-threshold-ab
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Download exact same-input Full Safety and M15 artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/full-sameinput /tmp/threshold-artifacts
+          gh run download 32865478995 -D /tmp/full-sameinput --pattern 'rc463-presafety-sameinput-*'
+          gh run download 32870106661 -D /tmp/threshold-artifacts --pattern 'rc463-presafety-threshold--15-*'
+          find /tmp/full-sameinput /tmp/threshold-artifacts -type f -print
+      - name: Evaluate paired complete-roster utility
+        run: python research/rc463_presafety_full_vs_m15_utility_2026.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc463-presafety-full-vs-m15-utility
+          path: diagnostics_2026/RC463_PRESAFETY_FULL_VS_M15_UTILITY_2026.json
+          if-no-files-found: error
+          retention-days: 14
