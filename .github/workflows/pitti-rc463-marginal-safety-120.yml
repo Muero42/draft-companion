@@ -1,0 +1,32 @@
+name: PITTI rc4.63 marginal safety 120
+on:
+  push:
+    branches: [pitti-rc463-safety-marginal-ab]
+    paths:
+      - research/rc463_marginal_safety_roster_120_shard_2026.js
+      - .github/workflows/pitti-rc463-marginal-safety-120.yml
+permissions:
+  contents: read
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix: {shard: [0,1,2,3,4,5,6,7,8,9,10,11]}
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-safety-marginal-ab}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check research/rc463_marginal_safety_roster_120_shard_2026.js
+      - name: Export marginal-safety challenger shard
+        env: {PITTI_SHARD: "${{ matrix.shard }}"}
+        run: node research/rc463_marginal_safety_roster_120_shard_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc463-marginal-safety-${{ matrix.shard }}
+          path: simulation_2026/RC463_MARGINAL_SAFETY_ROSTER_SHARD_${{ matrix.shard }}_2026.json
+          if-no-files-found: error
+          retention-days: 14
