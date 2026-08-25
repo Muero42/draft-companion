@@ -1,0 +1,78 @@
+name: PITTI rc4.63 roster championship v5 marginal
+on:
+  workflow_dispatch:
+  push:
+    branches: [pitti-rc463-roster-championship-v5-marginal]
+    paths:
+      - research/rc463_roster_championship_v5_marginal_scale_2026.js
+      - .github/workflows/pitti-rc463-roster-championship-v5.yml
+permissions:
+  actions: read
+  contents: write
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix: {shard: [0,1,2,3,4,5,6,7,8,9,10,11]}
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-roster-championship-v5-marginal}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check research/rc463_roster_championship_v5_marginal_scale_2026.js
+      - name: Run paired v5 shard
+        env: {PITTI_SHARD: "${{ matrix.shard }}"}
+        run: node research/rc463_roster_championship_v5_marginal_scale_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc463-roster-championship-v5-${{ matrix.shard }}
+          path: simulation_2026/RC463_ROSTER_CHAMPIONSHIP_V5_MARGINAL_SHARD_${{ matrix.shard }}_2026.json
+          if-no-files-found: error
+          retention-days: 14
+  evaluate:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-roster-championship-v5-marginal}
+      - name: Download shards
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: mkdir -p /tmp/v5 && gh run download ${{ github.run_id }} -D /tmp/v5 --pattern 'rc463-roster-championship-v5-*'
+      - name: Evaluate v5
+        run: |
+          python - <<'PY'
+          import json,glob,collections,pathlib
+          drafts=[]
+          for p in glob.glob('/tmp/v5/**/*.json',recursive=True):
+            x=json.load(open(p))
+            if x.get('status')!='PASS' or not x.get('rc463_roster_championship_v5_marginal'): raise RuntimeError('invalid v5 shard '+p)
+            drafts+=x.get('drafts',[])
+          drafts=sorted(drafts,key=lambda d:int(d['seed'])); expected=list(range(459820001,459820121))
+          if [int(d['seed']) for d in drafts]!=expected: raise RuntimeError('paired seed union mismatch')
+          base=json.load(open('diagnostics_2026/REALISTIC_SCALE_120_20260824.json'))
+          v3=json.load(open('diagnostics_2026/RC463_ROSTER_CHAMPIONSHIP_V3_NEARTIE_120_20260825.json'))
+          pos=collections.Counter(); bypick={}; qbc=collections.Counter(); tec=collections.Counter()
+          for d in drafts:
+            c=d['position_counts']; qbc[c['QB']]+=1; tec[c['TE']]+=1
+            for k,v in c.items(): pos[k]+=v
+            for z in d['decisions']: bypick.setdefault(str(z['pick']),collections.Counter())[z['name']]+=1
+          means={k:v/120 for k,v in pos.items()}; picks={k:dict(v.most_common()) for k,v in bypick.items()}
+          def l1(a,b):
+            out={}
+            for k in sorted(set(a)|set(b),key=int):
+              names=set(a.get(k,{}))|set(b.get(k,{})); out[k]=sum(abs(a.get(k,{}).get(n,0)-b.get(k,{}).get(n,0)) for n in names)/240
+            return out
+          lb=l1(picks,base['pick_choice_counts']); lv3=l1(picks,v3['pick_choice_counts'])
+          out={'schema':1,'status':'PASS','research_only':True,'production_mutation':False,'seeds':120,'paired_seed_family':'459820001..459820120','mean_position_counts':means,'qb_counts':dict(qbc),'te_counts':dict(tec),'pick_choice_counts':picks,'l1_vs_baseline':lb,'l1_vs_v3':lv3,'checks':{'qb2plus_zero':sum(v for k,v in qbc.items() if int(k)>=2)==0,'te2plus_zero':sum(v for k,v in tec.items() if int(k)>=2)==0,'no_k_def':means.get('K',0)==0 and means.get('DEF',0)==0},'mechanism':'explicit repeat QB/TE raw-score margin >=1.0 vs best legal RB/WR unless exceptional slide + v3 late WR near-tie','promotion_authorized':False,'next_gate':'natural pick92 mechanism control + exceptional-slide regression + paired Championship Utility'}
+          pathlib.Path('diagnostics_2026/RC463_ROSTER_CHAMPIONSHIP_V5_MARGINAL_120_20260825.json').write_text(json.dumps(out,indent=2)); print(json.dumps(out,indent=2))
+          PY
+      - name: Persist v5 result
+        run: |
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git add diagnostics_2026/RC463_ROSTER_CHAMPIONSHIP_V5_MARGINAL_120_20260825.json
+          if ! git diff --cached --quiet; then git commit -m 'research: persist rc4.63 v5 marginal 120-seed A/B' && git push origin HEAD:pitti-rc463-roster-championship-v5-marginal; fi
