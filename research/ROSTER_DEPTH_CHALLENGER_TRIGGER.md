@@ -1,0 +1,1 @@
+Trigger: apply the isolated diminishing-WR-depth challenger defined in the branch workflow. Baseline main/gh-pages remain untouched. Evidence: natural mock picks 109/112/129 with seven existing WR and repeated ordinary WR recommendations over comparable RB upside tickets.
