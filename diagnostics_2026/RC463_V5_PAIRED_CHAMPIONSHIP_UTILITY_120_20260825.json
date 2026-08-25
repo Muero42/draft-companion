@@ -1,0 +1,990 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "research_only": true,
+  "production_mutation": false,
+  "method": "paired exact 120-seed complete-roster baseline vs v5 -> independent 2022-2025 market/outcome bridge -> Utility-v3.5 exact league lineup topology + empirical 2025 league skill CDF",
+  "selected_panel_used_in_outcome_fit": false,
+  "seed_family": "459820001..459820120",
+  "seeds": 120,
+  "changed_rosters": 85,
+  "mean_delta_expected_wins_14w": 0.002209595959595963,
+  "median_delta": 0.0,
+  "sd_delta": 0.006543930708665905,
+  "mean_delta_ci95_normal_diagnostic": [
+    0.0010387381947261824,
+    0.0033804537244657437
+  ],
+  "challenger_better": 23,
+  "same": 95,
+  "challenger_worse": 2,
+  "nonzero_pairs": 25,
+  "min_delta": -0.007575757575757791,
+  "max_delta": 0.05303030303030298,
+  "baseline_mean_expected_wins_14w": 2.283838383838384,
+  "challenger_mean_expected_wins_14w": 2.28604797979798,
+  "policy_promotion_authorized": false,
+  "promotion_note": "Utility is one required gate only. Natural executable pick92/rawScore control and freeze-risk review remain mandatory before any production consideration.",
+  "rows": [
+    {
+      "seed": 459820001,
+      "baseline_expected_wins_14w": 2.0,
+      "challenger_expected_wins_14w": 2.0,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.9866400320349,
+      "challenger_weekly_mean": 70.9866400320349
+    },
+    {
+      "seed": 459820002,
+      "baseline_expected_wins_14w": 2.6893939393939394,
+      "challenger_expected_wins_14w": 2.6893939393939394,
+      "delta": 0.0,
+      "baseline_weekly_mean": 74.0724160226302,
+      "challenger_weekly_mean": 74.0724160226302
+    },
+    {
+      "seed": 459820003,
+      "baseline_expected_wins_14w": 2.128787878787879,
+      "challenger_expected_wins_14w": 2.128787878787879,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.34391887363721,
+      "challenger_weekly_mean": 71.35259799185847
+    },
+    {
+      "seed": 459820004,
+      "baseline_expected_wins_14w": 2.2196969696969697,
+      "challenger_expected_wins_14w": 2.2196969696969697,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.83954573514511,
+      "challenger_weekly_mean": 71.85466778338083
+    },
+    {
+      "seed": 459820005,
+      "baseline_expected_wins_14w": 2.3106060606060606,
+      "challenger_expected_wins_14w": 2.3257575757575757,
+      "delta": 0.015151515151515138,
+      "baseline_weekly_mean": 72.73066204900937,
+      "challenger_weekly_mean": 72.74709716104614
+    },
+    {
+      "seed": 459820006,
+      "baseline_expected_wins_14w": 2.1818181818181817,
+      "challenger_expected_wins_14w": 2.1818181818181817,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.78559529889051,
+      "challenger_weekly_mean": 71.80793920139986
+    },
+    {
+      "seed": 459820007,
+      "baseline_expected_wins_14w": 2.787878787878788,
+      "challenger_expected_wins_14w": 2.803030303030303,
+      "delta": 0.015151515151515138,
+      "baseline_weekly_mean": 74.14191823010947,
+      "challenger_weekly_mean": 74.15486304962391
+    },
+    {
+      "seed": 459820008,
+      "baseline_expected_wins_14w": 2.1515151515151514,
+      "challenger_expected_wins_14w": 2.1515151515151514,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.3450852112278,
+      "challenger_weekly_mean": 71.3450852112278
+    },
+    {
+      "seed": 459820009,
+      "baseline_expected_wins_14w": 2.5757575757575757,
+      "challenger_expected_wins_14w": 2.5757575757575757,
+      "delta": 0.0,
+      "baseline_weekly_mean": 73.56559605766662,
+      "challenger_weekly_mean": 73.58071810590235
+    },
+    {
+      "seed": 459820010,
+      "baseline_expected_wins_14w": 2.022727272727273,
+      "challenger_expected_wins_14w": 2.037878787878788,
+      "delta": 0.015151515151515138,
+      "baseline_weekly_mean": 70.79233513049874,
+      "challenger_weekly_mean": 70.90591296645468
+    },
+    {
+      "seed": 459820011,
+      "baseline_expected_wins_14w": 2.3484848484848486,
+      "challenger_expected_wins_14w": 2.3484848484848486,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.38547803232817,
+      "challenger_weekly_mean": 72.38547803232817
+    },
+    {
+      "seed": 459820012,
+      "baseline_expected_wins_14w": 2.234848484848485,
+      "challenger_expected_wins_14w": 2.234848484848485,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.15307148495435,
+      "challenger_weekly_mean": 72.15307148495435
+    },
+    {
+      "seed": 459820013,
+      "baseline_expected_wins_14w": 2.1742424242424243,
+      "challenger_expected_wins_14w": 2.1742424242424243,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.57265144226068,
+      "challenger_weekly_mean": 71.58559626177512
+    },
+    {
+      "seed": 459820014,
+      "baseline_expected_wins_14w": 1.9166666666666667,
+      "challenger_expected_wins_14w": 1.9166666666666667,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.32635731875256,
+      "challenger_weekly_mean": 70.32635731875256
+    },
+    {
+      "seed": 459820015,
+      "baseline_expected_wins_14w": 2.196969696969697,
+      "challenger_expected_wins_14w": 2.196969696969697,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.76190871277741,
+      "challenger_weekly_mean": 71.76190871277741
+    },
+    {
+      "seed": 459820016,
+      "baseline_expected_wins_14w": 1.962121212121212,
+      "challenger_expected_wins_14w": 1.962121212121212,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.64850590639792,
+      "challenger_weekly_mean": 70.64850590639792
+    },
+    {
+      "seed": 459820017,
+      "baseline_expected_wins_14w": 2.4166666666666665,
+      "challenger_expected_wins_14w": 2.4166666666666665,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.87700469554005,
+      "challenger_weekly_mean": 72.87700469554005
+    },
+    {
+      "seed": 459820018,
+      "baseline_expected_wins_14w": 2.25,
+      "challenger_expected_wins_14w": 2.25,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.12111820549221,
+      "challenger_weekly_mean": 72.12111820549221
+    },
+    {
+      "seed": 459820019,
+      "baseline_expected_wins_14w": 2.606060606060606,
+      "challenger_expected_wins_14w": 2.606060606060606,
+      "delta": 0.0,
+      "baseline_weekly_mean": 73.51505095750632,
+      "challenger_weekly_mean": 73.51505095750632
+    },
+    {
+      "seed": 459820020,
+      "baseline_expected_wins_14w": 2.3106060606060606,
+      "challenger_expected_wins_14w": 2.3181818181818183,
+      "delta": 0.007575757575757791,
+      "baseline_weekly_mean": 71.61494691157132,
+      "challenger_weekly_mean": 71.62362602979258
+    },
+    {
+      "seed": 459820021,
+      "baseline_expected_wins_14w": 1.8409090909090908,
+      "challenger_expected_wins_14w": 1.8409090909090908,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.1067928700044,
+      "challenger_weekly_mean": 70.1067928700044
+    },
+    {
+      "seed": 459820022,
+      "baseline_expected_wins_14w": 2.4393939393939394,
+      "challenger_expected_wins_14w": 2.4545454545454546,
+      "delta": 0.015151515151515138,
+      "baseline_weekly_mean": 72.94551106699565,
+      "challenger_weekly_mean": 72.95988573752442
+    },
+    {
+      "seed": 459820023,
+      "baseline_expected_wins_14w": 2.0833333333333335,
+      "challenger_expected_wins_14w": 2.0757575757575757,
+      "delta": -0.007575757575757791,
+      "baseline_weekly_mean": 71.3264328579732,
+      "challenger_weekly_mean": 71.30252976234486
+    },
+    {
+      "seed": 459820024,
+      "baseline_expected_wins_14w": 2.0303030303030303,
+      "challenger_expected_wins_14w": 2.0303030303030303,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.71770490038348,
+      "challenger_weekly_mean": 70.79414639890794
+    },
+    {
+      "seed": 459820025,
+      "baseline_expected_wins_14w": 2.037878787878788,
+      "challenger_expected_wins_14w": 2.037878787878788,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.27181846802006,
+      "challenger_weekly_mean": 71.27181846802006
+    },
+    {
+      "seed": 459820026,
+      "baseline_expected_wins_14w": 2.143939393939394,
+      "challenger_expected_wins_14w": 2.143939393939394,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.36282052778522,
+      "challenger_weekly_mean": 71.36282052778522
+    },
+    {
+      "seed": 459820027,
+      "baseline_expected_wins_14w": 2.621212121212121,
+      "challenger_expected_wins_14w": 2.628787878787879,
+      "delta": 0.007575757575757791,
+      "baseline_weekly_mean": 73.58733050060141,
+      "challenger_weekly_mean": 73.60592085239871
+    },
+    {
+      "seed": 459820028,
+      "baseline_expected_wins_14w": 2.340909090909091,
+      "challenger_expected_wins_14w": 2.340909090909091,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.28894256737598,
+      "challenger_weekly_mean": 72.28894256737598
+    },
+    {
+      "seed": 459820029,
+      "baseline_expected_wins_14w": 1.9696969696969697,
+      "challenger_expected_wins_14w": 1.9696969696969697,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.65413680214492,
+      "challenger_weekly_mean": 70.65413680214492
+    },
+    {
+      "seed": 459820030,
+      "baseline_expected_wins_14w": 2.765151515151515,
+      "challenger_expected_wins_14w": 2.765151515151515,
+      "delta": 0.0,
+      "baseline_weekly_mean": 74.27330465943487,
+      "challenger_weekly_mean": 74.27330465943487
+    },
+    {
+      "seed": 459820031,
+      "baseline_expected_wins_14w": 2.0984848484848486,
+      "challenger_expected_wins_14w": 2.0984848484848486,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.1037953080166,
+      "challenger_weekly_mean": 71.10958731127589
+    },
+    {
+      "seed": 459820032,
+      "baseline_expected_wins_14w": 2.4318181818181817,
+      "challenger_expected_wins_14w": 2.4318181818181817,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.94133653244319,
+      "challenger_weekly_mean": 72.95927225839544
+    },
+    {
+      "seed": 459820033,
+      "baseline_expected_wins_14w": 2.462121212121212,
+      "challenger_expected_wins_14w": 2.462121212121212,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.99547046926823,
+      "challenger_weekly_mean": 72.99547046926823
+    },
+    {
+      "seed": 459820034,
+      "baseline_expected_wins_14w": 1.9393939393939394,
+      "challenger_expected_wins_14w": 1.946969696969697,
+      "delta": 0.007575757575757569,
+      "baseline_weekly_mean": 70.77345508937395,
+      "challenger_weekly_mean": 70.78989020141073
+    },
+    {
+      "seed": 459820035,
+      "baseline_expected_wins_14w": 2.7045454545454546,
+      "challenger_expected_wins_14w": 2.7045454545454546,
+      "delta": 0.0,
+      "baseline_weekly_mean": 74.16062728745673,
+      "challenger_weekly_mean": 74.16062728745673
+    },
+    {
+      "seed": 459820036,
+      "baseline_expected_wins_14w": 1.878787878787879,
+      "challenger_expected_wins_14w": 1.878787878787879,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.32523153281227,
+      "challenger_weekly_mean": 70.32523153281227
+    },
+    {
+      "seed": 459820037,
+      "baseline_expected_wins_14w": 2.106060606060606,
+      "challenger_expected_wins_14w": 2.106060606060606,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.35140400002763,
+      "challenger_weekly_mean": 71.35140400002763
+    },
+    {
+      "seed": 459820038,
+      "baseline_expected_wins_14w": 2.0,
+      "challenger_expected_wins_14w": 2.0,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.98422191975976,
+      "challenger_weekly_mean": 71.023496718069
+    },
+    {
+      "seed": 459820039,
+      "baseline_expected_wins_14w": 2.734848484848485,
+      "challenger_expected_wins_14w": 2.734848484848485,
+      "delta": 0.0,
+      "baseline_weekly_mean": 74.28826363024272,
+      "challenger_weekly_mean": 74.28826363024272
+    },
+    {
+      "seed": 459820040,
+      "baseline_expected_wins_14w": 2.7727272727272725,
+      "challenger_expected_wins_14w": 2.7727272727272725,
+      "delta": 0.0,
+      "baseline_weekly_mean": 74.13499865876062,
+      "challenger_weekly_mean": 74.13499865876062
+    },
+    {
+      "seed": 459820041,
+      "baseline_expected_wins_14w": 2.121212121212121,
+      "challenger_expected_wins_14w": 2.121212121212121,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.51427899713785,
+      "challenger_weekly_mean": 71.51427899713785
+    },
+    {
+      "seed": 459820042,
+      "baseline_expected_wins_14w": 2.121212121212121,
+      "challenger_expected_wins_14w": 2.121212121212121,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.38921306724181,
+      "challenger_weekly_mean": 71.45861115624234
+    },
+    {
+      "seed": 459820043,
+      "baseline_expected_wins_14w": 2.25,
+      "challenger_expected_wins_14w": 2.257575757575758,
+      "delta": 0.007575757575757791,
+      "baseline_weekly_mean": 72.20118966836982,
+      "challenger_weekly_mean": 72.21762478040658
+    },
+    {
+      "seed": 459820044,
+      "baseline_expected_wins_14w": 2.621212121212121,
+      "challenger_expected_wins_14w": 2.621212121212121,
+      "delta": 0.0,
+      "baseline_weekly_mean": 73.96797358000417,
+      "challenger_weekly_mean": 73.96797358000417
+    },
+    {
+      "seed": 459820045,
+      "baseline_expected_wins_14w": 2.507575757575758,
+      "challenger_expected_wins_14w": 2.507575757575758,
+      "delta": 0.0,
+      "baseline_weekly_mean": 73.18910113617,
+      "challenger_weekly_mean": 73.18910113617
+    },
+    {
+      "seed": 459820046,
+      "baseline_expected_wins_14w": 2.7196969696969697,
+      "challenger_expected_wins_14w": 2.712121212121212,
+      "delta": -0.007575757575757791,
+      "baseline_weekly_mean": 73.93334749571075,
+      "challenger_weekly_mean": 73.92190996016859
+    },
+    {
+      "seed": 459820047,
+      "baseline_expected_wins_14w": 2.083333333333333,
+      "challenger_expected_wins_14w": 2.083333333333333,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.96842070352233,
+      "challenger_weekly_mean": 70.96842070352233
+    },
+    {
+      "seed": 459820048,
+      "baseline_expected_wins_14w": 2.4545454545454546,
+      "challenger_expected_wins_14w": 2.4545454545454546,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.97185998863024,
+      "challenger_weekly_mean": 72.97185998863024
+    },
+    {
+      "seed": 459820049,
+      "baseline_expected_wins_14w": 2.1742424242424243,
+      "challenger_expected_wins_14w": 2.1742424242424243,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.67316107383411,
+      "challenger_weekly_mean": 71.67316107383411
+    },
+    {
+      "seed": 459820050,
+      "baseline_expected_wins_14w": 2.5681818181818183,
+      "challenger_expected_wins_14w": 2.5757575757575757,
+      "delta": 0.007575757575757347,
+      "baseline_weekly_mean": 73.24428623071462,
+      "challenger_weekly_mean": 73.27659832065338
+    },
+    {
+      "seed": 459820051,
+      "baseline_expected_wins_14w": 2.2803030303030303,
+      "challenger_expected_wins_14w": 2.2803030303030303,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.40831060638436,
+      "challenger_weekly_mean": 72.40831060638436
+    },
+    {
+      "seed": 459820052,
+      "baseline_expected_wins_14w": 2.2878787878787876,
+      "challenger_expected_wins_14w": 2.2878787878787876,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.07277626785948,
+      "challenger_weekly_mean": 72.07277626785948
+    },
+    {
+      "seed": 459820053,
+      "baseline_expected_wins_14w": 2.0606060606060606,
+      "challenger_expected_wins_14w": 2.0606060606060606,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.97016639135897,
+      "challenger_weekly_mean": 70.97016639135897
+    },
+    {
+      "seed": 459820054,
+      "baseline_expected_wins_14w": 2.0,
+      "challenger_expected_wins_14w": 2.007575757575758,
+      "delta": 0.007575757575757791,
+      "baseline_weekly_mean": 71.08523178283058,
+      "challenger_weekly_mean": 71.10166689486735
+    },
+    {
+      "seed": 459820055,
+      "baseline_expected_wins_14w": 2.3257575757575757,
+      "challenger_expected_wins_14w": 2.3257575757575757,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.43786577115492,
+      "challenger_weekly_mean": 72.43786577115492
+    },
+    {
+      "seed": 459820056,
+      "baseline_expected_wins_14w": 1.9318181818181819,
+      "challenger_expected_wins_14w": 1.9545454545454546,
+      "delta": 0.022727272727272707,
+      "baseline_weekly_mean": 70.64051264192125,
+      "challenger_weekly_mean": 70.68173660721503
+    },
+    {
+      "seed": 459820057,
+      "baseline_expected_wins_14w": 2.5757575757575757,
+      "challenger_expected_wins_14w": 2.5757575757575757,
+      "delta": 0.0,
+      "baseline_weekly_mean": 73.52813635368707,
+      "challenger_weekly_mean": 73.54672670548439
+    },
+    {
+      "seed": 459820058,
+      "baseline_expected_wins_14w": 2.212121212121212,
+      "challenger_expected_wins_14w": 2.2196969696969697,
+      "delta": 0.007575757575757791,
+      "baseline_weekly_mean": 71.96287634856851,
+      "challenger_weekly_mean": 71.97582116808296
+    },
+    {
+      "seed": 459820059,
+      "baseline_expected_wins_14w": 1.9015151515151516,
+      "challenger_expected_wins_14w": 1.9545454545454546,
+      "delta": 0.05303030303030298,
+      "baseline_weekly_mean": 70.24069647195115,
+      "challenger_weekly_mean": 70.3277937826146
+    },
+    {
+      "seed": 459820060,
+      "baseline_expected_wins_14w": 2.5454545454545454,
+      "challenger_expected_wins_14w": 2.5454545454545454,
+      "delta": 0.0,
+      "baseline_weekly_mean": 73.32672144959606,
+      "challenger_weekly_mean": 73.32672144959606
+    },
+    {
+      "seed": 459820061,
+      "baseline_expected_wins_14w": 2.5833333333333335,
+      "challenger_expected_wins_14w": 2.590909090909091,
+      "delta": 0.007575757575757347,
+      "baseline_weekly_mean": 73.45560607941351,
+      "challenger_weekly_mean": 73.54130788475884
+    },
+    {
+      "seed": 459820062,
+      "baseline_expected_wins_14w": 1.9848484848484849,
+      "challenger_expected_wins_14w": 1.9848484848484849,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.89647769134092,
+      "challenger_weekly_mean": 70.89647769134092
+    },
+    {
+      "seed": 459820063,
+      "baseline_expected_wins_14w": 2.0075757575757573,
+      "challenger_expected_wins_14w": 2.0075757575757573,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.87079979629898,
+      "challenger_weekly_mean": 70.87079979629898
+    },
+    {
+      "seed": 459820064,
+      "baseline_expected_wins_14w": 1.9393939393939394,
+      "challenger_expected_wins_14w": 1.9393939393939394,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.5725235276233,
+      "challenger_weekly_mean": 70.5725235276233
+    },
+    {
+      "seed": 459820065,
+      "baseline_expected_wins_14w": 2.4545454545454546,
+      "challenger_expected_wins_14w": 2.4696969696969697,
+      "delta": 0.015151515151515138,
+      "baseline_weekly_mean": 73.09927522623435,
+      "challenger_weekly_mean": 73.12717261440181
+    },
+    {
+      "seed": 459820066,
+      "baseline_expected_wins_14w": 2.0984848484848486,
+      "challenger_expected_wins_14w": 2.106060606060606,
+      "delta": 0.007575757575757347,
+      "baseline_weekly_mean": 71.66409826298299,
+      "challenger_weekly_mean": 71.67922031121871
+    },
+    {
+      "seed": 459820067,
+      "baseline_expected_wins_14w": 2.2196969696969697,
+      "challenger_expected_wins_14w": 2.2196969696969697,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.30753033947778,
+      "challenger_weekly_mean": 72.30753033947778
+    },
+    {
+      "seed": 459820068,
+      "baseline_expected_wins_14w": 2.0681818181818183,
+      "challenger_expected_wins_14w": 2.0681818181818183,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.15052351648737,
+      "challenger_weekly_mean": 71.15052351648737
+    },
+    {
+      "seed": 459820069,
+      "baseline_expected_wins_14w": 2.1893939393939394,
+      "challenger_expected_wins_14w": 2.1893939393939394,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.30998891432333,
+      "challenger_weekly_mean": 71.30998891432333
+    },
+    {
+      "seed": 459820070,
+      "baseline_expected_wins_14w": 2.356060606060606,
+      "challenger_expected_wins_14w": 2.3636363636363638,
+      "delta": 0.007575757575757791,
+      "baseline_weekly_mean": 72.417238829946,
+      "challenger_weekly_mean": 72.46249329936819
+    },
+    {
+      "seed": 459820071,
+      "baseline_expected_wins_14w": 2.4242424242424243,
+      "challenger_expected_wins_14w": 2.4318181818181817,
+      "delta": 0.007575757575757347,
+      "baseline_weekly_mean": 72.79653207653712,
+      "challenger_weekly_mean": 72.81296718857388
+    },
+    {
+      "seed": 459820072,
+      "baseline_expected_wins_14w": 2.234848484848485,
+      "challenger_expected_wins_14w": 2.234848484848485,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.95422844485286,
+      "challenger_weekly_mean": 71.95422844485286
+    },
+    {
+      "seed": 459820073,
+      "baseline_expected_wins_14w": 2.893939393939394,
+      "challenger_expected_wins_14w": 2.893939393939394,
+      "delta": 0.0,
+      "baseline_weekly_mean": 74.96582026650259,
+      "challenger_weekly_mean": 74.96582026650259
+    },
+    {
+      "seed": 459820074,
+      "baseline_expected_wins_14w": 2.6818181818181817,
+      "challenger_expected_wins_14w": 2.6818181818181817,
+      "delta": 0.0,
+      "baseline_weekly_mean": 74.0316786585221,
+      "challenger_weekly_mean": 74.0316786585221
+    },
+    {
+      "seed": 459820075,
+      "baseline_expected_wins_14w": 2.3863636363636362,
+      "challenger_expected_wins_14w": 2.3863636363636362,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.74592484219883,
+      "challenger_weekly_mean": 72.74592484219883
+    },
+    {
+      "seed": 459820076,
+      "baseline_expected_wins_14w": 2.340909090909091,
+      "challenger_expected_wins_14w": 2.340909090909091,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.28059467631499,
+      "challenger_weekly_mean": 72.28059467631499
+    },
+    {
+      "seed": 459820077,
+      "baseline_expected_wins_14w": 2.5984848484848486,
+      "challenger_expected_wins_14w": 2.5984848484848486,
+      "delta": 0.0,
+      "baseline_weekly_mean": 73.50939730023096,
+      "challenger_weekly_mean": 73.50939730023096
+    },
+    {
+      "seed": 459820078,
+      "baseline_expected_wins_14w": 2.3106060606060606,
+      "challenger_expected_wins_14w": 2.3181818181818183,
+      "delta": 0.007575757575757791,
+      "baseline_weekly_mean": 72.68206000367374,
+      "challenger_weekly_mean": 72.6984951157105
+    },
+    {
+      "seed": 459820079,
+      "baseline_expected_wins_14w": 2.0454545454545454,
+      "challenger_expected_wins_14w": 2.053030303030303,
+      "delta": 0.007575757575757791,
+      "baseline_weekly_mean": 71.08482795409222,
+      "challenger_weekly_mean": 71.10858525789291
+    },
+    {
+      "seed": 459820080,
+      "baseline_expected_wins_14w": 2.507575757575758,
+      "challenger_expected_wins_14w": 2.507575757575758,
+      "delta": 0.0,
+      "baseline_weekly_mean": 73.4997615593225,
+      "challenger_weekly_mean": 73.4997615593225
+    },
+    {
+      "seed": 459820081,
+      "baseline_expected_wins_14w": 2.3257575757575757,
+      "challenger_expected_wins_14w": 2.3257575757575757,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.34944362206522,
+      "challenger_weekly_mean": 72.34944362206522
+    },
+    {
+      "seed": 459820082,
+      "baseline_expected_wins_14w": 2.287878787878788,
+      "challenger_expected_wins_14w": 2.287878787878788,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.44890988380546,
+      "challenger_weekly_mean": 72.44890988380546
+    },
+    {
+      "seed": 459820083,
+      "baseline_expected_wins_14w": 2.2954545454545454,
+      "challenger_expected_wins_14w": 2.2954545454545454,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.13755923447391,
+      "challenger_weekly_mean": 72.13755923447391
+    },
+    {
+      "seed": 459820084,
+      "baseline_expected_wins_14w": 2.606060606060606,
+      "challenger_expected_wins_14w": 2.606060606060606,
+      "delta": 0.0,
+      "baseline_weekly_mean": 73.83088534208119,
+      "challenger_weekly_mean": 73.87210930737496
+    },
+    {
+      "seed": 459820085,
+      "baseline_expected_wins_14w": 2.4242424242424243,
+      "challenger_expected_wins_14w": 2.4242424242424243,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.70956300252537,
+      "challenger_weekly_mean": 72.70956300252537
+    },
+    {
+      "seed": 459820086,
+      "baseline_expected_wins_14w": 2.507575757575758,
+      "challenger_expected_wins_14w": 2.507575757575758,
+      "delta": 0.0,
+      "baseline_weekly_mean": 73.2035719715382,
+      "challenger_weekly_mean": 73.2035719715382
+    },
+    {
+      "seed": 459820087,
+      "baseline_expected_wins_14w": 2.1818181818181817,
+      "challenger_expected_wins_14w": 2.1818181818181817,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.70408137981907,
+      "challenger_weekly_mean": 71.70408137981907
+    },
+    {
+      "seed": 459820088,
+      "baseline_expected_wins_14w": 2.537878787878788,
+      "challenger_expected_wins_14w": 2.537878787878788,
+      "delta": 0.0,
+      "baseline_weekly_mean": 73.20119403730337,
+      "challenger_weekly_mean": 73.20119403730337
+    },
+    {
+      "seed": 459820089,
+      "baseline_expected_wins_14w": 2.492424242424242,
+      "challenger_expected_wins_14w": 2.492424242424242,
+      "delta": 0.0,
+      "baseline_weekly_mean": 73.08820862530966,
+      "challenger_weekly_mean": 73.08820862530966
+    },
+    {
+      "seed": 459820090,
+      "baseline_expected_wins_14w": 2.984848484848485,
+      "challenger_expected_wins_14w": 2.984848484848485,
+      "delta": 0.0,
+      "baseline_weekly_mean": 75.11137536471414,
+      "challenger_weekly_mean": 75.11137536471414
+    },
+    {
+      "seed": 459820091,
+      "baseline_expected_wins_14w": 2.340909090909091,
+      "challenger_expected_wins_14w": 2.340909090909091,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.86327916932385,
+      "challenger_weekly_mean": 72.86327916932385
+    },
+    {
+      "seed": 459820092,
+      "baseline_expected_wins_14w": 2.378787878787879,
+      "challenger_expected_wins_14w": 2.378787878787879,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.662076132589,
+      "challenger_weekly_mean": 72.662076132589
+    },
+    {
+      "seed": 459820093,
+      "baseline_expected_wins_14w": 2.446969696969697,
+      "challenger_expected_wins_14w": 2.446969696969697,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.5795756832437,
+      "challenger_weekly_mean": 72.58536768650299
+    },
+    {
+      "seed": 459820094,
+      "baseline_expected_wins_14w": 2.2803030303030303,
+      "challenger_expected_wins_14w": 2.2803030303030303,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.10459803840114,
+      "challenger_weekly_mean": 72.11754285791558
+    },
+    {
+      "seed": 459820095,
+      "baseline_expected_wins_14w": 2.3636363636363638,
+      "challenger_expected_wins_14w": 2.3636363636363638,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.73489163929297,
+      "challenger_weekly_mean": 72.73489163929297
+    },
+    {
+      "seed": 459820096,
+      "baseline_expected_wins_14w": 2.553030303030303,
+      "challenger_expected_wins_14w": 2.553030303030303,
+      "delta": 0.0,
+      "baseline_weekly_mean": 73.48398847710207,
+      "challenger_weekly_mean": 73.48398847710207
+    },
+    {
+      "seed": 459820097,
+      "baseline_expected_wins_14w": 2.0757575757575757,
+      "challenger_expected_wins_14w": 2.0757575757575757,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.99474821145895,
+      "challenger_weekly_mean": 70.99474821145895
+    },
+    {
+      "seed": 459820098,
+      "baseline_expected_wins_14w": 2.8636363636363638,
+      "challenger_expected_wins_14w": 2.8636363636363638,
+      "delta": 0.0,
+      "baseline_weekly_mean": 74.6002983666163,
+      "challenger_weekly_mean": 74.6002983666163
+    },
+    {
+      "seed": 459820099,
+      "baseline_expected_wins_14w": 1.8636363636363638,
+      "challenger_expected_wins_14w": 1.8636363636363638,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.00477819670975,
+      "challenger_weekly_mean": 70.00477819670975
+    },
+    {
+      "seed": 459820100,
+      "baseline_expected_wins_14w": 1.8484848484848486,
+      "challenger_expected_wins_14w": 1.8484848484848486,
+      "delta": 0.0,
+      "baseline_weekly_mean": 69.96110431222021,
+      "challenger_weekly_mean": 69.96110431222021
+    },
+    {
+      "seed": 459820101,
+      "baseline_expected_wins_14w": 2.1818181818181817,
+      "challenger_expected_wins_14w": 2.1893939393939394,
+      "delta": 0.007575757575757791,
+      "baseline_weekly_mean": 71.73767333423639,
+      "challenger_weekly_mean": 71.80707142323692
+    },
+    {
+      "seed": 459820102,
+      "baseline_expected_wins_14w": 2.287878787878788,
+      "challenger_expected_wins_14w": 2.287878787878788,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.97333024921166,
+      "challenger_weekly_mean": 71.97333024921166
+    },
+    {
+      "seed": 459820103,
+      "baseline_expected_wins_14w": 2.0833333333333335,
+      "challenger_expected_wins_14w": 2.0833333333333335,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.1301149880192,
+      "challenger_weekly_mean": 71.1301149880192
+    },
+    {
+      "seed": 459820104,
+      "baseline_expected_wins_14w": 2.25,
+      "challenger_expected_wins_14w": 2.25,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.50638375772752,
+      "challenger_weekly_mean": 72.50638375772752
+    },
+    {
+      "seed": 459820105,
+      "baseline_expected_wins_14w": 1.946969696969697,
+      "challenger_expected_wins_14w": 1.9621212121212122,
+      "delta": 0.015151515151515138,
+      "baseline_weekly_mean": 70.64321832479487,
+      "challenger_weekly_mean": 70.68847279421706
+    },
+    {
+      "seed": 459820106,
+      "baseline_expected_wins_14w": 2.1818181818181817,
+      "challenger_expected_wins_14w": 2.1818181818181817,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.73767333423639,
+      "challenger_weekly_mean": 71.73767333423639
+    },
+    {
+      "seed": 459820107,
+      "baseline_expected_wins_14w": 2.25,
+      "challenger_expected_wins_14w": 2.25,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.81660865249866,
+      "challenger_weekly_mean": 71.81660865249866
+    },
+    {
+      "seed": 459820108,
+      "baseline_expected_wins_14w": 1.946969696969697,
+      "challenger_expected_wins_14w": 1.946969696969697,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.6990856238579,
+      "challenger_weekly_mean": 70.6990856238579
+    },
+    {
+      "seed": 459820109,
+      "baseline_expected_wins_14w": 2.106060606060606,
+      "challenger_expected_wins_14w": 2.106060606060606,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.604179365666,
+      "challenger_weekly_mean": 71.604179365666
+    },
+    {
+      "seed": 459820110,
+      "baseline_expected_wins_14w": 2.2803030303030303,
+      "challenger_expected_wins_14w": 2.2803030303030303,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.86972080235033,
+      "challenger_weekly_mean": 71.88484285058605
+    },
+    {
+      "seed": 459820111,
+      "baseline_expected_wins_14w": 1.9848484848484849,
+      "challenger_expected_wins_14w": 1.9848484848484849,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.75039856538363,
+      "challenger_weekly_mean": 70.75039856538363
+    },
+    {
+      "seed": 459820112,
+      "baseline_expected_wins_14w": 2.9696969696969697,
+      "challenger_expected_wins_14w": 2.9696969696969697,
+      "delta": 0.0,
+      "baseline_weekly_mean": 75.24124405646583,
+      "challenger_weekly_mean": 75.24124405646583
+    },
+    {
+      "seed": 459820113,
+      "baseline_expected_wins_14w": 2.9924242424242427,
+      "challenger_expected_wins_14w": 2.9924242424242427,
+      "delta": 0.0,
+      "baseline_weekly_mean": 75.14060957418745,
+      "challenger_weekly_mean": 75.14060957418745
+    },
+    {
+      "seed": 459820114,
+      "baseline_expected_wins_14w": 1.9393939393939394,
+      "challenger_expected_wins_14w": 1.9393939393939394,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.42472061164824,
+      "challenger_weekly_mean": 70.42472061164824
+    },
+    {
+      "seed": 459820115,
+      "baseline_expected_wins_14w": 1.9015151515151516,
+      "challenger_expected_wins_14w": 1.9015151515151516,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.3748393995151,
+      "challenger_weekly_mean": 70.3748393995151
+    },
+    {
+      "seed": 459820116,
+      "baseline_expected_wins_14w": 2.2803030303030303,
+      "challenger_expected_wins_14w": 2.2803030303030303,
+      "delta": 0.0,
+      "baseline_weekly_mean": 72.1128126317132,
+      "challenger_weekly_mean": 72.1128126317132
+    },
+    {
+      "seed": 459820117,
+      "baseline_expected_wins_14w": 1.9848484848484849,
+      "challenger_expected_wins_14w": 1.9848484848484849,
+      "delta": 0.0,
+      "baseline_weekly_mean": 70.88361919432322,
+      "challenger_weekly_mean": 70.88361919432322
+    },
+    {
+      "seed": 459820118,
+      "baseline_expected_wins_14w": 2.1136363636363638,
+      "challenger_expected_wins_14w": 2.1136363636363638,
+      "delta": 0.0,
+      "baseline_weekly_mean": 71.30403980386171,
+      "challenger_weekly_mean": 71.30403980386171
+    },
+    {
+      "seed": 459820119,
+      "baseline_expected_wins_14w": 1.8106060606060606,
+      "challenger_expected_wins_14w": 1.8106060606060606,
+      "delta": 0.0,
+      "baseline_weekly_mean": 69.8493257313637,
+      "challenger_weekly_mean": 69.8493257313637
+    },
+    {
+      "seed": 459820120,
+      "baseline_expected_wins_14w": 1.9545454545454546,
+      "challenger_expected_wins_14w": 1.9621212121212122,
+      "delta": 0.007575757575757569,
+      "baseline_weekly_mean": 70.86064142077616,
+      "challenger_weekly_mean": 70.86779423703132
+    }
+  ]
+}
