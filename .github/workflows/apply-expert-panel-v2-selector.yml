@@ -21,68 +21,29 @@ jobs:
         run: |
           python <<'PY'
           from pathlib import Path
+          import re
           p=Path('app.js'); s=p.read_text()
-          reps=[]
-          reps.append(("'activePanel','diagnoseBtn'","'activePanel','expertConfig','diagnoseBtn'"))
-          reps.append(("let activePanelId=store.text('v7_activePanel','standard');\nlet positionPanels=store.get('v7_positionPanels',{QB:'qb',RB:'rb',WR:'wr',TE:'te'});","let activePanelId=store.text('v7_activePanel','standard');\nlet positionPanels=store.get('v7_positionPanels',{QB:'qb',RB:'rb',WR:'wr',TE:'te'});\nlet expertConfig=store.text('v118_expertConfig','baseline')==='v2'?'v2':'baseline';"))
-          reps.append(("els.strategyMode.value=store.text('v111_strategyMode','progressive');","els.strategyMode.value=store.text('v111_strategyMode','progressive');\nif(els.expertConfig)els.expertConfig.value=expertConfig;"))
-          reps.append(("store.set('v7_positionPanels',positionPanels);store.set('v7_adp',adp);","store.set('v7_positionPanels',positionPanels);store.setText('v118_expertConfig',expertConfig);store.set('v7_adp',adp);"))
-          old_presets="""const PRESETS={
-  standard:{name:'Standard',list:[['Pat Fitzmaurice',30],['Justin Boone',25],['Sean Koerner',20],['Andrew Erickson',15],['Derek Brown',10]],max:5},
-  rb:{name:'RB',list:[['Pat Fitzmaurice',35],['Justin Boone',30],['Sean Koerner',20],['Andrew Erickson',15],['Derek Brown',10]],max:4},
-  wr:{name:'WR',list:[['Matt Harmon',35],['Pat Fitzmaurice',30],['Justin Boone',20],['Andrew Erickson',15],['Derek Brown',10]],max:4},
-  qb:{name:'QB',list:[['Pat Fitzmaurice',45],['Justin Boone',30],['Sean Koerner',25],['Andrew Erickson',15]],max:3},
-  te:{name:'TE',list:[['Pat Fitzmaurice',40],['Justin Boone',25],['Andrew Erickson',20],['Derek Brown',15],['Sean Koerner',15]],max:4}
-};
-const DESIRED_EXPERT_POOL=['Pat Fitzmaurice','Justin Boone','Sean Koerner','Andrew Erickson','Derek Brown','Matt Harmon'];
-
-function desiredExpertPoolHealth(){
-  const rows=DESIRED_EXPERT_POOL.map(name=>{"""
-          new_presets="""const PRESETS={
-  standard:{name:'Baseline · Standard',list:[['Pat Fitzmaurice',30],['Justin Boone',25],['Sean Koerner',20],['Andrew Erickson',15],['Derek Brown',10]],max:5},
-  rb:{name:'Baseline · RB',list:[['Pat Fitzmaurice',35],['Justin Boone',30],['Sean Koerner',20],['Andrew Erickson',15],['Derek Brown',10]],max:4},
-  wr:{name:'Baseline · WR',list:[['Matt Harmon',35],['Pat Fitzmaurice',30],['Justin Boone',20],['Andrew Erickson',15],['Derek Brown',10]],max:4},
-  qb:{name:'Baseline · QB',list:[['Pat Fitzmaurice',45],['Justin Boone',30],['Sean Koerner',25],['Andrew Erickson',15]],max:3},
-  te:{name:'Baseline · TE',list:[['Pat Fitzmaurice',40],['Justin Boone',25],['Andrew Erickson',20],['Derek Brown',15],['Sean Koerner',15]],max:4},
-  v2qb:{name:'v2 Shadow · QB',list:[['Sean Koerner',35],['Guilherme Gianni',25],['Michael Bobal',20],['Justin Boone',20]],max:3},
-  v2rb:{name:'v2 Shadow · RB',list:[['Michael Bobal',30],['Guilherme Gianni',30],['Sean Koerner',25],['Ryan Weisse',15],['Pat Fitzmaurice',10]],max:4},
-  v2wr:{name:'v2 Shadow · WR',list:[['Sean Koerner',30],['Guilherme Gianni',30],['Matt Harmon',20],['Michael Bobal',20]],max:4},
-  v2te:{name:'v2 Shadow · TE',list:[['Ryan Weisse',35],['Pat Fitzmaurice',35],['Sean Koerner',30]],max:3}
-};
-const EXPERT_CONFIG_PANELS={
-  baseline:{QB:'qb',RB:'rb',WR:'wr',TE:'te'},
-  v2:{QB:'v2qb',RB:'v2rb',WR:'v2wr',TE:'v2te'}
-};
-function desiredExpertPoolNames(){
-  const ids=Object.values(EXPERT_CONFIG_PANELS[expertConfig]||EXPERT_CONFIG_PANELS.baseline);
-  return [...new Set(ids.flatMap(id=>(PRESETS[id]?.list||[]).map(([name])=>name)))];
-}
-
-function desiredExpertPoolHealth(){
-  const rows=desiredExpertPoolNames().map(name=>{"""
-          reps.append((old_presets,new_presets))
-          old_apply="function applyPreset(){if(!experts.length)throw new Error('Zuerst Experten laden.');const missing=[];for(const[id,p]of Object.entries(PRESETS)){const members={};for(const[name,w]of p.list){const e=findExpert(name);if(e&&Object.keys(members).length<p.max)members[e.id]=w;else if(!e)missing.push(name)}panels[id]={name:p.name,members}}const pat=findExpert('Pat Fitzmaurice');panels.pat={name:'Pat einzeln',members:pat?{[pat.id]:100}:{}};positionPanels={QB:'qb',RB:'rb',WR:'wr',TE:'te'};activePanelId='standard';panelRanks={};persist();renderAll();els.presetStatus.className='notice ok';els.presetStatus.textContent=`Preset eingerichtet.${missing.length?` Nicht gefunden: ${[...new Set(missing)].join(', ')}.`:''}`}"
-          new_apply="function applyPreset(){if(!experts.length)throw new Error('Zuerst Experten laden.');const missing=[];for(const[id,p]of Object.entries(PRESETS)){const members={};for(const[name,w]of p.list){const e=findExpert(name);if(e&&Object.keys(members).length<p.max)members[e.id]=w;else if(!e)missing.push(name)}panels[id]={name:p.name,members}}const pat=findExpert('Pat Fitzmaurice');panels.pat={name:'Pat einzeln',members:pat?{[pat.id]:100}:{}};positionPanels={...(EXPERT_CONFIG_PANELS[expertConfig]||EXPERT_CONFIG_PANELS.baseline)};activePanelId=expertConfig==='v2'?'v2wr':'standard';panelRanks={};persist();renderAll();els.presetStatus.className='notice ok';els.presetStatus.textContent=`${expertConfig==='v2'?'Accuracy/Position v2 Shadow':'Baseline'} eingerichtet.${missing.length?` Nicht gefunden: ${[...new Set(missing)].join(', ')}.`:''}`}"
-          reps.append((old_apply,new_apply))
-          reps.append(("function renderAll(){if(!panels[activePanelId])activePanelId='standard';panelOptions(els.activePanel,activePanelId);","function renderAll(){if(!panels[activePanelId])activePanelId='standard';if(els.expertConfig)els.expertConfig.value=expertConfig;panelOptions(els.activePanel,activePanelId);"))
-          reps.append(("const wanted=['Pat Fitzmaurice','Justin Boone','Sean Koerner','Andrew Erickson','Derek Brown','Matt Harmon'];","const wanted=desiredExpertPoolNames();"))
-          reps.append(("if(els.strategyMode)els.strategyMode.onchange=()=>{persist();els.strategyStatus.className='notice ok';els.strategyStatus.textContent=strategyStatusText(els.strategyMode.value);};","if(els.strategyMode)els.strategyMode.onchange=()=>{persist();els.strategyStatus.className='notice ok';els.strategyStatus.textContent=strategyStatusText(els.strategyMode.value);};\nif(els.expertConfig)els.expertConfig.onchange=()=>{expertConfig=els.expertConfig.value==='v2'?'v2':'baseline';applyPreset();persist();updateStatus();};"))
-          for old,new in reps:
-              if s.count(old)!=1:
-                  raise SystemExit('app baseline mismatch: '+old[:100])
+          def once(old,new,label):
+              global s
+              if s.count(old)!=1: raise SystemExit(f'{label} baseline mismatch: {s.count(old)}')
               s=s.replace(old,new)
+          once("'activePanel','diagnoseBtn'","'activePanel','expertConfig','diagnoseBtn'",'ids')
+          once("let positionPanels=store.get('v7_positionPanels',{QB:'qb',RB:'rb',WR:'wr',TE:'te'});","let positionPanels=store.get('v7_positionPanels',{QB:'qb',RB:'rb',WR:'wr',TE:'te'});\nlet expertConfig=store.text('v118_expertConfig','baseline')==='v2'?'v2':'baseline';",'config state')
+          once("els.strategyMode.value=store.text('v111_strategyMode','progressive');","els.strategyMode.value=store.text('v111_strategyMode','progressive');\nif(els.expertConfig)els.expertConfig.value=expertConfig;",'config init')
+          once("store.set('v7_positionPanels',positionPanels);store.set('v7_adp',adp);","store.set('v7_positionPanels',positionPanels);store.setText('v118_expertConfig',expertConfig);store.set('v7_adp',adp);",'config persist')
+          start=s.index('const PRESETS={')
+          end=s.index('function desiredExpertPoolHealth(){',start)
+          preset="const PRESETS={\n  standard:{name:'Baseline · Standard',list:[['Pat Fitzmaurice',30],['Justin Boone',25],['Sean Koerner',20],['Andrew Erickson',15],['Derek Brown',10]],max:5},\n  rb:{name:'Baseline · RB',list:[['Pat Fitzmaurice',35],['Justin Boone',30],['Sean Koerner',20],['Andrew Erickson',15],['Derek Brown',10]],max:4},\n  wr:{name:'Baseline · WR',list:[['Matt Harmon',35],['Pat Fitzmaurice',30],['Justin Boone',20],['Andrew Erickson',15],['Derek Brown',10]],max:4},\n  qb:{name:'Baseline · QB',list:[['Pat Fitzmaurice',45],['Justin Boone',30],['Sean Koerner',25],['Andrew Erickson',15]],max:3},\n  te:{name:'Baseline · TE',list:[['Pat Fitzmaurice',40],['Justin Boone',25],['Andrew Erickson',20],['Derek Brown',15],['Sean Koerner',15]],max:4},\n  v2qb:{name:'v2 Shadow · QB',list:[['Sean Koerner',35],['Guilherme Gianni',25],['Michael Bobal',20],['Justin Boone',20]],max:3},\n  v2rb:{name:'v2 Shadow · RB',list:[['Michael Bobal',30],['Guilherme Gianni',30],['Sean Koerner',25],['Ryan Weisse',15],['Pat Fitzmaurice',10]],max:4},\n  v2wr:{name:'v2 Shadow · WR',list:[['Sean Koerner',30],['Guilherme Gianni',30],['Matt Harmon',20],['Michael Bobal',20]],max:4},\n  v2te:{name:'v2 Shadow · TE',list:[['Ryan Weisse',35],['Pat Fitzmaurice',35],['Sean Koerner',30]],max:3}\n};\nconst EXPERT_CONFIG_PANELS={baseline:{QB:'qb',RB:'rb',WR:'wr',TE:'te'},v2:{QB:'v2qb',RB:'v2rb',WR:'v2wr',TE:'v2te'}};\nfunction desiredExpertPoolNames(){const ids=Object.values(EXPERT_CONFIG_PANELS[expertConfig]||EXPERT_CONFIG_PANELS.baseline);return [...new Set(ids.flatMap(id=>(PRESETS[id]?.list||[]).map(([name])=>name)))]}\n\n"
+          s=s[:start]+preset+s[end:]
+          once('const rows=DESIRED_EXPERT_POOL.map(name=>{','const rows=desiredExpertPoolNames().map(name=>{','health pool')
+          once("positionPanels={QB:'qb',RB:'rb',WR:'wr',TE:'te'};activePanelId='standard';panelRanks={};","positionPanels={...(EXPERT_CONFIG_PANELS[expertConfig]||EXPERT_CONFIG_PANELS.baseline)};activePanelId=expertConfig==='v2'?'v2wr':'standard';panelRanks={};",'apply preset config')
+          once("function renderAll(){if(!panels[activePanelId])activePanelId='standard';panelOptions(els.activePanel,activePanelId);","function renderAll(){if(!panels[activePanelId])activePanelId='standard';if(els.expertConfig)els.expertConfig.value=expertConfig;panelOptions(els.activePanel,activePanelId);",'render config')
+          once("const wanted=['Pat Fitzmaurice','Justin Boone','Sean Koerner','Andrew Erickson','Derek Brown','Matt Harmon'];","const wanted=desiredExpertPoolNames();",'load wanted')
+          once("if(els.strategyStatus){els.strategyStatus.className='notice ok';els.strategyStatus.textContent=strategyStatusText(els.strategyMode.value);}","if(els.strategyStatus){els.strategyStatus.className='notice ok';els.strategyStatus.textContent=strategyStatusText(els.strategyMode.value);}\nif(els.expertConfig)els.expertConfig.onchange=()=>{expertConfig=els.expertConfig.value==='v2'?'v2':'baseline';applyPreset();persist();updateStatus();};",'selector handler')
           p.write_text(s)
-
           h=Path('index.html'); t=h.read_text()
-          old="""    <div class="advanced-section">
-      <h3>Experten & Gewichtung</h3>
-      <label for="expertSearch">Experten suchen</label>"""
-          new="""    <div class="advanced-section">
-      <h3>Experten & Gewichtung</h3>
-      <label for="expertConfig">Expertenkonfiguration</label>
-      <select id="expertConfig"><option value="baseline">Baseline rc4.64</option><option value="v2">Accuracy / Position v2 · Shadow</option></select>
-      <p class="tiny">Baseline bleibt unverändert. v2 ist ein separat auswählbarer Testarm; fehlende oder veraltete Experten werden weiterhin fail-closed/degraded ausgewiesen.</p>
-      <label for="expertSearch">Experten suchen</label>"""
+          old='      <h3>Experten & Gewichtung</h3>\n      <label for="expertSearch">Experten suchen</label>'
+          new='      <h3>Experten & Gewichtung</h3>\n      <label for="expertConfig">Expertenkonfiguration</label>\n      <select id="expertConfig"><option value="baseline">Baseline rc4.64</option><option value="v2">Accuracy / Position v2 · Shadow</option></select>\n      <p class="tiny">Baseline bleibt unverändert. v2 ist ein separat auswählbarer Testarm; fehlende oder veraltete Experten werden weiterhin fail-closed/degraded ausgewiesen.</p>\n      <label for="expertSearch">Experten suchen</label>'
           if t.count(old)!=1: raise SystemExit('index baseline mismatch')
           h.write_text(t.replace(old,new))
           PY
@@ -97,14 +58,12 @@ function desiredExpertPoolHealth(){
           const v2=s.slice(s.indexOf("v2qb:{"),s.indexOf('const EXPERT_CONFIG_PANELS'));
           if(v2.includes('Derek Brown'))throw new Error('Derek Brown leaked into v2');
           if(v2.includes('Andrew Erickson'))throw new Error('Erickson promoted before marginal-value validation');
-          // Baseline identities/weights must remain intact despite display-name prefixing.
           for(const x of ["['Pat Fitzmaurice',30],['Justin Boone',25],['Sean Koerner',20],['Andrew Erickson',15],['Derek Brown',10]","['Matt Harmon',35],['Pat Fitzmaurice',30],['Justin Boone',20],['Andrew Erickson',15],['Derek Brown',10]"])if(!s.includes(x))throw new Error('baseline changed');
           console.log('expert configuration A/B invariants PASS');
           NODE
-      - name: Confirm only selector/preset surface changed in this commit
+      - name: Confirm isolated selector patch
         run: |
           git diff --stat
-          git diff --name-only | sort
           test "$(git diff --name-only | sort | tr '\n' ' ')" = "app.js index.html "
       - name: Commit shadow selector
         run: |
