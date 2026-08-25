@@ -5,6 +5,8 @@ on:
       - pitti-rc464-recovery-fixtures
     paths:
       - .github/workflows/rc464-recovery-v2.yml
+      - scripts_rc464_patch.py
+      - RC4_64_SAFETY_RESURRECTION_REGRESSION.js
   workflow_dispatch:
 permissions:
   contents: write
