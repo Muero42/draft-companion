@@ -1,0 +1,20 @@
+name: PITTI rc4.63 two-deep mechanism controls
+on:
+  push:
+    branches: [pitti-rc463-safety-two-deep-ab]
+    paths:
+      - research/rc463_two_deep_mechanism_controls_2026.js
+      - .github/workflows/pitti-rc463-two-deep-controls.yml
+permissions:
+  contents: read
+jobs:
+  controls:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-safety-two-deep-ab}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check research/rc463_two_deep_mechanism_controls_2026.js
+      - run: node research/rc463_two_deep_mechanism_controls_2026.js
