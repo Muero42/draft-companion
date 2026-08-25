@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+# workflow-ready-v2
 import json,glob,pathlib,statistics,math,urllib.request,collections
 
 DRAFT_ID='1225769229928648704'
