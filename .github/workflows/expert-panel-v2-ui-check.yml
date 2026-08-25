@@ -1,0 +1,33 @@
+name: Expert Panel v2 UI Check
+
+on:
+  push:
+    branches:
+      - pitti-rc464-expert-panel-v2-research
+  workflow_dispatch:
+
+jobs:
+  ui-regression:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: JavaScript syntax
+        run: node --check live-surface-v3.js
+      - name: Expert UI invariants
+        run: |
+          node <<'NODE'
+          const fs=require('fs');
+          const s=fs.readFileSync('live-surface-v3.js','utf8');
+          const required=[
+            "const EXPERT_ORDER=['Pat Fitzmaurice','Justin Boone','Sean Koerner','Matt Harmon','Andrew Erickson','Derek Brown']",
+            '<div class="live-experts"><b>Experten:</b>',
+            'expertOrderIndex(a.expertName)-expertOrderIndex(b.expertName)'
+          ];
+          for(const x of required){if(!s.includes(x))throw new Error('missing invariant: '+x)}
+          if(s.includes('<details><summary>Experten</summary>'))throw new Error('expert rows still collapsed');
+          console.log('expert UI invariants PASS');
+          NODE
+      - name: No scoring/runtime engine mutation in UI commit range
+        run: |
+          git diff --name-only 2d3ee246a1f0de0d250d48a9886d042d96d96471..HEAD
+          test "$(git diff --name-only 2d3ee246a1f0de0d250d48a9886d042d96d96471..HEAD | grep -E '^(app\.js|sw\.js|manifest\.webmanifest|worker\.js)$' || true)" = ""
