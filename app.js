@@ -11,7 +11,7 @@ const LIVE_DRAFT_ID_2026='1366053132970233856';
 function activeDraftSurface(){return localStorage.getItem('v118_draftSurface')==='live'?'live':'mock'}
 function resolveActiveDraftId(){return activeDraftSurface()==='live'?LIVE_DRAFT_ID_2026:draftId(els.draftInput.value)}
 function validateCanonicalLiveDraft({id,season,teams,rounds,slot}){const errors=[];if(String(id)!==LIVE_DRAFT_ID_2026)errors.push('Draft-ID');if(String(season)!=='2026')errors.push('Saison');if(Number(teams)!==10)errors.push('Teams');if(Number(rounds)!==15)errors.push('Runden');if(Number(slot)!==9)errors.push('Slot');return{ok:!errors.length,errors}}
-function normalCandidateAdmissible(row){const v=row?.valueSafety;if(!row?.r||!Number.isFinite(row.r.rank)||!v)return false;const max=v.triggered&&Number.isFinite(v.qualityBandMax)?v.qualityBandMax:Number(v.bestPanelRank)+Number(v.threshold);return Number.isFinite(max)&&row.r.rank<=max}
+function normalCandidateAdmissible(row){const v=row?.valueSafety;if(!row?.r||!Number.isFinite(row.r.rank)||!v)return false;const max=v.triggered&&Number.isFinite(v.effectiveQualityBandMax??v.qualityBandMax)?Number(v.effectiveQualityBandMax??v.qualityBandMax):Number(v.bestPanelRank)+Number(v.threshold);return Number.isFinite(max)&&row.r.rank<=max}
 function visibleCoachCandidates(rows){const source=(rows||[]).filter(x=>x?.p&&x?.r);return source.slice(0,10).map(row=>({...row,outsideNormalCut:!normalCandidateAdmissible(row)}))}
 
 let experts=store.get('v7_experts',[]);
@@ -1291,6 +1291,7 @@ function applyPlayerQualitySafetyGate(rows,current){
     bestPanelRank,
     threshold,
     qualityBandMax,
+    effectiveQualityBandMax:eligibleBandMax,
     naturalLeaderRank:naturalLeader.r.rank,
     safetyLeaderRank:safetyLeader?.r?.rank??null,
     promoted:!overrideValid&&x===safetyLeader,
@@ -1302,6 +1303,7 @@ function applyPlayerQualitySafetyGate(rows,current){
     bestPanelRank,
     threshold,
     qualityBandMax,
+    effectiveQualityBandMax:eligibleBandMax,
     naturalLeaderRank:naturalLeader.r.rank,
     safetyLeaderRank:safetyLeader?.r?.rank??null,
     promoted:!overrideValid,
