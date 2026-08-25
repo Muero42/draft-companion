@@ -1,0 +1,49 @@
+name: PITTI rc4.63 safety-guard paired Championship Utility
+on:
+  workflow_dispatch:
+  push:
+    branches: [pitti-rc463-roster-championship-v5-marginal]
+    paths:
+      - research/rc463_safety_guard_championship_utility_2026.py
+      - .github/workflows/pitti-rc463-safety-guard-utility.yml
+permissions:
+  actions: read
+  contents: write
+jobs:
+  utility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-roster-championship-v5-marginal}
+      - name: Wait for full-safety comparator
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          python - <<'PY'
+          import json,subprocess,time,os
+          runs=[32835358363,32832269866];repo=os.environ['GITHUB_REPOSITORY'];deadline=time.time()+1200
+          while True:
+            st=[]
+            for r in runs:
+              x=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/runs/{r}']));st.append((r,x.get('status'),x.get('conclusion')))
+            print(st,flush=True)
+            if all(s=='completed' for _,s,_ in st):
+              bad=[z for z in st if z[2]!='success']
+              if bad:raise SystemExit('source run failure '+repr(bad))
+              break
+            if time.time()>deadline:raise SystemExit('wait timeout '+repr(st))
+            time.sleep(20)
+          PY
+      - name: Download exact paired rosters
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          mkdir -p /tmp/full /tmp/guard
+          gh run download 32835358363 -D /tmp/full --pattern 'rc463-full-safety-baseline-*'
+          gh run download 32832269866 -D /tmp/guard --pattern 'rc463-baseline-roster-*'
+      - run: python research/rc463_safety_guard_championship_utility_2026.py
+      - name: Persist safety-guard utility
+        run: |
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git add diagnostics_2026/RC463_SAFETY_GUARD_PAIRED_CHAMPIONSHIP_UTILITY_120_20260825.json
+          if ! git diff --cached --quiet; then git commit -m 'research: persist safety-guard paired Championship Utility' && git push origin HEAD:pitti-rc463-roster-championship-v5-marginal; fi
