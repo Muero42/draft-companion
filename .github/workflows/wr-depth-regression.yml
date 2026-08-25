@@ -1,0 +1,44 @@
+name: WR Depth Regression
+
+on:
+  push:
+    branches:
+      - pitti-rc464-expert-panel-v2-research
+  workflow_dispatch:
+
+jobs:
+  wr-depth:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate diminishing WR utility without hard cap
+        run: |
+          node --check app.js
+          node <<'NODE'
+          const fs=require('fs'),vm=require('vm');
+          const s=fs.readFileSync('app.js','utf8');
+          function fn(name){
+            const start=s.indexOf('function '+name+'('); if(start<0)throw new Error('missing '+name);
+            let b=s.indexOf('{',start),depth=0,end=-1;
+            for(let i=b;i<s.length;i++){if(s[i]==='{')depth++; else if(s[i]==='}'&&--depth===0){end=i+1;break}}
+            if(end<0)throw new Error('unclosed '+name); return s.slice(start,end);
+          }
+          const ctx={Math}; vm.createContext(ctx);
+          vm.runInContext(fn('progressiveStage')+'\n'+fn('progressiveUpsideBonus')+'\n'+fn('marginalRosterUtility'),ctx);
+          const wr=(yearsExp=0)=>({pos:'WR',yearsExp});
+          function total(current,count,yearsExp=0){const state={counts:{WR:count}};return ctx.progressiveUpsideBonus(wr(yearsExp),current,state)+ctx.marginalRosterUtility(wr(yearsExp),current,state)}
+          const cases=[
+            [80,7,0,0,'early draft unchanged'],
+            [100,7,0,-7,'young WR8 transition'],
+            [112,7,0,-9,'young WR8 bench stage'],
+            [129,7,0,-10.5,'young WR8 endgame'],
+            [112,6,0,-0.5,'WR7 remains viable'],
+            [129,8,0,-14.5,'young WR9 strongly diminished'],
+            [129,7,4,-14,'veteran WR8 has no young-player offset']
+          ];
+          for(const [pick,n,exp,want,label] of cases){const got=total(pick,n,exp);if(Math.abs(got-want)>1e-9)throw new Error(`${label}: got ${got}, want ${want}`);console.log(`${label}: ${got}`)}
+          // No WR count may be converted into a hard exclusion. This challenger is score-only.
+          const hard=[/p\.pos===['\"]WR['\"][^\n]{0,100}return\s*\{?\s*score\s*:\s*-99/i,/counts\.WR\s*>?=\s*[6789][^\n]{0,100}continue/i];
+          for(const re of hard)if(re.test(s))throw new Error('possible WR hard-cap/exclusion detected: '+re);
+          console.log('WR depth regression PASS: diminishing utility, no hard cap');
+          NODE
