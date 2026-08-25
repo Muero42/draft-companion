@@ -1,0 +1,45 @@
+name: PITTI rc4.63 marginal-safety paired Championship Utility
+on:
+  push:
+    branches: [pitti-rc463-safety-marginal-ab]
+    paths:
+      - research/rc463_marginal_safety_championship_utility_2026.py
+      - .github/workflows/pitti-rc463-marginal-safety-utility.yml
+permissions:
+  actions: read
+  contents: write
+jobs:
+  utility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-safety-marginal-ab}
+      - name: Wait for exact marginal source run
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          python - <<'PY'
+          import json,subprocess,time,os
+          run=32859803286;repo=os.environ['GITHUB_REPOSITORY'];deadline=time.time()+1800
+          while True:
+            x=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/runs/{run}']))
+            print(run,x.get('status'),x.get('conclusion'),flush=True)
+            if x.get('status')=='completed':
+              if x.get('conclusion')!='success': raise SystemExit('marginal source failure')
+              break
+            if time.time()>deadline: raise SystemExit('wait timeout')
+            time.sleep(20)
+          PY
+      - name: Download exact paired rosters
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          mkdir -p /tmp/full /tmp/marginal
+          gh run download 32839901036 -D /tmp/full --pattern 'rc463-full-safety-baseline-*'
+          gh run download 32859803286 -D /tmp/marginal --pattern 'rc463-marginal-safety-*'
+      - run: python research/rc463_marginal_safety_championship_utility_2026.py
+      - name: Persist marginal utility
+        run: |
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git add diagnostics_2026/RC463_MARGINAL_SAFETY_PAIRED_CHAMPIONSHIP_UTILITY_120_20260825.json
+          if ! git diff --cached --quiet; then git commit -m 'research: persist marginal-safety paired Championship Utility' && git push origin HEAD:pitti-rc463-safety-marginal-ab; fi
