@@ -1,0 +1,407 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "research_only": true,
+  "production_mutation": false,
+  "paired_seed_family": "459820001..459820120",
+  "seeds": 120,
+  "baseline_file": "diagnostics_2026/REALISTIC_SCALE_120_20260824.json",
+  "qb_counts": {
+    "1": 120
+  },
+  "te_counts": {
+    "1": 120
+  },
+  "mean_position_counts": {
+    "QB": 1.0,
+    "RB": 6.725,
+    "WR": 6.275,
+    "TE": 1.0,
+    "K": 0.0,
+    "DEF": 0.0
+  },
+  "baseline_mean_position_counts": {
+    "QB": 1.0,
+    "RB": 5.833333333333333,
+    "WR": 7.166666666666667,
+    "TE": 1.0,
+    "K": 0.0,
+    "DEF": 0.0
+  },
+  "mean_position_deltas": {
+    "DEF": 0.0,
+    "K": 0.0,
+    "QB": 0.0,
+    "RB": 0.8916666666666666,
+    "TE": 0.0,
+    "WR": -0.8916666666666666
+  },
+  "pick_choice_counts": {
+    "9": {
+      "James Cook III": 61,
+      "Amon-Ra St. Brown": 40,
+      "Jonathan Taylor": 10,
+      "Jaxon Smith-Njigba": 9
+    },
+    "12": {
+      "Brock Bowers": 118,
+      "James Cook III": 2
+    },
+    "29": {
+      "Chris Olave": 50,
+      "Malik Nabers": 49,
+      "Kyren Williams": 17,
+      "Jeremiyah Love": 3,
+      "George Pickens": 1
+    },
+    "32": {
+      "Zay Flowers": 70,
+      "Chris Olave": 47,
+      "DeVonta Smith": 3
+    },
+    "49": {
+      "D'Andre Swift": 48,
+      "Jaylen Waddle": 25,
+      "Travis Etienne Jr.": 17,
+      "Terry McLaurin": 9,
+      "Garrett Wilson": 5,
+      "Zay Flowers": 4,
+      "David Montgomery": 3,
+      "Ladd McConkey": 3,
+      "Cam Skattebo": 2,
+      "Colston Loveland": 1,
+      "Tee Higgins": 1,
+      "Bucky Irving": 1,
+      "Tyler Warren": 1
+    },
+    "52": {
+      "Terry McLaurin": 48,
+      "D'Andre Swift": 33,
+      "Jameson Williams": 22,
+      "David Montgomery": 12,
+      "Jaylen Waddle": 3,
+      "Luther Burden III": 1,
+      "Bucky Irving": 1
+    },
+    "69": {
+      "Parker Washington": 39,
+      "Christian Watson": 32,
+      "Rome Odunze": 12,
+      "Jalen Hurts": 10,
+      "Jadarian Price": 8,
+      "Carnell Tate": 6,
+      "Bhayshul Tuten": 5,
+      "Jayden Daniels": 3,
+      "Mike Evans": 3,
+      "Joe Burrow": 1,
+      "Jaylen Warren": 1
+    },
+    "72": {
+      "Marvin Harrison Jr.": 41,
+      "Parker Washington": 40,
+      "Jayden Daniels": 19,
+      "Jaylen Warren": 9,
+      "Christian Watson": 3,
+      "Carnell Tate": 2,
+      "Rhamondre Stevenson": 2,
+      "Jalen Hurts": 2,
+      "Jadarian Price": 1,
+      "Caleb Williams": 1
+    },
+    "89": {
+      "Jonathon Brooks": 64,
+      "Trevor Lawrence": 12,
+      "Justin Herbert": 10,
+      "Caleb Williams": 8,
+      "Blake Corum": 7,
+      "Tony Pollard": 5,
+      "Rhamondre Stevenson": 5,
+      "Rico Dowdle": 5,
+      "Stefon Diggs": 2,
+      "Dak Prescott": 1,
+      "Marvin Harrison Jr.": 1
+    },
+    "92": {
+      "Blake Corum": 45,
+      "Trevor Lawrence": 17,
+      "Rico Dowdle": 16,
+      "Jacory Croskey-Merritt": 13,
+      "Jonathon Brooks": 10,
+      "Caleb Williams": 6,
+      "Justin Herbert": 6,
+      "Tony Pollard": 4,
+      "Dak Prescott": 1,
+      "Stefon Diggs": 1,
+      "Rhamondre Stevenson": 1
+    },
+    "109": {
+      "Stefon Diggs": 47,
+      "Jacory Croskey-Merritt": 20,
+      "Trevor Lawrence": 11,
+      "Josh Downs": 10,
+      "Kenny Gainwell": 8,
+      "Jordan Mason": 7,
+      "Brock Purdy": 6,
+      "Rachaad White": 4,
+      "Blake Corum": 2,
+      "Chris Godwin Jr.": 1,
+      "Michael Pittman Jr.": 1,
+      "Jaxson Dart": 1,
+      "Quentin Johnston": 1,
+      "Dak Prescott": 1
+    },
+    "112": {
+      "Stefon Diggs": 29,
+      "Kenny Gainwell": 23,
+      "Jordan Mason": 22,
+      "Rachaad White": 19,
+      "Josh Downs": 17,
+      "Jaxson Dart": 3,
+      "Jacory Croskey-Merritt": 3,
+      "Brock Purdy": 1,
+      "Aaron Jones Sr.": 1,
+      "Quentin Johnston": 1,
+      "Michael Pittman Jr.": 1
+    },
+    "129": {
+      "Jonah Coleman": 83,
+      "Rachaad White": 14,
+      "Jalen Coker": 9,
+      "Aaron Jones Sr.": 4,
+      "Chris Rodriguez Jr.": 3,
+      "Jayden Reed": 1,
+      "KC Concepcion": 1,
+      "De'Zhaun Stribling": 1,
+      "Wan'Dale Robinson": 1,
+      "Jakobi Meyers": 1,
+      "Zach Charbonnet": 1,
+      "Matthew Golden": 1
+    },
+    "132": {
+      "Chris Rodriguez Jr.": 58,
+      "Jonah Coleman": 15,
+      "De'Zhaun Stribling": 13,
+      "Jalen Coker": 12,
+      "Tyler Allgeier": 8,
+      "Matthew Golden": 7,
+      "Zach Charbonnet": 5,
+      "Keaton Mitchell": 2
+    },
+    "149": {
+      "Keaton Mitchell": 73,
+      "Jalen Coker": 22,
+      "Tank Bigsby": 10,
+      "Chris Rodriguez Jr.": 5,
+      "Jonah Coleman": 3,
+      "De'Zhaun Stribling": 2,
+      "Woody Marks": 2,
+      "Denzel Boston": 2,
+      "MarShawn Lloyd": 1
+    }
+  },
+  "baseline_pick_choice_counts": {
+    "9": {
+      "James Cook III": 61,
+      "Amon-Ra St. Brown": 40,
+      "Jonathan Taylor": 10,
+      "Jaxon Smith-Njigba": 9
+    },
+    "12": {
+      "Brock Bowers": 118,
+      "James Cook III": 2
+    },
+    "29": {
+      "Chris Olave": 95,
+      "Kyren Williams": 17,
+      "Malik Nabers": 7,
+      "George Pickens": 1
+    },
+    "32": {
+      "Zay Flowers": 106,
+      "Chris Olave": 12,
+      "DeVonta Smith": 2
+    },
+    "49": {
+      "D'Andre Swift": 47,
+      "Jaylen Waddle": 32,
+      "Travis Etienne Jr.": 18,
+      "Terry McLaurin": 9,
+      "Garrett Wilson": 6,
+      "Cam Skattebo": 2,
+      "David Montgomery": 2,
+      "Colston Loveland": 1,
+      "Ladd McConkey": 1,
+      "Zay Flowers": 1,
+      "Tyler Warren": 1
+    },
+    "52": {
+      "Terry McLaurin": 44,
+      "D'Andre Swift": 37,
+      "Jameson Williams": 23,
+      "David Montgomery": 14,
+      "Luther Burden III": 1,
+      "Bucky Irving": 1
+    },
+    "69": {
+      "Parker Washington": 41,
+      "Christian Watson": 38,
+      "Jalen Hurts": 10,
+      "Jadarian Price": 8,
+      "Carnell Tate": 7,
+      "Rome Odunze": 6,
+      "Bhayshul Tuten": 4,
+      "Mike Evans": 3,
+      "Jayden Daniels": 2,
+      "Joe Burrow": 1
+    },
+    "72": {
+      "Marvin Harrison Jr.": 49,
+      "Parker Washington": 40,
+      "Jayden Daniels": 16,
+      "Jaylen Warren": 6,
+      "Jalen Hurts": 4,
+      "Rhamondre Stevenson": 2,
+      "Carnell Tate": 1,
+      "Jadarian Price": 1,
+      "Caleb Williams": 1
+    },
+    "89": {
+      "Jonathon Brooks": 58,
+      "Trevor Lawrence": 15,
+      "Justin Herbert": 12,
+      "Rhamondre Stevenson": 10,
+      "Caleb Williams": 9,
+      "Blake Corum": 7,
+      "Tony Pollard": 4,
+      "Rico Dowdle": 3,
+      "Stefon Diggs": 2
+    },
+    "92": {
+      "Blake Corum": 28,
+      "Trevor Lawrence": 26,
+      "Jacory Croskey-Merritt": 20,
+      "Rico Dowdle": 14,
+      "Jonathon Brooks": 11,
+      "Justin Herbert": 7,
+      "Caleb Williams": 5,
+      "Tony Pollard": 4,
+      "Stefon Diggs": 2,
+      "Dak Prescott": 2,
+      "DK Metcalf": 1
+    },
+    "109": {
+      "Stefon Diggs": 65,
+      "Jacory Croskey-Merritt": 19,
+      "Josh Downs": 11,
+      "Brock Purdy": 7,
+      "Blake Corum": 5,
+      "Jordan Mason": 4,
+      "Kenny Gainwell": 4,
+      "Rachaad White": 2,
+      "Michael Pittman Jr.": 1,
+      "Trevor Lawrence": 1,
+      "Chris Godwin Jr.": 1
+    },
+    "112": {
+      "Josh Downs": 34,
+      "Jordan Mason": 24,
+      "Stefon Diggs": 19,
+      "Rachaad White": 14,
+      "Kenny Gainwell": 13,
+      "Jacory Croskey-Merritt": 5,
+      "Jordan Addison": 4,
+      "KC Concepcion": 2,
+      "Wan'Dale Robinson": 1,
+      "Brock Purdy": 1,
+      "Aaron Jones Sr.": 1,
+      "Jaxson Dart": 1,
+      "Michael Pittman Jr.": 1
+    },
+    "129": {
+      "Jalen Coker": 87,
+      "Rachaad White": 18,
+      "KC Concepcion": 5,
+      "Jonah Coleman": 4,
+      "Aaron Jones Sr.": 3,
+      "De'Zhaun Stribling": 2,
+      "Wan'Dale Robinson": 1
+    },
+    "132": {
+      "Jonah Coleman": 73,
+      "Jalen Coker": 21,
+      "De'Zhaun Stribling": 17,
+      "Chris Rodriguez Jr.": 4,
+      "Matthew Golden": 3,
+      "KC Concepcion": 2
+    },
+    "149": {
+      "Keaton Mitchell": 87,
+      "Chris Rodriguez Jr.": 10,
+      "Jonah Coleman": 10,
+      "Tank Bigsby": 9,
+      "De'Zhaun Stribling": 2,
+      "Denzel Boston": 2
+    }
+  },
+  "pick_distribution_l1": {
+    "9": 0.0,
+    "12": 0.0,
+    "29": 0.375,
+    "32": 0.3,
+    "49": 0.075,
+    "52": 0.058333333333333334,
+    "69": 0.075,
+    "72": 0.08333333333333333,
+    "89": 0.09166666666666666,
+    "92": 0.175,
+    "109": 0.19166666666666668,
+    "112": 0.23333333333333334,
+    "129": 0.725,
+    "132": 0.6083333333333333,
+    "149": 0.21666666666666667
+  },
+  "first_turn_pair_counts": [
+    {
+      "pick9": "James Cook III",
+      "pick12": "Brock Bowers",
+      "n": 61
+    },
+    {
+      "pick9": "Amon-Ra St. Brown",
+      "pick12": "Brock Bowers",
+      "n": 39
+    },
+    {
+      "pick9": "Jonathan Taylor",
+      "pick12": "Brock Bowers",
+      "n": 10
+    },
+    {
+      "pick9": "Jaxon Smith-Njigba",
+      "pick12": "Brock Bowers",
+      "n": 8
+    },
+    {
+      "pick9": "Amon-Ra St. Brown",
+      "pick12": "James Cook III",
+      "n": 1
+    },
+    {
+      "pick9": "Jaxon Smith-Njigba",
+      "pick12": "James Cook III",
+      "n": 1
+    }
+  ],
+  "checks": {
+    "paired_seed_union": true,
+    "qb2plus_zero": true,
+    "te2plus_zero": true,
+    "no_k_def": true,
+    "max_early_pick_distribution_l1": 0.375
+  },
+  "interpretation_gate": {
+    "late_roster_shift_direction": "inspect WR/RB deltas and picks 109/112/129/132/149",
+    "early_round_stability": "diagnostic; do not promote if material unexplained shifts",
+    "promotion_authorized": false
+  }
+}
