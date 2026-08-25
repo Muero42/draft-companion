@@ -5,6 +5,7 @@ on:
       - pitti-rc464-recovery-fixtures
     paths:
       - .github/workflows/rc464-candidate-gate-package.yml
+      - Draft_Companion_IR_Stash_And_Fetch_Regression_2026-08-13.js
   workflow_dispatch:
 permissions:
   contents: write
