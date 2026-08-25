@@ -1,0 +1,19 @@
+name: PITTI rc4.64 post-apply candidate verification
+on:
+  push:
+    branches: [pitti-rc464-minimal-safety-candidate]
+    paths: [app.js]
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc464-minimal-safety-candidate}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check app.js
+      - run: node --check research/rc464_postapply_candidate_regression.js
+      - run: node research/rc464_postapply_candidate_regression.js
