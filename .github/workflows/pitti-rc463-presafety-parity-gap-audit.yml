@@ -1,0 +1,53 @@
+name: PITTI rc4.63 pre-safety parity and gap audit
+on:
+  push:
+    branches: [pitti-rc463-pre-safety-instrumentation]
+    paths:
+      - 'research/rc463_presafety_parity_gap_audit_2026.py'
+      - '.github/workflows/pitti-rc463-presafety-parity-gap-audit.yml'
+permissions:
+  contents: write
+  actions: read
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc463-pre-safety-instrumentation
+      - name: Wait for instrumented source run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,subprocess,time,os
+          runs=[32839901036,32863336439];repo=os.environ['GITHUB_REPOSITORY'];deadline=time.time()+2100
+          while True:
+            st=[]
+            for r in runs:
+              x=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/runs/{r}']));st.append((r,x.get('status'),x.get('conclusion')))
+            print(st,flush=True)
+            if all(s=='completed' for _,s,_ in st):
+              bad=[z for z in st if z[2]!='success']
+              if bad:raise SystemExit('source run failure '+repr(bad))
+              break
+            if time.time()>deadline:raise SystemExit('wait timeout '+repr(st))
+            time.sleep(20)
+          PY
+      - name: Download exact baseline and instrumented artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/base /tmp/inst
+          gh run download 32839901036 -D /tmp/base --pattern 'rc463-full-safety-baseline-*'
+          gh run download 32863336439 -D /tmp/inst --pattern 'rc463-full-safety-presafety-*'
+      - run: python -m py_compile research/rc463_presafety_parity_gap_audit_2026.py
+      - run: python research/rc463_presafety_parity_gap_audit_2026.py
+      - name: Persist audit
+        run: |
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git pull --rebase origin pitti-rc463-pre-safety-instrumentation
+          git add diagnostics_2026/RC463_PRESAFETY_PARITY_GAP_AUDIT_120_20260825.json
+          if ! git diff --cached --quiet; then git commit -m 'research: persist pre-safety parity gap audit' && git push origin HEAD:pitti-rc463-pre-safety-instrumentation; fi
