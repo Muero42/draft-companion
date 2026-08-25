@@ -1,0 +1,71 @@
+name: PITTI rc4.63 FullSafety late-WR near-tie isolated
+on:
+  workflow_dispatch:
+  push:
+    branches: [pitti-rc463-safety-neartie-ab]
+    paths:
+      - research/rc463_fullsafety_latewr_neartie_120_shard_2026.js
+      - .github/workflows/pitti-rc463-fullsafety-latewr-neartie.yml
+permissions:
+  actions: read
+  contents: write
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      max-parallel: 12
+      matrix: {shard: [0,1,2,3,4,5,6,7,8,9,10,11]}
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-safety-neartie-ab}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check research/rc463_fullsafety_latewr_neartie_120_shard_2026.js
+      - name: Run isolated treatment shard
+        env: {PITTI_SHARD: "${{ matrix.shard }}"}
+        run: node research/rc463_fullsafety_latewr_neartie_120_shard_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: fullsafety-latewr-${{ matrix.shard }}
+          path: simulation_2026/RC463_FULLSAFETY_LATEWR_NEARTIE_SHARD_${{ matrix.shard }}_2026.json
+          if-no-files-found: error
+          retention-days: 14
+  evaluate:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-safety-neartie-ab}
+      - name: Download shards
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: mkdir -p /tmp/latewr && gh run download ${{ github.run_id }} -D /tmp/latewr --pattern 'fullsafety-latewr-*'
+      - name: Evaluate isolated treatment
+        run: |
+          python - <<'PY'
+          import json,glob,collections,pathlib
+          ds=[]
+          for p in glob.glob('/tmp/latewr/**/*.json',recursive=True):
+            x=json.load(open(p))
+            if x.get('status')!='PASS' or not x.get('rc463_fullsafety_latewr_neartie'): raise RuntimeError('invalid shard '+p)
+            ds += x['drafts']
+          ds=sorted(ds,key=lambda d:int(d['seed']))
+          exp=list(range(459820001,459820121))
+          if [int(d['seed']) for d in ds]!=exp: raise RuntimeError('seed union mismatch')
+          pos=collections.Counter(); picks={}; q=collections.Counter(); t=collections.Counter()
+          for d in ds:
+            for k,v in d['position_counts'].items(): pos[k]+=v
+            q[d['position_counts'].get('QB',0)]+=1;t[d['position_counts'].get('TE',0)]+=1
+            for z in d['decisions']: picks.setdefault(str(z['pick']),collections.Counter())[z['name']]+=1
+          means={k:v/120 for k,v in pos.items()}; picks={k:dict(v) for k,v in picks.items()}
+          out={'schema':1,'status':'PASS','research_only':True,'production_mutation':False,'seed_family':'459820001..459820120','seeds':120,'treatment':'late-WR near-tie only on production-like Full Safety; QB/TE Safety unchanged','mean_position_counts':means,'qb_counts':dict(q),'te_counts':dict(t),'pick_choice_counts':picks,'checks':{'no_k_def':means.get('K',0)==0 and means.get('DEF',0)==0},'next_gate':'paired exact Full-Safety baseline delta + independent complete-roster Championship Utility'}
+          pathlib.Path('diagnostics_2026/RC463_FULLSAFETY_LATEWR_NEARTIE_120_20260825.json').write_text(json.dumps(out,indent=2));print(json.dumps(out,indent=2))
+          PY
+      - name: Persist result
+        run: |
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git add diagnostics_2026/RC463_FULLSAFETY_LATEWR_NEARTIE_120_20260825.json
+          if ! git diff --cached --quiet; then git commit -m 'research: persist isolated FullSafety late-WR 120-seed result' && git push origin HEAD:pitti-rc463-safety-neartie-ab; fi
