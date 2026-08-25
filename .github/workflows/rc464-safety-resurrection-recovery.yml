@@ -1,0 +1,88 @@
+name: rc4.64 Safety-resurrection recovery
+on:
+  push:
+    branches: [pitti-rc464-recovery-fixtures]
+    paths:
+      - 'RC4_64_SAFETY_RESURRECTION_REGRESSION.js'
+      - '.github/workflows/rc464-safety-resurrection-recovery.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  recover:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply narrow causal repair
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('app.js'); s=p.read_text()
+          old="""  const qualityBandMax=bestPanelRank+Math.max(3,Math.floor(threshold/2));
+  const qualityBand=valid.filter(x=>x.r.rank<=qualityBandMax);
+  const safetyLeader=qualityBand.slice().sort((a,b)=>b.rawScore-a.rawScore||a.r.rank-b.r.rank)[0];"""
+          new="""  const qualityBandMax=bestPanelRank+Math.max(3,Math.floor(threshold/2));
+  // rc4.64: Safety may not resurrect a repeated QB/TE after roster scoring already
+  // demoted it. First QB/TE remain normal; repeated-position players remain eligible
+  // when they naturally win. Only the existing objectively exceptional slide definition
+  // from rosterExceptionPenalty may re-enter the Safety promotion band.
+  const safetyPromotionEligible=x=>{
+    if(x.p.pos==='QB'&&(x.stateCounts?.QB??0)>=1){
+      return x.r.rank<=45&&Number.isFinite(x.a)&&current-x.a>=35;
+    }
+    if(x.p.pos==='TE'&&(x.stateCounts?.TE??0)>=1){
+      return x.r.rank<=35&&Number.isFinite(x.a)&&current-x.a>=30;
+    }
+    return true;
+  };
+  const eligible=valid.filter(safetyPromotionEligible);
+  const eligibleBestPanelRank=eligible.length?Math.min(...eligible.map(x=>x.r.rank)):bestPanelRank;
+  const eligibleBandMax=eligibleBestPanelRank+Math.max(3,Math.floor(threshold/2));
+  const qualityBand=eligible.filter(x=>x.r.rank<=eligibleBandMax);
+  const safetyLeader=qualityBand.slice().sort((a,b)=>b.rawScore-a.rawScore||a.r.rank-b.r.rank)[0];"""
+          if old not in s: raise SystemExit('target Safety block not found')
+          s=s.replace(old,new,1)
+          old2="""    const scored=rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,strategy)})).filter(x=>x.r);
+    const referenceBalanced=strategy==='progressive'?rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,'balanced')})).filter(x=>x.r):null;"""
+          new2="""    const scored=rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,strategy),stateCounts:{...state.counts}})).filter(x=>x.r);
+    const referenceBalanced=strategy==='progressive'?rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,'balanced'),stateCounts:{...state.counts}})).filter(x=>x.r):null;"""
+          if old2 not in s: raise SystemExit('target scored block not found')
+          s=s.replace(old2,new2,1)
+          p.write_text(s)
+          PY
+      - name: Deterministic gates
+        run: |
+          set -euo pipefail
+          node --check app.js
+          node RC4_64_SAFETY_RESURRECTION_REGRESSION.js
+          node Draft_Companion_Dress_Rehearsal_Regression_2026-08-14.js
+          node Draft_Companion_Position_Path_Regression_2026-08-13.js
+          node Draft_Companion_Player_Quality_Expert_Health_Regression_2026-08-13.js
+          node Draft_Companion_Return_Geometry_Market_Regression_2026-08-13.js
+          node Draft_Companion_Scarcity_Double_Count_Regression_2026-08-13.js
+          grep -q "USER_HARD_QB_EXCLUSIONS" app.js
+          grep -q "LIVE_DRAFT_ID_2026='1366053132970233856'" app.js
+          grep -q "snapshotFingerprint" app.js
+          grep -q "simulateReturnV2" app.js
+          ! grep -q "PairSum" research/RC464_RECOVERY_GATE_2026-08-25.md || grep -q "No PairSum" research/RC464_RECOVERY_GATE_2026-08-25.md
+      - name: Verify patch scope
+        run: |
+          git diff -- app.js
+          python3 - <<'PY'
+          from pathlib import Path
+          s=Path('app.js').read_text()
+          assert 'const safetyPromotionEligible=x=>' in s
+          assert "x.p.pos==='QB'&&(x.stateCounts?.QB??0)>=1" in s
+          assert "x.p.pos==='TE'&&(x.stateCounts?.TE??0)>=1" in s
+          assert 'current-x.a>=35' in s and 'current-x.a>=30' in s
+          assert 'stateCounts:{...state.counts}' in s
+          print('PASS narrow patch scope markers')
+          PY
+      - name: Commit verified candidate
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.js
+          git diff --cached --quiet && exit 0
+          git commit -m "rc4.64: prevent QB2 TE2 Safety resurrection"
+          git push
