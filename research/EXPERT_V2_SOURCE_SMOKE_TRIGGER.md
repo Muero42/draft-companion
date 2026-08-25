@@ -1,0 +1,1 @@
+Probe the current public FantasyPros 2026 Half-PPR overall draft pages for v2 candidates from GitHub Actions. This is source-availability diagnostics only; do not promote an expert from this probe alone.
