@@ -1,0 +1,73 @@
+name: PITTI rc4.63 Extreme M50 Screen
+on:
+  push:
+    branches: [pitti-rc463-presafety-threshold-ab]
+    paths:
+      - '.github/workflows/pitti-rc463-presafety-extreme-m50.yml'
+      - 'research/rc463_presafety_extreme_m50_shard_2026.js'
+      - 'research/rc463_presafety_full_vs_m50_utility_2026.py'
+  workflow_dispatch:
+permissions:
+  actions: read
+  contents: read
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0,1,2,3,4,5,6,7,8,9,10,11]
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-presafety-threshold-ab}
+      - uses: actions/setup-node@v4
+        with: {node-version: '24'}
+      - run: node --check research/rc463_presafety_extreme_m50_shard_2026.js
+      - name: Download parity-validated frozen metadata
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/meta
+          gh api repos/${{ github.repository }}/actions/artifacts/9569895117/zip > /tmp/meta/meta.zip
+          unzip -q /tmp/meta/meta.zip -d /tmp/meta/u
+          META=$(find /tmp/meta/u -type f -name '*.json' | head -1)
+          test -n "$META"
+          cp "$META" /tmp/meta/players.json
+          test "$(sha256sum /tmp/meta/players.json | cut -d' ' -f1)" = "f67d33ed3f9428413667346cf501916d71fafc9e699abad896c3b327cea05a4d"
+      - name: Run M50 arm
+        env:
+          PITTI_SHARD: ${{ matrix.shard }}
+          PITTI_META_SNAPSHOT: /tmp/meta/players.json
+        run: node research/rc463_presafety_extreme_m50_shard_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc463-presafety-extreme-m50-${{ matrix.shard }}
+          path: simulation_2026/RC463_PRESAFETY_EXTREME_M50_SHARD_${{ matrix.shard }}_2026.json
+          retention-days: 14
+  utility:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-presafety-threshold-ab}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.12'}
+      - name: Download current-run M50 and exact Full Safety artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          mkdir -p /tmp/m50 /tmp/full-sameinput
+          gh run download ${{ github.run_id }} -D /tmp/m50 --pattern 'rc463-presafety-extreme-m50-*'
+          gh run download 32865478995 -D /tmp/full-sameinput --pattern 'rc463-presafety-sameinput-*'
+      - name: Evaluate exact same-input M50 utility
+        run: python research/rc463_presafety_full_vs_m50_utility_2026.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc463-presafety-full-vs-m50-utility
+          path: diagnostics_2026/RC463_PRESAFETY_FULL_VS_M50_UTILITY_2026.json
+          if-no-files-found: error
+          retention-days: 14
