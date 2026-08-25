@@ -1,0 +1,48 @@
+name: PITTI rc4.63 pre-safety same-input aggregate
+on:
+  push:
+    branches: [pitti-rc463-pre-safety-instrumentation]
+    paths:
+      - 'research/rc463_presafety_sameinput_aggregate_2026.py'
+      - '.github/workflows/pitti-rc463-presafety-sameinput-aggregate.yml'
+permissions:
+  contents: write
+  actions: read
+jobs:
+  aggregate:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc463-pre-safety-instrumentation
+      - name: Wait for exact same-input source run
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,subprocess,time,os
+          run=32865083587;repo=os.environ['GITHUB_REPOSITORY'];deadline=time.time()+2400
+          while True:
+            x=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/runs/{run}']));print(x.get('status'),x.get('conclusion'),flush=True)
+            if x.get('status')=='completed':
+              if x.get('conclusion')!='success':raise SystemExit('source run failure '+str(x.get('conclusion')))
+              break
+            if time.time()>deadline:raise SystemExit('wait timeout')
+            time.sleep(20)
+          PY
+      - name: Download exact paired shards
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/pairs
+          gh run download 32865083587 -D /tmp/pairs --pattern 'rc463-presafety-sameinput-*'
+      - run: python -m py_compile research/rc463_presafety_sameinput_aggregate_2026.py
+      - run: python research/rc463_presafety_sameinput_aggregate_2026.py
+      - name: Persist aggregate
+        run: |
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git pull --rebase origin pitti-rc463-pre-safety-instrumentation
+          git add diagnostics_2026/RC463_PRESAFETY_SAMEINPUT_AGGREGATE_120_20260825.json
+          if ! git diff --cached --quiet; then git commit -m 'research: persist same-input presafety aggregate' && git push origin HEAD:pitti-rc463-pre-safety-instrumentation; fi
