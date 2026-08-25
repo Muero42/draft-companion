@@ -28,6 +28,14 @@ Interpretation: still a current high-ankle-sprain health/timing discount and unc
 
 Interpretation: direction of travel is positive; prior contact-clearance uncertainty should not be carried forward unchanged. Still verify final practice/contact status near draft day.
 
+## Parker Washington / Tucker Kraft — natural turn context
+- Jaguars official Aug 19 camp report: Parker Washington remained out of practice with an injury. Jaguars official Aug 24 Q&A states his late-week absence was entirely injury-related, not contract-related.
+  Sources: https://www.jaguars.com/news/camp-snapshot-day-16-our-guys-played-hard ; https://www.jaguars.com/news/o-zone-kind-of-rank
+- Packers activated Tucker Kraft from PUP on July 31 after his 2025 ACL tear. Packers official Aug 16 report says he returned to full team drills, caught all five targets in 11-on-11 and scored a touchdown.
+  Sources: https://www.packers.com/news/packers-activate-te-tucker-kraft-off-pup-july-31-2026 ; https://www.packers.com/news/5-things-learned-at-packers-training-camp-aug-16-2026
+
+Interpretation: the current health evidence strengthens, rather than weakens, the natural 69->72 sequencing case for Kraft-first / Parker-wait when both are otherwise close. Parker's injury status still requires a fresh check near draft day; Kraft's ACL recovery is materially progressed but remains a recent major-injury context.
+
 ## Jalen Coker / Tetairoa McMillan — Panthers
 - Panthers official Aug 24 depth chart lists both Tetairoa McMillan and Jalen Coker as first-team starting WRs; Coker is not merely McMillan's direct backup.
   Source: https://www.panthers.com/team/depth-chart
