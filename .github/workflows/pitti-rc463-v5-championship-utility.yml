@@ -1,0 +1,31 @@
+name: PITTI rc4.63 v5 paired Championship Utility
+on:
+  workflow_dispatch:
+  push:
+    branches: [pitti-rc463-roster-championship-v5-marginal]
+    paths:
+      - research/rc463_v5_championship_utility_2026.py
+permissions:
+  actions: read
+  contents: write
+jobs:
+  utility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-roster-championship-v5-marginal}
+      - name: Download exact paired baseline and v5 rosters
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          mkdir -p /tmp/base /tmp/v5
+          gh run download 32832269866 -D /tmp/base --pattern 'rc463-baseline-roster-*'
+          gh run download 32831362428 -D /tmp/v5 --pattern 'rc463-roster-championship-v5-*'
+      - name: Evaluate independent Championship Utility
+        run: python research/rc463_v5_championship_utility_2026.py
+      - name: Persist utility result
+        run: |
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git add diagnostics_2026/RC463_V5_PAIRED_CHAMPIONSHIP_UTILITY_120_20260825.json
+          if ! git diff --cached --quiet; then git commit -m 'research: persist v5 paired Championship Utility' && git push origin HEAD:pitti-rc463-roster-championship-v5-marginal; fi
