@@ -1,0 +1,67 @@
+name: Refine Expert Panel v2 Current Sources
+
+on:
+  push:
+    branches:
+      - pitti-rc464-expert-panel-v2-research
+    paths:
+      - research/EXPERT_V2_CURRENT_REFINEMENT_TRIGGER.md
+
+permissions:
+  contents: write
+
+jobs:
+  refine:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Replace provisional v2 priors with current-source correlation-shrunk priors
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          p=Path('app.js'); s=p.read_text()
+          old="""  v2qb:{name:'v2 Shadow · QB',list:[['Sean Koerner',35],['Guilherme Gianni',25],['Michael Bobal',20],['Justin Boone',20]],max:3},
+  v2rb:{name:'v2 Shadow · RB',list:[['Michael Bobal',30],['Guilherme Gianni',30],['Sean Koerner',25],['Ryan Weisse',15],['Pat Fitzmaurice',10]],max:4},
+  v2wr:{name:'v2 Shadow · WR',list:[['Sean Koerner',30],['Guilherme Gianni',30],['Matt Harmon',20],['Michael Bobal',20]],max:4},
+  v2te:{name:'v2 Shadow · TE',list:[['Ryan Weisse',35],['Pat Fitzmaurice',35],['Sean Koerner',30]],max:3}"""
+          new="""  // v2 current-source priors (2026-08-25 audit): exact public Half-PPR overall boards required.
+  // Koerner remains a high-priority research candidate but is excluded from the active v2 arm until an exact current board is ingestible.
+  v2qb:{name:'v2 Shadow · QB',list:[['Ryan Weisse',35],['Guilherme Gianni',35],['Michael Bobal',30]],max:3},
+  // Gianni/Bobal are highly correlated; Weisse receives meaningful weight as the least-correlated strong current RB ranker.
+  v2rb:{name:'v2 Shadow · RB',list:[['Michael Bobal',40],['Ryan Weisse',35],['Guilherme Gianni',25]],max:3},
+  // Gianni/Bobal WR boards are near-duplicates (rho≈.997), so Bobal is deliberately shrunk; Harmon supplies specialist diversity.
+  v2wr:{name:'v2 Shadow · WR',list:[['Guilherme Gianni',40],['Matt Harmon',35],['Michael Bobal',15],['Pat Fitzmaurice',10]],max:4},
+  // TE is the clearest position-specialist panel: Weisse (2025 TE accuracy #3) + Pat (multi-year TE strength).
+  v2te:{name:'v2 Shadow · TE',list:[['Ryan Weisse',60],['Pat Fitzmaurice',40]],max:2}"""
+          if s.count(old)!=1: raise SystemExit('provisional v2 block mismatch')
+          p.write_text(s.replace(old,new))
+          PY
+      - name: Validate v2 source/anti-regression invariants
+        run: |
+          node --check app.js
+          node <<'NODE'
+          const fs=require('fs'); const s=fs.readFileSync('app.js','utf8');
+          const v2=s.slice(s.indexOf("// v2 current-source priors"),s.indexOf('const EXPERT_CONFIG_PANELS'));
+          for(const bad of ['Derek Brown','Andrew Erickson','Sean Koerner']) if(v2.includes("['"+bad+"'")) throw new Error(bad+' must not be active v2 member');
+          for(const good of ['Michael Bobal','Guilherme Gianni','Ryan Weisse','Matt Harmon','Pat Fitzmaurice']) if(!v2.includes(good)) throw new Error('missing v2 expert '+good);
+          if(!v2.includes("v2te:{name:'v2 Shadow · TE',list:[['Ryan Weisse',60],['Pat Fitzmaurice',40]],max:2}")) throw new Error('TE specialist panel mismatch');
+          // Baseline remains exactly preserved.
+          for(const x of [
+            "standard:{name:'Baseline · Standard',list:[['Pat Fitzmaurice',30],['Justin Boone',25],['Sean Koerner',20],['Andrew Erickson',15],['Derek Brown',10]],max:5}",
+            "rb:{name:'Baseline · RB',list:[['Pat Fitzmaurice',35],['Justin Boone',30],['Sean Koerner',20],['Andrew Erickson',15],['Derek Brown',10]],max:4}",
+            "wr:{name:'Baseline · WR',list:[['Matt Harmon',35],['Pat Fitzmaurice',30],['Justin Boone',20],['Andrew Erickson',15],['Derek Brown',10]],max:4}"
+          ]) if(!s.includes(x)) throw new Error('baseline drift');
+          console.log('v2 current-source priors PASS');
+          NODE
+      - name: Verify isolated change
+        run: |
+          test "$(git diff --name-only)" = "app.js"
+      - name: Commit refined v2 priors
+        run: |
+          git config user.name "pitti-auto"
+          git config user.email "actions@users.noreply.github.com"
+          git add app.js
+          git commit -m "research: use current correlation-shrunk v2 expert priors" || exit 0
+          git push
