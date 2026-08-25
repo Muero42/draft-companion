@@ -1,0 +1,18 @@
+'use strict';
+/* Research-only: production-like Full Safety baseline + ONLY the v3 late-WR near-tie correction.
+   This deliberately leaves QB/TE Safety semantics untouched, so it can test the late-roster
+   improvement from the rc4.63 natural mock without contaminating evidence with the rejected
+   QB/TE threshold/no-resurrection family. */
+const fs=require('fs'),crypto=require('crypto'),cp=require('child_process'),path=require('path');
+const BASE='research/rc463_full_safety_baseline_roster_120_shard_2026.js';
+const EXPECT='aac28c9b443b81705355728087acdc60912b86eb';
+function gitBlob(s){const b=Buffer.from(s);return crypto.createHash('sha1').update(Buffer.from(`blob ${b.length}\0`)).update(b).digest('hex')}
+const base0=fs.readFileSync(BASE,'utf8');if(gitBlob(base0)!==EXPECT)throw Error('FULL_SAFETY_BASE_DRIFT '+gitBlob(base0));
+/* The baseline script emits a temporary copy of the frozen fullmock kernel. Inject only at that
+   temporary-kernel level, immediately after score normalization and before final ordering. */
+const anchor="let full=full0;";if(base0.split(anchor).length!==2)throw Error('BASE_INSERT_ANCHOR_DRIFT');
+const inject=`let full=full0;\nconst decisionAnchor="C.normalizeCoachScores(scored);scored.sort((a,b)=>b.score-a.score||b.rawScore-a.rawScore||a.r.rank-b.r.rank);";\nif(full.split(decisionAnchor).length!==2)throw Error('LATEWR_DECISION_ANCHOR_DRIFT');\nconst decisionPatch=\`C.normalizeCoachScores(scored);for(const x of scored)x.__lateWrPriority=Number(x.score||0);const __counts=state.counts||{};const __valid=scored.filter(x=>!x.hardExcluded&&!x.recommendationBlocked&&Number.isFinite(x.rawScore));if(pn>=120&&Number(__counts.WR||0)>=6){const bestWR=__valid.filter(x=>String(x.p.pos||'')==='WR').sort((a,b)=>b.rawScore-a.rawScore||a.r.rank-b.r.rank)[0];const bestRB=__valid.filter(x=>String(x.p.pos||'')==='RB').sort((a,b)=>b.rawScore-a.rawScore||a.r.rank-b.r.rank)[0];if(bestWR&&bestRB){const gap=Number(bestWR.rawScore)-Number(bestRB.rawScore);if(gap>=0&&gap<=1.0&&Number(__counts.RB||0)<7)bestRB.__lateWrPriority=Math.max(bestRB.__lateWrPriority,bestWR.__lateWrPriority+0.01);}}scored.sort((a,b)=>b.__lateWrPriority-a.__lateWrPriority||b.score-a.score||b.rawScore-a.rawScore||a.r.rank-b.r.rank);\`;\nfull=full.replace(decisionAnchor,decisionPatch);`;
+let s=base0.replace(anchor,inject);if(s===base0)throw Error('LATEWR_PATCH_NOOP');
+const marker="x.production_mutation=false;";if(s.split(marker).length!==2)throw Error('OUTPUT_MARKER_DRIFT');s=s.replace(marker,"x.production_mutation=false;x.rc463_fullsafety_latewr_neartie=true;x.treatment='ONLY pn>=120 + WR>=6 + bestWR-bestRB rawScore in [0,1.0] + RB<7; QB/TE Full Safety unchanged';");
+const shard=String(process.env.PITTI_SHARD??'');const tmp=path.join('/tmp',`pitti_rc463_fullsafety_latewr_${shard}.js`);fs.writeFileSync(tmp,s);const r=cp.spawnSync(process.execPath,[tmp],{stdio:'inherit',env:process.env});if(r.error)throw r.error;if((r.status??2)!==0)process.exit(r.status??2);
+const src=`simulation_2026/RC463_FULL_SAFETY_BASELINE_ROSTER_SHARD_${shard}_2026.json`;if(!fs.existsSync(src))throw Error('BASE_OUTPUT_MISSING');const x=JSON.parse(fs.readFileSync(src,'utf8'));if(x.status!=='PASS'||!x.rc463_full_safety_baseline_roster_export)throw Error('BASE_OUTPUT_INVALID');x.rc463_fullsafety_latewr_neartie=true;x.treatment='late-WR near-tie only; QB/TE Full Safety unchanged';const dst=`simulation_2026/RC463_FULLSAFETY_LATEWR_NEARTIE_SHARD_${shard}_2026.json`;fs.writeFileSync(dst,JSON.stringify(x));console.log(JSON.stringify({status:'PASS',shard:Number(shard),drafts:x.drafts.length,output:dst},null,2));
