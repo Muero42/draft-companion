@@ -1,0 +1,73 @@
+name: PITTI rc4.63 v3 identical-state replay v2
+on:
+  workflow_dispatch:
+  push:
+    branches: [pitti-rc463-roster-championship-ab]
+    paths:
+      - research/rc463_v3_state_replay_v2_2026.js
+      - .github/workflows/pitti-rc463-v3-state-replay-v2.yml
+permissions:
+  actions: read
+  contents: write
+jobs:
+  shard:
+    strategy:
+      fail-fast: false
+      max-parallel: 6
+      matrix: {shard: [0,1,2,3,4,5,6,7,8,9,10,11]}
+    runs-on: ubuntu-latest
+    timeout-minutes: 24
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-roster-championship-ab}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - run: node --check research/rc463_v3_state_replay_v2_2026.js
+      - name: Replay identical states v2
+        env: {PITTI_SHARD: "${{ matrix.shard }}"}
+        run: node research/rc463_v3_state_replay_v2_2026.js
+      - uses: actions/upload-artifact@v4
+        with:
+          name: rc463-v3-state-replay-v2-${{ matrix.shard }}
+          path: simulation_2026/RC463_V3_STATE_REPLAY_V2_SHARD_${{ matrix.shard }}_2026.json
+          if-no-files-found: error
+          retention-days: 14
+  evaluate:
+    needs: shard
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-roster-championship-ab}
+      - name: Download replay shards
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: mkdir -p /tmp/replay && gh run download ${{ github.run_id }} -D /tmp/replay --pattern 'rc463-v3-state-replay-v2-*'
+      - name: Evaluate replay gate
+        run: |
+          python - <<'PY'
+          import json,glob,pathlib,collections
+          rows=[]
+          for p in glob.glob('/tmp/replay/**/*.json',recursive=True):
+            x=json.load(open(p))
+            if x.get('status')!='PASS' or x.get('identical_state_replay_v2')!='PASS': raise RuntimeError('invalid replay shard '+p)
+            if x.get('identical_state_replay_checks')!=150: raise RuntimeError('bad replay count '+p)
+            rows+=x.get('drafts',[])
+          rows=sorted(rows,key=lambda d:int(d['seed']))
+          expected=list(range(459820001,459820121))
+          if [int(d['seed']) for d in rows]!=expected: raise RuntimeError('seed union mismatch')
+          bypick={}
+          for d in rows:
+            for z in d['decisions']: bypick.setdefault(str(z['pick']),collections.Counter())[z['name']]+=1
+          frozen=json.load(open('diagnostics_2026/RC463_ROSTER_CHAMPIONSHIP_V3_NEARTIE_120_20260825.json'))
+          if {k:dict(v) for k,v in bypick.items()} != frozen['pick_choice_counts']:
+            raise RuntimeError('instrumented replay changed frozen v3 distributions')
+          out={'schema':1,'status':'PASS','research_only':True,'production_mutation':False,'seeds':120,'decision_replays':1800,'seed_family':'459820001..459820120','identical_state_determinism':'PASS','outer_rng_nonadvance':'PASS','behavioral_parity_with_frozen_v3_120':'PASS','promotion_authorized':False,'note':'v3 complete policy remains rejected on natural pick92 QB2 control; this certifies determinism only'}
+          pathlib.Path('diagnostics_2026/RC463_V3_STATE_REPLAY_V2_120_20260825.json').write_text(json.dumps(out,indent=2))
+          print(json.dumps(out,indent=2))
+          PY
+      - name: Persist replay result
+        run: |
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git add diagnostics_2026/RC463_V3_STATE_REPLAY_V2_120_20260825.json
+          if ! git diff --cached --quiet; then git commit -m 'research: persist repaired v3 state replay gate' && git push origin HEAD:pitti-rc463-roster-championship-ab; fi
