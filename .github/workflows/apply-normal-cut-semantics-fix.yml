@@ -1,0 +1,79 @@
+name: Apply NORMAL-CUT Semantics Fix
+
+on:
+  push:
+    branches:
+      - pitti-rc464-expert-panel-v2-research
+    paths:
+      - research/NORMAL_CUT_SEMANTICS_TRIGGER.md
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply display-semantics-only fix
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          p=Path('app.js')
+          s=p.read_text()
+          old1="function normalCandidateAdmissible(row){const v=row?.valueSafety;if(!row?.r||!Number.isFinite(row.r.rank)||!v)return false;const max=v.triggered&&Number.isFinite(v.qualityBandMax)?v.qualityBandMax:Number(v.bestPanelRank)+Number(v.threshold);return Number.isFinite(max)&&row.r.rank<=max}"
+          new1="function normalCandidateAdmissible(row){const v=row?.valueSafety;if(!row?.r||!Number.isFinite(row.r.rank)||!v)return false;const max=v.triggered&&Number.isFinite(v.effectiveQualityBandMax??v.qualityBandMax)?Number(v.effectiveQualityBandMax??v.qualityBandMax):Number(v.bestPanelRank)+Number(v.threshold);return Number.isFinite(max)&&row.r.rank<=max}"
+          old2="    qualityBandMax,\n    naturalLeaderRank:naturalLeader.r.rank,"
+          new2="    qualityBandMax,\n    effectiveQualityBandMax:eligibleBandMax,\n    naturalLeaderRank:naturalLeader.r.rank,"
+          old3="    qualityBandMax,\n    naturalLeaderRank:naturalLeader.r.rank,\n    safetyLeaderRank:safetyLeader?.r?.rank??null,\n    promoted:!overrideValid,"
+          new3="    qualityBandMax,\n    effectiveQualityBandMax:eligibleBandMax,\n    naturalLeaderRank:naturalLeader.r.rank,\n    safetyLeaderRank:safetyLeader?.r?.rank??null,\n    promoted:!overrideValid,"
+          if s.count(old1)!=1: raise SystemExit('normalCandidateAdmissible baseline mismatch')
+          s=s.replace(old1,new1)
+          # The valueSafety object and returned summary contain nearly identical blocks.
+          # Patch the first object occurrence and then the returned summary separately.
+          if s.count(old2)<1: raise SystemExit('valueSafety block baseline mismatch')
+          s=s.replace(old2,new2,1)
+          if s.count(old3)!=1: raise SystemExit('safety summary block baseline mismatch')
+          s=s.replace(old3,new3,1)
+          p.write_text(s)
+          PY
+      - name: Syntax and semantic regression
+        run: |
+          node --check app.js
+          node <<'NODE'
+          const fs=require('fs'),vm=require('vm');
+          const s=fs.readFileSync('app.js','utf8');
+          if(!s.includes('effectiveQualityBandMax:eligibleBandMax'))throw new Error('effective band not persisted');
+          const m=s.match(/function normalCandidateAdmissible\(row\)\{[^\n]+\}/);
+          if(!m)throw new Error('normalCandidateAdmissible not found');
+          const ctx={Number}; vm.createContext(ctx); vm.runInContext(m[0],ctx);
+          const row={r:{rank:110},valueSafety:{triggered:true,bestPanelRank:100,threshold:13,qualityBandMax:106,effectiveQualityBandMax:112}};
+          if(ctx.normalCandidateAdmissible(row)!==true)throw new Error('eligible safety-band candidate still falsely warned');
+          const outside={r:{rank:113},valueSafety:{triggered:true,bestPanelRank:100,threshold:13,qualityBandMax:106,effectiveQualityBandMax:112}};
+          if(ctx.normalCandidateAdmissible(outside)!==false)throw new Error('true outside-cut candidate admitted');
+          const legacy={r:{rank:112},valueSafety:{triggered:false,bestPanelRank:100,threshold:13}};
+          if(ctx.normalCandidateAdmissible(legacy)!==true)throw new Error('non-triggered semantics changed');
+          console.log('NORMAL-CUT effective-band semantics PASS');
+          NODE
+      - name: Verify scoring functions unchanged by this patch
+        run: |
+          python <<'PY'
+          import subprocess
+          d=subprocess.check_output(['git','diff','--unified=0','--','app.js'],text=True)
+          forbidden=['scoreCandidate(','applyResolvedReturnScore(','marginalRosterUtility(','progressiveUpsideBonus(','rosterExceptionPenalty(']
+          changed='\n'.join(x for x in d.splitlines() if (x.startswith('+') or x.startswith('-')) and not x.startswith('+++') and not x.startswith('---'))
+          for f in forbidden:
+              assert f not in changed, f'scoring function touched: {f}'
+          assert 'normalCandidateAdmissible' in changed
+          assert 'effectiveQualityBandMax' in changed
+          print('display/safety metadata only PASS')
+          PY
+      - name: Commit semantics fix
+        run: |
+          git config user.name "pitti-auto"
+          git config user.email "actions@users.noreply.github.com"
+          git add app.js
+          git commit -m "research: align NORMAL-CUT warning with effective safety band" || exit 0
+          git push
