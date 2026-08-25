@@ -1,0 +1,33 @@
+name: PITTI rc4.63 full-safety repeat QBTE gap audit
+on:
+  push:
+    branches: [pitti-rc463-safety-neartie-ab]
+    paths:
+      - 'research/rc463_full_safety_repeat_promotion_gap_audit_2026.py'
+      - '.github/workflows/pitti-rc463-full-safety-repeat-gap-audit.yml'
+permissions:
+  contents: write
+  actions: read
+jobs:
+  audit:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc463-safety-neartie-ab
+      - name: Download full-safety exact roster artifacts
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/full
+          gh run download 32839901036 -D /tmp/full --pattern 'rc463-full-safety-baseline-*'
+      - run: python -m py_compile research/rc463_full_safety_repeat_promotion_gap_audit_2026.py
+      - run: python research/rc463_full_safety_repeat_promotion_gap_audit_2026.py
+      - name: Persist audit
+        run: |
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git pull --rebase origin pitti-rc463-safety-neartie-ab
+          git add diagnostics_2026/RC463_FULL_SAFETY_REPEAT_PROMOTION_GAP_AUDIT_20260825.json
+          if ! git diff --cached --quiet; then git commit -m 'research: persist repeat-QBTE safety gap audit' && git push origin HEAD:pitti-rc463-safety-neartie-ab; fi
