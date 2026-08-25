@@ -1,0 +1,45 @@
+name: PITTI rc4.63 two-deep paired Championship Utility
+on:
+  push:
+    branches: [pitti-rc463-safety-two-deep-ab]
+    paths:
+      - research/rc463_two_deep_championship_utility_2026.py
+      - .github/workflows/pitti-rc463-two-deep-utility.yml
+permissions:
+  actions: read
+  contents: write
+jobs:
+  utility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: pitti-rc463-safety-two-deep-ab}
+      - name: Wait for exact two-deep source run
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          python - <<'PY'
+          import json,subprocess,time,os
+          run=32858802739;repo=os.environ['GITHUB_REPOSITORY'];deadline=time.time()+1800
+          while True:
+            x=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/runs/{run}']))
+            print(run,x.get('status'),x.get('conclusion'),flush=True)
+            if x.get('status')=='completed':
+              if x.get('conclusion')!='success': raise SystemExit('two-deep source failure')
+              break
+            if time.time()>deadline: raise SystemExit('wait timeout')
+            time.sleep(20)
+          PY
+      - name: Download exact paired rosters
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          mkdir -p /tmp/full /tmp/twodeep
+          gh run download 32839901036 -D /tmp/full --pattern 'rc463-full-safety-baseline-*'
+          gh run download 32858802739 -D /tmp/twodeep --pattern 'rc463-two-deep-*'
+      - run: python research/rc463_two_deep_championship_utility_2026.py
+      - name: Persist two-deep utility
+        run: |
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git add diagnostics_2026/RC463_TWO_DEEP_PAIRED_CHAMPIONSHIP_UTILITY_120_20260825.json
+          if ! git diff --cached --quiet; then git commit -m 'research: persist two-deep paired Championship Utility' && git push origin HEAD:pitti-rc463-safety-two-deep-ab; fi
