@@ -1,0 +1,2204 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "research_only": true,
+  "production_mutation": false,
+  "comparison": "historical independently-fetched metadata rosters vs regenerated current same-input metadata rosters, separately for full-safety and minimal-guard arms",
+  "seeds": 120,
+  "seed_family": "459820001..459820120",
+  "new_shared_metadata_snapshot_sha256": "f67d33ed3f9428413667346cf501916d71fafc9e699abad896c3b327cea05a4d",
+  "summary": {
+    "full_decision_sequences_changed": 9,
+    "guard_decision_sequences_changed": 83,
+    "full_rosters_changed": 9,
+    "guard_rosters_changed": 83,
+    "both_arms_unchanged": 34
+  },
+  "rows": [
+    {
+      "seed": 459820001,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820002,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820003,
+      "full_changed": true,
+      "guard_changed": true,
+      "full_roster_changed": true,
+      "guard_roster_changed": true,
+      "full_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Denzel Boston",
+          "WR"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      },
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820004,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820005,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820006,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820007,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820008,
+      "full_changed": true,
+      "guard_changed": true,
+      "full_roster_changed": true,
+      "guard_roster_changed": true,
+      "full_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      },
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820009,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820010,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820011,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820012,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820013,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820014,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820015,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820016,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820017,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820018,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Denzel Boston",
+          "WR"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820019,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820020,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820021,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820022,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820023,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820024,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820025,
+      "full_changed": true,
+      "guard_changed": false,
+      "full_roster_changed": true,
+      "guard_roster_changed": false,
+      "full_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Jared Goff",
+          "QB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      },
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820026,
+      "full_changed": true,
+      "guard_changed": true,
+      "full_roster_changed": true,
+      "guard_roster_changed": true,
+      "full_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      },
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Denzel Boston",
+          "WR"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820027,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820028,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820029,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820030,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820031,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820032,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820033,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820034,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820035,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 6,
+        "old": [
+          "Jalen Hurts",
+          "QB"
+        ],
+        "new": [
+          "Parker Washington",
+          "WR"
+        ],
+        "old_pick": 69,
+        "new_pick": 69
+      }
+    },
+    {
+      "seed": 459820036,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820037,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820038,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820039,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820040,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820041,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820042,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820043,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820044,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820045,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820046,
+      "full_changed": true,
+      "guard_changed": false,
+      "full_roster_changed": true,
+      "guard_roster_changed": false,
+      "full_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      },
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820047,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820048,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820049,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820050,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820051,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820052,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820053,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820054,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820055,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820056,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820057,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820058,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820059,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820060,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820061,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820062,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820063,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820064,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820065,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820066,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820067,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820068,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820069,
+      "full_changed": true,
+      "guard_changed": false,
+      "full_roster_changed": true,
+      "guard_roster_changed": false,
+      "full_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      },
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820070,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820071,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820072,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Denzel Boston",
+          "WR"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820073,
+      "full_changed": true,
+      "guard_changed": true,
+      "full_roster_changed": true,
+      "guard_roster_changed": true,
+      "full_first_diff": {
+        "decision_index": 6,
+        "old": [
+          "Jalen Hurts",
+          "QB"
+        ],
+        "new": [
+          "Parker Washington",
+          "WR"
+        ],
+        "old_pick": 69,
+        "new_pick": 69
+      },
+      "guard_first_diff": {
+        "decision_index": 6,
+        "old": [
+          "Jalen Hurts",
+          "QB"
+        ],
+        "new": [
+          "Parker Washington",
+          "WR"
+        ],
+        "old_pick": 69,
+        "new_pick": 69
+      }
+    },
+    {
+      "seed": 459820074,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820075,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820076,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820077,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820078,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820079,
+      "full_changed": true,
+      "guard_changed": true,
+      "full_roster_changed": true,
+      "guard_roster_changed": true,
+      "full_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      },
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820080,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820081,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820082,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820083,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820084,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820085,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820086,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820087,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820088,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820089,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820090,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820091,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820092,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Denzel Boston",
+          "WR"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820093,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820094,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820095,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820096,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Denzel Boston",
+          "WR"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820097,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820098,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820099,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820100,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820101,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820102,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820103,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820104,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820105,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820106,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820107,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820108,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820109,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820110,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820111,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820112,
+      "full_changed": true,
+      "guard_changed": true,
+      "full_roster_changed": true,
+      "guard_roster_changed": true,
+      "full_first_diff": {
+        "decision_index": 6,
+        "old": [
+          "Jalen Hurts",
+          "QB"
+        ],
+        "new": [
+          "Parker Washington",
+          "WR"
+        ],
+        "old_pick": 69,
+        "new_pick": 69
+      },
+      "guard_first_diff": {
+        "decision_index": 6,
+        "old": [
+          "Jalen Hurts",
+          "QB"
+        ],
+        "new": [
+          "Parker Washington",
+          "WR"
+        ],
+        "old_pick": 69,
+        "new_pick": 69
+      }
+    },
+    {
+      "seed": 459820113,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820114,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820115,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820116,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820117,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Tank Bigsby",
+          "RB"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820118,
+      "full_changed": false,
+      "guard_changed": true,
+      "full_roster_changed": false,
+      "guard_roster_changed": true,
+      "full_first_diff": null,
+      "guard_first_diff": {
+        "decision_index": 14,
+        "old": [
+          "Keaton Mitchell",
+          "RB"
+        ],
+        "new": [
+          "Denzel Boston",
+          "WR"
+        ],
+        "old_pick": 149,
+        "new_pick": 149
+      }
+    },
+    {
+      "seed": 459820119,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    },
+    {
+      "seed": 459820120,
+      "full_changed": false,
+      "guard_changed": false,
+      "full_roster_changed": false,
+      "guard_roster_changed": false,
+      "full_first_diff": null,
+      "guard_first_diff": null
+    }
+  ],
+  "interpretation": "Quantifies how much mutable Sleeper player metadata changed autonomous draft trajectories in the old cross-time evidence. This is diagnostic only; it does not estimate policy utility."
+}
