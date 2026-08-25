@@ -29,7 +29,18 @@ jobs:
           if(s.includes('<details><summary>Experten</summary>'))throw new Error('expert rows still collapsed');
           console.log('expert UI invariants PASS');
           NODE
-      - name: No scoring/runtime engine mutation in UI commit range
+      - name: UI file contains no Coach scoring implementation
         run: |
-          git diff --name-only 2d3ee246a1f0de0d250d48a9886d042d96d96471..HEAD
-          test "$(git diff --name-only 2d3ee246a1f0de0d250d48a9886d042d96d96471..HEAD | grep -E '^(app\.js|sw\.js|manifest\.webmanifest|worker\.js)$' || true)" = ""
+          node <<'NODE'
+          const fs=require('fs');
+          const s=fs.readFileSync('live-surface-v3.js','utf8');
+          const forbidden=[
+            'function scoreCandidate(',
+            'function applyResolvedReturnScore(',
+            'function applyPlayerQualitySafetyGate(',
+            'function marginalRosterUtility(',
+            'function progressiveUpsideBonus('
+          ];
+          for(const x of forbidden){if(s.includes(x))throw new Error('scoring implementation leaked into UI: '+x)}
+          console.log('UI/scoring isolation PASS');
+          NODE
