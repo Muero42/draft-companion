@@ -401,10 +401,15 @@ const PRESETS={
   wr:{name:'Baseline · WR',list:[['Matt Harmon',35],['Pat Fitzmaurice',30],['Justin Boone',20],['Andrew Erickson',15],['Derek Brown',10]],max:4},
   qb:{name:'Baseline · QB',list:[['Pat Fitzmaurice',45],['Justin Boone',30],['Sean Koerner',25],['Andrew Erickson',15]],max:3},
   te:{name:'Baseline · TE',list:[['Pat Fitzmaurice',40],['Justin Boone',25],['Andrew Erickson',20],['Derek Brown',15],['Sean Koerner',15]],max:4},
-  v2qb:{name:'v2 Shadow · QB',list:[['Sean Koerner',35],['Guilherme Gianni',25],['Michael Bobal',20],['Justin Boone',20]],max:3},
-  v2rb:{name:'v2 Shadow · RB',list:[['Michael Bobal',30],['Guilherme Gianni',30],['Sean Koerner',25],['Ryan Weisse',15],['Pat Fitzmaurice',10]],max:4},
-  v2wr:{name:'v2 Shadow · WR',list:[['Sean Koerner',30],['Guilherme Gianni',30],['Matt Harmon',20],['Michael Bobal',20]],max:4},
-  v2te:{name:'v2 Shadow · TE',list:[['Ryan Weisse',35],['Pat Fitzmaurice',35],['Sean Koerner',30]],max:3}
+  // v2 current-source priors (2026-08-25 audit): exact public Half-PPR overall boards required.
+  // Koerner remains research-priority but is excluded until an exact current board is ingestible.
+  v2qb:{name:'v2 Shadow · QB',list:[['Ryan Weisse',35],['Guilherme Gianni',35],['Michael Bobal',30]],max:3},
+  // Gianni/Bobal are highly correlated; Weisse adds the most rank-order diversity among the strong current RB boards.
+  v2rb:{name:'v2 Shadow · RB',list:[['Michael Bobal',40],['Ryan Weisse',35],['Guilherme Gianni',25]],max:3},
+  // Gianni/Bobal WR boards are near-duplicates, so Bobal is shrunk; Harmon supplies specialist diversity.
+  v2wr:{name:'v2 Shadow · WR',list:[['Guilherme Gianni',40],['Matt Harmon',35],['Michael Bobal',15],['Pat Fitzmaurice',10]],max:4},
+  // TE is deliberately specialist-heavy: Weisse plus Pat.
+  v2te:{name:'v2 Shadow · TE',list:[['Ryan Weisse',60],['Pat Fitzmaurice',40]],max:2}
 };
 const EXPERT_CONFIG_PANELS={baseline:{QB:'qb',RB:'rb',WR:'wr',TE:'te'},v2:{QB:'v2qb',RB:'v2rb',WR:'v2wr',TE:'v2te'}};
 function desiredExpertPoolNames(){const ids=Object.values(EXPERT_CONFIG_PANELS[expertConfig]||EXPERT_CONFIG_PANELS.baseline);return [...new Set(ids.flatMap(id=>(PRESETS[id]?.list||[]).map(([name])=>name)))]}
