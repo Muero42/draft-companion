@@ -9,6 +9,8 @@ Research-only. No production coefficient mutation.
   Source: https://www.nfl.com/news/raiders-rb-ashton-jeanty-apparent-right-leg-injury
 - Raiders official Aug 24 notebook: Mike Washington Jr. received first-team offense reps while Jeanty was out and scored a red-zone receiving TD; article also notes >8 yards/carry through his first two preseason games.
   Source: https://www.raiders.com/news/training-camp-notebook-8-24-rookies-stack-late-camp-reps-as-their-climb-accelerates
+- Derek Brown/FantasyPros Aug 23 calls Washington one of fantasy's best handcuffs and says he has an every-down skill set; if Jeanty misses time, Brown projects immediate volume-driven RB2 utility.
+  Source: https://www.fantasypros.com/nfl/notes/430973/mike-washington-jr-2026-outlook.php
 
 Interpretation: Jeanty remains a material health-watch rather than a hard exclusion. Washington's contingent-upside case is stronger than a generic deep backup while Jeanty's timeline is unresolved. This is dynamic evidence and must not become a player-specific permanent model bonus.
 
@@ -35,11 +37,22 @@ Interpretation: direction of travel is positive; prior contact-clearance uncerta
   Source: https://www.panthers.com/photos/photos-training-camp-8-24
 - Panthers pre-camp review states McMillan and Coker entered camp established as the top two receivers; a more recent Panthers analysis calls McMillan the passing-game focal point and Coker a complementary piece, while noting Carolina uses three-WR sets frequently.
   Sources: https://www.panthers.com/news/panthers-pre-training-camp-2026-positional-preview-offense ; https://www.panthers.com/news/ask-the-old-guy-preseason-can-be-deceiving-panthers-jaguars-joint-practice-bryce-young-derrick-brown
+- Andrew Erickson/FantasyPros Aug 21 describes Coker as the favorite for Carolina's No. 2 WR job and notes 10.1 Half-PPR PPG over his final nine games played. Derek Brown's current FantasyPros note is more aggressive, calling Coker a late-round priority and arguing the ADP gap to McMillan is too large.
+  Sources: https://www.fantasypros.com/nfl/notes/419257/jalen-coker-2026-outlook.php ; https://www.fantasypros.com/nfl/notes/jalen-coker.php
 
 Interpretation: do not make Coker's draftability conditional on a McMillan absence. Coker has a current standalone starting role, but McMillan remains the focal point and Coker's marginal value still has to beat roster-saturated late-RB option value. A verified McMillan absence would be a positive catalyst for Coker, not the only route to relevance.
+
+## Keaton Mitchell — Chargers
+- Derek Brown/FantasyPros Aug 21: Mitchell is competing for the Chargers RB2 role, has elite big-play evidence, and may earn an ancillary/flex role, though standalone weekly volume is not bankable.
+  Source: https://www.fantasypros.com/nfl/notes/419070/keaton-mitchell-2026-outlook.php
+- Rotoworld staff Aug 18 selected Mitchell as a sleeper, citing his career explosiveness and a plausible receiving role in Mike McDaniel's offense; NBC/Rotoworld also reported McDaniel specifically praising Mitchell's pass-game value in camp.
+  Sources: https://www.nbcsports.com/fantasy/football/news/fantasy-football-sleepers-2026-keaton-mitchell-jaydon-blue-among-rotoworld-staff-picks ; https://www.nbcsports.com/fantasy/football/player-news/2026-08-10/mcdaniel-good-news-and-bad-news-fantasy-owners
+
+Interpretation: Mitchell remains a legitimate final-round asymmetric-upside option, especially as a temporary pre-K/DST roster spot. Washington currently has the cleaner injury-away volume path; Mitchell has stronger demonstrated explosive/receiving-sleeper evidence. Rank them from current total Championship Utility rather than a named-player rule.
 
 ## Policy consequence
 - These facts update the research/evidence layer only.
 - Do not globally retune Panel/Coach weights from one injury event.
 - In late-round option-value comparisons, Washington now has concrete current first-team contingency evidence while Jeanty is sidelined; evaluate it through the ordinary evidence/Championship-Utility framework, not a named-player override.
 - Likewise, do not hard-code Coker down because McMillan is healthy: use his standalone WR2 role as Player Quality context, then apply the already-established WR-saturation / option-value logic based on the actual roster state.
+- Final roster slots 14/15 remain special option-value slots because they are the most likely eventual K/DST drops; this increases the value of RBs whose role could jump sharply on one event, but it does not erase a genuinely exceptional WR value or acute catalyst.
