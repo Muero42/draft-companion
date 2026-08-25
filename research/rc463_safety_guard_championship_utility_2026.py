@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-import json,glob,pathlib,statistics,math,urllib.request,collections
+import json,glob,pathlib,statistics,math,urllib.request,collections,os
 DRAFT_ID='1225769229928648704'; EXPECTED=list(range(459820001,459820121)); POS={'QB','RB','WR','TE'}
 def getj(url):
- req=urllib.request.Request(url,headers={'User-Agent':'PITTI-RC463-SafetyGuardUtility/1.0'});return json.load(urllib.request.urlopen(req,timeout=60))
+ req=urllib.request.Request(url,headers={'User-Agent':'PITTI-RC463-SafetyGuardUtility/1.1'});return json.load(urllib.request.urlopen(req,timeout=60))
 def qtile(v,q):
  v=sorted(float(x) for x in v);z=(len(v)-1)*q;lo=int(math.floor(z));hi=int(math.ceil(z));return v[lo] if lo==hi else v[lo]*(hi-z)+v[hi]*(z-lo)
 def load(root,tag,flag):
@@ -12,7 +12,7 @@ def load(root,tag,flag):
   except:continue
   if x.get('status')!='PASS' or not x.get(flag) or not isinstance(x.get('drafts'),list):continue
   for d in x['drafts']:
-   seed=int(d['seed']);
+   seed=int(d['seed'])
    if seed in out:raise RuntimeError(f'{tag} duplicate seed {seed}')
    out[seed]=d
  if sorted(out)!=EXPECTED:raise RuntimeError(f'{tag} seed union {sorted(out)}')
@@ -28,6 +28,8 @@ def lineup(players,w,repl):
      have=min(len(vals[pos]),n);tot+=sum(vals[pos][:have])+(n-have)*repl[pos][w]
     best=max(best,tot)
  return qb+best
+def feasible(d):
+ c=d.get('position_counts') or {};return int(c.get('QB',0))>=1 and int(c.get('RB',0))>=1 and int(c.get('WR',0))>=2
 def main():
  B=load('/tmp/full','full-safety','rc463_full_safety_baseline_roster_export');C=load('/tmp/guard','guard','rc463_baseline_roster_export')
  bridge=json.load(open('bridge_2026/MARKET_OUTCOME_BRIDGE_2026.json'));assert bridge['status']=='PASS';fc=bridge['forecasts'];byname=collections.defaultdict(list)
@@ -61,13 +63,16 @@ def main():
   for k,v in c['position_counts'].items():posC[k]+=v
   for z in b['decisions']:byPickB.setdefault(str(z['pick']),collections.Counter())[z['name']]+=1
   for z in c['decisions']:byPickC.setdefault(str(z['pick']),collections.Counter())[z['name']]+=1
-  rows.append({'seed':seed,'full_safety_expected_wins_14w':ub,'guard_expected_wins_14w':uc,'delta_guard_minus_full_safety':uc-ub})
+  rows.append({'seed':seed,'full_safety_expected_wins_14w':ub,'guard_expected_wins_14w':uc,'delta_guard_minus_full_safety':uc-ub,'full_safety_position_counts':b['position_counts'],'guard_position_counts':c['position_counts'],'full_safety_user_policy_feasible':feasible(b),'guard_user_policy_feasible':feasible(c)})
  ds=[r['delta_guard_minus_full_safety'] for r in rows];mean=statistics.mean(ds);sd=statistics.stdev(ds);se=sd/math.sqrt(120)
  def l1(a,b):
   o={}
   for k in sorted(set(a)|set(b),key=int):
    names=set(a.get(k,{}))|set(b.get(k,{}));o[k]=sum(abs(a.get(k,{}).get(n,0)-b.get(k,{}).get(n,0)) for n in names)/240
   return o
- out={'schema':1,'status':'PASS','research_only':True,'production_mutation':False,'comparison':'no-safety-resurrection guard minus production-like full PlayerQualitySafety candidate board','seeds':120,'seed_family':'459820001..459820120','changed_rosters':changed,'full_safety_mean_position_counts':{k:v/120 for k,v in posB.items()},'guard_mean_position_counts':{k:v/120 for k,v in posC.items()},'pick_l1_guard_vs_full_safety':l1(byPickC,byPickB),'mean_delta_expected_wins_14w':mean,'median_delta':statistics.median(ds),'sd_delta':sd,'mean_delta_ci95_normal_diagnostic':[mean-1.96*se,mean+1.96*se],'guard_better':sum(x>1e-12 for x in ds),'same':sum(abs(x)<=1e-12 for x in ds),'guard_worse':sum(x<-1e-12 for x in ds),'min_delta':min(ds),'max_delta':max(ds),'full_safety_mean_expected_wins_14w':statistics.mean(r['full_safety_expected_wins_14w'] for r in rows),'guard_mean_expected_wins_14w':statistics.mean(r['guard_expected_wins_14w'] for r in rows),'selected_panel_used_in_outcome_fit':False,'promotion_authorized':False,'interpretation':'Direct fresh paired gate for the minimal safety-resurrection guard. Promotion still requires freeze-risk and implementation-level regression review.','rows':rows}
+ def dist(prefix):
+  src=B if prefix=='full_safety' else C
+  return {'qb3plus_rate':sum((d.get('position_counts') or {}).get('QB',0)>=3 for d in src.values())/120,'te3plus_rate':sum((d.get('position_counts') or {}).get('TE',0)>=3 for d in src.values())/120,'user_policy_invalid_rate':sum(not feasible(d) for d in src.values())/120,'position_count_histograms':{p:dict(sorted(collections.Counter((d.get('position_counts') or {}).get(p,0) for d in src.values()).items())) for p in sorted(POS)}}
+ out={'schema':2,'status':'PASS','research_only':True,'production_mutation':False,'comparison':'minimal no-safety-resurrection guard minus production-like full PlayerQualitySafety candidate board','seeds':120,'seed_family':'459820001..459820120','changed_rosters':changed,'full_safety_mean_position_counts':{k:v/120 for k,v in posB.items()},'guard_mean_position_counts':{k:v/120 for k,v in posC.items()},'roster_reality':{'full_safety':dist('full_safety'),'guard':dist('guard')},'pick_l1_guard_vs_full_safety':l1(byPickC,byPickB),'mean_delta_expected_wins_14w':mean,'median_delta':statistics.median(ds),'downside_tail_delta':{'p01':qtile(ds,.01),'p05':qtile(ds,.05),'p10':qtile(ds,.10),'p25':qtile(ds,.25)},'upside_tail_delta':{'p75':qtile(ds,.75),'p90':qtile(ds,.90),'p95':qtile(ds,.95),'p99':qtile(ds,.99)},'sd_delta':sd,'mean_delta_ci95_normal_diagnostic':[mean-1.96*se,mean+1.96*se],'guard_better':sum(x>1e-12 for x in ds),'same':sum(abs(x)<=1e-12 for x in ds),'guard_worse':sum(x<-1e-12 for x in ds),'min_delta':min(ds),'max_delta':max(ds),'full_safety_mean_expected_wins_14w':statistics.mean(r['full_safety_expected_wins_14w'] for r in rows),'guard_mean_expected_wins_14w':statistics.mean(r['guard_expected_wins_14w'] for r in rows),'selected_panel_used_in_outcome_fit':False,'replacement_policy':'Missing QB/RB/WR/TE starter slots use the same precomputed replacement-level weekly series; pathological full-safety roster composition is measured, not rejected by harness.','promotion_authorized':False,'interpretation':'Direct fresh paired gate for the minimal safety-resurrection guard. Promotion still requires implementation-level freeze-risk regressions; no v3/v5 late-WR patch is included.','rows':rows}
  pathlib.Path('diagnostics_2026').mkdir(exist_ok=True);pathlib.Path('diagnostics_2026/RC463_SAFETY_GUARD_PAIRED_CHAMPIONSHIP_UTILITY_120_20260825.json').write_text(json.dumps(out,indent=2));print(json.dumps({k:v for k,v in out.items() if k!='rows'},indent=2))
 if __name__=='__main__':main()
