@@ -1,0 +1,36 @@
+name: PITTI rc4.64 apply minimal safety candidate
+on:
+  push:
+    branches: [pitti-rc464-minimal-safety-candidate]
+    paths: [research/RC464_APPLY_GATE.txt]
+permissions:
+  contents: write
+jobs:
+  apply:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc464-minimal-safety-candidate
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Verify explicit paired-gate sentinel
+        run: |
+          grep -Fx 'PAIRED_SAFETY_UTILITY_PASS' research/RC464_APPLY_GATE.txt
+      - name: Apply locked rc4.63-derived transform
+        run: |
+          node research/rc464_minimal_safety_transform.js --apply
+          node --check app.js
+      - name: Fail closed on scope
+        run: |
+          git diff -- app.js
+          test "$(git diff --name-only | tr '\n' ' ')" = "app.js "
+      - name: Persist candidate app only
+        run: |
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git add app.js
+          git commit -m 'candidate: apply minimal repeat-QBTE safety-resurrection guard'
+          git push origin HEAD:pitti-rc464-minimal-safety-candidate
