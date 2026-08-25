@@ -1,0 +1,23 @@
+{
+  "schema": 1,
+  "status": "PASS",
+  "research_only": true,
+  "source_run": 32859855762,
+  "source_job": 97840855985,
+  "source_compute_step": "success",
+  "persistence_note": "Original workflow computed successfully but its final git push lost a concurrent-update race; this summary persists the computed gate without rerunning source simulation.",
+  "comparison": "marginal safety-resurrection policy minus production-like full PlayerQualitySafety candidate board",
+  "seeds": 120,
+  "seed_family": "459820001..459820120",
+  "changed_rosters": 119,
+  "marginal_mean_position_counts": {"QB":1.0,"RB":5.808333333333334,"WR":7.191666666666666,"TE":1.0},
+  "mean_delta_expected_wins_14w": -0.1258838383838384,
+  "median_delta": -0.1363636363636367,
+  "mean_delta_ci95_normal_diagnostic": [-0.16734378676587708,-0.08442389000179971],
+  "better_same_worse": [16,4,100],
+  "full_safety_mean_expected_wins_14w": 2.3988636363636364,
+  "marginal_mean_expected_wins_14w": 2.272979797979798,
+  "pick_l1_key": {"49":0.15833333333333333,"92":0.3,"112":0.38333333333333336,"129":0.725,"132":0.6916666666666667,"149":0.8166666666666667},
+  "interpretation": "The +1.0-over-best-skill eligibility hurdle is too restrictive as a safety mechanism in this simulation family and collapses to QB1/TE1 in all 120 drafts. Retain only as a falsification comparator; do not promote.",
+  "production_mutation": false
+}
