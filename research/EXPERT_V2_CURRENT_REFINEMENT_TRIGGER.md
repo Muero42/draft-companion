@@ -1,1 +1,3 @@
 Refine the selectable v2 shadow panel using only exact currently ingestible Half-PPR overall sources from the 2026-08-25 source audit and shrink strongly correlated experts. Koerner remains research-priority but is not an active v2 member until an exact current board is ingestible. Preserve baseline unchanged.
+
+Retrigger after workflow syntax diagnosis and repair: 2026-08-25T20:48Z.
