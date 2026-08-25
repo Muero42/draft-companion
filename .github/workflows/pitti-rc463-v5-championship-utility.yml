@@ -19,13 +19,14 @@ jobs:
         env: {GH_TOKEN: "${{ github.token }}"}
         run: |
           python - <<'PY'
-          import json,subprocess,time
+          import json,subprocess,time,os
           runs=[32831362428,32832269866]
+          repo=os.environ['GITHUB_REPOSITORY']
           deadline=time.time()+900
           while True:
             state=[]
             for r in runs:
-              x=json.loads(subprocess.check_output(['gh','api',f'repos/${{GITHUB_REPOSITORY}}/actions/runs/{r}']))
+              x=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/runs/{r}']))
               state.append((r,x.get('status'),x.get('conclusion')))
             print(state,flush=True)
             if all(s=='completed' for _,s,_ in state):
