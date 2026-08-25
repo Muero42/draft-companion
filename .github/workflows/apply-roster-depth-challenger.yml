@@ -1,0 +1,74 @@
+name: Apply Roster Depth Challenger
+
+on:
+  push:
+    branches:
+      - pitti-rc464-expert-panel-v2-research
+    paths:
+      - research/ROSTER_DEPTH_CHALLENGER_TRIGGER.md
+
+permissions:
+  contents: write
+
+jobs:
+  patch-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Apply exact isolated challenger
+        run: |
+          python <<'PY'
+          from pathlib import Path
+          p=Path('app.js')
+          s=p.read_text()
+          old1="if(p.pos==='WR'&&state.counts.WR>=7)b -= [0,1,2,3][stage];"
+          new1="if(p.pos==='WR'&&state.counts.WR>=7)b -= [0,2,5,8][stage];"
+          old2="if(p.pos==='WR'&&current>=81){if(n>=8)x-=6;else if(n>=7)x-=4;else if(n>=6)x-=1.5;else if(n<=4)x+=.5;}"
+          new2="if(p.pos==='WR'&&current>=81){if(n>=8)x-=10;else if(n>=7)x-=6;else if(n>=6)x-=2.5;else if(n<=4)x+=.5;}"
+          for old,new in [(old1,new1),(old2,new2)]:
+              if s.count(old)!=1:
+                  raise SystemExit(f'exact baseline mismatch for: {old}')
+              s=s.replace(old,new)
+          p.write_text(s)
+          PY
+      - name: Syntax and invariant checks
+        run: |
+          node --check app.js
+          python <<'PY'
+          from pathlib import Path
+          s=Path('app.js').read_text()
+          req=[
+            "if(p.pos==='WR'&&state.counts.WR>=7)b -= [0,2,5,8][stage];",
+            "if(p.pos==='WR'&&current>=81){if(n>=8)x-=10;else if(n>=7)x-=6;else if(n>=6)x-=2.5;else if(n<=4)x+=.5;}",
+            "if(p.pos==='RB'&&current>=81){if(n>=7)x-=3.5;else if(n>=6)x-=2;else if(n<=3)x+=1;}",
+            "function rosterExceptionPenalty(pos,state,current,rank,adp)",
+            "function applyResolvedReturnScore(x,current,strategy)",
+            "function applyPlayerQualitySafetyGate(rows,current)"
+          ]
+          for x in req:
+              assert x in s,x
+          assert "p.pos==='WR'&&state.counts.WR>=7" in s
+          assert 'WR_ROSTER_CAP' not in s
+          print('roster-depth challenger static invariants PASS')
+          PY
+      - name: Verify isolated app diff
+        run: |
+          git diff -- app.js
+          python <<'PY'
+          import subprocess
+          d=subprocess.check_output(['git','diff','--unified=0','--','app.js'],text=True)
+          removed=[x for x in d.splitlines() if x.startswith('-') and not x.startswith('---')]
+          added=[x for x in d.splitlines() if x.startswith('+') and not x.startswith('+++')]
+          assert len(removed)==2,(len(removed),removed)
+          assert len(added)==2,(len(added),added)
+          print('exactly two scoring lines changed PASS')
+          PY
+      - name: Commit research challenger
+        run: |
+          git config user.name "pitti-auto"
+          git config user.email "actions@users.noreply.github.com"
+          git add app.js
+          git commit -m "research: strengthen diminishing WR depth utility" || exit 0
+          git push
