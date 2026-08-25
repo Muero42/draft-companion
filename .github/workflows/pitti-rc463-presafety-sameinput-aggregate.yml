@@ -22,7 +22,7 @@ jobs:
         run: |
           python - <<'PY'
           import json,subprocess,time,os
-          run=32865083587;repo=os.environ['GITHUB_REPOSITORY'];deadline=time.time()+2400
+          run=32865478995;repo=os.environ['GITHUB_REPOSITORY'];deadline=time.time()+2400
           while True:
             x=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/runs/{run}']));print(x.get('status'),x.get('conclusion'),flush=True)
             if x.get('status')=='completed':
@@ -36,7 +36,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir -p /tmp/pairs
-          gh run download 32865083587 -D /tmp/pairs --pattern 'rc463-presafety-sameinput-*'
+          gh run download 32865478995 -D /tmp/pairs --pattern 'rc463-presafety-sameinput-*'
       - run: python -m py_compile research/rc463_presafety_sameinput_aggregate_2026.py
       - run: python research/rc463_presafety_sameinput_aggregate_2026.py
       - name: Persist aggregate
