@@ -1,0 +1,52 @@
+name: PITTI rc4.63 near-tie paired Championship Utility
+on:
+  push:
+    branches: [pitti-rc463-safety-neartie-ab]
+    paths:
+      - 'research/rc463_neartie_safety_championship_utility_2026.py'
+      - '.github/workflows/pitti-rc463-neartie-safety-utility.yml'
+permissions:
+  contents: write
+  actions: read
+jobs:
+  utility:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc463-safety-neartie-ab
+      - name: Wait for exact source runs
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          python - <<'PY'
+          import json,subprocess,time,os
+          runs=[32839901036,32861547984];repo=os.environ['GITHUB_REPOSITORY'];deadline=time.time()+2100
+          while True:
+            st=[]
+            for r in runs:
+              x=json.loads(subprocess.check_output(['gh','api',f'repos/{repo}/actions/runs/{r}']));st.append((r,x.get('status'),x.get('conclusion')))
+            print(st,flush=True)
+            if all(s=='completed' for _,s,_ in st):
+              bad=[z for z in st if z[2]!='success']
+              if bad:raise SystemExit('source run failure '+repr(bad))
+              break
+            if time.time()>deadline:raise SystemExit('wait timeout '+repr(st))
+            time.sleep(20)
+          PY
+      - name: Download exact paired rosters
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p /tmp/full /tmp/neartie
+          gh run download 32839901036 -D /tmp/full --pattern 'rc463-full-safety-baseline-*'
+          gh run download 32861547984 -D /tmp/neartie --pattern 'rc463-neartie-safety-*'
+      - run: python -m py_compile research/rc463_neartie_safety_championship_utility_2026.py
+      - run: python research/rc463_neartie_safety_championship_utility_2026.py
+      - name: Persist near-tie utility
+        run: |
+          git config user.name pitti-auto
+          git config user.email pitti-auto@users.noreply.github.com
+          git add diagnostics_2026/RC463_NEARTIE_SAFETY_PAIRED_CHAMPIONSHIP_UTILITY_120_20260825.json
+          if ! git diff --cached --quiet; then git commit -m 'research: persist near-tie paired Championship Utility' && git push origin HEAD:pitti-rc463-safety-neartie-ab; fi
