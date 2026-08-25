@@ -4,27 +4,39 @@ on:
     branches: [pitti-rc463-presafety-threshold-ab]
     paths:
       - 'research/rc463_presafety_threshold_arm_shard_2026.js'
+      - 'research/rc463_presafety_threshold_boundary_controls_2026.js'
       - '.github/workflows/pitti-rc463-presafety-threshold-ab.yml'
-  pull_request:
-    branches: [main]
-    paths:
-      - 'research/rc463_presafety_threshold_arm_shard_2026.js'
-      - '.github/workflows/pitti-rc463-presafety-threshold-ab.yml'
-  workflow_dispatch:
 permissions:
   contents: read
   actions: read
 jobs:
+  controls:
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc463-presafety-threshold-ab
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - run: node --check research/rc463_presafety_threshold_arm_shard_2026.js
+      - run: node research/rc463_presafety_threshold_boundary_controls_2026.js
   threshold:
+    needs: controls
     strategy:
       fail-fast: false
       matrix:
         threshold: [-15, 0]
         shard: [0,1,2,3,4,5,6,7,8,9,10,11]
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: pitti-rc463-presafety-threshold-ab
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
       - name: Download exact previously parity-validated Sleeper metadata snapshot
         env:
           GH_TOKEN: ${{ github.token }}
@@ -36,8 +48,6 @@ jobs:
           test -n "$META"
           cp "$META" /tmp/pitti-meta/players.json
           sha256sum /tmp/pitti-meta/players.json
-      - name: Syntax check treatment harness
-        run: node --check research/rc463_presafety_threshold_arm_shard_2026.js
       - name: Run threshold arm
         env:
           PITTI_SHARD: ${{ matrix.shard }}
