@@ -1,6 +1,8 @@
 const fs=require('fs'); const s=fs.readFileSync('app.js','utf8');
+// Regression is about IR/fetch semantics. Version is intentionally checked only for a
+// valid v11.8.0-rc4.x release marker so future release bumps cannot create a false failure.
 const checks=[
- ['version',/v11\.8\.0-rc4\.13/.test(s)],
+ ['version marker',/v11\.8\.0-rc4\.\d+/.test(s)],
  ['bounded fetch',/AbortController/.test(s)&&/Timeout nach/.test(s)],
  ['no second full player fetch',/players:first\.players/.test(s)&&/Draft-Kontrolle/.test(s)&&/Picks-Kontrolle/.test(s)],
  ['one IR slot modeled',/irSlots:1/.test(s)],
