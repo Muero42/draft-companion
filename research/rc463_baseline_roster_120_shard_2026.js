@@ -1,7 +1,8 @@
 'use strict';
 /* Research-only exact baseline roster exporter for the frozen 459820001..459820120 seed family.
    Uses the same metadata-safe no-safety-resurrection base as v3/v5, with no v3/v5 decision patch.
-   Purpose: retain full rosters for independent paired Championship Utility. */
+   Purpose: retain full rosters for independent paired Championship Utility.
+   Trigger marker: workflow registered before this revision. */
 const fs=require('fs'),crypto=require('crypto'),cp=require('child_process'),path=require('path');
 const SRC='research/rc459_meta_safe_qbte_no_safety_resurrection_shard_2026.js';
 const EXPECT='8827e0c83b4a55e5a38b5033d88d1effc8e8622b';
