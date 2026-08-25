@@ -11,10 +11,30 @@ permissions:
 jobs:
   utility:
     runs-on: ubuntu-latest
-    timeout-minutes: 20
+    timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
         with: {ref: pitti-rc463-roster-championship-v5-marginal}
+      - name: Wait for exact source runs
+        env: {GH_TOKEN: "${{ github.token }}"}
+        run: |
+          python - <<'PY'
+          import json,subprocess,time
+          runs=[32831362428,32832269866]
+          deadline=time.time()+900
+          while True:
+            state=[]
+            for r in runs:
+              x=json.loads(subprocess.check_output(['gh','api',f'repos/${{GITHUB_REPOSITORY}}/actions/runs/{r}']))
+              state.append((r,x.get('status'),x.get('conclusion')))
+            print(state,flush=True)
+            if all(s=='completed' for _,s,_ in state):
+              bad=[z for z in state if z[2]!='success']
+              if bad: raise SystemExit('source run not successful: '+repr(bad))
+              break
+            if time.time()>deadline: raise SystemExit('source run wait timeout: '+repr(state))
+            time.sleep(20)
+          PY
       - name: Download exact paired baseline and v5 rosters
         env: {GH_TOKEN: "${{ github.token }}"}
         run: |
