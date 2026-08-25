@@ -199,6 +199,9 @@
 
     <div class="advanced-section">
       <h3>Experten & Gewichtung</h3>
+      <label for="expertConfig">Expertenkonfiguration</label>
+      <select id="expertConfig"><option value="baseline">Baseline rc4.64</option><option value="v2">Accuracy / Position v2 · Shadow</option></select>
+      <p class="tiny">Baseline bleibt unverändert. v2 ist ein separat auswählbarer Testarm; fehlende oder veraltete Experten werden weiterhin fail-closed/degraded ausgewiesen.</p>
       <label for="expertSearch">Experten suchen</label>
       <input id="expertSearch" placeholder="Name oder Quelle">
       <div id="expertsList"></div>
