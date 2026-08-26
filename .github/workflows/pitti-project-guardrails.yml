@@ -1,0 +1,38 @@
+name: PITTI Project Guardrails
+
+on:
+  push:
+    branches:
+      - main
+      - pitti-guardrails-ci-20260826
+    paths:
+      - 'PITTI_EXECUTION_LOCK.json'
+      - 'PITTI_PROJECT_STATE.md'
+      - 'PITTI_AUTO_PREFLIGHT.md'
+      - 'README.md'
+      - 'app.js'
+      - 'tools/pitti_guardrail_check.mjs'
+      - '.github/workflows/pitti-project-guardrails.yml'
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  guardrails:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Node syntax
+        run: node --check app.js
+      - name: PITTI execution-lock and anti-regression gate
+        run: node tools/pitti_guardrail_check.mjs
+      - name: Runtime files are untouched by guardrail hardening
+        if: github.ref_name == 'pitti-guardrails-ci-20260826'
+        run: |
+          git diff --exit-code 9ba6db89fc1e7550052a7526bd0c68d6cc7459dc -- app.js index.html sw.js manifest.webmanifest || {
+            echo 'Guardrail hardening must not mutate Draft Companion runtime files.' >&2
+            exit 1
+          }
