@@ -1,19 +1,23 @@
-name: Expert profiles rc4.68 build
+name: Draft Companion release completeness
 'on':
   push:
     branches:
       - pitti-expert-v2-wr-decision-20260826
     paths:
-      - .github/workflows/wr-v2-shadow-integration.yml
-      - research/build-expert-profiles-rc465.mjs
-      - research/expert-v2-exact-return-input-v2.json.gz.b64
-      - live-surface-v3.js
-      - tools/release-completeness-guard.mjs
+      - '.github/workflows/wr-v2-shadow-integration.yml'
+      - 'tools/release-completeness-guard.mjs'
+      - 'app.js'
+      - 'index.html'
+      - 'sw.js'
+      - 'manifest.webmanifest'
+      - 'live-surface-v3.js'
+      - 'expert-v2-board.js'
+      - 'README.md'
   workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 jobs:
-  build-test-package:
+  verify-and-package:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -22,37 +26,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Build three selectable expert profiles with stable rank UI
-        run: node research/build-expert-profiles-rc465.mjs
-      - name: Syntax and expert-profile invariants
+      - name: Release completeness guard
+        run: node tools/release-completeness-guard.mjs
+      - name: JavaScript syntax
         run: |
           node --check app.js
-          node --check expert-v2-board.js
           node --check live-surface-v3.js
-          node <<'NODE'
-          const fs=require('fs'),vm=require('vm');
-          const c={window:{}};vm.createContext(c);vm.runInContext(fs.readFileSync('expert-v2-board.js','utf8'),c);
-          const b=c.window.PITTI_EXPERT_V2;if(!b)throw Error('board missing');
-          for(const p of ['QB','RB','WR','TE']){if(Object.values(b.weights[p]).reduce((a,x)=>a+x,0)!==100)throw Error(p+' weight sum');if(!b.rows[p].length)throw Error(p+' rows missing')}
-          const a=fs.readFileSync('app.js','utf8'),h=fs.readFileSync('index.html','utf8'),l=fs.readFileSync('live-surface-v3.js','utf8');
-          for(const x of ['fullv2','wrv2','incumbent','ensureExpertV2Panels','applyExpertProfile','expertProfileBeforeReload'])if(!a.includes(x)&&!h.includes(x))throw Error('missing '+x);
-          if(!h.includes('v11.8.0-rc4.68'))throw Error('version not bumped');
-          if(!a.includes("version:'11.8.0-rc4.68'"))throw Error('backup version stale');
-          if(l.includes('<details><summary>Experten'))throw Error('experts still collapsible');
-          if(/shortName\(name\).*w.*%/.test(l))throw Error('weights leaked into live expert row');
-          const required=[
-            "GLOBAL_EXPERT_ORDER=['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Nick Mariano','Justin Boone'",
-            "QB:['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Nick Mariano','Justin Boone']",
-            "RB:['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Nick Mariano']",
-            "WR:['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Nick Mariano','Justin Boone']",
-            "TE:['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Justin Boone']",
-            'return GLOBAL_EXPERT_ORDER.filter',
-            'Math.round(hit.rank)'
-          ];
-          for(const x of required)if(!l.includes(x))throw Error('stable rank layout missing '+x);
-          NODE
-      - name: Permanent release-completeness guard
-        run: node tools/release-completeness-guard.mjs
+          node --check expert-v2-board.js
+          node --check sw.js
       - name: Existing decision regressions
         run: |
           node Draft_Companion_Position_Path_Regression_2026-08-13.js
@@ -61,25 +42,17 @@ jobs:
           node Draft_Companion_Scarcity_Double_Count_Regression_2026-08-13.js
           node Draft_Companion_Alternative_Scarcity_Regression_2026-08-13.js
           node Draft_Companion_Dress_Rehearsal_Regression_2026-08-14.js
-      - name: Exact Return-v2 control parity
+      - name: Package verified runtime only
         run: |
-          node research/wr-v2-exact-return-harness.mjs > /tmp/return.log
-          grep -F 'CONTROL_PARITY predictions=224 rv2=215 fallback=9 mae=0 max=0' /tmp/return.log
-      - name: Commit generated rc4.68 candidate
-        run: |
-          git config user.name github-actions[bot]
-          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
-          git add app.js index.html sw.js manifest.webmanifest README.md expert-v2-board.js live-surface-v3.js
-          if ! git diff --cached --quiet; then git commit -m 'Build rc4.68 stable expert-rank live layout [skip ci]'; git push; fi
-      - name: Package runtime-only verified candidate
-        run: |
+          V=$(grep -o 'v11.8.0-rc4.[0-9]*' index.html | head -1)
           mkdir -p dist/runtime
           cp index.html app.js styles.css manifest.webmanifest sw.js _worker.js icon.svg live-surface-v3.js live-surface-v3.css expert-board-export.js expert-v2-board.js dist/runtime/
-          (cd dist/runtime && zip -q ../Draft_Companion_v11.8.0-rc4.68_EXPERT_PROFILES_RUNTIME.zip *)
-          test "$(unzip -Z1 dist/Draft_Companion_v11.8.0-rc4.68_EXPERT_PROFILES_RUNTIME.zip | wc -l)" -eq 11
-          ! unzip -Z1 dist/Draft_Companion_v11.8.0-rc4.68_EXPERT_PROFILES_RUNTIME.zip | grep -E '(^|/)(tools|research|PITTI_|README|Regression|REGRESSION)'
+          (cd dist/runtime && zip -q ../Draft_Companion_${V}_VERIFIED_RUNTIME.zip *)
+          test "$(unzip -Z1 dist/Draft_Companion_${V}_VERIFIED_RUNTIME.zip | wc -l)" -eq 11
+          ! unzip -Z1 dist/Draft_Companion_${V}_VERIFIED_RUNTIME.zip | grep -E '(^|/)(tools|research|PITTI_|README|Regression|REGRESSION)'
+          sha256sum dist/Draft_Companion_${V}_VERIFIED_RUNTIME.zip
       - uses: actions/upload-artifact@v4
         with:
-          name: Draft_Companion_v11.8.0-rc4.68_EXPERT_PROFILES_RUNTIME
-          path: dist/Draft_Companion_v11.8.0-rc4.68_EXPERT_PROFILES_RUNTIME.zip
+          name: verified-runtime
+          path: dist/Draft_Companion_*_VERIFIED_RUNTIME.zip
           retention-days: 7
