@@ -106,3 +106,4 @@ function ensureWrV2ShadowPanel(){
           path: dist/Draft_Companion_WR_V2_SHADOW_TEST.zip
           retention-days: 7
 # trigger: 2026-08-26T18:16+02:00
+# registration-repair: 2026-08-26T18:55+02:00
