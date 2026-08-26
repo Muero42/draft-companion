@@ -1,110 +1,114 @@
 # PITTI PROJECT STATE — CANONICAL
 
-Updated: 2026-08-26
-Authority: Source of Truth for PITTI/Draft Companion execution. Read this before project work or handoff. Actual verified artifacts/runtime can override stale statements; when they do, repair this file immediately. The persistent Library checkpoint `/Pitti/PITTI_PROJECT_STATE.md` contains the full append-only audit history; this repository file is the compact execution lock and must agree with its newest verified material state.
+Updated: 2026-08-26 16:45Z
+Authority: compact repository execution state. Persistent full append-only history is `/Pitti/PITTI_PROJECT_STATE.md`. Actual verified artifacts/runtime override stale text; repair stale state immediately. Chat memory is never authority.
 
 ## EXECUTION INVARIANTS — MUST NOT REGRESS
 
-1. AUTO means end-to-end autonomous execution. Do not interrupt while useful work can continue autonomously. Waiting on one lane means work another independent lane. Interrupt only for unavoidable user action/information, material irreversible/security risk, an unresolved contradiction that blocks safe progress, or a meaningful completed result requiring device/runtime verification.
-2. Optimize user time, not assistant response latency. Do not send status-only messages when more useful autonomous work is possible.
-3. Before every material implementation/research path, preflight: current canonical state; actual branch/build/artifacts; latest Android-verified version; known failures/rejected approaches; prerequisites; parallelizable work; simplest robust end-to-end route.
-4. Never silently revive a rejected/obsolete approach. A failed path may be retried only with new evidence explaining why the failure cause is removed.
-5. Material decisions, implementations, verifications, failures, rejected approaches, artifact state and next gates must be written here promptly, not deferred until chat handoff.
-6. New-chat recovery: read this file first, then verify relevant current artifacts/branches/runtime. Do not reconstruct state from conversational memory. Newer explicit sections supersede older conflicting notes.
-7. Built/prepared != deployed != Android verified. Never promote a version's status without evidence for that exact stage.
-8. Freeze discipline: near the 2026-08-31 draft, prefer small isolated reversible changes. Major changes require clear expected-value advantage and regression protection.
-9. Regression prevention is technical where possible: once a bug class or hard rule is known, add/retain a test, fail-closed guard, or explicit invariant rather than relying on memory.
-10. Do not repeatedly re-research settled facts unless freshness materially matters or new evidence appears.
+1. AUTO is end-to-end autonomous execution. Continue while useful work exists; use independent parallel lanes while waiting. No status-only/intermediate response while useful autonomous work remains.
+2. Before material work: verify canonical state, actual branch/build/artifacts, latest Android runtime, known rejected paths, prerequisites and simplest robust route.
+3. Failed/rejected approaches may not be silently revived without new evidence that removes the failure cause.
+4. Material decisions/failures/verification/next gates are written through promptly to checkpoint/lock.
+5. Built/prepared/deployed/Android-verified are distinct states.
+6. Near the 2026-08-31 draft, prefer small isolated reversible changes with deterministic regression protection.
+7. New chat: read Library CURRENT/SEAL/full Project State plus this compact state and `PITTI_EXECUTION_LOCK.json`; any contradiction fails closed and must be repaired before project work.
+8. AUTO never starts an interactive mock by itself.
 
-Machine-readable mirror: `PITTI_EXECUTION_LOCK.json`. Executable check: `tools/pitti_guardrail_check.mjs`. CI gate: `.github/workflows/pitti-project-guardrails.yml`. These are guards, not substitutes for checking actual runtime/artifacts.
+Machine lock: `PITTI_EXECUTION_LOCK.json`. Executable guard: `tools/pitti_guardrail_check.mjs`. CI: `.github/workflows/pitti-project-guardrails.yml`.
 
 ## HARD PRODUCT / DRAFT INVARIANTS
 
-- League: 10 teams, Half-PPR, 1QB. Starters QB, 2 WR, 1 RB, 1 TE, 2 Flex, K, DST; bench 6.
-- Max 4 WR / 3 RB / 2 TE simultaneously startable are STARTER maxima, NOT roster/draft caps. Bench players remain legal.
-- Do not draft K/DST in normal strategy.
-- QB2/TE2 only exceptional in this 10-team 1QB format; no global positional ban.
-- Geno Smith and Aaron Rodgers are hard exclusions from user's QB path.
-- Panel is baseline; ADP is market/timing input, not player-quality truth.
-- Return-v2/opponent geometry and opportunity cost must be respected; do not override TAKE/WAIT merely for generic positional preference.
-- Snapshot duplicate identity MUST include Draft-ID plus state/fingerprint. Never classify a new mock as duplicate merely because picks/fingerprint resemble another draft.
-- Experts in live UI should be immediately visible and in stable ordering; do not require expansion/search during 2-minute decisions.
-- Roster utility must suppress increasingly redundant WR recommendations when roster construction already has excessive WR depth; starter maxima must not be misread as roster caps.
-- Freshness: do not knowingly use stale expert rankings when current draft rankings are obtainable; reject Superflex/2QB contamination fail-closed.
-- Preserve quarantine: no PairSum-v2/Rolling-v1 resurrection, Chase-Brown/player-name forcing, fixed roster quotas/caps, or generic Return-v2 retune.
+- 10-team Half-PPR, 1QB, user slot 9, draft 2026-08-31, 120s/pick.
+- Starter maxima are not roster caps: 4 WR / 3 RB / 2 TE can be simultaneously startable, but bench players remain legal.
+- Normal strategy does not draft K/DST.
+- QB2/TE2 are exceptional, not globally banned.
+- Geno Smith and Aaron Rodgers are hard user-QB exclusions.
+- Selected panel is player-quality baseline; ADP is market/timing, not truth.
+- Return-v2/opponent geometry and opportunity cost remain active.
+- Excess WR depth must reduce marginal WR utility, while exceptional value slides remain legal. No hard WR cap.
+- Never revive PairSum-v2/Rolling-v1, Chase-Brown/player-name forcing, fixed quotas/caps, generic Return-v2 retune or global QB2/TE2 ban without new evidence.
+- Reject Superflex/2QB contamination fail-closed.
 
-## EXPERT-V2 — CURRENT AUTHORITATIVE SHADOW CANDIDATE
+## CURRENT RUNTIME BOUNDARY
 
-Expert-v2 is NOT production. It must be implemented only as an additional selectable configuration; the unchanged rc4.64 incumbent remains selectable as control/fallback.
+- Android verified/current control: **v11.8.0-rc4.64**.
+- Decision-kernel pin: `9ba6db89fc1e7550052a7526bd0c68d6cc7459dc`.
+- Current main after transfer-lock hardening carries only guard/state changes beyond the decision kernel; Draft Companion runtime remains rc4.64 control.
+- Library `Draft_Companion_TEST.zip`, `Draft_Companion_LATEST.zip`, numbered rc4.52 are recovery/audit aliases only (SHA `38e46c942e2b95c862587fdab1bd5bf71b2da524e5efc1ef0107acaad2c7bf32`, 8 files). Do not infer Android truth from Library aliases.
+- gh-pages remains a distinct rc4.63 runtime plus isolated audit tooling; do not equate it with current Android rc4.64.
+- rc4.64 incumbent expert configuration remains **DEFAULT / CONTROL / SELECTABLE**.
 
-Source rules:
-- Draft Sharks = ONE correlated source family. Never count Jody Smith + Jared Smola/team signal separately.
-- Nick Mariano: current board solved/refreshable; do not repeat availability research without a freshness reason.
-- Dalton Del Don: serious current candidate.
-- Pat Fitzmaurice: retained/reference candidate.
-- Justin Boone: current board available; keep draft-accuracy distinct from in-season accuracy. Boone-heavy variant is rejected.
-- Andrew Erickson: challenger only; no incumbency protection.
-- Matt Harmon: WR evidence/specialist layer only unless marginal numerical value is demonstrated.
-- Derek Brown: excluded from NEW Expert-v2.
-- Sean Koerner: current-draft acquisition closed because relevant source is paywalled/unavailable. Do not spend draft-week time forcing access.
-- Temporary Weisse/Gianni/Bobal replacement pool is rejected and must not be resurrected from old research workflows.
+## EXPERT-V2 — AUTHORITATIVE 2026-08-26 STATE
 
-Recovered rounded weights were the frozen four-position SHADOW hypothesis tested, not production weights:
+### Full four-position candidate: REJECTED
+
+The frozen tested four-position SHADOW hypothesis was:
 - QB: Draft Sharks 35 / Nick Mariano 25 / Dalton Del Don 20 / Justin Boone 10 / Pat Fitzmaurice 10.
 - RB: Draft Sharks 35 / Nick Mariano 25 / Dalton Del Don 25 / Pat Fitzmaurice 15.
 - WR: Nick Mariano 35 / Draft Sharks 30 / Pat Fitzmaurice 15 / Dalton Del Don 10 / Justin Boone 10.
 - TE: Draft Sharks 35 / Pat Fitzmaurice 30 / Dalton Del Don 25 / Justin Boone 10.
 
-Do not micro-tune percentages merely to fit historical picks. +/-5-point perturbation testing showed high top-choice robustness.
+Exact rc4.64 + end-to-end Return-v2 A/B rejected the combined treatment: QB-v2 produced a material late QB2 regression (Kyler Murray at pick149 with QB1 already rostered), while late WR concerns remained. RB-v2 had no demonstrated marginal decision value; TE-v2 lacked a sufficient promotion case. **Do not integrate the QB/RB/TE treatment weights. QB/RB/TE remain incumbent rc4.64.**
 
-## CURRENT VERIFIED TECHNICAL / RESEARCH STATE — 2026-08-26
+### WR-v2 only: PASS SHADOW QUALIFICATION, NOT PRODUCTION
 
-- Android runtime verified: Draft Companion `v11.8.0-rc4.64`.
-- Current decision-kernel baseline is pinned to main commit `9ba6db89fc1e7550052a7526bd0c68d6cc7459dc`; that commit's change from its parent is exporter-only, not a decision-kernel retune.
-- Real Android `PITTI_EXPERT_BOARDS_V3` export succeeded from persisted verified app caches: Pat 296, Boone 264, Erickson 196, Harmon 239; Dalton Del Don failed closed because no verified local cache; Brown intentionally absent.
-- App schema-13 export does NOT preserve expert tiers. Never invent tier values from blank fields; use exact-source tier evidence separately.
-- Draft Sharks v4 research evidence is quarantined because its parser truncated apostrophe names. Corrected v5 is the only valid current DS freeze.
-- Current Boone reconstruction: 264 rows; 210 exact + 54 bounded reconstructed. Reconstructed uncertainty remains explicit.
-- Current-board expert correlations are high; adding voices requires marginal decision value, not panel-size justification.
-- Canonical natural fixture backup: `draft-companion-v7-backup-2026-08-24T19-40-47-213Z.json`, draft `1397557585325891584`, 15 frozen states. Provenance is mixed: picks 9/12/29 rc4.60; picks 32 onward rc4.63. Never relabel all 15 rc4.63.
-- Stored fixture `coachScore` is panel-contaminated and is NOT a neutral A/B target.
-- Exact Return-v2 harness reached deterministic control parity for all 14 suitable natural fixtures. This supersedes the earlier non-certifying fixed-input diagnostic.
-- Four-position Expert-v2 treatment is REJECTED. QB-v2 produced a material late QB2 regression (including Kyler Murray at pick 149); RB-v2 showed no demonstrated marginal decision value; TE-v2 produced only an isolated pick-12 Bowers -> Jefferson change and no sufficient promotion case.
-- Only WR-v2 remains an open SHADOW challenger. In the exact decision comparison it changed/improved the surface at picks 69/92/112/132/149 sufficiently to justify a dedicated WR-only qualification, but this is NOT yet production certification.
-- Therefore current authoritative research endpoint: rc4.64 incumbent remains Control and production; QB/RB/TE remain incumbent; WR-v2 alone proceeds to a dedicated marginal-value/roster-utility qualification.
-- No player-specific fixes, hard WR cap, generic QB2/TE2 ban, Koerner/Brown resurrection, or rejected replacement-expert pool may be used to make WR-v2 pass.
+**Exact WR-v2 weights to preserve and integrate additively:**
+- Nick Mariano **35%**
+- Draft Sharks Team **30%**
+- Pat Fitzmaurice **15%**
+- Dalton Del Don **10%**
+- Justin Boone **10%**
+- Sum = **100%**
 
-## WR-V2 ONLY A/B GATE — CURRENT NEXT ACTION
+This is the only qualified new expert weighting. It must become an **additional selectable WR panel**; it must not overwrite/remove the rc4.64 incumbent, which stays default/control until full validation.
 
-The four-position v2 experiment is closed. Do not rerun it as the default next step.
+Exact control-parity evidence for the isolation harness: **224/224 predictions** = 215 Return-v2 + 9 production fallbacks, MAE=0, max=0. WR-v2 preserved key controls and improved/reduced WR accumulation at multiple deep-roster states. Pick129 can still surface WR7 because the common PlayerQualitySafety/roster-utility layer may resurrect a WR; this is a shared B-axis issue, not permission to alter WR weights or impose a cap.
 
-Next research gate is isolated WR-v2 against unchanged rc4.64:
-1. identical raw pre-decision states and exact current kernel;
-2. only WR expert-board composition changes; QB/RB/TE remain incumbent;
-3. full Return-v2 recomputation with deterministic/disjoint RNG semantics;
-4. all non-WR-panel inputs/fingerprints identical;
-5. explicitly measure whether apparent gains at picks 69/92/112/132/149 survive correct marginal WR utility as roster WR depth rises;
-6. verify late-RB optionality and ordinary QB2 opportunity cost are not displaced by panel-driven WR inflation;
-7. exceptional value slides remain legal; no hard positional caps/quotas;
-8. promote only if WR-v2 adds repeatable decision value without material natural-control regression.
+### Source locks
 
-Mandatory controls remain picks 89, 92, 112, 129, 132, 149, with special emphasis on excessive-WR-depth states. If a weakness occurs in both arms it is a separate B-axis decision-surface problem, not evidence for manipulating the panel.
+- Derek Brown: **EXCLUDED FROM NEW V2**.
+- Andrew Erickson: challenger-only; no current numeric vote.
+- Matt Harmon: WR evidence/specialist layer only; no numeric vote unless incremental value is demonstrated.
+- Sean Koerner: current-draft acquisition closed/paywalled; watchlist only. Do not spend draft-week time forcing access.
+- Draft Sharks = exactly ONE correlated family; never double-count Jody Smith/Jared Smola/staff as separate votes.
+- Temporary Weisse/Gianni/Bobal pool: rejected/control only; never resurrect from old workflows.
+- Draft accuracy and in-season accuracy remain distinct; do not justify Boone-heavy weights from in-season results.
+- Do not micro-tune 35 vs 32/38 to fit historical picks; perturbation testing showed percentage precision is not the material uncertainty.
 
-Even if WR-v2 passes, integration is additive/selectable only; unchanged rc4.64 remains selectable fallback/control.
+## FRESHNESS
+
+- Verified individual expert boards may be reused for at most ~12h before refresh attempt.
+- Failed refresh may preserve only explicit `STALE-FALLBACK`; stale data must never be silently presented as fresh.
+- Open draft-readiness gate: make age/stale state fail-visible and require a fresh pre-draft check.
+
+## CURRENT INTEGRATION / RESEARCH STATE
+
+- Research branch: `pitti-expert-v2-wr-decision-20260826`.
+- Last transfer-known head: `2449f457c7a3c46a68d5d271a590ff329e5f1813` (`Trigger WR-v2 shadow integration gate`).
+- WR-v2 decision gate report status: **PANEL-ISOLATION PASS / SHADOW TEST-READY, NOT PRODUCTION**.
+- Integration workflow was prepared/triggered but no concrete successful integration workflow run had been verified at handoff. Preparation is not a build/package/Android verification.
+- Natural frozen fixture provenance remains mixed: picks 9/12/29 rc4.60; picks 32 onward rc4.63. Never relabel all fixtures as rc4.64. Stored fixture `coachScore` is panel-contaminated and not a neutral A/B target.
+
+## EXACT CONTINUATION
+
+1. Verify whether the WR-v2 integration workflow produced a concrete run after `2449f457`; if absent diagnose workflow registration/trigger rather than waiting or declaring success.
+2. Integrate **WR only** with exact weights Mariano35 / Draft Sharks30 / Pat15 / Del Don10 / Boone10 as an additional selectable configuration. QB/RB/TE stay incumbent rc4.64. rc4.64 stays default/control/selectable.
+3. Run existing regression suite and exact Return-control parity.
+4. In parallel qualify the common roster-aware PlayerQualitySafety/WR-redundancy issue exposed at pick129 without hard cap, quota, player forcing, PairSum/Rolling, generic Return retune or global QB2/TE2 ban.
+5. In parallel harden expert freshness visibility/fail-closed draft readiness.
+6. After CI/regression PASS, run realistic non-interactive mock/roster validation. Android install/test only after a concrete verified package exists.
 
 ## KNOWN RECENT FAILURE MODES — DO NOT REPEAT
 
-- AUTO blocks announcing future work instead of doing it.
-- Waiting idle when independent lanes exist.
-- Chat handoffs or memory reviving stale states.
-- Research branches with damaged/minimal `index.html` used as app baseline.
-- Expert pool changed too aggressively without current-board/marginal-value proof.
-- Superflex/format contamination.
-- Rebuilding solved FantasyPros infrastructure or repeatedly re-proving Mariano availability.
-- Treating Boone in-season accuracy as preseason draft accuracy.
-- Using old selector/audit workflows as authority: some contain Koerner/Gianni/Bobal/Weisse and are historical/quarantined only.
-- Treating built/prepared artifacts as Android verified.
+- Handoff claiming completeness while compact state omits exact expert weights.
+- Stale nested generation/runtime pointers surviving a superficially PASS seal.
+- AUTO blocks announcing work instead of doing it.
+- Waiting idle while parallel work exists.
+- Treating prepared/build artifacts as Android verified.
+- Rebuilding solved expert/source acquisition questions.
+- Using old selector/audit workflows containing Koerner/Weisse/Gianni/Bobal as current authority.
+- Reviving rejected full-v2 QB/RB/TE weights after WR-only qualification.
 
-## HANDOFF RULE
+## HANDOFF LOCK
 
-A new chat must start from this file AND the persistent `/Pitti/PITTI_PROJECT_STATE.md`, then verify the relevant actual branch/build/artifacts/runtime. If checkpoint/chat/repository disagree, do not guess and do not continue from memory: establish the newest verified reality, repair the stale checkpoint/lock, then proceed. Material state changes are written through during the work unit, not deferred until handoff.
+Persistent Library handoff generation **v96** is authoritative for transfer. A new chat must verify `PITTI_CURRENT_STATE.json` + `PITTI_HANDOFF_SEAL.json` + full Library Project State and then verify relevant live GitHub/runtime facts. Exact WR-v2 weights are transfer-critical and machine-locked in `PITTI_EXECUTION_LOCK.json`.
