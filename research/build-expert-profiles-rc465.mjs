@@ -13,6 +13,6 @@ if(!a.includes('EXPERT_PROFILE_IDS')||!a.includes('ensureExpertV2Panels'))throw 
 const oldReload="    applyPreset();\n    persist();renderAll();";
 const newReload="    const expertProfileBeforeReload=currentExpertProfile();\n    applyPreset();\n    ensureExpertV2Panels();\n    if(EXPERT_PROFILE_IDS[expertProfileBeforeReload])positionPanels={...EXPERT_PROFILE_IDS[expertProfileBeforeReload]};\n    persist();renderAll();";
 if(a.includes(oldReload))a=a.replace(oldReload,newReload);else if(!a.includes('expertProfileBeforeReload'))throw Error('loadExperts reload marker missing');
-a=a.replaceAll(OLD,NEW).replaceAll('v11.8.0-rc4.66',NEW);fs.writeFileSync('app.js',a);
+a=a.replaceAll(OLD,NEW).replaceAll('v11.8.0-rc4.66',NEW).replaceAll("version:'11.8.0-rc4.64'", "version:'11.8.0-rc4.67'").replaceAll("version:'11.8.0-rc4.65'", "version:'11.8.0-rc4.67'").replaceAll("version:'11.8.0-rc4.66'", "version:'11.8.0-rc4.67'");fs.writeFileSync('app.js',a);
 for(const f of ['index.html','sw.js','manifest.webmanifest','README.md']){let s=fs.readFileSync(f,'utf8');s=s.replaceAll(OLD,NEW).replaceAll('v11.8.0-rc4.66',NEW);fs.writeFileSync(f,s);}
 console.log('RC467_BUILD_READY profile-preservation+locked-live-expert-layout',Object.fromEntries(Object.entries(rows).map(([k,v])=>[k,v.length])));
