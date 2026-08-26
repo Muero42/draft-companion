@@ -28,7 +28,28 @@ jobs:
           node --check app.js
           node --check expert-v2-board.js
           node --check live-surface-v3.js
-          node -e "const fs=require('fs'),vm=require('vm');const c={window:{}};vm.createContext(c);vm.runInContext(fs.readFileSync('expert-v2-board.js','utf8'),c);const b=c.window.PITTI_EXPERT_V2;if(!b)throw Error('board missing');for(const p of ['QB','RB','WR','TE']){if(Object.values(b.weights[p]).reduce((a,x)=>a+x,0)!==100)throw Error(p+' weight sum');if(!b.rows[p].length)throw Error(p+' rows missing')}const a=fs.readFileSync('app.js','utf8'),h=fs.readFileSync('index.html','utf8'),l=fs.readFileSync('live-surface-v3.js','utf8');for(const x of ['fullv2','wrv2','incumbent','ensureExpertV2Panels','applyExpertProfile','expertProfileBeforeReload'])if(!a.includes(x)&&!h.includes(x))throw Error('missing '+x);if(!h.includes('v11.8.0-rc4.68'))throw Error('version not bumped');if(!a.includes(\"version:'11.8.0-rc4.68'\"))throw Error('backup version stale');if(l.includes('<details><summary>Experten'))throw Error('experts still collapsible');if(/shortName\(name\).*w.*%/.test(l))throw Error('weights leaked into live expert row');for(const x of [\"GLOBAL_EXPERT_ORDER=['Draft Sharks Team','Nick Mariano','Dalton Del Don','Pat Fitzmaurice','Justin Boone'\",\"WR:['Draft Sharks Team','Nick Mariano','Dalton Del Don','Pat Fitzmaurice','Justin Boone']\",\"return GLOBAL_EXPERT_ORDER.filter\",\"`#${Math.round(hit.rank)}`\"])if(!l.includes(x))throw Error('stable rank layout missing '+x);"
+          node <<'NODE'
+          const fs=require('fs'),vm=require('vm');
+          const c={window:{}};vm.createContext(c);vm.runInContext(fs.readFileSync('expert-v2-board.js','utf8'),c);
+          const b=c.window.PITTI_EXPERT_V2;if(!b)throw Error('board missing');
+          for(const p of ['QB','RB','WR','TE']){if(Object.values(b.weights[p]).reduce((a,x)=>a+x,0)!==100)throw Error(p+' weight sum');if(!b.rows[p].length)throw Error(p+' rows missing')}
+          const a=fs.readFileSync('app.js','utf8'),h=fs.readFileSync('index.html','utf8'),l=fs.readFileSync('live-surface-v3.js','utf8');
+          for(const x of ['fullv2','wrv2','incumbent','ensureExpertV2Panels','applyExpertProfile','expertProfileBeforeReload'])if(!a.includes(x)&&!h.includes(x))throw Error('missing '+x);
+          if(!h.includes('v11.8.0-rc4.68'))throw Error('version not bumped');
+          if(!a.includes("version:'11.8.0-rc4.68'"))throw Error('backup version stale');
+          if(l.includes('<details><summary>Experten'))throw Error('experts still collapsible');
+          if(/shortName\(name\).*w.*%/.test(l))throw Error('weights leaked into live expert row');
+          const required=[
+            "GLOBAL_EXPERT_ORDER=['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Nick Mariano','Justin Boone'",
+            "QB:['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Nick Mariano','Justin Boone']",
+            "RB:['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Nick Mariano']",
+            "WR:['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Nick Mariano','Justin Boone']",
+            "TE:['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Justin Boone']",
+            'return GLOBAL_EXPERT_ORDER.filter',
+            'Math.round(hit.rank)'
+          ];
+          for(const x of required)if(!l.includes(x))throw Error('stable rank layout missing '+x);
+          NODE
       - name: Existing decision regressions
         run: |
           node Draft_Companion_Position_Path_Regression_2026-08-13.js
