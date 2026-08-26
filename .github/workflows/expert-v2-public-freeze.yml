@@ -1,0 +1,30 @@
+name: Expert v2 public freeze
+on:
+  push:
+    branches: [pitti-expert-v2-weight-audit-20260826]
+    paths:
+      - 'research/freeze-public-expert-boards.mjs'
+      - '.github/workflows/expert-v2-public-freeze.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  freeze:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax
+        run: node --check research/freeze-public-expert-boards.mjs
+      - name: Fetch and validate exact public boards
+        run: node research/freeze-public-expert-boards.mjs
+      - name: Summary
+        if: always()
+        run: cat expert-v2-public-freeze/manifest.json || true
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: expert-v2-public-freeze
+          path: expert-v2-public-freeze/
