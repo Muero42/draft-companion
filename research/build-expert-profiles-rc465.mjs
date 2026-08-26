@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import zlib from 'node:zlib';
-const OLD='v11.8.0-rc4.65', NEW='v11.8.0-rc4.66';
+const OLD='v11.8.0-rc4.65', NEW='v11.8.0-rc4.67';
 const raw=fs.readFileSync('research/expert-v2-exact-return-input-v2.json.gz.b64','utf8').replace(/\s+/g,'');
 const d=JSON.parse(zlib.gunzipSync(Buffer.from(raw,'base64')));
 if(d.schema!=='pitti-expert-v2-exact-return-input-v2'||d.kernelCommit!=='9ba6db89fc1e7550052a7526bd0c68d6cc7459dc')throw Error('frozen Expert-v2 source pin mismatch');
@@ -13,6 +13,6 @@ if(!a.includes('EXPERT_PROFILE_IDS')||!a.includes('ensureExpertV2Panels'))throw 
 const oldReload="    applyPreset();\n    persist();renderAll();";
 const newReload="    const expertProfileBeforeReload=currentExpertProfile();\n    applyPreset();\n    ensureExpertV2Panels();\n    if(EXPERT_PROFILE_IDS[expertProfileBeforeReload])positionPanels={...EXPERT_PROFILE_IDS[expertProfileBeforeReload]};\n    persist();renderAll();";
 if(a.includes(oldReload))a=a.replace(oldReload,newReload);else if(!a.includes('expertProfileBeforeReload'))throw Error('loadExperts reload marker missing');
-a=a.replaceAll(OLD,NEW);fs.writeFileSync('app.js',a);
-for(const f of ['index.html','sw.js','manifest.webmanifest','README.md']){let s=fs.readFileSync(f,'utf8');s=s.replaceAll(OLD,NEW);fs.writeFileSync(f,s);}
-console.log('RC466_BUILD_READY profile-preservation',Object.fromEntries(Object.entries(rows).map(([k,v])=>[k,v.length])));
+a=a.replaceAll(OLD,NEW).replaceAll('v11.8.0-rc4.66',NEW);fs.writeFileSync('app.js',a);
+for(const f of ['index.html','sw.js','manifest.webmanifest','README.md']){let s=fs.readFileSync(f,'utf8');s=s.replaceAll(OLD,NEW).replaceAll('v11.8.0-rc4.66',NEW);fs.writeFileSync(f,s);}
+console.log('RC467_BUILD_READY profile-preservation+locked-live-expert-layout',Object.fromEntries(Object.entries(rows).map(([k,v])=>[k,v.length])));
