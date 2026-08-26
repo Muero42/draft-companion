@@ -1,7 +1,7 @@
-const CACHE='draft-companion-v11.8.0-rc4.67';
+const CACHE='draft-companion-v11.8.0-rc4.68';
 const BACKUP_CACHE='draft-companion-backup-export-v1';
 const ASSETS=['./','./index.html','./styles.css','./app.js?v=11.8.0-rc4.61','./manifest.webmanifest','./icon.svg','./live-surface-v3.js','./live-surface-v3.css','./expert-board-export.js?v=20260826e'];
-const BASE='v11.8.0-rc4.67',TARGET='v11.8.0-rc4.67';
+const BASE='v11.8.0-rc4.68',TARGET='v11.8.0-rc4.68';
 function patchApp(s){
   s=s.replaceAll(BASE,TARGET).replaceAll('11.8.0-rc4.60','11.8.0-rc4.60');
   const old1="      snapshotLimit=els.snapshotMode.value==='full'?40:25,\n      availableSnapshot=scored.slice().sort((a,b)=>a.r.rank-b.r.rank).slice(0,snapshotLimit),";
