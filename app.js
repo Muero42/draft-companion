@@ -1,5 +1,5 @@
 const $=id=>document.getElementById(id);
-const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus'];
+const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
@@ -18,6 +18,11 @@ let experts=store.get('v7_experts',[]);
 let panels=store.get('v7_panels',{standard:{name:'Standard',members:{}},pat:{name:'Pat einzeln',members:{}}});
 let activePanelId=store.text('v7_activePanel','standard');
 let positionPanels=store.get('v7_positionPanels',{QB:'qb',RB:'rb',WR:'wr',TE:'te'});
+const EXPERT_PROFILE_IDS={incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'},fullv2:{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'},wrv2:{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'}};
+function ensureExpertV2Panels(){const src=globalThis.PITTI_EXPERT_V2;if(!src||src.schema!=='pitti-expert-v2-board.v1')return false;for(const pos of ['QB','RB','WR','TE']){const list=src.rows?.[pos]||[];if(!list.length)return false;const id='expert-v2-'+pos.toLowerCase(),ranks={};for(const row of list){const rank=Number(row.rank);if(row.name&&Number.isFinite(rank)&&rank>0)ranks[norm(row.name)]={name:row.name,pos,rank,mean:rank,median:rank,sd:null,n:null};}panelRanks[id]=ranks;panels[id]={name:'Expert-v2 '+pos+' · 26.08.',members:{},shadow:true,weights:src.weights?.[pos]||{},source:src.source};}return true;}
+function currentExpertProfile(){for(const [id,map] of Object.entries(EXPERT_PROFILE_IDS))if(['QB','RB','WR','TE'].every(pos=>positionPanels[pos]===map[pos]))return id;return 'custom';}
+function applyExpertProfile(id){const map=EXPERT_PROFILE_IDS[id];if(!map)return;positionPanels={...map};persist();renderAll();if(els.expertProfile)els.expertProfile.value=id;}
+
 function loadRankCacheCompact(){
   const legacy=store.get('v7_rankCache',{}),out={};
   if(legacy&&typeof legacy==='object')Object.assign(out,legacy);
@@ -472,9 +477,10 @@ function rebuildPanelRanksFromCache(){
   const pool=buildDraftCandidatePool(verifiedIds);if(pool.total<120)return false;
   const rebuilt={};for(const id of Object.keys(panels))rebuilt[id]=computePanel(id,pool.keep);
   if(!Object.values(rebuilt).some(r=>Object.keys(r||{}).length))return false;
-  panelRanks=rebuilt;return true;
+  panelRanks=rebuilt;ensureExpertV2Panels();return true;
 }
 if(!Object.keys(panelRanks).length)rebuildPanelRanksFromCache();
+ensureExpertV2Panels();
 function renderAll(){if(!panels[activePanelId])activePanelId='standard';panelOptions(els.activePanel,activePanelId);for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])panelOptions(el,positionPanels[pos]||activePanelId);renderExperts();renderLog();updateStatus()}
 function renderExperts(){const q=els.expertSearch.value.trim().toLowerCase(),members=panels[activePanelId]?.members||{},total=Object.values(members).reduce((s,w)=>s+Number(w||0),0);const list=experts.filter(e=>!q||`${e.name} ${e.site}`.toLowerCase().includes(q));els.expertsList.innerHTML=list.length?list.map(e=>{const on=members[e.id]!=null,w=Number(members[e.id]??25),pct=on&&total?Math.round(w/total*100):0;return `<div class="expert"><label><input type="checkbox" data-id="${esc(e.id)}" ${on?'checked':''}> ${esc(e.name)}<small>${esc(e.site||'Quelle unbekannt')}${e.accuracy!=null?` · Accuracy ${e.accuracy}`:''}${on?` · effektiv ${pct}%`:''}</small></label><input type="number" min="0" max="100" value="${w}" data-weight="${esc(e.id)}"></div>`}).join(''):'<div class="notice">Noch keine Experten geladen oder keine Treffer.</div>'}
 function saveCurrentPanel(){const p=panels[activePanelId];if(!p)return;const members={};els.expertsList.querySelectorAll('[data-id]').forEach(cb=>{if(cb.checked){const id=cb.dataset.id,w=Number(els.expertsList.querySelector(`[data-weight="${CSS.escape(id)}"]`)?.value||0);if(w>0)members[id]=w}});p.members=members;persist()}
@@ -1146,7 +1152,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.64',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},managerLiveStateSnapshot:JSON.parse(JSON.stringify(LIVE_MANAGER_ADAPTATION_STATE)),rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.65',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},managerLiveStateSnapshot:JSON.parse(JSON.stringify(LIVE_MANAGER_ADAPTATION_STATE)),rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     // Full frozen skill-player pool makes post-mock counterfactuals reproducible without
@@ -1355,7 +1361,7 @@ function buildEmergencyQueueText(scored,state,current,draftId){
   }
   const lines=[
     '===== PITTI EMERGENCY SLEEPER QUEUE =====',
-    'App-Version: v11.8.0-rc4.64',
+    'App-Version: v11.8.0-rc4.65',
     `Draft-ID: ${draftId}`,
     `Stand: Pick ${current}`,
     'Nur manueller Sleeper-Queue-Fallback; keine API-/Import-Automation.',
@@ -1461,7 +1467,7 @@ function researchBadgesHtml(x){
 function pittiFantasyRole(p,players){
  const pos=String(p?.pos||'').toUpperCase(),team=String(p?.team||'').toUpperCase();if(!['QB','RB','WR','TE'].includes(pos))return pos||'?';const same=[];for(const q of Object.values(players||{})){if(String(q?.team||'').toUpperCase()!==team||String(q?.position||'').toUpperCase()!==pos)continue;const name=q?.full_name||[q?.first_name,q?.last_name].filter(Boolean).join(' ');if(!name)continue;const r=rankFor(name,pos),sr=Number(q?.search_rank);if(r&&Number.isFinite(r.rank))same.push({name,rank:r.rank,sr});}same.sort((a,b)=>a.rank-b.rank||(a.sr||9999)-(b.sr||9999));const i=same.findIndex(q=>norm(q.name)===norm(p?.name));if(i>=0)return pos+(i+1);const d=Number(p?.depthOrder);return Number.isFinite(d)&&d>=1&&d<=6?pos+Math.round(d):pos;}
 function pittiResearchArrows(x){const rr=x?.researchResidual;if(!rr?.active||!Array.isArray(rr.components))return'';const c=rr.components.filter(c=>Number(c.dir)!==0).sort((a,b)=>Number(b.strength||0)*Number(b.confidence||0)-Number(a.strength||0)*Number(a.confidence||0))[0];if(!c)return'';const s=Number(c.strength||0)*Number(c.confidence||0),up=Number(c.dir)>0;return s>=.58?(up?'↑↑':'↓↓'):s>=.30?(up?'↑':'↓'):'';}
-window.PITTI_LIVE_DECISION_STATE=()=>{const c=lastDraftContext;if(!c?.scored)return null;const rows=visibleCoachCandidates(c.scored).filter(x=>!x.hardExcluded&&!x.recommendationBlocked).slice(0,10);return{version:'v11.8.0-rc4.64',current:c.current,next:c.next,rows:rows.map(x=>({name:x.p.name,pos:x.p.pos,team:x.p.team,injury:x.p.injury||null,panel:x.r.rank,individual:x.r.individual||[],adp:Number.isFinite(x.a)?x.a:null,ret:x.ret,returnConfidence:x.returnConfidence,confidence:x.confidence,score:x.score,action:x.action,loss:x.loss,outsideNormalCut:!!x.outsideNormalCut,role:pittiFantasyRole(x.p,c.players),arrows:pittiResearchArrows(x)}))};};
+window.PITTI_LIVE_DECISION_STATE=()=>{const c=lastDraftContext;if(!c?.scored)return null;const rows=visibleCoachCandidates(c.scored).filter(x=>!x.hardExcluded&&!x.recommendationBlocked).slice(0,10);return{version:'v11.8.0-rc4.65',current:c.current,next:c.next,rows:rows.map(x=>({name:x.p.name,pos:x.p.pos,team:x.p.team,injury:x.p.injury||null,panel:x.r.rank,individual:x.r.individual||[],adp:Number.isFinite(x.a)?x.a:null,ret:x.ret,returnConfidence:x.returnConfidence,confidence:x.confidence,score:x.score,action:x.action,loss:x.loss,outsideNormalCut:!!x.outsideNormalCut,role:pittiFantasyRole(x.p,c.players),arrows:pittiResearchArrows(x)}))};};
 
 function renderCoach(rows,state,current,next){
   const top=visibleCoachCandidates(rows);
@@ -2035,7 +2041,7 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.64',
+      'App-Version: v11.8.0-rc4.65',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -2057,7 +2063,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.64 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.65 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'?[`Manager-Live-Adaption: ${liveManagerDiagnostics()}`]:[]),
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
@@ -2265,6 +2271,7 @@ els.newPanelBtn.onclick=()=>{const name=prompt('Name des Panels:','Custom');if(!
 els.renamePanelBtn.onclick=()=>{const p=panels[activePanelId],name=prompt('Neuer Name:',p.name);if(name){p.name=name;persist();renderAll()}};
 els.deletePanelBtn.onclick=()=>{if(['standard','pat'].includes(activePanelId))return alert('Standard und Pat bleiben erhalten.');if(confirm('Panel löschen?')){delete panels[activePanelId];delete panelRanks[activePanelId];activePanelId='standard';persist();renderAll()}};
 for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])el.onchange=()=>{positionPanels[pos]=el.value;persist()};
+if(els.expertProfile){els.expertProfile.value=currentExpertProfile();els.expertProfile.onchange=()=>applyExpertProfile(els.expertProfile.value);}
 els.diagnoseBtn.onclick=async()=>{els.diagnostic.textContent='Teste …';try{
   const out=[];
   try{

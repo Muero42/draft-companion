@@ -1,6 +1,6 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.64)
+# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.65)
 
-> **Aktiver Release-Stand:** v11.8.0-rc4.64. Historische Abschnitte darunter dokumentieren frühere RCs und können ältere Versionsnummern enthalten.
+> **Aktiver Release-Stand:** v11.8.0-rc4.65. Historische Abschnitte darunter dokumentieren frühere RCs und können ältere Versionsnummern enthalten.
 
 ### rc4.62 — decision UI / live hierarchy correction
 - Live-Entscheidungsoberfläche auf den kanonischen Coach-/Draft-Utility-State synchronisiert; keine zweite Scoring-Engine.
