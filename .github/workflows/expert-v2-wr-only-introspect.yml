@@ -1,14 +1,14 @@
-name: Expert-v2 WR-only exact gate
+name: Expert-v2 WR decision gate
 on:
   push:
-    branches: [pitti-expert-v2-wr-only-20260826]
+    branches: [pitti-expert-v2-wr-decision-20260826]
   workflow_dispatch:
 permissions:
   contents: read
 jobs:
-  exact-return:
+  decision-introspect:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Exact Return-v2 control parity and WR-only treatment
-        run: node research/wr-v2-exact-return-harness.mjs
+      - name: Inspect exact rc4.64 decision functions
+        run: node research/wr-v2-decision-introspect.mjs
