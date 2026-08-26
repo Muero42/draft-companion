@@ -1,0 +1,64 @@
+{
+  "schema": "pitti-expert-v2-panel-candidate-v1",
+  "asOf": "2026-08-26",
+  "formatGate": {"season": 2026, "type": "DRAFT", "scoring": "HALF", "league": "1QB"},
+  "status": "research-candidate-not-production",
+  "rules": {
+    "koerner": "watchlist_unavailable_for_2026_draft_no_further_acquisition_work",
+    "derekBrown": "excluded_from_v2",
+    "andrewErickson": "challenger_only",
+    "mattHarmon": "wr_evidence_layer_not_numeric_panel_until_current_exact_board_and_incremental_value_verified",
+    "draftSharks": "single_correlated_source_family_do_not_double_count_jody_smith_and_jared_smola",
+    "tiers": "preserve_source_tiers_when available; do_not_infer_source_tiers_from_rank_gaps"
+  },
+  "importantCorrection": "Do not use 2025 in-season accuracy as if it were 2025 preseason draft accuracy. Justin Boone was #114 in FantasyPros 2025 DRAFT accuracy (QB 34/RB 125/WR 144/TE 169), despite #1 in 2025 IN-SEASON accuracy. Previous proposed Boone-heavy v2 weights are therefore rejected.",
+  "evidence": {
+    "multiYearDraft2023_2025": {
+      "Jody Smith (Draft Sharks)": {"overall":1,"QB":40,"RB":1,"WR":13,"TE":9},
+      "Nick Mariano": {"overall":6,"QB":48,"RB":11,"WR":8,"TE":77},
+      "Jared Smola (Draft Sharks)": {"overall":7,"QB":23,"RB":14,"WR":14,"TE":120},
+      "Dalton Del Don": {"overall":17,"QB":56,"RB":7,"WR":76,"TE":21},
+      "Pat Fitzmaurice": {"overall":36,"QB":91,"RB":40,"WR":52,"TE":14}
+    },
+    "draft2025": {
+      "Jody Smith (Draft Sharks)": {"overall":9,"QB":66,"RB":19,"WR":21,"TE":23},
+      "Justin Boone": {"overall":114,"QB":34,"RB":125,"WR":144,"TE":169}
+    }
+  },
+  "candidateWeights": {
+    "QB": [
+      {"source":"Draft Sharks","weight":35},
+      {"source":"Nick Mariano","weight":25},
+      {"source":"Dalton Del Don","weight":20},
+      {"source":"Justin Boone","weight":10},
+      {"source":"Pat Fitzmaurice","weight":10}
+    ],
+    "RB": [
+      {"source":"Draft Sharks","weight":35},
+      {"source":"Nick Mariano","weight":25},
+      {"source":"Dalton Del Don","weight":25},
+      {"source":"Pat Fitzmaurice","weight":15}
+    ],
+    "WR": [
+      {"source":"Nick Mariano","weight":35},
+      {"source":"Draft Sharks","weight":30},
+      {"source":"Pat Fitzmaurice","weight":15},
+      {"source":"Dalton Del Don","weight":10},
+      {"source":"Justin Boone","weight":10}
+    ],
+    "TE": [
+      {"source":"Draft Sharks","weight":35},
+      {"source":"Pat Fitzmaurice","weight":30},
+      {"source":"Dalton Del Don","weight":25},
+      {"source":"Justin Boone","weight":10}
+    ]
+  },
+  "promotionGates": [
+    "All included current 2026 boards pass season=DRAFT/HALF/1QB fail-closed validation",
+    "Freshness eligible under v2 gate",
+    "Full-board rank correlation and incremental-value audit completed",
+    "Draft Sharks counted once as a source family",
+    "A/B draft-state regression against unchanged rc4.64 baseline passes",
+    "No increase in WR-overdraft behavior at high WR roster counts"
+  ]
+}
