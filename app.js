@@ -406,8 +406,9 @@ const PRESETS={
   v2qb:{name:'v2 Shadow · QB',list:[['Ryan Weisse',35],['Guilherme Gianni',35],['Michael Bobal',30]],max:3},
   // Gianni/Bobal are highly correlated; Weisse adds the most rank-order diversity among the strong current RB boards.
   v2rb:{name:'v2 Shadow · RB',list:[['Michael Bobal',40],['Ryan Weisse',35],['Guilherme Gianni',25]],max:3},
-  // Gianni/Bobal WR boards are near-duplicates, so Bobal is shrunk; Harmon supplies specialist diversity.
-  v2wr:{name:'v2 Shadow · WR',list:[['Guilherme Gianni',40],['Matt Harmon',35],['Michael Bobal',15],['Pat Fitzmaurice',10]],max:4},
+  // WR exact-source panel: Harmon is excluded while no fresh exact individual board is ingestible.
+  // Gianni/Bobal are near-duplicates (rho .997); Bobal is shrunk. Pat adds the stronger multi-year WR signal.
+  v2wr:{name:'v2 Shadow · WR',list:[['Guilherme Gianni',45],['Pat Fitzmaurice',40],['Michael Bobal',15]],max:3},
   // TE is deliberately specialist-heavy: Weisse plus Pat.
   v2te:{name:'v2 Shadow · TE',list:[['Ryan Weisse',60],['Pat Fitzmaurice',40]],max:2}
 };
