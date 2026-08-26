@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import zlib from 'node:zlib';
-const OLD='v11.8.0-rc4.67', NEW='v11.8.0-rc4.68';
+const OLD='v11.8.0-rc4.67', NEW='v11.8.0-rc4.68', BARE=NEW.slice(1);
 const raw=fs.readFileSync('research/expert-v2-exact-return-input-v2.json.gz.b64','utf8').replace(/\s+/g,'');
 const d=JSON.parse(zlib.gunzipSync(Buffer.from(raw,'base64')));
 if(d.schema!=='pitti-expert-v2-exact-return-input-v2'||d.kernelCommit!=='9ba6db89fc1e7550052a7526bd0c68d6cc7459dc')throw Error('frozen Expert-v2 source pin mismatch');
@@ -14,5 +14,20 @@ const oldReload="    applyPreset();\n    persist();renderAll();";
 const newReload="    const expertProfileBeforeReload=currentExpertProfile();\n    applyPreset();\n    ensureExpertV2Panels();\n    if(EXPERT_PROFILE_IDS[expertProfileBeforeReload])positionPanels={...EXPERT_PROFILE_IDS[expertProfileBeforeReload]};\n    persist();renderAll();";
 if(a.includes(oldReload))a=a.replace(oldReload,newReload);else if(!a.includes('expertProfileBeforeReload'))throw Error('loadExperts reload marker missing');
 a=a.replaceAll(OLD,NEW).replaceAll('v11.8.0-rc4.65',NEW).replaceAll('v11.8.0-rc4.66',NEW).replaceAll("version:'11.8.0-rc4.64'", "version:'11.8.0-rc4.68'").replaceAll("version:'11.8.0-rc4.65'", "version:'11.8.0-rc4.68'").replaceAll("version:'11.8.0-rc4.66'", "version:'11.8.0-rc4.68'").replaceAll("version:'11.8.0-rc4.67'", "version:'11.8.0-rc4.68'");fs.writeFileSync('app.js',a);
-for(const f of ['index.html','sw.js','manifest.webmanifest','README.md']){let s=fs.readFileSync(f,'utf8');s=s.replaceAll(OLD,NEW).replaceAll('v11.8.0-rc4.65',NEW).replaceAll('v11.8.0-rc4.66',NEW);fs.writeFileSync(f,s);}
-console.log('RC468_BUILD_READY profile-preservation+global-stable-expert-ranks',Object.fromEntries(Object.entries(rows).map(([k,v])=>[k,v.length])));
+for(const f of ['index.html','sw.js','manifest.webmanifest','README.md']){let s=fs.readFileSync(f,'utf8');s=s.replaceAll(OLD,NEW).replaceAll('v11.8.0-rc4.65',NEW).replaceAll('v11.8.0-rc4.66',NEW);
+  if(f==='index.html'){
+    s=s.replace(/live-surface-v3\.css\?v=[^"']+/g,`live-surface-v3.css?v=${BARE}`)
+       .replace(/live-surface-v3\.js\?v=[^"']+/g,`live-surface-v3.js?v=${BARE}`)
+       .replace(/app\.js\?v=[^"']+/g,`app.js?v=${BARE}`);
+  }
+  if(f==='sw.js')s=s.replace(/\.\/app\.js\?v=[^']+/g,`./app.js?v=${BARE}`);
+  if(f==='README.md'){
+    const lines=s.split(/\r?\n/);
+    if(lines.length){lines[0]=`# Draft Companion – Final Draft Edition 2026 (${NEW})`;}
+    const active=lines.findIndex(x=>x.startsWith('> **Aktiver Release-Stand:**'));
+    if(active>=0)lines[active]=`> **Aktiver Release-Stand:** ${NEW}. Historische Abschnitte darunter dokumentieren frühere RCs und können ältere Versionsnummern enthalten.`;
+    s=lines.join('\n');
+  }
+  fs.writeFileSync(f,s);
+}
+console.log('RC468_BUILD_READY profile-preservation+global-stable-expert-ranks+release-coherence',Object.fromEntries(Object.entries(rows).map(([k,v])=>[k,v.length])));
