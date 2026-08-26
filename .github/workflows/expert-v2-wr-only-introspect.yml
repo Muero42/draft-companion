@@ -1,4 +1,4 @@
-name: Expert-v2 WR-only introspect
+name: Expert-v2 WR-only exact gate
 on:
   push:
     branches: [pitti-expert-v2-wr-only-20260826]
@@ -6,21 +6,9 @@ on:
 permissions:
   contents: read
 jobs:
-  inspect:
+  exact-return:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inspect decision-kernel slices
-        shell: bash
-        run: |
-          set -euo pipefail
-          echo '=== FUNCTION LINES ==='
-          grep -nE 'function (rankFor|playerQualityBaseScore|scoreCandidate|applyResolvedReturnScore|applyPlayerQualitySafetyGate|normalizeCoachScores|rosterState|rosterExceptionPenalty|progressiveStage|valueLabel|returnChance|simulateReturnV2|normalCandidateAdmissible)' app.js || true
-          echo '=== SCORE BLOCK ==='
-          start=$(grep -n 'function playerQualityBaseScore' app.js | head -1 | cut -d: -f1)
-          end=$(grep -n 'function positionPathCandidates' app.js | head -1 | cut -d: -f1)
-          nl -ba app.js | sed -n "${start},${end}p"
-          echo '=== ROSTER BLOCK ==='
-          start2=$(grep -n 'function rosterState' app.js | head -1 | cut -d: -f1)
-          end2=$(grep -n 'function playerQualityBaseScore' app.js | head -1 | cut -d: -f1)
-          nl -ba app.js | sed -n "${start2},${end2}p"
+      - name: Exact Return-v2 control parity and WR-only treatment
+        run: node research/wr-v2-exact-return-harness.mjs
