@@ -56,9 +56,7 @@ function ensureWrV2ShadowPanel(){
           if 'ensureWrV2ShadowPanel();' not in s:
             if old not in s: raise SystemExit('panel rank init marker missing')
             s=s.replace(old,new,1)
-          # Re-materialize after any panel rebuild and prevent persistence/editor from destroying static shadow ranks.
           s=s.replace("panelRanks=rebuilt;return true;","panelRanks=rebuilt;ensureWrV2ShadowPanel();return true;",1)
-          # Position selector is the intended A/B control. Never make shadow the default.
           p.write_text(s)
 
           p=Path('index.html'); h=p.read_text()
@@ -91,7 +89,6 @@ function ensureWrV2ShadowPanel(){
           NODE
       - name: Commit tested integration
         run: |
-          if git diff --quiet && git status --porcelain | grep -q '^?? wr-v2-shadow-board.js$'; then :; fi
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add app.js index.html wr-v2-shadow-board.js
@@ -108,3 +105,4 @@ function ensureWrV2ShadowPanel(){
           name: Draft_Companion_WR_V2_SHADOW_TEST
           path: dist/Draft_Companion_WR_V2_SHADOW_TEST.zip
           retention-days: 7
+# trigger: 2026-08-26T18:16+02:00
