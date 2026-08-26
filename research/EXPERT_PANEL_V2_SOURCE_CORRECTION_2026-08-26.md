@@ -5,6 +5,20 @@ Status: RESEARCH / SHADOW ONLY. No production/main/gh-pages/Android promotion. T
 ## Binding process correction
 Expert quality is selected first; technical availability is a downstream ingestion gate. Never construct the panel primarily from whichever complete boards happen to be easiest to scrape. Historical accuracy must be multi-year and position-specific where possible; current 2026 freshness/provenance and rank-correlation/marginal information are separate gates. Baseline rc4.64 remains preserved/selectable.
 
+## 2026-08-26 API-first correction
+FantasyPros Public API v2 is now the primary legitimate ingestion path for FantasyPros-listed experts, ahead of HTML scraping/reconstruction.
+
+Verified public API contract:
+- `GET /nfl/2026/rankings/experts` returns expert metadata/IDs and accuracy metadata.
+- `GET /nfl/2026/consensus-rankings` accepts `position`, `type`, `scoring`, and `filters` (colon-delimited expert IDs), plus `experts=show`.
+- Consensus responses expose `expert_pub`, `expert_name`, `last_updated`, `last_updated_ts`, player `rank_ecr`, positional rank fields where supplied, and `tier`.
+- A one-ID `filters=<expert_id>` request is therefore the first test for an exact individual board. Do not assume the public web selector defines API availability.
+- API authentication requires `x-api-key`; no key may be committed, logged, copied into project state, or inferred. Use a GitHub Actions secret or process environment only.
+- Preserve raw response + normalized rows + request parameters + retrieval timestamp + response expert IDs/names/publication timestamps + SHA-256. Fail closed if requested expert ID is not actually represented by the response.
+- Tiers are first-class evidence and must be frozen rather than discarded. Do not convert article prose/tier commentary into invented exact ranks.
+
+This API-first route supersedes the assumption that Boone/other candidates need HTML reconstruction merely because FantasyPros' visible selector omits them. HTML/partner boards remain fallback evidence only when the API genuinely cannot return the desired expert.
+
 ## Existing user-approved constraints retained
 - Derek Brown is excluded from NEW v2.
 - Andrew Erickson has no incumbency protection; retain only if position-specific marginal value is demonstrated.
@@ -13,55 +27,50 @@ Expert quality is selected first; technical availability is a downstream ingesti
 - No weights are authorized until candidate-source audit and correlation/marginal-value testing are complete.
 
 ## Candidate status after fresh source audit
-### Nick Mariano — SOLVED / high-priority RB+WR candidate
-- RotoBaller published a fresh 2026 Top-400 Half-PPR overall board on 2026-08-25.
-- The page explicitly states the Half-PPR rankings are put together by Nick Mariano.
-- This supersedes older checkpoint wording that no <=2-day exact Mariano board had been verified.
+### Nick Mariano — high-priority RB+WR candidate
+- RotoBaller published a fresh 2026 Top-400 Half-PPR overall board on 2026-08-25 and attributes it to Nick Mariano.
 - Historical FantasyPros 2023-2025 signal retained: overall #6, RB #11, WR #8.
+- Before relying on HTML ingestion, query the FantasyPros experts endpoint for Mariano's current expert ID and test exact filtered API boards by position.
 
-### Justin Boone — KEEP IN AUDIT; individual public 2026 rankings exist
+### Justin Boone — high-priority API audit
 - Yahoo publishes individual Justin Boone 2026 rankings pages and links Half-PPR QB/RB/WR/TE/Top-300 boards.
-- Public article publication timestamp surfaced as 2026-08-20; pages state Boone updates rankings through camp/preseason and for material August news.
-- Do NOT silently label Boone as <=2-day fresh unless an exact underlying update timestamp/state is captured. But Boone is not technically unavailable and must not disappear from the candidate set merely because other boards are easier to ingest.
-- Yahoo states Boone is a two-time FantasyPros Most Accurate Expert winner (2019, 2025) with nine top-10 finishes; verify/use appropriate historical position-specific evidence separately before weighting.
+- Public article publication timestamp surfaced as 2026-08-20; do not equate article publication with current ranking-update state.
+- First ingestion test is now FantasyPros expert-ID discovery + one-ID filtered API request. If API returns Boone, use API provenance/freshness and keep Yahoo as independent/fallback cross-check.
+- Boone must not disappear from the candidate set merely because another board is easier to ingest.
 
-### Sean Koerner — highest-priority quality candidate, exact board paywalled/unresolved
-- FantasyLabs currently advertises 2026 season-long draft projections/rankings for standard/.5 PPR/PPR, tiered rankings and cheat sheets under its NFL Season package.
-- The exact comprehensive ranking product is therefore real/current but commercially gated; public exact full-board ingestion remains unresolved.
-- Continue searching legitimate public/partner surfaces, but never fabricate exact ranks from tiers/articles.
+### Sean Koerner — highest-priority quality candidate
+- FantasyLabs currently advertises 2026 season-long draft projections/rankings for standard/.5 PPR/PPR, tiered rankings and cheat sheets.
+- Exact public full-board ingestion from FantasyLabs remains unresolved.
+- Before treating that as a blocker, query FantasyPros expert metadata and attempt one-ID filtered API boards. If the API does not actually return Koerner for current draft/HALF, retain the commercial-source blocker and never fabricate ranks from articles.
 
 ### Draft Sharks Team — serious ENSEMBLE challenger, one source only
 - Public 2026 Half-PPR Team board provides overall/position ranks, DS projections, floor/ceiling and injury risk; page states rankings update in real time.
-- Provenance: `Draft Sharks Team`, reviewed by Jared Smola. Do not relabel it as Jody Smith/Jared Smola individual ranks.
-- User-provided Draft Sharks team profile explicitly says its rankings are consensus/aggregate staff output rather than a single contributor.
-- FantasyPros individual Jared Smola 2026 Half-PPR page currently says draft rankings unavailable; no verified public Jody/Smola individual board has replaced the team board.
-- Treat DS Team as at most one panel source. Do not additionally count individual DS analysts without proven incremental independence.
-- Historical strength of DS analysts/team makes the source worthy of testing, but exact panel weight remains unassigned until correlation and marginal decision value are measured.
+- Provenance is `Draft Sharks Team`, reviewed by Jared Smola. Do not relabel it as Jody Smith/Jared Smola individual ranks.
+- Treat DS Team as at most one panel source. Separately test FantasyPros individual expert IDs for Jody Smith/Jared Smola; only count an individual board if the API proves it is current and distinct.
 
 ### Matt Harmon — WR specialist hypothesis only
-- Preserve as an explicit WR-specialist/diversity candidate from the original design.
-- Yahoo has current 2026 Harmon rankings hub and points to Half-PPR rankings, but source freshness/exact extraction must be verified before live use.
-- Generic overall accuracy alone is not the reason for inclusion; require independent WR information relative to Mariano/Koerner/Boone/DS Team.
+- Preserve as an explicit WR-specialist/diversity candidate.
+- Query FantasyPros API first for current individual WR/HALF draft availability and exact freshness. Yahoo remains fallback/cross-check.
+- Require independent WR information relative to Mariano/Koerner/Boone/DS Team before weighting.
 
 ### Pat Fitzmaurice — retained stabilizer/core candidate
-- Already available in PITTI and current enough to remain the comparison anchor while the challenger set is audited.
-- Especially defensible at TE in the existing multi-year position-specific accuracy audit.
+- Already available in PITTI and current enough to remain the comparison anchor.
+- API payload should become the canonical exact current Pat board for v2 reproducibility, including tiers and expert publication timestamp.
 
 ### Bobal / Gianni / Weisse — QUARANTINED AS RESEARCH CONTROLS, NOT v2 DEFAULTS
 - Their temporary v2 presets were an availability-driven methodological mistake.
 - They are not declared bad experts; they may be tested if they independently pass the same quality/source gates.
-- Existing exact-board audit showed heavy redundancy, especially Bobal/Gianni (RB/WR near-identical rank order). This further blocks treating the temporary panel as a promotion candidate.
+- Existing exact-board audit showed heavy redundancy, especially Bobal/Gianni (RB/WR near-identical rank order).
 - Do not delete the research arm; retain it as a control/comparison artifact only.
 
 ## Required next test order
-1. Freeze exact current Mariano board with provenance/timestamp and stable player identities.
-2. Capture Boone exact Half-PPR board plus the freshest verifiable update-state; do not confuse publication date with ranking-update date.
-3. Continue legitimate Koerner acquisition; paid-only exact rankings remain an unresolved blocker, not a reason to substitute a weaker expert.
-4. Freeze Draft Sharks Team Half-PPR board as one ensemble source, keeping DS projections/floor/ceiling separate from its ranking vote to avoid double counting.
-5. Verify/freeze Harmon current Half-PPR/WR ranks if public exact access is available.
-6. Compare Pat/Boone/Mariano/DS Team/(Koerner when available)/Harmon-by-WR on the same common player universe: positional Spearman, disagreement clusters, missingness, and current-news sensitivity.
-7. Only then construct small position-specific candidate panels and estimate weights; no pre-committed percentages.
-8. Replay on frozen natural decision fixtures and prospectively on new mock snapshots. Preserve roster/Return/Coach variables across panel arms.
+1. Via FantasyPros API, discover current expert IDs/accuracy metadata for Boone, Koerner, Mariano, Harmon, Pat, Jody Smith, Jared Smola and other historically strong position-specific candidates.
+2. For each candidate/position, request exact 2026 DRAFT/HALF one-ID filtered boards and verify response expert identity, row count, publication timestamp, tiers and missingness. Persist raw+normalized SHA-256 evidence without the API key.
+3. Only for candidates the API genuinely cannot serve, use fresh legitimate partner/public boards (Mariano/RotoBaller, Boone/Harmon Yahoo, DS Team, FantasyLabs where accessible) with exact provenance.
+4. Compare the quality-first candidate universe on common players: positional Spearman, tier agreement/disagreement, missingness, current-news sensitivity and marginal information relative to the baseline/core.
+5. Construct small position-specific candidate panels only after those results; no pre-committed percentages.
+6. Replay baseline vs v2 panel-only and unchanged full decision surface on frozen natural fixtures. Preserve roster/Return/Coach variables across arms.
+7. Prospectively validate on new mock snapshots, with special attention to deep-WR states already identified by the WR-depth challenger.
 
 ## Anti-regression
-No player-name overrides; no hard WR roster cap; no PairSum/Rolling resurrection; no generic Return-v2 retune; no stale expert-board promotion; no promotion of Bobal/Gianni/Weisse merely because their payload is already frozen.
+No player-name overrides; no hard WR roster cap; no PairSum/Rolling resurrection; no generic Return-v2 retune; no stale expert-board promotion; no promotion of Bobal/Gianni/Weisse merely because their payload is already frozen; no secret/API key in repository artifacts.
