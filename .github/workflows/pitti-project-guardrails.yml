@@ -25,6 +25,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Node syntax
         run: node --check app.js
       - name: PITTI execution-lock and anti-regression gate
