@@ -128,6 +128,22 @@ function parseFantasyProsDirect(html){
   }
   return out.sort((a,b)=>a.rank-b.rank);
 }
+function sourceDateFromHtml(html){
+  const text=String(html||'');
+  const patterns=[
+    /["']dateModified["']\s*:\s*["']([^"']+)["']/i,
+    /["']datePublished["']\s*:\s*["']([^"']+)["']/i,
+    /<meta\b[^>]*(?:property|name)=["'](?:article:modified_time|article:published_time|dateModified|datePublished)["'][^>]*content=["']([^"']+)["'][^>]*>/i,
+    /<time\b[^>]*datetime=["']([^"']+)["'][^>]*>/i
+  ];
+  for(const re of patterns){
+    const raw=text.match(re)?.[1];
+    if(!raw)continue;
+    const ts=Date.parse(htmlDecode(raw));
+    if(Number.isFinite(ts))return new Date(ts).toISOString();
+  }
+  return '';
+}
 function parseYahooSimpleOverall(html){
   const out=[],seen=new Set();
   for(const row of tableRows(html)){
@@ -245,7 +261,7 @@ async function tryYahooExpert(name){
     for(const url of YAHOO_BOONE_URLS){
       try{
         const html=await fetchHtml(url),players=parseYahooSimpleOverall(html);
-        if(players.length>=120)return {ok:true,source:'Yahoo Sports – Justin Boone Top 300',sourceUrl:url,players,updated:''};
+        if(players.length>=120)return {ok:true,source:'Yahoo Sports – Justin Boone Top 300',sourceUrl:url,players,updated:sourceDateFromHtml(html)};
         errors.push(`Boone Yahoo ${players.length}`);
       }catch(e){errors.push(`Boone Yahoo ${e.message}`)}
     }
@@ -253,7 +269,7 @@ async function tryYahooExpert(name){
   for(const url of YAHOO_STAFF_URLS){
     try{
       const html=await fetchHtml(url),players=parseYahooStaffTable(html,name);
-      if(players.length>=80)return {ok:true,source:`Yahoo Sports Staff – ${name}`,sourceUrl:url,players,updated:''};
+      if(players.length>=80)return {ok:true,source:`Yahoo Sports Staff – ${name}`,sourceUrl:url,players,updated:sourceDateFromHtml(html)};
       errors.push(`Yahoo Staff ${players.length}`);
     }catch(e){errors.push(`Yahoo Staff ${e.message}`)}
   }
