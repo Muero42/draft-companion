@@ -1,0 +1,64 @@
+{
+  "schema": "pitti.execution-lock.v1",
+  "updatedAt": "2026-08-26T12:40:00Z",
+  "authority": {
+    "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
+    "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
+    "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative."
+  },
+  "runtime": {
+    "appVersion": "v11.8.0-rc4.64",
+    "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
+    "productionPanel": "rc4.64-incumbent",
+    "productionPanelMustRemainSelectable": true,
+    "builtIsNotAndroidVerified": true
+  },
+  "auto": {
+    "continueWhileAutonomousWorkExists": true,
+    "parallelizeIndependentLanesWhileWaiting": true,
+    "statusOnlyOutputWhileUsefulWorkExists": false,
+    "checkpointWriteThroughAfterMaterialChange": true,
+    "retryRejectedPathWithoutNewEvidence": false
+  },
+  "league": {
+    "teams": 10,
+    "scoring": "HALF",
+    "qbFormat": "1QB",
+    "draftDate": "2026-08-31",
+    "userSlot": 9,
+    "starterMaximaAreRosterCaps": false,
+    "normalDraftKDst": false
+  },
+  "canaries": {
+    "snapshotIdentityIncludesDraftId": true,
+    "genoSmithExcludedFromUserQbPath": true,
+    "aaronRodgersExcludedFromUserQbPath": true,
+    "excessWrDepthMustReduceMarginalWrUtility": true,
+    "rejectSuperflex2qbEvidence": true,
+    "noPairSumRollingResurrection": true,
+    "noPlayerNameForcing": true,
+    "noFixedRosterQuotasCaps": true,
+    "noGenericReturnV2Retune": true,
+    "noGlobalQb2Te2Ban": true
+  },
+  "expertV2": {
+    "status": "SHADOW_NOT_PROMOTED",
+    "integration": "ADDITIVE_SELECTABLE_ONLY",
+    "brownExcluded": true,
+    "erickson": "CHALLENGER_ONLY",
+    "harmon": "WR_EVIDENCE_ONLY_UNLESS_MARGINAL_VALUE_PROVEN",
+    "koerner": "NO_CURRENT_DRAFT_ACQUISITION_PAYWALL",
+    "draftSharksCountAsOneSourceFamily": true,
+    "temporaryWeisseGianniBobalPoolRejected": true,
+    "weights": {
+      "QB": {"Draft Sharks": 35, "Nick Mariano": 25, "Dalton Del Don": 20, "Justin Boone": 10, "Pat Fitzmaurice": 10},
+      "RB": {"Draft Sharks": 35, "Nick Mariano": 25, "Dalton Del Don": 25, "Pat Fitzmaurice": 15},
+      "WR": {"Nick Mariano": 35, "Draft Sharks": 30, "Pat Fitzmaurice": 15, "Dalton Del Don": 10, "Justin Boone": 10},
+      "TE": {"Draft Sharks": 35, "Pat Fitzmaurice": 30, "Dalton Del Don": 25, "Justin Boone": 10}
+    },
+    "weightsAreProduction": false,
+    "currentGate": "EXACT_FIXED_RC464_KERNEL_AB_WITH_END_TO_END_RETURN_V2_RERUN",
+    "mandatoryControls": [89, 92, 112, 129, 132, 149],
+    "oldSelectorWorkflowsAreAuthority": false
+  }
+}
