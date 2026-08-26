@@ -1,0 +1,110 @@
+name: WR-v2 shadow integration
+on:
+  push:
+    branches: [pitti-expert-v2-wr-decision-20260826]
+    paths:
+      - '.github/workflows/wr-v2-shadow-integration.yml'
+      - 'research/expert-v2-exact-return-input-v2.json.gz.b64'
+      - 'app.js'
+      - 'index.html'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  integrate-test-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: pitti-expert-v2-wr-decision-20260826
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Materialize frozen WR-v2 shadow board
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),z=require('zlib');
+          const src=fs.readFileSync('research/expert-v2-exact-return-input-v2.json.gz.b64','utf8').replace(/\s+/g,'');
+          const d=JSON.parse(z.gunzipSync(Buffer.from(src,'base64')));
+          if(d.schema!=='pitti-expert-v2-exact-return-input-v2'||d.kernelCommit!=='9ba6db89fc1e7550052a7526bd0c68d6cc7459dc')throw Error('WR-v2 source pin mismatch');
+          const rows=Object.values(d.pool).filter(p=>p.pos==='WR'&&Number.isFinite(+p.v2Rank)).map(p=>({name:p.name,rank:+p.v2Rank})).sort((a,b)=>a.rank-b.rank);
+          if(rows.length<50)throw Error('WR-v2 board unexpectedly small: '+rows.length);
+          fs.writeFileSync('wr-v2-shadow-board.js',`window.PITTI_WR_V2_SHADOW=${JSON.stringify({schema:'pitti-wr-v2-shadow.v1',source:'frozen-qualified-2026-08-26',kernelCommit:d.kernelCommit,rows})};\n`);
+          NODE
+      - name: Add isolated selectable shadow surface
+        run: |
+          python3 <<'PY'
+          from pathlib import Path
+          p=Path('app.js'); s=p.read_text()
+          marker="let positionPanels=store.get('v7_positionPanels',{QB:'qb',RB:'rb',WR:'wr',TE:'te'});"
+          insert="""
+const WR_V2_SHADOW_PANEL_ID='wr-v2-shadow';
+function ensureWrV2ShadowPanel(){
+  const src=globalThis.PITTI_WR_V2_SHADOW;
+  if(!src||src.schema!=='pitti-wr-v2-shadow.v1'||!Array.isArray(src.rows)||src.rows.length<50)return false;
+  const ranks={};for(const row of src.rows){const rank=Number(row.rank);if(row.name&&Number.isFinite(rank)&&rank>0)ranks[norm(row.name)]={name:row.name,pos:'WR',rank,mean:rank,median:rank,sd:null,n:null};}
+  panelRanks[WR_V2_SHADOW_PANEL_ID]=ranks;
+  panels[WR_V2_SHADOW_PANEL_ID]={name:'WR-v2 SHADOW · 26.08.',members:{},shadow:true,source:src.source};
+  return true;
+}
+"""
+          if 'WR_V2_SHADOW_PANEL_ID' not in s:
+            if marker not in s: raise SystemExit('positionPanels marker missing')
+            s=s.replace(marker,marker+'\n'+insert,1)
+          old="if(!Object.keys(panelRanks).length)rebuildPanelRanksFromCache();"
+          new=old+"\nensureWrV2ShadowPanel();"
+          if 'ensureWrV2ShadowPanel();' not in s:
+            if old not in s: raise SystemExit('panel rank init marker missing')
+            s=s.replace(old,new,1)
+          # Re-materialize after any panel rebuild and prevent persistence/editor from destroying static shadow ranks.
+          s=s.replace("panelRanks=rebuilt;return true;","panelRanks=rebuilt;ensureWrV2ShadowPanel();return true;",1)
+          # Position selector is the intended A/B control. Never make shadow the default.
+          p.write_text(s)
+
+          p=Path('index.html'); h=p.read_text()
+          if 'wr-v2-shadow-board.js' not in h:
+            needle='<script src="app.js'
+            i=h.find(needle)
+            if i<0: raise SystemExit('app.js script marker missing')
+            h=h[:i]+'<script src="wr-v2-shadow-board.js?v=20260826"></script>\n  '+h[i:]
+          p.write_text(h)
+          PY
+      - name: Regression guards
+        run: |
+          node tools/pitti_guardrail_check.mjs
+          node Draft_Companion_Position_Path_Regression_2026-08-13.js
+          node Draft_Companion_Player_Quality_Expert_Health_Regression_2026-08-13.js
+          node Draft_Companion_Return_Geometry_Market_Regression_2026-08-13.js
+          node Draft_Companion_Scarcity_Double_Count_Regression_2026-08-13.js
+          node Draft_Companion_Alternative_Scarcity_Regression_2026-08-13.js
+          node Draft_Companion_Dress_Rehearsal_Regression_2026-08-14.js
+          node research/wr-v2-exact-return-harness.mjs > /tmp/wr-v2-return.log
+          grep -F 'CONTROL_PARITY predictions=224 rv2=215 fallback=9 mae=0 max=0' /tmp/wr-v2-return.log
+          node <<'NODE'
+          const fs=require('fs'),vm=require('vm');
+          const src=fs.readFileSync('wr-v2-shadow-board.js','utf8');const c={window:{}};vm.createContext(c);vm.runInContext(src,c);
+          const b=c.window.PITTI_WR_V2_SHADOW;if(!b||b.rows.length<50)throw Error('shadow board missing');
+          const app=fs.readFileSync('app.js','utf8'),html=fs.readFileSync('index.html','utf8');
+          for(const x of ['WR_V2_SHADOW_PANEL_ID','ensureWrV2ShadowPanel'])if(!app.includes(x))throw Error('integration missing '+x);
+          if(!html.includes('wr-v2-shadow-board.js'))throw Error('shadow script missing');
+          if(!app.includes("WR_V2_SHADOW_PANEL_ID='wr-v2-shadow'"))throw Error('stable selector id missing');
+          NODE
+      - name: Commit tested integration
+        run: |
+          if git diff --quiet && git status --porcelain | grep -q '^?? wr-v2-shadow-board.js$'; then :; fi
+          git config user.name github-actions[bot]
+          git config user.email 41898282+github-actions[bot]@users.noreply.github.com
+          git add app.js index.html wr-v2-shadow-board.js
+          if ! git diff --cached --quiet; then
+            git commit -m 'Integrate selectable WR-v2 shadow panel [skip ci]'
+            git push
+          fi
+      - name: Package shadow test build
+        run: |
+          mkdir -p dist
+          zip -q -r dist/Draft_Companion_WR_V2_SHADOW_TEST.zip . -x '.git/*' 'dist/*' 'research/*' '.github/*'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Draft_Companion_WR_V2_SHADOW_TEST
+          path: dist/Draft_Companion_WR_V2_SHADOW_TEST.zip
+          retention-days: 7
