@@ -49,13 +49,13 @@ Source rules:
 - Sean Koerner: current-draft acquisition closed because relevant source is paywalled/unavailable. Do not spend draft-week time forcing access.
 - Temporary Weisse/Gianni/Bobal replacement pool is rejected and must not be resurrected from old research workflows.
 
-Recovered rounded weights are the frozen SHADOW hypothesis to test, not final production weights:
+Recovered rounded weights were the frozen four-position SHADOW hypothesis tested, not production weights:
 - QB: Draft Sharks 35 / Nick Mariano 25 / Dalton Del Don 20 / Justin Boone 10 / Pat Fitzmaurice 10.
 - RB: Draft Sharks 35 / Nick Mariano 25 / Dalton Del Don 25 / Pat Fitzmaurice 15.
 - WR: Nick Mariano 35 / Draft Sharks 30 / Pat Fitzmaurice 15 / Dalton Del Don 10 / Justin Boone 10.
 - TE: Draft Sharks 35 / Pat Fitzmaurice 30 / Dalton Del Don 25 / Justin Boone 10.
 
-Do not micro-tune these percentages merely to fit historical picks. +/-5-point perturbation testing showed high top-choice robustness; the remaining problem is decision-level interaction, not false precision in 35 vs 32/38.
+Do not micro-tune percentages merely to fit historical picks. +/-5-point perturbation testing showed high top-choice robustness.
 
 ## CURRENT VERIFIED TECHNICAL / RESEARCH STATE — 2026-08-26
 
@@ -68,32 +68,29 @@ Do not micro-tune these percentages merely to fit historical picks. +/-5-point p
 - Current-board expert correlations are high; adding voices requires marginal decision value, not panel-size justification.
 - Canonical natural fixture backup: `draft-companion-v7-backup-2026-08-24T19-40-47-213Z.json`, draft `1397557585325891584`, 15 frozen states. Provenance is mixed: picks 9/12/29 rc4.60; picks 32 onward rc4.63. Never relabel all 15 rc4.63.
 - Stored fixture `coachScore` is panel-contaminated and is NOT a neutral A/B target.
-- Fixed-input diagnostic reproduced 14/15 historical incumbent leaders but intentionally remains non-certifying because Return-v2 was not rerun end-to-end. Pick 92 is an explicit current-kernel semantic boundary.
-- Expert-v2 fixed-input treatment showed material warning signals, including a pick-149 QB2 regression and late-WR interaction. No principled single-source deletion fixes the full control set. Therefore v2 remains SHADOW.
+- Exact Return-v2 harness reached deterministic control parity for all 14 suitable natural fixtures. This supersedes the earlier non-certifying fixed-input diagnostic.
+- Four-position Expert-v2 treatment is REJECTED. QB-v2 produced a material late QB2 regression (including Kyler Murray at pick 149); RB-v2 showed no demonstrated marginal decision value; TE-v2 produced only an isolated pick-12 Bowers -> Jefferson change and no sufficient promotion case.
+- Only WR-v2 remains an open SHADOW challenger. In the exact decision comparison it changed/improved the surface at picks 69/92/112/132/149 sufficiently to justify a dedicated WR-only qualification, but this is NOT yet production certification.
+- Therefore current authoritative research endpoint: rc4.64 incumbent remains Control and production; QB/RB/TE remain incumbent; WR-v2 alone proceeds to a dedicated marginal-value/roster-utility qualification.
+- No player-specific fixes, hard WR cap, generic QB2/TE2 ban, Koerner/Brown resurrection, or rejected replacement-expert pool may be used to make WR-v2 pass.
 
-## EXACT EXPERT-V2 A/B GATE — CURRENT NEXT ACTION
+## WR-V2 ONLY A/B GATE — CURRENT NEXT ACTION
 
-The next work is NOT source reacquisition or intuitive weight tuning. It is a research-only exact A/B with the current rc4.64 kernel and complete Return-v2 recomputation.
+The four-position v2 experiment is closed. Do not rerun it as the default next step.
 
-For every canonical frozen state:
-1. clone identical raw pre-decision state;
-2. Control A0 = unchanged rc4.64 incumbent panel; Treatment A1 = frozen Expert-v2 shadow panel;
-3. recompute every panel-dependent input from raw data;
-4. rerun Return-v2 end-to-end with deterministic/disjoint RNG semantics; never reuse incumbent Return/coachScore/board-median outputs in treatment;
-5. keep Coach, manager/opponent model, roster/championship utility, Value-Safety, injuries/research, ADP, pick geometry and every non-panel coefficient identical;
-6. fail closed on any non-panel fingerprint mismatch;
-7. first prove deterministic A0 control parity; only then interpret A1.
+Next research gate is isolated WR-v2 against unchanged rc4.64:
+1. identical raw pre-decision states and exact current kernel;
+2. only WR expert-board composition changes; QB/RB/TE remain incumbent;
+3. full Return-v2 recomputation with deterministic/disjoint RNG semantics;
+4. all non-WR-panel inputs/fingerprints identical;
+5. explicitly measure whether apparent gains at picks 69/92/112/132/149 survive correct marginal WR utility as roster WR depth rises;
+6. verify late-RB optionality and ordinary QB2 opportunity cost are not displaced by panel-driven WR inflation;
+7. exceptional value slides remain legal; no hard positional caps/quotas;
+8. promote only if WR-v2 adds repeatable decision value without material natural-control regression.
 
-Mandatory natural controls:
-- pick 89: QB1 remains legal;
-- pick 92: after Herbert, an ordinary QB2 must clear the existing state-dependent marginal-value/opportunity-cost hurdle;
-- picks 112/129/132/149: deep-WR diminishing utility and late-RB optionality remain state-dependent;
-- exceptional QB/TE slides remain legal;
-- no hard WR cap, blind RB accumulation, global QB2/TE2 ban, or player-specific repair.
+Mandatory controls remain picks 89, 92, 112, 129, 132, 149, with special emphasis on excessive-WR-depth states. If a weakness occurs in both arms it is a separate B-axis decision-surface problem, not evidence for manipulating the panel.
 
-If a decision-surface weakness appears in BOTH panel arms, treat it as an independent B-axis problem. Do not change production decision logic merely to make Expert-v2 pass.
-
-Promotion requires exact A/B invariants to pass and no material regression on the natural controls. Even after promotion, Expert-v2 remains additive/selectable and the incumbent remains available.
+Even if WR-v2 passes, integration is additive/selectable only; unchanged rc4.64 remains selectable fallback/control.
 
 ## KNOWN RECENT FAILURE MODES — DO NOT REPEAT
 
