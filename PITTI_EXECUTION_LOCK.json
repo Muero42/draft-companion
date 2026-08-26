@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-26T12:40:00Z",
+  "updatedAt": "2026-08-26T14:05:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -42,23 +42,25 @@
     "noGlobalQb2Te2Ban": true
   },
   "expertV2": {
-    "status": "SHADOW_NOT_PROMOTED",
+    "status": "WR_ONLY_SHADOW_QUALIFICATION",
     "integration": "ADDITIVE_SELECTABLE_ONLY",
+    "control": "rc4.64-incumbent",
+    "fourPositionCandidate": "REJECTED",
+    "qbCandidate": "REJECTED_LATE_QB2_REGRESSION",
+    "rbCandidate": "REJECTED_NO_DEMONSTRATED_MARGINAL_VALUE",
+    "teCandidate": "REJECTED_INSUFFICIENT_PROMOTION_CASE",
+    "wrCandidate": "OPEN_SHADOW_CHALLENGER",
     "brownExcluded": true,
     "erickson": "CHALLENGER_ONLY",
     "harmon": "WR_EVIDENCE_ONLY_UNLESS_MARGINAL_VALUE_PROVEN",
     "koerner": "NO_CURRENT_DRAFT_ACQUISITION_PAYWALL",
     "draftSharksCountAsOneSourceFamily": true,
     "temporaryWeisseGianniBobalPoolRejected": true,
-    "weights": {
-      "QB": {"Draft Sharks": 35, "Nick Mariano": 25, "Dalton Del Don": 20, "Justin Boone": 10, "Pat Fitzmaurice": 10},
-      "RB": {"Draft Sharks": 35, "Nick Mariano": 25, "Dalton Del Don": 25, "Pat Fitzmaurice": 15},
-      "WR": {"Nick Mariano": 35, "Draft Sharks": 30, "Pat Fitzmaurice": 15, "Dalton Del Don": 10, "Justin Boone": 10},
-      "TE": {"Draft Sharks": 35, "Pat Fitzmaurice": 30, "Dalton Del Don": 25, "Justin Boone": 10}
-    },
-    "weightsAreProduction": false,
-    "currentGate": "EXACT_FIXED_RC464_KERNEL_AB_WITH_END_TO_END_RETURN_V2_RERUN",
+    "exactReturnControlParityFixtures": 14,
+    "wrCandidateSignalPicks": [69, 92, 112, 132, 149],
     "mandatoryControls": [89, 92, 112, 129, 132, 149],
+    "currentGate": "WR_ONLY_EXACT_AB_WITH_MARGINAL_WR_UTILITY_AND_ROSTER_DEPTH_CONTROLS",
+    "weightsAreProduction": false,
     "oldSelectorWorkflowsAreAuthority": false
   }
 }
