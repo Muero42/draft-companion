@@ -36,12 +36,15 @@ function comparisonTables(html,targetName){
   return out;
 }
 async function direct(name){const u=`https://www.fantasypros.com/nfl/rankings/${slugify(name)}.php?scoring=HALF&type=draft`;const {html}=await get(u);const ctx=validateContext(html);const rows=parseDirect(html);if(!ctx.ok||rows.length<80)throw Error(`${name}: direct context/rows fail ${JSON.stringify({ctx,n:rows.length})}`);fs.writeFileSync(`${OUT}/${slugify(name)}.direct.raw.html`,html);return{name,url:u,ctx,rows}}
-async function comparison(target,anchor){const ts=slugify(target),as=slugify(anchor);const urls=[`https://www.fantasypros.com/nfl/rankings/${ts}-${as}.php?scoring=HALF&type=draft`,`https://www.fantasypros.com/nfl/rankings/${as}-${ts}.php?scoring=HALF&type=draft`];const errors=[];for(const u of urls){try{const {html}=await get(u);const ctx=validateContext(html);if(!ctx.ok){errors.push(`${u}: context`);continue}const rows=comparisonTables(html,target);if(rows.size){fs.writeFileSync(`${OUT}/cmp-${ts}-${as}.raw.html`,html);return{url:u,ctx,rows}}errors.push(`${u}:0 rows`)}catch(e){errors.push(e.message)}}throw Error(`${target}/${anchor}: ${errors.join(' | ')}`)}
+async function comparison(target,anchor){
+  const ts=slugify(target),as=slugify(anchor); const urls=[`https://www.fantasypros.com/nfl/rankings/${ts}-${as}.php?scoring=HALF&type=draft`,`https://www.fantasypros.com/nfl/rankings/${as}-${ts}.php?scoring=HALF&type=draft`]; const errors=[];
+  for(const u of urls){try{const {html}=await get(u);const rows=comparisonTables(html,target);if(rows.size){fs.writeFileSync(`${OUT}/cmp-${ts}-${as}.raw.html`,html);return{url:u,rows,diagnosticContext:validateContext(html)}}errors.push(`${u}:0 rows`)}catch(e){errors.push(e.message)}} throw Error(`${target}/${anchor}: ${errors.join(' | ')}`)
+}
 
 const target='Justin Boone', anchors=['Pat Fitzmaurice','Andrew Erickson','Derek Brown'];
 const anchorLists={}; for(const a of anchors)anchorLists[a]=await direct(a);
 const exact=new Map(), comparisons=[];
-for(const a of anchors){const c=await comparison(target,a);comparisons.push({anchor:a,url:c.url,count:c.rows.size,updated:c.ctx.updated});for(const [k,v] of c.rows){const prev=exact.get(k);if(!prev||prev.rank===v.rank)exact.set(k,v)}}
+for(const a of anchors){const c=await comparison(target,a);comparisons.push({anchor:a,url:c.url,count:c.rows.size,diagnosticContext:c.diagnosticContext});for(const [k,v] of c.rows){const prev=exact.get(k);if(!prev||prev.rank===v.rank)exact.set(k,v)}}
 if(exact.size<20)throw Error(`only ${exact.size} exact comparison rows`);
 const universe=new Map(); for(const a of anchors){for(const row of anchorLists[a].rows){const u=universe.get(row.key)||{key:row.key,name:row.name,pos:row.pos,anchorRanks:[]};u.anchorRanks.push(row.rank);universe.set(row.key,u)}}
 const players=[];let exactCount=0,reconstructedCount=0;for(const u of universe.values()){
@@ -50,6 +53,6 @@ const players=[];let exactCount=0,reconstructedCount=0;for(const u of universe.v
 }
 players.sort((a,b)=>a.rank-b.rank||a.name.localeCompare(b.name));
 if(players.length<80)throw Error(`only ${players.length} reconstructed rows`);
-const result={schema:'pitti-boone-current-fp-reconstruction-v1',createdAt:new Date().toISOString(),season:2026,scoring:'HALF',type:'DRAFT',target,anchors,comparisons,anchorUpdates:Object.fromEntries(anchors.map(a=>[a,anchorLists[a].ctx.updated])),rowCount:players.length,exactCount,reconstructedCount,exactCoverage:exactCount/players.length,players};
+const result={schema:'pitti-boone-current-fp-reconstruction-v2',createdAt:new Date().toISOString(),season:2026,scoring:'HALF',type:'DRAFT',target,anchors,comparisons,anchorUpdates:Object.fromEntries(anchors.map(a=>[a,anchorLists[a].ctx.updated])),rowCount:players.length,exactCount,reconstructedCount,exactCoverage:exactCount/players.length,players};
 fs.writeFileSync(`${OUT}/boone.json`,JSON.stringify(result,null,2));
 const manifest={...result,players:undefined,normalizedSha256:sha(JSON.stringify(players))}; delete manifest.players; fs.writeFileSync(`${OUT}/manifest.json`,JSON.stringify(manifest,null,2)); console.log(JSON.stringify(manifest,null,2));
