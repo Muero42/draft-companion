@@ -1,0 +1,23 @@
+name: Boone Yahoo source probe
+on:
+  push:
+    branches: [pitti-expert-v2-weight-audit-20260826]
+    paths:
+      - 'research/boone-yahoo-source-probe.mjs'
+      - '.github/workflows/boone-yahoo-source-probe.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  probe:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Syntax
+        run: node --check research/boone-yahoo-source-probe.mjs
+      - name: Probe
+        run: node research/boone-yahoo-source-probe.mjs
