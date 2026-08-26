@@ -10,8 +10,10 @@ const start=app.indexOf('const MANAGER_PROFILES='),end=app.indexOf('function ret
 if(start<0||end<=start)throw Error('cannot extract Return-v2 kernel slice');
 const kernel=app.slice(start,end),pool=data.pool;
 const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
+const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 function armRank(k,arm){const p=pool[k];return arm==='wr-v2'&&p?.pos==='WR'&&Number.isFinite(+p.v2Rank)?+p.v2Rank:+p?.incRank}
 function rankedAvailable(f,arm){return f.available.map((key,i)=>({...pool[key],key,__i:i})).filter(p=>p&&Number.isFinite(armRank(p.key,arm))).sort((a,b)=>armRank(a.key,arm)-armRank(b.key,arm)||a.__i-b.__i).map(p=>({name:p.name,pos:p.pos,team:p.team,yearsExp:p.yearsExp,key:p.key}))}
+function returnChance(next,a){return Number.isFinite(next)&&Number.isFinite(a)?clamp(1/(1+Math.exp((next-a)/4)),.01,.99):null}
 function buildEngine(){const prelude=`
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\\u0300-\\u036f]/g,'').replace(/\\b(jr|sr|ii|iii|iv)\\b\\.?/g,'').replace(/[^a-z0-9]/g,'');
@@ -23,12 +25,12 @@ function draftSlotAtPick(pickNo,teams){const r=Math.floor((pickNo-1)/teams)+1,w=
 function pinfo(){return{pos:''}}
 `;const suffix=`
 rosterBySlot=function(){const o={};for(const[k,v]of Object.entries(globalThis.__fixtureRosters||{}))o[k]={...v};return o};
-globalThis.__pitti={simulateReturnV2,liveIntel,adjustedReturn,returnChance};`;
+globalThis.__pitti={simulateReturnV2,liveIntel,adjustedReturn};`;
 const ctx={console,Math,JSON,Object,Array,Number,String,Set,Map,Date,Infinity,NaN};vm.createContext(ctx);vm.runInContext(prelude+kernel+suffix,ctx,{timeout:5000});return ctx}
 const ctx=buildEngine();
 function configure(f,arm){ctx.__fixtureRosters=f.rosters;ctx.__rankMap={};ctx.__adpMap={};for(const[k,p]of Object.entries(pool)){ctx.__rankMap[norm(p.name)]=armRank(k,arm);ctx.__adpMap[norm(p.name)]=+p.adp}}
 function runFixture(f,arm){configure(f,arm);const ranked=rankedAvailable(f,arm);const rv=ctx.__pitti.simulateReturnV2({current:f.current,next:f.next,picks:[],players:{},teams:data.teams,map:f.managerMap,rankedAvailable:ranked,mode:f.mode||'mock',userSlot:data.slot},f.stress||'baseline',900);return{ranked,rv}}
-function resolvedReturn(f,arm,key,run){const mc=run.rv?.players?.[key]?.ret;if(Number.isFinite(mc))return{ret:mc,kind:'rv2'};configure(f,arm);const p=pool[key];if(!p)return{ret:null,kind:'missing'};const base=ctx.__pitti.returnChance(f.next,+p.adp);const intel=ctx.__pitti.liveIntel({name:p.name,pos:p.pos,team:p.team,yearsExp:p.yearsExp},f.current,f.next,[],{},data.teams,f.mode||'mock',f.managerMap,f.stress||'baseline');return{ret:ctx.__pitti.adjustedReturn(base,intel),kind:'fallback'}}
+function resolvedReturn(f,arm,key,run){const mc=run.rv?.players?.[key]?.ret;if(Number.isFinite(mc))return{ret:mc,kind:'rv2'};configure(f,arm);const p=pool[key];if(!p)return{ret:null,kind:'missing'};const base=returnChance(f.next,+p.adp);const intel=ctx.__pitti.liveIntel({name:p.name,pos:p.pos,team:p.team,yearsExp:p.yearsExp},f.current,f.next,[],{},data.teams,f.mode||'mock',f.managerMap,f.stress||'baseline');return{ret:ctx.__pitti.adjustedReturn(base,intel),kind:'fallback'}}
 let n=0,sum=0,max=0,rv2N=0,fallbackN=0;const errs=[];
 for(const f of data.fixtures){if(!Number.isFinite(f.next))continue;const run=runFixture(f,'control');for(const[key,expected]of Object.entries(f.capturedReturn||{})){const z=resolvedReturn(f,'control',key,run),got=z.ret;if(z.kind==='rv2')rv2N++;else fallbackN++;if(!Number.isFinite(got))throw Error(`missing control Return pick=${f.current} player=${key}`);const e=Math.abs(got-+expected);n++;sum+=e;max=Math.max(max,e);if(e)errs.push({pick:f.current,key,expected:+expected,got,error:e,kind:z.kind})}}
 const mae=n?sum/n:NaN;console.log(`CONTROL_PARITY predictions=${n} rv2=${rv2N} fallback=${fallbackN} mae=${mae} max=${max}`);if(max!==0){console.log('TOP_ERRORS',JSON.stringify(errs.sort((a,b)=>b.error-a.error).slice(0,12)));process.exit(2)}
