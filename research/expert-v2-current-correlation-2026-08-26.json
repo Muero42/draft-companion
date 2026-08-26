@@ -1,0 +1,46 @@
+{
+  "schema": "pitti-expert-v2-current-correlation-v1",
+  "asOf": "2026-08-26",
+  "status": "research-shadow-not-production",
+  "universeRule": "pairwise common players within position where min(overallRankA, overallRankB) <= 180",
+  "sources": ["Nick Mariano", "Draft Sharks Team", "Pat Fitzmaurice", "Dalton Del Don"],
+  "pairs": {
+    "QB": [
+      {"a":"Nick Mariano","b":"Draft Sharks Team","n":25,"spearman":0.947692,"madOverallRank":19.96},
+      {"a":"Nick Mariano","b":"Pat Fitzmaurice","n":26,"spearman":0.975385,"madOverallRank":7.692308},
+      {"a":"Nick Mariano","b":"Dalton Del Don","n":26,"spearman":0.955556,"madOverallRank":10.923077},
+      {"a":"Draft Sharks Team","b":"Pat Fitzmaurice","n":25,"spearman":0.962308,"madOverallRank":19.44},
+      {"a":"Draft Sharks Team","b":"Dalton Del Don","n":25,"spearman":0.982308,"madOverallRank":15.28},
+      {"a":"Pat Fitzmaurice","b":"Dalton Del Don","n":26,"spearman":0.963077,"madOverallRank":11.307692}
+    ],
+    "RB": [
+      {"a":"Nick Mariano","b":"Draft Sharks Team","n":48,"spearman":0.977204,"madOverallRank":20.833333},
+      {"a":"Nick Mariano","b":"Pat Fitzmaurice","n":58,"spearman":0.970347,"madOverallRank":14.965517},
+      {"a":"Nick Mariano","b":"Dalton Del Don","n":55,"spearman":0.981962,"madOverallRank":12.090909},
+      {"a":"Draft Sharks Team","b":"Pat Fitzmaurice","n":49,"spearman":0.974286,"madOverallRank":21.204082},
+      {"a":"Draft Sharks Team","b":"Dalton Del Don","n":48,"spearman":0.972102,"madOverallRank":19.0625},
+      {"a":"Pat Fitzmaurice","b":"Dalton Del Don","n":60,"spearman":0.975827,"madOverallRank":11.8}
+    ],
+    "WR": [
+      {"a":"Nick Mariano","b":"Draft Sharks Team","n":59,"spearman":0.975687,"madOverallRank":21.898305},
+      {"a":"Nick Mariano","b":"Pat Fitzmaurice","n":74,"spearman":0.962977,"madOverallRank":14.378378},
+      {"a":"Nick Mariano","b":"Dalton Del Don","n":73,"spearman":0.977508,"madOverallRank":10.767123},
+      {"a":"Draft Sharks Team","b":"Pat Fitzmaurice","n":58,"spearman":0.963149,"madOverallRank":20.913793},
+      {"a":"Draft Sharks Team","b":"Dalton Del Don","n":58,"spearman":0.966532,"madOverallRank":23.534483},
+      {"a":"Pat Fitzmaurice","b":"Dalton Del Don","n":73,"spearman":0.961249,"madOverallRank":14.835616}
+    ],
+    "TE": [
+      {"a":"Nick Mariano","b":"Draft Sharks Team","n":18,"spearman":0.975232,"madOverallRank":37.611111},
+      {"a":"Nick Mariano","b":"Pat Fitzmaurice","n":23,"spearman":0.97332,"madOverallRank":19.217391},
+      {"a":"Nick Mariano","b":"Dalton Del Don","n":24,"spearman":0.966087,"madOverallRank":13.291667},
+      {"a":"Draft Sharks Team","b":"Pat Fitzmaurice","n":18,"spearman":0.96904,"madOverallRank":40.111111},
+      {"a":"Draft Sharks Team","b":"Dalton Del Don","n":18,"spearman":0.929825,"madOverallRank":36.722222},
+      {"a":"Pat Fitzmaurice","b":"Dalton Del Don","n":25,"spearman":0.958462,"madOverallRank":18.72}
+    ]
+  },
+  "interpretation": {
+    "global": "All four frozen current boards are highly ordinally correlated. Additional panel voices should be penalized for redundancy unless they improve decision-level disagreement clusters.",
+    "draftSharks": "Despite high Spearman correlation, Draft Sharks shows larger absolute rank displacement from several peers, especially TE; count it once as a differentiated source family.",
+    "boone": "Current verified Android V3 board exists and correct-format FantasyPros directory freshness is 2026-08-25. Boone must be added to the reproducible full-board matrix before production promotion; no second user export should be requested unless the captured V3 text becomes inaccessible."
+  }
+}
