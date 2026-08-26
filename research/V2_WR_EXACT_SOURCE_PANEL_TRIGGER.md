@@ -1,0 +1,1 @@
+Replace the v2 WR shadow preset with current exact-source-eligible experts only after the Harmon exact-source smoke failed. Preserve baseline unchanged. Weights: Gianni 45, Pat 40, Bobal 15; max 3. Bobal is correlation-shrunk against Gianni; Weisse is excluded from WR because 2025/multi-year WR accuracy is too weak despite lower correlation.
