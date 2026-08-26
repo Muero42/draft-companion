@@ -15,21 +15,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Add exporter only to packaged worktree
+      - name: Point packaged runtime at fixed exporter
         run: |
           python3 - <<'PY'
           from pathlib import Path
-          p=Path('index.html'); s=p.read_text()
-          needle='<script type="module" src="app.js?v=11.8.0-rc4.64"></script>'
-          if s.count(needle)!=1: raise SystemExit('index anchor mismatch')
-          tag='<script src="expert-board-export.js?v=20260826e" defer></script>'
-          if tag not in s: s=s.replace(needle,needle+'\n'+tag)
-          p.write_text(s)
-          p=Path('sw.js'); s=p.read_text()
-          needle="'./live-surface-v3.css']"
-          if s.count(needle)!=1: raise SystemExit('sw asset anchor mismatch')
-          s=s.replace(needle,"'./live-surface-v3.css','./expert-board-export.js?v=20260826e']")
-          p.write_text(s)
+          for name in ('index.html','sw.js'):
+              p=Path(name); s=p.read_text()
+              old='expert-board-export.js?v=20260826d'
+              new='expert-board-export.js?v=20260826e'
+              if s.count(old)!=1: raise SystemExit(f'{name}: exporter anchor mismatch ({s.count(old)})')
+              p.write_text(s.replace(old,new))
           PY
       - name: Syntax and semantic gates
         run: |
@@ -46,10 +41,12 @@ jobs:
           grep -q '10ER-ÜBERSICHT' live-surface-v3.js
           grep -q 'NORMAL-CUT WARNUNG' live-surface-v3.js
           grep -q 'expert-board-export.js?v=20260826e' index.html sw.js
+          ! grep -q 'expert-board-export.js?v=20260826d' index.html sw.js
           grep -q 'PITTI_EXPERT_BOARDS_V3' expert-board-export.js
           grep -q 'source=PERSISTED_VERIFIED_APP_CACHE' expert-board-export.js
           grep -q 'credential=NONE' expert-board-export.js
           grep -q 'verifiedIndividual' expert-board-export.js
+          grep -q 'schemaVersion' expert-board-export.js
           grep -q 'staleFallback' expert-board-export.js
           grep -q "v7_rank_" expert-board-export.js
           grep -q 'navigator.clipboard.writeText' expert-board-export.js
