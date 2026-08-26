@@ -1,0 +1,1 @@
+Freeze the exact current Half-PPR boards for the four unique experts in the present v2 shadow configuration into a short-retention workflow artifact, with sourceUpdated, source URL, row count and SHA-256 manifest. Do not commit full third-party ranking boards to the public repository.
