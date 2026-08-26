@@ -8,6 +8,7 @@ name: Expert profiles rc4.68 build
       - research/build-expert-profiles-rc465.mjs
       - research/expert-v2-exact-return-input-v2.json.gz.b64
       - live-surface-v3.js
+      - tools/release-completeness-guard.mjs
   workflow_dispatch:
 permissions:
   contents: write
@@ -50,6 +51,8 @@ jobs:
           ];
           for(const x of required)if(!l.includes(x))throw Error('stable rank layout missing '+x);
           NODE
+      - name: Permanent release-completeness guard
+        run: node tools/release-completeness-guard.mjs
       - name: Existing decision regressions
         run: |
           node Draft_Companion_Position_Path_Regression_2026-08-13.js
