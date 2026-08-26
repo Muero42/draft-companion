@@ -1,4 +1,4 @@
-name: Expert profiles rc4.67 build
+name: Expert profiles rc4.68 build
 'on':
   push:
     branches:
@@ -21,14 +21,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Build three selectable expert profiles with persistence fix
+      - name: Build three selectable expert profiles with stable rank UI
         run: node research/build-expert-profiles-rc465.mjs
       - name: Syntax and expert-profile invariants
         run: |
           node --check app.js
           node --check expert-v2-board.js
           node --check live-surface-v3.js
-          node -e "const fs=require('fs'),vm=require('vm');const c={window:{}};vm.createContext(c);vm.runInContext(fs.readFileSync('expert-v2-board.js','utf8'),c);const b=c.window.PITTI_EXPERT_V2;if(!b)throw Error('board missing');for(const p of ['QB','RB','WR','TE']){if(Object.values(b.weights[p]).reduce((a,x)=>a+x,0)!==100)throw Error(p+' weight sum');if(!b.rows[p].length)throw Error(p+' rows missing')}const a=fs.readFileSync('app.js','utf8'),h=fs.readFileSync('index.html','utf8'),l=fs.readFileSync('live-surface-v3.js','utf8');for(const x of ['fullv2','wrv2','incumbent','ensureExpertV2Panels','applyExpertProfile','expertProfileBeforeReload'])if(!a.includes(x)&&!h.includes(x))throw Error('missing '+x);if(!h.includes('v11.8.0-rc4.67'))throw Error('version not bumped');if(!a.includes(\"version:'11.8.0-rc4.67'\"))throw Error('backup version stale');if(l.includes('<details><summary>Experten'))throw Error('experts still collapsible');for(const x of ['Expert-v2 ALLE','V2={QB','Experten:</b>'])if(!l.includes(x))throw Error('live expert layout missing '+x);"
+          node -e "const fs=require('fs'),vm=require('vm');const c={window:{}};vm.createContext(c);vm.runInContext(fs.readFileSync('expert-v2-board.js','utf8'),c);const b=c.window.PITTI_EXPERT_V2;if(!b)throw Error('board missing');for(const p of ['QB','RB','WR','TE']){if(Object.values(b.weights[p]).reduce((a,x)=>a+x,0)!==100)throw Error(p+' weight sum');if(!b.rows[p].length)throw Error(p+' rows missing')}const a=fs.readFileSync('app.js','utf8'),h=fs.readFileSync('index.html','utf8'),l=fs.readFileSync('live-surface-v3.js','utf8');for(const x of ['fullv2','wrv2','incumbent','ensureExpertV2Panels','applyExpertProfile','expertProfileBeforeReload'])if(!a.includes(x)&&!h.includes(x))throw Error('missing '+x);if(!h.includes('v11.8.0-rc4.68'))throw Error('version not bumped');if(!a.includes(\"version:'11.8.0-rc4.68'\"))throw Error('backup version stale');if(l.includes('<details><summary>Experten'))throw Error('experts still collapsible');if(/shortName\(name\).*w.*%/.test(l))throw Error('weights leaked into live expert row');for(const x of [\"GLOBAL_EXPERT_ORDER=['Draft Sharks Team','Nick Mariano','Dalton Del Don','Pat Fitzmaurice','Justin Boone'\",\"WR:['Draft Sharks Team','Nick Mariano','Dalton Del Don','Pat Fitzmaurice','Justin Boone']\",\"return GLOBAL_EXPERT_ORDER.filter\",\"`#${Math.round(hit.rank)}`\"])if(!l.includes(x))throw Error('stable rank layout missing '+x);"
       - name: Existing decision regressions
         run: |
           node Draft_Companion_Position_Path_Regression_2026-08-13.js
@@ -41,21 +41,21 @@ jobs:
         run: |
           node research/wr-v2-exact-return-harness.mjs > /tmp/return.log
           grep -F 'CONTROL_PARITY predictions=224 rv2=215 fallback=9 mae=0 max=0' /tmp/return.log
-      - name: Commit generated rc4.67 candidate
+      - name: Commit generated rc4.68 candidate
         run: |
           git config user.name github-actions[bot]
           git config user.email 41898282+github-actions[bot]@users.noreply.github.com
           git add app.js index.html sw.js manifest.webmanifest README.md expert-v2-board.js live-surface-v3.js
-          if ! git diff --cached --quiet; then git commit -m 'Build rc4.67 locked live expert layout [skip ci]'; git push; fi
+          if ! git diff --cached --quiet; then git commit -m 'Build rc4.68 stable expert-rank live layout [skip ci]'; git push; fi
       - name: Package runtime-only verified candidate
         run: |
           mkdir -p dist/runtime
           cp index.html app.js styles.css manifest.webmanifest sw.js _worker.js icon.svg live-surface-v3.js live-surface-v3.css expert-board-export.js expert-v2-board.js dist/runtime/
-          (cd dist/runtime && zip -q ../Draft_Companion_v11.8.0-rc4.67_EXPERT_PROFILES_RUNTIME.zip *)
-          test "$(unzip -Z1 dist/Draft_Companion_v11.8.0-rc4.67_EXPERT_PROFILES_RUNTIME.zip | wc -l)" -eq 11
-          ! unzip -Z1 dist/Draft_Companion_v11.8.0-rc4.67_EXPERT_PROFILES_RUNTIME.zip | grep -E '(^|/)(tools|research|PITTI_|README|Regression|REGRESSION)'
+          (cd dist/runtime && zip -q ../Draft_Companion_v11.8.0-rc4.68_EXPERT_PROFILES_RUNTIME.zip *)
+          test "$(unzip -Z1 dist/Draft_Companion_v11.8.0-rc4.68_EXPERT_PROFILES_RUNTIME.zip | wc -l)" -eq 11
+          ! unzip -Z1 dist/Draft_Companion_v11.8.0-rc4.68_EXPERT_PROFILES_RUNTIME.zip | grep -E '(^|/)(tools|research|PITTI_|README|Regression|REGRESSION)'
       - uses: actions/upload-artifact@v4
         with:
-          name: Draft_Companion_v11.8.0-rc4.67_EXPERT_PROFILES_RUNTIME
-          path: dist/Draft_Companion_v11.8.0-rc4.67_EXPERT_PROFILES_RUNTIME.zip
+          name: Draft_Companion_v11.8.0-rc4.68_EXPERT_PROFILES_RUNTIME
+          path: dist/Draft_Companion_v11.8.0-rc4.68_EXPERT_PROFILES_RUNTIME.zip
           retention-days: 7
