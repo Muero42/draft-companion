@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Decode exact input and inspect schema
+      - name: Decode exact input and inspect WR-only fields
         shell: bash
         run: |
           set -euo pipefail
@@ -19,13 +19,13 @@ jobs:
           import json
           d=json.load(open('/tmp/input.json'))
           print('TOP_KEYS', sorted(d.keys()))
-          for k,v in d.items():
-              if isinstance(v, list): print('LIST', k, len(v))
-              elif isinstance(v, dict): print('DICT', k, sorted(v.keys())[:80], 'N', len(v))
-              else: print('SCALAR', k, type(v).__name__, repr(v)[:200])
-          fs=d.get('fixtures') or d.get('states') or d.get('cases') or []
-          if isinstance(fs, list) and fs:
-              print('FIXTURE_KEYS', sorted(fs[0].keys()))
-              for i,f in enumerate(fs[:3]):
-                  print('FIXTURE', i, json.dumps(f, ensure_ascii=False)[:8000])
+          print('POOL_N',len(d['pool']))
+          for key in ['parkerwashington','stefondiggs','joshdowns','jordanaddison','jalencoker','xavierworthy','romeodoubs','mikewashington','jonahcoleman','kylermurray','justinherbert','tuckerkraft']:
+              p=d['pool'].get(key)
+              if p:
+                  print('PLAYER',key,json.dumps(p,ensure_ascii=False,sort_keys=True))
+          print('FIXTURE_SUMMARIES')
+          for f in d['fixtures']:
+              r=f['rosters'].get('9') or f['rosters'].get(9)
+              print('STATE',f['current'],'NEXT',f['next'],'ROSTER',r,'AVAILABLE_N',len(f['available']),'RET_N',len(f.get('capturedReturn',{})),'OVERRIDES',f.get('overrides',{}))
           PY
