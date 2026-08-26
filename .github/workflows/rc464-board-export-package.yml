@@ -1,0 +1,85 @@
+name: rc4.64 Expert Board Export Package
+on:
+  push:
+    branches: [pitti-rc464-board-export-clean]
+    paths:
+      - 'expert-board-export.js'
+      - '.github/workflows/rc464-board-export-package.yml'
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  patch-test-package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Add exporter only to packaged worktree
+        run: |
+          python3 - <<'PY'
+          from pathlib import Path
+          p=Path('index.html'); s=p.read_text()
+          needle='<script type="module" src="app.js?v=11.8.0-rc4.64"></script>'
+          if s.count(needle)!=1: raise SystemExit('index anchor mismatch')
+          tag='<script src="expert-board-export.js?v=20260826d" defer></script>'
+          if tag not in s: s=s.replace(needle,needle+'\n'+tag)
+          p.write_text(s)
+          p=Path('sw.js'); s=p.read_text()
+          needle="'./live-surface-v3.css']"
+          if s.count(needle)!=1: raise SystemExit('sw asset anchor mismatch')
+          s=s.replace(needle,"'./live-surface-v3.css','./expert-board-export.js?v=20260826d']")
+          p.write_text(s)
+          PY
+      - name: Syntax and semantic gates
+        run: |
+          set -euo pipefail
+          node --check app.js
+          node --check sw.js
+          node --check live-surface-v3.js
+          node --check expert-board-export.js
+          grep -q 'v11.8.0-rc4.64' app.js index.html sw.js live-surface-v3.js manifest.webmanifest README.md
+          grep -q 'window.PITTI_LIVE_DECISION_STATE' app.js
+          grep -q 'visibleCoachCandidates(c.scored)' app.js
+          grep -q 'USER_HARD_QB_EXCLUSIONS' app.js
+          grep -q 'DRAFT_ACUTE_STATUS_2026' app.js
+          grep -q '10ER-ÜBERSICHT' live-surface-v3.js
+          grep -q 'NORMAL-CUT WARNUNG' live-surface-v3.js
+          grep -q 'expert-board-export.js?v=20260826d' index.html sw.js
+          grep -q 'PITTI_EXPERT_BOARDS_V1' expert-board-export.js
+          grep -q 'credential=NONE' expert-board-export.js
+          grep -q 'navigator.clipboard.writeText' expert-board-export.js
+          ! grep -q 'localStorage.setItem.*apiKey' expert-board-export.js
+      - name: Verify isolated runtime diff
+        run: |
+          set -euo pipefail
+          git diff --name-only | sort > /tmp/diff-files
+          printf 'index.html\nsw.js\n' > /tmp/expected
+          diff -u /tmp/expected /tmp/diff-files
+          git diff -- app.js live-surface-v3.js live-surface-v3.css manifest.webmanifest README.md _worker.js styles.css
+      - name: Package and verify
+        run: |
+          set -euo pipefail
+          NAME=Draft_Companion_v11.8.0-rc4.64_EXPERT_BOARD_EXPORT_TEST.zip
+          zip -X -q "$NAME" README.md _worker.js app.js icon.svg index.html manifest.webmanifest styles.css sw.js live-surface-v3.js live-surface-v3.css expert-board-export.js
+          unzip -t "$NAME"
+          test "$(unzip -Z1 "$NAME" | wc -l)" -eq 11
+          sha256sum "$NAME" > rc464-board-export.sha256
+          mkdir -p dist
+          cp "$NAME" dist/
+          cp rc464-board-export.sha256 dist/
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Draft_Companion_v11.8.0-rc4.64_EXPERT_BOARD_EXPORT_TEST
+          path: |
+            Draft_Companion_v11.8.0-rc4.64_EXPERT_BOARD_EXPORT_TEST.zip
+            rc464-board-export.sha256
+      - name: Publish direct-download package only
+        run: |
+          git restore index.html sw.js
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add dist/Draft_Companion_v11.8.0-rc4.64_EXPERT_BOARD_EXPORT_TEST.zip dist/rc464-board-export.sha256
+          git diff --cached --quiet && exit 0
+          git commit -m 'Publish rc4.64 expert board export test package'
+          git push
