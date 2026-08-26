@@ -1,0 +1,44 @@
+name: Apply Expert v2 WR Exact-Source Panel
+
+on:
+  push:
+    branches:
+      - pitti-rc464-expert-panel-v2-research
+    paths:
+      - research/V2_WR_EXACT_SOURCE_PANEL_TRIGGER.md
+
+permissions:
+  contents: write
+
+jobs:
+  patch-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch v2 WR only
+        run: python tools/apply-v2-wr-exact-source-panel.py
+      - name: Verify syntax and isolation
+        run: |
+          node --check app.js
+          node <<'NODE'
+          const fs=require('fs');const s=fs.readFileSync('app.js','utf8');
+          const m=s.match(/v2wr:\{name:'v2 Shadow · WR',list:\[(.*?)\],max:(\d+)\}/);
+          if(!m)throw new Error('v2 WR preset missing');
+          const row=m[1];
+          for(const x of ['Guilherme Gianni', 'Pat Fitzmaurice', 'Michael Bobal'])if(!row.includes(x))throw new Error('missing '+x);
+          if(row.includes('Matt Harmon')||row.includes('Ryan Weisse'))throw new Error('non-qualified WR member retained');
+          if(!row.includes("['Guilherme Gianni',45]")||!row.includes("['Pat Fitzmaurice',40]")||!row.includes("['Michael Bobal',15]")||m[2]!=='3')throw new Error('unexpected weights/max');
+          const baseline=s.slice(s.indexOf("standard:{name:'Baseline"),s.indexOf('// v2 current-source priors'));
+          if(!baseline.includes("['Matt Harmon',35]")||!baseline.includes('Derek Brown')||!baseline.includes('Andrew Erickson'))throw new Error('baseline drift');
+          console.log('v2 WR exact-source panel PASS');
+          NODE
+          test "$(git diff --name-only)" = "app.js"
+      - name: Commit
+        run: |
+          git config user.name "pitti-auto"
+          git config user.email "actions@users.noreply.github.com"
+          git add app.js
+          git commit -m "research: remove undated Harmon from v2 WR panel" || exit 0
+          git push
