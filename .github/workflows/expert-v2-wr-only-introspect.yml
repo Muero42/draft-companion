@@ -1,0 +1,31 @@
+name: Expert-v2 WR-only introspect
+on:
+  push:
+    branches: [pitti-expert-v2-wr-only-20260826]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  inspect:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Decode exact input and inspect schema
+        shell: bash
+        run: |
+          set -euo pipefail
+          base64 -d research/expert-v2-exact-return-input-v2.json.gz.b64 | gzip -dc > /tmp/input.json
+          python - <<'PY'
+          import json
+          d=json.load(open('/tmp/input.json'))
+          print('TOP_KEYS', sorted(d.keys()))
+          for k,v in d.items():
+              if isinstance(v, list): print('LIST', k, len(v))
+              elif isinstance(v, dict): print('DICT', k, sorted(v.keys())[:80], 'N', len(v))
+              else: print('SCALAR', k, type(v).__name__, repr(v)[:200])
+          fs=d.get('fixtures') or d.get('states') or d.get('cases') or []
+          if isinstance(fs, list) and fs:
+              print('FIXTURE_KEYS', sorted(fs[0].keys()))
+              for i,f in enumerate(fs[:3]):
+                  print('FIXTURE', i, json.dumps(f, ensure_ascii=False)[:8000])
+          PY
