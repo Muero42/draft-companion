@@ -1,0 +1,29 @@
+name: Boone current reconstruction
+on:
+  push:
+    branches: [pitti-expert-v2-weight-audit-20260826]
+    paths:
+      - 'research/boone-fp-reconstruct-current.mjs'
+      - '.github/workflows/boone-current-reconstruction.yml'
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Syntax
+        run: node --check research/boone-fp-reconstruct-current.mjs
+      - name: Reconstruct
+        run: node research/boone-fp-reconstruct-current.mjs
+      - name: Summary
+        run: cat boone-current-reconstruction/manifest.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: boone-current-reconstruction
+          path: boone-current-reconstruction/
