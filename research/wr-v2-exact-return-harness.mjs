@@ -17,6 +17,7 @@ if(start<0||end<=start) throw new Error('cannot extract Return-v2 kernel slice')
 const kernel=app.slice(start,end);
 
 const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
+const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const pool=data.pool;
 
 function armRank(key,arm){
@@ -26,14 +27,17 @@ function armRank(key,arm){
   return Number(p.incRank);
 }
 function rankedAvailable(f,arm){
-  const rows=f.available.map((key,i)=>({...pool[key],key,__fixtureOrder:i}))
-    .filter(p=>p&&Number.isFinite(armRank(p.key,arm)));
-  // f.available is the frozen incumbent rankedAvailable order from the verified fixture.
-  // Re-sorting the control would discard the original Sleeper search-rank tie-break, which
-  // is intentionally not duplicated in the compact exact-input file. Treatment changes only
-  // WR panel ranks; fixture order is retained as the deterministic tie-break for equal ranks.
-  if(arm!=='control') rows.sort((a,b)=>armRank(a.key,arm)-armRank(b.key,arm)||a.__fixtureOrder-b.__fixtureOrder);
-  return rows.map(p=>({name:p.name,pos:p.pos,team:p.team,yearsExp:p.yearsExp,key:p.key}));
+  // app.js sorts rankedAvailable by selected panel rank, then Sleeper searchRank. The compact
+  // exact input does not duplicate searchRank; the frozen fixture order is therefore the only
+  // valid deterministic tie-break. Fractional panel ranks make exact ties rare.
+  return f.available.map((key,i)=>({...pool[key],key,__fixtureOrder:i}))
+    .filter(p=>p&&Number.isFinite(armRank(p.key,arm)))
+    .sort((a,b)=>armRank(a.key,arm)-armRank(b.key,arm)||a.__fixtureOrder-b.__fixtureOrder)
+    .map(p=>({name:p.name,pos:p.pos,team:p.team,yearsExp:p.yearsExp,key:p.key}));
+}
+function fallbackReturn(next,key){
+  const a=Number(pool[key]?.adp);
+  return Number.isFinite(next)&&Number.isFinite(a)?clamp(1/(1+Math.exp((next-a)/4)),.01,.99):null;
 }
 
 function buildEngine(){
@@ -74,18 +78,20 @@ function runFixture(f,arm){
   return {ranked,rv};
 }
 
-let n=0,sum=0,max=0;
+let n=0,sum=0,max=0,rv2N=0,fallbackN=0;
 for(const f of data.fixtures){
   if(!Number.isFinite(f.next))continue;
   const {rv}=runFixture(f,'control');
   for(const [key,expected] of Object.entries(f.capturedReturn||{})){
-    const got=rv?.players?.[key]?.ret;
+    const mc=rv?.players?.[key]?.ret;
+    const got=Number.isFinite(mc)?mc:fallbackReturn(f.next,key);
+    if(Number.isFinite(mc))rv2N++;else fallbackN++;
     if(!Number.isFinite(got))throw new Error(`missing control Return pick=${f.current} player=${key}`);
     const e=Math.abs(got-Number(expected)); n++;sum+=e;max=Math.max(max,e);
   }
 }
 const mae=n?sum/n:NaN;
-console.log(`CONTROL_PARITY predictions=${n} mae=${mae} max=${max}`);
+console.log(`CONTROL_PARITY predictions=${n} rv2=${rv2N} fallback=${fallbackN} mae=${mae} max=${max}`);
 if(max!==0) {
   console.error('CONTROL_PARITY_FAIL');
   process.exit(2);
