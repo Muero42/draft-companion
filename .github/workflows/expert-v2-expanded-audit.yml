@@ -18,19 +18,25 @@ jobs:
           import re, urllib.request, html, math
           from collections import defaultdict
           candidates={
+            'Pat Fitzmaurice':'pat-fitzmaurice',
+            'Justin Boone':'justin-boone',
+            'Sean Koerner':'sean-koerner',
+            'Nick Mariano':'nick-mariano',
+            'Dalton Del Don':'dalton-del-don',
+            'Matt Harmon':'matt-harmon',
+            'Andrew Erickson':'andrew-erickson',
+            'Derek Brown':'derek-brown',
+            'Jody Smith':'jody-smith',
+            'Jared Smola':'jared-smola',
+            'Dave Kluge':'dave-kluge',
+            'Jeff Ratcliffe':'jeff-ratcliffe',
+            'Joey Wright':'joey-wright',
             'Michael Bobal':'michael-bobal',
             'Guilherme Gianni':'guilherme-gianni-',
-            'Ryan Weisse':'ryan-weisse',
-            'Pat Fitzmaurice':'pat-fitzmaurice',
-            'Seth Miller':'seth-miller',
-            'Jason Willan':'jason-willan',
-            'Marc Shannep':'marc-shannep',
-            'Jody Smith':'jody-smith',
-            'Kevin Steele':'kevin-steele',
-            'Joey Wright':'joey-wright'
+            'Ryan Weisse':'ryan-weisse'
           }
           def fetch(url):
-            req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (compatible; PITTI-expanded-audit/1.0)','Accept':'text/html'})
+            req=urllib.request.Request(url,headers={'User-Agent':'Mozilla/5.0 (compatible; PITTI-expanded-audit/2.0)','Accept':'text/html'})
             with urllib.request.urlopen(req,timeout=25) as r:return r.read().decode('utf-8','replace')
           def clean(x):return re.sub(r'\s+',' ',re.sub(r'<[^>]+>',' ',html.unescape(x))).strip()
           def parse(text):
@@ -38,12 +44,11 @@ jobs:
             for row in re.findall(r'<tr\b[^>]*>([\s\S]*?)</tr>',text,re.I):
               cells=[clean(x) for x in re.findall(r'<t[dh]\b[^>]*>([\s\S]*?)</t[dh]>',row,re.I)]
               if len(cells)<3: continue
-              m=re.match(r'^\s*(\d{1,3})\b',cells[0]);
+              m=re.match(r'^\s*(\d{1,3})\b',cells[0])
               if not m: continue
               rank=int(m.group(1)); name=''
               for attrs,body in re.findall(r'<a\b([^>]*)>([\s\S]*?)</a>',row,re.I):
-                if '/nfl/players/' in attrs.lower():
-                  name=clean(body); break
+                if '/nfl/players/' in attrs.lower(): name=clean(body); break
               if not name: continue
               pos=None
               for c in cells:
@@ -71,14 +76,17 @@ jobs:
             return (num/math.sqrt(dx*dy) if dx and dy else None),n
           boards={}; meta={}
           for name,slug in candidates.items():
-            url=f'https://www.fantasypros.com/nfl/rankings/{slug}.php?scoring=HALF&type=draft'
+            url=f'https://www.fantasypros.com/nfl/rankings/{slug}.php?position=ALL&scoring=HALF&type=draft'
             try:
               t=fetch(url); plain=clean(t); rows=parse(t)
               updated=re.search(r'Rankings\s*-\s*([A-Z][a-z]{2,8}\s+\d{1,2},\s+2026)',plain,re.I)
-              ok=bool(re.search(r'\b2026\b',plain) and re.search(r'Half Point PPR Rankings|Half PPR Rankings',plain,re.I) and re.search(r'Draft Rankings|Overall .*Rankings',plain,re.I) and len(rows)>=80)
-              meta[name]=(len(rows),updated.group(1) if updated else '?',ok)
+              half=bool(re.search(r'Half Point PPR Rankings|Half PPR Rankings',plain,re.I))
+              superflex=bool(re.search(r'Superflex|2QB',plain,re.I))
+              draft=bool(re.search(r'Draft Rankings|Overall .*Rankings',plain,re.I))
+              ok=bool(re.search(r'\b2026\b',plain) and half and not superflex and draft and len(rows)>=80)
+              meta[name]=(len(rows),updated.group(1) if updated else '?',ok,half,superflex)
               if ok: boards[name]=rows
-              print(f'SOURCE {name}: rows={len(rows)} updated={meta[name][1]} usable={ok}')
+              print(f'SOURCE {name}: rows={len(rows)} updated={meta[name][1]} usable={ok} half={half} superflex={superflex}')
             except Exception as e: print(f'SOURCE {name}: ERROR {e}')
           print('\nPOSITION COUNTS')
           for n,b in boards.items():
