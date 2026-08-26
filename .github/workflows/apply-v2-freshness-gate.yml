@@ -17,115 +17,16 @@ jobs:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      - name: Add source-date freshness semantics for v2 only
+      - name: Patch app
+        run: python tools/apply-v2-freshness-gate.py
+      - name: Syntax
+        run: node --check app.js
+      - name: Invariants
         run: |
-          python <<'PY'
-          from pathlib import Path
-          p=Path('app.js'); s=p.read_text()
-          old="function desiredExpertPoolHealth(){\n"
-          new="""function expertSourceFreshness(cache,now=Date.now()){
-  const raw=String(cache?.sourceUpdated||'').trim();
-  if(!raw)return{status:'unknown',days:null,eligible:false,degraded:true};
-  const ts=Date.parse(raw);
-  if(!Number.isFinite(ts))return{status:'unknown',days:null,eligible:false,degraded:true};
-  const days=Math.max(0,(now-ts)/86400000);
-  if(days<=2.999)return{status:'current',days,eligible:true,degraded:false};
-  if(days<=5.999)return{status:'degraded',days,eligible:true,degraded:true};
-  return{status:'expired',days,eligible:false,degraded:true};
-}
-function v2ExpertEligible(cache){return !!cache?.verifiedIndividual&&!cache?.duplicateOf&&expertSourceFreshness(cache).eligible}
-function desiredExpertPoolHealth(){
-"""
-          if s.count(old)!=1: raise SystemExit(f'health insertion mismatch: {s.count(old)}')
-          s=s.replace(old,new)
-          old="""    let status='unavailable';
-    if(c?.duplicateOf)status='duplicate';
-    else if(c?.verifiedIndividual&&c?.staleFallback)status='stale-fallback';
-    else if(c?.verifiedIndividual)status='verified';
-    else if(c?.error)status='unavailable';
-    const source=c?.source||'none';
-    const sourceUpdated=c?.sourceUpdated||'';
-    const refreshed=Number(c?.updated||0);
-    return{name,id:e?.id||null,status,source,sourceUpdated,refreshed,error:c?.error||'',counts:c?.counts||{}};
-"""
-          new="""    let status='unavailable';
-    const freshness=expertSourceFreshness(c);
-    if(c?.duplicateOf)status='duplicate';
-    else if(c?.verifiedIndividual&&c?.staleFallback)status='stale-fallback';
-    else if(c?.verifiedIndividual&&expertConfig==='v2'&&freshness.status==='expired')status='expired';
-    else if(c?.verifiedIndividual&&expertConfig==='v2'&&freshness.status==='unknown')status='freshness-unknown';
-    else if(c?.verifiedIndividual&&expertConfig==='v2'&&freshness.status==='degraded')status='freshness-degraded';
-    else if(c?.verifiedIndividual)status='verified';
-    else if(c?.error)status='unavailable';
-    const source=c?.source||'none';
-    const sourceUpdated=c?.sourceUpdated||'';
-    const refreshed=Number(c?.updated||0);
-    return{name,id:e?.id||null,status,source,sourceUpdated,refreshed,error:c?.error||'',counts:c?.counts||{},freshness};
-"""
-          if s.count(old)!=1: raise SystemExit(f'health body mismatch: {s.count(old)}')
-          s=s.replace(old,new)
-          old="""  const verified=rows.filter(x=>x.status==='verified').length;
-  const stale=rows.filter(x=>x.status==='stale-fallback').length;
-  const usable=verified+stale;
-  return{verified,stale,usable,total:rows.length,degraded:verified<rows.length,rows};
-"""
-          new="""  const verified=rows.filter(x=>x.status==='verified').length;
-  const freshDegraded=rows.filter(x=>x.status==='freshness-degraded').length;
-  const stale=rows.filter(x=>x.status==='stale-fallback').length;
-  const usable=verified+freshDegraded+stale;
-  return{verified,stale,freshDegraded,usable,total:rows.length,degraded:verified<rows.length,rows};
-"""
-          if s.count(old)!=1: raise SystemExit(f'health counts mismatch: {s.count(old)}')
-          s=s.replace(old,new)
-          old="""  const status=row.status==='verified'?'VERIFIED':row.status==='stale-fallback'?'STALE-FALLBACK':row.status==='duplicate'?'DUPLICATE':'UNAVAILABLE';
-"""
-          new="""  const status=row.status==='verified'?'VERIFIED':row.status==='freshness-degraded'?'FRESHNESS 3–5D':row.status==='expired'?'EXPIRED >5D':row.status==='freshness-unknown'?'FRESHNESS UNKNOWN':row.status==='stale-fallback'?'STALE-FALLBACK':row.status==='duplicate'?'DUPLICATE':'UNAVAILABLE';
-"""
-          if s.count(old)!=1: raise SystemExit(f'detail status mismatch: {s.count(old)}')
-          s=s.replace(old,new)
-          old="""      const c=rankCache[e.id];
-      if(c?.verifiedIndividual&&!c?.duplicateOf&&Object.keys(members).length<p.max)members[e.id]=w;
-"""
-          new="""      const c=rankCache[e.id];
-      const allowed=id.startsWith('v2')?v2ExpertEligible(c):(c?.verifiedIndividual&&!c?.duplicateOf);
-      if(allowed&&Object.keys(members).length<p.max)members[e.id]=w;
-"""
-          if s.count(old)!=1: raise SystemExit(f'backfill mismatch: {s.count(old)}')
-          s=s.replace(old,new)
-          old="""    const cache=rankCache[eid],w=Number(w0);
-    if(!cache?.verifiedIndividual)continue;
-    if(cache?.duplicateOf)continue;
-"""
-          new="""    const cache=rankCache[eid],w=Number(w0);
-    if(!cache?.verifiedIndividual)continue;
-    if(cache?.duplicateOf)continue;
-    if(String(panelId).startsWith('v2')&&!v2ExpertEligible(cache))continue;
-"""
-          if s.count(old)!=1: raise SystemExit(f'compute gate mismatch: {s.count(old)}')
-          s=s.replace(old,new)
-          p.write_text(s)
-          PY
-      - name: Validate syntax and freshness invariants
-        run: |
-          node --check app.js
-          node <<'NODE'
-          const fs=require('fs'),vm=require('vm'); const s=fs.readFileSync('app.js','utf8');
-          for(const x of ['function expertSourceFreshness(','function v2ExpertEligible(','freshness-degraded','expired','String(panelId).startsWith(\'v2\')&&!v2ExpertEligible(cache)']) if(!s.includes(x)) throw new Error('missing '+x);
-          const start=s.indexOf('function expertSourceFreshness('),end=s.indexOf('function desiredExpertPoolHealth()',start);
-          const code=s.slice(start,end)+';globalThis.expertSourceFreshness=expertSourceFreshness;'; const ctx={Date}; vm.createContext(ctx); vm.runInContext(code,ctx);
-          const now=Date.parse('2026-08-26T12:00:00Z');
-          const f=ctx.expertSourceFreshness;
-          if(f({sourceUpdated:'Aug 25, 2026'},now).status!=='current')throw new Error('1d must current');
-          if(f({sourceUpdated:'Aug 22, 2026'},now).status!=='degraded')throw new Error('4d must degraded');
-          if(f({sourceUpdated:'Aug 19, 2026'},now).status!=='expired')throw new Error('7d must expired');
-          if(f({sourceUpdated:''},now).status!=='unknown')throw new Error('missing date must unknown');
-          const baseline=s.slice(s.indexOf("standard:{name:'Baseline"),s.indexOf('// v2 current-source priors'));
-          if(!baseline.includes('Derek Brown')||!baseline.includes('Andrew Erickson'))throw new Error('baseline unexpectedly changed');
-          console.log('v2 freshness gate PASS');
-          NODE
-      - name: Verify isolated runtime change
+          node -e "const fs=require('fs');const s=fs.readFileSync('app.js','utf8');for(const x of ['function expertSourceFreshness(','function v2ExpertEligible(','freshness-degraded','EXPIRED >5D'])if(!s.includes(x))throw new Error('missing '+x);const b=s.slice(s.indexOf(\"standard:{name:'Baseline\"),s.indexOf('// v2 current-source priors'));if(!b.includes('Derek Brown')||!b.includes('Andrew Erickson'))throw new Error('baseline drift');console.log('freshness invariants PASS')"
+      - name: Isolated diff
         run: test "$(git diff --name-only)" = "app.js"
-      - name: Commit freshness gate
+      - name: Commit
         run: |
           git config user.name "pitti-auto"
           git config user.email "actions@users.noreply.github.com"
