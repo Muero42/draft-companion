@@ -6,9 +6,11 @@ on:
 permissions:
   contents: read
 jobs:
-  decision-introspect:
+  decision-gate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Inspect exact rc4.64 decision functions
+      - name: Exact resolved Return probabilities
+        run: node research/wr-v2-exact-return-harness.mjs
+      - name: Compact WR rank and fixture map
         run: node research/wr-v2-decision-introspect.mjs
