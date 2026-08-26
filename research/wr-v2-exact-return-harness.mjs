@@ -18,8 +18,6 @@ const kernel=app.slice(start,end);
 
 const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
 const pool=data.pool;
-const keys=Object.keys(pool);
-const baseIndex=new Map(keys.map((k,i)=>[k,i]));
 
 function armRank(key,arm){
   const p=pool[key];
@@ -28,12 +26,14 @@ function armRank(key,arm){
   return Number(p.incRank);
 }
 function rankedAvailable(f,arm){
-  // The frozen fixture order is the exact incumbent rankedAvailable order. For the WR-only
-  // treatment, change only WR panel ranks and use the frozen order as deterministic tie-break.
-  return f.available.map((key,i)=>({...pool[key],key,__fixtureOrder:i}))
-    .filter(p=>p&&Number.isFinite(armRank(p.key,arm)))
-    .sort((a,b)=>armRank(a.key,arm)-armRank(b.key,arm)||a.__fixtureOrder-b.__fixtureOrder)
-    .map(p=>({name:p.name,pos:p.pos,team:p.team,yearsExp:p.yearsExp,key:p.key}));
+  const rows=f.available.map((key,i)=>({...pool[key],key,__fixtureOrder:i}))
+    .filter(p=>p&&Number.isFinite(armRank(p.key,arm)));
+  // f.available is the frozen incumbent rankedAvailable order from the verified fixture.
+  // Re-sorting the control would discard the original Sleeper search-rank tie-break, which
+  // is intentionally not duplicated in the compact exact-input file. Treatment changes only
+  // WR panel ranks; fixture order is retained as the deterministic tie-break for equal ranks.
+  if(arm!=='control') rows.sort((a,b)=>armRank(a.key,arm)-armRank(b.key,arm)||a.__fixtureOrder-b.__fixtureOrder);
+  return rows.map(p=>({name:p.name,pos:p.pos,team:p.team,yearsExp:p.yearsExp,key:p.key}));
 }
 
 function buildEngine(){
@@ -75,7 +75,6 @@ function runFixture(f,arm){
 }
 
 let n=0,sum=0,max=0;
-const rows=[];
 for(const f of data.fixtures){
   if(!Number.isFinite(f.next))continue;
   const {rv}=runFixture(f,'control');
@@ -84,7 +83,6 @@ for(const f of data.fixtures){
     if(!Number.isFinite(got))throw new Error(`missing control Return pick=${f.current} player=${key}`);
     const e=Math.abs(got-Number(expected)); n++;sum+=e;max=Math.max(max,e);
   }
-  rows.push({pick:f.current,controlTop24:Object.keys(rv.players),controlReturns:Object.fromEntries(Object.entries(rv.players).map(([k,v])=>[k,v.ret]))});
 }
 const mae=n?sum/n:NaN;
 console.log(`CONTROL_PARITY predictions=${n} mae=${mae} max=${max}`);
