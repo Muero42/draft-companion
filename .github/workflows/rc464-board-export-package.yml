@@ -46,9 +46,14 @@ jobs:
           grep -q '10ER-ÜBERSICHT' live-surface-v3.js
           grep -q 'NORMAL-CUT WARNUNG' live-surface-v3.js
           grep -q 'expert-board-export.js?v=20260826d' index.html sw.js
-          grep -q 'PITTI_EXPERT_BOARDS_V1' expert-board-export.js
+          grep -q 'PITTI_EXPERT_BOARDS_V3' expert-board-export.js
+          grep -q 'source=PERSISTED_VERIFIED_APP_CACHE' expert-board-export.js
           grep -q 'credential=NONE' expert-board-export.js
+          grep -q 'verifiedIndividual' expert-board-export.js
+          grep -q "v7_rank_" expert-board-export.js
           grep -q 'navigator.clipboard.writeText' expert-board-export.js
+          ! grep -q '/api/fantasypros' expert-board-export.js
+          ! grep -q 'getDir' expert-board-export.js
           ! grep -q 'localStorage.setItem.*apiKey' expert-board-export.js
       - name: Verify isolated runtime diff
         run: |
