@@ -1,0 +1,48 @@
+name: Harmon Yahoo Exact Source Smoke
+
+on:
+  push:
+    branches:
+      - pitti-rc464-expert-panel-v2-research
+    paths:
+      - research/HARMON_YAHOO_SOURCE_SMOKE_TRIGGER.md
+  workflow_dispatch:
+
+jobs:
+  smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Parse exact Harmon columns from Yahoo mirrors
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),vm=require('vm');
+          const s=fs.readFileSync('_worker.js','utf8');
+          const st=s.indexOf('function htmlDecode('), en=s.indexOf('function parseFpDirectory(',st);
+          if(st<0||en<0)throw new Error('parser extraction bounds missing');
+          const ctx={Date}; vm.createContext(ctx);
+          vm.runInContext(s.slice(st,en)+';globalThis.parseYahooStaffTable=parseYahooStaffTable;globalThis.sourceDateFromHtml=sourceDateFromHtml;',ctx);
+          const urls=[
+            'https://sports.yahoo.com/fantasy/article/fantasy-football-rankings-consensus-top-300-players-160643696.html',
+            'https://ca.sports.yahoo.com/news/fantasy-football-rankings-consensus-top-300-players-160643696.html'
+          ];
+          (async()=>{
+            let usable=0;
+            for(const url of urls){
+              const r=await fetch(url,{headers:{'user-agent':'Mozilla/5.0 (compatible; PITTI-Harmon-smoke/1.0)','accept':'text/html'}});
+              if(!r.ok){console.log('SOURCE',url,'HTTP',r.status);continue}
+              const html=await r.text();
+              const harmon=ctx.parseYahooStaffTable(html,'Matt Harmon');
+              const boone=ctx.parseYahooStaffTable(html,'Justin Boone');
+              const updated=ctx.sourceDateFromHtml(html);
+              console.log('SOURCE',url,'HARMON',harmon.length,'BOONE',boone.length,'UPDATED',updated||'?');
+              if(harmon.length>=80&&updated)usable++;
+              if(harmon.length>=80){
+                const bad=harmon.filter(x=>!Number.isFinite(x.rank)||!x.name||!['QB','RB','WR','TE','K','DST'].includes(x.pos));
+                if(bad.length)throw new Error('malformed Harmon rows '+bad.length);
+              }
+            }
+            if(!usable)throw new Error('No Yahoo mirror yielded >=80 exact Harmon rows with a machine-readable date');
+            console.log('Harmon Yahoo exact-source smoke PASS, usable mirrors',usable);
+          })().catch(e=>{console.error(e);process.exit(1)});
+          NODE
