@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260827T160500Z-v108`
-Updated: 2026-08-27 16:05Z
+Handoff generation: `20260827T163500Z-v109`
+Updated: 2026-08-27 16:35Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -133,3 +133,11 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Evidence-v2 offline analysis now fails closed on exact rc4.83, complete 15-pick mock telemetry and unique own-pick fixtures.
 - No rc4.83 Decision-Kernel coefficient changed. OOS gate remains unchanged.
 - Fresh independent QB/RB research is checkpointed as qualitative dated evidence only.
+
+
+## V109 AUTHORITY-CLEANUP CANARY
+- v108 read-back closed 20/20 exact.
+- Subsequent independent audit found active Execution Lock recovery prose still named repo v107 explicitly. That stale scalar could have become an old-state resurrection path despite a newer valid seal.
+- Active recovery semantics are now generation-generic: newest fully sealed repo generation + verified device facts win over stale Library.
+- Release-tooling guards remain: rc4.83 mandatory release gate, dynamic APP_VERSION package naming, Evidence-v2 exact rc4.83/15 unique own picks.
+- Decision Kernel remains unchanged/frozen; external OOS gate unchanged.
