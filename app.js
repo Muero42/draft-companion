@@ -453,7 +453,10 @@ function activePanelSourceLines(usedPanelIds){
   const out=[];
   for(const pid of usedPanelIds){
     const panel=panels[pid]||{},embedded=embeddedPanelExpertNames(pid);
-    if(panel.shadow&&embedded.length){out.push(...embedded.map(name=>`${name}: Expert-v2 Board (eingebettet)`));continue;}
+    if(panel.shadow&&embedded.length){
+      const boardSource=globalThis.PITTI_EXPERT_V2?.source||'Expert-v2 Board';
+      out.push(...embedded.map(name=>`${name}: ${boardSource} (eingebettet)`));continue;
+    }
     for(const eid of Object.keys(panel.members||{})){
       const row=rankCache[eid];if(!row?.verifiedIndividual)continue;
       out.push(`${row.expertName}: ${row.source||'verifiziert'}${row.sourceScoring?` [${row.sourceScoring}${row.sourceContextVerified?' ✓':' ?'}]`:''}${row.sourceUpdated?` (${row.sourceUpdated})`:''}`);
