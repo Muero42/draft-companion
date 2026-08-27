@@ -20,6 +20,13 @@ must(lock.auto?.parallelizeIndependentLanesWhileWaiting===true,'AUTO parallel-la
 must(lock.auto?.statusOnlyOutputWhileUsefulWorkExists===false,'status-only prohibition missing');
 must(lock.auto?.checkpointWriteThroughAfterMaterialChange===true,'checkpoint write-through invariant missing');
 must(lock.auto?.retryRejectedPathWithoutNewEvidence===false,'rejected-path retry invariant missing');
+must(lock.auto?.longBlocksByDefault===true,'long-block AUTO invariant missing');
+must(lock.auto?.userReminderRequired===false,'AUTO must never require repeated user reminder');
+must(lock.auto?.blockedGateStopsOnlyDependentLane===true,'blocked-gate lane isolation missing');
+must(lock.auto?.reinventoryAfterEveryWorkPackage===true,'post-package re-inventory invariant missing');
+must(lock.auto?.oneInventoryPerAutoTurnIsInsufficient===true,'single-inventory AUTO regression guard missing');
+must(lock.auto?.promiseOnlyAutoResponseForbidden===true,'promise-only AUTO response prohibition missing');
+must(lock.auto?.externalGateValidStopOnlyAfterIndependentLaneExhaustion===true,'external gate exhaustion invariant missing');
 
 for(const token of [
   'Source of Truth for PITTI/Draft Companion execution',
@@ -41,7 +48,11 @@ for(const token of [
   'AUTO CONTINUITY',
   'CHECKPOINT WRITE-THROUGH',
   'USER INTERRUPTION TEST',
-  'PITTI-SPECIFIC CANARIES'
+  'PITTI-SPECIFIC CANARIES',
+  'AUTO is a repeated work loop, not a one-package action',
+  'Re-inventory after **EVERY** completed work package',
+  'Promise-only AUTO responses are invalid',
+  'external/device/OOS gate is a valid interruption only after all independent'
 ]) must(preflight.includes(token),`preflight gate missing: ${token}`);
 
 must(readme.includes('v11.8.0-rc4.64'),'README active runtime drift');
