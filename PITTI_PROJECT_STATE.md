@@ -555,3 +555,69 @@ Performed the required parallel inventory instead of stopping at the OOS gate.
 - User one-QB invariant remains absolute: once QB1 is selected, all other QBs become draft-surface exclusions; Willis becomes FA/watchlist only.
 - Practical validation target for Evidence-v2: test whether rc4.83 recognizes Herbert/Caleb/Lawrence at market-appropriate opportunity cost before falling through to Goff/Murray/Willis, while still allowing continued waiting when RB/WR/TE option value dominates.
 - Primary rc4.83 OOS gate remains unchanged and uncontaminated.
+
+
+---
+
+## 2026-08-27 PITTI HANDOFF v105 — CURRENT-STATE CATCH-UP / DURABLE AUTO LOOP / OLD-ERROR RESEAL
+
+### Trigger
+User again required an exact transfer audit because repeated chat switches had lost current facts and AUTO repeatedly stopped after one short work package despite explicit long-block instructions. This is treated as a material execution/reliability defect, not as style-only feedback.
+
+### Current authority reverified
+- Production/control baseline remains **v11.8.0-rc4.64**.
+- **v11.8.0-rc4.82** is the last fully Android-verified authority. Device evidence includes badge, Full-v2 active health, completed roster state and fresh Snapshot version/Frozen-v2 provenance/frozen-weight semantics.
+- **v11.8.0-rc4.83** is deployed only as a TEST challenger; it is not promoted and not Android-verified.
+- Latest independent package + re-extract boundary remains rc4.78; Library rc4.52 TEST/LATEST aliases remain recovery-only.
+- rc4.83 Decision Kernel coefficients remain **FROZEN** pending realistic OOS Evidence-v2.
+
+### OOS / Evidence-v2 transfer lock
+- End-roster composition is not Coach-success evidence when user overrides occurred.
+- Evidence-v2 stores pre-pick roster positions/counts, frozen candidate board, Coach top, chosen player, override/followedCoach, score/panel deltas and WR6+/WR7+/QB2 flags.
+- Pre-mock roster-position undercount bug was already fixed; frozen user-roster rows persist position directly.
+- External gate remains: ordinary realistic rc4.83 Android mock -> refresh once after completion -> Erweitert/Sicherung/Pick-Evidenz exportieren -> share JSON.
+- No manual pick documentation is required.
+
+### QB qualitative evidence lock
+- Andrew Erickson direct answer to the user's exact league question: Caleb Williams / Trevor Lawrence / Justin Herbert as preferred mid/late targets.
+- Pat Fitzmaurice direct evidence supports later price-dependent Kyler Murray / Jared Goff / Malik Willis paths.
+- Direct answers are qualitative thesis/context and must not be double-counted as extra numeric votes alongside Frozen Expert-v2 rankings.
+- User drafts exactly one QB. After QB1 every QB2 is hard-excluded from the user's Coach surface; Willis becomes FA/watch only. Geno Smith and Aaron Rodgers remain hard exclusions.
+
+### Durable AUTO defect fix — contract strengthened
+The former rule "parallel inventory before stop" proved insufficient in practice: AUTO could perform one small audit, claim exhaustion and stop. The execution rule is now machine-locked as a repeated loop:
+
+**execute work package -> checkpoint material change -> re-inventory all independent lanes -> execute next package -> repeat.**
+
+- Re-inventory after **EVERY** completed work package; one inventory per AUTO invocation is insufficient.
+- A blocked OOS/device/CI lane blocks only its dependent lane.
+- Mandatory inventory: decision/evidence validation; regression/release safety; evidence tooling; draft-day failsafe; expert freshness; post-draft/FA; Watcher draft-critical readiness; handoff/checkpoint integrity; independent strategy/current evidence.
+- Promise-only responses such as "AUTO läuft", "ich mache weiter", a priority list or status-only recap are forbidden while executable work remains.
+- User reminder is never required.
+- An external/device/OOS gate becomes a valid interruption only after all independent non-contaminating positive-value lanes are actually exhausted.
+
+### Machine protection
+- PITTI_AUTO_PREFLIGHT upgraded with the repeated post-package loop.
+- PITTI_EXECUTION_LOCK now carries reinventoryAfterEveryWorkPackage, oneInventoryPerAutoTurnIsInsufficient, promiseOnlyAutoResponseForbidden, and externalGateValidStopOnlyAfterIndependentLaneExhaustion.
+- tools/pitti_guardrail_check.mjs now fails if any of those durable AUTO semantics disappear.
+- NEW_CHAT_HANDOFF_CURRENT includes the same v105 canary and current rc4.82/rc4.83 boundary.
+
+### Old-error scan
+Explicitly kept quarantined absent new causal evidence:
+- PairSum/Rolling resurrection;
+- fixed roster caps/quotas or starter-maxima-as-roster-caps;
+- player-name forcing / blind RB forcing;
+- generic Return-v2 retune;
+- generic/global QB2 or TE2 bans;
+- Superflex/2QB contamination;
+- Brown numeric vote in new v2;
+- temporary Weisse/Gianni/Bobal pool;
+- Draft Sharks double-counting;
+- live renormalization of Frozen Expert-v2 weights;
+- stale cross-draft duplicate identity;
+- prepared/build == Android-verified conflation;
+- rc4.80 stale Snapshot version / false Full-v2 DEGRADED semantics;
+- treating user overrides/final roster as Coach-quality labels.
+
+### New-chat acceptance
+PITTI AUTO remains the only user message required. The receiving chat must load Library command contract/CURRENT/PASS seal/Project State to EOF/handoff/bootstrap/matrix, verify actual repo Execution Lock + repo Project-State EOF and current runtime facts, fail closed on contradiction, and then execute actual continuation work. A "loaded/ready/AUTO runs" response without concrete work is invalid.
