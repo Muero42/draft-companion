@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T08:52:00Z",
+  "updatedAt": "2026-08-27T08:59:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,7 +11,10 @@
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
-    "builtIsNotAndroidVerified": true
+    "builtIsNotAndroidVerified": true,
+    "latestAndroidObserved": "v11.8.0-rc4.76",
+    "latestPreinstallVerified": "v11.8.0-rc4.77",
+    "latestResearchChallenger": "v11.8.0-rc4.78"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -48,12 +51,19 @@
     "userSpecificQb2ExclusionIsNotGenericLeagueRule": true
   },
   "expertV2": {
-    "status": "WR_ONLY_SHADOW_QUALIFIED_NOT_PRODUCTION",
-    "integration": "ADDITIVE_SELECTABLE_ONLY",
-    "control": "rc4.64-incumbent",
-    "controlRemainsDefault": true,
-    "fourPositionCandidate": "REJECTED_DO_NOT_INTEGRATE",
-    "rejectedFullCandidateWeights": {
+    "status": "THREE_SELECTABLE_PROFILES_CURRENT_AUTHORITY_NO_FINAL_WINNER",
+    "integration": "SELECTABLE_ABC_COMPARISON",
+    "profiles": [
+      "incumbent/control",
+      "Expert-v2 ALL positions",
+      "Expert-v2 WR-only"
+    ],
+    "control": "incumbent/control",
+    "controlRemainsSelectable": true,
+    "fullV2RemainsSelectable": true,
+    "wrOnlyRemainsSelectable": true,
+    "historicalFullV2Regression": "RETAIN_AS_EVIDENCE_NOT_AS_PROFILE_DELETION",
+    "weights": {
       "QB": {
         "Draft Sharks Team": 35,
         "Nick Mariano": 25,
@@ -81,48 +91,29 @@
         "Justin Boone": 10
       }
     },
-    "qbCandidate": "REJECTED_LATE_QB2_REGRESSION_USE_INCUMBENT",
-    "rbCandidate": "REJECTED_NO_DEMONSTRATED_MARGINAL_VALUE_USE_INCUMBENT",
-    "teCandidate": "REJECTED_INSUFFICIENT_PROMOTION_CASE_USE_INCUMBENT",
-    "wrCandidate": "PASS_SHADOW_QUALIFICATION_NOT_PRODUCTION",
-    "wrShadowWeights": {
-      "Nick Mariano": 35,
-      "Draft Sharks Team": 30,
-      "Pat Fitzmaurice": 15,
-      "Dalton Del Don": 10,
-      "Justin Boone": 10
+    "displayOrder": [
+      "Draft Sharks Team",
+      "Dalton Del Don",
+      "Pat Fitzmaurice",
+      "Nick Mariano",
+      "Justin Boone"
+    ],
+    "displayValues": "INDIVIDUAL_PLAYER_RANKS_NOT_WEIGHTS",
+    "sourceLocks": {
+      "Derek Brown": "EXCLUDED_FROM_NEW_V2",
+      "Andrew Erickson": "CHALLENGER_ONLY_NO_CURRENT_NUMERIC_VOTE",
+      "Matt Harmon": "WR_EVIDENCE_ONLY_NO_CURRENT_NUMERIC_VOTE_UNLESS_INCREMENTAL_VALUE_PROVEN",
+      "Sean Koerner": "NO_CURRENT_DRAFT_ACQUISITION_PAYWALL_WATCHLIST_ONLY",
+      "Draft Sharks Team": "COUNT_EXACTLY_ONCE_AS_CORRELATED_FAMILY",
+      "Weisse_Gianni_Bobal": "REJECTED_TEMPORARY_CONTROL_ONLY"
     },
-    "wrShadowWeightsSum": 100,
-    "brownExcluded": true,
-    "erickson": "CHALLENGER_ONLY_NO_CURRENT_NUMERIC_VOTE",
-    "harmon": "WR_EVIDENCE_ONLY_NO_CURRENT_NUMERIC_VOTE_UNLESS_MARGINAL_VALUE_PROVEN",
-    "koerner": "NO_CURRENT_DRAFT_ACQUISITION_PAYWALL_WATCHLIST_ONLY",
-    "draftSharksCountAsOneSourceFamily": true,
-    "temporaryWeisseGianniBobalPoolRejected": true,
-    "exactReturnControlPredictions": 224,
-    "exactReturnV2Predictions": 215,
-    "exactReturnProductionFallbacks": 9,
-    "exactReturnMAE": 0,
-    "wrCandidateSignalPicks": [
-      69,
-      92,
-      109,
-      112,
-      132,
-      149
-    ],
-    "mandatoryControls": [
-      89,
-      92,
-      112,
-      129,
-      132,
-      149
-    ],
-    "knownSharedBAxisIssue": "pick129 WR7 can be resurrected by common PlayerQualitySafety/roster-utility; do not alter WR weights or impose cap to mask it",
-    "currentGate": "INTEGRATE_EXACT_WR_SHADOW_WEIGHTS_ADDITIVELY_THEN_REGRESSION_SAFETY_FRESHNESS_REALISTIC_VALIDATION",
-    "weightsAreProduction": false,
-    "oldSelectorWorkflowsAreAuthority": false
+    "freshness": {
+      "cacheMaxHoursBeforeRefreshAttempt": 12,
+      "failedRefresh": "EXPLICIT_STALE_FALLBACK_ONLY",
+      "preDraft": "FRESH_ATTEMPT_REQUIRED"
+    },
+    "weightsAreFinalWinner": false,
+    "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
     "branch": "pitti-auto/rc4.78-roster-option-value",
@@ -130,7 +121,7 @@
     "status": "RESEARCH_CHALLENGER_NOT_PROMOTED",
     "gate": "DETERMINISTIC_EXECUTABLE_OOS_BEHAVIOR_FROM_CLEAN_PROMOTION_BRANCH",
     "newEvidence": "User explicitly will draft exactly one QB; QB2 would be dropped for K/DST and has no pre-Week-1 option value. Preserve TE as soft/exceptional-value path; do not generalize QB rule to TE or other league profiles.",
-    "head": "67bea7abae5ebadd82ca8bb366657d3b3402ea13",
+    "head": "ee77bb3089d02d85bc2104861e7d1c9949008c0e",
     "validatedChanges": [
       "user QB2 hard Coach exclusion after QB1",
       "WR7+ Safety promotion requires existing strong-value threshold; no WR cap",
@@ -138,6 +129,7 @@
       "embedded Expert-v2 health plus explicit frozen-board provenance disclosure"
     ],
     "ciProbe": "branch-local workflow added; no run emitted; internal limitation, not user gate",
-    "closedProbePr": 28
+    "closedProbePr": 28,
+    "semanticRepair": "Execution Lock old WR-only/full-v2-rejected authority removed; three-profile current authority restored from CURRENT/Handoff."
   }
 }
