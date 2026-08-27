@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T12:35:00Z",
+  "updatedAt": "2026-08-27T12:45:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -19,7 +19,7 @@
     "preinstallSha256": "69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba",
     "preinstallRuntimeFiles": 12,
     "latestSourceRegressionVerified": "v11.8.0-rc4.82",
-    "latestDeployedCandidate": "v11.8.0-rc4.80"
+    "latestDeployedCandidate": "v11.8.0-rc4.82"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -122,7 +122,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.82_SOURCE_REGRESSION_PASS_DEPLOY_PENDING",
+    "status": "RC4.82_DEPLOYED_SOURCE_REGRESSION_PASS_ANDROID_PENDING",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -137,9 +137,11 @@
       "full-v2/hybrid/incumbent active-panel-health fixtures PASS including degraded hybrid detection",
       "six legacy draft regressions PASS including 6000-run Return market sanity",
       "release/completeness static invariants PASS",
-      "Expert-v2 board weights/counts/order invariants PASS"
+      "Expert-v2 board weights/counts/order invariants PASS",
+      "main/gh-pages byte parity PASS for app.js/index.html/sw.js/manifest.webmanifest",
+      "README authority synchronized: production rc4.64 vs package rc4.78 vs Android rc4.80 vs current rc4.82 separated"
     ],
-    "gate": "DEPLOY_RC4.82_TO_GH_PAGES_THEN_ANDROID_VERSION/HEALTH/SNAPSHOT_SMOKE",
+    "gate": "ANDROID_RC4.82_VERSION_PLUS_ACTIVE_PANEL_HEALTH_AND_SNAPSHOT_PROVENANCE_SMOKE",
     "note": "latestPreinstallVerified remains rc4.78 because rc4.80 was Android-deployed but no new packaged/re-extracted preinstall ZIP was created; do not conflate deployment with package verification."
   }
 }
