@@ -283,3 +283,44 @@ Implementation in rc4.79:
 - Existing one-QB policy remains authoritative: after QB1, all QB2 candidates are excluded before this research residual can affect Coach ordering.
 - Evidence expires 2026-09-01 unless refreshed/invalidated; appropriate because this is draft-week qualitative evidence.
 - Runtime/version bumped to v11.8.0-rc4.79 and deployed to gh-pages. Android verification remains required before production/draft-ready promotion.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — QB1 deployment-risk decision: Murray/Goff vs last-pick Willis
+
+Question tested: Is Malik Willis already safe enough to draft as the user's only QB and start immediately, or should PITTI prefer a safer Murray/Goff QB1 and monitor Willis on waivers?
+
+Fresh evidence:
+- Willis starter/job-security risk is LOW: current Miami reporting explicitly calls him the starter while the team sorts out QB2. This removes the earlier concern that the late pick could lose the job before Week 1.
+- Willis fantasy-output uncertainty remains MATERIAL: current FantasyPros draft ECR QB21 (83 experts; range QB13-QB30), consensus ADP 150 / Sleeper 164, projected 493 pass attempts, 3371 pass yards, 17.7 pass TD, 124.9 rushes, 642.4 rush yards, 4.1 rush TD. The rushing thesis is real, but consensus still prices him below reliable weekly QB1 territory.
+- Goff is the safety archetype: Fitz calls him high-floor; Derek Brown independently calls him high-floor/low-end-QB1 ceiling and explicitly suggests pairing him with upside QBs including Willis. Week-1 ECR currently QB12 (8 experts), but Pat himself QB15 and Brown QB19. Four straight 4,000-yard seasons and no missed game since 2021 support reliability.
+- Murray is the balanced archetype: official Minnesota depth chart lists him QB1; current Week-1 independent projection/ranking is materially stronger than Goff in at least one current source, and Fitz's qualitative thesis supplies rushing/rebound upside.
+- Goff and Willis share Week 6 bye, but this is irrelevant to the user's hard one-QB draft policy because Willis would be monitored, not drafted as QB2.
+
+Decision:
+1. Do NOT classify Willis as unsafe because of starter/job-security. That concern is currently resolved.
+2. Do classify Willis as HIGHER WEEKLY OUTPUT VARIANCE / insufficiently proven Week-1 QB1 floor. His tiny relevant starter sample and low passing projection create real downside even with elite rushing upside.
+3. Preferred default if prices are reasonable: Murray > Goff > Willis for opening-day QB1, with Willis a high-priority waiver/FA monitor.
+4. Price sensitivity is mandatory: do not spend a materially earlier pick on Murray/Goff merely for floor. If Murray/Goff cost a valuable RB-upside round while Willis survives to 15.09, Willis becomes the preferred portfolio bet.
+5. No QB2 draft. A Murray/Goff selection immediately invokes the QB2 hard exclusion; Willis is then WATCHLIST/FA only.
+6. If Willis is the QB1 pick, last-pick timing is preferred when return probability supports it. No premature reach solely from Fitz endorsement.
+
+Willis promotion triggers before/after draft:
+- sustained Miami QB1 status;
+- designed-run/read-option/red-zone rushing usage consistent with the projected rushing profile;
+- acceptable pressure-to-sack/turnover behavior and passing success sufficient to keep offense on schedule;
+- Week-1/early-week snap rate and route/play-action environment;
+- no material offensive-line/pass-catcher degradation.
+A strong preseason box score alone is NOT enough.
+
+Willis downgrade triggers:
+- QB rotation/short leash;
+- rushing usage materially below thesis;
+- passing inefficiency causes stalled drives/benching risk;
+- high sack/turnover rate;
+- market rises enough that the last-pick opportunity-cost advantage disappears.
+
+Coach implication:
+- Add semantic archetypes: Murray=BALANCED_UPSIDE_QB1; Goff=FLOOR_QB1; Willis=LAST_PICK_UPSIDE_OR_FA_WATCH.
+- These are decision semantics, not hard player forcing. Expert-v2 + ADP + Return-v2 remain authoritative.
