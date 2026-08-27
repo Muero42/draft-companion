@@ -443,3 +443,22 @@ Only then mark rc4.82 Android-verified.
 - Repository `PITTI_PROJECT_STATE.md` and `PITTI_EXECUTION_LOCK.json` contain the current rc4.82 authority above.
 - The attempted write-through of the same catch-up into Library `/Pitti/PITTI_PROJECT_STATE.md` / `PITTI_CURRENT_STATE.json` was blocked repeatedly by the Files upload bridge returning `container_session_expired` after materialization/editing. This is an internal tooling limitation, not a user gate.
 - Fail-closed recovery rule until the Library mirror can be refreshed: if a new chat sees Library generation `20260827T083500Z-v103` or any state that still says rc4.76/rc4.77 is current, it MUST reconcile against repository Execution Lock/Project-State EOF before project work and must not revive those stale pointers.
+
+
+### 2026-08-27 completed rc4.80 mock evidence — Draft 1398663778593198080
+User supplied a completed Full-v2 mock snapshot from the Android rc4.80 runtime. Snapshot itself prints stale rc4.78 metadata; this is now confirmed as a real rc4.80 metadata defect, not an uncertain display issue. It also reproduces the false global `Panel-Health: DEGRADED` and misleading Live Multi-Source/renormalized-weight prose while all four active Expert-v2 boards are complete (QB 5/5 embedded, RB 4/4, WR 5/5, TE 4/4). These three defects are exactly the rc4.82 fixes and therefore provide an additional before-fix regression fixture.
+
+Draft roster (user, slot 9):
+James Cook, Justin Jefferson, Kyren Williams, Malik Nabers, Tyler Warren, Jameson Williams, Christian Watson, Parker Washington, Rico Dowdle, Jacory Croskey-Merritt, Kenny Gainwell, Josh Downs, Zach Charbonnet, Jared Goff, Jonah Coleman.
+No K/DST drafted; one QB drafted at pick 132; TE1 at 49. User ended 7 RB / 7 WR / 1 TE / 1 QB? Note: 15 total picks = RB7 (Cook/Kyren/Dowdle/JCM/Gainwell/Charbonnet/Coleman), WR6 (Jefferson/Nabers/Jamo/Watson/Parker/Downs), TE1, QB1. Correct count is 7 RB / 6 WR / 1 TE / 1 QB.
+
+Decision-quality observations to retain for later aggregate validation:
+- Early core: Cook 1.09, Jefferson 2.02, Kyren 3.09, Nabers 4.02.
+- Warren 5.09, Jameson Williams 6.02.
+- Christian Watson 7.09 and Parker Washington 8.02.
+- RB depth then Dowdle 9.09, JCM 10.02, Gainwell 11.09; Downs 12.02; Charbonnet 13.09.
+- Goff selected only at 14.02 after QBs Allen/Lamar/Maye/Hurts/Daniels/Caleb/Herbert/Dak/Lawrence/Stafford/Dart/Mahomes/Nix/Purdy were gone; this is consistent with the safe-QB1 fallback path discussed after Pat Fitzmaurice's 27.08 answer.
+- Malik Willis was not drafted by any team in the 150 picks shown, supporting the practical option of taking Goff for floor and observing Willis in free agency rather than forcing Willis into the draft.
+- No post-draft retuning is authorized from this single mock. Use it as evidence alongside other realistic simulations and live expert evidence.
+
+This snapshot is also a direct canary for rc4.82 Android verification: after reload, a fresh Full-v2 snapshot must show current rc4.82 metadata, active Full-v2 Panel-Health OK, Frozen Expert-v2 provenance, and frozen-v2 weight semantics.
