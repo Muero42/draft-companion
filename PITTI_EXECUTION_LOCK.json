@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T13:25:00Z",
+  "updatedAt": "2026-08-27T13:09:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -20,7 +20,7 @@
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip",
     "preinstallSha256": "69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba",
     "preinstallRuntimeFiles": 12,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.82",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.83",
     "latestDeployedCandidate": "v11.8.0-rc4.83",
     "latestAndroidVerified": "v11.8.0-rc4.82"
   },
@@ -125,7 +125,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.83_ROSTER_UTILITY_CHALLENGER_SOURCE_PENDING_REGRESSION",
+    "status": "RC4.83_SOURCE_STATIC_REGRESSION_VERIFIED_OOS_AGGREGATE_PENDING",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -145,9 +145,11 @@
       "main/gh-pages byte parity PASS for app.js/index.html/sw.js/manifest.webmanifest",
       "README authority synchronized: production rc4.64 vs package rc4.78 vs Android rc4.80 vs current rc4.82 separated",
       "Android rc4.82 badge + Full-v2 selected + green active-panel health + completed roster 1QB/7RB/6WR/1TE + completed-state live suppression PASS",
-      "Fresh Android rc4.82 snapshot PASS: App-Version rc4.82; Panel-Health OK; Expert-v2 Frozen Board provenance; frozen effective weights/no live renormalization; Coach model rc4.82; embedded counts QB5/5 RB4/4 WR5/5 TE4/4"
+      "Fresh Android rc4.82 snapshot PASS: App-Version rc4.82; Panel-Health OK; Expert-v2 Frozen Board provenance; frozen effective weights/no live renormalization; Coach model rc4.82; embedded counts QB5/5 RB4/4 WR5/5 TE4/4",
+      "rc4.83 static draft-critical invariants PASS: version parity, centralized WR6+ late Safety policy, stronger MRU/progressive saturation, no duplicate policy path",
+      "rc4.83 dedicated regression gate + CI workflow added; legacy gate suite retained"
     ],
-    "gate": "RC4.83_REGRESSION_AND_OOS_DECISION_QUALITY_BEFORE_ANDROID",
-    "note": "User clarified rc4.80 final 7RB/6WR roster was materially produced by manual overrides, so end-roster composition is not Coach success evidence. Decision-quality must compare recommendation vs chosen pick. rc4.83 is a bounded challenger only; rc4.82 remains last Android-verified."
+    "gate": "RC4.83_OOS_AGGREGATE_DECISION_QUALITY_BEFORE_DEPLOY_ANDROID",
+    "note": "rc4.83 remains bounded challenger. Static/source regression passes. Do not deploy to Android until aggregate/OOS decision-quality evidence shows fewer saturated-WR false positives without suppressing exceptional WR value."
   }
 }
