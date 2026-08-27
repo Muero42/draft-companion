@@ -235,3 +235,29 @@ Executable policy assertions PASS.
 - rc4.78 is now **PREINSTALL VERIFIED / NOT ANDROID VERIFIED**.
 - Do not call rc4.78 draft-ready or production until the exact candidate is observed on Android and the intended Decision Surface smoke checks pass.
 - AUTO must not stop with a status-only message while autonomous work remains.
+
+
+---
+
+## 2026-08-27 — Fitzmaurice qualitative QB evidence (AMA, user-captured)
+
+Source: direct Pat Fitzmaurice AMA reply captured by user on 2026-08-27. Treat as dated qualitative evidence, separate from numerical expert ranks to prevent double counting.
+
+Pat's three stated QB favorites:
+- Kyler Murray: rebound/value thesis. Pat notes 2025 was first career season outside top-12 QB fantasy points/game; rushing floor plus Justin Jefferson/Jordan Addison and Kevin O'Connell environment.
+- Malik Willis: high-upside rushing thesis. Pat explicitly compares his rushing class to Lamar Jackson, cites ~8.5 fantasy points from rushing in six career starts, and credits passing development under Matt LaFleur. This is the strongest new asymmetric-upside signal and merits targeted validation, not a blind rank boost.
+- Jared Goff: stable-floor/value thesis driven by weapons, potential shootouts from shaky defense, soft/indoor-heavy schedule and multi-year passing production.
+- Pat would like Goff+Willis as stable QB + upside wild card, but notes both share Week 6 bye. For the user's 10-team 1QB strategy this DOES NOT override the hard no-QB2 policy; use it only to understand archetypes before QB1 is selected.
+- Pat's opening “Kyren Murray” is contextually an obvious typo for Kyler Murray; do not create a player/entity from it.
+
+Independent same-day validation:
+- Malik Willis is currently Miami QB1 in current depth-chart reporting and projected starter; this materially strengthens the applicability of Pat's upside thesis.
+- Current public rankings remain much lower on Willis (roughly QB25-26 in a same-day ranking source), so he is a genuine expert-disagreement/high-upside late path rather than consensus QB1.
+- Kyler Murray has independent late-round QB1-upside support; Derek Brown explicitly says the risk is priced into ADP and QB1 upside is not.
+- Goff remains a floor-heavy profile; current Half-PPR ADP evidence places him around pick 139-140 overall, while current rankings can be materially higher (around QB10). Do not mistake stable floor for championship ceiling.
+
+Operational implication:
+- Add/retain a qualitative Fitz evidence flag for Murray/Willis/Goff before QB1 is selected.
+- Do NOT numerically count the AMA thesis as another Fitz ranking input.
+- Willis should receive targeted upside/research consideration, but no player-specific hard forcing.
+- Once QB1 is rostered, rc4.78 one-QB invariant removes all three from the user's Coach candidate surface.
