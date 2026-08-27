@@ -960,3 +960,11 @@ Challenger families to test after current Evidence-v2 analysis: incumbent weight
 - DS weight is explicitly open to redistribution if evidence supports it. Do not assume DS35 is optimal; validate the finished DS Team ranking itself rather than inferring its accuracy solely from individual DS analysts.
 - Preserve incumbent Expert-v2 unchanged. Any improved composition should initially be added as a separate selectable Expert-v3/challenger preset so incumbent remains available for controlled comparison and rollback.
 - Candidate admission remains evidence-first: availability/API access alone never qualifies a source. Weisse may be freshly evaluated; old Weisse/Gianni/Bobal anti-regression lock only prevents unqualified automatic restoration.
+
+
+### 2026-08-27 — Expert-v3 decision gate reached; stop repetitive screening
+- User correctly flagged repeated screening. Broad expert/freshness research is now CLOSED unless a concrete v3 test requires missing data.
+- Current app code already contains a generic FantasyPros expert-directory + verified individual/comparison ranking pipeline (`loadExperts`, `loadExpertRanks`, `fetchMultiSourceExpertRanking`, compare reconstruction). Therefore no new acquisition architecture is needed for Weisse/Wolf/Todd/Wright; use existing pipeline when generating v3.
+- Fresh public verification: Weisse has current 2026 Half-PPR Overall 08/24 and RB 08/22; Wolf has current 2026 Half-PPR Overall 08/24 and TE 08/25. These are sufficient to proceed to challenger construction; do not re-check their existence/freshness repeatedly.
+- Primary v3 candidate roles remain RB Weisse; TE Wolf (+ Weisse only as secondary challenger); QB Todd D Clark; WR Wright only if existing pipeline resolves a current complete ranking, otherwise keep incumbent WR rather than force addition.
+- Next substantive deliverable must be a concrete Expert-v3 composition/weight challenger and controlled comparison against frozen Expert-v2, or a precise unavoidable data blocker. Do not return another candidate-screening summary.
