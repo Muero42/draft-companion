@@ -1163,7 +1163,7 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,rankedAvai
   const evidenceCutoff=Date.now();
   rows.push({
     id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
-    modelVersion:'v11.8.0-rc4.76',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},managerLiveStateSnapshot:JSON.parse(JSON.stringify(LIVE_MANAGER_ADAPTATION_STATE)),rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
+    modelVersion:'v11.8.0-rc4.77',researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},managerLiveStateSnapshot:JSON.parse(JSON.stringify(LIVE_MANAGER_ADAPTATION_STATE)),rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>({pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     // Full frozen skill-player pool makes post-mock counterfactuals reproducible without
@@ -1372,7 +1372,7 @@ function buildEmergencyQueueText(scored,state,current,draftId){
   }
   const lines=[
     '===== PITTI EMERGENCY SLEEPER QUEUE =====',
-    'App-Version: v11.8.0-rc4.76',
+    'App-Version: v11.8.0-rc4.77',
     `Draft-ID: ${draftId}`,
     `Stand: Pick ${current}`,
     'Nur manueller Sleeper-Queue-Fallback; keine API-/Import-Automation.',
@@ -1478,7 +1478,7 @@ function researchBadgesHtml(x){
 function pittiFantasyRole(p,players){
  const pos=String(p?.pos||'').toUpperCase(),team=String(p?.team||'').toUpperCase();if(!['QB','RB','WR','TE'].includes(pos))return pos||'?';const same=[];for(const q of Object.values(players||{})){if(String(q?.team||'').toUpperCase()!==team||String(q?.position||'').toUpperCase()!==pos)continue;const name=q?.full_name||[q?.first_name,q?.last_name].filter(Boolean).join(' ');if(!name)continue;const r=rankFor(name,pos),sr=Number(q?.search_rank);if(r&&Number.isFinite(r.rank))same.push({name,rank:r.rank,sr});}same.sort((a,b)=>a.rank-b.rank||(a.sr||9999)-(b.sr||9999));const i=same.findIndex(q=>norm(q.name)===norm(p?.name));if(i>=0)return pos+(i+1);const d=Number(p?.depthOrder);return Number.isFinite(d)&&d>=1&&d<=6?pos+Math.round(d):pos;}
 function pittiResearchArrows(x){const rr=x?.researchResidual;if(!rr?.active||!Array.isArray(rr.components))return'';const eligible=c=>{const k=String(c?.kind||'').toLowerCase();return /(ascension|upside|ceiling|talent|efficiency|role_environment|elite_rookie_role|elite_role|decline_tail|decline_risk|regression)/.test(k)&&!/(injury|ankle|achilles|recurrence)/.test(k)};const c=rr.components.filter(c=>Number(c.dir)!==0&&eligible(c)).sort((a,b)=>Number(b.strength||0)*Number(b.confidence||0)-Number(a.strength||0)*Number(a.confidence||0))[0];if(!c)return'';const s=Number(c.strength||0)*Number(c.confidence||0),up=Number(c.dir)>0;return s>=.58?(up?'↑↑':'↓↓'):s>=.30?(up?'↑':'↓'):'';}
-window.PITTI_LIVE_DECISION_STATE=()=>{const c=lastDraftContext;if(!c?.scored)return null;const rows=visibleCoachCandidates(c.scored).filter(x=>!x.hardExcluded&&!x.recommendationBlocked).slice(0,10);return{version:'v11.8.0-rc4.76',current:c.current,next:c.next,rows:rows.map(x=>({name:x.p.name,pos:x.p.pos,team:x.p.team,injury:x.p.injury||null,panel:x.r.rank,individual:x.r.individual||[],adp:Number.isFinite(x.a)?x.a:null,ret:x.ret,returnConfidence:x.returnConfidence,confidence:x.confidence,score:x.score,action:x.action,loss:x.loss,outsideNormalCut:!!x.outsideNormalCut,role:pittiFantasyRole(x.p,c.players),arrows:pittiResearchArrows(x),reasons:Array.isArray(x.reasons)?x.reasons.slice():[],researchResidual:x.researchResidual||null}))};};
+window.PITTI_LIVE_DECISION_STATE=()=>{const c=lastDraftContext;if(!c?.scored)return null;const rows=visibleCoachCandidates(c.scored).filter(x=>!x.hardExcluded&&!x.recommendationBlocked).slice(0,10);return{version:'v11.8.0-rc4.77',current:c.current,next:c.next,rows:rows.map(x=>({name:x.p.name,pos:x.p.pos,team:x.p.team,injury:x.p.injury||null,panel:x.r.rank,individual:x.r.individual||[],adp:Number.isFinite(x.a)?x.a:null,ret:x.ret,returnConfidence:x.returnConfidence,confidence:x.confidence,score:x.score,action:x.action,loss:x.loss,outsideNormalCut:!!x.outsideNormalCut,role:pittiFantasyRole(x.p,c.players),arrows:pittiResearchArrows(x),reasons:Array.isArray(x.reasons)?x.reasons.slice():[],researchResidual:x.researchResidual||null}))};};
 
 function renderCoach(rows,state,current,next){
   const top=visibleCoachCandidates(rows);
@@ -1815,6 +1815,14 @@ async function syncWatcherFeed(){
 const RESEARCH_RESIDUAL_MODEL_VERSION='shadow-v2.0';
 const RESEARCH_PRIOR_EXPIRY=Date.parse('2026-08-24T00:00:00Z');
 const RESEARCH_RESIDUAL_PRIORS={
+  [norm('Jahmyr Gibbs')]:{pos:'RB',expiresAt:Date.parse('2026-09-02T12:00:00Z'),components:[{kind:'consistency',dir:0,strength:1,confidence:.95,display:true,causal:'Einziger RB mit mindestens 21 PPR-Punkten/Spiel in beiden letzten Saisons; dazu 500+ Receiving-Yards im Zweijahresfenster',invalidator:'Rollen- oder Effizienzbruch'}]},
+  [norm('Bijan Robinson')]:{pos:'RB',expiresAt:Date.parse('2026-09-02T12:00:00Z'),components:[{kind:'dual_threat_elite',dir:0,strength:1,confidence:.95,display:true,causal:'Elite Dual-Threat-Profil: 2025 Top-3 bei Target Share, YPRR, Missed Tackles und Yards after Contact; zusätzlicher Goal-Line-Pfad 2026',invalidator:'unerwartete Rollenbegrenzung'}]},
+  [norm("Ja'Marr Chase")]:{pos:'WR',expiresAt:Date.parse('2026-09-02T12:00:00Z'),components:[{kind:'elite_target_qb',dir:0,strength:1,confidence:.95,display:true,causal:'Bewährte WR-Elite mit Joe Burrow: 185 Targets sowie 125-1.412-8 in 2025',invalidator:'Knieproblem verschärft sich'}]},
+  [norm('Puka Nacua')]:{pos:'WR',expiresAt:Date.parse('2026-09-02T12:00:00Z'),components:[{kind:'elite_volume',dir:0,strength:1,confidence:.95,display:true,causal:'Extremes Volumen/Floor: 129 Receptions und 1.715 Receiving-Yards in 2025',invalidator:'gesundheitliche Einschränkung oder deutlicher Rollenverlust'}]},
+  [norm('Jonathan Taylor')]:{pos:'RB',expiresAt:Date.parse('2026-09-02T12:00:00Z'),components:[{kind:'workhorse_volume',dir:0,strength:1,confidence:.95,display:true,causal:'Bewährtes Workhorse: 2025 #1 Snap Share, #2 Opportunity Share und #2 Red-Zone-Touches unter RBs',invalidator:'Colts-Offense/Quarterback limitiert Effizienz deutlich'}]},
+  [norm('Jaxon Smith-Njigba')]:{pos:'WR',expiresAt:Date.parse('2026-09-02T12:00:00Z'),components:[{kind:'elite_target_share',dir:0,strength:1,confidence:.95,display:true,causal:'2025 Elite-Volumen: 119-1.793-10, 32,6% Target Share und 44,6% First-Read Share',invalidator:'deutlich geringere Nutzung nach Coordinator-Wechsel'}]},
+  [norm('Amon-Ra St. Brown')]:{pos:'WR',expiresAt:Date.parse('2026-09-02T12:00:00Z'),components:[{kind:'consistency',dir:0,strength:1,confidence:.97,display:true,causal:'Elite-Konstanz: drei Jahre in Folge mindestens 1.250 Yards und 141 Targets; 172 Targets in 2025',invalidator:'unerwarteter Rollen- oder QB-Einbruch'}]},
+
   [norm('Parker Washington')]:{pos:'WR',expiresAt:Date.parse('2026-09-01T12:00:00Z'),components:[{kind:'ascension',dir:1,strength:.82,confidence:.78,pricing:'PARTLY_PRICED',causal:'WR2 mit WR1-Upside · 2025 Effizienz + Vollzeit-Slot/Target-Pfad',invalidator:'route share falls behind healthy target competition'}]},
   [norm('Jalen Coker')]:{pos:'WR',components:[{kind:'ascension',dir:1,strength:.72,confidence:.72,pricing:'PARTLY_PRICED',causal:'strong healthy-sample production + established Carolina WR2 role + Year-3 breakout window',invalidator:'route share falls materially or Bryce Young/pass-volume ceiling persists'}]},
   [norm('Zay Flowers')]:{pos:'WR',components:[{kind:'ascension',dir:1,strength:.68,confidence:.78,pricing:'LIKELY_PRICED',causal:'career-high efficiency/target share + vacated targets + explicit expanded-usage plan',invalidator:'red-zone role and pass volume remain capped'}]},
@@ -1855,7 +1863,7 @@ function researchResidualShadow(p,r,a,current,cutoff=Infinity){
   const components=[];
   if(prior&&prior.pos===p.pos&&now<priorExpiry)components.push(...prior.components.map(x=>({...x,source:'2026-prior'})));
   components.push(...structuredResidualComponents(p,cutoff));
-  if(!components.length)return{model:RESEARCH_RESIDUAL_MODEL_VERSION,delta:0,active:false,components:[],expired:Boolean(prior&&now>=priorExpiry)};
+  if(!components.length)return{model:RESEARCH_RESIDUAL_MODEL_VERSION,delta:0,active:false,displayActive:false,components:[],expired:Boolean(prior&&now>=priorExpiry)};
   let raw=0;const used=[];
   for(const c of components){
     let pricing=researchPricingFactor(c.pricing);
@@ -1873,7 +1881,7 @@ function researchResidualShadow(p,r,a,current,cutoff=Infinity){
     raw+=contribution;used.push({...c,pricingFactor:Number(pricing.toFixed(3)),contribution:Number(contribution.toFixed(3))});
   }
   const cap=researchResidualCap(current),delta=clamp(raw*3.0,-cap,cap);
-  return{model:RESEARCH_RESIDUAL_MODEL_VERSION,delta:Number(delta.toFixed(2)),raw:Number(raw.toFixed(3)),cap,active:Math.abs(delta)>=.05,components:used,expiresAt:prior?priorExpiry:null};
+  return{model:RESEARCH_RESIDUAL_MODEL_VERSION,delta:Number(delta.toFixed(2)),raw:Number(raw.toFixed(3)),cap,active:Math.abs(delta)>=.05,displayActive:used.some(x=>x.display===true),components:used,expiresAt:prior?priorExpiry:null};
 }
 function assignResearchShadowScores(rows,current){
   const clones=rows.map(x=>({...x,reasons:[...(x.reasons||[])],rawScore:x.rawScore+Number(x.researchResidual?.delta||0)}));
@@ -2052,7 +2060,7 @@ async function refresh(){
 
     const lines=[
       '===== SLEEPER DRAFT SNAPSHOT =====',
-      'App-Version: v11.8.0-rc4.76',
+      'App-Version: v11.8.0-rc4.77',
       `Draft-ID: ${id}`,
       `Status: ${draft.status}`,
       `Teams: ${teams} | Runden: ${rounds} | Mein Slot: ${slot}`,
@@ -2074,7 +2082,7 @@ async function refresh(){
       `Kandidatenpool: max. 230 ohne K/DST · QB 30 · RB 90 · WR 80 · TE 30 · Auswahl ausschließlich aus Expertenrankings`,
       `Overall-Ränge: Originalwerte inkl. K/DST-Einfluss; K/DST werden erst NACH der Ranking-Rekonstruktion aus dem Draftpool entfernt`,
       `Panel-Gewichte: pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert`,
-      `Coach-Modell: v11.8.0-rc4.76 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
+      `Coach-Modell: v11.8.0-rc4.77 Return-v2 · Strategie ${strategyLabel(strategy)} · Modus ${mode} · Stress ${stressLabel(stress)} · Panel-first · Return + Gegnerroster + plausible Abnehmer${managerProfilesActive(mode,els.season.value,teams)?' + Manager-Layer':''} · Loss-if-Gone`,
       ...(mode==='live'?[`Manager-Live-Adaption: ${liveManagerDiagnostics()}`]:[]),
       ...(mode==='live'&&rv2?.collisions?(()=>{
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
