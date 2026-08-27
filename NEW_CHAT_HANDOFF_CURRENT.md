@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260827T172500Z-v112`
-Updated: 2026-08-27 17:25Z
+Handoff generation: `20260827T173500Z-v113`
+Updated: 2026-08-27 17:35Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -162,3 +162,10 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - This prevents future cleanup of historical prose from falsely breaking a valid takeover.
 - rc4.83 remains frozen; slot-9 realistic Evidence-v2 remains the experiment gate; Jeanty-affected rows remain a separate acute-status confound.
 - No runtime/kernel/expert-weight/Return-v2 change.
+
+
+## V113 PRE-DRAFT FRESHNESS CANARY
+- New non-runtime gate: `tools/pre-draft-freshness-gate.mjs`.
+- Before the real draft/live promotion, blocking acute-status entries must be refreshed within the configured age window; default 2 days. The currently frozen Jeanty overlay dated 24.08. will intentionally fail an Aug-31 gate unless reviewed/updated.
+- This safeguard is outside rc4.83 runtime and does not contaminate the OOS experiment.
+- External OOS gate remains realistic rc4.83 slot-9 mock -> refresh -> Evidence-v2 export.
