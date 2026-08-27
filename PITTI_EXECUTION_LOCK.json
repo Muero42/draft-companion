@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T12:55:00Z",
+  "updatedAt": "2026-08-27T13:05:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -14,7 +14,7 @@
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.80",
+    "latestAndroidObserved": "v11.8.0-rc4.82",
     "latestPreinstallVerified": "v11.8.0-rc4.78",
     "latestResearchChallenger": "v11.8.0-rc4.82",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip",
@@ -124,7 +124,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.82_DEPLOYED_SOURCE_REGRESSION_PASS_ANDROID_PENDING",
+    "status": "RC4.82_ANDROID_VISIBLE_HEALTH_PASS_SNAPSHOT_METADATA_PENDING",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -141,9 +141,10 @@
       "release/completeness static invariants PASS",
       "Expert-v2 board weights/counts/order invariants PASS",
       "main/gh-pages byte parity PASS for app.js/index.html/sw.js/manifest.webmanifest",
-      "README authority synchronized: production rc4.64 vs package rc4.78 vs Android rc4.80 vs current rc4.82 separated"
+      "README authority synchronized: production rc4.64 vs package rc4.78 vs Android rc4.80 vs current rc4.82 separated",
+      "Android rc4.82 badge + Full-v2 selected + green active-panel health + completed roster 1QB/7RB/6WR/1TE + completed-state live suppression PASS"
     ],
-    "gate": "ANDROID_RC4.82_VERSION_PLUS_ACTIVE_PANEL_HEALTH_AND_SNAPSHOT_PROVENANCE_SMOKE",
-    "note": "latestPreinstallVerified remains rc4.78 because rc4.80 was Android-deployed but no new packaged/re-extracted preinstall ZIP was created; do not conflate deployment with package verification."
+    "gate": "FRESH_RC4.82_SNAPSHOT_METADATA_PROVENANCE_SMOKE_ONLY",
+    "note": "Android visible health gate passed. Full Android verification remains fail-closed until one fresh rc4.82 snapshot confirms APP_VERSION plus Frozen Expert-v2 provenance/weight wording. No additional full mock required."
   }
 }
