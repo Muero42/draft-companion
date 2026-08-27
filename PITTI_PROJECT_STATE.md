@@ -918,3 +918,11 @@ Fresh same-day research added without mutating active rc4.84 runtime:
 - Alec Pierce: conditional alpha-role/health ↑ after Aug-27 PUP activation, 4y/$114m commitment and Pittman trade; Week-1 route readiness remains required.
 - Coverage protocol now requires every top-120 draft-relevant WR/RB/TE to receive an Opportunity/Ceiling record, including explicit NO_ARROW outcomes.
 - Freshness split into ACUTE <=24h, CAMP_ROLE <=48h, STRUCTURAL and PERFORMANCE; blanket expiry must not silently erase durable evidence.
+
+
+### 2026-08-27 20:54 CEST — Upside v3 same-day adversarial research pass
+Fresh same-day/last-week sources were checked for WR/RB/TE upside and counter-theses. Material refinement: ↑↑ is explicitly residual-value, not raw ceiling. Parker Washington has credible current counter-evidence (late-2025 eruption benefited from BTJ/Hunter availability context), so his initial ↑↑ confidence is reduced pending healthy-depth-chart first-read/route evidence. Carnell Tate likewise requires price-state check because current market has both breakout and fade theses. Mike Washington Jr. must refresh both Jeanty status and ADP because the market is already reacting. Isaiah Likely thesis strengthened by current TE-tier analysis; Warren remains health-gated.
+
+Coverage audit after current mock is now specified for top ~120 WR/RB/TE with positive thesis + strongest counter-thesis + events-needed + pricing + invalidator + explicit expiry. No arrow can be promoted from a single sleeper article.
+
+No rc4.84 runtime mutation.
