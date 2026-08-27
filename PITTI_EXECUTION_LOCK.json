@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T15:45:00Z",
+  "updatedAt": "2026-08-27T16:05:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -125,7 +125,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.83_BOUNDED_CHALLENGER_DECISION_TELEMETRY_READY",
+    "status": "RC4.83_DEPLOYED_TEST_CANDIDATE_ONE_TAP_EVIDENCE_READY_ANDROID_MOCK_PENDING",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -149,9 +149,11 @@
       "rc4.83 static draft-critical invariants PASS: version parity, centralized WR6+ late Safety policy, stronger MRU/progressive saturation, no duplicate policy path",
       "rc4.83 dedicated regression gate + CI workflow added; legacy gate suite retained",
       "rc4.83 interaction audit: initial saturation stack rejected as too cap-like; bounded stack now soft and stage-aware",
-      "decision fixture outcome telemetry added + backward backfill for already-resolved fixtures"
+      "decision fixture outcome telemetry added + backward backfill for already-resolved fixtures",
+      "one-tap current-draft PITTI-Decision-Evidence export added; includes frozen fixtures, resolved picks, overrides and Coach-vs-choice outcome fields",
+      "main/gh-pages parity PASS for app/index/decision-policy/sw/manifest after rc4.83 evidence export"
     ],
-    "gate": "RC4.83_REALISTIC_MOCK_DECISION_FIXTURES_REQUIRED_FOR_PROMOTION",
-    "note": "No reliable historical rc4.80 per-pick Coach-vs-choice telemetry is recoverable from repo; do not reconstruct from final roster. rc4.83 now records/backfills decisionOutcome automatically. Android rc4.82 remains authority until a realistic mock supplies direct recommendation-vs-choice evidence."
+    "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_ONE_TAP_DECISION_EVIDENCE_EXPORT",
+    "note": "rc4.83 is deployed only as a test candidate; rc4.82 remains last fully Android-verified authority. User need not document picks manually. After realistic mock, refresh once so final chosen pick resolves, then use Pick-Evidenz exportieren and share JSON."
   }
 }
