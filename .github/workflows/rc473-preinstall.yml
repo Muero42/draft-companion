@@ -1,0 +1,64 @@
+name: rc4.73 preinstall gate
+on:
+  push:
+    branches: [pitti-auto/rc4.73-preinstall]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preinstall:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax
+        run: |
+          node --check app.js
+          node --check live-surface-v3.js
+          node --check expert-v2-board.js
+          node --check tools/release-completeness-guard.mjs
+      - name: Release completeness
+        run: node tools/release-completeness-guard.mjs
+      - name: rc4.72 zero-candidate regression
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),vm=require('vm');
+          const a=fs.readFileSync('app.js','utf8');
+          if(a.includes('.filter(x=>x.r&&panelHasVerifiedExperts(x.r.panelId))')) throw Error('old downstream member gate still active');
+          if(!a.includes('.filter(x=>x.r&&panelSelectable(x.r.panelId))')) throw Error('shared selectable gate missing downstream');
+          if(!a.includes("if(/^expert-v2-(qb|rb|wr|te)$/.test(id))return true")) throw Error('Expert-v2 selectable semantics missing');
+          const c={window:{}};vm.createContext(c);vm.runInContext(fs.readFileSync('expert-v2-board.js','utf8'),c);
+          const b=c.window.PITTI_EXPERT_V2;if(!b||b.schema!=='pitti-expert-v2-board.v4')throw Error('board missing');
+          for(const p of ['QB','RB','WR','TE']) if(!(b.rows[p]||[]).length) throw Error(p+' empty');
+          console.log('RC472_ZERO_CANDIDATE_REGRESSION_PASS');
+          NODE
+      - name: Existing decision regressions
+        run: |
+          node Draft_Companion_Position_Path_Regression_2026-08-13.js
+          node Draft_Companion_Player_Quality_Expert_Health_Regression_2026-08-13.js
+          node Draft_Companion_Return_Geometry_Market_Regression_2026-08-13.js
+          node Draft_Companion_Scarcity_Double_Count_Regression_2026-08-13.js
+          node Draft_Companion_Alternative_Scarcity_Regression_2026-08-13.js
+          node Draft_Companion_Dress_Rehearsal_Regression_2026-08-14.js
+      - name: Package actual runtime
+        run: |
+          mkdir -p dist/runtime
+          cp index.html app.js styles.css manifest.webmanifest sw.js _worker.js icon.svg live-surface-v3.js live-surface-v3.css expert-board-export.js expert-v2-board.js dist/runtime/
+          (cd dist/runtime && zip -q ../Draft_Companion_v11.8.0-rc4.73_PREINSTALL.zip *)
+          unzip -t dist/Draft_Companion_v11.8.0-rc4.73_PREINSTALL.zip
+          test "$(unzip -Z1 dist/Draft_Companion_v11.8.0-rc4.73_PREINSTALL.zip | wc -l)" -eq 11
+          rm -rf dist/reextract && mkdir dist/reextract
+          unzip -q dist/Draft_Companion_v11.8.0-rc4.73_PREINSTALL.zip -d dist/reextract
+          (cd dist/reextract && node --check app.js && node --check live-surface-v3.js && node --check expert-v2-board.js)
+          sha256sum dist/Draft_Companion_v11.8.0-rc4.73_PREINSTALL.zip | tee dist/rc473.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Draft_Companion_v11.8.0-rc4.73_PREINSTALL
+          path: |
+            dist/Draft_Companion_v11.8.0-rc4.73_PREINSTALL.zip
+            dist/rc473.sha256
+          retention-days: 7
