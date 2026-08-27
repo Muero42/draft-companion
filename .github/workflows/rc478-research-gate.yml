@@ -2,7 +2,7 @@ name: rc4.78 research gate
 on:
   push:
     branches:
-      - pitti-auto/rc4.78-roster-option-value
+      - pitti-auto/rc4.78-clean-promotion
   workflow_dispatch:
 jobs:
   static-gate:
@@ -13,21 +13,26 @@ jobs:
         with:
           node-version: '22'
       - name: JavaScript syntax
-        run: node --check app.js && node --check sw.js && node --check live-surface-v3.js
+        run: node --check app.js && node --check decision-policy.js && node --check sw.js && node --check live-surface-v3.js
+      - name: Executable OOS roster-policy gate
+        run: node tools/rc478-oos-policy.mjs
+      - name: PITTI authority guardrail
+        run: node tools/pitti_guardrail_check.mjs
       - name: rc4.78 invariant gate
         shell: python
         run: |
           from pathlib import Path
           app=Path("app.js").read_text()
+          policy=Path("decision-policy.js").read_text()
           idx=Path("index.html").read_text()
           sw=Path("sw.js").read_text()
           man=Path("manifest.webmanifest").read_text()
           readme=Path("README.md").read_text()
           required=[
-            ("one-QB constant","const USER_DRAFT_QB_LIMIT=1;",app),
+            ("one-QB constant","const USER_DRAFT_QB_LIMIT=1;",policy),
             ("QB2 hard user exclusion","userStrategyExcluded:true",app),
             ("QB2 filtered coach surface","filter(x=>x.r&&!x.userStrategyExcluded)",app),
-            ("WR7 safety guard","current-x.a>=10",app),
+            ("WR7 safety guard","Number(current)-Number(adp)>=10",policy),
             ("embedded v2 health","function embeddedPanelExpertNames",app),
             ("snapshot v2 source helper","activePanelSourceLines(usedPanelIds)",app),
             ("snapshot v2 provenance","globalThis.PITTI_EXPERT_V2?.source",app),
