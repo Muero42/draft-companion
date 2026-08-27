@@ -1,7 +1,7 @@
 name: PITTI release contract v2
 on:
   push:
-    branches: [pitti-auto/rc4.78-clean-promotion]
+    branches: [main]
   workflow_dispatch:
 jobs:
   behavioral-contract:
@@ -22,3 +22,4 @@ jobs:
           node tools/live-presentation-behavior.mjs
           node tools/rc478-oos-policy.mjs
           node tools/pitti_guardrail_check.mjs
+          node tools/rc482-draft-critical.mjs
