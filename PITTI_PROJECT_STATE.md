@@ -544,3 +544,14 @@ Performed the required parallel inventory instead of stopping at the OOS gate.
 - Post-draft/FA audit: bench review remains separate from Add/Drop; contingent RB capital is protected; CLEAR ADD requires a concrete materially better free agent plus fresh actionable evidence. No speculative FAAB amount is emitted.
 - Watcher integration audit: automatic ingestion is fail-closed unless the expected feed schema and overall PASS gate are present; unavailable feed leaves the existing cache unchanged.
 - No Decision-Kernel coefficients changed. Remaining improvements in these lanes are verification/data dependent rather than safe scoring changes.
+
+
+### 2026-08-27 PITTI AUTO — independent QB1 market/expert cross-check while rc4.83 kernel frozen
+- Used fresh public draft rankings only as independent strategy evidence; no rc4.83 scoring coefficient or frozen OOS hypothesis was changed.
+- Andrew Erickson's Aug-26 QB board independently matches his direct answer: Herbert QB4, Caleb QB7, Lawrence QB8. Pat Fitzmaurice has the same trio QB8/QB7/QB9 respectively. Current 3-expert FantasyPros consensus places Herbert/Caleb/Lawrence QB7/QB8/QB9.
+- Independent RotoBaller Aug-2026 board also clusters Herbert/Caleb/Lawrence QB7/QB8/QB9, while Goff is QB16, Kyler QB18 and Malik Willis QB21. This strengthens the interpretation that Herbert/Caleb/Lawrence are the primary mid-round upside QB1 tier, whereas Goff/Murray/Willis are later price-dependent fallback/challenger paths rather than interchangeable targets.
+- Week-1 evidence available publicly is supportive of Herbert/Caleb/Lawrence as immediately startable (FantasyPros weekly consensus QB5/QB9/QB10), reducing the case for preferring a lower-upside floor QB solely to avoid Week-1 uncertainty if one of the trio is available at acceptable opportunity cost.
+- Do NOT double-count Erickson/Fitz rankings plus their direct qualitative answers as separate numeric expert votes. Use direct answers as thesis/context and frozen Expert-v2 ranks as numeric panel evidence.
+- User one-QB invariant remains absolute: once QB1 is selected, all other QBs become draft-surface exclusions; Willis becomes FA/watchlist only.
+- Practical validation target for Evidence-v2: test whether rc4.83 recognizes Herbert/Caleb/Lawrence at market-appropriate opportunity cost before falling through to Goff/Murray/Willis, while still allowing continued waiting when RB/WR/TE option value dominates.
+- Primary rc4.83 OOS gate remains unchanged and uncontaminated.
