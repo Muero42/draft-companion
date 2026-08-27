@@ -339,3 +339,14 @@ Coach implication:
   * Willis: preferred very-late/last-pick QB1 when Murray/Goff cost materially more, or FA watch after drafting either safer QB.
 - Because all three currently have Week 6 byes, bye-week differences do not decide among them.
 - Hard one-QB rule unchanged. No Goff+Willis or Murray+Willis draft pairing.
+
+
+### 2026-08-27 PITTI AUTO — Willis risk calibration corrected
+- Fresh recency-7 web check confirms Miami is evaluating the backup QB role behind starter Malik Willis; therefore job-security is not the main Week-1 concern.
+- Same-day market evidence materially improves the price picture: recent Sleeper-derived Half-PPR ADP is Murray 144.6 and Goff 139.2; in recent 10-team PPR samples Murray ~138 and Goff ~128.4. Both can therefore reach the user's late turns more often than a generic Round-10/11 assumption suggests.
+- Independent same-day rank source remains much more bullish on Murray/Goff (Murray QB5, Goff QB10) than Willis (QB26), confirming genuine disagreement rather than a simple consensus sleeper.
+- Goff's 2025 production (4,564 pass yards, 34 TD, 8 INT) and camp comfort in the new offense support floor, but essentially zero rushing means his ceiling remains passing/TD dependent.
+- Willis' only 2026 preseason action to date was deliberately light (4/5, 43 pass yards; 2 rushes, 9 yards) and he sat the second game; that is insufficient to validate weekly fantasy floor.
+- Corrected prior calibration in app: Willis qualitative residual reduced from .78/.88 to .72/.90 and causal text now separates confirmed starter status from unproven Week-1 fantasy floor. Invalidators explicitly include designed/read-option/red-zone rushing, sack/turnover behavior and passing efficiency.
+- This is a calibration, not a reversal: Willis remains the highest asymmetric very-late QB bet; Murray/Goff remain preferable when their actual acquisition cost is sufficiently close.
+- No QB2 draft; if Murray/Goff is selected, Willis moves to high-priority FA watch.
