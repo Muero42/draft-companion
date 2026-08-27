@@ -467,3 +467,15 @@ This snapshot is also a direct canary for rc4.82 Android verification: after rel
 ### 2026-08-27 Android gate — rc4.82 visible
 User reloaded Android and supplied screenshot. Badge visibly shows v11.8.0-rc4.82. Top cards show FantasyPros Online, Rankings 33 Min., Sleeper Draft 1029, Coach bereit. Expert configuration visibly selected: Expert-v2 · alle Positionen. This closes the version-badge/reload portion of the rc4.82 Android gate.
 Screenshot does NOT include the lower Draftbereit/Panel-Health line, so Full-v2 health/provenance semantics remain device-unverified. Next minimal verification: scroll slightly below expert configuration until Draftbereit/Panel-Health status is visible, or produce a fresh snapshot if that exposes corrected metadata/health/provenance more efficiently.
+
+
+### 2026-08-27 Android gate — rc4.82 PASS for visible Full-v2 health + roster rendering
+Second Android evidence supplied after refresh:
+- badge still v11.8.0-rc4.82;
+- selected Expert-v2 · alle Positionen;
+- former amber/degraded banner is now green: "Alles aktuell: Experten, Panels, Rankings, Sleeper-Spielerdaten und 1029 Sleeper-ADPs (Sleeper Draft ADP (half-PPR))."
+- Coach bereit = Bereit;
+- completed draft renders roster counts correctly: QB 1 / RB 7 / WR 6 / TE 1 and Fertig;
+- completed-state card suppresses further live recommendations as intended.
+Thus the user-visible false-DEGRADED regression seen in rc4.80 is fixed on Android rc4.82.
+Remaining narrow metadata/provenance verification: a fresh rc4.82 snapshot should be checked once for App-Version=rc4.82 and corrected Frozen Expert-v2 provenance/weight wording. No need for another full mock merely for this check.
