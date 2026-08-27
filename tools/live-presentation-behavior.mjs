@@ -65,6 +65,8 @@ const renderedSpecific=specific.map((x,i)=>p.plus(x,i));
 assert(new Set(renderedSpecific).size===specific.length,'specific evidence collapsed into generic repeated prose: '+renderedSpecific.join(' || '));
 assert(renderedSpecific[2].includes('Workhorse'),'Taylor advantage missing');
 assert(renderedSpecific[3].includes('Elite-Konstanz'),'Amon-Ra advantage missing');
+assert(p.keyword(specific[2],5).includes('WORKHORSE'),'Taylor Top-10 trait missing');
+assert(p.keyword(specific[3],7).includes('KONSTANZ'),'Amon-Ra Top-10 trait missing');
 assert(!renderedSpecific.slice(0,2).every(x=>x.includes('Expertenkonsens Top-5')),'Gibbs/Bijan still generic consensus');
 
 console.log('LIVE_PRESENTATION_BEHAVIOR_PASS');
