@@ -1,11 +1,22 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Produktions-/Default-Branch-Baseline:** v11.8.0-rc4.64.  
-> **Letzter vollständig off-device geprüfter pre-install Kandidat:** v11.8.0-rc4.77 · Release Contract v2.  
-> **Aktueller Research-Challenger:** v11.8.0-rc4.78 auf isoliertem Branch; NICHT promoted, NICHT Android-ready.  
-> **Android-Status:** rc4.74/rc4.75 verworfen; rc4.76 Android-verifiziert mit unzureichender Decision-Quality; rc4.77/rc4.78 nicht Android-verifiziert.
+> **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
+> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.78 · SHA-256 `69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba`.  
+> **Letzter Android-verifizierter Kandidat:** v11.8.0-rc4.80 (Decision Surface + Expert-v2 Health auf Android PASS).  
+> **Aktueller Draft-Critical Kandidat:** v11.8.0-rc4.82 auf `main`; Source-/Regression-Gates PASS, Android-Verifikation noch ausstehend.  
 >
-> RC-Freigabe verlangt ZIP-Re-Extract, Regressionen und semantischen Render-Gate. README-Drift ist ein Release-Gate.
+> Built/source-verified, packaged/re-extracted, deployed und Android-verified sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
+
+### rc4.82 — profile-aware health / metadata integrity candidate
+- Keine Decision-/Return-v2-Retunings gegenüber rc4.80.
+- Runtime-Version wird in `app.js` zentral aus `APP_VERSION` abgeleitet; Snapshot, Emergency Queue, Decision-State und Backup dürfen keine veralteten RC-Strings mehr tragen.
+- Active Panel Health bewertet jetzt das **tatsächlich ausgewählte Profil**: Full-v2 vollständig eingebettet, WR-v2 als Hybrid aus eingebettetem WR-Board + Live-QB/RB/TE, Incumbent vollständig live.
+- Ein degradiertes Live-Teilpanel im Hybridprofil darf nicht durch vorhandene Expert-v2-Stimmen verdeckt werden.
+- Snapshot-Provenienz und Gewichtserklärung sind profilabhängig: Frozen Expert-v2 Board vs. Live-Multi-Source-Pipeline vs. Hybrid.
+- Drei Profile bleiben verpflichtend auswählbar; Brown bleibt aus v2 ausgeschlossen; Erickson bleibt Challenger ohne numerisches v2-Votum.
+- User-Strategie bleibt exakt ein QB; WR7+-Safety bleibt roster-aware ohne WR-Cap; TE2 bleibt nur Soft-/Exceptional-Value-Pfad.
+- Draft-critical Regression `tools/rc482-draft-critical.mjs` schützt diese Semantik dauerhaft.
+- Source-/Legacy-/Return-/UI-Gates PASS; Android-Gate steht noch aus.
 
 ### rc4.78 — OOS roster/option-value research challenger
 - User-Draftpfad: nach QB1 kein QB2 auf der Coach-Oberfläche; Gegner-/Return-Modell bleibt unverändert.
