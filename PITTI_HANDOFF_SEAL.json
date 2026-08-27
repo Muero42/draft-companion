@@ -1,0 +1,60 @@
+{
+  "schema": "pitti.handoff-seal.v1",
+  "handoff_generation": "20260827T154300Z-v106",
+  "created_at": "2026-08-27T15:43:00Z",
+  "status": "PASS",
+  "handoff_ready": true,
+  "second_pass_pass": true,
+  "integrity_algorithm": "git_blob_sha1",
+  "integrity": {
+    "PITTI_CURRENT_STATE.json": "7725744cd28ab484e6e6ae1968b1752c6fa1b96c",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "a2f643967e85a785334864f1b06fa87b2df7e5f0",
+    "PITTI_COMMAND_CONTRACTS.json": "e0b78115fa09f152355de7db356aaa9c033bdc3e",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "5f01c7a4d29b5949db6c10c75b89854ee0b50c39",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "1c0746df003a20ea9bd08fdf5e0cc0b39a24a62a",
+    "PITTI_EXECUTION_LOCK.json": "4c4a189c2a9014b1d1b16fe5ab834a24e57bc17f",
+    "PITTI_PROJECT_STATE.md": "2eb7877e18cfca1ffa272e083eb2c8ba28d9e135",
+    "PITTI_AUTO_PREFLIGHT.md": "6455e8743bbe92c8787dd0be21f808aae8de8d6c",
+    "app.js": "c9139d0efe9545326ece4a8936ff51dfa7938878",
+    "index.html": "9f4c9ad2cbc98a13770736c6407e9ddda96832f0",
+    "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
+    "sw.js": "c9ac5a6d821fda9f393964a6dc42d7254240444d",
+    "manifest.webmanifest": "0c02f7bb0ad65c47001afbcda40409186f1b1168",
+    "tools/rc483-draft-critical.mjs": "eaba9734e1baad3338f8f1eb5995c8b28279b3c6",
+    "tools/analyze-decision-evidence.mjs": "bb054dc35c88f54c17ac4694115b7038281b7ef3"
+  },
+  "checks": {
+    "current_generation": true,
+    "handoff_generation": true,
+    "boundary": true,
+    "exact_gate": true,
+    "no_auto_mock": true,
+    "kernel_frozen": true,
+    "handoff_resume_semantics": true,
+    "auto_long_blocks": true,
+    "user_qb_limit": true,
+    "no_stale_root_scalar": true
+  },
+  "artifact_runtime_parity": {
+    "app_js_main_pages": true,
+    "index_html_main_pages": true,
+    "decision_policy_main_pages": true,
+    "sw_js_main_pages": true,
+    "manifest_main_pages": true
+  },
+  "runtime_boundary": {
+    "production_control": "v11.8.0-rc4.64",
+    "android_authority": "v11.8.0-rc4.82",
+    "test_challenger": "v11.8.0-rc4.83",
+    "test_challenger_android_verified": false,
+    "latest_package_reextract": "v11.8.0-rc4.78",
+    "library_recovery_alias": "v11.8.0-rc4.52"
+  },
+  "exact_continuation": {
+    "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
+    "auto_starts_mock": false,
+    "instruction": "After verified new-chat takeover, continue independent AUTO work; when user performs a natural rc4.83 Android mock, refresh once, export Evidence-v2, then run pick-by-pick OOS analysis and PROMOTE/MODIFY/REJECT. Do not tune frozen rc4.83 before evidence."
+  },
+  "library_persistence": "STALE_FAIL_CLOSED_NOT_V106",
+  "acceptance_fingerprint": "rc4.64|rc4.82|rc4.83-test|rc4.78-package|EVIDENCE_V2|1QB|AUTO-LONGBLOCK|HANDOFF-v106"
+}
