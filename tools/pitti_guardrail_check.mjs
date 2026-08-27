@@ -16,6 +16,9 @@ const bootstrap=text('PITTI_NEW_CHAT_BOOTSTRAP.md');
 const handoffMatrix=text('HANDOFF_COMPLETENESS_MATRIX.md');
 const currentHandoff=text('NEW_CHAT_HANDOFF_CURRENT.md');
 const evidenceAnalyzer=text('tools/analyze-decision-evidence.mjs');
+const releaseContract=text('PITTI_RELEASE_CONTRACT_V2.md');
+const releaseWorkflow=text('.github/workflows/release-contract-v2.yml');
+const packageWorkflow=text('.github/workflows/release-contract-v2-package.yml');
 const current=JSON.parse(text('PITTI_CURRENT_STATE.json'));
 const seal=JSON.parse(text('PITTI_HANDOFF_SEAL.json'));
 const handoffGeneration=(currentHandoff.match(/Handoff generation:\s*`([^`]+)`/)||[])[1];
@@ -123,6 +126,11 @@ const generationVersion=(current.handoff_generation.match(/-v(\d+)$/)||[])[1];
 must(generationVersion,'CURRENT generation version missing');
 must(handoffMatrix.includes(`REPO v${generationVersion}`),'handoff matrix generation label drift');
 must(preflight.includes('HANDOFF TRANSACTION STATE'),'preflight handoff transaction gate missing');
+must(releaseWorkflow.includes('node tools/rc483-draft-critical.mjs'),'release workflow missing rc4.83 gate');
+must(packageWorkflow.includes('node tools/rc483-draft-critical.mjs'),'package workflow missing rc4.83 gate');
+must(packageWorkflow.includes('VERSION="$(sed -n'),'package version must derive from APP_VERSION');
+must(!packageWorkflow.includes('Draft_Companion_v11.8.0-rc4.82_PREINSTALL.zip'),'stale hard-coded rc4.82 package path resurrected');
+must(releaseContract.includes('Exact v2 weights:'),'release contract expert-weight lock missing');
 
 for(const token of ['rc4.82','rc4.83','work package -> checkpoint -> re-inventory','user must never need to remind'])
   must(bootstrap.includes(token),`repo bootstrap invariant missing: ${token}`);
