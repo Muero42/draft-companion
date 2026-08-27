@@ -11,6 +11,9 @@ const preflight=text('PITTI_AUTO_PREFLIGHT.md');
 const app=text('app.js');
 const policy=text('decision-policy.js');
 const readme=text('README.md');
+const commandContract=JSON.parse(text('PITTI_COMMAND_CONTRACTS.json'));
+const bootstrap=text('PITTI_NEW_CHAT_BOOTSTRAP.md');
+const handoffMatrix=text('HANDOFF_COMPLETENESS_MATRIX.md');
 
 must(lock.schema==='pitti.execution-lock.v1','execution lock schema');
 must(lock.runtime?.appVersion==='v11.8.0-rc4.64','runtime version lock drift');
@@ -87,6 +90,17 @@ must(e.weightsAreFinalWinner===false,'no Expert-v2 profile may be mislabeled fin
 must(e.oldWrOnlyRejectionSemanticsAreAuthority===false,'obsolete WR-only authority resurrected');
 must(lock.league?.userDraftQbLimit===1,'user one-QB strategy lock drift');
 must(lock.league?.userQb2Policy==='HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1','user QB2 policy drift');
+must(commandContract.version==='1.4.0','repo command contract version drift');
+must(commandContract.auto?.longestSafeBlocks===true,'repo command contract long-block drift');
+must(commandContract.auto?.userReminderRequired===false,'repo command contract reminder drift');
+must(commandContract.auto?.reinventoryAfterEveryWorkPackage===true,'repo command contract post-package inventory drift');
+must(commandContract.auto?.blockedGateStopsOnlyDependentLane===true,'repo command contract lane isolation drift');
+must(commandContract.auto?.promiseOnlyResponseForbidden===true,'repo command contract promise-only guard drift');
+must(commandContract.auto?.externalGateValidStopOnlyAfterIndependentLaneExhaustion===true,'repo command contract external-gate guard drift');
+for(const token of ['rc4.82','rc4.83','work package -> checkpoint -> re-inventory','user must never need to remind'])
+  must(bootstrap.includes(token),`repo bootstrap invariant missing: ${token}`);
+for(const token of ['rc4.82','rc4.83','AUTO durability','Execution witness','Old-error scan'])
+  must(handoffMatrix.includes(token),`repo handoff matrix invariant missing: ${token}`);
 
 const digest=crypto.createHash('sha256').update(JSON.stringify(lock)).digest('hex');
 if(!process.exitCode)console.log(`PITTI_GUARDRAILS_PASS lock_sha256=${digest} app=${lock.runtime.appVersion} gate=${e.currentGate}`);
