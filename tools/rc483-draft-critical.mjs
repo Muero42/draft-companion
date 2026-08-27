@@ -114,3 +114,9 @@ for(const k of ['current','rosterCounts','candidates','chosenPlayer','decisionOu
 assert.ok(app.includes("format:'pitti-decision-evidence-v2'"));
 assert.ok(app.includes('wrSaturationRecommendationCount'));
 assert.ok(app.includes('qb2ViolationCount'));
+
+// Evidence-v2 offline analyzer must remain available for immediate OOS grading.
+const evidenceAnalyzer=fs.readFileSync('tools/analyze-decision-evidence.mjs','utf8');
+for(const k of ['QB2_VIOLATION','WR6_PLUS_COACH','WR7_PLUS_COACH','TE2_COACH','USER_OVERRIDE','CHOSEN_OUTSIDE_TOP16'])assert.ok(evidenceAnalyzer.includes(k),k);
+assert.ok(evidenceAnalyzer.includes("hardQb2Pass:qb2.length===0"));
+assert.ok(evidenceAnalyzer.includes('telemetryComplete:'));
