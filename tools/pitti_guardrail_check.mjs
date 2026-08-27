@@ -148,7 +148,7 @@ must(lock.authority?.failClosedRecovery?.includes('never claim a newer Library g
 for(const token of ['Library mirror is stale/writeback-blocked','rc4.82','rc4.83','Re-inventory after EVERY completed work package'])
   must(currentHandoff.includes(token),`current handoff invariant missing: ${token}`);
 
-for(const token of ['pitti-decision-evidence-v2','QB2_VIOLATION','WR6_PLUS_COACH','WR7_PLUS_COACH','TE2_COACH','USER_OVERRIDE','CHOSEN_OUTSIDE_TOP16','telemetryComplete','hardQb2Pass','OOS promotion evidence must come from the realistic mock gate','OOS promotion evidence must use user slot 9','ACUTE_STATUS_CONFOUND'])
+for(const token of ['pitti-decision-evidence-v2','QB2_VIOLATION','WR6_PLUS_COACH','WR7_PLUS_COACH','TE2_COACH','USER_OVERRIDE','CHOSEN_OUTSIDE_TOP16','telemetryComplete','hardQb2Pass','OOS promotion evidence must come from the realistic mock gate','OOS promotion evidence must use user slot 9','ACUTE_STATUS_CONFOUND','acuteStatusConfoundCount','cleanDecisionCount','cleanHardQb2Pass','cleanSaturatedWrCount','cleanWr7PlusCount'])
   must(evidenceAnalyzer.includes(token),`Evidence-v2 analyzer invariant missing: ${token}`);
 
 const digest=crypto.createHash('sha256').update(JSON.stringify(lock)).digest('hex');
