@@ -120,7 +120,7 @@
   },
   "currentWork": {
     "branch": "pitti-auto/rc4.78-clean-promotion",
-    "status": "ANDROID_DECISION_SURFACE_SMOKE_PASS_WITH_DATA_HEALTH_BLOCKER",
+    "status": "ANDROID_DECISION_SURFACE_SMOKE_PASS_WITH_DATA_HEALTH_DEGRADED",
     "production": false,
     "androidReadyForVerification": true,
     "androidVerified": true,
@@ -145,7 +145,7 @@
       "version/cache coherence PASS"
     ],
     "ciTransport": "NO_ACTIONS_RUN_EMITTED_FOR_CONNECTOR_COMMITS; equivalent gates executed independently; not a user gate",
-    "gate": "EXPERT_POOL_HEALTH_AND_FINAL_DRAFT_READY_GATE",
+    "gate": "DIAGNOSE_AND_FIX_EXPERT_POOL_PANEL_HEALTH_ACCOUNTING; then regression + Android refresh verification",
     "libraryArtifact": "/Pitti/Development/Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip",
     "libraryGateReport": "/Pitti/Development/RC478_PREINSTALL_GATE_REPORT_2026-08-27.md",
     "androidVersionVerified": true,
@@ -178,6 +178,17 @@
     ],
     "blockers": [
       "Expert pool degraded: UI reports 161 experts, desired pool 5/6, 120 panels; active expert availability/source health requires refresh/diagnosis before draft-ready promotion."
-    ]
+    ],
+    "androidDecisionSurfaceObservedAt": "2026-08-27T13:01:00+02:00",
+    "androidDecisionSurfaceEvidence": [
+      "completed-draft state rendered at Pick 150 without fatal error",
+      "top four: Tyjae Spears, Tank Bigsby, Mike Washington, Deebo Samuel",
+      "no QB2 surfaced in top four or 10er overview despite Trevor Lawrence rostered",
+      "WR saturation surfaced for Deebo Samuel and Jalen Coker; neither displaced RB top two",
+      "expert rows rendered in fixed DS > Del Don > Pat > Mariano > Boone order where ranks exist",
+      "10er overview and fallback/normal-cut warnings rendered",
+      "mock controls and snapshot controls rendered"
+    ],
+    "remainingIssue": "DATA HEALTH DEGRADED: UI reports Expert pool 5/6 with 161 experts/panel rows but 0/6 desired pool and 0/6 panels; diagnose health/accounting semantics before declaring draft-ready."
   }
 }
