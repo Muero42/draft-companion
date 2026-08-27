@@ -261,3 +261,25 @@ Operational implication:
 - Do NOT numerically count the AMA thesis as another Fitz ranking input.
 - Willis should receive targeted upside/research consideration, but no player-specific hard forcing.
 - Once QB1 is rostered, rc4.78 one-QB invariant removes all three from the user's Coach candidate surface.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — Fitz QB thesis integrated as bounded residual (rc4.79)
+
+Fresh validation before implementation:
+- Malik Willis is independently listed as Miami QB1 on current 2026-08-27 depth-chart evidence; a current Dolphins roster projection calls him entrenched at the top.
+- Current FantasyPros page: Willis ECR QB21, consensus ADP 149 / Sleeper 164, with projected 124.9 rush attempts and 642.8 rush yards. This confirms real rushing asymmetry but also material market/rank disagreement.
+- Same-day independent ranks put Kyler Murray around QB5-9, Jared Goff around QB7-11 and Willis around QB24-26 depending scoring; Murray market ADP evidence remains materially later (around 133 overall/QB18 in one current consensus feed); Goff Half-PPR Sleeper-derived ADP ~139.
+- Therefore Fitz's AMA is useful qualitative residual evidence, especially Willis, but not sufficient to replace Expert-v2 ranks or force a player.
+
+Implementation in rc4.79:
+- Added bounded, expiring QB qualitative priors for Kyler Murray, Malik Willis and Jared Goff to the existing Research Residual shadow architecture.
+- Willis: strongest asymmetric residual, POSSIBLY_UNPRICED; causal path requires starter status + rushing + viable passing floor.
+- Murray: medium positive rebound/upside residual, PARTLY_PRICED.
+- Goff: smaller positive floor residual, LIKELY_PRICED.
+- These are explicitly not an additional Fitz numerical ranking and therefore do not double-count his panel rank.
+- Existing residual caps/pricing adjustment remain authoritative; no hard forcing/name override.
+- Existing one-QB policy remains authoritative: after QB1, all QB2 candidates are excluded before this research residual can affect Coach ordering.
+- Evidence expires 2026-09-01 unless refreshed/invalidated; appropriate because this is draft-week qualitative evidence.
+- Runtime/version bumped to v11.8.0-rc4.79 and deployed to gh-pages. Android verification remains required before production/draft-ready promotion.
