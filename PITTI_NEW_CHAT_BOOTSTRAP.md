@@ -14,7 +14,7 @@ When the user writes **PITTI AUTO** in a new chat, do not answer with a status-o
 6. `HANDOFF_COMPLETENESS_MATRIX.md`
 7. relevant actual branch/runtime/artifact/device evidence
 
-If Library files are available, read them too. If Library still points to v102/v103, rc4.76/77, or other superseded current facts, it is stale evidence and must not override repo EOF/lock/device truth.
+If Library files are available, read them too. A v105 Library reseal was prepared and locally second-pass verified on 2026-08-27, but persistent upload-back failed with container_session_expired. Therefore, until a later files.list proves newer Library bytes, Library v102/v103 or rc4.76/77 current pointers are stale evidence and must not override repo EOF/lock/device truth.
 
 ## Current acceptance boundary
 - production/control: rc4.64
