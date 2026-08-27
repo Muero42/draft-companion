@@ -21,4 +21,16 @@ assert(p.plus(rows[0],0)!==p.plus(rows[1],1),'available differentiating evidence
 const ex=p.ex(rows[2]);assert(ex==='DS #4 · Del Don #3 · Pat #4 · Mariano #3 · Boone #4','expert render/order/ranks: '+ex);
 const injury={...rows[1],injury:'Q',arrows:''};assert(!p.headerArrow(injury),'injury manufactured arrow');
 console.log(JSON.stringify(rows.map((x,i)=>({name:x.name,signal:p.signal(x,i),plus:p.plus(x,i),minus:p.minus(x),keyword:p.keyword(x,i),header:p.headerArrow(x),experts:p.ex(x)})),null,2));
+
+// Additional scenario coverage: same evidence may legitimately yield same prose; roster/market signals remain orthogonal.
+const mid=[
+ {...rows[0],name:'Generic RB A',ret:.55,adp:25,panel:24,loss:'mittel',arrows:'',researchResidual:null,reasons:['Positions-Alternativen 4 nah']},
+ {...rows[0],name:'Generic RB B',ret:.88,adp:40,panel:39,loss:'niedrig',arrows:'',researchResidual:null,reasons:['Positions-Alternativen 4 nah']},
+ {...rows[2],name:'Generic WR C',ret:.45,adp:60,panel:54,loss:'mittel',arrows:'',researchResidual:null,reasons:['WR-Sättigung: 7 WR']},
+];
+assert(p.signal(mid[1],1)==='WAIT','high-return WAIT exception missing');
+assert(p.keyword(mid[2],2).includes('VALUE')&&p.keyword(mid[2],2).includes('ROSTER-SÄTTIGUNG'),'value/roster orthogonal markers missing');
+assert(p.minus(mid[2]).includes('WR-Sättigung'),'roster saturation not surfaced as downside');
+assert(p.plus(mid[0],0)===p.plus({...mid[0],name:'Generic RB D'},0),'similar evidence was artificially differentiated');
+
 console.log('LIVE_PRESENTATION_BEHAVIOR_PASS');
