@@ -7,8 +7,8 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "1830d69362d0480280d158fe2f7f37fdd578aa4e",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "19bd3ce521433d335e666305bdc15e8be0a203d3",
+    "PITTI_CURRENT_STATE.json": "29cba18aeba745a60c1a3bf2d9266a80ef39410f",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "1959b96bd07218e68a9d0886c323ffd01fb0fc42",
     "PITTI_COMMAND_CONTRACTS.json": "5fe962b5043777b75efccc03b61408d5e181a013",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "ca02242c27b78d8b4f70bd57aad9288e1bcdadd6",
     "HANDOFF_COMPLETENESS_MATRIX.md": "dc33e1a7bf334637f812b72a5b6844906f1f3e31",
