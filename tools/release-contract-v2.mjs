@@ -1,0 +1,19 @@
+import fs from 'node:fs';
+const live=fs.readFileSync('live-surface-v3.js','utf8');
+const app=fs.readFileSync('app.js','utf8');
+const board=fs.readFileSync('expert-v2-board.js','utf8');
+const fail=m=>{throw new Error(m)};
+const need=(s,x,m)=>{if(!s.includes(x))fail(m)};
+need(live,"GLOBAL_EXPERT_ORDER=['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Nick Mariano','Justin Boone'","fixed expert order");
+need(live,"return'WAIT'","WAIT missing");
+if(/JETZT-FENSTER|EHER JETZT/.test(live))fail('redundant timing label in live surface');
+need(live,"WR2 mit WR1-Upside","Parker thesis missing");
+need(live,"!/(injury|ankle|achilles|recurrence)/","injury-arrow guard missing");
+need(live,"<b>Experten:</b>","expert row not always rendered");
+need(app,"fullv2","all-position profile missing");
+need(app,"wrv2","WR-only profile missing");
+for(const p of ['Jahmyr Gibbs','Bijan Robinson','Puka Nacua',"Ja'Marr Chase",'Parker Washington'])need(board,p,'board fixture missing '+p);
+const expected={QB:{'Draft Sharks Team':35,'Nick Mariano':25,'Dalton Del Don':20,'Justin Boone':10,'Pat Fitzmaurice':10},RB:{'Draft Sharks Team':35,'Nick Mariano':25,'Dalton Del Don':25,'Pat Fitzmaurice':15},WR:{'Nick Mariano':35,'Draft Sharks Team':30,'Pat Fitzmaurice':15,'Dalton Del Don':10,'Justin Boone':10},TE:{'Draft Sharks Team':35,'Pat Fitzmaurice':30,'Dalton Del Don':25,'Justin Boone':10}};
+const m=board.match(/window\.PITTI_EXPERT_V2=([\s\S]+);\s*$/);if(!m)fail('board payload parse missing');const data=JSON.parse(m[1]);
+for(const [pos,w] of Object.entries(expected)){for(const [name,v] of Object.entries(w))if(Number(data.weights?.[pos]?.[name])!==v)fail('weight mismatch '+pos+' '+name)}
+console.log('release-contract-v2 static invariants PASS');
