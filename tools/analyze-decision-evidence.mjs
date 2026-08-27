@@ -10,6 +10,8 @@ assert.ok(Array.isArray(e.fixtures),'fixtures missing');
 assert.equal(e.appVersion,'v11.8.0-rc4.83','Evidence must come from frozen rc4.83 challenger');
 assert.ok(e.draftId,'draftId missing');
 assert.ok(Number.isFinite(Number(e.slot)),'slot missing');
+assert.equal(e.mode,'mock','OOS promotion evidence must come from the realistic mock gate');
+assert.equal(Number(e.slot),9,'OOS promotion evidence must use user slot 9');
 assert.ok(Number(e.fixtureCount)===e.fixtures.length,'fixtureCount mismatch');
 assert.ok(Number(e.resolvedCount)<=Number(e.fixtureCount),'resolvedCount exceeds fixtures');
 
@@ -26,6 +28,8 @@ const rows=e.summaries.map(s=>{
   if(s.wr7PlusFlag)flags.push('WR7_PLUS_COACH');
   else if(s.wrSaturationFlag)flags.push('WR6_PLUS_COACH');
   if(top?.pos==='TE'&&Number(counts.TE||0)>=1)flags.push('TE2_COACH');
+  const acuteNames=new Set(['ashtonjeanty']);
+  if(acuteNames.has(norm(top?.name))||acuteNames.has(norm(s.chosen?.name)))flags.push('ACUTE_STATUS_CONFOUND');
   if(s.override)flags.push('USER_OVERRIDE');
   if(s.chosen&&!s.chosenInFrozenCandidates)flags.push('CHOSEN_OUTSIDE_TOP16');
   const top3=candidates.slice(0,3).map((x,i)=>`${i+1}.${x.name}(${x.pos},${Number.isFinite(x.coachScore)?x.coachScore.toFixed(2):'?'})`).join(' | ');
@@ -39,6 +43,7 @@ const wr6=rows.filter(r=>r.flags.includes('WR6_PLUS_COACH')||r.flags.includes('W
 const wr7=rows.filter(r=>r.flags.includes('WR7_PLUS_COACH'));
 const te2=rows.filter(r=>r.flags.includes('TE2_COACH'));
 const outside=rows.filter(r=>r.flags.includes('CHOSEN_OUTSIDE_TOP16'));
+const acuteConfounds=rows.filter(r=>r.flags.includes('ACUTE_STATUS_CONFOUND'));
 const completeness={
  fixtureCount:e.fixtureCount,summaryCount:e.summaries.length,resolved:e.resolvedCount,
  expectedOwnPicks:e.mode==='mock'?15:null,
