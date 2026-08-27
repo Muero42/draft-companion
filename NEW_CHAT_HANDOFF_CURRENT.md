@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260827T165000Z-v110`
-Updated: 2026-08-27 16:50Z
+Handoff generation: `20260827T171000Z-v111`
+Updated: 2026-08-27 17:10Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -148,3 +148,10 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Known rc4.83 OOS confound: Jeanty acute hard blocker dated 24.08.; Week 1 still uncertain on 27.08. Do not use a Jeanty-affected early decision to judge the late-WR saturation challenger.
 - Do not mutate the frozen rc4.83 experiment to “fix” that confound before Evidence-v2; revisit the blocker in the mandatory pre-real-draft freshness pass.
 - Runtime/OOS gate otherwise unchanged.
+
+
+## V111 OOS-IDENTITY CANARY
+- Promotion Evidence-v2 must be realistic mock mode + slot 9.
+- Jeanty-affected rows are ACUTE_STATUS_CONFOUND and are not causal evidence for the late-WR saturation challenger.
+- Same-day injury evidence still leaves Week 1 uncertain; do not silently clear the frozen rc4.83 overlay before OOS.
+- No runtime/kernel/expert-weight change.
