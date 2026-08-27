@@ -802,3 +802,21 @@ Offline Evidence-v2 analysis is now stricter:
 - rc4.83 regression and PITTI guard both protect these semantics.
 
 Purpose: prevent a current injury overlay from contaminating the causal judgment of the rc4.83 late-WR saturation change. No runtime/Decision-Kernel/Expert-v2/Return-v2 coefficient changed.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — v111 final seal/read-back + CI observability finding
+
+v111 final seal/read-back completed:
+- CURRENT = Handoff = Seal generation 20260827T171000Z-v111.
+- Seal PASS; handoff_ready=true; second_pass_pass=true.
+- 21/21 seal-listed repo blob hashes independently re-fetched after final seal and matched exactly.
+
+CI observability:
+- GitHub connector returns no combined statuses and no workflow_runs for the v111 seal commit even though PITTI Project Guardrails is configured for push/main and PITTI_HANDOFF_SEAL.json is explicitly in its paths filter.
+- GitHub documentation confirms branch + path filters are conjunctive and a matching changed path on main is eligible to trigger.
+- Absence of a returned run is therefore NOT treated as CI PASS. Static config + seal/read-back are verified; CI execution remains unobserved through the connector.
+- Do not weaken the gate or invent PASS. If CI execution becomes release-critical and remains unobservable, resolve through GitHub Actions UI/runner evidence before promotion.
+
+No runtime/kernel/expert-weight change.
