@@ -41,10 +41,11 @@
     "noPlayerNameForcing": true,
     "noFixedRosterQuotasCaps": true,
     "noGenericReturnV2Retune": true,
-    "noGlobalQb2Te2Ban": false,
     "noGenericGlobalQb2Ban": true,
     "userOneQbDraftStrategy": true,
-    "qb2MustNotAppearOnUserCoachSurfaceAfterQb1": true
+    "qb2MustNotAppearOnUserCoachSurfaceAfterQb1": true,
+    "noGlobalTe2Ban": true,
+    "userSpecificQb2ExclusionIsNotGenericLeagueRule": true
   },
   "expertV2": {
     "status": "WR_ONLY_SHADOW_QUALIFIED_NOT_PRODUCTION",
