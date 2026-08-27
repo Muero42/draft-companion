@@ -507,3 +507,9 @@ Before promoting the first saturation coefficients, interaction accounting showe
 A second validation flaw was repaired: final roster cannot proxy Coach quality when the user overrides recommendations. Frozen decision fixtures already captured the Coach candidate board and later chosen player, but did not explicitly persist the comparison. resolveDecisionFixtures now records decisionOutcome with Coach top, whether the chosen player was in the frozen candidate set, chosen frozen rank, followedCoach, score delta and panel-rank delta. This makes future mocks directly auditable without relying on final roster composition or manual reconstruction.
 
 No Android deployment yet. Need OOS/aggregate evidence from frozen fixtures or realistic new mock(s); rc4.82 remains Android authority.
+
+
+### 2026-08-27 PITTI AUTO — one-tap decision evidence transport + rc4.83 test deploy
+Verified that full backups already contain decisionFixtures, but using the general backup would unnecessarily transfer rank caches/settings and make analysis noisier. Added a dedicated Advanced > Sicherung button `Pick-Evidenz exportieren`. It exports only current-draft frozen fixtures as `PITTI-Decision-Evidence-<draftId>-<timestamp>.json`, with appVersion, fixture/resolved/override counts and the full compact decision fixtures including decisionOutcome. Android Web Share/download path reuses the already-proven backup transport.
+
+Static invariants PASS and main/gh-pages parity PASS for app.js/index.html/decision-policy.js/sw.js/manifest. rc4.83 is now deployed as a TEST candidate solely to obtain realistic OOS Coach-vs-user evidence. It is not promoted over rc4.82 yet. Required user flow is minimal: reload to rc4.83, run one ordinary realistic mock without documenting picks, refresh once after completion, Advanced > Sicherung > Pick-Evidenz exportieren, share the JSON. The final refresh is necessary so the last own pick is resolved into decisionOutcome.
