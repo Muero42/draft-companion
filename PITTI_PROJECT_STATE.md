@@ -688,3 +688,46 @@ The interrupted v106 handoff was repo-side sealed with matching hashes, but a fr
 - Library mirror remains stale/fail-closed; repo/device truth wins.
 - external gate remains `ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT`.
 - AUTO itself does not start the mock.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — post-v107 independent-lane hardening while OOS kernel remains frozen
+
+### Takeover verification
+- v107 CURRENT / Handoff / Seal generation rechecked and identical.
+- Seal status PASS, handoff_ready=true, second_pass_pass=true.
+- Every seal-listed repo blob SHA re-fetched from current main and matched the seal. No stale-pointer resurrection detected.
+- rc4.83 Decision Kernel remains frozen; no scoring coefficient, expert weight, Return-v2 or roster policy changed.
+
+### Release-gate defect found and repaired
+Independent release audit found a concrete stale-release path:
+- both release-contract workflows still stopped at rc4.82 draft-critical tests even though current deployed challenger is rc4.83;
+- package workflow still hard-coded an rc4.82 package filename and artifact name, which could package current rc4.83 bytes under an rc4.82 label.
+Repairs:
+- rc4.83 draft-critical gate is now mandatory in both release-contract workflows;
+- candidate package version is derived from APP_VERSION and cross-checked against index.html/sw.js/manifest.webmanifest;
+- package filename is version-derived and shell runs fail-closed.
+This does not promote/package rc4.83; it prevents future mislabeled candidate artifacts.
+
+### Evidence-v2 analyzer hardening
+The offline analyzer previously accepted any Evidence-v2 appVersion and could call a partial completed mock telemetry-complete if fixture/resolved counts merely matched each other.
+It now fails closed unless:
+- appVersion is exactly frozen rc4.83 for this experiment;
+- draftId and slot exist;
+- fixtureCount matches actual fixture array;
+- resolvedCount cannot exceed fixtureCount;
+- completed mock has exactly 15 own-pick fixtures;
+- fixture pick numbers are unique.
+rc4.83 regression now guards these analyzer requirements.
+
+### Fresh independent strategy evidence — non-contaminating
+Fresh Aug-27 public QB evidence supports the existing tier semantics rather than a kernel change:
+- NFL.com current 1QB tiers: Caleb Williams QB5, Trevor Lawrence QB9, Justin Herbert QB11; Jared Goff QB16, Kyler Murray QB17.
+- This independently supports Herbert/Caleb/Lawrence as the stronger mid-round upside/startable tier and Goff/Murray as later price-sensitive fallbacks.
+- Fresh RB sleeper reporting raises Mike Washington Jr. after Ashton Jeanty's Aug-23 ankle sprain and first-team reps, while Jonah Coleman remains a contingency-upside late RB. Treat as dated research/watch evidence only; do not hard-force or contaminate frozen rc4.83 OOS.
+- Superflex search result explicitly rejected from evidence.
+
+### Gate
+External OOS gate unchanged: ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT.
+AUTO itself does not start the interactive mock.
