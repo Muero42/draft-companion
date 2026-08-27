@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T16:25:00Z",
+  "updatedAt": "2026-08-27T16:18:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -154,9 +154,10 @@
       "main/gh-pages parity PASS for app/index/decision-policy/sw/manifest after rc4.83 evidence export",
       "parallel freeze audit extended: exact 1QB, Geno/Rodgers hard exclusions, K/DST candidate omission, exceptional TE2, no WR hard cap",
       "decision evidence upgraded to v2 with per-pick roster counts plus automatic WR6+/WR7+ recommendation and QB2 violation flags",
-      "README authority synchronized: rc4.82 Android authority vs rc4.83 test challenger"
+      "README authority synchronized: rc4.82 Android authority vs rc4.83 test challenger",
+      "parallel evidence audit caught roster-count derivation bug before mock: frozen userRoster now stores position directly; Evidence-v2 no longer depends on already-drafted players remaining in rankedAvailable"
     ],
     "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
-    "note": "Independent parallel lanes exhausted without speculative retuning. Runtime app/index resynced to Pages after evidence-v2 hardening. Do not tune further before direct OOS Coach-vs-choice evidence."
+    "note": "Parallel autonomous audit exhausted another real defect in evidence instrumentation and repaired it before user mock. rc4.83 Pages resynced. OOS realistic mock remains the only informative gate; no further speculative tuning."
   }
 }
