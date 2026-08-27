@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260827T175500Z-v114`
-Updated: 2026-08-27 17:55Z
+Handoff generation: `20260827T181500Z-v115`
+Updated: 2026-08-27 18:15Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -174,3 +174,7 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 ## V114 EMERGENCY-FALLBACK CANARY
 - Emergency Queue has an independent deterministic executable contract: max 35; one QB/TE candidate only while QB1/TE1 open; none after filled; K/DST omitted; draft/version metadata retained.
 - Contract is protected by rc4.83 regression + PITTI guard and does not alter runtime/kernel.
+
+
+## V115 CLEAN OOS CONFOUND CANARY
+- Evidence-v2 analysis reports acute-status-confounded and clean non-confounded metrics separately; frozen rc4.83 runtime remains unchanged.
