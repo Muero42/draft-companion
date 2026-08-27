@@ -359,3 +359,15 @@ Coach implication:
 - Portfolio conclusion strengthened: preserve RB optionality through the late rounds; do not draft a safe QB early merely because Willis is volatile. At the actual QB decision compare Murray/Goff acquisition cost against the best remaining RB lottery ticket and Willis return-to-15.09 probability.
 - If Goff is still present near the final turn, his safety/price combination can dominate the choice. If he is gone and Murray required a materially earlier opportunity cost, last-pick Willis is acceptable rather than an emergency fallback.
 - After selecting Murray or Goff: Willis remains FA/watch only, never QB2 draft.
+
+
+### 2026-08-27 PITTI AUTO — fresh QB market convergence + Willis Week-1 risk update
+- Same-day Kyle Yates QB ranks materially compress the three candidates: Kyler Murray QB16, Jared Goff QB17, Malik Willis QB18. This is useful independent evidence that Willis is no longer merely a QB25-style fringe bet.
+- Same-day FullTimeFantasy remains much more conservative on Willis (QB24-26 across scoring variants) while ranking Murray QB5-9 and Goff QB7-11. The expert disagreement on Willis therefore remains large and actionable; do not erase it with a single consensus number.
+- Current Dolphins reporting continues to call Willis the starter while Miami evaluates backups. CBS reports Miami sat Willis for preseason game two after a 4/5, 43-yard + 2/9 rushing opener; this is more consistent with starter protection than an open competition.
+- NBC preseason snap evidence: De'Von Achane and rookie Caleb Douglas played every snap with Willis; Malik Washington and blocking TE Will Kacmarek played 12/14 with the ones. Supporting-cast quality/continuity remains a legitimate translation concern.
+- FFToday's current outlook still frames Willis as rushing-floor dependent in an offense expected to be weak. Thus starter certainty is now strong enough that the remaining risk is weekly fantasy translation, not role loss.
+- Decision calibration: Willis is promoted from generic QB25 lottery to LIVE LATE-QB1 CHALLENGER, but not to automatic Week-1 starter preference over Murray/Goff.
+- Draft-price trigger remains portfolio-based. Current market evidence for Murray is around 12th round/ADP 133-145 in 12-team feeds; Goff evidence ranges materially earlier (~ADP 115 in one current analysis). In a 10-team room, do not mechanically translate round numbers; use actual Sleeper availability + Return-v2.
+- If Willis remains until 15.09, the opportunity-cost case is strongest because the alternative pick is normally a K/DST slot or lowest marginal bench value. If Murray/Goff require sacrificing a materially better RB lottery ticket, Willis becomes preferred.
+- If Murray/Goff are obtained at negligible opportunity cost, Willis becomes FA WATCH only under the hard one-QB rule.
