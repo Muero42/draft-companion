@@ -3,9 +3,17 @@
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
 > **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.78 · SHA-256 `69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba`.  
 > **Letzter vollständig Android-verifizierter Kandidat:** v11.8.0-rc4.82 (Badge, Full-v2 Active-Health, Roster/Completed-State und Snapshot-Metadaten/Provenienz PASS).  
-> **Aktueller Draft-Critical Kandidat:** v11.8.0-rc4.82 auf `main`; Source-/Regression-/Deploy-/Android-Gates PASS.  
+> **Aktueller Android-Authority:** v11.8.0-rc4.82; Source-/Regression-/Deploy-/Android-Gates PASS.  
+> **Aktueller Test-Challenger:** v11.8.0-rc4.83 auf `main`/Pages; bounded WR6+ roster utility + Coach-vs-Pick Evidenzexport, OOS-Mock-Gate noch offen.  
 >
 > Built/source-verified, packaged/re-extracted, deployed und Android-verified sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
+
+### rc4.83 — bounded late-WR challenger / decision-evidence test
+- Kein Produktions-Promotion: rc4.82 bleibt Android-Authority bis zum realistischen OOS-Mock.
+- WR6+/WR7+ wird spät graduell stärker abgewertet, ohne Hard-Cap oder pauschales RB-Forcing; außergewöhnlicher WR-Marktvalue bleibt zulässig.
+- Coach-vs.-tatsächlichem Pick wird pro eingefrorener Entscheidung gespeichert; dedizierter `Pick-Evidenz exportieren`-Export ist draft-spezifisch.
+- Evidence-v2 enthält zusätzlich automatische Flags für WR-Sättigungs-Empfehlungen und QB2-Verstöße.
+- Freeze-Guards schützen exakt-einen-QB, Geno/Rodgers-Hard-Exclusions, K/DST-Auslassung, exceptional TE2, drei Expert-Profile und Expert-v2-Gewichte.
 
 ### rc4.82 — profile-aware health / metadata integrity candidate
 - Keine Decision-/Return-v2-Retunings gegenüber rc4.80.
