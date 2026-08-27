@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260827T171000Z-v111",
-  "created_at": "2026-08-27T17:10:00Z",
+  "handoff_generation": "20260827T172500Z-v112",
+  "created_at": "2026-08-27T17:25:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "abca13b06e6fdf383bdaa45b6317fed6b648df69",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "b54e61ae906368a34ed77185f54a6385fc26f56c",
+    "PITTI_CURRENT_STATE.json": "370c45372eaaf2a40e928fd5f306a7d05a5ea2b4",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "74b65241d2ea68233d3eb55b990f92026e2b71be",
     "PITTI_COMMAND_CONTRACTS.json": "5fe962b5043777b75efccc03b61408d5e181a013",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "ca02242c27b78d8b4f70bd57aad9288e1bcdadd6",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "a7374fd0a41a0140c6c37f649f6f9e6b4d0704b1",
-    "PITTI_EXECUTION_LOCK.json": "007b759b4bb57123b0c05403977c72ebfcbc907f",
-    "PITTI_PROJECT_STATE.md": "11f6df7ce6ecca5c513d3bcf2e7ed8bf8259c1c0",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "201d0f3b310528364e070347e874057444b3868b",
+    "PITTI_EXECUTION_LOCK.json": "bd9ec2f66dd016a4dc036e105b47798e5fcacc23",
+    "PITTI_PROJECT_STATE.md": "71d741c530b15d1dde137e475fe2117b634dafcf",
     "PITTI_AUTO_PREFLIGHT.md": "9e6090ef003e324bc7fdf91b9bd9c2c5b2c06317",
     "app.js": "c9139d0efe9545326ece4a8936ff51dfa7938878",
     "index.html": "9f4c9ad2cbc98a13770736c6407e9ddda96832f0",
@@ -22,7 +22,7 @@
     "manifest.webmanifest": "0c02f7bb0ad65c47001afbcda40409186f1b1168",
     "tools/rc483-draft-critical.mjs": "726e84ca8ec3da6842f4261aa84eabb999cef650",
     "tools/analyze-decision-evidence.mjs": "4b428258fbbca906be2e516fb249e4f18a888d34",
-    "tools/pitti_guardrail_check.mjs": "5f67fc9d629c3bbace9570ca1d60196baa1a16db",
+    "tools/pitti_guardrail_check.mjs": "12b0b5ead64c1d98804746ac94ccb9691c1cd01f",
     ".github/workflows/pitti-project-guardrails.yml": "0461f01a8fc8d72533456c055232dd64e8e9f1a2",
     "README.md": "12aec3a1601784325bab8ed65af93d9f7d2ed077",
     ".github/workflows/release-contract-v2.yml": "f30f34e089145a96d79ab1fdd4f4ff42ca337078",
@@ -51,9 +51,10 @@
     "active_authority_generation_generic": true,
     "guard_library_recovery_generic": true,
     "jeanty_oos_confound_locked": true,
-    "matrix_v111": true,
     "oos_mock_slot9_identity": true,
-    "acute_status_confound_separated": true
+    "acute_status_confound_separated": true,
+    "matrix_v112": true,
+    "generation_generic_transfer_guards": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -75,6 +76,6 @@
     "auto_starts_mock": false,
     "instruction": "After verified new-chat takeover, continue independent AUTO work; when user performs a natural rc4.83 Android mock, refresh once, export Evidence-v2, then run pick-by-pick OOS analysis and PROMOTE/MODIFY/REJECT. Do not tune frozen rc4.83 before evidence."
   },
-  "library_persistence": "STALE_FAIL_CLOSED_NOT_V111",
-  "acceptance_fingerprint": "rc4.64|rc4.82|rc4.83-test|rc4.78-package|EVIDENCE_V2-OOS-ID|JEANTY-CONFOUND|1QB|AUTO-LONGBLOCK|HANDOFF-v111"
+  "library_persistence": "STALE_FAIL_CLOSED_NOT_V112",
+  "acceptance_fingerprint": "rc4.64|rc4.82|rc4.83-test|rc4.78-package|EVIDENCE_V2-OOS-ID|JEANTY-CONFOUND|GENERIC-GUARDS|1QB|AUTO-LONGBLOCK|HANDOFF-v112"
 }
