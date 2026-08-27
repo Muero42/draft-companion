@@ -169,3 +169,54 @@ After Evidence-v2 export:
 5. distinguish CONSOLIDATION from BREAKOUT in UI;
 6. use opportunity-path/event-count for RBs and target-hierarchy path for WR/TE;
 7. apply pricing factor so obvious upside already fully reflected in ADP does not get double counted.
+
+
+## Fresh Aug-27 expansion — market-moving opportunity cases
+
+### D'Andre Swift — RB — STANDALONE_PLUS_OPPORTUNITY — ↑
+- Current DraftSharks riser: Kyle Monangai hyperextended knee and may miss/start limited, creating a larger-than-anticipated Swift role.
+- Important distinction: this is not a pure contingency handcuff. Swift already has standalone role/value; teammate availability can increase touches immediately.
+- Price interaction: current ADP near 49 means much is already priced; arrow should remain ↑ rather than ↑↑ unless receiving/goal-line share expands materially.
+- Invalidate/downgrade when Monangai returns fully or committee usage is confirmed.
+
+### Dalton Schultz — TE — TARGET_ASCENSION — ↑
+- DraftSharks identifies Schultz as a riser after Jayden Higgins' season-ending ACL tear; Schultz caught 82 passes in 2025 and now has a plausible path to open as Houston's No. 2 target.
+- This is exactly the desired TE archetype: target-hierarchy gain, not generic age-based breakout.
+- Upgrade to ↑↑ only if current route/first-read evidence confirms a durable top-two target role rather than an early-season injury window.
+
+### Braelon Allen — RB — ROLE_EARNER / STANDALONE_PLUS_CONTINGENCY — ↑
+- Returned from 2025 MCL injury and current reporting describes an opportunity to re-establish a meaningful role behind Breece Hall; coaches/mentors view every-down skill set as plausible.
+- Hall's new contract blocks a clean takeover thesis, so not ↑↑ on current evidence.
+- Still useful as an opportunity-elasticity target: usable secondary role plus larger contingency ceiling.
+
+### Alec Pierce — WR — POST_HYPE / ALPHA-ROLE HEALTH WATCH — ↑ conditional
+- Activated from PUP Aug 27 after ankle surgery; Colts invested four years/$114m and elevated him to No. 1 WR after trading Pittman.
+- 2025: 47-1,003-6 and elite downfield efficiency profile.
+- High leverage because market can lag a late health clearance + explicit alpha designation.
+- Keep conditional until route participation/Week-1 readiness is established; do not treat PUP activation itself as full health.
+
+## Coverage scoring protocol
+Every draft-relevant WR/RB/TE in the top-120 composite pool receives an Opportunity/Ceiling record, even when the correct result is NO_ARROW.
+
+Fields:
+- archetype
+- bankableRole (0-3)
+- ceilingRole (0-3)
+- eventsNeeded (0,1,2+)
+- eventPlausibility (0-3)
+- talentEfficiencyEvidence (0-3)
+- targetOrTouchPath (0-3)
+- healthFragility (0-3 negative)
+- marketPricing (0-3; 3=fully priced)
+- evidenceFreshnessDays
+- thesisInvalidator
+- arrow = NO_ARROW / ↑ / ↑↑ / ↓ / ↓↓
+
+Principle: arrows rank asymmetric EV, not raw player quality. A first-round superstar can have NO_ARROW while a Round-10 player has ↑↑. Panel remains the player-quality baseline.
+
+## Freshness classes
+- ACUTE (injury/depth-chart/cutdown): refresh <=24h pre-draft.
+- CAMP_ROLE (first-team usage/role competition): refresh <=48h.
+- STRUCTURAL (draft capital, contract, coordinator, vacated targets): valid through draft unless contradicted.
+- PERFORMANCE (2025 usage/efficiency): structural historical evidence; only interpretation expires.
+No global blanket expiry may silently deactivate structural/performance evidence.
