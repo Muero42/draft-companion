@@ -1,8 +1,8 @@
 import fs from 'node:fs';import vm from 'node:vm';
 const src=fs.readFileSync('live-surface-v3.js','utf8');
 const store={v7_positionPanels:JSON.stringify({QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'})};
-const el=()=>({textContent:'',innerHTML:'',classList:{add(){},remove(){}},addEventListener(){},querySelector(){return null}});
-const ctx={window:{PITTI_LIVE_DECISION_STATE:()=>null},document:{getElementById:()=>el(),querySelector:()=>null,createElement:()=>el(),addEventListener(){},hidden:false,readyState:'complete',body:{appendChild(){},classList:{toggle(){},add(){},remove(){}}}},localStorage:{getItem:k=>store[k]??null},navigator:{clipboard:{writeText:async()=>{}}},setInterval:()=>0,clearInterval(){},MutationObserver:class{observe(){} disconnect(){}},addEventListener(){},console};
+const el=()=>({textContent:'',innerHTML:'',classList:{add(){},remove(){}},addEventListener(){},querySelector(){return null},getBoundingClientRect(){return {top:0,bottom:1}},setAttribute(){},scrollIntoView(){}});
+const ctx={window:{PITTI_LIVE_DECISION_STATE:()=>null},document:{getElementById:()=>el(),querySelector:()=>null,createElement:()=>el(),addEventListener(){},hidden:false,readyState:'complete',body:{appendChild(){},classList:{toggle(){},add(){},remove(){}}}},localStorage:{getItem:k=>store[k]??null},navigator:{clipboard:{writeText:async()=>{}}},setInterval:()=>0,clearInterval(){},MutationObserver:class{observe(){} disconnect(){}},addEventListener(){},innerHeight:800,console};
 ctx.window.window=ctx.window;ctx.window.localStorage=ctx.localStorage;ctx.globalThis=ctx;vm.createContext(ctx);vm.runInContext(src,ctx);
 const p=ctx.window.PITTI_LIVE_PRESENTATION_V3;if(!p)throw Error('presentation export missing');
 const ind=(pairs)=>pairs.map(([expertName,rank])=>({expertName,rank}));
