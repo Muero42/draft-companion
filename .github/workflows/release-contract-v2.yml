@@ -1,7 +1,7 @@
 name: PITTI release contract v2
 on:
   push:
-    branches: [pitti-auto/rc4.77-decision-evidence]
+    branches: [pitti-auto/rc4.78-clean-promotion]
   workflow_dispatch:
 jobs:
   behavioral-contract:
@@ -11,7 +11,7 @@ jobs:
       - uses: actions/setup-node@v4
         with: {node-version: 22}
       - name: Syntax
-        run: node --check app.js && node --check live-surface-v3.js && node --check expert-v2-board.js && node --check sw.js
+        run: node --check app.js && node --check decision-policy.js && node --check live-surface-v3.js && node --check expert-v2-board.js && node --check sw.js
       - name: Fail closed on hand-coded product prose
         run: |
           ! grep -q "PLAYER_EVIDENCE" live-surface-v3.js
@@ -20,3 +20,5 @@ jobs:
         run: |
           node tools/release-contract-v2.mjs
           node tools/live-presentation-behavior.mjs
+          node tools/rc478-oos-policy.mjs
+          node tools/pitti_guardrail_check.mjs
