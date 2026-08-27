@@ -316,3 +316,10 @@ Fresh public FantasyPros verification: Joey Wright's dedicated 2026 Half-PPR Ove
 Current FantasyPros Half-PPR consensus directory reports 160 experts on Aug 27, confirming ample candidate supply. Do not lower quality threshold to fill WR6 slot.
 
 Decision: keep WR incumbent unchanged for now; prioritize validating high-value position additions where both historical edge and current data are stronger (Weisse RB, Wolf TE, Todd D Clark QB). WR specialist remains optional, not a required sixth source. Jeff Bell/Dave Kluge should only advance if current 2026 Half-PPR ranks can be verified and their marginal information is demonstrably independent of Mariano + DS.
+
+
+## AUTO candidate acquisition update — 2026-08-27
+- Public web now directly verifies Ryan Weisse current 2026 Half-PPR Overall dated 08/24 and WR dated 08/24; RB page surfaced 08/22. This supersedes earlier uncertainty from stale cached dedicated pages. Weisse has current usable Half-PPR data; API remains preferred for exact complete artifact.
+- Wolf current Half-PPR RB page surfaced 08/24. Public overall cache can lag (08/13), reinforcing per-position/API timestamp verification rather than one-page freshness assumptions.
+- Weisse 2026 WR board is highly non-consensus (e.g. Garrett Wilson WR10 vs ECR18), but historical WR110/2025 WR171 means this independence is not evidence of value; exclude him from WR weighting despite current data.
+- Continue evidence-first challenger roles: Weisse RB (and TE secondary), Wolf TE, Todd D Clark QB. WR specialist search remains quality-first; Joey Wright stays HIGH-VALUE/UNRESOLVED rather than rejected.
