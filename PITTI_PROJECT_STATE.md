@@ -1,6 +1,6 @@
 # PITTI PROJECT STATE — CANONICAL
 
-Updated: 2026-08-27 17:10Z
+Updated: 2026-08-27 17:25Z
 Authority: compact repository execution state. Persistent full append-only history is `/Pitti/PITTI_PROJECT_STATE.md`. Actual verified artifacts/runtime override stale text; repair stale state immediately. Chat memory is never authority.
 
 ## EXECUTION INVARIANTS — MUST NOT REGRESS
@@ -820,3 +820,14 @@ CI observability:
 - Do not weaken the gate or invent PASS. If CI execution becomes release-critical and remains unobservable, resolve through GitHub Actions UI/runner evidence before promotion.
 
 No runtime/kernel/expert-weight change.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — v112 generation-generic guard closure
+
+After the v111 seal, Project State was intentionally updated with the CI-observability finding, making HEAD newer than the sealed Project-State blob. Before resealing, another anti-stale scan found one remaining executable historical-generation dependency: the PITTI guard still required the literal current-handoff phrase “do not claim Library v105 is persisted”.
+
+That was a regression hazard because deleting or condensing historical v105 prose could falsely fail a future otherwise-valid takeover. The executable guard now checks the generic active invariant instead: the Library mirror is stale/writeback-blocked and may not override newer fully sealed repo/device truth.
+
+v112 contains only checkpoint/guard hardening. No Draft Companion runtime file, Decision Kernel coefficient, Expert-v2 weight, Return-v2 behavior, roster utility coefficient, manager model or user QB rule changed.
