@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.82';
+const APP_VERSION='v11.8.0-rc4.83';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -913,7 +913,7 @@ function progressiveUpsideBonus(p,current,state){
   if(p.pos==='RB')b += [0,2.0,4.0,6.5][stage];
   if((p.pos==='RB'||p.pos==='WR')&&p.yearsExp!=null&&p.yearsExp<=1)b += [0,1.0,2.0,3.5][stage];
   // Ein sehr tiefer WR-Room bleibt ein Tiebreaker, wird aber nicht zum harten Ausschluss.
-  if(p.pos==='WR'&&state.counts.WR>=7)b -= [0,1,2,3][stage];
+  if(p.pos==='WR'&&state.counts.WR>=6)b -= state.counts.WR>=7?[0,2,4,6][stage]:[0,1,2,3][stage];
   return b;
 }
 function strategyStatusText(mode){
@@ -935,7 +935,7 @@ function marginalRosterUtility(p,current,state){
   // Keine starre Sollverteilung: nur gradueller Grenznutzen. Eure Flex-Regeln erlauben 1–3 RB und 2–4 WR Starter.
   const c=state.counts||{},n=Number(c[p.pos]||0);let x=0;
   if(p.pos==='RB'&&current>=81){if(n>=7)x-=3.5;else if(n>=6)x-=2;else if(n<=3)x+=1;}
-  if(p.pos==='WR'&&current>=81){if(n>=8)x-=6;else if(n>=7)x-=4;else if(n>=6)x-=1.5;else if(n<=4)x+=.5;}
+  if(p.pos==='WR'&&current>=81){if(n>=8)x-=8;else if(n>=7)x-=6;else if(n>=6)x-=3.5;else if(n<=4)x+=.5;}
   if(p.pos==='QB'&&n===0&&current>=130)x+=7;
   if(p.pos==='TE'&&n===0&&current>=120)x+=4;
   return x;
@@ -1351,7 +1351,7 @@ function applyPlayerQualitySafetyGate(rows,current){
   // Existing exceptional-slide thresholds are reused exactly; no new numeric penalty family.
   const safetyPromotionEligible=x=>safetyPromotionEligiblePolicy({
     pos:x.p.pos,counts:x.stateCounts||{},rank:x.r.rank,adp:x.a,current
-  });
+  }) && !(x.p.pos==='WR' && current>=101 && Number(x.stateCounts?.WR||0)>=6 && !(Number.isFinite(x.a)&&x.a-current>=10));
   const eligible=valid.filter(safetyPromotionEligible);
   const eligibleBestPanelRank=eligible.length?Math.min(...eligible.map(x=>x.r.rank)):bestPanelRank;
   const eligibleBandMax=eligibleBestPanelRank+Math.max(3,Math.floor(threshold/2));
