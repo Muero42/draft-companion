@@ -15,6 +15,7 @@ const commandContract=JSON.parse(text('PITTI_COMMAND_CONTRACTS.json'));
 const bootstrap=text('PITTI_NEW_CHAT_BOOTSTRAP.md');
 const handoffMatrix=text('HANDOFF_COMPLETENESS_MATRIX.md');
 const currentHandoff=text('NEW_CHAT_HANDOFF_CURRENT.md');
+const evidenceAnalyzer=text('tools/analyze-decision-evidence.mjs');
 
 must(lock.schema==='pitti.execution-lock.v1','execution lock schema');
 must(lock.runtime?.appVersion==='v11.8.0-rc4.64','runtime version lock drift');
@@ -106,6 +107,9 @@ must(lock.authority?.libraryMirrorStatus?.includes('STALE_'),'stale Library mirr
 must(lock.authority?.failClosedRecovery?.includes('never claim Library v105 persisted')||lock.authority?.failClosedRecovery?.includes('never claim Library v105'), 'Library persistence fail-closed rule missing');
 for(const token of ['do not claim Library v105 is persisted','rc4.82','rc4.83','Re-inventory after EVERY completed work package'])
   must(currentHandoff.includes(token),`current handoff invariant missing: ${token}`);
+
+for(const token of ['pitti-decision-evidence-v2','QB2_VIOLATION','WR6_PLUS_COACH','WR7_PLUS_COACH','TE2_COACH','USER_OVERRIDE','CHOSEN_OUTSIDE_TOP16','telemetryComplete','hardQb2Pass'])
+  must(evidenceAnalyzer.includes(token),`Evidence-v2 analyzer invariant missing: ${token}`);
 
 const digest=crypto.createHash('sha256').update(JSON.stringify(lock)).digest('hex');
 if(!process.exitCode)console.log(`PITTI_GUARDRAILS_PASS lock_sha256=${digest} app=${lock.runtime.appVersion} gate=${e.currentGate}`);
