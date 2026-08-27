@@ -7,6 +7,8 @@ on:
       - pitti-guardrails-ci-20260826
     paths:
       - 'PITTI_EXECUTION_LOCK.json'
+      - 'PITTI_CURRENT_STATE.json'
+      - 'PITTI_HANDOFF_SEAL.json'
       - 'PITTI_PROJECT_STATE.md'
       - 'PITTI_AUTO_PREFLIGHT.md'
       - 'NEW_CHAT_HANDOFF_CURRENT.md'
@@ -15,6 +17,8 @@ on:
       - 'PITTI_COMMAND_CONTRACTS.json'
       - 'README.md'
       - 'app.js'
+      - 'decision-policy.js'
+      - 'tools/analyze-decision-evidence.mjs'
       - 'tools/pitti_guardrail_check.mjs'
       - '.github/workflows/pitti-project-guardrails.yml'
   pull_request:
