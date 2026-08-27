@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T15:47:00Z",
+  "updatedAt": "2026-08-27T16:05:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -168,9 +168,11 @@
       "parallel evidence audit caught roster-count derivation bug before mock: frozen userRoster now stores position directly; Evidence-v2 no longer depends on already-drafted players remaining in rankedAvailable",
       "Evidence-v2 schema contract frozen in rc4.83 regression gate: pick, rosterCounts, candidates, chosenPlayer, decisionOutcome, WR saturation/QB2 aggregate flags",
       "AUTO anti-regression hardened: re-inventory after EVERY work package; promise/status-only AUTO responses forbidden while work exists; external gate only valid after independent-lane exhaustion",
-      "v105 Library reseal bytes prepared and second-pass semantic/hash checks PASS locally, but persistent Library upload-back FAILED (container_session_expired); repo-side fail-closed bootstrap/contract/matrix added so stale Library cannot override current facts"
+      "v105 Library reseal bytes prepared and second-pass semantic/hash checks PASS locally, but persistent Library upload-back FAILED (container_session_expired); repo-side fail-closed bootstrap/contract/matrix added so stale Library cannot override current facts",
+      "post-v107 release audit: both release contracts now require rc4.83 draft-critical gate; package version derives from APP_VERSION and cross-checks index/sw/manifest, preventing rc4.83 bytes mislabeled as rc4.82",
+      "Evidence-v2 analyzer now fail-closed on exact rc4.83 appVersion, draftId/slot, fixture-count equality, exactly 15 completed-mock own-pick fixtures and unique pick numbers"
     ],
     "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
-    "note": "rc4.82 remains last fully Android-verified authority. rc4.83 is deployed test challenger only; coefficients frozen pending realistic OOS Evidence-v2. AUTO is a repeated package->checkpoint->reinventory->continue loop; blocked OOS/device lane never stops independent PITTI work; user reminder never required."
+    "note": "rc4.82 remains last fully Android-verified authority. rc4.83 remains deployed test challenger only and Decision Kernel coefficients remain frozen pending realistic OOS Evidence-v2. Post-v107 release/evidence tooling was hardened without scoring changes."
   }
 }
