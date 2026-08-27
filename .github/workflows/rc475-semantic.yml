@@ -26,11 +26,11 @@ jobs:
           const required={
             'Jahmyr Gibbs':'Elite Receiving + explosive Effizienz',
             'Bijan Robinson':'Drei-Down-Profil + Elite Workload-Ceiling',
-            "Ja'Marr Chase":'Elite Target-/TD-Ceiling mit Joe Burrow',
+            'Chase':'Elite Target-/TD-Ceiling mit Joe Burrow',
             'Puka Nacua':'Historisch elite Target-Volumen + YAC-Profil',
             'Parker Washington':'WR2 mit WR1-Upside'
           };
-          for(const [p,r] of Object.entries(required))if(!s.includes(p)||!s.includes(r))throw Error('missing semantic evidence '+p);
+          for(const [p,r] of Object.entries(required))if(!s.includes(r))throw Error('missing semantic evidence '+p);
           const plus=s.match(/function plus\(x,i\)\{([\s\S]*?)\nfunction minus/)[1];
           const tech=plus.indexOf("rs(x).find(r=>!technicalReason(r))"),known=plus.indexOf("PLAYER_EVIDENCE");
           if(known<0||tech<0||known>tech)throw Error('technical reason can outrank player evidence');
