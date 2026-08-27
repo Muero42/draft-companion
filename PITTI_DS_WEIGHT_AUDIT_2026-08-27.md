@@ -297,3 +297,13 @@ FantasyPros 2023-25 multi-year table confirms the strongest WR rankers among rel
 Ryan Weisse robustness: 2025 single-year Draft Accuracy was overall #7, RB #8, TE #3, QB #16, WR #171. This reinforces a real RB/TE specialist profile and a strong anti-signal for using him at WR. His 2023-25 WR110 is not a one-year fluke in the favorable direction. Keep Weisse out of WR challenger.
 
 Methodology note: FantasyPros draft accuracy uses final preseason Half-PPR ranks and includes players relevant by preseason ECR or final results, so sleepers/busts are represented. This makes it useful baseline evidence for PITTI, though it still optimizes rank accuracy rather than championship-EV/tail upside; Upside-v3 remains separate.
+
+
+## AUTO candidate-role refinement — 2026-08-27
+
+Fresh public 2026 Half-PPR boards independently verified:
+- Ryan Weisse overall/WR board dated 08/24. Despite poor historical WR accuracy, his current WR board contains material non-consensus calls (Garrett Wilson WR10 vs ECR18; Zay Flowers WR12 vs ECR15). This is useful for disagreement diagnostics but NOT enough to override the historical WR110/2025 WR171 evidence. Keep him RB-primary, TE-secondary, WR research-only.
+- Wolf overall/RB dated 08/24; QB and TE pages dated 08/25. Current QB board has Maye2, Lamar3, Burrow4, Daniels5, Lawrence6, Herbert7, Hurts8. TE board Bowers1/McBride2/Loveland3/Kraft4/Warren5/Pitts6/LaPorta7. His fresh board is suitable for TE challenger and potentially a QB control, but historical QB20 does not displace Todd D Clark QB5 as primary specialist candidate.
+- FantasyPros consensus directory is Aug27 and 160-expert deep; scarcity is not a selection constraint.
+
+Next v3 test architecture should preserve role purity: specialist ranks only enter the position(s) justified by historical evidence; other positions can be retained as shadow/control for diagnostics. This prevents a repeat of the old availability-driven Weisse/Gianni/Bobal substitution error.
