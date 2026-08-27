@@ -926,3 +926,12 @@ Fresh same-day/last-week sources were checked for WR/RB/TE upside and counter-th
 Coverage audit after current mock is now specified for top ~120 WR/RB/TE with positive thesis + strongest counter-thesis + events-needed + pricing + invalidator + explicit expiry. No arrow can be promoted from a single sleeper article.
 
 No rc4.84 runtime mutation.
+
+
+### 2026-08-27 — Draft Sharks source-weight audit opened (NO runtime mutation)
+Created `PITTI_DS_WEIGHT_AUDIT_2026-08-27.md`.
+Fresh FantasyPros 2023-25 evidence: Jody Smith DS overall #1 (QB40/RB1/WR13/TE9), Jared Smola DS #7 (QB23/RB14/WR14/TE120), Kevin English DS #13 (QB35/RB37/WR12/TE113). DS family is therefore strong overall, especially consistently strong at WR, but TE evidence is highly heterogeneous. Current public Draft Sharks rankings are a Team 3D projection/value product reviewed by Jared Smola, not proven identical to any individual DS expert's submitted FantasyPros ranks. Individual historical accuracy must not be transferred wholesale to the Team board.
+
+Coleman diagnostic: frozen RB ranks DS222 / Mariano166 / Del Don148 / Fitz126 produce panel175.1. Removing DS and renormalizing the other three gives ~149.85; DS shifts Coleman ~25.25 slots later. Material outlier, not sufficient by itself to downweight DS.
+
+Next research gate: per-position/current-expert historical table + source-influence/outlier audit + draft-zone/archetype stratification + OOS challenger weighting. If DS is accurate overall but systematically conservative on late opportunity backs, prefer Upside-v3 residual correction rather than blunt global downweighting. No active rc4.84 runtime mutation from this audit.
