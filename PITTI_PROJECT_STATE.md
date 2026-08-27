@@ -1,6 +1,6 @@
 # PITTI PROJECT STATE — CANONICAL
 
-Updated: 2026-08-27 15:47Z
+Updated: 2026-08-27 16:35Z
 Authority: compact repository execution state. Persistent full append-only history is `/Pitti/PITTI_PROJECT_STATE.md`. Actual verified artifacts/runtime override stale text; repair stale state immediately. Chat memory is never authority.
 
 ## EXECUTION INVARIANTS — MUST NOT REGRESS
@@ -755,3 +755,17 @@ No Decision-Kernel or expert-weight change.
 
 ### GitHub Actions observation
 No workflow-run/status object was returned for the seal commit through the connector. Do not infer PASS from absence. Repository configuration is consistent with GitHub's documented branch+path filter semantics; executable local/CI result remains distinct from static configuration audit.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — v109 stale-authority scalar removal
+
+Independent post-v108 audit found one more transfer hazard: active `PITTI_EXECUTION_LOCK.json` recovery prose still explicitly called “repo v107 authority” even though CURRENT/Seal had advanced. The actual machine generation checks were newer, but this stale active scalar could mislead a future recovery path.
+
+Repair:
+- active fail-closed recovery wording is now generation-generic and points to the newest fully sealed repo generation plus verified device facts;
+- completeness matrix advanced to v109 and explicitly rejects stale sealed-generation authority prose;
+- no Decision-Kernel, Expert-v2, Return-v2, roster scoring, ADP or player-specific recommendation changed.
+
+v108 prior integrity evidence remains historical: 20/20 seal-listed blobs matched before subsequent guard/checkpoint changes. v109 is the new transfer generation and requires its own seal/read-back.
