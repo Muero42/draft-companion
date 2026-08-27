@@ -437,3 +437,9 @@ Verify:
 3. fresh Snapshot says `Panel-Health: OK` for Full-v2 and reports Frozen Expert-v2 provenance/weight semantics;
 4. Decision Surface still renders normally.
 Only then mark rc4.82 Android-verified.
+
+
+### 2026-08-27 checkpoint mirror note
+- Repository `PITTI_PROJECT_STATE.md` and `PITTI_EXECUTION_LOCK.json` contain the current rc4.82 authority above.
+- The attempted write-through of the same catch-up into Library `/Pitti/PITTI_PROJECT_STATE.md` / `PITTI_CURRENT_STATE.json` was blocked repeatedly by the Files upload bridge returning `container_session_expired` after materialization/editing. This is an internal tooling limitation, not a user gate.
+- Fail-closed recovery rule until the Library mirror can be refreshed: if a new chat sees Library generation `20260827T083500Z-v103` or any state that still says rc4.76/rc4.77 is current, it MUST reconcile against repository Execution Lock/Project-State EOF before project work and must not revive those stale pointers.
