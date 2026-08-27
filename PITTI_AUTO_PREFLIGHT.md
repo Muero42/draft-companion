@@ -2,6 +2,11 @@
 
 Use before every PITTI AUTO execution and after any chat handoff. This is an execution gate, not optional documentation.
 
+## 0. HANDOFF TRANSACTION STATE
+- On takeover, verify `PITTI_CURRENT_STATE.json` + `PITTI_HANDOFF_SEAL.json` first.
+- Require matching generation with `NEW_CHAT_HANDOFF_CURRENT.md`, PASS seal, `handoff_ready=true`, `second_pass_pass=true`, and current seal-listed blob integrity.
+- If a PITTI HANDOFF transaction is still marked in progress, AUTO finishes that transaction before ordinary project development.
+
 ## 1. SOURCE OF TRUTH
 - Read `PITTI_PROJECT_STATE.md`.
 - Identify newest material decisions and NEXT GATE.
@@ -61,4 +66,4 @@ Otherwise continue AUTO.
 - Geno Smith/Aaron Rodgers excluded from user's QB path.
 - Excess WR depth must materially reduce redundant WR utility.
 - Expert-v2: Brown excluded; Erickson challenger; Koerner no current-draft acquisition effort; Mariano availability already solved; Draft Sharks counted as one correlated family; temporary Weisse/Gianni/Bobal pool rejected.
-- Final expert weights require current-board analysis; do not invent them.
+- Frozen Expert-v2 weights/profile semantics in `PITTI_EXECUTION_LOCK.json` are authoritative for the current experiment; do not invent, silently renormalize, or retune them without new promotion evidence.
