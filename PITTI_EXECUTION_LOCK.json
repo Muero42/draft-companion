@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T17:10:00Z",
+  "updatedAt": "2026-08-27T17:25:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -176,10 +176,11 @@
       "active authority text made generation-generic; stale v107 fail-closed pointer removed so future sealed generations cannot be downgraded by Execution Lock prose",
       "guard self-consistency repaired: Library recovery canary now matches generation-generic active authority wording",
       "acute-status OOS confound audited: rc4.83 Jeanty hard blocker remains frozen for experiment; Evidence-v2 must separate Jeanty-affected early decisions from late-WR saturation; pre-real-draft refresh must re-evaluate",
-      "Evidence-v2 promotion analysis now requires realistic mock mode + slot 9 and reports ACUTE_STATUS_CONFOUND separately; rc4.83 regression + PITTI guard protect this"
+      "Evidence-v2 promotion analysis now requires realistic mock mode + slot 9 and reports ACUTE_STATUS_CONFOUND separately; rc4.83 regression + PITTI guard protect this",
+      "v112 transfer guard cleanup: executable current-handoff canary no longer depends on historical Library v105 wording; active recovery checks are generation-generic"
     ],
     "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
-    "note": "rc4.82 remains last fully Android-verified authority. rc4.83 remains deployed test challenger only and Decision Kernel coefficients remain frozen pending realistic OOS Evidence-v2. Post-v107 release/evidence tooling was hardened without scoring changes.",
+    "note": "rc4.82 remains last fully Android-verified authority. rc4.83 remains deployed test challenger only; Decision Kernel coefficients stay frozen pending realistic slot-9 OOS Evidence-v2. Transfer/release/evidence guards are generation-generic.",
     "knownOosConfounds": [
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ]
