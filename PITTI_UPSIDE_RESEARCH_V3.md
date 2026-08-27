@@ -220,3 +220,49 @@ Principle: arrows rank asymmetric EV, not raw player quality. A first-round supe
 - STRUCTURAL (draft capital, contract, coordinator, vacated targets): valid through draft unless contradicted.
 - PERFORMANCE (2025 usage/efficiency): structural historical evidence; only interpretation expires.
 No global blanket expiry may silently deactivate structural/performance evidence.
+
+
+## Fresh cross-check — 2026-08-27 evening
+
+Same-day/last-week market research strengthens the framework but also adds useful counterweights:
+
+### WR
+- Current Fantasy Life WR tiers (updated Aug 27) are now a mandatory freshness source for price-vs-ceiling review.
+- 4for4 explicitly groups Jameson Williams as a 2026 value/breakout discussion and places the WR drop-off around Watson/Tate/Parker; this supports treating Jamo as a meaningful ceiling candidate but not automatically as an unpriced breakout.
+- Seahawks current WR analysis describes Jameson as a volatile week-winner around the WR3/flex price band and DJ Moore as a potential ADP outperformer.
+- Parker Washington is NOT a consensus ↑↑: a current counter-thesis notes that his late-2025 eruption coincided with Travis Hunter absence / Brian Thomas Jr. injury and expects heavier 2026 target competition. Therefore Parker remains high-upside but confidence must be reduced versus the initial ledger. Promotion to ↑↑ requires current first-read/route evidence that survives healthy BTJ + Hunter involvement.
+- Carnell Tate also has current fade/value disagreement. High ceiling remains, but priceState must be checked immediately before draft; do not award ↑↑ if WR1-takeover probability is already fully priced.
+
+### RB
+- Current Seahawks sleeper list explicitly highlights Mike Washington Jr. as an ADP riser after the Jeanty development and includes Jonah Coleman among sleeper targets.
+- Current RB market sources still treat Coleman as a meaningful stash/opportunity play. Because Denver has multiple backs, label him ONE_EVENT_AWAY + ROLE_EARNER rather than presumed handcuff/lead back.
+- Mike Washington's upside is highly time-sensitive; as ADP rises, the same football thesis produces less residual value. Fresh Jeanty status + fresh ADP are mandatory.
+
+### TE
+- Fantasy Life published updated TE tiers on Aug 27; use as a same-day price/role cross-check.
+- ESPN TE tiers identify Isaiah Likely as having breakout potential as NYG TE1; this strengthens his TARGET_ASCENSION thesis.
+- FantasyPros Aug 19 TE overview identifies Tyler Warren as a breakout TE and documents Fannin's rookie production; both remain candidates but Warren's current health is a gating variable.
+
+## Confidence / disagreement rule
+A player can have a high football ceiling and still receive only ↑ if:
+1. the market already prices much of it,
+2. credible current counter-evidence attacks the causal path,
+3. the path depends on health/target competition that is unresolved.
+
+↑↑ is therefore a residual-value label, not a raw-talent label.
+
+## Coverage-audit design
+For each top-120 draft-relevant WR/RB/TE after the current mock, classify:
+- archetype,
+- ceiling role,
+- events needed,
+- current-role evidence,
+- pricing state vs current half-PPR ADP,
+- positive current sources,
+- strongest current counter-thesis,
+- invalidator,
+- explicit expiry/refresh trigger,
+- proposed arrow 0/↑/↑↑/↓/↓↓,
+- causal display sentence.
+
+No arrow may be promoted solely from one sleeper/breakout article.
