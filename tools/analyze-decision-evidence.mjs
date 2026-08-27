@@ -7,6 +7,11 @@ const e=JSON.parse(fs.readFileSync(file,'utf8'));
 assert.equal(e.format,'pitti-decision-evidence-v2','Expected Evidence-v2 export');
 assert.ok(Array.isArray(e.summaries),'summaries missing');
 assert.ok(Array.isArray(e.fixtures),'fixtures missing');
+assert.equal(e.appVersion,'v11.8.0-rc4.83','Evidence must come from frozen rc4.83 challenger');
+assert.ok(e.draftId,'draftId missing');
+assert.ok(Number.isFinite(Number(e.slot)),'slot missing');
+assert.ok(Number(e.fixtureCount)===e.fixtures.length,'fixtureCount mismatch');
+assert.ok(Number(e.resolvedCount)<=Number(e.fixtureCount),'resolvedCount exceeds fixtures');
 
 const norm=s=>String(s||'').toLowerCase().replace(/[^a-z0-9]/g,'');
 const fixtureByPick=new Map(e.fixtures.map(f=>[Number(f.current),f]));
@@ -50,4 +55,6 @@ const verdict={
  overrideCount:overrides.length,
  chosenOutsideTop16:outside.length
 };
+if(e.mode==='mock')assert.equal(Number(e.fixtureCount),15,'Expected 15 own-pick fixtures for completed 10x15 mock');
+assert.equal(new Set(e.fixtures.map(f=>Number(f.current))).size,e.fixtures.length,'duplicate fixture pick detected');
 console.log(JSON.stringify({meta:{draftId:e.draftId,createdAt:e.createdAt,mode:e.mode,slot:e.slot},completeness,verdict,rows},null,2));
