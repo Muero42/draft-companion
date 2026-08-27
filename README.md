@@ -1,12 +1,12 @@
 # Draft Companion – Final Draft Edition 2026
 
 > **Produktions-/Default-Branch-Baseline:** v11.8.0-rc4.64.  
-> **Aktueller pre-install geprüfter Kandidat:** v11.8.0-rc4.73.  
-> **Android-Status:** rc4.72 ist verworfen (0-Kandidaten-Regression im Expert-v2-Pfad); rc4.73 ist noch nicht Android-verifiziert.
+> **Aktueller pre-install geprüfter Kandidat:** v11.8.0-rc4.74.  
+> **Android-Status:** rc4.72 ist verworfen (0-Kandidaten-Regression im Expert-v2-Pfad); rc4.74 ist noch nicht Android-verifiziert.
 >
 > RC-Kandidaten werden erst nach ZIP-Extraktion, Syntax-/Versions-/Cache-/Routing-/Regressionstests zur Android-Verifikation freigegeben. README-Drift ist ein Release-Gate.
 
-### rc4.73 — Expert-v2 downstream routing fix
+### rc4.74 — Expert-v2 downstream routing fix
 - Behebt den rc4.72-Fehler, bei dem rankFor() Expert-v2 korrekt fand, rankedAvailable die Kandidaten danach aber erneut mit dem alten FantasyPros-Member-Gate verwarf.
 - Downstream-Kandidatenfilter nutzt jetzt dieselbe panelSelectable()-Semantik wie panelFor().
 - Neuer Regressionstest bildet exakt den Fall „Expert-v2-Ranks vorhanden, Members absichtlich leer“ ab.
