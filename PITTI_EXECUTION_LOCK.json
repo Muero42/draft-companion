@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T16:05:00Z",
+  "updatedAt": "2026-08-27T16:25:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -125,7 +125,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.83_DEPLOYED_TEST_CANDIDATE_ONE_TAP_EVIDENCE_READY_ANDROID_MOCK_PENDING",
+    "status": "RC4.83_PARALLEL_HARDENING_COMPLETE_OOS_MOCK_GATE",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -151,9 +151,12 @@
       "rc4.83 interaction audit: initial saturation stack rejected as too cap-like; bounded stack now soft and stage-aware",
       "decision fixture outcome telemetry added + backward backfill for already-resolved fixtures",
       "one-tap current-draft PITTI-Decision-Evidence export added; includes frozen fixtures, resolved picks, overrides and Coach-vs-choice outcome fields",
-      "main/gh-pages parity PASS for app/index/decision-policy/sw/manifest after rc4.83 evidence export"
+      "main/gh-pages parity PASS for app/index/decision-policy/sw/manifest after rc4.83 evidence export",
+      "parallel freeze audit extended: exact 1QB, Geno/Rodgers hard exclusions, K/DST candidate omission, exceptional TE2, no WR hard cap",
+      "decision evidence upgraded to v2 with per-pick roster counts plus automatic WR6+/WR7+ recommendation and QB2 violation flags",
+      "README authority synchronized: rc4.82 Android authority vs rc4.83 test challenger"
     ],
-    "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_ONE_TAP_DECISION_EVIDENCE_EXPORT",
-    "note": "rc4.83 is deployed only as a test candidate; rc4.82 remains last fully Android-verified authority. User need not document picks manually. After realistic mock, refresh once so final chosen pick resolves, then use Pick-Evidenz exportieren and share JSON."
+    "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
+    "note": "Independent parallel lanes exhausted without speculative retuning. Runtime app/index resynced to Pages after evidence-v2 hardening. Do not tune further before direct OOS Coach-vs-choice evidence."
   }
 }
