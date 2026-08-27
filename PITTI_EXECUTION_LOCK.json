@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T16:35:00Z",
+  "updatedAt": "2026-08-27T16:45:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -29,7 +29,11 @@
     "parallelizeIndependentLanesWhileWaiting": true,
     "statusOnlyOutputWhileUsefulWorkExists": false,
     "checkpointWriteThroughAfterMaterialChange": true,
-    "retryRejectedPathWithoutNewEvidence": false
+    "retryRejectedPathWithoutNewEvidence": false,
+    "longBlocksByDefault": true,
+    "userReminderRequired": false,
+    "blockedGateStopsOnlyDependentLane": true,
+    "parallelLaneInventoryBeforeStop": true
   },
   "league": {
     "teams": 10,
@@ -159,6 +163,6 @@
       "Evidence-v2 schema contract frozen in rc4.83 regression gate: pick, rosterCounts, candidates, chosenPlayer, decisionOutcome, WR saturation/QB2 aggregate flags"
     ],
     "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
-    "note": "All safe autonomous pre-OOS work exhausted. Freeze rc4.83 coefficients and evidence schema; no further decision-model edits until realistic mock evidence arrives. Android rc4.82 remains authority; rc4.83 is test-only."
+    "note": "rc4.83 Decision Kernel frozen pending OOS evidence, but PITTI AUTO continues independent positive-value lanes. Long uninterrupted AUTO blocks are a durable user contract; do not require reminders."
   }
 }
