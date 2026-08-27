@@ -17,4 +17,6 @@ jobs:
           ! grep -q "PLAYER_EVIDENCE" live-surface-v3.js
           ! grep -q "JETZT-FENSTER\|EHER JETZT" live-surface-v3.js
       - name: Expert and UI contract
-        run: |\n          node tools/release-contract-v2.mjs\n          node tools/live-presentation-behavior.mjs
+        run: |
+          node tools/release-contract-v2.mjs
+          node tools/live-presentation-behavior.mjs
