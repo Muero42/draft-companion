@@ -67,6 +67,8 @@ assert(renderedSpecific[2].includes('Workhorse'),'Taylor advantage missing');
 assert(renderedSpecific[3].includes('Elite-Konstanz'),'Amon-Ra advantage missing');
 assert(p.keyword(specific[2],5).includes('WORKHORSE'),'Taylor Top-10 trait missing');
 assert(p.keyword(specific[3],7).includes('KONSTANZ'),'Amon-Ra Top-10 trait missing');
+const chaseRisk={...rows[2],injury:'Questionable',researchResidual:{displayActive:true,components:[{displayRisk:true,confidence:.9,causal:'Aktuell Knie-Hyperextension; Chase bezeichnete sie als gering und wäre nach eigener Aussage spielbereit'}]}};
+assert(p.minus(chaseRisk).includes('Knie-Hyperextension'),'specific risk context missing');
 assert(!renderedSpecific.slice(0,2).every(x=>x.includes('Expertenkonsens Top-5')),'Gibbs/Bijan still generic consensus');
 
 console.log('LIVE_PRESENTATION_BEHAVIOR_PASS');
