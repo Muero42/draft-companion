@@ -19,6 +19,7 @@ const evidenceAnalyzer=text('tools/analyze-decision-evidence.mjs');
 const releaseContract=text('PITTI_RELEASE_CONTRACT_V2.md');
 const releaseWorkflow=text('.github/workflows/release-contract-v2.yml');
 const packageWorkflow=text('.github/workflows/release-contract-v2-package.yml');
+const preDraftFreshnessGate=text('tools/pre-draft-freshness-gate.mjs');
 const current=JSON.parse(text('PITTI_CURRENT_STATE.json'));
 const seal=JSON.parse(text('PITTI_HANDOFF_SEAL.json'));
 const handoffGeneration=(currentHandoff.match(/Handoff generation:\s*`([^`]+)`/)||[])[1];
@@ -131,6 +132,8 @@ must(packageWorkflow.includes('node tools/rc483-draft-critical.mjs'),'package wo
 must(packageWorkflow.includes('VERSION="$(sed -n'),'package version must derive from APP_VERSION');
 must(!packageWorkflow.includes('Draft_Companion_v11.8.0-rc4.82_PREINSTALL.zip'),'stale hard-coded rc4.82 package path resurrected');
 must(releaseContract.includes('Exact v2 weights:'),'release contract expert-weight lock missing');
+must(preDraftFreshnessGate.includes('PRE_DRAFT_FRESHNESS_FAIL'),'pre-draft freshness fail-closed gate missing');
+must(preDraftFreshnessGate.includes("--max-age-days"),'pre-draft freshness age control missing');
 
 for(const token of ['rc4.82','rc4.83','work package -> checkpoint -> re-inventory','user must never need to remind'])
   must(bootstrap.includes(token),`repo bootstrap invariant missing: ${token}`);
