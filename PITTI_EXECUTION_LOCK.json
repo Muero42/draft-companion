@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T00:00:00Z",
+  "updatedAt": "2026-08-27T07:35:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -14,14 +14,20 @@
     "builtIsNotAndroidVerified": true,
     "preInstallCandidate": "v11.8.0-rc4.77",
     "preInstallCandidateAndroidVerified": false,
-    "installationApproved": false
+    "installationApproved": false,
+    "productionControl": "v11.8.0-rc4.64",
+    "latestAndroidObserved": "v11.8.0-rc4.76"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
     "parallelizeIndependentLanesWhileWaiting": true,
     "statusOnlyOutputWhileUsefulWorkExists": false,
     "checkpointWriteThroughAfterMaterialChange": true,
-    "retryRejectedPathWithoutNewEvidence": false
+    "retryRejectedPathWithoutNewEvidence": false,
+    "noIntermediateUserFacingOutputWhileUsefulWorkExists": true,
+    "internalCiTestBuildResearchFailuresAreUserGates": false,
+    "repairInternalFailuresAndContinue": true,
+    "handoffSilentUntilSealed": true
   },
   "league": {
     "teams": 10,
@@ -45,12 +51,17 @@
     "noGlobalQb2Te2Ban": true
   },
   "expertV2": {
-    "status": "WR_ONLY_SHADOW_QUALIFIED_NOT_PRODUCTION",
-    "integration": "ADDITIVE_SELECTABLE_ONLY",
-    "control": "rc4.64-incumbent",
-    "controlRemainsDefault": true,
-    "fourPositionCandidate": "REJECTED_DO_NOT_INTEGRATE",
-    "rejectedFullCandidateWeights": {
+    "status": "THREE_SELECTABLE_PROFILES_EXPERIMENTAL_COMPARISON",
+    "profiles": [
+      "incumbent",
+      "fullv2",
+      "wrv2"
+    ],
+    "incumbentRemainsSelectable": true,
+    "fullV2Selectable": true,
+    "fullV2PromotedWinner": false,
+    "historicalABRejectionDoesNotDisableSelectableProfile": true,
+    "weights": {
       "QB": {
         "Draft Sharks Team": 35,
         "Nick Mariano": 25,
@@ -78,55 +89,34 @@
         "Justin Boone": 10
       }
     },
-    "qbCandidate": "REJECTED_LATE_QB2_REGRESSION_USE_INCUMBENT",
-    "rbCandidate": "REJECTED_NO_DEMONSTRATED_MARGINAL_VALUE_USE_INCUMBENT",
-    "teCandidate": "REJECTED_INSUFFICIENT_PROMOTION_CASE_USE_INCUMBENT",
-    "wrCandidate": "PASS_SHADOW_QUALIFICATION_NOT_PRODUCTION",
-    "wrShadowWeights": {
-      "Nick Mariano": 35,
-      "Draft Sharks Team": 30,
-      "Pat Fitzmaurice": 15,
-      "Dalton Del Don": 10,
-      "Justin Boone": 10
+    "wrOnly": {
+      "QB": "incumbent",
+      "RB": "incumbent",
+      "WR": "v2",
+      "TE": "incumbent"
     },
-    "wrShadowWeightsSum": 100,
+    "displayOrder": [
+      "Draft Sharks Team",
+      "Dalton Del Don",
+      "Pat Fitzmaurice",
+      "Nick Mariano",
+      "Justin Boone"
+    ],
+    "displayValues": "individual player ranks, never weights",
     "brownExcluded": true,
     "erickson": "CHALLENGER_ONLY_NO_CURRENT_NUMERIC_VOTE",
-    "harmon": "WR_EVIDENCE_ONLY_NO_CURRENT_NUMERIC_VOTE_UNLESS_MARGINAL_VALUE_PROVEN",
-    "koerner": "NO_CURRENT_DRAFT_ACQUISITION_PAYWALL_WATCHLIST_ONLY",
-    "draftSharksCountAsOneSourceFamily": true,
-    "temporaryWeisseGianniBobalPoolRejected": true,
-    "exactReturnControlPredictions": 224,
-    "exactReturnV2Predictions": 215,
-    "exactReturnProductionFallbacks": 9,
-    "exactReturnMAE": 0,
-    "wrCandidateSignalPicks": [
-      69,
-      92,
-      109,
-      112,
-      132,
-      149
-    ],
-    "mandatoryControls": [
-      89,
-      92,
-      112,
-      129,
-      132,
-      149
-    ],
-    "knownSharedBAxisIssue": "pick129 WR7 can be resurrected by common PlayerQualitySafety/roster-utility; do not alter WR weights or impose cap to mask it",
-    "currentGate": "INTEGRATE_EXACT_WR_SHADOW_WEIGHTS_ADDITIVELY_THEN_REGRESSION_SAFETY_FRESHNESS_REALISTIC_VALIDATION",
-    "weightsAreProduction": false,
-    "oldSelectorWorkflowsAreAuthority": false
+    "harmon": "WR_EVIDENCE_ONLY",
+    "koerner": "PAYWALLED_WATCHLIST_ONLY",
+    "draftSharksCountAsOneSourceFamily": true
   },
   "currentWork": {
     "branch": "pitti-auto/rc4.77-decision-evidence",
-    "gate": "RC4_77_RELEASE_CONTRACT_V2_FULL_GATES_THEN_DECISION_AUDIT",
+    "runtimeTestedHead": "25ce5df410a4b9be2ce6ec75ba0817bdbb858d3e",
+    "latestCandidate": "v11.8.0-rc4.77",
+    "gate": "DECISION_QUALITY_AUDIT_PLUS_PARALLEL_SEMANTIC_VERIFICATION_THEN_ANDROID",
     "presentationContract": [
-      "Return is normal timing signal; WAIT only high-return exception",
-      "player-specific causal strengths/risks when evidence exists; no forced differences",
+      "Return is normal timing; WAIT only high-return exception",
+      "specific structured strengths/risks when evidence exists; no forced differences",
       "expert ranks always visible; ranks not weights; deterministic common-first order; selected experts only",
       "upside/regression arrows and reason directly after player name",
       "Parker Washington: WR2 mit WR1-Upside",
