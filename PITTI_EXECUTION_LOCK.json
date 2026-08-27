@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T09:04:00Z",
+  "updatedAt": "2026-08-27T10:25:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -13,8 +13,11 @@
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.76",
-    "latestPreinstallVerified": "v11.8.0-rc4.77",
-    "latestResearchChallenger": "v11.8.0-rc4.78"
+    "latestPreinstallVerified": "v11.8.0-rc4.78",
+    "latestResearchChallenger": "v11.8.0-rc4.78",
+    "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip",
+    "preinstallSha256": "69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba",
+    "preinstallRuntimeFiles": 12
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -116,21 +119,34 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "branch": "pitti-auto/rc4.78-roster-option-value",
-    "baseRuntimeTestedHead": "25ce5df410a4b9be2ce6ec75ba0817bdbb858d3e",
-    "status": "RESEARCH_CHALLENGER_NOT_PROMOTED",
-    "gate": "GUARDRAIL_SELF_CHECK_THEN_DETERMINISTIC_EXECUTABLE_OOS_FROM_CLEAN_PROMOTION_LINE",
-    "newEvidence": "User explicitly will draft exactly one QB; QB2 would be dropped for K/DST and has no pre-Week-1 option value. Preserve TE as soft/exceptional-value path; do not generalize QB rule to TE or other league profiles.",
-    "head": "705a3f48d2961a9376eef66225326c95d5ae6c9a",
-    "validatedChanges": [
-      "user QB2 hard Coach exclusion after QB1",
-      "WR7+ Safety promotion requires existing strong-value threshold; no WR cap",
-      "embedded Expert-v2 snapshot health/source semantics",
-      "embedded Expert-v2 health plus explicit frozen-board provenance disclosure"
+    "branch": "pitti-auto/rc4.78-clean-promotion",
+    "status": "PREINSTALL_VERIFIED_NOT_ANDROID",
+    "production": false,
+    "androidReadyForVerification": true,
+    "androidVerified": false,
+    "packageSha256": "69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba",
+    "runtimeFiles": 12,
+    "oosDraft": "1398395487467368448",
+    "oosPicks": [
+      112,
+      129,
+      132,
+      149
     ],
-    "ciProbe": "branch-local workflow added; no run emitted; internal limitation, not user gate",
-    "closedProbePr": 28,
-    "semanticRepair": "Execution Lock old WR-only/full-v2-rejected authority removed; three-profile current authority restored from CURRENT/Handoff.",
-    "authorityConsistency": "REPAIRED_CURRENT_THREE_PROFILE_SEMANTICS"
+    "validation": [
+      "clean branch ahead-only of main",
+      "12/12 runtime files byte-identical to GitHub branch blobs",
+      "JS syntax PASS",
+      "executable one-QB/OOS WR7 policy PASS",
+      "live presentation behavior PASS",
+      "Expert-v2 board/weights contract PASS",
+      "legacy regression-equivalent suite PASS including 6000-run Return market sanity",
+      "package/re-extract 12/12 byte parity PASS",
+      "version/cache coherence PASS"
+    ],
+    "ciTransport": "NO_ACTIONS_RUN_EMITTED_FOR_CONNECTOR_COMMITS; equivalent gates executed independently; not a user gate",
+    "gate": "ANDROID_EXACT_CANDIDATE_SMOKE_ONLY",
+    "libraryArtifact": "/Pitti/Development/Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip",
+    "libraryGateReport": "/Pitti/Development/RC478_PREINSTALL_GATE_REPORT_2026-08-27.md"
   }
 }
