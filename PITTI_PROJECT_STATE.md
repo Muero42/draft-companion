@@ -1,6 +1,6 @@
 # PITTI PROJECT STATE — CANONICAL
 
-Updated: 2026-08-26 16:45Z
+Updated: 2026-08-27 15:47Z
 Authority: compact repository execution state. Persistent full append-only history is `/Pitti/PITTI_PROJECT_STATE.md`. Actual verified artifacts/runtime override stale text; repair stale state immediately. Chat memory is never authority.
 
 ## EXECUTION INVARIANTS — MUST NOT REGRESS
@@ -29,7 +29,7 @@ Machine lock: `PITTI_EXECUTION_LOCK.json`. Executable guard: `tools/pitti_guardr
 - Never revive PairSum-v2/Rolling-v1, Chase-Brown/player-name forcing, fixed quotas/caps, generic Return-v2 retune or global QB2/TE2 ban without new evidence.
 - Reject Superflex/2QB contamination fail-closed.
 
-## CURRENT RUNTIME BOUNDARY
+## HISTORICAL CURRENT RUNTIME BOUNDARY — SUPERSEDED BY LATEST EOF SECTIONS
 
 - Android verified/current control: **v11.8.0-rc4.64**.
 - Decision-kernel pin: `9ba6db89fc1e7550052a7526bd0c68d6cc7459dc`.
@@ -38,7 +38,7 @@ Machine lock: `PITTI_EXECUTION_LOCK.json`. Executable guard: `tools/pitti_guardr
 - gh-pages remains a distinct rc4.63 runtime plus isolated audit tooling; do not equate it with current Android rc4.64.
 - rc4.64 incumbent expert configuration remains **DEFAULT / CONTROL / SELECTABLE**.
 
-## EXPERT-V2 — AUTHORITATIVE 2026-08-26 STATE
+## HISTORICAL EXPERT-V2 — 2026-08-26 STATE — SUPERSEDED BY 2026-08-27 THREE-PROFILE AUTHORITY BELOW
 
 ### Full four-position candidate: REJECTED
 
@@ -656,3 +656,35 @@ User clarified that the preceding `AUTO` was issued inside an active PITTI HANDO
 
 ### Exact continuation after PASS takeover
 Receiving chat message remains only `PITTI AUTO`. It must verify v106 repo CURRENT/handoff/seal + bootstrap/matrix + Project State EOF against actual runtime/device evidence, then execute concrete continuation work. AUTO must not itself start the interactive rc4.83 mock.
+
+
+---
+
+## 2026-08-27 PITTI HANDOFF v107 — RECEIVING-CHAT TRANSFER AUDIT / SEAL-VERIFICATION HARDENING
+
+### Audit finding
+The interrupted v106 handoff was repo-side sealed with matching hashes, but a fresh receiving-chat audit still found concrete old-error resurrection risks:
+1. `PITTI_COMMAND_CONTRACTS.json`, `PITTI_NEW_CHAT_BOOTSTRAP.md`, and the top mandatory block of `NEW_CHAT_HANDOFF_CURRENT.md` did not uniformly require `PITTI_CURRENT_STATE.json` + `PITTI_HANDOFF_SEAL.json` before project work.
+2. `HANDOFF_COMPLETENESS_MATRIX.md` still labeled itself “REPO v105”.
+3. `PITTI_AUTO_PREFLIGHT.md` retained stale wording that could be misread as permission to reinvent current Expert-v2 weights.
+4. Guardrail CI did not trigger on every file that the checker reads, leaving a path where policy/seal state could change without running the gate.
+5. The guardrail checker did not itself verify CURRENT/Handoff/Seal generation equality or seal-listed Git blob integrity.
+
+### v107 repair
+- Takeover source order now explicitly starts with command contract, CURRENT and PASS SEAL, then preflight/lock/Project-State EOF/handoff/bootstrap/matrix and actual runtime evidence.
+- CURRENT / SEAL / handoff generation equality is mandatory and fail-closed.
+- Seal-listed Git blob integrity is executable-guarded.
+- Completeness matrix advanced to repo v107 and includes generation/hash checks.
+- Preflight now preserves frozen current Expert-v2 weights/profile semantics rather than suggesting they are still to be invented.
+- CI trigger coverage expanded to CURRENT, SEAL, decision-policy and evidence-analyzer inputs used by the guardrail.
+- Historical top-of-file runtime/expert headings are explicitly marked superseded so old 2026-08-26 text is not mistaken for current authority.
+- No Decision-Kernel, Return-v2, manager-model, expert-weight, ADP, QB/TE/WR roster scoring or player-specific recommendation change was made.
+
+### Current boundary unchanged
+- production/control: rc4.64.
+- Android authority: rc4.82.
+- rc4.83: deployed TEST challenger, not Android-verified/promoted; Decision Kernel frozen pending realistic OOS Evidence-v2.
+- latest package/re-extract: rc4.78.
+- Library mirror remains stale/fail-closed; repo/device truth wins.
+- external gate remains `ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT`.
+- AUTO itself does not start the mock.
