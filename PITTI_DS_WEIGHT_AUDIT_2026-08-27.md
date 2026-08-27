@@ -155,3 +155,45 @@ User constraint: do NOT restart expert selection. Derek Brown remains excluded. 
 
 ### Test policy
 Do not add all candidates. Fetch only current API ranks for the highest-value position-specific challengers, then test marginal benefit against incumbent and DS-reduced variants. Require freshness close to 31.08 draft and no provenance/scoring mismatch. Candidate value is position-specific; never import their weak-position ranks merely because their strong-position ranks are useful.
+
+
+## Stability validation of shortlisted specialists — 2026-08-27
+
+FantasyPros 2025 Draft Accuracy provides a useful recent-year stress test:
+- Ryan Weisse: overall #7, QB16 / RB8 / WR171 / TE3. Confirms RB+TE specialization; explicitly do NOT use WR.
+- Marc Shannep: overall #5, QB19 / RB54 / WR4 / TE39. Strengthens him materially as a WR challenger despite 3-year WR16.
+- Jody Smith (DS individual, not Team board): overall #9, QB66 / RB19 / WR21 / TE23.
+2024:
+- Wolf of Roto Street: overall #6, QB41 / RB52 / WR10 / TE8.
+- Mike Maher: overall #10, QB121 / RB17 / WR40 / TE33.
+- DS individuals Kevin English #1 (RB12/WR2), Jody Smith #2 (RB11/WR68).
+This reinforces: recent stability matters; no direct inference from DS individuals to DS Team board.
+
+### Revised high-priority shortlist
+RB:
+1. Ryan Weisse — multi-year RB2 + 2025 RB8: strongest immediately actionable specialist among screenshots.
+2. Kev Wheeler — multi-year RB4; freshness 08/20, WATCH until refreshed. Need annual stability extraction before production.
+3. Ben Wasley — multi-year RB6; annual stability extraction needed.
+4. Mike Maher — multi-year RB9 + 2024 RB17; secondary.
+
+TE:
+1. Ryan Weisse — multi-year TE12 + 2025 TE3: very strong dual-position candidate.
+2. Wolf of Roto Street — multi-year TE2 + 2024 TE8: very strong TE candidate.
+3. Scott Pianowski — multi-year TE5; annual stability extraction needed.
+Do not infer broad usefulness from TE specialty.
+
+WR:
+1. Marc Shannep — multi-year WR16 + 2025 WR4 + 2024 in-season WR4 (in-season is secondary evidence): now a legitimate challenger, not merely generic diversification.
+2. No need to add a WR specialist unless marginal/OOS test beats incumbent Mariano + DS setup.
+
+QB:
+Todd D Clark remains multi-year QB5, but annual stability must be checked before promotion; do not overvalue one aggregate.
+
+### Selection rule tightened
+A specialist can enter challenger testing when:
+- multi-year position evidence is strong;
+- at least one recent annual draft-accuracy result supports rather than contradicts it, where available;
+- current 2026 rank is fresh enough;
+- source is not redundant/correlated enough to erase marginal value;
+- position-only inclusion is technically supported.
+Availability alone never qualifies a source.
