@@ -1255,7 +1255,7 @@ function playerQualitySafetyThreshold(current){
   return 13;
 }
 function applyPlayerQualitySafetyGate(rows,current){
-  const valid=rows.filter(x=>x?.r&&Number.isFinite(x.r.rank)&&Number.isFinite(x.rawScore)&&!x.hardExcluded&&!x.recommendationBlocked);
+  const valid=rows.filter(x=>x?.r&&Number.isFinite(x.r.rank)&&Number.isFinite(x.rawScore)&&!x.hardExcluded&&!x.recommendationBlocked&&!x.userStrategyExcluded);
   if(!valid.length)return{triggered:false,reason:'no-valid-candidates'};
 
   const naturalLeader=valid.slice().sort((a,b)=>b.rawScore-a.rawScore||a.r.rank-b.r.rank)[0];
