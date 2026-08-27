@@ -1,9 +1,13 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v105
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v107
 
 A new-chat takeover fails closed unless all checks pass.
 
 ## 1 Authority
 - command contract loaded
+- CURRENT loaded
+- PASS Seal loaded
+- CURRENT / Seal / Handoff generation identical
+- every seal-listed repo blob hash verified
 - Execution Lock loaded
 - Project State read to EOF
 - current handoff/bootstrap/matrix loaded
