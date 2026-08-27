@@ -102,3 +102,9 @@ assert.ok(app.includes("USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodge
 assert.ok(app.includes("USER_HARD_QB_EXCLUSIONS.has(norm(p.name))"));
 assert.ok(app.includes("['QB','RB','WR','TE'].includes(p.pos)"));
 assert.ok(!policy.includes("userDraftStrategyExcluded('WR'"));
+
+// Evidence roster counts must not depend on rankedAvailable membership (e.g. already-drafted roster players).
+assert.ok(app.includes("player_name:p.metadata?.first_name"));
+assert.ok(app.includes("pos:meta.position||p.metadata?.position||null"));
+assert.ok(app.includes("const pos=p.pos||(f.rankedPool||[]).find"));
+assert.ok(app.includes("freezeDecisionFixture({draftId:id,current,returnPick,picks,mine,players,rankedAvailable"));
