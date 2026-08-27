@@ -1,5 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Updated: 2026-08-27 15:00Z
+Handoff generation: `20260827T154300Z-v106`
+Updated: 2026-08-27 15:43Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_AUTO_PREFLIGHT.md` fully.
@@ -91,3 +92,12 @@ Library mirror is stale/writeback-blocked. Repo `PITTI_EXECUTION_LOCK.json` + re
 - A v105 Library reseal was prepared locally and passed an independent semantic/hash second pass, but persistent Library upload-back failed again with `container_session_expired`. Therefore **do not claim Library v105 is persisted** until a later `files.list` proves it.
 - If Library still surfaces v102/v103 or rc4.76/77 current pointers, treat them as stale. Repo `PITTI_COMMAND_CONTRACTS.json` + `PITTI_EXECUTION_LOCK.json` + repo Project-State EOF + this handoff + repo bootstrap/matrix + verified device facts win and the contradiction fails closed.
 - Current factual boundary: rc4.64 production/control; rc4.82 last fully Android-verified authority; rc4.83 deployed TEST challenger OOS-pending/not promoted/not Android-verified; rc4.78 latest package+reextract boundary; Library rc4.52 aliases recovery-only.
+
+
+## V106 HANDOFF RESUMPTION CANARY
+- User clarified on 2026-08-27 17:43 CEST that the immediately preceding `AUTO` meant: **resume the PITTI HANDOFF transaction at the correct point**, not resume ordinary project-development AUTO.
+- Therefore this generation is a handoff transaction. Do not perform new Decision-Kernel tuning while sealing it.
+- Latest material addition since v105: independent QB1 cross-check is recorded in Project State; it remains qualitative and does not alter the frozen rc4.83 OOS experiment.
+- Runtime parity reverified during this handoff: main == gh-pages byte/blob parity for app.js, index.html, decision-policy.js, sw.js and manifest.webmanifest.
+- Current external continuation after takeover remains `ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT`; AUTO itself must not start the mock.
+- Receiving chat must distinguish `PITTI HANDOFF` (transactional transfer preparation) from `PITTI AUTO` (verified takeover/continuation). If the user says AUTO while a HANDOFF transaction is in progress, finish the handoff transaction first.
