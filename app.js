@@ -436,8 +436,35 @@ function expertHealthDetailLine(row){
   const times=[row.sourceUpdated?`Quelle ${row.sourceUpdated}`:'',refreshed?`lokal ${refreshed}`:''].filter(Boolean).join(' · ');
   return`${row.name}: ${status} · ${row.source||'keine Quelle'}${times?` · ${times}`:''}${row.error?` · ${row.error}`:''}`;
 }
+function embeddedPanelExpertNames(pid){
+  const panel=panels[pid]||{};
+  if(!panel.shadow)return[];
+  const names=new Set();
+  for(const row of Object.values(panelRanks[pid]||{}))for(const x of (row?.individual||[]))if(x?.expertName&&Number.isFinite(Number(x.rank)))names.add(x.expertName);
+  return[...names];
+}
+function panelIndividualVerificationLine(pid){
+  const panel=panels[pid]||{},embedded=embeddedPanelExpertNames(pid);
+  if(panel.shadow)return `${panel.name||pid}: ${embedded.length}/${embedded.length} eingebettet`;
+  const ids=Object.keys(panel.members||{}).filter(eid=>rankCache[eid]?.verifiedIndividual&&!rankCache[eid]?.duplicateOf);
+  return `${panel.name||pid}: ${ids.length}/${Object.keys(panel.members||{}).length}`;
+}
+function activePanelSourceLines(usedPanelIds){
+  const out=[];
+  for(const pid of usedPanelIds){
+    const panel=panels[pid]||{},embedded=embeddedPanelExpertNames(pid);
+    if(panel.shadow&&embedded.length){out.push(...embedded.map(name=>`${name}: Expert-v2 Board (eingebettet)`));continue;}
+    for(const eid of Object.keys(panel.members||{})){
+      const row=rankCache[eid];if(!row?.verifiedIndividual)continue;
+      out.push(`${row.expertName}: ${row.source||'verifiziert'}${row.sourceScoring?` [${row.sourceScoring}${row.sourceContextVerified?' ✓':' ?'}]`:''}${row.sourceUpdated?` (${row.sourceUpdated})`:''}`);
+    }
+  }
+  return[...new Set(out)];
+}
 function effectivePanelHealthLine(pos){
-  const pid=panelFor(pos),panel=panels[pid]||{},members=Object.entries(panel.members||{}).filter(([eid])=>rankCache[eid]?.verifiedIndividual&&!rankCache[eid]?.duplicateOf);
+  const pid=panelFor(pos),panel=panels[pid]||{},embedded=embeddedPanelExpertNames(pid);
+  if(panel.shadow)return `${pos}: ${embedded.length?embedded.join(' + '):'keine eingebetteten Einzelränge'} | Expert-v2 Board`;
+  const members=Object.entries(panel.members||{}).filter(([eid])=>rankCache[eid]?.verifiedIndividual&&!rankCache[eid]?.duplicateOf);
   const total=members.reduce((sum,[,w])=>sum+Number(w||0),0);
   const effective=members.map(([eid,w])=>{
     const name=rankCache[eid]?.expertName||experts.find(e=>String(e.id)===String(eid))?.name||eid;
@@ -2085,7 +2112,7 @@ async function refresh(){
       'DATENSTATUS',
       `Verwendete Panels: ${usedPanelIds.map(pid=>panels[pid]?.name||pid).join(' / ')||'FEHLT'}`,
       `Geladene Panel-Spieler: ${rankedCounts||'FEHLT'}`,
-      `Verifizierte Einzelrankings: ${usedPanelIds.map(pid=>{const ids=Object.keys(panels[pid]?.members||{}).filter(eid=>rankCache[eid]?.verifiedIndividual&&!rankCache[eid]?.duplicateOf);return `${panels[pid]?.name||pid}: ${ids.length}/${Object.keys(panels[pid]?.members||{}).length}`}).join(' · ')||'FEHLT'}`,
+      `Verifizierte Einzelrankings: ${usedPanelIds.map(panelIndividualVerificationLine).join(' · ')||'FEHLT'}`,
       expertHealthSummary,
       `Expertenpool-Details: ${expertHealthDetails.join(' | ')}`,
       `Panel-Health: ${expertHealth.degraded?'DEGRADED':'OK'} · ${panelHealthLines.join(' · ')}`,
@@ -2099,7 +2126,7 @@ async function refresh(){
         const b=Object.values(rv2.collisions).find(x=>norm(x.label)==='basti');
         return b?[`Basti Target Collision: ${Math.round(b.prob*100)}% · ${b.targets.slice(0,4).map(x=>`${x.name} ${Math.round(x.prob*100)}%`).join(' · ')}`]:[];
       })():[]),
-      `Aktive Expertenquellen: ${[...new Set(usedPanelIds.flatMap(pid=>Object.keys(panels[pid]?.members||{})))].filter(eid=>rankCache[eid]?.verifiedIndividual).map(eid=>`${rankCache[eid]?.expertName}: ${rankCache[eid]?.source||'verifiziert'}${rankCache[eid]?.sourceScoring?` [${rankCache[eid].sourceScoring}${rankCache[eid]?.sourceContextVerified?' ✓':' ?'}]`:''}${rankCache[eid]?.sourceUpdated?` (${rankCache[eid].sourceUpdated})`:''}`).join(' · ')||'KEINE'}`,
+      `Aktive Expertenquellen: ${activePanelSourceLines(usedPanelIds).join(' · ')||'KEINE'}`,
       `Panel-Stand: ${rankingStamp}`,
       `Sleeper-ADP: ${Object.keys(adp).length} | Quelle: ${adpMeta.source||'none'} | Stand: ${adpStamp}`,
       `Bewertbare verfügbare Spieler: ${scored.length}`,
