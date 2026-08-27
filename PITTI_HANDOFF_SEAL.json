@@ -1,30 +1,31 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260827T173500Z-v113",
-  "created_at": "2026-08-27T17:35:00Z",
+  "handoff_generation": "20260827T175500Z-v114",
+  "created_at": "2026-08-27T17:55:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "6daf1559bcce6d6809b311016a6558b36eff6049",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "a8c4c2251bc0a9c5ff777f222729d57f33a9ee45",
+    "PITTI_CURRENT_STATE.json": "08223ea2c5e6a1e3119e5345c926bb045e596be3",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "0be0e7eb741096e3b53f482c03ffa4538c9bc7fb",
     "PITTI_COMMAND_CONTRACTS.json": "5fe962b5043777b75efccc03b61408d5e181a013",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "ca02242c27b78d8b4f70bd57aad9288e1bcdadd6",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "e4a036c58166aeb2f157c417acd9afd68e795325",
-    "PITTI_EXECUTION_LOCK.json": "0e06e31cc1cfce9e6762ed2f1433406b0d48ee6d",
-    "PITTI_PROJECT_STATE.md": "a52877ce38ff2db07ea099b9e9f210285efad487",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "df47ad6fe3da942e5aa163ce84edb9ff5ae3524f",
+    "PITTI_EXECUTION_LOCK.json": "f08e0570cc753b378e3215073d80a01870efee3e",
+    "PITTI_PROJECT_STATE.md": "93a11a14ea1f9afd6b1e973b67069e4febe2ff2c",
     "PITTI_AUTO_PREFLIGHT.md": "9e6090ef003e324bc7fdf91b9bd9c2c5b2c06317",
     "app.js": "c9139d0efe9545326ece4a8936ff51dfa7938878",
     "index.html": "9f4c9ad2cbc98a13770736c6407e9ddda96832f0",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
     "sw.js": "c9ac5a6d821fda9f393964a6dc42d7254240444d",
     "manifest.webmanifest": "0c02f7bb0ad65c47001afbcda40409186f1b1168",
-    "tools/rc483-draft-critical.mjs": "726e84ca8ec3da6842f4261aa84eabb999cef650",
+    "tools/rc483-draft-critical.mjs": "ae617a21edae9626e83a953e26b3187df0f5d6d1",
     "tools/analyze-decision-evidence.mjs": "4b428258fbbca906be2e516fb249e4f18a888d34",
-    "tools/pitti_guardrail_check.mjs": "033748425757b03bac9f82fa51d821110002e7a0",
+    "tools/pitti_guardrail_check.mjs": "59dfdfe954f4ac19515cf21b24eb761e6a62125a",
     "tools/pre-draft-freshness-gate.mjs": "9acc1999c0fe8a3428b9af7631812fe04338d42d",
-    ".github/workflows/pitti-project-guardrails.yml": "d6873f8169a628b57bbbd9a3fa94e08aaa767a33",
+    "tools/emergency-queue-contract.mjs": "d5ce421c905c40c10c03ba70a41161fb6036d320",
+    ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
     "README.md": "12aec3a1601784325bab8ed65af93d9f7d2ed077",
     ".github/workflows/release-contract-v2.yml": "f30f34e089145a96d79ab1fdd4f4ff42ca337078",
     ".github/workflows/release-contract-v2-package.yml": "6161f434e8bfa735c6cf38c4eaff88dc36e43877",
@@ -55,8 +56,9 @@
     "oos_mock_slot9_identity": true,
     "acute_status_confound_separated": true,
     "generation_generic_transfer_guards": true,
-    "matrix_v113": true,
-    "pre_real_draft_freshness_gate": true
+    "pre_real_draft_freshness_gate": true,
+    "matrix_v114": true,
+    "emergency_queue_executable_contract": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -78,6 +80,6 @@
     "auto_starts_mock": false,
     "instruction": "After verified new-chat takeover, continue independent AUTO work; when user performs a natural rc4.83 Android mock, refresh once, export Evidence-v2, then run pick-by-pick OOS analysis and PROMOTE/MODIFY/REJECT. Do not tune frozen rc4.83 before evidence."
   },
-  "library_persistence": "STALE_FAIL_CLOSED_NOT_V113",
-  "acceptance_fingerprint": "rc4.64|rc4.82|rc4.83-test|rc4.78-package|EVIDENCE_V2-OOS-ID|JEANTY-CONFOUND|PREDRAFT-FRESHNESS-GATE|1QB|AUTO-LONGBLOCK|HANDOFF-v113"
+  "library_persistence": "STALE_FAIL_CLOSED_NOT_V114",
+  "acceptance_fingerprint": "rc4.64|rc4.82|rc4.83-test|rc4.78-package|EVIDENCE_V2-OOS-ID|PREDRAFT-FRESHNESS|EMERGENCY-QUEUE-CONTRACT|1QB|AUTO-LONGBLOCK|HANDOFF-v114"
 }
