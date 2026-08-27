@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T17:05:00Z",
+  "updatedAt": "2026-08-27T15:02:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -35,7 +35,11 @@
     "longBlocksByDefault": true,
     "userReminderRequired": false,
     "blockedGateStopsOnlyDependentLane": true,
-    "parallelLaneInventoryBeforeStop": true
+    "parallelLaneInventoryBeforeStop": true,
+    "reinventoryAfterEveryWorkPackage": true,
+    "oneInventoryPerAutoTurnIsInsufficient": true,
+    "promiseOnlyAutoResponseForbidden": true,
+    "externalGateValidStopOnlyAfterIndependentLaneExhaustion": true
   },
   "league": {
     "teams": 10,
@@ -131,7 +135,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.83_PARALLEL_HARDENING_COMPLETE_OOS_MOCK_GATE",
+    "status": "RC4.83_FROZEN_OOS_EVIDENCE_GATE_PARALLEL_AUTO_LOOP_LOCKED",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -162,9 +166,10 @@
       "decision evidence upgraded to v2 with per-pick roster counts plus automatic WR6+/WR7+ recommendation and QB2 violation flags",
       "README authority synchronized: rc4.82 Android authority vs rc4.83 test challenger",
       "parallel evidence audit caught roster-count derivation bug before mock: frozen userRoster now stores position directly; Evidence-v2 no longer depends on already-drafted players remaining in rankedAvailable",
-      "Evidence-v2 schema contract frozen in rc4.83 regression gate: pick, rosterCounts, candidates, chosenPlayer, decisionOutcome, WR saturation/QB2 aggregate flags"
+      "Evidence-v2 schema contract frozen in rc4.83 regression gate: pick, rosterCounts, candidates, chosenPlayer, decisionOutcome, WR saturation/QB2 aggregate flags",
+      "AUTO anti-regression hardened: re-inventory after EVERY work package; promise/status-only AUTO responses forbidden while work exists; external gate only valid after independent-lane exhaustion"
     ],
     "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
-    "note": "HANDOFF refreshed after independent QB1 cross-check. rc4.83 Decision Kernel remains frozen; next external gate is Android rc4.83 realistic mock then Evidence-v2 export. AUTO long-block contract must survive chat change."
+    "note": "rc4.82 remains last fully Android-verified authority. rc4.83 is deployed test challenger only; coefficients frozen pending realistic OOS Evidence-v2. AUTO is a repeated package->checkpoint->reinventory->continue loop; blocked OOS/device lane never stops independent PITTI work; user reminder never required."
   }
 }
