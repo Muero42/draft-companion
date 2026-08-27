@@ -244,3 +244,14 @@ Priority order for acquisition/testing:
 6) Wasley/Maher — RB reserve challengers if top candidates fail freshness/complementarity gates.
 
 Do not change Expert-v2. Expert-v3 remains a separate selectable challenger until it wins controlled tests.
+
+
+## AUTO evidence pass — specialist stability / DS interpretation — 2026-08-27
+
+Fresh public FantasyPros evidence confirms 2023-25 draft-accuracy position ranks used for screening: Wheeler RB4; Weisse RB2/TE12; Maher RB9; Wasley RB6; Wolf TE2/QB20; Todd D Clark QB5; Pianowski TE5. Incumbents: Mariano RB11/WR8; Del Don RB7/TE21; Pat TE14 but weaker QB/RB/WR multi-year ranks. DS individual analysts are heterogeneous: Jody Smith overall1/RB1/WR13/TE9; Jared Smola overall7/RB14/WR14/TE120; Kevin English overall13/QB35/RB37/WR12/TE113. This strengthens the need to validate the finished DS Team board separately rather than infer a universal DS35 from individual analyst results.
+
+Year-level robustness evidence found: FantasyPros' 2025 draft-accuracy article lists Ryan Weisse #7 overall and Jody Smith #9 overall; its 2024 article lists Kevin English #1 overall and Wolf #6 overall, Mike Maher #10. Thus Weisse and Wolf have at least one recent single-year top-10 overall result in addition to strong 3-year positional ranks; they are not merely artifacts of the aggregate table. This is qualification evidence, not automatic admission.
+
+Expert-v3 experimental policy: preserve Expert-v2 unchanged. First high-value API acquisition/test order should be (1) current Ryan Weisse RB; (2) current Wolf TE; (3) Todd D Clark QB; (4) Wheeler RB only after freshness improves; (5) Maher/Wasley as RB controls if needed; (6) Pianowski TE as secondary control. No forced WR addition.
+
+Weight-grid principle: compare incumbent DS35/30 against modest DS reductions (e.g. -5/-10) allocated to qualified specialists, while also allowing incumbent non-DS weights to move if OOS evidence supports it. Never optimize on Coleman or another single 2026 player. Evaluate overall and decision-zone/position loss plus source correlation and tail/breakout behavior.
