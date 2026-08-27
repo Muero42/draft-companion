@@ -1,12 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T16:25:00Z",
+  "updatedAt": "2026-08-27T16:35:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
-    "libraryMirrorStatus": "STALE_V102_V103_PERSISTENT_WRITEBACK_RETRY_FAILED_2026-08-27T15:00Z_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Persistent Library CURRENT/Project-State/Handoff/Seal remain stale because v105 upload-back failed with container_session_expired. Repo v107 authority is fail-closed: new chat MUST verify PITTI_COMMAND_CONTRACTS + CURRENT + PASS SEAL + EXECUTION_LOCK + PROJECT_STATE EOF + NEW_CHAT_HANDOFF_CURRENT + repo bootstrap/matrix against any Library state. Repo/device verified facts win; never claim Library v105/v106/v107 persisted unless files.list later proves it.",
+    "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
+    "failClosedRecovery": "Persistent Library CURRENT/Project-State/Handoff/Seal remain stale because upload-back failed with container_session_expired. New chat MUST verify PITTI_COMMAND_CONTRACTS + CURRENT + PASS SEAL + EXECUTION_LOCK + PROJECT_STATE EOF + NEW_CHAT_HANDOFF_CURRENT + repo bootstrap/matrix against any Library state. The newest fully sealed repo generation and verified device facts win; never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
@@ -172,7 +172,8 @@
       "post-v107 release audit: both release contracts now require rc4.83 draft-critical gate; package version derives from APP_VERSION and cross-checks index/sw/manifest, preventing rc4.83 bytes mislabeled as rc4.82",
       "Evidence-v2 analyzer now fail-closed on exact rc4.83 appVersion, draftId/slot, fixture-count equality, exactly 15 completed-mock own-pick fixtures and unique pick numbers",
       "v108 independent seal read-back complete: CURRENT/Handoff/Seal generation match and 20/20 seal-listed repo blob hashes match current main",
-      "release-tooling anti-regression closure: PITTI guardrail now asserts rc4.83 release/package gates, dynamic APP_VERSION packaging and no hard-coded rc4.82 PREINSTALL resurrection; guardrail workflow triggers on release-contract files"
+      "release-tooling anti-regression closure: PITTI guardrail now asserts rc4.83 release/package gates, dynamic APP_VERSION packaging and no hard-coded rc4.82 PREINSTALL resurrection; guardrail workflow triggers on release-contract files",
+      "active authority text made generation-generic; stale v107 fail-closed pointer removed so future sealed generations cannot be downgraded by Execution Lock prose"
     ],
     "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
     "note": "rc4.82 remains last fully Android-verified authority. rc4.83 remains deployed test challenger only and Decision Kernel coefficients remain frozen pending realistic OOS Evidence-v2. Post-v107 release/evidence tooling was hardened without scoring changes."
