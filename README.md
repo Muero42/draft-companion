@@ -1,6 +1,16 @@
-# Draft Companion – Final Draft Edition 2026 (v11.8.0-rc4.68)
+# Draft Companion – Final Draft Edition 2026
 
-> **Aktiver Release-Stand:** v11.8.0-rc4.68. Historische Abschnitte darunter dokumentieren frühere RCs und können ältere Versionsnummern enthalten.
+> **Produktions-/Default-Branch-Baseline:** v11.8.0-rc4.64.  
+> **Aktueller pre-install geprüfter Kandidat:** v11.8.0-rc4.73.  
+> **Android-Status:** rc4.72 ist verworfen (0-Kandidaten-Regression im Expert-v2-Pfad); rc4.73 ist noch nicht Android-verifiziert.
+>
+> RC-Kandidaten werden erst nach ZIP-Extraktion, Syntax-/Versions-/Cache-/Routing-/Regressionstests zur Android-Verifikation freigegeben. README-Drift ist ein Release-Gate.
+
+### rc4.73 — Expert-v2 downstream routing fix
+- Behebt den rc4.72-Fehler, bei dem rankFor() Expert-v2 korrekt fand, rankedAvailable die Kandidaten danach aber erneut mit dem alten FantasyPros-Member-Gate verwarf.
+- Downstream-Kandidatenfilter nutzt jetzt dieselbe panelSelectable()-Semantik wie panelFor().
+- Neuer Regressionstest bildet exakt den Fall „Expert-v2-Ranks vorhanden, Members absichtlich leer“ ab.
+- Keine Änderung an Expert-v2-Gewichten, Return-v2, Player Quality, Manager Model, ADP oder Roster Utility.
 
 ### rc4.62 — decision UI / live hierarchy correction
 - Live-Entscheidungsoberfläche auf den kanonischen Coach-/Draft-Utility-State synchronisiert; keine zweite Scoring-Engine.
