@@ -2,8 +2,8 @@
 
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
 > **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.78 · SHA-256 `69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba`.  
-> **Letzter vollständig Android-verifizierter Kandidat:** v11.8.0-rc4.80. **rc4.82 Android-Sichtprüfung:** Badge + Full-v2 Active-Health + Roster/Completed-State PASS; Snapshot-Metadaten/Provenienz noch offen.  
-> **Aktueller Draft-Critical Kandidat:** v11.8.0-rc4.82 auf `main`; Source-/Regression-/Deploy-Gates PASS, Android-Sichtprüfung PASS; nur Snapshot-Metadaten/Provenienz-Smoke offen.  
+> **Letzter vollständig Android-verifizierter Kandidat:** v11.8.0-rc4.82 (Badge, Full-v2 Active-Health, Roster/Completed-State und Snapshot-Metadaten/Provenienz PASS).  
+> **Aktueller Draft-Critical Kandidat:** v11.8.0-rc4.82 auf `main`; Source-/Regression-/Deploy-/Android-Gates PASS.  
 >
 > Built/source-verified, packaged/re-extracted, deployed und Android-verified sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
 
@@ -16,7 +16,7 @@
 - Drei Profile bleiben verpflichtend auswählbar; Brown bleibt aus v2 ausgeschlossen; Erickson bleibt Challenger ohne numerisches v2-Votum.
 - User-Strategie bleibt exakt ein QB; WR7+-Safety bleibt roster-aware ohne WR-Cap; TE2 bleibt nur Soft-/Exceptional-Value-Pfad.
 - Draft-critical Regression `tools/rc482-draft-critical.mjs` schützt diese Semantik dauerhaft.
-- Source-/Legacy-/Return-/UI-Gates PASS; Android Badge/Full-v2-Health/Roster/Completed-State PASS. Nur frischer Snapshot für Version + Frozen-v2-Provenienz/Gewichtssemantik steht noch aus.
+- Source-/Legacy-/Return-/UI-/Android-Gates PASS. Frischer Snapshot bestätigt rc4.82, Panel-Health OK, Frozen Expert-v2 Board und eingefrorene effektive Gewichte ohne Live-Neunormierung.
 
 ### rc4.78 — OOS roster/option-value research challenger
 - User-Draftpfad: nach QB1 kein QB2 auf der Coach-Oberfläche; Gegner-/Return-Modell bleibt unverändert.
