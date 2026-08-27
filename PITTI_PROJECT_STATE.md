@@ -183,3 +183,55 @@ Persistent Library handoff generation **v96** is authoritative for transfer. A n
 - Guardrail checker also now enforces the user-specific one-QB strategy rather than the obsolete generic repeated-QB/TE wording; TE remains a soft exceptional-value path and is not globally banned.
 - This repair changes authority/guard infrastructure only; it does not retune Coach, Return-v2, manager model, expert weights or player scores.
 - rc4.78 remains research-only. Next gate remains clean-line executable OOS validation after authority consistency is rechecked.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — rc4.78 CLEAN PROMOTION LINE / OOS + PACKAGE GATES PASS
+
+### Why this continuation was necessary
+- User correctly flagged that AUTO had stopped after a status-only message even though useful autonomous work remained. This violates the durable AUTO contract. Continuation resumed without treating internal CI/tooling limits as a user gate.
+- A clean promotion branch `pitti-auto/rc4.78-clean-promotion` was created directly from current `main` to eliminate the noisy/diverged history of the earlier research branch while preserving the exact intended runtime bytes.
+- The clean branch is ahead-only of `main` at the validation point; no behind/diverged main commits remain in this line.
+
+### rc4.78 runtime policy architecture
+- Extracted the user/roster policy into pure module `decision-policy.js` so the exact live policy is executable off-device rather than only source-grep tested.
+- User-specific 1-QB invariant: after QB1, QB2 is hard-excluded from the user's Coach candidate surface. This does not alter opponents/Return-v2 and is not a generic league-wide QB2 law.
+- WR7+ remains legal. PlayerQualitySafety may not mechanically resurrect an ordinary saturated WR; it may still protect a genuine existing `Starker Value` case (pick minus ADP >=10). No WR cap, no player-name forcing and no blind RB bonus were introduced.
+- TE2 remains a separate soft exceptional-value path; it was not collapsed into the QB2 hard rule.
+- Embedded Expert-v2 snapshot health/source semantics remain fixed and now disclose the frozen board provenance explicitly.
+
+### Deterministic OOS policy gate
+Natural completed draft `1398395487467368448` is the OOS regression anchor:
+- pick 149 with Trevor Lawrence already rostered: Kyler Murray/Jared Goff QB2 path is hard-excluded.
+- picks 129/132 with WR7: ordinary Romeo Doubs-type safety resurrection is blocked.
+- strong WR value still passes; WR6 remains unaffected.
+- late RB remains eligible without forcing RB.
+- exceptional TE2 path remains available while ordinary TE2 is not safety-promoted.
+Executable policy assertions PASS.
+
+### Byte provenance / package verification
+- Built rc4.78 from the previously verified rc4.77 inner ZIP and the clean-branch changes.
+- All 12 runtime files were independently compared to GitHub clean-branch blobs using Git blob SHA and matched byte-for-byte.
+- Runtime files: `_worker.js`, `app.js`, `decision-policy.js`, `expert-board-export.js`, `expert-v2-board.js`, `icon.svg`, `index.html`, `live-surface-v3.css`, `live-surface-v3.js`, `manifest.webmanifest`, `styles.css`, `sw.js`.
+- JavaScript syntax PASS.
+- Version/cache coherence PASS; service worker caches `decision-policy.js`.
+- Live presentation behavioral checks PASS: no redundant JETZT/EHER-JETZT, Parker thesis retained, fixed expert rank order retained, injury cannot manufacture arrow, WR saturation surfaced, Taylor workhorse evidence retained.
+- Expert-v2 board/weights contract PASS.
+- Legacy regression-equivalent checks PASS: position path, PlayerQuality monotonicity/expert-health semantics, Return geometry + 6000-run market sanity, scarcity single-channel, alternative scarcity/marginal utility and dress-rehearsal endgame.
+- Package -> re-extract -> byte equality PASS for all 12 files.
+- Final local package: `Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip`
+- SHA-256: `69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba`
+- Package and gate report uploaded to Library `/Pitti/Development/`; TEST/LATEST recovery aliases were deliberately NOT overwritten.
+
+### CI transport diagnosis
+- Connector-created GitHub commits did not emit Actions runs even after workflows were retargeted to the clean branch. Combined status remained empty.
+- This is an internal CI transport limitation, not a user gate. Equivalent executable/static/package/re-extract validation was completed independently in the working container, with direct blob parity against GitHub source.
+
+### Current boundary
+- Production/control remains rc4.64.
+- Latest Android-observed runtime remains rc4.76 and remains UI-incomplete/not draft-ready.
+- rc4.77 is superseded as the next candidate by rc4.78.
+- rc4.78 is now **PREINSTALL VERIFIED / NOT ANDROID VERIFIED**.
+- Do not call rc4.78 draft-ready or production until the exact candidate is observed on Android and the intended Decision Surface smoke checks pass.
+- AUTO must not stop with a status-only message while autonomous work remains.
