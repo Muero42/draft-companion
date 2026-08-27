@@ -1,10 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T12:45:00Z",
+  "updatedAt": "2026-08-27T12:55:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
-    "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative."
+    "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
+    "libraryMirrorStatus": "STALE_V103_WRITEBACK_BLOCKED_BY_FILES_CONTAINER_SESSION_EXPIRED",
+    "failClosedRecovery": "If Library CURRENT/Project-State still shows v103 or rc4.76/rc4.77 current, reconcile against repo PITTI_EXECUTION_LOCK.json + repo Project-State EOF before any work; stale Library pointer must not win."
   },
   "runtime": {
     "appVersion": "v11.8.0-rc4.64",
