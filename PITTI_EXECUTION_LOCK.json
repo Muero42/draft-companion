@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T13:12:00Z",
+  "updatedAt": "2026-08-27T13:25:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -16,12 +16,12 @@
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.82",
     "latestPreinstallVerified": "v11.8.0-rc4.78",
-    "latestResearchChallenger": "v11.8.0-rc4.82",
+    "latestResearchChallenger": "v11.8.0-rc4.83",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip",
     "preinstallSha256": "69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba",
     "preinstallRuntimeFiles": 12,
     "latestSourceRegressionVerified": "v11.8.0-rc4.82",
-    "latestDeployedCandidate": "v11.8.0-rc4.82",
+    "latestDeployedCandidate": "v11.8.0-rc4.83",
     "latestAndroidVerified": "v11.8.0-rc4.82"
   },
   "auto": {
@@ -125,15 +125,16 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.82_ANDROID_VERIFIED",
+    "status": "RC4.83_ROSTER_UTILITY_CHALLENGER_SOURCE_PENDING_REGRESSION",
     "production": false,
-    "androidVerified": true,
+    "androidVerified": false,
     "changes": [
       "centralized APP_VERSION to eliminate stale snapshot/queue/backup/model metadata",
       "active panel health now evaluates the actually selected full-v2, hybrid WR-v2, or live profile instead of global desired-pool health",
       "snapshot provenance and weight semantics are profile-aware",
       "rc4.82 durable draft-critical regression added",
-      "release workflows retargeted from obsolete rc4.78 branch to main"
+      "release workflows retargeted from obsolete rc4.78 branch to main",
+      "rc4.83: late WR6+/WR7+ marginal utility penalties strengthened; PlayerQualitySafety cannot resurrect saturated late WR unless exceptional +10 ADP value"
     ],
     "validation": [
       "27 static/runtime policy invariants PASS before health refinement",
@@ -146,7 +147,7 @@
       "Android rc4.82 badge + Full-v2 selected + green active-panel health + completed roster 1QB/7RB/6WR/1TE + completed-state live suppression PASS",
       "Fresh Android rc4.82 snapshot PASS: App-Version rc4.82; Panel-Health OK; Expert-v2 Frozen Board provenance; frozen effective weights/no live renormalization; Coach model rc4.82; embedded counts QB5/5 RB4/4 WR5/5 TE4/4"
     ],
-    "gate": "RC4.82_GATE_CLOSED_CONTINUE_AGGREGATE_DRAFT_VALIDATION",
-    "note": "rc4.82 Android gate fully closed. Snapshot duplicate flag is expected because same completed draft fingerprint was intentionally recopied; it is not a regression. Continue aggregate decision-quality validation; no retune from this single mock."
+    "gate": "RC4.83_REGRESSION_AND_OOS_DECISION_QUALITY_BEFORE_ANDROID",
+    "note": "User clarified rc4.80 final 7RB/6WR roster was materially produced by manual overrides, so end-roster composition is not Coach success evidence. Decision-quality must compare recommendation vs chosen pick. rc4.83 is a bounded challenger only; rc4.82 remains last Android-verified."
   }
 }
