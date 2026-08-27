@@ -1,0 +1,171 @@
+# PITTI UPSIDE RESEARCH v3 — 2026 Draft Edge Framework
+
+Status: NON-RUNTIME RESEARCH LEDGER. Do not load into the active rc4.84 mock. Integration/promotion only after the ongoing OOS mock is complete.
+
+## Goal
+Identify asymmetric league-winning upside that panel rank + ADP may underprice, without double-counting expert opinion or blindly favoring youth.
+
+## Taxonomy
+### WR
+- CONSOLIDATION: player already broke out / produced WR1-WR2 stretches; question is whether the expanded role persists for a full season.
+- ASCENSION: player has not yet delivered season-long WR1/WR2 production but has target-earning/efficiency evidence plus a credible role path.
+- ROLE_TAKEOVER: realistic path to become team WR1 or high-volume WR2.
+- POST_HYPE: prior pedigree/efficiency remains but market price fell after injury/poor environment.
+- ROOKIE_ALPHA: draft capital + target-earning traits + immediate depth-chart path.
+- LATE_WR2_PATH: cheap player with realistic top-two team target path even if WR1 ceiling is thin.
+
+### RB
+- STANDALONE_PLUS_CONTINGENCY: already owns usable role and gains sharply from one plausible event.
+- ONE_EVENT_AWAY: one injury/benching/role flip creates lead-back or valuable 1A/1B workload.
+- MULTI_EVENT: needs two or more independent events; do not inflate.
+- ROLE_EARNER: talent/efficiency can win more work without teammate injury.
+- GOAL_LINE / RECEIVING_LEVER: specific path to fantasy value beyond raw carry share.
+
+### TE
+- TARGET_ASCENSION: credible path to top-two team target share.
+- ROLE_CONSOLIDATION: already flashed TE1 production; question is full-season persistence.
+- SCHEME_UNLOCK: new playcaller/team materially improves route/target opportunity.
+- LATE_TOP5_PATH: cheap TE with realistic top-five ceiling, not merely touchdown variance.
+
+## Evidence hierarchy
+1. Actual NFL usage: route participation, target share, first-read share, target rate, red-zone role.
+2. Efficiency that tends to earn volume: YPRR, first downs/route, RACR/YAC ability, separation/route quality.
+3. Role/environment delta: vacated targets, depth-chart movement, coordinator/QB change, camp first-team work.
+4. Draft capital/contract/team incentives.
+5. Multiple current analyst theses.
+6. Narrative-only camp buzz = weak unless tied to usage.
+
+## Opportunity-path score
+For each candidate record:
+- currentRole: what is already bankable.
+- ceilingRole: plausible best role without fantasy-fiction.
+- eventsNeeded: 0 / 1 / 2+.
+- eventType: injury / role win / target consolidation / scheme / health.
+- probabilityConfidence: LOW/MED/HIGH.
+- priceState: LIKELY_PRICED / PARTLY_PRICED / POSSIBLY_UNPRICED.
+- fragility: key ways the thesis fails.
+
+## Display semantics
+- ↑↑ only when there is strong evidence of materially higher season-long ceiling than market price and the path is not mostly priced.
+- ↑ for meaningful but conditional upside, consolidation, or high-variance ceiling.
+- ↓ / ↓↓ for materially elevated decline/regression risk.
+- Never call every young player a breakout.
+- "Breakout" is not appropriate after a player already established the level; use CONSOLIDATION / ASCENSION / ROLE-TAKEOVER.
+- Player-facing text should state the actual causal path, e.g. "WR2 mit WR1-Wochen, falls die 2025-Zweit-Hälfte-Usage hält", not generic "Upside".
+
+## Current priority board — Aug 27, 2026
+
+### WR — highest leverage
+**Parker Washington — ASCENSION / ROLE_TAKEOVER — ↑↑**
+- 2025 late-season featured-role pace was roughly WR1-level.
+- NFL.com: final 9 regular-season games + Wild Card pace projects to 82-1270-9; with Washington/Meyers/BTJ together after Week 8 he had a 29.4% target rate and 3.2 YPRR.
+- Ceiling: Jacksonville WR1 / strong fantasy WR2 with WR1 outcome.
+- Events needed: 0-1; he can earn it directly, though target competition is real.
+- Price state: PARTLY_PRICED.
+- Invalidate if route/first-read share falls materially behind BTJ/Meyers.
+
+**Emeka Egbuka — CONSOLIDATION / ASCENSION — ↑↑**
+- Already showed WR1 production over an early-2025 stretch before injury.
+- Evans departure creates a cleaner target path; Godwin age/injury is additional but not required for upside.
+- Ceiling: season-long WR1.
+- Events needed: 0 if health + prior role hold.
+- Price state: PARTLY_PRICED.
+- Invalidate if target hierarchy does not consolidate or health limits him.
+
+**Tetairoa McMillan — CONSOLIDATION — ↑**
+- Already owns alpha-type usage (route share/air yards/first-read share); upside is translating existing workload plus modest offense improvement into top-five/WR1 output.
+- This is not a classic breakout label.
+- Price state: LIKELY_PRICED.
+
+**Jameson Williams — CONSOLIDATION, NOT BREAKOUT — ↑**
+- 2025: 1,182 receiving yards; first 1,000-yard season.
+- FantasyPros current analysis: Weeks 10-18 WR11 in fantasy points/game, 18.5% target share, 84.7 yards/game, 2.34 YPRR, 21.1% first-read share after role/play-calling changed.
+- Full-season line still came with only ~17% target share and high weekly volatility.
+- Ceiling: strong WR2 with frequent WR1 weeks; season-long WR1 requires the expanded intermediate/first-read usage to persist.
+- Events needed: 0, but role persistence is the key condition.
+- Main risks: Sam LaPorta return, Drew Petzing role design, reversion to low-volume field-stretcher.
+- Display should say: "↑ Konsolidierung · WR2 mit WR1-Wochen, wenn 2025-H2-Usage hält" rather than "Breakout".
+
+**Carnell Tate — ROOKIE_ALPHA / ROLE_TAKEOVER — ↑↑**
+- No. 4 overall draft capital; strong college YPRR/receiving grade; zero drops in final college season; three-level route profile.
+- Clear path to Tennessee WR1, though Ridley/Robinson remain competition and Cam Ward must support the volume.
+- Events needed: 0; role can be won directly.
+- Price state: PARTLY_PRICED.
+
+**Ladd McConkey — POST_HYPE / ROLE_ASCENSION — ↑**
+- Target opportunity remained despite 2025 disappointment.
+- Mike McDaniel influence creates plausible featured short/intermediate/YAC role; ~130-target scenario yields WR1 path.
+- Price state: PARTLY_PRICED.
+
+**Christian Watson — POST_HYPE / HEALTH-ASCENSION — ↑**
+- Explosive profile + missed developmental time; current breakout archetype similar to last year's Jamo argument.
+- High health fragility and crowded GB target tree prevent ↑↑ unless current usage proves alpha-level.
+- Price state: PARTLY_PRICED.
+
+**Luther Burden III — ASCENSION — ↑**
+- Strong talent/offense ceiling, but rising price and target competition make this less asymmetric than Parker/Tate.
+- Needs current role/route evidence refreshed before promotion.
+
+**Josh Downs — LATE_WR2_PATH — ↑**
+- Proven target earning when healthy; Colts indicate wider alignment and expanded role after Pittman departure.
+- Ceiling more likely strong WR2/3 than true overall WR1; useful late-round value archetype.
+
+**Jalen Nailor — LATE_WR2_PATH / ROLE_TAKEOVER — ↑**
+- Very cheap, weak Raiders WR competition, plausible No. 2 passing-game role behind Bowers and outside chance to lead WRs.
+- QB uncertainty lowers confidence; do not inflate to ↑↑ without first-read/route evidence.
+
+### RB — opportunity elasticity
+**Jonah Coleman — ONE_EVENT_AWAY + ROLE_EARNER — ↑↑ late**
+- Current RB3 but strong contingency upside; can earn work directly and one Dobbins/Harvey availability or role failure can create major workload.
+- Dobbins durability history makes the one-event path unusually plausible.
+- Best archetype for "few things need to happen".
+
+**Mike Washington Jr. — ACUTE ONE_EVENT_AWAY / ROLE_EARNER — ↑↑ while Jeanty status unresolved**
+- Current first-team opportunity increased after Jeanty ankle injury; preseason efficiency adds talent signal.
+- Acute status must be refreshed; this is not a timeless prior.
+- If Jeanty returns fully, downgrade sharply to contingency value.
+
+**Keaton Mitchell — ROLE_EARNER / ONE_EVENT_AWAY — ↑**
+- Current sleeper consensus strongly likes the price; requires current Chargers role validation before runtime promotion.
+
+**Dylan Sampson — ROLE_EARNER / ONE_EVENT_AWAY — ↑**
+- Current sleeper consensus sees meaningful opportunity at a cheap price; promote only with verified depth-chart/receiving/goal-line path.
+
+**MarShawn Lloyd — POST_HYPE / ONE_EVENT_AWAY — ↑**
+- Cheap path to workload but health/availability history raises fragility.
+
+Rule: RB ↑↑ should generally require either (a) standalone usage + one-event lead-back path, or (b) very cheap one-event-away back with strong talent and a fragile incumbent. Pure handcuffs needing 2+ events stay unarrowed.
+
+### TE — target/route ceiling
+**Tyler Warren — ROLE_CONSOLIDATION / ASCENSION — ↑ if health clears**
+- NFL.com notes he was third among TEs in targets in 2025 and has Year-2 leap potential.
+- Groin status is current limiting factor. If healthy, top-five ceiling is credible.
+
+**Tucker Kraft — ROLE_CONSOLIDATION — ↑**
+- NFL.com: was performing like fantasy TE1 before ACL tear and is back to full practice.
+- This is consolidation/return-to-ceiling, not generic breakout.
+
+**Harold Fannin Jr. — ROLE_CONSOLIDATION — ↑**
+- Rookie TE6 half-PPR / strong target and first-read profile.
+- Monken TE-friendly history supports persistence; incoming WR target competition and Cleveland QB quality cap confidence.
+- Some current analysts see top-five upside, but base expectation is mid/low TE1.
+
+**Isaiah Likely — TARGET_ASCENSION / SCHEME_UNLOCK — ↑↑ at late price**
+- New NYG role projects materially more volume than Baltimore; NFL.com highlights elite limited-opportunity efficiency and expected TE1 role.
+- Giants target tree behind Nabers is thin; credible top-two team target path.
+- Mid/late price preserves asymmetry.
+
+**Brenton Strange — LATE_TOP5_PATH? — ↑ only**
+- Clear upward role/volume trend, but current NFL ranking still views him more as TE2 upside than obvious every-week starter.
+- Needs stronger top-two-target evidence for ↑↑.
+
+## Integration rule after current mock
+Do not change rc4.84 during the active OOS mock.
+After Evidence-v2 export:
+1. keep player quality panel as baseline;
+2. rebuild research priors from this taxonomy with explicit expiry per thesis;
+3. add an end-to-end test: evidence -> active residual -> arrow magnitude -> causal user-facing text;
+4. add coverage audit across top ~120 draft-relevant WR/RB/TE, not just hand-picked stars;
+5. distinguish CONSOLIDATION from BREAKOUT in UI;
+6. use opportunity-path/event-count for RBs and target-hierarchy path for WR/TE;
+7. apply pricing factor so obvious upside already fully reflected in ADP does not get double counted.
