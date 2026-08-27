@@ -968,3 +968,11 @@ Challenger families to test after current Evidence-v2 analysis: incumbent weight
 - Fresh public verification: Weisse has current 2026 Half-PPR Overall 08/24 and RB 08/22; Wolf has current 2026 Half-PPR Overall 08/24 and TE 08/25. These are sufficient to proceed to challenger construction; do not re-check their existence/freshness repeatedly.
 - Primary v3 candidate roles remain RB Weisse; TE Wolf (+ Weisse only as secondary challenger); QB Todd D Clark; WR Wright only if existing pipeline resolves a current complete ranking, otherwise keep incumbent WR rather than force addition.
 - Next substantive deliverable must be a concrete Expert-v3 composition/weight challenger and controlled comparison against frozen Expert-v2, or a precise unavoidable data blocker. Do not return another candidate-screening summary.
+
+
+### 2026-08-27 — Expert-v3 decision checkpoint (stop repeated screening)
+- Broad candidate/freshness re-screening is CLOSED unless a concrete implementation blocker requires it.
+- Current evidence-backed roles: Ryan Weisse = RB primary challenger (2023-25 RB #2; current 2026 Half-PPR RB board verified Aug 22); Wolf of Roto Street = TE primary challenger (2023-25 TE #2; current 2026 Half-PPR TE board verified Aug 25); Todd D Clark = QB primary challenger pending exact current-rank artifact; WR = no forced addition, Joey Wright remains high-value only if current ranks can actually be reconstructed.
+- Expert-v2 remains immutable control. Expert-v3 must be a separate selectable preset.
+- First v3 weight grids to evaluate once exact rank vectors are in hand: RB incumbent DS35/Mariano25/DelDon25/Pat15 vs DS30 + Weisse5 and DS25 + Weisse10 (then only expand if evidence warrants); TE incumbent DS35/Pat30/DelDon25/Boone10 vs DS30 + Wolf5 and DS25 + Wolf10, plus optional Weisse only after Wolf marginal-value test; QB incumbent DS35/Mariano25/DelDon20/Boone10/Pat10 vs DS30 + Todd5 and DS25 + Todd10. Do not optimize on Coleman or any single 2026 player.
+- Evaluation target: historical/OOS positional loss + decision-zone stability + source correlation/leverage + tail/breakout behavior. Availability has no positive selection weight.
