@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T18:15:00Z",
+  "updatedAt": "2026-08-27T18:45:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -180,13 +180,15 @@
       "v112 transfer guard cleanup: executable current-handoff canary no longer depends on historical Library v105 wording; active recovery checks are generation-generic",
       "pre-real-draft freshness gate added outside runtime/kernel: blocking DRAFT_ACUTE_STATUS_2026 entries fail closed when older than configured max-age; default 2 days; PITTI guard protects gate presence",
       "Emergency Queue fallback now has independent deterministic executable contract: 35 cap, one-QB/one-TE while open, none after QB1/TE1, identity/version metadata, K/DST omission; protected by rc4.83 + PITTI guards",
-      "Evidence-v2 analyzer now reports clean non-acute-confounded OOS metrics separately from whole-mock metrics; same-day Jeanty recheck remains unresolved and does not mutate frozen rc4.83"
+      "Evidence-v2 analyzer now reports clean non-acute-confounded OOS metrics separately from whole-mock metrics; same-day Jeanty recheck remains unresolved and does not mutate frozen rc4.83",
+      "CRITICAL: rc4.83 forced stale 2026 manager slots 5/6/8, distorting Return-v2; corrected in rc4.84 and guarded. OOS gate moves to rc4.84 realistic slot-9 mock."
     ],
     "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
     "note": "rc4.82 remains last fully Android-verified authority. rc4.83 remains deployed test challenger only; Decision Kernel coefficients stay frozen pending realistic slot-9 OOS Evidence-v2. Transfer/release/evidence guards are generation-generic.",
     "knownOosConfounds": [
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
-    "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2"
+    "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
+    "nextGate": "rc4.84 Android/device verify -> realistic slot-9 mock -> refresh -> Evidence-v2 export -> clean OOS analysis"
   }
 }
