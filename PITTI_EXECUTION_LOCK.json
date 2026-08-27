@@ -1,13 +1,13 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T12:16:00Z",
+  "updatedAt": "2026-08-27T12:17:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.64",
+    "appVersion": "v11.8.0-rc4.80",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
@@ -124,22 +124,18 @@
     "production": false,
     "androidVerified": true,
     "changes": [
-      "Fitz QB AMA integrated as bounded expiring Research Residual priors",
-      "Malik Willis strongest POSSIBLY_UNPRICED upside residual",
-      "Kyler Murray medium PARTLY_PRICED rebound residual",
-      "Jared Goff smaller LIKELY_PRICED floor residual",
-      "no double counting of Fitz numerical panel rank",
-      "one-QB hard exclusion remains upstream/authoritative",
-      "Active Expert-v2 health accounting fixed: embedded active votes no longer mislabeled by unrelated legacy desired-pool health"
+      "Expert-v2 active-health accounting fixed: embedded active votes no longer mislabeled by legacy desired live-pool health",
+      "Fitz QB AMA bounded residual priors retained",
+      "one-QB hard exclusion remains upstream/authoritative"
     ],
     "validation": [
-      "Willis current Miami QB1 corroborated",
-      "Willis FantasyPros ECR/ADP confirms disagreement and rushing asymmetry",
-      "same-day Murray/Goff/Willis ranks cross-checked",
-      "Android screenshot verifies rc4.80 loaded",
-      "Expert-v2 ALL positions reports 5 embedded active votes and Coach ready",
-      "Pick-1 decision surface renders Expert-v2 ranks and research residual evidence"
+      "Android screenshot shows v11.8.0-rc4.80",
+      "Expert-v2 all positions selected",
+      "Draftbereit: 161 Experten · aktive Expert-v2 Stimmen 5 eingebettet · 10 Panels · 1029 Sleeper-ADPs",
+      "Coach bereit",
+      "fresh mock decision surface renders Pick 1 with 341 candidates and plausible elite top board",
+      "no active degraded warning on Expert-v2 profile"
     ],
-    "gate": "CONTINUE AUTONOMOUS COMPANION VALIDATION; NO USER ACTION REQUIRED"
+    "gate": "CONTINUE DRAFT-CRITICAL REGRESSION/PROFILE VALIDATION; NO USER ACTION REQUIRED"
   }
 }
