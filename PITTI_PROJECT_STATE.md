@@ -859,3 +859,14 @@ No Draft Companion runtime bytes, Decision Kernel, Expert-v2 weights, Return-v2,
 Parallel draft-day failsafe audit found that Emergency Queue behavior was only indirectly protected by app-source assertions. Added `tools/emergency-queue-contract.mjs`, an independent deterministic contract test for the actual queue builder: 35-entry cap, one QB/TE candidate while QB1/TE1 remain open, zero QB/TE after those positions are filled, draft/version metadata, and explicit K/DST omission. rc4.83 regression and PITTI guard protect the contract, and workflow paths include the test.
 
 No runtime bytes or Decision-Kernel/Expert-v2/Return-v2 coefficients changed.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — v115 OOS confound isolation
+
+Fresh same-day injury recheck still does not justify silently clearing the frozen rc4.83 Ashton Jeanty blocker: NFL/ESPN/NBC report ankle sprain, not long-term, coach says on the mend, but return/Week-1 timing remains unresolved. No runtime mutation made.
+
+Evidence-v2 offline analysis now explicitly reports clean non-acute-confounded decision metrics in parallel with whole-mock metrics: acuteStatusConfoundCount, cleanDecisionCount, cleanHardQb2Pass, cleanSaturatedWrCount and cleanWr7PlusCount. This prevents a Jeanty-affected early row from contaminating causal judgment of the late-WR challenger. rc4.83 regression + PITTI guard protect these outputs.
+
+No Decision-Kernel, Expert-v2, Return-v2, manager-model or runtime coefficient changed.
