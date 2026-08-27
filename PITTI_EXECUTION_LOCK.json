@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T16:35:00Z",
+  "updatedAt": "2026-08-27T16:50:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -173,9 +173,14 @@
       "Evidence-v2 analyzer now fail-closed on exact rc4.83 appVersion, draftId/slot, fixture-count equality, exactly 15 completed-mock own-pick fixtures and unique pick numbers",
       "v108 independent seal read-back complete: CURRENT/Handoff/Seal generation match and 20/20 seal-listed repo blob hashes match current main",
       "release-tooling anti-regression closure: PITTI guardrail now asserts rc4.83 release/package gates, dynamic APP_VERSION packaging and no hard-coded rc4.82 PREINSTALL resurrection; guardrail workflow triggers on release-contract files",
-      "active authority text made generation-generic; stale v107 fail-closed pointer removed so future sealed generations cannot be downgraded by Execution Lock prose"
+      "active authority text made generation-generic; stale v107 fail-closed pointer removed so future sealed generations cannot be downgraded by Execution Lock prose",
+      "guard self-consistency repaired: Library recovery canary now matches generation-generic active authority wording",
+      "acute-status OOS confound audited: rc4.83 Jeanty hard blocker remains frozen for experiment; Evidence-v2 must separate Jeanty-affected early decisions from late-WR saturation; pre-real-draft refresh must re-evaluate"
     ],
     "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
-    "note": "rc4.82 remains last fully Android-verified authority. rc4.83 remains deployed test challenger only and Decision Kernel coefficients remain frozen pending realistic OOS Evidence-v2. Post-v107 release/evidence tooling was hardened without scoring changes."
+    "note": "rc4.82 remains last fully Android-verified authority. rc4.83 remains deployed test challenger only and Decision Kernel coefficients remain frozen pending realistic OOS Evidence-v2. Post-v107 release/evidence tooling was hardened without scoring changes.",
+    "knownOosConfounds": [
+      "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
+    ]
   }
 }
