@@ -1351,7 +1351,7 @@ function applyPlayerQualitySafetyGate(rows,current){
   // Existing exceptional-slide thresholds are reused exactly; no new numeric penalty family.
   const safetyPromotionEligible=x=>safetyPromotionEligiblePolicy({
     pos:x.p.pos,counts:x.stateCounts||{},rank:x.r.rank,adp:x.a,current
-  }) && !(x.p.pos==='WR' && current>=101 && Number(x.stateCounts?.WR||0)>=6 && !(Number.isFinite(x.a)&&x.a-current>=10));
+  });
   const eligible=valid.filter(safetyPromotionEligible);
   const eligibleBestPanelRank=eligible.length?Math.min(...eligible.map(x=>x.r.rank)):bestPanelRank;
   const eligibleBandMax=eligibleBestPanelRank+Math.max(3,Math.floor(threshold/2));
