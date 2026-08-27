@@ -324,3 +324,18 @@ Willis downgrade triggers:
 Coach implication:
 - Add semantic archetypes: Murray=BALANCED_UPSIDE_QB1; Goff=FLOOR_QB1; Willis=LAST_PICK_UPSIDE_OR_FA_WATCH.
 - These are decision semantics, not hard player forcing. Expert-v2 + ADP + Return-v2 remain authoritative.
+
+
+### 2026-08-27 PITTI AUTO — QB price/risk calibration follow-up
+- Fresh same-day market/rank cross-check reinforces a meaningful three-way price/risk distinction rather than a fixed player order.
+- FantasyPros sleeper consensus (Aug 26): Murray sleeper ECR 17/ADP QB17; Goff ECR 16/ADP QB16; Willis ECR 20/ADP QB21. FullTimeFantasy same-day ranks are much more bullish on Murray/Goff (roughly QB5-11 depending scoring) while Willis remains QB24-26. This divergence is material.
+- Murray current PPR market evidence: ~ADP 133 overall/QB18; another Aug-26 feed places him around 12.01. Goff has evidence around ADP 115 in an Aug-2026 bargain analysis. Willis remains substantially cheaper/late.
+- Willis current Dolphins role remains starter; backup competition is behind him. FFToday explicitly characterizes the fantasy bet as rushing-floor dependent in an offense expected to be weak; CBS similarly flags the small-sample/LaFleur/supporting-cast translation risk while acknowledging top-five single-game upside.
+- Pat's Aug-24 Willis note adds useful quantified history: 44.8 rushing yards/game across six career starts; Green Bay 2024-25 appearances showed 78.7% completion, 10.9 YPA, 6 TD/0 INT, but Miami pass-catcher quality is a major downgrade.
+- Therefore Willis' risk label is refined: JOB_SECURITY_LOW_RISK; FANTASY_TRANSLATION_MEDIUM_HIGH_RISK; RUSHING_CEILING_HIGH; PRICE_OPPORTUNITY_VERY_HIGH.
+- Default decision is not a fixed Murray>Goff>Willis ranking. Use expected portfolio value at the actual pick:
+  * Murray: preferred if he falls enough that his rushing/rebound ceiling does not consume a materially superior RB lottery ticket.
+  * Goff: preferred safety fallback when his acquisition cost is modest; do not reach merely for floor.
+  * Willis: preferred very-late/last-pick QB1 when Murray/Goff cost materially more, or FA watch after drafting either safer QB.
+- Because all three currently have Week 6 byes, bye-week differences do not decide among them.
+- Hard one-QB rule unchanged. No Goff+Willis or Murray+Willis draft pairing.
