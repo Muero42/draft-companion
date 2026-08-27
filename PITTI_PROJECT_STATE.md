@@ -513,3 +513,11 @@ No Android deployment yet. Need OOS/aggregate evidence from frozen fixtures or r
 Verified that full backups already contain decisionFixtures, but using the general backup would unnecessarily transfer rank caches/settings and make analysis noisier. Added a dedicated Advanced > Sicherung button `Pick-Evidenz exportieren`. It exports only current-draft frozen fixtures as `PITTI-Decision-Evidence-<draftId>-<timestamp>.json`, with appVersion, fixture/resolved/override counts and the full compact decision fixtures including decisionOutcome. Android Web Share/download path reuses the already-proven backup transport.
 
 Static invariants PASS and main/gh-pages parity PASS for app.js/index.html/decision-policy.js/sw.js/manifest. rc4.83 is now deployed as a TEST candidate solely to obtain realistic OOS Coach-vs-user evidence. It is not promoted over rc4.82 yet. Required user flow is minimal: reload to rc4.83, run one ordinary realistic mock without documenting picks, refresh once after completion, Advanced > Sicherung > Pick-Evidenz exportieren, share the JSON. The final refresh is necessary so the last own pick is resolved into decisionOutcome.
+
+
+### 2026-08-27 PITTI AUTO — parallel lanes completed before OOS mock
+Parallel work was deliberately used instead of waiting for user mock evidence.
+1. Evidence transport upgraded from v1 to self-auditing v2. Export now includes per-pick rosterCounts, Coach top, chosen candidate/rank, override/score/panel deltas and automatic wrSaturationFlag (Coach recommends WR while already 6+ WR), wr7PlusFlag and qb2Violation. Aggregate counters are included, while full frozen fixtures remain available for deeper counterfactual analysis.
+2. Freeze audit extended with executable guards for exact one-QB user strategy, explicit Geno Smith/Aaron Rodgers hard exclusions, user candidate pool restricted to QB/RB/WR/TE (no K/DST), exceptional-only TE2 Safety path, no WR hard cap, three Expert profiles and Expert-v2 weights/Brown exclusion.
+3. README release authority repaired so rc4.82 remains Android authority and rc4.83 is explicitly only the deployed test challenger.
+4. No additional strategy coefficients were changed. Independent lanes are now exhausted without speculative tuning; next material evidence must come from realistic OOS Coach-vs-user decisions.
