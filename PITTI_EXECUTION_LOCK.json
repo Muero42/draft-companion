@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T13:09:00Z",
+  "updatedAt": "2026-08-27T15:45:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -125,7 +125,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.83_SOURCE_STATIC_REGRESSION_VERIFIED_OOS_AGGREGATE_PENDING",
+    "status": "RC4.83_BOUNDED_CHALLENGER_DECISION_TELEMETRY_READY",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -147,9 +147,11 @@
       "Android rc4.82 badge + Full-v2 selected + green active-panel health + completed roster 1QB/7RB/6WR/1TE + completed-state live suppression PASS",
       "Fresh Android rc4.82 snapshot PASS: App-Version rc4.82; Panel-Health OK; Expert-v2 Frozen Board provenance; frozen effective weights/no live renormalization; Coach model rc4.82; embedded counts QB5/5 RB4/4 WR5/5 TE4/4",
       "rc4.83 static draft-critical invariants PASS: version parity, centralized WR6+ late Safety policy, stronger MRU/progressive saturation, no duplicate policy path",
-      "rc4.83 dedicated regression gate + CI workflow added; legacy gate suite retained"
+      "rc4.83 dedicated regression gate + CI workflow added; legacy gate suite retained",
+      "rc4.83 interaction audit: initial saturation stack rejected as too cap-like; bounded stack now soft and stage-aware",
+      "decision fixture outcome telemetry added + backward backfill for already-resolved fixtures"
     ],
-    "gate": "RC4.83_OOS_AGGREGATE_DECISION_QUALITY_BEFORE_DEPLOY_ANDROID",
-    "note": "rc4.83 remains bounded challenger. Static/source regression passes. Do not deploy to Android until aggregate/OOS decision-quality evidence shows fewer saturated-WR false positives without suppressing exceptional WR value."
+    "gate": "RC4.83_REALISTIC_MOCK_DECISION_FIXTURES_REQUIRED_FOR_PROMOTION",
+    "note": "No reliable historical rc4.80 per-pick Coach-vs-choice telemetry is recoverable from repo; do not reconstruct from final roster. rc4.83 now records/backfills decisionOutcome automatically. Android rc4.82 remains authority until a realistic mock supplies direct recommendation-vs-choice evidence."
   }
 }
