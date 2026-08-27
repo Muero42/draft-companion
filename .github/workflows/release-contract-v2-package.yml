@@ -2,7 +2,7 @@ name: PITTI candidate package gate
 on:
   workflow_dispatch:
   push:
-    branches: [pitti-auto/release-contract-v2]
+    branches: [pitti-auto/rc4.76-release-contract-v2]
 jobs:
   package:
     runs-on: ubuntu-latest
@@ -25,9 +25,9 @@ jobs:
         run: |
           rm -rf dist && mkdir -p dist/runtime dist/reextract
           cp index.html app.js styles.css manifest.webmanifest sw.js _worker.js icon.svg live-surface-v3.js live-surface-v3.css expert-board-export.js expert-v2-board.js dist/runtime/
-          (cd dist/runtime && zip -q ../PITTI_RELEASE_CONTRACT_V2_CANDIDATE.zip *)
-          test "$(unzip -Z1 dist/PITTI_RELEASE_CONTRACT_V2_CANDIDATE.zip | wc -l)" -eq 11
-          unzip -q dist/PITTI_RELEASE_CONTRACT_V2_CANDIDATE.zip -d dist/reextract
+          (cd dist/runtime && zip -q ../Draft_Companion_v11.8.0-rc4.76_PREINSTALL.zip *)
+          test "$(unzip -Z1 dist/Draft_Companion_v11.8.0-rc4.76_PREINSTALL.zip | wc -l)" -eq 11
+          unzip -q dist/Draft_Companion_v11.8.0-rc4.76_PREINSTALL.zip -d dist/reextract
           cd dist/reextract
           node --check app.js
           node --check live-surface-v3.js
@@ -37,10 +37,10 @@ jobs:
           grep -q "panelSelectable(x.r.panelId)" app.js
           grep -q "WR2 mit WR1-Upside" live-surface-v3.js
           cd ..
-          sha256sum PITTI_RELEASE_CONTRACT_V2_CANDIDATE.zip > candidate.sha256
+          sha256sum Draft_Companion_v11.8.0-rc4.76_PREINSTALL.zip > candidate.sha256
       - uses: actions/upload-artifact@v4
         with:
-          name: PITTI_RELEASE_CONTRACT_V2_CANDIDATE
+          name: Draft_Companion_v11.8.0-rc4.76_PREINSTALL
           path: |
-            dist/PITTI_RELEASE_CONTRACT_V2_CANDIDATE.zip
+            dist/Draft_Companion_v11.8.0-rc4.76_PREINSTALL.zip
             dist/candidate.sha256
