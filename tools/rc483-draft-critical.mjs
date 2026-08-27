@@ -123,3 +123,6 @@ assert.ok(evidenceAnalyzer.includes('telemetryComplete:'));
 assert.ok(evidenceAnalyzer.includes("assert.equal(e.appVersion,'v11.8.0-rc4.83'"));
 assert.ok(evidenceAnalyzer.includes("Expected 15 own-pick fixtures"));
 assert.ok(evidenceAnalyzer.includes("duplicate fixture pick detected"));
+assert.ok(evidenceAnalyzer.includes("OOS promotion evidence must come from the realistic mock gate"));
+assert.ok(evidenceAnalyzer.includes("OOS promotion evidence must use user slot 9"));
+assert.ok(evidenceAnalyzer.includes("ACUTE_STATUS_CONFOUND"));
