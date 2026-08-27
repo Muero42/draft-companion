@@ -908,3 +908,13 @@ RB: Jonah Coleman ↑↑ late; Mike Washington Jr acute ↑↑ while Jeanty unre
 TE: Tyler Warren ↑ health-dependent; Tucker Kraft ↑; Harold Fannin ↑; Isaiah Likely ↑↑ at late price; Brenton Strange ↑ only pending stronger target-hierarchy evidence.
 
 Do NOT integrate into rc4.84 during the active OOS mock. After Evidence-v2 export, rebuild explicit-expiry priors and add end-to-end evidence -> residual -> arrow -> causal-text tests plus top-120 coverage audit.
+
+
+### 2026-08-27 20:51 CEST — Upside v3 fresh research expansion
+Fresh same-day research added without mutating active rc4.84 runtime:
+- D'Andre Swift: standalone + opportunity ↑; Monangai knee issue can expand immediate role, but current Round-5 price prevents automatic ↑↑.
+- Dalton Schultz: TE target-ascension ↑ after Jayden Higgins season-ending ACL; 82 catches in 2025 + plausible Houston No.2 target path.
+- Braelon Allen: role-earner/contingency ↑ after MCL return; Hall contract prevents clean takeover thesis.
+- Alec Pierce: conditional alpha-role/health ↑ after Aug-27 PUP activation, 4y/$114m commitment and Pittman trade; Week-1 route readiness remains required.
+- Coverage protocol now requires every top-120 draft-relevant WR/RB/TE to receive an Opportunity/Ceiling record, including explicit NO_ARROW outcomes.
+- Freshness split into ACUTE <=24h, CAMP_ROLE <=48h, STRUCTURAL and PERFORMANCE; blanket expiry must not silently erase durable evidence.
