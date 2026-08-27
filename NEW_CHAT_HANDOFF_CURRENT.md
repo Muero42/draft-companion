@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260827T171000Z-v111`
-Updated: 2026-08-27 17:10Z
+Handoff generation: `20260827T172500Z-v112`
+Updated: 2026-08-27 17:25Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -155,3 +155,10 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Jeanty-affected rows are ACUTE_STATUS_CONFOUND and are not causal evidence for the late-WR saturation challenger.
 - Same-day injury evidence still leaves Week 1 uncertain; do not silently clear the frozen rc4.83 overlay before OOS.
 - No runtime/kernel/expert-weight change.
+
+
+## V112 GENERATION-GENERIC GUARD CANARY
+- The executable handoff guard no longer requires the historical phrase tied to Library v105; it requires the current generic stale/writeback-blocked Library invariant instead.
+- This prevents future cleanup of historical prose from falsely breaking a valid takeover.
+- rc4.83 remains frozen; slot-9 realistic Evidence-v2 remains the experiment gate; Jeanty-affected rows remain a separate acute-status confound.
+- No runtime/kernel/expert-weight/Return-v2 change.
