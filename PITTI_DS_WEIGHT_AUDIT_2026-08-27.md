@@ -118,3 +118,40 @@ Coleman qualifies diagnostically: DS moves him ~25.25 slots later than the other
 
 ### Sean Koerner implication
 FantasyPros 2023-25: Koerner overall #2, QB4/RB12/WR6/TE15. This strongly supports keeping him as desired expert source if a sufficiently complete, scoring-verified 2026 ranking can be acquired. His absence is more consequential than replacing a strong incumbent source ad hoc. Do not reconstruct incomplete ranks.
+
+
+## Screenshot/API candidate triage — corrected 2026-08-27
+
+User constraint: do NOT restart expert selection. Derek Brown remains excluded. Sean Koerner is inaccessible behind paywall for a sufficiently complete current board. Availability is secondary; candidates must demonstrate likely incremental value. Current FantasyPros ranks can be reconstructed through the already working API route used for Boone/Del Don.
+
+### Strong candidate visible in screenshots
+- Kev Wheeler (Wheel Route FF), screenshot freshness 08/20: WATCH_FRESHNESS, not production yet.
+  - FantasyPros 2023-25 Draft Accuracy: #9 overall; QB89 / RB4 / WR30 / TE20.
+  - Primary value proposition: RB specialist. TE secondary only. Weak QB signal.
+  - If refreshed close to draft, API-fetch current 2026 ranks and run RB challenger first.
+
+### Other visible experts: evidence-based triage
+- Mick Ciallela (Fantrax), screenshot 08/21: #14 overall 2023-25; QB68 / RB23 / WR19 / TE67. Broadly solid but no obvious position edge over incumbent; SECONDARY.
+- Mike Maher (BettingPros), screenshot 08/24: #11 overall; RB9 / WR39 / TE49 / QB62. RB challenger candidate, below Wheeler priority.
+- Ryan Weisse (Club Fantasy FFL), screenshot 08/24: #12 overall; RB2 / TE12 / QB32 / WR110. HIGH-VALUE specialist candidate for RB; TE potentially useful; avoid WR.
+- Ben Wasley (Hashtag Football), screenshot 08/27: #15 overall; RB6 / WR26 / QB105 / TE87. RB specialist candidate; below Wheeler/Weisse due weaker breadth.
+- Wolf of Roto Street, screenshot 08/26: #20 overall; TE2 / QB20 / RB55 / WR73. HIGH-VALUE TE specialist candidate; QB secondary.
+- Marc Shannep (Fantasy Knockout), screenshot 08/26: #19 overall; WR16 / RB36 / QB47 / TE84. WR secondary candidate.
+- Scott Pianowski (Yahoo), screenshot 08/27: #42 overall; TE5 / WR44 / RB53 / QB113. TE specialist candidate only; not general-panel candidate.
+- Andy Behrens (The Deep Shot), screenshot 08/27: #103 overall; QB25 but RB142/WR72/TE52. Reject as general/RB challenger; prior intuition corrected.
+- Brandon Funston (The Athletic), screenshot 08/26: #104 overall; no compelling position rank (QB66/RB110/WR116/TE61). Reject.
+- Andrew Erickson (FantasyPros), screenshot 08/27: #108 overall; QB151/RB80/WR71/TE122 over 2023-25. Current availability does not justify expansion; retain only if an already-established project role requires him, not as accuracy-based weight challenger.
+- Matt Harmon (Yahoo), screenshot 08/26: #117 overall in FantasyPros draft-accuracy table, WR117. This DOES NOT invalidate Reception Perception/qualitative WR scouting; it argues against using his FantasyPros overall rank as a weighted baseline expert.
+- Todd D Clark (Fantasy Fix), screenshot 08/26: #39 overall; QB5 is notable, other positions weaker (RB43/WR62/TE147). QB specialist candidate.
+- Kelly Kirby (FantasyPros), screenshot 08/24: #114 overall but TE11. TE tertiary specialist only.
+- Daniel Mader, screenshot 08/25: #116 overall but TE4. TE specialist candidate, but require stability check before use.
+- Clayton Cadieux, screenshot 08/20: #43 overall; RB24/TE25. Secondary only.
+
+### Priority API challenger shortlist (without rebuilding Expert-v2)
+1. RB: Ryan Weisse (#2 RB), Kev Wheeler (#4 RB, freshness watch), Ben Wasley (#6 RB), Mike Maher (#9 RB).
+2. TE: Wolf of Roto Street (#2 TE), Scott Pianowski (#5 TE), Ryan Weisse (#12 TE). Daniel Mader (#4 TE) only after stability check.
+3. QB: Todd D Clark (#5 QB); Wolf (#20) secondary.
+4. WR: no equally compelling new specialist among screenshots versus incumbent Mariano (#8 WR) + DS-family strength. Marc Shannep (#16) is secondary; do not add merely to diversify.
+
+### Test policy
+Do not add all candidates. Fetch only current API ranks for the highest-value position-specific challengers, then test marginal benefit against incumbent and DS-reduced variants. Require freshness close to 31.08 draft and no provenance/scoring mismatch. Candidate value is position-specific; never import their weak-position ranks merely because their strong-position ranks are useful.
