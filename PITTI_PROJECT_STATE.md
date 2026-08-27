@@ -1,6 +1,6 @@
 # PITTI PROJECT STATE — CANONICAL
 
-Updated: 2026-08-27 16:35Z
+Updated: 2026-08-27 16:50Z
 Authority: compact repository execution state. Persistent full append-only history is `/Pitti/PITTI_PROJECT_STATE.md`. Actual verified artifacts/runtime override stale text; repair stale state immediately. Chat memory is never authority.
 
 ## EXECUTION INVARIANTS — MUST NOT REGRESS
@@ -769,3 +769,21 @@ Repair:
 - no Decision-Kernel, Expert-v2, Return-v2, roster scoring, ADP or player-specific recommendation changed.
 
 v108 prior integrity evidence remains historical: 20/20 seal-listed blobs matched before subsequent guard/checkpoint changes. v109 is the new transfer generation and requires its own seal/read-back.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — v110 guard/self-consistency + acute-status OOS confound audit
+
+### Guard self-consistency defect repaired
+After the v109 seal/read-back, the now-generation-generic Execution Lock exposed a guard mismatch: `pitti_guardrail_check.mjs` still required the old literal phrase “never claim Library v105 persisted”. That would make the guard fail despite the newer, safer generic authority wording. The guard now requires the generic fail-closed phrase: never claim a newer Library generation persisted unless `files.list` proves it.
+
+### Acute-status audit — no frozen-kernel mutation
+Current rc4.83 contains one hard acute status overlay: Ashton Jeanty, dated 2026-08-24, with `blockRecommendation=true`. Fresh 2026-08-27 reporting says the ankle sprain is not viewed as long-term, but Week 1 remains uncertain; Raiders coach says he is “on the mend”. Therefore:
+- the status is still materially relevant;
+- the hard block is a known early-round OOS confound distinct from the WR6+/WR7+ challenger hypothesis;
+- do NOT retune/remove it inside the frozen rc4.83 experiment before evidence;
+- Evidence-v2 interpretation must separate any Jeanty-affected early decision from the late-WR saturation promotion question;
+- pre-real-draft refresh must revisit this dated blocker and must not let it persist silently if recovery/IR information changes.
+
+No rc4.83 Decision-Kernel coefficient, Expert-v2 weight, Return-v2, roster-scoring coefficient or user-QB rule changed.
