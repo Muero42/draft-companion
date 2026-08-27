@@ -108,3 +108,9 @@ assert.ok(app.includes("player_name:p.metadata?.first_name"));
 assert.ok(app.includes("pos:meta.position||p.metadata?.position||null"));
 assert.ok(app.includes("const pos=p.pos||(f.rankedPool||[]).find"));
 assert.ok(app.includes("freezeDecisionFixture({draftId:id,current,returnPick,picks,mine,players,rankedAvailable"));
+
+// Evidence schema contract: future analysis must not silently lose per-pick context.
+for(const k of ['current','rosterCounts','candidates','chosenPlayer','decisionOutcome'])assert.ok(app.includes(k),k);
+assert.ok(app.includes("format:'pitti-decision-evidence-v2'"));
+assert.ok(app.includes('wrSaturationRecommendationCount'));
+assert.ok(app.includes('qb2ViolationCount'));
