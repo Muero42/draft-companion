@@ -307,3 +307,12 @@ Fresh public 2026 Half-PPR boards independently verified:
 - FantasyPros consensus directory is Aug27 and 160-expert deep; scarcity is not a selection constraint.
 
 Next v3 test architecture should preserve role purity: specialist ranks only enter the position(s) justified by historical evidence; other positions can be retained as shadow/control for diagnostics. This prevents a repeat of the old availability-driven Weisse/Gianni/Bobal substitution error.
+
+
+## AUTO WR acquisition screen — 2026-08-27
+
+Fresh public FantasyPros verification: Joey Wright's dedicated 2026 Half-PPR Overall and TE pages currently return `Draft rankings are not available`. Therefore his historical WR7 accuracy does NOT translate into an immediately usable 2026 challenger via the public page. He can still be checked through the existing comparison/API route if present in the user's live expert directory, but availability must not drive selection.
+
+Current FantasyPros Half-PPR consensus directory reports 160 experts on Aug 27, confirming ample candidate supply. Do not lower quality threshold to fill WR6 slot.
+
+Decision: keep WR incumbent unchanged for now; prioritize validating high-value position additions where both historical edge and current data are stronger (Weisse RB, Wolf TE, Todd D Clark QB). WR specialist remains optional, not a required sixth source. Jeff Bell/Dave Kluge should only advance if current 2026 Half-PPR ranks can be verified and their marginal information is demonstrably independent of Mariano + DS.
