@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T17:55:00Z",
+  "updatedAt": "2026-08-27T18:15:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -179,7 +179,8 @@
       "Evidence-v2 promotion analysis now requires realistic mock mode + slot 9 and reports ACUTE_STATUS_CONFOUND separately; rc4.83 regression + PITTI guard protect this",
       "v112 transfer guard cleanup: executable current-handoff canary no longer depends on historical Library v105 wording; active recovery checks are generation-generic",
       "pre-real-draft freshness gate added outside runtime/kernel: blocking DRAFT_ACUTE_STATUS_2026 entries fail closed when older than configured max-age; default 2 days; PITTI guard protects gate presence",
-      "Emergency Queue fallback now has independent deterministic executable contract: 35 cap, one-QB/one-TE while open, none after QB1/TE1, identity/version metadata, K/DST omission; protected by rc4.83 + PITTI guards"
+      "Emergency Queue fallback now has independent deterministic executable contract: 35 cap, one-QB/one-TE while open, none after QB1/TE1, identity/version metadata, K/DST omission; protected by rc4.83 + PITTI guards",
+      "Evidence-v2 analyzer now reports clean non-acute-confounded OOS metrics separately from whole-mock metrics; same-day Jeanty recheck remains unresolved and does not mutate frozen rc4.83"
     ],
     "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
     "note": "rc4.82 remains last fully Android-verified authority. rc4.83 remains deployed test challenger only; Decision Kernel coefficients stay frozen pending realistic slot-9 OOS Evidence-v2. Transfer/release/evidence guards are generation-generic.",
