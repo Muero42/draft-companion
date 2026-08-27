@@ -4,6 +4,10 @@ const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
 const USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers']);
+// User draft strategy: in this 10-team/1QB league, draft exactly one QB. A QB2 has no
+// useful pre-Week-1 option-value because it would be dropped for K/DST; unlike late RB
+// (and, to a lesser extent, WR/TE), it cannot earn a roster slot through role news.
+const USER_DRAFT_QB_LIMIT=1;
 const DRAFT_ACUTE_STATUS_2026={ashtonjeanty:{label:'AKUTER STATUS: Sprunggelenkverletzung · Teilnahme/Belastbarkeit vor Draft prüfen',blockRecommendation:true,asOf:'2026-08-24'}};
 const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
@@ -1270,7 +1274,7 @@ function applyPlayerQualitySafetyGate(rows,current){
   // rc4.64: Safety must not resurrect a repeated QB/TE after roster scoring demoted it.
   // Existing exceptional-slide thresholds are reused exactly; no new numeric penalty family.
   const safetyPromotionEligible=x=>{
-    if(x.p.pos==='QB'&&(x.stateCounts?.QB??0)>=1)return x.r.rank<=45&&Number.isFinite(x.a)&&current-x.a>=35;
+    if(x.p.pos==='QB'&&(x.stateCounts?.QB??0)>=USER_DRAFT_QB_LIMIT)return false;
     if(x.p.pos==='TE'&&(x.stateCounts?.TE??0)>=1)return x.r.rank<=35&&Number.isFinite(x.a)&&current-x.a>=30;
     return true;
   };
@@ -1399,6 +1403,7 @@ function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   const r=rankFor(p.name,p.pos),a=Number(adp[norm(p.name)]);
   if(!r)return{score:-999,r:null,a,reasons:['Panel-Rang fehlt']};
   if(p.pos==='QB'&&USER_HARD_QB_EXCLUSIONS.has(norm(p.name)))return{score:-999,rawScore:-999,r,a,reasons:['USER HARD EXCLUSION'],hardExcluded:true};
+  if(p.pos==='QB'&&(state.counts?.QB||0)>=USER_DRAFT_QB_LIMIT)return{score:-999,rawScore:-999,r,a,reasons:['USER STRATEGY: genau 1 QB · QB2 nicht draften'],hardExcluded:true,userStrategyExcluded:true};
   const acuteStatus=DRAFT_ACUTE_STATUS_2026[norm(p.name)];
   if(acuteStatus?.blockRecommendation)return{score:-998,rawScore:-998,r,a,reasons:[acuteStatus.label],acuteStatus,recommendationBlocked:true};
   /* rc4.10: monotonic selected-panel Player Quality, anchored to best available panel rank. */
