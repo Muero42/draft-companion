@@ -1,12 +1,14 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T16:45:00Z",
+  "updatedAt": "2026-08-27T17:05:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_V103_WRITEBACK_BLOCKED_BY_FILES_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "If Library CURRENT/Project-State still shows v103 or rc4.76/rc4.77 current, reconcile against repo PITTI_EXECUTION_LOCK.json + repo Project-State EOF before any work; stale Library pointer must not win."
+    "failClosedRecovery": "If Library CURRENT/Project-State still shows v103 or rc4.76/rc4.77 current, reconcile against repo PITTI_EXECUTION_LOCK.json + repo Project-State EOF before any work; stale Library pointer must not win.",
+    "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
+    "handoffRule": "New chat must read PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF; repo EOF/lock override stale Library mirror."
   },
   "runtime": {
     "appVersion": "v11.8.0-rc4.64",
@@ -163,6 +165,6 @@
       "Evidence-v2 schema contract frozen in rc4.83 regression gate: pick, rosterCounts, candidates, chosenPlayer, decisionOutcome, WR saturation/QB2 aggregate flags"
     ],
     "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
-    "note": "rc4.83 Decision Kernel frozen pending OOS evidence, but PITTI AUTO continues independent positive-value lanes. Long uninterrupted AUTO blocks are a durable user contract; do not require reminders."
+    "note": "HANDOFF refreshed after independent QB1 cross-check. rc4.83 Decision Kernel remains frozen; next external gate is Android rc4.83 realistic mock then Evidence-v2 export. AUTO long-block contract must survive chat change."
   }
 }
