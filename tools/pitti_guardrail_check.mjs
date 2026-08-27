@@ -20,6 +20,7 @@ const releaseContract=text('PITTI_RELEASE_CONTRACT_V2.md');
 const releaseWorkflow=text('.github/workflows/release-contract-v2.yml');
 const packageWorkflow=text('.github/workflows/release-contract-v2-package.yml');
 const preDraftFreshnessGate=text('tools/pre-draft-freshness-gate.mjs');
+const emergencyQueueContract=text('tools/emergency-queue-contract.mjs');
 const current=JSON.parse(text('PITTI_CURRENT_STATE.json'));
 const seal=JSON.parse(text('PITTI_HANDOFF_SEAL.json'));
 const handoffGeneration=(currentHandoff.match(/Handoff generation:\s*`([^`]+)`/)||[])[1];
@@ -134,6 +135,9 @@ must(!packageWorkflow.includes('Draft_Companion_v11.8.0-rc4.82_PREINSTALL.zip'),
 must(releaseContract.includes('Exact v2 weights:'),'release contract expert-weight lock missing');
 must(preDraftFreshnessGate.includes('PRE_DRAFT_FRESHNESS_FAIL'),'pre-draft freshness fail-closed gate missing');
 must(preDraftFreshnessGate.includes("--max-age-days"),'pre-draft freshness age control missing');
+must(emergencyQueueContract.includes('EMERGENCY_QUEUE_CONTRACT_PASS'),'emergency queue contract missing');
+must(emergencyQueueContract.includes('only one QB while QB1 open'),'emergency queue one-QB canary missing');
+must(emergencyQueueContract.includes('only one TE while TE1 open'),'emergency queue one-TE canary missing');
 
 for(const token of ['rc4.82','rc4.83','work package -> checkpoint -> re-inventory','user must never need to remind'])
   must(bootstrap.includes(token),`repo bootstrap invariant missing: ${token}`);
