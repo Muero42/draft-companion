@@ -525,3 +525,13 @@ Parallel work was deliberately used instead of waiting for user mock evidence.
 
 ### 2026-08-27 PITTI AUTO — Evidence-v2 roster-count defect caught pre-mock
 Parallel audit found a real telemetry defect before collecting OOS evidence: Evidence-v2 attempted to infer positions of already-drafted user-roster players from rankedAvailable, but rankedAvailable excludes drafted players. This could silently report zero/undercounted QB/RB/WR/TE and invalidate WR6+/WR7+ flags. Fixed at source: each frozen userRoster row now persists player position directly from Sleeper metadata; exporter uses persisted pos with rankedPool only as backward-compatible fallback. Regression guard added and rc4.83 main/Pages runtime resynchronized. No scoring coefficients changed.
+
+
+### 2026-08-27 durable AUTO continuity correction
+User explicitly requires PITTI AUTO to run in the longest safe autonomous blocks with minimal interruptions and without repeated reminders. This is now a durable project execution contract, not a conversational preference that may be forgotten.
+- A blocked device/OOS gate blocks only its dependent lane.
+- Before any AUTO stop, inventory independent lanes: decision validation, regression/release safety, evidence tooling, draft-day failsafe, expert freshness, post-draft/FA readiness, Watcher draft-critical readiness, checkpoint/handoff integrity, independent strategy research.
+- Work every safe positive-value lane that does not contaminate a frozen experiment.
+- Do not stop merely because the current primary lane needs user evidence.
+- Interrupt only under PITTI_AUTO_PREFLIGHT user-interruption criteria.
+- The rc4.83 Decision Kernel remains frozen pending OOS mock evidence; this does not freeze the rest of PITTI.
