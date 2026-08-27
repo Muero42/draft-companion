@@ -450,7 +450,7 @@ User supplied a completed Full-v2 mock snapshot from the Android rc4.80 runtime.
 
 Draft roster (user, slot 9):
 James Cook, Justin Jefferson, Kyren Williams, Malik Nabers, Tyler Warren, Jameson Williams, Christian Watson, Parker Washington, Rico Dowdle, Jacory Croskey-Merritt, Kenny Gainwell, Josh Downs, Zach Charbonnet, Jared Goff, Jonah Coleman.
-No K/DST drafted; one QB drafted at pick 132; TE1 at 49. User ended 7 RB / 7 WR / 1 TE / 1 QB? Note: 15 total picks = RB7 (Cook/Kyren/Dowdle/JCM/Gainwell/Charbonnet/Coleman), WR6 (Jefferson/Nabers/Jamo/Watson/Parker/Downs), TE1, QB1. Correct count is 7 RB / 6 WR / 1 TE / 1 QB.
+No K/DST drafted; one QB drafted at pick 132; TE1 at 49. This newly supplied rc4.80 draft ended 7 RB / 6 WR / 1 TE / 1 QB. IMPORTANT: do not conflate it with the earlier rc4.76 mock supplied previously, which the user confirms was the separate 7-WR draft used to expose WR-saturation failures.
 
 Decision-quality observations to retain for later aggregate validation:
 - Early core: Cook 1.09, Jefferson 2.02, Kyren 3.09, Nabers 4.02.
@@ -462,3 +462,8 @@ Decision-quality observations to retain for later aggregate validation:
 - No post-draft retuning is authorized from this single mock. Use it as evidence alongside other realistic simulations and live expert evidence.
 
 This snapshot is also a direct canary for rc4.82 Android verification: after reload, a fresh Full-v2 snapshot must show current rc4.82 metadata, active Full-v2 Panel-Health OK, Frozen Expert-v2 provenance, and frozen-v2 weight semantics.
+
+
+### 2026-08-27 Android gate — rc4.82 visible
+User reloaded Android and supplied screenshot. Badge visibly shows v11.8.0-rc4.82. Top cards show FantasyPros Online, Rankings 33 Min., Sleeper Draft 1029, Coach bereit. Expert configuration visibly selected: Expert-v2 · alle Positionen. This closes the version-badge/reload portion of the rc4.82 Android gate.
+Screenshot does NOT include the lower Draftbereit/Panel-Health line, so Full-v2 health/provenance semantics remain device-unverified. Next minimal verification: scroll slightly below expert configuration until Draftbereit/Panel-Health status is visible, or produce a fresh snapshot if that exposes corrected metadata/health/provenance more efficiently.
