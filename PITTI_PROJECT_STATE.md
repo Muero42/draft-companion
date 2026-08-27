@@ -870,3 +870,14 @@ Fresh same-day injury recheck still does not justify silently clearing the froze
 Evidence-v2 offline analysis now explicitly reports clean non-acute-confounded decision metrics in parallel with whole-mock metrics: acuteStatusConfoundCount, cleanDecisionCount, cleanHardQb2Pass, cleanSaturatedWrCount and cleanWr7PlusCount. This prevents a Jeanty-affected early row from contaminating causal judgment of the late-WR challenger. rc4.83 regression + PITTI guard protect these outputs.
 
 No Decision-Kernel, Expert-v2, Return-v2, manager-model or runtime coefficient changed.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — v116 CRITICAL manager-slot correction / rc4.84
+
+Independent Return-v2 audit found a material stale mapping in `ACTIVE_2026_MANAGER_MAP_TEXT`. The confirmed 2026 order has Basti at slot 5, Björn at 6, Michael K/alias Giuliano at 7, Pascal B/alias Pascal Gelderner at 8. rc4.83 instead forced Björn 5 / Pascal 6 / Giuliano 7 / Basti 8 for every 2026 10-team live/mock, ignoring the editable map. This would distort manager-specific Return-v2 risk and invalidate the intended realistic OOS mock.
+
+Corrected runtime mapping in rc4.84: `1 Michael, 2 Pascal Voerde, 3 Marc Düsseldorf, 4 Thomas, 5 Basti, 6 Bjoern, 7 Giuliano, 8 Pascal Gelderner, 9 Tim, 10 Dutch Marc`. Only mapping + version/cache identity changed; Decision Kernel, late-WR coefficients, Expert-v2, player scoring and Return-v2 algorithm unchanged. Added rc4.84 draft-critical regression and PITTI guard canary for slots 5-8. Deployed main runtime bytes to gh-pages.
+
+IMPORTANT: rc4.83 OOS realistic-mock gate is superseded because its forced manager map was wrong. New OOS challenger is rc4.84 with the same WR-saturation hypothesis plus corrected confirmed manager geometry. rc4.82 remains last Android-verified authority until rc4.84 is device-verified/promoted.
