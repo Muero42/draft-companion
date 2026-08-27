@@ -101,3 +101,8 @@ Library mirror is stale/writeback-blocked. Repo `PITTI_EXECUTION_LOCK.json` + re
 - Runtime parity reverified during this handoff: main == gh-pages byte/blob parity for app.js, index.html, decision-policy.js, sw.js and manifest.webmanifest.
 - Current external continuation after takeover remains `ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT`; AUTO itself must not start the mock.
 - Receiving chat must distinguish `PITTI HANDOFF` (transactional transfer preparation) from `PITTI AUTO` (verified takeover/continuation). If the user says AUTO while a HANDOFF transaction is in progress, finish the handoff transaction first.
+
+## V106 SEAL STATUS
+- Transactional second pass: **PASS**.
+- `handoff_ready=true`; `second_pass_pass=true`.
+- New-chat user message: **PITTI AUTO** only.
