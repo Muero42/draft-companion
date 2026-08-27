@@ -112,3 +112,24 @@ Exact control-parity evidence for the isolation harness: **224/224 predictions**
 ## HANDOFF LOCK
 
 Persistent Library handoff generation **v96** is authoritative for transfer. A new chat must verify `PITTI_CURRENT_STATE.json` + `PITTI_HANDOFF_SEAL.json` + full Library Project State and then verify relevant live GitHub/runtime facts. Exact WR-v2 weights are transfer-critical and machine-locked in `PITTI_EXECUTION_LOCK.json`.
+
+
+## HANDOFF WRITE-THROUGH — 2026-08-27 rc4.77 DECISION-EVIDENCE
+
+- Current working branch: `pitti-auto/rc4.77-decision-evidence`.
+- Current pre-install candidate: **v11.8.0-rc4.77**; **NOT Android-verified / NOT installation-approved**.
+- User Android evidence on rc4.76 showed the live decision cards still failed the intended information architecture: Gibbs/Bijan shared generic expert-consensus advantages; Taylor/St. Brown lacked useful differentiating strengths. The next work must test the actual decision quality in parallel with fixing this presentation/evidence defect.
+- rc4.77 changes on the working branch make structured player-specific causal Research Evidence win over generic fallback text. README/version references on that branch are synchronized to rc4.77.
+- Required decision UI contract remains: Return % is the normal timing signal; do not add redundant NOW/JETZT wording. WAIT is retained only when high Return probability must not be overlooked. Value remains useful. Do not force artificial differences between genuinely similar players, but surface meaningful differentiators when evidence exists (multi-year consistency, workload/role, athletic/ceiling traits, elite-QB environment, etc.).
+- Four clear candidate cards: player-specific +/− reasons; expert rankings always visible (not collapsible), **ranks not weights**, and deterministic expert order with experts common to all position panels first. Only selected experts are displayed.
+- Player-name suffix: only established upside/regression arrows plus concise reason; preserve Parker Washington invariant **WR2 mit WR1-Upside**. Top-10 keywords belong after metrics, not appended to player names; injury warning may be additional.
+- Never release another install ZIP merely because source/unit tests are green. Mandatory pre-install path: behavioral/semantic render gate against actual live presentation -> regressions/invariants -> README/version/cache coherence -> build/package -> re-extract actual runtime ZIP and retest extracted contents. Only then request Android installation.
+- README drift is a release-blocking regression, not documentation cleanup.
+- No status/intermediate messages during PITTI AUTO/HANDOFF while autonomous useful work remains. HANDOFF must persist and verify state before reporting completion.
+
+### Immediate continuation after handoff
+1. Verify rc4.77 branch contents and run the full Release Contract v2 gates; repair failures rather than asking for Android install.
+2. Test whether structured causal evidence actually produces distinct, decision-useful reasons for representative players including Gibbs, Bijan, Taylor and Amon-Ra St. Brown, while allowing equal text where players truly share the same rationale.
+3. In parallel audit the **actual draft decisions/ranking order**, not merely UI wording, against current locked model/expert/Return/roster rules.
+4. Preserve all prior Expert-v2/WR-only qualification locks unless a newer verified checkpoint explicitly supersedes them; do not infer production status from the rc4.77 presentation branch.
+5. If all gates pass, package/re-extract/retest and only then mark a concrete ZIP pre-install-ready; Android verification remains a separate state.
