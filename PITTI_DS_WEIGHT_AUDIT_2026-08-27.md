@@ -268,3 +268,13 @@ Fresh FantasyPros directory/web verification changes the acquisition assumptions
 Important: current FantasyPros directory 'Accuracy' numbers (e.g. Weisse #7, Todd #11) are displayed alongside 2026 rankings but should not be conflated with the previously used 2023-25 position-specific accuracy table. Keep those evidence dimensions separate.
 
 No production panel or rc4.84 weights changed in this pass.
+
+
+## AUTO public-board extraction — 2026-08-27 22h
+
+Public FantasyPros pages now expose enough current Half-PPR data to validate challenger shape before API integration.
+- Ryan Weisse overall Half-PPR Aug24: independent deviations include Garrett Wilson overall19 vs ECR38 (+19), Nico Collins14 vs ECR17, Olave18 vs ECR24. QB Aug24: Drake Maye QB2, Caleb Williams QB4, Lamar QB5, Jayden Daniels QB10. RB page indexed Aug22: Chase Brown RB5, CMC RB3, Jeanty RB9. This confirms nontrivial independent opinions; use him only as RB challenger initially because historical qualification is RB-specific.
+- Wolf overall Half-PPR Aug24; TE page Aug25: Bowers1, McBride2, Loveland3, Kraft4, Warren5, Pitts6, LaPorta7. QB page Aug25: Maye2, Lawrence6, Hurts8. His TE board is sufficiently current for a challenger extraction, but API timestamp remains preferred if newer.
+- FantasyPros consensus itself is Aug27 and currently draws from ~160 experts, so ECR comparisons are contemporaneous context only, not an additional independent expert source.
+
+Methodological guard: visible disagreement from ECR is useful for source-independence screening but is not proof of superior accuracy. Historical position accuracy + current freshness + OOS marginal-value remains the admission chain.
