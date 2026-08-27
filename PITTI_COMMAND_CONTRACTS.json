@@ -1,17 +1,20 @@
 {
   "schema": "pitti.command-contract.v1",
-  "version": "1.4.0",
+  "version": "1.5.0",
   "trigger": "PITTI AUTO",
   "sourceOrder": [
     "PITTI_COMMAND_CONTRACTS.json",
+    "PITTI_CURRENT_STATE.json",
+    "PITTI_HANDOFF_SEAL.json",
     "PITTI_EXECUTION_LOCK.json",
+    "PITTI_AUTO_PREFLIGHT.md",
     "PITTI_PROJECT_STATE.md to EOF",
     "NEW_CHAT_HANDOFF_CURRENT.md",
     "PITTI_NEW_CHAT_BOOTSTRAP.md",
     "HANDOFF_COMPLETENESS_MATRIX.md",
     "actual branch/runtime/artifact/device evidence"
   ],
-  "authorityRule": "Chat memory is never authority. Fail closed on contradiction. Actual verified runtime/artifact/device evidence and newest repo Project-State EOF/Execution Lock override stale Library mirrors.",
+  "authorityRule": "Chat memory is never authority. Fail closed on contradiction. New-chat takeover must verify CURRENT + SEAL generation/integrity before project work. Actual verified runtime/artifact/device evidence and newest repo Project-State EOF/Execution Lock override stale Library mirrors.",
   "auto": {
     "longestSafeBlocks": true,
     "userReminderRequired": false,
