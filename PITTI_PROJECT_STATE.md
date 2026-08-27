@@ -133,3 +133,10 @@ Persistent Library handoff generation **v96** is authoritative for transfer. A n
 3. In parallel audit the **actual draft decisions/ranking order**, not merely UI wording, against current locked model/expert/Return/roster rules.
 4. Preserve all prior Expert-v2/WR-only qualification locks unless a newer verified checkpoint explicitly supersedes them; do not infer production status from the rc4.77 presentation branch.
 5. If all gates pass, package/re-extract/retest and only then mark a concrete ZIP pre-install-ready; Android verification remains a separate state.
+
+
+## 2026-08-27 HANDOFF v100 ALIGNMENT
+- Library handoff v100 is the current transfer authority.
+- Machine lock corrected to preserve **three selectable expert profiles**: incumbent, Expert-v2 ALL, Expert-v2 WR-only. Earlier full-v2 A/B failure is historical evidence against promotion as winner, not permission to remove the selectable ALL profile.
+- AUTO/HANDOFF continuity is fail-closed: no intermediate user-facing status while autonomous useful work remains; parallelize independent lanes; autonomously diagnosable CI/test/build/research failures are repaired and rerun internally.
+- Runtime tested content remains commit `25ce5df410a4b9be2ce6ec75ba0817bdbb858d3e`; subsequent commits are state/lock documentation only and do not alter rc4.77 runtime bytes.
