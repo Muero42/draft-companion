@@ -1,13 +1,18 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260827T154300Z-v106`
-Updated: 2026-08-27 15:43Z
+Handoff generation: `20260827T154700Z-v107`
+Updated: 2026-08-27 15:47Z
 
 ## BOOTSTRAP — mandatory
-1. Read `PITTI_AUTO_PREFLIGHT.md` fully.
-2. Read `PITTI_EXECUTION_LOCK.json` fully.
-3. Read `PITTI_PROJECT_STATE.md` to EOF. Newest appended sections override older NEXT_ACTION/current-version statements.
-4. Verify actual repo/runtime/artifact state before acting. Chat memory and stale Library mirrors are never authority.
-5. Continue with `PITTI AUTO` as a repeated long-block loop: execute work -> checkpoint material changes -> re-inventory ALL independent lanes -> continue. A blocked lane blocks only itself.
+1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
+2. Read `PITTI_CURRENT_STATE.json` fully.
+3. Read `PITTI_HANDOFF_SEAL.json` fully and require PASS, `handoff_ready=true`, `second_pass_pass=true`.
+4. Require CURRENT generation == SEAL generation == this handoff generation and verify every seal-listed repo blob hash.
+5. Read `PITTI_AUTO_PREFLIGHT.md` fully.
+6. Read `PITTI_EXECUTION_LOCK.json` fully.
+7. Read `PITTI_PROJECT_STATE.md` to EOF. Newest appended sections override older NEXT_ACTION/current-version statements.
+8. Read `PITTI_NEW_CHAT_BOOTSTRAP.md` and `HANDOFF_COMPLETENESS_MATRIX.md`.
+9. Verify actual repo/runtime/artifact state before acting. Chat memory and stale Library mirrors are never authority.
+10. Continue with `PITTI AUTO` as a repeated long-block loop: execute work -> checkpoint material changes -> re-inventory ALL independent lanes -> continue. A blocked lane blocks only itself.
 
 ## CURRENT AUTHORITY
 - League: 10-team Half-PPR, 1QB, real draft 2026-08-31, user slot 9.
@@ -103,6 +108,21 @@ Library mirror is stale/writeback-blocked. Repo `PITTI_EXECUTION_LOCK.json` + re
 - Receiving chat must distinguish `PITTI HANDOFF` (transactional transfer preparation) from `PITTI AUTO` (verified takeover/continuation). If the user says AUTO while a HANDOFF transaction is in progress, finish the handoff transaction first.
 
 ## V106 SEAL STATUS
+- Transactional second pass: **PASS**.
+- `handoff_ready=true`; `second_pass_pass=true`.
+- New-chat user message: **PITTI AUTO** only.
+
+
+## V107 TRANSFER-AUDIT REPAIR — SUPERSEDES V106 TAKEOVER PROCEDURE
+A receiving-chat audit found transfer-hardening defects even though the v106 hash seal itself was internally consistent:
+- command-contract/bootstrap/handoff primary load orders did not all require `PITTI_CURRENT_STATE.json` + `PITTI_HANDOFF_SEAL.json` before project work;
+- the completeness matrix still identified itself as repo v105;
+- preflight retained a stale generic sentence implying current Expert-v2 weights still needed to be invented/reselected;
+- CI path triggering did not cover every file read by the guardrail checker.
+
+These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them and adds executable generation + seal-integrity verification. Runtime boundary and OOS gate remain unchanged: rc4.82 Android authority; rc4.83 deployed test challenger, frozen pending realistic Evidence-v2.
+
+## V107 SEAL STATUS
 - Transactional second pass: **PASS**.
 - `handoff_ready=true`; `second_pass_pass=true`.
 - New-chat user message: **PITTI AUTO** only.
