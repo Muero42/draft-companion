@@ -44,6 +44,10 @@ const wr7=rows.filter(r=>r.flags.includes('WR7_PLUS_COACH'));
 const te2=rows.filter(r=>r.flags.includes('TE2_COACH'));
 const outside=rows.filter(r=>r.flags.includes('CHOSEN_OUTSIDE_TOP16'));
 const acuteConfounds=rows.filter(r=>r.flags.includes('ACUTE_STATUS_CONFOUND'));
+const cleanRows=rows.filter(r=>!r.flags.includes('ACUTE_STATUS_CONFOUND'));
+const cleanWr6=cleanRows.filter(r=>r.flags.includes('WR6_PLUS_COACH')||r.flags.includes('WR7_PLUS_COACH'));
+const cleanWr7=cleanRows.filter(r=>r.flags.includes('WR7_PLUS_COACH'));
+const cleanQb2=cleanRows.filter(r=>r.flags.includes('QB2_VIOLATION'));
 const completeness={
  fixtureCount:e.fixtureCount,summaryCount:e.summaries.length,resolved:e.resolvedCount,
  expectedOwnPicks:e.mode==='mock'?15:null,
@@ -54,8 +58,13 @@ const completeness={
 const verdict={
  telemetryComplete:completeness.allFixturesSummarized&&completeness.allResolved,
  hardQb2Pass:qb2.length===0,
+ acuteStatusConfoundCount:acuteConfounds.length,
+ cleanDecisionCount:cleanRows.length,
+ cleanHardQb2Pass:cleanQb2.length===0,
  saturatedWrCount:wr6.length,
  wr7PlusCount:wr7.length,
+ cleanSaturatedWrCount:cleanWr6.length,
+ cleanWr7PlusCount:cleanWr7.length,
  te2CoachCount:te2.length,
  overrideCount:overrides.length,
  chosenOutsideTop16:outside.length
