@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260827T154700Z-v107`
-Updated: 2026-08-27 15:47Z
+Handoff generation: `20260827T160500Z-v108`
+Updated: 2026-08-27 16:05Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -126,3 +126,10 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Transactional second pass: **PASS**.
 - `handoff_ready=true`; `second_pass_pass=true`.
 - New-chat user message: **PITTI AUTO** only.
+
+
+## V108 AUTO CONTINUATION CANARY
+- Post-v107 AUTO found and repaired a stale release path: release contracts now execute rc4.83 draft-critical gates, and candidate packaging derives its version from APP_VERSION instead of hard-coding rc4.82.
+- Evidence-v2 offline analysis now fails closed on exact rc4.83, complete 15-pick mock telemetry and unique own-pick fixtures.
+- No rc4.83 Decision-Kernel coefficient changed. OOS gate remains unchanged.
+- Fresh independent QB/RB research is checkpointed as qualitative dated evidence only.
