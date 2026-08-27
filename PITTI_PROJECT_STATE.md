@@ -952,3 +952,11 @@ Challenger families to test after current Evidence-v2 analysis: incumbent weight
 - Gianni/Bobal likewise require fresh independent qualification; no inherited positive or negative verdict.
 - Availability/API accessibility remains only an acquisition property, never a selection criterion.
 - Any earlier note claiming Weisse had already failed PITTI marginal-value testing is incorrect and superseded.
+
+
+### 2026-08-27 — Expert-v3 challenger design space (user-approved)
+- Verified from current rc4.84 UI screenshot: incumbent Expert-v2 effective weights are QB DS35/Mariano25/Del Don20/Boone10/Pat10; RB DS35/Mariano25/Del Don25/Pat15; WR Mariano35/DS30/Pat15/Del Don10/Boone10; TE DS35/Pat30/Del Don25/Boone10.
+- User permits 4–6 experts per positional panel. Therefore RB currently has room for up to 2 additional experts; QB/WR have room for 1; TE has room for up to 2.
+- DS weight is explicitly open to redistribution if evidence supports it. Do not assume DS35 is optimal; validate the finished DS Team ranking itself rather than inferring its accuracy solely from individual DS analysts.
+- Preserve incumbent Expert-v2 unchanged. Any improved composition should initially be added as a separate selectable Expert-v3/challenger preset so incumbent remains available for controlled comparison and rollback.
+- Candidate admission remains evidence-first: availability/API access alone never qualifies a source. Weisse may be freshly evaluated; old Weisse/Gianni/Bobal anti-regression lock only prevents unqualified automatic restoration.
