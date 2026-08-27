@@ -11,7 +11,7 @@
     "NEW_CHAT_HANDOFF_CURRENT.md": "1959b96bd07218e68a9d0886c323ffd01fb0fc42",
     "PITTI_COMMAND_CONTRACTS.json": "5fe962b5043777b75efccc03b61408d5e181a013",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "ca02242c27b78d8b4f70bd57aad9288e1bcdadd6",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "dc33e1a7bf334637f812b72a5b6844906f1f3e31",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "96a558ea8c76be08e4772309f22037a3b640e9e9",
     "PITTI_EXECUTION_LOCK.json": "3eb5cc2dfe76c018d765eb36b01f35226a349cda",
     "PITTI_PROJECT_STATE.md": "f27336f2f19c1b5dbfeabdbd00e5606d2e87f157",
     "PITTI_AUTO_PREFLIGHT.md": "9e6090ef003e324bc7fdf91b9bd9c2c5b2c06317",
@@ -22,7 +22,7 @@
     "manifest.webmanifest": "0c02f7bb0ad65c47001afbcda40409186f1b1168",
     "tools/rc483-draft-critical.mjs": "e3c790e2b48e9af800ad2d30a0325fed468001de",
     "tools/analyze-decision-evidence.mjs": "eee08e9e040656f346267c04d44d9f7e368c22bc",
-    "tools/pitti_guardrail_check.mjs": "d26e5d9d7348d9d6d606a8ff65922a10d767d2a4",
+    "tools/pitti_guardrail_check.mjs": "c520acdae0057680c45e1df04554b778b5c64597",
     ".github/workflows/pitti-project-guardrails.yml": "ade6a8b2526b43dfac1fd4436f5a440a3ac85e5e",
     "README.md": "12aec3a1601784325bab8ed65af93d9f7d2ed077",
     ".github/workflows/release-contract-v2.yml": "f30f34e089145a96d79ab1fdd4f4ff42ca337078",
@@ -44,10 +44,10 @@
     "current_seal_handoff_generation_match": true,
     "takeover_source_order_requires_current_and_seal": true,
     "seal_integrity_executable_guard": true,
-    "matrix_v107": true,
     "release_gate_rc483": true,
     "package_version_fail_closed": true,
-    "evidence_v2_exact_15": true
+    "evidence_v2_exact_15": true,
+    "matrix_v108": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
