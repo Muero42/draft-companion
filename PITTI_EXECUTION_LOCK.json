@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T13:05:00Z",
+  "updatedAt": "2026-08-27T13:12:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -21,7 +21,8 @@
     "preinstallSha256": "69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba",
     "preinstallRuntimeFiles": 12,
     "latestSourceRegressionVerified": "v11.8.0-rc4.82",
-    "latestDeployedCandidate": "v11.8.0-rc4.82"
+    "latestDeployedCandidate": "v11.8.0-rc4.82",
+    "latestAndroidVerified": "v11.8.0-rc4.82"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -124,9 +125,9 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.82_ANDROID_VISIBLE_HEALTH_PASS_SNAPSHOT_METADATA_PENDING",
+    "status": "RC4.82_ANDROID_VERIFIED",
     "production": false,
-    "androidVerified": false,
+    "androidVerified": true,
     "changes": [
       "centralized APP_VERSION to eliminate stale snapshot/queue/backup/model metadata",
       "active panel health now evaluates the actually selected full-v2, hybrid WR-v2, or live profile instead of global desired-pool health",
@@ -142,9 +143,10 @@
       "Expert-v2 board weights/counts/order invariants PASS",
       "main/gh-pages byte parity PASS for app.js/index.html/sw.js/manifest.webmanifest",
       "README authority synchronized: production rc4.64 vs package rc4.78 vs Android rc4.80 vs current rc4.82 separated",
-      "Android rc4.82 badge + Full-v2 selected + green active-panel health + completed roster 1QB/7RB/6WR/1TE + completed-state live suppression PASS"
+      "Android rc4.82 badge + Full-v2 selected + green active-panel health + completed roster 1QB/7RB/6WR/1TE + completed-state live suppression PASS",
+      "Fresh Android rc4.82 snapshot PASS: App-Version rc4.82; Panel-Health OK; Expert-v2 Frozen Board provenance; frozen effective weights/no live renormalization; Coach model rc4.82; embedded counts QB5/5 RB4/4 WR5/5 TE4/4"
     ],
-    "gate": "FRESH_RC4.82_SNAPSHOT_METADATA_PROVENANCE_SMOKE_ONLY",
-    "note": "Android visible health gate passed. Full Android verification remains fail-closed until one fresh rc4.82 snapshot confirms APP_VERSION plus Frozen Expert-v2 provenance/weight wording. No additional full mock required."
+    "gate": "RC4.82_GATE_CLOSED_CONTINUE_AGGREGATE_DRAFT_VALIDATION",
+    "note": "rc4.82 Android gate fully closed. Snapshot duplicate flag is expected because same completed draft fingerprint was intentionally recopied; it is not a regression. Continue aggregate decision-quality validation; no retune from this single mock."
   }
 }
