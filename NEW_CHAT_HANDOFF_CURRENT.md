@@ -185,3 +185,10 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - rc4.84 corrects only this mapping plus version/cache identity; late-WR challenger coefficients and Decision Kernel are unchanged.
 - rc4.83 realistic OOS gate is invalid/superseded because manager geometry was wrong. Gate is now rc4.84 device verify -> realistic slot-9 mock -> Evidence-v2.
 - main rc4.84 runtime deployed byte-identically to gh-pages; rc4.82 remains last Android-verified authority pending device verification.
+
+
+## UPSIDE RESEARCH v3 — NON-RUNTIME PENDING
+- `PITTI_UPSIDE_RESEARCH_V3.md` is the new ceiling/opportunity research ledger.
+- Jameson Williams is explicitly CONSOLIDATION (already broke out) rather than generic BREAKOUT; Parker/Egbuka/Tate carry stronger WR1-takeover/ascension paths.
+- RB upside uses opportunity elasticity/events-needed; TE uses target-hierarchy/route-volume ceiling.
+- Do not load this ledger into the active rc4.84 mock. Integration waits for current Evidence-v2 export.
