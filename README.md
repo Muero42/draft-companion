@@ -1,10 +1,14 @@
 # Draft Companion – Final Draft Edition 2026
 
 > **Produktions-/Default-Branch-Baseline:** v11.8.0-rc4.64.  
-> **Aktueller Entwicklungsstand:** Release Contract v2 (noch kein Installationsrelease).  
-> **Android-Status:** rc4.74 und rc4.75 verworfen; Release Contract v2 wird vor dem nächsten nummerierten Kandidaten vollständig validiert.
+> **Aktueller pre-install Kandidat:** v11.8.0-rc4.76 · Release Contract v2.  
+> **Android-Status:** rc4.74 und rc4.75 verworfen; rc4.76 noch nicht Android-verifiziert.
 >
 > RC-Freigabe verlangt ZIP-Re-Extract, Regressionen und semantischen Render-Gate. README-Drift ist ein Release-Gate.
+
+### rc4.76 — Release Contract v2 pre-install candidate
+- Kandidat erst nach Behavioral-, Evidence-kind-, Draft-phase-/Roster-State-, Regression-, Completeness- und Re-Extract-Gates freigeben.
+- Return/WAIT, Expert-v2, feste Expertenreihenfolge, Einzelrankings, Pfeile, Parker-These und Kartenbegründungen sind als ausführbare Invarianten geschützt.
 
 ### Release Contract v2 — Prozessumbau
 - Fail-closed Behavioral Gate gegen die echten Live-Presentation-Funktionen.
