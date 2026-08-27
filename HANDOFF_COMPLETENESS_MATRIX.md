@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v110
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v111
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -60,10 +60,11 @@ Explicitly reject resurrection of PairSum/Rolling, fixed caps, player forcing, b
 ## 8 Execution witness
 Before user-facing AUTO completion, actual work must have been executed in the current run unless the only remaining condition is a genuinely unavoidable external/device gate after all independent lanes are exhausted.
 
-## 9 v110 tooling canaries
+## 9 v111 tooling canaries
 - release contracts execute rc4.83 draft-critical gate
 - candidate package label derives from APP_VERSION and cross-checks index/sw/manifest
 - Evidence-v2 completed mock requires exact rc4.83 + 15 unique own-pick fixtures
 
 - active authority prose must be generation-generic; no stale sealed-generation pointer may override CURRENT/SEAL
 - Evidence-v2 analysis separates dated acute-status hard blockers from the late-WR saturation hypothesis
+ - promotion Evidence-v2 must be realistic mock mode, slot 9; acute-status confounds reported separately
