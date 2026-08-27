@@ -1,0 +1,63 @@
+name: rc4.74 decision evidence gate
+on:
+  push:
+    branches: [pitti-auto/rc4.74-decision-evidence]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  preinstall:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Syntax and release guard
+        run: |
+          node --check app.js
+          node --check live-surface-v3.js
+          node --check expert-v2-board.js
+          node tools/release-completeness-guard.mjs
+      - name: Decision information architecture regression
+        run: |
+          node <<'NODE'
+          const fs=require('fs');const s=fs.readFileSync('live-surface-v3.js','utf8');
+          for(const bad of ['JETZT-FENSTER',"return'JETZT'","return'EHER JETZT'","KNAPPES RETURN-FENSTER","HOHE RETURN-CHANCE","Jetzt-Fenster:","Warten plausibel:"]) if(s.includes(bad)) throw Error('redundant timing signal remains: '+bad);
+          if(!s.includes("if(x.ret!=null&&x.ret>=.80)out.push('WAIT')")) throw Error('WAIT exception missing');
+          if(!s.includes("if(g!=null&&g>=2)out.push('VALUE')")) throw Error('VALUE missing');
+          if(!s.includes("String(x.name)==='Parker Washington'")||!s.includes("'WR2 mit WR1-Upside'")) throw Error('Parker upside invariant missing');
+          if(!s.includes("rrComponent")) throw Error('research evidence differentiator missing');
+          console.log('DECISION_INFORMATION_ARCHITECTURE_PASS');
+          NODE
+      - name: Expert-v2 zero-candidate and existing regressions
+        run: |
+          node <<'NODE'
+          const fs=require('fs');const a=fs.readFileSync('app.js','utf8');
+          if(a.includes('.filter(x=>x.r&&panelHasVerifiedExperts(x.r.panelId))')) throw Error('old downstream member gate active');
+          if(!a.includes('.filter(x=>x.r&&panelSelectable(x.r.panelId))')) throw Error('selectable gate missing');
+          NODE
+          node Draft_Companion_Position_Path_Regression_2026-08-13.js
+          node Draft_Companion_Player_Quality_Expert_Health_Regression_2026-08-13.js
+          node Draft_Companion_Return_Geometry_Market_Regression_2026-08-13.js
+          node Draft_Companion_Scarcity_Double_Count_Regression_2026-08-13.js
+          node Draft_Companion_Alternative_Scarcity_Regression_2026-08-13.js
+          node Draft_Companion_Dress_Rehearsal_Regression_2026-08-14.js
+      - name: Package and re-extract actual runtime
+        run: |
+          mkdir -p dist/runtime
+          cp index.html app.js styles.css manifest.webmanifest sw.js _worker.js icon.svg live-surface-v3.js live-surface-v3.css expert-board-export.js expert-v2-board.js dist/runtime/
+          (cd dist/runtime && zip -q ../Draft_Companion_v11.8.0-rc4.74_PREINSTALL.zip *)
+          unzip -t dist/Draft_Companion_v11.8.0-rc4.74_PREINSTALL.zip
+          test "$(unzip -Z1 dist/Draft_Companion_v11.8.0-rc4.74_PREINSTALL.zip | wc -l)" -eq 11
+          mkdir dist/reextract && unzip -q dist/Draft_Companion_v11.8.0-rc4.74_PREINSTALL.zip -d dist/reextract
+          (cd dist/reextract && node --check app.js && node --check live-surface-v3.js && node --check expert-v2-board.js)
+          ! grep -q 'JETZT-FENSTER\|KNAPPES RETURN-FENSTER\|HOHE RETURN-CHANCE' dist/reextract/live-surface-v3.js
+          grep -q "out.push('WAIT')" dist/reextract/live-surface-v3.js
+          grep -q "out.push('VALUE')" dist/reextract/live-surface-v3.js
+          sha256sum dist/Draft_Companion_v11.8.0-rc4.74_PREINSTALL.zip > dist/rc474.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Draft_Companion_v11.8.0-rc4.74_PREINSTALL
+          path: |
+            dist/Draft_Companion_v11.8.0-rc4.74_PREINSTALL.zip
+            dist/rc474.sha256
