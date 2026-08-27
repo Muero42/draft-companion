@@ -1,7 +1,7 @@
 name: PITTI release contract v2
 on:
   push:
-    branches: [pitti-auto/release-contract-v2]
+    branches: [pitti-auto/rc4.76-release-contract-v2]
   workflow_dispatch:
 jobs:
   behavioral-contract:
