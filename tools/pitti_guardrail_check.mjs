@@ -9,6 +9,7 @@ const lock=JSON.parse(text('PITTI_EXECUTION_LOCK.json'));
 const state=text('PITTI_PROJECT_STATE.md');
 const preflight=text('PITTI_AUTO_PREFLIGHT.md');
 const app=text('app.js');
+const rc484=text('tools/rc484-draft-critical.mjs');
 const policy=text('decision-policy.js');
 const readme=text('README.md');
 const commandContract=JSON.parse(text('PITTI_COMMAND_CONTRACTS.json'));
