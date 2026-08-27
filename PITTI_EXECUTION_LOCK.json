@@ -1,14 +1,14 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T15:12:00Z",
+  "updatedAt": "2026-08-27T15:47:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_V102_V103_PERSISTENT_WRITEBACK_RETRY_FAILED_2026-08-27T15:00Z_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Persistent Library CURRENT/Project-State/Handoff/Seal remain stale because v105 upload-back failed with container_session_expired after a locally prepared + second-pass-PASS reseal. New chat MUST reconcile repo PITTI_COMMAND_CONTRACTS + EXECUTION_LOCK + PROJECT_STATE EOF + NEW_CHAT_HANDOFF_CURRENT + repo bootstrap/matrix against any Library state. Repo/device verified facts win; never claim Library v105 persisted unless files.list later proves it.",
+    "failClosedRecovery": "Persistent Library CURRENT/Project-State/Handoff/Seal remain stale because v105 upload-back failed with container_session_expired. Repo v107 authority is fail-closed: new chat MUST verify PITTI_COMMAND_CONTRACTS + CURRENT + PASS SEAL + EXECUTION_LOCK + PROJECT_STATE EOF + NEW_CHAT_HANDOFF_CURRENT + repo bootstrap/matrix against any Library state. Repo/device verified facts win; never claim Library v105/v106/v107 persisted unless files.list later proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
-    "handoffRule": "New chat must read PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF; repo EOF/lock override stale Library mirror."
+    "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
     "appVersion": "v11.8.0-rc4.64",
