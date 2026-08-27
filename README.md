@@ -2,7 +2,7 @@
 
 > **Produktions-/Default-Branch-Baseline:** v11.8.0-rc4.64.  
 > **Aktueller pre-install Kandidat:** v11.8.0-rc4.76 · Release Contract v2.  
-> **Android-Status:** rc4.74 und rc4.76 verworfen; rc4.76 noch nicht Android-verifiziert.
+> **Android-Status:** rc4.74 und rc4.75 verworfen; rc4.76 noch nicht Android-verifiziert.
 >
 > RC-Freigabe verlangt ZIP-Re-Extract, Regressionen und semantischen Render-Gate. README-Drift ist ein Release-Gate.
 
