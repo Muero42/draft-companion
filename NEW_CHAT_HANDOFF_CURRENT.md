@@ -88,5 +88,6 @@ Never resurrect without new evidence:
 Library mirror is stale/writeback-blocked. Repo `PITTI_EXECUTION_LOCK.json` + repo Project-State EOF win on contradiction.
 
 ## V105 TRANSFER CANARY
-- Library v102/v103 transfer state is superseded by the 2026-08-27 v105 reseal. New chat must verify Library generation and actual repo state; if an older Library copy is surfaced, repo Execution Lock + Project-State EOF and verified device evidence win and the Library transfer must be repaired fail-closed.
+- A v105 Library reseal was prepared locally and passed an independent semantic/hash second pass, but persistent Library upload-back failed again with `container_session_expired`. Therefore **do not claim Library v105 is persisted** until a later `files.list` proves it.
+- If Library still surfaces v102/v103 or rc4.76/77 current pointers, treat them as stale. Repo `PITTI_COMMAND_CONTRACTS.json` + `PITTI_EXECUTION_LOCK.json` + repo Project-State EOF + this handoff + repo bootstrap/matrix + verified device facts win and the contradiction fails closed.
 - Current factual boundary: rc4.64 production/control; rc4.82 last fully Android-verified authority; rc4.83 deployed TEST challenger OOS-pending/not promoted/not Android-verified; rc4.78 latest package+reextract boundary; Library rc4.52 aliases recovery-only.
