@@ -255,3 +255,16 @@ Year-level robustness evidence found: FantasyPros' 2025 draft-accuracy article l
 Expert-v3 experimental policy: preserve Expert-v2 unchanged. First high-value API acquisition/test order should be (1) current Ryan Weisse RB; (2) current Wolf TE; (3) Todd D Clark QB; (4) Wheeler RB only after freshness improves; (5) Maher/Wasley as RB controls if needed; (6) Pianowski TE as secondary control. No forced WR addition.
 
 Weight-grid principle: compare incumbent DS35/30 against modest DS reductions (e.g. -5/-10) allocated to qualified specialists, while also allowing incumbent non-DS weights to move if OOS evidence supports it. Never optimize on Coleman or another single 2026 player. Evaluate overall and decision-zone/position loss plus source correlation and tail/breakout behavior.
+
+
+## AUTO current-2026 freshness correction — 2026-08-27 late
+
+Fresh FantasyPros directory/web verification changes the acquisition assumptions:
+- Ryan Weisse is listed in the live 2026 Half-PPR expert directory with Accuracy #7 and Updated 08/24/2026. His dedicated Half-PPR page surfaced an older 08/03 snapshot, while current PPR positional pages are 08/24. Therefore do NOT treat the public dedicated Half-PPR page as sufficient current Half-PPR evidence; use the already-working FantasyPros API/comparison reconstruction and verify scoring/season before import. He remains a high-priority RB challenger, not yet production.
+- Todd D Clark is live in the 2026 Half-PPR directory, Accuracy #11, Updated 08/26/2026. This is fresh enough to attempt API reconstruction now.
+- Kev Wheeler is live but Updated 08/20/2026 (Accuracy #26 in current directory): continue WATCH_FRESHNESS.
+- Wolf dedicated public Half-PPR page currently surfaces Aug 24, despite the user's directory screenshot showing 08/26. Treat freshness as source-view dependent; API must be authoritative for the imported artifact and timestamp. Wolf remains primary TE challenger pending API verification.
+
+Important: current FantasyPros directory 'Accuracy' numbers (e.g. Weisse #7, Todd #11) are displayed alongside 2026 rankings but should not be conflated with the previously used 2023-25 position-specific accuracy table. Keep those evidence dimensions separate.
+
+No production panel or rc4.84 weights changed in this pass.
