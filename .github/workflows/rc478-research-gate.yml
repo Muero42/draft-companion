@@ -30,6 +30,7 @@ jobs:
             ("WR7 safety guard","current-x.a>=10",app),
             ("embedded v2 health","function embeddedPanelExpertNames",app),
             ("snapshot v2 source helper","activePanelSourceLines(usedPanelIds)",app),
+            ("snapshot v2 provenance","globalThis.PITTI_EXPERT_V2?.source",app),
             ("runtime app version","v11.8.0-rc4.78",app),
             ("index version","v11.8.0-rc4.78",idx),
             ("sw version","v11.8.0-rc4.78",sw),
