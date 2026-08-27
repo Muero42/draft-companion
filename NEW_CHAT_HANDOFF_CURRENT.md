@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260827T181500Z-v115`
-Updated: 2026-08-27 18:15Z
+Handoff generation: `20260827T184500Z-v116`
+Updated: 2026-08-27 18:45Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -178,3 +178,10 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 
 ## V115 CLEAN OOS CONFOUND CANARY
 - Evidence-v2 analysis reports acute-status-confounded and clean non-confounded metrics separately; frozen rc4.83 runtime remains unchanged.
+
+
+## V116 CRITICAL MANAGER-MAP CORRECTION
+- Return-v2 audit found rc4.83 forced stale 2026 manager slots: 5 Björn / 6 Pascal / 8 Basti. Confirmed order is 5 Basti / 6 Björn / 7 Michael K (profile alias Giuliano) / 8 Pascal B (profile alias Pascal Gelderner).
+- rc4.84 corrects only this mapping plus version/cache identity; late-WR challenger coefficients and Decision Kernel are unchanged.
+- rc4.83 realistic OOS gate is invalid/superseded because manager geometry was wrong. Gate is now rc4.84 device verify -> realistic slot-9 mock -> Evidence-v2.
+- main rc4.84 runtime deployed byte-identically to gh-pages; rc4.82 remains last Android-verified authority pending device verification.
