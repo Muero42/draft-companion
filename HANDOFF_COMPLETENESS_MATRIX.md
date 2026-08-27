@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v115
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v116
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -60,7 +60,7 @@ Explicitly reject resurrection of PairSum/Rolling, fixed caps, player forcing, b
 ## 8 Execution witness
 Before user-facing AUTO completion, actual work must have been executed in the current run unless the only remaining condition is a genuinely unavoidable external/device gate after all independent lanes are exhausted.
 
-## 9 v115 tooling canaries
+## 9 v116 tooling canaries
 - release contracts execute rc4.83 draft-critical gate
 - candidate package label derives from APP_VERSION and cross-checks index/sw/manifest
 - Evidence-v2 completed mock requires exact rc4.83 + 15 unique own-pick fixtures
@@ -72,3 +72,5 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - pre-real-draft freshness gate must fail closed on stale blocking acute-status entries; default max age 2 days
 - Emergency Queue must retain executable 35-cap + one-QB/one-TE fallback contract
 - Evidence-v2 OOS interpretation must expose clean non-acute-confounded metrics separately from whole-mock counts
+
+- confirmed 2026 manager mapping canary: slots 5=Basti, 6=Bjoern, 7=Giuliano (Michael K alias), 8=Pascal Gelderner (Pascal B alias); rc4.83 stale map must never return
