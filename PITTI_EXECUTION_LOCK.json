@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T10:25:00Z",
+  "updatedAt": "2026-08-27T10:53:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -12,7 +12,7 @@
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.76",
+    "latestAndroidObserved": "v11.8.0-rc4.78",
     "latestPreinstallVerified": "v11.8.0-rc4.78",
     "latestResearchChallenger": "v11.8.0-rc4.78",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip",
@@ -120,7 +120,7 @@
   },
   "currentWork": {
     "branch": "pitti-auto/rc4.78-clean-promotion",
-    "status": "PREINSTALL_VERIFIED_NOT_ANDROID",
+    "status": "ANDROID_VERSION_AND_LANDING_SMOKE_VERIFIED_DECISION_SURFACE_PENDING",
     "production": false,
     "androidReadyForVerification": true,
     "androidVerified": false,
@@ -145,8 +145,20 @@
       "version/cache coherence PASS"
     ],
     "ciTransport": "NO_ACTIONS_RUN_EMITTED_FOR_CONNECTOR_COMMITS; equivalent gates executed independently; not a user gate",
-    "gate": "ANDROID_EXACT_CANDIDATE_SMOKE_ONLY",
+    "gate": "ANDROID_DECISION_SURFACE_SMOKE_WITH_CURRENT_OR_MOCK_DRAFT",
     "libraryArtifact": "/Pitti/Development/Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip",
-    "libraryGateReport": "/Pitti/Development/RC478_PREINSTALL_GATE_REPORT_2026-08-27.md"
+    "libraryGateReport": "/Pitti/Development/RC478_PREINSTALL_GATE_REPORT_2026-08-27.md",
+    "androidVersionVerified": true,
+    "androidLandingSmokeVerified": true,
+    "androidObservedAt": "2026-08-27T12:53:00+02:00",
+    "androidObservedEvidence": [
+      "visible version badge v11.8.0-rc4.78",
+      "Draft landing page rendered without fatal error",
+      "FantasyPros Online",
+      "Rankings 4 Std.",
+      "Sleeper Draft 986",
+      "Coach bereit: Bereit",
+      "Expert-v2 · alle Positionen selectable and explanatory weights rendered"
+    ]
   }
 }
