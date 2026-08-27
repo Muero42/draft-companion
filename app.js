@@ -1,3 +1,4 @@
+import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -7,7 +8,6 @@ const USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers']);
 // User draft strategy: in this 10-team/1QB league, draft exactly one QB. A QB2 has no
 // useful pre-Week-1 option-value because it would be dropped for K/DST; unlike late RB
 // (and, to a lesser extent, WR/TE), it cannot earn a roster slot through role news.
-const USER_DRAFT_QB_LIMIT=1;
 const DRAFT_ACUTE_STATUS_2026={ashtonjeanty:{label:'AKUTER STATUS: Sprunggelenkverletzung · Teilnahme/Belastbarkeit vor Draft prüfen',blockRecommendation:true,asOf:'2026-08-24'}};
 const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
@@ -1303,17 +1303,9 @@ function applyPlayerQualitySafetyGate(rows,current){
   const qualityBandMax=bestPanelRank+Math.max(3,Math.floor(threshold/2));
   // rc4.64: Safety must not resurrect a repeated QB/TE after roster scoring demoted it.
   // Existing exceptional-slide thresholds are reused exactly; no new numeric penalty family.
-  const safetyPromotionEligible=x=>{
-    if(x.p.pos==='QB'&&(x.stateCounts?.QB??0)>=USER_DRAFT_QB_LIMIT)return false;
-    if(x.p.pos==='TE'&&(x.stateCounts?.TE??0)>=1)return x.r.rank<=35&&Number.isFinite(x.a)&&current-x.a>=30;
-    // Once the user already has seven WR, PlayerQualitySafety must not erase the
-    // roster/championship-utility signal by mechanically promoting an ordinary WR.
-    // This is not a WR cap: a WR may still win naturally after all utility penalties,
-    // and Safety may still protect a genuinely strong market slide. Reuse the existing
-    // "Starker Value" threshold (+10 vs ADP) rather than introducing a new coefficient.
-    if(x.p.pos==='WR'&&(x.stateCounts?.WR??0)>=7)return Number.isFinite(x.a)&&current-x.a>=10;
-    return true;
-  };
+  const safetyPromotionEligible=x=>safetyPromotionEligiblePolicy({
+    pos:x.p.pos,counts:x.stateCounts||{},rank:x.r.rank,adp:x.a,current
+  });
   const eligible=valid.filter(safetyPromotionEligible);
   const eligibleBestPanelRank=eligible.length?Math.min(...eligible.map(x=>x.r.rank)):bestPanelRank;
   const eligibleBandMax=eligibleBestPanelRank+Math.max(3,Math.floor(threshold/2));
@@ -1439,7 +1431,7 @@ function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   const r=rankFor(p.name,p.pos),a=Number(adp[norm(p.name)]);
   if(!r)return{score:-999,r:null,a,reasons:['Panel-Rang fehlt']};
   if(p.pos==='QB'&&USER_HARD_QB_EXCLUSIONS.has(norm(p.name)))return{score:-999,rawScore:-999,r,a,reasons:['USER HARD EXCLUSION'],hardExcluded:true};
-  if(p.pos==='QB'&&(state.counts?.QB||0)>=USER_DRAFT_QB_LIMIT)return{score:-999,rawScore:-999,r,a,reasons:['USER STRATEGY: genau 1 QB · QB2 nicht draften'],hardExcluded:true,userStrategyExcluded:true};
+  if(userDraftStrategyExcluded(p.pos,state.counts))return{score:-999,rawScore:-999,r,a,reasons:['USER STRATEGY: genau 1 QB · QB2 nicht draften'],hardExcluded:true,userStrategyExcluded:true};
   const acuteStatus=DRAFT_ACUTE_STATUS_2026[norm(p.name)];
   if(acuteStatus?.blockRecommendation)return{score:-998,rawScore:-998,r,a,reasons:[acuteStatus.label],acuteStatus,recommendationBlocked:true};
   /* rc4.10: monotonic selected-panel Player Quality, anchored to best available panel rank. */
