@@ -214,3 +214,10 @@ Revised incremental shortlist from screenshot-visible/API-accessible experts:
 Current FantasyPros directory also confirms Kev Wheeler's 2026 board exists but is dated 08/20; do not promote stale input. Wolf's 2026 rankings are current 08/27.
 
 Rule: historical accuracy is qualification evidence, never sufficient by itself. Prior PITTI marginal-value tests and source locks take precedence. Availability/API access remains secondary.
+
+
+## USER CORRECTION — Weisse status — 2026-08-27
+
+The immediately preceding authority-correction interpretation was too strong and is superseded here. Ryan Weisse was NOT previously rejected by a valid PITTI marginal-value/A-B test. Weisse/Gianni/Bobal were an opportunistic availability-driven temporary pool that incorrectly displaced intended experts. The durable lock means only: never reintroduce them automatically/unqualified. It does NOT prohibit fresh qualification.
+
+Accordingly Ryan Weisse is restored to the RB challenger pool because his 2023-25 RB historical accuracy (#2 in the evidence already collected) is a strong screening signal. Admission still requires current 2026 Half-PPR freshness/completeness verification plus independence/source-leverage and OOS/marginal-value testing versus the incumbent panel and other RB challengers. Availability alone has zero evidentiary weight.
