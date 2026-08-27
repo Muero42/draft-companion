@@ -371,3 +371,69 @@ Coach implication:
 - Draft-price trigger remains portfolio-based. Current market evidence for Murray is around 12th round/ADP 133-145 in 12-team feeds; Goff evidence ranges materially earlier (~ADP 115 in one current analysis). In a 10-team room, do not mechanically translate round numbers; use actual Sleeper availability + Return-v2.
 - If Willis remains until 15.09, the opportunity-cost case is strongest because the alternative pick is normally a K/DST slot or lowest marginal bench value. If Murray/Goff require sacrificing a materially better RB lottery ticket, Willis becomes preferred.
 - If Murray/Goff are obtained at negligible opportunity cost, Willis becomes FA WATCH only under the hard one-QB rule.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — rc4.82 draft-critical profile/health hardening
+
+### Trigger
+After Android rc4.80 confirmed the first Expert-v2 health fix, autonomous profile validation found two additional authority/runtime inconsistencies that would have caused future confusion or regression if left unresolved.
+
+### Findings
+1. Runtime metadata drift still existed in `app.js`: Emergency Queue, Decision-State export, Snapshot Coach model and backup version contained stale rc4.78/rc4.72 strings even though visible runtime was newer.
+2. The first rc4.80 health fix treated *any* embedded v2 position as if the entire selected profile were embedded. That was correct for Full-v2 but unsafe for the WR-only hybrid profile because degraded live QB/RB/TE panels could be hidden.
+3. Snapshot overall `Panel-Health` still used global desired acquisition-pool health rather than health of the actually selected panels.
+4. Snapshot source/weight prose still described the Live Multi-Source pipeline even when the active Full-v2 board was frozen/embedded.
+5. README and Execution Lock had stale release-state semantics: rc4.78/77 status persisted; `latestPreinstallVerified` had briefly been conflated with Android-deployed rc4.80 even though the latest actual package/re-extract artifact remains rc4.78.
+
+### rc4.82 implementation
+- Added centralized `APP_VERSION='v11.8.0-rc4.82'`; active Snapshot/Queue/Decision-State/backup/model metadata now derives from it.
+- Added `activePanelHealthState()` and profile-aware summary/source/weight helpers.
+- Full-v2 health = embedded Expert-v2 board health.
+- WR-v2 health = hybrid: embedded WR board + live QB/RB/TE health. Any degraded live component remains a warning.
+- Incumbent health = actual live panel membership/completeness, not global desired acquisition-pool completeness.
+- Snapshot `Panel-Health` now follows active selected panels.
+- Snapshot provenance now explicitly distinguishes Frozen Expert-v2 Board / Hybrid / Live Multi-Source.
+- Snapshot weight semantics now distinguish frozen v2 effective weights from live renormalization.
+- No Decision-/Return-v2 score coefficients changed.
+- No WR cap, player-name forcing, RB force, PairSum/Rolling resurrection, generic QB2 ban or TE2 ban.
+- Fitz Murray/Willis/Goff bounded residual evidence remains intact and upstream one-QB exclusion remains authoritative.
+
+### Durable regression
+Added `tools/rc482-draft-critical.mjs` and retargeted release workflows to current `main`.
+It protects:
+- centralized/current runtime version and no stale active RC strings;
+- exact one-QB policy + OOS WR7 Safety semantics + exceptional TE2 path;
+- exact three-profile routing;
+- active profile health for Full-v2, healthy/degraded Hybrid and Incumbent;
+- Expert-v2 schema/counts/weights and Brown exclusion;
+- Fitz QB residual presence without bypassing QB2 exclusion.
+Superseded `rc478-research-gate.yml` was removed and replaced by `rc482-draft-critical.yml`.
+
+### Validation
+PASS:
+- 27 source/runtime policy invariants;
+- executable active-health fixtures: Full-v2 healthy, Hybrid healthy, Hybrid degraded when live QB loses one required member, Incumbent healthy;
+- exact Expert-v2 board counts QB46/RB102/WR143/TE54 and canonical weights;
+- six legacy draft regressions, including 6000-run Return market sanity;
+- release/completeness static UI invariants;
+- main/gh-pages byte parity for rc4.82 runtime delta (`app.js`, `index.html`, `sw.js`, `manifest.webmanifest`).
+
+GitHub connector pushes still emit no Actions runs. This remains an internal transport limitation; equivalent gates were executed directly and is not user work.
+
+### Correct release boundaries
+- Production/control baseline: rc4.64.
+- Latest package + re-extract verified artifact: rc4.78, SHA-256 `69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba`, 12 runtime files.
+- Latest Android-verified candidate: rc4.80.
+- Current deployed draft-critical candidate: rc4.82.
+- rc4.82 is SOURCE/REGRESSION/DEPLOY verified, **NOT Android-verified yet**.
+
+### Exact next gate
+Ordinary Android reload only; no data deletion or install package.
+Verify:
+1. visible rc4.82;
+2. Full-v2 selected state shows active embedded v2 health without false acquisition-pool degradation;
+3. fresh Snapshot says `Panel-Health: OK` for Full-v2 and reports Frozen Expert-v2 provenance/weight semantics;
+4. Decision Surface still renders normally.
+Only then mark rc4.82 Android-verified.
