@@ -1,6 +1,6 @@
 # PITTI PROJECT STATE — CANONICAL
 
-Updated: 2026-08-27 16:50Z
+Updated: 2026-08-27 17:10Z
 Authority: compact repository execution state. Persistent full append-only history is `/Pitti/PITTI_PROJECT_STATE.md`. Actual verified artifacts/runtime override stale text; repair stale state immediately. Chat memory is never authority.
 
 ## EXECUTION INVARIANTS — MUST NOT REGRESS
@@ -787,3 +787,18 @@ Current rc4.83 contains one hard acute status overlay: Ashton Jeanty, dated 2026
 - pre-real-draft refresh must revisit this dated blocker and must not let it persist silently if recovery/IR information changes.
 
 No rc4.83 Decision-Kernel coefficient, Expert-v2 weight, Return-v2, roster-scoring coefficient or user-QB rule changed.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — v111 OOS experiment-identity hardening
+
+Fresh same-day injury research still supports treating Ashton Jeanty's ankle as unresolved for Week 1 rather than silently clearing the rc4.83 dated acute overlay. This is observational freshness evidence only and does not mutate the frozen challenger.
+
+Offline Evidence-v2 analysis is now stricter:
+- promotion evidence must be from mode=mock and slot=9;
+- Jeanty-affected Coach/chosen rows are explicitly flagged ACUTE_STATUS_CONFOUND;
+- acute-confound count is reported separately from WR6+/WR7+ and QB2 outcomes;
+- rc4.83 regression and PITTI guard both protect these semantics.
+
+Purpose: prevent a current injury overlay from contaminating the causal judgment of the rc4.83 late-WR saturation change. No runtime/Decision-Kernel/Expert-v2/Return-v2 coefficient changed.
