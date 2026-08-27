@@ -23,6 +23,7 @@ on:
       - 'decision-policy.js'
       - 'tools/analyze-decision-evidence.mjs'
       - 'tools/pitti_guardrail_check.mjs'
+      - 'tools/pre-draft-freshness-gate.mjs'
       - '.github/workflows/pitti-project-guardrails.yml'
   pull_request:
     branches:
