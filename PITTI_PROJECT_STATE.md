@@ -621,3 +621,13 @@ Explicitly kept quarantined absent new causal evidence:
 
 ### New-chat acceptance
 PITTI AUTO remains the only user message required. The receiving chat must load Library command contract/CURRENT/PASS seal/Project State to EOF/handoff/bootstrap/matrix, verify actual repo Execution Lock + repo Project-State EOF and current runtime facts, fail closed on contradiction, and then execute actual continuation work. A "loaded/ready/AUTO runs" response without concrete work is invalid.
+
+
+### v105 persistence correction — fail closed
+The v105 Library reseal bytes were prepared locally from the actual Library files, updated to current rc4.82/rc4.83 semantics, and passed an independent second-pass semantic/hash verification. Persistent upload-back to /Pitti then failed for every file with the same Files bridge error container_session_expired.
+Therefore:
+- **Do not claim Library v105 is persisted.**
+- Library v102/v103 remains stale until a later files.list proves newer bytes.
+- Repo-side PITTI_COMMAND_CONTRACTS.json, PITTI_EXECUTION_LOCK.json, PITTI_PROJECT_STATE.md EOF, NEW_CHAT_HANDOFF_CURRENT.md, PITTI_NEW_CHAT_BOOTSTRAP.md, and HANDOFF_COMPLETENESS_MATRIX.md now form a redundant fail-closed recovery layer for new chats.
+- A new chat must reconcile stale Library against repo/device facts and must never let an old PASS seal resurrect rc4.76/77 or old AUTO behavior.
+- This is an internal Files persistence limitation, not a user-action gate.
