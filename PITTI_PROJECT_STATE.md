@@ -350,3 +350,12 @@ Coach implication:
 - Corrected prior calibration in app: Willis qualitative residual reduced from .78/.88 to .72/.90 and causal text now separates confirmed starter status from unproven Week-1 fantasy floor. Invalidators explicitly include designed/read-option/red-zone rushing, sack/turnover behavior and passing efficiency.
 - This is a calibration, not a reversal: Willis remains the highest asymmetric very-late QB bet; Murray/Goff remain preferable when their actual acquisition cost is sufficiently close.
 - No QB2 draft; if Murray/Goff is selected, Willis moves to high-priority FA watch.
+
+
+### 2026-08-27 PITTI AUTO — latest Willis/Goff market update
+- Recent Dolphins reporting (Aug 24) explicitly describes the team as sorting the backup role *behind starter Malik Willis*. Willis also sat the second preseason game after going 4/5 for 43 yards plus 2/9 rushing in the opener. This further reduces job-security uncertainty; it does NOT resolve weekly fantasy-floor uncertainty.
+- Fresh Sleeper-derived Half-PPR Goff ADP is ~139.2 (Aug 27, recent 1QB drafts), which is substantially later than some generic ADP feeds. In the user's 10x15 room this makes Goff plausibly a Round-14/15 safety option rather than something PITTI should automatically pay Round 10-11 prices for.
+- Kyler Murray current mock-market evidence remains roughly Round 12/13 (12-team sources), therefore usually costs materially more than a last-pick Willis route.
+- Portfolio conclusion strengthened: preserve RB optionality through the late rounds; do not draft a safe QB early merely because Willis is volatile. At the actual QB decision compare Murray/Goff acquisition cost against the best remaining RB lottery ticket and Willis return-to-15.09 probability.
+- If Goff is still present near the final turn, his safety/price combination can dominate the choice. If he is gone and Murray required a materially earlier opportunity cost, last-pick Willis is acceptable rather than an emergency fallback.
+- After selecting Murray or Goff: Willis remains FA/watch only, never QB2 draft.
