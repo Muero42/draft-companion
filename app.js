@@ -1276,6 +1276,12 @@ function applyPlayerQualitySafetyGate(rows,current){
   const safetyPromotionEligible=x=>{
     if(x.p.pos==='QB'&&(x.stateCounts?.QB??0)>=USER_DRAFT_QB_LIMIT)return false;
     if(x.p.pos==='TE'&&(x.stateCounts?.TE??0)>=1)return x.r.rank<=35&&Number.isFinite(x.a)&&current-x.a>=30;
+    // Once the user already has seven WR, PlayerQualitySafety must not erase the
+    // roster/championship-utility signal by mechanically promoting an ordinary WR.
+    // This is not a WR cap: a WR may still win naturally after all utility penalties,
+    // and Safety may still protect a genuinely strong market slide. Reuse the existing
+    // "Starker Value" threshold (+10 vs ADP) rather than introducing a new coefficient.
+    if(x.p.pos==='WR'&&(x.stateCounts?.WR??0)>=7)return Number.isFinite(x.a)&&current-x.a>=10;
     return true;
   };
   const eligible=valid.filter(safetyPromotionEligible);
