@@ -1,0 +1,48 @@
+name: rc4.78 research gate
+on:
+  push:
+    branches:
+      - pitti-auto/rc4.78-roster-option-value
+  workflow_dispatch:
+jobs:
+  static-gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: JavaScript syntax
+        run: node --check app.js && node --check sw.js && node --check live-surface-v3.js
+      - name: rc4.78 invariant gate
+        shell: python
+        run: |
+          from pathlib import Path
+          app=Path("app.js").read_text()
+          idx=Path("index.html").read_text()
+          sw=Path("sw.js").read_text()
+          man=Path("manifest.webmanifest").read_text()
+          readme=Path("README.md").read_text()
+          required=[
+            ("one-QB constant","const USER_DRAFT_QB_LIMIT=1;",app),
+            ("QB2 hard user exclusion","userStrategyExcluded:true",app),
+            ("QB2 filtered coach surface","filter(x=>x.r&&!x.userStrategyExcluded)",app),
+            ("WR7 safety guard","current-x.a>=10",app),
+            ("embedded v2 health","function embeddedPanelExpertNames",app),
+            ("snapshot v2 source helper","activePanelSourceLines(usedPanelIds)",app),
+            ("snapshot v2 provenance","globalThis.PITTI_EXPERT_V2?.source",app),
+            ("runtime app version","v11.8.0-rc4.78",app),
+            ("index version","v11.8.0-rc4.78",idx),
+            ("sw version","v11.8.0-rc4.78",sw),
+            ("manifest version","v11.8.0-rc4.78",man),
+            ("README research boundary","rc4.78 — OOS roster/option-value research challenger",readme),
+          ]
+          missing=[name for name,needle,text in required if needle not in text]
+          forbidden=[
+            ("hard WR cap","state.counts.WR>=7)return{score:-999",app),
+            ("global TE2 exclusion","p.pos==='TE'&&(state.counts?.TE||0)>=1)return{score:-999",app),
+          ]
+          bad=[name for name,needle,text in forbidden if needle in text]
+          if missing or bad:
+            raise SystemExit(f"missing={missing}; forbidden={bad}")
+          print("rc4.78 static invariant gate PASS")
