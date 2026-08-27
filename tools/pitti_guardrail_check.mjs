@@ -119,7 +119,9 @@ for(const [p,expected] of Object.entries(seal.integrity||{})){
   if(fs.existsSync(p)) must(gitBlobSha(p)===expected,`seal blob mismatch: ${p}`);
 }
 must(current.handoff?.transaction_in_progress===false,'sealed takeover still marked transaction_in_progress');
-must(handoffMatrix.includes('REPO v107'),'handoff matrix generation label drift');
+const generationVersion=(current.handoff_generation.match(/-v(\d+)$/)||[])[1];
+must(generationVersion,'CURRENT generation version missing');
+must(handoffMatrix.includes(`REPO v${generationVersion}`),'handoff matrix generation label drift');
 must(preflight.includes('HANDOFF TRANSACTION STATE'),'preflight handoff transaction gate missing');
 
 for(const token of ['rc4.82','rc4.83','work package -> checkpoint -> re-inventory','user must never need to remind'])
