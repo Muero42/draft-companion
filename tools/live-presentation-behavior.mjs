@@ -43,4 +43,14 @@ const kinds=[
 ];
 for(const [kind,arrow,want] of kinds){const x={...rows[0],name:'Fixture '+kind,arrows:arrow,researchResidual:{active:true,components:[{kind,dir:arrow==='↑'?1:-1,strength:.7,confidence:.9}]}};assert(p.arrowWhy(x)===want,'kind rationale '+kind+': '+p.arrowWhy(x));}
 
+
+// Draft-phase/roster-state matrix. Presentation must remain stable under early/mid/late labels and saturated rosters.
+const phases=[
+ {phase:'early',pick:9,row:{...rows[2],ret:.18,adp:4,panel:4}},
+ {phase:'mid',pick:69,row:{...rows[3],ret:.82}},
+ {phase:'late',pick:129,row:{...mid[2],ret:.44,reasons:['WR-Sättigung: 7 WR']}},
+ {phase:'late-rb-saturated',pick:132,row:{...mid[0],pos:'RB',role:'RB5',reasons:['Positions-Alternativen 3 nah']}}
+];
+for(const z of phases){const x=z.row;assert(typeof p.plus(x,0)==='string'&&p.plus(x,0).length>2,'plus '+z.phase);assert(typeof p.minus(x)==='string'&&p.minus(x).length>2,'minus '+z.phase);assert(typeof p.keyword(x,0)==='string','keyword '+z.phase);if(z.phase==='mid')assert(p.signal(x,0)==='WAIT','mid WAIT');if(z.phase==='late')assert(p.minus(x).includes('WR-Sättigung'),'late saturation');}
+
 console.log('LIVE_PRESENTATION_BEHAVIOR_PASS');
