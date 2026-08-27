@@ -221,3 +221,26 @@ Rule: historical accuracy is qualification evidence, never sufficient by itself.
 The immediately preceding authority-correction interpretation was too strong and is superseded here. Ryan Weisse was NOT previously rejected by a valid PITTI marginal-value/A-B test. Weisse/Gianni/Bobal were an opportunistic availability-driven temporary pool that incorrectly displaced intended experts. The durable lock means only: never reintroduce them automatically/unqualified. It does NOT prohibit fresh qualification.
 
 Accordingly Ryan Weisse is restored to the RB challenger pool because his 2023-25 RB historical accuracy (#2 in the evidence already collected) is a strong screening signal. Admission still requires current 2026 Half-PPR freshness/completeness verification plus independence/source-leverage and OOS/marginal-value testing versus the incumbent panel and other RB challengers. Availability alone has zero evidentiary weight.
+
+
+## Expert-v3 evidence gate — 2026-08-27 21:55 CEST
+
+Fresh web verification against FantasyPros Draft Accuracy (not in-season) confirms the multi-year 2023-25 specialist screen:
+- RB: Ryan Weisse #2; Kev Wheeler #4; Ben Wasley #6; Mike Maher #9. Incumbent comparators: Dalton Del Don #7, Nick Mariano #11, Pat Fitzmaurice #40.
+- TE: Wolf of Roto Street #2; Scott Pianowski #5; Ryan Weisse #12. Incumbent comparators: Pat #14, Del Don #21, Boone multi-year draft rank not established in this source, DS Team finished-board accuracy still not directly established.
+- QB: Todd D Clark #5; Wolf #20. Incumbent comparators include DS-family Smola #23 / Kevin English #35 / Jody Smith #40, while finished DS Team ranking remains unvalidated as a unit.
+- WR: no screenshot-visible challenger currently beats incumbent Nick Mariano (#8) convincingly on the 2023-25 screen; DS-family Kevin English #12, Jody #13, Smola #14 provide strong organizational/family evidence but NOT direct validation of the finished DS Team board.
+
+Important methodology: FantasyPros 2025 page explicitly identifies these as preseason DRAFT accuracy rankings, distinct from in-season accuracy. Do not substitute in-season ranks for the draft panel qualification gate.
+
+Stability caveat: multi-year aggregate is a screening metric, not enough for admission. Before production weight, inspect annual draft-accuracy stability where retrievable and then run current-2026 rank influence/correlation/marginal-value tests. The current web results did not reliably expose annual draft tables for all candidates, so no fabricated year-by-year stability verdict is allowed.
+
+Priority order for acquisition/testing:
+1) TE Wolf (fresh screenshot 08/27) — strongest combination of positional evidence + freshness + open TE slots.
+2) RB Weisse — strongest historical RB screen; allowed to re-qualify despite old temporary-pool anti-regression lock.
+3) QB Todd D Clark — strong positional screen; only if current 2026 board completeness/scoring can be verified.
+4) RB Wheeler — strong screen but WATCH_FRESHNESS at 08/20; do not use stale board.
+5) TE Pianowski — secondary challenger.
+6) Wasley/Maher — RB reserve challengers if top candidates fail freshness/complementarity gates.
+
+Do not change Expert-v2. Expert-v3 remains a separate selectable challenger until it wins controlled tests.
