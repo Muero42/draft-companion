@@ -491,3 +491,11 @@ User clarified that the rc4.80 mock's late-round 7 RB / 6 WR end roster was mate
 Code audit found a plausible structural cause: late WR saturation was still weak at WR6 (MRU only -1.5) and PlayerQualitySafety could re-promote a saturated WR after roster scoring. rc4.83 is a bounded research challenger, not a winner: WR6+ late marginal utility penalties strengthened; progressive saturation begins at WR6; from pick 101 a WR with 6+ already rostered cannot be Safety-promoted unless it has exceptional market value (ADP at least 10 picks later than current). No hard WR cap; natural elite/value WR can still win. QB2 hard user exclusion, TE2 exceptional path, Return-v2, Expert-v2 weights and opponent model unchanged.
 
 Gate: regression + OOS decision-quality comparison before Android. rc4.82 remains last fully Android-verified candidate until this challenger proves incremental value.
+
+
+### 2026-08-27 PITTI AUTO — rc4.83 policy centralization + regression gate
+- Re-audit caught an implementation-quality issue before deployment: the initial WR6+ Safety exception had been duplicated inline in app.js rather than living in the canonical decision-policy module. This was repaired before Android exposure.
+- Canonical safetyPromotionEligiblePolicy now owns the late saturated-WR rule: from pick 101 with 6+ WR, Safety promotion is blocked unless current pick is at least 10 picks later than ADP (exceptional value slide). This is still not a hard WR ban; ordinary Coach scoring may select a WR naturally.
+- app.js now contains only the canonical policy call, eliminating divergent duplicate logic.
+- Added tools/rc483-draft-critical.mjs and rc4.83 CI workflow. Static verification passes version parity, strengthened WR6+/WR7+ MRU, progressive saturation, centralized policy and preservation of QB/TE guards.
+- Gate remains deliberately closed: aggregate/OOS decision-quality comparison is required before Android deployment. rc4.82 remains Android authority.
