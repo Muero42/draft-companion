@@ -33,8 +33,11 @@
     "blocked_lane_only": true
   },
   "handoff": {
-    "transaction_in_progress": true,
+    "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.82|rc4.83-test|rc4.78-package|EVIDENCE_V2|1QB|AUTO-LONGBLOCK|HANDOFF-v106"
+    "acceptance_fingerprint": "rc4.64|rc4.82|rc4.83-test|rc4.78-package|EVIDENCE_V2|1QB|AUTO-LONGBLOCK|HANDOFF-v106",
+    "status": "SEALED_PASS",
+    "handoff_ready": true,
+    "second_pass_pass": true
   }
 }
