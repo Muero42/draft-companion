@@ -288,3 +288,12 @@ Fresh web verification materially reduces the acquisition uncertainty:
 - FantasyPros consensus page itself is current Aug 27 and reports 160 experts for Half-PPR overall; candidate availability is not scarce.
 
 Implication: no user action is needed to establish that Weisse/Wolf have current 2026 Half-PPR content. Next implementation work should use API/comparison pipeline for complete exact ranks and metadata, then build separate Expert-v3 challenger; do not alter Expert-v2.
+
+
+## AUTO WR-specialist scan + Weisse robustness — 2026-08-27
+
+FantasyPros 2023-25 multi-year table confirms the strongest WR rankers among relevant visible/accessible candidates include Jeff Bell WR1, Sean Koerner WR6 (paywalled/current-source problem), Joey Wright WR7, Nick Mariano WR8 (already incumbent), Dave Kluge WR9, Jody Smith WR13, Jared Smola WR14, Chris Raybon WR15, Marc Shannep WR16, Mick Ciallela WR19. Because Mariano is already WR35% and DS Team already carries a DS-family/model signal, adding another WR expert only makes sense if current 2026 ranking is accessible/fresh and adds independent marginal value. Jeff Bell / Joey Wright / Dave Kluge are the most interesting accuracy-qualified WR candidates to check next; do not add merely on rank.
+
+Ryan Weisse robustness: 2025 single-year Draft Accuracy was overall #7, RB #8, TE #3, QB #16, WR #171. This reinforces a real RB/TE specialist profile and a strong anti-signal for using him at WR. His 2023-25 WR110 is not a one-year fluke in the favorable direction. Keep Weisse out of WR challenger.
+
+Methodology note: FantasyPros draft accuracy uses final preseason Half-PPR ranks and includes players relevant by preseason ECR or final results, so sleepers/busts are represented. This makes it useful baseline evidence for PITTI, though it still optimizes rank accuracy rather than championship-EV/tail upside; Upside-v3 remains separate.
