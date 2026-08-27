@@ -731,3 +731,27 @@ Fresh Aug-27 public QB evidence supports the existing tier semantics rather than
 ### Gate
 External OOS gate unchanged: ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT.
 AUTO itself does not start the interactive mock.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — v108 second-pass + release-tooling regression closure
+
+### v108 independent read-back
+- CURRENT = Handoff = Seal generation `20260827T160500Z-v108`.
+- Seal: PASS; handoff_ready=true; second_pass_pass=true.
+- All 20 seal-listed repo blob hashes were re-fetched from current main in two independent batches: 20/20 exact matches.
+- This closes the fail-closed read-back left open by the prior tool-call limit.
+
+### Additional old-error scan
+A second release-tooling pass found that the new rc4.83/package fixes were not yet themselves protected by the PITTI guardrail:
+- guardrail did not assert that both release workflows execute rc4.83 draft-critical;
+- guardrail workflow path filter did not include PITTI_RELEASE_CONTRACT_V2.md or the two release workflows.
+Repairs:
+- pitti_guardrail_check now rejects missing rc4.83 release/package gates and resurrection of hard-coded rc4.82 PREINSTALL packaging;
+- it verifies package version derivation from APP_VERSION;
+- pitti-project-guardrails path filter now triggers on release contract and both release workflows.
+No Decision-Kernel or expert-weight change.
+
+### GitHub Actions observation
+No workflow-run/status object was returned for the seal commit through the connector. Do not infer PASS from absence. Repository configuration is consistent with GitHub's documented branch+path filter semantics; executable local/CI result remains distinct from static configuration audit.
