@@ -278,3 +278,13 @@ Public FantasyPros pages now expose enough current Half-PPR data to validate cha
 - FantasyPros consensus itself is Aug27 and currently draws from ~160 experts, so ECR comparisons are contemporaneous context only, not an additional independent expert source.
 
 Methodological guard: visible disagreement from ECR is useful for source-independence screening but is not proof of superior accuracy. Historical position accuracy + current freshness + OOS marginal-value remains the admission chain.
+
+
+## AUTO public-board verification — 2026-08-27 21:56 CEST
+
+Fresh web verification materially reduces the acquisition uncertainty:
+- Ryan Weisse has a directly readable 2026 Overall Half-PPR board dated 08/24. Current board is meaningfully non-consensus in places (e.g. Garrett Wilson overall 19 vs ECR 38; Nico Collins 14 vs ECR17), supporting independence screening. His QB board also has distinct calls (Caleb QB4, Lamar QB5, Jayden Daniels QB10), but only RB is currently a proposed role because historical positional evidence is RB2.
+- Wolf has directly readable 2026 Overall Half-PPR dated 08/24 and TE positional board dated 08/25. His TE board: Bowers1, McBride2, Loveland3, Kraft4, Warren5, Pitts6, LaPorta7. This is fresh enough for a challenger artifact even before API reconstruction; API remains preferred for completeness/provenance.
+- FantasyPros consensus page itself is current Aug 27 and reports 160 experts for Half-PPR overall; candidate availability is not scarce.
+
+Implication: no user action is needed to establish that Weisse/Wolf have current 2026 Half-PPR content. Next implementation work should use API/comparison pipeline for complete exact ranks and metadata, then build separate Expert-v3 challenger; do not alter Expert-v2.
