@@ -483,3 +483,11 @@ Remaining narrow metadata/provenance verification: a fresh rc4.82 snapshot shoul
 
 ### 2026-08-27 Android gate — rc4.82 COMPLETE
 Fresh snapshot from Android closes the remaining gate. Verified: App-Version v11.8.0-rc4.82; Full-v2 Panel-Health OK; embedded individual ranks QB 5/5, RB 4/4, WR 5/5, TE 4/4; provenance explicitly Expert-v2 Frozen Board; panel weights explicitly frozen effective weights with no live renormalization; Coach model reports rc4.82. The DUPLIKAT/UNVERÄNDERT guard is expected because the same completed draft fingerprint was intentionally recopied for metadata verification and is not a defect. rc4.82 is now fully Android-verified. Continue aggregate draft/decision-quality validation; do not retune from this single completed mock.
+
+
+### 2026-08-27 PITTI AUTO — decision-quality correction + rc4.83 bounded challenger
+User clarified that the rc4.80 mock's late-round 7 RB / 6 WR end roster was materially produced by manual overrides; Coach recommendations were often different. Therefore end-roster composition is NOT Coach-success evidence. Future validation must compare frozen Coach recommendation at each own pick against chosen player/override and roster state.
+
+Code audit found a plausible structural cause: late WR saturation was still weak at WR6 (MRU only -1.5) and PlayerQualitySafety could re-promote a saturated WR after roster scoring. rc4.83 is a bounded research challenger, not a winner: WR6+ late marginal utility penalties strengthened; progressive saturation begins at WR6; from pick 101 a WR with 6+ already rostered cannot be Safety-promoted unless it has exceptional market value (ADP at least 10 picks later than current). No hard WR cap; natural elite/value WR can still win. QB2 hard user exclusion, TE2 exceptional path, Return-v2, Expert-v2 weights and opponent model unchanged.
+
+Gate: regression + OOS decision-quality comparison before Android. rc4.82 remains last fully Android-verified candidate until this challenger proves incremental value.
