@@ -80,3 +80,9 @@ assert.ok(prog.includes("state.counts.WR>=6"));
 assert.ok(prog.includes("[0,1.5,3,4.5]"));
 assert.ok(prog.includes("[0,.75,1.5,2.5]"));
 assert.ok(!app.includes("&& !(x.p.pos==='WR'"),'saturation policy must remain centralized in decision-policy.js');
+
+// Decision-quality evidence must distinguish Coach recommendation from user override.
+assert.ok(app.includes('decisionOutcome={coachTop:coach?'));
+assert.ok(app.includes('followedCoach:!!coach'));
+assert.ok(app.includes('chosenInFrozenCandidates:!!chosenCandidate'));
+assert.ok(app.includes('chosenVsCoachScoreDelta'));
