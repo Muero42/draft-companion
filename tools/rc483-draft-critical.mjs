@@ -86,3 +86,9 @@ assert.ok(app.includes('decisionOutcome={coachTop:coach?'));
 assert.ok(app.includes('followedCoach:!!coach'));
 assert.ok(app.includes('chosenInFrozenCandidates:!!chosenCandidate'));
 assert.ok(app.includes('chosenVsCoachScoreDelta'));
+
+// One-tap current-draft decision evidence export.
+assert.ok(app.includes("format:'pitti-decision-evidence-v1'"));
+assert.ok(app.includes("fixtures:rows"));
+assert.ok(app.includes("overrideCount:rows.filter"));
+assert.ok(index.includes('id="decisionEvidenceBtn"'));
