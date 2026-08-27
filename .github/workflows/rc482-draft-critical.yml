@@ -1,0 +1,27 @@
+name: rc4.82 draft-critical gate
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+jobs:
+  draft-critical:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: 22}
+      - name: JavaScript syntax
+        run: node --check app.js && node --check decision-policy.js && node --check sw.js && node --check live-surface-v3.js && node --check expert-v2-board.js
+      - name: Draft-critical invariants
+        run: |
+          node tools/rc478-oos-policy.mjs
+          node tools/pitti_guardrail_check.mjs
+          node tools/rc482-draft-critical.mjs
+      - name: Legacy regressions
+        run: |
+          node Draft_Companion_Position_Path_Regression_2026-08-13.js
+          node Draft_Companion_Player_Quality_Expert_Health_Regression_2026-08-13.js
+          node Draft_Companion_Return_Geometry_Market_Regression_2026-08-13.js
+          node Draft_Companion_Scarcity_Double_Count_Regression_2026-08-13.js
+          node Draft_Companion_Alternative_Scarcity_Regression_2026-08-13.js
+          node Draft_Companion_Dress_Rehearsal_Regression_2026-08-14.js
