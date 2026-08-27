@@ -22,11 +22,15 @@ If any answer is unsafe/unknown, inspect evidence first.
 - Prefer additive/small changes near draft freeze.
 - Do not create parallel infrastructure when an existing verified capability already solves the problem.
 
-## 4. AUTO CONTINUITY
+## 4. AUTO CONTINUITY — DURABLE USER CONTRACT
+- `PITTI AUTO` / `AUTO` means long autonomous work blocks by default, with as few interruptions as technically possible. This is a persistent project rule and must not require the user to repeat it in later turns or chats.
 - Execute all autonomously possible steps before messaging user.
-- If lane A waits, work lane B/C when independent and useful.
+- If lane A waits, immediately inventory and work lane B/C/D when independent and useful; a blocked OOS/device gate blocks only its dependent lane, never PITTI AUTO globally.
+- Before stopping, explicitly perform a parallel-work inventory across: decision validation, regression/release safety, evidence tooling, draft-day failsafe, expert freshness, post-draft/FA readiness, Watcher draft-critical readiness, checkpoint/handoff integrity, and independent strategy research. Work every safe positive-value lane that does not contaminate a frozen experiment.
 - Do not send 'next I will...' when that next step can be done now.
 - Status-only output is prohibited while meaningful autonomous work remains.
+- A model/experiment freeze forbids contaminating that experiment; it does NOT forbid independent project work.
+- If no safe autonomous lane remains, record why and the exact external gate before interrupting.
 
 ## 5. CHECKPOINT WRITE-THROUGH
 Immediately update `PITTI_PROJECT_STATE.md` after material:
