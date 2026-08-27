@@ -499,3 +499,11 @@ Gate: regression + OOS decision-quality comparison before Android. rc4.82 remain
 - app.js now contains only the canonical policy call, eliminating divergent duplicate logic.
 - Added tools/rc483-draft-critical.mjs and rc4.83 CI workflow. Static verification passes version parity, strengthened WR6+/WR7+ MRU, progressive saturation, centralized policy and preservation of QB/TE guards.
 - Gate remains deliberately closed: aggregate/OOS decision-quality comparison is required before Android deployment. rc4.82 remains Android authority.
+
+
+### 2026-08-27 PITTI AUTO — rc4.83 OOS methodology audit
+Before promoting the first saturation coefficients, interaction accounting showed the initial combined penalty could reach roughly -13 raw-score points for WR8 in the endgame because three existing channels stack (MRU + Progressive saturation + late WR penalty). That was judged too close to an implicit position ban and inconsistent with the no-fixed-cap requirement. rc4.83 was therefore bounded before deployment: MRU WR6/7/8+ = -3/-5/-6.5; Progressive WR6 = -.75/-1.5/-2.5 by stages 1/2/3 and WR7+ = -1.5/-3/-4.5; existing pick120+ -2 late penalty retained. Combined veteran WR saturation is therefore about -3.75 at WR6/pick90, -4.5 at WR6/pick110, -7.5 at WR6/endgame; WR7 endgame -11.5. This remains soft scoring, not exclusion. Exceptional Safety promotion still has the +10 ADP slide escape.
+
+A second validation flaw was repaired: final roster cannot proxy Coach quality when the user overrides recommendations. Frozen decision fixtures already captured the Coach candidate board and later chosen player, but did not explicitly persist the comparison. resolveDecisionFixtures now records decisionOutcome with Coach top, whether the chosen player was in the frozen candidate set, chosen frozen rank, followedCoach, score delta and panel-rank delta. This makes future mocks directly auditable without relying on final roster composition or manual reconstruction.
+
+No Android deployment yet. Need OOS/aggregate evidence from frozen fixtures or realistic new mock(s); rc4.82 remains Android authority.
