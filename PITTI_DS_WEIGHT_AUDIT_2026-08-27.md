@@ -197,3 +197,20 @@ A specialist can enter challenger testing when:
 - source is not redundant/correlated enough to erase marginal value;
 - position-only inclusion is technically supported.
 Availability alone never qualifies a source.
+
+
+## Authority correction after full checkpoint re-read — 2026-08-27
+
+Critical anti-regression finding: Project State already machine-locks `Temporary Weisse/Gianni/Bobal pool: rejected/control only; never resurrect from old workflows.` Therefore Ryan Weisse MUST NOT be revived merely because his 2023-25 RB accuracy is #2. The prior screenshot-triage section that labeled Weisse a HIGH-VALUE new candidate is superseded by this section.
+
+This does not invalidate his historical accuracy datum; it means prior project testing already rejected his marginal value in the relevant PITTI workflow, and current work must respect that result unless genuinely new evidence specifically overturns the rejection. No such evidence has yet been established.
+
+Revised incremental shortlist from screenshot-visible/API-accessible experts:
+- RB: Kev Wheeler (2023-25 RB #4) = WATCH_FRESHNESS because current FP board is 08/20; Ben Wasley (#6) and Mike Maher (#9) are possible fresh challengers only if they were not previously rejected elsewhere. Do not use Weisse.
+- TE: Wolf of Roto Street (TE #2, current FP directory updated 08/27) is the cleanest fresh specialist challenger. Scott Pianowski (TE #5, screenshot 08/27) secondary.
+- QB: Todd D Clark (QB #5, screenshot 08/26) specialist challenger.
+- WR: no compelling incremental specialist identified; incumbent Mariano + DS-family WR evidence remains stronger than adding a merely available ranker.
+
+Current FantasyPros directory also confirms Kev Wheeler's 2026 board exists but is dated 08/20; do not promote stale input. Wolf's 2026 rankings are current 08/27.
+
+Rule: historical accuracy is qualification evidence, never sufficient by itself. Prior PITTI marginal-value tests and source locks take precedence. Availability/API access remains secondary.
