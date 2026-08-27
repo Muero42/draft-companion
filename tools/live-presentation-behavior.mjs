@@ -33,4 +33,14 @@ assert(p.keyword(mid[2],2).includes('VALUE')&&p.keyword(mid[2],2).includes('ROST
 assert(p.minus(mid[2]).includes('WR-Sättigung'),'roster saturation not surfaced as downside');
 assert(p.plus(mid[0],0)===p.plus({...mid[0],name:'Generic RB D'},0),'similar evidence was artificially differentiated');
 
+
+// Evidence-kind coverage: every arrow-eligible structured kind must map to a specific user-facing rationale.
+const kinds=[
+ ['ascension','↑','Breakout-Upside'],['upside','↑','Breakout-Upside'],['ceiling','↑','Elite-Ceiling'],
+ ['talent','↑','Talent-Upside'],['efficiency','↑','Effizienz-Upside'],['role_environment','↑','Rollen-Upside'],
+ ['elite_rookie_role','↑','Rookie-Rollen-Upside'],['elite_role','↑','Rollen-Upside'],
+ ['decline_tail','↓','Regressionsrisiko'],['decline_risk','↓','Regressionsrisiko'],['regression','↓','Regressionsrisiko']
+];
+for(const [kind,arrow,want] of kinds){const x={...rows[0],name:'Fixture '+kind,arrows:arrow,researchResidual:{active:true,components:[{kind,dir:arrow==='↑'?1:-1,strength:.7,confidence:.9}]}};assert(p.arrowWhy(x)===want,'kind rationale '+kind+': '+p.arrowWhy(x));}
+
 console.log('LIVE_PRESENTATION_BEHAVIOR_PASS');
