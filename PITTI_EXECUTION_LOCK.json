@@ -1,12 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T15:02:00Z",
+  "updatedAt": "2026-08-27T15:12:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
-    "libraryMirrorStatus": "STALE_V103_WRITEBACK_BLOCKED_BY_FILES_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "If Library CURRENT/Project-State still shows v103 or rc4.76/rc4.77 current, reconcile against repo PITTI_EXECUTION_LOCK.json + repo Project-State EOF before any work; stale Library pointer must not win.",
+    "libraryMirrorStatus": "STALE_V102_V103_PERSISTENT_WRITEBACK_RETRY_FAILED_2026-08-27T15:00Z_CONTAINER_SESSION_EXPIRED",
+    "failClosedRecovery": "Persistent Library CURRENT/Project-State/Handoff/Seal remain stale because v105 upload-back failed with container_session_expired after a locally prepared + second-pass-PASS reseal. New chat MUST reconcile repo PITTI_COMMAND_CONTRACTS + EXECUTION_LOCK + PROJECT_STATE EOF + NEW_CHAT_HANDOFF_CURRENT + repo bootstrap/matrix against any Library state. Repo/device verified facts win; never claim Library v105 persisted unless files.list later proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must read PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF; repo EOF/lock override stale Library mirror."
   },
@@ -167,7 +167,8 @@
       "README authority synchronized: rc4.82 Android authority vs rc4.83 test challenger",
       "parallel evidence audit caught roster-count derivation bug before mock: frozen userRoster now stores position directly; Evidence-v2 no longer depends on already-drafted players remaining in rankedAvailable",
       "Evidence-v2 schema contract frozen in rc4.83 regression gate: pick, rosterCounts, candidates, chosenPlayer, decisionOutcome, WR saturation/QB2 aggregate flags",
-      "AUTO anti-regression hardened: re-inventory after EVERY work package; promise/status-only AUTO responses forbidden while work exists; external gate only valid after independent-lane exhaustion"
+      "AUTO anti-regression hardened: re-inventory after EVERY work package; promise/status-only AUTO responses forbidden while work exists; external gate only valid after independent-lane exhaustion",
+      "v105 Library reseal bytes prepared and second-pass semantic/hash checks PASS locally, but persistent Library upload-back FAILED (container_session_expired); repo-side fail-closed bootstrap/contract/matrix added so stale Library cannot override current facts"
     ],
     "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
     "note": "rc4.82 remains last fully Android-verified authority. rc4.83 is deployed test challenger only; coefficients frozen pending realistic OOS Evidence-v2. AUTO is a repeated package->checkpoint->reinventory->continue loop; blocked OOS/device lane never stops independent PITTI work; user reminder never required."
