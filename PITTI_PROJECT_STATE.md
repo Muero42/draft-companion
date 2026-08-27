@@ -631,3 +631,28 @@ Therefore:
 - Repo-side PITTI_COMMAND_CONTRACTS.json, PITTI_EXECUTION_LOCK.json, PITTI_PROJECT_STATE.md EOF, NEW_CHAT_HANDOFF_CURRENT.md, PITTI_NEW_CHAT_BOOTSTRAP.md, and HANDOFF_COMPLETENESS_MATRIX.md now form a redundant fail-closed recovery layer for new chats.
 - A new chat must reconcile stale Library against repo/device facts and must never let an old PASS seal resurrect rc4.76/77 or old AUTO behavior.
 - This is an internal Files persistence limitation, not a user-action gate.
+
+
+---
+
+## 2026-08-27 PITTI HANDOFF v106 — TRANSACTION RESUMPTION / REPO CURRENT RESTORATION
+
+### Trigger correction
+User clarified that the preceding `AUTO` was issued inside an active PITTI HANDOFF and therefore meant **resume PITTI HANDOFF at the correct transactional point**, not ordinary development AUTO. Earlier continuation work that treated it as generic project AUTO was a command-state interpretation error. Durable rule: while a PITTI HANDOFF transaction is active, AUTO resumes/finishes that transaction first; only after a PASS seal does PITTI AUTO become ordinary verified takeover/continuation.
+
+### Current facts retained
+- production/control rc4.64; last fully Android-verified authority rc4.82; rc4.83 deployed TEST challenger, OOS-pending/not promoted/not Android-verified; rc4.78 latest package+reextract; Library rc4.52 recovery aliases only.
+- rc4.83 Decision Kernel remains frozen. User overrides/final roster remain forbidden as Coach-success labels.
+- Evidence-v2 + direct roster-position telemetry fix remain current; external gate remains natural rc4.83 Android mock -> refresh -> one-tap Evidence-v2 export.
+- Latest QB1 cross-check remains qualitative only and does not contaminate the frozen OOS experiment.
+- Durable long-block AUTO semantics and anti-regression quarantine remain unchanged.
+
+### Handoff repair
+- Generation advanced to `20260827T154300Z-v106`.
+- Added missing repo-side `PITTI_CURRENT_STATE.json` so the command contract no longer references a repo CURRENT that is absent while the Library mirror is stale.
+- Regenerated repo `NEW_CHAT_HANDOFF_CURRENT.md` with v106 transaction-resumption canary.
+- Reverified main/gh-pages blob parity for app.js, index.html, decision-policy.js, sw.js and manifest.webmanifest before seal construction.
+- Library persistence remains fail-closed/stale; do not claim Library v106 persisted unless Files later proves it.
+
+### Exact continuation after PASS takeover
+Receiving chat message remains only `PITTI AUTO`. It must verify v106 repo CURRENT/handoff/seal + bootstrap/matrix + Project State EOF against actual runtime/device evidence, then execute concrete continuation work. AUTO must not itself start the interactive rc4.83 mock.
