@@ -1,0 +1,40 @@
+{
+  "schema": "pitti.current-state.v1",
+  "handoff_generation": "20260827T154300Z-v106",
+  "updated_at": "2026-08-27T15:43:00Z",
+  "authority": {
+    "repo": "Muero42/draft-companion",
+    "branch": "main",
+    "library_mirror": "STALE_FAIL_CLOSED",
+    "generated_handoff": "NEW_CHAT_HANDOFF_CURRENT.md"
+  },
+  "runtime": {
+    "production_control": "v11.8.0-rc4.64",
+    "android_authority": "v11.8.0-rc4.82",
+    "test_challenger": "v11.8.0-rc4.83",
+    "test_challenger_android_verified": false,
+    "latest_package_reextract": "v11.8.0-rc4.78",
+    "library_recovery_alias": "v11.8.0-rc4.52"
+  },
+  "exact_continuation": {
+    "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
+    "auto_starts_mock": false,
+    "instruction": "After verified new-chat takeover, continue independent AUTO work; when user performs a natural rc4.83 Android mock, refresh once, export Evidence-v2, then run pick-by-pick OOS analysis and PROMOTE/MODIFY/REJECT. Do not tune frozen rc4.83 before evidence."
+  },
+  "invariants": {
+    "user_qb_limit": 1,
+    "geno_rodgers_excluded": true,
+    "normal_kdst": false,
+    "starter_maxima_not_roster_caps": true,
+    "wr_saturation_soft": true,
+    "user_overrides_not_coach_labels": true,
+    "rc483_kernel_frozen": true,
+    "long_auto_blocks": true,
+    "blocked_lane_only": true
+  },
+  "handoff": {
+    "transaction_in_progress": true,
+    "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
+    "acceptance_fingerprint": "rc4.64|rc4.82|rc4.83-test|rc4.78-package|EVIDENCE_V2|1QB|AUTO-LONGBLOCK|HANDOFF-v106"
+  }
+}
