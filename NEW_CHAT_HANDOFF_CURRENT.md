@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260827T173500Z-v113`
-Updated: 2026-08-27 17:35Z
+Handoff generation: `20260827T175500Z-v114`
+Updated: 2026-08-27 17:55Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -169,3 +169,8 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Before the real draft/live promotion, blocking acute-status entries must be refreshed within the configured age window; default 2 days. The currently frozen Jeanty overlay dated 24.08. will intentionally fail an Aug-31 gate unless reviewed/updated.
 - This safeguard is outside rc4.83 runtime and does not contaminate the OOS experiment.
 - External OOS gate remains realistic rc4.83 slot-9 mock -> refresh -> Evidence-v2 export.
+
+
+## V114 EMERGENCY-FALLBACK CANARY
+- Emergency Queue has an independent deterministic executable contract: max 35; one QB/TE candidate only while QB1/TE1 open; none after filled; K/DST omitted; draft/version metadata retained.
+- Contract is protected by rc4.83 regression + PITTI guard and does not alter runtime/kernel.
