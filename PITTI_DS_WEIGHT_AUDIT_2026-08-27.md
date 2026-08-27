@@ -81,3 +81,40 @@ Use reliability shrinkage rather than raw rank-derived weights:
 6. Upside-v3 residual remains orthogonal to baseline accuracy weights.
 
 Do not change production weights until the challenger is tested on historical seasons + natural-mock Evidence-v2.
+
+
+## Full-panel influence interpretation — next challenger design
+
+The current four-source RB panel must not be treated as "DS vs truth." Historical 2023-25 position ranks for current RB sources:
+- Draft Sharks family evidence: Jody Smith RB1, Jared Smola RB14, Kevin English RB37.
+- Nick Mariano RB11.
+- Dalton Del Don RB7.
+- Pat Fitzmaurice RB40.
+The current DS Team board is a separate team/model product, so its reliability prior must be shrunk toward the DS-family distribution rather than assigned Jody's RB1 result.
+
+A robust challenger should therefore compare at least:
+1. incumbent weighted mean;
+2. reliability-shrunk weighted mean;
+3. robust weighted center with capped single-source leverage;
+4. incumbent baseline + orthogonal Upside-v3 residual.
+
+### Single-source leverage guard
+For each player/source compute:
+- leave-one-source-out panel rank;
+- absolute source-vs-other-consensus gap;
+- panel displacement caused by source;
+- whether source is lone extreme or part of broader disagreement;
+- draft-zone/archetype.
+
+Provisional guardrail candidate (NOT runtime): when one source is the sole extreme and moves a player >=20 overall slots versus the renormalized other-source center, flag SOURCE_LEVERAGE_HIGH for research/uncertainty. Do not automatically clip or change rank.
+
+Coleman qualifies diagnostically: DS moves him ~25.25 slots later than the other-three weighted center. This should trigger research, not a player-specific boost.
+
+### Position implications
+- WR: current Mariano 35% + DS 30% is directionally supported by multi-year evidence (Mariano WR8; DS family Jody13/Smola14/English12). Main risk is correlation/provenance, not obvious weak expertise.
+- RB: DS35/Mariano25/DelDon25/Fitz15 has good historical ingredients, but source leverage and team-board provenance need shrinkage validation.
+- TE: current DS35 cannot be justified from DS family label alone due extreme DS-family TE heterogeneity (Jody9 vs Smola120 vs English113); direct current-board validation is highest priority.
+- QB: DS family is solid but not elite by 2023-25 position ranks; current QB panel should be checked against Boone/Mariano/DelDon/Fitz and rushing-upside policy separately.
+
+### Sean Koerner implication
+FantasyPros 2023-25: Koerner overall #2, QB4/RB12/WR6/TE15. This strongly supports keeping him as desired expert source if a sufficiently complete, scoring-verified 2026 ranking can be acquired. His absence is more consequential than replacing a strong incumbent source ad hoc. Do not reconstruct incomplete ranks.
