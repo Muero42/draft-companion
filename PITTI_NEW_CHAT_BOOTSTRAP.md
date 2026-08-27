@@ -7,12 +7,17 @@ When the user writes **PITTI AUTO** in a new chat, do not answer with a status-o
 
 ## Mandatory load order
 1. `PITTI_COMMAND_CONTRACTS.json`
-2. `PITTI_EXECUTION_LOCK.json`
-3. `PITTI_PROJECT_STATE.md` to actual EOF
-4. `NEW_CHAT_HANDOFF_CURRENT.md`
-5. this bootstrap
-6. `HANDOFF_COMPLETENESS_MATRIX.md`
-7. relevant actual branch/runtime/artifact/device evidence
+2. `PITTI_CURRENT_STATE.json`
+3. `PITTI_HANDOFF_SEAL.json`
+4. `PITTI_EXECUTION_LOCK.json`
+5. `PITTI_AUTO_PREFLIGHT.md`
+6. `PITTI_PROJECT_STATE.md` to actual EOF
+7. `NEW_CHAT_HANDOFF_CURRENT.md`
+8. this bootstrap
+9. `HANDOFF_COMPLETENESS_MATRIX.md`
+10. relevant actual branch/runtime/artifact/device evidence
+
+Before project work, require CURRENT.handoff_generation == SEAL.handoff_generation == handoff generation, SEAL PASS, handoff_ready=true, second_pass_pass=true, and verify the seal-listed repo blob hashes. Any mismatch fails closed.
 
 If Library files are available, read them too. A v105 Library reseal was prepared and locally second-pass verified on 2026-08-27, but persistent upload-back failed with container_session_expired. Therefore, until a later files.list proves newer Library bytes, Library v102/v103 or rc4.76/77 current pointers are stale evidence and must not override repo EOF/lock/device truth.
 
