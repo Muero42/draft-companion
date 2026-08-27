@@ -28,8 +28,9 @@ for(const token of [
   'New-chat recovery: read this file first',
   'Built/prepared != deployed != Android verified',
   'Regression prevention is technical where possible',
-  'Four-position Expert-v2 treatment is REJECTED',
-  'Only WR-v2 remains an open SHADOW challenger'
+  'three selectable profiles',
+  'Expert-v2 ALL positions',
+  'Expert-v2 WR-only'
 ]) must(state.includes(token),`project-state invariant missing: ${token}`);
 
 for(const token of [
@@ -45,7 +46,7 @@ for(const token of [
 must(readme.includes('v11.8.0-rc4.64'),'README active runtime drift');
 must(app.includes("const USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers'])"),'QB hard-exclusion canary drift');
 must(app.includes("function normalCandidateAdmissible(row)"),'normal candidate admissibility guard missing');
-must(app.includes('Safety must not resurrect a repeated QB/TE'),'repeat-QB/TE safety guard missing');
+must(app.includes('USER_DRAFT_QB_LIMIT=1'),'user one-QB runtime invariant missing');
 must(app.includes("Progressive WR-Sättigung")||app.includes('WR-Sättigung'),'WR saturation canary missing');
 must(app.includes('function simulateReturnV2('),'Return-v2 kernel missing');
 must(app.includes('function applyPlayerQualitySafetyGate('),'Value-Safety gate missing');
@@ -54,24 +55,25 @@ for(const name of ['Guilherme Gianni','Michael Bobal','Ryan Weisse'])
   must(!app.includes(name),`rejected temporary Expert-v2 runtime name leaked: ${name}`);
 
 const e=lock.expertV2||{};
-must(e.status==='WR_ONLY_SHADOW_QUALIFICATION','Expert-v2 must remain WR-only shadow until qualification passes');
-must(e.integration==='ADDITIVE_SELECTABLE_ONLY','Expert-v2 additive/selectable invariant missing');
-must(e.control==='rc4.64-incumbent','rc4.64 incumbent control drift');
-must(e.fourPositionCandidate==='REJECTED','four-position v2 must remain rejected');
-must(e.qbCandidate==='REJECTED_LATE_QB2_REGRESSION','QB-v2 rejection drift');
-must(e.rbCandidate==='REJECTED_NO_DEMONSTRATED_MARGINAL_VALUE','RB-v2 rejection drift');
-must(e.teCandidate==='REJECTED_INSUFFICIENT_PROMOTION_CASE','TE-v2 rejection drift');
-must(e.wrCandidate==='OPEN_SHADOW_CHALLENGER','WR-v2 challenger state drift');
-must(e.brownExcluded===true,'Brown exclusion missing');
-must(e.erickson==='CHALLENGER_ONLY','Erickson challenger invariant missing');
-must(e.koerner==='NO_CURRENT_DRAFT_ACQUISITION_PAYWALL','Koerner current-draft acquisition lock drift');
-must(e.draftSharksCountAsOneSourceFamily===true,'Draft Sharks family-count invariant missing');
-must(e.temporaryWeisseGianniBobalPoolRejected===true,'temporary pool quarantine missing');
-must(e.weightsAreProduction===false,'shadow weights must not be marked production');
-must(e.exactReturnControlParityFixtures===14,'exact Return-v2 control parity count drift');
-must(JSON.stringify(e.wrCandidateSignalPicks)==='[69,92,112,132,149]','WR-v2 signal picks drift');
-must(JSON.stringify(e.mandatoryControls)==='[89,92,112,129,132,149]','natural control picks drift');
-must(e.currentGate==='WR_ONLY_EXACT_AB_WITH_MARGINAL_WR_UTILITY_AND_ROSTER_DEPTH_CONTROLS','current Expert-v2 gate drift');
+must(e.status==='THREE_SELECTABLE_PROFILES_CURRENT_AUTHORITY_NO_FINAL_WINNER','three-profile Expert-v2 authority drift');
+must(e.integration==='SELECTABLE_ABC_COMPARISON','A/B/C profile comparison invariant missing');
+must(e.control==='incumbent/control','incumbent control identity drift');
+must(e.controlRemainsSelectable===true,'incumbent must remain selectable');
+must(e.fullV2RemainsSelectable===true,'Expert-v2 ALL must remain selectable');
+must(e.wrOnlyRemainsSelectable===true,'Expert-v2 WR-only must remain selectable');
+must(e.historicalFullV2Regression==='RETAIN_AS_EVIDENCE_NOT_AS_PROFILE_DELETION','historical full-v2 evidence semantics drift');
+must(JSON.stringify(e.profiles)===JSON.stringify(['incumbent/control','Expert-v2 ALL positions','Expert-v2 WR-only']),'profile set/order drift');
+must(JSON.stringify(e.displayOrder)===JSON.stringify(['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Nick Mariano','Justin Boone']),'expert display order drift');
+must(e.displayValues==='INDIVIDUAL_PLAYER_RANKS_NOT_WEIGHTS','expert display value semantics drift');
+must(e.sourceLocks?.['Derek Brown']==='EXCLUDED_FROM_NEW_V2','Brown exclusion missing');
+must(e.sourceLocks?.['Andrew Erickson']==='CHALLENGER_ONLY_NO_CURRENT_NUMERIC_VOTE','Erickson challenger invariant missing');
+must(e.sourceLocks?.['Sean Koerner']==='NO_CURRENT_DRAFT_ACQUISITION_PAYWALL_WATCHLIST_ONLY','Koerner acquisition lock drift');
+must(e.sourceLocks?.['Draft Sharks Team']==='COUNT_EXACTLY_ONCE_AS_CORRELATED_FAMILY','Draft Sharks family-count invariant missing');
+must(e.sourceLocks?.Weisse_Gianni_Bobal==='REJECTED_TEMPORARY_CONTROL_ONLY','temporary pool quarantine missing');
+must(e.weightsAreFinalWinner===false,'no Expert-v2 profile may be mislabeled final winner');
+must(e.oldWrOnlyRejectionSemanticsAreAuthority===false,'obsolete WR-only authority resurrected');
+must(lock.league?.userDraftQbLimit===1,'user one-QB strategy lock drift');
+must(lock.league?.userQb2Policy==='HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1','user QB2 policy drift');
 
 const digest=crypto.createHash('sha256').update(JSON.stringify(lock)).digest('hex');
 if(!process.exitCode)console.log(`PITTI_GUARDRAILS_PASS lock_sha256=${digest} app=${lock.runtime.appVersion} gate=${e.currentGate}`);
