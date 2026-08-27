@@ -913,7 +913,7 @@ function progressiveUpsideBonus(p,current,state){
   if(p.pos==='RB')b += [0,2.0,4.0,6.5][stage];
   if((p.pos==='RB'||p.pos==='WR')&&p.yearsExp!=null&&p.yearsExp<=1)b += [0,1.0,2.0,3.5][stage];
   // Ein sehr tiefer WR-Room bleibt ein Tiebreaker, wird aber nicht zum harten Ausschluss.
-  if(p.pos==='WR'&&state.counts.WR>=6)b -= state.counts.WR>=7?[0,2,4,6][stage]:[0,1,2,3][stage];
+  if(p.pos==='WR'&&state.counts.WR>=6)b -= state.counts.WR>=7?[0,1.5,3,4.5][stage]:[0,.75,1.5,2.5][stage];
   return b;
 }
 function strategyStatusText(mode){
@@ -935,7 +935,7 @@ function marginalRosterUtility(p,current,state){
   // Keine starre Sollverteilung: nur gradueller Grenznutzen. Eure Flex-Regeln erlauben 1–3 RB und 2–4 WR Starter.
   const c=state.counts||{},n=Number(c[p.pos]||0);let x=0;
   if(p.pos==='RB'&&current>=81){if(n>=7)x-=3.5;else if(n>=6)x-=2;else if(n<=3)x+=1;}
-  if(p.pos==='WR'&&current>=81){if(n>=8)x-=8;else if(n>=7)x-=6;else if(n>=6)x-=3.5;else if(n<=4)x+=.5;}
+  if(p.pos==='WR'&&current>=81){if(n>=8)x-=6.5;else if(n>=7)x-=5;else if(n>=6)x-=3;else if(n<=4)x+=.5;}
   if(p.pos==='QB'&&n===0&&current>=130)x+=7;
   if(p.pos==='TE'&&n===0&&current>=120)x+=4;
   return x;
