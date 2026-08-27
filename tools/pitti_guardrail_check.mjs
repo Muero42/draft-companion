@@ -138,7 +138,7 @@ for(const token of ['rc4.82','rc4.83','AUTO durability','Execution witness','Old
   must(handoffMatrix.includes(token),`repo handoff matrix invariant missing: ${token}`);
 must(lock.authority?.libraryMirrorStatus?.includes('STALE_'),'stale Library mirror status must remain explicit until persistence is proven');
 must(lock.authority?.failClosedRecovery?.includes('never claim a newer Library generation persisted unless files.list proves it'),'Library persistence fail-closed rule missing');
-for(const token of ['do not claim Library v105 is persisted','rc4.82','rc4.83','Re-inventory after EVERY completed work package'])
+for(const token of ['Library mirror is stale/writeback-blocked','rc4.82','rc4.83','Re-inventory after EVERY completed work package'])
   must(currentHandoff.includes(token),`current handoff invariant missing: ${token}`);
 
 for(const token of ['pitti-decision-evidence-v2','QB2_VIOLATION','WR6_PLUS_COACH','WR7_PLUS_COACH','TE2_COACH','USER_OVERRIDE','CHOSEN_OUTSIDE_TOP16','telemetryComplete','hardQb2Pass','OOS promotion evidence must come from the realistic mock gate','OOS promotion evidence must use user slot 9','ACUTE_STATUS_CONFOUND'])
