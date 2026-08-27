@@ -479,3 +479,7 @@ Second Android evidence supplied after refresh:
 - completed-state card suppresses further live recommendations as intended.
 Thus the user-visible false-DEGRADED regression seen in rc4.80 is fixed on Android rc4.82.
 Remaining narrow metadata/provenance verification: a fresh rc4.82 snapshot should be checked once for App-Version=rc4.82 and corrected Frozen Expert-v2 provenance/weight wording. No need for another full mock merely for this check.
+
+
+### 2026-08-27 Android gate — rc4.82 COMPLETE
+Fresh snapshot from Android closes the remaining gate. Verified: App-Version v11.8.0-rc4.82; Full-v2 Panel-Health OK; embedded individual ranks QB 5/5, RB 4/4, WR 5/5, TE 4/4; provenance explicitly Expert-v2 Frozen Board; panel weights explicitly frozen effective weights with no live renormalization; Coach model reports rc4.82. The DUPLIKAT/UNVERÄNDERT guard is expected because the same completed draft fingerprint was intentionally recopied for metadata verification and is not a defect. rc4.82 is now fully Android-verified. Continue aggregate draft/decision-quality validation; do not retune from this single completed mock.
