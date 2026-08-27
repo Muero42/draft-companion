@@ -943,3 +943,12 @@ DS audit extended from source reputation to panel mechanics. Historical 2023-25 
 Position implications: WR weights directionally supported; RB needs provenance/leverage validation; TE is highest-priority direct validation because DS-family TE history is extremely heterogeneous; QB separately needs rushing-upside policy check. Sean Koerner remains a high-value missing desired source: 2023-25 FantasyPros overall #2, QB4/RB12/WR6/TE15. Do not use incomplete/unverified 2026 reconstruction.
 
 Challenger families to test after current Evidence-v2 analysis: incumbent weighted mean; reliability-shrunk mean; robust capped-leverage center; incumbent + orthogonal Upside-v3 residual. No production weight mutation yet.
+
+
+### 2026-08-27 — CORRECTION: Weisse/Gianni/Bobal source-lock semantics
+- User correction: Ryan Weisse, Guilherme Gianni and Michael Bobal were NOT rejected by a valid marginal-value/A-B expert test. They had previously been introduced opportunistically because rankings were available and displaced intended experts without adequate qualification.
+- Therefore the existing wording `Temporary Weisse/Gianni/Bobal pool: rejected/control only; never resurrect from old workflows` must be interpreted narrowly as an anti-regression rule: never restore that temporary trio automatically or merely because rankings are available. It is NOT evidence that any of the three individually lacks predictive/marginal value.
+- Ryan Weisse may be reconsidered as a NEW challenger if independent evidence supports him and he passes the same freshness, scoring/season verification, positional historical-accuracy, independence/correlation, source-influence and OOS/marginal-value gates as any other candidate. His historical RB accuracy is qualification evidence, not automatic admission.
+- Gianni/Bobal likewise require fresh independent qualification; no inherited positive or negative verdict.
+- Availability/API accessibility remains only an acquisition property, never a selection criterion.
+- Any earlier note claiming Weisse had already failed PITTI marginal-value testing is incorrect and superseded.
