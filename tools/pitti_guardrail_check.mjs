@@ -137,7 +137,7 @@ for(const token of ['rc4.82','rc4.83','work package -> checkpoint -> re-inventor
 for(const token of ['rc4.82','rc4.83','AUTO durability','Execution witness','Old-error scan'])
   must(handoffMatrix.includes(token),`repo handoff matrix invariant missing: ${token}`);
 must(lock.authority?.libraryMirrorStatus?.includes('STALE_'),'stale Library mirror status must remain explicit until persistence is proven');
-must(lock.authority?.failClosedRecovery?.includes('never claim Library v105 persisted')||lock.authority?.failClosedRecovery?.includes('never claim Library v105'), 'Library persistence fail-closed rule missing');
+must(lock.authority?.failClosedRecovery?.includes('never claim a newer Library generation persisted unless files.list proves it'),'Library persistence fail-closed rule missing');
 for(const token of ['do not claim Library v105 is persisted','rc4.82','rc4.83','Re-inventory after EVERY completed work package'])
   must(currentHandoff.includes(token),`current handoff invariant missing: ${token}`);
 
