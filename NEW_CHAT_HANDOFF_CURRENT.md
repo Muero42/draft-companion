@@ -1,12 +1,12 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Updated: 2026-08-27
+Updated: 2026-08-27 15:00Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_AUTO_PREFLIGHT.md` fully.
 2. Read `PITTI_EXECUTION_LOCK.json` fully.
 3. Read `PITTI_PROJECT_STATE.md` to EOF. Newest appended sections override older NEXT_ACTION/current-version statements.
 4. Verify actual repo/runtime/artifact state before acting. Chat memory and stale Library mirrors are never authority.
-5. Continue with `PITTI AUTO` in long uninterrupted blocks; a blocked lane blocks only itself.
+5. Continue with `PITTI AUTO` as a repeated long-block loop: execute work -> checkpoint material changes -> re-inventory ALL independent lanes -> continue. A blocked lane blocks only itself.
 
 ## CURRENT AUTHORITY
 - League: 10-team Half-PPR, 1QB, real draft 2026-08-31, user slot 9.
@@ -61,11 +61,14 @@ Do not claim PITTI AUTO is globally blocked merely because OOS mock evidence is 
 
 ## AUTO CONTRACT — CRITICAL
 User has repeatedly required this and should NEVER need to repeat it:
-- AUTO means the longest safe autonomous blocks with minimal interruptions.
-- Do not reply with a promise to continue and then stop.
-- After each work package, automatically inventory further independent work and continue.
-- No status-only output while useful autonomous work exists.
-- Interrupt only for an unavoidable device/user action, unavailable required information, unsafe contradiction, irreversible action, or meaningful runtime-verification gate.
+- AUTO means the longest safe autonomous blocks with minimal interruptions; the user must never need to repeat this.
+- AUTO is a repeated loop: execute package -> checkpoint -> re-inventory -> execute next package -> repeat.
+- Re-inventory after EVERY completed work package, not only once per AUTO invocation.
+- Do not reply with a promise to continue and then stop; `AUTO läuft`, `ich mache weiter`, priority-only and status-only responses are invalid while executable work remains.
+- A blocked OOS/device/CI lane blocks only itself; independent positive-value lanes continue.
+- Before any stop inventory decision/evidence, regressions/release, draft-day failsafe, expert freshness, post-draft/FA, Watcher, handoff/checkpoint integrity and independent strategy/current evidence.
+- An external/device/OOS gate is a valid stop only after independent non-contaminating lanes are actually exhausted.
+- Interrupt only for an unavoidable device/user action, unavailable required information, unsafe contradiction, irreversible action, or meaningful runtime-verification gate after parallel exhaustion.
 - Material changes must be written through immediately to Project State / Execution Lock / handoff.
 
 ## ANTI-REGRESSION CANARIES
@@ -83,3 +86,7 @@ Never resurrect without new evidence:
 
 ## KNOWN CHECKPOINT CAVEAT
 Library mirror is stale/writeback-blocked. Repo `PITTI_EXECUTION_LOCK.json` + repo Project-State EOF win on contradiction.
+
+## V105 TRANSFER CANARY
+- Library v102/v103 transfer state is superseded by the 2026-08-27 v105 reseal. New chat must verify Library generation and actual repo state; if an older Library copy is surfaced, repo Execution Lock + Project-State EOF and verified device evidence win and the Library transfer must be repaired fail-closed.
+- Current factual boundary: rc4.64 production/control; rc4.82 last fully Android-verified authority; rc4.83 deployed TEST challenger OOS-pending/not promoted/not Android-verified; rc4.78 latest package+reextract boundary; Library rc4.52 aliases recovery-only.
