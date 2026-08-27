@@ -53,4 +53,18 @@ const phases=[
 ];
 for(const z of phases){const x=z.row;assert(typeof p.plus(x,0)==='string'&&p.plus(x,0).length>2,'plus '+z.phase);assert(typeof p.minus(x)==='string'&&p.minus(x).length>2,'minus '+z.phase);assert(typeof p.keyword(x,0)==='string','keyword '+z.phase);if(z.phase==='mid')assert(p.signal(x,0)==='WAIT','mid WAIT');if(z.phase==='late')assert(p.minus(x).includes('WR-Sättigung'),'late saturation');}
 
+
+// rc4.77 specific-decision evidence: top candidates must expose real differentiators where structured evidence exists.
+const specific=[
+ {name:'Jahmyr Gibbs',pos:'RB',role:'RB1',panel:1.1,adp:1.3,ret:0,loss:'hoch',arrows:'',reasons:['Positions-Alternativen 4 nah'],individual:rows[0].individual,researchResidual:{displayActive:true,components:[{display:true,kind:'consistency',dir:0,confidence:.95,causal:'Einziger RB mit mindestens 21 PPR-Punkten/Spiel in beiden letzten Saisons; dazu 500+ Receiving-Yards im Zweijahresfenster'}]}},
+ {name:'Bijan Robinson',pos:'RB',role:'RB1',panel:1.9,adp:2.8,ret:0,loss:'hoch',arrows:'',reasons:['Positions-Alternativen 4 nah'],individual:rows[1].individual,researchResidual:{displayActive:true,components:[{display:true,kind:'dual_threat_elite',dir:0,confidence:.95,causal:'Elite Dual-Threat-Profil: 2025 Top-3 bei Target Share, YPRR, Missed Tackles und Yards after Contact; zusätzlicher Goal-Line-Pfad 2026'}]}},
+ {name:'Jonathan Taylor',pos:'RB',role:'RB1',panel:7.5,adp:6.6,ret:.07,loss:'hoch',arrows:'',reasons:[],individual:rows[1].individual,researchResidual:{displayActive:true,components:[{display:true,kind:'workhorse_volume',dir:0,confidence:.95,causal:'Bewährtes Workhorse: 2025 #1 Snap Share, #2 Opportunity Share und #2 Red-Zone-Touches unter RBs'}]}},
+ {name:'Amon-Ra St. Brown',pos:'WR',role:'WR1',panel:7.8,adp:7.9,ret:.31,loss:'mittel',arrows:'',reasons:[],individual:rows[2].individual,researchResidual:{displayActive:true,components:[{display:true,kind:'consistency',dir:0,confidence:.97,causal:'Elite-Konstanz: drei Jahre in Folge mindestens 1.250 Yards und 141 Targets; 172 Targets in 2025'}]}}
+];
+const renderedSpecific=specific.map((x,i)=>p.plus(x,i));
+assert(new Set(renderedSpecific).size===specific.length,'specific evidence collapsed into generic repeated prose: '+renderedSpecific.join(' || '));
+assert(renderedSpecific[2].includes('Workhorse'),'Taylor advantage missing');
+assert(renderedSpecific[3].includes('Elite-Konstanz'),'Amon-Ra advantage missing');
+assert(!renderedSpecific.slice(0,2).every(x=>x.includes('Expertenkonsens Top-5')),'Gibbs/Bijan still generic consensus');
+
 console.log('LIVE_PRESENTATION_BEHAVIOR_PASS');
