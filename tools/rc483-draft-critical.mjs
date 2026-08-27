@@ -132,3 +132,6 @@ const eq=fs.readFileSync('tools/emergency-queue-contract.mjs','utf8');
 assert.ok(eq.includes('EMERGENCY_QUEUE_CONTRACT_PASS'));
 assert.ok(eq.includes('only one QB while QB1 open'));
 assert.ok(eq.includes('only one TE while TE1 open'));
+
+// OOS analyzer must expose clean (non-acute-confounded) promotion metrics.
+for(const k of ['acuteStatusConfoundCount','cleanDecisionCount','cleanHardQb2Pass','cleanSaturatedWrCount','cleanWr7PlusCount'])assert.ok(evidenceAnalyzer.includes(k),k);
