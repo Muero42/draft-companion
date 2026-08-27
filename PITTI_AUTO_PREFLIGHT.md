@@ -23,14 +23,16 @@ If any answer is unsafe/unknown, inspect evidence first.
 - Do not create parallel infrastructure when an existing verified capability already solves the problem.
 
 ## 4. AUTO CONTINUITY — DURABLE USER CONTRACT
-- `PITTI AUTO` / `AUTO` means long autonomous work blocks by default, with as few interruptions as technically possible. This is a persistent project rule and must not require the user to repeat it in later turns or chats.
+- `PITTI AUTO` / `AUTO` means the longest safe autonomous work blocks by default, with as few interruptions as technically possible. This is persistent project authority; the user must never need to repeat it in later turns or chats.
+- AUTO is a repeated work loop, not a one-package action: **execute work package -> checkpoint any material change -> re-inventory all independent lanes -> execute next package -> repeat**.
+- Re-inventory after **EVERY** completed work package. One inventory at the start/end of an AUTO turn is insufficient.
 - Execute all autonomously possible steps before messaging user.
-- If lane A waits, immediately inventory and work lane B/C/D when independent and useful; a blocked OOS/device gate blocks only its dependent lane, never PITTI AUTO globally.
-- Before stopping, explicitly perform a parallel-work inventory across: decision validation, regression/release safety, evidence tooling, draft-day failsafe, expert freshness, post-draft/FA readiness, Watcher draft-critical readiness, checkpoint/handoff integrity, and independent strategy research. Work every safe positive-value lane that does not contaminate a frozen experiment.
-- Do not send 'next I will...' when that next step can be done now.
-- Status-only output is prohibited while meaningful autonomous work remains.
+- If lane A waits or hits an OOS/device/CI gate, immediately work independent lane B/C/D; a blocked gate blocks only its dependent lane, never PITTI AUTO globally.
+- Mandatory inventory: decision/evidence validation, regression/release safety, evidence tooling, draft-day failsafe, expert freshness, post-draft/FA readiness, Watcher draft-critical readiness, checkpoint/handoff integrity, and independent strategy/current-evidence research.
+- Do not send 'AUTO läuft', 'ich mache weiter', 'next I will...', a priority list, or a status-only response when executable work remains. Promise-only AUTO responses are invalid.
 - A model/experiment freeze forbids contaminating that experiment; it does NOT forbid independent project work.
-- If no safe autonomous lane remains, record why and the exact external gate before interrupting.
+- An external/device/OOS gate is a valid interruption only after all independent non-contaminating positive-value lanes have actually been exhausted.
+- If no safe autonomous lane remains, record the exhaustion reason and exact external gate before interrupting.
 
 ## 5. CHECKPOINT WRITE-THROUGH
 Immediately update `PITTI_PROJECT_STATE.md` after material:
