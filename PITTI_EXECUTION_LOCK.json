@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T11:01:00Z",
+  "updatedAt": "2026-08-27T11:20:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -14,7 +14,7 @@
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.78",
     "latestPreinstallVerified": "v11.8.0-rc4.78",
-    "latestResearchChallenger": "v11.8.0-rc4.78",
+    "latestResearchChallenger": "v11.8.0-rc4.79",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip",
     "preinstallSha256": "69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba",
     "preinstallRuntimeFiles": 12
@@ -119,76 +119,23 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "branch": "pitti-auto/rc4.78-clean-promotion",
-    "status": "ANDROID_DECISION_SURFACE_SMOKE_PASS_WITH_DATA_HEALTH_DEGRADED",
+    "branch": "main",
+    "status": "RC4.79_DEPLOYED_NOT_ANDROID_VERIFIED",
     "production": false,
-    "androidReadyForVerification": true,
-    "androidVerified": true,
-    "packageSha256": "69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba",
-    "runtimeFiles": 12,
-    "oosDraft": "1398395487467368448",
-    "oosPicks": [
-      112,
-      129,
-      132,
-      149
+    "androidVerified": false,
+    "changes": [
+      "Fitz QB AMA integrated as bounded expiring Research Residual priors",
+      "Malik Willis strongest POSSIBLY_UNPRICED upside residual",
+      "Kyler Murray medium PARTLY_PRICED rebound residual",
+      "Jared Goff smaller LIKELY_PRICED floor residual",
+      "no double counting of Fitz numerical panel rank",
+      "one-QB hard exclusion remains upstream/authoritative"
     ],
     "validation": [
-      "clean branch ahead-only of main",
-      "12/12 runtime files byte-identical to GitHub branch blobs",
-      "JS syntax PASS",
-      "executable one-QB/OOS WR7 policy PASS",
-      "live presentation behavior PASS",
-      "Expert-v2 board/weights contract PASS",
-      "legacy regression-equivalent suite PASS including 6000-run Return market sanity",
-      "package/re-extract 12/12 byte parity PASS",
-      "version/cache coherence PASS"
+      "Willis current Miami QB1 corroborated",
+      "Willis FantasyPros ECR/ADP confirms disagreement and rushing asymmetry",
+      "same-day Murray/Goff/Willis ranks cross-checked"
     ],
-    "ciTransport": "NO_ACTIONS_RUN_EMITTED_FOR_CONNECTOR_COMMITS; equivalent gates executed independently; not a user gate",
-    "gate": "DIAGNOSE_AND_FIX_EXPERT_POOL_PANEL_HEALTH_ACCOUNTING; then regression + Android refresh verification",
-    "libraryArtifact": "/Pitti/Development/Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip",
-    "libraryGateReport": "/Pitti/Development/RC478_PREINSTALL_GATE_REPORT_2026-08-27.md",
-    "androidVersionVerified": true,
-    "androidLandingSmokeVerified": true,
-    "androidObservedAt": "2026-08-27T12:53:00+02:00",
-    "androidObservedEvidence": [
-      "visible version badge v11.8.0-rc4.78",
-      "Draft landing page rendered without fatal error",
-      "FantasyPros Online",
-      "Rankings 4 Std.",
-      "Sleeper Draft 986",
-      "Coach bereit: Bereit",
-      "Expert-v2 · alle Positionen selectable and explanatory weights rendered"
-    ],
-    "androidDecisionSurfaceVerified": true,
-    "androidDecisionObservedAt": "2026-08-27T13:01:00+02:00",
-    "androidDecisionEvidence": [
-      "completed-draft pick 150 renders without fatal error",
-      "QB2 absent from late candidate surface after rostered QB1",
-      "top four: Tyjae Spears, Tank Bigsby, Mike Washington, Deebo Samuel",
-      "WR saturation visibly penalizes Deebo/Jalen Coker rather than forcing WR",
-      "RB remains eligible without blind RB-only surface",
-      "fixed expert rank row visible in DS -> Del Don -> Pat -> Mariano -> Boone order where available",
-      "no redundant JETZT/EHER-JETZT labels visible"
-    ],
-    "androidResiduals": [
-      "completed-draft replay still renders a Pick 150 decision card although live banner correctly says DRAFT ABGESCHLOSSEN; post-draft UX should suppress/label historical decision surface",
-      "expert pool is degraded on-device (161 experts, 96 desired-pool, 6/6; 10 panels) and must be distinguished from decision-kernel correctness",
-      "some deep late RBs show extreme ADPs (e.g. 690+) and NORMAL-CUT WARNING; likely market-data tail behavior, not recommendation blocker"
-    ],
-    "blockers": [
-      "Expert pool degraded: UI reports 161 experts, desired pool 5/6, 120 panels; active expert availability/source health requires refresh/diagnosis before draft-ready promotion."
-    ],
-    "androidDecisionSurfaceObservedAt": "2026-08-27T13:01:00+02:00",
-    "androidDecisionSurfaceEvidence": [
-      "completed-draft state rendered at Pick 150 without fatal error",
-      "top four: Tyjae Spears, Tank Bigsby, Mike Washington, Deebo Samuel",
-      "no QB2 surfaced in top four or 10er overview despite Trevor Lawrence rostered",
-      "WR saturation surfaced for Deebo Samuel and Jalen Coker; neither displaced RB top two",
-      "expert rows rendered in fixed DS > Del Don > Pat > Mariano > Boone order where ranks exist",
-      "10er overview and fallback/normal-cut warnings rendered",
-      "mock controls and snapshot controls rendered"
-    ],
-    "remainingIssue": "DATA HEALTH DEGRADED: UI reports Expert pool 5/6 with 161 experts/panel rows but 0/6 desired pool and 0/6 panels; diagnose health/accounting semantics before declaring draft-ready."
+    "gate": "AUTONOMOUS REGRESSION/PACKAGE CHECK THEN ANDROID RC4.79 SMOKE"
   }
 }
