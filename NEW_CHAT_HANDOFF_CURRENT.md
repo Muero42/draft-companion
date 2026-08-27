@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260827T163500Z-v109`
-Updated: 2026-08-27 16:35Z
+Handoff generation: `20260827T165000Z-v110`
+Updated: 2026-08-27 16:50Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -141,3 +141,10 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Active recovery semantics are now generation-generic: newest fully sealed repo generation + verified device facts win over stale Library.
 - Release-tooling guards remain: rc4.83 mandatory release gate, dynamic APP_VERSION package naming, Evidence-v2 exact rc4.83/15 unique own picks.
 - Decision Kernel remains unchanged/frozen; external OOS gate unchanged.
+
+
+## V110 OOS-CONFOUND / GUARD-CONSISTENCY CANARY
+- Guard now matches generation-generic Library fail-closed semantics; no stale v105 literal is required for PASS.
+- Known rc4.83 OOS confound: Jeanty acute hard blocker dated 24.08.; Week 1 still uncertain on 27.08. Do not use a Jeanty-affected early decision to judge the late-WR saturation challenger.
+- Do not mutate the frozen rc4.83 experiment to “fix” that confound before Evidence-v2; revisit the blocker in the mandatory pre-real-draft freshness pass.
+- Runtime/OOS gate otherwise unchanged.
