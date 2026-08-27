@@ -935,3 +935,11 @@ Fresh FantasyPros 2023-25 evidence: Jody Smith DS overall #1 (QB40/RB1/WR13/TE9)
 Coleman diagnostic: frozen RB ranks DS222 / Mariano166 / Del Don148 / Fitz126 produce panel175.1. Removing DS and renormalizing the other three gives ~149.85; DS shifts Coleman ~25.25 slots later. Material outlier, not sufficient by itself to downweight DS.
 
 Next research gate: per-position/current-expert historical table + source-influence/outlier audit + draft-zone/archetype stratification + OOS challenger weighting. If DS is accurate overall but systematically conservative on late opportunity backs, prefer Upside-v3 residual correction rather than blunt global downweighting. No active rc4.84 runtime mutation from this audit.
+
+
+### 2026-08-27 — Expert source-leverage challenger specified
+DS audit extended from source reputation to panel mechanics. Historical 2023-25 RB ranks of current source evidence are strong overall (DS family Jody1/Smola14/English37, Mariano11, Del Don7, Fitz40), so Coleman does not justify a DS-specific downweight. Instead define a source-leverage audit: leave-one-source-out center, source-vs-other gap, caused panel displacement, lone-extreme flag, and draft-zone/archetype. Provisional research trigger SOURCE_LEVERAGE_HIGH when a lone source moves a player >=20 overall slots versus renormalized other-source center; this is diagnostic only, not automatic clipping.
+
+Position implications: WR weights directionally supported; RB needs provenance/leverage validation; TE is highest-priority direct validation because DS-family TE history is extremely heterogeneous; QB separately needs rushing-upside policy check. Sean Koerner remains a high-value missing desired source: 2023-25 FantasyPros overall #2, QB4/RB12/WR6/TE15. Do not use incomplete/unverified 2026 reconstruction.
+
+Challenger families to test after current Evidence-v2 analysis: incumbent weighted mean; reliability-shrunk mean; robust capped-leverage center; incumbent + orthogonal Upside-v3 residual. No production weight mutation yet.
