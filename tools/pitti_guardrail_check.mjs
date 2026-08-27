@@ -16,6 +16,16 @@ const bootstrap=text('PITTI_NEW_CHAT_BOOTSTRAP.md');
 const handoffMatrix=text('HANDOFF_COMPLETENESS_MATRIX.md');
 const currentHandoff=text('NEW_CHAT_HANDOFF_CURRENT.md');
 const evidenceAnalyzer=text('tools/analyze-decision-evidence.mjs');
+const current=JSON.parse(text('PITTI_CURRENT_STATE.json'));
+const seal=JSON.parse(text('PITTI_HANDOFF_SEAL.json'));
+const handoffGeneration=(currentHandoff.match(/Handoff generation:\s*`([^`]+)`/)||[])[1];
+const gitBlobSha=(p)=>{
+  const b=fs.readFileSync(p);
+  const h=crypto.createHash('sha1');
+  h.update(Buffer.from(`blob ${b.length}\0`));
+  h.update(b);
+  return h.digest('hex');
+};
 
 must(lock.schema==='pitti.execution-lock.v1','execution lock schema');
 must(lock.runtime?.appVersion==='v11.8.0-rc4.64','runtime version lock drift');
@@ -92,13 +102,26 @@ must(e.weightsAreFinalWinner===false,'no Expert-v2 profile may be mislabeled fin
 must(e.oldWrOnlyRejectionSemanticsAreAuthority===false,'obsolete WR-only authority resurrected');
 must(lock.league?.userDraftQbLimit===1,'user one-QB strategy lock drift');
 must(lock.league?.userQb2Policy==='HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1','user QB2 policy drift');
-must(commandContract.version==='1.4.0','repo command contract version drift');
+must(commandContract.version==='1.5.0','repo command contract version drift');
+must(commandContract.sourceOrder?.includes('PITTI_CURRENT_STATE.json'),'CURRENT missing from takeover source order');
+must(commandContract.sourceOrder?.includes('PITTI_HANDOFF_SEAL.json'),'SEAL missing from takeover source order');
 must(commandContract.auto?.longestSafeBlocks===true,'repo command contract long-block drift');
 must(commandContract.auto?.userReminderRequired===false,'repo command contract reminder drift');
 must(commandContract.auto?.reinventoryAfterEveryWorkPackage===true,'repo command contract post-package inventory drift');
 must(commandContract.auto?.blockedGateStopsOnlyDependentLane===true,'repo command contract lane isolation drift');
 must(commandContract.auto?.promiseOnlyResponseForbidden===true,'repo command contract promise-only guard drift');
 must(commandContract.auto?.externalGateValidStopOnlyAfterIndependentLaneExhaustion===true,'repo command contract external-gate guard drift');
+must(current.handoff_generation===seal.handoff_generation,'CURRENT/SEAL generation mismatch');
+must(current.handoff_generation===handoffGeneration,'CURRENT/Handoff generation mismatch');
+must(seal.status==='PASS' && seal.handoff_ready===true && seal.second_pass_pass===true,'handoff seal not fully PASS');
+for(const [p,expected] of Object.entries(seal.integrity||{})){
+  must(fs.existsSync(p),`seal-listed file missing: ${p}`);
+  if(fs.existsSync(p)) must(gitBlobSha(p)===expected,`seal blob mismatch: ${p}`);
+}
+must(current.handoff?.transaction_in_progress===false,'sealed takeover still marked transaction_in_progress');
+must(handoffMatrix.includes('REPO v107'),'handoff matrix generation label drift');
+must(preflight.includes('HANDOFF TRANSACTION STATE'),'preflight handoff transaction gate missing');
+
 for(const token of ['rc4.82','rc4.83','work package -> checkpoint -> re-inventory','user must never need to remind'])
   must(bootstrap.includes(token),`repo bootstrap invariant missing: ${token}`);
 for(const token of ['rc4.82','rc4.83','AUTO durability','Execution witness','Old-error scan'])
