@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T10:00:00Z",
+  "updatedAt": "2026-08-27T08:40:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -128,7 +128,15 @@
     "branch": "pitti-auto/rc4.78-roster-option-value",
     "baseRuntimeTestedHead": "25ce5df410a4b9be2ce6ec75ba0817bdbb858d3e",
     "status": "RESEARCH_CHALLENGER_NOT_PROMOTED",
-    "gate": "OOS_1398395487467368448_ROSTER_OPTION_VALUE_REGRESSION_THEN_FULL_RELEASE_CONTRACT",
-    "newEvidence": "User explicitly will draft exactly one QB; QB2 would be dropped for K/DST and has no pre-Week-1 option value. Preserve TE as soft/exceptional-value path; do not generalize QB rule to TE or other league profiles."
+    "gate": "DETERMINISTIC_OOS_BEHAVIORAL_VALIDATION_PLUS_CLEAN_PROMOTION_RELEASE_CONTRACT",
+    "newEvidence": "User explicitly will draft exactly one QB; QB2 would be dropped for K/DST and has no pre-Week-1 option value. Preserve TE as soft/exceptional-value path; do not generalize QB rule to TE or other league profiles.",
+    "head": "430afb784c76df569374c9f96c17a2bbec0787c1",
+    "validatedChanges": [
+      "user QB2 hard Coach exclusion after QB1",
+      "WR7+ Safety promotion requires existing strong-value threshold; no WR cap",
+      "embedded Expert-v2 snapshot health/source semantics"
+    ],
+    "ciProbe": "branch-local workflow added; no run emitted; internal limitation, not user gate",
+    "closedProbePr": 28
   }
 }
