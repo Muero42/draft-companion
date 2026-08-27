@@ -126,3 +126,9 @@ assert.ok(evidenceAnalyzer.includes("duplicate fixture pick detected"));
 assert.ok(evidenceAnalyzer.includes("OOS promotion evidence must come from the realistic mock gate"));
 assert.ok(evidenceAnalyzer.includes("OOS promotion evidence must use user slot 9"));
 assert.ok(evidenceAnalyzer.includes("ACUTE_STATUS_CONFOUND"));
+
+// Emergency Queue contract must remain independently executable.
+const eq=fs.readFileSync('tools/emergency-queue-contract.mjs','utf8');
+assert.ok(eq.includes('EMERGENCY_QUEUE_CONTRACT_PASS'));
+assert.ok(eq.includes('only one QB while QB1 open'));
+assert.ok(eq.includes('only one TE while TE1 open'));
