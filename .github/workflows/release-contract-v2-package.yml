@@ -2,7 +2,7 @@ name: PITTI candidate package gate
 on:
   workflow_dispatch:
   push:
-    branches: [pitti-auto/rc4.78-clean-promotion]
+    branches: [main]
 jobs:
   package:
     runs-on: ubuntu-latest
@@ -17,6 +17,7 @@ jobs:
           node tools/release-completeness-guard.mjs
           node tools/rc478-oos-policy.mjs
           node tools/pitti_guardrail_check.mjs
+          node tools/rc482-draft-critical.mjs
           node Draft_Companion_Position_Path_Regression_2026-08-13.js
           node Draft_Companion_Player_Quality_Expert_Health_Regression_2026-08-13.js
           node Draft_Companion_Return_Geometry_Market_Regression_2026-08-13.js
@@ -27,9 +28,9 @@ jobs:
         run: |
           rm -rf dist && mkdir -p dist/runtime dist/reextract
           cp index.html app.js decision-policy.js styles.css manifest.webmanifest sw.js _worker.js icon.svg live-surface-v3.js live-surface-v3.css expert-board-export.js expert-v2-board.js dist/runtime/
-          (cd dist/runtime && zip -q ../Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip *)
-          test "$(unzip -Z1 dist/Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip | wc -l)" -eq 12
-          unzip -q dist/Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip -d dist/reextract
+          (cd dist/runtime && zip -q ../Draft_Companion_v11.8.0-rc4.82_PREINSTALL.zip *)
+          test "$(unzip -Z1 dist/Draft_Companion_v11.8.0-rc4.82_PREINSTALL.zip | wc -l)" -eq 12
+          unzip -q dist/Draft_Companion_v11.8.0-rc4.82_PREINSTALL.zip -d dist/reextract
           cd dist/reextract
           node --check app.js
           node --check decision-policy.js
@@ -40,10 +41,10 @@ jobs:
           grep -q "panelSelectable(x.r.panelId)" app.js
           grep -q "WR2 mit WR1-Upside" live-surface-v3.js
           cd ..
-          sha256sum Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip > candidate.sha256
+          sha256sum Draft_Companion_v11.8.0-rc4.82_PREINSTALL.zip > candidate.sha256
       - uses: actions/upload-artifact@v4
         with:
-          name: Draft_Companion_v11.8.0-rc4.78_PREINSTALL
+          name: Draft_Companion_v11.8.0-rc4.82_PREINSTALL
           path: |
-            dist/Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip
+            dist/Draft_Companion_v11.8.0-rc4.82_PREINSTALL.zip
             dist/candidate.sha256
