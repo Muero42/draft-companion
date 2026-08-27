@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260827T181500Z-v115",
-  "updated_at": "2026-08-27T18:15:00Z",
+  "handoff_generation": "20260827T184500Z-v116",
+  "updated_at": "2026-08-27T18:45:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -35,9 +35,10 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.82|rc4.83-test|rc4.78-package|EVIDENCE_V2-OOS-ID|CLEAN-OOS-CONFOUND|PREDRAFT-FRESHNESS|EMERGENCY-QUEUE-CONTRACT|1QB|AUTO-LONGBLOCK|HANDOFF-v115",
+    "acceptance_fingerprint": "rc4.64|rc4.82|rc4.84-test|MANAGER-MAP-CORRECTED|EVIDENCE_V2-OOS-ID|CLEAN-OOS-CONFOUND|PREDRAFT-FRESHNESS|EMERGENCY-QUEUE-CONTRACT|1QB|AUTO-LONGBLOCK|HANDOFF-v116",
     "status": "SEALED_PASS",
     "handoff_ready": true,
-    "second_pass_pass": true
+    "second_pass_pass": true,
+    "next_action": "Device verify rc4.84, then realistic 10x15 slot-9 OOS mock; refresh once after completion; export Evidence-v2; analyze clean/non-confounded metrics."
   }
 }
