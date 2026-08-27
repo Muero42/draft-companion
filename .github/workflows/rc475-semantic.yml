@@ -1,0 +1,73 @@
+name: rc4.75 semantic render gate
+on:
+  push:
+    branches: [pitti-auto/rc4.75-semantic-evidence]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  gate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: {node-version: '22'}
+      - name: Syntax versions completeness
+        run: |
+          node --check app.js
+          node --check live-surface-v3.js
+          node --check expert-v2-board.js
+          node tools/release-completeness-guard.mjs
+          grep -q 'Aktueller pre-install Kandidat.*v11.8.0-rc4.75' README.md
+      - name: Semantic evidence contract
+        run: |
+          node <<'NODE'
+          const fs=require('fs'),s=fs.readFileSync('live-surface-v3.js','utf8');
+          const required={
+            'Jahmyr Gibbs':'Elite Receiving + explosive Effizienz',
+            'Bijan Robinson':'Drei-Down-Profil + Elite Workload-Ceiling',
+            "Ja'Marr Chase":'Elite Target-/TD-Ceiling mit Joe Burrow',
+            'Puka Nacua':'Historisch elite Target-Volumen + YAC-Profil',
+            'Parker Washington':'WR2 mit WR1-Upside'
+          };
+          for(const [p,r] of Object.entries(required))if(!s.includes(p)||!s.includes(r))throw Error('missing semantic evidence '+p);
+          const plus=s.match(/function plus\(x,i\)\{([\s\S]*?)\nfunction minus/)[1];
+          const tech=plus.indexOf("rs(x).find(r=>!technicalReason(r))"),known=plus.indexOf("PLAYER_EVIDENCE");
+          if(known<0||tech<0||known>tech)throw Error('technical reason can outrank player evidence');
+          if(/preferred=reasons\.find\(r=>\/[^\n]*Positions-Alternativen/.test(plus))throw Error('old generic priority remains');
+          for(const bad of ['JETZT-FENSTER','KNAPPES RETURN-FENSTER','HOHE RETURN-CHANCE'])if(s.includes(bad))throw Error('redundant timing '+bad);
+          console.log('SEMANTIC_EVIDENCE_GATE_PASS');
+          NODE
+      - name: Existing regression suite
+        run: |
+          node Draft_Companion_Position_Path_Regression_2026-08-13.js
+          node Draft_Companion_Player_Quality_Expert_Health_Regression_2026-08-13.js
+          node Draft_Companion_Return_Geometry_Market_Regression_2026-08-13.js
+          node Draft_Companion_Scarcity_Double_Count_Regression_2026-08-13.js
+          node Draft_Companion_Alternative_Scarcity_Regression_2026-08-13.js
+          node Draft_Companion_Dress_Rehearsal_Regression_2026-08-14.js
+      - name: Package re-extract and inspect actual runtime
+        run: |
+          mkdir -p dist/runtime
+          cp index.html app.js styles.css manifest.webmanifest sw.js _worker.js icon.svg live-surface-v3.js live-surface-v3.css expert-board-export.js expert-v2-board.js dist/runtime/
+          (cd dist/runtime && zip -q ../Draft_Companion_v11.8.0-rc4.75_PREINSTALL.zip *)
+          unzip -t dist/Draft_Companion_v11.8.0-rc4.75_PREINSTALL.zip
+          test "$(unzip -Z1 dist/Draft_Companion_v11.8.0-rc4.75_PREINSTALL.zip | wc -l)" -eq 11
+          mkdir dist/reextract && unzip -q dist/Draft_Companion_v11.8.0-rc4.75_PREINSTALL.zip -d dist/reextract
+          cd dist/reextract
+          node --check app.js
+          node --check live-surface-v3.js
+          grep -q 'Elite Receiving + explosive Effizienz' live-surface-v3.js
+          grep -q 'Drei-Down-Profil + Elite Workload-Ceiling' live-surface-v3.js
+          grep -q 'Elite Target-/TD-Ceiling mit Joe Burrow' live-surface-v3.js
+          grep -q 'Historisch elite Target-Volumen + YAC-Profil' live-surface-v3.js
+          grep -q 'WR2 mit WR1-Upside' live-surface-v3.js
+          grep -q 'v11.8.0-rc4.75' app.js
+          cd ..
+          sha256sum Draft_Companion_v11.8.0-rc4.75_PREINSTALL.zip > rc475.sha256
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Draft_Companion_v11.8.0-rc4.75_PREINSTALL
+          path: |
+            dist/Draft_Companion_v11.8.0-rc4.75_PREINSTALL.zip
+            dist/rc475.sha256
