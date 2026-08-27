@@ -9,6 +9,7 @@ const lock=JSON.parse(text('PITTI_EXECUTION_LOCK.json'));
 const state=text('PITTI_PROJECT_STATE.md');
 const preflight=text('PITTI_AUTO_PREFLIGHT.md');
 const app=text('app.js');
+const policy=text('decision-policy.js');
 const readme=text('README.md');
 
 must(lock.schema==='pitti.execution-lock.v1','execution lock schema');
@@ -46,7 +47,8 @@ for(const token of [
 must(readme.includes('v11.8.0-rc4.64'),'README active runtime drift');
 must(app.includes("const USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers'])"),'QB hard-exclusion canary drift');
 must(app.includes("function normalCandidateAdmissible(row)"),'normal candidate admissibility guard missing');
-must(app.includes('USER_DRAFT_QB_LIMIT=1'),'user one-QB runtime invariant missing');
+must(policy.includes('USER_DRAFT_QB_LIMIT=1'),'user one-QB runtime invariant missing');
+must(app.includes("from './decision-policy.js'"),'decision policy wiring missing');
 must(app.includes("Progressive WR-Sättigung")||app.includes('WR-Sättigung'),'WR saturation canary missing');
 must(app.includes('function simulateReturnV2('),'Return-v2 kernel missing');
 must(app.includes('function applyPlayerQualitySafetyGate('),'Value-Safety gate missing');
