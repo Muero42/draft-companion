@@ -1,10 +1,18 @@
 # Draft Companion – Final Draft Edition 2026
 
 > **Produktions-/Default-Branch-Baseline:** v11.8.0-rc4.64.  
-> **Aktueller pre-install Kandidat:** v11.8.0-rc4.77 · Release Contract v2.  
-> **Android-Status:** rc4.74/rc4.75 verworfen; rc4.76 Android-verifiziert mit unzureichender Entscheidungsbegründung; rc4.77 noch nicht Android-verifiziert.
+> **Letzter vollständig off-device geprüfter pre-install Kandidat:** v11.8.0-rc4.77 · Release Contract v2.  
+> **Aktueller Research-Challenger:** v11.8.0-rc4.78 auf isoliertem Branch; NICHT promoted, NICHT Android-ready.  
+> **Android-Status:** rc4.74/rc4.75 verworfen; rc4.76 Android-verifiziert mit unzureichender Decision-Quality; rc4.77/rc4.78 nicht Android-verifiziert.
 >
 > RC-Freigabe verlangt ZIP-Re-Extract, Regressionen und semantischen Render-Gate. README-Drift ist ein Release-Gate.
+
+### rc4.78 — OOS roster/option-value research challenger
+- User-Draftpfad: nach QB1 kein QB2 auf der Coach-Oberfläche; Gegner-/Return-Modell bleibt unverändert.
+- WR7+ bleibt legal und kann natürlich gewinnen; PlayerQualitySafety darf einen gewöhnlichen gesättigten WR aber nicht mehr über die Roster-Utility zurückpromoten. Safety-Ausnahme nutzt den bestehenden `Starker Value`-Schwellwert (+10 vs ADP).
+- Embedded Expert-v2 Einzelränge werden im Snapshot als solche berichtet statt fälschlich `0/0` / `KEINE`.
+- OOS-Gates: Draft 1398395487467368448, Picks 112/129/132/149. Keine Spielername-Forcings, kein pauschaler RB-Bonus, kein WR-Cap, kein TE2-Verbot.
+- Erst nach vollständigem Release Contract darf ein Nachfolger Android erreichen.
 
 ### rc4.77 — Release Contract v2 pre-install candidate
 - Kandidat erst nach Behavioral-, Evidence-kind-, Draft-phase-/Roster-State-, Regression-, Completeness- und Re-Extract-Gates freigeben.
