@@ -521,3 +521,7 @@ Parallel work was deliberately used instead of waiting for user mock evidence.
 2. Freeze audit extended with executable guards for exact one-QB user strategy, explicit Geno Smith/Aaron Rodgers hard exclusions, user candidate pool restricted to QB/RB/WR/TE (no K/DST), exceptional-only TE2 Safety path, no WR hard cap, three Expert profiles and Expert-v2 weights/Brown exclusion.
 3. README release authority repaired so rc4.82 remains Android authority and rc4.83 is explicitly only the deployed test challenger.
 4. No additional strategy coefficients were changed. Independent lanes are now exhausted without speculative tuning; next material evidence must come from realistic OOS Coach-vs-user decisions.
+
+
+### 2026-08-27 PITTI AUTO — Evidence-v2 roster-count defect caught pre-mock
+Parallel audit found a real telemetry defect before collecting OOS evidence: Evidence-v2 attempted to infer positions of already-drafted user-roster players from rankedAvailable, but rankedAvailable excludes drafted players. This could silently report zero/undercounted QB/RB/WR/TE and invalidate WR6+/WR7+ flags. Fixed at source: each frozen userRoster row now persists player position directly from Sleeper metadata; exporter uses persisted pos with rankedPool only as backward-compatible fallback. Regression guard added and rc4.83 main/Pages runtime resynchronized. No scoring coefficients changed.
