@@ -535,3 +535,12 @@ User explicitly requires PITTI AUTO to run in the longest safe autonomous blocks
 - Do not stop merely because the current primary lane needs user evidence.
 - Interrupt only under PITTI_AUTO_PREFLIGHT user-interruption criteria.
 - The rc4.83 Decision Kernel remains frozen pending OOS mock evidence; this does not freeze the rest of PITTI.
+
+
+### 2026-08-27 PITTI AUTO — independent-lane audit while rc4.83 kernel frozen
+Performed the required parallel inventory instead of stopping at the OOS gate.
+- Draft-day failsafe audit: Emergency Queue uses the current scored board, is capped at 35, and preserves the one-QB/one-TE fallback semantics.
+- Expert freshness audit: live expert caches use a 12h refresh window and stale fallback is explicitly degraded; Full-v2 remains a Frozen Board and does not silently live-renormalize. Pre-draft fresh-attempt rule remains authoritative.
+- Post-draft/FA audit: bench review remains separate from Add/Drop; contingent RB capital is protected; CLEAR ADD requires a concrete materially better free agent plus fresh actionable evidence. No speculative FAAB amount is emitted.
+- Watcher integration audit: automatic ingestion is fail-closed unless the expected feed schema and overall PASS gate are present; unavailable feed leaves the existing cache unchanged.
+- No Decision-Kernel coefficients changed. Remaining improvements in these lanes are verification/data dependent rather than safe scoring changes.
