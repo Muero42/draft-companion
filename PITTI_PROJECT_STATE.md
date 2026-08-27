@@ -1,6 +1,6 @@
 # PITTI PROJECT STATE — CANONICAL
 
-Updated: 2026-08-27 17:25Z
+Updated: 2026-08-27 17:35Z
 Authority: compact repository execution state. Persistent full append-only history is `/Pitti/PITTI_PROJECT_STATE.md`. Actual verified artifacts/runtime override stale text; repair stale state immediately. Chat memory is never authority.
 
 ## EXECUTION INVARIANTS — MUST NOT REGRESS
@@ -831,3 +831,22 @@ After the v111 seal, Project State was intentionally updated with the CI-observa
 That was a regression hazard because deleting or condensing historical v105 prose could falsely fail a future otherwise-valid takeover. The executable guard now checks the generic active invariant instead: the Library mirror is stale/writeback-blocked and may not override newer fully sealed repo/device truth.
 
 v112 contains only checkpoint/guard hardening. No Draft Companion runtime file, Decision Kernel coefficient, Expert-v2 weight, Return-v2 behavior, roster utility coefficient, manager model or user QB rule changed.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — v113 pre-real-draft freshness fail-closed gate
+
+Independent runtime audit found that the rc4.83 acute-status registry contains a blocking Ashton Jeanty overlay dated 2026-08-24 and that the `asOf` field is informational only at runtime. Because the OOS kernel is intentionally frozen, changing that runtime behavior now would contaminate the experiment; doing nothing would risk carrying an obsolete hard blocker into the real draft.
+
+Added non-runtime tool `tools/pre-draft-freshness-gate.mjs`:
+- scans blocking acute-status entries in app.js;
+- takes an explicit as-of date and max-age window;
+- fails closed when a blocking entry is older than the permitted freshness window or has no date;
+- default max age is 2 days;
+- is NOT inserted into ordinary rc4.83 CI, so it does not mutate or invalidate the frozen OOS challenger;
+- must be run in the mandatory pre-real-draft freshness pass before promotion/live use.
+
+PITTI guardrail protects the presence/fail-closed semantics of this tool, and guardrail workflow path filters include it.
+
+No Draft Companion runtime bytes, Decision Kernel, Expert-v2 weights, Return-v2, manager model, roster utility or user-QB policy changed.
