@@ -881,3 +881,30 @@ Independent Return-v2 audit found a material stale mapping in `ACTIVE_2026_MANAG
 Corrected runtime mapping in rc4.84: `1 Michael, 2 Pascal Voerde, 3 Marc Düsseldorf, 4 Thomas, 5 Basti, 6 Bjoern, 7 Giuliano, 8 Pascal Gelderner, 9 Tim, 10 Dutch Marc`. Only mapping + version/cache identity changed; Decision Kernel, late-WR coefficients, Expert-v2, player scoring and Return-v2 algorithm unchanged. Added rc4.84 draft-critical regression and PITTI guard canary for slots 5-8. Deployed main runtime bytes to gh-pages.
 
 IMPORTANT: rc4.83 OOS realistic-mock gate is superseded because its forced manager map was wrong. New OOS challenger is rc4.84 with the same WR-saturation hypothesis plus corrected confirmed manager geometry. rc4.82 remains last Android-verified authority until rc4.84 is device-verified/promoted.
+
+
+---
+
+## 2026-08-27 PITTI UPSIDE RESEARCH v3 — high-leverage player-ceiling framework
+
+User correctly identified player-ceiling recognition as a likely major competitive edge. Research lane expanded without touching the active rc4.84 mock/runtime.
+
+New non-runtime ledger: `PITTI_UPSIDE_RESEARCH_V3.md`.
+
+Key methodological correction:
+- "breakout" is too coarse. Separate WR/TE ASCENSION from CONSOLIDATION (already broke out/flashed, question is persistence), ROLE_TAKEOVER, POST_HYPE and late target-path archetypes.
+- RB upside is modeled primarily through opportunity elasticity: current standalone role + number/probability of events needed for a valuable workload.
+- ↑↑ requires a materially higher ceiling than price plus a credible short causal path; ↑ covers conditional/consolidation upside; do not reward youth by itself.
+- pricing state and invalidators remain mandatory to avoid double counting panel/ADP.
+
+Jameson Williams verified as CONSOLIDATION rather than classic breakout:
+- 2025 1,182 yards / first 1,000-yard season.
+- current analyst evidence shows a materially stronger Weeks 10-18 usage/efficiency stretch (WR11 PPG, 18.5% target share, 84.7 yards/game, 2.34 YPRR, 21.1% first-read share), but role persistence is uncertain with LaPorta returning and Drew Petzing coordinating.
+- intended live wording after post-mock integration: "↑ Konsolidierung · WR2 mit WR1-Wochen, wenn 2025-H2-Usage hält", not generic BREAKOUT.
+
+Priority examples researched:
+WR: Parker Washington ↑↑; Emeka Egbuka ↑↑; Carnell Tate ↑↑; Jameson Williams ↑; Tet McMillan ↑; Ladd McConkey ↑; Christian Watson ↑; Luther Burden ↑; Josh Downs/Jalen Nailor late WR2 paths.
+RB: Jonah Coleman ↑↑ late; Mike Washington Jr acute ↑↑ while Jeanty unresolved; Keaton Mitchell/Dylan Sampson/MarShawn Lloyd ↑ conditional.
+TE: Tyler Warren ↑ health-dependent; Tucker Kraft ↑; Harold Fannin ↑; Isaiah Likely ↑↑ at late price; Brenton Strange ↑ only pending stronger target-hierarchy evidence.
+
+Do NOT integrate into rc4.84 during the active OOS mock. After Evidence-v2 export, rebuild explicit-expiry priors and add end-to-end evidence -> residual -> arrow -> causal-text tests plus top-120 coverage audit.
