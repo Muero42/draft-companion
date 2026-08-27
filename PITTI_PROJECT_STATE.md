@@ -1,6 +1,6 @@
 # PITTI PROJECT STATE — CANONICAL
 
-Updated: 2026-08-27 17:35Z
+Updated: 2026-08-27 17:55Z
 Authority: compact repository execution state. Persistent full append-only history is `/Pitti/PITTI_PROJECT_STATE.md`. Actual verified artifacts/runtime override stale text; repair stale state immediately. Chat memory is never authority.
 
 ## EXECUTION INVARIANTS — MUST NOT REGRESS
@@ -850,3 +850,12 @@ Added non-runtime tool `tools/pre-draft-freshness-gate.mjs`:
 PITTI guardrail protects the presence/fail-closed semantics of this tool, and guardrail workflow path filters include it.
 
 No Draft Companion runtime bytes, Decision Kernel, Expert-v2 weights, Return-v2, manager model, roster utility or user-QB policy changed.
+
+
+---
+
+## 2026-08-27 PITTI AUTO — v114 emergency fallback executable contract
+
+Parallel draft-day failsafe audit found that Emergency Queue behavior was only indirectly protected by app-source assertions. Added `tools/emergency-queue-contract.mjs`, an independent deterministic contract test for the actual queue builder: 35-entry cap, one QB/TE candidate while QB1/TE1 remain open, zero QB/TE after those positions are filled, draft/version metadata, and explicit K/DST omission. rc4.83 regression and PITTI guard protect the contract, and workflow paths include the test.
+
+No runtime bytes or Decision-Kernel/Expert-v2/Return-v2 coefficients changed.
