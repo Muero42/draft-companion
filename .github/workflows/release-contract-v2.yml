@@ -23,3 +23,4 @@ jobs:
           node tools/rc478-oos-policy.mjs
           node tools/pitti_guardrail_check.mjs
           node tools/rc482-draft-critical.mjs
+          node tools/rc483-draft-critical.mjs
