@@ -7,8 +7,8 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "7725744cd28ab484e6e6ae1968b1752c6fa1b96c",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "a2f643967e85a785334864f1b06fa87b2df7e5f0",
+    "PITTI_CURRENT_STATE.json": "6b445454606315d8544482d77a651505927474d0",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "9a314aa6943ed085780446d9d7033d5788565d39",
     "PITTI_COMMAND_CONTRACTS.json": "e0b78115fa09f152355de7db356aaa9c033bdc3e",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "5f01c7a4d29b5949db6c10c75b89854ee0b50c39",
     "HANDOFF_COMPLETENESS_MATRIX.md": "1c0746df003a20ea9bd08fdf5e0cc0b39a24a62a",
@@ -33,7 +33,9 @@
     "handoff_resume_semantics": true,
     "auto_long_blocks": true,
     "user_qb_limit": true,
-    "no_stale_root_scalar": true
+    "no_stale_root_scalar": true,
+    "current_finalized": true,
+    "handoff_ready_marker": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
