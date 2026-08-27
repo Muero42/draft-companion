@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T10:53:00Z",
+  "updatedAt": "2026-08-27T11:01:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -120,10 +120,10 @@
   },
   "currentWork": {
     "branch": "pitti-auto/rc4.78-clean-promotion",
-    "status": "ANDROID_VERSION_AND_LANDING_SMOKE_VERIFIED_DECISION_SURFACE_PENDING",
+    "status": "ANDROID_DECISION_SURFACE_SMOKE_PASS_WITH_RESIDUALS",
     "production": false,
     "androidReadyForVerification": true,
-    "androidVerified": false,
+    "androidVerified": true,
     "packageSha256": "69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba",
     "runtimeFiles": 12,
     "oosDraft": "1398395487467368448",
@@ -145,7 +145,7 @@
       "version/cache coherence PASS"
     ],
     "ciTransport": "NO_ACTIONS_RUN_EMITTED_FOR_CONNECTOR_COMMITS; equivalent gates executed independently; not a user gate",
-    "gate": "ANDROID_DECISION_SURFACE_SMOKE_WITH_CURRENT_OR_MOCK_DRAFT",
+    "gate": "AUTO_REVIEW_RESIDUALS_AND_FREEZE_DECISION",
     "libraryArtifact": "/Pitti/Development/Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip",
     "libraryGateReport": "/Pitti/Development/RC478_PREINSTALL_GATE_REPORT_2026-08-27.md",
     "androidVersionVerified": true,
@@ -159,6 +159,22 @@
       "Sleeper Draft 986",
       "Coach bereit: Bereit",
       "Expert-v2 · alle Positionen selectable and explanatory weights rendered"
+    ],
+    "androidDecisionSurfaceVerified": true,
+    "androidDecisionObservedAt": "2026-08-27T13:01:00+02:00",
+    "androidDecisionEvidence": [
+      "completed OOS draft 1398395487467368448 rendered at pick 150",
+      "no QB2 appears in clear candidates or visible top-10 after Trevor Lawrence rostered",
+      "late RB candidates remain eligible and dominate top options without a blind RB-only surface",
+      "WR saturation is explicitly shown on Deebo Samuel/Jalen Coker",
+      "Deebo Samuel remains eligible via genuine Starker Value +19 despite WR saturation",
+      "expert rank row order renders DS -> Del Don -> Pat -> Mariano -> Boone when available",
+      "normal-cut warnings remain contextual and do not dominate top recommendation"
+    ],
+    "androidResiduals": [
+      "completed-draft replay still renders a Pick 150 decision card although live banner correctly says DRAFT ABGESCHLOSSEN; post-draft UX should suppress/label historical decision surface",
+      "expert pool is degraded on-device (161 experts, 96 desired-pool, 6/6; 10 panels) and must be distinguished from decision-kernel correctness",
+      "some deep late RBs show extreme ADPs (e.g. 690+) and NORMAL-CUT WARNING; likely market-data tail behavior, not recommendation blocker"
     ]
   }
 }
