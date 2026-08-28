@@ -1,20 +1,20 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T143500Z-v143",
-  "created_at": "2026-08-28T14:50:00Z",
+  "handoff_generation": "20260828T121700Z-v144",
+  "created_at": "2026-08-28T12:17:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "43a9f53a164a2b68af1e6484aa3807ef495941b5",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "8de58dce634b19c885819baba74d477eed5aa281",
-    "PITTI_COMMAND_CONTRACTS.json": "2f23ef41a02630a77c22c3eaffa41ae3efa7c2bb",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "4b664aee5edfc3f398cda75c09c545d4016e093b",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "c31626fe2eadb71c2780ecbc0955f8e636471491",
-    "PITTI_EXECUTION_LOCK.json": "3ae55b4633c80be3cdf9f9b96dd6a79c69a65030",
-    "PITTI_PROJECT_STATE.md": "d1e96cca1f62390ea246dd28b808a2708d95fe0d",
-    "PITTI_AUTO_PREFLIGHT.md": "16142569399bd55bbfe7407cb2986f590e30106c",
+    "PITTI_CURRENT_STATE.json": "daa79ea0d5e3f73a824667e5e5946afd0a27988d",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "22340ce5abb3ddbd5f55fe3241d7fa506dfac328",
+    "PITTI_COMMAND_CONTRACTS.json": "003146de33cd6e5d57f9bc58e07000428a3b7335",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "940dea7527cc104066945c9e958c906efc4894d6",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "ecc320d7282c91fb9a3ccc7370f76a9d8a85269f",
+    "PITTI_EXECUTION_LOCK.json": "753bd67dac8ff62e3ebd92eddc317256103ae44d",
+    "PITTI_PROJECT_STATE.md": "0fe24f92373d905a82806bd502496c3a6fba2404",
+    "PITTI_AUTO_PREFLIGHT.md": "7088238ceea6070d4a2d099e1a68e814480637bf",
     "app.js": "e6f504e0348f2323ab0666b4519daf9a93ecaca4",
     "index.html": "3a1e41f99800789386bb9deac92bdbe0b53d9cff",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
@@ -30,7 +30,7 @@
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "61cd002eeb82ab94cc531b88ad164817a163a11e",
+    "README.md": "723f527d1cb64969f4fd7e7bbb615b59523807fc",
     ".github/workflows/release-contract-v2.yml": "a87aac1320f524565c2de7abaab3a25befc22213",
     ".github/workflows/release-contract-v2-package.yml": "d4f0c9f7495f802b10c91a5a7c3c60675193ec8d",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
@@ -172,15 +172,20 @@
     "v143_walker_generic_display_fix": true,
     "v143_return_tau425": true,
     "v143_auto_block_contract": true,
-    "v143_second_pass_complete": true
+    "v143_second_pass_complete": true,
+    "v144_all_v143_blobs_preverified": true,
+    "v144_rc494_all_five_primary_gates_pass": true,
+    "v144_rc494_package_reextract_pass": true,
+    "v144_package_authority_corrected": true,
+    "v144_deploy_android_still_pending": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
-    "index_html_main_pages": true,
+    "index_html_main_pages": false,
     "decision_policy_main_pages": true,
-    "sw_js_main_pages": true,
-    "manifest_main_pages": true,
-    "note": "Intentional audited distinction at handoff: gh-pages app.js is an older rc4.91 byte set than main after newest broad evidence batch. Do not infer parity from version text."
+    "sw_js_main_pages": false,
+    "manifest_main_pages": false,
+    "note": "Audited v144 boundary: rc4.94 source/package is verified; gh-pages remains rc4.93 until exact promotion. app.js/index.html/sw.js/manifest.webmanifest differ; unchanged decision-policy/live-surface/expert-v3 assets remain equal."
   },
   "runtime_boundary": {
     "production_control": "v11.8.0-rc4.64",
@@ -190,21 +195,21 @@
     "source_authority": "v11.8.0-rc4.94",
     "test_challenger": "v11.8.0-rc4.94",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.93",
-    "latest_package_digest": "3ce741b71cbc3f35b026e6aa8f9622e10999ecd29c54c0d66f6fcfdef379db95",
+    "latest_package_reextract": "v11.8.0-rc4.94",
+    "latest_package_digest": "d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576",
     "package_runtime_files": 13,
     "deployed_pages_version": "v11.8.0-rc4.93",
     "deployed_pages_app_byte_parity_with_main": false,
     "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR exact v2 fallback",
-    "package_reference_run": 33166867111,
-    "package_reference_artifact_id": 9683925309,
-    "note": "v143 audited boundary: rc4.94 source-only normal-cut-first display challenger; rc4.93 package/deploy/Android-observed authority. No functional PASS inferred."
+    "package_reference_run": 33169002426,
+    "package_reference_artifact_id": 9684784867,
+    "note": "v144 audited boundary: rc4.94 source + CI/release/package/re-extract verified; rc4.93 deployment/Android-observed authority. Deployment parity and fresh Android functional verification remain open."
   },
   "exact_continuation": {
-    "gate": "RC494_NORMAL_CUT_DISPLAY_FIX_CI_PACKAGE_DEPLOY_ANDROID_VERIFY",
+    "gate": "RC494_DEPLOY_PARITY_ANDROID_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "Verify rc4.94 presentation-only normal-cut-first fix through CI/package, deploy exact runtime only after PASS, prove main/pages parity, then fresh Android Pick-9 snapshot. No scoring/player-specific tuning; duplicate guard binding."
+    "instruction": "Deploy exact rc4.94 runtime from verified source/package to gh-pages, prove main/pages runtime parity, then fresh Android Pick-9 snapshot. No scoring/player-specific tuning; duplicate guard binding."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
-  "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143"
+  "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-PACKAGE-PASS|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v144"
 }
