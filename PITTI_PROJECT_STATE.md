@@ -1036,3 +1036,27 @@ Release-gate audit found stale regression infrastructure and is being repaired r
 - Expert-v2 WR-only remains selectable
 
 No user action until rc4.85 package/re-extract PASS.
+
+
+---
+
+## 2026-08-28 — v118 rc4.85 PACKAGE / RE-EXTRACT / DEPLOY PASS
+
+Expert-v3 primary lane reached the genuine device boundary.
+
+- rc4.85 Release Contract v2 PASS.
+- Candidate package gate + re-extract PASS.
+- Artifact: `Draft_Companion_v11.8.0-rc4.85_PREINSTALL.zip`.
+- SHA-256: `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed`.
+- Runtime files: exactly 12.
+- Independent local re-extract verified the archive contains only rc4.85 runtime tags and the integrated Expert-v3 export tokens.
+- Git-blob parity: 12/12 re-extracted runtime files exactly equal current main.
+- Deployment: all 12 runtime files main == gh-pages.
+- Expert-v2 frozen board, its weights, Decision Kernel, Return-v2 and manager model remain byte/logically unchanged by the acquisition feature.
+
+The release-gate failures encountered on the way were stale test-infrastructure defects, not production-policy failures: stale WR6 expectation, exact-RC legacy gates that rejected successors, stale Evidence-v2 source assertions, undefined `index` alias, README/guard authority drift. Each was diagnosed and repaired rather than bypassed. Guardrails + rc4.82/rc4.83 feature gates now PASS; release/package gates passed after successor-safe fixes.
+
+### Current sole gate
+Device must load rc4.85 on the same origin holding the local FantasyPros credential, then run the integrated `Expert-v3 Challenger exportieren` action. The output is credential-free. Once that JSON returns, AUTO resumes with exact vector validation, v2/v3 weight-grid computation, marginal-value analysis and — only if justified — a separate selectable Expert-v3 preset.
+
+No additional player research should preempt this gate.
