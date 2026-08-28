@@ -19,11 +19,11 @@ Updated: 2026-08-28 12:17Z
 - User strategy: exactly one drafted QB; after QB1 all QBs disappear from the user's Coach surface. Geno Smith and Aaron Rodgers are ordinary QB candidates and must rank organically; player-name hard exclusions are forbidden.
 - K/DST normally not drafted. Starter maxima are NOT roster caps.
 - Production/control baseline remains rc4.64 and must stay selectable.
-- **Android version authority is rc4.93**, confirmed by the fresh Pick-9 snapshot. rc4.94 is not Android-verified.
-- Android functional verification remains open. Expert-v3/Return/evidence are preserved, but the Top-10 presentation defect reproduced on rc4.93 and must be verified fixed on rc4.94.
-- Current source/package challenger is rc4.94; latest deployed/Android-observed authority remains rc4.93.
+- **Android version and functional authority is rc4.94**, confirmed by fresh post-deployment Pick-9 screenshots.
+- Android functional Pick-9 presentation verification PASS: Walker is visible at #7; Achane/Bowers/London remain visible at #8–10 with contextual Normal-Cut warnings. Expert-v3/Return/evidence remain preserved.
+- Current source/package/deployment/Android authority is rc4.94.
 - Latest package/re-extract is rc4.94, 13 runtime files, final-v143 candidate run 33169002426 / artifact 9684784867 / artifact digest `d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576`.
-- gh-pages is rc4.93; main app.js is rc4.94 pending gates. **app.js byte parity is intentionally false** until exact rc4.94 deployment.
+- gh-pages exact 13-file rc4.94 runtime parity PASS at deployment commit `55c42cb2c35645b92c7e11ddc5253e76392f0a13`.
 - Expert-v3 is already integrated and selectable: QB Todd D Clark 10%, RB Ryan Weisse 10%, TE Wolf of Roto Street 10%; WR remains exact frozen Expert-v2 because Joey Wright current vector is unavailable.
 - Expert-v2 remains selectable/control. Derek Brown remains excluded from new v2; Erickson remains qualitative/challenger only; Draft Sharks counted once.
 - Broad upside/differentiator research remains coverage-first and anti-repeat. Evidence enrichment is not automatic ranking promotion.
@@ -45,16 +45,15 @@ rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. In
 - Do NOT ask user to manually document picks during the mock.
 
 ## CURRENT EXTERNAL GATE
-`RC494_DEPLOY_PARITY_ANDROID_VERIFY`
+`RC494_FINAL_RESEAL`
 
 Receiving chat must first verify v144 CURRENT/SEAL/Handoff equality and every seal-listed blob hash.
 
 Required continuation:
-- rc4.93 fresh Pick-9 snapshot is evidence: Walker Panel 15.3 / ADP 17.4 remained available while lower-panel rows were marked fallback outside normal cut.
-- rc4.94 fixes **presentation selection only**: normal-cut candidates fill Top-10 first; fallback context may only fill unused slots.
+- rc4.94 exact runtime deployment parity PASS and fresh Android Pick-9 presentation verification PASS.
+- Walker is #7 organically; Achane/Bowers/London #8–10 remain contextual Normal-Cut warning rows. No player-specific boost.
 - Do not change Coach scoring, Expert-v3 weights, Return-v2, ADP, injury penalty, or add a Walker-specific rule.
-- rc4.94 CI/release/package are already PASS on final v143 reseal. Deploy the exact runtime next and prove main/pages parity.
-- Then obtain a fresh Android Pick-9 snapshot. Duplicate/unverändert guard remains binding.
+- Final task is canonical v145 reseal + all five primary gates PASS. Duplicate/unverändert guard remains binding.
 - No automatic mock.
 
 **AUTO BLOCK** is a zero-ack correction trigger: immediately resume the already-defined AUTO loop, with no acknowledgement/apology/status/explanation.
