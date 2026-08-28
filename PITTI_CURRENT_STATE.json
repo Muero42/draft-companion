@@ -11,7 +11,7 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.92",
-    "test_challenger": "v11.8.0-rc4.92",
+    "test_challenger": "v11.8.0-rc4.93",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.92",
     "library_recovery_alias": "v11.8.0-rc4.52",
