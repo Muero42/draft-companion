@@ -54,3 +54,4 @@
 - Expert-v2-Gewichte/Routing unverändert.
 
 .
+> **Android authority update (2026-08-28):** user screenshot confirms v11.8.0-rc4.91 loaded on device. Functional visual verification remains the active gate.
