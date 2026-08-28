@@ -1417,3 +1417,11 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Current visibleCoachCandidates is mechanically sorted Coach top 10; normalCandidateAdmissible only labels rows after slicing and does not exclude Walker. Therefore disappearance means Walker's final Coach score is below at least ten candidates, not a card-render/cut filter.
 - Candidate scoring channels capable of causing this despite panel 15.35: ADP/value timing, need contribution, positional alternatives, consensus SD, injury_status penalty, Return-v2 + board-relative Return. Research residual is shadow-only and cannot cause live disappearance.
 - High-priority next diagnostic: expose/use PITTI_LIVE_DECISION_STATE or add a focused candidate audit that returns Walker raw score, final score/rank, injury_status, ADP, Return-v2, need, alternatives, consensus and reasons alongside visible #10. Do not boost Walker by name; fix only a demonstrated generic scoring defect.
+
+### 2026-08-28 — rc4.93 focused Walker diagnostic
+- User screenshot showed AUTO had again returned an empty/blank assistant message after ~1m05s; AUTO protocol remains: no empty/status-only interruptions.
+- Root cause narrowing retained: Expert-v3 itself does not remove Walker; computed Walker v3 panel is 15.35.
+- Added generic `window.PITTI_CANDIDATE_AUDIT(query)` in rc4.93. It reports any scored candidate's Coach rank, visibility, raw/final score, panel, ADP, Return-v2, injury status, reasons, value-safety state, alternatives and exact gap to visible #10. Default query is Kenneth Walker. This is diagnostic only and does not alter ranking/scoring.
+- Expanded PITTI_LIVE_DECISION_STATE row diagnostics with rawScore/valueSafety/alternative context.
+- Synced app.js, service-worker cache/assets, index asset versions and manifest to v11.8.0-rc4.93.
+- Next step is automated CI/package verification and then device acceptance; do not introduce a player-specific Walker boost. Use the audit result to repair only a demonstrated generic scoring defect.
