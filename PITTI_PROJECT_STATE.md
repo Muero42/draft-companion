@@ -1935,3 +1935,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - strict Coach draft 1399114762087895040 correct roster is 9 WR / 4 RB / 1 TE / 1 QB; old 7-WR count is explicitly forbidden.
 - exact continuation is broadened to two linked generic audits: WR saturation/championship utility and pool-wide substantive Pro/Contra evidence coverage.
 - no automatic mock; no hard WR cap/quota, blind RB forcing, PairSum/Rolling, player-name forcing, global Return-v2 retune or expert-weight redesign.
+
+
+## 2026-08-28 17:58Z — v155 guard-compatibility closure
+- First v155 CI pass failed only because the rewritten concise bootstrap/matrix/handoff omitted historical guard witness tokens, not because runtime/model behavior regressed.
+- Restored those tokens explicitly as historical anti-regression canaries while keeping all superseded states labeled non-authoritative.
+- This preserves old protections without resurrecting old rc4.82/rc4.83/rc4.84-90 runtime state.
+- Seal must be refreshed after these documentation changes before handoff is considered final.
