@@ -1,34 +1,38 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260827T181500Z-v115",
-  "created_at": "2026-08-27T18:15:00Z",
+  "handoff_generation": "20260828T053000Z-v117",
+  "created_at": "2026-08-28T05:30:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "1c9db256fb847dbdd62e2877e10acfc1f59c9f50",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "550038e235a87b0d28e14c3a963c3dda1f029359",
+    "PITTI_CURRENT_STATE.json": "64554bfa23fffaf0db7caceedb51af221898f72a",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "0d64db823fb381cfd0a040b50dae6843c5ff9cc7",
     "PITTI_COMMAND_CONTRACTS.json": "5fe962b5043777b75efccc03b61408d5e181a013",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "ca02242c27b78d8b4f70bd57aad9288e1bcdadd6",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "a46644fc1dca2b3b8f1be47d5117f2451f2d3848",
-    "PITTI_EXECUTION_LOCK.json": "11e70c923adce414a2f792ca38a06c41a7b186c7",
-    "PITTI_PROJECT_STATE.md": "8600975d57598919c568991fcb5001324b84065e",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "9cccceadf22e49b0e40dff5beb8a7c04cbed5a2a",
+    "PITTI_EXECUTION_LOCK.json": "57dcb76dd4c3e748e7c0493d1f6df5382f5379be",
+    "PITTI_PROJECT_STATE.md": "9e9e97a45185f29a2684cf7213863beb1749d026",
     "PITTI_AUTO_PREFLIGHT.md": "9e6090ef003e324bc7fdf91b9bd9c2c5b2c06317",
-    "app.js": "c9139d0efe9545326ece4a8936ff51dfa7938878",
-    "index.html": "9f4c9ad2cbc98a13770736c6407e9ddda96832f0",
+    "app.js": "f518bc93d13770d4a5f39572bcdfd4f7939a49c8",
+    "index.html": "eb2a206e4380b86f58385505b0b631e6349c1f5d",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
-    "sw.js": "c9ac5a6d821fda9f393964a6dc42d7254240444d",
-    "manifest.webmanifest": "0c02f7bb0ad65c47001afbcda40409186f1b1168",
-    "tools/rc483-draft-critical.mjs": "84c1aced7265fc9c17cb083df662608cb2455cff",
+    "sw.js": "d693da495f0409cb1298e0742e7842e84e8338d3",
+    "manifest.webmanifest": "a7e1c8665c3c130af30b7f598f207725f8cbcd8f",
+    "tools/rc483-draft-critical.mjs": "0dbdaf67f82500abdb38c27c3e0bc2656ac77d8f",
+    "tools/rc484-draft-critical.mjs": "d98d29a56db49ebf7c3882fa1826e84f6b08928b",
+    "tools/rc485-draft-critical.mjs": "1b713a4662b1a118bb75a302cee5da912c718221",
     "tools/analyze-decision-evidence.mjs": "bb75950cc1698659769d7412adef71bb2e41d494",
-    "tools/pitti_guardrail_check.mjs": "1ffc29ced210fb323d22a73ff95f02bd69c10d52",
+    "tools/pitti_guardrail_check.mjs": "576bc9b84ddd88fcdc9512271c706bfcbd148a80",
     "tools/pre-draft-freshness-gate.mjs": "9acc1999c0fe8a3428b9af7631812fe04338d42d",
     "tools/emergency-queue-contract.mjs": "d5ce421c905c40c10c03ba70a41161fb6036d320",
+    "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
+    "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "12aec3a1601784325bab8ed65af93d9f7d2ed077",
-    ".github/workflows/release-contract-v2.yml": "f30f34e089145a96d79ab1fdd4f4ff42ca337078",
-    ".github/workflows/release-contract-v2-package.yml": "6161f434e8bfa735c6cf38c4eaff88dc36e43877",
+    "README.md": "9ba39886fe2d2a8d9ec00a08e4967013c0331ef1",
+    ".github/workflows/release-contract-v2.yml": "3c1297ea4b30bb958b922f17f2402ea7bbe1e136",
+    ".github/workflows/release-contract-v2-package.yml": "5eebac4359d70eb5e947d2fdd8804b033d9f8645",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5"
   },
   "checks": {
@@ -58,8 +62,11 @@
     "generation_generic_transfer_guards": true,
     "pre_real_draft_freshness_gate": true,
     "emergency_queue_executable_contract": true,
-    "matrix_v115": true,
-    "clean_oos_confound_metrics": true
+    "clean_oos_confound_metrics": true,
+    "matrix_v117": true,
+    "expert_v3_acquisition_only": true,
+    "rc485_release_gate": true,
+    "legacy_feature_gates_successor_safe": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -70,17 +77,17 @@
   },
   "runtime_boundary": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.82",
-    "test_challenger": "v11.8.0-rc4.83",
+    "android_authority": "v11.8.0-rc4.84",
+    "test_challenger": "v11.8.0-rc4.85",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.78",
     "library_recovery_alias": "v11.8.0-rc4.52"
   },
   "exact_continuation": {
-    "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
+    "gate": "RC4.85_PACKAGE_REEXTRACT_THEN_DEVICE_EXPERT_V3_EXPORT",
     "auto_starts_mock": false,
-    "instruction": "After verified new-chat takeover, continue independent AUTO work; when user performs a natural rc4.83 Android mock, refresh once, export Evidence-v2, then run pick-by-pick OOS analysis and PROMOTE/MODIFY/REJECT. Do not tune frozen rc4.83 before evidence."
+    "instruction": "Finish rc4.85 package/re-extract autonomously. Then device-update once and export Expert-v3 challenger JSON. Compute/test v3 weights before adding a selectable preset."
   },
-  "library_persistence": "STALE_FAIL_CLOSED_NOT_V115",
-  "acceptance_fingerprint": "rc4.64|rc4.82|rc4.83-test|rc4.78-package|EVIDENCE_V2-OOS-ID|CLEAN-OOS-CONFOUND|PREDRAFT-FRESHNESS|EMERGENCY-QUEUE-CONTRACT|1QB|AUTO-LONGBLOCK|HANDOFF-v115"
+  "library_persistence": "STALE_FAIL_CLOSED_NOT_V117",
+  "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-expert-v3-acquisition|V2-FROZEN|UPSIDE-V3|1QB|AUTO-LONGBLOCK|HANDOFF-v117"
 }
