@@ -1699,3 +1699,47 @@ Anti-overfit/non-actions remain binding:
 - no Geno/Rodgers name exclusions;
 - no change to Expert-v3 weights from this audit;
 - no promotion of rc4.96 until exact reseal + full release/package/deploy gates.
+
+
+## 2026-08-28 — v150 deep handoff audit / rc4.96 draft-readiness boundary
+
+This section supersedes older active-pointer prose where it conflicts.
+
+Verified current facts:
+- Source/package/deployment authority is v11.8.0-rc4.96.
+- All five primary workflows PASS at exact commit 6eafbb297fa999a28dae14375a65544b73a97d7c.
+- Candidate package/re-extract PASS: run 33183057716, artifact 9690504450, 13 runtime files, SHA-256 18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0.
+- Independent Git-tree comparison verifies exact 13/13 runtime blob parity between main and gh-pages head 35b68015aa79e8976f3ee9a230be3710be503b32.
+- Android authority remains v11.8.0-rc4.94. rc4.96 is NOT Android-verified yet; any older test_challenger_android_verified=true statement is stale/incorrect and must not be used.
+- Exact next gate is RC496_ANDROID_VERIFY, followed by final draft-ready freeze audit if device behavior passes.
+
+Decision-Evidence authority preserved:
+- Canonical file: PITTI-Decision-Evidence-1398976368485625856-2026-08-28T14-07-09-294Z.json.
+- Repo audit: research/DECISION_EVIDENCE_AUDIT_1398976368485625856_2026-08-28.md.
+- 16 raw fixtures -> 15 canonical own-pick states; mixed frozen model versions rc4.88/rc4.94/rc4.95 are explicitly segmented.
+- effectiveWeight export bug fixed.
+- Dobbins sparse-panel issue handled generically; no name-specific penalty.
+- Cam/Cameron Ward and Kenny/Kenneth Gainwell alias splits merged.
+- QUESTIONABLE alone remains score-neutral.
+- NORMAL-CUT presentation is broader than PlayerQualitySafety.
+- observed decision-zone player-specific evidence coverage added.
+- late WR7+ opportunity-cost strengthened softly, without roster cap.
+- no generic Return-v2 retune from this one mock.
+
+Anti-regression:
+- no PairSum/Rolling resurrection;
+- no fixed roster quotas;
+- no player-name forcing;
+- no generic QB2/TE2 ban; QB2 exclusion is user-strategy-specific after QB1;
+- no K/DST normal path;
+- no Superflex evidence;
+- no Brown numeric-v2 resurrection;
+- no frozen-weight live renormalization;
+- no package/deployment/Android conflation.
+
+Transfer mechanics:
+- Handoff generation v150.
+- NEW_CHAT_HANDOFF_CURRENT.md was rewritten as concise active authority because older accumulated sections contained stale rc4.94/rc4.95 gates.
+- HANDOFF_COMPLETENESS_MATRIX.md advanced to REPO v150.
+- Library mirror remains stale/writeback-blocked; repo CURRENT + PASS SEAL + Execution Lock + Project-State EOF + actual CI/device evidence win.
+- Next chat must not restart settled expert acquisition/research or another mock automatically.
