@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.99';
+const APP_VERSION='v11.8.0-rc4.100';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -8,7 +8,7 @@ const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u03
 // User draft strategy: in this 10-team/1QB league, draft exactly one QB. A QB2 has no
 // useful pre-Week-1 option-value because it would be dropped for K/DST; unlike late RB
 // (and, to a lesser extent, WR/TE), it cannot earn a roster slot through role news.
-const DRAFT_ACUTE_STATUS_2026={ashtonjeanty:{label:'AKUTER STATUS: Sprunggelenkverletzung · Teilnahme/Belastbarkeit vor Draft prüfen',blockRecommendation:true,asOf:'2026-08-24'}};
+const DRAFT_ACUTE_STATUS_2026={ashtonjeanty:{label:'AKUTER STATUS: Sprunggelenkverletzung · Raiders zählen für Week 1 auf ihn; Belastbarkeit weiter beobachten',blockRecommendation:false,asOf:'2026-08-28'}};
 const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const LIVE_DRAFT_ID_2026='1366053132970233856';
@@ -26,6 +26,33 @@ function normalCandidateAdmissible(row){
   const current=Number(lastDraftContext?.current||1);
   const displayGap=current<=70?18:current<=110?22:26;
   return row.r.rank<=best+displayGap;
+}
+function applyTurnPortfolioOrdering(rows,current,next){
+  if(!Array.isArray(rows)||rows.length<2||!Number.isFinite(current)||!Number.isFinite(next))return rows;
+  // Short-turn snake geometry: a clearly deferable board leader should not be shown as
+  // TAKE/#1 when a materially comparable normal-cut alternative has much lower return odds.
+  // This is an ordering/presentation policy, not a score/Return-v2 retune and never creates
+  // a hard positional rule. Generic thresholds are deliberately conservative.
+  if(next-current>3)return rows;
+  const leader=rows[0],leaderRet=Number(leader?.ret);
+  if(leader?.action!=='WAIT'||!Number.isFinite(leaderRet)||leaderRet<.85)return rows;
+  const leaderPanel=Number(leader?.r?.rank);
+  if(!Number.isFinite(leaderPanel))return rows;
+  const alternatives=rows.slice(1).filter(x=>{
+    const ret=Number(x?.ret),panel=Number(x?.r?.rank);
+    return !x?.hardExcluded&&!x?.recommendationBlocked&&normalCandidateAdmissible(x)
+      &&Number.isFinite(ret)&&ret<=.82
+      &&Number.isFinite(panel)&&panel<=leaderPanel+25;
+  }).sort((a,b)=>Number(a.ret)-Number(b.ret)||Number(a.r.rank)-Number(b.r.rank)||Number(b.rawScore)-Number(a.rawScore));
+  const take=alternatives[0];
+  if(!take)return rows;
+  const ordered=[take,...rows.filter(x=>x!==take)];
+  take.turnPortfolioReason=`Turn-Portfolio: ${leader.p.name} mit ${Math.round(leaderRet*100)}% Return aufschieben`;
+  if(Array.isArray(take.reasons)&&!take.reasons.includes(take.turnPortfolioReason))take.reasons.push(take.turnPortfolioReason);
+  leader.turnPortfolioDeferred=true;
+  const deferReason=`Turn-Portfolio: hoher Return (${Math.round(leaderRet*100)}%) · für Folgepick einplanen`;
+  if(Array.isArray(leader.reasons)&&!leader.reasons.includes(deferReason))leader.reasons.push(deferReason);
+  return ordered;
 }
 function visibleCoachCandidates(rows){
   const source=(rows||[]).filter(x=>x?.p&&x?.r);
@@ -2300,6 +2327,7 @@ async function refresh(){
     }
     els.strategyStatus.className='notice ok';els.strategyStatus.textContent=strategyStatusText(strategy);
     scored.sort((x,y)=>y.score-x.score||y.rawScore-x.rawScore||x.r.rank-y.r.rank);
+    scored=applyTurnPortfolioOrdering(scored,current,returnPick);
 
     const draftComplete=(!preview&&String(draft.status||'').toLowerCase()==='complete')||picks.length>=total;
     lastEmergencyQueueText=draftComplete?'':buildEmergencyQueueText(scored,state,current,id);
