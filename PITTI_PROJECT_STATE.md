@@ -1496,3 +1496,11 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Draft-day review rule: compare this preserved baseline plus PITTI augmentation against same-day injuries/depth charts/Expert-v3/ADP; reorder only on material evidence, not cosmetic ADP drift.
 - Augmentation objective remains ~35 additional names, emphasizing uncovered Round 4/5 fallers then RB asymmetric upside/handcuffs, breakout WRs, and only policy-valid QB/TE depth; no K/DST.
 - Fresh public cross-check on Aug 28: FantasyPros Half-PPR consensus is updated today (109 experts), and NFL's current draft guidance continues to flag late-round value/upside candidates including Jordan Mason/Jonathon Brooks/Josh Downs/Isaiah Likely/Chigoziem Okonkwo and values such as Cam Skattebo/Tucker Kraft/Jonathon Brooks. Treat these as recon evidence only, not overrides of PITTI Expert-v3.
+
+
+### 2026-08-28 — AUTO BLOCK correction / queue work execution contract
+- User invoked AUTO BLOCK after repeated status-only AUTO responses. Binding correction: do not answer with "AUTO läuft" or describe intended queue construction without delivering work. Continue substantive work until a real result or unavoidable user action.
+- Freshness evidence used in this block: FantasyPros Half-PPR overall/rank pages crawled Aug 28; Pat Fitzmaurice RB Half-PPR ranks published Aug 27; NFL late-round sleepers/rookie/breakout guidance from Aug 2026. Recon only; PITTI Expert-v3 remains primary.
+- New material freshness note: NFL's current rookie-late-round article says Jordyn Tyson is expected to miss roughly two months with a hamstring injury; he must not be blindly inserted into the emergency queue from stale upside evidence.
+- Current public RB recon materially supports Walker rather than contradicting PITTI: Pat Fitzmaurice has Walker RB6 on Aug 27 (ECR RB10, ADP RB11), and Dalton Del Don has Walker RB7 on Aug 28. No Walker-specific PITTI tuning follows; this is only an external sanity check.
+- Queue augmentation must now be produced as an actionable ordered list, deduplicated against the user's captured baseline, with explicit exclusions for known hard rules (Geno Smith/Aaron Rodgers; K/DST) and current injury gates.
