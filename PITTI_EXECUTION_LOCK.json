@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T05:25:00Z",
+  "updatedAt": "2026-08-28T05:45:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -17,13 +17,13 @@
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.84",
-    "latestPreinstallVerified": "v11.8.0-rc4.78",
+    "latestPreinstallVerified": "v11.8.0-rc4.85",
     "latestResearchChallenger": "v11.8.0-rc4.85",
-    "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip",
-    "preinstallSha256": "69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba",
+    "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.85_PREINSTALL.zip",
+    "preinstallSha256": "53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed",
     "preinstallRuntimeFiles": 12,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.84",
-    "latestDeployedCandidate": "v11.8.0-rc4.84",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.85",
+    "latestDeployedCandidate": "v11.8.0-rc4.85",
     "latestAndroidVerified": "v11.8.0-rc4.84"
   },
   "auto": {
@@ -135,7 +135,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.85_EXPERT_V3_ACQUISITION_PACKAGE_GATE",
+    "status": "RC4.85_PACKAGE_REEXTRACT_DEPLOY_PASS_DEVICE_EXPORT_GATE",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -183,7 +183,8 @@
       "Evidence-v2 analyzer now reports clean non-acute-confounded OOS metrics separately from whole-mock metrics; same-day Jeanty recheck remains unresolved and does not mutate frozen rc4.83",
       "CRITICAL: rc4.83 forced stale 2026 manager slots 5/6/8, distorting Return-v2; corrected in rc4.84 and guarded. OOS gate moves to rc4.84 realistic slot-9 mock.",
       "Upside Research v3 added as non-runtime ledger: WR/TE breakout vs consolidation vs role-takeover taxonomy; RB opportunity-elasticity/event-count model; pricing + invalidators; active rc4.84 mock remains untouched",
-      "rc4.85 adds only Expert-v3 challenger export acquisition path; frozen Expert-v2 and Decision Kernel remain unchanged"
+      "rc4.85 adds only Expert-v3 challenger export acquisition path; frozen Expert-v2 and Decision Kernel remain unchanged",
+      "rc4.85 Release Contract + candidate package/re-extract PASS; inner PREINSTALL SHA-256 53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed; 12/12 runtime blobs match main; main/gh-pages 12/12 byte parity PASS"
     ],
     "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
     "note": "rc4.82 remains last fully Android-verified authority. rc4.83 remains deployed test challenger only; Decision Kernel coefficients stay frozen pending realistic slot-9 OOS Evidence-v2. Transfer/release/evidence guards are generation-generic.",
@@ -191,7 +192,7 @@
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
     "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
-    "nextGate": "Package/re-extract rc4.85 -> device update -> export exact challenger JSON -> compute/test Expert-v3 weights",
+    "nextGate": "Device update/reload to rc4.85 -> press Expert-v3 Challenger exportieren -> share generated JSON -> compute/test Expert-v3 weights",
     "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION"
   }
 }
