@@ -1,11 +1,10 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
-> **Aktuelle Source-Authority:** v11.8.0-rc4.96 (sparse Expert-panel safety challenger; validation pending).  
-> **Letzter paket-/re-extract-verifizierter Stand:** v11.8.0-rc4.94 (candidate-package PASS; run 33169002426 / artifact 9684784867 / artifact digest d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576).  
-> **Android-Authority:** v11.8.0-rc4.94 (funktional verifiziert).  
-> **gh-pages:** rc4.94 deployed; rc4.95 noch nicht promoted, daher main/pages parity absichtlich false.  
-> **Aktuelles Gate:** `RC495_ALL_FIVE_PRIMARY_GATES`.  
+> **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar).  
+> **Android-/Rollback-Authority:** v11.8.0-rc4.96 (funktional verifiziert).  
+> **Aktuelle Source-/Test-Authority:** v11.8.0-rc4.98 (Evidence-Polarity-Challenger; Android-Verifikation ausstehend).  
+> **Letzter paket-/re-extract-verifizierter Stand:** v11.8.0-rc4.96 (run 33183057716 / artifact 9690504450).  
+> **Aktuelles Gate:** `RC498_RELEASE_VALIDATION`.  
 >
 > Built/source-verified, packaged/re-extracted, deployed, Android-Version-beobachtet und Android-funktional-verifiziert sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
 
