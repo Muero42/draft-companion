@@ -1897,3 +1897,16 @@ Permanent correction: AUTO BLOCK is now a hard silent-execution/output gate. Too
 - rc4.98 package/re-extract PASS: run 33194280926, artifact 9695061955, digest sha256:43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e.
 - Obsolete rc4.61 push-package workflow disabled; rc4.96 feature gate repaired to be successor-safe. These were CI/process defects, not runtime scoring defects.
 - Android rollback authority remains rc4.96. Next unavoidable gate: rc4.98 Android/PWA version + representative Pro/Contra verification.
+
+
+## 2026-08-28 — rc4.98 paired OOS mocks ingested
+- Canonical backup: `draft-companion-v7-backup-2026-08-28T17-30-01-853Z.json`.
+- New realistic/user-decision mock: draft `1399109246460682240`. Treat as closest mock proxy for the user's real-draft decision policy, not as recommendation-following evidence.
+- New strict Coach-control mock: draft `1399114762087895040`; all 15 own-pick fixtures are present and `followedCoach=true`.
+- The two drafts are paired OOS evidence but not a randomized A/B experiment because opponent selections differ; do not causally attribute final-roster differences solely to user-vs-Coach policy.
+- Realistic path retains only five complete decision fixtures (109/112/129/132/149) in this backup. Never reconstruct missing frozen candidate states as if observed. Its draft path/Return evidence remains useful with that limitation.
+- Control roster: JSN, Justin Jefferson, Malik Nabers, Chris Olave, Jaylen Waddle, D'Andre Swift, Christian Watson, Parker Washington, Harold Fannin, Trevor Lawrence, Josh Downs, Stefon Diggs, Chris Rodriguez, Woody Marks, Tyjae Spears.
+- Realistic roster: Amon-Ra St. Brown, Justin Jefferson, Jeremiyah Love, Malik Nabers, Tyler Warren, Jadarian Price, Christian Watson, Parker Washington, Jonathon Brooks, Trevor Lawrence, Kenny Gainwell, Stefon Diggs, Jonah Coleman, Zach Charbonnet, Tank Bigsby.
+- No broad runtime/scoring change is justified by this pair alone. Preserve anti-overfit constraints: no generic Return-v2 retune, expert-weight redesign, PairSum/Rolling, hard WR cap, player-name forcing or roster quota.
+- Detailed audit authority: `research/RC498_PAIRED_OOS_MOCKS_1399109246460682240_1399114762087895040_2026-08-28.md`.
+- Current device observation supplied by user: rc4.98 is installed. Remaining narrow device gate is representative Pro/Contra semantic verification after the sign-aware polarity fix; do not start another mock automatically.
