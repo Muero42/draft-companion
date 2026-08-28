@@ -1611,3 +1611,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
   - Josh Jacobs: current NFL RB analysis notes Green Bay is preparing for possible suspension while investigation remains open. Add legal/availability freshness flag; do not treat as ordinary clean Round-4/5 faller.
   - Tucker Kraft: returned to practice from ACL and current camp reporting is positive; no stale blanket injury exclusion warranted, but workload/Week-1 readiness remains a freshness item.
 - No scoring/Expert-v3 changes from these findings. They are player availability/role overlays and must be evaluated at draft time.
+
+
+### 2026-08-28 — AUTO BLOCK draft-readiness freshness continuation
+- Fresh official NFL fantasy scan confirms Parker Washington remains a current 2026 breakout/value thesis, not stale camp residue: NFL breakout analysis cites a 29.4% target rate and 3.2 YPRR when Washington/Meyers/BTJ shared the field after Week 8; NFL WR-value article still calls him a priority around Round 9.
+- NFL draft-tips article published ~Aug 27/28 reinforces process principles already encoded: avoid rigid take-locks and seek ascending offenses/value rather than drafting by static names. No PITTI model change required.
+- No new evidence from this scan justifies reopening rc4.94 code, Expert-v3 weights, Return-v2, or Normal-Cut logic.
+- Draft-readiness blocker inventory after this scan: (1) user's full natural rc4.94 mock must complete without P0/P1 behavior regression; (2) time-proximate Aug-31 freshness pass on active injury/role/legal gates; (3) emergency Queue is sufficient at ~100 and is no longer a blocker. If (1) passes, code freeze is appropriate.
