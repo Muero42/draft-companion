@@ -7,7 +7,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.86">
+  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.87">
   <title>Draft Companion – Final Draft Edition 2026</title>
 
 <style id="workspaceStyles">
@@ -22,7 +22,7 @@
       <h1>Draft Companion</h1>
       <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
     </div>
-    <span class="version">v11.8.0-rc4.86</span>
+    <span class="version">v11.8.0-rc4.87</span>
   </header>
 
   <nav class="workspace-nav" aria-label="Arbeitsbereich">
@@ -50,7 +50,7 @@
       <div><span class="step">1</span><h2>Daten aktualisieren</h2></div>
       <button id="refreshAllBtn" class="primary">Alles aktualisieren</button>
     </div>
-    <div id="apiQuickStatus" class="notice"></div><div class="strategy-box"><label for="expertProfile"><b>Experten-Konfiguration</b></label><select id="expertProfile"><option value="incumbent">Bisherige Konfiguration (rc4.64)</option><option value="fullv2">Expert-v2 · alle Positionen</option><option value="wrv2">Expert-v2 · nur WR</option><option value="custom" disabled>Benutzerdefiniert</option></select><div class="button-grid" style="margin-top:8px"><button id="expertV3AuditBtn" class="secondary" type="button">Expert-v3 Challenger exportieren</button></div><div id="expertV3AuditStatus" class="notice">v3-Audit bereit; Expert-v2 bleibt unverändert.</div><select hidden aria-hidden="true"></select><p class="tiny">Vergleichsmodus: gleicher Decision-/Return-Kernel, nur die Positionspanels wechseln. Expert-v2: QB DS35/Mariano25/Del Don20/Boone10/Pat10 · RB DS35/Mariano25/Del Don25/Pat15 · WR Mariano35/DS30/Pat15/Del Don10/Boone10 · TE DS35/Pat30/Del Don25/Boone10.</p></div><div id="qualityStatus" class="notice">Datenprüfung läuft …</div>
+    <div id="apiQuickStatus" class="notice"></div><div class="strategy-box"><label for="expertProfile"><b>Experten-Konfiguration</b></label><select id="expertProfile"><option value="incumbent">Bisherige Konfiguration (rc4.64)</option><option value="fullv2">Expert-v2 · alle Positionen</option><option value="wrv2">Expert-v2 · nur WR</option><option value="custom" disabled>Benutzerdefiniert</option></select><div class="button-grid" style="margin-top:8px"><button id="expertV3AuditBtn" class="secondary" type="button">Expert-v3 kompakt kopieren</button></div><div id="expertV3AuditStatus" class="notice">v3-Kompaktexport bereit; nur positionsrelevante Ränge, Expert-v2 bleibt unverändert.</div><select hidden aria-hidden="true"></select><p class="tiny">Vergleichsmodus: gleicher Decision-/Return-Kernel, nur die Positionspanels wechseln. Expert-v2: QB DS35/Mariano25/Del Don20/Boone10/Pat10 · RB DS35/Mariano25/Del Don25/Pat15 · WR Mariano35/DS30/Pat15/Del Don10/Boone10 · TE DS35/Pat30/Del Don25/Boone10.</p></div><div id="qualityStatus" class="notice">Datenprüfung läuft …</div>
     <div class="button-grid">
       
     </div>
@@ -230,12 +230,12 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v11.8.0-rc4.86: Expert-v3 Export-Hotfix (bestehende verifizierte Einzelranking-Pipeline statt nicht definierter Helper); genau ein QB im User-Draftpfad, WR7+-Safety roster-aware, Expert-v2 Snapshot-Health korrigiert. Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt; Phase Views und Research Cache v2 bleiben erhalten. Die bewährten Simulation-Lab-v2- und Live-Speed/Snapshot-Guard-Regeln der Produktionsbasis bleiben erhalten.</div>
+<div class="freeze-note">v11.8.0-rc4.87: Expert-v3 Export-Hotfix (bestehende verifizierte Einzelranking-Pipeline statt nicht definierter Helper); genau ein QB im User-Draftpfad, WR7+-Safety roster-aware, Expert-v2 Snapshot-Health korrigiert. Panel-, Preset- und ADP-Details sind standardmäßig eingeklappt; Phase Views und Research Cache v2 bleiben erhalten. Die bewährten Simulation-Lab-v2- und Live-Speed/Snapshot-Guard-Regeln der Produktionsbasis bleiben erhalten.</div>
 <button id="analysisJumpV3" class="snapshot-jump" type="button" aria-label="Zur Analyse" hidden>↓</button>
 </main>
-<script src="live-surface-v3.js?v=v11.8.0-rc4.86" defer></script>
+<script src="live-surface-v3.js?v=v11.8.0-rc4.87" defer></script>
 <script src="expert-v2-board.js?v=20260826"></script>
-<script type="module" src="app.js?v=v11.8.0-rc4.86"></script>
+<script type="module" src="app.js?v=v11.8.0-rc4.87"></script>
 <script src="expert-board-export.js?v=20260826e" defer></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>
