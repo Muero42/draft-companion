@@ -1,20 +1,20 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T054500Z-v118",
-  "created_at": "2026-08-28T06:12:00Z",
+  "handoff_generation": "20260828T063500Z-v119",
+  "created_at": "2026-08-28T06:38:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "96a17b49ee0f57ee303753825354258488400f88",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "1f6add9da2758cb33df32345f51b912ad516cd7d",
-    "PITTI_COMMAND_CONTRACTS.json": "5fe962b5043777b75efccc03b61408d5e181a013",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "ca02242c27b78d8b4f70bd57aad9288e1bcdadd6",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "9ae4a905599d038b244b3faf9c8c9e4a3620bdbb",
-    "PITTI_EXECUTION_LOCK.json": "32cc6fe73abb1887feccecff43678ba4023d5880",
-    "PITTI_PROJECT_STATE.md": "eb97e969ab0b1c7dfd2c2c1547c6c19dcefd312e",
-    "PITTI_AUTO_PREFLIGHT.md": "9e6090ef003e324bc7fdf91b9bd9c2c5b2c06317",
+    "PITTI_CURRENT_STATE.json": "4e30271dae8d829033cfef7d1d9523d91579e766",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "ba1470e42de3deb753b14a2b1ad7cf90543496ec",
+    "PITTI_COMMAND_CONTRACTS.json": "41ffd8e89066b5e880ff11d6dffdd85e07127fdb",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "e4ba6389db3da869ab2106c0d14ac83e68c6bdc2",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "8a9b367c8f110e9ae36c0d8ee1f766542dc82267",
+    "PITTI_EXECUTION_LOCK.json": "7ae1dcbad5b33037341e8a701078a4e6b5f4c43d",
+    "PITTI_PROJECT_STATE.md": "950e0d0d291848459bb23acf514839200aaba6d3",
+    "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
     "app.js": "f518bc93d13770d4a5f39572bcdfd4f7939a49c8",
     "index.html": "eb2a206e4380b86f58385505b0b631e6349c1f5d",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
@@ -30,7 +30,7 @@
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "a17244fa4f29562bc37c808912424ae1bd72f25e",
+    "README.md": "a55b1dcc8c1af3d9107b7bd231c584a05242d3dd",
     ".github/workflows/release-contract-v2.yml": "3c1297ea4b30bb958b922f17f2402ea7bbe1e136",
     ".github/workflows/release-contract-v2-package.yml": "5eebac4359d70eb5e947d2fdd8804b033d9f8645",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
@@ -73,7 +73,14 @@
     "matrix_v118": true,
     "rc485_package_reextract_pass": true,
     "rc485_main_pages_runtime_parity_12of12": true,
-    "post_checkpoint_reseal": true
+    "post_checkpoint_reseal": true,
+    "matrix_v119": true,
+    "rc485_self_update_path_primary": true,
+    "expired_chat_attachment_not_primary": true,
+    "expert_v3_primary_workstream": true,
+    "anti_repeat_research_lock": true,
+    "auto_execute_before_reply": true,
+    "v119_stale_bootstrap_repaired": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -89,13 +96,14 @@
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.85",
     "latest_package_sha256": "53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed",
+    "deployed_pages": "v11.8.0-rc4.85",
     "library_recovery_alias": "v11.8.0-rc4.52"
   },
   "exact_continuation": {
-    "gate": "ANDROID_RC4.85_EXPERT_V3_EXPORT",
+    "gate": "ANDROID_RC4.85_SELF_UPDATE_THEN_EXPERT_V3_EXPORT",
     "auto_starts_mock": false,
-    "instruction": "Update/reload Companion to rc4.85 once, press Expert-v3 Challenger exportieren, and share the credential-free JSON. Then compute/test v3 weights before implementing a separate preset."
+    "instruction": "Receiving chat verifies v119 first. Then use deployed PWA/app self-update/reload path to reach rc4.85; verify badge; run Expert-v3 Challenger exportieren once and return credential-free JSON. AUTO validates vectors, computes v2-v3 grids and DS redistribution, implements only a validated separate v3 preset, then regression/package/device gates. Do not restart broad screening or a mock."
   },
-  "library_persistence": "STALE_FAIL_CLOSED_NOT_V118",
-  "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-package-deploy|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|1QB|AUTO-LONGBLOCK|HANDOFF-v118"
+  "library_persistence": "STALE_FAIL_CLOSED_NOT_V119",
+  "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-package-pages|SELF-UPDATE|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|ANTI-REPEAT|1QB|AUTO-EXECUTE-BEFORE-REPLY|HANDOFF-v119"
 }
