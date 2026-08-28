@@ -44,13 +44,13 @@
     "no_player_name_qb_exclusions": true
   },
   "handoff": {
-    "transaction_in_progress": true,
+    "transaction_in_progress": false,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
     "acceptance_fingerprint": "rc4.92-android-version-observed-NOT-functional|rc4.92-source-package-pages-parity|NO-NAMED-QB-FORCING|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|WALKER-TOP10-DIAGNOSTIC|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v141",
-    "status": "SECOND_PASS_PENDING_RESEAL",
-    "handoff_ready": false,
-    "second_pass_pass": false,
-    "next_action": "Reseal v141 against repaired active authority, run all primary CI, then mark handoff ready only on PASS."
+    "status": "SEALED_PASS_PENDING_CI_CONFIRMATION",
+    "handoff_ready": true,
+    "second_pass_pass": true,
+    "next_action": "Receiving chat verifies v141 seal integrity and resumes Walker P0 + rc4.92 functional verification; no mock."
   },
   "source_authority": "rc4.92",
   "package_authority": "rc4.92",
