@@ -7,12 +7,12 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "e84db54328c7f3be3fdb963205efd63e2c8dae6b",
+    "PITTI_CURRENT_STATE.json": "a9ccc643f55d1115010f07db672f29ebc1b9a3d8",
     "NEW_CHAT_HANDOFF_CURRENT.md": "9638a58d0dc759eb43c9a7158c313c3c17367e2f",
     "PITTI_COMMAND_CONTRACTS.json": "be98e8923d8c8058619ada3dbf177bb6cfd1fafc",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "3f3c8ead0489cb946641f3839625261043dfacc1",
     "HANDOFF_COMPLETENESS_MATRIX.md": "8fdff1c2579b5d35b0ae3adec2a106fa753a19a7",
-    "PITTI_EXECUTION_LOCK.json": "059bfe514292b0f4a51beea6cdeeaedb38d52aec",
+    "PITTI_EXECUTION_LOCK.json": "4b9d2de3906f46ecee6b96f0239cb0fea779546d",
     "PITTI_PROJECT_STATE.md": "d46900e71bbdde91ade42c994af9adf85bfe6d06",
     "PITTI_AUTO_PREFLIGHT.md": "5dd967ac26a5b5465e769b60d6537ecd3ef01cdc",
     "app.js": "fe0d63a5fcc50ab9b1341ef8a93bbb82938211be",
@@ -188,7 +188,8 @@
     "v146_rc495_package_reextract_pass": true,
     "v146_rc495_deployed_parity": true,
     "v147_rc496_source_regression_pass": true,
-    "v147_guardrail_reseal_in_progress": true
+    "v147_guardrail_reseal_in_progress": false,
+    "v147_transaction_closed": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
