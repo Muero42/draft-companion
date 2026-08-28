@@ -289,3 +289,14 @@ No arrow may be promoted solely from one sleeper/breakout article.
 - Parker Washington: Aug25 21-expert WR breakout roundup contains multiple independent WR1/top-15 outcome cases, citing late-2025 target/first-read/YPRR surge and current camp role. This is stronger evidence than generic sleeper labeling and supports ↑↑/WR1-path display, with BTJ/Travis Hunter target competition as explicit downside.
 - Isiah Pacheco: Draft Sharks Aug27 reports new back injury after MCL recovery, uncertain Week 1, and Detroit worked out Kareem Hunt; DS recommends avoiding until he returns. Add material ↓↓/availability-role-risk candidate; this is exactly the type of late-breaking regression signal Upside-v3 must surface.
 - Tucker Kraft/Jonnu Smith context: Kraft remains on track for Week 1; Jonnu projects as No.2 while Musgrave is PUP. No reason to downgrade Kraft merely because Jonnu signed; monitor only if Kraft health changes.
+
+
+## 2026-08-28 AUTO correction + fresh evidence
+- Operational correction: AUTO cannot literally continue executing after a response; do not tell user it is still running. Instead, each AUTO turn must execute the largest stable batch before replying.
+- Fresh FantasyPros sleeper consensus crawl now shows Kyler Murray, Tyler Shough, Jared Goff, Malik Willis and Stefon Diggs atop its sleeper-ranking view; treat this as low-weight discovery evidence only, not baseline rank evidence.
+- Fresh Aug25 FP WR breakout roundup gives multiple independent Parker Washington cases: late-2025 Weeks16-19 28.9% target share, 113.5 receiving yds/game, 3.78 YPRR, 33.3% first-read share; experts explicitly describe a 2026 JAX WR1 race and top-15 outcome. This materially validates PITTI's ↑↑/WR1-path label, while BTJ/Travis Hunter competition remains the downside.
+- Same roundup: Jameson Williams already cleared 1,100 yards and 102 targets; current thesis is not first breakout but consolidation/TD progression into a higher fantasy tier. Label should reflect `established breakout -> further ceiling` rather than generic breakout.
+- Same roundup: Christian Watson finished WR15 in PPG last year, Doubs gone/Wicks traded, clear downfield+red-zone path; health is the dominant downside. Strong ceiling with explicit durability flag.
+- Same roundup: Josh Downs had 25% TPRR and Pittman's 111 targets vacated; Keenan Allen adds competition. Strong target-earning/volume expansion case, but not automatic WR1 ceiling.
+- Same roundup: Matthew Golden has a clearer top-3 GB role after Doubs/Wicks departures and is explicitly argued as WR50-cost with team-target-lead upside; add as late WR ceiling candidate.
+- Fresh FP homepage lists new Aug27/28 research modules `Breakout Candidates`, `RB3s With RB1 Potential`, and `All-Undrafted Team`; these should be mined in the next autonomous research batch rather than repeating prior expert screening.
