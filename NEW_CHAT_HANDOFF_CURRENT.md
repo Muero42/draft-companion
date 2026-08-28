@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T104000Z-v134`
-Updated: 2026-08-28 10:40Z
+Handoff generation: `20260828T105000Z-v135`
+Updated: 2026-08-28 10:50Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -375,3 +375,9 @@ HANDOFF_GENERATION: 20260828T100500Z-v132
 - Successful package workflow run 33162367347 / artifact 9682152886 was independently downloaded and inspected.
 - Inner `Draft_Companion_v11.8.0-rc4.91_PREINSTALL.zip`: 13 runtime files; SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.
 - The ZIP hash is recorded as a **reference artifact hash**, not a forever-stable build identifier: later documentation-only commits may produce a different archive hash because ZIP metadata/timestamps are not deterministic. Runtime correctness is anchored by seal-listed blob hashes plus successful package/re-extract gates.
+
+
+## V135 ANDROID VERIFICATION SEMANTICS — FAIL CLOSED
+- The user's screenshot proves **version rc4.91 is loaded on Android**. It does **not** prove the current rc4.91 functional surface is correct.
+- Therefore active state is: `android_version_observed=true`, `android_functional_verified=false`.
+- Any older field/text saying rc4.91 is simply “Android verified” must be interpreted as version observation only and must NOT close the functional gate.
