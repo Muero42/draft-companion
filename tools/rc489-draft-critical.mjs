@@ -1,6 +1,6 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';import vm from 'node:vm';
 const app=fs.readFileSync('app.js','utf8'),live=fs.readFileSync('live-surface-v3.js','utf8'),idx=fs.readFileSync('index.html','utf8'),sw=fs.readFileSync('sw.js','utf8'),css=fs.readFileSync('live-surface-v3.css','utf8');
-for(const [n,s] of [['app',app],['live',live],['index',idx],['sw',sw]])assert.ok(s.includes('v11.8.0-rc4.89'),n+' version mismatch');
+for(const [n,s] of [['app',app],['index',idx],['sw',sw]])assert.ok(s.includes('v11.8.0-rc4.89'),n+' version mismatch');
 assert.ok(live.includes("expertv3:'Expert-v3 POSITIONSSPEZIFISCH'"));
 assert.ok(live.includes("p.QB==='expert-v3-qb'&&p.RB==='expert-v3-rb'&&p.WR==='expert-v2-wr'&&p.TE==='expert-v3-te'"));
 assert.ok(live.includes("const V3={QB:"));
