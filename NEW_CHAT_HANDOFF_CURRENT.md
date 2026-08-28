@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T140500Z-v142`
-Updated: 2026-08-28 14:05Z
+Handoff generation: `20260828T143500Z-v143`
+Updated: 2026-08-28 14:35Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -19,11 +19,11 @@ Updated: 2026-08-28 14:05Z
 - User strategy: exactly one drafted QB; after QB1 all QBs disappear from the user's Coach surface. Geno Smith and Aaron Rodgers are ordinary QB candidates and must rank organically; player-name hard exclusions are forbidden.
 - K/DST normally not drafted. Starter maxima are NOT roster caps.
 - Production/control baseline remains rc4.64 and must stay selectable.
-- **Android version authority is rc4.91**, directly observed in the user's screenshot on 2026-08-28. Do not downgrade to rc4.89/88/87 because historical sections mention them.
-- Android functional verification is still pending for: actual Expert-v3 rows, evidence polarity/quality, unified rich Top-10 rendering, and short-turn Return-v2 behavior.
-- Current source authority is rc4.91.
-- Latest package/re-extract is rc4.91, 13 runtime files, SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.
-- gh-pages reports rc4.91, but **app.js bytes lag main** after the newest broad research batch. Henry/evidence-polarity fixes are present on gh-pages; the latest broad evidence additions are only in main/package. Matching version text is NOT byte parity.
+- **Android version authority is rc4.93**, confirmed by the fresh Pick-9 snapshot. rc4.94 is not Android-verified.
+- Android functional verification remains open. Expert-v3/Return/evidence are preserved, but the Top-10 presentation defect reproduced on rc4.93 and must be verified fixed on rc4.94.
+- Current source challenger is rc4.94; latest packaged/deployed/Android-observed authority is rc4.93.
+- Latest package/re-extract is rc4.93, 13 runtime files, candidate run 33166867111 / artifact 9683925309 / digest `3ce741b71cbc3f35b026e6aa8f9622e10999ecd29c54c0d66f6fcfdef379db95`.
+- gh-pages is rc4.93; main app.js is rc4.94 pending gates. **app.js byte parity is intentionally false** until exact rc4.94 deployment.
 - Expert-v3 is already integrated and selectable: QB Todd D Clark 10%, RB Ryan Weisse 10%, TE Wolf of Roto Street 10%; WR remains exact frozen Expert-v2 because Joey Wright current vector is unavailable.
 - Expert-v2 remains selectable/control. Derek Brown remains excluded from new v2; Erickson remains qualitative/challenger only; Draft Sharks counted once.
 - Broad upside/differentiator research remains coverage-first and anti-repeat. Evidence enrichment is not automatic ranking promotion.
@@ -45,20 +45,17 @@ rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. In
 - Do NOT ask user to manually document picks during the mock.
 
 ## CURRENT EXTERNAL GATE
-`RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`
+`RC494_NORMAL_CUT_DISPLAY_FIX_CI_PACKAGE_DEPLOY_ANDROID_VERIFY`
 
-Receiving chat must first verify v137 CURRENT/SEAL/Handoff generation equality and every seal-listed blob hash. Then continue from the observed rc4.91 Android state.
+Receiving chat must first verify v143 CURRENT/SEAL/Handoff equality and every seal-listed blob hash.
 
-Functional device checks still required:
-- actual Expert-v3 individual rows are the ones used/displayed;
-- no old incumbent expert fallback;
-- ten full candidate cards rendered once, no duplicated compact Top-10;
-- Normal-Cut warning at bottom in orange;
-- positive/negative evidence polarity is correct; `Reach`/risk/wait/decline can never be a plus;
-- Derrick Henry has genuine workhorse/goal-line/TD-ceiling positive evidence plus age/workload/receiving-floor risk;
-- rc4.91 short-turn Return-v2 calibration uses early tau 4.25 and does not return to the false ~99% survival behavior caused by tau 1.35.
-
-Do not restart Expert-v3 export/acquisition and do not start a mock unless explicitly requested. If device evidence is unavailable, continue independent broad anti-repeat research and other positive-value lanes.
+Required continuation:
+- rc4.93 fresh Pick-9 snapshot is evidence: Walker Panel 15.3 / ADP 17.4 remained available while lower-panel rows were marked fallback outside normal cut.
+- rc4.94 fixes **presentation selection only**: normal-cut candidates fill Top-10 first; fallback context may only fill unused slots.
+- Do not change Coach scoring, Expert-v3 weights, Return-v2, ADP, injury penalty, or add a Walker-specific rule.
+- Run rc4.94 CI/release/package. Only after PASS deploy exact runtime and prove main/pages parity.
+- Then obtain a fresh Android Pick-9 snapshot. Duplicate/unverändert guard remains binding.
+- No automatic mock.
 
 **AUTO BLOCK** is a zero-ack correction trigger: immediately resume the already-defined AUTO loop, with no acknowledgement/apology/status/explanation.
 
@@ -421,3 +418,13 @@ HANDOFF_GENERATION: 20260828T100500Z-v132
 - No scoring, panel, injury, Return-v2, ADP or player-specific tuning.
 - Next: rc4.94 CI/package -> deploy exact runtime -> fresh Android Pick-9 verification. No mock. Snapshot duplicate guard remains binding.
 - AUTO BLOCK remains zero-ack long-block resumption.
+
+## V143 FINAL TRANSFER AUTHORITY — SUPERSEDES ALL OLDER ACTIVE POINTERS
+- Generation: `20260828T143500Z-v143`.
+- Android/package/deployment authority: rc4.93. Source-only challenger: rc4.94.
+- Walker root cause is generic Top-10 presentation ordering; no player-specific adjustment is authorized.
+- rc4.94 must pass CI/package before deployment; current main/pages app.js divergence is expected and must remain explicit.
+- Geno Smith/Aaron Rodgers rank organically; no player-name exclusions. Exactly one QB is enforced only after QB1.
+- Expert-v3: Todd D Clark QB 10%, Ryan Weisse RB 10%, Wolf of Roto Street TE 10%; WR exact Expert-v2 fallback. No reacquisition/re-export restart.
+- Return-v2 early tau 4.25; never restore 1.35. Research residual remains shadow-only.
+- AUTO/AUTO BLOCK same-turn continuation contract remains binding. No empty/status-only final while autonomous work remains.
