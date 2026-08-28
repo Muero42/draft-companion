@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T082000Z-v125`
-Updated: 2026-08-28 08:20Z
+Handoff generation: `20260828T080300Z-v126`
+Updated: 2026-08-28 08:04Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -262,3 +262,9 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - rc4.88 adds expert-v3-board.js and keeps incumbent/control, Expert-v2 ALL and Expert-v2 WR-only selectable.
 - Exact next device gate: reload/update to rc4.88 -> choose “Expert-v3 · positionsspezifisch” -> verify green panel health. No mock required for this verification.
 - Research breadth lock remains active: cover new/unsettled players; do not recycle settled names without new decision-changing evidence.
+
+
+## V126 EXPERT-v3 INTEGRATION GATE
+- rc4.88 deployed with selectable Expert-v3 positional profile: Todd D Clark QB 10%, Ryan Weisse RB 10%, Wolf of Roto Street TE 10%; WR deliberately remains Expert-v2 because Joey Wright vector is missing.
+- Legacy rc4.82/83 profile guards were found structurally over-strict (exact object shape) and repaired additively; no old behavior was removed.
+- v126 current/seal synchronized. Full gates must pass before Android verification.
