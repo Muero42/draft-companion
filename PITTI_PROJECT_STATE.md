@@ -1254,3 +1254,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - This was not roster construction and should not be defended as intentional timing logic. rc4.91 broadens only the early (pick <=30) market distribution to tau=4.25; manager history, roster need, candidate-manager modifiers, ADP center and panel stabilizer remain intact.
 - New deterministic gate prevents restoration of tau=1.35 and requires material market weight for ADP16-19 candidates at the turn. No player-specific rank boost was added.
 - Fresh external cross-check on 28 Aug: aggregate current market had Chase Brown around 16 and Kenneth Walker around 19; Walker remains a high-upside RB1 but current ankle/foot swelling is being monitored, with Andy Reid publicly describing it as minor. This supports uncertainty rather than ~99% survival certainty.
+
+
+### 2026-08-28 — AUTO BLOCK command contract / evidence-polarity regression
+- User-defined correction trigger: `AUTO BLOCK` means resume the already-defined long AUTO loop immediately with NO acknowledgement, apology, status/progress text, or explanation. Continue executable work, use waits for independent lanes, and surface only a material result, unavoidable user action, or non-self-solvable blocker.
+- This does not change AUTO semantics; it is a terse recovery trigger when AUTO behavior has drifted.
+- Live-card regression found by user: Derrick Henry showed `+ Reach 7`. Root cause was presentation evidence polarity, not Decision Kernel scoring. Live surface now rejects Reach/risk/wait/decline terms from plus evidence and routes Reach to minus evidence; rc4.82 gate now protects this.
+- Henry also lacked substantive positive research evidence. Added explicit workhorse/goal-line/TD ceiling positive evidence plus age/cumulative-workload/low-receiving-floor risk. No player-specific score boost.
