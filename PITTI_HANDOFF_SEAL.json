@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T081000Z-v127",
-  "created_at": "2026-08-28T08:11:00Z",
+  "handoff_generation": "20260828T081600Z-v128",
+  "created_at": "2026-08-28T08:17:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "f92d36411c091b7d3a68ce7f1ddc4a5c5b61caa7",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "96fb623fa18be24f6513372e67f6376877136aee",
+    "PITTI_CURRENT_STATE.json": "c936b54780bad5423da51792c869cb99428dd360",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "87fae31b6b05a43ed30e19a9bf2564f793d57ec9",
     "PITTI_COMMAND_CONTRACTS.json": "41ffd8e89066b5e880ff11d6dffdd85e07127fdb",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e4ba6389db3da869ab2106c0d14ac83e68c6bdc2",
     "HANDOFF_COMPLETENESS_MATRIX.md": "fae9c5b0d6bd105c07e58c7916109e2bf67d0018",
-    "PITTI_EXECUTION_LOCK.json": "804211748cb7ae126b21e0df2bdc8743dcec8f6c",
-    "PITTI_PROJECT_STATE.md": "4a74676935a25e42bac14dbcf14eb59d38f57d6a",
+    "PITTI_EXECUTION_LOCK.json": "e828febe366e6fcf8f664e7d676f1cf576beec47",
+    "PITTI_PROJECT_STATE.md": "5be8e2f0f49dc3ddd0cdfe436c1a57c89950e663",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
     "app.js": "8bdaac2546c658f8a828f76b324e0a1ed96443f1",
     "index.html": "9df04c95402307a0301e179963406be30753d495",
@@ -108,7 +108,9 @@
     "rc488_wr_fallback_assertion_final": true,
     "rc488_all_primary_gates_pass": true,
     "rc488_pages_loader_synced": true,
-    "v127_reseal": true
+    "v127_reseal": true,
+    "rc488_android_visual_verified": true,
+    "v128_runtime_authority": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -119,18 +121,18 @@
   },
   "runtime_boundary": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.87",
+    "android_authority": "v11.8.0-rc4.88",
     "test_challenger": "v11.8.0-rc4.88",
-    "test_challenger_android_verified": false,
+    "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.88",
     "deployed_pages": "v11.8.0-rc4.88",
     "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR v2 unchanged"
   },
   "exact_continuation": {
-    "gate": "ANDROID_RC4.88_EXPERT_V3_VERIFY",
+    "gate": "BROAD_UPSIDE_RESEARCH_PLUS_EXPERT_V3_EFFECT_VALIDATION",
     "auto_starts_mock": false,
-    "instruction": "Update/reload Android/PWA to rc4.88, verify badge and Expert-v3 profile selectable; then resume broad anti-repeat upside research. No mock."
+    "instruction": "rc4.88 Android verified. Continue broad anti-repeat upside/differentiator research and Expert-v3 effect validation. No mock unless explicit."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
-  "acceptance_fingerprint": "rc4.64|rc4.87-android|rc4.88-full-gates-pass|EXPERT-V3-QB-RB-TE|WR-V2|ANTI-REPEAT-RESEARCH|1QB|HANDOFF-v127"
+  "acceptance_fingerprint": "rc4.64|rc4.88-android-verified|EXPERT-V3|V2-FROZEN|WR-V2-FALLBACK|ANTI-REPEAT|UPSIDE-RESEARCH|1QB|HANDOFF-v128"
 }
