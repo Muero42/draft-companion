@@ -91,7 +91,7 @@ assert.ok(app.includes('chosenVsCoachScoreDelta'));
 assert.ok(app.includes("format:'pitti-decision-evidence-v2'"));
 assert.ok(app.includes("fixtures:rows"));
 assert.ok(app.includes("overrideCount:summaries.filter"));
-assert.ok(index.includes('id="decisionEvidenceBtn"'));
+assert.ok(idx.includes('id="decisionEvidenceBtn"'));
 
 assert.ok(app.includes('wrSaturationRecommendationCount'));
 assert.ok(app.includes('qb2ViolationCount'));
@@ -137,8 +137,8 @@ assert.ok(eq.includes('only one TE while TE1 open'));
 for(const k of ['acuteStatusConfoundCount','cleanDecisionCount','cleanHardQb2Pass','cleanSaturatedWrCount','cleanWr7PlusCount'])assert.ok(evidenceAnalyzer.includes(k),k);
 
 // rc4.85 Expert-v3 acquisition gate
-assert.ok(index.includes('id="expertV3AuditBtn"'));
-assert.ok(index.includes('id="expertV3AuditStatus"'));
+assert.ok(idx.includes('id="expertV3AuditBtn"'));
+assert.ok(idx.includes('id="expertV3AuditStatus"'));
 assert.ok(app.includes('async function exportExpertV3Challengers()'));
 for(const n of ['Ryan Weisse','Wolf of Roto Street','Todd D Clark','Joey Wright'])assert.ok(app.includes(n),n);
 assert.ok(app.includes("containsCredential:false"));
