@@ -7,7 +7,7 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "ecabece4f7f86c401a399b42d389d0d3748f3cd9",
+    "PITTI_CURRENT_STATE.json": "dca2cc9aeac484538774d5de43a19fb922ac5a2f",
     "NEW_CHAT_HANDOFF_CURRENT.md": "9b608c83e40521f24ebbe73b0ab337b0677fe972",
     "PITTI_COMMAND_CONTRACTS.json": "41ffd8e89066b5e880ff11d6dffdd85e07127fdb",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e4ba6389db3da869ab2106c0d14ac83e68c6bdc2",
@@ -34,7 +34,6 @@
     ".github/workflows/release-contract-v2.yml": "a87aac1320f524565c2de7abaab3a25befc22213",
     ".github/workflows/release-contract-v2-package.yml": "d4f0c9f7495f802b10c91a5a7c3c60675193ec8d",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
-    "tools/rc482-draft-critical.mjs": "b555f4e6d5324e62a617242cdc9b1d9ffe7bc8cf",
     "tools/release-completeness-guard.mjs": "d745916c2263ef56ec04e92149d41c6072a23465",
     "tools/rc486-draft-critical.mjs": "c432c9b0c41975d6b3d799a7088b80ef226ad5b6",
     "tools/rc487-draft-critical.mjs": "e2033aef883503bb902d4ef52a6d2ff2b4943c69",
@@ -42,7 +41,9 @@
     "tools/rc488-draft-critical.mjs": "7835e441c90e947cc7d95d4a1a4844268da624f7",
     "tools/rc489-draft-critical.mjs": "261bde9a556379d764e0eea40f7998d6cf868704",
     "tools/rc490-draft-critical.mjs": "0897971e1bdaf5e87b8233c60ee2c00e45f3742b",
-    "tools/rc491-return-calibration.mjs": "02e9f38627d1da736e429e23c06aa8e3d8428189"
+    "tools/rc491-return-calibration.mjs": "02e9f38627d1da736e429e23c06aa8e3d8428189",
+    "live-surface-v3.js": "3f340dea3d3957f6394ab22df2f86f4d914d00bb",
+    "tools/rc482-draft-critical.mjs": "52a35806492aa901ee7ef51f62e185f7971fda2f"
   },
   "checks": {
     "current_generation": true,
