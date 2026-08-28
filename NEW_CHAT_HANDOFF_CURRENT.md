@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260827T184500Z-v116`
-Updated: 2026-08-27 18:45Z
+Handoff generation: `20260828T053000Z-v117`
+Updated: 2026-08-28 05:30Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -18,9 +18,9 @@ Updated: 2026-08-27 18:45Z
 - League: 10-team Half-PPR, 1QB, real draft 2026-08-31, user slot 9.
 - User strategy: exactly one drafted QB. After QB1, all QBs disappear from user's Coach surface. Geno Smith and Aaron Rodgers are hard exclusions.
 - K/DST normally not drafted. Starter maxima are NOT roster caps.
-- rc4.82 = last fully Android-verified authority.
-- rc4.83 = deployed TEST challenger, not promoted and not Android-verified.
-- rc4.83 Decision Kernel is FROZEN pending OOS evidence. Do not retune coefficients from the user's overrides or final roster.
+- rc4.84 = current Android-observed/verified runtime used for the completed mock.
+- rc4.85 = source candidate containing only the integrated Expert-v3 challenger export; not yet package/re-extract/device verified.
+- rc4.84 Decision Kernel remains frozen. rc4.85 does not retune it; it only adds the Expert-v3 acquisition/export control.
 - Expert-v2 Frozen Board weights/provenance remain authority. Brown excluded from new v2; Erickson is qualitative/challenger evidence, not an extra numeric vote.
 
 ## WHY RC4.83 EXISTS
@@ -40,15 +40,8 @@ rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. In
 - Do NOT ask user to manually document picks during the mock.
 
 ## CURRENT EXTERNAL GATE
-`ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT`
-Once evidence arrives, run long AUTO block:
-1. validate evidence completeness/schema;
-2. analyze every own pick Coach vs actual choice and roster state;
-3. diagnose WR saturation, RB forcing, Safety promotion, opportunity cost/Return, QB/TE behavior;
-4. compare against rc4.82-known behavior without using user picks as training labels;
-5. decide PROMOTE / MODIFY / REJECT rc4.83;
-6. only then alter Decision Kernel if evidence supports it;
-7. run regression/package/re-extract/device gates as appropriate.
+`RC4.85_PACKAGE_REEXTRACT_THEN_DEVICE_EXPERT_V3_EXPORT`
+AUTO must finish release/package/re-extract autonomously. Only then ask for one device update and one Expert-v3 JSON export. After JSON arrives: validate vectors -> compute v2/v3 weight grids -> choose composition -> implement separate v3 preset -> regressions. Expert-v2 remains selectable and unchanged.
 
 ## QB EVIDENCE — KEEP QUALITATIVE, AVOID DOUBLE COUNTING
 - Pat Fitzmaurice direct answer supports a late/fallback path centered on Kyler Murray / Jared Goff / Malik Willis; user considers Goff floor + observe Willis in FA a plausible late strategy.
@@ -192,3 +185,11 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Jameson Williams is explicitly CONSOLIDATION (already broke out) rather than generic BREAKOUT; Parker/Egbuka/Tate carry stronger WR1-takeover/ascension paths.
 - RB upside uses opportunity elasticity/events-needed; TE uses target-hierarchy/route-volume ceiling.
 - Do not load this ledger into the active rc4.84 mock. Integration waits for current Evidence-v2 export.
+
+
+## V117 EXPERT-v3 ACQUISITION CANARY
+- rc4.84 mock/Evidence-v2 work is complete enough for the current Expert-v3 lane; manager-slot correction is retained.
+- rc4.85 adds only a local authenticated challenger export for Ryan Weisse, Wolf of Roto Street, Todd D Clark and Joey Wright. No challenger is yet a numeric Expert-v3 vote.
+- Weisse/Gianni/Bobal old lock means no unqualified availability-driven auto-restore; it does not prohibit fresh Weisse qualification.
+- Expert-v3 is primary. Player research is parallel only during genuine wait time and settled players are not repeatedly re-queried without new decision-changing news.
+- Next user action is prohibited until package/re-extract gates pass.
