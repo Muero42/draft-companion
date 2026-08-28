@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 const app=fs.readFileSync('app.js','utf8'),idx=fs.readFileSync('index.html','utf8'),sw=fs.readFileSync('sw.js','utf8'),manifest=fs.readFileSync('manifest.webmanifest','utf8');
-for(const [n,s] of [['app',app],['index',idx],['sw',sw],['manifest',manifest]])assert.match(s,/v11\.8\.0-rc4\.(?:87|8[8-9]|9\d+)/,n+' rc4.87+ version');
+for(const [n,s] of [['app',app],['index',idx],['sw',sw],['manifest',manifest]])assert.match(s,/v11\.8\.0-rc4\.(?:87|8[8-9]|9\d|[1-9]\d{2,})/,n+' rc4.87+ version');
 assert.ok(app.includes("schema:'pitti-expert-v3-compact.v1'"));
 assert.ok(app.includes("{name:'Ryan Weisse',pos:'RB'}"));
 assert.ok(app.includes("{name:'Wolf of Roto Street',pos:'TE'}"));
