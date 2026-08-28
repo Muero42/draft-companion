@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v116
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v117
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -16,9 +16,9 @@ A new-chat takeover fails closed unless all checks pass.
 
 ## 2 Runtime boundary
 - rc4.64 production/control
-- rc4.82 last fully Android-verified authority
-- rc4.83 deployed TEST challenger, not promoted or Android-verified
-- rc4.78 package/re-extract boundary
+- rc4.84 current Android-observed/verified test authority for the completed mock
+- rc4.85 source candidate: Expert-v3 acquisition/export only; not yet packaged or Android-verified
+- rc4.78 remains last package/re-extract boundary until rc4.85 candidate gate passes
 - rc4.52 Library aliases recovery only
 - built/prepared/deployed/Android-verified kept distinct
 
@@ -39,11 +39,11 @@ A new-chat takeover fails closed unless all checks pass.
 - Frozen-v2 weights/provenance never live-renormalized
 
 ## 5 Evidence integrity
-- rc4.83 kernel frozen pending OOS
+- rc4.84 Decision Kernel remains frozen while Expert-v3 acquisition is isolated
 - Evidence-v2 direct roster positions/counts bug fix present
 - Coach-vs-user decision outcome retained
 - user overrides/final roster not used as training labels
-- current gate = realistic rc4.83 mock -> refresh -> one-tap Evidence-v2 export
+- current gate = rc4.85 package/re-extract -> device update -> Expert-v3 challenger JSON -> v3 weight computation
 
 ## 6 AUTO durability
 - long blocks default
@@ -60,7 +60,7 @@ Explicitly reject resurrection of PairSum/Rolling, fixed caps, player forcing, b
 ## 8 Execution witness
 Before user-facing AUTO completion, actual work must have been executed in the current run unless the only remaining condition is a genuinely unavoidable external/device gate after all independent lanes are exhausted.
 
-## 9 v116 tooling canaries
+## 9 v117 tooling canaries
 - release contracts execute rc4.83 draft-critical gate
 - candidate package label derives from APP_VERSION and cross-checks index/sw/manifest
 - Evidence-v2 completed mock requires exact rc4.83 + 15 unique own-pick fixtures
@@ -74,3 +74,6 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - Evidence-v2 OOS interpretation must expose clean non-acute-confounded metrics separately from whole-mock counts
 
 - confirmed 2026 manager mapping canary: slots 5=Basti, 6=Bjoern, 7=Giuliano (Michael K alias), 8=Pascal Gelderner (Pascal B alias); rc4.83 stale map must never return
+
+- rc4.85 Expert-v3 export target set is acquisition-only; Weisse may appear in acquisition UI but must not enter frozen Expert-v2 without a successful v3 comparison.
+- legacy rc4.83/84 gates are minimum-feature regressions and must not require stale exact runtime tags.
