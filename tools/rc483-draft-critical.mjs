@@ -56,7 +56,11 @@ assert.equal(fixture('incumbent').degraded,false);
 const m=boardSrc.match(/window\.PITTI_EXPERT_V2=([\s\S]+);\s*$/);assert.ok(m);
 const board=JSON.parse(m[1]);
 assert.equal(board.schema,'pitti-expert-v2-board.v4');
-assert.deepEqual(Object.fromEntries(Object.entries(board.rows).map(([k,v])=>[k,v.length])),{QB:46,RB:102,WR:143,TE:54});
+assert.deepEqual(Object.fromEntries(Object.entries(board.rows).map(([k,v])=>[k,v.length])),{QB:45,RB:101,WR:143,TE:54});
+assert.ok(board.rows.QB.some(x=>x.name==='Cam Ward'&&x.n===5),'Cam Ward alias merge must preserve all five expert voices');
+assert.ok(board.rows.RB.some(x=>x.name==='Kenny Gainwell'&&x.n===4),'Kenny Gainwell alias merge must preserve all four expert voices');
+assert.ok(!board.rows.QB.some(x=>x.name==='Cameron Ward'),'Cameron Ward split alias must not resurrect');
+assert.ok(!board.rows.RB.some(x=>x.name==='Kenneth Gainwell'),'Kenneth Gainwell split alias must not resurrect');
 assert.deepEqual(board.weights,{
   QB:{'Draft Sharks Team':35,'Nick Mariano':25,'Dalton Del Don':20,'Justin Boone':10,'Pat Fitzmaurice':10},
   RB:{'Draft Sharks Team':35,'Nick Mariano':25,'Dalton Del Don':25,'Pat Fitzmaurice':15},
