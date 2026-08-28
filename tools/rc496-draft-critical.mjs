@@ -22,6 +22,20 @@ assert.match(app,/current>=121&&n>=6\)x-=12/,'late WR7 marginal-utility guard mi
 assert.match(app,/current>=121&&n<=4\)x\+=2/,'late RB contingent-option utility missing');
 assert.match(live,/return'PANEL-CHECK'/,'live sparse-panel signal missing');
 assert.match(live,/Panel unvollständig\|Panel-Streuung/,'live sparse-panel negative evidence handling missing');
+const observedDecisionZoneEvidence=[
+  'Zay Flowers','Travis Etienne','Luther Burden','Davante Adams','Terry McLaurin','Jameson Williams','Christian Watson','Mike Evans','DJ Moore',
+  'Drake Maye','Joe Burrow','Bhayshul Tuten','Rome Odunze','Parker Washington','Tucker Kraft','Sam LaPorta','Marvin Harrison Jr.','Jaylen Warren',
+  'Brian Thomas Jr.','Harold Fannin Jr.','DK Metcalf','Jonathon Brooks','Rico Dowdle','Tony Pollard','Courtland Sutton','J.K. Dobbins','Jayden Reed',
+  'Jordan Addison','Quentin Johnston','Blake Corum','Jacory Croskey-Merritt','Chris Godwin','Michael Pittman','Josh Downs','Stefon Diggs','Jordan Mason',
+  'Kenny Gainwell','Xavier Worthy','Jakobi Meyers','Rachaad White','Matthew Golden','Chris Rodriguez Jr.','Aaron Jones','Romeo Doubs',"Wan'Dale Robinson",
+  'Woody Marks','Tyjae Spears','Tank Bigsby','Mike Washington','Zach Charbonnet','Tyler Allgeier','Deebo Samuel','Keaton Mitchell','Jalen Coker',
+  'Rashid Shaheed','MarShawn Lloyd','Khalil Shakir','Ray Davis'
+];
+for(const name of observedDecisionZoneEvidence){
+  const single="[norm('"+name.replaceAll("'","\\'")+"')]";
+  const double='[norm("'+name.replaceAll('"','\\"')+'")]';
+  assert.ok(app.includes(single)||app.includes(double),'decision-zone evidence missing: '+name);
+}
 
 const qb=board.rows.QB, rb=board.rows.RB;
 assert.equal(qb.some(x=>x.name==='Cameron Ward'),false,'split Cameron Ward alias resurrected');
