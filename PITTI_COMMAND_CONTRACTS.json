@@ -55,7 +55,7 @@
     "generic/global TE2 ban",
     "Superflex/2QB contamination",
     "Brown numeric vote in new v2",
-    "Weisse/Gianni/Bobal pool",
+    "Weisse/Gianni/Bobal availability-only auto-restore; fresh individual qualification remains allowed",
     "Draft Sharks double count",
     "Frozen-v2 live renormalization",
     "prepared/build == Android verified",
@@ -65,11 +65,13 @@
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.64",
-    "androidAuthority": "v11.8.0-rc4.82",
-    "testChallenger": "v11.8.0-rc4.83",
+    "androidAuthority": "v11.8.0-rc4.84",
+    "testChallenger": "v11.8.0-rc4.85",
     "testChallengerAndroidVerified": false,
-    "latestPackageReextract": "v11.8.0-rc4.78",
+    "latestPackageReextract": "v11.8.0-rc4.85",
+    "latestPackageSha256": "53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed",
+    "deployedPages": "v11.8.0-rc4.85",
     "libraryRecoveryAlias": "v11.8.0-rc4.52"
   },
-  "currentGate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT"
+  "currentGate": "ANDROID_RC4.85_SELF_UPDATE_THEN_EXPERT_V3_EXPORT"
 }
