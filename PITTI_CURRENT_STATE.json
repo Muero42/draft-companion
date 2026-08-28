@@ -1,6 +1,6 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T111000Z-v141",
+  "handoff_generation": "20260828T111800Z-v141",
   "updated_at": "2026-08-28T11:10:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -27,8 +27,8 @@
   "exact_continuation": {
     "gate": "RC492_ANDROID_FUNCTIONAL_WALKER_DIAGNOSTIC_PLUS_BROAD_RESEARCH",
     "auto_starts_mock": false,
-    "instruction": "User screenshot at 13:04 local proves rc4.92 badge and selected Expert-v3 on Android. Do NOT infer full functional PASS. First diagnose why Kenneth Walker III disappeared from Pick-9 Top-10 despite panel ~17.4/ADP ~19 and fresh high-upside evidence; verify no stale injury/return/normal-cut or name forcing. Then focused Android functional checks: actual Expert-v3 rows, evidence polarity/quality, unified Top-10, Return-v2 short-turn. Continue broad anti-repeat research in parallel. No mock unless explicitly requested.",
-    "next_gate": "RC492_WALKER_ROOT_CAUSE_AND_ANDROID_FUNCTIONAL_VERIFY"
+    "instruction": "rc4.93 is diagnostic-only over rc4.92: generic PITTI_CANDIDATE_AUDIT added, no scoring changes. Verify CI/package, deploy exact runtime, then Android audit Kenneth Walker to identify generic score channel. No player-specific boost.",
+    "next_gate": "RC493_CI_PACKAGE_THEN_ANDROID_CANDIDATE_AUDIT"
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -47,12 +47,12 @@
     "transaction_in_progress": false,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
     "acceptance_fingerprint": "rc4.92-android-version-observed-NOT-functional|rc4.92-source-package-pages-parity|NO-NAMED-QB-FORCING|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|WALKER-TOP10-DIAGNOSTIC|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v141",
-    "status": "SEALED_PASS_PENDING_CI_CONFIRMATION",
+    "status": "RC493_DIAGNOSTIC_CANDIDATE_PENDING_CI",
     "handoff_ready": true,
     "second_pass_pass": true,
     "next_action": "Receiving chat verifies v141 seal integrity and resumes Walker P0 + rc4.92 functional verification; no mock."
   },
-  "source_authority": "rc4.92",
+  "source_authority": "rc4.93",
   "package_authority": "rc4.92",
   "android_version_observed": "rc4.92",
   "android_functional_verified": false,
