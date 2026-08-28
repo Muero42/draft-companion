@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v126
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v127
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -97,3 +97,5 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - Expert-v3 sensitivity must remain bounded vs v2 (observed Spearman ~0.999 QB, ~0.997 RB/TE); no Decision Kernel or Return-v2 retune accompanies the profile.
 
 - v126 Expert-v3: selectable QB/RB/TE challenger profile; WR v2 fallback; legacy profile assertions additive; full gates pending.
+
+- v127 rc4.88: Expert-v3 separate profile; final five primary gates PASS; gh-pages loader synchronized; Android verify pending.
