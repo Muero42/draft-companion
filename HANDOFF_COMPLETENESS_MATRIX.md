@@ -110,3 +110,5 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - James Cook RB must contain Ryan Weisse and no incumbent-only Erickson/Koerner.
 - Early Top-10 evidence must be substantive for Cook/Lamb/Jefferson/Barkley/Bowers/Chase Brown/Achane/Kenneth Walker/Omarion Hampton/Drake London.
 - Do not deploy to Android until full sealed gates PASS.
+
+- rc4.91 Android device version observed by user screenshot on 2026-08-28; device authority promoted to rc4.91. Functional visual checks remain distinct from version observation.
