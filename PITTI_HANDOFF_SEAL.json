@@ -7,7 +7,7 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "f18281dfbfc53bbc35a5ecefdb8cb876a70abcb1",
+    "PITTI_CURRENT_STATE.json": "344bd003903934977b9cb7e1120081ede88dfb77",
     "NEW_CHAT_HANDOFF_CURRENT.md": "51846ddf080597399f5ceda9bbc292d877a87412",
     "PITTI_COMMAND_CONTRACTS.json": "989d42d36ab2e1493ca4fb42aa2784ea7f9a85be",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "694bc62b161c661af12a7fb6d9897baa7a599feb",
