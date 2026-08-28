@@ -6,7 +6,8 @@ const policy=fs.readFileSync('decision-policy.js','utf8');
 const boardSrc=fs.readFileSync('expert-v2-board.js','utf8');
 const idx=fs.readFileSync('index.html','utf8');
 const sw=fs.readFileSync('sw.js','utf8');
-const manifest=fs.readFileSync('manifest.webmanifest','utf8');\nconst live=fs.readFileSync('live-surface-v3.js','utf8');
+const manifest=fs.readFileSync('manifest.webmanifest','utf8');
+const live=fs.readFileSync('live-surface-v3.js','utf8');
 
 const activeVersion=(app.match(/const APP_VERSION='v11\.8\.0-rc4\.(\d+)'/)||[])[1];assert.ok(Number(activeVersion)>=82,'active runtime below rc4.82 feature gate');
 for(const stale of ['v11.8.0-rc4.78','v11.8.0-rc4.79','v11.8.0-rc4.80','11.8.0-rc4.72'])assert.ok(!app.includes(stale),`stale active version ${stale}`);
