@@ -23,18 +23,17 @@ If Library files are available, read them too. A v105 Library reseal was prepare
 
 ## Current acceptance boundary
 - production/control: rc4.64
-- Android version authority: rc4.91, observed directly in user screenshot on 2026-08-28
-- Android functional verification: still pending for actual Expert-v3 rows, evidence polarity/quality, unified Top-10 and short-turn Return-v2 behavior
-- current source: rc4.91
-- latest package/re-extract: rc4.91, 13 runtime files, SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`
-- gh-pages reports rc4.91, but `app.js` bytes currently lag main: Henry/polarity fix is present, latest broad evidence batch is not. Matching version text is NOT proof of byte parity.
-- Library rc4.52 aliases remain recovery-only; stale Library state never overrides repo/device evidence.
+- source/package/deployment: rc4.92; main/gh-pages runtime parity verified
+- Android version authority: rc4.92, observed directly in user screenshot 2026-08-28 13:04 local
+- Android functional verification: OPEN
+- Expert-v3 integrated; do not restart acquisition/export
+- Geno Smith/Aaron Rodgers are ordinary QB candidates; no player-name exclusion
+- Library mirror remains fail-closed if stale
 
 ## Current gate
-`RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`
+`RC492_WALKER_ROOT_CAUSE_AND_ANDROID_FUNCTIONAL_VERIFY`
 
-On takeover, verify the v137 seal/current hashes first. Continue from the rc4.91 device-observed state. Do not restart Expert-v3 acquisition/export: Todd D Clark QB, Ryan Weisse RB and Wolf of Roto Street TE are already integrated; WR intentionally remains frozen Expert-v2 because Joey Wright is unavailable. Verify actual runtime rows/evidence before any further device promotion. Continue broad anti-repeat upside/differentiator research in parallel when device evidence is unavailable. No mock unless explicitly requested.
-
+On takeover, require the latest CURRENT/SEAL/handoff generation and verify seal hashes. First diagnose Kenneth Walker III disappearing from the fresh Pick-9 Top-10; do not rationalize it from the minor ankle/foot issue without scoring arithmetic. Then finish focused rc4.92 Android functional verification (actual Expert-v3 rows, evidence polarity/quality, unified Top-10, Return-v2 short-turn tau 4.25). Continue broad anti-repeat upside research in parallel. No mock unless explicitly requested.
 
 ## AUTO acceptance test
 A valid PITTI AUTO run must execute the repeated loop:
