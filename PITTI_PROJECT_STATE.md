@@ -1239,3 +1239,11 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - User also correctly noted early-round Pro/Contra remained under-informed. Added substantive positive/risk evidence for Saquon Barkley, Chase Brown, De'Von Achane, Kenneth Walker III, Omarion Hampton, and Drake London; existing Cook/Lamb/Jefferson/Bowers evidence retained. Thus every player in the shown early Top-10 has a concrete differentiator rather than generic filler.
 - Fresh supporting research used 21-27 Aug 2026 outlooks: Achane explosive/receiving profile with Willis target-risk; Walker elite efficiency + KC role with current foot gate; Hampton pre-injury three-down sample + McDaniel receiving path; London elite target/first-read/YPRR profile + QB uncertainty; Chase Brown late-2025/Burrow receiving-led RB1 production; Barkley ~300-touch/TD path balanced against 2025 efficiency decline.
 - Hard process correction: rc4.90 is withheld from gh-pages/Android until sealed full workflows pass. Device is no longer the first functional test for this class of change.
+
+
+### 2026-08-28 — BROAD EARLY-DRAFT COVERAGE EXPANSION (rc4.90, pre-device)
+- Continued coverage-first research instead of recycling already-settled players.
+- Added substantive differentiator/risk priors for Nico Collins, George Pickens, Chris Olave, Kyren Williams, Trey McBride, Ashton Jeanty, Javonte Williams, Josh Allen, Tee Higgins, Rashee Rice, Garrett Wilson, Jaylen Waddle, Breece Hall and Ladd McConkey.
+- Combined with prior coverage, the early Expert-v3 board now has concrete display evidence across the great majority of the top ~40 candidates rather than only the first handful.
+- Sources are fresh Aug 21-27 outlooks; key mechanisms include target/first-read dominance, red-zone role, per-touch efficiency, scheme/volume changes, current injury gates and explicit counter-theses. No generic sleeper labels were accepted without a causal path.
+- Because this changed runtime display evidence after the first rc4.90 gate pass, deployment remains withheld until the full sealed workflow set is rerun and passes again.
