@@ -73,3 +73,10 @@ Otherwise continue AUTO.
 - Never answer an AUTO turn with “AUTO läuft”, “ich mache weiter”, or equivalent future-tense progress prose. Work must be executed **before** any reply.
 - During PITTI HANDOFF, finish the complete transactional audit/reseal before replying unless an unavoidable blocker prevents it.
 - Current update path: rc4.91 is Android-version-observed and source/package authority. Functional verification is still open. gh-pages also reports rc4.91 but its app.js bytes lag main; never infer byte parity from the version string. Prefer normal PWA/self-update/reload verification over expiring ChatGPT file links, and preserve the audited main/gh-pages byte distinction until explicitly resolved.
+
+## 9. AUTO TURN TERMINATION — HARD GATE
+- Completing one work package is **not** permission to end the assistant turn.
+- After every package, re-inventory and execute the next safe positive-value autonomous package **inside the same assistant turn**.
+- A normal final, status final, acknowledgement final, **or empty final after tool work** is forbidden while executable autonomous work remains.
+- Because execution cannot continue after the assistant turn is ended without another user message, early turn termination is a functional AUTO failure, not a cosmetic response issue.
+- Valid turn end requires one of: unavoidable user/device input; approval-gated consequential action; unsafe unresolved contradiction; material end result with no higher-value package remaining; or demonstrated exhaustion of all safe positive-value independent lanes.
