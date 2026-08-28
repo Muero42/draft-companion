@@ -74,5 +74,8 @@ const neutralAge={...rows[0],name:'Neutral Age Fixture',arrows:'',researchResidu
 assert(!p.plus(neutralAge,0).includes('Age 29'),'neutral age leaked into plus');
 const fairRange={...rows[0],name:'Fair Range Fixture',panel:10,adp:10,reasons:['Fairer Bereich: ADP 10.0 vs Pick 10']};
 assert(!p.plus(fairRange,0).includes('Fairer Bereich'),'fair-range context leaked into plus');
+const mixedPolarity={...rows[0],name:'Mixed Polarity Fixture',arrows:'',researchResidual:{active:true,displayActive:true,components:[{display:true,kind:'age',dir:0,confidence:.99,causal:'Age 29'},{display:true,kind:'elite_role',dir:1,confidence:.90,causal:'Elite workload and receiving role'},{displayRisk:true,display:true,kind:'decline_risk',dir:-1,confidence:.92,causal:'Workload-driven decline risk'}]}};
+assert(p.plus(mixedPolarity,0).includes('Elite workload'),'neutral evidence masked positive Pro');
+assert(p.minus(mixedPolarity).includes('Workload-driven decline risk'),'negative risk masked by neutral evidence');
 
 console.log('LIVE_PRESENTATION_BEHAVIOR_PASS');
