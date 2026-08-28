@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260828T091500Z-v130",
-  "updated_at": "2026-08-28T09:15:00Z",
+  "updated_at": "2026-08-28T09:40:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,16 +11,16 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.89",
-    "test_challenger": "v11.8.0-rc4.90",
+    "test_challenger": "v11.8.0-rc4.91",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.89",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608"
   },
   "exact_continuation": {
-    "gate": "RC490_PREDEVICE_FULL_VERIFICATION",
+    "gate": "RC491_PREDEVICE_FULL_VERIFICATION",
     "auto_starts_mock": false,
-    "instruction": "Do not deploy rc4.90 to Android until full gates prove the root-cause fix. rc4.90 makes Expert-v3 shadow panels selectable, exposes actual panel IDs, displays experts from actual panel rows only, and enriches all current early Top-10 candidates with substantive evidence."
+    "instruction": "Run full rc4.91 gates before deployment; validate early Return-v2 calibration and retain rc4.90 Expert-v3 fixes."
   },
   "invariants": {
     "user_qb_limit": 1,
