@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T080300Z-v126",
-  "created_at": "2026-08-28T08:10:00Z",
+  "created_at": "2026-08-28T08:12:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -16,7 +16,7 @@
     "PITTI_PROJECT_STATE.md": "17c1e9c4f64976329439481b36b8e08cd9019d46",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
     "app.js": "8bdaac2546c658f8a828f76b324e0a1ed96443f1",
-    "index.html": "c4f5e00d41752e155bdd63c8275361117be30de0",
+    "index.html": "9df04c95402307a0301e179963406be30753d495",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
     "sw.js": "2c444c3ca41344b4f087350aa4d499b6631dc1c7",
     "manifest.webmanifest": "80da04b64a43a8df23a82aa5a893f1a9281f3518",
@@ -102,7 +102,8 @@
     "legacy_profile_assertions_additive": true,
     "v126_reseal": true,
     "legacy_embedded_wording_successor_safe": true,
-    "legacy_rc484_486_assertions_additive": true
+    "legacy_rc484_486_assertions_additive": true,
+    "rc488_index_load_v3_board": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
