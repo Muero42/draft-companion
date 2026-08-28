@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T074500Z-v123",
-  "created_at": "2026-08-28T07:58:00Z",
+  "created_at": "2026-08-28T08:02:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -36,7 +36,7 @@
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
     "tools/rc482-draft-critical.mjs": "2dc217912729fc22432b443aad509e7ef55a4bd9",
     "tools/release-completeness-guard.mjs": "aca9202daff2ab5bc71b5b9d74cc3c5ae17490a1",
-    "tools/rc486-draft-critical.mjs": "99d5223ea07b71b7b447fbeb308cb5ad425260e4",
+    "tools/rc486-draft-critical.mjs": "3f57e27fd0aeb8aa1255b4d32de4ed8693c4ef01",
     "tools/rc487-draft-critical.mjs": "44d96b34d07bdf94ad20ae7e9ca362b6e17580cf"
   },
   "checks": {
@@ -93,7 +93,8 @@
     "rc487_compact_transfer": true,
     "v123_reseal": true,
     "rc487_guard_structured_targets": true,
-    "successor_schema_guards_repaired": true
+    "successor_schema_guards_repaired": true,
+    "rc486_serialization_successor_guard": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
