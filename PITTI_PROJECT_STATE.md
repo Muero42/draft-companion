@@ -1203,3 +1203,11 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - User screenshot confirms v11.8.0-rc4.88 badge and selectable/selected `Expert-v3 · positionsspezifisch` profile on Android/PWA.
 - rc4.88 is now Android runtime authority, not merely a deployed/package candidate.
 - Next work: broad anti-repeat upside/differentiator research across many players plus Expert-v3 effect validation. Avoid repeated player checks without materially new evidence. No mock unless explicitly requested.
+
+
+### 2026-08-28 — rc4.89 LIVE PRESENTATION REPAIR
+- rc4.88 Android screenshot proved the selected Expert-v3 profile was active in configuration, but live decision surface still labeled it CUSTOM and showed incumbent experts because `live-surface-v3.js` profile detection had not been extended for `expertv3`.
+- User also rejected the duplicated layout (four full cards + compact ten-player list). Correct target is one uniform Top-10 decision list using the full rich card format for all ten, with orange Normal-Cut warning at the bottom of affected cards.
+- rc4.89 implements that target and adds regression coverage.
+- User's critique of weak Pro/Contra text is accepted: it is not only a late-draft missing-research issue. Current early-round candidates James Cook, CeeDee Lamb, Justin Jefferson and Brock Bowers now have explicit differentiating positive evidence and specific counter-risk evidence instead of generic Value/Opportunity-Cost fallback when structured evidence is available.
+- No scoring/model weights changed. This is presentation + display-evidence enrichment only.
