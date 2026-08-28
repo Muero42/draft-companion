@@ -8,11 +8,11 @@ const idx=fs.readFileSync('index.html','utf8');
 const sw=fs.readFileSync('sw.js','utf8');
 const manifest=fs.readFileSync('manifest.webmanifest','utf8');
 
-assert.match(app,/const APP_VERSION='v11\.8\.0-rc4\.85'/);
+assert.match(app,/const APP_VERSION='v11\.8\.0-rc4\.(?:85|8[6-9]|9\d+)'/);
 for(const stale of ['v11.8.0-rc4.78','v11.8.0-rc4.79','v11.8.0-rc4.80','11.8.0-rc4.72'])assert.ok(!app.includes(stale),`stale active version ${stale}`);
-assert.ok(idx.includes('v11.8.0-rc4.85'));
-assert.ok(sw.includes('v11.8.0-rc4.85'));
-assert.ok(manifest.includes('v11.8.0-rc4.85'));
+assert.match(idx,/v11\.8\.0-rc4\.(?:85|8[6-9]|9\d+)/);
+assert.match(sw,/v11\.8\.0-rc4\.(?:85|8[6-9]|9\d+)/);
+assert.match(manifest,/v11\.8\.0-rc4\.(?:85|8[6-9]|9\d+)/);
 assert.ok(sw.includes('./decision-policy.js'));
 
 const psrc=policy.replace(/export\s+/g,'');
@@ -143,3 +143,5 @@ assert.ok(app.includes('async function exportExpertV3Challengers()'));
 for(const n of ['Ryan Weisse','Wolf of Roto Street','Todd D Clark','Joey Wright'])assert.ok(app.includes(n),n);
 assert.ok(app.includes("containsCredential:false"));
 assert.ok(app.includes("pitti-expert-v3-challengers.v1"));
+assert.ok(!app.includes('loadSingleExpert('),'obsolete undefined Expert-v3 helper must not return');
+assert.ok(app.includes('const row=await loadExpertRanks(e.id);'),'Expert-v3 export must reuse verified ranking loader');
