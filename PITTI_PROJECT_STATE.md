@@ -2038,3 +2038,8 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - All inherited rc4.82–rc4.99 contracts plus rc4.100 turn-portfolio contract, emergency queue contract, freshness gate and package re-extract passed.
 - Jeanty acute-status freshness was the final substantive gate blocker and was refreshed from 2026-08-28 public evidence; status monitored but hard recommendation block removed because Raiders explicitly say they are counting on him for Week 1.
 - Candidate remains unmerged/undeployed at this checkpoint. Next safe promotion path is draft PR -> main -> main CI/package -> gh-pages byte parity -> Android observation. Do not skip main post-merge verification.
+
+
+## 2026-08-28 19:52Z — rc4.100 promoted to main, post-merge gate pending
+- PR #36 was marked ready only after all three candidate gates PASS and then squash-merged to main as `1b85656e40a182ca6be2397c5bf6674006b97bd2`.
+- No gh-pages/Android promotion has been performed yet. Main post-merge workflows had not appeared at the last poll, so deployment is intentionally held. Candidate PASS does not substitute for required main post-merge verification.
