@@ -1219,3 +1219,13 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Independent Actions artifact inspection confirms 13 files and SHA-256 `2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608`; candidate.sha256 matches bytes.
 - rc4.89 fixes presentation regressions only: active Expert-v3 rows, one full-card Top-10 list, orange Normal-Cut warning per affected card, richer early-round Pro/Contra evidence. No scoring/Return/roster/expert-weight change.
 - Android verification remains the only open gate.
+
+
+### 2026-08-28 — LIVE DECISION SURFACE FIX v129
+- Root cause confirmed: live-surface-v3 profile detector lacked Expert-v3 and fell through to CUSTOM/old INC experts.
+- Fixed Expert-v3 display membership by position; WR remains Expert-v2 fallback as intended.
+- Removed duplicated compact 10ER overview; all ten candidates now render as the same full decision card.
+- Outside-normal-cut warning renders at bottom of each affected card using existing orange warning style.
+- Removed generic pro/contra fallbacks `Opportunity Cost gegenüber den direkten Alternativen` and `mit konkurrenzfähiger Panel-Bewertung`; fallback now uses concrete panel/ADP/return/expert context when no researched causal thesis exists.
+- Added regression assertions. After diagnosing/fixing duplicate V3 declaration and test-fixture omission, final five workflow set PASS: Project Guardrails, release contract v2, candidate package, rc4.82 and rc4.83 gates.
+- Fix deployed to gh-pages. Android visual verification remains the next runtime gate; then broad anti-repeat research continues.
