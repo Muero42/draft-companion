@@ -1373,3 +1373,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - This was a version-synchronization defect introduced during the P0 QB correction, not a failure of the QB anti-forcing change.
 - Repaired index.html, sw.js and manifest.webmanifest to rc4.92 including cache-busters/service-worker keys. No decision/model/expert/Return logic changed.
 - Next push-triggered Actions run must be inspected to PASS before package/deploy claim.
+
+### 2026-08-28 — AUTO BLOCK continued: second pipeline blocker diagnosed
+- After runtime version sync, candidate run 33164714115 advanced further: release-contract static PASS, live presentation PASS, release completeness PASS rc4.92, OOS policy PASS.
+- It then failed PITTI guardrails because takeover seal/generation hashes were intentionally stale after material rc4.92/AUTO-contract changes and because pitti_guardrail_check still expected command-contract v1.6.0 while active contract is v1.7.0.
+- README authority was synchronized to Source rc4.92 while package/Android remain rc4.91; historical rc4.83 Geno/Rodgers text was explicitly marked superseded rather than active.
+- Guardrail command-contract expectation corrected to v1.7.0.
+- Remaining failures are now chiefly expected seal/generation integrity drift from post-v137 material changes; reseal only after rc4.92 technical gates are internally consistent, to avoid repeatedly sealing intermediate broken states.
