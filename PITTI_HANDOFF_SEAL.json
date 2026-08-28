@@ -35,7 +35,7 @@
     ".github/workflows/release-contract-v2-package.yml": "d4f0c9f7495f802b10c91a5a7c3c60675193ec8d",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
     "tools/release-completeness-guard.mjs": "d745916c2263ef56ec04e92149d41c6072a23465",
-    "tools/rc486-draft-critical.mjs": "c432c9b0c41975d6b3d799a7088b80ef226ad5b6",
+    "tools/rc486-draft-critical.mjs": "4e81a8040b36c63d326fa34b85b813b278e8b9a1",
     "tools/rc487-draft-critical.mjs": "e2033aef883503bb902d4ef52a6d2ff2b4943c69",
     "expert-v3-board.js": "b8e869f5384e5dc2a0f353e632ecfabf7958debd",
     "tools/rc488-draft-critical.mjs": "7835e441c90e947cc7d95d4a1a4844268da624f7",
