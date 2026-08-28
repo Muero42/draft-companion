@@ -1993,3 +1993,5 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Added mixed-polarity fixtures proving neutral age/context cannot mask substantive positive Pro and positive evidence cannot leak into Contra through displayRisk.
 - No player-name scoring/ranking rule, no hard WR cap/quota, no Return-v2 retune, no expert-weight change.
 - This source hardening is newer than the currently observed Android rc4.99 device instance. Full release/package validation and canonical deployment must precede device acceptance.
+
+- Static pool-wide structured-evidence inventory on current main: 169 display/displayRisk components across 153 kinds; 0 missing causal text; 0 positive-dir displayRisk components; no ultra-generic causal strings detected. 144 neutral context components and 25 signed components remain by design, so selector ordering is regression-protected rather than deleting neutral context.
