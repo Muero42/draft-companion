@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v145
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v146
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -171,3 +171,9 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - [x] fresh Android rc4.94 Pick-9 presentation PASS.
 - [x] Walker remains organic (#7), no player-specific boost; contextual fallback warnings retained #8–10.
 - [ ] final v145 seal + five primary CI gates PASS.
+
+
+## v146 rc4.95 boundary
+- Generic QUESTIONABLE penalty is neutral (0) absent concrete severity evidence.
+- Source challenger rc4.95; Android/package/deployment authority remains rc4.94 until full five-gate + exact deploy/device verification.
+- Successor-safe runtime guard requires Execution Lock appVersion == APP_VERSION rather than stale rc4.64 literal.
