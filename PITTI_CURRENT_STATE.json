@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260828T115500Z-v140",
-  "updated_at": "2026-08-28T11:55:00Z",
+  "updated_at": "2026-08-28T12:01:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -44,7 +44,7 @@
     "no_player_name_qb_exclusions": true
   },
   "handoff": {
-    "transaction_in_progress": true,
+    "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
     "acceptance_fingerprint": "rc4.91-android-version-observed-NOT-functional|rc4.91-package-ref-64039b7a|PAGES-APP-BYTE-LAG|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v137",
     "status": "SEALED_PASS",
