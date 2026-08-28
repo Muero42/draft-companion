@@ -1274,3 +1274,23 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - AUTO semantics: AUTO already means long autonomous execution with independent parallel lanes and minimal interruption. `AUTO BLOCK` is the terse correction trigger if behavior drifts: immediately resume AUTO with NO acknowledgement/apology/status/explanation; reply only for a material result, unavoidable user action, or non-self-solvable blocker.
 - No mock starts automatically. Current device gate is functional/visual verification of rc4.91: actual Expert-v3 rows, evidence polarity/quality across Top-10, and Return-v2 short-turn behavior. Research can continue in parallel when device evidence is unavailable.
 - Freeze discipline remains: real draft is 2026-08-31; avoid broad risky architecture changes. Prefer bounded, regression-tested corrections and evidence enrichment. Pre-real-draft acute-status freshness gate remains mandatory.
+
+
+### 2026-08-28 — HANDOFF v133 DEEP AUDIT / STALE-AUTHORITY REPAIR
+- User explicitly requested a deep transfer audit because prior chat handoffs repeatedly resurrected old errors.
+- Audit found several stale *active* pointers despite a correct v132 EOF summary: `PITTI_COMMAND_CONTRACTS.json` still said Android rc4.84 / challenger rc4.85; `PITTI_NEW_CHAT_BOOTSTRAP.md` still had the rc4.85 export gate; Matrix active sections still described rc4.89/rc4.90 pre-device; README and Execution Lock contained old Android/package fields; Seal runtime_boundary still carried rc4.89 package/deploy metadata.
+- These are now repaired to the actual current boundary. Historical Vxxx sections remain historical evidence only and must never override CURRENT/SEAL/EOF.
+- Actual verified boundary during audit:
+  - source main: rc4.91;
+  - Android version observed by user screenshot: rc4.91;
+  - Android functional verification still pending;
+  - final v132 package/re-extract: `Draft_Companion_v11.8.0-rc4.91_PREINSTALL.zip`, 13 files, SHA-256 `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`;
+  - GitHub artifact ID 9681950213, workflow run 33161849023, outer artifact digest sha256 `90c2530897d8ffe5ae4ef1b58ca5c8e57145efaf41fe0461a1ae9620e77e0c10`.
+- Critical deployment nuance discovered: gh-pages and main both advertise rc4.91 but current `app.js` bytes differ. main includes the newest broad evidence batch; gh-pages does not. Henry/evidence-polarity fixes are present in gh-pages. Therefore version equality MUST NOT be treated as byte parity or functional equivalence.
+- Do not automatically deploy/synchronize this byte difference during handoff. Preserve the distinction and let the receiving chat verify the safest next device path; same-version cache/service-worker behavior can otherwise hide which bytes are actually running.
+- Expert-v3 acquisition/export is complete and must not be restarted. Active profile composition: QB Todd D Clark 10%, RB Ryan Weisse 10%, TE Wolf of Roto Street 10%, WR exact Expert-v2 fallback.
+- rc4.91 Return-v2 early-turn correction remains authoritative: tau 4.25 for pick<=30; old tau 1.35 caused false ~99% return confidence and must never return.
+- Live evidence polarity invariant remains authoritative: Reach/risk/wait/decline cannot be positive evidence. Derrick Henry `+ Reach 7` was a presentation regression and is fixed/guarded.
+- Broad anti-repeat research continues coverage-first across uncovered players. Do not repeatedly query settled Brown/Walker/Henry/etc. without materially new evidence.
+- `AUTO BLOCK` semantics are now promoted into the command contract: zero acknowledgement/apology/status/explanation; immediately resume long AUTO execution.
+- Handoff generation advanced to v133 because the audit materially changed authoritative transfer documents. Final step is fresh seal/hash verification and all five CI families green.
