@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T121700Z-v144",
-  "updated_at": "2026-08-28T12:17:00Z",
+  "handoff_generation": "20260828T145500Z-v145",
+  "updated_at": "2026-08-28T14:55:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -46,11 +46,11 @@
     "transaction_in_progress": false,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
     "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143",
-    "status": "RC494_ANDROID_PICK9_PASS_RESEAL_PENDING",
+    "status": "RC494_ANDROID_PASS_FINAL_RESEAL",
     "handoff_ready": true,
     "second_pass_pass": true,
     "next_action": "Receiving chat verifies v144 integrity, then deploys the already package-verified rc4.94 runtime, proves main/pages parity, and obtains a fresh Android Pick-9 verification; no mock.",
-    "gate": "RC494_FINAL_RESEAL"
+    "gate": "V145_FINAL_RESEAL_CI"
   },
   "source_authority": "rc4.94",
   "package_authority": "rc4.94",
