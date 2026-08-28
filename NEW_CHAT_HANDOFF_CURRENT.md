@@ -1,5 +1,5 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T094500Z-v131`
+Handoff generation: `20260828T100500Z-v132`
 Updated: 2026-08-28 09:45Z
 
 ## BOOTSTRAP — mandatory
@@ -344,3 +344,5 @@ User screenshot confirms Draft Companion v11.8.0-rc4.91 loaded on Android. rc4.9
 - Latest resealed broad-evidence state passed all five CI families. rc4.82/rc4.83 labels are legacy regression-suite names only.
 - **AUTO:** long autonomous blocks, use independent lanes during waits, no progress/status-only replies while executable work exists. **AUTO BLOCK:** correction trigger; zero acknowledgement/explanation, simply resume this behavior. Interrupt only for material result, unavoidable user action, or non-self-solvable blocker.
 - No automatic mock. Real draft 2026-08-31; freeze discipline: bounded low-risk regression-tested fixes/evidence enrichment only. Acute-status freshness gate required before real draft.
+
+HANDOFF_GENERATION: 20260828T100500Z-v132
