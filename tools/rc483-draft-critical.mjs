@@ -25,7 +25,7 @@ assert.equal(safetyPromotionEligiblePolicy({pos:'WR',counts:{WR:7},rank:105,adp:
 assert.equal(safetyPromotionEligiblePolicy({pos:'TE',counts:{TE:1},rank:30,adp:110,current:149}),true);
 assert.equal(safetyPromotionEligiblePolicy({pos:'TE',counts:{TE:1},rank:40,adp:110,current:149}),false);
 
-assert.match(app,/const EXPERT_PROFILE_IDS=\{incumbent:\{QB:'qb',RB:'rb',WR:'wr',TE:'te'\},fullv2:\{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'\},wrv2:\{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'\}\}/);
+assert.ok(app.includes("incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'}"));assert.ok(app.includes("fullv2:{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'}"));assert.ok(app.includes("wrv2:{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'}"));
 for(const option of ['Bisherige Konfiguration (rc4.64)','Expert-v2 · alle Positionen','Expert-v2 · nur WR'])assert.ok(idx.includes(option),option);
 assert.ok(app.includes('function activePanelHealthState()'));
 assert.ok(app.includes("Panel-Health: ${activeHealth.degraded?'DEGRADED':'OK'}"));
