@@ -8,7 +8,7 @@ const idx=fs.readFileSync('index.html','utf8');
 const sw=fs.readFileSync('sw.js','utf8');
 const manifest=fs.readFileSync('manifest.webmanifest','utf8');
 
-assert.match(app,/const APP_VERSION='v11\.8\.0-rc4\.(?:85|8[6-9]|9\d+)'/);
+const activeVersion=(app.match(/const APP_VERSION='v11\\.8\\.0-rc4\\.(\\d+)'/)||[])[1];assert.ok(Number(activeVersion)>=85,'active runtime below rc4.85 feature gate');
 for(const stale of ['v11.8.0-rc4.78','v11.8.0-rc4.79','v11.8.0-rc4.80','11.8.0-rc4.72'])assert.ok(!app.includes(stale),`stale active version ${stale}`);
 assert.match(idx,/v11\.8\.0-rc4\.(?:85|8[6-9]|9\d+)/);
 assert.match(sw,/v11\.8\.0-rc4\.(?:85|8[6-9]|9\d+)/);
