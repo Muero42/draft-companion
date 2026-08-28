@@ -121,8 +121,8 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 
 - v132: rc4.91 Android-observed authority + Expert-v3 actual-row gate + evidence polarity + Return-v2 tau4.25 + broad anti-repeat research + AUTO BLOCK zero-ack semantics preserved.
 
-## v136 deep-handoff canaries
-- CURRENT / SEAL / Handoff generation must all equal `20260828T105500Z-v136`.
+## v137 deep-handoff canaries
+- CURRENT / SEAL / Handoff generation must all equal `20260828T110500Z-v137`.
 - Active command contract and bootstrap must state rc4.91 Android authority and `RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`; rc4.84/85 active pointers are forbidden.
 - latest package/re-extract must be rc4.91, 13 runtime files, SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.
 - main/gh-pages `app.js` byte parity is currently FALSE despite both saying rc4.91; a receiving chat must preserve this distinction.
@@ -131,4 +131,5 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - Reach/risk/wait/decline can never be positive evidence.
 - `AUTO BLOCK` means immediate zero-ack AUTO resumption.
 
-- v136 Android semantics: rc4.91 version observed, but `android_functional_verified=false`; never collapse these states.
+- v137 Android semantics: rc4.91 version observed, but `android_functional_verified=false`; never collapse these states.
+- v137 preflight canary: PITTI_AUTO_PREFLIGHT current update path must name rc4.91 and must preserve main/gh-pages app.js byte divergence; active rc4.85 update-path language is forbidden.
