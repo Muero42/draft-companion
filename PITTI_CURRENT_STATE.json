@@ -11,8 +11,8 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.96",
-    "test_challenger": "v11.8.0-rc4.96",
-    "test_challenger_android_verified": true,
+    "test_challenger": "v11.8.0-rc4.97",
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.96",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0",
@@ -26,7 +26,7 @@
     "freeze_policy": "rc4.96 remains rollback baseline; low-risk microfix challenger allowed for further testing"
   },
   "exact_continuation": {
-    "gate": "RC497_MICROFIX_AUDIT",
+    "gate": "RC497_MICROFIX_CI",
     "auto_starts_mock": false,
     "instruction": "Keep rc4.96 as rollback baseline. Allow only small isolated reversible fixes with deterministic regression coverage; no broad scoring/Return/expert retune. Validate challenger against rc4.96 and revert immediately on regression."
   },
@@ -47,11 +47,11 @@
     "transaction_in_progress": false,
     "resume_semantics": "PITTI AUTO resumes from rc4.96 pre-draft freeze; runtime/model changes require new material evidence and deterministic gates.",
     "acceptance_fingerprint": "RC4.96-ALL5-PASS|PKG-REEXTRACT-PASS|GH-PAGES-13OF13|ANDROID-RC4.96-VERIFIED|OOS-FOLLOWCOACH-15OF15|RETURN-BRIER-0.0802|SPARSE-PANEL-OOS-PASS|NO-RETURN-RETUNE|NO-PAIRSUM|WR7-SOFT|WAIT-TURN-CHAT-REVIEW|FRESHNESS-ONLY|HANDOFF-v152",
-    "status": "RC496_ROLLBACK_BASELINE_RC497_MICROFIX_ALLOWED",
+    "status": "RC497_MICROFIX_CHALLENGER_CI",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Audit remaining small defects and build an isolated rc4.97 microfix challenger only where fixes are low-risk, reversible and testable. Preserve rc4.96 as immediate rollback.",
-    "gate": "RC497_MICROFIX_AUDIT"
+    "next_action": "Run deterministic rc4.97 microfix CI with rc4.96 as rollback authority; no Android promotion before all gates pass.",
+    "gate": "RC497_MICROFIX_CI"
   },
   "source_authority": "rc4.96",
   "package_authority": "rc4.96",
