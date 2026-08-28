@@ -15,7 +15,7 @@ const currentTag='v11.8.0-rc4.'+activeVersion;assert.ok(idx.includes(currentTag)
 assert.ok(sw.includes('./decision-policy.js'));
 assert.ok(live.includes('const negativeReason='),'live evidence polarity gate missing');
 assert.ok(/negativeReason\(r\)/.test(live),'plus() must reject negative reasons');
-assert.ok(/preferred=reasons\.find\(r=>\/Reach\|/.test(live),'Reach must be eligible for minus evidence');
+assert.ok(/preferred=reasons\.find\(r=>\/Panel unvollständig\|Panel-Streuung\|Reach\|/.test(live),'Reach must be eligible for minus evidence');
 
 const psrc=policy.replace(/export\s+/g,'');
 const {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy}=new Function(psrc+';return {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy}')();
