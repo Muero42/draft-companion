@@ -1,6 +1,6 @@
 {
   "schema": "pitti.command-contract.v1",
-  "version": "1.5.0",
+  "version": "1.6.0",
   "trigger": "PITTI AUTO",
   "sourceOrder": [
     "PITTI_COMMAND_CONTRACTS.json",
@@ -35,7 +35,11 @@
     "promiseOnlyResponseForbidden": true,
     "statusOnlyWhileUsefulWorkExists": false,
     "externalGateValidStopOnlyAfterIndependentLaneExhaustion": true,
-    "autoStartsInteractiveMock": false
+    "autoStartsInteractiveMock": false,
+    "autoBlockCorrectionTrigger": {
+      "trigger": "AUTO BLOCK",
+      "semantics": "Resume the existing AUTO long-block loop immediately with zero acknowledgement/apology/status/explanation. Execute work first; reply only for a material result, unavoidable user action, or non-self-solvable blocker."
+    }
   },
   "interruption": [
     "unavoidable user/device action or information",
@@ -65,13 +69,17 @@
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.64",
-    "androidAuthority": "v11.8.0-rc4.84",
-    "testChallenger": "v11.8.0-rc4.85",
-    "testChallengerAndroidVerified": false,
-    "latestPackageReextract": "v11.8.0-rc4.85",
-    "latestPackageSha256": "53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed",
-    "deployedPages": "v11.8.0-rc4.85",
+    "androidAuthority": "v11.8.0-rc4.91",
+    "androidVersionObserved": true,
+    "androidFunctionalVerificationPending": true,
+    "sourceAuthority": "v11.8.0-rc4.91",
+    "latestPackageReextract": "v11.8.0-rc4.91",
+    "latestPackageSha256": "6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a",
+    "packageRuntimeFiles": 13,
+    "deployedPagesVersion": "v11.8.0-rc4.91",
+    "deployedPagesAppByteParityWithMain": false,
+    "deployedPagesNote": "gh-pages app.js is an older rc4.91 byte set: Henry/polarity fix present, latest broad evidence batch absent. Do not infer byte parity from matching version string.",
     "libraryRecoveryAlias": "v11.8.0-rc4.52"
   },
-  "currentGate": "ANDROID_RC4.85_SELF_UPDATE_THEN_EXPERT_V3_EXPORT"
+  "currentGate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH"
 }
