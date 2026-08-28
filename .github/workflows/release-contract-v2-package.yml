@@ -24,6 +24,7 @@ jobs:
           node tools/rc486-draft-critical.mjs
           node tools/rc487-draft-critical.mjs
           node tools/rc488-draft-critical.mjs
+          node tools/rc489-draft-critical.mjs
           node Draft_Companion_Position_Path_Regression_2026-08-13.js
           node Draft_Companion_Player_Quality_Expert_Health_Regression_2026-08-13.js
           node Draft_Companion_Return_Geometry_Market_Regression_2026-08-13.js
