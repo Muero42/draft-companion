@@ -1667,3 +1667,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Added a deliberately small continuous dispersion adjustment around SD 7: clamp((7-SD)*0.12, -1.25, +0.75). This treats disagreement as uncertainty rather than a player-quality verdict, so volatile breakout profiles are not broadly suppressed.
 - Existing categorical consensus handling remains; no player-name rule added. Generic Questionable remains zero penalty.
 - rc4.96 is SOURCE CHALLENGER only until full release gates + deployment/device verification. rc4.94 remains verified Android authority.
+
+
+## 2026-08-28 rc4.96 sparse-panel safety — IN PROGRESS
+- Trigger: J.K. Dobbins surfaced at Pick 89 with only two embedded Expert-v2 voices (Draft Sharks #102, Nick Mariano #80) yet 74% confidence / LOSS HOCH.
+- Root cause verified: Expert-v2 row has n=2; Expert-v3 cannot add Ryan Weisse because his challenger vector omits Dobbins, so the base row passes through unchanged. Existing confidence penalty for n=2 was too weak and no recommendation-score sparse-panel penalty existed.
+- rc4.96 source change: n=2 now receives a bounded sparse-panel score penalty and confidence cap; n=3 is also degraded; n>=4 remains normal. UI reason explicitly marks incomplete panel. Questionable remains score-neutral unless separate injury evidence indicates severity.
+- IMPORTANT: source-only until regression/gates/package/deploy verification complete; Android authority remains rc4.94.
