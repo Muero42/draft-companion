@@ -10,9 +10,9 @@ const manifest=fs.readFileSync('manifest.webmanifest','utf8');
 
 const activeVersion=(app.match(/const APP_VERSION='v11\\.8\\.0-rc4\\.(\\d+)'/)||[])[1];assert.ok(Number(activeVersion)>=85,'active runtime below rc4.85 feature gate');
 for(const stale of ['v11.8.0-rc4.78','v11.8.0-rc4.79','v11.8.0-rc4.80','11.8.0-rc4.72'])assert.ok(!app.includes(stale),`stale active version ${stale}`);
-assert.match(idx,/v11\.8\.0-rc4\.(?:85|8[6-9]|9\d+)/);
-assert.match(sw,/v11\.8\.0-rc4\.(?:85|8[6-9]|9\d+)/);
-assert.match(manifest,/v11\.8\.0-rc4\.(?:85|8[6-9]|9\d+)/);
+assert.match(idx,/v11\.8\.0-rc4\.(?:85|8[6-9]|9\d|[1-9]\d{2,})/);
+assert.match(sw,/v11\.8\.0-rc4\.(?:85|8[6-9]|9\d|[1-9]\d{2,})/);
+assert.match(manifest,/v11\.8\.0-rc4\.(?:85|8[6-9]|9\d|[1-9]\d{2,})/);
 assert.ok(sw.includes('./decision-policy.js'));
 
 const psrc=policy.replace(/export\s+/g,'');
