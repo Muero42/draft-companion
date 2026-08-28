@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T091500Z-v130`
-Updated: 2026-08-28 09:15Z
+Handoff generation: `20260828T094500Z-v131`
+Updated: 2026-08-28 09:45Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
