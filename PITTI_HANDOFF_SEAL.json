@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T102000Z-v133",
-  "created_at": "2026-08-28T10:28:00Z",
+  "created_at": "2026-08-28T10:32:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -24,7 +24,7 @@
     "tools/rc484-draft-critical.mjs": "b16bc6c7e01dc57375e166fd6fb3d8300141f185",
     "tools/rc485-draft-critical.mjs": "156d8c479c543d3f34f689c8ca486181473ec035",
     "tools/analyze-decision-evidence.mjs": "bb75950cc1698659769d7412adef71bb2e41d494",
-    "tools/pitti_guardrail_check.mjs": "8683c7fda2afd3abcc51310b45460d2dfd87b0aa",
+    "tools/pitti_guardrail_check.mjs": "14cd451580786dabbbfb6c70d32519b57a35e6e9",
     "tools/pre-draft-freshness-gate.mjs": "9acc1999c0fe8a3428b9af7631812fe04338d42d",
     "tools/emergency-queue-contract.mjs": "d5ce421c905c40c10c03ba70a41161fb6036d320",
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
@@ -145,7 +145,8 @@
     "v133_active_boundary_stale_pointers_repaired": true,
     "v133_package_hash_verified": true,
     "v133_pages_main_app_divergence_recorded": true,
-    "v133_auto_block_in_command_contract": true
+    "v133_auto_block_in_command_contract": true,
+    "v133_guardrail_authority_updated": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
