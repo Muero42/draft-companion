@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v131
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v132
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -112,3 +112,5 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - Do not deploy to Android until full sealed gates PASS.
 
 - rc4.91 Android device version observed by user screenshot on 2026-08-28; device authority promoted to rc4.91. Functional visual checks remain distinct from version observation.
+
+- v132: rc4.91 Android-observed authority + Expert-v3 actual-row gate + evidence polarity + Return-v2 tau4.25 + broad anti-repeat research + AUTO BLOCK zero-ack semantics preserved.
