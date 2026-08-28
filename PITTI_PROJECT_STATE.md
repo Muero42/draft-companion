@@ -2002,3 +2002,13 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Version bumped consistently across app/index/service-worker/manifest to **v11.8.0-rc4.100**; release-contract predicates extended so rc4.98 polarity and rc4.99 WR/normal-cut regressions also execute for rc4.100.
 - PR #36 is mergeable but remains draft/unmerged. No automatic promotion until behavioral/package gates actually execute and pass.
 - GitHub workflow runs are still absent for the PR head despite pull_request triggers; treat CI as unavailable, not as PASS. Independent static pool audit remains PASS, but is insufficient for release promotion.
+
+
+## 2026-08-28 19:22Z — rc4.100 gate diagnostics / release-process hardening
+- GitHub Actions is operational; earlier "CI unavailable" inference is superseded. PR #36 runs executed and exposed candidate-vs-deployed-authority coupling in guardrails plus stale two-digit RC regexes.
+- Candidate preflight is now explicitly separated from deployed-authority locks: PR validation may bypass only version/package/deployment authority equality while preserving substantive invariants and seal-integrity pre-seal semantics. Production/main checks remain strict.
+- README candidate header repaired to preserve exact production/control token and actual rc4.99 authority while identifying rc4.100 as unmerged/unobserved.
+- Inherited rc4.85/rc4.88 version guards changed from brittle 2-digit regex ranges to monotonic numeric minimum checks, preventing rc4.100+ false failures.
+- rc4.98 evidence-polarity contract explicitly extended to rc4.100; rc4.99 WR saturation + Normal-Cut contracts execute for rc4.100.
+- Draft-day safety strengthened: emergency-queue contract and acute-status freshness gate are now mandatory in both release and package workflows. Freshness gate is pinned to 2026-08-28 for this candidate validation; draft-day execution still requires a fresh as-of run.
+- PR #36 remains draft/unmerged while latest three gates run. No Android/deployment mutation.
