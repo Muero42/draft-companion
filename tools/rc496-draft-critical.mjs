@@ -13,6 +13,8 @@ assert.match(app,/const confidenceCap=r\.n>=4\?96:r\.n===3\?78:r\.n===2\?62:50/,
 assert.match(app,/Number\.isFinite\(Number\(x\.w\)\)\?Number\(x\.w\):Number\(x\.effectiveWeight\)/,'embedded expert weights must survive evidence export');
 assert.match(app,/const byPick=new Map\(\)/,'decision evidence canonical per-pick dedupe missing');
 assert.match(app,/supersededFixtureCount/,'decision evidence superseded-fixture telemetry missing');
+assert.match(app,/mixedModelVersions:modelVersions.length>1/,'decision evidence mixed-version guard missing');
+assert.match(app,/modelVersion:f.modelVersion\|\|null/,'decision summary model-version attribution missing');
 assert.match(app,/panelN:Number\.isFinite/,'decision evidence panelN missing');
 assert.match(app,/reasons:Array\.isArray\(x\.reasons\)/,'decision evidence scoring reasons missing');
 assert.match(app,/const displayGap=current<=70\?18:current<=110\?22:26/,'presentation normal-cut must be broader than safety gate');
