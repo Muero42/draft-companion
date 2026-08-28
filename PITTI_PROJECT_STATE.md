@@ -1337,3 +1337,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - New explicit coverage: Ryan Flournoy ↑ deep/watch (pass-heavy WR3 + contingent ascension); Antonio Williams watch; Chris Brazzell watch; Zachariah Branch watch; Ted Hurst NO_ARROW/watch.
 - Fresh material event legitimately reopened already-covered Cleveland rookies: Cedric Tillman release removes one veteran competitor for KC Concepcion/Denzel Boston. Treat as opportunity confirmation, not duplicate “open room” scoring.
 - No runtime, Coach, expert, Return-v2, ranking or ADP weight change; freeze intact.
+
+### 2026-08-28 — AUTO same-turn hardening + Coverage Batches E/F
+- Root cause from observed AUTO BLOCK failure was formalized: tool work followed by an empty final still ends the assistant turn and therefore violates AUTO continuity. Command contract upgraded to v1.7.0 with a hard same-turn termination contract; preflight and handoff matrix now explicitly forbid normal OR empty final while executable autonomous work remains.
+- Added `research/UPSIDE_V3_COVERAGE_BATCH_E_2026-08-28.md`: broad late-WR coverage. Strongest differentiated deep mechanisms: Dont'e Thornton Jr. size/speed vertical role; Savion Williams hybrid/manufactured-touch optionality. Royals/Noel/TeSlaa/Horton/Bryant/Ayomanor/Felton/Dike/Watkins explicitly covered without manufactured promotion.
+- Added `research/UPSIDE_V3_COVERAGE_BATCH_F_2026-08-28.md`: late-RB coverage. Brashard Smith/RJ Harvey/Jaydon Blue = receiving/explosive deep-watch mechanisms; DJ Giddens/Kaleb Johnson/Tahj Brooks = contingent volume watch, no automatic arrow.
+- Anti-repeat honored: already-settled names were inventoried and excluded from re-scoring.
+- No runtime/Decision Kernel/Expert-v3/Return-v2/ranking/ADP change; freeze intact.
