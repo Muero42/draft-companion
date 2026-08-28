@@ -16,10 +16,12 @@ A new-chat takeover fails closed unless all checks pass.
 
 ## 2 Runtime boundary
 - rc4.64 production/control
-- rc4.89 latest Android-observed runtime; screenshot exposed Expert-v3 panel-selection fallback bug
-- rc4.91 current PRE-DEVICE challenger; NOT deployed until full sealed gates pass
-- rc4.90/91 root-cause requirement: `expert-v3-*` shadow panels selectable and actual panel rows drive expert labels
-- built/prepared/deployed/Android-verified kept distinct
+- rc4.91 Android version authority, directly observed by user screenshot
+- rc4.91 Android functional verification remains pending; version observation is not functional proof
+- rc4.91 current source authority
+- latest package/re-extract rc4.91 · 13 runtime files · SHA-256 `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`
+- gh-pages version string rc4.91, but app.js bytes lag main after latest broad evidence batch; do not claim main/pages byte parity
+- built/prepared/deployed/package-reextract/Android-version-observed/Android-functional-verified are distinct states
 - expiring ChatGPT attachment is NOT the preferred update path; normal deployed PWA/self-update path first
 
 ## 3 Draft invariants
@@ -39,11 +41,14 @@ A new-chat takeover fails closed unless all checks pass.
 - Frozen-v2 weights/provenance never live-renormalized
 
 ## 5 Evidence integrity
-- rc4.84 Decision Kernel frozen
-- rc4.85 changes only Expert-v3 challenger acquisition/export
-- Expert-v2 remains frozen/selectable
-- completed mock/Evidence-v2 is retained and must not be lost
-- current gate = Android self-update/reload to rc4.85 -> verify badge -> Expert-v3 challenger JSON -> v2/v3 weight computation
+- rc4.91 preserves the Expert-v3 panel-selection root-cause fix: actual `expert-v3-*` shadow panels must be selectable and live labels must come from actual candidate rows
+- Expert-v2 remains frozen/selectable; Expert-v3 is separate: QB Todd10, RB Weisse10, TE Wolf10, WR exact Expert-v2 fallback
+- live presentation target: ten full cards once, orange Normal-Cut warning at card bottom, no duplicated compact Top-10
+- evidence polarity invariant: Reach/risk/wait/decline can never be positive evidence; Derrick Henry `+ Reach 7` regression is forbidden
+- rc4.91 early Return-v2 calibration uses pick<=30 tau 4.25; do not restore tau 1.35
+- broad research is coverage-first/anti-repeat and evidence enrichment is not automatic ranking promotion
+- completed mock/Evidence-v2 history remains retained
+- current gate = rc4.91 Android functional verification + broad anti-repeat research; no mock unless explicitly requested
 
 ## 6 AUTO durability
 - long blocks default
@@ -53,6 +58,7 @@ A new-chat takeover fails closed unless all checks pass.
 - mandatory parallel lane inventory
 - promise/status-only responses forbidden while work exists
 - external gate valid only after independent-lane exhaustion
+- `AUTO BLOCK` correction trigger = immediate zero-ack AUTO resumption; no apology/status/explanation
 
 ## 7 Old-error scan
 Explicitly reject resurrection of PairSum/Rolling, fixed caps, player forcing, blind RB forcing, generic Return retune, generic QB2/TE2 ban, Superflex, starter-maxima cap error, Brown numeric v2, availability-only old temporary expert-pool restoration, DS double count, stale cross-draft identity, false Expert-v2 health/provenance, stale snapshot version, package/device conflation, or end-roster-as-Coach-success.
