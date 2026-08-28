@@ -77,7 +77,7 @@ console.log('RC483_DRAFT_CRITICAL_PASS');
 
 // rc4.83 bounded late-WR saturation challenger invariants.
 const mru=grab('marginalRosterUtility'),prog=grab('progressiveUpsideBonus');
-assert.ok(mru.includes("if(n>=8)x-=6.5;else if(n>=7)x-=5;else if(n>=6)x-=3"));
+assert.ok(mru.includes("else if(n>=8)x-=6.5")&&mru.includes("else if(n>=7)x-=5")&&mru.includes("else if(n>=6)x-=3"),'legacy WR saturation floors must remain beneath rc4.96 late-draft strengthening');
 assert.ok(prog.includes("state.counts.WR>=6"));
 assert.ok(prog.includes("[0,1.5,3,4.5]"));
 assert.ok(prog.includes("[0,.75,1.5,2.5]"));
