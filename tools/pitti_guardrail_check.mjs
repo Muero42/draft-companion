@@ -146,7 +146,7 @@ must(emergencyQueueContract.includes('only one TE while TE1 open'),'emergency qu
 
 for(const token of ['rc4.82','rc4.83','work package -> checkpoint -> re-inventory','user must never need to remind'])
   must(bootstrap.includes(token),`repo bootstrap invariant missing: ${token}`);
-for(const token of ['rc4.82','rc4.83','AUTO durability','Execution witness','Old-error scan'])
+for(const token of ['rc4.84','rc4.85','AUTO durability','Execution witness','Old-error scan'])
   must(handoffMatrix.includes(token),`repo handoff matrix invariant missing: ${token}`);
 must(lock.authority?.libraryMirrorStatus?.includes('STALE_'),'stale Library mirror status must remain explicit until persistence is proven');
 must(lock.authority?.failClosedRecovery?.includes('never claim a newer Library generation persisted unless files.list proves it'),'Library persistence fail-closed rule missing');
