@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v121
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v122
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -87,3 +87,5 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 ## v121 rc4.86 hotfix canary
 - rc4.84 Android authority; rc4.86 deployed Expert-v3 export hotfix; rc4.85 failed with undefined helper.
 - No Decision Kernel/Return-v2/Expert-v2 weight change.
+
+- rc4.86 package/re-extract PASS; SHA 49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1; 12 runtime files.
