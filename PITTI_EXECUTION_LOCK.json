@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T15:10:00Z",
+  "updatedAt": "2026-08-28T16:10:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,18 +11,18 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.95",
+    "appVersion": "v11.8.0-rc4.96",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.94",
     "latestPreinstallVerified": "v11.8.0-rc4.95",
-    "latestResearchChallenger": "v11.8.0-rc4.95",
+    "latestResearchChallenger": "v11.8.0-rc4.96",
     "preinstallArtifact": "Draft_Companion_PREINSTALL (rc4.94)",
     "preinstallSha256": "d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.95",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.96",
     "latestDeployedCandidate": "v11.8.0-rc4.95",
     "latestAndroidVerified": "v11.8.0-rc4.94",
     "androidAuthority": "v11.8.0-rc4.94",
