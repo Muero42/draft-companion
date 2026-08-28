@@ -1554,3 +1554,47 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Hard exclusions remain: K/DST, Geno Smith, Aaron Rodgers. QB augmentation is capped and subordinate to exactly-one-QB roster policy; these QBs are emergency fallers/options, not a QB2 plan.
 - Current injury/freshness exclusion: Jordyn Tyson not in queue while hamstring absence estimate remains material.
 - Evidence basis: PITTI Expert-v3 positional vectors; Sleeper ADP market refreshed Aug 27; current FantasyPros 2026 ranks; NFL Aug-2026 late-round sleeper/value/breakout guidance. External sources are recon only.
+
+
+### 2026-08-28 — Emergency Queue augmentation v2 FINAL (35 unique)
+- Reconciled v1 duplicate sentinel and current late-WR evidence. Final extension is 35 UNIQUE players, deduplicated against all names visible in the user's baseline screenshots:
+  1 Josh Jacobs
+  2 De'Von Achane
+  3 Brian Thomas Jr.
+  4 TreVeyon Henderson
+  5 Bucky Irving
+  6 Terry McLaurin
+  7 Jaylen Warren
+  8 D'Andre Swift
+  9 David Montgomery
+  10 Tucker Kraft
+  11 Tyler Warren
+  12 Kyle Pitts
+  13 RJ Harvey
+  14 Quinshon Judkins
+  15 Jonathon Brooks
+  16 Bhayshul Tuten
+  17 Chris Rodriguez Jr.
+  18 Jordan Mason
+  19 Tyrone Tracy Jr.
+  20 Jacory Croskey-Merritt
+  21 Rhamondre Stevenson
+  22 Rico Dowdle
+  23 Chuba Hubbard
+  24 Josh Downs
+  25 Parker Washington
+  26 Stefon Diggs
+  27 Denzel Boston
+  28 Dalton Kincaid
+  29 Isaiah Likely
+  30 Chig Okonkwo
+  31 Jaxson Dart
+  32 Caleb Williams
+  33 Justin Herbert
+  34 Dak Prescott
+  35 Ja'Kobi Lane
+- Why Lane replaced duplicate sentinel: current Aug-28 evidence independently identifies him as a late-round upside/red-zone rookie with a path to Baltimore WR2; this matches the user's late-round asymmetric-upside objective better than adding another low-ceiling QB/TE.
+- Parker Washington retained: multiple fresh Aug-27/28 sources flag him as rising/undervalued; this also matches PITTI's longstanding target thesis. No forced reach implied.
+- Denzel Boston retained: fresh Aug-27 expert outlook plus Cleveland roster movement increases his path to meaningful targets; still late-round only.
+- Tank Dell remains watchlist rather than top-35 extension because post-catastrophic-knee return creates a wider health/role distribution; current positive camp evidence is real but does not beat the selected emergency-queue portfolio yet.
+- Draft-day review must start from this exact v2 list and the captured baseline; recheck injuries/53-man depth charts/Sleeper ADP/Expert-v3 on Aug 31 and alter only material deltas.
