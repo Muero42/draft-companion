@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-27T18:55:00Z",
+  "updatedAt": "2026-08-28T05:25:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -16,15 +16,15 @@
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.82",
+    "latestAndroidObserved": "v11.8.0-rc4.84",
     "latestPreinstallVerified": "v11.8.0-rc4.78",
-    "latestResearchChallenger": "v11.8.0-rc4.83",
+    "latestResearchChallenger": "v11.8.0-rc4.85",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.78_PREINSTALL.zip",
     "preinstallSha256": "69404f0b413440a3aa7adcf5bf7028522405d1b5183d730c4686a98e005820ba",
     "preinstallRuntimeFiles": 12,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.83",
-    "latestDeployedCandidate": "v11.8.0-rc4.83",
-    "latestAndroidVerified": "v11.8.0-rc4.82"
+    "latestSourceRegressionVerified": "v11.8.0-rc4.84",
+    "latestDeployedCandidate": "v11.8.0-rc4.84",
+    "latestAndroidVerified": "v11.8.0-rc4.84"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -123,7 +123,7 @@
       "Matt Harmon": "WR_EVIDENCE_ONLY_NO_CURRENT_NUMERIC_VOTE_UNLESS_INCREMENTAL_VALUE_PROVEN",
       "Sean Koerner": "NO_CURRENT_DRAFT_ACQUISITION_PAYWALL_WATCHLIST_ONLY",
       "Draft Sharks Team": "COUNT_EXACTLY_ONCE_AS_CORRELATED_FAMILY",
-      "Weisse_Gianni_Bobal": "REJECTED_TEMPORARY_CONTROL_ONLY"
+      "Weisse_Gianni_Bobal": "NO_AUTO_RESTORE_AVAILABILITY_ONLY; FRESH_INDIVIDUAL_QUALIFICATION_ALLOWED"
     },
     "freshness": {
       "cacheMaxHoursBeforeRefreshAttempt": 12,
@@ -135,7 +135,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.83_FROZEN_OOS_EVIDENCE_GATE_PARALLEL_AUTO_LOOP_LOCKED",
+    "status": "RC4.85_EXPERT_V3_ACQUISITION_PACKAGE_GATE",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -182,7 +182,8 @@
       "Emergency Queue fallback now has independent deterministic executable contract: 35 cap, one-QB/one-TE while open, none after QB1/TE1, identity/version metadata, K/DST omission; protected by rc4.83 + PITTI guards",
       "Evidence-v2 analyzer now reports clean non-acute-confounded OOS metrics separately from whole-mock metrics; same-day Jeanty recheck remains unresolved and does not mutate frozen rc4.83",
       "CRITICAL: rc4.83 forced stale 2026 manager slots 5/6/8, distorting Return-v2; corrected in rc4.84 and guarded. OOS gate moves to rc4.84 realistic slot-9 mock.",
-      "Upside Research v3 added as non-runtime ledger: WR/TE breakout vs consolidation vs role-takeover taxonomy; RB opportunity-elasticity/event-count model; pricing + invalidators; active rc4.84 mock remains untouched"
+      "Upside Research v3 added as non-runtime ledger: WR/TE breakout vs consolidation vs role-takeover taxonomy; RB opportunity-elasticity/event-count model; pricing + invalidators; active rc4.84 mock remains untouched",
+      "rc4.85 adds only Expert-v3 challenger export acquisition path; frozen Expert-v2 and Decision Kernel remain unchanged"
     ],
     "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
     "note": "rc4.82 remains last fully Android-verified authority. rc4.83 remains deployed test challenger only; Decision Kernel coefficients stay frozen pending realistic slot-9 OOS Evidence-v2. Transfer/release/evidence guards are generation-generic.",
@@ -190,7 +191,7 @@
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
     "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
-    "nextGate": "rc4.84 Android/device verify -> realistic slot-9 mock -> refresh -> Evidence-v2 export -> clean OOS analysis",
+    "nextGate": "Package/re-extract rc4.85 -> device update -> export exact challenger JSON -> compute/test Expert-v3 weights",
     "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION"
   }
 }
