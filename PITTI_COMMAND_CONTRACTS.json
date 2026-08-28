@@ -83,20 +83,20 @@
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.64",
-    "androidAuthority": "v11.8.0-rc4.91",
+    "androidAuthority": "v11.8.0-rc4.93",
     "androidVersionObserved": true,
     "androidFunctionalVerificationPending": true,
-    "sourceAuthority": "v11.8.0-rc4.91",
-    "latestPackageReextract": "v11.8.0-rc4.91",
-    "latestPackageSha256": "64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72",
+    "sourceAuthority": "v11.8.0-rc4.94",
+    "latestPackageReextract": "v11.8.0-rc4.93",
+    "latestPackageSha256": "3ce741b71cbc3f35b026e6aa8f9622e10999ecd29c54c0d66f6fcfdef379db95",
     "packageRuntimeFiles": 13,
-    "deployedPagesVersion": "v11.8.0-rc4.91",
+    "deployedPagesVersion": "v11.8.0-rc4.93",
     "deployedPagesAppByteParityWithMain": false,
-    "deployedPagesNote": "gh-pages app.js is an older rc4.91 byte set: Henry/polarity fix present, latest broad evidence batch absent. Do not infer byte parity from matching version string.",
+    "deployedPagesNote": "gh-pages remains rc4.93 while main rc4.94 is an un-deployed display-only challenger; app.js differs by design until rc4.94 gates/deployment pass.",
     "libraryRecoveryAlias": "v11.8.0-rc4.52",
-    "packageReferenceRun": 33162367347,
-    "packageReferenceArtifactId": 9682152886,
-    "packageHashSemantics": "Reference inspected artifact hash; not a deterministic build identity."
+    "packageReferenceRun": 33166867111,
+    "packageReferenceArtifactId": 9683925309,
+    "packageHashSemantics": "GitHub artifact digest for the successful rc4.93 candidate package; durable authority also requires runtime blob/re-extract gates."
   },
-  "currentGate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH"
+  "currentGate": "RC494_NORMAL_CUT_DISPLAY_FIX_CI_PACKAGE_DEPLOY_ANDROID_VERIFY"
 }
