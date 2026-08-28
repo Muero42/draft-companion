@@ -1,14 +1,14 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T100500Z-v132",
-  "created_at": "2026-08-28T10:11:00Z",
+  "created_at": "2026-08-28T10:13:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_CURRENT_STATE.json": "d39bdc47367125ebf862f0189c35900ca9df362e",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "969cd3193c1a9b4e65874672129157a82d9b8920",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "80086766aeb790d3463ddc5873b3d48a54dced2a",
     "PITTI_COMMAND_CONTRACTS.json": "41ffd8e89066b5e880ff11d6dffdd85e07127fdb",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e4ba6389db3da869ab2106c0d14ac83e68c6bdc2",
     "HANDOFF_COMPLETENESS_MATRIX.md": "fee56a284a58a575b657d4b354f759dcdc48452d",
