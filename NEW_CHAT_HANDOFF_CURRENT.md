@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T083000Z-v129`
-Updated: 2026-08-28 08:30Z
+Handoff generation: `20260828T083800Z-v130`
+Updated: 2026-08-28 08:38Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -296,3 +296,11 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Weak early-round generic Pro/Contra was not merely a late-draft coverage problem. Added explicit current display/risk evidence for James Cook, CeeDee Lamb, Justin Jefferson and Brock Bowers; broader anti-repeat research continues separately.
 - Decision Kernel, Return-v2, roster policy, Expert-v2 board and Expert-v3 weights are unchanged.
 - Exact gate: full rc4.89 release/package/guardrails -> gh-pages parity -> Android visual verification. No mock.
+
+
+## V130 RC4.89 FULL RELEASE CLOSURE
+- rc4.89 final sealed CI set PASS: Project Guardrails, Release Contract v2, Candidate Package/Re-extract, rc4.82 gate and rc4.83 gate.
+- Independent artifact inspection: `Draft_Companion_v11.8.0-rc4.89_PREINSTALL.zip`, exactly 13 runtime files, SHA-256 `2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608`; candidate.sha256 matches.
+- main/gh-pages runtime parity verified 13/13.
+- Android authority remains rc4.88 until device update/reload proves rc4.89.
+- Exact next action: update/reload to rc4.89 and visually verify Expert-v3 voices, uniform full Top-10 cards, orange per-card Normal-Cut warning, richer Pro/Contra. No mock.
