@@ -20,7 +20,7 @@
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
     "sw.js": "aa70410aecc5f7acf6b26286d2c2d13b095d9ad3",
     "manifest.webmanifest": "9033c63189b689b8d89cbb75eb046377868321c9",
-    "tools/rc483-draft-critical.mjs": "ace2fd0c36e870cf416c3f70700f102545df62e1",
+    "tools/rc483-draft-critical.mjs": "78bbc1a68b8fb87cedef86e5c629b807ea3ed533",
     "tools/rc484-draft-critical.mjs": "37edb64fe25bbc0cbff621c21803c229f0153c8b",
     "tools/rc485-draft-critical.mjs": "b0266be12925f9bb0f04474418ba4d5a6178a619",
     "tools/analyze-decision-evidence.mjs": "bb75950cc1698659769d7412adef71bb2e41d494",
@@ -43,7 +43,7 @@
     "tools/rc490-draft-critical.mjs": "0897971e1bdaf5e87b8233c60ee2c00e45f3742b",
     "tools/rc491-return-calibration.mjs": "b64485b69f1929dde260591288dabdc0eb656d7d",
     "live-surface-v3.js": "72e8beb87a5f73284e9d7d1d50dde6abea15c510",
-    "tools/rc482-draft-critical.mjs": "2efe395989717744454e7f07000d6be26a193f4a"
+    "tools/rc482-draft-critical.mjs": "3f992a5c0112c45108ea1da607a67c52d82db271"
   },
   "checks": {
     "current_generation": true,
@@ -189,7 +189,8 @@
     "v146_rc495_deployed_parity": true,
     "v147_rc496_source_regression_pass": true,
     "v147_guardrail_reseal_in_progress": false,
-    "v147_transaction_closed": true
+    "v147_transaction_closed": true,
+    "v148_successor_safe_legacy_canaries": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
