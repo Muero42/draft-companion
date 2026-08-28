@@ -1640,3 +1640,9 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - GitHub commit 98d5a95197e9316e2db78ed4104313ae16f4a6b8 has no associated GitHub Actions workflow runs and no combined-status checks. Therefore rc4.95 must NOT be described as CI/regression-gated yet.
 - Repository search likewise exposes no workflow_dispatch/candidate-package-gate entry via the connected GitHub surface. The previously used release gates are not automatically running on this source commit.
 - Consequence: safest path is to keep the user's live rc4.94 mock uninterrupted, treat rc4.95 as a tiny source challenger, and run/package the established local/release regression suite through the existing project release path before Android install. Do not ask user to install an un-gated build.
+
+
+### 2026-08-28 — rc4.95 release metadata parity correction
+- AUTO audit found rc4.95 source-version bump was incomplete at package metadata level: index.html still cache-busted live-surface-v3.css with rc4.94, and manifest.webmanifest description still advertised rc4.94.
+- Corrected both to rc4.95 (commits 43c6d54bef078bb1dedb6a98ee059349a8821028 and 20632a6ee64a6b6faf793da6d9f5e8ab5c7c3fe1).
+- This was a real release-parity issue, not cosmetic: stale cache-busting metadata could allow an Android/PWA deployment to mix source generations. Keep rc4.95 unapproved until full candidate package/release gates run.
