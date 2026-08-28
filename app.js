@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.85';
+const APP_VERSION='v11.8.0-rc4.86';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2393,9 +2393,10 @@ async function exportExpertV3Challengers(){
     if(!e){found.push({name,status:'missing'});continue}
     try{
       status.textContent='Lade '+name+' …';
-      const row=await loadSingleExpert(e);
-      const ranks=(row?.ranks||row?.players||[]), players=Array.isArray(ranks)?ranks:Object.entries(ranks||{}).map(([id,v])=>({id,...v}));
-      found.push({name,id:String(e.id),site:e.site||e.source||'',status:'ok',meta:{verifiedIndividual:!!row?.verifiedIndividual,expertName:row?.expertName||name,updated:row?.updated||row?.lastUpdated||null,source:row?.source||null},raw:row,players});
+      const row=await loadExpertRanks(e.id);
+      if(!row?.verifiedIndividual)throw new Error(row?.error||'Kein verifiziertes Einzelranking verfügbar.');
+      const players=Object.entries(row.ranks||{}).map(([key,v])=>({key,...v})).sort((a,b)=>Number(a.rank)-Number(b.rank));
+      found.push({name,id:String(e.id),site:e.site||e.source||'',status:'ok',meta:{verifiedIndividual:true,expertName:row.expertName||name,updated:row.sourceUpdated||row.updated||null,source:row.source||null,sourceSeason:row.sourceSeason||null,sourceScoring:row.sourceScoring||null,staleFallback:!!row.staleFallback},players});
     }catch(err){found.push({name,id:String(e.id),status:'error',error:err?.message||String(err)})}
   }
   const out={schema:'pitti-expert-v3-challengers.v1',appVersion:APP_VERSION,createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,targets,containsCredential:false,experts:found};
