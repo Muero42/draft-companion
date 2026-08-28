@@ -65,5 +65,11 @@ Otherwise continue AUTO.
 - K/DST normally not drafted.
 - Geno Smith/Aaron Rodgers excluded from user's QB path.
 - Excess WR depth must materially reduce redundant WR utility.
-- Expert-v2: Brown excluded; Erickson challenger; Koerner no current-draft acquisition effort; Mariano availability already solved; Draft Sharks counted as one correlated family; temporary Weisse/Gianni/Bobal pool rejected.
+- Expert-v2: Brown excluded; Erickson challenger; Koerner no current-draft acquisition effort; Mariano availability already solved; Draft Sharks counted as one correlated family; availability-only automatic restoration of the old Weisse/Gianni/Bobal trio rejected; Ryan Weisse or others may be freshly qualified individually with evidence.
 - Frozen Expert-v2 weights/profile semantics in `PITTI_EXECUTION_LOCK.json` are authoritative for the current experiment; do not invent, silently renormalize, or retune them without new promotion evidence.
+
+
+## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — v119
+- Never answer an AUTO turn with “AUTO läuft”, “ich mache weiter”, or equivalent future-tense progress prose. Work must be executed **before** any reply.
+- During PITTI HANDOFF, finish the complete transactional audit/reseal before replying unless an unavoidable blocker prevents it.
+- Current update path: rc4.85 is already deployed to gh-pages; prefer normal PWA/self-update/reload verification over expiring ChatGPT file links.
