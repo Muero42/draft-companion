@@ -1,7 +1,6 @@
 name: package rc4.61
 on:
-  push:
-    branches: [main]
+  workflow_dispatch:
     paths:
       - 'README.md'
       - '_worker.js'
