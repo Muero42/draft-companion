@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T100500Z-v132`
-Updated: 2026-08-28 09:45Z
+Handoff generation: `20260828T102000Z-v133`
+Updated: 2026-08-28 10:20Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -16,14 +16,17 @@ Updated: 2026-08-28 09:45Z
 
 ## CURRENT AUTHORITY
 - League: 10-team Half-PPR, 1QB, real draft 2026-08-31, user slot 9.
-- User strategy: exactly one drafted QB; after QB1 all QBs disappear from user's Coach surface. Geno Smith and Aaron Rodgers are hard exclusions.
+- User strategy: exactly one drafted QB; after QB1 all QBs disappear from the user's Coach surface. Geno Smith and Aaron Rodgers are hard exclusions.
 - K/DST normally not drafted. Starter maxima are NOT roster caps.
-- rc4.87 = current Android authority; compact Expert-v3 export verified Weisse RB, Wolf TE and Todd QB; Joey Wright WR is unavailable.
-- rc4.85 export attempt exposed a deterministic defect: `loadSingleExpert is not defined`.
-- rc4.88 = current deployed Expert-v3 integration candidate. It adds a fourth selectable positional profile; Decision Kernel/Return-v2 remain unchanged.
-- rc4.85 changes ONLY the integrated Expert-v3 challenger export. rc4.84 Decision Kernel, Return-v2 and Frozen Expert-v2 remain unchanged.
-- Expert-v2 remains fully selectable/control. Brown stays excluded. Erickson remains qualitative/challenger only. Weisse may be freshly qualified; old availability-driven temporary-pool restoration remains forbidden.
-- Upside-v3/player research remains a parallel lane only during genuine Expert-v3 wait time. Settled players are not repeatedly re-queried without genuinely new decision-changing news.
+- Production/control baseline remains rc4.64 and must stay selectable.
+- **Android version authority is rc4.91**, directly observed in the user's screenshot on 2026-08-28. Do not downgrade to rc4.89/88/87 because historical sections mention them.
+- Android functional verification is still pending for: actual Expert-v3 rows, evidence polarity/quality, unified rich Top-10 rendering, and short-turn Return-v2 behavior.
+- Current source authority is rc4.91.
+- Latest package/re-extract is rc4.91, 13 runtime files, SHA-256 `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`.
+- gh-pages reports rc4.91, but **app.js bytes lag main** after the newest broad research batch. Henry/evidence-polarity fixes are present on gh-pages; the latest broad evidence additions are only in main/package. Matching version text is NOT byte parity.
+- Expert-v3 is already integrated and selectable: QB Todd D Clark 10%, RB Ryan Weisse 10%, TE Wolf of Roto Street 10%; WR remains exact frozen Expert-v2 because Joey Wright current vector is unavailable.
+- Expert-v2 remains selectable/control. Derek Brown remains excluded from new v2; Erickson remains qualitative/challenger only; Draft Sharks counted once.
+- Broad upside/differentiator research remains coverage-first and anti-repeat. Evidence enrichment is not automatic ranking promotion.
 
 ## WHY RC4.83 EXISTS
 User showed late-round Coach recommendations that remained WR-heavy despite already having 7 WR. A later completed roster cannot be treated as Coach success because the user manually overrode many recommendations.
@@ -42,11 +45,22 @@ rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. In
 - Do NOT ask user to manually document picks during the mock.
 
 ## CURRENT EXTERNAL GATE
-`ANDROID_RC4.88_EXPERT_V3_PROFILE_VERIFY`
+`RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`
 
-The preferred update route is the already deployed Companion/PWA path. **Do not ask for or regenerate the expired ChatGPT PREINSTALL link as the default solution.** First reload/update the installed app and verify badge `v11.8.0-rc4.85`. If it remains rc4.84, diagnose the service-worker/cache/update path before inventing another install route.
+Receiving chat must first verify v133 CURRENT/SEAL/Handoff generation equality and every seal-listed blob hash. Then continue from the observed rc4.91 Android state.
 
-After rc4.85 is Android-verified: press `Expert-v3 Challenger exportieren` once and share the credential-free JSON. No mock is needed. Then AUTO: exact vector validation -> v2/v3 marginal grids -> DS35/30/25 redistribution test -> composition/weights -> separate selectable Expert-v3 preset -> regression/package/device gates. No broad expert re-screening.
+Functional device checks still required:
+- actual Expert-v3 individual rows are the ones used/displayed;
+- no old incumbent expert fallback;
+- ten full candidate cards rendered once, no duplicated compact Top-10;
+- Normal-Cut warning at bottom in orange;
+- positive/negative evidence polarity is correct; `Reach`/risk/wait/decline can never be a plus;
+- Derrick Henry has genuine workhorse/goal-line/TD-ceiling positive evidence plus age/workload/receiving-floor risk;
+- rc4.91 short-turn Return-v2 calibration uses early tau 4.25 and does not return to the false ~99% survival behavior caused by tau 1.35.
+
+Do not restart Expert-v3 export/acquisition and do not start a mock unless explicitly requested. If device evidence is unavailable, continue independent broad anti-repeat research and other positive-value lanes.
+
+**AUTO BLOCK** is a zero-ack correction trigger: immediately resume the already-defined AUTO loop, with no acknowledgement/apology/status/explanation.
 
 ## QB EVIDENCE — KEEP QUALITATIVE, AVOID DOUBLE COUNTING
 - Pat Fitzmaurice direct answer supports a late/fallback path centered on Kyler Murray / Jared Goff / Malik Willis; user considers Goff floor + observe Willis in FA a plausible late strategy.
@@ -346,3 +360,12 @@ User screenshot confirms Draft Companion v11.8.0-rc4.91 loaded on Android. rc4.9
 - No automatic mock. Real draft 2026-08-31; freeze discipline: bounded low-risk regression-tested fixes/evidence enrichment only. Acute-status freshness gate required before real draft.
 
 HANDOFF_GENERATION: 20260828T100500Z-v132
+
+
+## V133 HANDOFF AUDIT — ACTIVE OVERRIDES
+- This v133 audit explicitly supersedes stale active pointers in historical V105–V132 sections.
+- rc4.91 Android version observed; functional verification pending.
+- rc4.91 package/re-extract SHA-256: `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`; 13 runtime files.
+- main and gh-pages are NOT fully byte-identical: current main `app.js` contains the newest broad evidence batch, gh-pages `app.js` does not. Do not claim parity until explicitly resynchronized and reverified.
+- Latest integrated broad evidence batch includes Blake Corum, Rachaad White, Jordan Mason, Jake Ferguson, Juwan Johnson, Malachi Fields and Romeo Doubs; Henry polarity/evidence fix is retained.
+- Five workflow families were green on the final v132 sealed source before this documentation-only v133 audit. After v133 reseal, rerun and require all five green again.
