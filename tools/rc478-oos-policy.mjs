@@ -19,9 +19,9 @@ for(const name of ['Kyler Murray','Jared Goff']){
 assert.equal(safetyPromotionEligiblePolicy({pos:'WR',counts:{WR:7},rank:130.8,adp:127.3,current:129}),false,'pick129 ordinary WR8 safety resurrection');
 assert.equal(safetyPromotionEligiblePolicy({pos:'WR',counts:{WR:7},rank:130.8,adp:127.3,current:132}),false,'pick132 ordinary WR8 safety resurrection');
 
-// Not a WR cap: genuine strong market value can still be protected, and WR6 is unaffected.
+// Not a WR cap: genuine strong market value can still be protected; late WR6+ ordinary safety resurrection is bounded.
 assert.equal(safetyPromotionEligiblePolicy({pos:'WR',counts:{WR:7},rank:105,adp:110,current:132}),true,'exceptional WR value must remain eligible');
-assert.equal(safetyPromotionEligiblePolicy({pos:'WR',counts:{WR:6},rank:130.8,adp:127.3,current:132}),true,'WR6 must not be hard-capped');
+assert.equal(safetyPromotionEligiblePolicy({pos:'WR',counts:{WR:6},rank:130.8,adp:127.3,current:132}),false,'ordinary late WR6 safety resurrection must be bounded');
 
 // Late RB remains eligible; no blind RB forcing is encoded here.
 assert.equal(safetyPromotionEligiblePolicy({pos:'RB',counts:{RB:5,WR:7,QB:1,TE:1},rank:157.3,adp:162.6,current:149}),true,'late RB eligibility unexpectedly blocked');
