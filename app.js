@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.95';
+const APP_VERSION='v11.8.0-rc4.96';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -1570,6 +1570,15 @@ function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   const agree=agreement(r.sd,r.n);
   if(agree==='Sehr hoher Konsens')score+=1.5;
   else if(agree==='Stark umstritten')score-=3;
+  // rc4.96: modest continuous dispersion calibration. Expert disagreement is uncertainty,
+  // not evidence that a player is bad; keep the adjustment small and symmetric around SD 7.
+  // This prevents two optimistic experts from over-promoting a volatile panel while preserving
+  // genuine breakout candidates for the research/upside layers.
+  if(Number.isFinite(r.sd)){
+    const dispersionAdj=clamp((7-r.sd)*.12,-1.25,.75);
+    score+=dispersionAdj;
+    if(Math.abs(dispersionAdj)>=.5)reasons.push(`Panel-Streuung ${dispersionAdj>0?'Bonus':'Unsicherheit'} ${dispersionAdj>0?'+':''}${dispersionAdj.toFixed(1)}`);
+  }
   if(p.injury){const st=String(p.injury).toUpperCase(),freeIr=(state.irEligible||0)<(state.irSlots||0);const pen=st==='PUP'&&freeIr&&current>=121?0:st==='PUP'?3:st==='QUESTIONABLE'?0:st==='DOUBTFUL'?7:st==='IR'&&freeIr?12:st==='IR'?18:8;score-=pen;if(pen>0)reasons.push(`Injury ${p.injury}${st==='PUP'?' · Return-Timetable prüfen':''}${st==='IR'?' · Season-ending prüfen':''}`);else if(st==='QUESTIONABLE')reasons.push('Questionable · kein pauschaler Score-Abzug; aktuelle Evidenz prüfen')}
   if(p.bye&&(state.byes[p.pos]?.[p.bye]||0)>=2){score-=1;reasons.push(`Bye ${p.bye} (nur Tiebreaker)`)}
   // Return is scored only after Return-v2 / fallback resolution in the coach loop.
