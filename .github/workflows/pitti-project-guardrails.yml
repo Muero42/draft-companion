@@ -52,6 +52,9 @@ jobs:
       - name: rc4.99 WR saturation contract
         if: contains(github.head_ref || github.ref_name, 'rc4.99-wr-saturation-semantic-audit')
         run: node tools/rc499-wr-saturation.mjs
+      - name: rc4.99 normal-cut timing contract
+        if: contains(github.head_ref || github.ref_name, 'rc4.99-wr-saturation-semantic-audit')
+        run: node tools/rc499-normal-cut.mjs
       - name: PITTI execution-lock and anti-regression gate
         env:
           PITTI_SKIP_SEAL_INTEGRITY: ${{ github.event_name == 'pull_request' && '1' || '0' }}
