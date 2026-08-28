@@ -11,7 +11,7 @@ jobs:
       - uses: actions/setup-node@v4
         with: {node-version: 22}
       - name: Syntax
-        run: node --check app.js && node --check decision-policy.js && node --check live-surface-v3.js && node --check expert-v2-board.js && node --check sw.js
+        run: node --check app.js && node --check decision-policy.js && node --check live-surface-v3.js && node --check expert-v2-board.js && node --check expert-v3-board.js && node --check sw.js
       - name: Fail closed on hand-coded product prose
         run: |
           ! grep -q "PLAYER_EVIDENCE" live-surface-v3.js
@@ -28,3 +28,4 @@ jobs:
           node tools/rc485-draft-critical.mjs
           node tools/rc486-draft-critical.mjs
           node tools/rc487-draft-critical.mjs
+          node tools/rc488-draft-critical.mjs
