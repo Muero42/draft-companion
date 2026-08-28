@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T085400Z-v129`
-Updated: 2026-08-28 08:54Z
+Handoff generation: `20260828T091500Z-v130`
+Updated: 2026-08-28 09:15Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -311,3 +311,11 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Ten candidates now use ten full cards; duplicate 10ER overview removed; normal-cut warning at card bottom in orange.
 - Generic pro/contra fallback phrases removed in favor of evidence/context-linked fallbacks.
 - Final five-workflow set PASS after root-cause repairs. Deployed to gh-pages; Android reload/visual verification is next gate, then broad anti-repeat research.
+
+
+## V130 RC4.90 PRE-DEVICE ROOT-CAUSE FIX
+- User screenshot on rc4.89 proved the selected Expert-v3 UI did NOT guarantee v3 ranks: `panelSelectable()` only whitelisted Expert-v2 shadow boards, so `panelFor()` rejected `expert-v3-*` and silently fell back to the old active panel. This is the exact reason old experts still appeared.
+- rc4.90 fixes panel selectability for Expert-v2 and Expert-v3 shadow boards. Live state now exposes actual `panelId`/profile, and expert labels are generated exclusively from the actual `individual` rows used for that candidate, never re-inferred from selector state.
+- Pre-device regression requires James Cook RB actual v3 composition = DS/Del Don/Pat/Mariano/Weisse; Bowers TE includes Wolf; QB includes Todd.
+- Early-info coverage expanded for the exact current Top-10: Cook, Lamb, Jefferson, Barkley, Bowers, Chase Brown, Achane, Kenneth Walker, Omarion Hampton, Drake London. Generic filler remains forbidden.
+- IMPORTANT: rc4.90 must NOT be deployed to Android until the sealed full workflow set passes. This explicitly implements the user's requirement to verify before phone rollout.
