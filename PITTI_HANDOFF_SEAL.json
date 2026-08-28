@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T111000Z-v141",
-  "created_at": "2026-08-28T11:25:00Z",
+  "created_at": "2026-08-28T11:31:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -13,7 +13,7 @@
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e861d746a7adc8dbfc4ad775af55b6d591416b26",
     "HANDOFF_COMPLETENESS_MATRIX.md": "a5cf7bf156b0fbab97abe7053b135f029abdf01e",
     "PITTI_EXECUTION_LOCK.json": "ca719d74222953882a5e924a408b7ec378a07d4c",
-    "PITTI_PROJECT_STATE.md": "2e5f47a663dede7d4b204c31ac2bdd9c08f071d8",
+    "PITTI_PROJECT_STATE.md": "7d5dd802d1ba0edc2a9a4ca5d119fb48b4e2242d",
     "PITTI_AUTO_PREFLIGHT.md": "04322998286de54ddd7c71f9e116501e423e70d9",
     "app.js": "cd16fc30b2830240be2fea2c4d54380cf281ea12",
     "index.html": "af1315e41ec5668690198aad53610e0e49ac6ef1",
@@ -160,7 +160,8 @@
     "v141_rc492_device_observed": true,
     "v141_walker_p0_preserved": true,
     "v141_stale_active_pointers_repaired": true,
-    "v141_second_pass_complete": true
+    "v141_second_pass_complete": true,
+    "v141_all_five_primary_gates_pass": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
