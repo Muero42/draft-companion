@@ -27,8 +27,8 @@
   "exact_continuation": {
     "gate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH",
     "auto_starts_mock": false,
-    "instruction": "Package/deploy rc4.92 and functionally verify on Android. Geno Smith and Aaron Rodgers must remain ordinary QB candidates and rank organically; no player-name exclusion/forcing. Continue broad anti-repeat research in parallel.",
-    "next_gate": "RC492_PACKAGE_DEPLOY_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH"
+    "instruction": "rc4.92 source/CI/package and gh-pages runtime parity are verified. Android remains observed rc4.91. Next: load/install deployed rc4.92 on Android and verify version plus focused live behavior including organic QB ranking/no player-name exclusions.",
+    "next_gate": "RC492_ANDROID_INSTALL_AND_FUNCTIONAL_VERIFY"
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -53,7 +53,8 @@
     "next_action": "Receiving chat verifies generation v137 and seal integrity, then resumes RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH. No mock."
   },
   "source_authority": "rc4.92",
-  "package_authority": "rc4.91",
+  "package_authority": "rc4.92",
   "android_version_observed": "rc4.91",
-  "android_functional_verified": false
+  "android_functional_verified": false,
+  "deployment_authority": "rc4.92"
 }
