@@ -329,3 +329,18 @@ Audit found the 99% Brown/Walker short-turn return was not trustworthy: early si
 
 ## RC4.91 ANDROID AUTHORITY — DEVICE OBSERVED
 User screenshot confirms Draft Companion v11.8.0-rc4.91 loaded on Android. rc4.91 is now the device authority. Remaining gate is functional/visual verification of Expert-v3 actual rows, evidence polarity, early Top-10 evidence and Return-v2 short-turn behavior. Do not reconstruct Android authority as rc4.89.
+
+
+# V132 — CURRENT HANDOFF (2026-08-28 10:05Z)
+**Authority order:** PITTI_CURRENT_STATE.json + PITTI_HANDOFF_SEAL.json + latest appended PITTI_PROJECT_STATE.md section. Older sections are history and must not override this block.
+
+- Android-observed authority: **v11.8.0-rc4.91** (user screenshot). Source/test challenger: rc4.91. Never regress to rc4.89 from stale package prose.
+- Active continuation gate: **RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH**.
+- Verify on device when evidence is available: selected Expert-v3 must resolve actual positional expert rows (QB Todd; RB Weisse; TE Wolf; WR exact v2 fallback); Top-10 is ten uniform rich cards with no duplicate overview; orange Normal-Cut warning at card bottom; no negative concept such as Reach/risk/wait/decline may render as '+'.
+- Derrick Henry regression: '+ Reach 7' was invalid presentation polarity. Fixed. Henry positive thesis is workhorse/goal-line/TD ceiling; downside is age/cumulative workload/lower receiving floor.
+- rc4.91 Return-v2 correction: early pick<=30 tau=4.25, replacing overconfident tau=1.35. Do not revert. Purpose is realistic survival probability for ADP ~16-19 around 1.09/2.02; no player-specific forcing.
+- Expert-v3 weights: QB DS25/Mariano25/DelDon20/Boone10/Pat10/Todd10; RB DS25/Mariano25/DelDon25/Pat15/Weisse10; TE DS25/Pat30/DelDon25/Boone10/Wolf10; WR unchanged Expert-v2. Joey Wright missing, never proxy/fabricate.
+- Broad research: coverage-first, anti-repeat. Latest integrated evidence batch: Blake Corum, Rachaad White, Jordan Mason, Jake Ferguson, Juwan Johnson, Malachi Fields, Romeo Doubs. Earlier broad early-board evidence remains. Research is causal upside/differentiator + invalidator, not generic sleeper labels and not automatic score boosts.
+- Latest resealed broad-evidence state passed all five CI families. rc4.82/rc4.83 labels are legacy regression-suite names only.
+- **AUTO:** long autonomous blocks, use independent lanes during waits, no progress/status-only replies while executable work exists. **AUTO BLOCK:** correction trigger; zero acknowledgement/explanation, simply resume this behavior. Interrupt only for material result, unavoidable user action, or non-self-solvable blocker.
+- No automatic mock. Real draft 2026-08-31; freeze discipline: bounded low-risk regression-tested fixes/evidence enrichment only. Acute-status freshness gate required before real draft.
