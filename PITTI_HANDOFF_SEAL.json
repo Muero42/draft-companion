@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T171200Z-v149",
-  "created_at": "2026-08-28T17:12:00Z",
+  "handoff_generation": "20260828T172200Z-v150",
+  "created_at": "2026-08-28T17:22:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "902ae487cadd1a16fcf2bcda92639a2d0464e6b3",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "e13653adbcebcfe2a6659288c4f51d958509b1d1",
-    "PITTI_COMMAND_CONTRACTS.json": "985d1eb69b631a519716083e7b960446e3547edc",
+    "PITTI_CURRENT_STATE.json": "13bb644f18ed0cd946a835f1702b9cda1fad2005",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "1a959da9c89e8062a88391c5035686d859c6d038",
+    "PITTI_COMMAND_CONTRACTS.json": "1c262c870ae056d0dc54ae9c3dadc1b677633f56",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "3f3c8ead0489cb946641f3839625261043dfacc1",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "73844e0b353e61e49d4eaac1e38d84bb02c91319",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "fb0bb07da890f37530962e9f8449a0da390be09d",
     "PITTI_EXECUTION_LOCK.json": "51c65c785c2f66267dc88d5735fb4f3f718a6436",
-    "PITTI_PROJECT_STATE.md": "d46900e71bbdde91ade42c994af9adf85bfe6d06",
+    "PITTI_PROJECT_STATE.md": "49a80b0b44800f788ffac6eade69d3c041c2075f",
     "PITTI_AUTO_PREFLIGHT.md": "5dd967ac26a5b5465e769b60d6537ecd3ef01cdc",
     "app.js": "fe0d63a5fcc50ab9b1341ef8a93bbb82938211be",
     "index.html": "34f6aa57934db506c8aec2ff314690929f1ddf36",
@@ -195,7 +195,12 @@
     "v148_release_head": "28e820c0335bada4c361c334349c995477bed2a4",
     "v149_rc496_package_reextract_pass": true,
     "v149_rc496_deploy_parity_pass": true,
-    "v149_android_verify_pending": true
+    "v149_android_verify_pending": true,
+    "v150_deep_handoff_audit": true,
+    "v150_rc496_all5_reference_verified": true,
+    "v150_rc496_package_reextract_reference": true,
+    "v150_rc496_main_pages_13of13": true,
+    "v150_android_rc494_rc496_pending": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
@@ -212,11 +217,11 @@
     "android_functional_verified": true,
     "source_authority": "v11.8.0-rc4.96",
     "test_challenger": "v11.8.0-rc4.96",
-    "test_challenger_android_verified": true,
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.96",
     "latest_package_digest": "18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0",
     "package_runtime_files": 13,
-    "deployed_pages_version": "v11.8.0-rc4.95",
+    "deployed_pages_version": "v11.8.0-rc4.96",
     "deployed_pages_app_byte_parity_with_main": true,
     "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR exact v2 fallback",
     "package_reference_run": 33183057716,
@@ -224,9 +229,9 @@
     "note": "v145 closure boundary: rc4.94 source/package/re-extract + exact 13-file gh-pages deployment parity + fresh Android Pick-9 presentation verified."
   },
   "exact_continuation": {
-    "gate": "RC496_DEPLOY_PARITY",
+    "gate": "RC496_ANDROID_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "rc4.96 all five primary gates and candidate package/re-extract PASS. Deploy exact rc4.96 runtime to gh-pages and verify byte parity; Android rc4.94 remains device authority until fresh verification."
+    "instruction": "Verify v150 seal and rc4.96 release/deployment authority. Then obtain one fresh Android/PWA rc4.96 functional snapshot before Android promotion; no automatic mock."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
   "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-PACKAGE-PASS|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v144"
