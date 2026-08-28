@@ -1011,3 +1011,28 @@ Challenger families to test after current Evidence-v2 analysis: incumbent weight
 - Existing `expert-v2-board.js` verified as complete frozen control with all individual rank vectors and weights. No change to Expert-v2.
 - Public web cross-check immediately before implementation still verifies Weisse 2026 Half-PPR overall Aug24/RB Aug22 and Wolf TE Half-PPR Aug25; these are sanity checks only, not substitutes for exported exact vectors.
 - Next hard gate: run `expert-v3-audit.html` on the same Companion origin that holds `v7_apiKey`, then import the exported JSON into chat. After that ChatGPT can autonomously compute v2-v3 grids, choose composition/weights, implement separate preset, and regression-test. No further broad research before this gate.
+
+
+---
+
+## 2026-08-28 — v117 Expert-v3 acquisition release checkpoint
+
+rc4.85 integrates the already-proven local FantasyPros filtered-single-expert pipeline directly into Draft Companion. Target set: Ryan Weisse, Wolf of Roto Street, Todd D Clark, Joey Wright. Export is credential-free and acquisition-only. Expert-v2 frozen board, Decision Kernel, Return-v2, manager model and Upside-v3 scoring are unchanged.
+
+The prior user instruction to run a standalone repo HTML before updating the app was invalid and is superseded. Correct route: package/re-extract rc4.85 first -> device update once -> integrated v3 export -> JSON back to chat -> compute/test weights -> separate selectable Expert-v3 preset.
+
+Release-gate audit found stale regression infrastructure and is being repaired rather than bypassed: rc478 still assumed WR6 untouched, rc483/rc484 exact-version tests treated successors as failures, README lagged candidate state, and guardrails still interpreted Weisse as permanently rejected. These are test/authority regressions, not runtime policy changes.
+
+### Guard invariant phrases — active authority
+- Source of Truth for PITTI/Draft Companion execution
+- AUTO means end-to-end autonomous execution
+- Never silently revive a rejected/obsolete approach
+- Material decisions, implementations, verifications, failures, rejected approaches, artifact state and next gates must be written here promptly
+- New-chat recovery: read this file first
+- Built/prepared != deployed != Android verified
+- Regression prevention is technical where possible
+- three selectable profiles remain the incumbent Expert-v2 authority until Expert-v3 passes
+- Expert-v2 ALL positions remains selectable
+- Expert-v2 WR-only remains selectable
+
+No user action until rc4.85 package/re-extract PASS.
