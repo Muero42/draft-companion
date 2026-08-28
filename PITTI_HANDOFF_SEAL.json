@@ -1,20 +1,20 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T115500Z-v140",
-  "created_at": "2026-08-28T12:00:00Z",
+  "handoff_generation": "20260828T111000Z-v141",
+  "created_at": "2026-08-28T11:18:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "344bd003903934977b9cb7e1120081ede88dfb77",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "51846ddf080597399f5ceda9bbc292d877a87412",
+    "PITTI_CURRENT_STATE.json": "de85d0a670762c4de33480a130600c83f00922bf",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "24d9691435ad1509a7b2427c33a8013928285ae5",
     "PITTI_COMMAND_CONTRACTS.json": "989d42d36ab2e1493ca4fb42aa2784ea7f9a85be",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "694bc62b161c661af12a7fb6d9897baa7a599feb",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "5874db795ef6baf4823d451fd27f57ae484a5429",
-    "PITTI_EXECUTION_LOCK.json": "15f5099206d6a9324da0e9979764d5bc0e3ff3cd",
-    "PITTI_PROJECT_STATE.md": "fb3f1d965cef86e1b5edef6d8a46a670ffd0b0e6",
-    "PITTI_AUTO_PREFLIGHT.md": "d5eb9c7e3225e09ac5b18c69bc8383f8fdc40d01",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "fee59627704ab5b427fab8cb6cefaf1b83c15578",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "87463b0707c015811f18743d4422bcc96374d622",
+    "PITTI_EXECUTION_LOCK.json": "ca719d74222953882a5e924a408b7ec378a07d4c",
+    "PITTI_PROJECT_STATE.md": "2e5f47a663dede7d4b204c31ac2bdd9c08f071d8",
+    "PITTI_AUTO_PREFLIGHT.md": "04322998286de54ddd7c71f9e116501e423e70d9",
     "app.js": "cd16fc30b2830240be2fea2c4d54380cf281ea12",
     "index.html": "af1315e41ec5668690198aad53610e0e49ac6ef1",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
@@ -30,7 +30,7 @@
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "3cab828ef4c5db40b3cc4834a4f72f1e99d0232e",
+    "README.md": "14e3a0e9f584d29ab49e56af7c260447e9a9d021",
     ".github/workflows/release-contract-v2.yml": "a87aac1320f524565c2de7abaab3a25befc22213",
     ".github/workflows/release-contract-v2-package.yml": "d4f0c9f7495f802b10c91a5a7c3c60675193ec8d",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
@@ -156,7 +156,10 @@
     "v137_generation_synced": true,
     "v140_rc492_anti_forcing": true,
     "v140_auto_contract_170": true,
-    "v140_reseal": true
+    "v140_reseal": true,
+    "v141_rc492_device_observed": true,
+    "v141_walker_p0_preserved": true,
+    "v141_stale_active_pointers_repaired": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
@@ -168,17 +171,17 @@
   },
   "runtime_boundary": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.91",
+    "android_authority": "v11.8.0-rc4.92",
     "android_version_observed": true,
     "android_functional_verified": false,
-    "source_authority": "v11.8.0-rc4.91",
-    "test_challenger": "v11.8.0-rc4.91",
+    "source_authority": "v11.8.0-rc4.92",
+    "test_challenger": "v11.8.0-rc4.92",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.91",
+    "latest_package_reextract": "v11.8.0-rc4.92",
     "latest_package_sha256": "64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72",
     "package_runtime_files": 13,
-    "deployed_pages_version": "v11.8.0-rc4.91",
-    "deployed_pages_app_byte_parity_with_main": false,
+    "deployed_pages_version": "v11.8.0-rc4.92",
+    "deployed_pages_app_byte_parity_with_main": true,
     "deployed_pages_app_sha": "6fd11d3ffa2e3211d98b907df7e7e6a2d3262abb",
     "main_app_sha": "af39e65bbb2a7b521b205d7cfaa4a748836985fa",
     "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR exact v2 fallback",
@@ -188,10 +191,10 @@
     "package_hash_semantics": "Reference inspected artifact hash; archive hash may vary across documentation-only rebuilds. Durable authority is seal blob integrity + package/reextract PASS."
   },
   "exact_continuation": {
-    "gate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH",
+    "gate": "RC492_WALKER_ROOT_CAUSE_AND_ANDROID_FUNCTIONAL_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "Verify v137 current/seal/handoff hashes first. rc4.91 version is observed on Android but NOT functionally verified. Preserve main/pages app-byte divergence. Verify actual Expert-v3 rows, evidence polarity/quality, unified Top-10 and short-turn Return-v2 behavior; continue broad anti-repeat research in parallel. AUTO BLOCK is zero-ack correction trigger. No mock."
+    "instruction": "rc4.92 version observed on Android, functional verification open. Diagnose Kenneth Walker III missing from fresh Pick-9 Top-10 before tuning. Preserve no named QB forcing, Expert-v3 exact weights, rich Top-10/evidence polarity, Return tau 4.25, broad anti-repeat research, AUTO BLOCK zero-ack. No mock."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
-  "acceptance_fingerprint": "rc4.91-android-version-observed-NOT-functional|rc4.91-package-ref-64039b7a|PAGES-APP-BYTE-LAG|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v137"
+  "acceptance_fingerprint": "rc4.92-android-version-observed-NOT-functional|rc4.92-source-package-pages-parity|NO-NAMED-QB-FORCING|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|WALKER-TOP10-DIAGNOSTIC|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v141"
 }
