@@ -1440,3 +1440,15 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - rc4.94 version strings synchronized in app/index/sw/manifest. Display fix remains generic: normal-cut rows are selected before fallback context. No Coach score, Expert-v3, Return-v2, injury, ADP, roster utility or Walker-specific tuning.
 - Guardrail now protects the normal-cut-first selection contract and active rc4.93 package/Android boundary.
 - Transfer generation advanced to v143. Do not mark handoff ready until final CI + seal-integrity second pass succeeds.
+
+
+### 2026-08-28 — TAKEOVER AUDIT v144 / rc4.94 PACKAGE AUTHORITY CORRECTION
+- New-chat audit re-read the canonical repo authority chain and independently verified all 37 files listed in the v143 seal: 37/37 current Git blob SHAs matched exactly before any mutation.
+- The final v143 reseal commit `f3a8938d757065150a40d915c3516c09bb315830` had exactly five push-triggered primary workflow runs; all five were completed/success: Project Guardrails 33169002464, rc4.83 draft-critical 33169002459, Candidate Package 33169002426, rc4.82 draft-critical 33169002429, Release Contract v2 33169002438.
+- Candidate Package job 98841244884 reports `RELEASE_GUARD_PASS v11.8.0-rc4.94` and successful package/re-extract. Artifact 9684784867 is present with GitHub artifact digest `d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576`.
+- This proves a subtle transfer drift in v143: active docs still said rc4.94 CI/package was pending even though the final reseal itself had already passed those gates. That stale pointer is now repaired rather than carried into the new chat.
+- Correct boundary after the audit: production/control rc4.64; source + CI/release/package/re-extract rc4.94; deployed + Android-observed rc4.93; Android functional verification open.
+- Current main/gh-pages parity check: app.js, index.html, sw.js and manifest.webmanifest differ as expected before rc4.94 promotion; decision-policy.js, live-surface-v3.js, live-surface-v3.css and expert-v3-board.js match. No deployment/device PASS may be inferred until exact promotion and parity verification.
+- Exact continuation gate is now `RC494_DEPLOY_PARITY_ANDROID_VERIFY`: deploy exact rc4.94 runtime to gh-pages, verify runtime parity, then fresh Android Pick-9 snapshot. No automatic mock.
+- All critical anti-regressions remain unchanged: Walker gets no player-specific boost; normal-cut-first is presentation-only; no Geno/Rodgers name exclusions; one QB only after QB1; Expert-v3 positional weights preserved; WR exact v2 fallback; Return-v2 early tau 4.25; starter maxima are not roster caps; Duplicate Guard and AUTO/AUTO BLOCK remain binding.
+- Transfer generation advanced to v144 because correcting package authority is material handoff state. v144 must be resealed after all authority documents are synchronized.
