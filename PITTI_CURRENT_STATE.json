@@ -47,10 +47,10 @@
     "transaction_in_progress": true,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
     "acceptance_fingerprint": "rc4.92-android-version-observed-NOT-functional|rc4.92-source-package-pages-parity|NO-NAMED-QB-FORCING|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|WALKER-TOP10-DIAGNOSTIC|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v141",
-    "status": "HANDOFF_AUDIT_IN_PROGRESS",
+    "status": "SECOND_PASS_PENDING_RESEAL",
     "handoff_ready": false,
     "second_pass_pass": false,
-    "next_action": "Deep-audit active pointers and seal v141; receiving chat must diagnose Walker disappearance before claiming rc4.92 functional PASS."
+    "next_action": "Reseal v141 against repaired active authority, run all primary CI, then mark handoff ready only on PASS."
   },
   "source_authority": "rc4.92",
   "package_authority": "rc4.92",
