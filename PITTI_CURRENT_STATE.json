@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T063500Z-v119",
-  "updated_at": "2026-08-28T06:35:00Z",
+  "handoff_generation": "20260828T065500Z-v120",
+  "updated_at": "2026-08-28T06:55:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -36,7 +36,7 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-package-pages|SELF-UPDATE|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|ANTI-REPEAT|1QB|AUTO-EXECUTE-BEFORE-REPLY|HANDOFF-v119",
+    "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-package-pages|SELF-UPDATE|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|ANTI-REPEAT|1QB|AUTO-EXECUTE-BEFORE-REPLY|HANDOFF-v120",
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
