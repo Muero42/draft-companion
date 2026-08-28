@@ -1883,3 +1883,8 @@ Explicit non-changes:
 Static read-back on challenger confirms rc4.97 version and new labels; old actionLabel WAIT implementation is absent. PR-triggered Actions had not appeared at the immediate first check, so challenger is NOT promoted and rc4.96 remains Android/production rollback authority.
 
 Next gate: deterministic CI/regression/package checks on rc4.97 challenger, then device/OOS test only if all pass.
+
+
+## 2026-08-28 — AUTO BLOCK output failure hardened
+Observed failure: repeated tool runs terminated with blank assistant turns, forcing the user to type AUTO/AUTO BLOCK again. This violates the command contract even though internal work occurred.
+Permanent correction: AUTO BLOCK is now a hard silent-execution/output gate. Tool-call completion is not a stop condition; empty/progress/status/promise-only responses are forbidden. Re-inventory and continue autonomously until useful result, unavoidable user action, safety confirmation, or exhausted blocker.
