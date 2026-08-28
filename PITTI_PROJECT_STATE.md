@@ -1985,3 +1985,11 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - User work minimization is mandatory: assistant performs package/repo/deploy verification and promotion autonomously; user is only asked for the final device observation when technically unavoidable.
 - Clearing app data/cache or reinstalling is prohibited as a casual troubleshooting step because local draft/settings data may be at risk; only consider after explicit backup/data-preservation analysis.
 - rc4.99 Android **version observation PASS**. Functional/semantic acceptance remains a separate gate; do not infer full acceptance from version visibility alone.
+
+
+## 2026-08-28 19:02Z — rc4.99 semantic selector hardening
+- Pool-wide structured-evidence inspection found a generic selector hazard beyond the original CMC reproducer: neutral display context could mask a signed Pro/Contra component because researchEvidence previously selected displayEvidence first.
+- Fixed generically in live-surface-v3.js: signed display evidence is selected before neutral context for research polarity; displayRisk now requires nonpositive polarity.
+- Added mixed-polarity fixtures proving neutral age/context cannot mask substantive positive Pro and positive evidence cannot leak into Contra through displayRisk.
+- No player-name scoring/ranking rule, no hard WR cap/quota, no Return-v2 retune, no expert-weight change.
+- This source hardening is newer than the currently observed Android rc4.99 device instance. Full release/package validation and canonical deployment must precede device acceptance.
