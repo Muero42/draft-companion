@@ -1921,3 +1921,17 @@ Permanent correction: AUTO BLOCK is now a hard silent-execution/output gate. Too
 - This materially elevates generic WR-saturation/marginal championship-utility audit priority. Starter maxima are not roster caps; no hard WR cap/quota. Preserve exceptional WR value.
 - CMC display sequence exposed two generic evidence classes: (1) wrong polarity, fixed sign-aware in rc4.98 and audited across 194 components; (2) missing substantive positive evidence causing '+ Fairer Bereich' fallback. Continue pool-wide semantic/coverage audit, not player-by-player user inspection.
 - Exact continuation gate RC498_WR_SATURATION_AUDIT; no automatic mock, no global Return-v2 retune, PairSum/Rolling, player-name forcing, or expert-weight redesign.
+
+
+## 2026-08-28 17:55Z — v155 deep handoff audit / stale-authority repair
+A full pre-handoff audit found multiple v154 transfer hazards and repaired them before handoff:
+- v154 SEAL had an empty integrity map while takeover text required hash verification. Guardrail now rejects empty/incomplete seals and requires core authority/runtime files.
+- bootstrap and completeness matrix were still hard-coded to v152 / rc4.96 freshness-only state.
+- command contract still claimed RC498_ANDROID_VERIFY, source rc4.96 and old deployment semantics.
+- CURRENT/Execution Lock had mixed rc4.96/rc4.98 source/package/Android pointers.
+- main is rc4.98 while gh-pages is independently verified still rc4.96; old parity=true pointers were wrong and are now false.
+- rc4.98 is visibly installed on Android/PWA, but this is NOT full acceptance because the CMC '+ Fairer Bereich' substantive-evidence defect remains.
+- draft PR #33 / branch pitti/rc4.98-release-close contains a proposed CMC elite_dual_threat_role positive-evidence patch and regression, but PR #33 is OPEN/DRAFT/UNMERGED. main must not be described as containing it.
+- strict Coach draft 1399114762087895040 correct roster is 9 WR / 4 RB / 1 TE / 1 QB; old 7-WR count is explicitly forbidden.
+- exact continuation is broadened to two linked generic audits: WR saturation/championship utility and pool-wide substantive Pro/Contra evidence coverage.
+- no automatic mock; no hard WR cap/quota, blind RB forcing, PairSum/Rolling, player-name forcing, global Return-v2 retune or expert-weight redesign.
