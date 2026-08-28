@@ -18,5 +18,5 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - run: node --check app.js && node --check live-surface-v3.js && node --check expert-v2-board.js
+      - run: node --check app.js && node --check live-surface-v3.js && node --check expert-v2-board.js && node --check tools/analyze-current-decision-evidence.mjs
       - run: node tools/rc496-draft-critical.mjs
