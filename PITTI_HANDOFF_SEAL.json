@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T104000Z-v134",
-  "created_at": "2026-08-28T10:45:00Z",
+  "handoff_generation": "20260828T105000Z-v135",
+  "created_at": "2026-08-28T10:55:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "762a36675a792fd5ad300a2f2070e1422c69e69f",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "b391f86df0f6c93895b5d5dae0070c8c33eae368",
+    "PITTI_CURRENT_STATE.json": "1801e5fbf29cabd9c156cb9029a69cba47d0d151",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "87bd94e69a5577fae224b356ed9438dc2bff52ac",
     "PITTI_COMMAND_CONTRACTS.json": "0ae3afa2c6edcd2122d6ed339fb4f74f42219e04",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "84f7abfc868b70780b6ee67b33bd27e8c4aa1496",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "c08f4bd3bead6393bdffb658959635fd7b761c93",
-    "PITTI_EXECUTION_LOCK.json": "acb85345872dabe98892fcc26cf0059b9ec5b9fa",
-    "PITTI_PROJECT_STATE.md": "90048f9f441bd2932954e3a1595a4c5de1502ac8",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "f93f5b5649dbb2e46746ca632d6cedb6d3828697",
+    "PITTI_EXECUTION_LOCK.json": "60b2f50c8aed9211f39cd97b124e3fb6d72a71b9",
+    "PITTI_PROJECT_STATE.md": "38f4ec6d08c8ae7d6a6edc981c7ab5c99031f84d",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
     "app.js": "af39e65bbb2a7b521b205d7cfaa4a748836985fa",
     "index.html": "d305cd9b6e4d515cc51470a62619b0b7df460441",
@@ -148,7 +148,8 @@
     "v133_auto_block_in_command_contract": true,
     "v133_guardrail_authority_updated": true,
     "v134_package_reference_clarified": true,
-    "v134_deep_handoff_final": true
+    "v134_deep_handoff_final": true,
+    "v135_android_version_vs_functional_distinction": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
@@ -165,7 +166,7 @@
     "android_functional_verified": false,
     "source_authority": "v11.8.0-rc4.91",
     "test_challenger": "v11.8.0-rc4.91",
-    "test_challenger_android_verified": true,
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.91",
     "latest_package_sha256": "64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72",
     "package_runtime_files": 13,
@@ -182,8 +183,8 @@
   "exact_continuation": {
     "gate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH",
     "auto_starts_mock": false,
-    "instruction": "Verify v133 current/seal/handoff hashes first. Continue from Android-observed rc4.91. Preserve main/pages app-byte divergence until deliberately resolved. Verify actual Expert-v3 rows, evidence polarity/quality, unified Top-10 and short-turn Return-v2 behavior; continue broad anti-repeat research in parallel. AUTO BLOCK is zero-ack correction trigger. No mock."
+    "instruction": "Verify v135 current/seal/handoff hashes first. rc4.91 version is observed on Android but NOT functionally verified. Preserve main/pages app-byte divergence. Verify actual Expert-v3 rows, evidence polarity/quality, unified Top-10 and short-turn Return-v2 behavior; continue broad anti-repeat research in parallel. AUTO BLOCK is zero-ack correction trigger. No mock."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
-  "acceptance_fingerprint": "rc4.91-android-observed|rc4.91-package-ref-64039b7a|PAGES-APP-BYTE-LAG|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v134"
+  "acceptance_fingerprint": "rc4.91-android-version-observed-NOT-functional|rc4.91-package-ref-64039b7a|PAGES-APP-BYTE-LAG|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v135"
 }
