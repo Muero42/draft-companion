@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T091500Z-v130",
-  "created_at": "2026-08-28T09:18:00Z",
+  "created_at": "2026-08-28T09:20:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -30,7 +30,7 @@
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "cec7633ce035bcf8992f8bc12c790c2c1d588f84",
+    "README.md": "505d2037ae90bfdd8b7b74e1400f11487bb0895d",
     ".github/workflows/release-contract-v2.yml": "c484bccc265dafbfdef779e6d29b6b8d9c6ee828",
     ".github/workflows/release-contract-v2-package.yml": "4a98108affc335a47183fdf0ec5528793b65dace",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
