@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T14:35:00Z",
+  "updatedAt": "2026-08-28T12:17:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -17,19 +17,19 @@
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.93",
-    "latestPreinstallVerified": "v11.8.0-rc4.93",
+    "latestPreinstallVerified": "v11.8.0-rc4.94",
     "latestResearchChallenger": "v11.8.0-rc4.94",
-    "preinstallArtifact": "Draft_Companion_PREINSTALL (rc4.93)",
-    "preinstallSha256": "3ce741b71cbc3f35b026e6aa8f9622e10999ecd29c54c0d66f6fcfdef379db95",
+    "preinstallArtifact": "Draft_Companion_PREINSTALL (rc4.94)",
+    "preinstallSha256": "d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.93",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.94",
     "latestDeployedCandidate": "v11.8.0-rc4.93",
     "latestAndroidVerified": "VERSION_OBSERVED_ONLY_NOT_FUNCTIONALLY_VERIFIED",
     "androidAuthority": "v11.8.0-rc4.93",
     "android_authority": "v11.8.0-rc4.93",
     "deployedPagesAppByteParityWithMain": false,
-    "preinstallReferenceRun": 33166867111,
-    "preinstallReferenceArtifactId": 9683925309,
+    "preinstallReferenceRun": 33169002426,
+    "preinstallReferenceArtifactId": 9684784867,
     "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.93",
     "latestAndroidFunctionalVerified": null
@@ -145,7 +145,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC494_NORMAL_CUT_DISPLAY_FIX_PENDING_CI",
+    "status": "RC494_PACKAGE_PASS_DEPLOY_PENDING",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -207,13 +207,13 @@
       "rc4.89 artifact independently inspected: 13 runtime files, candidate SHA-256 2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608, candidate.sha256 matches actual bytes.",
       "rc4.90 adds deterministic gate: Expert-v3 panel selectability; actual live panelId exposure; actual-row expert display; James Cook RB must resolve DS/Del Don/Pat/Mariano/Weisse; Bowers TE includes Wolf; QB includes Todd; current early Top-10 all require substantive display evidence."
     ],
-    "gate": "RC494_NORMAL_CUT_DISPLAY_FIX_CI_PACKAGE_DEPLOY_ANDROID_VERIFY",
+    "gate": "RC494_DEPLOY_PARITY_ANDROID_VERIFY",
     "note": "rc4.92 version observed on Android at 13:04 local; NOT full functional PASS. Walker unexpectedly absent from Pick-9 Top-10 is active P0 diagnostic.",
     "knownOosConfounds": [
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
     "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
-    "nextGate": "Run rc4.94 CI/package; if PASS deploy exact runtime, prove main/pages parity, then fresh Android Pick-9 verification. No scoring/player-specific tuning.",
+    "nextGate": "rc4.94 CI/release/package are PASS on final v143 reseal. Deploy exact rc4.94 runtime, prove main/pages parity, then fresh Android Pick-9 verification. No scoring/player-specific tuning.",
     "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION",
     "androidVersionObserved": true,
     "androidFunctionalVerified": false
