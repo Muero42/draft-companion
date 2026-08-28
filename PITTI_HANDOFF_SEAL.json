@@ -13,7 +13,7 @@
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "940dea7527cc104066945c9e958c906efc4894d6",
     "HANDOFF_COMPLETENESS_MATRIX.md": "ecc320d7282c91fb9a3ccc7370f76a9d8a85269f",
     "PITTI_EXECUTION_LOCK.json": "753bd67dac8ff62e3ebd92eddc317256103ae44d",
-    "PITTI_PROJECT_STATE.md": "0fe24f92373d905a82806bd502496c3a6fba2404",
+    "PITTI_PROJECT_STATE.md": "c1e390076278d675546a9dadb6878ed067d08c9d",
     "PITTI_AUTO_PREFLIGHT.md": "7088238ceea6070d4a2d099e1a68e814480637bf",
     "app.js": "e6f504e0348f2323ab0666b4519daf9a93ecaca4",
     "index.html": "3a1e41f99800789386bb9deac92bdbe0b53d9cff",
@@ -24,7 +24,7 @@
     "tools/rc484-draft-critical.mjs": "37edb64fe25bbc0cbff621c21803c229f0153c8b",
     "tools/rc485-draft-critical.mjs": "b0266be12925f9bb0f04474418ba4d5a6178a619",
     "tools/analyze-decision-evidence.mjs": "bb75950cc1698659769d7412adef71bb2e41d494",
-    "tools/pitti_guardrail_check.mjs": "6ac9556980069d0f1ce9f86529ee31a33a697cfb",
+    "tools/pitti_guardrail_check.mjs": "6534777151193f0eeeb44220e515e8aa9cffaa91",
     "tools/pre-draft-freshness-gate.mjs": "9acc1999c0fe8a3428b9af7631812fe04338d42d",
     "tools/emergency-queue-contract.mjs": "d5ce421c905c40c10c03ba70a41161fb6036d320",
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
@@ -177,7 +177,8 @@
     "v144_rc494_all_five_primary_gates_pass": true,
     "v144_rc494_package_reextract_pass": true,
     "v144_package_authority_corrected": true,
-    "v144_deploy_android_still_pending": true
+    "v144_deploy_android_still_pending": true,
+    "v144_successor_safe_package_guard": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
