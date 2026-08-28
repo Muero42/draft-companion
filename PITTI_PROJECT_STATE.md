@@ -1452,3 +1452,11 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Exact continuation gate is now `RC494_DEPLOY_PARITY_ANDROID_VERIFY`: deploy exact rc4.94 runtime to gh-pages, verify runtime parity, then fresh Android Pick-9 snapshot. No automatic mock.
 - All critical anti-regressions remain unchanged: Walker gets no player-specific boost; normal-cut-first is presentation-only; no Geno/Rodgers name exclusions; one QB only after QB1; Expert-v3 positional weights preserved; WR exact v2 fallback; Return-v2 early tau 4.25; starter maxima are not roster caps; Duplicate Guard and AUTO/AUTO BLOCK remain binding.
 - Transfer generation advanced to v144 because correcting package authority is material handoff state. v144 must be resealed after all authority documents are synchronized.
+
+
+### 2026-08-28 — v144 first reseal failure / stale literal guard repaired
+- First v144 reseal commit c0acc63b84756b75f061ffe7d4075531d3b2baa0 correctly failed all five primary workflows.
+- Exact shared cause from job logs: `PITTI_GUARDRAIL_FAIL: command contract package reference hash drift` and `package reference run drift`.
+- Root cause was not rc4.94 runtime/package behavior. `tools/pitti_guardrail_check.mjs` still hard-coded the old rc4.93 artifact digest/run even though canonical CURRENT/Command Contract had correctly advanced package authority to rc4.94.
+- Guardrail repaired successor-safely: Android authority, package digest/run and main/pages parity are now cross-checked against `PITTI_CURRENT_STATE.json` instead of historical rc4.93 literals. This prevents the same stale-literal failure on future promotions while preserving fail-closed cross-document consistency.
+- Because the guardrail file is seal-listed, v144 must be resealed again with its new blob hash and the new Project-State hash, then all five primary workflows must PASS on that exact final reseal before transfer is accepted.
