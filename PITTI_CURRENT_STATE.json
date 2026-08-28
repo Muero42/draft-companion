@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T083800Z-v130",
-  "updated_at": "2026-08-28T08:38:00Z",
+  "handoff_generation": "20260828T085400Z-v129",
+  "updated_at": "2026-08-28T08:54:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -18,9 +18,9 @@
     "latest_package_sha256": "2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608"
   },
   "exact_continuation": {
-    "gate": "ANDROID_RC4.89_VERIFY_PRESENTATION",
+    "gate": "LIVE_SURFACE_FIX_DEPLOYED_ANDROID_VERIFY_THEN_RESEARCH",
     "auto_starts_mock": false,
-    "instruction": "Update/reload Android/PWA to rc4.89. Verify active Expert-v3 label/voices, all ten candidates as full cards without duplicate compact 10er block, orange Normal-Cut warning at bottom, richer Pro/Contra. No mock."
+    "instruction": "Live surface fix deployed: Expert-v3 correct expert rows, ten full cards, orange normal-cut warning, generic fallback removal. Full five workflow set PASS. Android reload/visual verify next; then continue broad anti-repeat research."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -37,7 +37,7 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.88-android|rc4.89-package-pages-pass|EXPERT-V3-DISPLAY|TOP10-CARDS|RICH-PROCON|V2-FROZEN|1QB|HANDOFF-v130",
+    "acceptance_fingerprint": "rc4.64|rc4.88-android-before-livefix|LIVEFIX-DEPLOYED|EXPERT-V3-DISPLAY|TEN-FULL-CARDS|PROCON-EVIDENCE|ANTI-REPEAT|HANDOFF-v129",
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
