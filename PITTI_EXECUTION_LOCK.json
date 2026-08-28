@@ -149,9 +149,9 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC498_ANDROID_VERIFY",
+    "status": "RC498_WR_SATURATION_AUDIT",
     "production": false,
-    "androidVerified": false,
+    "androidVerified": true,
     "changes": [
       "centralized APP_VERSION to eliminate stale snapshot/queue/backup/model metadata",
       "active panel health now evaluates the actually selected full-v2, hybrid WR-v2, or live profile instead of global desired-pool health",
@@ -211,8 +211,8 @@
       "rc4.89 artifact independently inspected: 13 runtime files, candidate SHA-256 2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608, candidate.sha256 matches actual bytes.",
       "rc4.90 adds deterministic gate: Expert-v3 panel selectability; actual live panelId exposure; actual-row expert display; James Cook RB must resolve DS/Del Don/Pat/Mariano/Weisse; Bowers TE includes Wolf; QB includes Todd; current early Top-10 all require substantive display evidence."
     ],
-    "gate": "RC498_ANDROID_VERIFY",
-    "note": "rc4.98 full source/release/package gates PASS; Android authority remains rc4.96 pending device verification.",
+    "gate": "RC498_WR_SATURATION_AUDIT",
+    "note": "rc4.98 observed on Android. Material paired-OOS finding: strict followed-Coach mock has 9 WR / 4 RB / 1 TE / 1 QB. Audit generic WR saturation; no hard cap.",
     "knownOosConfounds": [
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
@@ -222,7 +222,7 @@
     "androidVersionObserved": true,
     "androidFunctionalVerified": false
   },
-  "status": "RC498_EVIDENCE_POLARITY_CI",
-  "gate": "RC498_EVIDENCE_POLARITY_CI",
-  "nextGate": "Deterministic CI/regression/package checks; no device install before PASS."
+  "status": "RC498_WR_SATURATION_AUDIT",
+  "gate": "RC498_WR_SATURATION_AUDIT",
+  "nextGate": "Audit 9-WR strict Coach path and substantive Pro/Contra coverage; no automatic mock."
 }
