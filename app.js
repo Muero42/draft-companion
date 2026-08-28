@@ -27,6 +27,30 @@ function normalCandidateAdmissible(row){
   const displayGap=current<=70?18:current<=110?22:26;
   return row.r.rank<=best+displayGap;
 }
+function applyTurnPortfolioOrdering(rows,current,next){
+  if(!Array.isArray(rows)||rows.length<2||!Number.isFinite(current)||!Number.isFinite(next))return rows;
+  // Short-turn snake geometry: a clearly deferable board leader should not be shown as
+  // TAKE/#1 when a materially comparable normal-cut alternative has much lower return odds.
+  // This is an ordering/presentation policy, not a score/Return-v2 retune and never creates
+  // a hard positional rule. Generic thresholds are deliberately conservative.
+  if(next-current>3)return rows;
+  const leader=rows[0],leaderRet=Number(leader?.ret);
+  if(leader?.action!=='WAIT'||!Number.isFinite(leaderRet)||leaderRet<.85)return rows;
+  const leaderPanel=Number(leader?.r?.rank);
+  if(!Number.isFinite(leaderPanel))return rows;
+  const alternatives=rows.slice(1).filter(x=>{
+    const ret=Number(x?.ret),panel=Number(x?.r?.rank);
+    return !x?.hardExcluded&&!x?.recommendationBlocked&&normalCandidateAdmissible(x)
+      &&Number.isFinite(ret)&&ret<=.82
+      &&Number.isFinite(panel)&&panel<=leaderPanel+25;
+  }).sort((a,b)=>Number(a.ret)-Number(b.ret)||Number(a.r.rank)-Number(b.r.rank)||Number(b.rawScore)-Number(a.rawScore));
+  const take=alternatives[0];
+  if(!take)return rows;
+  const ordered=[take,...rows.filter(x=>x!==take)];
+  take.turnPortfolioReason=`Turn-Portfolio: ${leader.p.name} mit ${Math.round(leaderRet*100)}% Return aufschieben`;
+  leader.turnPortfolioDeferred=true;
+  return ordered;
+}
 function visibleCoachCandidates(rows){
   const source=(rows||[]).filter(x=>x?.p&&x?.r);
   if(!source.length)return[];
@@ -42,7 +66,8 @@ function visibleCoachCandidates(rows){
       visible.push(x);seen.add(norm(x.p.name));
     }
   }
-  return visible.map(row=>({...row,outsideNormalCut:!normalCandidateAdmissible(row)}));
+  const tagged=visible.map(row=>({...row,outsideNormalCut:!normalCandidateAdmissible(row)}));
+  return applyTurnPortfolioOrdering(tagged,Number(lastDraftContext?.current),Number(lastDraftContext?.next));
 }
 
 let experts=store.get('v7_experts',[]);
@@ -2300,6 +2325,7 @@ async function refresh(){
     }
     els.strategyStatus.className='notice ok';els.strategyStatus.textContent=strategyStatusText(strategy);
     scored.sort((x,y)=>y.score-x.score||y.rawScore-x.rawScore||x.r.rank-y.r.rank);
+    scored=applyTurnPortfolioOrdering(scored,current,returnPick);
 
     const draftComplete=(!preview&&String(draft.status||'').toLowerCase()==='complete')||picks.length>=total;
     lastEmergencyQueueText=draftComplete?'':buildEmergencyQueueText(scored,state,current,id);
