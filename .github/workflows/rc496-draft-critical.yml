@@ -9,6 +9,7 @@ on:
       - 'expert-v3-board.js'
       - 'tools/rc496-draft-critical.mjs'
       - 'tools/rc497-microfix.mjs'
+      - 'tools/rc498-evidence-polarity.mjs'
       - '.github/workflows/rc496-draft-critical.yml'
   workflow_dispatch:
 jobs:
