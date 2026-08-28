@@ -1004,3 +1004,10 @@ Challenger families to test after current Evidence-v2 analysis: incumbent weight
 - Research must run in large batches and MUST NOT repeatedly re-query/re-report the same recently settled players. Likely/Jacobs/Pacheco are explicit examples of wasteful repetition. Once a player's current thesis + freshness are sufficiently established, mark settled and move to uncovered players; reopen only on genuinely new decision-changing news/status.
 - Time to real draft is short; optimize coverage breadth and completion, not repeated confidence polishing.
 - Expert-v3 next action is NOT more candidate screening. Use proven `expert-v2-audit.html` FP directory+filtered-consensus pipeline to acquire exact current challenger vectors, then compute v2-v3 marginal tests and implement separate preset. If local credential/runtime execution becomes the sole gate, ask for one concise user action; until then exhaust autonomous repo/preparation work.
+
+
+### 2026-08-28 — Expert-v3 PRIMARY: autonomous implementation progress
+- Created `expert-v3-audit.html` on main (commit f0f895068385dee4120a9ed905e7d0385ca65c71). It reuses the proven fail-closed local FantasyPros pipeline from v2 and targets Ryan Weisse, Wolf of Roto Street, Todd D Clark, Joey Wright. It exports exact 2026 HALF / DRAFT / OVERALL single-expert vectors with no credential. This replaces repeated public-page screening and is the required acquisition artifact for the computed v3 test.
+- Existing `expert-v2-board.js` verified as complete frozen control with all individual rank vectors and weights. No change to Expert-v2.
+- Public web cross-check immediately before implementation still verifies Weisse 2026 Half-PPR overall Aug24/RB Aug22 and Wolf TE Half-PPR Aug25; these are sanity checks only, not substitutes for exported exact vectors.
+- Next hard gate: run `expert-v3-audit.html` on the same Companion origin that holds `v7_apiKey`, then import the exported JSON into chat. After that ChatGPT can autonomously compute v2-v3 grids, choose composition/weights, implement separate preset, and regression-test. No further broad research before this gate.
