@@ -82,6 +82,8 @@ must(!app.includes('USER_HARD_QB_EXCLUSIONS'),'player-name QB exclusion must not
 must(!app.includes('USER HARD EXCLUSION'),'player-name hard-exclusion scoring must not exist');
 must(!/genosmith|aaronrodgers/i.test(app),'Geno/Rodgers must not receive player-name runtime treatment');
 must(app.includes("function normalCandidateAdmissible(row)"),'normal candidate admissibility guard missing');
+must(app.includes("const normal=source.filter(normalCandidateAdmissible)"),'normal-cut rows must precede fallback in visible Top-10');
+must(app.includes("if(visible.length<10)"),'fallback fill must only occur after normal-cut selection');
 must(policy.includes('USER_DRAFT_QB_LIMIT=1'),'user one-QB runtime invariant missing');
 must(app.includes("from './decision-policy.js'"),'decision policy wiring missing');
 must(app.includes("Progressive WR-Sättigung")||app.includes('WR-Sättigung'),'WR saturation canary missing');
@@ -123,10 +125,10 @@ must(commandContract.auto?.blockedGateStopsOnlyDependentLane===true,'repo comman
 must(commandContract.auto?.promiseOnlyResponseForbidden===true,'repo command contract promise-only guard drift');
 must(commandContract.auto?.externalGateValidStopOnlyAfterIndependentLaneExhaustion===true,'repo command contract external-gate guard drift');
 must(commandContract.auto?.autoBlockCorrectionTrigger?.trigger==='AUTO BLOCK','AUTO BLOCK command contract missing');
-must(commandContract.currentBoundary?.androidAuthority==='v11.8.0-rc4.91','command contract Android authority drift');
-must(commandContract.currentBoundary?.latestPackageSha256==='64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72','command contract package reference hash drift');
-must(commandContract.currentBoundary?.packageReferenceRun===33162367347,'package reference run drift');
-must(commandContract.currentBoundary?.deployedPagesAppByteParityWithMain===false,'main/pages app divergence must remain explicit until resynced');
+must(commandContract.currentBoundary?.androidAuthority==='v11.8.0-rc4.93','command contract Android authority drift');
+must(commandContract.currentBoundary?.latestPackageSha256==='3ce741b71cbc3f35b026e6aa8f9622e10999ecd29c54c0d66f6fcfdef379db95','command contract package reference hash drift');
+must(commandContract.currentBoundary?.packageReferenceRun===33166867111,'package reference run drift');
+must(commandContract.currentBoundary?.deployedPagesAppByteParityWithMain===false,'main/pages app divergence must remain explicit until rc4.94 deployment');
 must(current.handoff_generation===seal.handoff_generation,'CURRENT/SEAL generation mismatch');
 must(current.handoff_generation===handoffGeneration,'CURRENT/Handoff generation mismatch');
 must(seal.status==='PASS' && seal.handoff_ready===true && seal.second_pass_pass===true,'handoff seal not fully PASS');
