@@ -1165,3 +1165,27 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - This is sufficient for PITTI’s v2-v3 positional marginal-weight computation because the panel needs exact player overall ranks for the challenged position; unused positional rows/raw source metadata are unnecessary payload.
 - Added rc4.87 regression gate for positional filtering, compact tuple schema, clipboard path, credential exclusion and no resurrection of undefined loadSingleExpert.
 - rc4.87 deployed to gh-pages. Android verification pending.
+
+
+---
+## 2026-08-28 — EXPERT-v3 VECTOR VALIDATION / rc4.88 POSITIONAL PROFILE
+- Android rc4.87 compact export succeeded. Fresh HALF 2026 vectors: Ryan Weisse RB = VERIFIED direct FantasyPros individual list; Wolf of Roto Street TE = VERIFIED direct FantasyPros individual list; Todd D Clark QB = VERIFIED FantasyPros comparison reconstruction; Joey Wright WR = missing. No credential was exported.
+- Qualification research refreshed before weighting:
+  - Ryan Weisse: 2025 draft accuracy overall #7, RB #8; 2023-2025 multi-year draft RB #2.
+  - Todd D Clark: 2025 draft accuracy overall #11, QB #8; 2023-2025 multi-year draft QB #5.
+  - Wolf of Roto Street: 2023-2025 multi-year draft TE #2; 2024 overall #6 and TE #8. 2025 fell to TE #42 / overall #126, so his current vote is capped rather than allowed to dominate.
+- Grid sensitivity against frozen Expert-v2 was calculated before integration:
+  - QB Todd 10 replacing 10 Draft Sharks points: v3-v2 Spearman ~0.9991, mean absolute overall-rank shift ~2.51.
+  - RB Weisse 10 replacing 10 Draft Sharks points: Spearman ~0.9972, MAE ~3.49.
+  - TE Wolf 10 replacing 10 Draft Sharks points: Spearman ~0.9972, MAE ~4.13.
+  - These are meaningful independent signals without destabilizing the board. The 5-point variants were more conservative but unnecessarily underweighted the strongest qualified positional track records.
+- Selected Expert-v3 weights:
+  - QB: Draft Sharks Team 25 / Nick Mariano 25 / Dalton Del Don 20 / Justin Boone 10 / Pat Fitzmaurice 10 / Todd D Clark 10.
+  - RB: Draft Sharks Team 25 / Nick Mariano 25 / Dalton Del Don 25 / Pat Fitzmaurice 15 / Ryan Weisse 10.
+  - WR: EXACT Expert-v2 WR board retained. Joey Wright is not fabricated or proxied.
+  - TE: Draft Sharks Team 25 / Pat Fitzmaurice 30 / Dalton Del Don 25 / Justin Boone 10 / Wolf of Roto Street 10.
+- rc4.88 implements this as a FOURTH selectable profile, not a replacement: incumbent/control, Expert-v2 ALL, Expert-v2 WR-only, Expert-v3 positional.
+- expert-v3-board.js is an immutable embedded challenger source. For QB/RB/TE, rc4.88 reduces the existing Draft Sharks effective contribution proportionally from 35 to 25 and adds the exact challenger at weight 10. If the challenger has no row for a specific player, the frozen v2 row is preserved rather than silently renormalized.
+- WR points to the existing Expert-v2 WR board because Joey Wright's current vector is unavailable.
+- Decision Kernel, Return-v2, manager map, roster rules, one-QB policy, Geno/Rodgers hard exclusions, K/DST omission and Upside-v3 remain unchanged.
+- rc4.88 source + gh-pages deployment completed; release/package/guardrail gates must pass on the resealed generation before Android verification.
