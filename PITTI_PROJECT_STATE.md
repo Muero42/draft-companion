@@ -1967,3 +1967,11 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Production/main and verified Android authority remain unchanged. Next dependent gate: full release-contract/package validation, then controlled Android verification only if all contracts pass.
 
 - rc4.99 full behavioral release contract PASS: run 33200189530. Candidate package/re-extract PASS: run 33200304688, artifact 9697465647. Downloaded nested PREINSTALL SHA-256 = 67caeab25b8b474c9eb69d947ef2b8daa1429503655803030764a8013aac57a8; 13 runtime files. This is still **not Android verified/accepted** and must not be merged/promoted on package PASS alone.
+
+
+## 2026-08-28 rc4.99 deployment checkpoint — gh-pages parity PASS
+- Verified rc4.99 PREINSTALL package passed full behavioral contract, package/re-extract and independent 13-file byte audit.
+- Deployed the exact 13 verified runtime files to `gh-pages`; post-deploy Git blob comparison PASS for all 13 files.
+- gh-pages candidate is now byte-identical to the rc4.99 research candidate runtime. `main` remains unchanged and rc4.99 remains unmerged/research-only.
+- Android/PWA refresh is the only remaining device gate. User action required only to open/refresh the installed app once so the service worker can activate the new cache; then verify visible `v11.8.0-rc4.99` and functional live surface.
+- Do not infer Android acceptance from deployment parity alone.
