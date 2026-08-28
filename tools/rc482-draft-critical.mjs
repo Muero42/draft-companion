@@ -6,12 +6,12 @@ const policy=fs.readFileSync('decision-policy.js','utf8');
 const boardSrc=fs.readFileSync('expert-v2-board.js','utf8');
 const idx=fs.readFileSync('index.html','utf8');
 const sw=fs.readFileSync('sw.js','utf8');
-const manifest=fs.readFileSync('manifest.webmanifest','utf8');
+const manifest=fs.readFileSync('manifest.webmanifest','utf8');\nconst live=fs.readFileSync('live-surface-v3.js','utf8');
 
 const activeVersion=(app.match(/const APP_VERSION='v11\.8\.0-rc4\.(\d+)'/)||[])[1];assert.ok(Number(activeVersion)>=82,'active runtime below rc4.82 feature gate');
 for(const stale of ['v11.8.0-rc4.78','v11.8.0-rc4.79','v11.8.0-rc4.80','11.8.0-rc4.72'])assert.ok(!app.includes(stale),`stale active version ${stale}`);
 const currentTag='v11.8.0-rc4.'+activeVersion;assert.ok(idx.includes(currentTag));assert.ok(sw.includes(currentTag));assert.ok(manifest.includes(currentTag));
-assert.ok(sw.includes('./decision-policy.js'));
+assert.ok(sw.includes('./decision-policy.js'));\nassert.ok(live.includes('const negativeReason='),'live evidence polarity gate missing');\nassert.ok(/negativeReason\(r\)/.test(live),'plus() must reject negative reasons');\nassert.ok(/preferred=reasons\.find\(r=>\/Reach\|/.test(live),'Reach must be eligible for minus evidence');
 
 const psrc=policy.replace(/export\s+/g,'');
 const {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy}=new Function(psrc+';return {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy}')();
