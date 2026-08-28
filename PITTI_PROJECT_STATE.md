@@ -1910,3 +1910,14 @@ Permanent correction: AUTO BLOCK is now a hard silent-execution/output gate. Too
 - No broad runtime/scoring change is justified by this pair alone. Preserve anti-overfit constraints: no generic Return-v2 retune, expert-weight redesign, PairSum/Rolling, hard WR cap, player-name forcing or roster quota.
 - Detailed audit authority: `research/RC498_PAIRED_OOS_MOCKS_1399109246460682240_1399114762087895040_2026-08-28.md`.
 - Current device observation supplied by user: rc4.98 is installed. Remaining narrow device gate is representative Pro/Contra semantic verification after the sign-aware polarity fix; do not start another mock automatically.
+
+
+## 2026-08-28 19:35Z — v154 handoff: rc4.98 device + paired OOS critical correction
+- User screenshot confirms Android/PWA v11.8.0-rc4.98 installed.
+- Canonical paired OOS backup: draft-companion-v7-backup-2026-08-28T17-30-01-853Z.json.
+- Realistic/user-decision draft 1399109246460682240; strict Coach-control 1399114762087895040 with 15/15 followedCoach=true.
+- CRITICAL: prior assistant analysis incorrectly counted strict Coach roster as 7 WR / 5 RB. Correct roster is **9 WR / 4 RB / 1 TE / 1 QB**. Never propagate the old count.
+- Nine WR: JSN, Justin Jefferson, Malik Nabers, Chris Olave, Jaylen Waddle, Christian Watson, Parker Washington, Josh Downs, Stefon Diggs.
+- This materially elevates generic WR-saturation/marginal championship-utility audit priority. Starter maxima are not roster caps; no hard WR cap/quota. Preserve exceptional WR value.
+- CMC display sequence exposed two generic evidence classes: (1) wrong polarity, fixed sign-aware in rc4.98 and audited across 194 components; (2) missing substantive positive evidence causing '+ Fairer Bereich' fallback. Continue pool-wide semantic/coverage audit, not player-by-player user inspection.
+- Exact continuation gate RC498_WR_SATURATION_AUDIT; no automatic mock, no global Return-v2 retune, PairSum/Rolling, player-name forcing, or expert-weight redesign.
