@@ -1504,3 +1504,9 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - New material freshness note: NFL's current rookie-late-round article says Jordyn Tyson is expected to miss roughly two months with a hamstring injury; he must not be blindly inserted into the emergency queue from stale upside evidence.
 - Current public RB recon materially supports Walker rather than contradicting PITTI: Pat Fitzmaurice has Walker RB6 on Aug 27 (ECR RB10, ADP RB11), and Dalton Del Don has Walker RB7 on Aug 28. No Walker-specific PITTI tuning follows; this is only an external sanity check.
 - Queue augmentation must now be produced as an actionable ordered list, deduplicated against the user's captured baseline, with explicit exclusions for known hard rules (Geno Smith/Aaron Rodgers; K/DST) and current injury gates.
+
+
+### 2026-08-28 — AUTO BLOCK semantic correction (binding)
+- User corrected AUTO BLOCK behavior again after assistant emitted a confirmation/status reply. That reply itself violated the command.
+- Binding semantics: when user sends exactly/essentially `AUTO BLOCK`, DO NOT acknowledge, explain, apologize, promise continuation, or emit a status-only response. In the same turn immediately execute the pending substantive project work with tools. User-visible output is allowed only when (a) a material deliverable/result is ready, (b) an unavoidable user action/input is required, or (c) a safety/destructive-action confirmation is required.
+- AUTO BLOCK is a recovery interrupt for broken AUTO continuation, not a request for a message saying AUTO has resumed.
