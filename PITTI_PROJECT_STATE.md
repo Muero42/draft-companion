@@ -1409,3 +1409,11 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Final reseal commit f18c3bbe6eb531bd95b0300b537fef93141259d6 completed after repairing all discovered active stale pointers and generation labels.
 - All five primary Actions families PASS on the final reseal: release contract v2 33166063033; candidate package 33166063012; Project Guardrails 33166063017; rc4.82 regression 33166063044; rc4.83 regression 33166063036.
 - Handoff is ready for new chat. Required continuation is Walker P0 root-cause diagnosis + focused rc4.92 Android functional verification, with broad anti-repeat research in parallel. No mock.
+
+### 2026-08-28 — Android rc4.92 acceptance: Kenneth Walker investigation
+- Device screenshot confirms rc4.92 loaded on Android and Expert-v3 selected; however functional acceptance remains open because Kenneth Walker disappeared from visible Pick-9 Top 10.
+- Fresh user Expert-v3 compact export validated: Ryan Weisse RB challenger is fresh/staleFallback=false and ranks Kenneth Walker III #33 overall. Base Expert-v2 row is Kenneth Walker panel 13.45 with DS 14 / Mariano 15 / Del Don 12 / Fitz 12. Because norm() strips III, challenger matching is valid.
+- Exact Expert-v3 recomputation from implementation weights: DS effective 25, Mariano 25, Del Don 25, Fitz 15, Weisse 10 => Walker panel = (14*25+15*25+12*25+12*15+33*10)/100 = 15.35. Thus Weisse only moves Walker +1.90 versus v2 and cannot itself explain disappearance.
+- Current visibleCoachCandidates is mechanically sorted Coach top 10; normalCandidateAdmissible only labels rows after slicing and does not exclude Walker. Therefore disappearance means Walker's final Coach score is below at least ten candidates, not a card-render/cut filter.
+- Candidate scoring channels capable of causing this despite panel 15.35: ADP/value timing, need contribution, positional alternatives, consensus SD, injury_status penalty, Return-v2 + board-relative Return. Research residual is shadow-only and cannot cause live disappearance.
+- High-priority next diagnostic: expose/use PITTI_LIVE_DECISION_STATE or add a focused candidate audit that returns Walker raw score, final score/rank, injury_status, ADP, Return-v2, need, alternatives, consensus and reasons alongside visible #10. Do not boost Walker by name; fix only a demonstrated generic scoring defect.
