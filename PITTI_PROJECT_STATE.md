@@ -1306,3 +1306,12 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Deep handoff audit found one remaining ambiguity: older runtime fields named `test_challenger_android_verified` / `latestAndroidVerified` could make a receiving chat treat the rc4.91 badge screenshot as full functional verification.
 - Correct authority: rc4.91 **version observed on Android = true**; rc4.91 **functional verification = false**. Functional checks of actual Expert-v3 rows, evidence polarity/quality, unified Top-10 and Return-v2 short-turn behavior remain open.
 - CURRENT/Execution Lock/Handoff/Matrix now encode this distinction fail-closed. A future chat must not close the device gate merely from the version badge.
+
+### 2026-08-28 — PITTI TAKEOVER AUDIT v136 / RESIDUAL ACTIVE-POINTER REPAIR
+- New-chat verification against the user's handoff screenshots and live repository found three residual active stale pointers after the otherwise successful v135 deep audit: CURRENT exact continuation still said verify v133; NEW_CHAT_HANDOFF_CURRENT still required v133; PITTI_NEW_CHAT_BOOTSTRAP still required v132; PITTI_EXECUTION_LOCK nextGate still required v133. These could cause a future chat to downgrade or reject a valid v135+ handoff.
+- Repaired active transfer authority only. Historical sections retaining older version labels remain historical evidence and are explicitly subordinate to CURRENT/SEAL/EOF.
+- Handoff generation advanced to v136 so the repair is fail-closed and resealable rather than silently mutating a sealed generation.
+- Current runtime boundary is unchanged: source rc4.91; Android rc4.91 version observed; Android functional verification still open; production/control rc4.64; package/re-extract rc4.91 / 13 files / reference SHA-256 64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72.
+- Expert-v3 remains integrated: Todd D Clark QB 10%, Ryan Weisse RB 10%, Wolf of Roto Street TE 10%, WR exact Expert-v2 fallback. Do not restart acquisition/export.
+- rc4.91 Return-v2 early tau 4.25 remains locked; tau 1.35 must not return. Reach/risk/wait/decline cannot enter positive evidence. AUTO BLOCK remains zero-ack immediate AUTO resumption. No mock unless explicitly requested.
+- main/gh-pages app.js byte divergence remains an audited open distinction; equal rc4.91 version strings do not establish byte parity.
