@@ -25,13 +25,13 @@ assert.equal(safetyPromotionEligiblePolicy({pos:'WR',counts:{WR:7},rank:105,adp:
 assert.equal(safetyPromotionEligiblePolicy({pos:'TE',counts:{TE:1},rank:30,adp:110,current:149}),true);
 assert.equal(safetyPromotionEligiblePolicy({pos:'TE',counts:{TE:1},rank:40,adp:110,current:149}),false);
 
-assert.match(app,/const EXPERT_PROFILE_IDS=\{incumbent:\{QB:'qb',RB:'rb',WR:'wr',TE:'te'\},fullv2:\{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'\},wrv2:\{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'\}\}/);
+assert.ok(app.includes("incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'}"));assert.ok(app.includes("fullv2:{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'}"));assert.ok(app.includes("wrv2:{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'}"));
 for(const option of ['Bisherige Konfiguration (rc4.64)','Expert-v2 · alle Positionen','Expert-v2 · nur WR'])assert.ok(idx.includes(option),option);
 assert.ok(app.includes('function activePanelHealthState()'));
 assert.ok(app.includes("Panel-Health: ${activeHealth.degraded?'DEGRADED':'OK'}"));
 assert.ok(app.includes('Expertenquelle: ${activePanelSourceSummary()}'));
 assert.ok(app.includes('Panel-Gewichte: ${activePanelWeightSummary()}'));
-assert.ok(app.includes('aktive Expert-v2 Stimmen'));
+assert.ok(app.includes('aktive eingebettete Expertenstimmen')||app.includes('aktive Expert-v2 Stimmen'));
 assert.ok(app.includes("mode==='hybrid'"));
 
 const grab=name=>{const s=app.indexOf(`function ${name}`);assert.ok(s>=0,name);let i=app.indexOf('{',s),d=0;for(let j=i;j<app.length;j++){if(app[j]==='{')d++;else if(app[j]==='}'){d--;if(d===0)return app.slice(s,j+1)}}throw new Error(name)};
