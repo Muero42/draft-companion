@@ -1942,3 +1942,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Restored those tokens explicitly as historical anti-regression canaries while keeping all superseded states labeled non-authoritative.
 - This preserves old protections without resurrecting old rc4.82/rc4.83/rc4.84-90 runtime state.
 - Seal must be refreshed after these documentation changes before handoff is considered final.
+
+
+## 2026-08-28 18:01Z — v155 obsolete rc4.61 workflow retired
+- The deep handoff validation exposed one recurring historical CI failure unrelated to the current runtime: `.github/workflows/package-rc461.yml` still encoded rc4.61-specific checks (including now-forbidden USER_HARD_QB_EXCLUSIONS) and was unexpectedly firing on ordinary pushes.
+- Replaced it with a manual-only historical note job. It can no longer package/publish rc4.61 or contaminate current CI status.
+- Current packaging authority remains `.github/workflows/release-contract-v2-package.yml`.
+- This is tooling/anti-regression cleanup only; no runtime/model/ranking change.
