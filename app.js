@@ -1596,8 +1596,14 @@ function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   // Keeping the legacy ADP curve here as a score input would double-count return pressure
   // and could make the displayed Return-v2 probability disagree with the actual ranking.
   const ret=returnChance(next,a);
-  const expertBase=r.n>=5?4:r.n>=3?1:r.n===2?-5:-12;
-  const confidence=clamp(Math.round(88-r.sd*2+(Number.isFinite(a)?4:-10)+expertBase),35,96);
+  // Sparse-panel guard: 1-2 embedded voices are not a normal consensus panel.
+  // Penalize recommendation score as well as confidence; otherwise scarcity/return can still
+  // turn a partial panel into a misleading LOSS-HIGH recommendation (e.g. Dobbins).
+  const sparsePanelPenalty=r.n>=4?0:r.n===3?2:r.n===2?7:14;
+  if(sparsePanelPenalty){score-=sparsePanelPenalty;reasons.push(`Panel unvollständig (${r.n||0} Stimmen) · Confidence begrenzt`);}
+  const expertBase=r.n>=5?4:r.n>=4?1:r.n===3?-4:r.n===2?-14:-22;
+  const confidenceCap=r.n>=4?96:r.n===3?78:r.n===2?62:50;
+  const confidence=clamp(Math.min(confidenceCap,Math.round(88-r.sd*2+(Number.isFinite(a)?4:-10)+expertBase)),35,96);
   const researchResidual=researchResidualShadow(p,r,a,current);
   return{score:0,rawScore:score,r,a,ret,reasons,agree,sameTier:tier.sameTierCount,tierGap:tier.tierGap,alternativeGap:alt.bestGap,nearAlternatives:alt.nearEqual,confidence,valueKind:value.kind,researchResidual};
 }
