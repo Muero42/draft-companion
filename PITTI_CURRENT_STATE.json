@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T053000Z-v117",
-  "updated_at": "2026-08-28T05:30:00Z",
+  "handoff_generation": "20260828T054500Z-v118",
+  "updated_at": "2026-08-28T05:45:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -13,13 +13,13 @@
     "android_authority": "v11.8.0-rc4.84",
     "test_challenger": "v11.8.0-rc4.85",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.78",
+    "latest_package_reextract": "v11.8.0-rc4.85",
     "library_recovery_alias": "v11.8.0-rc4.52"
   },
   "exact_continuation": {
-    "gate": "RC4.85_PACKAGE_REEXTRACT_THEN_DEVICE_EXPERT_V3_EXPORT",
+    "gate": "ANDROID_RC4.85_EXPERT_V3_EXPORT",
     "auto_starts_mock": false,
-    "instruction": "Finish rc4.85 release/package/re-extract gates. Then device-update once, run the integrated Expert-v3 challenger export, share the JSON, and compute/test v3 weights. Expert-v2 and Decision Kernel remain unchanged."
+    "instruction": "Update/reload the Companion to rc4.85 once, press Expert-v3 Challenger exportieren, share the generated credential-free JSON. Then compute/test Expert-v3 weights and implement only a validated separate preset."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -36,10 +36,10 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-expert-v3-acquisition|V2-FROZEN|UPSIDE-V3|1QB|AUTO-LONGBLOCK|HANDOFF-v117",
+    "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-package-deploy|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|1QB|AUTO-LONGBLOCK|HANDOFF-v118",
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Finish rc4.85 package/re-extract gate; then one device update and Expert-v3 challenger JSON export."
+    "next_action": "Update/reload device to rc4.85 and export the Expert-v3 challenger JSON."
   }
 }
