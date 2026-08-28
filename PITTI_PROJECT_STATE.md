@@ -1598,3 +1598,16 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Denzel Boston retained: fresh Aug-27 expert outlook plus Cleveland roster movement increases his path to meaningful targets; still late-round only.
 - Tank Dell remains watchlist rather than top-35 extension because post-catastrophic-knee return creates a wider health/role distribution; current positive camp evidence is real but does not beat the selected emergency-queue portfolio yet.
 - Draft-day review must start from this exact v2 list and the captured baseline; recheck injuries/53-man depth charts/Sleeper ADP/Expert-v3 on Aug 31 and alter only material deltas.
+
+
+### 2026-08-28 — Post-queue reprioritization / live freshness findings
+- User has now populated ~100 Sleeper Queue players manually. Queue optimization is demoted: treat as sufficient emergency failsafe, not a draft-readiness blocker. Only revisit if surplus time or a materially dangerous high-ranked stale/injured player is discovered.
+- Fresh NFL cutdown/injury scan materially changes several assumptions and must feed draft-day freshness:
+  - Tyrone Tracy Jr.: current NFL cutdown analysis says roster spot/job is in peril after preseason issues plus Giants signing Najee Harris; special-teams work is being used to justify a roster spot. This is materially worse than old 'Tracy late OK' priors; downgrade/hold until final roster/role resolution.
+  - Ashton Jeanty: ankle sprain remains non-long-term but return timeline unknown; current NFL RB rankings explicitly discount him because of the sprain. Keep hard freshness gate through draft day.
+  - TreVeyon Henderson: left practice after slipping; Patriots said he would probably not practice Aug 25 while evaluated. Requires current-status recheck before treating him as normal queue/value target.
+  - Kenneth Walker III: foot kept him from expected practice Aug 25. Existing PITTI rank should not be changed from this alone, but draft-day health verification is mandatory.
+  - Jordyn Tyson: approximately two-month hamstring absence confirmed; exclude from normal draft path absent major new recovery evidence.
+  - Josh Jacobs: current NFL RB analysis notes Green Bay is preparing for possible suspension while investigation remains open. Add legal/availability freshness flag; do not treat as ordinary clean Round-4/5 faller.
+  - Tucker Kraft: returned to practice from ACL and current camp reporting is positive; no stale blanket injury exclusion warranted, but workload/Week-1 readiness remains a freshness item.
+- No scoring/Expert-v3 changes from these findings. They are player availability/role overlays and must be evaluated at draft time.
