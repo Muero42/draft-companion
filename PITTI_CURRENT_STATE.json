@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T160000Z-v146",
-  "updated_at": "2026-08-28T16:10:00Z",
+  "handoff_generation": "20260828T164900Z-v147",
+  "updated_at": "2026-08-28T16:52:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -25,9 +25,9 @@
     "android_functional_verified": true
   },
   "exact_continuation": {
-    "gate": "RC496_SPARSE_PANEL_REGRESSION",
+    "gate": "RC496_RELEASE_PACKAGE",
     "auto_starts_mock": false,
-    "instruction": "Validate sparse Expert-v3 panel guard and evidence coverage; do not require user action while autonomous validation remains."
+    "instruction": "Run full rc4.96 release/package gates; continue autonomous evidence/coverage audit in parallel."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -43,14 +43,14 @@
     "no_player_name_qb_exclusions": true
   },
   "handoff": {
-    "transaction_in_progress": true,
+    "transaction_in_progress": false,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
     "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143|RC495-Q-NEUTRAL|ALL5-PASS|ANDROID-VERIFY-PENDING|HANDOFF-v146",
-    "status": "RC496_SOURCE_VALIDATION_IN_PROGRESS",
-    "handoff_ready": false,
-    "second_pass_pass": false,
-    "next_action": "Complete rc4.96 sparse-panel regression, coverage audit, gates, package/deploy only after PASS.",
-    "gate": "RC496_SPARSE_PANEL_REGRESSION"
+    "status": "RC496_SOURCE_REGRESSION_PASS_PACKAGE_PENDING",
+    "handoff_ready": true,
+    "second_pass_pass": true,
+    "next_action": "Run full rc4.96 release/package gates; package/deploy only after PASS.",
+    "gate": "RC496_RELEASE_PACKAGE"
   },
   "source_authority": "rc4.96",
   "package_authority": "rc4.95",
