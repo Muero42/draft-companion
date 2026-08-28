@@ -21,6 +21,7 @@ jobs:
           node-version: 22
       - run: node --check app.js && node --check live-surface-v3.js && node --check expert-v2-board.js && node --check tools/analyze-current-decision-evidence.mjs
       - run: node tools/rc496-draft-critical.mjs
-      - name: rc4.97 microfix contract when active
+      - name: successor microfix contracts when active
         run: |
           if grep -q "v11.8.0-rc4.97" app.js; then node tools/rc497-microfix.mjs; fi
+          if grep -q "v11.8.0-rc4.98" app.js; then node tools/rc498-evidence-polarity.mjs; fi
