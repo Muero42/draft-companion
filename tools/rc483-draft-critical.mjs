@@ -95,9 +95,9 @@ assert.ok(app.includes('wrSaturationRecommendationCount'));
 assert.ok(app.includes('qb2ViolationCount'));
 assert.ok(app.includes('rosterCounts:counts'));
 
-// Freeze audit: explicit user QB exclusions and K/DST omission from candidate construction.
-assert.ok(app.includes("USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers'])"));
-assert.ok(app.includes("USER_HARD_QB_EXCLUSIONS.has(norm(p.name))"));
+// Successor-safe freeze audit: player-name QB exclusions are forbidden; K/DST omission remains.
+assert.ok(!app.includes('USER_HARD_QB_EXCLUSIONS'));
+assert.ok(!/genosmith|aaronrodgers/i.test(app));
 assert.ok(app.includes("['QB','RB','WR','TE'].includes(p.pos)"));
 assert.ok(!policy.includes("userDraftStrategyExcluded('WR'"));
 
