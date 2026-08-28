@@ -67,3 +67,5 @@ These labels are retained only so old protections cannot silently disappear; the
 - AUTO durability: retained.
 - Execution witness: retained.
 - Old-error scan: retained.
+
+- Obsolete rc4.61 automatic package/publish workflow is retired; it must not reappear as active CI/current artifact authority.
