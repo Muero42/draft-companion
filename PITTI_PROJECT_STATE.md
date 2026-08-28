@@ -1618,3 +1618,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - NFL draft-tips article published ~Aug 27/28 reinforces process principles already encoded: avoid rigid take-locks and seek ascending offenses/value rather than drafting by static names. No PITTI model change required.
 - No new evidence from this scan justifies reopening rc4.94 code, Expert-v3 weights, Return-v2, or Normal-Cut logic.
 - Draft-readiness blocker inventory after this scan: (1) user's full natural rc4.94 mock must complete without P0/P1 behavior regression; (2) time-proximate Aug-31 freshness pass on active injury/role/legal gates; (3) emergency Queue is sufficient at ~100 and is no longer a blocker. If (1) passes, code freeze is appropriate.
+
+
+### 2026-08-28 — AUTO BLOCK freshness/readiness continuation
+- Same-day Half-PPR ECR source remains live: FantasyPros consensus 109 experts on Aug 28. Daily notes are explicitly updated for news/injuries.
+- Fresh late-round WR recon materially supports Denzel Boston as a legitimate asymmetric late pick: current FantasyPros note says he could emerge as Cleveland WR1 and draft price does not reflect that ceiling.
+- Current WR sleeper consensus has Stefon Diggs #1 sleeper among polled WR experts, while late-round expert content remains active Aug 26-28. These are recon signals only; do not override PITTI Expert-v3 or force WR-heavy roster construction.
+- Readiness priority remains: user mock is the remaining live end-to-end acceptance evidence; assistant parallel lane is freshness + fallback audit. 100-player Sleeper queue is sufficient and should not consume more time absent surplus.
