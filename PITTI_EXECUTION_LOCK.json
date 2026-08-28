@@ -16,7 +16,7 @@
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.93",
+    "latestAndroidObserved": "v11.8.0-rc4.94",
     "latestPreinstallVerified": "v11.8.0-rc4.94",
     "latestResearchChallenger": "v11.8.0-rc4.94",
     "preinstallArtifact": "Draft_Companion_PREINSTALL (rc4.94)",
@@ -24,15 +24,15 @@
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.94",
     "latestDeployedCandidate": "v11.8.0-rc4.94",
-    "latestAndroidVerified": "VERSION_OBSERVED_ONLY_NOT_FUNCTIONALLY_VERIFIED",
-    "androidAuthority": "v11.8.0-rc4.93",
-    "android_authority": "v11.8.0-rc4.93",
+    "latestAndroidVerified": "v11.8.0-rc4.94",
+    "androidAuthority": "v11.8.0-rc4.94",
+    "android_authority": "v11.8.0-rc4.94",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33169002426,
     "preinstallReferenceArtifactId": 9684784867,
     "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.93",
-    "latestAndroidFunctionalVerified": null
+    "latestAndroidVersionObserved": "v11.8.0-rc4.94",
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.94"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -218,7 +218,7 @@
     "androidVersionObserved": true,
     "androidFunctionalVerified": false
   },
-  "status": "RC494_DEPLOY_PARITY_PASS_ANDROID_PENDING",
-  "gate": "RC494_ANDROID_PICK9_VERIFY",
-  "nextGate": "rc4.94 exact 13-file gh-pages runtime parity PASS at 55c42cb2. Fresh Android Pick-9 verification is the remaining gate; no scoring/player-specific tuning."
+  "status": "RC494_ANDROID_PICK9_PASS_RESEAL_PENDING",
+  "gate": "RC494_FINAL_RESEAL",
+  "nextGate": "Fresh Android Pick-9 rc4.94 presentation verification PASS; synchronize canonical docs, reseal, and require all five primary gates PASS. No mock."
 }
