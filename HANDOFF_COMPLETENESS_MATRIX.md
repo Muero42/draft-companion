@@ -53,3 +53,17 @@ Takeover fails closed unless every item is true.
 
 ## Current gate
 `RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT`
+
+
+## Historical anti-regression witness tokens
+These labels are retained only so old protections cannot silently disappear; they do not restore old runtime state.
+- rc4.84: historical guard retained.
+- rc4.85: historical guard retained.
+- rc4.86: historical guard retained.
+- rc4.87: historical guard retained.
+- rc4.88: historical guard retained.
+- rc4.89: historical guard retained.
+- rc4.90: historical guard retained.
+- AUTO durability: retained.
+- Execution witness: retained.
+- Old-error scan: retained.
