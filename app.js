@@ -48,7 +48,10 @@ function applyTurnPortfolioOrdering(rows,current,next){
   if(!take)return rows;
   const ordered=[take,...rows.filter(x=>x!==take)];
   take.turnPortfolioReason=`Turn-Portfolio: ${leader.p.name} mit ${Math.round(leaderRet*100)}% Return aufschieben`;
+  if(Array.isArray(take.reasons)&&!take.reasons.includes(take.turnPortfolioReason))take.reasons.push(take.turnPortfolioReason);
   leader.turnPortfolioDeferred=true;
+  const deferReason=`Turn-Portfolio: hoher Return (${Math.round(leaderRet*100)}%) · für Folgepick einplanen`;
+  if(Array.isArray(leader.reasons)&&!leader.reasons.includes(deferReason))leader.reasons.push(deferReason);
   return ordered;
 }
 function visibleCoachCandidates(rows){
@@ -66,8 +69,7 @@ function visibleCoachCandidates(rows){
       visible.push(x);seen.add(norm(x.p.name));
     }
   }
-  const tagged=visible.map(row=>({...row,outsideNormalCut:!normalCandidateAdmissible(row)}));
-  return applyTurnPortfolioOrdering(tagged,Number(lastDraftContext?.current),Number(lastDraftContext?.next));
+  return visible.map(row=>({...row,outsideNormalCut:!normalCandidateAdmissible(row)}));
 }
 
 let experts=store.get('v7_experts',[]);
