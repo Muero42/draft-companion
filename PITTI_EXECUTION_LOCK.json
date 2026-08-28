@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T08:38:00Z",
+  "updatedAt": "2026-08-28T09:15:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -18,13 +18,13 @@
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.87",
     "latestPreinstallVerified": "v11.8.0-rc4.89",
-    "latestResearchChallenger": "v11.8.0-rc4.89",
+    "latestResearchChallenger": "v11.8.0-rc4.90",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.89_PREINSTALL.zip",
     "preinstallSha256": "2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608",
     "preinstallRuntimeFiles": 12,
     "latestSourceRegressionVerified": "v11.8.0-rc4.89",
     "latestDeployedCandidate": "v11.8.0-rc4.89",
-    "latestAndroidVerified": "v11.8.0-rc4.88"
+    "latestAndroidVerified": "v11.8.0-rc4.89"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -135,7 +135,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC489_FULLY_VERIFIED_ANDROID_VISUAL_PENDING",
+    "status": "RC490_PREDEVICE_FULL_VERIFICATION",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -192,15 +192,16 @@
       "User screenshot 2026-08-28 visually verifies Android/PWA badge v11.8.0-rc4.88 and selected Expert-v3 · positionsspezifisch profile.",
       "rc4.89 source changes: live profile detects exact Expert-v3 position map; expert rows use actual selected v3 voices; Top-10 rendered once as full cards; per-card orange Normal-Cut warning; James Cook/CeeDee Lamb/Justin Jefferson/Brock Bowers receive explicit display/risk evidence.",
       "rc4.89 sealed CI closure PASS: Project Guardrails, Release Contract v2, Candidate Package/Re-extract, rc4.82 and rc4.83 gates all green.",
-      "rc4.89 artifact independently inspected: 13 runtime files, candidate SHA-256 2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608, candidate.sha256 matches actual bytes."
+      "rc4.89 artifact independently inspected: 13 runtime files, candidate SHA-256 2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608, candidate.sha256 matches actual bytes.",
+      "rc4.90 adds deterministic gate: Expert-v3 panel selectability; actual live panelId exposure; actual-row expert display; James Cook RB must resolve DS/Del Don/Pat/Mariano/Weisse; Bowers TE includes Wolf; QB includes Todd; current early Top-10 all require substantive display evidence."
     ],
-    "gate": "ANDROID_RC4.89_VERIFY_PRESENTATION",
-    "note": "User correctly identified two regressions in rc4.88 live surface: profile detector treated Expert-v3 as CUSTOM/incumbent and rendered old expert names; top four/full + duplicated 10er compact layout was inferior. rc4.89 fixes presentation only and enriches early-round evidence text; Decision Kernel, Return-v2, roster policy and Expert-v3 weights unchanged.",
+    "gate": "RC490_PREDEVICE_FULL_VERIFICATION",
+    "note": "User screenshot proved rc4.89 still used old incumbent rankings despite Expert-v3 selector. Exact root cause: panelSelectable whitelisted only expert-v2 shadow boards, so preferred expert-v3 panels were rejected and panelFor fell back to old activePanelId. rc4.90 fixes selectability and live display derives expert names from actual rank rows, not inferred profile membership.",
     "knownOosConfounds": [
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
     "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
-    "nextGate": "Update/reload Android/PWA to rc4.89 and visually verify corrected Expert-v3 rows, unified full Top-10 cards, per-card Normal-Cut warning, and richer Pro/Contra.",
+    "nextGate": "Full sealed rc4.90 workflow set must pass before any gh-pages/Android deployment. Then deploy and visually verify one early-draft analysis.",
     "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION"
   }
 }
