@@ -1469,3 +1469,13 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Post-promotion direct blob verification: all 13 runtime files now match main exactly (4 changed files re-read after promotion; 9 unchanged files independently checked).
 - This establishes repository deployment parity for rc4.94 without importing project/control files into gh-pages and without changing scoring/model logic.
 - Remaining external gate: fresh Android Pick-9 snapshot/function check. Android authority must not advance from rc4.93 until that device evidence is received.
+
+
+### 2026-08-28 — rc4.94 fresh Android Pick-9 evidence received
+- User supplied fresh Android screenshots after exact gh-pages rc4.94 promotion.
+- Footer visibly reports `v11.8.0-rc4.94: Live-Draft-Anzeige auf aktives Expert-v3 korrigiert.`
+- Pick surface is `DRAFT-ENTSCHEIDUNG · Pick 9`, `Nächster 12 · Expert-v3`, with a complete 1–10 list.
+- Critical normal-cut regression is resolved in device evidence: Kenneth Walker is present at #7 with no player-specific boost; #8 De'Von Achane, #9 Brock Bowers and #10 Drake London remain visible and are explicitly marked `NORMAL-CUT WARNUNG · nur Fallback/kontextuell`.
+- No Geno/Rodgers name-exclusion behavior is visible/introduced; this verification is presentation/runtime activation evidence, not permission for scoring/player-specific tuning.
+- Android rc4.94 version + functional Pick-9 presentation verification therefore PASS for the targeted deployment gate.
+- Remaining work is canonical-state promotion/reseal and final guardrail/CI pass; no mock should auto-start.
