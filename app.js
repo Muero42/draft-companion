@@ -998,9 +998,25 @@ function injuryStashAdjustment(p,current,state){
 
 function marginalRosterUtility(p,current,state){
   // Keine starre Sollverteilung: nur gradueller Grenznutzen. Eure Flex-Regeln erlauben 1–3 RB und 2–4 WR Starter.
+  // rc4.96 evidence audit: once six WR are already rostered, a seventh late WR has sharply
+  // lower championship option value than an RB5 with contingent-role upside. This remains
+  // a soft utility cost, not a roster cap: a truly exceptional WR value can still overcome it.
   const c=state.counts||{},n=Number(c[p.pos]||0);let x=0;
-  if(p.pos==='RB'&&current>=81){if(n>=7)x-=3.5;else if(n>=6)x-=2;else if(n<=3)x+=1;}
-  if(p.pos==='WR'&&current>=81){if(n>=8)x-=6.5;else if(n>=7)x-=5;else if(n>=6)x-=3;else if(n<=4)x+=.5;}
+  if(p.pos==='RB'&&current>=81){
+    if(n>=7)x-=3.5;
+    else if(n>=6)x-=2;
+    else if(current>=121&&n<=4)x+=2;
+    else if(n<=3)x+=1;
+  }
+  if(p.pos==='WR'&&current>=81){
+    if(current>=121&&n>=8)x-=15;
+    else if(current>=121&&n>=7)x-=13.5;
+    else if(current>=121&&n>=6)x-=12;
+    else if(n>=8)x-=6.5;
+    else if(n>=7)x-=5;
+    else if(n>=6)x-=3;
+    else if(n<=4)x+=.5;
+  }
   if(p.pos==='QB'&&n===0&&current>=130)x+=7;
   if(p.pos==='TE'&&n===0&&current>=120)x+=4;
   return x;
