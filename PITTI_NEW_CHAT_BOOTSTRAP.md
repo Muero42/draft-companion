@@ -1,5 +1,5 @@
 # PITTI NEW CHAT BOOTSTRAP — FAIL-CLOSED
-Generation: `20260828T175500Z-v155`
+Generation: `20260828T2002Z-v157`
 
 When the user writes **PITTI AUTO**, verify in this order:
 1. PITTI_COMMAND_CONTRACTS.json
@@ -13,35 +13,40 @@ When the user writes **PITTI AUTO**, verify in this order:
 9. HANDOFF_COMPLETENESS_MATRIX.md
 10. actual repo/main/gh-pages/device evidence
 
-Fail closed unless CURRENT/SEAL/HANDOFF generation is `20260828T175500Z-v155`, the seal is PASS/ready/second-pass and its integrity set is non-empty and validates.
+Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260828T2002Z-v157`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
 
 ## Current facts
 - production/control: rc4.64.
-- rollback/Android accepted authority: rc4.96.
-- main/source + latest package/re-extract: rc4.98.
-- Android version observed: rc4.98; final Android acceptance still pending because semantic/evidence defects remain.
-- gh-pages: rc4.96 and NOT byte-parity with main rc4.98.
-- current gate: RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT.
-- canonical OOS backup: draft-companion-v7-backup-2026-08-28T17-30-01-853Z.json.
-- strict Coach draft 1399114762087895040 = 9 WR / 4 RB / 1 TE / 1 QB. Any 7-WR count is stale/wrong.
-- PR #33 CMC substantive positive-evidence patch is UNMERGED.
+- rollback accepted functional authority: rc4.96.
+- main/source: rc4.100.
+- rc4.100 PR #36 candidate gates: release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
+- rc4.100 merged to main as 1b85656e40a182ca6be2397c5bf6674006b97bd2.
+- post-merge main workflow verification: **pending / no run observed yet**. This blocks deployment only, not independent audit work.
+- gh-pages: rc4.99; main/pages parity FALSE.
+- Android/PWA observed: rc4.99; rc4.100 device observation/acceptance NOT yet established.
+- current gate: RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY.
 
-## Takeover invariants
-- no automatic mock;
-- no PairSum/Rolling;
-- no hard WR cap/quota;
-- no blind RB forcing;
-- no player-name forcing;
-- no generic Return-v2 retune;
-- no expert-weight redesign;
-- starter maxima are not roster caps;
-- WAIT/Return is timing, not automatic TAKE;
-- QUESTIONABLE alone stays neutral;
-- sparse-panel protection stays generic;
-- AUTO/AUTO BLOCK continues across work packages without progress-only/empty replies.
+## Canonical evidence
+- full draft backup: draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json, SHA-256 1fc70dc81e8d9a4e28b5f0450f1a57e8cf8873b7541040acc0033e13cf6725ab.
+- full draft 1399141058222280704: rc4.99, 15/15 fixtures, final user roster 1 QB / 6 RB / 7 WR / 1 TE, Coach followed 10/15.
+- Return-v2: short 3-pick turns 91.4% forecast vs 90.9% actual; 17-pick turns 37.1% vs 30.4%. Do not globally retune from one draft.
+- pick 89: Trevor Lawrence 96.1% Return/WAIT survived to 92; defect was #1 turn-portfolio ordering, not short-turn Return calibration.
+- strict Coach control draft 1399114762087895040 = **9 WR / 4 RB / 1 TE / 1 QB**, never 7 WR.
 
+## rc4.100 changes to preserve
+- signed evidence before neutral context; positive evidence cannot leak into Contra via displayRisk.
+- neutral age/fair-range filler cannot masquerade as substantive Plus.
+- soft WR saturation retained; no hard cap/quota.
+- conservative short-turn portfolio ordering only for <=3-pick turn, WAIT leader Return>=85%, comparable unblocked normal-cut alternative Return<=82%, <=25 panel ranks worse.
+- emergency queue + acute-status freshness mandatory in release/package gates.
+- Jeanty acute status refreshed 2026-08-28; monitored, not hard-blocked.
 
-## Guard-compatibility canaries — historical semantics only
-- Android version authority: rc4.96 rollback/accepted authority; rc4.98 is observed active candidate, not accepted authority.
-- work package -> checkpoint -> re-inventory remains mandatory AUTO sequencing.
-- user must never need to remind: AUTO/AUTO BLOCK must continue without repeated nudges.
+## Hard invariants
+No automatic mock; no PairSum/Rolling; no hard WR cap/quota; no blind RB forcing; no player-name forcing; no global Return-v2 retune; no expert-weight redesign; starter maxima are not roster caps; user overrides are not Coach-success labels; WAIT is timing, not automatic TAKE; exactly-one-QB strategy after QB1 remains.
+
+## AUTO / AUTO BLOCK
+Execute long autonomous same-turn blocks. Re-inventory after every package. No progress/status/promise-only or empty replies while useful autonomous work remains. A blocked dependent lane does not stop independent lanes.
+
+## Canonical self-update path
+verified candidate -> main promotion/post-merge verification -> gh-pages exact runtime deployment + byte parity -> Android/PWA refresh -> device observation.
+Do not revert to gh-pages-only promotion while main is stale, repeated refresh loops, cache clearing, reinstall, or manual ZIP as the default route.
