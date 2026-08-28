@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T111000Z-v141",
-  "created_at": "2026-08-28T11:31:00Z",
+  "handoff_generation": "20260828T111800Z-v141",
+  "created_at": "2026-08-28T11:18:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -13,13 +13,13 @@
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e861d746a7adc8dbfc4ad775af55b6d591416b26",
     "HANDOFF_COMPLETENESS_MATRIX.md": "a5cf7bf156b0fbab97abe7053b135f029abdf01e",
     "PITTI_EXECUTION_LOCK.json": "ca719d74222953882a5e924a408b7ec378a07d4c",
-    "PITTI_PROJECT_STATE.md": "7d5dd802d1ba0edc2a9a4ca5d119fb48b4e2242d",
+    "PITTI_PROJECT_STATE.md": "cffaf501b08a4ab51d0678b4f597eeab79038147",
     "PITTI_AUTO_PREFLIGHT.md": "04322998286de54ddd7c71f9e116501e423e70d9",
-    "app.js": "cd16fc30b2830240be2fea2c4d54380cf281ea12",
-    "index.html": "af1315e41ec5668690198aad53610e0e49ac6ef1",
+    "app.js": "1665c5691222c53ffc334fefe42dacc452300c02",
+    "index.html": "ce8881101a8dbd0069d8114023888d9201ed7127",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
-    "sw.js": "f35395de4fcdf3e2f18d7b8a858844d6392d575d",
-    "manifest.webmanifest": "ba9dd226df79693435fb29ae1e372352d21e94ae",
+    "sw.js": "2273e84db0da56734a81b994f23ff3f660ea1a25",
+    "manifest.webmanifest": "fc27a523e7768181178ca4abf2c7e548667f5873",
     "tools/rc483-draft-critical.mjs": "ace2fd0c36e870cf416c3f70700f102545df62e1",
     "tools/rc484-draft-critical.mjs": "37edb64fe25bbc0cbff621c21803c229f0153c8b",
     "tools/rc485-draft-critical.mjs": "b0266be12925f9bb0f04474418ba4d5a6178a619",
@@ -161,7 +161,8 @@
     "v141_walker_p0_preserved": true,
     "v141_stale_active_pointers_repaired": true,
     "v141_second_pass_complete": true,
-    "v141_all_five_primary_gates_pass": true
+    "v141_all_five_primary_gates_pass": true,
+    "v141_rc493_candidate_audit": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
