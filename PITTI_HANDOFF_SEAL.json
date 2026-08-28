@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T100500Z-v132",
-  "created_at": "2026-08-28T10:09:00Z",
+  "created_at": "2026-08-28T10:11:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -11,7 +11,7 @@
     "NEW_CHAT_HANDOFF_CURRENT.md": "969cd3193c1a9b4e65874672129157a82d9b8920",
     "PITTI_COMMAND_CONTRACTS.json": "41ffd8e89066b5e880ff11d6dffdd85e07127fdb",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e4ba6389db3da869ab2106c0d14ac83e68c6bdc2",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "0a7b8e506a07f0ffc692e6e0a617953f003ab74b",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "fee56a284a58a575b657d4b354f759dcdc48452d",
     "PITTI_EXECUTION_LOCK.json": "08ac2dc4062de8f5ed0bfa95d5a707737d4d776d",
     "PITTI_PROJECT_STATE.md": "fbb69451d8083e930298043b204debabca59967b",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
@@ -139,7 +139,8 @@
     "fresh_late_august_sleeper_batch": true,
     "v132_latest_auto_research_preserved": true,
     "v132_auto_block_semantics": true,
-    "v132_rc491_android_authority": true
+    "v132_rc491_android_authority": true,
+    "v132_matrix_synced": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
