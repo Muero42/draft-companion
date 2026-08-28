@@ -1949,3 +1949,8 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Replaced it with a manual-only historical note job. It can no longer package/publish rc4.61 or contaminate current CI status.
 - Current packaging authority remains `.github/workflows/release-contract-v2-package.yml`.
 - This is tooling/anti-regression cleanup only; no runtime/model/ranking change.
+
+
+## 2026-08-28 18:04Z — v155 detailed continuation contract
+- Added `research/RC498_V155_OPEN_AUDIT_CONTRACT_2026-08-28.md`.
+- It formalizes exact Lane A (9-WR saturation/championship utility) and Lane B (pool-wide substantive Pro/Contra quality) acceptance tests, preserving all anti-overfit and rollback constraints.
