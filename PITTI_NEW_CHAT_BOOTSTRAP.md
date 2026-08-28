@@ -23,18 +23,18 @@ If Library files are available, read them too. A v105 Library reseal was prepare
 
 ## Current acceptance boundary
 - production/control: rc4.64
-- source/package challenger: rc4.94; latest deployment/Android authority: rc4.93; rc4.94 CI/release/package PASS, main/gh-pages parity intentionally false until exact rc4.94 deployment
+- source/package/deployment/Android authority: rc4.94; exact 13-file main/gh-pages runtime parity PASS and fresh Android Pick-9 functional presentation PASS
 - latest package/re-extract: rc4.94 (final v143 candidate-package PASS; run 33169002426 / artifact 9684784867 / artifact digest d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576)
-- Android version authority: rc4.93, observed directly in fresh Pick-9 snapshot
-- Android functional verification: OPEN
+- Android version authority: rc4.94, observed directly in fresh post-deployment Pick-9 screenshots
+- Android functional Pick-9 presentation verification: PASS
 - Expert-v3 integrated; do not restart acquisition/export
 - Geno Smith/Aaron Rodgers are ordinary QB candidates; no player-name exclusion
 - Library mirror remains fail-closed if stale
 
 ## Current gate
-`RC494_DEPLOY_PARITY_ANDROID_VERIFY`
+`RC494_FINAL_RESEAL`
 
-On takeover, require the latest CURRENT/SEAL/handoff generation and verify seal hashes. Fresh rc4.93 Pick-9 evidence proved Walker remains Panel 15.3 / ADP 17.4 while outside-normal-cut fallback rows occupied visible Top-10 slots. rc4.94 fixes only visible candidate selection: normal-cut rows first, fallback only fills unused slots. CI/release/package already PASS on final v143 reseal. Deploy exact rc4.94 runtime, prove main/pages parity, then obtain a fresh Android Pick-9 snapshot. Do not retune scoring, Expert-v3, Return-v2, injury penalties or Walker specifically. No mock unless explicitly requested.
+On takeover, require the latest CURRENT/SEAL/handoff generation and verify seal hashes. rc4.94 CI/release/package PASS, exact 13-file gh-pages runtime parity PASS, and fresh Android Pick-9 presentation PASS. Walker is organically visible at #7; #8–10 contextual fallback rows remain visibly warned. Finalize canonical reseal and require all five primary gates PASS. Do not retune scoring, Expert-v3, Return-v2, injury penalties or Walker specifically. No mock unless explicitly requested.
 
 ## AUTO acceptance test
 A valid PITTI AUTO run must execute the repeated loop:
