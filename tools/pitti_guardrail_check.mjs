@@ -125,10 +125,10 @@ must(commandContract.auto?.blockedGateStopsOnlyDependentLane===true,'repo comman
 must(commandContract.auto?.promiseOnlyResponseForbidden===true,'repo command contract promise-only guard drift');
 must(commandContract.auto?.externalGateValidStopOnlyAfterIndependentLaneExhaustion===true,'repo command contract external-gate guard drift');
 must(commandContract.auto?.autoBlockCorrectionTrigger?.trigger==='AUTO BLOCK','AUTO BLOCK command contract missing');
-must(commandContract.currentBoundary?.androidAuthority==='v11.8.0-rc4.93','command contract Android authority drift');
-must(commandContract.currentBoundary?.latestPackageSha256==='3ce741b71cbc3f35b026e6aa8f9622e10999ecd29c54c0d66f6fcfdef379db95','command contract package reference hash drift');
-must(commandContract.currentBoundary?.packageReferenceRun===33166867111,'package reference run drift');
-must(commandContract.currentBoundary?.deployedPagesAppByteParityWithMain===false,'main/pages app divergence must remain explicit until rc4.94 deployment');
+must(commandContract.currentBoundary?.androidAuthority===current.runtime?.android_authority,'command contract Android authority drift');
+must(commandContract.currentBoundary?.latestPackageSha256===current.runtime?.latest_package_sha256,'command contract package reference hash drift');
+must(commandContract.currentBoundary?.packageReferenceRun===current.runtime?.package_reference_run,'package reference run drift');
+must(commandContract.currentBoundary?.deployedPagesAppByteParityWithMain===current.runtime?.deployed_pages_app_byte_parity_with_main,'main/pages parity state drift');
 must(current.handoff_generation===seal.handoff_generation,'CURRENT/SEAL generation mismatch');
 must(current.handoff_generation===handoffGeneration,'CURRENT/Handoff generation mismatch');
 must(seal.status==='PASS' && seal.handoff_ready===true && seal.second_pass_pass===true,'handoff seal not fully PASS');
