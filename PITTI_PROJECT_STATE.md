@@ -1315,3 +1315,8 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Expert-v3 remains integrated: Todd D Clark QB 10%, Ryan Weisse RB 10%, Wolf of Roto Street TE 10%, WR exact Expert-v2 fallback. Do not restart acquisition/export.
 - rc4.91 Return-v2 early tau 4.25 remains locked; tau 1.35 must not return. Reach/risk/wait/decline cannot enter positive evidence. AUTO BLOCK remains zero-ack immediate AUTO resumption. No mock unless explicitly requested.
 - main/gh-pages app.js byte divergence remains an audited open distinction; equal rc4.91 version strings do not establish byte parity.
+
+### 2026-08-28 — PITTI TAKEOVER AUDIT v137 / PREFLIGHT STALE-POINTER CLOSURE
+- Independent second-order scan after v136 found one additional active stale instruction in PITTI_AUTO_PREFLIGHT.md: “Current update path: rc4.85 is already deployed to gh-pages.” Because preflight is read before execution, this could have resurrected the old rc4.85 device/update path despite CURRENT/SEAL rc4.91 authority.
+- Repaired preflight to rc4.91 and explicitly preserved the audited same-version main/gh-pages app.js byte divergence. Equal rc4.91 labels are not byte parity.
+- Transfer generation advanced to v137 and bootstrap/current/handoff/matrix/execution-lock are synchronized. No runtime/model/expert weighting change.
