@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T073500Z-v122",
-  "updated_at": "2026-08-28T07:35:00Z",
+  "handoff_generation": "20260828T074500Z-v123",
+  "updated_at": "2026-08-28T07:45:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,16 +11,16 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.84",
-    "test_challenger": "v11.8.0-rc4.86",
+    "test_challenger": "v11.8.0-rc4.87",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.86",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1"
   },
   "exact_continuation": {
-    "gate": "ANDROID_RC4.86_SELF_UPDATE_THEN_EXPERT_V3_EXPORT",
+    "gate": "ANDROID_RC4.87_COMPACT_EXPERT_V3_EXPORT",
     "auto_starts_mock": false,
-    "instruction": "Use deployed Companion/PWA update path to reach v11.8.0-rc4.86. rc4.86 fixes the rc4.85 Expert-v3 export defect by reusing loadExpertRanks; no Decision Kernel/Return-v2/Expert-v2 weight change. Then run Expert-v3 Challenger exportieren once and return credential-free JSON."
+    "instruction": "Update/reload deployed app to rc4.87. Use Expert-v3 kompakt kopieren once, then paste the compact JSON. It contains only the position-relevant ranks needed for Weisse RB, Wolf TE, Todd QB, optional Wright WR."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -37,7 +37,7 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-export-failed|rc4.86-package-pages-pass|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|ANTI-REPEAT|1QB|AUTO-EXECUTE-BEFORE-REPLY|HANDOFF-v122",
+    "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-export-failed|rc4.86-full-export-too-large|rc4.87-compact-transfer|EXPERT-V3|V2-FROZEN|ANTI-REPEAT|1QB|HANDOFF-v123",
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
