@@ -1330,3 +1330,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Fresh external evidence used: Aug-24 late-round lotto-ticket analysis and Aug-27 late-TE analysis; generic sleeper labeling is not itself positive PITTI evidence.
 - Anti-repeat preserved: settled Stribling/Concepcion/Walker/Rachaad White/Corum/Mason/Juwan Johnson/Jake Ferguson/Fields/Doubs were not recycled.
 - No Coach/expert/Return-v2/ranking/ADP weights changed. Freeze remains intact.
+
+### 2026-08-28 — AUTO BLOCK: Upside-v3 Coverage Batch D
+- AUTO BLOCK executed with zero-ack semantics; Android-functional lane remains externally gated, so autonomous work stayed on broad anti-repeat research.
+- Added `research/UPSIDE_V3_COVERAGE_BATCH_D_2026-08-28.md`.
+- New explicit coverage: Ryan Flournoy ↑ deep/watch (pass-heavy WR3 + contingent ascension); Antonio Williams watch; Chris Brazzell watch; Zachariah Branch watch; Ted Hurst NO_ARROW/watch.
+- Fresh material event legitimately reopened already-covered Cleveland rookies: Cedric Tillman release removes one veteran competitor for KC Concepcion/Denzel Boston. Treat as opportunity confirmation, not duplicate “open room” scoring.
+- No runtime, Coach, expert, Return-v2, ranking or ADP weight change; freeze intact.
