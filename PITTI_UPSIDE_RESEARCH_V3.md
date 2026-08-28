@@ -300,3 +300,22 @@ No arrow may be promoted solely from one sleeper/breakout article.
 - Same roundup: Josh Downs had 25% TPRR and Pittman's 111 targets vacated; Keenan Allen adds competition. Strong target-earning/volume expansion case, but not automatic WR1 ceiling.
 - Same roundup: Matthew Golden has a clearer top-3 GB role after Doubs/Wicks departures and is explicitly argued as WR50-cost with team-target-lead upside; add as late WR ceiling candidate.
 - Fresh FP homepage lists new Aug27/28 research modules `Breakout Candidates`, `RB3s With RB1 Potential`, and `All-Undrafted Team`; these should be mined in the next autonomous research batch rather than repeating prior expert screening.
+
+
+## 2026-08-28 06:28 CEST — large AUTO batch: actionable tail map
+### RB opportunity-path grading
+- Bhayshul Tuten: multiple FP RB3->RB1 pieces converge; latest Aug19 article explicitly selects backs who can reach RB1 WITHOUT teammate injury. Tuten has short-yardage/GL evidence and a path to lead work. Upgrade to `↑↑ standalone RB1-path`, stronger than pure contingent handcuffs.
+- D'Andre Swift: Aug19 fresh case says 2025 RB15, >1300 total yds/10 TD, 62% snaps immediately after Monangai spike game; Monangai knee absence creates early clear-lead possibility. `↑ strong standalone + temporary ↑↑ opportunity`, but later committee risk remains.
+- David Montgomery: fresh Aug19 case: Houston volume opportunity is clear but efficiency/O-line is the gating factor. `↑ volume path`, not same ceiling confidence as Tuten.
+- Jonathon Brooks: fresh Aug19 case explicitly shifts toward Brooks as Chuba hamstring concern creates a job-winning path; prior repeated ACL injuries remain severe downside. `↑↑ role-capture ceiling + ↓↓ durability` = high-variance archetype, appropriate later not safe.
+- Jonah Coleman: Aug27 FP sleeper consensus ranks him RB sleeper #1 among 25 experts. This is broad discovery support for keeping him in late-RB priority set, but not enough alone for ↑↑; require role-specific evidence.
+- Tank Bigsby: Aug27 consensus RB sleeper #6 plus prior contingent/standalone evidence; maintain strong late asymmetry.
+- Blake Corum: Aug27 must-have expert roundup explicitly argues Rams have incentive to increase workload to preserve Kyren; keep active as standalone-growth + contingent ceiling.
+
+### WR ceiling classification
+- Emeka Egbuka: Aug breakout article explicitly states healthy 2026 can produce WR1 numbers after Evans departure; hamstring history + current toe injury are explicit qualifiers. `↑↑ WR1-path / ↓ health`.
+- Alec Pierce: role expansion case remains strong after Pittman departure + 4y/$114m extension + 19.9% target share with Jones. `↑ clear volume/organizational commitment`, ceiling likely WR2 rather than automatic WR1.
+- Jayden Reed: Doubs departure and no-Doubs split support target growth; Watson durability/Kraft ACL add contingent volume. `↑`, not `↑↑` absent stronger target-dominance evidence.
+
+### Display/model implication
+Upside-v3 should distinguish at least four mechanisms rather than one generic breakout arrow: (A) standalone elite-ceiling path, (B) role-capture path, (C) contingent injury-away ceiling, (D) established-breakout consolidation. Two arrows reserved for strong ceiling + short causal path; simultaneous downside arrow allowed for high-variance cases such as Brooks/Egbuka. This directly matches user's requested richer descriptions and prevents Jameson Williams-type mislabeling.
