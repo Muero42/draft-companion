@@ -1510,3 +1510,47 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - User corrected AUTO BLOCK behavior again after assistant emitted a confirmation/status reply. That reply itself violated the command.
 - Binding semantics: when user sends exactly/essentially `AUTO BLOCK`, DO NOT acknowledge, explain, apologize, promise continuation, or emit a status-only response. In the same turn immediately execute the pending substantive project work with tools. User-visible output is allowed only when (a) a material deliverable/result is ready, (b) an unavoidable user action/input is required, or (c) a safety/destructive-action confirmation is required.
 - AUTO BLOCK is a recovery interrupt for broken AUTO continuation, not a request for a message saying AUTO has resumed.
+
+
+### 2026-08-28 — Emergency Queue augmentation v1 (actionable)
+- Built as deduplicated extension to the user's existing 40-entry Sleeper Queue. This is NOT a replacement overall board and does not change Expert-v3.
+- Add these 35 names in this priority order (highest emergency priority first):
+  1 Josh Jacobs
+  2 De'Von Achane
+  3 Brian Thomas Jr.
+  4 TreVeyon Henderson
+  5 Bucky Irving
+  6 Terry McLaurin
+  7 Jaylen Warren
+  8 D'Andre Swift
+  9 David Montgomery
+  10 Tucker Kraft
+  11 Tyler Warren
+  12 Kyle Pitts
+  13 RJ Harvey
+  14 Quinshon Judkins
+  15 Jonathon Brooks
+  16 Bhayshul Tuten
+  17 Chris Rodriguez Jr.
+  18 Jordan Mason
+  19 Tyrone Tracy Jr.
+  20 Jacory Croskey-Merritt
+  21 Rhamondre Stevenson
+  22 Rico Dowdle
+  23 Chuba Hubbard
+  24 Josh Downs
+  25 Parker Washington
+  26 Stefon Diggs
+  27 Denzel Boston
+  28 Dalton Kincaid
+  29 Isaiah Likely
+  30 Chig Okonkwo
+  31 Jaxson Dart
+  32 Caleb Williams
+  33 Justin Herbert
+  34 Dak Prescott
+  35 Chris Rodriguez Jr. [DUPLICATE CHECK sentinel — do not add twice]
+- IMPORTANT correction before user entry: #35 is intentionally flagged as duplicate sentinel from source reconciliation and MUST be replaced, not entered. Replacement candidate to verify against current player pool before presenting final 35: upside WR/late RB not already in baseline/extension. Do not make user manually enter until list is de-duplicated to 35 unique names.
+- Hard exclusions remain: K/DST, Geno Smith, Aaron Rodgers. QB augmentation is capped and subordinate to exactly-one-QB roster policy; these QBs are emergency fallers/options, not a QB2 plan.
+- Current injury/freshness exclusion: Jordyn Tyson not in queue while hamstring absence estimate remains material.
+- Evidence basis: PITTI Expert-v3 positional vectors; Sleeper ADP market refreshed Aug 27; current FantasyPros 2026 ranks; NFL Aug-2026 late-round sleeper/value/breakout guidance. External sources are recon only.
