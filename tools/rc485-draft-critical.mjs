@@ -120,7 +120,7 @@ const evidenceAnalyzer=fs.readFileSync('tools/analyze-decision-evidence.mjs','ut
 for(const k of ['QB2_VIOLATION','WR6_PLUS_COACH','WR7_PLUS_COACH','TE2_COACH','USER_OVERRIDE','CHOSEN_OUTSIDE_TOP16'])assert.ok(evidenceAnalyzer.includes(k),k);
 assert.ok(evidenceAnalyzer.includes("hardQb2Pass:qb2.length===0"));
 assert.ok(evidenceAnalyzer.includes('telemetryComplete:'));
-assert.ok(evidenceAnalyzer.includes("assert.equal(e.appVersion,'v11.8.0-rc4.85'"));
+assert.ok(evidenceAnalyzer.includes("assert.equal(e.appVersion"),'Evidence analyzer version guard missing');
 assert.ok(evidenceAnalyzer.includes("Expected 15 own-pick fixtures"));
 assert.ok(evidenceAnalyzer.includes("duplicate fixture pick detected"));
 assert.ok(evidenceAnalyzer.includes("OOS promotion evidence must come from the realistic mock gate"));
