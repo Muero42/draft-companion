@@ -1284,7 +1284,7 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
   - source main: rc4.91;
   - Android version observed by user screenshot: rc4.91;
   - Android functional verification still pending;
-  - final v132 package/re-extract: `Draft_Companion_v11.8.0-rc4.91_PREINSTALL.zip`, 13 files, SHA-256 `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`;
+  - final v132 package/re-extract: `Draft_Companion_v11.8.0-rc4.91_PREINSTALL.zip`, 13 files, SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`;
   - GitHub artifact ID 9681950213, workflow run 33161849023, outer artifact digest sha256 `90c2530897d8ffe5ae4ef1b58ca5c8e57145efaf41fe0461a1ae9620e77e0c10`.
 - Critical deployment nuance discovered: gh-pages and main both advertise rc4.91 but current `app.js` bytes differ. main includes the newest broad evidence batch; gh-pages does not. Henry/evidence-polarity fixes are present in gh-pages. Therefore version equality MUST NOT be treated as byte parity or functional equivalence.
 - Do not automatically deploy/synchronize this byte difference during handoff. Preserve the distinction and let the receiving chat verify the safest next device path; same-version cache/service-worker behavior can otherwise hide which bytes are actually running.
@@ -1294,3 +1294,9 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Broad anti-repeat research continues coverage-first across uncovered players. Do not repeatedly query settled Brown/Walker/Henry/etc. without materially new evidence.
 - `AUTO BLOCK` semantics are now promoted into the command contract: zero acknowledgement/apology/status/explanation; immediately resume long AUTO execution.
 - Handoff generation advanced to v133 because the audit materially changed authoritative transfer documents. Final step is fresh seal/hash verification and all five CI families green.
+
+
+### 2026-08-28 — v134 PACKAGE REFERENCE CLARIFICATION
+- Deep handoff second pass inspected successful package run 33162367347 / artifact 9682152886 directly. Inner rc4.91 PREINSTALL contains exactly 13 runtime files and SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.
+- Prior v133 documentation used the previous successful rc4.91 package hash. Corrected to the directly inspected v133 package artifact.
+- Important: ZIP archive hash is not treated as a deterministic runtime identity across documentation-only commits because archive metadata/timestamps can change. The durable authority is seal-listed Git blob integrity plus package/re-extract PASS. This prevents an endless handoff reseal/package-hash loop and prevents a later chat from mistaking archive-hash churn for runtime changes.
