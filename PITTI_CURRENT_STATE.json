@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T054500Z-v118",
-  "updated_at": "2026-08-28T05:45:00Z",
+  "handoff_generation": "20260828T063500Z-v119",
+  "updated_at": "2026-08-28T06:35:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -17,9 +17,9 @@
     "library_recovery_alias": "v11.8.0-rc4.52"
   },
   "exact_continuation": {
-    "gate": "ANDROID_RC4.85_EXPERT_V3_EXPORT",
+    "gate": "ANDROID_RC4.85_SELF_UPDATE_THEN_EXPERT_V3_EXPORT",
     "auto_starts_mock": false,
-    "instruction": "Update/reload the Companion to rc4.85 once, press Expert-v3 Challenger exportieren, share the generated credential-free JSON. Then compute/test Expert-v3 weights and implement only a validated separate preset."
+    "instruction": "Use the already deployed Companion/PWA update path first; reload/update until badge shows v11.8.0-rc4.85. Do not default to an expiring ChatGPT ZIP. Then press Expert-v3 Challenger exportieren once and share the credential-free JSON. Validate vectors, compute v2-v3 grids/DS redistribution, select only an evidence-backed Expert-v3 composition, implement as a separate selectable preset, and run regression/package/device gates."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -34,12 +34,12 @@
     "rc484_kernel_frozen": true
   },
   "handoff": {
-    "transaction_in_progress": false,
+    "transaction_in_progress": true,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-package-deploy|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|1QB|AUTO-LONGBLOCK|HANDOFF-v118",
-    "status": "SEALED_PASS",
-    "handoff_ready": true,
-    "second_pass_pass": true,
-    "next_action": "Update/reload device to rc4.85 and export the Expert-v3 challenger JSON."
+    "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-package-pages|SELF-UPDATE|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|ANTI-REPEAT|1QB|AUTO-EXECUTE-BEFORE-REPLY|HANDOFF-v119",
+    "status": "HANDOFF_TRANSACTION_IN_PROGRESS",
+    "handoff_ready": false,
+    "second_pass_pass": false,
+    "next_action": "Finish v119 seal/second pass. In receiving chat: verify deployed rc4.85 update on Android, then Expert-v3 export; no mock."
   }
 }
