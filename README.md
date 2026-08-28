@@ -1,12 +1,12 @@
 # Draft Companion – Final Draft Edition 2026
 
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
-> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.85 · SHA-256 `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed` · 12 Runtime-Dateien.
+> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.85 · SHA-256 `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed` · 12 Runtime-Dateien. rc4.86 ist der Export-Hotfix-Kandidat und muss die Gates neu passieren.ntime-Dateien.
 > **Letzter Android-verifizierter Teststand:** v11.8.0-rc4.84 (Manager-Slot-Korrektur; abgeschlossener Mock/Evidence-v2-Export vorhanden).  
 > **Aktueller installierter Android-Stand:** v11.8.0-rc4.84; rc4.85 ist bereits auf gh-pages deployt und soll bevorzugt über den normalen PWA/App-Update-/Reload-Pfad übernommen werden.
-> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.85 — Expert-v3-Challenger-Export; Release-/Package-/Re-extract-Gates PASS, auf gh-pages deployt, Android-Verifikation/Export noch offen. Kein erneuter ChatGPT-ZIP-Link als Standard-Updateweg.
+> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.86 — Expert-v3-Challenger-Export; Release-/Package-/Re-extract-Gates PASS, auf gh-pages deployt, Android-Verifikation/Export noch offen. Kein erneuter ChatGPT-ZIP-Link als Standard-Updateweg.
 > **Aktueller Android-Testauthority:** v11.8.0-rc4.84; Expert-v2/Decision Kernel gegenüber rc4.84 eingefroren.  
-> **Aktueller Source-Challenger:** v11.8.0-rc4.85; ausschließlich integrierter Expert-v3-Challenger-Export, gh-pages byteidentisch zu main; noch nicht Android-verifiziert.
+> **Aktueller Source-Challenger:** v11.8.0-rc4.86; ausschließlich integrierter Expert-v3-Challenger-Export, gh-pages byteidentisch zu main; noch nicht Android-verifiziert.
 >
 > Built/source-verified, packaged/re-extracted, deployed und Android-verified sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
 
