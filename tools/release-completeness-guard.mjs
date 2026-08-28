@@ -25,12 +25,15 @@ for(const x of [
   '<b>Fazit:</b>',
   '${esc(keyword(x,i))}</strong>',
   'expertName||r.source',
-  '10ER-ÜBERSICHT'
+  'TOP 10 KANDIDATEN'
 ]) must(live.includes(x),`live UI invariant missing: ${x}`);
 must(!live.includes('— ${esc(keyword(x,i))}'),'Top-10 keywords must not sit behind player name');
 must(!live.includes('<details><summary>Experten'),'expert ranks must not be collapsible');
 must(!/shortName\(name\).*%/.test(live),'expert weights leaked into live cards');
 must(app.includes('expertProfileBeforeReload'),'expert profile refresh preservation missing');
+must(live.includes("expertv3:'Expert-v3 POSITIONSSPEZIFISCH'"),'Expert-v3 live profile label missing');
+must(live.includes('s.rows.slice(0,10).map(card).join'), 'Top-10 must render as full decision cards');
+must(live.includes('live-cut-warning'), 'per-card Normal-Cut warning missing');
 must(app.includes('injury|ankle|achilles|recurrence'),'arrow injury-exclusion guard missing');
 const ctx={window:{}};vm.createContext(ctx);vm.runInContext(read('expert-v2-board.js'),ctx);vm.runInContext(read('expert-v3-board.js'),ctx);const b=ctx.window.PITTI_EXPERT_V2,v3=ctx.window.PITTI_EXPERT_V3;
 must(b?.schema==='pitti-expert-v2-board.v4','Expert-v2 board schema/completeness not v4');
