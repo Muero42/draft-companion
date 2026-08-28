@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T07:34:00Z",
+  "updatedAt": "2026-08-28T07:45:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -18,12 +18,12 @@
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.84",
     "latestPreinstallVerified": "v11.8.0-rc4.86",
-    "latestResearchChallenger": "v11.8.0-rc4.86",
+    "latestResearchChallenger": "v11.8.0-rc4.87",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.86_PREINSTALL.zip",
     "preinstallSha256": "49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1",
     "preinstallRuntimeFiles": 12,
     "latestSourceRegressionVerified": "v11.8.0-rc4.86",
-    "latestDeployedCandidate": "v11.8.0-rc4.86",
+    "latestDeployedCandidate": "v11.8.0-rc4.87",
     "latestAndroidVerified": "v11.8.0-rc4.84"
   },
   "auto": {
@@ -135,7 +135,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC486_EXPERT_V3_EXPORT_HOTFIX_DEPLOYED_DEVICE_VERIFY_PENDING",
+    "status": "RC487_COMPACT_EXPERT_V3_TRANSFER_DEPLOYED_DEVICE_VERIFY_PENDING",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -186,15 +186,16 @@
       "rc4.85 adds only Expert-v3 challenger export acquisition path; frozen Expert-v2 and Decision Kernel remain unchanged",
       "rc4.85 Release Contract + candidate package/re-extract PASS; inner PREINSTALL SHA-256 53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed; 12/12 runtime blobs match main; main/gh-pages 12/12 byte parity PASS",
       "rc4.86 static syntax PASS in Actions; export hotfix replaces undefined loadSingleExpert with existing verified loadExpertRanks pipeline; main/gh-pages 12/12 runtime blob parity PASS",
-      "rc4.86 full release contract PASS; candidate package/re-extract PASS; 12 runtime files; inner PREINSTALL SHA-256 49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1"
+      "rc4.86 full release contract PASS; candidate package/re-extract PASS; 12 runtime files; inner PREINSTALL SHA-256 49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1",
+      "rc4.87 compact export uses existing verified loadExpertRanks, filters each challenger to the only position under evaluation, serializes [playerName,overallRank] tuples, and copies directly to clipboard; no credentials/raw source payloads."
     ],
-    "gate": "ANDROID_RC4.86_SELF_UPDATE_THEN_EXPERT_V3_EXPORT",
-    "note": "rc4.84 remains latest Android-verified authority. rc4.85 export failed deterministically because loadSingleExpert was undefined. rc4.86 reuses loadExpertRanks and changes acquisition/export only; Decision Kernel/Return-v2/Expert-v2 stay frozen.",
+    "gate": "ANDROID_RC4.87_COMPACT_EXPERT_V3_EXPORT",
+    "note": "rc4.86 successfully produced a large full export, but transfer through ChatGPT/Android became impractical and caused app/chat instability. rc4.87 changes transfer format only: target-position ranks, compact tuple encoding, clipboard-first fallback to file. Core model unchanged.",
     "knownOosConfounds": [
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
     "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
-    "nextGate": "Android self-update/reload to rc4.86 via deployed app path; verify badge; export Expert-v3 challenger JSON; compute/test v3; keep v2 selectable.",
+    "nextGate": "Reload/update Android/PWA to rc4.87; tap Expert-v3 kompakt kopieren once; paste compact JSON; compute/test Expert-v3.",
     "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION"
   }
 }
