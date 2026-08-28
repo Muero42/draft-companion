@@ -1,7 +1,7 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.84';
+const APP_VERSION='v11.8.0-rc4.85';
 const $=id=>document.getElementById(id);
-const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile'];
+const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
@@ -2380,6 +2380,32 @@ els.renamePanelBtn.onclick=()=>{const p=panels[activePanelId],name=prompt('Neuer
 els.deletePanelBtn.onclick=()=>{if(['standard','pat'].includes(activePanelId))return alert('Standard und Pat bleiben erhalten.');if(confirm('Panel löschen?')){delete panels[activePanelId];delete panelRanks[activePanelId];activePanelId='standard';persist();renderAll()}};
 for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])el.onchange=()=>{positionPanels[pos]=el.value;persist()};
 if(els.expertProfile){els.expertProfile.value=currentExpertProfile();els.expertProfile.onchange=()=>applyExpertProfile(els.expertProfile.value);}
+
+async function exportExpertV3Challengers(){
+  const status=els.expertV3AuditStatus;
+  if(!els.apiKey.value.trim())throw new Error('FantasyPros-Zugang fehlt. Zuerst Alles aktualisieren.');
+  const targets=['Ryan Weisse','Wolf of Roto Street','Todd D Clark','Joey Wright'];
+  status.textContent='Lade Expert-v3 Challenger …';
+  const info=await loadExperts();
+  const found=[];
+  for(const name of targets){
+    const e=findExpert(name);
+    if(!e){found.push({name,status:'missing'});continue}
+    try{
+      status.textContent='Lade '+name+' …';
+      const row=await loadSingleExpert(e);
+      const ranks=(row?.ranks||row?.players||[]), players=Array.isArray(ranks)?ranks:Object.entries(ranks||{}).map(([id,v])=>({id,...v}));
+      found.push({name,id:String(e.id),site:e.site||e.source||'',status:'ok',meta:{verifiedIndividual:!!row?.verifiedIndividual,expertName:row?.expertName||name,updated:row?.updated||row?.lastUpdated||null,source:row?.source||null},raw:row,players});
+    }catch(err){found.push({name,id:String(e.id),status:'error',error:err?.message||String(err)})}
+  }
+  const out={schema:'pitti-expert-v3-challengers.v1',appVersion:APP_VERSION,createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,targets,containsCredential:false,experts:found};
+  await downloadJson('pitti-expert-v3-challengers-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json',out);
+  const ok=found.filter(x=>x.status==='ok'&&x.meta?.verifiedIndividual);
+  status.className='notice '+(ok.length?'ok':'warn');
+  status.textContent='v3 Export: '+ok.length+'/'+targets.length+' verifizierte Einzelrankings · '+found.map(x=>x.name+': '+x.status).join(' · ');
+}
+
+if(els.expertV3AuditBtn)els.expertV3AuditBtn.onclick=()=>exportExpertV3Challengers().catch(e=>{els.expertV3AuditStatus.className='notice bad';els.expertV3AuditStatus.textContent='v3 Audit fehlgeschlagen: '+e.message});
 els.diagnoseBtn.onclick=async()=>{els.diagnostic.textContent='Teste …';try{
   const out=[];
   try{
