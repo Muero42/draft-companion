@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T11:10:00Z",
+  "updatedAt": "2026-08-28T14:05:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -18,7 +18,7 @@
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.91",
     "latestPreinstallVerified": "v11.8.0-rc4.91",
-    "latestResearchChallenger": "v11.8.0-rc4.92",
+    "latestResearchChallenger": "v11.8.0-rc4.94",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.91_PREINSTALL.zip",
     "preinstallSha256": "64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72",
     "preinstallRuntimeFiles": 13,
@@ -31,7 +31,7 @@
     "preinstallReferenceRun": 33162367347,
     "preinstallReferenceArtifactId": 9682152886,
     "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.92",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.93",
     "latestAndroidFunctionalVerified": null
   },
   "auto": {
@@ -145,7 +145,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC492_ANDROID_FUNCTIONAL_WALKER_DIAGNOSTIC_PLUS_BROAD_RESEARCH",
+    "status": "RC494_NORMAL_CUT_DISPLAY_FIX_PENDING_CI",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -155,7 +155,8 @@
       "rc4.82 durable draft-critical regression added",
       "release workflows retargeted from obsolete rc4.78 branch to main",
       "rc4.83: late WR6+/WR7+ marginal utility penalties strengthened; PlayerQualitySafety cannot resurrect saturated late WR unless exceptional +10 ADP value",
-      "rc4.92 removes resurrected Geno Smith/Aaron Rodgers player-name hard exclusions; model/panel/ADP must rank them organically. Guardrails inverted to forbid this class of forcing."
+      "rc4.92 removes resurrected Geno Smith/Aaron Rodgers player-name hard exclusions; model/panel/ADP must rank them organically. Guardrails inverted to forbid this class of forcing.",
+      "rc4.94 presentation-only fix: normal-cut candidates fill Top-10 before outside-cut fallback context; no scoring/player-specific tuning"
     ],
     "validation": [
       "27 static/runtime policy invariants PASS before health refinement",
