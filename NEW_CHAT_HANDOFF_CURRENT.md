@@ -319,3 +319,5 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Pre-device regression requires James Cook RB actual v3 composition = DS/Del Don/Pat/Mariano/Weisse; Bowers TE includes Wolf; QB includes Todd.
 - Early-info coverage expanded for the exact current Top-10: Cook, Lamb, Jefferson, Barkley, Bowers, Chase Brown, Achane, Kenneth Walker, Omarion Hampton, Drake London. Generic filler remains forbidden.
 - IMPORTANT: rc4.90 must NOT be deployed to Android until the sealed full workflow set passes. This explicitly implements the user's requirement to verify before phone rollout.
+
+- v130 addendum: rc4.90 broad early-draft evidence now also covers Nico Collins, Pickens, Olave, Kyren, McBride, Jeanty, Javonte, Josh Allen, Higgins, Rice, Garrett Wilson, Waddle, Breece Hall and McConkey. Full gates must rerun before deployment because app.js changed after the prior pass.
