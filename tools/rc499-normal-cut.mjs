@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const app=fs.readFileSync('app.js','utf8');
+const m=app.match(/function normalCandidateAdmissible\(row\)\{([\s\S]*?)\n\}/);
+assert.ok(m,'normalCandidateAdmissible missing');
+assert.match(m[1],/current<=70\?18:current<=110\?22:26/,'phase-aware normal-cut gaps changed');
+assert.ok(!/current<=70\?[0-9](?:\D|$)/.test(m[1]),'early normal-cut became narrow again');
+assert.match(app,/const normal=source\.filter\(normalCandidateAdmissible\)/,'normal candidates not separated');
+assert.match(app,/if\(visible\.length<10\)/,'fallback must only fill unused slots');
+assert.match(app,/outsideNormalCut:!normalCandidateAdmissible\(row\)/,'outside-cut labeling missing');
+assert.match(app,/Weitere sichtbare Kandidaten · außerhalb Normal-Cut/,'fallback UI separator missing');
+console.log('RC499_NORMAL_CUT_PASS gaps=18/22/26 fallback=fill-only');
