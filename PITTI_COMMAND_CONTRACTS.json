@@ -1,6 +1,6 @@
 {
   "schema": "pitti.command-contract.v1",
-  "version": "1.7.0",
+  "version": "1.7.2",
   "trigger": "PITTI AUTO",
   "sourceOrder": [
     "PITTI_COMMAND_CONTRACTS.json",
@@ -79,25 +79,27 @@
     "prepared/build == Android verified",
     "stale cross-draft duplicate identity",
     "rc4.80 stale snapshot version/false DEGRADED",
-    "user overrides/final roster as Coach-success labels"
+    "user overrides/final roster as Coach-success labels",
+    "blindly treating WAIT board leader as TAKE without turn-portfolio review",
+    "using one OOS mock to resurrect PairSum/Rolling or globally retune Return-v2"
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.64",
-    "androidAuthority": "v11.8.0-rc4.94",
+    "androidAuthority": "v11.8.0-rc4.96",
     "androidVersionObserved": true,
-    "androidFunctionalVerificationPending": true,
+    "androidFunctionalVerificationPending": false,
     "sourceAuthority": "v11.8.0-rc4.96",
     "latestPackageReextract": "v11.8.0-rc4.96",
     "latestPackageSha256": "18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0",
     "packageRuntimeFiles": 13,
     "deployedPagesVersion": "v11.8.0-rc4.96",
     "deployedPagesAppByteParityWithMain": true,
-    "deployedPagesNote": "rc4.96 exact 13-file main/gh-pages runtime parity independently verified at gh-pages head 35b68015aa79e8976f3ee9a230be3710be503b32; Android authority remains rc4.94 and fresh rc4.96 functional verification is pending.",
+    "deployedPagesNote": "rc4.96 exact 13-file main/gh-pages parity PASS; Android/PWA rc4.96 functionally evidenced by complete 15-pick follow-Coach mock. Runtime frozen; only pre-draft freshness checks remain.",
     "libraryRecoveryAlias": "v11.8.0-rc4.52",
     "packageReferenceRun": 33183057716,
     "packageReferenceArtifactId": 9690504450,
     "packageHashSemantics": "GitHub artifact digest for successful rc4.96 candidate package; durable authority also requires runtime blob/re-extract gates.",
     "testChallenger": "v11.8.0-rc4.96"
   },
-  "currentGate": "RC496_ANDROID_VERIFY"
+  "currentGate": "RC496_PRE_DRAFT_FREEZE_FRESHNESS_ONLY"
 }
