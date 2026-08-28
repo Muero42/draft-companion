@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T172200Z-v150",
-  "created_at": "2026-08-28T17:22:00Z",
+  "handoff_generation": "20260828T155300Z-v152",
+  "created_at": "2026-08-28T15:53:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "13bb644f18ed0cd946a835f1702b9cda1fad2005",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "1a959da9c89e8062a88391c5035686d859c6d038",
-    "PITTI_COMMAND_CONTRACTS.json": "1c262c870ae056d0dc54ae9c3dadc1b677633f56",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "3f3c8ead0489cb946641f3839625261043dfacc1",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "fb0bb07da890f37530962e9f8449a0da390be09d",
-    "PITTI_EXECUTION_LOCK.json": "51c65c785c2f66267dc88d5735fb4f3f718a6436",
-    "PITTI_PROJECT_STATE.md": "49a80b0b44800f788ffac6eade69d3c041c2075f",
+    "PITTI_CURRENT_STATE.json": "e5c616c6e9a6c98a00c72f207a90b38b3e4ddac2",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "5a999962dec279f94f078a7788ace742913478ee",
+    "PITTI_COMMAND_CONTRACTS.json": "7638c02428cb97ca6a6175c5cc62c12f974d3b4c",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "55981f1c03971b5c4aba38fdc98f0763a32d3d60",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "c79737336b7a7d8581da2e856645d0cd01503f8c",
+    "PITTI_EXECUTION_LOCK.json": "36c0fd2034d3ad0145da008796beafd9188dcbbb",
+    "PITTI_PROJECT_STATE.md": "847094f513696d1a9f4f6d43a7d7fe3f342e30c9",
     "PITTI_AUTO_PREFLIGHT.md": "5dd967ac26a5b5465e769b60d6537ecd3ef01cdc",
     "app.js": "fe0d63a5fcc50ab9b1341ef8a93bbb82938211be",
     "index.html": "34f6aa57934db506c8aec2ff314690929f1ddf36",
@@ -43,7 +43,8 @@
     "tools/rc490-draft-critical.mjs": "0897971e1bdaf5e87b8233c60ee2c00e45f3742b",
     "tools/rc491-return-calibration.mjs": "b64485b69f1929dde260591288dabdc0eb656d7d",
     "live-surface-v3.js": "72e8beb87a5f73284e9d7d1d50dde6abea15c510",
-    "tools/rc482-draft-critical.mjs": "9eab92465f65017869eb65d533fc93e48a8bbc3a"
+    "tools/rc482-draft-critical.mjs": "9eab92465f65017869eb65d533fc93e48a8bbc3a",
+    "research/RC496_RECOMMENDATION_FOLLOWING_MOCK_1399085353452761088_2026-08-28.md": "16e419adfff1e3e02dd15dbce408f51fbb6695d5"
   },
   "checks": {
     "current_generation": true,
@@ -200,39 +201,51 @@
     "v150_rc496_all5_reference_verified": true,
     "v150_rc496_package_reextract_reference": true,
     "v150_rc496_main_pages_13of13": true,
-    "v150_android_rc494_rc496_pending": true
+    "v150_android_rc494_rc496_pending": true,
+    "v152_current_seal_handoff_generation_match": true,
+    "v152_rc496_android_functional_verified": true,
+    "v152_followcoach_oos_15of15": true,
+    "v152_return_brier_0080186": true,
+    "v152_sparse_panel_oos_pass": true,
+    "v152_no_return_retune": true,
+    "v152_no_pairsum_resurrection": true,
+    "v152_wait_turn_chat_review": true,
+    "v152_runtime_frozen": true,
+    "v152_freshness_only_gate": true,
+    "v152_research_report_sealed": true
   },
   "artifact_runtime_parity": {
-    "app_js_main_pages": false,
-    "index_html_main_pages": false,
+    "app_js_main_pages": true,
+    "index_html_main_pages": true,
     "decision_policy_main_pages": true,
-    "sw_js_main_pages": false,
-    "manifest_main_pages": false,
-    "note": "Audited v144 boundary: rc4.94 source/package is verified; gh-pages remains rc4.93 until exact promotion. app.js/index.html/sw.js/manifest.webmanifest differ; unchanged decision-policy/live-surface/expert-v3 assets remain equal."
+    "sw_js_main_pages": true,
+    "manifest_main_pages": true,
+    "note": "rc4.96 exact 13/13 runtime parity PASS at gh-pages head 35b68015aa79e8976f3ee9a230be3710be503b32; no runtime files changed during v152 OOS audit/checkpoint work."
   },
   "runtime_boundary": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.94",
+    "android_authority": "v11.8.0-rc4.96",
     "android_version_observed": true,
     "android_functional_verified": true,
     "source_authority": "v11.8.0-rc4.96",
     "test_challenger": "v11.8.0-rc4.96",
-    "test_challenger_android_verified": false,
+    "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.96",
     "latest_package_digest": "18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0",
     "package_runtime_files": 13,
     "deployed_pages_version": "v11.8.0-rc4.96",
     "deployed_pages_app_byte_parity_with_main": true,
-    "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR exact v2 fallback",
     "package_reference_run": 33183057716,
     "package_reference_artifact_id": 9690504450,
-    "note": "v145 closure boundary: rc4.94 source/package/re-extract + exact 13-file gh-pages deployment parity + fresh Android Pick-9 presentation verified."
+    "decision_oos": "draft 1399085353452761088; 15/15 rc4.96 followedCoach; Return Brier 0.080186; sparse-panel OOS PASS",
+    "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR exact v2 fallback",
+    "note": "rc4.96 frozen pre-draft runtime; no rc4.97 scoring challenger promoted."
   },
   "exact_continuation": {
-    "gate": "RC496_ANDROID_VERIFY",
+    "gate": "RC496_PRE_DRAFT_FREEZE_FRESHNESS_ONLY",
     "auto_starts_mock": false,
-    "instruction": "Verify v150 seal and rc4.96 release/deployment authority. Then obtain one fresh Android/PWA rc4.96 functional snapshot before Android promotion; no automatic mock."
+    "instruction": "Do not retune runtime/model or start another mock automatically. Perform only pre-draft panel/ADP/acute-status/news freshness and failsafe checks unless genuinely new material evidence reopens the freeze."
   },
-  "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
-  "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-PACKAGE-PASS|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v144"
+  "library_persistence": "STALE_FAIL_CLOSED",
+  "acceptance_fingerprint": "RC4.96-ALL5-PASS|PKG-REEXTRACT-PASS|GH-PAGES-13OF13|ANDROID-RC4.96-VERIFIED|OOS-FOLLOWCOACH-15OF15|RETURN-BRIER-0.0802|SPARSE-PANEL-OOS-PASS|NO-RETURN-RETUNE|NO-PAIRSUM|WR7-SOFT|WAIT-TURN-CHAT-REVIEW|FRESHNESS-ONLY|HANDOFF-v152"
 }
