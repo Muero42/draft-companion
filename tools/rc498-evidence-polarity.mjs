@@ -41,7 +41,15 @@ for(const c of components){
 }
 
 // Exact regressions that triggered this audit.
-for(const name of ['Christian McCaffrey','A.J. Brown']){
+// CMC must retain both substantive upside and decline/camp risk; never fall back to generic market text.
+{
+  const p=app.indexOf(`[norm('Christian McCaffrey')]`); const chunk=app.slice(p,p+2200);
+  must(p>=0,'Christian McCaffrey prior missing');
+  must(/kind:'elite_dual_threat_role',dir:0[^}]*display:true/.test(chunk),'CMC substantive positive display evidence missing');
+  must(/kind:'decline_tail',dir:-1/.test(chunk),'CMC negative decline prior missing');
+  must(/kind:'current_camp_context',dir:0[^}]*displayRisk:true/.test(chunk),'CMC current camp risk display missing');
+}
+for(const name of ['A.J. Brown']){
   const p=app.indexOf(`[norm('${name}')]`);
   must(p>=0,`${name} prior missing`);
   const chunk=app.slice(p,p+1800);
