@@ -1660,3 +1660,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Candidate package run 33176313062 / artifact 9687724788; GitHub artifact container digest sha256:da9312f3854427e421369dff2bf8f58367b7db8a0568fcee7937a3b79db26d5c. Package/re-extract behavioral gate PASS.
 - Exact rc4.95 changed runtime files promoted to gh-pages: app.js b084b63a..., index.html 665ac302..., sw.js eb89899f..., manifest e0451ab8...; deployment head e003a9fec107e28f377da260c2940610df7caa34.
 - Android authority intentionally remains rc4.94 until user/device actually observes rc4.95 and a functional snapshot. No more source/model tuning before this device gate unless a P0 defect is discovered.
+
+
+### 2026-08-28 — rc4.96 expert-dispersion calibration
+- Pick-32 audit: Zay Flowers panel 30.1 (tight expert cluster) was initially behind DeVonta Smith 30.9 and Javonte Williams 31.1 in Coach utility. The gap was not caused by the generic Questionable flag after rc4.95; it came from downstream utility/return/normalization interacting with consensus handling.
+- Added a deliberately small continuous dispersion adjustment around SD 7: clamp((7-SD)*0.12, -1.25, +0.75). This treats disagreement as uncertainty rather than a player-quality verdict, so volatile breakout profiles are not broadly suppressed.
+- Existing categorical consensus handling remains; no player-name rule added. Generic Questionable remains zero penalty.
+- rc4.96 is SOURCE CHALLENGER only until full release gates + deployment/device verification. rc4.94 remains verified Android authority.
