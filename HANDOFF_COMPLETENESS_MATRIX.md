@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v119
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v120
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -81,4 +81,4 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 
 - rc4.85 package contains exactly 12 runtime files; re-extracted blobs match main and main/gh-pages runtime parity is 12/12.
 
-- v119 handoff canary: next chat must not restart expert screening, repeat settled Likely/Jacobs/Pacheco research, or ask for the expired ChatGPT ZIP. Expert-v3 completion is primary; player research only during genuine v3 wait time and only on unsettled/new names or genuinely new decision-changing news.
+- v120 handoff canary: next chat must not restart expert screening, repeat settled Likely/Jacobs/Pacheco research, or ask for the expired ChatGPT ZIP. Expert-v3 completion is primary; player research only during genuine v3 wait time and only on unsettled/new names or genuinely new decision-changing news.
