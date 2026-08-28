@@ -1351,3 +1351,12 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Oronde Gadsden II / Elijah Arroyo = receiving-ceiling ↑ deep/watch; Gunnar Helm / Luke Lachey / Jake Briningstool = explicit watch/NO_AUTO_ARROW pending route evidence.
 - Settled Fannin/Mason Taylor/Mitchell Evans/Tyler Warren excluded from duplicate scoring.
 - No runtime/model/profile/Return/ranking change.
+
+### 2026-08-28 — P0 rc4.92: remove resurrected player-name QB hard exclusions
+- User corrected stale historical policy: Geno Smith and Aaron Rodgers must NOT be excluded by name. They are ordinary QB candidates and should appear low only if Expert-v3/panel/ADP/upside/roster utility/Decision Kernel rank them there organically.
+- Root cause confirmed in live main: `USER_HARD_QB_EXCLUSIONS` assigned both names score -999 before normal scoring. This contradicted the simultaneously documented `noPlayerNameForcing` canary.
+- rc4.92 removes the runtime set and -999 branch. Exactly-one-QB remains only as roster strategy after QB1 is drafted through `decision-policy.js`; it is not a pre-QB1 name filter.
+- Active PITTI guardrail and rc4.86 legacy draft-critical test were inverted: runtime presence of the old exclusion symbol/reason or normalized Geno/Rodgers name treatment now fails.
+- CURRENT, Execution Lock, Preflight, Current Handoff and Completeness Matrix active authority corrected. Historical older mentions remain evidence of the regression and cannot override this EOF correction.
+- Parallel scan found no second active named hard-exclusion set. Ashton Jeanty's acute-status block is a time-bounded injury-status gate, not preference/name forcing, and remains subject to pre-draft freshness recheck.
+- New immediate gate: package/deploy rc4.92, run release/regression gates, then Android functional verification. Do not claim Android rc4.92 until observed.
