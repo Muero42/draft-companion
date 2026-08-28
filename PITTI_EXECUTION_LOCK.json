@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T09:40:00Z",
+  "updatedAt": "2026-08-28T09:55:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -24,7 +24,9 @@
     "preinstallRuntimeFiles": 12,
     "latestSourceRegressionVerified": "v11.8.0-rc4.89",
     "latestDeployedCandidate": "v11.8.0-rc4.89",
-    "latestAndroidVerified": "v11.8.0-rc4.89"
+    "latestAndroidVerified": "v11.8.0-rc4.89",
+    "androidAuthority": "v11.8.0-rc4.91",
+    "android_authority": "v11.8.0-rc4.91"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -135,7 +137,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC491_PREDEVICE_FULL_VERIFICATION",
+    "status": "RC491_ANDROID_VISUAL_FUNCTIONAL_VERIFY",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -195,13 +197,13 @@
       "rc4.89 artifact independently inspected: 13 runtime files, candidate SHA-256 2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608, candidate.sha256 matches actual bytes.",
       "rc4.90 adds deterministic gate: Expert-v3 panel selectability; actual live panelId exposure; actual-row expert display; James Cook RB must resolve DS/Del Don/Pat/Mariano/Weisse; Bowers TE includes Wolf; QB includes Todd; current early Top-10 all require substantive display evidence."
     ],
-    "gate": "RC491_PREDEVICE_FULL_VERIFICATION",
-    "note": "Return-v2 audit found early tau=1.35 overconfidence causing false ~99% survival for ADP16-19 at 1.09->2.02. rc4.91 broadens early market variance only; no player-specific boost.",
+    "gate": "RC491_ANDROID_VISUAL_FUNCTIONAL_VERIFY",
+    "note": "User screenshot at 11:50 local confirms v11.8.0-rc4.91 loaded on Android. Never regress device authority to rc4.89.",
     "knownOosConfounds": [
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
     "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
-    "nextGate": "Full sealed rc4.91 workflows must pass before deployment.",
+    "nextGate": "Verify rc4.91 functional surfaces on Android; source/package/device authority aligned.",
     "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION"
   }
 }
