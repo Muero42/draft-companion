@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T110500Z-v137",
-  "updated_at": "2026-08-28T11:05:00Z",
+  "handoff_generation": "20260828T113500Z-v139",
+  "updated_at": "2026-08-28T11:35:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -27,11 +27,12 @@
   "exact_continuation": {
     "gate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH",
     "auto_starts_mock": false,
-    "instruction": "Verify v137 seal/current/project-state integrity. Continue from Android-observed rc4.91. Functional device gate: actual Expert-v3 rows, evidence polarity/quality, unified Top-10 and Return-v2 short-turn behavior. gh-pages app.js currently lags main broad-evidence bytes despite same rc4.91 version. Continue broad anti-repeat upside/differentiator research in parallel. AUTO BLOCK = zero-ack correction trigger. No mock."
+    "instruction": "Package/deploy rc4.92 and functionally verify on Android. Geno Smith and Aaron Rodgers must remain ordinary QB candidates and rank organically; no player-name exclusion/forcing. Continue broad anti-repeat research in parallel.",
+    "next_gate": "RC492_PACKAGE_DEPLOY_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH"
   },
   "invariants": {
     "user_qb_limit": 1,
-    "geno_rodgers_excluded": true,
+    "geno_rodgers_excluded": false,
     "normal_kdst": false,
     "starter_maxima_not_roster_caps": true,
     "wr_saturation_soft": true,
@@ -39,7 +40,8 @@
     "rc483_kernel_frozen": false,
     "long_auto_blocks": true,
     "blocked_lane_only": true,
-    "rc484_kernel_frozen": true
+    "rc484_kernel_frozen": true,
+    "no_player_name_qb_exclusions": true
   },
   "handoff": {
     "transaction_in_progress": false,
@@ -49,5 +51,9 @@
     "handoff_ready": true,
     "second_pass_pass": true,
     "next_action": "Receiving chat verifies generation v137 and seal integrity, then resumes RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH. No mock."
-  }
+  },
+  "source_authority": "rc4.92",
+  "package_authority": "rc4.91",
+  "android_version_observed": "rc4.91",
+  "android_functional_verified": false
 }
