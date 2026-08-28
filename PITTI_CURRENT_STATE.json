@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T115500Z-v140",
-  "updated_at": "2026-08-28T12:01:00Z",
+  "handoff_generation": "20260828T111000Z-v141",
+  "updated_at": "2026-08-28T11:10:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -10,14 +10,14 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.91",
-    "test_challenger": "v11.8.0-rc4.91",
+    "android_authority": "v11.8.0-rc4.92",
+    "test_challenger": "v11.8.0-rc4.92",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.91",
+    "latest_package_reextract": "v11.8.0-rc4.92",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72",
-    "deployed_pages": "v11.8.0-rc4.91",
-    "deployed_pages_app_byte_parity_with_main": false,
+    "deployed_pages": "v11.8.0-rc4.92",
+    "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33162367347,
     "package_reference_artifact_id": 9682152886,
     "package_reference_note": "Independently inspected successful v133 package artifact. ZIP hash is a reference artifact hash; doc-only commits may emit a different archive hash because ZIP metadata is not deterministic. Runtime authority is seal-listed blob integrity + package/reextract gate.",
@@ -25,10 +25,10 @@
     "android_functional_verified": false
   },
   "exact_continuation": {
-    "gate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH",
+    "gate": "RC492_ANDROID_FUNCTIONAL_WALKER_DIAGNOSTIC_PLUS_BROAD_RESEARCH",
     "auto_starts_mock": false,
-    "instruction": "rc4.92 source/CI/package and gh-pages runtime parity are verified. Android remains observed rc4.91. Next: load/install deployed rc4.92 on Android and verify version plus focused live behavior including organic QB ranking/no player-name exclusions.",
-    "next_gate": "RC492_ANDROID_INSTALL_AND_FUNCTIONAL_VERIFY"
+    "instruction": "User screenshot at 13:04 local proves rc4.92 badge and selected Expert-v3 on Android. Do NOT infer full functional PASS. First diagnose why Kenneth Walker III disappeared from Pick-9 Top-10 despite panel ~17.4/ADP ~19 and fresh high-upside evidence; verify no stale injury/return/normal-cut or name forcing. Then focused Android functional checks: actual Expert-v3 rows, evidence polarity/quality, unified Top-10, Return-v2 short-turn. Continue broad anti-repeat research in parallel. No mock unless explicitly requested.",
+    "next_gate": "RC492_WALKER_ROOT_CAUSE_AND_ANDROID_FUNCTIONAL_VERIFY"
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -44,17 +44,17 @@
     "no_player_name_qb_exclusions": true
   },
   "handoff": {
-    "transaction_in_progress": false,
-    "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.91-android-version-observed-NOT-functional|rc4.91-package-ref-64039b7a|PAGES-APP-BYTE-LAG|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v137",
-    "status": "SEALED_PASS",
-    "handoff_ready": true,
-    "second_pass_pass": true,
-    "next_action": "Receiving chat verifies generation v137 and seal integrity, then resumes RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH. No mock."
+    "transaction_in_progress": true,
+    "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
+    "acceptance_fingerprint": "rc4.92-android-version-observed-NOT-functional|rc4.92-source-package-pages-parity|NO-NAMED-QB-FORCING|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|WALKER-TOP10-DIAGNOSTIC|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v141",
+    "status": "HANDOFF_AUDIT_IN_PROGRESS",
+    "handoff_ready": false,
+    "second_pass_pass": false,
+    "next_action": "Deep-audit active pointers and seal v141; receiving chat must diagnose Walker disappearance before claiming rc4.92 functional PASS."
   },
   "source_authority": "rc4.92",
   "package_authority": "rc4.92",
-  "android_version_observed": "rc4.91",
+  "android_version_observed": "rc4.92",
   "android_functional_verified": false,
   "deployment_authority": "rc4.92"
 }
