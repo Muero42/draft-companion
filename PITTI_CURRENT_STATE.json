@@ -16,7 +16,7 @@
     "latest_package_reextract": "v11.8.0-rc4.96",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0",
-    "deployed_pages": "v11.8.0-rc4.95",
+    "deployed_pages": "v11.8.0-rc4.96",
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33183057716,
     "package_reference_artifact_id": 9690504450,
@@ -25,9 +25,9 @@
     "android_functional_verified": true
   },
   "exact_continuation": {
-    "gate": "RC496_DEPLOY_PARITY",
+    "gate": "RC496_ANDROID_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "Deploy exact rc4.96 runtime to gh-pages and verify byte parity; do not require user action until Android verification."
+    "instruction": "rc4.96 source/package/re-extract/deployment parity PASS. Refresh/open installed PWA and provide one fresh Pick-9 snapshot to verify rc4.96 version and functional presentation; do not start a mock."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -46,15 +46,15 @@
     "transaction_in_progress": false,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
     "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143|RC495-Q-NEUTRAL|ALL5-PASS|ANDROID-VERIFY-PENDING|HANDOFF-v146",
-    "status": "RC496_PACKAGE_PASS_DEPLOY_PENDING",
+    "status": "RC496_DEPLOY_PASS_ANDROID_PENDING",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Deploy exact rc4.96 runtime to gh-pages, verify parity, then Android functional verification.",
-    "gate": "RC496_DEPLOY_PARITY"
+    "next_action": "Fresh Android/PWA rc4.96 Pick-9 functional verification.",
+    "gate": "RC496_ANDROID_VERIFY"
   },
   "source_authority": "rc4.96",
   "package_authority": "rc4.96",
   "android_version_observed": "v11.8.0-rc4.94",
   "android_functional_verified": true,
-  "deployment_authority": "rc4.95"
+  "deployment_authority": "rc4.96"
 }
