@@ -2022,3 +2022,11 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Pick 89 is direct frozen evidence of a turn-portfolio presentation defect: Trevor Lawrence 96.1% Return / WAIT was Coach #1, user took Blake Corum, Lawrence survived and was taken at 92. The Return number was directionally correct; the #1 recommendation semantics were not.
 - rc4.100 candidate now contains a conservative generic short-turn portfolio ordering: only <=3-pick own-turn, deferable leader Return >=85%, alternative Return <=82%, normal-cut/unblocked and <=25 panel ranks worse. No score mutation, no Return retune, no position/player forcing. Dedicated synthetic anti-regression contract added.
 - Do not globally depress short-turn Return probabilities. Next calibration work is horizon-specific replication across compatible rc4.91+ OOS drafts; distinguish Monte-Carlo endpoint display from probability calibration.
+
+
+## 2026-08-28 19:49Z — AUTO BLOCK continuation / rc4.100 gate repair
+- AUTO BLOCK resumed without user-facing status chatter after prior accidental empty/false continuation behavior.
+- rc4.100 candidate gates exposed a family of stale two-digit RC regexes (rc4.85–rc4.89 contracts). Repaired to accept three-digit successors while preserving each feature minimum; rc4.90/91 were already three-digit safe.
+- Emergency-queue contract itself was promoted into release/package gates and exposed a test-harness dependency on APP_VERSION; harness now injects actual app version. Contract then PASSed.
+- Freshness gate correctly failed on Ashton Jeanty stale blocking status (asOf 2026-08-24). Fresh public evidence checked 2026-08-28: Raiders/ESPN report ankle still monitored but head coach says team is counting on him for Week 1; prior hard recommendation block was no longer justified. rc4.100 acute status refreshed to 2026-08-28, remains monitored, blockRecommendation=false.
+- This is a freshness-driven status correction, not a ranking/score retune. Candidate remains unmerged/undeployed until full gates pass.
