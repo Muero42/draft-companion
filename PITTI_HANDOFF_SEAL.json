@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T094500Z-v131",
-  "created_at": "2026-08-28T10:03:00Z",
+  "created_at": "2026-08-28T10:15:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -15,7 +15,7 @@
     "PITTI_EXECUTION_LOCK.json": "08ac2dc4062de8f5ed0bfa95d5a707737d4d776d",
     "PITTI_PROJECT_STATE.md": "378cf9723c499e41393595baa79d7263b6e800a5",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
-    "app.js": "357f187015c24e0689cd132f1bf4dbf59d0fbed7",
+    "app.js": "af39e65bbb2a7b521b205d7cfaa4a748836985fa",
     "index.html": "d305cd9b6e4d515cc51470a62619b0b7df460441",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
     "sw.js": "ae3582cd968031534df25d57010dbafd9e0ee945",
@@ -135,7 +135,8 @@
     "rc490_broad_early_coverage": true,
     "rc491_return_calibration_guard": true,
     "rc491_android_version_observed": true,
-    "broad_late_round_evidence_batch": true
+    "broad_late_round_evidence_batch": true,
+    "fresh_late_august_sleeper_batch": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
