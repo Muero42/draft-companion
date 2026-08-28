@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T054500Z-v118",
-  "created_at": "2026-08-28T05:45:00Z",
+  "created_at": "2026-08-28T06:12:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -13,7 +13,7 @@
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "ca02242c27b78d8b4f70bd57aad9288e1bcdadd6",
     "HANDOFF_COMPLETENESS_MATRIX.md": "9ae4a905599d038b244b3faf9c8c9e4a3620bdbb",
     "PITTI_EXECUTION_LOCK.json": "32cc6fe73abb1887feccecff43678ba4023d5880",
-    "PITTI_PROJECT_STATE.md": "d9b427969e657b5e9e37fa5a33b60d771d8e09ef",
+    "PITTI_PROJECT_STATE.md": "eb97e969ab0b1c7dfd2c2c1547c6c19dcefd312e",
     "PITTI_AUTO_PREFLIGHT.md": "9e6090ef003e324bc7fdf91b9bd9c2c5b2c06317",
     "app.js": "f518bc93d13770d4a5f39572bcdfd4f7939a49c8",
     "index.html": "eb2a206e4380b86f58385505b0b631e6349c1f5d",
@@ -72,7 +72,8 @@
     "readme_rc485_current": true,
     "matrix_v118": true,
     "rc485_package_reextract_pass": true,
-    "rc485_main_pages_runtime_parity_12of12": true
+    "rc485_main_pages_runtime_parity_12of12": true,
+    "post_checkpoint_reseal": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
