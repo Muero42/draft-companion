@@ -15,7 +15,7 @@
     "PITTI_EXECUTION_LOCK.json": "9a7e4d8854514f89b6d3942814365aeab8a6cf75",
     "PITTI_PROJECT_STATE.md": "490a34e1132f134cb8f1a18c9d1d55962b5aa2e1",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
-    "app.js": "a6090814f558f370aabd34dc0174fb5c1c63b766",
+    "app.js": "6fd11d3ffa2e3211d98b907df7e7e6a2d3262abb",
     "index.html": "d305cd9b6e4d515cc51470a62619b0b7df460441",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
     "sw.js": "ae3582cd968031534df25d57010dbafd9e0ee945",
@@ -43,7 +43,7 @@
     "tools/rc490-draft-critical.mjs": "0897971e1bdaf5e87b8233c60ee2c00e45f3742b",
     "tools/rc491-return-calibration.mjs": "02e9f38627d1da736e429e23c06aa8e3d8428189",
     "live-surface-v3.js": "3f340dea3d3957f6394ab22df2f86f4d914d00bb",
-    "tools/rc482-draft-critical.mjs": "52a35806492aa901ee7ef51f62e185f7971fda2f"
+    "tools/rc482-draft-critical.mjs": "6160fe478dbae5aea5aa32ac23f79af09ea57070"
   },
   "checks": {
     "current_generation": true,
