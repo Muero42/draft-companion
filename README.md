@@ -65,3 +65,5 @@ v11.8.0-rc4.97 is a test-only actionability/presentation challenger. rc4.96 rema
 
 ### rc4.98 evidence-polarity challenger
 v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96 remains Android rollback authority until full validation.
+
+Release-close validation additionally makes the inherited rc4.96 feature gate successor-safe and fixes the completeness guard to read the complete current-authority header. These are validation/tooling changes only.
