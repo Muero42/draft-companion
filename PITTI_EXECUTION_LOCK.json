@@ -209,7 +209,7 @@
   },
   "handoff": {
     "generation": "20260828T2002Z-v157",
-    "status": "HANDOFF_v157_READY_PENDING_SEAL",
+    "status": "HANDOFF_v157_READY",
     "ready": true,
     "secondPass": true,
     "resume": "PITTI AUTO: verify rc4.100 main post-merge gates, then deploy exact verified runtime to gh-pages and prove parity before Android refresh. Continue Return horizon/semantic audits in parallel."
