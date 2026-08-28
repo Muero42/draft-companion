@@ -1,10 +1,10 @@
 # Draft Companion – Final Draft Edition 2026
 
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
-> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.86 · SHA-256 `49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1` · 12 Runtime-Dateien. rc4.87 ist der kompakte Transfer-Hotfix-Kandidat und muss die Gates neu passieren.
+> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.87 · 12 Runtime-Dateien · Release/Package/Re-extract/Guardrails PASS.
 > **Letzter Android-verifizierter Teststand:** v11.8.0-rc4.84 (Manager-Slot-Korrektur; abgeschlossener Mock/Evidence-v2-Export vorhanden).  
 > **Aktueller installierter Android-Stand:** v11.8.0-rc4.84; rc4.85 ist bereits auf gh-pages deployt und soll bevorzugt über den normalen PWA/App-Update-/Reload-Pfad übernommen werden.
-> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.87 — Expert-v3-Export-Hotfix; alle Release-/Package-/Re-extract-Gates PASS, auf gh-pages deployt, Android-Verifikation/Export offen.
+> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.87 — kompakter Expert-v3-Transfer; alle Release-/Package-/Re-extract-/Guardrail-Gates PASS, auf gh-pages deployt, Android-Verifikation offen.
 > **Aktueller Android-Testauthority:** v11.8.0-rc4.84; Expert-v2/Decision Kernel gegenüber rc4.84 eingefroren.  
 > **Aktueller Source-Challenger:** v11.8.0-rc4.87; ausschließlich integrierter Expert-v3-Challenger-Export, gh-pages byteidentisch zu main; noch nicht Android-verifiziert.
 >
