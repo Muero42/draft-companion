@@ -1,43 +1,107 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
+Handoff generation: `20260828T2002Z-v157`
+Updated: 2026-08-28 20:02Z
 
-Handoff generation: `20260828T1955Z-v156`
-Updated: 2026-08-28 19:55Z
+## FAIL-CLOSED TAKEOVER
+1. Read PITTI_COMMAND_CONTRACTS.json.
+2. Read PITTI_CURRENT_STATE.json.
+3. Read PITTI_HANDOFF_SEAL.json and require generation `20260828T2002Z-v157`, PASS, handoff_ready=true, second_pass_pass=true, non-empty integrity map.
+4. Verify every seal-listed Git blob SHA against main.
+5. Read PITTI_EXECUTION_LOCK.json, PITTI_AUTO_PREFLIGHT.md, and PITTI_PROJECT_STATE.md to EOF.
+6. Read PITTI_NEW_CHAT_BOOTSTRAP.md and HANDOFF_COMPLETENESS_MATRIX.md.
+7. Verify actual main/gh-pages/device facts. Historical text or stale Library mirrors may never override newer verified state.
 
-## TAKEOVER
-Read PITTI_COMMAND_CONTRACTS.json, PITTI_CURRENT_STATE.json, PITTI_EXECUTION_LOCK.json, then PITTI_PROJECT_STATE.md to EOF. Newest verified repo/runtime evidence overrides stale scalar pointers in older sealed v155 files.
+## CURRENT RUNTIME / RELEASE BOUNDARY
+- production/control baseline: rc4.64.
+- rollback / last fully functionally accepted Android authority: rc4.96.
+- **main/source: rc4.100**, squash merge `1b85656e40a182ca6be2397c5bf6674006b97bd2`.
+- PR #36 candidate gates all GREEN:
+  - release contract 33205458705 PASS;
+  - package/re-extract 33205458721 PASS;
+  - project guardrails 33205458745 PASS.
+- package artifact 9699461048; GitHub artifact-envelope SHA-256 `4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae`.
+- **post-merge main verification has not yet been observed**. Do not infer PASS from PR gates alone.
+- gh-pages = rc4.99; main/pages parity = FALSE.
+- Android/PWA observed = rc4.99; rc4.100 is NOT Android-observed or accepted.
+- canonical deployment sequence is mandatory: verified candidate -> main/post-merge verification -> exact gh-pages deployment + byte parity -> Android/PWA refresh -> device observation.
+- Do not repeat old detours: gh-pages-only while main stale, repeated restart/refresh loops, cache clearing/reinstall, or manual ZIP as default.
 
-## CURRENT BOUNDARY
-- main/source: **v11.8.0-rc4.100**, squash merge `1b85656e40a182ca6be2397c5bf6674006b97bd2`.
-- rc4.100 PR preinstall gates: release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
-- preinstall artifact 9699461048; GitHub artifact digest SHA-256 `4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae`.
-- **Post-merge main verification is still pending. Do NOT deploy gh-pages or ask for Android refresh until main gates PASS.**
-- Android currently observed: **v11.8.0-rc4.99**. Do not call rc4.100 Android-observed/accepted.
-- rollback functional authority remains rc4.96 until successor device acceptance is demonstrated.
+## CANONICAL FULL-DRAFT EVIDENCE — PITTI BACKUP 28-08 19:24
+Library filename: **draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json**
+SHA-256: `1fc70dc81e8d9a4e28b5f0450f1a57e8cf8873b7541040acc0033e13cf6725ab`
+Draft: **1399141058222280704**, rc4.99, slot 9, 15/15 own decision fixtures.
+New chat retrieval: search Files/Library for the exact filename above or alias **PITTI BACKUP 28-08 19:24**. Do not substitute the older 17:30 backup for this full-draft audit.
 
-## NEW CANONICAL FULL-DRAFT EVIDENCE
-`draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json`, SHA-256 `1fc70dc81e8d9a4e28b5f0450f1a57e8cf8873b7541040acc0033e13cf6725ab`, draft 1399141058222280704, rc4.99, 15/15 fixtures.
-Final user roster: **1 QB / 6 RB / 7 WR / 1 TE**. Coach followed 10/15.
-Return-v2: 168 resolved non-censored predictions; overall 62.2% forecast vs 58.3% actual, Brier .091. Short 3-pick turns 91.4% vs 90.9% actual (well calibrated); 17-pick turns 37.1% vs 30.4% (overprediction signal). **No global Return retune from this one draft.**
-Pick 89: Trevor Lawrence 96.1% Return / WAIT was Coach #1; user took Blake Corum; Lawrence survived and user took him at 92. This validates a **turn-portfolio ordering defect**, not short-turn Return calibration.
+Final user roster: **1 QB / 6 RB / 7 WR / 1 TE**.
+Coach followed 10/15. Overrides are user decisions/validation evidence, never retroactively Coach-success labels.
 
-## RC4.100 MATERIAL CHANGES
-- signed substantive display evidence selected before neutral context;
+### Return-v2
+- 168 resolved non-censored forecasts.
+- overall: 62.2% forecast vs 58.3% actual; Brier 0.091.
+- short 3-pick turns: **91.4% forecast vs 90.9% actual** — high short-turn Return values are well calibrated in this draft.
+- 17-pick turns: **37.1% vs 30.4% actual** — long-horizon optimism signal, not enough for global retune.
+- Never globally depress Return-v2 because of the pick-89 screenshot.
+- Aggregate compatible rc4.91+ OOS by horizon before changing hazard/tau.
+
+### Pick 89 TLaw / Corum
+Trevor Lawrence was Coach #1, Return 96.1%, Fazit WAIT. User chose Blake Corum; Lawrence survived picks 90/91 and user drafted him at 92.
+Conclusion: the Return estimate was directionally correct; the defect was **turn-portfolio recommendation ordering** — WAIT with very high Return must not automatically occupy #1 if a materially comparable, more urgent alternative exists.
+
+## RC4.100 MATERIAL FIXES
+- signed substantive evidence selected before neutral context;
 - displayRisk requires nonpositive polarity;
-- mixed-polarity regressions prevent neutral age/context masking Pro and positive evidence leaking into Contra;
-- conservative generic short-turn portfolio ordering: only own next pick <=3 away, leader WAIT+Return>=85%, alternative Return<=82%, normal-cut/unblocked, <=25 panel ranks worse; no score mutation/position/player forcing;
-- inherited rc4.82–99 regressions successor-safe for three-digit RCs;
-- emergency queue + acute-status freshness now mandatory release/package gates;
-- Jeanty acute status refreshed 2026-08-28; monitored, no hard recommendation block.
+- neutral age/fair-range filler cannot masquerade as substantive Plus;
+- mixed-polarity regressions protect Pro/Contra direction;
+- soft WR saturation strengthened without a hard cap/quota or blind RB forcing;
+- Normal-Cut remains phase-aware 18/22/26;
+- conservative short-turn portfolio ordering:
+  - next own pick <=3 picks away;
+  - leader WAIT + Return >=85%;
+  - alternative normal-cut/unblocked, Return <=82%;
+  - alternative no more than 25 panel ranks worse;
+  - no score mutation, no Return retune, no player/position forcing;
+- emergency queue and acute-status freshness are mandatory release/package gates;
+- Jeanty status refreshed 2026-08-28; monitored, no hard recommendation block.
 
-## DO NOT REGRESS
-No hard WR cap/quota; no blind RB forcing; no PairSum/Rolling resurrection; no player-name scoring/forcing; no global Return-v2 retune; no expert-weight redesign from this evidence; starter maxima are not roster caps; strict-Coach draft 1399114762087895040 remains **9 WR / 4 RB / 1 TE / 1 QB**, never 7 WR; user overrides are not Coach-success labels; WAIT must not be treated as TAKE without turn-portfolio review.
+## STRICT-COACH CONTROL — NEVER REGRESS
+Draft 1399114762087895040 = **9 WR / 4 RB / 1 TE / 1 QB**, not 7 WR / 5 RB.
+This is evidence that redundant WR marginal utility needed strengthening, but never permission for a roster cap/quota.
+Starter maxima are not roster caps; exceptional WR value must remain legal.
 
-## AUTO CONTRACT
-AUTO/AUTO BLOCK = long autonomous same-turn execution. No progress/status/promise-only messages, no empty final, and a tool package ending is not a stop condition. Re-inventory after every work package and continue independent safe work. Visible interruption only for a concrete useful result, unavoidable user/device action, consequential confirmation, or true blocker after independent lanes are exhausted.
+## EXPERT / LEAGUE / DRAFT INVARIANTS
+- 10-team Half-PPR, slot 9, 1QB.
+- exactly one user QB after QB1; no player-name QB blacklist/forcing.
+- no normal K/DST drafting.
+- Expert-v2/v3 profile semantics and frozen weights stay intact unless new promotion evidence justifies change.
+- Brown remains excluded from the new numeric v2; Draft Sharks counted once as a correlated family.
+- no Superflex/2QB contamination.
+- TE2 only exceptional-soft.
+- no PairSum/Rolling resurrection.
+- no broad expert-weight redesign from one mock/draft.
+- no player-name scoring rules.
+- no hard WR cap/quota or blind RB forcing.
+- user preference may break close ties; only clearly non-viable deviations should be flagged.
 
-## NEXT EXACT ACTION
-1. Verify post-merge main rc4.100 workflows/package.
-2. Only after PASS, promote exact verified runtime through canonical gh-pages path and prove byte parity.
-3. Then request only unavoidable Android observation/functional check.
-4. In parallel aggregate compatible rc4.91+ horizon-specific Return outcomes before considering long-horizon calibration.
-5. Continue pool-wide Pro/Contra substantive-quality and soft WR-saturation validation; no broad retunes without OOS evidence.
+## PRO/CONTRA QUALITY
+The old CMC classes are now generic regressions:
+- downside must not appear as Plus;
+- neutral age/context/fair-range must not displace substantive signed evidence;
+- positive evidence must not leak into Contra;
+- pool-wide evidence quality remains an autonomous audit; user must not manually inspect all cards.
+
+## AUTO / AUTO BLOCK — HARD CONTRACT
+AUTO means complete autonomous work in long same-turn blocks.
+After every package: checkpoint material change -> re-inventory all independent lanes -> execute next package.
+No progress/status/promise-only messages, no empty final, and tool completion is not a stop condition.
+A blocked CI/device lane blocks only that lane; continue decision/evidence, regression safety, draft-day failsafe, expert freshness, Watcher/post-draft readiness, checkpoint integrity, and current-evidence lanes where useful.
+AUTO never starts an interactive mock unless explicitly requested.
+
+## EXACT NEXT GATE
+**RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY**
+
+1. Verify rc4.100 main post-merge behavioral/package/guardrail state.
+2. Only after PASS, deploy the exact verified rc4.100 runtime to gh-pages and prove byte parity.
+3. Then request only the unavoidable Android version/functional observation.
+4. In parallel, aggregate horizon-specific Return outcomes from compatible rc4.91+ OOS evidence.
+5. Continue generic Pro/Contra substantive-quality and soft WR-saturation validation.
+6. Do not introduce any broad retune without multi-draft OOS support.
