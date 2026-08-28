@@ -1954,3 +1954,14 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 ## 2026-08-28 18:04Z — v155 detailed continuation contract
 - Added `research/RC498_V155_OPEN_AUDIT_CONTRACT_2026-08-28.md`.
 - It formalizes exact Lane A (9-WR saturation/championship utility) and Lane B (pool-wide substantive Pro/Contra quality) acceptance tests, preserving all anti-overfit and rollback constraints.
+
+
+## 2026-08-28 rc4.99 research-only checkpoint — source guardrails PASS
+- Branch: `pitti/rc4.99-wr-saturation-semantic-audit`; PR #35; **do not merge/promote yet**.
+- Root cause confirmed for CMC-class presentation bug: neutral research evidence (`dir:0`) could enter the Plus path. Plus now requires positive research polarity; neutral `Fairer Bereich`/Panel≈ADP filler is explicitly excluded.
+- Added regression fixtures for neutral age, neutral context and fair-range text.
+- Strict-Coach rc4.98 9-WR result is treated as structural evidence. rc4.99 strengthens only soft marginal roster economics (no WR cap/quota, no blind RB forcing, no Return-v2 retune): numeric canary covers WR6/7/8 and RB5 contingent utility.
+- Early/mid/late Normal-Cut remains 18/22/26 panel-rank points; dedicated canary prevents the previously observed premature cut warning from silently returning.
+- Sparse panel guard remains generic; J.K. Dobbins n=2 is retained as the canary, not player-forced scoring.
+- GitHub guardrail run 33199805925 PASS after the semantic/fair-range changes; rc4.99 saturation and normal-cut contracts PASS.
+- Production/main and verified Android authority remain unchanged. Next dependent gate: full release-contract/package validation, then controlled Android verification only if all contracts pass.
