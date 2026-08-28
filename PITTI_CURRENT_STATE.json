@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T081000Z-v127",
-  "updated_at": "2026-08-28T08:10:00Z",
+  "handoff_generation": "20260828T081600Z-v128",
+  "updated_at": "2026-08-28T08:16:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -10,17 +10,17 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.87",
+    "android_authority": "v11.8.0-rc4.88",
     "test_challenger": "v11.8.0-rc4.88",
-    "test_challenger_android_verified": false,
+    "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.88",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1"
   },
   "exact_continuation": {
-    "gate": "ANDROID_RC4.88_EXPERT_V3_VERIFY",
+    "gate": "RC488_ANDROID_VERIFIED_CONTINUE_RESEARCH_AND_V3_EFFECT_VALIDATION",
     "auto_starts_mock": false,
-    "instruction": "Update/reload to rc4.88; verify badge and selectable Expert-v3 positional profile. Then continue broad anti-repeat upside research. No mock unless explicitly requested."
+    "instruction": "rc4.88 Android badge and Expert-v3 selectable profile visually verified. Continue broad anti-repeat upside/differentiator research and Expert-v3 effect validation. No mock unless explicitly requested."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -37,7 +37,7 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.87-android|rc4.88-full-gates-pass|EXPERT-V3-QB-RB-TE|WR-V2|ANTI-REPEAT-RESEARCH|1QB|HANDOFF-v127",
+    "acceptance_fingerprint": "rc4.64|rc4.88-android-verified|rc4.88-expert-v3|V2-FROZEN|WR-V2-FALLBACK|ANTI-REPEAT|UPSIDE-RESEARCH|1QB|HANDOFF-v128",
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
