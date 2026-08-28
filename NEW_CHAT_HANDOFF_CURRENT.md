@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T073500Z-v122`
-Updated: 2026-08-28 07:35Z
+Handoff generation: `20260828T074500Z-v123`
+Updated: 2026-08-28 07:45Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -240,3 +240,11 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Canonical rc4.86 PREINSTALL SHA-256: `49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1`.
 - main/gh-pages parity remains 12/12. rc4.84 remains latest Android-observed authority until reload/update proves rc4.86.
 - Next action remains one device step only: update/reload -> verify v11.8.0-rc4.86 -> run Expert-v3 Challenger export once -> return JSON. No mock.
+
+
+## V123 RC4.87 COMPACT EXPERT-v3 TRANSFER
+- rc4.86 is confirmed installed by user and produced a materially larger Expert-v3 result; however Android/ChatGPT could not reliably transfer it: file export did not work and pasting the huge JSON made ChatGPT slow/crash and exceeded message size.
+- Therefore do NOT ask user to manually trim/copy sections.
+- rc4.87 is a transfer-only hotfix: Weisse exports RB only, Wolf TE only, Todd QB only, Wright WR only; rows are compact [name, overallRank] tuples. It copies the compact JSON straight to clipboard and falls back to file export only if clipboard fails.
+- No Decision Kernel, Return-v2, manager model, roster policy, Expert-v2 weights or expert qualification logic changed.
+- Exact next action: update/reload to rc4.87 -> tap “Expert-v3 kompakt kopieren” once -> paste clipboard into chat. No mock.
