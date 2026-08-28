@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T145500Z-v145",
-  "updated_at": "2026-08-28T15:10:00Z",
+  "handoff_generation": "20260828T160000Z-v146",
+  "updated_at": "2026-08-28T16:00:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -45,10 +45,10 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
-    "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143",
-    "status": "RC495_SOURCE_CHALLENGER_RESEAL_PENDING",
-    "handoff_ready": true,
-    "second_pass_pass": true,
+    "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143|RC495-Q-NEUTRAL|HANDOFF-v146",
+    "status": "RC495_RESEAL_FINALIZING",
+    "handoff_ready": false,
+    "second_pass_pass": false,
     "next_action": "Reseal rc4.95 generic Questionable=0 change, run all five primary gates, then deploy exact runtime; keep rc4.94 Android authority until verified.",
     "gate": "RC495_RESEAL_AND_REGRESSION"
   },
