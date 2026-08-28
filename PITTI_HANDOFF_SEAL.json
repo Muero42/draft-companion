@@ -2,9 +2,9 @@
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T155300Z-v152",
   "created_at": "2026-08-28T15:53:00Z",
-  "status": "PASS",
-  "handoff_ready": true,
-  "second_pass_pass": true,
+  "status": "SUPERSEDED_PENDING_RESEAL",
+  "handoff_ready": false,
+  "second_pass_pass": false,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_CURRENT_STATE.json": "b1a8bbb4018411880317699bee1fa3a784c0fa36",
@@ -212,7 +212,9 @@
     "v152_wait_turn_chat_review": true,
     "v152_runtime_frozen": true,
     "v152_freshness_only_gate": true,
-    "v152_research_report_sealed": true
+    "v152_research_report_sealed": true,
+    "v153_rc498_evidence_polarity": true,
+    "v153_reseal_pending": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -228,7 +230,7 @@
     "android_version_observed": true,
     "android_functional_verified": true,
     "source_authority": "v11.8.0-rc4.96",
-    "test_challenger": "v11.8.0-rc4.97",
+    "test_challenger": "v11.8.0-rc4.98",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.96",
     "latest_package_digest": "18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0",
@@ -242,9 +244,9 @@
     "note": "rc4.96 frozen pre-draft runtime; no rc4.97 scoring challenger promoted."
   },
   "exact_continuation": {
-    "gate": "RC497_MICROFIX_CI",
+    "gate": "RC498_RELEASE_VALIDATION",
     "auto_starts_mock": false,
-    "instruction": "Validate isolated rc4.97 microfix; rc4.96 remains rollback/Android authority until all gates and device verification pass."
+    "instruction": "Run full successor-safe release suite, package/re-extract, then reseal. rc4.96 remains Android rollback authority until device verification."
   },
   "library_persistence": "STALE_FAIL_CLOSED",
   "acceptance_fingerprint": "RC4.96-ALL5-PASS|PKG-REEXTRACT-PASS|GH-PAGES-13OF13|ANDROID-RC4.96-VERIFIED|OOS-FOLLOWCOACH-15OF15|RETURN-BRIER-0.0802|SPARSE-PANEL-OOS-PASS|NO-RETURN-RETUNE|NO-PAIRSUM|WR7-SOFT|WAIT-TURN-CHAT-REVIEW|FRESHNESS-ONLY|HANDOFF-v152|RC497-MICROFIX-CI"
