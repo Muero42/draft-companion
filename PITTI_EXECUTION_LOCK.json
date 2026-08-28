@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T10:40:00Z",
+  "updatedAt": "2026-08-28T10:50:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -24,13 +24,15 @@
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.91",
     "latestDeployedCandidate": "v11.8.0-rc4.91",
-    "latestAndroidVerified": "v11.8.0-rc4.91",
+    "latestAndroidVerified": "VERSION_OBSERVED_ONLY_NOT_FUNCTIONALLY_VERIFIED",
     "androidAuthority": "v11.8.0-rc4.91",
     "android_authority": "v11.8.0-rc4.91",
     "deployedPagesAppByteParityWithMain": false,
     "preinstallReferenceRun": 33162367347,
     "preinstallReferenceArtifactId": 9682152886,
-    "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority."
+    "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority.",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.91",
+    "latestAndroidFunctionalVerified": null
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -144,7 +146,7 @@
     "branch": "main",
     "status": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH",
     "production": false,
-    "androidVerified": true,
+    "androidVerified": false,
     "changes": [
       "centralized APP_VERSION to eliminate stale snapshot/queue/backup/model metadata",
       "active panel health now evaluates the actually selected full-v2, hybrid WR-v2, or live profile instead of global desired-pool health",
@@ -203,12 +205,14 @@
       "rc4.90 adds deterministic gate: Expert-v3 panel selectability; actual live panelId exposure; actual-row expert display; James Cook RB must resolve DS/Del Don/Pat/Mariano/Weisse; Bowers TE includes Wolf; QB includes Todd; current early Top-10 all require substantive display evidence."
     ],
     "gate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH",
-    "note": "rc4.91 version is observed on Android. Functional verification is still pending. gh-pages app.js is an older rc4.91 byte set than main after the newest broad evidence batch; do not confuse matching version with parity.",
+    "note": "User screenshot proves rc4.91 version loaded on Android, NOT full functional verification. Functional gate remains actual Expert-v3 rows/evidence/Top-10/Return behavior. Never promote version observation into functional verification.",
     "knownOosConfounds": [
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
     "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
     "nextGate": "Receiving chat verifies v133 seal/integrity, then continues rc4.91 functional device checks and broad anti-repeat research. No mock.",
-    "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION"
+    "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION",
+    "androidVersionObserved": true,
+    "androidFunctionalVerified": false
   }
 }
