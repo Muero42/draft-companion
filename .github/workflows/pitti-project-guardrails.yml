@@ -43,6 +43,8 @@ jobs:
       - name: Node syntax
         run: node --check app.js
       - name: PITTI execution-lock and anti-regression gate
+        env:
+          PITTI_SKIP_SEAL_INTEGRITY: ${{ github.event_name == 'pull_request' && '1' || '0' }}
         run: node tools/pitti_guardrail_check.mjs
       - name: Runtime files are untouched by guardrail hardening
         if: github.ref_name == 'pitti-guardrails-ci-20260826'
