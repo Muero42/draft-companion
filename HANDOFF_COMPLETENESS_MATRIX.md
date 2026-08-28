@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v130
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v131
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -17,8 +17,8 @@ A new-chat takeover fails closed unless all checks pass.
 ## 2 Runtime boundary
 - rc4.64 production/control
 - rc4.89 latest Android-observed runtime; screenshot exposed Expert-v3 panel-selection fallback bug
-- rc4.90 current PRE-DEVICE challenger; NOT deployed until full sealed gates pass
-- rc4.90 root-cause requirement: `expert-v3-*` shadow panels selectable and actual panel rows drive expert labels
+- rc4.91 current PRE-DEVICE challenger; NOT deployed until full sealed gates pass
+- rc4.90/91 root-cause requirement: `expert-v3-*` shadow panels selectable and actual panel rows drive expert labels
 - built/prepared/deployed/Android-verified kept distinct
 - expiring ChatGPT attachment is NOT the preferred update path; normal deployed PWA/self-update path first
 
