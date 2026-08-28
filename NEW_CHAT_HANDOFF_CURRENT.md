@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T072500Z-v121`
-Updated: 2026-08-28 07:25Z
+Handoff generation: `20260828T073500Z-v122`
+Updated: 2026-08-28 07:35Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -233,3 +233,10 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - main/gh-pages parity has been restored for all 12 runtime files. rc4.84 remains latest Android authority until device reload proves rc4.86.
 - Exact next action: reload/update to rc4.86, verify badge, run Expert-v3 Challenger export once. No mock.
 - Research breadth lock remains: move to uncovered players; settled players reopen only on genuinely decision-changing news.
+
+
+## V122 RC4.86 RELEASE CLOSURE
+- Full release contract PASS, package/re-extract PASS, and independent artifact inspection confirms 12 runtime files.
+- Canonical rc4.86 PREINSTALL SHA-256: `49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1`.
+- main/gh-pages parity remains 12/12. rc4.84 remains latest Android-observed authority until reload/update proves rc4.86.
+- Next action remains one device step only: update/reload -> verify v11.8.0-rc4.86 -> run Expert-v3 Challenger export once -> return JSON. No mock.
