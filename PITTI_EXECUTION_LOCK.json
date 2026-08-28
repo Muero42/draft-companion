@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T05:45:00Z",
+  "updatedAt": "2026-08-28T06:35:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -135,7 +135,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.85_PACKAGE_REEXTRACT_DEPLOY_PASS_DEVICE_EXPORT_GATE",
+    "status": "HANDOFF_V119_RC4.85_SELF_UPDATE_EXPERT_V3_EXPORT",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -192,7 +192,7 @@
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
     "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
-    "nextGate": "Device update/reload to rc4.85 -> press Expert-v3 Challenger exportieren -> share generated JSON -> compute/test Expert-v3 weights",
+    "nextGate": "Android self-update/reload to rc4.85 via deployed app path; verify badge; export Expert-v3 challenger JSON; compute/test v3; keep v2 selectable.",
     "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION"
   }
 }
