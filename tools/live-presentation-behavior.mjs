@@ -70,5 +70,9 @@ assert(p.keyword(specific[3],7).includes('KONSTANZ'),'Amon-Ra Top-10 trait missi
 const chaseRisk={...rows[2],injury:'Questionable',researchResidual:{displayActive:true,components:[{displayRisk:true,confidence:.9,causal:'Aktuell Knie-Hyperextension; Chase bezeichnete sie als gering und wäre nach eigener Aussage spielbereit'}]}};
 assert(p.minus(chaseRisk).includes('Knie-Hyperextension'),'specific risk context missing');
 assert(!renderedSpecific.slice(0,2).every(x=>x.includes('Expertenkonsens Top-5')),'Gibbs/Bijan still generic consensus');
+const neutralAge={...rows[0],name:'Neutral Age Fixture',arrows:'',researchResidual:{active:true,displayActive:true,components:[{display:true,kind:'age',dir:0,confidence:.95,causal:'Age 29'}]}};
+assert(!p.plus(neutralAge,0).includes('Age 29'),'neutral age leaked into plus');
+const neutralContext={...rows[0],name:'Neutral Context Fixture',arrows:'',researchResidual:{active:true,displayActive:true,components:[{display:true,kind:'context',dir:0,confidence:.95,causal:'Neutraler Kontext'}]}};
+assert(!p.plus(neutralContext,0).includes('Neutraler Kontext'),'neutral evidence leaked into plus');
 
 console.log('LIVE_PRESENTATION_BEHAVIOR_PASS');
