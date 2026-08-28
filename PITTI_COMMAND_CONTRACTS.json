@@ -1,6 +1,6 @@
 {
   "schema": "pitti.command-contract.v1",
-  "version": "1.6.0",
+  "version": "1.7.0",
   "trigger": "PITTI AUTO",
   "sourceOrder": [
     "PITTI_COMMAND_CONTRACTS.json",
@@ -38,7 +38,21 @@
     "autoStartsInteractiveMock": false,
     "autoBlockCorrectionTrigger": {
       "trigger": "AUTO BLOCK",
-      "semantics": "Resume the existing AUTO long-block loop immediately with zero acknowledgement/apology/status/explanation. Execute work first; reply only for a material result, unavoidable user action, or non-self-solvable blocker."
+      "semantics": "Resume the existing AUTO long-block loop immediately with zero acknowledgement/apology/status/explanation. Execute multiple work packages in the SAME assistant turn, re-inventorying after each. A normal final OR empty final is forbidden while any safe positive-value autonomous work remains. Reply only at a valid turn-end condition."
+    },
+    "autoTurnTerminationContract": {
+      "rule": "AUTO/AUTO BLOCK must not end the current assistant turn merely because one work package completed. After every package, re-inventory and execute the next safe positive-value autonomous package in the SAME turn.",
+      "finalForbiddenWhileExecutableAutonomousWorkExists": true,
+      "emptyFinalAlsoForbidden": true,
+      "toolWorkThenEmptyReplyForbidden": true,
+      "validTurnEndOnly": [
+        "unavoidable user/device action or missing information",
+        "consequential/irreversible/security-sensitive action requiring approval",
+        "unresolved contradiction makes continuation unsafe",
+        "material end result reached and no higher-value autonomous package remains",
+        "all safe positive-value independent lanes actually exhausted"
+      ],
+      "platformBoundary": "After an assistant turn is ended, autonomous execution cannot continue until another user turn. Therefore do not end an AUTO turn early."
     }
   },
   "interruption": [
