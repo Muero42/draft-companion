@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T080300Z-v126",
-  "created_at": "2026-08-28T08:12:00Z",
+  "created_at": "2026-08-28T08:15:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -103,7 +103,8 @@
     "v126_reseal": true,
     "legacy_embedded_wording_successor_safe": true,
     "legacy_rc484_486_assertions_additive": true,
-    "rc488_index_load_v3_board": true
+    "rc488_index_load_v3_board": true,
+    "rc488_wr_fallback_assertion_corrected": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
