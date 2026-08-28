@@ -266,3 +266,17 @@ For each top-120 draft-relevant WR/RB/TE after the current mock, classify:
 - causal display sentence.
 
 No arrow may be promoted solely from one sleeper/breakout article.
+
+
+## 2026-08-28 fresh research pass — decision-changing additions
+- Parker Washington: Aug25 FantasyPros 21-WR expert roundup explicitly frames Jacksonville as an ambiguous three-way WR1 race (Brian Thomas Jr./Parker Washington/Jakobi Meyers) and identifies Washington as the profitable breakout bet. This directly supports PITTI's desired WR1-path flag rather than merely generic sleeper status. Maintain strong upside marker, but do not convert qualitative article into baseline rank override by itself.
+- Christian Watson: same Aug25 expert roundup gives a concrete WR1/WR2 ceiling case at WR3 cost: Romeo Doubs gone, Wicks traded, Watson WR15 in PPG last season, 2.67 YPRR after IR return; health remains the material downside. This merits strong upside + explicit health regression/risk counterweight, not an unconditional boost.
+- Luther Burden: same roundup cites elite rookie efficiency (2.79 YPRR, strong separation/first-down rates) and Year-2 ceiling, but current groin issue can linger. Strong upside with injury qualifier.
+- Rome Odunze: newer Aug25 breakout analysis says foot is doing well/no offseason surgery and DJ Moore departure opens targets; Burden groin adds near-term opportunity. This partially improves the prior injury caution but does not erase recurrence/availability uncertainty. Upside marker strengthened, downside marker should be milder than previously contemplated unless newer medical news worsens.
+- Alec Pierce: Aug25 breakout case materially stronger than generic post-hype: Pittman departed, Pierce received 4y/$114m extension after 1,003 yards at 21.3 YPC, and had 19.9% target share with Daniel Jones. Clear expanded-role/organizational-commitment signal; add to WR upside research set.
+- Jayden Reed: Doubs gone; late-2025 splits without Doubs showed Reed leading targets in a small sample. Kraft ACL recovery and Watson durability add contingent target paths. Moderate upside, not WR1 flag without stronger volume evidence.
+- Blake Corum: Aug27 RB sleeper article identifies standalone 2025 efficiency masked by 7.2 FPPG; retain as contingent/late RB candidate and investigate exact role split before ↑↑.
+- Tank Bigsby: current expert roundup highlights both possible standalone split and immediate RB1-type contingent value if Barkley misses time; excellent late-round asymmetry archetype for PITTI. Strong contingent-upside marker, but no claim that Barkley injury is likely.
+- Nicholas Singleton: deep sleeper thesis depends on Pollard/Spears backfield deterioration/role capture; higher number of required events than Price/Bigsby, so lower opportunity-path grade despite ceiling.
+- Malachi Fields: Aug28 deep-WR article reports repeated camp impact and a path to NYG WR role behind Nabers, but likely low-volume/red-zone/deep profile. Track as deep sleeper, not normal 10-team draft target yet.
+- DS Aug28 methodological clarification: Draft Sharks explicitly says its rankings are NOT an average of analysts' personal ranks; they come from player projections + proprietary 3D Value with team input. This is decisive for Expert-v3 weighting logic: individual DS analyst FantasyPros accuracy cannot be treated as direct accuracy evidence for the DS Team board. DS remains a distinct model/source whose 30-35% weight must be validated on its own output.
