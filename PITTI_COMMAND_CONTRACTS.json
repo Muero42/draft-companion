@@ -83,9 +83,9 @@
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.64",
-    "androidAuthority": "v11.8.0-rc4.93",
+    "androidAuthority": "v11.8.0-rc4.94",
     "androidVersionObserved": true,
-    "androidFunctionalVerificationPending": true,
+    "androidFunctionalVerificationPending": false,
     "sourceAuthority": "v11.8.0-rc4.94",
     "latestPackageReextract": "v11.8.0-rc4.94",
     "latestPackageSha256": "d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576",
@@ -98,5 +98,5 @@
     "packageReferenceArtifactId": 9684784867,
     "packageHashSemantics": "GitHub artifact digest for successful rc4.94 candidate package; durable authority also requires runtime blob/re-extract gates."
   },
-  "currentGate": "RC494_ANDROID_PICK9_VERIFY"
+  "currentGate": "RC494_FINAL_RESEAL"
 }
