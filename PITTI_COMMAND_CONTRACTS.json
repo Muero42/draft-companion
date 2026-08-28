@@ -87,16 +87,16 @@
     "androidVersionObserved": true,
     "androidFunctionalVerificationPending": true,
     "sourceAuthority": "v11.8.0-rc4.94",
-    "latestPackageReextract": "v11.8.0-rc4.93",
-    "latestPackageSha256": "3ce741b71cbc3f35b026e6aa8f9622e10999ecd29c54c0d66f6fcfdef379db95",
+    "latestPackageReextract": "v11.8.0-rc4.94",
+    "latestPackageSha256": "d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576",
     "packageRuntimeFiles": 13,
     "deployedPagesVersion": "v11.8.0-rc4.93",
     "deployedPagesAppByteParityWithMain": false,
-    "deployedPagesNote": "gh-pages remains rc4.93 while main rc4.94 is an un-deployed display-only challenger; app.js differs by design until rc4.94 gates/deployment pass.",
+    "deployedPagesNote": "rc4.94 CI/release/package PASS on final v143 reseal; gh-pages remains rc4.93, so deployment/main-pages parity is still pending.",
     "libraryRecoveryAlias": "v11.8.0-rc4.52",
-    "packageReferenceRun": 33166867111,
-    "packageReferenceArtifactId": 9683925309,
+    "packageReferenceRun": 33169002426,
+    "packageReferenceArtifactId": 9684784867,
     "packageHashSemantics": "GitHub artifact digest for the successful rc4.93 candidate package; durable authority also requires runtime blob/re-extract gates."
   },
-  "currentGate": "RC494_NORMAL_CUT_DISPLAY_FIX_CI_PACKAGE_DEPLOY_ANDROID_VERIFY"
+  "currentGate": "RC494_DEPLOY_PARITY_ANDROID_VERIFY"
 }
