@@ -1395,3 +1395,11 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Post-promotion SHA parity verified for app.js, index.html, sw.js, manifest.webmanifest, decision-policy.js, live-surface-v3.js, live-surface-v3.css and expert-v3-board.js: all exact.
 - Authority may now advance Source/Package/Deployment to rc4.92. Android remains last observed rc4.91 and not functionally verified for rc4.92.
 - Next unavoidable device gate: open/reload installed PWA on Android, confirm App-Version rc4.92, then focused live functional check. Do not infer device cache activation from branch parity alone.
+
+
+### 2026-08-28 — PITTI HANDOFF v141 deep audit / rc4.92 device observation / Walker P0
+- User requested PITTI HANDOFF and explicit second-pass completeness audit. New screenshots prove Android/PWA v11.8.0-rc4.92 at 13:04 local with Expert-v3 selected; version observation is NOT full functional verification.
+- Fresh Pick-9 screenshot exposes new P0 diagnostic: Kenneth Walker III is absent from the unified Top-10. Earlier rc4.91 showed Walker #8 around panel 11.1 / ADP 17.4; do not assume the disappearance is intended. Fresh Aug-28 public evidence says his ankle/foot swelling is expected non-serious while current expert analysis still identifies KC lead-back/high-end RB1 upside. Receiving chat must inspect exact rc4.92 score components/candidate identity before any tuning.
+- Deep active-pointer scan found stale rc4.91 instructions in PITTI_AUTO_PREFLIGHT, PITTI_NEW_CHAT_BOOTSTRAP and README despite rc4.92 source/package/pages/device observation. Repaired to rc4.92; historical sections remain historical only.
+- Preserved critical anti-regressions: no Geno/Rodgers name exclusion; one-QB only after QB1; Expert-v3 exact positional weights and WR v2 fallback; ten rich nonduplicate cards with orange cut warning; Reach/risk/wait/decline never positive; Return-v2 early tau 4.25, never 1.35; broad anti-repeat research; AUTO BLOCK zero-ack; no mock unless explicit.
+- Handoff generation v141 must be sealed only after this active-pointer repair and second-pass integrity verification. Library mirror remains stale/fail-closed and cannot override repo EOF authority.
