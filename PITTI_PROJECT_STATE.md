@@ -2030,3 +2030,11 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Emergency-queue contract itself was promoted into release/package gates and exposed a test-harness dependency on APP_VERSION; harness now injects actual app version. Contract then PASSed.
 - Freshness gate correctly failed on Ashton Jeanty stale blocking status (asOf 2026-08-24). Fresh public evidence checked 2026-08-28: Raiders/ESPN report ankle still monitored but head coach says team is counting on him for Week 1; prior hard recommendation block was no longer justified. rc4.100 acute status refreshed to 2026-08-28, remains monitored, blockRecommendation=false.
 - This is a freshness-driven status correction, not a ranking/score retune. Candidate remains unmerged/undeployed until full gates pass.
+
+
+## 2026-08-28 19:50Z — rc4.100 preinstall gates GREEN
+- Candidate head `c973bffc2e76fa8e40eed03276f6009f330966dd` completed all three PR gates successfully: release contract run 33205458705 PASS; package/re-extract run 33205458721 PASS; project guardrails run 33205458745 PASS.
+- Package artifact: `Draft_Companion_PREINSTALL`, artifact id 9699461048, artifact digest SHA-256 `4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae` (GitHub artifact envelope digest), candidate head c973bffc2e76fa8e40eed03276f6009f330966dd.
+- All inherited rc4.82–rc4.99 contracts plus rc4.100 turn-portfolio contract, emergency queue contract, freshness gate and package re-extract passed.
+- Jeanty acute-status freshness was the final substantive gate blocker and was refreshed from 2026-08-28 public evidence; status monitored but hard recommendation block removed because Raiders explicitly say they are counting on him for Week 1.
+- Candidate remains unmerged/undeployed at this checkpoint. Next safe promotion path is draft PR -> main -> main CI/package -> gh-pages byte parity -> Android observation. Do not skip main post-merge verification.
