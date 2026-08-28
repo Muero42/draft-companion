@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T111800Z-v141",
-  "updated_at": "2026-08-28T11:10:00Z",
+  "handoff_generation": "20260828T140500Z-v142",
+  "updated_at": "2026-08-28T14:05:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -10,8 +10,8 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.92",
-    "test_challenger": "v11.8.0-rc4.93",
+    "android_authority": "v11.8.0-rc4.93",
+    "test_challenger": "v11.8.0-rc4.94",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.92",
     "library_recovery_alias": "v11.8.0-rc4.52",
@@ -25,10 +25,9 @@
     "android_functional_verified": false
   },
   "exact_continuation": {
-    "gate": "RC492_ANDROID_FUNCTIONAL_WALKER_DIAGNOSTIC_PLUS_BROAD_RESEARCH",
+    "gate": "RC494_NORMAL_CUT_DISPLAY_FIX_CI_PACKAGE_DEPLOY_ANDROID_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "rc4.93 is diagnostic-only over rc4.92: generic PITTI_CANDIDATE_AUDIT added, no scoring changes. Verify CI/package, deploy exact runtime, then Android audit Kenneth Walker to identify generic score channel. No player-specific boost.",
-    "next_gate": "RC493_CI_PACKAGE_THEN_ANDROID_CANDIDATE_AUDIT"
+    "instruction": "Fresh rc4.93 Pick-9 snapshot proved Walker remains panel #15.3 but was omitted from visible Top-10 while lower-ranked rows were marked FALLBACK AUSSERHALB NORMAL-CUT. Root cause is visibleCoachCandidates slicing source top 10 before normal-cut priority. rc4.94 changes display selection only: normal-cut rows fill visible slots first; outside-cut fallback can only fill remaining slots. No scoring/panel/Return/injury tuning. Verify CI/package, deploy exact runtime, then Android fresh Pick-9 snapshot. Preserve duplicate guard."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -46,13 +45,13 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
-    "acceptance_fingerprint": "rc4.92-android-version-observed-NOT-functional|rc4.92-source-package-pages-parity|NO-NAMED-QB-FORCING|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|WALKER-TOP10-DIAGNOSTIC|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v141",
-    "status": "RC493_DIAGNOSTIC_CANDIDATE_PENDING_CI",
+    "acceptance_fingerprint": "rc4.93-android-snapshot|WALKER-PANEL15.3|RC494-NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v142",
+    "status": "RC494_DISPLAY_FIX_PENDING_CI",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Receiving chat verifies v141 seal integrity and resumes Walker P0 + rc4.92 functional verification; no mock."
+    "next_action": "Receiving chat verifies v142 seal integrity, then rc4.94 CI/package/deploy and Android fresh Pick-9 verification; no mock."
   },
-  "source_authority": "rc4.93",
+  "source_authority": "rc4.94",
   "package_authority": "rc4.92",
   "android_version_observed": "rc4.92",
   "android_functional_verified": false,
