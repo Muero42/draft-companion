@@ -2043,3 +2043,15 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 ## 2026-08-28 19:52Z — rc4.100 promoted to main, post-merge gate pending
 - PR #36 was marked ready only after all three candidate gates PASS and then squash-merged to main as `1b85656e40a182ca6be2397c5bf6674006b97bd2`.
 - No gh-pages/Android promotion has been performed yet. Main post-merge workflows had not appeared at the last poll, so deployment is intentionally held. Candidate PASS does not substitute for required main post-merge verification.
+
+
+## 2026-08-28 20:02Z — HANDOFF v157 deep anti-regression audit
+- User requested a fail-safe new-chat transfer with no regressions. Deep audit found the prior v156 handoff was **not sufficient** because multiple authoritative takeover files still contained active v155/rc4.98-era pointers: PITTI_CURRENT_STATE, PITTI_EXECUTION_LOCK, PITTI_COMMAND_CONTRACTS currentBoundary, PITTI_AUTO_PREFLIGHT active update line, PITTI_NEW_CHAT_BOOTSTRAP, HANDOFF_COMPLETENESS_MATRIX, README header, and the v155 seal.
+- All active pointers above were repaired to the actual boundary: main/source rc4.100; PR #36 release/package/guardrail PASS; post-merge main verification pending; gh-pages + Android rc4.99; rc4.96 rollback.
+- Handoff generation advanced to `20260828T2002Z-v157`; CURRENT/HANDOFF/bootstrap/matrix/lock are being synchronized and a fresh non-empty Git-blob integrity seal will be generated only after all files stop changing.
+- Canonical full-draft evidence is now the 19:24 backup `draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json`, not the older 17:30 file for the full-draft Return/turn-portfolio audit.
+- Full-draft Return finding preserved: short 3-pick turns 91.4% forecast vs 90.9% actual; long 17-pick turns 37.1% vs 30.4%; no global Return-v2 retune.
+- Pick-89 TLaw/Corum finding preserved as a recommendation-ordering defect; rc4.100 bounded generic turn-portfolio fix is part of the current source.
+- Strict-Coach 9-WR correction is explicitly retained; old 7-WR count remains forbidden.
+- Canonical self-update process preserved to avoid repeating the rc4.99 deployment detour.
+- Historical sections in this ledger remain historical evidence only. New chat must use newest EOF checkpoint + v157 CURRENT/SEAL/HANDOFF and verified repo/device facts; old narrative must not restore superseded runtime state.
