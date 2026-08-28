@@ -54,3 +54,7 @@
 
 .
 > **Android authority update:** fresh Pick-9 snapshot confirms v11.8.0-rc4.93. Walker remains Panel 15.3 / ADP 17.4; the reproduced defect is Top-10 presentation ordering. rc4.94 fixes display selection only.
+
+## rc4.95 source challenger (2026-08-28)
+- Source challenger: `v11.8.0-rc4.95`; Android/package/deployment authority remains `v11.8.0-rc4.94` until full release gates and device verification.
+- Generic Sleeper `Questionable` alone has no Coach penalty; concrete acute injury evidence remains authoritative.
