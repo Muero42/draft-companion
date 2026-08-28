@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T172200Z-v150",
-  "updated_at": "2026-08-28T17:45:00Z",
+  "handoff_generation": "20260828T155300Z-v152",
+  "updated_at": "2026-08-28T15:53:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -20,14 +20,14 @@
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33183057716,
     "package_reference_artifact_id": 9690504450,
-    "package_reference_note": "rc4.96 all five primary gates PASS at 6eafbb297fa999a28dae14375a65544b73a97d7c; candidate package/re-extract PASS (run 33183057716 / artifact 9690504450); exact 13/13 main↔gh-pages runtime parity independently verified at gh-pages head 35b68015aa79e8976f3ee9a230be3710be503b32. Android rc4.96 verification pending.",
+    "package_reference_note": "rc4.96 all five primary gates PASS at 6eafbb297fa999a28dae14375a65544b73a97d7c; package/re-extract PASS run 33183057716 / artifact 9690504450; exact 13/13 main↔gh-pages parity at 35b68015aa79e8976f3ee9a230be3710be503b32; Android/PWA rc4.96 functionally evidenced by complete 15-pick recommendation-following mock 1399085353452761088 and rc4.96 fixtures.",
     "android_version_observed": true,
     "android_functional_verified": true
   },
   "exact_continuation": {
-    "gate": "RC496_POSTDRAFT_EVIDENCE_CAPTURE",
+    "gate": "RC496_PRE_DRAFT_FREEZE_FRESHNESS_ONLY",
     "auto_starts_mock": false,
-    "instruction": "rc4.96 Android/PWA version and completed-draft functionality observed. Do not start another mock. Capture Decision Evidence for draft 1399085353452761088, then run post-draft recommendation-quality audit/freeze."
+    "instruction": "rc4.96 runtime/decision kernel is frozen after OOS recommendation-following audit. Do not start another mock automatically and do not retune scoring/Return from this one draft. Before the real draft, run only fresh panel/ADP/acute-status checks and cached decision support."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -44,13 +44,13 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
-    "acceptance_fingerprint": "RC4.96-ALL5-PASS|PKG-REEXTRACT-PASS|GH-PAGES-13OF13|ANDROID-RC4.94-AUTHORITY|RC4.96-ANDROID-PENDING|Q-NEUTRAL|SPARSE-PANEL-GUARD|NORMAL-CUT-DECOUPLED|WR7-SOFT-UTILITY|EVIDENCE-V2-MIXED-VERSION-GUARD|NO-PLAYER-FORCING|NO-GLOBAL-RETURN-RETUNE|HANDOFF-v150",
-    "status": "RC496_ANDROID_COMPLETE_POSTDRAFT_EVIDENCE_PENDING",
+    "resume_semantics": "PITTI AUTO resumes from rc4.96 pre-draft freeze; runtime/model changes require new material evidence and deterministic gates.",
+    "acceptance_fingerprint": "RC4.96-ALL5-PASS|PKG-REEXTRACT-PASS|GH-PAGES-13OF13|ANDROID-RC4.96-VERIFIED|OOS-FOLLOWCOACH-15OF15|RETURN-BRIER-0.0802|SPARSE-PANEL-OOS-PASS|NO-RETURN-RETUNE|NO-PAIRSUM|WR7-SOFT|WAIT-TURN-CHAT-REVIEW|FRESHNESS-ONLY|HANDOFF-v152",
+    "status": "RC496_DRAFT_READY_FROZEN_FRESHNESS_PENDING",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Capture PITTI Decision Evidence for completed draft 1399085353452761088; analyze recommendation-following mock before final freeze.",
-    "gate": "RC496_POSTDRAFT_EVIDENCE_CAPTURE"
+    "next_action": "No runtime retune. Pre-draft freshness checks only: Expert-v3/WR-v2 boards, Sleeper ADP and acute-status evidence; real-draft WAIT leaders require turn-portfolio review by ChatGPT.",
+    "gate": "RC496_PRE_DRAFT_FREEZE_FRESHNESS_ONLY"
   },
   "source_authority": "rc4.96",
   "package_authority": "rc4.96",
