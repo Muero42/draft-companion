@@ -341,3 +341,22 @@ Upside-v3 should distinguish at least four mechanisms rather than one generic br
 - Rounds 7-10: prioritize standalone/role-capture upside (Price/Tuten archetypes) over pure handcuffs when quality is close.
 - Rounds 11-15: contingent RB1 ceiling (Bigsby/Corum archetypes) becomes especially valuable; low-ceiling veteran floor loses utility in 10-team format.
 - WR bench: reserve ↑↑ primarily for plausible WR1/top-15 or dominant-target paths (Parker Washington/Egbuka type), ↑ for plausible WR2/volume expansion (Pierce/Downs/Golden), and use separate `consolidation` mechanism for Jameson Williams rather than calling every young WR a breakout.
+
+
+## 2026-08-28 06:xx CEST — larger AUTO batch II: fresh market/news + causal-path refinement
+- Jarquez Hunter: Aug27 trade LAR->MIA is a new late-RB watch signal. Miami acquiring him suggests dissatisfaction/uncertainty behind Achane (Ollie Gordon/Jaylen Wright), but DS correctly treats him only as a low-risk flier/name-to-know until he climbs depth chart. Grade `C role-capture/contingent`, no arrow yet; monitor depth chart rather than overreacting to transaction.
+- Isiah Pacheco: Aug27 DS says back injury now makes Week1 uncertain after MCL recovery; Detroit worked out Kareem Hunt and No.2 role could be jeopardized. This is decision-changing negative evidence: `↓↓ health + role-loss risk`, avoid-draft until return signal. Separate knee resolved from new back issue.
+- Tucker Kraft: Aug27 Jonnu signing does NOT materially hurt Kraft; Musgrave PUP, Kraft on track W1, Jonnu currently No.2. Avoid false regression marker from transaction alone.
+- Malachi Fields: Aug27 last-pick analysis strengthens immediate NYG WR-role path behind Nabers; front office reportedly wants Fields to win job and Mooney has not impressed. Still deep 10-team-only watch because likely low-volume/deep/red-zone profile; `B role-capture`, not normal draft target yet.
+- Tyler Allgeier: fresh Aug27 outlook shows TD-dependent standalone flex and mediocre 2025 efficiency; still contingent value behind Jeremiyah Love but not an upside target equal to backs with standalone growth paths. Grade `C contingent`, ceiling event requires Love absence/role change.
+- Woody Marks: fresh Aug26 outlook: immediate Montgomery handcuff, 17.5 touches in 2025 starter stretch but mediocre efficiency and likely waiver-available in 10-team. Grade `C contingent/waiver`, lower draft priority than Bigsby/Tuten/Price/Corum.
+- DS Sleeper ADP page is updated Aug27 and explicitly compares platform ADP to DS 3D Value. Use this as a MARKET/TIMING cross-check only; do not feed DS value back into Upside-v3 as independent research because DS is already an expert-panel source (double-count guard).
+
+### Causal-path priority refinement for 10-team Half-PPR
+Tier A late-RB archetype = usable standalone value + one short path to major workload (Tuten; Corum; Swift at higher cost). Tier B = weak/moderate standalone but plausible role capture without injury (Price; Hunter only if depth-chart movement confirms). Tier C = primarily injury-away handcuff (Bigsby has unusually strong contingent ceiling and some split possibility, so C+; Allgeier; Marks). Prefer A > B > C at equal market cost because 10-team waiver replacement reduces the value of low-standalone handcuffs.
+
+### Anti-double-count rules
+- Expert roundup consensus = qualitative thesis strength, never an extra pseudo-expert rank.
+- Draft Sharks news/3D Value = current-context evidence, but because DS is in panel, do not independently boost player score from DS ranking/value itself.
+- Sleeper ADP = timing/return probability only, not player-quality evidence.
+- Injury/transaction/depth-chart facts may override stale priors when genuinely decision-changing.
