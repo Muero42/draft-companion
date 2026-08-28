@@ -1150,10 +1150,13 @@ function adjustedReturn(base,intel){if(base==null)return null;const eff=Math.max
 function returnConfidence(ret,intel,mode,hasAdp){let score=hasAdp?82:52;score-=Math.min(22,intel.between*1.7);score-=intel.uncertain*5;if(mode==='replay')score+=4;return clamp(Math.round(score),30,94)}
 function lossIfGone(x){let loss=0;if(x.sameTier<=2)loss+=2;if(Number.isFinite(x.tierGap))loss+=Math.min(4,x.tierGap/4);if(Number.isFinite(x.alternativeGap))loss+=Math.min(3,x.alternativeGap/6);if((x.nearAlternatives||0)>=2)loss-=1.5;else if((x.nearAlternatives||0)===1)loss-=.5;if(x.p.pos==='RB'&&x.r.rank>=70)loss+=1;return loss>=5?'hoch':loss>=2.5?'mittel':'niedrig'}
 function actionLabel(x){
-  // Microfix rc4.97: this label describes Return timing only. It is deliberately
-  // not a TAKE/WAIT command because the board leader can itself be a high-return
-  // player and turn ordering still requires portfolio/opportunity-cost review.
-  if((x.ret??0)>=.72)return'RETURN GUT';
+  // Microfix rc4.97: preserve the stable two-state data contract (WAIT / —).
+  // The bug was semantic/presentation: WAIT is Return timing, never an automatic pick command.
+  if((x.ret??0)>=.72)return'WAIT';
+  return'—';
+}
+function actionDisplayLabel(x){
+  if(x.action==='WAIT')return'RETURN GUT';
   if((x.ret??1)<=.25)return'RETURN KRITISCH';
   return'RETURN OFFEN';
 }
@@ -2191,11 +2194,11 @@ function positionDecisionPath(state,scored,current,next){
   const out=[];
   if(state.counts.QB===0){
     const q=positionPathCandidates(scored,'QB',4);
-    if(q.length)out.push(`QB-Pfad: ${q.map(x=>`${x.p.name} (${x.action})`).join(' → ')}`);
+    if(q.length)out.push(`QB-Pfad: ${q.map(x=>`${x.p.name} (${actionDisplayLabel(x)})`).join(' → ')}`);
   }
   if(state.counts.TE===0){
     const t=positionPathCandidates(scored,'TE',3);
-    if(t.length)out.push(`TE-Pfad: ${t.map(x=>`${x.p.name} (${x.action})`).join(' → ')}`);
+    if(t.length)out.push(`TE-Pfad: ${t.map(x=>`${x.p.name} (${actionDisplayLabel(x)})`).join(' → ')}`);
   }
   const r=scored.filter(x=>x.p.pos==='RB').slice(0,5);
   if(current>=81&&r.length)out.push(`Late-RB-Pfad: ${r.map(x=>x.p.name).join(' / ')}`);
@@ -2404,7 +2407,7 @@ async function refresh(){
     if(draftComplete){
       lines.push('DRAFT ABGESCHLOSSEN — keine Pick-Entscheidung und keine Return-Prognose mehr.');
     }else if(snapshotCandidates.length){
-      snapshotCandidates.forEach((x,i)=>lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Coach ${x.score}${Number.isFinite(x.balancedScore)?` | v10-Ref ${x.balancedScore}`:''} | Panel ${x.r.rank.toFixed(1)} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Return-Confidence ${x.returnConfidence}% | ${x.outsideNormalCut?'FALLBACK AUSSERHALB NORMAL-CUT · '+x.action+' NUR KONTEXT':x.action} | Loss ${x.loss}`));
+      snapshotCandidates.forEach((x,i)=>lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Coach ${x.score}${Number.isFinite(x.balancedScore)?` | v10-Ref ${x.balancedScore}`:''} | Panel ${x.r.rank.toFixed(1)} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Return-Confidence ${x.returnConfidence}% | ${x.outsideNormalCut?'FALLBACK AUSSERHALB NORMAL-CUT · '+actionDisplayLabel(x)+' NUR KONTEXT':actionDisplayLabel(x)} | Loss ${x.loss}`));
     }else lines.push('KEINE — Panel-Zuordnung/Rankings prüfen.');
 
     lines.push('','DRAFT COACH TOP 8');
