@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T074500Z-v123`
-Updated: 2026-08-28 07:45Z
+Handoff generation: `20260828T082000Z-v125`
+Updated: 2026-08-28 08:20Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -18,9 +18,9 @@ Updated: 2026-08-28 07:45Z
 - League: 10-team Half-PPR, 1QB, real draft 2026-08-31, user slot 9.
 - User strategy: exactly one drafted QB; after QB1 all QBs disappear from user's Coach surface. Geno Smith and Aaron Rodgers are hard exclusions.
 - K/DST normally not drafted. Starter maxima are NOT roster caps.
-- rc4.84 = current Android authority and runtime of the completed realistic mock/Evidence-v2.
+- rc4.87 = current Android authority; compact Expert-v3 export verified Weisse RB, Wolf TE and Todd QB; Joey Wright WR is unavailable.
 - rc4.85 export attempt exposed a deterministic defect: `loadSingleExpert is not defined`.
-- rc4.86 = current Expert-v3 export hotfix, deployed to gh-pages with main/pages runtime parity. It reuses the existing verified `loadExpertRanks` pipeline; Decision Kernel, Return-v2 and Expert-v2 remain unchanged. Android still requires reload/update verification.
+- rc4.88 = current deployed Expert-v3 integration candidate. It adds a fourth selectable positional profile; Decision Kernel/Return-v2 remain unchanged.
 - rc4.85 changes ONLY the integrated Expert-v3 challenger export. rc4.84 Decision Kernel, Return-v2 and Frozen Expert-v2 remain unchanged.
 - Expert-v2 remains fully selectable/control. Brown stays excluded. Erickson remains qualitative/challenger only. Weisse may be freshly qualified; old availability-driven temporary-pool restoration remains forbidden.
 - Upside-v3/player research remains a parallel lane only during genuine Expert-v3 wait time. Settled players are not repeatedly re-queried without genuinely new decision-changing news.
@@ -42,7 +42,7 @@ rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. In
 - Do NOT ask user to manually document picks during the mock.
 
 ## CURRENT EXTERNAL GATE
-`ANDROID_RC4.86_SELF_UPDATE_THEN_EXPERT_V3_EXPORT`
+`ANDROID_RC4.88_EXPERT_V3_PROFILE_VERIFY`
 
 The preferred update route is the already deployed Companion/PWA path. **Do not ask for or regenerate the expired ChatGPT PREINSTALL link as the default solution.** First reload/update the installed app and verify badge `v11.8.0-rc4.85`. If it remains rc4.84, diagnose the service-worker/cache/update path before inventing another install route.
 
@@ -248,3 +248,17 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - rc4.87 is a transfer-only hotfix: Weisse exports RB only, Wolf TE only, Todd QB only, Wright WR only; rows are compact [name, overallRank] tuples. It copies the compact JSON straight to clipboard and falls back to file export only if clipboard fails.
 - No Decision Kernel, Return-v2, manager model, roster policy, Expert-v2 weights or expert qualification logic changed.
 - Exact next action: update/reload to rc4.87 -> tap “Expert-v3 kompakt kopieren” once -> paste clipboard into chat. No mock.
+
+
+## V125 EXPERT-v3 WEIGHTING / rc4.88
+- rc4.87 compact vector transfer succeeded.
+- Final bounded Expert-v3 candidate:
+  - QB: DS25 / Mariano25 / Del Don20 / Boone10 / Pat10 / Todd D Clark10.
+  - RB: DS25 / Mariano25 / Del Don25 / Pat15 / Ryan Weisse10.
+  - WR: unchanged Expert-v2 WR board; Joey Wright current vector missing, no proxy/fabrication.
+  - TE: DS25 / Pat30 / Del Don25 / Boone10 / Wolf of Roto Street10.
+- Track-record basis: Ryan Weisse 2025 RB #8 and 2023-25 RB #2; Todd D Clark 2025 QB #8 and 2023-25 QB #5; Wolf 2023-25 TE #2, with 2025 TE #42 as the reason not to exceed 10%.
+- 10-point sensitivity remains bounded: v3-v2 Spearman ~0.9991 QB, ~0.9972 RB, ~0.9972 TE.
+- rc4.88 adds expert-v3-board.js and keeps incumbent/control, Expert-v2 ALL and Expert-v2 WR-only selectable.
+- Exact next device gate: reload/update to rc4.88 -> choose “Expert-v3 · positionsspezifisch” -> verify green panel health. No mock required for this verification.
+- Research breadth lock remains active: cover new/unsettled players; do not recycle settled names without new decision-changing evidence.
