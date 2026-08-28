@@ -27,7 +27,7 @@ A new-chat takeover fails closed unless all checks pass.
 ## 3 Draft invariants
 - 10-team Half-PPR, slot 9, 1QB
 - exactly one user-drafted QB; QB2 hard user-Coach exclusion after QB1
-- Geno Smith/Aaron Rodgers hard exclusions
+- Geno Smith/Aaron Rodgers organic ranking; no player-name hard exclusions
 - no normal K/DST
 - starter maxima are not roster caps
 - WR saturation soft, no hard cap; exceptional WR value remains legal
@@ -138,3 +138,4 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - AUTO/AUTO BLOCK must chain work packages in the same assistant turn; one completed package is not a stop condition.
 - Empty final after tool work is explicitly forbidden while executable autonomous work remains.
 - Early turn termination is treated as execution failure because autonomous work cannot resume after turn end without another user message.
+- rc4.92 correction: Geno Smith/Aaron Rodgers are NOT exclusions. Any active runtime/test/checkpoint rule that special-cases either name for demotion/removal is a regression. Exactly-one-QB remains a roster strategy only after QB1 is drafted.
