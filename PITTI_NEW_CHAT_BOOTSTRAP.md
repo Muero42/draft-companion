@@ -24,6 +24,7 @@ If Library files are available, read them too. A v105 Library reseal was prepare
 ## Current acceptance boundary
 - production/control: rc4.64
 - source/package/deployment: rc4.92; main/gh-pages runtime parity verified
+- latest package/re-extract: rc4.92 (candidate-package PASS; run 33165222701 / artifact 9683286172)
 - Android version authority: rc4.92, observed directly in user screenshot 2026-08-28 13:04 local
 - Android functional verification: OPEN
 - Expert-v3 integrated; do not restart acquisition/export
