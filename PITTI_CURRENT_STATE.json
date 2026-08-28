@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T074500Z-v123",
-  "updated_at": "2026-08-28T07:45:00Z",
+  "handoff_generation": "20260828T082000Z-v125",
+  "updated_at": "2026-08-28T08:20:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -10,17 +10,17 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.84",
-    "test_challenger": "v11.8.0-rc4.87",
+    "android_authority": "v11.8.0-rc4.87",
+    "test_challenger": "v11.8.0-rc4.88",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.86",
+    "latest_package_reextract": "v11.8.0-rc4.87",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1"
   },
   "exact_continuation": {
-    "gate": "ANDROID_RC4.87_COMPACT_EXPERT_V3_EXPORT",
+    "gate": "ANDROID_RC4.88_EXPERT_V3_PROFILE_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "Update/reload deployed app to rc4.87. Use Expert-v3 kompakt kopieren once, then paste the compact JSON. It contains only the position-relevant ranks needed for Weisse RB, Wolf TE, Todd QB, optional Wright WR."
+    "instruction": "Update/reload deployed app to rc4.88. Select Expert-v3 · positionsspezifisch and verify green panel health. No mock required before verifying the profile. Expert-v2 remains selectable."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -37,10 +37,10 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-export-failed|rc4.86-full-export-too-large|rc4.87-compact-transfer|EXPERT-V3|V2-FROZEN|ANTI-REPEAT|1QB|HANDOFF-v123",
+    "acceptance_fingerprint": "rc4.64|rc4.87-android|rc4.88-expert-v3-profile|QB-TODD10|RB-WEISSE10|TE-WOLF10|WR-V2|V2-SELECTABLE|ANTI-REPEAT|1QB|HANDOFF-v125",
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Receiving chat: update/reload Android to rc4.86 through deployed path; verify badge; export Expert-v3 challenger JSON; continue AUTO calculations. No mock."
+    "next_action": "Receiving chat: verify rc4.88 on Android, select Expert-v3 positional profile, confirm green panel health; continue AUTO research/validation. No mock."
   }
 }
