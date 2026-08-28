@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.87';
+const APP_VERSION='v11.8.0-rc4.88';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -23,8 +23,46 @@ let experts=store.get('v7_experts',[]);
 let panels=store.get('v7_panels',{standard:{name:'Standard',members:{}},pat:{name:'Pat einzeln',members:{}}});
 let activePanelId=store.text('v7_activePanel','standard');
 let positionPanels=store.get('v7_positionPanels',{QB:'qb',RB:'rb',WR:'wr',TE:'te'});
-const EXPERT_PROFILE_IDS={incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'},fullv2:{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'},wrv2:{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'}};
+const EXPERT_PROFILE_IDS={incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'},fullv2:{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'},wrv2:{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'},expertv3:{QB:'expert-v3-qb',RB:'expert-v3-rb',WR:'expert-v2-wr',TE:'expert-v3-te'}};
 function ensureExpertV2Panels(){const src=globalThis.PITTI_EXPERT_V2;if(!src||src.schema!=='pitti-expert-v2-board.v4')return false;for(const pos of ['QB','RB','WR','TE']){const list=src.rows?.[pos]||[];if(!list.length)return false;const id='expert-v2-'+pos.toLowerCase(),ranks={};for(const row of list){const rank=Number(row.rank);if(row.name&&Number.isFinite(rank)&&rank>0)ranks[norm(row.name)]={name:row.name,pos,rank,mean:rank,median:rank,sd:Number.isFinite(Number(row.sd))?Number(row.sd):null,n:Number.isFinite(Number(row.n))?Number(row.n):null,tier:row.tier??null,individual:Array.isArray(row.individual)?row.individual.map(e=>({expertName:e.expertName,rank:Number(e.rank),effectiveWeight:Number(e.effectiveWeight),reconstructed:!!e.reconstructed,spread:e.spread??null})).filter(e=>e.expertName&&Number.isFinite(e.rank)):[]};}panelRanks[id]=ranks;panels[id]={name:'Expert-v2 '+pos+' · 26.08.',members:{},shadow:true,weights:src.weights?.[pos]||{},source:src.source};}return true;}
+function ensureExpertV3Panels(){
+  const base=globalThis.PITTI_EXPERT_V2,v3=globalThis.PITTI_EXPERT_V3;
+  if(!base||base.schema!=='pitti-expert-v2-board.v4'||!v3||v3.schema!=='pitti-expert-v3-board.v1')return false;
+  for(const pos of ['QB','RB','TE']){
+    const spec=v3.challengers?.[pos],weights=v3.weights?.[pos],baseRows=base.rows?.[pos]||[];
+    if(!spec||!weights||!baseRows.length)return false;
+    const challenger=new Map((spec.ranks||[]).map(([name,rank])=>[norm(name),Number(rank)]).filter(([,rank])=>Number.isFinite(rank)&&rank>0));
+    const id='expert-v3-'+pos.toLowerCase(),ranks={};
+    for(const row of baseRows){
+      if(!row?.name||!Number.isFinite(Number(row.rank)))continue;
+      const cr=challenger.get(norm(row.name));
+      if(!Number.isFinite(cr)){
+        ranks[norm(row.name)]={name:row.name,pos,rank:Number(row.rank),mean:Number(row.rank),median:Number(row.rank),sd:Number.isFinite(Number(row.sd))?Number(row.sd):null,n:Number.isFinite(Number(row.n))?Number(row.n):null,tier:row.tier??null,individual:Array.isArray(row.individual)?row.individual.map(e=>({...e,rank:Number(e.rank),effectiveWeight:Number(e.effectiveWeight)})):[]};
+        continue;
+      }
+      const vals=[];
+      for(const e of Array.isArray(row.individual)?row.individual:[]){
+        if(!e?.expertName||!Number.isFinite(Number(e.rank)))continue;
+        let ew=Number(e.effectiveWeight)||0;
+        const oldBase=Number(base.weights?.[pos]?.[e.expertName]);
+        const newBase=Number(weights?.[e.expertName]);
+        if(Number.isFinite(oldBase)&&oldBase>0&&Number.isFinite(newBase)&&newBase>=0)ew*=newBase/oldBase;
+        vals.push({expertName:e.expertName,rank:Number(e.rank),effectiveWeight:ew,reconstructed:!!e.reconstructed,spread:e.spread??null});
+      }
+      const cw=Number(weights[spec.name]||0);
+      if(cw>0)vals.push({expertName:spec.name,rank:cr,effectiveWeight:cw,reconstructed:false,spread:null});
+      const sw=vals.reduce((s,e)=>s+e.effectiveWeight,0);
+      if(!sw)continue;
+      const mean=vals.reduce((s,e)=>s+e.rank*e.effectiveWeight,0)/sw;
+      const variance=vals.reduce((s,e)=>s+e.effectiveWeight*(e.rank-mean)**2,0)/sw;
+      ranks[norm(row.name)]={name:row.name,pos,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,tier:row.tier??null,individual:vals.sort((a,b)=>a.rank-b.rank)};
+    }
+    assignTiers(ranks);
+    panelRanks[id]=ranks;
+    panels[id]={name:'Expert-v3 '+pos+' · 28.08.',members:{},shadow:true,weights,source:v3.source,methodology:v3.methodology};
+  }
+  return true;
+}
 function currentExpertProfile(){for(const [id,map] of Object.entries(EXPERT_PROFILE_IDS))if(['QB','RB','WR','TE'].every(pos=>positionPanels[pos]===map[pos]))return id;return 'custom';}
 function applyExpertProfile(id){const map=EXPERT_PROFILE_IDS[id];if(!map)return;positionPanels={...map};persist();renderAll();if(els.expertProfile)els.expertProfile.value=id;}
 
@@ -455,7 +493,7 @@ function activePanelSourceLines(usedPanelIds){
   for(const pid of usedPanelIds){
     const panel=panels[pid]||{},embedded=embeddedPanelExpertNames(pid);
     if(panel.shadow&&embedded.length){
-      const boardSource=globalThis.PITTI_EXPERT_V2?.source||'Expert-v2 Board';
+      const boardSource=panel.source||globalThis.PITTI_EXPERT_V2?.source||'eingebettetes Expert-Board';
       out.push(...embedded.map(name=>`${name}: ${boardSource} (eingebettet)`));continue;
     }
     for(const eid of Object.keys(panel.members||{})){
@@ -467,7 +505,7 @@ function activePanelSourceLines(usedPanelIds){
 }
 function effectivePanelHealthLine(pos){
   const pid=panelFor(pos),panel=panels[pid]||{},embedded=embeddedPanelExpertNames(pid);
-  if(panel.shadow)return `${pos}: ${embedded.length?embedded.join(' + '):'keine eingebetteten Einzelränge'} | Expert-v2 Board`;
+  if(panel.shadow)return `${pos}: ${embedded.length?embedded.join(' + '):'keine eingebetteten Einzelränge'} | ${panel.name||'eingebettetes Expert-Board'}`;
   const members=Object.entries(panel.members||{}).filter(([eid])=>rankCache[eid]?.verifiedIndividual&&!rankCache[eid]?.duplicateOf);
   const total=members.reduce((sum,[,w])=>sum+Number(w||0),0);
   const effective=members.map(([eid,w])=>{
@@ -506,20 +544,20 @@ function activePanelHealthState(){
 }
 function activePanelHealthSummaryText(){
   const h=activePanelHealthState();
-  if(h.mode==='embedded')return`aktive Expert-v2 Stimmen ${h.embeddedExperts.length} eingebettet`;
+  if(h.mode==='embedded')return`aktive eingebettete Expertenstimmen ${h.embeddedExperts.length}`;
   const bad=h.details.filter(x=>!x.ok).map(x=>`${x.pos} ${x.count}/${x.target}${x.stale?' stale':''}`);
   if(h.mode==='hybrid')return`aktive Panels ${h.degraded?'DEGRADED':'OK'} · v2 ${h.embeddedPositions.join('/')} + live ${h.livePositions.join('/')}${bad.length?` · ${bad.join(', ')}`:''}`;
   return`aktive Live-Panels ${h.degraded?'DEGRADED':'OK'}${bad.length?` · ${bad.join(', ')}`:''}`;
 }
 function activePanelSourceSummary(){
   const h=activePanelHealthState();
-  if(h.mode==='embedded')return'Expert-v2 Frozen Board mit eingebetteten Einzelrängen; Live-Multi-Source-Pipeline nur Refresh/Diagnose';
+  if(h.mode==='embedded')return'eingebettete positionsspezifische Expert-Boards; Live-Multi-Source-Pipeline nur Refresh/Diagnose';
   if(h.mode==='hybrid')return`Hybrid: Expert-v2 Frozen Board (${h.embeddedPositions.join('/')}) + verifizierte Live-Multi-Source-Pipeline (${h.livePositions.join('/')})`;
   return'automatische Multi-Source-Pipeline (vollständige öffentliche Einzelrankings; Vergleichsseiten nur Kontrolle)';
 }
 function activePanelWeightSummary(){
   const h=activePanelHealthState();
-  if(h.mode==='embedded')return'im Expert-v2 Board eingefrorene effektive Gewichte; keine Live-Neunormierung';
+  if(h.mode==='embedded')return'im gewählten eingebetteten Expert-Board eingefrorene effektive Gewichte; keine Live-Neunormierung';
   if(h.mode==='hybrid')return'Expert-v2-Positionen nutzen eingefrorene effektive Gewichte; Live-Positionen normieren auf tatsächlich verfügbare verifizierte Experten';
   return'pro Spieler automatisch auf die tatsächlich verfügbaren verifizierten Experten normiert';
 }
@@ -556,10 +594,10 @@ function rebuildPanelRanksFromCache(){
   const pool=buildDraftCandidatePool(verifiedIds);if(pool.total<120)return false;
   const rebuilt={};for(const id of Object.keys(panels))rebuilt[id]=computePanel(id,pool.keep);
   if(!Object.values(rebuilt).some(r=>Object.keys(r||{}).length))return false;
-  panelRanks=rebuilt;ensureExpertV2Panels();return true;
+  panelRanks=rebuilt;ensureExpertV2Panels();ensureExpertV3Panels();return true;
 }
 if(!Object.keys(panelRanks).length)rebuildPanelRanksFromCache();
-ensureExpertV2Panels();
+ensureExpertV2Panels();ensureExpertV3Panels();
 function renderAll(){if(!panels[activePanelId])activePanelId='standard';panelOptions(els.activePanel,activePanelId);for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])panelOptions(el,positionPanels[pos]||activePanelId);renderExperts();renderLog();updateStatus()}
 function renderExperts(){const q=els.expertSearch.value.trim().toLowerCase(),members=panels[activePanelId]?.members||{},total=Object.values(members).reduce((s,w)=>s+Number(w||0),0);const list=experts.filter(e=>!q||`${e.name} ${e.site}`.toLowerCase().includes(q));els.expertsList.innerHTML=list.length?list.map(e=>{const on=members[e.id]!=null,w=Number(members[e.id]??25),pct=on&&total?Math.round(w/total*100):0;return `<div class="expert"><label><input type="checkbox" data-id="${esc(e.id)}" ${on?'checked':''}> ${esc(e.name)}<small>${esc(e.site||'Quelle unbekannt')}${e.accuracy!=null?` · Accuracy ${e.accuracy}`:''}${on?` · effektiv ${pct}%`:''}</small></label><input type="number" min="0" max="100" value="${w}" data-weight="${esc(e.id)}"></div>`}).join(''):'<div class="notice">Noch keine Experten geladen oder keine Treffer.</div>'}
 function saveCurrentPanel(){const p=panels[activePanelId];if(!p)return;const members={};els.expertsList.querySelectorAll('[data-id]').forEach(cb=>{if(cb.checked){const id=cb.dataset.id,w=Number(els.expertsList.querySelector(`[data-weight="${CSS.escape(id)}"]`)?.value||0);if(w>0)members[id]=w}});p.members=members;persist()}
@@ -605,7 +643,7 @@ async function loadExperts(){
     if(!experts.length)throw new Error('Keine Experten erkannt.');
     const expertProfileBeforeReload=currentExpertProfile();
     applyPreset();
-    ensureExpertV2Panels();
+    ensureExpertV2Panels();ensureExpertV3Panels();
     if(EXPERT_PROFILE_IDS[expertProfileBeforeReload])positionPanels={...EXPERT_PROFILE_IDS[expertProfileBeforeReload]};
     persist();renderAll();
 
