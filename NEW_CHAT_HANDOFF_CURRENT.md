@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T165800Z-v148`
-Updated: 2026-08-28 16:58Z
+Handoff generation: `20260828T171200Z-v149`
+Updated: 2026-08-28 17:12Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -446,3 +446,20 @@ HANDOFF_GENERATION: 20260828T100500Z-v132
 - Anti-overfit: no generic Return-v2 retune; no Dobbins/player-specific rank penalty; no hard WR cap; QUESTIONABLE alone remains neutral.
 - Dedicated rc4.96 source regression PASS. Current release failures are checkpoint-generation drift, not a demonstrated rc4.96 decision-kernel failure.
 - Current gate: `RC496_RELEASE_PACKAGE`. No mock unless explicitly requested.
+
+
+## V149 PITTI HANDOFF — ACTIVE EOF AUTHORITY
+- Generation: `20260828T171200Z-v149`. This section supersedes older active pointers.
+- rc4.96 decision-evidence audit and generic repairs are retained. Audit source: PITTI-Decision-Evidence-1398976368485625856-2026-08-28T14-07-09-294Z.json; 16 raw / 15 canonical own-pick fixtures; mixed rc4.88/rc4.94/rc4.95 evidence.
+- rc4.96 dedicated source gate PASS. Legacy rc4.82/rc4.83 canaries were made successor-safe after alias dedupe / sparse-panel polarity changes; do not revert those fixes.
+- Exact rc4.96 package/re-extract PASS: reference run 33183057716, artifact 9690504450, SHA-256 18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0.
+- rc4.96 gh-pages deployment/runtime parity PASS. Device/PWA functional verification is the only dependent promotion gate still open.
+- IMPORTANT authority distinction: source/package/deployment = rc4.96; last fully observed/functional Android authority remains rc4.94 until a fresh rc4.96 device snapshot is supplied. Do not infer device promotion from deployment.
+- Exact continuation in a new chat: verify v149 seal/integrity and actual repo/Actions state; then request/inspect ONE fresh Android/PWA Pick-9 snapshot only when user interaction is unavoidable. Do NOT start a mock automatically.
+- Preserve generic fixes: QUESTIONABLE alone neutral; sparse n=2/n=3 panel penalty/confidence cap + PANEL-CHECK; evidence export effectiveWeight + dedupe/version telemetry; Cam/Cameron Ward and Kenny/Kenneth Gainwell aliases merged; Normal-Cut presentation separate from quality safety; late WR7+ is soft opportunity-cost only; no hard roster cap.
+- Anti-overfit locks: no global Return-v2 retune from this mock; no Dobbins/player-specific rank penalty; no Williams/Flowers/Smith name forcing; no blind RB forcing.
+- QB policy: exactly one user-drafted QB after QB1; Geno Smith/Aaron Rodgers rank organically and MUST NOT be name-excluded.
+- Expert-v3 authority remains positional: QB Todd D Clark 10%, RB Ryan Weisse 10%, TE Wolf of Roto Street 10%, WR exact Expert-v2 fallback; do not restart expert acquisition.
+- Return-v2 early tau 4.25 remains authoritative; never resurrect 1.35.
+- AUTO: long same-turn blocks, parallelize independent lanes, checkpoint after material change. AUTO BLOCK = zero-ack immediate resumption. Promise/status-only AUTO replies while executable work exists are forbidden.
+- Library mirror remains stale/fail-closed; newest sealed repo generation + verified device facts win.
