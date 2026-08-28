@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T083800Z-v130",
-  "created_at": "2026-08-28T08:40:00Z",
+  "created_at": "2026-08-28T08:49:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -39,7 +39,7 @@
     "tools/rc486-draft-critical.mjs": "c432c9b0c41975d6b3d799a7088b80ef226ad5b6",
     "tools/rc487-draft-critical.mjs": "e2033aef883503bb902d4ef52a6d2ff2b4943c69",
     "expert-v3-board.js": "b8e869f5384e5dc2a0f353e632ecfabf7958debd",
-    "tools/rc488-draft-critical.mjs": "6d260df6b272537fb3f62871f17ba58af8978e7a",
+    "tools/rc488-draft-critical.mjs": "0adf79176c56948ba6741b4c288fb9da58bcb966",
     "tools/rc489-draft-critical.mjs": "5a7d8ce066bf8ab2ac39f7e4f64b492ed56c93bd"
   },
   "checks": {
@@ -121,7 +121,11 @@
     "rc489_full_ci_pass": true,
     "rc489_package_13_files": true,
     "rc489_main_pages_parity_13of13": true,
-    "v130_reseal": true
+    "v130_reseal": true,
+    "live_v3_expert_display_fix": true,
+    "ten_full_cards": true,
+    "cut_warning_on_card": true,
+    "generic_pro_contra_fallbacks_removed": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
