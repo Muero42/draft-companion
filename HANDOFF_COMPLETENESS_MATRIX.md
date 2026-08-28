@@ -140,3 +140,17 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - Early turn termination is treated as execution failure because autonomous work cannot resume after turn end without another user message.
 - rc4.92 correction: Geno Smith/Aaron Rodgers are NOT exclusions. Any active runtime/test/checkpoint rule that special-cases either name for demotion/removal is a regression. Exactly-one-QB remains a roster strategy only after QB1 is drafted.
 - v140 anti-forcing canary: Geno/Rodgers ordinary organic ranking; no player-name QB exclusion. Source rc4.92; package/Android rc4.91 until independently promoted.
+
+
+## V141 transfer completeness
+- [x] rc4.92 source/package/pages parity preserved.
+- [x] rc4.92 Android version badge observed at 13:04 local.
+- [ ] rc4.92 full Android functional verification — OPEN.
+- [ ] Kenneth Walker III Pick-9 Top-10 disappearance root cause — OPEN/P0 diagnostic; do not rationalize without arithmetic.
+- [x] no player-name QB exclusions; Geno/Rodgers organic ranking only.
+- [x] Expert-v3 exact positional weights preserved; WR exact v2 fallback.
+- [x] unified ten rich cards / orange cut warning / evidence polarity requirements preserved.
+- [x] Return-v2 early tau 4.25 preserved; tau 1.35 forbidden.
+- [x] broad anti-repeat upside research mandate preserved.
+- [x] AUTO BLOCK zero-ack semantics preserved.
+- [x] no mock unless explicit.
