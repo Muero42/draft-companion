@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260828T160000Z-v146",
-  "updated_at": "2026-08-28T16:00:00Z",
+  "updated_at": "2026-08-28T16:10:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,7 +11,7 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.94",
-    "test_challenger": "v11.8.0-rc4.95",
+    "test_challenger": "v11.8.0-rc4.96",
     "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.95",
     "library_recovery_alias": "v11.8.0-rc4.52",
@@ -25,9 +25,9 @@
     "android_functional_verified": true
   },
   "exact_continuation": {
-    "gate": "RC495_ANDROID_VERIFY",
+    "gate": "RC496_SPARSE_PANEL_REGRESSION",
     "auto_starts_mock": false,
-    "instruction": "User is running the natural rc4.94 mock. Do not start another mock. Parallel work is freshness/readiness only. If mock has no P0/P1 regression, freeze code. Final Aug-31 freshness pass remains required; ~100-player Sleeper Queue is sufficient and not a blocker."
+    "instruction": "Validate sparse Expert-v3 panel guard and evidence coverage; do not require user action while autonomous validation remains."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -43,16 +43,16 @@
     "no_player_name_qb_exclusions": true
   },
   "handoff": {
-    "transaction_in_progress": false,
+    "transaction_in_progress": true,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
     "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143|RC495-Q-NEUTRAL|ALL5-PASS|ANDROID-VERIFY-PENDING|HANDOFF-v146",
-    "status": "RC495_RELEASE_GATES_PASS_ANDROID_VERIFY_PENDING",
-    "handoff_ready": true,
-    "second_pass_pass": true,
-    "next_action": "Verify Android/PWA badge v11.8.0-rc4.95 and functional snapshot; then promote Android authority. No further source tuning before device check.",
-    "gate": "RC495_ANDROID_VERIFY"
+    "status": "RC496_SOURCE_VALIDATION_IN_PROGRESS",
+    "handoff_ready": false,
+    "second_pass_pass": false,
+    "next_action": "Complete rc4.96 sparse-panel regression, coverage audit, gates, package/deploy only after PASS.",
+    "gate": "RC496_SPARSE_PANEL_REGRESSION"
   },
-  "source_authority": "rc4.95",
+  "source_authority": "rc4.96",
   "package_authority": "rc4.95",
   "android_version_observed": "v11.8.0-rc4.94",
   "android_functional_verified": true,
