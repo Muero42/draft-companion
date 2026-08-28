@@ -2,10 +2,10 @@
 
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
 > **Aktuelle Source-Authority:** v11.8.0-rc4.92.  
-> **Letzter paket-/re-extract-verifizierter Stand:** v11.8.0-rc4.91 · 13 Runtime-Dateien · SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.  
-> **Android-Version beobachtet:** v11.8.0-rc4.91 (User-Screenshot 2026-08-28). Das ist noch keine vollständige funktionale Verifikation aller rc4.91-Oberflächen.  
-> **gh-pages:** Versionsstring rc4.91; `app.js` ist aktuell byte-seitig älter als main (Henry/Polarity vorhanden, jüngster breiter Research-Batch fehlt). Versionsgleichheit darf nicht als Parität gewertet werden.  
-> **Aktuelles Gate:** `RC492_PACKAGE_DEPLOY_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`.  
+> **Letzter paket-/re-extract-verifizierter Stand:** v11.8.0-rc4.92 (GitHub Actions candidate-package PASS; artifact run 33165222701 / id 9683286172).  
+> **Android-Version beobachtet:** v11.8.0-rc4.92 (User-Screenshot 2026-08-28 13:04 lokal). Das ist noch keine vollständige funktionale Verifikation.  
+> **gh-pages:** rc4.92; Runtime-Parität zu main wurde nach Promotion verifiziert.  
+> **Aktuelles Gate:** `RC492_WALKER_ROOT_CAUSE_AND_ANDROID_FUNCTIONAL_VERIFY` plus breite Anti-Repeat-Research-Lane.  
 >
 > Built/source-verified, packaged/re-extracted, deployed, Android-Version-beobachtet und Android-funktional-verifiziert sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
 
@@ -53,4 +53,4 @@
 - Expert-v2-Gewichte/Routing unverändert.
 
 .
-> **Android authority update (2026-08-28):** user screenshot confirms v11.8.0-rc4.91 loaded on device. Functional visual verification remains the active gate.
+> **Android authority update (2026-08-28 13:04 local):** user screenshot confirms v11.8.0-rc4.92 loaded on device. Functional verification remains open; Kenneth Walker III Top-10 disappearance is the active diagnostic.
