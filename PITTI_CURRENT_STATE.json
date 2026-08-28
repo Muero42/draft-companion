@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260828T094500Z-v131",
-  "updated_at": "2026-08-28T09:45:00Z",
+  "updated_at": "2026-08-28T09:46:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -13,14 +13,14 @@
     "android_authority": "v11.8.0-rc4.89",
     "test_challenger": "v11.8.0-rc4.91",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.89",
+    "latest_package_reextract": "v11.8.0-rc4.91",
     "library_recovery_alias": "v11.8.0-rc4.52",
-    "latest_package_sha256": "2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608"
+    "latest_package_sha256": "8f772c01c617b8fd5fa62676fcba2aca223a881beeed86c0246d37d68ab346f1"
   },
   "exact_continuation": {
-    "gate": "RC491_PREDEVICE_FULL_VERIFICATION",
+    "gate": "RC491_ANDROID_DEPLOY_AND_VISUAL_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "Run full rc4.91 gates before deployment; validate early Return-v2 calibration and retain rc4.90 Expert-v3 fixes."
+    "instruction": "rc4.91 full five-gate suite PASS and PREINSTALL artifact produced/re-extracted. Next deploy via verified update path, then Android visual verification of actual Expert-v3 rows, evidence polarity, early Top-10 info and Return-v2 short-turn calibration."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -41,6 +41,6 @@
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Android/PWA update to rc4.89 and visual verification only. Then continue broad anti-repeat research and effect validation. No mock."
+    "next_action": "Deploy rc4.91 via verified update path and visually verify on Android; do not call Android-verified before screenshot/runtime evidence."
   }
 }
