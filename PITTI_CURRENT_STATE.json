@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260828T172200Z-v150",
-  "updated_at": "2026-08-28T17:22:00Z",
+  "updated_at": "2026-08-28T17:30:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -22,7 +22,7 @@
     "package_reference_artifact_id": 9690504450,
     "package_reference_note": "rc4.96 all five primary gates PASS at 6eafbb297fa999a28dae14375a65544b73a97d7c; candidate package/re-extract PASS (run 33183057716 / artifact 9690504450); exact 13/13 main↔gh-pages runtime parity independently verified at gh-pages head 35b68015aa79e8976f3ee9a230be3710be503b32. Android rc4.96 verification pending.",
     "android_version_observed": true,
-    "android_functional_verified": true
+    "android_functional_verified": false
   },
   "exact_continuation": {
     "gate": "RC496_ANDROID_VERIFY",
@@ -49,12 +49,12 @@
     "status": "RC496_DEPLOY_PASS_ANDROID_PENDING",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Fresh Android/PWA rc4.96 functional verification; then final draft-ready audit/freeze.",
+    "next_action": "Fresh Android/PWA rc4.96 Pick-9 functional verification; then final draft-ready audit/freeze.",
     "gate": "RC496_ANDROID_VERIFY"
   },
   "source_authority": "rc4.96",
   "package_authority": "rc4.96",
   "android_version_observed": "v11.8.0-rc4.94",
-  "android_functional_verified": true,
+  "android_functional_verified": false,
   "deployment_authority": "rc4.96"
 }
