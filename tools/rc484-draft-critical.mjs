@@ -88,7 +88,7 @@ assert.ok(app.includes('chosenVsCoachScoreDelta'));
 // One-tap current-draft decision evidence export.
 assert.ok(app.includes("format:'pitti-decision-evidence-v2'"));
 assert.ok(app.includes("fixtures:rows"));
-assert.ok(app.includes("overrideCount:rows.filter"));
+assert.ok(app.includes("overrideCount:summaries.filter"));
 assert.ok(index.includes('id="decisionEvidenceBtn"'));
 
 assert.ok(app.includes('wrSaturationRecommendationCount'));
