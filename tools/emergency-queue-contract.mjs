@@ -9,7 +9,9 @@ const grab=name=>{
   throw new Error(name+' parse');
 };
 const src=grab('buildEmergencyQueueText');
-const fn=new Function(src+';return buildEmergencyQueueText')();
+const appVersion=(app.match(/const APP_VERSION='([^']+)'/)||[])[1];
+assert.ok(appVersion,'APP_VERSION missing');
+const fn=new Function('APP_VERSION',src+';return buildEmergencyQueueText')(appVersion);
 const row=(name,pos,score=100,injury=null)=>({p:{name,pos,team:'TST',injury},score});
 const base=[
  row('QB A','QB'),row('QB B','QB'),row('TE A','TE'),row('TE B','TE'),
