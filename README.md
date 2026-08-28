@@ -1,10 +1,10 @@
 # Draft Companion – Final Draft Edition 2026
 
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
-> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.89 · 13 Runtime-Dateien · SHA-256 `2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608` · Release/Package/Re-extract/Guardrails PASS.
+> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.89 · 13 Runtime-Dateien. rc4.90 is not device-ready until its full sealed workflow set passes.
 > **Letzter Android-verifizierter Teststand:** v11.8.0-rc4.88 (Expert-v3 · positionsspezifisch ausgewählt und visuell verifiziert).  
 > **Aktueller installierter Android-Stand:** v11.8.0-rc4.88; rc4.89 korrigiert ausschließlich Live-Draft-Präsentation/Research-Prose und ist noch nicht Android-verifiziert.
-> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.89 — vollständig release-/package-/re-extract-verifiziert und auf gh-pages deployt; Android-Verifikation offen.
+> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.90 — PRE-DEVICE root-cause fix for Expert-v3 panel selection + actual expert rows + early Top-10 evidence; deployment withheld until full sealed gates PASS.
 > **Aktueller Android-Testauthority:** v11.8.0-rc4.88; Decision Kernel/Return-v2 bleiben eingefroren.  
 > **Aktueller Source-Challenger:** v11.8.0-rc4.89; Live-Präsentations-/Evidence-Fix, kein Scoring-/Return-/Roster-Policy-Change.
 >
