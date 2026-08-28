@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T10:20:00Z",
+  "updatedAt": "2026-08-28T10:40:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -20,14 +20,17 @@
     "latestPreinstallVerified": "v11.8.0-rc4.91",
     "latestResearchChallenger": "v11.8.0-rc4.91",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.91_PREINSTALL.zip",
-    "preinstallSha256": "6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a",
+    "preinstallSha256": "64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.91",
     "latestDeployedCandidate": "v11.8.0-rc4.91",
     "latestAndroidVerified": "v11.8.0-rc4.91",
     "androidAuthority": "v11.8.0-rc4.91",
     "android_authority": "v11.8.0-rc4.91",
-    "deployedPagesAppByteParityWithMain": false
+    "deployedPagesAppByteParityWithMain": false,
+    "preinstallReferenceRun": 33162367347,
+    "preinstallReferenceArtifactId": 9682152886,
+    "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority."
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
