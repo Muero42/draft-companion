@@ -72,7 +72,7 @@ Otherwise continue AUTO.
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — v119
 - Never answer an AUTO turn with “AUTO läuft”, “ich mache weiter”, or equivalent future-tense progress prose. Work must be executed **before** any reply.
 - During PITTI HANDOFF, finish the complete transactional audit/reseal before replying unless an unavoidable blocker prevents it.
-- Current update path: main/source/package rc4.98; Android/PWA rc4.98 observed but not fully accepted; rc4.96 rollback authority; gh-pages rc4.96 diverges from main; exact gate RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT.
+- Current update path: main/source rc4.100; rc4.100 PR release/package/guardrails PASS; post-merge main verification pending; gh-pages + Android remain rc4.99; rc4.96 rollback authority; exact gate RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY.
 
 ## 9. AUTO TURN TERMINATION — HARD GATE
 - Completing one work package is **not** permission to end the assistant turn.
@@ -93,9 +93,14 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - visible output is permitted only for a concrete useful end-result, unavoidable user action/input, safety/irreversible confirmation, or a blocker after every independent lane is exhausted.
 
 
-## v155 TAKEOVER CANARIES
-- Strict Coach draft 1399114762087895040 must be counted as 9 WR / 4 RB / 1 TE / 1 QB. Any 7-WR count is a regression.
-- main/source/package is rc4.98; gh-pages remains rc4.96 and parity must be FALSE.
-- rc4.98 observed on Android does not equal final acceptance while known semantic/evidence defects remain.
-- PR #33 CMC positive-evidence patch is UNMERGED; never claim it exists on main.
-- Handoff PASS is invalid if seal integrity map is empty or omits required core files.
+## v157 TAKEOVER CANARIES
+- Handoff generation must be `20260828T2002Z-v157` across CURRENT/SEAL/HANDOFF/bootstrap/matrix.
+- main/source = rc4.100; PR #36 candidate gates all PASS; post-merge main verification remains pending.
+- gh-pages = rc4.99 and therefore main/pages parity is FALSE until canonical rc4.100 deployment.
+- Android/PWA observed = rc4.99; rc4.100 is NOT Android-observed/accepted yet.
+- Full draft backup = draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json; draft 1399141058222280704; 15/15 fixtures.
+- Return-v2 short-turn evidence is calibrated (91.4% forecast vs 90.9% actual); do not globally depress Return because of high 3-pick values.
+- Strict Coach draft 1399114762087895040 remains 9 WR / 4 RB / 1 TE / 1 QB; any 7-WR count is a regression.
+- rc4.100 short-turn portfolio fix is generic and bounded; no score mutation, no player/position forcing, no Return retune.
+- Canonical self-update path: verified candidate -> main promotion/post-merge verification -> gh-pages byte parity -> Android/PWA refresh -> device observation.
+- Handoff PASS is invalid if seal integrity is stale, empty, or omits required core files.
