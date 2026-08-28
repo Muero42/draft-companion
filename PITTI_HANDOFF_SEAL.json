@@ -1,20 +1,20 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T121700Z-v144",
-  "created_at": "2026-08-28T12:17:00Z",
+  "handoff_generation": "20260828T145500Z-v145",
+  "created_at": "2026-08-28T14:55:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "daa79ea0d5e3f73a824667e5e5946afd0a27988d",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "22340ce5abb3ddbd5f55fe3241d7fa506dfac328",
-    "PITTI_COMMAND_CONTRACTS.json": "003146de33cd6e5d57f9bc58e07000428a3b7335",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "940dea7527cc104066945c9e958c906efc4894d6",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "ecc320d7282c91fb9a3ccc7370f76a9d8a85269f",
-    "PITTI_EXECUTION_LOCK.json": "753bd67dac8ff62e3ebd92eddc317256103ae44d",
-    "PITTI_PROJECT_STATE.md": "c1e390076278d675546a9dadb6878ed067d08c9d",
-    "PITTI_AUTO_PREFLIGHT.md": "7088238ceea6070d4a2d099e1a68e814480637bf",
+    "PITTI_CURRENT_STATE.json": "101bc44f30c2bcf4e4f4a95c77e9e4f5b99f810d",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "17e805cbcf1f1bfa0341561a009794dc251b2db1",
+    "PITTI_COMMAND_CONTRACTS.json": "8835b4c68ac922382f6d20a1baf9454f3ee0cbc2",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "3f3c8ead0489cb946641f3839625261043dfacc1",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "63c76d5af1310001bdb13f6bb5375b048808aac2",
+    "PITTI_EXECUTION_LOCK.json": "63ba40ded3227fa5a8e9cf43971643df670cd9d8",
+    "PITTI_PROJECT_STATE.md": "0e0497eba9d013392079bdcdbc4824ac481841ab",
+    "PITTI_AUTO_PREFLIGHT.md": "5dd967ac26a5b5465e769b60d6537ecd3ef01cdc",
     "app.js": "e6f504e0348f2323ab0666b4519daf9a93ecaca4",
     "index.html": "3a1e41f99800789386bb9deac92bdbe0b53d9cff",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
@@ -178,7 +178,9 @@
     "v144_rc494_package_reextract_pass": true,
     "v144_package_authority_corrected": true,
     "v144_deploy_android_still_pending": true,
-    "v144_successor_safe_package_guard": true
+    "v144_successor_safe_package_guard": true,
+    "v145_rc494_deploy_13_file_parity": true,
+    "v145_rc494_android_pick9_functional_pass": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
@@ -190,26 +192,26 @@
   },
   "runtime_boundary": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.93",
+    "android_authority": "v11.8.0-rc4.94",
     "android_version_observed": true,
-    "android_functional_verified": false,
+    "android_functional_verified": true,
     "source_authority": "v11.8.0-rc4.94",
     "test_challenger": "v11.8.0-rc4.94",
-    "test_challenger_android_verified": false,
+    "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.94",
     "latest_package_digest": "d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576",
     "package_runtime_files": 13,
-    "deployed_pages_version": "v11.8.0-rc4.93",
-    "deployed_pages_app_byte_parity_with_main": false,
+    "deployed_pages_version": "v11.8.0-rc4.94",
+    "deployed_pages_app_byte_parity_with_main": true,
     "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR exact v2 fallback",
     "package_reference_run": 33169002426,
     "package_reference_artifact_id": 9684784867,
-    "note": "v144 audited boundary: rc4.94 source + CI/release/package/re-extract verified; rc4.93 deployment/Android-observed authority. Deployment parity and fresh Android functional verification remain open."
+    "note": "v145 closure boundary: rc4.94 source/package/re-extract + exact 13-file gh-pages deployment parity + fresh Android Pick-9 presentation verified."
   },
   "exact_continuation": {
-    "gate": "RC494_DEPLOY_PARITY_ANDROID_VERIFY",
+    "gate": "V145_FINAL_CI_CONFIRM",
     "auto_starts_mock": false,
-    "instruction": "Deploy exact rc4.94 runtime from verified source/package to gh-pages, prove main/pages runtime parity, then fresh Android Pick-9 snapshot. No scoring/player-specific tuning; duplicate guard binding."
+    "instruction": "Require all five primary workflows PASS on this exact v145 reseal. Then resume draft-readiness inventory; no automatic mock."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
   "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-PACKAGE-PASS|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v144"
