@@ -2012,3 +2012,13 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - rc4.98 evidence-polarity contract explicitly extended to rc4.100; rc4.99 WR saturation + Normal-Cut contracts execute for rc4.100.
 - Draft-day safety strengthened: emergency-queue contract and acute-status freshness gate are now mandatory in both release and package workflows. Freshness gate is pinned to 2026-08-28 for this candidate validation; draft-day execution still requires a fresh as-of run.
 - PR #36 remains draft/unmerged while latest three gates run. No Android/deployment mutation.
+
+
+## 2026-08-28 19:31Z — PITTI BACKUP 28-08 19:24 full-draft evidence integrated
+- Canonical evidence file: `draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json`, SHA-256 `1fc70dc81e8d9a4e28b5f0450f1a57e8cf8873b7541040acc0033e13cf6725ab`, draft `1399141058222280704`, model rc4.99, 15/15 own decision fixtures + 15 resolved Return windows.
+- Full audit persisted at `research/RC499_FULL_DRAFT_1399141058222280704_2026-08-28.md`.
+- Final user construction: 1 QB / 6 RB / 7 WR / 1 TE. Coach followed 10/15; five user overrides retained as validation evidence, never Coach-success labels.
+- Return-v2: 168 resolved non-censored predictions. Overall 62.2% forecast vs 58.3% actual; Brier 0.091. Short 3-pick turns: 91.4% vs 90.9% actual (well calibrated). 17-pick turns: 37.1% vs 30.4% (overprediction signal); no global retune from one draft.
+- Pick 89 is direct frozen evidence of a turn-portfolio presentation defect: Trevor Lawrence 96.1% Return / WAIT was Coach #1, user took Blake Corum, Lawrence survived and was taken at 92. The Return number was directionally correct; the #1 recommendation semantics were not.
+- rc4.100 candidate now contains a conservative generic short-turn portfolio ordering: only <=3-pick own-turn, deferable leader Return >=85%, alternative Return <=82%, normal-cut/unblocked and <=25 panel ranks worse. No score mutation, no Return retune, no position/player forcing. Dedicated synthetic anti-regression contract added.
+- Do not globally depress short-turn Return probabilities. Next calibration work is horizon-specific replication across compatible rc4.91+ OOS drafts; distinguish Monte-Carlo endpoint display from probability calibration.
