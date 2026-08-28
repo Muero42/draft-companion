@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v141
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v143
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -16,11 +16,11 @@ A new-chat takeover fails closed unless all checks pass.
 
 ## 2 Runtime boundary
 - rc4.64 production/control
-- rc4.91 Android version authority, directly observed by user screenshot
-- rc4.91 Android functional verification remains pending; version observation is not functional proof
-- rc4.91 current source authority
-- latest package/re-extract rc4.91 · 13 runtime files · SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`
-- gh-pages version string rc4.91, but app.js bytes lag main after latest broad evidence batch; do not claim main/pages byte parity
+- rc4.93 Android version authority, observed in fresh user Pick-9 snapshot
+- rc4.93 functional verification remains open because the Top-10 presentation defect was reproduced; version observation is not full functional proof
+- rc4.94 current source challenger; rc4.93 remains latest packaged/deployed/Android-observed authority
+- latest package/re-extract rc4.93 · 13 runtime files · artifact digest `3ce741b71cbc3f35b026e6aa8f9622e10999ecd29c54c0d66f6fcfdef379db95`
+- gh-pages remains rc4.93 while main app.js is rc4.94 pending gates; do not claim main/pages byte parity until exact rc4.94 deployment
 - built/prepared/deployed/package-reextract/Android-version-observed/Android-functional-verified are distinct states
 - expiring ChatGPT attachment is NOT the preferred update path; normal deployed PWA/self-update path first
 
@@ -48,7 +48,7 @@ A new-chat takeover fails closed unless all checks pass.
 - rc4.91 early Return-v2 calibration uses pick<=30 tau 4.25; do not restore tau 1.35
 - broad research is coverage-first/anti-repeat and evidence enrichment is not automatic ranking promotion
 - completed mock/Evidence-v2 history remains retained
-- current gate = rc4.91 Android functional verification + broad anti-repeat research; no mock unless explicitly requested
+- current gate = rc4.94 normal-cut display fix CI/package/deploy + fresh Android Pick-9 verification; no mock unless explicitly requested
 
 ## 6 AUTO durability
 - long blocks default
@@ -122,17 +122,17 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - v132: rc4.91 Android-observed authority + Expert-v3 actual-row gate + evidence polarity + Return-v2 tau4.25 + broad anti-repeat research + AUTO BLOCK zero-ack semantics preserved.
 
 ## v137 deep-handoff canaries
-- CURRENT / SEAL / Handoff generation must all equal `20260828T111800Z-v141`.
-- Active command contract and bootstrap must state rc4.91 Android authority and `RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`; rc4.84/85 active pointers are forbidden.
-- latest package/re-extract must be rc4.91, 13 runtime files, SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.
-- main/gh-pages `app.js` byte parity is currently FALSE despite both saying rc4.91; a receiving chat must preserve this distinction.
+- CURRENT / SEAL / Handoff generation must all equal `20260828T143500Z-v143`.
+- Active command contract/bootstrap must state rc4.93 Android authority, rc4.94 source challenger, and `RC494_NORMAL_CUT_DISPLAY_FIX_CI_PACKAGE_DEPLOY_ANDROID_VERIFY`; older active rc4.91/92 gates are forbidden.
+- latest package/re-extract must be rc4.93, 13 runtime files, candidate run 33166867111 / artifact 9683925309.
+- main/gh-pages `app.js` byte parity is currently FALSE because main is rc4.94 and gh-pages rc4.93; a receiving chat must preserve this distinction until promotion.
 - Expert-v3 acquisition/export is complete; do not restart it.
 - old Return-v2 early tau 1.35 is forbidden; rc4.91 tau 4.25 remains authoritative.
 - Reach/risk/wait/decline can never be positive evidence.
 - `AUTO BLOCK` means immediate zero-ack AUTO resumption.
 
-- v137 Android semantics: rc4.91 version observed, but `android_functional_verified=false`; never collapse these states.
-- v137 preflight canary: PITTI_AUTO_PREFLIGHT current update path must name rc4.91 and must preserve main/gh-pages app.js byte divergence; active rc4.85 update-path language is forbidden.
+- Current Android semantics: rc4.93 version observed, `android_functional_verified=false`; never collapse these states.
+- v143 preflight canary: current path must distinguish rc4.94 source challenger from rc4.93 package/deploy/Android authority.
 
 ## v138 AUTO turn-continuity canary
 - AUTO/AUTO BLOCK must chain work packages in the same assistant turn; one completed package is not a stop condition.
@@ -142,15 +142,15 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - v140 anti-forcing canary: Geno/Rodgers ordinary organic ranking; no player-name QB exclusion. Source rc4.92; package/Android rc4.91 until independently promoted.
 
 
-## V141 transfer completeness
-- [x] rc4.92 source/package/pages parity preserved.
-- [x] rc4.92 Android version badge observed at 13:04 local.
-- [ ] rc4.92 full Android functional verification — OPEN.
-- [ ] Kenneth Walker III Pick-9 Top-10 disappearance root cause — OPEN/P0 diagnostic; do not rationalize without arithmetic.
-- [x] no player-name QB exclusions; Geno/Rodgers organic ranking only.
+## V143 transfer completeness
+- [x] Fresh rc4.93 Android Pick-9 snapshot captured.
+- [x] Walker remains Panel 15.3 / ADP 17.4; no player-specific exclusion or rank loss.
+- [x] Root cause localized to Top-10 presentation selection ordering.
+- [x] rc4.94 source fix is generic normal-cut-first display selection only.
+- [ ] rc4.94 CI/release/package — PENDING.
+- [ ] rc4.94 deployment/main-pages parity — PENDING.
+- [ ] rc4.94 Android fresh Pick-9 verification — PENDING.
+- [x] Geno/Rodgers ordinary organic ranking; no player-name exclusions.
 - [x] Expert-v3 exact positional weights preserved; WR exact v2 fallback.
-- [x] unified ten rich cards / orange cut warning / evidence polarity requirements preserved.
-- [x] Return-v2 early tau 4.25 preserved; tau 1.35 forbidden.
-- [x] broad anti-repeat upside research mandate preserved.
-- [x] AUTO BLOCK zero-ack semantics preserved.
-- [x] no mock unless explicit.
+- [x] Return-v2 early tau 4.25 preserved.
+- [x] AUTO BLOCK same-turn/zero-ack contract preserved.
