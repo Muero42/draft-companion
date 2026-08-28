@@ -7,8 +7,6 @@ on:
       - 'live-surface-v3.js'
       - 'live-surface-v3.css'
       - '.github/workflows/rc461-live-surface-v3.yml'
-  pull_request:
-    branches: [main]
 permissions:
   contents: write
 jobs:

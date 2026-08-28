@@ -7,15 +7,15 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "e5c616c6e9a6c98a00c72f207a90b38b3e4ddac2",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "5a999962dec279f94f078a7788ace742913478ee",
-    "PITTI_COMMAND_CONTRACTS.json": "7638c02428cb97ca6a6175c5cc62c12f974d3b4c",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "55981f1c03971b5c4aba38fdc98f0763a32d3d60",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "c79737336b7a7d8581da2e856645d0cd01503f8c",
-    "PITTI_EXECUTION_LOCK.json": "36c0fd2034d3ad0145da008796beafd9188dcbbb",
-    "PITTI_PROJECT_STATE.md": "847094f513696d1a9f4f6d43a7d7fe3f342e30c9",
+    "PITTI_CURRENT_STATE.json": "b1a8bbb4018411880317699bee1fa3a784c0fa36",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "ba4e9c898c37518feb264aeb6e2688585013fe4e",
+    "PITTI_COMMAND_CONTRACTS.json": "ce8dbbf6e851539e063408c34d208ff003879a23",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "be95bb0f26730ce18d44b2776e85272085acbdbf",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "51622e4e18672b2d91399d4841f5864c3a4040d7",
+    "PITTI_EXECUTION_LOCK.json": "22b1025ea112fb6668d2b3291beef5ee2cea0354",
+    "PITTI_PROJECT_STATE.md": "1808e0fb243c53f6e9a2e9e6cc3fcd354ac42977",
     "PITTI_AUTO_PREFLIGHT.md": "5dd967ac26a5b5465e769b60d6537ecd3ef01cdc",
-    "app.js": "fe0d63a5fcc50ab9b1341ef8a93bbb82938211be",
+    "app.js": "e066d8cf08c25caee602327fb63282cba1bb19ca",
     "index.html": "34f6aa57934db506c8aec2ff314690929f1ddf36",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
     "sw.js": "aa70410aecc5f7acf6b26286d2c2d13b095d9ad3",
@@ -30,7 +30,7 @@
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "f0583629b9035f4ac78976400dcff76c5fe80f8e",
+    "README.md": "f38ac433d16fc1a573e11285eedeaba7dcac9720",
     ".github/workflows/release-contract-v2.yml": "2a5985802805a33d0c79b8f6688899af833cf49e",
     ".github/workflows/release-contract-v2-package.yml": "a6a3b7e6fcc3838edf0b2a031037c171fff39841",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
@@ -228,8 +228,8 @@
     "android_version_observed": true,
     "android_functional_verified": true,
     "source_authority": "v11.8.0-rc4.96",
-    "test_challenger": "v11.8.0-rc4.96",
-    "test_challenger_android_verified": true,
+    "test_challenger": "v11.8.0-rc4.97",
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.96",
     "latest_package_digest": "18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0",
     "package_runtime_files": 13,
@@ -242,10 +242,10 @@
     "note": "rc4.96 frozen pre-draft runtime; no rc4.97 scoring challenger promoted."
   },
   "exact_continuation": {
-    "gate": "RC496_PRE_DRAFT_FREEZE_FRESHNESS_ONLY",
+    "gate": "RC497_MICROFIX_CI",
     "auto_starts_mock": false,
-    "instruction": "Do not retune runtime/model or start another mock automatically. Perform only pre-draft panel/ADP/acute-status/news freshness and failsafe checks unless genuinely new material evidence reopens the freeze."
+    "instruction": "Validate isolated rc4.97 microfix; rc4.96 remains rollback/Android authority until all gates and device verification pass."
   },
   "library_persistence": "STALE_FAIL_CLOSED",
-  "acceptance_fingerprint": "RC4.96-ALL5-PASS|PKG-REEXTRACT-PASS|GH-PAGES-13OF13|ANDROID-RC4.96-VERIFIED|OOS-FOLLOWCOACH-15OF15|RETURN-BRIER-0.0802|SPARSE-PANEL-OOS-PASS|NO-RETURN-RETUNE|NO-PAIRSUM|WR7-SOFT|WAIT-TURN-CHAT-REVIEW|FRESHNESS-ONLY|HANDOFF-v152"
+  "acceptance_fingerprint": "RC4.96-ALL5-PASS|PKG-REEXTRACT-PASS|GH-PAGES-13OF13|ANDROID-RC4.96-VERIFIED|OOS-FOLLOWCOACH-15OF15|RETURN-BRIER-0.0802|SPARSE-PANEL-OOS-PASS|NO-RETURN-RETUNE|NO-PAIRSUM|WR7-SOFT|WAIT-TURN-CHAT-REVIEW|FRESHNESS-ONLY|HANDOFF-v152|RC497-MICROFIX-CI"
 }

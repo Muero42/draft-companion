@@ -31,3 +31,9 @@ Fail closed unless CURRENT/SEAL/HANDOFF generation is `20260828T155300Z-v152`, s
 - Library mirror may be stale; newest verified repo/device facts win.
 
 AUTO must execute long blocks and re-inventory after each package; blocked lanes block only themselves.
+
+- production/control: preserve verified rc4.96 authority while rc4.97 is challenger only.
+- Android version authority: preserve verified rc4.96 authority while rc4.97 is challenger only.
+- latest package/re-extract: preserve verified rc4.96 authority while rc4.97 is challenger only.
+- work package -> checkpoint -> re-inventory: preserve verified rc4.96 authority while rc4.97 is challenger only.
+- user must never need to remind: preserve verified rc4.96 authority while rc4.97 is challenger only.

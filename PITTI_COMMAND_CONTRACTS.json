@@ -1,6 +1,6 @@
 {
   "schema": "pitti.command-contract.v1",
-  "version": "1.7.2",
+  "version": "1.7.0",
   "trigger": "PITTI AUTO",
   "sourceOrder": [
     "PITTI_COMMAND_CONTRACTS.json",
@@ -99,7 +99,7 @@
     "packageReferenceRun": 33183057716,
     "packageReferenceArtifactId": 9690504450,
     "packageHashSemantics": "GitHub artifact digest for successful rc4.96 candidate package; durable authority also requires runtime blob/re-extract gates.",
-    "testChallenger": "v11.8.0-rc4.96"
+    "testChallenger": "v11.8.0-rc4.97"
   },
-  "currentGate": "RC496_PRE_DRAFT_FREEZE_FRESHNESS_ONLY"
+  "currentGate": "RC497_MICROFIX_CI"
 }

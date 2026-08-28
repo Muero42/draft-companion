@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.96';
+const APP_VERSION='v11.8.0-rc4.97';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -1149,7 +1149,17 @@ function liveIntel(p,current,next,picks,players,teams,mode,map,stress='baseline'
 function adjustedReturn(base,intel){if(base==null)return null;const eff=Math.max(.5,intel.effectiveSkillPicks??intel.between);const pressure=clamp((intel.hazard-eff*.45)*.07,-.12,.15);const endgameRelief=clamp((intel.between-eff)*.035,0,.30);return clamp(base-pressure+endgameRelief,.02,.98)}
 function returnConfidence(ret,intel,mode,hasAdp){let score=hasAdp?82:52;score-=Math.min(22,intel.between*1.7);score-=intel.uncertain*5;if(mode==='replay')score+=4;return clamp(Math.round(score),30,94)}
 function lossIfGone(x){let loss=0;if(x.sameTier<=2)loss+=2;if(Number.isFinite(x.tierGap))loss+=Math.min(4,x.tierGap/4);if(Number.isFinite(x.alternativeGap))loss+=Math.min(3,x.alternativeGap/6);if((x.nearAlternatives||0)>=2)loss-=1.5;else if((x.nearAlternatives||0)===1)loss-=.5;if(x.p.pos==='RB'&&x.r.rank>=70)loss+=1;return loss>=5?'hoch':loss>=2.5?'mittel':'niedrig'}
-function actionLabel(x){if((x.ret??0)>=.72)return'WAIT';return'—'}
+function actionLabel(x){
+  // Microfix rc4.97: preserve the stable two-state data contract (WAIT / —).
+  // The bug was semantic/presentation: WAIT is Return timing, never an automatic pick command.
+  if((x.ret??0)>=.72)return'WAIT';
+  return'—';
+}
+function actionDisplayLabel(x){
+  if(x.action==='WAIT')return'RETURN GUT';
+  if((x.ret??1)<=.25)return'RETURN KRITISCH';
+  return'RETURN OFFEN';
+}
 function modeStatusText(mode,map){if(mode==='live')return `LIVE LEAGUE: Managerhistorie + adaptive 2026-Priors aktiv${Object.keys(map).length?` · ${Object.keys(map).length} Slots zugeordnet`:' · WARNUNG: keine Slot→Manager-Zuordnung'} · Optionaler Modus-Override im Manager-Feld: [manual] / [autodraft] / [infer]`;if(mode==='mock')return `MOCK/TEST: 2026-Managerprofile aktiv · Markt-Prior + Roster-State + Profilvarianz${Object.keys(map).length?` · ${Object.keys(map).length} Slots zugeordnet`:''}`;if(mode==='replay')return 'REPLAY: historische Picks werden nur bis zum gewählten Cutoff sichtbar.';return 'Managerprofil-Status unbekannt.'}
 
 
@@ -2184,11 +2194,11 @@ function positionDecisionPath(state,scored,current,next){
   const out=[];
   if(state.counts.QB===0){
     const q=positionPathCandidates(scored,'QB',4);
-    if(q.length)out.push(`QB-Pfad: ${q.map(x=>`${x.p.name} (${x.action})`).join(' → ')}`);
+    if(q.length)out.push(`QB-Pfad: ${q.map(x=>`${x.p.name} (${actionDisplayLabel(x)})`).join(' → ')}`);
   }
   if(state.counts.TE===0){
     const t=positionPathCandidates(scored,'TE',3);
-    if(t.length)out.push(`TE-Pfad: ${t.map(x=>`${x.p.name} (${x.action})`).join(' → ')}`);
+    if(t.length)out.push(`TE-Pfad: ${t.map(x=>`${x.p.name} (${actionDisplayLabel(x)})`).join(' → ')}`);
   }
   const r=scored.filter(x=>x.p.pos==='RB').slice(0,5);
   if(current>=81&&r.length)out.push(`Late-RB-Pfad: ${r.map(x=>x.p.name).join(' / ')}`);
@@ -2397,7 +2407,7 @@ async function refresh(){
     if(draftComplete){
       lines.push('DRAFT ABGESCHLOSSEN — keine Pick-Entscheidung und keine Return-Prognose mehr.');
     }else if(snapshotCandidates.length){
-      snapshotCandidates.forEach((x,i)=>lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Coach ${x.score}${Number.isFinite(x.balancedScore)?` | v10-Ref ${x.balancedScore}`:''} | Panel ${x.r.rank.toFixed(1)} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Return-Confidence ${x.returnConfidence}% | ${x.outsideNormalCut?'FALLBACK AUSSERHALB NORMAL-CUT · '+x.action+' NUR KONTEXT':x.action} | Loss ${x.loss}`));
+      snapshotCandidates.forEach((x,i)=>lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Coach ${x.score}${Number.isFinite(x.balancedScore)?` | v10-Ref ${x.balancedScore}`:''} | Panel ${x.r.rank.toFixed(1)} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Return ${x.ret!=null?Math.round(x.ret*100)+'%':'FEHLT'} | Return-Confidence ${x.returnConfidence}% | ${x.outsideNormalCut?'FALLBACK AUSSERHALB NORMAL-CUT · '+actionDisplayLabel(x)+' NUR KONTEXT':actionDisplayLabel(x)} | Loss ${x.loss}`));
     }else lines.push('KEINE — Panel-Zuordnung/Rankings prüfen.');
 
     lines.push('','DRAFT COACH TOP 8');
@@ -2440,7 +2450,7 @@ async function refresh(){
       strategy==='balanced'?'Kein großer Reach ohne konkrete aktuelle Begründung. Fehlende Panel- oder ADP-Daten ausdrücklich als Unsicherheit behandeln. K und DST werden nicht gedraftet. Bye Weeks sind nur ein kleiner Tiebreaker.':'Panel bleibt Baseline. Ab Runde 9 graduell mehr Ceiling/Breakout-EV und höhere Reach-Toleranz; ein Reach braucht weiterhin einen plausiblen Upside-Pfad. K und DST werden nicht gedraftet. Bye Weeks sind nur ein kleiner Tiebreaker.',
       '',
       'AUFGABE',
-      'Prüfe aktuelle Verletzungen, Depth Charts und News, einschließlich angekündigter/geplanter IR- oder PUP-Moves und ob IR season-ending ist, sowie gezielt die Research-Kandidaten auf aktuelle Sleeper-, Breakout-, League-Winner- und Bust-Analysen. Artikel dienen als begründungspflichtiger Kontext; das Expertenpanel bleibt Baseline. Nutze das Expertenpanel als Baseline und Sleeper-ADP als Marktindikator, sofern vorhanden. Nenne alle nahezu gleichwertigen Favoriten, danach 2–3 Alternativen, Return-Chancen und Confidence. Erzwinge keine Einzelentscheidung, wenn mehrere Spieler nahezu gleichauf liegen. Abweichungen vom Expertenpanel oder der Sleeper-ADP ausdrücklich begründen. In dieser 10-Team-1QB-Liga QB2 und TE2 nur in absoluten Ausnahmefällen empfehlen; TE1 darf bei einem Run bis nach dem Draft aufgeschoben werden. Bei ähnlich guten QB1-Kandidaten Rushing-Upside bevorzugen. Späte Bench-Picks primär auf RB-Upside optimieren. Override-Guard: Weiche vom Coach-Topfavoriten oder dessen TAKE/WAIT-Sequenz nur bei konkreter entscheidungsändernder Evidenz ab. Eine allgemeine Positions-/Upside-Präferenz allein reicht insbesondere dann nicht, wenn die Alternative laut Return-v2 sehr wahrscheinlich bis zum nächsten Pick zurückkommt und als WARTEN markiert ist. Snapshot-Freshness-Guard: Wenn dieser Snapshot als DUPLIKAT/UNVERÄNDERT markiert ist UND derselbe Pick/Fingerprint im Chat bereits ausgewertet wurde, keine zweite Analyse liefern; nur den aktuellen/neuen Snapshot anfordern. Voranalyse-Regel: gleiche Player-Quality-, Roster-, Injury-, Return-/TAKE-WAIT- und Championship-Utility-Regeln wie in der Live-Analyse verwenden; Starter-Maxima niemals als Roster-Caps behandeln.'
+      'Prüfe aktuelle Verletzungen, Depth Charts und News, einschließlich angekündigter/geplanter IR- oder PUP-Moves und ob IR season-ending ist, sowie gezielt die Research-Kandidaten auf aktuelle Sleeper-, Breakout-, League-Winner- und Bust-Analysen. Artikel dienen als begründungspflichtiger Kontext; das Expertenpanel bleibt Baseline. Nutze das Expertenpanel als Baseline und Sleeper-ADP als Marktindikator, sofern vorhanden. Nenne alle nahezu gleichwertigen Favoriten, danach 2–3 Alternativen, Return-Chancen und Confidence. Erzwinge keine Einzelentscheidung, wenn mehrere Spieler nahezu gleichauf liegen. Abweichungen vom Expertenpanel oder der Sleeper-ADP ausdrücklich begründen. In dieser 10-Team-1QB-Liga QB2 und TE2 nur in absoluten Ausnahmefällen empfehlen; TE1 darf bei einem Run bis nach dem Draft aufgeschoben werden. Bei ähnlich guten QB1-Kandidaten Rushing-Upside bevorzugen. Späte Bench-Picks primär auf RB-Upside optimieren. Override-Guard: Behandle den Coach-Topfavoriten als Board-Leader, nicht als automatischen Pick-Befehl. Return-Labels beschreiben Timing und sind kein Pick-Befehl. Am Turn darf die Reihenfolge zwischen plausiblen Kandidaten angepasst werden, wenn Portfolio, Opportunity Cost und unterschiedliche Return-/Loss-Risiken dies konkret stützen; allgemeine Positions-/Upside-Präferenz allein reicht weiterhin nicht. Snapshot-Freshness-Guard: Wenn dieser Snapshot als DUPLIKAT/UNVERÄNDERT markiert ist UND derselbe Pick/Fingerprint im Chat bereits ausgewertet wurde, keine zweite Analyse liefern; nur den aktuellen/neuen Snapshot anfordern. Voranalyse-Regel: gleiche Player-Quality-, Roster-, Injury-, Return-Timing- und Championship-Utility-Regeln wie in der Live-Analyse verwenden; Starter-Maxima niemals als Roster-Caps behandeln.'
     );
     }
 
