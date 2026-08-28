@@ -1189,3 +1189,11 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - WR points to the existing Expert-v2 WR board because Joey Wright's current vector is unavailable.
 - Decision Kernel, Return-v2, manager map, roster rules, one-QB policy, Geno/Rodgers hard exclusions, K/DST omission and Upside-v3 remain unchanged.
 - rc4.88 source + gh-pages deployment completed; release/package/guardrail gates must pass on the resealed generation before Android verification.
+
+
+### 2026-08-28 — rc4.88 EXPERT-v3 FULL CLOSURE
+- User-provided rc4.87 compact export verified fresh direct vectors for Ryan Weisse RB and Wolf TE plus Todd D Clark QB reconstruction; Joey Wright WR missing.
+- Expert-v3 integrated as separate selectable profile: QB Todd 10%, RB Weisse 10%, TE Wolf 10%, each funded by Draft Sharks Team 35→25; WR deliberately remains frozen Expert-v2.
+- During AUTO, old rc4.82-86 gates exposed exact-shape/wording assertions that rejected additive profiles. These were repaired successor-safely rather than weakening behavioral requirements. A missing index loader for expert-v3-board.js was also caught and repaired before release closure.
+- Final sealed rc4.88 commit b1f70fe7 passed Project Guardrails, Release Contract v2, candidate package/re-extract, rc4.82 and rc4.83 gates. gh-pages synchronized including corrected index loader.
+- Next device gate: update/reload rc4.88, verify version + Expert-v3 selectable. Thereafter resume broad, anti-repeat upside research; do not start a mock absent explicit request.
