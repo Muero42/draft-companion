@@ -62,3 +62,7 @@
 
 ### rc4.97 isolated microfix challenger
 v11.8.0-rc4.97 is a test-only actionability/presentation challenger. rc4.96 remains rollback/Android authority until all gates pass.
+
+
+### rc4.98 evidence-polarity challenger
+v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96 remains Android rollback authority until full validation.
