@@ -1211,3 +1211,11 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - rc4.89 implements that target and adds regression coverage.
 - User's critique of weak Pro/Contra text is accepted: it is not only a late-draft missing-research issue. Current early-round candidates James Cook, CeeDee Lamb, Justin Jefferson and Brock Bowers now have explicit differentiating positive evidence and specific counter-risk evidence instead of generic Value/Opportunity-Cost fallback when structured evidence is available.
 - No scoring/model weights changed. This is presentation + display-evidence enrichment only.
+
+
+### 2026-08-28 — rc4.89 FULL RELEASE CLOSURE
+- Final sealed workflow set PASS: Project Guardrails, release contract v2, candidate package/re-extract, rc4.82 successor gate, rc4.83 successor gate.
+- Runtime parity main == gh-pages confirmed for all 13 runtime files.
+- Independent Actions artifact inspection confirms 13 files and SHA-256 `2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608`; candidate.sha256 matches bytes.
+- rc4.89 fixes presentation regressions only: active Expert-v3 rows, one full-card Top-10 list, orange Normal-Cut warning per affected card, richer early-round Pro/Contra evidence. No scoring/Return/roster/expert-weight change.
+- Android verification remains the only open gate.
