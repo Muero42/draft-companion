@@ -190,7 +190,9 @@
     "v147_rc496_source_regression_pass": true,
     "v147_guardrail_reseal_in_progress": false,
     "v147_transaction_closed": true,
-    "v148_successor_safe_legacy_canaries": true
+    "v148_successor_safe_legacy_canaries": true,
+    "v148_all_primary_release_gates_pass": true,
+    "v148_release_head": "28e820c0335bada4c361c334349c995477bed2a4"
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
