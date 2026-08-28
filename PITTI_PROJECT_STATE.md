@@ -1425,3 +1425,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Expanded PITTI_LIVE_DECISION_STATE row diagnostics with rawScore/valueSafety/alternative context.
 - Synced app.js, service-worker cache/assets, index asset versions and manifest to v11.8.0-rc4.93.
 - Next step is automated CI/package verification and then device acceptance; do not introduce a player-specific Walker boost. Use the audit result to repair only a demonstrated generic scoring defect.
+
+### 2026-08-28 — rc4.94 Walker root cause corrected
+- Fresh rc4.93 Pick-9 snapshot: Kenneth Walker remains available with Expert-v3 RB panel 15.3 and ADP 17.4, but visible Top-10 contains lower-panel fallback rows explicitly labeled OUTSIDE NORMAL CUT.
+- This disproves the prior inference that Walker necessarily ranked below ten candidates on final Coach score. Root cause is presentation selection: visibleCoachCandidates sliced the first ten scored rows before applying normal-cut admissibility; fallback context could therefore displace normal-cut candidates.
+- rc4.94 changes ONLY visible candidate selection: all normal-cut rows are prioritized for up to ten cards; outside-cut rows fill only unused slots. No Coach scoring, Expert-v3, injury penalty, Return-v2, ADP, roster utility or player-specific Walker boost changed.
+- Commit implementing rc4.94 app.js: 03a798bc20a6f8b42dd2b29a4524ae4ea561af93. CI/package/deploy/device verification remains pending.
+- Exact next gate: verify rc4.94 release/regression/package, synchronize versioned runtime assets if required, deploy exact runtime, then obtain a fresh Pick-9 Android snapshot. Duplicate/unverändert snapshots must not be re-analyzed.
