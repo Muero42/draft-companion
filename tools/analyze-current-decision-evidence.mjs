@@ -47,7 +47,7 @@ const decisions=fixtures.map(f=>{
   const chosen=f.chosenPlayer||s.chosen||null;
   const counts=s.rosterCounts||{};
   return {
-    pick:Number(f.current),returnPick:Number.isFinite(Number(f.returnPick))?Number(f.returnPick):null,
+    pick:Number(f.current),returnPick:Number.isFinite(Number(f.returnPick))?Number(f.returnPick):null,modelVersion:f.modelVersion||null,
     rosterCounts:counts,top:top?.name||null,topPos:top?.pos||null,topScore:top?.coachScore??top?.score??null,
     topPanel:top?.panelRank??null,topN:top?candidateN(top):null,topReturn:top?.returnProb??null,
     chosen:chosen?.name||null,followed:s.followedCoach??f.decisionOutcome?.followedCoach??null,
@@ -85,7 +85,7 @@ const missingEvidence=[...new Map(evidence.filter(x=>!x.specific).map(x=>[x.name
 const overrides=decisions.filter(x=>x.override).map(x=>({...x,topTaken:x.top?picked.get(norm(x.top))??null:null,chosenTaken:x.chosen?picked.get(norm(x.chosen))??null:null}));
 
 console.log(JSON.stringify({
-  meta:{format:e.format,appVersion:e.appVersion,draftId:e.draftId,slot:e.slot,mode:e.mode,rawFixtureCount:rawRows.length,canonicalFixtureCount:fixtures.length,supersededFixtureCount:rawRows.length-fixtures.length,canonicalPicks:fixtures.map(f=>f.current)},
+  meta:{format:e.format,appVersion:e.appVersion,draftId:e.draftId,slot:e.slot,mode:e.mode,rawFixtureCount:rawRows.length,canonicalFixtureCount:fixtures.length,supersededFixtureCount:rawRows.length-fixtures.length,modelVersions:[...new Set(fixtures.map(f=>f.modelVersion||'unknown'))],canonicalPicks:fixtures.map(f=>f.current)},
   verdict:{
     expectedOwnPicks:e.mode==='mock'?15:null,
     canonicalOwnPickCount:fixtures.length,
