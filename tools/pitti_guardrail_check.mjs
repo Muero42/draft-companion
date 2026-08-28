@@ -144,7 +144,7 @@ must(emergencyQueueContract.includes('EMERGENCY_QUEUE_CONTRACT_PASS'),'emergency
 must(emergencyQueueContract.includes('only one QB while QB1 open'),'emergency queue one-QB canary missing');
 must(emergencyQueueContract.includes('only one TE while TE1 open'),'emergency queue one-TE canary missing');
 
-for(const token of ['rc4.82','rc4.83','work package -> checkpoint -> re-inventory','user must never need to remind'])
+for(const token of ['production/control','current Android authority','current deployed/package-reextract candidate','work package -> checkpoint -> re-inventory','user must never need to remind'])
   must(bootstrap.includes(token),`repo bootstrap invariant missing: ${token}`);
 for(const token of ['rc4.84','rc4.85','AUTO durability','Execution witness','Old-error scan'])
   must(handoffMatrix.includes(token),`repo handoff matrix invariant missing: ${token}`);
