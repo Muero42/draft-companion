@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v123
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v125
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -16,9 +16,9 @@ A new-chat takeover fails closed unless all checks pass.
 
 ## 2 Runtime boundary
 - rc4.64 production/control
-- rc4.84 current Android authority / completed-mock runtime
-- rc4.85 current Expert-v3 acquisition candidate
-- rc4.85 Release Contract + package/re-extract PASS; gh-pages deployed; Android rc4.85 verification pending
+- rc4.87 current Android authority / compact Expert-v3 vector export verified
+- rc4.88 current Expert-v3 positional integration candidate
+- rc4.87 package/re-extract PASS; rc4.88 deployed and pending final package/device verification
 - package/re-extract SHA-256 `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed`
 - built/prepared/deployed/Android-verified kept distinct
 - expiring ChatGPT attachment is NOT the preferred update path; normal deployed PWA/self-update path first
@@ -33,7 +33,7 @@ A new-chat takeover fails closed unless all checks pass.
 - TE2 exceptional-soft, not globally banned
 
 ## 4 Expert invariants
-- incumbent, Expert-v2 ALL, Expert-v2 WR-only all selectable
+- incumbent, Expert-v2 ALL, Expert-v2 WR-only remain selectable; rc4.88 adds Expert-v3 positional as fourth profile
 - no final profile winner claimed
 - exact v2 weights/order preserved
 - Brown excluded; Erickson qualitative challenger only; DS counted once
@@ -91,3 +91,7 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - rc4.86 package/re-extract PASS; SHA 49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1; 12 runtime files.
 
 - rc4.87 compact Expert-v3 transfer: positional-only tuple payload + clipboard-first; core scoring unchanged.
+
+- rc4.88 Expert-v3 weights canary: QB Todd10 replacing DS10; RB Weisse10 replacing DS10; TE Wolf10 replacing DS10; WR exactly frozen v2 because Joey Wright vector is unavailable.
+- rc4.88 package contains 13 runtime files including expert-v3-board.js; package workflow must fail if count differs.
+- Expert-v3 sensitivity must remain bounded vs v2 (observed Spearman ~0.999 QB, ~0.997 RB/TE); no Decision Kernel or Return-v2 retune accompanies the profile.
