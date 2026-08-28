@@ -77,7 +77,7 @@ for(const token of [
 ]) must(preflight.includes(token),`preflight gate missing: ${token}`);
 
 must(readme.includes('v11.8.0-rc4.64'),'README production/control baseline drift');
-must(readme.includes('v11.8.0-rc4.85'),'README current candidate missing');
+must(readme.includes(current.runtime?.test_challenger||'v11.8.0-rc4.86'),'README current candidate missing');
 must(app.includes("const USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers'])"),'QB hard-exclusion canary drift');
 must(app.includes("function normalCandidateAdmissible(row)"),'normal candidate admissibility guard missing');
 must(policy.includes('USER_DRAFT_QB_LIMIT=1'),'user one-QB runtime invariant missing');
@@ -133,8 +133,10 @@ must(handoffMatrix.includes(`REPO v${generationVersion}`),'handoff matrix genera
 must(preflight.includes('HANDOFF TRANSACTION STATE'),'preflight handoff transaction gate missing');
 must(releaseWorkflow.includes('node tools/rc483-draft-critical.mjs'),'release workflow missing rc4.83 gate');
 must(releaseWorkflow.includes('node tools/rc485-draft-critical.mjs'),'release workflow missing rc4.85 gate');
+must(releaseWorkflow.includes('node tools/rc486-draft-critical.mjs'),'release workflow missing rc4.86 gate');
 must(packageWorkflow.includes('node tools/rc483-draft-critical.mjs'),'package workflow missing rc4.83 gate');
 must(packageWorkflow.includes('node tools/rc485-draft-critical.mjs'),'package workflow missing rc4.85 gate');
+must(packageWorkflow.includes('node tools/rc486-draft-critical.mjs'),'package workflow missing rc4.86 gate');
 must(packageWorkflow.includes('VERSION="$(sed -n'),'package version must derive from APP_VERSION');
 must(!packageWorkflow.includes('Draft_Companion_v11.8.0-rc4.82_PREINSTALL.zip'),'stale hard-coded rc4.82 package path resurrected');
 must(releaseContract.includes('Exact v2 weights:'),'release contract expert-weight lock missing');
@@ -146,7 +148,7 @@ must(emergencyQueueContract.includes('only one TE while TE1 open'),'emergency qu
 
 for(const token of ['production/control','current Android authority','current deployed/package-reextract candidate','work package -> checkpoint -> re-inventory','user must never need to remind'])
   must(bootstrap.includes(token),`repo bootstrap invariant missing: ${token}`);
-for(const token of ['rc4.84','rc4.85','AUTO durability','Execution witness','Old-error scan'])
+for(const token of ['rc4.84','rc4.85','rc4.86','AUTO durability','Execution witness','Old-error scan'])
   must(handoffMatrix.includes(token),`repo handoff matrix invariant missing: ${token}`);
 must(lock.authority?.libraryMirrorStatus?.includes('STALE_'),'stale Library mirror status must remain explicit until persistence is proven');
 must(lock.authority?.failClosedRecovery?.includes('never claim a newer Library generation persisted unless files.list proves it'),'Library persistence fail-closed rule missing');
