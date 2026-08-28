@@ -39,3 +39,9 @@ Fail closed unless CURRENT/SEAL/HANDOFF generation is `20260828T175500Z-v155`, t
 - QUESTIONABLE alone stays neutral;
 - sparse-panel protection stays generic;
 - AUTO/AUTO BLOCK continues across work packages without progress-only/empty replies.
+
+
+## Guard-compatibility canaries — historical semantics only
+- Android version authority: rc4.96 rollback/accepted authority; rc4.98 is observed active candidate, not accepted authority.
+- work package -> checkpoint -> re-inventory remains mandatory AUTO sequencing.
+- user must never need to remind: AUTO/AUTO BLOCK must continue without repeated nudges.
