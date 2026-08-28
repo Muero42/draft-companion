@@ -32,8 +32,11 @@ must(!live.includes('<details><summary>Experten'),'expert ranks must not be coll
 must(!/shortName\(name\).*%/.test(live),'expert weights leaked into live cards');
 must(app.includes('expertProfileBeforeReload'),'expert profile refresh preservation missing');
 must(app.includes('injury|ankle|achilles|recurrence'),'arrow injury-exclusion guard missing');
-const ctx={window:{}};vm.createContext(ctx);vm.runInContext(read('expert-v2-board.js'),ctx);const b=ctx.window.PITTI_EXPERT_V2;
+const ctx={window:{}};vm.createContext(ctx);vm.runInContext(read('expert-v2-board.js'),ctx);vm.runInContext(read('expert-v3-board.js'),ctx);const b=ctx.window.PITTI_EXPERT_V2,v3=ctx.window.PITTI_EXPERT_V3;
 must(b?.schema==='pitti-expert-v2-board.v4','Expert-v2 board schema/completeness not v4');
+must(v3?.schema==='pitti-expert-v3-board.v1','Expert-v3 board schema missing');
+for(const p of ['QB','RB','TE'])must(Math.abs(Object.values(v3?.weights?.[p]||{}).reduce((a,x)=>a+Number(x),0)-100)<1e-9,`v3 ${p} weights != 100`);
+must(v3?.weights?.WR===null,'v3 WR must preserve v2 due missing qualified vector');
 for(const p of ['QB','RB','WR','TE'])must(Math.abs(Object.values(b?.weights?.[p]||{}).reduce((a,x)=>a+Number(x),0)-100)<1e-9,`${p} weights != 100`);
 const norm=s=>String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'').replace('cameronskattebo','camskattebo');
 const rows=Object.values(b?.rows||{}).flat(),by=new Map(rows.map(r=>[norm(r.name),r]));
