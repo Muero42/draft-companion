@@ -68,3 +68,5 @@ AUTO/AUTO BLOCK remains a hard execution contract: long autonomous blocks, re-in
 - Re-inventory after EVERY completed work package remains mandatory during AUTO/AUTO BLOCK.
 
 - Obsolete rc4.61 auto-package workflow is retired/manual-only; current package authority is release-contract-v2-package.yml.
+
+Detailed continuation contract: `research/RC498_V155_OPEN_AUDIT_CONTRACT_2026-08-28.md`.
