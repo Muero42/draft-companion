@@ -321,3 +321,7 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - IMPORTANT: rc4.90 must NOT be deployed to Android until the sealed full workflow set passes. This explicitly implements the user's requirement to verify before phone rollout.
 
 - v130 addendum: rc4.90 broad early-draft evidence now also covers Nico Collins, Pickens, Olave, Kyren, McBride, Jeanty, Javonte, Josh Allen, Higgins, Rice, Garrett Wilson, Waddle, Breece Hall and McConkey. Full gates must rerun before deployment because app.js changed after the prior pass.
+
+
+## RC4.91 PRE-DEVICE — RETURN-v2 CALIBRATION
+Audit found the 99% Brown/Walker short-turn return was not trustworthy: early sim tau=1.35 over-suppressed players whose ADP was only 7-10 picks later. rc4.91 changes early tau only to 4.25, preserving manager/roster/ADP/panel layers. No player-specific boost. Full gates required before Android deployment.
