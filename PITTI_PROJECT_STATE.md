@@ -1130,3 +1130,10 @@ The chat filled again largely because AUTO produced repeated unnecessary interme
 ### Transfer-risk note
 The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-boundary prose; v119 explicitly updates those. The latest red CI immediately after the post-seal project-state checkpoint was caused by seal timing (Project State changed after seal), not by rc4.85 behavior. v119 must be sealed only after ALL canonical files are final, and no checkpoint file may be modified after the seal before second-pass CI.
 
+
+
+## 2026-08-28 08:55 CEST — HANDOFF v120 second-pass repair
+- v119 transactional CI failed for one precise reason: `tools/pitti_guardrail_check.mjs` still required literal `rc4.82` and `rc4.83` strings in `PITTI_NEW_CHAT_BOOTSTRAP.md`. The bootstrap itself had been correctly updated to the current rc4.84/rc4.85 boundary.
+- This was a stale regression-guard assumption, not a runtime/build/Expert-v3 failure. The guard now requires semantic bootstrap invariants (production/control, current Android authority, current deployed/package-reextract candidate, AUTO loop/reminder rules) instead of obsolete exact predecessor versions.
+- Handoff generation advances to v120. No runtime files changed. rc4.85 deployment/package state and exact next gate remain unchanged.
+- Seal must be generated only after this checkpoint and all canonical v120 files are final; no post-seal project-state edits before CI second pass.
