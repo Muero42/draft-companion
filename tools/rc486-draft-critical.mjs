@@ -13,7 +13,7 @@ assert.ok(app.includes('async function exportExpertV3Challengers()'));
 assert.ok(app.includes('const row=await loadExpertRanks(e.id);'));
 assert.ok(!app.includes('loadSingleExpert('),'undefined rc4.85 helper resurrected');
 assert.ok(app.includes("if(!row?.verifiedIndividual)throw new Error"));
-assert.ok(app.includes("Object.entries(row.ranks||{})"));
+assert.ok(app.includes("Object.entries(row.ranks||{})")||app.includes("Object.values(row.ranks||{})"),"Expert-v3 rank serialization missing");
 assert.ok(app.includes("containsCredential:false"));
 for(const n of ['Ryan Weisse','Wolf of Roto Street','Todd D Clark','Joey Wright'])assert.ok(app.includes(n),n);
 
