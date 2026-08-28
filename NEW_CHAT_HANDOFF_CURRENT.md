@@ -1,5 +1,5 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T105000Z-v135`
+Handoff generation: `20260828T105500Z-v136`
 Updated: 2026-08-28 10:50Z
 
 ## BOOTSTRAP — mandatory
@@ -47,7 +47,7 @@ rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. In
 ## CURRENT EXTERNAL GATE
 `RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`
 
-Receiving chat must first verify v133 CURRENT/SEAL/Handoff generation equality and every seal-listed blob hash. Then continue from the observed rc4.91 Android state.
+Receiving chat must first verify v136 CURRENT/SEAL/Handoff generation equality and every seal-listed blob hash. Then continue from the observed rc4.91 Android state.
 
 Functional device checks still required:
 - actual Expert-v3 individual rows are the ones used/displayed;
@@ -381,3 +381,10 @@ HANDOFF_GENERATION: 20260828T100500Z-v132
 - The user's screenshot proves **version rc4.91 is loaded on Android**. It does **not** prove the current rc4.91 functional surface is correct.
 - Therefore active state is: `android_version_observed=true`, `android_functional_verified=false`.
 - Any older field/text saying rc4.91 is simply “Android verified” must be interpreted as version observation only and must NOT close the functional gate.
+
+## V136 TAKEOVER AUDIT CORRECTION — ACTIVE POINTERS ONLY
+- New-chat audit caught residual active transfer pointers left at v132/v133 even though CURRENT/SEAL authority had advanced to v135.
+- Active takeover generation is now v136. Historical V105–V135 sections remain evidence only and cannot override the top-level CURRENT AUTHORITY / CURRENT EXTERNAL GATE.
+- rc4.91 remains Android-version-observed but not functionally verified; Expert-v3 is already integrated; no Expert-v3 acquisition/export restart; no mock.
+- gh-pages/main app.js byte divergence remains intentionally preserved and must not be mistaken for parity from equal version text.
+- AUTO BLOCK remains zero-ack immediate AUTO resumption.
