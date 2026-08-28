@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.90';
+const APP_VERSION='v11.8.0-rc4.91';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -1129,7 +1129,12 @@ function simCandidateWeight(p,pickNo,roster,profile,stress){
   // Market is a plausibility prior, not the opponent decision model. Sleeper ADP dominates
   // because it is visible in the room; panel rank is only a light stabilizer/fallback.
   const center=Number.isFinite(a)?a*.90+r.rank*.10:r.rank;
-  const tauBase=pickNo<=30?1.35:pickNo<=80?4.5:7.5,tau=tauBase*(stress==='baseline'?1:1.18);
+  // rc4.91: Early-turn market calibration. The former tau=1.35 made players
+  // whose ADP sat only ~7-10 picks after the current pick virtually impossible choices.
+  // That produced false ~99% return confidence at short snake turns (e.g. 1.09 -> 2.02).
+  // Use a broader early market distribution; manager/roster modifiers still decide WHICH
+  // nearby player a specific opponent prefers.
+  const tauBase=pickNo<=30?4.25:pickNo<=80?4.5:7.5,tau=tauBase*(stress==='baseline'?1:1.18);
   let w=Math.exp(clamp((pickNo-center)/tau,-9,3.8))*simNeedWeight(p.pos,roster);
   if(profile){
     w*=managerHistoryPosMult(profile,p.pos,pickNo);
