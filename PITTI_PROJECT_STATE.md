@@ -1403,3 +1403,9 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Deep active-pointer scan found stale rc4.91 instructions in PITTI_AUTO_PREFLIGHT, PITTI_NEW_CHAT_BOOTSTRAP and README despite rc4.92 source/package/pages/device observation. Repaired to rc4.92; historical sections remain historical only.
 - Preserved critical anti-regressions: no Geno/Rodgers name exclusion; one-QB only after QB1; Expert-v3 exact positional weights and WR v2 fallback; ten rich nonduplicate cards with orange cut warning; Reach/risk/wait/decline never positive; Return-v2 early tau 4.25, never 1.35; broad anti-repeat research; AUTO BLOCK zero-ack; no mock unless explicit.
 - Handoff generation v141 must be sealed only after this active-pointer repair and second-pass integrity verification. Library mirror remains stale/fail-closed and cannot override repo EOF authority.
+
+
+### 2026-08-28 — PITTI HANDOFF v141 FINAL PASS
+- Final reseal commit f18c3bbe6eb531bd95b0300b537fef93141259d6 completed after repairing all discovered active stale pointers and generation labels.
+- All five primary Actions families PASS on the final reseal: release contract v2 33166063033; candidate package 33166063012; Project Guardrails 33166063017; rc4.82 regression 33166063044; rc4.83 regression 33166063036.
+- Handoff is ready for new chat. Required continuation is Walker P0 root-cause diagnosis + focused rc4.92 Android functional verification, with broad anti-repeat research in parallel. No mock.
