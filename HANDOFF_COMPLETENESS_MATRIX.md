@@ -1,73 +1,59 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v155
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v157
+Generation: `20260828T2002Z-v157`
 
-Takeover fails closed unless every item is true.
+Takeover fails closed unless every item below is true.
 
 ## Authority / seal
-- CURRENT = SEAL = HANDOFF generation = `20260828T175500Z-v155`.
+- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260828T2002Z-v157`.
 - SEAL status PASS; handoff_ready=true; second_pass_pass=true.
-- Seal integrity map is NON-EMPTY and contains all required authority/runtime files.
+- Integrity map non-empty and includes all authority/runtime/critical regression files.
 - Every seal-listed Git blob SHA matches main.
-- Project State read to EOF.
-- Stale Library mirrors cannot override newer verified repo/device facts.
+- PITTI_PROJECT_STATE.md read to EOF.
+- Verified repo/runtime evidence overrides stale Library mirrors and historical prose.
 
 ## Runtime boundary
-- main/source = rc4.98.
-- package/re-extract = rc4.98 PASS: run 33194280926, artifact 9695061955, SHA-256 43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e.
-- Android/PWA rc4.98 version observed and live UI rendered.
-- Android acceptance is NOT yet PASS because semantic/evidence-quality work remains.
+- main/source = rc4.100.
+- PR #36 release 33205458705 PASS.
+- PR #36 package/re-extract 33205458721 PASS; artifact 9699461048; GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
+- PR #36 guardrails 33205458745 PASS.
+- rc4.100 merged main commit = 1b85656e40a182ca6be2397c5bf6674006b97bd2.
+- post-merge main workflow verification pending; do not deploy before it is satisfied or independently reproduced.
+- gh-pages = rc4.99, main/pages parity FALSE.
+- Android/PWA observed = rc4.99; rc4.100 Android acceptance NOT PASS.
 - rollback authority = rc4.96.
-- gh-pages = rc4.96; main/pages parity = FALSE.
 
-## Paired OOS
-- canonical backup = draft-companion-v7-backup-2026-08-28T17-30-01-853Z.json.
-- realistic draft = 1399109246460682240.
-- strict Coach draft = 1399114762087895040, 15/15 followedCoach=true.
-- correct strict Coach roster = **9 WR / 4 RB / 1 TE / 1 QB**.
-- old 7-WR / 5-RB count is explicitly invalid.
-- paired mocks are not randomized A/B; do not causally attribute all roster differences to policy.
+## Full-draft / Return evidence
+- canonical backup = draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json.
+- draft 1399141058222280704 = 15/15 fixtures, final user roster 1 QB / 6 RB / 7 WR / 1 TE, Coach followed 10/15.
+- 168 resolved non-censored Return forecasts; overall 62.2% vs 58.3%, Brier .091.
+- 3-pick turns = 91.4% vs 90.9% actual: high short-turn Returns are not globally inflated.
+- 17-pick turns = 37.1% vs 30.4%: long-horizon optimism signal only; aggregate more OOS before retune.
+- Pick 89 TLaw 96.1% WAIT survived to pick 92 after user chose Corum: turn-portfolio ordering defect confirmed.
+- no global Return-v2 retune.
 
-## Evidence quality
-- polarity contract PASS across 194 structured components.
-- CMC generic "+ Fairer Bereich" fallback demonstrates a separate substantive-coverage defect class.
-- PR #33 CMC positive-evidence patch is open/draft/unmerged; main does not contain it.
-- pool-wide audit required for polarity, generic fallbacks, missing substantive Pro/Contra, stale evidence, and arrow/Fazit/risk contradictions.
+## Strict Coach WR evidence
+- draft 1399114762087895040 = 9 WR / 4 RB / 1 TE / 1 QB.
+- old 7-WR / 5-RB count invalid.
+- WR saturation remains soft and marginal; exceptional WR value remains legal.
+- no hard cap/quota or blind RB forcing.
+
+## Semantic evidence
+- sign-aware routing retained.
+- signed evidence outranks neutral context.
+- displayRisk cannot surface positive polarity.
+- neutral age/fair-range filler cannot be substantive Plus.
+- mixed-polarity and fair-range regressions retained.
+- pool-wide evidence quality remains an audit lane; no player-by-player manual burden on user.
 
 ## Draft/model invariants
-- 10-team Half-PPR, slot 9, 1QB.
-- exactly one user QB after QB1; no player-name QB blacklist.
-- no normal K/DST.
-- starter maxima are not roster caps.
-- WR saturation is soft; exceptional value remains legal.
-- TE2 exceptional-soft.
-- no hard caps/quotas, PairSum/Rolling, blind RB forcing, generic Return retune, Superflex contamination, Brown numeric resurrection, frozen-weight live renormalization, or player-name forcing.
-- Expert-v3 positional profile and WR-v2 fallback preserved.
-- Return-v2 early tau 4.25 preserved.
-- QUESTIONABLE alone neutral.
+10-team Half-PPR, slot 9, 1QB; exactly one user QB after QB1; no player-name QB blacklist; no normal K/DST; starter maxima are not roster caps; TE2 exceptional-soft; no PairSum/Rolling, Superflex contamination, Brown numeric resurrection, frozen-weight live renormalization, player-name forcing, or broad expert retune.
 
 ## AUTO
-- long blocks by default;
-- re-inventory after every work package;
-- blocked gate stops only dependent lane;
-- no status/promise/empty output while executable work exists;
-- AUTO never starts an interactive mock by itself.
+Long blocks; re-inventory after every package; blocked gate stops only dependent lane; no status/promise/empty output while executable work exists; AUTO does not start an interactive mock by itself.
+
+## Update path
+verified candidate -> main post-merge verification -> gh-pages exact-byte deployment/parity -> Android observation.
+No repeated refresh/cache/reinstall/manual-ZIP detours before server-side parity is proven.
 
 ## Current gate
-`RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT`
-
-
-## Historical anti-regression witness tokens
-These labels are retained only so old protections cannot silently disappear; they do not restore old runtime state.
-- rc4.84: historical guard retained.
-- rc4.85: historical guard retained.
-- rc4.86: historical guard retained.
-- rc4.87: historical guard retained.
-- rc4.88: historical guard retained.
-- rc4.89: historical guard retained.
-- rc4.90: historical guard retained.
-- AUTO durability: retained.
-- Execution witness: retained.
-- Old-error scan: retained.
-
-- Obsolete rc4.61 automatic package/publish workflow is retired; it must not reappear as active CI/current artifact authority.
-
-- Detailed open-audit contract exists at `research/RC498_V155_OPEN_AUDIT_CONTRACT_2026-08-28.md` and must be read before implementing a successor fix.
+`RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY`
