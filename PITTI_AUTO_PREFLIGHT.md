@@ -82,3 +82,12 @@ Otherwise continue AUTO.
 - Valid turn end requires one of: unavoidable user/device input; approval-gated consequential action; unsafe unresolved contradiction; material end result with no higher-value package remaining; or demonstrated exhaustion of all safe positive-value independent lanes.
 - rc4.92 correction: Geno Smith/Aaron Rodgers are NOT exclusions. Any active runtime/test/checkpoint rule that special-cases either name for demotion/removal is a regression. Exactly-one-QB remains a roster strategy only after QB1 is drafted.
 - v145 takeover canary: rc4.94 source/package/deployment/Android Pick-9 presentation PASS. Kenneth Walker must not receive a player-specific boost; the fix remains generic normal-cut-first Top-10 selection.
+
+
+## AUTO BLOCK — HARD OUTPUT GATE
+When the user writes `AUTO BLOCK`, enter silent execution mode:
+- no progress, status, acknowledgement, or promise-only assistant messages;
+- an individual tool/work-package ending is NOT a valid reason to return;
+- immediately re-inventory and continue with the next autonomous package;
+- never emit an empty assistant response;
+- visible output is permitted only for a concrete useful end-result, unavoidable user action/input, safety/irreversible confirmation, or a blocker after every independent lane is exhausted.
