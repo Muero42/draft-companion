@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v125
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v126
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -95,3 +95,5 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - rc4.88 Expert-v3 weights canary: QB Todd10 replacing DS10; RB Weisse10 replacing DS10; TE Wolf10 replacing DS10; WR exactly frozen v2 because Joey Wright vector is unavailable.
 - rc4.88 package contains 13 runtime files including expert-v3-board.js; package workflow must fail if count differs.
 - Expert-v3 sensitivity must remain bounded vs v2 (observed Spearman ~0.999 QB, ~0.997 RB/TE); no Decision Kernel or Return-v2 retune accompanies the profile.
+
+- v126 Expert-v3: selectable QB/RB/TE challenger profile; WR v2 fallback; legacy profile assertions additive; full gates pending.
