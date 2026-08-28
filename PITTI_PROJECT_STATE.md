@@ -1646,3 +1646,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - AUTO audit found rc4.95 source-version bump was incomplete at package metadata level: index.html still cache-busted live-surface-v3.css with rc4.94, and manifest.webmanifest description still advertised rc4.94.
 - Corrected both to rc4.95 (commits 43c6d54bef078bb1dedb6a98ee059349a8821028 and 20632a6ee64a6b6faf793da6d9f5e8ab5c7c3fe1).
 - This was a real release-parity issue, not cosmetic: stale cache-busting metadata could allow an Android/PWA deployment to mix source generations. Keep rc4.95 unapproved until full candidate package/release gates run.
+
+
+### 2026-08-28 — rc4.95 Questionable-neutral + successor-safe release guard
+- User policy locked: generic Sleeper `Questionable` status alone has zero Coach penalty; only concrete severity evidence (IR/PUP/Out/Doubtful or substantive injury/news evidence) may alter valuation.
+- rc4.95 implements the generic neutral-Q rule without player-name forcing. Release metadata parity corrected across app/index/manifest.
+- Release audit exposed a stale guardrail literal that required execution-lock appVersion rc4.64 even though the runtime had legitimately advanced. Repaired guard to require Execution Lock appVersion == APP_VERSION instead, preserving fail-closed behavior while making successor releases possible.
+- Android authority remains rc4.94 until exact rc4.95 package/deploy/device verification. Do not promote merely from source edits.
