@@ -48,3 +48,14 @@ A takeover fails closed unless every current item below is true.
 `RC496_PRE_DRAFT_FREEZE_FRESHNESS_ONLY`
 
 Only fresh panels/ADP/acute-status/news and emergency-failsafe checks remain before the real draft, unless new material evidence warrants reopening the runtime.
+
+- rc4.84: historical anti-regression invariant retained.
+- rc4.85: historical anti-regression invariant retained.
+- rc4.86: historical anti-regression invariant retained.
+- rc4.87: historical anti-regression invariant retained.
+- rc4.88: historical anti-regression invariant retained.
+- rc4.89: historical anti-regression invariant retained.
+- rc4.90: historical anti-regression invariant retained.
+- AUTO durability: historical anti-regression invariant retained.
+- Execution witness: historical anti-regression invariant retained.
+- Old-error scan: historical anti-regression invariant retained.
