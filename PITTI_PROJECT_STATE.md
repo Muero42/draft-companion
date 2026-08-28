@@ -1764,3 +1764,63 @@ Transfer mechanics:
 - Structural observation from final roster: QB1/RB6/WR7/TE1, no K/DST. WR7 occurred at pick 109 (Diggs), before the existing late WR7+ >=121 utility guard; RB then filled picks 112/129/132/149. This is an audit target, not automatically an error or a new cap.
 - The supplied completed snapshot lacks per-pick candidate scores, return probabilities, confidence, panelN/SD and reasons. Final roster alone is insufficient to validate whether each recommendation was correct. Exact next evidence gate: export PITTI Decision Evidence for draft 1399085353452761088; analyze it before any scoring changes/freeze.
 - FantasyPros benchmark is optional/secondary after internal decision-evidence capture; do not require manual pick reconstruction.
+
+
+## 2026-08-28 — v152 rc4.96 recommendation-following OOS audit closed / pre-draft runtime freeze
+
+Canonical new input:
+- Library backup `draft-companion-v7-backup-2026-08-28T15-39-01-624Z.json`
+- exact file id during audit: `file_0000000032a881f4af86527765c70f96`
+- materialized analysis copy: `/mnt/data/pitti/draft-companion-v7-backup-2026-08-28T15-39-01-624Z.json`
+- target draft: `1399085353452761088`
+
+Evidence integrity:
+- exactly 15 own-pick fixtures at 9/12/29/32/49/52/69/72/89/92/109/112/129/132/149;
+- all 15 are exact `v11.8.0-rc4.96`;
+- all 15 chosen players are frozen candidate rank 1 with `followedCoach=true`;
+- this is therefore a clean recommendation-following OOS path, not a user-override path;
+- final roster = QB1/RB6/WR7/TE1, no K/DST.
+
+Return-v2:
+- 167 resolved target-draft predictions;
+- mean Brier = 0.080186;
+- 3-pick turn windows n=77: predicted survival 0.9023 vs actual 0.8701, Brier 0.0841;
+- 17-pick long windows n=78: predicted 0.3574 vs actual 0.3333, Brier 0.0750;
+- middle probability bands are optimistic, but 60%+ calibration and overall Brier are strong enough that a generic Return-v2 retune is rejected.
+
+Sparse-panel OOS:
+- J.K. Dobbins at pick 72 has panelN=2, confidence 56, Coach 0 and explicit `Panel unvollständig (2 Stimmen) · Confidence begrenzt`;
+- this independently verifies the generic rc4.96 sparse-panel repair on the exact earlier failure family;
+- no Dobbins-specific rule.
+
+Turn geometry:
+- natural 3-pick pairs 9/12, 29/32, 49/52, 69/72, 109/112 and 129/132 sequence the lower-survival intended second player correctly or defensibly;
+- 89/92 is the only clear tension: Lawrence Coach100/Return96.4 vs Corum Coach52/Return86.1. Corum-first marginally increases two-player acquisition probability if normalized Coach score is treated as cardinal utility, but that assumption is not strong enough for a new pair optimizer;
+- PairSum/Rolling stays quarantined. No new turn coefficient is promoted from one case.
+
+WR7:
+- Stefon Diggs at 109 is the seventh WR, with saturation/MRU penalties already active; he is not resurrected by PlayerQualitySafety;
+- fresh 28.08 external outlook evidence still supports Diggs as a legitimate WR3/upside asset, while Rachaad White carries ambiguous role/hamstring risk;
+- therefore this is not evidence for a hard WR cap. Keep WR-depth as soft championship utility.
+
+WAIT semantics:
+- Coach leader is WAIT at 89/109/129/132; at 89/109/129 the full visible Top-10 is WAIT;
+- live surface already shows WAIT explicitly, but a WAIT board leader must not be interpreted by the ChatGPT live-decision layer as an automatic TAKE;
+- real-draft operating rule: when the leader is WAIT, evaluate turn portfolio/alternatives and current loss risk before recommending the actual pick;
+- this is an assistant operating rule, not a new runtime coefficient and not a PairSum resurrection.
+
+Evidence coverage:
+- exact backup had 84 unique Top-10 names; 58/84 carried causal residual evidence at fixture time;
+- current rc4.96 source read-back has causal entries for 65/84; 19 still rely on substantive generic panel/ADP/role/Return fallback;
+- current research cached for the important missing cases (including Lawrence, Walker, Warren, Dart, Stevenson, Swift, Tate, Concepcion, Coleman, Black, Monangai, Tracy, Nix, Purdy, Prescott, Lamar);
+- do not build rc4.97 solely to statically hard-code all 84 names three days before draft.
+
+Final decision:
+- no rc4.97 scoring/runtime challenger promoted;
+- rc4.96 source/package/deployment/Android authority is the frozen draft runtime;
+- no generic Return-v2 retune, no PairSum/Rolling, no player-name forcing, no WR cap;
+- remaining work before 31.08 is freshness-only: embedded Expert-v3/WR-v2 board freshness, Sleeper ADP refresh, acute-status/news check, emergency queue/failsafe smoke;
+- no automatic new mock.
+
+Detailed audit:
+`research/RC496_RECOMMENDATION_FOLLOWING_MOCK_1399085353452761088_2026-08-28.md`
