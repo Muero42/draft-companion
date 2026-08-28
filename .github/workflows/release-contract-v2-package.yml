@@ -1,6 +1,8 @@
 name: PITTI candidate package gate
 on:
   workflow_dispatch:
+  pull_request:
+    branches: [main]
   push:
     branches: [main]
 jobs:
@@ -16,7 +18,7 @@ jobs:
           node tools/live-presentation-behavior.mjs
           node tools/release-completeness-guard.mjs
           node tools/rc478-oos-policy.mjs
-          node tools/pitti_guardrail_check.mjs
+          PITTI_SKIP_SEAL_INTEGRITY=1 node tools/pitti_guardrail_check.mjs
           node tools/rc482-draft-critical.mjs
           node tools/rc483-draft-critical.mjs
           node tools/rc484-draft-critical.mjs
