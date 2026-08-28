@@ -20,7 +20,7 @@
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
     "sw.js": "f35395de4fcdf3e2f18d7b8a858844d6392d575d",
     "manifest.webmanifest": "ba9dd226df79693435fb29ae1e372352d21e94ae",
-    "tools/rc483-draft-critical.mjs": "28919d2442e84a98e533225a801c89eb1a3d355d",
+    "tools/rc483-draft-critical.mjs": "ace2fd0c36e870cf416c3f70700f102545df62e1",
     "tools/rc484-draft-critical.mjs": "b16bc6c7e01dc57375e166fd6fb3d8300141f185",
     "tools/rc485-draft-critical.mjs": "156d8c479c543d3f34f689c8ca486181473ec035",
     "tools/analyze-decision-evidence.mjs": "bb75950cc1698659769d7412adef71bb2e41d494",
