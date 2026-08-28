@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260828T155300Z-v152",
-  "updated_at": "2026-08-28T16:15:00Z",
+  "updated_at": "2026-08-28T16:30:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -22,12 +22,13 @@
     "package_reference_artifact_id": 9690504450,
     "package_reference_note": "rc4.96 all five primary gates PASS at 6eafbb297fa999a28dae14375a65544b73a97d7c; package/re-extract PASS run 33183057716 / artifact 9690504450; exact 13/13 main↔gh-pages parity at 35b68015aa79e8976f3ee9a230be3710be503b32; Android/PWA rc4.96 functionally evidenced by complete 15-pick recommendation-following mock 1399085353452761088 and rc4.96 fixtures.",
     "android_version_observed": true,
-    "android_functional_verified": true
+    "android_functional_verified": true,
+    "freeze_policy": "rc4.96 remains rollback baseline; low-risk microfix challenger allowed for further testing"
   },
   "exact_continuation": {
-    "gate": "RC496_PRE_DRAFT_FREEZE_FRESHNESS_ONLY",
+    "gate": "RC497_MICROFIX_AUDIT",
     "auto_starts_mock": false,
-    "instruction": "rc4.96 runtime/decision kernel is frozen after OOS recommendation-following audit. Do not start another mock automatically and do not retune scoring/Return from this one draft. Before the real draft, run only fresh panel/ADP/acute-status checks and cached decision support."
+    "instruction": "Keep rc4.96 as rollback baseline. Allow only small isolated reversible fixes with deterministic regression coverage; no broad scoring/Return/expert retune. Validate challenger against rc4.96 and revert immediately on regression."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -46,11 +47,11 @@
     "transaction_in_progress": false,
     "resume_semantics": "PITTI AUTO resumes from rc4.96 pre-draft freeze; runtime/model changes require new material evidence and deterministic gates.",
     "acceptance_fingerprint": "RC4.96-ALL5-PASS|PKG-REEXTRACT-PASS|GH-PAGES-13OF13|ANDROID-RC4.96-VERIFIED|OOS-FOLLOWCOACH-15OF15|RETURN-BRIER-0.0802|SPARSE-PANEL-OOS-PASS|NO-RETURN-RETUNE|NO-PAIRSUM|WR7-SOFT|WAIT-TURN-CHAT-REVIEW|FRESHNESS-ONLY|HANDOFF-v152",
-    "status": "RC496_DRAFT_READY_FROZEN_FRESHNESS_PENDING",
+    "status": "RC496_ROLLBACK_BASELINE_RC497_MICROFIX_ALLOWED",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Maintain rc4.96 freeze. On 31.08 execute research/DRAFT_DAY_FRESHNESS_PLAN_2026-08-31.md: full freshness 17:30-18:15, targeted transaction delta 19:05-19:30, final materiality scan 19:40-19:50, then operational freeze.",
-    "gate": "RC496_PRE_DRAFT_FREEZE_FRESHNESS_ONLY"
+    "next_action": "Audit remaining small defects and build an isolated rc4.97 microfix challenger only where fixes are low-risk, reversible and testable. Preserve rc4.96 as immediate rollback.",
+    "gate": "RC497_MICROFIX_AUDIT"
   },
   "source_authority": "rc4.96",
   "package_authority": "rc4.96",
