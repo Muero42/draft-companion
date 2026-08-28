@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T145500Z-v145`
-Updated: 2026-08-28 14:55Z
+Handoff generation: `20260828T160000Z-v146`
+Updated: 2026-08-28 16:00Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -21,7 +21,7 @@ Updated: 2026-08-28 14:55Z
 - Production/control baseline remains rc4.64 and must stay selectable.
 - **Android version and functional authority is rc4.94**, confirmed by fresh post-deployment Pick-9 screenshots.
 - Android functional Pick-9 presentation verification PASS: Walker is visible at #7; Achane/Bowers/London remain visible at #8–10 with contextual Normal-Cut warnings. Expert-v3/Return/evidence remain preserved.
-- Current source/package/deployment/Android authority is rc4.94.
+- Android/package/deployment authority remains rc4.94. Source challenger is rc4.95 pending full reseal/regression/deploy/device verification.
 - Latest package/re-extract is rc4.94, 13 runtime files, final-v143 candidate run 33169002426 / artifact 9684784867 / artifact digest `d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576`.
 - gh-pages exact 13-file rc4.94 runtime parity PASS at deployment commit `55c42cb2c35645b92c7e11ddc5253e76392f0a13`.
 - Expert-v3 is already integrated and selectable: QB Todd D Clark 10%, RB Ryan Weisse 10%, TE Wolf of Roto Street 10%; WR remains exact frozen Expert-v2 because Joey Wright current vector is unavailable.
@@ -45,15 +45,15 @@ rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. In
 - Do NOT ask user to manually document picks during the mock.
 
 ## CURRENT EXTERNAL GATE
-`RC494_FINAL_RESEAL`
+`RC495_RESEAL_AND_REGRESSION`
 
-Receiving chat must first verify v145 CURRENT/SEAL/Handoff equality and every seal-listed blob hash.
+Receiving chat must first verify v146 CURRENT/SEAL/Handoff equality and every seal-listed blob hash.
 
 Required continuation:
 - rc4.94 exact runtime deployment parity PASS and fresh Android Pick-9 presentation verification PASS.
 - Walker is #7 organically; Achane/Bowers/London #8–10 remain contextual Normal-Cut warning rows. No player-specific boost.
 - Do not change Coach scoring, Expert-v3 weights, Return-v2, ADP, injury penalty, or add a Walker-specific rule.
-- Final task is canonical v145 reseal + all five primary gates PASS. Duplicate/unverändert guard remains binding.
+- rc4.95 changes generic QUESTIONABLE penalty from -3 to 0 only; concrete acute evidence still governs real injury risk. Canonical v146 reseal + all five primary gates must PASS before deployment. Duplicate/unverändert guard remains binding.
 - No automatic mock.
 
 **AUTO BLOCK** is a zero-ack correction trigger: immediately resume the already-defined AUTO loop, with no acknowledgement/apology/status/explanation.
