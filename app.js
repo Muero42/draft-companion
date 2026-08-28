@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.86';
+const APP_VERSION='v11.8.0-rc4.87';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2384,26 +2384,40 @@ if(els.expertProfile){els.expertProfile.value=currentExpertProfile();els.expertP
 async function exportExpertV3Challengers(){
   const status=els.expertV3AuditStatus;
   if(!els.apiKey.value.trim())throw new Error('FantasyPros-Zugang fehlt. Zuerst Alles aktualisieren.');
-  const targets=['Ryan Weisse','Wolf of Roto Street','Todd D Clark','Joey Wright'];
+  const targets=[
+    {name:'Ryan Weisse',pos:'RB'},
+    {name:'Wolf of Roto Street',pos:'TE'},
+    {name:'Todd D Clark',pos:'QB'},
+    {name:'Joey Wright',pos:'WR'}
+  ];
   status.textContent='Lade Expert-v3 Challenger …';
-  const info=await loadExperts();
+  await loadExperts();
   const found=[];
-  for(const name of targets){
-    const e=findExpert(name);
-    if(!e){found.push({name,status:'missing'});continue}
+  for(const target of targets){
+    const {name,pos}=target,e=findExpert(name);
+    if(!e){found.push({name,pos,status:'missing'});continue}
     try{
-      status.textContent='Lade '+name+' …';
+      status.textContent='Lade '+name+' · '+pos+' …';
       const row=await loadExpertRanks(e.id);
       if(!row?.verifiedIndividual)throw new Error(row?.error||'Kein verifiziertes Einzelranking verfügbar.');
-      const players=Object.entries(row.ranks||{}).map(([key,v])=>({key,...v})).sort((a,b)=>Number(a.rank)-Number(b.rank));
-      found.push({name,id:String(e.id),site:e.site||e.source||'',status:'ok',meta:{verifiedIndividual:true,expertName:row.expertName||name,updated:row.sourceUpdated||row.updated||null,source:row.source||null,sourceSeason:row.sourceSeason||null,sourceScoring:row.sourceScoring||null,staleFallback:!!row.staleFallback},players});
-    }catch(err){found.push({name,id:String(e.id),status:'error',error:err?.message||String(err)})}
+      const ranks=Object.values(row.ranks||{})
+        .filter(v=>String(v.pos||'').toUpperCase()===pos&&Number.isFinite(Number(v.rank)))
+        .sort((a,b)=>Number(a.rank)-Number(b.rank))
+        .map(v=>[v.name,Number(v.rank)]);
+      if(!ranks.length)throw new Error('Kein verifiziertes '+pos+'-Ranking verfügbar.');
+      found.push({name,pos,id:String(e.id),status:'ok',updated:row.sourceUpdated||row.updated||null,source:row.source||null,staleFallback:!!row.staleFallback,ranks});
+    }catch(err){found.push({name,pos,id:String(e.id),status:'error',error:err?.message||String(err)})}
   }
-  const out={schema:'pitti-expert-v3-challengers.v1',appVersion:APP_VERSION,createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,targets,containsCredential:false,experts:found};
-  await downloadJson('pitti-expert-v3-challengers-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json',out);
-  const ok=found.filter(x=>x.status==='ok'&&x.meta?.verifiedIndividual);
+  const out={schema:'pitti-expert-v3-compact.v1',appVersion:APP_VERSION,createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,containsCredential:false,experts:found};
+  const text=JSON.stringify(out);
+  try{
+    await navigator.clipboard.writeText(text);
+  }catch(e){
+    await downloadJson('pitti-expert-v3-compact-'+new Date().toISOString().replace(/[:.]/g,'-')+'.json',out);
+  }
+  const ok=found.filter(x=>x.status==='ok');
   status.className='notice '+(ok.length?'ok':'warn');
-  status.textContent='v3 Export: '+ok.length+'/'+targets.length+' verifizierte Einzelrankings · '+found.map(x=>x.name+': '+x.status).join(' · ');
+  status.textContent='v3 Kompakt-Export: '+ok.length+'/'+targets.length+' Positionsrankings · '+text.length+' Zeichen · '+(navigator.clipboard?'in Zwischenablage kopiert':'als Datei exportiert')+' · '+found.map(x=>x.name+' '+x.pos+': '+x.status).join(' · ');
 }
 
 if(els.expertV3AuditBtn)els.expertV3AuditBtn.onclick=()=>exportExpertV3Challengers().catch(e=>{els.expertV3AuditStatus.className='notice bad';els.expertV3AuditStatus.textContent='v3 Audit fehlgeschlagen: '+e.message});
