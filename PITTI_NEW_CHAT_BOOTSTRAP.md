@@ -23,15 +23,16 @@ If Library files are available, read them too. A v105 Library reseal was prepare
 
 ## Current acceptance boundary
 - production/control: rc4.64
-- last fully Android-verified authority: rc4.82
-- deployed TEST challenger: rc4.83, OOS-pending, not promoted, not Android-verified
-- latest package + re-extract boundary: rc4.78
+- current Android authority: rc4.84 (completed realistic mock / Evidence-v2 available)
+- current deployed/package-reextract candidate: rc4.85
+- rc4.85 purpose: integrated Expert-v3 challenger export only; Decision Kernel / Return-v2 / frozen Expert-v2 unchanged
+- rc4.85 package/re-extract PASS; gh-pages deployed; Android rc4.85 not yet verified
 - Library rc4.52 TEST/LATEST: recovery aliases only
 
 ## Current gate
-`ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT`
+`ANDROID_RC4.85_SELF_UPDATE_THEN_EXPERT_V3_EXPORT`
 
-rc4.83 coefficients are frozen until realistic Evidence-v2. User choices/final roster are not training labels.
+Use the already deployed/self-update path first. Do **not** require an expiring ChatGPT ZIP if the installed PWA can update/reload from gh-pages. Verify the app badge is `v11.8.0-rc4.85`; if it remains rc4.84, diagnose service-worker/cache/update state before inventing another install path. Once rc4.85 is verified, run `Expert-v3 Challenger exportieren` once and return the credential-free JSON. Then compute/test v3 weights and only implement a separate v3 preset if validated.
 
 ## AUTO acceptance test
 A valid PITTI AUTO run must execute the repeated loop:
