@@ -137,11 +137,13 @@ must(releaseWorkflow.includes('node tools/rc485-draft-critical.mjs'),'release wo
 must(releaseWorkflow.includes('node tools/rc486-draft-critical.mjs'),'release workflow missing rc4.86 gate');
 must(releaseWorkflow.includes('node tools/rc487-draft-critical.mjs'),'release workflow missing rc4.87 gate');
 must(releaseWorkflow.includes('node tools/rc488-draft-critical.mjs'),'release workflow missing rc4.88 gate');
+must(releaseWorkflow.includes('node tools/rc489-draft-critical.mjs'),'release workflow missing rc4.89 gate');
 must(packageWorkflow.includes('node tools/rc483-draft-critical.mjs'),'package workflow missing rc4.83 gate');
 must(packageWorkflow.includes('node tools/rc485-draft-critical.mjs'),'package workflow missing rc4.85 gate');
 must(packageWorkflow.includes('node tools/rc486-draft-critical.mjs'),'package workflow missing rc4.86 gate');
 must(packageWorkflow.includes('node tools/rc487-draft-critical.mjs'),'package workflow missing rc4.87 gate');
 must(packageWorkflow.includes('node tools/rc488-draft-critical.mjs'),'package workflow missing rc4.88 gate');
+must(packageWorkflow.includes('node tools/rc489-draft-critical.mjs'),'package workflow missing rc4.89 gate');
 must(packageWorkflow.includes('VERSION="$(sed -n'),'package version must derive from APP_VERSION');
 must(!packageWorkflow.includes('Draft_Companion_v11.8.0-rc4.82_PREINSTALL.zip'),'stale hard-coded rc4.82 package path resurrected');
 must(releaseContract.includes('Exact v2 weights:'),'release contract expert-weight lock missing');
