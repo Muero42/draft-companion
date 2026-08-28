@@ -1,5 +1,5 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T110500Z-v137`
+Handoff generation: `20260828T115500Z-v140`
 Updated: 2026-08-28 10:50Z
 
 ## BOOTSTRAP — mandatory
@@ -393,3 +393,8 @@ HANDOFF_GENERATION: 20260828T100500Z-v132
 - Second-order audit found one remaining active stale pointer in PITTI_AUTO_PREFLIGHT.md: it still called rc4.85 the current deployed update path. That active instruction is repaired to rc4.91 and now preserves the audited main/gh-pages app.js byte divergence.
 - Active handoff generation is v137. This section supersedes v136 only for transfer metadata; runtime/model/expert semantics are unchanged.
 - rc4.92 correction: Geno Smith/Aaron Rodgers are NOT exclusions. Any active runtime/test/checkpoint rule that special-cases either name for demotion/removal is a regression. Exactly-one-QB remains a roster strategy only after QB1 is drafted.
+
+## V140 RC4.92 P0 CORRECTION
+- Active source authority rc4.92. Geno Smith/Aaron Rodgers are ordinary QB candidates; player-name hard exclusions are forbidden. Package/Android remain rc4.91 until gates/device verification.
+- AUTO contract v1.7.0 same-turn continuation is active.
+- This v140 EOF section supersedes older transfer metadata and old Geno/Rodgers exclusion language.
