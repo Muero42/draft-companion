@@ -1853,3 +1853,33 @@ New policy:
 - Challenger must be compared against rc4.96; any regression returns immediately to rc4.96.
 - Highest-priority remaining microfix candidates: WAIT/actionability semantics at the turn, residual presentation/evidence gaps, and any stale metadata/authority inconsistencies discovered by read-back.
 - Draft-day freshness remains separate from runtime logic and should not be blocked by microfix work.
+
+
+## 2026-08-28 — rc4.97 microfix challenger created (isolated branch / draft PR #29)
+
+Branch: `pitti/rc4.97-microfix`
+Head: `20bfc31bd967734340059656f41f5a8d95a6dd8f`
+Draft PR: #29.
+
+Scope is intentionally one runtime file (`app.js`) and reversible against rc4.96:
+- APP_VERSION -> v11.8.0-rc4.97 on challenger only.
+- Old action label `WAIT` for Return >=72% replaced with non-prescriptive timing labels:
+  - RETURN GUT >=72%
+  - RETURN KRITISCH <=25%
+  - RETURN OFFEN otherwise.
+- Snapshot/ChatGPT override guidance now states that Board #1 is a board leader, not an automatic pick command; turn ordering between plausible candidates may change only when concrete portfolio/opportunity-cost/Return/loss evidence supports it.
+- stale TAKE/WAIT wording removed from the same snapshot guidance.
+
+Explicit non-changes:
+- zero scoring formula changes;
+- zero Return-v2 coefficient/tau changes;
+- zero expert/panel/weight changes;
+- no PairSum/Rolling;
+- no WR cap/quota;
+- no player-name forcing;
+- no injury penalty change;
+- no roster-limit change.
+
+Static read-back on challenger confirms rc4.97 version and new labels; old actionLabel WAIT implementation is absent. PR-triggered Actions had not appeared at the immediate first check, so challenger is NOT promoted and rc4.96 remains Android/production rollback authority.
+
+Next gate: deterministic CI/regression/package checks on rc4.97 challenger, then device/OOS test only if all pass.
