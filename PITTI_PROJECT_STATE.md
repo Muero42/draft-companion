@@ -1634,3 +1634,9 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - This is generic, not a Flowers boost. Any Q player can still be downgraded/blocked by concrete current evidence.
 - App version bumped v11.8.0-rc4.94 -> v11.8.0-rc4.95. Commits: 34416f3844146bc74c8d46a725f96613c2992c0b (logic), 98d5a95197e9316e2db78ed4104313ae16f4a6b8 (version).
 - Live mock may continue on installed rc4.94 as diagnostic evidence, but rc4.95 must be packaged/deployed and regression-gated before final code freeze; do not pretend rc4.95 is installed until Android deployment is actually verified.
+
+
+### 2026-08-28 — rc4.95 CI availability audit
+- GitHub commit 98d5a95197e9316e2db78ed4104313ae16f4a6b8 has no associated GitHub Actions workflow runs and no combined-status checks. Therefore rc4.95 must NOT be described as CI/regression-gated yet.
+- Repository search likewise exposes no workflow_dispatch/candidate-package-gate entry via the connected GitHub surface. The previously used release gates are not automatically running on this source commit.
+- Consequence: safest path is to keep the user's live rc4.94 mock uninterrupted, treat rc4.95 as a tiny source challenger, and run/package the established local/release regression suite through the existing project release path before Android install. Do not ask user to install an un-gated build.
