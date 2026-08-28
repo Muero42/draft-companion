@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T17:30:00Z",
+  "updatedAt": "2026-08-28T15:53:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -16,7 +16,7 @@
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.94",
+    "latestAndroidObserved": "v11.8.0-rc4.96",
     "latestPreinstallVerified": "v11.8.0-rc4.96",
     "latestResearchChallenger": "v11.8.0-rc4.96",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.96_PREINSTALL.zip",
@@ -24,15 +24,15 @@
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.96",
     "latestDeployedCandidate": "v11.8.0-rc4.96",
-    "latestAndroidVerified": "v11.8.0-rc4.94",
-    "androidAuthority": "v11.8.0-rc4.94",
-    "android_authority": "v11.8.0-rc4.94",
+    "latestAndroidVerified": "v11.8.0-rc4.96",
+    "androidAuthority": "v11.8.0-rc4.96",
+    "android_authority": "v11.8.0-rc4.96",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33183057716,
     "preinstallReferenceArtifactId": 9690504450,
     "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.94",
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.94"
+    "latestAndroidVersionObserved": "v11.8.0-rc4.96",
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.96"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -145,9 +145,9 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC496_DEPLOY_PASS_ANDROID_PENDING",
-    "production": false,
-    "androidVerified": false,
+    "status": "RC496_DRAFT_READY_FROZEN_FRESHNESS_PENDING",
+    "production": true,
+    "androidVerified": true,
     "changes": [
       "centralized APP_VERSION to eliminate stale snapshot/queue/backup/model metadata",
       "active panel health now evaluates the actually selected full-v2, hybrid WR-v2, or live profile instead of global desired-pool health",
@@ -207,18 +207,18 @@
       "rc4.89 artifact independently inspected: 13 runtime files, candidate SHA-256 2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608, candidate.sha256 matches actual bytes.",
       "rc4.90 adds deterministic gate: Expert-v3 panel selectability; actual live panelId exposure; actual-row expert display; James Cook RB must resolve DS/Del Don/Pat/Mariano/Weisse; Bowers TE includes Wolf; QB includes Todd; current early Top-10 all require substantive display evidence."
     ],
-    "gate": "RC496_ANDROID_VERIFY",
-    "note": "rc4.96 source/package/re-extract/all five primary gates/deployment 13/13 parity PASS; Android authority remains rc4.94 pending fresh rc4.96 Pick-9 functional verification.",
+    "gate": "RC496_PRE_DRAFT_FREEZE_FRESHNESS_ONLY",
+    "note": "rc4.96 source/package/re-extract/all five primary gates/deployment 13/13 parity/Android functional path PASS. OOS mock 1399085353452761088: 15/15 followed Coach; Return mean Brier 0.08019; sparse-panel guard OOS PASS. Runtime/decision kernel frozen; WAIT leaders require ChatGPT turn-portfolio review, not PairSum/Rolling.",
     "knownOosConfounds": [
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
     "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
-    "nextGate": "Fresh Android/PWA rc4.96 Pick-9 functional verification; no automatic mock.",
+    "nextGate": "Freshness-only checks before 2026-08-31 draft; no automatic mock and no runtime/model retune absent new material evidence.",
     "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION",
     "androidVersionObserved": true,
     "androidFunctionalVerified": false
   },
-  "status": "RC496_DEPLOY_PASS_ANDROID_PENDING",
-  "gate": "RC496_ANDROID_VERIFY",
-  "nextGate": "Fresh Android/PWA rc4.96 Pick-9 functional verification; no automatic mock."
+  "status": "RC496_DRAFT_READY_FROZEN_FRESHNESS_PENDING",
+  "gate": "RC496_PRE_DRAFT_FREEZE_FRESHNESS_ONLY",
+  "nextGate": "Freshness-only checks before 2026-08-31 draft; no automatic mock and no runtime/model retune absent new material evidence."
 }
