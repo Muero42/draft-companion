@@ -74,12 +74,15 @@
     "androidFunctionalVerificationPending": true,
     "sourceAuthority": "v11.8.0-rc4.91",
     "latestPackageReextract": "v11.8.0-rc4.91",
-    "latestPackageSha256": "6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a",
+    "latestPackageSha256": "64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72",
     "packageRuntimeFiles": 13,
     "deployedPagesVersion": "v11.8.0-rc4.91",
     "deployedPagesAppByteParityWithMain": false,
     "deployedPagesNote": "gh-pages app.js is an older rc4.91 byte set: Henry/polarity fix present, latest broad evidence batch absent. Do not infer byte parity from matching version string.",
-    "libraryRecoveryAlias": "v11.8.0-rc4.52"
+    "libraryRecoveryAlias": "v11.8.0-rc4.52",
+    "packageReferenceRun": 33162367347,
+    "packageReferenceArtifactId": 9682152886,
+    "packageHashSemantics": "Reference inspected artifact hash; not a deterministic build identity."
   },
   "currentGate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH"
 }
