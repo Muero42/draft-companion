@@ -1,63 +1,13 @@
-name: package rc4.61
+name: legacy rc4.61 package (manual only)
 on:
   workflow_dispatch:
-    paths:
-      - 'README.md'
-      - '_worker.js'
-      - 'app.js'
-      - 'icon.svg'
-      - 'index.html'
-      - 'manifest.webmanifest'
-      - 'styles.css'
-      - 'sw.js'
-      - 'live-surface-v3.js'
-      - 'live-surface-v3.css'
-      - '.github/workflows/package-rc461.yml'
-  workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 jobs:
-  package:
+  legacy-note:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Verify merged runtime
-        run: |
-          node --check app.js
-          node --check sw.js
-          node --check live-surface-v3.js
-          grep -q "window.PITTI_LIVE_DECISION_STATE" app.js
-          grep -q "id=\"liveDecisionSurfaceV3\"" index.html
-          grep -q "id=\"analysisJumpV3\"" index.html
-          grep -q "10ER-ÜBERSICHT" live-surface-v3.js
-          grep -q "Pick-Confidence" live-surface-v3.js
-          grep -q "AUSSERHALB NORMAL-CUT" live-surface-v3.js
-          grep -q "Chat-Handoff kopieren" live-surface-v3.js
-          grep -q "Full Diagnostic" live-surface-v3.js
-          grep -q "USER_HARD_QB_EXCLUSIONS" app.js
-          grep -q "DRAFT_ACUTE_STATUS_2026" app.js
-          grep -q "v11.8.0-rc4.61" app.js index.html sw.js live-surface-v3.js
-          grep -q "app.js?v=11.8.0-rc4.61" index.html sw.js
-      - name: Package
-        run: |
-          zip -X -q Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip README.md _worker.js app.js icon.svg index.html manifest.webmanifest styles.css sw.js live-surface-v3.js live-surface-v3.css
-          unzip -t Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip
-          sha256sum Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip > rc461.sha256
-      - uses: actions/upload-artifact@v4
-        with:
-          name: Draft_Companion_v11.8.0-rc4.61_FULL_TEST
-          path: |
-            Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip
-            rc461.sha256
-      - name: Publish direct-download package
-        run: |
-          mkdir -p dist
-          cp Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip dist/
-          cp Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip dist/PITTI-rc461.zip
-          cp rc461.sha256 dist/
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add dist/Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip dist/PITTI-rc461.zip dist/rc461.sha256
-          git diff --cached --quiet && exit 0
-          git commit -m "Publish rc4.61 Android test package"
-          git push
+      - run: |
+          echo "rc4.61 packaging is historical only."
+          echo "Current successor packaging authority is release-contract-v2-package.yml."
+          echo "Do not publish or infer current runtime state from rc4.61."
