@@ -1,12 +1,12 @@
 # Draft Companion – Final Draft Edition 2026
 
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
-> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.87 · 12 Runtime-Dateien · Release/Package/Re-extract/Guardrails PASS.
-> **Letzter Android-verifizierter Teststand:** v11.8.0-rc4.84 (Manager-Slot-Korrektur; abgeschlossener Mock/Evidence-v2-Export vorhanden).  
-> **Aktueller installierter Android-Stand:** v11.8.0-rc4.84; rc4.85 ist bereits auf gh-pages deployt und soll bevorzugt über den normalen PWA/App-Update-/Reload-Pfad übernommen werden.
-> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.87 — kompakter Expert-v3-Transfer; alle Release-/Package-/Re-extract-/Guardrail-Gates PASS, auf gh-pages deployt, Android-Verifikation offen.
-> **Aktueller Android-Testauthority:** v11.8.0-rc4.84; Expert-v2/Decision Kernel gegenüber rc4.84 eingefroren.  
-> **Aktueller Source-Challenger:** v11.8.0-rc4.87; ausschließlich integrierter Expert-v3-Challenger-Export, gh-pages byteidentisch zu main; noch nicht Android-verifiziert.
+> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.87 · 12 Runtime-Dateien · Release/Package/Re-extract/Guardrails PASS. rc4.88 ist der aktuelle Expert-v3-Integrationskandidat und muss die vollständigen Gates neu passieren.
+> **Letzter Android-verifizierter Teststand:** v11.8.0-rc4.87 (kompakter Expert-v3-Export erfolgreich; Weisse/Wolf/Todd verifiziert, Wright fehlt).  
+> **Aktueller installierter Android-Stand:** v11.8.0-rc4.87; rc4.88 ist auf gh-pages deployt und integriert das validierte positionsspezifische Expert-v3-Profil.
+> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.88 — Expert-v3 positionsspezifisch: QB Todd10, RB Weisse10, TE Wolf10; WR bleibt Expert-v2. Release-Gates laufen.
+> **Aktueller Android-Testauthority:** v11.8.0-rc4.87; Decision Kernel/Return-v2 bleiben eingefroren.  
+> **Aktueller Source-Challenger:** v11.8.0-rc4.88; separates auswählbares Expert-v3-Profil, Expert-v2 bleibt unverändert verfügbar.
 >
 > Built/source-verified, packaged/re-extracted, deployed und Android-verified sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
 
