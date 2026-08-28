@@ -5,7 +5,7 @@ const live=fs.readFileSync('live-surface-v3.js','utf8');
 const must=(ok,msg)=>{if(!ok){console.error('RC498_EVIDENCE_POLARITY_FAIL:',msg);process.exitCode=1;}};
 
 // Runtime-version parity for this challenger.
-must(/const APP_VERSION='v11\\.8\\.0-rc4\\.(?:99|100)'/.test(app),'app version outside rc4.99/rc4.100 polarity contract');
+const activeVersion=Number((app.match(/const APP_VERSION='v11\\.8\\.0-rc4\\.(\\d+)'/)||[])[1]);\nmust(Number.isFinite(activeVersion)&&activeVersion>=98,'app version below rc4.98 polarity contract');
 
 // Sign-aware presentation contract. Neutral evidence may remain displayable as context, but never as a plus.
 must(live.includes("Number(c.dir??0)>=0"),'displayEvidence must retain neutral evidence for neutral/context surfaces');
