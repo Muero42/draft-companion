@@ -69,3 +69,5 @@ These labels are retained only so old protections cannot silently disappear; the
 - Old-error scan: retained.
 
 - Obsolete rc4.61 automatic package/publish workflow is retired; it must not reappear as active CI/current artifact authority.
+
+- Detailed open-audit contract exists at `research/RC498_V155_OPEN_AUDIT_CONTRACT_2026-08-28.md` and must be read before implementing a successor fix.
