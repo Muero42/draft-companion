@@ -134,6 +134,11 @@ must(current.handoff_generation===handoffGeneration,'CURRENT/Handoff generation 
 const sealPending=seal.status==='SUPERSEDED_PENDING_RESEAL'&&seal.handoff_ready===false&&seal.second_pass_pass===false;
 must((seal.status==='PASS'&&seal.handoff_ready===true&&seal.second_pass_pass===true)||sealPending,'handoff seal state invalid');
 const integrityBypass=process.env.PITTI_SKIP_SEAL_INTEGRITY==='1'||sealPending;
+const requiredSealFiles=['PITTI_CURRENT_STATE.json','NEW_CHAT_HANDOFF_CURRENT.md','PITTI_COMMAND_CONTRACTS.json','PITTI_NEW_CHAT_BOOTSTRAP.md','HANDOFF_COMPLETENESS_MATRIX.md','PITTI_EXECUTION_LOCK.json','PITTI_PROJECT_STATE.md','PITTI_AUTO_PREFLIGHT.md','app.js','live-surface-v3.js'];
+if(!integrityBypass){
+  must(Object.keys(seal.integrity||{}).length>=requiredSealFiles.length,'handoff seal integrity set unexpectedly empty/incomplete');
+  for(const p of requiredSealFiles) must(Object.prototype.hasOwnProperty.call(seal.integrity||{},p),`handoff seal missing required integrity entry: ${p}`);
+}
 if(integrityBypass) console.log('PITTI_GUARDRAIL_INFO: seal-integrity checks bypassed for explicit pre-seal candidate validation only');
 if(!integrityBypass){
 for(const [p,expected] of Object.entries(seal.integrity||{})){
