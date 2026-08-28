@@ -370,3 +370,19 @@ Tier A late-RB archetype = usable standalone value + one short path to major wor
 - Tucker Kraft: no downgrade from Jonnu signing; Kraft is on track W1 and Jonnu is No.2 while Musgrave is PUP. This is an anti-false-positive regression example.
 - UI semantics locked for richer arrows: `↑↑` = strong high-end outcome + short plausible causal path; `↑` = meaningful but conditional/moderate ceiling; `↓↓` = material role/health/availability deterioration; `↓` = moderate downside. Mixed arrows allowed (`↑↑ / ↓↓`) for genuinely bimodal profiles. Description must name mechanism, not just 'breakout'/'risk'.
 - Examples: Jameson Williams `↑ established breakout -> volume/TD consolidation`; Parker Washington `↑↑ WR1-path -> late-2025 target dominance + open JAX hierarchy`; Tuten `↑↑ standalone RB1-path -> GL/lead-work route`; Brooks `↑↑/↓↓ role-capture ceiling / recurrent knee durability`; Pacheco `↓↓ new back injury + RB2 job pressure`.
+
+
+## 2026-08-28 — AUTO batch IV: freshness reconciliation and 10-team replacement-value calibration
+- Parker Washington injury status reconciled: Aug18 undisclosed day-to-day issue was expected short term; Aug25 he returned to joint practice and is on track W1. Do NOT retain a stale health downgrade. Keep `↑↑ WR1-path`; health qualifier now minor/watch only.
+- Jadarian Price: Aug26 expert note + Aug18 full practice confirm W1 track. Lead-back-on-paper + Charbonnet recovery uncertainty justify `↑↑ opportunity`; receiving ceiling remains uncertain due only 13 college targets over last two seasons. Do not label proven three-down back.
+- Pacheco contradiction guard: fresh Aug27 FantasyPros note still mentions MCL while same-day news says additional back injury/no timetable. The newer specific news controls availability layer: `↓↓` until practice return. Sleeper-consensus sleeper status (#9 RB sleeper) is stale/qualitative relative to injury and must not override health.
+- Jonah Coleman: current Aug27 25-expert sleeper consensus ranks him #1 RB sleeper (9 expert votes; ECR52/ADP47). Strong breadth signal but no causal role evidence in this pass; keep high-priority research/late target, not automatic ↑↑.
+- Tank Bigsby: same consensus #6; retain C+ asymmetry. Allgeier fresh outlook confirms TD-dependent flex/handcuff with poor 2025 efficiency; Marks fresh outlook says likely waiver-available in 10-team. This validates replacement-value rule: do not spend scarce bench slots on ordinary contingent backs when higher-ceiling A/B archetypes exist.
+- Malachi Fields: fresh Aug28 last-pick article strengthens NYG role-capture floor; because standard 1QB 5-6 bench context is directly similar to PITTI, he becomes a watchlist/last-pick candidate, still below Parker/Watson/Burden-type ceiling plays.
+- New deep-WR discovery: Tre Tucker appears in Aug27 deep sleeper article. Keep discovery-only until role/target path is validated; one spike game is insufficient for arrow.
+
+### Freshness precedence rule
+When sources conflict, use: specific dated injury/practice/transaction news > current team/beat role evidence > current expert outlook > roundup/sleeper consensus > static preseason prior. This prevents stale sleeper labels from masking new injuries and prevents old injury flags from persisting after practice return.
+
+### 10-team bench-slot EV rule
+For final bench RB/WR, evaluate expected championship utility against waiver replacement, not merely player projection. Ordinary handcuffs with low standalone use (Marks/Allgeier archetype) need unusually high contingent ceiling or very low acquisition cost to beat role-capture/standalone-upside players. This rule should influence Coach late-round utility but must not distort baseline expert ranks.
