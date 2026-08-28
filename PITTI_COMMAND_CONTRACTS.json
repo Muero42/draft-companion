@@ -1,6 +1,6 @@
 {
   "schema": "pitti.command-contract.v1",
-  "version": "1.9.0",
+  "version": "2.0.0",
   "trigger": "PITTI AUTO",
   "sourceOrder": [
     "PITTI_COMMAND_CONTRACTS.json",
@@ -93,31 +93,37 @@
     "claiming rc4.98 Android acceptance PASS merely because the version is installed",
     "treating draft PR #33 CMC evidence patch as merged",
     "empty/incomplete handoff seal integrity set",
-    "obsolete rc4.61 package workflow auto-running or publishing as current authority"
+    "obsolete rc4.61 package workflow auto-running or publishing as current authority",
+    "treating PR #36 rc4.100 as undeployed Android authority before device observation",
+    "deploying gh-pages before post-merge main verification",
+    "global Return-v2 reduction based on high short-turn screenshot despite calibrated 3-pick evidence",
+    "stale v155 rc4.98/gh-pages-rc4.96 pointers overriding rc4.100/rc4.99 verified state"
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.64",
     "rollbackAuthority": "v11.8.0-rc4.96",
     "androidAuthority": "v11.8.0-rc4.96",
-    "activeAndroidObserved": "v11.8.0-rc4.98",
+    "activeAndroidObserved": "v11.8.0-rc4.99",
     "androidVersionObserved": true,
     "androidAcceptancePending": true,
-    "sourceAuthority": "v11.8.0-rc4.98",
-    "latestPackageReextract": "v11.8.0-rc4.98",
-    "latestPackageSha256": "43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e",
+    "sourceAuthority": "v11.8.0-rc4.100",
+    "latestPackageReextract": "v11.8.0-rc4.100 PR candidate PASS",
+    "latestPackageSha256": "artifact-envelope:4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae",
     "packageRuntimeFiles": 13,
-    "deployedPagesVersion": "v11.8.0-rc4.96",
+    "deployedPagesVersion": "v11.8.0-rc4.99",
     "deployedPagesAppByteParityWithMain": false,
-    "deployedPagesNote": "gh-pages remains rc4.96 while main/source is rc4.98; do not claim parity or deployment promotion.",
+    "deployedPagesNote": "main is rc4.100; gh-pages remains rc4.99 until post-merge main verification passes.",
     "libraryRecoveryAlias": "v11.8.0-rc4.52",
-    "packageReferenceRun": 33194280926,
-    "packageReferenceArtifactId": 9695061955,
-    "packageHashSemantics": "rc4.98 package/re-extract authority; Android acceptance and deployment are separate.",
-    "testChallenger": "v11.8.0-rc4.98",
-    "canonicalOosBackup": "draft-companion-v7-backup-2026-08-28T17-30-01-853Z.json",
+    "packageReferenceRun": 33205458721,
+    "packageReferenceArtifactId": 9699461048,
+    "packageHashSemantics": "GitHub artifact envelope digest for the all-green rc4.100 PR package; do not confuse with a separately downloaded inner ZIP hash.",
+    "testChallenger": "v11.8.0-rc4.100",
+    "canonicalOosBackup": "draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json",
     "strictCoachDraft": "1399114762087895040",
     "strictCoachRoster": "9 WR / 4 RB / 1 TE / 1 QB",
-    "openEvidencePatch": "draft PR #33 contains CMC substantive positive evidence but is unmerged"
+    "fullDraftAudit": "1399141058222280704 rc4.99; 15/15 fixtures; user roster 1 QB / 6 RB / 7 WR / 1 TE",
+    "returnFinding": "3-pick turns 91.4% forecast vs 90.9% actual; 17-pick turns 37.1% vs 30.4%; no global Return-v2 retune",
+    "openEvidencePatch": "Superseded by merged rc4.99/rc4.100 generic semantic fixes; never resurrect stale PR #33 status as current."
   },
-  "currentGate": "RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT"
+  "currentGate": "RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY"
 }
