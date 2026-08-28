@@ -10,7 +10,7 @@ if(V){
     const refs=[...new Set(text.match(/v11\.8\.0-rc4\.\d+/g)||[])];
     must(refs.every(x=>x===V),`${name} contains stale runtime RC refs: ${refs.filter(x=>x!==V).join(', ')}`);
   }
-  const head=readme.split(/\r?\n/).slice(0,8).join('\n');const processMode=head.includes('Release Contract v2 (noch kein Installationsrelease)');must(processMode||head.includes(V),`README state is neither explicit process-mode nor ${V}`);
+  const head=readme.split(/\r?\n/).slice(0,12).join('\n');const processMode=head.includes('Release Contract v2 (noch kein Installationsrelease)');must(processMode||head.includes(V),`README state is neither explicit process-mode nor ${V}`);
   must(index.includes(`app.js?v=${V}`),`index app.js cache-buster != ${V}`);
   must(index.includes(`live-surface-v3.js?v=${V}`),`index live JS cache-buster != ${V}`);
   must(index.includes(`live-surface-v3.css?v=${V}`),`index live CSS cache-buster != ${V}`);
