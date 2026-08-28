@@ -823,6 +823,7 @@ async function loadAllRanks(){
     // Sealed Expert-v2 panels are not derived from live FantasyPros members. Rehydrate them
     // after every live-rank rebuild so a refresh cannot silently erase the selected v2 boards.
     if(!ensureExpertV2Panels())throw new Error('Expert-v2 Board konnte nach Ranking-Refresh nicht wiederhergestellt werden.');
+    if(!ensureExpertV3Panels())throw new Error('Expert-v3 Board konnte nach Ranking-Refresh nicht wiederhergestellt werden.');
     store.set('v7_lastRankingUpdate',Date.now());
     try{localStorage.removeItem('v7_panelRanks');localStorage.removeItem('v7_rankCache')}catch{}
     persist();
