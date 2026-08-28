@@ -4,7 +4,7 @@
 > **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.89 · 13 Runtime-Dateien. rc4.90 is not device-ready until its full sealed workflow set passes.
 > **Letzter Android-verifizierter Teststand:** v11.8.0-rc4.88 (Expert-v3 · positionsspezifisch ausgewählt und visuell verifiziert).  
 > **Aktueller installierter Android-Stand:** v11.8.0-rc4.88; rc4.89 korrigiert ausschließlich Live-Draft-Präsentation/Research-Prose und ist noch nicht Android-verifiziert.
-> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.90 — PRE-DEVICE root-cause fix for Expert-v3 panel selection + actual expert rows + early Top-10 evidence; deployment withheld until full sealed gates PASS.
+> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.91 — PRE-DEVICE root-cause fix for Expert-v3 panel selection + actual expert rows + early Top-10 evidence; deployment withheld until full sealed gates PASS.
 > **Aktueller Android-Testauthority:** v11.8.0-rc4.88; Decision Kernel/Return-v2 bleiben eingefroren.  
 > **Aktueller Source-Challenger:** v11.8.0-rc4.89; Live-Präsentations-/Evidence-Fix, kein Scoring-/Return-/Roster-Policy-Change.
 >
