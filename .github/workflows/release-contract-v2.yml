@@ -31,3 +31,4 @@ jobs:
           node tools/rc488-draft-critical.mjs
           node tools/rc489-draft-critical.mjs
           node tools/rc490-draft-critical.mjs
+          node tools/rc491-return-calibration.mjs
