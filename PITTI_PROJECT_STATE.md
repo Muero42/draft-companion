@@ -1432,3 +1432,11 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - rc4.94 changes ONLY visible candidate selection: all normal-cut rows are prioritized for up to ten cards; outside-cut rows fill only unused slots. No Coach scoring, Expert-v3, injury penalty, Return-v2, ADP, roster utility or player-specific Walker boost changed.
 - Commit implementing rc4.94 app.js: 03a798bc20a6f8b42dd2b29a4524ae4ea561af93. CI/package/deploy/device verification remains pending.
 - Exact next gate: verify rc4.94 release/regression/package, synchronize versioned runtime assets if required, deploy exact runtime, then obtain a fresh Pick-9 Android snapshot. Duplicate/unverändert snapshots must not be re-analyzed.
+
+### 2026-08-28 — PITTI HANDOFF v143 deep repair after v142 verification failure
+- User requested a second deep handoff verification. Audit found v142 was NOT safe to transfer despite a PASS seal marker: all five latest CI families failed because rc4.94 app.js had not been version-synchronized to index/sw/manifest; Project Guardrails also found README candidate and matrix-generation drift.
+- Additional active stale pointers existed in Command Contract, Execution Lock, top-level Current Handoff, Bootstrap, Preflight, Matrix and Seal runtime boundary (rc4.91/rc4.92/v137/v141-era authority). These could have resurrected old device/package/gate semantics in a receiving chat.
+- Correct factual boundary reconstructed from evidence: rc4.93 candidate-package PASS at run 33166867111 / artifact 9683925309 / digest 3ce741b71cbc3f35b026e6aa8f9622e10999ecd29c54c0d66f6fcfdef379db95; rc4.93 deployed and observed on Android in fresh Pick-9 snapshot; rc4.94 is source-only display challenger pending its own gates.
+- rc4.94 version strings synchronized in app/index/sw/manifest. Display fix remains generic: normal-cut rows are selected before fallback context. No Coach score, Expert-v3, Return-v2, injury, ADP, roster utility or Walker-specific tuning.
+- Guardrail now protects the normal-cut-first selection contract and active rc4.93 package/Android boundary.
+- Transfer generation advanced to v143. Do not mark handoff ready until final CI + seal-integrity second pass succeeds.
