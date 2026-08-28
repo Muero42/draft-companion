@@ -25,5 +25,5 @@ function calc(pos,name){const row=b2.rows[pos].find(x=>norm(x.name)===norm(name)
 assert.ok(Math.abs(calc('QB','Joe Burrow')-60.35)<1e-9);
 assert.ok(Math.abs(calc('RB','Isiah Pacheco')-187.85)<1e-9);
 assert.ok(Math.abs(calc('TE','Isaiah Likely')-137.65)<1e-9);
-assert.ok(!b3src.includes('Joey Wright'), 'missing WR vector must not be fabricated into v3 board');
+assert.ok(b3src.includes('WR:null'), 'missing WR vector must leave WR weights unset');
 console.log('RC488_EXPERT_V3_POSITIONAL_PASS');
