@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.93';
+const APP_VERSION='v11.8.0-rc4.94';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -16,7 +16,23 @@ function activeDraftSurface(){return localStorage.getItem('v118_draftSurface')==
 function resolveActiveDraftId(){return activeDraftSurface()==='live'?LIVE_DRAFT_ID_2026:draftId(els.draftInput.value)}
 function validateCanonicalLiveDraft({id,season,teams,rounds,slot}){const errors=[];if(String(id)!==LIVE_DRAFT_ID_2026)errors.push('Draft-ID');if(String(season)!=='2026')errors.push('Saison');if(Number(teams)!==10)errors.push('Teams');if(Number(rounds)!==15)errors.push('Runden');if(Number(slot)!==9)errors.push('Slot');return{ok:!errors.length,errors}}
 function normalCandidateAdmissible(row){const v=row?.valueSafety;if(!row?.r||!Number.isFinite(row.r.rank)||!v)return false;const max=v.triggered&&Number.isFinite(v.qualityBandMax)?v.qualityBandMax:Number(v.bestPanelRank)+Number(v.threshold);return Number.isFinite(max)&&row.r.rank<=max}
-function visibleCoachCandidates(rows){const source=(rows||[]).filter(x=>x?.p&&x?.r);return source.slice(0,10).map(row=>({...row,outsideNormalCut:!normalCandidateAdmissible(row)}))}
+function visibleCoachCandidates(rows){
+  const source=(rows||[]).filter(x=>x?.p&&x?.r);
+  if(!source.length)return[];
+  const normal=source.filter(normalCandidateAdmissible);
+  const visible=normal.slice(0,10);
+  // If fewer than ten normal candidates exist, fill remaining slots with the best
+  // outside-cut context candidates. Never let fallback rows displace normal-cut peers.
+  if(visible.length<10){
+    const seen=new Set(visible.map(x=>norm(x.p.name)));
+    for(const x of source){
+      if(visible.length>=10)break;
+      if(seen.has(norm(x.p.name)))continue;
+      visible.push(x);seen.add(norm(x.p.name));
+    }
+  }
+  return visible.map(row=>({...row,outsideNormalCut:!normalCandidateAdmissible(row)}));
+}
 
 let experts=store.get('v7_experts',[]);
 let panels=store.get('v7_panels',{standard:{name:'Standard',members:{}},pat:{name:'Pat einzeln',members:{}}});
