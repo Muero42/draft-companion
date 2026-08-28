@@ -1344,3 +1344,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Added `research/UPSIDE_V3_COVERAGE_BATCH_F_2026-08-28.md`: late-RB coverage. Brashard Smith/RJ Harvey/Jaydon Blue = receiving/explosive deep-watch mechanisms; DJ Giddens/Kaleb Johnson/Tahj Brooks = contingent volume watch, no automatic arrow.
 - Anti-repeat honored: already-settled names were inventoried and excluded from re-scoring.
 - No runtime/Decision Kernel/Expert-v3/Return-v2/ranking/ADP change; freeze intact.
+
+### 2026-08-28 — AUTO continuation: Coverage Batch G
+- Same-turn re-inventory continued after E/F rather than terminating.
+- Added `research/UPSIDE_V3_COVERAGE_BATCH_G_2026-08-28.md` for uncovered late TEs.
+- Oronde Gadsden II / Elijah Arroyo = receiving-ceiling ↑ deep/watch; Gunnar Helm / Luke Lachey / Jake Briningstool = explicit watch/NO_AUTO_ARROW pending route evidence.
+- Settled Fannin/Mason Taylor/Mitchell Evans/Tyler Warren excluded from duplicate scoring.
+- No runtime/model/profile/Return/ranking change.
