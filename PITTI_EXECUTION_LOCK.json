@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T18:34:00Z",
+  "updatedAt": "2026-08-28T18:40:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -36,7 +36,7 @@
     "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
     "rc499": {
-      "status": "SOURCE_GUARDRAILS_PASS_RESEARCH_ONLY",
+      "status": "PACKAGE_REEXTRACT_PASS_RESEARCH_ONLY",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
       "scope": [
         "neutral evidence must not render as plus",
@@ -52,7 +52,10 @@
         "normal-cut timing 18/22/26"
       ],
       "mergeAllowed": false,
-      "nextGate": "full release-contract/package validation then controlled Android verification"
+      "nextGate": "controlled Android install/functional verification before any promotion",
+      "packageGateRun": 33200304688,
+      "artifactId": 9697465647,
+      "artifactDigest": "sha256:66bf4d2654135b8448f0ad42ff29bc5daca58d30225c75e1d72b6d4bed91f3c2"
     }
   },
   "auto": {
