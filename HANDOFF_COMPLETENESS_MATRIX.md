@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v132
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v133
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -120,3 +120,13 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - rc4.91 Android device version observed by user screenshot on 2026-08-28; device authority promoted to rc4.91. Functional visual checks remain distinct from version observation.
 
 - v132: rc4.91 Android-observed authority + Expert-v3 actual-row gate + evidence polarity + Return-v2 tau4.25 + broad anti-repeat research + AUTO BLOCK zero-ack semantics preserved.
+
+## v133 deep-handoff canaries
+- CURRENT / SEAL / Handoff generation must all equal `20260828T102000Z-v133`.
+- Active command contract and bootstrap must state rc4.91 Android authority and `RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`; rc4.84/85 active pointers are forbidden.
+- latest package/re-extract must be rc4.91, 13 runtime files, SHA-256 `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`.
+- main/gh-pages `app.js` byte parity is currently FALSE despite both saying rc4.91; a receiving chat must preserve this distinction.
+- Expert-v3 acquisition/export is complete; do not restart it.
+- old Return-v2 early tau 1.35 is forbidden; rc4.91 tau 4.25 remains authoritative.
+- Reach/risk/wait/decline can never be positive evidence.
+- `AUTO BLOCK` means immediate zero-ack AUTO resumption.
