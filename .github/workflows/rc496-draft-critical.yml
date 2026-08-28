@@ -1,0 +1,22 @@
+name: rc4.96 draft-critical gate
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'app.js'
+      - 'live-surface-v3.js'
+      - 'expert-v2-board.js'
+      - 'expert-v3-board.js'
+      - 'tools/rc496-draft-critical.mjs'
+      - '.github/workflows/rc496-draft-critical.yml'
+  workflow_dispatch:
+jobs:
+  draft-critical:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - run: node --check app.js && node --check live-surface-v3.js && node --check expert-v2-board.js
+      - run: node tools/rc496-draft-critical.mjs
