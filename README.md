@@ -1,12 +1,12 @@
 # Draft Companion – Final Draft Edition 2026
 
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
-> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.87 · 12 Runtime-Dateien · Release/Package/Re-extract/Guardrails PASS. rc4.88 ist der aktuelle Expert-v3-Integrationskandidat und muss die vollständigen Gates neu passieren.
-> **Letzter Android-verifizierter Teststand:** v11.8.0-rc4.87 (kompakter Expert-v3-Export erfolgreich; Weisse/Wolf/Todd verifiziert, Wright fehlt).  
-> **Aktueller installierter Android-Stand:** v11.8.0-rc4.87; rc4.88 ist auf gh-pages deployt und integriert das validierte positionsspezifische Expert-v3-Profil.
-> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.88 — Expert-v3 positionsspezifisch: QB Todd10, RB Weisse10, TE Wolf10; WR bleibt Expert-v2. Release-Gates laufen.
-> **Aktueller Android-Testauthority:** v11.8.0-rc4.87; Decision Kernel/Return-v2 bleiben eingefroren.  
-> **Aktueller Source-Challenger:** v11.8.0-rc4.88; separates auswählbares Expert-v3-Profil, Expert-v2 bleibt unverändert verfügbar.
+> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.88 · 13 Runtime-Dateien · Release/Package/Re-extract/Guardrails PASS. rc4.89 ist der aktuelle Live-Presentation-Fix-Kandidat und muss die vollständigen Gates neu passieren.
+> **Letzter Android-verifizierter Teststand:** v11.8.0-rc4.88 (Expert-v3 · positionsspezifisch ausgewählt und visuell verifiziert).  
+> **Aktueller installierter Android-Stand:** v11.8.0-rc4.88; rc4.89 korrigiert ausschließlich Live-Draft-Präsentation/Research-Prose und ist noch nicht Android-verifiziert.
+> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.89 — Live-Anzeige: aktives Expert-v3 korrekt, alle Top-10 als volle Entscheidungskarten, NORMAL-CUT-Warnung je Karte, reichere frühe Pro/Contra-Evidenz. Release-Gates laufen.
+> **Aktueller Android-Testauthority:** v11.8.0-rc4.88; Decision Kernel/Return-v2 bleiben eingefroren.  
+> **Aktueller Source-Challenger:** v11.8.0-rc4.89; reine Präsentations-/Evidence-Anreicherung, kein Scoring-/Return-/Roster-Policy-Change.
 >
 > Built/source-verified, packaged/re-extracted, deployed und Android-verified sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
 
