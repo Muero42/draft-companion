@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v146
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v148
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -48,7 +48,7 @@ A new-chat takeover fails closed unless all checks pass.
 - rc4.91 early Return-v2 calibration uses pick<=30 tau 4.25; do not restore tau 1.35
 - broad research is coverage-first/anti-repeat and evidence enrichment is not automatic ranking promotion
 - completed mock/Evidence-v2 history remains retained
-- current gate = final v145 reseal + all five primary gates PASS; rc4.94 deployment/main-pages parity and fresh Android Pick-9 presentation already PASS; no mock unless explicitly requested
+- current gate = rc4.96 full release/package after dedicated rc4.96 source regression PASS; Android/package/deployment authority remains rc4.94 until exact promotion
 
 ## 6 AUTO durability
 - long blocks default
