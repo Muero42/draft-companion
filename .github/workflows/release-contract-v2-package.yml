@@ -28,7 +28,7 @@ jobs:
           node tools/rc490-draft-critical.mjs
           node tools/rc491-return-calibration.mjs
           node tools/rc496-draft-critical.mjs
-          if grep -q "v11.8.0-rc4.98" app.js; then node tools/rc498-evidence-polarity.mjs; fi
+          if grep -Eq "v11.8.0-rc4.(98|99)" app.js; then node tools/rc498-evidence-polarity.mjs; fi
           node Draft_Companion_Position_Path_Regression_2026-08-13.js
           node Draft_Companion_Player_Quality_Expert_Health_Regression_2026-08-13.js
           node Draft_Companion_Return_Geometry_Market_Regression_2026-08-13.js
