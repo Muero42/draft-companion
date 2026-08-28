@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T155300Z-v152",
-  "updated_at": "2026-08-28T16:30:00Z",
+  "handoff_generation": "20260828T172200Z-v153",
+  "updated_at": "2026-08-28T17:22:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -13,22 +13,22 @@
     "android_authority": "v11.8.0-rc4.96",
     "test_challenger": "v11.8.0-rc4.98",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.96",
+    "latest_package_reextract": "v11.8.0-rc4.98",
     "library_recovery_alias": "v11.8.0-rc4.52",
-    "latest_package_sha256": "18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0",
+    "latest_package_sha256": "43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e",
     "deployed_pages": "v11.8.0-rc4.96",
     "deployed_pages_app_byte_parity_with_main": true,
-    "package_reference_run": 33183057716,
-    "package_reference_artifact_id": 9690504450,
-    "package_reference_note": "rc4.96 all five primary gates PASS at 6eafbb297fa999a28dae14375a65544b73a97d7c; package/re-extract PASS run 33183057716 / artifact 9690504450; exact 13/13 main↔gh-pages parity at 35b68015aa79e8976f3ee9a230be3710be503b32; Android/PWA rc4.96 functionally evidenced by complete 15-pick recommendation-following mock 1399085353452761088 and rc4.96 fixtures.",
+    "package_reference_run": 33194280926,
+    "package_reference_artifact_id": 9695061955,
+    "package_reference_note": "rc4.98 source/behavioral/draft-critical/polarity/package-reextract gates PASS at c039575db4ca803d50559528306cad13581f0b29; artifact 9695061955. Android authority remains rc4.96 until device verification.",
     "android_version_observed": true,
     "android_functional_verified": true,
     "freeze_policy": "rc4.96 remains rollback baseline; low-risk microfix challenger allowed for further testing"
   },
   "exact_continuation": {
-    "gate": "RC498_EVIDENCE_POLARITY_CI",
+    "gate": "RC498_ANDROID_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "Run exhaustive polarity and draft-critical regressions. Do not promote until package/re-extract and Android verification pass."
+    "instruction": "Install/refresh rc4.98 only when user/device interaction is available; verify version and representative Pro/Contra cards. rc4.96 remains rollback authority until then."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -46,12 +46,12 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "PITTI AUTO resumes from rc4.96 pre-draft freeze; runtime/model changes require new material evidence and deterministic gates.",
-    "acceptance_fingerprint": "RC4.96-ALL5-PASS|PKG-REEXTRACT-PASS|GH-PAGES-13OF13|ANDROID-RC4.96-VERIFIED|OOS-FOLLOWCOACH-15OF15|RETURN-BRIER-0.0802|SPARSE-PANEL-OOS-PASS|NO-RETURN-RETUNE|NO-PAIRSUM|WR7-SOFT|WAIT-TURN-CHAT-REVIEW|FRESHNESS-ONLY|HANDOFF-v152",
-    "status": "RC498_EVIDENCE_POLARITY_CI",
+    "acceptance_fingerprint": "RC4.98-POLARITY-194PASS|FULL-RELEASE-PASS|PKG-REEXTRACT-PASS|ANDROID-RC4.96-ROLLBACK|NO-SCORING-TUNE|HANDOFF-v153",
+    "status": "RC498_ANDROID_VERIFY",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Validate generic live evidence polarity fix across all structured priors; rc4.96 remains Android rollback authority.",
-    "gate": "RC498_EVIDENCE_POLARITY_CI"
+    "next_action": "Android/PWA verification of rc4.98 evidence-polarity presentation; no scoring/ranking retune.",
+    "gate": "RC498_ANDROID_VERIFY"
   },
   "source_authority": "rc4.96",
   "package_authority": "rc4.96",

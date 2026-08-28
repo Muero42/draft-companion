@@ -1888,3 +1888,12 @@ Next gate: deterministic CI/regression/package checks on rc4.97 challenger, then
 ## 2026-08-28 — AUTO BLOCK output failure hardened
 Observed failure: repeated tool runs terminated with blank assistant turns, forcing the user to type AUTO/AUTO BLOCK again. This violates the command contract even though internal work occurred.
 Permanent correction: AUTO BLOCK is now a hard silent-execution/output gate. Tool-call completion is not a stop condition; empty/progress/status/promise-only responses are forbidden. Re-inventory and continue autonomously until useful result, unavoidable user action, safety confirmation, or exhausted blocker.
+
+
+## 2026-08-28 17:22Z — v153 rc4.98 evidence-polarity closure
+- User-reported semantic display class was audited across 194 structured research components. Root cause: live Pro/Contra fallback used lexical text heuristics instead of structured direction.
+- rc4.98 makes research presentation sign-aware; dedicated exhaustive contract PASS (194 components). No ranking/scoring/Return-v2/expert-weight changes.
+- Full successor-safe source gates PASS on main c039575db4ca803d50559528306cad13581f0b29: rc4.82, rc4.83, successor draft-critical, release-contract-v2, candidate package/re-extract.
+- rc4.98 package/re-extract PASS: run 33194280926, artifact 9695061955, digest sha256:43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e.
+- Obsolete rc4.61 push-package workflow disabled; rc4.96 feature gate repaired to be successor-safe. These were CI/process defects, not runtime scoring defects.
+- Android rollback authority remains rc4.96. Next unavoidable gate: rc4.98 Android/PWA version + representative Pro/Contra verification.

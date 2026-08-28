@@ -59,3 +59,9 @@ Only fresh panels/ADP/acute-status/news and emergency-failsafe checks remain bef
 - AUTO durability: historical anti-regression invariant retained.
 - Execution witness: historical anti-regression invariant retained.
 - Old-error scan: historical anti-regression invariant retained.
+
+## REPO v153
+- rc4.98 generic Pro/Contra polarity audit: PASS, 194 structured components.
+- rc4.98 full release/source gates: PASS at c039575db4ca803d50559528306cad13581f0b29.
+- rc4.98 package/re-extract: PASS run 33194280926 / artifact 9695061955 / sha256 43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e.
+- Android authority: rc4.96; rc4.98 device verification pending.

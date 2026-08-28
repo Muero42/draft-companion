@@ -95,17 +95,17 @@
     "androidVersionObserved": true,
     "androidFunctionalVerificationPending": false,
     "sourceAuthority": "v11.8.0-rc4.96",
-    "latestPackageReextract": "v11.8.0-rc4.96",
-    "latestPackageSha256": "18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0",
+    "latestPackageReextract": "v11.8.0-rc4.98",
+    "latestPackageSha256": "43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e",
     "packageRuntimeFiles": 13,
     "deployedPagesVersion": "v11.8.0-rc4.96",
     "deployedPagesAppByteParityWithMain": true,
     "deployedPagesNote": "rc4.96 exact 13-file main/gh-pages parity PASS; Android/PWA rc4.96 functionally evidenced by complete 15-pick follow-Coach mock. Runtime frozen; only pre-draft freshness checks remain.",
     "libraryRecoveryAlias": "v11.8.0-rc4.52",
-    "packageReferenceRun": 33183057716,
-    "packageReferenceArtifactId": 9690504450,
+    "packageReferenceRun": 33194280926,
+    "packageReferenceArtifactId": 9695061955,
     "packageHashSemantics": "GitHub artifact digest for successful rc4.96 candidate package; durable authority also requires runtime blob/re-extract gates.",
     "testChallenger": "v11.8.0-rc4.98"
   },
-  "currentGate": "RC498_EVIDENCE_POLARITY_CI"
+  "currentGate": "RC498_ANDROID_VERIFY"
 }
