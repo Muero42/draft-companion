@@ -1197,3 +1197,9 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - During AUTO, old rc4.82-86 gates exposed exact-shape/wording assertions that rejected additive profiles. These were repaired successor-safely rather than weakening behavioral requirements. A missing index loader for expert-v3-board.js was also caught and repaired before release closure.
 - Final sealed rc4.88 commit b1f70fe7 passed Project Guardrails, Release Contract v2, candidate package/re-extract, rc4.82 and rc4.83 gates. gh-pages synchronized including corrected index loader.
 - Next device gate: update/reload rc4.88, verify version + Expert-v3 selectable. Thereafter resume broad, anti-repeat upside research; do not start a mock absent explicit request.
+
+
+### 2026-08-28 — rc4.88 ANDROID VERIFIED
+- User screenshot confirms v11.8.0-rc4.88 badge and selectable/selected `Expert-v3 · positionsspezifisch` profile on Android/PWA.
+- rc4.88 is now Android runtime authority, not merely a deployed/package candidate.
+- Next work: broad anti-repeat upside/differentiator research across many players plus Expert-v3 effect validation. Avoid repeated player checks without materially new evidence. No mock unless explicitly requested.
