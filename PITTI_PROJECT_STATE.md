@@ -1300,3 +1300,9 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Deep handoff second pass inspected successful package run 33162367347 / artifact 9682152886 directly. Inner rc4.91 PREINSTALL contains exactly 13 runtime files and SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.
 - Prior v133 documentation used the previous successful rc4.91 package hash. Corrected to the directly inspected v133 package artifact.
 - Important: ZIP archive hash is not treated as a deterministic runtime identity across documentation-only commits because archive metadata/timestamps can change. The durable authority is seal-listed Git blob integrity plus package/re-extract PASS. This prevents an endless handoff reseal/package-hash loop and prevents a later chat from mistaking archive-hash churn for runtime changes.
+
+
+### 2026-08-28 — v135 ANDROID VERSION/FUNCTIONAL SEMANTICS CORRECTION
+- Deep handoff audit found one remaining ambiguity: older runtime fields named `test_challenger_android_verified` / `latestAndroidVerified` could make a receiving chat treat the rc4.91 badge screenshot as full functional verification.
+- Correct authority: rc4.91 **version observed on Android = true**; rc4.91 **functional verification = false**. Functional checks of actual Expert-v3 rows, evidence polarity/quality, unified Top-10 and Return-v2 short-turn behavior remain open.
+- CURRENT/Execution Lock/Handoff/Matrix now encode this distinction fail-closed. A future chat must not close the device gate merely from the version badge.
