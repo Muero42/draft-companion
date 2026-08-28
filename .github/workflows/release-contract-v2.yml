@@ -24,3 +24,5 @@ jobs:
           node tools/pitti_guardrail_check.mjs
           node tools/rc482-draft-critical.mjs
           node tools/rc483-draft-critical.mjs
+          node tools/rc484-draft-critical.mjs
+          node tools/rc485-draft-critical.mjs
