@@ -1,14 +1,13 @@
 # Draft Companion – Final Draft Edition 2026
 
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
-> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.89 · 13 Runtime-Dateien. rc4.91 full sealed workflow set passed; package/re-extract promotion pending latest post-gate evidence-only commit.
-> **Letzter Android-verifizierter Teststand:** v11.8.0-rc4.88 (Expert-v3 · positionsspezifisch ausgewählt und visuell verifiziert).  
-> **Aktueller installierter Android-Stand:** v11.8.0-rc4.88; rc4.89 korrigiert ausschließlich Live-Draft-Präsentation/Research-Prose und ist noch nicht Android-verifiziert.
-> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.91 — PRE-DEVICE root-cause fix for Expert-v3 panel selection + actual expert rows + early Top-10 evidence; deployment withheld until full sealed gates PASS.
-> **Aktueller Android-Testauthority:** v11.8.0-rc4.88; Decision Kernel/Return-v2 bleiben eingefroren.  
-> **Aktueller Source-Challenger:** v11.8.0-rc4.91; Expert-v3 panel fix + early Return-v2 calibration + evidence-polarity/Henry evidence fixes. Android deployment remains gated.
+> **Aktuelle Source-Authority:** v11.8.0-rc4.91.  
+> **Letzter paket-/re-extract-verifizierter Stand:** v11.8.0-rc4.91 · 13 Runtime-Dateien · SHA-256 `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`.  
+> **Android-Version beobachtet:** v11.8.0-rc4.91 (User-Screenshot 2026-08-28). Das ist noch keine vollständige funktionale Verifikation aller rc4.91-Oberflächen.  
+> **gh-pages:** Versionsstring rc4.91; `app.js` ist aktuell byte-seitig älter als main (Henry/Polarity vorhanden, jüngster breiter Research-Batch fehlt). Versionsgleichheit darf nicht als Parität gewertet werden.  
+> **Aktuelles Gate:** `RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`.  
 >
-> Built/source-verified, packaged/re-extracted, deployed und Android-verified sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
+> Built/source-verified, packaged/re-extracted, deployed, Android-Version-beobachtet und Android-funktional-verifiziert sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
 
 ### rc4.83 — bounded late-WR challenger / decision-evidence test
 - Kein Produktions-Promotion: rc4.82 bleibt Android-Authority bis zum realistischen OOS-Mock.
