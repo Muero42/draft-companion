@@ -1570,7 +1570,7 @@ function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   const agree=agreement(r.sd,r.n);
   if(agree==='Sehr hoher Konsens')score+=1.5;
   else if(agree==='Stark umstritten')score-=3;
-  if(p.injury){const st=String(p.injury).toUpperCase(),freeIr=(state.irEligible||0)<(state.irSlots||0);const pen=st==='PUP'&&freeIr&&current>=121?0:st==='PUP'?3:st==='QUESTIONABLE'?3:st==='DOUBTFUL'?7:st==='IR'&&freeIr?12:st==='IR'?18:8;score-=pen;reasons.push(`Injury ${p.injury}${st==='PUP'?' · Return-Timetable prüfen':''}${st==='IR'?' · Season-ending prüfen':''}`)}
+  if(p.injury){const st=String(p.injury).toUpperCase(),freeIr=(state.irEligible||0)<(state.irSlots||0);const pen=st==='PUP'&&freeIr&&current>=121?0:st==='PUP'?3:st==='QUESTIONABLE'?0:st==='DOUBTFUL'?7:st==='IR'&&freeIr?12:st==='IR'?18:8;score-=pen;if(pen>0)reasons.push(`Injury ${p.injury}${st==='PUP'?' · Return-Timetable prüfen':''}${st==='IR'?' · Season-ending prüfen':''}`);else if(st==='QUESTIONABLE')reasons.push('Questionable · kein pauschaler Score-Abzug; aktuelle Evidenz prüfen')}
   if(p.bye&&(state.byes[p.pos]?.[p.bye]||0)>=2){score-=1;reasons.push(`Bye ${p.bye} (nur Tiebreaker)`)}
   // Return is scored only after Return-v2 / fallback resolution in the coach loop.
   // Keeping the legacy ADP curve here as a score input would double-count return pressure
