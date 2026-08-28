@@ -29,7 +29,7 @@ assert.ok(app.includes('function activePanelHealthState()'));
 assert.ok(app.includes("Panel-Health: ${activeHealth.degraded?'DEGRADED':'OK'}"));
 assert.ok(app.includes('Expertenquelle: ${activePanelSourceSummary()}'));
 assert.ok(app.includes('Panel-Gewichte: ${activePanelWeightSummary()}'));
-assert.ok(app.includes('aktive Expert-v2 Stimmen'));
+assert.ok(app.includes('aktive eingebettete Expertenstimmen')||app.includes('aktive Expert-v2 Stimmen'));
 assert.ok(app.includes("mode==='hybrid'"));
 
 const grab=name=>{const s=app.indexOf(`function ${name}`);assert.ok(s>=0,name);let i=app.indexOf('{',s),d=0;for(let j=i;j<app.length;j++){if(app[j]==='{')d++;else if(app[j]==='}'){d--;if(d===0)return app.slice(s,j+1)}}throw new Error(name)};
