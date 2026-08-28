@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T065500Z-v120`
-Updated: 2026-08-28 06:55Z
+Handoff generation: `20260828T072500Z-v121`
+Updated: 2026-08-28 07:25Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -19,7 +19,8 @@ Updated: 2026-08-28 06:55Z
 - User strategy: exactly one drafted QB; after QB1 all QBs disappear from user's Coach surface. Geno Smith and Aaron Rodgers are hard exclusions.
 - K/DST normally not drafted. Starter maxima are NOT roster caps.
 - rc4.84 = current Android authority and runtime of the completed realistic mock/Evidence-v2.
-- rc4.85 = current Expert-v3 acquisition/export candidate. Release Contract, package/re-extract and gh-pages deployment are complete; Android still shows rc4.84 until update/reload is verified.
+- rc4.85 export attempt exposed a deterministic defect: `loadSingleExpert is not defined`.
+- rc4.86 = current Expert-v3 export hotfix, deployed to gh-pages with main/pages runtime parity. It reuses the existing verified `loadExpertRanks` pipeline; Decision Kernel, Return-v2 and Expert-v2 remain unchanged. Android still requires reload/update verification.
 - rc4.85 changes ONLY the integrated Expert-v3 challenger export. rc4.84 Decision Kernel, Return-v2 and Frozen Expert-v2 remain unchanged.
 - Expert-v2 remains fully selectable/control. Brown stays excluded. Erickson remains qualitative/challenger only. Weisse may be freshly qualified; old availability-driven temporary-pool restoration remains forbidden.
 - Upside-v3/player research remains a parallel lane only during genuine Expert-v3 wait time. Settled players are not repeatedly re-queried without genuinely new decision-changing news.
@@ -41,7 +42,7 @@ rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. In
 - Do NOT ask user to manually document picks during the mock.
 
 ## CURRENT EXTERNAL GATE
-`ANDROID_RC4.85_SELF_UPDATE_THEN_EXPERT_V3_EXPORT`
+`ANDROID_RC4.86_SELF_UPDATE_THEN_EXPERT_V3_EXPORT`
 
 The preferred update route is the already deployed Companion/PWA path. **Do not ask for or regenerate the expired ChatGPT PREINSTALL link as the default solution.** First reload/update the installed app and verify badge `v11.8.0-rc4.85`. If it remains rc4.84, diagnose the service-worker/cache/update path before inventing another install route.
 
@@ -223,3 +224,12 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 ## V120 SECOND-PASS REPAIR
 - v119 seal correctly exposed one stale guardrail assumption: the bootstrap checker still required historical literals rc4.82 and rc4.83 even after the bootstrap was intentionally synchronized to rc4.84/rc4.85. The guard is now successor-safe and checks semantic boundary labels instead of obsolete version literals.
 - This is a transfer/regression-tool repair only; no runtime, Decision Kernel, Return-v2, Expert-v2 or Expert-v3 candidate data changed.
+
+
+## V121 RC4.86 EXPERT-v3 EXPORT HOTFIX
+- User's rc4.85 export proved the acquisition UI path executed, but Ryan Weisse/Wolf/Todd failed with `loadSingleExpert is not defined`; Joey Wright remained directory-missing.
+- Root cause: rc4.85 integration called a helper that never existed in the production app even though the verified general loader `loadExpertRanks(expertId)` already existed. This was a deterministic integration defect and should have been caught before device use.
+- rc4.86 replaces only that call/serialization path, adds an explicit regression canary forbidding `loadSingleExpert(`, and reuses the existing verified per-expert ranking cache/pipeline.
+- main/gh-pages parity has been restored for all 12 runtime files. rc4.84 remains latest Android authority until device reload proves rc4.86.
+- Exact next action: reload/update to rc4.86, verify badge, run Expert-v3 Challenger export once. No mock.
+- Research breadth lock remains: move to uncovered players; settled players reopen only on genuinely decision-changing news.
