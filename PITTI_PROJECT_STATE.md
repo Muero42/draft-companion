@@ -1674,3 +1674,28 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Root cause verified: Expert-v2 row has n=2; Expert-v3 cannot add Ryan Weisse because his challenger vector omits Dobbins, so the base row passes through unchanged. Existing confidence penalty for n=2 was too weak and no recommendation-score sparse-panel penalty existed.
 - rc4.96 source change: n=2 now receives a bounded sparse-panel score penalty and confidence cap; n=3 is also degraded; n>=4 remains normal. UI reason explicitly marks incomplete panel. Questionable remains score-neutral unless separate injury evidence indicates severity.
 - IMPORTANT: source-only until regression/gates/package/deploy verification complete; Android authority remains rc4.94.
+
+
+## 2026-08-28 — rc4.96 Decision-Evidence audit / draft-readiness repairs
+
+Canonical evidence input: `PITTI-Decision-Evidence-1398976368485625856-2026-08-28T14-07-09-294Z.json` (Library file; 2.55 MB). Full repo audit: `research/DECISION_EVIDENCE_AUDIT_1398976368485625856_2026-08-28.md`.
+
+Material findings and accepted generic repairs:
+- Raw export had 16 fixtures but 15 canonical own-pick states; Pick 92 had a superseded fingerprint after Sleeper revised the preceding pick. Export now keeps newest fixture per own pick and reports raw/superseded counts.
+- Top-level rc4.95 label concealed mixed fixtures: canonical set = rc4.88 x1, rc4.94 x3, rc4.95 x11. Export now records `modelVersions`, per-summary modelVersion and `mixedModelVersions`.
+- Embedded Expert-v2/v3 individual rows vanished in old Evidence-v2 because `robustRankShadow` expected `w` while frozen rows use `effectiveWeight`. Fixed generically; candidates additionally export panelN/panelSd/reasons/confidence/outsideNormalCut.
+- J.K. Dobbins sparse panel is real: only Draft Sharks #102 + Nick Mariano #80; Ryan Weisse vector has no Dobbins. Generic n=2/n=3 sparse-panel score/confidence guard added; n<3 surfaces PANEL-CHECK. No Dobbins-specific ranking rule.
+- Frozen source board contained real-player alias splits: Cam Ward/Cameron Ward and Kenny Gainwell/Kenneth Gainwell. Merged to one player row: Cam Ward n=5 base voices, weighted rank 178.4; Kenny Gainwell n=4 base voices, weighted rank 122.65. This is data hygiene, not player forcing.
+- rc4.95 decision-zone display-evidence coverage was only 12/110 Top-10 appearances (10.9%). All 58 unique Top-10 names observed across the audited mock are now backed by specific display/displayRisk evidence in rc4.96; additions are display-only unless an existing structured residual explicitly scores them.
+- NORMAL-CUT presentation is decoupled from PlayerQualitySafety. Display band is +18 panel ranks through pick 70, +22 through 110, +26 thereafter; Safety remains the narrower top-pick protection. No Coach score change from this display fix.
+- Pick 129 exposed late WR opportunity-cost weakness: roster QB1/RB4/WR6/TE1 yet a seventh WR (Xavier Worthy) was Coach #1. rc4.96 strengthens only late (pick >=121) WR7+ marginal utility and gives RB<=4 a small contingent-option utility; no hard WR cap and exceptional WR value can still win.
+- Return-v2 single-mock calibration is retained as evidence only: approximate Brier 0.097; middle/high-middle survival bands were overoptimistic, but 90%+ band was strong. Generic Return-v2 retune remains explicitly forbidden from this one mock.
+- Dedicated `tools/rc496-draft-critical.mjs` + CI workflow added and wired into both release contracts. It protects Q-neutral status, sparse-panel safety, evidence serialization/version segmentation, alias merges, broader normal-cut display, late WR opportunity cost, and the 58-name observed evidence corridor.
+
+Anti-overfit/non-actions remain binding:
+- no player-name forcing for Dobbins/Williams/Flowers/Smith or anyone else;
+- no generic Return-v2 retune;
+- no hard WR cap/fixed quotas;
+- no Geno/Rodgers name exclusions;
+- no change to Expert-v3 weights from this audit;
+- no promotion of rc4.96 until exact reseal + full release/package/deploy gates.
