@@ -1,5 +1,6 @@
 # Draft Companion – Final Draft Edition 2026
 
+> **Research-only candidate:** v11.8.0-rc4.99 — source/package validation only; not production, not Android-accepted, not merged.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64.  
 > **Rollback-/zuletzt voll akzeptierte Android-Authority:** v11.8.0-rc4.96.  
 > **Aktuelle main/source + package/re-extract Authority:** v11.8.0-rc4.98.  
