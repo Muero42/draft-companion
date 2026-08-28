@@ -33,7 +33,7 @@ If Library files are available, read them too. A v105 Library reseal was prepare
 ## Current gate
 `RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`
 
-On takeover, verify the v132 seal/current hashes first. Continue from the rc4.91 device-observed state. Do not restart Expert-v3 acquisition/export: Todd D Clark QB, Ryan Weisse RB and Wolf of Roto Street TE are already integrated; WR intentionally remains frozen Expert-v2 because Joey Wright is unavailable. Verify actual runtime rows/evidence before any further device promotion. Continue broad anti-repeat upside/differentiator research in parallel when device evidence is unavailable. No mock unless explicitly requested.
+On takeover, verify the v136 seal/current hashes first. Continue from the rc4.91 device-observed state. Do not restart Expert-v3 acquisition/export: Todd D Clark QB, Ryan Weisse RB and Wolf of Roto Street TE are already integrated; WR intentionally remains frozen Expert-v2 because Joey Wright is unavailable. Verify actual runtime rows/evidence before any further device promotion. Continue broad anti-repeat upside/differentiator research in parallel when device evidence is unavailable. No mock unless explicitly requested.
 
 
 ## AUTO acceptance test
