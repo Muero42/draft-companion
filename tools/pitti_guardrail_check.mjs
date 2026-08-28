@@ -111,7 +111,7 @@ must(e.weightsAreFinalWinner===false,'no Expert-v2 profile may be mislabeled fin
 must(e.oldWrOnlyRejectionSemanticsAreAuthority===false,'obsolete WR-only authority resurrected');
 must(lock.league?.userDraftQbLimit===1,'user one-QB strategy lock drift');
 must(lock.league?.userQb2Policy==='HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1','user QB2 policy drift');
-must(commandContract.version==='1.5.0','repo command contract version drift');
+must(commandContract.version==='1.6.0','repo command contract version drift');
 must(commandContract.sourceOrder?.includes('PITTI_CURRENT_STATE.json'),'CURRENT missing from takeover source order');
 must(commandContract.sourceOrder?.includes('PITTI_HANDOFF_SEAL.json'),'SEAL missing from takeover source order');
 must(commandContract.auto?.longestSafeBlocks===true,'repo command contract long-block drift');
@@ -120,6 +120,10 @@ must(commandContract.auto?.reinventoryAfterEveryWorkPackage===true,'repo command
 must(commandContract.auto?.blockedGateStopsOnlyDependentLane===true,'repo command contract lane isolation drift');
 must(commandContract.auto?.promiseOnlyResponseForbidden===true,'repo command contract promise-only guard drift');
 must(commandContract.auto?.externalGateValidStopOnlyAfterIndependentLaneExhaustion===true,'repo command contract external-gate guard drift');
+must(commandContract.auto?.autoBlockCorrectionTrigger?.trigger==='AUTO BLOCK','AUTO BLOCK command contract missing');
+must(commandContract.currentBoundary?.androidAuthority==='v11.8.0-rc4.91','command contract Android authority drift');
+must(commandContract.currentBoundary?.latestPackageSha256==='6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a','command contract package hash drift');
+must(commandContract.currentBoundary?.deployedPagesAppByteParityWithMain===false,'main/pages app divergence must remain explicit until resynced');
 must(current.handoff_generation===seal.handoff_generation,'CURRENT/SEAL generation mismatch');
 must(current.handoff_generation===handoffGeneration,'CURRENT/Handoff generation mismatch');
 must(seal.status==='PASS' && seal.handoff_ready===true && seal.second_pass_pass===true,'handoff seal not fully PASS');
@@ -157,7 +161,7 @@ must(emergencyQueueContract.includes('EMERGENCY_QUEUE_CONTRACT_PASS'),'emergency
 must(emergencyQueueContract.includes('only one QB while QB1 open'),'emergency queue one-QB canary missing');
 must(emergencyQueueContract.includes('only one TE while TE1 open'),'emergency queue one-TE canary missing');
 
-for(const token of ['production/control','current Android authority','current deployed/package-reextract candidate','work package -> checkpoint -> re-inventory','user must never need to remind'])
+for(const token of ['production/control','Android version authority','latest package/re-extract','work package -> checkpoint -> re-inventory','user must never need to remind'])
   must(bootstrap.includes(token),`repo bootstrap invariant missing: ${token}`);
 for(const token of ['rc4.84','rc4.85','rc4.86','rc4.87','rc4.88','rc4.89','rc4.90','AUTO durability','Execution witness','Old-error scan'])
   must(handoffMatrix.includes(token),`repo handoff matrix invariant missing: ${token}`);
