@@ -78,7 +78,9 @@ for(const token of [
 
 must(readme.includes('v11.8.0-rc4.64'),'README production/control baseline drift');
 must(readme.includes(current.runtime?.test_challenger||'v11.8.0-rc4.86'),'README current candidate missing');
-must(app.includes("const USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers'])"),'QB hard-exclusion canary drift');
+must(!app.includes('USER_HARD_QB_EXCLUSIONS'),'player-name QB exclusion must not exist');
+must(!app.includes('USER HARD EXCLUSION'),'player-name hard-exclusion scoring must not exist');
+must(!/genosmith|aaronrodgers/i.test(app),'Geno/Rodgers must not receive player-name runtime treatment');
 must(app.includes("function normalCandidateAdmissible(row)"),'normal candidate admissibility guard missing');
 must(policy.includes('USER_DRAFT_QB_LIMIT=1'),'user one-QB runtime invariant missing');
 must(app.includes("from './decision-policy.js'"),'decision policy wiring missing');
