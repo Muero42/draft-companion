@@ -8,12 +8,12 @@
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_CURRENT_STATE.json": "f21058fa6728ad3ff29b2f6b2f258ac6c00c97a2",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "59de682b543d689fe544ad524392cc9b19cce015",
-    "PITTI_COMMAND_CONTRACTS.json": "c2bdb5343c8801de1abd5f4ce29d4f8d21c76ebd",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "cea9d5c7df2f81016b925cdb194834bda0b84e93",
+    "PITTI_COMMAND_CONTRACTS.json": "53073bb44c36642c862365ce108698694c33e71d",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "125efb9f5ffed895206067cfbd19b7271d1349c3",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "0165aac8ce3dad9d383bc9723228fc85bd45e347",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "abfc2d5095105956c657b8abc0afd2e64f1ba913",
     "PITTI_EXECUTION_LOCK.json": "fdca8b8d1405a93639c70d62c318c8e0cb3ffb51",
-    "PITTI_PROJECT_STATE.md": "5188a74b6271c18fcdbf2b46f6306104095b96b2",
+    "PITTI_PROJECT_STATE.md": "ba39f0d4288f59aaee1a8d52b9dd4b53b751ccb5",
     "PITTI_AUTO_PREFLIGHT.md": "821033bf26d29ca498b86996e9a0e0a4e23e0492",
     "README.md": "136313046471ae3b21126a94e454d027515c3ca2",
     "app.js": "63aececb4c05661276a386c6b4c5a9985ad9d637",
@@ -24,6 +24,7 @@
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
     "tools/pitti_guardrail_check.mjs": "4da0a6ccb1129e60ee278622448a15b5243d9d4c",
     "tools/rc498-evidence-polarity.mjs": "5a21cc109a73bfb0f52f8424ee4e16fdcd702359",
+    ".github/workflows/package-rc461.yml": "b2fc45e59e66bc7f4a48323348bfe5d958a18ba0",
     "research/RC498_PAIRED_OOS_MOCKS_1399109246460682240_1399114762087895040_2026-08-28.md": "0ce3c9826607d36b8aa59ab767fa6e26fcc83843"
   },
   "checks": {
@@ -223,7 +224,9 @@
     "v155_wr_saturation_audit_open": true,
     "v155_no_auto_mock": true,
     "v155_guard_compatibility_canaries_restored": true,
-    "v155_final_second_pass_after_guard_failure": true
+    "v155_final_second_pass_after_guard_failure": true,
+    "v155_obsolete_rc461_workflow_retired": true,
+    "v155_final_integrity_after_all_repairs": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
@@ -264,5 +267,5 @@
     "instruction": "Use the canonical 17:30 backup. Audit the strict Coach 9-WR path and pool-wide substantive Pro/Contra coverage. Do not hard-cap WR, blindly force RB, resurrect PairSum/Rolling, globally retune Return-v2, redesign expert weights, or claim PR #33 is merged."
   },
   "library_persistence": "STALE_FAIL_CLOSED",
-  "acceptance_fingerprint": "RC4.98-SOURCE-PKG|ANDROID-RC4.98-OBSERVED-NOT-ACCEPTED|RC4.96-ROLLBACK|GH-PAGES-RC4.96-DIVERGED|PAIRED-OOS|STRICT-COACH-9WR|CMC-FALLBACK-OPEN|PR33-UNMERGED|SEAL-18FILES|NO-AUTO-MOCK|HANDOFF-v155"
+  "acceptance_fingerprint": "RC4.98-SOURCE-PKG|ANDROID-RC4.98-OBSERVED-NOT-ACCEPTED|RC4.96-ROLLBACK|GH-PAGES-RC4.96-DIVERGED|PAIRED-OOS|STRICT-COACH-9WR|CMC-FALLBACK-OPEN|PR33-UNMERGED|RC461-WORKFLOW-RETIRED|SEAL-19FILES|NO-AUTO-MOCK|HANDOFF-v155"
 }
