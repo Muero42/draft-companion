@@ -72,7 +72,7 @@ Otherwise continue AUTO.
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — v119
 - Never answer an AUTO turn with “AUTO läuft”, “ich mache weiter”, or equivalent future-tense progress prose. Work must be executed **before** any reply.
 - During PITTI HANDOFF, finish the complete transactional audit/reseal before replying unless an unavoidable blocker prevents it.
-- Current update path: rc4.93 is the latest package/deploy/Android-observed authority; rc4.94 is a source-only display-selection challenger pending CI/package/deploy. rc4.94 must prioritize normal-cut candidates before outside-cut fallback context and must not change Coach scoring, Expert-v3, Return-v2, ADP, injury penalties or player-specific treatment. Never infer functional PASS from a version badge.
+- Current update path: rc4.94 is source + CI/release/package/re-extract verified; rc4.93 remains deployed + Android-observed until exact rc4.94 promotion/parity. rc4.94 must prioritize normal-cut candidates before outside-cut fallback context and must not change Coach scoring, Expert-v3, Return-v2, ADP, injury penalties or player-specific treatment. Never infer functional PASS from a version badge.
 
 ## 9. AUTO TURN TERMINATION — HARD GATE
 - Completing one work package is **not** permission to end the assistant turn.
@@ -81,4 +81,4 @@ Otherwise continue AUTO.
 - Because execution cannot continue after the assistant turn is ended without another user message, early turn termination is a functional AUTO failure, not a cosmetic response issue.
 - Valid turn end requires one of: unavoidable user/device input; approval-gated consequential action; unsafe unresolved contradiction; material end result with no higher-value package remaining; or demonstrated exhaustion of all safe positive-value independent lanes.
 - rc4.92 correction: Geno Smith/Aaron Rodgers are NOT exclusions. Any active runtime/test/checkpoint rule that special-cases either name for demotion/removal is a regression. Exactly-one-QB remains a roster strategy only after QB1 is drafted.
-- v143 takeover canary: rc4.93 Android observed; rc4.94 source challenger only until CI/package/deploy. Kenneth Walker must not receive a player-specific boost; the fix is generic normal-cut-first Top-10 selection.
+- v144 takeover canary: rc4.93 Android observed/deployed; rc4.94 source + CI/release/package verified, deployment/Android still pending. Kenneth Walker must not receive a player-specific boost; the fix is generic normal-cut-first Top-10 selection.
