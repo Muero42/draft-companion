@@ -125,5 +125,6 @@
     "returnFinding": "3-pick turns 91.4% forecast vs 90.9% actual; 17-pick turns 37.1% vs 30.4%; no global Return-v2 retune",
     "openEvidencePatch": "Superseded by merged rc4.99/rc4.100 generic semantic fixes; never resurrect stale PR #33 status as current."
   },
-  "currentGate": "RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY"
+  "currentGate": "RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY",
+  "handoffGeneration": "20260828T2002Z-v157"
 }
