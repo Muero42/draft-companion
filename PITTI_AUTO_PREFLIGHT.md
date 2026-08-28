@@ -72,7 +72,7 @@ Otherwise continue AUTO.
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — v119
 - Never answer an AUTO turn with “AUTO läuft”, “ich mache weiter”, or equivalent future-tense progress prose. Work must be executed **before** any reply.
 - During PITTI HANDOFF, finish the complete transactional audit/reseal before replying unless an unavoidable blocker prevents it.
-- Current update path: rc4.91 is Android-version-observed and source/package authority. Functional verification is still open. gh-pages also reports rc4.91 but its app.js bytes lag main; never infer byte parity from the version string. Prefer normal PWA/self-update/reload verification over expiring ChatGPT file links, and preserve the audited main/gh-pages byte distinction until explicitly resolved.
+- Current update path: rc4.92 is source/package/gh-pages authority with verified main/pages runtime parity, and rc4.92 is Android-version-observed from the user's 13:04 screenshot. Functional verification is still open; the active P0 diagnostic is Kenneth Walker III unexpectedly missing from the Pick-9 Top-10. Never infer functional PASS from the version badge.
 
 ## 9. AUTO TURN TERMINATION — HARD GATE
 - Completing one work package is **not** permission to end the assistant turn.
