@@ -77,5 +77,7 @@ assert(!p.plus(fairRange,0).includes('Fairer Bereich'),'fair-range context leake
 const mixedPolarity={...rows[0],name:'Mixed Polarity Fixture',arrows:'',researchResidual:{active:true,displayActive:true,components:[{display:true,kind:'age',dir:0,confidence:.99,causal:'Age 29'},{display:true,kind:'elite_role',dir:1,confidence:.90,causal:'Elite workload and receiving role'},{displayRisk:true,display:true,kind:'decline_risk',dir:-1,confidence:.92,causal:'Workload-driven decline risk'}]}};
 assert(p.plus(mixedPolarity,0).includes('Elite workload'),'neutral evidence masked positive Pro');
 assert(p.minus(mixedPolarity).includes('Workload-driven decline risk'),'negative risk masked by neutral evidence');
+const badRiskPolarity={...rows[0],name:'Bad Risk Polarity Fixture',researchResidual:{active:true,components:[{displayRisk:true,kind:'upside',dir:1,confidence:.99,causal:'Positive upside must not render as risk'}]}};
+assert(!p.minus(badRiskPolarity).includes('Positive upside must not render as risk'),'positive evidence leaked into Contra via displayRisk');
 
 console.log('LIVE_PRESENTATION_BEHAVIOR_PASS');
