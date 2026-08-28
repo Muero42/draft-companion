@@ -72,3 +72,7 @@ assert.ok(app.includes('Fitzmaurice 27.08.'));
 assert.ok(app.indexOf('userDraftStrategyExcluded(p.pos,state.counts)')>app.indexOf('function scoreCandidate'));
 
 console.log('RC482_DRAFT_CRITICAL_PASS');
+
+// Broad evidence batch: researched late-round upside must remain player-specific and displayable.
+for(const name of ['Blake Corum','Rachaad White','Jordan Mason','Jake Ferguson','Juwan Johnson','Malachi Fields','Romeo Doubs']) assert.ok(app.includes(`[norm('${name}')]`)||app.includes(`[norm("${name}")]`),`missing researched evidence: ${name}`);
+for(const phrase of ['contingent_workhorse','receiving_role_upside','volume_insurance_ceiling','target_role_upside','deep_sleeper_role','pass_environment_upside']) assert.ok(app.includes(phrase),`missing evidence kind: ${phrase}`);
