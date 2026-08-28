@@ -23,18 +23,18 @@ If Library files are available, read them too. A v105 Library reseal was prepare
 
 ## Current acceptance boundary
 - production/control: rc4.64
-- source/package/deployment: rc4.92; main/gh-pages runtime parity verified
-- latest package/re-extract: rc4.92 (candidate-package PASS; run 33165222701 / artifact 9683286172)
-- Android version authority: rc4.92, observed directly in user screenshot 2026-08-28 13:04 local
+- source challenger: rc4.94; latest package/deployment authority: rc4.93; main/gh-pages app.js parity intentionally false until rc4.94 passes and is deployed
+- latest package/re-extract: rc4.93 (candidate-package PASS; run 33166867111 / artifact 9683925309)
+- Android version authority: rc4.93, observed directly in fresh Pick-9 snapshot
 - Android functional verification: OPEN
 - Expert-v3 integrated; do not restart acquisition/export
 - Geno Smith/Aaron Rodgers are ordinary QB candidates; no player-name exclusion
 - Library mirror remains fail-closed if stale
 
 ## Current gate
-`RC492_WALKER_ROOT_CAUSE_AND_ANDROID_FUNCTIONAL_VERIFY`
+`RC494_NORMAL_CUT_DISPLAY_FIX_CI_PACKAGE_DEPLOY_ANDROID_VERIFY`
 
-On takeover, require the latest CURRENT/SEAL/handoff generation and verify seal hashes. First diagnose Kenneth Walker III disappearing from the fresh Pick-9 Top-10; do not rationalize it from the minor ankle/foot issue without scoring arithmetic. Then finish focused rc4.92 Android functional verification (actual Expert-v3 rows, evidence polarity/quality, unified Top-10, Return-v2 short-turn tau 4.25). Continue broad anti-repeat upside research in parallel. No mock unless explicitly requested.
+On takeover, require the latest CURRENT/SEAL/handoff generation and verify seal hashes. Fresh rc4.93 Pick-9 evidence proved Walker remains Panel 15.3 / ADP 17.4 while outside-normal-cut fallback rows occupied visible Top-10 slots. rc4.94 fixes only visible candidate selection: normal-cut rows first, fallback only fills unused slots. Verify rc4.94 CI/package, deploy exact runtime, then obtain a fresh Android Pick-9 snapshot. Do not retune scoring, Expert-v3, Return-v2, injury penalties or Walker specifically. No mock unless explicitly requested.
 
 ## AUTO acceptance test
 A valid PITTI AUTO run must execute the repeated loop:
