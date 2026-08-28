@@ -133,3 +133,8 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 
 - v137 Android semantics: rc4.91 version observed, but `android_functional_verified=false`; never collapse these states.
 - v137 preflight canary: PITTI_AUTO_PREFLIGHT current update path must name rc4.91 and must preserve main/gh-pages app.js byte divergence; active rc4.85 update-path language is forbidden.
+
+## v138 AUTO turn-continuity canary
+- AUTO/AUTO BLOCK must chain work packages in the same assistant turn; one completed package is not a stop condition.
+- Empty final after tool work is explicitly forbidden while executable autonomous work remains.
+- Early turn termination is treated as execution failure because autonomous work cannot resume after turn end without another user message.
