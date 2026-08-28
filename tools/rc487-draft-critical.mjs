@@ -1,0 +1,17 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const app=fs.readFileSync('app.js','utf8'),idx=fs.readFileSync('index.html','utf8'),sw=fs.readFileSync('sw.js','utf8'),manifest=fs.readFileSync('manifest.webmanifest','utf8');
+for(const [n,s] of [['app',app],['index',idx],['sw',sw],['manifest',manifest]])assert.ok(s.includes('v11.8.0-rc4.87'),n+' version');
+assert.ok(app.includes("schema:'pitti-expert-v3-compact.v1'"));
+assert.ok(app.includes("{name:'Ryan Weisse',pos:'RB'}"));
+assert.ok(app.includes("{name:'Wolf of Roto Street',pos:'TE'}"));
+assert.ok(app.includes("{name:'Todd D Clark',pos:'QB'}"));
+assert.ok(app.includes("{name:'Joey Wright',pos:'WR'}"));
+assert.ok(app.includes(".filter(v=>String(v.pos||'').toUpperCase()===pos"));
+assert.ok(app.includes(".map(v=>[v.name,Number(v.rank)])"));
+assert.ok(app.includes('await navigator.clipboard.writeText(text)'));
+assert.ok(!app.includes('loadSingleExpert('));
+assert.ok(app.includes('const row=await loadExpertRanks(e.id);'));
+assert.ok(idx.includes('Expert-v3 kompakt kopieren'));
+assert.ok(app.includes("containsCredential:false"));
+console.log('RC487_COMPACT_EXPERT_V3_TRANSFER_PASS');
