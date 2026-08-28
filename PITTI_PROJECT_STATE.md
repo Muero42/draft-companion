@@ -1754,3 +1754,13 @@ Transfer mechanics:
 - Source/package/re-extract/all five primary gates/deployment 13/13 parity remain rc4.96 PASS; no automatic mock.
 - Decision-Evidence v2 repairs remain binding: Dobbins sparse-panel generic guard, effectiveWeight serialization, mixed-version segmentation, alias dedupe, 58-name evidence coverage, broader display-only Normal-Cut, late WR7+ soft utility, QUESTIONABLE neutral, no generic Return-v2 retune, no player-name forcing.
 - Next unavoidable external gate: fresh Android/PWA rc4.96 Pick-9 functional snapshot; only after PASS may Android authority promote and final draft-ready/freeze audit run.
+
+
+## 2026-08-28 — rc4.96 Android functional observation + recommendation-following mock 1399085353452761088
+- User supplied a complete Sleeper snapshot from Android/PWA v11.8.0-rc4.96, draft 1399085353452761088, slot 9, 10x15, status complete. This proves rc4.96 loaded and completed-draft snapshot/runtime path functions on device; Android authority may promote to rc4.96.
+- User explicitly followed every Companion recommendation in this mock. Therefore this draft is high-value decision-quality evidence and must be analyzed before final freeze; do NOT start another mock automatically.
+- User roster: James Cook 9, CeeDee Lamb 12, Malik Nabers 29, Chris Olave 32, Garrett Wilson 49, Jaylen Waddle 52, Tucker Kraft 69, Parker Washington 72, Trevor Lawrence 89, Blake Corum 92, Stefon Diggs 109, Rachaad White 112, Woody Marks 129, Tyjae Spears 132, Tank Bigsby 149.
+- Snapshot panel health OK: Expert-v3 QB/RB/TE 28.08 and frozen Expert-v2 WR 26.08; embedded verification QB6/6 RB5/5 WR5/5 TE5/5. Koerner remains unavailable diagnostically and is not silently counted.
+- Structural observation from final roster: QB1/RB6/WR7/TE1, no K/DST. WR7 occurred at pick 109 (Diggs), before the existing late WR7+ >=121 utility guard; RB then filled picks 112/129/132/149. This is an audit target, not automatically an error or a new cap.
+- The supplied completed snapshot lacks per-pick candidate scores, return probabilities, confidence, panelN/SD and reasons. Final roster alone is insufficient to validate whether each recommendation was correct. Exact next evidence gate: export PITTI Decision Evidence for draft 1399085353452761088; analyze it before any scoring changes/freeze.
+- FantasyPros benchmark is optional/secondary after internal decision-evidence capture; do not require manual pick reconstruction.
