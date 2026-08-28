@@ -45,8 +45,8 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
-    "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143|RC495-Q-NEUTRAL|HANDOFF-v146",
-    "status": "RC495_DEPLOYED_ANDROID_VERIFY_PENDING",
+    "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143|RC495-Q-NEUTRAL|ALL5-PASS|ANDROID-VERIFY-PENDING|HANDOFF-v146",
+    "status": "RC495_RELEASE_GATES_PASS_ANDROID_VERIFY_PENDING",
     "handoff_ready": true,
     "second_pass_pass": true,
     "next_action": "Verify Android/PWA badge v11.8.0-rc4.95 and functional snapshot; then promote Android authority. No further source tuning before device check.",
