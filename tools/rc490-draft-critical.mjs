@@ -8,7 +8,7 @@ const sw=fs.readFileSync('sw.js','utf8');
 const b2src=fs.readFileSync('expert-v2-board.js','utf8');
 const b3src=fs.readFileSync('expert-v3-board.js','utf8');
 
-for(const [n,s] of [['app',app],['index',idx],['sw',sw]])assert.ok(s.includes('v11.8.0-rc4.90'),n+' version mismatch');
+for(const [n,s] of [['app',app],['index',idx],['sw',sw]])assert.match(s,/v11\.8\.0-rc4\.(?:90|9[1-9]|[1-9][0-9]{2,})/,n+' rc4.90+ version mismatch');
 
 // Root-cause guard: Expert-v3 shadow panels must be selectable just like frozen v2 boards.
 assert.ok(app.includes("if(/^expert-v[23]-(qb|rb|wr|te)$/.test(id))return true;"),'Expert-v3 panel selectability missing');
