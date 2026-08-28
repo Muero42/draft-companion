@@ -9,7 +9,7 @@
   "integrity": {
     "PITTI_CURRENT_STATE.json": "9bcfd321c3f46ee57d41c177c50f6dc6ca660049",
     "NEW_CHAT_HANDOFF_CURRENT.md": "9a10c6fbe13a269616eb89726839541350b7e80f",
-    "PITTI_COMMAND_CONTRACTS.json": "be98e8923d8c8058619ada3dbf177bb6cfd1fafc",
+    "PITTI_COMMAND_CONTRACTS.json": "dd1dbe2f314405bf6e463361822ecba020fae4ef",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "3f3c8ead0489cb946641f3839625261043dfacc1",
     "HANDOFF_COMPLETENESS_MATRIX.md": "73844e0b353e61e49d4eaac1e38d84bb02c91319",
     "PITTI_EXECUTION_LOCK.json": "fbcd2f12b966858b9fc91102cf6a09aeff18efec",
@@ -205,8 +205,8 @@
     "android_authority": "v11.8.0-rc4.94",
     "android_version_observed": true,
     "android_functional_verified": true,
-    "source_authority": "v11.8.0-rc4.95",
-    "test_challenger": "v11.8.0-rc4.95",
+    "source_authority": "v11.8.0-rc4.96",
+    "test_challenger": "v11.8.0-rc4.96",
     "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.95",
     "latest_package_digest": "d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576",
@@ -219,9 +219,9 @@
     "note": "v145 closure boundary: rc4.94 source/package/re-extract + exact 13-file gh-pages deployment parity + fresh Android Pick-9 presentation verified."
   },
   "exact_continuation": {
-    "gate": "RC495_ANDROID_VERIFY",
+    "gate": "RC496_RELEASE_PACKAGE",
     "auto_starts_mock": false,
-    "instruction": "rc4.95 source/package/deployment gates PASS. Verify Android/PWA badge rc4.95 and a functional snapshot; rc4.94 remains Android authority until observed."
+    "instruction": "rc4.96 source regression PASS; close canonical release/package gates before any deployment. Android authority remains rc4.94 until promotion and fresh device verification."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
   "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-PACKAGE-PASS|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v144"
