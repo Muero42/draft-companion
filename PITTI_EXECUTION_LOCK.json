@@ -48,7 +48,11 @@
     "oneInventoryPerAutoTurnIsInsufficient": true,
     "promiseOnlyAutoResponseForbidden": true,
     "externalGateValidStopOnlyAfterIndependentLaneExhaustion": true,
-    "autoBlockCorrectionTrigger": "AUTO BLOCK = immediate zero-ack resumption of AUTO; no status/apology/explanation."
+    "autoBlockCorrectionTrigger": "AUTO BLOCK = immediate zero-ack resumption of AUTO; no status/apology/explanation.",
+    "autoBlockSilentExecution": true,
+    "autoBlockVisibleResponseGate": "RESULT_OR_UNAVOIDABLE_USER_ACTION_ONLY",
+    "emptyAssistantResponseForbidden": true,
+    "toolRunEndedIsNotAStopCondition": true
   },
   "league": {
     "teams": 10,
