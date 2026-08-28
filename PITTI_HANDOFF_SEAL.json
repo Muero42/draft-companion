@@ -1,21 +1,21 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T091500Z-v130",
-  "created_at": "2026-08-28T09:20:00Z",
+  "created_at": "2026-08-28T09:26:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_CURRENT_STATE.json": "a341eac81f0eda27d3c3484be5e02f0988ea6378",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "222002de4fe73bf40616e92ba9b155f1437bebab",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "f01b5a511c0c159663f3bbbf8c6d0b95ec29e166",
     "PITTI_COMMAND_CONTRACTS.json": "41ffd8e89066b5e880ff11d6dffdd85e07127fdb",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e4ba6389db3da869ab2106c0d14ac83e68c6bdc2",
     "HANDOFF_COMPLETENESS_MATRIX.md": "96157a292b98cd6cc8596835ba67922fe2abc17f",
     "PITTI_EXECUTION_LOCK.json": "e488c02bf5f9387e5fe47d08c9b106f41b4b0d31",
-    "PITTI_PROJECT_STATE.md": "8eefb6905b18f2754dc9f7a776f7951d83ac35c6",
+    "PITTI_PROJECT_STATE.md": "c06721597e96e849de062130c9c8b2630a167c11",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
-    "app.js": "75b8f68156c0163dc9c5b3e5a1daa43de1e2ee99",
+    "app.js": "b8cba20cbeaa4b91f046b40f614a8dc9dbac7f12",
     "index.html": "0ba4071177703dbabcd94e73a45169bf6cd40ddb",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
     "sw.js": "8a591745ce740061546fff540cdc079fa53bf9b8",
@@ -41,7 +41,7 @@
     "expert-v3-board.js": "b8e869f5384e5dc2a0f353e632ecfabf7958debd",
     "tools/rc488-draft-critical.mjs": "7835e441c90e947cc7d95d4a1a4844268da624f7",
     "tools/rc489-draft-critical.mjs": "261bde9a556379d764e0eea40f7998d6cf868704",
-    "tools/rc490-draft-critical.mjs": "898be836be56b5be3534b456c8d65100135a933c"
+    "tools/rc490-draft-critical.mjs": "f1c16292ccf51a3488be4962c6f59854b3838dc8"
   },
   "checks": {
     "current_generation": true,
@@ -129,7 +129,8 @@
     "generic_pro_contra_fallbacks_removed": true,
     "rc490_predevice_policy": true,
     "rc490_panel_selectability_guard": true,
-    "rc490_early_top10_evidence": true
+    "rc490_early_top10_evidence": true,
+    "rc490_broad_early_coverage": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
