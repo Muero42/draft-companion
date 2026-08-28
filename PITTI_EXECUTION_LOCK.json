@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T18:40:00Z",
+  "updatedAt": "2026-08-28T18:43:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -23,7 +23,7 @@
     "preinstallSha256": "43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.98",
-    "latestDeployedCandidate": "v11.8.0-rc4.96",
+    "latestDeployedCandidate": "v11.8.0-rc4.99",
     "latestAndroidVerified": "v11.8.0-rc4.96",
     "androidAuthority": "v11.8.0-rc4.96",
     "android_authority": "v11.8.0-rc4.96",
@@ -36,7 +36,7 @@
     "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
     "rc499": {
-      "status": "PACKAGE_REEXTRACT_PASS_RESEARCH_ONLY",
+      "status": "GH_PAGES_BYTE_PARITY_PASS_ANDROID_REFRESH_PENDING",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
       "scope": [
         "neutral evidence must not render as plus",
@@ -52,10 +52,14 @@
         "normal-cut timing 18/22/26"
       ],
       "mergeAllowed": false,
-      "nextGate": "controlled Android install/functional verification before any promotion",
+      "nextGate": "user opens/refreshes installed PWA once; verify visible v11.8.0-rc4.99 and functional surface",
       "packageGateRun": 33200304688,
       "artifactId": 9697465647,
-      "artifactDigest": "sha256:66bf4d2654135b8448f0ad42ff29bc5daca58d30225c75e1d72b6d4bed91f3c2"
+      "artifactDigest": "sha256:66bf4d2654135b8448f0ad42ff29bc5daca58d30225c75e1d72b6d4bed91f3c2",
+      "ghPagesRuntimeFiles": 13,
+      "ghPagesByteParityWithCandidate": true,
+      "androidObserved": false,
+      "androidAccepted": false
     }
   },
   "auto": {
