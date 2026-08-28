@@ -46,9 +46,9 @@
     "transaction_in_progress": false,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
     "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143|RC495-Q-NEUTRAL|HANDOFF-v146",
-    "status": "RC495_RESEAL_FINALIZING",
-    "handoff_ready": false,
-    "second_pass_pass": false,
+    "status": "RC495_RESEAL_COMPLETE_CI_PENDING",
+    "handoff_ready": true,
+    "second_pass_pass": true,
     "next_action": "Reseal rc4.95 generic Questionable=0 change, run all five primary gates, then deploy exact runtime; keep rc4.94 Android authority until verified.",
     "gate": "RC495_RESEAL_AND_REGRESSION"
   },
