@@ -88,6 +88,7 @@ must(app.includes('function applyPlayerQualitySafetyGate('),'Value-Safety gate m
 
 for(const name of ['Guilherme Gianni','Michael Bobal']) must(!app.includes(name),`temporary availability-only expert leaked into runtime: ${name}`);
 must(!text('expert-v2-board.js').includes('Ryan Weisse'),'Weisse must not leak into frozen Expert-v2 board');
+must(text('expert-v3-board.js').includes("schema:'pitti-expert-v3-board.v1'"),'Expert-v3 board missing');
 for(const token of ["{name:'Ryan Weisse',pos:'RB'}","{name:'Wolf of Roto Street',pos:'TE'}","{name:'Todd D Clark',pos:'QB'}","{name:'Joey Wright',pos:'WR'}"]) must(app.includes(token),`Expert-v3 acquisition target missing: ${token}`);
 
 const e=lock.expertV2||{};
@@ -135,10 +136,12 @@ must(releaseWorkflow.includes('node tools/rc483-draft-critical.mjs'),'release wo
 must(releaseWorkflow.includes('node tools/rc485-draft-critical.mjs'),'release workflow missing rc4.85 gate');
 must(releaseWorkflow.includes('node tools/rc486-draft-critical.mjs'),'release workflow missing rc4.86 gate');
 must(releaseWorkflow.includes('node tools/rc487-draft-critical.mjs'),'release workflow missing rc4.87 gate');
+must(releaseWorkflow.includes('node tools/rc488-draft-critical.mjs'),'release workflow missing rc4.88 gate');
 must(packageWorkflow.includes('node tools/rc483-draft-critical.mjs'),'package workflow missing rc4.83 gate');
 must(packageWorkflow.includes('node tools/rc485-draft-critical.mjs'),'package workflow missing rc4.85 gate');
 must(packageWorkflow.includes('node tools/rc486-draft-critical.mjs'),'package workflow missing rc4.86 gate');
 must(packageWorkflow.includes('node tools/rc487-draft-critical.mjs'),'package workflow missing rc4.87 gate');
+must(packageWorkflow.includes('node tools/rc488-draft-critical.mjs'),'package workflow missing rc4.88 gate');
 must(packageWorkflow.includes('VERSION="$(sed -n'),'package version must derive from APP_VERSION');
 must(!packageWorkflow.includes('Draft_Companion_v11.8.0-rc4.82_PREINSTALL.zip'),'stale hard-coded rc4.82 package path resurrected');
 must(releaseContract.includes('Exact v2 weights:'),'release contract expert-weight lock missing');
@@ -150,7 +153,7 @@ must(emergencyQueueContract.includes('only one TE while TE1 open'),'emergency qu
 
 for(const token of ['production/control','current Android authority','current deployed/package-reextract candidate','work package -> checkpoint -> re-inventory','user must never need to remind'])
   must(bootstrap.includes(token),`repo bootstrap invariant missing: ${token}`);
-for(const token of ['rc4.84','rc4.85','rc4.86','rc4.87','AUTO durability','Execution witness','Old-error scan'])
+for(const token of ['rc4.84','rc4.85','rc4.86','rc4.87','rc4.88','AUTO durability','Execution witness','Old-error scan'])
   must(handoffMatrix.includes(token),`repo handoff matrix invariant missing: ${token}`);
 must(lock.authority?.libraryMirrorStatus?.includes('STALE_'),'stale Library mirror status must remain explicit until persistence is proven');
 must(lock.authority?.failClosedRecovery?.includes('never claim a newer Library generation persisted unless files.list proves it'),'Library persistence fail-closed rule missing');
