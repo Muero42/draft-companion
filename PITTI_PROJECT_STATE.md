@@ -1479,3 +1479,11 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - No Geno/Rodgers name-exclusion behavior is visible/introduced; this verification is presentation/runtime activation evidence, not permission for scoring/player-specific tuning.
 - Android rc4.94 version + functional Pick-9 presentation verification therefore PASS for the targeted deployment gate.
 - Remaining work is canonical-state promotion/reseal and final guardrail/CI pass; no mock should auto-start.
+
+
+### 2026-08-28 — Draft-day fallback / freshness AUTO pass
+- Sleeper official support revalidated: there is still no direct custom pre-draft ranking upload/import. The native low-risk fallback is the per-draft-room Queue; CPU/forced auto-pick prioritizes queued players when available, otherwise uses roster need/high-ranked availability. Therefore do not build or depend on an unsupported import workflow.
+- Emergency Queue plan remains deliberately compact rather than a 150-player manual mirror: PITTI generates the ordered candidate set; user only needs one-time queue taps in Sleeper. K/DST excluded; QB/TE scarcity and roster rules must remain policy-bound.
+- Freshness scan on 2026-08-28 found draft-material news requiring the existing freshness layer to remain active through draft day. Official NFL reporting: Ashton Jeanty suffered a believed sprained ankle; timeline unknown but not considered long-term. This validates keeping Jeanty behind a live freshness gate rather than freezing an old injury assumption.
+- Current NFL draft guidance also independently reinforces two existing PITTI principles rather than requiring tuning: bench upside over low-ceiling depth, and avoiding rigid take-lock plans. No scoring/model change authorized from this qualitative evidence.
+- Because roster cuts/depth-chart/injury news is still moving through the Aug-30/31 window, '100% draft ready' cannot mean permanently frozen data on Aug 28. Code/runtime can freeze after clean mock; final data freshness pass remains intentionally time-proximate to the real draft.
