@@ -323,3 +323,7 @@ Decision: keep WR incumbent unchanged for now; prioritize validating high-value 
 - Wolf current Half-PPR RB page surfaced 08/24. Public overall cache can lag (08/13), reinforcing per-position/API timestamp verification rather than one-page freshness assumptions.
 - Weisse 2026 WR board is highly non-consensus (e.g. Garrett Wilson WR10 vs ECR18), but historical WR110/2025 WR171 means this independence is not evidence of value; exclude him from WR weighting despite current data.
 - Continue evidence-first challenger roles: Weisse RB (and TE secondary), Wolf TE, Todd D Clark QB. WR specialist search remains quality-first; Joey Wright stays HIGH-VALUE/UNRESOLVED rather than rejected.
+
+
+## Aug 28 decisive DS methodology evidence
+Draft Sharks' Aug 28 2026 `Plant Your Flag` article explicitly states that users cannot access individual analyst rankings because DS does not work that way: its fantasy rankings come from player projections combined with proprietary 3D Value, customized to league settings; all analysts have input, but the output is NOT an averaging of their personal ranks. Therefore Jody Smith/Jared Smola/Kevin English individual FantasyPros accuracy can only be supporting organizational/talent evidence, not direct validation of the exact `Draft Sharks Team` vector embedded in PITTI. Any DS 30-35% production weight must stand on the finished board's observed marginal/OOS value. This strengthens, rather than prejudges, the case for testing DS25/30 vs DS35 with qualified independent specialists.
