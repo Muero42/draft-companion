@@ -1975,3 +1975,13 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - gh-pages candidate is now byte-identical to the rc4.99 research candidate runtime. `main` remains unchanged and rc4.99 remains unmerged/research-only.
 - Android/PWA refresh is the only remaining device gate. User action required only to open/refresh the installed app once so the service worker can activate the new cache; then verify visible `v11.8.0-rc4.99` and functional live surface.
 - Do not infer Android acceptance from deployment parity alone.
+
+
+## 2026-08-28 18:52Z — canonical Android self-update lesson locked
+- User confirmed the installed Draft Companion has now updated to **v11.8.0-rc4.99**.
+- Root cause of the unnecessary update troubleshooting was process drift: rc4.99 had been deployed to `gh-pages` while `main` still remained on rc4.98. The previously reliable self-update path expects the verified candidate to be promoted through the canonical repo/deployment chain rather than leaving main stale.
+- Permanent update contract: **verified candidate -> full behavioral/package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh -> device observation**.
+- Never repeat the failed pattern of asking for repeated close/reopen, cache clearing, reinstall, or manual ZIP install before proving server-side main + gh-pages parity.
+- User work minimization is mandatory: assistant performs package/repo/deploy verification and promotion autonomously; user is only asked for the final device observation when technically unavoidable.
+- Clearing app data/cache or reinstalling is prohibited as a casual troubleshooting step because local draft/settings data may be at risk; only consider after explicit backup/data-preservation analysis.
+- rc4.99 Android **version observation PASS**. Functional/semantic acceptance remains a separate gate; do not infer full acceptance from version visibility alone.
