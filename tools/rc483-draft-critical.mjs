@@ -89,7 +89,7 @@ assert.ok(app.includes('chosenVsCoachScoreDelta'));
 assert.ok(app.includes("format:'pitti-decision-evidence-v2'"));
 assert.ok(app.includes("fixtures:rows"));
 assert.ok(app.includes("overrideCount:summaries.filter"));
-assert.ok(index.includes('id="decisionEvidenceBtn"'));
+assert.ok(idx.includes('id="decisionEvidenceBtn"'));
 
 assert.ok(app.includes('wrSaturationRecommendationCount'));
 assert.ok(app.includes('qb2ViolationCount'));
