@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T18:43:00Z",
+  "updatedAt": "2026-08-28T18:52:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -16,33 +16,33 @@
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.98",
-    "latestPreinstallVerified": "v11.8.0-rc4.98",
+    "latestAndroidObserved": "v11.8.0-rc4.99",
+    "latestPreinstallVerified": "v11.8.0-rc4.99",
     "latestResearchChallenger": "v11.8.0-rc4.99",
-    "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.98_PREINSTALL.zip",
-    "preinstallSha256": "43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e",
+    "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.99_PREINSTALL.zip",
+    "preinstallSha256": "67caeab25b8b474c9eb69d947ef2b8daa1429503655803030764a8013aac57a8",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.98",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.99",
     "latestDeployedCandidate": "v11.8.0-rc4.99",
     "latestAndroidVerified": "v11.8.0-rc4.96",
     "androidAuthority": "v11.8.0-rc4.96",
     "android_authority": "v11.8.0-rc4.96",
-    "deployedPagesAppByteParityWithMain": false,
+    "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33194280926,
     "preinstallReferenceArtifactId": 9695061955,
     "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.98",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.99",
     "latestAndroidFunctionalVerified": "v11.8.0-rc4.96",
-    "testChallengerAndroidObserved": false,
+    "testChallengerAndroidObserved": true,
     "testChallengerAndroidAccepted": false,
     "rc499": {
-      "status": "GH_PAGES_BYTE_PARITY_PASS_ANDROID_REFRESH_PENDING",
+      "status": "ANDROID_VERSION_OBSERVED_RC4.99_FUNCTIONAL_ACCEPTANCE_PENDING",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
       "scope": [
         "neutral evidence must not render as plus",
         "soft WR saturation economics"
       ],
-      "productionUnchanged": true,
+      "productionUnchanged": false,
       "pr": 35,
       "guardrailRun": 33199805925,
       "guards": [
@@ -51,14 +51,14 @@
         "soft WR saturation numeric canary",
         "normal-cut timing 18/22/26"
       ],
-      "mergeAllowed": false,
-      "nextGate": "user opens/refreshes installed PWA once; verify visible v11.8.0-rc4.99 and functional surface",
+      "mergeAllowed": true,
+      "nextGate": "functional/semantic acceptance on rc4.99; no deployment troubleshooting unless a verified parity check fails",
       "packageGateRun": 33200304688,
       "artifactId": 9697465647,
       "artifactDigest": "sha256:66bf4d2654135b8448f0ad42ff29bc5daca58d30225c75e1d72b6d4bed91f3c2",
       "ghPagesRuntimeFiles": 13,
       "ghPagesByteParityWithCandidate": true,
-      "androidObserved": false,
+      "androidObserved": true,
       "androidAccepted": false
     }
   },
@@ -252,5 +252,12 @@
   },
   "status": "RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT",
   "gate": "RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT",
-  "nextGate": "Generic 9-WR roster-utility audit + pool-wide substantive Pro/Contra audit; no automatic mock. Promote nothing until deterministic regressions and Android acceptance pass."
+  "nextGate": "Generic 9-WR roster-utility audit + pool-wide substantive Pro/Contra audit; no automatic mock. Promote nothing until deterministic regressions and Android acceptance pass.",
+  "deploymentUpdateContract": {
+    "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
+    "doNotRegressTo": "gh-pages-only deployment while main remains stale",
+    "diagnosticRule": "If Android stays on old version, verify main and gh-pages parity first. Do not ask user for cache clearing, reinstall, or repeated refresh attempts before server-side parity is proven.",
+    "dataSafety": "Never recommend clearing app data/cache or reinstalling before a backup/data-preservation assessment.",
+    "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
+  }
 }
