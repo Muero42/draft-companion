@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T102000Z-v133`
-Updated: 2026-08-28 10:20Z
+Handoff generation: `20260828T104000Z-v134`
+Updated: 2026-08-28 10:40Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -22,7 +22,7 @@ Updated: 2026-08-28 10:20Z
 - **Android version authority is rc4.91**, directly observed in the user's screenshot on 2026-08-28. Do not downgrade to rc4.89/88/87 because historical sections mention them.
 - Android functional verification is still pending for: actual Expert-v3 rows, evidence polarity/quality, unified rich Top-10 rendering, and short-turn Return-v2 behavior.
 - Current source authority is rc4.91.
-- Latest package/re-extract is rc4.91, 13 runtime files, SHA-256 `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`.
+- Latest package/re-extract is rc4.91, 13 runtime files, SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.
 - gh-pages reports rc4.91, but **app.js bytes lag main** after the newest broad research batch. Henry/evidence-polarity fixes are present on gh-pages; the latest broad evidence additions are only in main/package. Matching version text is NOT byte parity.
 - Expert-v3 is already integrated and selectable: QB Todd D Clark 10%, RB Ryan Weisse 10%, TE Wolf of Roto Street 10%; WR remains exact frozen Expert-v2 because Joey Wright current vector is unavailable.
 - Expert-v2 remains selectable/control. Derek Brown remains excluded from new v2; Erickson remains qualitative/challenger only; Draft Sharks counted once.
@@ -365,7 +365,13 @@ HANDOFF_GENERATION: 20260828T100500Z-v132
 ## V133 HANDOFF AUDIT — ACTIVE OVERRIDES
 - This v133 audit explicitly supersedes stale active pointers in historical V105–V132 sections.
 - rc4.91 Android version observed; functional verification pending.
-- rc4.91 package/re-extract SHA-256: `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`; 13 runtime files.
+- rc4.91 package/re-extract SHA-256: `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`; 13 runtime files.
 - main and gh-pages are NOT fully byte-identical: current main `app.js` contains the newest broad evidence batch, gh-pages `app.js` does not. Do not claim parity until explicitly resynchronized and reverified.
 - Latest integrated broad evidence batch includes Blake Corum, Rachaad White, Jordan Mason, Jake Ferguson, Juwan Johnson, Malachi Fields and Romeo Doubs; Henry polarity/evidence fix is retained.
 - Five workflow families were green on the final v132 sealed source before this documentation-only v133 audit. After v133 reseal, rerun and require all five green again.
+
+
+## V134 PACKAGE-REFERENCE CLARIFICATION
+- Successful package workflow run 33162367347 / artifact 9682152886 was independently downloaded and inspected.
+- Inner `Draft_Companion_v11.8.0-rc4.91_PREINSTALL.zip`: 13 runtime files; SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.
+- The ZIP hash is recorded as a **reference artifact hash**, not a forever-stable build identifier: later documentation-only commits may produce a different archive hash because ZIP metadata/timestamps are not deterministic. Runtime correctness is anchored by seal-listed blob hashes plus successful package/re-extract gates.
