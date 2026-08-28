@@ -63,7 +63,7 @@ Otherwise continue AUTO.
 - Half-PPR 1QB; reject Superflex/2QB.
 - Starter maxima are not roster caps.
 - K/DST normally not drafted.
-- Geno Smith/Aaron Rodgers excluded from user's QB path.
+- Geno Smith/Aaron Rodgers are ordinary QB candidates; they must rank organically and must never be player-name hard-excluded.
 - Excess WR depth must materially reduce redundant WR utility.
 - Expert-v2: Brown excluded; Erickson challenger; Koerner no current-draft acquisition effort; Mariano availability already solved; Draft Sharks counted as one correlated family; availability-only automatic restoration of the old Weisse/Gianni/Bobal trio rejected; Ryan Weisse or others may be freshly qualified individually with evidence.
 - Frozen Expert-v2 weights/profile semantics in `PITTI_EXECUTION_LOCK.json` are authoritative for the current experiment; do not invent, silently renormalize, or retune them without new promotion evidence.
@@ -80,3 +80,4 @@ Otherwise continue AUTO.
 - A normal final, status final, acknowledgement final, **or empty final after tool work** is forbidden while executable autonomous work remains.
 - Because execution cannot continue after the assistant turn is ended without another user message, early turn termination is a functional AUTO failure, not a cosmetic response issue.
 - Valid turn end requires one of: unavoidable user/device input; approval-gated consequential action; unsafe unresolved contradiction; material end result with no higher-value package remaining; or demonstrated exhaustion of all safe positive-value independent lanes.
+- rc4.92 correction: Geno Smith/Aaron Rodgers are NOT exclusions. Any active runtime/test/checkpoint rule that special-cases either name for demotion/removal is a regression. Exactly-one-QB remains a roster strategy only after QB1 is drafted.
