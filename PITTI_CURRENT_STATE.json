@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T094500Z-v131",
-  "updated_at": "2026-08-28T09:55:00Z",
+  "handoff_generation": "20260828T100500Z-v132",
+  "updated_at": "2026-08-28T10:05:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -18,9 +18,9 @@
     "latest_package_sha256": "8f772c01c617b8fd5fa62676fcba2aca223a881beeed86c0246d37d68ab346f1"
   },
   "exact_continuation": {
-    "gate": "RC491_ANDROID_VISUAL_FUNCTIONAL_VERIFY",
+    "gate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH",
     "auto_starts_mock": false,
-    "instruction": "User screenshot confirms v11.8.0-rc4.91 is loaded on Android. Treat rc4.91 as Android authority. Continue functional visual verification of actual Expert-v3 rows, evidence polarity, early Top-10 evidence and Return-v2 short-turn calibration; do not regress to rc4.89."
+    "instruction": "First verify v132 seal/current/project-state integrity. Continue from Android-observed rc4.91. Functional device gate: actual Expert-v3 rows, evidence polarity/quality Top-10, Return-v2 short-turn calibration. In parallel continue broad anti-repeat upside/differentiator research across uncovered players. AUTO BLOCK is correction trigger with zero acknowledgement/status prose. Do not start a mock unless explicitly requested."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -35,12 +35,12 @@
     "rc484_kernel_frozen": true
   },
   "handoff": {
-    "transaction_in_progress": false,
+    "transaction_in_progress": true,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.91-android-observed|rc4.90-predevice|EXPERT-V3-PANEL-SELECTABLE|ACTUAL-EXPERT-ROWS|EARLY-TOP10-EVIDENCE|ANTI-REPEAT|HANDOFF-v130",
-    "status": "SEALED_PASS",
-    "handoff_ready": true,
-    "second_pass_pass": true,
-    "next_action": "Continue rc4.91 Android functional verification from observed device state; source/package/device must all remain rc4.91."
+    "acceptance_fingerprint": "rc4.91-android-observed|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v132",
+    "status": "HANDOFF_V132_PRESEAL",
+    "handoff_ready": false,
+    "second_pass_pass": false,
+    "next_action": "Receiving chat: read CURRENT + SEAL + PROJECT_STATE first; verify hashes/generation; then resume rc4.91 functional verification and broad research. No mock."
   }
 }
