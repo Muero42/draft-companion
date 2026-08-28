@@ -1,465 +1,83 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T171200Z-v149`
-Updated: 2026-08-28 17:12Z
-
-## BOOTSTRAP — mandatory
-1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
-2. Read `PITTI_CURRENT_STATE.json` fully.
-3. Read `PITTI_HANDOFF_SEAL.json` fully and require PASS, `handoff_ready=true`, `second_pass_pass=true`.
-4. Require CURRENT generation == SEAL generation == this handoff generation and verify every seal-listed repo blob hash.
-5. Read `PITTI_AUTO_PREFLIGHT.md` fully.
-6. Read `PITTI_EXECUTION_LOCK.json` fully.
-7. Read `PITTI_PROJECT_STATE.md` to EOF. Newest appended sections override older NEXT_ACTION/current-version statements.
-8. Read `PITTI_NEW_CHAT_BOOTSTRAP.md` and `HANDOFF_COMPLETENESS_MATRIX.md`.
-9. Verify actual repo/runtime/artifact state before acting. Chat memory and stale Library mirrors are never authority.
-10. Continue with `PITTI AUTO` as a repeated long-block loop: execute work -> checkpoint material changes -> re-inventory ALL independent lanes -> continue. A blocked lane blocks only itself.
-
-## CURRENT AUTHORITY
-- League: 10-team Half-PPR, 1QB, real draft 2026-08-31, user slot 9.
-- User strategy: exactly one drafted QB; after QB1 all QBs disappear from the user's Coach surface. Geno Smith and Aaron Rodgers are ordinary QB candidates and must rank organically; player-name hard exclusions are forbidden.
-- K/DST normally not drafted. Starter maxima are NOT roster caps.
-- Production/control baseline remains rc4.64 and must stay selectable.
-- **Android version and functional authority is rc4.94**, confirmed by fresh post-deployment Pick-9 screenshots.
-- Android functional Pick-9 presentation verification PASS: Walker is visible at #7; Achane/Bowers/London remain visible at #8–10 with contextual Normal-Cut warnings. Expert-v3/Return/evidence remain preserved.
-- Android/package/deployment authority remains rc4.94. Source challenger is rc4.95 pending full reseal/regression/deploy/device verification.
-- Latest package/re-extract is rc4.94, 13 runtime files, final-v143 candidate run 33169002426 / artifact 9684784867 / artifact digest `d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576`.
-- gh-pages exact 13-file rc4.94 runtime parity PASS at deployment commit `55c42cb2c35645b92c7e11ddc5253e76392f0a13`.
-- Expert-v3 is already integrated and selectable: QB Todd D Clark 10%, RB Ryan Weisse 10%, TE Wolf of Roto Street 10%; WR remains exact frozen Expert-v2 because Joey Wright current vector is unavailable.
-- Expert-v2 remains selectable/control. Derek Brown remains excluded from new v2; Erickson remains qualitative/challenger only; Draft Sharks counted once.
-- Broad upside/differentiator research remains coverage-first and anti-repeat. Evidence enrichment is not automatic ranking promotion.
-
-## WHY RC4.83 EXISTS
-User showed late-round Coach recommendations that remained WR-heavy despite already having 7 WR. A later completed roster cannot be treated as Coach success because the user manually overrode many recommendations.
-Audit found two structural issues:
-1. late WR6+/WR7+ marginal utility was too weak;
-2. PlayerQualitySafety could resurrect a WR after saturation scoring.
-rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. Initial stronger coefficients were rejected as too cap-like and reduced before deployment.
-
-## EVIDENCE / VALIDATION
-- Decision fixtures now persist Coach top recommendation and actual chosen player.
-- Evidence-v2 export includes per-pick rosterCounts, frozen candidates, chosen player, followedCoach/override, score and panel deltas, WR6+/WR7+ saturation flags and QB2 violation flags.
-- Pre-mock audit fixed a telemetry defect: frozen userRoster now stores position directly; exporter no longer infers already-drafted positions from rankedAvailable.
-- Evidence-v2 schema is regression-guarded.
-- Dedicated UI: Erweitert -> Sicherung -> Pick-Evidenz exportieren.
-- Required OOS flow: reload rc4.83 -> ordinary realistic mock with natural user decisions/overrides -> refresh once after completion -> export PITTI-Decision-Evidence JSON -> analyze pick by pick.
-- Do NOT ask user to manually document picks during the mock.
-
-## CURRENT EXTERNAL GATE
-`RC495_RESEAL_AND_REGRESSION`
-
-Receiving chat must first verify v146 CURRENT/SEAL/Handoff equality and every seal-listed blob hash.
-
-Required continuation:
-- rc4.94 exact runtime deployment parity PASS and fresh Android Pick-9 presentation verification PASS.
-- Walker is #7 organically; Achane/Bowers/London #8–10 remain contextual Normal-Cut warning rows. No player-specific boost.
-- Do not change Coach scoring, Expert-v3 weights, Return-v2, ADP, injury penalty, or add a Walker-specific rule.
-- rc4.95 changes generic QUESTIONABLE penalty from -3 to 0 only; concrete acute evidence still governs real injury risk. Canonical v146 reseal + all five primary gates must PASS before deployment. Duplicate/unverändert guard remains binding.
-- No automatic mock.
-
-**AUTO BLOCK** is a zero-ack correction trigger: immediately resume the already-defined AUTO loop, with no acknowledgement/apology/status/explanation.
-
-## QB EVIDENCE — KEEP QUALITATIVE, AVOID DOUBLE COUNTING
-- Pat Fitzmaurice direct answer supports a late/fallback path centered on Kyler Murray / Jared Goff / Malik Willis; user considers Goff floor + observe Willis in FA a plausible late strategy.
-- Andrew Erickson direct answer to user's 10-team 1QB Half-PPR question: Caleb Williams, Trevor Lawrence, Justin Herbert are his preferred mid/late targets. These also match user's earlier preferred QB options.
-- Independent cross-check recorded in Project State: Herbert/Caleb/Lawrence cluster as primary mid-round upside QB1 tier; Goff/Murray/Willis are later price-dependent fallback/challenger paths.
-- Do not count direct answers as extra numeric expert votes on top of frozen expert rankings.
-- Willis is FA/watchlist-only after any QB1 because user will not draft QB2.
-
-## PARALLEL LANES ALREADY AUDITED
-- Draft-day Emergency Queue/failsafe.
-- Expert freshness/stale fallback semantics.
-- Post-draft/FA workspace and contingent-RB protection.
-- Watcher integration fail-closed.
-- Release/regression/evidence tooling.
-Do not claim PITTI AUTO is globally blocked merely because OOS mock evidence is pending. Re-inventory independent positive-value lanes before stopping.
-
-## AUTO CONTRACT — CRITICAL
-User has repeatedly required this and should NEVER need to repeat it:
-- AUTO means the longest safe autonomous blocks with minimal interruptions; the user must never need to repeat this.
-- AUTO is a repeated loop: execute package -> checkpoint -> re-inventory -> execute next package -> repeat.
-- Re-inventory after EVERY completed work package, not only once per AUTO invocation.
-- Do not reply with a promise to continue and then stop; `AUTO läuft`, `ich mache weiter`, priority-only and status-only responses are invalid while executable work remains.
-- A blocked OOS/device/CI lane blocks only itself; independent positive-value lanes continue.
-- Before any stop inventory decision/evidence, regressions/release, draft-day failsafe, expert freshness, post-draft/FA, Watcher, handoff/checkpoint integrity and independent strategy/current evidence.
-- An external/device/OOS gate is a valid stop only after independent non-contaminating lanes are actually exhausted.
-- Interrupt only for an unavoidable device/user action, unavailable required information, unsafe contradiction, irreversible action, or meaningful runtime-verification gate after parallel exhaustion.
-- Material changes must be written through immediately to Project State / Execution Lock / handoff.
-
-## ANTI-REGRESSION CANARIES
-Never resurrect without new evidence:
-- PairSum/Rolling old logic;
-- fixed roster quotas/caps;
-- generic/global QB2 ban (the hard ban is user-strategy-specific);
-- generic TE2 ban;
-- player-name forcing;
-- generic Return-v2 retune;
-- stale cross-draft duplicate logic;
-- Superflex/2QB evidence;
-- Brown in new Expert-v2;
-- live renormalization of Frozen Expert-v2 weights.
-
-## KNOWN CHECKPOINT CAVEAT
-Library mirror is stale/writeback-blocked. Repo `PITTI_EXECUTION_LOCK.json` + repo Project-State EOF win on contradiction.
-
-## V105 TRANSFER CANARY
-- A v105 Library reseal was prepared locally and passed an independent semantic/hash second pass, but persistent Library upload-back failed again with `container_session_expired`. Therefore **do not claim Library v105 is persisted** until a later `files.list` proves it.
-- If Library still surfaces v102/v103 or rc4.76/77 current pointers, treat them as stale. Repo `PITTI_COMMAND_CONTRACTS.json` + `PITTI_EXECUTION_LOCK.json` + repo Project-State EOF + this handoff + repo bootstrap/matrix + verified device facts win and the contradiction fails closed.
-- Current factual boundary: rc4.64 production/control; rc4.82 last fully Android-verified authority; rc4.83 deployed TEST challenger OOS-pending/not promoted/not Android-verified; rc4.78 latest package+reextract boundary; Library rc4.52 aliases recovery-only.
-
-
-## V106 HANDOFF RESUMPTION CANARY
-- User clarified on 2026-08-27 17:43 CEST that the immediately preceding `AUTO` meant: **resume the PITTI HANDOFF transaction at the correct point**, not resume ordinary project-development AUTO.
-- Therefore this generation is a handoff transaction. Do not perform new Decision-Kernel tuning while sealing it.
-- Latest material addition since v105: independent QB1 cross-check is recorded in Project State; it remains qualitative and does not alter the frozen rc4.83 OOS experiment.
-- Runtime parity reverified during this handoff: main == gh-pages byte/blob parity for app.js, index.html, decision-policy.js, sw.js and manifest.webmanifest.
-- Current external continuation after takeover remains `ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT`; AUTO itself must not start the mock.
-- Receiving chat must distinguish `PITTI HANDOFF` (transactional transfer preparation) from `PITTI AUTO` (verified takeover/continuation). If the user says AUTO while a HANDOFF transaction is in progress, finish the handoff transaction first.
-
-## V106 SEAL STATUS
-- Transactional second pass: **PASS**.
-- `handoff_ready=true`; `second_pass_pass=true`.
-- New-chat user message: **PITTI AUTO** only.
-
-
-## V107 TRANSFER-AUDIT REPAIR — SUPERSEDES V106 TAKEOVER PROCEDURE
-A receiving-chat audit found transfer-hardening defects even though the v106 hash seal itself was internally consistent:
-- command-contract/bootstrap/handoff primary load orders did not all require `PITTI_CURRENT_STATE.json` + `PITTI_HANDOFF_SEAL.json` before project work;
-- the completeness matrix still identified itself as repo v105;
-- preflight retained a stale generic sentence implying current Expert-v2 weights still needed to be invented/reselected;
-- CI path triggering did not cover every file read by the guardrail checker.
-
-These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them and adds executable generation + seal-integrity verification. Runtime boundary and OOS gate remain unchanged: rc4.82 Android authority; rc4.83 deployed test challenger, frozen pending realistic Evidence-v2.
-
-## V107 SEAL STATUS
-- Transactional second pass: **PASS**.
-- `handoff_ready=true`; `second_pass_pass=true`.
-- New-chat user message: **PITTI AUTO** only.
-
-
-## V108 AUTO CONTINUATION CANARY
-- Post-v107 AUTO found and repaired a stale release path: release contracts now execute rc4.83 draft-critical gates, and candidate packaging derives its version from APP_VERSION instead of hard-coding rc4.82.
-- Evidence-v2 offline analysis now fails closed on exact rc4.83, complete 15-pick mock telemetry and unique own-pick fixtures.
-- No rc4.83 Decision-Kernel coefficient changed. OOS gate remains unchanged.
-- Fresh independent QB/RB research is checkpointed as qualitative dated evidence only.
-
-
-## V109 AUTHORITY-CLEANUP CANARY
-- v108 read-back closed 20/20 exact.
-- Subsequent independent audit found active Execution Lock recovery prose still named repo v107 explicitly. That stale scalar could have become an old-state resurrection path despite a newer valid seal.
-- Active recovery semantics are now generation-generic: newest fully sealed repo generation + verified device facts win over stale Library.
-- Release-tooling guards remain: rc4.83 mandatory release gate, dynamic APP_VERSION package naming, Evidence-v2 exact rc4.83/15 unique own picks.
-- Decision Kernel remains unchanged/frozen; external OOS gate unchanged.
-
-
-## V110 OOS-CONFOUND / GUARD-CONSISTENCY CANARY
-- Guard now matches generation-generic Library fail-closed semantics; no stale v105 literal is required for PASS.
-- Known rc4.83 OOS confound: Jeanty acute hard blocker dated 24.08.; Week 1 still uncertain on 27.08. Do not use a Jeanty-affected early decision to judge the late-WR saturation challenger.
-- Do not mutate the frozen rc4.83 experiment to “fix” that confound before Evidence-v2; revisit the blocker in the mandatory pre-real-draft freshness pass.
-- Runtime/OOS gate otherwise unchanged.
-
-
-## V111 OOS-IDENTITY CANARY
-- Promotion Evidence-v2 must be realistic mock mode + slot 9.
-- Jeanty-affected rows are ACUTE_STATUS_CONFOUND and are not causal evidence for the late-WR saturation challenger.
-- Same-day injury evidence still leaves Week 1 uncertain; do not silently clear the frozen rc4.83 overlay before OOS.
-- No runtime/kernel/expert-weight change.
-
-
-## V112 GENERATION-GENERIC GUARD CANARY
-- The executable handoff guard no longer requires the historical phrase tied to Library v105; it requires the current generic stale/writeback-blocked Library invariant instead.
-- This prevents future cleanup of historical prose from falsely breaking a valid takeover.
-- rc4.83 remains frozen; slot-9 realistic Evidence-v2 remains the experiment gate; Jeanty-affected rows remain a separate acute-status confound.
-- No runtime/kernel/expert-weight/Return-v2 change.
-
-
-## V113 PRE-DRAFT FRESHNESS CANARY
-- New non-runtime gate: `tools/pre-draft-freshness-gate.mjs`.
-- Before the real draft/live promotion, blocking acute-status entries must be refreshed within the configured age window; default 2 days. The currently frozen Jeanty overlay dated 24.08. will intentionally fail an Aug-31 gate unless reviewed/updated.
-- This safeguard is outside rc4.83 runtime and does not contaminate the OOS experiment.
-- External OOS gate remains realistic rc4.83 slot-9 mock -> refresh -> Evidence-v2 export.
-
-
-## V114 EMERGENCY-FALLBACK CANARY
-- Emergency Queue has an independent deterministic executable contract: max 35; one QB/TE candidate only while QB1/TE1 open; none after filled; K/DST omitted; draft/version metadata retained.
-- Contract is protected by rc4.83 regression + PITTI guard and does not alter runtime/kernel.
-
-
-## V115 CLEAN OOS CONFOUND CANARY
-- Evidence-v2 analysis reports acute-status-confounded and clean non-confounded metrics separately; frozen rc4.83 runtime remains unchanged.
-
-
-## V116 CRITICAL MANAGER-MAP CORRECTION
-- Return-v2 audit found rc4.83 forced stale 2026 manager slots: 5 Björn / 6 Pascal / 8 Basti. Confirmed order is 5 Basti / 6 Björn / 7 Michael K (profile alias Giuliano) / 8 Pascal B (profile alias Pascal Gelderner).
-- rc4.84 corrects only this mapping plus version/cache identity; late-WR challenger coefficients and Decision Kernel are unchanged.
-- rc4.83 realistic OOS gate is invalid/superseded because manager geometry was wrong. Gate is now rc4.84 device verify -> realistic slot-9 mock -> Evidence-v2.
-- main rc4.84 runtime deployed byte-identically to gh-pages; rc4.82 remains last Android-verified authority pending device verification.
-
-
-## UPSIDE RESEARCH v3 — NON-RUNTIME PENDING
-- `PITTI_UPSIDE_RESEARCH_V3.md` is the new ceiling/opportunity research ledger.
-- Jameson Williams is explicitly CONSOLIDATION (already broke out) rather than generic BREAKOUT; Parker/Egbuka/Tate carry stronger WR1-takeover/ascension paths.
-- RB upside uses opportunity elasticity/events-needed; TE uses target-hierarchy/route-volume ceiling.
-- Do not load this ledger into the active rc4.84 mock. Integration waits for current Evidence-v2 export.
-
-
-## V117 EXPERT-v3 ACQUISITION CANARY
-- rc4.84 mock/Evidence-v2 work is complete enough for the current Expert-v3 lane; manager-slot correction is retained.
-- rc4.85 adds only a local authenticated challenger export for Ryan Weisse, Wolf of Roto Street, Todd D Clark and Joey Wright. No challenger is yet a numeric Expert-v3 vote.
-- Weisse/Gianni/Bobal old lock means no unqualified availability-driven auto-restore; it does not prohibit fresh Weisse qualification.
-- Expert-v3 is primary. Player research is parallel only during genuine wait time and settled players are not repeatedly re-queried without new decision-changing news.
-- Next user action is prohibited until package/re-extract gates pass.
-
-
-## V118 RC4.85 PACKAGE/DEPLOY PASS
-- Release Contract + candidate package/re-extract PASS for rc4.85.
-- PREINSTALL SHA-256 `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed`; 12 runtime files; every re-extracted Git blob matches current main.
-- main/gh-pages parity for all 12 runtime files PASS.
-- rc4.85 changes only Expert-v3 challenger acquisition/export UI/path; no Expert-v3 numeric vote or weight exists yet.
-- Next and only necessary user action: reload/update rc4.85, press the new export button, share JSON.
-
-
-## V119 CRITICAL HANDOFF CANARY — 2026-08-28
-- This handoff occurs at a critical update boundary: the installed Android app is still rc4.84 while rc4.85 is already release/package/re-extract verified and deployed.
-- Previous assistant error: it gave an expiring ChatGPT PREINSTALL file link even though the project had already been using the deployed/self-update path. That expired-link path is now explicitly non-preferred and must not be repeated without evidence that normal updating cannot work.
-- Another repeated assistant failure was replying to AUTO with “AUTO läuft/ich mache weiter” even though execution stops after the message. In the receiving chat, AUTO means EXECUTE the largest safe batch first and reply only at a meaningful result/unavoidable gate. Never send future-tense continuation prose as an AUTO result.
-- Expert-v3 is PRIMARY until finished. Current acquisition targets: Ryan Weisse (RB primary), Wolf of Roto Street (TE primary), Todd D Clark (QB primary), Joey Wright (WR only if exact current complete vector resolves). Do not restart candidate screening.
-- First controlled weight grids after exact vectors: RB v2 DS35 vs DS30+Weisse5 vs DS25+Weisse10; TE v2 DS35 vs DS30+Wolf5 vs DS25+Wolf10; QB v2 DS35 vs DS30+Todd5 vs DS25+Todd10. Expand only if evidence warrants. WR gets no forced new expert.
-- Evaluate marginal/OOS positional loss, decision-zone stability, correlation/leverage, and ceiling-tail behavior. Availability is never a positive selection criterion. Draft Sharks Team output must be validated as its own model; individual DS analyst accuracy is not direct validation because DS rankings are projections + 3D Value, not averaged analyst boards.
-- Upside-v3 semantics preserved: ↑↑ strong high-end outcome + short causal path; ↑ meaningful/moderate ceiling; ↓↓ material health/role/availability deterioration; ↓ moderate downside; mixed arrows allowed. Mechanism must be named. Jameson Williams = established-breakout consolidation, not generic breakout. Parker Washington = WR1-path, subject to fresh news override.
-- Anti-repeat research lock: Likely/Jacobs/Pacheco and any other recently settled player are not rechecked/reported again unless genuinely new decision-changing news exists. New research must move to uncovered players and be done in large batches.
-- rc4.85 package/re-extract SHA-256 authority: `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed`. A later GitHub artifact digest is an Actions artifact container digest and must not silently replace the canonical preinstall SHA without an explicit artifact-boundary decision.
-- User action in the receiving chat is only necessary after handoff verification: verify/update Android to rc4.85 through normal deployed update path; then export Expert-v3 JSON. Do not start a mock.
-
-
-## V120 SECOND-PASS REPAIR
-- v119 seal correctly exposed one stale guardrail assumption: the bootstrap checker still required historical literals rc4.82 and rc4.83 even after the bootstrap was intentionally synchronized to rc4.84/rc4.85. The guard is now successor-safe and checks semantic boundary labels instead of obsolete version literals.
-- This is a transfer/regression-tool repair only; no runtime, Decision Kernel, Return-v2, Expert-v2 or Expert-v3 candidate data changed.
-
-
-## V121 RC4.86 EXPERT-v3 EXPORT HOTFIX
-- User's rc4.85 export proved the acquisition UI path executed, but Ryan Weisse/Wolf/Todd failed with `loadSingleExpert is not defined`; Joey Wright remained directory-missing.
-- Root cause: rc4.85 integration called a helper that never existed in the production app even though the verified general loader `loadExpertRanks(expertId)` already existed. This was a deterministic integration defect and should have been caught before device use.
-- rc4.86 replaces only that call/serialization path, adds an explicit regression canary forbidding `loadSingleExpert(`, and reuses the existing verified per-expert ranking cache/pipeline.
-- main/gh-pages parity has been restored for all 12 runtime files. rc4.84 remains latest Android authority until device reload proves rc4.86.
-- Exact next action: reload/update to rc4.86, verify badge, run Expert-v3 Challenger export once. No mock.
-- Research breadth lock remains: move to uncovered players; settled players reopen only on genuinely decision-changing news.
-
-
-## V122 RC4.86 RELEASE CLOSURE
-- Full release contract PASS, package/re-extract PASS, and independent artifact inspection confirms 12 runtime files.
-- Canonical rc4.86 PREINSTALL SHA-256: `49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1`.
-- main/gh-pages parity remains 12/12. rc4.84 remains latest Android-observed authority until reload/update proves rc4.86.
-- Next action remains one device step only: update/reload -> verify v11.8.0-rc4.86 -> run Expert-v3 Challenger export once -> return JSON. No mock.
-
-
-## V123 RC4.87 COMPACT EXPERT-v3 TRANSFER
-- rc4.86 is confirmed installed by user and produced a materially larger Expert-v3 result; however Android/ChatGPT could not reliably transfer it: file export did not work and pasting the huge JSON made ChatGPT slow/crash and exceeded message size.
-- Therefore do NOT ask user to manually trim/copy sections.
-- rc4.87 is a transfer-only hotfix: Weisse exports RB only, Wolf TE only, Todd QB only, Wright WR only; rows are compact [name, overallRank] tuples. It copies the compact JSON straight to clipboard and falls back to file export only if clipboard fails.
-- No Decision Kernel, Return-v2, manager model, roster policy, Expert-v2 weights or expert qualification logic changed.
-- Exact next action: update/reload to rc4.87 -> tap “Expert-v3 kompakt kopieren” once -> paste clipboard into chat. No mock.
-
-
-## V125 EXPERT-v3 WEIGHTING / rc4.88
-- rc4.87 compact vector transfer succeeded.
-- Final bounded Expert-v3 candidate:
-  - QB: DS25 / Mariano25 / Del Don20 / Boone10 / Pat10 / Todd D Clark10.
-  - RB: DS25 / Mariano25 / Del Don25 / Pat15 / Ryan Weisse10.
-  - WR: unchanged Expert-v2 WR board; Joey Wright current vector missing, no proxy/fabrication.
-  - TE: DS25 / Pat30 / Del Don25 / Boone10 / Wolf of Roto Street10.
-- Track-record basis: Ryan Weisse 2025 RB #8 and 2023-25 RB #2; Todd D Clark 2025 QB #8 and 2023-25 QB #5; Wolf 2023-25 TE #2, with 2025 TE #42 as the reason not to exceed 10%.
-- 10-point sensitivity remains bounded: v3-v2 Spearman ~0.9991 QB, ~0.9972 RB, ~0.9972 TE.
-- rc4.88 adds expert-v3-board.js and keeps incumbent/control, Expert-v2 ALL and Expert-v2 WR-only selectable.
-- Exact next device gate: reload/update to rc4.88 -> choose “Expert-v3 · positionsspezifisch” -> verify green panel health. No mock required for this verification.
-- Research breadth lock remains active: cover new/unsettled players; do not recycle settled names without new decision-changing evidence.
-
-
-## V126 EXPERT-v3 INTEGRATION GATE
-- rc4.88 deployed with selectable Expert-v3 positional profile: Todd D Clark QB 10%, Ryan Weisse RB 10%, Wolf of Roto Street TE 10%; WR deliberately remains Expert-v2 because Joey Wright vector is missing.
-- Legacy rc4.82/83 profile guards were found structurally over-strict (exact object shape) and repaired additively; no old behavior was removed.
-- v126 current/seal synchronized. Full gates must pass before Android verification.
-
-
-## V127 RC4.88 EXPERT-v3 FULL CLOSURE
-- Final sealed rc4.88 commit b1f70fe7: all five primary gates PASS (Project Guardrails, release contract v2, package/re-extract, rc4.82, rc4.83).
-- Expert-v3 is separate/selectable: Todd QB 10%, Weisse RB 10%, Wolf TE 10%; WR stays Expert-v2 because qualified fresh Wright vector is missing.
-- AUTO diagnosed/repaired successor-hostile legacy assertions and a real missing index loader before closure; do not revert these repairs.
-- gh-pages synchronized after closure. Exact next action: Android/PWA update to rc4.88 -> verify badge + Expert-v3 selectable. Then broad non-repetitive upside research. No mock.
-
-
-## V128 RC4.88 ANDROID VERIFIED
-- User screenshot verifies badge v11.8.0-rc4.88 on Android/PWA and Expert-v3 · positionsspezifisch selected in the UI.
-- Runtime authority advances to rc4.88. No further install gate remains for this change.
-- Continue AUTO with broad anti-repeat upside/differentiator research and Expert-v3 effect validation; do not start a mock unless explicitly requested.
-
-
-## V129 RC4.89 LIVE-PRESENTATION REPAIR
-- User screenshot exposed two genuine rc4.88 presentation regressions:
-  1. Live surface profile detector knew only incumbent/v2 maps, so selected Expert-v3 rendered as CUSTOM and reused old incumbent expert-name ordering.
-  2. First four players were full decision cards, then all ten were duplicated again in a weaker compact 10er list.
-- rc4.89 fixes presentation only:
-  - recognizes exact Expert-v3 map QB v3 / RB v3 / WR v2 / TE v3;
-  - displays actual selected v3 experts (Todd QB, Weisse RB, Wolf TE; WR remains frozen v2);
-  - renders candidates 1-10 exactly once, all with the same full card structure;
-  - NORMAL-CUT warning is orange at bottom of each affected card;
-  - no duplicated hierarchy/10ER compact block.
-- Weak early-round generic Pro/Contra was not merely a late-draft coverage problem. Added explicit current display/risk evidence for James Cook, CeeDee Lamb, Justin Jefferson and Brock Bowers; broader anti-repeat research continues separately.
-- Decision Kernel, Return-v2, roster policy, Expert-v2 board and Expert-v3 weights are unchanged.
-- Exact gate: full rc4.89 release/package/guardrails -> gh-pages parity -> Android visual verification. No mock.
-
-
-## V130 RC4.89 FULL RELEASE CLOSURE
-- rc4.89 final sealed CI set PASS: Project Guardrails, Release Contract v2, Candidate Package/Re-extract, rc4.82 gate and rc4.83 gate.
-- Independent artifact inspection: `Draft_Companion_v11.8.0-rc4.89_PREINSTALL.zip`, exactly 13 runtime files, SHA-256 `2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608`; candidate.sha256 matches.
-- main/gh-pages runtime parity verified 13/13.
-- Android authority remains rc4.88 until device update/reload proves rc4.89.
-- Exact next action: update/reload to rc4.89 and visually verify Expert-v3 voices, uniform full Top-10 cards, orange per-card Normal-Cut warning, richer Pro/Contra. No mock.
-
-
-## V129 LIVE SURFACE CORRECTION
-- Expert-v3 live expert labels fixed by position; no fallback to old INC experts.
-- Ten candidates now use ten full cards; duplicate 10ER overview removed; normal-cut warning at card bottom in orange.
-- Generic pro/contra fallback phrases removed in favor of evidence/context-linked fallbacks.
-- Final five-workflow set PASS after root-cause repairs. Deployed to gh-pages; Android reload/visual verification is next gate, then broad anti-repeat research.
-
-
-## V130 RC4.90 PRE-DEVICE ROOT-CAUSE FIX
-- User screenshot on rc4.89 proved the selected Expert-v3 UI did NOT guarantee v3 ranks: `panelSelectable()` only whitelisted Expert-v2 shadow boards, so `panelFor()` rejected `expert-v3-*` and silently fell back to the old active panel. This is the exact reason old experts still appeared.
-- rc4.90 fixes panel selectability for Expert-v2 and Expert-v3 shadow boards. Live state now exposes actual `panelId`/profile, and expert labels are generated exclusively from the actual `individual` rows used for that candidate, never re-inferred from selector state.
-- Pre-device regression requires James Cook RB actual v3 composition = DS/Del Don/Pat/Mariano/Weisse; Bowers TE includes Wolf; QB includes Todd.
-- Early-info coverage expanded for the exact current Top-10: Cook, Lamb, Jefferson, Barkley, Bowers, Chase Brown, Achane, Kenneth Walker, Omarion Hampton, Drake London. Generic filler remains forbidden.
-- IMPORTANT: rc4.90 must NOT be deployed to Android until the sealed full workflow set passes. This explicitly implements the user's requirement to verify before phone rollout.
-
-- v130 addendum: rc4.90 broad early-draft evidence now also covers Nico Collins, Pickens, Olave, Kyren, McBride, Jeanty, Javonte, Josh Allen, Higgins, Rice, Garrett Wilson, Waddle, Breece Hall and McConkey. Full gates must rerun before deployment because app.js changed after the prior pass.
-
-
-## RC4.91 PRE-DEVICE — RETURN-v2 CALIBRATION
-Audit found the 99% Brown/Walker short-turn return was not trustworthy: early sim tau=1.35 over-suppressed players whose ADP was only 7-10 picks later. rc4.91 changes early tau only to 4.25, preserving manager/roster/ADP/panel layers. No player-specific boost. Full gates required before Android deployment.
-
-
-## RC4.91 ANDROID AUTHORITY — DEVICE OBSERVED
-User screenshot confirms Draft Companion v11.8.0-rc4.91 loaded on Android. rc4.91 is now the device authority. Remaining gate is functional/visual verification of Expert-v3 actual rows, evidence polarity, early Top-10 evidence and Return-v2 short-turn behavior. Do not reconstruct Android authority as rc4.89.
-
-
-# V132 — CURRENT HANDOFF (2026-08-28 10:05Z)
-**Authority order:** PITTI_CURRENT_STATE.json + PITTI_HANDOFF_SEAL.json + latest appended PITTI_PROJECT_STATE.md section. Older sections are history and must not override this block.
-
-- Android-observed authority: **v11.8.0-rc4.91** (user screenshot). Source/test challenger: rc4.91. Never regress to rc4.89 from stale package prose.
-- Active continuation gate: **RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH**.
-- Verify on device when evidence is available: selected Expert-v3 must resolve actual positional expert rows (QB Todd; RB Weisse; TE Wolf; WR exact v2 fallback); Top-10 is ten uniform rich cards with no duplicate overview; orange Normal-Cut warning at card bottom; no negative concept such as Reach/risk/wait/decline may render as '+'.
-- Derrick Henry regression: '+ Reach 7' was invalid presentation polarity. Fixed. Henry positive thesis is workhorse/goal-line/TD ceiling; downside is age/cumulative workload/lower receiving floor.
-- rc4.91 Return-v2 correction: early pick<=30 tau=4.25, replacing overconfident tau=1.35. Do not revert. Purpose is realistic survival probability for ADP ~16-19 around 1.09/2.02; no player-specific forcing.
-- Expert-v3 weights: QB DS25/Mariano25/DelDon20/Boone10/Pat10/Todd10; RB DS25/Mariano25/DelDon25/Pat15/Weisse10; TE DS25/Pat30/DelDon25/Boone10/Wolf10; WR unchanged Expert-v2. Joey Wright missing, never proxy/fabricate.
-- Broad research: coverage-first, anti-repeat. Latest integrated evidence batch: Blake Corum, Rachaad White, Jordan Mason, Jake Ferguson, Juwan Johnson, Malachi Fields, Romeo Doubs. Earlier broad early-board evidence remains. Research is causal upside/differentiator + invalidator, not generic sleeper labels and not automatic score boosts.
-- Latest resealed broad-evidence state passed all five CI families. rc4.82/rc4.83 labels are legacy regression-suite names only.
-- **AUTO:** long autonomous blocks, use independent lanes during waits, no progress/status-only replies while executable work exists. **AUTO BLOCK:** correction trigger; zero acknowledgement/explanation, simply resume this behavior. Interrupt only for material result, unavoidable user action, or non-self-solvable blocker.
-- No automatic mock. Real draft 2026-08-31; freeze discipline: bounded low-risk regression-tested fixes/evidence enrichment only. Acute-status freshness gate required before real draft.
-
-HANDOFF_GENERATION: 20260828T100500Z-v132
-
-
-## V133 HANDOFF AUDIT — ACTIVE OVERRIDES
-- This v133 audit explicitly supersedes stale active pointers in historical V105–V132 sections.
-- rc4.91 Android version observed; functional verification pending.
-- rc4.91 package/re-extract SHA-256: `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`; 13 runtime files.
-- main and gh-pages are NOT fully byte-identical: current main `app.js` contains the newest broad evidence batch, gh-pages `app.js` does not. Do not claim parity until explicitly resynchronized and reverified.
-- Latest integrated broad evidence batch includes Blake Corum, Rachaad White, Jordan Mason, Jake Ferguson, Juwan Johnson, Malachi Fields and Romeo Doubs; Henry polarity/evidence fix is retained.
-- Five workflow families were green on the final v132 sealed source before this documentation-only v133 audit. After v133 reseal, rerun and require all five green again.
-
-
-## V134 PACKAGE-REFERENCE CLARIFICATION
-- Successful package workflow run 33162367347 / artifact 9682152886 was independently downloaded and inspected.
-- Inner `Draft_Companion_v11.8.0-rc4.91_PREINSTALL.zip`: 13 runtime files; SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.
-- The ZIP hash is recorded as a **reference artifact hash**, not a forever-stable build identifier: later documentation-only commits may produce a different archive hash because ZIP metadata/timestamps are not deterministic. Runtime correctness is anchored by seal-listed blob hashes plus successful package/re-extract gates.
-
-
-## V135 ANDROID VERIFICATION SEMANTICS — FAIL CLOSED
-- The user's screenshot proves **version rc4.91 is loaded on Android**. It does **not** prove the current rc4.91 functional surface is correct.
-- Therefore active state is: `android_version_observed=true`, `android_functional_verified=false`.
-- Any older field/text saying rc4.91 is simply “Android verified” must be interpreted as version observation only and must NOT close the functional gate.
-
-## V136 TAKEOVER AUDIT CORRECTION — ACTIVE POINTERS ONLY
-- New-chat audit caught residual active transfer pointers left at v132/v133 even though CURRENT/SEAL authority had advanced to v135.
-- Active takeover generation is now v136. Historical V105–V135 sections remain evidence only and cannot override the top-level CURRENT AUTHORITY / CURRENT EXTERNAL GATE.
-- rc4.91 remains Android-version-observed but not functionally verified; Expert-v3 is already integrated; no Expert-v3 acquisition/export restart; no mock.
-- gh-pages/main app.js byte divergence remains intentionally preserved and must not be mistaken for parity from equal version text.
-- AUTO BLOCK remains zero-ack immediate AUTO resumption.
-
-## V137 FINAL TAKEOVER CANARY REPAIR
-- Second-order audit found one remaining active stale pointer in PITTI_AUTO_PREFLIGHT.md: it still called rc4.85 the current deployed update path. That active instruction is repaired to rc4.91 and now preserves the audited main/gh-pages app.js byte divergence.
-- Active handoff generation is v137. This section supersedes v136 only for transfer metadata; runtime/model/expert semantics are unchanged.
-- rc4.92 correction: Geno Smith/Aaron Rodgers are NOT exclusions. Any active runtime/test/checkpoint rule that special-cases either name for demotion/removal is a regression. Exactly-one-QB remains a roster strategy only after QB1 is drafted.
-
-## V140 RC4.92 P0 CORRECTION
-- Active source authority rc4.92. Geno Smith/Aaron Rodgers are ordinary QB candidates; player-name hard exclusions are forbidden. Package/Android remain rc4.91 until gates/device verification.
-- AUTO contract v1.7.0 same-turn continuation is active.
-- This v140 EOF section supersedes older transfer metadata and old Geno/Rodgers exclusion language.
-
-
-## V141 — RC4.92 DEVICE OBSERVED + WALKER DIAGNOSTIC (ACTIVE EOF AUTHORITY)
-- User screenshot 2026-08-28 13:04 local proves Android/PWA badge **v11.8.0-rc4.92** and selected **Expert-v3 · positionsspezifisch**. This is VERSION OBSERVATION ONLY; full functional verification remains open.
-- Source/package/gh-pages runtime authority is rc4.92 and main/pages parity was verified before device observation.
-- P0 anti-regression: Geno Smith and Aaron Rodgers are NOT name-excluded. Any old hard-exclusion wording is historical and superseded. They must rank organically; one-QB strategy excludes QB2 only after QB1 is drafted.
-- NEW USER-OBSERVED ISSUE: at Pick 9 / fresh snapshot, Kenneth Walker III disappeared entirely from Top-10 although earlier rc4.91 showed Walker #8 with P~11.1 / ADP~17.4 and fresh external evidence supports substantial KC lead-back upside. Do NOT assume this is correct or merely injury-related. Diagnose scoring/presentation root cause first: selected Expert-v3 panel rank, ADP, acute injury/status penalty, Return-v2, normal-cut, candidate-pool identity/name normalization, and any stale residual forcing. Current minor ankle/foot swelling was reported as non-serious/expected fine; it can justify uncertainty but not an unexplained disappearance without model arithmetic.
-- Current visible rc4.92 Pick-9 Top-10 from screenshot: James Cook, CeeDee Lamb, Saquon Barkley, Justin Jefferson, Derrick Henry, De'Von Achane, Chase Brown, Brock Bowers, Drake London, Omarion Hampton. Walker absent.
-- Preserve live-surface requirements: ten candidates rendered once as full cards; orange NORMAL-CUT warning at card bottom; actual selected Expert-v3 rows; substantive player-specific +/- evidence; Reach/risk/wait/decline never as plus.
-- Expert-v3 weights remain: QB DS25/Mariano25/DelDon20/Boone10/Pat10/Todd10; RB DS25/Mariano25/DelDon25/Pat15/Weisse10; WR exact Expert-v2 fallback; TE DS25/Pat30/DelDon25/Boone10/Wolf10. Do not restart challenger acquisition.
-- Return-v2: early short-turn tau **4.25** remains locked; never resurrect tau 1.35. No generic Return retune from one screenshot.
-- Broad research: continue anti-repeat coverage; do not repeatedly query settled players absent new decision-changing information. Research goal is differentiated upside mechanisms/invalidators for app evidence, not generic sleeper labels.
-- AUTO semantics unchanged; **AUTO BLOCK** is zero-ack correction trigger: immediately resume long AUTO, parallelize independent lanes, no apology/status/promise response, stop only at material result/unavoidable user action/non-self-solvable blocker.
-- No mock unless explicitly requested.
-- Receiving chat order: (1) verify CURRENT/SEAL generation v141 and integrity; (2) diagnose Walker disappearance; (3) finish focused rc4.92 Android functional verification; (4) broad anti-repeat research in parallel; (5) keep checkpoint write-through.
-
-## V142 RC4.94 WALKER DISPLAY-FIX HANDOFF — SUPERSEDES OLDER ACTIVE POINTERS
-- Generation: `20260828T140500Z-v142`.
-- Fresh rc4.93 Pick-9 snapshot proves Walker panel 15.3 / ADP 17.4 remained available while lower-panel rows appeared as `FALLBACK AUSSERHALB NORMAL-CUT`.
-- Root cause: Top-10 presentation sliced scored rows before prioritizing normal-cut admissibility. rc4.94 fixes presentation only: normal-cut candidates fill visible slots first; fallback context fills only remaining slots.
-- No scoring, panel, injury, Return-v2, ADP or player-specific tuning.
-- Next: rc4.94 CI/package -> deploy exact runtime -> fresh Android Pick-9 verification. No mock. Snapshot duplicate guard remains binding.
-- AUTO BLOCK remains zero-ack long-block resumption.
-
-## V143 FINAL TRANSFER AUTHORITY — SUPERSEDES ALL OLDER ACTIVE POINTERS
-- Generation: `20260828T143500Z-v143`.
-- Android/package/deployment authority: rc4.93. Source-only challenger: rc4.94.
-- Walker root cause is generic Top-10 presentation ordering; no player-specific adjustment is authorized.
-- rc4.94 must pass CI/package before deployment; current main/pages app.js divergence is expected and must remain explicit.
-- Geno Smith/Aaron Rodgers rank organically; no player-name exclusions. Exactly one QB is enforced only after QB1.
-- Expert-v3: Todd D Clark QB 10%, Ryan Weisse RB 10%, Wolf of Roto Street TE 10%; WR exact Expert-v2 fallback. No reacquisition/re-export restart.
-- Return-v2 early tau 4.25; never restore 1.35. Research residual remains shadow-only.
-- AUTO/AUTO BLOCK same-turn continuation contract remains binding. No empty/status-only final while autonomous work remains.
-
-
-## V144 TAKEOVER AUDIT — RC4.94 PACKAGE PASS PROMOTION
-- Independent new-chat audit verified all 37 v143 seal-listed repo blob hashes exactly and confirmed the final v143 reseal commit `f3a8938d757065150a40d915c3516c09bb315830` is current head before this documentation repair.
-- GitHub Actions on that exact commit show all five primary workflows PASS: Project Guardrails 33169002464, rc4.83 gate 33169002459, candidate package 33169002426, rc4.82 gate 33169002429, release contract v2 33169002438.
-- Candidate package run 33169002426 explicitly reports `RELEASE_GUARD_PASS v11.8.0-rc4.94`; artifact 9684784867 exists with GitHub artifact digest `d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576`.
-- Therefore the old active statement “rc4.94 CI/package pending” was stale after the final reseal and is corrected here. rc4.94 is now source + CI/release/package/re-extract authority. rc4.93 remains deployed + Android-observed authority until exact promotion.
-- main/gh-pages parity audit remains intentionally false for app.js/index.html/sw.js/manifest.webmanifest and true for decision-policy/live-surface/expert-v3-board. Do not claim deployment or Android verification yet.
-- Exact continuation: deploy exact rc4.94 runtime to gh-pages, verify runtime parity, then obtain a fresh Android Pick-9 snapshot. No scoring, Expert-v3, Return-v2, ADP, injury or Walker-specific tuning; no automatic mock.
-
-
-## V148 RC4.96 DECISION-EVIDENCE AUDIT — ACTIVE AUTHORITY
-- Generation: `20260828T165800Z-v148`.
-- Source challenger: rc4.96. Android/package/deployment authority remains rc4.94 until full release/package/deploy/device promotion.
-- Audit source: `PITTI-Decision-Evidence-1398976368485625856-2026-08-28T14-07-09-294Z.json`; canonical 15 own-pick states from 16 raw fixtures; mixed fixture versions rc4.88/rc4.94/rc4.95.
-- Generic rc4.96 repairs: sparse-panel score/confidence guard + PANEL-CHECK; embedded `effectiveWeight` evidence export; per-pick dedupe/version telemetry; Cam/Cameron Ward and Kenny/Kenneth Gainwell alias merges; broader presentation normal-cut; late WR7+ soft opportunity-cost; observed decision-zone evidence coverage.
-- Anti-overfit: no generic Return-v2 retune; no Dobbins/player-specific rank penalty; no hard WR cap; QUESTIONABLE alone remains neutral.
-- Dedicated rc4.96 source regression PASS. Current release failures are checkpoint-generation drift, not a demonstrated rc4.96 decision-kernel failure.
-- Current gate: `RC496_RELEASE_PACKAGE`. No mock unless explicitly requested.
-
-
-## V149 PITTI HANDOFF — ACTIVE EOF AUTHORITY
-- Generation: `20260828T171200Z-v149`. This section supersedes older active pointers.
-- rc4.96 decision-evidence audit and generic repairs are retained. Audit source: PITTI-Decision-Evidence-1398976368485625856-2026-08-28T14-07-09-294Z.json; 16 raw / 15 canonical own-pick fixtures; mixed rc4.88/rc4.94/rc4.95 evidence.
-- rc4.96 dedicated source gate PASS. Legacy rc4.82/rc4.83 canaries were made successor-safe after alias dedupe / sparse-panel polarity changes; do not revert those fixes.
-- Exact rc4.96 package/re-extract PASS: reference run 33183057716, artifact 9690504450, SHA-256 18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0.
-- rc4.96 gh-pages deployment/runtime parity PASS. Device/PWA functional verification is the only dependent promotion gate still open.
-- IMPORTANT authority distinction: source/package/deployment = rc4.96; last fully observed/functional Android authority remains rc4.94 until a fresh rc4.96 device snapshot is supplied. Do not infer device promotion from deployment.
-- Exact continuation in a new chat: verify v149 seal/integrity and actual repo/Actions state; then request/inspect ONE fresh Android/PWA Pick-9 snapshot only when user interaction is unavoidable. Do NOT start a mock automatically.
-- Preserve generic fixes: QUESTIONABLE alone neutral; sparse n=2/n=3 panel penalty/confidence cap + PANEL-CHECK; evidence export effectiveWeight + dedupe/version telemetry; Cam/Cameron Ward and Kenny/Kenneth Gainwell aliases merged; Normal-Cut presentation separate from quality safety; late WR7+ is soft opportunity-cost only; no hard roster cap.
-- Anti-overfit locks: no global Return-v2 retune from this mock; no Dobbins/player-specific rank penalty; no Williams/Flowers/Smith name forcing; no blind RB forcing.
-- QB policy: exactly one user-drafted QB after QB1; Geno Smith/Aaron Rodgers rank organically and MUST NOT be name-excluded.
-- Expert-v3 authority remains positional: QB Todd D Clark 10%, RB Ryan Weisse 10%, TE Wolf of Roto Street 10%, WR exact Expert-v2 fallback; do not restart expert acquisition.
-- Return-v2 early tau 4.25 remains authoritative; never resurrect 1.35.
-- AUTO: long same-turn blocks, parallelize independent lanes, checkpoint after material change. AUTO BLOCK = zero-ack immediate resumption. Promise/status-only AUTO replies while executable work exists are forbidden.
-- Library mirror remains stale/fail-closed; newest sealed repo generation + verified device facts win.
+Handoff generation: `20260828T172200Z-v150`
+Updated: 2026-08-28 17:22Z
+
+## Mandatory takeover order
+1. Read `PITTI_COMMAND_CONTRACTS.json`.
+2. Read `PITTI_CURRENT_STATE.json`.
+3. Read `PITTI_HANDOFF_SEAL.json`; require PASS, handoff_ready=true, second_pass_pass=true.
+4. Require CURRENT == SEAL == this handoff generation and verify every seal-listed blob hash.
+5. Read `PITTI_AUTO_PREFLIGHT.md`, then `PITTI_EXECUTION_LOCK.json`.
+6. Read `PITTI_PROJECT_STATE.md` to EOF. Newer appended facts override historical sections.
+7. Read `PITTI_NEW_CHAT_BOOTSTRAP.md` and `HANDOFF_COMPLETENESS_MATRIX.md`.
+8. Verify actual GitHub CI/package/deployment state before acting. Chat memory is not authority.
+
+## Current authority — v150
+- League: 10-team Half-PPR, 1QB, slot 9; real draft 2026-08-31.
+- Production/control baseline remains rc4.64 and selectable.
+- Source authority: **v11.8.0-rc4.96**.
+- Package/re-extract authority: **v11.8.0-rc4.96**, 13 runtime files, run **33183057716**, artifact **9690504450**, SHA-256 **18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0**.
+- Exact five primary workflows PASS at commit **6eafbb297fa999a28dae14375a65544b73a97d7c**.
+- Deployment authority: **v11.8.0-rc4.96**. Independent 13/13 main↔gh-pages blob parity PASS at gh-pages head **35b68015aa79e8976f3ee9a230be3710be503b32**.
+- Android authority remains **v11.8.0-rc4.94** until a fresh device snapshot proves rc4.96 functionally. Do not conflate deployed with Android-verified.
+- Exact next gate: **RC496_ANDROID_VERIFY**. Do not start a mock automatically.
+
+## Decision-Evidence audit now part of authority
+Canonical source: `PITTI-Decision-Evidence-1398976368485625856-2026-08-28T14-07-09-294Z.json`.
+Repo audit: `research/DECISION_EVIDENCE_AUDIT_1398976368485625856_2026-08-28.md`.
+
+Accepted rc4.96 generic repairs:
+- QUESTIONABLE alone = zero score penalty; concrete injury evidence can still downgrade.
+- NORMAL-CUT display decoupled from PlayerQualitySafety; display warning must not appear artificially early.
+- Sparse Expert panel: n=2/n=3 reduces score/confidence; n<3 surfaces PANEL-CHECK. J.K. Dobbins is a canary, not a name-specific rule.
+- Embedded Expert rows export `effectiveWeight` correctly.
+- Decision evidence canonicalizes duplicate own-pick states and exposes mixed model versions.
+- Cam Ward/Cameron Ward and Kenny Gainwell/Kenneth Gainwell split aliases merged.
+- Observed mock decision corridor received player-specific evidence coverage rather than generic Panel/ADP filler.
+- Late WR7+ opportunity cost strengthened softly; **no hard WR cap**.
+- Dedicated `tools/rc496-draft-critical.mjs` exists and is wired into release/package contracts.
+
+Evidence audit non-actions:
+- no generic Return-v2 retune from one mock;
+- no Dobbins/Flowers/Smith/Williams name forcing;
+- no fixed roster quotas;
+- no player-name QB forcing;
+- no Expert-v3 weight change from this audit.
+
+## Draft invariants / old-error blockers
+- Exactly one user-drafted QB; after QB1 the user Coach surface excludes QB2 by user strategy.
+- Geno Smith/Aaron Rodgers rank organically; no player-name hard exclusions.
+- K/DST not drafted normally.
+- Starter maxima are not roster caps.
+- TE2 only exceptional-soft, not globally banned.
+- WR saturation is soft; exceptional value remains legal.
+- PairSum/Rolling must not resurrect.
+- No blind RB forcing, no Superflex evidence, no Brown numeric-v2 resurrection, no live renormalization of frozen Expert weights.
+- Duplicate snapshot guard remains draft-id/fingerprint aware.
+
+## Expert authority
+Expert-v3 positional profile remains selectable:
+- QB: Todd D Clark 10%.
+- RB: Ryan Weisse 10%.
+- TE: Wolf of Roto Street 10%.
+- WR: exact Expert-v2 fallback.
+Expert-v2/control profiles remain selectable. Draft Sharks counted once. Derek Brown stays excluded from new v2; Erickson is qualitative/challenger context, not an extra numeric vote.
+
+## AUTO / AUTO BLOCK contract
+AUTO means actual long autonomous work, not a promise/status response.
+Re-inventory after EVERY completed work package.
+A blocked lane blocks only itself; use independent lanes in parallel.
+AUTO BLOCK = zero-ack immediate continuation.
+No empty/status-only final while safe useful autonomous work exists.
+
+## Legacy canaries intentionally retained
+Historical rc4.82 and rc4.83 gates remain minimum-feature regression canaries. They were made successor-safe after alias/evidence changes and must not be reverted to stale exact counts/strings.
+
+## Checkpoint caveat
+Library mirror is stale/writeback-blocked. Repo CURRENT + PASS SEAL + Execution Lock + Project-State EOF + this handoff + actual CI/device evidence win on contradiction. Do not claim Library persistence unless Files proves it.
+
+## Exact continuation
+1. Verify v150 seal hashes and confirm five-gate rc4.96 PASS + 13/13 deployed parity.
+2. Request/inspect one fresh Android/PWA rc4.96 snapshot only when device verification is the next unavoidable action.
+3. If functional verification passes, promote Android authority to rc4.96 and run final draft-ready freeze audit.
+4. Preserve the Decision-Evidence findings and all anti-regression canaries above.
