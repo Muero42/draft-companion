@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T18:52:00Z",
+  "updatedAt": "2026-08-28T19:03:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -36,7 +36,7 @@
     "testChallengerAndroidObserved": true,
     "testChallengerAndroidAccepted": false,
     "rc499": {
-      "status": "ANDROID_VERSION_OBSERVED_RC4.99_FUNCTIONAL_ACCEPTANCE_PENDING",
+      "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
       "scope": [
         "neutral evidence must not render as plus",
@@ -52,7 +52,7 @@
         "normal-cut timing 18/22/26"
       ],
       "mergeAllowed": true,
-      "nextGate": "functional/semantic acceptance on rc4.99; no deployment troubleshooting unless a verified parity check fails",
+      "nextGate": "full release/package validation, canonical deployment, then device acceptance",
       "packageGateRun": 33200304688,
       "artifactId": 9697465647,
       "artifactDigest": "sha256:66bf4d2654135b8448f0ad42ff29bc5daca58d30225c75e1d72b6d4bed91f3c2",
