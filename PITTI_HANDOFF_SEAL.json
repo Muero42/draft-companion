@@ -1,43 +1,45 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T074500Z-v123",
-  "created_at": "2026-08-28T08:02:00Z",
+  "handoff_generation": "20260828T082000Z-v125",
+  "created_at": "2026-08-28T08:24:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "255378e3e8d013ec47a50b130f5c1d149d6d17df",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "bc092b7c21655a645d253290a31ed547cbcf7f7d",
+    "PITTI_CURRENT_STATE.json": "b278fed76bd2c413393421edc3697e108359bd85",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "937d46ade6c6d792d289b4830b8b94d55974321f",
     "PITTI_COMMAND_CONTRACTS.json": "41ffd8e89066b5e880ff11d6dffdd85e07127fdb",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e4ba6389db3da869ab2106c0d14ac83e68c6bdc2",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "255d7ae5b5489512c4d614c3b376f9747e3a6f57",
-    "PITTI_EXECUTION_LOCK.json": "e9f63d647420cb40f1a28dbc67a3da3f70fc3118",
-    "PITTI_PROJECT_STATE.md": "94836b611c44bf84863dbd7cd7fba3700b821a22",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "b3419ffc079be861bb9c6141b8a0ab436f8c8442",
+    "PITTI_EXECUTION_LOCK.json": "0554b9c49d5a21a58a51552f6857e8ff36233f3f",
+    "PITTI_PROJECT_STATE.md": "17c1e9c4f64976329439481b36b8e08cd9019d46",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
-    "app.js": "01558d59d72a4549746333695edf91568c4bcbb7",
-    "index.html": "32b3448b4d4daa5cd790d39a2197db7c7a72dbdb",
+    "app.js": "8bdaac2546c658f8a828f76b324e0a1ed96443f1",
+    "index.html": "c4f5e00d41752e155bdd63c8275361117be30de0",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
-    "sw.js": "ff9d3ca3d1a2e48674e23dca26a1bd8e69675fe0",
-    "manifest.webmanifest": "3af3c1d82a328ad06381814f9fd8b1e90a3fa163",
+    "sw.js": "2c444c3ca41344b4f087350aa4d499b6631dc1c7",
+    "manifest.webmanifest": "80da04b64a43a8df23a82aa5a893f1a9281f3518",
     "tools/rc483-draft-critical.mjs": "b9b01a6dd82c84141b778de90d1fc163f0406dac",
     "tools/rc484-draft-critical.mjs": "49328e534ecf36242bb0890f31157d0ce036f4b8",
     "tools/rc485-draft-critical.mjs": "47c94add1c36d114463bc97c8054a0e380f0617a",
     "tools/analyze-decision-evidence.mjs": "bb75950cc1698659769d7412adef71bb2e41d494",
-    "tools/pitti_guardrail_check.mjs": "9ecafcc60849de7522537fe37fef30ff4018df4e",
+    "tools/pitti_guardrail_check.mjs": "325e20744bfa75f8436cb8a157c23c2a16863e9e",
     "tools/pre-draft-freshness-gate.mjs": "9acc1999c0fe8a3428b9af7631812fe04338d42d",
     "tools/emergency-queue-contract.mjs": "d5ce421c905c40c10c03ba70a41161fb6036d320",
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "7419c575c0ae3a34860278af2a5a7cfc44a1ce08",
-    ".github/workflows/release-contract-v2.yml": "e08f11861f871a601c2ae4fdc4a071279147da3c",
-    ".github/workflows/release-contract-v2-package.yml": "765ac0e017b3bad0ce388b24639b8e414fcac3b6",
+    "README.md": "ccec8b92b3fcc2432845c9a404c4f45fab102a27",
+    ".github/workflows/release-contract-v2.yml": "5373c7ea6bdbef7149727f41e9fe406c20c30e1d",
+    ".github/workflows/release-contract-v2-package.yml": "98e7008abf8f46d04712e7ddfb14556c19a8807b",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
     "tools/rc482-draft-critical.mjs": "2dc217912729fc22432b443aad509e7ef55a4bd9",
-    "tools/release-completeness-guard.mjs": "aca9202daff2ab5bc71b5b9d74cc3c5ae17490a1",
+    "tools/release-completeness-guard.mjs": "12bf1760db10e0a11e9187ac84cd96d4f6b4380b",
     "tools/rc486-draft-critical.mjs": "3f57e27fd0aeb8aa1255b4d32de4ed8693c4ef01",
-    "tools/rc487-draft-critical.mjs": "44d96b34d07bdf94ad20ae7e9ca362b6e17580cf"
+    "tools/rc487-draft-critical.mjs": "e2033aef883503bb902d4ef52a6d2ff2b4943c69",
+    "expert-v3-board.js": "b8e869f5384e5dc2a0f353e632ecfabf7958debd",
+    "tools/rc488-draft-critical.mjs": "e573a524e34302cbb69e8ad4f7e02bab0f0299de"
   },
   "checks": {
     "current_generation": true,
@@ -94,7 +96,9 @@
     "v123_reseal": true,
     "rc487_guard_structured_targets": true,
     "successor_schema_guards_repaired": true,
-    "rc486_serialization_successor_guard": true
+    "rc486_serialization_successor_guard": true,
+    "rc488_expert_v3_profile": true,
+    "v125_reseal": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -105,20 +109,18 @@
   },
   "runtime_boundary": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.86",
-    "failed_candidate": "v11.8.0-rc4.85",
-    "transfer_bottleneck": "v11.8.0-rc4.86",
-    "test_challenger": "v11.8.0-rc4.87",
+    "android_authority": "v11.8.0-rc4.87",
+    "test_challenger": "v11.8.0-rc4.88",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.86",
-    "deployed_pages": "v11.8.0-rc4.87",
-    "library_recovery_alias": "v11.8.0-rc4.52"
+    "latest_package_reextract": "v11.8.0-rc4.87",
+    "deployed_pages": "v11.8.0-rc4.88",
+    "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR v2 unchanged"
   },
   "exact_continuation": {
-    "gate": "ANDROID_RC4.87_COMPACT_EXPERT_V3_EXPORT",
+    "gate": "ANDROID_RC4.88_EXPERT_V3_PROFILE_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "Reload/update to rc4.87, tap Expert-v3 kompakt kopieren once, paste compact JSON, then compute/test v3. No manual trimming and no mock."
+    "instruction": "Reload/update to rc4.88, select Expert-v3 positionsspezifisch, verify green panel health. No mock."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
-  "acceptance_fingerprint": "rc4.64|rc4.86-android|rc4.85-export-failed|rc4.86-full-export-too-large|rc4.87-compact-transfer|EXPERT-V3|V2-FROZEN|ANTI-REPEAT|1QB|HANDOFF-v123"
+  "acceptance_fingerprint": "rc4.64|rc4.87-android|rc4.88-expert-v3-profile|QB-TODD10|RB-WEISSE10|TE-WOLF10|WR-V2|V2-SELECTABLE|ANTI-REPEAT|1QB|HANDOFF-v125"
 }
