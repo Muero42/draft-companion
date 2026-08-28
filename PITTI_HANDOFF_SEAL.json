@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T063500Z-v119",
-  "created_at": "2026-08-28T06:38:00Z",
+  "handoff_generation": "20260828T065500Z-v120",
+  "created_at": "2026-08-28T07:00:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "4e30271dae8d829033cfef7d1d9523d91579e766",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "ba1470e42de3deb753b14a2b1ad7cf90543496ec",
+    "PITTI_CURRENT_STATE.json": "1bd7a7ad679b67d14cb13daa01cd58e092910d07",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "7005d8d5699a187b857ad83b4fe2d4c16ea5e3dc",
     "PITTI_COMMAND_CONTRACTS.json": "41ffd8e89066b5e880ff11d6dffdd85e07127fdb",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e4ba6389db3da869ab2106c0d14ac83e68c6bdc2",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "8a9b367c8f110e9ae36c0d8ee1f766542dc82267",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "f2a7568923c547879ced494cf7072419cc52195f",
     "PITTI_EXECUTION_LOCK.json": "7ae1dcbad5b33037341e8a701078a4e6b5f4c43d",
-    "PITTI_PROJECT_STATE.md": "950e0d0d291848459bb23acf514839200aaba6d3",
+    "PITTI_PROJECT_STATE.md": "bf73b5143e9358191b7667f6e7940889a86736c4",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
     "app.js": "f518bc93d13770d4a5f39572bcdfd4f7939a49c8",
     "index.html": "eb2a206e4380b86f58385505b0b631e6349c1f5d",
@@ -24,9 +24,9 @@
     "tools/rc484-draft-critical.mjs": "49328e534ecf36242bb0890f31157d0ce036f4b8",
     "tools/rc485-draft-critical.mjs": "a5e2306334b9594bfc6dd73268fcb3d5d7ba8187",
     "tools/analyze-decision-evidence.mjs": "bb75950cc1698659769d7412adef71bb2e41d494",
-    "tools/pitti_guardrail_check.mjs": "899934837947c78f3ae88d07a2363b5264b8ffb7",
+    "tools/pitti_guardrail_check.mjs": "fe596c3d12a97edb07328a8b888623b0d6540c0d",
     "tools/pre-draft-freshness-gate.mjs": "9acc1999c0fe8a3428b9af7631812fe04338d42d",
-    "tools/emergency-queue-contract.mjs": "d5ce421c905c40c10c03ba70a41161fb6036d320",
+    "tools/emergency-queue-contract.mjs": "d5ce421c905c40b10c03ba70a41161fb6036d320",
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
@@ -80,7 +80,9 @@
     "expert_v3_primary_workstream": true,
     "anti_repeat_research_lock": true,
     "auto_execute_before_reply": true,
-    "v119_stale_bootstrap_repaired": true
+    "v119_stale_bootstrap_repaired": true,
+    "matrix_v120": true,
+    "v120_stale_bootstrap_guard_repaired": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -102,8 +104,8 @@
   "exact_continuation": {
     "gate": "ANDROID_RC4.85_SELF_UPDATE_THEN_EXPERT_V3_EXPORT",
     "auto_starts_mock": false,
-    "instruction": "Receiving chat verifies v119 first. Then use deployed PWA/app self-update/reload path to reach rc4.85; verify badge; run Expert-v3 Challenger exportieren once and return credential-free JSON. AUTO validates vectors, computes v2-v3 grids and DS redistribution, implements only a validated separate v3 preset, then regression/package/device gates. Do not restart broad screening or a mock."
+    "instruction": "Verify v120 handoff first. Then use deployed PWA/app self-update/reload path to reach rc4.85; verify badge; run Expert-v3 Challenger exportieren once and return credential-free JSON. AUTO validates vectors, computes v2-v3 grids and DS redistribution, implements only a validated separate v3 preset, then regression/package/device gates. Do not restart broad screening or a mock."
   },
-  "library_persistence": "STALE_FAIL_CLOSED_NOT_V119",
-  "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-package-pages|SELF-UPDATE|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|ANTI-REPEAT|1QB|AUTO-EXECUTE-BEFORE-REPLY|HANDOFF-v119"
+  "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
+  "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-package-pages|SELF-UPDATE|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|ANTI-REPEAT|1QB|AUTO-EXECUTE-BEFORE-REPLY|HANDOFF-v120"
 }
