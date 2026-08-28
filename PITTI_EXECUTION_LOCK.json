@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T19:03:00Z",
+  "updatedAt": "2026-08-28T19:25:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -176,8 +176,8 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "branch": "main",
-    "status": "RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT",
+    "branch": "pitti/rc4.100-semantic-selector",
+    "status": "RC4100_ISOLATED_CI_DIAGNOSTICS_ACTIVE",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -248,7 +248,18 @@
     "nextGate": "Generic 9-WR roster-utility audit + pool-wide substantive Pro/Contra audit; no automatic mock. Promote nothing until deterministic regressions and Android acceptance pass.",
     "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION",
     "androidVersionObserved": true,
-    "androidFunctionalVerified": false
+    "androidFunctionalVerified": false,
+    "challenger": "v11.8.0-rc4.100",
+    "pr": 36,
+    "ciFinding": "CI operational; prior failures were stale authority/version guard assumptions, not runtime semantic failures",
+    "releaseHardening": [
+      "candidate preflight separated from deployed authority locks",
+      "rc4.85/rc4.88 version gates monotonic",
+      "rc4.98 polarity canary extended through rc4.100",
+      "emergency queue mandatory in release/package",
+      "acute-status freshness mandatory in release/package"
+    ],
+    "androidUnchanged": "v11.8.0-rc4.99"
   },
   "status": "RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT",
   "gate": "RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT",
