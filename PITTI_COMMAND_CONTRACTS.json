@@ -99,5 +99,5 @@
     "packageHashSemantics": "GitHub artifact digest for successful rc4.96 candidate package; durable authority also requires runtime blob/re-extract gates.",
     "testChallenger": "v11.8.0-rc4.96"
   },
-  "currentGate": "RC496_RELEASE_PACKAGE"
+  "currentGate": "RC496_DEPLOY_PARITY"
 }
