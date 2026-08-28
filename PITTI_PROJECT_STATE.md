@@ -1137,3 +1137,15 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - This was a stale regression-guard assumption, not a runtime/build/Expert-v3 failure. The guard now requires semantic bootstrap invariants (production/control, current Android authority, current deployed/package-reextract candidate, AUTO loop/reminder rules) instead of obsolete exact predecessor versions.
 - Handoff generation advances to v120. No runtime files changed. rc4.85 deployment/package state and exact next gate remain unchanged.
 - Seal must be generated only after this checkpoint and all canonical v120 files are final; no post-seal project-state edits before CI second pass.
+
+
+---
+## 2026-08-28 — rc4.85 EXPERT-v3 EXPORT FAILURE / rc4.86 HOTFIX
+- Direct Android rc4.85 export evidence returned deterministic errors for Ryan Weisse, Wolf of Roto Street and Todd D Clark: `loadSingleExpert is not defined`; Joey Wright was `missing` in the current expert directory.
+- Root cause is exact: rc4.85 `exportExpertV3Challengers()` called nonexistent `loadSingleExpert(e)` even though the mature verified runtime already exposes `loadExpertRanks(expertId)`. This was an integration/test-coverage defect, not a FantasyPros data failure.
+- rc4.86 changes only Expert-v3 acquisition/export: it calls `loadExpertRanks(e.id)`, requires `verifiedIndividual`, exports normalized rank rows, and preserves source/freshness metadata. No Decision Kernel, Return-v2, manager map, Expert-v2 board/weights or roster policy changed.
+- Added `tools/rc486-draft-critical.mjs` and strengthened rc4.85 successor gate to forbid resurrection of `loadSingleExpert(` and require the verified loader.
+- Runtime version/cache/index/manifest synchronized to rc4.86 and deployed to gh-pages. Direct blob audit confirms main == gh-pages for all 12 runtime files.
+- Initial CI after mutation failed fail-closed because the v120 handoff seal correctly detected changed blobs. Treat those failures as expected seal-staleness, not runtime failure; v121 reseal must precede final release-gate interpretation.
+- Expert-v3 remains primary. Next device gate: update/reload rc4.86 -> export once -> compute challenger marginal grids. Joey Wright remains optional; do not force a WR expert if current complete vector remains unavailable.
+- Upside research breadth/anti-repeat rule remains active; new coverage batches A/B are persisted under `research/` and settled players are not recycled absent new decision-changing facts.
