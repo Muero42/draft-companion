@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T172200Z-v153",
-  "updated_at": "2026-08-28T17:22:00Z",
+  "handoff_generation": "20260828T193500Z-v154",
+  "updated_at": "2026-08-28T19:35:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -12,7 +12,7 @@
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.96",
     "test_challenger": "v11.8.0-rc4.98",
-    "test_challenger_android_verified": false,
+    "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.98",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e",
@@ -26,9 +26,9 @@
     "freeze_policy": "rc4.96 remains rollback baseline; low-risk microfix challenger allowed for further testing"
   },
   "exact_continuation": {
-    "gate": "RC498_ANDROID_VERIFY",
+    "gate": "RC498_WR_SATURATION_AUDIT",
     "auto_starts_mock": false,
-    "instruction": "Install/refresh rc4.98 only when user/device interaction is available; verify version and representative Pro/Contra cards. rc4.96 remains rollback authority until then."
+    "instruction": "Use canonical 17:30 backup paired OOS mocks. First correct prior miscount: strict Coach mock drafted NINE WR (not seven): JSN, Jefferson, Nabers, Olave, Waddle, Christian Watson, Parker Washington, Josh Downs, Stefon Diggs. Audit generic WR saturation / marginal championship utility across mid-late rounds without hard WR cap, player-name forcing, or global Return-v2 retune. Also continue systematic substantive Pro/Contra coverage audit; rc4.96 remains rollback authority until rc4.98 fully accepted."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -45,17 +45,17 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "PITTI AUTO resumes from rc4.96 pre-draft freeze; runtime/model changes require new material evidence and deterministic gates.",
-    "acceptance_fingerprint": "RC4.98-POLARITY-194PASS|FULL-RELEASE-PASS|PKG-REEXTRACT-PASS|ANDROID-RC4.96-ROLLBACK|NO-SCORING-TUNE|HANDOFF-v153",
-    "status": "RC498_ANDROID_VERIFY",
+    "resume_semantics": "PITTI AUTO resumes from rc4.98 Android-observed state and canonical paired OOS evidence; correct 9-WR Coach roster is a material unresolved audit finding.",
+    "acceptance_fingerprint": "RC4.98-ANDROID-OBSERVED|POLARITY-194PASS|PAIRED-OOS|STRICT-COACH-9WR|WR-SATURATION-AUDIT|NO-HARD-CAP|NO-RETURN-RETUNE|HANDOFF-v154",
+    "status": "RC498_WR_SATURATION_AUDIT",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Android/PWA verification of rc4.98 evidence-polarity presentation; no scoring/ranking retune.",
-    "gate": "RC498_ANDROID_VERIFY"
+    "next_action": "Generic WR saturation/utility audit plus substantive evidence-coverage audit; no automatic mock.",
+    "gate": "RC498_WR_SATURATION_AUDIT"
   },
   "source_authority": "rc4.96",
   "package_authority": "rc4.96",
-  "android_version_observed": "v11.8.0-rc4.96",
+  "android_version_observed": "v11.8.0-rc4.98",
   "android_functional_verified": true,
   "deployment_authority": "rc4.96",
   "draft_day_plan": {
