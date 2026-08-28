@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T121700Z-v144`
-Updated: 2026-08-28 12:17Z
+Handoff generation: `20260828T145500Z-v145`
+Updated: 2026-08-28 14:55Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -47,7 +47,7 @@ rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. In
 ## CURRENT EXTERNAL GATE
 `RC494_FINAL_RESEAL`
 
-Receiving chat must first verify v144 CURRENT/SEAL/Handoff equality and every seal-listed blob hash.
+Receiving chat must first verify v145 CURRENT/SEAL/Handoff equality and every seal-listed blob hash.
 
 Required continuation:
 - rc4.94 exact runtime deployment parity PASS and fresh Android Pick-9 presentation verification PASS.
