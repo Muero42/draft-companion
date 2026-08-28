@@ -2,7 +2,7 @@
 
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
 > **Aktuelle Source-Authority:** v11.8.0-rc4.91.  
-> **Letzter paket-/re-extract-verifizierter Stand:** v11.8.0-rc4.91 · 13 Runtime-Dateien · SHA-256 `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`.  
+> **Letzter paket-/re-extract-verifizierter Stand:** v11.8.0-rc4.91 · 13 Runtime-Dateien · SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.  
 > **Android-Version beobachtet:** v11.8.0-rc4.91 (User-Screenshot 2026-08-28). Das ist noch keine vollständige funktionale Verifikation aller rc4.91-Oberflächen.  
 > **gh-pages:** Versionsstring rc4.91; `app.js` ist aktuell byte-seitig älter als main (Henry/Polarity vorhanden, jüngster breiter Research-Batch fehlt). Versionsgleichheit darf nicht als Parität gewertet werden.  
 > **Aktuelles Gate:** `RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`.  
