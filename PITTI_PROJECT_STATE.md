@@ -1625,3 +1625,12 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Fresh late-round WR recon materially supports Denzel Boston as a legitimate asymmetric late pick: current FantasyPros note says he could emerge as Cleveland WR1 and draft price does not reflect that ceiling.
 - Current WR sleeper consensus has Stefon Diggs #1 sleeper among polled WR experts, while late-round expert content remains active Aug 26-28. These are recon signals only; do not override PITTI Expert-v3 or force WR-heavy roster construction.
 - Readiness priority remains: user mock is the remaining live end-to-end acceptance evidence; assistant parallel lane is freshness + fallback audit. 100-player Sleeper queue is sufficient and should not consume more time absent surplus.
+
+
+### 2026-08-28 — rc4.95 generic Questionable fix
+- Live rc4.94 mock at pick 32 exposed an unjustified ranking distortion: Zay Flowers carried Sleeper QUESTIONABLE and the generic coach code subtracted 3 points solely for that label. User correctly noted that Q tags are ubiquitous and usually non-material without corroborating severity evidence.
+- Freshness validation supports the generic change: current reporting says Flowers is being held out for precautionary reasons and is expected ready Week 1; therefore the bare Q label was double-counting/over-penalizing uncertainty rather than reflecting a material availability loss.
+- Implemented in app.js: QUESTIONABLE generic penalty changed from -3 to 0. The UI/reason now explicitly says 'Questionable · kein pauschaler Score-Abzug; aktuelle Evidenz prüfen'. DOUBTFUL/OUT/PUP/IR handling is unchanged; acute evidence/status layer remains responsible for genuine material injury/workload risk.
+- This is generic, not a Flowers boost. Any Q player can still be downgraded/blocked by concrete current evidence.
+- App version bumped v11.8.0-rc4.94 -> v11.8.0-rc4.95. Commits: 34416f3844146bc74c8d46a725f96613c2992c0b (logic), 98d5a95197e9316e2db78ed4104313ae16f4a6b8 (version).
+- Live mock may continue on installed rc4.94 as diagnostic evidence, but rc4.95 must be packaged/deployed and regression-gated before final code freeze; do not pretend rc4.95 is installed until Android deployment is actually verified.
