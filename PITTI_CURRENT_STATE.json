@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260828T175500Z-v155",
-  "updated_at": "2026-08-28T17:55:00Z",
+  "updated_at": "2026-08-28T18:55:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,16 +11,16 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.96",
-    "test_challenger": "v11.8.0-rc4.98",
+    "test_challenger": "v11.8.0-rc4.99",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.98",
+    "latest_package_reextract": "v11.8.0-rc4.99",
     "library_recovery_alias": "v11.8.0-rc4.52",
-    "latest_package_sha256": "43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e",
-    "deployed_pages": "v11.8.0-rc4.96",
-    "deployed_pages_app_byte_parity_with_main": false,
-    "package_reference_run": 33194280926,
-    "package_reference_artifact_id": 9695061955,
-    "package_reference_note": "rc4.98 source/behavioral/draft-critical/polarity/package-reextract PASS at c039575db4ca803d50559528306cad13581f0b29; artifact 9695061955. Android/PWA rc4.98 is visibly installed/operational, but final acceptance is NOT PASS because the substantive Pro/Contra coverage defect remains. rc4.96 is rollback authority. gh-pages remains rc4.96 and diverges from main rc4.98.",
+    "latest_package_sha256": "67caeab25b8b474c9eb69d947ef2b8daa1429503655803030764a8013aac57a8",
+    "deployed_pages": "v11.8.0-rc4.99",
+    "deployed_pages_app_byte_parity_with_main": true,
+    "package_reference_run": 33200304688,
+    "package_reference_artifact_id": 9697465647,
+    "package_reference_note": "rc4.99 full behavioral/source/package-reextract PASS; main and gh-pages promoted with byte parity; Android/PWA rc4.99 version observed. Functional/semantic acceptance remains pending.",
     "android_version_observed": true,
     "android_functional_verified": false,
     "freeze_policy": "rc4.96 remains rollback baseline; low-risk microfix challenger allowed for further testing",
@@ -28,9 +28,9 @@
     "android_acceptance_pending": true
   },
   "exact_continuation": {
-    "gate": "RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT",
+    "gate": "RC499_FUNCTIONAL_SEMANTIC_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "Use canonical 17:30 backup paired OOS mocks. Strict Coach mock 1399114762087895040 drafted NINE WR (not seven): JSN, Jefferson, Nabers, Olave, Waddle, Christian Watson, Parker Washington, Josh Downs, Stefon Diggs. Audit generic WR marginal/championship utility across rounds ~5-12 without a hard cap/quota, blind RB forcing, player-name rules or global Return-v2 retune. In parallel run a pool-wide semantic evidence audit for wrong polarity, generic/non-informative Pro/Contra fallback, missing substantive positive/negative evidence, and arrow/Fazit/risk contradictions. Do not assume the CMC positive-evidence change from draft PR #33 is on main: it is unmerged. No automatic mock."
+    "instruction": "No automatic mock. rc4.99 is installed/observed. Continue generic pool-wide Pro/Contra semantic coverage and soft WR saturation validation; preserve no-hard-cap/no-player-forcing/no-Return-retune invariants. Device interaction only if a functional behavior cannot be verified statically."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -47,19 +47,19 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "PITTI AUTO resumes from v155. main/source/package are rc4.98; Android/PWA rc4.98 is observed but not fully accepted; rc4.96 remains rollback authority. Two unresolved material lanes: strict-Coach 9-WR saturation and substantive Pro/Contra coverage.",
-    "acceptance_fingerprint": "RC4.98-SOURCE-PKG|ANDROID-RC4.98-OBSERVED-NOT-ACCEPTED|RC4.96-ROLLBACK|GH-PAGES-RC4.96-DIVERGED|PAIRED-OOS|STRICT-COACH-9WR|CMC-FALLBACK-OPEN|PR33-UNMERGED|NO-HARD-WR-CAP|NO-RETURN-RETUNE|NO-AUTO-MOCK|HANDOFF-v155",
-    "status": "RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT",
+    "resume_semantics": "PITTI AUTO resumes on rc4.99: source/package/deployment parity PASS and Android version observed; functional/semantic acceptance pending.",
+    "acceptance_fingerprint": "RC4.99-SOURCE-PKG-DEPLOY|ANDROID-RC4.99-OBSERVED|FUNCTIONAL-SEMANTIC-PENDING|STRICT-COACH-9WR|SOFT-WR-SATURATION|NO-HARD-CAP|NO-RETURN-RETUNE|NO-AUTO-MOCK",
+    "status": "RC499_FUNCTIONAL_SEMANTIC_ACCEPTANCE",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Audit 9-WR Coach path and pool-wide substantive Pro/Contra coverage; preserve rc4.96 rollback; no automatic mock.",
-    "gate": "RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT"
+    "next_action": "Continue pool-wide semantic evidence coverage and soft WR saturation validation on rc4.99; no automatic mock.",
+    "gate": "RC499_FUNCTIONAL_SEMANTIC_ACCEPTANCE"
   },
-  "source_authority": "rc4.98",
-  "package_authority": "rc4.98",
-  "android_version_observed": "v11.8.0-rc4.98",
+  "source_authority": "rc4.99",
+  "package_authority": "rc4.99",
+  "android_version_observed": "v11.8.0-rc4.99",
   "android_functional_verified": false,
-  "deployment_authority": "rc4.96",
+  "deployment_authority": "rc4.99",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
