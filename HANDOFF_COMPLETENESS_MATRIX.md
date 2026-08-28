@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v129
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v130
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -101,3 +101,5 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - v127 rc4.88: Expert-v3 separate profile; final five primary gates PASS; gh-pages loader synchronized; Android verify pending.
 
 - v129 rc4.89: active Expert-v3 live display fix; unified full Top-10 cards; per-card orange Normal-Cut warning; richer early-round Pro/Contra; kernel/Return/weights unchanged; full gates pending.
+
+- v130 rc4.89 full closure: 5/5 final CI workflows PASS, 13/13 main-pages runtime parity, 13-file package SHA 2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608. Android visual verification pending.
