@@ -1653,3 +1653,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - rc4.95 implements the generic neutral-Q rule without player-name forcing. Release metadata parity corrected across app/index/manifest.
 - Release audit exposed a stale guardrail literal that required execution-lock appVersion rc4.64 even though the runtime had legitimately advanced. Repaired guard to require Execution Lock appVersion == APP_VERSION instead, preserving fail-closed behavior while making successor releases possible.
 - Android authority remains rc4.94 until exact rc4.95 package/deploy/device verification. Do not promote merely from source edits.
+
+
+### 2026-08-28 — rc4.95 full release closure / Android gate
+- v146 rc4.95 final five-workflow set PASS on exact sealed commit 5ff06f0056c956816e33f387494db231b776cf74: Project Guardrails, Release Contract v2, Candidate Package/Re-extract, rc4.82 gate, rc4.83 gate.
+- Candidate package run 33176313062 / artifact 9687724788; GitHub artifact container digest sha256:da9312f3854427e421369dff2bf8f58367b7db8a0568fcee7937a3b79db26d5c. Package/re-extract behavioral gate PASS.
+- Exact rc4.95 changed runtime files promoted to gh-pages: app.js b084b63a..., index.html 665ac302..., sw.js eb89899f..., manifest e0451ab8...; deployment head e003a9fec107e28f377da260c2940610df7caa34.
+- Android authority intentionally remains rc4.94 until user/device actually observes rc4.95 and a functional snapshot. No more source/model tuning before this device gate unless a P0 defect is discovered.
