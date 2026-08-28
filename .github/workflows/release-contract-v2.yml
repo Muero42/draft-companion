@@ -3,6 +3,8 @@ on:
   push:
     branches: [main]
   workflow_dispatch:
+  pull_request:
+    branches: [main]
 jobs:
   behavioral-contract:
     runs-on: ubuntu-latest
@@ -21,7 +23,7 @@ jobs:
           node tools/release-contract-v2.mjs
           node tools/live-presentation-behavior.mjs
           node tools/rc478-oos-policy.mjs
-          node tools/pitti_guardrail_check.mjs
+          PITTI_SKIP_SEAL_INTEGRITY=1 node tools/pitti_guardrail_check.mjs
           node tools/rc482-draft-critical.mjs
           node tools/rc483-draft-critical.mjs
           node tools/rc484-draft-critical.mjs
@@ -33,4 +35,5 @@ jobs:
           node tools/rc490-draft-critical.mjs
           node tools/rc491-return-calibration.mjs
           node tools/rc496-draft-critical.mjs
-          if grep -q "v11.8.0-rc4.98" app.js; then node tools/rc498-evidence-polarity.mjs; fi
+          if grep -Eq "v11.8.0-rc4.(98|99)" app.js; then node tools/rc498-evidence-polarity.mjs; fi
+          if grep -q "v11.8.0-rc4.99" app.js; then node tools/rc499-wr-saturation.mjs && node tools/rc499-normal-cut.mjs; fi

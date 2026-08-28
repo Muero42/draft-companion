@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.98';
+const APP_VERSION='v11.8.0-rc4.99';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -997,25 +997,32 @@ function injuryStashAdjustment(p,current,state){
 }
 
 function marginalRosterUtility(p,current,state){
-  // Keine starre Sollverteilung: nur gradueller Grenznutzen. Eure Flex-Regeln erlauben 1–3 RB und 2–4 WR Starter.
-  // rc4.96 evidence audit: once six WR are already rostered, a seventh late WR has sharply
-  // lower championship option value than an RB5 with contingent-role upside. This remains
-  // a soft utility cost, not a roster cap: a truly exceptional WR value can still overcome it.
+  // Soft roster economics, never a positional cap. The relevant comparison is marginal
+  // championship option value: after WR6, another WR must clear an increasingly meaningful
+  // hurdle versus RB contingency/upside, while exceptional panel/value edges remain draftable.
   const c=state.counts||{},n=Number(c[p.pos]||0);let x=0;
   if(p.pos==='RB'&&current>=81){
     if(n>=7)x-=3.5;
     else if(n>=6)x-=2;
-    else if(current>=121&&n<=4)x+=2;
+    else if(current>=121&&n<=4)x+=3.5;
+    else if(current>=101&&n<=4)x+=2;
     else if(n<=3)x+=1;
   }
   if(p.pos==='WR'&&current>=81){
-    if(current>=121&&n>=8)x-=15;
-    else if(current>=121&&n>=7)x-=13.5;
-    else if(current>=121&&n>=6)x-=12;
-    else if(n>=8)x-=6.5;
-    else if(n>=7)x-=5;
-    else if(n>=6)x-=3;
+    const rb=Number(c.RB||0);
+    if(current>=121&&n>=8)x-=20;
+    else if(current>=121&&n>=7)x-=17;
+    else if(current>=121&&n>=6)x-=14;
+    else if(current>=101&&n>=8)x-=12;
+    else if(current>=101&&n>=7)x-=9;
+    else if(current>=101&&n>=6)x-=6;
+    else if(n>=8)x-=8;
+    else if(n>=7)x-=6;
+    else if(n>=6)x-=4;
     else if(n<=4)x+=.5;
+    // Portfolio imbalance matters independently of raw WR count. This is deliberately
+    // modest and only activates once the roster already carries six WR.
+    if(n>=6&&rb<=4)x-=current>=121?3:1.5;
   }
   if(p.pos==='QB'&&n===0&&current>=130)x+=7;
   if(p.pos==='TE'&&n===0&&current>=120)x+=4;

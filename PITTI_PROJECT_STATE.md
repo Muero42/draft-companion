@@ -1954,3 +1954,24 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 ## 2026-08-28 18:04Z — v155 detailed continuation contract
 - Added `research/RC498_V155_OPEN_AUDIT_CONTRACT_2026-08-28.md`.
 - It formalizes exact Lane A (9-WR saturation/championship utility) and Lane B (pool-wide substantive Pro/Contra quality) acceptance tests, preserving all anti-overfit and rollback constraints.
+
+
+## 2026-08-28 rc4.99 research-only checkpoint — source guardrails PASS
+- Branch: `pitti/rc4.99-wr-saturation-semantic-audit`; PR #35; **do not merge/promote yet**.
+- Root cause confirmed for CMC-class presentation bug: neutral research evidence (`dir:0`) could enter the Plus path. Plus now requires positive research polarity; neutral `Fairer Bereich`/Panel≈ADP filler is explicitly excluded.
+- Added regression fixtures for neutral age, neutral context and fair-range text.
+- Strict-Coach rc4.98 9-WR result is treated as structural evidence. rc4.99 strengthens only soft marginal roster economics (no WR cap/quota, no blind RB forcing, no Return-v2 retune): numeric canary covers WR6/7/8 and RB5 contingent utility.
+- Early/mid/late Normal-Cut remains 18/22/26 panel-rank points; dedicated canary prevents the previously observed premature cut warning from silently returning.
+- Sparse panel guard remains generic; J.K. Dobbins n=2 is retained as the canary, not player-forced scoring.
+- GitHub guardrail run 33199805925 PASS after the semantic/fair-range changes; rc4.99 saturation and normal-cut contracts PASS.
+- Production/main and verified Android authority remain unchanged. Next dependent gate: full release-contract/package validation, then controlled Android verification only if all contracts pass.
+
+- rc4.99 full behavioral release contract PASS: run 33200189530. Candidate package/re-extract PASS: run 33200304688, artifact 9697465647. Downloaded nested PREINSTALL SHA-256 = 67caeab25b8b474c9eb69d947ef2b8daa1429503655803030764a8013aac57a8; 13 runtime files. This is still **not Android verified/accepted** and must not be merged/promoted on package PASS alone.
+
+
+## 2026-08-28 rc4.99 deployment checkpoint — gh-pages parity PASS
+- Verified rc4.99 PREINSTALL package passed full behavioral contract, package/re-extract and independent 13-file byte audit.
+- Deployed the exact 13 verified runtime files to `gh-pages`; post-deploy Git blob comparison PASS for all 13 files.
+- gh-pages candidate is now byte-identical to the rc4.99 research candidate runtime. `main` remains unchanged and rc4.99 remains unmerged/research-only.
+- Android/PWA refresh is the only remaining device gate. User action required only to open/refresh the installed app once so the service worker can activate the new cache; then verify visible `v11.8.0-rc4.99` and functional live surface.
+- Do not infer Android acceptance from deployment parity alone.

@@ -18,8 +18,8 @@ assert.match(app,/modelVersion:f.modelVersion\|\|null/,'decision summary model-v
 assert.match(app,/panelN:Number\.isFinite/,'decision evidence panelN missing');
 assert.match(app,/reasons:Array\.isArray\(x\.reasons\)/,'decision evidence scoring reasons missing');
 assert.match(app,/const displayGap=current<=70\?18:current<=110\?22:26/,'presentation normal-cut must be broader than safety gate');
-assert.match(app,/current>=121&&n>=6\)x-=12/,'late WR7 marginal-utility guard missing');
-assert.match(app,/current>=121&&n<=4\)x\+=2/,'late RB contingent-option utility missing');
+assert.match(app,/current>=121&&n>=6\)x-=14/,'late WR7 marginal-utility guard missing');
+assert.match(app,/current>=121&&n<=4\)x\+=3\.5/,'late RB contingent-option utility missing');
 assert.match(live,/return'PANEL-CHECK'/,'live sparse-panel signal missing');
 assert.match(live,/Panel unvollständig\|Panel-Streuung/,'live sparse-panel negative evidence handling missing');
 const observedDecisionZoneEvidence=[

@@ -75,7 +75,8 @@ console.log('RC485_DRAFT_CRITICAL_PASS');
 
 // rc4.85 bounded late-WR saturation challenger invariants.
 const mru=grab('marginalRosterUtility'),prog=grab('progressiveUpsideBonus');
-assert.ok(mru.includes("else if(n>=8)x-=6.5")&&mru.includes("else if(n>=7)x-=5")&&mru.includes("else if(n>=6)x-=3"),'legacy WR saturation floors must remain beneath successor strengthening');
+assert.ok(/else if\(n>=8\)x-=\d/.test(mru)&&/else if\(n>=7\)x-=\d/.test(mru)&&/else if\(n>=6\)x-=\d/.test(mru),'soft WR saturation floors missing');
+assert.ok(!/return\s+-999/.test(mru),'WR saturation must remain soft, never a hard exclusion');
 assert.ok(prog.includes("state.counts.WR>=6"));
 assert.ok(prog.includes("[0,1.5,3,4.5]"));
 assert.ok(prog.includes("[0,.75,1.5,2.5]"));

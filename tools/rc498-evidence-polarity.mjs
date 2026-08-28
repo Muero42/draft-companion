@@ -5,11 +5,12 @@ const live=fs.readFileSync('live-surface-v3.js','utf8');
 const must=(ok,msg)=>{if(!ok){console.error('RC498_EVIDENCE_POLARITY_FAIL:',msg);process.exitCode=1;}};
 
 // Runtime-version parity for this challenger.
-must(app.includes("const APP_VERSION='v11.8.0-rc4.98';"),'app version != rc4.98');
+must(app.includes("const APP_VERSION='v11.8.0-rc4.99';"),'app version != rc4.99');
 
-// Sign-aware presentation contract.
-must(live.includes("Number(c.dir??0)>=0"),'displayEvidence does not exclude negative research from plus path');
-must(live.includes("re&&Number(re.dir??0)>=0?researchText(x):null"),'plus path is not sign-aware');
+// Sign-aware presentation contract. Neutral evidence may remain displayable as context, but never as a plus.
+must(live.includes("Number(c.dir??0)>=0"),'displayEvidence must retain neutral evidence for neutral/context surfaces');
+must(live.includes("Number(re.dir??0)>0?researchText(x):null"),'plus path is not sign-aware');
+must(live.includes("positiveDisplayEvidence"),'positive display-evidence selector missing');
 must(live.includes("re&&Number(re.dir??0)<0"),'minus path does not route negative research by sign');
 must(!live.includes("rr&&!/Regression/.test(rr)"),'old lexical polarity heuristic remains');
 must(!live.includes("rr&&/Regression/.test(rr)"),'old lexical negative heuristic remains');

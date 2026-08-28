@@ -1,5 +1,6 @@
 # Draft Companion – Final Draft Edition 2026
 
+> **Research-only candidate:** v11.8.0-rc4.99 — source/package validation only; not production, not Android-accepted, not merged.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64.  
 > **Rollback-/zuletzt voll akzeptierte Android-Authority:** v11.8.0-rc4.96.  
 > **Aktuelle main/source + package/re-extract Authority:** v11.8.0-rc4.98.  
@@ -9,6 +10,8 @@
 > **Aktuelles Gate:** `RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT`.  
 > **OOS critical:** strict Coach draft 1399114762087895040 = 9 WR / 4 RB / 1 TE / 1 QB; old 7-WR count is invalid.  
 > **Evidence:** polarity 194-component PASS; substantive Pro/Contra coverage still open. PR #33 CMC positive-evidence patch is UNMERGED.
+
+> **Research-only candidate:** v11.8.0-rc4.99 on `pitti/rc4.99-wr-saturation-semantic-audit`; not production, not Android-accepted, not merged. Source guardrails + full behavioral release contract PASS; package/re-extract gate pending.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
 
