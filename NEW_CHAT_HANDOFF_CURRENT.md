@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T081600Z-v128`
-Updated: 2026-08-28 08:16Z
+Handoff generation: `20260828T083000Z-v129`
+Updated: 2026-08-28 08:30Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -281,3 +281,18 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - User screenshot verifies badge v11.8.0-rc4.88 on Android/PWA and Expert-v3 · positionsspezifisch selected in the UI.
 - Runtime authority advances to rc4.88. No further install gate remains for this change.
 - Continue AUTO with broad anti-repeat upside/differentiator research and Expert-v3 effect validation; do not start a mock unless explicitly requested.
+
+
+## V129 RC4.89 LIVE-PRESENTATION REPAIR
+- User screenshot exposed two genuine rc4.88 presentation regressions:
+  1. Live surface profile detector knew only incumbent/v2 maps, so selected Expert-v3 rendered as CUSTOM and reused old incumbent expert-name ordering.
+  2. First four players were full decision cards, then all ten were duplicated again in a weaker compact 10er list.
+- rc4.89 fixes presentation only:
+  - recognizes exact Expert-v3 map QB v3 / RB v3 / WR v2 / TE v3;
+  - displays actual selected v3 experts (Todd QB, Weisse RB, Wolf TE; WR remains frozen v2);
+  - renders candidates 1-10 exactly once, all with the same full card structure;
+  - NORMAL-CUT warning is orange at bottom of each affected card;
+  - no duplicated hierarchy/10ER compact block.
+- Weak early-round generic Pro/Contra was not merely a late-draft coverage problem. Added explicit current display/risk evidence for James Cook, CeeDee Lamb, Justin Jefferson and Brock Bowers; broader anti-repeat research continues separately.
+- Decision Kernel, Return-v2, roster policy, Expert-v2 board and Expert-v3 weights are unchanged.
+- Exact gate: full rc4.89 release/package/guardrails -> gh-pages parity -> Android visual verification. No mock.
