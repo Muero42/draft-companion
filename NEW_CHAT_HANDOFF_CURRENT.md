@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T080300Z-v126`
-Updated: 2026-08-28 08:04Z
+Handoff generation: `20260828T081000Z-v127`
+Updated: 2026-08-28 08:10Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -268,3 +268,10 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - rc4.88 deployed with selectable Expert-v3 positional profile: Todd D Clark QB 10%, Ryan Weisse RB 10%, Wolf of Roto Street TE 10%; WR deliberately remains Expert-v2 because Joey Wright vector is missing.
 - Legacy rc4.82/83 profile guards were found structurally over-strict (exact object shape) and repaired additively; no old behavior was removed.
 - v126 current/seal synchronized. Full gates must pass before Android verification.
+
+
+## V127 RC4.88 EXPERT-v3 FULL CLOSURE
+- Final sealed rc4.88 commit b1f70fe7: all five primary gates PASS (Project Guardrails, release contract v2, package/re-extract, rc4.82, rc4.83).
+- Expert-v3 is separate/selectable: Todd QB 10%, Weisse RB 10%, Wolf TE 10%; WR stays Expert-v2 because qualified fresh Wright vector is missing.
+- AUTO diagnosed/repaired successor-hostile legacy assertions and a real missing index loader before closure; do not revert these repairs.
+- gh-pages synchronized after closure. Exact next action: Android/PWA update to rc4.88 -> verify badge + Expert-v3 selectable. Then broad non-repetitive upside research. No mock.
