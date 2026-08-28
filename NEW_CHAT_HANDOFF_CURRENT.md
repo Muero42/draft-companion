@@ -1,5 +1,5 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T155300Z-v152`
+Handoff generation: `20260828T172200Z-v153`
 Updated: 2026-08-28 15:53Z
 
 ## Mandatory takeover order
@@ -58,3 +58,6 @@ Library mirror remains stale/fail-closed; do not let it overwrite this sealed re
 - rc4.82: retained takeover invariant.
 - rc4.83: retained takeover invariant.
 - Re-inventory after EVERY completed work package: retained takeover invariant.
+
+## v153 delta
+rc4.98 evidence-polarity source/release/package gates PASS. Package run 33194280926 / artifact 9695061955 / digest 43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e. Android authority remains rc4.96 until rc4.98 device verification. AUTO must not start a mock; next dependent gate is RC498_ANDROID_VERIFY.
