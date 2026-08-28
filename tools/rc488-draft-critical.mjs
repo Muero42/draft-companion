@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 const app=fs.readFileSync('app.js','utf8'),idx=fs.readFileSync('index.html','utf8'),sw=fs.readFileSync('sw.js','utf8');
-const b2src=fs.readFileSync('expert-v2-board.js','utf8'),b3src=fs.readFileSync('expert-v3-board.js','utf8');
+const b2src=fs.readFileSync('expert-v2-board.js','utf8'),b3src=fs.readFileSync('expert-v3-board.js','utf8'),live=fs.readFileSync('live-surface-v3.js','utf8');
 assert.match(app,/const APP_VERSION='v11\.8\.0-rc4\.(?:88|89|9\d+)'/);
 assert.match(idx,/v11\.8\.0-rc4\.(?:88|89|9\d+)/);assert.match(sw,/v11\.8\.0-rc4\.(?:88|89|9\d+)/);
 assert.ok(idx.includes('<option value="expertv3">Expert-v3 · positionsspezifisch</option>'));
