@@ -15,7 +15,18 @@ const LIVE_DRAFT_ID_2026='1366053132970233856';
 function activeDraftSurface(){return localStorage.getItem('v118_draftSurface')==='live'?'live':'mock'}
 function resolveActiveDraftId(){return activeDraftSurface()==='live'?LIVE_DRAFT_ID_2026:draftId(els.draftInput.value)}
 function validateCanonicalLiveDraft({id,season,teams,rounds,slot}){const errors=[];if(String(id)!==LIVE_DRAFT_ID_2026)errors.push('Draft-ID');if(String(season)!=='2026')errors.push('Saison');if(Number(teams)!==10)errors.push('Teams');if(Number(rounds)!==15)errors.push('Runden');if(Number(slot)!==9)errors.push('Slot');return{ok:!errors.length,errors}}
-function normalCandidateAdmissible(row){const v=row?.valueSafety;if(!row?.r||!Number.isFinite(row.r.rank)||!v)return false;const max=v.triggered&&Number.isFinite(v.qualityBandMax)?v.qualityBandMax:Number(v.bestPanelRank)+Number(v.threshold);return Number.isFinite(max)&&row.r.rank<=max}
+function normalCandidateAdmissible(row){
+  // Presentation normal-cut is deliberately broader than the Player-Quality Safety gate.
+  // The Safety gate constrains who may become the top recommendation; it must not make
+  // otherwise useful Top-10 context look like "fallback" this early in a 10-team draft.
+  const v=row?.valueSafety;
+  if(!row?.r||!Number.isFinite(row.r.rank)||!v)return false;
+  const best=Number(v.bestPanelRank);
+  if(!Number.isFinite(best))return false;
+  const current=Number(lastDraftContext?.current||1);
+  const displayGap=current<=70?18:current<=110?22:26;
+  return row.r.rank<=best+displayGap;
+}
 function visibleCoachCandidates(rows){
   const source=(rows||[]).filter(x=>x?.p&&x?.r);
   if(!source.length)return[];
