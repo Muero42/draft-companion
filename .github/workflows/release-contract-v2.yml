@@ -30,3 +30,4 @@ jobs:
           node tools/rc487-draft-critical.mjs
           node tools/rc488-draft-critical.mjs
           node tools/rc489-draft-critical.mjs
+          node tools/rc490-draft-critical.mjs
