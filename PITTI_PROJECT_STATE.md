@@ -1995,3 +1995,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - This source hardening is newer than the currently observed Android rc4.99 device instance. Full release/package validation and canonical deployment must precede device acceptance.
 
 - Static pool-wide structured-evidence inventory on current main: 169 display/displayRisk components across 153 kinds; 0 missing causal text; 0 positive-dir displayRisk components; no ultra-generic causal strings detected. 144 neutral context components and 25 signed components remain by design, so selector ordering is regression-protected rather than deleting neutral context.
+
+
+## 2026-08-28 19:07Z — rc4.100 isolated challenger
+- Semantic selector hardening has been isolated from Android-observed rc4.99 on branch `pitti/rc4.100-semantic-selector`, draft PR #36.
+- Version bumped consistently across app/index/service-worker/manifest to **v11.8.0-rc4.100**; release-contract predicates extended so rc4.98 polarity and rc4.99 WR/normal-cut regressions also execute for rc4.100.
+- PR #36 is mergeable but remains draft/unmerged. No automatic promotion until behavioral/package gates actually execute and pass.
+- GitHub workflow runs are still absent for the PR head despite pull_request triggers; treat CI as unavailable, not as PASS. Independent static pool audit remains PASS, but is insufficient for release promotion.
