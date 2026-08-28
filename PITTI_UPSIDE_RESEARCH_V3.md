@@ -360,3 +360,13 @@ Tier A late-RB archetype = usable standalone value + one short path to major wor
 - Draft Sharks news/3D Value = current-context evidence, but because DS is in panel, do not independently boost player score from DS ranking/value itself.
 - Sleeper ADP = timing/return probability only, not player-quality evidence.
 - Injury/transaction/depth-chart facts may override stale priors when genuinely decision-changing.
+
+
+## 2026-08-28 — AUTO batch III: last-pick, injury and UI semantics
+- Fresh Aug28 FP last-pick article reinforces Jonah Coleman as a legitimate final-pick RB target and Malachi Fields as an immediate NYG role-capture WR; Fields remains low-volume archetype, so 10-team draft priority stays below higher-volume WR ceiling bets.
+- Juwan Johnson: TE10 in 2025 (77-889-3) and temporarily benefits from Jordyn Tyson hamstring absence; second-read path behind Olave. This is early-season floor/volume, not long-term breakout ceiling. Do not confuse temporary target vacuum with season-long ↑↑.
+- Isiah Pacheco: retain `↓↓` until back-to-practice; new back injury is distinct from resolved MCL. Potential No.2 job loss is concrete downside, not generic injury-risk prior.
+- Josh Jacobs: Aug27 DS reports misdemeanor charges plus groin issue; expected missed-time/disciplinary cloud now belongs in regression/availability layer. Do not speculate exact suspension length; current value must carry explicit legal/availability uncertainty.
+- Tucker Kraft: no downgrade from Jonnu signing; Kraft is on track W1 and Jonnu is No.2 while Musgrave is PUP. This is an anti-false-positive regression example.
+- UI semantics locked for richer arrows: `↑↑` = strong high-end outcome + short plausible causal path; `↑` = meaningful but conditional/moderate ceiling; `↓↓` = material role/health/availability deterioration; `↓` = moderate downside. Mixed arrows allowed (`↑↑ / ↓↓`) for genuinely bimodal profiles. Description must name mechanism, not just 'breakout'/'risk'.
+- Examples: Jameson Williams `↑ established breakout -> volume/TD consolidation`; Parker Washington `↑↑ WR1-path -> late-2025 target dominance + open JAX hierarchy`; Tuten `↑↑ standalone RB1-path -> GL/lead-work route`; Brooks `↑↑/↓↓ role-capture ceiling / recurrent knee durability`; Pacheco `↓↓ new back injury + RB2 job pressure`.
