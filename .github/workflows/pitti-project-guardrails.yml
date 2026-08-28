@@ -45,6 +45,9 @@ jobs:
       - name: rc4.97 microfix contract
         if: contains(github.head_ref || github.ref_name, 'rc4.97-microfix')
         run: node tools/rc497-microfix.mjs
+      - name: rc4.98 evidence polarity contract
+        if: contains(github.head_ref || github.ref_name, 'rc4.98-evidence-polarity')
+        run: node tools/rc498-evidence-polarity.mjs
       - name: PITTI execution-lock and anti-regression gate
         env:
           PITTI_SKIP_SEAL_INTEGRITY: ${{ github.event_name == 'pull_request' && '1' || '0' }}
