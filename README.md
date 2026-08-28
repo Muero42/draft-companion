@@ -1,11 +1,11 @@
 # Draft Companion – Final Draft Edition 2026
 
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
-> **Aktuelle Source-Authority:** v11.8.0-rc4.93.  
-> **Letzter paket-/re-extract-verifizierter Stand:** v11.8.0-rc4.93 (GitHub Actions candidate-package PASS; artifact run 33165222701 / id 9683286172).  
+> **Aktuelle Source-Authority:** v11.8.0-rc4.94 (display-only challenger, CI/package pending).  
+> **Letzter paket-/re-extract-verifizierter Stand:** v11.8.0-rc4.93 (candidate-package PASS; run 33166867111 / artifact 9683925309 / digest 3ce741b71cbc3f35b026e6aa8f9622e10999ecd29c54c0d66f6fcfdef379db95).  
 > **Android-Version beobachtet:** v11.8.0-rc4.93 (User-Screenshot 2026-08-28 13:04 lokal). Das ist noch keine vollständige funktionale Verifikation.  
-> **gh-pages:** rc4.92; Runtime-Parität zu main wurde nach Promotion verifiziert.  
-> **Aktuelles Gate:** `RC492_WALKER_ROOT_CAUSE_AND_ANDROID_FUNCTIONAL_VERIFY` plus breite Anti-Repeat-Research-Lane.  
+> **gh-pages:** rc4.93 deployed; main app.js is rc4.94 pending gates, so current app.js byte parity is intentionally false.  
+> **Aktuelles Gate:** `RC494_NORMAL_CUT_DISPLAY_FIX_CI_PACKAGE_DEPLOY_ANDROID_VERIFY`.  
 >
 > Built/source-verified, packaged/re-extracted, deployed, Android-Version-beobachtet und Android-funktional-verifiziert sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
 
@@ -53,4 +53,4 @@
 - Expert-v2-Gewichte/Routing unverändert.
 
 .
-> **Android authority update (2026-08-28 13:04 local):** user screenshot confirms v11.8.0-rc4.93 loaded on device. Functional verification remains open; Kenneth Walker III Top-10 disappearance is the active diagnostic.
+> **Android authority update:** fresh Pick-9 snapshot confirms v11.8.0-rc4.93. Walker remains Panel 15.3 / ADP 17.4; the reproduced defect is Top-10 presentation ordering. rc4.94 fixes display selection only.
