@@ -398,3 +398,18 @@ HANDOFF_GENERATION: 20260828T100500Z-v132
 - Active source authority rc4.92. Geno Smith/Aaron Rodgers are ordinary QB candidates; player-name hard exclusions are forbidden. Package/Android remain rc4.91 until gates/device verification.
 - AUTO contract v1.7.0 same-turn continuation is active.
 - This v140 EOF section supersedes older transfer metadata and old Geno/Rodgers exclusion language.
+
+
+## V141 — RC4.92 DEVICE OBSERVED + WALKER DIAGNOSTIC (ACTIVE EOF AUTHORITY)
+- User screenshot 2026-08-28 13:04 local proves Android/PWA badge **v11.8.0-rc4.92** and selected **Expert-v3 · positionsspezifisch**. This is VERSION OBSERVATION ONLY; full functional verification remains open.
+- Source/package/gh-pages runtime authority is rc4.92 and main/pages parity was verified before device observation.
+- P0 anti-regression: Geno Smith and Aaron Rodgers are NOT name-excluded. Any old hard-exclusion wording is historical and superseded. They must rank organically; one-QB strategy excludes QB2 only after QB1 is drafted.
+- NEW USER-OBSERVED ISSUE: at Pick 9 / fresh snapshot, Kenneth Walker III disappeared entirely from Top-10 although earlier rc4.91 showed Walker #8 with P~11.1 / ADP~17.4 and fresh external evidence supports substantial KC lead-back upside. Do NOT assume this is correct or merely injury-related. Diagnose scoring/presentation root cause first: selected Expert-v3 panel rank, ADP, acute injury/status penalty, Return-v2, normal-cut, candidate-pool identity/name normalization, and any stale residual forcing. Current minor ankle/foot swelling was reported as non-serious/expected fine; it can justify uncertainty but not an unexplained disappearance without model arithmetic.
+- Current visible rc4.92 Pick-9 Top-10 from screenshot: James Cook, CeeDee Lamb, Saquon Barkley, Justin Jefferson, Derrick Henry, De'Von Achane, Chase Brown, Brock Bowers, Drake London, Omarion Hampton. Walker absent.
+- Preserve live-surface requirements: ten candidates rendered once as full cards; orange NORMAL-CUT warning at card bottom; actual selected Expert-v3 rows; substantive player-specific +/- evidence; Reach/risk/wait/decline never as plus.
+- Expert-v3 weights remain: QB DS25/Mariano25/DelDon20/Boone10/Pat10/Todd10; RB DS25/Mariano25/DelDon25/Pat15/Weisse10; WR exact Expert-v2 fallback; TE DS25/Pat30/DelDon25/Boone10/Wolf10. Do not restart challenger acquisition.
+- Return-v2: early short-turn tau **4.25** remains locked; never resurrect tau 1.35. No generic Return retune from one screenshot.
+- Broad research: continue anti-repeat coverage; do not repeatedly query settled players absent new decision-changing information. Research goal is differentiated upside mechanisms/invalidators for app evidence, not generic sleeper labels.
+- AUTO semantics unchanged; **AUTO BLOCK** is zero-ack correction trigger: immediately resume long AUTO, parallelize independent lanes, no apology/status/promise response, stop only at material result/unavoidable user action/non-self-solvable blocker.
+- No mock unless explicitly requested.
+- Receiving chat order: (1) verify CURRENT/SEAL generation v141 and integrity; (2) diagnose Walker disappearance; (3) finish focused rc4.92 Android functional verification; (4) broad anti-repeat research in parallel; (5) keep checkpoint write-through.
