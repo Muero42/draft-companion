@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T100500Z-v132",
-  "created_at": "2026-08-28T10:13:00Z",
+  "handoff_generation": "20260828T102000Z-v133",
+  "created_at": "2026-08-28T10:28:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "d39bdc47367125ebf862f0189c35900ca9df362e",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "80086766aeb790d3463ddc5873b3d48a54dced2a",
-    "PITTI_COMMAND_CONTRACTS.json": "41ffd8e89066b5e880ff11d6dffdd85e07127fdb",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "e4ba6389db3da869ab2106c0d14ac83e68c6bdc2",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "fee56a284a58a575b657d4b354f759dcdc48452d",
-    "PITTI_EXECUTION_LOCK.json": "08ac2dc4062de8f5ed0bfa95d5a707737d4d776d",
-    "PITTI_PROJECT_STATE.md": "fbb69451d8083e930298043b204debabca59967b",
+    "PITTI_CURRENT_STATE.json": "7d8e49559984ce9d63ba07ac5976f73ba103c77d",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "b5bd29bb098350cd031aadc2bb0cccc557e931d4",
+    "PITTI_COMMAND_CONTRACTS.json": "af12002e6790413d2c218803dc71dd9b1ab213e3",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "633e610c2d995e71376466f7dc54d61614349293",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "ef9ef86ab8704287871c36a242ad97b38861da3e",
+    "PITTI_EXECUTION_LOCK.json": "b7363eb50b753b91b16ccd544d6d9f313858018a",
+    "PITTI_PROJECT_STATE.md": "a471e5c96e925072dc564e46e72e333faac50bff",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
     "app.js": "af39e65bbb2a7b521b205d7cfaa4a748836985fa",
     "index.html": "d305cd9b6e4d515cc51470a62619b0b7df460441",
@@ -30,7 +30,7 @@
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "fa46a35231ad1be620b59d1849540d5279b60d26",
+    "README.md": "3cb79436fccd8e4609397d717316979856da1776",
     ".github/workflows/release-contract-v2.yml": "a87aac1320f524565c2de7abaab3a25befc22213",
     ".github/workflows/release-contract-v2-package.yml": "d4f0c9f7495f802b10c91a5a7c3c60675193ec8d",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
@@ -140,30 +140,44 @@
     "v132_latest_auto_research_preserved": true,
     "v132_auto_block_semantics": true,
     "v132_rc491_android_authority": true,
-    "v132_matrix_synced": true
+    "v132_matrix_synced": true,
+    "v133_deep_handoff_audit": true,
+    "v133_active_boundary_stale_pointers_repaired": true,
+    "v133_package_hash_verified": true,
+    "v133_pages_main_app_divergence_recorded": true,
+    "v133_auto_block_in_command_contract": true
   },
   "artifact_runtime_parity": {
-    "app_js_main_pages": true,
+    "app_js_main_pages": false,
     "index_html_main_pages": true,
     "decision_policy_main_pages": true,
     "sw_js_main_pages": true,
-    "manifest_main_pages": true
+    "manifest_main_pages": true,
+    "note": "Intentional audited distinction at handoff: gh-pages app.js is an older rc4.91 byte set than main after newest broad evidence batch. Do not infer parity from version text."
   },
   "runtime_boundary": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.91",
+    "android_version_observed": true,
+    "android_functional_verified": false,
+    "source_authority": "v11.8.0-rc4.91",
     "test_challenger": "v11.8.0-rc4.91",
     "test_challenger_android_verified": true,
-    "latest_package_reextract": "v11.8.0-rc4.89",
-    "deployed_pages": "v11.8.0-rc4.89",
-    "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR v2 unchanged",
-    "latest_package_sha256": "2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608"
+    "latest_package_reextract": "v11.8.0-rc4.91",
+    "latest_package_sha256": "6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a",
+    "package_runtime_files": 13,
+    "deployed_pages_version": "v11.8.0-rc4.91",
+    "deployed_pages_app_byte_parity_with_main": false,
+    "deployed_pages_app_sha": "6fd11d3ffa2e3211d98b907df7e7e6a2d3262abb",
+    "main_app_sha": "af39e65bbb2a7b521b205d7cfaa4a748836985fa",
+    "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR exact v2 fallback",
+    "library_recovery_alias": "v11.8.0-rc4.52"
   },
   "exact_continuation": {
     "gate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH",
     "auto_starts_mock": false,
-    "instruction": "Verify v132 transaction and integrity first. Resume Android-observed rc4.91 functional verification plus broad anti-repeat upside research. AUTO BLOCK has zero-ack correction semantics. No mock unless explicit."
+    "instruction": "Verify v133 current/seal/handoff hashes first. Continue from Android-observed rc4.91. Preserve main/pages app-byte divergence until deliberately resolved. Verify actual Expert-v3 rows, evidence polarity/quality, unified Top-10 and short-turn Return-v2 behavior; continue broad anti-repeat research in parallel. AUTO BLOCK is zero-ack correction trigger. No mock."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
-  "acceptance_fingerprint": "rc4.91-android-observed|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v132"
+  "acceptance_fingerprint": "rc4.91-android-observed|rc4.91-package-6b98ff11|PAGES-APP-BYTE-LAG|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v133"
 }
