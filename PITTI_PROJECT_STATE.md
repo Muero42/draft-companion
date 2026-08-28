@@ -1360,3 +1360,9 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - CURRENT, Execution Lock, Preflight, Current Handoff and Completeness Matrix active authority corrected. Historical older mentions remain evidence of the regression and cannot override this EOF correction.
 - Parallel scan found no second active named hard-exclusion set. Ashton Jeanty's acute-status block is a time-bounded injury-status gate, not preference/name forcing, and remains subject to pre-draft freshness recheck.
 - New immediate gate: package/deploy rc4.92, run release/regression gates, then Android functional verification. Do not claim Android rc4.92 until observed.
+
+### 2026-08-28 — AUTO rc4.92 verification hardening
+- Re-inventory after P0 correction found legacy rc4.83-rc4.85 test files still contain historical Geno/Rodgers exclusion fixtures; these are not runtime imports, but they are retained only as historical tests and MUST NOT be treated as current policy.
+- Current executable package gate runs rc4.86+; rc4.86 gate has been inverted to reject any USER_HARD_QB_EXCLUSIONS / USER HARD EXCLUSION / normalized Geno-Rodgers runtime strings and now also asserts the generic post-QB1 userDraftStrategyExcluded path remains present.
+- Main app scan: only score -999 hard exclusion remaining is generic roster strategy after QB1; acute injury status uses separate -998 recommendation block and freshness gate.
+- GitHub status API exposed no completed status yet for latest checkpoint commit; do not claim release/package PASS until Actions evidence exists.
