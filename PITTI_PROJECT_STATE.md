@@ -1380,3 +1380,11 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - README authority was synchronized to Source rc4.92 while package/Android remain rc4.91; historical rc4.83 Geno/Rodgers text was explicitly marked superseded rather than active.
 - Guardrail command-contract expectation corrected to v1.7.0.
 - Remaining failures are now chiefly expected seal/generation integrity drift from post-v137 material changes; reseal only after rc4.92 technical gates are internally consistent, to avoid repeatedly sealing intermediate broken states.
+
+### 2026-08-28 — rc4.92 candidate package gate PASS
+- Removed obsolete historical test assertions that required Geno Smith/Aaron Rodgers player-name hard exclusions in rc483/rc484/rc485/rc486 guards. Successor-safe authority is now the opposite: no USER_HARD_QB_EXCLUSIONS and no player-name Geno/Rodgers runtime treatment.
+- rc491 version assertion made successor-safe for rc4.91+ instead of pinning app.js to rc4.91.
+- Final commit ed59bf3902892051586dac426cfa102d55bb93d9: ALL observed primary GitHub Actions gates PASS: release contract v2, candidate package gate, project guardrails, rc4.82 gate, rc4.83 gate.
+- Candidate package artifact from run 33165222701: Draft_Companion_PREINSTALL, artifact id 9683286172, GitHub artifact digest sha256:2c47f3fd9ddb18fab68fe7dc031e261c8093525f7211b92d129d7114d6e53408.
+- This establishes source + CI + package-artifact evidence for rc4.92. It does NOT establish gh-pages deployment parity or Android installation/functional verification. Android authority remains rc4.91 until observed otherwise.
+- Next dependent gate: promote/deploy the exact rc4.92 candidate through the verified release path, prove main/pages runtime parity, then Android install/version + focused functional anti-forcing verification. Do not claim deployment/device PASS early.
