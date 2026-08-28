@@ -88,7 +88,7 @@ must(app.includes('function applyPlayerQualitySafetyGate('),'Value-Safety gate m
 
 for(const name of ['Guilherme Gianni','Michael Bobal']) must(!app.includes(name),`temporary availability-only expert leaked into runtime: ${name}`);
 must(!text('expert-v2-board.js').includes('Ryan Weisse'),'Weisse must not leak into frozen Expert-v2 board');
-must(app.includes("['Ryan Weisse','Wolf of Roto Street','Todd D Clark','Joey Wright']"),'Expert-v3 acquisition target set missing');
+for(const token of ["{name:'Ryan Weisse',pos:'RB'}","{name:'Wolf of Roto Street',pos:'TE'}","{name:'Todd D Clark',pos:'QB'}","{name:'Joey Wright',pos:'WR'}"]) must(app.includes(token),`Expert-v3 acquisition target missing: ${token}`);
 
 const e=lock.expertV2||{};
 must(e.status==='THREE_SELECTABLE_PROFILES_CURRENT_AUTHORITY_NO_FINAL_WINNER','three-profile Expert-v2 authority drift');
