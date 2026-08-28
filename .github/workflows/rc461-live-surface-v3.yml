@@ -9,6 +9,11 @@ on:
       - '.github/workflows/rc461-live-surface-v3.yml'
   pull_request:
     branches: [main]
+    paths:
+      - 'tools/apply-rc461-live-surface-v3.mjs'
+      - 'live-surface-v3.js'
+      - 'live-surface-v3.css'
+      - '.github/workflows/rc461-live-surface-v3.yml'
 permissions:
   contents: write
 jobs:
