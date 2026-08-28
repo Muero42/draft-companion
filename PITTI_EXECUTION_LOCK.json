@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T17:55:00Z",
+  "updatedAt": "2026-08-28T18:27:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -18,7 +18,7 @@
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.98",
     "latestPreinstallVerified": "v11.8.0-rc4.98",
-    "latestResearchChallenger": "v11.8.0-rc4.98",
+    "latestResearchChallenger": "v11.8.0-rc4.99",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.98_PREINSTALL.zip",
     "preinstallSha256": "43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e",
     "preinstallRuntimeFiles": 13,
@@ -34,7 +34,16 @@
     "latestAndroidVersionObserved": "v11.8.0-rc4.98",
     "latestAndroidFunctionalVerified": "v11.8.0-rc4.96",
     "testChallengerAndroidObserved": true,
-    "testChallengerAndroidAccepted": false
+    "testChallengerAndroidAccepted": false,
+    "rc499": {
+      "status": "RESEARCH_ONLY_UNVERIFIED",
+      "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
+      "scope": [
+        "neutral evidence must not render as plus",
+        "soft WR saturation economics"
+      ],
+      "productionUnchanged": true
+    }
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
