@@ -40,7 +40,7 @@ assert.deepEqual(new Set(v3Experts('TE','Brock Bowers')),new Set(['Draft Sharks 
 assert.ok(v3Experts('QB','Josh Allen').includes('Todd D Clark'));
 
 // Current early-round visible candidates must have substantive display evidence, not generic filler.
-for(const name of ['James Cook','CeeDee Lamb','Justin Jefferson','Saquon Barkley','Brock Bowers','Chase Brown',"De'Von Achane",'Kenneth Walker III','Omarion Hampton','Drake London']){
+for(const name of ['James Cook','CeeDee Lamb','Justin Jefferson','Saquon Barkley','Brock Bowers','Chase Brown',"De'Von Achane",'Kenneth Walker III','Omarion Hampton','Drake London','Nico Collins','George Pickens','Chris Olave','Kyren Williams','Trey McBride','Ashton Jeanty','Javonte Williams','Josh Allen','Tee Higgins','Rashee Rice','Garrett Wilson','Jaylen Waddle','Breece Hall','Ladd McConkey']){
   const start=app.indexOf("[norm('"+name+"')]")>=0?app.indexOf("[norm('"+name+"')]"):app.indexOf('[norm("'+name+'")]');
   assert.ok(start>=0,name+' research prior missing');
   const slice=app.slice(start,start+2200);
