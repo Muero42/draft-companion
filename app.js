@@ -8,7 +8,7 @@ const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u03
 // User draft strategy: in this 10-team/1QB league, draft exactly one QB. A QB2 has no
 // useful pre-Week-1 option-value because it would be dropped for K/DST; unlike late RB
 // (and, to a lesser extent, WR/TE), it cannot earn a roster slot through role news.
-const DRAFT_ACUTE_STATUS_2026={ashtonjeanty:{label:'AKUTER STATUS: Sprunggelenkverletzung · Teilnahme/Belastbarkeit vor Draft prüfen',blockRecommendation:true,asOf:'2026-08-24'}};
+const DRAFT_ACUTE_STATUS_2026={ashtonjeanty:{label:'AKUTER STATUS: Sprunggelenkverletzung · Raiders zählen für Week 1 auf ihn; Belastbarkeit weiter beobachten',blockRecommendation:false,asOf:'2026-08-28'}};
 const esc=v=>String(v??'').replace(/[&<>'"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[c]));
 const clamp=(v,min,max)=>Math.max(min,Math.min(max,v));
 const LIVE_DRAFT_ID_2026='1366053132970233856';
