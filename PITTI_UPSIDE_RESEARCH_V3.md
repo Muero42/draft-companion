@@ -319,3 +319,25 @@ No arrow may be promoted solely from one sleeper/breakout article.
 
 ### Display/model implication
 Upside-v3 should distinguish at least four mechanisms rather than one generic breakout arrow: (A) standalone elite-ceiling path, (B) role-capture path, (C) contingent injury-away ceiling, (D) established-breakout consolidation. Two arrows reserved for strong ceiling + short causal path; simultaneous downside arrow allowed for high-variance cases such as Brooks/Egbuka. This directly matches user's requested richer descriptions and prevents Jameson Williams-type mislabeling.
+
+
+## 2026-08-28 06:xx CEST — larger AUTO batch II: regression/injury layer + draft-zone priorities
+### Decision-changing fresh injury/regression signals
+- Jeremiyah Love: DS Aug22 flags high-ankle sprain threatening early availability/production; baseline/floor reduced, although still a Round3 consideration. Because PITTI mock took him 4.02, Upside-v3 must display simultaneous elite talent ceiling + meaningful early-season ↓↓ health/role timing risk rather than an unqualified rookie-upside arrow.
+- Cam Skattebo: DS Aug22 reports concerning preseason usage (5/16 Dart snaps, work lost to Tracy and Singletary), conflicting with older breakout articles calling him unquestioned starter. Fresh usage evidence wins for current role certainty: downgrade role-confidence; retain talent ceiling but add ↓ committee/usage risk. This is a concrete example of why fresh depth-chart evidence must supersede static breakout priors.
+- TreVeyon Henderson: DS Aug8-14 reports continued camp vision/patience issues and likely opening behind Rhamondre. Keep ceiling, but downgrade immediate standalone opportunity; classify role-capture rather than standalone RB1 path.
+- Jordyn Tyson: current hamstring injury expected to cost roughly first four games plus limitations; strong pre-injury camp does not offset immediate redraft ↓↓ availability. Avoid treating prior breakout research as current draft-positive without price adjustment.
+- Mike Evans: Aug27 plans Week1 but recurring quad/groin plus age33 and extensive 2025 injury history create material durability ↓↓ despite TD ceiling. Strong regression-risk archetype for the new display.
+- James Conner: Aug27 still uncertain Week1 nearly a year after season-ending ankle injury, age31; strong ↓↓ durability/availability. Tyler Allgeier gets temporary early-opportunity ↑, but Love/Conner recovery can compress it quickly.
+- Keaton Mitchell: Aug26 mild setback after earlier receiving-game camp rise. Keep late stash upside but health uncertainty blocks ↑↑.
+
+### Cross-source conflict resolution
+- Skattebo is the clearest conflict: older FP breakout thesis says unquestioned starter/full strength; newer DS preseason usage says committee concern. PITTI rule: recent concrete usage > older narrative, so label should show ceiling AND role-risk rather than choose one narrative.
+- Price remains stronger on immediate opportunity than Henderson because current Seattle depth-chart uncertainty behind him is favorable, while Henderson has explicit evidence of opening behind Stevenson.
+- Bigsby vs Corum: both are useful late asymmetry bets. Bigsby has stronger immediate contingent RB1 framing plus possible standalone split; Corum has stronger incumbent-preservation/workload-growth thesis. Both belong ahead of low-ceiling veteran bench fillers in late rounds, subject to market timing.
+
+### Draft-zone priority implications for 10-team Half-PPR
+- Rounds 1-6: upside arrows should not override major current health/role flags; Love-type dual-signal players need price-sensitive treatment.
+- Rounds 7-10: prioritize standalone/role-capture upside (Price/Tuten archetypes) over pure handcuffs when quality is close.
+- Rounds 11-15: contingent RB1 ceiling (Bigsby/Corum archetypes) becomes especially valuable; low-ceiling veteran floor loses utility in 10-team format.
+- WR bench: reserve ↑↑ primarily for plausible WR1/top-15 or dominant-target paths (Parker Washington/Egbuka type), ↑ for plausible WR2/volume expansion (Pierce/Downs/Golden), and use separate `consolidation` mechanism for Jameson Williams rather than calling every young WR a breakout.
