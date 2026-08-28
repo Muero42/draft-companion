@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T18:27:00Z",
+  "updatedAt": "2026-08-28T18:34:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -36,13 +36,23 @@
     "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
     "rc499": {
-      "status": "RESEARCH_ONLY_UNVERIFIED",
+      "status": "SOURCE_GUARDRAILS_PASS_RESEARCH_ONLY",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
       "scope": [
         "neutral evidence must not render as plus",
         "soft WR saturation economics"
       ],
-      "productionUnchanged": true
+      "productionUnchanged": true,
+      "pr": 35,
+      "guardrailRun": 33199805925,
+      "guards": [
+        "neutral evidence not plus",
+        "fair-range not plus",
+        "soft WR saturation numeric canary",
+        "normal-cut timing 18/22/26"
+      ],
+      "mergeAllowed": false,
+      "nextGate": "full release-contract/package validation then controlled Android verification"
     }
   },
   "auto": {
