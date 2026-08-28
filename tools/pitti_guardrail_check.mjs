@@ -122,7 +122,8 @@ must(commandContract.auto?.promiseOnlyResponseForbidden===true,'repo command con
 must(commandContract.auto?.externalGateValidStopOnlyAfterIndependentLaneExhaustion===true,'repo command contract external-gate guard drift');
 must(commandContract.auto?.autoBlockCorrectionTrigger?.trigger==='AUTO BLOCK','AUTO BLOCK command contract missing');
 must(commandContract.currentBoundary?.androidAuthority==='v11.8.0-rc4.91','command contract Android authority drift');
-must(commandContract.currentBoundary?.latestPackageSha256==='6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a','command contract package hash drift');
+must(commandContract.currentBoundary?.latestPackageSha256==='64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72','command contract package reference hash drift');
+must(commandContract.currentBoundary?.packageReferenceRun===33162367347,'package reference run drift');
 must(commandContract.currentBoundary?.deployedPagesAppByteParityWithMain===false,'main/pages app divergence must remain explicit until resynced');
 must(current.handoff_generation===seal.handoff_generation,'CURRENT/SEAL generation mismatch');
 must(current.handoff_generation===handoffGeneration,'CURRENT/Handoff generation mismatch');
