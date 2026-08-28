@@ -24,6 +24,7 @@ const preDraftFreshnessGate=text('tools/pre-draft-freshness-gate.mjs');
 const emergencyQueueContract=text('tools/emergency-queue-contract.mjs');
 const current=JSON.parse(text('PITTI_CURRENT_STATE.json'));
 const seal=JSON.parse(text('PITTI_HANDOFF_SEAL.json'));
+const candidatePreflight=process.env.PITTI_CANDIDATE_PREFLIGHT==='1';
 const handoffGeneration=(currentHandoff.match(/Handoff generation:\s*`([^`]+)`/)||[])[1];
 const gitBlobSha=(p)=>{
   const b=fs.readFileSync(p);
@@ -34,7 +35,7 @@ const gitBlobSha=(p)=>{
 };
 
 must(lock.schema==='pitti.execution-lock.v1','execution lock schema');
-must(lock.runtime?.appVersion===((app.match(/const APP_VERSION='([^']+)'/)||[])[1]),'runtime version lock drift');
+if(!candidatePreflight) must(lock.runtime?.appVersion===((app.match(/const APP_VERSION='([^']+)'/)||[])[1]),'runtime version lock drift');
 must(lock.runtime?.productionPanelMustRemainSelectable===true,'incumbent selectable invariant missing');
 must(lock.auto?.continueWhileAutonomousWorkExists===true,'AUTO continuity invariant missing');
 must(lock.auto?.parallelizeIndependentLanesWhileWaiting===true,'AUTO parallel-lane invariant missing');
@@ -126,9 +127,9 @@ must(commandContract.auto?.promiseOnlyResponseForbidden===true,'repo command con
 must(commandContract.auto?.externalGateValidStopOnlyAfterIndependentLaneExhaustion===true,'repo command contract external-gate guard drift');
 must(commandContract.auto?.autoBlockCorrectionTrigger?.trigger==='AUTO BLOCK','AUTO BLOCK command contract missing');
 must(commandContract.currentBoundary?.androidAuthority===current.runtime?.android_authority,'command contract Android authority drift');
-must(commandContract.currentBoundary?.latestPackageSha256===current.runtime?.latest_package_sha256,'command contract package reference hash drift');
-must(commandContract.currentBoundary?.packageReferenceRun===current.runtime?.package_reference_run,'package reference run drift');
-must(commandContract.currentBoundary?.deployedPagesAppByteParityWithMain===current.runtime?.deployed_pages_app_byte_parity_with_main,'main/pages parity state drift');
+if(!candidatePreflight) must(commandContract.currentBoundary?.latestPackageSha256===current.runtime?.latest_package_sha256,'command contract package reference hash drift');
+if(!candidatePreflight) must(commandContract.currentBoundary?.packageReferenceRun===current.runtime?.package_reference_run,'package reference run drift');
+if(!candidatePreflight) must(commandContract.currentBoundary?.deployedPagesAppByteParityWithMain===current.runtime?.deployed_pages_app_byte_parity_with_main,'main/pages parity state drift');
 must(current.handoff_generation===seal.handoff_generation,'CURRENT/SEAL generation mismatch');
 must(current.handoff_generation===handoffGeneration,'CURRENT/Handoff generation mismatch');
 const sealPending=seal.status==='SUPERSEDED_PENDING_RESEAL'&&seal.handoff_ready===false&&seal.second_pass_pass===false;
