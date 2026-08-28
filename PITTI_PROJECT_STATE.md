@@ -1156,3 +1156,12 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Downloaded Actions artifact independently inspected: `Draft_Companion_v11.8.0-rc4.86_PREINSTALL.zip`, exactly 12 runtime files, SHA-256 `49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1`; `candidate.sha256` matches actual bytes.
 - rc4.86 is therefore package/re-extract verified and deployed. Android authority remains rc4.84 until direct device evidence.
 - Exact gate: Android/PWA update to rc4.86 -> one Expert-v3 export -> vector/grid analysis. No mock.
+
+
+### 2026-08-28 — rc4.86 TRANSFER BOTTLENECK -> rc4.87 COMPACT EXPORT
+- User confirmed app updated to rc4.86. The generated Expert-v3 export was much larger than rc4.85, consistent with successful challenger data acquisition, but the file-sharing/download path failed and pasting the full JSON repeatedly slowed/crashed ChatGPT and exceeded message limits.
+- Do not burden user with manual trimming. Root problem is transfer payload, not ranking acquisition.
+- rc4.87 preserves the rc4.86 verified source pipeline and changes only serialization/transfer: per expert export only the position actually needed for the challenger test (Weisse RB, Wolf TE, Todd QB, Wright WR), encode ranks as compact [name, overallRank] tuples, copy one compact JSON to clipboard; file export is fallback only.
+- This is sufficient for PITTI’s v2-v3 positional marginal-weight computation because the panel needs exact player overall ranks for the challenged position; unused positional rows/raw source metadata are unnecessary payload.
+- Added rc4.87 regression gate for positional filtering, compact tuple schema, clipboard path, credential exclusion and no resurrection of undefined loadSingleExpert.
+- rc4.87 deployed to gh-pages. Android verification pending.
