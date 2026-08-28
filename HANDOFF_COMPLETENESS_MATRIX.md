@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v140
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v141
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -122,7 +122,7 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - v132: rc4.91 Android-observed authority + Expert-v3 actual-row gate + evidence polarity + Return-v2 tau4.25 + broad anti-repeat research + AUTO BLOCK zero-ack semantics preserved.
 
 ## v137 deep-handoff canaries
-- CURRENT / SEAL / Handoff generation must all equal `20260828T115500Z-v140`.
+- CURRENT / SEAL / Handoff generation must all equal `20260828T111000Z-v141`.
 - Active command contract and bootstrap must state rc4.91 Android authority and `RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`; rc4.84/85 active pointers are forbidden.
 - latest package/re-extract must be rc4.91, 13 runtime files, SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.
 - main/gh-pages `app.js` byte parity is currently FALSE despite both saying rc4.91; a receiving chat must preserve this distinction.
