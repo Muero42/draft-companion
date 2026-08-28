@@ -210,7 +210,7 @@
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
     "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
-    "nextGate": "Receiving chat verifies v133 seal/integrity, then continues rc4.91 functional device checks and broad anti-repeat research. No mock.",
+    "nextGate": "Receiving chat verifies v136 seal/integrity, then continues rc4.91 functional device checks and broad anti-repeat research. No mock.",
     "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION",
     "androidVersionObserved": true,
     "androidFunctionalVerified": false
