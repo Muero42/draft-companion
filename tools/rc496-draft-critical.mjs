@@ -6,7 +6,7 @@ const live=fs.readFileSync('live-surface-v3.js','utf8');
 const boardSrc=fs.readFileSync('expert-v2-board.js','utf8').trim();
 const board=JSON.parse(boardSrc.replace(/^window\.PITTI_EXPERT_V2=/,'').replace(/;\s*$/,''));
 
-assert.match(app,/const APP_VERSION='v11\.8\.0-rc4\.96'/,'rc4.96 version missing');
+const activeVersion=(app.match(/const APP_VERSION='v11\\.8\\.0-rc4\\.(\\d+)'/)||[])[1];assert.ok(Number(activeVersion)>=96,'active runtime below rc4.96 feature gate');
 assert.match(app,/st==='QUESTIONABLE'\?0/,'Questionable must remain score-neutral');
 assert.match(app,/const sparsePanelPenalty=r\.n>=4\?0:r\.n===3\?2:r\.n===2\?7:14/,'sparse-panel score guard missing');
 assert.match(app,/const confidenceCap=r\.n>=4\?96:r\.n===3\?78:r\.n===2\?62:50/,'sparse-panel confidence cap missing');
