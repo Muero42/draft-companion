@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T072500Z-v121",
-  "created_at": "2026-08-28T07:29:00Z",
+  "handoff_generation": "20260828T073500Z-v122",
+  "created_at": "2026-08-28T07:38:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "5db4ac3fc7c54c31d9303765368a40199f3cd268",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "c99e953557919b43fb6b067e35e98064cc4a4861",
+    "PITTI_CURRENT_STATE.json": "e9978d88ed8a784163ee5fa36bfc4cfe14f11cf2",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "701ced5e6b1940a5b276d01779ed28e11e9dd397",
     "PITTI_COMMAND_CONTRACTS.json": "41ffd8e89066b5e880ff11d6dffdd85e07127fdb",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e4ba6389db3da869ab2106c0d14ac83e68c6bdc2",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "9ab39dd14333a15481e6dafb8e2b3472525c1cf3",
-    "PITTI_EXECUTION_LOCK.json": "383c5151ed63543a76e522bfafd5723b5c9a9481",
-    "PITTI_PROJECT_STATE.md": "b35cc7ea004f1815f14bf2797b5e389804784562",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "506df0f3bc05588275f435c697c5c9ff27f50b30",
+    "PITTI_EXECUTION_LOCK.json": "3cffff80b4a31df27b81b633f9d026dfa3faf513",
+    "PITTI_PROJECT_STATE.md": "bd5b97c8d35fe909e3a2a601289d19b478a999be",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
     "app.js": "61be71845de57294a3379821fbeb2bba82347215",
     "index.html": "28bfe259ddc92172f7116cde4bf55252ad96aa7c",
@@ -30,7 +30,7 @@
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "773c0ff2036ea39d9dc48e574945427f7eafe4e2",
+    "README.md": "5371ea249ea44286cd3c3cdf40e13a45c5bfcfab",
     ".github/workflows/release-contract-v2.yml": "a681513a1673ee74941447d26a31c4c5af702b1a",
     ".github/workflows/release-contract-v2-package.yml": "316076c12b83bda42abc36f1560c8b8af0cfac65",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
@@ -86,7 +86,9 @@
     "v120_stale_bootstrap_guard_repaired": true,
     "rc486_export_hotfix": true,
     "rc486_main_pages_runtime_parity_12of12": true,
-    "v121_reseal": true
+    "v121_reseal": true,
+    "v122_release_closure": true,
+    "rc486_package_reextract_pass": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -101,15 +103,16 @@
     "failed_candidate": "v11.8.0-rc4.85",
     "test_challenger": "v11.8.0-rc4.86",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.85",
+    "latest_package_reextract": "v11.8.0-rc4.86",
+    "latest_package_sha256": "49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1",
     "deployed_pages": "v11.8.0-rc4.86",
     "library_recovery_alias": "v11.8.0-rc4.52"
   },
   "exact_continuation": {
     "gate": "ANDROID_RC4.86_SELF_UPDATE_THEN_EXPERT_V3_EXPORT",
     "auto_starts_mock": false,
-    "instruction": "Verify v121 handoff. Reload/update deployed PWA/app to rc4.86, verify badge, run Expert-v3 Challenger exportieren once, then validate exact vectors and compute v2-v3 grids. No mock."
+    "instruction": "Reload/update deployed PWA/app to rc4.86, verify badge, run Expert-v3 Challenger exportieren once, then validate vectors and compute v2-v3 grids. No mock."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
-  "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-export-failed|rc4.86-hotfix-pages|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|ANTI-REPEAT|1QB|AUTO-EXECUTE-BEFORE-REPLY|HANDOFF-v121"
+  "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-export-failed|rc4.86-package-pages-pass|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|ANTI-REPEAT|1QB|AUTO-EXECUTE-BEFORE-REPLY|HANDOFF-v122"
 }
