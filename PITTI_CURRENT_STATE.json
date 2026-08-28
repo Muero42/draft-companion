@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T085400Z-v129",
-  "updated_at": "2026-08-28T08:54:00Z",
+  "handoff_generation": "20260828T091500Z-v130",
+  "updated_at": "2026-08-28T09:15:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -10,17 +10,17 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.88",
-    "test_challenger": "v11.8.0-rc4.89",
+    "android_authority": "v11.8.0-rc4.89",
+    "test_challenger": "v11.8.0-rc4.90",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.89",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608"
   },
   "exact_continuation": {
-    "gate": "LIVE_SURFACE_FIX_DEPLOYED_ANDROID_VERIFY_THEN_RESEARCH",
+    "gate": "RC490_PREDEVICE_FULL_VERIFICATION",
     "auto_starts_mock": false,
-    "instruction": "Live surface fix deployed: Expert-v3 correct expert rows, ten full cards, orange normal-cut warning, generic fallback removal. Full five workflow set PASS. Android reload/visual verify next; then continue broad anti-repeat research."
+    "instruction": "Do not deploy rc4.90 to Android until full gates prove the root-cause fix. rc4.90 makes Expert-v3 shadow panels selectable, exposes actual panel IDs, displays experts from actual panel rows only, and enriches all current early Top-10 candidates with substantive evidence."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -37,7 +37,7 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.88-android-before-livefix|LIVEFIX-DEPLOYED|EXPERT-V3-DISPLAY|TEN-FULL-CARDS|PROCON-EVIDENCE|ANTI-REPEAT|HANDOFF-v129",
+    "acceptance_fingerprint": "rc4.64|rc4.89-android-observed-bug|rc4.90-predevice|EXPERT-V3-PANEL-SELECTABLE|ACTUAL-EXPERT-ROWS|EARLY-TOP10-EVIDENCE|ANTI-REPEAT|HANDOFF-v130",
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
