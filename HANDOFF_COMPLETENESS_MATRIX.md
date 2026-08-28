@@ -16,10 +16,9 @@ A new-chat takeover fails closed unless all checks pass.
 
 ## 2 Runtime boundary
 - rc4.64 production/control
-- rc4.87 current Android authority / compact Expert-v3 vector export verified
-- rc4.88 current Expert-v3 positional integration candidate
-- rc4.87 package/re-extract PASS; rc4.88 deployed and pending final package/device verification
-- package/re-extract SHA-256 `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed`
+- rc4.89 latest Android-observed runtime; screenshot exposed Expert-v3 panel-selection fallback bug
+- rc4.90 current PRE-DEVICE challenger; NOT deployed until full sealed gates pass
+- rc4.90 root-cause requirement: `expert-v3-*` shadow panels selectable and actual panel rows drive expert labels
 - built/prepared/deployed/Android-verified kept distinct
 - expiring ChatGPT attachment is NOT the preferred update path; normal deployed PWA/self-update path first
 
@@ -103,3 +102,11 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - v129 rc4.89: active Expert-v3 live display fix; unified full Top-10 cards; per-card orange Normal-Cut warning; richer early-round Pro/Contra; kernel/Return/weights unchanged; full gates pending.
 
 - v130 rc4.89 full closure: 5/5 final CI workflows PASS, 13/13 main-pages runtime parity, 13-file package SHA 2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608. Android visual verification pending.
+
+
+## v130 rc4.90 pre-device canaries
+- Expert-v3 preferred panels must not fall back to incumbent activePanel.
+- Live expert labels must come from actual candidate `individual` rows.
+- James Cook RB must contain Ryan Weisse and no incumbent-only Erickson/Koerner.
+- Early Top-10 evidence must be substantive for Cook/Lamb/Jefferson/Barkley/Bowers/Chase Brown/Achane/Kenneth Walker/Omarion Hampton/Drake London.
+- Do not deploy to Android until full sealed gates PASS.
