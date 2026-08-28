@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T102000Z-v133",
-  "created_at": "2026-08-28T10:32:00Z",
+  "handoff_generation": "20260828T104000Z-v134",
+  "created_at": "2026-08-28T10:45:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "7d8e49559984ce9d63ba07ac5976f73ba103c77d",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "b5bd29bb098350cd031aadc2bb0cccc557e931d4",
-    "PITTI_COMMAND_CONTRACTS.json": "af12002e6790413d2c218803dc71dd9b1ab213e3",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "633e610c2d995e71376466f7dc54d61614349293",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "ef9ef86ab8704287871c36a242ad97b38861da3e",
-    "PITTI_EXECUTION_LOCK.json": "b7363eb50b753b91b16ccd544d6d9f313858018a",
-    "PITTI_PROJECT_STATE.md": "a471e5c96e925072dc564e46e72e333faac50bff",
+    "PITTI_CURRENT_STATE.json": "762a36675a792fd5ad300a2f2070e1422c69e69f",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "b391f86df0f6c93895b5d5dae0070c8c33eae368",
+    "PITTI_COMMAND_CONTRACTS.json": "0ae3afa2c6edcd2122d6ed339fb4f74f42219e04",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "84f7abfc868b70780b6ee67b33bd27e8c4aa1496",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "c08f4bd3bead6393bdffb658959635fd7b761c93",
+    "PITTI_EXECUTION_LOCK.json": "acb85345872dabe98892fcc26cf0059b9ec5b9fa",
+    "PITTI_PROJECT_STATE.md": "90048f9f441bd2932954e3a1595a4c5de1502ac8",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
     "app.js": "af39e65bbb2a7b521b205d7cfaa4a748836985fa",
     "index.html": "d305cd9b6e4d515cc51470a62619b0b7df460441",
@@ -24,13 +24,13 @@
     "tools/rc484-draft-critical.mjs": "b16bc6c7e01dc57375e166fd6fb3d8300141f185",
     "tools/rc485-draft-critical.mjs": "156d8c479c543d3f34f689c8ca486181473ec035",
     "tools/analyze-decision-evidence.mjs": "bb75950cc1698659769d7412adef71bb2e41d494",
-    "tools/pitti_guardrail_check.mjs": "14cd451580786dabbbfb6c70d32519b57a35e6e9",
+    "tools/pitti_guardrail_check.mjs": "a31b4f18fe4d8c2967434aad76e4697dc9002ea7",
     "tools/pre-draft-freshness-gate.mjs": "9acc1999c0fe8a3428b9af7631812fe04338d42d",
     "tools/emergency-queue-contract.mjs": "d5ce421c905c40c10c03ba70a41161fb6036d320",
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "3cb79436fccd8e4609397d717316979856da1776",
+    "README.md": "2dafff5ee8aac4406a11695b5e1d5265b3975150",
     ".github/workflows/release-contract-v2.yml": "a87aac1320f524565c2de7abaab3a25befc22213",
     ".github/workflows/release-contract-v2-package.yml": "d4f0c9f7495f802b10c91a5a7c3c60675193ec8d",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
@@ -146,7 +146,9 @@
     "v133_package_hash_verified": true,
     "v133_pages_main_app_divergence_recorded": true,
     "v133_auto_block_in_command_contract": true,
-    "v133_guardrail_authority_updated": true
+    "v133_guardrail_authority_updated": true,
+    "v134_package_reference_clarified": true,
+    "v134_deep_handoff_final": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
@@ -165,14 +167,17 @@
     "test_challenger": "v11.8.0-rc4.91",
     "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.91",
-    "latest_package_sha256": "6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a",
+    "latest_package_sha256": "64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72",
     "package_runtime_files": 13,
     "deployed_pages_version": "v11.8.0-rc4.91",
     "deployed_pages_app_byte_parity_with_main": false,
     "deployed_pages_app_sha": "6fd11d3ffa2e3211d98b907df7e7e6a2d3262abb",
     "main_app_sha": "af39e65bbb2a7b521b205d7cfaa4a748836985fa",
     "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR exact v2 fallback",
-    "library_recovery_alias": "v11.8.0-rc4.52"
+    "library_recovery_alias": "v11.8.0-rc4.52",
+    "package_reference_run": 33162367347,
+    "package_reference_artifact_id": 9682152886,
+    "package_hash_semantics": "Reference inspected artifact hash; archive hash may vary across documentation-only rebuilds. Durable authority is seal blob integrity + package/reextract PASS."
   },
   "exact_continuation": {
     "gate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH",
@@ -180,5 +185,5 @@
     "instruction": "Verify v133 current/seal/handoff hashes first. Continue from Android-observed rc4.91. Preserve main/pages app-byte divergence until deliberately resolved. Verify actual Expert-v3 rows, evidence polarity/quality, unified Top-10 and short-turn Return-v2 behavior; continue broad anti-repeat research in parallel. AUTO BLOCK is zero-ack correction trigger. No mock."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
-  "acceptance_fingerprint": "rc4.91-android-observed|rc4.91-package-6b98ff11|PAGES-APP-BYTE-LAG|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v133"
+  "acceptance_fingerprint": "rc4.91-android-observed|rc4.91-package-ref-64039b7a|PAGES-APP-BYTE-LAG|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v134"
 }
