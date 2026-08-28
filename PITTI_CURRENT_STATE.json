@@ -47,11 +47,11 @@
     "transaction_in_progress": false,
     "resume_semantics": "PITTI AUTO resumes from rc4.96 pre-draft freeze; runtime/model changes require new material evidence and deterministic gates.",
     "acceptance_fingerprint": "RC4.96-ALL5-PASS|PKG-REEXTRACT-PASS|GH-PAGES-13OF13|ANDROID-RC4.96-VERIFIED|OOS-FOLLOWCOACH-15OF15|RETURN-BRIER-0.0802|SPARSE-PANEL-OOS-PASS|NO-RETURN-RETUNE|NO-PAIRSUM|WR7-SOFT|WAIT-TURN-CHAT-REVIEW|FRESHNESS-ONLY|HANDOFF-v152",
-    "status": "RC497_MICROFIX_CHALLENGER_CI",
+    "status": "RC497_PACKAGE_CI_PENDING",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Run deterministic rc4.97 microfix CI with rc4.96 as rollback authority; no Android promotion before all gates pass.",
-    "gate": "RC497_MICROFIX_CI"
+    "next_action": "Validate rc4.97 full runtime parity/package/re-extract; only then request Android functional verification. rc4.96 remains rollback authority.",
+    "gate": "RC497_PACKAGE_REEXTRACT"
   },
   "source_authority": "rc4.96",
   "package_authority": "rc4.96",
