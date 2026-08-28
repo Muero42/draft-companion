@@ -26,7 +26,7 @@ If Library files are available, read them too. A v105 Library reseal was prepare
 - Android version authority: rc4.91, observed directly in user screenshot on 2026-08-28
 - Android functional verification: still pending for actual Expert-v3 rows, evidence polarity/quality, unified Top-10 and short-turn Return-v2 behavior
 - current source: rc4.91
-- latest package/re-extract: rc4.91, 13 runtime files, SHA-256 `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`
+- latest package/re-extract: rc4.91, 13 runtime files, SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`
 - gh-pages reports rc4.91, but `app.js` bytes currently lag main: Henry/polarity fix is present, latest broad evidence batch is not. Matching version text is NOT proof of byte parity.
 - Library rc4.52 aliases remain recovery-only; stale Library state never overrides repo/device evidence.
 
