@@ -26,4 +26,13 @@ assert.ok(Math.abs(calc('QB','Joe Burrow')-60.35)<1e-9);
 assert.ok(Math.abs(calc('RB','Isiah Pacheco')-187.85)<1e-9);
 assert.ok(Math.abs(calc('TE','Isaiah Likely')-137.65)<1e-9);
 assert.ok(b3src.includes('WR:null'), 'missing WR vector must leave WR weights unset');
+
+assert.ok(live.includes("return'expertv3'"),'live surface must detect Expert-v3 profile');
+assert.ok(live.includes("Todd D Clark")&&live.includes("Ryan Weisse")&&live.includes("Wolf of Roto Street"),'live Expert-v3 members missing');
+assert.ok(live.includes("s.rows.slice(0,10).map(card).join('')"),'all ten candidates must use full cards');
+assert.ok(!live.includes('10ER-ÜBERSICHT'),'duplicated compact top-10 overview must stay removed');
+assert.ok(live.includes('live-cut-warning'),'normal-cut warning must render on full card');
+assert.ok(!live.includes('Opportunity Cost gegenüber den direkten Alternativen'),'generic opportunity-cost fallback must stay removed');
+assert.ok(!live.includes('mit konkurrenzfähiger Panel-Bewertung'),'generic panel fallback must stay removed');
+
 console.log('RC488_EXPERT_V3_POSITIONAL_PASS');
