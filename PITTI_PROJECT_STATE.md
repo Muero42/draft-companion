@@ -1060,3 +1060,11 @@ The release-gate failures encountered on the way were stale test-infrastructure 
 Device must load rc4.85 on the same origin holding the local FantasyPros credential, then run the integrated `Expert-v3 Challenger exportieren` action. The output is credential-free. Once that JSON returns, AUTO resumes with exact vector validation, v2/v3 weight-grid computation, marginal-value analysis and — only if justified — a separate selectable Expert-v3 preset.
 
 No additional player research should preempt this gate.
+
+
+### 2026-08-28 06:20Z — rc4.85 Expert-v3 acquisition package VERIFIED
+- Resumed the interrupted final audit instead of repeating implementation.
+- Latest main CI head `7558e46b696a5d9ee5947a8f9805400f0090ceab`: Project Guardrails PASS, release contract v2 PASS, candidate package gate PASS, rc4.82/rc4.83 legacy regression gates PASS after successor-version fixes.
+- Candidate package workflow re-extract step PASS. Downloaded GitHub artifact 9675407274 and independently reverified locally: outer artifact contains `Draft_Companion_v11.8.0-rc4.85_PREINSTALL.zip` + checksum; checksum PASS; re-extracted runtime has APP_VERSION rc4.85, matching sw/manifest, integrated `expertV3AuditBtn`, exact target set Ryan Weisse/Wolf of Roto Street/Todd D Clark/Joey Wright, `containsCredential:false`, and expected runtime files including expert-v2-board.js. Independent candidate SHA-256: `0bb0e56e42e676846d0fb2634fbab271d9e633b4e727f0b75d981c8fb731ce38`.
+- This closes the autonomous release/package/re-extract gate. rc4.85 is PREINSTALL only, not Android-verified and not Expert-v3 itself. Decision Kernel and frozen Expert-v2 remain unchanged.
+- Sole next gate is now one Android update/install of this verified rc4.85 candidate, then in-app `Expert-v3 Challenger exportieren` and return the generated JSON. After JSON, resume autonomous vector validation -> v2/v3 grids -> DS redistribution test -> separate v3 preset -> regression/package/device gates.
