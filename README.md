@@ -1,17 +1,13 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Research-only candidate:** v11.8.0-rc4.99 — source/package validation only; not production, not Android-accepted, not merged.
-> **Produktions-/Control-Baseline:** v11.8.0-rc4.64.  
-> **Rollback-/zuletzt voll akzeptierte Android-Authority:** v11.8.0-rc4.96.  
-> **Aktuelle main/source + package/re-extract Authority:** v11.8.0-rc4.98.  
-> **Android/PWA beobachtet:** v11.8.0-rc4.98 installiert und UI funktional sichtbar; finale Acceptance noch NICHT PASS.  
-> **gh-pages Deployment:** v11.8.0-rc4.96; derzeit KEINE Byte-Parität zu main rc4.98.  
-> **rc4.98 package:** run 33194280926 / artifact 9695061955 / SHA-256 43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e.  
-> **Aktuelles Gate:** `RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT`.  
-> **OOS critical:** strict Coach draft 1399114762087895040 = 9 WR / 4 RB / 1 TE / 1 QB; old 7-WR count is invalid.  
-> **Evidence:** polarity 194-component PASS; substantive Pro/Contra coverage still open. PR #33 CMC positive-evidence patch is UNMERGED.
-
-> **Research-only candidate:** v11.8.0-rc4.99 on `pitti/rc4.99-wr-saturation-semantic-audit`; not production, not Android-accepted, not merged. Source guardrails + full behavioral release contract PASS; package/re-extract gate pending.
+> **Research-only candidate:** v11.8.0-rc4.100 on `pitti/rc4.100-semantic-selector`; draft PR #36; not merged, not deployed, not Android-observed.
+> **Current main/deployed/Android-observed challenger:** v11.8.0-rc4.99. Functional/semantic acceptance remains pending.
+> **Rollback / last fully functionally accepted Android authority:** v11.8.0-rc4.96.
+> **Production expert-panel control:** rc4.64 incumbent remains selectable.
+> **rc4.99 verified package:** run 33200304688 / artifact 9697465647 / SHA-256 67caeab25b8b474c9eb69d947ef2b8daa1429503655803030764a8013aac57a8.
+> **rc4.100 scope:** generic Pro/Contra evidence-selector hardening only; no ranking/score retune, no hard WR cap/quota, no Return-v2/expert-weight change.
+> **OOS critical:** strict Coach draft 1399114762087895040 = 9 WR / 4 RB / 1 TE / 1 QB; old 7-WR count is invalid.
+> **Current gate:** rc4.100 behavioral/package validation; never infer PASS from a build/version bump.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
 
