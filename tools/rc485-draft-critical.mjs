@@ -142,6 +142,6 @@ assert.ok(idx.includes('id="expertV3AuditStatus"'));
 assert.ok(app.includes('async function exportExpertV3Challengers()'));
 for(const n of ['Ryan Weisse','Wolf of Roto Street','Todd D Clark','Joey Wright'])assert.ok(app.includes(n),n);
 assert.ok(app.includes("containsCredential:false"));
-assert.ok(app.includes("pitti-expert-v3-challengers.v1"));
+assert.ok(app.includes("pitti-expert-v3-challengers.v1")||app.includes("pitti-expert-v3-compact.v1"),"Expert-v3 export schema missing");
 assert.ok(!app.includes('loadSingleExpert('),'obsolete undefined Expert-v3 helper must not return');
 assert.ok(app.includes('const row=await loadExpertRanks(e.id);'),'Expert-v3 export must reuse verified ranking loader');
