@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v118
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v119
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -16,11 +16,12 @@ A new-chat takeover fails closed unless all checks pass.
 
 ## 2 Runtime boundary
 - rc4.64 production/control
-- rc4.84 current Android-observed/verified test authority for the completed mock
-- rc4.85 Expert-v3 acquisition/export candidate: Release/Package/Re-extract PASS and gh-pages deployed; Android export verification pending
-- rc4.85 is the current package/re-extract boundary; SHA-256 `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed`
-- rc4.52 Library aliases recovery only
+- rc4.84 current Android authority / completed-mock runtime
+- rc4.85 current Expert-v3 acquisition candidate
+- rc4.85 Release Contract + package/re-extract PASS; gh-pages deployed; Android rc4.85 verification pending
+- package/re-extract SHA-256 `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed`
 - built/prepared/deployed/Android-verified kept distinct
+- expiring ChatGPT attachment is NOT the preferred update path; normal deployed PWA/self-update path first
 
 ## 3 Draft invariants
 - 10-team Half-PPR, slot 9, 1QB
@@ -39,11 +40,11 @@ A new-chat takeover fails closed unless all checks pass.
 - Frozen-v2 weights/provenance never live-renormalized
 
 ## 5 Evidence integrity
-- rc4.84 Decision Kernel remains frozen while Expert-v3 acquisition is isolated
-- Evidence-v2 direct roster positions/counts bug fix present
-- Coach-vs-user decision outcome retained
-- user overrides/final roster not used as training labels
-- current gate = device update/reload rc4.85 -> Expert-v3 challenger JSON -> v3 weight computation
+- rc4.84 Decision Kernel frozen
+- rc4.85 changes only Expert-v3 challenger acquisition/export
+- Expert-v2 remains frozen/selectable
+- completed mock/Evidence-v2 is retained and must not be lost
+- current gate = Android self-update/reload to rc4.85 -> verify badge -> Expert-v3 challenger JSON -> v2/v3 weight computation
 
 ## 6 AUTO durability
 - long blocks default
@@ -55,7 +56,7 @@ A new-chat takeover fails closed unless all checks pass.
 - external gate valid only after independent-lane exhaustion
 
 ## 7 Old-error scan
-Explicitly reject resurrection of PairSum/Rolling, fixed caps, player forcing, blind RB forcing, generic Return retune, generic QB2/TE2 ban, Superflex, starter-maxima cap error, Brown numeric v2, rejected temporary expert pool, DS double count, stale cross-draft identity, false Expert-v2 health/provenance, stale snapshot version, package/device conflation, or end-roster-as-Coach-success.
+Explicitly reject resurrection of PairSum/Rolling, fixed caps, player forcing, blind RB forcing, generic Return retune, generic QB2/TE2 ban, Superflex, starter-maxima cap error, Brown numeric v2, availability-only old temporary expert-pool restoration, DS double count, stale cross-draft identity, false Expert-v2 health/provenance, stale snapshot version, package/device conflation, or end-roster-as-Coach-success.
 
 ## 8 Execution witness
 Before user-facing AUTO completion, actual work must have been executed in the current run unless the only remaining condition is a genuinely unavoidable external/device gate after all independent lanes are exhausted.
@@ -79,3 +80,5 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - legacy rc4.83/84 gates are minimum-feature regressions and must not require stale exact runtime tags.
 
 - rc4.85 package contains exactly 12 runtime files; re-extracted blobs match main and main/gh-pages runtime parity is 12/12.
+
+- v119 handoff canary: next chat must not restart expert screening, repeat settled Likely/Jacobs/Pacheco research, or ask for the expired ChatGPT ZIP. Expert-v3 completion is primary; player research only during genuine v3 wait time and only on unsettled/new names or genuinely new decision-changing news.
