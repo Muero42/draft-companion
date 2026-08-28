@@ -59,3 +59,10 @@ Priorities:
 5. Preserve draft-day freshness plan for Monday 2026-08-31 20:00 Europe/Berlin.
 
 AUTO/AUTO BLOCK remains a hard execution contract: long autonomous blocks, re-inventory after every package, no empty/progress-only replies, and no interruption while safe positive-value independent work remains.
+
+
+## Historical takeover canaries — semantics retained, state superseded
+- Library mirror is stale/writeback-blocked: fail closed; verified repo/device state wins.
+- rc4.82: historical regression guard retained; not current authority.
+- rc4.83: historical regression guard retained; not current authority.
+- Re-inventory after EVERY completed work package remains mandatory during AUTO/AUTO BLOCK.
