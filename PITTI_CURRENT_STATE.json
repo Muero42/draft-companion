@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260828T145500Z-v145",
-  "updated_at": "2026-08-28T14:55:00Z",
+  "updated_at": "2026-08-28T15:10:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -20,14 +20,14 @@
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33169002426,
     "package_reference_artifact_id": 9684784867,
-    "package_reference_note": "rc4.94 package/re-extract PASS; exact 13-file gh-pages runtime parity established at deployment commit 55c42cb2c35645b92c7e11ddc5253e76392f0a13. Android functional verification remains pending.",
+    "package_reference_note": "rc4.94 source/package/re-extract PASS; exact 13-file gh-pages runtime parity PASS at 55c42cb2c35645b92c7e11ddc5253e76392f0a13; fresh Android rc4.94 Pick-9 presentation PASS.",
     "android_version_observed": true,
     "android_functional_verified": true
   },
   "exact_continuation": {
-    "gate": "RC494_DEPLOY_PARITY_ANDROID_VERIFY",
+    "gate": "RC494_FULL_MOCK_ACCEPTANCE_PLUS_DRAFTDAY_FRESHNESS",
     "auto_starts_mock": false,
-    "instruction": "Fresh rc4.93 Pick-9 snapshot proved Walker remains panel #15.3 but was omitted from visible Top-10 while lower-ranked rows were marked FALLBACK AUSSERHALB NORMAL-CUT. Root cause is visibleCoachCandidates slicing source top 10 before normal-cut priority. rc4.94 changes display selection only: normal-cut rows fill visible slots first; outside-cut fallback can only fill remaining slots. No scoring/panel/Return/injury tuning. CI/release/package are PASS on final v143 reseal; deploy exact rc4.94 runtime, prove main/pages parity, then Android fresh Pick-9 snapshot. Preserve duplicate guard."
+    "instruction": "User is running the natural rc4.94 mock. Do not start another mock. Parallel work is freshness/readiness only. If mock has no P0/P1 regression, freeze code. Final Aug-31 freshness pass remains required; ~100-player Sleeper Queue is sufficient and not a blocker."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -46,15 +46,15 @@
     "transaction_in_progress": false,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
     "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143",
-    "status": "RC494_ANDROID_PASS_FINAL_RESEAL",
+    "status": "RC494_TECHNICAL_PASS_MOCK_ACCEPTANCE_ACTIVE",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Receiving chat verifies v144 integrity, then deploys the already package-verified rc4.94 runtime, proves main/pages parity, and obtains a fresh Android Pick-9 verification; no mock.",
-    "gate": "V145_FINAL_RESEAL_CI"
+    "next_action": "Continue freshness/readiness work while user runs rc4.94 mock; no automatic mock and no code/model tuning absent demonstrated P0/P1 regression.",
+    "gate": "RC494_FULL_MOCK_ACCEPTANCE_PLUS_DRAFTDAY_FRESHNESS"
   },
   "source_authority": "rc4.94",
   "package_authority": "rc4.94",
-  "android_version_observed": "rc4.93",
-  "android_functional_verified": false,
-  "deployment_authority": "rc4.93"
+  "android_version_observed": "v11.8.0-rc4.94",
+  "android_functional_verified": true,
+  "deployment_authority": "rc4.94"
 }
