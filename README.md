@@ -1,13 +1,14 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Research-only candidate:** v11.8.0-rc4.100 on `pitti/rc4.100-semantic-selector`; draft PR #36; not merged, not deployed, not Android-observed.
-> **Current main/deployed/Android-observed challenger:** v11.8.0-rc4.99. Functional/semantic acceptance remains pending.
+> **Current main/source:** v11.8.0-rc4.100, merged from PR #36 as `1b85656e40a182ca6be2397c5bf6674006b97bd2`.
+> **rc4.100 PR validation:** release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
+> **Deployment/device:** gh-pages and Android/PWA remain v11.8.0-rc4.99; rc4.100 post-merge main verification is pending, so no rc4.100 deployment/device acceptance is claimed.
 > **Rollback / last fully functionally accepted Android authority:** v11.8.0-rc4.96.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
-> **rc4.99 verified package:** run 33200304688 / artifact 9697465647 / SHA-256 67caeab25b8b474c9eb69d947ef2b8daa1429503655803030764a8013aac57a8.
-> **rc4.100 scope:** generic Pro/Contra evidence-selector hardening only; no ranking/score retune, no hard WR cap/quota, no Return-v2/expert-weight change.
+> **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
+> **rc4.100 scope:** generic Pro/Contra semantic hardening + bounded short-turn portfolio ordering; no global ranking/Return/expert retune, no hard WR cap/quota.
 > **OOS critical:** strict Coach draft 1399114762087895040 = 9 WR / 4 RB / 1 TE / 1 QB; old 7-WR count is invalid.
-> **Current gate:** rc4.100 behavioral/package validation; never infer PASS from a build/version bump.
+> **Current gate:** RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
 
