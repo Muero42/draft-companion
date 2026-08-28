@@ -386,3 +386,16 @@ When sources conflict, use: specific dated injury/practice/transaction news > cu
 
 ### 10-team bench-slot EV rule
 For final bench RB/WR, evaluate expected championship utility against waiver replacement, not merely player projection. Ordinary handcuffs with low standalone use (Marks/Allgeier archetype) need unusually high contingent ceiling or very low acquisition cost to beat role-capture/standalone-upside players. This rule should influence Coach late-round utility but must not distort baseline expert ranks.
+
+
+## 2026-08-28 06:xx CEST — AUTO batch V: TE upside + injury precedence + DS independence
+- Fresh Aug27 FantasyPros TE sleeper roundup is now part of the research queue. Use it to distinguish cheap TE1-paths from mere streamers; no TE2 drafting in PITTI unless exceptional value because 10-team replacement value is high.
+- Isaiah Likely remains the clearest late TE ceiling archetype from prior breakout work: historically top-five-level fantasy production when given extended opportunity and now a permanent featured-receiving path in NYG. `↑↑ featured-role ceiling`; validate current injury status before live draft.
+- Tucker Kraft remains protected against a false Jonnu downgrade: Aug27 DS says Kraft is on track W1, Jonnu No.2, Musgrave PUP. `no downside arrow from signing alone`.
+- Pacheco freshness conflict formally resolved: Aug27 specific DS injury news (new back injury, uncertain W1, Hunt workout) overrides generic/current sleeper or outlook pages that still discuss MCL. `↓↓ until practice return`.
+- Josh Jacobs: Aug27 DS reports misdemeanor battery/criminal-damage charges plus groin issue and expects missed-time risk, but no exact suspension should be modeled without league action. `↓/availability cloud`, not deterministic games-lost input.
+- Jarquez Hunter trade: DS says low-risk flier only; Miami move indicates dissatisfaction behind Achane but no current touch evidence. Keep discovery/watch, no arrow.
+- DS methodology evidence reconfirmed from Aug28 primary source: rankings are projections + proprietary 3D Value customized to league; analysts contribute but ranks are NOT averaged personal boards. Therefore DS analyst accuracy cannot validate DS Team vector directly. Expert-v3 must test finished DS output as distinct model.
+
+### Live freshness guard implementation requirement
+At draft time, any player carrying ↑↑ or ↓↓ must be rechecked against same-day/last-24h injury/practice/transaction news when feasible; a new specific status can suppress/modify the static research marker. Static research should never override a newer concrete availability fact.
