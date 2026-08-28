@@ -9,7 +9,8 @@ must(app.includes("const APP_VERSION='v11.8.0-rc4.99';"),'app version != rc4.99'
 
 // Sign-aware presentation contract. Neutral evidence may remain displayable as context, but never as a plus.
 must(live.includes("Number(c.dir??0)>=0"),'displayEvidence must retain neutral evidence for neutral/context surfaces');
-must(live.includes("re&&Number(re.dir??0)>0?researchText(x):null"),'plus path is not sign-aware');
+must(live.includes("Number(re.dir??0)>0?researchText(x):null"),'plus path is not sign-aware');
+must(live.includes("positiveDisplayEvidence"),'positive display-evidence selector missing');
 must(live.includes("re&&Number(re.dir??0)<0"),'minus path does not route negative research by sign');
 must(!live.includes("rr&&!/Regression/.test(rr)"),'old lexical polarity heuristic remains');
 must(!live.includes("rr&&/Regression/.test(rr)"),'old lexical negative heuristic remains');
