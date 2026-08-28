@@ -9,7 +9,7 @@
   "integrity": {
     "PITTI_CURRENT_STATE.json": "9bcfd321c3f46ee57d41c177c50f6dc6ca660049",
     "NEW_CHAT_HANDOFF_CURRENT.md": "9a10c6fbe13a269616eb89726839541350b7e80f",
-    "PITTI_COMMAND_CONTRACTS.json": "a86cceac005d2c6dfde60e1d3b621df6598a8bf6",
+    "PITTI_COMMAND_CONTRACTS.json": "985d1eb69b631a519716083e7b960446e3547edc",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "3f3c8ead0489cb946641f3839625261043dfacc1",
     "HANDOFF_COMPLETENESS_MATRIX.md": "73844e0b353e61e49d4eaac1e38d84bb02c91319",
     "PITTI_EXECUTION_LOCK.json": "fbcd2f12b966858b9fc91102cf6a09aeff18efec",
@@ -208,20 +208,20 @@
     "source_authority": "v11.8.0-rc4.96",
     "test_challenger": "v11.8.0-rc4.96",
     "test_challenger_android_verified": true,
-    "latest_package_reextract": "v11.8.0-rc4.95",
-    "latest_package_digest": "d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576",
+    "latest_package_reextract": "v11.8.0-rc4.96",
+    "latest_package_digest": "18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0",
     "package_runtime_files": 13,
     "deployed_pages_version": "v11.8.0-rc4.95",
     "deployed_pages_app_byte_parity_with_main": true,
     "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR exact v2 fallback",
-    "package_reference_run": 33176313062,
-    "package_reference_artifact_id": 9687724788,
+    "package_reference_run": 33183057716,
+    "package_reference_artifact_id": 9690504450,
     "note": "v145 closure boundary: rc4.94 source/package/re-extract + exact 13-file gh-pages deployment parity + fresh Android Pick-9 presentation verified."
   },
   "exact_continuation": {
-    "gate": "RC496_RELEASE_PACKAGE",
+    "gate": "RC496_DEPLOY_PARITY",
     "auto_starts_mock": false,
-    "instruction": "rc4.96 source regression PASS; close canonical release/package gates before any deployment. Android authority remains rc4.94 until promotion and fresh device verification."
+    "instruction": "rc4.96 all five primary gates and candidate package/re-extract PASS. Deploy exact rc4.96 runtime to gh-pages and verify byte parity; Android rc4.94 remains device authority until fresh verification."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
   "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-PACKAGE-PASS|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v144"
