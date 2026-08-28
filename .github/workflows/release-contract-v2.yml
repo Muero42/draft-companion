@@ -35,5 +35,5 @@ jobs:
           node tools/rc490-draft-critical.mjs
           node tools/rc491-return-calibration.mjs
           node tools/rc496-draft-critical.mjs
-          if grep -Eq "v11.8.0-rc4.(98|99)" app.js; then node tools/rc498-evidence-polarity.mjs; fi
-          if grep -q "v11.8.0-rc4.99" app.js; then node tools/rc499-wr-saturation.mjs && node tools/rc499-normal-cut.mjs; fi
+          if grep -Eq "v11.8.0-rc4.(98|99|100)" app.js; then node tools/rc498-evidence-polarity.mjs; fi
+          if grep -Eq "v11.8.0-rc4.(99|100)" app.js; then node tools/rc499-wr-saturation.mjs && node tools/rc499-normal-cut.mjs; fi
