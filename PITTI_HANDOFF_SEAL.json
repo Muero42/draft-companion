@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T074500Z-v123",
-  "created_at": "2026-08-28T07:48:00Z",
+  "created_at": "2026-08-28T07:52:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -24,7 +24,7 @@
     "tools/rc484-draft-critical.mjs": "49328e534ecf36242bb0890f31157d0ce036f4b8",
     "tools/rc485-draft-critical.mjs": "1f2ee8cda7b16cea32a0549b022694b4f4f3caba",
     "tools/analyze-decision-evidence.mjs": "bb75950cc1698659769d7412adef71bb2e41d494",
-    "tools/pitti_guardrail_check.mjs": "eb1369aa94b59926a653c4d62f35eb08d714c633",
+    "tools/pitti_guardrail_check.mjs": "9ecafcc60849de7522537fe37fef30ff4018df4e",
     "tools/pre-draft-freshness-gate.mjs": "9acc1999c0fe8a3428b9af7631812fe04338d42d",
     "tools/emergency-queue-contract.mjs": "d5ce421c905c40c10c03ba70a41161fb6036d320",
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
@@ -91,7 +91,8 @@
     "v122_release_closure": true,
     "rc486_package_reextract_pass": true,
     "rc487_compact_transfer": true,
-    "v123_reseal": true
+    "v123_reseal": true,
+    "rc487_guard_structured_targets": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
