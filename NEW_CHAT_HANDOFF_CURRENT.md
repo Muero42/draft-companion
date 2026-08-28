@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T143500Z-v143`
-Updated: 2026-08-28 14:35Z
+Handoff generation: `20260828T121700Z-v144`
+Updated: 2026-08-28 12:17Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -21,8 +21,8 @@ Updated: 2026-08-28 14:35Z
 - Production/control baseline remains rc4.64 and must stay selectable.
 - **Android version authority is rc4.93**, confirmed by the fresh Pick-9 snapshot. rc4.94 is not Android-verified.
 - Android functional verification remains open. Expert-v3/Return/evidence are preserved, but the Top-10 presentation defect reproduced on rc4.93 and must be verified fixed on rc4.94.
-- Current source challenger is rc4.94; latest packaged/deployed/Android-observed authority is rc4.93.
-- Latest package/re-extract is rc4.93, 13 runtime files, candidate run 33166867111 / artifact 9683925309 / digest `3ce741b71cbc3f35b026e6aa8f9622e10999ecd29c54c0d66f6fcfdef379db95`.
+- Current source/package challenger is rc4.94; latest deployed/Android-observed authority remains rc4.93.
+- Latest package/re-extract is rc4.94, 13 runtime files, final-v143 candidate run 33169002426 / artifact 9684784867 / artifact digest `d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576`.
 - gh-pages is rc4.93; main app.js is rc4.94 pending gates. **app.js byte parity is intentionally false** until exact rc4.94 deployment.
 - Expert-v3 is already integrated and selectable: QB Todd D Clark 10%, RB Ryan Weisse 10%, TE Wolf of Roto Street 10%; WR remains exact frozen Expert-v2 because Joey Wright current vector is unavailable.
 - Expert-v2 remains selectable/control. Derek Brown remains excluded from new v2; Erickson remains qualitative/challenger only; Draft Sharks counted once.
@@ -45,15 +45,15 @@ rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. In
 - Do NOT ask user to manually document picks during the mock.
 
 ## CURRENT EXTERNAL GATE
-`RC494_NORMAL_CUT_DISPLAY_FIX_CI_PACKAGE_DEPLOY_ANDROID_VERIFY`
+`RC494_DEPLOY_PARITY_ANDROID_VERIFY`
 
-Receiving chat must first verify v143 CURRENT/SEAL/Handoff equality and every seal-listed blob hash.
+Receiving chat must first verify v144 CURRENT/SEAL/Handoff equality and every seal-listed blob hash.
 
 Required continuation:
 - rc4.93 fresh Pick-9 snapshot is evidence: Walker Panel 15.3 / ADP 17.4 remained available while lower-panel rows were marked fallback outside normal cut.
 - rc4.94 fixes **presentation selection only**: normal-cut candidates fill Top-10 first; fallback context may only fill unused slots.
 - Do not change Coach scoring, Expert-v3 weights, Return-v2, ADP, injury penalty, or add a Walker-specific rule.
-- Run rc4.94 CI/release/package. Only after PASS deploy exact runtime and prove main/pages parity.
+- rc4.94 CI/release/package are already PASS on final v143 reseal. Deploy the exact runtime next and prove main/pages parity.
 - Then obtain a fresh Android Pick-9 snapshot. Duplicate/unverändert guard remains binding.
 - No automatic mock.
 
@@ -428,3 +428,12 @@ HANDOFF_GENERATION: 20260828T100500Z-v132
 - Expert-v3: Todd D Clark QB 10%, Ryan Weisse RB 10%, Wolf of Roto Street TE 10%; WR exact Expert-v2 fallback. No reacquisition/re-export restart.
 - Return-v2 early tau 4.25; never restore 1.35. Research residual remains shadow-only.
 - AUTO/AUTO BLOCK same-turn continuation contract remains binding. No empty/status-only final while autonomous work remains.
+
+
+## V144 TAKEOVER AUDIT — RC4.94 PACKAGE PASS PROMOTION
+- Independent new-chat audit verified all 37 v143 seal-listed repo blob hashes exactly and confirmed the final v143 reseal commit `f3a8938d757065150a40d915c3516c09bb315830` is current head before this documentation repair.
+- GitHub Actions on that exact commit show all five primary workflows PASS: Project Guardrails 33169002464, rc4.83 gate 33169002459, candidate package 33169002426, rc4.82 gate 33169002429, release contract v2 33169002438.
+- Candidate package run 33169002426 explicitly reports `RELEASE_GUARD_PASS v11.8.0-rc4.94`; artifact 9684784867 exists with GitHub artifact digest `d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576`.
+- Therefore the old active statement “rc4.94 CI/package pending” was stale after the final reseal and is corrected here. rc4.94 is now source + CI/release/package/re-extract authority. rc4.93 remains deployed + Android-observed authority until exact promotion.
+- main/gh-pages parity audit remains intentionally false for app.js/index.html/sw.js/manifest.webmanifest and true for decision-policy/live-surface/expert-v3-board. Do not claim deployment or Android verification yet.
+- Exact continuation: deploy exact rc4.94 runtime to gh-pages, verify runtime parity, then obtain a fresh Android Pick-9 snapshot. No scoring, Expert-v3, Return-v2, ADP, injury or Walker-specific tuning; no automatic mock.
