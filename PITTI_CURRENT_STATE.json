@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T171200Z-v149",
-  "updated_at": "2026-08-28T17:12:00Z",
+  "handoff_generation": "20260828T172200Z-v150",
+  "updated_at": "2026-08-28T17:22:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -12,7 +12,7 @@
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.94",
     "test_challenger": "v11.8.0-rc4.96",
-    "test_challenger_android_verified": true,
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.96",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0",
@@ -20,14 +20,14 @@
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33183057716,
     "package_reference_artifact_id": 9690504450,
-    "package_reference_note": "rc4.96 all five primary gates PASS at 6eafbb297fa999a28dae14375a65544b73a97d7c; candidate package/re-extract PASS. Deployment/Android promotion pending.",
+    "package_reference_note": "rc4.96 all five primary gates PASS at 6eafbb297fa999a28dae14375a65544b73a97d7c; candidate package/re-extract PASS (run 33183057716 / artifact 9690504450); exact 13/13 main↔gh-pages runtime parity independently verified at gh-pages head 35b68015aa79e8976f3ee9a230be3710be503b32. Android rc4.96 verification pending.",
     "android_version_observed": true,
     "android_functional_verified": true
   },
   "exact_continuation": {
     "gate": "RC496_ANDROID_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "Verify v149 repo seal/CI authority, then inspect one fresh Android/PWA rc4.96 Pick-9 snapshot. Do not start a mock."
+    "instruction": "New chat: verify v150 seal/CI/deployment authority, then require one fresh Android/PWA rc4.96 functional snapshot before promoting Android authority. Do not start a mock automatically."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -45,11 +45,11 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
-    "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143|RC495-Q-NEUTRAL|ALL5-PASS|ANDROID-VERIFY-PENDING|HANDOFF-v146",
+    "acceptance_fingerprint": "RC4.96-ALL5-PASS|PKG-REEXTRACT-PASS|GH-PAGES-13OF13|ANDROID-RC4.94-AUTHORITY|RC4.96-ANDROID-PENDING|Q-NEUTRAL|SPARSE-PANEL-GUARD|NORMAL-CUT-DECOUPLED|WR7-SOFT-UTILITY|EVIDENCE-V2-MIXED-VERSION-GUARD|NO-PLAYER-FORCING|NO-GLOBAL-RETURN-RETUNE|HANDOFF-v150",
     "status": "RC496_DEPLOY_PASS_ANDROID_PENDING",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Fresh Android/PWA rc4.96 Pick-9 functional verification.",
+    "next_action": "Fresh Android/PWA rc4.96 functional verification; then final draft-ready audit/freeze.",
     "gate": "RC496_ANDROID_VERIFY"
   },
   "source_authority": "rc4.96",
