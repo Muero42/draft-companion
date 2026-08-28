@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260828T094500Z-v131",
-  "updated_at": "2026-08-28T09:46:00Z",
+  "updated_at": "2026-08-28T09:55:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -10,17 +10,17 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.89",
+    "android_authority": "v11.8.0-rc4.91",
     "test_challenger": "v11.8.0-rc4.91",
-    "test_challenger_android_verified": false,
+    "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.91",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "8f772c01c617b8fd5fa62676fcba2aca223a881beeed86c0246d37d68ab346f1"
   },
   "exact_continuation": {
-    "gate": "RC491_ANDROID_DEPLOY_AND_VISUAL_VERIFY",
+    "gate": "RC491_ANDROID_VISUAL_FUNCTIONAL_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "rc4.91 full five-gate suite PASS and PREINSTALL artifact produced/re-extracted. Next deploy via verified update path, then Android visual verification of actual Expert-v3 rows, evidence polarity, early Top-10 info and Return-v2 short-turn calibration."
+    "instruction": "User screenshot confirms v11.8.0-rc4.91 is loaded on Android. Treat rc4.91 as Android authority. Continue functional visual verification of actual Expert-v3 rows, evidence polarity, early Top-10 evidence and Return-v2 short-turn calibration; do not regress to rc4.89."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -37,10 +37,10 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.89-android-observed-bug|rc4.90-predevice|EXPERT-V3-PANEL-SELECTABLE|ACTUAL-EXPERT-ROWS|EARLY-TOP10-EVIDENCE|ANTI-REPEAT|HANDOFF-v130",
+    "acceptance_fingerprint": "rc4.64|rc4.91-android-observed|rc4.90-predevice|EXPERT-V3-PANEL-SELECTABLE|ACTUAL-EXPERT-ROWS|EARLY-TOP10-EVIDENCE|ANTI-REPEAT|HANDOFF-v130",
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Deploy rc4.91 via verified update path and visually verify on Android; do not call Android-verified before screenshot/runtime evidence."
+    "next_action": "Continue rc4.91 Android functional verification from observed device state; source/package/device must all remain rc4.91."
   }
 }
