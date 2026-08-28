@@ -1297,7 +1297,10 @@ function freezeReturnValidation(draftId,current,returnPick,rv2,rankedAvailable,s
   rows.push({id,draftId,current,returnPick,slot:Number.isFinite(Number(slot))?Number(slot):null,createdAt:Date.now(),resolved:false,predictions});saveReturnValidation(rows);
 }
 function robustRankShadow(r){
-  const vals=(r?.individual||[]).filter(x=>Number.isFinite(Number(x.rank))&&Number.isFinite(Number(x.w))&&Number(x.w)>0).map(x=>({rank:Number(x.rank),w:Number(x.w),expertId:String(x.expertId||''),expertName:String(x.expertName||''),source:String(x.source||''),exact:x.exact!==false,reconstructed:!!x.reconstructed,spread:Number(x.spread)||0,anchors:Number(x.anchors)||0})).sort((a,b)=>a.rank-b.rank);
+  // Live panels expose weight as `w`; embedded Expert-v2/v3 rows expose
+  // `effectiveWeight`. Evidence export must preserve both, otherwise every
+  // frozen embedded panel looks like it has zero expert rows.
+  const vals=(r?.individual||[]).map(x=>({...x,__w:Number.isFinite(Number(x.w))?Number(x.w):Number(x.effectiveWeight)})).filter(x=>Number.isFinite(Number(x.rank))&&Number.isFinite(x.__w)&&x.__w>0).map(x=>({rank:Number(x.rank),w:x.__w,expertId:String(x.expertId||''),expertName:String(x.expertName||''),source:String(x.source||''),exact:x.exact!==false,reconstructed:!!x.reconstructed,spread:Number(x.spread)||0,anchors:Number(x.anchors)||0})).sort((a,b)=>a.rank-b.rank);
   if(!vals.length)return null;
   const sw=vals.reduce((a,x)=>a+x.w,0);
   let acc=0,median=vals[vals.length-1].rank;
