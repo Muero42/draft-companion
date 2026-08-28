@@ -1,5 +1,5 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T105500Z-v136`
+Handoff generation: `20260828T110500Z-v137`
 Updated: 2026-08-28 10:50Z
 
 ## BOOTSTRAP — mandatory
@@ -47,7 +47,7 @@ rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. In
 ## CURRENT EXTERNAL GATE
 `RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`
 
-Receiving chat must first verify v136 CURRENT/SEAL/Handoff generation equality and every seal-listed blob hash. Then continue from the observed rc4.91 Android state.
+Receiving chat must first verify v137 CURRENT/SEAL/Handoff generation equality and every seal-listed blob hash. Then continue from the observed rc4.91 Android state.
 
 Functional device checks still required:
 - actual Expert-v3 individual rows are the ones used/displayed;
@@ -388,3 +388,7 @@ HANDOFF_GENERATION: 20260828T100500Z-v132
 - rc4.91 remains Android-version-observed but not functionally verified; Expert-v3 is already integrated; no Expert-v3 acquisition/export restart; no mock.
 - gh-pages/main app.js byte divergence remains intentionally preserved and must not be mistaken for parity from equal version text.
 - AUTO BLOCK remains zero-ack immediate AUTO resumption.
+
+## V137 FINAL TAKEOVER CANARY REPAIR
+- Second-order audit found one remaining active stale pointer in PITTI_AUTO_PREFLIGHT.md: it still called rc4.85 the current deployed update path. That active instruction is repaired to rc4.91 and now preserves the audited main/gh-pages app.js byte divergence.
+- Active handoff generation is v137. This section supersedes v136 only for transfer metadata; runtime/model/expert semantics are unchanged.
