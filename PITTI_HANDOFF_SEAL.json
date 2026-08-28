@@ -1,18 +1,18 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T094500Z-v131",
-  "created_at": "2026-08-28T09:50:00Z",
+  "created_at": "2026-08-28T10:00:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "dca2cc9aeac484538774d5de43a19fb922ac5a2f",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "613bd6af39e24a816fa057deff6e164d9d3db1bf",
+    "PITTI_CURRENT_STATE.json": "95217f7b0646e9f87b96e2715f20a0f786a077a3",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "480786c3379e2771a113340c4200b2711acfa6af",
     "PITTI_COMMAND_CONTRACTS.json": "41ffd8e89066b5e880ff11d6dffdd85e07127fdb",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e4ba6389db3da869ab2106c0d14ac83e68c6bdc2",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "395acf01109ef0b7877d7e190951e7abb1c2988d",
-    "PITTI_EXECUTION_LOCK.json": "9a7e4d8854514f89b6d3942814365aeab8a6cf75",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "0a7b8e506a07f0ffc692e6e0a617953f003ab74b",
+    "PITTI_EXECUTION_LOCK.json": "08ac2dc4062de8f5ed0bfa95d5a707737d4d776d",
     "PITTI_PROJECT_STATE.md": "378cf9723c499e41393595baa79d7263b6e800a5",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
     "app.js": "6fd11d3ffa2e3211d98b907df7e7e6a2d3262abb",
@@ -30,7 +30,7 @@
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "352d6c1d6b74da82ff61df3e83594deafbd62cdf",
+    "README.md": "fa46a35231ad1be620b59d1849540d5279b60d26",
     ".github/workflows/release-contract-v2.yml": "a87aac1320f524565c2de7abaab3a25befc22213",
     ".github/workflows/release-contract-v2-package.yml": "d4f0c9f7495f802b10c91a5a7c3c60675193ec8d",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
@@ -133,7 +133,8 @@
     "rc490_panel_selectability_guard": true,
     "rc490_early_top10_evidence": true,
     "rc490_broad_early_coverage": true,
-    "rc491_return_calibration_guard": true
+    "rc491_return_calibration_guard": true,
+    "rc491_android_version_observed": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -144,18 +145,18 @@
   },
   "runtime_boundary": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.89",
+    "android_authority": "v11.8.0-rc4.91",
     "test_challenger": "v11.8.0-rc4.91",
-    "test_challenger_android_verified": false,
+    "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.89",
     "deployed_pages": "v11.8.0-rc4.89",
     "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR v2 unchanged",
     "latest_package_sha256": "2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608"
   },
   "exact_continuation": {
-    "gate": "RC491_PREDEVICE_FULL_VERIFICATION",
+    "gate": "RC491_ANDROID_VISUAL_FUNCTIONAL_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "Run full sealed rc4.91 gates; deploy only after PASS. rc4.91 corrects early Return-v2 overconfidence while retaining rc4.90 Expert-v3 fixes."
+    "instruction": "rc4.91 is device-observed Android authority. Verify functional surfaces; never regress to rc4.89."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
   "acceptance_fingerprint": "rc4.64|rc4.89-android-bug|rc4.90-predevice|EXPERT-V3-PANEL-SELECTABLE|ACTUAL-EXPERT-ROWS|EARLY-TOP10-EVIDENCE|ANTI-REPEAT|HANDOFF-v130"
