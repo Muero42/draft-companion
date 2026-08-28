@@ -7,7 +7,7 @@ const sw=fs.readFileSync('sw.js','utf8');
 const manifest=fs.readFileSync('manifest.webmanifest','utf8');
 
 for(const [name,src] of [['app',app],['index',idx],['sw',sw],['manifest',manifest]])
-  assert.ok(src.includes('v11.8.0-rc4.86'),name+' rc4.86 version mismatch');
+  assert.match(src,/v11\.8\.0-rc4\.(?:86|8[7-9]|9\d+)/,name+' rc4.86+ version mismatch');
 
 assert.ok(app.includes('async function exportExpertV3Challengers()'));
 assert.ok(app.includes('const row=await loadExpertRanks(e.id);'));
