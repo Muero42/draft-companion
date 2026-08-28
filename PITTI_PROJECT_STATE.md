@@ -1366,3 +1366,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Current executable package gate runs rc4.86+; rc4.86 gate has been inverted to reject any USER_HARD_QB_EXCLUSIONS / USER HARD EXCLUSION / normalized Geno-Rodgers runtime strings and now also asserts the generic post-QB1 userDraftStrategyExcluded path remains present.
 - Main app scan: only score -999 hard exclusion remaining is generic roster strategy after QB1; acute injury status uses separate -998 recommendation block and freshness gate.
 - GitHub status API exposed no completed status yet for latest checkpoint commit; do not claim release/package PASS until Actions evidence exists.
+
+### 2026-08-28 — AUTO BLOCK rc4.92 pipeline failure diagnosed and repaired
+- Actual GitHub Actions evidence retrieved for candidate-package run 33164631219 at checkpoint 3cbf6e7: FAILED in Behavioral contract before packaging.
+- Root cause from job log was exact and non-model: `RELEASE_GUARD_FAIL: app contains stale runtime RC refs: v11.8.0-rc4.92`. Visible/runtime authority in index/sw/manifest was still rc4.91 while app.js had been advanced to rc4.92.
+- This was a version-synchronization defect introduced during the P0 QB correction, not a failure of the QB anti-forcing change.
+- Repaired index.html, sw.js and manifest.webmanifest to rc4.92 including cache-busters/service-worker keys. No decision/model/expert/Return logic changed.
+- Next push-triggered Actions run must be inspected to PASS before package/deploy claim.
