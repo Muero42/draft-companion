@@ -76,7 +76,8 @@ for(const token of [
   'external/device/OOS gate is a valid interruption only after all independent'
 ]) must(preflight.includes(token),`preflight gate missing: ${token}`);
 
-must(readme.includes('v11.8.0-rc4.64'),'README active runtime drift');
+must(readme.includes('v11.8.0-rc4.64'),'README production/control baseline drift');
+must(readme.includes('v11.8.0-rc4.85'),'README current candidate missing');
 must(app.includes("const USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers'])"),'QB hard-exclusion canary drift');
 must(app.includes("function normalCandidateAdmissible(row)"),'normal candidate admissibility guard missing');
 must(policy.includes('USER_DRAFT_QB_LIMIT=1'),'user one-QB runtime invariant missing');
@@ -85,8 +86,9 @@ must(app.includes("Progressive WR-Sättigung")||app.includes('WR-Sättigung'),'W
 must(app.includes('function simulateReturnV2('),'Return-v2 kernel missing');
 must(app.includes('function applyPlayerQualitySafetyGate('),'Value-Safety gate missing');
 
-for(const name of ['Guilherme Gianni','Michael Bobal','Ryan Weisse'])
-  must(!app.includes(name),`rejected temporary Expert-v2 runtime name leaked: ${name}`);
+for(const name of ['Guilherme Gianni','Michael Bobal']) must(!app.includes(name),`temporary availability-only expert leaked into runtime: ${name}`);
+must(!text('expert-v2-board.js').includes('Ryan Weisse'),'Weisse must not leak into frozen Expert-v2 board');
+must(app.includes("['Ryan Weisse','Wolf of Roto Street','Todd D Clark','Joey Wright']"),'Expert-v3 acquisition target set missing');
 
 const e=lock.expertV2||{};
 must(e.status==='THREE_SELECTABLE_PROFILES_CURRENT_AUTHORITY_NO_FINAL_WINNER','three-profile Expert-v2 authority drift');
@@ -103,7 +105,7 @@ must(e.sourceLocks?.['Derek Brown']==='EXCLUDED_FROM_NEW_V2','Brown exclusion mi
 must(e.sourceLocks?.['Andrew Erickson']==='CHALLENGER_ONLY_NO_CURRENT_NUMERIC_VOTE','Erickson challenger invariant missing');
 must(e.sourceLocks?.['Sean Koerner']==='NO_CURRENT_DRAFT_ACQUISITION_PAYWALL_WATCHLIST_ONLY','Koerner acquisition lock drift');
 must(e.sourceLocks?.['Draft Sharks Team']==='COUNT_EXACTLY_ONCE_AS_CORRELATED_FAMILY','Draft Sharks family-count invariant missing');
-must(e.sourceLocks?.Weisse_Gianni_Bobal==='REJECTED_TEMPORARY_CONTROL_ONLY','temporary pool quarantine missing');
+must(e.sourceLocks?.Weisse_Gianni_Bobal==='NO_AUTO_RESTORE_AVAILABILITY_ONLY; FRESH_INDIVIDUAL_QUALIFICATION_ALLOWED','temporary pool qualification semantics drift');
 must(e.weightsAreFinalWinner===false,'no Expert-v2 profile may be mislabeled final winner');
 must(e.oldWrOnlyRejectionSemanticsAreAuthority===false,'obsolete WR-only authority resurrected');
 must(lock.league?.userDraftQbLimit===1,'user one-QB strategy lock drift');
@@ -130,7 +132,9 @@ must(generationVersion,'CURRENT generation version missing');
 must(handoffMatrix.includes(`REPO v${generationVersion}`),'handoff matrix generation label drift');
 must(preflight.includes('HANDOFF TRANSACTION STATE'),'preflight handoff transaction gate missing');
 must(releaseWorkflow.includes('node tools/rc483-draft-critical.mjs'),'release workflow missing rc4.83 gate');
+must(releaseWorkflow.includes('node tools/rc485-draft-critical.mjs'),'release workflow missing rc4.85 gate');
 must(packageWorkflow.includes('node tools/rc483-draft-critical.mjs'),'package workflow missing rc4.83 gate');
+must(packageWorkflow.includes('node tools/rc485-draft-critical.mjs'),'package workflow missing rc4.85 gate');
 must(packageWorkflow.includes('VERSION="$(sed -n'),'package version must derive from APP_VERSION');
 must(!packageWorkflow.includes('Draft_Companion_v11.8.0-rc4.82_PREINSTALL.zip'),'stale hard-coded rc4.82 package path resurrected');
 must(releaseContract.includes('Exact v2 weights:'),'release contract expert-weight lock missing');
