@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T165800Z-v148",
-  "updated_at": "2026-08-28T17:03:00Z",
+  "handoff_generation": "20260828T171200Z-v149",
+  "updated_at": "2026-08-28T17:12:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -27,7 +27,7 @@
   "exact_continuation": {
     "gate": "RC496_ANDROID_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "rc4.96 source/package/re-extract/deployment parity PASS. Refresh/open installed PWA and provide one fresh Pick-9 snapshot to verify rc4.96 version and functional presentation; do not start a mock."
+    "instruction": "Verify v149 repo seal/CI authority, then inspect one fresh Android/PWA rc4.96 Pick-9 snapshot. Do not start a mock."
   },
   "invariants": {
     "user_qb_limit": 1,
