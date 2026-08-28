@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T105000Z-v135",
-  "updated_at": "2026-08-28T10:50:00Z",
+  "handoff_generation": "20260828T105500Z-v136",
+  "updated_at": "2026-08-28T10:55:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -27,7 +27,7 @@
   "exact_continuation": {
     "gate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH",
     "auto_starts_mock": false,
-    "instruction": "Verify v133 seal/current/project-state integrity. Continue from Android-observed rc4.91. Functional device gate: actual Expert-v3 rows, evidence polarity/quality, unified Top-10 and Return-v2 short-turn behavior. gh-pages app.js currently lags main broad-evidence bytes despite same rc4.91 version. Continue broad anti-repeat upside/differentiator research in parallel. AUTO BLOCK = zero-ack correction trigger. No mock."
+    "instruction": "Verify v136 seal/current/project-state integrity. Continue from Android-observed rc4.91. Functional device gate: actual Expert-v3 rows, evidence polarity/quality, unified Top-10 and Return-v2 short-turn behavior. gh-pages app.js currently lags main broad-evidence bytes despite same rc4.91 version. Continue broad anti-repeat upside/differentiator research in parallel. AUTO BLOCK = zero-ack correction trigger. No mock."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -44,10 +44,10 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.91-android-version-observed-NOT-functional|rc4.91-package-ref-64039b7a|PAGES-APP-BYTE-LAG|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v135",
+    "acceptance_fingerprint": "rc4.91-android-version-observed-NOT-functional|rc4.91-package-ref-64039b7a|PAGES-APP-BYTE-LAG|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v136",
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Receiving chat verifies generation v135 and seal integrity, then resumes RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH. No mock."
+    "next_action": "Receiving chat verifies generation v136 and seal integrity, then resumes RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH. No mock."
   }
 }
