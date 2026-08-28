@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T17:12:00Z",
+  "updatedAt": "2026-08-28T17:30:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -19,11 +19,11 @@
     "latestAndroidObserved": "v11.8.0-rc4.94",
     "latestPreinstallVerified": "v11.8.0-rc4.96",
     "latestResearchChallenger": "v11.8.0-rc4.96",
-    "preinstallArtifact": "Draft_Companion_PREINSTALL (rc4.94)",
+    "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.96_PREINSTALL.zip",
     "preinstallSha256": "18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.96",
-    "latestDeployedCandidate": "v11.8.0-rc4.95",
+    "latestDeployedCandidate": "v11.8.0-rc4.96",
     "latestAndroidVerified": "v11.8.0-rc4.94",
     "androidAuthority": "v11.8.0-rc4.94",
     "android_authority": "v11.8.0-rc4.94",
@@ -147,7 +147,7 @@
     "branch": "main",
     "status": "RC496_DEPLOY_PASS_ANDROID_PENDING",
     "production": false,
-    "androidVerified": true,
+    "androidVerified": false,
     "changes": [
       "centralized APP_VERSION to eliminate stale snapshot/queue/backup/model metadata",
       "active panel health now evaluates the actually selected full-v2, hybrid WR-v2, or live profile instead of global desired-pool health",
@@ -208,7 +208,7 @@
       "rc4.90 adds deterministic gate: Expert-v3 panel selectability; actual live panelId exposure; actual-row expert display; James Cook RB must resolve DS/Del Don/Pat/Mariano/Weisse; Bowers TE includes Wolf; QB includes Todd; current early Top-10 all require substantive display evidence."
     ],
     "gate": "RC496_ANDROID_VERIFY",
-    "note": "rc4.94 source/package/deployment/Android Pick-9/final v145 CI all PASS. User natural mock is current acceptance test; queue ~100 sufficient.",
+    "note": "rc4.96 source/package/re-extract/all five primary gates/deployment 13/13 parity PASS; Android authority remains rc4.94 pending fresh rc4.96 Pick-9 functional verification.",
     "knownOosConfounds": [
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
