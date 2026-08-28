@@ -1149,3 +1149,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Initial CI after mutation failed fail-closed because the v120 handoff seal correctly detected changed blobs. Treat those failures as expected seal-staleness, not runtime failure; v121 reseal must precede final release-gate interpretation.
 - Expert-v3 remains primary. Next device gate: update/reload rc4.86 -> export once -> compute challenger marginal grids. Joey Wright remains optional; do not force a WR expert if current complete vector remains unavailable.
 - Upside research breadth/anti-repeat rule remains active; new coverage batches A/B are persisted under `research/` and settled players are not recycled absent new decision-changing facts.
+
+
+### 2026-08-28 — rc4.86 RELEASE CONTRACT / PACKAGE CLOSURE
+- GitHub Actions on sealed v121: PITTI Project Guardrails PASS; candidate package gate PASS; release contract v2 PASS; rc4.82/rc4.83 successor gates PASS.
+- Downloaded Actions artifact independently inspected: `Draft_Companion_v11.8.0-rc4.86_PREINSTALL.zip`, exactly 12 runtime files, SHA-256 `49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1`; `candidate.sha256` matches actual bytes.
+- rc4.86 is therefore package/re-extract verified and deployed. Android authority remains rc4.84 until direct device evidence.
+- Exact gate: Android/PWA update to rc4.86 -> one Expert-v3 export -> vector/grid analysis. No mock.
