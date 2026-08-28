@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v122
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v123
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -89,3 +89,5 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - No Decision Kernel/Return-v2/Expert-v2 weight change.
 
 - rc4.86 package/re-extract PASS; SHA 49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1; 12 runtime files.
+
+- rc4.87 compact Expert-v3 transfer: positional-only tuple payload + clipboard-first; core scoring unchanged.
