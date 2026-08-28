@@ -1075,3 +1075,58 @@ No additional player research should preempt this gate.
 - v118 reseal commit `ff0d69c7e48281c24f711d1f0795b965b2c52379` reran the complete triggered gate set and ALL completed SUCCESS: Project Guardrails, candidate package gate, release contract v2, rc4.82 draft-critical compatibility, rc4.83 draft-critical compatibility.
 - Fresh candidate artifact exists from the passing v118 run: `Draft_Companion_PREINSTALL`, artifact id 9676445380, SHA-256 digest `23496a512ba409c9db3bd6064375b12715b5745c4906ff1d55098c4fb61fbcb9`, created 2026-08-28T06:24:06Z. This is the rc4.85 install candidate boundary.
 - Therefore autonomous release/package/CI work is exhausted. Next gate is genuinely device-local: install/update to rc4.85, then use integrated `Expert-v3 Challenger exportieren` once and return the generated challenger JSON. Only after exact vectors arrive compute/choose v3; do not preselect weights.
+
+
+---
+
+## 2026-08-28 08:35 CEST — PITTI HANDOFF v119 CRITICAL UPDATE BOUNDARY
+
+### Why this handoff exists
+The chat filled again largely because AUTO produced repeated unnecessary intermediate messages. The user explicitly requires a transfer that does not lose the exact implementation/update state. This is a HANDOFF transaction; do not resume ordinary development until the v119 seal is verified.
+
+### Exact runtime/artifact state
+- Android currently verified/observed: **v11.8.0-rc4.84**.
+- Current source/deployed/package candidate: **v11.8.0-rc4.85**.
+- rc4.85 purpose is narrow: integrated authenticated Expert-v3 challenger export. It does **not** change Decision Kernel, Return-v2, frozen Expert-v2 weights, manager geometry, or Upside-v3 scoring.
+- rc4.85 Release Contract, package/re-extract and main↔gh-pages runtime parity passed before this handoff. Canonical preinstall SHA-256 remains `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed`.
+- Installed Android has NOT yet been verified as rc4.85.
+- The ChatGPT PREINSTALL attachment expired. This is a delivery-path failure, not an rc4.85 build failure.
+- Normal deployed PWA/App update/reload is the preferred path because previous project updates were handled that way. Do not default back to an expiring attachment. If rc4.85 does not appear after normal update/reload, diagnose service worker/cache/deployment before offering another manual route.
+
+### Exact next gate
+`ANDROID_RC4.85_SELF_UPDATE_THEN_EXPERT_V3_EXPORT`
+1. Receiving chat verifies the v119 handoff/seal first.
+2. Then user/device verifies rc4.85 via normal deployed self-update/reload path; badge must show `v11.8.0-rc4.85`.
+3. Run integrated `Expert-v3 Challenger exportieren` once; return credential-free JSON.
+4. AUTO validates exact vectors and computes v2-v3 controlled grids.
+5. Only evidence-backed v3 composition gets implemented as a **separate selectable preset**; Expert-v2 remains intact for control/rollback.
+6. Regression/package/device gates follow. **No mock is required for the acquisition step.**
+
+### Expert-v3 exact design state — DO NOT RESTART
+- RB primary challenger: Ryan Weisse.
+- TE primary challenger: Wolf of Roto Street; Weisse only secondary if incremental test warrants it.
+- QB primary challenger: Todd D Clark.
+- WR: Joey Wright only if exact current complete vector resolves; otherwise keep incumbent WR panel.
+- Initial grids: RB DS35 control vs DS30+Weisse5 vs DS25+Weisse10; TE DS35 control vs DS30+Wolf5 vs DS25+Wolf10; QB DS35 control vs DS30+Todd5 vs DS25+Todd10.
+- Admission/evaluation: historical/OOS positional accuracy/loss, marginal value, correlation/independence, decision-zone stability, tail/ceiling behavior. Availability/API accessibility has zero positive selection weight.
+- Draft Sharks methodology evidence: Team ranks are projections + proprietary 3D Value with analyst input, **not** an average of personal analyst ranks. Therefore individual DS analyst accuracy cannot directly justify DS Team weight.
+- Old Weisse/Gianni/Bobal rule is anti-regression against availability-driven trio restoration, not a valid negative marginal-value verdict on Weisse.
+
+### Upside-v3 state retained
+- Expert-v3 remains PRIMARY. Player research only during genuine wait time.
+- Research runs in large batches, focusing on uncovered names; settled names are not repeatedly checked/reported without new decision-changing news. User explicitly cited Likely/Jacobs/Pacheco as examples of wasteful repetition.
+- Freshness precedence: specific dated injury/practice/transaction news > current role/beat evidence > current expert outlook > roundup/sleeper consensus > static preseason prior.
+- Arrow semantics: ↑↑ strong high-end outcome with short causal path; ↑ relevant/moderate ceiling; ↓↓ material role/health/availability deterioration; ↓ moderate downside; mixed arrows allowed. Descriptions name causal mechanism.
+- Jameson Williams is CONSOLIDATION (breakout already happened), not generic breakout. Parker Washington is WR1-path evidence. RB late-round utility distinguishes standalone + short workload path, role capture, and injury-away contingent value, with 10-team waiver replacement explicitly considered.
+- Double-count guards: expert roundups are thesis evidence, not pseudo-rank votes; DS value/news does not become a second DS numeric vote; Sleeper ADP is timing/Return market evidence, not player-quality evidence.
+
+### AUTO operational correction — MUST SURVIVE CHAT SWITCH
+- Never respond to AUTO with “AUTO läuft”, “ich mache weiter”, “next I will…”, or similar progress/promise text. After a response, execution does not continue invisibly.
+- Instead perform the largest stable autonomous batch **before** replying. Reply only with a meaningful result, real unavoidable user/device gate, consequential decision, or genuine blocker after parallel lanes are exhausted.
+- PITTI HANDOFF itself must be completed/resealed before ordinary AUTO resumes.
+- Re-inventory after every work package; blocked lane blocks only itself.
+- Do not repeat recently failed approaches without new evidence.
+
+### Transfer-risk note
+The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-boundary prose; v119 explicitly updates those. The latest red CI immediately after the post-seal project-state checkpoint was caused by seal timing (Project State changed after seal), not by rc4.85 behavior. v119 must be sealed only after ALL canonical files are final, and no checkpoint file may be modified after the seal before second-pass CI.
+
