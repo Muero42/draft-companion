@@ -1,12 +1,12 @@
 # Draft Companion – Final Draft Edition 2026
 
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
-> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.89 · 13 Runtime-Dateien. rc4.90 is not device-ready until its full sealed workflow set passes.
+> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.89 · 13 Runtime-Dateien. rc4.91 full sealed workflow set passed; package/re-extract promotion pending latest post-gate evidence-only commit.
 > **Letzter Android-verifizierter Teststand:** v11.8.0-rc4.88 (Expert-v3 · positionsspezifisch ausgewählt und visuell verifiziert).  
 > **Aktueller installierter Android-Stand:** v11.8.0-rc4.88; rc4.89 korrigiert ausschließlich Live-Draft-Präsentation/Research-Prose und ist noch nicht Android-verifiziert.
 > **Aktueller Pre-install Kandidat:** v11.8.0-rc4.91 — PRE-DEVICE root-cause fix for Expert-v3 panel selection + actual expert rows + early Top-10 evidence; deployment withheld until full sealed gates PASS.
 > **Aktueller Android-Testauthority:** v11.8.0-rc4.88; Decision Kernel/Return-v2 bleiben eingefroren.  
-> **Aktueller Source-Challenger:** v11.8.0-rc4.89; Live-Präsentations-/Evidence-Fix, kein Scoring-/Return-/Roster-Policy-Change.
+> **Aktueller Source-Challenger:** v11.8.0-rc4.91; Expert-v3 panel fix + early Return-v2 calibration + evidence-polarity/Henry evidence fixes. Android deployment remains gated.
 >
 > Built/source-verified, packaged/re-extracted, deployed und Android-verified sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
 
