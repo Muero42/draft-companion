@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T091500Z-v130",
-  "updated_at": "2026-08-28T09:40:00Z",
+  "handoff_generation": "20260828T094500Z-v131",
+  "updated_at": "2026-08-28T09:45:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
