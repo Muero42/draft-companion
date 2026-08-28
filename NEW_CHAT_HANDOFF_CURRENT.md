@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T053000Z-v117`
-Updated: 2026-08-28 05:30Z
+Handoff generation: `20260828T054500Z-v118`
+Updated: 2026-08-28 05:45Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -19,7 +19,7 @@ Updated: 2026-08-28 05:30Z
 - User strategy: exactly one drafted QB. After QB1, all QBs disappear from user's Coach surface. Geno Smith and Aaron Rodgers are hard exclusions.
 - K/DST normally not drafted. Starter maxima are NOT roster caps.
 - rc4.84 = current Android-observed/verified runtime used for the completed mock.
-- rc4.85 = source candidate containing only the integrated Expert-v3 challenger export; not yet package/re-extract/device verified.
+- rc4.85 = integrated Expert-v3 challenger-export candidate; Release Contract, package/re-extract and 12/12 main↔gh-pages runtime parity PASS; device export still pending.
 - rc4.84 Decision Kernel remains frozen. rc4.85 does not retune it; it only adds the Expert-v3 acquisition/export control.
 - Expert-v2 Frozen Board weights/provenance remain authority. Brown excluded from new v2; Erickson is qualitative/challenger evidence, not an extra numeric vote.
 
@@ -40,8 +40,8 @@ rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. In
 - Do NOT ask user to manually document picks during the mock.
 
 ## CURRENT EXTERNAL GATE
-`RC4.85_PACKAGE_REEXTRACT_THEN_DEVICE_EXPERT_V3_EXPORT`
-AUTO must finish release/package/re-extract autonomously. Only then ask for one device update and one Expert-v3 JSON export. After JSON arrives: validate vectors -> compute v2/v3 weight grids -> choose composition -> implement separate v3 preset -> regressions. Expert-v2 remains selectable and unchanged.
+`ANDROID_RC4.85_EXPERT_V3_EXPORT`
+All autonomous release/package/deploy work is complete. One device action is now unavoidable: update/reload Companion to rc4.85, press `Expert-v3 Challenger exportieren`, and share the generated credential-free JSON. After JSON arrives: validate vectors -> compute v2/v3 grids -> choose composition/weights -> implement separate selectable Expert-v3 preset -> regression/package/device gates. Expert-v2 remains unchanged/selectable.
 
 ## QB EVIDENCE — KEEP QUALITATIVE, AVOID DOUBLE COUNTING
 - Pat Fitzmaurice direct answer supports a late/fallback path centered on Kyler Murray / Jared Goff / Malik Willis; user considers Goff floor + observe Willis in FA a plausible late strategy.
@@ -193,3 +193,11 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Weisse/Gianni/Bobal old lock means no unqualified availability-driven auto-restore; it does not prohibit fresh Weisse qualification.
 - Expert-v3 is primary. Player research is parallel only during genuine wait time and settled players are not repeatedly re-queried without new decision-changing news.
 - Next user action is prohibited until package/re-extract gates pass.
+
+
+## V118 RC4.85 PACKAGE/DEPLOY PASS
+- Release Contract + candidate package/re-extract PASS for rc4.85.
+- PREINSTALL SHA-256 `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed`; 12 runtime files; every re-extracted Git blob matches current main.
+- main/gh-pages parity for all 12 runtime files PASS.
+- rc4.85 changes only Expert-v3 challenger acquisition/export UI/path; no Expert-v3 numeric vote or weight exists yet.
+- Next and only necessary user action: reload/update rc4.85, press the new export button, share JSON.
