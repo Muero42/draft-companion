@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T053000Z-v117",
-  "created_at": "2026-08-28T05:30:00Z",
+  "handoff_generation": "20260828T054500Z-v118",
+  "created_at": "2026-08-28T05:45:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "64554bfa23fffaf0db7caceedb51af221898f72a",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "0d64db823fb381cfd0a040b50dae6843c5ff9cc7",
+    "PITTI_CURRENT_STATE.json": "96a17b49ee0f57ee303753825354258488400f88",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "1f6add9da2758cb33df32345f51b912ad516cd7d",
     "PITTI_COMMAND_CONTRACTS.json": "5fe962b5043777b75efccc03b61408d5e181a013",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "ca02242c27b78d8b4f70bd57aad9288e1bcdadd6",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "9cccceadf22e49b0e40dff5beb8a7c04cbed5a2a",
-    "PITTI_EXECUTION_LOCK.json": "57dcb76dd4c3e748e7c0493d1f6df5382f5379be",
-    "PITTI_PROJECT_STATE.md": "9e9e97a45185f29a2684cf7213863beb1749d026",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "9ae4a905599d038b244b3faf9c8c9e4a3620bdbb",
+    "PITTI_EXECUTION_LOCK.json": "32cc6fe73abb1887feccecff43678ba4023d5880",
+    "PITTI_PROJECT_STATE.md": "d9b427969e657b5e9e37fa5a33b60d771d8e09ef",
     "PITTI_AUTO_PREFLIGHT.md": "9e6090ef003e324bc7fdf91b9bd9c2c5b2c06317",
     "app.js": "f518bc93d13770d4a5f39572bcdfd4f7939a49c8",
     "index.html": "eb2a206e4380b86f58385505b0b631e6349c1f5d",
@@ -30,7 +30,7 @@
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "7cd61978ac7d52fe13c3c39498b75c6cc1656923",
+    "README.md": "a17244fa4f29562bc37c808912424ae1bd72f25e",
     ".github/workflows/release-contract-v2.yml": "3c1297ea4b30bb958b922f17f2402ea7bbe1e136",
     ".github/workflows/release-contract-v2-package.yml": "5eebac4359d70eb5e947d2fdd8804b033d9f8645",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
@@ -65,12 +65,14 @@
     "pre_real_draft_freshness_gate": true,
     "emergency_queue_executable_contract": true,
     "clean_oos_confound_metrics": true,
-    "matrix_v117": true,
     "expert_v3_acquisition_only": true,
     "rc485_release_gate": true,
     "legacy_feature_gates_successor_safe": true,
     "successor_safe_legacy_gates": true,
-    "readme_rc485_current": true
+    "readme_rc485_current": true,
+    "matrix_v118": true,
+    "rc485_package_reextract_pass": true,
+    "rc485_main_pages_runtime_parity_12of12": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -84,14 +86,15 @@
     "android_authority": "v11.8.0-rc4.84",
     "test_challenger": "v11.8.0-rc4.85",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.78",
+    "latest_package_reextract": "v11.8.0-rc4.85",
+    "latest_package_sha256": "53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed",
     "library_recovery_alias": "v11.8.0-rc4.52"
   },
   "exact_continuation": {
-    "gate": "RC4.85_PACKAGE_REEXTRACT_THEN_DEVICE_EXPERT_V3_EXPORT",
+    "gate": "ANDROID_RC4.85_EXPERT_V3_EXPORT",
     "auto_starts_mock": false,
-    "instruction": "Finish rc4.85 package/re-extract autonomously. Then device-update once and export Expert-v3 challenger JSON. Compute/test v3 weights before adding a selectable preset."
+    "instruction": "Update/reload Companion to rc4.85 once, press Expert-v3 Challenger exportieren, and share the credential-free JSON. Then compute/test v3 weights before implementing a separate preset."
   },
-  "library_persistence": "STALE_FAIL_CLOSED_NOT_V117",
-  "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-expert-v3-acquisition|V2-FROZEN|UPSIDE-V3|1QB|AUTO-LONGBLOCK|HANDOFF-v117"
+  "library_persistence": "STALE_FAIL_CLOSED_NOT_V118",
+  "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-package-deploy|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|1QB|AUTO-LONGBLOCK|HANDOFF-v118"
 }
