@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T063500Z-v119`
-Updated: 2026-08-28 06:35Z
+Handoff generation: `20260828T065500Z-v120`
+Updated: 2026-08-28 06:55Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -218,3 +218,8 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Anti-repeat research lock: Likely/Jacobs/Pacheco and any other recently settled player are not rechecked/reported again unless genuinely new decision-changing news exists. New research must move to uncovered players and be done in large batches.
 - rc4.85 package/re-extract SHA-256 authority: `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed`. A later GitHub artifact digest is an Actions artifact container digest and must not silently replace the canonical preinstall SHA without an explicit artifact-boundary decision.
 - User action in the receiving chat is only necessary after handoff verification: verify/update Android to rc4.85 through normal deployed update path; then export Expert-v3 JSON. Do not start a mock.
+
+
+## V120 SECOND-PASS REPAIR
+- v119 seal correctly exposed one stale guardrail assumption: the bootstrap checker still required historical literals rc4.82 and rc4.83 even after the bootstrap was intentionally synchronized to rc4.84/rc4.85. The guard is now successor-safe and checks semantic boundary labels instead of obsolete version literals.
+- This is a transfer/regression-tool repair only; no runtime, Decision Kernel, Return-v2, Expert-v2 or Expert-v3 candidate data changed.
