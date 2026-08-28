@@ -1,21 +1,21 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T111800Z-v141",
-  "created_at": "2026-08-28T11:18:00Z",
+  "handoff_generation": "20260828T140500Z-v142",
+  "created_at": "2026-08-28T14:08:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "f05271df44f658b21c08c0d342da4159da08b122",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "f340d00a507ee68bc4b83027b9b909626d761ee8",
+    "PITTI_CURRENT_STATE.json": "be31823f2059f3bd3c84c572af6767df0596e275",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "7fa19ee47ab08e46d439cc09a772bf5f1be5d924",
     "PITTI_COMMAND_CONTRACTS.json": "989d42d36ab2e1493ca4fb42aa2784ea7f9a85be",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e861d746a7adc8dbfc4ad775af55b6d591416b26",
     "HANDOFF_COMPLETENESS_MATRIX.md": "21de6de256e2942942ed58ca33a2f01aa9a83808",
-    "PITTI_EXECUTION_LOCK.json": "ca719d74222953882a5e924a408b7ec378a07d4c",
-    "PITTI_PROJECT_STATE.md": "cffaf501b08a4ab51d0678b4f597eeab79038147",
+    "PITTI_EXECUTION_LOCK.json": "5b8d019b57f63dd196f733d5e86919575a4d5b8e",
+    "PITTI_PROJECT_STATE.md": "1af5b4ef6d21b33ef60c83e9f86703ff121bfa93",
     "PITTI_AUTO_PREFLIGHT.md": "04322998286de54ddd7c71f9e116501e423e70d9",
-    "app.js": "1665c5691222c53ffc334fefe42dacc452300c02",
+    "app.js": "e6f504e0348f2323ab0666b4519daf9a93ecaca4",
     "index.html": "ce8881101a8dbd0069d8114023888d9201ed7127",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
     "sw.js": "2273e84db0da56734a81b994f23ff3f660ea1a25",
@@ -162,7 +162,10 @@
     "v141_stale_active_pointers_repaired": true,
     "v141_second_pass_complete": true,
     "v141_all_five_primary_gates_pass": true,
-    "v141_rc493_candidate_audit": true
+    "v141_rc493_candidate_audit": true,
+    "v142_rc494_display_root_cause": true,
+    "v142_no_scoring_tune": true,
+    "v142_second_pass_complete": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
@@ -194,10 +197,10 @@
     "package_hash_semantics": "Reference inspected artifact hash; archive hash may vary across documentation-only rebuilds. Durable authority is seal blob integrity + package/reextract PASS."
   },
   "exact_continuation": {
-    "gate": "RC492_WALKER_ROOT_CAUSE_AND_ANDROID_FUNCTIONAL_VERIFY",
+    "gate": "RC494_NORMAL_CUT_DISPLAY_FIX_CI_PACKAGE_DEPLOY_ANDROID_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "rc4.92 version observed on Android, functional verification open. Diagnose Kenneth Walker III missing from fresh Pick-9 Top-10 before tuning. Preserve no named QB forcing, Expert-v3 exact weights, rich Top-10/evidence polarity, Return tau 4.25, broad anti-repeat research, AUTO BLOCK zero-ack. No mock."
+    "instruction": "Verify rc4.94 presentation-only normal-cut-first fix through CI/package/deploy, then fresh Android Pick-9 snapshot. No scoring/player-specific tuning; duplicate guard binding."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
-  "acceptance_fingerprint": "rc4.92-android-version-observed-NOT-functional|rc4.92-source-package-pages-parity|NO-NAMED-QB-FORCING|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|WALKER-TOP10-DIAGNOSTIC|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v141"
+  "acceptance_fingerprint": "rc4.93-android-snapshot|WALKER-PANEL15.3|RC494-NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v142"
 }
