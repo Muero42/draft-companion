@@ -11,14 +11,14 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.94",
+    "appVersion": "v11.8.0-rc4.95",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.94",
     "latestPreinstallVerified": "v11.8.0-rc4.94",
-    "latestResearchChallenger": "v11.8.0-rc4.94",
+    "latestResearchChallenger": "v11.8.0-rc4.95",
     "preinstallArtifact": "Draft_Companion_PREINSTALL (rc4.94)",
     "preinstallSha256": "d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576",
     "preinstallRuntimeFiles": 13,
@@ -27,7 +27,7 @@
     "latestAndroidVerified": "v11.8.0-rc4.94",
     "androidAuthority": "v11.8.0-rc4.94",
     "android_authority": "v11.8.0-rc4.94",
-    "deployedPagesAppByteParityWithMain": true,
+    "deployedPagesAppByteParityWithMain": false,
     "preinstallReferenceRun": 33169002426,
     "preinstallReferenceArtifactId": 9684784867,
     "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority.",
@@ -145,7 +145,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC494_TECHNICAL_PASS_MOCK_ACCEPTANCE_ACTIVE",
+    "status": "RC495_SOURCE_CHALLENGER_RESEAL_PENDING",
     "production": false,
     "androidVerified": true,
     "changes": [
@@ -207,18 +207,18 @@
       "rc4.89 artifact independently inspected: 13 runtime files, candidate SHA-256 2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608, candidate.sha256 matches actual bytes.",
       "rc4.90 adds deterministic gate: Expert-v3 panel selectability; actual live panelId exposure; actual-row expert display; James Cook RB must resolve DS/Del Don/Pat/Mariano/Weisse; Bowers TE includes Wolf; QB includes Todd; current early Top-10 all require substantive display evidence."
     ],
-    "gate": "RC494_FULL_MOCK_ACCEPTANCE_PLUS_DRAFTDAY_FRESHNESS",
+    "gate": "RC495_RESEAL_AND_REGRESSION",
     "note": "rc4.94 source/package/deployment/Android Pick-9/final v145 CI all PASS. User natural mock is current acceptance test; queue ~100 sufficient.",
     "knownOosConfounds": [
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
     "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
-    "nextGate": "Clean full natural rc4.94 mock => code freeze. Final Aug-31 freshness pass remains required. No automatic mock.",
+    "nextGate": "Reseal canonical rc4.95 boundary, require all five primary gates PASS, then exact deployment and Android verification. rc4.94 remains Android authority.",
     "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION",
     "androidVersionObserved": true,
     "androidFunctionalVerified": false
   },
-  "status": "RC494_TECHNICAL_PASS_MOCK_ACCEPTANCE_ACTIVE",
-  "gate": "RC494_FULL_MOCK_ACCEPTANCE_PLUS_DRAFTDAY_FRESHNESS",
-  "nextGate": "Clean user rc4.94 mock then freeze code; final Aug-31 freshness pass."
+  "status": "RC495_SOURCE_CHALLENGER_RESEAL_PENDING",
+  "gate": "RC495_RESEAL_AND_REGRESSION",
+  "nextGate": "Reseal canonical rc4.95 boundary, require all five primary gates PASS, then exact deployment and Android verification. rc4.94 remains Android authority."
 }
