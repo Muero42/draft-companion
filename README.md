@@ -1,11 +1,11 @@
 # Draft Companion – Final Draft Edition 2026
 
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
-> **Aktuelle Source-Authority:** v11.8.0-rc4.91.  
+> **Aktuelle Source-Authority:** v11.8.0-rc4.92.  
 > **Letzter paket-/re-extract-verifizierter Stand:** v11.8.0-rc4.91 · 13 Runtime-Dateien · SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.  
 > **Android-Version beobachtet:** v11.8.0-rc4.91 (User-Screenshot 2026-08-28). Das ist noch keine vollständige funktionale Verifikation aller rc4.91-Oberflächen.  
 > **gh-pages:** Versionsstring rc4.91; `app.js` ist aktuell byte-seitig älter als main (Henry/Polarity vorhanden, jüngster breiter Research-Batch fehlt). Versionsgleichheit darf nicht als Parität gewertet werden.  
-> **Aktuelles Gate:** `RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`.  
+> **Aktuelles Gate:** `RC492_PACKAGE_DEPLOY_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`.  
 >
 > Built/source-verified, packaged/re-extracted, deployed, Android-Version-beobachtet und Android-funktional-verifiziert sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
 
@@ -14,7 +14,7 @@
 - WR6+/WR7+ wird spät graduell stärker abgewertet, ohne Hard-Cap oder pauschales RB-Forcing; außergewöhnlicher WR-Marktvalue bleibt zulässig.
 - Coach-vs.-tatsächlichem Pick wird pro eingefrorener Entscheidung gespeichert; dedizierter `Pick-Evidenz exportieren`-Export ist draft-spezifisch.
 - Evidence-v2 enthält zusätzlich automatische Flags für WR-Sättigungs-Empfehlungen und QB2-Verstöße.
-- Freeze-Guards schützen exakt-einen-QB, Geno/Rodgers-Hard-Exclusions, K/DST-Auslassung, exceptional TE2, drei Expert-Profile und Expert-v2-Gewichte.
+- Historischer rc4.83-Abschnitt: damalige Guards enthielten Geno/Rodgers-Hard-Exclusions; **dies ist seit rc4.92 ausdrücklich verworfen**. Aktuell schützt der Guard exakt-einen-QB erst nach QB1, verbietet player-name QB exclusions, lässt Geno/Rodgers organisch ranken, lässt K/DST aus, erlaubt exceptional TE2 und schützt die Expert-Profile/Gewichte.
 
 ### rc4.82 — profile-aware health / metadata integrity candidate
 - Keine Decision-/Return-v2-Retunings gegenüber rc4.80.
