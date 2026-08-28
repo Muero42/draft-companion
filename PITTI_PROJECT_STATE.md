@@ -1839,3 +1839,17 @@ User-approved planning refinement:
 - Highest practical value is expected for RB/WR/TE depth-chart and contingent-upside candidates, especially late-round options; early-round rank changes require materially stronger corroboration.
 - Draft-day workflow should therefore include a targeted late transaction/claim delta scan rather than a broad new model rebuild.
 - This is a ChatGPT research/decision-layer operating rule. It does not modify frozen rc4.96 scoring or Expert-v3 weights.
+
+
+## 2026-08-28 — freeze policy corrected: rc4.96 rollback baseline, microfix challenger allowed
+
+User clarified that small defects should still be eliminated before further tests; rc4.96 can remain the rollback point. This supersedes the overly conservative interpretation of “freeze” as “no more runtime changes”.
+
+New policy:
+- rc4.96 is the stable rollback/control baseline, not an untouchable endpoint.
+- Small, isolated, reversible, deterministic bug fixes may be implemented in a new challenger (rc4.97 or successor) for further testing.
+- Every microfix must have a specific reproducible defect, bounded scope, and regression protection.
+- No broad Return-v2 retune, no expert-weight redesign, no PairSum/Rolling resurrection, no hard WR cap, no player-name forcing, no generic roster quota changes.
+- Challenger must be compared against rc4.96; any regression returns immediately to rc4.96.
+- Highest-priority remaining microfix candidates: WAIT/actionability semantics at the turn, residual presentation/evidence gaps, and any stale metadata/authority inconsistencies discovered by read-back.
+- Draft-day freshness remains separate from runtime logic and should not be blocked by microfix work.
