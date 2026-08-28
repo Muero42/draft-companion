@@ -1320,3 +1320,13 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Independent second-order scan after v136 found one additional active stale instruction in PITTI_AUTO_PREFLIGHT.md: “Current update path: rc4.85 is already deployed to gh-pages.” Because preflight is read before execution, this could have resurrected the old rc4.85 device/update path despite CURRENT/SEAL rc4.91 authority.
 - Repaired preflight to rc4.91 and explicitly preserved the audited same-version main/gh-pages app.js byte divergence. Equal rc4.91 labels are not byte parity.
 - Transfer generation advanced to v137 and bootstrap/current/handoff/matrix/execution-lock are synchronized. No runtime/model/expert weighting change.
+
+### 2026-08-28 — AUTO continuation after v137: Upside-v3 Coverage Batch C
+- Handoff v137 verified as active continuation authority; no mock started and no Android functional-verification claim inferred from the rc4.91 version badge.
+- Broad anti-repeat research continued while the device-functional lane remains externally gated.
+- Added non-runtime research file `research/UPSIDE_V3_COVERAGE_BATCH_C_2026-08-28.md`.
+- New coverage: Germie Bernard = versatile role-capture deep/watch; Rashod Bateman = explicit watch/NO_ARROW pending causal role proof.
+- Refined without duplicate boosting: Sean Tucker = goal-line + contingent-volume ↑ deep; Terrance Ferguson = athletic/scheme ↑ deep with crowded-role confidence cap.
+- Fresh external evidence used: Aug-24 late-round lotto-ticket analysis and Aug-27 late-TE analysis; generic sleeper labeling is not itself positive PITTI evidence.
+- Anti-repeat preserved: settled Stribling/Concepcion/Walker/Rachaad White/Corum/Mason/Juwan Johnson/Jake Ferguson/Fields/Doubs were not recycled.
+- No Coach/expert/Return-v2/ranking/ADP weights changed. Freeze remains intact.
