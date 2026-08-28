@@ -1,6 +1,6 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
 const app=fs.readFileSync('app.js','utf8');
-assert.ok(app.includes("v11.8.0-rc4.91"));
+assert.ok(/v11\.8\.0-rc4\.(?:9[1-9]|[1-9][0-9]{2,})/.test(app),'rc4.91+ successor required');
 assert.ok(app.includes("pickNo<=30?4.25"),'early Return-v2 tau calibration missing');
 assert.ok(!app.includes("pickNo<=30?1.35"),'old overconfident early tau resurrected');
 // Analytic canary: market-only relative weight at pick 10 for ADP-like centers 16-19
