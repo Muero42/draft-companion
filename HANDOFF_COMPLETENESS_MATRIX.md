@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v117
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v118
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -17,8 +17,8 @@ A new-chat takeover fails closed unless all checks pass.
 ## 2 Runtime boundary
 - rc4.64 production/control
 - rc4.84 current Android-observed/verified test authority for the completed mock
-- rc4.85 source candidate: Expert-v3 acquisition/export only; not yet packaged or Android-verified
-- rc4.78 remains last package/re-extract boundary until rc4.85 candidate gate passes
+- rc4.85 Expert-v3 acquisition/export candidate: Release/Package/Re-extract PASS and gh-pages deployed; Android export verification pending
+- rc4.85 is the current package/re-extract boundary; SHA-256 `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed`
 - rc4.52 Library aliases recovery only
 - built/prepared/deployed/Android-verified kept distinct
 
@@ -43,7 +43,7 @@ A new-chat takeover fails closed unless all checks pass.
 - Evidence-v2 direct roster positions/counts bug fix present
 - Coach-vs-user decision outcome retained
 - user overrides/final roster not used as training labels
-- current gate = rc4.85 package/re-extract -> device update -> Expert-v3 challenger JSON -> v3 weight computation
+- current gate = device update/reload rc4.85 -> Expert-v3 challenger JSON -> v3 weight computation
 
 ## 6 AUTO durability
 - long blocks default
@@ -60,7 +60,7 @@ Explicitly reject resurrection of PairSum/Rolling, fixed caps, player forcing, b
 ## 8 Execution witness
 Before user-facing AUTO completion, actual work must have been executed in the current run unless the only remaining condition is a genuinely unavoidable external/device gate after all independent lanes are exhausted.
 
-## 9 v117 tooling canaries
+## 9 v118 tooling canaries
 - release contracts execute rc4.83 draft-critical gate
 - candidate package label derives from APP_VERSION and cross-checks index/sw/manifest
 - Evidence-v2 completed mock requires exact rc4.83 + 15 unique own-pick fixtures
@@ -77,3 +77,5 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 
 - rc4.85 Expert-v3 export target set is acquisition-only; Weisse may appear in acquisition UI but must not enter frozen Expert-v2 without a successful v3 comparison.
 - legacy rc4.83/84 gates are minimum-feature regressions and must not require stale exact runtime tags.
+
+- rc4.85 package contains exactly 12 runtime files; re-extracted blobs match main and main/gh-pages runtime parity is 12/12.
