@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T111800Z-v141`
-Updated: 2026-08-28 10:50Z
+Handoff generation: `20260828T140500Z-v142`
+Updated: 2026-08-28 14:05Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -413,3 +413,11 @@ HANDOFF_GENERATION: 20260828T100500Z-v132
 - AUTO semantics unchanged; **AUTO BLOCK** is zero-ack correction trigger: immediately resume long AUTO, parallelize independent lanes, no apology/status/promise response, stop only at material result/unavoidable user action/non-self-solvable blocker.
 - No mock unless explicitly requested.
 - Receiving chat order: (1) verify CURRENT/SEAL generation v141 and integrity; (2) diagnose Walker disappearance; (3) finish focused rc4.92 Android functional verification; (4) broad anti-repeat research in parallel; (5) keep checkpoint write-through.
+
+## V142 RC4.94 WALKER DISPLAY-FIX HANDOFF — SUPERSEDES OLDER ACTIVE POINTERS
+- Generation: `20260828T140500Z-v142`.
+- Fresh rc4.93 Pick-9 snapshot proves Walker panel 15.3 / ADP 17.4 remained available while lower-panel rows appeared as `FALLBACK AUSSERHALB NORMAL-CUT`.
+- Root cause: Top-10 presentation sliced scored rows before prioritizing normal-cut admissibility. rc4.94 fixes presentation only: normal-cut candidates fill visible slots first; fallback context fills only remaining slots.
+- No scoring, panel, injury, Return-v2, ADP or player-specific tuning.
+- Next: rc4.94 CI/package -> deploy exact runtime -> fresh Android Pick-9 verification. No mock. Snapshot duplicate guard remains binding.
+- AUTO BLOCK remains zero-ack long-block resumption.
