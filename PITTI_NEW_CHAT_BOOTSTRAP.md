@@ -23,16 +23,18 @@ If Library files are available, read them too. A v105 Library reseal was prepare
 
 ## Current acceptance boundary
 - production/control: rc4.64
-- current Android authority: rc4.84 (completed realistic mock / Evidence-v2 available)
-- current deployed/package-reextract candidate: rc4.85
-- rc4.85 purpose: integrated Expert-v3 challenger export only; Decision Kernel / Return-v2 / frozen Expert-v2 unchanged
-- rc4.85 package/re-extract PASS; gh-pages deployed; Android rc4.85 not yet verified
-- Library rc4.52 TEST/LATEST: recovery aliases only
+- Android version authority: rc4.91, observed directly in user screenshot on 2026-08-28
+- Android functional verification: still pending for actual Expert-v3 rows, evidence polarity/quality, unified Top-10 and short-turn Return-v2 behavior
+- current source: rc4.91
+- latest package/re-extract: rc4.91, 13 runtime files, SHA-256 `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`
+- gh-pages reports rc4.91, but `app.js` bytes currently lag main: Henry/polarity fix is present, latest broad evidence batch is not. Matching version text is NOT proof of byte parity.
+- Library rc4.52 aliases remain recovery-only; stale Library state never overrides repo/device evidence.
 
 ## Current gate
-`ANDROID_RC4.85_SELF_UPDATE_THEN_EXPERT_V3_EXPORT`
+`RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`
 
-Use the already deployed/self-update path first. Do **not** require an expiring ChatGPT ZIP if the installed PWA can update/reload from gh-pages. Verify the app badge is `v11.8.0-rc4.85`; if it remains rc4.84, diagnose service-worker/cache/update state before inventing another install path. Once rc4.85 is verified, run `Expert-v3 Challenger exportieren` once and return the credential-free JSON. Then compute/test v3 weights and only implement a separate v3 preset if validated.
+On takeover, verify the v132 seal/current hashes first. Continue from the rc4.91 device-observed state. Do not restart Expert-v3 acquisition/export: Todd D Clark QB, Ryan Weisse RB and Wolf of Roto Street TE are already integrated; WR intentionally remains frozen Expert-v2 because Joey Wright is unavailable. Verify actual runtime rows/evidence before any further device promotion. Continue broad anti-repeat upside/differentiator research in parallel when device evidence is unavailable. No mock unless explicitly requested.
+
 
 ## AUTO acceptance test
 A valid PITTI AUTO run must execute the repeated loop:
