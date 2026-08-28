@@ -92,7 +92,8 @@
     "claiming gh-pages rc4.96 has byte parity with main rc4.98",
     "claiming rc4.98 Android acceptance PASS merely because the version is installed",
     "treating draft PR #33 CMC evidence patch as merged",
-    "empty/incomplete handoff seal integrity set"
+    "empty/incomplete handoff seal integrity set",
+    "obsolete rc4.61 package workflow auto-running or publishing as current authority"
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.64",
