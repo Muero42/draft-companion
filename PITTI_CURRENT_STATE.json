@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T104000Z-v134",
-  "updated_at": "2026-08-28T10:40:00Z",
+  "handoff_generation": "20260828T105000Z-v135",
+  "updated_at": "2026-08-28T10:50:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -12,7 +12,7 @@
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.91",
     "test_challenger": "v11.8.0-rc4.91",
-    "test_challenger_android_verified": true,
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.91",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72",
@@ -20,7 +20,9 @@
     "deployed_pages_app_byte_parity_with_main": false,
     "package_reference_run": 33162367347,
     "package_reference_artifact_id": 9682152886,
-    "package_reference_note": "Independently inspected successful v133 package artifact. ZIP hash is a reference artifact hash; doc-only commits may emit a different archive hash because ZIP metadata is not deterministic. Runtime authority is seal-listed blob integrity + package/reextract gate."
+    "package_reference_note": "Independently inspected successful v133 package artifact. ZIP hash is a reference artifact hash; doc-only commits may emit a different archive hash because ZIP metadata is not deterministic. Runtime authority is seal-listed blob integrity + package/reextract gate.",
+    "android_version_observed": true,
+    "android_functional_verified": false
   },
   "exact_continuation": {
     "gate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH",
@@ -42,10 +44,10 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.91-android-observed|rc4.91-package-ref-64039b7a|PAGES-APP-BYTE-LAG|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v134",
+    "acceptance_fingerprint": "rc4.91-android-version-observed-NOT-functional|rc4.91-package-ref-64039b7a|PAGES-APP-BYTE-LAG|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v135",
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Receiving chat verifies generation v134 and seal integrity, then resumes RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH. No mock."
+    "next_action": "Receiving chat verifies generation v135 and seal integrity, then resumes RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH. No mock."
   }
 }
