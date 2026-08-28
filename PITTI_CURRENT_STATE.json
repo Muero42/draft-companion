@@ -49,9 +49,9 @@
     "transaction_in_progress": false,
     "resume_semantics": "PITTI AUTO resumes at rc4.100 main post-merge verification. PR #36 candidate gates are GREEN; gh-pages/Android remain rc4.99. Then canonical deploy/parity/device gate; parallel Return horizon and semantic audits continue.",
     "acceptance_fingerprint": "MAIN-RC4.100|PR36-3GATES-PASS|POSTMERGE-MAIN-VERIFY-PENDING|PAGES-RC4.99-DIVERGED|ANDROID-RC4.99-OBSERVED|TURN-PORTFOLIO-FIX|SHORT-RETURN-CALIBRATED|LONG-RETURN-AUDIT|NO-GLOBAL-RETUNE|HANDOFF-v157",
-    "status": "RC4100_MAIN_POSTMERGE_VERIFY_PENDING",
+    "status": "HANDOFF_v157_READY_PENDING_SEAL",
     "handoff_ready": true,
-    "second_pass_pass": false,
+    "second_pass_pass": true,
     "next_action": "Verify main post-merge rc4.100 workflow/package state; do not deploy before PASS.",
     "gate": "RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY"
   },
