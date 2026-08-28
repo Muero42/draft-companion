@@ -8,12 +8,12 @@
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_CURRENT_STATE.json": "f21058fa6728ad3ff29b2f6b2f258ac6c00c97a2",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "8067c1ab86e8a9e6c312a720ccaff2732cea2969",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "59de682b543d689fe544ad524392cc9b19cce015",
     "PITTI_COMMAND_CONTRACTS.json": "c2bdb5343c8801de1abd5f4ce29d4f8d21c76ebd",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "41b5e9b600d89691342d000dfdbf646964a478a5",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "13685f8a28cc965108ae1ab0eedf39c1cbad0d60",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "125efb9f5ffed895206067cfbd19b7271d1349c3",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "0165aac8ce3dad9d383bc9723228fc85bd45e347",
     "PITTI_EXECUTION_LOCK.json": "fdca8b8d1405a93639c70d62c318c8e0cb3ffb51",
-    "PITTI_PROJECT_STATE.md": "414fa48d8078c3c72f832a98882d37c1fd514914",
+    "PITTI_PROJECT_STATE.md": "5188a74b6271c18fcdbf2b46f6306104095b96b2",
     "PITTI_AUTO_PREFLIGHT.md": "821033bf26d29ca498b86996e9a0e0a4e23e0492",
     "README.md": "136313046471ae3b21126a94e454d027515c3ca2",
     "app.js": "63aececb4c05661276a386c6b4c5a9985ad9d637",
@@ -221,7 +221,9 @@
     "v155_cmc_pr33_unmerged": true,
     "v155_evidence_coverage_audit_open": true,
     "v155_wr_saturation_audit_open": true,
-    "v155_no_auto_mock": true
+    "v155_no_auto_mock": true,
+    "v155_guard_compatibility_canaries_restored": true,
+    "v155_final_second_pass_after_guard_failure": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
