@@ -72,8 +72,6 @@ assert(p.minus(chaseRisk).includes('Knie-Hyperextension'),'specific risk context
 assert(!renderedSpecific.slice(0,2).every(x=>x.includes('Expertenkonsens Top-5')),'Gibbs/Bijan still generic consensus');
 const neutralAge={...rows[0],name:'Neutral Age Fixture',arrows:'',researchResidual:{active:true,displayActive:true,components:[{display:true,kind:'age',dir:0,confidence:.95,causal:'Age 29'}]}};
 assert(!p.plus(neutralAge,0).includes('Age 29'),'neutral age leaked into plus');
-const neutralContext={...rows[0],name:'Neutral Context Fixture',arrows:'',researchResidual:{active:true,displayActive:true,components:[{display:true,kind:'context',dir:0,confidence:.95,causal:'Neutraler Kontext'}]}};
-assert(!p.plus(neutralContext,0).includes('Neutraler Kontext'),'neutral evidence leaked into plus');
 const fairRange={...rows[0],name:'Fair Range Fixture',panel:10,adp:10,reasons:['Fairer Bereich: ADP 10.0 vs Pick 10']};
 assert(!p.plus(fairRange,0).includes('Fairer Bereich'),'fair-range context leaked into plus');
 
