@@ -1,12 +1,12 @@
 # Draft Companion – Final Draft Edition 2026
 
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar; nicht mit aktuellem Kandidaten verwechseln).  
-> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.88 · 13 Runtime-Dateien · Release/Package/Re-extract/Guardrails PASS. rc4.89 ist der aktuelle Live-Presentation-Fix-Kandidat und muss die vollständigen Gates neu passieren.
+> **Letzter paket-/re-extract-verifizierter pre-install Kandidat:** v11.8.0-rc4.89 · 13 Runtime-Dateien · SHA-256 `2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608` · Release/Package/Re-extract/Guardrails PASS.
 > **Letzter Android-verifizierter Teststand:** v11.8.0-rc4.88 (Expert-v3 · positionsspezifisch ausgewählt und visuell verifiziert).  
 > **Aktueller installierter Android-Stand:** v11.8.0-rc4.88; rc4.89 korrigiert ausschließlich Live-Draft-Präsentation/Research-Prose und ist noch nicht Android-verifiziert.
-> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.89 — Live-Anzeige: aktives Expert-v3 korrekt, alle Top-10 als volle Entscheidungskarten, NORMAL-CUT-Warnung je Karte, reichere frühe Pro/Contra-Evidenz. Release-Gates laufen.
+> **Aktueller Pre-install Kandidat:** v11.8.0-rc4.89 — vollständig release-/package-/re-extract-verifiziert und auf gh-pages deployt; Android-Verifikation offen.
 > **Aktueller Android-Testauthority:** v11.8.0-rc4.88; Decision Kernel/Return-v2 bleiben eingefroren.  
-> **Aktueller Source-Challenger:** v11.8.0-rc4.89; reine Präsentations-/Evidence-Anreicherung, kein Scoring-/Return-/Roster-Policy-Change.
+> **Aktueller Source-Challenger:** v11.8.0-rc4.89; Live-Präsentations-/Evidence-Fix, kein Scoring-/Return-/Roster-Policy-Change.
 >
 > Built/source-verified, packaged/re-extracted, deployed und Android-verified sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
 
