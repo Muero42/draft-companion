@@ -1743,3 +1743,14 @@ Transfer mechanics:
 - HANDOFF_COMPLETENESS_MATRIX.md advanced to REPO v150.
 - Library mirror remains stale/writeback-blocked; repo CURRENT + PASS SEAL + Execution Lock + Project-State EOF + actual CI/device evidence win.
 - Next chat must not restart settled expert acquisition/research or another mock automatically.
+
+
+## 2026-08-28 — v151 authority-consistency repair after handoff read-back
+- Post-v150 receiving-chat audit found stale active metadata resurrected by the sealed-byte restore commit after the earlier rc4.96 lock correction.
+- Repaired active authority only; no runtime/scoring/expert/Return-v2 code changed.
+- PITTI_CURRENT_STATE: rc4.96 Android functional verification is explicitly FALSE/pending; Android authority remains rc4.94.
+- PITTI_EXECUTION_LOCK: rc4.96 preinstall/deployed-candidate labels aligned; currentWork.androidVerified=false; gate remains RC496_ANDROID_VERIFY.
+- PITTI_COMMAND_CONTRACTS: androidFunctionalVerificationPending=true and currentGate=RC496_ANDROID_VERIFY.
+- Source/package/re-extract/all five primary gates/deployment 13/13 parity remain rc4.96 PASS; no automatic mock.
+- Decision-Evidence v2 repairs remain binding: Dobbins sparse-panel generic guard, effectiveWeight serialization, mixed-version segmentation, alias dedupe, 58-name evidence coverage, broader display-only Normal-Cut, late WR7+ soft utility, QUESTIONABLE neutral, no generic Return-v2 retune, no player-name forcing.
+- Next unavoidable external gate: fresh Android/PWA rc4.96 Pick-9 functional snapshot; only after PASS may Android authority promote and final draft-ready/freeze audit run.
