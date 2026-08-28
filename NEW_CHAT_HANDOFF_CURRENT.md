@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T083800Z-v130`
-Updated: 2026-08-28 08:38Z
+Handoff generation: `20260828T085400Z-v129`
+Updated: 2026-08-28 08:54Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -304,3 +304,10 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - main/gh-pages runtime parity verified 13/13.
 - Android authority remains rc4.88 until device update/reload proves rc4.89.
 - Exact next action: update/reload to rc4.89 and visually verify Expert-v3 voices, uniform full Top-10 cards, orange per-card Normal-Cut warning, richer Pro/Contra. No mock.
+
+
+## V129 LIVE SURFACE CORRECTION
+- Expert-v3 live expert labels fixed by position; no fallback to old INC experts.
+- Ten candidates now use ten full cards; duplicate 10ER overview removed; normal-cut warning at card bottom in orange.
+- Generic pro/contra fallback phrases removed in favor of evidence/context-linked fallbacks.
+- Final five-workflow set PASS after root-cause repairs. Deployed to gh-pages; Android reload/visual verification is next gate, then broad anti-repeat research.
