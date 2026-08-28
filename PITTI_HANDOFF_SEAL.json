@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T172200Z-v153",
-  "created_at": "2026-08-28T17:22:00Z",
+  "handoff_generation": "20260828T193500Z-v154",
+  "created_at": "2026-08-28T19:35:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -178,7 +178,17 @@
     "v153_reseal_pending": false,
     "v153_rc498_full_release_pass": true,
     "v153_rc498_package_reextract_pass": true,
-    "v153_rc498_android_pending": true
+    "v153_rc498_android_pending": true,
+    "v154_current_seal_handoff_generation_match": true,
+    "v154_rc498_android_observed": true,
+    "v154_paired_oos_backup": true,
+    "v154_strict_coach_9wr_corrected": true,
+    "v154_old_7wr_count_forbidden": true,
+    "v154_wr_saturation_audit_gate": true,
+    "v154_no_hard_wr_cap": true,
+    "v154_no_return_retune": true,
+    "v154_substantive_evidence_coverage_audit": true,
+    "v154_no_auto_mock": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -190,9 +200,9 @@
   },
   "runtime_boundary": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.96",
+    "android_authority": "v11.8.0-rc4.98",
     "android_version_observed": true,
-    "android_functional_verified": true,
+    "android_functional_verified": false,
     "source_authority": "v11.8.0-rc4.96",
     "test_challenger": "v11.8.0-rc4.98",
     "test_challenger_android_verified": false,
@@ -203,15 +213,15 @@
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33194280926,
     "package_reference_artifact_id": 9695061955,
-    "decision_oos": "draft 1399085353452761088; 15/15 rc4.96 followedCoach; Return Brier 0.080186; sparse-panel OOS PASS",
+    "decision_oos": "paired: realistic 1399109246460682240 + strict Coach 1399114762087895040; strict Coach 15/15 followed; correct roster 9 WR / 4 RB / 1 TE / 1 QB",
     "expert_v3_weights": "QB Todd10 / RB Weisse10 / TE Wolf10 / WR exact v2 fallback",
-    "note": "rc4.96 frozen pre-draft runtime; no rc4.97 scoring challenger promoted."
+    "note": "rc4.98 version observed on Android; rollback remains rc4.96 pending final functional acceptance. Material unresolved gate is generic WR saturation/utility audit."
   },
   "exact_continuation": {
-    "gate": "RC498_ANDROID_VERIFY",
+    "gate": "RC498_WR_SATURATION_AUDIT",
     "auto_starts_mock": false,
-    "instruction": "Verify rc4.98 on Android/PWA; confirm version and representative Pro/Contra polarity. rc4.96 remains rollback authority until PASS."
+    "instruction": "Use canonical 17:30 backup paired OOS mocks. First correct prior miscount: strict Coach mock drafted NINE WR (not seven): JSN, Jefferson, Nabers, Olave, Waddle, Christian Watson, Parker Washington, Josh Downs, Stefon Diggs. Audit generic WR saturation / marginal championship utility across mid-late rounds without hard WR cap, player-name forcing, or global Return-v2 retune. Also continue systematic substantive Pro/Contra coverage audit; rc4.96 remains rollback authority until rc4.98 fully accepted."
   },
   "library_persistence": "STALE_FAIL_CLOSED",
-  "acceptance_fingerprint": "RC4.98-POLARITY-194PASS|FULL-RELEASE-PASS|PKG-REEXTRACT-PASS|ANDROID-RC4.96-ROLLBACK|NO-SCORING-TUNE|HANDOFF-v153"
+  "acceptance_fingerprint": "RC4.98-ANDROID-OBSERVED|POLARITY-194PASS|PAIRED-OOS|STRICT-COACH-9WR|WR-SATURATION-AUDIT|NO-HARD-CAP|NO-RETURN-RETUNE|HANDOFF-v154"
 }
