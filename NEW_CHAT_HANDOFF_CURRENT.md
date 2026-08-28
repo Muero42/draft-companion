@@ -53,3 +53,8 @@ Before the real draft, only:
 5. real-draft ChatGPT decision support with special attention to WAIT leaders/turn geometry.
 
 Library mirror remains stale/fail-closed; do not let it overwrite this sealed repo state.
+
+- Library mirror is stale/writeback-blocked: retained takeover invariant.
+- rc4.82: retained takeover invariant.
+- rc4.83: retained takeover invariant.
+- Re-inventory after EVERY completed work package: retained takeover invariant.
