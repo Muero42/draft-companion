@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260828T155300Z-v152",
-  "updated_at": "2026-08-28T15:53:00Z",
+  "updated_at": "2026-08-28T16:15:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -49,12 +49,22 @@
     "status": "RC496_DRAFT_READY_FROZEN_FRESHNESS_PENDING",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "No runtime retune. Pre-draft freshness checks only: Expert-v3/WR-v2 boards, Sleeper ADP and acute-status evidence; real-draft WAIT leaders require turn-portfolio review by ChatGPT.",
+    "next_action": "Maintain rc4.96 freeze. On 31.08 execute research/DRAFT_DAY_FRESHNESS_PLAN_2026-08-31.md: full freshness 17:30-18:15, targeted transaction delta 19:05-19:30, final materiality scan 19:40-19:50, then operational freeze.",
     "gate": "RC496_PRE_DRAFT_FREEZE_FRESHNESS_ONLY"
   },
   "source_authority": "rc4.96",
   "package_authority": "rc4.96",
   "android_version_observed": "v11.8.0-rc4.96",
   "android_functional_verified": true,
-  "deployment_authority": "rc4.96"
+  "deployment_authority": "rc4.96",
+  "draft_day_plan": {
+    "date": "2026-08-31",
+    "start_local": "20:00 Europe/Berlin",
+    "runtime": "v11.8.0-rc4.96 frozen",
+    "primary_freshness_pass": "17:30-18:15",
+    "transaction_delta_scan": "19:05-19:30",
+    "final_materiality_scan": "19:40-19:50",
+    "operational_freeze": "~19:50",
+    "transaction_rule": "same-position claim/signing is weak Bayesian evidence only; correlate with pre-existing injury/role uncertainty and seek corroboration; uncorroborated signal may only break close ties"
+  }
 }
