@@ -1460,3 +1460,12 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Root cause was not rc4.94 runtime/package behavior. `tools/pitti_guardrail_check.mjs` still hard-coded the old rc4.93 artifact digest/run even though canonical CURRENT/Command Contract had correctly advanced package authority to rc4.94.
 - Guardrail repaired successor-safely: Android authority, package digest/run and main/pages parity are now cross-checked against `PITTI_CURRENT_STATE.json` instead of historical rc4.93 literals. This prevents the same stale-literal failure on future promotions while preserving fail-closed cross-document consistency.
 - Because the guardrail file is seal-listed, v144 must be resealed again with its new blob hash and the new Project-State hash, then all five primary workflows must PASS on that exact final reseal before transfer is accepted.
+
+
+### 2026-08-28 — rc4.94 exact runtime deployment
+- Deployment preflight compared all 13 candidate runtime files between main and gh-pages. Nine were already byte-identical; only index.html, app.js, manifest.webmanifest and sw.js differed.
+- Because gh-pages is historically diverged from main, no branch merge/reset was used. An atomic gh-pages commit was constructed on the existing gh-pages tree replacing only those four differing runtime blobs with the exact already-verified main blobs.
+- gh-pages promotion commit: `55c42cb2c35645b92c7e11ddc5253e76392f0a13`.
+- Post-promotion direct blob verification: all 13 runtime files now match main exactly (4 changed files re-read after promotion; 9 unchanged files independently checked).
+- This establishes repository deployment parity for rc4.94 without importing project/control files into gh-pages and without changing scoring/model logic.
+- Remaining external gate: fresh Android Pick-9 snapshot/function check. Android authority must not advance from rc4.93 until that device evidence is received.
