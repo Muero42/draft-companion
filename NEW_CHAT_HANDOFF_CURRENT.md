@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T054500Z-v118`
-Updated: 2026-08-28 05:45Z
+Handoff generation: `20260828T063500Z-v119`
+Updated: 2026-08-28 06:35Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -16,12 +16,13 @@ Updated: 2026-08-28 05:45Z
 
 ## CURRENT AUTHORITY
 - League: 10-team Half-PPR, 1QB, real draft 2026-08-31, user slot 9.
-- User strategy: exactly one drafted QB. After QB1, all QBs disappear from user's Coach surface. Geno Smith and Aaron Rodgers are hard exclusions.
+- User strategy: exactly one drafted QB; after QB1 all QBs disappear from user's Coach surface. Geno Smith and Aaron Rodgers are hard exclusions.
 - K/DST normally not drafted. Starter maxima are NOT roster caps.
-- rc4.84 = current Android-observed/verified runtime used for the completed mock.
-- rc4.85 = integrated Expert-v3 challenger-export candidate; Release Contract, package/re-extract and 12/12 main↔gh-pages runtime parity PASS; device export still pending.
-- rc4.84 Decision Kernel remains frozen. rc4.85 does not retune it; it only adds the Expert-v3 acquisition/export control.
-- Expert-v2 Frozen Board weights/provenance remain authority. Brown excluded from new v2; Erickson is qualitative/challenger evidence, not an extra numeric vote.
+- rc4.84 = current Android authority and runtime of the completed realistic mock/Evidence-v2.
+- rc4.85 = current Expert-v3 acquisition/export candidate. Release Contract, package/re-extract and gh-pages deployment are complete; Android still shows rc4.84 until update/reload is verified.
+- rc4.85 changes ONLY the integrated Expert-v3 challenger export. rc4.84 Decision Kernel, Return-v2 and Frozen Expert-v2 remain unchanged.
+- Expert-v2 remains fully selectable/control. Brown stays excluded. Erickson remains qualitative/challenger only. Weisse may be freshly qualified; old availability-driven temporary-pool restoration remains forbidden.
+- Upside-v3/player research remains a parallel lane only during genuine Expert-v3 wait time. Settled players are not repeatedly re-queried without genuinely new decision-changing news.
 
 ## WHY RC4.83 EXISTS
 User showed late-round Coach recommendations that remained WR-heavy despite already having 7 WR. A later completed roster cannot be treated as Coach success because the user manually overrode many recommendations.
@@ -40,8 +41,11 @@ rc4.83 is a bounded soft-saturation challenger, explicitly NOT a hard WR cap. In
 - Do NOT ask user to manually document picks during the mock.
 
 ## CURRENT EXTERNAL GATE
-`ANDROID_RC4.85_EXPERT_V3_EXPORT`
-All autonomous release/package/deploy work is complete. One device action is now unavoidable: update/reload Companion to rc4.85, press `Expert-v3 Challenger exportieren`, and share the generated credential-free JSON. After JSON arrives: validate vectors -> compute v2/v3 grids -> choose composition/weights -> implement separate selectable Expert-v3 preset -> regression/package/device gates. Expert-v2 remains unchanged/selectable.
+`ANDROID_RC4.85_SELF_UPDATE_THEN_EXPERT_V3_EXPORT`
+
+The preferred update route is the already deployed Companion/PWA path. **Do not ask for or regenerate the expired ChatGPT PREINSTALL link as the default solution.** First reload/update the installed app and verify badge `v11.8.0-rc4.85`. If it remains rc4.84, diagnose the service-worker/cache/update path before inventing another install route.
+
+After rc4.85 is Android-verified: press `Expert-v3 Challenger exportieren` once and share the credential-free JSON. No mock is needed. Then AUTO: exact vector validation -> v2/v3 marginal grids -> DS35/30/25 redistribution test -> composition/weights -> separate selectable Expert-v3 preset -> regression/package/device gates. No broad expert re-screening.
 
 ## QB EVIDENCE — KEEP QUALITATIVE, AVOID DOUBLE COUNTING
 - Pat Fitzmaurice direct answer supports a late/fallback path centered on Kyler Murray / Jared Goff / Malik Willis; user considers Goff floor + observe Willis in FA a plausible late strategy.
@@ -201,3 +205,16 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - main/gh-pages parity for all 12 runtime files PASS.
 - rc4.85 changes only Expert-v3 challenger acquisition/export UI/path; no Expert-v3 numeric vote or weight exists yet.
 - Next and only necessary user action: reload/update rc4.85, press the new export button, share JSON.
+
+
+## V119 CRITICAL HANDOFF CANARY — 2026-08-28
+- This handoff occurs at a critical update boundary: the installed Android app is still rc4.84 while rc4.85 is already release/package/re-extract verified and deployed.
+- Previous assistant error: it gave an expiring ChatGPT PREINSTALL file link even though the project had already been using the deployed/self-update path. That expired-link path is now explicitly non-preferred and must not be repeated without evidence that normal updating cannot work.
+- Another repeated assistant failure was replying to AUTO with “AUTO läuft/ich mache weiter” even though execution stops after the message. In the receiving chat, AUTO means EXECUTE the largest safe batch first and reply only at a meaningful result/unavoidable gate. Never send future-tense continuation prose as an AUTO result.
+- Expert-v3 is PRIMARY until finished. Current acquisition targets: Ryan Weisse (RB primary), Wolf of Roto Street (TE primary), Todd D Clark (QB primary), Joey Wright (WR only if exact current complete vector resolves). Do not restart candidate screening.
+- First controlled weight grids after exact vectors: RB v2 DS35 vs DS30+Weisse5 vs DS25+Weisse10; TE v2 DS35 vs DS30+Wolf5 vs DS25+Wolf10; QB v2 DS35 vs DS30+Todd5 vs DS25+Todd10. Expand only if evidence warrants. WR gets no forced new expert.
+- Evaluate marginal/OOS positional loss, decision-zone stability, correlation/leverage, and ceiling-tail behavior. Availability is never a positive selection criterion. Draft Sharks Team output must be validated as its own model; individual DS analyst accuracy is not direct validation because DS rankings are projections + 3D Value, not averaged analyst boards.
+- Upside-v3 semantics preserved: ↑↑ strong high-end outcome + short causal path; ↑ meaningful/moderate ceiling; ↓↓ material health/role/availability deterioration; ↓ moderate downside; mixed arrows allowed. Mechanism must be named. Jameson Williams = established-breakout consolidation, not generic breakout. Parker Washington = WR1-path, subject to fresh news override.
+- Anti-repeat research lock: Likely/Jacobs/Pacheco and any other recently settled player are not rechecked/reported again unless genuinely new decision-changing news exists. New research must move to uncovered players and be done in large batches.
+- rc4.85 package/re-extract SHA-256 authority: `53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed`. A later GitHub artifact digest is an Actions artifact container digest and must not silently replace the canonical preinstall SHA without an explicit artifact-boundary decision.
+- User action in the receiving chat is only necessary after handoff verification: verify/update Android to rc4.85 through normal deployed update path; then export Expert-v3 JSON. Do not start a mock.
