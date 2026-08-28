@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T081600Z-v128",
-  "updated_at": "2026-08-28T08:16:00Z",
+  "handoff_generation": "20260828T083000Z-v129",
+  "updated_at": "2026-08-28T08:30:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,16 +11,16 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.88",
-    "test_challenger": "v11.8.0-rc4.88",
-    "test_challenger_android_verified": true,
+    "test_challenger": "v11.8.0-rc4.89",
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.88",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1"
   },
   "exact_continuation": {
-    "gate": "RC488_ANDROID_VERIFIED_CONTINUE_RESEARCH_AND_V3_EFFECT_VALIDATION",
+    "gate": "RC489_FULL_GATES_THEN_ANDROID_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "rc4.88 Android badge and Expert-v3 selectable profile visually verified. Continue broad anti-repeat upside/differentiator research and Expert-v3 effect validation. No mock unless explicitly requested."
+    "instruction": "Complete rc4.89 release/package/guardrails after reseal; then update Android and verify: active Expert-v3 experts displayed, all ten candidates use full cards, Normal-Cut warning at card bottom, richer pro/contra text. No mock."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -37,10 +37,10 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.88-android-verified|rc4.88-expert-v3|V2-FROZEN|WR-V2-FALLBACK|ANTI-REPEAT|UPSIDE-RESEARCH|1QB|HANDOFF-v128",
+    "acceptance_fingerprint": "rc4.64|rc4.88-android|rc4.89-live-presentation|EXPERT-V3-DISPLAY|TOP10-CARDS|RICH-PROCON|V2-FROZEN|1QB|HANDOFF-v129",
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Receiving chat: verify rc4.88 on Android, select Expert-v3 positional profile, confirm green panel health; continue AUTO research/validation. No mock."
+    "next_action": "Run rc4.89 full gates; deploy main/runtime parity; then Android visual verification. Continue broad anti-repeat research in parallel where independent."
   }
 }
