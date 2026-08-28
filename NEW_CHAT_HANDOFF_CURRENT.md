@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T160000Z-v146`
-Updated: 2026-08-28 16:00Z
+Handoff generation: `20260828T165800Z-v148`
+Updated: 2026-08-28 16:58Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -436,3 +436,13 @@ HANDOFF_GENERATION: 20260828T100500Z-v132
 - Therefore the old active statement “rc4.94 CI/package pending” was stale after the final reseal and is corrected here. rc4.94 is now source + CI/release/package/re-extract authority. rc4.93 remains deployed + Android-observed authority until exact promotion.
 - main/gh-pages parity audit remains intentionally false for app.js/index.html/sw.js/manifest.webmanifest and true for decision-policy/live-surface/expert-v3-board. Do not claim deployment or Android verification yet.
 - Exact continuation: deploy exact rc4.94 runtime to gh-pages, verify runtime parity, then obtain a fresh Android Pick-9 snapshot. No scoring, Expert-v3, Return-v2, ADP, injury or Walker-specific tuning; no automatic mock.
+
+
+## V148 RC4.96 DECISION-EVIDENCE AUDIT — ACTIVE AUTHORITY
+- Generation: `20260828T165800Z-v148`.
+- Source challenger: rc4.96. Android/package/deployment authority remains rc4.94 until full release/package/deploy/device promotion.
+- Audit source: `PITTI-Decision-Evidence-1398976368485625856-2026-08-28T14-07-09-294Z.json`; canonical 15 own-pick states from 16 raw fixtures; mixed fixture versions rc4.88/rc4.94/rc4.95.
+- Generic rc4.96 repairs: sparse-panel score/confidence guard + PANEL-CHECK; embedded `effectiveWeight` evidence export; per-pick dedupe/version telemetry; Cam/Cameron Ward and Kenny/Kenneth Gainwell alias merges; broader presentation normal-cut; late WR7+ soft opportunity-cost; observed decision-zone evidence coverage.
+- Anti-overfit: no generic Return-v2 retune; no Dobbins/player-specific rank penalty; no hard WR cap; QUESTIONABLE alone remains neutral.
+- Dedicated rc4.96 source regression PASS. Current release failures are checkpoint-generation drift, not a demonstrated rc4.96 decision-kernel failure.
+- Current gate: `RC496_RELEASE_PACKAGE`. No mock unless explicitly requested.
