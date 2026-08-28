@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260827T184500Z-v116",
-  "updated_at": "2026-08-27T18:45:00Z",
+  "handoff_generation": "20260828T053000Z-v117",
+  "updated_at": "2026-08-28T05:30:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -10,16 +10,16 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.82",
-    "test_challenger": "v11.8.0-rc4.83",
+    "android_authority": "v11.8.0-rc4.84",
+    "test_challenger": "v11.8.0-rc4.85",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.78",
     "library_recovery_alias": "v11.8.0-rc4.52"
   },
   "exact_continuation": {
-    "gate": "ANDROID_RC4.83_REALISTIC_MOCK_THEN_EVIDENCE_V2_EXPORT",
+    "gate": "RC4.85_PACKAGE_REEXTRACT_THEN_DEVICE_EXPERT_V3_EXPORT",
     "auto_starts_mock": false,
-    "instruction": "After verified new-chat takeover, continue independent AUTO work; when user performs a natural rc4.83 Android mock, refresh once, export Evidence-v2, then run pick-by-pick OOS analysis and PROMOTE/MODIFY/REJECT. Do not tune frozen rc4.83 before evidence."
+    "instruction": "Finish rc4.85 release/package/re-extract gates. Then device-update once, run the integrated Expert-v3 challenger export, share the JSON, and compute/test v3 weights. Expert-v2 and Decision Kernel remain unchanged."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -28,17 +28,18 @@
     "starter_maxima_not_roster_caps": true,
     "wr_saturation_soft": true,
     "user_overrides_not_coach_labels": true,
-    "rc483_kernel_frozen": true,
+    "rc483_kernel_frozen": false,
     "long_auto_blocks": true,
-    "blocked_lane_only": true
+    "blocked_lane_only": true,
+    "rc484_kernel_frozen": true
   },
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.82|rc4.84-test|MANAGER-MAP-CORRECTED|EVIDENCE_V2-OOS-ID|CLEAN-OOS-CONFOUND|PREDRAFT-FRESHNESS|EMERGENCY-QUEUE-CONTRACT|1QB|AUTO-LONGBLOCK|HANDOFF-v116",
+    "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-expert-v3-acquisition|V2-FROZEN|UPSIDE-V3|1QB|AUTO-LONGBLOCK|HANDOFF-v117",
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Device verify rc4.84, then realistic 10x15 slot-9 OOS mock; refresh once after completion; export Evidence-v2; analyze clean/non-confounded metrics."
+    "next_action": "Finish rc4.85 package/re-extract gate; then one device update and Expert-v3 challenger JSON export."
   }
 }
