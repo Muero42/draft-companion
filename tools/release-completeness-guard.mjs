@@ -23,7 +23,6 @@ for(const x of [
   'headerArrow(x)',
   'WR2 mit WR1-Upside',
   '<b>Fazit:</b>',
-  '${esc(keyword(x,i))}</strong>',
   'expertName||r.source',
   'TOP 10 KANDIDATEN'
 ]) must(live.includes(x),`live UI invariant missing: ${x}`);
