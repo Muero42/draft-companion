@@ -1824,3 +1824,18 @@ Final decision:
 
 Detailed audit:
 `research/RC496_RECOMMENDATION_FOLLOWING_MOCK_1399085353452761088_2026-08-28.md`
+
+
+## 2026-08-28 — Draft-day weak-signal transaction rule (Monday 31.08)
+
+User-approved planning refinement:
+- Real draft starts Monday 2026-08-31 at 20:00 Germany time.
+- Do not treat waiver claims/signings as injury proof or as an automatic rank penalty.
+- A same-position acquisition can be a weak Bayesian signal when it coincides with an already-existing injury/availability/role uncertainty for a relevant draft candidate.
+- Required interpretation chain: transaction -> player/profile/roster purpose -> pre-existing uncertainty -> fresh beat/team/injury evidence -> materiality.
+- Special-teams/depth/practice-squad/opportunistic explanations must remain live alternatives.
+- If no corroboration appears, use the transaction only as low-weight uncertainty/tiebreak evidence between otherwise close candidates; never convert it into a hard injury assertion.
+- If corroborating evidence appears, escalate according to the actual severity/role evidence rather than the transaction itself.
+- Highest practical value is expected for RB/WR/TE depth-chart and contingent-upside candidates, especially late-round options; early-round rank changes require materially stronger corroboration.
+- Draft-day workflow should therefore include a targeted late transaction/claim delta scan rather than a broad new model rebuild.
+- This is a ChatGPT research/decision-layer operating rule. It does not modify frozen rc4.96 scoring or Expert-v3 weights.
