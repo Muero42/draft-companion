@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T080300Z-v126",
-  "created_at": "2026-08-28T08:07:00Z",
+  "created_at": "2026-08-28T08:10:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -21,8 +21,8 @@
     "sw.js": "2c444c3ca41344b4f087350aa4d499b6631dc1c7",
     "manifest.webmanifest": "80da04b64a43a8df23a82aa5a893f1a9281f3518",
     "tools/rc483-draft-critical.mjs": "28919d2442e84a98e533225a801c89eb1a3d355d",
-    "tools/rc484-draft-critical.mjs": "49328e534ecf36242bb0890f31157d0ce036f4b8",
-    "tools/rc485-draft-critical.mjs": "47c94add1c36d114463bc97c8054a0e380f0617a",
+    "tools/rc484-draft-critical.mjs": "b16bc6c7e01dc57375e166fd6fb3d8300141f185",
+    "tools/rc485-draft-critical.mjs": "156d8c479c543d3f34f689c8ca486181473ec035",
     "tools/analyze-decision-evidence.mjs": "bb75950cc1698659769d7412adef71bb2e41d494",
     "tools/pitti_guardrail_check.mjs": "325e20744bfa75f8436cb8a157c23c2a16863e9e",
     "tools/pre-draft-freshness-gate.mjs": "9acc1999c0fe8a3428b9af7631812fe04338d42d",
@@ -36,7 +36,7 @@
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
     "tools/rc482-draft-critical.mjs": "b555f4e6d5324e62a617242cdc9b1d9ffe7bc8cf",
     "tools/release-completeness-guard.mjs": "12bf1760db10e0a11e9187ac84cd96d4f6b4380b",
-    "tools/rc486-draft-critical.mjs": "3f57e27fd0aeb8aa1255b4d32de4ed8693c4ef01",
+    "tools/rc486-draft-critical.mjs": "c432c9b0c41975d6b3d799a7088b80ef226ad5b6",
     "tools/rc487-draft-critical.mjs": "e2033aef883503bb902d4ef52a6d2ff2b4943c69",
     "expert-v3-board.js": "b8e869f5384e5dc2a0f353e632ecfabf7958debd",
     "tools/rc488-draft-critical.mjs": "e573a524e34302cbb69e8ad4f7e02bab0f0299de"
@@ -101,7 +101,8 @@
     "v125_reseal": true,
     "legacy_profile_assertions_additive": true,
     "v126_reseal": true,
-    "legacy_embedded_wording_successor_safe": true
+    "legacy_embedded_wording_successor_safe": true,
+    "legacy_rc484_486_assertions_additive": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
