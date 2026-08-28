@@ -1965,3 +1965,5 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Sparse panel guard remains generic; J.K. Dobbins n=2 is retained as the canary, not player-forced scoring.
 - GitHub guardrail run 33199805925 PASS after the semantic/fair-range changes; rc4.99 saturation and normal-cut contracts PASS.
 - Production/main and verified Android authority remain unchanged. Next dependent gate: full release-contract/package validation, then controlled Android verification only if all contracts pass.
+
+- rc4.99 full behavioral release contract PASS: run 33200189530. Candidate package/re-extract PASS: run 33200304688, artifact 9697465647. Downloaded nested PREINSTALL SHA-256 = 67caeab25b8b474c9eb69d947ef2b8daa1429503655803030764a8013aac57a8; 13 runtime files. This is still **not Android verified/accepted** and must not be merged/promoted on package PASS alone.
