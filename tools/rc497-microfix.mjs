@@ -1,0 +1,12 @@
+import fs from 'node:fs';
+const app=fs.readFileSync('app.js','utf8');
+const must=(x,m)=>{if(!x)throw new Error(m)};
+must(app.includes("const APP_VERSION='v11.8.0-rc4.97';"),'rc4.97 version missing');
+must(/function actionLabel\(x\)\{[\s\S]{0,500}return'WAIT';[\s\S]{0,100}return'—';/.test(app),'stable WAIT/— data contract changed');
+must(app.includes('function actionDisplayLabel(x)'), 'display timing label missing');
+for(const s of ['RETURN GUT','RETURN KRITISCH','RETURN OFFEN'])must(app.includes(s),s+' missing');
+must((app.match(/actionDisplayLabel\(x\)/g)||[]).length>=4,'display label not wired to surfaces');
+must(app.includes('Board-Leader, nicht als automatischen Pick-Befehl'),'board leader guidance missing');
+must(!app.includes('dessen TAKE/WAIT-Sequenz'),'stale prescriptive TAKE/WAIT guidance remains');
+must(!app.includes("actionLabel(x){if((x.ret??0)>=.72)return'RETURN GUT'"),'data contract replaced by display labels');
+console.log('RC497_MICROFIX_PASS');
