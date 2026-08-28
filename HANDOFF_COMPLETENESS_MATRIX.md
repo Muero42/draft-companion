@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v144
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v145
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -18,7 +18,7 @@ A new-chat takeover fails closed unless all checks pass.
 - rc4.64 production/control
 - rc4.93 Android version authority, observed in fresh user Pick-9 snapshot
 - rc4.93 functional verification remains open because the Top-10 presentation defect was reproduced; version observation is not full functional proof
-- rc4.94 current source + CI/release/package/re-extract challenger; rc4.93 remains deployed/Android-observed authority
+- rc4.94 current source + CI/release/package/re-extract + deployed + Android Pick-9 functional authority
 - latest package/re-extract rc4.94 · 13 runtime files · final-v143 run 33169002426 / artifact 9684784867 / artifact digest `d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576`
 - gh-pages remains rc4.93 while main app.js is rc4.94 pending gates; do not claim main/pages byte parity until exact rc4.94 deployment
 - built/prepared/deployed/package-reextract/Android-version-observed/Android-functional-verified are distinct states
@@ -48,7 +48,7 @@ A new-chat takeover fails closed unless all checks pass.
 - rc4.91 early Return-v2 calibration uses pick<=30 tau 4.25; do not restore tau 1.35
 - broad research is coverage-first/anti-repeat and evidence enrichment is not automatic ranking promotion
 - completed mock/Evidence-v2 history remains retained
-- current gate = rc4.94 exact deployment/main-pages parity + fresh Android Pick-9 verification; CI/release/package already PASS; no mock unless explicitly requested
+- current gate = final v145 reseal + all five primary gates PASS; rc4.94 deployment/main-pages parity and fresh Android Pick-9 presentation already PASS; no mock unless explicitly requested
 
 ## 6 AUTO durability
 - long blocks default
@@ -131,7 +131,7 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - Reach/risk/wait/decline can never be positive evidence.
 - `AUTO BLOCK` means immediate zero-ack AUTO resumption.
 
-- Current Android semantics: rc4.93 version observed, `android_functional_verified=false`; rc4.94 package PASS does not imply deployment/device activation.
+- Current Android semantics: rc4.94 version observed and targeted Pick-9 presentation function verified after exact deployment.
 - v143 preflight canary: current path must distinguish rc4.94 source challenger from rc4.93 package/deploy/Android authority.
 
 ## v138 AUTO turn-continuity canary
@@ -148,8 +148,8 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - [x] Root cause localized to Top-10 presentation selection ordering.
 - [x] rc4.94 source fix is generic normal-cut-first display selection only.
 - [x] rc4.94 CI/release/package — PASS on final v143 reseal commit f3a8938d; candidate run 33169002426 / artifact 9684784867.
-- [ ] rc4.94 deployment/main-pages parity — PENDING; audited current divergence remains expected before promotion.
-- [ ] rc4.94 Android fresh Pick-9 verification — PENDING.
+- [x] rc4.94 deployment/main-pages parity — PASS; exact 13-file parity at gh-pages commit 55c42cb2c35645b92c7e11ddc5253e76392f0a13.
+- [x] rc4.94 Android fresh Pick-9 presentation verification — PASS; footer rc4.94, Walker #7, contextual Normal-Cut warnings #8–10.
 - [x] Geno/Rodgers ordinary organic ranking; no player-name exclusions.
 - [x] Expert-v3 exact positional weights preserved; WR exact v2 fallback.
 - [x] Return-v2 early tau 4.25 preserved.
@@ -163,3 +163,11 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - [x] Active authority corrected so package is no longer incorrectly labeled rc4.93/pending.
 - [ ] rc4.94 gh-pages deployment/parity remains pending.
 - [ ] rc4.94 fresh Android Pick-9 verification remains pending.
+
+
+## V145 closure canary
+- [x] rc4.94 source/package/re-extract PASS.
+- [x] rc4.94 exact 13-file gh-pages parity PASS at 55c42cb2.
+- [x] fresh Android rc4.94 Pick-9 presentation PASS.
+- [x] Walker remains organic (#7), no player-specific boost; contextual fallback warnings retained #8–10.
+- [ ] final v145 seal + five primary CI gates PASS.
