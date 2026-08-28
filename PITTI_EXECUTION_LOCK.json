@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T07:45:00Z",
+  "updatedAt": "2026-08-28T08:21:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -16,15 +16,15 @@
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.84",
+    "latestAndroidObserved": "v11.8.0-rc4.87",
     "latestPreinstallVerified": "v11.8.0-rc4.86",
-    "latestResearchChallenger": "v11.8.0-rc4.87",
+    "latestResearchChallenger": "v11.8.0-rc4.88",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.86_PREINSTALL.zip",
     "preinstallSha256": "49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1",
     "preinstallRuntimeFiles": 12,
     "latestSourceRegressionVerified": "v11.8.0-rc4.86",
-    "latestDeployedCandidate": "v11.8.0-rc4.87",
-    "latestAndroidVerified": "v11.8.0-rc4.84"
+    "latestDeployedCandidate": "v11.8.0-rc4.88",
+    "latestAndroidVerified": "v11.8.0-rc4.87"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -135,7 +135,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC487_COMPACT_EXPERT_V3_TRANSFER_DEPLOYED_DEVICE_VERIFY_PENDING",
+    "status": "RC488_EXPERT_V3_POSITIONAL_PROFILE_DEPLOYED_DEVICE_VERIFY_PENDING",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -189,13 +189,13 @@
       "rc4.86 full release contract PASS; candidate package/re-extract PASS; 12 runtime files; inner PREINSTALL SHA-256 49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1",
       "rc4.87 compact export uses existing verified loadExpertRanks, filters each challenger to the only position under evaluation, serializes [playerName,overallRank] tuples, and copies directly to clipboard; no credentials/raw source payloads."
     ],
-    "gate": "ANDROID_RC4.87_COMPACT_EXPERT_V3_EXPORT",
-    "note": "rc4.86 successfully produced a large full export, but transfer through ChatGPT/Android became impractical and caused app/chat instability. rc4.87 changes transfer format only: target-position ranks, compact tuple encoding, clipboard-first fallback to file. Core model unchanged.",
+    "gate": "ANDROID_RC4.88_EXPERT_V3_PROFILE_VERIFY",
+    "note": "rc4.88 integrates a separate selectable Expert-v3 profile only. Decision Kernel and Return-v2 remain unchanged; Expert-v2 remains selectable.",
     "knownOosConfounds": [
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
     "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
-    "nextGate": "Reload/update Android/PWA to rc4.87; tap Expert-v3 kompakt kopieren once; paste compact JSON; compute/test Expert-v3.",
+    "nextGate": "Reload/update Android/PWA to rc4.88; select Expert-v3 positionsspezifisch; verify green panel health; no mock required.",
     "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION"
   }
 }
