@@ -58,3 +58,7 @@
 ## rc4.95 source challenger (2026-08-28)
 - Source challenger: `v11.8.0-rc4.95`; Android/package/deployment authority remains `v11.8.0-rc4.94` until full release gates and device verification.
 - Generic Sleeper `Questionable` alone has no Coach penalty; concrete acute injury evidence remains authoritative.
+
+
+### rc4.97 isolated microfix challenger
+v11.8.0-rc4.97 is a test-only actionability/presentation challenger. rc4.96 remains rollback/Android authority until all gates pass.
