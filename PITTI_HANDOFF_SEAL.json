@@ -1,17 +1,17 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T111000Z-v141",
-  "created_at": "2026-08-28T11:18:00Z",
+  "created_at": "2026-08-28T11:25:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "de85d0a670762c4de33480a130600c83f00922bf",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "24d9691435ad1509a7b2427c33a8013928285ae5",
+    "PITTI_CURRENT_STATE.json": "25d0620acf6a01e0308dad7d55b9f411d2ffd1b4",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "60e94a086a08975e3c33ffd9b0ba8c6a169c962c",
     "PITTI_COMMAND_CONTRACTS.json": "989d42d36ab2e1493ca4fb42aa2784ea7f9a85be",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "fee59627704ab5b427fab8cb6cefaf1b83c15578",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "87463b0707c015811f18743d4422bcc96374d622",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "e861d746a7adc8dbfc4ad775af55b6d591416b26",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "a5cf7bf156b0fbab97abe7053b135f029abdf01e",
     "PITTI_EXECUTION_LOCK.json": "ca719d74222953882a5e924a408b7ec378a07d4c",
     "PITTI_PROJECT_STATE.md": "2e5f47a663dede7d4b204c31ac2bdd9c08f071d8",
     "PITTI_AUTO_PREFLIGHT.md": "04322998286de54ddd7c71f9e116501e423e70d9",
@@ -159,7 +159,8 @@
     "v140_reseal": true,
     "v141_rc492_device_observed": true,
     "v141_walker_p0_preserved": true,
-    "v141_stale_active_pointers_repaired": true
+    "v141_stale_active_pointers_repaired": true,
+    "v141_second_pass_complete": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": false,
