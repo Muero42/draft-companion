@@ -24,16 +24,18 @@
     "tools/rc484-draft-critical.mjs": "d98d29a56db49ebf7c3882fa1826e84f6b08928b",
     "tools/rc485-draft-critical.mjs": "1b713a4662b1a118bb75a302cee5da912c718221",
     "tools/analyze-decision-evidence.mjs": "bb75950cc1698659769d7412adef71bb2e41d494",
-    "tools/pitti_guardrail_check.mjs": "576bc9b84ddd88fcdc9512271c706bfcbd148a80",
+    "tools/pitti_guardrail_check.mjs": "899934837947c78f3ae88d07a2363b5264b8ffb7",
     "tools/pre-draft-freshness-gate.mjs": "9acc1999c0fe8a3428b9af7631812fe04338d42d",
     "tools/emergency-queue-contract.mjs": "d5ce421c905c40c10c03ba70a41161fb6036d320",
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "9ba39886fe2d2a8d9ec00a08e4967013c0331ef1",
+    "README.md": "7cd61978ac7d52fe13c3c39498b75c6cc1656923",
     ".github/workflows/release-contract-v2.yml": "3c1297ea4b30bb958b922f17f2402ea7bbe1e136",
     ".github/workflows/release-contract-v2-package.yml": "5eebac4359d70eb5e947d2fdd8804b033d9f8645",
-    "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5"
+    "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
+    "tools/rc482-draft-critical.mjs": "8a0933a9dd4979a1ccba17494c7c33c7b1f979d1",
+    "tools/release-completeness-guard.mjs": "aca9202daff2ab5bc71b5b9d74cc3c5ae17490a1"
   },
   "checks": {
     "current_generation": true,
@@ -66,7 +68,9 @@
     "matrix_v117": true,
     "expert_v3_acquisition_only": true,
     "rc485_release_gate": true,
-    "legacy_feature_gates_successor_safe": true
+    "legacy_feature_gates_successor_safe": true,
+    "successor_safe_legacy_gates": true,
+    "readme_rc485_current": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
