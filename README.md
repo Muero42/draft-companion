@@ -3,7 +3,7 @@
 > **Research-only candidate:** v11.8.0-rc4.100 on `pitti/rc4.100-semantic-selector`; draft PR #36; not merged, not deployed, not Android-observed.
 > **Current main/deployed/Android-observed challenger:** v11.8.0-rc4.99. Functional/semantic acceptance remains pending.
 > **Rollback / last fully functionally accepted Android authority:** v11.8.0-rc4.96.
-> **Production expert-panel control:** rc4.64 incumbent remains selectable.
+> **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
 > **rc4.99 verified package:** run 33200304688 / artifact 9697465647 / SHA-256 67caeab25b8b474c9eb69d947ef2b8daa1429503655803030764a8013aac57a8.
 > **rc4.100 scope:** generic Pro/Contra evidence-selector hardening only; no ranking/score retune, no hard WR cap/quota, no Return-v2/expert-weight change.
 > **OOS critical:** strict Coach draft 1399114762087895040 = 9 WR / 4 RB / 1 TE / 1 QB; old 7-WR count is invalid.
