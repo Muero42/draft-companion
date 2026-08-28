@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v148
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v150
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -177,3 +177,13 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - Generic QUESTIONABLE penalty is neutral (0) absent concrete severity evidence.
 - Source challenger rc4.95; Android/package/deployment authority remains rc4.94 until full five-gate + exact deploy/device verification.
 - Successor-safe runtime guard requires Execution Lock appVersion == APP_VERSION rather than stale rc4.64 literal.
+
+
+## v150 authoritative closure canaries
+- Source/package/deployment: rc4.96; Android authority: rc4.94 until fresh rc4.96 device verification.
+- Five primary workflows PASS at 6eafbb297fa999a28dae14375a65544b73a97d7c.
+- Candidate package/re-extract run 33183057716 / artifact 9690504450 / SHA-256 18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0 / 13 files.
+- gh-pages head 35b68015aa79e8976f3ee9a230be3710be503b32 has exact 13/13 runtime blob parity with main.
+- Decision-Evidence audit source PITTI-Decision-Evidence-1398976368485625856-2026-08-28T14-07-09-294Z.json is canonical input for rc4.96 repairs.
+- QUESTIONABLE neutral; sparse-panel guard; mixed-version evidence telemetry; alias dedupe; broader normal-cut presentation; late WR7+ soft utility; no global Return-v2 retune.
+- Final external gate: RC496_ANDROID_VERIFY. No automatic mock.
