@@ -34,7 +34,7 @@ const gitBlobSha=(p)=>{
 };
 
 must(lock.schema==='pitti.execution-lock.v1','execution lock schema');
-must(lock.runtime?.appVersion==='v11.8.0-rc4.64','runtime version lock drift');
+must(lock.runtime?.appVersion===((app.match(/const APP_VERSION='([^']+)'/)||[])[1]),'runtime version lock drift');
 must(lock.runtime?.productionPanelMustRemainSelectable===true,'incumbent selectable invariant missing');
 must(lock.auto?.continueWhileAutonomousWorkExists===true,'AUTO continuity invariant missing');
 must(lock.auto?.parallelizeIndependentLanesWhileWaiting===true,'AUTO parallel-lane invariant missing');
