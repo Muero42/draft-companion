@@ -16,11 +16,11 @@
     "latest_package_reextract": "v11.8.0-rc4.94",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576",
-    "deployed_pages": "v11.8.0-rc4.93",
-    "deployed_pages_app_byte_parity_with_main": false,
+    "deployed_pages": "v11.8.0-rc4.94",
+    "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33169002426,
     "package_reference_artifact_id": 9684784867,
-    "package_reference_note": "Final v143 reseal produced a successful rc4.94 candidate package/re-extract. Deployment remains rc4.93 until exact gh-pages promotion/parity.",
+    "package_reference_note": "rc4.94 package/re-extract PASS; exact 13-file gh-pages runtime parity established at deployment commit 55c42cb2c35645b92c7e11ddc5253e76392f0a13. Android functional verification remains pending.",
     "android_version_observed": true,
     "android_functional_verified": false
   },
@@ -46,10 +46,11 @@
     "transaction_in_progress": false,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
     "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143",
-    "status": "RC494_PACKAGE_PASS_DEPLOY_PENDING",
+    "status": "RC494_DEPLOY_PARITY_PASS_ANDROID_PENDING",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Receiving chat verifies v144 integrity, then deploys the already package-verified rc4.94 runtime, proves main/pages parity, and obtains a fresh Android Pick-9 verification; no mock."
+    "next_action": "Receiving chat verifies v144 integrity, then deploys the already package-verified rc4.94 runtime, proves main/pages parity, and obtains a fresh Android Pick-9 verification; no mock.",
+    "gate": "RC494_ANDROID_PICK9_VERIFY"
   },
   "source_authority": "rc4.94",
   "package_authority": "rc4.94",
