@@ -11,7 +11,7 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.96",
-    "test_challenger": "v11.8.0-rc4.97",
+    "test_challenger": "v11.8.0-rc4.98",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.96",
     "library_recovery_alias": "v11.8.0-rc4.52",
@@ -26,9 +26,9 @@
     "freeze_policy": "rc4.96 remains rollback baseline; low-risk microfix challenger allowed for further testing"
   },
   "exact_continuation": {
-    "gate": "RC497_MICROFIX_CI",
+    "gate": "RC498_EVIDENCE_POLARITY_CI",
     "auto_starts_mock": false,
-    "instruction": "Keep rc4.96 as rollback baseline. Allow only small isolated reversible fixes with deterministic regression coverage; no broad scoring/Return/expert retune. Validate challenger against rc4.96 and revert immediately on regression."
+    "instruction": "Run exhaustive polarity and draft-critical regressions. Do not promote until package/re-extract and Android verification pass."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -47,11 +47,11 @@
     "transaction_in_progress": false,
     "resume_semantics": "PITTI AUTO resumes from rc4.96 pre-draft freeze; runtime/model changes require new material evidence and deterministic gates.",
     "acceptance_fingerprint": "RC4.96-ALL5-PASS|PKG-REEXTRACT-PASS|GH-PAGES-13OF13|ANDROID-RC4.96-VERIFIED|OOS-FOLLOWCOACH-15OF15|RETURN-BRIER-0.0802|SPARSE-PANEL-OOS-PASS|NO-RETURN-RETUNE|NO-PAIRSUM|WR7-SOFT|WAIT-TURN-CHAT-REVIEW|FRESHNESS-ONLY|HANDOFF-v152",
-    "status": "RC497_PACKAGE_CI_PENDING",
+    "status": "RC498_EVIDENCE_POLARITY_CI",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Validate rc4.97 full runtime parity/package/re-extract; only then request Android functional verification. rc4.96 remains rollback authority.",
-    "gate": "RC497_PACKAGE_REEXTRACT"
+    "next_action": "Validate generic live evidence polarity fix across all structured priors; rc4.96 remains Android rollback authority.",
+    "gate": "RC498_EVIDENCE_POLARITY_CI"
   },
   "source_authority": "rc4.96",
   "package_authority": "rc4.96",
