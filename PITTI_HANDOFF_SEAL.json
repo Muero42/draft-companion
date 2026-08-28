@@ -1,41 +1,42 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T065500Z-v120",
-  "created_at": "2026-08-28T07:00:00Z",
+  "handoff_generation": "20260828T072500Z-v121",
+  "created_at": "2026-08-28T07:29:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "1bd7a7ad679b67d14cb13daa01cd58e092910d07",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "7005d8d5699a187b857ad83b4fe2d4c16ea5e3dc",
+    "PITTI_CURRENT_STATE.json": "5db4ac3fc7c54c31d9303765368a40199f3cd268",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "c99e953557919b43fb6b067e35e98064cc4a4861",
     "PITTI_COMMAND_CONTRACTS.json": "41ffd8e89066b5e880ff11d6dffdd85e07127fdb",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e4ba6389db3da869ab2106c0d14ac83e68c6bdc2",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "f2a7568923c547879ced494cf7072419cc52195f",
-    "PITTI_EXECUTION_LOCK.json": "7ae1dcbad5b33037341e8a701078a4e6b5f4c43d",
-    "PITTI_PROJECT_STATE.md": "bf73b5143e9358191b7667f6e7940889a86736c4",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "9ab39dd14333a15481e6dafb8e2b3472525c1cf3",
+    "PITTI_EXECUTION_LOCK.json": "383c5151ed63543a76e522bfafd5723b5c9a9481",
+    "PITTI_PROJECT_STATE.md": "b35cc7ea004f1815f14bf2797b5e389804784562",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
-    "app.js": "f518bc93d13770d4a5f39572bcdfd4f7939a49c8",
-    "index.html": "eb2a206e4380b86f58385505b0b631e6349c1f5d",
+    "app.js": "61be71845de57294a3379821fbeb2bba82347215",
+    "index.html": "28bfe259ddc92172f7116cde4bf55252ad96aa7c",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
-    "sw.js": "d693da495f0409cb1298e0742e7842e84e8338d3",
-    "manifest.webmanifest": "a7e1c8665c3c130af30b7f598f207725f8cbcd8f",
+    "sw.js": "35629fd125e863f08069ec51e77837c27d88df13",
+    "manifest.webmanifest": "b7cd2d84e537974c81116558116027069819b4dc",
     "tools/rc483-draft-critical.mjs": "b9b01a6dd82c84141b778de90d1fc163f0406dac",
     "tools/rc484-draft-critical.mjs": "49328e534ecf36242bb0890f31157d0ce036f4b8",
-    "tools/rc485-draft-critical.mjs": "a5e2306334b9594bfc6dd73268fcb3d5d7ba8187",
+    "tools/rc485-draft-critical.mjs": "1f2ee8cda7b16cea32a0549b022694b4f4f3caba",
     "tools/analyze-decision-evidence.mjs": "bb75950cc1698659769d7412adef71bb2e41d494",
-    "tools/pitti_guardrail_check.mjs": "fe596c3d12a97edb07328a8b888623b0d6540c0d",
+    "tools/pitti_guardrail_check.mjs": "a5577e0f008382cf26555b3cf451facc33a7df5e",
     "tools/pre-draft-freshness-gate.mjs": "9acc1999c0fe8a3428b9af7631812fe04338d42d",
     "tools/emergency-queue-contract.mjs": "d5ce421c905c40c10c03ba70a41161fb6036d320",
     "tools/rc478-oos-policy.mjs": "ae5640e009d493719a50d42b7879e811be38d2f4",
     "expert-v3-audit.html": "60db25a55faeb92599e303d77b664eccd3159ff3",
     ".github/workflows/pitti-project-guardrails.yml": "bb8af01bff598b5b77237e7521daf2bb74a0d769",
-    "README.md": "a55b1dcc8c1af3d9107b7bd231c584a05242d3dd",
-    ".github/workflows/release-contract-v2.yml": "3c1297ea4b30bb958b922f17f2402ea7bbe1e136",
-    ".github/workflows/release-contract-v2-package.yml": "5eebac4359d70eb5e947d2fdd8804b033d9f8645",
+    "README.md": "773c0ff2036ea39d9dc48e574945427f7eafe4e2",
+    ".github/workflows/release-contract-v2.yml": "a681513a1673ee74941447d26a31c4c5af702b1a",
+    ".github/workflows/release-contract-v2-package.yml": "316076c12b83bda42abc36f1560c8b8af0cfac65",
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
     "tools/rc482-draft-critical.mjs": "2dc217912729fc22432b443aad509e7ef55a4bd9",
-    "tools/release-completeness-guard.mjs": "aca9202daff2ab5bc71b5b9d74cc3c5ae17490a1"
+    "tools/release-completeness-guard.mjs": "aca9202daff2ab5bc71b5b9d74cc3c5ae17490a1",
+    "tools/rc486-draft-critical.mjs": "d26877fc083c77dc74146de6fcefaa59abfb6aca"
   },
   "checks": {
     "current_generation": true,
@@ -82,7 +83,10 @@
     "auto_execute_before_reply": true,
     "v119_stale_bootstrap_repaired": true,
     "matrix_v120": true,
-    "v120_stale_bootstrap_guard_repaired": true
+    "v120_stale_bootstrap_guard_repaired": true,
+    "rc486_export_hotfix": true,
+    "rc486_main_pages_runtime_parity_12of12": true,
+    "v121_reseal": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -94,18 +98,18 @@
   "runtime_boundary": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.84",
-    "test_challenger": "v11.8.0-rc4.85",
+    "failed_candidate": "v11.8.0-rc4.85",
+    "test_challenger": "v11.8.0-rc4.86",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.85",
-    "latest_package_sha256": "53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed",
-    "deployed_pages": "v11.8.0-rc4.85",
+    "deployed_pages": "v11.8.0-rc4.86",
     "library_recovery_alias": "v11.8.0-rc4.52"
   },
   "exact_continuation": {
-    "gate": "ANDROID_RC4.85_SELF_UPDATE_THEN_EXPERT_V3_EXPORT",
+    "gate": "ANDROID_RC4.86_SELF_UPDATE_THEN_EXPERT_V3_EXPORT",
     "auto_starts_mock": false,
-    "instruction": "Verify v120 handoff first. Then use deployed PWA/app self-update/reload path to reach rc4.85; verify badge; run Expert-v3 Challenger exportieren once and return credential-free JSON. AUTO validates vectors, computes v2-v3 grids and DS redistribution, implements only a validated separate v3 preset, then regression/package/device gates. Do not restart broad screening or a mock."
+    "instruction": "Verify v121 handoff. Reload/update deployed PWA/app to rc4.86, verify badge, run Expert-v3 Challenger exportieren once, then validate exact vectors and compute v2-v3 grids. No mock."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
-  "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-package-pages|SELF-UPDATE|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|ANTI-REPEAT|1QB|AUTO-EXECUTE-BEFORE-REPLY|HANDOFF-v120"
+  "acceptance_fingerprint": "rc4.64|rc4.84-android|rc4.85-export-failed|rc4.86-hotfix-pages|EXPERT-V3-EXPORT|V2-FROZEN|UPSIDE-V3|ANTI-REPEAT|1QB|AUTO-EXECUTE-BEFORE-REPLY|HANDOFF-v121"
 }
