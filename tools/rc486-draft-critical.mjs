@@ -19,6 +19,8 @@ for(const n of ['Ryan Weisse','Wolf of Roto Street','Todd D Clark','Joey Wright'
 
 // The hotfix is acquisition-only; core Expert-v2 and user-strategy invariants remain intact.
 assert.ok(app.includes("incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'}"));assert.ok(app.includes("fullv2:{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'}"));assert.ok(app.includes("wrv2:{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'}"));
-assert.ok(app.includes("USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers'])"));
+assert.ok(!app.includes('USER_HARD_QB_EXCLUSIONS'));
+assert.ok(!app.includes('USER HARD EXCLUSION'));
+assert.ok(!/genosmith|aaronrodgers/i.test(app));
 assert.ok(app.includes("format:'pitti-decision-evidence-v2'"));
 console.log('RC486_EXPERT_V3_EXPORT_HOTFIX_PASS');
