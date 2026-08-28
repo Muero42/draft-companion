@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260828T165800Z-v148",
-  "updated_at": "2026-08-28T16:58:00Z",
+  "updated_at": "2026-08-28T17:03:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -13,21 +13,21 @@
     "android_authority": "v11.8.0-rc4.94",
     "test_challenger": "v11.8.0-rc4.96",
     "test_challenger_android_verified": true,
-    "latest_package_reextract": "v11.8.0-rc4.95",
+    "latest_package_reextract": "v11.8.0-rc4.96",
     "library_recovery_alias": "v11.8.0-rc4.52",
-    "latest_package_sha256": "d9ce3d0fa1fe1b3d69ebe7609d9425e2a3d0328741648fc868ddeba8d3f1e576",
+    "latest_package_sha256": "18d168661f8fbe2cdbe00d8829531f9c721845efb98fa8c2925c76e7cd21cca0",
     "deployed_pages": "v11.8.0-rc4.95",
     "deployed_pages_app_byte_parity_with_main": true,
-    "package_reference_run": 33176313062,
-    "package_reference_artifact_id": 9687724788,
-    "package_reference_note": "rc4.95 all five primary gates PASS at 5ff06f0; candidate package/re-extract PASS; gh-pages exact changed-runtime parity deployed through e003a9f. Android verification pending.",
+    "package_reference_run": 33183057716,
+    "package_reference_artifact_id": 9690504450,
+    "package_reference_note": "rc4.96 all five primary gates PASS at 6eafbb297fa999a28dae14375a65544b73a97d7c; candidate package/re-extract PASS. Deployment/Android promotion pending.",
     "android_version_observed": true,
     "android_functional_verified": true
   },
   "exact_continuation": {
-    "gate": "RC496_RELEASE_PACKAGE",
+    "gate": "RC496_DEPLOY_PARITY",
     "auto_starts_mock": false,
-    "instruction": "Run full rc4.96 release/package gates; continue autonomous evidence/coverage audit in parallel."
+    "instruction": "Deploy exact rc4.96 runtime to gh-pages and verify byte parity; do not require user action until Android verification."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -46,14 +46,14 @@
     "transaction_in_progress": false,
     "resume_semantics": "PITTI HANDOFF must finish deep transfer audit before normal AUTO resumes",
     "acceptance_fingerprint": "rc4.93-android-snapshot|RC4.94-SOURCE-ONLY|WALKER-PANEL15.3|NORMAL-CUT-FIRST-DISPLAY-ONLY|NO-SCORING-TUNE|NO-NAMED-QB-FORCING|EXPERT-V3|RETURN-TAU4.25|AUTO-BLOCK|HANDOFF-v143|RC495-Q-NEUTRAL|ALL5-PASS|ANDROID-VERIFY-PENDING|HANDOFF-v146",
-    "status": "RC496_RELEASE_PACKAGE",
+    "status": "RC496_PACKAGE_PASS_DEPLOY_PENDING",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Run full rc4.96 release/package gates; package/deploy only after PASS.",
-    "gate": "RC496_RELEASE_PACKAGE"
+    "next_action": "Deploy exact rc4.96 runtime to gh-pages, verify parity, then Android functional verification.",
+    "gate": "RC496_DEPLOY_PARITY"
   },
   "source_authority": "rc4.96",
-  "package_authority": "rc4.95",
+  "package_authority": "rc4.96",
   "android_version_observed": "v11.8.0-rc4.94",
   "android_functional_verified": true,
   "deployment_authority": "rc4.95"
