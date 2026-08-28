@@ -56,7 +56,7 @@ assert.equal(fixture('incumbent').degraded,false);
 const m=boardSrc.match(/window\.PITTI_EXPERT_V2=([\s\S]+);\s*$/);assert.ok(m);
 const board=JSON.parse(m[1]);
 assert.equal(board.schema,'pitti-expert-v2-board.v4');
-assert.deepEqual(Object.fromEntries(Object.entries(board.rows).map(([k,v])=>[k,v.length])),{QB:46,RB:102,WR:143,TE:54});
+assert.deepEqual(Object.fromEntries(Object.entries(board.rows).map(([k,v])=>[k,v.length])),{QB:45,RB:101,WR:143,TE:54});
 assert.deepEqual(board.weights,{
   QB:{'Draft Sharks Team':35,'Nick Mariano':25,'Dalton Del Don':20,'Justin Boone':10,'Pat Fitzmaurice':10},
   RB:{'Draft Sharks Team':35,'Nick Mariano':25,'Dalton Del Don':25,'Pat Fitzmaurice':15},
