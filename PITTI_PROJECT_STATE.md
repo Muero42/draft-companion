@@ -1388,3 +1388,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Candidate package artifact from run 33165222701: Draft_Companion_PREINSTALL, artifact id 9683286172, GitHub artifact digest sha256:2c47f3fd9ddb18fab68fe7dc031e261c8093525f7211b92d129d7114d6e53408.
 - This establishes source + CI + package-artifact evidence for rc4.92. It does NOT establish gh-pages deployment parity or Android installation/functional verification. Android authority remains rc4.91 until observed otherwise.
 - Next dependent gate: promote/deploy the exact rc4.92 candidate through the verified release path, prove main/pages runtime parity, then Android install/version + focused functional anti-forcing verification. Do not claim deployment/device PASS early.
+
+### 2026-08-28 — rc4.92 deployed runtime parity verified
+- Compared main vs gh-pages runtime files after CI/package PASS. Before promotion, app.js/index.html/sw.js/manifest.webmanifest were stale on gh-pages while decision-policy/live-surface/expert-v3 already matched.
+- Promoted ONLY the four differing runtime files from main to gh-pages; no model/content edits during deployment.
+- Post-promotion SHA parity verified for app.js, index.html, sw.js, manifest.webmanifest, decision-policy.js, live-surface-v3.js, live-surface-v3.css and expert-v3-board.js: all exact.
+- Authority may now advance Source/Package/Deployment to rc4.92. Android remains last observed rc4.91 and not functionally verified for rc4.92.
+- Next unavoidable device gate: open/reload installed PWA on Android, confirm App-Version rc4.92, then focused live functional check. Do not infer device cache activation from branch parity alone.
