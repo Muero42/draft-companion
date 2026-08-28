@@ -1,12 +1,16 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Produktions-/Control-Baseline:** v11.8.0-rc4.64 (weiter auswählbar).  
-> **Android-/Rollback-Authority:** v11.8.0-rc4.96 (funktional verifiziert).  
-> **Aktuelle Source-/Test-Authority:** v11.8.0-rc4.98 (Evidence-Polarity-Challenger; Android-Verifikation ausstehend).  
-> **Letzter paket-/re-extract-verifizierter Stand:** v11.8.0-rc4.96 (run 33183057716 / artifact 9690504450).  
-> **Aktuelles Gate:** `RC498_RELEASE_VALIDATION`.  
->
-> Built/source-verified, packaged/re-extracted, deployed, Android-Version-beobachtet und Android-funktional-verifiziert sind getrennte Zustände. Kein Zustand darf aus einem anderen abgeleitet werden.
+> **Produktions-/Control-Baseline:** v11.8.0-rc4.64.  
+> **Rollback-/zuletzt voll akzeptierte Android-Authority:** v11.8.0-rc4.96.  
+> **Aktuelle main/source + package/re-extract Authority:** v11.8.0-rc4.98.  
+> **Android/PWA beobachtet:** v11.8.0-rc4.98 installiert und UI funktional sichtbar; finale Acceptance noch NICHT PASS.  
+> **gh-pages Deployment:** v11.8.0-rc4.96; derzeit KEINE Byte-Parität zu main rc4.98.  
+> **rc4.98 package:** run 33194280926 / artifact 9695061955 / SHA-256 43887c2cbeb3a142fa383941caac0b6768687203f862e0d234a54bb9854dd44e.  
+> **Aktuelles Gate:** `RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT`.  
+> **OOS critical:** strict Coach draft 1399114762087895040 = 9 WR / 4 RB / 1 TE / 1 QB; old 7-WR count is invalid.  
+> **Evidence:** polarity 194-component PASS; substantive Pro/Contra coverage still open. PR #33 CMC positive-evidence patch is UNMERGED.
+
+Built/source/package/deployment/device-observed/device-accepted are distinct states.
 
 ### rc4.83 — bounded late-WR challenger / decision-evidence test
 - Kein Produktions-Promotion: rc4.82 bleibt Android-Authority bis zum realistischen OOS-Mock.
