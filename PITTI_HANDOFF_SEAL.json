@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260828T074500Z-v123",
-  "created_at": "2026-08-28T07:52:00Z",
+  "created_at": "2026-08-28T07:58:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -22,7 +22,7 @@
     "manifest.webmanifest": "3af3c1d82a328ad06381814f9fd8b1e90a3fa163",
     "tools/rc483-draft-critical.mjs": "b9b01a6dd82c84141b778de90d1fc163f0406dac",
     "tools/rc484-draft-critical.mjs": "49328e534ecf36242bb0890f31157d0ce036f4b8",
-    "tools/rc485-draft-critical.mjs": "1f2ee8cda7b16cea32a0549b022694b4f4f3caba",
+    "tools/rc485-draft-critical.mjs": "47c94add1c36d114463bc97c8054a0e380f0617a",
     "tools/analyze-decision-evidence.mjs": "bb75950cc1698659769d7412adef71bb2e41d494",
     "tools/pitti_guardrail_check.mjs": "9ecafcc60849de7522537fe37fef30ff4018df4e",
     "tools/pre-draft-freshness-gate.mjs": "9acc1999c0fe8a3428b9af7631812fe04338d42d",
@@ -36,7 +36,7 @@
     "PITTI_RELEASE_CONTRACT_V2.md": "9af0372bfe556d8ed3322fc8abe6047c78f18bd5",
     "tools/rc482-draft-critical.mjs": "2dc217912729fc22432b443aad509e7ef55a4bd9",
     "tools/release-completeness-guard.mjs": "aca9202daff2ab5bc71b5b9d74cc3c5ae17490a1",
-    "tools/rc486-draft-critical.mjs": "d26877fc083c77dc74146de6fcefaa59abfb6aca",
+    "tools/rc486-draft-critical.mjs": "99d5223ea07b71b7b447fbeb308cb5ad425260e4",
     "tools/rc487-draft-critical.mjs": "44d96b34d07bdf94ad20ae7e9ca362b6e17580cf"
   },
   "checks": {
@@ -92,7 +92,8 @@
     "rc486_package_reextract_pass": true,
     "rc487_compact_transfer": true,
     "v123_reseal": true,
-    "rc487_guard_structured_targets": true
+    "rc487_guard_structured_targets": true,
+    "successor_schema_guards_repaired": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
