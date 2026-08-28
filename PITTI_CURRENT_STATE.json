@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260828T175500Z-v155",
-  "updated_at": "2026-08-28T18:55:00Z",
+  "updated_at": "2026-08-28T19:14:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -28,9 +28,9 @@
     "android_acceptance_pending": true
   },
   "exact_continuation": {
-    "gate": "RC499_FUNCTIONAL_SEMANTIC_ACCEPTANCE",
+    "gate": "RC4100_CI_UNAVAILABLE_STATIC_AUDIT_CONTINUE",
     "auto_starts_mock": false,
-    "instruction": "No automatic mock. rc4.99 is installed/observed. Continue generic pool-wide Pro/Contra semantic coverage and soft WR saturation validation; preserve no-hard-cap/no-player-forcing/no-Return-retune invariants. Device interaction only if a functional behavior cannot be verified statically."
+    "instruction": "rc4.100 isolated draft PR #36 is mergeable but CI does not instantiate. Do not merge/promote. Continue static/structural validation and inherited canary hardening; Android rc4.99 remains device authority."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -47,13 +47,13 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "PITTI AUTO resumes on rc4.99: source/package/deployment parity PASS and Android version observed; functional/semantic acceptance pending.",
-    "acceptance_fingerprint": "RC4.99-SOURCE-PKG-DEPLOY|ANDROID-RC4.99-OBSERVED|FUNCTIONAL-SEMANTIC-PENDING|STRICT-COACH-9WR|SOFT-WR-SATURATION|NO-HARD-CAP|NO-RETURN-RETUNE|NO-AUTO-MOCK",
-    "status": "RC499_FUNCTIONAL_SEMANTIC_ACCEPTANCE",
+    "resume_semantics": "PITTI AUTO resumes with Android rc4.99 authority and isolated rc4.100 draft PR #36; CI unavailable, static audit only until a trustworthy executable contract path exists.",
+    "acceptance_fingerprint": "ANDROID-RC4.99-AUTHORITY|RC4.100-DRAFT-PR36|CI-NOT-INSTANTIATING|NO-PROMOTION|POLARITY+SATURATION+CUT-CANARIES",
+    "status": "RC4100_DRAFT_PR_CI_UNAVAILABLE",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Continue pool-wide semantic evidence coverage and soft WR saturation validation on rc4.99; no automatic mock.",
-    "gate": "RC499_FUNCTIONAL_SEMANTIC_ACCEPTANCE"
+    "next_action": "Continue autonomous static audit of rc4.100; do not promote without executable full contract.",
+    "gate": "RC4100_CI_UNAVAILABLE_STATIC_AUDIT_CONTINUE"
   },
   "source_authority": "rc4.99",
   "package_authority": "rc4.99",
