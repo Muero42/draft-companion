@@ -16,7 +16,7 @@ Updated: 2026-08-28 10:50Z
 
 ## CURRENT AUTHORITY
 - League: 10-team Half-PPR, 1QB, real draft 2026-08-31, user slot 9.
-- User strategy: exactly one drafted QB; after QB1 all QBs disappear from the user's Coach surface. Geno Smith and Aaron Rodgers are hard exclusions.
+- User strategy: exactly one drafted QB; after QB1 all QBs disappear from the user's Coach surface. Geno Smith and Aaron Rodgers are ordinary QB candidates and must rank organically; player-name hard exclusions are forbidden.
 - K/DST normally not drafted. Starter maxima are NOT roster caps.
 - Production/control baseline remains rc4.64 and must stay selectable.
 - **Android version authority is rc4.91**, directly observed in the user's screenshot on 2026-08-28. Do not downgrade to rc4.89/88/87 because historical sections mention them.
@@ -392,3 +392,4 @@ HANDOFF_GENERATION: 20260828T100500Z-v132
 ## V137 FINAL TAKEOVER CANARY REPAIR
 - Second-order audit found one remaining active stale pointer in PITTI_AUTO_PREFLIGHT.md: it still called rc4.85 the current deployed update path. That active instruction is repaired to rc4.91 and now preserves the audited main/gh-pages app.js byte divergence.
 - Active handoff generation is v137. This section supersedes v136 only for transfer metadata; runtime/model/expert semantics are unchanged.
+- rc4.92 correction: Geno Smith/Aaron Rodgers are NOT exclusions. Any active runtime/test/checkpoint rule that special-cases either name for demotion/removal is a regression. Exactly-one-QB remains a roster strategy only after QB1 is drafted.
