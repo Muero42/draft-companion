@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260828T083000Z-v129",
-  "updated_at": "2026-08-28T08:30:00Z",
+  "handoff_generation": "20260828T083800Z-v130",
+  "updated_at": "2026-08-28T08:38:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -13,14 +13,14 @@
     "android_authority": "v11.8.0-rc4.88",
     "test_challenger": "v11.8.0-rc4.89",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.88",
+    "latest_package_reextract": "v11.8.0-rc4.89",
     "library_recovery_alias": "v11.8.0-rc4.52",
-    "latest_package_sha256": "49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1"
+    "latest_package_sha256": "2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608"
   },
   "exact_continuation": {
-    "gate": "RC489_FULL_GATES_THEN_ANDROID_VERIFY",
+    "gate": "ANDROID_RC4.89_VERIFY_PRESENTATION",
     "auto_starts_mock": false,
-    "instruction": "Complete rc4.89 release/package/guardrails after reseal; then update Android and verify: active Expert-v3 experts displayed, all ten candidates use full cards, Normal-Cut warning at card bottom, richer pro/contra text. No mock."
+    "instruction": "Update/reload Android/PWA to rc4.89. Verify active Expert-v3 label/voices, all ten candidates as full cards without duplicate compact 10er block, orange Normal-Cut warning at bottom, richer Pro/Contra. No mock."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -37,10 +37,10 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "AUTO during active PITTI HANDOFF finishes handoff transaction first",
-    "acceptance_fingerprint": "rc4.64|rc4.88-android|rc4.89-live-presentation|EXPERT-V3-DISPLAY|TOP10-CARDS|RICH-PROCON|V2-FROZEN|1QB|HANDOFF-v129",
+    "acceptance_fingerprint": "rc4.64|rc4.88-android|rc4.89-package-pages-pass|EXPERT-V3-DISPLAY|TOP10-CARDS|RICH-PROCON|V2-FROZEN|1QB|HANDOFF-v130",
     "status": "SEALED_PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Run rc4.89 full gates; deploy main/runtime parity; then Android visual verification. Continue broad anti-repeat research in parallel where independent."
+    "next_action": "Android/PWA update to rc4.89 and visual verification only. Then continue broad anti-repeat research and effect validation. No mock."
   }
 }
