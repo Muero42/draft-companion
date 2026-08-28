@@ -1,4 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v133
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v134
 
 A new-chat takeover fails closed unless all checks pass.
 
@@ -19,7 +19,7 @@ A new-chat takeover fails closed unless all checks pass.
 - rc4.91 Android version authority, directly observed by user screenshot
 - rc4.91 Android functional verification remains pending; version observation is not functional proof
 - rc4.91 current source authority
-- latest package/re-extract rc4.91 · 13 runtime files · SHA-256 `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`
+- latest package/re-extract rc4.91 · 13 runtime files · SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`
 - gh-pages version string rc4.91, but app.js bytes lag main after latest broad evidence batch; do not claim main/pages byte parity
 - built/prepared/deployed/package-reextract/Android-version-observed/Android-functional-verified are distinct states
 - expiring ChatGPT attachment is NOT the preferred update path; normal deployed PWA/self-update path first
@@ -122,9 +122,9 @@ Before user-facing AUTO completion, actual work must have been executed in the c
 - v132: rc4.91 Android-observed authority + Expert-v3 actual-row gate + evidence polarity + Return-v2 tau4.25 + broad anti-repeat research + AUTO BLOCK zero-ack semantics preserved.
 
 ## v133 deep-handoff canaries
-- CURRENT / SEAL / Handoff generation must all equal `20260828T102000Z-v133`.
+- CURRENT / SEAL / Handoff generation must all equal `20260828T104000Z-v134`.
 - Active command contract and bootstrap must state rc4.91 Android authority and `RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH`; rc4.84/85 active pointers are forbidden.
-- latest package/re-extract must be rc4.91, 13 runtime files, SHA-256 `6b98ff11f4d32e8e0cb82776207c589fec4b78fa6c601dd1f828208532f41f9a`.
+- latest package/re-extract must be rc4.91, 13 runtime files, SHA-256 `64039b7a054c0f4a7a784f01540d3a1482c1786a88075e8be167dc4eb00bbc72`.
 - main/gh-pages `app.js` byte parity is currently FALSE despite both saying rc4.91; a receiving chat must preserve this distinction.
 - Expert-v3 acquisition/export is complete; do not restart it.
 - old Return-v2 early tau 1.35 is forbidden; rc4.91 tau 4.25 remains authoritative.
