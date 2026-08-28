@@ -1,6 +1,6 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260828T081000Z-v127`
-Updated: 2026-08-28 08:10Z
+Handoff generation: `20260828T081600Z-v128`
+Updated: 2026-08-28 08:16Z
 
 ## BOOTSTRAP — mandatory
 1. Read `PITTI_COMMAND_CONTRACTS.json` fully.
@@ -275,3 +275,9 @@ These are transfer/guard defects, not Decision-Kernel changes. v107 repairs them
 - Expert-v3 is separate/selectable: Todd QB 10%, Weisse RB 10%, Wolf TE 10%; WR stays Expert-v2 because qualified fresh Wright vector is missing.
 - AUTO diagnosed/repaired successor-hostile legacy assertions and a real missing index loader before closure; do not revert these repairs.
 - gh-pages synchronized after closure. Exact next action: Android/PWA update to rc4.88 -> verify badge + Expert-v3 selectable. Then broad non-repetitive upside research. No mock.
+
+
+## V128 RC4.88 ANDROID VERIFIED
+- User screenshot verifies badge v11.8.0-rc4.88 on Android/PWA and Expert-v3 · positionsspezifisch selected in the UI.
+- Runtime authority advances to rc4.88. No further install gate remains for this change.
+- Continue AUTO with broad anti-repeat upside/differentiator research and Expert-v3 effect validation; do not start a mock unless explicitly requested.
