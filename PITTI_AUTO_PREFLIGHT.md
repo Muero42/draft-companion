@@ -72,7 +72,7 @@ Otherwise continue AUTO.
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — v119
 - Never answer an AUTO turn with “AUTO läuft”, “ich mache weiter”, or equivalent future-tense progress prose. Work must be executed **before** any reply.
 - During PITTI HANDOFF, finish the complete transactional audit/reseal before replying unless an unavoidable blocker prevents it.
-- Current update path: rc4.94 is source + CI/release/package/re-extract + exact 13-file gh-pages deployment parity + fresh Android Pick-9 presentation verified. rc4.94 prioritizes normal-cut candidates before outside-cut fallback context without changing Coach scoring, Expert-v3, Return-v2, ADP, injury penalties or player-specific treatment.
+- Current update path: main/source/package rc4.98; Android/PWA rc4.98 observed but not fully accepted; rc4.96 rollback authority; gh-pages rc4.96 diverges from main; exact gate RC498_WR_SATURATION_AND_EVIDENCE_COVERAGE_AUDIT.
 
 ## 9. AUTO TURN TERMINATION — HARD GATE
 - Completing one work package is **not** permission to end the assistant turn.
@@ -91,3 +91,11 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - immediately re-inventory and continue with the next autonomous package;
 - never emit an empty assistant response;
 - visible output is permitted only for a concrete useful end-result, unavoidable user action/input, safety/irreversible confirmation, or a blocker after every independent lane is exhausted.
+
+
+## v155 TAKEOVER CANARIES
+- Strict Coach draft 1399114762087895040 must be counted as 9 WR / 4 RB / 1 TE / 1 QB. Any 7-WR count is a regression.
+- main/source/package is rc4.98; gh-pages remains rc4.96 and parity must be FALSE.
+- rc4.98 observed on Android does not equal final acceptance while known semantic/evidence defects remain.
+- PR #33 CMC positive-evidence patch is UNMERGED; never claim it exists on main.
+- Handoff PASS is invalid if seal integrity map is empty or omits required core files.
