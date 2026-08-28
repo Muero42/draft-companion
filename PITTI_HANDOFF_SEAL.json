@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T094500Z-v131",
-  "created_at": "2026-08-28T10:15:00Z",
+  "handoff_generation": "20260828T100500Z-v132",
+  "created_at": "2026-08-28T10:07:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "95217f7b0646e9f87b96e2715f20a0f786a077a3",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "480786c3379e2771a113340c4200b2711acfa6af",
+    "PITTI_CURRENT_STATE.json": "af6f7846bc2adddca7b39bdb7a9c378d40194247",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "969cd3193c1a9b4e65874672129157a82d9b8920",
     "PITTI_COMMAND_CONTRACTS.json": "41ffd8e89066b5e880ff11d6dffdd85e07127fdb",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e4ba6389db3da869ab2106c0d14ac83e68c6bdc2",
     "HANDOFF_COMPLETENESS_MATRIX.md": "0a7b8e506a07f0ffc692e6e0a617953f003ab74b",
     "PITTI_EXECUTION_LOCK.json": "08ac2dc4062de8f5ed0bfa95d5a707737d4d776d",
-    "PITTI_PROJECT_STATE.md": "378cf9723c499e41393595baa79d7263b6e800a5",
+    "PITTI_PROJECT_STATE.md": "fbb69451d8083e930298043b204debabca59967b",
     "PITTI_AUTO_PREFLIGHT.md": "602d93de184207465af7f0278b33e02da188df8c",
     "app.js": "af39e65bbb2a7b521b205d7cfaa4a748836985fa",
     "index.html": "d305cd9b6e4d515cc51470a62619b0b7df460441",
@@ -136,7 +136,10 @@
     "rc491_return_calibration_guard": true,
     "rc491_android_version_observed": true,
     "broad_late_round_evidence_batch": true,
-    "fresh_late_august_sleeper_batch": true
+    "fresh_late_august_sleeper_batch": true,
+    "v132_latest_auto_research_preserved": true,
+    "v132_auto_block_semantics": true,
+    "v132_rc491_android_authority": true
   },
   "artifact_runtime_parity": {
     "app_js_main_pages": true,
@@ -156,10 +159,10 @@
     "latest_package_sha256": "2b4ea3de5523efbdeba24a6224504ec90ec825a06a6856b08482574f1d776608"
   },
   "exact_continuation": {
-    "gate": "RC491_ANDROID_VISUAL_FUNCTIONAL_VERIFY",
+    "gate": "RC491_ANDROID_FUNCTIONAL_PLUS_BROAD_RESEARCH",
     "auto_starts_mock": false,
-    "instruction": "rc4.91 is device-observed Android authority. Verify functional surfaces; never regress to rc4.89."
+    "instruction": "Verify v132 transaction and integrity first. Resume Android-observed rc4.91 functional verification plus broad anti-repeat upside research. AUTO BLOCK has zero-ack correction semantics. No mock unless explicit."
   },
   "library_persistence": "STALE_FAIL_CLOSED_NOT_V120",
-  "acceptance_fingerprint": "rc4.64|rc4.89-android-bug|rc4.90-predevice|EXPERT-V3-PANEL-SELECTABLE|ACTUAL-EXPERT-ROWS|EARLY-TOP10-EVIDENCE|ANTI-REPEAT|HANDOFF-v130"
+  "acceptance_fingerprint": "rc4.91-android-observed|EXPERT-V3-ACTUAL-ROWS|TOP10-RICH-NODUP|EVIDENCE-POLARITY|RETURN-TAU4.25|BROAD-ANTI-REPEAT|AUTO-BLOCK|HANDOFF-v132"
 }
