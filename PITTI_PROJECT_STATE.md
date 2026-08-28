@@ -1247,3 +1247,10 @@ The pre-v119 command contract/bootstrap still contained stale rc4.82/83 current-
 - Combined with prior coverage, the early Expert-v3 board now has concrete display evidence across the great majority of the top ~40 candidates rather than only the first handful.
 - Sources are fresh Aug 21-27 outlooks; key mechanisms include target/first-read dominance, red-zone role, per-touch efficiency, scheme/volume changes, current injury gates and explicit counter-theses. No generic sleeper labels were accepted without a causal path.
 - Because this changed runtime display evidence after the first rc4.90 gate pass, deployment remains withheld until the full sealed workflow set is rerun and passes again.
+
+
+### 2026-08-28 — rc4.91 RETURN-v2 EARLY-TURN CALIBRATION
+- Audit after user questioned Chase Brown/Kenneth Walker placement found a genuine model issue: early opponent-choice temperature tau=1.35 made ADP ~16-19 players almost impossible selections at picks 10-11, creating false ~99% return confidence from 1.09 to 2.02.
+- This was not roster construction and should not be defended as intentional timing logic. rc4.91 broadens only the early (pick <=30) market distribution to tau=4.25; manager history, roster need, candidate-manager modifiers, ADP center and panel stabilizer remain intact.
+- New deterministic gate prevents restoration of tau=1.35 and requires material market weight for ADP16-19 candidates at the turn. No player-specific rank boost was added.
+- Fresh external cross-check on 28 Aug: aggregate current market had Chase Brown around 16 and Kenneth Walker around 19; Walker remains a high-upside RB1 but current ankle/foot swelling is being monitored, with Andy Reid publicly describing it as minor. This supports uncertainty rather than ~99% survival certainty.
