@@ -997,3 +997,10 @@ Challenger families to test after current Evidence-v2 analysis: incumbent weight
 - Cross-source recency rule locked: newer concrete usage/injury/depth-chart evidence supersedes older generic breakout narratives, while preserving both upside and downside signals when both remain valid.
 - Draft-zone policy locked: R7-10 favor standalone/role-capture upside; R11-15 increasingly favor contingent RB1 asymmetry; WR ↑↑ reserved for plausible WR1/top-15/dominant-target paths; Jameson Williams uses established-breakout-consolidation mechanism.
 - Expert-v3 remains blocked only on exact challenger vector execution through local FP proxy/app; do not repeat candidate screening or repo artifact search. Continue parallel player research until local execution is sole remaining meaningful gate.
+
+
+### 2026-08-28 — PRIORITY / ANTI-REPETITION LOCK
+- User directive: Expert-v3 is now the PRIMARY workstream until finished. Player/Upside research may run only in genuine wait/block time on v3.
+- Research must run in large batches and MUST NOT repeatedly re-query/re-report the same recently settled players. Likely/Jacobs/Pacheco are explicit examples of wasteful repetition. Once a player's current thesis + freshness are sufficiently established, mark settled and move to uncovered players; reopen only on genuinely new decision-changing news/status.
+- Time to real draft is short; optimize coverage breadth and completion, not repeated confidence polishing.
+- Expert-v3 next action is NOT more candidate screening. Use proven `expert-v2-audit.html` FP directory+filtered-consensus pipeline to acquire exact current challenger vectors, then compute v2-v3 marginal tests and implement separate preset. If local credential/runtime execution becomes the sole gate, ask for one concise user action; until then exhaust autonomous repo/preparation work.
