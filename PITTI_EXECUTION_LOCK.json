@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-28T08:21:00Z",
+  "updatedAt": "2026-08-28T08:09:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -17,12 +17,12 @@
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.87",
-    "latestPreinstallVerified": "v11.8.0-rc4.86",
+    "latestPreinstallVerified": "v11.8.0-rc4.88",
     "latestResearchChallenger": "v11.8.0-rc4.88",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.86_PREINSTALL.zip",
     "preinstallSha256": "49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1",
     "preinstallRuntimeFiles": 12,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.86",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.88",
     "latestDeployedCandidate": "v11.8.0-rc4.88",
     "latestAndroidVerified": "v11.8.0-rc4.87"
   },
@@ -135,7 +135,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC488_EXPERT_V3_POSITIONAL_PROFILE_DEPLOYED_DEVICE_VERIFY_PENDING",
+    "status": "RC488_EXPERT_V3_FULL_GATES_PASS_ANDROID_VERIFY_PENDING",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -187,15 +187,16 @@
       "rc4.85 Release Contract + candidate package/re-extract PASS; inner PREINSTALL SHA-256 53a26943b6e86da751c7c98c9d3b8b58f3b476c794b4f69bda7265eb47b6dfed; 12/12 runtime blobs match main; main/gh-pages 12/12 byte parity PASS",
       "rc4.86 static syntax PASS in Actions; export hotfix replaces undefined loadSingleExpert with existing verified loadExpertRanks pipeline; main/gh-pages 12/12 runtime blob parity PASS",
       "rc4.86 full release contract PASS; candidate package/re-extract PASS; 12 runtime files; inner PREINSTALL SHA-256 49cbcdc8ee7eb5833249aa2482611de07d8327450aa41c2542ba3d00137593d1",
-      "rc4.87 compact export uses existing verified loadExpertRanks, filters each challenger to the only position under evaluation, serializes [playerName,overallRank] tuples, and copies directly to clipboard; no credentials/raw source payloads."
+      "rc4.87 compact export uses existing verified loadExpertRanks, filters each challenger to the only position under evaluation, serializes [playerName,overallRank] tuples, and copies directly to clipboard; no credentials/raw source payloads.",
+      "rc4.88 final sealed commit b1f70fe7: Project Guardrails PASS; release contract v2 PASS; candidate package/re-extract PASS; rc4.82 and rc4.83 gates PASS. gh-pages runtime synchronized after index loader correction."
     ],
-    "gate": "ANDROID_RC4.88_EXPERT_V3_PROFILE_VERIFY",
+    "gate": "ANDROID_RC4.88_EXPERT_V3_VERIFY",
     "note": "rc4.88 integrates a separate selectable Expert-v3 profile only. Decision Kernel and Return-v2 remain unchanged; Expert-v2 remains selectable.",
     "knownOosConfounds": [
       "Ashton Jeanty acute-status hard blocker dated 2026-08-24; Week1 uncertain as of 2026-08-27; interpret early rc4.83 decisions separately from WR saturation hypothesis"
     ],
     "preRealDraftFreshnessGate": "node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-31 --max-age-days=2",
-    "nextGate": "Reload/update Android/PWA to rc4.88; select Expert-v3 positionsspezifisch; verify green panel health; no mock required.",
+    "nextGate": "Reload/update Android/PWA to rc4.88; verify badge and Expert-v3 profile selectable. Then continue broad non-repetitive upside research; no mock unless explicitly requested.",
     "upsideResearch": "PITTI_UPSIDE_RESEARCH_V3.md — NON_RUNTIME_PENDING_POST_MOCK_INTEGRATION"
   }
 }
