@@ -1,6 +1,8 @@
 name: PITTI candidate package gate
 on:
   workflow_dispatch:
+  push:
+    branches: [pitti/expert-v4-v5-v180]
   pull_request:
     branches: [main]
   push:
