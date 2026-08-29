@@ -100,15 +100,6 @@
       <div id="strategyStatus" class="notice ok">Progressive Upside ist aktiv.</div>
       <p class="tiny">v10 bleibt als eingefrorene Referenz erhalten. v11 verändert die Gewichtung erst ab Runde 9 zunehmend in Richtung Ceiling/Breakout-EV.</p><p class="tiny"><b>Live-Speed:</b> Der Snapshot kann während einer laufenden Analyse nicht kopiert werden. Der Hauptbutton aktualisiert zuerst Sleeper und kopiert anschließend ausschließlich den frisch erzeugten Snapshot.</p>
     </div>
-    <div class="strategy-box mock-only" id="analysisExpertSelector">
-      <label for="analysisExpertProfile"><b>Expertenmodell für diese Analyse</b></label>
-      <select id="analysisExpertProfile">
-        <option value="expertv3">v3 · Baseline</option>
-        <option value="expertv4" disabled>v4 · Individual-only (Audit läuft)</option>
-        <option value="expertv5" disabled>v5 · Hybrid + Koerner (Audit läuft)</option>
-      </select>
-      <p class="tiny">Presetwechsel verändert keinen Draftzustand. Erst Analysieren berechnet denselben Snapshot mit dem gewählten Expertenmodell neu.</p>
-    </div>
     <div class="button-grid">
       <button id="refreshBtn" class="primary">Analysieren & Snapshot kopieren</button>
       <button id="copyBtn" class="secondary" disabled>Snapshot erneut kopieren</button>
