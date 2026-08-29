@@ -399,3 +399,15 @@ For final bench RB/WR, evaluate expected championship utility against waiver rep
 
 ### Live freshness guard implementation requirement
 At draft time, any player carrying ↑↑ or ↓↓ must be rechecked against same-day/last-24h injury/practice/transaction news when feasible; a new specific status can suppress/modify the static research marker. Static research should never override a newer concrete availability fact.
+
+
+## Aug 29 current-evidence delta — non-runtime
+- **Jordan Mason — STANDALONE_PLUS_CONTINGENCY:** PFF Aug 27 again flags him as a late-round sleeper with both standalone production and meaningful upside if Aaron Jones misses time. This corroborates, rather than creates, the existing contingency thesis.
+- **Chris Rodriguez Jr. — GOAL_LINE / ROLE_EARNER:** PFF Aug 27 identifies a plausible goal-line role in Jacksonville based on size/short-yardage profile; this materially supports his late RB option-value and helps explain why rc4.104/105 OOS boards legitimately elevated him late. Keep contingent, not forced.
+- **Keaton Mitchell — ONE_EVENT_AWAY / EXPLOSIVE ROLE:** PFF/Fantasy Nerds Aug 27 highlight explosive Achane-like traits in the Chargers backfield. Health/role certainty remain limiting; suitable endgame upside rather than floor pick.
+- **Tyjae Spears — STANDALONE_PLUS_CONTINGENCY:** current late-round sleeper coverage supports a larger-role path even without a Pollard injury. This is stronger than pure handcuff logic, but remains price-sensitive.
+- **Malik Willis — QB rushing-upside recon:** PFF Aug 27 notes the highest scramble rate among QBs over the last two seasons and a current Miami starting job. Relevant only if the user still lacks QB1 very late; it does not override the established one-QB strategy or justify QB2.
+- **Jacory Croskey-Merritt:** current Commanders camp reporting says pass blocking improved, strengthening his third-down/role viability. This is incremental role evidence, not enough to erase the current panel/ADP discount by itself.
+- **Mike Washington Jr.:** Jeanty ankle uncertainty plus strong preseason play creates a real early-season contingency path. Monitor cutdown/depth-chart status Sunday; do not promote solely from injury speculation.
+- **Kaelon Black:** current 49ers reporting has him emerging as a likely workload-relief candidate behind CMC. Still requires role confirmation; useful deep contingency watchlist.
+- Cross-source conclusion: the late-RB framework remains directionally correct—prefer one-event-away/goal-line/explosive role paths over low-ceiling depth. No runtime coefficient change is justified from article consensus alone.
