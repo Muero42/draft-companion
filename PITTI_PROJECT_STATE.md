@@ -2467,3 +2467,13 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 5. Build v4 (individual-only, 4–6 per position) and v5 (v3+Koerner/minimal DS reduction).
 6. Counterfactual/regression compare v3/v4/v5, including early Pick-12 RBs and late-RB coverage, plus known WR/QB/TE canaries.
 7. Only after PASS, wire/enable selector directly above Analyze, package/re-extract, deploy with byte parity, then device acceptance.
+
+
+### 2026-08-29 — CANONICAL 2026 MANAGER MAP CORRECTION (supersedes rc4.84 and stale handoffs)
+- User-confirmed real order is now locked as: **1 Michael · 2 Pascal Voerde · 3 Marc Düsseldorf · 4 Thomas · 5 Björn · 6 Pascal Gelderner · 7 Giuliano · 8 Bastian · 9 Muerotechnik/user · 10 Dutch Marc**.
+- Root cause reconstructed from history: rc4.84's “manager-slot correction” was itself wrong. It changed the previously correct 5–8 geometry (Björn / Pascal Gelderner / Giuliano / Basti) into Basti / Björn / Giuliano / Pascal Gelderner; that error survived through rc4.106.
+- “Michael K.” does not exist in this league and must never alias Giuliano. Giuliano has his own historical identity/profile.
+- “Moers Venom” is stale/incorrect. User team identity is **Muerotechnik**.
+- Pascal identity anchors: slot 2 = Pascal_Voerde; slot 6 = Pascal_Gelderner. Marc identity anchors: slot 3 = Marc_Duesseldorf; slot 10 = Marc_Dutch.
+- Research branch runtime map corrected in commit **8f68d4ede83690560b16aedb22e9310b42358801**. Regression canaries added in **99101ac3f1f8434db5b2acc6c7ed0804b2479287** to reject rc4.84 slot geometry, Pascal-at-8, Moers Venom, and Michael K.
+- **Main/accepted Android rc4.106 remains unchanged and therefore still contains the stale map.** Do not use its manager-return outputs as final live authority until this correction passes the branch gates and is promoted in the next validated release.
