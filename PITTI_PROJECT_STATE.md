@@ -2381,3 +2381,11 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Decision notes to retain for post-draft analysis: Woody Marks was explicitly downgraded after deeper talent/role review despite Coach 100; final late-RB ordering favored Tyjae Spears, Charbonnet stash package, Tank Bigsby/Mike Washington style contingent upside over Marks. This should be audited as a possible model overvaluation of opportunity without sufficient talent/workhorse-quality gating.
 - Pick 129 was Jonah Coleman, not Woody Marks, after user skepticism about Marks talent. Pick 132 was Zach Charbonnet for stash-package EV. Pick 149 was Tyjae Spears.
 - FantasyPros post-draft benchmark not yet imported. Next external-analysis gate: PITTI-FP-Capture from FantasyPros Full Analysis; do not manually reconstruct picks.
+
+
+## 2026-08-29 — Handoff requirement: real-draft late-RB competition / reach audit
+- For the real Aug31 draft, expect **more competition for RBs than in mock 1399325404598124544**, especially in late rounds. Basti is one known candidate, but do not model this as a single-manager effect; treat late-RB depletion as a broader opponent-market risk.
+- After handoff in the new chat, before further mock tuning, perform a focused late-RB upside audit across the remaining candidate pool. Objective: identify backs with the strongest asymmetrical ceiling, realistic path to expanded volume, sufficient talent to capitalize, and current roster/transaction context that can justify a controlled reach.
+- Reach decisions must remain evidence-based: talent/role/injury-contingency + opponent competition + expected availability at next turn. Do not reach merely because the player is an RB or because ADP is rising.
+- Explicitly include the Charbonnet-style IR/PUP stash-package concept when eligible: injured stash + free-agent replacement slot can exceed the EV of a normal bench pick.
+- Preserve the Woody Marks correction: opportunity alone is insufficient; candidate review must include talent/workhorse-quality gating before labeling a late RB as high-upside.
