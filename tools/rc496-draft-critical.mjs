@@ -37,6 +37,8 @@ assert.match(app,/function extractPairwiseInvertedRows\(/,'Koerner pairwise inve
 assert.match(app,/Number\(payload\?\.total_experts\)!==2/,'pairwise inversion must require exactly two experts');
 assert.match(app,/fetchExpertOverallPairwise\(expert,ref\)/,'Koerner pairwise API fallback missing');
 assert.match(app,/FantasyPros API pairwise exact inversion/,'pairwise provenance label missing');
+assert.match(app,/crosscheck=\{checked,matched,ok:checked>=2&&matched===checked\}/,'Koerner fallback Compare Players match gate missing');
+assert.match(app,/finalRows\.length>=80&&crosscheck\.ok/,'Koerner fallback must fail closed on crosscheck mismatch');
 assert.doesNotMatch(app,/5=Basti, 6=Bjoern/,'rc4.84 wrong slot-5/6 mapping resurrected');
 assert.doesNotMatch(app,/8=Pascal Gelderner/,'rc4.84 wrong slot-8 mapping resurrected');
 assert.doesNotMatch(app,/Moers Venom/i,'stale user team identity resurrected');
