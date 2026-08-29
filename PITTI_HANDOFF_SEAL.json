@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260829T0548Z-v161",
-  "created_at": "2026-08-29T05:49:00Z",
+  "created_at": "2026-08-29T05:48:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -76,5 +76,5 @@
     "rc4104_android_pending": true
   },
   "exact_gate": "RC4104_POSTMERGE_RESEAL_THEN_DEPLOY",
-  "note": "v161 predeploy seal refreshed after making current-source guardrail successor-safe; rc4.104 merged/package/behavior verified, Android accepted authority rc4.101, gh-pages deployment held until all main gates GREEN."
+  "note": "v161: rc4.104 merged after canonical rc4.101 mock reproduced strict-Coach WR9 and long-turn WAIT defects. Candidate/merge release-package-successor semantics PASS. Seal refreshed before exact gh-pages deployment; Android rc4.101 remains accepted until rc4.104 device PASS."
 }
