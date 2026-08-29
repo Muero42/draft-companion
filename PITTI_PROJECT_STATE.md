@@ -2186,3 +2186,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - GitHub connector behavior was inspected directly: `fetch_commit_workflow_runs` is documented to return only pull-request-triggered runs. Therefore repeated empty results for main-push commits were an observability limitation, not evidence that GitHub Actions failed to start.
 - The prior path-filter repair remains correct. A manual `workflow_dispatch` trigger was also added as a fallback entry point, but the currently available connector exposes rerun operations only and no start/dispatch operation; AUTO cannot invoke a new manual run from chat.
 - Do not spend further AUTO cycles polling `fetch_commit_workflow_runs` for main-push runs. Validation must use a PR-visible run, an available external status surface, or local/container execution. This prevents the repeated false-stuck loop.
+
+
+## 2026-08-29 — AUTO rc4.104 replay contract CI PASS
+- PR #45 was created solely to obtain connector-visible pull_request CI for the frozen-fixture replay contracts; no runtime change is proposed by the PR validation marker.
+- First PR run proved the rc4.104 frozen-fixture contracts themselves PASS, but exposed a stale guardrail string invariant: pitti_guardrail_check still required the superseded phrase `rollback accepted functional authority: rc4.96` after v166 intentionally changed bootstrap wording to `historical rollback reference: rc4.96`. This was a guardrail/doc semantic mismatch, not a runtime failure.
+- Guardrail invariant was repaired on main and the validation branch to require the v166 phrase. Second PR run is fully green: PITTI Project Guardrails SUCCESS (including rc4.104 roster portfolio contract and anti-regression gate), PITTI release contract v2 SUCCESS, PITTI candidate package gate SUCCESS.
+- This establishes CI-backed PASS for the bounded rc4.104 mechanisms against the frozen failure-point fixtures: pick92/109/112 roster-opportunity-cost repair and exact pick132 Spears/Andrews turn-portfolio reorder, while preserving Return-v2. It does not manufacture a browser-equivalent recomputation of unavailable mutable scoring inputs.
