@@ -2219,3 +2219,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - PR #46 merged to main as `93a7619ec5af3468b71d62238b77f4f01e37822c`.
 - Canonical 13 runtime files were deployed from main to gh-pages and individually SHA-verified: **13/13 exact parity PASS**. rc4.105 is source/package/deployment candidate authority.
 - Android rc4.105 acceptance remains **PENDING** until a fresh device Snapshot confirms App-Version rc4.105 and Coach path. rc4.104 remains the last accepted Android authority until that observation.
+
+
+## 2026-08-29 09:12 local — rc4.105 Android deployment acceptance PASS
+- User device screenshot visibly shows v11.8.0-rc4.105.
+- App shell/status healthy in same observation: FantasyPros Online; Rankings 26 Min.; Sleeper Draft 1057; Coach Bereit; Expert-v3 positionsspezifisch selected.
+- This closes the deployment/version acceptance gate. rc4.105 is now accepted Android authority; do not regress to rc4.104 or repeat install/version troubleshooting.
+- Behavioral gate remains separate: obtain a fresh rc4.105 Snapshot/Coach state to validate recommendation path after the pick129 portfolio fix.
