@@ -2517,3 +2517,11 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Found a release-critical persistence hazard: merely correcting ACTIVE_2026_MANAGER_MAP_TEXT would not repair an already-saved wrong v11_managerMap on the phone, and restoring an old backup could reintroduce the rc4.84 map. Added canonicalize2026ManagerMap migration at startup and backup restore. Known stale signatures (slot5 Basti, slot8 Pascal Gelderner, Moers Venom, Michael K) are automatically replaced by canonical 2026 order before use.
 - Regression guards require startup/restore migration.
 - Analysis selector application now rejects all profiles outside v3/v4/v5, preserving the intended controlled same-state comparison path.
+
+
+### 2026-08-30 — AUTO BLOCK CI/release staging
+- v4/v5 branch now has executable capped panel builder plus fail-closed coverage telemetry; selector is wired but v4/v5 remain locked until exact source data exists.
+- Release-contract workflow was extended to run on pitti/expert-v4-v5-v180; package workflow likewise runs on branch push.
+- Draft PR #48 opened solely to trigger full PR/main-target gates; **do not merge** until all checks pass and exact v4/v5 source gates are satisfied.
+- Head 05279ddfc57757f4285da8814367c339486f785f: Project Guardrails run 33280786686 queued; release-contract run 33280786655 queued. Package gate expected via PR event after workflow recognition.
+- No production/main/Android promotion yet.
