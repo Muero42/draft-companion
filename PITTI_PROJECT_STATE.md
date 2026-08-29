@@ -2226,3 +2226,11 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - App shell/status healthy in same observation: FantasyPros Online; Rankings 26 Min.; Sleeper Draft 1057; Coach Bereit; Expert-v3 positionsspezifisch selected.
 - This closes the deployment/version acceptance gate. rc4.105 is now accepted Android authority; do not regress to rc4.104 or repeat install/version troubleshooting.
 - Behavioral gate remains separate: obtain a fresh rc4.105 Snapshot/Coach state to validate recommendation path after the pick129 portfolio fix.
+
+
+## 2026-08-29 09:14 local — rc4.105 fresh pre-draft Snapshot behavioral PASS
+- Fresh Snapshot draft 1399325404598124544, slot 9, pre_draft, App-Version v11.8.0-rc4.105, fingerprint NEW. Panel-Health OK; 341 evaluable candidates; Expert-v3 QB/RB/TE + Expert-v2 WR active; Sleeper ADP refreshed 09:14 local; Coach ready.
+- Behavioral shell is healthy after rc4.105 promotion. No stale-version/degraded-profile regression. Snapshot correctly preserves starter maxima as non-roster-caps and no player-name blacklist.
+- Pre-draft top board is plausible and unforced: Gibbs 100, Bijan 98, Chase 92, Puka 88, CMC 81, JSN 75, Taylor 73, Amon-Ra 65, Cook 59, Lamb 49. No short-turn portfolio override is active in pre-draft state, as expected.
+- Current injury overlay at 09:16 local: Ja'Marr Chase has a minor left-knee hyperextension from Aug 25/26; he said he could have played and no Week-1 threat is currently reported. Puka Nacua remains a psoas monitoring case; Rams were still holding him out Aug 24 but expect Week-1 readiness. CMC has no new acute first-round block, but 49ers are actively evaluating workload relief after a 450-touch season. Gibbs finished camp with a strong scrimmage; no new acute concern in current reporting.
+- This closes RC4105_POST_DEVICE_COACH_VALIDATION for app/snapshot behavior. Next work remains draft-day freshness/readiness and live pick-specific decisions once picks 1-8 exist.
