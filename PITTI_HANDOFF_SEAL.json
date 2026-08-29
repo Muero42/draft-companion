@@ -7,12 +7,12 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "c21d4a2434af2be5459c6f58052042a5a24c3f7e",
+    "PITTI_CURRENT_STATE.json": "3cb968540bc3cde55dcfc6523d4d43f87bf3a5c6",
     "NEW_CHAT_HANDOFF_CURRENT.md": "c69b4a1a5babb71ec5f3dedf442e90a063cf77b7",
-    "PITTI_COMMAND_CONTRACTS.json": "dacd18151f78a5060fae2f6659df2e4e30127434",
+    "PITTI_COMMAND_CONTRACTS.json": "9e60a4afbe7c58126d03318e871b008fd246cb53",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "031cfd4ddb6636a486fffab6c4355207d985218c",
     "HANDOFF_COMPLETENESS_MATRIX.md": "c7b5a405589baa1f4d9a7041de44c2b3ade29ece",
-    "PITTI_EXECUTION_LOCK.json": "760b57ab4e25da91b91acc05690c04609f483b28",
+    "PITTI_EXECUTION_LOCK.json": "c74b00e10b610726ebceb5d4b32e2ce2006a44e6",
     "PITTI_PROJECT_STATE.md": "3f5092e74358c1efa292589c60b9e7d5df0018b9",
     "PITTI_AUTO_PREFLIGHT.md": "c03a64d96d784be51f18595c1bee5449137b637b",
     "README.md": "3376ce54b45fbf7960ae80b9762ed5eb1a892ecd",
@@ -60,8 +60,11 @@
     "rc4100_android_version_observed": true,
     "rc4100_representative_changed_behaviors_pass": true,
     "rc4101_android_accepted": true,
-    "rc4102_freshness_candidate_pending_gates": true
+    "rc4102_freshness_candidate_pending_gates": false,
+    "rc4102_candidate_gates_pass": true,
+    "rc4102_main_merged": true,
+    "rc4102_pages_deployed": true
   },
-  "exact_gate": "RC4102_FRESHNESS_GATES",
-  "note": "v160 candidate seal: rc4.101 accepted Android authority; rc4.102 bounded freshness candidate pending gates. Stale rc4.100 authority fields removed; Aug-29 freshness audit includes invalidated Josh Jacobs groin penalty correction."
+  "exact_gate": "RC4102_ANDROID_OBSERVATION",
+  "note": "v160: rc4.102 freshness candidate gates PASS, merged to main and deployed to gh-pages; Android observation pending. rc4.101 remains accepted Android authority until device PASS."
 }
