@@ -2366,3 +2366,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Verified 2026 sources still support: Aug30 18:00 ET final-53 deadline; Aug31 13:00 ET waiver expiry; Jeanty still on the mend but Raiders counting on him; Mike Washington Jr. first-team preseason usage / possible two-back discussion; official Aug27 Atwell↔Hunter and Aug24 Boutte/Reed transactions.
 - New official waiver-wire delta: Cedric Tillman was waived by Cleveland on Aug27. Any stale CLE role/team assumption for Tillman is invalidated pending claim/signing outcome.
 - No trustworthy same-day Aug29 fantasy-relevant delta found that warrants a ranking/runtime change. rc4.106 freeze remains correct.
+
+
+## 2026-08-29 — AUTO freshness verification VIII
+- Fresh official Aug29 search produced no newer 2026 decision-changing injury/transaction item than the already captured Aug28/transaction-wire deltas. Jeanty remains monitored/expected, Walker swollen ankle remains a mandatory Aug31 recheck, and Trey Benson cut remains the key stale-depth-chart invalidator.
+- Search regression reproduced again: same-date NFL results surfaced 2022/2023/2024 pages. Year/body verification remains a hard source-quality guard; these legacy pages are excluded from 2026 decisions.
+- Official league calendar reverified: final 53-man reduction Aug30 before 18:00 ET; final-reduction waivers expire Aug31 13:00 ET. These remain the next material freshness windows.
+- No rc4.106 runtime mutation; no mock progression. Continue independent research/checkpoint work under freeze.
