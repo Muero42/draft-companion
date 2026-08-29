@@ -2352,3 +2352,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - However, Jeanty's embedded positive component is still named workhorse_environment_rebound and its invalidator is opportunity-share decline. Because current official evidence now directly raises that invalidator, **do not mutate rc4.106 solely to rename/reword this component**. Live interpretation must treat the workhorse premise as challenged pending Aug31 status/usage evidence.
 - Mike Washington embedded component explicitly says genuine committee use invalidates the old low-standalone-volume risk. Kubiak's Aug28 comments are therefore a live invalidator candidate, but not sufficient by themselves to convert Washington into a weekly starter projection.
 - This confirms the freshness-layer override can safely handle the new evidence without a last-minute runtime build.
+
+
+## 2026-08-29 — AUTO transaction-wire / late-RB audit VII
+- Official transaction wire exposes multiple team changes that may lag in Sleeper metadata: Tutu Atwell MIA→LAR, Jarquez Hunter LAR→MIA, Kayshon Boutte NE→HOU, Jayden Reed HOU→NE. Live analysis must prefer official team context when conflict exists.
+- Aug30 18:00 ET final 53-man deadline + Aug31 13:00 ET waiver expiry are now explicit hard freshness gates for the real Aug31 draft. Final refresh must include post-cutdown roster/IR/PUP and post-waiver deltas.
+- Mike Washington Jr. is independently flagged by NFL fantasy analysis as Jeanty's handcuff. Emmett Johnson is a Walker contingency-upside candidate despite Demercado's current unofficial-depth-chart edge. Preserve as late-round watch signals, not panel overrides.
+- No runtime mutation justified; rc4.106 freeze remains intact. Mock remains paused before pick 9.
