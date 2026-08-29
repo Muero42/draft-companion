@@ -2254,3 +2254,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Independent turn-portfolio check strengthens the 1.09 James Cook recommendation without treating it as a completed pick. Cook is the best current panel/Coach candidate (Panel 8.9, Coach100) and has the lowest survival among the close elite cluster (61%) versus Lamb 72%, Jefferson 77%, Saquon 73%.
 - Crucially, only two opponent picks (10/11) occur before own pick12 while Lamb, Jefferson and Saquon are all currently available. Therefore **at least one of those three is mathematically guaranteed to remain at pick12** if the user takes Cook at pick9; opponents can remove at most two. This makes Cook-now / best-survivor-at-12 a robust two-pick portfolio, not generic RB preference.
 - Mock remains paused before pick9 and no roster mutation is inferred until the user actually makes a pick and supplies a fresh Snapshot.
+
+
+## 2026-08-29 — parallel current-evidence / late-upside pass
+- Aug29 public research was refreshed while rc4.106 awaits device display observation. No broad runtime retune justified.
+- Current corroborated late-RB signals added to PITTI_UPSIDE_RESEARCH_V3.md: Jordan Mason standalone+contingency; Chris Rodriguez plausible goal-line role; Keaton Mitchell explosive one-event path; Tyjae Spears standalone+contingency; Mike Washington Jeanty-injury contingency; Kaelon Black CMC workload-relief watch. JCM pass-blocking improvement is incremental role evidence.
+- Malik Willis current rushing profile remains an interesting very-late QB1 recon path only if QB1 still open; exactly-one-QB user strategy remains unchanged.
+- Sunday Aug30 cut/PUP/IR designations and Monday Aug31 waiver claims are the next materially informative windows. Transaction alone remains weak evidence; correlate with role/injury context.
