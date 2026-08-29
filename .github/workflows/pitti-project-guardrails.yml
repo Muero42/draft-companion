@@ -25,6 +25,8 @@ on:
       - 'tools/pitti_guardrail_check.mjs'
       - 'tools/pre-draft-freshness-gate.mjs'
       - 'tools/emergency-queue-contract.mjs'
+      - 'tools/rc4100-turn-portfolio.mjs'
+      - 'tools/rc4104-roster-portfolio.mjs'
       - '.github/workflows/pitti-project-guardrails.yml'
   pull_request:
     branches:
