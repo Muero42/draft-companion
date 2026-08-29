@@ -134,3 +134,8 @@ Scope rule: rc4.102 is a source-freshness correction, not a coefficient experime
 - During Aug30/Aug31 freshness passes, an official NFL transaction (release/waive/IR/PUP/NFI/trade) overrides stale Sleeper team/status metadata for eligibility and role interpretation.
 - Explicit current example to regression-check: official NFL.com cutdown coverage reports Arizona released Trey Benson while the current Sleeper-derived pool still showed ARI / Injury IR. Do not silently carry that stale state into the real-draft board.
 - Mike Washington Jr. current first-team preseason usage with Jeanty sidelined is role evidence only; it must not be converted into an injury certainty or automatic ranking override.
+
+
+## Aug29 freshness source-quality guard
+- Generic web search can surface legacy NFL roundup pages with matching month/day but wrong season. Draft-day ingestion must verify **explicit 2026 season/date context** before accepting a news item as current.
+- Prefer the NFL 2026-27 important-dates/calendar, current 2026 roster-cut coverage, current team/league transaction reporting, then corroborated fantasy analysis. Reject legacy same-date pages even when search freshness labels them as newly crawled.
