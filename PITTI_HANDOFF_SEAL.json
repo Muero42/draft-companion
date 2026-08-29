@@ -17,14 +17,14 @@
     "PITTI_CURRENT_STATE.json": "109dc28c7e721320d47a75f3789228731fd8226a",
     "PITTI_EXECUTION_LOCK.json": "6469c871a6769c9ea6548ab50f4f327d43f5d887",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "262d1de1161b9b8e5a939c7b96a44780a3e46211",
-    "PITTI_PROJECT_STATE.md": "c1580870ed4b848a7224061874322e348e102fbd",
+    "PITTI_PROJECT_STATE.md": "bc4049639caecf9f304c2ccbc846fdf9b0f24aef",
     "README.md": "ff0d739eb3def45e068392da991c83fdbdd4cc47",
     "app.js": "89fa7974cf2f1ebc7747f09b02cb246f4ee0523f",
     "decision-policy.js": "76234515b5428a33b7ef573f1f5c87bab058ad67",
     "index.html": "a19a52499821a91411267f6fbe11ad4e1fd25452",
     "live-surface-v3.js": "593bfcb58465227cc6eae71b787508ab95afbbd8",
     "manifest.webmanifest": "47e15cb1ff81fafea1b5f528e0f35dd13b947c63",
-    "research/DRAFT_DAY_FRESHNESS_PLAN_2026-08-31.md": "1899980d4b009f883b12818eeef14b702e58b724",
+    "research/DRAFT_DAY_FRESHNESS_PLAN_2026-08-31.md": "9aa85da54f2ece7b6b60d41ba9688ce33ea23c92",
     "research/RC498_PAIRED_OOS_MOCKS_1399109246460682240_1399114762087895040_2026-08-28.md": "0ce3c9826607d36b8aa59ab767fa6e26fcc83843",
     "research/RC499_FULL_DRAFT_1399141058222280704_2026-08-28.md": "341f76da8fd53c8cf094f31a072332ff86eeccdd",
     "sw.js": "1981d47e94a899f5611cf876d8f5e54ef30d8e0f",
@@ -38,7 +38,7 @@
     "tools/rc499-normal-cut.mjs": "fd70fafc8da135927d12d81cd98beef10de487ed",
     "tools/rc499-wr-saturation.mjs": "9e297363e83bc771aa0ebaabf9bcfeb17fd1dca8",
     "tools/rc4106-embedded-individuals.mjs": "92b401305ff4ffcac369585a0220e7fb58cea89b",
-    "PITTI_UPSIDE_RESEARCH_V3.md": "351944cc56aba8b98389129043e78a963c7b78c1"
+    "PITTI_UPSIDE_RESEARCH_V3.md": "85d9b4fe945577434d18a32eda5e55770b858a8b"
   },
   "checks": {
     "generation_consistent": true,
@@ -115,8 +115,13 @@
     "late_rb_contingency_delta_v": true,
     "mike_washington_first_team_evidence": true,
     "emmett_johnson_walker_handcuff_evidence": true,
-    "no_qualitative_runtime_score_mutation": true
+    "no_qualitative_runtime_score_mutation": true,
+    "jeanty_committee_delta_captured": true,
+    "walker_swollen_ankle_recheck": true,
+    "trey_benson_cut_invalidates_stale_depth_chart": true,
+    "embedded_research_consistency_audited": true,
+    "no_last_minute_runtime_mutation": true
   },
   "exact_gate": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
-  "note": "v174 PASS seal. rc4.106 remains frozen; Android display acceptance pending. Mock paused before pick9. Fresh Aug28 NFL evidence strengthens Mike Washington Jr. and Emmett Johnson contingency/late-RB utility without changing runtime scores or downgrading Jeanty."
+  "note": "v174 PASS seal. rc4.106 remains frozen; Android display acceptance pending. Mock paused before pick9. Freshness delta adds Jeanty committee/workload uncertainty via Mike Washington Jr., Walker swollen-ankle recheck, Trey Benson cut invalidator. Embedded research inspected; freshness override sufficient, no risky rebuild."
 }
