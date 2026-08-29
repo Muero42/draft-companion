@@ -2338,3 +2338,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Fresh official NFL Aug28 evidence materially strengthens Mike Washington Jr.'s Jeanty-contingency thesis: first-team finale usage while Jeanty sat and Kubiak's public openness to Walker/Charbonnet-like deployment. Still insufficient to assume a healthy-Jeanty committee; no Jeanty downgrade.
 - NFL current rookie late-round analysis independently flags Emmett Johnson as the preferred Kenneth Walker handcuff despite Demercado's unofficial-depth-chart edge. Treat as late-round contingency EV, not standalone reach justification.
 - No runtime score mutation; evidence added to research layer for live tie-break/late-bench reasoning. Freeze policy preserved.
+
+
+## 2026-08-29 — AUTO late-cutdown RB delta V
+- New official decision-relevant evidence: Jeanty's ankle remains monitored, but the larger new signal is Mike Washington Jr.'s first-team work and Kubiak's explicit openness to a Walker/Charbonnet-like two-back usage pattern. Jeanty remains lead-back baseline; bellcow certainty is reduced. This is a live-context downgrade, not a panel rewrite two days before draft.
+- Kenneth Walker III has a swollen ankle per Aug26 official reporting, following a foot-related practice absence. Mandatory Aug31 health recheck; no unsupported IR/PUP inference.
+- Trey Benson was released by Arizona during cutdown week; stale depth-chart research involving him is invalidated.
+- No runtime mutation: these are freshness-layer overrides/invalidators under the existing near-draft freeze.
