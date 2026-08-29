@@ -1,25 +1,25 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260829T0448Z-v159",
-  "created_at": "2026-08-29T04:48:00Z",
+  "handoff_generation": "20260829T0500Z-v160",
+  "created_at": "2026-08-29T05:05:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "8c768f7aeb432c670f00b3e16aa5292894c915f8",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "388d179e597ccde85a70c75a7a00a2e1aea19062",
+    "PITTI_CURRENT_STATE.json": "c21d4a2434af2be5459c6f58052042a5a24c3f7e",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "c69b4a1a5babb71ec5f3dedf442e90a063cf77b7",
     "PITTI_COMMAND_CONTRACTS.json": "dacd18151f78a5060fae2f6659df2e4e30127434",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "abd3720632afad71571e69cc799f695664af6a97",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "4b6e866c02ba59ef042a72301d47c71b4940dd6d",
-    "PITTI_EXECUTION_LOCK.json": "9229968e2978351515bf751825fa1eca9aafc9fe",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "031cfd4ddb6636a486fffab6c4355207d985218c",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "c7b5a405589baa1f4d9a7041de44c2b3ade29ece",
+    "PITTI_EXECUTION_LOCK.json": "760b57ab4e25da91b91acc05690c04609f483b28",
     "PITTI_PROJECT_STATE.md": "3f5092e74358c1efa292589c60b9e7d5df0018b9",
     "PITTI_AUTO_PREFLIGHT.md": "c03a64d96d784be51f18595c1bee5449137b637b",
-    "README.md": "1a457ec617d14a208b0101a0b444f21c1c2eb4f8",
-    "app.js": "48afb7db0c561c69b49fc56a9755be238dc7194d",
-    "index.html": "e119b20640b3d539fe53a5840aeb2e96aab5bc75",
-    "sw.js": "b7955c0a780be15aefb268c5f2385302468d40d4",
-    "manifest.webmanifest": "21fa7938f9bf733f5288e8123d926e92d2d0b1c8",
+    "README.md": "3376ce54b45fbf7960ae80b9762ed5eb1a892ecd",
+    "app.js": "4b293c89ac575feb8cf561c969d1c03a35428f95",
+    "index.html": "05c55cde5b92435eb1f476d9942eedaf5686fc50",
+    "sw.js": "44b5f52abe41e4c78a7f0871f625943becd9d094",
+    "manifest.webmanifest": "8962735f211c00c50378e01988b9d3128f2bf98c",
     "live-surface-v3.js": "593bfcb58465227cc6eae71b787508ab95afbbd8",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
     "tools/pitti_guardrail_check.mjs": "ede049ac50052d3160780f277bffdd1e11afac54",
@@ -35,11 +35,11 @@
     ".github/workflows/pitti-project-guardrails.yml": "aa2504a63d412e85f088ada7280ad0d384abc1a2",
     "research/RC498_PAIRED_OOS_MOCKS_1399109246460682240_1399114762087895040_2026-08-28.md": "0ce3c9826607d36b8aa59ab767fa6e26fcc83843",
     "research/RC499_FULL_DRAFT_1399141058222280704_2026-08-28.md": "341f76da8fd53c8cf094f31a072332ff86eeccdd",
-    "research/DRAFT_DAY_FRESHNESS_PLAN_2026-08-31.md": "774830d81610fee61a6e9a7306526a87ff1703dd"
+    "research/DRAFT_DAY_FRESHNESS_PLAN_2026-08-31.md": "89dc075d8db9c4b8ba61dd7e43e4058699368af4"
   },
   "checks": {
     "generation_consistent": true,
-    "active_boundary_rc4100": true,
+    "active_boundary_rc4100": false,
     "pr36_three_gates_pass": true,
     "postmerge_main_verification_pending": false,
     "gh_pages_rc499_diverged": false,
@@ -58,8 +58,10 @@
     "rc4100_postmerge_all_gates_pass": true,
     "gh_pages_rc4100_exact_13_file_parity": true,
     "rc4100_android_version_observed": true,
-    "rc4100_representative_changed_behaviors_pass": true
+    "rc4100_representative_changed_behaviors_pass": true,
+    "rc4101_android_accepted": true,
+    "rc4102_freshness_candidate_pending_gates": true
   },
-  "exact_gate": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE",
-  "note": "v159: rc4.101 accepted Android authority after real-device live Analyze/Snapshot PASS; canonical authority/docs/freshness plan synchronized. No scoring/model retune."
+  "exact_gate": "RC4102_FRESHNESS_GATES",
+  "note": "v160 candidate seal: rc4.101 accepted Android authority; rc4.102 bounded freshness candidate pending gates. Stale rc4.100 authority fields removed; Aug-29 freshness audit includes invalidated Josh Jacobs groin penalty correction."
 }
