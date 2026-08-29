@@ -1,14 +1,14 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Current accepted main/source/deployment/Android:** v11.8.0-rc4.105. **v11.8.0-rc4.106 candidate:** snapshot display-only fix for embedded Expert-v2/v3 individual ranks; no ranking/Coach/Return change. generic short-turn portfolio quality floor after OOS pick129 score-0 promotion regression; no Return-v2/model/expert retune.
+> **Current source/package/deployment candidate:** v11.8.0-rc4.106; **last accepted Android:** v11.8.0-rc4.105. rc4.106 is display-only embedded individual-rank repair.
 > **rc4.100 PR validation:** release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
-> **Deployment/device:** gh-pages rc4.105 exact 13-file parity PASS; Android rc4.105 acceptance pending, rc4.104 remains last accepted device authority.
+> **Deployment/device:** gh-pages rc4.106 exact 13-file parity PASS; Android rc4.106 display observation pending; rc4.105 remains accepted device authority.
 > **Rollback reference:** v11.8.0-rc4.96 historical only; current accepted Android authority is v11.8.0-rc4.104.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
 > **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
 > **rc4.100 scope:** generic Pro/Contra semantic hardening + bounded short-turn portfolio ordering; no global ranking/Return/expert retune, no hard WR cap/quota.
 > **OOS critical:** strict Coach draft 1399114762087895040 = 9 WR / 4 RB / 1 TE / 1 QB; old 7-WR count is invalid.
-> **Current gate:** RC4106_EMBEDDED_INDIVIDUAL_DISPLAY_VALIDATION.
+> **Current gate:** RC4106_ANDROID_DISPLAY_ACCEPTANCE.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
 
