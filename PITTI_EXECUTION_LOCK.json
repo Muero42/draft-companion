@@ -18,7 +18,7 @@
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.101",
     "latestPreinstallVerified": "v11.8.0-rc4.101",
-    "latestResearchChallenger": "v11.8.0-rc4.101",
+    "latestResearchChallenger": "v11.8.0-rc4.102",
     "preinstallArtifact": "rc4.101 verified package/runtime set",
     "preinstallSha256": "artifact-envelope:4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae",
     "preinstallRuntimeFiles": 13,
@@ -177,15 +177,14 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4101_ACCEPTED_DRAFT_DAY_FRESHNESS_EVIDENCE",
+    "status": "RC4102_FRESHNESS_CANDIDATE_GATES",
     "production": false,
-    "androidVerified": true,
+    "androidVerified": false,
     "changes": [
-      "rc4.100 semantic selector hardening: signed evidence before neutral context; displayRisk nonpositive only",
-      "rc4.100 generic short-turn portfolio ordering for deferable WAIT leaders; no score/Return retune",
-      "three-digit successor-safe legacy gates",
-      "emergency queue and acute-status freshness mandatory in release/package",
-      "Jeanty acute status refreshed 2026-08-28 and no longer hard-blocked"
+      "freshen Jeremiyah Love high-ankle context without changing risk strength",
+      "add unresolved Puka discipline context while preserving psoas risk and no score retune",
+      "clarify Zach Charbonnet active/PUP conditional four-game consequence",
+      "add Wan'Dale Robinson acute post-hit concussion-monitoring status"
     ],
     "validation": [
       "PR #36 release contract 33205458705 PASS",
@@ -195,10 +194,10 @@
       "rc4.99 WR saturation and normal-cut contracts PASS under rc4.100",
       "full 19:24 draft audit integrated; short-turn Return calibration 91.4% vs 90.9% actual"
     ],
-    "nextGate": "Draft-day freshness/evidence; no broad retune or automatic mock"
+    "nextGate": "Full candidate gates; rc4.101 remains accepted Android authority until promotion/device observation"
   },
-  "status": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE",
-  "gate": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE",
+  "status": "RC4102_FRESHNESS_GATES",
+  "gate": "RC4102_FRESHNESS_GATES",
   "nextGate": "Final 31-Aug freshness pass and independent evidence/calibration work; preserve freeze unless reproducible critical defect.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
