@@ -2703,6 +2703,17 @@ els.renamePanelBtn.onclick=()=>{const p=panels[activePanelId],name=prompt('Neuer
 els.deletePanelBtn.onclick=()=>{if(['standard','pat'].includes(activePanelId))return alert('Standard und Pat bleiben erhalten.');if(confirm('Panel löschen?')){delete panels[activePanelId];delete panelRanks[activePanelId];activePanelId='standard';persist();renderAll()}};
 for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])el.onchange=()=>{positionPanels[pos]=el.value;persist()};
 if(els.expertProfile){els.expertProfile.value=currentExpertProfile();els.expertProfile.onchange=()=>applyExpertProfile(els.expertProfile.value);}
+if(els.analysisExpertProfile){
+  syncAnalysisExpertSelector();
+  els.analysisExpertProfile.onchange=()=>{
+    const requested=els.analysisExpertProfile.value;
+    if(!applyExpertProfile(requested)){
+      els.analysisExpertProfile.value=currentExpertProfile()==='expertv3'?'expertv3':'expertv3';
+      els.draftStatus.className='notice warn';
+      els.draftStatus.textContent=requested+' ist noch nicht vollständig verifiziert und bleibt gesperrt.';
+    }
+  };
+}
 
 async function exportExpertV3Challengers(){
   const status=els.expertV3AuditStatus;
