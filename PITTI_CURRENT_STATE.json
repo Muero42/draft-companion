@@ -16,11 +16,11 @@
     "latest_package_reextract": "v11.8.0-rc4.100",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope:4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae",
-    "deployed_pages": "v11.8.0-rc4.99",
-    "deployed_pages_app_byte_parity_with_main": false,
+    "deployed_pages": "v11.8.0-rc4.100",
+    "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33205458721,
     "package_reference_artifact_id": 9699461048,
-    "package_reference_note": "rc4.100 PR candidate release/package/re-extract/guardrails all PASS; merged to main as 1b85656e40a182ca6be2397c5bf6674006b97bd2. Main post-merge workflow verification not yet observed. gh-pages and Android remain rc4.99.",
+    "package_reference_note": "rc4.100 post-merge main gates PASS on 794f4b3059fe2756e785dcec889efaec90287196; exact 13-file runtime parity proven on gh-pages. Android/PWA observation remains rc4.99 until device refresh.",
     "android_version_observed": true,
     "android_functional_verified": false,
     "freeze_policy": "rc4.96 remains rollback baseline; low-risk microfix challenger allowed for further testing",
@@ -28,9 +28,9 @@
     "android_acceptance_pending": true
   },
   "exact_continuation": {
-    "gate": "RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY",
+    "gate": "RC4100_ANDROID_OBSERVATION",
     "auto_starts_mock": false,
-    "instruction": "Verify rc4.100 main post-merge gates. If PASS, deploy exact verified rc4.100 runtime to gh-pages, prove byte parity, then obtain only the unavoidable Android observation. In parallel continue horizon-specific Return-v2 calibration and generic Pro/Contra/soft-WR-saturation audit. No global retunes."
+    "instruction": "Server-side rc4.100 promotion is complete: post-merge gates PASS and all 13 runtime files have exact main/gh-pages blob parity. Obtain only the unavoidable Android/PWA version and representative functional observation. In parallel continue horizon-specific Return-v2 calibration and current-evidence audits; no global retunes."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -47,19 +47,19 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "PITTI AUTO resumes at rc4.100 main post-merge verification. PR #36 candidate gates are GREEN; gh-pages/Android remain rc4.99. Then canonical deploy/parity/device gate; parallel Return horizon and semantic audits continue.",
+    "resume_semantics": "PITTI AUTO resumes at rc4.100 Android/PWA observation. Post-merge gates are GREEN and exact 13-file main/gh-pages runtime parity is proven. Android last observed rc4.99; rc4.100 device acceptance pending.",
     "acceptance_fingerprint": "MAIN-RC4.100|PR36-3GATES-PASS|POSTMERGE-MAIN-VERIFY-PENDING|PAGES-RC4.99-DIVERGED|ANDROID-RC4.99-OBSERVED|TURN-PORTFOLIO-FIX|SHORT-RETURN-CALIBRATED|LONG-RETURN-AUDIT|NO-GLOBAL-RETUNE|HANDOFF-v157",
     "status": "HANDOFF_v157_READY",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Verify main post-merge rc4.100 workflow/package state; do not deploy before PASS.",
-    "gate": "RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY"
+    "next_action": "Obtain Android/PWA rc4.100 version and representative functional observation; no cache/reinstall detours unless normal refresh fails after server parity.",
+    "gate": "RC4100_ANDROID_OBSERVATION"
   },
   "source_authority": "rc4.100",
   "package_authority": "rc4.100-candidate-pass",
   "android_version_observed": "v11.8.0-rc4.99",
   "android_functional_verified": false,
-  "deployment_authority": "rc4.99",
+  "deployment_authority": "rc4.100",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
