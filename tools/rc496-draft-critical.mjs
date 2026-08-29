@@ -41,6 +41,10 @@ assert.match(app,/crosscheck=\{checked,matched,ok:checked>=2&&matched===checked\
 assert.match(app,/finalRows\.length>=80&&crosscheck\.ok/,'Koerner fallback must fail closed on crosscheck mismatch');
 assert.match(app,/function normalizeWeights\(raw,cap=\.30\)/,'v4-v5 normalized weight cap builder missing');
 assert.match(app,/function buildPanelFromExpertRows\(/,'v4-v5 complete-panel builder missing');
+assert.match(app,/function ensureExpertV4Panels\(\)/,'v4 live panel construction missing');
+assert.match(app,/function ensureExpertV5Panels\(\)/,'v5 live panel construction missing');
+assert.match(app,/const v4Ready=ensureExpertV4Panels\(\),v5Ready=ensureExpertV5Panels\(\)/,'v4-v5 refresh wiring missing');
+assert.match(app,/v45Names=\[\.\.\.new Set\(Object\.values\(EXPERT_V4_BLUEPRINT\)/,'v4-v5 experts must be included in refresh acquisition');
 assert.match(app,/coverageStatus:missing\.length\?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE'/,'new panels must preserve per-player coverage status');
 assert.doesNotMatch(app,/5=Basti, 6=Bjoern/,'rc4.84 wrong slot-5/6 mapping resurrected');
 assert.doesNotMatch(app,/8=Pascal Gelderner/,'rc4.84 wrong slot-8 mapping resurrected');
