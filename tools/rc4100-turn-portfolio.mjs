@@ -55,4 +55,17 @@ const row=(name,pos,ret,panel,rawScore=50,extra={})=>({p:{name,pos},ret,r:{rank:
   assert.equal(fn([leader,blocked],89,92)[0],leader,'blocked alternative must never be promoted');
 }
 assert.ok(!src.includes('Trevor Lawrence')&&!src.includes('Blake Corum'),'player-name forcing detected');
+// Exact mandatory rc4.101 pick-132 fixture: Spears was #1 at 93.3% Return,
+// Andrews #2 at 0.6%, panel gap 4.05 and raw-score gap 7.9. rc4.104 must
+// present Andrews first while leaving both raw scores and Return untouched.
+{
+  const spears=row('Tyjae Spears','RB',.9333333333333333,137.2,100);
+  const andrews=row('Mark Andrews','TE',.005555555555555556,141.25,92.1);
+  const out=fn([spears,andrews],132,149);
+  assert.equal(out[0],andrews,'pick132 frozen fixture must defer Spears to urgent Andrews');
+  assert.equal(spears.rawScore,100);
+  assert.equal(andrews.rawScore,92.1);
+  assert.equal(spears.ret,.9333333333333333);
+  assert.equal(andrews.ret,.005555555555555556);
+}
 console.log('RC4100_TURN_PORTFOLIO_PASS');
