@@ -2141,3 +2141,12 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Return evidence preserved: 3-pick 92.5% forecast vs 92.4% actual (Brier .044); 17-pick 35.6% vs 32.5% (Brier .077). No global Return-v2 retune justified.
 - Completed rc4.104 Snapshot is duplicate/documentation only and must not trigger live-pick analysis. FantasyPros capture remains an optional external benchmark, not a prerequisite for replay.
 - Final v165 seal must be generated from the now-stable takeover files, then all main guardrails must PASS before handoff is declared complete.
+
+
+## 2026-08-29 — HANDOFF v166 semantic contradiction repair
+- Independent new-chat audit of v165 found real stale active takeover scalars despite the v165 PASS seal: COMMAND_CONTRACTS still named active Android rc4.101/source rc4.102 with acceptance pending; BOOTSTRAP and COMPLETENESS_MATRIX still described gh-pages rc4.102 / Android rc4.101 and an obsolete post-merge reseal/deploy gate; CURRENT retained a stale package-reference note; HANDOFF carried an old Updated timestamp.
+- These were transfer-regression hazards because a new chat could legally read the stale top-level/current fields before reaching later corrective prose.
+- v166 repairs every active/current takeover scalar to the verified boundary: main/source/deployment/accepted Android = rc4.104; exact 13/13 main/gh-pages parity PASS; Android post-draft Snapshot path PASS; historical rollback reference rc4.96 only; exact gate RC4104_POST_DRAFT_REPLAY_VALIDATION.
+- Canonical rc4.101 mock remains draft 1399284498113294336 / backup draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json. Counterfactual replay under rc4.104 remains PENDING and cannot be inferred from release/deploy/device PASS.
+- Hard anti-regressions remain unchanged: no PairSum/Rolling, no hard WR roster cap/quota, no blind RB forcing, no player-name forcing/exclusions, no global Return-v2 retune, no generic QB2/TE2 rule, no expert-weight redesign, and starter maxima are not roster caps.
+- Library mirror remains stale/fail-closed; repo generation v166 plus verified runtime/device facts is authority until persistent Library writeback is proven.
