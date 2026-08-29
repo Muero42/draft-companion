@@ -1,10 +1,10 @@
 # PITTI HANDOFF COMPLETENESS MATRIX — REPO v169
-Generation: `20260829T1030Z-v176`
+Generation: `20260829T1235Z-v177`
 
 Takeover fails closed unless every item below is true.
 
 ## Authority / seal
-- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T1030Z-v176`.
+- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T1235Z-v177`.
 - SEAL status PASS; handoff_ready=true; second_pass_pass=true.
 - Integrity map non-empty and includes all authority/runtime/critical regression files.
 - Every seal-listed Git blob SHA matches main.
