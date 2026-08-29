@@ -128,3 +128,9 @@ Scope rule: rc4.102 is a source-freshness correction, not a coefficient experime
 - Official/current team transaction reporting outranks stale Sleeper team / injury_status metadata for roster-status interpretation. Sleeper remains the live draft-room identity/availability and ADP market source, but a player shown with an old club/status must not be treated as roster-secure when an official current transaction contradicts it.
 - Concrete trigger discovered Aug 29: NFL.com's current cutdown preview reports Trey Benson already cut by Arizona while the rc4.105 pre-draft Snapshot still rendered Trey Benson — RB, ARI ... Injury IR. Sunday/Monday transaction scan must explicitly reconcile such conflicts before they influence championship utility or contingency-path reasoning.
 - Do not remove a player from the draft candidate universe solely because of a release: first resolve destination/waiver status and fantasy role. The correction is about status authority, not an automatic player blacklist.
+
+
+## Official-transaction precedence guard
+- During Aug30/Aug31 freshness passes, an official NFL transaction (release/waive/IR/PUP/NFI/trade) overrides stale Sleeper team/status metadata for eligibility and role interpretation.
+- Explicit current example to regression-check: official NFL.com cutdown coverage reports Arizona released Trey Benson while the current Sleeper-derived pool still showed ARI / Injury IR. Do not silently carry that stale state into the real-draft board.
+- Mike Washington Jr. current first-team preseason usage with Jeanty sidelined is role evidence only; it must not be converted into an injury certainty or automatic ranking override.
