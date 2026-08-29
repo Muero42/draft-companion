@@ -20,9 +20,9 @@ Updated: 2026-08-28 20:02Z
   - package/re-extract 33205458721 PASS;
   - project guardrails 33205458745 PASS.
 - package artifact 9699461048; GitHub artifact-envelope SHA-256 `4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae`.
-- **post-merge main verification has not yet been observed**. Do not infer PASS from PR gates alone.
-- gh-pages = rc4.99; main/pages parity = FALSE.
-- Android/PWA observed = rc4.99; rc4.100 is NOT Android-observed or accepted.
+- **post-merge main verification PASS** on the sealed main state; release/package/project guardrails and legacy draft-critical gates are GREEN.
+- gh-pages = rc4.100; **all 13 packaged runtime files have exact Git-blob parity with main**.
+- Android/PWA last observed = rc4.99; rc4.100 is NOT yet Android-observed or functionally accepted.
 - canonical deployment sequence is mandatory: verified candidate -> main/post-merge verification -> exact gh-pages deployment + byte parity -> Android/PWA refresh -> device observation.
 - Do not repeat old detours: gh-pages-only while main stale, repeated restart/refresh loops, cache clearing/reinstall, or manual ZIP as default.
 
@@ -97,11 +97,11 @@ A blocked CI/device lane blocks only that lane; continue decision/evidence, regr
 AUTO never starts an interactive mock unless explicitly requested.
 
 ## EXACT NEXT GATE
-**RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY**
+**RC4100_ANDROID_OBSERVATION**
 
-1. Verify rc4.100 main post-merge behavioral/package/guardrail state.
-2. Only after PASS, deploy the exact verified rc4.100 runtime to gh-pages and prove byte parity.
-3. Then request only the unavoidable Android version/functional observation.
+1. Server-side promotion is complete: post-merge gates PASS and exact 13-file main/gh-pages runtime parity is proven.
+2. Request only the unavoidable Android/PWA rc4.100 version and representative functional observation.
+3. Do not use cache clearing/reinstall/manual-ZIP detours unless normal refresh fails despite proven server parity.
 4. In parallel, aggregate horizon-specific Return outcomes from compatible rc4.91+ OOS evidence.
 5. Continue generic Pro/Contra substantive-quality and soft WR-saturation validation.
 6. Do not introduce any broad retune without multi-draft OOS support.
