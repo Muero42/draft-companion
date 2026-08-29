@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-29T07:12:00Z",
+  "updatedAt": "2026-08-29T07:24:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,30 +11,30 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.105",
+    "appVersion": "v11.8.0-rc4.106",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.104",
     "latestPreinstallVerified": "v11.8.0-rc4.104",
-    "latestResearchChallenger": "v11.8.0-rc4.105",
+    "latestResearchChallenger": "v11.8.0-rc4.106",
     "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.104",
     "preinstallSha256": "sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.105",
-    "latestDeployedCandidate": "v11.8.0-rc4.105",
-    "latestAndroidVerified": "v11.8.0-rc4.104",
-    "androidAuthority": "v11.8.0-rc4.104",
-    "android_authority": "v11.8.0-rc4.104",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.106",
+    "latestDeployedCandidate": "v11.8.0-rc4.106",
+    "latestAndroidVerified": "v11.8.0-rc4.105",
+    "androidAuthority": "v11.8.0-rc4.105",
+    "android_authority": "v11.8.0-rc4.105",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33236822641,
     "preinstallReferenceArtifactId": 9710162910,
     "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.104",
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.104",
-    "testChallengerAndroidObserved": true,
-    "testChallengerAndroidAccepted": true,
+    "latestAndroidVersionObserved": "v11.8.0-rc4.105",
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.105",
+    "testChallengerAndroidObserved": false,
+    "testChallengerAndroidAccepted": false,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
@@ -178,7 +178,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4105_POST_DEVICE_COACH_VALIDATION",
+    "status": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
     "production": true,
     "androidVerified": true,
     "changes": [
@@ -187,7 +187,8 @@
       "long-turn high-Return WAIT portfolio ordering",
       "visible curated Pro/Contra evidence with neutral polarity preserved",
       "successor-RC semantic regression wiring",
-      "short-turn portfolio quality floor blocks score-0/low-quality timing overrides while preserving validated TLaw/Corum case"
+      "short-turn portfolio quality floor blocks score-0/low-quality timing overrides while preserving validated TLaw/Corum case",
+      "snapshot Coach Top 8 embedded Expert-v2/v3 individual ranks now render from audited embedded rows instead of unrelated live rankCache verification flags"
     ],
     "validation": [
       "PR #44 candidate release/package/guardrails PASS",
@@ -197,13 +198,14 @@
       "Android rc4.104 observed; post-draft Snapshot path PASS",
       "bounded frozen-fixture replay CI PASS: pick92/109/112 roster economics + exact pick132 Spears/Andrews reorder; no Return-v2 mutation",
       "PR #46 release/package/guardrails PASS; main merged 93a7619ec5af3468b71d62238b77f4f01e37822c; exact 13/13 main/gh-pages runtime parity PASS",
-      "Android screenshot 2026-08-29 09:12 local: visible v11.8.0-rc4.105; FantasyPros Online; Rankings 26 Min.; Sleeper Draft 1057; Coach Bereit; Expert-v3 positionsspezifisch."
+      "Android screenshot 2026-08-29 09:12 local: visible v11.8.0-rc4.105; FantasyPros Online; Rankings 26 Min.; Sleeper Draft 1057; Coach Bereit; Expert-v3 positionsspezifisch.",
+      "rc4.105 fresh pre-draft Snapshot PASS and pick9 live Snapshot healthy; PR #47 release/package/guardrails PASS; rc4.106 merged main 0818bc9632eca79c4d055d444a6eae0af53f3a9f; 13/13 runtime deployed to gh-pages"
     ],
-    "nextGate": "Fresh rc4.105 Snapshot/Coach behavioral validation; deployment/version gate is closed."
+    "nextGate": "Android rc4.106 display observation when convenient; independent draft-day work continues; mock 1399325404598124544 paused before pick9"
   },
-  "status": "RC4105_POST_DEVICE_COACH_VALIDATION",
-  "gate": "RC4105_POST_DEVICE_COACH_VALIDATION",
-  "nextGate": "Fresh rc4.105 Snapshot/Coach behavioral validation; deployment/version gate is closed.",
+  "status": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
+  "gate": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
+  "nextGate": "Android rc4.106 display observation when convenient; independent draft-day work continues; mock 1399325404598124544 paused before pick9",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
