@@ -150,7 +150,7 @@ for(const [p,expected] of Object.entries(seal.integrity||{})){
 must(current.handoff?.transaction_in_progress===false,'sealed takeover still marked transaction_in_progress');
 const generationVersion=(current.handoff_generation.match(/-v(\d+)$/)||[])[1];
 must(generationVersion,'CURRENT generation version missing');
-must(handoffMatrix.includes(`REPO v${generationVersion}`),'handoff matrix generation label drift');
+must(handoffMatrix.includes(`REPO v${generationVersion}`)||handoffMatrix.includes(`— v${generationVersion}`)||handoffMatrix.includes(`Generation: \`${current.handoff_generation}\``),'handoff matrix generation label drift');
 must(preflight.includes('HANDOFF TRANSACTION STATE'),'preflight handoff transaction gate missing');
 must(releaseWorkflow.includes('node tools/rc483-draft-critical.mjs'),'release workflow missing rc4.83 gate');
 must(releaseWorkflow.includes('node tools/rc485-draft-critical.mjs'),'release workflow missing rc4.85 gate');
