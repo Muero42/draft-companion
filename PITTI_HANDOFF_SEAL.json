@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260829T0815Z-v171",
-  "created_at": "2026-08-29T08:15:00Z",
+  "handoff_generation": "20260829T0825Z-v172",
+  "created_at": "2026-08-29T08:25:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -11,20 +11,20 @@
     ".github/workflows/release-contract-v2-package.yml": "0d8b36422355b2450a4a33291165427ca4c8de83",
     ".github/workflows/release-contract-v2.yml": "0579fdc8a8333704bea72baa1af99a9180168796",
     "HANDOFF_COMPLETENESS_MATRIX.md": "859e0890f83d2877db2d4e4dfdb44c4deb32f040",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "9e34bb06c6d260e17e662cf355da5522c7b31638",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "90d4eb2f4b05d2b4a0695770e4049b7b3e6945b0",
     "PITTI_AUTO_PREFLIGHT.md": "622aa5870525283f99e30b3fe632951ed14c20dc",
-    "PITTI_COMMAND_CONTRACTS.json": "eb259380a440983db75f662c2000950ad65511e0",
-    "PITTI_CURRENT_STATE.json": "125ede9f4e298b7276dc5d3e510f694062172ce3",
-    "PITTI_EXECUTION_LOCK.json": "b2815bf7aebb9d2179549668e5052ec9a9cc7534",
+    "PITTI_COMMAND_CONTRACTS.json": "8f23ab05c418f1318f68ef1dff48d298b5ab73ac",
+    "PITTI_CURRENT_STATE.json": "350d3e46194ce3733396539e7fd0147a03ff9df6",
+    "PITTI_EXECUTION_LOCK.json": "d69fad7635a60ca8cbf7683abb6d6e360cf4add6",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "5a45de5de1a5fa317c2d8954617aea72776ba34f",
-    "PITTI_PROJECT_STATE.md": "95d695d191770b86c039b993a700da222e1c04fb",
+    "PITTI_PROJECT_STATE.md": "6fe604e301ca45ad6a58230718b080deaf9bf8b3",
     "README.md": "ff0d739eb3def45e068392da991c83fdbdd4cc47",
     "app.js": "89fa7974cf2f1ebc7747f09b02cb246f4ee0523f",
     "decision-policy.js": "76234515b5428a33b7ef573f1f5c87bab058ad67",
     "index.html": "a19a52499821a91411267f6fbe11ad4e1fd25452",
     "live-surface-v3.js": "593bfcb58465227cc6eae71b787508ab95afbbd8",
     "manifest.webmanifest": "47e15cb1ff81fafea1b5f528e0f35dd13b947c63",
-    "research/DRAFT_DAY_FRESHNESS_PLAN_2026-08-31.md": "e6da8d01acfa653a3e0edc99f7565b8032f0bec5",
+    "research/DRAFT_DAY_FRESHNESS_PLAN_2026-08-31.md": "edcc77339b1f8536f38bba101ab2ea675fc97880",
     "research/RC498_PAIRED_OOS_MOCKS_1399109246460682240_1399114762087895040_2026-08-28.md": "0ce3c9826607d36b8aa59ab767fa6e26fcc83843",
     "research/RC499_FULL_DRAFT_1399141058222280704_2026-08-28.md": "341f76da8fd53c8cf094f31a072332ff86eeccdd",
     "sw.js": "1981d47e94a899f5611cf876d8f5e54ef30d8e0f",
@@ -38,7 +38,7 @@
     "tools/rc499-normal-cut.mjs": "fd70fafc8da135927d12d81cd98beef10de487ed",
     "tools/rc499-wr-saturation.mjs": "9e297363e83bc771aa0ebaabf9bcfeb17fd1dca8",
     "tools/rc4106-embedded-individuals.mjs": "92b401305ff4ffcac369585a0220e7fb58cea89b",
-    "PITTI_UPSIDE_RESEARCH_V3.md": "fe7858f164a0037d08a8c626c2f0415ca4c0dcb6"
+    "PITTI_UPSIDE_RESEARCH_V3.md": "1141e02eea509b627348979241467b5111347319"
   },
   "checks": {
     "generation_consistent": true,
@@ -100,8 +100,11 @@
     "rc4106_challenger_flags_fail_closed": true,
     "rc4106_package_authority_current": true,
     "official_transaction_authority_guard": true,
-    "raiders_current_role_delta_recorded": true
+    "raiders_current_role_delta_recorded": true,
+    "current_2026_source_context_guard": true,
+    "official_transaction_precedence": true,
+    "late_rb_external_corroboration_checkpointed": true
   },
   "exact_gate": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
-  "note": "v171 PASS seal. rc4.106 source/package/deployment PASS and Android display observation pending; rc4.105 last accepted Android. Mock paused before pick9, Cook recommendation not pick. Aug29 current NFL role/cutdown delta and official-transaction-over-stale-Sleeper authority guard checkpointed. No broad runtime retune."
+  "note": "v172 PASS seal. rc4.106 source/package/deployment PASS; rc4.105 accepted Android; rc4.106 display observation pending. Mock 1399325404598124544 paused before pick9, Cook recommended not drafted. Official-transaction precedence, explicit-2026 source-context guard, and Aug26-27 late-RB corroboration checkpointed. No broad runtime retune."
 }
