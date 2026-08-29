@@ -10,9 +10,9 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.101",
+    "android_authority": "v11.8.0-rc4.104",
     "test_challenger": "v11.8.0-rc4.104",
-    "test_challenger_android_verified": false,
+    "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.104",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd",
@@ -24,16 +24,16 @@
     "android_version_observed": true,
     "android_functional_verified": true,
     "freeze_policy": "rc4.101 accepted draft runtime; rc4.96 historical rollback reference only",
-    "test_challenger_android_observed": false,
-    "android_acceptance_pending": true,
-    "android_observed": "v11.8.0-rc4.101",
-    "android_functional_acceptance": "LIVE_ANALYZE_SNAPSHOT_COACH_PASS",
+    "test_challenger_android_observed": true,
+    "android_acceptance_pending": false,
+    "android_observed": "v11.8.0-rc4.104",
+    "android_functional_acceptance": "SNAPSHOT_POST_DRAFT_PATH_PASS",
     "rollback_reference": "v11.8.0-rc4.96"
   },
   "exact_continuation": {
-    "gate": "RC4104_ANDROID_OBSERVATION",
+    "gate": "RC4104_POST_DRAFT_REPLAY_VALIDATION",
     "auto_starts_mock": false,
-    "instruction": "rc4.104 main all gates GREEN after v161 seal; exact 13-file main/gh-pages runtime parity PASS. Await unavoidable Android update/observation and Analyze/Snapshot/Coach smoke. rc4.101 remains accepted Android authority until PASS."
+    "instruction": "Android rc4.104 observed and post-draft Snapshot path PASS. Draft 1399284498113294336 is complete; do not live-analyze duplicate snapshot. Use preserved rc4.101 decision fixtures for counterfactual rc4.104 replay/regression and await FantasyPros capture only for external benchmark."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -55,12 +55,12 @@
     "status": "HANDOFF_v161_READY",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Complete v161 consistency reseal and main all-green verification, then exact gh-pages deployment.",
-    "gate": "RC4104_POSTMERGE_RESEAL_THEN_DEPLOY"
+    "next_action": "Counterfactual replay preserved decision fixtures under rc4.104; FantasyPros capture is optional external benchmark, not prerequisite.",
+    "gate": "RC4104_POST_DRAFT_REPLAY_VALIDATION"
   },
   "source_authority": "v11.8.0-rc4.104",
   "package_authority": "v11.8.0-rc4.104",
-  "android_version_observed": "v11.8.0-rc4.101",
+  "android_version_observed": "v11.8.0-rc4.104",
   "android_functional_verified": true,
   "deployment_authority": "v11.8.0-rc4.104",
   "draft_day_plan": {
@@ -73,5 +73,5 @@
     "operational_freeze": "~19:50",
     "transaction_rule": "same-position claim/signing is weak Bayesian evidence only; correlate with pre-existing injury/role uncertainty and seek corroboration; uncorroborated signal may only break close ties"
   },
-  "android_acceptance_pending": true
+  "android_acceptance_pending": false
 }
