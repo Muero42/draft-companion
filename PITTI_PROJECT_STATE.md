@@ -2108,3 +2108,12 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - 17-pick turns: **77 forecasts, 35.6% forecast vs 32.5% actual, Brier 0.077**. This again shows modest long-horizon optimism, directionally consistent with the prior full-draft audit, but still does not justify a global Return-v2 retune.
 - Expert coverage on the visible decision surface was healthy: every Top-10 candidate across the 15 current-draft fixtures had at least four panel voices; no new sparse-panel/Dobbins-style defect was reproduced.
 - All 14 completed own picks captured before pick149 matched the Coach #1 candidate. This makes the WR9 construction causal evidence about the Coach path, not a user-override artifact. The backup itself stops at 148 completed picks, so it does **not** prove the actual final pick149 selection; the pick149 fixture had Tank Bigsby #1.
+
+
+## 2026-08-29 07:48 CEST — rc4.104 merged; post-merge reseal diagnosis
+- PR #44 candidate head completed release/package/project guardrails PASS after inherited rc4.83/84/85 WR-safety assertions were updated to the new generic roster-aware semantics.
+- Squash merge to main: `ff6c2240797c1d3303dd538204c76553fd324c16`.
+- Main release contract PASS (33236822691), candidate package PASS (33236822641; artifact 9710162910; digest sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd), and draft-critical successor gate PASS (33236822674).
+- Main rc4.82/rc4.83/project guardrails failed only because the v160 execution lock still named rc4.102 and the v160 seal hashes necessarily no longer matched the merged rc4.104 files. Logs contain no new runtime/model assertion failure before the seal checks. Treat as checkpoint transaction drift, not candidate rejection.
+- v161 transaction now synchronizes CURRENT/LOCK/COMMAND/HANDOFF/bootstrap/matrix/README to actual rc4.104 main + rc4.101 Android boundary before resealing. gh-pages deployment remains held until the final main seal state is all-green.
+- Important release-process fix from rc4.104: rc4.98/99/100 semantic regressions were previously wired with exact-version regexes and could silently stop running on successors. Workflows now keep polarity, WR saturation, normal-cut, turn-portfolio, and rc4.104 roster-portfolio canaries active on successor RCs.
