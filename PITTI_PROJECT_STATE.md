@@ -2273,3 +2273,12 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - NFL official calendar verified the two decisive roster windows: final 53-man cutdown Sunday Aug30 18:00 ET and final-cutdown waiver claims Monday Aug31 13:00 ET.
 - Monday 13:00 ET = **19:00 Europe/Berlin** on Aug31. This independently validates PITTI's already-planned 19:05–19:30 transaction delta scan immediately before the 20:00 draft; no cadence redesign needed.
 - Final 19:40–19:50 materiality scan and ~19:50 operational freeze remain appropriate. Prioritize official PUP/NFI/IR designations, waiver claims, trades and role-changing releases; do not infer injury solely from a same-position acquisition.
+
+
+## 2026-08-29 — post-draft / FA readiness source audit
+- Post-draft surfaces were re-audited from current rc4.106 source while the mock remains paused. No draft-runtime change is justified.
+- FA-vs-roster is correctly inactive before draft completion and compares concrete ADD/DROP pairs after completion. CLEAR ADD requires both a materially positive swap score (>=6) and fresh actionable Evidence <=7 days; older evidence can only surface WATCH. No automatic transaction is executed.
+- Late RB contingency value is explicitly protected in drop-capital scoring; QB2/TE2 acquisition carries an exceptional-only penalty in this 10-team 1QB environment; FAAB is deliberately not fabricated without current waiver-week/market evidence.
+- Research-cache chronology remains fail-closed for critical injury/PUP/IR state: fresh crawl/observation alone does not prove a current source event. Watcher ingestion failure leaves existing cache unchanged.
+- Trade board remains target-discovery/read-only and does not emit accept/decline/fairness claims without a current trade-market layer.
+- One post-draft-only nuance remains on the watchlist, not a pre-draft fix: IR status increases drop-review pressure even though an IR stash can preserve option value. Re-evaluate only against real post-draft roster/FA evidence; do not alter near-draft runtime from a hypothetical case.
