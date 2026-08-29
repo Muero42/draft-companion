@@ -154,7 +154,7 @@ els.topN.value=store.text('v7_topN','35');
 els.snapshotMode.value=store.text('v7_snapshotMode','compact');
 els.draftMode.value=store.text('v11_draftMode',store.text('v10_draftMode','mock'));
 els.replayCutoff.value=store.text('v11_replayCutoff',store.text('v10_replayCutoff',''));
-const ACTIVE_2026_MANAGER_MAP_TEXT='1=Michael, 2=Pascal Voerde, 3=Marc Düsseldorf, 4=Thomas, 5=Basti, 6=Bjoern, 7=Giuliano, 8=Pascal Gelderner, 9=Tim, 10=Dutch Marc';
+const ACTIVE_2026_MANAGER_MAP_TEXT='1=Michael, 2=Pascal Voerde, 3=Marc Düsseldorf, 4=Thomas, 5=Bjoern, 6=Pascal Gelderner, 7=Giuliano, 8=Basti, 9=Muerotechnik, 10=Dutch Marc';
 els.managerMap.value=store.text('v11_managerMap',store.text('v10_managerMap',ACTIVE_2026_MANAGER_MAP_TEXT));
 els.stressMode.value=store.text('v113_stressMode','baseline');
 els.strategyMode.value=store.text('v111_strategyMode','progressive');
