@@ -2496,3 +2496,12 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - v5 blueprint encoded as v3 + Koerner, funded primarily from DS Team share, position-specific, capped. No blind transfer.
 - Selector prototype remains directly above Analyze, v3 selected, v4/v5 disabled fail-closed.
 - Do not upload/promote Android/main merely to save time; release only after exact-source and regression gates pass.
+
+
+### 2026-08-29 — Koerner API recovery route
+- User correctly identified a stronger acquisition route: FantasyPros API supports multi-expert filters on Rankings/Consensus Rankings and multi-expert experts= on Compare Players. This allows a pairwise exact-recovery fallback when direct single-expert retrieval fails.
+- Research branch now implements Koerner fallback: request exactly **Koerner + one known verified reference expert** with range=true; if the reference expert's exact rank equals one endpoint of the 2-expert min/max range, the other endpoint is Koerner's exact overall rank. Equal endpoints imply a tie. Any row where the reference rank is not an endpoint is rejected.
+- The pair response must explicitly contain exactly two experts and both identities. Fallback tries verified references (Fitzmaurice, Boone, Del Don, Mariano) and requires >=80 recovered usable rows. Provenance is labeled FantasyPros API pairwise exact inversion.
+- This is not article/tier reconstruction; it is algebraic recovery from official API rank ranges using an independently verified exact reference vector.
+- Regression guards now require the pairwise parser, exact-two-expert gate, fallback path and provenance label.
+- v5 still remains disabled until this route actually succeeds on-device/API and the resulting Koerner vector passes coverage + same-state regression. No user action needed yet.
