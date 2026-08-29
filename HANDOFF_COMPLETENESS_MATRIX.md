@@ -1,10 +1,10 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v166
-Generation: `20260829T0840Z-v166`
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v167
+Generation: `20260829T0705Z-v167`
 
 Takeover fails closed unless every item below is true.
 
 ## Authority / seal
-- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T0840Z-v166`.
+- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T0705Z-v167`.
 - SEAL status PASS; handoff_ready=true; second_pass_pass=true.
 - Integrity map non-empty and includes all authority/runtime/critical regression files.
 - Every seal-listed Git blob SHA matches main.
@@ -12,14 +12,14 @@ Takeover fails closed unless every item below is true.
 - Verified repo/runtime evidence overrides stale Library mirrors and historical prose.
 
 ## Runtime boundary
-- main/source = rc4.104.
+- main/source = rc4.105.
 - PR #36 release 33205458705 PASS.
 - PR #36 package/re-extract 33205458721 PASS; artifact 9699461048; GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
 - PR #36 guardrails 33205458745 PASS.
 - rc4.100 merged main commit = 1b85656e40a182ca6be2397c5bf6674006b97bd2.
 - post-merge main verification PASS: release/package/project guardrails plus rc4.82/rc4.83 draft-critical gates GREEN.
-- gh-pages = rc4.104; exact 13/13 packaged runtime-file parity with main PASS.
-- Android/PWA accepted = rc4.104; user post-draft Snapshot path PASS.
+- gh-pages = rc4.105; exact 13/13 packaged runtime-file parity with main PASS.
+- Android/PWA last accepted = rc4.104; rc4.105 device acceptance pending.
 - rollback authority = rc4.96.
 
 ## Full-draft / Return evidence
@@ -56,7 +56,7 @@ verified candidate -> main post-merge verification -> gh-pages exact-byte deploy
 No repeated refresh/cache/reinstall/manual-ZIP detours before server-side parity is proven.
 
 ## Current gate
-`RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS`
+`RC4105_ANDROID_ACCEPTANCE`
 
 ## rc4.104 canonical new evidence
 - Backup `draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json`, draft 1399284498113294336, rc4.101.
@@ -70,3 +70,8 @@ No repeated refresh/cache/reinstall/manual-ZIP detours before server-side parity
 - Bounded frozen-fixture replay under rc4.104 is CI PASS for pick92/109/112 roster economics and exact pick132 Spears/Andrews reorder; no Return-v2 mutation.
 - Browser-equivalent full historical recomputation is unavailable from preserved inputs and is not claimed.
 - Current work is draft-day readiness/freshness/failsafe; FantasyPros capture optional.
+
+## v167 OOS / rc4.105
+- latest backup = draft-companion-v7-backup-2026-08-29T06-53-52-495Z.json; draft 1399308446632800256; rc4.104.
+- pick129 score-0 timing promotion reproduced; rc4.105 generic quality-floor regression added.
+- PR #46 three gates PASS; main merged; gh-pages 13/13 parity PASS; Android acceptance pending.
