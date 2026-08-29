@@ -139,3 +139,10 @@ Scope rule: rc4.102 is a source-freshness correction, not a coefficient experime
 ## Aug29 freshness source-quality guard
 - Generic web search can surface legacy NFL roundup pages with matching month/day but wrong season. Draft-day ingestion must verify **explicit 2026 season/date context** before accepting a news item as current.
 - Prefer the NFL 2026-27 important-dates/calendar, current 2026 roster-cut coverage, current team/league transaction reporting, then corroborated fantasy analysis. Reject legacy same-date pages even when search freshness labels them as newly crawled.
+
+
+## Aug29 source audit IV — same-date legacy trap confirmed in live search
+- Live web search on Aug29 returned NFL pages titled Aug29/Aug30 that are actually 2023/2022 content alongside genuine 2026 pages. This independently validates the explicit-year guard added earlier.
+- Current accepted official anchors are the NFL **2026-27 important dates** page and current 2026 cutdown coverage explicitly dated Aug25-28, 2026. Reject roundup pages unless the body itself establishes the 2026 season.
+- Current official Aug28 2026 injury delta: Raiders HC Klint Kubiak says Ashton Jeanty is still recovering from the Aug23 ankle injury but the club is counting on him and has another week to assess Week 1 readiness. Treat as monitoring/availability uncertainty, not a presumed absence.
+- Current official 2026 cutdown coverage confirms Arizona released Trey Benson. Any stale Sleeper ARI/IR label must not survive the final freshness pass as current roster truth.
