@@ -1,5 +1,5 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260829T0500Z-v160`
+Handoff generation: `20260829T0548Z-v161`
 Updated: 2026-08-28 20:02Z
 
 ## FAIL-CLOSED TAKEOVER
@@ -13,18 +13,16 @@ Updated: 2026-08-28 20:02Z
 
 ## CURRENT RUNTIME / RELEASE BOUNDARY
 - production/control baseline: rc4.64.
-- rollback / last fully functionally accepted Android authority: rc4.96.
-- **main/source: rc4.100**, squash merge `1b85656e40a182ca6be2397c5bf6674006b97bd2`.
-- PR #36 candidate gates all GREEN:
-  - release contract 33205458705 PASS;
-  - package/re-extract 33205458721 PASS;
-  - project guardrails 33205458745 PASS.
-- package artifact 9699461048; GitHub artifact-envelope SHA-256 `4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae`.
-- **post-merge main verification PASS** on the sealed main state; release/package/project guardrails and legacy draft-critical gates are GREEN.
-- gh-pages = rc4.100; **all 13 packaged runtime files have exact Git-blob parity with main**.
-- Android/PWA last observed = rc4.99; rc4.100 is NOT yet Android-observed or functionally accepted.
-- canonical deployment sequence is mandatory: verified candidate -> main/post-merge verification -> exact gh-pages deployment + byte parity -> Android/PWA refresh -> device observation.
-- Do not repeat old detours: gh-pages-only while main stale, repeated restart/refresh loops, cache clearing/reinstall, or manual ZIP as default.
+- historical rollback reference: rc4.96.
+- accepted Android authority: **rc4.101** (live Analyze/Snapshot/Coach PASS).
+- **main/source: rc4.104**, squash merge `ff6c2240797c1d3303dd538204c76553fd324c16`.
+- rc4.104 PR #44 candidate gates: release/package/project guardrails **PASS**.
+- post-merge main: release contract PASS (33236822691), package PASS (33236822641), successor gate PASS (33236822674).
+- post-merge rc4.82/rc4.83/project guard failures were diagnosed as **checkpoint/seal drift only**: runtime version lock and stale v160 blob hashes. No behavioral/package failure.
+- package artifact 9710162910, digest `sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd`.
+- gh-pages remains rc4.102 until the v161 reseal is all-green; do not claim rc4.104 deployed yet.
+- canonical mock evidence: `draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json`, draft 1399284498113294336, rc4.101.
+- rc4.104 scope: repeated-WR9 generic repair, long-turn WAIT portfolio ordering, visible curated evidence + neutral polarity, successor-RC regression wiring. No hard WR cap, no global Return-v2 retune, no expert-weight redesign.
 
 ## CANONICAL FULL-DRAFT EVIDENCE — PITTI BACKUP 28-08 19:24
 Library filename: **draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json**
@@ -97,11 +95,9 @@ A blocked CI/device lane blocks only that lane; continue decision/evidence, regr
 AUTO never starts an interactive mock unless explicitly requested.
 
 ## EXACT NEXT GATE
-**RC4100_ANDROID_OBSERVATION**
+**RC4104_POSTMERGE_RESEAL_THEN_DEPLOY**
 
-1. Server-side promotion is complete: post-merge gates PASS and exact 13-file main/gh-pages runtime parity is proven.
-2. Request only the unavoidable Android/PWA rc4.100 version and representative functional observation.
-3. Do not use cache clearing/reinstall/manual-ZIP detours unless normal refresh fails despite proven server parity.
-4. In parallel, aggregate horizon-specific Return outcomes from compatible rc4.91+ OOS evidence.
-5. Continue generic Pro/Contra substantive-quality and soft WR-saturation validation.
-6. Do not introduce any broad retune without multi-draft OOS support.
+1. Complete v161 authority/seal consistency and require all main gates GREEN.
+2. Deploy the exact 13 packaged runtime files to gh-pages and prove Git-blob parity.
+3. Only then request the unavoidable Android rc4.104 observation and Analyze/Snapshot/Coach smoke.
+4. Continue draft-day freshness/evidence work independently; no broad retune.
