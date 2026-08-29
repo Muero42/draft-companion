@@ -179,14 +179,19 @@ must(emergencyQueueContract.includes('EMERGENCY_QUEUE_CONTRACT_PASS'),'emergency
 must(emergencyQueueContract.includes('only one QB while QB1 open'),'emergency queue one-QB canary missing');
 must(emergencyQueueContract.includes('only one TE while TE1 open'),'emergency queue one-TE canary missing');
 
-for(const token of ['production/control: rc4.64','rollback accepted functional authority: rc4.96','main/source: rc4.100','blocked dependent lane does not stop independent lanes'])
+const currentSourceRc=(String(current.source_authority||'').match(/rc4\.\d+/)||[])[0];
+must(currentSourceRc,'CURRENT source authority missing RC version');
+for(const token of ['production/control: rc4.64','rollback accepted functional authority: rc4.96','blocked dependent lane does not stop independent lanes'])
   must(bootstrap.includes(token),`repo bootstrap invariant missing: ${token}`);
-for(const token of ['main/source = rc4.100','rollback authority = rc4.96','no global Return-v2 retune','Long blocks; re-inventory after every package'])
+must(bootstrap.includes(`main/source: ${currentSourceRc}`),`repo bootstrap current source drift: ${currentSourceRc}`);
+for(const token of ['rollback authority = rc4.96','no global Return-v2 retune','Long blocks; re-inventory after every package'])
   must(handoffMatrix.includes(token),`repo handoff matrix invariant missing: ${token}`);
+must(handoffMatrix.includes(`main/source = ${currentSourceRc}`),`repo handoff matrix current source drift: ${currentSourceRc}`);
 must(lock.authority?.libraryMirrorStatus?.includes('STALE_'),'stale Library mirror status must remain explicit until persistence is proven');
 must(lock.authority?.failClosedRecovery?.includes('never claim a newer Library generation persisted unless files.list proves it'),'Library persistence fail-closed rule missing');
-for(const token of ['Historical text or stale Library mirrors may never override newer verified state','rc4.100','After every package: checkpoint material change -> re-inventory all independent lanes -> execute next package'])
+for(const token of ['Historical text or stale Library mirrors may never override newer verified state','After every package: checkpoint material change -> re-inventory all independent lanes -> execute next package'])
   must(currentHandoff.includes(token),`current handoff invariant missing: ${token}`);
+must(currentHandoff.includes(currentSourceRc),`current handoff source authority drift: ${currentSourceRc}`);
 
 for(const token of ['pitti-decision-evidence-v2','QB2_VIOLATION','WR6_PLUS_COACH','WR7_PLUS_COACH','TE2_COACH','USER_OVERRIDE','CHOSEN_OUTSIDE_TOP16','telemetryComplete','hardQb2Pass','OOS promotion evidence must come from the realistic mock gate','OOS promotion evidence must use user slot 9','ACUTE_STATUS_CONFOUND','acuteStatusConfoundCount','cleanDecisionCount','cleanHardQb2Pass','cleanSaturatedWrCount','cleanWr7PlusCount'])
   must(evidenceAnalyzer.includes(token),`Evidence-v2 analyzer invariant missing: ${token}`);
