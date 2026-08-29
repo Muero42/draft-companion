@@ -2300,3 +2300,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Current Aug26-27 sleeper consensus corroborates PITTI's late-RB thesis set (Mitchell/Coleman/Lloyd/Sampson/Bigsby/Braelon Allen/Spears/Emmett Johnson/Kaelon Black/Mike Washington) without justifying double-counting or a runtime coefficient change.
 - Search audit exposed a real freshness hazard: legacy NFL roundup pages can be returned under same month/day and appear freshly crawled. Draft-day plan now requires explicit 2026 season/date validation before ingesting a news event.
 - No runtime mutation made. Official current transaction evidence remains higher authority than stale Sleeper status or generic article recency.
+
+
+## 2026-08-29 — AUTO live-search source audit IV
+- Live Aug29 search reproduced the legacy same-date hazard: old 2022/2023 NFL roundup pages appeared beside genuine 2026 sources. The explicit-2026 validation guard is therefore evidence-backed, not hypothetical.
+- Current official Aug28 2026 update keeps Ashton Jeanty in monitor status: ankle still mending, Raiders counting on him, another week to assess Week 1. No absence assumption and no broad rank retune.
+- Current official 2026 cutdown coverage independently confirms Trey Benson's Arizona release; official transaction precedence over stale Sleeper metadata remains mandatory.
