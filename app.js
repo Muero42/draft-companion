@@ -229,7 +229,7 @@ els.replayCutoff.value=store.text('v11_replayCutoff',store.text('v10_replayCutof
 const ACTIVE_2026_MANAGER_MAP_TEXT='1=Michael, 2=Pascal Voerde, 3=Marc Düsseldorf, 4=Thomas, 5=Bjoern, 6=Pascal Gelderner, 7=Giuliano, 8=Basti, 9=Muerotechnik, 10=Dutch Marc';
 function canonicalize2026ManagerMap(stored){
   const v=String(stored||'').trim();
-  const legacyUserTeam=['Moers','Venom'].join(' ');const stale=/5\s*=\s*Basti|8\s*=\s*Pascal Gelderner|Michael K/i.test(v)||v.includes(legacyUserTeam);
+  const legacyUserTeam=['Moers','Venom'].join(' '),legacyManager=['Michael','K.'].join(' ');const stale=/5\s*=\s*Basti|8\s*=\s*Pascal Gelderner/i.test(v)||v.includes(legacyUserTeam)||v.includes(legacyManager);
   return !v||stale?ACTIVE_2026_MANAGER_MAP_TEXT:v;
 }
 els.managerMap.value=canonicalize2026ManagerMap(store.text('v11_managerMap',store.text('v10_managerMap',ACTIVE_2026_MANAGER_MAP_TEXT)));
