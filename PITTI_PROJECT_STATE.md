@@ -2065,3 +2065,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Post-deploy verification compared all 13 packaged runtime files by Git blob SHA; **13/13 exact main/gh-pages parity PASS**. gh-pages/deployment authority is now rc4.100.
 - Android/PWA remains last observed rc4.99. No claim of rc4.100 device acceptance is allowed until actual device observation. Next gate: `RC4100_ANDROID_OBSERVATION`.
 - Parallel current-evidence scan found no basis for a broad scoring/Return retune. Fresh Aug-28 evidence reinforces CMC workload/age as risk context (not Plus), Jeanty remains monitored rather than hard-blocked, and fresh rankings/news should feed the scheduled draft-day freshness pass rather than trigger an unsafely broad late redesign.
+
+
+## 2026-08-29 06:24 CEST — rc4.100 Android/PWA observation PASS
+- User device screenshot visibly shows `v11.8.0-rc4.100` in the Draft Companion header after normal refresh/open. This closes the version/deployment observation gate; no cache clear, reinstall or ZIP path was needed.
+- Visible smoke state is healthy at load: FantasyPros Online, rankings 9h, Sleeper Draft 1057, Coach Bereit, Expert-v3 positionsspezifisch selected. This is sufficient for load/configuration smoke, but not yet a claim that every recommendation-path behavior is functionally accepted.
+- Android authority advances to rc4.100 for deployment/version state. Next bounded gate is representative functional acceptance plus independent evidence/calibration work; do not repeat install/version troubleshooting.
