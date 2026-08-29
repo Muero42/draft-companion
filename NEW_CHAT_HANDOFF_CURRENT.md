@@ -1,11 +1,11 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260829T1018Z-v175`
-Updated: 2026-08-29 10:18Z
+Handoff generation: `20260829T1030Z-v176`
+Updated: 2026-08-29 10:30Z
 
 ## FAIL-CLOSED TAKEOVER
 1. Read PITTI_COMMAND_CONTRACTS.json.
 2. Read PITTI_CURRENT_STATE.json.
-3. Read PITTI_HANDOFF_SEAL.json and require generation `20260829T1018Z-v175`, PASS, handoff_ready=true, second_pass_pass=true, non-empty integrity map.
+3. Read PITTI_HANDOFF_SEAL.json and require generation `20260829T1030Z-v176`, PASS, handoff_ready=true, second_pass_pass=true, non-empty integrity map.
 4. Verify every seal-listed Git blob SHA against main.
 5. Read PITTI_EXECUTION_LOCK.json, PITTI_AUTO_PREFLIGHT.md, and PITTI_PROJECT_STATE.md to EOF.
 6. Read PITTI_NEW_CHAT_BOOTSTRAP.md and HANDOFF_COMPLETENESS_MATRIX.md.
