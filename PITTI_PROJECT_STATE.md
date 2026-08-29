@@ -2085,3 +2085,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 ## 2026-08-29 06:26 CEST — state consistency audit
 - Re-inventory found stale rc4.99/rc4.96 Android authority fields in CURRENT, COMMAND_CONTRACTS and EXECUTION_LOCK after the verified rc4.100 device observation and representative acceptance. This is checkpoint drift, not runtime drift.
 - Active authority fields are normalized to rc4.100 and gate DRAFT_DAY_FRESHNESS_AND_EVIDENCE; rc4.96 remains historical rollback reference only. No runtime, model, or scoring files changed.
+
+
+## 2026-08-29 06:42 CEST — rc4.101 live crash-fix acceptance PASS
+- Device rerun after rc4.101 shows `Analysieren & Snapshot kopieren` completing successfully: green fresh-snapshot status, 341 candidates evaluated, and Draft Coach populated at Pick 1. The rc4.100 `Assignment to constant variable.` failure is therefore closed on the actual Android/PWA path.
+- Visible candidate surface is coherent at top: Gibbs #1, Bijan #2, Chase #3, Puka #4 with distinct Return values and evidence text. No inference of full content correctness from one screen; content-quality/freshness remains independently audited.
+- rc4.101 becomes current Android authority. The fix itself remains a one-line mutability correction plus version/cache metadata; no scoring/model retune.
