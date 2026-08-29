@@ -73,7 +73,7 @@ Otherwise continue AUTO.
 - Never answer an AUTO turn with “AUTO läuft”, “ich mache weiter”, or equivalent future-tense progress prose. Work must be executed before any reply.
 - During PITTI HANDOFF, finish the complete transactional audit/reseal before replying unless an unavoidable blocker prevents it.
 - Current source/package/deployment candidate = rc4.106 with exact 13-file main/gh-pages parity PASS; last accepted Android authority = rc4.105; rc4.106 display observation pending.
-- Current gate: RC4106_ANDROID_DISPLAY_ACCEPTANCE.
+- current gate: NEW_CHAT_LATE_RB_AUDIT.
 - Canonical completed mock evidence: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json, draft 1399284498113294336, produced on rc4.101.
 - Bounded frozen-fixture replay is CI PASS for the observed rc4.101 failure mechanisms under rc4.104. Browser-equivalent full historical recomputation is unavailable and must not be fabricated.
 
@@ -97,7 +97,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 
 
 ## v169 TAKEOVER CANARIES
-- Handoff generation must be `20260829T1235Z-v177` across CURRENT/SEAL/HANDOFF/bootstrap/matrix/lock.
+- Handoff generation must be `20260829T1244Z-v178` across CURRENT/SEAL/HANDOFF/bootstrap/matrix/lock.
 - main/source/deployment/accepted Android authority = rc4.104.
 - Exact 13-file main/gh-pages runtime parity = PASS.
 - Android rc4.104 observed; completed post-draft Snapshot path = PASS.
