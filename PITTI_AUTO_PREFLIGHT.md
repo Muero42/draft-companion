@@ -97,7 +97,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 
 
 ## v169 TAKEOVER CANARIES
-- Handoff generation must be `20260829T1002Z-v174` across CURRENT/SEAL/HANDOFF/bootstrap/matrix/lock.
+- Handoff generation must be `20260829T1018Z-v175` across CURRENT/SEAL/HANDOFF/bootstrap/matrix/lock.
 - main/source/deployment/accepted Android authority = rc4.104.
 - Exact 13-file main/gh-pages runtime parity = PASS.
 - Android rc4.104 observed; completed post-draft Snapshot path = PASS.
