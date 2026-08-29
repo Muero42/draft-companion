@@ -2261,3 +2261,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Current corroborated late-RB signals added to PITTI_UPSIDE_RESEARCH_V3.md: Jordan Mason standalone+contingency; Chris Rodriguez plausible goal-line role; Keaton Mitchell explosive one-event path; Tyjae Spears standalone+contingency; Mike Washington Jeanty-injury contingency; Kaelon Black CMC workload-relief watch. JCM pass-blocking improvement is incremental role evidence.
 - Malik Willis current rushing profile remains an interesting very-late QB1 recon path only if QB1 still open; exactly-one-QB user strategy remains unchanged.
 - Sunday Aug30 cut/PUP/IR designations and Monday Aug31 waiver claims are the next materially informative windows. Transaction alone remains weak evidence; correlate with role/injury context.
+
+
+## 2026-08-29 — v168 post-audit challenger flag correction
+- A second semantic audit caught one remaining ambiguity: CURRENT still had `test_challenger_android_verified=true` and top-level `android_acceptance_pending=false` inherited from rc4.105 even though the test challenger is now rc4.106 and has not been observed on device.
+- Fail-closed correction: rc4.105 remains accepted/verified Android authority; rc4.106 challenger observed=false, accepted=false, Android acceptance pending=true. COMMAND now carries explicit challenger observed/accepted false fields.
+- This is checkpoint semantics only; no runtime behavior changed.
