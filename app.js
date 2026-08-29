@@ -160,6 +160,7 @@ function syncAnalysisExpertSelector(){
   els.analysisExpertProfile.value=['expertv3','expertv4','expertv5'].includes(active)?active:'expertv3';
 }
 function applyExpertProfile(id){
+  if(!['expertv3','expertv4','expertv5'].includes(id))return false;
   if((id==='expertv4'||id==='expertv5')&&!expertProfileReady(id))return false;
   const map=EXPERT_PROFILE_IDS[id];if(!map)return false;
   positionPanels={...map};persist();renderAll();
