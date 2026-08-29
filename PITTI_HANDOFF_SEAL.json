@@ -1,21 +1,21 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260829T0548Z-v161",
-  "created_at": "2026-08-29T05:48:00Z",
+  "handoff_generation": "20260829T0555Z-v162",
+  "created_at": "2026-08-29T05:55:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "d64549c4d72f553de5f5e1b9c3b58ca029a5ef52",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "09c88584ff7a7ab51d0f221fae470d0bc868ecc4",
-    "PITTI_COMMAND_CONTRACTS.json": "ad28783e03e88efd4a4b0b7f5294ed87a55d3834",
+    "PITTI_CURRENT_STATE.json": "8daab0d50c9efa34468e7793c58665ea1acdb693",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "990e7454388e920705078ee597ea6716c2061240",
+    "PITTI_COMMAND_CONTRACTS.json": "d9fd68e79943e725c418645a1261b02c22fb7e8e",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "e65e2dae8bcd0ce33f5a0e2fe07e7704d3ca8d0d",
     "HANDOFF_COMPLETENESS_MATRIX.md": "6e57674902a45f40627d333cefd2647f8c1515cd",
-    "PITTI_EXECUTION_LOCK.json": "d984ea363e67ceceb48344d94cba9b87cd65b704",
+    "PITTI_EXECUTION_LOCK.json": "550354e27a273eec3650eb76249ead36120069f1",
     "PITTI_PROJECT_STATE.md": "b70b1641b5335556d34e15042f0e686d277904a0",
     "PITTI_AUTO_PREFLIGHT.md": "c03a64d96d784be51f18595c1bee5449137b637b",
-    "README.md": "39c5709c64f477b0b2be6ba7726fb84813bdbe90",
+    "README.md": "4012faec41afb2e92f7f42c39b77eed0e9a2a3c0",
     "app.js": "95e61dde423c6a968efb37e8287398b9bc0b8509",
     "index.html": "1b7448de393a166887e5a8661ee55d9041382a4c",
     "sw.js": "7e1eacead67ebb9d4ae29400696e6d7ab157c352",
@@ -75,6 +75,6 @@
     "rc4104_no_global_return_retune": true,
     "rc4104_android_pending": true
   },
-  "exact_gate": "RC4104_POSTMERGE_RESEAL_THEN_DEPLOY",
-  "note": "v161: rc4.104 merged after canonical rc4.101 mock reproduced strict-Coach WR9 and long-turn WAIT defects. Candidate/merge release-package-successor semantics PASS. Seal refreshed before exact gh-pages deployment; Android rc4.101 remains accepted until rc4.104 device PASS."
+  "exact_gate": "RC4104_ANDROID_OBSERVATION",
+  "note": "v162: rc4.104 all main gates GREEN, exact 13-file main/gh-pages runtime parity PASS. Await Android rc4.104 live observation; rc4.101 remains accepted authority until smoke PASS."
 }
