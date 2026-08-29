@@ -11,8 +11,8 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.100",
-    "test_challenger": "v11.8.0-rc4.100",
-    "test_challenger_android_verified": true,
+    "test_challenger": "v11.8.0-rc4.101",
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.100",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope:4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae",
@@ -24,16 +24,16 @@
     "android_version_observed": true,
     "android_functional_verified": true,
     "freeze_policy": "rc4.96 remains rollback baseline; low-risk microfix challenger allowed for further testing",
-    "test_challenger_android_observed": true,
-    "android_acceptance_pending": false,
+    "test_challenger_android_observed": false,
+    "android_acceptance_pending": true,
     "android_observed": "v11.8.0-rc4.100",
     "android_functional_acceptance": "REPRESENTATIVE_CHANGED_BEHAVIORS_PASS",
     "rollback_reference": "v11.8.0-rc4.96"
   },
   "exact_continuation": {
-    "gate": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE",
+    "gate": "RC4101_CRASH_FIX_VERIFY",
     "auto_starts_mock": false,
-    "instruction": "rc4.100 deployment/version and representative rc4.98-rc4.100 changed-behavior acceptance PASS. Continue independent horizon-specific Return replication/current evidence and execute final 31-Aug draft-day freshness gate. No broad retune, no automatic new mock, no reinstall/version troubleshooting."
+    "instruction": "Critical rc4.100 runtime crash root-caused: scored declared const then reassigned after turn-portfolio ordering. rc4.101 changes const->let only plus version/cache metadata. Verify full gates before promotion; no scoring/model retune."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -58,8 +58,8 @@
     "next_action": "Continue evidence/calibration lanes and final draft-day freshness workflow; preserve freeze unless a fresh reproducible critical defect appears.",
     "gate": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE"
   },
-  "source_authority": "rc4.100",
-  "package_authority": "rc4.100-candidate-pass",
+  "source_authority": "rc4.101-candidate",
+  "package_authority": "rc4.101-pending-gates",
   "android_version_observed": "v11.8.0-rc4.100",
   "android_functional_verified": true,
   "deployment_authority": "rc4.100",
