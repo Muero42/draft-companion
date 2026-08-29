@@ -129,8 +129,11 @@
     "strict_2026_body_date_guard": true,
     "legacy_nfl_same_date_hits_rejected": true,
     "cedric_tillman_waiver_invalidated_old_role": true,
-    "no_same_day_material_override": true
+    "no_same_day_material_override": true,
+    "aug29_fresh_search_no_new_decision_delta": true,
+    "legacy_same_date_results_excluded": true,
+    "aug30_aug31_gates_reverified": true
   },
   "exact_gate": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
-  "note": "v176 PASS. Strict 2026 body/date source guard added after reproducing legacy same-date NFL search collisions. Cedric Tillman Aug27 waiver captured. No verified Aug29 delta warrants runtime/ranking change. rc4.106 frozen; Android display acceptance pending; mock paused before pick9."
+  "note": "v176 PASS. Aug29 official freshness search found no newer 2026 decision-changing delta beyond captured Aug28/wire evidence. Legacy same-date search contamination reverified/excluded. rc4.106 frozen; Android display acceptance pending; mock paused before pick9."
 }
