@@ -1,10 +1,10 @@
 # PITTI HANDOFF COMPLETENESS MATRIX — REPO v169
-Generation: `20260829T1235Z-v177`
+Generation: `20260829T1244Z-v178`
 
 Takeover fails closed unless every item below is true.
 
 ## Authority / seal
-- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T1235Z-v177`.
+- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T1244Z-v178`.
 - SEAL status PASS; handoff_ready=true; second_pass_pass=true.
 - Integrity map non-empty and includes all authority/runtime/critical regression files.
 - Every seal-listed Git blob SHA matches main.
@@ -76,7 +76,8 @@ No repeated refresh/cache/reinstall/manual-ZIP detours before server-side parity
 - pick129 score-0 timing promotion reproduced; rc4.105 generic quality-floor regression added.
 - PR #46 three gates PASS; main merged; gh-pages 13/13 parity PASS; Android acceptance pending.
 
-## v169 display / paused mock
-- rc4.106 fixes embedded individual-rank Snapshot rendering only; PR #47 three gates PASS; main merged; pages 13/13 parity PASS.
-- latest accepted Android = rc4.105; rc4.106 observation pending.
-- mock 1399325404598124544 paused BEFORE pick9; James Cook recommendation is not a completed pick.
+## v178 current truth
+- rc4.106 source/package/pages/Android display accepted.
+- Mock 1399325404598124544 COMPLETE. Never restore the obsolete paused-before-pick9 state.
+- Next-chat first work: late-RB upside/reach audit under higher expected real-draft RB competition; broader than Basti. Talent/workhorse gate required; preserve Marks correction and Charbonnet stash-package EV.
+- FantasyPros benchmark deferred until after handoff; use PITTI-FP-Capture, no manual reconstruction.
