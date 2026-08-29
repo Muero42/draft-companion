@@ -2409,3 +2409,61 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - On future evaluation, use this exact file/provenance rather than reconstructing the mock from memory.
 
 - AUTO 2026-08-29: implemented the requested analysis-surface expert selector directly above Analyze in index.html. v3 is selectable baseline; v4/v5 are visibly staged but disabled until the expert-coverage blocker is resolved. This deliberately avoids exposing unsafe presets while completing the low-risk UI requirement. Commit f45bb99d0bd69d52f3cc792aae9571db4b2e615e.
+
+
+---
+## 2026-08-29 PITTI HANDOFF v180 — EXPERT v4/v5 / COVERAGE AUTHORITY
+
+### Runtime / branch boundary
+- Accepted Android/runtime baseline remains **v11.8.0-rc4.106**.
+- A low-risk UI prototype placing the expert selector directly above Analyze was committed as `f45bb99d0bd69d52f3cc792aae9571db4b2e615e` and preserved on research branch **pitti/expert-v4-v5-v180**.
+- That prototype was then deliberately reverted from main in commit `4940c943f64b03ecf1cc1ef6d4611dc56b4859be` so main runtime bytes again match the validated rc4.106 baseline. Do not re-enable the selector on main until v4/v5 are actually validated and wired.
+
+### Critical expert-coverage defect — MUST NOT BE LOST
+- Current `expert-v3-rb` is not compositionally invariant across players.
+- **Tyjae Spears**: panelN=5; Ryan Weisse 126, Dalton Del Don 131, Pat Fitzmaurice 139, Nick Mariano 140, Draft Sharks Team 144.
+- **Tank Bigsby**: panelN=4; Pat 134, Mariano 139, Del Don 149, Weisse 156; **Draft Sharks Team missing**.
+- Root cause is localized in `ensureExpertV3Panels()`: if the positional challenger has no rank for a base-row player, the old base row is inherited; when a challenger rank exists, a new row is rebuilt from whatever base individual ranks exist and normalized by the sum of available weights. Missing coverage can therefore silently change the effective ensemble while the UI still says the same panel name.
+- This is a **GO-LIVE BLOCKER for v4/v5**. Required semantics: distinguish genuine unranked/outside-publication-range from import/acquisition failure and short-board coverage; never silently treat missingness as a vote; do not blindly impute ranks; make effective panel N/coverage reason fail-visible; do not silently renormalize materially different expert sets; audit relevant players across all positions before activation.
+
+### v3 / v4 / v5 authority
+- **v3**: preserve exactly as frozen baseline/control and keep selectable.
+- **v2**: retire from the new comparison path; historical evidence remains available but must not regain authority by stale handoff text.
+- **v4**: position-specific **individual-expert-only** panels, baseline **4–6 experts per position**. Draft Sharks Team is excluded from v4 because its team-feed attribution is not cleanly equivalent to the historical accuracy of identified DS individuals; this is not a claim that Draft Sharks as an organization is weak. Existing v3 individuals are not displaced merely to make room for newcomers.
+- **v5**: minimal-invasive hybrid = v3 + Sean Koerner, with Koerner funded primarily by reducing Draft Sharks share. Transfer must be position-specific; do not blindly hand Koerner all DS weight where his recent positional accuracy is weak.
+- Sean Koerner's current 2026 FantasyPros ranking is visibly available in user screenshots dated 29.08.; the old “paywall-only/unavailable” assumption is **superseded**. Exact import/coverage still requires validation.
+
+### Provisional individual-expert research — preserve, do not treat as final weights
+- Accuracy methodology: multi-year positional **draft** accuracy is the primary signal; 2025 is a recency/stability correction rather than a 50/50 double-count because 2025 is already inside the multi-year window; current 2026 ranking freshness is a hard gate; cap individual influence.
+- **QB provisional core/challengers:** Sean Koerner, Todd D Clark, Seth Miller + 1–3 best currently validated individuals.
+- **RB provisional core:** Ryan Weisse, Kev Wheeler, Dalton Del Don, Nick Mariano, Sean Koerner; Pat Fitzmaurice is the strongest current sixth-place challenger. Known multi-year RB ranks from the audited research: Weisse #2, Wheeler #4, Del Don #7, Mariano #11, Koerner #12. Do not ignore recency counter-signals such as Koerner's poor 2025 RB result.
+- **WR provisional core:** Sean Koerner, Nick Mariano, Marc Shannep, Seth Miller + 0–2 best validated current candidates.
+- **TE provisional core:** Wolf of Roto Street, Ryan Weisse, Pat Fitzmaurice, Sean Koerner; Kev Wheeler / Dalton Del Don are current 5th–6th candidates.
+- Do not finalize any panel solely from these notes. First verify every selected expert's current 2026 board, timestamp, depth/coverage and exact player mapping.
+
+### UI requirement
+- Expert configuration must sit **directly above Analyze**.
+- User must be able to switch v4↔v5 (and retain v3 baseline) and re-analyze the **same draft state** for a second opinion.
+- Preset switch alone must not mutate board/roster/draft state; analysis must clearly display which preset produced the result.
+
+### Deferred future research
+- Preserve post-season idea: phase/archetype-specific expert teams (early stability, middle value/ceiling, late breakout/league-winner). Potentially automatic weighting by draft phase/roster context later.
+- Before the 2026 draft, collect only raw accuracy/ranking/provenance data that could become irretrievable: timestamped expert-player ranks, panel provenance, contemporary ADP/ECR. All reconstructible historical analysis can wait until after the season.
+
+### Deferred natural-mock evidence — DO NOT ANALYZE YET
+- Exact Library file: `draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json` / library id `libfile_5d98bb730a00819187cff3e062c430bc`.
+- User identifies this as the missing mock with **their real decisions**.
+- It is intentionally frozen for future evaluation and must not be analyzed during takeover unless the user later lifts that restriction.
+
+### Player descriptions
+- Some Coach cards still lack meaningful player-specific text. This is secondary to expert-panel integrity before the draft.
+- If time permits, use deterministic fallback prose from existing panel/ADP/role evidence; broad player-by-player research is deferred until after the draft unless a live decision needs it.
+
+### Exact next gate after takeover
+1. Verify v180 authority files and actual main/runtime/branch facts.
+2. Work on **pitti/expert-v4-v5-v180**, not main production, for panel changes.
+3. Fix/audit missing-expert coverage semantics first.
+4. Complete the current-expert availability + accuracy + freshness + coverage matrix from the user's FantasyPros screenshots and live accessible boards.
+5. Build v4 (individual-only, 4–6 per position) and v5 (v3+Koerner/minimal DS reduction).
+6. Counterfactual/regression compare v3/v4/v5, including early Pick-12 RBs and late-RB coverage, plus known WR/QB/TE canaries.
+7. Only after PASS, wire/enable selector directly above Analyze, package/re-extract, deploy with byte parity, then device acceptance.
