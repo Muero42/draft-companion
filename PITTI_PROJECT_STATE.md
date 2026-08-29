@@ -2242,3 +2242,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Same Snapshot exposed a presentation contradiction: data-status correctly reported embedded individual ranks (QB 6/6, RB/WR/TE 5/5), while DRAFT COACH TOP 8 printed `Einzelrankings: KEINE VERIFIZIERT`. Root cause: snapshot Top-8 filtered embedded frozen rows through live `rankCache[].verifiedIndividual`, which is unrelated for shadow Expert-v2/v3 boards.
 - rc4.106 is display-only: added panel-aware `verifiedIndividualEntries`. Embedded audited board rows render directly; live panels still require verified + nonduplicate rankCache entries. No score/rank/Return/expert-weight/roster logic changed.
 - Exact rc4.106 regression contract added. PR #47: Project Guardrails PASS, Release Contract v2 PASS, Candidate Package/Re-Extract PASS. Merged main `0818bc9632eca79c4d055d444a6eae0af53f3a9f`; 13 runtime files deployed to gh-pages. Android rc4.106 observation pending; rc4.105 remains last accepted Android authority meanwhile.
+
+
+## 2026-08-29 — post-v168 semantic scalar audit / rc4.106 package authority
+- Independent post-seal audit found stale active scalar remnants in CURRENT/LOCK/COMMAND despite the correct high-level rc4.106 gate: CURRENT still carried rc4.104 in android_observed/freeze/draft-day runtime and old package reference metadata; LOCK still named rc4.104 as latest observed/preinstall; COMMAND retained stale rc4.104 deployment note/reference package.
+- Repaired fail-closed: accepted Android = rc4.105; source/package/deployment candidate = rc4.106; rc4.106 Android display observation pending. No historical rc4.104 scalar may override these current fields.
+- PR #47 candidate-package authority recorded exactly: run 33240680178, artifact 9711254133, GitHub artifact-envelope digest sha256:2b7ad9b2a0ec2af1641d7262c33e91d48f290f19feee54a38a9d581efbc8a7c5. Inner ZIP hash is not claimed.
