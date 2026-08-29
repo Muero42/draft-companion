@@ -2326,3 +2326,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Consequence: team/status lag is upstream Sleeper metadata, not a stale local mapping bug. A broad runtime patch immediately before draft would require a new authoritative transaction-overlay ingestion path and would add operational risk.
 - Decision: **no rc4.107 runtime mutation now**. Keep rc4.106 frozen; use the explicit draft-day official-transaction precedence guard during research/live interpretation. If a stale Sleeper team/status materially affects a live candidate, assistant-side official evidence overrides the displayed metadata and the discrepancy is called out.
 - This preserves near-draft stability while closing the actual decision-risk path; revisit a native transaction overlay post-draft unless Sunday/Monday evidence proves it draft-critical.
+
+
+## 2026-08-29 — AUTO Watcher source re-audit / freeze decision
+- Watcher main re-read at VERSION 0.1.5. Scheduled architecture remains coherent: trending every 15m; player_state daily 04:17 UTC; public /companion-feed emits events/market only when latest scheduled trending PASS <=45m and player_state PASS <=36h, otherwise FAIL/STALE/WAIT. Protected debug/events/run-health endpoints remain token-gated.
+- This source audit does **not** claim deployed endpoint health; source correctness and deployment observation remain separate. No available evidence justifies changing the Watcher before the draft.
+- Combined with the Companion metadata audit, current lowest-risk posture is freeze: rc4.106 Companion and Watcher 0.1.5 source remain unchanged unless Sunday/Monday live evidence exposes a draft-critical defect. Independent freshness/research can continue without device action.
