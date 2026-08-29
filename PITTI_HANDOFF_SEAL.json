@@ -7,13 +7,13 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "3fff9180cfdc229ca8e65e408948551a9d599582",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "4cd87ff934817a7d3951c129cf1ce325afb5ae5d",
-    "PITTI_COMMAND_CONTRACTS.json": "4d277c9d93c4b73910e6fb4c754bf2e4cad50b41",
+    "PITTI_CURRENT_STATE.json": "47aa8f8c150dd3c334d78959c232eb0348d2a438",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "24c60ae5ef39ad553832d08a27f40a8123b4038b",
+    "PITTI_COMMAND_CONTRACTS.json": "915817ac151e8855b3bf9ed2698c286f55befbd0",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "19d6168da1189b8b046103bc29e6b5aa3787e301",
     "HANDOFF_COMPLETENESS_MATRIX.md": "ff752525877ca66f97dce4dfd1ce99015885d72f",
-    "PITTI_EXECUTION_LOCK.json": "2248252f318d1c3e4dad066e49f01e63c93138d1",
-    "PITTI_PROJECT_STATE.md": "e866596fa193433267504d6e166fb41e68d85119",
+    "PITTI_EXECUTION_LOCK.json": "07c5fbe7eb98dc0b29c6fbbd7d6e26799463c9b9",
+    "PITTI_PROJECT_STATE.md": "3db6c0c6ed001b255e3ce959dd4532f4dc9a6689",
     "PITTI_AUTO_PREFLIGHT.md": "c03a64d96d784be51f18595c1bee5449137b637b",
     "README.md": "5f5592bc467ca61e0258e1af265969a16f4e2592",
     "app.js": "48afb7db0c561c69b49fc56a9755be238dc7194d",
@@ -40,8 +40,8 @@
     "generation_consistent": true,
     "active_boundary_rc4100": true,
     "pr36_three_gates_pass": true,
-    "postmerge_main_verification_pending": true,
-    "gh_pages_rc499_diverged": true,
+    "postmerge_main_verification_pending": false,
+    "gh_pages_rc499_diverged": false,
     "android_rc499_observed_rc4100_not_claimed": true,
     "canonical_1924_backup_preserved": true,
     "strict_coach_9wr_preserved": true,
@@ -53,8 +53,10 @@
     "auto_block_contract_preserved": true,
     "canonical_self_update_path_preserved": true,
     "old_v155_active_pointers_removed": true,
-    "seal_integrity_nonempty": true
+    "seal_integrity_nonempty": true,
+    "rc4100_postmerge_all_gates_pass": true,
+    "gh_pages_rc4100_exact_13_file_parity": true
   },
-  "exact_gate": "RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY",
-  "note": "v157 seal refreshed after post-merge guardrail-contract repair; runtime/model files unchanged. Historical ledger text may mention older states; takeover authority remains v157 CURRENT/HANDOFF/bootstrap/matrix and verified repo/device facts."
+  "exact_gate": "RC4100_ANDROID_OBSERVATION",
+  "note": "v157 seal refreshed after rc4.100 post-merge gates PASS and exact 13-file main/gh-pages runtime parity. Android/PWA rc4.100 observation remains pending."
 }
