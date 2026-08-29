@@ -167,3 +167,9 @@ Scope rule: rc4.102 is a source-freshness correction, not a coefficient experime
 - Final 53-man reduction is Aug30 before 18:00 ET; Aug31 waiver claims expire 13:00 ET. Therefore the final draft-day scan must occur after the cutdown/waiver wave, not merely reuse Aug29 state.
 - NFL fantasy rookie analysis independently identifies Mike Washington Jr. as the Jeanty handcuff and Emmett Johnson as a plausible Walker injury-upside RB despite Demercado being above him on the unofficial depth chart. These are late-round contingency signals only; panel remains baseline.
 - Current official Aug28 Jeanty update: still on the mend, Raiders counting on him, another week to assess Week-1 readiness. No IR/PUP inference.
+
+
+## Aug29 AUTO freshness audit VIII — strict current-year source guard
+- Reject search hits whose title/day matches the target date but whose body/season is legacy. Reproduced examples: NFL Aug29 page with 2023 roster context and Aug30 page with 2022 context. Require explicit 2026 body evidence, not title/date pattern alone.
+- Verified current-year official waiver wire: Cedric Tillman waived by Cleveland Aug27. Treat old CLE depth-chart context as invalid until post-waiver destination is known.
+- Revalidated hard timing gates: Aug30 18:00 ET final 53; Aug31 13:00 ET waiver claims. Sunday/Monday scans remain mandatory.
