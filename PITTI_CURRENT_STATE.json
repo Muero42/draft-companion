@@ -50,11 +50,11 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "PITTI AUTO resumes at rc4.104 post-merge reseal/deploy. Canonical mock 1399284498113294336 reproduced Coach WR9 and long-turn WAIT ordering defects; rc4.104 bounded generic repair is merged.",
-    "acceptance_fingerprint": "MAIN-RC4.101|ALL-GREEN|PAGES-RC4.101-13FILE-PARITY|ANDROID-RC4.101-LIVE-COACH-PASS|NO-GLOBAL-RETUNE|HANDOFF-v160",
-    "status": "HANDOFF_v161_RESEAL",
-    "handoff_ready": false,
-    "second_pass_pass": false,
+    "resume_semantics": "PITTI AUTO resumes at RC4104_POSTMERGE_RESEAL_THEN_DEPLOY. rc4.104 behavior/package gates are green; v161 seal is the only prerequisite to exact gh-pages deployment.",
+    "acceptance_fingerprint": "MAIN-RC4.104|PR44-ALL-GREEN|POSTMERGE-RELEASE-PACKAGE-SUCCESSOR-GREEN|PREDEPLOY-RESEAL-v161|ANDROID-RC4.101-ACCEPTED",
+    "status": "HANDOFF_v161_READY",
+    "handoff_ready": true,
+    "second_pass_pass": true,
     "next_action": "Complete v161 consistency reseal and main all-green verification, then exact gh-pages deployment.",
     "gate": "RC4104_POSTMERGE_RESEAL_THEN_DEPLOY"
   },
