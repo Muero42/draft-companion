@@ -1,7 +1,7 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 const APP_VERSION='v11.8.0-rc4.106';
 const $=id=>document.getElementById(id);
-const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
+const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
@@ -143,7 +143,29 @@ function ensureExpertV3Panels(){
   return true;
 }
 function currentExpertProfile(){for(const [id,map] of Object.entries(EXPERT_PROFILE_IDS))if(['QB','RB','WR','TE'].every(pos=>positionPanels[pos]===map[pos]))return id;return 'custom';}
-function applyExpertProfile(id){const map=EXPERT_PROFILE_IDS[id];if(!map)return;positionPanels={...map};persist();renderAll();if(els.expertProfile)els.expertProfile.value=id;}
+function expertProfileReady(id){
+  const map=EXPERT_PROFILE_IDS[id];if(!map)return false;
+  return ['QB','RB','WR','TE'].every(pos=>{
+    const pid=map[pos],rows=panelRanks[pid];
+    return rows&&Object.keys(rows).length&&Object.values(rows).every(row=>row?.coverageStatus==='COMPLETE'||(!('coverageStatus' in row)&&id==='expertv3'));
+  });
+}
+function syncAnalysisExpertSelector(){
+  if(!els.analysisExpertProfile)return;
+  const active=currentExpertProfile();
+  for(const opt of els.analysisExpertProfile.options){
+    if(opt.value==='expertv3'){opt.disabled=false;continue}
+    opt.disabled=!expertProfileReady(opt.value);
+  }
+  els.analysisExpertProfile.value=['expertv3','expertv4','expertv5'].includes(active)?active:'expertv3';
+}
+function applyExpertProfile(id){
+  if((id==='expertv4'||id==='expertv5')&&!expertProfileReady(id))return false;
+  const map=EXPERT_PROFILE_IDS[id];if(!map)return false;
+  positionPanels={...map};persist();renderAll();
+  if(els.expertProfile)els.expertProfile.value=id;
+  syncAnalysisExpertSelector();return true;
+}
 
 function loadRankCacheCompact(){
   const legacy=store.get('v7_rankCache',{}),out={};
@@ -173,6 +195,7 @@ const ACTIVE_2026_MANAGER_MAP_TEXT='1=Michael, 2=Pascal Voerde, 3=Marc Düsseldo
 els.managerMap.value=store.text('v11_managerMap',store.text('v10_managerMap',ACTIVE_2026_MANAGER_MAP_TEXT));
 els.stressMode.value=store.text('v113_stressMode','baseline');
 els.strategyMode.value=store.text('v111_strategyMode','progressive');
+if(els.analysisExpertProfile)els.analysisExpertProfile.value='expertv3';
 
 function persist(){
   store.setText('v7_apiKey',els.apiKey.value.trim());store.setText('v7_season',els.season.value.trim());store.setText('v7_scoring',els.scoring.value);
