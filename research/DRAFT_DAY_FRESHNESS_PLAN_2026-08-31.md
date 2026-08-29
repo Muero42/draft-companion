@@ -1,7 +1,7 @@
 # PITTI Draft-Day Freshness Plan — 2026-08-31
 
 Real draft: 20:00 Germany local time.
-Accepted runtime: v11.8.0-rc4.100. Historical rollback reference: rc4.96.
+Accepted runtime: v11.8.0-rc4.101. Historical rollback reference: rc4.96.
 Purpose: maximize fresh information without destabilizing the frozen decision kernel.
 
 ## Operating principle
@@ -73,10 +73,14 @@ Keep web/news research available for genuinely breaking information during the d
 - acute injury/availability deltas
 - transaction/claim role deltas
 - emergency queue/failsafe
-- device/app rc4.100 availability
+- device/app rc4.101 availability
 - ChatGPT live-decision context loaded
 
 ## Aug 29 pre-draft delta checkpoint
 - Current FantasyPros riser/faller board has Parker Washington at overall 72 (+7) and Bucky Irving at 51 (+6). Treat as corroborating market movement, not an automatic rank override.
 - NFL Aug 28 reports Ashton Jeanty still recovering from the Aug 23 ankle injury; Las Vegas expects him but will reassess Week 1 readiness. Keep acute monitoring active without a hard block absent stronger evidence.
 - Current CBS draft-prep coverage also flags Jeanty as a notable ADP faller because of Week 1 ankle uncertainty. This corroborates uncertainty only; no broad model change.
+
+## Aug 29 runtime acceptance delta
+- rc4.100 exposed a live-only `Assignment to constant variable.` crash after turn-portfolio ordering because `scored` was declared `const` and then reassigned. rc4.101 changes only that binding to `let` plus version/cache metadata.
+- rc4.101 candidate behavioral/package/guardrail gates PASS, exact packaged-runtime deployment parity was established, and Android live rerun PASS: fresh snapshot generated, 341 candidates evaluated, Draft Coach rendered. rc4.101 is therefore the accepted draft runtime.
