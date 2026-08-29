@@ -1,10 +1,10 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v160
-Generation: `20260829T0500Z-v160`
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v161
+Generation: `20260829T0548Z-v161`
 
 Takeover fails closed unless every item below is true.
 
 ## Authority / seal
-- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T0500Z-v160`.
+- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T0548Z-v161`.
 - SEAL status PASS; handoff_ready=true; second_pass_pass=true.
 - Integrity map non-empty and includes all authority/runtime/critical regression files.
 - Every seal-listed Git blob SHA matches main.
@@ -12,14 +12,14 @@ Takeover fails closed unless every item below is true.
 - Verified repo/runtime evidence overrides stale Library mirrors and historical prose.
 
 ## Runtime boundary
-- main/source = rc4.100.
+- main/source = rc4.104.
 - PR #36 release 33205458705 PASS.
 - PR #36 package/re-extract 33205458721 PASS; artifact 9699461048; GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
 - PR #36 guardrails 33205458745 PASS.
 - rc4.100 merged main commit = 1b85656e40a182ca6be2397c5bf6674006b97bd2.
 - post-merge main verification PASS: release/package/project guardrails plus rc4.82/rc4.83 draft-critical gates GREEN.
-- gh-pages = rc4.100; exact 13-file packaged-runtime main/pages parity PASS.
-- Android/PWA last observed = rc4.99; rc4.100 Android acceptance NOT PASS.
+- gh-pages = rc4.102; rc4.104 exact deployment parity pending v161 reseal.
+- Android/PWA accepted = rc4.101; rc4.104 Android acceptance NOT PASS.
 - rollback authority = rc4.96.
 
 ## Full-draft / Return evidence
@@ -56,4 +56,10 @@ verified candidate -> main post-merge verification -> gh-pages exact-byte deploy
 No repeated refresh/cache/reinstall/manual-ZIP detours before server-side parity is proven.
 
 ## Current gate
-`RC4100_ANDROID_OBSERVATION`
+`RC4104_POSTMERGE_RESEAL_THEN_DEPLOY`
+
+## rc4.104 canonical new evidence
+- Backup `draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json`, draft 1399284498113294336, rc4.101.
+- Strict Coach path reproduced 9 WR / 4 RB / 1 QB / 0 TE before pick149; 14/14 completed own picks followed Coach #1.
+- Pick92 Value-Safety promoted WR7 despite WR6/RB2; pick132 93.3% WAIT Spears remained #1 over Mark Andrews 0.6% Return.
+- rc4.104 generic bounded repair merged; no hard cap, player-name forcing, Return retune, or expert retune.
