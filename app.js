@@ -87,7 +87,14 @@ let experts=store.get('v7_experts',[]);
 let panels=store.get('v7_panels',{standard:{name:'Standard',members:{}},pat:{name:'Pat einzeln',members:{}}});
 let activePanelId=store.text('v7_activePanel','standard');
 let positionPanels=store.get('v7_positionPanels',{QB:'qb',RB:'rb',WR:'wr',TE:'te'});
-const EXPERT_PROFILE_IDS={incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'},fullv2:{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'},wrv2:{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'},expertv3:{QB:'expert-v3-qb',RB:'expert-v3-rb',WR:'expert-v2-wr',TE:'expert-v3-te'}};
+const EXPERT_PROFILE_IDS={incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'},fullv2:{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'},wrv2:{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'},expertv3:{QB:'expert-v3-qb',RB:'expert-v3-rb',WR:'expert-v2-wr',TE:'expert-v3-te'},expertv4:{QB:'expert-v4-qb',RB:'expert-v4-rb',WR:'expert-v4-wr',TE:'expert-v4-te'},expertv5:{QB:'expert-v5-qb',RB:'expert-v5-rb',WR:'expert-v5-wr',TE:'expert-v5-te'}};
+const EXPERT_V4_BLUEPRINT={
+  QB:{experts:['Pat Fitzmaurice','Justin Boone','Dalton Del Don','Nick Mariano','Todd D Clark'],maxSingleWeight:.30},
+  RB:{experts:['Pat Fitzmaurice','Nick Mariano','Dalton Del Don','Ryan Weisse'],maxSingleWeight:.30},
+  WR:{experts:['Pat Fitzmaurice','Nick Mariano','Dalton Del Don','Justin Boone'],maxSingleWeight:.30},
+  TE:{experts:['Pat Fitzmaurice','Justin Boone','Dalton Del Don','Wolf of Roto Street'],maxSingleWeight:.30}
+};
+const EXPERT_V5_BLUEPRINT={base:'expertv3',add:'Sean Koerner',fundPrimarilyFrom:'Draft Sharks Team',positionSpecific:true,maxSingleWeight:.30};
 function ensureExpertV2Panels(){const src=globalThis.PITTI_EXPERT_V2;if(!src||src.schema!=='pitti-expert-v2-board.v4')return false;for(const pos of ['QB','RB','WR','TE']){const list=src.rows?.[pos]||[];if(!list.length)return false;const id='expert-v2-'+pos.toLowerCase(),ranks={};for(const row of list){const rank=Number(row.rank);if(row.name&&Number.isFinite(rank)&&rank>0)ranks[norm(row.name)]={name:row.name,pos,rank,mean:rank,median:rank,sd:Number.isFinite(Number(row.sd))?Number(row.sd):null,n:Number.isFinite(Number(row.n))?Number(row.n):null,tier:row.tier??null,individual:Array.isArray(row.individual)?row.individual.map(e=>({expertName:e.expertName,rank:Number(e.rank),effectiveWeight:Number(e.effectiveWeight),reconstructed:!!e.reconstructed,spread:e.spread??null})).filter(e=>e.expertName&&Number.isFinite(e.rank)):[]};}panelRanks[id]=ranks;panels[id]={name:'Expert-v2 '+pos+' · 26.08.',members:{},shadow:true,weights:src.weights?.[pos]||{},source:src.source};}return true;}
 function ensureExpertV3Panels(){
   const base=globalThis.PITTI_EXPERT_V2,v3=globalThis.PITTI_EXPERT_V3;
