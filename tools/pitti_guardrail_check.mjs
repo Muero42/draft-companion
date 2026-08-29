@@ -116,7 +116,7 @@ must(e.weightsAreFinalWinner===false,'no Expert-v2 profile may be mislabeled fin
 must(e.oldWrOnlyRejectionSemanticsAreAuthority===false,'obsolete WR-only authority resurrected');
 must(lock.league?.userDraftQbLimit===1,'user one-QB strategy lock drift');
 must(lock.league?.userQb2Policy==='HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1','user QB2 policy drift');
-must(/^1\.\d+\.\d+$/.test(String(commandContract.version||'')),'repo command contract version malformed');
+must(/^\d+\.\d+\.\d+$/.test(String(commandContract.version||'')),'repo command contract version malformed');
 must(commandContract.sourceOrder?.includes('PITTI_CURRENT_STATE.json'),'CURRENT missing from takeover source order');
 must(commandContract.sourceOrder?.includes('PITTI_HANDOFF_SEAL.json'),'SEAL missing from takeover source order');
 must(commandContract.auto?.longestSafeBlocks===true,'repo command contract long-block drift');
@@ -179,13 +179,13 @@ must(emergencyQueueContract.includes('EMERGENCY_QUEUE_CONTRACT_PASS'),'emergency
 must(emergencyQueueContract.includes('only one QB while QB1 open'),'emergency queue one-QB canary missing');
 must(emergencyQueueContract.includes('only one TE while TE1 open'),'emergency queue one-TE canary missing');
 
-for(const token of ['production/control','Android version authority','latest package/re-extract','work package -> checkpoint -> re-inventory','user must never need to remind'])
+for(const token of ['production/control: rc4.64','rollback accepted functional authority: rc4.96','main/source: rc4.100','blocked dependent lane does not stop independent lanes'])
   must(bootstrap.includes(token),`repo bootstrap invariant missing: ${token}`);
-for(const token of ['rc4.84','rc4.85','rc4.86','rc4.87','rc4.88','rc4.89','rc4.90','AUTO durability','Execution witness','Old-error scan'])
+for(const token of ['main/source = rc4.100','rollback authority = rc4.96','no global Return-v2 retune','Long blocks; re-inventory after every package'])
   must(handoffMatrix.includes(token),`repo handoff matrix invariant missing: ${token}`);
 must(lock.authority?.libraryMirrorStatus?.includes('STALE_'),'stale Library mirror status must remain explicit until persistence is proven');
 must(lock.authority?.failClosedRecovery?.includes('never claim a newer Library generation persisted unless files.list proves it'),'Library persistence fail-closed rule missing');
-for(const token of ['Library mirror is stale/writeback-blocked','rc4.82','rc4.83','Re-inventory after EVERY completed work package'])
+for(const token of ['Historical text or stale Library mirrors may never override newer verified state','rc4.100','After every package: checkpoint material change -> re-inventory all independent lanes -> execute next package'])
   must(currentHandoff.includes(token),`current handoff invariant missing: ${token}`);
 
 for(const token of ['pitti-decision-evidence-v2','QB2_VIOLATION','WR6_PLUS_COACH','WR7_PLUS_COACH','TE2_COACH','USER_OVERRIDE','CHOSEN_OUTSIDE_TOP16','telemetryComplete','hardQb2Pass','OOS promotion evidence must come from the realistic mock gate','OOS promotion evidence must use user slot 9','ACUTE_STATUS_CONFOUND','acuteStatusConfoundCount','cleanDecisionCount','cleanHardQb2Pass','cleanSaturatedWrCount','cleanWr7PlusCount'])
