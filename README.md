@@ -2,13 +2,13 @@
 
 > **Current main/source:** v11.8.0-rc4.104; repeated Coach-WR9 and long-turn WAIT ordering defects repaired generically; no broad model retune.
 > **rc4.100 PR validation:** release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
-> **Deployment/device:** Android accepted authority remains v11.8.0-rc4.101; rc4.104 package/main are verified, gh-pages deployment waits only for v161 seal/all-green post-merge.
+> **Deployment/device:** gh-pages rc4.104 exact 13-file parity PASS; Android accepted authority remains rc4.101 until rc4.104 live smoke PASS.
 > **Rollback reference:** v11.8.0-rc4.96 historical only; current accepted Android authority remains v11.8.0-rc4.101 until rc4.102 passes promotion/device gates.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
 > **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
 > **rc4.100 scope:** generic Pro/Contra semantic hardening + bounded short-turn portfolio ordering; no global ranking/Return/expert retune, no hard WR cap/quota.
 > **OOS critical:** strict Coach draft 1399114762087895040 = 9 WR / 4 RB / 1 TE / 1 QB; old 7-WR count is invalid.
-> **Current gate:** RC4104_POSTMERGE_RESEAL_THEN_DEPLOY.
+> **Current gate:** RC4104_ANDROID_OBSERVATION.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
 
