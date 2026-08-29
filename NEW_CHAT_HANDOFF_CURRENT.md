@@ -1,11 +1,11 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260829T1030Z-v176`
-Updated: 2026-08-29 10:30Z
+Handoff generation: `20260829T1235Z-v177`
+Updated: 2026-08-29 12:35Z
 
 ## FAIL-CLOSED TAKEOVER
 1. Read PITTI_COMMAND_CONTRACTS.json.
 2. Read PITTI_CURRENT_STATE.json.
-3. Read PITTI_HANDOFF_SEAL.json and require generation `20260829T1030Z-v176`, PASS, handoff_ready=true, second_pass_pass=true, non-empty integrity map.
+3. Read PITTI_HANDOFF_SEAL.json and require generation `20260829T1235Z-v177`, PASS, handoff_ready=true, second_pass_pass=true, non-empty integrity map.
 4. Verify every seal-listed Git blob SHA against main.
 5. Read PITTI_EXECUTION_LOCK.json, PITTI_AUTO_PREFLIGHT.md, and PITTI_PROJECT_STATE.md to EOF.
 6. Read PITTI_NEW_CHAT_BOOTSTRAP.md and HANDOFF_COMPLETENESS_MATRIX.md.
@@ -102,3 +102,10 @@ AUTO never starts an interactive mock unless explicitly requested.
 - Mock draft 1399325404598124544 is PAUSED BEFORE PICK 9. Picks1-8: Gibbs, Chase, Bijan, Jonathan Taylor, CMC, Puka, Amon-Ra, JSN. James Cook was recommended at 1.09, but no user pick was reported.
 - On mock continuation require a fresh Snapshot; never synthesize Cook as rostered.
 - Continue draft-day freshness/failsafe and Watcher/post-draft work while device display observation waits.
+
+
+## Immediate next-chat priority
+- Do **not** start another mock automatically.
+- First run a focused real-draft late-RB upside/reach audit because expected RB competition is higher than in the completed mock, especially late. Model this as broader opponent-market pressure, not only Basti.
+- Rank candidates by asymmetrical ceiling, talent/workhorse capability, injury/role path, opponent demand, next-turn availability, and stash-package EV where applicable. Preserve the Woody Marks talent-gate correction.
+- FantasyPros post-draft benchmark remains deferred until after this handoff and should use PITTI-FP-Capture rather than manual reconstruction.
