@@ -122,3 +122,9 @@ Scope rule: rc4.102 is a source-freshness correction, not a coefficient experime
 - The claiming period for players waived at final cuts expires **Monday Aug 31 at 1:00 p.m. New York time**. On Aug 31, New York is EDT (UTC-4) and Germany is CEST (UTC+2), so this is **19:00 Europe/Berlin**, one hour before the 20:00 real draft.
 - Therefore the existing **19:05–19:30 transaction delta scan is intentionally retained**: it begins immediately after the official waiver-claim deadline and is the first high-value window for claims plus corresponding depth-chart/injury inference. The 19:40–19:50 final materiality scan remains the last targeted pass before freeze.
 - Sunday priority: official Reserve/PUP / Reserve/NFI / IR designations, waives/injury settlements, trades and 53-man role changes. Monday priority after 19:00 local: waiver claims and resulting same-position roster changes. A transaction alone remains weak Bayesian evidence unless corroborated by role/health context.
+
+
+## Data-authority guard added Aug 29
+- Official/current team transaction reporting outranks stale Sleeper team / injury_status metadata for roster-status interpretation. Sleeper remains the live draft-room identity/availability and ADP market source, but a player shown with an old club/status must not be treated as roster-secure when an official current transaction contradicts it.
+- Concrete trigger discovered Aug 29: NFL.com's current cutdown preview reports Trey Benson already cut by Arizona while the rc4.105 pre-draft Snapshot still rendered Trey Benson — RB, ARI ... Injury IR. Sunday/Monday transaction scan must explicitly reconcile such conflicts before they influence championship utility or contingency-path reasoning.
+- Do not remove a player from the draft candidate universe solely because of a release: first resolve destination/waiver status and fantasy role. The correction is about status authority, not an automatic player blacklist.
