@@ -424,3 +424,9 @@ At draft time, any player carrying ↑↑ or ↓↓ must be rechecked against sa
 - **Mike Washington Jr. — role evidence strengthened:** current NFL.com preseason reporting says he received first-team work in the finale while Ashton Jeanty was sidelined and explicitly frames the backfield as capable of using two backs. This upgrades the contingency thesis from generic handcuff logic to a plausible complementary-role path, while Jeanty remains the expected major-role back if healthy.
 - **Trey Benson — stale-roster-status warning:** current NFL.com cutdown coverage reports Arizona has released Benson. Treat official transaction status as higher authority than stale Sleeper roster/team metadata during the Sunday/Monday freshness pass. This is a data-freshness lesson, not a reason to globally alter player scoring.
 - No global runtime coefficient change follows from either item. Reassess after final cut/PUP/IR and waiver outcomes.
+
+
+## Aug 29 sleeper-consensus cross-check III
+- FantasyPros Aug26-27 RB sleeper consensus independently corroborates the existing late-upside pool rather than revealing a missing class: Keaton Mitchell, Jonah Coleman, MarShawn Lloyd, Dylan Sampson, Tank Bigsby, Braelon Allen, Tyjae Spears, Emmett Johnson, Kaelon Black and Mike Washington Jr. all appear among named sleeper RBs.
+- Derek Brown's Aug27 late-RB article specifically supports Jordan Mason as standalone early-down/contingency value and Jonah Coleman as an RB3 with a path to climb Denver's depth chart.
+- Treat this as external corroboration only. Do not double-count it against embedded expert ranks; use it as a close-call thesis/role validator in late rounds.
