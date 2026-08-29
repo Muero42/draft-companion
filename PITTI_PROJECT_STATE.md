@@ -2373,3 +2373,11 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Search regression reproduced again: same-date NFL results surfaced 2022/2023/2024 pages. Year/body verification remains a hard source-quality guard; these legacy pages are excluded from 2026 decisions.
 - Official league calendar reverified: final 53-man reduction Aug30 before 18:00 ET; final-reduction waivers expire Aug31 13:00 ET. These remain the next material freshness windows.
 - No rc4.106 runtime mutation; no mock progression. Continue independent research/checkpoint work under freeze.
+
+
+## 2026-08-29 — Mock 1399325404598124544 completed on rc4.106
+- Draft complete at pick 150. User roster: James Cook, Justin Jefferson, Chris Olave, Jeremiyah Love, Colston Loveland, Jaylen Waddle, Christian Watson, Parker Washington, Blake Corum, Trevor Lawrence, Josh Downs, Rachaad White, Jonah Coleman, Zach Charbonnet, Tyjae Spears.
+- Structural outcome: 1 QB / 7 RB / 6 WR / 1 TE; no K/DST drafted. Charbonnet intentionally drafted as potential IR/PUP stash plus post-draft FA-slot strategy, not as a normal bench-only asset.
+- Decision notes to retain for post-draft analysis: Woody Marks was explicitly downgraded after deeper talent/role review despite Coach 100; final late-RB ordering favored Tyjae Spears, Charbonnet stash package, Tank Bigsby/Mike Washington style contingent upside over Marks. This should be audited as a possible model overvaluation of opportunity without sufficient talent/workhorse-quality gating.
+- Pick 129 was Jonah Coleman, not Woody Marks, after user skepticism about Marks talent. Pick 132 was Zach Charbonnet for stash-package EV. Pick 149 was Tyjae Spears.
+- FantasyPros post-draft benchmark not yet imported. Next external-analysis gate: PITTI-FP-Capture from FantasyPros Full Analysis; do not manually reconstruct picks.
