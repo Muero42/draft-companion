@@ -1,11 +1,11 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260829T0825Z-v164`
+Handoff generation: `20260829T0840Z-v165`
 Updated: 2026-08-28 20:02Z
 
 ## FAIL-CLOSED TAKEOVER
 1. Read PITTI_COMMAND_CONTRACTS.json.
 2. Read PITTI_CURRENT_STATE.json.
-3. Read PITTI_HANDOFF_SEAL.json and require generation `20260829T0500Z-v160`, PASS, handoff_ready=true, second_pass_pass=true, non-empty integrity map.
+3. Read PITTI_HANDOFF_SEAL.json and require generation `20260829T0840Z-v165`, PASS, handoff_ready=true, second_pass_pass=true, non-empty integrity map.
 4. Verify every seal-listed Git blob SHA against main.
 5. Read PITTI_EXECUTION_LOCK.json, PITTI_AUTO_PREFLIGHT.md, and PITTI_PROJECT_STATE.md to EOF.
 6. Read PITTI_NEW_CHAT_BOOTSTRAP.md and HANDOFF_COMPLETENESS_MATRIX.md.
@@ -96,8 +96,13 @@ AUTO never starts an interactive mock unless explicitly requested.
 ## EXACT NEXT GATE
 **RC4104_POST_DRAFT_REPLAY_VALIDATION**
 
-1. Verify v164 seal/authority consistency; repair only checkpoint drift, not runtime behavior.
-2. Counterfactually replay the preserved rc4.101 decision fixtures under rc4.104, with explicit focus on pick92 Addison/JCM, pick109 Downs, pick112 Diggs, and pick132 Spears/Andrews.
-3. Verify that the repair reduces the repeated WR9 construction without hard WR caps, blind RB forcing, player-name rules, or global Return/expert retunes.
-4. Integrate FantasyPros post-draft capture if/when supplied as an external benchmark.
-5. Continue draft-day freshness plan for 31 Aug; no broad late redesign without replicated evidence.
+1. Verify v165 PASS seal/integrity and actual rc4.104 main/pages/Android authority.
+2. Execute the still-pending counterfactual replay of preserved rc4.101 decision fixtures under rc4.104.
+3. First mandatory replay targets: pick92 Addison/JCM, pick109 Downs, pick112 Diggs, pick132 Spears/Andrews; then evaluate full roster construction.
+4. Preserve hard anti-regressions: no hard WR cap/quota, blind RB forcing, player-name forcing, PairSum/Rolling, global Return-v2 retune, or expert-weight redesign.
+5. Do not re-analyze the completed duplicate snapshot as live. FantasyPros capture is optional external benchmark only.
+
+## v165 replay-status canary
+- Counterfactual replay rc4.101 -> rc4.104 is PENDING and must not be inferred complete from release/deploy/device PASS.
+- Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
+- First replay targets: pick92 Addison/JCM, pick109 Downs, pick112 Diggs, pick132 Spears/Andrews, then full roster construction.
