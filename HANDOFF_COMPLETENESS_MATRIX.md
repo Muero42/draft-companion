@@ -1,10 +1,10 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v165
-Generation: `20260829T0840Z-v165`
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v166
+Generation: `20260829T0840Z-v166`
 
 Takeover fails closed unless every item below is true.
 
 ## Authority / seal
-- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T0840Z-v165`.
+- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T0840Z-v166`.
 - SEAL status PASS; handoff_ready=true; second_pass_pass=true.
 - Integrity map non-empty and includes all authority/runtime/critical regression files.
 - Every seal-listed Git blob SHA matches main.
@@ -18,8 +18,8 @@ Takeover fails closed unless every item below is true.
 - PR #36 guardrails 33205458745 PASS.
 - rc4.100 merged main commit = 1b85656e40a182ca6be2397c5bf6674006b97bd2.
 - post-merge main verification PASS: release/package/project guardrails plus rc4.82/rc4.83 draft-critical gates GREEN.
-- gh-pages = rc4.102; rc4.104 exact deployment parity pending v161 reseal.
-- Android/PWA accepted = rc4.101; rc4.104 Android acceptance NOT PASS.
+- gh-pages = rc4.104; exact 13/13 packaged runtime-file parity with main PASS.
+- Android/PWA accepted = rc4.104; user post-draft Snapshot path PASS.
 - rollback authority = rc4.96.
 
 ## Full-draft / Return evidence
@@ -56,7 +56,7 @@ verified candidate -> main post-merge verification -> gh-pages exact-byte deploy
 No repeated refresh/cache/reinstall/manual-ZIP detours before server-side parity is proven.
 
 ## Current gate
-`RC4104_POSTMERGE_RESEAL_THEN_DEPLOY`
+`RC4104_POST_DRAFT_REPLAY_VALIDATION`
 
 ## rc4.104 canonical new evidence
 - Backup `draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json`, draft 1399284498113294336, rc4.101.
@@ -72,7 +72,7 @@ No repeated refresh/cache/reinstall/manual-ZIP detours before server-side parity
 - Completed rc4.104 Snapshot is duplicate/documentation only; FantasyPros capture optional external benchmark.
 
 
-## v165 replay-status canary
+## v166 replay-status canary
 - Counterfactual replay rc4.101 -> rc4.104 is PENDING and must not be inferred complete from release/deploy/device PASS.
 - Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
 - First replay targets: pick92 Addison/JCM, pick109 Downs, pick112 Diggs, pick132 Spears/Andrews, then full roster construction.
