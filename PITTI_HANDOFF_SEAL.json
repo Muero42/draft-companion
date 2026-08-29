@@ -22,7 +22,7 @@
     "manifest.webmanifest": "21fa7938f9bf733f5288e8123d926e92d2d0b1c8",
     "live-surface-v3.js": "593bfcb58465227cc6eae71b787508ab95afbbd8",
     "decision-policy.js": "f8fb704277e08d627a3177d09f6907e3af2f633f",
-    "tools/pitti_guardrail_check.mjs": "5f38c4cf67fa6e4b106458816526fa09383d5751",
+    "tools/pitti_guardrail_check.mjs": "ede049ac50052d3160780f277bffdd1e11afac54",
     "tools/live-presentation-behavior.mjs": "3a78461c1b1b4c65e5cc2d6fc8ad06f97b6fd5e8",
     "tools/rc498-evidence-polarity.mjs": "a2bdc37695b41cc7296b955f330f37030ea23e8a",
     "tools/rc499-wr-saturation.mjs": "7b3dbb8ffba44310d94b30c95685a140db3c27e4",
@@ -56,5 +56,5 @@
     "seal_integrity_nonempty": true
   },
   "exact_gate": "RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY",
-  "note": "Historical ledger text may mention older states; takeover authority is this v157 seal plus v157 CURRENT/HANDOFF/bootstrap/matrix and verified repo/device facts."
+  "note": "v157 seal refreshed after post-merge guardrail-contract repair; runtime/model files unchanged. Historical ledger text may mention older states; takeover authority remains v157 CURRENT/HANDOFF/bootstrap/matrix and verified repo/device facts."
 }
