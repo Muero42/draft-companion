@@ -2313,3 +2313,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Injury stash logic is intentionally conservative: PUP can receive a small free-IR-slot endgame tiebreaker; IR remains penalized until return/season-ending status is externally clarified. This avoids treating an IR label as positive availability evidence.
 - Therefore the correct near-draft solution remains the freshness overlay/official-transaction precedence at decision time, not a rushed runtime transaction subsystem two days before the draft. If Sleeper still carries stale released-player metadata during final scans, suppress/override that player in live analysis rather than mutating the frozen scoring kernel.
 - No runtime change made.
+
+
+## 2026-08-29 — AUTO official transaction-wire / injury delta IV
+- Official NFL 2026 transaction wire promoted to primary freshness authority for team/status reconciliation before role inference. Current August examples demonstrate real team-metadata churn (Atwell/Hunter, Boutte/Reed).
+- Aug28 official injury delta: Jeanty ankle remains monitored but Raiders explicitly still count on him for Week 1; Wan'Dale Robinson is not currently believed concussed. No ranking override warranted from either item yet.
+- Legacy same-date NFL search-result hazard reproduced again; explicit 2026 context guard retained. No runtime mutation.
