@@ -22,7 +22,7 @@
     "manifest.webmanifest": "bb7bb73b9b6b4b797af2a1999a085f390af7761b",
     "live-surface-v3.js": "593bfcb58465227cc6eae71b787508ab95afbbd8",
     "decision-policy.js": "76234515b5428a33b7ef573f1f5c87bab058ad67",
-    "tools/pitti_guardrail_check.mjs": "ede049ac50052d3160780f277bffdd1e11afac54",
+    "tools/pitti_guardrail_check.mjs": "44afde70ea7e336262c3c16ff0253cc9bb76637b",
     "tools/live-presentation-behavior.mjs": "3a78461c1b1b4c65e5cc2d6fc8ad06f97b6fd5e8",
     "tools/rc498-evidence-polarity.mjs": "a2bdc37695b41cc7296b955f330f37030ea23e8a",
     "tools/rc499-wr-saturation.mjs": "9e297363e83bc771aa0ebaabf9bcfeb17fd1dca8",
@@ -76,5 +76,5 @@
     "rc4104_android_pending": true
   },
   "exact_gate": "RC4104_POSTMERGE_RESEAL_THEN_DEPLOY",
-  "note": "v161 predeploy seal: rc4.104 merged and package/behavior gates PASS; prior main red checks diagnosed as v160 lock/seal drift. Android accepted authority remains rc4.101; gh-pages rc4.104 deployment follows only after this sealed main state is all-green."
+  "note": "v161 predeploy seal refreshed after making current-source guardrail successor-safe; rc4.104 merged/package/behavior verified, Android accepted authority rc4.101, gh-pages deployment held until all main gates GREEN."
 }
