@@ -16,8 +16,8 @@
     "latest_package_reextract": "v11.8.0-rc4.104",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd",
-    "deployed_pages": "v11.8.0-rc4.102",
-    "deployed_pages_app_byte_parity_with_main": false,
+    "deployed_pages": "v11.8.0-rc4.104",
+    "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33236822641,
     "package_reference_artifact_id": 9710162910,
     "package_reference_note": "rc4.104 merged main ff6c2240797c1d3303dd538204c76553fd324c16; post-merge release/package/successor gates PASS. rc4.82/rc4.83/project-guard failures are checkpoint/seal drift only and require v161 reseal before deployment.",
@@ -31,9 +31,9 @@
     "rollback_reference": "v11.8.0-rc4.96"
   },
   "exact_continuation": {
-    "gate": "RC4104_POSTMERGE_RESEAL_THEN_DEPLOY",
+    "gate": "RC4104_ANDROID_OBSERVATION",
     "auto_starts_mock": false,
-    "instruction": "rc4.104 PR gates PASS and main merge complete. Post-merge runtime/package/successor gates PASS; remaining RED gates are solely stale lock/seal integrity. Reseal v161, require all main gates GREEN, then deploy exact 13-file runtime to gh-pages and prove parity. Android rc4.101 remains accepted until device observation."
+    "instruction": "rc4.104 main all gates GREEN after v161 seal; exact 13-file main/gh-pages runtime parity PASS. Await unavoidable Android update/observation and Analyze/Snapshot/Coach smoke. rc4.101 remains accepted Android authority until PASS."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -62,7 +62,7 @@
   "package_authority": "v11.8.0-rc4.104",
   "android_version_observed": "v11.8.0-rc4.101",
   "android_functional_verified": true,
-  "deployment_authority": "v11.8.0-rc4.102",
+  "deployment_authority": "v11.8.0-rc4.104",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
