@@ -8,7 +8,7 @@
 > **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
 > **rc4.100 scope:** generic Pro/Contra semantic hardening + bounded short-turn portfolio ordering; no global ranking/Return/expert retune, no hard WR cap/quota.
 > **OOS critical:** strict Coach draft 1399114762087895040 = 9 WR / 4 RB / 1 TE / 1 QB; old 7-WR count is invalid.
-> **Current gate:** RC4104_POST_DRAFT_REPLAY_VALIDATION.
+> **Current gate:** RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS; bounded frozen-fixture replay CI PASS, full browser-equivalent historical recomputation unavailable/not claimed.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
 
@@ -72,6 +72,7 @@ v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96
 
 
 ## v166 replay-status canary
-- Counterfactual replay rc4.101 -> rc4.104 is PENDING and must not be inferred complete from release/deploy/device PASS.
+- Bounded frozen-fixture replay rc4.101 -> rc4.104 is CI PASS for the observed failure mechanisms at pick92/109/112 and exact pick132 Spears/Andrews; Return-v2 unchanged.
 - Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
-- First replay targets: pick92 Addison/JCM, pick109 Downs, pick112 Diggs, pick132 Spears/Andrews, then full roster construction.
+- Browser-equivalent full historical recomputation is unavailable from preserved transient inputs and must not be fabricated.
+- Current gate: RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS.
