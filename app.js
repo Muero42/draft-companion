@@ -176,6 +176,40 @@ function buildPanelFromExpertRows(id,pos,expertRows,rawWeights,meta={}){
   }
   assignTiers(ranks);panelRanks[id]=ranks;panels[id]={name:meta.name||id,members:{},shadow:true,weights,source:meta.source||'verified-expert-import',coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};return ranks;
 }
+function verifiedRowsForExpert(name,pos){
+  const e=findExpert(name),cache=e?rankCache[e.id]:null;if(!cache?.verifiedIndividual||cache?.duplicateOf)return[];
+  return Object.values(cache.ranks||{}).filter(x=>x?.pos===pos&&Number.isFinite(Number(x.posRank??x.rank))).map(x=>({name:x.name,pos,rank:Number(x.rank),posRank:Number(x.posRank??x.rank)}));
+}
+function ensureExpertV4Panels(){
+  let ok=true;
+  for(const pos of ['QB','RB','WR','TE']){
+    const bp=EXPERT_V4_BLUEPRINT[pos],rows={};
+    for(const name of bp.experts)rows[name]=verifiedRowsForExpert(name,pos);
+    if(bp.experts.some(name=>rows[name].length<20)){ok=false;continue}
+    buildPanelFromExpertRows('expert-v4-'+pos.toLowerCase(),pos,rows,Object.fromEntries(bp.experts.map(name=>[name,1])),{name:'Expert-v4 '+pos,source:'live verified individual experts',maxSingleWeight:bp.maxSingleWeight});
+  }
+  return ok&&expertProfileReady('expertv4');
+}
+function ensureExpertV5Panels(){
+  const koerner='Sean Koerner';let ok=true;
+  for(const pos of ['QB','RB','WR','TE']){
+    const baseId=EXPERT_PROFILE_IDS.expertv3[pos],baseRows=panelRanks[baseId]||{},kRows=verifiedRowsForExpert(koerner,pos);
+    if(kRows.length<20||!Object.keys(baseRows).length){ok=false;continue}
+    const kMap=new Map(kRows.map(x=>[norm(x.name),x])),ranks={};
+    for(const [key,row] of Object.entries(baseRows)){
+      const k=kMap.get(key),baseInd=(row.individual||[]).map(x=>({...x}));
+      if(!k){ranks[key]={...row,intendedN:(row.intendedN||baseInd.length)+1,coverageStatus:'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN',missingExperts:[...new Set([...(row.missingExperts||[]),koerner])]};continue}
+      const ds=baseInd.find(x=>x.expertName==='Draft Sharks Team'),transfer=Math.min(.20,Number(ds?.effectiveWeight||0));
+      const vals=baseInd.map(x=>x.expertName==='Draft Sharks Team'?{...x,effectiveWeight:Math.max(0,Number(x.effectiveWeight)-transfer)}:x);
+      vals.push({expertName:koerner,rank:Number(k.posRank),effectiveWeight:transfer,reconstructed:false,spread:null});
+      const sw=vals.reduce((a,x)=>a+Number(x.effectiveWeight||0),0),mean=vals.reduce((a,x)=>a+x.rank*Number(x.effectiveWeight||0),0)/sw;
+      const variance=vals.reduce((a,x)=>a+Number(x.effectiveWeight||0)*(x.rank-mean)**2,0)/sw;
+      ranks[key]={...row,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,intendedN:(row.intendedN||baseInd.length)+1,coverage:vals.length/((row.intendedN||baseInd.length)+1),coverageStatus:(row.missingExperts||[]).length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',missingExperts:[...(row.missingExperts||[])],individual:vals.sort((a,b)=>a.rank-b.rank)};
+    }
+    assignTiers(ranks);panelRanks['expert-v5-'+pos.toLowerCase()]=ranks;panels['expert-v5-'+pos.toLowerCase()]={name:'Expert-v5 '+pos,members:{},shadow:true,source:'v3 + verified Sean Koerner',coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};
+  }
+  return ok&&expertProfileReady('expertv5');
+}
 function currentExpertProfile(){for(const [id,map] of Object.entries(EXPERT_PROFILE_IDS))if(['QB','RB','WR','TE'].every(pos=>positionPanels[pos]===map[pos]))return id;return 'custom';}
 function expertProfileReady(id){
   const map=EXPERT_PROFILE_IDS[id];if(!map)return false;
