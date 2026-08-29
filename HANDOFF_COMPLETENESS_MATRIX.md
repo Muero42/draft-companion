@@ -1,10 +1,10 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v168
-Generation: `20260829T0730Z-v168`
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v169
+Generation: `20260829T0745Z-v169`
 
 Takeover fails closed unless every item below is true.
 
 ## Authority / seal
-- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T0730Z-v168`.
+- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T0745Z-v169`.
 - SEAL status PASS; handoff_ready=true; second_pass_pass=true.
 - Integrity map non-empty and includes all authority/runtime/critical regression files.
 - Every seal-listed Git blob SHA matches main.
@@ -76,7 +76,7 @@ No repeated refresh/cache/reinstall/manual-ZIP detours before server-side parity
 - pick129 score-0 timing promotion reproduced; rc4.105 generic quality-floor regression added.
 - PR #46 three gates PASS; main merged; gh-pages 13/13 parity PASS; Android acceptance pending.
 
-## v168 display / paused mock
+## v169 display / paused mock
 - rc4.106 fixes embedded individual-rank Snapshot rendering only; PR #47 three gates PASS; main merged; pages 13/13 parity PASS.
 - latest accepted Android = rc4.105; rc4.106 observation pending.
 - mock 1399325404598124544 paused BEFORE pick9; James Cook recommendation is not a completed pick.
