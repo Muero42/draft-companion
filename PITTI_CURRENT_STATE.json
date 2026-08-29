@@ -11,8 +11,8 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.101",
     "android_authority": "v11.8.0-rc4.101",
-    "test_challenger": "v11.8.0-rc4.101",
-    "test_challenger_android_verified": true,
+    "test_challenger": "v11.8.0-rc4.102",
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.101",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope:4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae",
@@ -25,15 +25,15 @@
     "android_functional_verified": true,
     "freeze_policy": "rc4.101 accepted draft runtime; rc4.96 historical rollback reference only",
     "test_challenger_android_observed": true,
-    "android_acceptance_pending": false,
+    "android_acceptance_pending": true,
     "android_observed": "v11.8.0-rc4.101",
     "android_functional_acceptance": "LIVE_ANALYZE_SNAPSHOT_COACH_PASS",
     "rollback_reference": "v11.8.0-rc4.96"
   },
   "exact_continuation": {
-    "gate": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE",
+    "gate": "RC4102_FRESHNESS_GATES",
     "auto_starts_mock": false,
-    "instruction": "rc4.101 live device rerun PASS: Analyze & Snapshot completes and Draft Coach renders candidates; prior `Assignment to constant variable.` crash is closed. Continue draft-day freshness/evidence and bounded content-quality audits; no scoring/model retune from this fix."
+    "instruction": "rc4.102 freshness-only candidate: update Love ankle wording, Puka psoas + unresolved discipline context, Charbonnet conditional PUP consequence, Wan'Dale acute concussion-monitoring status. No coefficient/Return/panel retune. Run full gates before promotion; rc4.101 remains accepted Android authority."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -58,8 +58,8 @@
     "next_action": "Continue evidence/calibration lanes and final draft-day freshness workflow; preserve freeze unless a fresh reproducible critical defect appears.",
     "gate": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE"
   },
-  "source_authority": "v11.8.0-rc4.101",
-  "package_authority": "v11.8.0-rc4.101",
+  "source_authority": "v11.8.0-rc4.102-candidate",
+  "package_authority": "v11.8.0-rc4.102-pending-gates",
   "android_version_observed": "v11.8.0-rc4.101",
   "android_functional_verified": true,
   "deployment_authority": "v11.8.0-rc4.101",
