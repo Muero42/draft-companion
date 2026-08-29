@@ -2345,3 +2345,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Kenneth Walker III has a swollen ankle per Aug26 official reporting, following a foot-related practice absence. Mandatory Aug31 health recheck; no unsupported IR/PUP inference.
 - Trey Benson was released by Arizona during cutdown week; stale depth-chart research involving him is invalidated.
 - No runtime mutation: these are freshness-layer overrides/invalidators under the existing near-draft freeze.
+
+
+## 2026-08-29 — AUTO embedded research consistency audit VI
+- app.js already contains a neutral Jeanty current_ankle risk component and a Mike Washington contingent-upside component; the newly found committee evidence is directionally compatible with the existing research architecture.
+- However, Jeanty's embedded positive component is still named workhorse_environment_rebound and its invalidator is opportunity-share decline. Because current official evidence now directly raises that invalidator, **do not mutate rc4.106 solely to rename/reword this component**. Live interpretation must treat the workhorse premise as challenged pending Aug31 status/usage evidence.
+- Mike Washington embedded component explicitly says genuine committee use invalidates the old low-standalone-volume risk. Kubiak's Aug28 comments are therefore a live invalidator candidate, but not sufficient by themselves to convert Washington into a weekly starter projection.
+- This confirms the freshness-layer override can safely handle the new evidence without a last-minute runtime build.
