@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260828T2002Z-v157",
-  "created_at": "2026-08-28T20:02:00Z",
+  "handoff_generation": "20260829T0430Z-v158",
+  "created_at": "2026-08-29T04:30:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "1acad9d3d15a017e91c552d1e7660b7b852e687c",
+    "PITTI_CURRENT_STATE.json": "9b55563ba6e35d5db8a48414a2868f50f0bab254",
     "NEW_CHAT_HANDOFF_CURRENT.md": "24c60ae5ef39ad553832d08a27f40a8123b4038b",
-    "PITTI_COMMAND_CONTRACTS.json": "915817ac151e8855b3bf9ed2698c286f55befbd0",
+    "PITTI_COMMAND_CONTRACTS.json": "754902a023a80ff62321cb0dea8d8cdcdc83424e",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "935770fe35982f45581dd176e7e2e91aba27f7ff",
     "HANDOFF_COMPLETENESS_MATRIX.md": "2c2722b6c1172c49f8e6cbf6131316ae49176487",
-    "PITTI_EXECUTION_LOCK.json": "07c5fbe7eb98dc0b29c6fbbd7d6e26799463c9b9",
-    "PITTI_PROJECT_STATE.md": "7a8debdf16bb9bb386da5f37e20a14ff1a64b891",
+    "PITTI_EXECUTION_LOCK.json": "d8ff3f4c918a79a153319b14dbf0b2c2b36cc0d5",
+    "PITTI_PROJECT_STATE.md": "6c3bead84be02b9f54a2b04acd309ebb33de642a",
     "PITTI_AUTO_PREFLIGHT.md": "c03a64d96d784be51f18595c1bee5449137b637b",
     "README.md": "be89025f1c7bdd26897f897ee640b6b95897bb50",
     "app.js": "48afb7db0c561c69b49fc56a9755be238dc7194d",
@@ -60,5 +60,5 @@
     "rc4100_representative_changed_behaviors_pass": true
   },
   "exact_gate": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE",
-  "note": "v157 seal advanced after rc4.100 Android observation and representative changed-behavior acceptance. Final draft-day freshness/evidence work remains; no broad retune."
+  "note": "v158 consistency seal: rc4.100 is Android authority after device observation and representative changed-behavior acceptance; stale rc4.99/rc4.96 active pointers removed. Draft-day freshness/evidence remains."
 }
