@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-29T08:40:00Z",
+  "updatedAt": "2026-08-29T08:50:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -177,7 +177,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4104_POST_DRAFT_REPLAY_VALIDATION",
+    "status": "RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS",
     "production": true,
     "androidVerified": true,
     "changes": [
@@ -192,13 +192,14 @@
       "rc4.104 main release/package/successor semantic gates PASS before v161 reseal",
       "v161 seal reached all-green before deployment",
       "exact 13-file main/gh-pages runtime parity PASS",
-      "Android rc4.104 observed; post-draft Snapshot path PASS"
+      "Android rc4.104 observed; post-draft Snapshot path PASS",
+      "bounded frozen-fixture replay CI PASS: pick92/109/112 roster economics + exact pick132 Spears/Andrews reorder; no Return-v2 mutation"
     ],
-    "nextGate": "counterfactual replay of preserved rc4.101 decision fixtures under rc4.104; external FantasyPros benchmark when supplied"
+    "nextGate": "draft-day readiness/freshness/failsafe; FantasyPros benchmark optional"
   },
-  "status": "RC4104_POST_DRAFT_REPLAY_VALIDATION",
-  "gate": "RC4104_POST_DRAFT_REPLAY_VALIDATION",
-  "nextGate": "counterfactual replay of preserved rc4.101 decision fixtures under rc4.104; external FantasyPros benchmark when supplied",
+  "status": "RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS",
+  "gate": "RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS",
+  "nextGate": "draft-day readiness/freshness/failsafe; FantasyPros benchmark optional",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -211,6 +212,6 @@
     "status": "HANDOFF_v166_READY",
     "ready": true,
     "secondPass": true,
-    "resume": "PITTI AUTO: verify v166 PASS seal, then execute pending rc4.101->rc4.104 counterfactual replay. rc4.104 is accepted Android authority; completed snapshot is documentation only."
+    "resume": "PITTI AUTO: bounded rc4.104 frozen-fixture replay is CI PASS; continue draft-day readiness/freshness/failsafe. Browser-equivalent full recomputation was not claimed."
   }
 }
