@@ -21,6 +21,10 @@ assert.match(app,/const displayGap=current<=70\?18:current<=110\?22:26/,'present
 assert.match(app,/current>=121&&n>=6\)x-=14/,'late WR7 marginal-utility guard missing');
 assert.match(app,/current>=121&&n<=4\)x\+=3\.5/,'late RB contingent-option utility missing');
 assert.match(app,/ACTIVE_2026_MANAGER_MAP_TEXT='1=Michael, 2=Pascal Voerde, 3=Marc Düsseldorf, 4=Thomas, 5=Bjoern, 6=Pascal Gelderner, 7=Giuliano, 8=Basti, 9=Muerotechnik, 10=Dutch Marc'/,'canonical 2026 manager map drift');
+assert.match(app,/coverageStatus:missing\.length\?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE'/,'expert coverage status must be explicit');
+assert.match(app,/missingExperts:missing/,'missing expert identities must be retained per player');
+assert.match(app,/intendedN:intendedExperts\.length,coverage:vals\.length\/intendedExperts\.length/,'effective-vs-intended panel coverage telemetry missing');
+assert.match(app,/coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'/,'v4-v5 coverage fail-closed policy missing');
 assert.doesNotMatch(app,/5=Basti, 6=Bjoern/,'rc4.84 wrong slot-5/6 mapping resurrected');
 assert.doesNotMatch(app,/8=Pascal Gelderner/,'rc4.84 wrong slot-8 mapping resurrected');
 assert.doesNotMatch(app,/Moers Venom/i,'stale user team identity resurrected');
