@@ -121,12 +121,12 @@
     "canonicalOosBackup": "draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json",
     "strictCoachDraft": "1399114762087895040",
     "strictCoachRoster": "9 WR / 4 RB / 1 TE / 1 QB",
-    "fullDraftAudit": "1399284498113294336 rc4.101 source fixtures; 14 preserved completed own picks all Coach #1; rc4.104 counterfactual replay pending",
+    "fullDraftAudit": "1399284498113294336 rc4.101 source fixtures; bounded rc4.104 frozen-fixture replay CI PASS for observed failure mechanisms; browser-equivalent full recomputation unavailable and not claimed",
     "returnFinding": "3-pick 92.5% forecast vs 92.4% actual (Brier .044); 17-pick 35.6% vs 32.5% (Brier .077); no global Return-v2 retune",
     "openEvidencePatch": "Superseded by merged rc4.99/rc4.100 generic semantic fixes; never resurrect stale PR #33 status as current.",
     "androidAccepted": true
   },
-  "currentGate": "RC4104_POST_DRAFT_REPLAY_VALIDATION",
+  "currentGate": "RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS",
   "handoffGeneration": "20260829T0840Z-v166",
   "handoff_generation": "20260829T0840Z-v166"
 }
