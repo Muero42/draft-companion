@@ -210,10 +210,10 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260829T0840Z-v166",
-    "status": "HANDOFF_v166_READY",
+    "generation": "20260829T0705Z-v167",
+    "status": "HANDOFF_v167_READY_PENDING_ANDROID_RC4105",
     "ready": true,
     "secondPass": true,
-    "resume": "PITTI AUTO: bounded rc4.104 frozen-fixture replay is CI PASS; continue draft-day readiness/freshness/failsafe. Browser-equivalent full recomputation was not claimed."
+    "resume": "PITTI AUTO: rc4.105 source/package/deployment and 13/13 pages parity PASS; Android rc4.105 acceptance pending. New OOS backup draft 1399308446632800256 is canonical latest evidence."
   }
 }
