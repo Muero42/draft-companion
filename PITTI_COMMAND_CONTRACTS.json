@@ -102,10 +102,10 @@
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.64",
     "rollbackAuthority": "v11.8.0-rc4.96",
-    "androidAuthority": "v11.8.0-rc4.104",
-    "activeAndroidObserved": "v11.8.0-rc4.104",
+    "androidAuthority": "v11.8.0-rc4.105",
+    "activeAndroidObserved": "v11.8.0-rc4.105",
     "androidVersionObserved": true,
-    "androidAcceptancePending": true,
+    "androidAcceptancePending": false,
     "sourceAuthority": "v11.8.0-rc4.105",
     "latestPackageReextract": "v11.8.0-rc4.105 PASS",
     "latestPackageSha256": "sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd",
@@ -126,7 +126,7 @@
     "openEvidencePatch": "Superseded by merged rc4.99/rc4.100 generic semantic fixes; never resurrect stale PR #33 status as current.",
     "androidAccepted": true
   },
-  "currentGate": "RC4105_ANDROID_ACCEPTANCE",
+  "currentGate": "RC4105_POST_DEVICE_COACH_VALIDATION",
   "handoffGeneration": "20260829T0705Z-v167",
   "handoff_generation": "20260829T0705Z-v167"
 }
