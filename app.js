@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.103';
+const APP_VERSION='v11.8.0-rc4.104';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -29,20 +29,25 @@ function normalCandidateAdmissible(row){
 }
 function applyTurnPortfolioOrdering(rows,current,next){
   if(!Array.isArray(rows)||rows.length<2||!Number.isFinite(current)||!Number.isFinite(next))return rows;
-  // Short-turn snake geometry: a clearly deferable board leader should not be shown as
-  // TAKE/#1 when a materially comparable normal-cut alternative has much lower return odds.
-  // This is an ordering/presentation policy, not a score/Return-v2 retune and never creates
-  // a hard positional rule. Generic thresholds are deliberately conservative.
-  if(next-current>3)return rows;
+  // Portfolio ordering is presentation-only: it never mutates Coach scores or Return-v2.
+  // At a 3-pick turn we can use a broad defer window. On a long turn, only a very high-
+  // Return WAIT leader may be deferred, and only for a close-quality, genuinely urgent
+  // alternative. This closes the "WAIT still shown #1" failure without position forcing.
+  const turnGap=next-current,shortTurn=turnGap<=3;
   const leader=rows[0],leaderRet=Number(leader?.ret);
-  if(leader?.action!=='WAIT'||!Number.isFinite(leaderRet)||leaderRet<.85)return rows;
-  const leaderPanel=Number(leader?.r?.rank);
+  const leaderRetMin=shortTurn?.85:.90;
+  if(leader?.action!=='WAIT'||!Number.isFinite(leaderRet)||leaderRet<leaderRetMin)return rows;
+  const leaderPanel=Number(leader?.r?.rank),leaderRaw=Number(leader?.rawScore);
   if(!Number.isFinite(leaderPanel))return rows;
+  const maxAltRet=shortTurn?.82:.25;
+  const maxPanelGap=shortTurn?25:15;
+  const maxRawGap=shortTurn?Infinity:10;
   const alternatives=rows.slice(1).filter(x=>{
-    const ret=Number(x?.ret),panel=Number(x?.r?.rank);
+    const ret=Number(x?.ret),panel=Number(x?.r?.rank),raw=Number(x?.rawScore);
     return !x?.hardExcluded&&!x?.recommendationBlocked&&normalCandidateAdmissible(x)
-      &&Number.isFinite(ret)&&ret<=.82
-      &&Number.isFinite(panel)&&panel<=leaderPanel+25;
+      &&Number.isFinite(ret)&&ret<=maxAltRet
+      &&Number.isFinite(panel)&&panel<=leaderPanel+maxPanelGap
+      &&(!Number.isFinite(leaderRaw)||!Number.isFinite(raw)||leaderRaw-raw<=maxRawGap);
   }).sort((a,b)=>Number(a.ret)-Number(b.ret)||Number(a.r.rank)-Number(b.r.rank)||Number(b.rawScore)-Number(a.rawScore));
   const take=alternatives[0];
   if(!take)return rows;
@@ -1047,9 +1052,13 @@ function marginalRosterUtility(p,current,state){
     else if(n>=7)x-=6;
     else if(n>=6)x-=4;
     else if(n<=4)x+=.5;
-    // Portfolio imbalance matters independently of raw WR count. This is deliberately
-    // modest and only activates once the roster already carries six WR.
+    // Portfolio imbalance matters independently of raw WR count. It remains a soft
+    // opportunity-cost term, never a cap: exceptional WR value may still overcome it.
     if(n>=6&&rb<=4)x-=current>=121?3:1.5;
+    // Repeated strict-Coach mocks reached WR9 while carrying only two or three RBs.
+    // Once WR7+ and RB<=3 coexist, the next WR must clear an additional meaningful
+    // championship-utility hurdle instead of winning on panel rank alone.
+    if(n>=7&&rb<=3)x-=6;
   }
   if(p.pos==='QB'&&n===0&&current>=130)x+=7;
   if(p.pos==='TE'&&n===0&&current>=120)x+=4;

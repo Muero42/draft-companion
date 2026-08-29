@@ -117,7 +117,7 @@
     "packageReferenceRun": 33235297898,
     "packageReferenceArtifactId": 9709726210,
     "packageHashSemantics": "GitHub artifact envelope digest for the all-green rc4.100 PR package; do not confuse with a separately downloaded inner ZIP hash.",
-    "testChallenger": "v11.8.0-rc4.102",
+    "testChallenger": "v11.8.0-rc4.104",
     "canonicalOosBackup": "draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json",
     "strictCoachDraft": "1399114762087895040",
     "strictCoachRoster": "9 WR / 4 RB / 1 TE / 1 QB",
@@ -125,7 +125,7 @@
     "returnFinding": "3-pick turns 91.4% forecast vs 90.9% actual; 17-pick turns 37.1% vs 30.4%; no global Return-v2 retune",
     "openEvidencePatch": "Superseded by merged rc4.99/rc4.100 generic semantic fixes; never resurrect stale PR #33 status as current."
   },
-  "currentGate": "RC4102_ANDROID_OBSERVATION",
+  "currentGate": "RC4104_REPEATED_WR9_PORTFOLIO_GATES",
   "handoffGeneration": "20260829T0430Z-v158",
   "handoff_generation": "20260829T0430Z-v158"
 }

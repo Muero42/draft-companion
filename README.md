@@ -1,8 +1,8 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Current main/source:** v11.8.0-rc4.103; curated player Pro/Contra evidence is now surfaced on Coach cards; no scoring/Return/expert retune.
+> **Current candidate/source:** v11.8.0-rc4.104 on PR branch; rc4.101 remains accepted Android authority until full gates/deployment/device PASS.
 > **rc4.100 PR validation:** release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
-> **Deployment/device:** accepted gh-pages/Android authority v11.8.0-rc4.101; rc4.102 is a source-only freshness candidate pending full gates/deployment/device observation.
+> **Deployment/device:** current accepted Android authority v11.8.0-rc4.101; rc4.104 is not yet deployed/accepted.
 > **Rollback reference:** v11.8.0-rc4.96 historical only; current accepted Android authority remains v11.8.0-rc4.101 until rc4.102 passes promotion/device gates.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
 > **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
