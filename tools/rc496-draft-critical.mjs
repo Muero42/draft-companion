@@ -47,7 +47,8 @@ assert.doesNotMatch(app,/8=Pascal Gelderner/,'rc4.84 wrong slot-8 mapping resurr
 assert.doesNotMatch(app,/Moers Venom/i,'stale user team identity resurrected');
 assert.doesNotMatch(app,/Michael K/i,'nonexistent Michael K identity resurrected');
 assert.match(app,/function canonicalize2026ManagerMap\(stored\)/,'persisted manager-map migration missing');
-assert.match(app,/stale=\/5\\s\*=\\s\*Basti\|8\\s\*=\\s\*Pascal Gelderner\|Moers Venom\|Michael K\/i/,'stale manager-map signatures not migrated');
+assert.match(app,/legacyUserTeam=\['Moers','Venom'\]\.join\(' '\)/,'legacy team migration signature missing');
+assert.match(app,/stale=\/5\\s\*=\\s\*Basti\|8\\s\*=\\s\*Pascal Gelderner\|Michael K\/i/,'stale manager-map signatures not migrated');
 assert.match(app,/managerMap\.value=canonicalize2026ManagerMap\(v\.managerMap\)/,'backup restore must canonicalize stale manager map');
 assert.match(live,/return'PANEL-CHECK'/,'live sparse-panel signal missing');
 assert.match(live,/Panel unvollständig\|Panel-Streuung/,'live sparse-panel negative evidence handling missing');
