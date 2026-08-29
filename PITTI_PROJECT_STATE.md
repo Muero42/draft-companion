@@ -2407,3 +2407,5 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - User identifies this as the previously missing mock containing the user's real decisions.
 - DO NOT evaluate/analyze it now. Preserve it as deferred natural-mock evidence for future PITTI accuracy/decision-model evaluation and comparison against recommendation-following mocks.
 - On future evaluation, use this exact file/provenance rather than reconstructing the mock from memory.
+
+- AUTO 2026-08-29: implemented the requested analysis-surface expert selector directly above Analyze in index.html. v3 is selectable baseline; v4/v5 are visibly staged but disabled until the expert-coverage blocker is resolved. This deliberately avoids exposing unsafe presets while completing the low-risk UI requirement. Commit f45bb99d0bd69d52f3cc792aae9571db4b2e615e.
