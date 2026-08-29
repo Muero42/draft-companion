@@ -8,10 +8,10 @@
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_CURRENT_STATE.json": "c185644f1ebcd3737ed7ccf69683648d10729527",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "24c60ae5ef39ad553832d08a27f40a8123b4038b",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "388d179e597ccde85a70c75a7a00a2e1aea19062",
     "PITTI_COMMAND_CONTRACTS.json": "741b068233a0fc2cc3cb0831f5a45c424b53b3b1",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "935770fe35982f45581dd176e7e2e91aba27f7ff",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "2c2722b6c1172c49f8e6cbf6131316ae49176487",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "abd3720632afad71571e69cc799f695664af6a97",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "4b6e866c02ba59ef042a72301d47c71b4940dd6d",
     "PITTI_EXECUTION_LOCK.json": "bbdb3426698f60f2945a3ca915083d8634824c7c",
     "PITTI_PROJECT_STATE.md": "6c3bead84be02b9f54a2b04acd309ebb33de642a",
     "PITTI_AUTO_PREFLIGHT.md": "c03a64d96d784be51f18595c1bee5449137b637b",
@@ -34,7 +34,8 @@
     ".github/workflows/release-contract-v2-package.yml": "944072ef6e2f294c1ca893d07dc5a4aaccf2142b",
     ".github/workflows/pitti-project-guardrails.yml": "aa2504a63d412e85f088ada7280ad0d384abc1a2",
     "research/RC498_PAIRED_OOS_MOCKS_1399109246460682240_1399114762087895040_2026-08-28.md": "0ce3c9826607d36b8aa59ab767fa6e26fcc83843",
-    "research/RC499_FULL_DRAFT_1399141058222280704_2026-08-28.md": "341f76da8fd53c8cf094f31a072332ff86eeccdd"
+    "research/RC499_FULL_DRAFT_1399141058222280704_2026-08-28.md": "341f76da8fd53c8cf094f31a072332ff86eeccdd",
+    "research/DRAFT_DAY_FRESHNESS_PLAN_2026-08-31.md": "d725244823ba9c0bb0cf7ef4b8243a0ca202a313"
   },
   "checks": {
     "generation_consistent": true,
@@ -60,5 +61,5 @@
     "rc4100_representative_changed_behaviors_pass": true
   },
   "exact_gate": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE",
-  "note": "v158 consistency seal: rc4.100 is Android authority after device observation and representative changed-behavior acceptance; stale rc4.99/rc4.96 active pointers removed. Draft-day freshness/evidence remains."
+  "note": "v158 consistent authority seal: rc4.100 accepted; all takeover generation labels aligned; draft-day freshness plan updated with Aug-29 deltas."
 }
