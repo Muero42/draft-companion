@@ -153,3 +153,10 @@ Scope rule: rc4.102 is a source-freshness correction, not a coefficient experime
 - This matters because current embedded/Sleeper-derived player metadata can lag team assignment. Before interpreting role, stack, handcuff, or depth-chart context, reconcile candidate team/status against the official transaction wire.
 - Current NFL Aug28 roundup confirms Ashton Jeanty remains on the mend from the Aug23 ankle injury, while the Raiders still say they are counting on him for Week 1. Treat as monitored uncertainty, not a presumed absence. Wan'Dale Robinson was not believed to have suffered a concussion after the Aug28 practice hit; continue symptom/status monitoring rather than applying a concussion downgrade now.
 - Search-quality regression reconfirmed: NFL search can return legacy Aug29/Aug30 roundup pages from 2022/2023 without an obvious year in the title. Explicit 2026 body/date verification remains mandatory.
+
+
+## Aug29 AUTO freshness audit V — late cutdown / RB role delta
+- Official Aug28 reporting adds a **material Ashton Jeanty role-risk delta** beyond the ankle itself: rookie Mike Washington Jr. ran solely with the Raiders' first team in the finale while Jeanty was out, finished preseason 23-168 (7.3 YPC), and Klint Kubiak explicitly entertained a Jeanty/Washington usage comparison to his prior Walker/Charbonnet split. This does not displace Jeanty as lead back, but it weakens any assumption of uncontested bellcow volume and is decision-relevant at Jeanty's current first/second-round market price.
+- Kenneth Walker III: official Aug26 report says he is dealing with a swollen ankle after an earlier foot-related practice absence. Treat as active health uncertainty for Aug31, requiring Sunday/Monday status recheck; do not infer IR/PUP or absence without new evidence.
+- Cardinals released Trey Benson during cutdown week. This is a concrete depth-chart transaction and must supersede stale preseason role assumptions anywhere Benson appears in old research/cache.
+- Roster cutdown is already producing fantasy-relevant churn before Sunday's deadline; official transaction/roster-cut sources remain mandatory in each final delta scan.
