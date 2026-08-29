@@ -2511,3 +2511,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Follow-up code audit found the first pairwise fallback implementation counted Compare Players observations but did not increment matched; that would correctly fail closed but could never validate. Fixed before release.
 - Pairwise-derived overall ranks are now converted to target positional ranks first; Compare Players then checks those exact target positional ranks. Acceptance requires >=2 checked rows and 100% matches, in addition to >=80 recovered overall rows. Any mismatch rejects the fallback.
 - Regression canaries require both the actual match gate and fail-closed crosscheck condition.
+
+
+### 2026-08-29 — AUTO BLOCK regression hardening
+- Found a release-critical persistence hazard: merely correcting ACTIVE_2026_MANAGER_MAP_TEXT would not repair an already-saved wrong v11_managerMap on the phone, and restoring an old backup could reintroduce the rc4.84 map. Added canonicalize2026ManagerMap migration at startup and backup restore. Known stale signatures (slot5 Basti, slot8 Pascal Gelderner, Moers Venom, Michael K) are automatically replaced by canonical 2026 order before use.
+- Regression guards require startup/restore migration.
+- Analysis selector application now rejects all profiles outside v3/v4/v5, preserving the intended controlled same-state comparison path.
