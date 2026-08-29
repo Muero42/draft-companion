@@ -2282,3 +2282,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Research-cache chronology remains fail-closed for critical injury/PUP/IR state: fresh crawl/observation alone does not prove a current source event. Watcher ingestion failure leaves existing cache unchanged.
 - Trade board remains target-discovery/read-only and does not emit accept/decline/fairness claims without a current trade-market layer.
 - One post-draft-only nuance remains on the watchlist, not a pre-draft fix: IR status increases drop-review pressure even though an IR stash can preserve option value. Re-evaluate only against real post-draft roster/FA evidence; do not alter near-draft runtime from a hypothetical case.
+
+
+## 2026-08-29 — AUTO current-news delta II
+- Current NFL.com evidence materially strengthens Mike Washington Jr.'s late-round case: first-team preseason finale work with Jeanty sidelined plus explicit Kubiak two-back comparison. Jeanty's ankle remains a short-term uncertainty but team expectation is still that he plays a major role.
+- Official NFL.com cutdown preview also says Arizona has already cut Trey Benson, exposing a stale-roster-status risk versus Sleeper metadata. Current official transactions must override stale roster/team labels in Sunday/Monday freshness work.
+- No broad runtime retune from these isolated developments; capture them in freshness/research and let final cutdown + waiver outcomes settle before any draft-day materiality decision.
