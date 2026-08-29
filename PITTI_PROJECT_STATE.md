@@ -2294,3 +2294,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Official-transaction precedence is now an explicit draft-day guard: official release/waive/IR/PUP/NFI/trade status outranks stale Sleeper team/status metadata.
 - Current regression case captured: Trey Benson official release report versus stale Sleeper ARI/IR pool state. Mike Washington Jr. role evidence strengthened, but remains contingent and non-forcing.
 - No runtime retune made; final cutdown/waiver outcomes remain the correct materiality gate.
+
+
+## 2026-08-29 — AUTO external corroboration / source-quality audit
+- Current Aug26-27 sleeper consensus corroborates PITTI's late-RB thesis set (Mitchell/Coleman/Lloyd/Sampson/Bigsby/Braelon Allen/Spears/Emmett Johnson/Kaelon Black/Mike Washington) without justifying double-counting or a runtime coefficient change.
+- Search audit exposed a real freshness hazard: legacy NFL roundup pages can be returned under same month/day and appear freshly crawled. Draft-day plan now requires explicit 2026 season/date validation before ingesting a news event.
+- No runtime mutation made. Official current transaction evidence remains higher authority than stale Sleeper status or generic article recency.
