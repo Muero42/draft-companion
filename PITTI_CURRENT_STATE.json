@@ -1,6 +1,6 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260829T0840Z-v166",
+  "handoff_generation": "20260829T0705Z-v167",
   "updated_at": "2026-08-29T07:03:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -50,9 +50,9 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "PITTI AUTO resumes after CI-backed bounded rc4.104 frozen-fixture replay PASS. Continue draft-day readiness/freshness/failsafe work; do not re-analyze completed snapshot.",
-    "acceptance_fingerprint": "MAIN-RC4.104|PAGES-13OF13|ANDROID-RC4.104-SNAPSHOT-PASS|MOCK-1399284498113294336|BOUNDED-REPLAY-CI-PASS|HANDOFF-v166",
-    "status": "HANDOFF_v166_READY",
+    "resume_semantics": "PITTI AUTO resumes at RC4105_ANDROID_ACCEPTANCE. rc4.105 source/package/deployment are verified with exact 13/13 main/gh-pages parity; rc4.104 remains last accepted Android authority until fresh rc4.105 device Snapshot/Coach observation.",
+    "acceptance_fingerprint": "MAIN-RC4.105|PAGES-13OF13|ANDROID-RC4.104-LAST-ACCEPTED|RC4105-ANDROID-PENDING|OOS-1399308446632800256|HANDOFF-v167",
+    "status": "HANDOFF_v167_READY_PENDING_ANDROID_RC4105",
     "handoff_ready": true,
     "second_pass_pass": true,
     "next_action": "Observe rc4.105 on Android and verify fresh Snapshot/Coach; continue independent draft-day readiness in parallel.",
