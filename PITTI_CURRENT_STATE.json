@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260829T0500Z-v160",
-  "updated_at": "2026-08-29T05:40:00Z",
+  "handoff_generation": "20260829T0548Z-v161",
+  "updated_at": "2026-08-29T05:48:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -13,14 +13,14 @@
     "android_authority": "v11.8.0-rc4.101",
     "test_challenger": "v11.8.0-rc4.104",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.102",
+    "latest_package_reextract": "v11.8.0-rc4.104",
     "library_recovery_alias": "v11.8.0-rc4.52",
-    "latest_package_sha256": "sha256:59816ca48a913afa6913a0ae9e409a45efa5c6b8ff811b1c21295a5d54a7dc5a",
+    "latest_package_sha256": "sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd",
     "deployed_pages": "v11.8.0-rc4.102",
-    "deployed_pages_app_byte_parity_with_main": true,
-    "package_reference_run": 33235297898,
-    "package_reference_artifact_id": 9709726210,
-    "package_reference_note": "rc4.102 candidate package/re-extract PASS; main merged; gh-pages runtime deployed. Android observation pending.",
+    "deployed_pages_app_byte_parity_with_main": false,
+    "package_reference_run": 33236822641,
+    "package_reference_artifact_id": 9710162910,
+    "package_reference_note": "rc4.104 merged main ff6c2240797c1d3303dd538204c76553fd324c16; post-merge release/package/successor gates PASS. rc4.82/rc4.83/project-guard failures are checkpoint/seal drift only and require v161 reseal before deployment.",
     "android_version_observed": true,
     "android_functional_verified": true,
     "freeze_policy": "rc4.101 accepted draft runtime; rc4.96 historical rollback reference only",
@@ -31,9 +31,9 @@
     "rollback_reference": "v11.8.0-rc4.96"
   },
   "exact_continuation": {
-    "gate": "RC4104_REPEATED_WR9_PORTFOLIO_GATES",
+    "gate": "RC4104_POSTMERGE_RESEAL_THEN_DEPLOY",
     "auto_starts_mock": false,
-    "instruction": "Use canonical mock backup draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json (draft 1399284498113294336, rc4.101). Reproduced strict-Coach WR9 again: through pick132 roster 9 WR/4 RB/1 QB, no TE; pick92 Addison was Value-Safety-promoted over JCM despite WR6/RB2; pick132 Spears WAIT 93% remained #1 over Mark Andrews Return 0.6%. rc4.104 fixes generic roster-aware WR safety promotion from pick81, adds soft WR7+/RB<=3 opportunity cost, and adds conservative long-turn WAIT-vs-urgent ordering. Full gates before promotion; no hard WR cap, no Return retune, no expert retune."
+    "instruction": "rc4.104 PR gates PASS and main merge complete. Post-merge runtime/package/successor gates PASS; remaining RED gates are solely stale lock/seal integrity. Reseal v161, require all main gates GREEN, then deploy exact 13-file runtime to gh-pages and prove parity. Android rc4.101 remains accepted until device observation."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -50,16 +50,16 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "PITTI AUTO resumes at DRAFT_DAY_FRESHNESS_AND_EVIDENCE. rc4.101 gates, exact 13-file main/gh-pages parity, Android observation, and live Analyze/Snapshot/Coach acceptance are PASS.",
+    "resume_semantics": "PITTI AUTO resumes at rc4.104 post-merge reseal/deploy. Canonical mock 1399284498113294336 reproduced Coach WR9 and long-turn WAIT ordering defects; rc4.104 bounded generic repair is merged.",
     "acceptance_fingerprint": "MAIN-RC4.101|ALL-GREEN|PAGES-RC4.101-13FILE-PARITY|ANDROID-RC4.101-LIVE-COACH-PASS|NO-GLOBAL-RETUNE|HANDOFF-v160",
-    "status": "HANDOFF_v160_READY",
-    "handoff_ready": true,
-    "second_pass_pass": true,
-    "next_action": "Continue evidence/calibration lanes and final draft-day freshness workflow; preserve freeze unless a fresh reproducible critical defect appears.",
-    "gate": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE"
+    "status": "HANDOFF_v161_RESEAL",
+    "handoff_ready": false,
+    "second_pass_pass": false,
+    "next_action": "Complete v161 consistency reseal and main all-green verification, then exact gh-pages deployment.",
+    "gate": "RC4104_POSTMERGE_RESEAL_THEN_DEPLOY"
   },
-  "source_authority": "v11.8.0-rc4.104-candidate",
-  "package_authority": "v11.8.0-rc4.104-pending-gates",
+  "source_authority": "v11.8.0-rc4.104",
+  "package_authority": "v11.8.0-rc4.104",
   "android_version_observed": "v11.8.0-rc4.101",
   "android_functional_verified": true,
   "deployment_authority": "v11.8.0-rc4.102",
@@ -73,5 +73,5 @@
     "operational_freeze": "~19:50",
     "transaction_rule": "same-position claim/signing is weak Bayesian evidence only; correlate with pre-existing injury/role uncertainty and seek corroboration; uncorroborated signal may only break close ties"
   },
-  "android_acceptance_pending": false
+  "android_acceptance_pending": true
 }
