@@ -2400,3 +2400,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - New critical finding from current backup/mock: expert-v3-rb is not compositionally invariant per player. Tyjae Spears has all 5 intended votes (Weisse/Del Don/Pat/Mariano/DS), while Tank Bigsby has only 4 because Draft Sharks is absent. The live builder in app.js inherits the base row unchanged whenever the challenger lacks a player, and otherwise renormalizes only available individual weights, so missing expert coverage can silently change the effective ensemble. This is a GO-LIVE BLOCKER for v4/v5 and must be audited across all relevant players/positions before activation.
 - Required fix semantics: never silently treat missing import coverage as expert opinion; distinguish true unranked/outside-published-range vs acquisition/import failure vs short-board coverage. Make effective panel N/coverage comparable and fail-visible. Do not blindly impute ranks.
 - Player descriptions remain secondary before draft. Prefer deterministic fallback prose from existing panel/ADP/role evidence; broad new player-by-player research is deferred until after draft unless needed for a live decision.
+
+
+## 2026-08-29 — DEFERRED NATURAL-MOCK EVIDENCE LOCK
+- Located persistent Library file `draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json` (Library file id `libfile_5d98bb730a00819187cff3e062c430bc`, ~10.9 MB).
+- User identifies this as the previously missing mock containing the user's real decisions.
+- DO NOT evaluate/analyze it now. Preserve it as deferred natural-mock evidence for future PITTI accuracy/decision-model evaluation and comparison against recommendation-following mocks.
+- On future evaluation, use this exact file/provenance rather than reconstructing the mock from memory.
