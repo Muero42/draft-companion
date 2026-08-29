@@ -446,3 +446,9 @@ At draft time, any player carrying ↑↑ or ↓↓ must be rechecked against sa
 ### Freshness interpretation
 - Jeanty ankle remains monitored, not presumed Week-1 inactive: Raiders say they are counting on him while assessing him over the coming week.
 - No runtime score mutation from these qualitative items before draft. They belong in live tie-break / late-RB contingency reasoning unless stronger official depth/injury evidence arrives.
+
+
+## Aug29 AUTO shadow correction — Jeanty / Mike Washington Jr.
+- **Ashton Jeanty:** retain elite talent/lead-back thesis, but reduce confidence in the prior clean bellcow/ascension interpretation. Mike Washington Jr. ran with the first team while Jeanty was out and Kubiak publicly entertained a two-back usage analogy to Walker/Charbonnet. This is a workload-ceiling counter-signal, not evidence that Washington replaces Jeanty.
+- **Mike Washington Jr.:** add as a late upside/contingency watch. Preseason production (23 carries, 168 yards) plus first-team usage provides a real role path; do not overreact to preseason efficiency alone. His value is primarily contingent/committee upside and should be reconciled with final 53-man status and Aug31 market/rankings.
+- Shadow policy: no live Coach score injection from this note. At live decision time, use it to prevent Jeanty's old bellcow prior from overriding current panel/market/health evidence.
