@@ -411,3 +411,10 @@ At draft time, any player carrying ↑↑ or ↓↓ must be rechecked against sa
 - **Mike Washington Jr.:** Jeanty ankle uncertainty plus strong preseason play creates a real early-season contingency path. Monitor cutdown/depth-chart status Sunday; do not promote solely from injury speculation.
 - **Kaelon Black:** current 49ers reporting has him emerging as a likely workload-relief candidate behind CMC. Still requires role confirmation; useful deep contingency watchlist.
 - Cross-source conclusion: the late-RB framework remains directionally correct—prefer one-event-away/goal-line/explosive role paths over low-ceiling depth. No runtime coefficient change is justified from article consensus alone.
+
+
+## Aug 29 current-news delta II — Raiders backfield / cutdown
+- **Mike Washington Jr. — upgrade evidence, still non-runtime:** NFL.com Aug 28 reports Washington worked solely with the Raiders' first team in the preseason finale while Ashton Jeanty was sidelined by an ankle injury; he produced 8-49 and HC Klint Kubiak explicitly entertained a Jeanty/Washington two-back usage comparison to his 2025 Seattle Walker/Charbonnet deployment. This is materially stronger than a pure handcuff thesis: Washington now has both contingent upside and a plausible standalone role.
+- **Ashton Jeanty — short-term health uncertainty:** NFL.com Aug 28 says Jeanty remains 'on the mend' from the Aug 23 ankle injury, with another week to assess before Week 1, while the team says it is counting on him. Treat as current availability/role uncertainty, not evidence of long-term demotion.
+- **Trey Benson — roster-status correction:** NFL.com's 2026 cutdown preview states Arizona already cut Benson. Any stale Sleeper IR/ARI representation must not be interpreted as current roster security. This is a freshness/data-quality flag and a post-cut transaction-watch item, not a reason for an emergency pre-draft model rewrite before the official Sunday cutdown settles.
+- Net: Washington's late-round option value strengthens; Jeanty carries modest near-term uncertainty; transaction feeds must win over stale roster metadata when official current sources conflict.
