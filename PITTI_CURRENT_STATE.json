@@ -26,12 +26,14 @@
     "freeze_policy": "rc4.96 remains rollback baseline; low-risk microfix challenger allowed for further testing",
     "test_challenger_android_observed": false,
     "android_acceptance_pending": true,
-    "android_observed": "v11.8.0-rc4.100"
+    "android_observed": "v11.8.0-rc4.100",
+    "android_functional_acceptance": "REPRESENTATIVE_CHANGED_BEHAVIORS_PASS",
+    "rollback_reference": "v11.8.0-rc4.96"
   },
   "exact_continuation": {
-    "gate": "RC4100_REPRESENTATIVE_FUNCTIONAL_ACCEPTANCE",
+    "gate": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE",
     "auto_starts_mock": false,
-    "instruction": "Android/PWA version rc4.100 is visually observed on device at 2026-08-29 06:24 CEST. Version/deployment acceptance PASS. Continue with representative functional acceptance and independent Return-v2/current-evidence audits; do not repeat version/cache/install work."
+    "instruction": "rc4.100 deployment/version and representative rc4.98-rc4.100 changed-behavior acceptance PASS. Continue independent horizon-specific Return replication/current evidence and execute final 31-Aug draft-day freshness gate. No broad retune, no automatic new mock, no reinstall/version troubleshooting."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -53,8 +55,8 @@
     "status": "HANDOFF_v157_READY",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Use the now-observed rc4.100 device state for representative functional acceptance; no reinstall/cache/version troubleshooting.",
-    "gate": "RC4100_REPRESENTATIVE_FUNCTIONAL_ACCEPTANCE"
+    "next_action": "Continue evidence/calibration lanes and final draft-day freshness workflow; preserve freeze unless a fresh reproducible critical defect appears.",
+    "gate": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE"
   },
   "source_authority": "rc4.100",
   "package_authority": "rc4.100-candidate-pass",
