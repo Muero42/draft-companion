@@ -207,10 +207,10 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260829T0840Z-v165",
-    "status": "HANDOFF_v165_READY",
+    "generation": "20260829T0840Z-v166",
+    "status": "HANDOFF_v166_READY",
     "ready": true,
     "secondPass": true,
-    "resume": "PITTI AUTO: verify v165 PASS seal, then execute pending rc4.101->rc4.104 counterfactual replay. rc4.104 is accepted Android authority; completed snapshot is documentation only."
+    "resume": "PITTI AUTO: verify v166 PASS seal, then execute pending rc4.101->rc4.104 counterfactual replay. rc4.104 is accepted Android authority; completed snapshot is documentation only."
   }
 }
