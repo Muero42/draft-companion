@@ -102,17 +102,17 @@
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.64",
     "rollbackAuthority": "v11.8.0-rc4.96",
-    "androidAuthority": "v11.8.0-rc4.96",
-    "activeAndroidObserved": "v11.8.0-rc4.99",
+    "androidAuthority": "v11.8.0-rc4.100",
+    "activeAndroidObserved": "v11.8.0-rc4.100",
     "androidVersionObserved": true,
-    "androidAcceptancePending": true,
+    "androidAcceptancePending": false,
     "sourceAuthority": "v11.8.0-rc4.100",
     "latestPackageReextract": "v11.8.0-rc4.100 PR candidate PASS",
     "latestPackageSha256": "artifact-envelope:4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae",
     "packageRuntimeFiles": 13,
     "deployedPagesVersion": "v11.8.0-rc4.100",
     "deployedPagesAppByteParityWithMain": true,
-    "deployedPagesNote": "rc4.100 exact 13-file runtime parity with main proven after post-merge gates PASS; Android/PWA rc4.100 observation pending.",
+    "deployedPagesNote": "rc4.100 exact 13-file runtime parity with main proven after post-merge gates PASS; Android/PWA rc4.100 observed and representative changed-behavior acceptance PASS.",
     "libraryRecoveryAlias": "v11.8.0-rc4.52",
     "packageReferenceRun": 33205458721,
     "packageReferenceArtifactId": 9699461048,
@@ -125,6 +125,6 @@
     "returnFinding": "3-pick turns 91.4% forecast vs 90.9% actual; 17-pick turns 37.1% vs 30.4%; no global Return-v2 retune",
     "openEvidencePatch": "Superseded by merged rc4.99/rc4.100 generic semantic fixes; never resurrect stale PR #33 status as current."
   },
-  "currentGate": "RC4100_ANDROID_OBSERVATION",
+  "currentGate": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE",
   "handoffGeneration": "20260828T2002Z-v157"
 }
