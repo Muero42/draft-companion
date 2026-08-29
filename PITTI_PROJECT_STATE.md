@@ -2267,3 +2267,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - A second semantic audit caught one remaining ambiguity: CURRENT still had `test_challenger_android_verified=true` and top-level `android_acceptance_pending=false` inherited from rc4.105 even though the test challenger is now rc4.106 and has not been observed on device.
 - Fail-closed correction: rc4.105 remains accepted/verified Android authority; rc4.106 challenger observed=false, accepted=false, Android acceptance pending=true. COMMAND now carries explicit challenger observed/accepted false fields.
 - This is checkpoint semantics only; no runtime behavior changed.
+
+
+## 2026-08-29 — official draft-day transaction timing locked
+- NFL official calendar verified the two decisive roster windows: final 53-man cutdown Sunday Aug30 18:00 ET and final-cutdown waiver claims Monday Aug31 13:00 ET.
+- Monday 13:00 ET = **19:00 Europe/Berlin** on Aug31. This independently validates PITTI's already-planned 19:05–19:30 transaction delta scan immediately before the 20:00 draft; no cadence redesign needed.
+- Final 19:40–19:50 materiality scan and ~19:50 operational freeze remain appropriate. Prioritize official PUP/NFI/IR designations, waiver claims, trades and role-changing releases; do not infer injury solely from a same-position acquisition.
