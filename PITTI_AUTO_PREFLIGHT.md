@@ -73,9 +73,9 @@ Otherwise continue AUTO.
 - Never answer an AUTO turn with “AUTO läuft”, “ich mache weiter”, or equivalent future-tense progress prose. Work must be executed before any reply.
 - During PITTI HANDOFF, finish the complete transactional audit/reseal before replying unless an unavoidable blocker prevents it.
 - Current authority: main/source/deployment/Android = rc4.104; exact 13-file main/gh-pages parity PASS; Android rc4.104 post-draft Snapshot path PASS.
-- Current gate: RC4104_POST_DRAFT_REPLAY_VALIDATION.
+- Current gate: RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS.
 - Canonical completed mock evidence: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json, draft 1399284498113294336, produced on rc4.101.
-- Critical unfinished work: counterfactual replay of preserved rc4.101 decision fixtures under rc4.104 is PENDING. Do not infer completion from package/deploy/device PASS.
+- Bounded frozen-fixture replay is CI PASS for the observed rc4.101 failure mechanisms under rc4.104. Browser-equivalent full historical recomputation is unavailable and must not be fabricated.
 
 ## 9. AUTO TURN TERMINATION — HARD GATE
 - Completing one work package is **not** permission to end the assistant turn.
@@ -104,7 +104,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - Canonical mock backup = draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json; draft 1399284498113294336; source runtime rc4.101.
 - Strict-Coach construction in that mock reached 9 WR / 4 RB / 1 QB / 0 TE before final pick; 14/14 preserved completed own picks followed Coach #1.
 - rc4.104 bounded repairs: roster-aware WR6+ Value-Safety from pick81; extra soft WR7+/RB<=3 opportunity cost; conservative long-turn WAIT portfolio ordering; visible curated evidence with neutral polarity.
-- Counterfactual replay rc4.101 fixtures -> rc4.104 is PENDING. First targets: pick92 Addison/JCM, pick109 Downs, pick112 Diggs, pick132 Spears/Andrews, then whole-construction outcome.
+- Bounded replay rc4.101 fixtures -> rc4.104 is CI PASS for pick92/109/112 roster economics and exact pick132 Spears/Andrews reorder; Return-v2 unchanged. Continue draft-day readiness/freshness/failsafe.
 - Return evidence remains: 3-pick 92.5% forecast vs 92.4% actual (Brier .044); 17-pick 35.6% vs 32.5% (Brier .077). No global Return-v2 retune.
 - No PairSum/Rolling, hard WR cap/quota, blind RB forcing, player-name forcing, global QB2/TE2 rule, generic Return-v2 retune, or expert-weight redesign.
 - Geno Smith/Aaron Rodgers are ordinary QB candidates; no player-name hard exclusion.
