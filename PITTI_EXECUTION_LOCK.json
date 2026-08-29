@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-29T08:25:00Z",
+  "updatedAt": "2026-08-29T08:40:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -207,10 +207,10 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260829T0825Z-v164",
-    "status": "HANDOFF_v164_READY",
+    "generation": "20260829T0840Z-v165",
+    "status": "HANDOFF_v165_READY",
     "ready": true,
     "secondPass": true,
-    "resume": "PITTI AUTO: rc4.104 accepted Android. Repair/verify v164 seal consistency, then counterfactual replay preserved rc4.101 fixtures; completed snapshot is documentation only."
+    "resume": "PITTI AUTO: verify v165 PASS seal, then execute pending rc4.101->rc4.104 counterfactual replay. rc4.104 is accepted Android authority; completed snapshot is documentation only."
   }
 }
