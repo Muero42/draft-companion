@@ -96,14 +96,11 @@ function ensureExpertV3Panels(){
     const spec=v3.challengers?.[pos],weights=v3.weights?.[pos],baseRows=base.rows?.[pos]||[];
     if(!spec||!weights||!baseRows.length)return false;
     const challenger=new Map((spec.ranks||[]).map(([name,rank])=>[norm(name),Number(rank)]).filter(([,rank])=>Number.isFinite(rank)&&rank>0));
+    const intendedExperts=Object.entries(weights).filter(([,w])=>Number(w)>0).map(([name])=>name);
     const id='expert-v3-'+pos.toLowerCase(),ranks={};
     for(const row of baseRows){
       if(!row?.name||!Number.isFinite(Number(row.rank)))continue;
       const cr=challenger.get(norm(row.name));
-      if(!Number.isFinite(cr)){
-        ranks[norm(row.name)]={name:row.name,pos,rank:Number(row.rank),mean:Number(row.rank),median:Number(row.rank),sd:Number.isFinite(Number(row.sd))?Number(row.sd):null,n:Number.isFinite(Number(row.n))?Number(row.n):null,tier:row.tier??null,individual:Array.isArray(row.individual)?row.individual.map(e=>({...e,rank:Number(e.rank),effectiveWeight:Number(e.effectiveWeight)})):[]};
-        continue;
-      }
       const vals=[];
       for(const e of Array.isArray(row.individual)?row.individual:[]){
         if(!e?.expertName||!Number.isFinite(Number(e.rank)))continue;
@@ -114,16 +111,27 @@ function ensureExpertV3Panels(){
         vals.push({expertName:e.expertName,rank:Number(e.rank),effectiveWeight:ew,reconstructed:!!e.reconstructed,spread:e.spread??null});
       }
       const cw=Number(weights[spec.name]||0);
-      if(cw>0)vals.push({expertName:spec.name,rank:cr,effectiveWeight:cw,reconstructed:false,spread:null});
-      const sw=vals.reduce((s,e)=>s+e.effectiveWeight,0);
+      if(Number.isFinite(cr)&&cw>0)vals.push({expertName:spec.name,rank:cr,effectiveWeight:cw,reconstructed:false,spread:null});
+      const present=new Set(vals.map(e=>e.expertName));
+      const missing=intendedExperts.filter(name=>!present.has(name));
+      const sw=vals.reduce((sum,e)=>sum+e.effectiveWeight,0);
       if(!sw)continue;
-      const mean=vals.reduce((s,e)=>s+e.rank*e.effectiveWeight,0)/sw;
-      const variance=vals.reduce((s,e)=>s+e.effectiveWeight*(e.rank-mean)**2,0)/sw;
-      ranks[norm(row.name)]={name:row.name,pos,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,tier:row.tier??null,individual:vals.sort((a,b)=>a.rank-b.rank)};
+      // Coverage semantics: keep historical v3 rank math frozen for control comparability,
+      // but never pretend a sparse row is the same ensemble. Missing experts are explicit
+      // right-censored/unknown coverage until source metadata proves acquisition failure.
+      const mean=vals.reduce((sum,e)=>sum+e.rank*e.effectiveWeight,0)/sw;
+      const variance=vals.reduce((sum,e)=>sum+e.effectiveWeight*(e.rank-mean)**2,0)/sw;
+      ranks[norm(row.name)]={
+        name:row.name,pos,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,tier:row.tier??null,
+        intendedN:intendedExperts.length,coverage:vals.length/intendedExperts.length,
+        coverageStatus:missing.length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',
+        missingExperts:missing,
+        individual:vals.sort((a,b)=>a.rank-b.rank)
+      };
     }
     assignTiers(ranks);
     panelRanks[id]=ranks;
-    panels[id]={name:'Expert-v3 '+pos+' · 28.08.',members:{},shadow:true,weights,source:v3.source,methodology:v3.methodology};
+    panels[id]={name:'Expert-v3 '+pos+' · 28.08.',members:{},shadow:true,weights,source:v3.source,methodology:v3.methodology,coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};
   }
   return true;
 }
