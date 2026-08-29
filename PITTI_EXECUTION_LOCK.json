@@ -208,9 +208,9 @@
   },
   "handoff": {
     "generation": "20260829T0548Z-v161",
-    "status": "HANDOFF_v161_RESEAL",
-    "ready": false,
-    "secondPass": false,
-    "resume": "PITTI AUTO: complete rc4.104 v161 reseal, then deploy exact runtime; Android rc4.101 remains accepted authority until device PASS."
+    "status": "HANDOFF_v161_READY",
+    "ready": true,
+    "secondPass": true,
+    "resume": "PITTI AUTO: rc4.104 main/package verified; complete v161 seal all-green then deploy exact 13-file runtime. Android rc4.101 remains accepted until device PASS."
   }
 }
