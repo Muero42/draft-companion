@@ -1,7 +1,7 @@
 # PITTI Draft-Day Freshness Plan — 2026-08-31
 
 Real draft: 20:00 Germany local time.
-Frozen runtime: v11.8.0-rc4.96.
+Accepted runtime: v11.8.0-rc4.100. Historical rollback reference: rc4.96.
 Purpose: maximize fresh information without destabilizing the frozen decision kernel.
 
 ## Operating principle
@@ -28,7 +28,7 @@ Focus:
 
 ### ~17:30–18:15
 Primary full pre-draft freshness pass.
-Produce a delta set against the frozen rc4.96 inputs. No runtime mutation unless a genuinely material source-data defect is proven and deterministic gates can still be completed safely.
+Produce a delta set against the frozen rc4.100 inputs. No runtime mutation unless a genuinely material source-data defect is proven and deterministic gates can still be completed safely.
 
 ### after late transaction/waiver processing, roughly ~19:05–19:30
 Targeted delta scan, not a full research rebuild.
@@ -73,5 +73,10 @@ Keep web/news research available for genuinely breaking information during the d
 - acute injury/availability deltas
 - transaction/claim role deltas
 - emergency queue/failsafe
-- device/app rc4.96 availability
+- device/app rc4.100 availability
 - ChatGPT live-decision context loaded
+
+## Aug 29 pre-draft delta checkpoint
+- Current FantasyPros riser/faller board has Parker Washington at overall 72 (+7) and Bucky Irving at 51 (+6). Treat as corroborating market movement, not an automatic rank override.
+- NFL Aug 28 reports Ashton Jeanty still recovering from the Aug 23 ankle injury; Las Vegas expects him but will reassess Week 1 readiness. Keep acute monitoring active without a hard block absent stronger evidence.
+- Current CBS draft-prep coverage also flags Jeanty as a notable ADP faller because of Week 1 ankle uncertainty. This corroborates uncertainty only; no broad model change.
