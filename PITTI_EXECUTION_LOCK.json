@@ -11,25 +11,25 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.101",
+    "appVersion": "v11.8.0-rc4.102",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.101",
-    "latestPreinstallVerified": "v11.8.0-rc4.101",
+    "latestPreinstallVerified": "v11.8.0-rc4.102",
     "latestResearchChallenger": "v11.8.0-rc4.102",
-    "preinstallArtifact": "rc4.101 verified package/runtime set",
-    "preinstallSha256": "artifact-envelope:4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae",
+    "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.102",
+    "preinstallSha256": "sha256:59816ca48a913afa6913a0ae9e409a45efa5c6b8ff811b1c21295a5d54a7dc5a",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.101",
-    "latestDeployedCandidate": "v11.8.0-rc4.101",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.102",
+    "latestDeployedCandidate": "v11.8.0-rc4.102",
     "latestAndroidVerified": "v11.8.0-rc4.101",
     "androidAuthority": "v11.8.0-rc4.101",
     "android_authority": "v11.8.0-rc4.101",
     "deployedPagesAppByteParityWithMain": true,
-    "preinstallReferenceRun": 33205458721,
-    "preinstallReferenceArtifactId": 9699461048,
+    "preinstallReferenceRun": 33235297898,
+    "preinstallReferenceArtifactId": 9709726210,
     "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.101",
     "latestAndroidFunctionalVerified": "v11.8.0-rc4.101",
@@ -177,7 +177,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4102_FRESHNESS_CANDIDATE_GATES",
+    "status": "RC4102_PROMOTED_ANDROID_PENDING",
     "production": false,
     "androidVerified": false,
     "changes": [
@@ -194,11 +194,11 @@
       "rc4.99 WR saturation and normal-cut contracts PASS under rc4.100",
       "full 19:24 draft audit integrated; short-turn Return calibration 91.4% vs 90.9% actual"
     ],
-    "nextGate": "Full candidate gates; rc4.101 remains accepted Android authority until promotion/device observation"
+    "nextGate": "Observe rc4.102 on Android/PWA and verify Analyze/Snapshot/Coach; rc4.101 remains accepted Android authority until PASS."
   },
-  "status": "RC4102_FRESHNESS_GATES",
-  "gate": "RC4102_FRESHNESS_GATES",
-  "nextGate": "Final 31-Aug freshness pass and independent evidence/calibration work; preserve freeze unless reproducible critical defect.",
+  "status": "RC4102_ANDROID_OBSERVATION",
+  "gate": "RC4102_ANDROID_OBSERVATION",
+  "nextGate": "Observe rc4.102 on Android/PWA and verify Analyze/Snapshot/Coach; rc4.101 remains accepted Android authority until PASS.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
