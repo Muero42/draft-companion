@@ -214,7 +214,7 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260829T0840Z-v173",
+    "generation": "20260829T0945Z-v173",
     "status": "HANDOFF_v173_READY_RC4106_ANDROID_DISPLAY_PENDING",
     "ready": true,
     "secondPass": true,
