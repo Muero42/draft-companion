@@ -146,3 +146,10 @@ Scope rule: rc4.102 is a source-freshness correction, not a coefficient experime
 - Current accepted official anchors are the NFL **2026-27 important dates** page and current 2026 cutdown coverage explicitly dated Aug25-28, 2026. Reject roundup pages unless the body itself establishes the 2026 season.
 - Current official Aug28 2026 injury delta: Raiders HC Klint Kubiak says Ashton Jeanty is still recovering from the Aug23 ankle injury but the club is counting on him and has another week to assess Week 1 readiness. Treat as monitoring/availability uncertainty, not a presumed absence.
 - Current official 2026 cutdown coverage confirms Arizona released Trey Benson. Any stale Sleeper ARI/IR label must not survive the final freshness pass as current roster truth.
+
+
+## Aug29 AUTO freshness audit IV — official live transaction wire
+- NFL official 2026 transaction wire is now an explicit primary input for Sunday/Monday delta scans, not merely a fallback. It currently records Aug27 Tutu Atwell MIA→LAR / Jarquez Hunter LAR→MIA, Aug24 Kayshon Boutte NE→HOU / Jaylen Reed HOU→NE, and other August transactions.
+- This matters because current embedded/Sleeper-derived player metadata can lag team assignment. Before interpreting role, stack, handcuff, or depth-chart context, reconcile candidate team/status against the official transaction wire.
+- Current NFL Aug28 roundup confirms Ashton Jeanty remains on the mend from the Aug23 ankle injury, while the Raiders still say they are counting on him for Week 1. Treat as monitored uncertainty, not a presumed absence. Wan'Dale Robinson was not believed to have suffered a concussion after the Aug28 practice hit; continue symptom/status monitoring rather than applying a concussion downgrade now.
+- Search-quality regression reconfirmed: NFL search can return legacy Aug29/Aug30 roundup pages from 2022/2023 without an obvious year in the title. Explicit 2026 body/date verification remains mandatory.
