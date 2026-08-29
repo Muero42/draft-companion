@@ -2332,3 +2332,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Watcher main re-read at VERSION 0.1.5. Scheduled architecture remains coherent: trending every 15m; player_state daily 04:17 UTC; public /companion-feed emits events/market only when latest scheduled trending PASS <=45m and player_state PASS <=36h, otherwise FAIL/STALE/WAIT. Protected debug/events/run-health endpoints remain token-gated.
 - This source audit does **not** claim deployed endpoint health; source correctness and deployment observation remain separate. No available evidence justifies changing the Watcher before the draft.
 - Combined with the Companion metadata audit, current lowest-risk posture is freeze: rc4.106 Companion and Watcher 0.1.5 source remain unchanged unless Sunday/Monday live evidence exposes a draft-critical defect. Independent freshness/research can continue without device action.
+
+
+## 2026-08-29 — AUTO late-RB contingency audit V
+- Fresh official NFL Aug28 evidence materially strengthens Mike Washington Jr.'s Jeanty-contingency thesis: first-team finale usage while Jeanty sat and Kubiak's public openness to Walker/Charbonnet-like deployment. Still insufficient to assume a healthy-Jeanty committee; no Jeanty downgrade.
+- NFL current rookie late-round analysis independently flags Emmett Johnson as the preferred Kenneth Walker handcuff despite Demercado's unofficial-depth-chart edge. Treat as late-round contingency EV, not standalone reach justification.
+- No runtime score mutation; evidence added to research layer for live tie-break/late-bench reasoning. Freeze policy preserved.
