@@ -16,7 +16,7 @@
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.101",
+    "latestAndroidObserved": "v11.8.0-rc4.104",
     "latestPreinstallVerified": "v11.8.0-rc4.104",
     "latestResearchChallenger": "v11.8.0-rc4.104",
     "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.104",
@@ -24,17 +24,17 @@
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.104",
     "latestDeployedCandidate": "v11.8.0-rc4.104",
-    "latestAndroidVerified": "v11.8.0-rc4.101",
-    "androidAuthority": "v11.8.0-rc4.101",
-    "android_authority": "v11.8.0-rc4.101",
+    "latestAndroidVerified": "v11.8.0-rc4.104",
+    "androidAuthority": "v11.8.0-rc4.104",
+    "android_authority": "v11.8.0-rc4.104",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33236822641,
     "preinstallReferenceArtifactId": 9710162910,
     "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.101",
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.101",
-    "testChallengerAndroidObserved": false,
-    "testChallengerAndroidAccepted": false,
+    "latestAndroidVersionObserved": "v11.8.0-rc4.104",
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.104",
+    "testChallengerAndroidObserved": true,
+    "testChallengerAndroidAccepted": true,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
@@ -177,9 +177,9 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4104_ANDROID_OBSERVATION",
+    "status": "RC4104_POST_DRAFT_REPLAY_VALIDATION",
     "production": true,
-    "androidVerified": false,
+    "androidVerified": true,
     "changes": [
       "WR6+ Value-Safety promotion roster-aware from pick81",
       "soft WR7+/RB<=3 championship opportunity cost",
@@ -194,11 +194,11 @@
       "post-merge successor gate PASS 33236822674",
       "remaining post-merge RED = stale lock/seal integrity only"
     ],
-    "nextGate": "Android rc4.104 observation + Analyze/Snapshot/Coach smoke"
+    "nextGate": "counterfactual replay of preserved rc4.101 decision fixtures under rc4.104; external FantasyPros benchmark when supplied"
   },
-  "status": "RC4104_ANDROID_OBSERVATION",
-  "gate": "RC4104_ANDROID_OBSERVATION",
-  "nextGate": "Android rc4.104 observation + Analyze/Snapshot/Coach smoke",
+  "status": "RC4104_POST_DRAFT_REPLAY_VALIDATION",
+  "gate": "RC4104_POST_DRAFT_REPLAY_VALIDATION",
+  "nextGate": "counterfactual replay of preserved rc4.101 decision fixtures under rc4.104; external FantasyPros benchmark when supplied",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -207,10 +207,10 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260829T0548Z-v161",
-    "status": "HANDOFF_v161_READY",
+    "generation": "20260829T0815Z-v163",
+    "status": "HANDOFF_v163_READY",
     "ready": true,
     "secondPass": true,
-    "resume": "PITTI AUTO: rc4.104 main/package verified; complete v161 seal all-green then deploy exact 13-file runtime. Android rc4.101 remains accepted until device PASS."
+    "resume": "PITTI AUTO: Android rc4.104 post-draft Snapshot path PASS. Do not re-analyze duplicate complete snapshot; replay preserved rc4.101 fixtures under rc4.104 and integrate FantasyPros benchmark if supplied."
   }
 }
