@@ -56,7 +56,7 @@ verified candidate -> main post-merge verification -> gh-pages exact-byte deploy
 No repeated refresh/cache/reinstall/manual-ZIP detours before server-side parity is proven.
 
 ## Current gate
-`RC4104_POST_DRAFT_REPLAY_VALIDATION`
+`RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS`
 
 ## rc4.104 canonical new evidence
 - Backup `draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json`, draft 1399284498113294336, rc4.101.
@@ -64,15 +64,9 @@ No repeated refresh/cache/reinstall/manual-ZIP detours before server-side parity
 - Pick92 Value-Safety promoted WR7 despite WR6/RB2; pick132 93.3% WAIT Spears remained #1 over Mark Andrews 0.6% Return.
 - rc4.104 generic bounded repair merged; no hard cap, player-name forcing, Return retune, or expert retune.
 
-## v164 replay truth
+## v166 replay truth
 - rc4.104 is main/source/deployment/accepted Android authority; exact 13-file main/gh-pages parity PASS and user post-draft Snapshot PASS.
 - Canonical completed mock: `draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json`, draft 1399284498113294336, generated on rc4.101.
-- Counterfactual rc4.104 replay is **PENDING**. Never infer it was completed merely because rc4.104 gates/device passed.
-- First replay targets: pick92 Addison vs JCM; pick109 Downs; pick112 Diggs; pick132 Spears vs Andrews. Preserve no-hard-cap/no-blind-RB/no-player-name/no-global-Return-retune invariants.
-- Completed rc4.104 Snapshot is duplicate/documentation only; FantasyPros capture optional external benchmark.
-
-
-## v166 replay-status canary
-- Counterfactual replay rc4.101 -> rc4.104 is PENDING and must not be inferred complete from release/deploy/device PASS.
-- Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
-- First replay targets: pick92 Addison/JCM, pick109 Downs, pick112 Diggs, pick132 Spears/Andrews, then full roster construction.
+- Bounded frozen-fixture replay under rc4.104 is CI PASS for pick92/109/112 roster economics and exact pick132 Spears/Andrews reorder; no Return-v2 mutation.
+- Browser-equivalent full historical recomputation is unavailable from preserved inputs and is not claimed.
+- Current work is draft-day readiness/freshness/failsafe; FantasyPros capture optional.
