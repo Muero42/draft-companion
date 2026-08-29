@@ -1,6 +1,6 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260829T0840Z-v165",
+  "handoff_generation": "20260829T0840Z-v166",
   "created_at": "2026-08-29T08:40:00Z",
   "status": "PASS",
   "handoff_ready": true,
@@ -10,15 +10,15 @@
     ".github/workflows/pitti-project-guardrails.yml": "f5d2fb990122c70020e85ddec5ca1dd118ead848",
     ".github/workflows/release-contract-v2-package.yml": "dace6a7a651a21d1f5c20819568848a073dfdc8a",
     ".github/workflows/release-contract-v2.yml": "0579fdc8a8333704bea72baa1af99a9180168796",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "f1fe061592a14dc77df3439d898cd51ba907f4cf",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "0b81f143ea219697b9632816a30b66372f1c4ef0",
-    "PITTI_AUTO_PREFLIGHT.md": "ac6d8ed68e6f031ceff6b0003454c0bf8092021c",
-    "PITTI_COMMAND_CONTRACTS.json": "b0a737f335f0030ec3f0d408a3397dda1cca6312",
-    "PITTI_CURRENT_STATE.json": "00b1aa1abbebc2efe8f113671df1d7b697aa37ea",
-    "PITTI_EXECUTION_LOCK.json": "6b665ba762bbb6cef012fa664456ad956f4ec5a0",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "c0973fd2743e5bd1883af2c596246a7d36709eb0",
-    "PITTI_PROJECT_STATE.md": "b4316205c273753c3ef22fd4a82ff6926fc4346a",
-    "README.md": "e912936ce0843e6ed913e09a1281b437a0953e74",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "b9734331f25756b4e77e22b60d69edf63d6e0fdf",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "3ce40b7b1c90e26df3d07c6d15c98ba1f994577f",
+    "PITTI_AUTO_PREFLIGHT.md": "5c7e4abfc97ffa26578a181853c9d358ec4c9156",
+    "PITTI_COMMAND_CONTRACTS.json": "df74cbd7dc53db75866e5f6fad0e4b0ee3bdfe8d",
+    "PITTI_CURRENT_STATE.json": "6383ae7b01e8154f817f4dbe557a2cddbf59786d",
+    "PITTI_EXECUTION_LOCK.json": "b8f652c94b8648525a81000113ee2360b6389b3c",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "40ff3ee7dab3f4b7dfd6fae2b3edded085304d12",
+    "PITTI_PROJECT_STATE.md": "0aed5917bbffbd3d62ae914e8c404df82049d138",
+    "README.md": "ee570048d6ee0022bdccdc301b3aaabe1d694c10",
     "app.js": "95e61dde423c6a968efb37e8287398b9bc0b8509",
     "decision-policy.js": "76234515b5428a33b7ef573f1f5c87bab058ad67",
     "index.html": "1b7448de393a166887e5a8661ee55d9041382a4c",
@@ -73,8 +73,13 @@
     "rc4104_repeated_wr9_evidence_preserved": true,
     "rc4104_no_hard_wr_cap": true,
     "rc4104_no_global_return_retune": true,
-    "rc4104_android_pending": true
+    "rc4104_android_pending": false,
+    "rc4104_android_accepted": true,
+    "rc4104_main_pages_exact_13_file_parity": true,
+    "rc4104_post_draft_snapshot_path_pass": true,
+    "rc4104_counterfactual_replay_pending": true,
+    "no_stale_active_runtime_scalars": true
   },
   "exact_gate": "RC4104_POST_DRAFT_REPLAY_VALIDATION",
-  "note": "v165 PASS seal after deep anti-regression audit. rc4.104 main/pages/Android observed; canonical rc4.101 mock replay under rc4.104 is explicitly PENDING. Old v157/v160/v162/v164 authority canaries removed from active takeover files. Verify this integrity map before work."
+  "note": "v166 PASS seal after independent semantic contradiction audit and repair. Active takeover scalars now agree: main/source/deployment/accepted Android = rc4.104, exact 13/13 main/gh-pages parity PASS, Android post-draft Snapshot path PASS. Canonical rc4.101 fixture replay under rc4.104 remains explicitly PENDING. Historical v165/stale rc4.101/rc4.102 takeover scalars cannot override v166."
 }
