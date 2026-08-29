@@ -1032,7 +1032,9 @@ function assignTiers(map){for(const pos of ['QB','RB','WR','TE']){const rows=Obj
 async function loadAllRanks(){
   saveCurrentPanel();
   const selectedIds=[...new Set(Object.values(panels).flatMap(p=>Object.keys(p.members||{})))];
-  const ids=[...new Set([...selectedIds,...presetCandidateIds()])];
+  const v45Names=[...new Set(Object.values(EXPERT_V4_BLUEPRINT).flatMap(x=>x.experts).concat(EXPERT_V5_BLUEPRINT.add))];
+  const v45Ids=v45Names.map(findExpert).filter(Boolean).map(e=>e.id);
+  const ids=[...new Set([...selectedIds,...presetCandidateIds(),...v45Ids])];
   if(!ids.length)throw new Error('Preset oder Expertenauswahl fehlt.');
   if(els.loadAllRanksBtn)els.loadAllRanksBtn.disabled=true;
   const skipped=[];
@@ -1075,6 +1077,10 @@ async function loadAllRanks(){
     // after every live-rank rebuild so a refresh cannot silently erase the selected v2 boards.
     if(!ensureExpertV2Panels())throw new Error('Expert-v2 Board konnte nach Ranking-Refresh nicht wiederhergestellt werden.');
     if(!ensureExpertV3Panels())throw new Error('Expert-v3 Board konnte nach Ranking-Refresh nicht wiederhergestellt werden.');
+    const v4Ready=ensureExpertV4Panels(),v5Ready=ensureExpertV5Panels();
+    syncAnalysisExpertSelector();
+    if(!v4Ready)skipped.push('Expert-v4 bleibt gesperrt: mindestens eine verifizierte Individualquelle/Position unvollständig.');
+    if(!v5Ready)skipped.push('Expert-v5 bleibt gesperrt: Koerner/v3 Coverage nicht vollständig verifiziert.');
     store.set('v7_lastRankingUpdate',Date.now());
     try{localStorage.removeItem('v7_panelRanks');localStorage.removeItem('v7_rankCache')}catch{}
     persist();
