@@ -1,5 +1,5 @@
 # PITTI NEW CHAT BOOTSTRAP — FAIL-CLOSED
-Generation: `20260829T1235Z-v177`
+Generation: `20260829T1244Z-v178`
 
 When the user writes **PITTI AUTO**, verify in this order:
 1. PITTI_COMMAND_CONTRACTS.json
@@ -13,7 +13,7 @@ When the user writes **PITTI AUTO**, verify in this order:
 9. HANDOFF_COMPLETENESS_MATRIX.md
 10. actual repo/main/gh-pages/device evidence
 
-Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T1235Z-v177`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
+Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T1244Z-v178`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
 
 ## Current facts
 - production/control: rc4.64.
@@ -23,8 +23,8 @@ Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829
 - rc4.100 merged to main as 1b85656e40a182ca6be2397c5bf6674006b97bd2.
 - post-merge main verification: **PASS**; release/package/project guardrails plus rc4.82/rc4.83 draft-critical gates are GREEN.
 - gh-pages: rc4.106; exact 13/13 packaged runtime-file parity with main PASS.
-- Android/PWA last accepted authority: rc4.105. rc4.106 display-only candidate Android observation is pending.
-- current gate: RC4106_ANDROID_DISPLAY_ACCEPTANCE.
+- Android/PWA accepted authority: rc4.106 (observed in completed mock snapshots).
+- current gate: NEW_CHAT_LATE_RB_AUDIT.
 
 ## Canonical evidence
 - full draft backup: draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json, SHA-256 1fc70dc81e8d9a4e28b5f0450f1a57e8cf8873b7541040acc0033e13cf6725ab.
