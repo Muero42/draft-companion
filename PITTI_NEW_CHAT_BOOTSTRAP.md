@@ -21,10 +21,10 @@ Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260828
 - main/source: rc4.100.
 - rc4.100 PR #36 candidate gates: release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
 - rc4.100 merged to main as 1b85656e40a182ca6be2397c5bf6674006b97bd2.
-- post-merge main workflow verification: **pending / no run observed yet**. This blocks deployment only, not independent audit work.
-- gh-pages: rc4.99; main/pages parity FALSE.
-- Android/PWA observed: rc4.99; rc4.100 device observation/acceptance NOT yet established.
-- current gate: RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY.
+- post-merge main verification: **PASS**; release/package/project guardrails plus rc4.82/rc4.83 draft-critical gates are GREEN.
+- gh-pages: rc4.100; exact 13-file packaged-runtime parity with main PASS.
+- Android/PWA last observed: rc4.99; rc4.100 device observation/acceptance NOT yet established.
+- current gate: RC4100_ANDROID_OBSERVATION.
 
 ## Canonical evidence
 - full draft backup: draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json, SHA-256 1fc70dc81e8d9a4e28b5f0450f1a57e8cf8873b7541040acc0033e13cf6725ab.
@@ -48,5 +48,5 @@ No automatic mock; no PairSum/Rolling; no hard WR cap/quota; no blind RB forcing
 Execute long autonomous same-turn blocks. Re-inventory after every package. No progress/status/promise-only or empty replies while useful autonomous work remains. A blocked dependent lane does not stop independent lanes.
 
 ## Canonical self-update path
-verified candidate -> main promotion/post-merge verification -> gh-pages exact runtime deployment + byte parity -> Android/PWA refresh -> device observation.
+verified candidate -> main promotion/post-merge verification -> gh-pages exact runtime deployment + byte parity -> Android/PWA refresh -> device observation. The first three stages are complete for rc4.100; only device observation remains.
 Do not revert to gh-pages-only promotion while main is stale, repeated refresh loops, cache clearing, reinstall, or manual ZIP as the default route.
