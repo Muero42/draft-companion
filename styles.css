@@ -48,3 +48,4 @@
 .research-evidence{display:grid;gap:5px;margin-top:9px;font-size:.78rem;line-height:1.42}
 .research-evidence-up{color:var(--ok)}
 .research-evidence-risk{color:#ffc4cc}
+.research-evidence-neutral{color:var(--muted)}
