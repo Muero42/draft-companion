@@ -1,11 +1,11 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260829T0840Z-v166`
-Updated: 2026-08-29 08:40Z
+Handoff generation: `20260829T0705Z-v167`
+Updated: 2026-08-29 07:05Z
 
 ## FAIL-CLOSED TAKEOVER
 1. Read PITTI_COMMAND_CONTRACTS.json.
 2. Read PITTI_CURRENT_STATE.json.
-3. Read PITTI_HANDOFF_SEAL.json and require generation `20260829T0840Z-v166`, PASS, handoff_ready=true, second_pass_pass=true, non-empty integrity map.
+3. Read PITTI_HANDOFF_SEAL.json and require generation `20260829T0705Z-v167`, PASS, handoff_ready=true, second_pass_pass=true, non-empty integrity map.
 4. Verify every seal-listed Git blob SHA against main.
 5. Read PITTI_EXECUTION_LOCK.json, PITTI_AUTO_PREFLIGHT.md, and PITTI_PROJECT_STATE.md to EOF.
 6. Read PITTI_NEW_CHAT_BOOTSTRAP.md and HANDOFF_COMPLETENESS_MATRIX.md.
@@ -94,10 +94,10 @@ A blocked CI/device lane blocks only that lane; continue decision/evidence, regr
 AUTO never starts an interactive mock unless explicitly requested.
 
 ## EXACT NEXT GATE
-**RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS**
+**RC4105_ANDROID_ACCEPTANCE**
 
-1. Treat the CI-backed bounded rc4.104 frozen-fixture replay as PASS; do not reopen it from historical pending prose.
-2. Continue draft-day freshness/readiness/failsafe and Watcher/post-draft readiness.
-3. Preserve hard anti-regressions: no hard WR cap/quota, blind RB forcing, player-name forcing, PairSum/Rolling, global Return-v2 retune, or expert-weight redesign.
-4. Do not re-analyze the completed duplicate snapshot as live. FantasyPros capture remains an optional external benchmark.
-5. Browser-equivalent full historical board recomputation is not available from the preserved backup and must not be fabricated.
+- Source/package/deployment candidate: v11.8.0-rc4.105; PR #46 release/package/guardrails PASS; main merge 93a7619ec5af3468b71d62238b77f4f01e37822c; gh-pages exact 13/13 runtime parity PASS.
+- Last accepted Android authority remains rc4.104 until a fresh device Snapshot confirms rc4.105 and Coach path.
+- Latest canonical OOS backup: `draft-companion-v7-backup-2026-08-29T06-53-52-495Z.json`, draft 1399308446632800256, generated on rc4.104.
+- New regression/fix: pick129 score-0 short-turn promotion blocked generically by rc4.105 normalized Coach floor >=40; prior TLaw/Corum score47 case preserved.
+- No Return-v2 retune, player-name forcing, position quota, hard WR cap, PairSum/Rolling or expert redesign.
