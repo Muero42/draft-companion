@@ -23,11 +23,11 @@
     "preinstallSha256": "sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.104",
-    "latestDeployedCandidate": "v11.8.0-rc4.102",
+    "latestDeployedCandidate": "v11.8.0-rc4.104",
     "latestAndroidVerified": "v11.8.0-rc4.101",
     "androidAuthority": "v11.8.0-rc4.101",
     "android_authority": "v11.8.0-rc4.101",
-    "deployedPagesAppByteParityWithMain": false,
+    "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33236822641,
     "preinstallReferenceArtifactId": 9710162910,
     "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority.",
@@ -177,8 +177,8 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4104_POSTMERGE_RESEAL_THEN_DEPLOY",
-    "production": false,
+    "status": "RC4104_ANDROID_OBSERVATION",
+    "production": true,
     "androidVerified": false,
     "changes": [
       "WR6+ Value-Safety promotion roster-aware from pick81",
@@ -194,11 +194,11 @@
       "post-merge successor gate PASS 33236822674",
       "remaining post-merge RED = stale lock/seal integrity only"
     ],
-    "nextGate": "v161 seal consistency -> all main gates GREEN -> gh-pages 13-file parity -> Android observation"
+    "nextGate": "Android rc4.104 observation + Analyze/Snapshot/Coach smoke"
   },
-  "status": "RC4104_POSTMERGE_RESEAL_THEN_DEPLOY",
-  "gate": "RC4104_POSTMERGE_RESEAL_THEN_DEPLOY",
-  "nextGate": "v161 seal consistency -> all main gates GREEN -> gh-pages 13-file parity -> Android observation",
+  "status": "RC4104_ANDROID_OBSERVATION",
+  "gate": "RC4104_ANDROID_OBSERVATION",
+  "nextGate": "Android rc4.104 observation + Analyze/Snapshot/Coach smoke",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
