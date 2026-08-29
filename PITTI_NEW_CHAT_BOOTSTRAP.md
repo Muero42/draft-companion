@@ -1,5 +1,5 @@
 # PITTI NEW CHAT BOOTSTRAP — FAIL-CLOSED
-Generation: `20260829T0705Z-v167`
+Generation: `20260829T0730Z-v168`
 
 When the user writes **PITTI AUTO**, verify in this order:
 1. PITTI_COMMAND_CONTRACTS.json
@@ -13,18 +13,18 @@ When the user writes **PITTI AUTO**, verify in this order:
 9. HANDOFF_COMPLETENESS_MATRIX.md
 10. actual repo/main/gh-pages/device evidence
 
-Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T0705Z-v167`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
+Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T0730Z-v168`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
 
 ## Current facts
 - production/control: rc4.64.
 - historical rollback reference: rc4.96.
-- main/source: rc4.105.
+- main/source: rc4.106.
 - rc4.100 PR #36 candidate gates: release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
 - rc4.100 merged to main as 1b85656e40a182ca6be2397c5bf6674006b97bd2.
 - post-merge main verification: **PASS**; release/package/project guardrails plus rc4.82/rc4.83 draft-critical gates are GREEN.
-- gh-pages: rc4.105; exact 13/13 packaged runtime-file parity with main PASS.
-- Android/PWA last accepted authority: rc4.104. rc4.105 Android acceptance is pending fresh device Snapshot/Coach observation.
-- current gate: RC4105_ANDROID_ACCEPTANCE.
+- gh-pages: rc4.106; exact 13/13 packaged runtime-file parity with main PASS.
+- Android/PWA last accepted authority: rc4.105. rc4.106 display-only candidate Android observation is pending.
+- current gate: RC4106_ANDROID_DISPLAY_ACCEPTANCE.
 
 ## Canonical evidence
 - full draft backup: draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json, SHA-256 1fc70dc81e8d9a4e28b5f0450f1a57e8cf8873b7541040acc0033e13cf6725ab.
@@ -69,3 +69,8 @@ Do not revert to gh-pages-only promotion while main is stale, repeated refresh l
 - Pick129 regression: score-0 WR promoted over score-100 RB by short-turn timing override. rc4.105 adds generic normalized-Coach floor >=40; preserves prior Corum score47 case.
 - PR #46 all three gates PASS; merged main 93a7619ec5af3468b71d62238b77f4f01e37822c; gh-pages 13/13 runtime parity PASS.
 - Android rc4.105 NOT YET accepted. rc4.104 remains last accepted device authority.
+
+## v168 rc4.106 / mock-pause canary
+- rc4.105 Android + fresh Snapshot/Coach behavior PASS.
+- rc4.106 fixes only Snapshot embedded individual-rank display; no ranking/Coach/Return/model change. PR #47 all gates PASS; main 0818bc9632eca79c4d055d444a6eae0af53f3a9f; gh-pages 13/13 parity PASS; Android rc4.106 observation pending.
+- Mock 1399325404598124544 paused before pick9. Cook recommended, not confirmed drafted.
