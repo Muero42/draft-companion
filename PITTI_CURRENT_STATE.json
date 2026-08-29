@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260829T1235Z-v177",
-  "updated_at": "2026-08-29T12:35:00Z",
+  "handoff_generation": "20260829T1244Z-v178",
+  "updated_at": "2026-08-29T12:44:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -51,8 +51,8 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "PITTI AUTO: rc4.106 source/package/deployment PASS, exact 13/13 pages parity; rc4.105 last accepted Android. rc4.106 display observation pending. Mock 1399325404598124544 paused before pick9; Cook recommended, not drafted. Continue draft-day freshness/Watcher/post-draft independent lanes.",
-    "acceptance_fingerprint": "MAIN-RC4.106|PAGES-13OF13|ANDROID-RC4.105-LAST-ACCEPTED|RC4106-DISPLAY-PENDING|MOCK-1399325404598124544-PAUSED-BEFORE-PICK9|PACKAGE-9711254133|NFL-WAIVER-19CET|OFFICIAL-TRANSACTION-AUTHORITY|HANDOFF-v177",
-    "status": "HANDOFF_v177_READY_POST_MOCK_LATE_RB_AUDIT",
+    "acceptance_fingerprint": "MAIN-RC4.106|PAGES-13OF13|ANDROID-RC4.105-LAST-ACCEPTED|RC4106-DISPLAY-PENDING|MOCK-1399325404598124544-PAUSED-BEFORE-PICK9|PACKAGE-9711254133|NFL-WAIVER-19CET|OFFICIAL-TRANSACTION-AUTHORITY|HANDOFF-v178",
+    "status": "HANDOFF_v178_READY_LATE_RB_AUDIT",
     "handoff_ready": true,
     "second_pass_pass": true,
     "next_action": "Continue independent draft-day readiness/freshness/Watcher work. When convenient, observe rc4.106 on Android; mock 1399325404598124544 may resume later from pick9 with fresh snapshot.",
