@@ -2479,3 +2479,12 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - **Main/accepted Android rc4.106 remains unchanged and therefore still contains the stale map.** Do not use its manager-return outputs as final live authority until this correction passes the branch gates and is promoted in the next validated release.
 
 - Follow-up identity-history correction: **Pascal Voerde is a long-tenured manager with an 8-season runtime history, evidence reaching at least 2017; legacy Bracht Eagles → Voerde Eagles → Pascal Voerde are one identity chain.** The prior 3-season description was wrong; that 2023–2025 sample belongs to Pascal Gelderner. Locked in commit f5649136dcf8d72d6e59b37be98c42e25f5c32c8.
+
+
+### 2026-08-29 — EXPERT COVERAGE / BIGSBY ROOT FIX (research branch)
+- Root defect in v3 construction fixed on research branch: when a challenger or base expert is absent for a player, v3 no longer silently presents that row as an equivalent full ensemble.
+- Every QB/RB/TE v3 row now records **intendedN, effective n, coverage ratio, missingExperts, coverageStatus**. Missing rows are classified fail-closed as `INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN` until source metadata proves whether the cause is genuine published-board truncation or acquisition failure.
+- Historical v3 numerical rank math remains frozen for control comparability; this change exposes confidence/coverage semantics rather than rewriting old evidence.
+- This directly catches Tank Bigsby N4 vs Tyjae Spears N5 and the more severe J.K. Dobbins N2 class instead of treating their ensembles as equivalent.
+- Regression gate added in rc496-draft-critical to require explicit coverage telemetry/policy.
+- v4/v5 remain disabled until final panel membership has verified board depth and missingness policy; no blind imputation and no silent renormalization allowed.
