@@ -2477,3 +2477,5 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Pascal identity anchors: slot 2 = Pascal_Voerde; slot 6 = Pascal_Gelderner. Marc identity anchors: slot 3 = Marc_Duesseldorf; slot 10 = Marc_Dutch.
 - Research branch runtime map corrected in commit **8f68d4ede83690560b16aedb22e9310b42358801**. Regression canaries added in **99101ac3f1f8434db5b2acc6c7ed0804b2479287** to reject rc4.84 slot geometry, Pascal-at-8, Moers Venom, and Michael K.
 - **Main/accepted Android rc4.106 remains unchanged and therefore still contains the stale map.** Do not use its manager-return outputs as final live authority until this correction passes the branch gates and is promoted in the next validated release.
+
+- Follow-up identity-history correction: **Pascal Voerde is a long-tenured manager with an 8-season runtime history, evidence reaching at least 2017; legacy Bracht Eagles → Voerde Eagles → Pascal Voerde are one identity chain.** The prior 3-season description was wrong; that 2023–2025 sample belongs to Pascal Gelderner. Locked in commit f5649136dcf8d72d6e59b37be98c42e25f5c32c8.
