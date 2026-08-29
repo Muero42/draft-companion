@@ -2552,3 +2552,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Raised raw source minimums from 20 to 80 rows for every v4 expert/position and Koerner v5 acquisition. This is materially safer for draft use and avoids false readiness from shallow lists.
 - Head a57292f7f061967eeb18e4d57a14373ad5abd5e4: package gate 33281812805 PASS; release contract 33281812819 PASS; project guardrails 33281812809 PASS.
 - Production remains untouched pending real endpoint acquisition/same-state profile comparison and final Android promotion gate.
+
+
+### 2026-08-30 — AUTO BLOCK latest candidate re-extract verification
+- Rechecked head 30405f7041f2c0cbd026a4e2b558a0b6e1f0022b after checkpoint write: candidate package gate 33281837172 PASS; release contract 33281837169 PASS; Project Guardrails 33281837177 PASS.
+- Downloaded artifact 9723209123 and independently re-extracted it. Inner candidate `Draft_Companion_v11.8.0-rc4.106_PREINSTALL.zip` contains exactly the expected 13 runtime files. SHA-256 independently recomputed as `17e831403129d3b80c9fa922918781c5f85510f6ff2292717e76a3d963099161`, exactly matching `candidate.sha256`.
+- This supersedes the prior candidate hash because readiness-semantics code changed afterward. Still PREINSTALL only; production/main remains untouched.
+- Remaining dependent gate is real live-source acquisition (including Koerner exact/pairwise route) and same-state v3/v4/v5 behavioral comparison. No user input is required for repository/package work; do not promote merely on static CI.
