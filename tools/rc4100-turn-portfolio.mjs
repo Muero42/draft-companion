@@ -25,7 +25,19 @@ const row=(name,pos,ret,panel,rawScore=50,extra={})=>({p:{name,pos},ret,r:{rank:
 {
   const leader=row('Long Turn Leader','QB',.96,76.6,100);
   const alt=row('Long Turn Alt','RB',.60,90,80);
-  assert.equal(fn([leader,alt],92,109)[0],leader,'long turn must not use short-turn override');
+  assert.equal(fn([leader,alt],92,109)[0],leader,'long turn with non-urgent alternative must keep leader');
+}
+{
+  const leader=row('Long Turn Deferable Leader','RB',.933,137.2,100);
+  const alt=row('Urgent Close Alternative','TE',.006,141.2,92);
+  const out=fn([leader,alt],132,149);
+  assert.equal(out[0],alt,'long-turn WAIT leader should defer to close-quality genuinely urgent alternative');
+  assert.match(alt.reasons.join(' | '),/Turn-Portfolio/,'long-turn rationale missing');
+}
+{
+  const leader=row('Long Turn Too Far Leader','RB',.95,137.2,100);
+  const alt=row('Urgent But Too Far','TE',.01,160,92);
+  assert.equal(fn([leader,alt],132,149)[0],leader,'long-turn quality cliff must block override');
 }
 {
   const leader=row('Moderate Return Leader','QB',.80,76.6,100);
