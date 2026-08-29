@@ -1,11 +1,11 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260829T1235Z-v177`
+Handoff generation: `20260829T1244Z-v178`
 Updated: 2026-08-29 12:35Z
 
 ## FAIL-CLOSED TAKEOVER
 1. Read PITTI_COMMAND_CONTRACTS.json.
 2. Read PITTI_CURRENT_STATE.json.
-3. Read PITTI_HANDOFF_SEAL.json and require generation `20260829T1235Z-v177`, PASS, handoff_ready=true, second_pass_pass=true, non-empty integrity map.
+3. Read PITTI_HANDOFF_SEAL.json and require generation `20260829T1244Z-v178`, PASS, handoff_ready=true, second_pass_pass=true, non-empty integrity map.
 4. Verify every seal-listed Git blob SHA against main.
 5. Read PITTI_EXECUTION_LOCK.json, PITTI_AUTO_PREFLIGHT.md, and PITTI_PROJECT_STATE.md to EOF.
 6. Read PITTI_NEW_CHAT_BOOTSTRAP.md and HANDOFF_COMPLETENESS_MATRIX.md.
@@ -94,14 +94,13 @@ A blocked CI/device lane blocks only that lane; continue decision/evidence, regr
 AUTO never starts an interactive mock unless explicitly requested.
 
 ## EXACT NEXT GATE
-**RC4106_ANDROID_DISPLAY_ACCEPTANCE**
+**NEW_CHAT_LATE_RB_AUDIT**
 
 - Source/package/deployment: v11.8.0-rc4.106; PR #47 Project Guardrails / Release Contract / Candidate Package all PASS; main merge 0818bc9632eca79c4d055d444a6eae0af53f3a9f; gh-pages exact 13/13 runtime parity PASS.
-- Last accepted Android authority remains rc4.105 until rc4.106 is visually observed. This is display-only validation; do not reopen ranking/model work.
-- rc4.106 corrects Snapshot DRAFT COACH TOP 8 individual-rank rendering for embedded Expert-v2/v3 boards. It must no longer say KEINE VERIFIZIERT when the data-status reports embedded individual ranks.
-- Mock draft 1399325404598124544 is PAUSED BEFORE PICK 9. Picks1-8: Gibbs, Chase, Bijan, Jonathan Taylor, CMC, Puka, Amon-Ra, JSN. James Cook was recommended at 1.09, but no user pick was reported.
-- On mock continuation require a fresh Snapshot; never synthesize Cook as rostered.
-- Continue draft-day freshness/failsafe and Watcher/post-draft work while device display observation waits.
+- rc4.106 Android/display acceptance is complete: user supplied multiple rc4.106 live snapshots through completed draft.
+- Mock 1399325404598124544 is COMPLETE, picks 1-150. User roster: James Cook, Justin Jefferson, Chris Olave, Jeremiyah Love, Colston Loveland, Jaylen Waddle, Christian Watson, Parker Washington, Blake Corum, Trevor Lawrence, Josh Downs, Rachaad White, Jonah Coleman, Zach Charbonnet, Tyjae Spears.
+- Do not resurrect the obsolete "paused before pick9 / Cook unconfirmed" state.
+- Exact next gate is focused late-RB upside/reach audit for the real draft; FantasyPros post-draft capture follows afterward.
 
 
 ## Immediate next-chat priority
