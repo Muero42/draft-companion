@@ -84,9 +84,9 @@
     "rc4105_pr_three_gates_pass": true,
     "rc4105_main_merged": true,
     "rc4105_main_pages_exact_13_file_parity": true,
-    "rc4105_android_pending": true,
-    "rc4105_android_accepted": false
+    "rc4105_android_pending": false,
+    "rc4105_android_accepted": true
   },
-  "exact_gate": "RC4105_ANDROID_ACCEPTANCE",
-  "note": "v167 PASS seal: latest canonical OOS backup draft-companion-v7-backup-2026-08-29T06-53-52-495Z.json (rc4.104, draft 1399308446632800256) exposed generic pick129 score-0 short-turn promotion. rc4.105 generic Coach-floor fix passed PR #46 release/package/guardrails, merged main 93a7619..., and exact 13/13 main/gh-pages runtime parity PASS. rc4.104 remains last accepted Android authority; rc4.105 device acceptance is pending fresh Snapshot/Coach observation."
+  "exact_gate": "RC4105_POST_DEVICE_COACH_VALIDATION",
+  "note": "v167 PASS seal: latest canonical OOS backup draft-companion-v7-backup-2026-08-29T06-53-52-495Z.json (rc4.104, draft 1399308446632800256) exposed generic pick129 score-0 short-turn promotion. rc4.105 generic Coach-floor fix passed PR #46 release/package/guardrails, merged main 93a7619..., and exact 13/13 main/gh-pages runtime parity PASS. rc4.104 remains last accepted Android authority; rc4.105 device acceptance is pending fresh Snapshot/Coach observation. Android/PWA rc4.105 visibly observed 09:12 local with healthy shell/status; deployment acceptance PASS. Behavioral Snapshot/Coach validation remains."
 }
