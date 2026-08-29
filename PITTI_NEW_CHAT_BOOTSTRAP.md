@@ -1,5 +1,5 @@
 # PITTI NEW CHAT BOOTSTRAP — FAIL-CLOSED
-Generation: `20260829T0500Z-v160`
+Generation: `20260829T0548Z-v161`
 
 When the user writes **PITTI AUTO**, verify in this order:
 1. PITTI_COMMAND_CONTRACTS.json
@@ -13,18 +13,18 @@ When the user writes **PITTI AUTO**, verify in this order:
 9. HANDOFF_COMPLETENESS_MATRIX.md
 10. actual repo/main/gh-pages/device evidence
 
-Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T0500Z-v160`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
+Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T0548Z-v161`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
 
 ## Current facts
 - production/control: rc4.64.
 - rollback accepted functional authority: rc4.96.
-- main/source: rc4.100.
+- main/source: rc4.104.
 - rc4.100 PR #36 candidate gates: release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
 - rc4.100 merged to main as 1b85656e40a182ca6be2397c5bf6674006b97bd2.
 - post-merge main verification: **PASS**; release/package/project guardrails plus rc4.82/rc4.83 draft-critical gates are GREEN.
-- gh-pages: rc4.100; exact 13-file packaged-runtime parity with main PASS.
-- Android/PWA last observed: rc4.99; rc4.100 device observation/acceptance NOT yet established.
-- current gate: RC4100_ANDROID_OBSERVATION.
+- gh-pages: rc4.102; rc4.104 deployment intentionally held until v161 reseal and post-merge all-green.
+- Android/PWA accepted authority: rc4.101 after live Analyze/Snapshot/Coach PASS; rc4.104 device acceptance pending.
+- current gate: RC4104_POSTMERGE_RESEAL_THEN_DEPLOY.
 
 ## Canonical evidence
 - full draft backup: draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json, SHA-256 1fc70dc81e8d9a4e28b5f0450f1a57e8cf8873b7541040acc0033e13cf6725ab.
@@ -50,3 +50,9 @@ Execute long autonomous same-turn blocks. Re-inventory after every package. No p
 ## Canonical self-update path
 verified candidate -> main promotion/post-merge verification -> gh-pages exact runtime deployment + byte parity -> Android/PWA refresh -> device observation. The first three stages are complete for rc4.100; only device observation remains.
 Do not revert to gh-pages-only promotion while main is stale, repeated refresh loops, cache clearing, reinstall, or manual ZIP as the default route.
+
+## rc4.104 canonical new evidence
+- Backup `draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json`, draft 1399284498113294336, rc4.101.
+- Strict Coach path reproduced 9 WR / 4 RB / 1 QB / 0 TE before pick149; 14/14 completed own picks followed Coach #1.
+- Pick92 Value-Safety promoted WR7 despite WR6/RB2; pick132 93.3% WAIT Spears remained #1 over Mark Andrews 0.6% Return.
+- rc4.104 generic bounded repair merged; no hard cap, player-name forcing, Return retune, or expert retune.
