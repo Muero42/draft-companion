@@ -17,9 +17,9 @@ Takeover fails closed unless every item below is true.
 - PR #36 package/re-extract 33205458721 PASS; artifact 9699461048; GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
 - PR #36 guardrails 33205458745 PASS.
 - rc4.100 merged main commit = 1b85656e40a182ca6be2397c5bf6674006b97bd2.
-- post-merge main workflow verification pending; do not deploy before it is satisfied or independently reproduced.
-- gh-pages = rc4.99, main/pages parity FALSE.
-- Android/PWA observed = rc4.99; rc4.100 Android acceptance NOT PASS.
+- post-merge main verification PASS: release/package/project guardrails plus rc4.82/rc4.83 draft-critical gates GREEN.
+- gh-pages = rc4.100; exact 13-file packaged-runtime main/pages parity PASS.
+- Android/PWA last observed = rc4.99; rc4.100 Android acceptance NOT PASS.
 - rollback authority = rc4.96.
 
 ## Full-draft / Return evidence
@@ -56,4 +56,4 @@ verified candidate -> main post-merge verification -> gh-pages exact-byte deploy
 No repeated refresh/cache/reinstall/manual-ZIP detours before server-side parity is proven.
 
 ## Current gate
-`RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY`
+`RC4100_ANDROID_OBSERVATION`
