@@ -25,6 +25,11 @@ assert.match(app,/coverageStatus:missing\.length\?'INCOMPLETE_RIGHT_CENSORED_OR_
 assert.match(app,/missingExperts:missing/,'missing expert identities must be retained per player');
 assert.match(app,/intendedN:intendedExperts\.length,coverage:vals\.length\/intendedExperts\.length/,'effective-vs-intended panel coverage telemetry missing');
 assert.match(app,/coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'/,'v4-v5 coverage fail-closed policy missing');
+assert.match(app,/EXPERT_V4_BLUEPRINT/,'v4 blueprint missing');
+assert.match(app,/maxSingleWeight:\.30/,'single-expert influence cap missing');
+assert.match(app,/EXPERT_V5_BLUEPRINT=\{base:'expertv3',add:'Sean Koerner',fundPrimarilyFrom:'Draft Sharks Team'/,'v5 Koerner/DS design drift');
+assert.match(app,/expertv4:\{QB:'expert-v4-qb'/,'v4 profile map missing');
+assert.match(app,/expertv5:\{QB:'expert-v5-qb'/,'v5 profile map missing');
 assert.doesNotMatch(app,/5=Basti, 6=Bjoern/,'rc4.84 wrong slot-5/6 mapping resurrected');
 assert.doesNotMatch(app,/8=Pascal Gelderner/,'rc4.84 wrong slot-8 mapping resurrected');
 assert.doesNotMatch(app,/Moers Venom/i,'stale user team identity resurrected');
