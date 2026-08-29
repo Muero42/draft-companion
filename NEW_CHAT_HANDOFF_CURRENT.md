@@ -1,5 +1,5 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260829T0548Z-v161`
+Handoff generation: `20260829T0555Z-v162`
 Updated: 2026-08-28 20:02Z
 
 ## FAIL-CLOSED TAKEOVER
@@ -95,9 +95,6 @@ A blocked CI/device lane blocks only that lane; continue decision/evidence, regr
 AUTO never starts an interactive mock unless explicitly requested.
 
 ## EXACT NEXT GATE
-**RC4104_POSTMERGE_RESEAL_THEN_DEPLOY**
+**RC4104_ANDROID_OBSERVATION**
 
-1. Complete v161 authority/seal consistency and require all main gates GREEN.
-2. Deploy the exact 13 packaged runtime files to gh-pages and prove Git-blob parity.
-3. Only then request the unavoidable Android rc4.104 observation and Analyze/Snapshot/Coach smoke.
-4. Continue draft-day freshness/evidence work independently; no broad retune.
+rc4.104 is deployed with exact 13-file main/gh-pages runtime parity. Next unavoidable step is Android rc4.104 observation plus Analyze/Snapshot/Coach smoke. rc4.101 remains accepted Android authority until that PASS.
