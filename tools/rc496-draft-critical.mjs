@@ -39,6 +39,9 @@ assert.match(app,/fetchExpertOverallPairwise\(expert,ref\)/,'Koerner pairwise AP
 assert.match(app,/FantasyPros API pairwise exact inversion/,'pairwise provenance label missing');
 assert.match(app,/crosscheck=\{checked,matched,ok:checked>=2&&matched===checked\}/,'Koerner fallback Compare Players match gate missing');
 assert.match(app,/finalRows\.length>=80&&crosscheck\.ok/,'Koerner fallback must fail closed on crosscheck mismatch');
+assert.match(app,/function normalizeWeights\(raw,cap=\.30\)/,'v4-v5 normalized weight cap builder missing');
+assert.match(app,/function buildPanelFromExpertRows\(/,'v4-v5 complete-panel builder missing');
+assert.match(app,/coverageStatus:missing\.length\?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE'/,'new panels must preserve per-player coverage status');
 assert.doesNotMatch(app,/5=Basti, 6=Bjoern/,'rc4.84 wrong slot-5/6 mapping resurrected');
 assert.doesNotMatch(app,/8=Pascal Gelderner/,'rc4.84 wrong slot-8 mapping resurrected');
 assert.doesNotMatch(app,/Moers Venom/i,'stale user team identity resurrected');
