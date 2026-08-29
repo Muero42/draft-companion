@@ -2,8 +2,8 @@
 
 > **Current main/source:** v11.8.0-rc4.102; critical rc4.100 live-analysis const-reassignment crash fixed and merged.
 > **rc4.100 PR validation:** release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
-> **Deployment/device:** gh-pages v11.8.0-rc4.102 with packaged-runtime parity; Android/PWA rc4.102 live rerun PASS (fresh snapshot, 341 candidates, Draft Coach rendered).
-> **Rollback reference:** v11.8.0-rc4.96 historical only; current accepted Android authority is v11.8.0-rc4.102.
+> **Deployment/device:** accepted gh-pages/Android authority v11.8.0-rc4.101; rc4.102 is a source-only freshness candidate pending full gates/deployment/device observation.
+> **Rollback reference:** v11.8.0-rc4.96 historical only; current accepted Android authority remains v11.8.0-rc4.101 until rc4.102 passes promotion/device gates.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
 > **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
 > **rc4.100 scope:** generic Pro/Contra semantic hardening + bounded short-turn portfolio ordering; no global ranking/Return/expert retune, no hard WR cap/quota.
