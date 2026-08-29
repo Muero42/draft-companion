@@ -1,5 +1,5 @@
 # PITTI NEW CHAT HANDOFF — CURRENT
-Handoff generation: `20260829T0555Z-v162`
+Handoff generation: `20260829T0825Z-v164`
 Updated: 2026-08-28 20:02Z
 
 ## FAIL-CLOSED TAKEOVER
@@ -14,15 +14,14 @@ Updated: 2026-08-28 20:02Z
 ## CURRENT RUNTIME / RELEASE BOUNDARY
 - production/control baseline: rc4.64.
 - historical rollback reference: rc4.96.
-- accepted Android authority: **rc4.101** (live Analyze/Snapshot/Coach PASS).
-- **main/source: rc4.104**, squash merge `ff6c2240797c1d3303dd538204c76553fd324c16`.
-- rc4.104 PR #44 candidate gates: release/package/project guardrails **PASS**.
-- post-merge main: release contract PASS (33236822691), package PASS (33236822641), successor gate PASS (33236822674).
-- post-merge rc4.82/rc4.83/project guard failures were diagnosed as **checkpoint/seal drift only**: runtime version lock and stale v160 blob hashes. No behavioral/package failure.
-- package artifact 9710162910, digest `sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd`.
-- gh-pages remains rc4.102 until the v161 reseal is all-green; do not claim rc4.104 deployed yet.
-- canonical mock evidence: `draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json`, draft 1399284498113294336, rc4.101.
-- rc4.104 scope: repeated-WR9 generic repair, long-turn WAIT portfolio ordering, visible curated evidence + neutral polarity, successor-RC regression wiring. No hard WR cap, no global Return-v2 retune, no expert-weight redesign.
+- **accepted Android authority: rc4.104**; user snapshot confirms App-Version rc4.104 and successful post-draft Snapshot path.
+- main/source/deployment: **rc4.104**; exact 13/13 runtime-file main/gh-pages parity PASS.
+- rc4.104 package/reference: run 33236822641, artifact 9710162910, digest sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd.
+- canonical completed mock evidence: `draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json`, draft 1399284498113294336, source runtime rc4.101.
+- strict-Coach path reproduced 9 WR / 4 RB / 1 QB / 0 TE before final pick; 14/14 preserved completed own picks followed Coach #1.
+- rc4.104 bounded fixes are merged/deployed/Android-observed. **Counterfactual replay against preserved rc4.101 decision fixtures is still pending and must not be claimed complete.**
+- completed Snapshot fingerprint is duplicate/documentation only; do not run live-pick analysis on it.
+- FantasyPros capture is optional external post-draft benchmark, not a prerequisite for replay.
 
 ## CANONICAL FULL-DRAFT EVIDENCE — PITTI BACKUP 28-08 19:24
 Library filename: **draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json**
@@ -95,6 +94,10 @@ A blocked CI/device lane blocks only that lane; continue decision/evidence, regr
 AUTO never starts an interactive mock unless explicitly requested.
 
 ## EXACT NEXT GATE
-**RC4104_ANDROID_OBSERVATION**
+**RC4104_POST_DRAFT_REPLAY_VALIDATION**
 
-rc4.104 is deployed with exact 13-file main/gh-pages runtime parity. Next unavoidable step is Android rc4.104 observation plus Analyze/Snapshot/Coach smoke. rc4.101 remains accepted Android authority until that PASS.
+1. Verify v164 seal/authority consistency; repair only checkpoint drift, not runtime behavior.
+2. Counterfactually replay the preserved rc4.101 decision fixtures under rc4.104, with explicit focus on pick92 Addison/JCM, pick109 Downs, pick112 Diggs, and pick132 Spears/Andrews.
+3. Verify that the repair reduces the repeated WR9 construction without hard WR caps, blind RB forcing, player-name rules, or global Return/expert retunes.
+4. Integrate FantasyPros post-draft capture if/when supplied as an external benchmark.
+5. Continue draft-day freshness plan for 31 Aug; no broad late redesign without replicated evidence.
