@@ -2080,3 +2080,8 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Fresh public scan 2026-08-29: FantasyPros current riser/faller board has Parker Washington up to overall 72 (+7) and Bucky Irving up to 51 (+6), while several mid-tier TEs continue to fall; this is directionally consistent with the existing Parker/value and late-TE strategy and does not justify a broad model retune. Current public material remains an input to the scheduled 31-Aug freshness gate, not a reason to overfit runtime now.
 - No broad Return-v2 retune: rc4.99 full-draft audit remains the strongest resolved calibration evidence (3-pick 91.4% forecast vs 90.9% actual; longer windows show modest overprediction requiring replication).
 - rc4.100 status after this block: deployment/version/representative changed-behavior acceptance PASS. Remaining work is draft-day freshness, broader horizon-specific Return replication where immutable evidence exists, and normal mock/live observation; no reinstall/version troubleshooting and no automatic new mock.
+
+
+## 2026-08-29 06:26 CEST — state consistency audit
+- Re-inventory found stale rc4.99/rc4.96 Android authority fields in CURRENT, COMMAND_CONTRACTS and EXECUTION_LOCK after the verified rc4.100 device observation and representative acceptance. This is checkpoint drift, not runtime drift.
+- Active authority fields are normalized to rc4.100 and gate DRAFT_DAY_FRESHNESS_AND_EVIDENCE; rc4.96 remains historical rollback reference only. No runtime, model, or scoring files changed.
