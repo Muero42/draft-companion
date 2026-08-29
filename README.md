@@ -1,6 +1,6 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Current main/source:** v11.8.0-rc4.102; critical rc4.100 live-analysis const-reassignment crash fixed and merged.
+> **Current main/source:** v11.8.0-rc4.103; curated player Pro/Contra evidence is now surfaced on Coach cards; no scoring/Return/expert retune.
 > **rc4.100 PR validation:** release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
 > **Deployment/device:** accepted gh-pages/Android authority v11.8.0-rc4.101; rc4.102 is a source-only freshness candidate pending full gates/deployment/device observation.
 > **Rollback reference:** v11.8.0-rc4.96 historical only; current accepted Android authority remains v11.8.0-rc4.101 until rc4.102 passes promotion/device gates.
