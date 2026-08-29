@@ -96,8 +96,8 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - visible output is permitted only for a concrete useful end-result, unavoidable user action/input, safety/irreversible confirmation, or a blocker after every independent lane is exhausted.
 
 
-## v165 TAKEOVER CANARIES
-- Handoff generation must be `20260829T0840Z-v165` across CURRENT/SEAL/HANDOFF/bootstrap/matrix/lock.
+## v166 TAKEOVER CANARIES
+- Handoff generation must be `20260829T0840Z-v166` across CURRENT/SEAL/HANDOFF/bootstrap/matrix/lock.
 - main/source/deployment/accepted Android authority = rc4.104.
 - Exact 13-file main/gh-pages runtime parity = PASS.
 - Android rc4.104 observed; completed post-draft Snapshot path = PASS.
