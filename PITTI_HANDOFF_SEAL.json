@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260829T0945Z-v173",
-  "created_at": "2026-08-29T09:45:00Z",
+  "handoff_generation": "20260829T1002Z-v174",
+  "created_at": "2026-08-29T10:02:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -10,14 +10,14 @@
     ".github/workflows/pitti-project-guardrails.yml": "540059f7fb23384caad29bcdf6b235288d07a5e7",
     ".github/workflows/release-contract-v2-package.yml": "0d8b36422355b2450a4a33291165427ca4c8de83",
     ".github/workflows/release-contract-v2.yml": "0579fdc8a8333704bea72baa1af99a9180168796",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "0c83be469f3ecdc236ead98d1d231047d089393e",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "588a5d0ee4bc5d586fee94a0d23bffeff2fcb41a",
-    "PITTI_AUTO_PREFLIGHT.md": "599c61faab64972e42a19d2e8455f6848c6e1d90",
-    "PITTI_COMMAND_CONTRACTS.json": "0f8fa203a0eb0a77a6b7c4966d708f19dd426437",
-    "PITTI_CURRENT_STATE.json": "f6e20699d88381a5a875d8c68547d8c4fc7e4feb",
-    "PITTI_EXECUTION_LOCK.json": "c7cad62ae1ee459f5603765eb76b62b24c954ef9",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "2540d95d710a13949e2a0be13faab514253e3548",
-    "PITTI_PROJECT_STATE.md": "96b58b5aea8798045764edb88c47624b789499b6",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "e589e7ab42126c321124b4960ddd2a2ed8f76f90",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "09bcd5376e2deab6bf9f8f6db209d52e7770c5b6",
+    "PITTI_AUTO_PREFLIGHT.md": "ddb418ba8514cfe49a20789ca7a7cb82368194a5",
+    "PITTI_COMMAND_CONTRACTS.json": "3dc35900534041e396a1fd6a0355263be7e490d2",
+    "PITTI_CURRENT_STATE.json": "109dc28c7e721320d47a75f3789228731fd8226a",
+    "PITTI_EXECUTION_LOCK.json": "6469c871a6769c9ea6548ab50f4f327d43f5d887",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "262d1de1161b9b8e5a939c7b96a44780a3e46211",
+    "PITTI_PROJECT_STATE.md": "c1580870ed4b848a7224061874322e348e102fbd",
     "README.md": "ff0d739eb3def45e068392da991c83fdbdd4cc47",
     "app.js": "89fa7974cf2f1ebc7747f09b02cb246f4ee0523f",
     "decision-policy.js": "76234515b5428a33b7ef573f1f5c87bab058ad67",
@@ -38,7 +38,7 @@
     "tools/rc499-normal-cut.mjs": "fd70fafc8da135927d12d81cd98beef10de487ed",
     "tools/rc499-wr-saturation.mjs": "9e297363e83bc771aa0ebaabf9bcfeb17fd1dca8",
     "tools/rc4106-embedded-individuals.mjs": "92b401305ff4ffcac369585a0220e7fb58cea89b",
-    "PITTI_UPSIDE_RESEARCH_V3.md": "1141e02eea509b627348979241467b5111347319"
+    "PITTI_UPSIDE_RESEARCH_V3.md": "351944cc56aba8b98389129043e78a963c7b78c1"
   },
   "checks": {
     "generation_consistent": true,
@@ -111,8 +111,12 @@
     "sleeper_metadata_upstream_not_local_map": true,
     "no_rc4107_pre_draft_metadata_patch": true,
     "watcher_015_source_reaudited": true,
-    "watcher_deployed_health_not_inferred": true
+    "watcher_deployed_health_not_inferred": true,
+    "late_rb_contingency_delta_v": true,
+    "mike_washington_first_team_evidence": true,
+    "emmett_johnson_walker_handcuff_evidence": true,
+    "no_qualitative_runtime_score_mutation": true
   },
   "exact_gate": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
-  "note": "v173 PASS seal. rc4.106 frozen source/package/deployment PASS; rc4.105 accepted Android; rc4.106 display observation pending. Mock paused before pick9. Official NFL transaction wire promoted for team/status reconciliation; Sleeper lag identified as upstream metadata risk, no risky rc4.107 patch. Watcher 0.1.5 source re-audited; deployed health not inferred."
+  "note": "v174 PASS seal. rc4.106 remains frozen; Android display acceptance pending. Mock paused before pick9. Fresh Aug28 NFL evidence strengthens Mike Washington Jr. and Emmett Johnson contingency/late-RB utility without changing runtime scores or downgrading Jeanty."
 }
