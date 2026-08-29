@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260829T0730Z-v168",
-  "updated_at": "2026-08-29T07:35:00Z",
+  "updated_at": "2026-08-29T07:40:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -12,7 +12,7 @@
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.105",
     "test_challenger": "v11.8.0-rc4.106",
-    "test_challenger_android_verified": true,
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.106",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "sha256:2b7ad9b2a0ec2af1641d7262c33e91d48f290f19feee54a38a9d581efbc8a7c5",
@@ -24,7 +24,7 @@
     "android_version_observed": true,
     "android_functional_verified": true,
     "freeze_policy": "rc4.105 accepted Android authority; rc4.106 display-only candidate pending device observation; rc4.96 historical rollback reference only",
-    "test_challenger_android_observed": true,
+    "test_challenger_android_observed": false,
     "android_acceptance_pending": true,
     "android_observed": "v11.8.0-rc4.105",
     "android_functional_acceptance": "SNAPSHOT_AND_PICK9_COACH_BEHAVIOR_PASS",
@@ -73,5 +73,5 @@
     "operational_freeze": "~19:50",
     "transaction_rule": "same-position claim/signing is weak Bayesian evidence only; correlate with pre-existing injury/role uncertainty and seek corroboration; uncorroborated signal may only break close ties"
   },
-  "android_acceptance_pending": false
+  "android_acceptance_pending": true
 }
