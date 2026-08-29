@@ -110,9 +110,9 @@
     "latestPackageReextract": "v11.8.0-rc4.102 PASS",
     "latestPackageSha256": "sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd",
     "packageRuntimeFiles": 13,
-    "deployedPagesVersion": "v11.8.0-rc4.102",
-    "deployedPagesAppByteParityWithMain": false,
-    "deployedPagesNote": "rc4.104 merged/packaged; gh-pages deployment held until v161 reseal and post-merge all-green. Android accepted authority remains rc4.101.",
+    "deployedPagesVersion": "v11.8.0-rc4.104",
+    "deployedPagesAppByteParityWithMain": true,
+    "deployedPagesNote": "rc4.104 exact 13-file main/gh-pages runtime parity PASS after v161 all-green seal; Android observation pending.",
     "libraryRecoveryAlias": "v11.8.0-rc4.52",
     "packageReferenceRun": 33236822641,
     "packageReferenceArtifactId": 9710162910,
@@ -125,7 +125,7 @@
     "returnFinding": "3-pick turns 91.4% forecast vs 90.9% actual; 17-pick turns 37.1% vs 30.4%; no global Return-v2 retune",
     "openEvidencePatch": "Superseded by merged rc4.99/rc4.100 generic semantic fixes; never resurrect stale PR #33 status as current."
   },
-  "currentGate": "RC4104_POSTMERGE_RESEAL_THEN_DEPLOY",
+  "currentGate": "RC4104_ANDROID_OBSERVATION",
   "handoffGeneration": "20260829T0548Z-v161",
   "handoff_generation": "20260829T0548Z-v161"
 }
