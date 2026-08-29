@@ -47,4 +47,4 @@ assert.equal(delta('WR',7,7,2,109),-7.5,'pick109 WR7/RB2 opportunity cost');
 assert.equal(delta('WR',8,8,2,112),-7.5,'pick112 WR8/RB2 opportunity cost');
 assert.equal(delta('RB',3,9,3,132),0,'pick132 RB leader score is not directly retuned');
 assert.equal(delta('TE',0,9,3,132),0,'pick132 TE score is not directly retuned');
-console.log('RC4104_ROSTER_PORTFOLIO_PASS');
+// PR validation trigger: frozen-fixture contract revision 1\nconsole.log('RC4104_ROSTER_PORTFOLIO_PASS');
