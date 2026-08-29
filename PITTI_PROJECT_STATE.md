@@ -2359,3 +2359,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Aug30 18:00 ET final 53-man deadline + Aug31 13:00 ET waiver expiry are now explicit hard freshness gates for the real Aug31 draft. Final refresh must include post-cutdown roster/IR/PUP and post-waiver deltas.
 - Mike Washington Jr. is independently flagged by NFL fantasy analysis as Jeanty's handcuff. Emmett Johnson is a Walker contingency-upside candidate despite Demercado's current unofficial-depth-chart edge. Preserve as late-round watch signals, not panel overrides.
 - No runtime mutation justified; rc4.106 freeze remains intact. Mock remains paused before pick 9.
+
+
+## 2026-08-29 — AUTO date/source integrity audit VIII
+- Fresh web audit reproduced a dangerous legacy-page collision: NFL search surfaced pages titled Aug29/Aug30 whose body is clearly 2023/2022. These are rejected. Current-year body/date verification is now a hard requirement before any transaction/injury delta enters PITTI.
+- Verified 2026 sources still support: Aug30 18:00 ET final-53 deadline; Aug31 13:00 ET waiver expiry; Jeanty still on the mend but Raiders counting on him; Mike Washington Jr. first-team preseason usage / possible two-back discussion; official Aug27 Atwell↔Hunter and Aug24 Boutte/Reed transactions.
+- New official waiver-wire delta: Cedric Tillman was waived by Cleveland on Aug27. Any stale CLE role/team assumption for Tillman is invalidated pending claim/signing outcome.
+- No trustworthy same-day Aug29 fantasy-relevant delta found that warrants a ranking/runtime change. rc4.106 freeze remains correct.
