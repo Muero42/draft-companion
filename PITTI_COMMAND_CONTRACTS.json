@@ -102,7 +102,7 @@
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.64",
     "rollbackAuthority": "v11.8.0-rc4.96",
-    "androidAuthority": "v11.8.0-rc4.101",
+    "androidAuthority": "v11.8.0-rc4.104",
     "activeAndroidObserved": "v11.8.0-rc4.101",
     "androidVersionObserved": true,
     "androidAcceptancePending": true,
@@ -112,7 +112,7 @@
     "packageRuntimeFiles": 13,
     "deployedPagesVersion": "v11.8.0-rc4.104",
     "deployedPagesAppByteParityWithMain": true,
-    "deployedPagesNote": "rc4.104 exact 13-file main/gh-pages runtime parity PASS after v161 all-green seal; Android observation pending.",
+    "deployedPagesNote": "rc4.104 exact 13-file main/gh-pages parity PASS; Android rc4.104 observed with post-draft Snapshot PASS. Next: counterfactual replay.",
     "libraryRecoveryAlias": "v11.8.0-rc4.52",
     "packageReferenceRun": 33236822641,
     "packageReferenceArtifactId": 9710162910,
@@ -123,9 +123,10 @@
     "strictCoachRoster": "9 WR / 4 RB / 1 TE / 1 QB",
     "fullDraftAudit": "1399141058222280704 rc4.99; 15/15 fixtures; user roster 1 QB / 6 RB / 7 WR / 1 TE",
     "returnFinding": "3-pick turns 91.4% forecast vs 90.9% actual; 17-pick turns 37.1% vs 30.4%; no global Return-v2 retune",
-    "openEvidencePatch": "Superseded by merged rc4.99/rc4.100 generic semantic fixes; never resurrect stale PR #33 status as current."
+    "openEvidencePatch": "Superseded by merged rc4.99/rc4.100 generic semantic fixes; never resurrect stale PR #33 status as current.",
+    "androidAccepted": true
   },
-  "currentGate": "RC4104_ANDROID_OBSERVATION",
-  "handoffGeneration": "20260829T0548Z-v161",
-  "handoff_generation": "20260829T0548Z-v161"
+  "currentGate": "RC4104_POST_DRAFT_REPLAY_VALIDATION",
+  "handoffGeneration": "20260829T0825Z-v164",
+  "handoff_generation": "20260829T0825Z-v164"
 }
