@@ -54,6 +54,16 @@ const row=(name,pos,ret,panel,rawScore=50,extra={})=>({p:{name,pos},ret,r:{rank:
   const blocked=row('Blocked Alt','RB',.70,90,90,{recommendationBlocked:true});
   assert.equal(fn([leader,blocked],89,92)[0],leader,'blocked alternative must never be promoted');
 }
+// Exact rc4.104 OOS regression from draft 1399308446632800256, pick129:
+{
+  const leader=row('Generic Leader','RB',.9011111111111111,130.35,100);
+  const zero=row('Generic Score-Zero Alternative','WR',.7988888888888889,139.75,0);
+  const out=fn([leader,zero],129,132);
+  assert.equal(out[0],leader,'short-turn score-0 alternative must not displace a score-100 leader');
+  assert.equal(zero.rawScore,0,'quality floor must not mutate the alternative score');
+  assert.equal(zero.ret,.7988888888888889,'quality floor must not mutate Return-v2');
+}
+assert.ok(!src.includes("De'Zhaun Stribling")&&!src.includes('Chris Rodriguez'),'rc4.105 fix must remain player-generic');
 assert.ok(!src.includes('Trevor Lawrence')&&!src.includes('Blake Corum'),'player-name forcing detected');
 // Exact mandatory rc4.101 pick-132 fixture: Spears was #1 at 93.3% Return,
 // Andrews #2 at 0.6%, panel gap 4.05 and raw-score gap 7.9. rc4.104 must
