@@ -19,7 +19,7 @@ Updated: 2026-08-29 08:40Z
 - rc4.104 package/reference: run 33236822641, artifact 9710162910, digest sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd.
 - canonical completed mock evidence: `draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json`, draft 1399284498113294336, source runtime rc4.101.
 - strict-Coach path reproduced 9 WR / 4 RB / 1 QB / 0 TE before final pick; 14/14 preserved completed own picks followed Coach #1.
-- rc4.104 bounded fixes are merged/deployed/Android-observed. **Counterfactual replay against preserved rc4.101 decision fixtures is still pending and must not be claimed complete.**
+- rc4.104 bounded fixes are merged/deployed/Android-observed. **Bounded frozen-fixture replay is CI PASS** for pick92/109/112 roster economics and exact pick132 Spears/Andrews reorder; Return-v2 unchanged. Browser-equivalent full historical recomputation is unavailable and is not claimed.
 - completed Snapshot fingerprint is duplicate/documentation only; do not run live-pick analysis on it.
 - FantasyPros capture is optional external post-draft benchmark, not a prerequisite for replay.
 
@@ -94,15 +94,10 @@ A blocked CI/device lane blocks only that lane; continue decision/evidence, regr
 AUTO never starts an interactive mock unless explicitly requested.
 
 ## EXACT NEXT GATE
-**RC4104_POST_DRAFT_REPLAY_VALIDATION**
+**RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS**
 
-1. Verify v166 PASS seal/integrity and actual rc4.104 main/pages/Android authority.
-2. Execute the still-pending counterfactual replay of preserved rc4.101 decision fixtures under rc4.104.
-3. First mandatory replay targets: pick92 Addison/JCM, pick109 Downs, pick112 Diggs, pick132 Spears/Andrews; then evaluate full roster construction.
-4. Preserve hard anti-regressions: no hard WR cap/quota, blind RB forcing, player-name forcing, PairSum/Rolling, global Return-v2 retune, or expert-weight redesign.
-5. Do not re-analyze the completed duplicate snapshot as live. FantasyPros capture is optional external benchmark only.
-
-## v166 replay-status canary
-- Counterfactual replay rc4.101 -> rc4.104 is PENDING and must not be inferred complete from release/deploy/device PASS.
-- Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
-- First replay targets: pick92 Addison/JCM, pick109 Downs, pick112 Diggs, pick132 Spears/Andrews, then full roster construction.
+1. Treat the CI-backed bounded rc4.104 frozen-fixture replay as PASS; do not reopen it from historical pending prose.
+2. Continue draft-day freshness/readiness/failsafe and Watcher/post-draft readiness.
+3. Preserve hard anti-regressions: no hard WR cap/quota, blind RB forcing, player-name forcing, PairSum/Rolling, global Return-v2 retune, or expert-weight redesign.
+4. Do not re-analyze the completed duplicate snapshot as live. FantasyPros capture remains an optional external benchmark.
+5. Browser-equivalent full historical board recomputation is not available from the preserved backup and must not be fabricated.
