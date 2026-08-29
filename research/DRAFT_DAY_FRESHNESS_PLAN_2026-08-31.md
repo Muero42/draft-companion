@@ -1,7 +1,7 @@
 # PITTI Draft-Day Freshness Plan — 2026-08-31
 
 Real draft: 20:00 Germany local time.
-Accepted runtime: v11.8.0-rc4.101. Historical rollback reference: rc4.96.
+Accepted runtime: v11.8.0-rc4.104. Historical rollback reference: rc4.96.
 Purpose: maximize fresh information without destabilizing the frozen decision kernel.
 
 ## Operating principle
@@ -28,7 +28,7 @@ Focus:
 
 ### ~17:30–18:15
 Primary full pre-draft freshness pass.
-Produce a delta set against the frozen rc4.100 inputs. No runtime mutation unless a genuinely material source-data defect is proven and deterministic gates can still be completed safely.
+Produce a delta set against the accepted rc4.104 inputs. No runtime mutation unless a genuinely material source-data defect is proven and deterministic gates can still be completed safely.
 
 ### after late transaction/waiver processing, roughly ~19:05–19:30
 Targeted delta scan, not a full research rebuild.
@@ -73,7 +73,7 @@ Keep web/news research available for genuinely breaking information during the d
 - acute injury/availability deltas
 - transaction/claim role deltas
 - emergency queue/failsafe
-- device/app rc4.101 availability
+- device/app rc4.104 availability
 - ChatGPT live-decision context loaded
 
 ## Aug 29 pre-draft delta checkpoint
@@ -97,3 +97,9 @@ Keep web/news research available for genuinely breaking information during the d
 - **CMC / Luther Burden / Ja'Marr Chase:** current app wording remains directionally consistent with Aug. 23-28 reporting; no additional mutation justified.
 
 Scope rule: rc4.102 is a source-freshness correction, not a coefficient experiment. Only the already-invalidated Jacobs groin penalty changes a scored residual; all other changes are wording/neutral acute-risk context.
+
+
+## Aug 29 rc4.104 acceptance + replay delta
+- Accepted Android/source/deployment authority is now rc4.104; exact 13-file main/gh-pages parity and post-draft Android Snapshot path PASS.
+- Frozen rc4.101 failure-point fixtures from draft 1399284498113294336 were replayed against the bounded rc4.104 mechanisms with CI-backed PASS: pick92/109/112 roster opportunity-cost behavior and exact pick132 Spears/Andrews long-turn reorder. Return-v2 values remain untouched.
+- Browser-equivalent recomputation of every historical candidate board is not claimed because the backup does not preserve every transient runtime input. This is an evidence boundary, not a reason to reopen the validated rc4.104 mechanisms.
