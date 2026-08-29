@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260829T0705Z-v167",
-  "updated_at": "2026-08-29T07:12:00Z",
+  "updated_at": "2026-08-29T07:24:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,12 +11,12 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.105",
-    "test_challenger": "v11.8.0-rc4.105",
+    "test_challenger": "v11.8.0-rc4.106",
     "test_challenger_android_verified": true,
-    "latest_package_reextract": "v11.8.0-rc4.105",
+    "latest_package_reextract": "v11.8.0-rc4.106",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd",
-    "deployed_pages": "v11.8.0-rc4.105",
+    "deployed_pages": "v11.8.0-rc4.106",
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33236822641,
     "package_reference_artifact_id": 9710162910,
@@ -25,15 +25,15 @@
     "android_functional_verified": true,
     "freeze_policy": "rc4.104 accepted Android authority; rc4.96 historical rollback reference only",
     "test_challenger_android_observed": true,
-    "android_acceptance_pending": false,
+    "android_acceptance_pending": true,
     "android_observed": "v11.8.0-rc4.104",
     "android_functional_acceptance": "SNAPSHOT_POST_DRAFT_PATH_PASS",
     "rollback_reference": "v11.8.0-rc4.96"
   },
   "exact_continuation": {
-    "gate": "RC4105_POST_DEVICE_COACH_VALIDATION",
+    "gate": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "Android/PWA rc4.105 visually observed on device at 09:12 local; app shell healthy: FantasyPros Online, Rankings 26 Min., Sleeper Draft 1057, Coach Bereit, Expert-v3 positionsspezifisch. Version/deployment acceptance PASS. Continue with fresh Snapshot/Coach behavioral validation; no reinstall/version troubleshooting."
+    "instruction": "rc4.105 fresh pre-draft and pick9 Snapshot/Coach behavior PASS. rc4.106 is a display-only embedded-individual-rank fix, PR #47 all gates PASS, merged and deployed with 13/13 runtime parity. Android rc4.106 observation pending. Mock draft 1399325404598124544 is paused before user pick 9; last recommendation was James Cook, but do not assume the pick was made."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -55,14 +55,14 @@
     "status": "HANDOFF_v167_READY_PENDING_ANDROID_RC4105",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Fresh rc4.105 Snapshot/Coach behavioral validation; continue draft-day readiness in parallel.",
-    "gate": "RC4105_POST_DEVICE_COACH_VALIDATION"
+    "next_action": "Continue independent draft-day readiness/freshness/Watcher work. When convenient, observe rc4.106 on Android; mock 1399325404598124544 may resume later from pick9 with fresh snapshot.",
+    "gate": "RC4106_ANDROID_DISPLAY_ACCEPTANCE"
   },
-  "source_authority": "v11.8.0-rc4.105",
-  "package_authority": "v11.8.0-rc4.105",
-  "android_version_observed": "v11.8.0-rc4.104",
+  "source_authority": "v11.8.0-rc4.106",
+  "package_authority": "v11.8.0-rc4.106",
+  "android_version_observed": "v11.8.0-rc4.105",
   "android_functional_verified": true,
-  "deployment_authority": "v11.8.0-rc4.105",
+  "deployment_authority": "v11.8.0-rc4.106",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
