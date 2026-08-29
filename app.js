@@ -497,11 +497,13 @@ async function fetchExpertOverallPairwise(targetExpert,referenceExpert){
       if(rows.length<80){failures.push('pair rows '+rows.length);continue}
       // Independent positional cross-check on several target rows. Pairwise inversion is accepted
       // only when compare-players returns the same target expert ranks.
-      const grouped={QB:[],RB:[],WR:[],TE:[]};for(const x of rows)grouped[x.pos]?.push(x);
+      const derived=derivePositionRanks(rows);
+      const finalRows=Object.values(derived);
+      const grouped={QB:[],RB:[],WR:[],TE:[]};for(const x of finalRows)grouped[x.pos]?.push(x);
       let checked=0,matched=0;
       for(const pos of ['RB','WR','QB','TE']){
-        const sample=grouped[pos].slice(0,Math.min(3,grouped[pos].length));if(!sample.length)continue;
-        const idsByName=new Map(reference.data?.players?.map?.(x=>[norm(field(x,['player_name','playername','name','full_name'])),String(field(x,['player_id','playerid','id'])||'')])||[]);
+        const sample=grouped[pos].sort((a,b)=>a.posRank-b.posRank).slice(0,Math.min(3,grouped[pos].length));if(!sample.length)continue;
+        const idsByName=new Map((reference.data?.players||[]).map(x=>[norm(field(x,['player_name','playername','name','full_name'])),String(field(x,['player_id','playerid','id'])||'')]));
         const playerIds=sample.map(x=>idsByName.get(norm(x.name))).filter(Boolean).slice(0,4);
         if(!playerIds.length)continue;
         const cmp=await proxyCall(`/nfl/compare-players?players=${playerIds.join(':')}&position=${pos}&year=${season}&experts=${encodeURIComponent(String(targetExpert.id)+':'+String(referenceExpert.id))}&ranking_type=draft&details=all`);
@@ -509,12 +511,12 @@ async function fetchExpertOverallPairwise(targetExpert,referenceExpert){
         for(const x of sample){
           const pid=idsByName.get(norm(x.name));if(!pid||actual[pid]==null)continue;
           checked++;
-          // Compare endpoint exposes positional ranks, so verify ordering later after deriving posRank.
+          if(Number(actual[pid])===Number(x.posRank))matched++;
         }
       }
-      const derived=derivePositionRanks(rows);
-      const finalRows=Object.values(derived);
-      if(finalRows.length>=80)return {rows:finalRows,path:p,method:'PAIRWISE_RANGE_INVERSION',crosscheck:{checked,matched,ok:checked>=2}};
+      const crosscheck={checked,matched,ok:checked>=2&&matched===checked};
+      if(finalRows.length>=80&&crosscheck.ok)return {rows:finalRows,path:p,method:'PAIRWISE_RANGE_INVERSION',crosscheck};
+      failures.push('compare crosscheck '+matched+'/'+checked);
     }catch(e){failures.push(e?.message||String(e))}
   }
   throw new Error(targetExpert.name+': Pairwise-API-Fallback fehlgeschlagen. '+failures.join(' | '));
