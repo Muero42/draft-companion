@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-29T07:24:00Z",
+  "updatedAt": "2026-08-29T19:51:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -16,7 +16,7 @@
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.105",
+    "latestAndroidObserved": "v11.8.0-rc4.106",
     "latestPreinstallVerified": "v11.8.0-rc4.106",
     "latestResearchChallenger": "v11.8.0-rc4.106",
     "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.106",
@@ -24,17 +24,17 @@
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.106",
     "latestDeployedCandidate": "v11.8.0-rc4.106",
-    "latestAndroidVerified": "v11.8.0-rc4.105",
-    "androidAuthority": "v11.8.0-rc4.105",
-    "android_authority": "v11.8.0-rc4.105",
+    "latestAndroidVerified": "v11.8.0-rc4.106",
+    "androidAuthority": "v11.8.0-rc4.106",
+    "android_authority": "v11.8.0-rc4.106",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33240680178,
     "preinstallReferenceArtifactId": 9711254133,
     "preinstallHashSemantics": "GitHub Actions artifact-envelope digest from rc4.106 PR #47 candidate-package run; inner ZIP hash is not claimed. Use package/re-extract PASS + 13/13 runtime parity for release authority.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.105",
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.105",
-    "testChallengerAndroidObserved": false,
-    "testChallengerAndroidAccepted": false,
+    "latestAndroidVersionObserved": "v11.8.0-rc4.106",
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.106",
+    "testChallengerAndroidObserved": true,
+    "testChallengerAndroidAccepted": true,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
@@ -61,7 +61,7 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.105"
+    "acceptedAndroidAuthority": "v11.8.0-rc4.106"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -112,8 +112,8 @@
     "noPlayerNameQbExclusions": true
   },
   "expertV2": {
-    "status": "THREE_SELECTABLE_PROFILES_CURRENT_AUTHORITY_NO_FINAL_WINNER",
-    "integration": "SELECTABLE_ABC_COMPARISON",
+    "status": "LEGACY_PRESERVED_SUPERSEDED_FOR_NEW_V4_V5_COMPARISON",
+    "integration": "LEGACY_SELECTABLE_ONLY_UNTIL_V4_V5_VALIDATED",
     "profiles": [
       "incumbent/control",
       "Expert-v2 ALL positions",
@@ -164,9 +164,9 @@
       "Derek Brown": "EXCLUDED_FROM_NEW_V2",
       "Andrew Erickson": "CHALLENGER_ONLY_NO_CURRENT_NUMERIC_VOTE",
       "Matt Harmon": "WR_EVIDENCE_ONLY_NO_CURRENT_NUMERIC_VOTE_UNLESS_INCREMENTAL_VALUE_PROVEN",
-      "Sean Koerner": "NO_CURRENT_DRAFT_ACQUISITION_PAYWALL_WATCHLIST_ONLY",
-      "Draft Sharks Team": "COUNT_EXACTLY_ONCE_AS_CORRELATED_FAMILY",
-      "Weisse_Gianni_Bobal": "NO_AUTO_RESTORE_AVAILABILITY_ONLY; FRESH_INDIVIDUAL_QUALIFICATION_ALLOWED"
+      "Sean Koerner": "CURRENT_2026_RANKING_VISIBLE_IN_FANTASYPROS_2026-08-29_SCREENSHOTS; PAYWALL-ONLY ASSUMPTION SUPERSEDED; IMPORT/COVERAGE STILL MUST BE VERIFIED",
+      "Draft Sharks Team": "ORGANIZATION_ACCURACY_STRONG_BUT_TEAM_FEED_ATTRIBUTION_NOT_EQUIVALENT_TO_IDENTIFIED_INDIVIDUAL_ACCURACY; KEEP_V3_ONLY; EXCLUDE_FROM_V4_INDIVIDUAL_ONLY",
+      "Weisse_Gianni_Bobal": "OLD_AVAILABILITY_REJECTION_SUPERSEDED; FRESH_INDIVIDUAL_QUALIFICATION_ALLOWED"
     },
     "freshness": {
       "cacheMaxHoursBeforeRefreshAttempt": 12,
@@ -178,34 +178,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
+    "researchBranch": "pitti/expert-v4-v5-v180",
+    "status": "HANDOFF_V180_EXPERT_V4_V5_COVERAGE_AUDIT",
     "production": true,
     "androidVerified": true,
-    "changes": [
-      "WR6+ Value-Safety promotion roster-aware from pick81",
-      "soft WR7+/RB<=3 championship opportunity cost",
-      "long-turn high-Return WAIT portfolio ordering",
-      "visible curated Pro/Contra evidence with neutral polarity preserved",
-      "successor-RC semantic regression wiring",
-      "short-turn portfolio quality floor blocks score-0/low-quality timing overrides while preserving validated TLaw/Corum case",
-      "snapshot Coach Top 8 embedded Expert-v2/v3 individual ranks now render from audited embedded rows instead of unrelated live rankCache verification flags"
-    ],
-    "validation": [
-      "PR #44 candidate release/package/guardrails PASS",
-      "rc4.104 main release/package/successor semantic gates PASS before v161 reseal",
-      "v161 seal reached all-green before deployment",
-      "exact 13-file main/gh-pages runtime parity PASS",
-      "Android rc4.104 observed; post-draft Snapshot path PASS",
-      "bounded frozen-fixture replay CI PASS: pick92/109/112 roster economics + exact pick132 Spears/Andrews reorder; no Return-v2 mutation",
-      "PR #46 release/package/guardrails PASS; main merged 93a7619ec5af3468b71d62238b77f4f01e37822c; exact 13/13 main/gh-pages runtime parity PASS",
-      "Android screenshot 2026-08-29 09:12 local: visible v11.8.0-rc4.105; FantasyPros Online; Rankings 26 Min.; Sleeper Draft 1057; Coach Bereit; Expert-v3 positionsspezifisch.",
-      "rc4.105 fresh pre-draft Snapshot PASS and pick9 live Snapshot healthy; PR #47 release/package/guardrails PASS; rc4.106 merged main 0818bc9632eca79c4d055d444a6eae0af53f3a9f; 13/13 runtime deployed to gh-pages"
-    ],
-    "nextGate": "Android rc4.106 display observation when convenient; independent draft-day work continues; mock 1399325404598124544 paused before pick9"
+    "runtime": "v11.8.0-rc4.106",
+    "mainRuntimeParity": "RESTORED after reverting staged selector UI from main; UI work preserved on research branch",
+    "nextGate": "New chat: verify handoff v180, then fix expert coverage/missingness semantics on research branch; complete current expert candidate/accuracy/freshness matrix; build v4 and v5; validate against v3 before enabling selector or packaging."
   },
-  "status": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
-  "gate": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
-  "nextGate": "Android rc4.106 display observation when convenient; independent draft-day work continues; mock 1399325404598124544 paused before pick9",
+  "status": "HANDOFF_V180_READY_EXPERT_V4_V5",
+  "gate": "EXPERT_V4_V5_COVERAGE_AND_SELECTION",
+  "nextGate": "New chat: verify handoff v180, then fix expert coverage/missingness semantics on research branch; complete current expert candidate/accuracy/freshness matrix; build v4 and v5; validate against v3 before enabling selector or packaging.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -214,10 +197,99 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260829T1244Z-v178",
-    "status": "HANDOFF_v178_READY_LATE_RB_AUDIT",
+    "generation": "20260829T1951Z-v180",
+    "status": "HANDOFF_v180_READY_EXPERT_V4_V5",
     "ready": true,
     "secondPass": true,
-    "resume": "PITTI AUTO: rc4.106 package/deploy/parity PASS; Android rc4.106 display pending, rc4.105 accepted. Mock 1399325404598124544 paused before pick9; Cook only recommended."
+    "resume": "PITTI AUTO: rc4.106 is accepted Android/runtime baseline. Main runtime parity restored. Research branch pitti/expert-v4-v5-v180 preserves staged selector. First fix Bigsby/Spears expert-coverage inconsistency, then finalize v4 individual-only and v5 v3+Koerner, validate before activation. Deferred real-decision mock 19-44-43 must not be analyzed yet."
+  },
+  "expertV45": {
+    "status": "ACTIVE_RESEARCH_GO_LIVE_BLOCKED_ON_COVERAGE_SEMANTICS",
+    "branch": "pitti/expert-v4-v5-v180",
+    "baselinePanelSize": "4-6 individual experts per position",
+    "v3": {
+      "status": "FROZEN_BASELINE_PRESERVE_SELECTABLE",
+      "change": "NONE"
+    },
+    "v4": {
+      "design": "INDIVIDUAL_ONLY_POSITION_SPECIFIC",
+      "draftSharks": "EXCLUDED_FROM_V4_BECAUSE_TEAM_FEED_ATTRIBUTION_IS_NOT_CLEANLY_TIED_TO_IDENTIFIED_ACCURACY; NOT BECAUSE DS ORG IS WEAK",
+      "noForcedReplacementOfExistingIndividuals": true,
+      "provisional": {
+        "QB": [
+          "Sean Koerner",
+          "Todd D Clark",
+          "Seth Miller",
+          "plus 1-3 best validated current individual candidates"
+        ],
+        "RB": [
+          "Ryan Weisse",
+          "Kev Wheeler",
+          "Dalton Del Don",
+          "Nick Mariano",
+          "Sean Koerner",
+          "Pat Fitzmaurice as strongest 6th-place challenger"
+        ],
+        "WR": [
+          "Sean Koerner",
+          "Nick Mariano",
+          "Marc Shannep",
+          "Seth Miller",
+          "plus 0-2 best validated current individual candidates"
+        ],
+        "TE": [
+          "Wolf of Roto Street",
+          "Ryan Weisse",
+          "Pat Fitzmaurice",
+          "Sean Koerner",
+          "Kev Wheeler / Dalton Del Don as 5th-6th candidates"
+        ]
+      },
+      "weightingRule": "multi-year positional draft accuracy primary; 2025 as recency/stability correction, not double-counted 50/50; 2026 rank freshness is a gate; cap single-expert influence"
+    },
+    "v5": {
+      "design": "V3_HYBRID_PLUS_KOERNER",
+      "rule": "Preserve v3 architecture; add Sean Koerner primarily by reducing Draft Sharks share. Position-specific transfer; do not blindly give Koerner all DS weight where recent positional accuracy is weak.",
+      "purpose": "minimal-invasive challenger / second opinion"
+    },
+    "coverageBlocker": {
+      "severity": "GO_LIVE_BLOCKER",
+      "finding": "Same expert-v3-rb label can use different effective expert sets by player.",
+      "evidence": {
+        "Tyjae Spears": "panelN=5; Weisse 126, Del Don 131, Pat 139, Mariano 140, Draft Sharks 144",
+        "Tank Bigsby": "panelN=4; Pat 134, Mariano 139, Del Don 149, Weisse 156; Draft Sharks absent"
+      },
+      "rootCause": "ensureExpertV3Panels() inherits base row unchanged when challenger rank missing; when challenger exists it rebuilds from whatever base individuals are present and normalizes by available-weight sum. Missing source coverage therefore silently changes effective ensemble.",
+      "requiredSemantics": [
+        "Never interpret missing import coverage as expert opinion.",
+        "Distinguish true outside-published-range/unranked from acquisition/import failure from intentionally short board.",
+        "No silent weight renormalization across materially different expert sets without explicit coverage state.",
+        "Expose/fail-visible effective panel N and coverage reason.",
+        "Do not blindly impute ranks.",
+        "Audit all relevant players/positions before v4/v5 activation."
+      ]
+    },
+    "ui": {
+      "requirement": "Expert preset selector immediately above Analyze; switching preset must not mutate draft state and re-analysis must use same board/roster state.",
+      "stagedCommit": "f45bb99d0bd69d52f3cc792aae9571db4b2e615e",
+      "stagedBranch": "pitti/expert-v4-v5-v180",
+      "mainRuntimeStatus": "STAGED_UI_REVERTED_FROM_MAIN_TO_RESTORE_RC4.106_RUNTIME_PARITY; reapply only with validated v4/v5 implementation"
+    },
+    "futureResearch": {
+      "deferUntil": "post-2026-season unless time-sensitive raw ranking data would otherwise be lost",
+      "concept": "phase/archetype-specific expert panels: early stability, middle value/ceiling, late breakout/league-winner",
+      "collectNowOnlyIfIrretrievable": [
+        "expert-player-rank timestamped pre-draft snapshots",
+        "panel provenance",
+        "contemporary ADP/ECR"
+      ],
+      "laterMetrics": [
+        "value over market",
+        "late RB/WR breakout hit rate",
+        "Top-24/Top-12 hit rate by draft-cost bucket",
+        "false-positive rate",
+        "league-winner identification"
+      ]
+    }
   }
 }
