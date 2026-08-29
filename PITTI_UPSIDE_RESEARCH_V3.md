@@ -430,3 +430,19 @@ At draft time, any player carrying ↑↑ or ↓↓ must be rechecked against sa
 - FantasyPros Aug26-27 RB sleeper consensus independently corroborates the existing late-upside pool rather than revealing a missing class: Keaton Mitchell, Jonah Coleman, MarShawn Lloyd, Dylan Sampson, Tank Bigsby, Braelon Allen, Tyjae Spears, Emmett Johnson, Kaelon Black and Mike Washington Jr. all appear among named sleeper RBs.
 - Derek Brown's Aug27 late-RB article specifically supports Jordan Mason as standalone early-down/contingency value and Jonah Coleman as an RB3 with a path to climb Denver's depth chart.
 - Treat this as external corroboration only. Do not double-count it against embedded expert ranks; use it as a close-call thesis/role validator in late rounds.
+
+
+## 2026-08-29 AUTO late-RB contingency delta — Raiders / Chiefs
+
+### Mike Washington Jr. — LV RB — contingency upgraded, standalone thesis still unproven
+- NFL Aug28 reports Washington ran solely with the Raiders' first team in the preseason finale while Ashton Jeanty was out with the ankle injury; Kubiak publicly entertained usage analogous to his Walker/Charbonnet deployment.
+- This materially strengthens Washington's contingency-role confidence and makes the existing app thesis directionally correct. It does **not** justify projecting a full committee once Jeanty is healthy; Jeanty's coach-backed Week-1 expectation remains the baseline.
+- Draft implication: Washington becomes a stronger final-round RB lottery/Jeanty-handcuff candidate if still cheap; do not move Jeanty down merely because Washington flashed.
+
+### Emmett Johnson — KC RB — explicit Walker handcuff candidate
+- NFL's current late-round rookie analysis explicitly identifies Johnson as the preferred Kenneth Walker handcuff despite Emari Demercado being ahead on the unofficial depth chart, citing a plausible RB1 path if Walker misses time.
+- This is useful late-bench championship-utility evidence but not sufficient for a large standalone reach. Preserve panel/market timing; increase scrutiny if Walker's health changes.
+
+### Freshness interpretation
+- Jeanty ankle remains monitored, not presumed Week-1 inactive: Raiders say they are counting on him while assessing him over the coming week.
+- No runtime score mutation from these qualitative items before draft. They belong in live tie-break / late-RB contingency reasoning unless stronger official depth/injury evidence arrives.
