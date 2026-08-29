@@ -214,8 +214,8 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260829T0945Z-v173",
-    "status": "HANDOFF_v173_READY_RC4106_ANDROID_DISPLAY_PENDING",
+    "generation": "20260829T1002Z-v174",
+    "status": "HANDOFF_v174_READY_RC4106_ANDROID_DISPLAY_PENDING",
     "ready": true,
     "secondPass": true,
     "resume": "PITTI AUTO: rc4.106 package/deploy/parity PASS; Android rc4.106 display pending, rc4.105 accepted. Mock 1399325404598124544 paused before pick9; Cook only recommended."
