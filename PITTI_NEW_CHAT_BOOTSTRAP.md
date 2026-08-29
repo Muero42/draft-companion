@@ -1,5 +1,5 @@
 # PITTI NEW CHAT BOOTSTRAP — FAIL-CLOSED
-Generation: `20260829T0548Z-v161`
+Generation: `20260829T0825Z-v164`
 
 When the user writes **PITTI AUTO**, verify in this order:
 1. PITTI_COMMAND_CONTRACTS.json
@@ -13,7 +13,7 @@ When the user writes **PITTI AUTO**, verify in this order:
 9. HANDOFF_COMPLETENESS_MATRIX.md
 10. actual repo/main/gh-pages/device evidence
 
-Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T0548Z-v161`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
+Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T0825Z-v164`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
 
 ## Current facts
 - production/control: rc4.64.
@@ -24,7 +24,7 @@ Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829
 - post-merge main verification: **PASS**; release/package/project guardrails plus rc4.82/rc4.83 draft-critical gates are GREEN.
 - gh-pages: rc4.102; rc4.104 deployment intentionally held until v161 reseal and post-merge all-green.
 - Android/PWA accepted authority: rc4.101 after live Analyze/Snapshot/Coach PASS; rc4.104 device acceptance pending.
-- current gate: RC4104_POSTMERGE_RESEAL_THEN_DEPLOY.
+- current gate: RC4104_POST_DRAFT_REPLAY_VALIDATION.
 
 ## Canonical evidence
 - full draft backup: draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json, SHA-256 1fc70dc81e8d9a4e28b5f0450f1a57e8cf8873b7541040acc0033e13cf6725ab.
@@ -56,3 +56,10 @@ Do not revert to gh-pages-only promotion while main is stale, repeated refresh l
 - Strict Coach path reproduced 9 WR / 4 RB / 1 QB / 0 TE before pick149; 14/14 completed own picks followed Coach #1.
 - Pick92 Value-Safety promoted WR7 despite WR6/RB2; pick132 93.3% WAIT Spears remained #1 over Mark Andrews 0.6% Return.
 - rc4.104 generic bounded repair merged; no hard cap, player-name forcing, Return retune, or expert retune.
+
+## v164 replay truth
+- rc4.104 is main/source/deployment/accepted Android authority; exact 13-file main/gh-pages parity PASS and user post-draft Snapshot PASS.
+- Canonical completed mock: `draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json`, draft 1399284498113294336, generated on rc4.101.
+- Counterfactual rc4.104 replay is **PENDING**. Never infer it was completed merely because rc4.104 gates/device passed.
+- First replay targets: pick92 Addison vs JCM; pick109 Downs; pick112 Diggs; pick132 Spears vs Andrews. Preserve no-hard-cap/no-blind-RB/no-player-name/no-global-Return-retune invariants.
+- Completed rc4.104 Snapshot is duplicate/documentation only; FantasyPros capture optional external benchmark.
