@@ -1,5 +1,5 @@
 # PITTI NEW CHAT BOOTSTRAP — FAIL-CLOSED
-Generation: `20260829T0840Z-v165`
+Generation: `20260829T0840Z-v166`
 
 When the user writes **PITTI AUTO**, verify in this order:
 1. PITTI_COMMAND_CONTRACTS.json
@@ -13,17 +13,17 @@ When the user writes **PITTI AUTO**, verify in this order:
 9. HANDOFF_COMPLETENESS_MATRIX.md
 10. actual repo/main/gh-pages/device evidence
 
-Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T0840Z-v165`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
+Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T0840Z-v166`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
 
 ## Current facts
 - production/control: rc4.64.
-- rollback accepted functional authority: rc4.96.
+- historical rollback reference: rc4.96.
 - main/source: rc4.104.
 - rc4.100 PR #36 candidate gates: release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
 - rc4.100 merged to main as 1b85656e40a182ca6be2397c5bf6674006b97bd2.
 - post-merge main verification: **PASS**; release/package/project guardrails plus rc4.82/rc4.83 draft-critical gates are GREEN.
-- gh-pages: rc4.102; rc4.104 deployment intentionally held until v161 reseal and post-merge all-green.
-- Android/PWA accepted authority: rc4.101 after live Analyze/Snapshot/Coach PASS; rc4.104 device acceptance pending.
+- gh-pages: rc4.104; exact 13/13 packaged runtime-file parity with main PASS.
+- Android/PWA accepted authority: rc4.104; user post-draft Snapshot confirms App-Version rc4.104 and Snapshot-path PASS.
 - current gate: RC4104_POST_DRAFT_REPLAY_VALIDATION.
 
 ## Canonical evidence
@@ -48,7 +48,7 @@ No automatic mock; no PairSum/Rolling; no hard WR cap/quota; no blind RB forcing
 Execute long autonomous same-turn blocks. Re-inventory after every package. No progress/status/promise-only or empty replies while useful autonomous work remains. A blocked dependent lane does not stop independent lanes.
 
 ## Canonical self-update path
-verified candidate -> main promotion/post-merge verification -> gh-pages exact runtime deployment + byte parity -> Android/PWA refresh -> device observation. The first three stages are complete for rc4.100; only device observation remains.
+verified candidate -> main promotion/post-merge verification -> gh-pages exact runtime deployment + byte parity -> Android/PWA refresh -> device observation. All stages are complete for rc4.104 through Android post-draft Snapshot observation; the open gate is decision-fixture replay validation, not deployment.
 Do not revert to gh-pages-only promotion while main is stale, repeated refresh loops, cache clearing, reinstall, or manual ZIP as the default route.
 
 ## rc4.104 canonical new evidence
@@ -65,7 +65,7 @@ Do not revert to gh-pages-only promotion while main is stale, repeated refresh l
 - Completed rc4.104 Snapshot is duplicate/documentation only; FantasyPros capture optional external benchmark.
 
 
-## v165 replay-status canary
+## v166 replay-status canary
 - Counterfactual replay rc4.101 -> rc4.104 is PENDING and must not be inferred complete from release/deploy/device PASS.
 - Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
 - First replay targets: pick92 Addison/JCM, pick109 Downs, pick112 Diggs, pick132 Spears/Andrews, then full roster construction.
