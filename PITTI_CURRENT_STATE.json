@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260829T0840Z-v166",
-  "updated_at": "2026-08-29T08:50:00Z",
+  "updated_at": "2026-08-29T07:03:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,12 +11,12 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.104",
-    "test_challenger": "v11.8.0-rc4.104",
+    "test_challenger": "v11.8.0-rc4.105",
     "test_challenger_android_verified": true,
-    "latest_package_reextract": "v11.8.0-rc4.104",
+    "latest_package_reextract": "v11.8.0-rc4.105",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "sha256:a35429594154cf2248851bcc9168ab6d51edf061dadf47c9ae82c1abc2b568bd",
-    "deployed_pages": "v11.8.0-rc4.104",
+    "deployed_pages": "v11.8.0-rc4.105",
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33236822641,
     "package_reference_artifact_id": 9710162910,
@@ -25,15 +25,15 @@
     "android_functional_verified": true,
     "freeze_policy": "rc4.104 accepted Android authority; rc4.96 historical rollback reference only",
     "test_challenger_android_observed": true,
-    "android_acceptance_pending": false,
+    "android_acceptance_pending": true,
     "android_observed": "v11.8.0-rc4.104",
     "android_functional_acceptance": "SNAPSHOT_POST_DRAFT_PATH_PASS",
     "rollback_reference": "v11.8.0-rc4.96"
   },
   "exact_continuation": {
-    "gate": "RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS",
+    "gate": "RC4105_ANDROID_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "Bounded frozen-fixture replay is CI PASS for the rc4.104 mechanisms that address the observed rc4.101 failures. Do not claim unavailable browser-equivalent full recomputation. Continue draft-day readiness/freshness/failsafe work; FantasyPros capture remains optional benchmark."
+    "instruction": "rc4.105 merged and deployed with exact 13/13 main/gh-pages runtime parity after OOS pick129 fix. Android/device acceptance is pending; do not call rc4.105 accepted Android authority until fresh device Snapshot confirms version and Coach path."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -55,14 +55,14 @@
     "status": "HANDOFF_v166_READY",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Draft-day readiness/freshness/failsafe work; FantasyPros capture optional external benchmark.",
-    "gate": "RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS"
+    "next_action": "Observe rc4.105 on Android and verify fresh Snapshot/Coach; continue independent draft-day readiness in parallel.",
+    "gate": "RC4105_ANDROID_ACCEPTANCE"
   },
-  "source_authority": "v11.8.0-rc4.104",
-  "package_authority": "v11.8.0-rc4.104",
+  "source_authority": "v11.8.0-rc4.105",
+  "package_authority": "v11.8.0-rc4.105",
   "android_version_observed": "v11.8.0-rc4.104",
   "android_functional_verified": true,
-  "deployment_authority": "v11.8.0-rc4.104",
+  "deployment_authority": "v11.8.0-rc4.105",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
