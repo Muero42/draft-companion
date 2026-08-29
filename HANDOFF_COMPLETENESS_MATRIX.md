@@ -1,10 +1,10 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — REPO v164
-Generation: `20260829T0825Z-v164`
+# PITTI HANDOFF COMPLETENESS MATRIX — REPO v165
+Generation: `20260829T0840Z-v165`
 
 Takeover fails closed unless every item below is true.
 
 ## Authority / seal
-- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T0825Z-v164`.
+- CURRENT = SEAL = HANDOFF = bootstrap = matrix generation `20260829T0840Z-v165`.
 - SEAL status PASS; handoff_ready=true; second_pass_pass=true.
 - Integrity map non-empty and includes all authority/runtime/critical regression files.
 - Every seal-listed Git blob SHA matches main.
@@ -70,3 +70,9 @@ No repeated refresh/cache/reinstall/manual-ZIP detours before server-side parity
 - Counterfactual rc4.104 replay is **PENDING**. Never infer it was completed merely because rc4.104 gates/device passed.
 - First replay targets: pick92 Addison vs JCM; pick109 Downs; pick112 Diggs; pick132 Spears vs Andrews. Preserve no-hard-cap/no-blind-RB/no-player-name/no-global-Return-retune invariants.
 - Completed rc4.104 Snapshot is duplicate/documentation only; FantasyPros capture optional external benchmark.
+
+
+## v165 replay-status canary
+- Counterfactual replay rc4.101 -> rc4.104 is PENDING and must not be inferred complete from release/deploy/device PASS.
+- Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
+- First replay targets: pick92 Addison/JCM, pick109 Downs, pick112 Diggs, pick132 Spears/Andrews, then full roster construction.
