@@ -22,7 +22,7 @@ Critical corrections:
 - Current rc4.106 main still inherits that rc4.84 wrong mapping and therefore must be repaired through regression/release gates before the real draft.
 
 ## Identity anchors / history mapping
-- Pascal Voerde = profile identity Pascal_Voerde, history sample 2023–2025 (3 seasons). Distinguish as "Pascal Voerde".
+- Pascal Voerde = profile identity Pascal_Voerde, **8-season historical model**; legacy team-name chain includes **Bracht Eagles → Voerde Eagles → Pascal Voerde** and must be normalized as the same manager. Evidence reaches at least 2017. Distinguish as "Pascal Voerde".
 - Pascal Gelderner = profile identity Pascal_Gelderner, history sample 2023–2025 (3 seasons). Distinguish as "Pascal Gelderner".
 - Marc Düsseldorf = profile identity Marc_Duesseldorf, history sample 2021, 2022, 2024, 2025 (4 seasons). Distinguish as "Marc Düsseldorf".
 - Dutch Marc = profile identity Marc_Dutch, history sample 2017–2025 (9 seasons). Distinguish as "Dutch Marc".
@@ -32,3 +32,10 @@ Critical corrections:
 ## Regression requirement
 Any runtime/handoff/test claiming slot5=Bastian, slot6=Björn, slot7=Michael K/Giuliano alias, slot8=Pascal Gelderner, or user team=Moers Venom is stale/invalid.
 Required 2026 live/mock map: 1 Michael, 2 Pascal Voerde, 3 Marc Düsseldorf, 4 Thomas, 5 Björn, 6 Pascal Gelderner, 7 Giuliano, 8 Bastian, 9 Muerotechnik/user, 10 Dutch Marc.
+
+
+## Identity-history correction lock
+- The earlier takeover note saying Pascal Voerde had only 2023–2025 / 3 seasons was wrong and is superseded.
+- **Do not truncate Pascal Voerde to the Pascal Gelderner sample.** Pascal Gelderner is the separate 3-season 2023–2025 profile.
+- Runtime MANAGER_PROFILES already carries Pascal Voerde history.years=8; preserve that rather than replacing it with the 3-season sample.
+- Legacy aliases/team names Bracht Eagles and Voerde Eagles belong to Pascal Voerde's identity chain and must not create separate managers.
