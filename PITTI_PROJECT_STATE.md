@@ -2545,3 +2545,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Head 7ae17c6247e3c5a48c2b4f42cb5b330ea2734272: candidate package gate run 33281703109 PASS; Project Guardrails 33281703173 PASS; release-contract 33281703208 PASS.
 - Downloaded and independently inspected Actions artifact 9723173339. Inner candidate: Draft_Companion_v11.8.0-rc4.106_PREINSTALL.zip, exact 13 runtime files, SHA-256 99103ec447d4a9b18deac8a83fc8e74ae11101beef37beac8ac20804f3c32c6a; candidate.sha256 matches local recomputation exactly.
 - Candidate is package/re-extract clean but remains PREINSTALL. Production/main untouched. Remaining acceptance: real source/API acquisition and same-state v3/v4/v5 comparison, then state/write-through + Android final gate before promotion.
+
+
+### 2026-08-30 — AUTO v4/v5 readiness semantics corrected
+- Audit found an over-strict unlock condition: requiring COMPLETE coverage for every row in the union of individual expert lists would make v4/v5 practically impossible to unlock because normal tail right-censoring creates legitimate missingness. Corrected fail-closed semantics to require a fully covered **top-80 decision core** per position while retaining explicit missingness outside the core.
+- Raised raw source minimums from 20 to 80 rows for every v4 expert/position and Koerner v5 acquisition. This is materially safer for draft use and avoids false readiness from shallow lists.
+- Head a57292f7f061967eeb18e4d57a14373ad5abd5e4: package gate 33281812805 PASS; release contract 33281812819 PASS; project guardrails 33281812809 PASS.
+- Production remains untouched pending real endpoint acquisition/same-state profile comparison and final Android promotion gate.
