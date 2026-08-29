@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-29T07:03:00Z",
+  "updatedAt": "2026-08-29T07:12:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -33,8 +33,8 @@
     "preinstallHashSemantics": "Reference inspected artifact hash; archive hash may vary across doc-only rebuilds. Use seal blob integrity + package/reextract PASS for runtime authority.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.104",
     "latestAndroidFunctionalVerified": "v11.8.0-rc4.104",
-    "testChallengerAndroidObserved": false,
-    "testChallengerAndroidAccepted": false,
+    "testChallengerAndroidObserved": true,
+    "testChallengerAndroidAccepted": true,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
@@ -60,7 +60,8 @@
       "ghPagesByteParityWithCandidate": true,
       "androidObserved": true,
       "androidAccepted": false
-    }
+    },
+    "acceptedAndroidAuthority": "v11.8.0-rc4.105"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -177,7 +178,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4105_ANDROID_ACCEPTANCE",
+    "status": "RC4105_POST_DEVICE_COACH_VALIDATION",
     "production": true,
     "androidVerified": true,
     "changes": [
@@ -195,13 +196,14 @@
       "exact 13-file main/gh-pages runtime parity PASS",
       "Android rc4.104 observed; post-draft Snapshot path PASS",
       "bounded frozen-fixture replay CI PASS: pick92/109/112 roster economics + exact pick132 Spears/Andrews reorder; no Return-v2 mutation",
-      "PR #46 release/package/guardrails PASS; main merged 93a7619ec5af3468b71d62238b77f4f01e37822c; exact 13/13 main/gh-pages runtime parity PASS"
+      "PR #46 release/package/guardrails PASS; main merged 93a7619ec5af3468b71d62238b77f4f01e37822c; exact 13/13 main/gh-pages runtime parity PASS",
+      "Android screenshot 2026-08-29 09:12 local: visible v11.8.0-rc4.105; FantasyPros Online; Rankings 26 Min.; Sleeper Draft 1057; Coach Bereit; Expert-v3 positionsspezifisch."
     ],
-    "nextGate": "Android rc4.105 fresh Snapshot/Coach acceptance; draft-day freshness/failsafe continues independently"
+    "nextGate": "Fresh rc4.105 Snapshot/Coach behavioral validation; deployment/version gate is closed."
   },
-  "status": "RC4105_ANDROID_ACCEPTANCE",
-  "gate": "RC4105_ANDROID_ACCEPTANCE",
-  "nextGate": "Android rc4.105 fresh Snapshot/Coach acceptance; draft-day freshness/failsafe continues independently",
+  "status": "RC4105_POST_DEVICE_COACH_VALIDATION",
+  "gate": "RC4105_POST_DEVICE_COACH_VALIDATION",
+  "nextGate": "Fresh rc4.105 Snapshot/Coach behavioral validation; deployment/version gate is closed.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
