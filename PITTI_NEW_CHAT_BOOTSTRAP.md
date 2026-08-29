@@ -1,5 +1,5 @@
 # PITTI NEW CHAT BOOTSTRAP — FAIL-CLOSED
-Generation: `20260829T0825Z-v164`
+Generation: `20260829T0840Z-v165`
 
 When the user writes **PITTI AUTO**, verify in this order:
 1. PITTI_COMMAND_CONTRACTS.json
@@ -13,7 +13,7 @@ When the user writes **PITTI AUTO**, verify in this order:
 9. HANDOFF_COMPLETENESS_MATRIX.md
 10. actual repo/main/gh-pages/device evidence
 
-Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T0825Z-v164`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
+Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T0840Z-v165`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
 
 ## Current facts
 - production/control: rc4.64.
@@ -63,3 +63,9 @@ Do not revert to gh-pages-only promotion while main is stale, repeated refresh l
 - Counterfactual rc4.104 replay is **PENDING**. Never infer it was completed merely because rc4.104 gates/device passed.
 - First replay targets: pick92 Addison vs JCM; pick109 Downs; pick112 Diggs; pick132 Spears vs Andrews. Preserve no-hard-cap/no-blind-RB/no-player-name/no-global-Return-retune invariants.
 - Completed rc4.104 Snapshot is duplicate/documentation only; FantasyPros capture optional external benchmark.
+
+
+## v165 replay-status canary
+- Counterfactual replay rc4.101 -> rc4.104 is PENDING and must not be inferred complete from release/deploy/device PASS.
+- Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
+- First replay targets: pick92 Addison/JCM, pick109 Downs, pick112 Diggs, pick132 Spears/Andrews, then full roster construction.
