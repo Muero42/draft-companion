@@ -2210,3 +2210,12 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - NEW MATERIAL REGRESSION at pick129: natural leader Chris Rodriguez RB has Coach 100 / Return 90.11% / panel 130.35, but short-turn portfolio ordering promotes De'Zhaun Stribling WR to visible #1 despite Coach score 0 / Return 79.89% / panel 139.75. Fixture reason explicitly says `Turn-Portfolio: Chris Rodriguez mit 90% Return aufschieben`. User followed the displayed #1, so roster became WR8 before pick132.
 - Root cause is generic and deterministic: applyTurnPortfolioOrdering uses short-turn maxAltRet=.82 and panel gap<=25 but has no minimum alternative quality / raw-score gap (short-turn maxRawGap=Infinity). Thus a catastrophically inferior candidate can displace a 100-score leader if its Return falls below 82%. This is not a player-specific issue and is distinct from the valid TLaw/Corum turn-portfolio use case.
 - Required repair: bound short-turn deferral by candidate quality while preserving the prior TLaw/Corum behavior. Add exact pick129 regression before promotion. No Return-v2 retune, no player-name forcing, no WR/RB quota.
+
+
+## 2026-08-29 — rc4.105 generic short-turn quality-floor fix promoted
+- rc4.105 candidate branch `pitti/rc4.105-turn-portfolio-quality-floor` implemented one bounded generic change: short-turn portfolio deferral requires normalized Coach score >=40 for the alternative. This preserves the previously validated TLaw/Corum case (Corum score 47) and blocks the new rc4.104 OOS pick129 score-0 promotion. No Return-v2, expert, position, player-name or roster-cap change.
+- Exact regression added from draft 1399308446632800256 pick129 and generic no-player-name canary retained.
+- PR #46 validation: PITTI Project Guardrails PASS, PITTI release contract v2 PASS, PITTI candidate package gate PASS. Initial package failures were diagnosed as README version-token completeness only; runtime/behavioral gates were green. README exact candidate version token repaired, then all three gates passed.
+- PR #46 merged to main as `93a7619ec5af3468b71d62238b77f4f01e37822c`.
+- Canonical 13 runtime files were deployed from main to gh-pages and individually SHA-verified: **13/13 exact parity PASS**. rc4.105 is source/package/deployment candidate authority.
+- Android rc4.105 acceptance remains **PENDING** until a fresh device Snapshot confirms App-Version rc4.105 and Coach path. rc4.104 remains the last accepted Android authority until that observation.
