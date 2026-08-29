@@ -118,7 +118,7 @@
     "packageReferenceArtifactId": 9710162910,
     "packageHashSemantics": "GitHub artifact envelope digest for the all-green rc4.100 PR package; do not confuse with a separately downloaded inner ZIP hash.",
     "testChallenger": "v11.8.0-rc4.105",
-    "canonicalOosBackup": "draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json",
+    "canonicalOosBackup": "draft-companion-v7-backup-2026-08-29T06-53-52-495Z.json",
     "strictCoachDraft": "1399114762087895040",
     "strictCoachRoster": "9 WR / 4 RB / 1 TE / 1 QB",
     "fullDraftAudit": "new rc4.104 OOS draft 1399308446632800256 exposed pick129 score-0 short-turn promotion; rc4.105 generic quality-floor fix PR #46 all gates PASS, merged/deployed 13/13 parity, Android acceptance pending",
@@ -127,6 +127,6 @@
     "androidAccepted": true
   },
   "currentGate": "RC4105_ANDROID_ACCEPTANCE",
-  "handoffGeneration": "20260829T0840Z-v166",
-  "handoff_generation": "20260829T0840Z-v166"
+  "handoffGeneration": "20260829T0705Z-v167",
+  "handoff_generation": "20260829T0705Z-v167"
 }
