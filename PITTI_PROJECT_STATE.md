@@ -2505,3 +2505,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - This is not article/tier reconstruction; it is algebraic recovery from official API rank ranges using an independently verified exact reference vector.
 - Regression guards now require the pairwise parser, exact-two-expert gate, fallback path and provenance label.
 - v5 still remains disabled until this route actually succeeds on-device/API and the resulting Koerner vector passes coverage + same-state regression. No user action needed yet.
+
+
+### 2026-08-29 — Koerner pairwise fallback validation hardening
+- Follow-up code audit found the first pairwise fallback implementation counted Compare Players observations but did not increment matched; that would correctly fail closed but could never validate. Fixed before release.
+- Pairwise-derived overall ranks are now converted to target positional ranks first; Compare Players then checks those exact target positional ranks. Acceptance requires >=2 checked rows and 100% matches, in addition to >=80 recovered overall rows. Any mismatch rejects the fallback.
+- Regression canaries require both the actual match gate and fail-closed crosscheck condition.
