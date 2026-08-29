@@ -2180,3 +2180,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Root cause of missing CI on the new replay assertions was identified: PITTI Project Guardrails executed rc4100/rc4104 contracts, but its push path filter did not include either tool file. Therefore commits changing only those contracts produced no workflow run.
 - Workflow path filters now include tools/rc4100-turn-portfolio.mjs and tools/rc4104-roster-portfolio.mjs. A workflow-only trigger commit was pushed. GitHub connector currently reports no workflow run object yet; this is treated as CI observation pending, not PASS and not a reason to alter runtime code.
 - Independent replay analysis remains valid: frozen backup is available and exact fixture values were read directly. No user/device action is required for this CI observation lane.
+
+
+## 2026-08-29 — AUTO CI observability diagnosis
+- GitHub connector behavior was inspected directly: `fetch_commit_workflow_runs` is documented to return only pull-request-triggered runs. Therefore repeated empty results for main-push commits were an observability limitation, not evidence that GitHub Actions failed to start.
+- The prior path-filter repair remains correct. A manual `workflow_dispatch` trigger was also added as a fallback entry point, but the currently available connector exposes rerun operations only and no start/dispatch operation; AUTO cannot invoke a new manual run from chat.
+- Do not spend further AUTO cycles polling `fetch_commit_workflow_runs` for main-push runs. Validation must use a PR-visible run, an available external status surface, or local/container execution. This prevents the repeated false-stuck loop.
