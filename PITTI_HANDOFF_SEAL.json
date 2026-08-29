@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260829T0730Z-v168",
-  "created_at": "2026-08-29T07:30:00Z",
+  "handoff_generation": "20260829T0745Z-v169",
+  "created_at": "2026-08-29T07:45:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -10,14 +10,14 @@
     ".github/workflows/pitti-project-guardrails.yml": "540059f7fb23384caad29bcdf6b235288d07a5e7",
     ".github/workflows/release-contract-v2-package.yml": "0d8b36422355b2450a4a33291165427ca4c8de83",
     ".github/workflows/release-contract-v2.yml": "0579fdc8a8333704bea72baa1af99a9180168796",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "fe75ac93be08c060d42a46e26748ed289d1059bd",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "005e519b0bba1edc268b4c6027221384e132a19c",
-    "PITTI_AUTO_PREFLIGHT.md": "2cd4da55079eb34b6da2ffb7647ef1d1c04e4c39",
-    "PITTI_COMMAND_CONTRACTS.json": "c6124cdaa7432d1e9cee46f0566fcd681c7b0356",
-    "PITTI_CURRENT_STATE.json": "173ddaac64186da75758bcc7467c89b34f0f8904",
-    "PITTI_EXECUTION_LOCK.json": "eafecd0fcc487f72bb480fb7ab625e35140e9411",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "05859b05b30584eba4ab34635cf39405e2424869",
-    "PITTI_PROJECT_STATE.md": "eff79728b9d5dd195ecda72139efeac69ff8e5ad",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "859e0890f83d2877db2d4e4dfdb44c4deb32f040",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "4ee58890946881410d74ddfe10f66fa51c23f040",
+    "PITTI_AUTO_PREFLIGHT.md": "622aa5870525283f99e30b3fe632951ed14c20dc",
+    "PITTI_COMMAND_CONTRACTS.json": "07191629ac459d9f22b1bb6222a199b9965ee7c6",
+    "PITTI_CURRENT_STATE.json": "bef8edef065606add17485e51115d4130af7d798",
+    "PITTI_EXECUTION_LOCK.json": "9169f4373a23f110405e536c37d67217bde1a318",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "5a45de5de1a5fa317c2d8954617aea72776ba34f",
+    "PITTI_PROJECT_STATE.md": "e188e03cb53f215fa7882d208aaa0732cb0d476b",
     "README.md": "ff0d739eb3def45e068392da991c83fdbdd4cc47",
     "app.js": "89fa7974cf2f1ebc7747f09b02cb246f4ee0523f",
     "decision-policy.js": "76234515b5428a33b7ef573f1f5c87bab058ad67",
@@ -37,7 +37,8 @@
     "tools/rc498-evidence-polarity.mjs": "a2bdc37695b41cc7296b955f330f37030ea23e8a",
     "tools/rc499-normal-cut.mjs": "fd70fafc8da135927d12d81cd98beef10de487ed",
     "tools/rc499-wr-saturation.mjs": "9e297363e83bc771aa0ebaabf9bcfeb17fd1dca8",
-    "tools/rc4106-embedded-individuals.mjs": "92b401305ff4ffcac369585a0220e7fb58cea89b"
+    "tools/rc4106-embedded-individuals.mjs": "92b401305ff4ffcac369585a0220e7fb58cea89b",
+    "PITTI_UPSIDE_RESEARCH_V3.md": "39e91cddfc329bc16d23f2cf6c32caa6a09045fa"
   },
   "checks": {
     "generation_consistent": true,
@@ -94,8 +95,11 @@
     "rc4106_main_pages_exact_13_file_parity": true,
     "rc4106_android_display_pending": true,
     "mock_1399325404598124544_paused_before_pick9": true,
-    "james_cook_recommended_not_confirmed_drafted": true
+    "james_cook_recommended_not_confirmed_drafted": true,
+    "rc4106_android_display_accepted": false,
+    "rc4106_challenger_flags_fail_closed": true,
+    "rc4106_package_authority_current": true
   },
   "exact_gate": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
-  "note": "v168 PASS seal: rc4.105 Android and fresh pre-draft/pick9 Snapshot behavior PASS. Snapshot exposed embedded Expert-v2/v3 individual-rank display bug only; rc4.106 panel-aware display fix passed PR #47 release/package/guardrails, merged main 0818bc9632eca79c4d055d444a6eae0af53f3a9f, and gh-pages exact 13/13 runtime parity PASS. rc4.105 remains last accepted Android until rc4.106 display observation. Mock 1399325404598124544 is paused BEFORE pick9; James Cook was recommended but not confirmed drafted."
+  "note": "v169 PASS seal after post-v168 semantic audit. rc4.106 source/package/deployment candidate PASS; PR #47 all gates PASS; package run 33240680178/artifact 9711254133; exact 13/13 main/gh-pages runtime parity PASS. rc4.105 remains accepted Android; rc4.106 challenger observed=false/accepted=false until display observation. Mock 1399325404598124544 paused BEFORE pick9; James Cook was recommended but not confirmed drafted. Current freshness/upside ledgers included in integrity."
 }
