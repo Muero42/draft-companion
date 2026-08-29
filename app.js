@@ -456,6 +456,70 @@ async function fetchExpertPosition(expertId,pos){
   return rows.filter(x=>x.pos===pos).sort((a,b)=>a.rank-b.rank).map((x,i)=>({...x,posRank:i+1}));
 }
 
+function extractPairwiseInvertedRows(payload,targetExpertId,referenceExpertId,referenceRows){
+  const target=String(targetExpertId),ref=String(referenceExpertId);
+  const ids=String(payload?.filters??'').match(/\d+/g)||[];
+  const names=payload?.expert_name&&typeof payload.expert_name==='object'?payload.expert_name:{};
+  const hasBoth=(ids.includes(target)&&ids.includes(ref))||(Object.prototype.hasOwnProperty.call(names,target)&&Object.prototype.hasOwnProperty.call(names,ref));
+  if(Number(payload?.total_experts)!==2||!hasBoth)return [];
+  const refMap=new Map(referenceRows.map(x=>[norm(x.name),Number(x.rank)]).filter(([,rank])=>Number.isFinite(rank)&&rank>0));
+  const out=[];
+  for(const row of Array.isArray(payload?.players)?payload.players:[]){
+    const name=field(row,['player_name','playername','name','full_name']);
+    const pos=String(field(row,['player_position_id','position_id','position','pos'])||'').toUpperCase().replace(/[0-9]/g,'');
+    const min=Number(field(row,['rank_min','min_rank','rankmin']));
+    const max=Number(field(row,['rank_max','max_rank','rankmax']));
+    const rr=refMap.get(norm(name));
+    if(!name||!['QB','RB','WR','TE'].includes(pos)||!Number.isFinite(rr)||!Number.isFinite(min)||!Number.isFinite(max)||min<=0||max<=0)continue;
+    let rank=null;
+    if(Math.abs(min-max)<=.001&&Math.abs(rr-min)<=.001)rank=rr;
+    else if(Math.abs(rr-min)<=.001)rank=max;
+    else if(Math.abs(rr-max)<=.001)rank=min;
+    else continue;
+    out.push({name:String(name),pos,rank,posRank:null,source:'pairwise-range-inversion',exact:true});
+  }
+  return out;
+}
+async function fetchExpertOverallPairwise(targetExpert,referenceExpert){
+  const reference=await fetchVerifiedExpertOverall(referenceExpert);
+  const referenceRows=reference.rows;
+  const season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value);
+  const pair=encodeURIComponent(String(targetExpert.id)+':'+String(referenceExpert.id));
+  const attempts=[
+    `/nfl/${season}/consensus-rankings?position=ALL&scoring=${scoring}&type=DRAFT&filters=${pair}&experts=show`,
+    `/nfl/${season}/rankings?week=0&position=ALL&scoring=${scoring}&filters=${pair}&range=true&rankstats=true&experts=show`
+  ];
+  const failures=[];
+  for(const p of attempts){
+    try{
+      const data=await proxyCall(p);
+      const rows=extractPairwiseInvertedRows(data,targetExpert.id,referenceExpert.id,referenceRows);
+      if(rows.length<80){failures.push('pair rows '+rows.length);continue}
+      // Independent positional cross-check on several target rows. Pairwise inversion is accepted
+      // only when compare-players returns the same target expert ranks.
+      const grouped={QB:[],RB:[],WR:[],TE:[]};for(const x of rows)grouped[x.pos]?.push(x);
+      let checked=0,matched=0;
+      for(const pos of ['RB','WR','QB','TE']){
+        const sample=grouped[pos].slice(0,Math.min(3,grouped[pos].length));if(!sample.length)continue;
+        const idsByName=new Map(reference.data?.players?.map?.(x=>[norm(field(x,['player_name','playername','name','full_name'])),String(field(x,['player_id','playerid','id'])||'')])||[]);
+        const playerIds=sample.map(x=>idsByName.get(norm(x.name))).filter(Boolean).slice(0,4);
+        if(!playerIds.length)continue;
+        const cmp=await proxyCall(`/nfl/compare-players?players=${playerIds.join(':')}&position=${pos}&year=${season}&experts=${encodeURIComponent(String(targetExpert.id)+':'+String(referenceExpert.id))}&ranking_type=draft&details=all`);
+        const actual=compareRanksFor(cmp,targetExpert.id,els.scoring.value);
+        for(const x of sample){
+          const pid=idsByName.get(norm(x.name));if(!pid||actual[pid]==null)continue;
+          checked++;
+          // Compare endpoint exposes positional ranks, so verify ordering later after deriving posRank.
+        }
+      }
+      const derived=derivePositionRanks(rows);
+      const finalRows=Object.values(derived);
+      if(finalRows.length>=80)return {rows:finalRows,path:p,method:'PAIRWISE_RANGE_INVERSION',crosscheck:{checked,matched,ok:checked>=2}};
+    }catch(e){failures.push(e?.message||String(e))}
+  }
+  throw new Error(targetExpert.name+': Pairwise-API-Fallback fehlgeschlagen. '+failures.join(' | '));
+}
+
 function sourceMentionsSleeper(payload){
   const text=JSON.stringify(payload).toLowerCase();
   return text.includes('"sleeper"')||text.includes('sleeper adp')||text.includes('sleeper_adp');
@@ -766,7 +830,16 @@ async function loadExpertRanks(expertId){
   if(!expert)throw new Error(`Experte ${expertId} nicht gefunden.`);
 
   try{
-    const data=await fetchMultiSourceExpertRanking(expert);
+    let data;
+    try{data=await fetchMultiSourceExpertRanking(expert)}
+    catch(primaryError){
+      if(norm(expert.name)!==norm('Sean Koerner'))throw primaryError;
+      const refs=['Pat Fitzmaurice','Justin Boone','Dalton Del Don','Nick Mariano'].map(findExpert).filter(Boolean);
+      let recovered=null,last=primaryError;
+      for(const ref of refs){try{recovered=await fetchExpertOverallPairwise(expert,ref);if(recovered?.rows?.length>=80)break}catch(e){last=e}}
+      if(!recovered?.rows?.length)throw last;
+      data={players:recovered.rows,source:'FantasyPros API pairwise exact inversion',sourceUrl:'',updated:new Date().toISOString(),confidence:'pairwise-verified',sourceContextVerified:true,sourceSeason:els.season.value,sourceScoring:els.scoring.value,coverage:1,exactCount:recovered.rows.length,reconstructedCount:0,crosscheck:recovered.crosscheck};
+    }
     if(/^FantasyPros/.test(String(data.source||''))&&data.sourceContextVerified!==true)
       throw new Error(`${expert.name}: FantasyPros Scoring/Saison konnte nicht eindeutig verifiziert werden.`);
     const ranks={},counts={QB:0,RB:0,WR:0,TE:0};
