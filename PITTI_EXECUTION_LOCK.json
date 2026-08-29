@@ -214,10 +214,10 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260829T0730Z-v168",
-    "status": "HANDOFF_v168_READY_RC4106_ANDROID_DISPLAY_PENDING",
+    "generation": "20260829T0745Z-v169",
+    "status": "HANDOFF_v169_READY_RC4106_ANDROID_DISPLAY_PENDING",
     "ready": true,
     "secondPass": true,
-    "resume": "PITTI AUTO: rc4.106 merged/deployed 13/13 parity, Android display observation pending. rc4.105 last accepted Android. Mock 1399325404598124544 paused BEFORE pick9; Cook recommended only, not drafted."
+    "resume": "PITTI AUTO: rc4.106 package/deploy/parity PASS; Android rc4.106 display pending, rc4.105 accepted. Mock 1399325404598124544 paused before pick9; Cook only recommended."
   }
 }
