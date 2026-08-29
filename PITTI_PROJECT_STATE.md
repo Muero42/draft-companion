@@ -2389,3 +2389,14 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Reach decisions must remain evidence-based: talent/role/injury-contingency + opponent competition + expected availability at next turn. Do not reach merely because the player is an RB or because ADP is rising.
 - Explicitly include the Charbonnet-style IR/PUP stash-package concept when eligible: injured stash + free-agent replacement slot can exceed the EV of a normal bench pick.
 - Preserve the Woody Marks correction: opportunity alone is insufficient; candidate review must include talent/workhorse-quality gating before labeling a late RB as high-upside.
+
+
+---
+## 2026-08-29 AUTO — EXPERT PANEL COVERAGE BLOCKER
+- User requires v4 to remain 4–6 individual experts baseline; v4 may replace Draft Sharks but must not displace existing individual experts merely to make room.
+- v3 remains preserved/selectable; v2 is to be retired from the new comparison path. v5 target is v3 + Sean Koerner, preferentially reducing Draft Sharks share, only if current Koerner data can be acquired reliably in time.
+- Expert preset selector must sit immediately above Analyse so v4/v5 can be switched and the same draft state re-analysed for a second opinion.
+- Future/post-season concept is phase-specific expert teams (early/middle/late breakout); preserve now. Collect only accuracy/provenance data that would otherwise be irretrievable; defer reproducible research.
+- New critical finding from current backup/mock: expert-v3-rb is not compositionally invariant per player. Tyjae Spears has all 5 intended votes (Weisse/Del Don/Pat/Mariano/DS), while Tank Bigsby has only 4 because Draft Sharks is absent. The live builder in app.js inherits the base row unchanged whenever the challenger lacks a player, and otherwise renormalizes only available individual weights, so missing expert coverage can silently change the effective ensemble. This is a GO-LIVE BLOCKER for v4/v5 and must be audited across all relevant players/positions before activation.
+- Required fix semantics: never silently treat missing import coverage as expert opinion; distinguish true unranked/outside-published-range vs acquisition/import failure vs short-board coverage. Make effective panel N/coverage comparable and fail-visible. Do not blindly impute ranks.
+- Player descriptions remain secondary before draft. Prefer deterministic fallback prose from existing panel/ADP/role evidence; broad new player-by-player research is deferred until after draft unless needed for a live decision.
