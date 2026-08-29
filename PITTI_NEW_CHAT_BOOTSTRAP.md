@@ -1,5 +1,5 @@
 # PITTI NEW CHAT BOOTSTRAP — FAIL-CLOSED
-Generation: `20260829T0840Z-v166`
+Generation: `20260829T0705Z-v167`
 
 When the user writes **PITTI AUTO**, verify in this order:
 1. PITTI_COMMAND_CONTRACTS.json
@@ -13,18 +13,18 @@ When the user writes **PITTI AUTO**, verify in this order:
 9. HANDOFF_COMPLETENESS_MATRIX.md
 10. actual repo/main/gh-pages/device evidence
 
-Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T0840Z-v166`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
+Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829T0705Z-v167`, the seal is PASS/ready/second-pass, and every seal-listed Git blob SHA validates.
 
 ## Current facts
 - production/control: rc4.64.
 - historical rollback reference: rc4.96.
-- main/source: rc4.104.
+- main/source: rc4.105.
 - rc4.100 PR #36 candidate gates: release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
 - rc4.100 merged to main as 1b85656e40a182ca6be2397c5bf6674006b97bd2.
 - post-merge main verification: **PASS**; release/package/project guardrails plus rc4.82/rc4.83 draft-critical gates are GREEN.
-- gh-pages: rc4.104; exact 13/13 packaged runtime-file parity with main PASS.
-- Android/PWA accepted authority: rc4.104; user post-draft Snapshot confirms App-Version rc4.104 and Snapshot-path PASS.
-- current gate: RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS.
+- gh-pages: rc4.105; exact 13/13 packaged runtime-file parity with main PASS.
+- Android/PWA last accepted authority: rc4.104. rc4.105 Android acceptance is pending fresh device Snapshot/Coach observation.
+- current gate: RC4105_ANDROID_ACCEPTANCE.
 
 ## Canonical evidence
 - full draft backup: draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json, SHA-256 1fc70dc81e8d9a4e28b5f0450f1a57e8cf8873b7541040acc0033e13cf6725ab.
@@ -63,3 +63,9 @@ Do not revert to gh-pages-only promotion while main is stale, repeated refresh l
 - Bounded frozen-fixture replay under rc4.104 is **CI PASS** for the observed failure mechanisms: pick92/109/112 roster economics and exact pick132 Spears/Andrews long-turn reorder. Return-v2 is unchanged.
 - Browser-equivalent full historical recomputation is unavailable because not every transient runtime input was preserved; do not mislabel this evidence boundary as a failed/pending bounded replay.
 - Current gate: `RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS`. Continue freshness, failsafe, Watcher/post-draft readiness and checkpoint integrity; FantasyPros capture is optional external benchmark.
+
+## v167 rc4.105 OOS canary
+- Latest canonical OOS backup: draft-companion-v7-backup-2026-08-29T06-53-52-495Z.json, runtime rc4.104, draft 1399308446632800256, 15 fixtures.
+- Pick129 regression: score-0 WR promoted over score-100 RB by short-turn timing override. rc4.105 adds generic normalized-Coach floor >=40; preserves prior Corum score47 case.
+- PR #46 all three gates PASS; merged main 93a7619ec5af3468b71d62238b77f4f01e37822c; gh-pages 13/13 runtime parity PASS.
+- Android rc4.105 NOT YET accepted. rc4.104 remains last accepted device authority.
