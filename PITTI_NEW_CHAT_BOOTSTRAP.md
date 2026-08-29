@@ -24,7 +24,7 @@ Fail closed unless CURRENT/SEAL/HANDOFF/bootstrap/matrix generation is `20260829
 - post-merge main verification: **PASS**; release/package/project guardrails plus rc4.82/rc4.83 draft-critical gates are GREEN.
 - gh-pages: rc4.104; exact 13/13 packaged runtime-file parity with main PASS.
 - Android/PWA accepted authority: rc4.104; user post-draft Snapshot confirms App-Version rc4.104 and Snapshot-path PASS.
-- current gate: RC4104_POST_DRAFT_REPLAY_VALIDATION.
+- current gate: RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS.
 
 ## Canonical evidence
 - full draft backup: draft-companion-v7-backup-2026-08-28T19-24-03-389Z.json, SHA-256 1fc70dc81e8d9a4e28b5f0450f1a57e8cf8873b7541040acc0033e13cf6725ab.
@@ -48,7 +48,7 @@ No automatic mock; no PairSum/Rolling; no hard WR cap/quota; no blind RB forcing
 Execute long autonomous same-turn blocks. Re-inventory after every package. No progress/status/promise-only or empty replies while useful autonomous work remains. A blocked dependent lane does not stop independent lanes.
 
 ## Canonical self-update path
-verified candidate -> main promotion/post-merge verification -> gh-pages exact runtime deployment + byte parity -> Android/PWA refresh -> device observation. All stages are complete for rc4.104 through Android post-draft Snapshot observation; the open gate is decision-fixture replay validation, not deployment.
+verified candidate -> main promotion/post-merge verification -> gh-pages exact runtime deployment + byte parity -> Android/PWA refresh -> device observation. All stages are complete for rc4.104 through Android post-draft Snapshot observation. The bounded frozen-fixture replay is CI PASS; current work is draft-day readiness/freshness/failsafe.
 Do not revert to gh-pages-only promotion while main is stale, repeated refresh loops, cache clearing, reinstall, or manual ZIP as the default route.
 
 ## rc4.104 canonical new evidence
@@ -57,15 +57,9 @@ Do not revert to gh-pages-only promotion while main is stale, repeated refresh l
 - Pick92 Value-Safety promoted WR7 despite WR6/RB2; pick132 93.3% WAIT Spears remained #1 over Mark Andrews 0.6% Return.
 - rc4.104 generic bounded repair merged; no hard cap, player-name forcing, Return retune, or expert retune.
 
-## v164 replay truth
+## v166 replay truth — supersedes historical pending text
 - rc4.104 is main/source/deployment/accepted Android authority; exact 13-file main/gh-pages parity PASS and user post-draft Snapshot PASS.
 - Canonical completed mock: `draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json`, draft 1399284498113294336, generated on rc4.101.
-- Counterfactual rc4.104 replay is **PENDING**. Never infer it was completed merely because rc4.104 gates/device passed.
-- First replay targets: pick92 Addison vs JCM; pick109 Downs; pick112 Diggs; pick132 Spears vs Andrews. Preserve no-hard-cap/no-blind-RB/no-player-name/no-global-Return-retune invariants.
-- Completed rc4.104 Snapshot is duplicate/documentation only; FantasyPros capture optional external benchmark.
-
-
-## v166 replay-status canary
-- Counterfactual replay rc4.101 -> rc4.104 is PENDING and must not be inferred complete from release/deploy/device PASS.
-- Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
-- First replay targets: pick92 Addison/JCM, pick109 Downs, pick112 Diggs, pick132 Spears/Andrews, then full roster construction.
+- Bounded frozen-fixture replay under rc4.104 is **CI PASS** for the observed failure mechanisms: pick92/109/112 roster economics and exact pick132 Spears/Andrews long-turn reorder. Return-v2 is unchanged.
+- Browser-equivalent full historical recomputation is unavailable because not every transient runtime input was preserved; do not mislabel this evidence boundary as a failed/pending bounded replay.
+- Current gate: `RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS`. Continue freshness, failsafe, Watcher/post-draft readiness and checkpoint integrity; FantasyPros capture is optional external benchmark.
