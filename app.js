@@ -185,7 +185,7 @@ function ensureExpertV4Panels(){
   for(const pos of ['QB','RB','WR','TE']){
     const bp=EXPERT_V4_BLUEPRINT[pos],rows={};
     for(const name of bp.experts)rows[name]=verifiedRowsForExpert(name,pos);
-    if(bp.experts.some(name=>rows[name].length<20)){ok=false;continue}
+    if(bp.experts.some(name=>rows[name].length<80)){ok=false;continue}
     buildPanelFromExpertRows('expert-v4-'+pos.toLowerCase(),pos,rows,Object.fromEntries(bp.experts.map(name=>[name,1])),{name:'Expert-v4 '+pos,source:'live verified individual experts',maxSingleWeight:bp.maxSingleWeight});
   }
   return ok&&expertProfileReady('expertv4');
@@ -194,7 +194,7 @@ function ensureExpertV5Panels(){
   const koerner='Sean Koerner';let ok=true;
   for(const pos of ['QB','RB','WR','TE']){
     const baseId=EXPERT_PROFILE_IDS.expertv3[pos],baseRows=panelRanks[baseId]||{},kRows=verifiedRowsForExpert(koerner,pos);
-    if(kRows.length<20||!Object.keys(baseRows).length){ok=false;continue}
+    if(kRows.length<80||!Object.keys(baseRows).length){ok=false;continue}
     const kMap=new Map(kRows.map(x=>[norm(x.name),x])),ranks={};
     for(const [key,row] of Object.entries(baseRows)){
       const k=kMap.get(key),baseInd=(row.individual||[]).map(x=>({...x}));
@@ -215,7 +215,12 @@ function expertProfileReady(id){
   const map=EXPERT_PROFILE_IDS[id];if(!map)return false;
   return ['QB','RB','WR','TE'].every(pos=>{
     const pid=map[pos],rows=panelRanks[pid];
-    return rows&&Object.keys(rows).length&&Object.values(rows).every(row=>row?.coverageStatus==='COMPLETE'||(!('coverageStatus' in row)&&id==='expertv3'));
+    if(!rows||!Object.keys(rows).length)return false;
+    if(id==='expertv3')return Object.values(rows).every(row=>row?.coverageStatus==='COMPLETE'||!('coverageStatus' in row));
+    // Right-censoring at the tail is expected for individual expert lists. Do not require every
+    // player in the union to be ranked by every expert; require a complete decision-relevant core.
+    const core=Object.values(rows).sort((a,b)=>Number(a.rank)-Number(b.rank)).slice(0,80);
+    return core.length>=80&&core.every(row=>row?.coverageStatus==='COMPLETE');
   });
 }
 function syncAnalysisExpertSelector(){
