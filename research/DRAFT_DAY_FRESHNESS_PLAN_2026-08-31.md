@@ -115,3 +115,10 @@ Scope rule: rc4.102 is a source-freshness correction, not a coefficient experime
 - **Zach Charbonnet:** Seahawks placed him on active/PUP in July while rehabbing ACL. Sunday final designation is draft-relevant: reserve/PUP would force missed regular-season time; active-roster activation would materially improve availability. Do not assume season-ending IR.
 - **Kenneth Walker:** current public injury aggregators still list ankle/questionable, but no new evidence in this pass supports a hard downgrade beyond existing acute monitor.
 - No source in this pass justifies a global rank, Return-v2, expert-weight or roster-policy change. The correct action is a targeted Sunday/Monday designation + transaction delta scan.
+
+
+## Aug 29 official NFL timing lock — Sunday/Monday transaction window
+- NFL official calendar confirms final 53-man roster reduction is due **Sunday Aug 30 at 6:00 p.m. New York time**. At that cutdown, Active/PUP and Active/NFI players must receive their final active/reserve/waive/terminate/trade treatment.
+- The claiming period for players waived at final cuts expires **Monday Aug 31 at 1:00 p.m. New York time**. On Aug 31, New York is EDT (UTC-4) and Germany is CEST (UTC+2), so this is **19:00 Europe/Berlin**, one hour before the 20:00 real draft.
+- Therefore the existing **19:05–19:30 transaction delta scan is intentionally retained**: it begins immediately after the official waiver-claim deadline and is the first high-value window for claims plus corresponding depth-chart/injury inference. The 19:40–19:50 final materiality scan remains the last targeted pass before freeze.
+- Sunday priority: official Reserve/PUP / Reserve/NFI / IR designations, waives/injury settlements, trades and 53-man role changes. Monday priority after 19:00 local: waiver claims and resulting same-position roster changes. A transaction alone remains weak Bayesian evidence unless corroborated by role/health context.
