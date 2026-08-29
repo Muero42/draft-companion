@@ -1,6 +1,6 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260829T0840Z-v165",
+  "handoff_generation": "20260829T0840Z-v166",
   "updated_at": "2026-08-29T08:40:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -20,7 +20,7 @@
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33236822641,
     "package_reference_artifact_id": 9710162910,
-    "package_reference_note": "rc4.104 merged main ff6c2240797c1d3303dd538204c76553fd324c16; post-merge release/package/successor gates PASS. rc4.82/rc4.83/project-guard failures are checkpoint/seal drift only and require v161 reseal before deployment.",
+    "package_reference_note": "rc4.104 merged main ff6c2240797c1d3303dd538204c76553fd324c16; post-merge release/package/successor gates PASS; checkpoint/seal drift was repaired before deployment. gh-pages exact 13/13 parity PASS and Android rc4.104 post-draft Snapshot path PASS.",
     "android_version_observed": true,
     "android_functional_verified": true,
     "freeze_policy": "rc4.104 accepted Android authority; rc4.96 historical rollback reference only",
@@ -50,9 +50,9 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "PITTI AUTO resumes at RC4104_POST_DRAFT_REPLAY_VALIDATION. First verify v165 PASS seal and actual rc4.104 repo/device authority; then execute the still-pending counterfactual replay of preserved rc4.101 decision fixtures under rc4.104. Never re-analyze the completed duplicate snapshot as live.",
-    "acceptance_fingerprint": "MAIN-RC4.104|PAGES-13OF13|ANDROID-RC4.104-SNAPSHOT-PASS|MOCK-1399284498113294336|REPLAY-PENDING|HANDOFF-v165",
-    "status": "HANDOFF_v165_READY",
+    "resume_semantics": "PITTI AUTO resumes at RC4104_POST_DRAFT_REPLAY_VALIDATION. First verify v166 PASS seal and actual rc4.104 repo/device authority; then execute the still-pending counterfactual replay of preserved rc4.101 decision fixtures under rc4.104. Never re-analyze the completed duplicate snapshot as live.",
+    "acceptance_fingerprint": "MAIN-RC4.104|PAGES-13OF13|ANDROID-RC4.104-SNAPSHOT-PASS|MOCK-1399284498113294336|REPLAY-PENDING|HANDOFF-v166",
+    "status": "HANDOFF_v166_READY",
     "handoff_ready": true,
     "second_pass_pass": true,
     "next_action": "Counterfactual replay preserved rc4.101 decision fixtures under rc4.104; FantasyPros capture optional external benchmark.",
