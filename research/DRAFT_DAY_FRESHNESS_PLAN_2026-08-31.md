@@ -103,3 +103,15 @@ Scope rule: rc4.102 is a source-freshness correction, not a coefficient experime
 - Accepted Android/source/deployment authority is now rc4.104; exact 13-file main/gh-pages parity and post-draft Android Snapshot path PASS.
 - Frozen rc4.101 failure-point fixtures from draft 1399284498113294336 were replayed against the bounded rc4.104 mechanisms with CI-backed PASS: pick92/109/112 roster opportunity-cost behavior and exact pick132 Spears/Andrews long-turn reorder. Return-v2 values remain untouched.
 - Browser-equivalent recomputation of every historical candidate board is not claimed because the backup does not preserve every transient runtime input. This is an evidence boundary, not a reason to reopen the validated rc4.104 mechanisms.
+
+
+## Aug 29 09:25 local freshness delta — no runtime retune
+- **Roster-cut timing:** final 53-man cuts are due Sunday Aug 30. This is the next high-value transaction window; Monday Aug 31 waiver claims can create additional role changes before the 20:00 draft. Treat cut/PUP/IR designations as factual overlays, then re-evaluate role impact rather than pre-emptively moving rankings.
+- **Ja'Marr Chase:** Aug 26 reporting confirms only a small left-knee hyperextension; Chase said he could have played. Keep a monitor flag, no current first-round block.
+- **Puka Nacua:** still an active psoas/groin monitoring case in Aug 28 coverage, but Week-1 optimism remains. No automatic top-tier removal absent a setback/official designation.
+- **Ashton Jeanty:** ankle sprain is confirmed and Week-1 availability remains genuinely uncertain. Raiders backup Mike Washington has played well enough to be the contingency if Jeanty misses time. Preserve the materially stronger injury discount/monitor; watch Sunday roster designation closely. No season-ending inference.
+- **Jeremiyah Love:** high-ankle sprain remains material. Aug 28 local reporting says recovery is trending positively but still roughly 50/50 for Week 1. Current panel/ADP discount is justified; do not erase injury risk from one positive update.
+- **Tyler Warren:** groin absence remains current; Aug 26 FantasyPros reporting says Week 1 was not considered in danger yet if he returns to practice the following week. Monitor, no hard block.
+- **Zach Charbonnet:** Seahawks placed him on active/PUP in July while rehabbing ACL. Sunday final designation is draft-relevant: reserve/PUP would force missed regular-season time; active-roster activation would materially improve availability. Do not assume season-ending IR.
+- **Kenneth Walker:** current public injury aggregators still list ankle/questionable, but no new evidence in this pass supports a hard downgrade beyond existing acute monitor.
+- No source in this pass justifies a global rank, Return-v2, expert-weight or roster-policy change. The correct action is a targeted Sunday/Monday designation + transaction delta scan.
