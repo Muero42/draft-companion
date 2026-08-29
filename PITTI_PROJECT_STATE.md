@@ -2306,3 +2306,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Live Aug29 search reproduced the legacy same-date hazard: old 2022/2023 NFL roundup pages appeared beside genuine 2026 sources. The explicit-2026 validation guard is therefore evidence-backed, not hypothetical.
 - Current official Aug28 2026 update keeps Ashton Jeanty in monitor status: ankle still mending, Raiders counting on him, another week to assess Week 1. No absence assumption and no broad rank retune.
 - Current official 2026 cutdown coverage independently confirms Trey Benson's Arizona release; official transaction precedence over stale Sleeper metadata remains mandatory.
+
+
+## 2026-08-29 — AUTO stale-status runtime boundary audit
+- Current rc4.106 source was inspected after the official Trey Benson release mismatch. Sleeper player metadata is loaded fresh on each draft fetch and pinfo() takes team/injury from live pick metadata first, then Sleeper player metadata. The Coach does **not** currently ingest arbitrary official transaction feeds directly.
+- Injury stash logic is intentionally conservative: PUP can receive a small free-IR-slot endgame tiebreaker; IR remains penalized until return/season-ending status is externally clarified. This avoids treating an IR label as positive availability evidence.
+- Therefore the correct near-draft solution remains the freshness overlay/official-transaction precedence at decision time, not a rushed runtime transaction subsystem two days before the draft. If Sleeper still carries stale released-player metadata during final scans, suppress/override that player in live analysis rather than mutating the frozen scoring kernel.
+- No runtime change made.
