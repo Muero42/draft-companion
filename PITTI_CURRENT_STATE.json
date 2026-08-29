@@ -10,7 +10,7 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.96",
+    "android_authority": "v11.8.0-rc4.100",
     "test_challenger": "v11.8.0-rc4.100",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.100",
@@ -25,12 +25,13 @@
     "android_functional_verified": false,
     "freeze_policy": "rc4.96 remains rollback baseline; low-risk microfix challenger allowed for further testing",
     "test_challenger_android_observed": false,
-    "android_acceptance_pending": true
+    "android_acceptance_pending": true,
+    "android_observed": "v11.8.0-rc4.100"
   },
   "exact_continuation": {
-    "gate": "RC4100_ANDROID_OBSERVATION",
+    "gate": "RC4100_REPRESENTATIVE_FUNCTIONAL_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "Server-side rc4.100 promotion is complete: post-merge gates PASS and all 13 runtime files have exact main/gh-pages blob parity. Obtain only the unavoidable Android/PWA version and representative functional observation. In parallel continue horizon-specific Return-v2 calibration and current-evidence audits; no global retunes."
+    "instruction": "Android/PWA version rc4.100 is visually observed on device at 2026-08-29 06:24 CEST. Version/deployment acceptance PASS. Continue with representative functional acceptance and independent Return-v2/current-evidence audits; do not repeat version/cache/install work."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -52,8 +53,8 @@
     "status": "HANDOFF_v157_READY",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Obtain Android/PWA rc4.100 version and representative functional observation; no cache/reinstall detours unless normal refresh fails after server parity.",
-    "gate": "RC4100_ANDROID_OBSERVATION"
+    "next_action": "Use the now-observed rc4.100 device state for representative functional acceptance; no reinstall/cache/version troubleshooting.",
+    "gate": "RC4100_REPRESENTATIVE_FUNCTIONAL_ACCEPTANCE"
   },
   "source_authority": "rc4.100",
   "package_authority": "rc4.100-candidate-pass",
@@ -70,5 +71,5 @@
     "operational_freeze": "~19:50",
     "transaction_rule": "same-position claim/signing is weak Bayesian evidence only; correlate with pre-existing injury/role uncertainty and seek corroboration; uncorroborated signal may only break close ties"
   },
-  "android_acceptance_pending": true
+  "android_acceptance_pending": false
 }
