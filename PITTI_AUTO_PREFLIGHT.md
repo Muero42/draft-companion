@@ -96,8 +96,8 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - visible output is permitted only for a concrete useful end-result, unavoidable user action/input, safety/irreversible confirmation, or a blocker after every independent lane is exhausted.
 
 
-## v168 TAKEOVER CANARIES
-- Handoff generation must be `20260829T0730Z-v168` across CURRENT/SEAL/HANDOFF/bootstrap/matrix/lock.
+## v169 TAKEOVER CANARIES
+- Handoff generation must be `20260829T0745Z-v169` across CURRENT/SEAL/HANDOFF/bootstrap/matrix/lock.
 - main/source/deployment/accepted Android authority = rc4.104.
 - Exact 13-file main/gh-pages runtime parity = PASS.
 - Android rc4.104 observed; completed post-draft Snapshot path = PASS.
@@ -115,5 +115,5 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 
 - v167 latest OOS: backup draft-companion-v7-backup-2026-08-29T06-53-52-495Z.json, draft 1399308446632800256, rc4.104. Pick129 exposed score-0 short-turn promotion; rc4.105 generic Coach-floor fix passed PR #46 gates and deployed 13/13 parity.
 
-- v168 mock pause canary: draft 1399325404598124544 is paused BEFORE user pick9. Picks1-8 Gibbs/Chase/Bijan/Jonathan Taylor/CMC/Puka/Amon-Ra/JSN. James Cook was recommended at 1.09 but user did not confirm the pick; never infer he is on roster.
-- v168 rc4.106 canary: embedded Expert-v2/v3 individual rows must appear in Snapshot Coach Top 8; old `KEINE VERIFIZIERT` live-rankCache-only filter is rejected. PR #47 all gates PASS; main merge 0818bc9632eca79c4d055d444a6eae0af53f3a9f; 13/13 pages parity PASS.
+- v169 mock pause canary: draft 1399325404598124544 is paused BEFORE user pick9. Picks1-8 Gibbs/Chase/Bijan/Jonathan Taylor/CMC/Puka/Amon-Ra/JSN. James Cook was recommended at 1.09 but user did not confirm the pick; never infer he is on roster.
+- v169 rc4.106 canary: embedded Expert-v2/v3 individual rows must appear in Snapshot Coach Top 8; old `KEINE VERIFIZIERT` live-rankCache-only filter is rejected. PR #47 all gates PASS; main merge 0818bc9632eca79c4d055d444a6eae0af53f3a9f; 13/13 pages parity PASS.
