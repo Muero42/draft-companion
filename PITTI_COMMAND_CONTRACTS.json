@@ -124,7 +124,9 @@
     "fullDraftAudit": "rc4.105 live Snapshot behavior PASS at draft 1399325404598124544 pick9; mock paused before user pick. rc4.106 display-only embedded individual-rank fix PR #47 all gates PASS, merged/deployed 13/13 parity, Android observation pending",
     "returnFinding": "3-pick 92.5% forecast vs 92.4% actual (Brier .044); 17-pick 35.6% vs 32.5% (Brier .077); no global Return-v2 retune",
     "openEvidencePatch": "Superseded by merged rc4.99/rc4.100 generic semantic fixes; never resurrect stale PR #33 status as current.",
-    "androidAccepted": true
+    "androidAccepted": true,
+    "testChallengerAndroidObserved": false,
+    "testChallengerAndroidAccepted": false
   },
   "currentGate": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
   "handoffGeneration": "20260829T0730Z-v168",
