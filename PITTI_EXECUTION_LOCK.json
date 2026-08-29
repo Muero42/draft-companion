@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-29T05:48:00Z",
+  "updatedAt": "2026-08-29T08:25:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -188,11 +188,11 @@
       "successor-RC semantic regression wiring"
     ],
     "validation": [
-      "PR #44 release/package/guardrails PASS",
-      "post-merge release contract PASS 33236822691",
-      "post-merge package PASS 33236822641 artifact 9710162910",
-      "post-merge successor gate PASS 33236822674",
-      "remaining post-merge RED = stale lock/seal integrity only"
+      "PR #44 candidate release/package/guardrails PASS",
+      "rc4.104 main release/package/successor semantic gates PASS before v161 reseal",
+      "v161 seal reached all-green before deployment",
+      "exact 13-file main/gh-pages runtime parity PASS",
+      "Android rc4.104 observed; post-draft Snapshot path PASS"
     ],
     "nextGate": "counterfactual replay of preserved rc4.101 decision fixtures under rc4.104; external FantasyPros benchmark when supplied"
   },
@@ -207,10 +207,10 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260829T0815Z-v163",
-    "status": "HANDOFF_v163_READY",
+    "generation": "20260829T0825Z-v164",
+    "status": "HANDOFF_v164_READY",
     "ready": true,
     "secondPass": true,
-    "resume": "PITTI AUTO: Android rc4.104 post-draft Snapshot path PASS. Do not re-analyze duplicate complete snapshot; replay preserved rc4.101 fixtures under rc4.104 and integrate FantasyPros benchmark if supplied."
+    "resume": "PITTI AUTO: rc4.104 accepted Android. Repair/verify v164 seal consistency, then counterfactual replay preserved rc4.101 fixtures; completed snapshot is documentation only."
   }
 }
