@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260829T1244Z-v178",
-  "updated_at": "2026-08-29T12:44:00Z",
+  "handoff_generation": "20260829T1951Z-v180",
+  "updated_at": "2026-08-29T19:51:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -10,9 +10,9 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.105",
+    "android_authority": "v11.8.0-rc4.106",
     "test_challenger": "v11.8.0-rc4.106",
-    "test_challenger_android_verified": false,
+    "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.106",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "sha256:2b7ad9b2a0ec2af1641d7262c33e91d48f290f19feee54a38a9d581efbc8a7c5",
@@ -23,17 +23,17 @@
     "package_reference_note": "rc4.106 PR #47 package/re-extract PASS; GitHub artifact Draft_Companion_PREINSTALL id 9711254133, envelope digest sha256:2b7ad9...; main merge 0818bc9632eca79c4d055d444a6eae0af53f3a9f; gh-pages exact 13/13 runtime parity PASS. rc4.106 Android display observation pending.",
     "android_version_observed": true,
     "android_functional_verified": true,
-    "freeze_policy": "rc4.105 accepted Android authority; rc4.106 display-only candidate pending device observation; rc4.96 historical rollback reference only",
+    "freeze_policy": "rc4.106 accepted Android/runtime baseline; expert v4/v5 changes stay on research branch until coverage semantics + validation PASS",
     "test_challenger_android_observed": false,
-    "android_acceptance_pending": true,
-    "android_observed": "v11.8.0-rc4.105",
+    "android_acceptance_pending": false,
+    "android_observed": "v11.8.0-rc4.106",
     "android_functional_acceptance": "SNAPSHOT_AND_PICK9_COACH_BEHAVIOR_PASS",
     "rollback_reference": "v11.8.0-rc4.96"
   },
   "exact_continuation": {
-    "gate": "RC4106_ANDROID_DISPLAY_ACCEPTANCE",
+    "gate": "EXPERT_V4_V5_COVERAGE_AND_SELECTION",
     "auto_starts_mock": false,
-    "instruction": "rc4.105 fresh pre-draft and pick9 Snapshot/Coach behavior PASS. rc4.106 is a display-only embedded-individual-rank fix, PR #47 all gates PASS, merged and deployed with 13/13 runtime parity. Android rc4.106 observation pending. Mock draft 1399325404598124544 is paused before user pick 9; last recommendation was James Cook, but do not assume the pick was made."
+    "instruction": "Verify v180 authority. Work on research branch pitti/expert-v4-v5-v180. First fix/audit missing-expert coverage semantics (Spears 5 votes vs Bigsby 4 under expert-v3-rb), then complete current individual-expert matrix, build v4 individual-only 4–6 per position and v5 v3+Koerner primarily reducing DS share, validate against v3 before enabling selector or packaging. Do not analyze deferred 19-44-43 real-decision mock yet."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -50,17 +50,17 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "PITTI AUTO: rc4.106 source/package/deployment PASS, exact 13/13 pages parity; rc4.105 last accepted Android. rc4.106 display observation pending. Mock 1399325404598124544 paused before pick9; Cook recommended, not drafted. Continue draft-day freshness/Watcher/post-draft independent lanes.",
-    "acceptance_fingerprint": "MAIN-RC4.106|PAGES-13OF13|ANDROID-RC4.105-LAST-ACCEPTED|RC4106-DISPLAY-PENDING|MOCK-1399325404598124544-PAUSED-BEFORE-PICK9|PACKAGE-9711254133|NFL-WAIVER-19CET|OFFICIAL-TRANSACTION-AUTHORITY|HANDOFF-v178",
-    "status": "HANDOFF_v178_READY_LATE_RB_AUDIT",
+    "resume_semantics": "PITTI AUTO: rc4.106 accepted baseline; main runtime parity restored after moving staged selector work to pitti/expert-v4-v5-v180. Critical blocker is silent per-player expert coverage inconsistency. v3 frozen; v4 individual-only 4–6; v5 v3+Koerner primarily at DS expense. Deferred real-decision mock 19-44-43 must remain unanalyzed.",
+    "acceptance_fingerprint": "RC4.106-ANDROID-ACCEPTED|MAIN-RUNTIME-PARITY-RESTORED|RESEARCH-BRANCH-pitti/expert-v4-v5-v180|COVERAGE-BLOCKER-SPEARS5-BIGSBY4|V3-FROZEN|V4-INDIVIDUAL-4TO6|V5-V3PLUSKOERNER|DEFERRED-MOCK-19-44-43-NO-ANALYSIS|HANDOFF-v180",
+    "status": "HANDOFF_v180_READY_EXPERT_V4_V5",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Continue independent draft-day readiness/freshness/Watcher work. When convenient, observe rc4.106 on Android; mock 1399325404598124544 may resume later from pick9 with fresh snapshot.",
-    "gate": "RC4106_ANDROID_DISPLAY_ACCEPTANCE"
+    "next_action": "Fix missing-expert coverage semantics and complete expert selection research on research branch; then build/validate v4/v5 before activation.",
+    "gate": "EXPERT_V4_V5_COVERAGE_AND_SELECTION"
   },
   "source_authority": "v11.8.0-rc4.106",
   "package_authority": "v11.8.0-rc4.106",
-  "android_version_observed": "v11.8.0-rc4.105",
+  "android_version_observed": "v11.8.0-rc4.106",
   "android_functional_verified": true,
   "deployment_authority": "v11.8.0-rc4.106",
   "draft_day_plan": {
@@ -73,5 +73,13 @@
     "operational_freeze": "~19:50",
     "transaction_rule": "same-position claim/signing is weak Bayesian evidence only; correlate with pre-existing injury/role uncertainty and seek corroboration; uncorroborated signal may only break close ties"
   },
-  "android_acceptance_pending": true
+  "android_acceptance_pending": false,
+  "expert_v4_v5": {
+    "research_branch": "pitti/expert-v4-v5-v180",
+    "v3": "frozen baseline selectable",
+    "v4": "individual-only, 4–6 per position, DS excluded for attribution ambiguity",
+    "v5": "v3 + Koerner, primarily reduce DS share, position-specific",
+    "coverage_blocker": "expert-v3-rb differs by player: Spears panelN5 incl DS; Bigsby panelN4 without DS; fix missingness semantics before activation",
+    "koerner": "current 2026 FantasyPros ranking visible in 2026-08-29 user screenshots; old paywall-only assumption superseded; import/coverage pending verification"
+  }
 }
