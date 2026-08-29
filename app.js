@@ -1707,13 +1707,16 @@ function pittiVisibleEvidence(x){
   for(const c of rr.components){
     if(c?.display!==true&&c?.displayRisk!==true)continue;
     const causal=String(c?.causal||'').trim();if(!causal)continue;
-    rows.push({dir:c.displayRisk===true?-1:(Number(c.dir)<0?-1:1),causal});
+    // displayRisk is a visibility flag, not a polarity override. Neutral context
+    // (dir===0) must stay neutral; only signed evidence may render as +/−.
+    const dir=Number(c.dir);
+    rows.push({dir:dir>0?1:dir<0?-1:0,causal});
   }
   return rows.slice(0,3);
 }
 function pittiVisibleEvidenceHtml(x){
   const rows=pittiVisibleEvidence(x);if(!rows.length)return'';
-  return '<div class="research-evidence">'+rows.map(e=>'<div class="'+(e.dir<0?'research-evidence-risk':'research-evidence-up')+'">'+(e.dir<0?'− ':'+ ')+esc(e.causal)+'</div>').join('')+'</div>';
+  return '<div class="research-evidence">'+rows.map(e=>'<div class="'+(e.dir<0?'research-evidence-risk':e.dir>0?'research-evidence-up':'research-evidence-neutral')+'">'+(e.dir<0?'− ':e.dir>0?'+ ':'• ')+esc(e.causal)+'</div>').join('')+'</div>';
 }
 function pittiFantasyRole(p,players){
  const pos=String(p?.pos||'').toUpperCase(),team=String(p?.team||'').toUpperCase();if(!['QB','RB','WR','TE'].includes(pos))return pos||'?';const same=[];for(const q of Object.values(players||{})){if(String(q?.team||'').toUpperCase()!==team||String(q?.position||'').toUpperCase()!==pos)continue;const name=q?.full_name||[q?.first_name,q?.last_name].filter(Boolean).join(' ');if(!name)continue;const r=rankFor(name,pos),sr=Number(q?.search_rank);if(r&&Number.isFinite(r.rank))same.push({name,rank:r.rank,sr});}same.sort((a,b)=>a.rank-b.rank||(a.sr||9999)-(b.sr||9999));const i=same.findIndex(q=>norm(q.name)===norm(p?.name));if(i>=0)return pos+(i+1);const d=Number(p?.depthOrder);return Number.isFinite(d)&&d>=1&&d<=6?pos+Math.round(d):pos;}
