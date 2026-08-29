@@ -1,10 +1,10 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260829T0825Z-v164",
-  "created_at": "2026-08-29T08:25:00Z",
-  "status": "LIVE_VERIFY_REQUIRED",
-  "handoff_ready": true,
-  "second_pass_pass": true,
+  "handoff_generation": "20260829T0840Z-v165",
+  "created_at": "2026-08-29T08:40:00Z",
+  "status": "SUPERSEDED_PENDING_RESEAL",
+  "handoff_ready": false,
+  "second_pass_pass": false,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {},
   "checks": {
@@ -44,6 +44,6 @@
     "rc4104_no_global_return_retune": true,
     "rc4104_android_pending": true
   },
-  "exact_gate": "RC4104_POST_DRAFT_REPLAY_VALIDATION",
-  "note": "v164 fail-closed handoff. rc4.104 main/pages/Android observed. Canonical rc4.101 mock counterfactual replay under rc4.104 is explicitly PENDING. Integrity map is superseded by takeover live verification because handoff files changed after v162; do not accept stale hashes as PASS."
+  "exact_gate": "HANDOFF_V165_RESEAL",
+  "note": "v165 handoff transaction in progress. Do not use stale v164/earlier integrity. Final seal will be generated only after all takeover files are synchronized."
 }
