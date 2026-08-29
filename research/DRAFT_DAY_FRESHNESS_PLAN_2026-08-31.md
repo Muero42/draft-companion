@@ -160,3 +160,10 @@ Scope rule: rc4.102 is a source-freshness correction, not a coefficient experime
 - Kenneth Walker III: official Aug26 report says he is dealing with a swollen ankle after an earlier foot-related practice absence. Treat as active health uncertainty for Aug31, requiring Sunday/Monday status recheck; do not infer IR/PUP or absence without new evidence.
 - Cardinals released Trey Benson during cutdown week. This is a concrete depth-chart transaction and must supersede stale preseason role assumptions anywhere Benson appears in old research/cache.
 - Roster cutdown is already producing fantasy-relevant churn before Sunday's deadline; official transaction/roster-cut sources remain mandatory in each final delta scan.
+
+
+## Aug29 AUTO freshness audit VII — transaction-wire corrections
+- NFL transaction wire confirms fantasy-relevant team churn that can make Sleeper metadata/cache stale: Tutu Atwell was traded MIA→LAR on Aug27; Jarquez Hunter LAR→MIA; Kayshon Boutte NE→HOU and Jayden Reed HOU→NE on Aug24. Treat official transaction wire as authoritative for team context until Sleeper catches up.
+- Final 53-man reduction is Aug30 before 18:00 ET; Aug31 waiver claims expire 13:00 ET. Therefore the final draft-day scan must occur after the cutdown/waiver wave, not merely reuse Aug29 state.
+- NFL fantasy rookie analysis independently identifies Mike Washington Jr. as the Jeanty handcuff and Emmett Johnson as a plausible Walker injury-upside RB despite Demercado being above him on the unofficial depth chart. These are late-round contingency signals only; panel remains baseline.
+- Current official Aug28 Jeanty update: still on the mend, Raiders counting on him, another week to assess Week-1 readiness. No IR/PUP inference.
