@@ -2319,3 +2319,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Official NFL 2026 transaction wire promoted to primary freshness authority for team/status reconciliation before role inference. Current August examples demonstrate real team-metadata churn (Atwell/Hunter, Boutte/Reed).
 - Aug28 official injury delta: Jeanty ankle remains monitored but Raiders explicitly still count on him for Week 1; Wan'Dale Robinson is not currently believed concussed. No ranking override warranted from either item yet.
 - Legacy same-date NFL search-result hazard reproduced again; explicit 2026 context guard retained. No runtime mutation.
+
+
+## 2026-08-29 — AUTO Sleeper metadata authority audit
+- Current app source was re-read after the official transaction-wire finding. Live candidate construction and pinfo intentionally use the freshly fetched Sleeper /players/nfl object for team, active and injury fields; there is no hard-coded player-team table in app.js.
+- Consequence: team/status lag is upstream Sleeper metadata, not a stale local mapping bug. A broad runtime patch immediately before draft would require a new authoritative transaction-overlay ingestion path and would add operational risk.
+- Decision: **no rc4.107 runtime mutation now**. Keep rc4.106 frozen; use the explicit draft-day official-transaction precedence guard during research/live interpretation. If a stale Sleeper team/status materially affects a live candidate, assistant-side official evidence overrides the displayed metadata and the discrepancy is called out.
+- This preserves near-draft stability while closing the actual decision-risk path; revisit a native transaction overlay post-draft unless Sunday/Monday evidence proves it draft-critical.
