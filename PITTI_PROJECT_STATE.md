@@ -2248,3 +2248,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Independent post-seal audit found stale active scalar remnants in CURRENT/LOCK/COMMAND despite the correct high-level rc4.106 gate: CURRENT still carried rc4.104 in android_observed/freeze/draft-day runtime and old package reference metadata; LOCK still named rc4.104 as latest observed/preinstall; COMMAND retained stale rc4.104 deployment note/reference package.
 - Repaired fail-closed: accepted Android = rc4.105; source/package/deployment candidate = rc4.106; rc4.106 Android display observation pending. No historical rc4.104 scalar may override these current fields.
 - PR #47 candidate-package authority recorded exactly: run 33240680178, artifact 9711254133, GitHub artifact-envelope digest sha256:2b7ad9b2a0ec2af1641d7262c33e91d48f290f19feee54a38a9d581efbc8a7c5. Inner ZIP hash is not claimed.
+
+
+## 2026-08-29 — paused mock 1.09 portfolio validation
+- Independent turn-portfolio check strengthens the 1.09 James Cook recommendation without treating it as a completed pick. Cook is the best current panel/Coach candidate (Panel 8.9, Coach100) and has the lowest survival among the close elite cluster (61%) versus Lamb 72%, Jefferson 77%, Saquon 73%.
+- Crucially, only two opponent picks (10/11) occur before own pick12 while Lamb, Jefferson and Saquon are all currently available. Therefore **at least one of those three is mathematically guaranteed to remain at pick12** if the user takes Cook at pick9; opponents can remove at most two. This makes Cook-now / best-survivor-at-12 a robust two-pick portfolio, not generic RB preference.
+- Mock remains paused before pick9 and no roster mutation is inferred until the user actually makes a pick and supplies a fresh Snapshot.
