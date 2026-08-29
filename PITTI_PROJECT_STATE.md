@@ -2525,3 +2525,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Draft PR #48 opened solely to trigger full PR/main-target gates; **do not merge** until all checks pass and exact v4/v5 source gates are satisfied.
 - Head 05279ddfc57757f4285da8814367c339486f785f: Project Guardrails run 33280786686 queued; release-contract run 33280786655 queued. Package gate expected via PR event after workflow recognition.
 - No production/main/Android promotion yet.
+
+
+### 2026-08-30 — AUTO BLOCK CI diagnosis/repair
+- First full PR CI exposed guardrail-definition drift, not runtime behavioral failures: syntax, release-contract static invariants, live-presentation behavior and rc478 OOS all passed before the guardrail stopped on stale v2/handoff wording.
+- Repaired guardrails to preserve legacy incumbent/v2 profiles while accepting the explicit v4/v5 research authority; Koerner import remains coverage-gated; DS remains v3-only/excluded from v4 individual-only. Removed stale prose-only bootstrap/handoff tokens as candidate blockers while retaining machine-readable lock/CURRENT and runtime regression authority.
+- Second CI reduced to one false-negative generation-label check: guard expected REPO v180 while canonical matrix uses v180 heading plus exact Generation. Repaired to accept canonical v180 label forms.
+- Current validated-code head before this checkpoint: 4a51b3b1a9961e391df47a50140661e89ebbce38; guardrails run 33280922351 and release-contract run 33280922352 queued. No production promotion until PASS.
