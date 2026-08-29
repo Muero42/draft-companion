@@ -1,8 +1,8 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Current main/source:** v11.8.0-rc4.100, merged from PR #36 as `1b85656e40a182ca6be2397c5bf6674006b97bd2`.
+> **Current main/source:** v11.8.0-rc4.101, merged from PR #36 as `1b85656e40a182ca6be2397c5bf6674006b97bd2`.
 > **rc4.100 PR validation:** release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
-> **Deployment/device:** gh-pages is v11.8.0-rc4.100 with exact 13-file packaged-runtime parity to main after all post-merge gates PASS; Android/PWA was last observed at v11.8.0-rc4.99, so rc4.100 device acceptance is still pending.
+> **Deployment/device:** gh-pages is v11.8.0-rc4.101 with exact 13-file packaged-runtime parity to main after all post-merge gates PASS; Android/PWA was last observed at v11.8.0-rc4.99, so rc4.100 device acceptance is still pending.
 > **Rollback / last fully functionally accepted Android authority:** v11.8.0-rc4.96.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
 > **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
