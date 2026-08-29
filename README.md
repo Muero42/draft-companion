@@ -69,3 +69,9 @@ v11.8.0-rc4.97 is a test-only actionability/presentation challenger. rc4.96 rema
 
 ### rc4.98 evidence-polarity challenger
 v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96 remains Android rollback authority until full validation.
+
+
+## v165 replay-status canary
+- Counterfactual replay rc4.101 -> rc4.104 is PENDING and must not be inferred complete from release/deploy/device PASS.
+- Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
+- First replay targets: pick92 Addison/JCM, pick109 Downs, pick112 Diggs, pick132 Spears/Andrews, then full roster construction.
