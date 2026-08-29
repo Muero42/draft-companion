@@ -84,3 +84,16 @@ Keep web/news research available for genuinely breaking information during the d
 ## Aug 29 runtime acceptance delta
 - rc4.100 exposed a live-only `Assignment to constant variable.` crash after turn-portfolio ordering because `scored` was declared `const` and then reassigned. rc4.101 changes only that binding to `let` plus version/cache metadata.
 - rc4.101 candidate behavioral/package/guardrail gates PASS, exact packaged-runtime deployment parity was established, and Android live rerun PASS: fresh snapshot generated, 341 candidates evaluated, Draft Coach rendered. rc4.101 is therefore the accepted draft runtime.
+
+## Aug 29 early-morning freshness audit — bounded rc4.102 candidate
+- **Josh Jacobs:** stale negative groin-absence residual was invalidated by his Aug. 18 return to practice. Remove that scoring penalty. New Aug. 27 misdemeanor charges are under NFL review, but no suspension has been announced; retain as neutral availability/discipline risk only. Sources: AP/NFL Aug. 27; contemporary return-to-practice reporting Aug. 18.
+- **Puka Nacua:** psoas absence remained current through Aug. 24. Possible league discipline remains unresolved. Rams reacquired Tutu Atwell, but Sean McVay explicitly said the trade was for receiver depth and unrelated to a possible Nacua suspension. Keep both issues as uncertainty, not a hard block or score penalty.
+- **Jeremiyah Love:** ankle issue is materially stronger than the old 'one week' wording; he missed the remaining preseason and was still visibly limited in individual work Aug. 28. Preserve existing bounded injury-risk strength; refresh wording only.
+- **Zach Charbonnet:** still on active/PUP late in preseason after ACL repair. If moved to reserve/PUP at cutdown he must miss at least four games; until the designation is final, phrase conditionally and do not hard-block.
+- **Wan'Dale Robinson:** after Aug. 27 helmet-to-helmet hit, early indications Aug. 28 were that he did not suffer a concussion; Titans continue symptom monitoring. Add acute monitor, no hard block.
+- **Kenneth Walker III:** current issue described as foot/ankle swelling reportedly caused by cleats; keep neutral freshness gate until full practice return.
+- **Sam LaPorta:** hip concern had created Week-1 uncertainty, but he returned to team drills Aug. 26; update display risk to reflect improvement rather than implying uninterrupted absence.
+- **Alec Pierce:** activated from PUP Aug. 27. No stale negative hardcoded residual was found in the current app, so no runtime change needed.
+- **CMC / Luther Burden / Ja'Marr Chase:** current app wording remains directionally consistent with Aug. 23-28 reporting; no additional mutation justified.
+
+Scope rule: rc4.102 is a source-freshness correction, not a coefficient experiment. Only the already-invalidated Jacobs groin penalty changes a scored residual; all other changes are wording/neutral acute-risk context.
