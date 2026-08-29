@@ -418,3 +418,9 @@ At draft time, any player carrying ↑↑ or ↓↓ must be rechecked against sa
 - **Ashton Jeanty — short-term health uncertainty:** NFL.com Aug 28 says Jeanty remains 'on the mend' from the Aug 23 ankle injury, with another week to assess before Week 1, while the team says it is counting on him. Treat as current availability/role uncertainty, not evidence of long-term demotion.
 - **Trey Benson — roster-status correction:** NFL.com's 2026 cutdown preview states Arizona already cut Benson. Any stale Sleeper IR/ARI representation must not be interpreted as current roster security. This is a freshness/data-quality flag and a post-cut transaction-watch item, not a reason for an emergency pre-draft model rewrite before the official Sunday cutdown settles.
 - Net: Washington's late-round option value strengthens; Jeanty carries modest near-term uncertainty; transaction feeds must win over stale roster metadata when official current sources conflict.
+
+
+## Aug 29 current-news delta II — official transaction priority
+- **Mike Washington Jr. — role evidence strengthened:** current NFL.com preseason reporting says he received first-team work in the finale while Ashton Jeanty was sidelined and explicitly frames the backfield as capable of using two backs. This upgrades the contingency thesis from generic handcuff logic to a plausible complementary-role path, while Jeanty remains the expected major-role back if healthy.
+- **Trey Benson — stale-roster-status warning:** current NFL.com cutdown coverage reports Arizona has released Benson. Treat official transaction status as higher authority than stale Sleeper roster/team metadata during the Sunday/Monday freshness pass. This is a data-freshness lesson, not a reason to globally alter player scoring.
+- No global runtime coefficient change follows from either item. Reassess after final cut/PUP/IR and waiver outcomes.
