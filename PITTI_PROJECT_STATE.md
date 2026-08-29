@@ -2055,3 +2055,13 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Strict-Coach 9-WR correction is explicitly retained; old 7-WR count remains forbidden.
 - Canonical self-update process preserved to avoid repeating the rc4.99 deployment detour.
 - Historical sections in this ledger remain historical evidence only. New chat must use newest EOF checkpoint + v157 CURRENT/SEAL/HANDOFF and verified repo/device facts; old narrative must not restore superseded runtime state.
+
+
+## 2026-08-29 02:20Z — rc4.100 post-merge gate repair + canonical deployment
+- AUTO resumed at `RC4100_MAIN_POSTMERGE_VERIFY_THEN_DEPLOY` and discovered that the first rc4.100 post-merge run was genuinely RED, not merely unobserved: the runtime/package contracts passed, but `pitti_guardrail_check.mjs` still asserted obsolete v156 literal handoff tokens and command-contract major version 1. This was a guardrail-contract drift introduced by the v157 handoff rewrite, not a runtime/model regression.
+- PR #37 repaired only those stale guardrail assertions; no scoring/model/runtime behavior changed. PR checks behavioral-contract/package/guardrails + Cloudflare preview all PASS. Squash merge `0d7134c1eae26b649c73817007cda3d3d51c9fba`.
+- v157 seal was refreshed for the changed guardrail blob. On main commit `794f4b3059fe2756e785dcec889efaec90287196`, **all five post-merge workflows PASS**: rc4.82 draft-critical, rc4.83 draft-critical, PITTI release contract v2, PITTI candidate package gate, PITTI Project Guardrails.
+- Canonical deployment then copied only the five differing packaged runtime files from verified main to gh-pages: `index.html`, `app.js`, `manifest.webmanifest`, `sw.js`, `live-surface-v3.js`. The other eight packaged runtime files were already identical.
+- Post-deploy verification compared all 13 packaged runtime files by Git blob SHA; **13/13 exact main/gh-pages parity PASS**. gh-pages/deployment authority is now rc4.100.
+- Android/PWA remains last observed rc4.99. No claim of rc4.100 device acceptance is allowed until actual device observation. Next gate: `RC4100_ANDROID_OBSERVATION`.
+- Parallel current-evidence scan found no basis for a broad scoring/Return retune. Fresh Aug-28 evidence reinforces CMC workload/age as risk context (not Plus), Jeanty remains monitored rather than hard-blocked, and fresh rankings/news should feed the scheduled draft-day freshness pass rather than trigger an unsafely broad late redesign.
