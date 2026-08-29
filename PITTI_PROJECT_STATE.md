@@ -2488,3 +2488,11 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - This directly catches Tank Bigsby N4 vs Tyjae Spears N5 and the more severe J.K. Dobbins N2 class instead of treating their ensembles as equivalent.
 - Regression gate added in rc496-draft-critical to require explicit coverage telemetry/policy.
 - v4/v5 remain disabled until final panel membership has verified board depth and missingness policy; no blind imputation and no silent renormalization allowed.
+
+
+### 2026-08-29 — AUTO BLOCK v4/v5 implementation lock
+- Fresh web/source pass completed. Pat current positional page reaches Aug29; Wolf overall Aug27; Todd directory Aug27; Weisse public overall Aug24. Koerner is demonstrably active/current (Aug28 cheat sheet, Aug29 WR tiers; says season-long ranks update daily), but FantasyPros currently exposes no complete all-position Koerner comparison vector. Therefore **never reconstruct Koerner from articles/tiers**; v5 stays disabled until exact full import/provenance passes.
+- v4 blueprint now encoded: QB Fitz/Boone/DelDon/Mariano/Todd; RB Fitz/Mariano/DelDon/Weisse; WR Fitz/Mariano/DelDon/Boone; TE Fitz/Boone/DelDon/Wolf. DS Team excluded from v4. Single-expert influence cap 30%. Every member still must pass exact current Half-PPR identity/depth/freshness gates before activation.
+- v5 blueprint encoded as v3 + Koerner, funded primarily from DS Team share, position-specific, capped. No blind transfer.
+- Selector prototype remains directly above Analyze, v3 selected, v4/v5 disabled fail-closed.
+- Do not upload/promote Android/main merely to save time; release only after exact-source and regression gates pass.
