@@ -2288,3 +2288,9 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Current NFL.com evidence materially strengthens Mike Washington Jr.'s late-round case: first-team preseason finale work with Jeanty sidelined plus explicit Kubiak two-back comparison. Jeanty's ankle remains a short-term uncertainty but team expectation is still that he plays a major role.
 - Official NFL.com cutdown preview also says Arizona has already cut Trey Benson, exposing a stale-roster-status risk versus Sleeper metadata. Current official transactions must override stale roster/team labels in Sunday/Monday freshness work.
 - No broad runtime retune from these isolated developments; capture them in freshness/research and let final cutdown + waiver outcomes settle before any draft-day materiality decision.
+
+
+## 2026-08-29 — AUTO current-news delta II checkpointed
+- Official-transaction precedence is now an explicit draft-day guard: official release/waive/IR/PUP/NFI/trade status outranks stale Sleeper team/status metadata.
+- Current regression case captured: Trey Benson official release report versus stale Sleeper ARI/IR pool state. Mike Washington Jr. role evidence strengthened, but remains contingent and non-forcing.
+- No runtime retune made; final cutdown/waiver outcomes remain the correct materiality gate.
