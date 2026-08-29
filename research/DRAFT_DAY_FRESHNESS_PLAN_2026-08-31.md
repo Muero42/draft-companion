@@ -75,3 +75,8 @@ Keep web/news research available for genuinely breaking information during the d
 - emergency queue/failsafe
 - device/app rc4.100 availability
 - ChatGPT live-decision context loaded
+
+## Aug 29 pre-draft delta checkpoint
+- Current FantasyPros riser/faller board has Parker Washington at overall 72 (+7) and Bucky Irving at 51 (+6). Treat as corroborating market movement, not an automatic rank override.
+- NFL Aug 28 reports Ashton Jeanty still recovering from the Aug 23 ankle injury; Las Vegas expects him but will reassess Week 1 readiness. Keep acute monitoring active without a hard block absent stronger evidence.
+- Current CBS draft-prep coverage also flags Jeanty as a notable ADP faller because of Week 1 ankle uncertainty. This corroborates uncertainty only; no broad model change.
