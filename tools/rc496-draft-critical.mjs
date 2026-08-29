@@ -20,6 +20,11 @@ assert.match(app,/reasons:Array\.isArray\(x\.reasons\)/,'decision evidence scori
 assert.match(app,/const displayGap=current<=70\?18:current<=110\?22:26/,'presentation normal-cut must be broader than safety gate');
 assert.match(app,/current>=121&&n>=6\)x-=14/,'late WR7 marginal-utility guard missing');
 assert.match(app,/current>=121&&n<=4\)x\+=3\.5/,'late RB contingent-option utility missing');
+assert.match(app,/ACTIVE_2026_MANAGER_MAP_TEXT='1=Michael, 2=Pascal Voerde, 3=Marc Düsseldorf, 4=Thomas, 5=Bjoern, 6=Pascal Gelderner, 7=Giuliano, 8=Basti, 9=Muerotechnik, 10=Dutch Marc'/,'canonical 2026 manager map drift');
+assert.doesNotMatch(app,/5=Basti, 6=Bjoern/,'rc4.84 wrong slot-5/6 mapping resurrected');
+assert.doesNotMatch(app,/8=Pascal Gelderner/,'rc4.84 wrong slot-8 mapping resurrected');
+assert.doesNotMatch(app,/Moers Venom/i,'stale user team identity resurrected');
+assert.doesNotMatch(app,/Michael K/i,'nonexistent Michael K identity resurrected');
 assert.match(live,/return'PANEL-CHECK'/,'live sparse-panel signal missing');
 assert.match(live,/Panel unvollständig\|Panel-Streuung/,'live sparse-panel negative evidence handling missing');
 const observedDecisionZoneEvidence=[
