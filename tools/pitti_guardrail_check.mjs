@@ -181,7 +181,7 @@ must(emergencyQueueContract.includes('only one TE while TE1 open'),'emergency qu
 
 const currentSourceRc=(String(current.source_authority||'').match(/rc4\.\d+/)||[])[0];
 must(currentSourceRc,'CURRENT source authority missing RC version');
-for(const token of ['production/control: rc4.64','rollback accepted functional authority: rc4.96','blocked dependent lane does not stop independent lanes'])
+for(const token of ['production/control: rc4.64','historical rollback reference: rc4.96','blocked dependent lane does not stop independent lanes'])
   must(bootstrap.includes(token),`repo bootstrap invariant missing: ${token}`);
 must(bootstrap.includes(`main/source: ${currentSourceRc}`),`repo bootstrap current source drift: ${currentSourceRc}`);
 for(const token of ['rollback authority = rc4.96','no global Return-v2 retune','Long blocks; re-inventory after every package'])
