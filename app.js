@@ -142,6 +142,40 @@ function ensureExpertV3Panels(){
   }
   return true;
 }
+function normalizeWeights(raw,cap=.30){
+  const entries=Object.entries(raw||{}).filter(([,w])=>Number(w)>0).map(([name,w])=>[name,Number(w)]);
+  if(!entries.length)return{};
+  let weights=Object.fromEntries(entries),free=new Set(entries.map(([n])=>n)),remaining=1;
+  while(free.size){
+    const base=[...free].reduce((a,n)=>a+weights[n],0);if(!base)break;
+    let capped=false;
+    for(const n of [...free]){
+      const proposed=remaining*weights[n]/base;
+      if(proposed>cap){weights[n]=cap;remaining-=cap;free.delete(n);capped=true}
+    }
+    if(!capped){const denom=[...free].reduce((a,n)=>a+weights[n],0);for(const n of free)weights[n]=remaining*weights[n]/denom;break}
+  }
+  return weights;
+}
+function buildPanelFromExpertRows(id,pos,expertRows,rawWeights,meta={}){
+  const weights=normalizeWeights(rawWeights,meta.maxSingleWeight??.30);
+  const intendedExperts=Object.keys(weights),byName=new Map();
+  for(const expertName of intendedExperts){
+    for(const row of expertRows[expertName]||[]){
+      const k=norm(row.name);if(!k)continue;
+      if(!byName.has(k))byName.set(k,{name:row.name,pos,vals:[]});
+      byName.get(k).vals.push({expertName,rank:Number(row.posRank??row.rank),effectiveWeight:weights[expertName],reconstructed:false,spread:null});
+    }
+  }
+  const ranks={};
+  for(const [k,item] of byName){
+    const vals=item.vals.filter(x=>Number.isFinite(x.rank)&&x.rank>0),present=new Set(vals.map(x=>x.expertName)),missing=intendedExperts.filter(x=>!present.has(x));
+    const sw=vals.reduce((a,x)=>a+x.effectiveWeight,0);if(!sw)continue;
+    const mean=vals.reduce((a,x)=>a+x.rank*x.effectiveWeight,0)/sw,variance=vals.reduce((a,x)=>a+x.effectiveWeight*(x.rank-mean)**2,0)/sw;
+    ranks[k]={name:item.name,pos,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,intendedN:intendedExperts.length,coverage:vals.length/intendedExperts.length,coverageStatus:missing.length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',missingExperts:missing,individual:vals.sort((a,b)=>a.rank-b.rank)};
+  }
+  assignTiers(ranks);panelRanks[id]=ranks;panels[id]={name:meta.name||id,members:{},shadow:true,weights,source:meta.source||'verified-expert-import',coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};return ranks;
+}
 function currentExpertProfile(){for(const [id,map] of Object.entries(EXPERT_PROFILE_IDS))if(['QB','RB','WR','TE'].every(pos=>positionPanels[pos]===map[pos]))return id;return 'custom';}
 function expertProfileReady(id){
   const map=EXPERT_PROFILE_IDS[id];if(!map)return false;
