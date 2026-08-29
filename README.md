@@ -1,6 +1,6 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Current main/source:** v11.8.0-rc4.104; repeated Coach-WR9 and long-turn WAIT ordering defects repaired generically; no broad model retune.
+> **Current accepted main/source:** v11.8.0-rc4.104. **v11.8.0-rc4.105 candidate:** generic short-turn portfolio quality floor after OOS pick129 score-0 promotion regression; no Return-v2/model/expert retune.
 > **rc4.100 PR validation:** release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
 > **Deployment/device:** gh-pages rc4.104 exact 13-file parity PASS; Android rc4.104 observed and post-draft Snapshot path PASS.
 > **Rollback reference:** v11.8.0-rc4.96 historical only; current accepted Android authority is v11.8.0-rc4.104.

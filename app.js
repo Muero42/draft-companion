@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.104';
+const APP_VERSION='v11.8.0-rc4.105';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -42,9 +42,15 @@ function applyTurnPortfolioOrdering(rows,current,next){
   const maxAltRet=shortTurn?.82:.25;
   const maxPanelGap=shortTurn?25:15;
   const maxRawGap=shortTurn?Infinity:10;
+  // rc4.105: a short-turn timing override may defer a high-Return leader only for
+  // an alternative that is still materially viable on the normalized Coach scale.
+  // This preserves the validated TLaw/Corum case (47) while blocking the rc4.104
+  // pick-129 failure where a score-0 WR displaced a score-100 RB solely on Return.
+  const minShortTurnCoachScore=40;
   const alternatives=rows.slice(1).filter(x=>{
     const ret=Number(x?.ret),panel=Number(x?.r?.rank),raw=Number(x?.rawScore);
     return !x?.hardExcluded&&!x?.recommendationBlocked&&normalCandidateAdmissible(x)
+      &&(!shortTurn||Number(x?.score)>=minShortTurnCoachScore)
       &&Number.isFinite(ret)&&ret<=maxAltRet
       &&Number.isFinite(panel)&&panel<=leaderPanel+maxPanelGap
       &&(!Number.isFinite(leaderRaw)||!Number.isFinite(raw)||leaderRaw-raw<=maxRawGap);
