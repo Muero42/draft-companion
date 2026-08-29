@@ -126,5 +126,6 @@
     "openEvidencePatch": "Superseded by merged rc4.99/rc4.100 generic semantic fixes; never resurrect stale PR #33 status as current."
   },
   "currentGate": "DRAFT_DAY_FRESHNESS_AND_EVIDENCE",
-  "handoffGeneration": "20260828T2002Z-v157"
+  "handoffGeneration": "20260829T0430Z-v158",
+  "handoff_generation": "20260829T0430Z-v158"
 }
