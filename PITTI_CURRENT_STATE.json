@@ -11,7 +11,7 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.108",
-    "test_challenger": "v11.8.0-rc4.113",
+    "test_challenger": "v11.8.0-rc4.114",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.111",
     "library_recovery_alias": "v11.8.0-rc4.52",
@@ -33,12 +33,12 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.113 configured-expert identity plumbing candidate; approved ranking/source decisions frozen; off-device acceptance running"
+    "source_candidate": "v11.8.0-rc4.114 root-cause fix: v4/v5 aggregate positional ranks, not Overall ranks; source choices frozen"
   },
   "exact_continuation": {
-    "gate": "RC4.113_FULL_OFFDEVICE_ACCEPTANCE",
+    "gate": "RC4.114_FULL_OFFDEVICE_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "AUTO finish rc4.113 off-device acceptance; no device interaction until all gates pass."
+    "instruction": "AUTO finish rc4.114 off-device acceptance; no device interaction until all gates pass."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -60,8 +60,8 @@
     "status": "HANDOFF_v187_RC4111_OFFDEVICE_GATING",
     "handoff_ready": false,
     "second_pass_pass": false,
-    "next_action": "AUTO finish rc4.113 off-device acceptance; no device interaction until all gates pass.",
-    "gate": "RC4.113_FULL_OFFDEVICE_ACCEPTANCE"
+    "next_action": "AUTO finish rc4.114 off-device acceptance; no device interaction until all gates pass.",
+    "gate": "RC4.114_FULL_OFFDEVICE_ACCEPTANCE"
   },
   "source_authority": "v11.8.0-rc4.111",
   "package_authority": "v11.8.0-rc4.107",
