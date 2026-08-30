@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.124';
+const APP_VERSION='v11.8.0-rc4.125';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -1740,11 +1740,12 @@ function robustRankShadow(r){
   return{weightedMedian:median,winsorizedMean:winsMean,experts:vals};
 }
 function freezeDecisionFixture({draftId,current,returnPick,picks,mine,players,rankedAvailable,scored,rv2,mode,strategy,stress,teams,slot,fingerprint,map}){
-  const rows=loadDecisionFixtures(),id=`${draftId}|${current}|${fingerprint}`;if(rows.some(r=>r.id===id))return;
+  const analysisProfile=currentExpertProfile();
+  const rows=loadDecisionFixtures(),id=`${draftId}|${current}|${fingerprint}|${analysisProfile}|${strategy}`;if(rows.some(r=>r.id===id))return;
   const endOfDraft=!Number.isFinite(returnPick)||returnPick<=current;
   const evidenceCutoff=Date.now();
   rows.push({
-    id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,mode,strategy,stress,teams,slot,
+    id,draftId,current,returnPick:Number.isFinite(returnPick)?returnPick:null,createdAt:evidenceCutoff,fingerprint,analysisProfile,mode,strategy,stress,teams,slot,
     modelVersion:APP_VERSION,researchResidualModel:RESEARCH_RESIDUAL_MODEL_VERSION,managerProfileHash:MANAGER_PROFILE_SOURCE_HASH,managerMapSnapshot:{...(map||{})},managerLiveStateSnapshot:JSON.parse(JSON.stringify(LIVE_MANAGER_ADAPTATION_STATE)),rng:{runs:rv2?.runs??900,seedBasis:`${current}|${returnPick??'end'}|${stress}`},
     picks:picks.map(p=>({pick_no:p.pick_no,draft_slot:p.draft_slot,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||'')})),
     userRoster:mine.map(p=>{const meta=players?.[String(p.player_id)]||p.metadata||{};return{pick_no:p.pick_no,player_id:String(p.player_id),player_name:p.metadata?.first_name&&p.metadata?.last_name?`${p.metadata.first_name} ${p.metadata.last_name}`:(p.metadata?.player_name||''),pos:meta.position||p.metadata?.position||null}}),
@@ -2933,16 +2934,18 @@ function logDecision(){if(!lastDraftContext)return alert('Zuerst Draft analysier
 function backup(){return{format:'draft-companion-v7',version:APP_VERSION.replace(/^v/,''),createdAt:new Date().toISOString(),season:els.season.value,scoring:els.scoring.value,experts,panels,activePanelId,positionPanels,rankCache,panelRanks,adp,adpMeta,decisionLog,returnValidation:loadReturnValidation(),decisionFixtures:loadDecisionFixtures(),fpBenchmarks:allFpBenchmarks(),draft:els.draftInput.value,slot:els.slot.value,draftMode:els.draftMode.value,strategyMode:els.strategyMode.value,stressMode:els.stressMode.value,managerMap:els.managerMap.value,managerModeSegments:loadManagerModeSegments(),managerProfileHash:MANAGER_PROFILE_SOURCE_HASH}}
 function decisionEvidenceExport(){
   const id=draftId(els.draftInput.value),all=loadDecisionFixtures(),rawRows=all.filter(f=>String(f.draftId||'')===String(id||''));
-  // Canonical decision evidence is one state per own pick. Sleeper can transiently revise
-  // the immediately preceding pick; keep only the newest fixture for a repeated current
-  // pick while reporting how many superseded snapshots existed.
+  // Preserve model-comparison variants (v4/v5) for the same Sleeper decision state.
+  // Canonical summaries remain one newest fixture per own pick for backward compatibility.
   const byPick=new Map();
   for(const f of rawRows){const k=Number(f.current);const prev=byPick.get(k);if(!prev||Number(f.createdAt||0)>=Number(prev.createdAt||0))byPick.set(k,f);}
   const rows=[...byPick.values()].sort((a,b)=>Number(a.current)-Number(b.current));
-  const supersededFixtureCount=Math.max(0,rawRows.length-rows.length);
+  const byPickProfile=new Map();
+  for(const f of rawRows){const profile=String(f.analysisProfile||'legacy'),k=`${Number(f.current)}|${profile}`;const prev=byPickProfile.get(k);if(!prev||Number(f.createdAt||0)>=Number(prev.createdAt||0))byPickProfile.set(k,f);}
+  const comparisonFixtures=[...byPickProfile.values()].sort((a,b)=>Number(a.current)-Number(b.current)||String(a.analysisProfile||'').localeCompare(String(b.analysisProfile||'')));
+  const supersededFixtureCount=Math.max(0,rawRows.length-comparisonFixtures.length);
   const summaries=rows.map(f=>{const counts={QB:0,RB:0,WR:0,TE:0};for(const p of f.userRoster||[]){const pos=p.pos||(f.rankedPool||[]).find(x=>String(x.playerId)===String(p.player_id))?.pos;if(pos&&counts[pos]!=null)counts[pos]++}const d=f.decisionOutcome||{},top=d.coachTop||f.candidates?.[0]||null,chosen=(f.candidates||[]).find(x=>norm(x.name)===norm(f.chosenPlayer?.name||''))||null;return{pick:f.current,returnPick:f.returnPick,modelVersion:f.modelVersion||null,rosterCounts:counts,coachTop:top?{name:top.name,pos:top.pos,score:top.coachScore??null,panelRank:top.panelRank??null,adp:top.adp??null}:null,chosen:f.chosenPlayer?{name:f.chosenPlayer.name,pos:chosen?.pos||null,frozenRank:d.chosenFrozenRank??null,score:chosen?.coachScore??null,panelRank:chosen?.panelRank??null,adp:chosen?.adp??null}:null,followedCoach:d.followedCoach??null,override:!!d&&d.followedCoach===false,chosenInFrozenCandidates:d.chosenInFrozenCandidates??null,scoreDelta:d.chosenVsCoachScoreDelta??null,panelDelta:d.chosenVsCoachPanelDelta??null,wrSaturationFlag:top?.pos==='WR'&&counts.WR>=6,wr7PlusFlag:top?.pos==='WR'&&counts.WR>=7,qb2Violation:top?.pos==='QB'&&counts.QB>=1};});
   const modelVersions=[...new Set(rows.map(f=>String(f.modelVersion||'unknown')))];
-  return{format:'pitti-decision-evidence-v2',appVersion:APP_VERSION,createdAt:new Date().toISOString(),draftId:id||null,slot:Number(els.slot.value),mode:els.draftMode.value,fixtureCount:rows.length,rawFixtureCount:rawRows.length,supersededFixtureCount,modelVersions,mixedModelVersions:modelVersions.length>1,resolvedCount:rows.filter(f=>f.chosenPlayer).length,overrideCount:summaries.filter(x=>x.override).length,wrSaturationRecommendationCount:summaries.filter(x=>x.wrSaturationFlag).length,qb2ViolationCount:summaries.filter(x=>x.qb2Violation).length,summaries,fixtures:rows};
+  return{format:'pitti-decision-evidence-v3',appVersion:APP_VERSION,createdAt:new Date().toISOString(),draftId:id||null,slot:Number(els.slot.value),mode:els.draftMode.value,fixtureCount:rows.length,rawFixtureCount:rawRows.length,comparisonFixtureCount:comparisonFixtures.length,supersededFixtureCount,modelVersions,mixedModelVersions:modelVersions.length>1,resolvedCount:rows.filter(f=>f.chosenPlayer).length,overrideCount:summaries.filter(x=>x.override).length,wrSaturationRecommendationCount:summaries.filter(x=>x.wrSaturationFlag).length,qb2ViolationCount:summaries.filter(x=>x.qb2Violation).length,summaries,fixtures:rows,comparisonFixtures};
 }
 async function downloadJson(name,v){
   const text=JSON.stringify(v,null,2),file=new File([text],name,{type:'application/json'});
