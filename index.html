@@ -50,17 +50,7 @@
       <div><span class="step">1</span><h2>Daten aktualisieren</h2></div>
       <button id="refreshAllBtn" class="primary">Alles aktualisieren</button>
     </div>
-    <div id="apiQuickStatus" class="notice"></div>
-    <div class="strategy-box" id="analysisExpertSelector">
-      <label for="analysisExpertProfile"><b>Aktives Expertenmodell</b></label>
-      <select id="analysisExpertProfile">
-        <option value="expertv3" selected>v3 · Baseline</option>
-        <option value="expertv4" disabled>v4 · Individual-only (noch nicht vollständig verifiziert)</option>
-        <option value="expertv5" disabled>v5 · Hybrid + Koerner (noch nicht vollständig verifiziert)</option>
-      </select>
-      <p class="tiny">Wechsel nur nach vollständiger Coverage-Verifikation. Draftzustand bleibt unverändert; die nächste Analyse nutzt das gewählte Modell.</p>
-    </div>
-    <div class="strategy-box"><label for="expertProfile"><b>Experten-Konfiguration</b></label><select id="expertProfile"><option value="incumbent">Bisherige Konfiguration (rc4.64)</option><option value="fullv2">Expert-v2 · alle Positionen</option><option value="wrv2">Expert-v2 · nur WR</option><option value="expertv3">Expert-v3 · positionsspezifisch</option><option value="custom" disabled>Benutzerdefiniert</option></select><div class="button-grid" style="margin-top:8px"><button id="expertV3AuditBtn" class="secondary" type="button">Expert-v3 kompakt kopieren</button></div><div id="expertV3AuditStatus" class="notice">v3-Kompaktexport bereit; nur positionsrelevante Ränge, Expert-v2 bleibt unverändert.</div><select hidden aria-hidden="true"></select><p class="tiny">Vergleichsmodus: gleicher Decision-/Return-Kernel, nur die Positionspanels wechseln. Expert-v2: QB DS35/Mariano25/Del Don20/Boone10/Pat10 · RB DS35/Mariano25/Del Don25/Pat15 · WR Mariano35/DS30/Pat15/Del Don10/Boone10 · TE DS35/Pat30/Del Don25/Boone10.</p></div><div id="qualityStatus" class="notice">Datenprüfung läuft …</div>
+    <div id="apiQuickStatus" class="notice"></div><div class="strategy-box"><label for="expertProfile"><b>Experten-Konfiguration</b></label><select id="expertProfile"><option value="incumbent">Bisherige Konfiguration (rc4.64)</option><option value="fullv2">Expert-v2 · alle Positionen</option><option value="wrv2">Expert-v2 · nur WR</option><option value="expertv3">Expert-v3 · positionsspezifisch</option><option value="custom" disabled>Benutzerdefiniert</option></select><div class="button-grid" style="margin-top:8px"><button id="expertV3AuditBtn" class="secondary" type="button">Expert-v3 kompakt kopieren</button></div><div id="expertV3AuditStatus" class="notice">v3-Kompaktexport bereit; nur positionsrelevante Ränge, Expert-v2 bleibt unverändert.</div><select hidden aria-hidden="true"></select><p class="tiny">Vergleichsmodus: gleicher Decision-/Return-Kernel, nur die Positionspanels wechseln. Expert-v2: QB DS35/Mariano25/Del Don20/Boone10/Pat10 · RB DS35/Mariano25/Del Don25/Pat15 · WR Mariano35/DS30/Pat15/Del Don10/Boone10 · TE DS35/Pat30/Del Don25/Boone10.</p></div><div id="qualityStatus" class="notice">Datenprüfung läuft …</div>
     <div class="button-grid">
       
     </div>
@@ -109,6 +99,15 @@
       </select>
       <div id="strategyStatus" class="notice ok">Progressive Upside ist aktiv.</div>
       <p class="tiny">v10 bleibt als eingefrorene Referenz erhalten. v11 verändert die Gewichtung erst ab Runde 9 zunehmend in Richtung Ceiling/Breakout-EV.</p><p class="tiny"><b>Live-Speed:</b> Der Snapshot kann während einer laufenden Analyse nicht kopiert werden. Der Hauptbutton aktualisiert zuerst Sleeper und kopiert anschließend ausschließlich den frisch erzeugten Snapshot.</p>
+    </div>
+    <div class="strategy-box mock-only" id="analysisExpertSelector">
+      <label for="analysisExpertProfile"><b>Expertenmodell für diese Analyse</b></label>
+      <select id="analysisExpertProfile">
+        <option value="expertv3" selected>v3 · Baseline</option>
+        <option value="expertv4" disabled>v4 · Individual-only (Audit läuft)</option>
+        <option value="expertv5" disabled>v5 · Hybrid + Koerner (Audit läuft)</option>
+      </select>
+      <p class="tiny">Presetwechsel verändert keinen Draftzustand. Erst Analysieren berechnet denselben Snapshot mit dem gewählten Expertenmodell neu.</p>
     </div>
     <div class="button-grid">
       <button id="refreshBtn" class="primary">Analysieren & Snapshot kopieren</button>
