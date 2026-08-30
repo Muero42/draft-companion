@@ -30,7 +30,7 @@ must(!live.includes('— ${esc(keyword(x,i))}'),'Top-10 keywords must not sit be
 must(!live.includes('<details><summary>Experten'),'expert ranks must not be collapsible');
 must(!/shortName\(name\).*%/.test(live),'expert weights leaked into live cards');
 must(app.includes('expertProfileBeforeReload'),'expert profile refresh preservation missing');
-must(live.includes("expertv3:'Expert-v3 POSITIONSSPEZIFISCH'"),'Expert-v3 live profile label missing');
+must(live.includes("expertv3:'Expert-v3 BASELINE'"),'Expert-v3 live profile label missing');
 must(live.includes('s.rows.slice(0,10).map(card).join'), 'Top-10 must render as full decision cards');
 must(live.includes('live-cut-warning'), 'per-card Normal-Cut warning missing');
 must(app.includes('injury|ankle|achilles|recurrence'),'arrow injury-exclusion guard missing');
