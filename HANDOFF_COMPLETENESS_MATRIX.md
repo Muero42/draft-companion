@@ -1,20 +1,19 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v187
-Generation: `20260830T0735Z-v187`
+# PITTI HANDOFF COMPLETENESS MATRIX — v189
+Generation: `20260830T1058Z-v189`
 
 Takeover fails closed unless all are true:
-- CURRENT = SEAL = HANDOFF = BOOTSTRAP = MATRIX generation v187.
+- CURRENT = SEAL = HANDOFF = BOOTSTRAP = MATRIX generation v189.
 - Seal PASS, ready, second-pass PASS, non-empty integrity; Project State read to EOF.
-- main/gh-pages rc4.107, 13/13 runtime parity; package hash adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c.
-- rc4.107 device observed; live refresh acceptance pending; rc4.106 fallback remains available.
-- v3 default; v4/v5 fail-closed until live source gates pass.
-- v4 cores QB24/RB60/WR70/TE24; live-current only; DS excluded.
-- v5 Koerner path must pass identity/coverage/Compare Players crosscheck and DS-funding invariant.
-- Geno/Rodgers organic before QB1; one-QB rule only after QB1.
-- Canonical manager map exact: 1 Michael, 2 Pascal Voerde, 3 Marc Düsseldorf, 4 Thomas, 5 Björn, 6 Pascal Gelderner, 7 Giuliano, 8 Bastian, 9 Muerotechnik, 10 Dutch Marc.
-- no Michael K / Moers Venom regression.
-- Bigsby/Spears/Dobbins coverage semantics visible; no blind imputation/silent renormalization.
-- selector directly above Analyze; same state reusable under v3/v4/v5.
-- 19:44:43 real-decision backup remains unanalyzed.
-- AUTO does not stop on package completion while useful autonomous work exists.
+- Runtime candidate rc4.115; latest device evidence rc4.114.
+- v4 device acceptance is final evidence: QB32/24, RB83/60, WR91/70, TE30/24.
+- rc4.115 changes v5 construction only: verified v4 individual-only + Koerner 20%; no legacy v3/DS funding dependency.
+- Ranking/source/freshness decisions frozen unless direct source failure proves unusable.
+- v3 remains default/failsafe until challenger comparison/acceptance.
+- Geno/Rodgers organic; exactly one QB after QB1; no K/DST normal recommendations; starter maxima are not roster caps.
+- Canonical managers preserved: Bastian slot 8; user Muerotechnik; Pascal Voerde != Pascal Gelderner; no Michael K/Moers Venom resurrection.
+- Bigsby/Spears/Dobbins missingness explicit; no silent renormalization.
+- 19-44-43 real-decision mock remains unanalyzed.
+- ChatGPT Android app instability/hangs reported at handoff; minimize turns/tool chatter.
+- Pre-handoff CI failures at head a8370f9 were handoff-generation drift only; do not infer runtime regression from them.
 
-Exact gate: `RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE`.
+Exact gate: `RC4.115_DEVICE_V5_ACCEPTANCE` after v189 integrity verification.
