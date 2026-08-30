@@ -234,7 +234,12 @@ function ensureExpertV5Panels(){
     if(dsKey){const take=Math.min(Number(raw[dsKey])||0,need);raw[dsKey]=Math.max(0,(Number(raw[dsKey])||0)-take);need-=take}
     if(need>0){const others=Object.keys(raw).filter(n=>n!==dsKey&&Number(raw[n])>0),sum=others.reduce((z,n)=>z+Number(raw[n]),0);for(const n of others)raw[n]=Math.max(0,Number(raw[n])-need*Number(raw[n])/sum)}
     raw[koerner]=target*100;
-    const weights=normalizeWeights(raw,.30);
+    // v5 is a controlled v3 perturbation: preserve every frozen v3 share except the
+    // explicitly funded Draft-Sharks reduction. Do NOT apply the v4 single-expert cap here,
+    // because that would silently rewrite v3 (notably WR Mariano 35%) and move Koerner
+    // away from the required exact 15 percentage points.
+    const rawTotal=Object.values(raw).reduce((z,w)=>z+(Number(w)||0),0);
+    const weights=Object.fromEntries(Object.entries(raw).filter(([,w])=>Number(w)>0).map(([name,w])=>[name,Number(w)/rawTotal]));
     for(const [key,row] of Object.entries(baseRows)){
       const k=kMap.get(key),vals=[];
       for(const x of row.individual||[]){
