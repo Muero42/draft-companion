@@ -2909,3 +2909,21 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Handoff generation authority: `20260830T1310Z-v193`.
 
 - v193 handoff parity transaction verified: gh-pages fast-forwarded without force to main; compare returned IDENTICAL (ahead 0 / behind 0) on rc4.129 before final reseal. Final reseal commit must be promoted once more so branches remain identical.
+
+
+---
+
+## 2026-08-30 — v194 AUTHORITY · rc4.130 quota-recovery correction
+
+- New backup inspected: **draft-companion-v7-backup-2026-08-30T13-40-34-982Z.json**, draft **1399782216862588928**, app **rc4.129**. It preserves exactly **4 current-draft fixtures = paired v4/v5 at picks 9 and 12**, plus **22 historical fixtures** from draft 1399767853707636736.
+- The visible rc4.129 error was a correct fail-closed signal: active Decision-Evidence persistence failed before any silent current-fixture trimming.
+- Exact rc4.129 root cause found in source: quota recovery iterated historyKeep [90,60,30,0] but used `history.slice(-historyKeep)`. In JavaScript, **slice(-0) === slice(0)**, so the final intended history-free retry retained all history. Under quota pressure it therefore could still fail despite active evidence itself being small enough.
+- **rc4.130** fixes this deterministically: historyKeep=0 maps explicitly to **[]**; active-draft fixtures remain atomic; historical fixtures may be evicted first; rank-cache recovery still may not delete active fixtures; if active-only storage cannot fit, analysis fails visibly rather than trimming. Persisted rankedPool also omits redundant `robustRankShadow` in addition to `panelIndividuals` for more headroom without changing Coach/model semantics.
+- Added deterministic quota regression reproducing historical+active pressure and separately verifying active-only fail-closed atomicity. Existing stale CI assertions uncovered during validation were aligned to already-authoritative current semantics (v3 BASELINE label, compact Overall-only expert display, current v3 profile map/evidence-v3 export); no model weights or football scoring changed.
+- PR #51 merged to **main** as **be161cb1d8898ba1a5ac65a2b5d6ff33b3be4699** after all three required workflows PASS: release contract, project guardrails, candidate package/re-extract.
+- **main == gh-pages IDENTICAL** after fast-forward promotion to the same commit. Runtime authority is now **v11.8.0-rc4.130**; latest fully operational Android/PWA v4/v5 baseline remains **rc4.126** until the next controlled refresh.
+- Model authority unchanged: **v4 PRIMARY / v5 CHALLENGER / v3 failsafe**. No weight/source retune from either incomplete backup.
+- Do not continue the interrupted rc4.129 mock as the acceptance test. Next acceptance must be a **fresh** complete 15-round mock after rc4.130 refresh, with both v4 and v5 analyzed before every own pick and an exported backup containing exactly **30 current-draft fixtures = 15 paired pick states × 2 profiles**.
+- No cache/app-data clearing, reinstall loop, or repeated refresh attempts. One controlled rc4.130 refresh only.
+- Exact next gate: **RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK**.
+- Handoff/checkpoint generation: **20260830T1359Z-v194**.
