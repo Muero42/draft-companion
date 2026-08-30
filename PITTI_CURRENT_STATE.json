@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1822Z-v207",
-  "updated_at": "2026-08-30T19:16:00Z",
+  "updated_at": "2026-08-30T19:18:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -288,5 +288,17 @@
     },
     "screenshot_handoff_audit": "Four screenshots preserve the visible narrative but are not a complete standalone authority because transition text is partly covered/cropped; repo v206 canonical files are authoritative.",
     "discovered_runtime_defect": "LIVE autodraft Return-v2 branch used nonexistent adaptation-state `.mode`; corrected to `.currentMode` before release."
-  }
+  },
+  "pending_after_release": [
+    {
+      "priority": "HIGH",
+      "task": "Reliable tier attribution in app",
+      "detail": "Current embedded row.tier/assignTiers geometry is not sufficient as a trusted external tier signal. Before draft, evaluate and implement a clearly sourced reliable tier layer; do not present synthetic gap tiers as expert tiers."
+    },
+    {
+      "priority": "HIGH",
+      "task": "WR comparison requested",
+      "detail": "Compare Emeka Egbuka, Zay Flowers, Tetairoa McMillan and likely Jaylen Waddle (user accidentally named Egbuka twice) after release work; then rank pure upside separately. Preserve panel baseline and use current injury/role context."
+    }
+  ]
 }
