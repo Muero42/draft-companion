@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-30T17:00:00Z",
+  "updatedAt": "2026-08-30T17:55:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -61,7 +61,8 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.131"
+    "acceptedAndroidAuthority": "v11.8.0-rc4.131",
+    "unreleasedMainDelta": "v203 live-autodraft Return-v2 merged under unchanged rc4.131 label; NOT an accepted release"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -125,7 +126,10 @@
     "incompleteExpertCoverageMustBeAudited": true,
     "genericOnlyTopCandidateDescriptionsMustBeAudited": true,
     "swiftGenericTop1ClosedByRc4131": true,
-    "lamarGenericTop1ClosedByRc4131": true
+    "lamarGenericTop1ClosedByRc4131": true,
+    "rc4132ReleaseRequired": true,
+    "pick32NabersJavonteRosterAware": true,
+    "liveAutodraftReturnV2RegressionRequired": true
   },
   "expertV2": {
     "status": "LEGACY_PRESERVED_SUPERSEDED_FOR_NEW_V4_V5_COMPARISON",
@@ -194,17 +198,16 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "PRE_DRAFT_READINESS_FREEZE",
-    "production": true,
+    "status": "HANDOFF_RC4132_REQUIRED",
+    "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
-    "runtime": "v11.8.0-rc4.131",
-    "mainRuntimeParity": "PASS",
-    "nextGate": "Final freshness/materiality scan; no broad model changes; Swift/Lamar card verification opportunistic."
+    "runtime": "v203 delta unreleased",
+    "nextGate": "Version/test v203 runtime delta as rc4.132 + encode Pick32 Nabers/Javonte roster-aware regression before device deployment."
   },
-  "status": "PRE_DRAFT_FREEZE_CUTDOWN_SCAN_PASS",
-  "gate": "DRAFT_DAY_FRESHNESS",
-  "nextGate": "Draft-day waiver/IR/PUP/materiality scan; no broad retune.",
+  "status": "HANDOFF_RC4132_REQUIRED",
+  "gate": "RC4.132_BUILD_AND_REGRESSION",
+  "nextGate": "Version/test v203 runtime delta as rc4.132 + encode Pick32 Nabers/Javonte roster-aware regression before device deployment.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -236,7 +239,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260830T1700Z-v198",
+  "handoff_generation": "20260830T1755Z-v204",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },

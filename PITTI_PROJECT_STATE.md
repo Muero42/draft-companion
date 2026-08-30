@@ -2994,3 +2994,16 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Final-bench RB utility is explicitly ordered by direct lead-role path, explosive/receiving standalone ceiling, price/return/loss economics and current role/health truth. Floor-only profiles do not get a late-round preference.
 - Tier/opportunity-cost guard revalidated: 1-3 Coach points are a near-tie, not a mandate; at the turn the two-pick portfolio may reorder based on panel quality, tier cliff, alternatives and championship utility. Pick32 Nabers/Javonte remains the regression canary.
 - No rc4.131 scoring/coefficient change is justified. Runtime stays frozen.
+
+
+---
+
+## 2026-08-30 — v204 CRITICAL HANDOFF · rc4.132 required
+
+- User explicitly identified a release inconsistency: v203 changed runtime Return-v2 behavior in app.js but retained the rc4.131 version label. **rc4.131 remains the last accepted Android authority; v203 is an unreleased main/gh-pages runtime delta until versioned and fully released as rc4.132.**
+- New-chat first gate is **RC4.132_BUILD_AND_REGRESSION**, before more generic research.
+- rc4.132 must include the dedicated Sleeper LIVE-autodraft Return-v2 path and a real encoded Pick32 Nabers/Javonte roster-aware correction. After Love, roster WR1/RB2; Nabers v4 panel 26.7 vs Javonte 28.9; observed Coach Javonte100/Nabers98. Adding Love cannot itself justify preferring a third RB. The 1–3 point near-tie must be resolved with replacement/tier/portfolio utility unless a concrete RB scarcity signal exists.
+- Required deterministic regressions: (a) live-autodraft Return-v2 uses Sleeper SearchRank + roster need and leaves mock CPU separate; (b) Pick32 WR1/RB2 canary cannot gain generic third-RB need pressure.
+- Required end-to-end release: rc4.132 version/cache contract -> all three gates PASS -> main -> gh-pages exact parity -> one controlled Android refresh/version observation. No cache clearing/reinstall.
+- v4 PRIMARY / v5 CHALLENGER / v3 failsafe unchanged. Latest backup 16-02-06-862Z remains 29/30 missing pick29 expertv5.
+- Generation: **20260830T1755Z-v204**.
