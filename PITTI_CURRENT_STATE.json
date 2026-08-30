@@ -11,7 +11,7 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.126",
-    "test_challenger": "v11.8.0-rc4.130",
+    "test_challenger": "v11.8.0-rc4.131",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.130 CI PACKAGE/RE-EXTRACT PASS; DEVICE REFRESH PENDING",
     "library_recovery_alias": "v11.8.0-rc4.52",
@@ -33,7 +33,7 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.130 CI PASS; GH-PAGES/MAIN PARITY PASS; DEVICE REFRESH PENDING"
+    "source_candidate": "v11.8.0-rc4.131 DESCRIPTION-QUALITY CANARY; CI PENDING"
   },
   "exact_continuation": {
     "gate": "RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
@@ -156,17 +156,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.130_BACKUP_AUDIT_29_OF_30_V4_PRIMARY",
+    "status": "RC4.131_DESCRIPTION_QUALITY_OFF_DEVICE_VALIDATION",
     "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.130",
-    "runtime": "v11.8.0-rc4.130",
+    "runtime": "v11.8.0-rc4.131",
     "mainRuntimeParity": "PASS",
-    "nextGate": "Keep v4 PRIMARY / v5 CHALLENGER for draft. Use new backup audit on future exports. Do not claim full 30/30 validation from the 16-02-06-862Z backup; exact missing pair is pick29 expertv5."
+    "nextGate": "Off-device validate Swift/Lamar description-only correction; do not deploy until all release gates PASS."
   },
-  "status": "RC4.130_BACKUP_AUDIT_29_OF_30_V4_PRIMARY",
-  "gate": "RC4.130_BACKUP_AUDIT_29_OF_30_NO_MODEL_PROMOTION",
-  "nextGate": "Keep v4 PRIMARY / v5 CHALLENGER for draft. Use new backup audit on future exports. Do not claim full 30/30 validation from the 16-02-06-862Z backup; exact missing pair is pick29 expertv5.",
+  "status": "RC4.131_DESCRIPTION_QUALITY_OFF_DEVICE_VALIDATION",
+  "gate": "RC4.131_OFF_DEVICE_ONLY_NO_DEPLOY",
+  "nextGate": "Off-device validate Swift/Lamar description-only correction; do not deploy until all release gates PASS.",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
