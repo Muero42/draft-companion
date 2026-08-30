@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260830T0653Z-v184",
-  "updated_at": "2026-08-30T06:53:00Z",
+  "handoff_generation": "20260830T0702Z-v185",
+  "updated_at": "2026-08-30T07:02:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -33,12 +33,12 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "main source includes post-rc4.107 v4/v5 acceptance-core hardening; not deployed as a new runtime yet"
+    "source_candidate": "v11.8.0-rc4.108 versioned candidate; package/CI gating in progress; not device accepted"
   },
   "exact_continuation": {
     "gate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "AUTO diagnose and validate v4/v5 source coverage. Device rc4.107 generic refresh PASS and v4/v5 fail-closed disabled state are already observed; do not ask user to repeat. Source acceptance-core hardening is CI-validated except seal-dependent legacy gates; reseal generation v184, then rerun seal-dependent gates before any deployment/version bump."
+    "instruction": "AUTO complete rc4.108 candidate gating. Do not ask user to refresh until package/re-extract, seal-dependent gates and deployment parity PASS."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -56,14 +56,14 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "PITTI AUTO: rc4.107 is deployed on main/gh-pages and observed on device. Immediate gate is Alles aktualisieren on device, then live v4/v5 coverage/Koerner validation and same-state comparison. v3 stays default fail-safe. No old manager-map or QB-name regressions.",
-    "acceptance_fingerprint": "RC4.107-DEPLOYED|DEVICE-OBSERVED|LIVE-REFRESH-PENDING|V3-DEFAULT|V4-V5-FAIL-CLOSED|MANAGER-MAP-CANONICAL|GENO-RODGERS-ORGANIC|DEFERRED-MOCK-19-44-43-NO-ANALYSIS|HANDOFF-v184",
-    "status": "HANDOFF_v184_SOURCE_VALIDATION",
-    "handoff_ready": true,
-    "second_pass_pass": true,
-    "next_action": "Reseal source state and rerun seal-dependent rc4.82/83 gates; then continue v4/v5 source diagnosis. No device action until a separately versioned candidate is fully gated.",
+    "acceptance_fingerprint": "RC4.107-DEPLOYED|DEVICE-OBSERVED|LIVE-REFRESH-PENDING|V3-DEFAULT|V4-V5-FAIL-CLOSED|MANAGER-MAP-CANONICAL|GENO-RODGERS-ORGANIC|DEFERRED-MOCK-19-44-43-NO-ANALYSIS|HANDOFF-v185",
+    "status": "HANDOFF_v185_RC4108_CANDIDATE_GATING",
+    "handoff_ready": false,
+    "second_pass_pass": false,
+    "next_action": "Complete rc4.108 package/re-extract and all gates; update artifact/hash and deploy parity; only then request one device refresh.",
     "gate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE"
   },
-  "source_authority": "v11.8.0-rc4.107",
+  "source_authority": "v11.8.0-rc4.108",
   "package_authority": "v11.8.0-rc4.107",
   "android_version_observed": "v11.8.0-rc4.107",
   "android_functional_verified": false,
