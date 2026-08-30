@@ -2927,3 +2927,20 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - No cache/app-data clearing, reinstall loop, or repeated refresh attempts. One controlled rc4.130 refresh only.
 - Exact next gate: **RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK**.
 - Handoff/checkpoint generation: **20260830T1359Z-v194**.
+
+
+---
+
+## 2026-08-30 — v195 AUTHORITY · backup 16-02-06-862Z quality audit
+
+- New canonical backup inspected: **draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json**, draft **1399782216862588928**, app **v11.8.0-rc4.130**.
+- Exact current-draft evidence: **29 decisionFixtures across all 15 own pick states; 14/15 states are paired v4/v5**. The only missing exact fixture is **pick 29 / expertv5**. Therefore the planned 30/30 promotion gate is **NOT PASS** and must never be relabeled as complete.
+- The missing pick29 fixture is already on rc4.130; the backup alone proves absence, not whether the v5 analysis was never run or otherwise not persisted. Do not fabricate/reconstruct it as exact evidence without a deterministic replay that reproduces the original state.
+- Paired top-choice comparison on the 14 exact pairs: same leader **11/14**. Differences: pick32 v4 Javonte Williams vs v5 Malik Nabers; pick92 v4 Dak Prescott vs v5 Trevor Lawrence; pick129 v4 De'Zhaun Stribling vs v5 Chris Rodriguez. The user's actual choices matched v5 on those three divergences, but user choices are **not ground-truth labels** and may not be used alone to promote v5.
+- Return calibration over paired top-10 rows is essentially tied: Brier v4 **0.09056**, v5 **0.09052**. Top-leader-only Brier favors v4 in this sample (**0.1222** vs **0.1936**), but sample is small and not a standalone model-selection metric.
+- Exact sparse-coverage audit confirms the user's McLaurin concern is material data-quality evidence, not merely UI: Terry McLaurin is **4/6 in both v4 and v5**, missing **Justin Boone + Sean Koerner**. Other top-10 sparse canaries include Lamar Jackson, DJ Moore, Kenny Gainwell, De'Zhaun Stribling, and Tank Bigsby depending on profile. Missingness remains explicit; no blind imputation is permitted.
+- Exact description audit confirms the user's Swift concern: **D'Andre Swift at pick52 is Top-1 under both v4 and v5 while researchEvidence is empty and researchResidual inactive**, so his displayed rationale is generic-only. Across all Top-10 candidate rows: v4 has **34/150** generic-only rows (19 unique players), v5 **28/140** (17 unique players). Top-1 generic-only cases exist in both profiles.
+- Added and merged persistent tool **tools/audit-v45-backup.mjs** with CI self-test. It now audits: 30-fixture pair completeness, exact missing profile/pick, sparse expert coverage + missing identities, generic-only Top-10/Top-1 descriptions, and v4/v5 leader divergences.
+- Current model verdict remains **v4 PRIMARY / v5 CHALLENGER / v3 failsafe**. The 29/30 backup does not provide sufficient new evidence for a last-minute weight/source redesign. No Coach/Return-v2 weights were changed by this audit.
+- Runtime remains **rc4.130**; no new phone update is required solely for the audit tooling.
+- Generation/checkpoint: **20260830T1618Z-v195**.
