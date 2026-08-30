@@ -193,10 +193,10 @@
     "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.126",
     "runtime": "v11.8.0-rc4.129",
-    "mainRuntimeParity": "FINAL_HANDOFF_PARITY_TARGET_PASS_AFTER_PROMOTION",
+    "mainRuntimeParity": "PASS_MAIN_GH_PAGES_RC4129",
     "nextGate": "ONE_DEVICE_REFRESH_THEN_FULL_15_PICK_PAIRED_V4V5_MOCK_AND_30_FIXTURE_BACKUP_GATE"
   },
-  "status": "RC4.129_HANDOFF_READY_DEVICE_REFRESH_PENDING",
+  "status": "RC4.129_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_PENDING",
   "gate": "RC4.129_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
   "nextGate": "Refresh once to rc4.129; run 15-round mock with v4+v5 at every own pick; export backup; require exactly 30 paired fixtures before comparison.",
   "deploymentUpdateContract": {
@@ -208,7 +208,7 @@
   },
   "handoff": {
     "generation": "20260830T1310Z-v193",
-    "status": "PASS_PENDING_RESEAL_IN_TRANSACTION",
+    "status": "PASS",
     "ready": true,
     "secondPass": true,
     "resume": "rc4.129 evidence-retention fix is source authority; rc4.126 device operation already proven. Next full 30-fixture paired mock."
