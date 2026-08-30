@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260829T1951Z-v180",
-  "updated_at": "2026-08-29T19:51:00Z",
+  "handoff_generation": "20260830T0530Z-v181",
+  "updated_at": "2026-08-30T05:30:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -20,20 +20,20 @@
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33293932073,
     "package_reference_artifact_id": 9726805413,
-    "package_reference_note": "rc4.107 candidate package/re-extract PASS; 13 runtime files; independently recomputed inner ZIP SHA-256 adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c; main merged via PR #49; gh-pages exact 13/13 runtime byte parity verified. Android/device acceptance pending.",
+    "package_reference_note": "rc4.107 package/re-extract PASS; 13 runtime files; main merged via PR #49; gh-pages 13/13 runtime parity verified; Android live acceptance pending.",
     "android_version_observed": true,
     "android_functional_verified": true,
-    "freeze_policy": "rc4.106 remains accepted Android/runtime baseline; rc4.107 is pre-draft candidate with manager-map/coverage/v4-v5 fixes, pending package + device acceptance",
-    "test_challenger_android_observed": false,
+    "freeze_policy": "rc4.107 deployed candidate; no further feature work. Only live-source validation, draft-critical fixes and final acceptance.",
+    "test_challenger_android_observed": true,
     "android_acceptance_pending": true,
-    "android_observed": "v11.8.0-rc4.106",
-    "android_functional_acceptance": "SNAPSHOT_AND_PICK9_COACH_BEHAVIOR_PASS",
+    "android_observed": "v11.8.0-rc4.107",
+    "android_functional_acceptance": "PENDING_LIVE_REFRESH_AND_V4_V5_SOURCE_ACCEPTANCE",
     "rollback_reference": "v11.8.0-rc4.96"
   },
   "exact_continuation": {
-    "gate": "EXPERT_V4_V5_COVERAGE_AND_SELECTION",
+    "gate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "Verify v180 authority. Work on research branch pitti/expert-v4-v5-v180. First fix/audit missing-expert coverage semantics (Spears 5 votes vs Bigsby 4 under expert-v3-rb), then complete current individual-expert matrix, build v4 individual-only 4–6 per position and v5 v3+Koerner primarily reducing DS share, validate against v3 before enabling selector or packaging. Do not analyze deferred 19-44-43 real-decision mock yet."
+    "instruction": "Device has rc4.107. Run Alles aktualisieren once, then inspect live expert acquisition/coverage. Validate v4 individual-only and v5 Koerner path against v3 on the same state. Keep v3 default until v4/v5 readiness gates pass. Do not analyze deferred 19-44-43 real-decision mock yet."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -50,19 +50,19 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "PITTI AUTO: rc4.106 accepted baseline; main runtime parity restored after moving staged selector work to pitti/expert-v4-v5-v180. Critical blocker is silent per-player expert coverage inconsistency. v3 frozen; v4 individual-only 4–6; v5 v3+Koerner primarily at DS expense. Deferred real-decision mock 19-44-43 must remain unanalyzed.",
-    "acceptance_fingerprint": "RC4.106-ANDROID-ACCEPTED|MAIN-RUNTIME-PARITY-RESTORED|RESEARCH-BRANCH-pitti/expert-v4-v5-v180|COVERAGE-BLOCKER-SPEARS5-BIGSBY4|V3-FROZEN|V4-INDIVIDUAL-4TO6|V5-V3PLUSKOERNER|DEFERRED-MOCK-19-44-43-NO-ANALYSIS|HANDOFF-v180",
-    "status": "HANDOFF_v180_READY_EXPERT_V4_V5",
+    "resume_semantics": "PITTI AUTO: rc4.107 is deployed on main/gh-pages and observed on device. Immediate gate is Alles aktualisieren on device, then live v4/v5 coverage/Koerner validation and same-state comparison. v3 stays default fail-safe. No old manager-map or QB-name regressions.",
+    "acceptance_fingerprint": "RC4.107-DEPLOYED|DEVICE-OBSERVED|LIVE-REFRESH-PENDING|V3-DEFAULT|V4-V5-FAIL-CLOSED|MANAGER-MAP-CANONICAL|GENO-RODGERS-ORGANIC|DEFERRED-MOCK-19-44-43-NO-ANALYSIS|HANDOFF-v181",
+    "status": "HANDOFF_v181_READY_RC4107_DEVICE_GATE",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Fix missing-expert coverage semantics and complete expert selection research on research branch; then build/validate v4/v5 before activation.",
-    "gate": "EXPERT_V4_V5_COVERAGE_AND_SELECTION"
+    "next_action": "Run Alles aktualisieren on rc4.107 device; evaluate resulting live coverage/Koerner source and same-state v3/v4/v5 behavior.",
+    "gate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE"
   },
-  "source_authority": "v11.8.0-rc4.106",
-  "package_authority": "v11.8.0-rc4.106",
-  "android_version_observed": "v11.8.0-rc4.106",
-  "android_functional_verified": true,
-  "deployment_authority": "v11.8.0-rc4.106",
+  "source_authority": "v11.8.0-rc4.107",
+  "package_authority": "v11.8.0-rc4.107",
+  "android_version_observed": "v11.8.0-rc4.107",
+  "android_functional_verified": false,
+  "deployment_authority": "v11.8.0-rc4.107",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
@@ -73,13 +73,13 @@
     "operational_freeze": "~19:50",
     "transaction_rule": "same-position claim/signing is weak Bayesian evidence only; correlate with pre-existing injury/role uncertainty and seek corroboration; uncorroborated signal may only break close ties"
   },
-  "android_acceptance_pending": false,
+  "android_acceptance_pending": true,
   "expert_v4_v5": {
-    "research_branch": "pitti/expert-v4-v5-v180",
-    "v3": "frozen baseline selectable",
-    "v4": "individual-only, 4–6 per position, DS excluded for attribution ambiguity",
-    "v5": "v3 + Koerner, primarily reduce DS share, position-specific",
-    "coverage_blocker": "expert-v3-rb differs by player: Spears panelN5 incl DS; Bigsby panelN4 without DS; fix missingness semantics before activation",
-    "koerner": "current 2026 FantasyPros ranking visible in 2026-08-29 user screenshots; old paywall-only assumption superseded; import/coverage pending verification"
+    "research_branch": "pitti/expert-v4-v5-v180 historical implementation branch; merged to main via PR #49",
+    "v3": "frozen baseline/default/selectable",
+    "v4": "individual-only; live-current verified rows only; DS excluded; position cores QB24/RB60/WR70/TE24; fail-closed until complete",
+    "v5": "v3 + Sean Koerner; primarily DS-funded, position-specific; fail-closed on missing Koerner or DS funding/crosscheck",
+    "coverage_blocker": "device live refresh pending; historical Bigsby/Spears missingness root is fixed/visible, not silently normalized",
+    "koerner": "pairwise official FantasyPros API recovery implemented with exact-two-expert gate and Compare Players crosscheck; live success still pending device refresh"
   }
 }
