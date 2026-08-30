@@ -2659,3 +2659,9 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Dedicated analysis selector after refresh still shows: `v3 · Baseline` enabled/selected; `v4 · Individual-only (Audit läuft)` disabled; `v5 · Hybrid + Koerner (Audit läuft)` disabled.
 - Therefore the rc4.108 readiness-core code fix did **not** by itself make either challenger ready. This is useful negative evidence: do not weaken gates further and do not repeat the same UI/refresh test. Remaining problem is upstream live source/coverage acquisition (and/or source depth), especially Koerner for v5, not selector wiring.
 - v3 remains production/default authority. Next AUTO work is source-level diagnosis of which required v4 experts fail `EXPERT_DECISION_CORE_MIN` after live acquisition and why; v5 cannot pass until v4 does plus Koerner coverage.
+
+
+### 2026-08-30 — rc4.108 negative evidence exposed remaining v4 blocker
+- Static re-audit after device screenshots found the previous readiness repair was only partial: `expertProfileReady()` correctly used COMPLETE rows, but `ensureExpertV4Panels()` still independently rejected the first N **aggregate** rows when any was incomplete. That stale second gate could keep v4 disabled before the corrected shared readiness rule had authority.
+- Removed only that duplicate/circular aggregate-core gate. Per-expert positional source-depth minimum remains strict; incomplete rows remain explicit; final v4 readiness now delegates to the shared COMPLETE-row decision-core rule. v5 semantics unchanged.
+- This is a concrete code-path cause consistent with rc4.108 device behavior; no further relaxation is authorized. Must pass full CI before version/deploy.
