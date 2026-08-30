@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260830T1700Z-v198",
-  "updated_at": "2026-08-30T17:00:00Z",
+  "handoff_generation": "20260830T1755Z-v204",
+  "updated_at": "2026-08-30T17:55:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -16,7 +16,7 @@
     "latest_package_reextract": "v11.8.0-rc4.131 CI PACKAGE/RE-EXTRACT PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
-    "deployed_pages": "v11.8.0-rc4.131",
+    "deployed_pages": "UNRELEASED v203 code under rc4.131 label; NOT accepted phone authority",
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33305284763,
     "package_reference_artifact_id": 9730250635,
@@ -33,7 +33,7 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.131 CI PASS; main/gh-pages parity PASS; Android version observed"
+    "source_candidate": "UNRELEASED_RUNTIME_DELTA_ON_MAIN: v203 live-autodraft Return-v2 code merged while version string remains rc4.131; must be versioned/tested as rc4.132 before phone use"
   },
   "exact_continuation": {
     "gate": "PRE_DRAFT_READINESS_FREEZE",
@@ -55,19 +55,15 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "rc4.131 Android version observed and source/deployment parity PASS; v4 PRIMARY / v5 CHALLENGER.",
-    "acceptance_fingerprint": "CURRENT|RC4130|V4-PRIMARY|V5-CHALLENGER|ZERO-HISTORY-RECOVERY-FIXED|ACTIVE-EVIDENCE-ATOMIC|30-FIXTURE-GATE|NO-TRIAL-ERROR|AUTO-SILENT|STATUS-REPORT-ONLY",
     "status": "PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Final pre-draft freshness/materiality work; no broad model changes. Swift/Lamar card canaries opportunistic only.",
-    "gate": "PRE_DRAFT_READINESS_FREEZE",
-    "seal_status": "PASS",
-    "seal_generation": "20260830T1645Z-v197",
-    "generation": "20260830T1645Z-v197",
-    "ready": true,
-    "secondPass": true,
-    "resume": "rc4.131 Android version observed. Continue pre-draft readiness; no new mock solely for display correction."
+    "generation": "20260830T1755Z-v204",
+    "seal_generation": "20260830T1755Z-v204",
+    "gate": "RC4.132_BUILD_AND_REGRESSION",
+    "next_action": "Build rc4.132 containing live-autodraft Return-v2 plus Pick32 Nabers/Javonte roster-aware near-tie fix; full gates then device verification.",
+    "resume": "Start with rc4.132 build/regressions. Do not continue freshness-only work first; runtime release inconsistency is priority.",
+    "resume_semantics": "rc4.131 is last accepted Android authority; v203 main/gh-pages runtime delta is unreleased until rc4.132."
   },
   "source_authority": "v11.8.0-rc4.131",
   "package_authority": "v11.8.0-rc4.117 run 33305284763 artifact 9730250635",
@@ -156,17 +152,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "PRE_DRAFT_FREEZE_CUTDOWN_SCAN_PASS",
-    "production": true,
+    "status": "HANDOFF_RC4132_REQUIRED",
+    "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
-    "runtime": "v11.8.0-rc4.131",
-    "mainRuntimeParity": "PASS",
-    "nextGate": "Draft-day waiver/IR/PUP/materiality scan; no broad retune."
+    "runtime": "v11.8.0-rc4.131 accepted Android; v203 runtime delta unreleased",
+    "mainRuntimeParity": "main==gh-pages at v203 code",
+    "nextGate": "Build rc4.132 containing live-autodraft Return-v2 plus Pick32 Nabers/Javonte roster-aware near-tie fix; full gates then device verification."
   },
-  "status": "PRE_DRAFT_FREEZE_CUTDOWN_SCAN_PASS",
-  "gate": "DRAFT_DAY_FRESHNESS",
-  "nextGate": "Draft-day waiver/IR/PUP/materiality scan; no broad retune.",
+  "status": "HANDOFF_RC4132_REQUIRED",
+  "gate": "RC4.132_BUILD_AND_REGRESSION",
+  "nextGate": "Build rc4.132 containing live-autodraft Return-v2 plus Pick32 Nabers/Javonte roster-aware near-tie fix; full gates then device verification.",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
@@ -182,5 +178,27 @@
       12
     ],
     "latestBackupHistoricalFixtures": 22
+  },
+  "critical_handoff": {
+    "rc4132_required": true,
+    "reason": "v203 changed runtime Return-v2 behavior without version bump; user correctly required a real release. Also close Pick32 Nabers/Javonte portfolio defect must be fixed, not merely interpreted manually.",
+    "requirements": [
+      "version runtime to v11.8.0-rc4.132",
+      "retain dedicated LIVE autodraft opponent path using Sleeper SearchRank + roster need; mock CPU remains separate",
+      "add deterministic regression for Pick32 after Love: roster WR1/RB2; generic RB need may not make third RB beat Nabers absent concrete tier/loss scarcity",
+      "add deterministic live-autodraft Return-v2 regression",
+      "run release contract + project guardrails + candidate package/re-extract",
+      "merge main; fast-forward gh-pages; verify byte parity",
+      "one controlled Android refresh; visible rc4.132 verification; no cache clear/reinstall"
+    ],
+    "canary": {
+      "pick": 32,
+      "roster": "WR1/RB2 after Jeremiyah Love",
+      "v4Panel": "Nabers 26.7 vs Javonte 28.9",
+      "badObserved": "Javonte Coach100 vs Nabers98",
+      "required": "Nabers must not lose solely because of generic RB need; 1-3 points is near-tie and portfolio/replacement-aware logic must be encoded/tested."
+    },
+    "modelAuthority": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
+    "latestBackup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json remains 29/30; missing pick29 expertv5"
   }
 }
