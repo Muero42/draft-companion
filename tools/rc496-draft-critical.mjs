@@ -127,4 +127,10 @@ if(Number(activeVersion)>=133){
   assert.match(app,/medianReturn-x\.ret\)\*4,-2,2/,'rc4.133 board-relative Return cap missing');
   assert.match(app,/norm\('A\.J\. Brown'\).*alpha_role_rebound/,'rc4.133 AJ Brown individual evidence missing');
 }
+if(Number(activeVersion)>=135){
+  for(const n of ['DeVonta Smith','Zay Flowers','Malik Nabers','Colston Loveland']){
+    const needle="[norm('"+n+"')]:{expiresAt:Date.parse('2026-09-02T12:00:00Z')";
+    assert.ok(app.includes(needle),'rc4.135 live-visible evidence expiry missing for '+n);
+  }
+}
 console.log('RC496_DRAFT_CRITICAL_PASS'); // rc4.133 gate trigger // rc4.132 release-gate trigger
