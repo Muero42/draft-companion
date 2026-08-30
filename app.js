@@ -119,10 +119,12 @@ function ensureExpertV3Panels(){
         const oldBase=Number(base.weights?.[pos]?.[e.expertName]);
         const newBase=Number(weights?.[e.expertName]);
         if(Number.isFinite(oldBase)&&oldBase>0&&Number.isFinite(newBase)&&newBase>=0)ew*=newBase/oldBase;
-        vals.push({expertName:e.expertName,rank:Number(e.rank),effectiveWeight:ew,reconstructed:!!e.reconstructed,spread:e.spread??null});
+        // Frozen v3 math remains unchanged, but preserve rank semantics explicitly:
+        // these historical board ranks are position ranks, not published Overall ranks.
+        vals.push({expertName:e.expertName,rank:Number(e.rank),posRank:Number(e.posRank??e.rank),overallRank:Number.isFinite(Number(e.overallRank))?Number(e.overallRank):null,effectiveWeight:ew,reconstructed:!!e.reconstructed,spread:e.spread??null});
       }
       const cw=Number(weights[spec.name]||0);
-      if(Number.isFinite(cr)&&cw>0)vals.push({expertName:spec.name,rank:cr,effectiveWeight:cw,reconstructed:false,spread:null});
+      if(Number.isFinite(cr)&&cw>0)vals.push({expertName:spec.name,rank:cr,posRank:cr,overallRank:null,effectiveWeight:cw,reconstructed:false,spread:null});
       const present=new Set(vals.map(e=>e.expertName));
       const missing=intendedExperts.filter(name=>!present.has(name));
       const sw=vals.reduce((sum,e)=>sum+e.effectiveWeight,0);
@@ -235,7 +237,7 @@ function ensureExpertV5Panels(){
         const w=Number(weights[x.expertName]);if(!(w>0)||!Number.isFinite(Number(x.rank)))continue;
         vals.push({...x,effectiveWeight:w});
       }
-      if(k&&Number(weights[koerner])>0)vals.push({expertName:koerner,rank:Number(k.posRank??k.rank),posRank:Number(k.posRank??k.rank),overallRank:Number(k.overallRank??k.rank),effectiveWeight:Number(weights[koerner]),reconstructed:false,spread:null});
+      if(k&&Number(weights[koerner])>0)vals.push({expertName:koerner,rank:Number(k.posRank??k.rank),posRank:Number(k.posRank??k.rank),overallRank:Number.isFinite(Number(k.overallRank))?Number(k.overallRank):null,effectiveWeight:Number(weights[koerner]),reconstructed:false,spread:null});
       const intended=Object.keys(weights).filter(n=>weights[n]>0),present=new Set(vals.map(x=>x.expertName)),missing=intended.filter(n=>!present.has(n)),sw=vals.reduce((z,x)=>z+Number(x.effectiveWeight||0),0);
       if(!sw)continue;
       const mean=vals.reduce((z,x)=>z+Number(x.rank)*Number(x.effectiveWeight||0),0)/sw,variance=vals.reduce((z,x)=>z+Number(x.effectiveWeight||0)*(Number(x.rank)-mean)**2,0)/sw;
@@ -259,10 +261,11 @@ function expertProfileReady(id){
     if(id==='expertv3')return Object.values(rows).every(row=>row?.coverageStatus==='COMPLETE'||!('coverageStatus' in row));
     const need=EXPERT_DECISION_CORE_MIN[pos];
     if(id==='expertv5'){
-      // v5 intentionally inherits v3's historical sparse/right-censored rows. Its builder
-      // already fail-closes missing experts per player and proves source depth separately.
-      // Requiring COMPLETE overlap here would contradict that policy and permanently lock v5.
-      return Object.values(rows).filter(row=>Number.isFinite(Number(row?.rank))).length>=need;
+      // v5 inherits v3's intentionally sparse historical board. Source validity is proved by
+      // a successful v5 build plus a usable position core; per-player missingness remains
+      // explicit and never becomes an invented vote.
+      const usable=Object.values(rows).filter(row=>Number.isFinite(Number(row?.rank))).length;
+      return usable>=need;
     }
     // v4 is individual-only and its decision core must have full intended-expert overlap.
     const complete=Object.values(rows).filter(row=>row?.coverageStatus==='COMPLETE').sort((a,b)=>Number(a.rank)-Number(b.rank));
