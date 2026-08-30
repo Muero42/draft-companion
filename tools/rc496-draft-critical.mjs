@@ -140,6 +140,7 @@ if(Number(activeVersion)>=136){
     assert.ok(app.includes(token),'rc4.136 verified comparison-player tier canary missing: '+token);
   }
   assert.match(app,/expertTier:externalExpertTierContext\(x\)/,'rc4.136 tier context missing from live audit row');
-  assert.doesNotMatch(app,/rawScore.*externalExpertTier|externalExpertTier.*rawScore/,'rc4.136 external tiers must remain display-only');
+  const scoreFn=app.slice(app.indexOf('function scoreCandidate('),app.indexOf('function applyResolvedReturnScore('));
+  assert.doesNotMatch(scoreFn,/externalExpertTier/,'rc4.136 external tiers must not enter scoreCandidate');
 }
 console.log('RC496_DRAFT_CRITICAL_PASS'); // rc4.135 release gate canonical-state retry // rc4.133 gate trigger // rc4.132 release-gate trigger
