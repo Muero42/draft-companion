@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-30T13:59:00Z",
+  "updatedAt": "2026-08-30T16:18:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -120,7 +120,10 @@
     "activeDraftDecisionFixturesNeverQuotaPruned": true,
     "fullPairedMockRequires30Fixtures": true,
     "backupSerializationIsPassThroughForDecisionFixtures": true,
-    "rc4130ZeroHistoryRecoveryActuallyEmpty": true
+    "rc4130ZeroHistoryRecoveryActuallyEmpty": true,
+    "backupQualityAuditRequired": true,
+    "incompleteExpertCoverageMustBeAudited": true,
+    "genericOnlyTopCandidateDescriptionsMustBeAudited": true
   },
   "expertV2": {
     "status": "LEGACY_PRESERVED_SUPERSEDED_FOR_NEW_V4_V5_COMPARISON",
@@ -189,17 +192,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
+    "status": "RC4.130_BACKUP_AUDIT_29_OF_30_V4_PRIMARY",
     "production": false,
-    "androidVerified": false,
-    "acceptedAndroidFallback": "v11.8.0-rc4.126",
+    "androidVerified": true,
+    "acceptedAndroidFallback": "v11.8.0-rc4.130",
     "runtime": "v11.8.0-rc4.130",
-    "mainRuntimeParity": "PASS_MAIN_GH_PAGES_RC4130",
-    "nextGate": "ONE_DEVICE_REFRESH_THEN_FRESH_15_PICK_PAIRED_V4V5_MOCK_AND_30_FIXTURE_BACKUP_GATE"
+    "mainRuntimeParity": "PASS",
+    "nextGate": "Draft authority remains v4 PRIMARY / v5 CHALLENGER. Missing expertv5 fixture at pick29 prevents 30/30 promotion claim."
   },
-  "status": "RC4.130_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_PENDING",
-  "gate": "RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
-  "nextGate": "Refresh once to rc4.130; run a fresh 15-round mock with v4+v5 before every own pick; export backup; require exactly 30 fixtures.",
+  "status": "RC4.130_BACKUP_AUDIT_29_OF_30_V4_PRIMARY",
+  "gate": "RC4.130_BACKUP_AUDIT_29_OF_30_NO_MODEL_PROMOTION",
+  "nextGate": "Draft authority remains v4 PRIMARY / v5 CHALLENGER. Missing expertv5 fixture at pick29 prevents 30/30 promotion claim.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -208,11 +211,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260830T1359Z-v194",
+    "generation": "20260830T1618Z-v195",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.130 fixes the rc4.129 slice(-0) history-retention bug; after one device refresh run a fresh full paired 30-fixture mock."
+    "resume": "rc4.130 runtime stays frozen; latest backup audit is 29/30, exact missing pair pick29 expertv5; v4 PRIMARY retained."
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER_DEVICE_OPERATIONAL_RC4126; RC4129_EVIDENCE_RETENTION_ACCEPTANCE_PENDING",
@@ -231,7 +234,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260830T1359Z-v194",
+  "handoff_generation": "20260830T1618Z-v195",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -247,14 +250,16 @@
     "silentActivePersistFailureForbidden": true,
     "expectedFullDraftPairs": 15,
     "expectedFullDraftFixtures": 30,
-    "latestBackup": "draft-companion-v7-backup-2026-08-30T13-40-34-982Z.json",
+    "latestBackup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json",
     "latestBackupCurrentDraft": "1399782216862588928",
-    "latestBackupCurrentPairs": [
-      9,
-      12
-    ],
-    "latestBackupCurrentFixtureCount": 4,
+    "latestBackupCurrentPairs": 14,
+    "latestBackupCurrentFixtureCount": 29,
     "latestBackupHistoricalFixtureCount": 22,
-    "rc4129RootCause": "history.slice(-0) retained all history; final quota retry was not history-free"
+    "rc4129RootCause": "history.slice(-0) retained all history; final quota retry was not history-free",
+    "missingExactPair": {
+      "pick": 29,
+      "profile": "expertv5"
+    },
+    "qualityAuditTool": "tools/audit-v45-backup.mjs"
   }
 }

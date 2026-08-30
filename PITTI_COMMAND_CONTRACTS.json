@@ -113,7 +113,8 @@
     "active-draft decisionFixtures trimmed or deleted under quota pressure",
     "silent failure to persist active-draft v4/v5 evidence",
     "treating a backup with fewer than 30 paired fixtures as a complete 15-pick v4/v5 test",
-    "JavaScript slice(-0) treated as zero-history eviction; historyKeep=0 must map explicitly to []"
+    "JavaScript slice(-0) treated as zero-history eviction; historyKeep=0 must map explicitly to []",
+    "treating 29/30 fixture backup as full v4/v5 promotion evidence"
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.126 device-observed operational baseline",
@@ -123,15 +124,15 @@
     "deployedPagesVersion": "v11.8.0-rc4.130",
     "deployedPagesAppByteParityWithMain": true,
     "researchBranch": "main; historical expert research branches retained only as provenance",
-    "currentResearchGate": "RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
-    "exactNextAction": "One device refresh to rc4.130; then start a fresh realistic 15-round mock analyzing expertv4 and expertv5 before every own pick; export backup and require exactly 30 paired decisionFixtures before model comparison.",
+    "currentResearchGate": "RC4.130_BACKUP_AUDIT_29_OF_30_NO_MODEL_PROMOTION",
+    "exactNextAction": "Keep rc4.130 and v4 PRIMARY for draft; use tools/audit-v45-backup.mjs on future exports. Latest backup is 29/30 with exact missing pick29 expertv5.",
     "deferredRealDecisionMock": "draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json — DO NOT ANALYZE UNTIL USER LIFTS RESTRICTION",
     "runtimeVersion": "v11.8.0-rc4.130",
-    "latestEvidenceBackup": "draft-companion-v7-backup-2026-08-30T13-40-34-982Z.json — current draft has only 2/15 exact paired states (picks 9/12; 4 fixtures) plus 22 historical fixtures; rc4.129 fail-closed storage error exposed slice(-0) recovery bug"
+    "latestEvidenceBackup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json — 29 fixtures / 15 states / 14 pairs; missing pick29 expertv5"
   },
-  "currentGate": "RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
-  "handoffGeneration": "20260830T1359Z-v194",
-  "handoff_generation": "20260830T1359Z-v194",
+  "currentGate": "RC4.130_BACKUP_AUDIT_29_OF_30_NO_MODEL_PROMOTION",
+  "handoffGeneration": "20260830T1618Z-v195",
+  "handoff_generation": "20260830T1618Z-v195",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
