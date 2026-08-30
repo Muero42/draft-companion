@@ -2863,3 +2863,13 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - rc4.127 adds a row sanitizer keyed to the exact panel weights, removes any expert not intended for that panel, recomputes the row from allowed experts, marks missing intended experts explicitly, and makes v4/v5 readiness fail if a panel contains unexpected membership.
 - Live decision rows now carry intendedExperts from the exact panel used. Compact cards bind to this row-local set, not mutable global selector/profile state; a missing expected expert renders #– rather than being silently replaced by another position's expert.
 - Regression reproduction PASS for the exact screenshot pattern: Ryan Weisse removed from v5-WR, Justin Boone surfaced as missing, allowed row recomputed from the five valid voices. Syntax/version/cache checks PASS.
+
+
+### PITTI AUTO evidence — backup 2026-08-30T12-25-45-079Z
+- Source file: draft-companion-v7-backup-2026-08-30T12-25-45-079Z.json (backup version rc4.126, draft 1399717172212695040, mock, slot 9).
+- This is the first clean paired v4/v5 evidence set preserved by the profile-aware fixture key: 18 decision fixtures = 9 own-pick states × both expertv4 and expertv5, covering own picks 69, 72, 89, 92, 109, 112, 129, 132, 149.
+- Same real/user choice is resolved against both profiles at every paired state. Shared top recommendation between v4/v5 at 6/9 states (Daniels, Corum, Reed, Johnston, Diggs plus same top at pick 69); late-board differences become materially larger.
+- Chosen-player ranks (v4 vs v5): Carnell Tate 5/4; Jayden Daniels 1/1; Blake Corum 1/1; Jayden Reed 1/1; Quentin Johnston 1/1; Stefon Diggs 1/1; Zach Charbonnet 8/8; Jonah Coleman 3/5; Tank Bigsby 9/4.
+- Return-v2 retrospective through pick 149, excluding the user's own chosen player as censored: on 107 common candidate/pick pairs v4 Brier 0.0815 vs v5 0.0827; on top-5 candidates v4 0.0963 vs v5 0.1045 (33 observations each). Across each model's full 120 candidate observations, composition differs and v5 is 0.0775 vs v4 0.0887, so this unpaired figure is NOT a clean head-to-head result.
+- Interpretation: paired/calibration evidence currently gives a slight edge to v4; v5 does not justify replacing v4 yet. v5 can better surface some late upside choices (notably Tank Bigsby #4 vs v4 #9), but Jonah Coleman moved the wrong way (#5 vs v4 #3). Keep v4 primary and v5 challenger until more paired full-draft evidence exists.
+- Do not tune weights from this 9-state sample alone. Preserve the backup for post-draft comparison and combine it with subsequent paired rc4.125+ evidence.
