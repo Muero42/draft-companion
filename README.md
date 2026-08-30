@@ -1,13 +1,13 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Current source/package candidate:** v11.8.0-rc4.112; **device-observed authority:** v11.8.0-rc4.111 diagnostic evidence only. rc4.112 adds a verified Nick Mariano Half-PPR source adapter from his current RotoBaller overall board.
-> **rc4.112 scope:** Mariano source resolution only; rc4.111 quota fix retained. No ranking/Return/expert weighting/readiness semantic change.
-> **Deployment/device:** rc4.112 is NOT deployed/device authority while off-device gates run. Do not request device interaction before all gates pass.
+> **Current source/package candidate:** v11.8.0-rc4.113; **device-observed authority:** v11.8.0-rc4.111 diagnostic evidence only. rc4.113 fixes configured v4/v5 expert identity plumbing; approved ranking sources are frozen.
+> **rc4.113 scope:** configured-expert identity resolution only; rc4.111 quota fix and established expert ranking/source decisions retained. No ranking/Return/expert weighting semantic change.
+> **Deployment/device:** rc4.113 is NOT device authority while off-device gates run. Do not request device interaction before all gates pass.
 > **Fallback:** v3 remains default/failsafe; rc4.110 is diagnostic evidence, not accepted v4/v5 authority.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
 > **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
 > **rc4.100 scope:** generic Pro/Contra semantic hardening + bounded short-turn portfolio ordering; no global ranking/Return/expert retune, no hard WR cap/quota.
-> **Current gate:** RC4.112_FULL_OFFDEVICE_ACCEPTANCE.
+> **Current gate:** RC4.113_FULL_OFFDEVICE_ACCEPTANCE.
 > **Current gate:** RC4106_ANDROID_DISPLAY_ACCEPTANCE.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
