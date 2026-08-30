@@ -3,6 +3,7 @@ import vm from 'node:vm';
 
 const app=fs.readFileSync('app.js','utf8');
 const live=fs.readFileSync('live-surface-v3.js','utf8');
+const v3src=fs.readFileSync('expert-v3-board.js','utf8');
 
 const must=(s,x,msg)=>{if(!s.includes(x))throw new Error(msg+': '+x)};
 must(app,"const APP_VERSION='v11.8.0-rc4.127'",'version');
@@ -17,7 +18,7 @@ if(v5Start<0||v5End<0)throw new Error('v5 block missing');
 const v5=app.slice(v5Start,v5End);
 must(v5,"const v3Id=EXPERT_PROFILE_IDS.expertv3[pos]",'v5 baseline map');
 must(app,"expertv3:{QB:'expert-v3-qb',RB:'expert-v3-rb',WR:'expert-v2-wr',TE:'expert-v3-te'}",'v3 WR baseline');
-must(app,"WR:null",'v3 WR unchanged marker');
+must(v3src,"WR:null",'v3 WR unchanged marker');
 
 // Execute sanitizer against the exact failure pattern seen on device.
 const start=app.indexOf('function sanitizeExpertPanelRow');
