@@ -10,9 +10,9 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.126",
+    "android_authority": "v11.8.0-rc4.131",
     "test_challenger": "v11.8.0-rc4.131",
-    "test_challenger_android_verified": false,
+    "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.130 CI PACKAGE/RE-EXTRACT PASS; DEVICE REFRESH PENDING",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
@@ -156,17 +156,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.131_DESCRIPTION_QUALITY_DEPLOYED_DEVICE_REFRESH_PENDING",
+    "status": "RC4.131_ANDROID_VERSION_VERIFIED",
     "production": false,
-    "androidVerified": false,
-    "acceptedAndroidFallback": "v11.8.0-rc4.130",
+    "androidVerified": true,
+    "acceptedAndroidFallback": "v11.8.0-rc4.131",
     "runtime": "v11.8.0-rc4.131",
     "mainRuntimeParity": "PASS",
-    "nextGate": "One controlled refresh to rc4.131; verify visible version and Swift/Lamar player-specific card text. No new mock required solely for this display-data correction."
+    "nextGate": "Verify Swift/Lamar player-specific rationale opportunistically; no additional mock solely for rc4.131. Continue remaining pre-draft readiness work."
   },
-  "status": "RC4.131_DESCRIPTION_QUALITY_DEPLOYED_DEVICE_REFRESH_PENDING",
-  "gate": "RC4.131_ONE_CONTROLLED_DEVICE_REFRESH",
-  "nextGate": "One controlled refresh to rc4.131; verify visible version and Swift/Lamar player-specific card text. No new mock required solely for this display-data correction.",
+  "status": "RC4.131_ANDROID_VERSION_VERIFIED",
+  "gate": "RC4.131_CARD_CANARY_VERIFY",
+  "nextGate": "Verify Swift/Lamar player-specific rationale opportunistically; no additional mock solely for rc4.131. Continue remaining pre-draft readiness work.",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
