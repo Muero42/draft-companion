@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.114';
+const APP_VERSION='v11.8.0-rc4.115';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -205,25 +205,23 @@ function ensureExpertV4Panels(){
 function ensureExpertV5Panels(){
   const koerner='Sean Koerner';let ok=true;
   for(const pos of ['QB','RB','WR','TE']){
-    const baseId=EXPERT_PROFILE_IDS.expertv3[pos],baseRows=panelRanks[baseId]||{},kRows=verifiedRowsForExpert(koerner,pos);
+    const v4Id='expert-v4-'+pos.toLowerCase(),baseRows=panelRanks[v4Id]||{},kRows=verifiedRowsForExpert(koerner,pos);
     if(kRows.length<EXPERT_DECISION_CORE_MIN[pos]||!Object.keys(baseRows).length){ok=false;continue}
     const kMap=new Map(kRows.map(x=>[norm(x.name),x])),ranks={};
     for(const [key,row] of Object.entries(baseRows)){
       const k=kMap.get(key),baseInd=(row.individual||[]).map(x=>({...x}));
       if(!k){ranks[key]={...row,intendedN:(row.intendedN||baseInd.length)+1,coverageStatus:'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN',missingExperts:[...new Set([...(row.missingExperts||[]),koerner])]};continue}
-      const ds=baseInd.find(x=>x.expertName==='Draft Sharks Team');
-      // v5 is deliberately minimal-invasive: Koerner is funded primarily from DS Team.
-      // If the base row has no explicit DS contribution, do NOT add Koerner on top and
-      // accidentally overweight the row; fail closed for that player instead.
-      if(!ds||Number(ds.effectiveWeight||0)<=0){ranks[key]={...row,intendedN:(row.intendedN||baseInd.length)+1,coverageStatus:'INCOMPLETE_V5_NO_DS_FUNDING',missingExperts:[...new Set([...(row.missingExperts||[]),'Draft Sharks Team funding'])]};continue}
-      const transfer=Math.min(.20,Number(ds.effectiveWeight||0));
-      const vals=baseInd.map(x=>x.expertName==='Draft Sharks Team'?{...x,effectiveWeight:Number(x.effectiveWeight)-transfer}:x);
-      vals.push({expertName:koerner,rank:Number(k.rank),effectiveWeight:transfer,reconstructed:false,spread:null});
+      // v5 is a true hybrid of the newly verified individual-only v4 panel plus Koerner.
+      // Fund Koerner proportionally from v4 rather than requiring the legacy v3 Draft Sharks
+      // aggregate, which made v5 structurally incapable of exceeding v3's sparse coverage.
+      const koernerWeight=.20,scale=1-koernerWeight;
+      const vals=baseInd.map(x=>({...x,effectiveWeight:Number(x.effectiveWeight||0)*scale}));
+      vals.push({expertName:koerner,rank:Number(k.rank),effectiveWeight:koernerWeight,reconstructed:false,spread:null});
       const sw=vals.reduce((a,x)=>a+Number(x.effectiveWeight||0),0),mean=vals.reduce((a,x)=>a+x.rank*Number(x.effectiveWeight||0),0)/sw;
       const variance=vals.reduce((a,x)=>a+Number(x.effectiveWeight||0)*(x.rank-mean)**2,0)/sw;
       ranks[key]={...row,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,intendedN:(row.intendedN||baseInd.length)+1,coverage:vals.length/((row.intendedN||baseInd.length)+1),coverageStatus:(row.missingExperts||[]).length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',missingExperts:[...(row.missingExperts||[])],individual:vals.sort((a,b)=>a.rank-b.rank)};
     }
-    assignTiers(ranks);panelRanks['expert-v5-'+pos.toLowerCase()]=ranks;panels['expert-v5-'+pos.toLowerCase()]={name:'Expert-v5 '+pos,members:{},shadow:true,source:'v3 + verified Sean Koerner',coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};
+    assignTiers(ranks);panelRanks['expert-v5-'+pos.toLowerCase()]=ranks;panels['expert-v5-'+pos.toLowerCase()]={name:'Expert-v5 '+pos,members:{},shadow:true,source:'verified v4 individual-only + verified Sean Koerner',coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};
   }
   return ok&&expertProfileReady('expertv5');
 }
