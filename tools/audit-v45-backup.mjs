@@ -55,7 +55,10 @@ function auditBackup(d){
   for(const pick of pairedPicks){
     const a=byPick.get(pick).get('expertv4'),b=byPick.get(pick).get('expertv5');
     const ta=a?.candidates?.[0]||null,tb=b?.candidates?.[0]||null;
-    topDiffs.push({pick,v4:ta?{name:ta.name,score:ta.coachScore??null,panel:ta.panelRank??null}:null,v5:tb?{name:tb.name,score:tb.coachScore??null,panel:tb.panelRank??null}:null,sameTop:!!ta&&!!tb&&norm(ta.name)===norm(tb.name),chosen:a?.chosenPlayer?.name||b?.chosenPlayer?.name||null});
+    const roster=Array.isArray(a?.userRoster)?a.userRoster:(Array.isArray(b?.userRoster)?b.userRoster:[]);
+    const rosterCounts=roster.reduce((m,x)=>{const p=String(x?.pos||'').toUpperCase();if(p)m[p]=(m[p]||0)+1;return m},{});
+    const diag=x=>x?{name:x.name,pos:x.pos||null,score:x.coachScore??null,panel:x.panelRank??null,returnProb:x.returnProb??null,reasons:Array.isArray(x.reasons)?x.reasons.filter(r=>/Need|Return|Loss if gone|Tier-Drop|Positions-Alternativen/i.test(String(r))):[]}:null;
+    topDiffs.push({pick,rosterCounts,v4:diag(ta),v5:diag(tb),sameTop:!!ta&&!!tb&&norm(ta.name)===norm(tb.name),chosen:a?.chosenPlayer?.name||b?.chosenPlayer?.name||null});
   }
 
   return {
@@ -74,6 +77,7 @@ if(selfTest){
   if(r.pairGate.actualFixtures!==2||r.pairGate.pairedPickStates!==1)throw new Error('pair self-test failed');
   if(r.coverageAudit.sparseTop10Count!==1||r.coverageAudit.sparseTop10[0].missingExperts.length!==2)throw new Error('coverage self-test failed');
   if(r.descriptionAudit.genericOnlyTop1Count!==1)throw new Error('description self-test failed');
+  if(!r.pairedModelAudit.all[0]||typeof r.pairedModelAudit.all[0].rosterCounts!=='object')throw new Error('divergence roster-context self-test failed');
   console.log('PITTI_V45_BACKUP_AUDIT_SELF_TEST_PASS');
   process.exit(0);
 }
