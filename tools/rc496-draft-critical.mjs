@@ -133,4 +133,10 @@ if(Number(activeVersion)>=135){
     assert.ok(app.includes(needle),'rc4.135 live-visible evidence expiry missing for '+n);
   }
 }
+if(Number(activeVersion)>=136){
+  assert.match(app,/andrewErickson:\{source:'FantasyPros · Andrew Erickson · Overall Half-PPR',asOf:'2026-08-30',ranges:\[\[1,4,1\],\[5,8,2\],\[9,15,3\],\[16,19,4\],\[20,26,5\],\[27,32,6\],\[33,40,7\]\]\}/,'rc4.136 Erickson verified tier boundaries missing');
+  assert.match(app,/nickMariano:\{source:'RotoBaller · Nick Mariano · Half-PPR Top 400',asOf:'2026-08-25',ranges:\[\[1,5,1\],\[6,16,2\],\[17,24,3\],\[25,36,4\],\[37,53,5\],\[54,63,6\],\[64,86,7\],\[87,102,8\],\[103,121,9\],\[122,133,10\]\]\}/,'rc4.136 Mariano verified tier boundaries missing');
+  assert.match(app,/expertTier:externalExpertTierContext\(x\)/,'rc4.136 tier context missing from live audit row');
+  assert.doesNotMatch(app,/rawScore.*externalExpertTier|externalExpertTier.*rawScore/,'rc4.136 external tiers must remain display-only');
+}
 console.log('RC496_DRAFT_CRITICAL_PASS'); // rc4.135 release gate canonical-state retry // rc4.133 gate trigger // rc4.132 release-gate trigger
