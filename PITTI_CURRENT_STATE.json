@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1010Z-v192",
-  "updated_at": "2026-08-30T12:20:00Z",
+  "updated_at": "2026-08-30T12:32:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,12 +11,12 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.114",
-    "test_challenger": "v11.8.0-rc4.117",
+    "test_challenger": "v11.8.0-rc4.122",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.117",
+    "latest_package_reextract": "v11.8.0-rc4.122 OFF-DEVICE CONTRACT PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
-    "deployed_pages": "v11.8.0-rc4.117",
+    "deployed_pages": "v11.8.0-rc4.122",
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33305284763,
     "package_reference_artifact_id": 9730250635,
@@ -33,12 +33,12 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.117 OFF-DEVICE PASS; GH-PAGES BYTE PARITY PASS; DEVICE v4 ACCEPTANCE PENDING"
+    "source_candidate": "v11.8.0-rc4.122 OFF-DEVICE PASS; GH-PAGES BYTE PARITY PASS; DEVICE v4/v5 ACCEPTANCE PENDING"
   },
   "exact_continuation": {
-    "gate": "RC4.117_DEVICE_V4_ACCEPTANCE",
+    "gate": "RC4.122_DEVICE_V45_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "One controlled Android/PWA refresh/install now; verify rc4.117 and test v4 readiness/coverage, exact experts/weights/provenance, Barkley Overall #14 vs RB8 canary, and normal Coach output. If PASS, begin realistic mocks immediately. v5 only if time remains."
+    "instruction": "One controlled Android/PWA refresh now; verify rc4.122, confirm v4 and v5 selectable after restart, confirm Barkley compact canary RB#8 · Ovr #14, and compare Pick-1 ranking on the common Overall panel scale. No further install cycle unless this single acceptance exposes a concrete defect."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -57,19 +57,19 @@
     "transaction_in_progress": false,
     "resume_semantics": "rc4.117 off-device PASS and gh-pages/main byte parity PASS. v4 is individual-only with native Koerner and corrected Overall-vs-position provenance. v5 is v3 + Koerner funded from Draft Sharks first. Next: one controlled device refresh/install and v4 acceptance; v5 only if time remains.",
     "acceptance_fingerprint": "CURRENT|RC4117-SOURCE|V4-INDIVIDUAL-ONLY|V5-V3-PLUS-KOERNER-FROM-DS|OVERALL-POSRANK-SEPARATE|NO-TRIAL-ERROR|STATUS-REPORT-ONLY|HANDOFF-BEFORE-DEGRADATION",
-    "status": "V192_DEPLOY_PARITY_PASS_DEVICE_V4_PENDING",
+    "status": "RC4.122_DEPLOYED_PARITY_PASS_DEVICE_ACCEPTANCE_PENDING",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "One controlled device refresh/install -> verify rc4.117 -> test v4 first -> realistic mocks if PASS. v5 only if time remains.",
-    "gate": "RC4.117_DEVICE_V4_ACCEPTANCE",
+    "next_action": "One controlled device refresh -> verify rc4.122 -> v4/v5 selectable -> Barkley compact canary -> same-state v3/v4/v5 comparison.",
+    "gate": "RC4.122_DEVICE_V45_ACCEPTANCE",
     "seal_status": "PASS",
     "seal_generation": "20260830T1010Z-v192"
   },
-  "source_authority": "v11.8.0-rc4.117",
+  "source_authority": "v11.8.0-rc4.122",
   "package_authority": "v11.8.0-rc4.117 run 33305284763 artifact 9730250635",
   "android_version_observed": "v11.8.0-rc4.114",
   "android_functional_verified": true,
-  "deployment_authority": "v11.8.0-rc4.117 gh-pages/main runtime parity PASS after fast-forward from rc4.115",
+  "deployment_authority": "v11.8.0-rc4.122 gh-pages/main runtime parity PASS at commit 0e739e424a8987b9bcd32d44d4efac136667bf8d",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
@@ -85,15 +85,15 @@
     "v3": "frozen control/failsafe; embedded team/individual hybrid as historically audited",
     "v4": "CURRENT RE-AUDIT: individual-only, only experts with obtainable individual rankings. Position-specific optimized weights in app.js EXPERT_V4_BLUEPRINT. Koerner is native v4.",
     "v5": "CURRENT DEFINITION: v3 + individually verified Sean Koerner; target 15 percentage points funded from Draft Sharks Team first, remainder only if necessary proportionally from other v3 voices.",
-    "coverage_blocker": "RESOLVED OFF-DEVICE for rc4.117; deployment parity and device v4 acceptance remain.",
+    "coverage_blocker": "OFF-DEVICE RESOLVED for rc4.122; device v4/v5 acceptance pending.",
     "koerner": "individually obtainable through existing FantasyPros API path; no longer a source blocker.",
-    "rank_semantics": "Aggregation may use position rank; provenance/UI must preserve published Overall separately and show positional rank separately. Barkley Pat example: Overall #14, RB8; never label RB8 as Overall #8."
+    "rank_semantics": "Dual-rank model: published Overall weighted panel is the common cross-position Coach scale; weighted positional rank is retained separately for position-specific interpretation/UI. Barkley/Pat compact canary must render RB#8 · Ovr #14."
   },
   "process_controls": {
     "status_semantics": "REPORT_ONLY_NO_TOOL_WORK",
     "auto_semantics": "EXECUTE_CONTINUOUSLY; no 'AUTO läuft' placeholder responses; report only material result or unavoidable blocker",
-    "no_trial_error": "No device build until off-device gates PASS; one controlled install/test candidate at a time.",
-    "chat_handoff": "Takeover verified. rc4.117 is deployed with byte parity; device v4 acceptance is now the only release gate before realistic mocks.",
+    "no_trial_error": "No further device build/install loop without a concrete defect from the single rc4.122 acceptance. rc4.122 passed off-device syntax, dual-rank, v5 topology/weights/readiness, startup-rehydrate, cache-version and Barkley canary checks before deployment.",
+    "chat_handoff": "rc4.122 off-device PASS and gh-pages/main exact parity PASS. One device acceptance now; v4/v5 comparison immediately if PASS.",
     "source_of_truth": "PITTI_CURRENT_STATE.json + repository HEAD; newer device evidence overrides stale closure claims.",
     "guardrail_note": "rc4115 gate now scoped to rc4.115 only; rc4117 has dedicated release-critical contract; rc4114 gate made semantic so preserving Overall provenance does not falsely fail positional aggregation."
   }
