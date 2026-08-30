@@ -2639,3 +2639,10 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Static audit found a second-order acceptance defect: `expertProfileReady()` previously selected the first N aggregate rows and then required all to be COMPLETE. Because incomplete rows are ranked from available weights, sparse rows can move upward and poison the very decision-core used to decide readiness. This is circular and can keep a valid challenger locked or make readiness depend on missingness-induced rank movement.
 - Repaired source logic: source-depth acquisition gate remains strict; incomplete rows remain explicit and are never imputed; readiness core is now formed from COMPLETE rows only. v4 additionally verifies its complete decision-zone after panel construction. This does **not** promote any player or relax missingness semantics; it only prevents incomplete rows from defining the acceptance sample.
 - Change is source-only pending CI/deployment/device verification. v3 remains runtime default. Do not accept v4/v5 merely because this fix exists.
+
+
+### 2026-08-30 — v4/v5 acceptance hardening CI closure
+- The initial post-fix release-contract failure was a stale static assertion in `tools/rc496-draft-critical.mjs`, not a runtime failure. The gate still required the superseded aggregate-core predicate.
+- Updated the guard to require COMPLETE-row filtering before readiness acceptance. This strengthens the regression contract rather than weakening it.
+- Head `ea05d0ee7159176bbde7b2e31c5d5ba2f78e87e9` passed all workflows triggered for this change: release contract v2, candidate package gate, draft-critical successor/rc4.96 gate, rc4.82 gate, rc4.83 gate.
+- Source is CI-clean but remains **not deployed/device-accepted**. v3 remains default and current rc4.107 device runtime remains the safe authority until a successor package/deploy is intentionally produced and verified.
