@@ -1,6 +1,6 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Current source/package/deployment candidate:** v11.8.0-rc4.106; **last accepted Android:** v11.8.0-rc4.105. rc4.106 is display-only embedded individual-rank repair.
+> **Current source/package/deployment candidate:** v11.8.0-rc4.107; **last accepted Android:** v11.8.0-rc4.105. rc4.106 is display-only embedded individual-rank repair.
 > **rc4.100 PR validation:** release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
 > **Deployment/device:** gh-pages rc4.106 exact 13-file parity PASS; Android rc4.106 display observation pending; rc4.105 remains accepted device authority.
 > **Rollback reference:** v11.8.0-rc4.96 historical only; current accepted Android authority is v11.8.0-rc4.104.
