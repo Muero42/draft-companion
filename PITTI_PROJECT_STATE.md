@@ -2778,3 +2778,11 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Confirmed pre-deploy main rc4.117 vs gh-pages rc4.115, then fast-forwarded gh-pages without force. Post-deploy compare returned IDENTICAL, ahead 0, behind 0.
 - Direct gh-pages reads: app.js `077229e6c9a349fae7482f86d740bacba45d2a1f`, index.html `c1b77f78fe1e83d886951e46e77228ea1d719b84`, sw.js `d7c055259c5942d74e343ecf561b4f9b7c891842`, manifest `e8566f9827f85ac2e3a5482af874c5cc344230b2`; all rc4.117 and equal to main runtime blobs.
 - No Android success inferred. Next gate: `RC4.117_DEVICE_V4_ACCEPTANCE`; one controlled refresh/install, v4 first, realistic mocks immediately on PASS; v5 optional only if time remains.
+
+
+### rc4.119 — v4 display/semantics correction from first device test
+- Device v4 became READY after Kev Wheeler slug fix, but first real Pick-1 rendering exposed a semantic/UI defect: the card metric labeled a position-specific panel mean as Overall, and compact expert lines emphasized published Overall provenance even though v4 aggregation is positional. This made Barkley appear internally contradictory and made many RB/WR values look duplicated/misleading.
+- Corrected verifiedRowsForExpert: aggregation remains strict position rank; published Overall is carried only as separate provenance and never used as the position-panel value.
+- Corrected expert UI to show e.g. RB#8 · Ovr #14 instead of an ambiguous single rank; compact card metric is now explicitly RB-Panel / WR-Panel / etc., never Overall.
+- Barkley/Pat canary remains: Pat published Overall #14 and RB8 must display as RB#8 · Ovr #14; panel aggregation uses RB8.
+- Version bumped to rc4.119; release-critical guard extended for the new semantics. Do not resume realistic mocks until rc4.119 off-device checks and deployment parity pass.
