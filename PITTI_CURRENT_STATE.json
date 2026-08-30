@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260830T1700Z-v198",
-  "updated_at": "2026-08-30T17:00:00Z",
+  "handoff_generation": "20260830T1715Z-v199",
+  "updated_at": "2026-08-30T17:15:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -164,9 +164,9 @@
     "mainRuntimeParity": "PASS",
     "nextGate": "Draft-day waiver/IR/PUP/materiality scan; no broad retune."
   },
-  "status": "PRE_DRAFT_FREEZE_CUTDOWN_SCAN_PASS",
+  "status": "PRE_DRAFT_PARALLEL_AUDITS_PASS",
   "gate": "DRAFT_DAY_FRESHNESS",
-  "nextGate": "Draft-day waiver/IR/PUP/materiality scan; no broad retune.",
+  "nextGate": "Draft-day IR/PUP/waiver/depth-role freshness only; v4 PRIMARY. Treat near-tie cross-position leaders with portfolio override guard.",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
@@ -182,5 +182,12 @@
       12
     ],
     "latestBackupHistoricalFixtures": 22
+  },
+  "parallelAudit": {
+    "version": "v199",
+    "backupAuditRosterAware": true,
+    "pick32Canary": "WR1/RB2 roster; v4 Javonte 100 vs Nabers 98 despite Nabers better panel rank; v5 Nabers leader. Near-tie portfolio reorder is valid; no scoring retune from single case.",
+    "ci": "release contract + guardrails + package gate PASS",
+    "runtimeChanged": false
   }
 }
