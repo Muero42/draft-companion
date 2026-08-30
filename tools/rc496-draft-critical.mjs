@@ -121,4 +121,4 @@ assert.ok(Math.abs(gain.rank-122.65)<1e-9,'Kenny Gainwell merged weighted rank d
 const dob=rb.find(x=>x.name==='J.K. Dobbins');
 assert.ok(dob&&dob.n===2,'Dobbins sparse-panel canary must remain visible to generic guard');
 
-console.log('RC496_DRAFT_CRITICAL_PASS');
+console.log('RC496_DRAFT_CRITICAL_PASS'); // rc4.132 release-gate trigger
