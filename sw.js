@@ -1,7 +1,7 @@
-const CACHE='draft-companion-v11.8.0-rc4.109';
+const CACHE='draft-companion-v11.8.0-rc4.110';
 const BACKUP_CACHE='draft-companion-backup-export-v1';
-const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.109','./decision-policy.js','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.109','./live-surface-v3.css?v=v11.8.0-rc4.109','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
-const BASE='v11.8.0-rc4.109',TARGET='v11.8.0-rc4.109';
+const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.110','./decision-policy.js','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.110','./live-surface-v3.css?v=v11.8.0-rc4.110','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
+const BASE='v11.8.0-rc4.110',TARGET='v11.8.0-rc4.110';
 function patchApp(s){
   s=s.replaceAll(BASE,TARGET).replaceAll('11.8.0-rc4.60','11.8.0-rc4.60');
   const old1="      snapshotLimit=els.snapshotMode.value==='full'?40:25,\n      availableSnapshot=scored.slice().sort((a,b)=>a.r.rank-b.r.rank).slice(0,snapshotLimit),";
