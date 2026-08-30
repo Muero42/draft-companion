@@ -2841,3 +2841,9 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - rc4.125 keys frozen decision fixtures by draft + pick + fingerprint + analysisProfile + strategy and stores analysisProfile explicitly.
 - Backup JSON therefore retains separate v4/v5 fixtures for the same decision state. Decision Evidence v3 keeps canonical one-per-pick summaries for compatibility and adds comparisonFixtures/comparisonFixtureCount containing one newest fixture per pick/profile.
 - Off-device syntax/version/cache and fixture/export contract checks PASS. Safe for one deployment; no model-scoring change.
+
+
+### rc4.126 analysis navigation layout — OFF-DEVICE PASS
+- Mobile UX: v4/v5 expert audit/status display moved above the analysis expert selector; selector now sits immediately above the Analyze & Snapshot button.
+- No decision/model/evidence logic changed from rc4.125.
+- Off-device syntax/version/DOM-order checks PASS.
