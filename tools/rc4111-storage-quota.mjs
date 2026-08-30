@@ -7,7 +7,7 @@ function body(name,next){
   return src.slice(a,b<0?src.length:b);
 }
 const helperStart=src.indexOf('function removeLegacyRankingStorage');
-const helperEnd=src.indexOf('removeLegacyRankingStorage();\\nlet rankCache',helperStart);
+const helperEnd=src.indexOf('let rankCache=',helperStart);
 if(helperStart<0||helperEnd<0)throw new Error('storage helper block missing');
 const quota=src.slice(helperStart,helperEnd);
 for(const required of [
