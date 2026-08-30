@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-30T06:53:00Z",
+  "updatedAt": "2026-08-30T07:02:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,7 +11,7 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.107",
+    "appVersion": "v11.8.0-rc4.108",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
@@ -22,7 +22,7 @@
     "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.107",
     "preinstallSha256": "sha256:adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.107",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.108",
     "latestDeployedCandidate": "v11.8.0-rc4.107",
     "latestAndroidVerified": "v11.8.0-rc4.106",
     "androidAuthority": "v11.8.0-rc4.106",
@@ -186,17 +186,17 @@
   "currentWork": {
     "branch": "main",
     "researchBranch": "pitti/expert-v4-v5-v180 historical implementation branch; merged via PR #49",
-    "status": "RC4.107_DEVICE_REFRESH_PASS_V45_FAIL_CLOSED_SOURCE_DIAGNOSIS",
-    "production": true,
-    "androidVerified": true,
+    "status": "RC4.108_CANDIDATE_GATING",
+    "production": false,
+    "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.107",
-    "runtime": "v11.8.0-rc4.107",
+    "runtime": "v11.8.0-rc4.108",
     "mainRuntimeParity": "PASS; main/gh-pages 13/13 runtime parity verified",
-    "nextGate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE"
+    "nextGate": "RC4.108_PACKAGE_REEXTRACT_AND_DEPLOYMENT_PARITY"
   },
-  "status": "HANDOFF_V184_SOURCE_VALIDATION",
-  "gate": "V4_V5_SOURCE_COVERAGE_DIAGNOSIS",
-  "nextGate": "Reseal post-rc4.107 evidence/source-hardening state; rerun seal-dependent gates; no device action until separately versioned candidate is gated.",
+  "status": "HANDOFF_V185_RC4108_CANDIDATE_GATING",
+  "gate": "RC4.108_PACKAGE_REEXTRACT_AND_DEPLOYMENT_PARITY",
+  "nextGate": "Finish candidate package and seal-dependent gates; deploy only after PASS; then one Android refresh.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -205,8 +205,8 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260830T0653Z-v184",
-    "status": "HANDOFF_v184_SOURCE_VALIDATION",
+    "generation": "20260830T0702Z-v185",
+    "status": "HANDOFF_v185_RC4108_CANDIDATE_GATING",
     "ready": false,
     "secondPass": false,
     "resume": "PITTI AUTO: rc4.107 is on main/gh-pages and observed on device; rc4.106 remains accepted functional fallback. Immediate gate is Alles aktualisieren on rc4.107, then live v4/v5 coverage/Koerner validation and same-state v3/v4/v5 comparison. v3 stays default. Deferred real-decision mock 19-44-43 remains unanalyzed."
@@ -300,5 +300,5 @@
       ]
     }
   },
-  "handoff_generation": "20260830T0653Z-v184"
+  "handoff_generation": "20260830T0702Z-v185"
 }
