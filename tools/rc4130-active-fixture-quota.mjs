@@ -2,7 +2,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 
 const src=fs.readFileSync('app.js','utf8');
-if(!src.includes("v11.8.0-rc4.130"))throw new Error('rc4.130 version missing');
+if(!/v11\.8\.0-rc4\.(13[0-9]|1[4-9][0-9])/.test(src))throw new Error('rc4.130+ version missing');
 if(!src.includes("historyKeep===0?[]:history.slice(-historyKeep)"))throw new Error('zero-history recovery fix missing');
 if(!src.includes("const{panelIndividuals,robustRankShadow,...rest}=p"))throw new Error('rankedPool quota compaction missing');
 
