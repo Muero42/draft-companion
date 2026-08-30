@@ -2792,3 +2792,11 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - rc4.121 device screenshot proved v4 READY but v5 still locked. Root cause was not readiness anymore: ensureExpertV5Panels hard-coded expert-v3-wr, but frozen v3 canonically maps WR to expert-v2-wr. Therefore v5 WR never built and profile readiness could never pass.
 - Fixed v5 baseline resolution to use EXPERT_PROFILE_IDS.expertv3[pos] for every position; this preserves the frozen v3 topology and prevents invented panel IDs.
 - User explicitly requires: do not deploy/install another candidate before off-device testing. rc4.122 must remain undeployed until static/release-contract checks validate v5 QB/RB/WR/TE construction and selector readiness semantics.
+
+
+### rc4.122 candidate — HOLD, off-device verification required
+- User explicitly requires test-before-install after repeated device regressions. gh-pages MUST remain on rc4.121 until candidate gates are proven.
+- Device rc4.121 reproduced two blockers: v5 still locked after restart; Barkley compact expert line again ambiguous as Pat #8 instead of explicit positional/Overall semantics.
+- rc4.122 candidate fixes provenance propagation: historical v3/v2 inherited rows are explicitly positional; v5 sanitizes inherited stale Overall fields; only freshly verified Koerner may carry published Overall provenance.
+- Release gates strengthened in rc4114/rc4117 to reject regression of positional provenance and ambiguous expert-rank rendering.
+- Do not ask for another phone refresh/install until off-device candidate package, release contract, guardrails, restart-readiness, and Barkley canary are all PASS.
