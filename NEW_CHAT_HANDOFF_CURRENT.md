@@ -1,5 +1,5 @@
-# PITTI HANDOFF CURRENT — v206
-Handoff generation: `20260830T1814Z-v206`
+# PITTI HANDOFF CURRENT — v207
+Handoff generation: `20260830T1822Z-v207`
 
 ## FIRST GATE — rc4.132, not more general research
 rc4.131 is the last accepted Android authority. Main/gh-pages contain the v203 live-autodraft Return-v2 runtime delta under the unchanged rc4.131 label; that is UNRELEASED until a genuine rc4.132 passes all gates.
@@ -20,7 +20,7 @@ rc4.132 must include all of:
 Deterministic regressions for Autodraft Return-v2 + Pick32 portfolio + exact draft order + active-manager history -> Release Contract PASS -> Project Guardrails PASS -> Package/Re-extract PASS -> merge main -> fast-forward gh-pages -> exact parity -> ONE controlled Android refresh -> visible rc4.132 verification. No cache clear, reinstall or repeated refresh loop.
 
 ## Preserved model/evidence
-- User hard QB exclusions: **never recommend/draft Geno Smith or Aaron Rodgers**. Generic engine ranking may remain name-agnostic; this is a user execution rule.
+- Geno Smith/Aaron Rodgers are **NOT hard exclusions**. They must rank organically with no name-specific demotion/removal/forcing. Their absence from recommendations must result from correct Coach/player-quality evaluation.
 - v4 PRIMARY / v5 CHALLENGER / v3 failsafe.
 - Latest backup `draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json`: 29 fixtures / 15 states / 14 exact pairs; missing pick29 expertv5. Never call 30/30.
 - McLaurin sparse-panel canary and Swift/Lamar description canaries remain protected.
@@ -40,5 +40,8 @@ User plans a brand-new chat for the actual draft. This is beneficial: the draft 
 
 ## v206 contradiction scrub
 - Repaired stale authority text that still said Pascal Voerde = 8 seasons; canonical chain is 2017-2025 = 9 seasons.
-- Resolved QB wording conflict: user hard exclusions Geno Smith/Aaron Rodgers are mandatory in live recommendations and draft execution.
+- v206 QB wording was wrong and is revoked: no hard exclusion for Geno Smith/Aaron Rodgers; Coach ranking must decide organically.
 - Screenshot set is useful continuity evidence but not a complete standalone authority because transition text is partially obscured/cropped; canonical repo files control.
+
+## v207 correction
+- v206 incorrectly converted a repeatedly corrected non-exclusion rule into a hard user exclusion. That invented rule is fully revoked across canonical handoff authority.
