@@ -2749,3 +2749,10 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - v4 aggregation now uses configured position-specific weights instead of equal weights. Individual rows preserve both posRank (aggregation) and overallRank (provenance/display). Detailed/snapshot expert labels prefer overallRank and show positional rank separately.
 - Former v5 = v4 + Koerner is fail-closed because Koerner is now already a native v4 member; double-counting is forbidden. v5 is not a draft-test lane.
 - Commit 49066a630fa3c4e471f3b96e68f37db503d76782. Do NOT install/test on device until off-device release gates have passed and source-depth/readiness implications of the expanded v4 panels are verified.
+
+
+### 2026-08-30 — rc4.117 correction: v5 definition restored
+- User corrected a lost requirement: v5 is NOT v4+Koerner. v5 is the controlled v3 challenger: v3 + individually verified Sean Koerner, funded primarily by reducing Draft Sharks Team share.
+- rc4.117 restores that definition. Target Koerner share is 15 percentage points; those 15 points are removed from Draft Sharks Team first. Only if DS were below 15 would any remainder be funded proportionally from the other v3 voices.
+- This keeps v4 as the individual-only optimized lane and v5 as the v3/DS control lane with Koerner substitution, allowing an actual v3-v4-v5 comparison.
+- Commit 53a93e333c536e3e065ad71512e94b26d043e936. rc4.116 is superseded and must not be installed.
