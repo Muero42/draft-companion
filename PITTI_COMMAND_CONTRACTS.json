@@ -113,21 +113,30 @@
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.108 device-observed operational baseline; v3 default; v4/v5 fail-closed",
-    "androidAuthority": "v11.8.0-rc4.108",
-    "sourceAuthority": "v11.8.0-rc4.110",
+    "androidAuthority": "v11.8.0-rc4.114",
+    "sourceAuthority": "v11.8.0-rc4.115",
     "latestPackageReextract": "v11.8.0-rc4.107 PASS · 13 runtime files · sha256:adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c",
-    "deployedPagesVersion": "v11.8.0-rc4.110",
+    "deployedPagesVersion": "v11.8.0-rc4.115",
     "deployedPagesAppByteParityWithMain": true,
     "researchBranch": "main; historical pitti/expert-v4-v5-v180 retained only as provenance",
-    "currentResearchGate": "RC4.110_DIAGNOSTIC_PACKAGE_DEPLOY_AND_DEVICE_READ",
-    "exactNextAction": "One device reload to observe rc4.110; press Alles aktualisieren once; screenshot the new v4/v5 source diagnostic directly below the selector. No cache/data clear.",
+    "currentResearchGate": "RC4.115_DEVICE_V5_ACCEPTANCE",
+    "exactNextAction": "New chat verifies v190 once; then only rc4.115 device-v5 acceptance. v4/source research closed.",
     "deferredRealDecisionMock": "draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json — DO NOT ANALYZE UNTIL USER LIFTS RESTRICTION",
-    "latestPackageSha256": "pending artifact metadata for rc4.112 gated run 33300725739",
-    "packageReferenceRun": 33300725739,
-    "packageReferenceArtifactId": 9728307439,
-    "runtimeVersion": "v11.8.0-rc4.110"
+    "latestPackageSha256": "artifact-envelope-sha256:f5ac135c936addfb157142b5efe8de3bf8369758fc89b8774ce71f8bd53e0eb4",
+    "packageReferenceRun": 33301976035,
+    "packageReferenceArtifactId": 9729230976,
+    "runtimeVersion": "v11.8.0-rc4.115"
   },
   "currentGate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
-  "handoffGeneration": "20260830T0718Z-v186",
-  "handoff_generation": "20260830T0718Z-v186"
+  "handoffGeneration": "20260830T1115Z-v190",
+  "handoff_generation": "20260830T1115Z-v190",
+  "statusCommand": {
+    "trigger": "STATUS",
+    "meaning": "Report current known PITTI state only.",
+    "toolCallsForbidden": true,
+    "workForbidden": true,
+    "ciPollingForbidden": true,
+    "autoContinuationForbidden": true,
+    "reason": "STATUS must not consume chat/tool budget or trigger AUTO."
+  }
 }
