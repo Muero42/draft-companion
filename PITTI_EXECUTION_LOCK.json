@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-30T16:30:00Z",
+  "updatedAt": "2026-08-30T16:45:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -16,7 +16,7 @@
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.126",
+    "latestAndroidObserved": "v11.8.0-rc4.131",
     "latestPreinstallVerified": "v11.8.0-rc4.131 CI PACKAGE/RE-EXTRACT PASS",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.117",
@@ -24,17 +24,17 @@
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.131",
     "latestDeployedCandidate": "v11.8.0-rc4.131",
-    "latestAndroidVerified": "v11.8.0-rc4.106",
-    "androidAuthority": "v11.8.0-rc4.126",
-    "android_authority": "v11.8.0-rc4.126",
+    "latestAndroidVerified": "v11.8.0-rc4.131",
+    "androidAuthority": "v11.8.0-rc4.131",
+    "android_authority": "v11.8.0-rc4.131",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33305284763,
     "preinstallReferenceArtifactId": 9730250635,
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.126",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.131",
     "latestAndroidFunctionalVerified": "v11.8.0-rc4.126",
-    "testChallengerAndroidObserved": false,
-    "testChallengerAndroidAccepted": false,
+    "testChallengerAndroidObserved": true,
+    "testChallengerAndroidAccepted": true,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
@@ -61,7 +61,7 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.126"
+    "acceptedAndroidAuthority": "v11.8.0-rc4.131"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -194,17 +194,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.131_DESCRIPTION_QUALITY_DEPLOYED_DEVICE_REFRESH_PENDING",
-    "production": false,
-    "androidVerified": false,
-    "acceptedAndroidFallback": "v11.8.0-rc4.130",
+    "status": "PRE_DRAFT_READINESS_FREEZE",
+    "production": true,
+    "androidVerified": true,
+    "acceptedAndroidFallback": "v11.8.0-rc4.131",
     "runtime": "v11.8.0-rc4.131",
     "mainRuntimeParity": "PASS",
-    "nextGate": "One controlled refresh; verify rc4.131 and Swift/Lamar player-specific rationale. No model retune."
+    "nextGate": "Final freshness/materiality scan; no broad model changes; Swift/Lamar card verification opportunistic."
   },
-  "status": "RC4.131_DESCRIPTION_QUALITY_DEPLOYED_DEVICE_REFRESH_PENDING",
-  "gate": "RC4.131_ONE_CONTROLLED_DEVICE_REFRESH",
-  "nextGate": "One controlled refresh; verify rc4.131 and Swift/Lamar player-specific rationale. No model retune.",
+  "status": "PRE_DRAFT_READINESS_FREEZE",
+  "gate": "PRE_DRAFT_READINESS_FREEZE",
+  "nextGate": "Final freshness/materiality scan; no broad model changes; Swift/Lamar card verification opportunistic.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -236,7 +236,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260830T1630Z-v196",
+  "handoff_generation": "20260830T1645Z-v197",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
