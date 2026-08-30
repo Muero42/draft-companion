@@ -69,7 +69,7 @@ assert.ok(!JSON.stringify(board.weights).includes('Derek Brown'));
 
 for(const name of ['Kyler Murray','Malik Willis','Jared Goff'])assert.ok(app.includes(`[norm('${name}')]`),name);
 assert.ok(app.includes('Fitzmaurice 27.08.'));
-assert.ok(app.indexOf('userDraftStrategyExcluded(p.pos,state.counts,p.name)')>app.indexOf('function scoreCandidate'));
+assert.ok(app.indexOf('userDraftStrategyExcluded(p.pos,state.counts)')>app.indexOf('function scoreCandidate'));
 
 console.log('RC482_DRAFT_CRITICAL_PASS');
 
