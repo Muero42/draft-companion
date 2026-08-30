@@ -83,8 +83,12 @@ function stripHtml(s){
     .replace(/\s+/g,' ').trim();
 }
 function slugify(s){
-  return String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
+  const normalized=String(s||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
     .replace(/['’]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');
+  // FantasyPros' public Wheeler page uses his canonical first-name slug "kevin-wheeler"
+  // although the published expert display name is "Kev Wheeler".
+  if(normalized==='kev-wheeler')return 'kevin-wheeler';
+  return normalized;
 }
 async function fetchHtml(url){
   const r=await fetch(url,{headers:{
