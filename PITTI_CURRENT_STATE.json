@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1822Z-v207",
-  "updated_at": "2026-08-30T19:18:00Z",
+  "updated_at": "2026-08-30T19:22:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,7 +11,7 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.131",
-    "test_challenger": "v11.8.0-rc4.135",
+    "test_challenger": "v11.8.0-rc4.136",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.131 CI PACKAGE/RE-EXTRACT PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
@@ -41,7 +41,7 @@
   "exact_continuation": {
     "gate": "RC4.132_BUILD_AND_REGRESSION",
     "auto_starts_mock": false,
-    "instruction": "rc4.135 candidate: live text expiry repaired for 12 profiles; Josh Jacobs acute Commissioner Exempt status block included. Release gates in progress; do not deploy until all PASS."
+    "instruction": "rc4.136 candidate: display-only external expert-tier layer using verified current Andrew Erickson FantasyPros Half-PPR overall tiers and Nick Mariano RotoBaller Half-PPR Top-400 tiers; shown after player name before research arrows in live cards/handoff. No synthetic gap tiers presented as expert tiers. Run full release/package/guardrail gates before deploy."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -155,7 +155,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.135_RELEASE_GATE",
+    "status": "RC4.136_TIER_LAYER_RELEASE_GATE",
     "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
@@ -163,7 +163,7 @@
     "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
     "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
   },
-  "status": "RC4.135_RELEASE_GATE",
+  "status": "RC4.136_TIER_LAYER_RELEASE_GATE",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
   "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
   "evidenceRetention": {
