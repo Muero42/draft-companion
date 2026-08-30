@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.132';
+const APP_VERSION='v11.8.0-rc4.133';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2100,8 +2100,12 @@ function scoreCandidate(p,current,next,state,available,strategy='progressive'){
 function applyResolvedReturnScore(x,current,strategy){
   if(x.ret==null)return;
   const stage=progressiveStage(current);
-  const returnWeight=strategy==='progressive'?[12,10,7,4][stage]:12;
-  x.rawScore+=clamp((.50-x.ret)*returnWeight,-6,6);
+  // Return is a timing signal, not a second Player-Quality model. Early drafts previously
+  // let a high Return probability erase too much of a strong panel edge (Chase Brown canary).
+  // Cap the early WAIT discount tightly; relative board urgency below remains available.
+  const returnWeight=strategy==='progressive'?[8,8,6,4][stage]:8;
+  const returnCap=stage===0?3.5:stage===1?4.5:6;
+  x.rawScore+=clamp((.50-x.ret)*returnWeight,-returnCap,returnCap);
   // Reasons must describe the same resolved probability that the UI displays.
   if(x.ret>=.80)x.reasons.push(`Warten attraktiv (${Math.round(x.ret*100)}% Return)`);
   else if(x.ret<=.25)x.reasons.push(`Jetzt-Pick dringlich (${Math.round(x.ret*100)}% Return)`);
@@ -2762,14 +2766,14 @@ async function refresh(){
     const medianReturn=sortedReturns.length?sortedReturns[Math.floor(sortedReturns.length/2)]:null;
     if(medianReturn!=null)for(const x of scored){
       if(x.ret==null)continue;
-      const rel=clamp((medianReturn-x.ret)*6,-3,3);
+      const rel=clamp((medianReturn-x.ret)*4,-2,2);
       x.rawScore+=rel;
       if(Math.abs(rel)>=1.5)x.reasons.push(rel>0?'Dringlicher als Board':'Mehr Wartepotenzial als Board');
     }
     if(referenceBalanced){
       const refBoard=referenceBalanced.slice().sort((x,y)=>x.r.rank-y.r.rank).slice(0,12).filter(x=>x.ret!=null);
       const refReturns=refBoard.map(x=>x.ret).sort((x,y)=>x-y),refMedian=refReturns.length?refReturns[Math.floor(refReturns.length/2)]:null;
-      if(refMedian!=null)for(const x of referenceBalanced){if(x.ret==null)continue;x.rawScore+=clamp((refMedian-x.ret)*6,-3,3);}
+      if(refMedian!=null)for(const x of referenceBalanced){if(x.ret==null)continue;x.rawScore+=clamp((refMedian-x.ret)*4,-2,2);}
     }
     // Counterfactual Research Residual v2 is computed in parallel and never mutates
     // the live Coach score in rc4.18. This preserves a clean prospective baseline.
