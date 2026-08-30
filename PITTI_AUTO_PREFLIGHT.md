@@ -72,8 +72,9 @@ Otherwise continue AUTO.
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
 - Never answer an AUTO turn with “AUTO läuft”, “ich mache weiter”, or equivalent future-tense progress prose. Work must be executed before any reply.
 - During PITTI HANDOFF, finish the complete transactional audit/reseal before replying unless an unavoidable blocker prevents it.
-- Current source/package/deployment candidate = rc4.106 with exact 13-file main/gh-pages parity PASS; last accepted Android authority = rc4.105; rc4.106 display observation pending.
-- current gate: NEW_CHAT_LATE_RB_AUDIT.
+- Current source/package/deployment candidate = rc4.107 with exact 13-file main/gh-pages parity PASS; accepted Android functional authority remains rc4.106 until rc4.107 live-refresh acceptance completes.
+- rc4.107 is already observed on device; current gate is RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE.
+- Exact next device action: run Alles aktualisieren once on rc4.107, then inspect live v4/v5 coverage + Koerner validation. v3 remains default/failsafe until those gates pass.
 - Canonical completed mock evidence: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json, draft 1399284498113294336, produced on rc4.101.
 - Bounded frozen-fixture replay is CI PASS for the observed rc4.101 failure mechanisms under rc4.104. Browser-equivalent full historical recomputation is unavailable and must not be fabricated.
 
