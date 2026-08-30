@@ -1,13 +1,13 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Current source/package candidate:** v11.8.0-rc4.110; **device-observed authority:** v11.8.0-rc4.109 pending direct observation; rc4.110 adds read-only v4/v5 live source diagnostics only.
-> **rc4.110 scope:** diagnostics expose per-expert/per-position verified row counts, source failure/duplicate/stale state and COMPLETE-core counts; no ranking/Return/readiness relaxation.
-> **Deployment/device:** rc4.109 is the last gated runtime; rc4.110 is not device authority until full package/deploy/device acceptance.
-> **Fallback:** rc4.109/rc4.108 remain safe runtime lineage; v3 remains default.
+> **Current source/package candidate:** v11.8.0-rc4.111; **device-observed authority:** v11.8.0-rc4.110 diagnostic evidence only. rc4.111 fixes Android localStorage quota handling off-device before any further device acceptance.
+> **rc4.111 scope:** successful expert acquisition is no longer reclassified as source failure when persistence hits quota; obsolete duplicate ranking stores are removed and reproducible history is pruned only if required. No ranking/Return/expert/readiness semantic change.
+> **Deployment/device:** rc4.111 is NOT deployed/device authority while off-device gates run. Do not request device interaction before all gates pass.
+> **Fallback:** v3 remains default/failsafe; rc4.110 is diagnostic evidence, not accepted v4/v5 authority.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
 > **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
 > **rc4.100 scope:** generic Pro/Contra semantic hardening + bounded short-turn portfolio ordering; no global ranking/Return/expert retune, no hard WR cap/quota.
-> **Current gate:** RC4.110_DIAGNOSTIC_PACKAGE_DEPLOY_AND_DEVICE_READ.
+> **Current gate:** RC4.111_FULL_OFFDEVICE_ACCEPTANCE.
 > **Current gate:** RC4106_ANDROID_DISPLAY_ACCEPTANCE.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
