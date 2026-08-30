@@ -2719,3 +2719,12 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - rc4.115 all current off-device workflows PASS and Pages deployment succeeded before handoff.
 - Canonical next gate is RC4.115_DEVICE_V5_ACCEPTANCE. rc4.114 v4 device acceptance is immutable evidence (QB32/RB83/WR91/TE30 COMPLETE); do not reopen v4/source work.
 - NEW_CHAT_HANDOFF_CURRENT.md rewritten as v188 concise canonical resume; PITTI_CURRENT_STATE.json updated to v188. New chat should minimize tool chatter and proceed directly from the gate.
+
+
+### 2026-08-30 10:58 — PITTI HANDOFF v189 / CHAT APP INSTABILITY
+- User explicitly requested PITTI HANDOFF because this ChatGPT Android chat repeatedly hangs and the app crashes.
+- Latest accepted device evidence remains rc4.114 v4: COMPLETE QB32/24, RB83/60, WR91/70, TE30/24. Do not reopen v4.
+- rc4.115 is the current candidate and changes v5 construction only: accepted v4 individual-only + Koerner 20%; legacy v3/Draft-Sharks funding removed. Device v5 acceptance has NOT yet occurred.
+- Ranking/source research remains frozen. Mariano/RotoBaller and other established sources are not a current work lane.
+- The all-red CI set at head a8370f9 is diagnosed as handoff integrity drift (CURRENT v188 vs SEAL/MATRIX v187), not a runtime/model failure. Handoff v189 exists specifically to repair/reseal this transaction before new-chat continuation.
+- New chat must minimize chatter/tool turns due app instability and continue at rc4.115 device-v5 gate after v189 seal verification.
