@@ -2811,3 +2811,12 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Startup rehydration remains active so v4/v5 rebuild from persisted expert caches after a clean app reopen.
 - Off-device executable/static acceptance PASS against current runtime: syntax, version/cache keys, v4 dual-rank semantics, v5 topology/readiness, exact v5 weights, embedded base depths (QB 45 / RB 101 / WR 143 / TE 54), compact Barkley canary, and release-gate semantics. Runtime SHAs at PASS: app fe510b9826d5b34bae8cb68b5c59ff7ea469ebea; live-surface bb28b0a7762f85b04156ef4a132a3a718cdc8269; index 0d1cc0e606a7e006fd73f531c051b6c541a49b71; sw dd9945a6d38f397d6a761a52330158cf04b28206; manifest a190aa67859d0b7ada1f48270f281c95afafaedb.
 - rc4.122 is now eligible for ONE controlled deployment/device acceptance. No further phone trial-and-error before server parity.
+
+
+### rc4.123 compact decision-surface correction — OFF-DEVICE PASS
+- Device rc4.122 acceptance confirmed both v4 and v5 are selectable and ready after restart.
+- Device review exposed presentation regression only: individual expert rows showed both positional and Overall ranks, making the 90-second draft surface too dense.
+- Requirement restored: the live Top-10 surface is for cross-position decisions; individual expert provenance displays ONLY each expert's published Overall rank. Positional rank remains internal/separate and must not clutter the live card.
+- rc4.123 changes only compact presentation/version/cache contract; v4 dual-rank engine semantics and v5 v3+Koerner weighting/topology remain unchanged.
+- Executed off-device checks PASS: JS syntax (runtime files), rc4.123 cache/version parity, v4 dual-rank engine invariants, v5 Overall-scale integration, exact Koerner 15% weights, v4/v5 profile recognition, and compact Barkley/Pat canary '#14'.
+- Do not deploy before parity check; then one controlled device refresh only.
