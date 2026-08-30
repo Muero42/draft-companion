@@ -122,8 +122,8 @@
     "currentResearchGate": "RC4.110_DIAGNOSTIC_PACKAGE_DEPLOY_AND_DEVICE_READ",
     "exactNextAction": "One device reload to observe rc4.110; press Alles aktualisieren once; screenshot the new v4/v5 source diagnostic directly below the selector. No cache/data clear.",
     "deferredRealDecisionMock": "draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json — DO NOT ANALYZE UNTIL USER LIFTS RESTRICTION",
-    "latestPackageSha256": "artifact-envelope-sha256:feadf23c9ec0f9d72ac88d06e9d1cfc8b887e84caea4dc48c1dac939a89827b4",
-    "packageReferenceRun": 33299834699,
+    "latestPackageSha256": "pending artifact metadata for rc4.112 gated run 33300725739",
+    "packageReferenceRun": 33300725739,
     "packageReferenceArtifactId": 9728307439,
     "runtimeVersion": "v11.8.0-rc4.110"
   },
