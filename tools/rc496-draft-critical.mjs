@@ -51,8 +51,15 @@ assert.ok(idx.indexOf('id="analysisExpertSelector"')>idx.indexOf('id="strategyMo
 assert.match(app,/Object\.prototype\.hasOwnProperty\.call\(EXPERT_PROFILE_IDS,id\)/,'legacy incumbent-v2 profile switching must remain supported');
 assert.match(app,/\[\.\.\.els\.expertProfile\.options\]\.some\(o=>o\.value===id\)/,'dedicated v4-v5 switch must not blank legacy profile selector');
 assert.doesNotMatch(app,/INCOMPLETE_V5_NO_DS_FUNDING/,'v5 must not retain obsolete DS-funding dependency');
-assert.match(app,/const v4Id='expert-v4-'\+pos\.toLowerCase\(\)/,'v5 must build from verified v4 individual panel');
-assert.match(app,/const koernerWeight=\.20,scale=1-koernerWeight/,'v5 Koerner funding must be explicit and proportional');
+// rc4.117+: v5 is frozen v3 + Koerner, funded from Draft Sharks first; historical rc4.115 v4+Koerner contract is obsolete.
+if(Number(activeVersion)===115){
+  assert.match(app,/const v4Id='expert-v4-'\+pos\.toLowerCase\(\)/,'rc4.115 v5 must build from verified v4 individual panel');
+  assert.match(app,/const koernerWeight=\.20,scale=1-koernerWeight/,'rc4.115 Koerner funding must be explicit and proportional');
+}else if(Number(activeVersion)>=117){
+  assert.match(app,/const v3Id='expert-v3-'\+pos\.toLowerCase\(\)/,'rc4.117+ v5 must build from frozen v3');
+  assert.match(app,/fundPrimarilyFrom:'Draft Sharks Team'/,'rc4.117+ v5 must fund Koerner from Draft Sharks first');
+  assert.doesNotMatch(app,/const koernerWeight=\.20,scale=1-koernerWeight/,'obsolete rc4.115 proportional v5 resurrected');
+}
 assert.match(app,/EXPERT_DECISION_CORE_MIN=\{QB:24,RB:60,WR:70,TE:24\}/,'position-specific decision-core thresholds missing');
 assert.match(app,/EXPERT_DECISION_CORE_MIN\[pos\]/,'v4-v5 readiness must validate position-specific decision core');
 assert.match(app,/filter\(row=>row\?\.coverageStatus==='COMPLETE'\)/,'v4-v5 decision core must be formed only from complete rows');
