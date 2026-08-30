@@ -30,7 +30,7 @@ Example: WR1/RB2 at pick 32 after Love.
 - QB remains late by default in 10-team 1QB.
 - A rushing-upside QB can beat a near-equal pocket QB.
 - QB urgency cannot override a materially better RB/WR merely because Return is critical.
-- Once QB1 is drafted, QB2 is strategy-excluded except explicit emergency/absolute exception; Geno Smith/Aaron Rodgers remain hard user exclusions.
+- Once QB1 is drafted, QB2 is strategy-excluded except explicit emergency/absolute exception. Geno Smith/Aaron Rodgers are NOT hard exclusions; before QB1 they rank organically and should remain below superior options through correct Coach/player-quality evaluation.
 
 ### TE not yet drafted
 - TE1 may be deferred through a run if RB/WR utility dominates.
