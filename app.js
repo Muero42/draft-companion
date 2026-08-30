@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.110';
+const APP_VERSION='v11.8.0-rc4.111';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -300,8 +300,33 @@ function loadRankCacheCompact(){
   try{for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(!k?.startsWith('v7_rank_'))continue;const id=k.slice(8);if(id&&!out[id]){const v=store.get(k,null);if(v&&typeof v==='object')out[id]=v}}}catch{}
   return out;
 }
+function removeLegacyRankingStorage(){
+  // v7_rankCache and v7_panelRanks are obsolete full duplicates. Removing them first is
+  // safe because panels are rebuilt from the per-expert source caches / sealed boards.
+  try{localStorage.removeItem('v7_rankCache');localStorage.removeItem('v7_panelRanks')}catch{}
+}
+function pruneNonCriticalStorageForRankWrite(){
+  // Preserve configuration, API key, draft state and every expert source cache. Only
+  // reproducible/bounded history is eligible for eviction under browser quota pressure.
+  const keys=['v118_decisionFixtures','v118_returnValidation','v117_researchEvidence'];
+  for(const key of keys){try{localStorage.removeItem(key)}catch{}}
+}
+function persistExpertRankCache(expertId,result){
+  const key='v7_rank_'+expertId,payload=JSON.stringify(result);
+  try{localStorage.setItem(key,payload);return{ok:true,recovered:false}}
+  catch(first){
+    removeLegacyRankingStorage();
+    try{localStorage.setItem(key,payload);return{ok:true,recovered:true}}
+    catch(second){
+      pruneNonCriticalStorageForRankWrite();
+      try{localStorage.setItem(key,payload);return{ok:true,recovered:true}}
+      catch(third){return{ok:false,error:third}}
+    }
+  }
+}
 let rankCache=loadRankCacheCompact();
-let panelRanks=store.get('v7_panelRanks',{});
+removeLegacyRankingStorage();
+let panelRanks={};
 let adp=store.get('v7_adp',{});let adpMeta=store.get('v72_adpMeta',{source:'none',updated:0,count:0});
 let decisionLog=store.get('v7_decisionLog',[]);
 let lastDraftContext=null;
@@ -1032,8 +1057,12 @@ async function loadExpertRanks(expertId){
       sourceSeason:data.sourceSeason||'',sourceScoring:data.sourceScoring||'',
       sourceContext:data.sourceContext||null
     };
+    // A successful source acquisition remains valid in memory even when the browser cannot
+    // persist it. Quota pressure is a storage concern, never a source-verification failure.
     rankCache[expertId]=result;
-    store.set('v7_rank_'+expertId,result);
+    const persisted=persistExpertRankCache(expertId,result);
+    if(!persisted.ok)result.persistenceWarning='Browser-Speicher voll; Ranking nur für diese Sitzung gehalten.';
+    else if(persisted.recovered)result.persistenceRecovered=true;
     return result;
   }catch(e){
     if(cache&&cache.schemaVersion>=13&&cache.verifiedIndividual&&Object.keys(cache.ranks||{}).length){
