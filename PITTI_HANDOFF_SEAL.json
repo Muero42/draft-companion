@@ -25,7 +25,7 @@
   "branch_locks": {
     "main_runtime": "v11.8.0-rc4.129 source authority",
     "accepted_device_evidence": "v11.8.0-rc4.126 device-observed operational v4/v5 baseline; rc4.129 device refresh pending",
-    "deployed_pages": "v11.8.0-rc4.129; final reseal promotion required and then exact main/gh-pages parity",
+    "deployed_pages": "v11.8.0-rc4.129; final main/gh-pages compare IDENTICAL after v193 reseal promotion",
     "next_gate": "RC4.129_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK"
   },
   "checks": {
@@ -43,8 +43,9 @@
     "missing_pairs_9_12_29_32_recorded": true,
     "no_weight_retune_from_incomplete_backup": true,
     "auto_block_silent": true,
-    "status_report_only": true
+    "status_report_only": true,
+    "gh_pages_final_identical": true
   },
   "exact_gate": "RC4.129_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
-  "note": "v193 reseal after exhaustive handoff audit. Corrected stale v192/rc4.122 pointers and discovered gh-pages lagging main by 6 commits. Promoted rc4.129 runtime and handoff docs, verified pre-seal parity, then resealed all core takeover blobs. rc4.129 protects active-draft v4/v5 decision evidence from silent quota loss. Next: one device refresh, then full 15-pick paired mock; backup must contain exactly 30 decisionFixtures before model comparison."
+  "note": "v193 reseal after exhaustive handoff audit. Corrected stale v192/rc4.122 pointers and discovered gh-pages lagging main by 6 commits. Promoted rc4.129 runtime and handoff docs, verified parity, resealed all core takeover blobs, then promoted the reseal and verified final main/gh-pages compare IDENTICAL. rc4.129 protects active-draft v4/v5 decision evidence from silent quota loss. Next: one device refresh, then full 15-pick paired mock; backup must contain exactly 30 decisionFixtures before model comparison."
 }
