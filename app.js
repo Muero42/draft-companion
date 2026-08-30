@@ -1170,7 +1170,7 @@ function panelHasVerifiedExperts(id){
 }
 function panelSelectable(id){
   if(!id||!Object.keys(panelRanks[id]||{}).length)return false;
-  if(/^expert-v[23]-(qb|rb|wr|te)$/.test(id))return true;
+  if(/^expert-v[2345]-(qb|rb|wr|te)$/.test(id))return true;
   return panelHasVerifiedExperts(id);
 }
 function panelFor(pos){
