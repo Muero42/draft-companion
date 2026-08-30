@@ -2705,3 +2705,10 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Root cause in code: `verifiedRowsForExpert()` returned `rank:Number(x.rank)` (Overall rank) while v4/v5 are explicitly position-specific panels. `buildPanelFromExpertRows()` then intersected expert lists using those Overall numbers and the readiness core expected 24 QB / 60 RB / 70 WR / 24 TE COMPLETE rows. This made the audit structurally misleading and the position panel aggregation semantically wrong.
 - rc4.114 changes v4/v5 rows to positional rank (`posRank` where published; deterministic position order derived from Overall only when posRank absent), while preserving original Overall rank only as provenance. v5 Koerner consumes the same positional rank. No source/ranking/expert selection change.
 - Added executable regression `tools/rc4114-positional-expert-aggregation.mjs`; release/guardrail workflows gate it.
+
+
+### 2026-08-30 10:31 — rc4.114 DEVICE PASS v4 / v5 ROOT CAUSE
+- Device evidence proves rc4.114 v4 fix: QB COMPLETE 32/24, RB 83/60, WR 91/70, TE 30/24. v4 selector is enabled. Therefore v4 source acquisition + positional aggregation are accepted; do not reopen them.
+- v5 remains blocked: QB 25/24 PASS, RB 54/60, WR 61/70, TE 18/24. Koerner source depth itself is sufficient (37/82/110/47).
+- Code audit found v5 was still built from legacy v3 (`EXPERT_PROFILE_IDS.expertv3`) and required Draft Sharks Team funding. Thus v5 inherited v3 sparse-row coverage and could not exploit the now-verified v4 individual panel. This is a model-construction bug, not another ranking-source problem.
+- rc4.115 rebuilds v5 as the intended hybrid: verified v4 individual-only panel + Sean Koerner at 20%, funded proportionally from v4 weights. It removes the legacy v3/DS-funding dependency. Added executable regression `tools/rc4115-v5-hybrid.mjs` and CI gates.
