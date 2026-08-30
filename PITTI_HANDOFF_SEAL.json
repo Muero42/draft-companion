@@ -32,10 +32,11 @@
     "source_state": "v203 live-autodraft runtime delta UNRELEASED under rc4.131 label",
     "required_release": "v11.8.0-rc4.132",
     "canonical_draft_order": "1 Michael|2 Pascal Voerde|3 Marc Düsseldorf|4 Thomas|5 Björn|6 Pascal Gelderner|7 Giuliano|8 Bastian|9 Muerotechnik|10 Dutch Marc",
-    "manager_history": "Michael 2020-2025; Pascal Voerde Bracht/Voerde chain 2017-2025; Björn exclude 2021/2023",
+    "manager_history": "Michael 2020-2025; Pascal Voerde Bracht/Voerde chain 2017-2025 = 9 seasons; Björn exclude 2021/2023",
     "latest_backup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json",
     "evidence_gate": "29/30; missing pick29 expertv5",
-    "model": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe"
+    "model": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
+    "user_qb_hard_exclusions": "Geno Smith; Aaron Rodgers"
   },
   "checks": {
     "generation_consistent": true,
@@ -49,8 +50,11 @@
     "stale_nested_authority_fields_repaired": true,
     "draft_chat_bootstrap_added": true,
     "latest_backup_still_29_of_30": true,
-    "no_cache_clear_reinstall": true
+    "no_cache_clear_reinstall": true,
+    "user_qb_hard_exclusions_persisted": true,
+    "stale_pascal_8_season_authority_repaired": true,
+    "screenshot_set_not_standalone_authority": true
   },
   "exact_gate": "RC4.132_BUILD_AND_REGRESSION",
-  "note": "v206 deep-audit reseal. rc4.132 remains first gate; exact order/history and draft execution constraints are preserved."
+  "note": "v206 deep-audit reseal: rc4.132 remains first gate; exact order/history locks are preserved; Pascal Voerde is 9 seasons (2017-2025); Geno Smith/Aaron Rodgers are hard USER draft exclusions while generic engine ranking remains name-agnostic; screenshots are continuity evidence, not standalone authority."
 }
