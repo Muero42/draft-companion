@@ -29,6 +29,7 @@ on:
       - 'tools/rc4100-turn-portfolio.mjs'
       - 'tools/rc4104-roster-portfolio.mjs'
       - 'tools/rc4106-embedded-individuals.mjs'
+      - 'tools/rc4111-storage-quota.mjs'
       - '.github/workflows/pitti-project-guardrails.yml'
   pull_request:
     branches:
@@ -64,6 +65,10 @@ jobs:
         run: |
           node tools/rc4100-turn-portfolio.mjs
           if grep -Eq "v11.8.0-rc4.10[4-9]|v11.8.0-rc4.1[1-9][0-9]" app.js; then node tools/rc4104-roster-portfolio.mjs; fi
+      - name: rc4.111 storage quota contract
+        if: github.event_name == 'pull_request' || github.ref_name == 'main'
+        run: |
+          if grep -Eq "v11.8.0-rc4.11[1-9]|v11.8.0-rc4.1[2-9][0-9]" app.js; then node tools/rc4111-storage-quota.mjs; fi
       - name: PITTI execution-lock and anti-regression gate
         env:
           PITTI_SKIP_SEAL_INTEGRITY: ${{ github.event_name == 'pull_request' && '1' || '0' }}
