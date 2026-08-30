@@ -8,9 +8,6 @@ assert.equal(USER_DRAFT_QB_LIMIT,1);
 assert.equal(userDraftStrategyExcluded('QB',{QB:0}),false,'QB1 must remain draftable');
 assert.equal(userDraftStrategyExcluded('QB',{QB:1}),true,'QB2 must be excluded after QB1');
 assert.equal(userDraftStrategyExcluded('RB',{QB:1}),false,'QB policy must not leak to RB');
-assert.equal(userDraftStrategyExcluded('QB',{QB:0},'Geno Smith'),true,'Geno Smith user hard exclusion missing');
-assert.equal(userDraftStrategyExcluded('QB',{QB:0},'Aaron Rodgers'),true,'Aaron Rodgers user hard exclusion missing');
-assert.equal(userDraftStrategyExcluded('QB',{QB:0},'Jared Goff'),false,'ordinary QB1 must remain eligible');
 
 // OOS natural mock 1398395487467368448, pick 149: Trevor Lawrence already rostered.
 // Kyler Murray/Jared Goff must not be able to consume the user's Coach surface.
@@ -35,7 +32,7 @@ assert.equal(safetyPromotionEligiblePolicy({pos:'TE',counts:{TE:1},rank:40,adp:1
 
 // Wiring: executable helpers must be the actual app policy path.
 assert.match(app,/from '\.\/decision-policy\.js'/);
-assert.match(app,/userDraftStrategyExcluded\(p\.pos,state\.counts,p\.name\)/);
+assert.match(app,/userDraftStrategyExcluded\(p\.pos,state\.counts\)/);
 assert.match(app,/safetyPromotionEligiblePolicy\(\{/);
 assert.doesNotMatch(app,/if\(x\.p\.pos==='WR'.*stateCounts.*WR.*>=7.*return Number\.isFinite/s);
 
