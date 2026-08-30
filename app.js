@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.127';
+const APP_VERSION='v11.8.0-rc4.128';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2080,12 +2080,20 @@ function applyResolvedReturnScore(x,current,strategy){
 }
 
 function expertRanksHtml(r){
-  return `<div class="coach-section-title">Einzelrankings · Position / Overall</div><div class="expert-grid">${r.individual.map(x=>{
-    const delta=x.rank-r.rank,cls=delta<=-4?'high':delta>=4?'low':'';
+  // Live cards must have fixed expert columns for the exact analyzed panel. A source that
+  // lacks this player stays visible as #–; never replace it with another expert and never
+  // derive membership from the player's sparse individual rows.
+  const intended=Object.keys(panels[r?.panelId]?.weights||{}).filter(name=>Number(panels[r?.panelId]?.weights?.[name])>0);
+  const rows=Array.isArray(r?.individual)?r.individual:[];
+  const byExpert=new Map(rows.filter(x=>x?.expertName).map(x=>[norm(x.expertName),x]));
+  const names=intended.length?intended:rows.map(x=>x.expertName).filter(Boolean);
+  return `<div class="coach-section-title">Experten · Overall</div><div class="expert-grid">${names.map(name=>{
+    const x=byExpert.get(norm(name));
+    const overall=Number(x?.overallRank??x?.rank);
+    if(!x||!Number.isFinite(overall)||overall<=0)return `<div class="expert-rank"><b>${esc(name)}</b><span>#–</span><span class="delta">fehlt</span></div>`;
+    const delta=overall-Number(r.rank),cls=delta<=-4?'high':delta>=4?'low':'';
     const deltaText=Math.abs(delta)<1?'nahe Panel':delta<0?`${Math.abs(Math.round(delta))} höher`:`${Math.round(delta)} niedriger`;
-    const posRank=Number(x.posRank??x.rank),overall=Number(x.overallRank);
-    const provenance=Number.isFinite(overall)&&overall>0?` · Ovr #${Math.round(overall)}`:'';
-    return `<div class="expert-rank"><b>${esc(x.expertName)}</b><span>${r.pos}#${Math.round(posRank)}${provenance}</span><span class="delta ${cls}">${deltaText}</span></div>`;
+    return `<div class="expert-rank"><b>${esc(name)}</b><span>#${Math.round(overall)}</span><span class="delta ${cls}">${deltaText}</span></div>`;
   }).join('')}</div>`;
 }
 function researchBadgesHtml(x){
