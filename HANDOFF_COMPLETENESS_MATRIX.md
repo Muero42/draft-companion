@@ -1,17 +1,19 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v192
-Generation: `20260830T1010Z-v192`
+# PITTI HANDOFF COMPLETENESS MATRIX — v193
+Generation: `20260830T1310Z-v193`
 
 Takeover PASS requires all of:
-- CURRENT = SEAL = HANDOFF = BOOTSTRAP = MATRIX generation v192.
-- Seal PASS, ready=true, second-pass=true, final integrity matches required blobs.
-- rc4.117 source/package off-device PASS: run 33305284763 / artifact 9730250635 / sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc.
-- gh-pages runtime = rc4.117 and byte parity with main PASS; deployment compare returned IDENTICAL before checkpoint-only commits.
-- Exact gate: RC4.117_DEVICE_V4_ACCEPTANCE.
-- v4 is PRIMARY; v5 optional only if time remains.
-- v4 = individual-only with native Koerner and exact position weights; no Draft Sharks team ranking.
-- v5 = v3 + Koerner 15 points funded from Draft Sharks first; never v4+Koerner.
-- positional aggregation != published Overall provenance.
-- STATUS report-only/no tools; AUTO BLOCK silent; empty replies forbidden.
-- one device refresh/install now; no repeated phone trial-and-error.
+- CURRENT = SEAL = HANDOFF = BOOTSTRAP = MATRIX generation **v193 / 20260830T1310Z-v193**.
+- Seal PASS, handoff_ready=true, second-pass=true, integrity matches every required blob.
+- Source runtime **rc4.129**; latest device-observed operational runtime **rc4.126**.
+- Final gh-pages/main compare = **IDENTICAL** after v193 reseal promotion.
+- Exact gate: **RC4.129_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK**.
+- v4 PRIMARY; v5 CHALLENGER; v3 failsafe.
+- v5 remains v3 + Koerner 15pp funded from Draft Sharks first.
+- Common Overall is cross-position decision scale; positional ranks diagnostic/internal.
+- Compact expert membership fixed by exact analyzed panel; missing rows show #–.
+- Active-draft decisionFixtures cannot be deleted/trimmed for quota recovery; silent persistence failure forbidden.
+- Full paired mock acceptance = **30 fixtures / 15 exact own-pick states × two profiles**.
+- Latest 12-47-22-598Z backup = **11/15 paired**, missing 9/12/29/32; never treat as full test.
+- STATUS report-only/no tools; AUTO/AUTO BLOCK actual silent execution.
 - one-QB user strategy; no K/DST; starter maxima not roster caps; Geno/Rodgers organic.
-- missing expert coverage explicit; deferred 19-44-43 mock unanalyzed.
+- deferred 19-44-43 backup remains unanalyzed until explicit user release.
