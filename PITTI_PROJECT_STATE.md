@@ -2907,3 +2907,5 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Process: AUTO/AUTO BLOCK means actual long autonomous execution without promise/status chatter; STATUS is report-only/no tools. No phone trial-and-error; test candidates off-device before a single controlled device refresh.
 - Exact next gate after this handoff: **RC4.129_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK**. One device refresh to rc4.129, verify visible version and normal operation, then complete a realistic 15-round mock analyzing BOTH v4 and v5 at every own pick. Export backup and verify 30 paired fixtures before any model conclusions.
 - Handoff generation authority: `20260830T1310Z-v193`.
+
+- v193 handoff parity transaction verified: gh-pages fast-forwarded without force to main; compare returned IDENTICAL (ahead 0 / behind 0) on rc4.129 before final reseal. Final reseal commit must be promoted once more so branches remain identical.
