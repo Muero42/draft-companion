@@ -2882,3 +2882,11 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Scoring, panel weights, Return-v2, evidence fixtures and v4/v5 model semantics unchanged.
 - Static acceptance PASS: rc4.128 version/cache contract across app/index/sw/manifest; exact-panel membership source present; explicit missing-rank branch present; obsolete Position/Overall compact heading absent; row sanitizer and row-local intendedExperts audit remain present.
 - Deployment/device refresh remains gated until main↔gh-pages parity is explicitly checked.
+
+
+### Correction — backup 2026-08-30T12-47-22-598Z paired-fixture coverage
+- The draft has 15 own-pick decision states (9, 12, 29, 32, 49, 52, 69, 72, 89, 92, 109, 112, 129, 132, 149).
+- The backup contains paired expertv4/expertv5 decisionFixtures for only 11 of them: 49, 52, 69, 72, 89, 92, 109, 112, 129, 132, 149 (22 fixtures total).
+- Missing paired decisionFixtures: picks 9, 12, 29, 32. These four states DO exist in returnValidation for draft 1399767853707636736, but returnValidation is keyed once per draft/current/returnPick and carries no analysisProfile, so it cannot substitute for exact paired v4/v5 decision evidence.
+- Timeline evidence: returnValidation for this draft records 9 at 12:34:43Z, 12 at 12:35:08Z, 29 at 12:35:43Z, 32 at 12:36:37Z; the first paired decisionFixture appears at pick 49 at 12:37:31Z/12:37:39Z. Do not claim full 15/15 paired coverage for this backup.
+- Post-draft v4/v5 comparison must mark picks 9/12/29/32 as missing exact paired fixture evidence unless independently reconstructed and validated from other preserved artifacts.
