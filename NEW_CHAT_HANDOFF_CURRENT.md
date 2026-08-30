@@ -1,10 +1,9 @@
-# PITTI HANDOFF CURRENT — v196
-Handoff generation: `20260830T1630Z-v196`
+# PITTI HANDOFF CURRENT — v197
+Handoff generation: `20260830T1645Z-v197`
 
-- Source/deployment authority: **v11.8.0-rc4.131**, main == gh-pages at ba2247abe4bf64edb95f812d77e89980b9830d4e.
-- rc4.131 closes exact generic-description Top-1 canaries D'Andre Swift and Lamar Jackson; no scoring/weight/Return-v2 changes.
-- Latest backup remains **16-02-06-862Z**, 29 fixtures / 15 own states / 14 exact pairs; missing pick29 expertv5. Never call it 30/30.
-- v4 PRIMARY / v5 CHALLENGER / v3 failsafe.
-- McLaurin sparse coverage remains explicit 4/6, missing Boone + Koerner; no imputation.
-- Exact next gate: one controlled device refresh to rc4.131, verify visible version and Swift/Lamar player-specific rationale. No cache clear/reinstall and no new mock solely for rc4.131.
-- AUTO silent execution; STATUS report-only.
+- Android/source/deployment authority: **v11.8.0-rc4.131**. User directly observed visible version 131.
+- v4 PRIMARY / v5 CHALLENGER / v3 failsafe. Latest backup 16-02-06-862Z remains 29/30; missing pick29 expertv5.
+- rc4.131 Swift/Lamar description canaries are opportunistic; no new full mock solely for them.
+- Final 30 Aug freshness scan found no broad retune trigger. Henderson ankle expected Week 1 ready; Flowers expected Week 1 available; Nabers remains ACL-ramp risk with elite ceiling; Judkins offseason return progressed; Parker Washington/Tank Bigsby upside theses remain supported.
+- Roster cutdown is active: next high-value gate is materiality/delta monitoring, especially IR/PUP/role changes. Panel remains baseline.
+- No cache clear/reinstall/trial-and-error. AUTO silent; STATUS report-only.
