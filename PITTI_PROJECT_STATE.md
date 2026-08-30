@@ -2826,3 +2826,11 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Device snapshot on rc4.123 confirms v4 ready/selectable and operational on Pick 1 with 6/6 embedded experts per position, Panel-Health OK, Overall-based cross-position ordering restored, and realistic cross-position panel values (e.g. Cook 10.1, Barkley 14.3).
 - Compact live-surface requirement remains Overall-only for expert ranks; positional ranks may remain in Full Diagnostic/audit text only and are not decision-surface UI.
 - Current Snapshot-Fingerprint 1399717172212695040|9|0| is unchanged/duplicate, so no second football recommendation should be produced from this same state. Next validation is same-state v5 selection/analysis for model comparison.
+
+
+### rc4.123 same-state v4 vs v5 device comparison
+- Same Snapshot-Fingerprint 1399717172212695040|9|0| was analyzed under both v4 and v5 on device. This is a model-comparison use of a duplicate snapshot, not a second football recommendation.
+- v5 is READY/selectable and operational after restart. Panel-health OK; loaded depths QB45/RB101/WR143/TE54.
+- Top-board comparison is broadly stable: Gibbs/Bijan remain 1-2; Chase/Puka remain the leading WR pair; CMC/JSN/Taylor/ARSB remain next cluster. v5 notably lifts JSN (6.7->5.8), Cook (10.1->8.4), Barkley (14.3->13.2), Henry (15.9->14.4), Walker (16.8->14.9), Hampton (19.3->17.3) and lowers Jeanty materially (25.3->30.4) versus v4.
+- v5 diagnostic exposes cosmetic provenance artifacts from frozen v3 rows (e.g. RB0 and reconstructed undefined-anchor text). These are NOT the compact live surface and do not alter the Overall panel values, but should not be promoted into the 90-second decision UI.
+- Snapshot remains duplicate/unchanged; do not issue a second pick recommendation until a new fingerprint arrives.
