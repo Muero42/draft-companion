@@ -127,4 +127,4 @@ if(Number(activeVersion)>=133){
   assert.match(app,/medianReturn-x\.ret\)\*4,-2,2/,'rc4.133 board-relative Return cap missing');
   assert.match(app,/norm\('A\.J\. Brown'\).*alpha_role_rebound/,'rc4.133 AJ Brown individual evidence missing');
 }
-console.log('RC496_DRAFT_CRITICAL_PASS'); // rc4.132 release-gate trigger
+console.log('RC496_DRAFT_CRITICAL_PASS'); // rc4.133 gate trigger // rc4.132 release-gate trigger
