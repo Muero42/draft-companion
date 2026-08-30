@@ -2890,3 +2890,20 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Missing paired decisionFixtures: picks 9, 12, 29, 32. These four states DO exist in returnValidation for draft 1399767853707636736, but returnValidation is keyed once per draft/current/returnPick and carries no analysisProfile, so it cannot substitute for exact paired v4/v5 decision evidence.
 - Timeline evidence: returnValidation for this draft records 9 at 12:34:43Z, 12 at 12:35:08Z, 29 at 12:35:43Z, 32 at 12:36:37Z; the first paired decisionFixture appears at pick 49 at 12:37:31Z/12:37:39Z. Do not claim full 15/15 paired coverage for this backup.
 - Post-draft v4/v5 comparison must mark picks 9/12/29/32 as missing exact paired fixture evidence unless independently reconstructed and validated from other preserved artifacts.
+
+
+---
+
+## 2026-08-30 — v193 HANDOFF AUTHORITY · rc4.129 evidence-retention fix
+
+- Device evidence supersedes stale v192 pointers: rc4.123–rc4.126 were observed on Android/PWA during realistic v4/v5 mocks; v4 and v5 both became selectable/operational. Latest observed device runtime in this chat is **v11.8.0-rc4.126**. Do not revert to the old rc4.114/rc4.117 acceptance gate.
+- Current source runtime is **v11.8.0-rc4.129**. It contains all later fixes: common Overall cross-position panel semantics, compact Overall-only live expert display, profile-aware duplicate guard, paired v4/v5 decision-fixture IDs/export, mobile selector placement, fixed per-profile expert membership with explicit #– for missing rows, and active-draft decision-evidence retention protection.
+- Backup **draft-companion-v7-backup-2026-08-30T12-47-22-598Z.json** is NOT a complete 15-pick paired-model test. It contains 22 decisionFixtures = 11 paired own-pick states; exact paired fixtures are missing for picks 9/12/29/32 even though returnValidation contains those states. Never report this backup as 15/15 evidence.
+- Root cause class for the missing early fixtures: backup serialization itself exports loadDecisionFixtures() unchanged; loss can occur earlier because decision fixtures were allowed to be pruned/dropped under browser quota pressure and persistence failure was silent. rc4.129 repairs that path.
+- rc4.129 retention contract: **active-draft decisionFixtures are atomic and must not be trimmed**; quota recovery may evict only historical draft fixtures / secondary rebuildable evidence. Ranking-cache recovery must never delete active decisionFixtures. If the active draft cannot be persisted intact, analysis must surface an explicit blocking error instead of silently continuing.
+- Acceptance target for the next realistic mock: **15 own-pick states × expertv4 + expertv5 = 30 decisionFixtures** in the resulting backup, with all 15 pick numbers paired exactly once per profile. Verify this count FIRST before using the mock for model comparison.
+- Model authority remains: **v4 PRIMARY, v5 CHALLENGER**. Existing paired evidence gives v4 a slight calibration edge; v5 has some late-RB upside wins but no evidence strong enough to replace v4 or retune weights. No further weight/source redesign before the draft absent a proven defect.
+- Draft constraints remain: 10-team Half-PPR, slot 9, one QB only, no K/DST, starter maxima are not roster caps, late bench increasingly RB/league-winner upside, Panel baseline + Sleeper ADP timing, no player-name forcing.
+- Process: AUTO/AUTO BLOCK means actual long autonomous execution without promise/status chatter; STATUS is report-only/no tools. No phone trial-and-error; test candidates off-device before a single controlled device refresh.
+- Exact next gate after this handoff: **RC4.129_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK**. One device refresh to rc4.129, verify visible version and normal operation, then complete a realistic 15-round mock analyzing BOTH v4 and v5 at every own pick. Export backup and verify 30 paired fixtures before any model conclusions.
+- Handoff generation authority: `20260830T1310Z-v193`.
