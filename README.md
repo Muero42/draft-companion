@@ -1,13 +1,13 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Current source/package/deployment candidate:** v11.8.0-rc4.107; **last accepted Android:** v11.8.0-rc4.105. rc4.106 is display-only embedded individual-rank repair.
-> **rc4.100 PR validation:** release 33205458705 PASS; package/re-extract 33205458721 PASS; guardrails 33205458745 PASS.
-> **Deployment/device:** gh-pages rc4.106 exact 13-file parity PASS; Android rc4.106 display observation pending; rc4.105 remains accepted device authority.
-> **Rollback reference:** v11.8.0-rc4.96 historical only; current accepted Android authority is v11.8.0-rc4.104.
+> **Current source/package candidate:** v11.8.0-rc4.108; **deployed/device-observed authority:** v11.8.0-rc4.107. rc4.108 contains only the CI-validated v4/v5 readiness-core acceptance fix plus version/cache bump; device acceptance pending.
+> **rc4.108 validation:** source behavioral gates passed before version bump; package/re-extract and seal-dependent gates are being completed before deployment.
+> **Deployment/device:** rc4.107 is deployed and device-observed with generic refresh PASS; v4/v5 correctly fail closed there. rc4.108 is not yet device authority.
+> **Rollback/fallback:** rc4.107 remains current device authority during rc4.108 gating; historical rollback reference rc4.96.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
 > **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
 > **rc4.100 scope:** generic Pro/Contra semantic hardening + bounded short-turn portfolio ordering; no global ranking/Return/expert retune, no hard WR cap/quota.
-> **OOS critical:** strict Coach draft 1399114762087895040 = 9 WR / 4 RB / 1 TE / 1 QB; old 7-WR count is invalid.
+> **Current gate:** RC4108_PACKAGE_REEXTRACT_AND_DEPLOYMENT_PARITY.
 > **Current gate:** RC4106_ANDROID_DISPLAY_ACCEPTANCE.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
