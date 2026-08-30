@@ -235,7 +235,9 @@ function ensureExpertV5Panels(){
       const k=kMap.get(key),vals=[];
       for(const x of row.individual||[]){
         const w=Number(weights[x.expertName]);if(!(w>0)||!Number.isFinite(Number(x.rank)))continue;
-        vals.push({...x,effectiveWeight:w});
+        // v3/v2 base rows are position ranks. Never inherit a stale/misclassified Overall
+        // field into v5; only v5's freshly verified Koerner row carries published Overall.
+        vals.push({...x,posRank:Number(x.posRank??x.rank),overallRank:null,effectiveWeight:w});
       }
       if(k&&Number(weights[koerner])>0)vals.push({expertName:koerner,rank:Number(k.posRank??k.rank),posRank:Number(k.posRank??k.rank),overallRank:Number.isFinite(Number(k.overallRank))?Number(k.overallRank):null,effectiveWeight:Number(weights[koerner]),reconstructed:false,spread:null});
       const intended=Object.keys(weights).filter(n=>weights[n]>0),present=new Set(vals.map(x=>x.expertName)),missing=intended.filter(n=>!present.has(n)),sw=vals.reduce((z,x)=>z+Number(x.effectiveWeight||0),0);
