@@ -2573,3 +2573,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - This affects both independent expert crosschecks and the Koerner pairwise validation route, reducing false lockouts without relaxing identity/rank verification.
 - Head ff30b7b533fbf17671b9b5d237f2b27e8f5e58c3: release contract 33293057434 PASS; Project Guardrails 33293057472 PASS; candidate package gate 33293057453 PASS.
 - Production/main untouched; real authenticated source execution remains the dependent release gate.
+
+
+### 2026-08-30 — CRITICAL anti-regression correction: user QB exclusions
+- Full source-of-truth audit found a dangerous stale contradiction in repo preflight/lock inherited from rc4.92: it claimed Geno Smith/Aaron Rodgers were ordinary candidates and prohibited player-name QB exclusions. This directly contradicts the user's established 2026 draft authority: **Geno Smith and Aaron Rodgers are hard exclusions and must never be drafted/recommended**.
+- Corrected PITTI_AUTO_PREFLIGHT and PITTI_EXECUTION_LOCK. decision-policy.js now explicitly excludes both names before QB1 as well as preserving exactly-one-QB after QB1. app.js now passes player identity into the executable policy path. rc478 OOS tests now contain positive canaries for both hard exclusions plus an ordinary-QB control (Jared Goff remains eligible before QB1).
+- This is exactly the class of old-error resurrection the user warned against; it was caught before v4/v5 promotion. Production/main remains untouched.
+- Current code head 7ce9c809f0a2d9648641b7d21631a862a06c4493; full CI/package gates running. Do not promote unless all PASS.
