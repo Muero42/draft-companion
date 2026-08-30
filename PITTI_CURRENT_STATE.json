@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1200Z-v191",
-  "updated_at": "2026-08-30T12:12:00Z",
+  "updated_at": "2026-08-30T12:20:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -57,12 +57,12 @@
     "transaction_in_progress": false,
     "resume_semantics": "rc4.117 is the off-device-PASS candidate. v4 is individual-only with native Koerner and corrected Overall-vs-position provenance. v5 is v3 + Koerner funded from Draft Sharks first. gh-pages remains rc4.115 and is NOT in parity with main. Next: server-side promotion/parity, then one device v4 acceptance. v5 only if time remains.",
     "acceptance_fingerprint": "CURRENT|RC4117-SOURCE|V4-INDIVIDUAL-ONLY|V5-V3-PLUS-KOERNER-FROM-DS|OVERALL-POSRANK-SEPARATE|NO-TRIAL-ERROR|STATUS-REPORT-ONLY|HANDOFF-BEFORE-DEGRADATION",
-    "status": "V191_READY_RC4117_DEPLOY_THEN_V4_DEVICE_TEST",
-    "handoff_ready": false,
-    "second_pass_pass": false,
-    "next_action": "New chat: verify v191 once -> deploy rc4.117/verify gh-pages byte parity -> one device refresh/install -> test v4. v5 only if time remains.",
+    "status": "V191_HANDOFF_READY_RC4117_V4_FIRST",
+    "handoff_ready": true,
+    "second_pass_pass": true,
+    "next_action": "New chat: verify v191 seal once -> deploy rc4.117 to gh-pages -> prove byte parity -> one device refresh/install -> test v4 first -> realistic mocks. v5 only if time remains.",
     "gate": "RC4.117_DEPLOY_PARITY_THEN_DEVICE_V4_ACCEPTANCE",
-    "seal_status": "SUPERSEDED_PENDING_RESEAL",
+    "seal_status": "PASS",
     "seal_generation": "20260830T1200Z-v191"
   },
   "source_authority": "v11.8.0-rc4.117",
