@@ -54,12 +54,12 @@
     "no_player_name_qb_exclusions": true
   },
   "handoff": {
-    "transaction_in_progress": true,
+    "transaction_in_progress": false,
     "resume_semantics": "PITTI AUTO: rc4.114 device evidence ACCEPTED v4 (COMPLETE QB32/RB83/WR91/TE30). v5 failed only because legacy v3/DS-funded construction inherited sparse coverage. rc4.115 rebuilds v5 from accepted v4 individual-only + Koerner 20%; all off-device gates PASS and Pages deployment success. Next gate is rc4.115 device v5 acceptance. Ranking/source research is frozen.",
     "acceptance_fingerprint": "RC4.115-OFFDEVICE-PASS|V4-RC4114-DEVICE-ACCEPTED|V5-V4PLUSKOERNER|RANKING-SOURCES-FROZEN|DEVICE-V5-PENDING|HANDOFF-v188",
-    "status": "HANDOFF_v188_RC4115_DEVICE_V5_ACCEPTANCE",
-    "handoff_ready": false,
-    "second_pass_pass": false,
+    "status": "HANDOFF_v188_READY_RC4115_DEVICE_V5_ACCEPTANCE",
+    "handoff_ready": true,
+    "second_pass_pass": true,
     "next_action": "PITTI AUTO: first verify handoff/current artifacts, then rc4.115 device acceptance only. Do not reopen ranking/source research. v4 rc4.114 is device-accepted; validate v5 COMPLETE after rc4.115. User reports ChatGPT app instability, so minimize turns/tool chatter.",
     "gate": "RC4.115_DEVICE_V5_ACCEPTANCE"
   },
