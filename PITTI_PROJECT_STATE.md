@@ -2580,3 +2580,16 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - **Authoritative behavior restored:** Geno Smith and Aaron Rodgers are NOT player-name hard exclusions. They must appear and rank organically like other QB candidates before QB1. After QB1, the user-specific exactly-one-QB roster strategy suppresses QB2 recommendations.
 - No player-name scoring demotion/removal is allowed for Geno Smith or Aaron Rodgers. Their ranking/display may be low naturally, but never because of a name-specific rule.
 - Restored preflight, execution lock, decision policy, app wiring, guardrails, and rc478/rc482-486 regression tests to the pre-regression state from 0f4501768536bc47530791d8689d570ebe9f52c3.
+
+
+### 2026-08-30 — rc4.107 PRE-DRAFT PROMOTION / DEVICE GATE
+- AUTO audit found and fixed a release-critical v4/v5 runtime bug: panelSelectable only admitted embedded v2/v3 shadow IDs, so a supposedly ready v4/v5 profile would have silently fallen back instead of driving rankFor. Runtime now explicitly admits v2/v3/v4/v5 shadow panel IDs; regression canary added.
+- A second coexistence bug was fixed: applyExpertProfile had been narrowed to v3/v4/v5 and would break the retained incumbent/full-v2/wr-v2 selector. It now accepts all defined profiles while fail-closing v4/v5 on readiness; the dedicated v4/v5 selector cannot blank the legacy selector.
+- UI placement was re-audited against the locked requirement and restored **directly above Analyze**. An attempted move to Step 1 was reverted before release.
+- v4/v5 coverage readiness changed from impossible blanket top-80-per-position to position-appropriate decision cores: QB 24 / RB 60 / WR 70 / TE 24, still requiring COMPLETE coverage for the whole core. Structural embedded-source audit proves feasible complete intersections: QB31 / RB84 / WR93 / TE30. Runtime remains **live-current only**; stale embedded rows are diagnostic/control evidence, not a production freshness bypass.
+- Deterministic same-state v3→v4 diagnostic added. Key canaries on frozen evidence are stable: Tank Bigsby +0.9 overall-rank points, Tyjae Spears -3.2, Javonte Williams -0.8, Breece Hall +0.1; Parker Washington -4.45, Olave +0.28, Flowers -0.84, Higgins +1.79; Drake Maye -1.75, Goff +1.5. Geno/Rodgers remain organically ranked, not hard-excluded.
+- Freshness gate advanced to 2026-08-30 with max age 2 days and PASS.
+- rc4.107 branch release contract / project guardrails / package-reextract all PASS. Candidate artifact 9726805413, run 33293932073; independently recomputed inner ZIP SHA-256 adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c; exactly 13 runtime files.
+- PR #49 merged to main as fccac7f5d28c3e533eff2e80209e45d50f142317. gh-pages runtime was updated and independently checked **13/13 byte parity with main**. rc4.107 is therefore deployed for device acceptance.
+- Android authority remains rc4.106 until the user/device observes rc4.107 and runs the live FantasyPros refresh. v3 is default. v4/v5 remain fail-closed until real current source coverage succeeds; v5 additionally requires Koerner exact import/crosscheck.
+- **Next unavoidable external gate:** device loads rc4.107 → Alles aktualisieren → inspect v4/v5 readiness/source status and same-state behavior. Do not claim Android acceptance before that observation.
