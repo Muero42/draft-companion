@@ -1,20 +1,21 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260830T1630Z-v196",
-  "created_at": "2026-08-30T16:30:00Z",
+  "handoff_generation": "20260830T1645Z-v197",
+  "created_at": "2026-08-30T16:45:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "29fa82cdb4105fdb1114c4ebb3258b16e1705ee0",
-    "PITTI_CURRENT_STATE.json": "2ec9f51b6a38d214df323906eadc89b094c4207c",
-    "PITTI_EXECUTION_LOCK.json": "cf3738fb463fea36ddd9089e818ab206cdd57f3e",
+    "PITTI_COMMAND_CONTRACTS.json": "fa64f1aff5fbb3380bebe51fc9127b60f61eb7bc",
+    "PITTI_CURRENT_STATE.json": "793b8c0f16eebfeff855f451d681cca45baf32ea",
+    "PITTI_EXECUTION_LOCK.json": "8198e9bd80abab2766860f887368aba2161771cc",
     "PITTI_AUTO_PREFLIGHT.md": "7d612f96f71d212d9f0d135eae668fe7f36baa98",
-    "PITTI_PROJECT_STATE.md": "32dc940b312fdc0084ae77d908c35f8b3fb0ffad",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "8ffd88e537f0f294a82d36e1a28a9241c10bf646",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "6a27ca8dbf186a677db7f820f944b76ec6f5c1e0",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "7b4417c59f41edd538dc34c8aca0b244e73ef15c",
+    "PITTI_PROJECT_STATE.md": "725fd2c84bf35ad92d2136bf7f84bd2ed049a7c9",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "f1cd5f0ac4c63eb8cf145ed97ec34bd13e5b22f2",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "5fdc444d4fbaee06c0bb72ea3d952c8133354dad",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "7d9c3cd7227fcf4bb803074800173b702d19ef36",
+    "PITTI_PRE_DRAFT_FRESHNESS_2026-08-30.md": "306f621e1f30ca369befe53c9db03ef59000354e",
     "app.js": "0a79574bbbf042853139c80fa04342b0337c8507",
     "index.html": "b1077a3723df0d27bfcda16ae3f7969dec09a5e9",
     "decision-policy.js": "76234515b5428a33b7ef573f1f5c87bab058ad67",
@@ -26,18 +27,19 @@
   },
   "branch_locks": {
     "runtime": "v11.8.0-rc4.131",
+    "android": "v11.8.0-rc4.131 observed",
     "latest_backup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json",
     "evidence_gate": "29/30; missing pick29 expertv5",
     "model": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe"
   },
   "checks": {
     "generation_consistent": true,
-    "rc4131_all_ci_pass": true,
-    "main_ghpages_identical": true,
-    "swift_lamar_description_canaries_closed": true,
-    "no_model_scoring_change": true,
-    "backup_gate_still_29_of_30": true
+    "android131_observed": true,
+    "main_ghpages_runtime_parity": true,
+    "no_model_retune": true,
+    "latest_backup_still_29_of_30": true,
+    "freshness_delta_recorded": true
   },
-  "exact_gate": "RC4.131_ONE_CONTROLLED_DEVICE_REFRESH",
-  "note": "rc4.131 is a narrow description-data correction. One controlled device refresh is the only remaining dependent gate."
+  "exact_gate": "PRE_DRAFT_READINESS_FREEZE",
+  "note": "Android rc4.131 observed. Remaining work is final roster-cutdown/materiality freshness, not another model rebuild or full mock solely for rc4.131."
 }
