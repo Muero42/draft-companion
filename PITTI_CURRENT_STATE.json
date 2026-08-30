@@ -13,13 +13,13 @@
     "android_authority": "v11.8.0-rc4.108",
     "test_challenger": "v11.8.0-rc4.111",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.110",
+    "latest_package_reextract": "v11.8.0-rc4.111",
     "library_recovery_alias": "v11.8.0-rc4.52",
-    "latest_package_sha256": "artifact-envelope-sha256:dad2cdd2f882a251838be5ea4f455288a927708e35fa4eec3eae7ffc5d9e3cae",
-    "deployed_pages": "v11.8.0-rc4.110",
+    "latest_package_sha256": "artifact-envelope-sha256:feadf23c9ec0f9d72ac88d06e9d1cfc8b887e84caea4dc48c1dac939a89827b4",
+    "deployed_pages": "v11.8.0-rc4.111",
     "deployed_pages_app_byte_parity_with_main": true,
-    "package_reference_run": 33299006935,
-    "package_reference_artifact_id": 9728307439,
+    "package_reference_run": 33299834699,
+    "package_reference_artifact_id": 9728556713,
     "package_reference_note": "rc4.108 package/re-extract PASS; 13 runtime files; release contract, guardrails, rc4.82 and rc4.83 gates PASS; gh-pages force-aligned to gated main commit and sampled runtime parity PASS.",
     "android_version_observed": true,
     "android_functional_verified": true,
@@ -33,12 +33,12 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.111 storage-quota fix candidate; device untouched; full CI pending"
+    "source_candidate": "v11.8.0-rc4.111 off-device acceptance PASS; deployed; final device acceptance pending"
   },
   "exact_continuation": {
     "gate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "AUTO complete off-device rc4.111 gates and inspect failures; do not request device interaction before all reproducible gates pass."
+    "instruction": "Final device acceptance only: reload to rc4.111, Alles aktualisieren once, inspect v4/v5 diagnostic. No cache/data clear."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -60,7 +60,7 @@
     "status": "HANDOFF_v187_RC4111_OFFDEVICE_GATING",
     "handoff_ready": false,
     "second_pass_pass": false,
-    "next_action": "AUTO complete off-device rc4.111 gates and inspect failures; do not request device interaction before all reproducible gates pass.",
+    "next_action": "Final device acceptance only: reload to rc4.111, Alles aktualisieren once, inspect v4/v5 diagnostic. No cache/data clear.",
     "gate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE"
   },
   "source_authority": "v11.8.0-rc4.111",
