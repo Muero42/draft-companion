@@ -113,7 +113,7 @@
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.106 accepted Android/runtime baseline",
-    "androidAuthority": "v11.8.0-rc4.106",
+    "androidAuthority": "v11.8.0-rc4.107",
     "sourceAuthority": "v11.8.0-rc4.107 on main",
     "latestPackageReextract": "v11.8.0-rc4.107 PASS · 13 runtime files · sha256:adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c",
     "deployedPagesVersion": "v11.8.0-rc4.107",
@@ -127,6 +127,6 @@
     "packageReferenceArtifactId": 9726805413
   },
   "currentGate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
-  "handoffGeneration": "20260830T0634Z-v183",
-  "handoff_generation": "20260830T0634Z-v183"
+  "handoffGeneration": "20260830T0653Z-v184",
+  "handoff_generation": "20260830T0653Z-v184"
 }
