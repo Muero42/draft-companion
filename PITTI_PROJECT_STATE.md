@@ -2820,3 +2820,9 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - rc4.123 changes only compact presentation/version/cache contract; v4 dual-rank engine semantics and v5 v3+Koerner weighting/topology remain unchanged.
 - Executed off-device checks PASS: JS syntax (runtime files), rc4.123 cache/version parity, v4 dual-rank engine invariants, v5 Overall-scale integration, exact Koerner 15% weights, v4/v5 profile recognition, and compact Barkley/Pat canary '#14'.
 - Do not deploy before parity check; then one controlled device refresh only.
+
+
+### rc4.123 device v4 acceptance
+- Device snapshot on rc4.123 confirms v4 ready/selectable and operational on Pick 1 with 6/6 embedded experts per position, Panel-Health OK, Overall-based cross-position ordering restored, and realistic cross-position panel values (e.g. Cook 10.1, Barkley 14.3).
+- Compact live-surface requirement remains Overall-only for expert ranks; positional ranks may remain in Full Diagnostic/audit text only and are not decision-surface UI.
+- Current Snapshot-Fingerprint 1399717172212695040|9|0| is unchanged/duplicate, so no second football recommendation should be produced from this same state. Next validation is same-state v5 selection/analysis for model comparison.
