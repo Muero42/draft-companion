@@ -186,10 +186,17 @@ function ensureExpertV4Panels(){
   for(const pos of ['QB','RB','WR','TE']){
     const bp=EXPERT_V4_BLUEPRINT[pos],rows={};
     for(const name of bp.experts)rows[name]=verifiedRowsForExpert(name,pos);
+    // Source depth is checked separately from row overlap. A published positional list can
+    // legitimately stop before another expert's tail; that is right-censoring, not an
+    // acquisition failure and must not be converted into a vote or silently renormalized.
     if(bp.experts.some(name=>rows[name].length<EXPERT_DECISION_CORE_MIN[pos])){ok=false;continue}
-    buildPanelFromExpertRows('expert-v4-'+pos.toLowerCase(),pos,rows,Object.fromEntries(bp.experts.map(name=>[name,1])),{name:'Expert-v4 '+pos,source:'live verified individual experts',maxSingleWeight:bp.maxSingleWeight});
+    const ranks=buildPanelFromExpertRows('expert-v4-'+pos.toLowerCase(),pos,rows,Object.fromEntries(bp.experts.map(name=>[name,1])),{name:'Expert-v4 '+pos,source:'live verified individual experts',maxSingleWeight:bp.maxSingleWeight});
+    // Acceptance is decision-zone based: require the first N players by the aggregate board
+    // to have the full intended ensemble. Do not require every union/tail row to be complete.
+    const need=EXPERT_DECISION_CORE_MIN[pos],core=Object.values(ranks).sort((a,b)=>Number(a.rank)-Number(b.rank)).slice(0,need);
+    if(core.length<need||core.some(row=>row?.coverageStatus!=='COMPLETE'))ok=false;
   }
-  return ok&&expertProfileReady('expertv4');
+  return ok;
 }
 function ensureExpertV5Panels(){
   const koerner='Sean Koerner';let ok=true;
@@ -223,10 +230,13 @@ function expertProfileReady(id){
     const pid=map[pos],rows=panelRanks[pid];
     if(!rows||!Object.keys(rows).length)return false;
     if(id==='expertv3')return Object.values(rows).every(row=>row?.coverageStatus==='COMPLETE'||!('coverageStatus' in row));
-    // Right-censoring at the tail is expected for individual expert lists. Do not require every
-    // player in the union to be ranked by every expert; require a complete decision-relevant core.
-    const need=EXPERT_DECISION_CORE_MIN[pos],core=Object.values(rows).sort((a,b)=>Number(a.rank)-Number(b.rank)).slice(0,need);
-    return core.length>=need&&core.every(row=>row?.coverageStatus==='COMPLETE');
+    // Rank-based "first N aggregate rows" is unsafe for sparse panels: a player missing one
+    // expert can move artificially upward after the available weights are renormalized. Define
+    // the decision core from COMPLETE rows only; incomplete rows remain visible/fail-closed and
+    // are never used to prove readiness.
+    const need=EXPERT_DECISION_CORE_MIN[pos];
+    const complete=Object.values(rows).filter(row=>row?.coverageStatus==='COMPLETE').sort((a,b)=>Number(a.rank)-Number(b.rank));
+    return complete.length>=need;
   });
 }
 function syncAnalysisExpertSelector(){
