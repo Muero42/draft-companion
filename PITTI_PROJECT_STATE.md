@@ -2786,3 +2786,9 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Corrected expert UI to show e.g. RB#8 · Ovr #14 instead of an ambiguous single rank; compact card metric is now explicitly RB-Panel / WR-Panel / etc., never Overall.
 - Barkley/Pat canary remains: Pat published Overall #14 and RB8 must display as RB#8 · Ovr #14; panel aggregation uses RB8.
 - Version bumped to rc4.119; release-critical guard extended for the new semantics. Do not resume realistic mocks until rc4.119 off-device checks and deployment parity pass.
+
+
+### rc4.122 — v5 lock root cause + predeploy discipline
+- rc4.121 device screenshot proved v4 READY but v5 still locked. Root cause was not readiness anymore: ensureExpertV5Panels hard-coded expert-v3-wr, but frozen v3 canonically maps WR to expert-v2-wr. Therefore v5 WR never built and profile readiness could never pass.
+- Fixed v5 baseline resolution to use EXPERT_PROFILE_IDS.expertv3[pos] for every position; this preserves the frozen v3 topology and prevents invented panel IDs.
+- User explicitly requires: do not deploy/install another candidate before off-device testing. rc4.122 must remain undeployed until static/release-contract checks validate v5 QB/RB/WR/TE construction and selector readiness semantics.
