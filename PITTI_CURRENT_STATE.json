@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260830T1630Z-v196",
-  "updated_at": "2026-08-30T16:30:00Z",
+  "handoff_generation": "20260830T1645Z-v197",
+  "updated_at": "2026-08-30T16:45:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -13,7 +13,7 @@
     "android_authority": "v11.8.0-rc4.131",
     "test_challenger": "v11.8.0-rc4.131",
     "test_challenger_android_verified": true,
-    "latest_package_reextract": "v11.8.0-rc4.130 CI PACKAGE/RE-EXTRACT PASS; DEVICE REFRESH PENDING",
+    "latest_package_reextract": "v11.8.0-rc4.131 CI PACKAGE/RE-EXTRACT PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
     "deployed_pages": "v11.8.0-rc4.131",
@@ -24,21 +24,21 @@
     "android_version_observed": true,
     "android_functional_verified": true,
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
-    "test_challenger_android_observed": false,
-    "android_acceptance_pending": true,
-    "android_observed": "v11.8.0-rc4.126",
-    "android_functional_acceptance": "RC4.126_V4_V5_REALISTIC_MOCK_OPERATIONAL; RC4.129 FAIL-CLOSED PERSISTENCE ERROR OBSERVED; RC4.130 NOT YET DEVICE OBSERVED",
+    "test_challenger_android_observed": true,
+    "android_acceptance_pending": false,
+    "android_observed": "v11.8.0-rc4.131",
+    "android_functional_acceptance": "RC4.131_VERSION_OBSERVED; rc4.130 full mock operational; Swift/Lamar card-text canaries verify opportunistically",
     "rollback_reference": "v11.8.0-rc4.96",
     "accepted_android_fallback_functional_verified": true,
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.131 CI PASS; main/gh-pages IDENTICAL; device refresh pending"
+    "source_candidate": "v11.8.0-rc4.131 CI PASS; main/gh-pages parity PASS; Android version observed"
   },
   "exact_continuation": {
-    "gate": "RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
+    "gate": "PRE_DRAFT_READINESS_FREEZE",
     "auto_starts_mock": false,
-    "instruction": "One controlled device refresh to rc4.130. Verify visible rc4.130 and normal v4/v5 operation. Then start a fresh realistic 15-round mock, analyze BOTH expertv4 and expertv5 before every own pick, export backup, and FIRST require exactly 30 decisionFixtures = 15 paired pick states × 2 profiles."
+    "instruction": "No new full mock solely for rc4.131. Keep v4 PRIMARY. Perform final freshness/materiality scans and verify Swift/Lamar card rationale opportunistically if those cards appear."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -55,23 +55,23 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "rc4.130 is source/deployment authority. It fixes the rc4.129 quota-recovery bug exposed by backup 13-40-34-982Z while preserving active-draft atomicity. Device rc4.126 remains the last fully operational v4/v5 baseline. Next: one refresh to rc4.130, then a fresh full 30-fixture mock.",
+    "resume_semantics": "rc4.131 Android version observed and source/deployment parity PASS; v4 PRIMARY / v5 CHALLENGER.",
     "acceptance_fingerprint": "CURRENT|RC4130|V4-PRIMARY|V5-CHALLENGER|ZERO-HISTORY-RECOVERY-FIXED|ACTIVE-EVIDENCE-ATOMIC|30-FIXTURE-GATE|NO-TRIAL-ERROR|AUTO-SILENT|STATUS-REPORT-ONLY",
     "status": "PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "One controlled refresh to rc4.131; verify visible version and Swift/Lamar player-specific card text. No new mock required solely for this display-data correction.",
-    "gate": "RC4.131_ONE_CONTROLLED_DEVICE_REFRESH",
+    "next_action": "Final pre-draft freshness/materiality work; no broad model changes. Swift/Lamar card canaries opportunistic only.",
+    "gate": "PRE_DRAFT_READINESS_FREEZE",
     "seal_status": "PASS",
-    "seal_generation": "20260830T1630Z-v196",
-    "generation": "20260830T1630Z-v196",
+    "seal_generation": "20260830T1645Z-v197",
+    "generation": "20260830T1645Z-v197",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.131 is source/deployment authority after all CI gates PASS and main/gh-pages parity. It changes only Swift/Lamar player-specific description context plus forward-compatible rc4.130 quota guard; v4 remains PRIMARY."
+    "resume": "rc4.131 Android version observed. Continue pre-draft readiness; no new mock solely for display correction."
   },
   "source_authority": "v11.8.0-rc4.131",
   "package_authority": "v11.8.0-rc4.117 run 33305284763 artifact 9730250635",
-  "android_version_observed": "v11.8.0-rc4.126",
+  "android_version_observed": "v11.8.0-rc4.131",
   "android_functional_verified": true,
   "deployment_authority": "v11.8.0-rc4.131 gh-pages/main exact parity PASS",
   "draft_day_plan": {
@@ -84,7 +84,7 @@
     "operational_freeze": "~19:50",
     "transaction_rule": "same-position claim/signing is weak Bayesian evidence only; correlate with pre-existing injury/role uncertainty and seek corroboration; uncorroborated signal may only break close ties"
   },
-  "android_acceptance_pending": true,
+  "android_acceptance_pending": false,
   "expert_v4_v5": {
     "v3": "frozen control/failsafe; embedded team/individual hybrid as historically audited",
     "v4": "CURRENT RE-AUDIT: individual-only, only experts with obtainable individual rankings. Position-specific optimized weights in app.js EXPERT_V4_BLUEPRINT. Koerner is native v4.",
@@ -156,17 +156,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.131_ANDROID_VERSION_VERIFIED",
-    "production": false,
+    "status": "PRE_DRAFT_READINESS_FREEZE",
+    "production": true,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
     "runtime": "v11.8.0-rc4.131",
     "mainRuntimeParity": "PASS",
-    "nextGate": "Verify Swift/Lamar player-specific rationale opportunistically; no additional mock solely for rc4.131. Continue remaining pre-draft readiness work."
+    "nextGate": "Final freshness/materiality scan; opportunistic Swift/Lamar card verification."
   },
-  "status": "RC4.131_ANDROID_VERSION_VERIFIED",
-  "gate": "RC4.131_CARD_CANARY_VERIFY",
-  "nextGate": "Verify Swift/Lamar player-specific rationale opportunistically; no additional mock solely for rc4.131. Continue remaining pre-draft readiness work.",
+  "status": "PRE_DRAFT_READINESS_FREEZE",
+  "gate": "PRE_DRAFT_READINESS_FREEZE",
+  "nextGate": "Final freshness/materiality scan; opportunistic Swift/Lamar card verification.",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,

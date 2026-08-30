@@ -2959,3 +2959,15 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Source/deployment authority is now **v11.8.0-rc4.131**. v4 remains PRIMARY / v5 CHALLENGER / v3 failsafe. The 29/30 backup remains incomplete evidence and is not relabeled.
 - Exact device gate: **one controlled refresh to rc4.131**, then verify visible version and player-specific Swift/Lamar rationale. No cache clear/reinstall and no additional full mock is required solely for this narrow data-quality correction.
 - Generation/checkpoint: **20260830T1630Z-v196**.
+
+
+---
+
+## 2026-08-30 — v197 Android rc4.131 + pre-draft freshness checkpoint
+
+- User directly reported visible device version **131**, establishing Android/PWA version observation for **v11.8.0-rc4.131**. Stale rc4.126/refresh-pending fields in CURRENT/EXECUTION_LOCK/COMMAND_CONTRACTS were repaired; they must not override this newer device fact.
+- rc4.131 remains the accepted runtime. No new full mock is required solely to verify the narrow Swift/Lamar description correction; those card-text canaries are opportunistic.
+- Final same-day web freshness scan found no evidence requiring a broad model/weight change. Henderson's ankle issue is currently expected to clear for Week 1; Flowers is expected available despite recent missed practice; Nabers remains an elite-ceiling ACL-ramp case; Judkins' serious 2025 injury has progressed to offseason field participation; Parker Washington and Tank Bigsby late-upside theses remain directionally supported.
+- Roster cutdown is still in progress on 30 Aug, so the high-value remaining work is **delta monitoring/materiality scan**, not another model rebuild.
+- Model authority unchanged: **v4 PRIMARY / v5 CHALLENGER / v3 failsafe**. Latest evidence backup remains 29/30 and is not promoted to complete.
+- Generation: **20260830T1645Z-v197**.
