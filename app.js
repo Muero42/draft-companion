@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.113';
+const APP_VERSION='v11.8.0-rc4.114';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -179,7 +179,13 @@ function buildPanelFromExpertRows(id,pos,expertRows,rawWeights,meta={}){
 }
 function verifiedRowsForExpert(name,pos){
   const e=findExpert(name),cache=e?rankCache[e.id]:null;if(!cache?.verifiedIndividual||cache?.duplicateOf)return[];
-  return Object.values(cache.ranks||{}).filter(x=>x?.pos===pos&&Number.isFinite(Number(x.posRank??x.rank))).map(x=>({name:x.name,pos,rank:Number(x.rank),posRank:Number(x.posRank??x.rank)}));
+  const rows=Object.values(cache.ranks||{}).filter(x=>x?.pos===pos&&Number.isFinite(Number(x.posRank??x.rank)));
+  // v4/v5 are POSITION-SPECIFIC models. Their aggregation rank must therefore be the
+  // expert's positional rank. Falling back to Overall only derives the same positional
+  // ordering when a source does not publish posRank; never feed Overall numbers into a
+  // QB/RB/WR/TE panel and then require impossible cross-expert Overall overlap.
+  const sorted=rows.slice().sort((a,b)=>Number(a.posRank??a.rank)-Number(b.posRank??b.rank)||Number(a.rank)-Number(b.rank));
+  return sorted.map((x,i)=>({name:x.name,pos,rank:Number.isFinite(Number(x.posRank))&&Number(x.posRank)>0?Number(x.posRank):i+1,posRank:Number.isFinite(Number(x.posRank))&&Number(x.posRank)>0?Number(x.posRank):i+1,overallRank:Number(x.rank)}));
 }
 function ensureExpertV4Panels(){
   let ok=true;
@@ -212,7 +218,7 @@ function ensureExpertV5Panels(){
       if(!ds||Number(ds.effectiveWeight||0)<=0){ranks[key]={...row,intendedN:(row.intendedN||baseInd.length)+1,coverageStatus:'INCOMPLETE_V5_NO_DS_FUNDING',missingExperts:[...new Set([...(row.missingExperts||[]),'Draft Sharks Team funding'])]};continue}
       const transfer=Math.min(.20,Number(ds.effectiveWeight||0));
       const vals=baseInd.map(x=>x.expertName==='Draft Sharks Team'?{...x,effectiveWeight:Number(x.effectiveWeight)-transfer}:x);
-      vals.push({expertName:koerner,rank:Number(k.posRank),effectiveWeight:transfer,reconstructed:false,spread:null});
+      vals.push({expertName:koerner,rank:Number(k.rank),effectiveWeight:transfer,reconstructed:false,spread:null});
       const sw=vals.reduce((a,x)=>a+Number(x.effectiveWeight||0),0),mean=vals.reduce((a,x)=>a+x.rank*Number(x.effectiveWeight||0),0)/sw;
       const variance=vals.reduce((a,x)=>a+Number(x.effectiveWeight||0)*(x.rank-mean)**2,0)/sw;
       ranks[key]={...row,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,intendedN:(row.intendedN||baseInd.length)+1,coverage:vals.length/((row.intendedN||baseInd.length)+1),coverageStatus:(row.missingExperts||[]).length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',missingExperts:[...(row.missingExperts||[])],individual:vals.sort((a,b)=>a.rank-b.rank)};
