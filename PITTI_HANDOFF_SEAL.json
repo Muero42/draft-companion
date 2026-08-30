@@ -1,21 +1,20 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260830T1645Z-v197",
-  "created_at": "2026-08-30T16:45:00Z",
+  "handoff_generation": "20260830T1700Z-v198",
+  "created_at": "2026-08-30T17:00:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "fa64f1aff5fbb3380bebe51fc9127b60f61eb7bc",
-    "PITTI_CURRENT_STATE.json": "793b8c0f16eebfeff855f451d681cca45baf32ea",
-    "PITTI_EXECUTION_LOCK.json": "8198e9bd80abab2766860f887368aba2161771cc",
+    "PITTI_COMMAND_CONTRACTS.json": "9f6e14842216e9a8fdf036a8e2ad64d3cf94ab47",
+    "PITTI_CURRENT_STATE.json": "54a33ab9a7f597d9da8a7d6284ff2f04a2dacae3",
+    "PITTI_EXECUTION_LOCK.json": "c40f75562b79e0fa7df92cc02ed4dcb6f160cf70",
     "PITTI_AUTO_PREFLIGHT.md": "7d612f96f71d212d9f0d135eae668fe7f36baa98",
-    "PITTI_PROJECT_STATE.md": "725fd2c84bf35ad92d2136bf7f84bd2ed049a7c9",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "f1cd5f0ac4c63eb8cf145ed97ec34bd13e5b22f2",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "5fdc444d4fbaee06c0bb72ea3d952c8133354dad",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "7d9c3cd7227fcf4bb803074800173b702d19ef36",
-    "PITTI_PRE_DRAFT_FRESHNESS_2026-08-30.md": "306f621e1f30ca369befe53c9db03ef59000354e",
+    "PITTI_PROJECT_STATE.md": "3341669e8e78bb101f600c7351d7255107856c0a",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "80f3e95116f04b17dbced6051cf03d17cdbf852f",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "538ad7cea37ef9c99043ba26a9adfb8e70854da9",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "3b3e6cb8b097255bbd26a105c7983fcaa79a6639",
     "app.js": "0a79574bbbf042853139c80fa04342b0337c8507",
     "index.html": "b1077a3723df0d27bfcda16ae3f7969dec09a5e9",
     "decision-policy.js": "76234515b5428a33b7ef573f1f5c87bab058ad67",
@@ -35,11 +34,10 @@
   "checks": {
     "generation_consistent": true,
     "android131_observed": true,
-    "main_ghpages_runtime_parity": true,
-    "no_model_retune": true,
-    "latest_backup_still_29_of_30": true,
-    "freshness_delta_recorded": true
+    "no_runtime_model_change": true,
+    "cutdown_delta_scan_pass": true,
+    "latest_backup_still_29_of_30": true
   },
-  "exact_gate": "PRE_DRAFT_READINESS_FREEZE",
-  "note": "Android rc4.131 observed. Remaining work is final roster-cutdown/materiality freshness, not another model rebuild or full mock solely for rc4.131."
+  "exact_gate": "DRAFT_DAY_FRESHNESS",
+  "note": "Aug 30 cutdown scan found no broad retune trigger. Next material gate is draft-day waiver/IR/PUP/depth-role freshness."
 }
