@@ -79,6 +79,16 @@ assert.match(app,/legacyUserTeam=\['Moers','Venom'\]\.join\(' '\)/,'legacy team 
 assert.ok(app.includes("legacyManager=['Michael','K.'].join(' ')"),'legacy manager migration signature missing');
 assert.match(app,/stale=\/5\\s\*=\\s\*Basti\|8\\s\*=\\s\*Pascal Gelderner\/i/,'stale manager-map signatures not migrated');
 assert.match(app,/managerMap\.value=canonicalize2026ManagerMap\(v\.managerMap\)/,'backup restore must canonicalize stale manager map');
+if(Number(activeVersion)>=132){
+  assert.match(app,/michael:\{label:'Michael'.*history:\{years:6,/,'rc4.132 Michael summary must be 6 seasons');
+  assert.match(app,/'pascal voerde':\{label:'Pascal \/ Voerde'.*history:\{years:9,/,'rc4.132 Pascal Voerde summary must be 9 seasons');
+  assert.match(app,/"Michael":\{[^\n]*"sampleYears":6,"years":\[2020,2021,2022,2023,2024,2025\]/,'rc4.132 Michael detailed history missing 2025');
+  assert.match(app,/"Pascal Voerde":\{[^\n]*"sampleYears":9,"years":\[2017,2018,2019,2020,2021,2022,2023,2024,2025\]/,'rc4.132 Pascal Voerde detailed history chain incomplete');
+  assert.match(app,/"Bjoern":\{"excludedYears":\[2021,2023\]/,'rc4.132 Bjorn exclusions drift');
+  assert.match(app,/function liveAutodraftLikelihood\(/,'rc4.132 live-autodraft model missing');
+  assert.match(app,/Number\(p\.searchRank\)/,'rc4.132 live-autodraft must use Sleeper SearchRank');
+  assert.doesNotMatch(app,/Geno Smith.*hard exclusion|Aaron Rodgers.*hard exclusion/i,'player-name QB hard exclusion resurrected');
+}
 assert.match(live,/return'PANEL-CHECK'/,'live sparse-panel signal missing');
 assert.match(live,/Panel unvollständig\|Panel-Streuung/,'live sparse-panel negative evidence handling missing');
 const observedDecisionZoneEvidence=[
