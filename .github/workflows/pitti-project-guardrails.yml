@@ -36,6 +36,7 @@ on:
       - 'tools/rc4115-v5-hybrid.mjs'
       - 'tools/rc4117-release-critical.mjs'
       - 'tools/rc4130-active-fixture-quota.mjs'
+      - 'tools/audit-v45-backup.mjs'
       - 'tools/rc4122-v45-runtime-contract.mjs'
       - '.github/workflows/pitti-project-guardrails.yml'
   pull_request:
@@ -98,6 +99,8 @@ jobs:
         if: github.event_name == 'pull_request' || github.ref_name == 'main'
         run: |
           if grep -Eq "v11.8.0-rc4.1(3[0-9]|[4-9][0-9])" app.js; then node tools/rc4130-active-fixture-quota.mjs; fi
+      - name: v4/v5 backup evidence quality audit self-test
+        run: node tools/audit-v45-backup.mjs --self-test
       - name: PITTI execution-lock and anti-regression gate
         env:
           PITTI_SKIP_SEAL_INTEGRITY: ${{ github.event_name == 'pull_request' && '1' || '0' }}
