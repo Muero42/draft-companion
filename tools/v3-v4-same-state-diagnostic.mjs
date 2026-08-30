@@ -1,0 +1,9 @@
+import fs from 'node:fs';
+const b2=JSON.parse(fs.readFileSync('expert-v2-board.js','utf8').match(/window\.PITTI_EXPERT_V2=([\s\S]+);\s*$/)[1]);
+const w={};new Function('window',fs.readFileSync('expert-v3-board.js','utf8'))(w);const b3=w.PITTI_EXPERT_V3;
+const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
+const bp={QB:['Pat Fitzmaurice','Justin Boone','Dalton Del Don','Nick Mariano','Todd D Clark'],RB:['Pat Fitzmaurice','Nick Mariano','Dalton Del Don','Ryan Weisse'],WR:['Pat Fitzmaurice','Nick Mariano','Dalton Del Don','Justin Boone'],TE:['Pat Fitzmaurice','Justin Boone','Dalton Del Don','Wolf of Roto Street']};
+function erows(name,pos){const m=new Map();for(const row of b2.rows[pos]||[]){const h=(row.individual||[]).find(x=>x.expertName===name);if(h&&Number.isFinite(Number(h.rank)))m.set(norm(row.name),{name:row.name,r:Number(h.rank)});}const c=b3.challengers?.[pos];if(c?.name===name)for(const [n,r] of c.ranks||[])if(Number.isFinite(Number(r)))m.set(norm(n),{name:n,r:Number(r)});return m}
+const out={};
+for(const pos of Object.keys(bp)){const maps=Object.fromEntries(bp[pos].map(n=>[n,erows(n,pos)])),keys=new Set(Object.values(maps).flatMap(m=>[...m.keys()]));const rows=[];for(const k of keys){if(!bp[pos].every(n=>maps[n].has(k)))continue;const vals=bp[pos].map(n=>maps[n].get(k));const v4=vals.reduce((a,x)=>a+x.r,0)/vals.length;const base=(b2.rows[pos]||[]).find(x=>norm(x.name)===k);if(base)rows.push({name:base.name,v3:Number(base.rank),v4:Number(v4.toFixed(2)),delta:Number((v4-Number(base.rank)).toFixed(2))});}rows.sort((a,b)=>Math.abs(b.delta)-Math.abs(a.delta));out[pos]={n:rows.length,largest:rows.slice(0,8)};}
+console.log('V3_V4_SAME_STATE_DIAGNOSTIC '+JSON.stringify(out));
