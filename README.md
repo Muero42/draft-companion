@@ -1,9 +1,9 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source/package candidate:** v11.8.0-rc4.117; full off-device PASS. gh-pages still rc4.115, so parity is FALSE until promotion.
-> **Primary finish-line target:** validate v4 on device first. v5 is optional only if time remains and must not delay a validated v4 draft build.
+> **Current source/package candidate:** v11.8.0-rc4.130; narrow quota-recovery successor to v11.8.0-rc4.129. Off-device validation pending.
+> **Primary finish-line target:** validate rc4.130 evidence retention, then one controlled device refresh and a full 30-fixture v4/v5 mock.
 > **v4:** individual-only, native Sean Koerner, position-specific weights; no Draft Sharks team ranking. Overall provenance is stored separately from positional aggregation.
 > **v5:** frozen v3 + Sean Koerner 15 points, funded from Draft Sharks Team first.
-> **Next gate:** RC4.117_DEPLOY_PARITY_THEN_DEVICE_V4_ACCEPTANCE.
+> **Next gate:** RC4.130_OFF_DEVICE_PASS_THEN_DEVICE_REFRESH_FULL_30_FIXTURE_MOCK.
 > **Finish-line mode:** no broad feature work, duplicate source research, or phone trial-and-error.
 > **Fallback:** v3 / rc4.114 lineage remains emergency fallback only.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
