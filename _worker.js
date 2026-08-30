@@ -277,6 +277,11 @@ async function tryRotoBallerMariano(name,scoring,season='2026'){
       if(!new RegExp('\\b'+season+'\\b').test(plain)||!/half[- ]?ppr/i.test(plain)||!/Nick Mariano/i.test(plain)){
         errors.push(url+': Kontext nicht verifiziert');continue;
       }
+      // Reject stale fallback whenever the page itself exposes a newer Mariano
+      // Half-PPR publication link. This prevents silently accepting an older board.
+      const newer=[...String(html).matchAll(/href=["']([^"']*half-ppr[^"']*2026[^"']*)["']/gi)]
+        .map(m=>m[1]).filter(x=>/1916255/.test(x));
+      if(!/1916255/.test(url)&&newer.length){errors.push(url+': neuere Mariano-Half-PPR-Publikation vorhanden');continue}
       const players=parseRotoBallerOverall(html);
       const draftable=players.filter(x=>['QB','RB','WR','TE'].includes(x.pos));
       if(draftable.length>=120)return {
