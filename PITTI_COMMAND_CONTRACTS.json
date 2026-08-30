@@ -106,7 +106,6 @@
     "promoting v4/v5 before coverage/depth/freshness audit",
     "analyzing deferred 19-44-43 real-decision mock before user authorization",
     "resurrecting stale manager map: slot5 Basti / slot8 Pascal Gelderner / Michael K / Moers Venom",
-    "generic engine player-name demotion/removal of Geno Smith/Aaron Rodgers is forbidden; however the USER draft execution path has hard exclusions for Geno Smith and Aaron Rodgers and must never recommend/draft them",
     "moving the v3/v4/v5 selector away from directly above Analyze",
     "claiming v4/v5 active when readiness gates are not satisfied",
     "using stale embedded expert rows as live-current v4/v5 source data",
@@ -121,7 +120,7 @@
     "using Pascal Voerde's stale 2023-2025-only detailed profile instead of the confirmed Bracht Eagles 2017-2022 + Voerde Eagles 2023-2025 identity chain",
     "dropping Michael_Polk 2025 from manual manager history",
     "reintroducing Björn 2021 theme or 2023 autodraft into ordinary manager-preference learning",
-    "dropping the user hard-QB exclusions for Geno Smith/Aaron Rodgers from the real-draft bootstrap or live recommendation path"
+    "hard-excluding, name-demoting, or forcibly removing Geno Smith/Aaron Rodgers; they must rank organically and should be absent from recommendations only when the Coach/player-quality model correctly ranks superior options above them"
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.131 Android-observed authority",
@@ -138,8 +137,8 @@
     "latestEvidenceBackup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json — 29/30; missing pick29 expertv5"
   },
   "currentGate": "RC4.132_BUILD_AND_REGRESSION",
-  "handoffGeneration": "20260830T1814Z-v206",
-  "handoff_generation": "20260830T1814Z-v206",
+  "handoffGeneration": "20260830T1822Z-v207",
+  "handoff_generation": "20260830T1822Z-v207",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
