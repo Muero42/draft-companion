@@ -970,12 +970,17 @@ async function loadExperts(){
       merged.set(key,{...prev,...e,id:String(e.id),apiId:String(e.id)});
     }
 
-    // The presets must remain selectable even if FantasyPros' API/directory temporarily omits them.
-    for(const p of Object.values(PRESETS)){
-      for(const [name] of p.list){
-        const key=norm(name);
-        if(!merged.has(key))merged.set(key,{id:`pub:${slugifyExpert(name)}`,name,site:'',accuracy:null,publicSlug:slugifyExpert(name),virtual:true});
-      }
+    // Every expert referenced by an active model must remain addressable even when the
+    // FantasyPros directory omits that name. Source adapters resolve the ranking itself;
+    // directory presence must never decide whether a configured expert exists.
+    const configuredNames=new Set([
+      ...Object.values(PRESETS).flatMap(p=>p.list.map(([name])=>name)),
+      ...Object.values(EXPERT_V4_BLUEPRINT).flatMap(x=>x.experts),
+      EXPERT_V5_BLUEPRINT.add
+    ]);
+    for(const name of configuredNames){
+      const key=norm(name);
+      if(!merged.has(key))merged.set(key,{id:`pub:${slugifyExpert(name)}`,name,site:'',accuracy:null,publicSlug:slugifyExpert(name),virtual:true});
     }
 
     experts=[...merged.values()].sort((a,b)=>(b.accuracy??-999)-(a.accuracy??-999)||a.name.localeCompare(b.name));
