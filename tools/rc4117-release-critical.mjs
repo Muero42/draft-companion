@@ -1,12 +1,14 @@
 import fs from 'node:fs';
 const s=fs.readFileSync('app.js','utf8');
 const must=[
-  "const APP_VERSION='v11.8.0-rc4.117'",
+  "const APP_VERSION='v11.8.0-rc4.119'",
   "RB:{experts:['Ryan Weisse','Kev Wheeler','Dalton Del Don','Nick Mariano','Sean Koerner','Pat Fitzmaurice']",
   "WR:{experts:['Sean Koerner','Nick Mariano','Justin Boone','Todd D Clark','Dalton Del Don','Pat Fitzmaurice']",
   "TE:{experts:['Wolf of Roto Street','Ryan Weisse','Sean Koerner','Dalton Del Don','Pat Fitzmaurice','Justin Boone']",
   "buildPanelFromExpertRows('expert-v4-'+pos.toLowerCase(),pos,rows,bp.weights||",
   "overallRank:Number(row.overallRank)",
+  "Einzelrankings · Positionsrang",
+  "<span>${esc(x.p.pos)}-Panel</span>",
   "const displayRank=Number.isFinite(Number(x.overallRank))?Number(x.overallRank):Number(x.rank)",
   "v5 is the controlled v3 challenger",
   "const v3Id='expert-v3-'+pos.toLowerCase()",
