@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1822Z-v207",
-  "updated_at": "2026-08-30T19:04:00Z",
+  "updated_at": "2026-08-30T19:16:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,8 +11,8 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.131",
-    "test_challenger": "v11.8.0-rc4.133",
-    "test_challenger_android_verified": true,
+    "test_challenger": "v11.8.0-rc4.135",
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.131 CI PACKAGE/RE-EXTRACT PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
@@ -41,7 +41,7 @@
   "exact_continuation": {
     "gate": "RC4.132_BUILD_AND_REGRESSION",
     "auto_starts_mock": false,
-    "instruction": "User confirmed visible Android App-Version rc4.133 after controlled refresh. Continue final targeted live smoke and pre-draft freshness agenda autonomously; no further device update unless a concrete material defect is proven."
+    "instruction": "rc4.135 candidate: live text expiry repaired for 12 profiles; Josh Jacobs acute Commissioner Exempt status block included. Release gates in progress; do not deploy until all PASS."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -83,7 +83,7 @@
     "transaction_rule": "Official transaction/IR/PUP truth outranks stale Sleeper metadata; same-position move alone is weak evidence unless role/health impact is corroborated.",
     "draft_chat_rule": "Start a brand-new chat for the real draft after final runtime/freshness checkpoint. That draft chat is execution-only: load DRAFT_CHAT_BOOTSTRAP + canonical state, do not redesign code/model during the draft unless a release-critical emergency makes the app unusable."
   },
-  "android_acceptance_pending": false,
+  "android_acceptance_pending": true,
   "expert_v4_v5": {
     "v3": "frozen control/failsafe; embedded team/individual hybrid as historically audited",
     "v4": "CURRENT RE-AUDIT: individual-only, only experts with obtainable individual rankings. Position-specific optimized weights in app.js EXPERT_V4_BLUEPRINT. Koerner is native v4.",
@@ -155,7 +155,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.133_ANDROID_CONFIRMED_FINAL_SMOKE_AND_FRESHNESS",
+    "status": "RC4.135_RELEASE_GATE",
     "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
@@ -163,7 +163,7 @@
     "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
     "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
   },
-  "status": "RC4.133_ANDROID_CONFIRMED_FINAL_SMOKE_AND_FRESHNESS",
+  "status": "RC4.135_RELEASE_GATE",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
   "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
   "evidenceRetention": {
