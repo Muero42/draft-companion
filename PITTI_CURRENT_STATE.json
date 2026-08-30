@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260830T1010Z-v192",
-  "updated_at": "2026-08-30T12:32:00Z",
+  "handoff_generation": "20260830T1310Z-v193",
+  "updated_at": "2026-08-30T13:10:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -10,13 +10,13 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.114",
-    "test_challenger": "v11.8.0-rc4.122",
+    "android_authority": "v11.8.0-rc4.126",
+    "test_challenger": "v11.8.0-rc4.129",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.122 OFF-DEVICE CONTRACT PASS",
+    "latest_package_reextract": "v11.8.0-rc4.129 SOURCE/OFF-DEVICE LOGIC VERIFIED; DEVICE REFRESH PENDING",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
-    "deployed_pages": "v11.8.0-rc4.122",
+    "deployed_pages": "v11.8.0-rc4.129",
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33305284763,
     "package_reference_artifact_id": 9730250635,
@@ -26,19 +26,19 @@
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": false,
     "android_acceptance_pending": true,
-    "android_observed": "v11.8.0-rc4.114",
-    "android_functional_acceptance": "RC4.114_FALLBACK_FUNCTIONAL; RC4.117_NOT_YET_DEVICE_TESTED",
+    "android_observed": "v11.8.0-rc4.126",
+    "android_functional_acceptance": "RC4.126_V4_V5_REALISTIC_MOCK_OPERATIONAL; RC4.129_NOT_YET_DEVICE_OBSERVED",
     "rollback_reference": "v11.8.0-rc4.96",
     "accepted_android_fallback_functional_verified": true,
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.122 OFF-DEVICE PASS; GH-PAGES BYTE PARITY PASS; DEVICE v4/v5 ACCEPTANCE PENDING"
+    "source_candidate": "v11.8.0-rc4.129 evidence-retention fix; final handoff/deployment parity transaction PASS required before device refresh"
   },
   "exact_continuation": {
-    "gate": "RC4.122_DEVICE_V45_ACCEPTANCE",
+    "gate": "RC4.129_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
     "auto_starts_mock": false,
-    "instruction": "One controlled Android/PWA refresh now; verify rc4.122, confirm v4 and v5 selectable after restart, confirm Barkley compact canary RB#8 · Ovr #14, and compare Pick-1 ranking on the common Overall panel scale. No further install cycle unless this single acceptance exposes a concrete defect."
+    "instruction": "One controlled device refresh to rc4.129. Verify visible rc4.129 and normal v4/v5 operation. Then run one realistic 15-round mock, analyzing BOTH expertv4 and expertv5 at every own pick. Export backup and FIRST verify exactly 30 decisionFixtures = 15 paired pick states × 2 profiles; only then compare v4 vs v5."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -55,21 +55,21 @@
   },
   "handoff": {
     "transaction_in_progress": false,
-    "resume_semantics": "rc4.117 off-device PASS and gh-pages/main byte parity PASS. v4 is individual-only with native Koerner and corrected Overall-vs-position provenance. v5 is v3 + Koerner funded from Draft Sharks first. Next: one controlled device refresh/install and v4 acceptance; v5 only if time remains.",
-    "acceptance_fingerprint": "CURRENT|RC4117-SOURCE|V4-INDIVIDUAL-ONLY|V5-V3-PLUS-KOERNER-FROM-DS|OVERALL-POSRANK-SEPARATE|NO-TRIAL-ERROR|STATUS-REPORT-ONLY|HANDOFF-BEFORE-DEGRADATION",
-    "status": "RC4.122_DEPLOYED_PARITY_PASS_DEVICE_ACCEPTANCE_PENDING",
+    "resume_semantics": "rc4.129 is source authority. Device rc4.126 already proved v4/v5 operational. rc4.129 specifically protects active-draft paired evidence from silent quota loss. Next: one device refresh, then full 15-pick v4/v5 mock and 30-fixture backup verification.",
+    "acceptance_fingerprint": "CURRENT|RC4129|V4-PRIMARY|V5-CHALLENGER|ACTIVE-EVIDENCE-ATOMIC|30-FIXTURE-GATE|NO-TRIAL-ERROR|AUTO-SILENT|STATUS-REPORT-ONLY",
+    "status": "RC4.129_HANDOFF_READY_DEVICE_REFRESH_PENDING",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "One controlled device refresh -> verify rc4.122 -> v4/v5 selectable -> Barkley compact canary -> same-state v3/v4/v5 comparison.",
-    "gate": "RC4.122_DEVICE_V45_ACCEPTANCE",
-    "seal_status": "PASS",
-    "seal_generation": "20260830T1010Z-v192"
+    "next_action": "Refresh once to rc4.129 -> run full paired v4/v5 mock -> export backup -> verify 30 fixtures before model analysis.",
+    "gate": "RC4.129_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
+    "seal_status": "PASS_PENDING_RESEAL_IN_TRANSACTION",
+    "seal_generation": "20260830T1310Z-v193"
   },
-  "source_authority": "v11.8.0-rc4.122",
+  "source_authority": "v11.8.0-rc4.129",
   "package_authority": "v11.8.0-rc4.117 run 33305284763 artifact 9730250635",
-  "android_version_observed": "v11.8.0-rc4.114",
+  "android_version_observed": "v11.8.0-rc4.126",
   "android_functional_verified": true,
-  "deployment_authority": "v11.8.0-rc4.122 gh-pages/main runtime parity PASS at commit 0e739e424a8987b9bcd32d44d4efac136667bf8d",
+  "deployment_authority": "v11.8.0-rc4.129 main/gh-pages final handoff parity target",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
@@ -85,16 +85,24 @@
     "v3": "frozen control/failsafe; embedded team/individual hybrid as historically audited",
     "v4": "CURRENT RE-AUDIT: individual-only, only experts with obtainable individual rankings. Position-specific optimized weights in app.js EXPERT_V4_BLUEPRINT. Koerner is native v4.",
     "v5": "CURRENT DEFINITION: v3 + individually verified Sean Koerner; target 15 percentage points funded from Draft Sharks Team first, remainder only if necessary proportionally from other v3 voices.",
-    "coverage_blocker": "OFF-DEVICE RESOLVED for rc4.122; device v4/v5 acceptance pending.",
+    "coverage_blocker": "RESOLVED on device by rc4.123-rc4.126; current gate is evidence-retention acceptance on rc4.129.",
     "koerner": "individually obtainable through existing FantasyPros API path; no longer a source blocker.",
-    "rank_semantics": "Dual-rank model: published Overall weighted panel is the common cross-position Coach scale; weighted positional rank is retained separately for position-specific interpretation/UI. Barkley/Pat compact canary must render RB#8 · Ovr #14."
+    "rank_semantics": "Common published Overall weighted panel is the cross-position Coach scale; positional ranks are diagnostic/internal only on the live decision surface. Compact expert rows show Overall only."
   },
   "process_controls": {
     "status_semantics": "REPORT_ONLY_NO_TOOL_WORK",
     "auto_semantics": "EXECUTE_CONTINUOUSLY; no 'AUTO läuft' placeholder responses; report only material result or unavoidable blocker",
-    "no_trial_error": "No further device build/install loop without a concrete defect from the single rc4.122 acceptance. rc4.122 passed off-device syntax, dual-rank, v5 topology/weights/readiness, startup-rehydrate, cache-version and Barkley canary checks before deployment.",
-    "chat_handoff": "rc4.122 off-device PASS and gh-pages/main exact parity PASS. One device acceptance now; v4/v5 comparison immediately if PASS.",
-    "source_of_truth": "PITTI_CURRENT_STATE.json + repository HEAD; newer device evidence overrides stale closure claims.",
+    "no_trial_error": "No repeated phone install loop. rc4.129 evidence-retention change is off-device verified; one controlled refresh only.",
+    "chat_handoff": "v193: rc4.129 source/deployment authority; device rc4.126 operational; next gate full 30-fixture paired v4/v5 mock.",
+    "source_of_truth": "PITTI_CURRENT_STATE.json + PITTI_EXECUTION_LOCK.json + PITTI_PROJECT_STATE.md EOF + PASS seal + actual repo/runtime evidence.",
     "guardrail_note": "rc4115 gate now scoped to rc4.115 only; rc4117 has dedicated release-critical contract; rc4114 gate made semantic so preserving Overall provenance does not falsely fail positional aggregation."
+  },
+  "decision_evidence": {
+    "latest_backup": "draft-companion-v7-backup-2026-08-30T12-47-22-598Z.json",
+    "latest_backup_pair_coverage": "11/15 paired pick states; 22 fixtures; missing exact pairs at 9/12/29/32",
+    "backup_serialization_fault": false,
+    "root_cause": "pre-export local decisionFixtures could be silently pruned/dropped under quota pressure",
+    "rc4129_contract": "active draft evidence atomic; historical-only pruning; explicit failure on unsaved active evidence",
+    "next_acceptance": "30 fixtures = 15 pick states × expertv4/expertv5"
   }
 }
