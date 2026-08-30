@@ -2646,3 +2646,9 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Updated the guard to require COMPLETE-row filtering before readiness acceptance. This strengthens the regression contract rather than weakening it.
 - Head `ea05d0ee7159176bbde7b2e31c5d5ba2f78e87e9` passed all workflows triggered for this change: release contract v2, candidate package gate, draft-critical successor/rc4.96 gate, rc4.82 gate, rc4.83 gate.
 - Source is CI-clean but remains **not deployed/device-accepted**. v3 remains default and current rc4.107 device runtime remains the safe authority until a successor package/deploy is intentionally produced and verified.
+
+
+### 2026-08-30 — rc4.108 packaging transaction
+- Versioned the CI-clean v4/v5 readiness-core fix as `v11.8.0-rc4.108` across app/index/manifest/service-worker cache keys. No additional decision/Return/player-ranking change.
+- First version-bump gates exposed process-state drift rather than runtime defects: README still described rc4.107; handoff generation docs/seal were intentionally stale while candidate state changed. README and v185 handoff generation were aligned; seal remains intentionally invalid until final candidate/package evidence is known.
+- Do not treat seal-dependent rc4.82/83 failures during this transaction as product regression when logs report only generation/seal/blob mismatch. Candidate pre-seal gate must be used for runtime validation; final seal is rebuilt after package artifact/hash is fixed, then seal-dependent gates rerun.
