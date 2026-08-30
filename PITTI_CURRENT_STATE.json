@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1822Z-v207",
-  "updated_at": "2026-08-30T18:57:00Z",
+  "updated_at": "2026-08-30T19:02:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -34,14 +34,14 @@
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
     "source_candidate": "rc4.132 SOURCE BUILT ON MAIN; device/release gates pending",
-    "deployed": "v11.8.0-rc4.132",
+    "deployed": "v11.8.0-rc4.133",
     "main_gh_pages_parity": true,
     "accepted_android": "v11.8.0-rc4.132"
   },
   "exact_continuation": {
     "gate": "RC4.132_BUILD_AND_REGRESSION",
     "auto_starts_mock": false,
-    "instruction": "rc4.133 candidate built from pick-9 smoke. Root cause for Chase Brown under-ranking: early Return timing layer could subtract up to 6 raw points plus board-relative -3, enough to overwhelm a meaningful panel edge despite Return being only a timing signal. Capped early absolute Return discount at 3.5 and relative layer at 2; no player-specific Chase bonus. AJ Brown individual evidence added. Run full off-device gates before any deploy/device refresh."
+    "instruction": "rc4.133 full PR gates PASS, merged and deployed; exact main/gh-pages blob parity PASS for app.js,index.html,live-surface-v3.js,manifest.webmanifest,sw.js. Next unavoidable action: exactly one normal phone refresh and verify visible App-Version rc4.133. No cache clear/reinstall."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -155,7 +155,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.133_RETURN_CALIBRATION_CANDIDATE_OFFDEVICE_GATES_REQUIRED",
+    "status": "RC4.133_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_REQUIRED",
     "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
@@ -163,7 +163,7 @@
     "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
     "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
   },
-  "status": "RC4.133_RETURN_CALIBRATION_CANDIDATE_OFFDEVICE_GATES_REQUIRED",
+  "status": "RC4.133_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_REQUIRED",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
   "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
   "evidenceRetention": {
