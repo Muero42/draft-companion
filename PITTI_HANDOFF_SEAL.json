@@ -1,20 +1,20 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260830T1200Z-v191",
-  "created_at": "2026-08-30T12:05:00Z",
+  "created_at": "2026-08-30T12:25:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "42892ff0b2a1c854a9fcb1ac682f951f4d4a66e7",
-    "PITTI_CURRENT_STATE.json": "b0228182838000c367ccbe96915de35d18d31a02",
-    "PITTI_EXECUTION_LOCK.json": "53443b82f0cafb8376a406637d8fedae4e0e42ae",
+    "PITTI_COMMAND_CONTRACTS.json": "e7e90b4d81378f6a69d01e1d617290f96c6bccfa",
+    "PITTI_CURRENT_STATE.json": "b96c1c517a1248e9ed6afd5443c69d9c0ea611b6",
+    "PITTI_EXECUTION_LOCK.json": "c667299ac82d93204ecbe8ca0425f08eae1fc53e",
     "PITTI_AUTO_PREFLIGHT.md": "1bc3f43e0c809c6c0d042f98eaa01c7d90a20f52",
-    "PITTI_PROJECT_STATE.md": "7ea60c2b7f68eda862820888aaca509ce0f53a89",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "024b97c9ff294898a23fe1bf30e4e8c1d057cfeb",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "77e85af24cdcadca0a0e0c9234e07c5232829a66",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "767aa5d414db53546430e6f7d744dc8bc083280a",
+    "PITTI_PROJECT_STATE.md": "bf41c8c00ea59000dbe43d44343de4bfae7dd48f",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "699700f73da01735cb812e243fc33b22fef87f7b",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "8b70c34792a9416b557b0a03fe24eedeaba6dcae",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "05753bb14309e4c73b1f18d27462a3db81fa797f",
     "app.js": "077229e6c9a349fae7482f86d740bacba45d2a1f",
     "index.html": "c1b77f78fe1e83d886951e46e77228ea1d719b84",
     "decision-policy.js": "76234515b5428a33b7ef573f1f5c87bab058ad67",
@@ -23,20 +23,24 @@
     "sw.js": "d7c055259c5942d74e343ecf561b4f9b7c891842"
   },
   "branch_locks": {
-    "main_runtime": "v11.8.0-rc4.117 source/package candidate",
-    "accepted_device_evidence": "v11.8.0-rc4.114 fallback; rc4.115 superseded",
-    "next_gate": "CONTROLLED_CHAT_HANDOFF_THEN_RC4.117_DEVICE_ACCEPTANCE"
+    "main_runtime": "v11.8.0-rc4.117 source/package off-device PASS",
+    "accepted_device_evidence": "v11.8.0-rc4.114 emergency fallback; rc4.117 not yet device tested",
+    "deployed_pages": "v11.8.0-rc4.115; parity FALSE",
+    "next_gate": "RC4.117_DEPLOY_PARITY_THEN_DEVICE_V4_ACCEPTANCE"
   },
   "checks": {
     "generation_consistent": true,
     "seal_integrity_nonempty": true,
     "rc4117_offdevice_pass": true,
+    "gh_pages_parity_false_explicit": true,
+    "v4_primary_test_target": true,
+    "v5_optional_only": true,
     "ranking_semantics_locked": true,
     "v4_individual_only": true,
     "v5_v3_plus_koerner_from_ds": true,
     "auto_block_silent": true,
     "status_report_only": true
   },
-  "exact_gate": "CONTROLLED_CHAT_HANDOFF_THEN_RC4.117_DEVICE_ACCEPTANCE",
-  "note": "v191 sealed after rc4.117 candidate package/release/draft-critical gates PASS. Package run 33305284763 artifact 9730250635 digest sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc."
+  "exact_gate": "RC4.117_DEPLOY_PARITY_THEN_DEVICE_V4_ACCEPTANCE",
+  "note": "Final v191 reseal after full contradiction audit. rc4.117 package/release/draft-critical PASS; package run 33305284763 artifact 9730250635 digest sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc. New chat must deploy/verify parity before one device v4 test; v5 only if time remains."
 }
