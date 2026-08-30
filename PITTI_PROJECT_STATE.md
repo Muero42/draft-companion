@@ -2626,3 +2626,9 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 ### 2026-08-30 — HANDOFF v183 pre-seal verification
 - Repaired v182 command-boundary parity was validated on head f172693d400398e6b3d069eed075bda40fff0f39: Project Guardrails PASS (33297072635), rc4.83 gate PASS (33297072656), rc4.82 gate PASS (33297072690), release contract v2 PASS (33297072646), candidate package gate PASS (33297072660).
 - No runtime code changed during the repair. Generation advances to `20260830T0634Z-v183`; final seal is rebuilt only from post-generation blob SHAs.
+
+
+### 2026-08-30 — rc4.107 DEVICE REFRESH OBSERVED
+- User device screenshot after the requested refresh shows app `v11.8.0-rc4.107`, FantasyPros **Online**, Rankings **2 Min.**, Sleeper Draft/ADP count **1095**, Coach **Bereit**, and saved FantasyPros API key. This is sufficient evidence that the generic `Alles aktualisieren` path completed recently and the app remains operational.
+- It is **not** sufficient to accept v4/v5: the screenshot shows the legacy Expert-v3 configuration area, not the dedicated analysis v3/v4/v5 selector/readiness directly above Analyze, nor the hidden panel/source detail. Do not infer Koerner/v4/v5 PASS from generic `Bereit`.
+- Next device evidence is narrowed to the dedicated analysis selector/readiness/source state; no repeat refresh is required unless that state reports stale/error.
