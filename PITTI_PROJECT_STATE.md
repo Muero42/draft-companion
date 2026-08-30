@@ -2672,3 +2672,10 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Final candidate head `535a9b0b9032a693f6a70d5fe7006eb06e809089`: rc4.82 PASS, rc4.83 PASS, Project Guardrails PASS, release contract v2 PASS, candidate package/re-extract PASS.
 - Package artifact 9728147722 / run 33298460503; artifact envelope digest `sha256:fc17d0ddd78c80b3f6bd237db0995a986a779a14d0c57c2d90bc028d7ecddd39`.
 - gh-pages moved to the gated head; sampled runtime blob parity with main PASS. Device acceptance remains pending. rc4.108 remains last device-observed fallback until rc4.109 is seen and refreshed.
+
+
+### 2026-08-30 — rc4.110 source-diagnostic deployment
+- Added a read-only diagnostic directly below the v3/v4/v5 analysis selector. It reports, for every v4 required expert and position, verified positional row count vs. decision-core minimum, missing-source/duplicate/stale state, and COMPLETE overlap count; v5 reports Sean Koerner counts and COMPLETE overlap by position.
+- No ranking, Return, player-specific, expert-weight or readiness threshold was changed. This instrumentation exists only to identify the remaining upstream acquisition blocker from one device refresh.
+- Candidate head `dedfe95708cc8369dba9ae0ee52075c6ed5116e3`: release contract PASS, Project Guardrails PASS, rc4.82 PASS, rc4.83 PASS, package/re-extract PASS. Package run 33299006935 / artifact 9728307439 / envelope digest `sha256:dad2cdd2f882a251838be5ea4f455288a927708e35fa4eec3eae7ffc5d9e3cae`.
+- gh-pages was moved to that gated head and sampled runtime parity with main passed. Next user action is exactly one rc4.110 reload + `Alles aktualisieren`, then capture the diagnostic. Do not repeat generic selector-only screenshots.
