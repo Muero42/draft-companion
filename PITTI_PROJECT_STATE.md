@@ -2566,3 +2566,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Fixed fail-closed: a v5 row without positive DS funding is now `INCOMPLETE_V5_NO_DS_FUNDING`; Koerner is not added on top. Regression canaries explicitly prohibit the former optional-zero transfer pattern.
 - Head 1446fb90f80344f686f9986484d0d007dfcbb42e: release contract 33291094513 PASS; Project Guardrails 33291094497 PASS; candidate package gate 33291094493 PASS.
 - Production/main remains untouched. This is a real correctness improvement found autonomously before release.
+
+
+### 2026-08-30 — AUTO Compare Players scoring parser hardening
+- Audited the real-source dependent path and found a compatibility risk: Compare Players parser assumed the exact scoring object key equals the app scoring string. FantasyPros responses may label half-PPR variants differently. Hardened parser with explicit HALF/PPR/STD aliases and an unambiguous single-block fallback; it still refuses ambiguous substitution.
+- This affects both independent expert crosschecks and the Koerner pairwise validation route, reducing false lockouts without relaxing identity/rank verification.
+- Head ff30b7b533fbf17671b9b5d237f2b27e8f5e58c3: release contract 33293057434 PASS; Project Guardrails 33293057472 PASS; candidate package gate 33293057453 PASS.
+- Production/main untouched; real authenticated source execution remains the dependent release gate.
