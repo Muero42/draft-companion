@@ -33,7 +33,7 @@
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.114",
     "latestAndroidFunctionalVerified": "v11.8.0-rc4.114",
-    "testChallengerAndroidObserved": true,
+    "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
