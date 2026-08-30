@@ -2983,3 +2983,14 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - League-wide cut trackers remain active until the 18:00 ET deadline; transaction deltas are treated as weak evidence unless they change a fantasy-relevant player's active/PUP/IR status or credible depth-chart role.
 - Draft-day freshness rule unchanged: re-scan after waiver/roster churn and shortly before the draft; do not chase fringe cuts with model changes.
 - Generation: **20260830T1700Z-v198**.
+
+
+---
+
+## 2026-08-30 — v200 late-upside / tier opportunity-cost audit
+
+- Fresh Aug 28 RB sleeper consensus was reconciled against PITTI qualitative coverage. Existing context already covers MarShawn Lloyd, Keaton Mitchell, Tank Bigsby, Mike Washington, Jordan Mason, Kenny Gainwell and Jacory Croskey-Merritt.
+- Jonah Coleman, Braelon Allen and Dylan Sampson appear in fresh external sleeper controls but are not blindly injected into residual scoring; they remain eligible through expert boards and are escalated only if live panel/ADP/availability makes them decision-relevant.
+- Final-bench RB utility is explicitly ordered by direct lead-role path, explosive/receiving standalone ceiling, price/return/loss economics and current role/health truth. Floor-only profiles do not get a late-round preference.
+- Tier/opportunity-cost guard revalidated: 1-3 Coach points are a near-tie, not a mandate; at the turn the two-pick portfolio may reorder based on panel quality, tier cliff, alternatives and championship utility. Pick32 Nabers/Javonte remains the regression canary.
+- No rc4.131 scoring/coefficient change is justified. Runtime stays frozen.
