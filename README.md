@@ -1,13 +1,13 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Current source/package candidate:** v11.8.0-rc4.115; **device-observed authority:** v11.8.0-rc4.111 diagnostic evidence only. rc4.114 fixes v4/v5 position-specific aggregation after device evidence showed source depth was sufficient but COMPLETE overlap was zero; approved ranking sources are frozen.
-> **rc4.113 scope:** configured-expert identity resolution only; rc4.111 quota fix and established expert ranking/source decisions retained. No ranking/Return/expert weighting semantic change.
-> **Deployment/device:** rc4.113 is NOT device authority while off-device gates run. Do not request device interaction before all gates pass.
-> **Fallback:** v3 remains default/failsafe; rc4.110 is diagnostic evidence, not accepted v4/v5 authority.
+> **Current source/package/deployed candidate:** v11.8.0-rc4.115; **latest device-accepted challenger evidence:** rc4.114 v4 PASS. rc4.115 device-v5 acceptance pending.
+> **rc4.115 scope:** v5 construction only = accepted v4 individual-only + Sean Koerner 20%; legacy v3/Draft Sharks funding dependency removed. Rankings/sources frozen.
+> **Finish-line mode:** no broad feature work, no duplicate source research, no trial-and-error device debugging.
+> **Fallback:** v3 remains default/failsafe; rc4.114 v4 is accepted evidence.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
 > **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
 > **rc4.100 scope:** generic Pro/Contra semantic hardening + bounded short-turn portfolio ordering; no global ranking/Return/expert retune, no hard WR cap/quota.
-> **Current gate:** RC4.113_FULL_OFFDEVICE_ACCEPTANCE.
+> **Current gate:** RC4.115_DEVICE_V5_ACCEPTANCE.
 > **Current gate:** RC4106_ANDROID_DISPLAY_ACCEPTANCE.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
