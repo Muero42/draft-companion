@@ -1,6 +1,7 @@
-# PITTI NEW CHAT HANDOFF — v188 — 2026-08-30 10:35 Europe/Berlin
+# PITTI NEW CHAT HANDOFF — v189 — 2026-08-30 10:58 Europe/Berlin
 
 ## AUTHORITATIVE RESUME
+Handoff generation: `20260830T1058Z-v189`
 Trigger: **PITTI AUTO**
 
 Read first: `PITTI_CURRENT_STATE.json`, `PITTI_EXECUTION_LOCK.json`, this file, and the latest tail of `PITTI_PROJECT_STATE.md`. Repo `Muero42/draft-companion` main is authority. Library mirror remains fail-closed if stale.
@@ -33,6 +34,9 @@ Read first: `PITTI_CURRENT_STATE.json`, `PITTI_EXECUTION_LOCK.json`, this file, 
 - Bigsby/Spears/Dobbins missing expert coverage must remain explicit; no silent renormalization.
 - 19-44-43 real-decision mock remains intentionally unanalysed until requested.
 - AUTO/AUTO BLOCK means continue autonomously without empty status messages.
+
+## HANDOFF TRANSACTION NOTE
+The CI failures immediately before this handoff were generation-integrity failures (CURRENT/SEAL/Handoff/Matrix drift), not evidence that rc4.115 runtime semantics failed. v189 reseals those artifacts. Do not respond by changing app logic.
 
 ## NEXT ACTION
 1. On **PITTI AUTO**, verify this handoff against current repo artifacts; do not re-research already frozen rankings.
