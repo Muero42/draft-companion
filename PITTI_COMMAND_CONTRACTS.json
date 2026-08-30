@@ -117,7 +117,7 @@
     "sourceAuthority": "v11.8.0-rc4.117",
     "latestPackageReextract": "v11.8.0-rc4.117 PASS · run 33305284763 · artifact 9730250635",
     "deployedPagesVersion": "v11.8.0-rc4.115",
-    "deployedPagesAppByteParityWithMain": true,
+    "deployedPagesAppByteParityWithMain": false,
     "researchBranch": "main; historical pitti/expert-v4-v5-v180 retained only as provenance",
     "currentResearchGate": "RC4.117_DEPLOY_PARITY_THEN_DEVICE_V4_ACCEPTANCE",
     "exactNextAction": "Verify v191 once; deploy rc4.117 to gh-pages and prove parity; one device refresh/install; test v4 first; v5 only if time remains.",
