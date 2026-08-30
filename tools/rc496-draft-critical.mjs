@@ -57,7 +57,7 @@ assert.match(app,/EXPERT_DECISION_CORE_MIN=\{QB:24,RB:60,WR:70,TE:24\}/,'positio
 assert.match(app,/EXPERT_DECISION_CORE_MIN\[pos\]/,'v4-v5 readiness must validate position-specific decision core');
 assert.match(app,/filter\(row=>row\?\.coverageStatus==='COMPLETE'\)/,'v4-v5 decision core must be formed only from complete rows');
 assert.match(app,/complete\.length>=need/,'v4-v5 decision-core completeness gate missing');
-assert.match(app,/core\.some\(row=>row\?\.coverageStatus!=='COMPLETE'\)/,'v4 construction must reject incomplete aggregate decision-core rows');
+assert.match(app,/const complete=Object\.values\(rows\)\.filter\(row=>row\?\.coverageStatus==='COMPLETE'\)/,'v4-v5 readiness core must exclude incomplete rows before acceptance');
 assert.match(app,/rows\[name\]\.length<EXPERT_DECISION_CORE_MIN\[pos\]/,'v4 source acquisition minimum must be position-specific');
 assert.match(app,/kRows\.length<EXPERT_DECISION_CORE_MIN\[pos\]/,'Koerner source acquisition minimum must be position-specific');
 assert.match(app,/const v4Ready=ensureExpertV4Panels\(\),v5Ready=ensureExpertV5Panels\(\)/,'v4-v5 refresh wiring missing');
