@@ -1,20 +1,20 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260830T1200Z-v191",
-  "created_at": "2026-08-30T12:25:00Z",
+  "handoff_generation": "20260830T1010Z-v192",
+  "created_at": "2026-08-30T10:10:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "69533845ce2341931a52097702f494adaeaac4d8",
-    "PITTI_CURRENT_STATE.json": "b96c1c517a1248e9ed6afd5443c69d9c0ea611b6",
-    "PITTI_EXECUTION_LOCK.json": "c667299ac82d93204ecbe8ca0425f08eae1fc53e",
+    "PITTI_COMMAND_CONTRACTS.json": "5b8de6a00ea0bfdeac8a3fabf4757536938d9477",
+    "PITTI_CURRENT_STATE.json": "d11ef1994c0437a7ff4147b3747776c2f3c2ded7",
+    "PITTI_EXECUTION_LOCK.json": "fd40698e287a71bd22d37352096c61064b6654b5",
     "PITTI_AUTO_PREFLIGHT.md": "1bc3f43e0c809c6c0d042f98eaa01c7d90a20f52",
-    "PITTI_PROJECT_STATE.md": "bf41c8c00ea59000dbe43d44343de4bfae7dd48f",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "699700f73da01735cb812e243fc33b22fef87f7b",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "8b70c34792a9416b557b0a03fe24eedeaba6dcae",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "05753bb14309e4c73b1f18d27462a3db81fa797f",
+    "PITTI_PROJECT_STATE.md": "8456ce8b90c1788837c8f77c602f6cc57a7ea937",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "00787e7c5c645803cf23185afe45cd24fb83f4ac",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "3635d49746205d83cbaf710158c8e2042cb8dcbe",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "d8214b7a83b556e7ac6b6b0c0f5a16fbc3674e13",
     "app.js": "077229e6c9a349fae7482f86d740bacba45d2a1f",
     "index.html": "c1b77f78fe1e83d886951e46e77228ea1d719b84",
     "decision-policy.js": "76234515b5428a33b7ef573f1f5c87bab058ad67",
@@ -23,16 +23,16 @@
     "sw.js": "d7c055259c5942d74e343ecf561b4f9b7c891842"
   },
   "branch_locks": {
-    "main_runtime": "v11.8.0-rc4.117 source/package off-device PASS",
+    "main_runtime": "v11.8.0-rc4.117 source/package/deployment parity PASS",
     "accepted_device_evidence": "v11.8.0-rc4.114 emergency fallback; rc4.117 not yet device tested",
-    "deployed_pages": "v11.8.0-rc4.115; parity FALSE",
-    "next_gate": "RC4.117_DEPLOY_PARITY_THEN_DEVICE_V4_ACCEPTANCE"
+    "deployed_pages": "v11.8.0-rc4.117; runtime parity PASS",
+    "next_gate": "RC4.117_DEVICE_V4_ACCEPTANCE"
   },
   "checks": {
     "generation_consistent": true,
     "seal_integrity_nonempty": true,
     "rc4117_offdevice_pass": true,
-    "gh_pages_parity_false_explicit": true,
+    "gh_pages_parity_true": true,
     "v4_primary_test_target": true,
     "v5_optional_only": true,
     "ranking_semantics_locked": true,
@@ -41,6 +41,6 @@
     "auto_block_silent": true,
     "status_report_only": true
   },
-  "exact_gate": "RC4.117_DEPLOY_PARITY_THEN_DEVICE_V4_ACCEPTANCE",
-  "note": "Final v191 reseal after contradiction audit and parity-state correction. rc4.117 off-device/package PASS; gh-pages rc4.115 parity FALSE; next deploy rc4.117, prove parity, then one device v4 test. v5 optional only if time remains."
+  "exact_gate": "RC4.117_DEVICE_V4_ACCEPTANCE",
+  "note": "v192 takeover verified against user handoff screenshots and repo v191. rc4.117 off-device/package PASS and gh-pages/main runtime parity PASS. Next exactly one device refresh/install and v4 acceptance; realistic mocks immediately if PASS. v5 optional only if time remains."
 }
