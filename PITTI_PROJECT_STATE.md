@@ -2689,3 +2689,11 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Final head `294b4322000b76f293eb59a1acc53b60c41df0f2`: rc4.82 PASS, rc4.83 PASS, Project Guardrails PASS, release contract v2 PASS, candidate package/re-extract PASS, quota regression PASS.
 - Package run 33299834699 / artifact 9728556713 / artifact-envelope digest `sha256:feadf23c9ec0f9d72ac88d06e9d1cfc8b887e84caea4dc48c1dac939a89827b4`.
 - gh-pages deployed to the gated head; sampled runtime parity including worker PASS. Device is now used only for final acceptance, not diagnosis.
+
+
+### 2026-08-30 — EXPERT RANKING SOURCE FREEZE / NO DUPLICATE RESEARCH
+- User correction: Nick Mariano current ranking/source choice was already established earlier; reopening that research duplicated completed work and consumed draft-day time.
+- Effective immediately, expert source/ranking research is **frozen unless a concrete source failure proves the stored decision unusable**. Do not re-research freshness/source choice merely because a runtime lookup says an expert is missing.
+- Current blocker from rc4.111 screenshot is not ranking quality/freshness. It is identity plumbing: `loadExperts()` only synthesized missing experts referenced by legacy PRESETS, while v4-only configured experts such as Nick Mariano could still be absent from the directory and therefore `findExpert()` returned null before the already-established source adapter was ever called.
+- rc4.113 fixes only that plumbing: every name referenced by PRESETS, EXPERT_V4_BLUEPRINT or EXPERT_V5_BLUEPRINT is synthesized as an addressable virtual expert if omitted by the directory. Ranking source decisions themselves remain unchanged/frozen.
+- Priority is now finish-line work only: make v4/v5 consume the already-approved ranking sources, verify gates, then compare models. No broad expert re-selection, no duplicate freshness pass, no player-by-player research unless a live decision requires it.
