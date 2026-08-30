@@ -137,3 +137,13 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - One controlled device refresh only; no cache/app-data clear or reinstall.
 - The acceptance mock must be **fresh**, not continuation of the interrupted rc4.129 mock. At every own pick analyze both v4 and v5 before the user pick; exported backup must contain exactly 30 current-draft fixtures before model comparison.
 - v4 PRIMARY / v5 CHALLENGER / v3 failsafe; no weight/source retune.
+
+
+## 11. v195 CURRENT OVERRIDE — backup 16-02-06-862Z
+- This section supersedes older rc4.129/30-fixture continuation pointers above.
+- Runtime remains **rc4.130**; no phone update is required for the audit tool.
+- Latest canonical backup is **draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json**.
+- Exact evidence: **29 fixtures across all 15 own picks; 14 exact v4/v5 pairs; missing pick29 expertv5**. Never call this 30/30 PASS.
+- Persistent audit tool **tools/audit-v45-backup.mjs** must be used on future JSON exports before model conclusions.
+- Data-quality canaries are now explicit: Terry McLaurin = 4/6 coverage in both v4/v5, missing Boone + Koerner; D'Andre Swift pick52 = Top-1 both profiles with generic-only rationale.
+- Partial 14-pair evidence does not justify a last-minute model retune. **v4 remains PRIMARY, v5 CHALLENGER, v3 failsafe**.
