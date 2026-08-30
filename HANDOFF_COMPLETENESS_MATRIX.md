@@ -1,8 +1,8 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v182
-Generation: `20260830T0625Z-v182`
+# PITTI HANDOFF COMPLETENESS MATRIX — v183
+Generation: `20260830T0634Z-v183`
 
 Takeover fails closed unless all are true:
-- CURRENT = SEAL = HANDOFF = BOOTSTRAP = MATRIX generation v182.
+- CURRENT = SEAL = HANDOFF = BOOTSTRAP = MATRIX generation v183.
 - Seal PASS, ready, second-pass PASS, non-empty integrity; Project State read to EOF.
 - main/gh-pages rc4.107, 13/13 runtime parity; package hash adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c.
 - rc4.107 device observed; live refresh acceptance pending; rc4.106 fallback remains available.
