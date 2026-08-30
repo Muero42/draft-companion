@@ -199,8 +199,13 @@ function ensureExpertV5Panels(){
     for(const [key,row] of Object.entries(baseRows)){
       const k=kMap.get(key),baseInd=(row.individual||[]).map(x=>({...x}));
       if(!k){ranks[key]={...row,intendedN:(row.intendedN||baseInd.length)+1,coverageStatus:'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN',missingExperts:[...new Set([...(row.missingExperts||[]),koerner])]};continue}
-      const ds=baseInd.find(x=>x.expertName==='Draft Sharks Team'),transfer=Math.min(.20,Number(ds?.effectiveWeight||0));
-      const vals=baseInd.map(x=>x.expertName==='Draft Sharks Team'?{...x,effectiveWeight:Math.max(0,Number(x.effectiveWeight)-transfer)}:x);
+      const ds=baseInd.find(x=>x.expertName==='Draft Sharks Team');
+      // v5 is deliberately minimal-invasive: Koerner is funded primarily from DS Team.
+      // If the base row has no explicit DS contribution, do NOT add Koerner on top and
+      // accidentally overweight the row; fail closed for that player instead.
+      if(!ds||Number(ds.effectiveWeight||0)<=0){ranks[key]={...row,intendedN:(row.intendedN||baseInd.length)+1,coverageStatus:'INCOMPLETE_V5_NO_DS_FUNDING',missingExperts:[...new Set([...(row.missingExperts||[]),'Draft Sharks Team funding'])]};continue}
+      const transfer=Math.min(.20,Number(ds.effectiveWeight||0));
+      const vals=baseInd.map(x=>x.expertName==='Draft Sharks Team'?{...x,effectiveWeight:Number(x.effectiveWeight)-transfer}:x);
       vals.push({expertName:koerner,rank:Number(k.posRank),effectiveWeight:transfer,reconstructed:false,spread:null});
       const sw=vals.reduce((a,x)=>a+Number(x.effectiveWeight||0),0),mean=vals.reduce((a,x)=>a+x.rank*Number(x.effectiveWeight||0),0)/sw;
       const variance=vals.reduce((a,x)=>a+Number(x.effectiveWeight||0)*(x.rank-mean)**2,0)/sw;
