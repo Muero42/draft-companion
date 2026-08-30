@@ -11,7 +11,7 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.112",
+    "appVersion": "v11.8.0-rc4.113",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
@@ -22,7 +22,7 @@
     "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.107",
     "preinstallSha256": "sha256:adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.112",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.113",
     "latestDeployedCandidate": "v11.8.0-rc4.107",
     "latestAndroidVerified": "v11.8.0-rc4.106",
     "androidAuthority": "v11.8.0-rc4.106",
@@ -186,16 +186,16 @@
   "currentWork": {
     "branch": "main",
     "researchBranch": "pitti/expert-v4-v5-v180 historical implementation branch; merged via PR #49",
-    "status": "RC4.112_OFFDEVICE_GATING",
+    "status": "RC4.113_OFFDEVICE_GATING",
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.108",
-    "runtime": "v11.8.0-rc4.112",
+    "runtime": "v11.8.0-rc4.113",
     "mainRuntimeParity": "PASS; main/gh-pages 13/13 runtime parity verified",
-    "nextGate": "RC4.112_FULL_OFFDEVICE_ACCEPTANCE"
+    "nextGate": "RC4.113_FULL_OFFDEVICE_ACCEPTANCE"
   },
   "status": "HANDOFF_V187_RC4111_OFFDEVICE_GATING",
-  "gate": "RC4.112_FULL_OFFDEVICE_ACCEPTANCE",
+  "gate": "RC4.113_FULL_OFFDEVICE_ACCEPTANCE",
   "nextGate": "AUTO off-device only until all gates pass.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
