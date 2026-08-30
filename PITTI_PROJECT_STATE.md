@@ -2679,3 +2679,13 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - No ranking, Return, player-specific, expert-weight or readiness threshold was changed. This instrumentation exists only to identify the remaining upstream acquisition blocker from one device refresh.
 - Candidate head `dedfe95708cc8369dba9ae0ee52075c6ed5116e3`: release contract PASS, Project Guardrails PASS, rc4.82 PASS, rc4.83 PASS, package/re-extract PASS. Package run 33299006935 / artifact 9728307439 / envelope digest `sha256:dad2cdd2f882a251838be5ea4f455288a927708e35fa4eec3eae7ffc5d9e3cae`.
 - gh-pages was moved to that gated head and sampled runtime parity with main passed. Next user action is exactly one rc4.110 reload + `Alles aktualisieren`, then capture the diagnostic. Do not repeat generic selector-only screenshots.
+
+
+### 2026-08-30 — rc4.111 off-device storage acceptance
+- rc4.110 device diagnostic exposed a real Android localStorage quota failure while persisting Dalton Del Don; successful acquisition had been caught and falsely reclassified as a source failure.
+- rc4.111 separates source verification from persistence: successful expert rows remain authoritative in memory even if persistence fails. Before retry it removes obsolete duplicate full stores `v7_rankCache` and `v7_panelRanks`; only if still necessary it evicts reproducible bounded history (`v118_decisionFixtures`, `v118_returnValidation`, `v117_researchEvidence`). Configuration/API key/draft state/per-expert caches are not cleared.
+- Startup no longer hydrates obsolete `v7_panelRanks`; panels rebuild from compact per-expert caches/sealed boards.
+- Added deterministic quota-pressure regression `tools/rc4111-storage-quota.mjs` and made it mandatory in package + project guardrails for rc4.111+.
+- Final head `294b4322000b76f293eb59a1acc53b60c41df0f2`: rc4.82 PASS, rc4.83 PASS, Project Guardrails PASS, release contract v2 PASS, candidate package/re-extract PASS, quota regression PASS.
+- Package run 33299834699 / artifact 9728556713 / artifact-envelope digest `sha256:feadf23c9ec0f9d72ac88d06e9d1cfc8b887e84caea4dc48c1dac939a89827b4`.
+- gh-pages deployed to the gated head; sampled runtime parity including worker PASS. Device is now used only for final acceptance, not diagnosis.
