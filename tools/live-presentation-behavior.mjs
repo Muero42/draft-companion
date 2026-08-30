@@ -80,4 +80,7 @@ assert(p.minus(mixedPolarity).includes('Workload-driven decline risk'),'negative
 const badRiskPolarity={...rows[0],name:'Bad Risk Polarity Fixture',researchResidual:{active:true,components:[{displayRisk:true,kind:'upside',dir:1,confidence:.99,causal:'Positive upside must not render as risk'}]}};
 assert(!p.minus(badRiskPolarity).includes('Positive upside must not render as risk'),'positive evidence leaked into Contra via displayRisk');
 
+assert(src.includes('x.expertTier?.label'), 'rc4.136 tier label not wired into live surface');
+const cardPos=src.indexOf('<h3>${i+1}. ${esc(x.name)}'), tierPos=src.indexOf('x.expertTier?.label',cardPos), arrowPos=src.indexOf('headerArrow(x)',cardPos);
+assert(cardPos>=0&&tierPos>cardPos&&arrowPos>tierPos,'rc4.136 tier must render after player name and before research arrows');
 console.log('LIVE_PRESENTATION_BEHAVIOR_PASS');

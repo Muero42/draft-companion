@@ -2170,22 +2170,38 @@ window.PITTI_CANDIDATE_AUDIT=(query='Kenneth Walker')=>{const c=lastDraftContext
 // Erickson tiers are from his current FantasyPros half-PPR overall board; Mariano tiers from current RotoBaller half-PPR Top 400.
 // Missing/unsupported players intentionally render no external tier rather than a synthetic gap tier.
 const VERIFIED_EXTERNAL_TIERS_2026={
-  // Current Overall Half-PPR tier boundaries, not synthetic panel-gap tiers.
-  andrewErickson:{source:'FantasyPros · Andrew Erickson · Overall Half-PPR',asOf:'2026-08-30',ranges:[[1,4,1],[5,8,2],[9,15,3],[16,19,4],[20,26,5],[27,32,6],[33,40,7]]},
-  nickMariano:{source:'RotoBaller · Nick Mariano · Half-PPR Top 400',asOf:'2026-08-25',ranges:[[1,5,1],[6,16,2],[17,24,3],[25,36,4],[37,53,5],[54,63,6],[64,86,7],[87,102,8],[103,121,9],[122,133,10]]}
+  // Direct player->tier snapshots from published Half-PPR tier boards. Display-only.
+  andrewErickson:{source:'FantasyPros · Andrew Erickson · Overall Half-PPR',asOf:'2026-08-30',tiers:{
+    5:['Zay Flowers'],7:['Rashee Rice','DeVonta Smith','Malik Nabers','Tetairoa McMillan','Jaylen Waddle','Ladd McConkey','Emeka Egbuka','Garrett Wilson','Tee Higgins'],
+    8:["D'Andre Swift",'Jeremiyah Love','Kyren Williams','Tyler Warren','Drake Maye','Josh Allen','Lamar Jackson','Cam Skattebo','Christian Watson','Mike Evans','Carnell Tate','DJ Moore','Bucky Irving'],
+    9:['Josh Jacobs','Terry McLaurin','Jameson Williams','Rome Odunze','Parker Washington','Luther Burden III']
+  }},
+  nickMariano:{source:'RotoBaller · Nick Mariano · Half-PPR Top 400',asOf:'2026-08-25',tiers:{
+    1:['Jahmyr Gibbs','Bijan Robinson',"Ja'Marr Chase",'Puka Nacua','Jaxon Smith-Njigba'],
+    2:['Christian McCaffrey','Jonathan Taylor','James Cook','Amon-Ra St. Brown','CeeDee Lamb','Derrick Henry','Saquon Barkley','Justin Jefferson','Chase Brown','Kenneth Walker','Omarion Hampton'],
+    3:["De'Von Achane",'Drake London','George Pickens','A.J. Brown','Brock Bowers','Chris Olave','Nico Collins','Kyren Williams'],
+    4:['Javonte Williams','Malik Nabers','Trey McBride','Travis Etienne','Josh Jacobs','DeVonta Smith','Ladd McConkey','Zay Flowers','Ashton Jeanty','Breece Hall','Tee Higgins',"D'Andre Swift"],
+    5:['Josh Allen','Jeremiyah Love','Rashee Rice','Garrett Wilson','Emeka Egbuka','Jaylen Waddle','Davante Adams','Colston Loveland','Luther Burden','Jameson Williams','Terry McLaurin','Tetairoa McMillan','DJ Moore','Bucky Irving','David Montgomery','Cam Skattebo','Lamar Jackson'],
+    6:['Jadarian Price','Mike Evans','Parker Washington','Christian Watson','Jayden Daniels','Jalen Hurts','Rhamondre Stevenson','Quinshon Judkins','Joe Burrow','Bhayshul Tuten'],
+    7:['Tyler Warren','Drake Maye','Marvin Harrison Jr.','Rico Dowdle','Rome Odunze','Jaylen Warren','TreVeyon Henderson','Brian Thomas Jr.','Carnell Tate','Tucker Kraft','Justin Herbert','Caleb Williams','Jayden Reed','Trevor Lawrence','Dak Prescott','Tony Pollard','J.K. Dobbins','Blake Corum','Jonathon Brooks','Jordan Addison','DK Metcalf','Brock Purdy','Patrick Mahomes'],
+    8:['Chris Godwin','Quentin Johnston','Josh Downs','Chuba Hubbard','Sam LaPorta','RJ Harvey','Courtland Sutton','Jaxson Dart','Matthew Stafford','Jordan Mason','Michael Wilson','Xavier Worthy','Jared Goff','Michael Pittman','Jacory Croskey-Merritt','Kyle Pitts'],
+    9:['Stefon Diggs','Bo Nix','Kenneth Gainwell','Harold Fannin Jr.','Baker Mayfield','Chris Rodriguez Jr.','George Kittle','Matthew Golden','Makai Lemon','Kyler Murray','KC Concepcion','Alec Pierce','Jordan Love','Dalton Kincaid','Kyle Monangai','Romeo Doubs','Travis Kelce','Jalen Coker','Rachaad White'],
+    10:["De'Zhaun Stribling",'Malik Willis',"Wan'Dale Robinson",'Jakobi Meyers','Dallas Goedert','Khalil Shakir','Mark Andrews','Juwan Johnson','Daniel Jones','Keaton Mitchell','Isaiah Likely','Tyler Shough']
+  }}
+};
+function buildExternalTierNameMap(source){const m=new Map();for(const [tier,names] of Object.entries(source.tiers||{}))for(const name of names)m.set(norm(name),Number(tier));return m}
+const VERIFIED_EXTERNAL_TIER_MAPS_2026={
+  andrewErickson:buildExternalTierNameMap(VERIFIED_EXTERNAL_TIERS_2026.andrewErickson),
+  nickMariano:buildExternalTierNameMap(VERIFIED_EXTERNAL_TIERS_2026.nickMariano)
 };
 function externalExpertTierContext(x){
-  const vals=[];
-  const pick=(expert,label,source)=>{
-    const hit=x?.r?.individual?.find(v=>String(v.expertName||'').toLowerCase().includes(expert));
-    const rank=Number(hit?.overallRank??hit?.rank);if(!Number.isFinite(rank))return;
-    const range=source.ranges.find(([a,b])=>rank>=a&&rank<=b);if(range)vals.push({expert:label,tier:range[2],rank});
-  };
-  pick('erickson','Erickson',VERIFIED_EXTERNAL_TIERS_2026.andrewErickson);
-  pick('mariano','Mariano',VERIFIED_EXTERNAL_TIERS_2026.nickMariano);
+  const key=norm(x?.p?.name||''),vals=[];
+  const e=VERIFIED_EXTERNAL_TIER_MAPS_2026.andrewErickson.get(key);if(Number.isFinite(e))vals.push({expert:'Erickson',tier:e});
+  const m=VERIFIED_EXTERNAL_TIER_MAPS_2026.nickMariano.get(key);if(Number.isFinite(m))vals.push({expert:'Mariano',tier:m});
   if(!vals.length)return null;
-  const tiers=[...new Set(vals.map(v=>v.tier))].sort((a,b)=>a-b);
-  return{label:tiers.length===1?`T${tiers[0]}`:`T${tiers[0]}–${tiers[tiers.length-1]}`,details:vals.map(v=>`${v.expert} T${v.tier} (#${Math.round(v.rank)})`).join(' · '),sources:vals};
+  // Tier numbers are expert-specific scales; never average/range them across sources.
+  const short=vals.map(v=>`${v.expert==='Erickson'?'E':'M'}${v.tier}`).join('/');
+  return{label:`T ${short}`,details:vals.map(v=>`${v.expert} T${v.tier}`).join(' · '),sources:vals};
 }
 function externalTierHtml(x){const t=externalExpertTierContext(x);return t?` · <span class="expert-tier" title="${esc(t.details)}">${esc(t.label)}</span>`:'';}
 
