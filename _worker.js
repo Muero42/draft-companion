@@ -251,18 +251,18 @@ function parseRotoBallerOverall(html){
     if(c.length<3)continue;
     let rank=null,name='',pp=null;
     // Current RotoBaller overall tables are Tier | Rank | Player Name | Pos.
-    for(let i=0;i<c.length;i++){
+    // Rank is the numeric cell immediately before the player-name cell, not Tier.
+    let posIndex=-1;
+    for(let i=0;i<c.length;i++){const p=parsePosToken(c[i]);if(p){pp=p;posIndex=i;break}}
+    if(!pp||posIndex<2)continue;
+    const nameIndex=posIndex-1;
+    name=String(c[nameIndex]||'').trim();
+    for(let i=nameIndex-1;i>=0;i--){
       const n=Number(String(c[i]||'').trim());
-      if(rank===null&&Number.isFinite(n)&&n>=1&&n<=500){rank=n;continue}
-      if(!pp){const p=parsePosToken(c[i]);if(p)pp=p}
+      if(Number.isFinite(n)&&n>=1&&n<=500){rank=n;break}
     }
     if(!rank||!pp)continue;
-    for(const cell of c){
-      const t=String(cell||'').trim();
-      if(!t||/^\d+$/.test(t)||parsePosToken(t)||/^tier$/i.test(t)||/^rank$/i.test(t)||/^player name$/i.test(t)||/^pos\.?$/i.test(t))continue;
-      if(/[A-Za-z]/.test(t)&&t.length>2){name=t;break}
-    }
-    if(!name||seen.has(name.toLowerCase()))continue;
+    if(!name||!/\p{L}/u.test(name)||seen.has(name.toLowerCase()))continue;
     seen.add(name.toLowerCase());out.push({rank,name,pos:pp.pos,posRank:pp.posRank});
   }
   return out.sort((a,b)=>a.rank-b.rank);
