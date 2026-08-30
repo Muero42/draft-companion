@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-30T07:35:00Z",
+  "updatedAt": "2026-08-30T11:15:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -16,23 +16,23 @@
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.107",
+    "latestAndroidObserved": "v11.8.0-rc4.114",
     "latestPreinstallVerified": "v11.8.0-rc4.107",
     "latestResearchChallenger": "v11.8.0-rc4.107",
-    "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.107",
-    "preinstallSha256": "sha256:adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c",
+    "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.115",
+    "preinstallSha256": "artifact-envelope-sha256:f5ac135c936addfb157142b5efe8de3bf8369758fc89b8774ce71f8bd53e0eb4",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.115",
-    "latestDeployedCandidate": "v11.8.0-rc4.107",
+    "latestDeployedCandidate": "v11.8.0-rc4.115",
     "latestAndroidVerified": "v11.8.0-rc4.106",
-    "androidAuthority": "v11.8.0-rc4.106",
-    "android_authority": "v11.8.0-rc4.106",
+    "androidAuthority": "v11.8.0-rc4.114",
+    "android_authority": "v11.8.0-rc4.114",
     "deployedPagesAppByteParityWithMain": true,
-    "preinstallReferenceRun": 33293932073,
-    "preinstallReferenceArtifactId": 9726805413,
-    "preinstallHashSemantics": "Inner candidate ZIP SHA-256 independently recomputed and matched package gate; 13 runtime files; gh-pages/main parity verified.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.107",
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.106",
+    "preinstallReferenceRun": 33301976035,
+    "preinstallReferenceArtifactId": 9729230976,
+    "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.114",
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.114",
     "testChallengerAndroidObserved": true,
     "testChallengerAndroidAccepted": false,
     "rc499": {
@@ -61,7 +61,7 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.106"
+    "acceptedAndroidAuthority": "v11.8.0-rc4.114"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -184,13 +184,18 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4.115_OFFDEVICE_GATING",
+    "branch": "main",
+    "status": "RC4.115_DEVICE_V5_ACCEPTANCE_ONLY",
+    "production": false,
+    "androidVerified": false,
+    "acceptedAndroidFallback": "v11.8.0-rc4.114",
     "runtime": "v11.8.0-rc4.115",
-    "nextGate": "RC4.115_FULL_OFFDEVICE_ACCEPTANCE"
+    "mainRuntimeParity": "PASS",
+    "nextGate": "RC4.115_DEVICE_V5_ACCEPTANCE"
   },
-  "status": "HANDOFF_V187_RC4111_OFFDEVICE_GATING",
-  "gate": "RC4.115_FULL_OFFDEVICE_ACCEPTANCE",
-  "nextGate": "AUTO off-device only until all gates pass.",
+  "status": "HANDOFF_V190_READY_RC4115_DEVICE_V5_ACCEPTANCE",
+  "gate": "RC4.115_DEVICE_V5_ACCEPTANCE",
+  "nextGate": "One final rc4.115 device refresh/update and v5 diagnostic acceptance; no source re-research.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -199,100 +204,31 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260830T0735Z-v187",
-    "status": "HANDOFF_v187_RC4111_OFFDEVICE_GATING",
-    "ready": false,
-    "secondPass": false,
-    "resume": "PITTI AUTO: rc4.107 is on main/gh-pages and observed on device; rc4.106 remains accepted functional fallback. Immediate gate is Alles aktualisieren on rc4.107, then live v4/v5 coverage/Koerner validation and same-state v3/v4/v5 comparison. v3 stays default. Deferred real-decision mock 19-44-43 remains unanalyzed."
+    "generation": "20260830T1115Z-v190",
+    "status": "HANDOFF_v190_READY_RC4115_DEVICE_V5_ACCEPTANCE",
+    "ready": true,
+    "secondPass": true,
+    "resume": "Verify v190 once. v4 rc4.114 is accepted and closed. rc4.115 off-device/package/deploy PASS; only v5 device acceptance remains. Ranking/source research frozen. STATUS is report-only/no-tools."
   },
   "expertV45": {
-    "status": "ACTIVE_RESEARCH_GO_LIVE_BLOCKED_ON_COVERAGE_SEMANTICS",
-    "branch": "pitti/expert-v4-v5-v180",
-    "baselinePanelSize": "4-6 individual experts per position",
+    "status": "FINISH_LINE",
     "v3": {
-      "status": "FROZEN_BASELINE_PRESERVE_SELECTABLE",
-      "change": "NONE"
+      "status": "FROZEN_BASELINE_DEFAULT_FAILSAFE"
     },
     "v4": {
-      "design": "INDIVIDUAL_ONLY_POSITION_SPECIFIC",
-      "draftSharks": "EXCLUDED_FROM_V4_BECAUSE_TEAM_FEED_ATTRIBUTION_IS_NOT_CLEANLY_TIED_TO_IDENTIFIED_ACCURACY; NOT BECAUSE DS ORG IS WEAK",
-      "noForcedReplacementOfExistingIndividuals": true,
-      "provisional": {
-        "QB": [
-          "Sean Koerner",
-          "Todd D Clark",
-          "Seth Miller",
-          "plus 1-3 best validated current individual candidates"
-        ],
-        "RB": [
-          "Ryan Weisse",
-          "Kev Wheeler",
-          "Dalton Del Don",
-          "Nick Mariano",
-          "Sean Koerner",
-          "Pat Fitzmaurice as strongest 6th-place challenger"
-        ],
-        "WR": [
-          "Sean Koerner",
-          "Nick Mariano",
-          "Marc Shannep",
-          "Seth Miller",
-          "plus 0-2 best validated current individual candidates"
-        ],
-        "TE": [
-          "Wolf of Roto Street",
-          "Ryan Weisse",
-          "Pat Fitzmaurice",
-          "Sean Koerner",
-          "Kev Wheeler / Dalton Del Don as 5th-6th candidates"
-        ]
-      },
-      "weightingRule": "multi-year positional draft accuracy primary; 2025 as recency/stability correction, not double-counted 50/50; 2026 rank freshness is a gate; cap single-expert influence"
+      "status": "DEVICE_ACCEPTED_RC4.114",
+      "complete": "QB32/24 RB83/60 WR91/70 TE30/24",
+      "doNotReopen": true
     },
     "v5": {
-      "design": "V3_HYBRID_PLUS_KOERNER",
-      "rule": "Preserve v3 architecture; add Sean Koerner primarily by reducing Draft Sharks share. Position-specific transfer; do not blindly give Koerner all DS weight where recent positional accuracy is weak.",
-      "purpose": "minimal-invasive challenger / second opinion"
+      "status": "RC4.115_DEVICE_ACCEPTANCE_PENDING",
+      "design": "VERIFIED_V4_INDIVIDUAL_ONLY_PLUS_KOERNER_20_PERCENT",
+      "legacyV3DraftSharksDependency": false
     },
-    "coverageBlocker": {
-      "severity": "GO_LIVE_BLOCKER",
-      "finding": "Same expert-v3-rb label can use different effective expert sets by player.",
-      "evidence": {
-        "Tyjae Spears": "panelN=5; Weisse 126, Del Don 131, Pat 139, Mariano 140, Draft Sharks 144",
-        "Tank Bigsby": "panelN=4; Pat 134, Mariano 139, Del Don 149, Weisse 156; Draft Sharks absent"
-      },
-      "rootCause": "ensureExpertV3Panels() inherits base row unchanged when challenger rank missing; when challenger exists it rebuilds from whatever base individuals are present and normalizes by available-weight sum. Missing source coverage therefore silently changes effective ensemble.",
-      "requiredSemantics": [
-        "Never interpret missing import coverage as expert opinion.",
-        "Distinguish true outside-published-range/unranked from acquisition/import failure from intentionally short board.",
-        "No silent weight renormalization across materially different expert sets without explicit coverage state.",
-        "Expose/fail-visible effective panel N and coverage reason.",
-        "Do not blindly impute ranks.",
-        "Audit all relevant players/positions before v4/v5 activation."
-      ]
-    },
-    "ui": {
-      "requirement": "Expert preset selector immediately above Analyze; switching preset must not mutate draft state and re-analysis must use same board/roster state.",
-      "stagedCommit": "f45bb99d0bd69d52f3cc792aae9571db4b2e615e",
-      "stagedBranch": "pitti/expert-v4-v5-v180",
-      "mainRuntimeStatus": "STAGED_UI_REVERTED_FROM_MAIN_TO_RESTORE_RC4.106_RUNTIME_PARITY; reapply only with validated v4/v5 implementation"
-    },
-    "futureResearch": {
-      "deferUntil": "post-2026-season unless time-sensitive raw ranking data would otherwise be lost",
-      "concept": "phase/archetype-specific expert panels: early stability, middle value/ceiling, late breakout/league-winner",
-      "collectNowOnlyIfIrretrievable": [
-        "expert-player-rank timestamped pre-draft snapshots",
-        "panel provenance",
-        "contemporary ADP/ECR"
-      ],
-      "laterMetrics": [
-        "value over market",
-        "late RB/WR breakout hit rate",
-        "Top-24/Top-12 hit rate by draft-cost bucket",
-        "false-positive rate",
-        "league-winner identification"
-      ]
-    }
+    "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260830T0735Z-v187"
+  "handoff_generation": "20260830T1115Z-v190",
+  "statusCommandContract": {
+    "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
+  }
 }
