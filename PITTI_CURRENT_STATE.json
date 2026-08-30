@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1822Z-v207",
-  "updated_at": "2026-08-30T19:22:00Z",
+  "updated_at": "2026-08-30T19:44:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -34,14 +34,14 @@
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
     "source_candidate": "rc4.132 SOURCE BUILT ON MAIN; device/release gates pending",
-    "deployed": "v11.8.0-rc4.133",
+    "deployed": "v11.8.0-rc4.136",
     "main_gh_pages_parity": true,
     "accepted_android": "v11.8.0-rc4.133"
   },
   "exact_continuation": {
     "gate": "RC4.132_BUILD_AND_REGRESSION",
     "auto_starts_mock": false,
-    "instruction": "rc4.136 candidate: display-only external expert-tier layer using verified current Andrew Erickson FantasyPros Half-PPR overall tiers and Nick Mariano RotoBaller Half-PPR Top-400 tiers; shown after player name before research arrows in live cards/handoff. No synthetic gap tiers presented as expert tiers. Run full release/package/guardrail gates before deploy."
+    "instruction": "rc4.136 full release/package/guardrail gates PASS, merged and deployed; exact main/gh-pages parity PASS. External tiers are display-only and source-specific: Erickson (FantasyPros) + Mariano (RotoBaller), rendered after player name before arrows. Do not collapse expert tier numbers into a false consensus range. Next unavoidable action: one normal phone refresh and verify rc4.136."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -155,7 +155,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.136_TIER_LAYER_RELEASE_GATE",
+    "status": "RC4.136_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_REQUIRED",
     "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
@@ -163,7 +163,7 @@
     "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
     "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
   },
-  "status": "RC4.136_TIER_LAYER_RELEASE_GATE",
+  "status": "RC4.136_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_REQUIRED",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
   "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
   "evidenceRetention": {
