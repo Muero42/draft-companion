@@ -27,7 +27,28 @@ const V3={QB:['Draft Sharks Team','Dalton Del Don','Nick Mariano','Justin Boone'
 const INC={QB:['Pat Fitzmaurice','Justin Boone','Sean Koerner'],RB:['Pat Fitzmaurice','Justin Boone','Sean Koerner','Andrew Erickson'],WR:['Pat Fitzmaurice','Justin Boone','Andrew Erickson','Matt Harmon'],TE:['Pat Fitzmaurice','Justin Boone','Andrew Erickson','Derek Brown']};
 function profile(){try{const p=JSON.parse(localStorage.getItem('v7_positionPanels')||'{}');if(['QB','RB','WR','TE'].every(pos=>p[pos]===`expert-v5-${pos.toLowerCase()}`))return'expertv5';if(['QB','RB','WR','TE'].every(pos=>p[pos]===`expert-v4-${pos.toLowerCase()}`))return'expertv4';if(p.QB==='expert-v3-qb'&&p.RB==='expert-v3-rb'&&p.WR==='expert-v2-wr'&&p.TE==='expert-v3-te')return'expertv3';if(['QB','RB','WR','TE'].every(pos=>p[pos]===`expert-v2-${pos.toLowerCase()}`))return'fullv2';if(p.WR==='expert-v2-wr'&&p.QB==='qb'&&p.RB==='rb'&&p.TE==='te')return'wrv2';if(p.QB==='qb'&&p.RB==='rb'&&p.WR==='wr'&&p.TE==='te')return'incumbent'}catch{}return'custom'}
 const profileLabel=()=>({expertv5:'Expert-v5 HYBRID + KOERNER',expertv4:'Expert-v4 INDIVIDUAL-ONLY',expertv3:'Expert-v3 BASELINE',fullv2:'Expert-v2 ALLE',wrv2:'Expert-v2 NUR WR',incumbent:'BISHERIG',custom:'CUSTOM'})[profile()]||'CUSTOM';
-function expertOrder(x){const actual=[...new Set((x.individual||[]).map(r=>r.expertName||r.source).filter(Boolean))];const ordered=GLOBAL_EXPERT_ORDER.filter(name=>actual.some(v=>n(v)===n(name)));for(const name of actual)if(!ordered.some(v=>n(v)===n(name)))ordered.push(name);return ordered}
+const PROFILE_EXPERT_ORDER={
+  expertv4:{
+    QB:['Sean Koerner','Todd D Clark','Justin Boone','Dalton Del Don','Nick Mariano','Pat Fitzmaurice'],
+    RB:['Ryan Weisse','Kev Wheeler','Dalton Del Don','Nick Mariano','Sean Koerner','Pat Fitzmaurice'],
+    WR:['Sean Koerner','Nick Mariano','Justin Boone','Todd D Clark','Dalton Del Don','Pat Fitzmaurice'],
+    TE:['Wolf of Roto Street','Ryan Weisse','Sean Koerner','Dalton Del Don','Pat Fitzmaurice','Justin Boone']
+  },
+  expertv5:{
+    QB:['Draft Sharks Team','Todd D Clark','Sean Koerner','Justin Boone','Dalton Del Don','Nick Mariano','Pat Fitzmaurice'],
+    RB:['Draft Sharks Team','Nick Mariano','Dalton Del Don','Sean Koerner','Pat Fitzmaurice','Ryan Weisse'],
+    WR:['Draft Sharks Team','Pat Fitzmaurice','Justin Boone','Sean Koerner','Nick Mariano','Dalton Del Don'],
+    TE:['Pat Fitzmaurice','Justin Boone','Sean Koerner','Dalton Del Don','Wolf of Roto Street','Draft Sharks Team']
+  }
+};
+function expertOrder(x){
+  const fixed=PROFILE_EXPERT_ORDER[profile()]?.[String(x?.pos||'').toUpperCase()];
+  if(fixed)return fixed.slice();
+  const actual=[...new Set((x.individual||[]).map(r=>r.expertName||r.source).filter(Boolean))];
+  const ordered=GLOBAL_EXPERT_ORDER.filter(name=>actual.some(v=>n(v)===n(name)));
+  for(const name of actual)if(!ordered.some(v=>n(v)===n(name)))ordered.push(name);
+  return ordered
+}
 function expertRankLabel(hit){if(!hit)return'#–';const overall=Number(hit.overallRank??hit.rank);return Number.isFinite(overall)&&overall>0?`#${Math.round(overall)}`:'#–'}
 function ex(x){const rows=x.individual||[],map=new Map(rows.map(r=>[n(r.expertName||r.source),r]));const ord=expertOrder(x);if(!ord.length)return'—';return ord.map(name=>{const hit=map.get(n(name));return `${shortName(name)} ${expertRankLabel(hit)}`}).join(' · ')}
 window.PITTI_LIVE_PRESENTATION_V3={signal,arrowWhy,headerArrow,plus,minus,keyword,expertOrder,ex,profileLabel};
