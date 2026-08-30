@@ -1,6 +1,6 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Current source/package candidate:** v11.8.0-rc4.113; **device-observed authority:** v11.8.0-rc4.111 diagnostic evidence only. rc4.113 fixes configured v4/v5 expert identity plumbing; approved ranking sources are frozen.
+> **Current source/package candidate:** v11.8.0-rc4.114; **device-observed authority:** v11.8.0-rc4.111 diagnostic evidence only. rc4.114 fixes v4/v5 position-specific aggregation after device evidence showed source depth was sufficient but COMPLETE overlap was zero; approved ranking sources are frozen.
 > **rc4.113 scope:** configured-expert identity resolution only; rc4.111 quota fix and established expert ranking/source decisions retained. No ranking/Return/expert weighting semantic change.
 > **Deployment/device:** rc4.113 is NOT device authority while off-device gates run. Do not request device interaction before all gates pass.
 > **Fallback:** v3 remains default/failsafe; rc4.110 is diagnostic evidence, not accepted v4/v5 authority.
