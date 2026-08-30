@@ -113,7 +113,7 @@
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.106 accepted Android/runtime baseline",
-    "androidAuthority": "v11.8.0-rc4.106 until rc4.107 device/live acceptance",
+    "androidAuthority": "v11.8.0-rc4.106",
     "sourceAuthority": "v11.8.0-rc4.107 on main",
     "latestPackageReextract": "v11.8.0-rc4.107 PASS · 13 runtime files · sha256:adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c",
     "deployedPagesVersion": "v11.8.0-rc4.107",
@@ -121,7 +121,10 @@
     "researchBranch": "pitti/expert-v4-v5-v180 retained as historical implementation branch; main now carries rc4.107",
     "currentResearchGate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
     "exactNextAction": "On device rc4.107 run Alles aktualisieren; then inspect v4/v5 live coverage, Koerner source/crosscheck and same-state behavior before accepting Android authority.",
-    "deferredRealDecisionMock": "draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json — DO NOT ANALYZE UNTIL USER LIFTS RESTRICTION"
+    "deferredRealDecisionMock": "draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json — DO NOT ANALYZE UNTIL USER LIFTS RESTRICTION",
+    "latestPackageSha256": "sha256:adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c",
+    "packageReferenceRun": 33293932073,
+    "packageReferenceArtifactId": 9726805413
   },
   "currentGate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
   "handoffGeneration": "20260830T0625Z-v182",
