@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.121';
+const APP_VERSION='v11.8.0-rc4.122';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -214,7 +214,9 @@ function ensureExpertV5Panels(){
   const koerner='Sean Koerner',v3=globalThis.PITTI_EXPERT_V3;let ok=true;
   if(!v3)return false;
   for(const pos of ['QB','RB','WR','TE']){
-    const v3Id='expert-v3-'+pos.toLowerCase(),baseRows=panelRanks[v3Id]||{},kRows=verifiedRowsForExpert(koerner,pos);
+    // Frozen v3 intentionally reuses the v2 WR panel rather than creating expert-v3-wr.
+    // Resolve through the canonical profile map so v5 inherits the actual v3 baseline.
+    const v3Id=EXPERT_PROFILE_IDS.expertv3[pos],baseRows=panelRanks[v3Id]||{},kRows=verifiedRowsForExpert(koerner,pos);
     if(kRows.length<EXPERT_DECISION_CORE_MIN[pos]||!Object.keys(baseRows).length){ok=false;continue}
     const kMap=new Map(kRows.map(x=>[norm(x.name),x])),ranks={};
     const baseWeights=v3.weights?.[pos]||panels[v3Id]?.weights||{};
