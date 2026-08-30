@@ -2728,3 +2728,14 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Ranking/source research remains frozen. Mariano/RotoBaller and other established sources are not a current work lane.
 - The all-red CI set at head a8370f9 is diagnosed as handoff integrity drift (CURRENT v188 vs SEAL/MATRIX v187), not a runtime/model failure. Handoff v189 exists specifically to repair/reseal this transaction before new-chat continuation.
 - New chat must minimize chatter/tool turns due app instability and continue at rc4.115 device-v5 gate after v189 seal verification.
+
+
+### 2026-08-30 11:15 — PITTI HANDOFF v190 FINAL FINISH-LINE LOCK
+- Handoff re-audit found stale takeover fields despite v189 seal: EXECUTION_LOCK still carried v187-era currentWork/handoff, bootstrap still described rc4.107, README still described rc4.113/114 candidate state, and CURRENT nested status still named v188. These could resurrect old work in a new chat.
+- v190 supersedes v189 and rewrites current handoff/bootstrap/matrix from canonical facts.
+- rc4.115 package evidence pinned: run 33301976035, artifact 9729230976, envelope sha256:f5ac135c936addfb157142b5efe8de3bf8369758fc89b8774ce71f8bd53e0eb4; off-device gates/deployment PASS.
+- Immutable device evidence: rc4.114 v4 COMPLETE QB32/24 RB83/60 WR91/70 TE30/24. v4/source/identity/positional-aggregation work is CLOSED.
+- rc4.115 changes v5 construction only: accepted v4 individual-only + Koerner 20%; no legacy v3/Draft Sharks dependency. Only remaining gate: RC4.115_DEVICE_V5_ACCEPTANCE.
+- Expert ranking/source/freshness research frozen unless a direct source failure proves the frozen source unusable. No more trial-and-error device builds.
+- STATUS contract hardened: report known state only; no tools, CI polling, work, or AUTO continuation.
+- User reports chat/app hangs/crashes; new chat must minimize tool chatter and turns and use device only for final acceptance evidence.
