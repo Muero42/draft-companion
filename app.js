@@ -119,12 +119,12 @@ function ensureExpertV3Panels(){
         const oldBase=Number(base.weights?.[pos]?.[e.expertName]);
         const newBase=Number(weights?.[e.expertName]);
         if(Number.isFinite(oldBase)&&oldBase>0&&Number.isFinite(newBase)&&newBase>=0)ew*=newBase/oldBase;
-        // Frozen v3 math remains unchanged, but preserve rank semantics explicitly:
-        // these historical board ranks are position ranks, not published Overall ranks.
-        vals.push({expertName:e.expertName,rank:Number(e.rank),posRank:Number(e.posRank??e.rank),overallRank:Number.isFinite(Number(e.overallRank))?Number(e.overallRank):null,effectiveWeight:ew,reconstructed:!!e.reconstructed,spread:e.spread??null});
+        // Frozen v3 board values are cross-position Overall ranks. Keep them on that
+        // common scale; v5 must never mix them with Koerner positional ranks.
+        vals.push({expertName:e.expertName,rank:Number(e.rank),posRank:null,overallRank:Number(e.rank),effectiveWeight:ew,reconstructed:!!e.reconstructed,spread:e.spread??null});
       }
       const cw=Number(weights[spec.name]||0);
-      if(Number.isFinite(cr)&&cw>0)vals.push({expertName:spec.name,rank:cr,posRank:cr,overallRank:null,effectiveWeight:cw,reconstructed:false,spread:null});
+      if(Number.isFinite(cr)&&cw>0)vals.push({expertName:spec.name,rank:cr,posRank:null,overallRank:cr,effectiveWeight:cw,reconstructed:false,spread:null});
       const present=new Set(vals.map(e=>e.expertName));
       const missing=intendedExperts.filter(name=>!present.has(name));
       const sw=vals.reduce((sum,e)=>sum+e.effectiveWeight,0);
@@ -170,15 +170,19 @@ function buildPanelFromExpertRows(id,pos,expertRows,rawWeights,meta={}){
     for(const row of expertRows[expertName]||[]){
       const k=norm(row.name);if(!k)continue;
       if(!byName.has(k))byName.set(k,{name:row.name,pos,vals:[]});
-      byName.get(k).vals.push({expertName,rank:Number(row.posRank??row.rank),posRank:Number(row.posRank??row.rank),overallRank:Number(row.overallRank),effectiveWeight:weights[expertName],reconstructed:false,spread:null});
+      const overall=Number(row.overallRank),posRank=Number(row.posRank??row.rank);
+      // Cross-position Coach quality must live on one common scale: published Overall.
+      // Position rank is aggregated independently for position-specific interpretation/UI.
+      byName.get(k).vals.push({expertName,rank:overall,posRank,overallRank:overall,effectiveWeight:weights[expertName],reconstructed:false,spread:null});
     }
   }
   const ranks={};
   for(const [k,item] of byName){
-    const vals=item.vals.filter(x=>Number.isFinite(x.rank)&&x.rank>0),present=new Set(vals.map(x=>x.expertName)),missing=intendedExperts.filter(x=>!present.has(x));
+    const vals=item.vals.filter(x=>Number.isFinite(x.rank)&&x.rank>0&&Number.isFinite(x.posRank)&&x.posRank>0),present=new Set(vals.map(x=>x.expertName)),missing=intendedExperts.filter(x=>!present.has(x));
     const sw=vals.reduce((a,x)=>a+x.effectiveWeight,0);if(!sw)continue;
     const mean=vals.reduce((a,x)=>a+x.rank*x.effectiveWeight,0)/sw,variance=vals.reduce((a,x)=>a+x.effectiveWeight*(x.rank-mean)**2,0)/sw;
-    ranks[k]={name:item.name,pos,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,intendedN:intendedExperts.length,coverage:vals.length/intendedExperts.length,coverageStatus:missing.length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',missingExperts:missing,individual:vals.sort((a,b)=>a.rank-b.rank)};
+    const posMean=vals.reduce((a,x)=>a+x.posRank*x.effectiveWeight,0)/sw;
+    ranks[k]={name:item.name,pos,rank:mean,overallRank:mean,posRank:posMean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,intendedN:intendedExperts.length,coverage:vals.length/intendedExperts.length,coverageStatus:missing.length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',missingExperts:missing,individual:vals.sort((a,b)=>a.rank-b.rank)};
   }
   assignTiers(ranks);panelRanks[id]=ranks;panels[id]={name:meta.name||id,members:{},shadow:true,weights,source:meta.source||'verified-expert-import',coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};return ranks;
 }
@@ -192,7 +196,7 @@ function verifiedRowsForExpert(name,pos){
   return sorted.map((x,i)=>{
     const pr=Number.isFinite(Number(x.posRank))&&Number(x.posRank)>0?Number(x.posRank):i+1;
     const publishedOverall=Number.isFinite(Number(x.overallRank))&&Number(x.overallRank)>0?Number(x.overallRank):(Number.isFinite(Number(x.rank))&&Number(x.rank)>0?Number(x.rank):null);
-    return {name:x.name,pos,rank:pr,posRank:pr,overallRank:publishedOverall};
+    return {name:x.name,pos,rank:publishedOverall,posRank:pr,overallRank:publishedOverall};
   });
 }
 function ensureExpertV4Panels(){
@@ -235,11 +239,10 @@ function ensureExpertV5Panels(){
       const k=kMap.get(key),vals=[];
       for(const x of row.individual||[]){
         const w=Number(weights[x.expertName]);if(!(w>0)||!Number.isFinite(Number(x.rank)))continue;
-        // v3/v2 base rows are position ranks. Never inherit a stale/misclassified Overall
-        // field into v5; only v5's freshly verified Koerner row carries published Overall.
-        vals.push({...x,posRank:Number(x.posRank??x.rank),overallRank:null,effectiveWeight:w});
+        // v3/v2 base rows are frozen Overall ranks; v5 stays on that same common scale.
+        vals.push({...x,rank:Number(x.rank),overallRank:Number(x.rank),posRank:Number.isFinite(Number(x.posRank))?Number(x.posRank):null,effectiveWeight:w});
       }
-      if(k&&Number(weights[koerner])>0)vals.push({expertName:koerner,rank:Number(k.posRank??k.rank),posRank:Number(k.posRank??k.rank),overallRank:Number.isFinite(Number(k.overallRank))?Number(k.overallRank):null,effectiveWeight:Number(weights[koerner]),reconstructed:false,spread:null});
+      if(k&&Number(weights[koerner])>0)vals.push({expertName:koerner,rank:Number(k.overallRank??k.rank),posRank:Number(k.posRank),overallRank:Number(k.overallRank??k.rank),effectiveWeight:Number(weights[koerner]),reconstructed:false,spread:null});
       const intended=Object.keys(weights).filter(n=>weights[n]>0),present=new Set(vals.map(x=>x.expertName)),missing=intended.filter(n=>!present.has(n)),sw=vals.reduce((z,x)=>z+Number(x.effectiveWeight||0),0);
       if(!sw)continue;
       const mean=vals.reduce((z,x)=>z+Number(x.rank)*Number(x.effectiveWeight||0),0)/sw,variance=vals.reduce((z,x)=>z+Number(x.effectiveWeight||0)*(Number(x.rank)-mean)**2,0)/sw;
