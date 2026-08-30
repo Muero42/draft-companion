@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260830T-current-rc4117",
-  "updated_at": "2026-08-30T13:10:00Z",
+  "handoff_generation": "20260830T1200Z-v191",
+  "updated_at": "2026-08-30T12:00:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -57,13 +57,13 @@
     "transaction_in_progress": false,
     "resume_semantics": "rc4.115 device screenshots invalidated old v190 closure: expert rank UI mixed positional rank with Overall; v4 composition was re-audited; Koerner is individually obtainable. rc4.117 current source. v4 individual-only optimized lane. v5 is v3 + verified Sean Koerner, funded primarily from Draft Sharks share. Off-device gates pending; no device install.",
     "acceptance_fingerprint": "CURRENT|RC4117-SOURCE|V4-INDIVIDUAL-ONLY|V5-V3-PLUS-KOERNER-FROM-DS|OVERALL-POSRANK-SEPARATE|NO-TRIAL-ERROR|STATUS-REPORT-ONLY|HANDOFF-BEFORE-DEGRADATION",
-    "status": "RC4117_OFFDEVICE_GATES_PENDING_GUARDS_ALIGNED",
+    "status": "RC4117_OFFDEVICE_GATES_PENDING_RESEAL",
     "handoff_ready": false,
     "second_pass_pass": false,
     "next_action": "Run rc4.117 off-device package/regression gates after guard contracts were aligned to current semantics. No device install yet.",
     "gate": "RC4.117_OFFDEVICE_RELEASE_GATES",
-    "seal_status": "OPEN",
-    "seal_generation": "20260830T-current-rc4117"
+    "seal_status": "SUPERSEDED_PENDING_RESEAL",
+    "seal_generation": "20260830T1200Z-v191"
   },
   "source_authority": "v11.8.0-rc4.117",
   "package_authority": "NONE_RC4117_PENDING_GATES",
