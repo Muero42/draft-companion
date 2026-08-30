@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-30T05:30:00Z",
+  "updatedAt": "2026-08-30T06:25:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -185,17 +185,18 @@
   },
   "currentWork": {
     "branch": "main",
-    "researchBranch": "pitti/expert-v4-v5-v180",
-    "status": "HANDOFF_V180_EXPERT_V4_V5_COVERAGE_AUDIT",
+    "researchBranch": "pitti/expert-v4-v5-v180 historical implementation branch; merged via PR #49",
+    "status": "RC4.107_DEPLOYED_DEVICE_OBSERVED_LIVE_ACCEPTANCE_PENDING",
     "production": true,
-    "androidVerified": true,
-    "runtime": "v11.8.0-rc4.106",
-    "mainRuntimeParity": "RESTORED after reverting staged selector UI from main; UI work preserved on research branch",
-    "nextGate": "New chat: verify handoff v180, then fix expert coverage/missingness semantics on research branch; complete current expert candidate/accuracy/freshness matrix; build v4 and v5; validate against v3 before enabling selector or packaging."
+    "androidVerified": false,
+    "acceptedAndroidFallback": "v11.8.0-rc4.106",
+    "runtime": "v11.8.0-rc4.107",
+    "mainRuntimeParity": "PASS; main/gh-pages 13/13 runtime parity verified",
+    "nextGate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE"
   },
-  "status": "HANDOFF_V180_READY_EXPERT_V4_V5",
-  "gate": "EXPERT_V4_V5_COVERAGE_AND_SELECTION",
-  "nextGate": "New chat: verify handoff v180, then fix expert coverage/missingness semantics on research branch; complete current expert candidate/accuracy/freshness matrix; build v4 and v5; validate against v3 before enabling selector or packaging.",
+  "status": "HANDOFF_V182_READY_RC4107_DEVICE_GATE",
+  "gate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
+  "nextGate": "On device rc4.107 run Alles aktualisieren; then validate live v4/v5 coverage, Koerner acquisition/crosscheck and same-state v3/v4/v5. v3 stays default until PASS.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -204,11 +205,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260829T1951Z-v180",
-    "status": "HANDOFF_v180_READY_EXPERT_V4_V5",
+    "generation": "20260830T0625Z-v182",
+    "status": "HANDOFF_v182_READY_RC4107_DEVICE_GATE",
     "ready": true,
     "secondPass": true,
-    "resume": "PITTI AUTO: rc4.106 is accepted Android/runtime baseline. Main runtime parity restored. Research branch pitti/expert-v4-v5-v180 preserves staged selector. First fix Bigsby/Spears expert-coverage inconsistency, then finalize v4 individual-only and v5 v3+Koerner, validate before activation. Deferred real-decision mock 19-44-43 must not be analyzed yet."
+    "resume": "PITTI AUTO: rc4.107 is on main/gh-pages and observed on device; rc4.106 remains accepted functional fallback. Immediate gate is Alles aktualisieren on rc4.107, then live v4/v5 coverage/Koerner validation and same-state v3/v4/v5 comparison. v3 stays default. Deferred real-decision mock 19-44-43 remains unanalyzed."
   },
   "expertV45": {
     "status": "ACTIVE_RESEARCH_GO_LIVE_BLOCKED_ON_COVERAGE_SEMANTICS",
@@ -299,5 +300,5 @@
       ]
     }
   },
-  "handoff_generation": "20260830T0530Z-v181"
+  "handoff_generation": "20260830T0625Z-v182"
 }
