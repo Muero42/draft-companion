@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.120';
+const APP_VERSION='v11.8.0-rc4.121';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -255,11 +255,14 @@ function expertProfileReady(id){
     const pid=map[pos],rows=panelRanks[pid];
     if(!rows||!Object.keys(rows).length)return false;
     if(id==='expertv3')return Object.values(rows).every(row=>row?.coverageStatus==='COMPLETE'||!('coverageStatus' in row));
-    // Rank-based "first N aggregate rows" is unsafe for sparse panels: a player missing one
-    // expert can move artificially upward after the available weights are renormalized. Define
-    // the decision core from COMPLETE rows only; incomplete rows remain visible/fail-closed and
-    // are never used to prove readiness.
     const need=EXPERT_DECISION_CORE_MIN[pos];
+    if(id==='expertv5'){
+      // v5 intentionally inherits v3's historical sparse/right-censored rows. Its builder
+      // already fail-closes missing experts per player and proves source depth separately.
+      // Requiring COMPLETE overlap here would contradict that policy and permanently lock v5.
+      return Object.values(rows).filter(row=>Number.isFinite(Number(row?.rank))).length>=need;
+    }
+    // v4 is individual-only and its decision core must have full intended-expert overlap.
     const complete=Object.values(rows).filter(row=>row?.coverageStatus==='COMPLETE').sort((a,b)=>Number(a.rank)-Number(b.rank));
     return complete.length>=need;
   });
