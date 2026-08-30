@@ -95,6 +95,7 @@ const EXPERT_V4_BLUEPRINT={
   TE:{experts:['Pat Fitzmaurice','Justin Boone','Dalton Del Don','Wolf of Roto Street'],maxSingleWeight:.30}
 };
 const EXPERT_V5_BLUEPRINT={base:'expertv3',add:'Sean Koerner',fundPrimarilyFrom:'Draft Sharks Team',positionSpecific:true,maxSingleWeight:.30};
+const EXPERT_DECISION_CORE_MIN={QB:24,RB:60,WR:70,TE:24};
 function ensureExpertV2Panels(){const src=globalThis.PITTI_EXPERT_V2;if(!src||src.schema!=='pitti-expert-v2-board.v4')return false;for(const pos of ['QB','RB','WR','TE']){const list=src.rows?.[pos]||[];if(!list.length)return false;const id='expert-v2-'+pos.toLowerCase(),ranks={};for(const row of list){const rank=Number(row.rank);if(row.name&&Number.isFinite(rank)&&rank>0)ranks[norm(row.name)]={name:row.name,pos,rank,mean:rank,median:rank,sd:Number.isFinite(Number(row.sd))?Number(row.sd):null,n:Number.isFinite(Number(row.n))?Number(row.n):null,tier:row.tier??null,individual:Array.isArray(row.individual)?row.individual.map(e=>({expertName:e.expertName,rank:Number(e.rank),effectiveWeight:Number(e.effectiveWeight),reconstructed:!!e.reconstructed,spread:e.spread??null})).filter(e=>e.expertName&&Number.isFinite(e.rank)):[]};}panelRanks[id]=ranks;panels[id]={name:'Expert-v2 '+pos+' · 26.08.',members:{},shadow:true,weights:src.weights?.[pos]||{},source:src.source};}return true;}
 function ensureExpertV3Panels(){
   const base=globalThis.PITTI_EXPERT_V2,v3=globalThis.PITTI_EXPERT_V3;
@@ -185,7 +186,7 @@ function ensureExpertV4Panels(){
   for(const pos of ['QB','RB','WR','TE']){
     const bp=EXPERT_V4_BLUEPRINT[pos],rows={};
     for(const name of bp.experts)rows[name]=verifiedRowsForExpert(name,pos);
-    if(bp.experts.some(name=>rows[name].length<80)){ok=false;continue}
+    if(bp.experts.some(name=>rows[name].length<EXPERT_DECISION_CORE_MIN[pos])){ok=false;continue}
     buildPanelFromExpertRows('expert-v4-'+pos.toLowerCase(),pos,rows,Object.fromEntries(bp.experts.map(name=>[name,1])),{name:'Expert-v4 '+pos,source:'live verified individual experts',maxSingleWeight:bp.maxSingleWeight});
   }
   return ok&&expertProfileReady('expertv4');
@@ -194,7 +195,7 @@ function ensureExpertV5Panels(){
   const koerner='Sean Koerner';let ok=true;
   for(const pos of ['QB','RB','WR','TE']){
     const baseId=EXPERT_PROFILE_IDS.expertv3[pos],baseRows=panelRanks[baseId]||{},kRows=verifiedRowsForExpert(koerner,pos);
-    if(kRows.length<80||!Object.keys(baseRows).length){ok=false;continue}
+    if(kRows.length<EXPERT_DECISION_CORE_MIN[pos]||!Object.keys(baseRows).length){ok=false;continue}
     const kMap=new Map(kRows.map(x=>[norm(x.name),x])),ranks={};
     for(const [key,row] of Object.entries(baseRows)){
       const k=kMap.get(key),baseInd=(row.individual||[]).map(x=>({...x}));
@@ -224,8 +225,8 @@ function expertProfileReady(id){
     if(id==='expertv3')return Object.values(rows).every(row=>row?.coverageStatus==='COMPLETE'||!('coverageStatus' in row));
     // Right-censoring at the tail is expected for individual expert lists. Do not require every
     // player in the union to be ranked by every expert; require a complete decision-relevant core.
-    const core=Object.values(rows).sort((a,b)=>Number(a.rank)-Number(b.rank)).slice(0,80);
-    return core.length>=80&&core.every(row=>row?.coverageStatus==='COMPLETE');
+    const need=EXPERT_DECISION_CORE_MIN[pos],core=Object.values(rows).sort((a,b)=>Number(a.rank)-Number(b.rank)).slice(0,need);
+    return core.length>=need&&core.every(row=>row?.coverageStatus==='COMPLETE');
   });
 }
 function syncAnalysisExpertSelector(){
