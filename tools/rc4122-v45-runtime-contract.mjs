@@ -9,7 +9,7 @@ const v3src=fs.readFileSync('expert-v3-board.js','utf8');
 const must=(s,x,msg)=>{if(!s.includes(x))throw new Error(msg+': '+x)};
 
 for(const x of [
-  "const APP_VERSION='v11.8.0-rc4.122'",
+  "const APP_VERSION='v11.8.0-rc4.123'",
   "const v3Id=EXPERT_PROFILE_IDS.expertv3[pos]",
   "const overall=Number(row.overallRank),posRank=Number(row.posRank??row.rank);",
   "rank:mean,overallRank:mean,posRank:posMean",
@@ -60,9 +60,11 @@ for(const pos of Object.keys(mins)){
 const start=live.indexOf('function expertRankLabel'),end=live.indexOf('\nfunction ex',start);
 if(start<0||end<0)throw new Error('expertRankLabel extraction failed');
 const label=vm.runInNewContext('('+live.slice(start,end).replace(/^function expertRankLabel/,'function')+')');
-if(label({rank:14,posRank:8,overallRank:14},'RB')!=='RB#8 · Ovr #14')
-  throw new Error('Barkley/Pat canary failed');
-if(label({rank:14,overallRank:14,posRank:null},'RB')!=='Ovr #14')
+if(label({rank:14,posRank:8,overallRank:14})!=='#14')
+  throw new Error('Barkley/Pat compact Overall-only canary failed');
+if(label({rank:14,overallRank:14,posRank:null})!=='#14')
   throw new Error('Overall-only label failed');
+if(live.includes('Ovr #${Math.round(overall)}')||live.includes('${pos}#${Math.round(posRank)}'))
+  throw new Error('compact surface exposes positional/dual-rank clutter');
 
 console.log('rc4.122 v4/v5 runtime contract PASS');
