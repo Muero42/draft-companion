@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-30T18:08:00Z",
+  "updatedAt": "2026-08-30T18:14:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -62,7 +62,8 @@
       "androidAccepted": false
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.131",
-    "unreleasedMainDelta": "v203 live-autodraft Return-v2 merged under unchanged rc4.131 label; NOT an accepted release"
+    "unreleasedMainDelta": "v203 live-autodraft Return-v2 merged under unchanged rc4.131 label; NOT an accepted release",
+    "userQbExclusionSemantics": "Generic engine may rank all QBs organically; user execution/recommendation path must never recommend or draft Geno Smith or Aaron Rodgers."
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -93,12 +94,16 @@
     "starterMaximaAreRosterCaps": false,
     "normalDraftKDst": false,
     "userDraftQbLimit": 1,
-    "userQb2Policy": "HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1"
+    "userQb2Policy": "HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1",
+    "userHardQbExclusions": [
+      "Geno Smith",
+      "Aaron Rodgers"
+    ]
   },
   "canaries": {
     "snapshotIdentityIncludesDraftId": true,
-    "genoSmithExcludedFromUserQbPath": false,
-    "aaronRodgersExcludedFromUserQbPath": false,
+    "genoSmithExcludedFromUserQbPath": true,
+    "aaronRodgersExcludedFromUserQbPath": true,
     "excessWrDepthMustReduceMarginalWrUtility": true,
     "rejectSuperflex2qbEvidence": true,
     "noPairSumRollingResurrection": true,
@@ -219,11 +224,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260830T1808Z-v205",
+    "generation": "20260830T1814Z-v206",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "v205 supersedes stale v195 handoff. rc4.132 first; exact draft order/history locks mandatory."
+    "resume": "v206 supersedes stale v205 wording where conflicting. rc4.132 first; exact draft order/history locks and user QB hard exclusions mandatory."
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
