@@ -121,4 +121,10 @@ assert.ok(Math.abs(gain.rank-122.65)<1e-9,'Kenny Gainwell merged weighted rank d
 const dob=rb.find(x=>x.name==='J.K. Dobbins');
 assert.ok(dob&&dob.n===2,'Dobbins sparse-panel canary must remain visible to generic guard');
 
+if(Number(activeVersion)>=133){
+  assert.match(app,/const returnWeight=strategy==='progressive'\?\[8,8,6,4\]\[stage\]:8/,'rc4.133 early Return weight cap missing');
+  assert.match(app,/const returnCap=stage===0\?3\.5:stage===1\?4\.5:6/,'rc4.133 Return discount cap missing');
+  assert.match(app,/medianReturn-x\.ret\)\*4,-2,2/,'rc4.133 board-relative Return cap missing');
+  assert.match(app,/norm\('A\.J\. Brown'\).*alpha_role_rebound/,'rc4.133 AJ Brown individual evidence missing');
+}
 console.log('RC496_DRAFT_CRITICAL_PASS'); // rc4.132 release-gate trigger
