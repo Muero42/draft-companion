@@ -1,21 +1,21 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260830T1814Z-v206",
-  "created_at": "2026-08-30T18:14:00Z",
+  "handoff_generation": "20260830T1822Z-v207",
+  "created_at": "2026-08-30T18:22:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "8244a2ca36437f28f854e2a66feba30f9c477e49",
-    "PITTI_CURRENT_STATE.json": "b0b190b4d927a6cffe74a2adb5e26d4714ed55f8",
-    "PITTI_EXECUTION_LOCK.json": "944c3c57018ff76c6717a261e7c1d9113a9b3bde",
-    "PITTI_AUTO_PREFLIGHT.md": "1aed506877d4c8fc5ba49033f8a81c4e6502daf8",
+    "PITTI_COMMAND_CONTRACTS.json": "26efe52de675069670067a276e9413dd3d5d0d2e",
+    "PITTI_CURRENT_STATE.json": "5da1125fd351a85855e548b59e4da91887e5ab08",
+    "PITTI_EXECUTION_LOCK.json": "5d877be4bd227ad87a0926ff89d1668ddc742a1f",
+    "PITTI_AUTO_PREFLIGHT.md": "170a54b60ade82098fe83da34487b598e241a1cc",
     "PITTI_PROJECT_STATE.md": "b7496cd03a8eb0dce9d7dc2a3557c7ca12e7da6d",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "0a183eaf81e0e4f35abacd2c13835ca118efa938",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "aed54fbd4f8b78fb882d621d06d2425699d789a2",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "c8a4c7e2d2dbb3627353504aa61fc7b897e0e7f0",
-    "PITTI_DRAFT_CHAT_BOOTSTRAP.md": "64db407611efea435f0655cfff83fd098204d5e1",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "2b2190a43a9c0762e95e2f8e584bc54f77194607",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "c0f1b461e787cf40ccefd921cb9a44111baae07c",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "eebbdab528c093f882f8681a9361f38b93061608",
+    "PITTI_DRAFT_CHAT_BOOTSTRAP.md": "7ece3afedc880d3717f34765a0254199888281e8",
     "research/ACTIVE_MANAGER_IDENTITY_HISTORY_AUDIT_V205_2026-08-30.md": "d370be19c307514e37c0870ddafb35ae58c177ca",
     "app.js": "7895cccdf3d216337439e69bb2ca426d58470b3f",
     "index.html": "b1077a3723df0d27bfcda16ae3f7969dec09a5e9",
@@ -25,7 +25,8 @@
     "sw.js": "49f2516c45a978d2060756a5ed62d94a0dbb1034",
     "tools/audit-v45-backup.mjs": "333ab6d3877a6e89ba4af88e6163e9df4d7934fe",
     "tools/rc4130-active-fixture-quota.mjs": "601f685c99c1b56ad51e757629fe4230490eedb8",
-    "research/CORRECTED_2026_DRAFT_ORDER_AUTHORITY.md": "98e1a7fee73aef72459bd1f3c205e886535a6a97"
+    "research/CORRECTED_2026_DRAFT_ORDER_AUTHORITY.md": "6e52493d27ea75c91480edbc0cbb42cbb1998db6",
+    "research/LIVE_DECISION_MATRIX_V201_2026-08-30.md": "78cac69237daaf28f62259279aa45777983676d8"
   },
   "branch_locks": {
     "accepted_android": "v11.8.0-rc4.131",
@@ -36,7 +37,7 @@
     "latest_backup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json",
     "evidence_gate": "29/30; missing pick29 expertv5",
     "model": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
-    "user_qb_hard_exclusions": "Geno Smith; Aaron Rodgers"
+    "qb_rule": "Geno Smith/Aaron Rodgers NOT hard exclusions; no name-specific demotion/removal/forcing; Coach/player-quality ranking decides"
   },
   "checks": {
     "generation_consistent": true,
@@ -51,10 +52,10 @@
     "draft_chat_bootstrap_added": true,
     "latest_backup_still_29_of_30": true,
     "no_cache_clear_reinstall": true,
-    "user_qb_hard_exclusions_persisted": true,
     "stale_pascal_8_season_authority_repaired": true,
-    "screenshot_set_not_standalone_authority": true
+    "screenshot_set_not_standalone_authority": true,
+    "geno_rodgers_non_exclusion_persisted": true
   },
   "exact_gate": "RC4.132_BUILD_AND_REGRESSION",
-  "note": "v206 deep-audit reseal: rc4.132 remains first gate; exact order/history locks are preserved; Pascal Voerde is 9 seasons (2017-2025); Geno Smith/Aaron Rodgers are hard USER draft exclusions while generic engine ranking remains name-agnostic; screenshots are continuity evidence, not standalone authority."
+  "note": "v207 correction reseal: v206 invented a hard user exclusion for Geno Smith/Aaron Rodgers. Revoked. They remain ordinary candidates with no name-specific demotion/removal/forcing; correct Coach/player-quality ranking must keep inferior options out of recommendations. rc4.132 first gate and exact order/history locks unchanged."
 }
