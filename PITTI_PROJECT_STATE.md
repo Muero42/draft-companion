@@ -3007,3 +3007,20 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Required end-to-end release: rc4.132 version/cache contract -> all three gates PASS -> main -> gh-pages exact parity -> one controlled Android refresh/version observation. No cache clearing/reinstall.
 - v4 PRIMARY / v5 CHALLENGER / v3 failsafe unchanged. Latest backup 16-02-06-862Z remains 29/30 missing pick29 expertv5.
 - Generation: **20260830T1755Z-v204**.
+
+
+---
+
+## 2026-08-30 — v205 SECOND-PASS HANDOFF AUDIT · historical/order regression hardening
+
+- User requested an explicit second-pass takeover audit with special emphasis on preventing old draft-order and historical-data regressions.
+- Audit found a **real remaining historical-data defect** that v204 had not captured: runtime `MANAGER_PROFILE_DATA` still uses Michael 2020-2024 only and Pascal Voerde 2023-2025 only. This conflicts with the corrected canonical corpus: Michael_Polk includes 2025; Pascal Voerde is the confirmed Bracht Eagles 2017-2022 -> Voerde Eagles 2023-2025 person chain.
+- Canonical Library CSV `draft_picks_2017_2025.csv` (1,374 picks) was materialized and independently recomputed with the same recency-decay generator (0.72). The generator was validated exactly against Bastian's existing runtime profile before using it to reconstruct Michael/Pascal. Exact corrected aggregates are stored in `research/ACTIVE_MANAGER_IDENTITY_HISTORY_AUDIT_V205_2026-08-30.md`.
+- Corrected year sets: Michael_Polk 2020-2025 (6); Pascal Voerde identity chain 2017-2025 (9); Pascal Gelderner 2023-2025 (3); Marc Düsseldorf 2021/22/24/25 (4); Dutch Marc 2017-2025 (9); Thomas 2023-2025 (3); Björn 2017/18/19/20/22/24/25 (7 after 2021 theme + 2023 autodraft exclusions); Giuliano 2018/19/20/21/23/24/25 (7); Bastian 2017-2025 (9).
+- This also supersedes the old Pascal-summary phrase "8-season runtime history": with the now-confirmed Bracht->Voerde identity chain and canonical 2017-2025 CSV there are **9 canonical seasons**. Do not shrink him to the 3-season Pascal Gelderner profile.
+- Exact 2026 order remains HARD LOCK: **1 Michael, 2 Pascal Voerde, 3 Marc Düsseldorf, 4 Thomas, 5 Björn, 6 Pascal Gelderner, 7 Giuliano, 8 Bastian, 9 Muerotechnik, 10 Dutch Marc**. Never resurrect rc4.84 geometry, Michael K, or Moers Venom.
+- Stale nested authority pointers discovered in CURRENT/LOCK (old PRE_DRAFT gate, rc4.114/117 draft-day text, v194/v195 handoff strings, rc4.129 acceptance wording) were replaced in v205 so a new chat cannot branch backward through a nested field.
+- rc4.132 first gate now has FOUR mandatory regression families: live Sleeper-autodraft Return-v2, Pick32 Nabers/Javonte portfolio, exact 2026 manager order/localStorage migration, and corrected active-manager historical year sets/profile reconstruction.
+- Remaining pre-draft agenda after rc4.132 acceptance is preserved: final official cutdown/IR/PUP/waiver reconciliation; expert-board + Sleeper Half-PPR ADP delta; late-upside materiality; emergency/live operational verification; ~19:50 freeze.
+- A dedicated `PITTI_DRAFT_CHAT_BOOTSTRAP.md` was added for the user's planned brand-new real-draft chat. It is execution-only and explicitly forbids model redesign and old-identity/order resurrection during the live clock.
+- Generation: **20260830T1808Z-v205**.

@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-30T17:55:00Z",
+  "updatedAt": "2026-08-30T18:08:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -129,7 +129,10 @@
     "lamarGenericTop1ClosedByRc4131": true,
     "rc4132ReleaseRequired": true,
     "pick32NabersJavonteRosterAware": true,
-    "liveAutodraftReturnV2RegressionRequired": true
+    "liveAutodraftReturnV2RegressionRequired": true,
+    "canonical2026DraftOrderExact": true,
+    "pascalVoerdeIdentityChain2017to2025": true,
+    "michael2025HistoryIncluded": true
   },
   "expertV2": {
     "status": "LEGACY_PRESERVED_SUPERSEDED_FOR_NEW_V4_V5_COMPARISON",
@@ -198,16 +201,16 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "HANDOFF_RC4132_REQUIRED",
+    "status": "HANDOFF_V205_RC4132_PLUS_HISTORY_REPAIR_REQUIRED",
     "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
     "runtime": "v203 delta unreleased",
-    "nextGate": "Version/test v203 runtime delta as rc4.132 + encode Pick32 Nabers/Javonte roster-aware regression before device deployment."
+    "nextGate": "rc4.132: version v203 live-autodraft delta, fix Pick32 portfolio, repair manager history Michael/Pascal Voerde, then full release/parity/device verification."
   },
-  "status": "HANDOFF_RC4132_REQUIRED",
+  "status": "HANDOFF_V205_RC4132_PLUS_HISTORY_REPAIR_REQUIRED",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
-  "nextGate": "Version/test v203 runtime delta as rc4.132 + encode Pick32 Nabers/Javonte roster-aware regression before device deployment.",
+  "nextGate": "rc4.132: version v203 live-autodraft delta, fix Pick32 portfolio, repair manager history Michael/Pascal Voerde, then full release/parity/device verification.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -216,14 +219,14 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260830T1618Z-v195",
+    "generation": "20260830T1808Z-v205",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.130 runtime stays frozen; latest backup audit is 29/30, exact missing pair pick29 expertv5; v4 PRIMARY retained."
+    "resume": "v205 supersedes stale v195 handoff. rc4.132 first; exact draft order/history locks mandatory."
   },
   "expertV45": {
-    "status": "V4_PRIMARY_V5_CHALLENGER_DEVICE_OPERATIONAL_RC4126; RC4129_EVIDENCE_RETENTION_ACCEPTANCE_PENDING",
+    "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
     "v3": {
       "status": "FROZEN_BASELINE_DEFAULT_FAILSAFE"
     },
@@ -239,7 +242,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260830T1755Z-v204",
+  "handoff_generation": "20260830T1808Z-v205",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },

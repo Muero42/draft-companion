@@ -147,3 +147,12 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - Persistent audit tool **tools/audit-v45-backup.mjs** must be used on future JSON exports before model conclusions.
 - Data-quality canaries are now explicit: Terry McLaurin = 4/6 coverage in both v4/v5, missing Boone + Koerner; D'Andre Swift pick52 = Top-1 both profiles with generic-only rationale.
 - Partial 14-pair evidence does not justify a last-minute model retune. **v4 remains PRIMARY, v5 CHALLENGER, v3 failsafe**.
+
+
+## v205 CURRENT OVERRIDE — deep handoff anti-regression
+- Supersedes older rc4.129/130/131 continuation pointers above where they conflict.
+- First gate is **RC4.132_BUILD_AND_REGRESSION**.
+- rc4.132 scope is mandatory: live-autodraft Return-v2 + Pick32 Nabers/Javonte + exact 2026 manager-order regression + active-manager history repair.
+- Exact order: Michael / Pascal Voerde / Marc Düsseldorf / Thomas / Björn / Pascal Gelderner / Giuliano / Bastian / Muerotechnik / Dutch Marc.
+- Historical hard locks: Michael includes 2025; Pascal Voerde combines Bracht Eagles 2017-2022 with Voerde Eagles 2023-2025; Pascal Gelderner remains separate; Björn 2021 theme + 2023 autodraft excluded.
+- After rc4.132 device acceptance, execute final draft-day freshness agenda. The separate real-draft chat uses `PITTI_DRAFT_CHAT_BOOTSTRAP.md` and is execution-only.
