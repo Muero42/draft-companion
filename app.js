@@ -1851,7 +1851,7 @@ function playerQualityBaseScore(panelRank,available){
 function scoreCandidate(p,current,next,state,available,strategy='progressive'){
   const r=rankFor(p.name,p.pos),a=Number(adp[norm(p.name)]);
   if(!r)return{score:-999,r:null,a,reasons:['Panel-Rang fehlt']};
-  if(userDraftStrategyExcluded(p.pos,state.counts,p.name))return{score:-999,rawScore:-999,r,a,reasons:['USER STRATEGY: genau 1 QB · QB2 nicht draften'],hardExcluded:true,userStrategyExcluded:true};
+  if(userDraftStrategyExcluded(p.pos,state.counts))return{score:-999,rawScore:-999,r,a,reasons:['USER STRATEGY: genau 1 QB · QB2 nicht draften'],hardExcluded:true,userStrategyExcluded:true};
   const acuteStatus=DRAFT_ACUTE_STATUS_2026[norm(p.name)];
   if(acuteStatus?.blockRecommendation)return{score:-998,rawScore:-998,r,a,reasons:[acuteStatus.label],acuteStatus,recommendationBlocked:true};
   /* rc4.10: monotonic selected-panel Player Quality, anchored to best available panel rank. */
