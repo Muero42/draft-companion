@@ -28,11 +28,10 @@ for(const p of ['QB','RB','WR','TE']){
   const sum=vals.reduce((a,b)=>a+b,0);
   if(Math.abs(sum-100)>1e-9)throw new Error(p+' weights sum '+sum);
 }
-// Canary: Barkley/Pat must never regress to an ambiguous "#8" that can be read as Overall.
-// Runtime expert labels for v4/v5 explicitly render position and Overall provenance separately.
+// Canary: expert UI must render position rank and only append published Overall when present.
 for(const x of [
-  "const posLabel=Number.isFinite(posRank)?`${x.p.pos}#${Math.round(posRank)}`",
-  "const overallLabel=Number.isFinite(overallRank)?` · Ovr #${Math.round(overallRank)}`",
-  "${esc(posLabel+overallLabel)}"
+  "const posRank=Number(x.posRank??x.rank),overall=Number(x.overallRank);",
+  "const provenance=Number.isFinite(overall)&&overall>0?\` · Ovr #\${Math.round(overall)}\`:'';",
+  "<span>\${r.pos}#\${Math.round(posRank)}\${provenance}</span>"
 ]) if(!s.includes(x)) throw new Error('rank-label canary missing: '+x);
 console.log('rc4.117 release-critical contract PASS');
