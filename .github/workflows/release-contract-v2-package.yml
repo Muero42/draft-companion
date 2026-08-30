@@ -37,6 +37,7 @@ jobs:
           if grep -Eq "v11.8.0-rc4.10[6-9]|v11.8.0-rc4.1[1-9][0-9]" app.js; then node tools/rc4106-embedded-individuals.mjs; fi
           if grep -Eq "v11.8.0-rc4.11[1-9]|v11.8.0-rc4.1[2-9][0-9]" app.js; then node tools/rc4111-storage-quota.mjs; fi
           if grep -Eq "v11.8.0-rc4.11[2-9]|v11.8.0-rc4.1[2-9][0-9]" app.js; then node tools/rc4112-mariano-source.mjs; fi
+          if grep -Eq "v11.8.0-rc4.11[3-9]|v11.8.0-rc4.1[2-9][0-9]" app.js; then node tools/rc4113-configured-expert-identity.mjs; fi
           node tools/emergency-queue-contract.mjs
           node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-28 --max-age-days=2
           node Draft_Companion_Position_Path_Regression_2026-08-13.js
