@@ -50,9 +50,9 @@ assert.match(app,/\^expert-v\[2345\]-\(qb\|rb\|wr\|te\)\$/,'v4-v5 shadow panels 
 assert.ok(idx.indexOf('id="analysisExpertSelector"')>idx.indexOf('id="strategyMode"')&&idx.indexOf('id="analysisExpertSelector"')<idx.indexOf('id="refreshBtn"'),'v3-v5 switch must remain directly above Analyze in draft configuration');
 assert.match(app,/Object\.prototype\.hasOwnProperty\.call\(EXPERT_PROFILE_IDS,id\)/,'legacy incumbent-v2 profile switching must remain supported');
 assert.match(app,/\[\.\.\.els\.expertProfile\.options\]\.some\(o=>o\.value===id\)/,'dedicated v4-v5 switch must not blank legacy profile selector');
-assert.match(app,/INCOMPLETE_V5_NO_DS_FUNDING/,'v5 must fail closed when DS funding is absent');
-assert.match(app,/if\(!ds\|\|Number\(ds\.effectiveWeight\|\|0\)<=0\)/,'v5 DS funding guard missing');
-assert.doesNotMatch(app,/transfer=Math\.min\(\.20,Number\(ds\?\.effectiveWeight\|\|0\)\)/,'v5 must not add zero-funded Koerner');
+assert.doesNotMatch(app,/INCOMPLETE_V5_NO_DS_FUNDING/,'v5 must not retain obsolete DS-funding dependency');
+assert.match(app,/const v4Id='expert-v4-'\+pos\.toLowerCase\(\)/,'v5 must build from verified v4 individual panel');
+assert.match(app,/const koernerWeight=\.20,scale=1-koernerWeight/,'v5 Koerner funding must be explicit and proportional');
 assert.match(app,/EXPERT_DECISION_CORE_MIN=\{QB:24,RB:60,WR:70,TE:24\}/,'position-specific decision-core thresholds missing');
 assert.match(app,/EXPERT_DECISION_CORE_MIN\[pos\]/,'v4-v5 readiness must validate position-specific decision core');
 assert.match(app,/filter\(row=>row\?\.coverageStatus==='COMPLETE'\)/,'v4-v5 decision core must be formed only from complete rows');
