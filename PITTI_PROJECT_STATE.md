@@ -2873,3 +2873,12 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Return-v2 retrospective through pick 149, excluding the user's own chosen player as censored: on 107 common candidate/pick pairs v4 Brier 0.0815 vs v5 0.0827; on top-5 candidates v4 0.0963 vs v5 0.1045 (33 observations each). Across each model's full 120 candidate observations, composition differs and v5 is 0.0775 vs v4 0.0887, so this unpaired figure is NOT a clean head-to-head result.
 - Interpretation: paired/calibration evidence currently gives a slight edge to v4; v5 does not justify replacing v4 yet. v5 can better surface some late upside choices (notably Tank Bigsby #4 vs v4 #9), but Jonah Coleman moved the wrong way (#5 vs v4 #3). Keep v4 primary and v5 challenger until more paired full-draft evidence exists.
 - Do not tune weights from this 9-state sample alone. Preserve the backup for post-draft comparison and combine it with subsequent paired rc4.125+ evidence.
+
+
+### rc4.128 compact expert membership — OFF-DEVICE PASS
+- Follow-up audit found rc4.127 had the correct row sanitizer/audit metadata but `expertRanksHtml` still iterated only `r.individual`. Therefore a player missing one intended source could still render fewer/different visible expert names despite the rc4.127 intended-expert contract.
+- rc4.128 closes the presentation path: live cards derive their columns from the exact analyzed panel's frozen weights, look up that player's row by normalized expert name, and render an absent source explicitly as #– / fehlt. No substitution and no player-specific membership.
+- Restored the already-frozen rc4.123 live-surface rule: compact expert cards show published Overall only; positional provenance remains diagnostic/internal.
+- Scoring, panel weights, Return-v2, evidence fixtures and v4/v5 model semantics unchanged.
+- Static acceptance PASS: rc4.128 version/cache contract across app/index/sw/manifest; exact-panel membership source present; explicit missing-rank branch present; obsolete Position/Overall compact heading absent; row sanitizer and row-local intendedExperts audit remain present.
+- Deployment/device refresh remains gated until main↔gh-pages parity is explicitly checked.
