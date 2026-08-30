@@ -2199,8 +2199,9 @@ function externalExpertTierContext(x){
   const e=VERIFIED_EXTERNAL_TIER_MAPS_2026.andrewErickson.get(key);if(Number.isFinite(e))vals.push({expert:'Erickson',tier:e});
   const m=VERIFIED_EXTERNAL_TIER_MAPS_2026.nickMariano.get(key);if(Number.isFinite(m))vals.push({expert:'Mariano',tier:m});
   if(!vals.length)return null;
-  const tiers=[...new Set(vals.map(v=>v.tier))].sort((a,b)=>a-b);
-  return{label:tiers.length===1?`T${tiers[0]}`:`T${tiers[0]}–${tiers[tiers.length-1]}`,details:vals.map(v=>`${v.expert} T${v.tier}`).join(' · '),sources:vals};
+  // Tier numbers are expert-specific scales; never average/range them across sources.
+  const short=vals.map(v=>`${v.expert==='Erickson'?'E':'M'}${v.tier}`).join('/');
+  return{label:`T ${short}`,details:vals.map(v=>`${v.expert} T${v.tier}`).join(' · '),sources:vals};
 }
 function externalTierHtml(x){const t=externalExpertTierContext(x);return t?` · <span class="expert-tier" title="${esc(t.details)}">${esc(t.label)}</span>`:'';}
 
