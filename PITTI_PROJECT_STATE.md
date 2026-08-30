@@ -2800,3 +2800,14 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - rc4.122 candidate fixes provenance propagation: historical v3/v2 inherited rows are explicitly positional; v5 sanitizes inherited stale Overall fields; only freshly verified Koerner may carry published Overall provenance.
 - Release gates strengthened in rc4114/rc4117 to reject regression of positional provenance and ambiguous expert-rank rendering.
 - Do not ask for another phone refresh/install until off-device candidate package, release contract, guardrails, restart-readiness, and Barkley canary are all PASS.
+
+
+### rc4.122 off-device acceptance — PASS before deployment
+- Corrected the fundamental v4 ranking-scale defect exposed by the first device test: v4 now keeps two independent aggregates. Published Overall is the common cross-position Coach scale; weighted position rank is retained separately for position-specific interpretation/UI. RB1/WR1/QB1 are no longer compared as if they were the same global rank.
+- Corrected v5 to remain a true controlled v3 challenger on v3's frozen Overall scale. Koerner is integrated with his published Overall rank, never his positional rank.
+- Corrected v5 WR topology: frozen v3 maps WR to expert-v2-wr; no invented expert-v3-wr panel.
+- Corrected v5 weighting: Koerner is exactly 15 percentage points and funded from Draft Sharks first WITHOUT applying the v4 30% cap to the frozen v3 weights. Verified resulting DS shares: QB 10%, RB 10%, WR 15%, TE 10%; Koerner 15% in every position.
+- Corrected compact live surface: recognizes v4/v5 profiles and explicitly renders rank provenance. Barkley/Pat canary executes as RB#8 · Ovr #14.
+- Startup rehydration remains active so v4/v5 rebuild from persisted expert caches after a clean app reopen.
+- Off-device executable/static acceptance PASS against current runtime: syntax, version/cache keys, v4 dual-rank semantics, v5 topology/readiness, exact v5 weights, embedded base depths (QB 45 / RB 101 / WR 143 / TE 54), compact Barkley canary, and release-gate semantics. Runtime SHAs at PASS: app fe510b9826d5b34bae8cb68b5c59ff7ea469ebea; live-surface bb28b0a7762f85b04156ef4a132a3a718cdc8269; index 0d1cc0e606a7e006fd73f531c051b6c541a49b71; sw dd9945a6d38f397d6a761a52330158cf04b28206; manifest a190aa67859d0b7ada1f48270f281c95afafaedb.
+- rc4.122 is now eligible for ONE controlled deployment/device acceptance. No further phone trial-and-error before server parity.
