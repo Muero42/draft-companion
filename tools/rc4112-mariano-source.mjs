@@ -8,7 +8,9 @@ for(const x of [
   "if(/nick mariano/i.test(name)&&scoring==='HALF')",
   "source:'RotoBaller – Nick Mariano Half-PPR Overall'",
   "sourceContextVerified:true",
-  "sourceScoring:'HALF'"
+  "sourceScoring:'HALF'",
+  "1916255",
+  "neuere Mariano-Half-PPR-Publikation vorhanden"
 ])if(!src.includes(x))throw new Error('Mariano source contract missing: '+x);
 const a=src.indexOf("if(/nick mariano/i.test(name)&&scoring==='HALF')");
 const b=src.indexOf("// 1) Exact public individual list.");
