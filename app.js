@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.116';
+const APP_VERSION='v11.8.0-rc4.117';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -206,28 +206,37 @@ function ensureExpertV4Panels(){
   return ok&&expertProfileReady('expertv4');
 }
 function ensureExpertV5Panels(){
-  // rc4.116: Koerner is now a native v4 expert. The former v5 "v4 + Koerner"
-  // experiment would double-count the same individual and is therefore fail-closed.
-  return false;
-  const koerner='Sean Koerner';let ok=true;
+  // v5 is the controlled v3 challenger: preserve v3 and fund verified Sean Koerner
+  // primarily by reducing Draft Sharks Team, never by stacking Koerner onto v4.
+  const koerner='Sean Koerner',v3=globalThis.PITTI_EXPERT_V3;let ok=true;
+  if(!v3)return false;
   for(const pos of ['QB','RB','WR','TE']){
-    const v4Id='expert-v4-'+pos.toLowerCase(),baseRows=panelRanks[v4Id]||{},kRows=verifiedRowsForExpert(koerner,pos);
+    const v3Id='expert-v3-'+pos.toLowerCase(),baseRows=panelRanks[v3Id]||{},kRows=verifiedRowsForExpert(koerner,pos);
     if(kRows.length<EXPERT_DECISION_CORE_MIN[pos]||!Object.keys(baseRows).length){ok=false;continue}
     const kMap=new Map(kRows.map(x=>[norm(x.name),x])),ranks={};
+    const baseWeights=v3.weights?.[pos]||panels[v3Id]?.weights||{};
+    // Target Koerner share 15%. Take it from DS first; only if DS has less than 15
+    // would the remainder be funded proportionally from the other v3 voices.
+    const target=.15,raw={...baseWeights};
+    const dsKey=Object.keys(raw).find(n=>norm(n)===norm('Draft Sharks Team'));
+    let need=target*100;
+    if(dsKey){const take=Math.min(Number(raw[dsKey])||0,need);raw[dsKey]=Math.max(0,(Number(raw[dsKey])||0)-take);need-=take}
+    if(need>0){const others=Object.keys(raw).filter(n=>n!==dsKey&&Number(raw[n])>0),sum=others.reduce((z,n)=>z+Number(raw[n]),0);for(const n of others)raw[n]=Math.max(0,Number(raw[n])-need*Number(raw[n])/sum)}
+    raw[koerner]=target*100;
+    const weights=normalizeWeights(raw,.30);
     for(const [key,row] of Object.entries(baseRows)){
-      const k=kMap.get(key),baseInd=(row.individual||[]).map(x=>({...x}));
-      if(!k){ranks[key]={...row,intendedN:(row.intendedN||baseInd.length)+1,coverageStatus:'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN',missingExperts:[...new Set([...(row.missingExperts||[]),koerner])]};continue}
-      // v5 is a true hybrid of the newly verified individual-only v4 panel plus Koerner.
-      // Fund Koerner proportionally from v4 rather than requiring the legacy v3 Draft Sharks
-      // aggregate, which made v5 structurally incapable of exceeding v3's sparse coverage.
-      const koernerWeight=.20,scale=1-koernerWeight;
-      const vals=baseInd.map(x=>({...x,effectiveWeight:Number(x.effectiveWeight||0)*scale}));
-      vals.push({expertName:koerner,rank:Number(k.rank),effectiveWeight:koernerWeight,reconstructed:false,spread:null});
-      const sw=vals.reduce((a,x)=>a+Number(x.effectiveWeight||0),0),mean=vals.reduce((a,x)=>a+x.rank*Number(x.effectiveWeight||0),0)/sw;
-      const variance=vals.reduce((a,x)=>a+Number(x.effectiveWeight||0)*(x.rank-mean)**2,0)/sw;
-      ranks[key]={...row,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,intendedN:(row.intendedN||baseInd.length)+1,coverage:vals.length/((row.intendedN||baseInd.length)+1),coverageStatus:(row.missingExperts||[]).length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',missingExperts:[...(row.missingExperts||[])],individual:vals.sort((a,b)=>a.rank-b.rank)};
+      const k=kMap.get(key),vals=[];
+      for(const x of row.individual||[]){
+        const w=Number(weights[x.expertName]);if(!(w>0)||!Number.isFinite(Number(x.rank)))continue;
+        vals.push({...x,effectiveWeight:w});
+      }
+      if(k&&Number(weights[koerner])>0)vals.push({expertName:koerner,rank:Number(k.posRank??k.rank),posRank:Number(k.posRank??k.rank),overallRank:Number(k.overallRank??k.rank),effectiveWeight:Number(weights[koerner]),reconstructed:false,spread:null});
+      const intended=Object.keys(weights).filter(n=>weights[n]>0),present=new Set(vals.map(x=>x.expertName)),missing=intended.filter(n=>!present.has(n)),sw=vals.reduce((z,x)=>z+Number(x.effectiveWeight||0),0);
+      if(!sw)continue;
+      const mean=vals.reduce((z,x)=>z+Number(x.rank)*Number(x.effectiveWeight||0),0)/sw,variance=vals.reduce((z,x)=>z+Number(x.effectiveWeight||0)*(Number(x.rank)-mean)**2,0)/sw;
+      ranks[key]={...row,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,intendedN:intended.length,coverage:vals.length/intended.length,coverageStatus:missing.length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',missingExperts:missing,individual:vals.sort((x,y)=>x.rank-y.rank)};
     }
-    assignTiers(ranks);panelRanks['expert-v5-'+pos.toLowerCase()]=ranks;panels['expert-v5-'+pos.toLowerCase()]={name:'Expert-v5 '+pos,members:{},shadow:true,source:'verified v4 individual-only + verified Sean Koerner',coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};
+    assignTiers(ranks);panelRanks['expert-v5-'+pos.toLowerCase()]=ranks;panels['expert-v5-'+pos.toLowerCase()]={name:'Expert-v5 '+pos+' · v3 + Koerner',members:{},shadow:true,weights,source:'Expert-v3 plus verified Sean Koerner funded primarily from Draft Sharks Team',coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};
   }
   return ok&&expertProfileReady('expertv5');
 }
