@@ -1,8 +1,7 @@
 # Draft Companion – Final Draft Edition 2026
-
-> **Current source/package/deployed candidate:** v11.8.0-rc4.115; **latest device-accepted challenger evidence:** rc4.114 v4 PASS. rc4.115 device-v5 acceptance pending.
-> **rc4.115 scope:** v5 construction only = accepted v4 individual-only + Sean Koerner 20%; legacy v3/Draft Sharks funding dependency removed. Rankings/sources frozen.
-> **Finish-line mode:** no broad feature work, no duplicate source research, no trial-and-error device debugging.
+> **Current source candidate:** v11.8.0-rc4.117; off-device release gates pending; no device install authorized yet.
+> **rc4.117 scope:** v4 individual-only position-specific expert re-audit + correct Overall/position rank provenance; v5 = frozen v3 + verified Sean Koerner, funded primarily from Draft Sharks Team share.
+> **Finish-line mode:** no broad feature work, no duplicate source research, no trial-and-error device debugging. v3 remains failsafe/control.
 > **Fallback:** v3 remains default/failsafe; rc4.114 v4 is accepted evidence.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
 > **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
