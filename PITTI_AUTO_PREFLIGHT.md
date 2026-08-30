@@ -63,7 +63,7 @@ Otherwise continue AUTO.
 - Half-PPR 1QB; reject Superflex/2QB.
 - Starter maxima are not roster caps.
 - K/DST normally not drafted.
-- Geno Smith/Aaron Rodgers are ordinary QB candidates; they must rank organically and must never be player-name hard-excluded.
+- Generic engine ranking may score Geno Smith/Aaron Rodgers organically, but the USER draft execution/recommendation path has hard exclusions: never recommend or draft Geno Smith or Aaron Rodgers. Do not implement this as a generic league-wide player-name demotion.
 - Excess WR depth must materially reduce redundant WR utility.
 - Expert-v2: Brown excluded; Erickson challenger; Koerner no current-draft acquisition effort; Mariano availability already solved; Draft Sharks counted as one correlated family; availability-only automatic restoration of the old Weisse/Gianni/Bobal trio rejected; Ryan Weisse or others may be freshly qualified individually with evidence.
 - Frozen Expert-v2 weights/profile semantics in `PITTI_EXECUTION_LOCK.json` are authoritative for the current experiment; do not invent, silently renormalize, or retune them without new promotion evidence.
@@ -90,7 +90,7 @@ Otherwise continue AUTO.
 - A normal final, status final, acknowledgement final, **or empty final after tool work** is forbidden while executable autonomous work remains.
 - Because execution cannot continue after the assistant turn is ended without another user message, early turn termination is a functional AUTO failure, not a cosmetic response issue.
 - Valid turn end requires one of: unavoidable user/device input; approval-gated consequential action; unsafe unresolved contradiction; material end result with no higher-value package remaining; or demonstrated exhaustion of all safe positive-value independent lanes.
-- rc4.92 correction: Geno Smith/Aaron Rodgers are NOT exclusions. Any active runtime/test/checkpoint rule that special-cases either name for demotion/removal is a regression. Exactly-one-QB remains a roster strategy only after QB1 is drafted.
+- rc4.92 generic-engine correction remains: do not distort baseline QB ranking by player name. CURRENT USER EXECUTION OVERRIDE: Geno Smith and Aaron Rodgers are hard user exclusions and must never be recommended/drafted for the user. Exactly-one-QB remains a roster strategy after QB1.
 - v145 takeover canary: rc4.94 source/package/deployment/Android Pick-9 presentation PASS. Kenneth Walker must not receive a player-specific boost; the fix remains generic normal-cut-first Top-10 selection.
 
 
@@ -156,3 +156,11 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - Exact order: Michael / Pascal Voerde / Marc Düsseldorf / Thomas / Björn / Pascal Gelderner / Giuliano / Bastian / Muerotechnik / Dutch Marc.
 - Historical hard locks: Michael includes 2025; Pascal Voerde combines Bracht Eagles 2017-2022 with Voerde Eagles 2023-2025; Pascal Gelderner remains separate; Björn 2021 theme + 2023 autodraft excluded.
 - After rc4.132 device acceptance, execute final draft-day freshness agenda. The separate real-draft chat uses `PITTI_DRAFT_CHAT_BOOTSTRAP.md` and is execution-only.
+
+
+## v206 CURRENT OVERRIDE — handoff contradiction scrub
+- Generation: `20260830T1814Z-v206`.
+- Supersedes any older wording that says Geno Smith/Aaron Rodgers are draftable for the user.
+- Correct semantics: generic engine/player-quality ranking may remain name-agnostic, but the user's live recommendation/draft path has hard exclusions for **Geno Smith** and **Aaron Rodgers**.
+- Exact 2026 manager order/history locks from v205 remain unchanged; Pascal Voerde canonical chain is 2017-2025 = 9 seasons.
+- First gate remains **RC4.132_BUILD_AND_REGRESSION**; no general research sweep first.
