@@ -79,9 +79,8 @@ for(const token of [
 
 must(readme.includes('v11.8.0-rc4.64'),'README production/control baseline drift');
 must(readme.includes(current.runtime?.test_challenger||'v11.8.0-rc4.86'),'README current candidate missing');
-must(!app.includes('USER_HARD_QB_EXCLUSIONS'),'player-name QB exclusion must not exist');
-must(!app.includes('USER HARD EXCLUSION'),'player-name hard-exclusion scoring must not exist');
-must(!/genosmith|aaronrodgers/i.test(app),'Geno/Rodgers must not receive player-name runtime treatment');
+must(policy.includes("USER_HARD_QB_EXCLUSIONS=new Set(['genosmith','aaronrodgers'])"),'user QB hard exclusions missing');
+must(app.includes('userDraftStrategyExcluded(p.pos,state.counts,p.name)'),'Coach must pass player identity to user strategy exclusions');
 must(app.includes("function normalCandidateAdmissible(row)"),'normal candidate admissibility guard missing');
 must(app.includes("const normal=source.filter(normalCandidateAdmissible)"),'normal-cut rows must precede fallback in visible Top-10');
 must(app.includes("if(visible.length<10)"),'fallback fill must only occur after normal-cut selection');
@@ -116,6 +115,7 @@ must(e.weightsAreFinalWinner===false,'no Expert-v2 profile may be mislabeled fin
 must(e.oldWrOnlyRejectionSemanticsAreAuthority===false,'obsolete WR-only authority resurrected');
 must(lock.league?.userDraftQbLimit===1,'user one-QB strategy lock drift');
 must(lock.league?.userQb2Policy==='HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1','user QB2 policy drift');
+must(lock.canaries?.genoSmithExcludedFromUserQbPath===true&&lock.canaries?.aaronRodgersExcludedFromUserQbPath===true,'user QB hard-exclusion lock drift');
 must(/^\d+\.\d+\.\d+$/.test(String(commandContract.version||'')),'repo command contract version malformed');
 must(commandContract.sourceOrder?.includes('PITTI_CURRENT_STATE.json'),'CURRENT missing from takeover source order');
 must(commandContract.sourceOrder?.includes('PITTI_HANDOFF_SEAL.json'),'SEAL missing from takeover source order');
