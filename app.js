@@ -238,11 +238,13 @@ function syncAnalysisExpertSelector(){
   els.analysisExpertProfile.value=['expertv3','expertv4','expertv5'].includes(active)?active:'expertv3';
 }
 function applyExpertProfile(id){
-  if(!['expertv3','expertv4','expertv5'].includes(id))return false;
+  if(!Object.prototype.hasOwnProperty.call(EXPERT_PROFILE_IDS,id))return false;
   if((id==='expertv4'||id==='expertv5')&&!expertProfileReady(id))return false;
   const map=EXPERT_PROFILE_IDS[id];if(!map)return false;
   positionPanels={...map};persist();renderAll();
-  if(els.expertProfile)els.expertProfile.value=id;
+  // The legacy configuration selector intentionally exposes incumbent/v2/v3 only.
+  // Do not blank it when the dedicated v4/v5 analysis switch is active.
+  if(els.expertProfile&&[...els.expertProfile.options].some(o=>o.value===id))els.expertProfile.value=id;
   syncAnalysisExpertSelector();return true;
 }
 
