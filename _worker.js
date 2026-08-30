@@ -243,7 +243,7 @@ const ROTOBALLER_MARIANO_HALF_PPR_URLS=[
   'https://www.rotoballer.com/updated-top-400-half-ppr-fantasy-football-rankings-2026/1916255',
   'https://www.rotoballer.com/top-400-updated-half-ppr-fantasy-football-rankings-2026/1910000',
   'https://www.rotoballer.com/fantasy-football-draft-rankings-august-updates-2026/1905031'
-];
+]
 function parseRotoBallerOverall(html){
   const out=[],seen=new Set();
   for(const row of tableRows(html)){
