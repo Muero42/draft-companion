@@ -22,6 +22,6 @@ assert.ok(app.includes("incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'}"));assert.ok
 assert.ok(!app.includes('USER_HARD_QB_EXCLUSIONS'));
 assert.ok(!app.includes('USER HARD EXCLUSION'));
 assert.ok(!/genosmith|aaronrodgers/i.test(app));
-assert.ok(app.includes("userDraftStrategyExcluded(p.pos,state.counts)"));
+assert.ok(app.includes("userDraftStrategyExcluded(p.pos,state.counts,p.name)"));
 assert.ok(app.includes("format:'pitti-decision-evidence-v2'"));
 console.log('RC486_EXPERT_V3_EXPORT_HOTFIX_PASS');
