@@ -36,6 +36,8 @@ assert.match(app,/els\.analysisExpertProfile\.onchange=/,'analysis selector wiri
 assert.match(app,/function extractPairwiseInvertedRows\(/,'Koerner pairwise inversion parser missing');
 assert.match(app,/Number\(payload\?\.total_experts\)!==2/,'pairwise inversion must require exactly two experts');
 assert.match(app,/fetchExpertOverallPairwise\(expert,ref\)/,'Koerner pairwise API fallback missing');
+assert.match(app,/HALF:\['HALF','HALF_PPR','HALF-PPR','0\.5PPR','0\.5_PPR'\]/,'Compare Players HALF scoring aliases missing');
+assert.match(app,/if\(vals\.length===1\)block=vals\[0\]/,'Compare Players unambiguous scoring fallback missing');
 assert.match(app,/FantasyPros API pairwise exact inversion/,'pairwise provenance label missing');
 assert.match(app,/crosscheck=\{checked,matched,ok:checked>=2&&matched===checked\}/,'Koerner fallback Compare Players match gate missing');
 assert.match(app,/finalRows\.length>=80&&crosscheck\.ok/,'Koerner fallback must fail closed on crosscheck mismatch');
