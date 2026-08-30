@@ -10,11 +10,11 @@ const must=[
   "Einzelrankings · Positionsrang",
   "const v3Id=EXPERT_PROFILE_IDS.expertv3[pos]",
   "<span>${esc(x.p.pos)}-Panel</span>",
-  "const displayRank=Number.isFinite(Number(x.overallRank))?Number(x.overallRank):Number(x.rank)",
   "v5 is the controlled v3 challenger",
-  "const v3Id='expert-v3-'+pos.toLowerCase()",
   "raw[koerner]=target*100",
-  "Expert-v3 plus verified Sean Koerner funded primarily from Draft Sharks Team"
+  "Expert-v3 plus verified Sean Koerner funded primarily from Draft Sharks Team",
+  "overallRank:Number.isFinite(Number(e.overallRank))?Number(e.overallRank):null",
+  "overallRank:Number.isFinite(Number(k.overallRank))?Number(k.overallRank):null"
 ];
 for(const x of must)if(!s.includes(x))throw new Error('rc4.117 contract missing: '+x);
 if(s.includes("source:'verified v4 individual-only + verified Sean Koerner'"))throw new Error('obsolete v4+Koerner v5 resurrected');
