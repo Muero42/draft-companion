@@ -177,9 +177,27 @@ function buildPanelFromExpertRows(id,pos,expertRows,rawWeights,meta={}){
   }
   assignTiers(ranks);panelRanks[id]=ranks;panels[id]={name:meta.name||id,members:{},shadow:true,weights,source:meta.source||'verified-expert-import',coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};return ranks;
 }
+function embeddedVerifiedRowsForExpert(name,pos){
+  const out=new Map(),base=globalThis.PITTI_EXPERT_V2,v3=globalThis.PITTI_EXPERT_V3;
+  if(base?.schema==='pitti-expert-v2-board.v4'){
+    for(const row of base.rows?.[pos]||[]){
+      const hit=(row.individual||[]).find(x=>x?.expertName===name&&Number.isFinite(Number(x.rank)));
+      if(hit)out.set(norm(row.name),{name:row.name,pos,rank:Number(hit.rank),posRank:Number(hit.rank),provenance:'frozen-audited-v2-individual'});
+    }
+  }
+  const ch=v3?.schema==='pitti-expert-v3-board.v1'?v3.challengers?.[pos]:null;
+  if(ch?.name===name)for(const [player,rank] of ch.ranks||[])if(Number.isFinite(Number(rank)))out.set(norm(player),{name:player,pos,rank:Number(rank),posRank:Number(rank),provenance:'validated-v3-challenger'});
+  return [...out.values()];
+}
 function verifiedRowsForExpert(name,pos){
-  const e=findExpert(name),cache=e?rankCache[e.id]:null;if(!cache?.verifiedIndividual||cache?.duplicateOf)return[];
-  return Object.values(cache.ranks||{}).filter(x=>x?.pos===pos&&Number.isFinite(Number(x.posRank??x.rank))).map(x=>({name:x.name,pos,rank:Number(x.rank),posRank:Number(x.posRank??x.rank)}));
+  const e=findExpert(name),cache=e?rankCache[e.id]:null;
+  if(cache?.verifiedIndividual&&!cache?.duplicateOf){
+    const live=Object.values(cache.ranks||{}).filter(x=>x?.pos===pos&&Number.isFinite(Number(x.posRank??x.rank))).map(x=>({name:x.name,pos,rank:Number(x.rank),posRank:Number(x.posRank??x.rank),provenance:cache.provenance||'live-verified-individual'}));
+    if(live.length>=EXPERT_DECISION_CORE_MIN[pos])return live;
+  }
+  // v4 may use only exact individual rows already frozen in the audited v2/v3 artifacts.
+  // This is not imputation: missing players remain missing and coverage stays fail-closed.
+  return embeddedVerifiedRowsForExpert(name,pos);
 }
 function ensureExpertV4Panels(){
   let ok=true;
