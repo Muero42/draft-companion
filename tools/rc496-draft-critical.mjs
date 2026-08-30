@@ -56,7 +56,7 @@ if(Number(activeVersion)===115){
   assert.match(app,/const v4Id='expert-v4-'\+pos\.toLowerCase\(\)/,'rc4.115 v5 must build from verified v4 individual panel');
   assert.match(app,/const koernerWeight=\.20,scale=1-koernerWeight/,'rc4.115 Koerner funding must be explicit and proportional');
 }else if(Number(activeVersion)>=117){
-  assert.match(app,/const v3Id='expert-v3-'\+pos\.toLowerCase\(\)/,'rc4.117+ v5 must build from frozen v3');
+  assert.ok(app.includes("const v3Id=EXPERT_PROFILE_IDS.expertv3[pos]"),'rc4.117+ v5 must build from frozen v3');
   assert.match(app,/fundPrimarilyFrom:'Draft Sharks Team'/,'rc4.117+ v5 must fund Koerner from Draft Sharks first');
   assert.doesNotMatch(app,/const koernerWeight=\.20,scale=1-koernerWeight/,'obsolete rc4.115 proportional v5 resurrected');
 }
