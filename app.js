@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.117';
+const APP_VERSION='v11.8.0-rc4.118';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -236,9 +236,14 @@ function ensureExpertV5Panels(){
       const mean=vals.reduce((z,x)=>z+Number(x.rank)*Number(x.effectiveWeight||0),0)/sw,variance=vals.reduce((z,x)=>z+Number(x.effectiveWeight||0)*(Number(x.rank)-mean)**2,0)/sw;
       ranks[key]={...row,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,intendedN:intended.length,coverage:vals.length/intended.length,coverageStatus:missing.length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',missingExperts:missing,individual:vals.sort((x,y)=>x.rank-y.rank)};
     }
+    // v5 may contain historically sparse v3 rows. Readiness is therefore based on
+    // source depth + a usable decision core, while per-player missingness stays explicit
+    // and fail-closed. Do not require impossible COMPLETE overlap across every v3 voice.
+    const usableCount=Object.values(ranks).filter(row=>Number.isFinite(Number(row?.rank))).length;
+    if(usableCount<EXPERT_DECISION_CORE_MIN[pos])ok=false;
     assignTiers(ranks);panelRanks['expert-v5-'+pos.toLowerCase()]=ranks;panels['expert-v5-'+pos.toLowerCase()]={name:'Expert-v5 '+pos+' · v3 + Koerner',members:{},shadow:true,weights,source:'Expert-v3 plus verified Sean Koerner funded primarily from Draft Sharks Team',coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};
   }
-  return ok&&expertProfileReady('expertv5');
+  return ok;
 }
 function currentExpertProfile(){for(const [id,map] of Object.entries(EXPERT_PROFILE_IDS))if(['QB','RB','WR','TE'].every(pos=>positionPanels[pos]===map[pos]))return id;return 'custom';}
 function expertProfileReady(id){
