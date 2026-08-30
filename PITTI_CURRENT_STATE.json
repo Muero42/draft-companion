@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260830T1359Z-v194",
-  "updated_at": "2026-08-30T13:59:00Z",
+  "handoff_generation": "20260830T1618Z-v195",
+  "updated_at": "2026-08-30T16:18:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -57,17 +57,17 @@
     "transaction_in_progress": false,
     "resume_semantics": "rc4.130 is source/deployment authority. It fixes the rc4.129 quota-recovery bug exposed by backup 13-40-34-982Z while preserving active-draft atomicity. Device rc4.126 remains the last fully operational v4/v5 baseline. Next: one refresh to rc4.130, then a fresh full 30-fixture mock.",
     "acceptance_fingerprint": "CURRENT|RC4130|V4-PRIMARY|V5-CHALLENGER|ZERO-HISTORY-RECOVERY-FIXED|ACTIVE-EVIDENCE-ATOMIC|30-FIXTURE-GATE|NO-TRIAL-ERROR|AUTO-SILENT|STATUS-REPORT-ONLY",
-    "status": "RC4.130_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_PENDING",
+    "status": "PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Refresh once to rc4.130 -> start fresh full paired v4/v5 mock -> export backup -> verify 30 fixtures before model analysis.",
-    "gate": "RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
+    "next_action": "Keep v4 PRIMARY / v5 CHALLENGER for draft. Use new backup audit on future exports. Do not claim full 30/30 validation from the 16-02-06-862Z backup; exact missing pair is pick29 expertv5.",
+    "gate": "RC4.130_BACKUP_AUDIT_29_OF_30_NO_MODEL_PROMOTION",
     "seal_status": "PASS",
-    "seal_generation": "20260830T1359Z-v194",
-    "generation": "20260830T1359Z-v194",
+    "seal_generation": "20260830T1618Z-v195",
+    "generation": "20260830T1618Z-v195",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.130 quota-recovery fix is source/deployment authority; rc4.126 remains last fully operational device baseline. Next fresh 30-fixture paired mock after one refresh."
+    "resume": "rc4.130 remains runtime authority. Latest backup is 29/30 with only pick29 expertv5 missing. Backup-quality audit is now persistent and verified. v4 remains PRIMARY; no last-minute weight retune."
   },
   "source_authority": "v11.8.0-rc4.130",
   "package_authority": "v11.8.0-rc4.117 run 33305284763 artifact 9730250635",
@@ -102,29 +102,71 @@
     "guardrail_note": "rc4115 gate now scoped to rc4.115 only; rc4117 has dedicated release-critical contract; rc4114 gate made semantic so preserving Overall provenance does not falsely fail positional aggregation."
   },
   "decision_evidence": {
-    "latest_backup": "draft-companion-v7-backup-2026-08-30T13-40-34-982Z.json",
+    "latest_backup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json",
     "latest_backup_draft_id": "1399782216862588928",
-    "latest_backup_current_pair_coverage": "2/15 paired pick states; 4 current-draft fixtures at picks 9 and 12",
-    "retained_history_in_backup": "22 fixtures from prior draft 1399767853707636736",
-    "backup_serialization_fault": false,
-    "rc4129_failure_observed": true,
-    "root_cause": "rc4.129 quota recovery used history.slice(-historyKeep); when historyKeep=0 JavaScript slice(-0) equals slice(0), so the supposed history-free final retry retained all historical fixtures and could still exceed localStorage quota.",
-    "rc4130_contract": "historyKeep=0 explicitly maps to []; rankedPool persistence also drops redundant robustRankShadow; active draft remains atomic and can never be silently trimmed.",
-    "next_acceptance": "fresh mock: exactly 30 fixtures = 15 pick states × expertv4/expertv5"
+    "current_fixture_count": 29,
+    "own_pick_states": 15,
+    "paired_pick_states": 14,
+    "missing_exact_pair": {
+      "pick": 29,
+      "profile": "expertv5"
+    },
+    "exact_30_fixture_gate": false,
+    "model_top_same": "11/14 paired states",
+    "model_top_differences": [
+      {
+        "pick": 32,
+        "v4": "Javonte Williams",
+        "v5": "Malik Nabers",
+        "chosen": "Malik Nabers"
+      },
+      {
+        "pick": 92,
+        "v4": "Dak Prescott",
+        "v5": "Trevor Lawrence",
+        "chosen": "Trevor Lawrence"
+      },
+      {
+        "pick": 129,
+        "v4": "De'Zhaun Stribling",
+        "v5": "Chris Rodriguez",
+        "chosen": "Chris Rodriguez"
+      }
+    ],
+    "return_brier_top10": {
+      "expertv4": 0.09055565742380897,
+      "expertv5": 0.09052057670206158
+    },
+    "return_brier_top1": {
+      "expertv4": 0.12218575498575499,
+      "expertv5": 0.1936275403608737
+    },
+    "sparse_top10": {
+      "expertv4": 11,
+      "expertv5": 8
+    },
+    "generic_only_top10": {
+      "expertv4": 34,
+      "expertv5": 28
+    },
+    "mcLaurin_canary": "v4 and v5 both 4/6 coverage; missing Justin Boone + Sean Koerner",
+    "swift_canary": "pick52 top1 in both profiles but researchEvidence empty and researchResidual inactive; visible text therefore generic-only",
+    "audit_tool": "tools/audit-v45-backup.mjs merged on main; CI self-test PASS",
+    "verdict": "Incomplete 29/30 file cannot be used as full promotion evidence. Partial paired evidence does not justify changing v4 PRIMARY / v5 CHALLENGER."
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
+    "status": "RC4.130_BACKUP_AUDIT_29_OF_30_V4_PRIMARY",
     "production": false,
-    "androidVerified": false,
-    "acceptedAndroidFallback": "v11.8.0-rc4.126",
+    "androidVerified": true,
+    "acceptedAndroidFallback": "v11.8.0-rc4.130",
     "runtime": "v11.8.0-rc4.130",
-    "mainRuntimeParity": "PASS_MAIN_GH_PAGES_RC4130",
-    "nextGate": "ONE_DEVICE_REFRESH_THEN_FRESH_15_PICK_PAIRED_V4V5_MOCK_AND_30_FIXTURE_BACKUP_GATE"
+    "mainRuntimeParity": "PASS",
+    "nextGate": "Keep v4 PRIMARY / v5 CHALLENGER for draft. Use new backup audit on future exports. Do not claim full 30/30 validation from the 16-02-06-862Z backup; exact missing pair is pick29 expertv5."
   },
-  "status": "RC4.130_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_PENDING",
-  "gate": "RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
-  "nextGate": "Refresh once to rc4.130; start a fresh 15-round mock with v4+v5 at every own pick; export backup; require exactly 30 paired fixtures before comparison.",
+  "status": "RC4.130_BACKUP_AUDIT_29_OF_30_V4_PRIMARY",
+  "gate": "RC4.130_BACKUP_AUDIT_29_OF_30_NO_MODEL_PROMOTION",
+  "nextGate": "Keep v4 PRIMARY / v5 CHALLENGER for draft. Use new backup audit on future exports. Do not claim full 30/30 validation from the 16-02-06-862Z backup; exact missing pair is pick29 expertv5.",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
