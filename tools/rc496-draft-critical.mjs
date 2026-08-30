@@ -133,4 +133,4 @@ if(Number(activeVersion)>=135){
     assert.ok(app.includes(needle),'rc4.135 live-visible evidence expiry missing for '+n);
   }
 }
-console.log('RC496_DRAFT_CRITICAL_PASS'); // rc4.133 gate trigger // rc4.132 release-gate trigger
+console.log('RC496_DRAFT_CRITICAL_PASS'); // rc4.135 release gate canonical-state retry // rc4.133 gate trigger // rc4.132 release-gate trigger
