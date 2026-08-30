@@ -1,5 +1,5 @@
-# PITTI NEW CHAT BOOTSTRAP — v185
-Generation: `20260830T0702Z-v185`
+# PITTI NEW CHAT BOOTSTRAP — v186
+Generation: `20260830T0718Z-v186`
 
 Takeover must verify CURRENT + PASS SEAL + LOCK + PREFLIGHT + PROJECT_STATE EOF + CURRENT HANDOFF + this bootstrap + matrix against actual main/gh-pages/device facts.
 
