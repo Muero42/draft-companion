@@ -78,9 +78,12 @@ jobs:
       - name: rc4.114 positional expert aggregation contract
         run: |
           if grep -Eq "v11.8.0-rc4.11[4-9]|v11.8.0-rc4.1[2-9][0-9]" app.js; then node tools/rc4114-positional-expert-aggregation.mjs; fi
-      - name: rc4.115 v5 hybrid contract
+      - name: rc4.115 legacy v5 hybrid contract
         run: |
-          if grep -Eq "v11.8.0-rc4.11[5-9]|v11.8.0-rc4.1[2-9][0-9]" app.js; then node tools/rc4115-v5-hybrid.mjs; fi
+          if grep -q "v11.8.0-rc4.115" app.js; then node tools/rc4115-v5-hybrid.mjs; fi
+      - name: rc4.117 release-critical contract
+        run: |
+          if grep -Eq "v11.8.0-rc4.11[7-9]|v11.8.0-rc4.1[2-9][0-9]" app.js; then node tools/rc4117-release-critical.mjs; fi
       - name: PITTI execution-lock and anti-regression gate
         env:
           PITTI_SKIP_SEAL_INTEGRITY: ${{ github.event_name == 'pull_request' && '1' || '0' }}
