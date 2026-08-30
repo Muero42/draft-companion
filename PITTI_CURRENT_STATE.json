@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260830T0625Z-v182",
-  "updated_at": "2026-08-30T06:25:00Z",
+  "handoff_generation": "20260830T0634Z-v183",
+  "updated_at": "2026-08-30T06:34:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -52,8 +52,8 @@
   "handoff": {
     "transaction_in_progress": false,
     "resume_semantics": "PITTI AUTO: rc4.107 is deployed on main/gh-pages and observed on device. Immediate gate is Alles aktualisieren on device, then live v4/v5 coverage/Koerner validation and same-state comparison. v3 stays default fail-safe. No old manager-map or QB-name regressions.",
-    "acceptance_fingerprint": "RC4.107-DEPLOYED|DEVICE-OBSERVED|LIVE-REFRESH-PENDING|V3-DEFAULT|V4-V5-FAIL-CLOSED|MANAGER-MAP-CANONICAL|GENO-RODGERS-ORGANIC|DEFERRED-MOCK-19-44-43-NO-ANALYSIS|HANDOFF-v182",
-    "status": "HANDOFF_v182_READY_RC4107_DEVICE_GATE",
+    "acceptance_fingerprint": "RC4.107-DEPLOYED|DEVICE-OBSERVED|LIVE-REFRESH-PENDING|V3-DEFAULT|V4-V5-FAIL-CLOSED|MANAGER-MAP-CANONICAL|GENO-RODGERS-ORGANIC|DEFERRED-MOCK-19-44-43-NO-ANALYSIS|HANDOFF-v183",
+    "status": "HANDOFF_v183_READY_RC4107_DEVICE_GATE",
     "handoff_ready": true,
     "second_pass_pass": true,
     "next_action": "Run Alles aktualisieren on rc4.107 device; evaluate resulting live coverage/Koerner source and same-state v3/v4/v5 behavior.",
