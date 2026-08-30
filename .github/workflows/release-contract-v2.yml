@@ -1,7 +1,7 @@
 name: PITTI release contract v2
 on:
   push:
-    branches: [main]
+    branches: [main, pitti/expert-v4-v5-v180]
   workflow_dispatch:
   pull_request:
     branches: [main]
@@ -35,9 +35,11 @@ jobs:
           node tools/rc490-draft-critical.mjs
           node tools/rc491-return-calibration.mjs
           node tools/rc496-draft-critical.mjs
+          node tools/v4-embedded-coverage.mjs
+          node tools/v3-v4-same-state-diagnostic.mjs
           if grep -Eq "v11.8.0-rc4.(9[8-9]|1[0-9]{2,})" app.js; then node tools/rc498-evidence-polarity.mjs; fi
           if grep -Eq "v11.8.0-rc4.(99|1[0-9]{2,})" app.js; then node tools/rc499-wr-saturation.mjs && node tools/rc499-normal-cut.mjs; fi
           if grep -Eq "v11.8.0-rc4.1[0-9]{2,}" app.js; then node tools/rc4100-turn-portfolio.mjs; fi
           if grep -Eq "v11.8.0-rc4.10[4-9]|v11.8.0-rc4.1[1-9][0-9]" app.js; then node tools/rc4104-roster-portfolio.mjs; fi
           node tools/emergency-queue-contract.mjs
-          node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-28 --max-age-days=2
+          node tools/pre-draft-freshness-gate.mjs --as-of=2026-08-30 --max-age-days=2

@@ -11,7 +11,7 @@ const b3src=fs.readFileSync('expert-v3-board.js','utf8');
 for(const [n,s] of [['app',app],['index',idx],['sw',sw]])assert.match(s,/v11\.8\.0-rc4\.(?:90|9[1-9]|[1-9][0-9]{2,})/,n+' rc4.90+ version mismatch');
 
 // Root-cause guard: Expert-v3 shadow panels must be selectable just like frozen v2 boards.
-assert.ok(app.includes("if(/^expert-v[23]-(qb|rb|wr|te)$/.test(id))return true;"),'Expert-v3 panel selectability missing');
+assert.ok(app.includes("if(/^expert-v[2345]-(qb|rb|wr|te)$/.test(id))return true;"),'Expert-v3/v4/v5 panel selectability missing');
 assert.ok(app.includes("profile:currentExpertProfile()"),'live state must expose actual profile');
 assert.ok(app.includes("panelId:x.r.panelId||null"),'live state must expose actual panel id');
 assert.ok(live.includes("const actual=[...new Set((x.individual||[]).map(r=>r.expertName||r.source).filter(Boolean))]"),'live expert display must derive from actual rows');

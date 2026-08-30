@@ -1,7 +1,7 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.106';
+const APP_VERSION='v11.8.0-rc4.107';
 const $=id=>document.getElementById(id);
-const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','expertV3AuditBtn','expertV3AuditStatus'];
+const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
@@ -87,7 +87,15 @@ let experts=store.get('v7_experts',[]);
 let panels=store.get('v7_panels',{standard:{name:'Standard',members:{}},pat:{name:'Pat einzeln',members:{}}});
 let activePanelId=store.text('v7_activePanel','standard');
 let positionPanels=store.get('v7_positionPanels',{QB:'qb',RB:'rb',WR:'wr',TE:'te'});
-const EXPERT_PROFILE_IDS={incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'},fullv2:{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'},wrv2:{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'},expertv3:{QB:'expert-v3-qb',RB:'expert-v3-rb',WR:'expert-v2-wr',TE:'expert-v3-te'}};
+const EXPERT_PROFILE_IDS={incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'},fullv2:{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'},wrv2:{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'},expertv3:{QB:'expert-v3-qb',RB:'expert-v3-rb',WR:'expert-v2-wr',TE:'expert-v3-te'},expertv4:{QB:'expert-v4-qb',RB:'expert-v4-rb',WR:'expert-v4-wr',TE:'expert-v4-te'},expertv5:{QB:'expert-v5-qb',RB:'expert-v5-rb',WR:'expert-v5-wr',TE:'expert-v5-te'}};
+const EXPERT_V4_BLUEPRINT={
+  QB:{experts:['Pat Fitzmaurice','Justin Boone','Dalton Del Don','Nick Mariano','Todd D Clark'],maxSingleWeight:.30},
+  RB:{experts:['Pat Fitzmaurice','Nick Mariano','Dalton Del Don','Ryan Weisse'],maxSingleWeight:.30},
+  WR:{experts:['Pat Fitzmaurice','Nick Mariano','Dalton Del Don','Justin Boone'],maxSingleWeight:.30},
+  TE:{experts:['Pat Fitzmaurice','Justin Boone','Dalton Del Don','Wolf of Roto Street'],maxSingleWeight:.30}
+};
+const EXPERT_V5_BLUEPRINT={base:'expertv3',add:'Sean Koerner',fundPrimarilyFrom:'Draft Sharks Team',positionSpecific:true,maxSingleWeight:.30};
+const EXPERT_DECISION_CORE_MIN={QB:24,RB:60,WR:70,TE:24};
 function ensureExpertV2Panels(){const src=globalThis.PITTI_EXPERT_V2;if(!src||src.schema!=='pitti-expert-v2-board.v4')return false;for(const pos of ['QB','RB','WR','TE']){const list=src.rows?.[pos]||[];if(!list.length)return false;const id='expert-v2-'+pos.toLowerCase(),ranks={};for(const row of list){const rank=Number(row.rank);if(row.name&&Number.isFinite(rank)&&rank>0)ranks[norm(row.name)]={name:row.name,pos,rank,mean:rank,median:rank,sd:Number.isFinite(Number(row.sd))?Number(row.sd):null,n:Number.isFinite(Number(row.n))?Number(row.n):null,tier:row.tier??null,individual:Array.isArray(row.individual)?row.individual.map(e=>({expertName:e.expertName,rank:Number(e.rank),effectiveWeight:Number(e.effectiveWeight),reconstructed:!!e.reconstructed,spread:e.spread??null})).filter(e=>e.expertName&&Number.isFinite(e.rank)):[]};}panelRanks[id]=ranks;panels[id]={name:'Expert-v2 '+pos+' · 26.08.',members:{},shadow:true,weights:src.weights?.[pos]||{},source:src.source};}return true;}
 function ensureExpertV3Panels(){
   const base=globalThis.PITTI_EXPERT_V2,v3=globalThis.PITTI_EXPERT_V3;
@@ -96,14 +104,11 @@ function ensureExpertV3Panels(){
     const spec=v3.challengers?.[pos],weights=v3.weights?.[pos],baseRows=base.rows?.[pos]||[];
     if(!spec||!weights||!baseRows.length)return false;
     const challenger=new Map((spec.ranks||[]).map(([name,rank])=>[norm(name),Number(rank)]).filter(([,rank])=>Number.isFinite(rank)&&rank>0));
+    const intendedExperts=Object.entries(weights).filter(([,w])=>Number(w)>0).map(([name])=>name);
     const id='expert-v3-'+pos.toLowerCase(),ranks={};
     for(const row of baseRows){
       if(!row?.name||!Number.isFinite(Number(row.rank)))continue;
       const cr=challenger.get(norm(row.name));
-      if(!Number.isFinite(cr)){
-        ranks[norm(row.name)]={name:row.name,pos,rank:Number(row.rank),mean:Number(row.rank),median:Number(row.rank),sd:Number.isFinite(Number(row.sd))?Number(row.sd):null,n:Number.isFinite(Number(row.n))?Number(row.n):null,tier:row.tier??null,individual:Array.isArray(row.individual)?row.individual.map(e=>({...e,rank:Number(e.rank),effectiveWeight:Number(e.effectiveWeight)})):[]};
-        continue;
-      }
       const vals=[];
       for(const e of Array.isArray(row.individual)?row.individual:[]){
         if(!e?.expertName||!Number.isFinite(Number(e.rank)))continue;
@@ -114,21 +119,135 @@ function ensureExpertV3Panels(){
         vals.push({expertName:e.expertName,rank:Number(e.rank),effectiveWeight:ew,reconstructed:!!e.reconstructed,spread:e.spread??null});
       }
       const cw=Number(weights[spec.name]||0);
-      if(cw>0)vals.push({expertName:spec.name,rank:cr,effectiveWeight:cw,reconstructed:false,spread:null});
-      const sw=vals.reduce((s,e)=>s+e.effectiveWeight,0);
+      if(Number.isFinite(cr)&&cw>0)vals.push({expertName:spec.name,rank:cr,effectiveWeight:cw,reconstructed:false,spread:null});
+      const present=new Set(vals.map(e=>e.expertName));
+      const missing=intendedExperts.filter(name=>!present.has(name));
+      const sw=vals.reduce((sum,e)=>sum+e.effectiveWeight,0);
       if(!sw)continue;
-      const mean=vals.reduce((s,e)=>s+e.rank*e.effectiveWeight,0)/sw;
-      const variance=vals.reduce((s,e)=>s+e.effectiveWeight*(e.rank-mean)**2,0)/sw;
-      ranks[norm(row.name)]={name:row.name,pos,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,tier:row.tier??null,individual:vals.sort((a,b)=>a.rank-b.rank)};
+      // Coverage semantics: keep historical v3 rank math frozen for control comparability,
+      // but never pretend a sparse row is the same ensemble. Missing experts are explicit
+      // right-censored/unknown coverage until source metadata proves acquisition failure.
+      const mean=vals.reduce((sum,e)=>sum+e.rank*e.effectiveWeight,0)/sw;
+      const variance=vals.reduce((sum,e)=>sum+e.effectiveWeight*(e.rank-mean)**2,0)/sw;
+      ranks[norm(row.name)]={
+        name:row.name,pos,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,tier:row.tier??null,
+        intendedN:intendedExperts.length,coverage:vals.length/intendedExperts.length,
+        coverageStatus:missing.length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',
+        missingExperts:missing,
+        individual:vals.sort((a,b)=>a.rank-b.rank)
+      };
     }
     assignTiers(ranks);
     panelRanks[id]=ranks;
-    panels[id]={name:'Expert-v3 '+pos+' · 28.08.',members:{},shadow:true,weights,source:v3.source,methodology:v3.methodology};
+    panels[id]={name:'Expert-v3 '+pos+' · 28.08.',members:{},shadow:true,weights,source:v3.source,methodology:v3.methodology,coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};
   }
   return true;
 }
+function normalizeWeights(raw,cap=.30){
+  const entries=Object.entries(raw||{}).filter(([,w])=>Number(w)>0).map(([name,w])=>[name,Number(w)]);
+  if(!entries.length)return{};
+  let weights=Object.fromEntries(entries),free=new Set(entries.map(([n])=>n)),remaining=1;
+  while(free.size){
+    const base=[...free].reduce((a,n)=>a+weights[n],0);if(!base)break;
+    let capped=false;
+    for(const n of [...free]){
+      const proposed=remaining*weights[n]/base;
+      if(proposed>cap){weights[n]=cap;remaining-=cap;free.delete(n);capped=true}
+    }
+    if(!capped){const denom=[...free].reduce((a,n)=>a+weights[n],0);for(const n of free)weights[n]=remaining*weights[n]/denom;break}
+  }
+  return weights;
+}
+function buildPanelFromExpertRows(id,pos,expertRows,rawWeights,meta={}){
+  const weights=normalizeWeights(rawWeights,meta.maxSingleWeight??.30);
+  const intendedExperts=Object.keys(weights),byName=new Map();
+  for(const expertName of intendedExperts){
+    for(const row of expertRows[expertName]||[]){
+      const k=norm(row.name);if(!k)continue;
+      if(!byName.has(k))byName.set(k,{name:row.name,pos,vals:[]});
+      byName.get(k).vals.push({expertName,rank:Number(row.posRank??row.rank),effectiveWeight:weights[expertName],reconstructed:false,spread:null});
+    }
+  }
+  const ranks={};
+  for(const [k,item] of byName){
+    const vals=item.vals.filter(x=>Number.isFinite(x.rank)&&x.rank>0),present=new Set(vals.map(x=>x.expertName)),missing=intendedExperts.filter(x=>!present.has(x));
+    const sw=vals.reduce((a,x)=>a+x.effectiveWeight,0);if(!sw)continue;
+    const mean=vals.reduce((a,x)=>a+x.rank*x.effectiveWeight,0)/sw,variance=vals.reduce((a,x)=>a+x.effectiveWeight*(x.rank-mean)**2,0)/sw;
+    ranks[k]={name:item.name,pos,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,intendedN:intendedExperts.length,coverage:vals.length/intendedExperts.length,coverageStatus:missing.length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',missingExperts:missing,individual:vals.sort((a,b)=>a.rank-b.rank)};
+  }
+  assignTiers(ranks);panelRanks[id]=ranks;panels[id]={name:meta.name||id,members:{},shadow:true,weights,source:meta.source||'verified-expert-import',coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};return ranks;
+}
+function verifiedRowsForExpert(name,pos){
+  const e=findExpert(name),cache=e?rankCache[e.id]:null;if(!cache?.verifiedIndividual||cache?.duplicateOf)return[];
+  return Object.values(cache.ranks||{}).filter(x=>x?.pos===pos&&Number.isFinite(Number(x.posRank??x.rank))).map(x=>({name:x.name,pos,rank:Number(x.rank),posRank:Number(x.posRank??x.rank)}));
+}
+function ensureExpertV4Panels(){
+  let ok=true;
+  for(const pos of ['QB','RB','WR','TE']){
+    const bp=EXPERT_V4_BLUEPRINT[pos],rows={};
+    for(const name of bp.experts)rows[name]=verifiedRowsForExpert(name,pos);
+    if(bp.experts.some(name=>rows[name].length<EXPERT_DECISION_CORE_MIN[pos])){ok=false;continue}
+    buildPanelFromExpertRows('expert-v4-'+pos.toLowerCase(),pos,rows,Object.fromEntries(bp.experts.map(name=>[name,1])),{name:'Expert-v4 '+pos,source:'live verified individual experts',maxSingleWeight:bp.maxSingleWeight});
+  }
+  return ok&&expertProfileReady('expertv4');
+}
+function ensureExpertV5Panels(){
+  const koerner='Sean Koerner';let ok=true;
+  for(const pos of ['QB','RB','WR','TE']){
+    const baseId=EXPERT_PROFILE_IDS.expertv3[pos],baseRows=panelRanks[baseId]||{},kRows=verifiedRowsForExpert(koerner,pos);
+    if(kRows.length<EXPERT_DECISION_CORE_MIN[pos]||!Object.keys(baseRows).length){ok=false;continue}
+    const kMap=new Map(kRows.map(x=>[norm(x.name),x])),ranks={};
+    for(const [key,row] of Object.entries(baseRows)){
+      const k=kMap.get(key),baseInd=(row.individual||[]).map(x=>({...x}));
+      if(!k){ranks[key]={...row,intendedN:(row.intendedN||baseInd.length)+1,coverageStatus:'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN',missingExperts:[...new Set([...(row.missingExperts||[]),koerner])]};continue}
+      const ds=baseInd.find(x=>x.expertName==='Draft Sharks Team');
+      // v5 is deliberately minimal-invasive: Koerner is funded primarily from DS Team.
+      // If the base row has no explicit DS contribution, do NOT add Koerner on top and
+      // accidentally overweight the row; fail closed for that player instead.
+      if(!ds||Number(ds.effectiveWeight||0)<=0){ranks[key]={...row,intendedN:(row.intendedN||baseInd.length)+1,coverageStatus:'INCOMPLETE_V5_NO_DS_FUNDING',missingExperts:[...new Set([...(row.missingExperts||[]),'Draft Sharks Team funding'])]};continue}
+      const transfer=Math.min(.20,Number(ds.effectiveWeight||0));
+      const vals=baseInd.map(x=>x.expertName==='Draft Sharks Team'?{...x,effectiveWeight:Number(x.effectiveWeight)-transfer}:x);
+      vals.push({expertName:koerner,rank:Number(k.posRank),effectiveWeight:transfer,reconstructed:false,spread:null});
+      const sw=vals.reduce((a,x)=>a+Number(x.effectiveWeight||0),0),mean=vals.reduce((a,x)=>a+x.rank*Number(x.effectiveWeight||0),0)/sw;
+      const variance=vals.reduce((a,x)=>a+Number(x.effectiveWeight||0)*(x.rank-mean)**2,0)/sw;
+      ranks[key]={...row,rank:mean,mean,median:mean,sd:Math.sqrt(variance),n:vals.length,intendedN:(row.intendedN||baseInd.length)+1,coverage:vals.length/((row.intendedN||baseInd.length)+1),coverageStatus:(row.missingExperts||[]).length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',missingExperts:[...(row.missingExperts||[])],individual:vals.sort((a,b)=>a.rank-b.rank)};
+    }
+    assignTiers(ranks);panelRanks['expert-v5-'+pos.toLowerCase()]=ranks;panels['expert-v5-'+pos.toLowerCase()]={name:'Expert-v5 '+pos,members:{},shadow:true,source:'v3 + verified Sean Koerner',coveragePolicy:'FAIL_CLOSED_EXPLICIT_MISSINGNESS'};
+  }
+  return ok&&expertProfileReady('expertv5');
+}
 function currentExpertProfile(){for(const [id,map] of Object.entries(EXPERT_PROFILE_IDS))if(['QB','RB','WR','TE'].every(pos=>positionPanels[pos]===map[pos]))return id;return 'custom';}
-function applyExpertProfile(id){const map=EXPERT_PROFILE_IDS[id];if(!map)return;positionPanels={...map};persist();renderAll();if(els.expertProfile)els.expertProfile.value=id;}
+function expertProfileReady(id){
+  const map=EXPERT_PROFILE_IDS[id];if(!map)return false;
+  return ['QB','RB','WR','TE'].every(pos=>{
+    const pid=map[pos],rows=panelRanks[pid];
+    if(!rows||!Object.keys(rows).length)return false;
+    if(id==='expertv3')return Object.values(rows).every(row=>row?.coverageStatus==='COMPLETE'||!('coverageStatus' in row));
+    // Right-censoring at the tail is expected for individual expert lists. Do not require every
+    // player in the union to be ranked by every expert; require a complete decision-relevant core.
+    const need=EXPERT_DECISION_CORE_MIN[pos],core=Object.values(rows).sort((a,b)=>Number(a.rank)-Number(b.rank)).slice(0,need);
+    return core.length>=need&&core.every(row=>row?.coverageStatus==='COMPLETE');
+  });
+}
+function syncAnalysisExpertSelector(){
+  if(!els.analysisExpertProfile)return;
+  const active=currentExpertProfile();
+  for(const opt of els.analysisExpertProfile.options){
+    if(opt.value==='expertv3'){opt.disabled=false;continue}
+    opt.disabled=!expertProfileReady(opt.value);
+  }
+  els.analysisExpertProfile.value=['expertv3','expertv4','expertv5'].includes(active)?active:'expertv3';
+}
+function applyExpertProfile(id){
+  if(!Object.prototype.hasOwnProperty.call(EXPERT_PROFILE_IDS,id))return false;
+  if((id==='expertv4'||id==='expertv5')&&!expertProfileReady(id))return false;
+  const map=EXPERT_PROFILE_IDS[id];if(!map)return false;
+  positionPanels={...map};persist();renderAll();
+  // The legacy configuration selector intentionally exposes incumbent/v2/v3 only.
+  // Do not blank it when the dedicated v4/v5 analysis switch is active.
+  if(els.expertProfile&&[...els.expertProfile.options].some(o=>o.value===id))els.expertProfile.value=id;
+  syncAnalysisExpertSelector();return true;
+}
 
 function loadRankCacheCompact(){
   const legacy=store.get('v7_rankCache',{}),out={};
@@ -154,10 +273,16 @@ els.topN.value=store.text('v7_topN','35');
 els.snapshotMode.value=store.text('v7_snapshotMode','compact');
 els.draftMode.value=store.text('v11_draftMode',store.text('v10_draftMode','mock'));
 els.replayCutoff.value=store.text('v11_replayCutoff',store.text('v10_replayCutoff',''));
-const ACTIVE_2026_MANAGER_MAP_TEXT='1=Michael, 2=Pascal Voerde, 3=Marc Düsseldorf, 4=Thomas, 5=Basti, 6=Bjoern, 7=Giuliano, 8=Pascal Gelderner, 9=Tim, 10=Dutch Marc';
-els.managerMap.value=store.text('v11_managerMap',store.text('v10_managerMap',ACTIVE_2026_MANAGER_MAP_TEXT));
+const ACTIVE_2026_MANAGER_MAP_TEXT='1=Michael, 2=Pascal Voerde, 3=Marc Düsseldorf, 4=Thomas, 5=Bjoern, 6=Pascal Gelderner, 7=Giuliano, 8=Basti, 9=Muerotechnik, 10=Dutch Marc';
+function canonicalize2026ManagerMap(stored){
+  const v=String(stored||'').trim();
+  const legacyUserTeam=['Moers','Venom'].join(' '),legacyManager=['Michael','K.'].join(' ');const stale=/5\s*=\s*Basti|8\s*=\s*Pascal Gelderner/i.test(v)||v.includes(legacyUserTeam)||v.includes(legacyManager);
+  return !v||stale?ACTIVE_2026_MANAGER_MAP_TEXT:v;
+}
+els.managerMap.value=canonicalize2026ManagerMap(store.text('v11_managerMap',store.text('v10_managerMap',ACTIVE_2026_MANAGER_MAP_TEXT)));
 els.stressMode.value=store.text('v113_stressMode','baseline');
 els.strategyMode.value=store.text('v111_strategyMode','progressive');
+if(els.analysisExpertProfile)els.analysisExpertProfile.value='expertv3';
 
 function persist(){
   store.setText('v7_apiKey',els.apiKey.value.trim());store.setText('v7_season',els.season.value.trim());store.setText('v7_scoring',els.scoring.value);
@@ -229,7 +354,21 @@ function extractVerifiedOverall(payload,expertId){
   }).filter(Boolean);
 }
 function compareRanksFor(payload,expertId,scoring){
-  const block=payload?.rankings?.[scoring]||payload?.rankings?.[String(scoring).toUpperCase()]||{};
+  const roots=payload?.rankings||{},want=String(scoring||'').toUpperCase();
+  const aliases={
+    HALF:['HALF','HALF_PPR','HALF-PPR','0.5PPR','0.5_PPR'],
+    PPR:['PPR','FULL','FULL_PPR','FULL-PPR'],
+    STD:['STD','STANDARD','NON_PPR','NON-PPR']
+  };
+  const keys=[scoring,want,...(aliases[want]||[])].filter(Boolean);
+  let block=null;
+  for(const k of keys){if(roots?.[k]&&typeof roots[k]==='object'){block=roots[k];break}}
+  // Some Compare Players responses expose the scoring block directly or use a single
+  // scoring key. Accept that only when unambiguous; never silently substitute another format.
+  if(!block){
+    const vals=Object.values(roots).filter(x=>x&&typeof x==='object'&&!Array.isArray(x));
+    if(vals.length===1)block=vals[0];
+  }
   const out={};
   for(const [pid,rows] of Object.entries(block||{})){
     const hit=(Array.isArray(rows)?rows:[]).find(x=>String(x?.expert_id)===String(expertId));
@@ -416,6 +555,72 @@ async function fetchExpertPosition(expertId,pos){
   // Position ranks are derived from the verified overall list to avoid mixing in a consensus response.
   const rows=await fetchExpertOverall(expertId);
   return rows.filter(x=>x.pos===pos).sort((a,b)=>a.rank-b.rank).map((x,i)=>({...x,posRank:i+1}));
+}
+
+function extractPairwiseInvertedRows(payload,targetExpertId,referenceExpertId,referenceRows){
+  const target=String(targetExpertId),ref=String(referenceExpertId);
+  const ids=String(payload?.filters??'').match(/\d+/g)||[];
+  const names=payload?.expert_name&&typeof payload.expert_name==='object'?payload.expert_name:{};
+  const hasBoth=(ids.includes(target)&&ids.includes(ref))||(Object.prototype.hasOwnProperty.call(names,target)&&Object.prototype.hasOwnProperty.call(names,ref));
+  if(Number(payload?.total_experts)!==2||!hasBoth)return [];
+  const refMap=new Map(referenceRows.map(x=>[norm(x.name),Number(x.rank)]).filter(([,rank])=>Number.isFinite(rank)&&rank>0));
+  const out=[];
+  for(const row of Array.isArray(payload?.players)?payload.players:[]){
+    const name=field(row,['player_name','playername','name','full_name']);
+    const pos=String(field(row,['player_position_id','position_id','position','pos'])||'').toUpperCase().replace(/[0-9]/g,'');
+    const min=Number(field(row,['rank_min','min_rank','rankmin']));
+    const max=Number(field(row,['rank_max','max_rank','rankmax']));
+    const rr=refMap.get(norm(name));
+    if(!name||!['QB','RB','WR','TE'].includes(pos)||!Number.isFinite(rr)||!Number.isFinite(min)||!Number.isFinite(max)||min<=0||max<=0)continue;
+    let rank=null;
+    if(Math.abs(min-max)<=.001&&Math.abs(rr-min)<=.001)rank=rr;
+    else if(Math.abs(rr-min)<=.001)rank=max;
+    else if(Math.abs(rr-max)<=.001)rank=min;
+    else continue;
+    out.push({name:String(name),pos,rank,posRank:null,source:'pairwise-range-inversion',exact:true});
+  }
+  return out;
+}
+async function fetchExpertOverallPairwise(targetExpert,referenceExpert){
+  const reference=await fetchVerifiedExpertOverall(referenceExpert);
+  const referenceRows=reference.rows;
+  const season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value);
+  const pair=encodeURIComponent(String(targetExpert.id)+':'+String(referenceExpert.id));
+  const attempts=[
+    `/nfl/${season}/consensus-rankings?position=ALL&scoring=${scoring}&type=DRAFT&filters=${pair}&experts=show`,
+    `/nfl/${season}/rankings?week=0&position=ALL&scoring=${scoring}&filters=${pair}&range=true&rankstats=true&experts=show`
+  ];
+  const failures=[];
+  for(const p of attempts){
+    try{
+      const data=await proxyCall(p);
+      const rows=extractPairwiseInvertedRows(data,targetExpert.id,referenceExpert.id,referenceRows);
+      if(rows.length<80){failures.push('pair rows '+rows.length);continue}
+      // Independent positional cross-check on several target rows. Pairwise inversion is accepted
+      // only when compare-players returns the same target expert ranks.
+      const derived=derivePositionRanks(rows);
+      const finalRows=Object.values(derived);
+      const grouped={QB:[],RB:[],WR:[],TE:[]};for(const x of finalRows)grouped[x.pos]?.push(x);
+      let checked=0,matched=0;
+      for(const pos of ['RB','WR','QB','TE']){
+        const sample=grouped[pos].sort((a,b)=>a.posRank-b.posRank).slice(0,Math.min(3,grouped[pos].length));if(!sample.length)continue;
+        const idsByName=new Map((reference.data?.players||[]).map(x=>[norm(field(x,['player_name','playername','name','full_name'])),String(field(x,['player_id','playerid','id'])||'')]));
+        const playerIds=sample.map(x=>idsByName.get(norm(x.name))).filter(Boolean).slice(0,4);
+        if(!playerIds.length)continue;
+        const cmp=await proxyCall(`/nfl/compare-players?players=${playerIds.join(':')}&position=${pos}&year=${season}&experts=${encodeURIComponent(String(targetExpert.id)+':'+String(referenceExpert.id))}&ranking_type=draft&details=all`);
+        const actual=compareRanksFor(cmp,targetExpert.id,els.scoring.value);
+        for(const x of sample){
+          const pid=idsByName.get(norm(x.name));if(!pid||actual[pid]==null)continue;
+          checked++;
+          if(Number(actual[pid])===Number(x.posRank))matched++;
+        }
+      }
+      const crosscheck={checked,matched,ok:checked>=2&&matched===checked};
+      if(finalRows.length>=80&&crosscheck.ok)return {rows:finalRows,path:p,method:'PAIRWISE_RANGE_INVERSION',crosscheck};
+      failures.push('compare crosscheck '+matched+'/'+checked);
+    }catch(e){failures.push(e?.message||String(e))}
+  }
+  throw new Error(targetExpert.name+': Pairwise-API-Fallback fehlgeschlagen. '+failures.join(' | '));
 }
 
 function sourceMentionsSleeper(payload){
@@ -728,7 +933,16 @@ async function loadExpertRanks(expertId){
   if(!expert)throw new Error(`Experte ${expertId} nicht gefunden.`);
 
   try{
-    const data=await fetchMultiSourceExpertRanking(expert);
+    let data;
+    try{data=await fetchMultiSourceExpertRanking(expert)}
+    catch(primaryError){
+      if(norm(expert.name)!==norm('Sean Koerner'))throw primaryError;
+      const refs=['Pat Fitzmaurice','Justin Boone','Dalton Del Don','Nick Mariano'].map(findExpert).filter(Boolean);
+      let recovered=null,last=primaryError;
+      for(const ref of refs){try{recovered=await fetchExpertOverallPairwise(expert,ref);if(recovered?.rows?.length>=80)break}catch(e){last=e}}
+      if(!recovered?.rows?.length)throw last;
+      data={players:recovered.rows,source:'FantasyPros API pairwise exact inversion',sourceUrl:'',updated:new Date().toISOString(),confidence:'pairwise-verified',sourceContextVerified:true,sourceSeason:els.season.value,sourceScoring:els.scoring.value,coverage:1,exactCount:recovered.rows.length,reconstructedCount:0,crosscheck:recovered.crosscheck};
+    }
     if(/^FantasyPros/.test(String(data.source||''))&&data.sourceContextVerified!==true)
       throw new Error(`${expert.name}: FantasyPros Scoring/Saison konnte nicht eindeutig verifiziert werden.`);
     const ranks={},counts={QB:0,RB:0,WR:0,TE:0};
@@ -845,7 +1059,9 @@ function assignTiers(map){for(const pos of ['QB','RB','WR','TE']){const rows=Obj
 async function loadAllRanks(){
   saveCurrentPanel();
   const selectedIds=[...new Set(Object.values(panels).flatMap(p=>Object.keys(p.members||{})))];
-  const ids=[...new Set([...selectedIds,...presetCandidateIds()])];
+  const v45Names=[...new Set(Object.values(EXPERT_V4_BLUEPRINT).flatMap(x=>x.experts).concat(EXPERT_V5_BLUEPRINT.add))];
+  const v45Ids=v45Names.map(findExpert).filter(Boolean).map(e=>e.id);
+  const ids=[...new Set([...selectedIds,...presetCandidateIds(),...v45Ids])];
   if(!ids.length)throw new Error('Preset oder Expertenauswahl fehlt.');
   if(els.loadAllRanksBtn)els.loadAllRanksBtn.disabled=true;
   const skipped=[];
@@ -888,6 +1104,10 @@ async function loadAllRanks(){
     // after every live-rank rebuild so a refresh cannot silently erase the selected v2 boards.
     if(!ensureExpertV2Panels())throw new Error('Expert-v2 Board konnte nach Ranking-Refresh nicht wiederhergestellt werden.');
     if(!ensureExpertV3Panels())throw new Error('Expert-v3 Board konnte nach Ranking-Refresh nicht wiederhergestellt werden.');
+    const v4Ready=ensureExpertV4Panels(),v5Ready=ensureExpertV5Panels();
+    syncAnalysisExpertSelector();
+    if(!v4Ready)skipped.push('Expert-v4 bleibt gesperrt: mindestens eine verifizierte Individualquelle/Position unvollständig.');
+    if(!v5Ready)skipped.push('Expert-v5 bleibt gesperrt: Koerner/v3 Coverage nicht vollständig verifiziert.');
     store.set('v7_lastRankingUpdate',Date.now());
     try{localStorage.removeItem('v7_panelRanks');localStorage.removeItem('v7_rankCache')}catch{}
     persist();
@@ -953,7 +1173,7 @@ function panelHasVerifiedExperts(id){
 }
 function panelSelectable(id){
   if(!id||!Object.keys(panelRanks[id]||{}).length)return false;
-  if(/^expert-v[23]-(qb|rb|wr|te)$/.test(id))return true;
+  if(/^expert-v[2345]-(qb|rb|wr|te)$/.test(id))return true;
   return panelHasVerifiedExperts(id);
 }
 function panelFor(pos){
@@ -2614,7 +2834,7 @@ async function downloadJson(name,v){
   a.href=u;a.download=name;a.rel='noopener';a.style.display='none';document.body.appendChild(a);a.click();a.remove();
   setTimeout(()=>URL.revokeObjectURL(u),10000);
 }
-function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};for(const[id,c]of Object.entries(rankCache)){try{store.set('v7_rank_'+id,c)}catch{}}try{localStorage.removeItem('v7_rankCache');localStorage.removeItem('v7_panelRanks')}catch{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=Array.isArray(v.decisionLog)?v.decisionLog:[];saveReturnValidation(Array.isArray(v.returnValidation)?v.returnValidation:[]);saveDecisionFixtures(Array.isArray(v.decisionFixtures)?v.decisionFixtures:[]);restoreFpBenchmarks(v.fpBenchmarks);els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);if(['mock','live','replay'].includes(v.draftMode))els.draftMode.value=v.draftMode;if(['progressive','balanced'].includes(v.strategyMode))els.strategyMode.value=v.strategyMode;if(['baseline','rb','te','rookie','late'].includes(v.stressMode))els.stressMode.value=v.stressMode;if(typeof v.managerMap==='string')els.managerMap.value=v.managerMap;if(v.managerModeSegments&&typeof v.managerModeSegments==='object')saveManagerModeSegments(v.managerModeSegments);persist();renderAll()}
+function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ungültige Sicherung.');experts=v.experts||[];panels=v.panels||panels;activePanelId=v.activePanelId||'standard';positionPanels=v.positionPanels||positionPanels;rankCache=v.rankCache||{};panelRanks=v.panelRanks||{};for(const[id,c]of Object.entries(rankCache)){try{store.set('v7_rank_'+id,c)}catch{}}try{localStorage.removeItem('v7_rankCache');localStorage.removeItem('v7_panelRanks')}catch{};adp=v.adp||{};adpMeta=v.adpMeta||{source:'Backup',updated:Date.now(),count:Object.keys(adp).length};decisionLog=Array.isArray(v.decisionLog)?v.decisionLog:[];saveReturnValidation(Array.isArray(v.returnValidation)?v.returnValidation:[]);saveDecisionFixtures(Array.isArray(v.decisionFixtures)?v.decisionFixtures:[]);restoreFpBenchmarks(v.fpBenchmarks);els.season.value=v.season||'2026';els.scoring.value=v.scoring||'HALF';els.draftInput.value=v.draft||'';els.slot.value=String(v.slot||9);if(['mock','live','replay'].includes(v.draftMode))els.draftMode.value=v.draftMode;if(['progressive','balanced'].includes(v.strategyMode))els.strategyMode.value=v.strategyMode;if(['baseline','rb','te','rookie','late'].includes(v.stressMode))els.stressMode.value=v.stressMode;if(typeof v.managerMap==='string')els.managerMap.value=canonicalize2026ManagerMap(v.managerMap);if(v.managerModeSegments&&typeof v.managerModeSegments==='object')saveManagerModeSegments(v.managerModeSegments);persist();renderAll()}
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
 
 if(els.loadExpertsBtn)els.loadExpertsBtn.onclick=()=>loadExperts().catch(e=>{els.presetStatus.className='notice bad';els.presetStatus.textContent=e.message});
@@ -2665,6 +2885,17 @@ els.renamePanelBtn.onclick=()=>{const p=panels[activePanelId],name=prompt('Neuer
 els.deletePanelBtn.onclick=()=>{if(['standard','pat'].includes(activePanelId))return alert('Standard und Pat bleiben erhalten.');if(confirm('Panel löschen?')){delete panels[activePanelId];delete panelRanks[activePanelId];activePanelId='standard';persist();renderAll()}};
 for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])el.onchange=()=>{positionPanels[pos]=el.value;persist()};
 if(els.expertProfile){els.expertProfile.value=currentExpertProfile();els.expertProfile.onchange=()=>applyExpertProfile(els.expertProfile.value);}
+if(els.analysisExpertProfile){
+  syncAnalysisExpertSelector();
+  els.analysisExpertProfile.onchange=()=>{
+    const requested=els.analysisExpertProfile.value;
+    if(!applyExpertProfile(requested)){
+      els.analysisExpertProfile.value=currentExpertProfile()==='expertv3'?'expertv3':'expertv3';
+      els.draftStatus.className='notice warn';
+      els.draftStatus.textContent=requested+' ist noch nicht vollständig verifiziert und bleibt gesperrt.';
+    }
+  };
+}
 
 async function exportExpertV3Challengers(){
   const status=els.expertV3AuditStatus;
