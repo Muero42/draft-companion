@@ -1,48 +1,35 @@
-# PITTI HANDOFF CURRENT — v194
-Handoff generation: `20260830T1359Z-v194`
-Generation: `20260830T1359Z-v194`
+# PITTI HANDOFF CURRENT — v195
+Handoff generation: `20260830T1618Z-v195`
+Generation: `20260830T1618Z-v195`
 
 ## Canonical state
-- Draft is 31.08.2026; finish-line freeze. No broad feature work/source churn/phone trial-and-error.
-- Current source/deployment authority: **v11.8.0-rc4.130**.
-- Latest fully operational device-observed v4/v5 runtime: **v11.8.0-rc4.126**.
-- rc4.129 was observed on device only far enough to expose a fail-closed Decision-Evidence persistence error during the fresh mock at pick 12; do not call rc4.129 acceptance PASS.
-- rc4.130 is a narrow storage-recovery correction. It changes no expert weights, Coach scoring, Return-v2, or v4/v5 model semantics.
-- main and gh-pages were verified **IDENTICAL** on rc4.130 before this reseal.
+- Runtime/source/deployment authority remains **v11.8.0-rc4.130**.
+- Latest canonical backup: **draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json**, draft **1399782216862588928**.
+- Exact evidence count: **29 current-draft fixtures across 15 own picks; 14/15 exact v4/v5 pairs**.
+- Exact missing pair: **pick 29 / expertv5**. Therefore the intended 30/30 gate is NOT PASS.
+- Do not fabricate the missing fixture or call the backup complete unless a deterministic replay reproduces the original state exactly.
 
-## Evidence/root cause
-- Latest backup: **draft-companion-v7-backup-2026-08-30T13-40-34-982Z.json**, draft **1399782216862588928**, rc4.129.
-- Current-draft paired evidence in that backup: **2/15 pick states = picks 9 and 12 = 4 fixtures**.
-- It also contains **22 historical fixtures** from draft 1399767853707636736.
-- Exact rc4.129 bug: the final quota-recovery attempt used `history.slice(-0)`; JavaScript treats that as `slice(0)`, so history was not actually removed.
-- rc4.130 maps zero-history recovery explicitly to `[]` and further removes redundant rankedPool `robustRankShadow` from persisted fixtures. Active-draft fixtures remain atomic and may never be silently pruned.
-- Candidate package/re-extract, release contract, project guardrails, and the new deterministic rc4.130 quota regression all PASS.
+## Model verdict
+- **v4 PRIMARY**, **v5 CHALLENGER**, **v3 failsafe/control**.
+- 14 exact paired states: same leader 11/14.
+- Divergences: pick32 v4 Javonte vs v5 Nabers; pick92 v4 Dak vs v5 Trevor Lawrence; pick129 v4 De'Zhaun Stribling vs v5 Chris Rodriguez.
+- User choices matched v5 in those three divergences, but user choices are not labels and do not by themselves justify promotion.
+- Paired Top-10 Return Brier is effectively tied (v4 0.09056, v5 0.09052); no last-minute weight/source retune is justified.
+
+## Data-quality audit
+- Terry McLaurin is **4/6 expert coverage in both v4 and v5**, missing **Justin Boone + Sean Koerner**. This is real panel missingness, not merely a rendering artifact.
+- D'Andre Swift at pick52 is Top-1 in both profiles with no player-specific researchEvidence and inactive researchResidual, so the visible rationale is generic-only.
+- Backup-wide Top-10 generic-only rows: v4 **34/150**, v5 **28/140**.
+- Persistent audit tool now merged: `tools/audit-v45-backup.mjs`, CI self-test PASS. It checks pair completeness, sparse coverage/missing expert identities, generic descriptions, and v4/v5 leader divergences.
 
 ## Exact continuation
-`RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK`
-
-1. One controlled device/PWA refresh; verify visible **rc4.130**.
-2. Confirm v4 and v5 remain selectable/operational.
-3. **Start a fresh mock**; do not continue the interrupted rc4.129 mock for acceptance.
-4. Run all 15 own picks. Before each user pick, analyze both v4 and v5; order between v4/v5 is irrelevant.
-5. User may make own realistic draft decisions after both analyses.
-6. Export backup after completion.
-7. FIRST verify exactly **30 current-draft decisionFixtures = 15 pick states × 2 profiles**, every own pick paired once per profile.
-8. Only after 30/30 PASS compare v4 vs v5, Return calibration, late-RB behavior, and user decisions.
-9. If 30/30 fails, diagnose retention before model conclusions.
-
-## Model/invariant authority
-- **v4 PRIMARY**; **v5 CHALLENGER**; **v3 failsafe/control**.
-- v4 individual-only with native Koerner and frozen position-specific blueprint; no Draft Sharks team ranking.
-- v5 = frozen v3 + verified Sean Koerner at 15pp funded from Draft Sharks first; never v4+Koerner.
-- Common published Overall panel is the cross-position Coach scale; positional ranks diagnostic/internal; compact live expert display Overall-only.
-- 10-team Half-PPR, slot 9; user drafts exactly one QB; no K/DST; starter maxima are not roster caps.
-- Geno Smith/Aaron Rodgers rank organically; no player-name forcing.
-- Deferred backup `draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json` remains intentionally unanalyzed unless user explicitly lifts that restriction.
-- No source/weight redesign absent new concrete evidence.
+- Keep **rc4.130** as the draft runtime; audit tooling alone requires no phone update.
+- Keep **v4 PRIMARY / v5 CHALLENGER** for the real draft.
+- Any later backup/export must run through the new quality audit before model conclusions.
+- Do not reopen expert-source/weight design absent new concrete evidence.
+- No cache/app-data clear, reinstall, or phone trial-and-error.
 
 ## Process locks
-- AUTO/AUTO BLOCK = actual long autonomous execution; no promise/status chatter.
+- AUTO/AUTO BLOCK = actual long autonomous execution; no progress chatter.
 - STATUS = report-only/no tools.
-- No cache/app-data clear or reinstall. One controlled refresh only after server parity is proven.
-- Repo v194 authority overrides stale Library mirrors and historical older sections.
+- Starter maxima are not roster caps; normal user draft excludes K/DST; exactly one QB for user roster; Geno/Rodgers rank organically.
