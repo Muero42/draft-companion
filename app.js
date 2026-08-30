@@ -1674,7 +1674,7 @@ function simulateReturnV2(ctx,stress='baseline',runs=900){
       const special=prof?chooseSpecialTeamPick(prof,roster,pickNo,teams,rng):null;
       if(special){roster[special]++;continue;}
       if(!prof){const skillShare=endgameSkillShare(roster,pickNo,mode);if(pickNo>=120&&rng()>skillShare){if(roster.DEF===0&&roster.K===0){if(rng()<.5)roster.DEF++;else roster.K++;}else if(roster.DEF===0)roster.DEF++;else if(roster.K===0)roster.K++;continue;}}
-      const liveAuto=(mode==='live'&&LIVE_MANAGER_ADAPTATION_STATE?.[slot]?.mode==='autodraft');
+      const liveAuto=(mode==='live'&&LIVE_MANAGER_ADAPTATION_STATE?.[slot]?.currentMode==='autodraft');
       const board=pool.slice(0,70).map(p=>({p,w:liveAuto?sleeperLiveAutopickWeight(p,pickNo,roster):simCandidateWeight(p,pickNo,roster,prof,stress)}));
       const chosen=weightedChoice(board,rng);if(!chosen)break;
       const key=norm(chosen.p.name),idx=pool.indexOf(chosen.p);if(idx>=0)pool.splice(idx,1);
