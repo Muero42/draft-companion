@@ -1,20 +1,32 @@
 import fs from 'node:fs';
-const s=fs.readFileSync('app.js','utf8');
-// rc4.114+ invariant: v4/v5 aggregate position ranks, never Overall ranks.
-// Implementations evolved after rc4.114, so assert semantics rather than one historical code string.
+const app=fs.readFileSync('app.js','utf8');
+const live=fs.readFileSync('live-surface-v3.js','utf8');
+
+// rc4.122 invariant: v4 keeps TWO independent rank semantics.
+// - Overall = common cross-position Coach scale.
+// - posRank = position-specific interpretation/provenance.
+// Never compare RB1/WR1/QB1 directly as one global ranking number.
 for(const x of [
-  "v4/v5 are POSITION-SPECIFIC models",
-  "rank:Number.isFinite(Number(x.posRank))&&Number(x.posRank)>0?Number(x.posRank):i+1"
-]) if(!s.includes(x)) throw new Error('positional aggregation invariant missing: '+x);
-if(s.includes("rank:Number(x.rank),posRank:Number(x.posRank??x.rank)")) throw new Error('legacy Overall-as-position aggregation resurrected');
-// Any live individual row entering v4/v5 must aggregate with posRank fallback, while Overall
-// may be retained separately for provenance/display.
-if(!s.includes("rank:Number(row.posRank??row.rank)")) throw new Error('live v4 positional rank mapping missing');
-// Historical v3 rows are also position ranks. They must carry that semantic explicitly into v5,
-// while published Overall provenance stays null unless the source actually supplied it.
+  "const overall=Number(row.overallRank),posRank=Number(row.posRank??row.rank);",
+  "rank:overall,posRank,overallRank:overall",
+  "const posMean=vals.reduce((a,x)=>a+x.posRank*x.effectiveWeight,0)/sw;",
+  "rank:mean,overallRank:mean,posRank:posMean"
+]) if(!app.includes(x)) throw new Error('dual-rank v4 invariant missing: '+x);
+
+// v5 inherits frozen v3 Overall values and must add Koerner on the SAME Overall scale.
 for(const x of [
-  "posRank:Number(e.posRank??e.rank)",
-  "overallRank:Number.isFinite(Number(e.overallRank))?Number(e.overallRank):null",
-  "posRank:cr,overallRank:null"
-]) if(!s.includes(x)) throw new Error('v3/v5 positional provenance invariant missing: '+x);
-console.log('rc4.114+ positional expert aggregation PASS');
+  "const v3Id=EXPERT_PROFILE_IDS.expertv3[pos]",
+  "vals.push({...x,rank:Number(x.rank),overallRank:Number(x.rank)",
+  "rank:Number(k.overallRank??k.rank)",
+  "posRank:Number(k.posRank)"
+]) if(!app.includes(x)) throw new Error('v5 common-scale invariant missing: '+x);
+
+// Compact live view must expose both semantics when both exist.
+for(const x of [
+  "function expertRankLabel(hit,pos)",
+  "${pos}#${Math.round(posRank)} · Ovr #${Math.round(overall)}",
+  "return'expertv5'",
+  "return'expertv4'"
+]) if(!live.includes(x)) throw new Error('compact rank/profile invariant missing: '+x);
+
+console.log('rc4.122 dual-rank aggregation/display PASS');
