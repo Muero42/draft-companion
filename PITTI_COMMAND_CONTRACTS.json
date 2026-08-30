@@ -124,6 +124,6 @@
     "deferredRealDecisionMock": "draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json — DO NOT ANALYZE UNTIL USER LIFTS RESTRICTION"
   },
   "currentGate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
-  "handoffGeneration": "20260830T0530Z-v181",
-  "handoff_generation": "20260830T0530Z-v181"
+  "handoffGeneration": "20260830T0625Z-v182",
+  "handoff_generation": "20260830T0625Z-v182"
 }
