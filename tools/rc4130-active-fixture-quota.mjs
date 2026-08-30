@@ -49,11 +49,21 @@ function fixture(draftId,i){
 // Reproduce the rc4.129 defect: 22 historical rows plus active rows exceed quota.
 // The final historyKeep=0 attempt must mean truly zero history (slice(-0) would keep all history).
 {
-  const {ctx,m}=makeCtx(2600);
   const rows=[
     ...Array.from({length:22},(_,i)=>fixture('D1',i)),
     ...Array.from({length:4},(_,i)=>fixture('D2',100+i))
   ];
+  // Derive a deterministic quota between the compact active-only payload and the
+  // compact history+active payload. This tests recovery semantics rather than a
+  // brittle hand-picked byte threshold.
+  const activeProbe=makeCtx(1e9);
+  activeProbe.ctx.saveDecisionFixtures(rows.filter(x=>x.draftId==='D2'));
+  const activeBytes=activeProbe.m.get('v118_decisionFixtures').length;
+  const allProbe=makeCtx(1e9);
+  allProbe.ctx.saveDecisionFixtures(rows);
+  const allBytes=allProbe.m.get('v118_decisionFixtures').length;
+  if(!(activeBytes<allBytes))throw new Error('fixture size probe invalid');
+  const {ctx,m}=makeCtx(Math.floor((activeBytes+allBytes)/2));
   const ok=ctx.saveDecisionFixtures(rows);
   if(!ok)throw new Error('active-only recovery should succeed');
   const stored=JSON.parse(m.get('v118_decisionFixtures'));
