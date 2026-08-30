@@ -2615,3 +2615,9 @@ A takeover audit of sealed v181 found two semantic regressions despite a structu
 - `PITTI_EXECUTION_LOCK.json` still exposed v180 `currentWork/status/gate/nextGate/handoff` authority, pointing back to the pre-merge expert-v4/v5 research-branch gate.
 
 These stale fields could reactivate an old path in a new chat, so v181 is superseded by generation `20260830T0625Z-v182` (v182). Repaired authority is now: rc4.107 on main/gh-pages, device observed but functional live-refresh/v4/v5 acceptance pending; rc4.106 remains the accepted functional fallback; exact gate `RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE`; v3 remains default/failsafe; v4/v5 remain fail-closed; deferred 19-44-43 mock remains unanalyzed. The historical v180 expertV45 evidence is retained as history only, not current execution authority.
+
+
+### 2026-08-30 — v182 CI second-pass finding
+- Post-seal CI correctly rejected v182 because `PITTI_COMMAND_CONTRACTS.currentBoundary` used a descriptive Android-authority string instead of the exact machine-readable CURRENT value and omitted `latestPackageSha256` / `packageReferenceRun` required by the guardrail.
+- This proves the first v182 seal was premature despite manual semantic checks. Repaired command-boundary fields to exact CURRENT values and immediately invalidated the seal to `SUPERSEDED_PENDING_RESEAL`; no runtime code changed.
+- Do not call v182 handoff PASS again until the repaired head passes CI and all seal-listed blob SHAs are rebuilt from that final state.
