@@ -1,13 +1,14 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.117; off-device release gates pending; no device install authorized yet.
-> **rc4.117 scope:** v4 individual-only position-specific expert re-audit + correct Overall/position rank provenance; v5 = frozen v3 + verified Sean Koerner, funded primarily from Draft Sharks Team share.
-> **Finish-line mode:** no broad feature work, no duplicate source research, no trial-and-error device debugging. v3 remains failsafe/control.
-> **Fallback:** v3 remains default/failsafe; rc4.114 v4 is accepted evidence.
+> **Current source/package candidate:** v11.8.0-rc4.117; full off-device PASS. gh-pages still rc4.115, so parity is FALSE until promotion.
+> **Primary finish-line target:** validate v4 on device first. v5 is optional only if time remains and must not delay a validated v4 draft build.
+> **v4:** individual-only, native Sean Koerner, position-specific weights; no Draft Sharks team ranking. Overall provenance is stored separately from positional aggregation.
+> **v5:** frozen v3 + Sean Koerner 15 points, funded from Draft Sharks Team first.
+> **Next gate:** RC4.117_DEPLOY_PARITY_THEN_DEVICE_V4_ACCEPTANCE.
+> **Finish-line mode:** no broad feature work, duplicate source research, or phone trial-and-error.
+> **Fallback:** v3 / rc4.114 lineage remains emergency fallback only.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
 > **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
 > **rc4.100 scope:** generic Pro/Contra semantic hardening + bounded short-turn portfolio ordering; no global ranking/Return/expert retune, no hard WR cap/quota.
-> **Current gate:** RC4.115_DEVICE_V5_ACCEPTANCE.
-> **Current gate:** RC4106_ANDROID_DISPLAY_ACCEPTANCE.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
 
