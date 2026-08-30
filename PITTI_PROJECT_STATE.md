@@ -2593,3 +2593,14 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - PR #49 merged to main as fccac7f5d28c3e533eff2e80209e45d50f142317. gh-pages runtime was updated and independently checked **13/13 byte parity with main**. rc4.107 is therefore deployed for device acceptance.
 - Android authority remains rc4.106 until the user/device observes rc4.107 and runs the live FantasyPros refresh. v3 is default. v4/v5 remain fail-closed until real current source coverage succeeds; v5 additionally requires Koerner exact import/crosscheck.
 - **Next unavoidable external gate:** device loads rc4.107 → Alles aktualisieren → inspect v4/v5 readiness/source status and same-state behavior. Do not claim Android acceptance before that observation.
+
+
+### 2026-08-30 — HANDOFF v181 second-pass anti-regression audit
+- A full takeover-source audit after rc4.107 deployment found several stale **authority documents** that still pointed to rc4.106 / the research branch / the pre-merge coverage gate. These stale pointers were a real regression risk for the next chat even though runtime rc4.107 was correct.
+- Repaired command contracts, CURRENT, execution lock, AUTO preflight, current handoff, bootstrap and completeness matrix to one rc4.107 device/live-refresh gate.
+- Canonical next gate: rc4.107 is already observed on device; run **Alles aktualisieren**, then inspect live-current v4 coverage, Koerner acquisition/crosscheck, v5 readiness and same-state v3↔v4↔v5. v3 remains default/failsafe until PASS.
+- Re-locked critical corrections: Geno Smith/Aaron Rodgers rank organically before QB1 and are never player-name excluded/demoted; exactly-one-QB applies only after QB1. Canonical manager order is 1 Michael / 2 Pascal Voerde / 3 Marc Düsseldorf / 4 Thomas / 5 Björn / 6 Pascal Gelderner / 7 Giuliano / 8 Bastian / 9 Muerotechnik / 10 Dutch Marc. No Michael K; no Moers Venom. Pascal Voerde is long-tenured.
+- Bigsby/Spears/Dobbins coverage class remains protected by explicit missingness; no blind imputation or silent expert-set renormalization. v4 uses live-current verified rows only; diagnostic embedded rows are not a freshness bypass. v5 remains fail-closed on Koerner/crosscheck/DS-funding requirements.
+- Selector remains directly above Analyze and model switching must preserve identical draft state.
+- Deferred file `draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json` remains **UNANALYZED BY USER INSTRUCTION**.
+- Handoff generation advanced to `20260830T0530Z-v181`; seal must be rebuilt only after all authority files are written and verified.
