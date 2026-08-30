@@ -2847,3 +2847,11 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Mobile UX: v4/v5 expert audit/status display moved above the analysis expert selector; selector now sits immediately above the Analyze & Snapshot button.
 - No decision/model/evidence logic changed from rc4.125.
 - Off-device syntax/version/DOM-order checks PASS.
+
+
+### rc4.127 fixed expert columns — OFF-DEVICE PASS
+- Device screenshot exposed inconsistent expert names within the same selected profile when a deep player lacked one source row. Root cause was presentation: compact expertOrder derived the visible names from each player's actual rows, so missing experts disappeared and the list changed player-to-player.
+- rc4.127 makes the compact live surface use the canonical expert set for the selected v4/v5 profile and position. Missing source rows are shown explicitly as #–; they are never silently substituted or renormalized for display.
+- v4 WR display is fixed to Koerner / Mariano / Boone / Todd / Del Don / Pat. v5 WR display is fixed to Draft Sharks / Pat / Boone / Koerner / Mariano / Del Don. Equivalent canonical locks apply to QB/RB/TE.
+- No scoring, weighting, return, evidence, or panel construction logic changed from rc4.126.
+- Off-device PASS: JS syntax, rc4.127 version/cache contract, canonical v4 sets vs blueprint, v5 sets derived from frozen v3 topology + Koerner, and explicit #– missing-rank policy.
