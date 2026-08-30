@@ -27,14 +27,16 @@
     "test_challenger_android_observed": true,
     "android_acceptance_pending": true,
     "android_observed": "v11.8.0-rc4.107",
-    "android_functional_acceptance": "PENDING_LIVE_REFRESH_AND_V4_V5_SOURCE_ACCEPTANCE",
+    "android_functional_acceptance": "REFRESH_SUCCEEDED_V4_V5_READINESS_EVIDENCE_PENDING",
     "rollback_reference": "v11.8.0-rc4.96",
-    "accepted_android_fallback_functional_verified": true
+    "accepted_android_fallback_functional_verified": true,
+    "rc4107_device_refresh_observed": true,
+    "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot."
   },
   "exact_continuation": {
     "gate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "Device has rc4.107. Run Alles aktualisieren once, then inspect live expert acquisition/coverage. Validate v4 individual-only and v5 Koerner path against v3 on the same state. Keep v3 default until v4/v5 readiness gates pass. Do not analyze deferred 19-44-43 real-decision mock yet."
+    "instruction": "rc4.107 full refresh is now device-observed successful. Inspect the analysis expert selector/readiness immediately above Analyze (v3/v4/v5) and source/coverage status; v3 stays default until v4/v5 gates pass. Do not analyze deferred 19-44-43 mock."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -56,7 +58,7 @@
     "status": "HANDOFF_v183_READY_RC4107_DEVICE_GATE",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Run Alles aktualisieren on rc4.107 device; evaluate resulting live coverage/Koerner source and same-state v3/v4/v5 behavior.",
+    "next_action": "Inspect device analysis expert selector/readiness directly above Analyze after successful rc4.107 refresh; capture v4/v5 availability/source status. Keep v3 default until PASS.",
     "gate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE"
   },
   "source_authority": "v11.8.0-rc4.107",
