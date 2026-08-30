@@ -112,20 +112,20 @@
     "using stale embedded expert rows as live-current v4/v5 source data"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.106 accepted Android/runtime baseline",
-    "androidAuthority": "v11.8.0-rc4.107",
-    "sourceAuthority": "v11.8.0-rc4.108",
+    "productionControl": "v11.8.0-rc4.108 device-observed operational baseline; v3 default; v4/v5 fail-closed",
+    "androidAuthority": "v11.8.0-rc4.108",
+    "sourceAuthority": "v11.8.0-rc4.109",
     "latestPackageReextract": "v11.8.0-rc4.107 PASS · 13 runtime files · sha256:adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c",
-    "deployedPagesVersion": "v11.8.0-rc4.107",
+    "deployedPagesVersion": "v11.8.0-rc4.108",
     "deployedPagesAppByteParityWithMain": true,
-    "researchBranch": "pitti/expert-v4-v5-v180 retained as historical implementation branch; main now carries rc4.107",
-    "currentResearchGate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
-    "exactNextAction": "On device rc4.107 run Alles aktualisieren; then inspect v4/v5 live coverage, Koerner source/crosscheck and same-state behavior before accepting Android authority.",
+    "researchBranch": "main; historical pitti/expert-v4-v5-v180 retained only as provenance",
+    "currentResearchGate": "RC4.109_PACKAGE_DEPLOY_AND_DEVICE_ACCEPTANCE",
+    "exactNextAction": "AUTO gate/package/deploy rc4.109; only after PASS request one device refresh and inspect v4/v5 readiness.",
     "deferredRealDecisionMock": "draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json — DO NOT ANALYZE UNTIL USER LIFTS RESTRICTION",
     "latestPackageSha256": "artifact-envelope-sha256:e02a01ccc1951e731c6df3a3dc6a885be870c6094f8d5be342e367e1102b9bb4",
     "packageReferenceRun": 33298224019,
     "packageReferenceArtifactId": 9728081210,
-    "runtimeVersion": "v11.8.0-rc4.108"
+    "runtimeVersion": "v11.8.0-rc4.109"
   },
   "currentGate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
   "handoffGeneration": "20260830T0702Z-v185",
