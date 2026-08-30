@@ -69,14 +69,20 @@ Otherwise continue AUTO.
 - Frozen Expert-v2 weights/profile semantics in `PITTI_EXECUTION_LOCK.json` are authoritative for the current experiment; do not invent, silently renormalize, or retune them without new promotion evidence.
 
 
+- Active-draft decisionFixtures must never be deleted/pruned to recover browser quota; old history/secondary evidence may yield first.
+- A full paired 15-round v4/v5 mock is invalid unless the exported backup contains exactly 30 active-draft fixtures covering all 15 own picks twice.
+
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
 - Never answer an AUTO turn with “AUTO läuft”, “ich mache weiter”, or equivalent future-tense progress prose. Work must be executed before any reply.
 - During PITTI HANDOFF, finish the complete transactional audit/reseal before replying unless an unavoidable blocker prevents it.
-- Current source/package/deployment candidate = rc4.107 with exact 13-file main/gh-pages parity PASS; accepted Android functional authority remains rc4.106 until rc4.107 live-refresh acceptance completes.
-- rc4.107 is already observed on device; current gate is RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE.
-- Exact next device action: run Alles aktualisieren once on rc4.107, then inspect live v4/v5 coverage + Koerner validation. v3 remains default/failsafe until those gates pass.
-- Canonical completed mock evidence: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json, draft 1399284498113294336, produced on rc4.101.
-- Bounded frozen-fixture replay is CI PASS for the observed rc4.101 failure mechanisms under rc4.104. Browser-equivalent full historical recomputation is unavailable and must not be fabricated.
+- Current source/deployment authority = **v11.8.0-rc4.129**; latest device-observed operational runtime = **rc4.126**.
+- v4 and v5 are already operational on device. v4 remains PRIMARY; v5 remains CHALLENGER.
+- rc4.129 fixes silent paired-evidence loss: active-draft decisionFixtures are atomic, may not be quota-pruned, and persistence failure must surface explicitly.
+- Exact next gate: **RC4.129_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK**.
+- One controlled refresh to rc4.129; then one complete 15-round realistic mock with BOTH v4 and v5 at every own pick.
+- Backup acceptance requires **30 decisionFixtures = 15 exact pick states × 2 profiles** before any v4/v5 model comparison.
+- Latest backup `draft-companion-v7-backup-2026-08-30T12-47-22-598Z.json` is incomplete paired evidence: 11/15 states; missing 9/12/29/32.
+- No model-weight/source retune from that incomplete backup. No phone trial-and-error.
 
 ## 9. AUTO TURN TERMINATION — HARD GATE
 - Completing one work package is **not** permission to end the assistant turn.
