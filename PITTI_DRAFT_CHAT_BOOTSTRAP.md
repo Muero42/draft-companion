@@ -10,7 +10,7 @@ This chat is for live draft decisions, not implementation work. Load the final c
 - Exact order: 1 Michael · 2 Pascal Voerde · 3 Marc Düsseldorf · 4 Thomas · 5 Björn · 6 Pascal Gelderner · 7 Giuliano · 8 Bastian · 9 Muerotechnik · 10 Dutch Marc.
 - Starter maxima are NOT roster caps.
 - User drafts exactly one QB; no K/DST in normal draft.
-- Hard USER QB exclusions: **Geno Smith and Aaron Rodgers must never be recommended or drafted**. Do not confuse this with a generic engine/player-quality demotion rule.
+- **Geno Smith and Aaron Rodgers are NOT hard exclusions.** No name-specific demotion/removal/forcing. They must rank organically; if absent from recommendations, that must follow from the frozen Coach/player-quality evaluation.
 - v4 PRIMARY; v5 CHALLENGER; v3 failsafe.
 - Return labels are timing evidence, not pick commands.
 - At the 9/10 turn evaluate the two-pick portfolio; 1-3 Coach points are a near-tie.
