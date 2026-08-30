@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-29T19:51:00Z",
+  "updatedAt": "2026-08-30T07:00:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -92,12 +92,16 @@
     "starterMaximaAreRosterCaps": false,
     "normalDraftKDst": false,
     "userDraftQbLimit": 1,
-    "userQb2Policy": "HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1"
+    "userQb2Policy": "HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1",
+    "userQbHardExclusions": [
+      "Geno Smith",
+      "Aaron Rodgers"
+    ]
   },
   "canaries": {
     "snapshotIdentityIncludesDraftId": true,
-    "genoSmithExcludedFromUserQbPath": false,
-    "aaronRodgersExcludedFromUserQbPath": false,
+    "genoSmithExcludedFromUserQbPath": true,
+    "aaronRodgersExcludedFromUserQbPath": true,
     "excessWrDepthMustReduceMarginalWrUtility": true,
     "rejectSuperflex2qbEvidence": true,
     "noPairSumRollingResurrection": true,
@@ -109,7 +113,7 @@
     "qb2MustNotAppearOnUserCoachSurfaceAfterQb1": true,
     "noGlobalTe2Ban": true,
     "userSpecificQb2ExclusionIsNotGenericLeagueRule": true,
-    "noPlayerNameQbExclusions": true
+    "noPlayerNameQbExclusions": false
   },
   "expertV2": {
     "status": "LEGACY_PRESERVED_SUPERSEDED_FOR_NEW_V4_V5_COMPARISON",
