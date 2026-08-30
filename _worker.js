@@ -89,7 +89,7 @@ function slugify(s){
 async function fetchHtml(url){
   const r=await fetch(url,{headers:{
     'accept':'text/html,application/xhtml+xml',
-    'user-agent':'Mozilla/5.0 (compatible; DraftCompanion/9.4; +https://pages.dev)'
+    'user-agent':'Mozilla/5.0 (compatible; DraftCompanion/11.8; +https://pages.dev)'
   },cf:{cacheTtl:1800,cacheEverything:true}});
   if(!r.ok)throw new Error(`HTTP ${r.status}`);
   return await r.text();
@@ -239,6 +239,57 @@ const YAHOO_STAFF_URLS=[
   'https://sports.yahoo.com/fantasy/article/fantasy-football-rankings-consensus-top-300-players-160643696.html',
   'https://ca.sports.yahoo.com/news/fantasy-football-rankings-consensus-top-300-players-160643696.html'
 ];
+const ROTOBALLER_MARIANO_HALF_PPR_URLS=[
+  'https://www.rotoballer.com/updated-top-400-half-ppr-fantasy-football-rankings-2026/1916255',
+  'https://www.rotoballer.com/top-400-updated-half-ppr-fantasy-football-rankings-2026/1910000',
+  'https://www.rotoballer.com/fantasy-football-draft-rankings-august-updates-2026/1905031'
+];
+function parseRotoBallerOverall(html){
+  const out=[],seen=new Set();
+  for(const row of tableRows(html)){
+    const c=row.cells;
+    if(c.length<3)continue;
+    let rank=null,name='',pp=null;
+    // Current RotoBaller overall tables are Tier | Rank | Player Name | Pos.
+    for(let i=0;i<c.length;i++){
+      const n=Number(String(c[i]||'').trim());
+      if(rank===null&&Number.isFinite(n)&&n>=1&&n<=500){rank=n;continue}
+      if(!pp){const p=parsePosToken(c[i]);if(p)pp=p}
+    }
+    if(!rank||!pp)continue;
+    for(const cell of c){
+      const t=String(cell||'').trim();
+      if(!t||/^\d+$/.test(t)||parsePosToken(t)||/^tier$/i.test(t)||/^rank$/i.test(t)||/^player name$/i.test(t)||/^pos\.?$/i.test(t))continue;
+      if(/[A-Za-z]/.test(t)&&t.length>2){name=t;break}
+    }
+    if(!name||seen.has(name.toLowerCase()))continue;
+    seen.add(name.toLowerCase());out.push({rank,name,pos:pp.pos,posRank:pp.posRank});
+  }
+  return out.sort((a,b)=>a.rank-b.rank);
+}
+async function tryRotoBallerMariano(name,scoring,season='2026'){
+  if(!/nick mariano/i.test(name))return {ok:false,error:'kein Mariano-Adapter'};
+  if(scoring!=='HALF')return {ok:false,error:'RotoBaller Mariano Adapter nur für Half-PPR freigegeben'};
+  const errors=[];
+  for(const url of ROTOBALLER_MARIANO_HALF_PPR_URLS){
+    try{
+      const html=await fetchHtml(url),plain=stripHtml(html);
+      if(!new RegExp('\\b'+season+'\\b').test(plain)||!/half[- ]?ppr/i.test(plain)||!/Nick Mariano/i.test(plain)){
+        errors.push(url+': Kontext nicht verifiziert');continue;
+      }
+      const players=parseRotoBallerOverall(html);
+      const draftable=players.filter(x=>['QB','RB','WR','TE'].includes(x.pos));
+      if(draftable.length>=120)return {
+        ok:true,source:'RotoBaller – Nick Mariano Half-PPR Overall',sourceUrl:url,players,
+        exactCount:players.length,reconstructedCount:0,coverage:1,confidence:'external-exact',
+        updated:'',sourceContextVerified:true,sourceSeason:String(season),sourceScoring:'HALF',
+        sourceContext:{ok:true,method:'RotoBaller published Nick Mariano Half-PPR overall table'}
+      };
+      errors.push(url+': nur '+draftable.length+' draftbare Zeilen');
+    }catch(e){errors.push(url+': '+e.message)}
+  }
+  return {ok:false,error:'RotoBaller Mariano: '+errors.join(' | ')};
+}
 async function tryYahooExpert(name){
   const errors=[];
   if(/justin boone/i.test(name)){
@@ -445,6 +496,14 @@ async function handleExpertRanking(request,url){
   if(season!=='2026')return json({error:`Multi-Source-Adapter derzeit nur für Saison ${season} validiert.`},422);
 
   const attempts=[];
+
+  // Nick Mariano's current 2026 Half-PPR overall board is published by RotoBaller,
+  // while FantasyPros does not expose a usable individual Overall page. Prefer the
+  // named expert's own published board rather than reconstructing/renormalizing it.
+  if(/nick mariano/i.test(name)&&scoring==='HALF'){
+    const rb=await tryRotoBallerMariano(name,scoring,season);attempts.push(rb.error||rb.source);
+    if(rb.ok)return json(rb);
+  }
 
   // 1) Exact public individual list.
   const fp=await tryFantasyProsDirect(name,scoring,season);attempts.push(fp.error||fp.source);
