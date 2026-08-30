@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-30T12:15:00Z",
+  "updatedAt": "2026-08-30T12:32:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,19 +11,19 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.117",
+    "appVersion": "v11.8.0-rc4.122",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.114",
-    "latestPreinstallVerified": "v11.8.0-rc4.117",
+    "latestPreinstallVerified": "v11.8.0-rc4.122 OFF-DEVICE CONTRACT PASS",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.117",
     "preinstallSha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.117",
-    "latestDeployedCandidate": "v11.8.0-rc4.117",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.122",
+    "latestDeployedCandidate": "v11.8.0-rc4.122",
     "latestAndroidVerified": "v11.8.0-rc4.106",
     "androidAuthority": "v11.8.0-rc4.114",
     "android_authority": "v11.8.0-rc4.114",
@@ -185,17 +185,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.117_DEVICE_V4_ACCEPTANCE",
+    "status": "RC4.122_DEVICE_V45_ACCEPTANCE",
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.114",
-    "runtime": "v11.8.0-rc4.117",
-    "mainRuntimeParity": "PASS_SOURCE_PACKAGE_AND_GH_PAGES",
-    "nextGate": "ONE_DEVICE_REFRESH_INSTALL_THEN_V4_ACCEPTANCE"
+    "runtime": "v11.8.0-rc4.122",
+    "mainRuntimeParity": "PASS_OFFDEVICE_AND_GH_PAGES",
+    "nextGate": "ONE_DEVICE_REFRESH_THEN_V4_V5_AND_BARKLEY_ACCEPTANCE"
   },
-  "status": "V192_DEPLOY_PARITY_PASS_DEVICE_V4_PENDING",
-  "gate": "RC4.117_DEVICE_V4_ACCEPTANCE",
-  "nextGate": "One controlled device refresh/install; verify rc4.117; test v4 first; realistic mocks if PASS; v5 optional.",
+  "status": "RC4.122_DEPLOYED_PARITY_PASS_DEVICE_ACCEPTANCE_PENDING",
+  "gate": "RC4.122_DEVICE_V45_ACCEPTANCE",
+  "nextGate": "One device refresh; verify v4/v5 selectable, Barkley RB#8 · Ovr #14, and common-scale ranking.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -211,17 +211,17 @@
     "resume": "rc4.117 off-device/package PASS and gh-pages/main parity PASS. Next one controlled device refresh/install and v4 acceptance; v5 only if time remains."
   },
   "expertV45": {
-    "status": "FINISH_LINE_V4_FIRST",
+    "status": "RC4.122_OFFDEVICE_PASS_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
     "v3": {
       "status": "FROZEN_BASELINE_DEFAULT_FAILSAFE"
     },
     "v4": {
-      "status": "RC4.117_OFFDEVICE_PASS_DEVICE_TEST_PRIMARY",
+      "status": "RC4.122_DUAL_RANK_OFFDEVICE_PASS",
       "design": "INDIVIDUAL_ONLY_NATIVE_KOERNER_WEIGHTED_BLUEPRINT",
       "doNotReopenSourcesWithoutNewEvidence": true
     },
     "v5": {
-      "status": "OPTIONAL_AFTER_V4",
+      "status": "RC4.122_V3_PLUS_KOERNER_EXACT15_OFFDEVICE_PASS",
       "design": "V3_PLUS_KOERNER_15PP_FUNDED_FROM_DRAFT_SHARKS_FIRST",
       "legacyV4PlusKoerner": false
     },
