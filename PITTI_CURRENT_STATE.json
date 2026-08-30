@@ -11,8 +11,8 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.131",
-    "test_challenger": "v11.8.0-rc4.131",
-    "test_challenger_android_verified": true,
+    "test_challenger": "v11.8.0-rc4.132",
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.131 CI PACKAGE/RE-EXTRACT PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
@@ -80,7 +80,7 @@
     "transaction_rule": "Official transaction/IR/PUP truth outranks stale Sleeper metadata; same-position move alone is weak evidence unless role/health impact is corroborated.",
     "draft_chat_rule": "Start a brand-new chat for the real draft after final runtime/freshness checkpoint. That draft chat is execution-only: load DRAFT_CHAT_BOOTSTRAP + canonical state, do not redesign code/model during the draft unless a release-critical emergency makes the app unusable."
   },
-  "android_acceptance_pending": false,
+  "android_acceptance_pending": true,
   "expert_v4_v5": {
     "v3": "frozen control/failsafe; embedded team/individual hybrid as historically audited",
     "v4": "CURRENT RE-AUDIT: individual-only, only experts with obtainable individual rankings. Position-specific optimized weights in app.js EXPERT_V4_BLUEPRINT. Koerner is native v4.",
@@ -152,15 +152,15 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.132_SOURCE_BUILT_REGRESSION_IN_PROGRESS",
+    "status": "RC4.132_CANDIDATE_PREFLIGHT",
     "production": false,
-    "androidVerified": true,
+    "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
-    "runtime": "rc4.131 accepted Android; rc4.132 source now versioned on main",
+    "runtime": "rc4.131 accepted Android; rc4.132 candidate under full off-device gate",
     "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
     "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
   },
-  "status": "RC4.132_SOURCE_BUILT_REGRESSION_IN_PROGRESS",
+  "status": "RC4.132_CANDIDATE_PREFLIGHT",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
   "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
   "evidenceRetention": {
