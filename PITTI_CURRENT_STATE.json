@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1822Z-v207",
-  "updated_at": "2026-08-30T18:30:00Z",
+  "updated_at": "2026-08-30T18:41:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -38,7 +38,7 @@
   "exact_continuation": {
     "gate": "RC4.132_BUILD_AND_REGRESSION",
     "auto_starts_mock": false,
-    "instruction": "Continue rc4.132 regression/release gates. Deep audit found and fixed a real live-autodraft Return-v2 wiring defect: code checked `.mode` while adaptation state stores `.currentMode`, so the Sleeper SearchRank autodraft branch was unreachable. Manager-history runtime years repaired: Michael 6 incl 2025; Pascal Voerde 9 incl 2017-2025. No device refresh until full off-device gates/parity pass."
+    "instruction": "rc4.132 candidate PR gates all PASS and merged to main at 9b25dcf. Continue post-merge main/deployment/parity verification; no phone action until exact deployed parity is proven."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -152,7 +152,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.132_CANDIDATE_PREFLIGHT",
+    "status": "RC4.132_MAIN_MERGED_POSTMERGE_GATES_PENDING",
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
@@ -160,7 +160,7 @@
     "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
     "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
   },
-  "status": "RC4.132_CANDIDATE_PREFLIGHT",
+  "status": "RC4.132_MAIN_MERGED_POSTMERGE_GATES_PENDING",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
   "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
   "evidenceRetention": {
