@@ -2604,3 +2604,14 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Selector remains directly above Analyze and model switching must preserve identical draft state.
 - Deferred file `draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json` remains **UNANALYZED BY USER INSTRUCTION**.
 - Handoff generation advanced to `20260830T0530Z-v181`; seal must be rebuilt only after all authority files are written and verified.
+
+
+---
+
+## 2026-08-30 — HANDOFF v182 SEMANTIC CONSISTENCY REPAIR
+
+A takeover audit of sealed v181 found two semantic regressions despite a structurally valid PASS seal:
+- `PITTI_CURRENT_STATE.json` simultaneously carried rc4.107 acceptance pending at top level while nested `runtime.android_functional_verified=true`, and its draft-day runtime text still described rc4.105/rc4.106 pre-rc4.107 state.
+- `PITTI_EXECUTION_LOCK.json` still exposed v180 `currentWork/status/gate/nextGate/handoff` authority, pointing back to the pre-merge expert-v4/v5 research-branch gate.
+
+These stale fields could reactivate an old path in a new chat, so v181 is superseded by generation `20260830T0625Z-v182` (v182). Repaired authority is now: rc4.107 on main/gh-pages, device observed but functional live-refresh/v4/v5 acceptance pending; rc4.106 remains the accepted functional fallback; exact gate `RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE`; v3 remains default/failsafe; v4/v5 remain fail-closed; deferred 19-44-43 mock remains unanalyzed. The historical v180 expertV45 evidence is retained as history only, not current execution authority.
