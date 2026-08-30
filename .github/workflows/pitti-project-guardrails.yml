@@ -72,6 +72,9 @@ jobs:
       - name: rc4.112 Mariano source contract
         run: |
           if grep -Eq "v11.8.0-rc4.11[2-9]|v11.8.0-rc4.1[2-9][0-9]" app.js; then node tools/rc4112-mariano-source.mjs; fi
+      - name: rc4.113 configured expert identity contract
+        run: |
+          if grep -Eq "v11.8.0-rc4.11[3-9]|v11.8.0-rc4.1[2-9][0-9]" app.js; then node tools/rc4113-configured-expert-identity.mjs; fi
       - name: PITTI execution-lock and anti-regression gate
         env:
           PITTI_SKIP_SEAL_INTEGRITY: ${{ github.event_name == 'pull_request' && '1' || '0' }}
