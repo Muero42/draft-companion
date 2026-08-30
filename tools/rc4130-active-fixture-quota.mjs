@@ -6,7 +6,7 @@ if(!src.includes("v11.8.0-rc4.130"))throw new Error('rc4.130 version missing');
 if(!src.includes("historyKeep===0?[]:history.slice(-historyKeep)"))throw new Error('zero-history recovery fix missing');
 if(!src.includes("const{panelIndividuals,robustRankShadow,...rest}=p"))throw new Error('rankedPool quota compaction missing');
 
-const start=src.indexOf('function compactDecisionFixtureForStorage');
+const start=src.indexOf('function decisionFixtureKey');
 const end=src.indexOf('function resolveReturnValidation',start);
 if(start<0||end<0)throw new Error('decision fixture storage block missing');
 const helper=src.slice(start,end);
