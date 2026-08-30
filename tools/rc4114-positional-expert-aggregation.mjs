@@ -10,4 +10,11 @@ if(s.includes("rank:Number(x.rank),posRank:Number(x.posRank??x.rank)")) throw ne
 // Any live individual row entering v4/v5 must aggregate with posRank fallback, while Overall
 // may be retained separately for provenance/display.
 if(!s.includes("rank:Number(row.posRank??row.rank)")) throw new Error('live v4 positional rank mapping missing');
+// Historical v3 rows are also position ranks. They must carry that semantic explicitly into v5,
+// while published Overall provenance stays null unless the source actually supplied it.
+for(const x of [
+  "posRank:Number(e.posRank??e.rank)",
+  "overallRank:Number.isFinite(Number(e.overallRank))?Number(e.overallRank):null",
+  "posRank:cr,overallRank:null"
+]) if(!s.includes(x)) throw new Error('v3/v5 positional provenance invariant missing: '+x);
 console.log('rc4.114+ positional expert aggregation PASS');
