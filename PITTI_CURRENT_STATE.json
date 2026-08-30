@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260830T1755Z-v204",
-  "updated_at": "2026-08-30T17:55:00Z",
+  "handoff_generation": "20260830T1808Z-v205",
+  "updated_at": "2026-08-30T18:08:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -36,9 +36,9 @@
     "source_candidate": "UNRELEASED_RUNTIME_DELTA_ON_MAIN: v203 live-autodraft Return-v2 code merged while version string remains rc4.131; must be versioned/tested as rc4.132 before phone use"
   },
   "exact_continuation": {
-    "gate": "PRE_DRAFT_READINESS_FREEZE",
+    "gate": "RC4.132_BUILD_AND_REGRESSION",
     "auto_starts_mock": false,
-    "instruction": "No new full mock solely for rc4.131. Keep v4 PRIMARY. Perform final freshness/materiality scans and verify Swift/Lamar card rationale opportunistically if those cards appear."
+    "instruction": "First repair/release rc4.132: version the v203 live-autodraft runtime delta, encode Pick32 Nabers/Javonte roster-aware regression, repair stale active-manager historical profiles (Michael 2025 missing; Pascal Voerde Bracht→Voerde chain), then full gates/parity/device verification. Only after that continue final cutdown/IR/PUP/waiver/expert/ADP freshness."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -58,42 +58,43 @@
     "status": "PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "generation": "20260830T1755Z-v204",
-    "seal_generation": "20260830T1755Z-v204",
+    "generation": "20260830T1808Z-v205",
+    "seal_generation": "20260830T1808Z-v205",
     "gate": "RC4.132_BUILD_AND_REGRESSION",
-    "next_action": "Build rc4.132 containing live-autodraft Return-v2 plus Pick32 Nabers/Javonte roster-aware near-tie fix; full gates then device verification.",
-    "resume": "Start with rc4.132 build/regressions. Do not continue freshness-only work first; runtime release inconsistency is priority.",
-    "resume_semantics": "rc4.131 is last accepted Android authority; v203 main/gh-pages runtime delta is unreleased until rc4.132."
+    "next_action": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
+    "resume": "Start rc4.132 work immediately. Before release, fix manager-history corruption and exact-order canaries in addition to Autodraft/Pick32. After rc4.132 device acceptance, finish draft-day freshness and then generate/use the fresh draft execution chat.",
+    "resume_semantics": "v205 supersedes v204 and all stale nested rc4.114/117/v194/v195 pointers."
   },
-  "source_authority": "v11.8.0-rc4.131",
-  "package_authority": "v11.8.0-rc4.117 run 33305284763 artifact 9730250635",
+  "source_authority": "v203 UNRELEASED runtime delta under rc4.131 label; rc4.131 remains accepted Android authority until rc4.132 PASS",
+  "package_authority": "rc4.131 last accepted package/runtime lineage; rc4.132 package gate required",
   "android_version_observed": "v11.8.0-rc4.131",
   "android_functional_verified": true,
-  "deployment_authority": "v11.8.0-rc4.131 gh-pages/main exact parity PASS",
+  "deployment_authority": "main==gh-pages at unreleased v203 runtime bytes; NOT accepted release authority until rc4.132 version/gates",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
-    "runtime": "Use rc4.114/v3 lineage only as emergency fallback. Primary finish-line goal is rc4.117 v4 device acceptance; v5 test only if time remains.",
-    "primary_freshness_pass": "17:30-18:15",
-    "transaction_delta_scan": "19:05-19:30",
-    "final_materiality_scan": "19:40-19:50",
+    "runtime": "Use only the final device-verified rc4.132 if its full release gate passes; otherwise fall back to last accepted rc4.131 and manually ignore unreleased v203 semantics. Never revive rc4.114/117 as current authority.",
+    "primary_freshness_pass": "17:30-18:15 Europe/Berlin",
+    "transaction_delta_scan": "19:05-19:30 Europe/Berlin after 13:00 ET waiver deadline",
+    "final_materiality_scan": "19:40-19:50 Europe/Berlin",
     "operational_freeze": "~19:50",
-    "transaction_rule": "same-position claim/signing is weak Bayesian evidence only; correlate with pre-existing injury/role uncertainty and seek corroboration; uncorroborated signal may only break close ties"
+    "transaction_rule": "Official transaction/IR/PUP truth outranks stale Sleeper metadata; same-position move alone is weak evidence unless role/health impact is corroborated.",
+    "draft_chat_rule": "Start a brand-new chat for the real draft after final runtime/freshness checkpoint. That draft chat is execution-only: load DRAFT_CHAT_BOOTSTRAP + canonical state, do not redesign code/model during the draft unless a release-critical emergency makes the app unusable."
   },
   "android_acceptance_pending": false,
   "expert_v4_v5": {
     "v3": "frozen control/failsafe; embedded team/individual hybrid as historically audited",
     "v4": "CURRENT RE-AUDIT: individual-only, only experts with obtainable individual rankings. Position-specific optimized weights in app.js EXPERT_V4_BLUEPRINT. Koerner is native v4.",
     "v5": "CURRENT DEFINITION: v3 + individually verified Sean Koerner; target 15 percentage points funded from Draft Sharks Team first, remainder only if necessary proportionally from other v3 voices.",
-    "coverage_blocker": "RESOLVED on device by rc4.123-rc4.126; current gate is rc4.130 evidence-retention acceptance after rc4.129 fail-closed storage error.",
+    "coverage_blocker": "RESOLVED operationally; latest evidence backup remains 29/30, so no v5 promotion. v4 PRIMARY / v5 CHALLENGER / v3 failsafe.",
     "koerner": "individually obtainable through existing FantasyPros API path; no longer a source blocker.",
     "rank_semantics": "Common published Overall weighted panel is the cross-position Coach scale; positional ranks are diagnostic/internal only on the live decision surface. Compact expert rows show Overall only."
   },
   "process_controls": {
     "status_semantics": "REPORT_ONLY_NO_TOOL_WORK",
-    "auto_semantics": "EXECUTE_CONTINUOUSLY; no 'AUTO läuft' placeholder responses; report only material result or unavoidable blocker",
-    "no_trial_error": "No cache clear/reinstall/repeated phone loop. rc4.130 is CI/package verified; one controlled refresh only.",
-    "chat_handoff": "v194: rc4.130 merged and main/gh-pages parity PASS. Next one device refresh, then fresh full 30-fixture paired v4/v5 mock.",
+    "auto_semantics": "EXECUTE_CONTINUOUSLY; no promise/status chatter; checkpoint every material change",
+    "no_trial_error": "No cache clear/reinstall/repeated phone loop. Build/test rc4.132 off-device, then exactly one controlled refresh after main/gh-pages parity.",
+    "chat_handoff": "v205 deep-audit: rc4.132 first; stale manager-history bug discovered (Michael missing 2025, Pascal Voerde incorrectly 3-year instead of Bracht→Voerde 2017-2025 chain). Draft chat will be a separate fresh execution-only chat after final readiness.",
     "source_of_truth": "PITTI_CURRENT_STATE.json + PITTI_EXECUTION_LOCK.json + PITTI_PROJECT_STATE.md EOF + PASS seal + actual repo/runtime evidence.",
     "guardrail_note": "rc4115 gate now scoped to rc4.115 only; rc4117 has dedicated release-critical contract; rc4114 gate made semantic so preserving Overall provenance does not falsely fail positional aggregation."
   },
@@ -152,17 +153,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "HANDOFF_RC4132_REQUIRED",
+    "status": "HANDOFF_V205_RC4132_PLUS_HISTORY_REPAIR_REQUIRED",
     "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
-    "runtime": "v11.8.0-rc4.131 accepted Android; v203 runtime delta unreleased",
-    "mainRuntimeParity": "main==gh-pages at v203 code",
-    "nextGate": "Build rc4.132 containing live-autodraft Return-v2 plus Pick32 Nabers/Javonte roster-aware near-tie fix; full gates then device verification."
+    "runtime": "rc4.131 accepted Android; v203 runtime delta unreleased",
+    "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
+    "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
   },
-  "status": "HANDOFF_RC4132_REQUIRED",
+  "status": "HANDOFF_V205_RC4132_PLUS_HISTORY_REPAIR_REQUIRED",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
-  "nextGate": "Build rc4.132 containing live-autodraft Return-v2 plus Pick32 Nabers/Javonte roster-aware near-tie fix; full gates then device verification.",
+  "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
@@ -189,7 +190,9 @@
       "add deterministic live-autodraft Return-v2 regression",
       "run release contract + project guardrails + candidate package/re-extract",
       "merge main; fast-forward gh-pages; verify byte parity",
-      "one controlled Android refresh; visible rc4.132 verification; no cache clear/reinstall"
+      "one controlled Android refresh; visible rc4.132 verification; no cache clear/reinstall",
+      "repair active-manager historical data: Michael_Polk must include 2025; Pascal Voerde must merge Pascal_Bracht 2017-2022 + Pascal_Voerde 2023-2025; preserve Björn 2021/2023 exclusions",
+      "hard-lock canonical 2026 order: 1 Michael,2 Pascal Voerde,3 Marc Düsseldorf,4 Thomas,5 Björn,6 Pascal Gelderner,7 Giuliano,8 Bastian,9 Muerotechnik,10 Dutch Marc; reject rc4.84 geometry/Michael K/Moers Venom"
     ],
     "canary": {
       "pick": 32,
@@ -199,6 +202,85 @@
       "required": "Nabers must not lose solely because of generic RB need; 1-3 points is near-tie and portfolio/replacement-aware logic must be encoded/tested."
     },
     "modelAuthority": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
-    "latestBackup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json remains 29/30; missing pick29 expertv5"
+    "latestBackup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json remains 29/30; missing pick29 expertv5",
+    "managerHistoryAudit": {
+      "source": "canonical Library draft_picks_2017_2025.csv, 1374 rows",
+      "discoveredDefects": [
+        "Michael detailed runtime profile omits 2025 (5 seasons instead of canonical 6)",
+        "Pascal Voerde detailed runtime profile uses only 2023-2025 and therefore ignores confirmed Pascal_Bracht/Bracht Eagles 2017-2022 chain"
+      ],
+      "requiredCorrectedYears": {
+        "Michael_Polk": [
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "Pascal_Voerde": [
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "Pascal_Gelderner": [
+          2023,
+          2024,
+          2025
+        ],
+        "Marc_Duesseldorf": [
+          2021,
+          2022,
+          2024,
+          2025
+        ],
+        "Marc_Dutch": [
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ],
+        "Bjoern": [
+          2017,
+          2018,
+          2019,
+          2020,
+          2022,
+          2024,
+          2025
+        ],
+        "Giuliano": [
+          2018,
+          2019,
+          2020,
+          2021,
+          2023,
+          2024,
+          2025
+        ],
+        "Bastian": [
+          2017,
+          2018,
+          2019,
+          2020,
+          2021,
+          2022,
+          2023,
+          2024,
+          2025
+        ]
+      }
+    }
   }
 }
