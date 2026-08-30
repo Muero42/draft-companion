@@ -2162,7 +2162,7 @@ function pittiVisibleEvidenceHtml(x){
 function pittiFantasyRole(p,players){
  const pos=String(p?.pos||'').toUpperCase(),team=String(p?.team||'').toUpperCase();if(!['QB','RB','WR','TE'].includes(pos))return pos||'?';const same=[];for(const q of Object.values(players||{})){if(String(q?.team||'').toUpperCase()!==team||String(q?.position||'').toUpperCase()!==pos)continue;const name=q?.full_name||[q?.first_name,q?.last_name].filter(Boolean).join(' ');if(!name)continue;const r=rankFor(name,pos),sr=Number(q?.search_rank);if(r&&Number.isFinite(r.rank))same.push({name,rank:r.rank,sr});}same.sort((a,b)=>a.rank-b.rank||(a.sr||9999)-(b.sr||9999));const i=same.findIndex(q=>norm(q.name)===norm(p?.name));if(i>=0)return pos+(i+1);const d=Number(p?.depthOrder);return Number.isFinite(d)&&d>=1&&d<=6?pos+Math.round(d):pos;}
 function pittiResearchArrows(x){const rr=x?.researchResidual;if(!rr?.active||!Array.isArray(rr.components))return'';const eligible=c=>{const k=String(c?.kind||'').toLowerCase();return /(ascension|upside|ceiling|talent|efficiency|role_environment|elite_rookie_role|elite_role|decline_tail|decline_risk|regression)/.test(k)&&!/(injury|ankle|achilles|recurrence)/.test(k)};const c=rr.components.filter(c=>Number(c.dir)!==0&&eligible(c)).sort((a,b)=>Number(b.strength||0)*Number(b.confidence||0)-Number(a.strength||0)*Number(a.confidence||0))[0];if(!c)return'';const s=Number(c.strength||0)*Number(c.confidence||0),up=Number(c.dir)>0;return s>=.58?(up?'↑↑':'↓↓'):s>=.30?(up?'↑':'↓'):'';}
-function pittiDecisionAuditRow(x,c){if(!x)return null;const panelId=x.r.panelId||null,intendedExperts=Object.keys(panels[panelId]?.weights||{}).filter(name=>Number(panels[panelId]?.weights?.[name])>0);return{name:x.p.name,pos:x.p.pos,team:x.p.team,injury:x.p.injury||null,panel:x.r.rank,panelId,panelName:x.r.panel||null,expertCount:Number.isFinite(Number(x.r.n))?Number(x.r.n):null,intendedExperts,panelSd:Number.isFinite(Number(x.r.sd))?Number(x.r.sd):null,individual:x.r.individual||[],adp:Number.isFinite(x.a)?x.a:null,ret:x.ret,returnConfidence:x.returnConfidence,confidence:x.confidence,score:x.score,rawScore:x.rawScore,action:x.action,loss:x.loss,outsideNormalCut:!normalCandidateAdmissible(x),role:pittiFantasyRole(x.p,c.players),arrows:pittiResearchArrows(x),reasons:Array.isArray(x.reasons)?x.reasons.slice():[],researchResidual:x.researchResidual||null,valueSafety:x.valueSafety||null,nearAlternatives:x.nearAlternatives??null,alternativeGap:x.alternativeGap??null,valueKind:x.valueKind??null};}
+function pittiDecisionAuditRow(x,c){if(!x)return null;const panelId=x.r.panelId||null,intendedExperts=Object.keys(panels[panelId]?.weights||{}).filter(name=>Number(panels[panelId]?.weights?.[name])>0);return{name:x.p.name,pos:x.p.pos,team:x.p.team,injury:x.p.injury||null,panel:x.r.rank,panelId,panelName:x.r.panel||null,expertCount:Number.isFinite(Number(x.r.n))?Number(x.r.n):null,intendedExperts,panelSd:Number.isFinite(Number(x.r.sd))?Number(x.r.sd):null,individual:x.r.individual||[],adp:Number.isFinite(x.a)?x.a:null,ret:x.ret,returnConfidence:x.returnConfidence,confidence:x.confidence,score:x.score,rawScore:x.rawScore,action:x.action,loss:x.loss,outsideNormalCut:!normalCandidateAdmissible(x),role:pittiFantasyRole(x.p,c.players),arrows:pittiResearchArrows(x),expertTier:externalExpertTierContext(x),reasons:Array.isArray(x.reasons)?x.reasons.slice():[],researchResidual:x.researchResidual||null,valueSafety:x.valueSafety||null,nearAlternatives:x.nearAlternatives??null,alternativeGap:x.alternativeGap??null,valueKind:x.valueKind??null};}
 window.PITTI_LIVE_DECISION_STATE=()=>{const c=lastDraftContext;if(!c?.scored)return null;const rows=visibleCoachCandidates(c.scored).filter(x=>!x.hardExcluded&&!x.recommendationBlocked).slice(0,10);return{version:APP_VERSION,current:c.current,next:c.next,profile:currentExpertProfile(),positionPanels:{...positionPanels},rows:rows.map(x=>pittiDecisionAuditRow(x,c))};};
 window.PITTI_CANDIDATE_AUDIT=(query='Kenneth Walker')=>{const c=lastDraftContext;if(!c?.scored)return null;const q=norm(query),x=c.scored.find(z=>norm(z?.p?.name)===q)||c.scored.find(z=>norm(z?.p?.name).includes(q)||q.includes(norm(z?.p?.name)));if(!x)return{version:APP_VERSION,query,found:false,scoredCount:c.scored.length};const rank=c.scored.indexOf(x)+1,cut=c.scored[9]||null;return{version:APP_VERSION,query,found:true,coachRank:rank,visible:rank<=10,candidate:pittiDecisionAuditRow(x,c),visibleCut:cut?{rank:10,name:cut.p.name,pos:cut.p.pos,score:cut.score,rawScore:cut.rawScore,panel:cut.r.rank,adp:Number.isFinite(cut.a)?cut.a:null,ret:cut.ret,reasons:cut.reasons||[]}:null,scoreGapToVisibleCut:cut?Number((x.rawScore-cut.rawScore).toFixed(3)):null};};
 
@@ -2170,18 +2170,22 @@ window.PITTI_CANDIDATE_AUDIT=(query='Kenneth Walker')=>{const c=lastDraftContext
 // Erickson tiers are from his current FantasyPros half-PPR overall board; Mariano tiers from current RotoBaller half-PPR Top 400.
 // Missing/unsupported players intentionally render no external tier rather than a synthetic gap tier.
 const VERIFIED_EXTERNAL_TIERS_2026={
-  andrewErickson:{source:'FantasyPros · Andrew Erickson · Half-PPR',asOf:'2026-08-26',ranges:[[1,4,1],[5,8,2],[9,15,3],[16,20,4],[21,27,5]]},
-  nickMariano:{source:'RotoBaller · Nick Mariano · Half-PPR Top 400',asOf:'2026-08-25',byName:{}}
+  // Current Overall Half-PPR tier boundaries, not synthetic panel-gap tiers.
+  andrewErickson:{source:'FantasyPros · Andrew Erickson · Overall Half-PPR',asOf:'2026-08-30',ranges:[[1,4,1],[5,8,2],[9,15,3],[16,19,4],[20,26,5],[27,32,6],[33,40,7]]},
+  nickMariano:{source:'RotoBaller · Nick Mariano · Half-PPR Top 400',asOf:'2026-08-25',ranges:[[1,5,1],[6,16,2],[17,24,3],[25,36,4],[37,53,5],[54,63,6],[64,86,7],[87,102,8],[103,121,9],[122,133,10]]}
 };
 function externalExpertTierContext(x){
   const vals=[];
-  const er=x?.r?.individual?.find(v=>String(v.expertName||'').toLowerCase().includes('erickson'));
-  const erRank=Number(er?.overallRank??er?.rank);
-  if(Number.isFinite(erRank)){const hit=VERIFIED_EXTERNAL_TIERS_2026.andrewErickson.ranges.find(([a,b])=>erRank>=a&&erRank<=b);if(hit)vals.push({expert:'Erickson',tier:hit[2]});}
-  const mt=VERIFIED_EXTERNAL_TIERS_2026.nickMariano.byName[norm(x?.p?.name||'')];if(Number.isFinite(mt))vals.push({expert:'Mariano',tier:mt});
+  const pick=(expert,label,source)=>{
+    const hit=x?.r?.individual?.find(v=>String(v.expertName||'').toLowerCase().includes(expert));
+    const rank=Number(hit?.overallRank??hit?.rank);if(!Number.isFinite(rank))return;
+    const range=source.ranges.find(([a,b])=>rank>=a&&rank<=b);if(range)vals.push({expert:label,tier:range[2],rank});
+  };
+  pick('erickson','Erickson',VERIFIED_EXTERNAL_TIERS_2026.andrewErickson);
+  pick('mariano','Mariano',VERIFIED_EXTERNAL_TIERS_2026.nickMariano);
   if(!vals.length)return null;
   const tiers=[...new Set(vals.map(v=>v.tier))].sort((a,b)=>a-b);
-  return{label:tiers.length===1?`T${tiers[0]}`:`T${tiers[0]}–${tiers[tiers.length-1]}`,details:vals.map(v=>`${v.expert} T${v.tier}`).join(' · ')};
+  return{label:tiers.length===1?`T${tiers[0]}`:`T${tiers[0]}–${tiers[tiers.length-1]}`,details:vals.map(v=>`${v.expert} T${v.tier} (#${Math.round(v.rank)})`).join(' · '),sources:vals};
 }
 function externalTierHtml(x){const t=externalExpertTierContext(x);return t?` · <span class="expert-tier" title="${esc(t.details)}">${esc(t.label)}</span>`:'';}
 
