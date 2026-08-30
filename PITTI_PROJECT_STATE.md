@@ -2580,3 +2580,5 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Corrected PITTI_AUTO_PREFLIGHT and PITTI_EXECUTION_LOCK. decision-policy.js now explicitly excludes both names before QB1 as well as preserving exactly-one-QB after QB1. app.js now passes player identity into the executable policy path. rc478 OOS tests now contain positive canaries for both hard exclusions plus an ordinary-QB control (Jared Goff remains eligible before QB1).
 - This is exactly the class of old-error resurrection the user warned against; it was caught before v4/v5 promotion. Production/main remains untouched.
 - Current code head 7ce9c809f0a2d9648641b7d21631a862a06c4493; full CI/package gates running. Do not promote unless all PASS.
+
+- Follow-up CI initially failed only because historical rc482-486 wiring assertions expected the old two-argument policy call. Updated those canaries to the new player-identity-aware call; no behavioral gate was removed. Head e4463158c3e1c08a03e388924a7bd496f259fc23: Project Guardrails 33293226724 PASS; release contract 33293226727 PASS; candidate package gate 33293226722 PASS.
