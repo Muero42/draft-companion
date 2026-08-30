@@ -2855,3 +2855,11 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - v4 WR display is fixed to Koerner / Mariano / Boone / Todd / Del Don / Pat. v5 WR display is fixed to Draft Sharks / Pat / Boone / Koerner / Mariano / Del Don. Equivalent canonical locks apply to QB/RB/TE.
 - No scoring, weighting, return, evidence, or panel construction logic changed from rc4.126.
 - Off-device PASS: JS syntax, rc4.127 version/cache contract, canonical v4 sets vs blueprint, v5 sets derived from frozen v3 topology + Koerner, and explicit #– missing-rank policy.
+
+
+### rc4.127 expert-membership consistency — OFF-DEVICE PASS
+- Device screenshot exposed a real display/data-integrity regression: a WR card (Deebo Samuel) showed Ryan Weisse although v5-WR intends Draft Sharks, Pat, Boone, Koerner, Mariano and Del Don. Boone was absent.
+- Root cause class: expert display could fall back to current/global profile state instead of the exact analyzed panel row, and row-level unexpected experts were not fail-closed at rank lookup.
+- rc4.127 adds a row sanitizer keyed to the exact panel weights, removes any expert not intended for that panel, recomputes the row from allowed experts, marks missing intended experts explicitly, and makes v4/v5 readiness fail if a panel contains unexpected membership.
+- Live decision rows now carry intendedExperts from the exact panel used. Compact cards bind to this row-local set, not mutable global selector/profile state; a missing expected expert renders #– rather than being silently replaced by another position's expert.
+- Regression reproduction PASS for the exact screenshot pattern: Ryan Weisse removed from v5-WR, Justin Boone surfaced as missing, allowed row recomputed from the five valid voices. Syntax/version/cache checks PASS.
