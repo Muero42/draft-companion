@@ -1,43 +1,43 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260830T1618Z-v195",
-  "created_at": "2026-08-30T16:18:00Z",
+  "handoff_generation": "20260830T1630Z-v196",
+  "created_at": "2026-08-30T16:30:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "7c9b8d7bc76063d221ff5e629b1228a41152b2b3",
-    "PITTI_CURRENT_STATE.json": "46e05cb7af05d3364e935d171b667a26ed3e9843",
-    "PITTI_EXECUTION_LOCK.json": "2144f75fd063ca4a0a8744a65a04345afcd293be",
+    "PITTI_COMMAND_CONTRACTS.json": "29fa82cdb4105fdb1114c4ebb3258b16e1705ee0",
+    "PITTI_CURRENT_STATE.json": "2ec9f51b6a38d214df323906eadc89b094c4207c",
+    "PITTI_EXECUTION_LOCK.json": "cf3738fb463fea36ddd9089e818ab206cdd57f3e",
     "PITTI_AUTO_PREFLIGHT.md": "7d612f96f71d212d9f0d135eae668fe7f36baa98",
-    "PITTI_PROJECT_STATE.md": "8280f0444675f895cc48118414a3a46c303fa75a",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "d6ddef4858f3c8328e2d2a9f40fbcba42ef6f1d0",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "e7a8e66ab6d2b2541becc6844a6743e79046419b",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "b60d4bb48e8c5d41a9b3b628595e3b4da1b20493",
-    "app.js": "cb4ff663b69dd86cc22b6b8ab47c8af93ede1f5f",
-    "index.html": "025359d737ad75d8501701d8f4d34140642a502a",
+    "PITTI_PROJECT_STATE.md": "32dc940b312fdc0084ae77d908c35f8b3fb0ffad",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "8ffd88e537f0f294a82d36e1a28a9241c10bf646",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "6a27ca8dbf186a677db7f820f944b76ec6f5c1e0",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "7b4417c59f41edd538dc34c8aca0b244e73ef15c",
+    "app.js": "0a79574bbbf042853139c80fa04342b0337c8507",
+    "index.html": "b1077a3723df0d27bfcda16ae3f7969dec09a5e9",
     "decision-policy.js": "76234515b5428a33b7ef573f1f5c87bab058ad67",
     "live-surface-v3.js": "13806bc9d185f7459c27fc2f0979f8dedc2c0784",
-    "manifest.webmanifest": "39e92cce1d755cdfad3397429b9702edf564ce35",
-    "sw.js": "31e81d7107729bba3b013d1fed9cb75b2ffbfd59",
-    "tools/audit-v45-backup.mjs": "9e44435c9b78ee30c4e685a85b0aca4ee61cb271"
+    "manifest.webmanifest": "8b92ae10b5d9585f39e5a3437c7ca3dda11892d8",
+    "sw.js": "49f2516c45a978d2060756a5ed62d94a0dbb1034",
+    "tools/audit-v45-backup.mjs": "9e44435c9b78ee30c4e685a85b0aca4ee61cb271",
+    "tools/rc4130-active-fixture-quota.mjs": "601f685c99c1b56ad51e757629fe4230490eedb8"
   },
   "branch_locks": {
-    "runtime": "v11.8.0-rc4.130",
+    "runtime": "v11.8.0-rc4.131",
     "latest_backup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json",
-    "evidence_gate": "29/30; missing pick29 expertv5; no full model promotion",
+    "evidence_gate": "29/30; missing pick29 expertv5",
     "model": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe"
   },
   "checks": {
     "generation_consistent": true,
-    "latest_backup_29_of_30": true,
-    "missing_pair_pick29_expertv5": true,
-    "backup_quality_audit_merged": true,
-    "mcLaurin_sparse_canary_recorded": true,
-    "swift_generic_canary_recorded": true,
-    "no_model_retune": true
+    "rc4131_all_ci_pass": true,
+    "main_ghpages_identical": true,
+    "swift_lamar_description_canaries_closed": true,
+    "no_model_scoring_change": true,
+    "backup_gate_still_29_of_30": true
   },
-  "exact_gate": "RC4.130_BACKUP_AUDIT_29_OF_30_NO_MODEL_PROMOTION",
-  "note": "v195 records the full rc4.130 backup quality audit. Exact 30-fixture gate is not satisfied; pick29 expertv5 is absent. Persistent audit tooling is merged and CI-tested. v4 remains primary."
+  "exact_gate": "RC4.131_ONE_CONTROLLED_DEVICE_REFRESH",
+  "note": "rc4.131 is a narrow description-data correction. One controlled device refresh is the only remaining dependent gate."
 }

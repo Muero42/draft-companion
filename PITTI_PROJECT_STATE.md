@@ -2944,3 +2944,18 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Current model verdict remains **v4 PRIMARY / v5 CHALLENGER / v3 failsafe**. The 29/30 backup does not provide sufficient new evidence for a last-minute weight/source redesign. No Coach/Return-v2 weights were changed by this audit.
 - Runtime remains **rc4.130**; no new phone update is required solely for the audit tooling.
 - Generation/checkpoint: **20260830T1618Z-v195**.
+
+
+---
+
+## 2026-08-30 — v196 AUTHORITY · rc4.131 description-quality closure
+
+- rc4.130 acceptance backup exposed a release-critical presentation-data gap: D'Andre Swift was Top-1 with generic-only rationale; Lamar Jackson also appeared as a generic-only Top-1 case.
+- rc4.131 adds player-specific neutral display/risk context for exactly those two canaries. This changes **no expert membership, panel weights, Coach scoring, Return-v2, roster utility, or decision kernel**.
+- The rc4.130 active-fixture quota regression was made forward-compatible for rc4.130+; its behavioral assertions are unchanged.
+- Initial rc4.131 CI correctly failed because two release guards were version-pinned (quota guard expected literal rc4.130; README/current candidate lagged). Those causes were diagnosed and repaired rather than bypassed.
+- Final rc4.131 required workflows all PASS: release contract, project guardrails including backup-audit self-test and quota regression, and candidate package/re-extract.
+- PR #55 merged; **main and gh-pages are IDENTICAL at ba2247abe4bf64edb95f812d77e89980b9830d4e** after non-force fast-forward.
+- Source/deployment authority is now **v11.8.0-rc4.131**. v4 remains PRIMARY / v5 CHALLENGER / v3 failsafe. The 29/30 backup remains incomplete evidence and is not relabeled.
+- Exact device gate: **one controlled refresh to rc4.131**, then verify visible version and player-specific Swift/Lamar rationale. No cache clear/reinstall and no additional full mock is required solely for this narrow data-quality correction.
+- Generation/checkpoint: **20260830T1630Z-v196**.
