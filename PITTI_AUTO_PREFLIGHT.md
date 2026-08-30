@@ -124,3 +124,16 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 
 - v169 mock pause canary: draft 1399325404598124544 is paused BEFORE user pick9. Picks1-8 Gibbs/Chase/Bijan/Jonathan Taylor/CMC/Puka/Amon-Ra/JSN. James Cook was recommended at 1.09 but user did not confirm the pick; never infer he is on roster.
 - v169 rc4.106 canary: embedded Expert-v2/v3 individual rows must appear in Snapshot Coach Top 8; old `KEINE VERIFIZIERT` live-rankCache-only filter is rejected. PR #47 all gates PASS; main merge 0818bc9632eca79c4d055d444a6eae0af53f3a9f; 13/13 pages parity PASS.
+
+
+## 10. v194 CURRENT OVERRIDE — rc4.130
+- This section supersedes older rc4.129/v169 current pointers above; historical sections remain for regression provenance only.
+- Current source/deployment authority = **v11.8.0-rc4.130**; latest fully operational device-observed v4/v5 baseline = **rc4.126**.
+- rc4.129 device mock exposed a fail-closed Decision-Evidence storage error at pick 12. Backup `draft-companion-v7-backup-2026-08-30T13-40-34-982Z.json` contains 4 current-draft fixtures = paired v4/v5 at picks 9/12, plus 22 historical fixtures.
+- Exact root cause: `history.slice(-0)` retained all history, so rc4.129's final intended history-free quota retry was not history-free.
+- rc4.130 fixes zero-history recovery with explicit `[]`, retains active-draft atomicity, and removes redundant rankedPool `robustRankShadow` from persisted fixtures.
+- All required rc4.130 CI gates including deterministic quota regression and candidate package/re-extract are PASS; main/gh-pages parity was verified before reseal.
+- Exact next gate: **RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK**.
+- One controlled device refresh only; no cache/app-data clear or reinstall.
+- The acceptance mock must be **fresh**, not continuation of the interrupted rc4.129 mock. At every own pick analyze both v4 and v5 before the user pick; exported backup must contain exactly 30 current-draft fixtures before model comparison.
+- v4 PRIMARY / v5 CHALLENGER / v3 failsafe; no weight/source retune.
