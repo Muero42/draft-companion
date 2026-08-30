@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T-current-rc4117",
-  "updated_at": "2026-08-30T13:00:00Z",
+  "updated_at": "2026-08-30T13:10:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -57,10 +57,10 @@
     "transaction_in_progress": false,
     "resume_semantics": "rc4.115 device screenshots invalidated old v190 closure: expert rank UI mixed positional rank with Overall; v4 composition was re-audited; Koerner is individually obtainable. rc4.117 current source. v4 individual-only optimized lane. v5 is v3 + verified Sean Koerner, funded primarily from Draft Sharks share. Off-device gates pending; no device install.",
     "acceptance_fingerprint": "CURRENT|RC4117-SOURCE|V4-INDIVIDUAL-ONLY|V5-V3-PLUS-KOERNER-FROM-DS|OVERALL-POSRANK-SEPARATE|NO-TRIAL-ERROR|STATUS-REPORT-ONLY|HANDOFF-BEFORE-DEGRADATION",
-    "status": "RC4117_OFFDEVICE_GATES_PENDING",
+    "status": "RC4117_OFFDEVICE_GATES_PENDING_GUARDS_ALIGNED",
     "handoff_ready": false,
     "second_pass_pass": false,
-    "next_action": "Complete rc4.117 off-device gates; only then authorize one device install/test. After gates/checkpoint are sealed, proactively prompt PITTI HANDOFF before chat degradation.",
+    "next_action": "Run rc4.117 off-device package/regression gates after guard contracts were aligned to current semantics. No device install yet.",
     "gate": "RC4.117_OFFDEVICE_RELEASE_GATES",
     "seal_status": "OPEN",
     "seal_generation": "20260830T-current-rc4117"
@@ -94,6 +94,7 @@
     "auto_semantics": "EXECUTE_CONTINUOUSLY; no 'AUTO läuft' placeholder responses; report only material result or unavoidable blocker",
     "no_trial_error": "No device build until off-device gates PASS; one controlled install/test candidate at a time.",
     "chat_handoff": "After rc4.117 off-device gates and consolidated checkpoint are sealed, remind user to switch chats before degradation; do not wait for crashes/slowness.",
-    "source_of_truth": "PITTI_CURRENT_STATE.json + repository HEAD; newer device evidence overrides stale closure claims."
+    "source_of_truth": "PITTI_CURRENT_STATE.json + repository HEAD; newer device evidence overrides stale closure claims.",
+    "guardrail_note": "rc4115 gate now scoped to rc4.115 only; rc4117 has dedicated release-critical contract; rc4114 gate made semantic so preserving Overall provenance does not falsely fail positional aggregation."
   }
 }
