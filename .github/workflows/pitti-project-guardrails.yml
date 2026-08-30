@@ -30,6 +30,11 @@ on:
       - 'tools/rc4104-roster-portfolio.mjs'
       - 'tools/rc4106-embedded-individuals.mjs'
       - 'tools/rc4111-storage-quota.mjs'
+      - 'tools/rc4112-mariano-source.mjs'
+      - 'tools/rc4113-configured-expert-identity.mjs'
+      - 'tools/rc4114-positional-expert-aggregation.mjs'
+      - 'tools/rc4115-v5-hybrid.mjs'
+      - 'tools/rc4117-release-critical.mjs'
       - '.github/workflows/pitti-project-guardrails.yml'
   pull_request:
     branches:
