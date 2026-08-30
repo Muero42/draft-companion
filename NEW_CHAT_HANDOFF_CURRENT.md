@@ -1,5 +1,5 @@
 # PITTI HANDOFF CURRENT — v196
-Generation: `20260830T1630Z-v196`
+Handoff generation: `20260830T1630Z-v196`
 
 - Source/deployment authority: **v11.8.0-rc4.131**, main == gh-pages at ba2247abe4bf64edb95f812d77e89980b9830d4e.
 - rc4.131 closes exact generic-description Top-1 canaries D'Andre Swift and Lamar Jackson; no scoring/weight/Return-v2 changes.
