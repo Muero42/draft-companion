@@ -6,7 +6,10 @@ function body(name,next){
   const b=next?src.indexOf('function '+next,a+1):src.length;
   return src.slice(a,b<0?src.length:b);
 }
-const quota=body('persistExpertRankCache','arrays');
+const helperStart=src.indexOf('function removeLegacyRankingStorage');
+const helperEnd=src.indexOf('removeLegacyRankingStorage();\\nlet rankCache',helperStart);
+if(helperStart<0||helperEnd<0)throw new Error('storage helper block missing');
+const quota=src.slice(helperStart,helperEnd);
 for(const required of [
   "localStorage.removeItem('v7_rankCache')",
   "localStorage.removeItem('v7_panelRanks')",
@@ -19,9 +22,7 @@ if(!src.includes("rankCache[expertId]=result;\n    const persisted=persistExpert
 if(!src.includes("if(!persisted.ok)result.persistenceWarning="))throw new Error('quota must be warning, not source failure');
 
 // Execute the storage helper against deterministic quota-pressure fakes.
-const helperStart=src.indexOf('function removeLegacyRankingStorage');
-const helperEnd=src.indexOf('removeLegacyRankingStorage();\nlet rankCache',helperStart);
-const helper=src.slice(helperStart,helperEnd);
+const helper=quota;
 function runStore(initial,quotaPredicate){
   const m=new Map(Object.entries(initial));let writes=0;
   const localStorage={
