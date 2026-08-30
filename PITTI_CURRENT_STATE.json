@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1822Z-v207",
-  "updated_at": "2026-08-30T19:44:00Z",
+  "updated_at": "2026-08-30T19:50:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -41,7 +41,7 @@
   "exact_continuation": {
     "gate": "RC4.132_BUILD_AND_REGRESSION",
     "auto_starts_mock": false,
-    "instruction": "rc4.136 full release/package/guardrail gates PASS, merged and deployed; exact main/gh-pages parity PASS. External tiers are display-only and source-specific: Erickson (FantasyPros) + Mariano (RotoBaller), rendered after player name before arrows. Do not collapse expert tier numbers into a false consensus range. Next unavoidable action: one normal phone refresh and verify rc4.136."
+    "instruction": "NEW CHAT: load PITTI_CURRENT_STATE.json from main first and treat handoff as source of truth. First priority is verify/correct rc4.136 tier source logic so imminent-draft tier display uses ONLY active position-specific Expert-v4 experts. Investigate FantasyPros selectable multi-expert combined tiers per position; use Mariano RotoBaller tiers where compatible. Do not undertake broader tier-method redesign before draft. Then finish remaining pre-draft smoke/freshness agenda and requested WR comparison/upside analysis. Preserve draft order and historical data invariants exactly."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -56,16 +56,30 @@
     "no_player_name_qb_exclusions": true
   },
   "handoff": {
-    "transaction_in_progress": false,
-    "status": "PASS",
-    "handoff_ready": true,
-    "second_pass_pass": true,
-    "generation": "20260830T1822Z-v207",
-    "seal_generation": "20260830T1822Z-v207",
-    "gate": "RC4.132_BUILD_AND_REGRESSION",
-    "next_action": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
-    "resume": "Start rc4.132 work immediately. Before release, fix manager-history corruption and exact-order canaries in addition to Autodraft/Pick32. After rc4.132 device acceptance, finish draft-day freshness and then generate/use the fresh draft execution chat.",
-    "resume_semantics": "v207 supersedes v206 QB mistake. Geno Smith/Aaron Rodgers are NOT hard exclusions. They must remain ordinary QB candidates; correct Coach/player-quality evaluation should keep them from recommendations when inferior."
+    "acceptedAndroid": "v11.8.0-rc4.135",
+    "deployedCandidate": "v11.8.0-rc4.136",
+    "rc4136Warning": "Tier display is not acceptable as final draft tier logic: Erickson is not an Expert-v4 panel member. For the imminent draft, tiers must reflect only the underlying active Expert-v4 experts for each position. Do not reintroduce removed experts through tier display.",
+    "tierRule": "For each position, tier display must be built only from that position's active Expert-v4 experts. FantasyPros appears to provide tiers for selectable experts and combined selections; investigate immediately after handoff whether custom combinations of the FantasyPros-accessible v4 experts can yield position-specific combined tiers. Mariano should use his own current RotoBaller Half-PPR tier data where appropriate. No synthetic gap tiers presented as expert tiers. Deeper tier-method refinement is POST-DRAFT, not before imminent draft.",
+    "postHandoffResearch": [
+      "Verify FantasyPros custom multi-expert selection produces tiers for exactly our FantasyPros-accessible v4 experts, separately QB/RB/WR/TE",
+      "Determine how FantasyPros derives combined tiers and whether output is stable/exportable enough to embed",
+      "Map Mariano/RotoBaller tiers into the relevant v4 positions without mixing incompatible tier-number scales",
+      "Compare Emeka Egbuka, Zay Flowers, Tetairoa McMillan, DeVonta Smith; include Jaylen Waddle as reference; then rank pure upside separately"
+    ],
+    "invariants": [
+      "Never shift fixed 2026 draft order: Michael, Pascal V., Marc D., Thomas, Bastian, Björn, Michael K., Pascal B., user/Moers Venom, Marc H.",
+      "Never shift/reindex historical draft data or manager ownership due to older bugs",
+      "Starter maxima 4 WR/3 RB/2 TE are not roster/draft caps",
+      "No K/DST draft; no QB2; Geno Smith/Aaron Rodgers need no artificial blacklist—normal coach quality should keep them out",
+      "Panel remains baseline; Return is timing context, not pick command",
+      "Preserve exact historical pick numbers/decision evidence and snapshot fingerprints"
+    ],
+    "recentFixes": [
+      "rc4.133 Return timing calibration + text coverage release",
+      "rc4.135 live visibility expiry fixed for 12 existing individual-text profiles; Josh Jacobs acute status handled",
+      "rc4.136 tier UI display added after player name/before arrows, but source selection must be corrected to v4-only before treating tiers as draft-valid"
+    ],
+    "workflow": "AUTO/AUTO BLOCK means real uninterrupted autonomous work; no empty/status-only messages. STATUS only reports actual state. Before phone deployment full release/package/guardrail gates and main↔gh-pages runtime parity. No cache clear/reinstall unless proven necessary."
   },
   "source_authority": "v203 UNRELEASED runtime delta under rc4.131 label; rc4.131 remains accepted Android authority until rc4.132 PASS",
   "package_authority": "rc4.131 last accepted package/runtime lineage; rc4.132 package gate required",
@@ -163,7 +177,7 @@
     "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
     "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
   },
-  "status": "RC4.136_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_REQUIRED",
+  "status": "PITTI_HANDOFF_PRE_DRAFT_AFTER_RC4.136",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
   "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
   "evidenceRetention": {
