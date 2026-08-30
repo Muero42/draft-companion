@@ -2756,3 +2756,14 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - rc4.117 restores that definition. Target Koerner share is 15 percentage points; those 15 points are removed from Draft Sharks Team first. Only if DS were below 15 would any remainder be funded proportionally from the other v3 voices.
 - This keeps v4 as the individual-only optimized lane and v5 as the v3/DS control lane with Koerner substitution, allowing an actual v3-v4-v5 comparison.
 - Commit 53a93e333c536e3e065ad71512e94b26d043e936. rc4.116 is superseded and must not be installed.
+
+
+### 2026-08-30 — v191 final v4-first handoff authority
+- rc4.117 is the current source/package candidate and has passed the full off-device candidate package, release-contract, draft-critical successor, rc4.82 and rc4.83 gates. Package run 33305284763, artifact 9730250635, digest sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc.
+- gh-pages is still rc4.115; byte parity with main/rc4.117 is FALSE until explicit promotion. Do not ask for device refresh/install before server-side parity is proven.
+- PRIMARY finish-line target is v4 device acceptance, then immediate realistic draft testing. v5 is SECONDARY/OPTIONAL only if time remains; it must not delay a validated v4 draft version.
+- v4 authority is the rc4.117 EXPERT_V4_BLUEPRINT: QB Koerner30/Todd25/Boone15/DelDon10/Mariano10/Pat10; RB Weisse25/Wheeler25/DelDon15/Mariano15/Koerner10/Pat10; WR Koerner25/Mariano25/Boone20/Todd10/DelDon10/Pat10; TE Wolf25/Weisse20/Koerner15/DelDon15/Pat15/Boone10. v4 is individual-only and contains no Draft Sharks team ranking.
+- v5 authority remains frozen v3 + verified Sean Koerner at target 15 percentage points, funded from Draft Sharks Team first. Never restore the obsolete v4+Koerner formulation.
+- Rank semantics are locked: position rank is used for position-specific aggregation; published Overall rank is retained separately for provenance/UI. Barkley/Pat canary: Overall #14 and RB8 must never render as Overall #8.
+- Exact next route after handoff: verify v191 once -> deploy rc4.117 to gh-pages -> prove byte parity -> one device refresh/install -> test v4 first -> realistic mocks if PASS -> v5 only if justified by remaining time.
+- AUTO/AUTO BLOCK silent-execution and STATUS report-only locks remain mandatory. Empty assistant replies are invalid.
