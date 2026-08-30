@@ -42,6 +42,10 @@ const PROFILE_EXPERT_ORDER={
   }
 };
 function expertOrder(x){
+  // Bind the display to the exact panel row that produced this recommendation.
+  // Global selector/profile state can change independently of an already-rendered analysis.
+  const intended=[...new Set((x?.intendedExperts||[]).filter(Boolean))];
+  if(intended.length)return intended.slice();
   const fixed=PROFILE_EXPERT_ORDER[profile()]?.[String(x?.pos||'').toUpperCase()];
   if(fixed)return fixed.slice();
   const actual=[...new Set((x.individual||[]).map(r=>r.expertName||r.source).filter(Boolean))];
