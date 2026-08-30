@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260830T1645Z-v197",
-  "updated_at": "2026-08-30T16:45:00Z",
+  "handoff_generation": "20260830T1700Z-v198",
+  "updated_at": "2026-08-30T17:00:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -156,17 +156,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "PRE_DRAFT_READINESS_FREEZE",
+    "status": "PRE_DRAFT_FREEZE_CUTDOWN_SCAN_PASS",
     "production": true,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
     "runtime": "v11.8.0-rc4.131",
     "mainRuntimeParity": "PASS",
-    "nextGate": "Final freshness/materiality scan; opportunistic Swift/Lamar card verification."
+    "nextGate": "Draft-day waiver/IR/PUP/materiality scan; no broad retune."
   },
-  "status": "PRE_DRAFT_READINESS_FREEZE",
-  "gate": "PRE_DRAFT_READINESS_FREEZE",
-  "nextGate": "Final freshness/materiality scan; opportunistic Swift/Lamar card verification.",
+  "status": "PRE_DRAFT_FREEZE_CUTDOWN_SCAN_PASS",
+  "gate": "DRAFT_DAY_FRESHNESS",
+  "nextGate": "Draft-day waiver/IR/PUP/materiality scan; no broad retune.",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,

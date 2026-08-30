@@ -125,14 +125,14 @@
     "deployedPagesAppByteParityWithMain": true,
     "researchBranch": "main; historical expert research branches retained only as provenance",
     "currentResearchGate": "PRE_DRAFT_READINESS_FREEZE",
-    "exactNextAction": "Final freshness/materiality scan; no broad model changes. Opportunistically verify Swift/Lamar card text.",
+    "exactNextAction": "Draft-day waiver/IR/PUP/materiality scan; no broad retune.",
     "deferredRealDecisionMock": "draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json — DO NOT ANALYZE UNTIL USER LIFTS RESTRICTION",
     "runtimeVersion": "v11.8.0-rc4.131",
     "latestEvidenceBackup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json — 29 fixtures / 15 states / 14 pairs; missing pick29 expertv5"
   },
-  "currentGate": "PRE_DRAFT_READINESS_FREEZE",
-  "handoffGeneration": "20260830T1645Z-v197",
-  "handoff_generation": "20260830T1645Z-v197",
+  "currentGate": "DRAFT_DAY_FRESHNESS",
+  "handoffGeneration": "20260830T1700Z-v198",
+  "handoff_generation": "20260830T1700Z-v198",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",

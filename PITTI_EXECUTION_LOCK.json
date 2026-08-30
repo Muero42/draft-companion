@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-30T16:45:00Z",
+  "updatedAt": "2026-08-30T17:00:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -202,9 +202,9 @@
     "mainRuntimeParity": "PASS",
     "nextGate": "Final freshness/materiality scan; no broad model changes; Swift/Lamar card verification opportunistic."
   },
-  "status": "PRE_DRAFT_READINESS_FREEZE",
-  "gate": "PRE_DRAFT_READINESS_FREEZE",
-  "nextGate": "Final freshness/materiality scan; no broad model changes; Swift/Lamar card verification opportunistic.",
+  "status": "PRE_DRAFT_FREEZE_CUTDOWN_SCAN_PASS",
+  "gate": "DRAFT_DAY_FRESHNESS",
+  "nextGate": "Draft-day waiver/IR/PUP/materiality scan; no broad retune.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -236,7 +236,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260830T1645Z-v197",
+  "handoff_generation": "20260830T1700Z-v198",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },

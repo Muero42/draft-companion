@@ -2971,3 +2971,15 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Roster cutdown is still in progress on 30 Aug, so the high-value remaining work is **delta monitoring/materiality scan**, not another model rebuild.
 - Model authority unchanged: **v4 PRIMARY / v5 CHALLENGER / v3 failsafe**. Latest evidence backup remains 29/30 and is not promoted to complete.
 - Generation: **20260830T1645Z-v197**.
+
+
+---
+
+## 2026-08-30 — v198 roster-cutdown delta scan
+
+- Same-day roster-cutdown scan re-run during the final 53-man reduction window. No verified transaction/injury surfaced that warrants changing v4 PRIMARY, panel weights, Return-v2, or the late-upside strategy.
+- New England backfield delta: rookie Jam Miller was waived with an injury designation; Corey Kiner was acquired and reporting places him as depth/RB3 while Rhamondre Stevenson + TreVeyon Henderson remain the projected workload pair. This does **not** justify a Henderson downgrade; his ankle remains expected ready for Week 1, but committee risk stays in the existing role context.
+- Giants cuts included RB Damon Bankston plus WR Isaiah Hodgins/Kobe Prentice; no material negative Nabers role signal. Nabers remains ceiling + ACL-ramp context, not PUP/season-ending.
+- League-wide cut trackers remain active until the 18:00 ET deadline; transaction deltas are treated as weak evidence unless they change a fantasy-relevant player's active/PUP/IR status or credible depth-chart role.
+- Draft-day freshness rule unchanged: re-scan after waiver/roster churn and shortly before the draft; do not chase fringe cuts with model changes.
+- Generation: **20260830T1700Z-v198**.
