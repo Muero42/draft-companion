@@ -21,12 +21,13 @@ for(const x of [
   "posRank:Number(k.posRank)"
 ]) if(!app.includes(x)) throw new Error('v5 common-scale invariant missing: '+x);
 
-// Compact live view must expose both semantics when both exist.
+// Compact live view is deliberately Overall-only since rc4.123; positional ranks remain diagnostic/internal.
 for(const x of [
-  "function expertRankLabel(hit,pos)",
-  "${pos}#${Math.round(posRank)} · Ovr #${Math.round(overall)}",
+  "function expertRankLabel(hit)",
+  "const overall=Number(hit.overallRank??hit.rank);",
   "return'expertv5'",
   "return'expertv4'"
-]) if(!live.includes(x)) throw new Error('compact rank/profile invariant missing: '+x);
+]) if(!live.includes(x)) throw new Error('compact Overall/profile invariant missing: '+x);
+if(live.includes("${pos}#${Math.round(posRank)}")||live.includes("Ovr #"))throw new Error('compact live view must not reintroduce positional/Overall dual labels');
 
 console.log('rc4.122 dual-rank aggregation/display PASS');

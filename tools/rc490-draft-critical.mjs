@@ -13,7 +13,7 @@ for(const [n,s] of [['app',app],['index',idx],['sw',sw]])assert.match(s,/v11\.8\
 // Root-cause guard: Expert-v3 shadow panels must be selectable just like frozen v2 boards.
 assert.ok(app.includes("if(/^expert-v[2345]-(qb|rb|wr|te)$/.test(id))return true;"),'Expert-v3/v4/v5 panel selectability missing');
 assert.ok(app.includes("profile:currentExpertProfile()"),'live state must expose actual profile');
-assert.ok(app.includes("panelId:x.r.panelId||null"),'live state must expose actual panel id');
+assert.ok(app.includes("const panelId=x.r.panelId||null")&&app.includes("panelId,panelName:x.r.panel||null"),'live state must expose actual panel id');
 assert.ok(live.includes("const actual=[...new Set((x.individual||[]).map(r=>r.expertName||r.source).filter(Boolean))]"),'live expert display must derive from actual rows');
 assert.ok(!live.includes("members=p==='expertv3'"),'live expert display must not re-infer membership from profile');
 

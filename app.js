@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.129';
+const APP_VERSION='v11.8.0-rc4.130';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -1713,7 +1713,7 @@ function compactDecisionFixtureForStorage(f){
   // Full per-expert rows inside every ranked-pool player dominate localStorage and are
   // redundant for replay: frozen panel/pos/tier/ADP + robust summaries are retained,
   // while detailed expert rows remain on the decision candidates and in Backup rankCache.
-  return{...f,rankedPool:Array.isArray(f.rankedPool)?f.rankedPool.map(p=>{if(!p||typeof p!=='object')return p;const{panelIndividuals,...rest}=p;return rest}):f.rankedPool};
+  return{...f,rankedPool:Array.isArray(f.rankedPool)?f.rankedPool.map(p=>{if(!p||typeof p!=='object')return p;const{panelIndividuals,robustRankShadow,...rest}=p;return rest}):f.rankedPool};
 }
 function saveDecisionFixtures(rows){
   const compact=(Array.isArray(rows)?rows:[]).map(compactDecisionFixtureForStorage);
@@ -1723,7 +1723,8 @@ function saveDecisionFixtures(rows){
   // Never degrade the active draft: a 15-round v4/v5 comparison requires all 30 paired
   // fixtures. Quota recovery may trim old drafts only; active evidence is atomic.
   for(const historyKeep of[90,60,30,0]){
-    const payload=[...history.slice(-historyKeep),...current];
+    const keptHistory=historyKeep===0?[]:history.slice(-historyKeep);
+    const payload=[...keptHistory,...current];
     try{localStorage.setItem(decisionFixtureKey(),JSON.stringify(payload));return true}catch{}
   }
   return false;

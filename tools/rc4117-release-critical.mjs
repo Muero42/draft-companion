@@ -1,13 +1,12 @@
 import fs from 'node:fs';
 const s=fs.readFileSync('app.js','utf8');
+const versionMatch=s.match(/const APP_VERSION='v11\.8\.0-rc4\.(\d+)'/);
+if(!versionMatch||Number(versionMatch[1])<122)throw new Error('rc4.117+ contract requires rc4.122 or newer runtime');
 const must=[
-  "const APP_VERSION='v11.8.0-rc4.122'",
   "RB:{experts:['Ryan Weisse','Kev Wheeler','Dalton Del Don','Nick Mariano','Sean Koerner','Pat Fitzmaurice']",
   "WR:{experts:['Sean Koerner','Nick Mariano','Justin Boone','Todd D Clark','Dalton Del Don','Pat Fitzmaurice']",
   "TE:{experts:['Wolf of Roto Street','Ryan Weisse','Sean Koerner','Dalton Del Don','Pat Fitzmaurice','Justin Boone']",
   "buildPanelFromExpertRows('expert-v4-'+pos.toLowerCase(),pos,rows,bp.weights||",
-  "overallRank:Number(row.overallRank)",
-  "Einzelrankings · Position / Overall",
   "const v3Id=EXPERT_PROFILE_IDS.expertv3[pos]",
   "<span>Overall-Panel</span>",
   "v5 is the controlled v3 challenger",
@@ -16,7 +15,8 @@ const must=[
   "const overall=Number(row.overallRank),posRank=Number(row.posRank??row.rank);",
   "rank:mean,overallRank:mean,posRank:posMean",
   "vals.push({...x,rank:Number(x.rank),overallRank:Number(x.rank)",
-  "rank:Number(k.overallRank??k.rank)"
+  "rank:Number(k.overallRank??k.rank)",
+  "const publishedOverall=Number.isFinite(Number(x.overallRank))"
 ];
 for(const x of must)if(!s.includes(x))throw new Error('rc4.117 contract missing: '+x);
 if(s.includes("source:'verified v4 individual-only + verified Sean Koerner'"))throw new Error('obsolete v4+Koerner v5 resurrected');
@@ -32,9 +32,10 @@ for(const p of ['QB','RB','WR','TE']){
 }
 const live=fs.readFileSync('live-surface-v3.js','utf8');
 for(const x of [
-  "function expertRankLabel(hit,pos)",
-  "\${pos}#\${Math.round(posRank)} · Ovr #\${Math.round(overall)}",
+  "function expertRankLabel(hit)",
+  "const overall=Number(hit.overallRank??hit.rank);",
   "expertv5:'Expert-v5 HYBRID + KOERNER'",
   "expertv4:'Expert-v4 INDIVIDUAL-ONLY'"
-]) if(!live.includes(x)) throw new Error('compact rank/profile canary missing: '+x);
+]) if(!live.includes(x)) throw new Error('compact Overall/profile canary missing: '+x);
+if(live.includes("${pos}#${Math.round(posRank)}")||live.includes("Ovr #"))throw new Error('compact live surface must remain Overall-only');
 console.log('rc4.122 release-critical contract PASS');

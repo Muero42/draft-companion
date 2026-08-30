@@ -38,8 +38,8 @@ function runStore(initial,quotaPredicate){
  if(!r.ok||!r.recovered||m.has('v7_rankCache')||m.has('v7_panelRanks')||!m.has('v7_rank_x'))throw new Error('legacy-duplicate recovery failed');
 }
 {
- const {ctx,m}=runStore({v118_decisionFixtures:'HISTORY',v118_returnValidation:'HISTORY',v117_researchEvidence:'HISTORY'},(k,v,m)=>m.has('v118_decisionFixtures'));
+ const {ctx,m}=runStore({v118_decisionFixtures:'ACTIVE_EVIDENCE',v118_returnValidation:'HISTORY',v117_researchEvidence:'HISTORY'},(k,v,m)=>m.has('v118_decisionFixtures'));
  const r=ctx.persistExpertRankCache('x',{ranks:{a:{rank:1}}});
- if(!r.ok||!r.recovered||m.has('v118_decisionFixtures')||!m.has('v7_rank_x'))throw new Error('history-prune recovery failed');
+ if(r.ok||!m.has('v118_decisionFixtures')||m.has('v118_returnValidation')||m.has('v117_researchEvidence')||m.has('v7_rank_x'))throw new Error('active decision evidence must survive rank-cache quota recovery');
 }
 console.log('rc4.111 storage quota regression PASS');

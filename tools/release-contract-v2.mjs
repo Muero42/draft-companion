@@ -10,7 +10,7 @@ if(/JETZT-FENSTER|EHER JETZT/.test(live))fail('redundant timing label in live su
 need(live,"WR2 mit WR1-Upside","Parker thesis missing");
 need(live,"!/(injury|ankle|achilles|recurrence)/","injury-arrow guard missing");
 need(live,"<b>Experten:</b>","expert row not always rendered");
-need(live,"expertv3:'Expert-v3 POSITIONSSPEZIFISCH'","Expert-v3 live profile missing");
+need(live,"expertv3:'Expert-v3 BASELINE'","Expert-v3 live profile missing");
 need(live,"TOP 10 KANDIDATEN","unified top-10 cards missing");
 need(live,"live-cut-warning","per-card Normal-Cut warning missing");
 need(app,"fullv2","all-position profile missing");
