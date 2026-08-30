@@ -1,5 +1,5 @@
-# PITTI NEW CHAT BOOTSTRAP — v206
-Generation: `20260830T1814Z-v206`
+# PITTI NEW CHAT BOOTSTRAP — v207
+Generation: `20260830T1822Z-v207`
 
 Read and verify in this order:
 1. PITTI_COMMAND_CONTRACTS.json
@@ -21,7 +21,7 @@ Critical invariants:
 - Michael history includes 2025.
 - Pascal Voerde = Bracht Eagles 2017-2022 + Voerde Eagles 2023-2025; never Pascal Gelderner's 3-season profile.
 - Björn 2021 theme + 2023 autodraft excluded from ordinary preference learning.
-- USER hard QB exclusions: never recommend/draft Geno Smith or Aaron Rodgers; generic engine ranking may remain name-agnostic.
+- Geno Smith/Aaron Rodgers are NOT hard exclusions. Rank organically; no name-specific demotion/removal/forcing. Correct Coach evaluation should keep them below better QB options.
 - v4 PRIMARY / v5 CHALLENGER.
 - latest backup remains 29/30.
 - rc4.132 must include live-autodraft Return-v2 and Pick32 Nabers/Javonte regression before device deployment.
