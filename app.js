@@ -360,9 +360,9 @@ function removeLegacyRankingStorage(){
   try{localStorage.removeItem('v7_rankCache');localStorage.removeItem('v7_panelRanks')}catch{}
 }
 function pruneNonCriticalStorageForRankWrite(){
-  // Preserve configuration, API key, draft state and every expert source cache. Only
-  // reproducible/bounded history is eligible for eviction under browser quota pressure.
-  const keys=['v118_decisionFixtures','v118_returnValidation','v117_researchEvidence'];
+  // Decision fixtures are primary draft evidence and must never be sacrificed to refresh
+  // reproducible ranking caches. Evict only secondary/rebuildable data here.
+  const keys=['v118_returnValidation','v117_researchEvidence'];
   for(const key of keys){try{localStorage.removeItem(key)}catch{}}
 }
 function persistExpertRankCache(expertId,result){
@@ -1717,10 +1717,15 @@ function compactDecisionFixtureForStorage(f){
 }
 function saveDecisionFixtures(rows){
   const compact=(Array.isArray(rows)?rows:[]).map(compactDecisionFixtureForStorage);
-  // Keep a bounded rolling evidence cache. The current full 15-pick draft plus several
-  // prior drafts fit comfortably after compaction; quota pressure degrades by history,
-  // never by silently dropping the newest decision points.
-  for(const keep of[120,80,45,30,15]){try{localStorage.setItem(decisionFixtureKey(),JSON.stringify(compact.slice(-keep)));return true}catch{}}
+  const currentDraftId=resolveActiveDraftId?.()||draftId(els.draftInput.value);
+  const current=compact.filter(f=>String(f?.draftId||'')===String(currentDraftId||''));
+  const history=compact.filter(f=>String(f?.draftId||'')!==String(currentDraftId||''));
+  // Never degrade the active draft: a 15-round v4/v5 comparison requires all 30 paired
+  // fixtures. Quota recovery may trim old drafts only; active evidence is atomic.
+  for(const historyKeep of[90,60,30,0]){
+    const payload=[...history.slice(-historyKeep),...current];
+    try{localStorage.setItem(decisionFixtureKey(),JSON.stringify(payload));return true}catch{}
+  }
   return false;
 }
 function resolveReturnValidation(draftId,picks){
@@ -1783,7 +1788,10 @@ function freezeDecisionFixture({draftId,current,returnPick,picks,mine,players,ra
     candidates:scored.slice(0,16).map(x=>{const v2=rv2?.players?.[norm(x.p.name)],rob=robustRankShadow(x.r);return{playerId:String(x.p.id||''),name:x.p.name,pos:x.p.pos,panelRank:x.r?.rank??null,panelId:x.r?.panelId??null,panelN:Number.isFinite(Number(x.r?.n))?Number(x.r.n):null,panelSd:Number.isFinite(Number(x.r?.sd))?Number(x.r.sd):null,panelIndividuals:rob?.experts||[],robustRankShadow:rob?{weightedMedian:rob.weightedMedian,winsorizedMean:rob.winsorizedMean}:null,adp:Number.isFinite(x.a)?x.a:null,injury:x.p.injury||null,reasons:Array.isArray(x.reasons)?[...x.reasons]:[],confidence:Number.isFinite(Number(x.confidence))?Number(x.confidence):null,outsideNormalCut:!!x.outsideNormalCut,researchEvidence:researchPlayerState(x.p,evidenceCutoff).slice(-4),researchResidual:x.researchResidual||null,shadowCoachScore:x.shadowScore??null,shadowRank:x.shadowRank??null,returnProb:x.ret??null,returnConfidence:x.returnConfidence??null,topRisk:x.topRisk??null,returnTakers:v2?.takers||{},coachScore:x.score??null,action:x.action??null}}),
     targetCollisions:rv2?.collisions||{},
     forecastResolution:endOfDraft?'unresolved_end_of_draft':'pending',chosenPlayer:null,decisionOutcome:null
-  });saveDecisionFixtures(rows);
+  });
+  if(!saveDecisionFixtures(rows)){
+    throw new Error('Decision-Evidence konnte nicht gespeichert werden. Aktiver Draft bleibt geschützt; bitte sofort Backup erstellen und Speicher prüfen.');
+  }
 }
 function resolveDecisionFixtures(draftId,picks){const rows=loadDecisionFixtures();let changed=false;for(const f of rows){if(f.draftId!==draftId)continue;if(f.chosenPlayer){if(!f.decisionOutcome){const coach=f.candidates?.[0]||null,chosenCandidate=(f.candidates||[]).find(x=>norm(x.name)===norm(f.chosenPlayer?.name||''))||null;f.decisionOutcome={coachTop:coach?{name:coach.name,pos:coach.pos,coachScore:coach.coachScore,panelRank:coach.panelRank,adp:coach.adp}:null,chosenInFrozenCandidates:!!chosenCandidate,chosenFrozenRank:chosenCandidate?(f.candidates||[]).indexOf(chosenCandidate)+1:null,followedCoach:!!coach&&norm(coach.name)===norm(f.chosenPlayer?.name||''),chosenVsCoachScoreDelta:chosenCandidate&&coach&&Number.isFinite(chosenCandidate.coachScore)&&Number.isFinite(coach.coachScore)?chosenCandidate.coachScore-coach.coachScore:null,chosenVsCoachPanelDelta:chosenCandidate&&coach&&Number.isFinite(chosenCandidate.panelRank)&&Number.isFinite(coach.panelRank)?chosenCandidate.panelRank-coach.panelRank:null};changed=true}continue;}const hit=picks.find(p=>Number(p.pick_no)===Number(f.current)&&Number(p.draft_slot)===Number(f.slot));if(hit){const chosenName=hit.metadata?.first_name&&hit.metadata?.last_name?`${hit.metadata.first_name} ${hit.metadata.last_name}`:(hit.metadata?.player_name||'');const coach=f.candidates?.[0]||null,chosenCandidate=(f.candidates||[]).find(x=>norm(x.name)===norm(chosenName))||null;f.chosenPlayer={playerId:String(hit.player_id),name:chosenName};f.decisionOutcome={coachTop:coach?{name:coach.name,pos:coach.pos,coachScore:coach.coachScore,panelRank:coach.panelRank,adp:coach.adp}:null,chosenInFrozenCandidates:!!chosenCandidate,chosenFrozenRank:chosenCandidate?(f.candidates||[]).indexOf(chosenCandidate)+1:null,followedCoach:!!coach&&norm(coach.name)===norm(chosenName),chosenVsCoachScoreDelta:chosenCandidate&&coach&&Number.isFinite(chosenCandidate.coachScore)&&Number.isFinite(coach.coachScore)?chosenCandidate.coachScore-coach.coachScore:null,chosenVsCoachPanelDelta:chosenCandidate&&coach&&Number.isFinite(chosenCandidate.panelRank)&&Number.isFinite(coach.panelRank)?chosenCandidate.panelRank-coach.panelRank:null};if(f.forecastResolution==='pending')f.forecastResolution='chosen';changed=true}}if(changed)saveDecisionFixtures(rows)}
 function simulateToReturn(ctx,stress='baseline',runs=1200){
