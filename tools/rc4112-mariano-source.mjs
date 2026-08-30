@@ -32,5 +32,7 @@ const html='<table><tr><th>Tier</th><th>Rank</th><th>Player Name</th><th>Pos</th
  '<tr><td>1</td><td>3</td><td>Ja\'Marr Chase</td><td>WR</td></tr>'+
  '<tr><td>3</td><td>20</td><td>Brock Bowers</td><td>TE</td></tr></table>';
 const rows=ctx.parseRotoBallerOverall(html);
-if(rows.length!==4||rows[0].name!=='Jahmyr Gibbs'||rows[3].rank!==20||rows[3].pos!=='TE')throw new Error('RotoBaller table parser fixture failed');
+if(rows.length!==4)throw new Error('RotoBaller table parser fixture failed: '+JSON.stringify(rows));
+const byName=new Map(rows.map(x=>[x.name,x]));
+if(byName.get('Jahmyr Gibbs')?.rank!==1||byName.get('Brock Bowers')?.rank!==20||byName.get('Brock Bowers')?.pos!=='TE')throw new Error('RotoBaller parsed values wrong: '+JSON.stringify(rows));
 console.log('Nick Mariano RotoBaller source regression PASS');
