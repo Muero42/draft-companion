@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1822Z-v207",
-  "updated_at": "2026-08-30T18:52:00Z",
+  "updated_at": "2026-08-30T18:57:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,8 +11,8 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.131",
-    "test_challenger": "v11.8.0-rc4.132",
-    "test_challenger_android_verified": true,
+    "test_challenger": "v11.8.0-rc4.133",
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.131 CI PACKAGE/RE-EXTRACT PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
@@ -41,7 +41,7 @@
   "exact_continuation": {
     "gate": "RC4.132_BUILD_AND_REGRESSION",
     "auto_starts_mock": false,
-    "instruction": "Android rc4.132 smoke at pick 9: AJ Brown still generic/empty individual text; fixed in source candidate by adding explicit individual evidence. Chase Brown rank 6 vs Achane rank 5 is not a Return inversion: screenshot shows Achane panel 16.4/ADP14.5/Return87 and Chase panel14.0/ADP17.3/Return82; current Coach correctly keeps Achane ahead. Continue targeted top-candidate text coverage audit and regression; do not retune Chase/Achane without contrary evidence."
+    "instruction": "rc4.133 candidate built from pick-9 smoke. Root cause for Chase Brown under-ranking: early Return timing layer could subtract up to 6 raw points plus board-relative -3, enough to overwhelm a meaningful panel edge despite Return being only a timing signal. Capped early absolute Return discount at 3.5 and relative layer at 2; no player-specific Chase bonus. AJ Brown individual evidence added. Run full off-device gates before any deploy/device refresh."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -83,7 +83,7 @@
     "transaction_rule": "Official transaction/IR/PUP truth outranks stale Sleeper metadata; same-position move alone is weak evidence unless role/health impact is corroborated.",
     "draft_chat_rule": "Start a brand-new chat for the real draft after final runtime/freshness checkpoint. That draft chat is execution-only: load DRAFT_CHAT_BOOTSTRAP + canonical state, do not redesign code/model during the draft unless a release-critical emergency makes the app unusable."
   },
-  "android_acceptance_pending": false,
+  "android_acceptance_pending": true,
   "expert_v4_v5": {
     "v3": "frozen control/failsafe; embedded team/individual hybrid as historically audited",
     "v4": "CURRENT RE-AUDIT: individual-only, only experts with obtainable individual rankings. Position-specific optimized weights in app.js EXPERT_V4_BLUEPRINT. Koerner is native v4.",
@@ -155,7 +155,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.132_ANDROID_SMOKE_FINDINGS_RC4.133_CANDIDATE",
+    "status": "RC4.133_RETURN_CALIBRATION_CANDIDATE_OFFDEVICE_GATES_REQUIRED",
     "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
@@ -163,7 +163,7 @@
     "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
     "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
   },
-  "status": "RC4.132_ANDROID_SMOKE_FINDINGS_RC4.133_CANDIDATE",
+  "status": "RC4.133_RETURN_CALIBRATION_CANDIDATE_OFFDEVICE_GATES_REQUIRED",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
   "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
   "evidenceRetention": {
