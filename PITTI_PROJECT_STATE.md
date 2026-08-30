@@ -2632,3 +2632,10 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - User device screenshot after the requested refresh shows app `v11.8.0-rc4.107`, FantasyPros **Online**, Rankings **2 Min.**, Sleeper Draft/ADP count **1095**, Coach **Bereit**, and saved FantasyPros API key. This is sufficient evidence that the generic `Alles aktualisieren` path completed recently and the app remains operational.
 - It is **not** sufficient to accept v4/v5: the screenshot shows the legacy Expert-v3 configuration area, not the dedicated analysis v3/v4/v5 selector/readiness directly above Analyze, nor the hidden panel/source detail. Do not infer Koerner/v4/v5 PASS from generic `Bereit`.
 - Next device evidence is narrowed to the dedicated analysis selector/readiness/source state; no repeat refresh is required unless that state reports stale/error.
+
+
+### 2026-08-30 — v4/v5 disabled-state root-cause hardening
+- Device evidence after successful rc4.107 refresh confirms both challenger selectors remain disabled, so fail-closed behavior is working.
+- Static audit found a second-order acceptance defect: `expertProfileReady()` previously selected the first N aggregate rows and then required all to be COMPLETE. Because incomplete rows are ranked from available weights, sparse rows can move upward and poison the very decision-core used to decide readiness. This is circular and can keep a valid challenger locked or make readiness depend on missingness-induced rank movement.
+- Repaired source logic: source-depth acquisition gate remains strict; incomplete rows remain explicit and are never imputed; readiness core is now formed from COMPLETE rows only. v4 additionally verifies its complete decision-zone after panel construction. This does **not** promote any player or relax missingness semantics; it only prevents incomplete rows from defining the acceptance sample.
+- Change is source-only pending CI/deployment/device verification. v3 remains runtime default. Do not accept v4/v5 merely because this fix exists.
