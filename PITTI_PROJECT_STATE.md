@@ -2739,3 +2739,13 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Expert ranking/source/freshness research frozen unless a direct source failure proves the frozen source unusable. No more trial-and-error device builds.
 - STATUS contract hardened: report known state only; no tools, CI polling, work, or AUTO continuation.
 - User reports chat/app hangs/crashes; new chat must minimize tool chatter and turns and use device only for final acceptance evidence.
+
+
+### 2026-08-30 — rc4.116 v4 expert re-audit / device test NOT YET AUTHORIZED
+- New device evidence invalidated the prior v190 assumption that v4 was closed: Barkley displayed Pat #8 because v4 positional aggregation rank leaked into the user-facing expert-rank label. Aggregation may remain positional, but expert provenance/display must retain the published Overall rank.
+- User explicitly requires v4 to contain only individually obtainable rankings; no Draft Sharks Team/consensus. Sean Koerner is now obtainable through the existing API path and therefore belongs natively in v4, not as a separate v5 add-on.
+- Fresh FantasyPros Draft Accuracy re-audit (2023-2025) plus current 2026 individual-board availability identified a materially stronger RB construction: Ryan Weisse (multi-year RB2), Kev Wheeler (RB4, current Half-PPR board Aug 28), Dalton Del Don (RB7), Nick Mariano (RB11), Sean Koerner (RB12), with Pat Fitzmaurice (RB40) retained only as a 10% stability anchor. This proves the previous four-person RB blueprint was not optimal.
+- rc4.116 v4 weights: QB Koerner30 / Todd D Clark25 / Boone15 / Del Don10 / Mariano10 / Pat10. RB Weisse25 / Kev Wheeler25 / Del Don15 / Mariano15 / Koerner10 / Pat10. WR Koerner25 / Mariano25 / Boone20 / Todd10 / Del Don10 / Pat10. TE Wolf25 / Weisse20 / Koerner15 / Del Don15 / Pat15 / Boone10.
+- v4 aggregation now uses configured position-specific weights instead of equal weights. Individual rows preserve both posRank (aggregation) and overallRank (provenance/display). Detailed/snapshot expert labels prefer overallRank and show positional rank separately.
+- Former v5 = v4 + Koerner is fail-closed because Koerner is now already a native v4 member; double-counting is forbidden. v5 is not a draft-test lane.
+- Commit 49066a630fa3c4e471f3b96e68f37db503d76782. Do NOT install/test on device until off-device release gates have passed and source-depth/readiness implications of the expanded v4 panels are verified.
