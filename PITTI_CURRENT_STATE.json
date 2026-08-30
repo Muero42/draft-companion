@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260830T1808Z-v205",
-  "updated_at": "2026-08-30T18:08:00Z",
+  "handoff_generation": "20260830T1814Z-v206",
+  "updated_at": "2026-08-30T18:14:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -42,7 +42,7 @@
   },
   "invariants": {
     "user_qb_limit": 1,
-    "geno_rodgers_excluded": false,
+    "geno_rodgers_excluded": true,
     "normal_kdst": false,
     "starter_maxima_not_roster_caps": true,
     "wr_saturation_soft": true,
@@ -51,19 +51,23 @@
     "long_auto_blocks": true,
     "blocked_lane_only": true,
     "rc484_kernel_frozen": true,
-    "no_player_name_qb_exclusions": true
+    "no_player_name_qb_exclusions": true,
+    "user_qb_hard_exclusions": [
+      "Geno Smith",
+      "Aaron Rodgers"
+    ]
   },
   "handoff": {
     "transaction_in_progress": false,
     "status": "PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "generation": "20260830T1808Z-v205",
-    "seal_generation": "20260830T1808Z-v205",
+    "generation": "20260830T1814Z-v206",
+    "seal_generation": "20260830T1814Z-v206",
     "gate": "RC4.132_BUILD_AND_REGRESSION",
     "next_action": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
     "resume": "Start rc4.132 work immediately. Before release, fix manager-history corruption and exact-order canaries in addition to Autodraft/Pick32. After rc4.132 device acceptance, finish draft-day freshness and then generate/use the fresh draft execution chat.",
-    "resume_semantics": "v205 supersedes v204 and all stale nested rc4.114/117/v194/v195 pointers."
+    "resume_semantics": "v206 supersedes v205 and all stale nested rc4.114/117/v194/v195 pointers. User hard QB exclusions are execution-path rules, not generic engine player-name demotions."
   },
   "source_authority": "v203 UNRELEASED runtime delta under rc4.131 label; rc4.131 remains accepted Android authority until rc4.132 PASS",
   "package_authority": "rc4.131 last accepted package/runtime lineage; rc4.132 package gate required",
@@ -94,7 +98,7 @@
     "status_semantics": "REPORT_ONLY_NO_TOOL_WORK",
     "auto_semantics": "EXECUTE_CONTINUOUSLY; no promise/status chatter; checkpoint every material change",
     "no_trial_error": "No cache clear/reinstall/repeated phone loop. Build/test rc4.132 off-device, then exactly one controlled refresh after main/gh-pages parity.",
-    "chat_handoff": "v205 deep-audit: rc4.132 first; stale manager-history bug discovered (Michael missing 2025, Pascal Voerde incorrectly 3-year instead of Bracht→Voerde 2017-2025 chain). Draft chat will be a separate fresh execution-only chat after final readiness.",
+    "chat_handoff": "v206 deep-audit: rc4.132 first; exact order/history locks mandatory; Geno Smith/Aaron Rodgers remain hard USER draft exclusions while the generic engine may rank them organically. Draft chat is a separate fresh execution-only chat after final readiness.",
     "source_of_truth": "PITTI_CURRENT_STATE.json + PITTI_EXECUTION_LOCK.json + PITTI_PROJECT_STATE.md EOF + PASS seal + actual repo/runtime evidence.",
     "guardrail_note": "rc4115 gate now scoped to rc4.115 only; rc4117 has dedicated release-critical contract; rc4114 gate made semantic so preserving Overall provenance does not falsely fail positional aggregation."
   },
@@ -192,7 +196,8 @@
       "merge main; fast-forward gh-pages; verify byte parity",
       "one controlled Android refresh; visible rc4.132 verification; no cache clear/reinstall",
       "repair active-manager historical data: Michael_Polk must include 2025; Pascal Voerde must merge Pascal_Bracht 2017-2022 + Pascal_Voerde 2023-2025; preserve Björn 2021/2023 exclusions",
-      "hard-lock canonical 2026 order: 1 Michael,2 Pascal Voerde,3 Marc Düsseldorf,4 Thomas,5 Björn,6 Pascal Gelderner,7 Giuliano,8 Bastian,9 Muerotechnik,10 Dutch Marc; reject rc4.84 geometry/Michael K/Moers Venom"
+      "hard-lock canonical 2026 order: 1 Michael,2 Pascal Voerde,3 Marc Düsseldorf,4 Thomas,5 Björn,6 Pascal Gelderner,7 Giuliano,8 Bastian,9 Muerotechnik,10 Dutch Marc; reject rc4.84 geometry/Michael K/Moers Venom",
+      "preserve user hard QB exclusions: never recommend/draft Geno Smith or Aaron Rodgers; this is a user execution rule, not a generic engine ranking demotion"
     ],
     "canary": {
       "pick": 32,
@@ -281,6 +286,7 @@
           2025
         ]
       }
-    }
+    },
+    "screenshot_handoff_audit": "Four screenshots preserve the visible narrative but are not a complete standalone authority because transition text is partly covered/cropped; repo v206 canonical files are authoritative."
   }
 }
