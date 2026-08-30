@@ -1606,6 +1606,19 @@ function simNeedWeight(pos,c){
 }
 function seededRng(seed){let x=seed>>>0;return()=>{x=(x+0x6D2B79F5)|0;let t=x;t=Math.imul(t^t>>>15,t|1);t^=t+Math.imul(t^t>>>7,t|61);return((t^t>>>14)>>>0)/4294967296}}
 function weightedChoice(rows,rng=Math.random){let total=rows.reduce((a,x)=>a+x.w,0),r=rng()*total;for(const x of rows){r-=x.w;if(r<=0)return x}return rows[rows.length-1]}
+function sleeperLiveAutopickWeight(p,pickNo,roster){
+  // Sleeper live CPU auto-pick with an empty queue: roster need + a higher-ranked
+  // available player. The exact proprietary tie-break is undocumented, so keep a
+  // narrow stochastic band around Sleeper's visible SearchRank instead of claiming
+  // a deterministic exact pick. Queue contents are private/unknown and therefore
+  // cannot be simulated here.
+  const sr=Number(p?.searchRank),a=adpFor(p?.name);
+  const board=Number.isFinite(sr)&&sr>0?sr:(Number.isFinite(a)?a:rankFor(p?.name,p?.pos)?.rank);
+  if(!Number.isFinite(board))return .00005;
+  const need=simNeedWeight(p.pos,roster);
+  const distance=Math.max(0,board-pickNo);
+  return Math.max(.00005,Math.exp(-distance/2.35)*need);
+}
 function simCandidateWeight(p,pickNo,roster,profile,stress){
   const r=rankFor(p.name,p.pos);if(!r)return 0;
   const a=adpFor(p.name);
@@ -1661,7 +1674,8 @@ function simulateReturnV2(ctx,stress='baseline',runs=900){
       const special=prof?chooseSpecialTeamPick(prof,roster,pickNo,teams,rng):null;
       if(special){roster[special]++;continue;}
       if(!prof){const skillShare=endgameSkillShare(roster,pickNo,mode);if(pickNo>=120&&rng()>skillShare){if(roster.DEF===0&&roster.K===0){if(rng()<.5)roster.DEF++;else roster.K++;}else if(roster.DEF===0)roster.DEF++;else if(roster.K===0)roster.K++;continue;}}
-      const board=pool.slice(0,70).map(p=>({p,w:simCandidateWeight(p,pickNo,roster,prof,stress)}));
+      const liveAuto=(mode==='live'&&LIVE_MANAGER_ADAPTATION_STATE?.[slot]?.mode==='autodraft');
+      const board=pool.slice(0,70).map(p=>({p,w:liveAuto?sleeperLiveAutopickWeight(p,pickNo,roster):simCandidateWeight(p,pickNo,roster,prof,stress)}));
       const chosen=weightedChoice(board,rng);if(!chosen)break;
       const key=norm(chosen.p.name),idx=pool.indexOf(chosen.p);if(idx>=0)pool.splice(idx,1);
       if(roster[chosen.p.pos]!=null)roster[chosen.p.pos]++;
