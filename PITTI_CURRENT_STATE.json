@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1822Z-v207",
-  "updated_at": "2026-08-30T18:41:00Z",
+  "updated_at": "2026-08-30T18:45:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -33,12 +33,14 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "rc4.132 SOURCE BUILT ON MAIN; device/release gates pending"
+    "source_candidate": "rc4.132 SOURCE BUILT ON MAIN; device/release gates pending",
+    "deployed": "v11.8.0-rc4.132",
+    "main_gh_pages_parity": true
   },
   "exact_continuation": {
     "gate": "RC4.132_BUILD_AND_REGRESSION",
     "auto_starts_mock": false,
-    "instruction": "rc4.132 candidate PR gates all PASS and merged to main at 9b25dcf. Continue post-merge main/deployment/parity verification; no phone action until exact deployed parity is proven."
+    "instruction": "Validated rc4.132 merged and deployed. main/gh-pages exact blob parity PASS for app.js,index.html,live-surface-v3.js,manifest.webmanifest,sw.js. Next unavoidable action: one controlled phone refresh only; verify visible App-Version rc4.132. No cache clear/reinstall."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -152,7 +154,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.132_MAIN_MERGED_POSTMERGE_GATES_PENDING",
+    "status": "RC4.132_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_REQUIRED",
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
@@ -160,7 +162,7 @@
     "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
     "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
   },
-  "status": "RC4.132_MAIN_MERGED_POSTMERGE_GATES_PENDING",
+  "status": "RC4.132_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_REQUIRED",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
   "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
   "evidenceRetention": {
