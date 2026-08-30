@@ -63,9 +63,9 @@ Otherwise continue AUTO.
 - Half-PPR 1QB; reject Superflex/2QB.
 - Starter maxima are not roster caps.
 - K/DST normally not drafted.
-- Geno Smith/Aaron Rodgers are ordinary QB candidates; they must rank organically and must never be player-name hard-excluded.
+- Geno Smith/Aaron Rodgers are USER HARD EXCLUSIONS for the 2026 draft and must not be recommended/drafted. This supersedes stale rc4.92 prose claiming they are ordinary candidates.
 - Excess WR depth must materially reduce redundant WR utility.
-- Expert-v2: Brown excluded; Erickson challenger; Koerner no current-draft acquisition effort; Mariano availability already solved; Draft Sharks counted as one correlated family; availability-only automatic restoration of the old Weisse/Gianni/Bobal trio rejected; Ryan Weisse or others may be freshly qualified individually with evidence.
+- Expert-v2 is historical/control only. Current v4/v5 authority supersedes stale expert-v2 acquisition prose: Brown remains excluded from the new v4 individual panel; Koerner acquisition is active for v5 and must pass exact identity/coverage/crosscheck gates.
 - Frozen Expert-v2 weights/profile semantics in `PITTI_EXECUTION_LOCK.json` are authoritative for the current experiment; do not invent, silently renormalize, or retune them without new promotion evidence.
 
 
@@ -83,7 +83,7 @@ Otherwise continue AUTO.
 - A normal final, status final, acknowledgement final, **or empty final after tool work** is forbidden while executable autonomous work remains.
 - Because execution cannot continue after the assistant turn is ended without another user message, early turn termination is a functional AUTO failure, not a cosmetic response issue.
 - Valid turn end requires one of: unavoidable user/device input; approval-gated consequential action; unsafe unresolved contradiction; material end result with no higher-value package remaining; or demonstrated exhaustion of all safe positive-value independent lanes.
-- rc4.92 correction: Geno Smith/Aaron Rodgers are NOT exclusions. Any active runtime/test/checkpoint rule that special-cases either name for demotion/removal is a regression. Exactly-one-QB remains a roster strategy only after QB1 is drafted.
+- Current user authority supersedes rc4.92: Geno Smith/Aaron Rodgers ARE explicit hard exclusions for this draft. Exactly-one-QB remains the roster strategy.
 - v145 takeover canary: rc4.94 source/package/deployment/Android Pick-9 presentation PASS. Kenneth Walker must not receive a player-specific boost; the fix remains generic normal-cut-first Top-10 selection.
 
 
@@ -107,7 +107,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - Bounded replay rc4.101 fixtures -> rc4.104 is CI PASS for pick92/109/112 roster economics and exact pick132 Spears/Andrews reorder; Return-v2 unchanged. Continue draft-day readiness/freshness/failsafe.
 - Return evidence remains: 3-pick 92.5% forecast vs 92.4% actual (Brier .044); 17-pick 35.6% vs 32.5% (Brier .077). No global Return-v2 retune.
 - No PairSum/Rolling, hard WR cap/quota, blind RB forcing, player-name forcing, global QB2/TE2 rule, generic Return-v2 retune, or expert-weight redesign.
-- Geno Smith/Aaron Rodgers are ordinary QB candidates; no player-name hard exclusion.
+- Geno Smith/Aaron Rodgers are explicit user hard exclusions; do not recommend/draft them.
 - Starter maxima are not roster caps; normal user draft excludes K/DST; user strategy drafts exactly one QB.
 - Completed rc4.104 Snapshot is duplicate/documentation only; do not re-run live-pick analysis on it.
 - FantasyPros post-draft capture is optional external benchmark, not prerequisite for replay.
