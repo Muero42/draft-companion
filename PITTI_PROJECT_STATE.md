@@ -2665,3 +2665,10 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Static re-audit after device screenshots found the previous readiness repair was only partial: `expertProfileReady()` correctly used COMPLETE rows, but `ensureExpertV4Panels()` still independently rejected the first N **aggregate** rows when any was incomplete. That stale second gate could keep v4 disabled before the corrected shared readiness rule had authority.
 - Removed only that duplicate/circular aggregate-core gate. Per-expert positional source-depth minimum remains strict; incomplete rows remain explicit; final v4 readiness now delegates to the shared COMPLETE-row decision-core rule. v5 semantics unchanged.
 - This is a concrete code-path cause consistent with rc4.108 device behavior; no further relaxation is authorized. Must pass full CI before version/deploy.
+
+
+### 2026-08-30 — rc4.109 gated deployment
+- Complete v4 readiness fix versioned as `v11.8.0-rc4.109` after rc4.108 device evidence exposed the stale duplicate aggregate-core gate.
+- Final candidate head `535a9b0b9032a693f6a70d5fe7006eb06e809089`: rc4.82 PASS, rc4.83 PASS, Project Guardrails PASS, release contract v2 PASS, candidate package/re-extract PASS.
+- Package artifact 9728147722 / run 33298460503; artifact envelope digest `sha256:fc17d0ddd78c80b3f6bd237db0995a986a779a14d0c57c2d90bc028d7ecddd39`.
+- gh-pages moved to the gated head; sampled runtime blob parity with main PASS. Device acceptance remains pending. rc4.108 remains last device-observed fallback until rc4.109 is seen and refreshed.
