@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-30T12:32:00Z",
+  "updatedAt": "2026-08-30T13:10:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,28 +11,28 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.122",
+    "appVersion": "v11.8.0-rc4.129",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.114",
-    "latestPreinstallVerified": "v11.8.0-rc4.122 OFF-DEVICE CONTRACT PASS",
+    "latestAndroidObserved": "v11.8.0-rc4.126",
+    "latestPreinstallVerified": "v11.8.0-rc4.129 SOURCE/OFF-DEVICE LOGIC VERIFIED",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.117",
     "preinstallSha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.122",
-    "latestDeployedCandidate": "v11.8.0-rc4.122",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.129",
+    "latestDeployedCandidate": "v11.8.0-rc4.129",
     "latestAndroidVerified": "v11.8.0-rc4.106",
-    "androidAuthority": "v11.8.0-rc4.114",
-    "android_authority": "v11.8.0-rc4.114",
+    "androidAuthority": "v11.8.0-rc4.126",
+    "android_authority": "v11.8.0-rc4.126",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33305284763,
     "preinstallReferenceArtifactId": 9730250635,
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.114",
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.114",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.126",
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.126",
     "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
     "rc499": {
@@ -61,7 +61,7 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.114"
+    "acceptedAndroidAuthority": "v11.8.0-rc4.126"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -116,7 +116,10 @@
     "bastiSlot8": true,
     "v4v5FailClosedUntilLiveCoverage": true,
     "v3v4v5SelectorDirectlyAboveAnalyze": true,
-    "deferred194443MockUnanalyzed": true
+    "deferred194443MockUnanalyzed": true,
+    "activeDraftDecisionFixturesNeverQuotaPruned": true,
+    "fullPairedMockRequires30Fixtures": true,
+    "backupSerializationIsPassThroughForDecisionFixtures": true
   },
   "expertV2": {
     "status": "LEGACY_PRESERVED_SUPERSEDED_FOR_NEW_V4_V5_COMPARISON",
@@ -185,17 +188,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.122_DEVICE_V45_ACCEPTANCE",
+    "status": "RC4.129_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
     "production": false,
     "androidVerified": false,
-    "acceptedAndroidFallback": "v11.8.0-rc4.114",
-    "runtime": "v11.8.0-rc4.122",
-    "mainRuntimeParity": "PASS_OFFDEVICE_AND_GH_PAGES",
-    "nextGate": "ONE_DEVICE_REFRESH_THEN_V4_V5_AND_BARKLEY_ACCEPTANCE"
+    "acceptedAndroidFallback": "v11.8.0-rc4.126",
+    "runtime": "v11.8.0-rc4.129",
+    "mainRuntimeParity": "FINAL_HANDOFF_PARITY_TARGET_PASS_AFTER_PROMOTION",
+    "nextGate": "ONE_DEVICE_REFRESH_THEN_FULL_15_PICK_PAIRED_V4V5_MOCK_AND_30_FIXTURE_BACKUP_GATE"
   },
-  "status": "RC4.122_DEPLOYED_PARITY_PASS_DEVICE_ACCEPTANCE_PENDING",
-  "gate": "RC4.122_DEVICE_V45_ACCEPTANCE",
-  "nextGate": "One device refresh; verify v4/v5 selectable, Barkley RB#8 · Ovr #14, and common-scale ranking.",
+  "status": "RC4.129_HANDOFF_READY_DEVICE_REFRESH_PENDING",
+  "gate": "RC4.129_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
+  "nextGate": "Refresh once to rc4.129; run 15-round mock with v4+v5 at every own pick; export backup; require exactly 30 paired fixtures before comparison.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -204,31 +207,46 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260830T1010Z-v192",
-    "status": "PASS",
+    "generation": "20260830T1310Z-v193",
+    "status": "PASS_PENDING_RESEAL_IN_TRANSACTION",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.117 off-device/package PASS and gh-pages/main parity PASS. Next one controlled device refresh/install and v4 acceptance; v5 only if time remains."
+    "resume": "rc4.129 evidence-retention fix is source authority; rc4.126 device operation already proven. Next full 30-fixture paired mock."
   },
   "expertV45": {
-    "status": "RC4.122_OFFDEVICE_PASS_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
+    "status": "V4_PRIMARY_V5_CHALLENGER_DEVICE_OPERATIONAL_RC4126; RC4129_EVIDENCE_RETENTION_ACCEPTANCE_PENDING",
     "v3": {
       "status": "FROZEN_BASELINE_DEFAULT_FAILSAFE"
     },
     "v4": {
-      "status": "RC4.122_DUAL_RANK_OFFDEVICE_PASS",
+      "status": "PRIMARY_OPERATIONAL_DEVICE",
       "design": "INDIVIDUAL_ONLY_NATIVE_KOERNER_WEIGHTED_BLUEPRINT",
       "doNotReopenSourcesWithoutNewEvidence": true
     },
     "v5": {
-      "status": "RC4.122_V3_PLUS_KOERNER_EXACT15_OFFDEVICE_PASS",
+      "status": "CHALLENGER_OPERATIONAL_DEVICE",
       "design": "V3_PLUS_KOERNER_15PP_FUNDED_FROM_DRAFT_SHARKS_FIRST",
       "legacyV4PlusKoerner": false
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260830T1200Z-v191",
+  "handoff_generation": "20260830T1310Z-v193",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
+  },
+  "evidenceRetention": {
+    "activeDraftAtomic": true,
+    "historyMayTrim": true,
+    "rankCacheRecoveryMayDeleteDecisionFixtures": false,
+    "silentActivePersistFailureForbidden": true,
+    "expectedFullDraftPairs": 15,
+    "expectedFullDraftFixtures": 30,
+    "latestBackupExactPairs": 11,
+    "latestBackupMissingPicks": [
+      9,
+      12,
+      29,
+      32
+    ]
   }
 }
