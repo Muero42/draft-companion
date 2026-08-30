@@ -190,13 +190,11 @@ function ensureExpertV4Panels(){
     // legitimately stop before another expert's tail; that is right-censoring, not an
     // acquisition failure and must not be converted into a vote or silently renormalized.
     if(bp.experts.some(name=>rows[name].length<EXPERT_DECISION_CORE_MIN[pos])){ok=false;continue}
-    const ranks=buildPanelFromExpertRows('expert-v4-'+pos.toLowerCase(),pos,rows,Object.fromEntries(bp.experts.map(name=>[name,1])),{name:'Expert-v4 '+pos,source:'live verified individual experts',maxSingleWeight:bp.maxSingleWeight});
-    // Acceptance is decision-zone based: require the first N players by the aggregate board
-    // to have the full intended ensemble. Do not require every union/tail row to be complete.
-    const need=EXPERT_DECISION_CORE_MIN[pos],core=Object.values(ranks).sort((a,b)=>Number(a.rank)-Number(b.rank)).slice(0,need);
-    if(core.length<need||core.some(row=>row?.coverageStatus!=='COMPLETE'))ok=false;
+    buildPanelFromExpertRows('expert-v4-'+pos.toLowerCase(),pos,rows,Object.fromEntries(bp.experts.map(name=>[name,1])),{name:'Expert-v4 '+pos,source:'live verified individual experts',maxSingleWeight:bp.maxSingleWeight});
   }
-  return ok;
+  // Source-depth failures remain hard failures. For overlap/readiness, use the shared
+  // COMPLETE-row decision-core rule; never let sparse rows define the acceptance sample.
+  return ok&&expertProfileReady('expertv4');
 }
 function ensureExpertV5Panels(){
   const koerner='Sean Koerner';let ok=true;
