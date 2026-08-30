@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1822Z-v207",
-  "updated_at": "2026-08-30T18:45:00Z",
+  "updated_at": "2026-08-30T18:47:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -12,7 +12,7 @@
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.131",
     "test_challenger": "v11.8.0-rc4.132",
-    "test_challenger_android_verified": false,
+    "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.131 CI PACKAGE/RE-EXTRACT PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
@@ -35,12 +35,13 @@
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
     "source_candidate": "rc4.132 SOURCE BUILT ON MAIN; device/release gates pending",
     "deployed": "v11.8.0-rc4.132",
-    "main_gh_pages_parity": true
+    "main_gh_pages_parity": true,
+    "accepted_android": "v11.8.0-rc4.132"
   },
   "exact_continuation": {
     "gate": "RC4.132_BUILD_AND_REGRESSION",
     "auto_starts_mock": false,
-    "instruction": "Validated rc4.132 merged and deployed. main/gh-pages exact blob parity PASS for app.js,index.html,live-surface-v3.js,manifest.webmanifest,sw.js. Next unavoidable action: one controlled phone refresh only; verify visible App-Version rc4.132. No cache clear/reinstall."
+    "instruction": "User confirmed visible Android App-Version rc4.132 after one controlled refresh. Continue minimal live smoke/snapshot verification and then final freshness agenda; do not reinstall/clear cache or reopen model-development work unless a concrete failure appears."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -82,7 +83,7 @@
     "transaction_rule": "Official transaction/IR/PUP truth outranks stale Sleeper metadata; same-position move alone is weak evidence unless role/health impact is corroborated.",
     "draft_chat_rule": "Start a brand-new chat for the real draft after final runtime/freshness checkpoint. That draft chat is execution-only: load DRAFT_CHAT_BOOTSTRAP + canonical state, do not redesign code/model during the draft unless a release-critical emergency makes the app unusable."
   },
-  "android_acceptance_pending": true,
+  "android_acceptance_pending": false,
   "expert_v4_v5": {
     "v3": "frozen control/failsafe; embedded team/individual hybrid as historically audited",
     "v4": "CURRENT RE-AUDIT: individual-only, only experts with obtainable individual rankings. Position-specific optimized weights in app.js EXPERT_V4_BLUEPRINT. Koerner is native v4.",
@@ -154,15 +155,15 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.132_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_REQUIRED",
+    "status": "RC4.132_ANDROID_VERSION_OBSERVED_FINAL_LIVE_SMOKE_PENDING",
     "production": false,
-    "androidVerified": false,
+    "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
     "runtime": "rc4.131 accepted Android; rc4.132 candidate under full off-device gate",
     "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
     "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
   },
-  "status": "RC4.132_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_REQUIRED",
+  "status": "RC4.132_ANDROID_VERSION_OBSERVED_FINAL_LIVE_SMOKE_PENDING",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
   "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
   "evidenceRetention": {
