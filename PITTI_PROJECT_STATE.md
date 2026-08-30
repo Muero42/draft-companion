@@ -2559,3 +2559,10 @@ A full pre-handoff audit found multiple v154 transfer hazards and repaired them 
 - Downloaded artifact 9723209123 and independently re-extracted it. Inner candidate `Draft_Companion_v11.8.0-rc4.106_PREINSTALL.zip` contains exactly the expected 13 runtime files. SHA-256 independently recomputed as `17e831403129d3b80c9fa922918781c5f85510f6ff2292717e76a3d963099161`, exactly matching `candidate.sha256`.
 - This supersedes the prior candidate hash because readiness-semantics code changed afterward. Still PREINSTALL only; production/main remains untouched.
 - Remaining dependent gate is real live-source acquisition (including Koerner exact/pairwise route) and same-state v3/v4/v5 behavioral comparison. No user input is required for repository/package work; do not promote merely on static CI.
+
+
+### 2026-08-30 — AUTO v5 funding invariant hardening
+- Code audit found a subtle v5 weighting hazard before promotion: when a v3 player row lacked an explicit Draft Sharks Team contribution, the implementation could add Koerner with zero transferred weight yet still mark the row as complete. That violates the locked v5 design (Koerner funded primarily from DS) and could make readiness telemetry misleading.
+- Fixed fail-closed: a v5 row without positive DS funding is now `INCOMPLETE_V5_NO_DS_FUNDING`; Koerner is not added on top. Regression canaries explicitly prohibit the former optional-zero transfer pattern.
+- Head 1446fb90f80344f686f9986484d0d007dfcbb42e: release contract 33291094513 PASS; Project Guardrails 33291094497 PASS; candidate package gate 33291094493 PASS.
+- Production/main remains untouched. This is a real correctness improvement found autonomously before release.
