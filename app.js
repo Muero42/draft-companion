@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.126';
+const APP_VERSION='v11.8.0-rc4.127';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -262,12 +262,21 @@ function ensureExpertV5Panels(){
   }
   return ok;
 }
+function expertPanelMembershipAudit(id){
+  const weights=panels[id]?.weights||{},allowed=new Set(Object.keys(weights).filter(n=>Number(weights[n])>0).map(norm));
+  const bad=[];
+  for(const row of Object.values(panelRanks[id]||{})){
+    for(const x of row?.individual||[])if(x?.expertName&&!allowed.has(norm(x.expertName)))bad.push({player:row.name,expert:x.expertName});
+  }
+  return bad;
+}
 function currentExpertProfile(){for(const [id,map] of Object.entries(EXPERT_PROFILE_IDS))if(['QB','RB','WR','TE'].every(pos=>positionPanels[pos]===map[pos]))return id;return 'custom';}
 function expertProfileReady(id){
   const map=EXPERT_PROFILE_IDS[id];if(!map)return false;
   return ['QB','RB','WR','TE'].every(pos=>{
     const pid=map[pos],rows=panelRanks[pid];
     if(!rows||!Object.keys(rows).length)return false;
+    if((id==='expertv4'||id==='expertv5')&&expertPanelMembershipAudit(pid).length)return false;
     if(id==='expertv3')return Object.values(rows).every(row=>row?.coverageStatus==='COMPLETE'||!('coverageStatus' in row));
     const need=EXPERT_DECISION_CORE_MIN[pos];
     if(id==='expertv5'){
@@ -1306,7 +1315,26 @@ function panelFor(pos){
   if(panelSelectable(activePanelId))return activePanelId;
   return Object.keys(panelRanks).find(panelSelectable)||preferred||activePanelId;
 }
-function rankFor(name,pos){const id=panelFor(pos),r=panelRanks[id]?.[norm(name)];return r?{...r,panel:panels[id]?.name||id,panelId:id}:null}
+function sanitizeExpertPanelRow(id,row){
+  if(!row)return null;
+  const weights=panels[id]?.weights||{};
+  const intended=Object.keys(weights).filter(name=>Number(weights[name])>0);
+  if(!intended.length||!Array.isArray(row.individual))return row;
+  const allowed=new Set(intended.map(norm));
+  const vals=row.individual.filter(x=>x?.expertName&&allowed.has(norm(x.expertName))&&Number.isFinite(Number(x.rank)));
+  if(!vals.length)return row;
+  const present=new Set(vals.map(x=>norm(x.expertName))),missing=intended.filter(name=>!present.has(norm(name)));
+  const raw=vals.map(x=>({...x,effectiveWeight:Number(weights[x.expertName]??x.effectiveWeight??0)})).filter(x=>x.effectiveWeight>0);
+  const sw=raw.reduce((z,x)=>z+x.effectiveWeight,0);
+  if(!sw)return {...row,individual:vals,missingExperts:missing,coverageStatus:missing.length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE'};
+  const rank=raw.reduce((z,x)=>z+Number(x.rank)*x.effectiveWeight,0)/sw;
+  const posVals=raw.filter(x=>Number.isFinite(Number(x.posRank))&&Number(x.posRank)>0);
+  const posSw=posVals.reduce((z,x)=>z+x.effectiveWeight,0);
+  const posRank=posSw?posVals.reduce((z,x)=>z+Number(x.posRank)*x.effectiveWeight,0)/posSw:row.posRank;
+  const variance=raw.reduce((z,x)=>z+x.effectiveWeight*(Number(x.rank)-rank)**2,0)/sw;
+  return {...row,rank,mean:rank,overallRank:rank,posRank,sd:Math.sqrt(variance),n:raw.length,intendedN:intended.length,coverage:raw.length/intended.length,coverageStatus:missing.length?'INCOMPLETE_RIGHT_CENSORED_OR_SOURCE_UNKNOWN':'COMPLETE',missingExperts:missing,individual:raw.sort((a,b)=>Number(a.rank)-Number(b.rank))};
+}
+function rankFor(name,pos){const id=panelFor(pos),r=panelRanks[id]?.[norm(name)],clean=sanitizeExpertPanelRow(id,r);return clean?{...clean,panel:panels[id]?.name||id,panelId:id}:null}
 function verifiedIndividualEntries(r){
   const list=Array.isArray(r?.individual)?r.individual:[];
   const panel=panels[r?.panelId]||{};
