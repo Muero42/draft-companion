@@ -14,7 +14,8 @@ const must=[
   "raw[koerner]=target*100",
   "Expert-v3 plus verified Sean Koerner funded primarily from Draft Sharks Team",
   "overallRank:Number.isFinite(Number(e.overallRank))?Number(e.overallRank):null",
-  "overallRank:Number.isFinite(Number(k.overallRank))?Number(k.overallRank):null"
+  "overallRank:Number.isFinite(Number(k.overallRank))?Number(k.overallRank):null",
+  "vals.push({...x,posRank:Number(x.posRank??x.rank),overallRank:null,effectiveWeight:w})"
 ];
 for(const x of must)if(!s.includes(x))throw new Error('rc4.117 contract missing: '+x);
 if(s.includes("source:'verified v4 individual-only + verified Sean Koerner'"))throw new Error('obsolete v4+Koerner v5 resurrected');
