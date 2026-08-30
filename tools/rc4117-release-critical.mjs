@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 const s=fs.readFileSync('app.js','utf8');
-const versionMatch=s.match(/const APP_VERSION='v11\\.8\\.0-rc4\\.(\\d+)'/);
+const versionMatch=s.match(/const APP_VERSION='v11\.8\.0-rc4\.(\d+)'/);
 if(!versionMatch||Number(versionMatch[1])<122)throw new Error('rc4.117+ contract requires rc4.122 or newer runtime');
 const must=[
   "RB:{experts:['Ryan Weisse','Kev Wheeler','Dalton Del Don','Nick Mariano','Sean Koerner','Pat Fitzmaurice']",
