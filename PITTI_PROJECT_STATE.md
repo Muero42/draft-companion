@@ -2712,3 +2712,10 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - v5 remains blocked: QB 25/24 PASS, RB 54/60, WR 61/70, TE 18/24. Koerner source depth itself is sufficient (37/82/110/47).
 - Code audit found v5 was still built from legacy v3 (`EXPERT_PROFILE_IDS.expertv3`) and required Draft Sharks Team funding. Thus v5 inherited v3 sparse-row coverage and could not exploit the now-verified v4 individual panel. This is a model-construction bug, not another ranking-source problem.
 - rc4.115 rebuilds v5 as the intended hybrid: verified v4 individual-only panel + Sean Koerner at 20%, funded proportionally from v4 weights. It removes the legacy v3/DS-funding dependency. Added executable regression `tools/rc4115-v5-hybrid.mjs` and CI gates.
+
+
+### 2026-08-30 10:35 — PITTI HANDOFF v188 / CHAT INSTABILITY
+- User requested immediate handoff because this chat repeatedly hangs and the ChatGPT app crashes.
+- rc4.115 all current off-device workflows PASS and Pages deployment succeeded before handoff.
+- Canonical next gate is RC4.115_DEVICE_V5_ACCEPTANCE. rc4.114 v4 device acceptance is immutable evidence (QB32/RB83/WR91/TE30 COMPLETE); do not reopen v4/source work.
+- NEW_CHAT_HANDOFF_CURRENT.md rewritten as v188 concise canonical resume; PITTI_CURRENT_STATE.json updated to v188. New chat should minimize tool chatter and proceed directly from the gate.
