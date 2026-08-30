@@ -351,7 +351,21 @@ function extractVerifiedOverall(payload,expertId){
   }).filter(Boolean);
 }
 function compareRanksFor(payload,expertId,scoring){
-  const block=payload?.rankings?.[scoring]||payload?.rankings?.[String(scoring).toUpperCase()]||{};
+  const roots=payload?.rankings||{},want=String(scoring||'').toUpperCase();
+  const aliases={
+    HALF:['HALF','HALF_PPR','HALF-PPR','0.5PPR','0.5_PPR'],
+    PPR:['PPR','FULL','FULL_PPR','FULL-PPR'],
+    STD:['STD','STANDARD','NON_PPR','NON-PPR']
+  };
+  const keys=[scoring,want,...(aliases[want]||[])].filter(Boolean);
+  let block=null;
+  for(const k of keys){if(roots?.[k]&&typeof roots[k]==='object'){block=roots[k];break}}
+  // Some Compare Players responses expose the scoring block directly or use a single
+  // scoring key. Accept that only when unambiguous; never silently substitute another format.
+  if(!block){
+    const vals=Object.values(roots).filter(x=>x&&typeof x==='object'&&!Array.isArray(x));
+    if(vals.length===1)block=vals[0];
+  }
   const out={};
   for(const [pid,rows] of Object.entries(block||{})){
     const hit=(Array.isArray(rows)?rows:[]).find(x=>String(x?.expert_id)===String(expertId));
