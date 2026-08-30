@@ -2767,3 +2767,14 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Rank semantics are locked: position rank is used for position-specific aggregation; published Overall rank is retained separately for provenance/UI. Barkley/Pat canary: Overall #14 and RB8 must never render as Overall #8.
 - Exact next route after handoff: verify v191 once -> deploy rc4.117 to gh-pages -> prove byte parity -> one device refresh/install -> test v4 first -> realistic mocks if PASS -> v5 only if justified by remaining time.
 - AUTO/AUTO BLOCK silent-execution and STATUS report-only locks remain mandatory. Empty assistant replies are invalid.
+
+
+---
+
+## 2026-08-30 PITTI AUTO — v192 TAKEOVER VERIFIED + rc4.117 GH-PAGES PARITY PASS
+
+- Verified the user-provided handoff screenshots against repository v191: rc4.117 candidate, v4 primary, v5 optional v3+Koerner funded from Draft Sharks first, positional-vs-Overall separation, and deploy→parity→single-device route all match; no screenshot contradiction found.
+- Independently verified v191 CURRENT, PASS seal, execution lock, command contracts, handoff, bootstrap and matrix; stale Library mirrors remain non-authoritative.
+- Confirmed pre-deploy main rc4.117 vs gh-pages rc4.115, then fast-forwarded gh-pages without force. Post-deploy compare returned IDENTICAL, ahead 0, behind 0.
+- Direct gh-pages reads: app.js `077229e6c9a349fae7482f86d740bacba45d2a1f`, index.html `c1b77f78fe1e83d886951e46e77228ea1d719b84`, sw.js `d7c055259c5942d74e343ecf561b4f9b7c891842`, manifest `e8566f9827f85ac2e3a5482af874c5cc344230b2`; all rc4.117 and equal to main runtime blobs.
+- No Android success inferred. Next gate: `RC4.117_DEVICE_V4_ACCEPTANCE`; one controlled refresh/install, v4 first, realistic mocks immediately on PASS; v5 optional only if time remains.
