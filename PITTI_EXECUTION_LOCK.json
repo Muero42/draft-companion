@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-29T19:51:00Z",
+  "updatedAt": "2026-08-30T05:30:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,30 +11,30 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.106",
+    "appVersion": "v11.8.0-rc4.107",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.106",
-    "latestPreinstallVerified": "v11.8.0-rc4.106",
-    "latestResearchChallenger": "v11.8.0-rc4.106",
-    "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.106",
-    "preinstallSha256": "sha256:2b7ad9b2a0ec2af1641d7262c33e91d48f290f19feee54a38a9d581efbc8a7c5",
+    "latestAndroidObserved": "v11.8.0-rc4.107",
+    "latestPreinstallVerified": "v11.8.0-rc4.107",
+    "latestResearchChallenger": "v11.8.0-rc4.107",
+    "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.107",
+    "preinstallSha256": "sha256:adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.106",
-    "latestDeployedCandidate": "v11.8.0-rc4.106",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.107",
+    "latestDeployedCandidate": "v11.8.0-rc4.107",
     "latestAndroidVerified": "v11.8.0-rc4.106",
     "androidAuthority": "v11.8.0-rc4.106",
     "android_authority": "v11.8.0-rc4.106",
     "deployedPagesAppByteParityWithMain": true,
-    "preinstallReferenceRun": 33240680178,
-    "preinstallReferenceArtifactId": 9711254133,
-    "preinstallHashSemantics": "GitHub Actions artifact-envelope digest from rc4.106 PR #47 candidate-package run; inner ZIP hash is not claimed. Use package/re-extract PASS + 13/13 runtime parity for release authority.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.106",
+    "preinstallReferenceRun": 33293932073,
+    "preinstallReferenceArtifactId": 9726805413,
+    "preinstallHashSemantics": "Inner candidate ZIP SHA-256 independently recomputed and matched package gate; 13 runtime files; gh-pages/main parity verified.",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.107",
     "latestAndroidFunctionalVerified": "v11.8.0-rc4.106",
     "testChallengerAndroidObserved": true,
-    "testChallengerAndroidAccepted": true,
+    "testChallengerAndroidAccepted": false,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
@@ -109,7 +109,14 @@
     "qb2MustNotAppearOnUserCoachSurfaceAfterQb1": true,
     "noGlobalTe2Ban": true,
     "userSpecificQb2ExclusionIsNotGenericLeagueRule": true,
-    "noPlayerNameQbExclusions": true
+    "noPlayerNameQbExclusions": true,
+    "canonical2026ManagerMap": true,
+    "noMichaelKIdentity": true,
+    "userTeamMuerotechnik": true,
+    "bastiSlot8": true,
+    "v4v5FailClosedUntilLiveCoverage": true,
+    "v3v4v5SelectorDirectlyAboveAnalyze": true,
+    "deferred194443MockUnanalyzed": true
   },
   "expertV2": {
     "status": "LEGACY_PRESERVED_SUPERSEDED_FOR_NEW_V4_V5_COMPARISON",
@@ -291,5 +298,6 @@
         "league-winner identification"
       ]
     }
-  }
+  },
+  "handoff_generation": "20260830T0530Z-v181"
 }
