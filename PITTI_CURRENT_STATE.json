@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1822Z-v207",
-  "updated_at": "2026-08-30T18:47:00Z",
+  "updated_at": "2026-08-30T18:52:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -41,7 +41,7 @@
   "exact_continuation": {
     "gate": "RC4.132_BUILD_AND_REGRESSION",
     "auto_starts_mock": false,
-    "instruction": "User confirmed visible Android App-Version rc4.132 after one controlled refresh. Continue minimal live smoke/snapshot verification and then final freshness agenda; do not reinstall/clear cache or reopen model-development work unless a concrete failure appears."
+    "instruction": "Android rc4.132 smoke at pick 9: AJ Brown still generic/empty individual text; fixed in source candidate by adding explicit individual evidence. Chase Brown rank 6 vs Achane rank 5 is not a Return inversion: screenshot shows Achane panel 16.4/ADP14.5/Return87 and Chase panel14.0/ADP17.3/Return82; current Coach correctly keeps Achane ahead. Continue targeted top-candidate text coverage audit and regression; do not retune Chase/Achane without contrary evidence."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -155,7 +155,7 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.132_ANDROID_VERSION_OBSERVED_FINAL_LIVE_SMOKE_PENDING",
+    "status": "RC4.132_ANDROID_SMOKE_FINDINGS_RC4.133_CANDIDATE",
     "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
@@ -163,7 +163,7 @@
     "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
     "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
   },
-  "status": "RC4.132_ANDROID_VERSION_OBSERVED_FINAL_LIVE_SMOKE_PENDING",
+  "status": "RC4.132_ANDROID_SMOKE_FINDINGS_RC4.133_CANDIDATE",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
   "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
   "evidenceRetention": {
