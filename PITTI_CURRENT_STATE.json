@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260830T1035Z-v188",
-  "updated_at": "2026-08-30T10:35:00Z",
+  "handoff_generation": "20260830T1058Z-v189",
+  "updated_at": "2026-08-30T10:58:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -36,9 +36,9 @@
     "source_candidate": "v11.8.0-rc4.115 off-device PASS: v5 rebuilt on accepted v4 individual-only + Koerner; device validation NOT YET DONE"
   },
   "exact_continuation": {
-    "gate": "RC4.115_DEVICE_V5_ACCEPTANCE",
+    "gate": "HANDOFF_V189_RESEAL_THEN_RC4.115_DEVICE_V5_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "PITTI AUTO: first verify handoff/current artifacts, then rc4.115 device acceptance only. Do not reopen ranking/source research. v4 rc4.114 is device-accepted; validate v5 COMPLETE after rc4.115. User reports ChatGPT app instability, so minimize turns/tool chatter."
+    "instruction": "PITTI AUTO: verify v189 handoff/seal first. Then rc4.115 device acceptance only. v4 rc4.114 is accepted. Do not reopen ranking/source research. ChatGPT Android instability was reported; minimize turns."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -54,9 +54,9 @@
     "no_player_name_qb_exclusions": true
   },
   "handoff": {
-    "transaction_in_progress": false,
-    "resume_semantics": "PITTI AUTO: rc4.114 device evidence ACCEPTED v4 (COMPLETE QB32/RB83/WR91/TE30). v5 failed only because legacy v3/DS-funded construction inherited sparse coverage. rc4.115 rebuilds v5 from accepted v4 individual-only + Koerner 20%; all off-device gates PASS and Pages deployment success. Next gate is rc4.115 device v5 acceptance. Ranking/source research is frozen.",
-    "acceptance_fingerprint": "RC4.115-OFFDEVICE-PASS|V4-RC4114-DEVICE-ACCEPTED|V5-V4PLUSKOERNER|RANKING-SOURCES-FROZEN|DEVICE-V5-PENDING|HANDOFF-v188",
+    "transaction_in_progress": true,
+    "resume_semantics": "v4 rc4.114 DEVICE ACCEPTED: COMPLETE QB32/RB83/WR91/TE30. rc4.115 changes v5 construction only: accepted v4 individual-only + Koerner 20%, no legacy v3/DS funding. rc4.115 device validation is pending. Ranking/source research frozen. Current CI failures are handoff-generation drift caused by starting v188 without resealing; runtime logic is not thereby disproved.",
+    "acceptance_fingerprint": "V189|V4-RC4114-DEVICE-ACCEPTED|RC4115-V5-PENDING|SOURCE-FREEZE|CHAT-APP-UNSTABLE",
     "status": "HANDOFF_v188_READY_RC4115_DEVICE_V5_ACCEPTANCE",
     "handoff_ready": true,
     "second_pass_pass": true,
