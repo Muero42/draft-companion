@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.118';
+const APP_VERSION='v11.8.0-rc4.119';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -183,12 +183,15 @@ function buildPanelFromExpertRows(id,pos,expertRows,rawWeights,meta={}){
 function verifiedRowsForExpert(name,pos){
   const e=findExpert(name),cache=e?rankCache[e.id]:null;if(!cache?.verifiedIndividual||cache?.duplicateOf)return[];
   const rows=Object.values(cache.ranks||{}).filter(x=>x?.pos===pos&&Number.isFinite(Number(x.posRank??x.rank)));
-  // v4/v5 are POSITION-SPECIFIC models. Their aggregation rank must therefore be the
-  // expert's positional rank. Falling back to Overall only derives the same positional
-  // ordering when a source does not publish posRank; never feed Overall numbers into a
-  // QB/RB/WR/TE panel and then require impossible cross-expert Overall overlap.
+  // v4/v5 aggregate POSITION rank. Provenance must keep the source's published Overall
+  // rank separately. Some source adapters store rank=Overall and posRank correctly; others
+  // expose no native posRank, in which case only the positional ordering is derived.
   const sorted=rows.slice().sort((a,b)=>Number(a.posRank??a.rank)-Number(b.posRank??b.rank)||Number(a.rank)-Number(b.rank));
-  return sorted.map((x,i)=>({name:x.name,pos,rank:Number.isFinite(Number(x.posRank))&&Number(x.posRank)>0?Number(x.posRank):i+1,posRank:Number.isFinite(Number(x.posRank))&&Number(x.posRank)>0?Number(x.posRank):i+1,overallRank:Number(x.rank)}));
+  return sorted.map((x,i)=>{
+    const pr=Number.isFinite(Number(x.posRank))&&Number(x.posRank)>0?Number(x.posRank):i+1;
+    const publishedOverall=Number.isFinite(Number(x.overallRank))&&Number(x.overallRank)>0?Number(x.overallRank):(Number.isFinite(Number(x.rank))&&Number(x.rank)>0?Number(x.rank):null);
+    return {name:x.name,pos,rank:pr,posRank:pr,overallRank:publishedOverall};
+  });
 }
 function ensureExpertV4Panels(){
   let ok=true;
@@ -2030,11 +2033,12 @@ function applyResolvedReturnScore(x,current,strategy){
 }
 
 function expertRanksHtml(r){
-  return `<div class="coach-section-title">Einzelrankings</div><div class="expert-grid">${r.individual.map(x=>{
+  return `<div class="coach-section-title">Einzelrankings · Positionsrang</div><div class="expert-grid">${r.individual.map(x=>{
     const delta=x.rank-r.rank,cls=delta<=-4?'high':delta>=4?'low':'';
     const deltaText=Math.abs(delta)<1?'nahe Panel':delta<0?`${Math.abs(Math.round(delta))} höher`:`${Math.round(delta)} niedriger`;
-    const displayRank=Number.isFinite(Number(x.overallRank))?Number(x.overallRank):Number(x.rank);
-    return `<div class="expert-rank"><b>${esc(x.expertName)}</b><span>#${displayRank.toFixed(0)}${Number.isFinite(Number(x.posRank))?` (${r.pos}${Math.round(Number(x.posRank))})`:''}</span><span class="delta ${cls}">${deltaText}</span></div>`;
+    const posRank=Number(x.posRank??x.rank),overall=Number(x.overallRank);
+    const provenance=Number.isFinite(overall)&&overall>0?` · Ovr #${Math.round(overall)}`:'';
+    return `<div class="expert-rank"><b>${esc(x.expertName)}</b><span>${r.pos}#${Math.round(posRank)}${provenance}</span><span class="delta ${cls}">${deltaText}</span></div>`;
   }).join('')}</div>`;
 }
 function researchBadgesHtml(x){
@@ -2077,7 +2081,7 @@ window.PITTI_CANDIDATE_AUDIT=(query='Kenneth Walker')=>{const c=lastDraftContext
 function renderCoach(rows,state,current,next){
   const top=visibleCoachCandidates(rows);
   els.favoritesBlock.innerHTML=top.length?`<div class="favorite-box"><b>${esc(top[0].p.name)} · ${top[0].p.pos}</b><div class="tiny">Bis zu 10 nützliche Kandidaten sichtbar · Normalbereich und Fallbacks klar getrennt.</div></div>`:'';
-  els.coachList.innerHTML=`<div class="coach-section-title">Empfehlung + Alternativen</div>`+top.map((x,i)=>`${x.outsideNormalCut&&(i===0||!top[i-1]?.outsideNormalCut)?'<div class="coach-section-title">Weitere sichtbare Kandidaten · außerhalb Normal-Cut</div>':''}<article class="coach"><div class="coach-head"><div><h3>${i+1}. ${esc(x.p.name)} · ${x.p.pos}</h3><div class="tiny">${x.outsideNormalCut?'FALLBACK · AUSSERHALB NORMAL-CUT · ':i===0?'EMPFEHLUNG · ':''}Tier ${x.r.tier||'–'} · Loss ${x.loss}</div></div><div class="score">${x.score}${Number.isFinite(x.balancedScore)?`<small class="strategy-compare">v10 ${x.balancedScore}</small>`:''}</div></div><div class="metrics"><div class="metric"><b>${x.r.rank.toFixed(1)}</b><span>Overall</span></div><div class="metric"><b>${Number.isFinite(x.a)?x.a.toFixed(1):'–'}</b><span>ADP</span></div><div class="metric"><b>${x.ret!=null?Math.round(x.ret*100)+'%':'–'}</b><span>Return</span></div><div class="metric"><b>${x.returnConfidence}%</b><span>Return-Conf.</span></div><div class="metric"><b>${x.intel.plausible}</b><span>Abnehmer</span></div></div>${researchBadgesHtml(x)}${pittiVisibleEvidenceHtml(x)}${expertRanksHtml(x.r)}<div class="tags">${x.reasons.slice(-7).map(reason=>`<span class="tag info">${esc(reason)}</span>`).join('')}</div><button class="secondary live-only live-detail-toggle" type="button" data-live-detail-toggle>${i===0?'Details ausblenden':'Details anzeigen'}</button></article>`).join('');
+  els.coachList.innerHTML=`<div class="coach-section-title">Empfehlung + Alternativen</div>`+top.map((x,i)=>`${x.outsideNormalCut&&(i===0||!top[i-1]?.outsideNormalCut)?'<div class="coach-section-title">Weitere sichtbare Kandidaten · außerhalb Normal-Cut</div>':''}<article class="coach"><div class="coach-head"><div><h3>${i+1}. ${esc(x.p.name)} · ${x.p.pos}</h3><div class="tiny">${x.outsideNormalCut?'FALLBACK · AUSSERHALB NORMAL-CUT · ':i===0?'EMPFEHLUNG · ':''}Tier ${x.r.tier||'–'} · Loss ${x.loss}</div></div><div class="score">${x.score}${Number.isFinite(x.balancedScore)?`<small class="strategy-compare">v10 ${x.balancedScore}</small>`:''}</div></div><div class="metrics"><div class="metric"><b>${x.r.rank.toFixed(1)}</b><span>${esc(x.p.pos)}-Panel</span></div><div class="metric"><b>${Number.isFinite(x.a)?x.a.toFixed(1):'–'}</b><span>ADP</span></div><div class="metric"><b>${x.ret!=null?Math.round(x.ret*100)+'%':'–'}</b><span>Return</span></div><div class="metric"><b>${x.returnConfidence}%</b><span>Return-Conf.</span></div><div class="metric"><b>${x.intel.plausible}</b><span>Abnehmer</span></div></div>${researchBadgesHtml(x)}${pittiVisibleEvidenceHtml(x)}${expertRanksHtml(x.r)}<div class="tags">${x.reasons.slice(-7).map(reason=>`<span class="tag info">${esc(reason)}</span>`).join('')}</div><button class="secondary live-only live-detail-toggle" type="button" data-live-detail-toggle>${i===0?'Details ausblenden':'Details anzeigen'}</button></article>`).join('');
   els.teamSummary.innerHTML=Object.entries(state.counts).map(([p,n])=>`<div class="summary-item"><b>${n}</b><span>${p}</span></div>`).join('')+`<div class="summary-item"><b>${current}</b><span>Pick</span></div><div class="summary-item"><b>${next??'–'}</b><span>Nächster</span></div>`;
   els.coachList.querySelectorAll('[data-live-detail-toggle]').forEach(btn=>btn.onclick=()=>{const card=btn.closest('.coach');card.classList.toggle('live-detail-open');btn.textContent=card.classList.contains('live-detail-open')?'Details ausblenden':'Details anzeigen';});
 }
