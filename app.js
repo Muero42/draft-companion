@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.115';
+const APP_VERSION='v11.8.0-rc4.116';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -89,10 +89,13 @@ let activePanelId=store.text('v7_activePanel','standard');
 let positionPanels=store.get('v7_positionPanels',{QB:'qb',RB:'rb',WR:'wr',TE:'te'});
 const EXPERT_PROFILE_IDS={incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'},fullv2:{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'},wrv2:{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'},expertv3:{QB:'expert-v3-qb',RB:'expert-v3-rb',WR:'expert-v2-wr',TE:'expert-v3-te'},expertv4:{QB:'expert-v4-qb',RB:'expert-v4-rb',WR:'expert-v4-wr',TE:'expert-v4-te'},expertv5:{QB:'expert-v5-qb',RB:'expert-v5-rb',WR:'expert-v5-wr',TE:'expert-v5-te'}};
 const EXPERT_V4_BLUEPRINT={
-  QB:{experts:['Pat Fitzmaurice','Justin Boone','Dalton Del Don','Nick Mariano','Todd D Clark'],maxSingleWeight:.30},
-  RB:{experts:['Pat Fitzmaurice','Nick Mariano','Dalton Del Don','Ryan Weisse'],maxSingleWeight:.30},
-  WR:{experts:['Pat Fitzmaurice','Nick Mariano','Dalton Del Don','Justin Boone'],maxSingleWeight:.30},
-  TE:{experts:['Pat Fitzmaurice','Justin Boone','Dalton Del Don','Wolf of Roto Street'],maxSingleWeight:.30}
+  // v4 is individual-only and position-specific. Weights combine verified multi-year
+  // Draft Accuracy with recent signal; Pat is retained only as a small stability anchor
+  // where his positional accuracy does not justify primary influence.
+  QB:{experts:['Sean Koerner','Todd D Clark','Justin Boone','Dalton Del Don','Nick Mariano','Pat Fitzmaurice'],weights:{'Sean Koerner':30,'Todd D Clark':25,'Justin Boone':15,'Dalton Del Don':10,'Nick Mariano':10,'Pat Fitzmaurice':10},maxSingleWeight:.30},
+  RB:{experts:['Ryan Weisse','Kev Wheeler','Dalton Del Don','Nick Mariano','Sean Koerner','Pat Fitzmaurice'],weights:{'Ryan Weisse':25,'Kev Wheeler':25,'Dalton Del Don':15,'Nick Mariano':15,'Sean Koerner':10,'Pat Fitzmaurice':10},maxSingleWeight:.30},
+  WR:{experts:['Sean Koerner','Nick Mariano','Justin Boone','Todd D Clark','Dalton Del Don','Pat Fitzmaurice'],weights:{'Sean Koerner':25,'Nick Mariano':25,'Justin Boone':20,'Todd D Clark':10,'Dalton Del Don':10,'Pat Fitzmaurice':10},maxSingleWeight:.30},
+  TE:{experts:['Wolf of Roto Street','Ryan Weisse','Sean Koerner','Dalton Del Don','Pat Fitzmaurice','Justin Boone'],weights:{'Wolf of Roto Street':25,'Ryan Weisse':20,'Sean Koerner':15,'Dalton Del Don':15,'Pat Fitzmaurice':15,'Justin Boone':10},maxSingleWeight:.30}
 };
 const EXPERT_V5_BLUEPRINT={base:'expertv3',add:'Sean Koerner',fundPrimarilyFrom:'Draft Sharks Team',positionSpecific:true,maxSingleWeight:.30};
 const EXPERT_DECISION_CORE_MIN={QB:24,RB:60,WR:70,TE:24};
@@ -165,7 +168,7 @@ function buildPanelFromExpertRows(id,pos,expertRows,rawWeights,meta={}){
     for(const row of expertRows[expertName]||[]){
       const k=norm(row.name);if(!k)continue;
       if(!byName.has(k))byName.set(k,{name:row.name,pos,vals:[]});
-      byName.get(k).vals.push({expertName,rank:Number(row.posRank??row.rank),effectiveWeight:weights[expertName],reconstructed:false,spread:null});
+      byName.get(k).vals.push({expertName,rank:Number(row.posRank??row.rank),posRank:Number(row.posRank??row.rank),overallRank:Number(row.overallRank),effectiveWeight:weights[expertName],reconstructed:false,spread:null});
     }
   }
   const ranks={};
@@ -196,13 +199,16 @@ function ensureExpertV4Panels(){
     // legitimately stop before another expert's tail; that is right-censoring, not an
     // acquisition failure and must not be converted into a vote or silently renormalized.
     if(bp.experts.some(name=>rows[name].length<EXPERT_DECISION_CORE_MIN[pos])){ok=false;continue}
-    buildPanelFromExpertRows('expert-v4-'+pos.toLowerCase(),pos,rows,Object.fromEntries(bp.experts.map(name=>[name,1])),{name:'Expert-v4 '+pos,source:'live verified individual experts',maxSingleWeight:bp.maxSingleWeight});
+    buildPanelFromExpertRows('expert-v4-'+pos.toLowerCase(),pos,rows,bp.weights||Object.fromEntries(bp.experts.map(name=>[name,1])),{name:'Expert-v4 '+pos,source:'live verified individual experts',maxSingleWeight:bp.maxSingleWeight});
   }
   // Source-depth failures remain hard failures. For overlap/readiness, use the shared
   // COMPLETE-row decision-core rule; never let sparse rows define the acceptance sample.
   return ok&&expertProfileReady('expertv4');
 }
 function ensureExpertV5Panels(){
+  // rc4.116: Koerner is now a native v4 expert. The former v5 "v4 + Koerner"
+  // experiment would double-count the same individual and is therefore fail-closed.
+  return false;
   const koerner='Sean Koerner';let ok=true;
   for(const pos of ['QB','RB','WR','TE']){
     const v4Id='expert-v4-'+pos.toLowerCase(),baseRows=panelRanks[v4Id]||{},kRows=verifiedRowsForExpert(koerner,pos);
@@ -2013,7 +2019,8 @@ function expertRanksHtml(r){
   return `<div class="coach-section-title">Einzelrankings</div><div class="expert-grid">${r.individual.map(x=>{
     const delta=x.rank-r.rank,cls=delta<=-4?'high':delta>=4?'low':'';
     const deltaText=Math.abs(delta)<1?'nahe Panel':delta<0?`${Math.abs(Math.round(delta))} höher`:`${Math.round(delta)} niedriger`;
-    return `<div class="expert-rank"><b>${esc(x.expertName)}</b><span>#${Number(x.rank).toFixed(0)}${Number.isFinite(x.posRank)?` (${r.pos}${Math.round(x.posRank)})`:''}</span><span class="delta ${cls}">${deltaText}</span></div>`;
+    const displayRank=Number.isFinite(Number(x.overallRank))?Number(x.overallRank):Number(x.rank);
+    return `<div class="expert-rank"><b>${esc(x.expertName)}</b><span>#${displayRank.toFixed(0)}${Number.isFinite(Number(x.posRank))?` (${r.pos}${Math.round(Number(x.posRank))})`:''}</span><span class="delta ${cls}">${deltaText}</span></div>`;
   }).join('')}</div>`;
 }
 function researchBadgesHtml(x){
@@ -2820,7 +2827,7 @@ async function refresh(){
     if(availableSnapshot.length){
       availableSnapshot.forEach((x,i)=>{
         lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Panel ${x.r.rank.toFixed(1)} (${x.r.panel}) | Pos ${Number.isFinite(x.r.posRank)?x.p.pos+x.r.posRank.toFixed(1):'–'} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Sleeper SearchRank ${Number.isFinite(x.p.searchRank)?x.p.searchRank:'–'}${x.p.injury?` | Injury ${x.p.injury}`:''}`);
-        if(els.snapshotMode.value==='full')lines.push(`   Einzelrankings: ${x.r.individual.map(v=>`${v.expertName} ${v.reconstructed?'≈':'#'}${Math.round(v.rank)}${v.reconstructed?' [rekonstr.]':''}`).join(' · ')||'FEHLT'}`);
+        if(els.snapshotMode.value==='full')lines.push(`   Einzelrankings: ${x.r.individual.map(v=>`${v.expertName} ${v.reconstructed?'≈':'#'}${Math.round(Number.isFinite(Number(v.overallRank))?Number(v.overallRank):Number(v.rank))}${Number.isFinite(Number(v.posRank))?` (${x.p.pos}${Math.round(Number(v.posRank))})`:''}${v.reconstructed?' [rekonstr.]':''}`).join(' · ')||'FEHLT'}`);
       });
     }else lines.push('KEINE.');
 
