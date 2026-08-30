@@ -2044,7 +2044,13 @@ function scoreCandidate(p,current,next,state,available,strategy='progressive'){
     score+=clamp(value.value*.16*valueScale,-4.5,4.5);
   }
   reasons.push(value.label);
-  const needContribution=clamp((state.need[p.pos]||0)*draftPhaseNeedFactor(current),-16,7);
+  const rawNeed=state.need[p.pos]||0;
+  // Early portfolio guard: after two RBs but only one WR, generic RB roster need is
+  // already satisfied enough that it must not overturn a superior WR panel/tier.
+  // This is deliberately narrow (through pick 50) and soft: concrete scarcity/value
+  // evidence can still make an RB win; only the generic need channel is neutralized.
+  const portfolioNeed=(current<=50&&p.pos==='RB'&&state.counts.RB>=2&&state.counts.WR<=1)?Math.min(rawNeed,0):rawNeed;
+  const needContribution=clamp(portfolioNeed*draftPhaseNeedFactor(current),-16,7);
   score+=needContribution;
   if((state.need[p.pos]||0)>=7)reasons.push(`${p.pos}-Need (${p.pos==='QB'?'aufschiebbar':'draftphasenabhängig'})`);
   const exceptionPenalty=rosterExceptionPenalty(p.pos,state,current,r.rank,a);
