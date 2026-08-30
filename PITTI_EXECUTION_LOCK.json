@@ -23,11 +23,11 @@
     "preinstallSha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.117",
-    "latestDeployedCandidate": "v11.8.0-rc4.115",
+    "latestDeployedCandidate": "v11.8.0-rc4.117",
     "latestAndroidVerified": "v11.8.0-rc4.106",
     "androidAuthority": "v11.8.0-rc4.114",
     "android_authority": "v11.8.0-rc4.114",
-    "deployedPagesAppByteParityWithMain": false,
+    "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33305284763,
     "preinstallReferenceArtifactId": 9730250635,
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
@@ -185,17 +185,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.117_DEPLOY_PARITY_THEN_DEVICE_V4_ACCEPTANCE",
+    "status": "RC4.117_DEVICE_V4_ACCEPTANCE",
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.114",
     "runtime": "v11.8.0-rc4.117",
-    "mainRuntimeParity": "PASS_SOURCE_PACKAGE; GH_PAGES_PARITY_FALSE",
-    "nextGate": "DEPLOY_RC4.117_AND_VERIFY_PARITY_THEN_DEVICE_V4_TEST"
+    "mainRuntimeParity": "PASS_SOURCE_PACKAGE_AND_GH_PAGES",
+    "nextGate": "ONE_DEVICE_REFRESH_INSTALL_THEN_V4_ACCEPTANCE"
   },
-  "status": "V191_HANDOFF_READY_RC4117_V4_FIRST",
-  "gate": "RC4.117_DEPLOY_PARITY_THEN_DEVICE_V4_ACCEPTANCE",
-  "nextGate": "Deploy rc4.117/verify parity; one device refresh/install; test v4 first; v5 only if time remains.",
+  "status": "V192_DEPLOY_PARITY_PASS_DEVICE_V4_PENDING",
+  "gate": "RC4.117_DEVICE_V4_ACCEPTANCE",
+  "nextGate": "One controlled device refresh/install; verify rc4.117; test v4 first; realistic mocks if PASS; v5 optional.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -204,11 +204,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260830T1200Z-v191",
+    "generation": "20260830T1010Z-v192",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Verify v191 once. rc4.117 off-device PASS. gh-pages rc4.115 parity false. Deploy rc4.117, prove parity, then one device v4 test; realistic mocks if PASS. v5 optional only if time remains."
+    "resume": "rc4.117 off-device/package PASS and gh-pages/main parity PASS. Next one controlled device refresh/install and v4 acceptance; v5 only if time remains."
   },
   "expertV45": {
     "status": "FINISH_LINE_V4_FIRST",
