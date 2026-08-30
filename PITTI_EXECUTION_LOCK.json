@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-30T06:25:00Z",
+  "updatedAt": "2026-08-30T06:34:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -194,7 +194,7 @@
     "mainRuntimeParity": "PASS; main/gh-pages 13/13 runtime parity verified",
     "nextGate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE"
   },
-  "status": "HANDOFF_V182_READY_RC4107_DEVICE_GATE",
+  "status": "HANDOFF_V183_READY_RC4107_DEVICE_GATE",
   "gate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
   "nextGate": "On device rc4.107 run Alles aktualisieren; then validate live v4/v5 coverage, Koerner acquisition/crosscheck and same-state v3/v4/v5. v3 stays default until PASS.",
   "deploymentUpdateContract": {
@@ -205,8 +205,8 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260830T0625Z-v182",
-    "status": "HANDOFF_v182_READY_RC4107_DEVICE_GATE",
+    "generation": "20260830T0634Z-v183",
+    "status": "HANDOFF_v183_READY_RC4107_DEVICE_GATE",
     "ready": true,
     "secondPass": true,
     "resume": "PITTI AUTO: rc4.107 is on main/gh-pages and observed on device; rc4.106 remains accepted functional fallback. Immediate gate is Alles aktualisieren on rc4.107, then live v4/v5 coverage/Koerner validation and same-state v3/v4/v5 comparison. v3 stays default. Deferred real-decision mock 19-44-43 remains unanalyzed."
@@ -300,5 +300,5 @@
       ]
     }
   },
-  "handoff_generation": "20260830T0625Z-v182"
+  "handoff_generation": "20260830T0634Z-v183"
 }
