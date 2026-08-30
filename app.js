@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.123';
+const APP_VERSION='v11.8.0-rc4.124';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2319,7 +2319,7 @@ function renderFpHandoff(draftId,complete){
   const v=getFpBenchmark(draftId);els.fpStatus.className=`notice ${v?'ok':'warn'}`;els.fpStatus.textContent=fpSummary(v);
 }
 let lastPostDraftPairs=[];
-let analysisBusy=false,lastEmergencyQueueText='',lastSnapshotFingerprint=store.text('v116_lastSnapshotFingerprint',''),lastSnapshotPickCount=Number(store.text('v116_lastSnapshotPickCount','-1'));
+let analysisBusy=false,lastEmergencyQueueText='',lastSnapshotFingerprint=store.text('v116_lastSnapshotFingerprint',''),lastAnalysisFingerprint=store.text('v124_lastAnalysisFingerprint',''),lastSnapshotPickCount=Number(store.text('v116_lastSnapshotPickCount','-1'));
 function snapshotFingerprint(id,picks,slot){
   const tail=picks.slice(-8).map(p=>`${p.pick_no}:${p.player_id}:${p.draft_slot}`).join('|');
   return `${id}|${slot}|${picks.length}|${tail}`;
@@ -2648,7 +2648,8 @@ async function refresh(){
       mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no),
       drafted=new Set(picks.map(p=>String(p.player_id))),
       fingerprint=snapshotFingerprint(id,picks,slot),
-      duplicateSnapshot=fingerprint===lastSnapshotFingerprint,
+      analysisFingerprint=`${fingerprint}|${currentExpertProfile()}|${strategy}|${APP_VERSION}`,
+      duplicateSnapshot=analysisFingerprint===lastAnalysisFingerprint,
       tier=speedTier(current,next);
 
     const allAvailable=Object.entries(players)
@@ -2774,7 +2775,7 @@ async function refresh(){
       `Aktueller Pick: ${current}`,
       `Mein nächster Pick: ${next??'keiner'} | Picks bis dahin: ${next==null?'–':next-current}`,
       `Return-Modell: Folgepick ${returnPick??'keiner'}${returnPick!=null?` | ${rv2?.slots?.length??Math.max(0,returnPick-current-1)} gegnerische Picks bis dahin`:''}`,
-      `Snapshot-Fingerprint: ${fingerprint} | ${duplicateSnapshot?'DUPLIKAT/UNVERÄNDERT':'NEU'}`,
+      `Snapshot-Fingerprint: ${fingerprint} | Analyse-Profil: ${currentExpertProfile()} | ${duplicateSnapshot?'DUPLIKAT/UNVERÄNDERT':'NEU'}`,
       `Live-Speed: ${tier.label} | Analysebudget ${tier.budget}s`,
       ...(preview?[`LIVE-PREVIEW: READ-ONLY · Cutoff ${previewCutoff} · keine Validierungs-Fixtures geschrieben`]:[]), 
       '',
@@ -2887,7 +2888,7 @@ async function refresh(){
     }
 
     els.snapshot.value=lines.join('\n');
-    if(!preview){lastSnapshotFingerprint=fingerprint;lastSnapshotPickCount=picks.length;store.setText('v116_lastSnapshotFingerprint',fingerprint);store.setText('v116_lastSnapshotPickCount',String(picks.length));}
+    if(!preview){lastSnapshotFingerprint=fingerprint;lastAnalysisFingerprint=analysisFingerprint;lastSnapshotPickCount=picks.length;store.setText('v116_lastSnapshotFingerprint',fingerprint);store.setText('v124_lastAnalysisFingerprint',analysisFingerprint);store.setText('v116_lastSnapshotPickCount',String(picks.length));}
     els.draftStatus.className=scored.length?'notice ok':'notice warn';
     const dataState=scored.length?(navigator.onLine?'LIVE':'VERALTET'):'FALLBACK';
     const nextText=draftComplete?'DRAFT ABGESCHLOSSEN':`NÄCHSTER EIGENER PICK: ${next??'keiner'}${next===current?' · DU BIST DRAN':''}`;
