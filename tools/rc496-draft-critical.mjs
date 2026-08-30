@@ -46,7 +46,7 @@ assert.match(app,/function buildPanelFromExpertRows\(/,'v4-v5 complete-panel bui
 assert.match(app,/function ensureExpertV4Panels\(\)/,'v4 live panel construction missing');
 assert.match(app,/function ensureExpertV5Panels\(\)/,'v5 live panel construction missing');
 assert.match(app,/\^expert-v\[2345\]-\(qb\|rb\|wr\|te\)\$/,'v4-v5 shadow panels must be runtime-selectable');
-assert.ok(idx.indexOf('id="analysisExpertSelector"')<idx.indexOf('<span class="step">2</span>'),'v3-v5 switch must live in data/configuration step before Draft verbinden');
+assert.ok(idx.indexOf('id="analysisExpertSelector"')>idx.indexOf('id="strategyMode"')&&idx.indexOf('id="analysisExpertSelector"')<idx.indexOf('id="refreshBtn"'),'v3-v5 switch must remain directly above Analyze in draft configuration');
 assert.match(app,/Object\.prototype\.hasOwnProperty\.call\(EXPERT_PROFILE_IDS,id\)/,'legacy incumbent-v2 profile switching must remain supported');
 assert.match(app,/\[\.\.\.els\.expertProfile\.options\]\.some\(o=>o\.value===id\)/,'dedicated v4-v5 switch must not blank legacy profile selector');
 assert.match(app,/INCOMPLETE_V5_NO_DS_FUNDING/,'v5 must fail closed when DS funding is absent');
