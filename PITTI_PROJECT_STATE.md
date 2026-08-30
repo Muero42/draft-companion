@@ -2834,3 +2834,10 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Top-board comparison is broadly stable: Gibbs/Bijan remain 1-2; Chase/Puka remain the leading WR pair; CMC/JSN/Taylor/ARSB remain next cluster. v5 notably lifts JSN (6.7->5.8), Cook (10.1->8.4), Barkley (14.3->13.2), Henry (15.9->14.4), Walker (16.8->14.9), Hampton (19.3->17.3) and lowers Jeanty materially (25.3->30.4) versus v4.
 - v5 diagnostic exposes cosmetic provenance artifacts from frozen v3 rows (e.g. RB0 and reconstructed undefined-anchor text). These are NOT the compact live surface and do not alter the Overall panel values, but should not be promoted into the 90-second decision UI.
 - Snapshot remains duplicate/unchanged; do not issue a second pick recommendation until a new fingerprint arrives.
+
+
+### rc4.125 paired v4/v5 decision evidence — OFF-DEVICE PASS
+- Identified a post-draft evidence gap: decision fixture IDs previously used only draft/pick/fingerprint, so analyzing v4 then v5 at the same Sleeper state preserved only the first model. DecisionEvidence export also collapsed variants by pick.
+- rc4.125 keys frozen decision fixtures by draft + pick + fingerprint + analysisProfile + strategy and stores analysisProfile explicitly.
+- Backup JSON therefore retains separate v4/v5 fixtures for the same decision state. Decision Evidence v3 keeps canonical one-per-pick summaries for compatibility and adds comparisonFixtures/comparisonFixtureCount containing one newest fixture per pick/profile.
+- Off-device syntax/version/cache and fixture/export contract checks PASS. Safe for one deployment; no model-scoring change.
