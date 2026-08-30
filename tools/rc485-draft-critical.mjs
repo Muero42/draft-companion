@@ -90,7 +90,7 @@ assert.ok(app.includes('chosenInFrozenCandidates:!!chosenCandidate'));
 assert.ok(app.includes('chosenVsCoachScoreDelta'));
 
 // One-tap current-draft decision evidence export.
-assert.ok(app.includes("format:'pitti-decision-evidence-v2'"));
+assert.ok(app.includes("format:'pitti-decision-evidence-v3'"));
 assert.ok(app.includes("fixtures:rows"));
 assert.ok(app.includes("overrideCount:summaries.filter"));
 assert.ok(idx.includes('id="decisionEvidenceBtn"'));
@@ -113,7 +113,7 @@ assert.ok(app.includes("freezeDecisionFixture({draftId:id,current,returnPick,pic
 
 // Evidence schema contract: future analysis must not silently lose per-pick context.
 for(const k of ['current','rosterCounts','candidates','chosenPlayer','decisionOutcome'])assert.ok(app.includes(k),k);
-assert.ok(app.includes("format:'pitti-decision-evidence-v2'"));
+assert.ok(app.includes("format:'pitti-decision-evidence-v3'"));
 assert.ok(app.includes('wrSaturationRecommendationCount'));
 assert.ok(app.includes('qb2ViolationCount'));
 
