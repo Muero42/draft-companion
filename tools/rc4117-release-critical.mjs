@@ -13,9 +13,10 @@ const must=[
   "v5 is the controlled v3 challenger",
   "raw[koerner]=target*100",
   "Expert-v3 plus verified Sean Koerner funded primarily from Draft Sharks Team",
-  "overallRank:Number.isFinite(Number(e.overallRank))?Number(e.overallRank):null",
-  "overallRank:Number.isFinite(Number(k.overallRank))?Number(k.overallRank):null",
-  "vals.push({...x,posRank:Number(x.posRank??x.rank),overallRank:null,effectiveWeight:w})"
+  "const overall=Number(row.overallRank),posRank=Number(row.posRank??row.rank);",
+  "rank:mean,overallRank:mean,posRank:posMean",
+  "vals.push({...x,rank:Number(x.rank),overallRank:Number(x.rank)",
+  "rank:Number(k.overallRank??k.rank)"
 ];
 for(const x of must)if(!s.includes(x))throw new Error('rc4.117 contract missing: '+x);
 if(s.includes("source:'verified v4 individual-only + verified Sean Koerner'"))throw new Error('obsolete v4+Koerner v5 resurrected');
@@ -29,10 +30,11 @@ for(const p of ['QB','RB','WR','TE']){
   const sum=vals.reduce((a,b)=>a+b,0);
   if(Math.abs(sum-100)>1e-9)throw new Error(p+' weights sum '+sum);
 }
-// Canary: expert UI must render position rank and only append published Overall when present.
+const live=fs.readFileSync('live-surface-v3.js','utf8');
 for(const x of [
-  "const posRank=Number(x.posRank??x.rank),overall=Number(x.overallRank);",
-  "const provenance=Number.isFinite(overall)&&overall>0?\` · Ovr #\${Math.round(overall)}\`:'';",
-  "<span>\${r.pos}#\${Math.round(posRank)}\${provenance}</span>"
-]) if(!s.includes(x)) throw new Error('rank-label canary missing: '+x);
-console.log('rc4.117 release-critical contract PASS');
+  "function expertRankLabel(hit,pos)",
+  "\${pos}#\${Math.round(posRank)} · Ovr #\${Math.round(overall)}",
+  "expertv5:'Expert-v5 HYBRID + KOERNER'",
+  "expertv4:'Expert-v4 INDIVIDUAL-ONLY'"
+]) if(!live.includes(x)) throw new Error('compact rank/profile canary missing: '+x);
+console.log('rc4.122 release-critical contract PASS');
