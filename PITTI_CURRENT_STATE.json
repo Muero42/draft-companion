@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260830T1618Z-v195",
-  "updated_at": "2026-08-30T16:18:00Z",
+  "handoff_generation": "20260830T1630Z-v196",
+  "updated_at": "2026-08-30T16:30:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -16,7 +16,7 @@
     "latest_package_reextract": "v11.8.0-rc4.130 CI PACKAGE/RE-EXTRACT PASS; DEVICE REFRESH PENDING",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
-    "deployed_pages": "v11.8.0-rc4.130",
+    "deployed_pages": "v11.8.0-rc4.131",
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33305284763,
     "package_reference_artifact_id": 9730250635,
@@ -33,7 +33,7 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.131 DESCRIPTION-QUALITY CANARY; CI PENDING"
+    "source_candidate": "v11.8.0-rc4.131 CI PASS; main/gh-pages IDENTICAL; device refresh pending"
   },
   "exact_continuation": {
     "gate": "RC4.130_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK",
@@ -60,20 +60,20 @@
     "status": "PASS",
     "handoff_ready": true,
     "second_pass_pass": true,
-    "next_action": "Keep v4 PRIMARY / v5 CHALLENGER for draft. Use new backup audit on future exports. Do not claim full 30/30 validation from the 16-02-06-862Z backup; exact missing pair is pick29 expertv5.",
-    "gate": "RC4.130_BACKUP_AUDIT_29_OF_30_NO_MODEL_PROMOTION",
+    "next_action": "One controlled refresh to rc4.131; verify visible version and Swift/Lamar player-specific card text. No new mock required solely for this display-data correction.",
+    "gate": "RC4.131_ONE_CONTROLLED_DEVICE_REFRESH",
     "seal_status": "PASS",
-    "seal_generation": "20260830T1618Z-v195",
-    "generation": "20260830T1618Z-v195",
+    "seal_generation": "20260830T1630Z-v196",
+    "generation": "20260830T1630Z-v196",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.130 remains runtime authority. Latest backup is 29/30 with only pick29 expertv5 missing. Backup-quality audit is now persistent and verified. v4 remains PRIMARY; no last-minute weight retune."
+    "resume": "rc4.131 is source/deployment authority after all CI gates PASS and main/gh-pages parity. It changes only Swift/Lamar player-specific description context plus forward-compatible rc4.130 quota guard; v4 remains PRIMARY."
   },
-  "source_authority": "v11.8.0-rc4.130",
+  "source_authority": "v11.8.0-rc4.131",
   "package_authority": "v11.8.0-rc4.117 run 33305284763 artifact 9730250635",
   "android_version_observed": "v11.8.0-rc4.126",
   "android_functional_verified": true,
-  "deployment_authority": "v11.8.0-rc4.130 gh-pages/main exact parity PASS before v194 reseal",
+  "deployment_authority": "v11.8.0-rc4.131 gh-pages/main exact parity PASS",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
@@ -156,17 +156,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.131_DESCRIPTION_QUALITY_OFF_DEVICE_VALIDATION",
+    "status": "RC4.131_DESCRIPTION_QUALITY_DEPLOYED_DEVICE_REFRESH_PENDING",
     "production": false,
-    "androidVerified": true,
+    "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.130",
     "runtime": "v11.8.0-rc4.131",
     "mainRuntimeParity": "PASS",
-    "nextGate": "Off-device validate Swift/Lamar description-only correction; do not deploy until all release gates PASS."
+    "nextGate": "One controlled refresh to rc4.131; verify visible version and Swift/Lamar player-specific card text. No new mock required solely for this display-data correction."
   },
-  "status": "RC4.131_DESCRIPTION_QUALITY_OFF_DEVICE_VALIDATION",
-  "gate": "RC4.131_OFF_DEVICE_ONLY_NO_DEPLOY",
-  "nextGate": "Off-device validate Swift/Lamar description-only correction; do not deploy until all release gates PASS.",
+  "status": "RC4.131_DESCRIPTION_QUALITY_DEPLOYED_DEVICE_REFRESH_PENDING",
+  "gate": "RC4.131_ONE_CONTROLLED_DEVICE_REFRESH",
+  "nextGate": "One controlled refresh to rc4.131; verify visible version and Swift/Lamar player-specific card text. No new mock required solely for this display-data correction.",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
