@@ -1,54 +1,20 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v180
-Generation: `20260829T1951Z-v180`
+# PITTI HANDOFF COMPLETENESS MATRIX — v181
+Generation: `20260830T0530Z-v181`
 
-Takeover fails closed unless all are true.
+Takeover fails closed unless all are true:
+- CURRENT = SEAL = HANDOFF = BOOTSTRAP = MATRIX generation v181.
+- Seal PASS, ready, second-pass PASS, non-empty integrity; Project State read to EOF.
+- main/gh-pages rc4.107, 13/13 runtime parity; package hash adfc11a64d24ec4b1151e42471ce61812a654003eb2a1a2eb69b55a93b803f5c.
+- rc4.107 device observed; live refresh acceptance pending; rc4.106 fallback remains available.
+- v3 default; v4/v5 fail-closed until live source gates pass.
+- v4 cores QB24/RB60/WR70/TE24; live-current only; DS excluded.
+- v5 Koerner path must pass identity/coverage/Compare Players crosscheck and DS-funding invariant.
+- Geno/Rodgers organic before QB1; one-QB rule only after QB1.
+- Canonical manager map exact: 1 Michael, 2 Pascal Voerde, 3 Marc Düsseldorf, 4 Thomas, 5 Björn, 6 Pascal Gelderner, 7 Giuliano, 8 Bastian, 9 Muerotechnik, 10 Dutch Marc.
+- no Michael K / Moers Venom regression.
+- Bigsby/Spears/Dobbins coverage semantics visible; no blind imputation/silent renormalization.
+- selector directly above Analyze; same state reusable under v3/v4/v5.
+- 19:44:43 real-decision backup remains unanalyzed.
+- AUTO does not stop on package completion while useful autonomous work exists.
 
-## Authority
-- CURRENT = SEAL = HANDOFF = BOOTSTRAP = MATRIX generation v180.
-- Seal PASS, ready, second-pass PASS, non-empty integrity.
-- Project State read to EOF.
-- Actual runtime/branch evidence overrides stale prose/library mirrors.
-
-## Runtime
-- Android/runtime accepted baseline rc4.106.
-- main production runtime bytes restored to rc4.106.
-- expert research isolated on pitti/expert-v4-v5-v180.
-- staged selector prototype is not production authority.
-
-## Coverage blocker
-- Spears expert-v3-rb panelN5 incl DS.
-- Bigsby expert-v3-rb panelN4 without DS.
-- Root cause in ensureExpertV3Panels() preserved.
-- No v4/v5 activation until missingness semantics + all-position coverage audit PASS.
-- No blind imputation or silent materially-different renormalization.
-
-## Model authority
-- v3 frozen/selectable.
-- v2 retired from new compare path.
-- v4 individual-only, 4–6 per position; existing individuals need not be displaced; DS Team excluded because attribution is ambiguous.
-- v5 minimal-invasive v3+Koerner, primarily reducing DS share, position-specific.
-- Koerner old paywall-only lock superseded by current FantasyPros availability screenshots; import/coverage still pending validation.
-- Provisional candidate map and accuracy methodology preserved in handoff/project-state.
-
-## UI
-- selector directly above Analyze requirement preserved.
-- same board/roster state must be reusable under v3/v4/v5.
-- active model visible.
-- selector wiring stays research-only until validated.
-
-## Deferred evidence
-- 19:44:43 real-decision backup located and persistent.
-- must not be analyzed yet.
-
-## Future
-- phase-specific early/mid/late-breakout expert-panel concept preserved.
-- only irretrievable pre-draft snapshots collected now.
-
-## Existing invariants
-- 10-team Half-PPR, slot9, exactly one user QB, no normal K/DST.
-- no hard WR cap, no blind RB forcing, no PairSum/Rolling, no generic Return retune.
-- mock manager labels are simulations, not real-manager observations.
-- Plan B: real board truth + fundamental/roster/freshness first; manager/Return sequencing second.
-
-## Exact gate
-`EXPERT_V4_V5_COVERAGE_AND_SELECTION`
+Exact gate: `RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE`.
