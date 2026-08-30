@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260830T1822Z-v207",
-  "updated_at": "2026-08-30T18:22:00Z",
+  "updated_at": "2026-08-30T18:30:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -33,12 +33,12 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "UNRELEASED_RUNTIME_DELTA_ON_MAIN: v203 live-autodraft Return-v2 code merged while version string remains rc4.131; must be versioned/tested as rc4.132 before phone use"
+    "source_candidate": "rc4.132 SOURCE BUILT ON MAIN; device/release gates pending"
   },
   "exact_continuation": {
     "gate": "RC4.132_BUILD_AND_REGRESSION",
     "auto_starts_mock": false,
-    "instruction": "First repair/release rc4.132: version the v203 live-autodraft runtime delta, encode Pick32 Nabers/Javonte roster-aware regression, repair stale active-manager historical profiles (Michael 2025 missing; Pascal Voerde Bracht→Voerde chain), then full gates/parity/device verification. Only after that continue final cutdown/IR/PUP/waiver/expert/ADP freshness."
+    "instruction": "Continue rc4.132 regression/release gates. Deep audit found and fixed a real live-autodraft Return-v2 wiring defect: code checked `.mode` while adaptation state stores `.currentMode`, so the Sleeper SearchRank autodraft branch was unreachable. Manager-history runtime years repaired: Michael 6 incl 2025; Pascal Voerde 9 incl 2017-2025. No device refresh until full off-device gates/parity pass."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -152,15 +152,15 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "HANDOFF_V205_RC4132_PLUS_HISTORY_REPAIR_REQUIRED",
+    "status": "RC4.132_SOURCE_BUILT_REGRESSION_IN_PROGRESS",
     "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.131",
-    "runtime": "rc4.131 accepted Android; v203 runtime delta unreleased",
+    "runtime": "rc4.131 accepted Android; rc4.132 source now versioned on main",
     "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
     "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
   },
-  "status": "HANDOFF_V205_RC4132_PLUS_HISTORY_REPAIR_REQUIRED",
+  "status": "RC4.132_SOURCE_BUILT_REGRESSION_IN_PROGRESS",
   "gate": "RC4.132_BUILD_AND_REGRESSION",
   "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify",
   "evidenceRetention": {
@@ -192,7 +192,8 @@
       "one controlled Android refresh; visible rc4.132 verification; no cache clear/reinstall",
       "repair active-manager historical data: Michael_Polk must include 2025; Pascal Voerde must merge Pascal_Bracht 2017-2022 + Pascal_Voerde 2023-2025; preserve Björn 2021/2023 exclusions",
       "hard-lock canonical 2026 order: 1 Michael,2 Pascal Voerde,3 Marc Düsseldorf,4 Thomas,5 Björn,6 Pascal Gelderner,7 Giuliano,8 Bastian,9 Muerotechnik,10 Dutch Marc; reject rc4.84 geometry/Michael K/Moers Venom",
-      "Geno Smith/Aaron Rodgers are NOT hard exclusions: rank organically; never use player-name forcing/demotion/removal; if they are not recommended it must be because Coach/player-quality evaluation ranks better options above them"
+      "Geno Smith/Aaron Rodgers are NOT hard exclusions: rank organically; never use player-name forcing/demotion/removal; if they are not recommended it must be because Coach/player-quality evaluation ranks better options above them",
+      "rc4.132 deep-audit canary: Return-v2 live autodraft must read LIVE_MANAGER_ADAPTATION_STATE[slot].currentMode, never stale/nonexistent .mode"
     ],
     "canary": {
       "pick": 32,
@@ -282,6 +283,7 @@
         ]
       }
     },
-    "screenshot_handoff_audit": "Four screenshots preserve the visible narrative but are not a complete standalone authority because transition text is partly covered/cropped; repo v206 canonical files are authoritative."
+    "screenshot_handoff_audit": "Four screenshots preserve the visible narrative but are not a complete standalone authority because transition text is partly covered/cropped; repo v206 canonical files are authoritative.",
+    "discovered_runtime_defect": "LIVE autodraft Return-v2 branch used nonexistent adaptation-state `.mode`; corrected to `.currentMode` before release."
   }
 }
