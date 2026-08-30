@@ -1,21 +1,21 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260830T0634Z-v183",
-  "created_at": "2026-08-30T06:34:00Z",
-  "status": "PASS",
-  "handoff_ready": true,
-  "second_pass_pass": true,
+  "handoff_generation": "20260830T0653Z-v184",
+  "created_at": "2026-08-30T06:53:00Z",
+  "status": "SOURCE_VALIDATION_SEALED",
+  "handoff_ready": false,
+  "second_pass_pass": false,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "0fef8f4331cf10712acc330ca7415b976774740e",
-    "PITTI_CURRENT_STATE.json": "c7cc03caea8025112b5e86b8ee8019ab9bf39d3f",
-    "PITTI_EXECUTION_LOCK.json": "e99853693275807deb90b1f4e1a2acf2c3b70f94",
+    "PITTI_COMMAND_CONTRACTS.json": "3702b39cfe5812e9216d414607dd872063e843e7",
+    "PITTI_CURRENT_STATE.json": "211d8b8ce181be8f47b1fa0160d3f470ba5c9c09",
+    "PITTI_EXECUTION_LOCK.json": "9a3411579d1b781a43e65d874dacb1ef48d604e3",
     "PITTI_AUTO_PREFLIGHT.md": "1bc3f43e0c809c6c0d042f98eaa01c7d90a20f52",
-    "PITTI_PROJECT_STATE.md": "778cc27700beede95305d9fb66365cdf00ba2de0",
+    "PITTI_PROJECT_STATE.md": "e9918e8dc9d3b2b33d603b3d3c8bea2b0963e60f",
     "NEW_CHAT_HANDOFF_CURRENT.md": "4e3327d655b0d7d26c2921474d0481426b7cf2df",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "7fa34dd901ae2668a728121ed1e449662df2d1ad",
     "HANDOFF_COMPLETENESS_MATRIX.md": "c8385d53e9ebe6edb551453e792be5602b4e7843",
-    "app.js": "7bbb8756acd821c3ae8daea2eeb050ec6a48fb17",
+    "app.js": "5681949047cba042549f121040eae1213dc027cd",
     "index.html": "b729065e86208135a17660ed89be65309b1dea5f",
     "decision-policy.js": "76234515b5428a33b7ef573f1f5c87bab058ad67",
     "live-surface-v3.js": "593bfcb58465227cc6eae71b787508ab95afbbd8",
@@ -50,5 +50,5 @@
     "preseal_ci_pass": true
   },
   "exact_gate": "RC4.107_DEVICE_LIVE_REFRESH_AND_V4_V5_ACCEPTANCE",
-  "note": "v183 PASS. Supersedes premature v182 seal. Machine-readable command boundary now exactly matches CURRENT; pre-seal CI passed all five gates. rc4.107 remains deployed/device-observed but live-refresh/v4-v5 acceptance pending; rc4.106 functional fallback; v3 default."
+  "note": "v184 source-validation seal. rc4.107 device refresh PASS and v4/v5 disabled fail-closed state observed. Source acceptance-core hardening passed release/successor/candidate gates before reseal; seal-dependent legacy gates must rerun on this exact integrity state. No deployment/version bump yet."
 }
