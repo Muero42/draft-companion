@@ -8,7 +8,7 @@
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_COMMAND_CONTRACTS.json": "7bb9949a2dfc7fe01f0ed9a659442ea71fd80516",
-    "PITTI_CURRENT_STATE.json": "6c86c55c49da6672fbd4eb808883755c5bdb8ab6",
+    "PITTI_CURRENT_STATE.json": "63f834aef7635260e8e71f01b012acd5cb362c73",
     "PITTI_EXECUTION_LOCK.json": "07121fbdc54236c6b0e0c2bedc7752eb95cd1cdb",
     "PITTI_AUTO_PREFLIGHT.md": "1bc3f43e0c809c6c0d042f98eaa01c7d90a20f52",
     "PITTI_PROJECT_STATE.md": "2e5583cd9003acf1d173ac179880899894151767",
@@ -42,5 +42,5 @@
     "chat_app_instability_recorded": true
   },
   "exact_gate": "RC4.115_DEVICE_V5_ACCEPTANCE",
-  "note": "v189 handoff reseal after explicit user request; new chat verifies seal/integrity before continuing."
+  "note": "v189 final reseal after CURRENT transaction-complete mutation; new chat verifies integrity before continuing."
 }
