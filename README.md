@@ -1,13 +1,13 @@
 # Draft Companion – Final Draft Edition 2026
 
-> **Current source/package candidate:** v11.8.0-rc4.109; **device-observed authority:** v11.8.0-rc4.108. rc4.109 completes the v4 readiness-core acceptance fix; package/deploy/device acceptance pending.
-> **rc4.109 validation:** candidate is in pre-seal CI/package gating. No ranking/Return/player-specific rule change.
-> **Deployment/device:** rc4.108 is deployed and device-observed operational with v3 default and v4/v5 fail-closed. rc4.109 is not yet device authority.
-> **Fallback:** rc4.108 remains current device authority during rc4.109 gating.
+> **Current source/package candidate:** v11.8.0-rc4.110; **device-observed authority:** v11.8.0-rc4.109 pending direct observation; rc4.110 adds read-only v4/v5 live source diagnostics only.
+> **rc4.110 scope:** diagnostics expose per-expert/per-position verified row counts, source failure/duplicate/stale state and COMPLETE-core counts; no ranking/Return/readiness relaxation.
+> **Deployment/device:** rc4.109 is the last gated runtime; rc4.110 is not device authority until full package/deploy/device acceptance.
+> **Fallback:** rc4.109/rc4.108 remain safe runtime lineage; v3 remains default.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
 > **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
 > **rc4.100 scope:** generic Pro/Contra semantic hardening + bounded short-turn portfolio ordering; no global ranking/Return/expert retune, no hard WR cap/quota.
-> **Current gate:** RC4.109_PACKAGE_DEPLOY_AND_DEVICE_ACCEPTANCE.
+> **Current gate:** RC4.110_DIAGNOSTIC_PACKAGE_DEPLOY_AND_DEVICE_READ.
 > **Current gate:** RC4106_ANDROID_DISPLAY_ACCEPTANCE.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
