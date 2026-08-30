@@ -1,5 +1,5 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source/package candidate:** v11.8.0-rc4.130; narrow quota-recovery successor to v11.8.0-rc4.129. Off-device validation pending.
+> **Current source/package candidate:** v11.8.0-rc4.131; narrow quota-recovery successor to v11.8.0-rc4.129. Off-device validation pending.
 > **Primary finish-line target:** validate rc4.130 evidence retention, then one controlled device refresh and a full 30-fixture v4/v5 mock.
 > **v4:** individual-only, native Sean Koerner, position-specific weights; no Draft Sharks team ranking. Overall provenance is stored separately from positional aggregation.
 > **v5:** frozen v3 + Sean Koerner 15 points, funded from Draft Sharks Team first.
