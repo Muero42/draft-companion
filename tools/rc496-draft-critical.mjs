@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 
 const app=fs.readFileSync('app.js','utf8');
 const live=fs.readFileSync('live-surface-v3.js','utf8');
+const idx=fs.readFileSync('index.html','utf8');
 const boardSrc=fs.readFileSync('expert-v2-board.js','utf8').trim();
 const board=JSON.parse(boardSrc.replace(/^window\.PITTI_EXPERT_V2=/,'').replace(/;\s*$/,''));
 
