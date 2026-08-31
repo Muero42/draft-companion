@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.144';
+const APP_VERSION='v11.8.0-rc4.145';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2206,19 +2206,26 @@ function fpConsensusContextVerified(payload,pos,scoring){
   return gotPos===String(pos).toUpperCase()&&gotScoring===String(scoring).toUpperCase()&&gotType==='DRAFT';
 }
 async function fantasyProsSelectableV4Experts(pos){
-  // FantasyPros expert eligibility is position-specific. A numeric ID learned from the
-  // ALL directory proves identity, not that the expert is selectable for QB/RB/WR/TE.
-  // Resolve the exact DRAFT/HALF position directory first, then intersect by v4 name.
-  const season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value);
-  const data=await proxyCall(`/nfl/${season}/rankings/experts?position=${pos}&type=DRAFT&scoring=${scoring}&include_overall=true`);
-  const available=extractExperts(data),byName=new Map(available.map(e=>[norm(e.name),e]));
-  const selected=[],unavailable=[];
-  for(const name of EXPERT_V4_BLUEPRINT[pos].experts){
-    const e=byName.get(norm(name));
-    if(e?.id&&/^\d+$/.test(String(e.id)))selected.push({name,id:String(e.id)});
-    else unavailable.push(name);
+  // The authenticated positional /rankings/experts endpoint is empirically empty for this
+  // account although the working ALL directory and public selector both expose the experts.
+  // Reuse ONLY already-observed numeric FantasyPros IDs from those two working directories;
+  // Custom-ECR itself remains the authority for whether that exact v4 set is accepted.
+  const blueprint=EXPERT_V4_BLUEPRINT[pos].experts,byName=new Map();
+  for(const e of experts||[]){
+    const id=String(e?.apiId||e?.id||'');
+    if(e?.name&&/^\d+$/.test(id))byName.set(norm(e.name),{name:e.name,id});
   }
-  return {selected,unavailable,directoryCount:available.length};
+  const publicExperts=await loadPublicExpertDirectory();
+  for(const e of publicExperts||[]){
+    const id=String(e?.apiId||'');
+    if(e?.name&&/^\d+$/.test(id)&&!byName.has(norm(e.name)))byName.set(norm(e.name),{name:e.name,id});
+  }
+  const selected=[],unavailable=[];
+  for(const name of blueprint){
+    const e=byName.get(norm(name));
+    if(e)selected.push({name,id:e.id});else unavailable.push(name);
+  }
+  return {selected,unavailable,directoryCount:byName.size,directorySource:'working ALL/public numeric IDs'};
 }
 async function fetchV4ConsensusTierPosition(pos){
   let selected=[],unavailable=[],directoryCount=0;
