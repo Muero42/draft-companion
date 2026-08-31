@@ -13,19 +13,19 @@
     "android_authority": "v11.8.0-rc4.152",
     "test_challenger": "v11.8.0-rc4.156",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.156 candidate validation pending",
+    "latest_package_reextract": "v11.8.0-rc4.156 Candidate Package Gate PASS; Release Contract + Guardrails PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "sha256:0ae0c1011a731328df85464c6c4da4bb9b49eb57741801ae3f8e1c2b4a95bec9",
-    "deployed_pages": "gh-pages v11.8.0-rc4.155",
+    "deployed_pages": "gh-pages v11.8.0-rc4.156",
     "deployed_pages_app_byte_parity_with_main": true,
-    "package_reference_run": 33386341286,
-    "package_reference_artifact_id": 9755706199,
+    "package_reference_run": 33387096882,
+    "package_reference_artifact_id": 9755991411,
     "package_reference_note": "Historical rc4.142 package evidence retained only as provenance; current release authority is rc4.153 with all three CI gates PASS.",
     "android_version_observed": true,
     "android_functional_verified": true,
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": true,
-    "android_acceptance_pending": "only after all gates/deploy; one controlled rc4.156 smoke",
+    "android_acceptance_pending": "one controlled rc4.156 refresh after full server-side validation",
     "android_observed": "v11.8.0-rc4.152",
     "android_functional_acceptance": "PASS on rc4.152 device: LIVE nine-manager grid, LIVE v3/v4/v5 selector, faster analysis, global tiers and current player texts observed functional.",
     "rollback_reference": "v11.8.0-rc4.96",
@@ -33,16 +33,16 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "rc4.156 candidate: root-cause fix panelId->position + compact matrix; no model changes",
-    "deployed": "main/gh-pages rc4.155; 13/13 runtime parity PASS; PR85 Release Contract/Package/Guardrails PASS",
+    "source_candidate": "v11.8.0-rc4.156 merged/deployed",
+    "deployed": "main/gh-pages rc4.156; 13/13 runtime parity PASS",
     "main_gh_pages_parity": true,
     "accepted_android": "v11.8.0-rc4.152",
-    "package_reference_artifact_digest": "sha256:f200bc85a5215d3105bddb2caca2b8b5a57b58ce49fcad35af05ab13813dd43c"
+    "package_reference_artifact_digest": "sha256:1df367cb9ca21035c5e69d11b499bac1f8781b6dec970fc5ae921161546b85f5"
   },
   "exact_continuation": {
-    "gate": "RC4.156_PREINSTALL_VALIDATE_DEPLOY_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
+    "gate": "RC4.156_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
     "auto_starts_mock": false,
-    "instruction": "Do not ask user to update yet. Validate rc4.156 root-cause fix: rankFor rows lack pos, therefore v4 display derives position from panelId. Compact three-line matrix, no Experten/Overall heading, v3/v5 preserved. Require Release Contract + Candidate Package + Guardrails PASS, deploy and parity verification; only then one device smoke."
+    "instruction": "Server-side validation complete: root cause verified and fixed by deriving v4 position from panelId, not missing r.pos. All CI PASS, package/reextract PASS, 13/13 runtime parity PASS. User may now update exactly once to rc4.156. Verify compact three-line v4 matrix and absence of Experten/Overall heading. PASS => freeze."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -164,17 +164,17 @@
     "verdict": "Incomplete 29/30 file cannot be used as full promotion evidence. Partial paired evidence does not justify changing v4 PRIMARY / v5 CHALLENGER."
   },
   "currentWork": {
-    "branch": "pitti/rc4.156-expert-card-compact-matrix",
-    "status": "RC4.156_PREINSTALL_VALIDATION_PENDING",
+    "branch": "main",
+    "status": "RC4.156_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
     "production": false,
     "androidVerified": false,
-    "acceptedAndroidFallback": "v11.8.0-rc4.155 device loads but matrix still rendered legacy one-line prose",
-    "runtime": "candidate rc4.156; deployed/Android rc4.155",
-    "nextGate": "all three rc4.156 CI gates PASS"
+    "acceptedAndroidFallback": "v11.8.0-rc4.155 device observed with broken legacy one-line expert display",
+    "runtime": "main/gh-pages rc4.156 13/13 parity; Android rc4.155",
+    "nextGate": "one rc4.156 device refresh + screenshot"
   },
-  "status": "RC4.156_PREINSTALL_VALIDATION_PENDING",
-  "gate": "RC4.156_PREINSTALL_VALIDATE_DEPLOY_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
-  "nextGate": "all three rc4.156 CI gates PASS",
+  "status": "RC4.156_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
+  "gate": "RC4.156_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
+  "nextGate": "one rc4.156 device refresh + screenshot",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
