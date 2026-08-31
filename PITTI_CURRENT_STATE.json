@@ -62,10 +62,10 @@
   },
   "handoff": {
     "generation": "20260831T1028Z-v213",
-    "status": "PASS_PENDING_RESEAL",
-    "ready": false,
-    "secondPass": false,
-    "resume": "Android rc4.152 is functional and accepted. rc4.153 changes display ordering only; one controlled refresh/smoke, then freeze. No further model/tier/Return changes."
+    "status": "PASS",
+    "ready": true,
+    "secondPass": true,
+    "resume": "rc4.152 device functional. rc4.153 is fully gated/deployed display-only expert ordering; refresh once, smoke expert order, then freeze."
   },
   "source_authority": "main/gh-pages rc4.142; Android rc4.142 observed functional except tier display.",
   "package_authority": "rc4.142 package/release gates PASS; device tier functionality FAIL.",
