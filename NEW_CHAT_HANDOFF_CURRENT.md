@@ -1,59 +1,66 @@
-# PITTI HANDOFF CURRENT — v212
-Handoff generation: `20260831T0735Z-v212`
+# PITTI HANDOFF CURRENT — v213
+Handoff generation: `20260831T1028Z-v213`
 
-## Device/runtime truth
-- **Android already runs v11.8.0-rc4.142.**
-- Startup, refresh and Analyze are functional.
-- Expert-v4 can be selected and individual expert ranks render.
-- Individual-description coverage is **125/125**; Tyler Warren's individual text is restored.
-- **External v4 tier labels do not render. Tier functionality is FAIL.**
-- Do not reinstall, clear cache/app data, or repeat refresh attempts merely to change version.
+## Current authority
+- **Android/PWA accepted and observed:** v11.8.0-rc4.152.
+- **Source + deployed candidate:** v11.8.0-rc4.153.
+- rc4.153 is merged on main and deployed to gh-pages with exact runtime parity for app.js, index.html, manifest.webmanifest and sw.js.
+- PR #83 head passed Release Contract, Candidate Package Gate and Project Guardrails before merge.
+- **No model change in rc4.153.** It is presentation-only.
 
-## Proven failed hypothesis
-rc4.142 removed the incorrect verifier requirement `total_experts == selected-v4-count`. The device result proves this was **not sufficient**. Do not repeat that fix and do not create rc4.143 from another guessed API shape.
+## Exact next gate
+**RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE**
 
-## Immediate gate — RC4.142_TIER_PAYLOAD_ROOT_CAUSE
-Before any new build, inspect the actual live FantasyPros `consensus-rankings` payload for **QB, RB, WR and TE** through the existing proxy, using the exact FantasyPros-selectable members of each active v4 panel.
+One controlled phone refresh/update only. Confirm:
+1. version rc4.153;
+2. player-card expert order is stable across positions;
+3. common v4 experts appear first in this order: **Sean Koerner → Dalton Del Don → Pat Fitzmaurice**;
+4. remaining shared experts follow, then position specialists;
+5. missing player ranks remain `#– / fehlt`, never substituted.
 
-Capture and verify:
-1. request path and position/scoring/type/week/filter parameters;
-2. exact selected expert IDs and provenance returned by FantasyPros;
-3. `filters`, expert metadata and `total_experts`;
-4. where the player rows actually live;
-5. real position field/key/value;
-6. real explicit tier field/key/value.
+If PASS: freeze the runtime for the real draft. Do not reopen tiers, Return-v2, panel weights/sources, manager history or scoring without a new proven release-critical defect. No cache clear, app-data clear or reinstall.
 
-Accept no tier unless the selected expert set is exactly verifiable. Unavailable active-v4 experts are disclosed and never replaced. **Andrew Erickson or any other non-v4 expert must never be substituted.** No synthetic rank-gap tier may masquerade as an external expert tier.
+## What is already working on rc4.152 and must not regress
+- LIVE page nine-manager vertical quick-control grid.
+- Manual/AUTO/unknown state can be changed for opponents and applied directly to the Coach at the current pick; earlier picks remain unchanged.
+- LIVE v3/v4/v5 selector is available; v4 PRIMARY, v5 CHALLENGER, v3 failsafe.
+- Faster LIVE analysis path.
+- Global cross-position v4 tiers visible.
+- Current individual player descriptions visible, including the previously missing Montgomery/Warren coverage.
+- Tier display is context only and does not feed Coach/Return/history.
+- Latest backup adopted: `draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json`. Its Return audit does not justify a generic pre-draft Return-v2 retune.
 
-Once the payload-level defect is reproduced: implement **one bounded fix**, add a deterministic regression fixture from the real response shape, run full syntax/runtime/release/package/guardrail checks plus exact main↔gh-pages runtime parity, then perform **exactly one** device verification.
+## rc4.153 expert display order
+Global display priority:
+1. Sean Koerner
+2. Dalton Del Don
+3. Pat Fitzmaurice
+4. Nick Mariano
+5. Justin Boone
+6. Todd D Clark
+7. Ryan Weisse
+8. Kev Wheeler
+9. Wolf of Roto Street
 
-## Active v4 panels
-- QB: Todd D Clark, Sean Koerner, Justin Boone, Dalton Del Don, Nick Mariano, Pat Fitzmaurice.
-- RB: Ryan Weisse, Kev Wheeler, Dalton Del Don, Nick Mariano, Sean Koerner, Pat Fitzmaurice.
-- WR: Sean Koerner, Justin Boone, Todd D Clark, Pat Fitzmaurice, Nick Mariano, Dalton Del Don.
-- TE: Pat Fitzmaurice, Ryan Weisse, Sean Koerner, Justin Boone, Dalton Del Don, Wolf of Roto Street.
+Only experts actually belonging to the analyzed position panel are shown. This ordering is visual only; panel membership and weights remain untouched.
 
-## Immutable draft invariants
+## Immutable draft locks
 - Exact order: **1 Michael · 2 Pascal Voerde · 3 Marc Düsseldorf · 4 Thomas · 5 Björn · 6 Pascal Gelderner · 7 Giuliano · 8 Bastian · 9 Muerotechnik · 10 Dutch Marc.**
 - Never shift/reindex historical picks, manager ownership, decision evidence or snapshot fingerprints.
 - Michael history includes 2020–2025.
-- Pascal Voerde = Bracht Eagles 2017–2022 + Voerde Eagles 2023–2025; Pascal Gelderner remains separate.
+- Pascal Voerde = Bracht Eagles 2017–2022 + Voerde Eagles 2023–2025; Pascal Gelderner is separate.
 - Björn 2021/2023 exclusions remain.
 - Starter maxima 4 WR / 3 RB / 2 TE are not roster/draft caps.
 - No K/DST draft.
 - Exactly one QB; no QB2.
-- Geno Smith and Aaron Rodgers are explicit user hard exclusions.
-- Panel is baseline; Return is timing context, not a pick command.
-- Tier is display-only and may not alter Coach, Return-v2, opponent/roster logic, history or fingerprints.
-- Preserve Josh Jacobs acute-status behavior and all working 125/125 individual-text coverage.
+- Geno Smith and Aaron Rodgers are hard exclusions.
 - v4 PRIMARY / v5 CHALLENGER / v3 failsafe.
-- Latest paired evidence remains 29/30; pick29 expertv5 is missing. Do not call it 30/30.
+- Panel is player-quality baseline; Return is timing context, never an automatic pick command.
+- Manager AUTO/MANUELL state is forward-looking live evidence; changing it must not rewrite earlier pick history.
+- Tiers remain display-only.
+- Preserve Josh Jacobs acute-status handling and current description coverage.
 
-## Remaining pre-draft agenda after tier acceptance
-1. Deferred WR comparison: Emeka Egbuka, Zay Flowers, Tetairoa McMillan, DeVonta Smith; Jaylen Waddle reference. Compare baseline, role/injury, market and reliable v4-only tier context; rank pure upside/league-winner ceiling separately.
-2. Final transaction/IR/PUP/waiver/depth-chart freshness pass; official status overrides stale Sleeper metadata.
-3. Fresh expert-board + Sleeper Half-PPR ADP delta check.
-4. Final late-RB/upside materiality and operational smoke checks.
-5. Operational freeze before the real draft; execution-only draft chat.
+## Draft-day continuation after device PASS
+Freeze the runtime and use the execution-only real-draft workflow. High-value remaining non-runtime work is final pre-draft transaction/waiver/depth-chart/news freshness and live decision support. Do not spend draft-day time on another v4/v5 mock comparison.
 
-`PITTI AUTO` / `AUTO BLOCK` means real autonomous execution, not a status/promise reply.
+`PITTI AUTO` / `AUTO BLOCK` means autonomous execution with no empty progress replies. `STATUS` reports state only and does not start work.
