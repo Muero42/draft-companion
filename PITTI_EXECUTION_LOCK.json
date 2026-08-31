@@ -25,8 +25,8 @@
     "latestSourceRegressionVerified": "v11.8.0-rc4.142 source syntax + service-worker-transformed syntax locally PASS; full CI pending",
     "latestDeployedCandidate": "v11.8.0-rc4.153",
     "latestAndroidVerified": "v11.8.0-rc4.152",
-    "androidAuthority": "v11.8.0-rc4.152 accepted",
-    "android_authority": "v11.8.0-rc4.150",
+    "androidAuthority": "v11.8.0-rc4.152 observed functional",
+    "android_authority": "v11.8.0-rc4.152",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33370206139,
     "preinstallReferenceArtifactId": 9749745633,
@@ -62,7 +62,7 @@
       "androidAccepted": false
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.152",
-    "unreleasedMainDelta": "none; rc4.153 deployed, device acceptance pending",
+    "unreleasedMainDelta": "none; rc4.153 merged/deployed presentation-only",
     "deployedPagesVersion": "v11.8.0-rc4.153",
     "mainGhPagesParity": true
   },
@@ -211,12 +211,12 @@
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.152",
-    "runtime": "main/gh-pages rc4.153; Android rc4.152",
-    "nextGate": "one controlled rc4.153 device refresh and expert-order smoke"
+    "runtime": "main/gh-pages rc4.153 13/13 parity; Android rc4.152",
+    "nextGate": "one controlled rc4.153 update, expert-order smoke, then draft freeze"
   },
   "status": "RC4.153_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
   "gate": "RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
-  "nextGate": "one controlled rc4.153 device refresh and expert-order smoke",
+  "nextGate": "one controlled rc4.153 update, expert-order smoke, then draft freeze",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -225,11 +225,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260831T1028Z-v213",
+    "generation": "20260831T1028Z-v214",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.152 device functional. rc4.153 is fully gated/deployed display-only expert ordering; refresh once, smoke expert order, then freeze."
+    "resume": "Android rc4.152 is functional. rc4.153 is presentation-only expert-order fix, fully gated and deployed. One controlled device update/smoke, then freeze."
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
@@ -248,7 +248,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260831T1028Z-v213",
+  "handoff_generation": "20260831T1028Z-v214",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
