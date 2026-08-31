@@ -27,7 +27,7 @@
     "test_challenger_android_observed": true,
     "android_acceptance_pending": null,
     "android_observed": "v11.8.0-rc4.158",
-    "android_functional_acceptance": "PASS on rc4.158 device: version visible, expert delta control visible, v4 expert day baseline 9/9 complete; prior rc4.157 expert-matrix acceptance preserved.",
+    "android_functional_acceptance": "PASS on rc4.158 device: version visible, expert delta control visible, v4 expert day baseline 9/9 complete; live expert matrix behavior remains accepted.",
     "rollback_reference": "v11.8.0-rc4.96",
     "accepted_android_fallback_functional_verified": true,
     "rc4107_device_refresh_observed": true,
@@ -193,16 +193,16 @@
     "latestBackupHistoricalFixtures": 22
   },
   "critical_handoff": {
-    "generation": "20260831T1028Z-v214",
-    "gate": "RC4.154_PREINSTALL_VALIDATE_DEPLOY_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
-    "reason": "rc4.153 device loads, but expert layout did not meet the user's fixed-row requirement. rc4.154 is a display-only matrix correction; no model/source/weight/tier/Return change.",
+    "status": "PASS",
+    "generation": "20260831T1455Z-v215",
+    "gate": "DRAFT_DAY_TIME_DEPENDENT_FINALIZATION",
+    "reason": "rc4.158 is accepted/frozen; only time-dependent pre-draft evidence remains.",
     "requirements": [
-      "All three CI gates PASS for rc4.154.",
-      "Deploy canonically with main↔gh-pages runtime parity.",
-      "Verify fixed rows: Koerner/Del Don/Pat; Mariano/Boone/Weisse; Clark/Wolf/Wheeler.",
-      "Absent panel members use invisible in-row placeholders only when a later member follows; trailing absences are omitted.",
-      "Missing player rank for a panel member remains #–/fehlt.",
-      "If PASS, freeze runtime."
+      "Material-news-only monitoring before 19:00 CEST.",
+      "Post-19:00 waiver claim/destination reconciliation for affected players only.",
+      "One Experten-Delta prüfen around 19:40-19:45 and inspect result.",
+      "Final material injury/legal/transaction scan.",
+      "Create FINAL PRE-DRAFT HANDOFF, then operational freeze around 19:50."
     ]
   },
   "pending_after_release": [
