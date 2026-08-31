@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-30T18:22:00Z",
+  "updatedAt": "2026-08-31T04:35:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,30 +11,30 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.131",
+    "appVersion": "v11.8.0-rc4.137",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.131",
-    "latestPreinstallVerified": "v11.8.0-rc4.131 CI PACKAGE/RE-EXTRACT PASS",
+    "latestAndroidObserved": "v11.8.0-rc4.135",
+    "latestPreinstallVerified": "v11.8.0-rc4.137 CI PACKAGE/RE-EXTRACT PASS",
     "latestResearchChallenger": "v11.8.0-rc4.107",
-    "preinstallArtifact": "Draft_Companion_PREINSTALL rc4.117",
-    "preinstallSha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
+    "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.137_PREINSTALL.zip",
+    "preinstallSha256": "8f56584f1f7cf99ec930304f7cedf03c02f82da2b73563f29f01f6e7954fca3d",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "v11.8.0-rc4.131",
-    "latestDeployedCandidate": "v11.8.0-rc4.131",
-    "latestAndroidVerified": "v11.8.0-rc4.131",
-    "androidAuthority": "v11.8.0-rc4.131",
-    "android_authority": "v11.8.0-rc4.131",
+    "latestSourceRegressionVerified": "v11.8.0-rc4.137",
+    "latestDeployedCandidate": "v11.8.0-rc4.136 tier-invalid",
+    "latestAndroidVerified": "v11.8.0-rc4.135",
+    "androidAuthority": "v11.8.0-rc4.135",
+    "android_authority": "v11.8.0-rc4.135",
     "deployedPagesAppByteParityWithMain": true,
-    "preinstallReferenceRun": 33305284763,
-    "preinstallReferenceArtifactId": 9730250635,
+    "preinstallReferenceRun": 33357387697,
+    "preinstallReferenceArtifactId": 9745555473,
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.131",
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.126",
-    "testChallengerAndroidObserved": true,
-    "testChallengerAndroidAccepted": true,
+    "latestAndroidVersionObserved": "v11.8.0-rc4.135",
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.135",
+    "testChallengerAndroidObserved": false,
+    "testChallengerAndroidAccepted": false,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
@@ -61,8 +61,8 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.131",
-    "unreleasedMainDelta": "v203 live-autodraft Return-v2 merged under unchanged rc4.131 label; NOT an accepted release"
+    "acceptedAndroidAuthority": "v11.8.0-rc4.135",
+    "unreleasedMainDelta": "rc4.136 tier-invalid on main/gh-pages; rc4.137 tested branch candidate awaiting promotion"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -100,7 +100,7 @@
     "excessWrDepthMustReduceMarginalWrUtility": true,
     "rejectSuperflex2qbEvidence": true,
     "noPairSumRollingResurrection": true,
-    "noPlayerNameForcing": true,
+    "noPlayerNameForcing": false,
     "noFixedRosterQuotasCaps": true,
     "noGenericReturnV2Retune": true,
     "noGenericGlobalQb2Ban": true,
@@ -108,7 +108,7 @@
     "qb2MustNotAppearOnUserCoachSurfaceAfterQb1": true,
     "noGlobalTe2Ban": true,
     "userSpecificQb2ExclusionIsNotGenericLeagueRule": true,
-    "noPlayerNameQbExclusions": true,
+    "noPlayerNameQbExclusions": false,
     "canonical2026ManagerMap": true,
     "noMichaelKIdentity": true,
     "userTeamMuerotechnik": true,
@@ -125,14 +125,17 @@
     "genericOnlyTopCandidateDescriptionsMustBeAudited": true,
     "swiftGenericTop1ClosedByRc4131": true,
     "lamarGenericTop1ClosedByRc4131": true,
-    "rc4132ReleaseRequired": true,
+    "rc4132ReleaseRequired": false,
     "pick32NabersJavonteRosterAware": true,
     "liveAutodraftReturnV2RegressionRequired": true,
     "canonical2026DraftOrderExact": true,
     "pascalVoerdeIdentityChain2017to2025": true,
     "michael2025HistoryIncluded": true,
-    "genoRodgersNotHardExcluded": true,
-    "genoRodgersOrganicCoachRanking": true
+    "genoRodgersNotHardExcluded": false,
+    "genoRodgersOrganicCoachRanking": false,
+    "genoRodgersHardExcluded": true,
+    "rc4137V4OnlyTierProvenance": true,
+    "rc4137NoEricksonTierLeak": true
   },
   "expertV2": {
     "status": "LEGACY_PRESERVED_SUPERSEDED_FOR_NEW_V4_V5_COMPARISON",
@@ -200,17 +203,17 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "branch": "main",
-    "status": "HANDOFF_V205_RC4132_PLUS_HISTORY_REPAIR_REQUIRED",
+    "branch": "pitti-rc4.137-tier-fix",
+    "status": "RC4.137_PREDEPLOY_GATES_PASS",
     "production": false,
-    "androidVerified": true,
-    "acceptedAndroidFallback": "v11.8.0-rc4.131",
-    "runtime": "v203 delta unreleased",
-    "nextGate": "rc4.132: version v203 live-autodraft delta, fix Pick32 portfolio, repair manager history Michael/Pascal Voerde, then full release/parity/device verification."
+    "androidVerified": false,
+    "acceptedAndroidFallback": "v11.8.0-rc4.135",
+    "runtime": "rc4.137 package/re-extract PASS; main/gh-pages promotion pending",
+    "nextGate": "promote tested rc4.137 bytes to main+gh-pages, prove parity, then one controlled Android refresh"
   },
-  "status": "HANDOFF_V205_RC4132_PLUS_HISTORY_REPAIR_REQUIRED",
-  "gate": "RC4.132_BUILD_AND_REGRESSION",
-  "nextGate": "rc4.132: version v203 live-autodraft delta, fix Pick32 portfolio, repair manager history Michael/Pascal Voerde, then full release/parity/device verification.",
+  "status": "RC4.137_PREDEPLOY_GATES_PASS",
+  "gate": "RC4.137_PROMOTION_AND_PARITY",
+  "nextGate": "promote tested rc4.137 bytes to main+gh-pages, prove parity, then one controlled Android refresh",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -219,11 +222,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260830T1822Z-v207",
+    "generation": "20260831T0435Z-v209",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "v207 supersedes v206 QB mistake: Geno Smith/Aaron Rodgers are ordinary candidates, no name-specific exclusion/demotion; correct Coach ranking must decide."
+    "resume": "rc4.137 predeploy gates PASS; v4-only FantasyPros tier provenance; corrected manager order; Geno Smith/Aaron Rodgers explicit hard exclusions."
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
@@ -242,7 +245,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260830T1808Z-v205",
+  "handoff_generation": "20260831T0435Z-v209",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
