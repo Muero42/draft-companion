@@ -194,9 +194,15 @@ function parseFpDirectory(html){
     seen.add(slug);
     const directPublic=new RegExp(`/nfl/rankings/${slug}\\.php`,'i').test(row.html);
     const comparisonPublic=new RegExp(`/nfl/rankings/${slug}-consensus-rankings\\.php`,'i').test(row.html);
+    // FantasyPros' expert selector carries the numeric expert id in row controls/links.
+    // Preserve it when present so Custom-ECR can be built even if the authenticated
+    // /rankings/experts endpoint is temporarily unavailable. Never infer an id from order.
+    const idMatch=row.html.match(/(?:data-expert-id|data-expert|expert_id|expert-id|value)=["'](\d{1,9})["']/i)
+      ||row.html.match(/[?&](?:expert|expert_id|experts|filters)=(\d{1,9})(?:[&#"']|$)/i);
+    const apiId=idMatch?String(idMatch[1]):null;
     const sourceMatch=txt.match(/\(([^)]+)\)/);
     if(sourceMatch)site=sourceMatch[1];
-    experts.push({name,site,slug,directPublic,comparisonPublic});
+    experts.push({name,site,slug,directPublic,comparisonPublic,apiId});
   }
   return experts;
 }
