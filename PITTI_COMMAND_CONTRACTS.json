@@ -126,7 +126,7 @@
     "productionControl": "v11.8.0-rc4.152 Android accepted; rc4.153 deployed presentation-only candidate",
     "androidAuthority": "v11.8.0-rc4.152",
     "sourceAuthority": "main/gh-pages v11.8.0-rc4.153",
-    "latestPackageReextract": "v11.8.0-rc4.142 package/re-extract PASS",
+    "latestPackageReextract": "v11.8.0-rc4.153 Candidate Package Gate PASS; Release Contract + Guardrails PASS",
     "latestPackageSha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
     "packageReferenceRun": 33367917515,
     "deployedPagesVersion": "v11.8.0-rc4.153",
