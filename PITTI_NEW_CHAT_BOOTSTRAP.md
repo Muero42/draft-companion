@@ -21,7 +21,7 @@ Critical invariants:
 - Michael history includes 2025.
 - Pascal Voerde = Bracht Eagles 2017-2022 + Voerde Eagles 2023-2025; never Pascal Gelderner's 3-season profile.
 - Björn 2021 theme + 2023 autodraft excluded from ordinary preference learning.
-- Geno Smith/Aaron Rodgers are NOT hard exclusions. Rank organically; no name-specific demotion/removal/forcing. Correct Coach evaluation should keep them below better QB options.
+- Geno Smith and Aaron Rodgers are explicit user hard exclusions. Never recommend or draft either player. Exactly-one-QB remains the roster strategy after QB1.
 - v4 PRIMARY / v5 CHALLENGER.
 - latest backup remains 29/30.
 - rc4.132 must include live-autodraft Return-v2 and Pick32 Nabers/Javonte regression before device deployment.
