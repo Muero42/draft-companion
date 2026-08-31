@@ -25,3 +25,8 @@ Critical invariants:
 - v4 PRIMARY / v5 CHALLENGER.
 - latest backup remains 29/30.
 - rc4.132 must include live-autodraft Return-v2 and Pick32 Nabers/Javonte regression before device deployment.
+
+## 2026-08-31 takeover override
+The old first-gate text above is superseded by the current canonical state.
+**First gate now: RC4.142_TIER_PAYLOAD_ROOT_CAUSE.**
+Android already runs rc4.142 and the app is otherwise functional, but external v4 tiers are still absent. New chat must not build rc4.143 from assumptions. It must first inspect/reproduce the actual FantasyPros custom-consensus response for the exact active-v4 expert IDs, then fix only the proven payload/parser/request defect and add a real-payload regression test.
