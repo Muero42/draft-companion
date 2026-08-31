@@ -1,27 +1,28 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v212
-Generation: `20260831T0735Z-v212`
+# PITTI HANDOFF COMPLETENESS MATRIX — v214
+Generation: `20260831T1028Z-v214`
 
 Takeover is PASS only if all items below are recognized without contradiction:
 
-- Android = **v11.8.0-rc4.142 observed**.
-- Startup / refresh / Analyze = functional.
-- Individual descriptions = **125/125**, including restored Tyler Warren text.
-- External Expert-v4 tiers = **FAIL / absent**.
-- rc4.142 `total_experts` verifier correction = **insufficient**, not a solved root cause.
-- First gate = **RC4.142_TIER_PAYLOAD_ROOT_CAUSE**.
-- Before any next build, actual FantasyPros QB/RB/WR/TE custom-consensus payloads must be captured/reproduced for the exact selectable active-v4 expert IDs.
-- Verify request parameters, exact expert provenance, player container, position fields, scoring/type/week semantics and explicit tier key/value.
-- No rc4.143 on suspicion; no cache clear/app-data clear/reinstall/repeated-refresh loop.
-- No outsider substitution; Erickson remains forbidden in v4 tier provenance.
-- Tier display is context only and cannot alter Coach/Return/opponent/roster/history/fingerprints.
-- Exact order = **Michael / Pascal Voerde / Marc Düsseldorf / Thomas / Björn / Pascal Gelderner / Giuliano / Bastian / Muerotechnik / Dutch Marc**.
+- Android accepted/observed = **v11.8.0-rc4.152**.
+- Source/deployed candidate = **v11.8.0-rc4.153**.
+- rc4.153 PR #83: Release Contract PASS, Candidate Package Gate PASS, Project Guardrails PASS.
+- main↔gh-pages runtime parity = **13/13 PASS**.
+- rc4.153 is presentation-only expert-order stabilization.
+- Exact first gate = **RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE**.
+- Expert display common core order = **Sean Koerner → Dalton Del Don → Pat Fitzmaurice**; then shared experts; then specialists.
+- Missing expert ranks remain `#– / fehlt`; no substitution.
+- LIVE nine-manager grid works: all nine opponents visible, `? / AUTO / MANUELL`, forward-only segmentation from current pick.
+- LIVE v3/v4/v5 selector remains directly above Analyze.
+- LIVE fast path = 300 Return simulations + no balanced shadow; Decision Fixtures and Return Validation still persist.
+- Global cross-position v4 tiers are working and display-only.
+- David Montgomery / Tyler Warren individual text coverage is working.
+- Public FantasyPros tier-field experiment is retired and must not be reopened without new evidence.
+- Latest backup = `draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json`; no generic Return-v2 retune or hard WR/RB quota justified.
+- Exact manager order = **Michael / Pascal Voerde / Marc Düsseldorf / Thomas / Björn / Pascal Gelderner / Giuliano / Bastian / Muerotechnik / Dutch Marc**.
 - No Michael K, no Moers Venom, no slot-5 Bastian regression.
-- Michael history includes 2025.
-- Pascal Voerde identity chain = 2017–2025; Pascal Gelderner separate 2023–2025; Björn 2021/2023 exclusions preserved.
-- Exactly one QB/no QB2; Geno Smith and Aaron Rodgers are hard exclusions.
-- No K/DST draft; starter maxima are not roster caps.
+- Michael history includes 2025; Pascal Voerde identity chain 2017–2025; Pascal Gelderner separate; Björn 2021/2023 exclusions preserved.
+- Exactly one QB/no QB2; Geno Smith and Aaron Rodgers hard exclusions.
+- No K/DST; starter maxima are not roster caps.
 - v4 PRIMARY / v5 CHALLENGER / v3 failsafe.
-- Latest paired backup = 29/30, missing pick29 expertv5.
-- Deferred 5-WR comparison remains Egbuka / Flowers / Tetairoa McMillan / DeVonta Smith + Waddle reference, with separate maximum-upside ranking.
-- Final draft-day freshness/ADP/expert-board/late-RB/smoke agenda remains pending after tier acceptance.
-- Real-draft chat remains execution-only after final freeze.
+- After rc4.153 device PASS: **freeze runtime**, then final freshness/live support only.
+- Deferred 5-WR comparison is optional if time remains and must not delay draft readiness.
