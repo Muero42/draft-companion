@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-31T09:20:00Z",
+  "updatedAt": "2026-08-31T09:25:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -16,7 +16,7 @@
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.137",
+    "latestAndroidObserved": "v11.8.0-rc4.142",
     "latestPreinstallVerified": "v11.8.0-rc4.142 CI package gate PASS",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.142_PREINSTALL.zip",
@@ -206,16 +206,16 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.142_ALL_CI_GATES_PASS_HANDOFF",
+    "status": "RC4.142_DEVICE_TIER_FAIL",
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.135",
-    "runtime": "rc4.141 Android functional; tiers absent. rc4.142 tier verifier semantics fix has full CI PASS.",
-    "nextGate": "gh-pages exact rc4.142 parity then one Android tier verification"
+    "runtime": "Android rc4.142 functional for startup/refresh/analyze and Warren text; external v4 tiers absent",
+    "nextGate": "inspect/reproduce actual FantasyPros consensus-rankings payload for exact active-v4 expert IDs before any further build"
   },
-  "status": "RC4.142_ALL_CI_GATES_PASS_HANDOFF",
-  "gate": "RC4.142_PAGES_PARITY_THEN_DEVICE_TIER_VERIFY",
-  "nextGate": "gh-pages exact rc4.142 parity then one Android tier verification",
+  "status": "RC4.142_DEVICE_TIER_FAIL",
+  "gate": "RC4.142_TIER_PAYLOAD_ROOT_CAUSE",
+  "nextGate": "inspect/reproduce actual FantasyPros consensus-rankings payload for exact active-v4 expert IDs before any further build",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -274,5 +274,6 @@
       "profile": "expertv5"
     },
     "qualityAuditTool": "tools/audit-v45-backup.mjs"
-  }
+  },
+  "rootCauseDiscipline": "No speculative tier build. rc4.142 total_experts verifier fix was insufficient. Capture actual live FP payload shape/provenance, then one bounded fix + regression fixture."
 }
