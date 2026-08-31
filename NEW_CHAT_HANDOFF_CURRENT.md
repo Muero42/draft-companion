@@ -1,12 +1,13 @@
-# PITTI HANDOFF CURRENT — v209
-Handoff generation: `20260831T0435Z-v209`
+# PITTI HANDOFF CURRENT — v210
+Handoff generation: `20260831T0445Z-v210`
 
 ## Current release boundary
-- **Accepted Android:** v11.8.0-rc4.135.
-- **Deployed main/gh-pages:** v11.8.0-rc4.136, but its tier display is rejected for draft use.
-- **Prepared candidate:** v11.8.0-rc4.137 on `pitti-rc4.137-tier-fix`.
-- rc4.137 Release Contract, Project Guardrails and package/re-extract all PASS. Package run 33357387697, artifact 9745555473, inner runtime ZIP SHA-256 `8f56584f1f7cf99ec930304f7cedf03c02f82da2b73563f29f01f6e7954fca3d`, 13 runtime files.
-- Next gate: promote exactly the tested rc4.137 bytes to main and gh-pages, prove exact parity, then one controlled Android refresh. No cache clear/reinstall loop.
+- **Android/device:** v11.8.0-rc4.137 is already visibly installed and running. Do **not** reinstall or refresh merely to reach rc4.137.
+- **main:** v11.8.0-rc4.137.
+- **gh-pages:** still v11.8.0-rc4.136, so main↔gh-pages parity is currently **not** established.
+- rc4.137 Release Contract, Project Guardrails and package/re-extract are PASS.
+- **Immediate next device gate:** verify rc4.137 tier behavior on the already-installed version.
+- After that, reconcile gh-pages to the already-tested rc4.137 bytes and prove exact parity before final operational freeze.
 
 ## rc4.137 tier correction
 rc4.136 hard-coded Andrew Erickson and Mariano external tier snapshots. That is invalid because Erickson is not an active Expert-v4 member and coverage was not position-safe.
