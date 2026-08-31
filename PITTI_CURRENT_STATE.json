@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260831T0735Z-v212",
-  "updated_at": "2026-08-31T07:35:00Z",
+  "updated_at": "2026-08-31T07:53:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,21 +11,21 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.142 functional except external v4 tier display",
     "android_authority": "v11.8.0-rc4.142",
-    "test_challenger": "v11.8.0-rc4.142",
+    "test_challenger": "v11.8.0-rc4.143",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.142 CI package gate PASS",
+    "latest_package_reextract": "v11.8.0-rc4.143 release/package/guardrail gates PASS; 13-file re-extract PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
-    "latest_package_sha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
+    "latest_package_sha256": "sha256:0ae0c1011a731328df85464c6c4da4bb9b49eb57741801ae3f8e1c2b4a95bec9",
     "deployed_pages": "gh-pages v11.8.0-rc4.142; all 13 package runtime files byte-identical to main/package",
     "deployed_pages_app_byte_parity_with_main": true,
-    "package_reference_run": 33367917515,
-    "package_reference_artifact_id": 9748932673,
+    "package_reference_run": 33370206139,
+    "package_reference_artifact_id": 9749745633,
     "package_reference_note": "rc4.142 commit f8c215b65ed3ab04c25d76af104bc2fa83639121. Release 33367917513 PASS; package 33367917515 PASS; guardrails 33367917487 PASS; rc4.82 33367917505 PASS; rc4.83 33367917493 PASS. Device starts/refreshes/analyzes but v4 tiers still absent.",
     "android_version_observed": true,
     "android_functional_verified": false,
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": true,
-    "android_acceptance_pending": "payload-root-cause tier fix + one bounded verified successor",
+    "android_acceptance_pending": "exactly one controlled refresh to rc4.143, then Analyze with v4 and verify external tier labels",
     "android_observed": "v11.8.0-rc4.142",
     "android_functional_acceptance": "PARTIAL PASS: startup/refresh/analyze and 125/125 individual-description coverage work, including Tyler Warren; external v4 tier labels are absent, therefore full acceptance FAIL.",
     "rollback_reference": "v11.8.0-rc4.96",
@@ -33,16 +33,16 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.142 deployed and device-observed; tier-function FAIL",
-    "deployed": "main runtime rc4.142; gh-pages runtime rc4.142",
+    "source_candidate": "v11.8.0-rc4.143 merged to main and deployed to gh-pages",
+    "deployed": "main/gh-pages runtime rc4.143; exact 13/13 runtime parity PASS",
     "main_gh_pages_parity": true,
     "accepted_android": "NO_FULL_TIER_ACCEPTANCE; rc4.142 observed and otherwise functional",
     "package_reference_artifact_digest": "sha256:77c671dcbbf822285920ca5235efba388cb3445e160688312ece4502a6a876d7"
   },
   "exact_continuation": {
-    "gate": "RC4.142_TIER_PAYLOAD_ROOT_CAUSE",
+    "gate": "RC4.143_DEVICE_REFRESH_AND_TIER_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "PITTI AUTO starts here. Android already runs rc4.142. Do not reinstall, clear cache/data, or create rc4.143 speculatively. Capture/inspect the real FantasyPros consensus-rankings responses for QB/RB/WR/TE through the existing proxy with the exact FantasyPros-selectable active-v4 expert IDs. Verify request parameters, expert provenance, returned player container and position values, scoring/type/week semantics, and the actual explicit tier key/value. The rc4.142 total_experts hypothesis was insufficient. Only after reproducing the payload-level root cause: make one bounded fix, add a deterministic regression fixture from the real response shape, run full release/package/guardrail/runtime/parity gates, then request exactly one device verification."
+    "instruction": "rc4.143 is merged, fully gated, packaged/re-extracted, deployed, and 13/13 main↔gh-pages runtime parity is PASS. Android remains rc4.142. Exactly one controlled in-app refresh/update to rc4.143 is now required; no cache/app-data clear or reinstall. Then run Analyze with Expert-v4 and verify visible external FantasyPros tier labels. If absent, capture the visible panel/tier failure text rather than repeating refreshes."
   },
   "invariants": {
     "user_qb_limit": 1,
