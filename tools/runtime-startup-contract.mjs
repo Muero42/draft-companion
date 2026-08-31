@@ -54,9 +54,9 @@ function fakeElement(id=''){
 globalThis.document={getElementById(id){if(!elements.has(id))elements.set(id,fakeElement(id));return elements.get(id)},querySelectorAll(){return[]}};
 globalThis.localStorage={_m:new Map(),getItem(k){return this._m.has(k)?this._m.get(k):null},setItem(k,v){this._m.set(k,String(v))},removeItem(k){this._m.delete(k)},key(i){return [...this._m.keys()][i]??null},get length(){return this._m.size}};
 globalThis.Option=function(text,value){this.text=text;this.value=value};
-globalThis.navigator={};
-globalThis.location={};
-globalThis.window=globalThis;
+Object.defineProperty(globalThis,'navigator',{value:{},configurable:true,writable:true});
+Object.defineProperty(globalThis,'location',{value:{},configurable:true,writable:true});
+Object.defineProperty(globalThis,'window',{value:globalThis,configurable:true,writable:true});
 globalThis.fetch=async()=>({ok:false,json:async()=>({}),text:async()=>''});
 const prefixEnd=app.indexOf('if(els.adpFile)',app.indexOf('els.refreshAllBtn.onclick='));
 assert(prefixEnd>0,'refresh handler prefix boundary missing');
