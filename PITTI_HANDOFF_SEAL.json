@@ -1,14 +1,14 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260831T1455Z-v215",
-  "created_at": "2026-08-31T14:55:00Z",
+  "created_at": "2026-08-31T14:57:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_COMMAND_CONTRACTS.json": "358dba52e2d7464cbcf5e357eb2c642917f324a4",
-    "PITTI_CURRENT_STATE.json": "7b8564423d958176313b1b94739760b645914a1a",
+    "PITTI_CURRENT_STATE.json": "98555deae451913852b4c4fa75aff975cf5b598e",
     "PITTI_EXECUTION_LOCK.json": "a8d9fa2e28683d46d4dcba249645898495f2a3be",
     "PITTI_AUTO_PREFLIGHT.md": "8c4ae8934396004947a3397296cfc1dc46d07f61",
     "PITTI_PROJECT_STATE.md": "b7f71f60644fbd1f8eecbd8e2c604915ad2500e2",
@@ -78,5 +78,5 @@
     "operational freeze ~19:50",
     "execution-only live draft chat at 20:00"
   ],
-  "note": "v215 second-pass reseal after detecting and repairing stale rc4.152/153/154/155/157 authority pointers in canonical takeover files. CURRENT, LOCK, COMMAND, PREFLIGHT, PROJECT EOF, CURRENT HANDOFF, bootstrap, matrix and draft bootstrap now agree on rc4.158 and the same time-dependent finalization gate."
+  "note": "v215 second-pass reseal after detecting and repairing stale rc4.152/153/154/155/157 authority pointers in canonical takeover files. CURRENT, LOCK, COMMAND, PREFLIGHT, PROJECT EOF, CURRENT HANDOFF, bootstrap, matrix and draft bootstrap agree on rc4.158 and DRAFT_DAY_TIME_DEPENDENT_FINALIZATION. Final reseal also removed stale critical_handoff pointer."
 }
