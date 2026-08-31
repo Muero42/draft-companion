@@ -1,5 +1,5 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.153. **Android authority remains v11.8.0-rc4.152** until full gates/deployment/device acceptance.
+> **Current source candidate:** v11.8.0-rc4.154. **Android authority remains v11.8.0-rc4.152** until full gates/deployment/device acceptance.
 > **Observed rc4.152:** live nine-manager control grid, live v3/v4/v5 selector, faster LIVE analysis, global tiers and current player texts work.
 > **rc4.153 display-only fix:** expert order on player cards is stabilized across positions. Common v4 experts appear first: Sean Koerner → Dalton Del Don → Pat Fitzmaurice; then broadly shared experts; then position specialists. Missing ranks remain visible as #–.
 > **No model change:** expert membership, weights, panel ranks, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
