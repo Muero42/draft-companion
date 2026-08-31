@@ -140,11 +140,11 @@ if(Number(activeVersion)===136){
 }
 if(Number(activeVersion)>=137){
   assert.doesNotMatch(app,/VERIFIED_EXTERNAL_TIERS_2026|andrewErickson:/,'rc4.137 must remove hard-coded non-v4 tier snapshots');
-  assert.match(app,/function fpConsensusExpertSetVerified\(payload,ids\)/,'rc4.137 exact FantasyPros expert-set gate missing');
+  assert.match(app,/function fpConsensusExpertSelection\(payload,requestedIds\)/,'rc4.146 FantasyPros returned-provenance gate missing');
   assert.match(app,/function fetchV4ConsensusTierPosition\(pos\)/,'rc4.137 position-specific v4 tier acquisition missing');
   assert.match(app,/EXPERT_V4_BLUEPRINT\[pos\]/,'rc4.137 tier source must derive from active v4 blueprint');
   assert.match(app,/FantasyPros Custom ECR · v4-only/,'rc4.137 v4-only tier source label missing');
-  assert.match(app,/positionPanels\[pos\]!==EXPERT_PROFILE_IDS\.expertv4\[pos\]/,'rc4.137 tiers must render only when v4 is active for that position');
+  assert.doesNotMatch(app,/positionPanels\[pos\]!==EXPERT_PROFILE_IDS\.expertv4\[pos\]/,'verified v4 tier display must not be suppressed by mutable positionPanels');
   assert.match(app,/expertTier:externalExpertTierContext\(x\)/,'rc4.137 tier context missing from live audit row');
   assert.match(app,/userDraftStrategyExcluded\(p\.pos,state\.counts,p\.name\)/,'rc4.137 named QB hard-exclusion wiring missing');
   assert.match(policy,/USER_DRAFT_HARD_EXCLUSIONS=new Set\(\['geno smith','aaron rodgers'\]\)/,'rc4.137 Geno/Rodgers hard exclusions missing');
