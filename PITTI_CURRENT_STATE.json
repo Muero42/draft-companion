@@ -13,21 +13,21 @@
     "android_authority": "v11.8.0-rc4.152",
     "test_challenger": "v11.8.0-rc4.153",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.143 release/package/guardrail gates PASS; 13-file re-extract PASS",
+    "latest_package_reextract": "v11.8.0-rc4.153 Candidate Package Gate PASS; release/guardrail gates PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "sha256:0ae0c1011a731328df85464c6c4da4bb9b49eb57741801ae3f8e1c2b4a95bec9",
     "deployed_pages": "gh-pages v11.8.0-rc4.153",
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33370206139,
     "package_reference_artifact_id": 9749745633,
-    "package_reference_note": "rc4.142 commit f8c215b65ed3ab04c25d76af104bc2fa83639121. Release 33367917513 PASS; package 33367917515 PASS; guardrails 33367917487 PASS; rc4.82 33367917505 PASS; rc4.83 33367917493 PASS. Device starts/refreshes/analyzes but v4 tiers still absent.",
+    "package_reference_note": "Historical rc4.142 package evidence retained only as provenance; current release authority is rc4.153 with all three CI gates PASS.",
     "android_version_observed": true,
     "android_functional_verified": true,
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": true,
     "android_acceptance_pending": "one controlled update to rc4.153; verify stable expert display order across positions; then freeze runtime",
     "android_observed": "v11.8.0-rc4.152",
-    "android_functional_acceptance": "PASS for current draft-day surface: rc4.150 backup/device evidence shows Expert-v4 active, global cross-position tiers present, Montgomery current text present, analysis/Return evidence persisted.",
+    "android_functional_acceptance": "PASS on rc4.152 device: LIVE nine-manager grid, LIVE v3/v4/v5 selector, faster analysis, global tiers and current player texts observed functional.",
     "rollback_reference": "v11.8.0-rc4.96",
     "accepted_android_fallback_functional_verified": true,
     "rc4107_device_refresh_observed": true,
@@ -77,15 +77,15 @@
       "5 Deferred Egbuka/Flowers/Tetairoa McMillan/DeVonta Smith + Waddle comparison only if time remains; do not delay draft readiness."
     ]
   },
-  "source_authority": "main/gh-pages rc4.142; Android rc4.142 observed functional except tier display.",
-  "package_authority": "rc4.142 package/release gates PASS; device tier functionality FAIL.",
-  "android_version_observed": "v11.8.0-rc4.142",
-  "android_functional_verified": false,
-  "deployment_authority": "rc4.142 is deployed and on-device. Do not reinstall/update merely for version. Next action is payload-level tier diagnosis.",
+  "source_authority": "main/gh-pages v11.8.0-rc4.153; exact 13/13 runtime parity PASS",
+  "package_authority": "rc4.153 Release Contract + Candidate Package Gate + Project Guardrails PASS",
+  "android_version_observed": "v11.8.0-rc4.152",
+  "android_functional_verified": true,
+  "deployment_authority": "rc4.153 is merged/deployed; Android authority remains rc4.152 until one expert-order smoke. Then freeze.",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
-    "runtime": "Use the already-installed rc4.137 for verification. Do not reinstall/refresh merely to reach rc4.137. Before final freeze, verify tier functionality and reconcile main↔gh-pages parity.",
+    "runtime": "Android rc4.152 is functional. Perform exactly one rc4.153 update for the presentation-only expert-order acceptance; on PASS freeze runtime.",
     "primary_freshness_pass": "17:30-18:15 Europe/Berlin",
     "transaction_delta_scan": "19:05-19:30 Europe/Berlin after 13:00 ET waiver deadline",
     "final_materiality_scan": "19:40-19:50 Europe/Berlin",
@@ -93,7 +93,7 @@
     "transaction_rule": "Official transaction/IR/PUP truth outranks stale Sleeper metadata; same-position move alone is weak evidence unless role/health impact is corroborated.",
     "draft_chat_rule": "Start a brand-new chat for the real draft after final runtime/freshness checkpoint. That draft chat is execution-only: load DRAFT_CHAT_BOOTSTRAP + canonical state, do not redesign code/model during the draft unless a release-critical emergency makes the app unusable."
   },
-  "android_acceptance_pending": "rc4.142 tier-function root-cause and fix",
+  "android_acceptance_pending": "rc4.153 expert-display-order smoke only",
   "expert_v4_v5": {
     "v3": "frozen control/failsafe; embedded team/individual hybrid as historically audited",
     "v4": "CURRENT RE-AUDIT: individual-only, only experts with obtainable individual rankings. Position-specific optimized weights in app.js EXPERT_V4_BLUEPRINT. Koerner is native v4.",
@@ -105,8 +105,8 @@
   "process_controls": {
     "status_semantics": "REPORT_ONLY_NO_TOOL_WORK",
     "auto_semantics": "EXECUTE_CONTINUOUSLY; no promise/status chatter; checkpoint every material change",
-    "no_trial_error": "No cache clear/reinstall/repeated-refresh and no speculative tier builds. rc4.142 is already functional except tiers. Reproduce actual FantasyPros payload first.",
-    "chat_handoff": "v208: rc4.137 tier-provenance fix first; corrected order/history locks mandatory; Geno Smith/Aaron Rodgers explicit hard exclusions; draft chat execution-only after final readiness.",
+    "no_trial_error": "No cache clear/reinstall/repeated-refresh. No reopening tier API or model retuning. rc4.153 is a single presentation-only acceptance candidate; PASS => freeze.",
+    "chat_handoff": "v214: rc4.152 accepted Android; rc4.153 fully gated/deployed expert-order display-only candidate; one device smoke then runtime freeze.",
     "source_of_truth": "PITTI_CURRENT_STATE.json + PITTI_EXECUTION_LOCK.json + PITTI_PROJECT_STATE.md EOF + PASS seal + actual repo/runtime evidence.",
     "guardrail_note": "rc4115 gate now scoped to rc4.115 only; rc4117 has dedicated release-critical contract; rc4114 gate made semantic so preserving Overall provenance does not falsely fail positional aggregation."
   },
@@ -192,109 +192,15 @@
     "latestBackupHistoricalFixtures": 22
   },
   "critical_handoff": {
-    "rc4132_required": false,
-    "reason": "Earlier rc4.132 lineage work is closed. Current release-critical issue is rc4.136 tier regression; rc4.137 must fix v4-only tier provenance without changing Coach/Return/history.",
+    "generation": "20260831T1028Z-v214",
+    "gate": "RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
+    "reason": "All prior tier/startup/live-control defects are closed for draft-day use. Only rc4.153 expert display ordering awaits device observation.",
     "requirements": [
-      "rc4.137: remove hard-coded Erickson/non-v4 tier display; use only exact verified FantasyPros custom consensus from selectable active v4 experts, per QB/RB/WR/TE; fail closed otherwise",
-      "hard-lock canonical 2026 order: 1 Michael, 2 Pascal Voerde, 3 Marc Düsseldorf, 4 Thomas, 5 Bjoern, 6 Pascal Gelderner, 7 Giuliano, 8 Basti, 9 Muerotechnik, 10 Dutch Marc; reject Bastian@5 / Michael K. / Moers Venom regressions",
-      "restore explicit user hard exclusions for Geno Smith and Aaron Rodgers; no QB2",
-      "retain dedicated LIVE autodraft opponent path using Sleeper SearchRank + roster need; mock CPU remains separate",
-      "add deterministic regression for Pick32 after Love: roster WR1/RB2; generic RB need may not make third RB beat Nabers absent concrete tier/loss scarcity",
-      "add deterministic live-autodraft Return-v2 regression",
-      "run release contract + project guardrails + candidate package/re-extract",
-      "merge main; fast-forward gh-pages; verify byte parity",
-      "repair active-manager historical data: Michael_Polk must include 2025; Pascal Voerde must merge Pascal_Bracht 2017-2022 + Pascal_Voerde 2023-2025; preserve Björn 2021/2023 exclusions"
-    ],
-    "canary": {
-      "pick": 32,
-      "roster": "WR1/RB2 after Jeremiyah Love",
-      "v4Panel": "Nabers 26.7 vs Javonte 28.9",
-      "badObserved": "Javonte Coach100 vs Nabers98",
-      "required": "Nabers must not lose solely because of generic RB need; 1-3 points is near-tie and portfolio/replacement-aware logic must be encoded/tested."
-    },
-    "modelAuthority": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
-    "latestBackup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json remains 29/30; missing pick29 expertv5",
-    "managerHistoryAudit": {
-      "source": "canonical Library draft_picks_2017_2025.csv, 1374 rows",
-      "discoveredDefects": [
-        "Michael detailed runtime profile omits 2025 (5 seasons instead of canonical 6)",
-        "Pascal Voerde detailed runtime profile uses only 2023-2025 and therefore ignores confirmed Pascal_Bracht/Bracht Eagles 2017-2022 chain"
-      ],
-      "requiredCorrectedYears": {
-        "Michael_Polk": [
-          2020,
-          2021,
-          2022,
-          2023,
-          2024,
-          2025
-        ],
-        "Pascal_Voerde": [
-          2017,
-          2018,
-          2019,
-          2020,
-          2021,
-          2022,
-          2023,
-          2024,
-          2025
-        ],
-        "Pascal_Gelderner": [
-          2023,
-          2024,
-          2025
-        ],
-        "Marc_Duesseldorf": [
-          2021,
-          2022,
-          2024,
-          2025
-        ],
-        "Marc_Dutch": [
-          2017,
-          2018,
-          2019,
-          2020,
-          2021,
-          2022,
-          2023,
-          2024,
-          2025
-        ],
-        "Bjoern": [
-          2017,
-          2018,
-          2019,
-          2020,
-          2022,
-          2024,
-          2025
-        ],
-        "Giuliano": [
-          2018,
-          2019,
-          2020,
-          2021,
-          2023,
-          2024,
-          2025
-        ],
-        "Bastian": [
-          2017,
-          2018,
-          2019,
-          2020,
-          2021,
-          2022,
-          2023,
-          2024,
-          2025
-        ]
-      }
-    },
-    "screenshot_handoff_audit": "Four screenshots preserve the visible narrative but are not a complete standalone authority because transition text is partly covered/cropped; repo v206 canonical files are authoritative.",
-    "discovered_runtime_defect": "LIVE autodraft Return-v2 branch used nonexistent adaptation-state `.mode`; corrected to `.currentMode` before release."
+      "Update once to rc4.153.",
+      "Verify expert order across at least two positions: Sean Koerner → Dalton Del Don → Pat Fitzmaurice first wherever present; then shared experts; then specialists.",
+      "Missing ranks stay #– / fehlt; no substitutions.",
+      "If PASS, freeze runtime. No further model/tier/Return/source changes absent a new release-critical defect."
+    ]
   },
   "pending_after_release": [
     {
