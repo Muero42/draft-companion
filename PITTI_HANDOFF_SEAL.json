@@ -7,9 +7,9 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "48b71fd968e82a4d44d1082c859ee2b42f08bbd4",
-    "PITTI_CURRENT_STATE.json": "9c3abc9e9289e46a3e4c69a03a64f0fad5eacbc3",
-    "PITTI_EXECUTION_LOCK.json": "7dcfb4acd0bc559a0ff88c5f32274b6ed005903f",
+    "PITTI_COMMAND_CONTRACTS.json": "48565a0daebacd09322e3b6e2ebbb97155afc665",
+    "PITTI_CURRENT_STATE.json": "5c117393e15ad076b36d8b91a3b48224bb006b32",
+    "PITTI_EXECUTION_LOCK.json": "727f66c1d62d356c4dad9e7e5a4a0c50bdfaa54d",
     "PITTI_AUTO_PREFLIGHT.md": "9d13475f485d0c47f37bc339cfa17f8dc7f0cd05",
     "PITTI_PROJECT_STATE.md": "c98ddc5fccc8ab553ed064c6c8628975193b95c3",
     "NEW_CHAT_HANDOFF_CURRENT.md": "e08804ac999de161a6104b084a95f875aa79a509",
@@ -64,5 +64,5 @@
     "no_cache_clear_reinstall": true
   },
   "exact_gate": "RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
-  "note": "v214 is the second-pass no-regression seal. It repairs stale v212/v129 takeover pointers across command contracts, bootstrap, matrix, lock, preflight and real-draft bootstrap; preserves rc4.152 as accepted Android authority; records rc4.153 as fully gated/deployed presentation-only candidate with verified 13/13 main↔gh-pages runtime parity. One controlled rc4.153 device expert-order smoke remains, then runtime freeze."
+  "note": "v214 final second-pass no-regression seal. Stale current-authority pointers were removed from CURRENT/LOCK/COMMAND after the first reseal; integrity was recalculated. Android rc4.152 remains accepted; rc4.153 is fully gated/deployed presentation-only with verified 13/13 main↔gh-pages runtime parity. One controlled rc4.153 expert-order device smoke remains, then freeze."
 }
