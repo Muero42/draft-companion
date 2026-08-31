@@ -8,7 +8,7 @@
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_COMMAND_CONTRACTS.json": "22d0c0b0f23c98f5a160aa185126963565c1bc2d",
-    "PITTI_CURRENT_STATE.json": "fd2fc087ba11cd0ccf0ac100c7a73bf700feba1f",
+    "PITTI_CURRENT_STATE.json": "c3db93b6e938126309b8ce73bffb129700a9f351",
     "PITTI_EXECUTION_LOCK.json": "e75084252fbc76703d4f1b7d821f529f06d4b3ff",
     "PITTI_AUTO_PREFLIGHT.md": "170a54b60ade82098fe83da34487b598e241a1cc",
     "PITTI_PROJECT_STATE.md": "b7496cd03a8eb0dce9d7dc2a3557c7ca12e7da6d",
