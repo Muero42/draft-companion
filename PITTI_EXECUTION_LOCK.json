@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-31T04:35:00Z",
+  "updatedAt": "2026-08-31T04:45:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -16,7 +16,7 @@
     "productionPanel": "rc4.64-incumbent",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.135",
+    "latestAndroidObserved": "v11.8.0-rc4.137",
     "latestPreinstallVerified": "v11.8.0-rc4.137 CI PACKAGE/RE-EXTRACT PASS",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.137_PREINSTALL.zip",
@@ -24,16 +24,16 @@
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.137",
     "latestDeployedCandidate": "v11.8.0-rc4.136 tier-invalid",
-    "latestAndroidVerified": "v11.8.0-rc4.135",
-    "androidAuthority": "v11.8.0-rc4.135",
-    "android_authority": "v11.8.0-rc4.135",
+    "latestAndroidVerified": "v11.8.0-rc4.137",
+    "androidAuthority": "v11.8.0-rc4.137",
+    "android_authority": "v11.8.0-rc4.137",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33357387697,
     "preinstallReferenceArtifactId": 9745555473,
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.135",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.137",
     "latestAndroidFunctionalVerified": "v11.8.0-rc4.135",
-    "testChallengerAndroidObserved": false,
+    "testChallengerAndroidObserved": true,
     "testChallengerAndroidAccepted": false,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
@@ -61,8 +61,8 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.135",
-    "unreleasedMainDelta": "rc4.136 tier-invalid on main/gh-pages; rc4.137 tested branch candidate awaiting promotion"
+    "acceptedAndroidAuthority": "v11.8.0-rc4.137",
+    "unreleasedMainDelta": "main rc4.137; gh-pages rc4.136; Android rc4.137 visibly observed; tier-function verification pending"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -203,17 +203,17 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "branch": "pitti-rc4.137-tier-fix",
-    "status": "RC4.137_PREDEPLOY_GATES_PASS",
+    "branch": "main",
+    "status": "RC4.137_ANDROID_OBSERVED_TIER_VERIFY_PENDING",
     "production": false,
-    "androidVerified": false,
+    "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.135",
-    "runtime": "rc4.137 package/re-extract PASS; main/gh-pages promotion pending",
-    "nextGate": "promote tested rc4.137 bytes to main+gh-pages, prove parity, then one controlled Android refresh"
+    "runtime": "Android rc4.137 visible; main rc4.137; gh-pages rc4.136",
+    "nextGate": "verify tier behavior on already-installed rc4.137; then reconcile gh-pages parity before final freeze"
   },
-  "status": "RC4.137_PREDEPLOY_GATES_PASS",
-  "gate": "RC4.137_PROMOTION_AND_PARITY",
-  "nextGate": "promote tested rc4.137 bytes to main+gh-pages, prove parity, then one controlled Android refresh",
+  "status": "RC4.137_ANDROID_OBSERVED_TIER_VERIFY_PENDING",
+  "gate": "RC4.137_TIER_FUNCTION_VERIFY_AND_PAGES_PARITY",
+  "nextGate": "device tier-function verification on existing rc4.137, then gh-pages parity",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -222,11 +222,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260831T0435Z-v209",
+    "generation": "20260831T0445Z-v210",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.137 predeploy gates PASS; v4-only FantasyPros tier provenance; corrected manager order; Geno Smith/Aaron Rodgers explicit hard exclusions."
+    "resume": "Android already visibly runs rc4.137. Next gate is tier-function verification, not reinstall; main rc4.137 / gh-pages rc4.136 parity remains to reconcile."
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
@@ -245,7 +245,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260831T0435Z-v209",
+  "handoff_generation": "20260831T0445Z-v210",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
