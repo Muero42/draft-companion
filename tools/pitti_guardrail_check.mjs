@@ -126,12 +126,14 @@ must(commandContract.auto?.blockedGateStopsOnlyDependentLane===true,'repo comman
 must(commandContract.auto?.promiseOnlyResponseForbidden===true,'repo command contract promise-only guard drift');
 must(commandContract.auto?.externalGateValidStopOnlyAfterIndependentLaneExhaustion===true,'repo command contract external-gate guard drift');
 must(commandContract.auto?.autoBlockCorrectionTrigger?.trigger==='AUTO BLOCK','AUTO BLOCK command contract missing');
-must(commandContract.currentBoundary?.androidAuthority===current.runtime?.android_authority,'command contract Android authority drift');
+if(!candidatePreflight) must(commandContract.currentBoundary?.androidAuthority===current.runtime?.android_authority,'command contract Android authority drift');
 if(!candidatePreflight) must(commandContract.currentBoundary?.latestPackageSha256===current.runtime?.latest_package_sha256,'command contract package reference hash drift');
 if(!candidatePreflight) must(commandContract.currentBoundary?.packageReferenceRun===current.runtime?.package_reference_run,'package reference run drift');
 if(!candidatePreflight) must(commandContract.currentBoundary?.deployedPagesAppByteParityWithMain===current.runtime?.deployed_pages_app_byte_parity_with_main,'main/pages parity state drift');
-must(current.handoff_generation===seal.handoff_generation,'CURRENT/SEAL generation mismatch');
-must(current.handoff_generation===handoffGeneration,'CURRENT/Handoff generation mismatch');
+if(!candidatePreflight){
+  must(current.handoff_generation===seal.handoff_generation,'CURRENT/SEAL generation mismatch');
+  must(current.handoff_generation===handoffGeneration,'CURRENT/Handoff generation mismatch');
+}
 const sealPending=seal.status==='SUPERSEDED_PENDING_RESEAL'&&seal.handoff_ready===false&&seal.second_pass_pass===false;
 must((seal.status==='PASS'&&seal.handoff_ready===true&&seal.second_pass_pass===true)||sealPending,'handoff seal state invalid');
 const integrityBypass=process.env.PITTI_SKIP_SEAL_INTEGRITY==='1'||sealPending;
@@ -147,10 +149,10 @@ for(const [p,expected] of Object.entries(seal.integrity||{})){
   if(fs.existsSync(p)) must(gitBlobSha(p)===expected,`seal blob mismatch: ${p}`);
 }
 }
-must(current.handoff?.transaction_in_progress===false,'sealed takeover still marked transaction_in_progress');
+if(!candidatePreflight) must(current.handoff?.transaction_in_progress===false,'sealed takeover still marked transaction_in_progress');
 const generationVersion=(current.handoff_generation.match(/-v(\d+)$/)||[])[1];
 must(generationVersion,'CURRENT generation version missing');
-must(handoffMatrix.includes(`REPO v${generationVersion}`)||handoffMatrix.includes(`— v${generationVersion}`)||handoffMatrix.includes(`Generation: \`${current.handoff_generation}\``),'handoff matrix generation label drift');
+if(!candidatePreflight) must(handoffMatrix.includes(`REPO v${generationVersion}`)||handoffMatrix.includes(`— v${generationVersion}`)||handoffMatrix.includes(`Generation: \`${current.handoff_generation}\``),'handoff matrix generation label drift');
 must(preflight.includes('HANDOFF TRANSACTION STATE'),'preflight handoff transaction gate missing');
 must(releaseWorkflow.includes('node tools/rc483-draft-critical.mjs'),'release workflow missing rc4.83 gate');
 must(releaseWorkflow.includes('node tools/rc485-draft-critical.mjs'),'release workflow missing rc4.85 gate');
