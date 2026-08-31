@@ -6,6 +6,7 @@ on:
     branches:
       - main
       - pitti-guardrails-ci-20260826
+      - pitti-rc4.137-tier-fix
     paths:
       - 'PITTI_EXECUTION_LOCK.json'
       - 'PITTI_CURRENT_STATE.json'
