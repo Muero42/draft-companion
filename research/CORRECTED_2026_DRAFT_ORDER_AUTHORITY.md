@@ -43,4 +43,4 @@ Required 2026 live/mock map: 1 Michael, 2 Pascal Voerde, 3 Marc Düsseldorf, 4 T
 ## v206 anti-regression clarification
 - This file is no longer allowed to carry the stale "8 seasons" Pascal-Voerde count.
 - Canonical count is **9 seasons (2017-2025)**, with no currently authorized season exclusion.
-- QB rule clarification: Geno Smith and Aaron Rodgers are NOT hard exclusions. No name-specific demotion/removal/forcing; Coach/player-quality ranking remains authoritative.
+- QB rule clarification (superseded by latest user instruction): **Geno Smith and Aaron Rodgers are explicit hard exclusions and must never be recommended/drafted.** Exactly one QB is drafted; no QB2.
