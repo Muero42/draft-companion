@@ -2,7 +2,7 @@ import fs from 'node:fs';import assert from 'node:assert/strict';
 const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
 const live=fs.readFileSync(new URL('../live-surface-v3.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../live-surface-v3.css',import.meta.url),'utf8');
-const version=Number(app.match(/v11\\.8\\.0-rc4\\.(\\d+)/)?.[1]||0);
+const version=Number(app.match(/v11\.8\.0-rc4\.(\d+)/)?.[1]||0);
 assert(version>=157,'live expert matrix requires rc4.157+');
 assert(live.includes("const V4_EXPERT_MATRIX=["),'live v4 matrix missing');
 assert(live.includes("String(x?.panelId||'').startsWith('expert-v4-')"),'matrix not bound to analyzed v4 row');
