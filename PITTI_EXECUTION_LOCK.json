@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-31T09:25:00Z",
+  "updatedAt": "2026-08-31T07:35:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -13,7 +13,7 @@
   "runtime": {
     "appVersion": "v11.8.0-rc4.142",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
-    "productionPanel": "rc4.64-incumbent",
+    "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.142",
@@ -23,16 +23,16 @@
     "preinstallSha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.142 source syntax + service-worker-transformed syntax locally PASS; full CI pending",
-    "latestDeployedCandidate": "v11.8.0-rc4.136 tier-invalid",
-    "latestAndroidVerified": "v11.8.0-rc4.137",
-    "androidAuthority": "v11.8.0-rc4.137",
-    "android_authority": "v11.8.0-rc4.137",
+    "latestDeployedCandidate": "v11.8.0-rc4.142",
+    "latestAndroidVerified": "NO_FULL_TIER_ACCEPTANCE",
+    "androidAuthority": "v11.8.0-rc4.142 observed; tier FAIL",
+    "android_authority": "v11.8.0-rc4.142 observed; tier FAIL",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33366773460,
     "preinstallReferenceArtifactId": 9748549429,
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.137",
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.141 (startup/refresh/text; tiers absent)",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.142",
+    "latestAndroidFunctionalVerified": "rc4.142 partial PASS: startup/refresh/analyze/text; external v4 tiers absent",
     "testChallengerAndroidObserved": true,
     "testChallengerAndroidAccepted": false,
     "rc499": {
@@ -61,8 +61,8 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.137",
-    "unreleasedMainDelta": "main rc4.142; Android rc4.139 shell observed but app module fatal syntax confirmed; deploy only after gates PASS",
+    "acceptedAndroidAuthority": "NO_FULL_TIER_ACCEPTANCE; rc4.142 functional except tier display",
+    "unreleasedMainDelta": "none relevant; main/gh-pages runtime rc4.142. Next release forbidden until payload root cause is proven.",
     "deployedPagesVersion": "v11.8.0-rc4.142",
     "mainGhPagesParity": true
   },
@@ -209,13 +209,13 @@
     "status": "RC4.142_DEVICE_TIER_FAIL",
     "production": false,
     "androidVerified": false,
-    "acceptedAndroidFallback": "v11.8.0-rc4.135",
-    "runtime": "Android rc4.142 functional for startup/refresh/analyze and Warren text; external v4 tiers absent",
-    "nextGate": "inspect/reproduce actual FantasyPros consensus-rankings payload for exact active-v4 expert IDs before any further build"
+    "acceptedAndroidFallback": "rc4.142 partial functional baseline; no full tier acceptance",
+    "runtime": "Android rc4.142 functional for startup/refresh/analyze and 125/125 individual descriptions; external v4 tiers absent",
+    "nextGate": "inspect/reproduce actual FantasyPros consensus-rankings payload for exact active-v4 selectable expert IDs before any further build"
   },
   "status": "RC4.142_DEVICE_TIER_FAIL",
   "gate": "RC4.142_TIER_PAYLOAD_ROOT_CAUSE",
-  "nextGate": "inspect/reproduce actual FantasyPros consensus-rankings payload for exact active-v4 expert IDs before any further build",
+  "nextGate": "inspect/reproduce actual FantasyPros consensus-rankings payload for exact active-v4 selectable expert IDs before any further build",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -224,11 +224,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260831T0925Z-v211",
+    "generation": "20260831T0735Z-v212",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Android already visibly runs rc4.137. Next gate is tier-function verification, not reinstall; main rc4.137 / gh-pages rc4.136 parity remains to reconcile."
+    "resume": "Android already runs rc4.142. First gate is payload-level FantasyPros tier diagnosis; no reinstall/cache clear and no speculative rc4.143."
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
@@ -247,7 +247,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260831T0925Z-v211",
+  "handoff_generation": "20260831T0735Z-v212",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -275,5 +275,5 @@
     },
     "qualityAuditTool": "tools/audit-v45-backup.mjs"
   },
-  "rootCauseDiscipline": "No speculative tier build. rc4.142 total_experts verifier fix was insufficient. Capture actual live FP payload shape/provenance, then one bounded fix + regression fixture."
+  "rootCauseDiscipline": "No speculative tier build. rc4.142 total_experts verifier fix was insufficient. Capture actual live FantasyPros payload shape/provenance, then one bounded fix + real-shape regression fixture + full gates/parity + one device verification."
 }
