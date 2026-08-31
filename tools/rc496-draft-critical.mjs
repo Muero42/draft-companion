@@ -88,7 +88,7 @@ if(Number(activeVersion)>=132){
   assert.match(app,/"Bjoern":\{"excludedYears":\[2021,2023\]/,'rc4.132 Bjorn exclusions drift');
   assert.match(app,/function sleeperLiveAutopickWeight\(/,'rc4.132 live-autodraft model missing');
   assert.match(app,/const sr=Number\(p\?\.searchRank\)/,'rc4.132 live-autodraft must use Sleeper SearchRank');
-  assert.match(app,/LIVE_MANAGER_ADAPTATION_STATE\?\.\[slot\]\?\.currentMode==='autodraft'/,'rc4.132 Return-v2 must read current live manager autodraft mode');
+  assert.match(app,/liveManagerStateForProfile\(prof\)\?\.currentMode==='autodraft'/,'rc4.151 Return-v2 must read current live manager autodraft mode through profile-keyed adaptation state');
   assert.match(app,/current<=50&&p\.pos==='RB'&&state\.counts\.RB>=2&&state\.counts\.WR<=1/,'rc4.132 Pick32 portfolio guard missing');
   assert.match(app,/Math\.min\(rawNeed,0\)/,'rc4.132 early RB generic-need neutralization missing');
   if(Number(activeVersion)<137)assert.doesNotMatch(app,/Geno Smith.*hard exclusion|Aaron Rodgers.*hard exclusion/i,'pre-rc4.137 player-name QB hard exclusion resurrected');

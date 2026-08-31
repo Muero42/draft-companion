@@ -1,9 +1,9 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.150. **Android authority remains v11.8.0-rc4.149** until full gates/deployment/device acceptance.
-> **Observed rc4.149:** tiers render, but they are positional and therefore not comparable across QB/RB/WR/TE.
-> **rc4.150 tier policy:** visible tier is now **global across positions** on the same Overall-v4 scale used by Coach: in this 10-team league T1 = Overall 1–10, T2 = 11–20, etc. Coverage is shown when incomplete; no outsider substitution.
-> **Interpretation:** a displayed T4 WR and T6 RB are now directly comparable. Coach may still order a lower global tier above a higher one only because roster need, return timing, scarcity, injury, upside or other explicit contextual layers override raw player quality.
-> **Isolation:** tier itself remains display-only; Coach, Return-v2, manager model, roster logic, history and fingerprints are unchanged.
+> **Current source candidate:** v11.8.0-rc4.151. **Android authority remains v11.8.0-rc4.150** until full gates/deployment/device acceptance.
+> **Observed rc4.150:** global cross-position v4 tiers and current Montgomery text work on device.
+> **rc4.151 LIVE controls:** compact manager AUTO/MANUELL/? control directly above the now-visible LIVE v3/v4/v5 expert selector and Analyze button. Mode changes are segmented from the current pick; earlier picks are never reclassified.
+> **rc4.151 LIVE speed:** Return-v2 Monte Carlo is reduced from 900 to 300 runs in LIVE only and the balanced shadow-score comparison is skipped in LIVE. Decision fixtures and Return-validation evidence remain persisted. Mock/replay behavior stays unchanged.
+> **Autodraft fix:** LIVE Return-v2 now reads the profile-keyed manager adaptation state correctly; the previous slot-key lookup could silently miss an explicit autodraft mode.
 > **Draft locks:** exact canonical manager order/history; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; starter maxima are not roster caps.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
@@ -78,6 +78,7 @@ v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96
 - Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
 - Browser-equivalent full historical recomputation is unavailable from preserved transient inputs and must not be fabricated.
 - Current gate: RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS.
+
 
 
 
