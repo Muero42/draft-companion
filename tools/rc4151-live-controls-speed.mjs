@@ -1,0 +1,14 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
+const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+assert(html.includes('id="liveManagerModeControl"'),'live manager control missing');
+assert(html.includes('id="analysisExpertSelector"')&&!html.includes('class="strategy-box mock-only" id="analysisExpertSelector"'),'expert selector still hidden in live');
+assert(html.indexOf('id="liveManagerModeControl"')<html.indexOf('id="analysisExpertSelector"'),'manager control must sit above expert selector');
+assert(html.indexOf('id="analysisExpertSelector"')<html.indexOf('id="refreshBtn"'),'expert selector must sit above Analyze');
+assert(app.includes("source:'user-explicit-live-ui'"),'segment source missing');
+assert(app.includes("fromPick:current,mode"),'manager mode must be segmented from current pick');
+assert(app.includes("liveManagerStateForProfile(prof)?.currentMode==='autodraft'"),'live autodraft model still looks up wrong adaptation key');
+assert(app.includes("const returnRuns=mode==='live'?300:900"),'live Return-v2 speed reduction missing');
+assert(app.includes("const referenceBalanced=(mode!=='live'&&strategy==='progressive')"),'live balanced shadow scoring still active');
+assert(app.includes("if(!preview){resolveReturnValidation(id,picks);resolveDecisionFixtures(id,picks);freezeReturnValidation"),'live evidence persistence must remain');
+console.log('rc4.151 live controls/speed/evidence contract PASS');
