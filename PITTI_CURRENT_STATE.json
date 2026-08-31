@@ -10,13 +10,13 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.131",
-    "test_challenger": "v11.8.0-rc4.136",
+    "android_authority": "v11.8.0-rc4.135",
+    "test_challenger": "v11.8.0-rc4.137",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.131 CI PACKAGE/RE-EXTRACT PASS",
+    "latest_package_reextract": "v11.8.0-rc4.135 last accepted Android/package authority; rc4.137 package pending",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
-    "deployed_pages": "UNRELEASED v203 code under rc4.131 label; NOT accepted phone authority",
+    "deployed_pages": "v11.8.0-rc4.136 deployed but tier-invalid",
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33305284763,
     "package_reference_artifact_id": 9730250635,
@@ -25,18 +25,18 @@
     "android_functional_verified": true,
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": true,
-    "android_acceptance_pending": false,
-    "android_observed": "v11.8.0-rc4.131",
-    "android_functional_acceptance": "RC4.131_VERSION_OBSERVED; rc4.130 full mock operational; Swift/Lamar card-text canaries verify opportunistically",
+    "android_acceptance_pending": "v11.8.0-rc4.137",
+    "android_observed": "v11.8.0-rc4.135",
+    "android_functional_acceptance": "rc4.135 accepted Android; rc4.136 rejected for tier provenance/coverage",
     "rollback_reference": "v11.8.0-rc4.96",
     "accepted_android_fallback_functional_verified": true,
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "rc4.132 SOURCE BUILT ON MAIN; device/release gates pending",
+    "source_candidate": "v11.8.0-rc4.137 PREDEPLOY on pitti-rc4.137-tier-fix",
     "deployed": "v11.8.0-rc4.136",
     "main_gh_pages_parity": true,
-    "accepted_android": "v11.8.0-rc4.133"
+    "accepted_android": "v11.8.0-rc4.135"
   },
   "exact_continuation": {
     "gate": "RC4.137_TIER_FIX_AND_FULL_REGRESSION",
@@ -134,7 +134,7 @@
   "package_authority": "rc4.135 remains accepted package/runtime lineage until rc4.137 full gate and Android verification.",
   "android_version_observed": "v11.8.0-rc4.135",
   "android_functional_verified": true,
-  "deployment_authority": "main==gh-pages at unreleased v203 runtime bytes; NOT accepted release authority until rc4.132 version/gates",
+  "deployment_authority": "main==gh-pages at rc4.136, but rc4.136 tier display is rejected. rc4.137 branch is predeploy only until full gates pass.",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
@@ -158,8 +158,8 @@
   "process_controls": {
     "status_semantics": "REPORT_ONLY_NO_TOOL_WORK",
     "auto_semantics": "EXECUTE_CONTINUOUSLY; no promise/status chatter; checkpoint every material change",
-    "no_trial_error": "No cache clear/reinstall/repeated phone loop. Build/test rc4.132 off-device, then exactly one controlled refresh after main/gh-pages parity.",
-    "chat_handoff": "v207: rc4.132 first; exact order/history locks mandatory. Geno Smith/Aaron Rodgers are NOT hard exclusions; no name-specific demotion/removal. Draft chat remains execution-only after final readiness.",
+    "no_trial_error": "No cache clear/reinstall/repeated phone loop. Build/test rc4.137 off-device, then exactly one controlled refresh after main/gh-pages parity.",
+    "chat_handoff": "v208: rc4.137 tier-provenance fix first; corrected order/history locks mandatory; Geno Smith/Aaron Rodgers explicit hard exclusions; draft chat execution-only after final readiness.",
     "source_of_truth": "PITTI_CURRENT_STATE.json + PITTI_EXECUTION_LOCK.json + PITTI_PROJECT_STATE.md EOF + PASS seal + actual repo/runtime evidence.",
     "guardrail_note": "rc4115 gate now scoped to rc4.115 only; rc4117 has dedicated release-critical contract; rc4114 gate made semantic so preserving Overall provenance does not falsely fail positional aggregation."
   },
@@ -217,14 +217,14 @@
     "verdict": "Incomplete 29/30 file cannot be used as full promotion evidence. Partial paired evidence does not justify changing v4 PRIMARY / v5 CHALLENGER."
   },
   "currentWork": {
-    "branch": "main",
-    "status": "RC4.136_DEPLOYED_PARITY_PASS_DEVICE_REFRESH_REQUIRED",
+    "branch": "pitti-rc4.137-tier-fix",
+    "status": "RC4.137_PREDEPLOY_FULL_GATE",
     "production": false,
-    "androidVerified": true,
-    "acceptedAndroidFallback": "v11.8.0-rc4.131",
-    "runtime": "rc4.131 accepted Android; rc4.132 candidate under full off-device gate",
-    "mainRuntimeParity": "main==gh-pages unreleased v203 bytes",
-    "nextGate": "rc4.132: live-autodraft Return-v2 + Pick32 portfolio fix + active-manager history repair; full gates/parity/device verify"
+    "androidVerified": false,
+    "acceptedAndroidFallback": "v11.8.0-rc4.135",
+    "runtime": "rc4.135 accepted Android; rc4.136 deployed but tier-invalid; rc4.137 branch candidate under full off-device gate",
+    "mainRuntimeParity": "main==gh-pages rc4.136; candidate branch not yet promoted",
+    "nextGate": "rc4.137 full regression/package then promote main+gh-pages and verify parity before one Android refresh"
   },
   "status": "PITTI_RC4_137_TIER_FIX_IN_PROGRESS",
   "gate": "RC4.137_TIER_FIX_AND_FULL_REGRESSION",
