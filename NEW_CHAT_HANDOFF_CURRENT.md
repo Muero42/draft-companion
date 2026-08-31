@@ -63,3 +63,15 @@ AUTO/AUTO BLOCK means real autonomous execution with no promise/status-only repl
 - NEXT: verify/deploy exact rc4.142 runtime to gh-pages with byte parity, then ONE device verification for tiers. Do not send trial-and-error builds. If tiers still absent, inspect actual FP payload/provenance before another build.
 - After tier acceptance: deferred 5-WR analysis = Emeka Egbuka / Zay Flowers / Tetairoa McMillan / DeVonta Smith, Jaylen Waddle reference; baseline/role-injury/market plus separate maximum-upside/league-winner ranking. Then final draft-day freshness/smoke agenda.
 - Critical invariants unchanged: canonical order Michael/Pascal Voerde/Marc Düsseldorf/Thomas/Björn/Pascal Gelderner/Giuliano/Bastian/Muerotechnik/Dutch Marc; never reindex history/evidence/fingerprints; starter maxima are not roster caps; no K/DST; exactly one QB; Geno Smith + Aaron Rodgers hard excluded; v4 primary/v5 challenger/v3 failsafe; Warren/text coverage and Jacobs handling must not regress.
+
+
+## 2026-08-31 09:25Z — FINAL HANDOFF AFTER rc4.142 DEVICE FAILURE
+- **Android is already on v11.8.0-rc4.142.** Do not reinstall or request another update merely for version.
+- Device proof: app starts, refresh works, Analyze works, Expert-v4 is selected, Tyler Warren's individual description is restored, but **NO external v4 tier labels render at all** on the visible candidates. Tier functionality is therefore **FAIL**.
+- The rc4.142 code change removed the incorrect requirement `total_experts == selected-v4-count`. That hypothesis was insufficient. **Do not repeat it and do not make another speculative API-shape build.**
+- **Immediate next gate: RC4.142_TIER_PAYLOAD_ROOT_CAUSE.** First inspect the actual live FantasyPros `consensus-rankings` payload for QB/RB/WR/TE through the existing proxy with the exact FantasyPros-selectable members of each active v4 panel.
+- Capture request path + response structure and verify: selected expert IDs/provenance, `filters`/expert metadata, `total_experts`, where player rows actually live, position key/values, scoring/type/week semantics, and the real explicit tier field/key/value.
+- Accept no tier unless the selected expert set is exactly verifiable. Missing active-v4 experts are disclosed and **never replaced by outsiders**. Erickson remains forbidden for v4 tier provenance.
+- Once the payload-level root cause is reproduced, implement **one bounded fix**, add a deterministic regression fixture from the real response shape, run full release/package/guardrail + exact main↔gh-pages parity, then perform **one** device verification.
+- Preserve the now-working rc4.142 startup/refresh/analyze path and **125/125 individual-description coverage**, especially Tyler Warren. No regression of Josh Jacobs handling, QB exclusions, draft order/history, Return-v2, Coach, manager mapping or snapshot fingerprints.
+- After tier acceptance only: deferred 5-WR analysis (Egbuka / Flowers / Tetairoa McMillan / DeVonta Smith + Waddle reference), separate maximum-upside ordering, then final draft-day freshness/smoke.
