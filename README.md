@@ -1,5 +1,5 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.154. **Android authority remains v11.8.0-rc4.152** until full gates/deployment/device acceptance.
+> **Current source candidate:** v11.8.0-rc4.155. **Android authority remains v11.8.0-rc4.152** until full gates/deployment/device acceptance.
 > **Observed rc4.152:** live nine-manager control grid, live v3/v4/v5 selector, faster LIVE analysis, global tiers and current player texts work.
 > **rc4.154 display-only fix:** v4 expert cards use a fixed three-row matrix: (1) Sean Koerner · Dalton Del Don · Pat Fitzmaurice, (2) Nick Mariano · Justin Boone · Ryan Weisse, (3) Todd D Clark · Wolf of Roto Street · Kev Wheeler. A non-member expert creates an invisible same-column placeholder only when a later expert exists in that row; trailing non-members are omitted. A panel member with no player rank remains visible as #–/fehlt.
 > **No model change:** expert membership, weights, panel ranks, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
