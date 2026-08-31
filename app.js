@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.136';
+const APP_VERSION='v11.8.0-rc4.137';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -1238,6 +1238,8 @@ async function loadAllRanks(){
     if(!ensureExpertV2Panels())throw new Error('Expert-v2 Board konnte nach Ranking-Refresh nicht wiederhergestellt werden.');
     if(!ensureExpertV3Panels())throw new Error('Expert-v3 Board konnte nach Ranking-Refresh nicht wiederhergestellt werden.');
     const v4Ready=ensureExpertV4Panels(),v5Ready=ensureExpertV5Panels();
+    if(v4Ready){const tierStatus=await loadV4ConsensusTiers();skipped.push(...tierStatus.map(x=>'v4 Tier '+x));}
+    else {v4ConsensusTierCache={};store.set('v4137_v4ConsensusTiers',{});}
     syncAnalysisExpertSelector();
     if(!v4Ready)skipped.push('Expert-v4 bleibt gesperrt: mindestens eine verifizierte Individualquelle/Position unvollständig.');
     if(!v5Ready)skipped.push('Expert-v5 bleibt gesperrt: Koerner/v3 Coverage nicht vollständig verifiziert.');
@@ -2166,44 +2168,88 @@ function pittiDecisionAuditRow(x,c){if(!x)return null;const panelId=x.r.panelId|
 window.PITTI_LIVE_DECISION_STATE=()=>{const c=lastDraftContext;if(!c?.scored)return null;const rows=visibleCoachCandidates(c.scored).filter(x=>!x.hardExcluded&&!x.recommendationBlocked).slice(0,10);return{version:APP_VERSION,current:c.current,next:c.next,profile:currentExpertProfile(),positionPanels:{...positionPanels},rows:rows.map(x=>pittiDecisionAuditRow(x,c))};};
 window.PITTI_CANDIDATE_AUDIT=(query='Kenneth Walker')=>{const c=lastDraftContext;if(!c?.scored)return null;const q=norm(query),x=c.scored.find(z=>norm(z?.p?.name)===q)||c.scored.find(z=>norm(z?.p?.name).includes(q)||q.includes(norm(z?.p?.name)));if(!x)return{version:APP_VERSION,query,found:false,scoredCount:c.scored.length};const rank=c.scored.indexOf(x)+1,cut=c.scored[9]||null;return{version:APP_VERSION,query,found:true,coachRank:rank,visible:rank<=10,candidate:pittiDecisionAuditRow(x,c),visibleCut:cut?{rank:10,name:cut.p.name,pos:cut.p.pos,score:cut.score,rawScore:cut.rawScore,panel:cut.r.rank,adp:Number.isFinite(cut.a)?cut.a:null,ret:cut.ret,reasons:cut.reasons||[]}:null,scoreGapToVisibleCut:cut?Number((x.rawScore-cut.rawScore).toFixed(3)):null};};
 
-// rc4.136: externally sourced expert-tier context. This is display-only and never alters Coach scoring.
-// Erickson tiers are from his current FantasyPros half-PPR overall board; Mariano tiers from current RotoBaller half-PPR Top 400.
-// Missing/unsupported players intentionally render no external tier rather than a synthetic gap tier.
-const VERIFIED_EXTERNAL_TIERS_2026={
-  // Direct player->tier snapshots from published Half-PPR tier boards. Display-only.
-  andrewErickson:{source:'FantasyPros · Andrew Erickson · Overall Half-PPR',asOf:'2026-08-30',tiers:{
-    5:['Zay Flowers'],7:['Rashee Rice','DeVonta Smith','Malik Nabers','Tetairoa McMillan','Jaylen Waddle','Ladd McConkey','Emeka Egbuka','Garrett Wilson','Tee Higgins'],
-    8:["D'Andre Swift",'Jeremiyah Love','Kyren Williams','Tyler Warren','Drake Maye','Josh Allen','Lamar Jackson','Cam Skattebo','Christian Watson','Mike Evans','Carnell Tate','DJ Moore','Bucky Irving'],
-    9:['Josh Jacobs','Terry McLaurin','Jameson Williams','Rome Odunze','Parker Washington','Luther Burden III']
-  }},
-  nickMariano:{source:'RotoBaller · Nick Mariano · Half-PPR Top 400',asOf:'2026-08-25',tiers:{
-    1:['Jahmyr Gibbs','Bijan Robinson',"Ja'Marr Chase",'Puka Nacua','Jaxon Smith-Njigba'],
-    2:['Christian McCaffrey','Jonathan Taylor','James Cook','Amon-Ra St. Brown','CeeDee Lamb','Derrick Henry','Saquon Barkley','Justin Jefferson','Chase Brown','Kenneth Walker','Omarion Hampton'],
-    3:["De'Von Achane",'Drake London','George Pickens','A.J. Brown','Brock Bowers','Chris Olave','Nico Collins','Kyren Williams'],
-    4:['Javonte Williams','Malik Nabers','Trey McBride','Travis Etienne','Josh Jacobs','DeVonta Smith','Ladd McConkey','Zay Flowers','Ashton Jeanty','Breece Hall','Tee Higgins',"D'Andre Swift"],
-    5:['Josh Allen','Jeremiyah Love','Rashee Rice','Garrett Wilson','Emeka Egbuka','Jaylen Waddle','Davante Adams','Colston Loveland','Luther Burden','Jameson Williams','Terry McLaurin','Tetairoa McMillan','DJ Moore','Bucky Irving','David Montgomery','Cam Skattebo','Lamar Jackson'],
-    6:['Jadarian Price','Mike Evans','Parker Washington','Christian Watson','Jayden Daniels','Jalen Hurts','Rhamondre Stevenson','Quinshon Judkins','Joe Burrow','Bhayshul Tuten'],
-    7:['Tyler Warren','Drake Maye','Marvin Harrison Jr.','Rico Dowdle','Rome Odunze','Jaylen Warren','TreVeyon Henderson','Brian Thomas Jr.','Carnell Tate','Tucker Kraft','Justin Herbert','Caleb Williams','Jayden Reed','Trevor Lawrence','Dak Prescott','Tony Pollard','J.K. Dobbins','Blake Corum','Jonathon Brooks','Jordan Addison','DK Metcalf','Brock Purdy','Patrick Mahomes'],
-    8:['Chris Godwin','Quentin Johnston','Josh Downs','Chuba Hubbard','Sam LaPorta','RJ Harvey','Courtland Sutton','Jaxson Dart','Matthew Stafford','Jordan Mason','Michael Wilson','Xavier Worthy','Jared Goff','Michael Pittman','Jacory Croskey-Merritt','Kyle Pitts'],
-    9:['Stefon Diggs','Bo Nix','Kenneth Gainwell','Harold Fannin Jr.','Baker Mayfield','Chris Rodriguez Jr.','George Kittle','Matthew Golden','Makai Lemon','Kyler Murray','KC Concepcion','Alec Pierce','Jordan Love','Dalton Kincaid','Kyle Monangai','Romeo Doubs','Travis Kelce','Jalen Coker','Rachaad White'],
-    10:["De'Zhaun Stribling",'Malik Willis',"Wan'Dale Robinson",'Jakobi Meyers','Dallas Goedert','Khalil Shakir','Mark Andrews','Juwan Johnson','Daniel Jones','Keaton Mitchell','Isaiah Likely','Tyler Shough']
-  }}
-};
-function buildExternalTierNameMap(source){const m=new Map();for(const [tier,names] of Object.entries(source.tiers||{}))for(const name of names)m.set(norm(name),Number(tier));return m}
-const VERIFIED_EXTERNAL_TIER_MAPS_2026={
-  andrewErickson:buildExternalTierNameMap(VERIFIED_EXTERNAL_TIERS_2026.andrewErickson),
-  nickMariano:buildExternalTierNameMap(VERIFIED_EXTERNAL_TIERS_2026.nickMariano)
-};
-function externalExpertTierContext(x){
-  const key=norm(x?.p?.name||''),vals=[];
-  const e=VERIFIED_EXTERNAL_TIER_MAPS_2026.andrewErickson.get(key);if(Number.isFinite(e))vals.push({expert:'Erickson',tier:e});
-  const m=VERIFIED_EXTERNAL_TIER_MAPS_2026.nickMariano.get(key);if(Number.isFinite(m))vals.push({expert:'Mariano',tier:m});
-  if(!vals.length)return null;
-  // Tier numbers are expert-specific scales; never average/range them across sources.
-  const short=vals.map(v=>`${v.expert==='Erickson'?'E':'M'}${v.tier}`).join('/');
-  return{label:`T ${short}`,details:vals.map(v=>`${v.expert} T${v.tier}`).join(' · '),sources:vals};
+// rc4.137: exact FantasyPros custom-consensus tiers from active v4 experts only.
+// Display-only: never feeds Coach score, Return-v2, opponent model, roster logic or history.
+// Missing/unselectable v4 experts are disclosed and NEVER replaced by non-v4 experts.
+let v4ConsensusTierCache=store.get('v4137_v4ConsensusTiers',{});
+function fpConsensusTierNumber(row){
+  const raw=field(row,['tier','tier_ecr','rank_tier','tier_number','tier_num']);
+  const n=Number(String(raw??'').match(/\d+/)?.[0]);
+  return Number.isFinite(n)&&n>0?n:null;
 }
-function externalTierHtml(x){const t=externalExpertTierContext(x);return t?` · <span class="expert-tier" title="${esc(t.details)}">${esc(t.label)}</span>`:'';}
+function fpConsensusExpertSetVerified(payload,ids){
+  const want=ids.map(String).sort(),filters=(String(payload?.filters??'').match(/\d+/g)||[]).map(String).sort();
+  const names=payload?.expert_name&&typeof payload.expert_name==='object'?Object.keys(payload.expert_name).map(String).sort():[];
+  const pubs=payload?.expert_pub&&typeof payload.expert_pub==='object'?Object.keys(payload.expert_pub).map(String).sort():[];
+  const total=Number(payload?.total_experts);
+  const exact=a=>a.length===want.length&&a.every((x,i)=>x===want[i]);
+  return total===want.length&&(exact(filters)||exact(names)||exact(pubs));
+}
+function extractFpConsensusTiers(payload,pos,ids){
+  if(!fpConsensusExpertSetVerified(payload,ids))return {ok:false,reason:'Expertenset nicht exakt verifiziert',rows:{}};
+  const rows={},players=Array.isArray(payload?.players)?payload.players:[];
+  for(const row of players){
+    const name=field(row,['player_name','playername','name','full_name']);
+    const rp=String(field(row,['player_position_id','position_id','position','pos'])||'').toUpperCase().replace(/[0-9]/g,'');
+    const tier=fpConsensusTierNumber(row);
+    if(name&&rp===pos&&Number.isFinite(tier))rows[norm(name)]={name:String(name),tier};
+  }
+  return {ok:Object.keys(rows).length>0,reason:Object.keys(rows).length?'':'keine expliziten Tier-Zeilen',rows};
+}
+async function fetchV4ConsensusTierPosition(pos){
+  const bp=EXPERT_V4_BLUEPRINT[pos],selected=[],unavailable=[];
+  for(const name of bp.experts){
+    const e=findExpert(name),id=e?.apiId||(/^[0-9]+$/.test(String(e?.id||''))?String(e.id):null);
+    if(id)selected.push({name,id:String(id)});else unavailable.push(name);
+  }
+  if(selected.length<2)return {ok:false,pos,selected:selected.map(x=>x.name),unavailable,reason:'weniger als zwei FantasyPros-auswählbare v4-Experten'};
+  const ids=selected.map(x=>x.id),filter=encodeURIComponent(ids.join(':')),season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value);
+  const attempts=[
+    `/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}&week=0&filters=${filter}&experts=show`,
+    `/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}&week=0&type=PRESEASON&filters=${filter}&experts=show`,
+    `/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}&week=0&type=DRAFT&filters=${filter}&experts=show`
+  ];
+  const failures=[];
+  for(const path of attempts){
+    try{
+      const data=await proxyCall(path),parsed=extractFpConsensusTiers(data,pos,ids);
+      const min={QB:12,RB:30,WR:35,TE:12}[pos];
+      if(parsed.ok&&Object.keys(parsed.rows).length>=min)return {ok:true,pos,rows:parsed.rows,selected:selected.map(x=>x.name),unavailable,path,updated:Date.now()};
+      failures.push(parsed.reason+' ('+Object.keys(parsed.rows).length+')');
+    }catch(e){failures.push(e?.message||String(e))}
+  }
+  return {ok:false,pos,selected:selected.map(x=>x.name),unavailable,reason:failures.join(' | ')};
+}
+async function loadV4ConsensusTiers(){
+  const next={},status=[];
+  for(const pos of ['QB','RB','WR','TE']){
+    const r=await fetchV4ConsensusTierPosition(pos);
+    if(r.ok){
+      next[pos]={rows:r.rows,selected:r.selected,unavailable:r.unavailable,updated:r.updated,source:'FantasyPros Custom ECR · v4-only'};
+      status.push(`${pos} ${Object.keys(r.rows).length} Spieler · ${r.selected.length}/6 v4-Experten${r.unavailable.length?' · nicht FP-auswählbar: '+r.unavailable.join(', '):''}`);
+    }else{
+      next[pos]={rows:{},selected:r.selected||[],unavailable:r.unavailable||[],updated:Date.now(),source:'FantasyPros Custom ECR · v4-only',error:r.reason||'unbekannter Fehler'};
+      status.push(`${pos} KEINE TIER-FREIGABE · ${r.reason||'unbekannter Fehler'}`);
+    }
+  }
+  v4ConsensusTierCache=next;
+  store.set('v4137_v4ConsensusTiers',next);
+  return status;
+}
+function v4ConsensusTierContext(x){
+  const pos=String(x?.p?.pos||'').toUpperCase();
+  if(!EXPERT_PROFILE_IDS.expertv4[pos]||positionPanels[pos]!==EXPERT_PROFILE_IDS.expertv4[pos])return null;
+  const block=v4ConsensusTierCache?.[pos],row=block?.rows?.[norm(x?.p?.name||'')];
+  if(!row||!Number.isFinite(Number(row.tier)))return null;
+  const selected=Array.isArray(block.selected)?block.selected:[],unavailable=Array.isArray(block.unavailable)?block.unavailable:[];
+  return{
+    label:`T ${Number(row.tier)}`,
+    details:`FantasyPros v4-Konsens ${pos}: ${selected.join(' + ')}${unavailable.length?' · nicht ersetzt: '+unavailable.join(', '):''}`,
+    tier:Number(row.tier),selected,unavailable,source:block.source||'FantasyPros Custom ECR · v4-only'
+  };
+}
+function externalExpertTierContext(x){return v4ConsensusTierContext(x)}
+function externalTierHtml(x){const t=v4ConsensusTierContext(x);return t?` · <span class="expert-tier" title="${esc(t.details)}">${esc(t.label)}</span>`:'';}
 
 function renderCoach(rows,state,current,next){
   const top=visibleCoachCandidates(rows);
