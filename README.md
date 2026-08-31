@@ -1,9 +1,9 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.151. **Android authority remains v11.8.0-rc4.150** until full gates/deployment/device acceptance.
-> **Observed rc4.150:** global cross-position v4 tiers and current Montgomery text work on device.
-> **rc4.151 LIVE controls:** compact manager AUTO/MANUELL/? control directly above the now-visible LIVE v3/v4/v5 expert selector and Analyze button. Mode changes are segmented from the current pick; earlier picks are never reclassified.
-> **rc4.151 LIVE speed:** Return-v2 Monte Carlo is reduced from 900 to 300 runs in LIVE only and the balanced shadow-score comparison is skipped in LIVE. Decision fixtures and Return-validation evidence remain persisted. Mock/replay behavior stays unchanged.
-> **Autodraft fix:** LIVE Return-v2 now reads the profile-keyed manager adaptation state correctly; the previous slot-key lookup could silently miss an explicit autodraft mode.
+> **Current source candidate:** v11.8.0-rc4.152. **Android authority remains v11.8.0-rc4.151** until full gates/deployment/device acceptance.
+> **Observed rc4.151:** live expert switch and compact single-manager AUTO/MANUELL/? control are functional candidates, but the user wants all nine opponents visible simultaneously for faster draft operation.
+> **rc4.152 LIVE manager UI:** all nine opponents are listed vertically with their own ?/AUTO/MANUELL selector. One button, `Manager-Modi an Coach übernehmen`, applies only changed modes from the freshly resolved current pick and immediately recalculates the Coach.
+> **Semantics:** the old `ab jetzt` action was a save/persist action for one manager and took effect on the next analysis. rc4.152 removes that extra step: the single apply button persists all changes and runs the live analysis immediately.
+> **Evidence/speed:** LIVE still uses 300 Return-v2 runs and skips balanced shadow scoring; decision fixtures and Return-validation evidence remain intact.
 > **Draft locks:** exact canonical manager order/history; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; starter maxima are not roster caps.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
@@ -78,6 +78,7 @@ v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96
 - Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
 - Browser-equivalent full historical recomputation is unavailable from preserved transient inputs and must not be fabricated.
 - Current gate: RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS.
+
 
 
 

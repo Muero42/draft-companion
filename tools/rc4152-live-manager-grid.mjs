@@ -1,0 +1,15 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
+const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
+assert(html.includes('id="liveManagerGrid"'),'nine-manager grid missing');
+assert(!html.includes('id="liveManagerSlot"'),'old single-manager selector still present');
+assert(!html.includes('id="liveManagerMode"'),'old single mode selector still present');
+assert(html.includes('Manager-Modi an Coach übernehmen'),'direct Coach apply button missing');
+assert(app.includes("source:'user-explicit-live-grid'"),'grid mode segment provenance missing');
+assert(app.includes('pendingLiveManagerModes=collectLiveManagerModesFromUi()'),'grid values are not queued atomically');
+assert(app.includes("if(mode==='live')applyPendingLiveManagerModesAtPick(current)"),'fresh current pick is not used for segment boundary');
+assert(app.includes('await refresh()'),'manager apply must recalculate Coach directly');
+assert(app.includes("filter(([slot])=>Number(slot)!==9)"),'user slot must be excluded from nine-opponent grid');
+assert(app.includes("const returnRuns=mode==='live'?300:900"),'live speed optimization regressed');
+assert(app.includes("if(!preview){resolveReturnValidation(id,picks);resolveDecisionFixtures(id,picks);freezeReturnValidation"),'live evidence persistence regressed');
+console.log('rc4.152 nine-manager live grid/direct-Coach contract PASS');

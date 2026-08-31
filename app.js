@@ -1,7 +1,7 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.151';
+const APP_VERSION='v11.8.0-rc4.152';
 const $=id=>document.getElementById(id);
-const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerSlot','liveManagerMode','liveManagerApply','liveManagerModeStatus'];
+const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
@@ -404,36 +404,65 @@ function canonicalize2026ManagerMap(stored){
   return !v||stale?ACTIVE_2026_MANAGER_MAP_TEXT:v;
 }
 els.managerMap.value=canonicalize2026ManagerMap(store.text('v11_managerMap',store.text('v10_managerMap',ACTIVE_2026_MANAGER_MAP_TEXT)));
-function populateLiveManagerModeControl(){
-  if(!els.liveManagerSlot)return;
-  const map=parseManagerMap(ACTIVE_2026_MANAGER_MAP_TEXT);
-  const prior=els.liveManagerSlot.value;
-  els.liveManagerSlot.innerHTML='';
-  for(const [slot,name] of Object.entries(map)){
-    if(Number(slot)===9)continue;
-    els.liveManagerSlot.add(new Option(`${slot} · ${name}`,String(slot)));
-  }
-  els.liveManagerSlot.value=prior&&[...els.liveManagerSlot.options].some(o=>o.value===prior)?prior:'5';
-  renderLiveManagerModeStatus();
-}
+let pendingLiveManagerModes=null;
 function liveManagerModeAtCurrent(slot){
   const current=Number(lastDraftContext?.current||1);
   const seg=explicitManagerModeAt(loadManagerModeSegments(),Number(slot),current);
   return seg||'infer';
 }
-function renderLiveManagerModeStatus(){
-  if(!els.liveManagerModeStatus||!els.liveManagerSlot)return;
-  const slot=Number(els.liveManagerSlot.value||5),map=parseManagerMap(ACTIVE_2026_MANAGER_MAP_TEXT),mode=liveManagerModeAtCurrent(slot),label=mode==='autodraft'?'AUTO':mode==='manual'?'MANUELL':'?';
-  els.liveManagerMode.value=mode;
-  els.liveManagerModeStatus.textContent=`${map[slot]||'Slot '+slot}: ${label}`;
+function populateLiveManagerModeControl(){
+  if(!els.liveManagerGrid)return;
+  const map=parseManagerMap(ACTIVE_2026_MANAGER_MAP_TEXT);
+  els.liveManagerGrid.innerHTML=Object.entries(map).filter(([slot])=>Number(slot)!==9).map(([slot,name])=>{
+    const mode=liveManagerModeAtCurrent(Number(slot));
+    return `<label class="live-manager-row"><span class="live-manager-name">${esc(slot+' · '+name)}</span><select class="live-manager-mode-select" data-slot="${slot}" aria-label="${esc(name)} Modus"><option value="infer" ${mode==='infer'?'selected':''}>? / erkennen</option><option value="autodraft" ${mode==='autodraft'?'selected':''}>AUTO</option><option value="manual" ${mode==='manual'?'selected':''}>MANUELL</option></select></label>`;
+  }).join('');
+  els.liveManagerGrid.querySelectorAll('.live-manager-mode-select').forEach(sel=>sel.onchange=()=>{sel.dataset.dirty='1';});
+  renderLiveManagerModeStatus();
 }
-function setLiveManagerModeFromUi(){
-  const slot=Number(els.liveManagerSlot?.value),mode=String(els.liveManagerMode?.value||'infer');
-  if(!Number.isFinite(slot)||slot===9)return;
-  const current=Number(lastDraftContext?.current||1),segments=loadManagerModeSegments(),arr=Array.isArray(segments[slot])?segments[slot]:[],last=arr[arr.length-1];
-  if(!last||last.mode!==mode||Number(last.fromPick)!==current)arr.push({fromPick:current,mode,source:'user-explicit-live-ui',createdAt:Date.now()});
-  segments[slot]=arr;saveManagerModeSegments(segments);renderLiveManagerModeStatus();
-  if(els.draftStatus){els.draftStatus.className='notice ok';els.draftStatus.textContent=`Manager-Modus ab Pick ${current}: ${els.liveManagerModeStatus.textContent}`;}
+function renderLiveManagerModeStatus(){
+  if(!els.liveManagerModeStatus||!els.liveManagerGrid)return;
+  let auto=0,manual=0,infer=0;
+  els.liveManagerGrid.querySelectorAll('.live-manager-mode-select').forEach(sel=>{
+    if(sel.dataset.dirty!=='1')sel.value=liveManagerModeAtCurrent(Number(sel.dataset.slot));
+    if(sel.value==='autodraft')auto++;else if(sel.value==='manual')manual++;else infer++;
+  });
+  const pick=Number(lastDraftContext?.current||1);
+  els.liveManagerModeStatus.textContent=`Pick ${pick} · AUTO ${auto} · MANUELL ${manual} · ? ${infer}`;
+}
+function collectLiveManagerModesFromUi(){
+  const out={};
+  els.liveManagerGrid?.querySelectorAll('.live-manager-mode-select').forEach(sel=>{out[Number(sel.dataset.slot)]=String(sel.value||'infer');});
+  return out;
+}
+function applyPendingLiveManagerModesAtPick(current){
+  if(!pendingLiveManagerModes)return 0;
+  const segments=loadManagerModeSegments();let changed=0;
+  for(const [slotText,mode] of Object.entries(pendingLiveManagerModes)){
+    const slot=Number(slotText);if(!Number.isFinite(slot)||slot===9)continue;
+    const effective=explicitManagerModeAt(segments,slot,current)||'infer';
+    if(effective===mode)continue;
+    const arr=Array.isArray(segments[slot])?segments[slot]:[];
+    arr.push({fromPick:current,mode,source:'user-explicit-live-grid',createdAt:Date.now()});
+    segments[slot]=arr;changed++;
+  }
+  saveManagerModeSegments(segments);pendingLiveManagerModes=null;
+  els.liveManagerGrid?.querySelectorAll('.live-manager-mode-select').forEach(sel=>delete sel.dataset.dirty);
+  return changed;
+}
+async function applyLiveManagerModesToCoach(){
+  if(analysisBusy)return;
+  pendingLiveManagerModes=collectLiveManagerModesFromUi();
+  if(els.liveManagerApply){els.liveManagerApply.disabled=true;els.liveManagerApply.textContent='Übernehme & aktualisiere Coach …';}
+  try{
+    await refresh();
+    if(els.liveManagerModeStatus)els.liveManagerModeStatus.textContent='Übernommen · '+els.liveManagerModeStatus.textContent;
+  }catch(e){
+    pendingLiveManagerModes=null;
+    if(els.draftStatus){els.draftStatus.className='notice bad';els.draftStatus.textContent=e?.message||String(e);}
+  }finally{
+    if(els.liveManagerApply){els.liveManagerApply.disabled=false;els.liveManagerApply.textContent='Manager-Modi an Coach übernehmen';}
+  }
 }
 populateLiveManagerModeControl();
 els.stressMode.value=store.text('v113_stressMode','baseline');
@@ -2869,6 +2898,7 @@ async function refresh(){
       .slice(0,25);
 
     if(liveGuardMessage)throw new Error(liveGuardMessage);
+    if(mode==='live')applyPendingLiveManagerModesAtPick(current);
     rebuildLiveManagerAdaptation({mode,picks,players,map,current,modeText:els.managerMap.value});
     if(mode==='live')renderLiveManagerModeStatus();
 
@@ -3217,9 +3247,7 @@ els.renamePanelBtn.onclick=()=>{const p=panels[activePanelId],name=prompt('Neuer
 els.deletePanelBtn.onclick=()=>{if(['standard','pat'].includes(activePanelId))return alert('Standard und Pat bleiben erhalten.');if(confirm('Panel löschen?')){delete panels[activePanelId];delete panelRanks[activePanelId];activePanelId='standard';persist();renderAll()}};
 for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])el.onchange=()=>{positionPanels[pos]=el.value;persist()};
 if(els.expertProfile){els.expertProfile.value=currentExpertProfile();els.expertProfile.onchange=()=>applyExpertProfile(els.expertProfile.value);}
-if(els.liveManagerSlot)els.liveManagerSlot.onchange=renderLiveManagerModeStatus;
-if(els.liveManagerMode)els.liveManagerMode.onchange=()=>{};
-if(els.liveManagerApply)els.liveManagerApply.onclick=setLiveManagerModeFromUi;
+if(els.liveManagerApply)els.liveManagerApply.onclick=applyLiveManagerModesToCoach;
 if(els.analysisExpertProfile){
   syncAnalysisExpertSelector();
   els.analysisExpertProfile.onchange=()=>{
