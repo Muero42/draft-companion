@@ -63,7 +63,7 @@ Otherwise continue AUTO.
 - Half-PPR 1QB; reject Superflex/2QB.
 - Starter maxima are not roster caps.
 - K/DST normally not drafted.
-- Geno Smith/Aaron Rodgers are ordinary QB candidates and are NOT hard exclusions. No name-specific demotion/removal/forcing. They should fail to reach recommendations because the correct Coach/player-quality evaluation ranks better options above them.
+- Geno Smith and Aaron Rodgers are explicit user hard exclusions. Never recommend or draft either player.
 - Excess WR depth must materially reduce redundant WR utility.
 - Expert-v2: Brown excluded; Erickson challenger; Koerner no current-draft acquisition effort; Mariano availability already solved; Draft Sharks counted as one correlated family; availability-only automatic restoration of the old Weisse/Gianni/Bobal trio rejected; Ryan Weisse or others may be freshly qualified individually with evidence.
 - Frozen Expert-v2 weights/profile semantics in `PITTI_EXECUTION_LOCK.json` are authoritative for the current experiment; do not invent, silently renormalize, or retune them without new promotion evidence.
@@ -90,7 +90,7 @@ Otherwise continue AUTO.
 - A normal final, status final, acknowledgement final, **or empty final after tool work** is forbidden while executable autonomous work remains.
 - Because execution cannot continue after the assistant turn is ended without another user message, early turn termination is a functional AUTO failure, not a cosmetic response issue.
 - Valid turn end requires one of: unavoidable user/device input; approval-gated consequential action; unsafe unresolved contradiction; material end result with no higher-value package remaining; or demonstrated exhaustion of all safe positive-value independent lanes.
-- rc4.92 remains authoritative: Geno Smith/Aaron Rodgers are NOT player-name hard exclusions. They rank organically before QB1; exactly-one-QB is the user roster strategy after QB1. Any name-specific demotion/removal is a regression.
+- Draft-day correction supersedes rc4.92 for these two names: Geno Smith and Aaron Rodgers are explicit user hard exclusions. Exactly-one-QB remains the user roster strategy after QB1.
 - v145 takeover canary: rc4.94 source/package/deployment/Android Pick-9 presentation PASS. Kenneth Walker must not receive a player-specific boost; the fix remains generic normal-cut-first Top-10 selection.
 
 
@@ -114,7 +114,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - Bounded replay rc4.101 fixtures -> rc4.104 is CI PASS for pick92/109/112 roster economics and exact pick132 Spears/Andrews reorder; Return-v2 unchanged. Continue draft-day readiness/freshness/failsafe.
 - Return evidence remains: 3-pick 92.5% forecast vs 92.4% actual (Brier .044); 17-pick 35.6% vs 32.5% (Brier .077). No global Return-v2 retune.
 - No PairSum/Rolling, hard WR cap/quota, blind RB forcing, player-name forcing, global QB2/TE2 rule, generic Return-v2 retune, or expert-weight redesign.
-- Geno Smith/Aaron Rodgers are ordinary QB candidates; no player-name hard exclusion.
+- Geno Smith and Aaron Rodgers are explicit user hard exclusions; never recommend/draft.
 - Starter maxima are not roster caps; normal user draft excludes K/DST; user strategy drafts exactly one QB.
 - Completed rc4.104 Snapshot is duplicate/documentation only; do not re-run live-pick analysis on it.
 - FantasyPros post-draft capture is optional external benchmark, not prerequisite for replay.
@@ -160,6 +160,6 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 
 ## v207 CURRENT OVERRIDE — QB-rule correction
 - Generation: `20260830T1822Z-v207`.
-- v206 incorrectly invented a hard user exclusion for Geno Smith/Aaron Rodgers. That rule is revoked.
+- Draft-day authority: Geno Smith and Aaron Rodgers are explicit user hard exclusions. Any older checkpoint saying otherwise is superseded.
 - Correct rule: both remain ordinary candidates with no name-specific demotion/removal/forcing. Correct Coach/player-quality evaluation should keep them out of recommendations when inferior.
 - First gate remains **RC4.132_BUILD_AND_REGRESSION**; exact order/history locks remain unchanged.
