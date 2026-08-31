@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.148';
+const APP_VERSION='v11.8.0-rc4.149';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2195,20 +2195,22 @@ function buildV4PanelTiers(){
   for(const pos of ['QB','RB','WR','TE']){
     const panelId=EXPERT_PROFILE_IDS.expertv4[pos],rows=panelRanks[panelId]||{};
     const expected=EXPERT_V4_BLUEPRINT[pos].experts;
-    const out={};let complete=0;
+    const out={};let shown=0,partial=0;
     for(const [key,row] of Object.entries(rows)){
       const individual=Array.isArray(row.individual)?row.individual:[];
       const names=new Set(individual.map(x=>norm(x.expertName)));
-      const exactSix=expected.every(name=>names.has(norm(name)));
-      if(!exactSix)continue;
-      const pr=Number(row.posRank);
-      if(!Number.isFinite(pr)||pr<=0)continue;
-      const width=pos==='QB'||pos==='TE'?4:8;
-      out[key]={name:row.name,tier:Math.floor((pr-1)/width)+1,posRank:pr};
-      complete++;
+      const present=expected.filter(name=>names.has(norm(name)));
+      const missing=expected.filter(name=>!names.has(norm(name)));
+      // User preference: 1-2 unavailable v4 experts must not suppress useful tier context.
+      // Show the panel's own already-computed tier with >=4/6 exact intended experts.
+      if(present.length<4)continue;
+      const tier=Number(row.tier);
+      if(!Number.isFinite(tier)||tier<=0)continue;
+      out[key]={name:row.name,tier,present,missing,coverage:present.length/expected.length,posRank:Number(row.posRank)||null};
+      shown++;if(missing.length)partial++;
     }
-    next[pos]={rows:out,selected:[...expected],unavailable:[],updated:Date.now(),source:'Expert-v4 individual-only panel tiers'};
-    status.push(complete?pos+' '+complete+' Spieler · 6/6 v4-Experten · Tier aus v4-Positionskonsens':pos+' KEINE TIER-FREIGABE · kein Spieler mit 6/6 v4-Einzelrängen');
+    next[pos]={rows:out,selected:[...expected],updated:Date.now(),source:'Expert-v4 individual-only panel tiers'};
+    status.push(shown?pos+' '+shown+' Spieler · Tier-Freigabe ab 4/6 v4-Experten'+(partial?' · '+partial+' mit 4/6 oder 5/6 Coverage':''):pos+' KEINE TIER-FREIGABE · weniger als 4/6 v4-Einzelränge');
   }
   v4ConsensusTierCache=next;store.set('v4148_v4ConsensusTiers',next);return status;
 }
@@ -2216,7 +2218,9 @@ async function loadV4ConsensusTiers(){return buildV4PanelTiers()}
 function v4ConsensusTierContext(x){
   const pos=String(x?.p?.pos||'').toUpperCase(),block=v4ConsensusTierCache?.[pos],row=block?.rows?.[norm(x?.p?.name||'')];
   if(!row||!Number.isFinite(Number(row.tier)))return null;
-  return{label:'T '+Number(row.tier),details:'v4 '+pos+' · exakt dieselben 6 Individual-Experten wie das aktive v4-Ranking · Positionskonsens '+Number(row.posRank).toFixed(1),tier:Number(row.tier),selected:block.selected||[],unavailable:[],source:block.source};
+  const n=Array.isArray(row.present)?row.present.length:0;
+  const missing=Array.isArray(row.missing)?row.missing:[];
+  return{label:'T '+Number(row.tier)+(n&&n<6?' · '+n+'/6':''),details:'v4 '+pos+' · '+n+'/6 vorgesehene Individual-Experten'+(missing.length?' · fehlen: '+missing.join(', '):''),tier:Number(row.tier),selected:row.present||[],unavailable:missing,source:block.source};
 }
 function externalExpertTierContext(x){return v4ConsensusTierContext(x)}
 function externalTierHtml(x){const t=v4ConsensusTierContext(x);return t?` · <span class="expert-tier" title="${esc(t.details)}">${esc(t.label)}</span>`:'';}
