@@ -4,7 +4,7 @@ const app=fs.readFileSync('app.js','utf8'),idx=fs.readFileSync('index.html','utf
 const b2src=fs.readFileSync('expert-v2-board.js','utf8'),b3src=fs.readFileSync('expert-v3-board.js','utf8'),live=fs.readFileSync('live-surface-v3.js','utf8');
 const activeVersion=(app.match(/const APP_VERSION='v11\.8\.0-rc4\.(\d+)'/)||[])[1];assert.ok(Number(activeVersion)>=88,'active runtime below rc4.88 feature gate');
 assert.match(idx,/v11\.8\.0-rc4\.(?:88|89|9\d|[1-9]\d{2,})/);assert.match(sw,/v11\.8\.0-rc4\.(?:88|89|9\d|[1-9]\d{2,})/);
-assert.ok(idx.includes('<option value="expertv3">Expert-v3 · positionsspezifisch</option>'));
+assert.ok(idx.includes('<option value="expertv3" selected>v3 · Baseline</option>'),'authoritative analysis v3 selector missing');
 assert.ok(idx.includes('expert-v3-board.js?v=20260828a'));
 assert.ok(sw.includes('./expert-v3-board.js?v=20260828a'));
 assert.ok(app.includes("expertv3:{QB:'expert-v3-qb',RB:'expert-v3-rb',WR:'expert-v2-wr',TE:'expert-v3-te'}"));
