@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-31T10:14:00Z",
+  "updatedAt": "2026-08-31T10:28:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,21 +11,21 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.152",
+    "appVersion": "v11.8.0-rc4.153",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.151",
+    "latestAndroidObserved": "v11.8.0-rc4.152",
     "latestPreinstallVerified": "v11.8.0-rc4.143 full release/package/guardrail PASS",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.143_PREINSTALL.zip",
     "preinstallSha256": "sha256:0ae0c1011a731328df85464c6c4da4bb9b49eb57741801ae3f8e1c2b4a95bec9",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.142 source syntax + service-worker-transformed syntax locally PASS; full CI pending",
-    "latestDeployedCandidate": "v11.8.0-rc4.152",
-    "latestAndroidVerified": "v11.8.0-rc4.150",
-    "androidAuthority": "v11.8.0-rc4.151 accepted",
+    "latestDeployedCandidate": "v11.8.0-rc4.153",
+    "latestAndroidVerified": "v11.8.0-rc4.152",
+    "androidAuthority": "v11.8.0-rc4.152 accepted",
     "android_authority": "v11.8.0-rc4.150",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33370206139,
@@ -61,9 +61,9 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.150",
-    "unreleasedMainDelta": "none release-critical; draft-day freeze unless new proven defect",
-    "deployedPagesVersion": "v11.8.0-rc4.152",
+    "acceptedAndroidAuthority": "v11.8.0-rc4.152",
+    "unreleasedMainDelta": "none; rc4.153 deployed, device acceptance pending",
+    "deployedPagesVersion": "v11.8.0-rc4.153",
     "mainGhPagesParity": true
   },
   "auto": {
@@ -137,7 +137,8 @@
     "genoRodgersOrganicCoachRanking": false,
     "genoRodgersHardExcluded": true,
     "rc4137V4OnlyTierProvenance": true,
-    "rc4137NoEricksonTierLeak": true
+    "rc4137NoEricksonTierLeak": true,
+    "stableCrossPositionExpertDisplayOrder": true
   },
   "expertV2": {
     "status": "LEGACY_PRESERVED_SUPERSEDED_FOR_NEW_V4_V5_COMPARISON",
@@ -206,16 +207,16 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.152_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
+    "status": "RC4.153_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
     "production": false,
     "androidVerified": false,
-    "acceptedAndroidFallback": "v11.8.0-rc4.151",
-    "runtime": "main/gh-pages rc4.152; Android rc4.151",
-    "nextGate": "one controlled rc4.152 device update and LIVE manager-grid smoke"
+    "acceptedAndroidFallback": "v11.8.0-rc4.152",
+    "runtime": "main/gh-pages rc4.153; Android rc4.152",
+    "nextGate": "one controlled rc4.153 device refresh and expert-order smoke"
   },
-  "status": "RC4.152_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
-  "gate": "RC4.152_DEVICE_ACCEPTANCE",
-  "nextGate": "one controlled rc4.152 device update and LIVE manager-grid smoke",
+  "status": "RC4.153_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
+  "gate": "RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
+  "nextGate": "one controlled rc4.153 device refresh and expert-order smoke",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -224,11 +225,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260831T0735Z-v212",
-    "status": "PASS",
-    "ready": true,
-    "secondPass": true,
-    "resume": "Android already runs rc4.142. First gate is payload-level FantasyPros tier diagnosis; no reinstall/cache clear and no speculative rc4.143."
+    "generation": "20260831T1028Z-v213",
+    "status": "PASS_PENDING_RESEAL",
+    "ready": false,
+    "secondPass": false,
+    "resume": "rc4.152 device functional. rc4.153 is display-only expert ordering; refresh once, smoke expert order, freeze."
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
@@ -247,7 +248,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260831T0735Z-v212",
+  "handoff_generation": "20260831T1028Z-v213",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
