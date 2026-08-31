@@ -1,14 +1,11 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current candidate:** v11.8.0-rc4.142; Android shell last observed rc4.139, but its app module failed to parse. rc4.142 is the confirmed startup-root-cause fix candidate.ndroid remains rc4.137 until full release/package/guardrail validation.
-> **Primary finish-line target:** close rc4.132 live-autodraft, Pick32 portfolio, exact-order/history and package/parity gates; then exactly one controlled device refresh.
-> **v4:** individual-only, native Sean Koerner, position-specific weights; no Draft Sharks team ranking. Overall provenance is stored separately from positional aggregation.
-> **v5:** frozen v3 + Sean Koerner 15 points, funded from Draft Sharks Team first.
-> **Next gate:** RC4.141_RELEASE_GATES including browser/PWA transformed-runtime startup syntax; then exact main↔gh-pages parity and one device verification.n one controlled device verification of v4-only tiers and individual descriptions.
-> **Finish-line mode:** no broad feature work, duplicate source research, or phone trial-and-error.
-> **Fallback:** v3 / rc4.114 lineage remains emergency fallback only.
-> **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
-> **rc4.100 package artifact:** run 33205458721 / artifact 9699461048 / GitHub artifact-envelope SHA-256 4361e510841c608ae9977257d691ebf4d80994dcbba5d816e07f700d42439cae.
-> **rc4.100 scope:** generic Pro/Contra semantic hardening + bounded short-turn portfolio ordering; no global ranking/Return/expert retune, no hard WR cap/quota.
+> **Current runtime:** v11.8.0-rc4.142 is already observed on Android.
+> **Functional state:** startup, refresh, Analyze and 125/125 individual descriptions work; Tyler Warren text is restored.
+> **Open release-critical defect:** external Expert-v4 tier labels are absent on rc4.142.
+> **Next gate:** RC4.142_TIER_PAYLOAD_ROOT_CAUSE — inspect/reproduce the real FantasyPros custom-consensus payload for QB/RB/WR/TE with exact selectable active-v4 expert IDs before any next build.
+> **No trial-and-error:** no speculative rc4.143, cache/app-data clear, reinstall or repeated-refresh loop.
+> **Model authority:** v4 PRIMARY / v5 CHALLENGER / v3 failsafe. Tier display remains decision context only and may not alter Coach/Return/opponent/roster/history.
+> **Draft locks:** exact canonical manager order/history; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; starter maxima are not roster caps.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
 
@@ -80,3 +77,4 @@ v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96
 - Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
 - Browser-equivalent full historical recomputation is unavailable from preserved transient inputs and must not be fabricated.
 - Current gate: RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS.
+
