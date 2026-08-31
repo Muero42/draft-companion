@@ -27,7 +27,8 @@ assert.equal(safetyPromotionEligiblePolicy({pos:'TE',counts:{TE:1},rank:30,adp:1
 assert.equal(safetyPromotionEligiblePolicy({pos:'TE',counts:{TE:1},rank:40,adp:110,current:149}),false);
 
 assert.ok(app.includes("incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'}"));assert.ok(app.includes("fullv2:{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'}"));assert.ok(app.includes("wrv2:{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'}"));
-for(const option of ['Bisherige Konfiguration (rc4.64)','Expert-v2 · alle Positionen','Expert-v2 · nur WR'])assert.ok(idx.includes(option),option);
+for(const option of ['Bisherige Konfiguration (rc4.64)','Expert-v2 · alle Positionen','Expert-v2 · nur WR'])assert.ok(!idx.includes(option),'obsolete top selector leaked: '+option);
+for(const option of ['v3 · Baseline','v4 · Individual-only','v5 · Hybrid + Koerner'])assert.ok(idx.includes(option),'analysis selector missing: '+option);
 assert.ok(app.includes('function activePanelHealthState()'));
 assert.ok(app.includes("Panel-Health: ${activeHealth.degraded?'DEGRADED':'OK'}"));
 assert.ok(app.includes('Expertenquelle: ${activePanelSourceSummary()}'));

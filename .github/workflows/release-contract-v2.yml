@@ -36,6 +36,7 @@ jobs:
           node tools/rc490-draft-critical.mjs
           node tools/rc491-return-calibration.mjs
           node tools/rc496-draft-critical.mjs
+          node tools/rc4146-tier-payload-e2e.mjs
           if grep -q "v11.8.0-rc4.122" app.js; then node tools/rc4122-v45-runtime-contract.mjs; fi
           node tools/v4-embedded-coverage.mjs
           node tools/v3-v4-same-state-diagnostic.mjs

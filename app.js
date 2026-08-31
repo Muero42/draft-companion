@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.145';
+const APP_VERSION='v11.8.0-rc4.146';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2178,18 +2178,32 @@ function fpConsensusTierNumber(row){
   const n=Number(String(raw??'').match(/\d+/)?.[0]);
   return Number.isFinite(n)&&n>0?n:null;
 }
-function fpConsensusExpertSetVerified(payload,ids){
-  const want=ids.map(String).sort(),filters=(String(payload?.filters??'').match(/\d+/g)||[]).map(String).sort();
-  const names=payload?.expert_name&&typeof payload.expert_name==='object'?Object.keys(payload.expert_name).map(String).sort():[];
-  const pubs=payload?.expert_pub&&typeof payload.expert_pub==='object'?Object.keys(payload.expert_pub).map(String).sort():[];
-  const exact=a=>a.length===want.length&&a.every((x,i)=>x===want[i]);
-  // FantasyPros documents total_experts as the consensus population and filters as
-  // the expert whitelist. Therefore total_experts MUST NOT be required to equal the
-  // selected v4 count. Verify the actual returned expert IDs instead.
-  return exact(filters)||exact(names)||exact(pubs);
+function fpConsensusExpertSelection(payload,requestedIds){
+  const requested=[...new Set(requestedIds.map(String))],want=new Set(requested);
+  const filters=(String(payload?.filters??'').match(/\d+/g)||[]).map(String);
+  const available=payload?.experts_available&&typeof payload.experts_available==='object'?payload.experts_available:{};
+  const included=(Array.isArray(available.included)?available.included:[]).map(String).filter(id=>want.has(id));
+  const excluded=(Array.isArray(available.excluded)?available.excluded:[]).map(String).filter(id=>want.has(id));
+  const exactFilters=filters.length===requested.length&&requested.every(id=>filters.includes(id));
+  if(exactFilters)return {ok:true,used:requested,excluded:[],proof:'filters-exact'};
+  // FantasyPros may explicitly reject unavailable requested experts. Accept only a pure
+  // requested-v4 subset when every omitted request is accounted for as excluded.
+  const filterSubset=[...new Set(filters.filter(id=>want.has(id)))];
+  if(filterSubset.length>=2){
+    const omitted=requested.filter(id=>!filterSubset.includes(id));
+    if(omitted.every(id=>excluded.includes(id)))
+      return {ok:true,used:filterSubset,excluded:omitted,proof:'filters-subset+explicit-excluded'};
+  }
+  // Some responses expose availability metadata more reliably than filter echoing.
+  // Use it only when every requested ID is explicitly classified included/excluded.
+  const classified=new Set([...included,...excluded]);
+  if(included.length>=2&&requested.every(id=>classified.has(id)))
+    return {ok:true,used:included,excluded:requested.filter(id=>excluded.includes(id)),proof:'experts_available'};
+  return {ok:false,used:[],excluded:[],proof:'unverified'};
 }
-function extractFpConsensusTiers(payload,pos,ids){
-  if(!fpConsensusExpertSetVerified(payload,ids))return {ok:false,reason:'Expertenset nicht exakt verifiziert',rows:{}};
+function extractFpConsensusTiers(payload,pos,requestedIds){
+  const provenance=fpConsensusExpertSelection(payload,requestedIds);
+  if(!provenance.ok)return {ok:false,reason:'Expertenset nicht exakt/ausdrücklich verifiziert',rows:{},provenance};
   const rows={},players=Array.isArray(payload?.players)?payload.players:[];
   for(const row of players){
     const name=field(row,['player_name','playername','name','full_name']);
@@ -2197,7 +2211,7 @@ function extractFpConsensusTiers(payload,pos,ids){
     const tier=fpConsensusTierNumber(row);
     if(name&&rp===pos&&Number.isFinite(tier))rows[norm(name)]={name:String(name),tier};
   }
-  return {ok:Object.keys(rows).length>0,reason:Object.keys(rows).length?'':'keine expliziten Tier-Zeilen',rows};
+  return {ok:Object.keys(rows).length>0,reason:Object.keys(rows).length?'':'keine expliziten Tier-Zeilen',rows,provenance};
 }
 function fpConsensusContextVerified(payload,pos,scoring){
   const gotPos=String(payload?.position_id||'').toUpperCase();
@@ -2206,10 +2220,8 @@ function fpConsensusContextVerified(payload,pos,scoring){
   return gotPos===String(pos).toUpperCase()&&gotScoring===String(scoring).toUpperCase()&&gotType==='DRAFT';
 }
 async function fantasyProsSelectableV4Experts(pos){
-  // The authenticated positional /rankings/experts endpoint is empirically empty for this
-  // account although the working ALL directory and public selector both expose the experts.
-  // Reuse ONLY already-observed numeric FantasyPros IDs from those two working directories;
-  // Custom-ECR itself remains the authority for whether that exact v4 set is accepted.
+  // Use only numeric FantasyPros IDs already observed through working ALL/public directories.
+  // The actual Custom-ECR response decides which requested v4 experts are included/excluded.
   const blueprint=EXPERT_V4_BLUEPRINT[pos].experts,byName=new Map();
   for(const e of experts||[]){
     const id=String(e?.apiId||e?.id||'');
@@ -2228,27 +2240,29 @@ async function fantasyProsSelectableV4Experts(pos){
   return {selected,unavailable,directoryCount:byName.size,directorySource:'working ALL/public numeric IDs'};
 }
 async function fetchV4ConsensusTierPosition(pos){
-  let selected=[],unavailable=[],directoryCount=0;
+  let requested=[],unavailable=[],directoryCount=0;
   try{
-    ({selected,unavailable,directoryCount}=await fantasyProsSelectableV4Experts(pos));
+    ({selected:requested,unavailable,directoryCount}=await fantasyProsSelectableV4Experts(pos));
   }catch(e){
-    return {ok:false,pos,selected:[],unavailable:[...EXPERT_V4_BLUEPRINT[pos].experts],reason:'positionsspezifisches FantasyPros-Expertenverzeichnis nicht verifizierbar: '+(e?.message||String(e))};
+    return {ok:false,pos,selected:[],unavailable:[...EXPERT_V4_BLUEPRINT[pos].experts],reason:'FantasyPros-v4-ID-Verzeichnis nicht verifizierbar: '+(e?.message||String(e))};
   }
-  if(selected.length<2)return {ok:false,pos,selected:selected.map(x=>x.name),unavailable,reason:`weniger als zwei positionsspezifisch auswählbare v4-Experten (Verzeichnis ${directoryCount})`};
-  const ids=selected.map(x=>x.id),filter=ids.join(':'),season=els.season.value.trim(),scoringRaw=els.scoring.value,scoring=encodeURIComponent(scoringRaw);
-  // The public contract defines type=DRAFT, scoring, position and filters explicitly.
-  // Fail closed on any context/provenance mismatch instead of accepting a preseason/default response.
+  if(requested.length<2)return {ok:false,pos,selected:requested.map(x=>x.name),unavailable,reason:`weniger als zwei numerisch verifizierte v4-Experten (Verzeichnis ${directoryCount})`};
+  const ids=requested.map(x=>x.id),filter=ids.join(':'),season=els.season.value.trim(),scoringRaw=els.scoring.value,scoring=encodeURIComponent(scoringRaw);
   const path=`/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}&week=0&type=DRAFT&filters=${filter}&experts=show`;
   try{
     const data=await proxyCall(path);
     if(!fpConsensusContextVerified(data,pos,scoringRaw))
-      return {ok:false,pos,selected:selected.map(x=>x.name),unavailable,reason:`FantasyPros-Kontext abweichend: position=${data?.position_id??'?'} scoring=${data?.scoring??'?'} type=${data?.ranking_type_name??'?'}`};
+      return {ok:false,pos,selected:[],unavailable:[...unavailable,...requested.map(x=>x.name)],reason:`FantasyPros-Kontext abweichend: position=${data?.position_id??'?'} scoring=${data?.scoring??'?'} type=${data?.ranking_type_name??'?'}`};
     const parsed=extractFpConsensusTiers(data,pos,ids),min={QB:12,RB:30,WR:35,TE:12}[pos];
-    if(parsed.ok&&Object.keys(parsed.rows).length>=min)
-      return {ok:true,pos,rows:parsed.rows,selected:selected.map(x=>x.name),unavailable,path,updated:Date.now(),directoryCount};
-    return {ok:false,pos,selected:selected.map(x=>x.name),unavailable,reason:parsed.reason+' ('+Object.keys(parsed.rows).length+')'};
+    const usedIds=new Set(parsed.provenance?.used||[]),excludedIds=new Set(parsed.provenance?.excluded||[]);
+    const selected=requested.filter(x=>usedIds.has(x.id)).map(x=>x.name);
+    const rejected=requested.filter(x=>excludedIds.has(x.id)).map(x=>x.name);
+    const allUnavailable=[...new Set([...unavailable,...rejected])];
+    if(parsed.ok&&selected.length>=2&&Object.keys(parsed.rows).length>=min)
+      return {ok:true,pos,rows:parsed.rows,selected,unavailable:allUnavailable,path,updated:Date.now(),directoryCount,provenance:parsed.provenance?.proof||'unknown'};
+    return {ok:false,pos,selected,unavailable:allUnavailable,reason:parsed.reason+' ('+Object.keys(parsed.rows).length+' Tier-Zeilen; '+(parsed.provenance?.proof||'keine Provenienz')+')'};
   }catch(e){
-    return {ok:false,pos,selected:selected.map(x=>x.name),unavailable,reason:e?.message||String(e)};
+    return {ok:false,pos,selected:[],unavailable:[...unavailable,...requested.map(x=>x.name)],reason:e?.message||String(e)};
   }
 }
 async function loadV4ConsensusTiers(){
