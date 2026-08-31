@@ -1213,6 +1213,13 @@ async function loadExpertRanks(expertId,{force=false}={}){
 function rankingSignature(cache,limit=80){
   return Object.values(cache?.ranks||{}).filter(x=>Number.isFinite(x.rank)).sort((a,b)=>a.rank-b.rank).slice(0,limit).map(x=>`${norm(x.name)}:${x.rank}`).join('|');
 }
+function expertDeltaSignature(cache){
+  return Object.values(cache?.ranks||{})
+    .filter(x=>Number.isFinite(x.rank))
+    .sort((a,b)=>a.rank-b.rank||norm(a.name).localeCompare(norm(b.name)))
+    .map(x=>`${norm(x.name)}:${x.pos||''}:${x.rank}:${Number.isFinite(Number(x.posRank))?Number(x.posRank):''}`)
+    .join('|');
+}
 function draftDayExpertDateKey(){
   return new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Berlin',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
 }
@@ -1233,25 +1240,30 @@ async function checkExpertDeltas(){
   if(!experts.length)await loadExperts();
   const entries=draftDayV4ExpertEntries(),day=draftDayExpertDateKey();
   if(!entries.length)throw new Error('Keine v4-Experten für Delta-Prüfung gefunden.');
-  const priorAudit=store.get('v7_expertDeltaAudit',{}),baselineMode=priorAudit.day!==day||priorAudit.complete!==true;
+  const priorAudit=store.get('v7_expertDeltaAudit',{}),
+    baselineMode=priorAudit.day!==day,
+    repairMode=!baselineMode&&priorAudit.complete!==true,
+    retryNames=new Set(Array.isArray(priorAudit.failedNames)?priorAudit.failedNames:[]);
   const changed=[],unchanged=[],failed=[],accepted=[];
-  if(els.expertDeltaBtn){els.expertDeltaBtn.disabled=true;els.expertDeltaBtn.textContent=baselineMode?'Tagesbaseline …':'Experten-Delta …'}
+  const modeLabel=baselineMode?'Tagesbaseline':repairMode?'Baseline-Reparatur':'Delta-Prüfung';
+  if(els.expertDeltaBtn){els.expertDeltaBtn.disabled=true;els.expertDeltaBtn.textContent=baselineMode?'Tagesbaseline …':repairMode?'Baseline reparieren …':'Experten-Delta …'}
   try{
     let i=0;
     for(const entry of entries){
       i++;
+      if(repairMode&&!retryNames.has(entry.name)){accepted.push(entry.name);continue}
       if(!entry.expert){failed.push(entry.name+' (nicht im Expertenverzeichnis)');continue}
-      const id=String(entry.expert.id),before=rankCache[id]||null,beforeSig=rankingSignature(before,500);
-      if(els.panelStatus)els.panelStatus.textContent=`${baselineMode?'Tagesbaseline':'Delta-Prüfung'} ${i}/${entries.length}: ${entry.name}`;
+      const id=String(entry.expert.id),before=rankCache[id]||null,beforeSig=expertDeltaSignature(before);
+      if(els.panelStatus)els.panelStatus.textContent=`${modeLabel} ${i}/${entries.length}: ${entry.name}`;
       const fresh=await loadExpertRanks(id,{force:true});
-      const freshSig=rankingSignature(fresh,500);
+      const freshSig=expertDeltaSignature(fresh);
       const usable=!!(fresh?.verifiedIndividual&&!fresh?.staleFallback&&freshSig&&Object.keys(fresh.ranks||{}).length>=80);
       if(!usable){
         restoreExpertBaseline(id,before);
         failed.push(entry.name+(fresh?.error?` (${fresh.error})`:''));
         continue;
       }
-      if(baselineMode){
+      if(baselineMode||repairMode){
         accepted.push(entry.name);
         continue;
       }
@@ -1262,24 +1274,26 @@ async function checkExpertDeltas(){
         changed.push(entry.name);
       }
     }
-    if(baselineMode||changed.length){
-      await loadAllRanks();
+    if(baselineMode||repairMode||changed.length){
+      await loadAllRanks({skipFetch:true});
     }
-    const complete=failed.length===0;
+    const failedNames=failed.map(x=>x.replace(/ \(.*/,'')),complete=failed.length===0;
+    const priorAccepted=Array.isArray(priorAudit.accepted)?priorAudit.accepted:[];
+    const baselineAccepted=[...new Set(baselineMode?accepted:[...priorAccepted,...accepted])];
     store.set('v7_expertDeltaAudit',{
       day,complete,lastChecked:Date.now(),
       baselineCreated:baselineMode?Date.now():(priorAudit.baselineCreated||null),
-      accepted:baselineMode?accepted:(priorAudit.accepted||[]),
-      changed,unchanged,failed
+      accepted:(baselineMode||repairMode)?baselineAccepted:priorAccepted,
+      changed,unchanged,failed,failedNames
     });
     if(els.panelStatus){
       els.panelStatus.className=failed.length?'notice warn':'notice ok';
-      els.panelStatus.textContent=baselineMode
-        ?`Experten-Tagesbaseline ${accepted.length}/${entries.length}${failed.length?` · nicht aktualisiert: ${failed.join(', ')}`:' · vollständig'}`
+      els.panelStatus.textContent=(baselineMode||repairMode)
+        ?`Experten-Tagesbaseline ${baselineAccepted.length}/${entries.length}${failed.length?` · nicht aktualisiert: ${failed.join(', ')}`:' · vollständig'}`
         :`Experten-Delta geprüft · geändert ${changed.length}: ${changed.join(', ')||'keine'} · unverändert ${unchanged.length}${failed.length?` · Baseline beibehalten bei: ${failed.join(', ')}`:''}`;
     }
     updateStatus();
-    return{baselineMode,complete,changed,unchanged,failed,accepted};
+    return{baselineMode,repairMode,complete,changed,unchanged,failed,accepted:baselineAccepted};
   }finally{
     if(els.expertDeltaBtn){els.expertDeltaBtn.disabled=false;els.expertDeltaBtn.textContent='Experten-Delta prüfen'}
   }
@@ -1332,7 +1346,7 @@ function computePanel(panelId,candidateKeys=null){
   assignTiers(out);return out
 }
 function assignTiers(map){for(const pos of ['QB','RB','WR','TE']){const rows=Object.values(map).filter(x=>x.pos===pos).sort((a,b)=>a.rank-b.rank);let tier=1,prev=null;for(const row of rows){if(prev!=null&&row.rank-prev>=4)tier++;row.tier=tier;prev=row.rank}}}
-async function loadAllRanks(){
+async function loadAllRanks({skipFetch=false}={}){
   saveCurrentPanel();
   const selectedIds=[...new Set(Object.values(panels).flatMap(p=>Object.keys(p.members||{})))];
   const v45Names=[...new Set(Object.values(EXPERT_V4_BLUEPRINT).flatMap(x=>x.experts).concat(EXPERT_V5_BLUEPRINT.add))];
@@ -1346,8 +1360,9 @@ async function loadAllRanks(){
     let i=0;
     for(const id of ids){
       i++;
-      els.panelStatus.textContent=`Lade ${i}/${ids.length}: ${experts.find(e=>e.id===id)?.name||id}`;
-      const c=await loadExpertRanks(id);
+      els.panelStatus.textContent=`${skipFetch?'Verarbeite':'Lade'} ${i}/${ids.length}: ${experts.find(e=>e.id===id)?.name||id}`;
+      const c=skipFetch?rankCache[id]:await loadExpertRanks(id);
+      if(!c)continue;
       if(c.verifiedIndividual&&c.missing.length)skipped.push(`${c.expertName}: Positionsdaten fehlen ${c.missing.join('/')}`);
       if(c.derived?.length)skipped.push(`${c.expertName}: ${c.derived.join('/')} aus Overall abgeleitet`);
       if(c.staleFallback)skipped.push(`${c.expertName}: Quelle aktuell nicht erreichbar – letztes verifiziertes Ranking beibehalten`);
