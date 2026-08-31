@@ -3024,3 +3024,13 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - Remaining pre-draft agenda after rc4.132 acceptance is preserved: final official cutdown/IR/PUP/waiver reconciliation; expert-board + Sleeper Half-PPR ADP delta; late-upside materiality; emergency/live operational verification; ~19:50 freeze.
 - A dedicated `PITTI_DRAFT_CHAT_BOOTSTRAP.md` was added for the user's planned brand-new real-draft chat. It is execution-only and explicitly forbids model redesign and old-identity/order resurrection during the live clock.
 - Generation: **20260830T1808Z-v205**.
+
+
+## 2026-08-31 09:20Z — HANDOFF rc4.142 TIER PIPELINE
+- Device evidence: rc4.141 starts and refreshes correctly; Analyze works; Tyler Warren individual description is restored. User screenshot proves expert-v4 ranks render, but NO tier labels render.
+- Root cause isolated in v4 FantasyPros consensus tier verifier: it incorrectly required payload.total_experts to equal the selected v4 expert count. FantasyPros uses filters/expert metadata for the selected whitelist; total_experts is consensus-population metadata. This made valid custom-ECR tier responses fail closed.
+- rc4.142 fixes ONLY that verifier semantics plus version alignment; exact returned selected expert IDs remain mandatory. No outsider substitution; Erickson remains forbidden for v4 tier provenance; tiers remain display-only and cannot alter Coach/Return/history.
+- Latest rc4.142 commit with full gates PASS: f8c215b65ed3ab04c25d76af104bc2fa83639121. Runs: release 33367917513 PASS; package 33367917515 PASS; guardrails 33367917487 PASS; rc4.82 33367917505 PASS; rc4.83 33367917493 PASS.
+- NEXT: verify/deploy exact rc4.142 runtime to gh-pages with byte parity, then ONE device verification for tiers. Do not send trial-and-error builds. If tiers still absent, inspect actual FP payload/provenance before another build.
+- After tier acceptance: deferred 5-WR analysis = Emeka Egbuka / Zay Flowers / Tetairoa McMillan / DeVonta Smith, Jaylen Waddle reference; baseline/role-injury/market plus separate maximum-upside/league-winner ranking. Then final draft-day freshness/smoke agenda.
+- Critical invariants unchanged: canonical order Michael/Pascal Voerde/Marc Düsseldorf/Thomas/Björn/Pascal Gelderner/Giuliano/Bastian/Muerotechnik/Dutch Marc; never reindex history/evidence/fingerprints; starter maxima are not roster caps; no K/DST; exactly one QB; Geno Smith + Aaron Rodgers hard excluded; v4 primary/v5 challenger/v3 failsafe; Warren/text coverage and Jacobs handling must not regress.
