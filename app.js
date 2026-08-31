@@ -1,7 +1,7 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.157';
+const APP_VERSION='v11.8.0-rc4.158';
 const $=id=>document.getElementById(id);
-const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
+const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
@@ -1125,9 +1125,9 @@ async function loadExperts(){
     if(els.loadExpertsBtn)els.loadExpertsBtn.disabled=false;
   }
 }
-async function loadExpertRanks(expertId){
+async function loadExpertRanks(expertId,{force=false}={}){
   const cache=rankCache[expertId];
-  if(cache&&cache.schemaVersion>=13&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&cache.verifiedIndividual&&Object.keys(cache.ranks||{}).length&&Date.now()-cache.updated<12*3600e3)return cache;
+  if(!force&&cache&&cache.schemaVersion>=13&&cache.season===els.season.value&&cache.scoring===els.scoring.value&&cache.verifiedIndividual&&Object.keys(cache.ranks||{}).length&&Date.now()-cache.updated<12*3600e3)return cache;
 
   const expert=experts.find(e=>String(e.id)===String(expertId));
   if(!expert)throw new Error(`Experte ${expertId} nicht gefunden.`);
@@ -1213,6 +1213,92 @@ async function loadExpertRanks(expertId){
 function rankingSignature(cache,limit=80){
   return Object.values(cache?.ranks||{}).filter(x=>Number.isFinite(x.rank)).sort((a,b)=>a.rank-b.rank).slice(0,limit).map(x=>`${norm(x.name)}:${x.rank}`).join('|');
 }
+function expertDeltaSignature(cache){
+  return Object.values(cache?.ranks||{})
+    .filter(x=>Number.isFinite(x.rank))
+    .sort((a,b)=>a.rank-b.rank||norm(a.name).localeCompare(norm(b.name)))
+    .map(x=>`${norm(x.name)}:${x.pos||''}:${x.rank}:${Number.isFinite(Number(x.posRank))?Number(x.posRank):''}`)
+    .join('|');
+}
+function draftDayExpertDateKey(){
+  return new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Berlin',year:'numeric',month:'2-digit',day:'2-digit'}).format(new Date());
+}
+function draftDayV4ExpertEntries(){
+  const names=[...new Set(Object.values(EXPERT_V4_BLUEPRINT).flatMap(x=>x.experts))];
+  return names.map(name=>({name,expert:findExpert(name)}));
+}
+function restoreExpertBaseline(expertId,cache){
+  if(cache){
+    rankCache[expertId]=cache;
+    persistExpertRankCache(expertId,cache);
+  }else{
+    delete rankCache[expertId];
+    try{localStorage.removeItem('v7_rank_'+expertId)}catch{}
+  }
+}
+async function checkExpertDeltas(){
+  if(!experts.length)await loadExperts();
+  const entries=draftDayV4ExpertEntries(),day=draftDayExpertDateKey();
+  if(!entries.length)throw new Error('Keine v4-Experten für Delta-Prüfung gefunden.');
+  const priorAudit=store.get('v7_expertDeltaAudit',{}),
+    baselineMode=priorAudit.day!==day,
+    repairMode=!baselineMode&&priorAudit.complete!==true,
+    retryNames=new Set(Array.isArray(priorAudit.failedNames)?priorAudit.failedNames:[]);
+  const changed=[],unchanged=[],failed=[],accepted=[];
+  const modeLabel=baselineMode?'Tagesbaseline':repairMode?'Baseline-Reparatur':'Delta-Prüfung';
+  if(els.expertDeltaBtn){els.expertDeltaBtn.disabled=true;els.expertDeltaBtn.textContent=baselineMode?'Tagesbaseline …':repairMode?'Baseline reparieren …':'Experten-Delta …'}
+  try{
+    let i=0;
+    for(const entry of entries){
+      i++;
+      if(repairMode&&!retryNames.has(entry.name)){accepted.push(entry.name);continue}
+      if(!entry.expert){failed.push(entry.name+' (nicht im Expertenverzeichnis)');continue}
+      const id=String(entry.expert.id),before=rankCache[id]||null,beforeSig=expertDeltaSignature(before);
+      if(els.panelStatus)els.panelStatus.textContent=`${modeLabel} ${i}/${entries.length}: ${entry.name}`;
+      const fresh=await loadExpertRanks(id,{force:true});
+      const freshSig=expertDeltaSignature(fresh);
+      const usable=!!(fresh?.verifiedIndividual&&!fresh?.staleFallback&&freshSig&&Object.keys(fresh.ranks||{}).length>=80);
+      if(!usable){
+        restoreExpertBaseline(id,before);
+        failed.push(entry.name+(fresh?.error?` (${fresh.error})`:''));
+        continue;
+      }
+      if(baselineMode||repairMode){
+        accepted.push(entry.name);
+        continue;
+      }
+      if(beforeSig&&freshSig===beforeSig){
+        restoreExpertBaseline(id,before);
+        unchanged.push(entry.name);
+      }else{
+        changed.push(entry.name);
+      }
+    }
+    if(baselineMode||repairMode||changed.length){
+      await loadAllRanks({skipFetch:true});
+    }
+    const failedNames=failed.map(x=>x.replace(/ \(.*/,'')),complete=failed.length===0;
+    const priorAccepted=Array.isArray(priorAudit.accepted)?priorAudit.accepted:[];
+    const baselineAccepted=[...new Set(baselineMode?accepted:[...priorAccepted,...accepted])];
+    store.set('v7_expertDeltaAudit',{
+      day,complete,lastChecked:Date.now(),
+      baselineCreated:baselineMode?Date.now():(priorAudit.baselineCreated||null),
+      accepted:(baselineMode||repairMode)?baselineAccepted:priorAccepted,
+      changed,unchanged,failed,failedNames
+    });
+    if(els.panelStatus){
+      els.panelStatus.className=failed.length?'notice warn':'notice ok';
+      els.panelStatus.textContent=(baselineMode||repairMode)
+        ?`Experten-Tagesbaseline ${baselineAccepted.length}/${entries.length}${failed.length?` · nicht aktualisiert: ${failed.join(', ')}`:' · vollständig'}`
+        :`Experten-Delta geprüft · geändert ${changed.length}: ${changed.join(', ')||'keine'} · unverändert ${unchanged.length}${failed.length?` · Baseline beibehalten bei: ${failed.join(', ')}`:''}`;
+    }
+    updateStatus();
+    return{baselineMode,repairMode,complete,changed,unchanged,failed,accepted:baselineAccepted};
+  }finally{
+    if(els.expertDeltaBtn){els.expertDeltaBtn.disabled=false;els.expertDeltaBtn.textContent='Experten-Delta prüfen'}
+  }
+}
+
 function flagDuplicateExpertRankings(ids){
   const seen=new Map(),warnings=[];
   for(const id of ids){
@@ -1260,7 +1346,7 @@ function computePanel(panelId,candidateKeys=null){
   assignTiers(out);return out
 }
 function assignTiers(map){for(const pos of ['QB','RB','WR','TE']){const rows=Object.values(map).filter(x=>x.pos===pos).sort((a,b)=>a.rank-b.rank);let tier=1,prev=null;for(const row of rows){if(prev!=null&&row.rank-prev>=4)tier++;row.tier=tier;prev=row.rank}}}
-async function loadAllRanks(){
+async function loadAllRanks({skipFetch=false}={}){
   saveCurrentPanel();
   const selectedIds=[...new Set(Object.values(panels).flatMap(p=>Object.keys(p.members||{})))];
   const v45Names=[...new Set(Object.values(EXPERT_V4_BLUEPRINT).flatMap(x=>x.experts).concat(EXPERT_V5_BLUEPRINT.add))];
@@ -1274,8 +1360,9 @@ async function loadAllRanks(){
     let i=0;
     for(const id of ids){
       i++;
-      els.panelStatus.textContent=`Lade ${i}/${ids.length}: ${experts.find(e=>e.id===id)?.name||id}`;
-      const c=await loadExpertRanks(id);
+      els.panelStatus.textContent=`${skipFetch?'Verarbeite':'Lade'} ${i}/${ids.length}: ${experts.find(e=>e.id===id)?.name||id}`;
+      const c=skipFetch?rankCache[id]:await loadExpertRanks(id);
+      if(!c)continue;
       if(c.verifiedIndividual&&c.missing.length)skipped.push(`${c.expertName}: Positionsdaten fehlen ${c.missing.join('/')}`);
       if(c.derived?.length)skipped.push(`${c.expertName}: ${c.derived.join('/')} aus Overall abgeleitet`);
       if(c.staleFallback)skipped.push(`${c.expertName}: Quelle aktuell nicht erreichbar – letztes verifiziertes Ranking beibehalten`);
@@ -3229,6 +3316,7 @@ function applyBackup(v){if(v?.format!=='draft-companion-v7')throw new Error('Ung
 function setAuto(){if(autoTimer)clearInterval(autoTimer);autoTimer=null;persist();if(els.autoRefresh.checked)autoTimer=setInterval(()=>{if(!document.hidden&&els.draftInput.value.trim())refresh().catch(()=>{})},10000)}
 
 if(els.loadExpertsBtn)els.loadExpertsBtn.onclick=()=>loadExperts().catch(e=>{els.presetStatus.className='notice bad';els.presetStatus.textContent=e.message});
+if(els.expertDeltaBtn)els.expertDeltaBtn.onclick=()=>checkExpertDeltas().catch(e=>{els.panelStatus.className='notice bad';els.panelStatus.textContent=e.message});
 if(els.applyPresetBtn)els.applyPresetBtn.onclick=()=>{try{applyPreset()}catch(e){els.presetStatus.className='notice bad';els.presetStatus.textContent=e.message}};
 if(els.loadAllRanksBtn)els.loadAllRanksBtn.onclick=()=>loadAllRanks().catch(e=>{els.panelStatus.className='notice bad';els.panelStatus.textContent=e.message});
 els.refreshAllBtn.onclick=async()=>{els.refreshAllBtn.disabled=true;els.refreshAllBtn.textContent='Aktualisiere …';els.qualityStatus.className='notice';els.qualityStatus.textContent='Datenupdate gestartet …';await new Promise(requestAnimationFrame);try{
