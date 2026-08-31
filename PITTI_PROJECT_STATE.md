@@ -3145,3 +3145,43 @@ Exactly one controlled device refresh/update. Verify rc4.153 and stable expert o
 Draft locks remain unchanged: exact canonical 2026 manager order/history; no historical reindexing; starter maxima are not roster caps; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; v4 PRIMARY/v5 CHALLENGER/v3 failsafe; tiers display-only; Return timing context only. Autodraft/manual manager-state controls are live-input metadata and must not rewrite earlier picks. Latest adopted backup remains `draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json`; its Return audit does not justify a generic Return-v2 retune before the draft.
 
 Generation: **20260831T1028Z-v213**.
+
+
+## 2026-08-31 10:28Z — HANDOFF v214 SECOND-PASS / NO-REGRESSION SEAL
+User requested an additional deep handoff audit because draft-day time pressure makes stale pointers unacceptable.
+
+Second-pass findings and repairs:
+- Android/PWA **rc4.152** is the latest accepted/observed device authority.
+- Source/deployed candidate **rc4.153** is presentation-only expert-order stabilization.
+- PR #83 passed Release Contract, Candidate Package Gate and Project Guardrails before merge.
+- Post-merge/deploy runtime parity was independently rechecked: **all 13 runtime files main == gh-pages**.
+- Stale v212/v129 takeover pointers remained in COMMAND_CONTRACTS, NEW_CHAT_BOOTSTRAP, COMPLETENESS_MATRIX, EXECUTION_LOCK nested handoff fields and PREFLIGHT historical current sections. They are now explicitly superseded by generation **20260831T1028Z-v214**.
+- Real-draft bootstrap was advanced from the old rc4.132 acceptance language to the final rc4.153 acceptance/freeze boundary.
+- No model change is bundled into rc4.153.
+
+Exact next gate:
+**RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE**.
+One controlled device update. Verify stable card expert order across positions:
+**Sean Koerner → Dalton Del Don → Pat Fitzmaurice** first wherever present; then broadly shared experts; then position specialists. Missing ranks remain **#– / fehlt**. If PASS, freeze runtime.
+
+Protected working state from rc4.152:
+- nine-opponent LIVE ?/AUTO/MANUELL grid;
+- one-button direct Coach apply with forward-only pick segmentation;
+- LIVE v3/v4/v5 selector;
+- faster LIVE analysis while Decision Fixtures + Return-validation evidence persist;
+- global cross-position v4 tiers;
+- current player-specific text including Montgomery and Warren;
+- canonical manager order/history and all QB/KDST/roster-cap guards.
+
+Retired paths that must not be reopened without new evidence:
+- FantasyPros public tier-field trial path;
+- generic Return-v2 retune from the latest mock;
+- hard WR/RB quota/forcing;
+- old manager-map identities/order;
+- old tier expert-substitution logic.
+
+Latest evidence backup remains:
+`draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json`.
+Its audit supports preserving current Return-v2 for the draft.
+
+Generation: **20260831T1028Z-v214**.
