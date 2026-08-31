@@ -11,7 +11,7 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.137",
-    "test_challenger": "v11.8.0-rc4.137",
+    "test_challenger": "v11.8.0-rc4.138",
     "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.137 CI PACKAGE/RE-EXTRACT PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
@@ -33,7 +33,7 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.137 PREDEPLOY on pitti-rc4.137-tier-fix",
+    "source_candidate": "v11.8.0-rc4.138 on main — description coverage repaired; release/package verification pending",
     "deployed": "main rc4.137; gh-pages rc4.136",
     "main_gh_pages_parity": true,
     "accepted_android": "v11.8.0-rc4.137"
@@ -128,7 +128,7 @@
       "Josh Jacobs current acute-status handling must not regress.",
       "AUTO/AUTO BLOCK means actual autonomous work, no empty/status-only messages."
     ],
-    "preparedCandidate": "v11.8.0-rc4.137 visibly observed on Android; functional tier verification pending",
+    "preparedCandidate": "v11.8.0-rc4.138 source committed; phone deployment NOT yet authorized",
     "transaction_in_progress": false,
     "status": "PREDEPLOY_GATES_PASS",
     "releaseEvidence": {
@@ -144,46 +144,11 @@
     "textCoverageAudit20260831": {
       "source": "latest 2026-08-30 16:02 backup decisionFixtures candidate universe + current rc4.137 RESEARCH_RESIDUAL_PRIORS + current device screenshot",
       "candidateUniverse": 125,
-      "individuallyCoveredCurrent": 92,
-      "missingCurrent": 33,
-      "missingHighPriority": [
-        "Tyler Warren",
-        "Emeka Egbuka",
-        "Tetairoa McMillan",
-        "Cam Skattebo",
-        "Jayden Daniels",
-        "TreVeyon Henderson",
-        "Jadarian Price",
-        "Jalen Hurts",
-        "Rhamondre Stevenson",
-        "Justin Herbert",
-        "Trevor Lawrence",
-        "Dak Prescott",
-        "Brock Purdy"
-      ],
-      "missingOther": [
-        "Chuba Hubbard",
-        "Jaxson Dart",
-        "RJ Harvey",
-        "Patrick Mahomes",
-        "Bo Nix",
-        "Alec Pierce",
-        "Michael Wilson",
-        "KC Concepcion",
-        "Makai Lemon",
-        "Jonah Coleman",
-        "Dylan Sampson",
-        "Hunter Henry",
-        "Brian Robinson",
-        "Braelon Allen",
-        "Alvin Kamara",
-        "Tyrone Tracy",
-        "Emmett Johnson",
-        "Kaelon Black",
-        "Nicholas Singleton",
-        "Kaleb Johnson"
-      ],
-      "conclusion": "Earlier text-coverage repair was incomplete. Warren confirms live regression; current app still lacks individual visible-evidence priors for 33 relevant candidate names from audited universe. Must fix and add deterministic coverage gate before next device build."
+      "individuallyCoveredCurrent": 125,
+      "missingCurrent": 0,
+      "missingHighPriority": [],
+      "missingOther": [],
+      "conclusion": "rc4.138 source closes all 33 audited gaps (125/125) and adds deterministic regression gate. Full release/package gates still required before device."
     }
   },
   "source_authority": "main is rc4.137; gh-pages is still rc4.136; Android screenshot proves rc4.137 is already installed/visible. Do not request another install merely to reach rc4.137.",
@@ -280,12 +245,12 @@
     "acceptedAndroidFallback": "v11.8.0-rc4.135",
     "runtime": "Android visibly runs rc4.137; main rc4.137; gh-pages still rc4.136",
     "mainRuntimeParity": "PASS — app.js, decision-policy.js, index.html, live-surface-v3.js, manifest.webmanifest, sw.js, _worker.js identical main↔gh-pages",
-    "nextGate": "fix rc4.137 tier function AND individual-description coverage; add deterministic coverage regression before next device version",
-    "textCoverageStatus": "FAIL — 33/125 audited relevant candidate names lack current individual description prior; Warren live-confirmed"
+    "nextGate": "full release/package/guardrail verification for rc4.138; tier functional path remains fail-closed and requires device/API verification",
+    "textCoverageStatus": "SOURCE PASS — 125/125 audited candidate names covered in rc4.138; deterministic gate added"
   },
-  "status": "RC4.137_TIER_AND_TEXT_COVERAGE_FIX_REQUIRED",
-  "gate": "RC4.137_TIER_AND_TEXT_COVERAGE_FIX",
-  "nextGate": "off-device tier root-cause + text-coverage repair/regression, then one device verification",
+  "status": "RC4.138_SOURCE_READY_GATES_PENDING",
+  "gate": "RC4.138_RELEASE_GATES",
+  "nextGate": "full release/package/guardrail verification for rc4.138; tier functional path remains fail-closed and requires device/API verification",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
