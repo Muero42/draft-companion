@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-31T07:05:00Z",
+  "updatedAt": "2026-08-31T09:20:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -17,7 +17,7 @@
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.137",
-    "latestPreinstallVerified": "v11.8.0-rc4.142 exact package + browser-startup smoke PASS",
+    "latestPreinstallVerified": "v11.8.0-rc4.142 CI package gate PASS",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.142_PREINSTALL.zip",
     "preinstallSha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
@@ -32,7 +32,7 @@
     "preinstallReferenceArtifactId": 9748549429,
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.137",
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.135",
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.141 (startup/refresh/text; tiers absent)",
     "testChallengerAndroidObserved": true,
     "testChallengerAndroidAccepted": false,
     "rc499": {
@@ -206,16 +206,16 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.141_OFFDEVICE_FULL_PASS_DEVICE_VERIFY_PENDING",
+    "status": "RC4.142_ALL_CI_GATES_PASS_HANDOFF",
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.135",
-    "runtime": "Exact tested rc4.142 package/main/gh-pages 13/13 parity PASS; Android still needs one verification",
-    "nextGate": "single rc4.142 device verification"
+    "runtime": "rc4.141 Android functional; tiers absent. rc4.142 tier verifier semantics fix has full CI PASS.",
+    "nextGate": "gh-pages exact rc4.142 parity then one Android tier verification"
   },
-  "status": "RC4.141_OFFDEVICE_FULL_PASS_DEVICE_VERIFY_PENDING",
-  "gate": "RC4.141_DEVICE_VERIFY",
-  "nextGate": "single rc4.142 device verification",
+  "status": "RC4.142_ALL_CI_GATES_PASS_HANDOFF",
+  "gate": "RC4.142_PAGES_PARITY_THEN_DEVICE_TIER_VERIFY",
+  "nextGate": "gh-pages exact rc4.142 parity then one Android tier verification",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
