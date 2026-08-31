@@ -34,7 +34,7 @@ assert.equal(safetyPromotionEligiblePolicy({pos:'TE',counts:{TE:1},rank:40,adp:1
 
 // Wiring: executable helpers must be the actual app policy path.
 assert.match(app,/from '\.\/decision-policy\.js'/);
-assert.match(app,/userDraftStrategyExcluded\(p\.pos,state\.counts\)/);
+assert.match(app,/userDraftStrategyExcluded\(p\.pos,state\.counts,p\.name\)/);
 assert.match(app,/safetyPromotionEligiblePolicy\(\{/);
 assert.doesNotMatch(app,/if\(x\.p\.pos==='WR'.*stateCounts.*WR.*>=7.*return Number\.isFinite/s);
 
