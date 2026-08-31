@@ -123,20 +123,20 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.150 Android authority; rc4.151 deployed candidate",
+    "productionControl": "v11.8.0-rc4.151 Android authority; rc4.152 deployed candidate",
     "androidAuthority": "v11.8.0-rc4.150",
-    "sourceAuthority": "main/gh-pages v11.8.0-rc4.151",
+    "sourceAuthority": "main/gh-pages v11.8.0-rc4.152",
     "latestPackageReextract": "v11.8.0-rc4.142 package/re-extract PASS",
     "latestPackageSha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
     "packageReferenceRun": 33367917515,
-    "deployedPagesVersion": "v11.8.0-rc4.151",
+    "deployedPagesVersion": "v11.8.0-rc4.152",
     "deployedPagesAppByteParityWithMain": true,
-    "currentResearchGate": "RC4.151_DEVICE_ACCEPTANCE",
-    "exactNextAction": "Update once to rc4.151 and verify LIVE manager AUTO/MANUELL/? control, LIVE v3/v4/v5 selector above Analyze, and reduced analysis latency. Preserve live decision/return evidence; no broader scoring retune.",
-    "runtimeVersion": "rc4.151 deployed; Android authority rc4.150",
+    "currentResearchGate": "RC4.152_DEVICE_ACCEPTANCE",
+    "exactNextAction": "Update once to rc4.152 and verify all nine opponent manager-mode rows plus one-button direct Coach refresh. No broader model changes.",
+    "runtimeVersion": "rc4.152 deployed; Android authority rc4.151",
     "latestEvidenceBackup": "draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json — rc4.150, 17 decision fixtures, 10 rc4.150 fixtures, 674 resolved Return forecasts, Brier 0.0907"
   },
-  "currentGate": "RC4.151_DEVICE_ACCEPTANCE",
+  "currentGate": "RC4.152_DEVICE_ACCEPTANCE",
   "handoffGeneration": "20260831T0735Z-v212",
   "handoff_generation": "20260831T0735Z-v212",
   "statusCommand": {
