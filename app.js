@@ -1,7 +1,7 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.150';
+const APP_VERSION='v11.8.0-rc4.151';
 const $=id=>document.getElementById(id);
-const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
+const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerSlot','liveManagerMode','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
@@ -404,9 +404,41 @@ function canonicalize2026ManagerMap(stored){
   return !v||stale?ACTIVE_2026_MANAGER_MAP_TEXT:v;
 }
 els.managerMap.value=canonicalize2026ManagerMap(store.text('v11_managerMap',store.text('v10_managerMap',ACTIVE_2026_MANAGER_MAP_TEXT)));
+function populateLiveManagerModeControl(){
+  if(!els.liveManagerSlot)return;
+  const map=parseManagerMap(ACTIVE_2026_MANAGER_MAP_TEXT);
+  const prior=els.liveManagerSlot.value;
+  els.liveManagerSlot.innerHTML='';
+  for(const [slot,name] of Object.entries(map)){
+    if(Number(slot)===9)continue;
+    els.liveManagerSlot.add(new Option(`${slot} · ${name}`,String(slot)));
+  }
+  els.liveManagerSlot.value=prior&&[...els.liveManagerSlot.options].some(o=>o.value===prior)?prior:'5';
+  renderLiveManagerModeStatus();
+}
+function liveManagerModeAtCurrent(slot){
+  const current=Number(lastDraftContext?.current||1);
+  const seg=explicitManagerModeAt(loadManagerModeSegments(),Number(slot),current);
+  return seg||'infer';
+}
+function renderLiveManagerModeStatus(){
+  if(!els.liveManagerModeStatus||!els.liveManagerSlot)return;
+  const slot=Number(els.liveManagerSlot.value||5),map=parseManagerMap(ACTIVE_2026_MANAGER_MAP_TEXT),mode=liveManagerModeAtCurrent(slot),label=mode==='autodraft'?'AUTO':mode==='manual'?'MANUELL':'?';
+  els.liveManagerMode.value=mode;
+  els.liveManagerModeStatus.textContent=`${map[slot]||'Slot '+slot}: ${label}`;
+}
+function setLiveManagerModeFromUi(){
+  const slot=Number(els.liveManagerSlot?.value),mode=String(els.liveManagerMode?.value||'infer');
+  if(!Number.isFinite(slot)||slot===9)return;
+  const current=Number(lastDraftContext?.current||1),segments=loadManagerModeSegments(),arr=Array.isArray(segments[slot])?segments[slot]:[],last=arr[arr.length-1];
+  if(!last||last.mode!==mode||Number(last.fromPick)!==current)arr.push({fromPick:current,mode,source:'user-explicit-live-ui',createdAt:Date.now()});
+  segments[slot]=arr;saveManagerModeSegments(segments);renderLiveManagerModeStatus();
+  if(els.draftStatus){els.draftStatus.className='notice ok';els.draftStatus.textContent=`Manager-Modus ab Pick ${current}: ${els.liveManagerModeStatus.textContent}`;}
+}
+populateLiveManagerModeControl();
 els.stressMode.value=store.text('v113_stressMode','baseline');
 els.strategyMode.value=store.text('v111_strategyMode','progressive');
-if(els.analysisExpertProfile)els.analysisExpertProfile.value='expertv3';
+if(els.analysisExpertProfile)els.analysisExpertProfile.value=currentExpertProfile();
 
 function persist(){
   store.setText('v7_apiKey',els.apiKey.value.trim());store.setText('v7_season',els.season.value.trim());store.setText('v7_scoring',els.scoring.value);
@@ -1686,7 +1718,7 @@ function simulateReturnV2(ctx,stress='baseline',runs=900){
       const special=prof?chooseSpecialTeamPick(prof,roster,pickNo,teams,rng):null;
       if(special){roster[special]++;continue;}
       if(!prof){const skillShare=endgameSkillShare(roster,pickNo,mode);if(pickNo>=120&&rng()>skillShare){if(roster.DEF===0&&roster.K===0){if(rng()<.5)roster.DEF++;else roster.K++;}else if(roster.DEF===0)roster.DEF++;else if(roster.K===0)roster.K++;continue;}}
-      const liveAuto=(mode==='live'&&LIVE_MANAGER_ADAPTATION_STATE?.[slot]?.currentMode==='autodraft');
+      const liveAuto=(mode==='live'&&liveManagerStateForProfile(prof)?.currentMode==='autodraft');
       const board=pool.slice(0,70).map(p=>({p,w:liveAuto?sleeperLiveAutopickWeight(p,pickNo,roster):simCandidateWeight(p,pickNo,roster,prof,stress)}));
       const chosen=weightedChoice(board,rng);if(!chosen)break;
       const key=norm(chosen.p.name),idx=pool.indexOf(chosen.p);if(idx>=0)pool.splice(idx,1);
@@ -2838,13 +2870,15 @@ async function refresh(){
 
     if(liveGuardMessage)throw new Error(liveGuardMessage);
     rebuildLiveManagerAdaptation({mode,picks,players,map,current,modeText:els.managerMap.value});
+    if(mode==='live')renderLiveManagerModeStatus();
 
     const state=rosterState(mine,players,current);
     // No player-specific blacklist: all selected-panel candidates remain eligible.
     let scored=rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,strategy),stateCounts:{...state.counts}})).filter(x=>x.r&&!x.userStrategyExcluded);
-    const referenceBalanced=strategy==='progressive'?rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,'balanced'),stateCounts:{...state.counts}})).filter(x=>x.r&&!x.userStrategyExcluded):null;
+    const referenceBalanced=(mode!=='live'&&strategy==='progressive')?rankedAvailable.map(p=>({p,...scoreCandidate(p,current,returnPick,state,rankedAvailable,'balanced'),stateCounts:{...state.counts}})).filter(x=>x.r&&!x.userStrategyExcluded):null;
     const returnCtx={current,next:returnPick,picks,players,teams,map,rankedAvailable,mode,userSlot:slot};
-    const rv2=Number.isFinite(returnPick)&&returnPick>current?simulateReturnV2(returnCtx,stress,900):null;
+    const returnRuns=mode==='live'?300:900;
+    const rv2=Number.isFinite(returnPick)&&returnPick>current?simulateReturnV2(returnCtx,stress,returnRuns):null;
     for(const x of scored){
       x.intel=liveIntel(x.p,current,returnPick,picks,players,teams,mode,map,stress);
       const v2=rv2?.players?.[norm(x.p.name)];
@@ -3183,6 +3217,9 @@ els.renamePanelBtn.onclick=()=>{const p=panels[activePanelId],name=prompt('Neuer
 els.deletePanelBtn.onclick=()=>{if(['standard','pat'].includes(activePanelId))return alert('Standard und Pat bleiben erhalten.');if(confirm('Panel löschen?')){delete panels[activePanelId];delete panelRanks[activePanelId];activePanelId='standard';persist();renderAll()}};
 for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])el.onchange=()=>{positionPanels[pos]=el.value;persist()};
 if(els.expertProfile){els.expertProfile.value=currentExpertProfile();els.expertProfile.onchange=()=>applyExpertProfile(els.expertProfile.value);}
+if(els.liveManagerSlot)els.liveManagerSlot.onchange=renderLiveManagerModeStatus;
+if(els.liveManagerMode)els.liveManagerMode.onchange=()=>{};
+if(els.liveManagerApply)els.liveManagerApply.onclick=setLiveManagerModeFromUi;
 if(els.analysisExpertProfile){
   syncAnalysisExpertSelector();
   els.analysisExpertProfile.onchange=()=>{
@@ -3289,6 +3326,7 @@ function setDraftSurface(name){
     els.draftMode.value='live';
     if(els.autoRefresh.checked){els.autoRefresh.checked=false;setAuto();}
     populateLivePreviewPoints();
+    renderLiveManagerModeStatus();
     if(els.liveLockStatus){els.liveLockStatus.className='notice ok';els.liveLockStatus.textContent=`LIVE-Engine aktiv · Slot ${els.slot.value} · Progressive/Panel-/Manager-State unverändert.`;}
   }else{
     livePreviewActive=false;if(els.livePreviewExitBtn)els.livePreviewExitBtn.hidden=true;
