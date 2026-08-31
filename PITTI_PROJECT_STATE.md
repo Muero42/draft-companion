@@ -3075,3 +3075,42 @@ rc4.143 candidate:
 - adds `tools/rc4143-tier-position-contract.mjs` covering position-unavailable v4 disclosure, outsider exclusion, comma-returned filters and explicit tier parsing.
 
 Android authority remains rc4.142 until full CI/package/deployment parity and exactly one device verification. No cache/app-data clear or reinstall.
+
+
+## 2026-08-31 09:24Z — LATEST BACKUP ADOPTED / RC4.150 MOCK CALIBRATION
+
+Latest authoritative backup located in user Library and audited:
+`draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json`
+Library file id `file_00000000859c820a815d8dfe0209151b`.
+Backup self-identifies as `v11.8.0-rc4.150`, created `2026-08-31T09:21:02.895Z`, mock draft `1399843896455929856`, slot 9, progressive mode, active Expert-v4 QB/RB/WR/TE.
+
+Integrity:
+- 165 experts, 21 panels, 1332 Sleeper ADPs.
+- 17 decision fixtures, including 10 rc4.150 fixtures from pick 52 onward.
+- 60 Return-validation records / 674 resolved player forecasts.
+- Canonical manager map is correct.
+- Recorded roster path preserves no K/DST and exactly one QB only at final pick 149.
+
+Return-v2 audit:
+- Overall Brier 0.0907.
+- QB 0.0935 / RB 0.0811 / WR 0.0971 / TE 0.0648.
+- 80–100% return bin: predicted 94.5%, actual 94.1% (excellent).
+- Middle bins are modestly optimistic (~5–10 pp), but one mock does NOT justify a generic Return-v2 retune before the real draft.
+- Keep current Return-v2. Store these results for post-draft calibration.
+
+Coach-vs-user:
+- rc4.150 Coach leaders: WR 4 / QB 4 / RB 2 across ten fixtures.
+- User choices: RB 7 / WR 2 / QB 1.
+- Coach followed 4/10.
+- This divergence is NOT a supervised error label. Repeated QB leaders occurred with QB0; WR leaders had legitimate value/return context. Do not impose hard WR/RB quotas or blind RB forcing.
+
+v4 row coverage:
+- QB: 31×6/6, 5×5/6, 1×4/6, 1×2/6, 7×1/6.
+- RB: 74×6/6, 11×5/6, 4×4/6, 1×3/6, 11×2/6, 10×1/6.
+- WR: 88×6/6, 9×5/6, 5×4/6, 9×3/6, 10×2/6, 23×1/6.
+- TE: 30×6/6, 5×5/6, 6×4/6, 5×3/6, 5×2/6, 13×1/6.
+Coverage remains display context; no outsider substitution.
+
+Full audit: `research/BACKUP_AUDIT_2026-08-31T09-21-02-891Z.md`.
+
+Current runtime boundary is advanced to rc4.150. The public FantasyPros tier-field experiment is closed; global cross-position v4 tier display is operational. Next work is final draft-day freshness/upside/smoke and runtime freeze, not another tier trial.
