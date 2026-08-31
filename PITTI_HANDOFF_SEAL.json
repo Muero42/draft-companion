@@ -7,8 +7,8 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "22d0c0b0f23c98f5a160aa185126963565c1bc2d",
-    "PITTI_CURRENT_STATE.json": "c3db93b6e938126309b8ce73bffb129700a9f351",
+    "PITTI_COMMAND_CONTRACTS.json": "3fb7afc0559c3693b606c4310d62c817f3bf8056",
+    "PITTI_CURRENT_STATE.json": "6ca93391f510b99d2588eed51e8dc7d39ab8b19c",
     "PITTI_EXECUTION_LOCK.json": "e75084252fbc76703d4f1b7d821f529f06d4b3ff",
     "PITTI_AUTO_PREFLIGHT.md": "b57d1d0178339cc3790516ec89c0c568169ec87a",
     "PITTI_PROJECT_STATE.md": "b7496cd03a8eb0dce9d7dc2a3557c7ca12e7da6d",
@@ -53,9 +53,9 @@
     "no_cache_clear_reinstall": true,
     "rc4137_android_version_observed": true,
     "rc4137_tier_function_verified": false,
-    "main_gh_pages_parity": false,
+    "main_gh_pages_parity": true,
     "stale_geno_rodgers_contradictions_removed": true
   },
-  "exact_gate": "RC4.137_TIER_FUNCTION_VERIFY_AND_PAGES_PARITY",
-  "note": "v210 second-pass reseal: Android already visibly runs rc4.137. Stale bootstrap/research statements contradicting the explicit Geno Smith/Aaron Rodgers hard exclusions were removed. Next: verify tier function on existing rc4.137; gh-pages parity remains."
+  "exact_gate": "RC4.137_TIER_FUNCTION_VERIFY",
+  "note": "v210: core rc4.137 runtime parity main↔gh-pages PASS; Android already visibly runs rc4.137. Remaining release gate is on-device tier-function verification; no reinstall required."
 }
