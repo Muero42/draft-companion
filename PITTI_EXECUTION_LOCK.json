@@ -226,10 +226,10 @@
   },
   "handoff": {
     "generation": "20260831T1028Z-v213",
-    "status": "PASS_PENDING_RESEAL",
-    "ready": false,
-    "secondPass": false,
-    "resume": "rc4.152 device functional. rc4.153 is display-only expert ordering; refresh once, smoke expert order, freeze."
+    "status": "PASS",
+    "ready": true,
+    "secondPass": true,
+    "resume": "rc4.152 device functional. rc4.153 is fully gated/deployed display-only expert ordering; refresh once, smoke expert order, then freeze."
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
