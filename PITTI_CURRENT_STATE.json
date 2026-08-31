@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260831T0425Z-v208",
-  "updated_at": "2026-08-31T04:25:00Z",
+  "handoff_generation": "20260831T0435Z-v209",
+  "updated_at": "2026-08-31T04:35:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -13,13 +13,13 @@
     "android_authority": "v11.8.0-rc4.135",
     "test_challenger": "v11.8.0-rc4.137",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.135 last accepted Android/package authority; rc4.137 package pending",
+    "latest_package_reextract": "v11.8.0-rc4.137 CI PACKAGE/RE-EXTRACT PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
-    "latest_package_sha256": "artifact-envelope-sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc",
-    "deployed_pages": "v11.8.0-rc4.136 deployed but tier-invalid",
+    "latest_package_sha256": "8f56584f1f7cf99ec930304f7cedf03c02f82da2b73563f29f01f6e7954fca3d",
+    "deployed_pages": "v11.8.0-rc4.136 deployed but tier-invalid; rc4.137 promotion pending",
     "deployed_pages_app_byte_parity_with_main": true,
-    "package_reference_run": 33305284763,
-    "package_reference_artifact_id": 9730250635,
+    "package_reference_run": 33357387697,
+    "package_reference_artifact_id": 9745555473,
     "package_reference_note": "rc4.117 OFF-DEVICE PASS. Package run 33305284763 / artifact 9730250635 / sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc. gh-pages promoted to rc4.117 with main parity PASS. Device v4 acceptance remains pending.",
     "android_version_observed": true,
     "android_functional_verified": true,
@@ -128,7 +128,18 @@
       "Josh Jacobs current acute-status handling must not regress.",
       "AUTO/AUTO BLOCK means actual autonomous work, no empty/status-only messages."
     ],
-    "preparedCandidate": "v11.8.0-rc4.137 on pitti-rc4.137-tier-fix (NOT DEPLOYED / NOT ANDROID-VERIFIED)"
+    "preparedCandidate": "v11.8.0-rc4.137 on pitti-rc4.137-tier-fix (NOT DEPLOYED / NOT ANDROID-VERIFIED)",
+    "transaction_in_progress": false,
+    "status": "PREDEPLOY_GATES_PASS",
+    "releaseEvidence": {
+      "releaseContractRun": 33357387674,
+      "projectGuardrailsRun": 33357387751,
+      "packageGateRun": 33357387697,
+      "packageArtifactId": 9745555473,
+      "packageSha256": "8f56584f1f7cf99ec930304f7cedf03c02f82da2b73563f29f01f6e7954fca3d",
+      "runtimeFiles": 13,
+      "result": "PASS"
+    }
   },
   "source_authority": "main rc4.136 runtime is deployed but tier-invalid; rc4.135 is last accepted Android authority; rc4.137 fix branch is PREDEPLOY only.",
   "package_authority": "rc4.135 remains accepted package/runtime lineage until rc4.137 full gate and Android verification.",
@@ -218,17 +229,17 @@
   },
   "currentWork": {
     "branch": "pitti-rc4.137-tier-fix",
-    "status": "RC4.137_PREDEPLOY_FULL_GATE",
+    "status": "RC4.137_PREDEPLOY_GATES_PASS_PROMOTION_PENDING",
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.135",
     "runtime": "rc4.135 accepted Android; rc4.136 deployed but tier-invalid; rc4.137 branch candidate under full off-device gate",
     "mainRuntimeParity": "main==gh-pages rc4.136; candidate branch not yet promoted",
-    "nextGate": "rc4.137 full regression/package then promote main+gh-pages and verify parity before one Android refresh"
+    "nextGate": "promote identical tested rc4.137 runtime to main and gh-pages, prove exact parity, then one Android refresh"
   },
-  "status": "PITTI_RC4_137_TIER_FIX_IN_PROGRESS",
-  "gate": "RC4.137_TIER_FIX_AND_FULL_REGRESSION",
-  "nextGate": "rc4.137 syntax/version/guardrail/package + main↔gh-pages parity + controlled Android verification",
+  "status": "PITTI_RC4_137_PREDEPLOY_GATES_PASS",
+  "gate": "RC4.137_PROMOTION_AND_PARITY",
+  "nextGate": "promote tested rc4.137 bytes to main+gh-pages, exact parity, then one controlled Android refresh",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
