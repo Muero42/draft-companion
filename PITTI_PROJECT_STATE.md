@@ -3185,3 +3185,16 @@ Latest evidence backup remains:
 Its audit supports preserving current Return-v2 for the draft.
 
 Generation: **20260831T1028Z-v214**.
+
+
+## 2026-08-31 11:12Z — AUTO checkpoint · rc4.154 fixed expert matrix deployed
+
+User replaced the rc4.153 dynamic expert-order requirement with an exact visual 3×3 matrix for v4 player cards:
+- row 1: Sean Koerner · Dalton Del Don · Pat Fitzmaurice;
+- row 2: Nick Mariano · Justin Boone · Ryan Weisse;
+- row 3: Todd D Clark · Wolf of Roto Street · Kev Wheeler.
+If a position does not include an expert, preserve an invisible same-column placeholder only when a later expert exists in the same row; trailing absent experts are omitted. A panel member whose player rank is unavailable remains explicit as #– / fehlt. This is display-only; expert membership, weights, Overall ranks, tiers, Coach, Return-v2, manager logic, history and decision evidence are unchanged.
+
+Implementation root-cause correction: rc4.153's single global sort could not express fixed row/column geometry. rc4.154 replaces it with explicit row geometry plus hidden placeholders and a four-position regression contract. Initial rc4.154 CI failed only because CURRENT still pointed to rc4.153 as the test challenger while README had advanced; candidate authority pointers were corrected rather than changing runtime behavior. Re-run results: Project Guardrails PASS (run 33385556793), Release Contract PASS (33385556859), Candidate Package Gate PASS (33385556811). Preinstall artifact 9755426863, digest sha256:369aafeec1464251a735c733cd3297b3239c05ee0c7b60def7be6c29b6487ff1. PR #84 merged as dfcaffbb345fbe569ffac8ff160ae6c7476f3916. Canonical gh-pages deployment was synchronized and all 13 runtime files were re-read byte-identical to main.
+
+**NEXT GATE: RC4.154_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE.** Exactly one Android refresh/update. Verify version v11.8.0-rc4.154 and the fixed matrix on representative positions. No cache clear, reinstall, repeated refresh loop, model/tier/Return/source changes. PASS => runtime freeze for real draft.
