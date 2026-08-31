@@ -83,4 +83,13 @@ assert(!p.minus(badRiskPolarity).includes('Positive upside must not render as ri
 assert(src.includes('x.expertTier?.label'), 'rc4.136 tier label not wired into live surface');
 const cardPos=src.indexOf('<h3>${i+1}. ${esc(x.name)}'), tierPos=src.indexOf('x.expertTier?.label',cardPos), arrowPos=src.indexOf('headerArrow(x)',cardPos);
 assert(cardPos>=0&&tierPos>cardPos&&arrowPos>tierPos,'rc4.136 tier must render after player name and before research arrows');
+
+assert(src.includes("const APP_VERSION='v11.8.0-rc4.138'"),'rc4.138 version missing');
+const requiredDescriptionCoverage=["Tyler Warren","Emeka Egbuka","Tetairoa McMillan","Cam Skattebo","Jayden Daniels","TreVeyon Henderson","Jadarian Price","Jalen Hurts","Rhamondre Stevenson","Justin Herbert","Trevor Lawrence","Dak Prescott","Brock Purdy","Chuba Hubbard","Jaxson Dart","RJ Harvey","Patrick Mahomes","Bo Nix","Alec Pierce","Michael Wilson","KC Concepcion","Makai Lemon","Jonah Coleman","Dylan Sampson","Hunter Henry","Brian Robinson","Braelon Allen","Alvin Kamara","Tyrone Tracy","Emmett Johnson","Kaelon Black","Nicholas Singleton","Kaleb Johnson"];
+for(const name of requiredDescriptionCoverage){
+ const q1="[norm('"+name.replaceAll("'","\\'")+"')]";
+ const q2='[norm("'+name.replaceAll('"','\\"')+'")]';
+ assert(src.includes(q1)||src.includes(q2),'missing individual-description coverage: '+name);
+}
+
 console.log('LIVE_PRESENTATION_BEHAVIOR_PASS');
