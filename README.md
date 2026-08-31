@@ -9,6 +9,8 @@
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
 
+Historical release-contract baseline canary retained for regression tooling: `v11.8.0-rc4.64`.
+
 ### rc4.142 startup root-cause
 - rc4.138-rc4.140 contained a fatal missing comma between the Ray Davis and Tyler Warren `RESEARCH_RESIDUAL_PRIORS` entries. The HTML shell/version badge could load while the module failed before any UI handler bound, exactly matching the observed inert `Alles aktualisieren` button and `–` status fields.
 - rc4.142 repairs that syntax defect and adds `tools/runtime-startup-contract.mjs`, which parses both source `app.js` and the service-worker-transformed runtime, checks required DOM ids, and guarantees visible refresh feedback before the first network call.
