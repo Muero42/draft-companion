@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.142';
+const APP_VERSION='v11.8.0-rc4.143';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2199,30 +2199,50 @@ function extractFpConsensusTiers(payload,pos,ids){
   }
   return {ok:Object.keys(rows).length>0,reason:Object.keys(rows).length?'':'keine expliziten Tier-Zeilen',rows};
 }
+function fpConsensusContextVerified(payload,pos,scoring){
+  const gotPos=String(payload?.position_id||'').toUpperCase();
+  const gotScoring=String(payload?.scoring||'').toUpperCase();
+  const gotType=String(payload?.ranking_type_name||'').toUpperCase();
+  return gotPos===String(pos).toUpperCase()&&gotScoring===String(scoring).toUpperCase()&&gotType==='DRAFT';
+}
+async function fantasyProsSelectableV4Experts(pos){
+  // FantasyPros expert eligibility is position-specific. A numeric ID learned from the
+  // ALL directory proves identity, not that the expert is selectable for QB/RB/WR/TE.
+  // Resolve the exact DRAFT/HALF position directory first, then intersect by v4 name.
+  const season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value);
+  const data=await proxyCall(`/nfl/${season}/rankings/experts?position=${pos}&type=DRAFT&scoring=${scoring}&include_overall=true`);
+  const available=extractExperts(data),byName=new Map(available.map(e=>[norm(e.name),e]));
+  const selected=[],unavailable=[];
+  for(const name of EXPERT_V4_BLUEPRINT[pos].experts){
+    const e=byName.get(norm(name));
+    if(e?.id&&/^\d+$/.test(String(e.id)))selected.push({name,id:String(e.id)});
+    else unavailable.push(name);
+  }
+  return {selected,unavailable,directoryCount:available.length};
+}
 async function fetchV4ConsensusTierPosition(pos){
-  const bp=EXPERT_V4_BLUEPRINT[pos],selected=[],unavailable=[];
-  for(const name of bp.experts){
-    const e=findExpert(name),id=e?.apiId||(/^[0-9]+$/.test(String(e?.id||''))?String(e.id):null);
-    if(id)selected.push({name,id:String(id)});else unavailable.push(name);
+  let selected=[],unavailable=[],directoryCount=0;
+  try{
+    ({selected,unavailable,directoryCount}=await fantasyProsSelectableV4Experts(pos));
+  }catch(e){
+    return {ok:false,pos,selected:[],unavailable:[...EXPERT_V4_BLUEPRINT[pos].experts],reason:'positionsspezifisches FantasyPros-Expertenverzeichnis nicht verifizierbar: '+(e?.message||String(e))};
   }
-  if(selected.length<2)return {ok:false,pos,selected:selected.map(x=>x.name),unavailable,reason:'weniger als zwei FantasyPros-auswählbare v4-Experten'};
-  const ids=selected.map(x=>x.id),filter=ids.join(':'),season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value);
-  const attempts=[
-    // Public API: filters is the colon-delimited expert whitelist; preseason/draft
-    // consensus is the default at week 0. Keep explicit DRAFT only as a fallback.
-    `/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}&week=0&filters=${filter}&experts=show`,
-    `/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}&week=0&type=DRAFT&filters=${filter}&experts=show`
-  ];
-  const failures=[];
-  for(const path of attempts){
-    try{
-      const data=await proxyCall(path),parsed=extractFpConsensusTiers(data,pos,ids);
-      const min={QB:12,RB:30,WR:35,TE:12}[pos];
-      if(parsed.ok&&Object.keys(parsed.rows).length>=min)return {ok:true,pos,rows:parsed.rows,selected:selected.map(x=>x.name),unavailable,path,updated:Date.now()};
-      failures.push(parsed.reason+' ('+Object.keys(parsed.rows).length+')');
-    }catch(e){failures.push(e?.message||String(e))}
+  if(selected.length<2)return {ok:false,pos,selected:selected.map(x=>x.name),unavailable,reason:`weniger als zwei positionsspezifisch auswählbare v4-Experten (Verzeichnis ${directoryCount})`};
+  const ids=selected.map(x=>x.id),filter=ids.join(':'),season=els.season.value.trim(),scoringRaw=els.scoring.value,scoring=encodeURIComponent(scoringRaw);
+  // The public contract defines type=DRAFT, scoring, position and filters explicitly.
+  // Fail closed on any context/provenance mismatch instead of accepting a preseason/default response.
+  const path=`/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}&week=0&type=DRAFT&filters=${filter}&experts=show`;
+  try{
+    const data=await proxyCall(path);
+    if(!fpConsensusContextVerified(data,pos,scoringRaw))
+      return {ok:false,pos,selected:selected.map(x=>x.name),unavailable,reason:`FantasyPros-Kontext abweichend: position=${data?.position_id??'?'} scoring=${data?.scoring??'?'} type=${data?.ranking_type_name??'?'}`};
+    const parsed=extractFpConsensusTiers(data,pos,ids),min={QB:12,RB:30,WR:35,TE:12}[pos];
+    if(parsed.ok&&Object.keys(parsed.rows).length>=min)
+      return {ok:true,pos,rows:parsed.rows,selected:selected.map(x=>x.name),unavailable,path,updated:Date.now(),directoryCount};
+    return {ok:false,pos,selected:selected.map(x=>x.name),unavailable,reason:parsed.reason+' ('+Object.keys(parsed.rows).length+')'};
+  }catch(e){
+    return {ok:false,pos,selected:selected.map(x=>x.name),unavailable,reason:e?.message||String(e)};
   }
-  return {ok:false,pos,selected:selected.map(x=>x.name),unavailable,reason:failures.join(' | ')};
 }
 async function loadV4ConsensusTiers(){
   const next={},status=[];
