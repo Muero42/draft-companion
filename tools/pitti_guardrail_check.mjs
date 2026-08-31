@@ -79,9 +79,9 @@ for(const token of [
 
 must(readme.includes('v11.8.0-rc4.64'),'README production/control baseline drift');
 must(readme.includes(current.runtime?.test_challenger||'v11.8.0-rc4.86'),'README current candidate missing');
-must(!app.includes('USER_HARD_QB_EXCLUSIONS'),'player-name QB exclusion must not exist');
-must(!app.includes('USER HARD EXCLUSION'),'player-name hard-exclusion scoring must not exist');
-must(!/genosmith|aaronrodgers/i.test(app),'Geno/Rodgers must not receive player-name runtime treatment');
+must(policy.includes("USER_DRAFT_HARD_EXCLUSIONS=new Set(['geno smith','aaron rodgers'])"),'explicit Geno/Rodgers hard exclusions missing');
+must(app.includes("userDraftStrategyExcluded(p.pos,state.counts,p.name)"),'named user exclusion wiring missing');
+must(app.includes('USER HARD EXCLUSION: nicht draften'),'hard-exclusion Coach reason missing');
 must(app.includes("function normalCandidateAdmissible(row)"),'normal candidate admissibility guard missing');
 must(app.includes("const normal=source.filter(normalCandidateAdmissible)"),'normal-cut rows must precede fallback in visible Top-10');
 must(app.includes("if(visible.length<10)"),'fallback fill must only occur after normal-cut selection');
