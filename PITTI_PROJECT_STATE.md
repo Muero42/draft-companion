@@ -3207,3 +3207,16 @@ Device rc4.154 loaded but expert presentation was still rejected. Root cause aud
 PR #85 passed Project Guardrails run 33386341772, Release Contract 33386341367, Candidate Package Gate 33386341286. Preinstall artifact 9755706199 digest sha256:f200bc85a5215d3105bddb2caca2b8b5a57b58ce49fcad35af05ab13813dd43c. PR merged as cc04909f457d5ee6f7665e28776dad0e6ce06ad6. gh-pages was synchronized and all 13 runtime files re-read byte-identical to main.
 
 **NEXT GATE: RC4.155_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE.** Exactly one Android refresh. Verify v4 matrix geometry, v3/v5 expert preservation, and heading removal. No cache clear/reinstall or model/tier/Return/source changes.
+
+
+## 2026-08-31 11:31Z — AUTO checkpoint · rc4.156 root-cause closure before device update
+
+User explicitly prohibited further trial-and-error and required server-side verification before another install/update. The rc4.155 device screenshot was used as acceptance evidence rather than trying another layout variant. It showed the legacy single-line `Experten: Weisse #2 · Kev Wheeler #1 · Del Don #1 ...` on an RB card, proving the fixed v4 branch did not produce visible output.
+
+Root cause traced in source: `rankFor()` returns sanitized rank data plus `panelId`, but does **not** expose `r.pos`. rc4.155 attempted `String(r?.pos||'').toUpperCase()`, therefore looked up `EXPERT_V4_BLUEPRINT['']`, got zero members, and produced an empty matrix. rc4.156 derives the position from the authoritative panel id (`expert-v4-qb/rb/wr/te`). This is not a speculative CSS/layout change.
+
+The display contract was also aligned exactly with the screenshot/user request: compact three text lines, not nine large cards; no visible `Experten` or `Overall` heading. Rows are Koerner/Del Don/Pat; Mariano/Boone/Weisse; Clark/Wolf/Wheeler, with invisible same-column placeholders only before a later member and trailing absences omitted. v3/v5 retain their own experts.
+
+Verification before user action: Release Contract run 33387096891 PASS; Candidate Package Gate 33387096882 PASS including package/re-extract; Project Guardrails 33387096902 PASS; artifact 9755991411 digest sha256:1df367cb9ca21035c5e69d11b499bac1f8781b6dec970fc5ae921161546b85f5; PR #86 merged as b4d81320dadb466321ff4a4743212181a57592ff; canonical deployment completed; all 13 runtime files re-read main == gh-pages. No panel membership, weights, rankings, tiers, Coach, Return-v2, manager logic, history or evidence changed.
+
+**NEXT GATE: one controlled Android refresh to rc4.156, then screenshot acceptance.** No cache clear, reinstall or repeated attempts.
