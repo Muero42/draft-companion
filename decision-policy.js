@@ -1,6 +1,10 @@
 export const USER_DRAFT_QB_LIMIT=1;
 
-export function userDraftStrategyExcluded(pos, counts={}){
+export const USER_DRAFT_HARD_EXCLUSIONS=new Set(['geno smith','aaron rodgers']);
+
+export function userDraftStrategyExcluded(pos, counts={}, name=''){
+  const key=String(name||'').trim().toLowerCase().replace(/[^a-z0-9]+/g,' ').replace(/\s+/g,' ').trim();
+  if(USER_DRAFT_HARD_EXCLUSIONS.has(key))return true;
   return pos==='QB' && Number(counts?.QB||0)>=USER_DRAFT_QB_LIMIT;
 }
 
