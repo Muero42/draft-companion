@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+import assert from 'node:assert/strict';
+const src=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
+assert(src.includes("/rankings/experts?position=${pos}&include_overall=true"),'documented FantasyPros expert-directory query missing');
+assert(!src.includes("/rankings/experts?position=ALL&type=DRAFT&scoring="),'known-empty ALL+DRAFT+scoring expert query resurrected');
+assert(src.includes("[norm('David Montgomery')]"),'Montgomery current evidence missing');
+assert(src.includes("Houston behandelt Montgomery 2026 als klaren Lead-/Three-Down-Back"),'Montgomery visible positive text missing');
+assert(src.includes("2025 fiel Montgomery in Detroit spät auf 32,1% Snap Rate und 8,2 Touches/Spiel zurück"),'Montgomery visible risk text missing');
+assert(src.includes('externalTierHtml(x)'),'tier renderer missing');
+assert(src.includes('players[].tier')||src.includes("fpConsensusTierNumber(row)"),'explicit FantasyPros tier parser missing');
+console.log('rc4.147 documented expert directory + Montgomery text contract PASS');
