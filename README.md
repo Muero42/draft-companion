@@ -1,8 +1,8 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.146. **Android authority remains v11.8.0-rc4.145** until full package/deployment/device acceptance.
-> **Observed rc4.145 state:** app functional, v4 ranks/texts functional, external v4 tiers still absent.
+> **Current source candidate:** v11.8.0-rc4.147. **Android authority remains v11.8.0-rc4.146** until full gates/deployment/device acceptance.
+> **Observed rc4.146 state:** app functional, v4 ranks/texts mostly functional, external v4 tiers still absent; diagnostics show zero numeric v4 experts.
 > **Evidence:** rc4.144 diagnostics showed all four tier paths blocked by the unusable positional expert-directory response (`Verzeichnis 0`) despite 165 experts and populated v4 panels.
-> **rc4.146 bounded fix:** use only numeric FantasyPros IDs already observed through working directories, request exact v4 Custom-ECR, and verify returned `filters` / `experts_available.included|excluded` provenance. No outsider substitution; explicit `players[].tier` only.
+> **rc4.147 bounded fix:** query the FantasyPros expert directory exactly per documented position + include_overall contract (no ALL+DRAFT+scoring filter), retain exact v4-only Custom-ECR provenance, and restore David Montgomery current player text.
 > **UI cleanup:** obsolete top incumbent/v2/v3 development selector removed; authoritative v3/v4/v5 selector remains directly above Analyze.
 > **Next gate:** full release/package/guardrail validation, exact main↔gh-pages parity, then one controlled Android acceptance.
 > **Model authority:** v4 PRIMARY / v5 CHALLENGER / v3 failsafe. Tier display cannot alter Coach/Return/opponent/roster/history.
