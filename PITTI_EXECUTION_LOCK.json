@@ -17,19 +17,19 @@
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.152",
-    "latestPreinstallVerified": "candidate validation pending",
+    "latestPreinstallVerified": "rc4.157 Candidate Package Gate + Release Contract + Guardrails PASS",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "current CI package gate authority = rc4.153; historical rc4.143 artifact retained only as provenance",
-    "preinstallSha256": "sha256:1df367cb9ca21035c5e69d11b499bac1f8781b6dec970fc5ae921161546b85f5",
+    "preinstallSha256": "sha256:4a5c7c00fca33d7869be7c75f80a7005ae5c0f10d3b6c0767cb0b595f6297a18",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "actual visible live-surface matrix candidate",
-    "latestDeployedCandidate": "v11.8.0-rc4.156",
+    "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
+    "latestDeployedCandidate": "v11.8.0-rc4.157",
     "latestAndroidVerified": "v11.8.0-rc4.152",
     "androidAuthority": "v11.8.0-rc4.152 observed functional",
     "android_authority": "v11.8.0-rc4.152",
     "deployedPagesAppByteParityWithMain": true,
-    "preinstallReferenceRun": 33387096882,
-    "preinstallReferenceArtifactId": 9755991411,
+    "preinstallReferenceRun": 33388112853,
+    "preinstallReferenceArtifactId": 9756358571,
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.152",
     "latestAndroidFunctionalVerified": "rc4.152 device: nine-manager LIVE grid, LIVE v3/v4/v5 selector, fast analysis, global tiers, current texts functional",
@@ -62,8 +62,8 @@
       "androidAccepted": false
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.152",
-    "unreleasedMainDelta": "none; rc4.156 merged/deployed",
-    "deployedPagesVersion": "v11.8.0-rc4.156",
+    "unreleasedMainDelta": "none",
+    "deployedPagesVersion": "v11.8.0-rc4.157",
     "mainGhPagesParity": true
   },
   "auto": {
@@ -206,16 +206,17 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "branch": "pitti/rc4.157-live-surface-expert-matrix",
-    "status": "RC4.157_PREINSTALL_VALIDATION_PENDING",
+    "branch": "main",
+    "status": "RC4.157_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
     "production": false,
     "androidVerified": false,
-    "acceptedAndroidFallback": "rc4.156 device screenshot proves visible live surface still legacy expert line",
-    "nextGate": "all three rc4.157 CI gates PASS"
+    "acceptedAndroidFallback": "rc4.156 device loads but visible live surface expert line rejected",
+    "runtime": "main/gh-pages rc4.157 13/13 parity; Android rc4.156",
+    "nextGate": "one rc4.157 refresh + screenshot"
   },
-  "status": "RC4.157_PREINSTALL_VALIDATION_PENDING",
-  "gate": "RC4.157_PREINSTALL_VALIDATE_DEPLOY_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
-  "nextGate": "all three rc4.157 CI gates PASS",
+  "status": "RC4.157_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
+  "gate": "RC4.157_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
+  "nextGate": "one rc4.157 refresh + screenshot",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -281,5 +282,5 @@
     "latestBackupResolvedReturnForecasts": 674,
     "latestBackupReturnMeanBrier": 0.0907
   },
-  "rootCauseDiscipline": "rc4.154-156 patched hidden full Coach renderer; CSS explicitly hides #coachSectionCard while live decision surface is active. rc4.157 patches actual visible live-surface-v3.js card path. No model changes."
+  "rootCauseDiscipline": "Proven render-path mismatch, not cache/CSS speculation: live-surface-v3.css hides coachSectionCard and live-surface-v3.js rendered old Experten line. rc4.157 patches actual visible card path. No model changes."
 }
