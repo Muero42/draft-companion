@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.146';
+const APP_VERSION='v11.8.0-rc4.147';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -998,11 +998,20 @@ function saveCurrentPanel(){const p=panels[activePanelId];if(!p)return;const mem
 async function loadExperts(){
   if(els.loadExpertsBtn)els.loadExpertsBtn.disabled=true;
   try{
-    const season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value);
+    const season=els.season.value.trim();
     let apiExperts=[];
     try{
-      const data=await proxyCall(`/nfl/${season}/rankings/experts?position=ALL&type=DRAFT&scoring=${scoring}&include_overall=true`);
-      apiExperts=extractExperts(data);
+      // FantasyPros' documented expert-directory example uses position + include_overall
+      // without DRAFT/scoring filters. The previous ALL+DRAFT+HALF combination returned
+      // an empty directory on the live key even while public rankings showed 160+ experts.
+      const mergedApi=new Map();
+      for(const pos of ['QB','RB','WR','TE']){
+        try{
+          const data=await proxyCall(`/nfl/${season}/rankings/experts?position=${pos}&include_overall=true`);
+          for(const e of extractExperts(data))mergedApi.set(String(e.id),e);
+        }catch{}
+      }
+      apiExperts=[...mergedApi.values()];
     }catch{}
     const publicExperts=await loadPublicExpertDirectory();
 
@@ -2220,24 +2229,28 @@ function fpConsensusContextVerified(payload,pos,scoring){
   return gotPos===String(pos).toUpperCase()&&gotScoring===String(scoring).toUpperCase()&&gotType==='DRAFT';
 }
 async function fantasyProsSelectableV4Experts(pos){
-  // Use only numeric FantasyPros IDs already observed through working ALL/public directories.
-  // The actual Custom-ECR response decides which requested v4 experts are included/excluded.
-  const blueprint=EXPERT_V4_BLUEPRINT[pos].experts,byName=new Map();
+  const blueprint=EXPERT_V4_BLUEPRINT[pos].experts,byName=new Map(),season=els.season.value.trim();
+  // First use numeric IDs already loaded from the working expert refresh.
   for(const e of experts||[]){
     const id=String(e?.apiId||e?.id||'');
     if(e?.name&&/^\d+$/.test(id))byName.set(norm(e.name),{name:e.name,id});
   }
-  const publicExperts=await loadPublicExpertDirectory();
-  for(const e of publicExperts||[]){
-    const id=String(e?.apiId||'');
-    if(e?.name&&/^\d+$/.test(id)&&!byName.has(norm(e.name)))byName.set(norm(e.name),{name:e.name,id});
-  }
+  // Then query the documented position endpoint exactly as shown by FantasyPros:
+  // no type/scoring filters here. Eligibility is position-specific; Custom-ECR later
+  // verifies the exact returned v4 subset and DRAFT/HALF context.
+  try{
+    const data=await proxyCall(`/nfl/${season}/rankings/experts?position=${pos}&include_overall=true`);
+    for(const e of extractExperts(data)){
+      const id=String(e?.id||'');
+      if(e?.name&&/^\d+$/.test(id))byName.set(norm(e.name),{name:e.name,id});
+    }
+  }catch{}
   const selected=[],unavailable=[];
   for(const name of blueprint){
     const e=byName.get(norm(name));
     if(e)selected.push({name,id:e.id});else unavailable.push(name);
   }
-  return {selected,unavailable,directoryCount:byName.size,directorySource:'working ALL/public numeric IDs'};
+  return {selected,unavailable,directoryCount:byName.size,directorySource:'FantasyPros documented positional expert directory'};
 }
 async function fetchV4ConsensusTierPosition(pos){
   let requested=[],unavailable=[],directoryCount=0;
@@ -2646,6 +2659,7 @@ const RESEARCH_RESIDUAL_PRIORS={
   [norm('Justin Jefferson')]:{pos:'WR',expiresAt:Date.parse('2026-09-02T12:00:00Z'),components:[{kind:'elite_target_share',dir:0,strength:1,confidence:.94,display:true,causal:'Trotz schwachem 2025 weiterhin 28,5% Target Share und 35,1% First-Read Share; klarer Alpha mit Rebound-Potenzial bei besserem QB-Spiel',invalidator:'Target-Command oder Trennung bleibt unter früherem Elite-Niveau'},{kind:'qb_efficiency_risk',dir:0,strength:1,confidence:.9,displayRisk:true,causal:'2025 fielen Separation/Route-Win deutlich ab und die QB-Situation bleibt mit Murray/McCarthy nicht risikofrei',invalidator:'QB1 stabilisiert sich und Jeffersons per-route Effizienz normalisiert sich'}]},
   [norm('Brock Bowers')]:{pos:'TE',expiresAt:Date.parse('2026-09-02T12:00:00Z'),components:[{kind:'elite_target_ceiling',dir:0,strength:1,confidence:.96,display:true,causal:'Als Rookie 112-1.194-5 auf 153 Targets; trotz 2025-PCL-Verletzung weiterhin starke per-route Effizienz und 2026 kaum echte WR1-Konkurrenz — realer TE1-overall-Pfad',invalidator:'Target-Volumen oder Beweglichkeit bleibt klar unter Rookie-Niveau'},{kind:'knee_recovery_context',dir:0,strength:1,confidence:.9,displayRisk:true,causal:'2025 PCL-Verletzung/Bone Bruise beeinträchtigte fast die ganze Saison; Health ist der zentrale Gegenpfad zum Elite-Ceiling',invalidator:'voll belastbare Rolle ohne erkennbare Einschränkung'}]},
 
+  [norm('David Montgomery')]:{pos:'RB',expiresAt:Date.parse('2026-09-02T12:00:00Z'),components:[{display:true,kind:'workhorse_volume',dir:1,strength:.74,confidence:.90,pricing:'PARTLY_PRICED',causal:'Houston behandelt Montgomery 2026 als klaren Lead-/Three-Down-Back; aktueller FantasyPros-Outlook erwartet eine Mixon-ähnliche Workload und sieht ihn als volumengetriebenen RB2 mit RB1-Ausreißerpfad',invalidator:'Woody Marks übernimmt deutlich mehr Early-Down- oder Goal-Line-Arbeit als aktuell erwartet'},{displayRisk:true,kind:'age_role_risk',dir:-1,strength:.46,confidence:.84,pricing:'PARTLY_PRICED',causal:'2025 fiel Montgomery in Detroit spät auf 32,1% Snap Rate und 8,2 Touches/Spiel zurück; mit 29 bleibt Rollen- und Altersrisiko trotz besserer Houston-Chance real',invalidator:'Houston bestätigt früh eine stabile 18+-Touch-/Goal-Line-Rolle'}]},
   [norm("D'Andre Swift")]:{pos:'RB',expiresAt:Date.parse('2026-09-02T12:00:00Z'),components:[{kind:'lead_back_receiving_floor',dir:0,strength:1,confidence:.90,display:true,causal:'Chicago-Leadback mit belastbarem Receiving-Floor: 2025 trotz wechselnder Effizienz weiter klare Touch-/Route-Beteiligung; der Fantasy-Pfad kommt über Volumen plus Targets statt über einen sicheren Effizienzsprung',invalidator:'Monangai oder ein anderer Back übernimmt klar Early-Down-/Route-Anteile'},{kind:'efficiency_ceiling',dir:0,strength:1,confidence:.84,displayRisk:true,causal:'Der Ceiling-Pfad bleibt volumenabhängig: Swifts Rushing-Effizienz und Goal-Line-Dominanz waren zuletzt nicht stabil genug für einen sicheren High-End-RB2-Ausreißer',invalidator:'klar verbesserte Effizienz plus dominante Red-Zone-Nutzung'}]},
   [norm('Lamar Jackson')]:{pos:'QB',expiresAt:Date.parse('2026-09-02T12:00:00Z'),components:[{kind:'elite_dual_threat_qb',dir:0,strength:1,confidence:.97,display:true,causal:'Elite Dual-Threat-Ceiling: Jackson verbindet effizientes Passing mit ligaweit seltenem QB-Rushing und bleibt dadurch ein realer Overall-QB1-Kandidat',invalidator:'Designed-Rushing oder Explosivität fällt deutlich'},{kind:'qb_opportunity_cost',dir:0,strength:1,confidence:.86,displayRisk:true,causal:'In 1-QB ist der Preis der zentrale Gegenpfad: ein früher Jackson-Pick kostet einen RB/WR-Starter, während mehrere spielbare QBs später verfügbar bleiben',invalidator:'Jackson fällt deutlich unter seinen normalen Draftpreis'}]},
   [norm('Kyler Murray')]:{pos:'QB',expiresAt:Date.parse('2026-09-01T12:00:00Z'),components:[{display:true,kind:'expert_qualitative_upside',dir:1,strength:.62,confidence:.90,pricing:'PARTLY_PRICED',causal:'Fitzmaurice 27.08.: bevorzugter Mid/Late-QB; Karrierehistorie als QB1-Punkte/Spiel-Profil, Rushing-Floor und Jefferson/Addison unter Kevin O’Connell stützen Rebound-Ceiling',invalidator:'Rushing/gesundheitliche Rolle oder Passing-Effizienz bleibt klar unter früherem QB1-Niveau'}]},
