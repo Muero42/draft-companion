@@ -1,7 +1,7 @@
 name: PITTI release contract v2
 on:
   push:
-    branches: [main, pitti/expert-v4-v5-v180]
+    branches: [main, pitti/expert-v4-v5-v180, pitti-rc4.137-tier-fix]
   workflow_dispatch:
   pull_request:
     branches: [main]
