@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260831T0445Z-v210",
-  "updated_at": "2026-08-31T04:45:00Z",
+  "updated_at": "2026-08-31T09:20:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -128,9 +128,9 @@
       "Josh Jacobs current acute-status handling must not regress.",
       "AUTO/AUTO BLOCK means actual autonomous work, no empty/status-only messages."
     ],
-    "preparedCandidate": "v11.8.0-rc4.138 source committed; phone deployment NOT yet authorized",
+    "preparedCandidate": "v11.8.0-rc4.142",
     "transaction_in_progress": false,
-    "status": "PREDEPLOY_GATES_PASS",
+    "status": "RC4.142_ALL_CI_GATES_PASS",
     "releaseEvidence": {
       "releaseContractRun": 33366773433,
       "projectGuardrailsRun": 33366773498,
@@ -149,7 +149,16 @@
         "service-worker-transformed app parse PASS",
         "startup-prefix execution reaches refresh handler binding PASS",
         "canonical order/QB hard exclusions/v4-only tier provenance/Warren text/Jacobs exempt-list canaries PASS"
-      ]
+      ],
+      "rc4142": {
+        "commit": "f8c215b65ed3ab04c25d76af104bc2fa83639121",
+        "releaseContractRun": 33367917513,
+        "packageGateRun": 33367917515,
+        "guardrailsRun": 33367917487,
+        "rc482Run": 33367917505,
+        "rc483Run": 33367917493,
+        "result": "ALL_PASS"
+      }
     },
     "textCoverageAudit20260831": {
       "source": "latest 2026-08-30 16:02 backup decisionFixtures candidate universe + current rc4.137 RESEARCH_RESIDUAL_PRIORS + current device screenshot",
@@ -183,7 +192,9 @@
       "cause": "Fatal JavaScript syntax error in RESEARCH_RESIDUAL_PRIORS: missing comma between Ray Davis and Tyler Warren entries. HTML loaded version badge, but app.js module did not parse/execute, so no handlers/status initialization ran.",
       "fixedIn": "v11.8.0-rc4.142",
       "prevention": "tools/runtime-startup-contract.mjs parses both source app.js and the exact service-worker-transformed runtime, checks required DOM ids and immediate refresh feedback before network calls."
-    }
+    },
+    "rc4141DeviceEvidence": "User screenshot 2026-08-31: app functional, Analyze works, Warren individual description present; no tier labels visible.",
+    "rc4142TierFix": "Removed invalid requirement total_experts == selected v4 count; exact selected expert IDs are verified via filters/expert metadata. FantasyPros total_experts is consensus-population metadata, not selected-filter count."
   },
   "source_authority": "main is rc4.137; gh-pages is still rc4.136; Android screenshot proves rc4.137 is already installed/visible. Do not request another install merely to reach rc4.137.",
   "package_authority": "rc4.137 package/re-extract PASS; device version observed rc4.137. Functional tier verification remains pending.",
@@ -273,19 +284,19 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.141_OFFDEVICE_FULL_PASS_AND_13_OF_13_PARITY",
+    "status": "RC4.142_ALL_RELEASE_GATES_PASS_HANDOFF_DEVICE_VERIFY_PENDING",
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.135",
-    "runtime": "Android shell rc4.139 observed but app module did not execute; exact tested rc4.142 package now main↔gh-pages 13/13 byte-identical",
+    "runtime": "rc4.141 device screenshot proves startup/refresh/individual text functional; tiers still absent. rc4.142 fixes FP expert-set verifier semantics; all latest CI gates PASS. rc4.142 device tier verification pending.",
     "mainRuntimeParity": "PASS — app.js, decision-policy.js, index.html, live-surface-v3.js, manifest.webmanifest, sw.js, _worker.js identical main↔gh-pages",
-    "nextGate": "one controlled device reopen/update to rc4.142; verify status initialization, refresh handler, tiers and individual text",
+    "nextGate": "Deploy exact rc4.142 to gh-pages with byte parity, then one device tier verification; continue deferred 5-WR/freshness work after tier acceptance.",
     "textCoverageStatus": "SOURCE PASS — 125/125 audited candidate names covered in rc4.138; deterministic gate added",
     "parallelDraftDay": "ACTIVE — freshness research started while device verification pending"
   },
-  "status": "RC4.141_OFFDEVICE_FULL_PASS_AND_13_OF_13_PARITY",
-  "gate": "RC4.141_DEVICE_VERIFY",
-  "nextGate": "one controlled device reopen/update to rc4.142; verify status initialization, refresh handler, tiers and individual text",
+  "status": "RC4.142_ALL_RELEASE_GATES_PASS_HANDOFF_DEVICE_VERIFY_PENDING",
+  "gate": "RC4.142_PAGES_PARITY_THEN_DEVICE_TIER_VERIFY",
+  "nextGate": "Deploy exact rc4.142 to gh-pages with byte parity, then one device tier verification; continue deferred 5-WR/freshness work after tier acceptance.",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
