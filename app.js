@@ -1015,6 +1015,7 @@ async function loadExperts(){
         site:String(e.site||''),
         accuracy:null,
         publicSlug:e.slug||slugifyExpert(e.name),
+        apiId:e.apiId?String(e.apiId):null,
         directPublic:!!e.directPublic,
         comparisonPublic:!!e.comparisonPublic
       });
