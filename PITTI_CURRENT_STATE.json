@@ -1,6 +1,6 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260831T0445Z-v210",
+  "handoff_generation": "20260831T0925Z-v211",
   "updated_at": "2026-08-31T09:25:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -15,7 +15,7 @@
     "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.142 CI package gate PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
-    "latest_package_sha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
+    "latest_package_sha256": null,
     "deployed_pages": "gh-pages v11.8.0-rc4.142; all 13 package runtime files byte-identical to main/package",
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33367917515,
@@ -36,7 +36,8 @@
     "source_candidate": "v11.8.0-rc4.142 deployed and device-observed; tier-function FAIL",
     "deployed": "main rc4.142; gh-pages rc4.142",
     "main_gh_pages_parity": true,
-    "accepted_android": "v11.8.0-rc4.142"
+    "accepted_android": "NO_FULL_TIER_ACCEPTANCE; rc4.142 observed and otherwise functional",
+    "package_reference_artifact_digest": "sha256:77c671dcbbf822285920ca5235efba388cb3445e160688312ece4502a6a876d7"
   },
   "exact_continuation": {
     "gate": "RC4.142_TIER_PAYLOAD_ROOT_CAUSE",
@@ -134,12 +135,12 @@
     "releaseEvidence": {
       "releaseContractRun": 33366773433,
       "projectGuardrailsRun": 33366773498,
-      "packageGateRun": 33366773460,
-      "packageArtifactId": 9748549429,
-      "artifactEnvelopeDigest": "9d46c17640ab62449e729263ef110380543abc705d330fdc18b2388cf9b0525a",
-      "packageSha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
+      "packageGateRun": 33367917515,
+      "packageArtifactId": 9748932673,
+      "artifactEnvelopeDigest": "sha256:77c671dcbbf822285920ca5235efba388cb3445e160688312ece4502a6a876d7",
+      "packageSha256": null,
       "runtimeFiles": 13,
-      "result": "ALL_CI_GATES_PASS_PLUS_INDEPENDENT_PACKAGE_BROWSER_STARTUP_SMOKE_PASS",
+      "result": "RC4.142_ALL_CI_GATES_PASS_DEVICE_TIER_FAIL",
       "candidate": "v11.8.0-rc4.142",
       "packageToMain13of13": true,
       "mainToGhPages13of13": true,
