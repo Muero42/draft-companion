@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260831T0925Z-v211",
-  "updated_at": "2026-08-31T09:25:00Z",
+  "handoff_generation": "20260831T0735Z-v212",
+  "updated_at": "2026-08-31T07:35:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -9,13 +9,13 @@
     "generated_handoff": "NEW_CHAT_HANDOFF_CURRENT.md"
   },
   "runtime": {
-    "production_control": "v11.8.0-rc4.64",
+    "production_control": "v11.8.0-rc4.142 functional except external v4 tier display",
     "android_authority": "v11.8.0-rc4.142",
     "test_challenger": "v11.8.0-rc4.142",
-    "test_challenger_android_verified": true,
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.142 CI package gate PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
-    "latest_package_sha256": null,
+    "latest_package_sha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
     "deployed_pages": "gh-pages v11.8.0-rc4.142; all 13 package runtime files byte-identical to main/package",
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33367917515,
@@ -25,16 +25,16 @@
     "android_functional_verified": false,
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": true,
-    "android_acceptance_pending": "rc4.142 tier-function root cause only",
+    "android_acceptance_pending": "payload-root-cause tier fix + one bounded verified successor",
     "android_observed": "v11.8.0-rc4.142",
-    "android_functional_acceptance": "rc4.142 starts, refreshes, analyzes, and renders restored individual descriptions; external v4 tier labels still completely absent. Tier function FAIL.",
+    "android_functional_acceptance": "PARTIAL PASS: startup/refresh/analyze and 125/125 individual-description coverage work, including Tyler Warren; external v4 tier labels are absent, therefore full acceptance FAIL.",
     "rollback_reference": "v11.8.0-rc4.96",
     "accepted_android_fallback_functional_verified": true,
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
     "source_candidate": "v11.8.0-rc4.142 deployed and device-observed; tier-function FAIL",
-    "deployed": "main rc4.142; gh-pages rc4.142",
+    "deployed": "main runtime rc4.142; gh-pages runtime rc4.142",
     "main_gh_pages_parity": true,
     "accepted_android": "NO_FULL_TIER_ACCEPTANCE; rc4.142 observed and otherwise functional",
     "package_reference_artifact_digest": "sha256:77c671dcbbf822285920ca5235efba388cb3445e160688312ece4502a6a876d7"
@@ -42,7 +42,7 @@
   "exact_continuation": {
     "gate": "RC4.142_TIER_PAYLOAD_ROOT_CAUSE",
     "auto_starts_mock": false,
-    "instruction": "PITTI AUTO: rc4.142 is already on Android and the app is otherwise functional, including refresh/analyze and Tyler Warren individual text, but NO external v4 tier labels render. Do NOT make another speculative tier build. First capture/inspect the actual FantasyPros consensus-rankings response for each QB/RB/WR/TE request using the exact FantasyPros-selectable active v4 expert IDs. Verify real response shape, expert-selection provenance, position/scoring/type parameters, player rows and explicit tier field. The rc4.142 hypothesis (total_experts semantics) was insufficient. Only after a reproduced payload-level root cause is proven, implement one bounded fix, add a regression fixture/gate for the real payload, run full gates/parity, then one device verification."
+    "instruction": "PITTI AUTO starts here. Android already runs rc4.142. Do not reinstall, clear cache/data, or create rc4.143 speculatively. Capture/inspect the real FantasyPros consensus-rankings responses for QB/RB/WR/TE through the existing proxy with the exact FantasyPros-selectable active-v4 expert IDs. Verify request parameters, expert provenance, returned player container and position values, scoring/type/week semantics, and the actual explicit tier key/value. The rc4.142 total_experts hypothesis was insufficient. Only after reproducing the payload-level root cause: make one bounded fix, add a deterministic regression fixture from the real response shape, run full release/package/guardrail/runtime/parity gates, then request exactly one device verification."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -61,9 +61,9 @@
     ]
   },
   "handoff": {
-    "acceptedAndroid": "v11.8.0-rc4.137",
-    "deployedCandidate": "v11.8.0-rc4.136",
-    "rc4136Warning": "rc4.136 tier UI is rejected: hard-coded Erickson is not an active Expert-v4 member and tier coverage is not position-safe. Do not use rc4.136 tier labels for draft decisions.",
+    "acceptedAndroid": "NO_FULL_TIER_ACCEPTANCE; Android rc4.142 observed and otherwise functional",
+    "deployedCandidate": "main/gh-pages runtime rc4.142",
+    "rc4136Warning": "Historical only: rc4.136 tier UI was invalid. Current defect is rc4.142 external v4 tiers absent.",
     "tierRule": "Before draft, visible expert tier is DISPLAY-ONLY and may come only from an exact FantasyPros custom consensus assembled from the FantasyPros-selectable members of the ACTIVE position-specific Expert-v4 blueprint. Unavailable v4 experts are disclosed and never replaced by non-v4 experts. Exact selected expert set and explicit FantasyPros tier field must be verified; otherwise show no expert tier for that position/player. No synthetic gap tiers presented as expert tiers.",
     "postHandoffResearch": [
       "Verify FantasyPros custom multi-expert selection produces tiers for exactly our FantasyPros-accessible v4 experts, separately QB/RB/WR/TE",
@@ -91,7 +91,7 @@
       "WR: Sean Koerner + Justin Boone + Todd D Clark + Pat Fitzmaurice + Nick Mariano + Dalton Del Don",
       "TE: Pat Fitzmaurice + Ryan Weisse + Sean Koerner + Justin Boone + Dalton Del Don + Wolf of Roto Street"
     ],
-    "knownTierDefect": "rc4.136 rejected systemically: non-v4 Erickson hard-coded as tier source and TE tier display missing/coverage unreliable. Audit QB/RB/WR/TE.",
+    "knownTierDefect": "rc4.142: no external v4 tier labels render despite Expert-v4 selection and otherwise working app. total_experts verifier correction was insufficient; live FantasyPros payload-level diagnosis is mandatory before another build.",
     "wrAnalysisDeferredToNewChat": {
       "players": [
         "Emeka Egbuka",
@@ -111,12 +111,12 @@
       "instruction": "Do not complete this analysis in old chat; continue in new chat."
     },
     "preDraftPriorityOrder": [
-      "1 Build rc4.137 from current main with v4-only FantasyPros custom-consensus tier acquisition; no non-v4 substitutions",
-      "2 Full regression: corrected manager order/history/ownership/snapshot fingerprints unchanged; hard QB exclusions intact; Coach/Return-v2 unchanged by tier display; texts/Jacobs fixes intact",
-      "3 Syntax/version/release/package/guardrail gates and exact main↔gh-pages runtime parity",
-      "4 Only after all gates: one controlled phone refresh/update and visible rc4.137 verification",
-      "5 Deferred Egbuka/Flowers/Tetairoa McMillan/DeVonta Smith + Waddle reference analysis, including separate pure-upside ranking",
-      "6 Final pre-draft freshness/smoke checks; no broad redesign"
+      "1 Reproduce the real FantasyPros custom-consensus payload for QB/RB/WR/TE with exact selectable active-v4 expert IDs; no build before root cause.",
+      "2 Implement one bounded tier request/parser/provenance fix only after proof; add real-shape deterministic regression fixture.",
+      "3 Full syntax/runtime/release/package/guardrail regression and exact main↔gh-pages runtime parity; preserve 125/125 text coverage, Warren/Jacobs, Coach/Return/history/manager/QB invariants.",
+      "4 Exactly one controlled phone verification of the verified successor; no cache/app-data clear or reinstall loop.",
+      "5 Complete deferred Egbuka/Flowers/Tetairoa McMillan/DeVonta Smith + Waddle analysis, including separate maximum-upside ranking.",
+      "6 Final draft-day freshness/ADP/expert-board/late-RB/smoke agenda and operational freeze before the real draft."
     ],
     "criticalInvariants": [
       "FIXED 2026 order exactly: 1 Michael, 2 Pascal Voerde, 3 Marc Düsseldorf, 4 Thomas, 5 Bjoern, 6 Pascal Gelderner, 7 Giuliano, 8 Basti, 9 Muerotechnik, 10 Dutch Marc.",
@@ -131,7 +131,7 @@
     ],
     "preparedCandidate": "v11.8.0-rc4.142",
     "transaction_in_progress": false,
-    "status": "RC4.142_ALL_CI_GATES_PASS",
+    "status": "RC4.142_DEVICE_TIER_FAIL",
     "releaseEvidence": {
       "releaseContractRun": 33366773433,
       "projectGuardrailsRun": 33366773498,
