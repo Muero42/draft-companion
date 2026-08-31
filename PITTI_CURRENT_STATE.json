@@ -16,8 +16,8 @@
     "latest_package_reextract": "v11.8.0-rc4.137 CI PACKAGE/RE-EXTRACT PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "8f56584f1f7cf99ec930304f7cedf03c02f82da2b73563f29f01f6e7954fca3d",
-    "deployed_pages": "gh-pages remains v11.8.0-rc4.136; device already visibly runs rc4.137, so no reinstall/refresh is required merely to reach rc4.137",
-    "deployed_pages_app_byte_parity_with_main": false,
+    "deployed_pages": "gh-pages runtime rc4.137; core runtime files byte-identical to main",
+    "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33357387697,
     "package_reference_artifact_id": 9745555473,
     "package_reference_note": "rc4.117 OFF-DEVICE PASS. Package run 33305284763 / artifact 9730250635 / sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc. gh-pages promoted to rc4.117 with main parity PASS. Device v4 acceptance remains pending.",
@@ -35,7 +35,7 @@
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
     "source_candidate": "v11.8.0-rc4.137 PREDEPLOY on pitti-rc4.137-tier-fix",
     "deployed": "main rc4.137; gh-pages rc4.136",
-    "main_gh_pages_parity": false,
+    "main_gh_pages_parity": true,
     "accepted_android": "v11.8.0-rc4.137"
   },
   "exact_continuation": {
@@ -146,7 +146,7 @@
   "package_authority": "rc4.137 package/re-extract PASS; device version observed rc4.137. Functional tier verification remains pending.",
   "android_version_observed": "v11.8.0-rc4.137",
   "android_functional_verified": false,
-  "deployment_authority": "main rc4.137; gh-pages rc4.136. No main↔gh-pages parity yet. Device rc4.137 observed independently.",
+  "deployment_authority": "main and gh-pages core runtime are rc4.137 and byte-identical; Android already visibly runs rc4.137. Tier-function device verification remains.",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
@@ -230,17 +230,17 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.137_ANDROID_OBSERVED_TIER_VERIFICATION_PENDING",
+    "status": "RC4.137_RUNTIME_PARITY_PASS_TIER_VERIFY_PENDING",
     "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.135",
     "runtime": "Android visibly runs rc4.137; main rc4.137; gh-pages still rc4.136",
-    "mainRuntimeParity": "NO — main rc4.137 vs gh-pages rc4.136",
-    "nextGate": "verify rc4.137 tier behavior on device; then reconcile gh-pages to tested rc4.137 and prove parity before final freeze"
+    "mainRuntimeParity": "PASS — app.js, decision-policy.js, index.html, live-surface-v3.js, manifest.webmanifest, sw.js, _worker.js identical main↔gh-pages",
+    "nextGate": "verify rc4.137 tier behavior on already-installed Android; then deferred WR/freshness agenda"
   },
-  "status": "PITTI_RC4_137_ANDROID_OBSERVED",
-  "gate": "RC4.137_TIER_FUNCTION_VERIFY_AND_PAGES_PARITY",
-  "nextGate": "device tier-function verification on already-installed rc4.137, then gh-pages rc4.137 parity",
+  "status": "PITTI_RC4_137_RUNTIME_PARITY_PASS",
+  "gate": "RC4.137_TIER_FUNCTION_VERIFY",
+  "nextGate": "device tier-function verification on existing rc4.137",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
