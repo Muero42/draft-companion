@@ -224,7 +224,7 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260831T0445Z-v210",
+    "generation": "20260831T0925Z-v211",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -247,7 +247,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260831T0445Z-v210",
+  "handoff_generation": "20260831T0925Z-v211",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
