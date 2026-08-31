@@ -123,8 +123,8 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.137 device-observed authority; tier-function acceptance pending",
-    "androidAuthority": "v11.8.0-rc4.137",
+    "productionControl": "v11.8.0-rc4.141 Android functional for startup/refresh/text; tier display absent",
+    "androidAuthority": "v11.8.0-rc4.141 functional-with-tier-defect",
     "sourceAuthority": "main v11.8.0-rc4.142",
     "latestPackageReextract": "v11.8.0-rc4.142 exact package/re-extract + independent browser-startup smoke PASS",
     "latestPackageSha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
@@ -132,13 +132,13 @@
     "deployedPagesVersion": "v11.8.0-rc4.142",
     "deployedPagesAppByteParityWithMain": true,
     "researchBranch": "pitti-rc4.137-tier-fix",
-    "currentResearchGate": "RC4.141_DEVICE_VERIFY",
-    "exactNextAction": "Single controlled device reopen/update to rc4.142. Verify status initialization, immediate refresh feedback, v4-only tiers and individual descriptions.",
+    "currentResearchGate": "RC4.142_PAGES_PARITY_THEN_DEVICE_TIER_VERIFY",
+    "exactNextAction": "Verify/deploy exact rc4.142 gh-pages parity, then one controlled device verification focused on v4 tier labels. Do not retest rc4.141 tier logic.",
     "deferredRealDecisionMock": "draft-companion-v7-backup-2026-08-29T19-44-43-926Z.json — preserve as historical evidence",
-    "runtimeVersion": "Android last shell rc4.139; exact tested rc4.142 main↔gh-pages deployed",
+    "runtimeVersion": "Android rc4.141 functional; main rc4.142 all CI gates PASS",
     "latestEvidenceBackup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json — 29/30; missing pick29 expertv5"
   },
-  "currentGate": "RC4.141_DEVICE_VERIFY",
+  "currentGate": "RC4.142_PAGES_PARITY_THEN_DEVICE_TIER_VERIFY",
   "handoffGeneration": "20260831T0445Z-v210",
   "handoff_generation": "20260831T0445Z-v210",
   "statusCommand": {
