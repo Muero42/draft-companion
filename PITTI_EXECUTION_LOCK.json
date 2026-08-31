@@ -11,7 +11,7 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.142",
+    "appVersion": "v11.8.0-rc4.143",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
@@ -62,7 +62,7 @@
       "androidAccepted": false
     },
     "acceptedAndroidAuthority": "NO_FULL_TIER_ACCEPTANCE; rc4.142 functional except tier display",
-    "unreleasedMainDelta": "none relevant; main/gh-pages runtime rc4.142. Next release forbidden until payload root cause is proven.",
+    "unreleasedMainDelta": "rc4.143 candidate: position-specific FantasyPros expert eligibility for external v4 tiers; Android authority remains rc4.142 until full gates/deploy/device verification.",
     "deployedPagesVersion": "v11.8.0-rc4.142",
     "mainGhPagesParity": true
   },
@@ -205,17 +205,17 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "branch": "main",
-    "status": "RC4.142_DEVICE_TIER_FAIL",
+    "branch": "fix/rc4.143-tier-position-experts",
+    "status": "RC4.143_CANDIDATE_VALIDATION",
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "rc4.142 partial functional baseline; no full tier acceptance",
-    "runtime": "Android rc4.142 functional for startup/refresh/analyze and 125/125 individual descriptions; external v4 tiers absent",
-    "nextGate": "inspect/reproduce actual FantasyPros consensus-rankings payload for exact active-v4 selectable expert IDs before any further build"
+    "runtime": "candidate rc4.143 source only; Android rc4.142",
+    "nextGate": "full release/package/guardrail validation, then deployment parity and exactly one device verification"
   },
-  "status": "RC4.142_DEVICE_TIER_FAIL",
-  "gate": "RC4.142_TIER_PAYLOAD_ROOT_CAUSE",
-  "nextGate": "inspect/reproduce actual FantasyPros consensus-rankings payload for exact active-v4 selectable expert IDs before any further build",
+  "status": "RC4.143_CANDIDATE_VALIDATION",
+  "gate": "RC4.143_RELEASE_GATES",
+  "nextGate": "full release/package/guardrail validation, then deployment parity and exactly one device verification",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
