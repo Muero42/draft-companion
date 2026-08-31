@@ -161,5 +161,19 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 ## v207 CURRENT OVERRIDE — QB-rule correction
 - Generation: `20260830T1822Z-v207`.
 - Draft-day authority: Geno Smith and Aaron Rodgers are explicit user hard exclusions. Any older checkpoint saying otherwise is superseded.
-- Correct rule: both remain ordinary candidates with no name-specific demotion/removal/forcing. Correct Coach/player-quality evaluation should keep them out of recommendations when inferior.
+- Correct rule: both are explicit user hard exclusions and must not appear on the user's recommendation/draft surface. This user-specific exclusion does not imply a generic league-wide QB2 rule.
 - First gate remains **RC4.132_BUILD_AND_REGRESSION**; exact order/history locks remain unchanged.
+
+
+## 12. v212 CURRENT OVERRIDE — rc4.142 TIER PAYLOAD ROOT CAUSE
+- Generation: `20260831T0735Z-v212`. This section supersedes all older current-version/first-gate/device-authority pointers above where they conflict.
+- Android already runs **v11.8.0-rc4.142**.
+- Startup, refresh, Analyze and 125/125 individual descriptions work; Tyler Warren text is restored.
+- External Expert-v4 tier labels are **absent / FAIL**.
+- rc4.142's `total_experts` verifier correction was insufficient. Do not treat it as the root cause.
+- First gate: **RC4.142_TIER_PAYLOAD_ROOT_CAUSE**.
+- Before any new build, capture/reproduce actual FantasyPros `consensus-rankings` payloads for QB/RB/WR/TE through the existing proxy with exact selectable active-v4 expert IDs; verify request parameters, expert provenance, player container, position fields and explicit tier key/value.
+- No speculative rc4.143. No cache/app-data clear, reinstall or repeated-refresh loop.
+- After reproduced root cause only: one bounded fix + real-shape deterministic regression fixture + full gates/parity + exactly one device verification.
+- Preserve 125/125 text coverage, Warren/Jacobs handling, exact manager order/history, decision evidence/fingerprints, Coach/Return-v2, no K/DST, exactly one QB, and Geno Smith/Aaron Rodgers hard exclusions.
+- After tier acceptance: deferred 5-WR analysis, then final draft-day freshness/ADP/expert-board/late-RB/smoke freeze.
