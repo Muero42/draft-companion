@@ -41,6 +41,7 @@ jobs:
           node tools/rc4148-tier-from-v4-panel.mjs
           node tools/rc4149-partial-v4-tier.mjs
           node tools/rc4150-global-v4-tier.mjs
+          node tools/rc4151-live-controls-speed.mjs
           if grep -q "v11.8.0-rc4.122" app.js; then node tools/rc4122-v45-runtime-contract.mjs; fi
           node tools/v4-embedded-coverage.mjs
           node tools/v3-v4-same-state-diagnostic.mjs
