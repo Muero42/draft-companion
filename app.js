@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.154';
+const APP_VERSION='v11.8.0-rc4.155';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2190,30 +2190,50 @@ const EXPERT_DISPLAY_ROWS_2026=[
   ['Nick Mariano','Justin Boone','Ryan Weisse'],
   ['Todd D Clark','Wolf of Roto Street','Kev Wheeler']
 ];
+const NON_V4_EXPERT_DISPLAY_PRIORITY_2026=[
+  'Sean Koerner','Dalton Del Don','Pat Fitzmaurice',
+  'Nick Mariano','Justin Boone','Todd D Clark','Ryan Weisse',
+  'Kev Wheeler','Wolf of Roto Street'
+];
+const NON_V4_EXPERT_DISPLAY_PRIORITY_MAP_2026=new Map(NON_V4_EXPERT_DISPLAY_PRIORITY_2026.map((name,i)=>[norm(name),i]));
+function nonV4ExpertDisplayOrder(names){
+  return [...names].sort((a,b)=>(NON_V4_EXPERT_DISPLAY_PRIORITY_MAP_2026.get(norm(a))??999)-(NON_V4_EXPERT_DISPLAY_PRIORITY_MAP_2026.get(norm(b))??999)||String(a).localeCompare(String(b)));
+}
+function expertRankCellHtml(name,r,byExpert){
+  const x=byExpert.get(norm(name));
+  const overall=Number(x?.overallRank??x?.rank);
+  if(!x||!Number.isFinite(overall)||overall<=0)return `<div class="expert-rank"><b>${esc(name)}</b><span>#–</span><span class="delta">fehlt</span></div>`;
+  const delta=overall-Number(r.rank),cls=delta<=-4?'high':delta>=4?'low':'';
+  const deltaText=Math.abs(delta)<1?'nahe Panel':delta<0?`${Math.abs(Math.round(delta))} höher`:`${Math.round(delta)} niedriger`;
+  return `<div class="expert-rank"><b>${esc(name)}</b><span>#${Math.round(overall)}</span><span class="delta ${cls}">${deltaText}</span></div>`;
+}
 function expertRanksHtml(r){
-  // Fixed 3x3 visual matrix for v4 experts. Panel membership, weights and rank math are
-  // untouched. A non-member keeps an invisible cell only when a later member exists in
-  // the same row; trailing non-members are omitted. A member whose player rank is missing
-  // remains explicit as #–/fehlt.
-  const panelWeights=panels[r?.panelId]?.weights||{};
-  const members=new Set(Object.keys(panelWeights).filter(name=>Number(panelWeights[name])>0).map(norm));
   const rows=Array.isArray(r?.individual)?r.individual:[];
   const byExpert=new Map(rows.filter(x=>x?.expertName).map(x=>[norm(x.expertName),x]));
-  const matrix=EXPERT_DISPLAY_ROWS_2026.map(displayRow=>{
-    let last=-1;
-    for(let i=0;i<displayRow.length;i++)if(members.has(norm(displayRow[i])))last=i;
-    if(last<0)return '';
-    return `<div class="expert-display-row">${displayRow.slice(0,last+1).map(name=>{
-      if(!members.has(norm(name)))return `<div class="expert-rank expert-rank-placeholder" aria-hidden="true"><b>${esc(name)}</b><span>#000</span><span class="delta">Platzhalter</span></div>`;
-      const x=byExpert.get(norm(name));
-      const overall=Number(x?.overallRank??x?.rank);
-      if(!x||!Number.isFinite(overall)||overall<=0)return `<div class="expert-rank"><b>${esc(name)}</b><span>#–</span><span class="delta">fehlt</span></div>`;
-      const delta=overall-Number(r.rank),cls=delta<=-4?'high':delta>=4?'low':'';
-      const deltaText=Math.abs(delta)<1?'nahe Panel':delta<0?`${Math.abs(Math.round(delta))} höher`:`${Math.round(delta)} niedriger`;
-      return `<div class="expert-rank"><b>${esc(name)}</b><span>#${Math.round(overall)}</span><span class="delta ${cls}">${deltaText}</span></div>`;
-    }).join('')}</div>`;
-  }).join('');
-  return `<div class="coach-section-title">Experten · Overall</div><div class="expert-grid expert-grid-fixed">${matrix}</div>`;
+  const panelId=String(r?.panelId||'');
+  if(panelId.startsWith('expert-v4-')){
+    // The fixed 3x3 matrix is a v4 presentation contract only. Use the sealed v4
+    // blueprint for membership so mutable panel metadata cannot shift columns.
+    const pos=String(r?.pos||'').toUpperCase();
+    const members=new Set((EXPERT_V4_BLUEPRINT[pos]?.experts||[]).map(norm));
+    const matrix=EXPERT_DISPLAY_ROWS_2026.map(displayRow=>{
+      let last=-1;
+      for(let i=0;i<displayRow.length;i++)if(members.has(norm(displayRow[i])))last=i;
+      if(last<0)return '';
+      return `<div class="expert-display-row">${displayRow.slice(0,last+1).map(name=>{
+        if(!members.has(norm(name)))return `<div class="expert-rank expert-rank-placeholder" aria-hidden="true"><b>${esc(name)}</b><span>#000</span><span class="delta">Platzhalter</span></div>`;
+        return expertRankCellHtml(name,r,byExpert);
+      }).join('')}</div>`;
+    }).join('');
+    return `<div class="coach-section-title">Overall</div><div class="expert-grid expert-grid-fixed">${matrix}</div>`;
+  }
+  // v3/v5 and legacy panels must keep all of their own experts; rc4.154 incorrectly
+  // forced them through the v4-only matrix and could suppress Draft Sharks or other
+  // profile-specific members.
+  const panelWeights=panels[r?.panelId]?.weights||{};
+  const intended=nonV4ExpertDisplayOrder(Object.keys(panelWeights).filter(name=>Number(panelWeights[name])>0));
+  const names=intended.length?intended:nonV4ExpertDisplayOrder(rows.map(x=>x.expertName).filter(Boolean));
+  return `<div class="coach-section-title">Overall</div><div class="expert-grid">${names.map(name=>expertRankCellHtml(name,r,byExpert)).join('')}</div>`;
 }
 function researchBadgesHtml(x){
   const rr=x?.researchResidual;if(!rr?.active||!Array.isArray(rr.components)||!rr.components.length)return '';
