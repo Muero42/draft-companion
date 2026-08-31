@@ -5,14 +5,16 @@ import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePol
 const app=fs.readFileSync('app.js','utf8');
 
 assert.equal(USER_DRAFT_QB_LIMIT,1);
-assert.equal(userDraftStrategyExcluded('QB',{QB:0}),false,'QB1 must remain draftable');
-assert.equal(userDraftStrategyExcluded('QB',{QB:1}),true,'QB2 must be excluded after QB1');
-assert.equal(userDraftStrategyExcluded('RB',{QB:1}),false,'QB policy must not leak to RB');
+assert.equal(userDraftStrategyExcluded('QB',{QB:0},'Drake Maye'),false,'QB1 must remain draftable');
+assert.equal(userDraftStrategyExcluded('QB',{QB:1},'Drake Maye'),true,'QB2 must be excluded after QB1');
+assert.equal(userDraftStrategyExcluded('RB',{QB:1},'Bijan Robinson'),false,'QB policy must not leak to RB');
+assert.equal(userDraftStrategyExcluded('QB',{QB:0},'Geno Smith'),true,'Geno Smith hard exclusion missing');
+assert.equal(userDraftStrategyExcluded('QB',{QB:0},'Aaron Rodgers'),true,'Aaron Rodgers hard exclusion missing');
 
 // OOS natural mock 1398395487467368448, pick 149: Trevor Lawrence already rostered.
 // Kyler Murray/Jared Goff must not be able to consume the user's Coach surface.
 for(const name of ['Kyler Murray','Jared Goff']){
-  assert.equal(userDraftStrategyExcluded('QB',{QB:1,RB:5,WR:7,TE:1}),true,`${name}: QB2 exclusion failed`);
+  assert.equal(userDraftStrategyExcluded('QB',{QB:1,RB:5,WR:7,TE:1},name),true,`${name}: QB2 exclusion failed`);
 }
 
 // OOS picks 129/132: ordinary WR8 safety resurrection is blocked at WR7.
