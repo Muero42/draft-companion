@@ -20,7 +20,9 @@ for(const n of ['Ryan Weisse','Wolf of Roto Street','Todd D Clark','Joey Wright'
 // The hotfix is acquisition-only; core Expert-v2 and user-strategy invariants remain intact.
 assert.ok(app.includes("incumbent:{QB:'qb',RB:'rb',WR:'wr',TE:'te'}"));assert.ok(app.includes("fullv2:{QB:'expert-v2-qb',RB:'expert-v2-rb',WR:'expert-v2-wr',TE:'expert-v2-te'}"));assert.ok(app.includes("wrv2:{QB:'qb',RB:'rb',WR:'expert-v2-wr',TE:'te'}"));
 assert.ok(!app.includes('USER_HARD_QB_EXCLUSIONS'));
-assert.ok(!app.includes('USER HARD EXCLUSION'));
+const activeVersion=Number((app.match(/const APP_VERSION='v11\\.8\\.0-rc4\\.(\\d+)'/)||[])[1]);
+if(activeVersion<137)assert.ok(!app.includes('USER HARD EXCLUSION'));
+else assert.ok(app.includes('USER HARD EXCLUSION: nicht draften'));
 assert.ok(!/genosmith|aaronrodgers/i.test(app));
 assert.ok(app.includes("userDraftStrategyExcluded(p.pos,state.counts,p.name)"));
 assert.ok(app.includes("format:'pitti-decision-evidence-v3'"));
