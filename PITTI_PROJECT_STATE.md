@@ -3420,3 +3420,14 @@ Five-WR runtime coverage audit: Smith and Flowers have explicit ascension compon
 Low-risk Lloyd patch candidate is now fully specified but intentionally not pushed into installed rc4.157 during this block: replace stale 'bei Jacobs-Ausfall/ohne Jacobs-Ausfall' wording with current immediate-opportunity language, preserve durability/competition risk, no panel-rank mutation. Any release must pass syntax, regression, fixture and UI smoke checks before install. Given explicit freeze and today's draft, informational overlay is currently safer than an unneeded release unless live coach materially mis-scores Lloyd.
 
 Pre-19 re-inventory after this targeted audit: no additional static runtime freshness mismatch with comparable materiality was found in the audited five-WR + Jacobs/Lloyd/Kaleb set. Remaining high-value inputs are new information: waiver claims/results after 19:00 CEST, any official injury updates, and live draft board/manager modes. Avoid duplicate generic analysis before those deltas.
+
+
+## 2026-08-31 15:10 CEST — AUTO BLOCK: authoritative correction + pre-19 closure
+
+Fresh Aug31 slow-search performed. Current ESPN Aug30 Packers fantasy report confirms Jacobs exempt-list status and says it is safe to assume MarShawn Lloyd starts Week 1; Kaleb Johnson is also now in Green Bay. This further validates the previously identified stale Lloyd runtime wording. No code release pushed because rc4.157 is frozen and the current app already has Jacobs downside; decision-support overlay can correct Lloyd without risking regression before tonight's draft.
+
+Important Trey Benson correction from fresh current reporting: Arizona placed Benson on IR before final roster cuts; current reporting says that makes his 2026 Arizona season effectively over unless an injury settlement later changes his status. Therefore earlier checkpoint language describing Benson as merely waived/injured or a pending destination-sensitive claim is superseded. Treat Benson as OUT of normal 2026 draft consideration now. This also strengthens Jeremiyah Love's backfield-competition context already present in runtime, but does not justify a new kernel retune by itself.
+
+Jaydon Blue remains a genuine waived/pending-destination case in current Aug31 reporting; unlike Benson, destination remains relevant after today's claims. Current waiver coverage says claims are disclosed at 1pm ET; until then no destination is assumed.
+
+Re-inventory after correction: stress tests complete; manager/autodraft audit complete; five-WR comparison/ceiling overlay complete; QB/TE triggers complete; late-RB archetype complete; current runtime targeted audit complete; emergency path/post-draft prep complete. Before the 19:00 CEST information gate, remaining static work has negative/near-zero marginal value absent new news. Next autonomous high-value delta: waiver outcomes/destinations, then final injury/materiality scan and live-board execution. rc4.157 unchanged.
