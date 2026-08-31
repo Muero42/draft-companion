@@ -64,7 +64,9 @@
     "acceptedAndroidAuthority": "v11.8.0-rc4.152",
     "unreleasedMainDelta": "none",
     "deployedPagesVersion": "v11.8.0-rc4.157",
-    "mainGhPagesParity": true
+    "mainGhPagesParity": true,
+    "androidVerified": true,
+    "androidAcceptance": "rc4.157 PASS 2026-08-31 13:50 CEST: visible fixed expert matrix confirmed on device"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -207,16 +209,15 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.157_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
-    "production": false,
-    "androidVerified": false,
-    "acceptedAndroidFallback": "rc4.156 device loads but visible live surface expert line rejected",
-    "runtime": "main/gh-pages rc4.157 13/13 parity; Android rc4.156",
-    "nextGate": "one rc4.157 refresh + screenshot"
+    "status": "RC4.157_DRAFT_READY_FROZEN",
+    "production": true,
+    "androidVerified": true,
+    "runtime": "main/gh-pages rc4.157 13/13 parity; Android rc4.157 accepted",
+    "nextGate": "real draft only; no pre-draft code changes absent critical defect"
   },
-  "status": "RC4.157_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
-  "gate": "RC4.157_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
-  "nextGate": "one rc4.157 refresh + screenshot",
+  "status": "RC4.157_DRAFT_READY_FROZEN",
+  "gate": "REAL_DRAFT_2026",
+  "nextGate": "real draft; code freeze",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
