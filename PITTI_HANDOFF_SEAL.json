@@ -7,9 +7,9 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "4d86ccb1a2c616d4e65fae357c3deda6681fc8e3",
-    "PITTI_CURRENT_STATE.json": "cd64aae60b7a97a5b6cd486ac9dfe102cbf930dd",
-    "PITTI_EXECUTION_LOCK.json": "f2bf4c3108b4a4c710f1d37014e67a9a892478a9",
+    "PITTI_COMMAND_CONTRACTS.json": "2499e00d7d641c3f4477c94b26d85fc56f6796bb",
+    "PITTI_CURRENT_STATE.json": "6704a6b9b14f8dec768f0ebdc25f0a5d067d9d99",
+    "PITTI_EXECUTION_LOCK.json": "f17d325ce23d7079de07ebd184fe869bd7fd3033",
     "PITTI_AUTO_PREFLIGHT.md": "b57d1d0178339cc3790516ec89c0c568169ec87a",
     "PITTI_PROJECT_STATE.md": "b7496cd03a8eb0dce9d7dc2a3557c7ca12e7da6d",
     "NEW_CHAT_HANDOFF_CURRENT.md": "389f72bcd5473ac1d21b377885fbae8a5eb8a215",
@@ -17,21 +17,22 @@
     "HANDOFF_COMPLETENESS_MATRIX.md": "2d6a88249d870a49b2748eabb4fcdb11345dbb39",
     "PITTI_DRAFT_CHAT_BOOTSTRAP.md": "f2dff589dd45be9b59f50eb3c7f44ab8669b43cb",
     "research/ACTIVE_MANAGER_IDENTITY_HISTORY_AUDIT_V205_2026-08-30.md": "d370be19c307514e37c0870ddafb35ae58c177ca",
-    "app.js": "84207f0625e1e0f2f9de7daf778842bb75249b26",
-    "index.html": "fce77d455a8350eb1e3dbb4e8ebf7da6a88046ba",
+    "app.js": "b6e274159c6bc8f3b8cf440c6eb2fde5c3d7d496",
+    "index.html": "fd2797e8ce5a5ed6bc36faee85d7dd1c5cf492ad",
     "decision-policy.js": "d2e2f58b020e3c5c3f4c42c717677a4e81f0833a",
     "live-surface-v3.js": "b68ad1cc77941d23523cd30fd70e1b8a3bd5655f",
-    "manifest.webmanifest": "0b4c7246ed68cd9a265ff47d47257be1f0d2d91e",
-    "sw.js": "8c59ab1cf48f4f35fb77f27aaec888a29f03e83b",
+    "manifest.webmanifest": "8eb9a67163f0adcc24b41e5df5842427b5565d91",
+    "sw.js": "f7b5de6de3b2555bcef87edf6ffced6cc8f17dda",
     "tools/audit-v45-backup.mjs": "333ab6d3877a6e89ba4af88e6163e9df4d7934fe",
     "tools/rc4130-active-fixture-quota.mjs": "601f685c99c1b56ad51e757629fe4230490eedb8",
     "research/CORRECTED_2026_DRAFT_ORDER_AUTHORITY.md": "6d95906b8137018d92ead071ecca6c554cb01f34",
-    "research/LIVE_DECISION_MATRIX_V201_2026-08-30.md": "533f52c998a27a81fc819cd838110c1061a30a5d"
+    "research/LIVE_DECISION_MATRIX_V201_2026-08-30.md": "533f52c998a27a81fc819cd838110c1061a30a5d",
+    "README.md": "c8573812e76b923877a85576bddd1d7bb1d11448"
   },
   "branch_locks": {
     "accepted_android": "v11.8.0-rc4.137",
-    "source_state": "main rc4.138 with Jacobs exempt-list critical freshness delta; Android rc4.137",
-    "required_release": "v11.8.0-rc4.138",
+    "source_state": "main rc4.139 refresh diagnostic; Android rc4.137",
+    "required_release": "v11.8.0-rc4.139",
     "canonical_draft_order": "1 Michael|2 Pascal Voerde|3 Marc Düsseldorf|4 Thomas|5 Björn|6 Pascal Gelderner|7 Giuliano|8 Bastian|9 Muerotechnik|10 Dutch Marc",
     "manager_history": "Michael 2020-2025; Pascal Voerde Bracht/Voerde chain 2017-2025 = 9 seasons; Björn exclude 2021/2023",
     "latest_backup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json",
@@ -56,6 +57,6 @@
     "main_gh_pages_parity": true,
     "stale_geno_rodgers_contradictions_removed": true
   },
-  "exact_gate": "RC4.138_DRAFT_DAY_FRESHNESS_GATES",
-  "note": "rc4.138 draft-day freshness delta: Jacobs exempt-list risk, Charbonnet reserve/PUP minimum four games, Kaleb Johnson Green Bay opportunity, James Conner IR/designated-to-return minimum four games. Resealed after source changes; rerun gates."
+  "exact_gate": "RC4.139_RELEASE_GATES",
+  "note": "rc4.139 immediate visible refresh-start diagnostic; no decision-kernel change."
 }
