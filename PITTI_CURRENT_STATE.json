@@ -11,7 +11,7 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
     "android_authority": "v11.8.0-rc4.137",
-    "test_challenger": "v11.8.0-rc4.139",
+    "test_challenger": "v11.8.0-rc4.141",
     "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.139 package/re-extract PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
@@ -33,8 +33,8 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.139 on main — refresh-interaction diagnostic; release/package verification pending",
-    "deployed": "main rc4.139; gh-pages rc4.138",
+    "source_candidate": "v11.8.0-rc4.141 on main — fatal startup syntax repaired; browser/PWA runtime syntax gate added; full gates pending",
+    "deployed": "main rc4.141; gh-pages rc4.139",
     "main_gh_pages_parity": true,
     "accepted_android": "v11.8.0-rc4.137"
   },
@@ -165,7 +165,13 @@
       "Complete deferred Egbuka/Flowers/McMillan/DeVonta + Waddle comparison, with separate upside ordering",
       "Keep v4/v5 expert/source architecture frozen; no broad redesign",
       "After rc4.138 device verification, final smoke check only"
-    ]
+    ],
+    "rootCauseRefreshNoop20260831": {
+      "confirmed": true,
+      "cause": "Fatal JavaScript syntax error in RESEARCH_RESIDUAL_PRIORS: missing comma between Ray Davis and Tyler Warren entries. HTML loaded version badge, but app.js module did not parse/execute, so no handlers/status initialization ran.",
+      "fixedIn": "v11.8.0-rc4.141",
+      "prevention": "tools/runtime-startup-contract.mjs parses both source app.js and the exact service-worker-transformed runtime, checks required DOM ids and immediate refresh feedback before network calls."
+    }
   },
   "source_authority": "main is rc4.137; gh-pages is still rc4.136; Android screenshot proves rc4.137 is already installed/visible. Do not request another install merely to reach rc4.137.",
   "package_authority": "rc4.137 package/re-extract PASS; device version observed rc4.137. Functional tier verification remains pending.",
@@ -255,19 +261,19 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.139_RELEASE_GATES_PENDING",
+    "status": "RC4.141_RELEASE_GATES_PENDING",
     "production": false,
-    "androidVerified": true,
+    "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.135",
-    "runtime": "Android rc4.137; main rc4.139; gh-pages rc4.138",
+    "runtime": "Android rc4.139 observed but app module failed to execute due fatal syntax in RESEARCH_RESIDUAL_PRIORS; rc4.141 fixes root cause",
     "mainRuntimeParity": "PASS — app.js, decision-policy.js, index.html, live-surface-v3.js, manifest.webmanifest, sw.js, _worker.js identical main↔gh-pages",
-    "nextGate": "full rc4.139 gates then package/parity/device",
+    "nextGate": "full rc4.141 release/package/guardrail gates including new transformed-runtime startup contract; then parity and one device verification",
     "textCoverageStatus": "SOURCE PASS — 125/125 audited candidate names covered in rc4.138; deterministic gate added",
     "parallelDraftDay": "ACTIVE — freshness research started while device verification pending"
   },
-  "status": "RC4.139_RELEASE_GATES_PENDING",
-  "gate": "RC4.139_RELEASE_GATES",
-  "nextGate": "full rc4.139 gates then package/parity/device",
+  "status": "RC4.141_RELEASE_GATES_PENDING",
+  "gate": "RC4.141_RELEASE_GATES",
+  "nextGate": "full rc4.141 release/package/guardrail gates including new transformed-runtime startup contract; then parity and one device verification",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
