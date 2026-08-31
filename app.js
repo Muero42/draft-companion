@@ -2185,35 +2185,35 @@ function applyResolvedReturnScore(x,current,strategy){
   else if(x.ret>=.65)x.reasons.push(`Gute Return-Chance (${Math.round(x.ret*100)}%)`);
 }
 
-const EXPERT_DISPLAY_PRIORITY_2026=[
-  'Sean Koerner','Dalton Del Don','Pat Fitzmaurice',
-  'Nick Mariano','Justin Boone',
-  'Todd D Clark','Ryan Weisse',
-  'Kev Wheeler','Wolf of Roto Street'
+const EXPERT_DISPLAY_ROWS_2026=[
+  ['Sean Koerner','Dalton Del Don','Pat Fitzmaurice'],
+  ['Nick Mariano','Justin Boone','Ryan Weisse'],
+  ['Todd D Clark','Wolf of Roto Street','Kev Wheeler']
 ];
-const EXPERT_DISPLAY_PRIORITY_MAP_2026=new Map(EXPERT_DISPLAY_PRIORITY_2026.map((name,i)=>[norm(name),i]));
-function expertDisplayIndex(name){return EXPERT_DISPLAY_PRIORITY_MAP_2026.has(norm(name))?EXPERT_DISPLAY_PRIORITY_MAP_2026.get(norm(name)):999}
-function stableExpertDisplayOrder(names){
-  return [...names].sort((a,b)=>expertDisplayIndex(a)-expertDisplayIndex(b)||String(a).localeCompare(String(b)));
-}
 function expertRanksHtml(r){
-  // Live cards must have fixed expert columns for the exact analyzed panel. A source that
-  // lacks this player stays visible as #–; never replace it with another expert and never
-  // derive membership from the player's sparse individual rows. Display order is deliberately
-  // stable across positions: experts shared by all v4 panels first, then broadly shared experts,
-  // then position specialists.
-  const intended=stableExpertDisplayOrder(Object.keys(panels[r?.panelId]?.weights||{}).filter(name=>Number(panels[r?.panelId]?.weights?.[name])>0));
+  // Fixed 3x3 visual matrix for v4 experts. Panel membership, weights and rank math are
+  // untouched. A non-member keeps an invisible cell only when a later member exists in
+  // the same row; trailing non-members are omitted. A member whose player rank is missing
+  // remains explicit as #–/fehlt.
+  const panelWeights=panels[r?.panelId]?.weights||{};
+  const members=new Set(Object.keys(panelWeights).filter(name=>Number(panelWeights[name])>0).map(norm));
   const rows=Array.isArray(r?.individual)?r.individual:[];
   const byExpert=new Map(rows.filter(x=>x?.expertName).map(x=>[norm(x.expertName),x]));
-  const names=intended.length?intended:rows.map(x=>x.expertName).filter(Boolean);
-  return `<div class="coach-section-title">Experten · Overall</div><div class="expert-grid">${names.map(name=>{
-    const x=byExpert.get(norm(name));
-    const overall=Number(x?.overallRank??x?.rank);
-    if(!x||!Number.isFinite(overall)||overall<=0)return `<div class="expert-rank"><b>${esc(name)}</b><span>#–</span><span class="delta">fehlt</span></div>`;
-    const delta=overall-Number(r.rank),cls=delta<=-4?'high':delta>=4?'low':'';
-    const deltaText=Math.abs(delta)<1?'nahe Panel':delta<0?`${Math.abs(Math.round(delta))} höher`:`${Math.round(delta)} niedriger`;
-    return `<div class="expert-rank"><b>${esc(name)}</b><span>#${Math.round(overall)}</span><span class="delta ${cls}">${deltaText}</span></div>`;
-  }).join('')}</div>`;
+  const matrix=EXPERT_DISPLAY_ROWS_2026.map(displayRow=>{
+    let last=-1;
+    for(let i=0;i<displayRow.length;i++)if(members.has(norm(displayRow[i])))last=i;
+    if(last<0)return '';
+    return `<div class="expert-display-row">${displayRow.slice(0,last+1).map(name=>{
+      if(!members.has(norm(name)))return `<div class="expert-rank expert-rank-placeholder" aria-hidden="true"><b>${esc(name)}</b><span>#000</span><span class="delta">Platzhalter</span></div>`;
+      const x=byExpert.get(norm(name));
+      const overall=Number(x?.overallRank??x?.rank);
+      if(!x||!Number.isFinite(overall)||overall<=0)return `<div class="expert-rank"><b>${esc(name)}</b><span>#–</span><span class="delta">fehlt</span></div>`;
+      const delta=overall-Number(r.rank),cls=delta<=-4?'high':delta>=4?'low':'';
+      const deltaText=Math.abs(delta)<1?'nahe Panel':delta<0?`${Math.abs(Math.round(delta))} höher`:`${Math.round(delta)} niedriger`;
+      return `<div class="expert-rank"><b>${esc(name)}</b><span>#${Math.round(overall)}</span><span class="delta ${cls}">${deltaText}</span></div>`;
+    }).join('')}</div>`;
+  }).join('');
+  return `<div class="coach-section-title">Experten · Overall</div><div class="expert-grid expert-grid-fixed">${matrix}</div>`;
 }
 function researchBadgesHtml(x){
   const rr=x?.researchResidual;if(!rr?.active||!Array.isArray(rr.components)||!rr.components.length)return '';
