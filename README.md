@@ -1,9 +1,9 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.138; Android remains rc4.137 until full release/package/guardrail validation.
+> **Current source candidate:** v11.8.0-rc4.139; Android remains rc4.137 until full release/package/guardrail validation.
 > **Primary finish-line target:** close rc4.132 live-autodraft, Pick32 portfolio, exact-order/history and package/parity gates; then exactly one controlled device refresh.
 > **v4:** individual-only, native Sean Koerner, position-specific weights; no Draft Sharks team ranking. Overall provenance is stored separately from positional aggregation.
 > **v5:** frozen v3 + Sean Koerner 15 points, funded from Draft Sharks Team first.
-> **Next gate:** RC4.138_RELEASE_GATES; then one controlled device verification of v4-only tiers and individual descriptions.
+> **Next gate:** RC4.139_RELEASE_GATES; then one controlled device verification of v4-only tiers and individual descriptions.
 > **Finish-line mode:** no broad feature work, duplicate source research, or phone trial-and-error.
 > **Fallback:** v3 / rc4.114 lineage remains emergency fallback only.
 > **Produktions-/Control-Baseline:** v11.8.0-rc4.64; incumbent expert-panel control remains selectable.
