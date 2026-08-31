@@ -1,5 +1,5 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current candidate:** v11.8.0-rc4.141; Android shell last observed rc4.139, but its app module failed to parse. rc4.141 is the confirmed startup-root-cause fix candidate.ndroid remains rc4.137 until full release/package/guardrail validation.
+> **Current candidate:** v11.8.0-rc4.142; Android shell last observed rc4.139, but its app module failed to parse. rc4.142 is the confirmed startup-root-cause fix candidate.ndroid remains rc4.137 until full release/package/guardrail validation.
 > **Primary finish-line target:** close rc4.132 live-autodraft, Pick32 portfolio, exact-order/history and package/parity gates; then exactly one controlled device refresh.
 > **v4:** individual-only, native Sean Koerner, position-specific weights; no Draft Sharks team ranking. Overall provenance is stored separately from positional aggregation.
 > **v5:** frozen v3 + Sean Koerner 15 points, funded from Draft Sharks Team first.
@@ -12,9 +12,9 @@
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
 
-### rc4.141 startup root-cause
+### rc4.142 startup root-cause
 - rc4.138-rc4.140 contained a fatal missing comma between the Ray Davis and Tyler Warren `RESEARCH_RESIDUAL_PRIORS` entries. The HTML shell/version badge could load while the module failed before any UI handler bound, exactly matching the observed inert `Alles aktualisieren` button and `–` status fields.
-- rc4.141 repairs that syntax defect and adds `tools/runtime-startup-contract.mjs`, which parses both source `app.js` and the service-worker-transformed runtime, checks required DOM ids, and guarantees visible refresh feedback before the first network call.
+- rc4.142 repairs that syntax defect and adds `tools/runtime-startup-contract.mjs`, which parses both source `app.js` and the service-worker-transformed runtime, checks required DOM ids, and guarantees visible refresh feedback before the first network call.
 
 ### rc4.83 — bounded late-WR challenger / decision-evidence test
 - Kein Produktions-Promotion: rc4.82 bleibt Android-Authority bis zum realistischen OOS-Mock.
