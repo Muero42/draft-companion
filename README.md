@@ -1,9 +1,9 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current runtime:** v11.8.0-rc4.142 is already observed on Android.
+> **Current source candidate:** v11.8.0-rc4.143. **Android authority remains v11.8.0-rc4.142** until package/deployment/device verification.
 > **Functional state:** startup, refresh, Analyze and 125/125 individual descriptions work; Tyler Warren text is restored.
-> **Open release-critical defect:** external Expert-v4 tier labels are absent on rc4.142.
-> **Next gate:** RC4.142_TIER_PAYLOAD_ROOT_CAUSE — inspect/reproduce the real FantasyPros custom-consensus payload for QB/RB/WR/TE with exact selectable active-v4 expert IDs before any next build.
-> **No trial-and-error:** no speculative rc4.143, cache/app-data clear, reinstall or repeated-refresh loop.
+> **rc4.143 bounded fix:** resolve FantasyPros DRAFT expert eligibility separately for QB/RB/WR/TE, intersect exact v4 names only, and fail closed on context/provenance mismatch.
+> **Next gate:** RC4.143 full release/package/guardrail validation → exact main/gh-pages parity → one Android verification.
+> **No trial-and-error:** no cache/app-data clear, reinstall or repeated-refresh loop; rc4.143 is the single evidence-bounded successor.
 > **Model authority:** v4 PRIMARY / v5 CHALLENGER / v3 failsafe. Tier display remains decision context only and may not alter Coach/Return/opponent/roster/history.
 > **Draft locks:** exact canonical manager order/history; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; starter maxima are not roster caps.
 
