@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-31T14:36:00Z",
+  "updatedAt": "2026-08-31T14:55:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -16,10 +16,10 @@
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.152",
-    "latestPreinstallVerified": "rc4.158 Candidate Package Gate + Release Contract + Guardrails PASS",
+    "latestAndroidObserved": "v11.8.0-rc4.158",
+    "latestPreinstallVerified": "rc4.158 Candidate Package Gate + Release Contract + Project Guardrails PASS",
     "latestResearchChallenger": "v11.8.0-rc4.107",
-    "preinstallArtifact": "current CI package gate authority = rc4.153; historical rc4.143 artifact retained only as provenance",
+    "preinstallArtifact": "rc4.158 package/re-extract current authority",
     "preinstallSha256": "sha256:46162cce29bc21c21b1ef826f7ac36d8ebd655cd5c75498f3cfaaf7ac7fbcb7c",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
@@ -31,8 +31,8 @@
     "preinstallReferenceRun": 33401979026,
     "preinstallReferenceArtifactId": 9761582650,
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.152",
-    "latestAndroidFunctionalVerified": "rc4.152 device: nine-manager LIVE grid, LIVE v3/v4/v5 selector, fast analysis, global tiers, current texts functional",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.158",
+    "latestAndroidFunctionalVerified": "rc4.158 device PASS: version/control visible; v4 day baseline 9/9 complete; prior live expert matrix acceptance preserved.",
     "testChallengerAndroidObserved": true,
     "testChallengerAndroidAccepted": true,
     "rc499": {
@@ -66,7 +66,7 @@
     "deployedPagesVersion": "v11.8.0-rc4.158",
     "mainGhPagesParity": true,
     "androidVerified": true,
-    "androidAcceptance": "rc4.157 PASS 2026-08-31 13:50 CEST: visible fixed expert matrix confirmed on device"
+    "androidAcceptance": "rc4.158 PASS 2026-08-31 ~16:36 CEST: version/control visible; v4 expert day baseline 9/9 complete."
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -213,11 +213,11 @@
     "production": true,
     "androidVerified": true,
     "runtime": "main/gh-pages rc4.158 13/13 parity; Android rc4.158 accepted; expert baseline 9/9",
-    "nextGate": "draft-day evidence delta only"
+    "nextGate": "post-19:00 waiver delta; final expert delta ~19:40-19:45; freeze ~19:50"
   },
   "status": "RC4.158_DRAFT_READY_FROZEN",
-  "gate": "DRAFT_DAY_EVIDENCE_DELTA",
-  "nextGate": "expert/roster/news delta only; no runtime change absent critical defect",
+  "gate": "DRAFT_DAY_TIME_DEPENDENT_FINALIZATION",
+  "nextGate": "post-19:00 waiver claims/destinations; final expert delta ~19:40-19:45; freeze ~19:50",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -226,11 +226,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260831T1028Z-v214",
+    "generation": "20260831T1455Z-v215",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Android rc4.152 is functional. rc4.153 is presentation-only expert-order fix, fully gated and deployed. One controlled device update/smoke, then freeze."
+    "resume": "rc4.158 accepted/frozen. Continue only remaining time-dependent draft-day gates."
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
@@ -249,7 +249,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260831T1028Z-v214",
+  "handoff_generation": "20260831T1455Z-v215",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
