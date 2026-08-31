@@ -12,7 +12,7 @@
     "production_control": "v11.8.0-rc4.152 Android observed functional: LIVE manager grid + v3/v4/v5 selector + fast analysis + global tiers + current texts",
     "android_authority": "v11.8.0-rc4.152",
     "test_challenger": "v11.8.0-rc4.157",
-    "test_challenger_android_verified": false,
+    "test_challenger_android_verified": true,
     "latest_package_reextract": "rc4.157 package/re-extract PASS; Release Contract + Guardrails PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "sha256:0ae0c1011a731328df85464c6c4da4bb9b49eb57741801ae3f8e1c2b4a95bec9",
@@ -25,7 +25,7 @@
     "android_functional_verified": true,
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": true,
-    "android_acceptance_pending": "one controlled rc4.157 refresh + screenshot",
+    "android_acceptance_pending": null,
     "android_observed": "v11.8.0-rc4.152",
     "android_functional_acceptance": "PASS on rc4.152 device: LIVE nine-manager grid, LIVE v3/v4/v5 selector, faster analysis, global tiers and current player texts observed functional.",
     "rollback_reference": "v11.8.0-rc4.96",
@@ -37,12 +37,13 @@
     "deployed": "main/gh-pages rc4.157; 13/13 runtime parity PASS",
     "main_gh_pages_parity": true,
     "accepted_android": "v11.8.0-rc4.152",
-    "package_reference_artifact_digest": "sha256:4a5c7c00fca33d7869be7c75f80a7005ae5c0f10d3b6c0767cb0b595f6297a18"
+    "package_reference_artifact_digest": "sha256:4a5c7c00fca33d7869be7c75f80a7005ae5c0f10d3b6c0767cb0b595f6297a18",
+    "android_acceptance": "rc4.157 PASS at 2026-08-31 13:50 CEST: screenshot confirms actual live draft cards show fixed v4 expert matrix, no Experten heading; positional omissions/columns correct"
   },
   "exact_continuation": {
-    "gate": "RC4.157_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
+    "gate": "REAL_DRAFT_2026",
     "auto_starts_mock": false,
-    "instruction": "Root cause now proven at actual visible render path: live-surface-v3.js explicitly rendered old Experten line while #coachSectionCard is hidden whenever decision surface active. rc4.157 patches that exact path. All gates/package/parity PASS. One device refresh then screenshot; PASS => freeze."
+    "instruction": "rc4.157 accepted on Android. Freeze code. During real draft use live snapshots/manager-mode inputs; change code only for a critical draft-blocking defect."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -165,16 +166,15 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.157_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
-    "production": false,
-    "androidVerified": false,
-    "acceptedAndroidFallback": "rc4.156 device loads but visible live surface expert line rejected",
-    "runtime": "main/gh-pages rc4.157 13/13 parity; Android rc4.156",
-    "nextGate": "one rc4.157 refresh + screenshot"
+    "status": "RC4.157_DRAFT_READY_FROZEN",
+    "production": true,
+    "androidVerified": true,
+    "runtime": "main/gh-pages rc4.157 13/13 parity; Android rc4.157 accepted",
+    "nextGate": "real draft only; no pre-draft code changes absent critical defect"
   },
-  "status": "RC4.157_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
-  "gate": "RC4.157_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
-  "nextGate": "one rc4.157 refresh + screenshot",
+  "status": "RC4.157_DRAFT_READY_FROZEN",
+  "gate": "REAL_DRAFT_2026",
+  "nextGate": "real draft; code freeze",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
