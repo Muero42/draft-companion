@@ -11,9 +11,9 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.152 Android observed functional: LIVE manager grid + v3/v4/v5 selector + fast analysis + global tiers + current texts",
     "android_authority": "v11.8.0-rc4.152",
-    "test_challenger": "v11.8.0-rc4.153",
+    "test_challenger": "v11.8.0-rc4.154",
     "test_challenger_android_verified": false,
-    "latest_package_reextract": "v11.8.0-rc4.153 Candidate Package Gate PASS; release/guardrail gates PASS",
+    "latest_package_reextract": "v11.8.0-rc4.154 candidate validation pending",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "sha256:0ae0c1011a731328df85464c6c4da4bb9b49eb57741801ae3f8e1c2b4a95bec9",
     "deployed_pages": "gh-pages v11.8.0-rc4.153",
@@ -25,7 +25,7 @@
     "android_functional_verified": true,
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": true,
-    "android_acceptance_pending": "one controlled update to rc4.153; verify stable expert display order across positions; then freeze runtime",
+    "android_acceptance_pending": "after all three CI gates + deploy: one controlled rc4.154 fixed-matrix smoke; then freeze runtime",
     "android_observed": "v11.8.0-rc4.152",
     "android_functional_acceptance": "PASS on rc4.152 device: LIVE nine-manager grid, LIVE v3/v4/v5 selector, faster analysis, global tiers and current player texts observed functional.",
     "rollback_reference": "v11.8.0-rc4.96",
@@ -33,16 +33,16 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.153 merged and deployed",
+    "source_candidate": "v11.8.0-rc4.154 candidate branch; fixed 3x3 v4 expert matrix only",
     "deployed": "main/gh-pages rc4.153; 13/13 runtime parity PASS; PR83 Release Contract/Package/Guardrails PASS",
     "main_gh_pages_parity": true,
     "accepted_android": "v11.8.0-rc4.152",
     "package_reference_artifact_digest": "sha256:77c671dcbbf822285920ca5235efba388cb3445e160688312ece4502a6a876d7"
   },
   "exact_continuation": {
-    "gate": "RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
+    "gate": "RC4.154_PREINSTALL_VALIDATE_DEPLOY_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
     "auto_starts_mock": false,
-    "instruction": "Android rc4.152 is accepted/observed. rc4.153 is presentation-only, merged/deployed, all three CI gates PASS, and 13/13 runtime main↔gh-pages parity PASS. Update once to rc4.153 and verify player-card expert order: Sean Koerner → Dalton Del Don → Pat Fitzmaurice first wherever present, then broadly shared experts, then position specialists; missing ranks remain #–/fehlt. If PASS, freeze runtime for the real draft. Do not reopen tier API, Return-v2, panel weights/sources, scoring, manager history or old bugs without new release-critical evidence."
+    "instruction": "Validate rc4.154 as a presentation-only fixed 3x3 v4 expert matrix. Required rows: Koerner/Del Don/Pat; Mariano/Boone/Weisse; Clark/Wolf/Wheeler. Non-member experts retain invisible same-column placeholders only before later members; trailing non-members are omitted; member missing-rank stays #–/fehlt. Panel membership, weights, Overall ranks, tiers, Coach, Return-v2, manager logic and evidence remain unchanged. Require Release Contract + Candidate Package Gate + Project Guardrails PASS, then canonical deploy/main↔gh-pages parity, then exactly one Android smoke. PASS => freeze."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -93,7 +93,7 @@
     "transaction_rule": "Official transaction/IR/PUP truth outranks stale Sleeper metadata; same-position move alone is weak evidence unless role/health impact is corroborated.",
     "draft_chat_rule": "Start a brand-new chat for the real draft after final runtime/freshness checkpoint. That draft chat is execution-only: load DRAFT_CHAT_BOOTSTRAP + canonical state, do not redesign code/model during the draft unless a release-critical emergency makes the app unusable."
   },
-  "android_acceptance_pending": "rc4.153 expert-display-order smoke only",
+  "android_acceptance_pending": "rc4.154 fixed 3x3 expert-matrix smoke after validated deployment",
   "expert_v4_v5": {
     "v3": "frozen control/failsafe; embedded team/individual hybrid as historically audited",
     "v4": "CURRENT RE-AUDIT: individual-only, only experts with obtainable individual rankings. Position-specific optimized weights in app.js EXPERT_V4_BLUEPRINT. Koerner is native v4.",
@@ -164,17 +164,17 @@
     "verdict": "Incomplete 29/30 file cannot be used as full promotion evidence. Partial paired evidence does not justify changing v4 PRIMARY / v5 CHALLENGER."
   },
   "currentWork": {
-    "branch": "main",
-    "status": "RC4.153_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
+    "branch": "pitti/rc4.154-fixed-expert-matrix",
+    "status": "RC4.154_PREINSTALL_VALIDATION_PENDING",
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.152",
-    "runtime": "main/gh-pages rc4.153; Android rc4.152",
-    "nextGate": "one controlled rc4.153 device refresh and expert-order smoke"
+    "runtime": "candidate rc4.154; deployed rc4.153; Android rc4.153 observed but matrix acceptance failed",
+    "nextGate": "all three rc4.154 CI gates PASS"
   },
-  "status": "RC4.153_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
-  "gate": "RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
-  "nextGate": "one controlled rc4.153 device refresh and expert-order smoke",
+  "status": "RC4.154_PREINSTALL_VALIDATION_PENDING",
+  "gate": "RC4.154_PREINSTALL_VALIDATE_DEPLOY_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
+  "nextGate": "all three rc4.154 CI gates PASS",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
@@ -193,13 +193,15 @@
   },
   "critical_handoff": {
     "generation": "20260831T1028Z-v214",
-    "gate": "RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
-    "reason": "All prior tier/startup/live-control defects are closed for draft-day use. Only rc4.153 expert display ordering awaits device observation.",
+    "gate": "RC4.154_PREINSTALL_VALIDATE_DEPLOY_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
+    "reason": "rc4.153 device loads, but expert layout did not meet the user's fixed-row requirement. rc4.154 is a display-only matrix correction; no model/source/weight/tier/Return change.",
     "requirements": [
-      "Update once to rc4.153.",
-      "Verify expert order across at least two positions: Sean Koerner → Dalton Del Don → Pat Fitzmaurice first wherever present; then shared experts; then specialists.",
-      "Missing ranks stay #– / fehlt; no substitutions.",
-      "If PASS, freeze runtime. No further model/tier/Return/source changes absent a new release-critical defect."
+      "All three CI gates PASS for rc4.154.",
+      "Deploy canonically with main↔gh-pages runtime parity.",
+      "Verify fixed rows: Koerner/Del Don/Pat; Mariano/Boone/Weisse; Clark/Wolf/Wheeler.",
+      "Absent panel members use invisible in-row placeholders only when a later member follows; trailing absences are omitted.",
+      "Missing player rank for a panel member remains #–/fehlt.",
+      "If PASS, freeze runtime."
     ]
   },
   "pending_after_release": [
