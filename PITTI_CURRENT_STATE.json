@@ -140,6 +140,50 @@
       "runtimeFiles": 13,
       "result": "PASS",
       "deviceVersionObserved": "v11.8.0-rc4.137"
+    },
+    "textCoverageAudit20260831": {
+      "source": "latest 2026-08-30 16:02 backup decisionFixtures candidate universe + current rc4.137 RESEARCH_RESIDUAL_PRIORS + current device screenshot",
+      "candidateUniverse": 125,
+      "individuallyCoveredCurrent": 92,
+      "missingCurrent": 33,
+      "missingHighPriority": [
+        "Tyler Warren",
+        "Emeka Egbuka",
+        "Tetairoa McMillan",
+        "Cam Skattebo",
+        "Jayden Daniels",
+        "TreVeyon Henderson",
+        "Jadarian Price",
+        "Jalen Hurts",
+        "Rhamondre Stevenson",
+        "Justin Herbert",
+        "Trevor Lawrence",
+        "Dak Prescott",
+        "Brock Purdy"
+      ],
+      "missingOther": [
+        "Chuba Hubbard",
+        "Jaxson Dart",
+        "RJ Harvey",
+        "Patrick Mahomes",
+        "Bo Nix",
+        "Alec Pierce",
+        "Michael Wilson",
+        "KC Concepcion",
+        "Makai Lemon",
+        "Jonah Coleman",
+        "Dylan Sampson",
+        "Hunter Henry",
+        "Brian Robinson",
+        "Braelon Allen",
+        "Alvin Kamara",
+        "Tyrone Tracy",
+        "Emmett Johnson",
+        "Kaelon Black",
+        "Nicholas Singleton",
+        "Kaleb Johnson"
+      ],
+      "conclusion": "Earlier text-coverage repair was incomplete. Warren confirms live regression; current app still lacks individual visible-evidence priors for 33 relevant candidate names from audited universe. Must fix and add deterministic coverage gate before next device build."
     }
   },
   "source_authority": "main is rc4.137; gh-pages is still rc4.136; Android screenshot proves rc4.137 is already installed/visible. Do not request another install merely to reach rc4.137.",
@@ -236,11 +280,12 @@
     "acceptedAndroidFallback": "v11.8.0-rc4.135",
     "runtime": "Android visibly runs rc4.137; main rc4.137; gh-pages still rc4.136",
     "mainRuntimeParity": "PASS — app.js, decision-policy.js, index.html, live-surface-v3.js, manifest.webmanifest, sw.js, _worker.js identical main↔gh-pages",
-    "nextGate": "verify rc4.137 tier behavior on already-installed Android; then deferred WR/freshness agenda"
+    "nextGate": "fix rc4.137 tier function AND individual-description coverage; add deterministic coverage regression before next device version",
+    "textCoverageStatus": "FAIL — 33/125 audited relevant candidate names lack current individual description prior; Warren live-confirmed"
   },
-  "status": "PITTI_RC4_137_RUNTIME_PARITY_PASS",
-  "gate": "RC4.137_TIER_FUNCTION_VERIFY",
-  "nextGate": "device tier-function verification on existing rc4.137",
+  "status": "RC4.137_TIER_AND_TEXT_COVERAGE_FIX_REQUIRED",
+  "gate": "RC4.137_TIER_AND_TEXT_COVERAGE_FIX",
+  "nextGate": "off-device tier root-cause + text-coverage repair/regression, then one device verification",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
