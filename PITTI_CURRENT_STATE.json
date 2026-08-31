@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260831T0735Z-v212",
-  "updated_at": "2026-08-31T09:24:00Z",
+  "updated_at": "2026-08-31T09:58:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,7 +11,7 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.150 observed in latest device backup; global cross-position tiers visible",
     "android_authority": "v11.8.0-rc4.150",
-    "test_challenger": "v11.8.0-rc4.150",
+    "test_challenger": "v11.8.0-rc4.151",
     "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.143 release/package/guardrail gates PASS; 13-file re-extract PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
@@ -25,7 +25,7 @@
     "android_functional_verified": true,
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": true,
-    "android_acceptance_pending": "none for rc4.150 tier visibility; next gate is final draft-day evidence/freshness/smoke, not another tier trial",
+    "android_acceptance_pending": "one controlled update to rc4.151, verify compact live manager controls, live v3/v4/v5 selector, and faster Analyze",
     "android_observed": "v11.8.0-rc4.150",
     "android_functional_acceptance": "PASS for current draft-day surface: rc4.150 backup/device evidence shows Expert-v4 active, global cross-position tiers present, Montgomery current text present, analysis/Return evidence persisted.",
     "rollback_reference": "v11.8.0-rc4.96",
@@ -33,16 +33,16 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.150 merged and deployed",
-    "deployed": "main/gh-pages rc4.150; Guardrails/Release Contract/Package Gate PASS",
+    "source_candidate": "v11.8.0-rc4.151 merged and deployed",
+    "deployed": "main/gh-pages rc4.151; Guardrails/Release Contract/Package Gate PASS",
     "main_gh_pages_parity": true,
     "accepted_android": "v11.8.0-rc4.150",
     "package_reference_artifact_digest": "sha256:77c671dcbbf822285920ca5235efba388cb3445e160688312ece4502a6a876d7"
   },
   "exact_continuation": {
-    "gate": "FINAL_DRAFT_DAY_EVIDENCE_FRESHNESS_SMOKE",
+    "gate": "RC4.151_DEVICE_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "Use draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json as latest full mock/evidence source. rc4.150 is device-observed via backup and global cross-position tiers are visible. Do not reopen FantasyPros tier API experiments. Preserve current scoring unless new OOS evidence proves a defect. Continue final draft-day freshness/smoke and deferred WR/upside analysis."
+    "instruction": "rc4.151 is fully gated and deployed. LIVE now has compact per-manager AUTO/MANUELL/? controls directly above the live-visible v3/v4/v5 selector and Analyze. Mode changes are pick-segmented. LIVE Return-v2 uses 300 runs instead of 900, skips balanced shadow scoring, but still persists decision fixtures and Return-validation evidence. Also fixes the profile-keyed autodraft lookup. Android remains rc4.150 until one controlled update and smoke check."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -462,5 +462,11 @@
     "returnMeanBrier": 0.0907,
     "conclusion": "No generic Return-v2 retune and no hard WR/RB quota justified. Preserve current model for draft day; use backup as latest calibration baseline.",
     "report": "research/BACKUP_AUDIT_2026-08-31T09-21-02-891Z.md"
+  },
+  "liveDraftControls": {
+    "managerModeUi": "AUTO / MANUELL / ? per manager, applies from current pick",
+    "expertSelector": "v3/v4/v5 visible in LIVE directly above Analyze",
+    "speed": "LIVE Return-v2 300 runs; balanced shadow pass skipped; evidence persistence retained",
+    "autodraftFix": "profile-keyed LIVE_MANAGER_ADAPTATION_STATE lookup"
   }
 }
