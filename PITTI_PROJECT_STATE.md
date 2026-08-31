@@ -3234,3 +3234,10 @@ NEXT: exactly one Android refresh to rc4.157 and screenshot acceptance; no cache
 ## 2026-08-31 13:50 CEST — rc4.157 Android acceptance PASS / DRAFT FREEZE
 
 Device screenshot confirms the actual visible live-draft surface is fixed: the old `Experten:` heading is gone and v4 experts render in the intended stable three-column matrix. RB cards show Koerner/Del Don/Pat; Mariano/[blank]/Weisse; [blank]/[blank]/Kev Wheeler. WR cards show Koerner/Del Don/Pat; Mariano/Boone/[blank]; Todd/[blank]/[blank]. This matches the sealed positional memberships and fixed global layout. Tier labels and candidate content remain present. rc4.157 is therefore Android-accepted and draft-ready. CODE FREEZE until the real draft unless a critical draft-blocking defect is observed.
+
+
+## 2026-08-31 13:55 CEST — AUTO BLOCK draft-preparation lanes after rc4.157 freeze
+
+Runtime remains frozen at Android-accepted rc4.157. No code/model/weight/Return changes are authorized absent a critical draft-blocking defect. Parallel preparation lanes now active: (A) current 2026 transaction/injury/availability freshness with explicit-year source guard; (B) post-53-man and post-19:00 CEST waiver-claim role delta; (C) late-round RB/championship-upside and handcuff contingency review; (D) expert-board/ADP freshness without retuning sealed v4; (E) operational live-draft failsafe/emergency queue and manager-mode readiness; (F) final 19:40-19:50 materiality scan then 19:50 operational freeze.
+
+Current public-news pass at ~13:55 CEST: roster cutdown is producing material IR/roster changes. Examples requiring candidate-context reconciliation include Christian Kirk to IR-designated-return, Luke Musgrave reserve/PUP, Baltimore RB Adam Randall IR-designated-return, and SF RB Isaac Guerendo on IR; official/current transaction authority outranks stale Sleeper metadata. No evidence from this pass justifies reopening the decision kernel. Recent 2026 half-PPR/current draft boards continue to support a deep wait-at-QB environment rather than changing the user's one-QB strategy. The high-value transaction scan remains after the official 19:00 CEST waiver-claim deadline.
