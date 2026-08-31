@@ -1,47 +1,54 @@
-# PITTI HANDOFF CURRENT — v207
-Handoff generation: `20260830T1822Z-v207`
+# PITTI HANDOFF CURRENT — v209
+Handoff generation: `20260831T0435Z-v209`
 
-## FIRST GATE — rc4.132, not more general research
-rc4.131 is the last accepted Android authority. Main/gh-pages contain the v203 live-autodraft Return-v2 runtime delta under the unchanged rc4.131 label; that is UNRELEASED until a genuine rc4.132 passes all gates.
+## Current release boundary
+- **Accepted Android:** v11.8.0-rc4.135.
+- **Deployed main/gh-pages:** v11.8.0-rc4.136, but its tier display is rejected for draft use.
+- **Prepared candidate:** v11.8.0-rc4.137 on `pitti-rc4.137-tier-fix`.
+- rc4.137 Release Contract, Project Guardrails and package/re-extract all PASS. Package run 33357387697, artifact 9745555473, inner runtime ZIP SHA-256 `8f56584f1f7cf99ec930304f7cedf03c02f82da2b73563f29f01f6e7954fca3d`, 13 runtime files.
+- Next gate: promote exactly the tested rc4.137 bytes to main and gh-pages, prove exact parity, then one controlled Android refresh. No cache clear/reinstall loop.
 
-rc4.132 must include all of:
-1. Dedicated Sleeper LIVE-autodraft Return-v2 path. SearchRank + roster need for empty-queue CPU behavior; mock CPU remains separate; private queue remains unknown.
-2. Pick32 Nabers/Javonte correction as deterministic regression. After Love roster is WR1/RB2; Nabers v4 panel 26.7 vs Javonte 28.9; observed bad ordering Javonte100/Nabers98. Adding Love cannot itself make a third RB more attractive.
-3. Active-manager history repair discovered in the second-pass handoff audit:
-   - Michael_Polk detailed history MUST include 2025: canonical years 2020-2025.
-   - Pascal Voerde MUST combine Pascal_Bracht/Bracht Eagles 2017-2022 + Pascal_Voerde/Voerde Eagles 2023-2025. Canonical person-season chain is 2017-2025 (9 seasons). The runtime's current 2023-2025-only detailed profile is stale and must not survive rc4.132.
-   - Preserve Pascal Gelderner separately as 2023-2025.
-   - Preserve Björn exclusions: 2021 deliberate rookie-theme; 2023 confirmed autodraft.
-4. Exact 2026 draft order hard lock:
-   **1 Michael · 2 Pascal Voerde · 3 Marc Düsseldorf · 4 Thomas · 5 Björn · 6 Pascal Gelderner · 7 Giuliano · 8 Bastian · 9 Muerotechnik/user · 10 Dutch Marc**.
-   Reject any resurrection of rc4.84 geometry, Michael K, or Moers Venom.
+## rc4.137 tier correction
+rc4.136 hard-coded Andrew Erickson and Mariano external tier snapshots. That is invalid because Erickson is not an active Expert-v4 member and coverage was not position-safe.
 
-## Required release path
-Deterministic regressions for Autodraft Return-v2 + Pick32 portfolio + exact draft order + active-manager history -> Release Contract PASS -> Project Guardrails PASS -> Package/Re-extract PASS -> merge main -> fast-forward gh-pages -> exact parity -> ONE controlled Android refresh -> visible rc4.132 verification. No cache clear, reinstall or repeated refresh loop.
+rc4.137 removes those snapshots. Visible tiers are display-only and may be produced only from a FantasyPros Custom-ECR result for the **active position-specific Expert-v4 members that FantasyPros can actually select**. Unavailable active v4 experts are disclosed and **never replaced** by Erickson or any other outsider. The returned FantasyPros expert set and explicit tier field must be verified exactly; otherwise PITTI shows no external expert tier. No synthetic rank-gap tier is presented as an expert tier. Tier context never enters Coach score, Return-v2, opponent model, roster logic or history.
 
-## Preserved model/evidence
-- Geno Smith/Aaron Rodgers are **NOT hard exclusions**. They must rank organically with no name-specific demotion/removal/forcing. Their absence from recommendations must result from correct Coach/player-quality evaluation.
+Active v4 panels:
+- QB: Sean Koerner, Todd D Clark, Justin Boone, Dalton Del Don, Nick Mariano, Pat Fitzmaurice.
+- RB: Ryan Weisse, Kev Wheeler, Dalton Del Don, Nick Mariano, Sean Koerner, Pat Fitzmaurice.
+- WR: Sean Koerner, Nick Mariano, Justin Boone, Todd D Clark, Dalton Del Don, Pat Fitzmaurice.
+- TE: Wolf of Roto Street, Ryan Weisse, Sean Koerner, Dalton Del Don, Pat Fitzmaurice, Justin Boone.
+
+## Critical immutable draft invariants
+Exact 2026 order:
+**1 Michael · 2 Pascal Voerde · 3 Marc Düsseldorf · 4 Thomas · 5 Björn · 6 Pascal Gelderner · 7 Giuliano · 8 Bastian · 9 Muerotechnik/user · 10 Dutch Marc.**
+
+Never resurrect Michael K, Moers Venom, Bastian at slot 5 or Pascal Gelderner at slot 8. Never shift/reindex historical picks, manager ownership, decision evidence or snapshot fingerprints.
+
+Other locks:
+- Starter maxima 4 WR / 3 RB / 2 TE are not roster/draft caps.
+- No K/DST draft.
+- Exactly one QB; no QB2.
+- **Geno Smith and Aaron Rodgers are explicit user hard exclusions and must never be recommended/drafted.**
+- Panel is baseline; Return is timing context, not a pick command.
+- Preserve rc4.135 live-text expiry repairs and Josh Jacobs acute-status behavior.
+
+## Manager-history identity locks
+- Michael_Polk: 2020–2025 inclusive.
+- Pascal Voerde: Pascal_Bracht/Bracht Eagles 2017–2022 + Pascal_Voerde/Voerde Eagles 2023–2025 = 9 canonical seasons.
+- Pascal Gelderner remains a separate 2023–2025 identity.
+- Björn 2021/2023 exclusions remain preserved.
+
+## Evidence/model boundary
 - v4 PRIMARY / v5 CHALLENGER / v3 failsafe.
-- Latest backup `draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json`: 29 fixtures / 15 states / 14 exact pairs; missing pick29 expertv5. Never call 30/30.
-- McLaurin sparse-panel canary and Swift/Lamar description canaries remain protected.
-- Active-draft decision fixtures remain atomic; rc4.129 slice(-0) regression remains locked.
-- No broad expert-weight or Return-v2 retune from incomplete evidence.
+- Latest evidence backup `draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json` is 29/30 paired fixtures; pick29 expertv5 is missing. Never call it 30/30.
+- No broad expert-weight or Return-v2 retune before the draft.
 
-## Remaining agenda before real draft
-After rc4.132 device acceptance:
-1. Final cutdown/IR/PUP/waiver/depth-chart transaction reconciliation; official team/NFL status overrides stale Sleeper metadata.
-2. Fresh expert-board + Sleeper Half-PPR ADP delta check.
-3. Final late-RB/upside/league-winner materiality check only; no broad rebuild.
-4. Emergency/live-operational verification: snapshot guard, one-QB user strategy, no K/DST, starter maxima != roster caps, broad candidate visibility.
-5. ~19:50 operational freeze.
+## Remaining agenda after rc4.137 device verification
+1. Deferred WR comparison: Emeka Egbuka, Zay Flowers, Tetairoa McMillan, DeVonta Smith; Jaylen Waddle as reference. Compare baseline, role/injury, market and reliable v4-only tier context; rank pure upside/league-winner ceiling separately.
+2. Final transaction/IR/PUP/waiver/depth-chart freshness pass; official status overrides stale Sleeper metadata.
+3. Fresh expert-board + Sleeper Half-PPR ADP delta check.
+4. Final late-RB/upside materiality and operational smoke checks.
+5. ~19:50 operational freeze, then fresh execution-only real-draft chat.
 
-## Separate fresh real-draft chat
-User plans a brand-new chat for the actual draft. This is beneficial: the draft chat must be execution-only, loading the final canonical checkpoint + `PITTI_DRAFT_CHAT_BOOTSTRAP.md`. Do not reopen implementation/model design during the live draft unless a release-critical failure makes the Companion unusable.
-
-## v206 contradiction scrub
-- Repaired stale authority text that still said Pascal Voerde = 8 seasons; canonical chain is 2017-2025 = 9 seasons.
-- v206 QB wording was wrong and is revoked: no hard exclusion for Geno Smith/Aaron Rodgers; Coach ranking must decide organically.
-- Screenshot set is useful continuity evidence but not a complete standalone authority because transition text is partially obscured/cropped; canonical repo files control.
-
-## v207 correction
-- v206 incorrectly converted a repeatedly corrected non-exclusion rule into a hard user exclusion. That invented rule is fully revoked across canonical handoff authority.
+AUTO/AUTO BLOCK means real autonomous execution with no promise/status-only replies.
