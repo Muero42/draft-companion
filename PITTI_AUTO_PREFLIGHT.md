@@ -177,3 +177,17 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - After reproduced root cause only: one bounded fix + real-shape deterministic regression fixture + full gates/parity + exactly one device verification.
 - Preserve 125/125 text coverage, Warren/Jacobs handling, exact manager order/history, decision evidence/fingerprints, Coach/Return-v2, no K/DST, exactly one QB, and Geno Smith/Aaron Rodgers hard exclusions.
 - After tier acceptance: deferred 5-WR analysis, then final draft-day freshness/ADP/expert-board/late-RB/smoke freeze.
+
+
+## 13. v214 CURRENT OVERRIDE — rc4.153 DEVICE ACCEPTANCE THEN FREEZE
+- Generation: `20260831T1028Z-v214`. This section supersedes every older current-version / first-gate / device-authority pointer above.
+- Accepted Android/PWA authority = **v11.8.0-rc4.152**.
+- Source + deployed runtime candidate = **v11.8.0-rc4.153**.
+- rc4.153 PR #83 passed Release Contract, Candidate Package Gate and Project Guardrails; merged to main; **13/13 runtime files are main↔gh-pages parity**.
+- rc4.153 is presentation-only: stable expert display order across positions. Common v4 experts first: **Sean Koerner → Dalton Del Don → Pat Fitzmaurice**, then broadly shared experts, then specialists. Missing ranks remain `#– / fehlt`.
+- Exact next gate = **RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE**.
+- One controlled device update only. If display order PASS, immediately freeze runtime for the real draft.
+- Do not reopen public FantasyPros tier-field experiments, generic Return-v2 tuning, panel/source/weight changes, manager history, draft order, scoring or other old defect lanes without new release-critical evidence.
+- LIVE nine-manager AUTO/MANUELL/? grid, direct Coach apply, LIVE v3/v4/v5 selector and rc4.151 speed/evidence behavior are protected.
+- Latest adopted evidence backup remains `draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json`.
+- Exact manager order/history, no K/DST, exactly one QB, Geno Smith/Aaron Rodgers hard exclusions, starter maxima not roster caps remain immutable.
