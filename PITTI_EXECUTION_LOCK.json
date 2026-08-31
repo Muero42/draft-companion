@@ -17,19 +17,19 @@
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.152",
-    "latestPreinstallVerified": "candidate validation pending",
+    "latestPreinstallVerified": "v11.8.0-rc4.156 Candidate Package Gate PASS; Release Contract + Guardrails PASS",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "current CI package gate authority = rc4.153; historical rc4.143 artifact retained only as provenance",
-    "preinstallSha256": "sha256:f200bc85a5215d3105bddb2caca2b8b5a57b58ce49fcad35af05ab13813dd43c",
+    "preinstallSha256": "sha256:1df367cb9ca21035c5e69d11b499bac1f8781b6dec970fc5ae921161546b85f5",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "rc4.156 candidate: panelId-derived v4 position + compact matrix",
-    "latestDeployedCandidate": "v11.8.0-rc4.155",
+    "latestSourceRegressionVerified": "root cause closed: v4 position derived from panelId; compact matrix contract PASS",
+    "latestDeployedCandidate": "v11.8.0-rc4.156",
     "latestAndroidVerified": "v11.8.0-rc4.152",
     "androidAuthority": "v11.8.0-rc4.152 observed functional",
     "android_authority": "v11.8.0-rc4.152",
     "deployedPagesAppByteParityWithMain": true,
-    "preinstallReferenceRun": 33386341286,
-    "preinstallReferenceArtifactId": 9755706199,
+    "preinstallReferenceRun": 33387096882,
+    "preinstallReferenceArtifactId": 9755991411,
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.152",
     "latestAndroidFunctionalVerified": "rc4.152 device: nine-manager LIVE grid, LIVE v3/v4/v5 selector, fast analysis, global tiers, current texts functional",
@@ -62,8 +62,8 @@
       "androidAccepted": false
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.152",
-    "unreleasedMainDelta": "rc4.156 candidate only; no model changes",
-    "deployedPagesVersion": "v11.8.0-rc4.155",
+    "unreleasedMainDelta": "none; rc4.156 merged/deployed",
+    "deployedPagesVersion": "v11.8.0-rc4.156",
     "mainGhPagesParity": true
   },
   "auto": {
@@ -206,17 +206,17 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "branch": "pitti/rc4.156-expert-card-compact-matrix",
-    "status": "RC4.156_PREINSTALL_VALIDATION_PENDING",
+    "branch": "main",
+    "status": "RC4.156_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
     "production": false,
     "androidVerified": false,
-    "acceptedAndroidFallback": "v11.8.0-rc4.155 device loads but matrix still rendered legacy one-line prose",
-    "runtime": "candidate rc4.156; deployed/Android rc4.155",
-    "nextGate": "all three rc4.156 CI gates PASS"
+    "acceptedAndroidFallback": "v11.8.0-rc4.155 device observed with broken legacy one-line expert display",
+    "runtime": "main/gh-pages rc4.156 13/13 parity; Android rc4.155",
+    "nextGate": "one rc4.156 device refresh + screenshot"
   },
-  "status": "RC4.156_PREINSTALL_VALIDATION_PENDING",
-  "gate": "RC4.156_PREINSTALL_VALIDATE_DEPLOY_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
-  "nextGate": "all three rc4.156 CI gates PASS",
+  "status": "RC4.156_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
+  "gate": "RC4.156_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
+  "nextGate": "one rc4.156 device refresh + screenshot",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -282,5 +282,5 @@
     "latestBackupResolvedReturnForecasts": 674,
     "latestBackupReturnMeanBrier": 0.0907
   },
-  "rootCauseDiscipline": "Screenshot proves rc4.155 reached device but fixed v4 branch had no members because rankFor() does not expose r.pos. Derive position from expert-v4-* panelId. Compact matrix only; no model/source/tier/Return changes."
+  "rootCauseDiscipline": "rc4.155 device evidence isolated exact defect: rankFor returns panelId but not pos, so v4 display looked up empty blueprint membership. rc4.156 derives pos from panelId and uses compact fixed three-line matrix. All CI/package/parity checks pass. No model/source/tier/Return changes."
 }
