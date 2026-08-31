@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-31T08:24:00Z",
+  "updatedAt": "2026-08-31T08:28:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -23,7 +23,7 @@
     "preinstallSha256": "sha256:0ae0c1011a731328df85464c6c4da4bb9b49eb57741801ae3f8e1c2b4a95bec9",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.142 source syntax + service-worker-transformed syntax locally PASS; full CI pending",
-    "latestDeployedCandidate": "v11.8.0-rc4.143",
+    "latestDeployedCandidate": "v11.8.0-rc4.146",
     "latestAndroidVerified": "NO_FULL_TIER_ACCEPTANCE",
     "androidAuthority": "v11.8.0-rc4.145 observed; tier FAIL",
     "android_authority": "v11.8.0-rc4.142 observed; tier FAIL",
@@ -63,7 +63,7 @@
     },
     "acceptedAndroidAuthority": "NO_FULL_TIER_ACCEPTANCE; rc4.142 functional except tier display",
     "unreleasedMainDelta": "rc4.143 candidate: position-specific FantasyPros expert eligibility for external v4 tiers; Android authority remains rc4.142 until full gates/deploy/device verification.",
-    "deployedPagesVersion": "v11.8.0-rc4.143",
+    "deployedPagesVersion": "v11.8.0-rc4.146",
     "mainGhPagesParity": true
   },
   "auto": {
@@ -205,17 +205,17 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "branch": "fix/rc4.146-tier-response-provenance",
-    "status": "RC4.146_CANDIDATE_VALIDATION",
+    "branch": "main",
+    "status": "RC4.146_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "rc4.145 functional baseline without external tiers",
-    "runtime": "candidate rc4.146 source only; Android rc4.145",
-    "nextGate": "full release/package/guardrail validation before merge/deploy"
+    "runtime": "main/gh-pages rc4.146; Android rc4.145",
+    "nextGate": "exactly one controlled device update then v4 tier acceptance"
   },
-  "status": "RC4.146_CANDIDATE_VALIDATION",
-  "gate": "RC4.146_RELEASE_GATES",
-  "nextGate": "full release/package/guardrail validation before merge/deploy",
+  "status": "RC4.146_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
+  "gate": "RC4.146_DEVICE_TIER_ACCEPTANCE",
+  "nextGate": "exactly one controlled device update then v4 tier acceptance",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
