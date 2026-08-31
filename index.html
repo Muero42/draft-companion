@@ -7,7 +7,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.157">
+  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.158">
   <title>Draft Companion – Final Draft Edition 2026</title>
 
 <style id="workspaceStyles">
@@ -22,7 +22,7 @@
       <h1>Draft Companion</h1>
       <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
     </div>
-    <span class="version">v11.8.0-rc4.157</span>
+    <span class="version">v11.8.0-rc4.158</span>
   </header>
 
   <nav class="workspace-nav" aria-label="Arbeitsbereich">
@@ -52,7 +52,7 @@
     </div>
     <div id="apiQuickStatus" class="notice"></div><div class="strategy-box"><b>Draft-Day Expertenmodell</b><p class="tiny">Das aktive Analysemodell wird ausschließlich direkt über „Analysieren“ gewählt (v4 PRIMARY · v5 CHALLENGER · v3 Failsafe). Die veraltete Entwicklungs-Auswahl wurde entfernt.</p><div class="button-grid" style="margin-top:8px"><button id="expertV3AuditBtn" class="secondary" type="button">Expert-v3 kompakt kopieren</button></div><div id="expertV3AuditStatus" class="notice">v3-Kompaktexport bereit; nur positionsrelevante Ränge.</div></div><div id="qualityStatus" class="notice">Datenprüfung läuft …</div>
     <div class="button-grid">
-      
+      <button id="expertDeltaBtn" class="secondary" type="button">Experten-Delta prüfen</button>
     </div>
     <details class="compact-details">
       <summary>Panel-, Preset- & ADP-Details</summary>
@@ -63,7 +63,7 @@
       </div>
     </details>
     <p id="adpHelper" class="tiny">Sleeper-ADP wird beim Datenupdate automatisch geprüft. Ohne verifizierte ADP werden Reach und Return bewusst konservativ behandelt.</p>
-    <p class="tiny">Rankings einmal täglich aktualisieren; am Drafttag erneut kurz vor Beginn. Bye Weeks sind nur ein kleiner Tiebreaker.</p>
+    <p class="tiny">Am Drafttag zuerst eine Experten-Tagesbaseline erstellen; danach mit „Experten-Delta prüfen“ nur echte Ranglistenänderungen übernehmen. Bye Weeks sind nur ein kleiner Tiebreaker.</p>
   </section>
 
   <section class="card" data-workspace="draft">
@@ -246,13 +246,13 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v11.8.0-rc4.157: feste v4-Expertenmatrix im tatsächlich sichtbaren Live-Draft-Surface; Überschrift entfernt; Modelllogik unverändert.</div>
+<div class="freeze-note">v11.8.0-rc4.158: feste v4-Expertenmatrix im tatsächlich sichtbaren Live-Draft-Surface; Überschrift entfernt; Modelllogik unverändert.</div>
 <button id="analysisJumpV3" class="snapshot-jump" type="button" aria-label="Zur Analyse" hidden>↓</button>
 </main>
-<script src="live-surface-v3.js?v=v11.8.0-rc4.157" defer></script>
+<script src="live-surface-v3.js?v=v11.8.0-rc4.158" defer></script>
 <script src="expert-v2-board.js?v=20260826"></script>
 <script src="expert-v3-board.js?v=20260828a"></script>
-<script type="module" src="app.js?v=v11.8.0-rc4.157"></script>
+<script type="module" src="app.js?v=v11.8.0-rc4.158"></script>
 <script src="expert-board-export.js?v=20260826e" defer></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>
