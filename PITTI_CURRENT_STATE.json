@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260831T1028Z-v214",
-  "updated_at": "2026-08-31T10:28:00Z",
+  "updated_at": "2026-08-31T14:20:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -11,21 +11,21 @@
   "runtime": {
     "production_control": "v11.8.0-rc4.152 Android observed functional: LIVE manager grid + v3/v4/v5 selector + fast analysis + global tiers + current texts",
     "android_authority": "v11.8.0-rc4.152",
-    "test_challenger": "v11.8.0-rc4.157",
-    "test_challenger_android_verified": true,
-    "latest_package_reextract": "rc4.157 package/re-extract PASS; Release Contract + Guardrails PASS",
+    "test_challenger": "v11.8.0-rc4.158",
+    "test_challenger_android_verified": false,
+    "latest_package_reextract": "rc4.158 package/re-extract PASS; Release Contract + Guardrails PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
-    "latest_package_sha256": "sha256:0ae0c1011a731328df85464c6c4da4bb9b49eb57741801ae3f8e1c2b4a95bec9",
-    "deployed_pages": "gh-pages v11.8.0-rc4.157",
+    "latest_package_sha256": "sha256:46162cce29bc21c21b1ef826f7ac36d8ebd655cd5c75498f3cfaaf7ac7fbcb7c",
+    "deployed_pages": "gh-pages v11.8.0-rc4.158",
     "deployed_pages_app_byte_parity_with_main": true,
-    "package_reference_run": 33388112853,
-    "package_reference_artifact_id": 9756358571,
+    "package_reference_run": 33401979026,
+    "package_reference_artifact_id": 9761582650,
     "package_reference_note": "Historical rc4.142 package evidence retained only as provenance; current release authority is rc4.153 with all three CI gates PASS.",
     "android_version_observed": true,
     "android_functional_verified": true,
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": true,
-    "android_acceptance_pending": null,
+    "android_acceptance_pending": "rc4.158 one controlled device refresh + expert-delta smoke",
     "android_observed": "v11.8.0-rc4.152",
     "android_functional_acceptance": "PASS on rc4.152 device: LIVE nine-manager grid, LIVE v3/v4/v5 selector, faster analysis, global tiers and current player texts observed functional.",
     "rollback_reference": "v11.8.0-rc4.96",
@@ -33,17 +33,17 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "rc4.157 merged/deployed actual live-surface fix",
-    "deployed": "main/gh-pages rc4.157; 13/13 runtime parity PASS",
+    "source_candidate": "rc4.158 merged/deployed expert delta refresh",
+    "deployed": "main/gh-pages rc4.158; 13/13 runtime parity PASS",
     "main_gh_pages_parity": true,
-    "accepted_android": "v11.8.0-rc4.152",
+    "accepted_android": "v11.8.0-rc4.157",
     "package_reference_artifact_digest": "sha256:4a5c7c00fca33d7869be7c75f80a7005ae5c0f10d3b6c0767cb0b595f6297a18",
     "android_acceptance": "rc4.157 PASS at 2026-08-31 13:50 CEST: screenshot confirms actual live draft cards show fixed v4 expert matrix, no Experten heading; positional omissions/columns correct"
   },
   "exact_continuation": {
-    "gate": "REAL_DRAFT_2026",
+    "gate": "RC4.158_ANDROID_ACCEPTANCE",
     "auto_starts_mock": false,
-    "instruction": "rc4.157 accepted on Android. Freeze code. During real draft use live snapshots/manager-mode inputs; change code only for a critical draft-blocking defect."
+    "instruction": "Refresh/update once on Android. Verify rc4.158 and expert-delta control. Do not clear cache or reinstall. If PASS, create today's v4 expert baseline and refreeze runtime."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -78,11 +78,11 @@
       "5 Deferred Egbuka/Flowers/Tetairoa McMillan/DeVonta Smith + Waddle comparison only if time remains; do not delay draft readiness."
     ]
   },
-  "source_authority": "main/gh-pages v11.8.0-rc4.154; exact 13/13 runtime parity PASS",
-  "package_authority": "rc4.154 Release Contract + Candidate Package Gate + Project Guardrails PASS",
+  "source_authority": "main/gh-pages v11.8.0-rc4.158; exact 13/13 runtime parity PASS",
+  "package_authority": "rc4.158 Release Contract + Candidate Package Gate + Project Guardrails PASS",
   "android_version_observed": "v11.8.0-rc4.152",
   "android_functional_verified": true,
-  "deployment_authority": "rc4.154 merged/deployed; Android remains rc4.153 observed until fixed-matrix smoke",
+  "deployment_authority": "rc4.158 merged/deployed; Android authority remains rc4.157 until device smoke",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
@@ -94,7 +94,7 @@
     "transaction_rule": "Official transaction/IR/PUP truth outranks stale Sleeper metadata; same-position move alone is weak evidence unless role/health impact is corroborated.",
     "draft_chat_rule": "Start a brand-new chat for the real draft after final runtime/freshness checkpoint. That draft chat is execution-only: load DRAFT_CHAT_BOOTSTRAP + canonical state, do not redesign code/model during the draft unless a release-critical emergency makes the app unusable."
   },
-  "android_acceptance_pending": "rc4.155 display smoke only",
+  "android_acceptance_pending": "rc4.158 one controlled device refresh + expert-delta smoke",
   "expert_v4_v5": {
     "v3": "frozen control/failsafe; embedded team/individual hybrid as historically audited",
     "v4": "CURRENT RE-AUDIT: individual-only, only experts with obtainable individual rankings. Position-specific optimized weights in app.js EXPERT_V4_BLUEPRINT. Koerner is native v4.",
@@ -166,15 +166,15 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.157_DRAFT_READY_FROZEN",
+    "status": "RC4.158_DEPLOYED_ANDROID_ACCEPTANCE_PENDING",
     "production": true,
-    "androidVerified": true,
-    "runtime": "main/gh-pages rc4.157 13/13 parity; Android rc4.157 accepted",
-    "nextGate": "real draft only; no pre-draft code changes absent critical defect"
+    "androidVerified": false,
+    "runtime": "main/gh-pages rc4.158 13/13 parity; Android rc4.157 accepted",
+    "nextGate": "one controlled rc4.158 device refresh, then expert-delta smoke"
   },
-  "status": "RC4.157_DRAFT_READY_FROZEN",
-  "gate": "REAL_DRAFT_2026",
-  "nextGate": "real draft; code freeze",
+  "status": "RC4.158_DEPLOYED_ANDROID_ACCEPTANCE_PENDING",
+  "gate": "RC4.158_ANDROID_ACCEPTANCE",
+  "nextGate": "one controlled device refresh; verify version + delta button; no cache clear/reinstall",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
