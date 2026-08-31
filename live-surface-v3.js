@@ -54,13 +54,32 @@ function expertOrder(x){
   return ordered
 }
 function expertRankLabel(hit){if(!hit)return'#–';const overall=Number(hit.overallRank??hit.rank);return Number.isFinite(overall)&&overall>0?`#${Math.round(overall)}`:'#–'}
+const V4_EXPERT_MATRIX=[
+ ['Sean Koerner','Dalton Del Don','Pat Fitzmaurice'],
+ ['Nick Mariano','Justin Boone','Ryan Weisse'],
+ ['Todd D Clark','Wolf of Roto Street','Kev Wheeler']
+];
 function ex(x){const rows=x.individual||[],map=new Map(rows.map(r=>[n(r.expertName||r.source),r]));const ord=expertOrder(x);if(!ord.length)return'—';return ord.map(name=>{const hit=map.get(n(name));return `${shortName(name)} ${expertRankLabel(hit)}`}).join(' · ')}
-window.PITTI_LIVE_PRESENTATION_V3={signal,arrowWhy,headerArrow,plus,minus,keyword,expertOrder,ex,profileLabel};
+function expertMatrixHtml(x){
+  // This is the visible locked draft surface from the device screenshot. Bind to the
+  // exact analyzed row (panelId/intendedExperts), not the mutable selector.
+  if(!String(x?.panelId||'').startsWith('expert-v4-'))return `<div class="live-experts">${esc(ex(x))}</div>`;
+  const intended=new Set((x?.intendedExperts||[]).map(n));
+  const map=new Map((x.individual||[]).map(r=>[n(r.expertName||r.source),r]));
+  return `<div class="live-experts live-experts-matrix">${V4_EXPERT_MATRIX.map(row=>{
+    let last=-1;for(let i=0;i<row.length;i++)if(intended.has(n(row[i])))last=i;
+    if(last<0)return'';
+    return `<div class="live-expert-row">${row.slice(0,last+1).map(name=>intended.has(n(name))
+      ?`<span><b>${esc(shortName(name))}</b> ${esc(expertRankLabel(map.get(n(name))))}</span>`
+      :`<span class="live-expert-placeholder" aria-hidden="true">${esc(shortName(name))} #000</span>`).join('')}</div>`;
+  }).join('')}</div>`;
+}
+window.PITTI_LIVE_PRESENTATION_V3={signal,arrowWhy,headerArrow,plus,minus,keyword,expertOrder,ex,expertMatrixHtml,profileLabel};
 const metric=(label,value)=>`${label} <strong class="metric-value">${value}</strong>`,appVersion=()=>document.querySelector('.version')?.textContent?.replace(/\s+/g,'')||'v11.8.0';
 async function cp(t,m){try{await navigator.clipboard.writeText(t);$('liveSurfaceStatusV3').textContent=m}catch{$('liveSurfaceStatusV3').textContent='Kopieren nicht möglich.'}}
 function hand(s){const a=['===== PITTI DRAFT HANDOFF =====',`App-Version: ${appVersion()}`,`Experten: ${profileLabel()}`,`Pick ${s.current} · Folgepick ${s.next??'–'}`,''];s.rows.forEach((x,i)=>a.push(`${i+1}. ${x.name}${x.expertTier?.label?' · '+x.expertTier.label:''}${x.arrows?' '+x.arrows:''} | ${tl(x)} | P ${Number(x.panel).toFixed(1)} · ADP ${x.adp!=null?Number(x.adp).toFixed(1):'–'} · R ${x.ret!=null?Math.round(x.ret*100)+'%':'–'} | + ${plus(x,i).replace(/^\+ /,'')} | - ${minus(x).replace(/^− /,'')} | ${keyword(x,i)} | Experten ${ex(x)}`));a.push('','AUFGABE: Kanonisches Locked Draft-Layout verwenden. Panel bleibt Baseline; nur entscheidungsändernde aktuelle Evidenz darf Coach/TAKE-WAIT überstimmen. Research-Pfeile strikt beibehalten.');return a.join('\n')}
 function render(){const root=$('liveDecisionSurfaceV3'),s=st();if(!root)return;root.hidden=false;const active=!!s?.rows?.length;document.body.classList.toggle('pitti-decision-surface-active',active);if(!active){const empty='<div class="notice">Analyse starten; danach erscheint hier die kompakte Draft-Entscheidung.</div>';if(root.innerHTML!==empty)root.innerHTML=empty;return}
-const card=(x,i)=>`<article class="live-pick-card${i===0?' live-pick-primary':''}"><h3>${i+1}. ${esc(x.name)}${x.expertTier?.label?` · <span class="expert-tier">${esc(x.expertTier.label)}</span>`:''}${esc(headerArrow(x))}</h3><div class="live-teamline">${esc(tl(x))}</div><div class="live-metrics">${metric('P',Number(x.panel).toFixed(1))} · ${metric('ADP',x.adp!=null?Number(x.adp).toFixed(1):'–')} · ${metric('R',x.ret!=null?Math.round(x.ret*100)+'%':'–')} · ${metric('Conf.',pc(x,s.rows)+'%')}</div><div class="live-plus">${esc(plus(x,i))}</div><div class="live-minus">${esc(minus(x))}</div><div class="live-signal"><b>Fazit:</b> ${esc(signal(x,i))}</div><div class="live-experts"><b>Experten:</b> ${esc(ex(x))}</div>${x.outsideNormalCut?'<div class="live-cut-warning">NORMAL-CUT WARNUNG · nur Fallback/kontextuell</div>':''}</article>`;
+const card=(x,i)=>`<article class="live-pick-card${i===0?' live-pick-primary':''}"><h3>${i+1}. ${esc(x.name)}${x.expertTier?.label?` · <span class="expert-tier">${esc(x.expertTier.label)}</span>`:''}${esc(headerArrow(x))}</h3><div class="live-teamline">${esc(tl(x))}</div><div class="live-metrics">${metric('P',Number(x.panel).toFixed(1))} · ${metric('ADP',x.adp!=null?Number(x.adp).toFixed(1):'–')} · ${metric('R',x.ret!=null?Math.round(x.ret*100)+'%':'–')} · ${metric('Conf.',pc(x,s.rows)+'%')}</div><div class="live-plus">${esc(plus(x,i))}</div><div class="live-minus">${esc(minus(x))}</div><div class="live-signal"><b>Fazit:</b> ${esc(signal(x,i))}</div>${expertMatrixHtml(x)}${x.outsideNormalCut?'<div class="live-cut-warning">NORMAL-CUT WARNUNG · nur Fallback/kontextuell</div>':''}</article>`;
 const html=`<div class="live-surface-head"><div><b>DRAFT-ENTSCHEIDUNG · Pick ${s.current}</b><span>Nächster ${s.next??'–'} · ${s.profile==='expertv3'?'Expert-v3 POSITIONSSPEZIFISCH':profileLabel()}</span></div><button id="liveAnalyzeJumpV3" class="secondary">↕ Analyse</button></div><div class="live-clear-title">TOP 10 KANDIDATEN</div>${s.rows.slice(0,10).map(card).join('')}<div class="live-surface-actions"><button id="liveCopyCompactV3" class="secondary">Chat-Handoff kopieren</button><button id="liveCopyFullV3" class="secondary">Full Diagnostic</button></div><div id="liveSurfaceStatusV3" class="tiny"></div>`;
 if(root.innerHTML===html)return;root.innerHTML=html;$('liveAnalyzeJumpV3').onclick=()=>$('refreshBtn')?.scrollIntoView({behavior:'smooth',block:'center'});$('liveCopyCompactV3').onclick=()=>cp(hand(s),'Kompakter Chat-Handoff kopiert.');$('liveCopyFullV3').onclick=()=>cp($('snapshot')?.value||'','Full Diagnostic kopiert.')}
 function jump(){const b=$('analysisJumpV3'),t=$('refreshBtn');if(!b||!t)return;const r=t.getBoundingClientRect(),v=innerHeight||document.documentElement.clientHeight,vis=r.bottom>0&&r.top<v;if(b.hidden===!vis)b.hidden=vis;if(!vis){const u=r.bottom<=0;b.textContent=u?'↑':'↓';b.setAttribute('aria-label',u?'Nach oben zur Analyse':'Nach unten zur Analyse')}}
