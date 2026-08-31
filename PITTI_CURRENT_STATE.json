@@ -16,7 +16,7 @@
     "latest_package_reextract": "v11.8.0-rc4.141 PACKAGE/RE-EXTRACT + independent package browser-startup smoke PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
-    "deployed_pages": "gh-pages final rc4.138 draft-day runtime; 7/7 core files byte-identical to main",
+    "deployed_pages": "gh-pages v11.8.0-rc4.141; all 13 package runtime files byte-identical to main/package",
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33366773460,
     "package_reference_artifact_id": 9748549429,
@@ -33,8 +33,8 @@
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.141 on main — fatal startup syntax repaired; browser/PWA runtime syntax gate added; full gates pending",
-    "deployed": "main rc4.141; gh-pages rc4.139",
+    "source_candidate": "v11.8.0-rc4.141 exact tested package deployed to gh-pages",
+    "deployed": "main rc4.141; gh-pages rc4.141",
     "main_gh_pages_parity": true,
     "accepted_android": "v11.8.0-rc4.137"
   },
@@ -140,7 +140,16 @@
       "packageSha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
       "runtimeFiles": 13,
       "result": "ALL_CI_GATES_PASS_PLUS_INDEPENDENT_PACKAGE_BROWSER_STARTUP_SMOKE_PASS",
-      "candidate": "v11.8.0-rc4.141"
+      "candidate": "v11.8.0-rc4.141",
+      "packageToMain13of13": true,
+      "mainToGhPages13of13": true,
+      "independentPackageChecks": [
+        "node --check all JS PASS",
+        "source app parse PASS",
+        "service-worker-transformed app parse PASS",
+        "startup-prefix execution reaches refresh handler binding PASS",
+        "canonical order/QB hard exclusions/v4-only tier provenance/Warren text/Jacobs exempt-list canaries PASS"
+      ]
     },
     "textCoverageAudit20260831": {
       "source": "latest 2026-08-30 16:02 backup decisionFixtures candidate universe + current rc4.137 RESEARCH_RESIDUAL_PRIORS + current device screenshot",
@@ -264,19 +273,19 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.141_ALL_OFFDEVICE_GATES_PASS",
+    "status": "RC4.141_OFFDEVICE_FULL_PASS_AND_13_OF_13_PARITY",
     "production": false,
     "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.135",
-    "runtime": "Android rc4.139 observed but app module failed to execute due fatal syntax in RESEARCH_RESIDUAL_PRIORS; rc4.141 fixes root cause",
+    "runtime": "Android shell rc4.139 observed but app module did not execute; exact tested rc4.141 package now main↔gh-pages 13/13 byte-identical",
     "mainRuntimeParity": "PASS — app.js, decision-policy.js, index.html, live-surface-v3.js, manifest.webmanifest, sw.js, _worker.js identical main↔gh-pages",
-    "nextGate": "sync exact tested rc4.141 runtime to gh-pages, verify package↔main↔gh-pages byte identity, then one device verification",
+    "nextGate": "one controlled device reopen/update to rc4.141; verify status initialization, refresh handler, tiers and individual text",
     "textCoverageStatus": "SOURCE PASS — 125/125 audited candidate names covered in rc4.138; deterministic gate added",
     "parallelDraftDay": "ACTIVE — freshness research started while device verification pending"
   },
-  "status": "RC4.141_ALL_OFFDEVICE_GATES_PASS",
-  "gate": "RC4.141_PAGES_PARITY",
-  "nextGate": "sync exact tested rc4.141 runtime to gh-pages, verify package↔main↔gh-pages byte identity, then one device verification",
+  "status": "RC4.141_OFFDEVICE_FULL_PASS_AND_13_OF_13_PARITY",
+  "gate": "RC4.141_DEVICE_VERIFY",
+  "nextGate": "one controlled device reopen/update to rc4.141; verify status initialization, refresh handler, tiers and individual text",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
