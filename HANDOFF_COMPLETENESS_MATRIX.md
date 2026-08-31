@@ -22,3 +22,15 @@ Takeover/continuation PASS requires all of the following:
 - no cache clear/reinstall/repeated-refresh loop;
 - deferred 5-WR comparison and final draft-day freshness agenda remain preserved;
 - real-draft chat remains execution-only after final readiness freeze.
+
+## 2026-08-31 09:25Z takeover delta
+Takeover is incomplete unless the new chat explicitly recognizes:
+- Android = **rc4.142 observed**;
+- startup/refresh/analyze = functional;
+- Tyler Warren individual description = restored;
+- external v4 tier display = **FAIL / absent**;
+- rc4.142 `total_experts` verifier change did **not** solve tiers;
+- next action = live FantasyPros payload-level diagnosis before another build;
+- no reinstall/cache-clear/repeated-refresh loop;
+- no speculative rc4.143;
+- 125/125 description coverage and all draft/history/manager/QB/Return invariants remain locked.
