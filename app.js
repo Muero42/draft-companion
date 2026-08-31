@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.143';
+const APP_VERSION='v11.8.0-rc4.144';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2262,7 +2262,10 @@ async function loadV4ConsensusTiers(){
 }
 function v4ConsensusTierContext(x){
   const pos=String(x?.p?.pos||'').toUpperCase();
-  if(!EXPERT_PROFILE_IDS.expertv4[pos]||positionPanels[pos]!==EXPERT_PROFILE_IDS.expertv4[pos])return null;
+  // Tier is a display-only annotation sourced from the sealed v4 FantasyPros consensus.
+  // Do not couple visibility to mutable positionPanels: analysis/profile restoration and
+  // refresh can legitimately change that UI state after the v4 tier payload was verified.
+  if(!EXPERT_PROFILE_IDS.expertv4[pos])return null;
   const block=v4ConsensusTierCache?.[pos],row=block?.rows?.[norm(x?.p?.name||'')];
   if(!row||!Number.isFinite(Number(row.tier)))return null;
   const selected=Array.isArray(block.selected)?block.selected:[],unavailable=Array.isArray(block.unavailable)?block.unavailable:[];
