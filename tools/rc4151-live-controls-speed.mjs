@@ -5,7 +5,7 @@ assert(html.includes('id="liveManagerModeControl"'),'live manager control missin
 assert(html.includes('id="analysisExpertSelector"')&&!html.includes('class="strategy-box mock-only" id="analysisExpertSelector"'),'expert selector still hidden in live');
 assert(html.indexOf('id="liveManagerModeControl"')<html.indexOf('id="analysisExpertSelector"'),'manager control must sit above expert selector');
 assert(html.indexOf('id="analysisExpertSelector"')<html.indexOf('id="refreshBtn"'),'expert selector must sit above Analyze');
-assert(app.includes("source:'user-explicit-live-ui'"),'segment source missing');
+assert(app.includes("source:'user-explicit-live-ui'")||app.includes("source:'user-explicit-live-grid'"),'explicit live manager segment source missing');
 assert(app.includes("fromPick:current,mode"),'manager mode must be segmented from current pick');
 assert(app.includes("liveManagerStateForProfile(prof)?.currentMode==='autodraft'"),'live autodraft model still looks up wrong adaptation key');
 assert(app.includes("const returnRuns=mode==='live'?300:900"),'live Return-v2 speed reduction missing');
