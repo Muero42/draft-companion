@@ -2,7 +2,7 @@
 Generation: `20260831T0445Z-v210`
 
 Takeover/continuation PASS requires all of the following:
-- generation v209 is consistent across CURRENT, SEAL, LOCK, CONTRACTS, HANDOFF and MATRIX;
+- generation v210 is consistent across CURRENT, SEAL, LOCK, CONTRACTS, HANDOFF and MATRIX;
 - Android rc4.137 is already visibly observed on-device; do not request reinstall merely to reach rc4.137;
 - rc4.136 is treated as deployed-but-tier-invalid and never as tier authority;
 - rc4.137 Release Contract PASS, Project Guardrails PASS and package/re-extract PASS are retained as predeploy evidence;
