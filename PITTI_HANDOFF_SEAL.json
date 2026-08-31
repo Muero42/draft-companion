@@ -7,9 +7,9 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "0001670d436bc09a7118055ae6feb1f4ec9a2bc7",
-    "PITTI_CURRENT_STATE.json": "5c8a92d6465391a82c341111b0f292c15155df49",
-    "PITTI_EXECUTION_LOCK.json": "f2945e89dee3a9a68f8770b1b5f718fe0ed8879d",
+    "PITTI_COMMAND_CONTRACTS.json": "5a2bb5f735776dc171ebf9f17ab6cdc1f00503c4",
+    "PITTI_CURRENT_STATE.json": "aa56c1f9d125763055d29b4c5d702200e9cb6ddf",
+    "PITTI_EXECUTION_LOCK.json": "ef362b0e8902eefd7d4f3fd2b4ea3d5cc0f56287",
     "PITTI_AUTO_PREFLIGHT.md": "b57d1d0178339cc3790516ec89c0c568169ec87a",
     "PITTI_PROJECT_STATE.md": "b7496cd03a8eb0dce9d7dc2a3557c7ca12e7da6d",
     "NEW_CHAT_HANDOFF_CURRENT.md": "389f72bcd5473ac1d21b377885fbae8a5eb8a215",
@@ -17,22 +17,22 @@
     "HANDOFF_COMPLETENESS_MATRIX.md": "2d6a88249d870a49b2748eabb4fcdb11345dbb39",
     "PITTI_DRAFT_CHAT_BOOTSTRAP.md": "f2dff589dd45be9b59f50eb3c7f44ab8669b43cb",
     "research/ACTIVE_MANAGER_IDENTITY_HISTORY_AUDIT_V205_2026-08-30.md": "d370be19c307514e37c0870ddafb35ae58c177ca",
-    "app.js": "716ab7801f85ce3bb7e987c92772208bdd628eb3",
-    "index.html": "c68ff6efe14b62a6cd955927a6e8d7c696ec3f0b",
+    "app.js": "0f7ba04a2bfea23a512a2f2f7733578f0653d3d2",
+    "index.html": "0292807b051778088865cdea9b2f5fb7a8b1705d",
     "decision-policy.js": "d2e2f58b020e3c5c3f4c42c717677a4e81f0833a",
     "live-surface-v3.js": "b68ad1cc77941d23523cd30fd70e1b8a3bd5655f",
-    "manifest.webmanifest": "efc7d9256adfedf385b488d8ae3ff5b6175e7a16",
-    "sw.js": "5348ef6d9c5baaa8b41c0e0ee66bb54386d48285",
+    "manifest.webmanifest": "b6d61dfb6673aa22db3266ee65219480e5105393",
+    "sw.js": "069c153d6483a46670fa04080af744785f7722c5",
     "tools/audit-v45-backup.mjs": "333ab6d3877a6e89ba4af88e6163e9df4d7934fe",
     "tools/rc4130-active-fixture-quota.mjs": "601f685c99c1b56ad51e757629fe4230490eedb8",
     "research/CORRECTED_2026_DRAFT_ORDER_AUTHORITY.md": "6d95906b8137018d92ead071ecca6c554cb01f34",
     "research/LIVE_DECISION_MATRIX_V201_2026-08-30.md": "533f52c998a27a81fc819cd838110c1061a30a5d",
-    "README.md": "3afc1e400f0f4a0a908cd9621acfc409a75e570a"
+    "README.md": "168d568d2dfe2cac0f493d8d4a790edda3356727"
   },
   "branch_locks": {
     "accepted_android": "v11.8.0-rc4.137",
-    "source_state": "exact tested rc4.141 package deployed main+gh-pages 13/13 byte parity; Android verification pending",
-    "required_release": "v11.8.0-rc4.141",
+    "source_state": "rc4.142 fixes FantasyPros v4 tier verifier semantics after rc4.141 device startup PASS; off-device gates pending",
+    "required_release": "v11.8.0-rc4.142",
     "canonical_draft_order": "1 Michael|2 Pascal Voerde|3 Marc Düsseldorf|4 Thomas|5 Björn|6 Pascal Gelderner|7 Giuliano|8 Bastian|9 Muerotechnik|10 Dutch Marc",
     "manager_history": "Michael 2020-2025; Pascal Voerde Bracht/Voerde chain 2017-2025 = 9 seasons; Björn exclude 2021/2023",
     "latest_backup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json",
@@ -63,6 +63,6 @@
     "rc4141_package_main_13of13": true,
     "rc4141_main_pages_13of13": true
   },
-  "exact_gate": "RC4.141_DEVICE_VERIFY",
-  "note": "Confirmed root cause fixed and independently verified. rc4.141 source + SW-transformed runtime parse PASS; startup prefix binds refresh handler; exact 13-file package matches main and gh-pages byte-for-byte. One device verification remains."
+  "exact_gate": "RC4.142_RELEASE_GATES",
+  "note": "rc4.142: FantasyPros public API documents filters as expert whitelist while total_experts is consensus-population metadata. Verify returned filter/expert IDs exactly; do not require total_experts == selected v4 count."
 }
