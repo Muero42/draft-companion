@@ -2191,13 +2191,10 @@ const EXPERT_DISPLAY_PRIORITY_2026=[
   'Todd D Clark','Ryan Weisse',
   'Kev Wheeler','Wolf of Roto Street'
 ];
+const EXPERT_DISPLAY_PRIORITY_MAP_2026=new Map(EXPERT_DISPLAY_PRIORITY_2026.map((name,i)=>[norm(name),i]));
+function expertDisplayIndex(name){return EXPERT_DISPLAY_PRIORITY_MAP_2026.has(norm(name))?EXPERT_DISPLAY_PRIORITY_MAP_2026.get(norm(name)):999}
 function stableExpertDisplayOrder(names){
-  const priority=new Map(EXPERT_DISPLAY_PRIORITY_2026.map((name,i)=>[norm(name),i]));
-  return [...names].sort((a,b)=>{
-    const pa=priority.has(norm(a))?priority.get(norm(a)):999;
-    const pb=priority.has(norm(b))?priority.get(norm(b)):999;
-    return pa-pb||String(a).localeCompare(String(b));
-  });
+  return [...names].sort((a,b)=>expertDisplayIndex(a)-expertDisplayIndex(b)||String(a).localeCompare(String(b)));
 }
 function expertRanksHtml(r){
   // Live cards must have fixed expert columns for the exact analyzed panel. A source that
@@ -3113,7 +3110,7 @@ async function refresh(){
     if(availableSnapshot.length){
       availableSnapshot.forEach((x,i)=>{
         lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Panel ${x.r.rank.toFixed(1)} (${x.r.panel}) | Pos ${Number.isFinite(x.r.posRank)?x.p.pos+x.r.posRank.toFixed(1):'–'} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Sleeper SearchRank ${Number.isFinite(x.p.searchRank)?x.p.searchRank:'–'}${x.p.injury?` | Injury ${x.p.injury}`:''}`);
-        if(els.snapshotMode.value==='full'){const orderedIndividuals=[...(x.r.individual||[])].sort((a,b)=>stableExpertDisplayOrder([a.expertName,b.expertName])[0]===a.expertName?-1:1);lines.push(`   Einzelrankings: ${orderedIndividuals.map(v=>`${v.expertName} ${v.reconstructed?'≈':'#'}${Math.round(Number.isFinite(Number(v.overallRank))?Number(v.overallRank):Number(v.rank))}${Number.isFinite(Number(v.posRank))?` (${x.p.pos}${Math.round(Number(v.posRank))})`:''}${v.reconstructed?' [rekonstr.]':''}`).join(' · ')||'FEHLT'}`);}
+        if(els.snapshotMode.value==='full'){const orderedIndividuals=[...(x.r.individual||[])].sort((a,b)=>expertDisplayIndex(a.expertName)-expertDisplayIndex(b.expertName)||String(a.expertName).localeCompare(String(b.expertName)));lines.push(`   Einzelrankings: ${orderedIndividuals.map(v=>`${v.expertName} ${v.reconstructed?'≈':'#'}${Math.round(Number.isFinite(Number(v.overallRank))?Number(v.overallRank):Number(v.rank))}${Number.isFinite(Number(v.posRank))?` (${x.p.pos}${Math.round(Number(v.posRank))})`:''}${v.reconstructed?' [rekonstr.]':''}`).join(' · ')||'FEHLT'}`);}
       });
     }else lines.push('KEINE.');
 
