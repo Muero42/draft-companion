@@ -2182,9 +2182,11 @@ function fpConsensusExpertSetVerified(payload,ids){
   const want=ids.map(String).sort(),filters=(String(payload?.filters??'').match(/\d+/g)||[]).map(String).sort();
   const names=payload?.expert_name&&typeof payload.expert_name==='object'?Object.keys(payload.expert_name).map(String).sort():[];
   const pubs=payload?.expert_pub&&typeof payload.expert_pub==='object'?Object.keys(payload.expert_pub).map(String).sort():[];
-  const total=Number(payload?.total_experts);
   const exact=a=>a.length===want.length&&a.every((x,i)=>x===want[i]);
-  return total===want.length&&(exact(filters)||exact(names)||exact(pubs));
+  // FantasyPros documents total_experts as the consensus population and filters as
+  // the expert whitelist. Therefore total_experts MUST NOT be required to equal the
+  // selected v4 count. Verify the actual returned expert IDs instead.
+  return exact(filters)||exact(names)||exact(pubs);
 }
 function extractFpConsensusTiers(payload,pos,ids){
   if(!fpConsensusExpertSetVerified(payload,ids))return {ok:false,reason:'Expertenset nicht exakt verifiziert',rows:{}};
@@ -2204,10 +2206,11 @@ async function fetchV4ConsensusTierPosition(pos){
     if(id)selected.push({name,id:String(id)});else unavailable.push(name);
   }
   if(selected.length<2)return {ok:false,pos,selected:selected.map(x=>x.name),unavailable,reason:'weniger als zwei FantasyPros-auswählbare v4-Experten'};
-  const ids=selected.map(x=>x.id),filter=encodeURIComponent(ids.join(':')),season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value);
+  const ids=selected.map(x=>x.id),filter=ids.join(':'),season=els.season.value.trim(),scoring=encodeURIComponent(els.scoring.value);
   const attempts=[
+    // Public API: filters is the colon-delimited expert whitelist; preseason/draft
+    // consensus is the default at week 0. Keep explicit DRAFT only as a fallback.
     `/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}&week=0&filters=${filter}&experts=show`,
-    `/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}&week=0&type=PRESEASON&filters=${filter}&experts=show`,
     `/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}&week=0&type=DRAFT&filters=${filter}&experts=show`
   ];
   const failures=[];
