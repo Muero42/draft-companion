@@ -1,4 +1,5 @@
 # NEW CHAT HANDOFF — PITTI DRAFT DAY 2026-08-31
+Generation: `20260831T1455Z-v215`
 Generated: 2026-08-31 ~16:55 CEST
 Purpose: clean continuation chat for remaining draft-day preparation. This file supersedes stale handoffs for operational state.
 
@@ -19,6 +20,9 @@ Purpose: clean continuation chat for remaining draft-day preparation. This file 
 - 10 teams, Half-PPR.
 - Starters: QB, 2 WR, RB, TE, 2 Flex, K, DST; bench 6.
 - User slot: #9.
+- Exact manager/draft order: **1 Michael · 2 Pascal Voerde · 3 Marc Düsseldorf · 4 Thomas · 5 Björn · 6 Pascal Gelderner · 7 Giuliano · 8 Bastian · 9 Muerotechnik · 10 Dutch Marc.**
+- Identity locks: no Michael K; user team is Muerotechnik, not Moers Venom; Pascal Voerde and Pascal Gelderner are distinct; Bastian is slot 8.
+- Historical locks: Michael includes 2025; Pascal Voerde identity chain = Bracht Eagles 2017–2022 + Voerde Eagles 2023–2025; Björn 2021 theme and 2023 autodraft are excluded from ordinary human-preference learning.
 - Exact picks: 9/12, 29/32, 49/52, 69/72, 89/92, 109/112, 129/132, 149.
 - No K/DST drafted.
 - One QB only; no QB2.
@@ -26,6 +30,7 @@ Purpose: clean continuation chat for remaining draft-day preparation. This file 
 - Late QB/TE strategy remains; do not force either early.
 
 ## 2. CURRENT V4 EXPERT PANEL — DO NOT ALTER
+Visible live expert display order is visual only and stable: Sean Koerner → Dalton Del Don → Pat Fitzmaurice → Nick Mariano → Justin Boone → Todd D Clark → Ryan Weisse → Kev Wheeler → Wolf of Roto Street. Only panel members for the analyzed position appear; missing individual player rank stays #–/fehlt.
 QB: Todd D Clark / Sean Koerner / Justin Boone / Dalton Del Don / Nick Mariano / Pat Fitzmaurice.
 RB: Ryan Weisse / Kev Wheeler / Dalton Del Don / Nick Mariano / Sean Koerner / Pat Fitzmaurice.
 WR: Sean Koerner / Justin Boone / Todd D Clark / Pat Fitzmaurice / Nick Mariano / Dalton Del Don.
@@ -160,6 +165,7 @@ Emergency fallback: if Sleeper snapshot fails live, user sends screenshot of ava
 
 ## 13. NEXT CHAT INSTRUCTION
 On “PITTI AUTO”:
+0. Treat generation **20260831T1455Z-v215** as takeover generation. If CURRENT/LOCK/SEAL/HANDOFF/MATRIX generations or rc4.158 authority disagree, STOP and repair the handoff transaction before ordinary work.
 1. Read this handoff plus PITTI_CURRENT_STATE.json and PITTI_EXECUTION_LOCK.json.
 2. Verify Android authority rc4.158 / expert baseline 9/9.
 3. Continue only remaining time-dependent gates.
