@@ -7,7 +7,7 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "2499e00d7d641c3f4477c94b26d85fc56f6796bb",
+    "PITTI_COMMAND_CONTRACTS.json": "00bcfc4c72d8392ad5b99063926957fe040195f8",
     "PITTI_CURRENT_STATE.json": "4d56353a62f4faadb740b86047a09138a69963d0",
     "PITTI_EXECUTION_LOCK.json": "f17d325ce23d7079de07ebd184fe869bd7fd3033",
     "PITTI_AUTO_PREFLIGHT.md": "b57d1d0178339cc3790516ec89c0c568169ec87a",
@@ -57,6 +57,6 @@
     "main_gh_pages_parity": true,
     "stale_geno_rodgers_contradictions_removed": true
   },
-  "exact_gate": "RC4.139_RELEASE_GATES",
-  "note": "rc4.139 immediate visible refresh-start diagnostic; no decision-kernel change."
+  "exact_gate": "RC4.139_POST_PACKAGE_GATES",
+  "note": "rc4.139 canonical package PASS run 33364548281 artifact 9747810225 sha256 a038959891a95ac8d9f0e7ec6fd616c1e058c794c532055850473fbb369fa1ee; rerun guardrails."
 }
