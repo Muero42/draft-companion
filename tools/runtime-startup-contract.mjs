@@ -40,4 +40,27 @@ assert(handler.includes("els.refreshAllBtn.textContent='Aktualisiere …'"),'ref
 assert(handler.includes("els.qualityStatus.textContent='Datenupdate gestartet …'"),'refresh immediate status feedback missing');
 assert(handler.indexOf("Datenupdate gestartet …") < handler.indexOf("proxyCall("),'refresh feedback must precede first network call');
 
+
+/* Execute the real app prefix through refresh-handler binding in a browser-like harness.
+   This catches top-level runtime aborts that syntax-only CI misses. */
+const elements=new Map();
+function fakeElement(id=''){
+  const base={id,value:'',checked:false,disabled:false,hidden:false,options:[],style:{},dataset:{},
+    classList:{add(){},remove(){},toggle(){}},add(x){this.options.push(x)},addEventListener(){},
+    querySelectorAll(){return[]},querySelector(){return null},append(){},appendChild(){},
+    setAttribute(){},removeAttribute(){},focus(){},blur(){}};
+  return new Proxy(base,{get(t,p){if(p in t)return t[p];if(['innerHTML','textContent','className','type'].includes(String(p)))return '';return ()=>{}},set(t,p,v){t[p]=v;return true}});
+}
+globalThis.document={getElementById(id){if(!elements.has(id))elements.set(id,fakeElement(id));return elements.get(id)},querySelectorAll(){return[]}};
+globalThis.localStorage={_m:new Map(),getItem(k){return this._m.has(k)?this._m.get(k):null},setItem(k,v){this._m.set(k,String(v))},removeItem(k){this._m.delete(k)},key(i){return [...this._m.keys()][i]??null},get length(){return this._m.size}};
+globalThis.Option=function(text,value){this.text=text;this.value=value};
+globalThis.navigator={};
+globalThis.location={};
+globalThis.window=globalThis;
+globalThis.fetch=async()=>({ok:false,json:async()=>({}),text:async()=>''});
+const prefixEnd=app.indexOf('if(els.adpFile)',app.indexOf('els.refreshAllBtn.onclick='));
+assert(prefixEnd>0,'refresh handler prefix boundary missing');
+new Function(app.slice(0,prefixEnd).replace(/^import[^\n]*\n/,''))();
+assert.equal(typeof elements.get('refreshAllBtn')?.onclick,'function','refreshAllBtn handler was not bound during startup prefix');
+
 console.log('RUNTIME_STARTUP_CONTRACT_PASS',version);
