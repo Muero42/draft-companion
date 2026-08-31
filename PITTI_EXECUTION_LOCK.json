@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-31T14:20:00Z",
+  "updatedAt": "2026-08-31T14:36:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -24,17 +24,17 @@
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
     "latestDeployedCandidate": "v11.8.0-rc4.158",
-    "latestAndroidVerified": "v11.8.0-rc4.157",
-    "androidAuthority": "v11.8.0-rc4.157 accepted",
-    "android_authority": "v11.8.0-rc4.157",
+    "latestAndroidVerified": "v11.8.0-rc4.158",
+    "androidAuthority": "v11.8.0-rc4.158 accepted",
+    "android_authority": "v11.8.0-rc4.158",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33401979026,
     "preinstallReferenceArtifactId": 9761582650,
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.152",
     "latestAndroidFunctionalVerified": "rc4.152 device: nine-manager LIVE grid, LIVE v3/v4/v5 selector, fast analysis, global tiers, current texts functional",
-    "testChallengerAndroidObserved": false,
-    "testChallengerAndroidAccepted": false,
+    "testChallengerAndroidObserved": true,
+    "testChallengerAndroidAccepted": true,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
@@ -61,7 +61,7 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.157",
+    "acceptedAndroidAuthority": "v11.8.0-rc4.158",
     "unreleasedMainDelta": "none",
     "deployedPagesVersion": "v11.8.0-rc4.158",
     "mainGhPagesParity": true,
@@ -209,15 +209,15 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.158_DEPLOYED_ANDROID_ACCEPTANCE_PENDING",
+    "status": "RC4.158_DRAFT_READY_FROZEN",
     "production": true,
-    "androidVerified": false,
-    "runtime": "main/gh-pages rc4.158 13/13 parity; Android rc4.157 accepted",
-    "nextGate": "one controlled rc4.158 refresh + expert-delta smoke"
+    "androidVerified": true,
+    "runtime": "main/gh-pages rc4.158 13/13 parity; Android rc4.158 accepted; expert baseline 9/9",
+    "nextGate": "draft-day evidence delta only"
   },
-  "status": "RC4.158_DEPLOYED_ANDROID_ACCEPTANCE_PENDING",
-  "gate": "RC4.158_ANDROID_ACCEPTANCE",
-  "nextGate": "one controlled device refresh; verify rc4.158 and expert-delta control",
+  "status": "RC4.158_DRAFT_READY_FROZEN",
+  "gate": "DRAFT_DAY_EVIDENCE_DELTA",
+  "nextGate": "expert/roster/news delta only; no runtime change absent critical defect",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
