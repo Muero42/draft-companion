@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260831T1028Z-v214",
-  "updated_at": "2026-08-31T14:36:00Z",
+  "handoff_generation": "20260831T1455Z-v215",
+  "updated_at": "2026-08-31T14:55:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -9,9 +9,9 @@
     "generated_handoff": "NEW_CHAT_HANDOFF_CURRENT.md"
   },
   "runtime": {
-    "production_control": "v11.8.0-rc4.152 Android observed functional: LIVE manager grid + v3/v4/v5 selector + fast analysis + global tiers + current texts",
-    "android_authority": "v11.8.0-rc4.152",
-    "test_challenger": "v11.8.0-rc4.158",
+    "production_control": "v11.8.0-rc4.158 Android accepted and draft-ready",
+    "android_authority": "v11.8.0-rc4.158",
+    "test_challenger": "none",
     "test_challenger_android_verified": true,
     "latest_package_reextract": "rc4.158 package/re-extract PASS; Release Contract + Guardrails PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
@@ -20,14 +20,14 @@
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33401979026,
     "package_reference_artifact_id": 9761582650,
-    "package_reference_note": "Historical rc4.142 package evidence retained only as provenance; current release authority is rc4.153 with all three CI gates PASS.",
+    "package_reference_note": "rc4.158 is current release authority; package/re-extract, Release Contract and Project Guardrails PASS.",
     "android_version_observed": true,
     "android_functional_verified": true,
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": true,
     "android_acceptance_pending": null,
-    "android_observed": "v11.8.0-rc4.152",
-    "android_functional_acceptance": "PASS on rc4.152 device: LIVE nine-manager grid, LIVE v3/v4/v5 selector, faster analysis, global tiers and current player texts observed functional.",
+    "android_observed": "v11.8.0-rc4.158",
+    "android_functional_acceptance": "PASS on rc4.158 device: version visible, expert delta control visible, v4 expert day baseline 9/9 complete; prior rc4.157 expert-matrix acceptance preserved.",
     "rollback_reference": "v11.8.0-rc4.96",
     "accepted_android_fallback_functional_verified": true,
     "rc4107_device_refresh_observed": true,
@@ -38,8 +38,8 @@
     "main_gh_pages_parity": true,
     "accepted_android": "v11.8.0-rc4.158",
     "package_reference_artifact_digest": "sha256:4a5c7c00fca33d7869be7c75f80a7005ae5c0f10d3b6c0767cb0b595f6297a18",
-    "android_acceptance": "rc4.157 PASS at 2026-08-31 13:50 CEST: screenshot confirms actual live draft cards show fixed v4 expert matrix, no Experten heading; positional omissions/columns correct",
-    "android_smoke": "PASS 2026-08-31 16:36 CEST: version rc4.158 visible; expert delta control present; v4 expert day baseline 9/9 complete"
+    "android_acceptance": "rc4.158 PASS 2026-08-31 ~16:36 CEST: version/control visible and v4 day baseline 9/9 complete",
+    "android_smoke": "PASS 2026-08-31 ~16:36 CEST: rc4.158 visible; Expert Delta button present; v4 expert day baseline 9/9 complete."
   },
   "exact_continuation": {
     "gate": "DRAFT_DAY_EVIDENCE_DELTA",
@@ -63,33 +63,33 @@
     ]
   },
   "handoff": {
-    "generation": "20260831T1028Z-v214",
-    "status": "RC4.153_DEVICE_ACCEPTANCE_PENDING",
+    "generation": "20260831T1455Z-v215",
+    "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.152 device functional. rc4.153 is fully gated/deployed display-only expert ordering; refresh once, smoke expert order, then freeze.",
-    "acceptedAndroid": "v11.8.0-rc4.152 observed functional",
-    "deployedCandidate": "main/gh-pages runtime rc4.153",
-    "knownTierDefect": "RESOLVED FOR DRAFT-DAY DISPLAY in rc4.150+; global cross-position v4 tiers visible. Do not reopen public FantasyPros tier-field experiments.",
+    "resume": "rc4.158 is accepted Android authority and DRAFT_READY_FROZEN. Continue only time-dependent draft-day evidence: material news, post-19:00 waiver claims, final expert delta around 19:40-19:45, then execution freeze.",
+    "acceptedAndroid": "v11.8.0-rc4.158",
+    "deployedCandidate": "main/gh-pages v11.8.0-rc4.158 13/13 runtime parity",
+    "knownTierDefect": "RESOLVED; global cross-position v4 tiers are display context only.",
     "preDraftPriorityOrder": [
-      "1 One controlled rc4.153 device acceptance for expert display ordering only.",
-      "2 On PASS, freeze runtime for the real draft.",
-      "3 Final transaction/IR/PUP/waiver/depth-chart/news freshness and official-status overrides.",
-      "4 Final expert-board + Sleeper Half-PPR ADP freshness/delta check.",
-      "5 Deferred Egbuka/Flowers/Tetairoa McMillan/DeVonta Smith + Waddle comparison only if time remains; do not delay draft readiness."
+      "1 Material-news-only monitoring before 19:00; do not repeat completed static work.",
+      "2 After 19:00 CEST reconcile waiver claims/destinations and only affected RB/WR/TE paths.",
+      "3 Around 19:40-19:45 press Experten-Delta prüfen once and inspect actual delta result.",
+      "4 Final material injury/legal/transaction scan.",
+      "5 Around 19:50 operational freeze, then execution-only real draft chat."
     ]
   },
   "source_authority": "main/gh-pages v11.8.0-rc4.158; exact 13/13 runtime parity PASS",
   "package_authority": "rc4.158 Release Contract + Candidate Package Gate + Project Guardrails PASS",
-  "android_version_observed": "v11.8.0-rc4.152",
+  "android_version_observed": "v11.8.0-rc4.158",
   "android_functional_verified": true,
   "deployment_authority": "rc4.158 main/gh-pages + Android accepted",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
-    "runtime": "Android rc4.152 is functional. Perform exactly one rc4.153 update for the presentation-only expert-order acceptance; on PASS freeze runtime.",
-    "primary_freshness_pass": "17:30-18:15 Europe/Berlin",
-    "transaction_delta_scan": "19:05-19:30 Europe/Berlin after 13:00 ET waiver deadline",
+    "runtime": "Android rc4.158 is accepted and frozen. No runtime changes absent a critical draft-blocking defect.",
+    "primary_freshness_pass": "completed static/pre-waiver lanes; material-news-only until 19:00 Europe/Berlin",
+    "transaction_delta_scan": "19:00-19:30 Europe/Berlin after 13:00 ET waiver deadline",
     "final_materiality_scan": "19:40-19:50 Europe/Berlin",
     "operational_freeze": "~19:50",
     "transaction_rule": "Official transaction/IR/PUP truth outranks stale Sleeper metadata; same-position move alone is weak evidence unless role/health impact is corroborated.",
@@ -107,8 +107,8 @@
   "process_controls": {
     "status_semantics": "REPORT_ONLY_NO_TOOL_WORK",
     "auto_semantics": "EXECUTE_CONTINUOUSLY; no promise/status chatter; checkpoint every material change",
-    "no_trial_error": "No cache clear/reinstall/repeated-refresh. No reopening tier API or model retuning. rc4.153 is a single presentation-only acceptance candidate; PASS => freeze.",
-    "chat_handoff": "v214: rc4.152 accepted Android; rc4.153 fully gated/deployed expert-order display-only candidate; one device smoke then runtime freeze.",
+    "no_trial_error": "No cache/app-data clear or reinstall. No blanket expert refresh after today's baseline. Use Experten-Delta prüfen only. No model/runtime retune absent critical defect.",
+    "chat_handoff": "20260831T1455Z-v215: rc4.158 accepted/frozen; 9/9 expert baseline complete; clean pre-waiver handoff; final execution-only handoff required ~19:45.",
     "source_of_truth": "PITTI_CURRENT_STATE.json + PITTI_EXECUTION_LOCK.json + PITTI_PROJECT_STATE.md EOF + PASS seal + actual repo/runtime evidence.",
     "guardrail_note": "rc4115 gate now scoped to rc4.115 only; rc4117 has dedicated release-critical contract; rc4114 gate made semantic so preserving Overall provenance does not falsely fail positional aggregation."
   },
@@ -170,12 +170,12 @@
     "status": "RC4.158_DRAFT_READY_FROZEN",
     "production": true,
     "androidVerified": true,
-    "runtime": "main/gh-pages rc4.158 13/13 parity; Android rc4.158 accepted",
-    "nextGate": "draft-day evidence delta only; no runtime changes absent critical defect"
+    "runtime": "main/gh-pages rc4.158 13/13 parity; Android rc4.158 accepted; expert baseline 9/9",
+    "nextGate": "post-19:00 waiver delta then ~19:40 expert delta and final freeze"
   },
   "status": "RC4.158_DRAFT_READY_FROZEN",
-  "gate": "DRAFT_DAY_EVIDENCE_DELTA",
-  "nextGate": "expert/roster/news delta checks only; no blanket refresh",
+  "gate": "DRAFT_DAY_TIME_DEPENDENT_FINALIZATION",
+  "nextGate": "post-19:00 waiver claims/destinations; final expert delta ~19:40-19:45; freeze ~19:50",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
