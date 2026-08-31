@@ -3220,3 +3220,12 @@ The display contract was also aligned exactly with the screenshot/user request: 
 Verification before user action: Release Contract run 33387096891 PASS; Candidate Package Gate 33387096882 PASS including package/re-extract; Project Guardrails 33387096902 PASS; artifact 9755991411 digest sha256:1df367cb9ca21035c5e69d11b499bac1f8781b6dec970fc5ae921161546b85f5; PR #86 merged as b4d81320dadb466321ff4a4743212181a57592ff; canonical deployment completed; all 13 runtime files re-read main == gh-pages. No panel membership, weights, rankings, tiers, Coach, Return-v2, manager logic, history or evidence changed.
 
 **NEXT GATE: one controlled Android refresh to rc4.156, then screenshot acceptance.** No cache clear, reinstall or repeated attempts.
+
+
+## 2026-08-31 11:43Z — rc4.157 actual visible render-path root cause closed
+
+After rc4.156 device evidence, no further user-side attempt was made. Source tracing found the decisive architecture fact: when the compact draft decision surface is active, `live-surface-v3.css` explicitly hides `#coachSectionCard`. rc4.154-156 had been modifying `expertRanksHtml()` in that hidden full Coach renderer. The screenshots instead come from `live-surface-v3.js`, whose card template still explicitly contained `<b>Experten:</b> ${ex(x)}`. This fully explains why versions changed correctly while the visible expert line did not.
+
+rc4.157 patches that exact visible card template. v4 uses fixed rows Koerner/Del Don/Pat; Mariano/Boone/Weisse; Clark/Wolf/Wheeler, bound to the analyzed row's panelId + intendedExperts. Missing in-row members use invisible placeholders only before later members; trailing missing members are omitted. The visible heading is removed. Non-v4 keeps its own expert list. Initial CI correctly rejected the changed heading because the old release invariant required literal `<b>Experten:</b>`; that stale invariant was updated to require `expertMatrixHtml(x)`, v4 matrix existence, and absence of the obsolete heading. Re-run: Release Contract 33388112917 PASS; Package 33388112853 PASS; Guardrails 33388112877 PASS. Artifact 9756358571 sha256:4a5c7c00fca33d7869be7c75f80a7005ae5c0f10d3b6c0767cb0b595f6297a18. PR87 merged 65bd192f3405dad7dc803c3c908465e7548c255c. Deployment 13/13 runtime parity PASS.
+
+NEXT: exactly one Android refresh to rc4.157 and screenshot acceptance; no cache clear/reinstall.
