@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.147';
+const APP_VERSION='v11.8.0-rc4.148';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2178,136 +2178,45 @@ function pittiDecisionAuditRow(x,c){if(!x)return null;const panelId=x.r.panelId|
 window.PITTI_LIVE_DECISION_STATE=()=>{const c=lastDraftContext;if(!c?.scored)return null;const rows=visibleCoachCandidates(c.scored).filter(x=>!x.hardExcluded&&!x.recommendationBlocked).slice(0,10);return{version:APP_VERSION,current:c.current,next:c.next,profile:currentExpertProfile(),positionPanels:{...positionPanels},rows:rows.map(x=>pittiDecisionAuditRow(x,c))};};
 window.PITTI_CANDIDATE_AUDIT=(query='Kenneth Walker')=>{const c=lastDraftContext;if(!c?.scored)return null;const q=norm(query),x=c.scored.find(z=>norm(z?.p?.name)===q)||c.scored.find(z=>norm(z?.p?.name).includes(q)||q.includes(norm(z?.p?.name)));if(!x)return{version:APP_VERSION,query,found:false,scoredCount:c.scored.length};const rank=c.scored.indexOf(x)+1,cut=c.scored[9]||null;return{version:APP_VERSION,query,found:true,coachRank:rank,visible:rank<=10,candidate:pittiDecisionAuditRow(x,c),visibleCut:cut?{rank:10,name:cut.p.name,pos:cut.p.pos,score:cut.score,rawScore:cut.rawScore,panel:cut.r.rank,adp:Number.isFinite(cut.a)?cut.a:null,ret:cut.ret,reasons:cut.reasons||[]}:null,scoreGapToVisibleCut:cut?Number((x.rawScore-cut.rawScore).toFixed(3)):null};};
 
-// rc4.137: exact FantasyPros custom-consensus tiers from active v4 experts only.
+// rc4.148: v4 tier display is derived from the exact same six verified individual
+// v4 expert rows that drive the v4 position panel. FantasyPros' public consensus API does
+// not expose a documented player tier field; requiring one caused the rc4.137-147 dead end.
 // Display-only: never feeds Coach score, Return-v2, opponent model, roster logic or history.
-// Missing/unselectable v4 experts are disclosed and NEVER replaced by non-v4 experts.
-let v4ConsensusTierCache=store.get('v4137_v4ConsensusTiers',{});
-function fpConsensusTierNumber(row){
-  const raw=field(row,['tier','tier_ecr','rank_tier','tier_number','tier_num']);
-  const n=Number(String(raw??'').match(/\d+/)?.[0]);
-  return Number.isFinite(n)&&n>0?n:null;
+let v4ConsensusTierCache=store.get('v4148_v4ConsensusTiers',{});
+function v4TierFromPanelRank(posRank){
+  const r=Number(posRank);
+  if(!Number.isFinite(r)||r<=0)return null;
+  // Stable position-relative bands; expert membership/ranks come from sealed v4.
+  const size={QB:4,RB:8,WR:8,TE:4};
+  return size;
 }
-function fpConsensusExpertSelection(payload,requestedIds){
-  const requested=[...new Set(requestedIds.map(String))],want=new Set(requested);
-  const filters=(String(payload?.filters??'').match(/\d+/g)||[]).map(String);
-  const available=payload?.experts_available&&typeof payload.experts_available==='object'?payload.experts_available:{};
-  const included=(Array.isArray(available.included)?available.included:[]).map(String).filter(id=>want.has(id));
-  const excluded=(Array.isArray(available.excluded)?available.excluded:[]).map(String).filter(id=>want.has(id));
-  const exactFilters=filters.length===requested.length&&requested.every(id=>filters.includes(id));
-  if(exactFilters)return {ok:true,used:requested,excluded:[],proof:'filters-exact'};
-  // FantasyPros may explicitly reject unavailable requested experts. Accept only a pure
-  // requested-v4 subset when every omitted request is accounted for as excluded.
-  const filterSubset=[...new Set(filters.filter(id=>want.has(id)))];
-  if(filterSubset.length>=2){
-    const omitted=requested.filter(id=>!filterSubset.includes(id));
-    if(omitted.every(id=>excluded.includes(id)))
-      return {ok:true,used:filterSubset,excluded:omitted,proof:'filters-subset+explicit-excluded'};
-  }
-  // Some responses expose availability metadata more reliably than filter echoing.
-  // Use it only when every requested ID is explicitly classified included/excluded.
-  const classified=new Set([...included,...excluded]);
-  if(included.length>=2&&requested.every(id=>classified.has(id)))
-    return {ok:true,used:included,excluded:requested.filter(id=>excluded.includes(id)),proof:'experts_available'};
-  return {ok:false,used:[],excluded:[],proof:'unverified'};
-}
-function extractFpConsensusTiers(payload,pos,requestedIds){
-  const provenance=fpConsensusExpertSelection(payload,requestedIds);
-  if(!provenance.ok)return {ok:false,reason:'Expertenset nicht exakt/ausdrücklich verifiziert',rows:{},provenance};
-  const rows={},players=Array.isArray(payload?.players)?payload.players:[];
-  for(const row of players){
-    const name=field(row,['player_name','playername','name','full_name']);
-    const rp=String(field(row,['player_position_id','position_id','position','pos'])||'').toUpperCase().replace(/[0-9]/g,'');
-    const tier=fpConsensusTierNumber(row);
-    if(name&&rp===pos&&Number.isFinite(tier))rows[norm(name)]={name:String(name),tier};
-  }
-  return {ok:Object.keys(rows).length>0,reason:Object.keys(rows).length?'':'keine expliziten Tier-Zeilen',rows,provenance};
-}
-function fpConsensusContextVerified(payload,pos,scoring){
-  const gotPos=String(payload?.position_id||'').toUpperCase();
-  const gotScoring=String(payload?.scoring||'').toUpperCase();
-  const gotType=String(payload?.ranking_type_name||'').toUpperCase();
-  return gotPos===String(pos).toUpperCase()&&gotScoring===String(scoring).toUpperCase()&&gotType==='DRAFT';
-}
-async function fantasyProsSelectableV4Experts(pos){
-  const blueprint=EXPERT_V4_BLUEPRINT[pos].experts,byName=new Map(),season=els.season.value.trim();
-  // First use numeric IDs already loaded from the working expert refresh.
-  for(const e of experts||[]){
-    const id=String(e?.apiId||e?.id||'');
-    if(e?.name&&/^\d+$/.test(id))byName.set(norm(e.name),{name:e.name,id});
-  }
-  // Then query the documented position endpoint exactly as shown by FantasyPros:
-  // no type/scoring filters here. Eligibility is position-specific; Custom-ECR later
-  // verifies the exact returned v4 subset and DRAFT/HALF context.
-  try{
-    const data=await proxyCall(`/nfl/${season}/rankings/experts?position=${pos}&include_overall=true`);
-    for(const e of extractExperts(data)){
-      const id=String(e?.id||'');
-      if(e?.name&&/^\d+$/.test(id))byName.set(norm(e.name),{name:e.name,id});
-    }
-  }catch{}
-  const selected=[],unavailable=[];
-  for(const name of blueprint){
-    const e=byName.get(norm(name));
-    if(e)selected.push({name,id:e.id});else unavailable.push(name);
-  }
-  return {selected,unavailable,directoryCount:byName.size,directorySource:'FantasyPros documented positional expert directory'};
-}
-async function fetchV4ConsensusTierPosition(pos){
-  let requested=[],unavailable=[],directoryCount=0;
-  try{
-    ({selected:requested,unavailable,directoryCount}=await fantasyProsSelectableV4Experts(pos));
-  }catch(e){
-    return {ok:false,pos,selected:[],unavailable:[...EXPERT_V4_BLUEPRINT[pos].experts],reason:'FantasyPros-v4-ID-Verzeichnis nicht verifizierbar: '+(e?.message||String(e))};
-  }
-  if(requested.length<2)return {ok:false,pos,selected:requested.map(x=>x.name),unavailable,reason:`weniger als zwei numerisch verifizierte v4-Experten (Verzeichnis ${directoryCount})`};
-  const ids=requested.map(x=>x.id),filter=ids.join(':'),season=els.season.value.trim(),scoringRaw=els.scoring.value,scoring=encodeURIComponent(scoringRaw);
-  const path=`/nfl/${season}/consensus-rankings?position=${pos}&scoring=${scoring}&week=0&type=DRAFT&filters=${filter}&experts=show`;
-  try{
-    const data=await proxyCall(path);
-    if(!fpConsensusContextVerified(data,pos,scoringRaw))
-      return {ok:false,pos,selected:[],unavailable:[...unavailable,...requested.map(x=>x.name)],reason:`FantasyPros-Kontext abweichend: position=${data?.position_id??'?'} scoring=${data?.scoring??'?'} type=${data?.ranking_type_name??'?'}`};
-    const parsed=extractFpConsensusTiers(data,pos,ids),min={QB:12,RB:30,WR:35,TE:12}[pos];
-    const usedIds=new Set(parsed.provenance?.used||[]),excludedIds=new Set(parsed.provenance?.excluded||[]);
-    const selected=requested.filter(x=>usedIds.has(x.id)).map(x=>x.name);
-    const rejected=requested.filter(x=>excludedIds.has(x.id)).map(x=>x.name);
-    const allUnavailable=[...new Set([...unavailable,...rejected])];
-    if(parsed.ok&&selected.length>=2&&Object.keys(parsed.rows).length>=min)
-      return {ok:true,pos,rows:parsed.rows,selected,unavailable:allUnavailable,path,updated:Date.now(),directoryCount,provenance:parsed.provenance?.proof||'unknown'};
-    return {ok:false,pos,selected,unavailable:allUnavailable,reason:parsed.reason+' ('+Object.keys(parsed.rows).length+' Tier-Zeilen; '+(parsed.provenance?.proof||'keine Provenienz')+')'};
-  }catch(e){
-    return {ok:false,pos,selected:[],unavailable:[...unavailable,...requested.map(x=>x.name)],reason:e?.message||String(e)};
-  }
-}
-async function loadV4ConsensusTiers(){
+function buildV4PanelTiers(){
   const next={},status=[];
   for(const pos of ['QB','RB','WR','TE']){
-    const r=await fetchV4ConsensusTierPosition(pos);
-    if(r.ok){
-      next[pos]={rows:r.rows,selected:r.selected,unavailable:r.unavailable,updated:r.updated,source:'FantasyPros Custom ECR · v4-only'};
-      status.push(`${pos} ${Object.keys(r.rows).length} Spieler · ${r.selected.length}/6 v4-Experten${r.unavailable.length?' · nicht FP-auswählbar: '+r.unavailable.join(', '):''}`);
-    }else{
-      next[pos]={rows:{},selected:r.selected||[],unavailable:r.unavailable||[],updated:Date.now(),source:'FantasyPros Custom ECR · v4-only',error:r.reason||'unbekannter Fehler'};
-      status.push(`${pos} KEINE TIER-FREIGABE · ${r.reason||'unbekannter Fehler'}`);
+    const panelId=EXPERT_PROFILE_IDS.expertv4[pos],rows=panelRanks[panelId]||{};
+    const expected=EXPERT_V4_BLUEPRINT[pos].experts;
+    const out={};let complete=0;
+    for(const [key,row] of Object.entries(rows)){
+      const individual=Array.isArray(row.individual)?row.individual:[];
+      const names=new Set(individual.map(x=>norm(x.expertName)));
+      const exactSix=expected.every(name=>names.has(norm(name)));
+      if(!exactSix)continue;
+      const pr=Number(row.posRank);
+      if(!Number.isFinite(pr)||pr<=0)continue;
+      const width=pos==='QB'||pos==='TE'?4:8;
+      out[key]={name:row.name,tier:Math.floor((pr-1)/width)+1,posRank:pr};
+      complete++;
     }
+    next[pos]={rows:out,selected:[...expected],unavailable:[],updated:Date.now(),source:'Expert-v4 individual-only panel tiers'};
+    status.push(complete?pos+' '+complete+' Spieler · 6/6 v4-Experten · Tier aus v4-Positionskonsens':pos+' KEINE TIER-FREIGABE · kein Spieler mit 6/6 v4-Einzelrängen');
   }
-  v4ConsensusTierCache=next;
-  store.set('v4137_v4ConsensusTiers',next);
-  return status;
+  v4ConsensusTierCache=next;store.set('v4148_v4ConsensusTiers',next);return status;
 }
+async function loadV4ConsensusTiers(){return buildV4PanelTiers()}
 function v4ConsensusTierContext(x){
-  const pos=String(x?.p?.pos||'').toUpperCase();
-  // Tier is a display-only annotation sourced from the sealed v4 FantasyPros consensus.
-  // Do not couple visibility to mutable positionPanels: analysis/profile restoration and
-  // refresh can legitimately change that UI state after the v4 tier payload was verified.
-  if(!EXPERT_PROFILE_IDS.expertv4[pos])return null;
-  const block=v4ConsensusTierCache?.[pos],row=block?.rows?.[norm(x?.p?.name||'')];
+  const pos=String(x?.p?.pos||'').toUpperCase(),block=v4ConsensusTierCache?.[pos],row=block?.rows?.[norm(x?.p?.name||'')];
   if(!row||!Number.isFinite(Number(row.tier)))return null;
-  const selected=Array.isArray(block.selected)?block.selected:[],unavailable=Array.isArray(block.unavailable)?block.unavailable:[];
-  return{
-    label:`T ${Number(row.tier)}`,
-    details:`FantasyPros v4-Konsens ${pos}: ${selected.join(' + ')}${unavailable.length?' · nicht ersetzt: '+unavailable.join(', '):''}`,
-    tier:Number(row.tier),selected,unavailable,source:block.source||'FantasyPros Custom ECR · v4-only'
-  };
+  return{label:'T '+Number(row.tier),details:'v4 '+pos+' · exakt dieselben 6 Individual-Experten wie das aktive v4-Ranking · Positionskonsens '+Number(row.posRank).toFixed(1),tier:Number(row.tier),selected:block.selected||[],unavailable:[],source:block.source};
 }
 function externalExpertTierContext(x){return v4ConsensusTierContext(x)}
 function externalTierHtml(x){const t=v4ConsensusTierContext(x);return t?` · <span class="expert-tier" title="${esc(t.details)}">${esc(t.label)}</span>`:'';}
