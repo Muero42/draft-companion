@@ -1,32 +1,42 @@
-# PITTI NEW CHAT BOOTSTRAP — v207
-Generation: `20260830T1822Z-v207`
+# PITTI NEW CHAT BOOTSTRAP — v212
+Generation: `20260831T0735Z-v212`
 
-Read and verify in this order:
-1. PITTI_COMMAND_CONTRACTS.json
-2. PITTI_CURRENT_STATE.json
-3. PITTI_HANDOFF_SEAL.json
-4. PITTI_EXECUTION_LOCK.json
-5. PITTI_AUTO_PREFLIGHT.md
-6. PITTI_PROJECT_STATE.md to EOF
-7. NEW_CHAT_HANDOFF_CURRENT.md
-8. HANDOFF_COMPLETENESS_MATRIX.md
-9. research/ACTIVE_MANAGER_IDENTITY_HISTORY_AUDIT_V205_2026-08-30.md
-10. actual main/gh-pages/runtime/device evidence
+## Mandatory takeover order
+1. `PITTI_COMMAND_CONTRACTS.json`
+2. `PITTI_CURRENT_STATE.json`
+3. `PITTI_HANDOFF_SEAL.json`
+4. `PITTI_EXECUTION_LOCK.json`
+5. `PITTI_AUTO_PREFLIGHT.md`
+6. `PITTI_PROJECT_STATE.md` to EOF
+7. `NEW_CHAT_HANDOFF_CURRENT.md`
+8. `HANDOFF_COMPLETENESS_MATRIX.md`
+9. actual main/gh-pages/runtime/device evidence
 
-First gate: **RC4.132_BUILD_AND_REGRESSION**. Do not start with another research sweep.
+## Exact first gate
+**RC4.142_TIER_PAYLOAD_ROOT_CAUSE**
 
-Critical invariants:
-- exact 2026 order: Michael / Pascal Voerde / Marc Düsseldorf / Thomas / Björn / Pascal Gelderner / Giuliano / Bastian / Muerotechnik / Dutch Marc.
-- no Michael K; no Moers Venom; no rc4.84 slot geometry.
-- Michael history includes 2025.
-- Pascal Voerde = Bracht Eagles 2017-2022 + Voerde Eagles 2023-2025; never Pascal Gelderner's 3-season profile.
-- Björn 2021 theme + 2023 autodraft excluded from ordinary preference learning.
-- Geno Smith and Aaron Rodgers are explicit user hard exclusions. Never recommend or draft either player. Exactly-one-QB remains the roster strategy after QB1.
-- v4 PRIMARY / v5 CHALLENGER.
-- latest backup remains 29/30.
-- rc4.132 must include live-autodraft Return-v2 and Pick32 Nabers/Javonte regression before device deployment.
+Android already runs **v11.8.0-rc4.142**. Startup, refresh, Analyze and individual descriptions work; Tyler Warren's individual text is restored and description coverage is **125/125**. **External Expert-v4 tier labels are still absent.**
 
-## 2026-08-31 takeover override
-The old first-gate text above is superseded by the current canonical state.
-**First gate now: RC4.142_TIER_PAYLOAD_ROOT_CAUSE.**
-Android already runs rc4.142 and the app is otherwise functional, but external v4 tiers are still absent. New chat must not build rc4.143 from assumptions. It must first inspect/reproduce the actual FantasyPros custom-consensus response for the exact active-v4 expert IDs, then fix only the proven payload/parser/request defect and add a real-payload regression test.
+Do not reinstall, clear cache/app data, repeat refresh loops, or produce rc4.143 from assumptions. The rc4.142 `total_experts` verifier correction was insufficient.
+
+First capture and reproduce the actual FantasyPros `consensus-rankings` responses for QB/RB/WR/TE through the existing proxy using exactly the FantasyPros-selectable members of each active position-specific v4 panel. Verify:
+- exact request path and position/scoring/type/week/filter parameters;
+- exact returned selected expert IDs/provenance;
+- `filters`, expert metadata and `total_experts` semantics;
+- actual player-row container;
+- actual position field/key/value;
+- actual explicit tier key/value.
+
+No external tier may be shown unless the selected expert set is exactly verifiable. Missing v4 experts are disclosed and never replaced by outsiders; Andrew Erickson must not leak into v4 tier provenance. Tier context is display-only and must not affect Coach, Return-v2, opponent model, roster logic, history or snapshot fingerprints.
+
+After reproduced root cause only: one bounded fix + deterministic regression fixture from the real payload shape + full release/package/guardrail/runtime/parity gates + exactly one device verification.
+
+## Immutable draft guards
+Exact 2026 order: **1 Michael · 2 Pascal Voerde · 3 Marc Düsseldorf · 4 Thomas · 5 Björn · 6 Pascal Gelderner · 7 Giuliano · 8 Bastian · 9 Muerotechnik · 10 Dutch Marc.**
+
+Never resurrect Michael K, Moers Venom, Bastian@5, Pascal Gelderner@8, shifted history/evidence/fingerprints, starter-maxima roster caps, K/DST drafting, QB2, or Geno Smith/Aaron Rodgers recommendations. v4 PRIMARY / v5 CHALLENGER / v3 failsafe. Preserve Josh Jacobs acute-status handling and all working individual-text behavior.
+
+## After tier acceptance
+Complete the deferred WR comparison: Emeka Egbuka, Zay Flowers, Tetairoa McMillan, DeVonta Smith; Jaylen Waddle as reference. Compare baseline/role/injury/market and reliable v4-only tier context, then rank maximum upside/league-winner ceiling separately.
+
+Then run final draft-day freshness: transactions/IR/PUP/waivers/depth charts, fresh expert-board + Sleeper Half-PPR ADP delta, late-RB/upside materiality, operational smoke, and final execution-only draft freeze.
