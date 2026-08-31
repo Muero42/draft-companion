@@ -3451,3 +3451,22 @@ User requested immediate handoff. Preserve: installed/accepted Android version r
 Fresh corrections: Trey Benson is IR/out of normal 2026 draft consideration, not ordinary waiver target. Jacobs is on Commissioner Exempt List; Lloyd runtime wording in rc4.157 is stale but app not patched due freeze; apply current opportunity overlay manually. User explicitly requests NOT to keep rechecking Jacobs/Lloyd repeatedly; next useful Jacobs work is estimate likely absence/suspension duration from comparable cases. Preliminary comparable-case research: exempt-list duration is highly variable (Peterson essentially full 2014 season; Hunt later received 8-game conduct suspension); Jacobs current misdemeanor facts do not support a precise game count yet. Need produce a reasoned probability/range, not false precision.
 
 Stress-test answer for next chat: YES, both broad 6000-draft market stress and manager/autodraft turn stress are completed and analyzed; do not restart them absent new data. Remaining high-value gates: 19:00 CEST waiver claims/destinations, final official injury/materiality delta, actual manager online/AUTO modes, real draft board/Return-v2. Emergency: no repair during 2-min clock; visible Sleeper available list + cached v4; exactly one QB, Geno/Rodgers hard excluded, no K/DST drafted. Post-draft immediately compare FA upside before filling K/DST. AUTO means re-inventory and continue autonomously; no pseudo-continuation/status chatter.
+
+
+# v215 CURRENT OVERRIDE — 2026-08-31 16:55 CEST
+Generation: `20260831T1455Z-v215`
+
+This block supersedes all older current-version/device-authority/first-gate pointers above where they conflict.
+
+- Accepted Android/PWA runtime: **v11.8.0-rc4.158**.
+- Source/deployed runtime: **main/gh-pages v11.8.0-rc4.158**, exact **13/13 runtime parity PASS**.
+- rc4.158 Project Guardrails, Release Contract, Candidate Package/Re-Extract: **PASS**.
+- Device smoke: rc4.158 visible, `Experten-Delta prüfen` visible, v4 expert day baseline **9/9 COMPLETE**.
+- Runtime state: **DRAFT_READY_FROZEN**. No code/model/source-weight changes before the real draft absent a critical draft-blocking defect.
+- Exact current gate: **DRAFT_DAY_TIME_DEPENDENT_FINALIZATION**.
+- Remaining work only: material-news deltas; post-19:00 waiver claim/destination reconciliation; final expert delta around 19:40–19:45; final injury/legal/transaction scan; operational freeze around 19:50.
+- Exact manager order: Michael / Pascal Voerde / Marc Düsseldorf / Thomas / Björn / Pascal Gelderner / Giuliano / Bastian / Muerotechnik / Dutch Marc.
+- Correct five-WR cluster: DeVonta Smith / Zay Flowers / Emeka Egbuka / Tetairoa McMillan / Jaylen Waddle.
+- Hard draft locks: 10-team Half-PPR; slot 9; picks 9/12,29/32,49/52,69/72,89/92,109/112,129/132,149; no K/DST; exactly one QB; Geno Smith + Aaron Rodgers hard excluded; starter maxima are not roster caps.
+- Live manager modes remain forward-only evidence; one timer-expiry pick is insufficient for AUTO classification.
+- Final real-draft chat must start only after a short FINAL PRE-DRAFT HANDOFF around 19:45–19:50 that carries post-waiver deltas + final expert delta + final current status.
