@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260831T0735Z-v212",
-  "updated_at": "2026-08-31T08:28:00Z",
+  "updated_at": "2026-08-31T08:39:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -10,8 +10,8 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.142 functional except external v4 tier display",
-    "android_authority": "v11.8.0-rc4.145",
-    "test_challenger": "v11.8.0-rc4.146",
+    "android_authority": "v11.8.0-rc4.146",
+    "test_challenger": "v11.8.0-rc4.147",
     "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.143 release/package/guardrail gates PASS; 13-file re-extract PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
@@ -26,23 +26,23 @@
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": true,
     "android_acceptance_pending": "exactly one controlled refresh/update to rc4.146, then v4 Analyze and verify visible external FantasyPros tier labels",
-    "android_observed": "v11.8.0-rc4.145",
+    "android_observed": "v11.8.0-rc4.146",
     "android_functional_acceptance": "PARTIAL PASS: startup/refresh/analyze and 125/125 individual-description coverage work, including Tyler Warren; external v4 tier labels are absent, therefore full acceptance FAIL.",
     "rollback_reference": "v11.8.0-rc4.96",
     "accepted_android_fallback_functional_verified": true,
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.146 merged and deployed",
+    "source_candidate": "v11.8.0-rc4.147 candidate; Android rc4.146 currently observed with tier FAIL",
     "deployed": "main/gh-pages runtime rc4.146; changed runtime files deployed after all three CI gates PASS",
     "main_gh_pages_parity": true,
     "accepted_android": "NO_FULL_TIER_ACCEPTANCE; rc4.142 observed and otherwise functional",
     "package_reference_artifact_digest": "sha256:77c671dcbbf822285920ca5235efba388cb3445e160688312ece4502a6a876d7"
   },
   "exact_continuation": {
-    "gate": "RC4.146_DEVICE_TIER_ACCEPTANCE",
+    "gate": "RC4.147_RELEASE_GATES",
     "auto_starts_mock": false,
-    "instruction": "rc4.146 is merged after Guardrails, Release Contract and Package Gate all PASS. The new CI explicitly runs tools/rc4146-tier-payload-e2e.mjs, covering documented FantasyPros filters/experts_available semantics through visible T x coach rendering. Obsolete top expert selector is removed. Android remains rc4.145. Perform exactly one controlled update to rc4.146, then Analyze with v4 and verify external T x labels. No cache/app-data clear or reinstall."
+    "instruction": "Device rc4.146 diagnostics still show zero numeric v4 experts. Official FantasyPros docs show rankings/experts should be queried with position + include_overall, without the previous ALL+DRAFT+scoring combination. rc4.147 switches to the documented positional expert-directory call, keeps exact Custom-ECR provenance checks, and restores visible current David Montgomery evidence. Complete all gates before merge/deploy; no device update before PASS."
   },
   "invariants": {
     "user_qb_limit": 1,
