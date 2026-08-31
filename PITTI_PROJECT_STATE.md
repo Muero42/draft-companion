@@ -3114,3 +3114,34 @@ Coverage remains display context; no outsider substitution.
 Full audit: `research/BACKUP_AUDIT_2026-08-31T09-21-02-891Z.md`.
 
 Current runtime boundary is advanced to rc4.150. The public FantasyPros tier-field experiment is closed; global cross-position v4 tier display is operational. Next work is final draft-day freshness/upside/smoke and runtime freeze, not another tier trial.
+
+
+---
+
+## 2026-08-31 10:28Z — HANDOFF v213 · rc4.153 expert-order display fix
+
+Latest device truth before this handoff:
+- Android/PWA **v11.8.0-rc4.152** is observed functional. The LIVE page has the nine opposing managers in a vertical quick-control grid, a direct apply-to-Coach action, the v3/v4/v5 expert-model selector, global cross-position tiers and current player descriptions.
+- User then identified one presentation regression: the expert names under player cards were not ordered consistently across positions. Requirement: maximize stable visual comparability by listing experts common to all active v4 position panels first, then the remaining shared experts, then position specialists.
+- No expert membership, weight, rank, tier, Coach, Return-v2, manager model, roster/history or fingerprint behavior may change for this correction.
+
+**rc4.153** implements only that display-order correction:
+- common v4 core first: **Sean Koerner → Dalton Del Don → Pat Fitzmaurice**;
+- then broadly shared experts (Nick Mariano, Justin Boone);
+- then position specialists (Todd D Clark, Ryan Weisse, Kev Wheeler, Wolf of Roto Street);
+- a missing player rank remains visible as **#– / fehlt**; it is never replaced by another expert.
+- Full snapshot individual rows use the same deterministic order.
+- Deterministic regression: `tools/rc4153-expert-display-order.mjs`.
+
+Release evidence:
+- PR **#83**, head `700549af40c1eca11ea54ae8a8c16156fe03e4a3`: Release Contract PASS, Candidate Package Gate PASS, Project Guardrails PASS.
+- Squash merge to main: `e9c4db412129d4d1dfe7c1fdf58fc8031d9fd7ca`.
+- Exact runtime parity verified after deployment for `app.js`, `index.html`, `manifest.webmanifest`, `sw.js`: **main == gh-pages**.
+- Source/deployed candidate is rc4.153. Accepted Android fallback remains rc4.152 until device observation.
+
+**NEXT GATE: RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE.**
+Exactly one controlled device refresh/update. Verify rc4.153 and stable expert order on player cards across at least two positions. No cache/app-data clear, reinstall or repeated trial-and-error. If PASS, freeze runtime for the real draft; no further model/Return/tier/source changes without a newly proven release-critical defect.
+
+Draft locks remain unchanged: exact canonical 2026 manager order/history; no historical reindexing; starter maxima are not roster caps; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; v4 PRIMARY/v5 CHALLENGER/v3 failsafe; tiers display-only; Return timing context only. Autodraft/manual manager-state controls are live-input metadata and must not rewrite earlier picks. Latest adopted backup remains `draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json`; its Return audit does not justify a generic Return-v2 retune before the draft.
+
+Generation: **20260831T1028Z-v213**.
