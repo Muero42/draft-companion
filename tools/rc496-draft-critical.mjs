@@ -90,7 +90,7 @@ if(Number(activeVersion)>=132){
   assert.match(app,/LIVE_MANAGER_ADAPTATION_STATE\?\.\[slot\]\?\.currentMode==='autodraft'/,'rc4.132 Return-v2 must read current live manager autodraft mode');
   assert.match(app,/current<=50&&p\.pos==='RB'&&state\.counts\.RB>=2&&state\.counts\.WR<=1/,'rc4.132 Pick32 portfolio guard missing');
   assert.match(app,/Math\.min\(rawNeed,0\)/,'rc4.132 early RB generic-need neutralization missing');
-  assert.doesNotMatch(app,/Geno Smith.*hard exclusion|Aaron Rodgers.*hard exclusion/i,'player-name QB hard exclusion resurrected');
+  if(Number(activeVersion)<137)assert.doesNotMatch(app,/Geno Smith.*hard exclusion|Aaron Rodgers.*hard exclusion/i,'pre-rc4.137 player-name QB hard exclusion resurrected');
 }
 assert.match(live,/return'PANEL-CHECK'/,'live sparse-panel signal missing');
 assert.match(live,/Panel unvollständig\|Panel-Streuung/,'live sparse-panel negative evidence handling missing');
@@ -133,14 +133,21 @@ if(Number(activeVersion)>=135){
     assert.ok(app.includes(needle),'rc4.135 live-visible evidence expiry missing for '+n);
   }
 }
-if(Number(activeVersion)>=136){
+if(Number(activeVersion)===136){
   assert.match(app,/andrewErickson:\{source:'FantasyPros · Andrew Erickson · Overall Half-PPR',asOf:'2026-08-30',tiers:/,'rc4.136 Erickson direct tier snapshot missing');
   assert.match(app,/nickMariano:\{source:'RotoBaller · Nick Mariano · Half-PPR Top 400',asOf:'2026-08-25',tiers:/,'rc4.136 Mariano direct tier snapshot missing');
-  for(const token of ["5:['Zay Flowers']","7:['Rashee Rice','DeVonta Smith','Malik Nabers','Tetairoa McMillan','Jaylen Waddle','Ladd McConkey','Emeka Egbuka'","4:['Javonte Williams','Malik Nabers','Trey McBride','Travis Etienne','Josh Jacobs','DeVonta Smith','Ladd McConkey','Zay Flowers'","5:['Josh Allen','Jeremiyah Love','Rashee Rice','Garrett Wilson','Emeka Egbuka','Jaylen Waddle'"]){
-    assert.ok(app.includes(token),'rc4.136 verified comparison-player tier canary missing: '+token);
-  }
-  assert.match(app,/expertTier:externalExpertTierContext\(x\)/,'rc4.136 tier context missing from live audit row');
+}
+if(Number(activeVersion)>=137){
+  assert.doesNotMatch(app,/VERIFIED_EXTERNAL_TIERS_2026|andrewErickson:/,'rc4.137 must remove hard-coded non-v4 tier snapshots');
+  assert.match(app,/function fpConsensusExpertSetVerified\(payload,ids\)/,'rc4.137 exact FantasyPros expert-set gate missing');
+  assert.match(app,/function fetchV4ConsensusTierPosition\(pos\)/,'rc4.137 position-specific v4 tier acquisition missing');
+  assert.match(app,/EXPERT_V4_BLUEPRINT\[pos\]/,'rc4.137 tier source must derive from active v4 blueprint');
+  assert.match(app,/FantasyPros Custom ECR · v4-only/,'rc4.137 v4-only tier source label missing');
+  assert.match(app,/positionPanels\[pos\]!==EXPERT_PROFILE_IDS\.expertv4\[pos\]/,'rc4.137 tiers must render only when v4 is active for that position');
+  assert.match(app,/expertTier:externalExpertTierContext\(x\)/,'rc4.137 tier context missing from live audit row');
+  assert.match(app,/userDraftStrategyExcluded\(p\.pos,state\.counts,p\.name\)/,'rc4.137 named QB hard-exclusion wiring missing');
+  assert.match(policy,/USER_DRAFT_HARD_EXCLUSIONS=new Set\(\['geno smith','aaron rodgers'\]\)/,'rc4.137 Geno/Rodgers hard exclusions missing');
   const scoreFn=app.slice(app.indexOf('function scoreCandidate('),app.indexOf('function applyResolvedReturnScore('));
-  assert.doesNotMatch(scoreFn,/externalExpertTier/,'rc4.136 external tiers must not enter scoreCandidate');
+  assert.doesNotMatch(scoreFn,/v4ConsensusTierContext|externalExpertTierContext/,'rc4.137 display tiers must not enter scoreCandidate');
 }
 console.log('RC496_DRAFT_CRITICAL_PASS'); // rc4.135 release gate canonical-state retry // rc4.133 gate trigger // rc4.132 release-gate trigger
