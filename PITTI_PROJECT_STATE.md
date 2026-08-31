@@ -3229,3 +3229,8 @@ After rc4.156 device evidence, no further user-side attempt was made. Source tra
 rc4.157 patches that exact visible card template. v4 uses fixed rows Koerner/Del Don/Pat; Mariano/Boone/Weisse; Clark/Wolf/Wheeler, bound to the analyzed row's panelId + intendedExperts. Missing in-row members use invisible placeholders only before later members; trailing missing members are omitted. The visible heading is removed. Non-v4 keeps its own expert list. Initial CI correctly rejected the changed heading because the old release invariant required literal `<b>Experten:</b>`; that stale invariant was updated to require `expertMatrixHtml(x)`, v4 matrix existence, and absence of the obsolete heading. Re-run: Release Contract 33388112917 PASS; Package 33388112853 PASS; Guardrails 33388112877 PASS. Artifact 9756358571 sha256:4a5c7c00fca33d7869be7c75f80a7005ae5c0f10d3b6c0767cb0b595f6297a18. PR87 merged 65bd192f3405dad7dc803c3c908465e7548c255c. Deployment 13/13 runtime parity PASS.
 
 NEXT: exactly one Android refresh to rc4.157 and screenshot acceptance; no cache clear/reinstall.
+
+
+## 2026-08-31 13:50 CEST — rc4.157 Android acceptance PASS / DRAFT FREEZE
+
+Device screenshot confirms the actual visible live-draft surface is fixed: the old `Experten:` heading is gone and v4 experts render in the intended stable three-column matrix. RB cards show Koerner/Del Don/Pat; Mariano/[blank]/Weisse; [blank]/[blank]/Kev Wheeler. WR cards show Koerner/Del Don/Pat; Mariano/Boone/[blank]; Todd/[blank]/[blank]. This matches the sealed positional memberships and fixed global layout. Tier labels and candidate content remain present. rc4.157 is therefore Android-accepted and draft-ready. CODE FREEZE until the real draft unless a critical draft-blocking defect is observed.
