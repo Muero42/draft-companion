@@ -1,8 +1,8 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.157. **Android authority remains v11.8.0-rc4.152** until full gates/deployment/device acceptance.
-> **Observed rc4.152:** live nine-manager control grid, live v3/v4/v5 selector, faster LIVE analysis, global tiers and current player texts work.
-> **rc4.154 display-only fix:** v4 expert cards use a fixed three-row matrix: (1) Sean Koerner · Dalton Del Don · Pat Fitzmaurice, (2) Nick Mariano · Justin Boone · Ryan Weisse, (3) Todd D Clark · Wolf of Roto Street · Kev Wheeler. A non-member expert creates an invisible same-column placeholder only when a later expert exists in that row; trailing non-members are omitted. A panel member with no player rank remains visible as #–/fehlt.
-> **No model change:** expert membership, weights, panel ranks, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
+> **Current source candidate:** v11.8.0-rc4.158 expert-delta refresh. **Android authority remains accepted v11.8.0-rc4.157** until rc4.158 completes full gates/deployment/device acceptance.
+> **Accepted rc4.157:** live nine-manager control grid, live v3/v4/v5 selector, fast LIVE analysis, global tiers/current player texts and fixed visible v4 expert matrix are device-verified.
+> **rc4.158 bounded change:** adds a draft-day v4 expert baseline/delta workflow. Unchanged or failed/incomplete refreshes restore the prior verified baseline; panel rebuild can run cache-only and occurs only for baseline creation/repair or a real ranking delta.
+> **No model change:** expert membership, weights, panel ranks semantics, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
 > **Draft locks:** exact canonical manager order/history; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; starter maxima are not roster caps.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
