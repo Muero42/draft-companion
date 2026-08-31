@@ -3056,3 +3056,22 @@ Current truth:
 All immutable draft guards remain: canonical order, manager-history identities, no historical reindexing, starter maxima not roster caps, no K/DST, exactly one QB, Geno Smith/Aaron Rodgers hard exclusions, v4 PRIMARY/v5 CHALLENGER/v3 failsafe, Coach/Return/history isolation from tier display, Josh Jacobs handling, and 29/30 evidence status.
 
 After tier acceptance: deferred Egbuka/Flowers/Tetairoa McMillan/DeVonta Smith + Waddle analysis with separate upside ordering, then final draft-day freshness/ADP/expert-board/late-RB/smoke agenda and execution-only freeze.
+
+
+## 2026-08-31 07:51Z — rc4.143 evidence-bounded tier candidate
+Official FantasyPros Public API v2 documentation resolved the key rc4.142 ambiguity: the expert-directory endpoint itself is position-scoped (`rankings/experts?position=...`), while `consensus-rankings` accepts an explicit colon-delimited expert `filters` whitelist and returns `players[].tier`, `position_id`, `scoring`, `ranking_type_name`, `filters`, `expert_name`/`expert_pub`, and `total_experts`. The documented response example also shows `filters` may be returned comma-delimited and that `total_experts` is not the selected-filter count.
+
+rc4.142 learned numeric IDs from the global/ALL expert directory and then required exact returned expert provenance for each positional consensus. That conflated expert identity with position-specific FantasyPros eligibility and can fail closed when one active-v4 expert is not selectable for that position.
+
+rc4.143 candidate:
+- queries FantasyPros DRAFT/HALF expert eligibility separately for QB/RB/WR/TE;
+- intersects that position directory with the exact active-v4 blueprint by normalized expert name;
+- never substitutes Andrew Erickson or any outsider;
+- explicitly discloses unavailable v4 experts;
+- requests only explicit `type=DRAFT` custom consensus;
+- fail-closes unless returned position/scoring/type and exact selected expert provenance match;
+- reads only the explicit FantasyPros player `tier` field;
+- remains display-only; Coach/Return-v2/manager/roster/history/fingerprints untouched;
+- adds `tools/rc4143-tier-position-contract.mjs` covering position-unavailable v4 disclosure, outsider exclusion, comma-returned filters and explicit tier parsing.
+
+Android authority remains rc4.142 until full CI/package/deployment parity and exactly one device verification. No cache/app-data clear or reinstall.
