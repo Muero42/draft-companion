@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-31T08:45:00Z",
+  "updatedAt": "2026-08-31T08:58:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,21 +11,21 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.147",
+    "appVersion": "v11.8.0-rc4.149",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.146",
+    "latestAndroidObserved": "v11.8.0-rc4.147",
     "latestPreinstallVerified": "v11.8.0-rc4.143 full release/package/guardrail PASS",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "Draft_Companion_v11.8.0-rc4.143_PREINSTALL.zip",
     "preinstallSha256": "sha256:0ae0c1011a731328df85464c6c4da4bb9b49eb57741801ae3f8e1c2b4a95bec9",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.142 source syntax + service-worker-transformed syntax locally PASS; full CI pending",
-    "latestDeployedCandidate": "v11.8.0-rc4.147",
+    "latestDeployedCandidate": "v11.8.0-rc4.149",
     "latestAndroidVerified": "NO_FULL_TIER_ACCEPTANCE",
-    "androidAuthority": "v11.8.0-rc4.146 observed; tier FAIL",
+    "androidAuthority": "v11.8.0-rc4.147 observed; tiers absent",
     "android_authority": "v11.8.0-rc4.142 observed; tier FAIL",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33370206139,
@@ -63,7 +63,7 @@
     },
     "acceptedAndroidAuthority": "NO_FULL_TIER_ACCEPTANCE; rc4.142 functional except tier display",
     "unreleasedMainDelta": "rc4.143 candidate: position-specific FantasyPros expert eligibility for external v4 tiers; Android authority remains rc4.142 until full gates/deploy/device verification.",
-    "deployedPagesVersion": "v11.8.0-rc4.147",
+    "deployedPagesVersion": "v11.8.0-rc4.149",
     "mainGhPagesParity": true
   },
   "auto": {
@@ -206,16 +206,16 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.147_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
+    "status": "RC4.149_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
     "production": false,
     "androidVerified": false,
-    "acceptedAndroidFallback": "rc4.146 functional baseline without tiers",
-    "runtime": "main/gh-pages rc4.147; Android rc4.146",
-    "nextGate": "one controlled rc4.147 device update and tier+Montgomery acceptance"
+    "acceptedAndroidFallback": "rc4.147 functional baseline",
+    "runtime": "main/gh-pages rc4.149; Android rc4.147",
+    "nextGate": "one controlled rc4.149 device update and visible tier acceptance"
   },
-  "status": "RC4.147_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
-  "gate": "RC4.147_DEVICE_ACCEPTANCE",
-  "nextGate": "one controlled rc4.147 device update and tier+Montgomery acceptance",
+  "status": "RC4.149_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
+  "gate": "RC4.149_DEVICE_TIER_ACCEPTANCE",
+  "nextGate": "one controlled rc4.149 device update and visible tier acceptance",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
