@@ -139,16 +139,22 @@ if(Number(activeVersion)===136){
   assert.match(app,/nickMariano:\{source:'RotoBaller · Nick Mariano · Half-PPR Top 400',asOf:'2026-08-25',tiers:/,'rc4.136 Mariano direct tier snapshot missing');
 }
 if(Number(activeVersion)>=137){
-  assert.doesNotMatch(app,/VERIFIED_EXTERNAL_TIERS_2026|andrewErickson:/,'rc4.137 must remove hard-coded non-v4 tier snapshots');
-  assert.match(app,/function fpConsensusExpertSelection\(payload,requestedIds\)/,'rc4.146 FantasyPros returned-provenance gate missing');
-  assert.match(app,/function fetchV4ConsensusTierPosition\(pos\)/,'rc4.137 position-specific v4 tier acquisition missing');
-  assert.match(app,/EXPERT_V4_BLUEPRINT\[pos\]/,'rc4.137 tier source must derive from active v4 blueprint');
-  assert.match(app,/FantasyPros Custom ECR · v4-only/,'rc4.137 v4-only tier source label missing');
+  assert.doesNotMatch(app,/VERIFIED_EXTERNAL_TIERS_2026|andrewErickson:/,'non-v4 hard-coded tier snapshots must remain removed');
+  if(Number(activeVersion)>=148){
+    assert.match(app,/function buildV4PanelTiers\(\)/,'rc4.148+ v4 panel tier builder missing');
+    assert.match(app,/if\(present\.length<4\)continue/,'rc4.149+ tier display must permit 4/6 or 5/6 coverage');
+    assert.match(app,/const tier=Number\(row\.tier\)/,'rc4.148+ displayed tier must come from the active v4 panel');
+    assert.match(app,/label:'T '\+Number\(row\.tier\)/,'rc4.148+ visible tier label missing');
+  }else{
+    assert.match(app,/function fpConsensusExpertSelection\(payload,requestedIds\)/,'rc4.146 FantasyPros returned-provenance gate missing');
+    assert.match(app,/function fetchV4ConsensusTierPosition\(pos\)/,'rc4.137 position-specific v4 tier acquisition missing');
+    assert.match(app,/FantasyPros Custom ECR · v4-only/,'rc4.137 v4-only tier source label missing');
+  }
   assert.doesNotMatch(app,/positionPanels\[pos\]!==EXPERT_PROFILE_IDS\.expertv4\[pos\]/,'verified v4 tier display must not be suppressed by mutable positionPanels');
-  assert.match(app,/expertTier:externalExpertTierContext\(x\)/,'rc4.137 tier context missing from live audit row');
-  assert.match(app,/userDraftStrategyExcluded\(p\.pos,state\.counts,p\.name\)/,'rc4.137 named QB hard-exclusion wiring missing');
-  assert.match(policy,/USER_DRAFT_HARD_EXCLUSIONS=new Set\(\['geno smith','aaron rodgers'\]\)/,'rc4.137 Geno/Rodgers hard exclusions missing');
+  assert.match(app,/expertTier:externalExpertTierContext\(x\)/,'tier context missing from live audit row');
+  assert.match(app,/userDraftStrategyExcluded\(p\.pos,state\.counts,p\.name\)/,'named QB hard-exclusion wiring missing');
+  assert.match(policy,/USER_DRAFT_HARD_EXCLUSIONS=new Set\(\['geno smith','aaron rodgers'\]\)/,'Geno/Rodgers hard exclusions missing');
   const scoreFn=app.slice(app.indexOf('function scoreCandidate('),app.indexOf('function applyResolvedReturnScore('));
-  assert.doesNotMatch(scoreFn,/v4ConsensusTierContext|externalExpertTierContext/,'rc4.137 display tiers must not enter scoreCandidate');
+  assert.doesNotMatch(scoreFn,/v4ConsensusTierContext|externalExpertTierContext/,'display tiers must not enter scoreCandidate');
 }
 console.log('RC496_DRAFT_CRITICAL_PASS'); // rc4.135 release gate canonical-state retry // rc4.133 gate trigger // rc4.132 release-gate trigger

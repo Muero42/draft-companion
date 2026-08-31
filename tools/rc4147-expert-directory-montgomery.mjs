@@ -7,5 +7,5 @@ assert(src.includes("[norm('David Montgomery')]"),'Montgomery current evidence m
 assert(src.includes("Houston behandelt Montgomery 2026 als klaren Lead-/Three-Down-Back"),'Montgomery visible positive text missing');
 assert(src.includes("2025 fiel Montgomery in Detroit spät auf 32,1% Snap Rate und 8,2 Touches/Spiel zurück"),'Montgomery visible risk text missing');
 assert(src.includes('externalTierHtml(x)'),'tier renderer missing');
-assert(src.includes('players[].tier')||src.includes("fpConsensusTierNumber(row)"),'explicit FantasyPros tier parser missing');
+assert(src.includes('function buildV4PanelTiers()'),'current v4 panel tier builder missing');
 console.log('rc4.147 documented expert directory + Montgomery text contract PASS');
