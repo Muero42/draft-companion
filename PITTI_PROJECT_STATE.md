@@ -3431,3 +3431,14 @@ Important Trey Benson correction from fresh current reporting: Arizona placed Be
 Jaydon Blue remains a genuine waived/pending-destination case in current Aug31 reporting; unlike Benson, destination remains relevant after today's claims. Current waiver coverage says claims are disclosed at 1pm ET; until then no destination is assumed.
 
 Re-inventory after correction: stress tests complete; manager/autodraft audit complete; five-WR comparison/ceiling overlay complete; QB/TE triggers complete; late-RB archetype complete; current runtime targeted audit complete; emergency path/post-draft prep complete. Before the 19:00 CEST information gate, remaining static work has negative/near-zero marginal value absent new news. Next autonomous high-value delta: waiver outcomes/destinations, then final injury/materiality scan and live-board execution. rc4.157 unchanged.
+
+
+## 2026-08-31 15:00 CEST — AUTO at actual current time; no false 19:00 gate
+
+Actual local time confirmed by conversation runtime: ~14:59 CEST, so waiver claims are still ~4 hours away. Fresh Aug31 search confirms teams have until 1pm ET / 19:00 CEST to submit claims; Jaydon Blue remains the top/one of top available waiver names in current CBS tracker and no destination is yet confirmed. Current ESPN fantasy buzz continues to flag Jacobs exempt-list fallout as the major role change. No new official injury delta in this pass materially changes the five-WR overlay.
+
+AUTO work-state correction: prior checkpoint timestamps around 15:10/16:xx were ahead of actual local time and must not be used as chronological evidence. Substance remains valid where independently sourced, but actual-time ordering should use this checkpoint forward.
+
+Open static defect remains Lloyd stale runtime wording in rc4.157; decision overlay already corrects it. Because freeze is explicit and no evidence shows the stale text is currently mis-ranking Lloyd enough to justify release risk, keep rc4.157 unchanged. If live board surfaces Lloyd as a candidate, manually apply current Jacobs-exempt opportunity context to the decision. Jaydon Blue remains undraftable/avoid as a normal stable-role target until destination/role is known; reassess after claims.
+
+No additional positive-value static analysis discovered in this pass after full re-inventory; stress/manager/five-WR/QB-TE/late-RB/emergency tracks remain complete. Continue only on genuinely new public news before 19:00; otherwise next high-value delta is claims/results and subsequent role recalibration.
