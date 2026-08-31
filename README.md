@@ -1,5 +1,5 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source/package candidate:** v11.8.0-rc4.136; release-critical successor to accepted Android rc4.131. Off-device validation pending.
+> **Current source/package candidate:** v11.8.0-rc4.137; release-critical successor to accepted Android rc4.131. Off-device validation pending.
 > **Primary finish-line target:** close rc4.132 live-autodraft, Pick32 portfolio, exact-order/history and package/parity gates; then exactly one controlled device refresh.
 > **v4:** individual-only, native Sean Koerner, position-specific weights; no Draft Sharks team ranking. Overall provenance is stored separately from positional aggregation.
 > **v5:** frozen v3 + Sean Koerner 15 points, funded from Draft Sharks Team first.
