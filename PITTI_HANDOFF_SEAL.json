@@ -7,9 +7,9 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "7bdfa771d6ccb6b1ae76b867b9ac866e64cb8970",
-    "PITTI_CURRENT_STATE.json": "317e75b4742203b0790c1fdd9331006a1985409e",
-    "PITTI_EXECUTION_LOCK.json": "d6318236ca26c740423dd07ab283ebf6cde883fd",
+    "PITTI_COMMAND_CONTRACTS.json": "0001670d436bc09a7118055ae6feb1f4ec9a2bc7",
+    "PITTI_CURRENT_STATE.json": "5c8a92d6465391a82c341111b0f292c15155df49",
+    "PITTI_EXECUTION_LOCK.json": "f2945e89dee3a9a68f8770b1b5f718fe0ed8879d",
     "PITTI_AUTO_PREFLIGHT.md": "b57d1d0178339cc3790516ec89c0c568169ec87a",
     "PITTI_PROJECT_STATE.md": "b7496cd03a8eb0dce9d7dc2a3557c7ca12e7da6d",
     "NEW_CHAT_HANDOFF_CURRENT.md": "389f72bcd5473ac1d21b377885fbae8a5eb8a215",
@@ -31,7 +31,7 @@
   },
   "branch_locks": {
     "accepted_android": "v11.8.0-rc4.137",
-    "source_state": "main rc4.141 confirmed startup-root-cause fix; Android shell rc4.139 observed but app module did not execute",
+    "source_state": "exact tested rc4.141 package deployed main+gh-pages 13/13 byte parity; Android verification pending",
     "required_release": "v11.8.0-rc4.141",
     "canonical_draft_order": "1 Michael|2 Pascal Voerde|3 Marc Düsseldorf|4 Thomas|5 Björn|6 Pascal Gelderner|7 Giuliano|8 Bastian|9 Muerotechnik|10 Dutch Marc",
     "manager_history": "Michael 2020-2025; Pascal Voerde Bracht/Voerde chain 2017-2025 = 9 seasons; Björn exclude 2021/2023",
@@ -58,8 +58,11 @@
     "stale_geno_rodgers_contradictions_removed": true,
     "rc4141_source_syntax_pass": true,
     "rc4141_service_worker_transformed_syntax_pass": true,
-    "rc4141_refresh_noop_root_cause_confirmed": true
+    "rc4141_refresh_noop_root_cause_confirmed": true,
+    "rc4141_package_sha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
+    "rc4141_package_main_13of13": true,
+    "rc4141_main_pages_13of13": true
   },
-  "exact_gate": "RC4.141_RELEASE_GATES",
-  "note": "rc4.141 fixes fatal missing comma between Ray Davis and Tyler Warren RESEARCH_RESIDUAL_PRIORS entries. This exactly explains rc4.139 shell/version rendering with inert controls. Permanent transformed-runtime startup contract added; full CI gates pending."
+  "exact_gate": "RC4.141_DEVICE_VERIFY",
+  "note": "Confirmed root cause fixed and independently verified. rc4.141 source + SW-transformed runtime parse PASS; startup prefix binds refresh handler; exact 13-file package matches main and gh-pages byte-for-byte. One device verification remains."
 }
