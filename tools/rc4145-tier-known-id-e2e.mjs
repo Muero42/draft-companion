@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+const src=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
+const s=src.slice(src.indexOf('async function fantasyProsSelectableV4Experts'),src.indexOf('async function fetchV4ConsensusTierPosition'));
+if(s.includes('rankings/experts?position='))throw new Error('known-empty positional directory still gates tiers');
+if(!s.includes('loadPublicExpertDirectory()'))throw new Error('working public directory fallback missing');
+if(!s.includes("e?.apiId||e?.id"))throw new Error('working ALL numeric IDs not reused');
+const render=src.slice(src.indexOf('function externalTierHtml'),src.indexOf('function renderRosterWorkspace'));
+if(!render.includes('externalTierHtml(x)'))throw new Error('coach render lacks external tier call');
+if(!src.includes('label:`T ${Number(row.tier)}`'))throw new Error('tier label contract missing');
+console.log('rc4.145 known-ID to rendered-tier static E2E PASS');
