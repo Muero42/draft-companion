@@ -25,6 +25,7 @@ on:
       - 'decision-policy.js'
       - 'tools/analyze-decision-evidence.mjs'
       - 'tools/pitti_guardrail_check.mjs'
+      - 'tools/runtime-startup-contract.mjs'
       - 'tools/pre-draft-freshness-gate.mjs'
       - 'tools/emergency-queue-contract.mjs'
       - 'tools/rc4100-turn-portfolio.mjs'
@@ -56,6 +57,8 @@ jobs:
           fetch-depth: 0
       - name: Node syntax
         run: node --check app.js
+      - name: Browser/PWA runtime startup contract
+        run: node tools/runtime-startup-contract.mjs
       - name: rc4.97 microfix contract
         if: contains(github.head_ref || github.ref_name, 'rc4.97-microfix')
         run: node tools/rc497-microfix.mjs
