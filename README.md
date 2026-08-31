@@ -1,10 +1,11 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.143. **Android authority remains v11.8.0-rc4.142** until package/deployment/device verification.
-> **Functional state:** startup, refresh, Analyze and 125/125 individual descriptions work; Tyler Warren text is restored.
-> **rc4.143 bounded fix:** resolve FantasyPros DRAFT expert eligibility separately for QB/RB/WR/TE, intersect exact v4 names only, and fail closed on context/provenance mismatch.
-> **Next gate:** RC4.143 full release/package/guardrail validation → exact main/gh-pages parity → one Android verification.
-> **No trial-and-error:** no cache/app-data clear, reinstall or repeated-refresh loop; rc4.143 is the single evidence-bounded successor.
-> **Model authority:** v4 PRIMARY / v5 CHALLENGER / v3 failsafe. Tier display remains decision context only and may not alter Coach/Return/opponent/roster/history.
+> **Current source candidate:** v11.8.0-rc4.146. **Android authority remains v11.8.0-rc4.145** until full package/deployment/device acceptance.
+> **Observed rc4.145 state:** app functional, v4 ranks/texts functional, external v4 tiers still absent.
+> **Evidence:** rc4.144 diagnostics showed all four tier paths blocked by the unusable positional expert-directory response (`Verzeichnis 0`) despite 165 experts and populated v4 panels.
+> **rc4.146 bounded fix:** use only numeric FantasyPros IDs already observed through working directories, request exact v4 Custom-ECR, and verify returned `filters` / `experts_available.included|excluded` provenance. No outsider substitution; explicit `players[].tier` only.
+> **UI cleanup:** obsolete top incumbent/v2/v3 development selector removed; authoritative v3/v4/v5 selector remains directly above Analyze.
+> **Next gate:** full release/package/guardrail validation, exact main↔gh-pages parity, then one controlled Android acceptance.
+> **Model authority:** v4 PRIMARY / v5 CHALLENGER / v3 failsafe. Tier display cannot alter Coach/Return/opponent/roster/history.
 > **Draft locks:** exact canonical manager order/history; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; starter maxima are not roster caps.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
@@ -79,4 +80,5 @@ v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96
 - Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
 - Browser-equivalent full historical recomputation is unavailable from preserved transient inputs and must not be fabricated.
 - Current gate: RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS.
+
 
