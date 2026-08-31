@@ -143,8 +143,13 @@ if(Number(activeVersion)>=137){
   if(Number(activeVersion)>=148){
     assert.match(app,/function buildV4PanelTiers\(\)/,'rc4.148+ v4 panel tier builder missing');
     if(Number(activeVersion)>=150)assert.match(app,/if\(present\.length<2\)continue/,'rc4.150+ tier display must retain sparse but labeled coverage'); else assert.match(app,/if\(present\.length<4\)continue/,'rc4.149 tier display must permit 4/6 or 5/6 coverage');
-    assert.match(app,/const tier=Number\(row\.tier\)/,'rc4.148+ displayed tier must come from the active v4 panel');
-    assert.match(app,/label:'T '\+Number\(row\.tier\)/,'rc4.148+ visible tier label missing');
+    if(Number(activeVersion)>=150){
+      assert.match(app,/const tier=Math\.max\(1,Math\.ceil\(overall\/10\)\)/,'rc4.150+ global 10-team tier formula missing');
+      assert.match(app,/label:'T '\+Number\(row\.tier\)/,'rc4.150+ visible global tier label missing');
+    }else{
+      assert.match(app,/const tier=Number\(row\.tier\)/,'rc4.148-149 displayed tier must come from the active v4 panel');
+      assert.match(app,/label:'T '\+Number\(row\.tier\)/,'rc4.148-149 visible tier label missing');
+    }
   }else{
     assert.match(app,/function fpConsensusExpertSelection\(payload,requestedIds\)/,'rc4.146 FantasyPros returned-provenance gate missing');
     assert.match(app,/function fetchV4ConsensusTierPosition\(pos\)/,'rc4.137 position-specific v4 tier acquisition missing');
