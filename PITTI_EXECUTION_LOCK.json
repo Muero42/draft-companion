@@ -283,5 +283,5 @@
     "latestBackupResolvedReturnForecasts": 674,
     "latestBackupReturnMeanBrier": 0.0907
   },
-  "rootCauseDiscipline": "Proven render-path mismatch, not cache/CSS speculation: live-surface-v3.css hides coachSectionCard and live-surface-v3.js rendered old Experten line. rc4.157 patches actual visible card path. No model changes."
+  "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority."
 }
