@@ -123,20 +123,20 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.142 on Android, functional except external v4 tier display",
-    "androidAuthority": "v11.8.0-rc4.142 observed; startup/refresh/analyze/text functional; tier display FAIL",
-    "sourceAuthority": "main runtime v11.8.0-rc4.142; gh-pages runtime v11.8.0-rc4.142",
+    "productionControl": "v11.8.0-rc4.150 on Android/device backup; global cross-position v4 tiers visible",
+    "androidAuthority": "v11.8.0-rc4.150",
+    "sourceAuthority": "main/gh-pages v11.8.0-rc4.150",
     "latestPackageReextract": "v11.8.0-rc4.142 package/re-extract PASS",
     "latestPackageSha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
     "packageReferenceRun": 33367917515,
-    "deployedPagesVersion": "v11.8.0-rc4.142",
+    "deployedPagesVersion": "v11.8.0-rc4.150",
     "deployedPagesAppByteParityWithMain": true,
-    "currentResearchGate": "RC4.142_TIER_PAYLOAD_ROOT_CAUSE",
-    "exactNextAction": "Inspect/reproduce the actual live FantasyPros consensus-rankings payload for QB/RB/WR/TE using the exact FantasyPros-selectable active-v4 expert IDs. Verify request path/parameters, returned expert-selection provenance, player container/position fields, scoring/type/week semantics, and the real explicit tier key/value. No rc4.143 or other build until payload-level root cause is proven and a deterministic real-shape regression fixture exists.",
-    "runtimeVersion": "Android v11.8.0-rc4.142 observed; startup/refresh/analyze functional; Tyler Warren text restored; external v4 tiers absent",
-    "latestEvidenceBackup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json — 29/30; missing pick29 expertv5"
+    "currentResearchGate": "FINAL_DRAFT_DAY_EVIDENCE_FRESHNESS_SMOKE",
+    "exactNextAction": "Use the 2026-08-31 09:21 rc4.150 backup as latest mock/evidence baseline. Do not reopen the failed public FantasyPros tier-field path. Complete final draft-day freshness, deferred WR/upside analysis, and operational smoke; freeze runtime unless a new release-critical defect is proven.",
+    "runtimeVersion": "Android/device backup v11.8.0-rc4.150; v4 global tiers visible; Montgomery text fixed",
+    "latestEvidenceBackup": "draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json — rc4.150, 17 decision fixtures, 10 rc4.150 fixtures, 674 resolved Return forecasts, Brier 0.0907"
   },
-  "currentGate": "RC4.142_TIER_PAYLOAD_ROOT_CAUSE",
+  "currentGate": "FINAL_DRAFT_DAY_EVIDENCE_FRESHNESS_SMOKE",
   "handoffGeneration": "20260831T0735Z-v212",
   "handoff_generation": "20260831T0735Z-v212",
   "statusCommand": {
