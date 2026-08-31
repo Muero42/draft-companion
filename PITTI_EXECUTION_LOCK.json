@@ -62,7 +62,9 @@
       "androidAccepted": false
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.137",
-    "unreleasedMainDelta": "main rc4.137; gh-pages rc4.136; Android rc4.137 visibly observed; tier-function verification pending"
+    "unreleasedMainDelta": "main rc4.137; gh-pages rc4.136; Android rc4.137 visibly observed; tier-function verification pending",
+    "deployedPagesVersion": "v11.8.0-rc4.137",
+    "mainGhPagesParity": true
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -204,16 +206,16 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.137_ANDROID_OBSERVED_TIER_VERIFY_PENDING",
+    "status": "RC4.137_RUNTIME_PARITY_PASS_TIER_VERIFY_PENDING",
     "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.135",
-    "runtime": "Android rc4.137 visible; main rc4.137; gh-pages rc4.136",
-    "nextGate": "verify tier behavior on already-installed rc4.137; then reconcile gh-pages parity before final freeze"
+    "runtime": "Android rc4.137 visible; main↔gh-pages core runtime byte parity PASS",
+    "nextGate": "verify v4-only tier behavior on already-installed rc4.137; then deferred WR/freshness agenda"
   },
-  "status": "RC4.137_ANDROID_OBSERVED_TIER_VERIFY_PENDING",
-  "gate": "RC4.137_TIER_FUNCTION_VERIFY_AND_PAGES_PARITY",
-  "nextGate": "device tier-function verification on existing rc4.137, then gh-pages parity",
+  "status": "RC4.137_RUNTIME_PARITY_PASS_TIER_VERIFY_PENDING",
+  "gate": "RC4.137_TIER_FUNCTION_VERIFY",
+  "nextGate": "device tier-function verification on existing rc4.137",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
