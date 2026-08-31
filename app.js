@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.152';
+const APP_VERSION='v11.8.0-rc4.153';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2185,11 +2185,27 @@ function applyResolvedReturnScore(x,current,strategy){
   else if(x.ret>=.65)x.reasons.push(`Gute Return-Chance (${Math.round(x.ret*100)}%)`);
 }
 
+const EXPERT_DISPLAY_PRIORITY_2026=[
+  'Sean Koerner','Dalton Del Don','Pat Fitzmaurice',
+  'Nick Mariano','Justin Boone',
+  'Todd D Clark','Ryan Weisse',
+  'Kev Wheeler','Wolf of Roto Street'
+];
+function stableExpertDisplayOrder(names){
+  const priority=new Map(EXPERT_DISPLAY_PRIORITY_2026.map((name,i)=>[norm(name),i]));
+  return [...names].sort((a,b)=>{
+    const pa=priority.has(norm(a))?priority.get(norm(a)):999;
+    const pb=priority.has(norm(b))?priority.get(norm(b)):999;
+    return pa-pb||String(a).localeCompare(String(b));
+  });
+}
 function expertRanksHtml(r){
   // Live cards must have fixed expert columns for the exact analyzed panel. A source that
   // lacks this player stays visible as #–; never replace it with another expert and never
-  // derive membership from the player's sparse individual rows.
-  const intended=Object.keys(panels[r?.panelId]?.weights||{}).filter(name=>Number(panels[r?.panelId]?.weights?.[name])>0);
+  // derive membership from the player's sparse individual rows. Display order is deliberately
+  // stable across positions: experts shared by all v4 panels first, then broadly shared experts,
+  // then position specialists.
+  const intended=stableExpertDisplayOrder(Object.keys(panels[r?.panelId]?.weights||{}).filter(name=>Number(panels[r?.panelId]?.weights?.[name])>0));
   const rows=Array.isArray(r?.individual)?r.individual:[];
   const byExpert=new Map(rows.filter(x=>x?.expertName).map(x=>[norm(x.expertName),x]));
   const names=intended.length?intended:rows.map(x=>x.expertName).filter(Boolean);
@@ -3097,7 +3113,7 @@ async function refresh(){
     if(availableSnapshot.length){
       availableSnapshot.forEach((x,i)=>{
         lines.push(`${i+1}. ${x.p.name} — ${x.p.pos}, ${x.p.team} | Panel ${x.r.rank.toFixed(1)} (${x.r.panel}) | Pos ${Number.isFinite(x.r.posRank)?x.p.pos+x.r.posRank.toFixed(1):'–'} | ADP ${Number.isFinite(x.a)?x.a.toFixed(1):'FEHLT'} | Sleeper SearchRank ${Number.isFinite(x.p.searchRank)?x.p.searchRank:'–'}${x.p.injury?` | Injury ${x.p.injury}`:''}`);
-        if(els.snapshotMode.value==='full')lines.push(`   Einzelrankings: ${x.r.individual.map(v=>`${v.expertName} ${v.reconstructed?'≈':'#'}${Math.round(Number.isFinite(Number(v.overallRank))?Number(v.overallRank):Number(v.rank))}${Number.isFinite(Number(v.posRank))?` (${x.p.pos}${Math.round(Number(v.posRank))})`:''}${v.reconstructed?' [rekonstr.]':''}`).join(' · ')||'FEHLT'}`);
+        if(els.snapshotMode.value==='full'){const orderedIndividuals=[...(x.r.individual||[])].sort((a,b)=>stableExpertDisplayOrder([a.expertName,b.expertName])[0]===a.expertName?-1:1);lines.push(`   Einzelrankings: ${orderedIndividuals.map(v=>`${v.expertName} ${v.reconstructed?'≈':'#'}${Math.round(Number.isFinite(Number(v.overallRank))?Number(v.overallRank):Number(v.rank))}${Number.isFinite(Number(v.posRank))?` (${x.p.pos}${Math.round(Number(v.posRank))})`:''}${v.reconstructed?' [rekonstr.]':''}`).join(' · ')||'FEHLT'}`);}
       });
     }else lines.push('KEINE.');
 
