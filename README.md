@@ -1,9 +1,8 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.152. **Android authority remains v11.8.0-rc4.151** until full gates/deployment/device acceptance.
-> **Observed rc4.151:** live expert switch and compact single-manager AUTO/MANUELL/? control are functional candidates, but the user wants all nine opponents visible simultaneously for faster draft operation.
-> **rc4.152 LIVE manager UI:** all nine opponents are listed vertically with their own ?/AUTO/MANUELL selector. One button, `Manager-Modi an Coach übernehmen`, applies only changed modes from the freshly resolved current pick and immediately recalculates the Coach.
-> **Semantics:** the old `ab jetzt` action was a save/persist action for one manager and took effect on the next analysis. rc4.152 removes that extra step: the single apply button persists all changes and runs the live analysis immediately.
-> **Evidence/speed:** LIVE still uses 300 Return-v2 runs and skips balanced shadow scoring; decision fixtures and Return-validation evidence remain intact.
+> **Current source candidate:** v11.8.0-rc4.153. **Android authority remains v11.8.0-rc4.152** until full gates/deployment/device acceptance.
+> **Observed rc4.152:** live nine-manager control grid, live v3/v4/v5 selector, faster LIVE analysis, global tiers and current player texts work.
+> **rc4.153 display-only fix:** expert order on player cards is stabilized across positions. Common v4 experts appear first: Sean Koerner → Dalton Del Don → Pat Fitzmaurice; then broadly shared experts; then position specialists. Missing ranks remain visible as #–.
+> **No model change:** expert membership, weights, panel ranks, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
 > **Draft locks:** exact canonical manager order/history; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; starter maxima are not roster caps.
 
 Built/source/package/deployment/device-observed/device-accepted are distinct states.
@@ -78,6 +77,7 @@ v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96
 - Canonical mock: draft-companion-v7-backup-2026-08-29T05-28-09-291Z.json / draft 1399284498113294336.
 - Browser-equivalent full historical recomputation is unavailable from preserved transient inputs and must not be fabricated.
 - Current gate: RC4104_REPLAY_BOUNDED_PASS_DRAFTDAY_READINESS.
+
 
 
 
