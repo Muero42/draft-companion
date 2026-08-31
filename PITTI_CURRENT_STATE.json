@@ -17,7 +17,7 @@
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "8f56584f1f7cf99ec930304f7cedf03c02f82da2b73563f29f01f6e7954fca3d",
     "deployed_pages": "gh-pages remains v11.8.0-rc4.136; device already visibly runs rc4.137, so no reinstall/refresh is required merely to reach rc4.137",
-    "deployed_pages_app_byte_parity_with_main": true,
+    "deployed_pages_app_byte_parity_with_main": false,
     "package_reference_run": 33357387697,
     "package_reference_artifact_id": 9745555473,
     "package_reference_note": "rc4.117 OFF-DEVICE PASS. Package run 33305284763 / artifact 9730250635 / sha256:f646b6e672f96fa8e5ced73fd743f9528ad20d74d1db0b2f117d777f42c059fc. gh-pages promoted to rc4.117 with main parity PASS. Device v4 acceptance remains pending.",
