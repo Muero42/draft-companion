@@ -3034,3 +3034,25 @@ These stale fields could reactivate an old path in a new chat, so v181 is supers
 - NEXT: verify/deploy exact rc4.142 runtime to gh-pages with byte parity, then ONE device verification for tiers. Do not send trial-and-error builds. If tiers still absent, inspect actual FP payload/provenance before another build.
 - After tier acceptance: deferred 5-WR analysis = Emeka Egbuka / Zay Flowers / Tetairoa McMillan / DeVonta Smith, Jaylen Waddle reference; baseline/role-injury/market plus separate maximum-upside/league-winner ranking. Then final draft-day freshness/smoke agenda.
 - Critical invariants unchanged: canonical order Michael/Pascal Voerde/Marc Düsseldorf/Thomas/Björn/Pascal Gelderner/Giuliano/Bastian/Muerotechnik/Dutch Marc; never reindex history/evidence/fingerprints; starter maxima are not roster caps; no K/DST; exactly one QB; Geno Smith + Aaron Rodgers hard excluded; v4 primary/v5 challenger/v3 failsafe; Warren/text coverage and Jacobs handling must not regress.
+
+
+## 2026-08-31 07:35Z — HANDOFF v212 DEEP AUDIT / SCREENSHOT RECONCILIATION
+User-provided handoff screenshots were reconciled against repo authority. The earlier screenshot correctly preserved the rc4.141 -> rc4.142 intended tier-fix path, while the later screenshots correctly supersede it with the decisive device fact: **Android is already on rc4.142 and external v4 tiers are still absent**.
+
+Deep audit found stale takeover pointers inside core docs (notably rc4.137/rc4.141 authority text, the old rc4.132 bootstrap gate, stale completeness bullets, and a contradictory old QB sentence). These are now superseded/cleaned in generation **20260831T0735Z-v212**.
+
+Current truth:
+- Android rc4.142 observed.
+- Startup/refresh/Analyze PASS.
+- 125/125 individual descriptions PASS; Tyler Warren restored.
+- External Expert-v4 tier display FAIL/absent.
+- rc4.142 `total_experts` hypothesis insufficient.
+- main/gh-pages runtime rc4.142; runtime parity recorded PASS.
+- **NEXT GATE: RC4.142_TIER_PAYLOAD_ROOT_CAUSE**.
+- No further build until actual FantasyPros QB/RB/WR/TE custom-consensus payloads are captured/reproduced using exact selectable active-v4 expert IDs and request/provenance/player-container/position/tier-field semantics are proven.
+- Then one bounded fix, deterministic real-payload regression fixture, full release/package/guardrail/runtime/parity gates, and exactly one device verification.
+- No reinstall/cache-clear/repeated-refresh loop.
+
+All immutable draft guards remain: canonical order, manager-history identities, no historical reindexing, starter maxima not roster caps, no K/DST, exactly one QB, Geno Smith/Aaron Rodgers hard exclusions, v4 PRIMARY/v5 CHALLENGER/v3 failsafe, Coach/Return/history isolation from tier display, Josh Jacobs handling, and 29/30 evidence status.
+
+After tier acceptance: deferred Egbuka/Flowers/Tetairoa McMillan/DeVonta Smith + Waddle analysis with separate upside ordering, then final draft-day freshness/ADP/expert-board/late-RB/smoke agenda and execution-only freeze.
