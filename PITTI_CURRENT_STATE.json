@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260831T0435Z-v209",
-  "updated_at": "2026-08-31T04:35:00Z",
+  "handoff_generation": "20260831T0445Z-v210",
+  "updated_at": "2026-08-31T04:45:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -10,13 +10,13 @@
   },
   "runtime": {
     "production_control": "v11.8.0-rc4.64",
-    "android_authority": "v11.8.0-rc4.135",
+    "android_authority": "v11.8.0-rc4.137",
     "test_challenger": "v11.8.0-rc4.137",
-    "test_challenger_android_verified": false,
+    "test_challenger_android_verified": true,
     "latest_package_reextract": "v11.8.0-rc4.137 CI PACKAGE/RE-EXTRACT PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "8f56584f1f7cf99ec930304f7cedf03c02f82da2b73563f29f01f6e7954fca3d",
-    "deployed_pages": "v11.8.0-rc4.136 deployed but tier-invalid; rc4.137 promotion pending",
+    "deployed_pages": "gh-pages remains v11.8.0-rc4.136; device already visibly runs rc4.137, so no reinstall/refresh is required merely to reach rc4.137",
     "deployed_pages_app_byte_parity_with_main": true,
     "package_reference_run": 33357387697,
     "package_reference_artifact_id": 9745555473,
@@ -25,18 +25,18 @@
     "android_functional_verified": true,
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": true,
-    "android_acceptance_pending": "v11.8.0-rc4.137",
-    "android_observed": "v11.8.0-rc4.135",
-    "android_functional_acceptance": "rc4.135 accepted Android; rc4.136 rejected for tier provenance/coverage",
+    "android_acceptance_pending": "rc4.137 tier-function verification only",
+    "android_observed": "v11.8.0-rc4.137",
+    "android_functional_acceptance": "rc4.137 version visibly observed on device; tier-function verification still pending",
     "rollback_reference": "v11.8.0-rc4.96",
     "accepted_android_fallback_functional_verified": true,
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
     "source_candidate": "v11.8.0-rc4.137 PREDEPLOY on pitti-rc4.137-tier-fix",
-    "deployed": "v11.8.0-rc4.136",
-    "main_gh_pages_parity": true,
-    "accepted_android": "v11.8.0-rc4.135"
+    "deployed": "main rc4.137; gh-pages rc4.136",
+    "main_gh_pages_parity": false,
+    "accepted_android": "v11.8.0-rc4.137"
   },
   "exact_continuation": {
     "gate": "RC4.137_TIER_FIX_AND_FULL_REGRESSION",
@@ -60,7 +60,7 @@
     ]
   },
   "handoff": {
-    "acceptedAndroid": "v11.8.0-rc4.135",
+    "acceptedAndroid": "v11.8.0-rc4.137",
     "deployedCandidate": "v11.8.0-rc4.136",
     "rc4136Warning": "rc4.136 tier UI is rejected: hard-coded Erickson is not an active Expert-v4 member and tier coverage is not position-safe. Do not use rc4.136 tier labels for draft decisions.",
     "tierRule": "Before draft, visible expert tier is DISPLAY-ONLY and may come only from an exact FantasyPros custom consensus assembled from the FantasyPros-selectable members of the ACTIVE position-specific Expert-v4 blueprint. Unavailable v4 experts are disclosed and never replaced by non-v4 experts. Exact selected expert set and explicit FantasyPros tier field must be verified; otherwise show no expert tier for that position/player. No synthetic gap tiers presented as expert tiers.",
@@ -128,7 +128,7 @@
       "Josh Jacobs current acute-status handling must not regress.",
       "AUTO/AUTO BLOCK means actual autonomous work, no empty/status-only messages."
     ],
-    "preparedCandidate": "v11.8.0-rc4.137 on pitti-rc4.137-tier-fix (NOT DEPLOYED / NOT ANDROID-VERIFIED)",
+    "preparedCandidate": "v11.8.0-rc4.137 visibly observed on Android; functional tier verification pending",
     "transaction_in_progress": false,
     "status": "PREDEPLOY_GATES_PASS",
     "releaseEvidence": {
@@ -138,18 +138,19 @@
       "packageArtifactId": 9745555473,
       "packageSha256": "8f56584f1f7cf99ec930304f7cedf03c02f82da2b73563f29f01f6e7954fca3d",
       "runtimeFiles": 13,
-      "result": "PASS"
+      "result": "PASS",
+      "deviceVersionObserved": "v11.8.0-rc4.137"
     }
   },
-  "source_authority": "main rc4.136 runtime is deployed but tier-invalid; rc4.135 is last accepted Android authority; rc4.137 fix branch is PREDEPLOY only.",
-  "package_authority": "rc4.135 remains accepted package/runtime lineage until rc4.137 full gate and Android verification.",
-  "android_version_observed": "v11.8.0-rc4.135",
-  "android_functional_verified": true,
-  "deployment_authority": "main==gh-pages at rc4.136, but rc4.136 tier display is rejected. rc4.137 branch is predeploy only until full gates pass.",
+  "source_authority": "main is rc4.137; gh-pages is still rc4.136; Android screenshot proves rc4.137 is already installed/visible. Do not request another install merely to reach rc4.137.",
+  "package_authority": "rc4.137 package/re-extract PASS; device version observed rc4.137. Functional tier verification remains pending.",
+  "android_version_observed": "v11.8.0-rc4.137",
+  "android_functional_verified": false,
+  "deployment_authority": "main rc4.137; gh-pages rc4.136. No main↔gh-pages parity yet. Device rc4.137 observed independently.",
   "draft_day_plan": {
     "date": "2026-08-31",
     "start_local": "20:00 Europe/Berlin",
-    "runtime": "Use only final device-verified rc4.137 if full release/parity/device gates pass; otherwise stay on accepted rc4.135. Never treat rc4.136 tiers as valid.",
+    "runtime": "Use the already-installed rc4.137 for verification. Do not reinstall/refresh merely to reach rc4.137. Before final freeze, verify tier functionality and reconcile main↔gh-pages parity.",
     "primary_freshness_pass": "17:30-18:15 Europe/Berlin",
     "transaction_delta_scan": "19:05-19:30 Europe/Berlin after 13:00 ET waiver deadline",
     "final_materiality_scan": "19:40-19:50 Europe/Berlin",
@@ -157,7 +158,7 @@
     "transaction_rule": "Official transaction/IR/PUP truth outranks stale Sleeper metadata; same-position move alone is weak evidence unless role/health impact is corroborated.",
     "draft_chat_rule": "Start a brand-new chat for the real draft after final runtime/freshness checkpoint. That draft chat is execution-only: load DRAFT_CHAT_BOOTSTRAP + canonical state, do not redesign code/model during the draft unless a release-critical emergency makes the app unusable."
   },
-  "android_acceptance_pending": "v11.8.0-rc4.137",
+  "android_acceptance_pending": "rc4.137 tier-function verification only",
   "expert_v4_v5": {
     "v3": "frozen control/failsafe; embedded team/individual hybrid as historically audited",
     "v4": "CURRENT RE-AUDIT: individual-only, only experts with obtainable individual rankings. Position-specific optimized weights in app.js EXPERT_V4_BLUEPRINT. Koerner is native v4.",
@@ -169,7 +170,7 @@
   "process_controls": {
     "status_semantics": "REPORT_ONLY_NO_TOOL_WORK",
     "auto_semantics": "EXECUTE_CONTINUOUSLY; no promise/status chatter; checkpoint every material change",
-    "no_trial_error": "No cache clear/reinstall/repeated phone loop. Build/test rc4.137 off-device, then exactly one controlled refresh after main/gh-pages parity.",
+    "no_trial_error": "No cache clear/reinstall/repeated refresh. Device already shows rc4.137; next device gate is functional tier verification, not installation.",
     "chat_handoff": "v208: rc4.137 tier-provenance fix first; corrected order/history locks mandatory; Geno Smith/Aaron Rodgers explicit hard exclusions; draft chat execution-only after final readiness.",
     "source_of_truth": "PITTI_CURRENT_STATE.json + PITTI_EXECUTION_LOCK.json + PITTI_PROJECT_STATE.md EOF + PASS seal + actual repo/runtime evidence.",
     "guardrail_note": "rc4115 gate now scoped to rc4.115 only; rc4117 has dedicated release-critical contract; rc4114 gate made semantic so preserving Overall provenance does not falsely fail positional aggregation."
@@ -228,18 +229,18 @@
     "verdict": "Incomplete 29/30 file cannot be used as full promotion evidence. Partial paired evidence does not justify changing v4 PRIMARY / v5 CHALLENGER."
   },
   "currentWork": {
-    "branch": "pitti-rc4.137-tier-fix",
-    "status": "RC4.137_PREDEPLOY_GATES_PASS_PROMOTION_PENDING",
+    "branch": "main",
+    "status": "RC4.137_ANDROID_OBSERVED_TIER_VERIFICATION_PENDING",
     "production": false,
-    "androidVerified": false,
+    "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.135",
-    "runtime": "rc4.135 accepted Android; rc4.136 deployed but tier-invalid; rc4.137 branch candidate under full off-device gate",
-    "mainRuntimeParity": "main==gh-pages rc4.136; candidate branch not yet promoted",
-    "nextGate": "promote identical tested rc4.137 runtime to main and gh-pages, prove exact parity, then one Android refresh"
+    "runtime": "Android visibly runs rc4.137; main rc4.137; gh-pages still rc4.136",
+    "mainRuntimeParity": "NO — main rc4.137 vs gh-pages rc4.136",
+    "nextGate": "verify rc4.137 tier behavior on device; then reconcile gh-pages to tested rc4.137 and prove parity before final freeze"
   },
-  "status": "PITTI_RC4_137_PREDEPLOY_GATES_PASS",
-  "gate": "RC4.137_PROMOTION_AND_PARITY",
-  "nextGate": "promote tested rc4.137 bytes to main+gh-pages, exact parity, then one controlled Android refresh",
+  "status": "PITTI_RC4_137_ANDROID_OBSERVED",
+  "gate": "RC4.137_TIER_FUNCTION_VERIFY_AND_PAGES_PARITY",
+  "nextGate": "device tier-function verification on already-installed rc4.137, then gh-pages rc4.137 parity",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
