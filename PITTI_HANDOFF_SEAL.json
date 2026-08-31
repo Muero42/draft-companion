@@ -1,20 +1,20 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260831T0445Z-v210",
-  "created_at": "2026-08-31T04:45:00Z",
+  "handoff_generation": "20260831T0925Z-v211",
+  "created_at": "2026-08-31T09:25:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "5a2bb5f735776dc171ebf9f17ab6cdc1f00503c4",
-    "PITTI_CURRENT_STATE.json": "aa56c1f9d125763055d29b4c5d702200e9cb6ddf",
-    "PITTI_EXECUTION_LOCK.json": "ef362b0e8902eefd7d4f3fd2b4ea3d5cc0f56287",
+    "PITTI_COMMAND_CONTRACTS.json": "8b9a0af979512d73e081e3dd90f4b7163a2f6a9c",
+    "PITTI_CURRENT_STATE.json": "17822c2c0d709cf66b9daf6d4a9da2e96ad92c8a",
+    "PITTI_EXECUTION_LOCK.json": "d40724132aabefda3a1681b0da7349048390317f",
     "PITTI_AUTO_PREFLIGHT.md": "b57d1d0178339cc3790516ec89c0c568169ec87a",
     "PITTI_PROJECT_STATE.md": "b7496cd03a8eb0dce9d7dc2a3557c7ca12e7da6d",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "389f72bcd5473ac1d21b377885fbae8a5eb8a215",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "78e9e6a954e3519d8454ce07e1d76d59f471bf97",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "2d6a88249d870a49b2748eabb4fcdb11345dbb39",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "7536a24ada46daff9e4741daf8160c4d9666ce7f",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "b462b871bb2d2c659802c0fc41d1865d412ef03c",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "4cfe085ff2ded168eac60367841874ec7fdd36b8",
     "PITTI_DRAFT_CHAT_BOOTSTRAP.md": "f2dff589dd45be9b59f50eb3c7f44ab8669b43cb",
     "research/ACTIVE_MANAGER_IDENTITY_HISTORY_AUDIT_V205_2026-08-30.md": "d370be19c307514e37c0870ddafb35ae58c177ca",
     "app.js": "0f7ba04a2bfea23a512a2f2f7733578f0653d3d2",
@@ -30,9 +30,9 @@
     "README.md": "168d568d2dfe2cac0f493d8d4a790edda3356727"
   },
   "branch_locks": {
-    "accepted_android": "v11.8.0-rc4.137",
-    "source_state": "rc4.142 fixes FantasyPros v4 tier verifier semantics after rc4.141 device startup PASS; off-device gates pending",
-    "required_release": "v11.8.0-rc4.142",
+    "accepted_android": "NO_FULL_TIER_ACCEPTANCE; rc4.142 observed",
+    "source_state": "main/gh-pages rc4.142; Android rc4.142 observed functional except external v4 tiers",
+    "required_release": "next release only after payload-root-cause proof",
     "canonical_draft_order": "1 Michael|2 Pascal Voerde|3 Marc Düsseldorf|4 Thomas|5 Björn|6 Pascal Gelderner|7 Giuliano|8 Bastian|9 Muerotechnik|10 Dutch Marc",
     "manager_history": "Michael 2020-2025; Pascal Voerde Bracht/Voerde chain 2017-2025 = 9 seasons; Björn exclude 2021/2023",
     "latest_backup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json",
@@ -61,8 +61,14 @@
     "rc4141_refresh_noop_root_cause_confirmed": true,
     "rc4141_package_sha256": "95b8ea7cba6e9b19bec914cdd194efa1b04b40a2424f11e052d41ad607b2f80a",
     "rc4141_package_main_13of13": true,
-    "rc4141_main_pages_13of13": true
+    "rc4141_main_pages_13of13": true,
+    "rc4142_android_observed": true,
+    "rc4142_startup_refresh_analyze_pass": true,
+    "rc4142_warren_text_pass": true,
+    "rc4142_external_v4_tiers_pass": false,
+    "rc4142_total_experts_hypothesis_insufficient": true,
+    "real_fp_payload_capture_required_before_next_build": true
   },
-  "exact_gate": "RC4.142_RELEASE_GATES",
-  "note": "rc4.142: FantasyPros public API documents filters as expert whitelist while total_experts is consensus-population metadata. Verify returned filter/expert IDs exactly; do not require total_experts == selected v4 count."
+  "exact_gate": "RC4.142_TIER_PAYLOAD_ROOT_CAUSE",
+  "note": "v211 final handoff: rc4.142 is on Android and otherwise functional, but no external v4 tier labels render. Do not make another speculative build. First inspect/reproduce the actual FantasyPros consensus-rankings payload for each position with exact active-v4 selectable expert IDs, prove the request/parser/provenance defect, add a real-payload regression fixture, then one bounded fix + full gates/parity + one device verification. Preserve 125/125 text coverage, Warren/Jacobs fixes, canonical order/history, QB hard exclusions, Coach/Return/manager/snapshot invariants."
 }
