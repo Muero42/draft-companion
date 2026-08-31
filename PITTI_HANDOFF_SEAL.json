@@ -7,8 +7,8 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_COMMAND_CONTRACTS.json": "b2c8ed4fdb8c94bf64f09bf8784453fba2977d68",
-    "PITTI_CURRENT_STATE.json": "5d29b347e875bdbebd3ce8cf64687ceb80ee2573",
+    "PITTI_COMMAND_CONTRACTS.json": "4d86ccb1a2c616d4e65fae357c3deda6681fc8e3",
+    "PITTI_CURRENT_STATE.json": "cd64aae60b7a97a5b6cd486ac9dfe102cbf930dd",
     "PITTI_EXECUTION_LOCK.json": "f2bf4c3108b4a4c710f1d37014e67a9a892478a9",
     "PITTI_AUTO_PREFLIGHT.md": "b57d1d0178339cc3790516ec89c0c568169ec87a",
     "PITTI_PROJECT_STATE.md": "b7496cd03a8eb0dce9d7dc2a3557c7ca12e7da6d",
@@ -17,7 +17,7 @@
     "HANDOFF_COMPLETENESS_MATRIX.md": "2d6a88249d870a49b2748eabb4fcdb11345dbb39",
     "PITTI_DRAFT_CHAT_BOOTSTRAP.md": "f2dff589dd45be9b59f50eb3c7f44ab8669b43cb",
     "research/ACTIVE_MANAGER_IDENTITY_HISTORY_AUDIT_V205_2026-08-30.md": "d370be19c307514e37c0870ddafb35ae58c177ca",
-    "app.js": "c7801de073a957605ec4335bac1efc871096e2f6",
+    "app.js": "84207f0625e1e0f2f9de7daf778842bb75249b26",
     "index.html": "fce77d455a8350eb1e3dbb4e8ebf7da6a88046ba",
     "decision-policy.js": "d2e2f58b020e3c5c3f4c42c717677a4e81f0833a",
     "live-surface-v3.js": "b68ad1cc77941d23523cd30fd70e1b8a3bd5655f",
@@ -56,6 +56,6 @@
     "main_gh_pages_parity": true,
     "stale_geno_rodgers_contradictions_removed": true
   },
-  "exact_gate": "RC4.138_POST_FRESHNESS_RELEASE_GATES",
-  "note": "rc4.138 description coverage 125/125; Jacobs exempt-list critical availability risk integrated. Full gates rerunning before device."
+  "exact_gate": "RC4.138_DRAFT_DAY_FRESHNESS_GATES",
+  "note": "rc4.138 draft-day freshness delta: Jacobs exempt-list risk, Charbonnet reserve/PUP minimum four games, Kaleb Johnson Green Bay opportunity, James Conner IR/designated-to-return minimum four games. Resealed after source changes; rerun gates."
 }
