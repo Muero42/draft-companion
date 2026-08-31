@@ -15,6 +15,7 @@ jobs:
       - name: Behavioral contract
         run: |
           node tools/release-contract-v2.mjs
+          node tools/runtime-startup-contract.mjs
           node tools/live-presentation-behavior.mjs
           node tools/release-completeness-guard.mjs
           node tools/rc478-oos-policy.mjs
