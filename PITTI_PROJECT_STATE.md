@@ -3305,3 +3305,12 @@ Fresh Aug31 web pass materially updates two preparation lanes without touching r
 Current NFL.com 2026 WR tiers place all five in the same Tier 2: Smith WR13, Flowers WR14, McMillan WR17, Egbuka WR19, Waddle WR20. This reinforces the PITTI policy that these are close-enough candidates for roster/return/upside tie-breaks rather than a hard public-rank reorder. ESPN's current draft board and RB/WR tier updates were also published today; no evidence from this pass warrants changing one-QB/late-TE strategy or reopening the frozen decision kernel.
 
 Operational AUTO lanes still open before 19:00: destination-sensitive audit for waived RBs/WRs; candidate health delta; emergency queue/return-cliff mapping; manager/autodraft stress cases; final WR tie-break health resolution. At 19:00 CEST waiver claims become a high-information delta and should be reconciled before the 19:40-19:50 final materiality scan.
+
+
+## 2026-08-31 ~15:10 CEST — AUTO BLOCK correction + current roster/waiver implications
+
+Fresh same-day search resolves an important late-RB status: Trey Benson was waived/injured by Arizona with a knee injury, not simply a healthy destination-sensitive waiver. Treat him as unavailable/high-risk for draft purposes unless a materially new official status appears; do not promote him as a normal stash. Jaydon Blue was waived by Dallas and remains destination-sensitive pending claims. Current waiver process is due 13:00 ET / 19:00 CEST, so destinations should be rechecked after that point.
+
+Current ESPN fantasy buzz identifies Emmett Johnson as the Kansas City backup to roster for Kenneth Walker insurance, strengthening Johnson's contingent-value case while Walker's health is monitored. Current cutdown analysis continues to produce role openings but no kernel-level reason to change rc4.157. Five-WR public tier disagreement remains broad; ESPN's current WR tiers are retained only as corroboration. No new evidence in this pass overturns the existing conditional five-WR tie-break overlay.
+
+Data-quality rule reinforced: distinguish waived/injured from ordinary waived, and distinguish claim deadline from published claim results. Any earlier note that treated Benson as a normal destination-sensitive waiver is superseded by this checkpoint.
