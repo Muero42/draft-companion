@@ -191,3 +191,20 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - LIVE nine-manager AUTO/MANUELL/? grid, direct Coach apply, LIVE v3/v4/v5 selector and rc4.151 speed/evidence behavior are protected.
 - Latest adopted evidence backup remains `draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json`.
 - Exact manager order/history, no K/DST, exactly one QB, Geno Smith/Aaron Rodgers hard exclusions, starter maxima not roster caps remain immutable.
+
+
+## 14. v215 CURRENT OVERRIDE — rc4.158 ACCEPTED / PRE-WAIVER HANDOFF
+- Generation: `20260831T1455Z-v215`. This section supersedes every older current-version / first-gate / device-authority pointer above.
+- Accepted Android/PWA authority = **v11.8.0-rc4.158**.
+- Source/deployment authority = **main/gh-pages v11.8.0-rc4.158**, exact **13/13 runtime parity PASS**.
+- rc4.158 Project Guardrails, Release Contract, Candidate Package/Re-Extract = **PASS**.
+- Device smoke = PASS; `Experten-Delta prüfen` visible; v4 expert day baseline = **9/9 COMPLETE**.
+- Runtime state = **DRAFT_READY_FROZEN**. No code/model/source-weight changes absent a critical draft-blocking defect.
+- Exact gate = **DRAFT_DAY_TIME_DEPENDENT_FINALIZATION**.
+- Before 19:00 CEST: material-news-only; do not rerun completed static work.
+- At/after 19:00: reconcile waiver claims/destinations and only affected player paths.
+- Around 19:40–19:45: one `Experten-Delta prüfen`; no blanket expert refresh.
+- Around 19:50: operational freeze; 20:00 real draft execution.
+- Exact manager order = Michael / Pascal Voerde / Marc Düsseldorf / Thomas / Björn / Pascal Gelderner / Giuliano / Bastian / Muerotechnik / Dutch Marc.
+- Correct five-WR cluster = DeVonta Smith / Zay Flowers / Emeka Egbuka / Tetairoa McMillan / Jaylen Waddle.
+- Fresh real-draft chat is created only after a FINAL PRE-DRAFT HANDOFF around 19:45–19:50. That handoff must carry final expert delta + post-waiver deltas + final injury/legal/transaction status and execution locks.
