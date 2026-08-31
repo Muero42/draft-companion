@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-31T09:24:00Z",
+  "updatedAt": "2026-08-31T09:58:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,7 +11,7 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.150",
+    "appVersion": "v11.8.0-rc4.151",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
@@ -23,9 +23,9 @@
     "preinstallSha256": "sha256:0ae0c1011a731328df85464c6c4da4bb9b49eb57741801ae3f8e1c2b4a95bec9",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "v11.8.0-rc4.142 source syntax + service-worker-transformed syntax locally PASS; full CI pending",
-    "latestDeployedCandidate": "v11.8.0-rc4.150",
+    "latestDeployedCandidate": "v11.8.0-rc4.151",
     "latestAndroidVerified": "v11.8.0-rc4.150",
-    "androidAuthority": "v11.8.0-rc4.150 device backup observed; global tiers visible",
+    "androidAuthority": "v11.8.0-rc4.150 accepted",
     "android_authority": "v11.8.0-rc4.150",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33370206139,
@@ -63,7 +63,7 @@
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.150",
     "unreleasedMainDelta": "none release-critical; draft-day freeze unless new proven defect",
-    "deployedPagesVersion": "v11.8.0-rc4.150",
+    "deployedPagesVersion": "v11.8.0-rc4.151",
     "mainGhPagesParity": true
   },
   "auto": {
@@ -206,16 +206,16 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "FINAL_DRAFT_DAY_EVIDENCE_FRESHNESS_SMOKE",
-    "production": true,
-    "androidVerified": true,
+    "status": "RC4.151_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
+    "production": false,
+    "androidVerified": false,
     "acceptedAndroidFallback": "v11.8.0-rc4.150",
-    "runtime": "main/gh-pages + Android backup rc4.150",
-    "nextGate": "final freshness/upside/smoke and runtime freeze"
+    "runtime": "main/gh-pages rc4.151; Android rc4.150",
+    "nextGate": "one controlled rc4.151 device update and LIVE controls/speed smoke"
   },
-  "status": "FINAL_DRAFT_DAY_EVIDENCE_FRESHNESS_SMOKE",
-  "gate": "FINAL_DRAFT_DAY_EVIDENCE_FRESHNESS_SMOKE",
-  "nextGate": "final freshness/upside/smoke and runtime freeze",
+  "status": "RC4.151_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
+  "gate": "RC4.151_DEVICE_ACCEPTANCE",
+  "nextGate": "one controlled rc4.151 device update and LIVE controls/speed smoke",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
