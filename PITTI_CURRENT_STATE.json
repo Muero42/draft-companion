@@ -156,7 +156,9 @@
         "Emeka Egbuka: toe injury; Todd Bowles hopeful for Week 1. Preserve upside but availability uncertainty remains."
       ],
       "rosterCutdown": "Initial 53-man roster cutdown completed Aug 30; waiver claims due Aug 31 1pm ET, so another meaningful roster/depth-chart freshness pass is required after claims and before 20:00 German draft.",
-      "wrReference": "NFL.com current WR tier places DeVonta Smith 13, Zay Flowers 14, Tetairoa McMillan 17, Emeka Egbuka 19, Jaylen Waddle 20; useful independent context only, not a replacement for v4 panel."
+      "wrReference": "NFL.com current WR tier places DeVonta Smith 13, Zay Flowers 14, Tetairoa McMillan 17, Emeka Egbuka 19, Jaylen Waddle 20; useful independent context only, not a replacement for v4 panel.",
+      "jacobsAppIntegrated": true,
+      "jacobsPolicy": "Major availability risk, strength 3, displayRisk; no routine groin framing"
     },
     "parallelDraftDayAgenda": [
       "After waiver claims: final injuries/transactions/depth-chart freshness scan",
@@ -254,19 +256,19 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.138_OFFDEVICE_ALL_GATES_PASS_DEVICE_VERIFY_REQUIRED",
+    "status": "RC4.138_JACOBS_CRITICAL_FRESHNESS_DELTA_GATES_PENDING",
     "production": false,
     "androidVerified": true,
     "acceptedAndroidFallback": "v11.8.0-rc4.135",
     "runtime": "Android visibly runs rc4.137; main rc4.137; gh-pages still rc4.136",
     "mainRuntimeParity": "PASS — app.js, decision-policy.js, index.html, live-surface-v3.js, manifest.webmanifest, sw.js, _worker.js identical main↔gh-pages",
-    "nextGate": "one controlled device update/refresh to rc4.138, then verify individual description + v4-only tier function",
+    "nextGate": "rerun full gates after Jacobs exempt-list source delta; then device verification",
     "textCoverageStatus": "SOURCE PASS — 125/125 audited candidate names covered in rc4.138; deterministic gate added",
     "parallelDraftDay": "ACTIVE — freshness research started while device verification pending"
   },
-  "status": "RC4.138_OFFDEVICE_ALL_GATES_PASS_DEVICE_VERIFY_REQUIRED",
-  "gate": "RC4.138_DEVICE_VERIFY",
-  "nextGate": "one controlled device update/refresh to rc4.138, then verify individual description + v4-only tier function",
+  "status": "RC4.138_JACOBS_CRITICAL_FRESHNESS_DELTA_GATES_PENDING",
+  "gate": "RC4.138_POST_FRESHNESS_RELEASE_GATES",
+  "nextGate": "rerun full gates after Jacobs exempt-list source delta; then device verification",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
