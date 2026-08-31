@@ -8,7 +8,7 @@
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_COMMAND_CONTRACTS.json": "2499e00d7d641c3f4477c94b26d85fc56f6796bb",
-    "PITTI_CURRENT_STATE.json": "6704a6b9b14f8dec768f0ebdc25f0a5d067d9d99",
+    "PITTI_CURRENT_STATE.json": "4d56353a62f4faadb740b86047a09138a69963d0",
     "PITTI_EXECUTION_LOCK.json": "f17d325ce23d7079de07ebd184fe869bd7fd3033",
     "PITTI_AUTO_PREFLIGHT.md": "b57d1d0178339cc3790516ec89c0c568169ec87a",
     "PITTI_PROJECT_STATE.md": "b7496cd03a8eb0dce9d7dc2a3557c7ca12e7da6d",
@@ -27,7 +27,7 @@
     "tools/rc4130-active-fixture-quota.mjs": "601f685c99c1b56ad51e757629fe4230490eedb8",
     "research/CORRECTED_2026_DRAFT_ORDER_AUTHORITY.md": "6d95906b8137018d92ead071ecca6c554cb01f34",
     "research/LIVE_DECISION_MATRIX_V201_2026-08-30.md": "533f52c998a27a81fc819cd838110c1061a30a5d",
-    "README.md": "c8573812e76b923877a85576bddd1d7bb1d11448"
+    "README.md": "f10e26303062d07eb30271ed3709e69f18e42465"
   },
   "branch_locks": {
     "accepted_android": "v11.8.0-rc4.137",
