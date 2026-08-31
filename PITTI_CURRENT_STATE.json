@@ -148,7 +148,23 @@
       "missingHighPriority": [],
       "missingOther": [],
       "conclusion": "rc4.138 source closes all 33 audited gaps (125/125) and adds deterministic regression gate. Full release/package gates still required before device."
-    }
+    },
+    "draftDayFreshness20260831": {
+      "checkedAt": "2026-08-31 pre-draft AUTO BLOCK",
+      "critical": [
+        "Josh Jacobs: NFL Commissioner’s Exempt List; cannot practice or attend games while listed. This materially supersedes ordinary groin-only handling and must be treated as major availability risk before draft.",
+        "Emeka Egbuka: toe injury; Todd Bowles hopeful for Week 1. Preserve upside but availability uncertainty remains."
+      ],
+      "rosterCutdown": "Initial 53-man roster cutdown completed Aug 30; waiver claims due Aug 31 1pm ET, so another meaningful roster/depth-chart freshness pass is required after claims and before 20:00 German draft.",
+      "wrReference": "NFL.com current WR tier places DeVonta Smith 13, Zay Flowers 14, Tetairoa McMillan 17, Emeka Egbuka 19, Jaylen Waddle 20; useful independent context only, not a replacement for v4 panel."
+    },
+    "parallelDraftDayAgenda": [
+      "After waiver claims: final injuries/transactions/depth-chart freshness scan",
+      "Resolve Jacobs exempt-list handling in visible research/decision context before draft; do not treat as routine injury",
+      "Complete deferred Egbuka/Flowers/McMillan/DeVonta + Waddle comparison, with separate upside ordering",
+      "Keep v4/v5 expert/source architecture frozen; no broad redesign",
+      "After rc4.138 device verification, final smoke check only"
+    ]
   },
   "source_authority": "main is rc4.137; gh-pages is still rc4.136; Android screenshot proves rc4.137 is already installed/visible. Do not request another install merely to reach rc4.137.",
   "package_authority": "rc4.137 package/re-extract PASS; device version observed rc4.137. Functional tier verification remains pending.",
@@ -245,7 +261,8 @@
     "runtime": "Android visibly runs rc4.137; main rc4.137; gh-pages still rc4.136",
     "mainRuntimeParity": "PASS — app.js, decision-policy.js, index.html, live-surface-v3.js, manifest.webmanifest, sw.js, _worker.js identical main↔gh-pages",
     "nextGate": "one controlled device update/refresh to rc4.138, then verify individual description + v4-only tier function",
-    "textCoverageStatus": "SOURCE PASS — 125/125 audited candidate names covered in rc4.138; deterministic gate added"
+    "textCoverageStatus": "SOURCE PASS — 125/125 audited candidate names covered in rc4.138; deterministic gate added",
+    "parallelDraftDay": "ACTIVE — freshness research started while device verification pending"
   },
   "status": "RC4.138_OFFDEVICE_ALL_GATES_PASS_DEVICE_VERIFY_REQUIRED",
   "gate": "RC4.138_DEVICE_VERIFY",
