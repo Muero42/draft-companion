@@ -381,8 +381,6 @@ function persistExpertRankCache(expertId,result){
 let rankCache=loadRankCacheCompact();
 removeLegacyRankingStorage();
 let panelRanks={};
-// Startup must rehydrate sealed/derived panels before the first status render. A transient
-// empty in-memory panelRanks is not evidence that the user's persisted data is missing.
 let adp=store.get('v7_adp',{});let adpMeta=store.get('v72_adpMeta',{source:'none',updated:0,count:0});
 let decisionLog=store.get('v7_decisionLog',[]);
 let lastDraftContext=null;
