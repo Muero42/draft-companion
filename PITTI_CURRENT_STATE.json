@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260831T0735Z-v212",
-  "updated_at": "2026-08-31T10:14:00Z",
+  "handoff_generation": "20260831T1028Z-v213",
+  "updated_at": "2026-08-31T10:28:00Z",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -9,10 +9,10 @@
     "generated_handoff": "NEW_CHAT_HANDOFF_CURRENT.md"
   },
   "runtime": {
-    "production_control": "v11.8.0-rc4.150 observed in latest device backup; global cross-position tiers visible",
-    "android_authority": "v11.8.0-rc4.151",
-    "test_challenger": "v11.8.0-rc4.152",
-    "test_challenger_android_verified": true,
+    "production_control": "v11.8.0-rc4.152 Android observed functional: LIVE manager grid + v3/v4/v5 selector + fast analysis + global tiers + current texts",
+    "android_authority": "v11.8.0-rc4.152",
+    "test_challenger": "v11.8.0-rc4.153",
+    "test_challenger_android_verified": false,
     "latest_package_reextract": "v11.8.0-rc4.143 release/package/guardrail gates PASS; 13-file re-extract PASS",
     "library_recovery_alias": "v11.8.0-rc4.52",
     "latest_package_sha256": "sha256:0ae0c1011a731328df85464c6c4da4bb9b49eb57741801ae3f8e1c2b4a95bec9",
@@ -26,23 +26,23 @@
     "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
     "test_challenger_android_observed": true,
     "android_acceptance_pending": "one controlled update to rc4.152; verify nine-manager grid and one-button direct Coach refresh",
-    "android_observed": "v11.8.0-rc4.151",
+    "android_observed": "v11.8.0-rc4.152",
     "android_functional_acceptance": "PASS for current draft-day surface: rc4.150 backup/device evidence shows Expert-v4 active, global cross-position tiers present, Montgomery current text present, analysis/Return evidence persisted.",
     "rollback_reference": "v11.8.0-rc4.96",
     "accepted_android_fallback_functional_verified": true,
     "rc4107_device_refresh_observed": true,
     "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
     "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "v11.8.0-rc4.152 merged and deployed",
-    "deployed": "main/gh-pages rc4.152; Guardrails/Release Contract/Package Gate PASS",
+    "source_candidate": "v11.8.0-rc4.153 merged and deployed",
+    "deployed": "main/gh-pages rc4.153 exact runtime parity; PR83 head Release Contract/Package Gate/Guardrails PASS",
     "main_gh_pages_parity": true,
-    "accepted_android": "v11.8.0-rc4.150",
+    "accepted_android": "v11.8.0-rc4.152",
     "package_reference_artifact_digest": "sha256:77c671dcbbf822285920ca5235efba388cb3445e160688312ece4502a6a876d7"
   },
   "exact_continuation": {
-    "gate": "RC4.152_DEVICE_ACCEPTANCE",
+    "gate": "RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
     "auto_starts_mock": false,
-    "instruction": "rc4.152 fully gated and deployed. LIVE shows all nine opponents vertically with ?/AUTO/MANUELL selectors. One button applies only changed modes at the freshly resolved current pick and immediately runs the Coach analysis. Earlier picks remain unchanged. v3/v4/v5 selector remains directly below. LIVE speed/evidence behavior from rc4.151 is preserved."
+    "instruction": "rc4.153 is a display-only expert-order fix, fully gated on PR head and merged/deployed with exact main↔gh-pages runtime parity. Perform one controlled Android/PWA refresh, verify player-card expert order is stable across positions (Sean Koerner → Dalton Del Don → Pat Fitzmaurice first; then shared experts; then position specialists). Do not clear cache/app data or reinstall. If PASS, freeze runtime for real draft."
   },
   "invariants": {
     "user_qb_limit": 1,
@@ -61,157 +61,11 @@
     ]
   },
   "handoff": {
-    "acceptedAndroid": "NO_FULL_TIER_ACCEPTANCE; Android rc4.142 observed and otherwise functional",
-    "deployedCandidate": "main/gh-pages runtime rc4.142",
-    "rc4136Warning": "Historical only: rc4.136 tier UI was invalid. Current defect is rc4.142 external v4 tiers absent.",
-    "tierRule": "Draft-day tier is DISPLAY-ONLY, cross-position comparable, and derived from the same active v4 Overall panel rank used as player-quality baseline. Coverage is shown when incomplete; no outsider substitution. Do not feed the displayed tier back into Coach/Return/history.",
-    "postHandoffResearch": [
-      "Verify FantasyPros custom multi-expert selection produces tiers for exactly our FantasyPros-accessible v4 experts, separately QB/RB/WR/TE",
-      "Determine how FantasyPros derives combined tiers and whether output is stable/exportable enough to embed",
-      "Map Mariano/RotoBaller tiers into the relevant v4 positions without mixing incompatible tier-number scales",
-      "Compare Emeka Egbuka, Zay Flowers, Tetairoa McMillan, DeVonta Smith; include Jaylen Waddle as reference; then rank pure upside separately"
-    ],
-    "invariants": [
-      "Never shift fixed 2026 draft order: 1 Michael, 2 Pascal Voerde, 3 Marc Düsseldorf, 4 Thomas, 5 Bjoern, 6 Pascal Gelderner, 7 Giuliano, 8 Basti, 9 Muerotechnik, 10 Dutch Marc.",
-      "Never shift/reindex historical draft data, manager ownership, decision evidence or snapshot fingerprints due to older bugs.",
-      "Starter maxima 4 WR/3 RB/2 TE are not roster/draft caps.",
-      "No K/DST draft; exactly one QB. Geno Smith and Aaron Rodgers are explicit user hard exclusions and must never be recommended/drafted.",
-      "Panel remains baseline; Return is timing context, not pick command.",
-      "Tier display is context only and must never alter Coach/Return/opponent/roster/history logic."
-    ],
-    "recentFixes": [
-      "rc4.133 Return timing calibration + text coverage release",
-      "rc4.135 live visibility expiry fixed for 12 existing individual-text profiles; Josh Jacobs acute status handled",
-      "rc4.136 tier UI display added after player name/before arrows, but source selection must be corrected to v4-only before treating tiers as draft-valid"
-    ],
-    "workflow": "AUTO/AUTO BLOCK means real uninterrupted autonomous work; no empty/status-only messages. STATUS only reports actual state. Before phone deployment full release/package/guardrail gates and main↔gh-pages runtime parity. No cache clear/reinstall unless proven necessary.",
-    "tierCoverageAuditRequired": [
-      "QB: Todd D Clark + Sean Koerner + Justin Boone + Dalton Del Don + Nick Mariano + Pat Fitzmaurice",
-      "RB: Ryan Weisse + Kev Wheeler + Dalton Del Don + Nick Mariano + Sean Koerner + Pat Fitzmaurice",
-      "WR: Sean Koerner + Justin Boone + Todd D Clark + Pat Fitzmaurice + Nick Mariano + Dalton Del Don",
-      "TE: Pat Fitzmaurice + Ryan Weisse + Sean Koerner + Justin Boone + Dalton Del Don + Wolf of Roto Street"
-    ],
-    "knownTierDefect": "RESOLVED FOR DRAFT-DAY DISPLAY in rc4.150: global cross-position v4 tiers visible from the active v4 Overall panel rank. Historical FantasyPros public-API tier-field approach is retired.",
-    "wrAnalysisDeferredToNewChat": {
-      "players": [
-        "Emeka Egbuka",
-        "Zay Flowers",
-        "Tetairoa McMillan",
-        "DeVonta Smith"
-      ],
-      "reference": [
-        "Jaylen Waddle"
-      ],
-      "tasks": [
-        "compare baseline/current role/injury/market",
-        "identify reliable v4-only tier placement",
-        "rank pure upside separately",
-        "explicitly justify panel/ADP deviations"
-      ],
-      "instruction": "Do not complete this analysis in old chat; continue in new chat."
-    },
-    "preDraftPriorityOrder": [
-      "1 Final draft-day transaction/IR/PUP/waiver/depth-chart freshness check and official-status overrides.",
-      "2 Final expert-board + Sleeper Half-PPR ADP freshness/delta check.",
-      "3 Deferred Egbuka/Flowers/Tetairoa McMillan/DeVonta Smith + Waddle comparison, including separate maximum-upside/league-winner ranking.",
-      "4 Operational smoke/failsafe check on rc4.150; no further tier API experiments.",
-      "5 Freeze runtime for real draft unless a new release-critical defect is proven."
-    ],
-    "criticalInvariants": [
-      "FIXED 2026 order exactly: 1 Michael, 2 Pascal Voerde, 3 Marc Düsseldorf, 4 Thomas, 5 Bjoern, 6 Pascal Gelderner, 7 Giuliano, 8 Basti, 9 Muerotechnik, 10 Dutch Marc.",
-      "Never shift/reindex historical picks, manager ownership, decision evidence or snapshot fingerprints because of old bugs.",
-      "Starter maxima 4 WR / 3 RB / 2 TE are NOT roster/draft caps; bench remains legal.",
-      "No K/DST draft; no QB2. Geno Smith and Aaron Rodgers are explicit hard exclusions.",
-      "Panel is baseline; Return labels/timing never automatic pick commands.",
-      "Tiers are DISPLAY/decision context only and MUST NOT alter Coach score, Return-v2, opponent model, roster logic or historical state.",
-      "rc4.135 text-expiry repair for 12 profiles must remain; do not regress individual text visibility.",
-      "Josh Jacobs current acute-status handling must not regress.",
-      "AUTO/AUTO BLOCK means actual autonomous work, no empty/status-only messages."
-    ],
-    "preparedCandidate": "v11.8.0-rc4.142",
-    "transaction_in_progress": false,
-    "status": "RC4.142_DEVICE_TIER_FAIL",
-    "releaseEvidence": {
-      "releaseContractRun": 33366773433,
-      "projectGuardrailsRun": 33366773498,
-      "packageGateRun": 33367917515,
-      "packageArtifactId": 9748932673,
-      "artifactEnvelopeDigest": "sha256:77c671dcbbf822285920ca5235efba388cb3445e160688312ece4502a6a876d7",
-      "packageSha256": null,
-      "runtimeFiles": 13,
-      "result": "RC4.142_ALL_CI_GATES_PASS_DEVICE_TIER_FAIL",
-      "candidate": "v11.8.0-rc4.142",
-      "packageToMain13of13": true,
-      "mainToGhPages13of13": true,
-      "independentPackageChecks": [
-        "node --check all JS PASS",
-        "source app parse PASS",
-        "service-worker-transformed app parse PASS",
-        "startup-prefix execution reaches refresh handler binding PASS",
-        "canonical order/QB hard exclusions/v4-only tier provenance/Warren text/Jacobs exempt-list canaries PASS"
-      ],
-      "rc4142": {
-        "commit": "f8c215b65ed3ab04c25d76af104bc2fa83639121",
-        "releaseContractRun": 33367917513,
-        "packageGateRun": 33367917515,
-        "guardrailsRun": 33367917487,
-        "rc482Run": 33367917505,
-        "rc483Run": 33367917493,
-        "result": "ALL_PASS"
-      }
-    },
-    "textCoverageAudit20260831": {
-      "source": "latest 2026-08-30 16:02 backup decisionFixtures candidate universe + current rc4.137 RESEARCH_RESIDUAL_PRIORS + current device screenshot",
-      "candidateUniverse": 125,
-      "individuallyCoveredCurrent": 125,
-      "missingCurrent": 0,
-      "missingHighPriority": [],
-      "missingOther": [],
-      "conclusion": "rc4.138 source closes all 33 audited gaps (125/125) and adds deterministic regression gate. Full release/package gates still required before device."
-    },
-    "draftDayFreshness20260831": {
-      "checkedAt": "2026-08-31 pre-draft AUTO BLOCK",
-      "critical": [
-        "Josh Jacobs: NFL Commissioner’s Exempt List; cannot practice or attend games while listed. This materially supersedes ordinary groin-only handling and must be treated as major availability risk before draft.",
-        "Emeka Egbuka: toe injury; Todd Bowles hopeful for Week 1. Preserve upside but availability uncertainty remains."
-      ],
-      "rosterCutdown": "Initial 53-man roster cutdown completed Aug 30; waiver claims due Aug 31 1pm ET, so another meaningful roster/depth-chart freshness pass is required after claims and before 20:00 German draft.",
-      "wrReference": "NFL.com current WR tier places DeVonta Smith 13, Zay Flowers 14, Tetairoa McMillan 17, Emeka Egbuka 19, Jaylen Waddle 20; useful independent context only, not a replacement for v4 panel.",
-      "jacobsAppIntegrated": true,
-      "jacobsPolicy": "Major availability risk, strength 3, displayRisk; no routine groin framing"
-    },
-    "parallelDraftDayAgenda": [
-      "After waiver claims: final injuries/transactions/depth-chart freshness scan",
-      "Resolve Jacobs exempt-list handling in visible research/decision context before draft; do not treat as routine injury",
-      "Complete deferred Egbuka/Flowers/McMillan/DeVonta + Waddle comparison, with separate upside ordering",
-      "Keep v4/v5 expert/source architecture frozen; no broad redesign",
-      "After rc4.138 device verification, final smoke check only"
-    ],
-    "rootCauseRefreshNoop20260831": {
-      "confirmed": true,
-      "cause": "Fatal JavaScript syntax error in RESEARCH_RESIDUAL_PRIORS: missing comma between Ray Davis and Tyler Warren entries. HTML loaded version badge, but app.js module did not parse/execute, so no handlers/status initialization ran.",
-      "fixedIn": "v11.8.0-rc4.142",
-      "prevention": "tools/runtime-startup-contract.mjs parses both source app.js and the exact service-worker-transformed runtime, checks required DOM ids and immediate refresh feedback before network calls."
-    },
-    "rc4141DeviceEvidence": "User screenshot 2026-08-31: app functional, Analyze works, Warren individual description present; no tier labels visible.",
-    "rc4142TierFix": "Removed invalid requirement total_experts == selected v4 count; exact selected expert IDs are verified via filters/expert metadata. FantasyPros total_experts is consensus-population metadata, not selected-filter count.",
-    "rc4142DeviceEvidence": "User screenshot 2026-08-31 ~09:16: rc4.142 on phone; app functional, refresh/analyze works, Tyler Warren individual description restored; v4 selected; NO tier labels on Warren/Burden/Montgomery/McLaurin or visible candidates. Tier function FAIL.",
-    "rc4142TierFixOutcome": "FAIL on device. Removing total_experts==selected-count was not sufficient. Do not repeat that hypothesis or another blind API-shape guess.",
-    "tierNextRootCausePlan": [
-      "Inspect actual FantasyPros /consensus-rankings payload returned through the live proxy for QB/RB/WR/TE with exact selected active-v4 FantasyPros IDs.",
-      "Record request path and payload keys/shape: filters, expert_name/expert_pub, total_experts, players container location, position field, and explicit tier field/value.",
-      "Check whether players is nested rather than payload.players, whether tier field uses another key, whether filters are echoed differently, or whether type/week/scoring parameters suppress tiers.",
-      "Verify exact expert provenance before accepting any tier; unavailable active-v4 experts remain disclosed and never replaced by outsiders.",
-      "Add a deterministic fixture/regression test using the captured real payload before producing another Android build.",
-      "Tier display remains display-only and must not affect Coach, Return-v2, opponent model, roster/history."
-    ],
-    "immediateNewChatPriority": [
-      "1 rc4.142 tier payload root-cause inspection — no speculative build",
-      "2 implement one bounded fix only after reproduced cause + regression fixture",
-      "3 full release/package/guardrail + main↔gh-pages byte parity",
-      "4 one device verification of tiers while preserving Warren/125-of-125 text coverage",
-      "5 deferred 5-WR analysis and final draft-day freshness/smoke agenda"
-    ]
+    "generation": "20260831T1028Z-v213",
+    "status": "PASS_PENDING_RESEAL",
+    "ready": false,
+    "secondPass": false,
+    "resume": "Android rc4.152 is functional and accepted. rc4.153 changes display ordering only; one controlled refresh/smoke, then freeze. No further model/tier/Return changes."
   },
   "source_authority": "main/gh-pages rc4.142; Android rc4.142 observed functional except tier display.",
   "package_authority": "rc4.142 package/release gates PASS; device tier functionality FAIL.",
@@ -301,19 +155,16 @@
   },
   "currentWork": {
     "branch": "main",
-    "status": "RC4.142_ALL_RELEASE_GATES_PASS_HANDOFF_DEVICE_VERIFY_PENDING",
+    "status": "RC4.153_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
     "production": false,
     "androidVerified": false,
-    "acceptedAndroidFallback": "v11.8.0-rc4.135",
-    "runtime": "rc4.141 device screenshot proves startup/refresh/individual text functional; tiers still absent. rc4.142 fixes FP expert-set verifier semantics; all latest CI gates PASS. rc4.142 device tier verification pending.",
-    "mainRuntimeParity": "PASS — app.js, decision-policy.js, index.html, live-surface-v3.js, manifest.webmanifest, sw.js, _worker.js identical main↔gh-pages",
-    "nextGate": "Deploy exact rc4.142 to gh-pages with byte parity, then one device tier verification; continue deferred 5-WR/freshness work after tier acceptance.",
-    "textCoverageStatus": "SOURCE PASS — 125/125 audited candidate names covered in rc4.138; deterministic gate added",
-    "parallelDraftDay": "ACTIVE — freshness research started while device verification pending"
+    "acceptedAndroidFallback": "v11.8.0-rc4.152",
+    "runtime": "main/gh-pages rc4.153; Android rc4.152",
+    "nextGate": "one controlled rc4.153 device refresh and expert-order smoke"
   },
-  "status": "RC4.142_DEVICE_TIER_FAIL",
-  "gate": "RC4.142_TIER_PAYLOAD_ROOT_CAUSE",
-  "nextGate": "capture and reproduce actual FantasyPros v4 consensus tier payload before any further build",
+  "status": "RC4.153_DEPLOYED_DEVICE_ACCEPTANCE_PENDING",
+  "gate": "RC4.153_DEVICE_ACCEPTANCE_THEN_DRAFT_FREEZE",
+  "nextGate": "one controlled rc4.153 device refresh and expert-order smoke",
   "evidenceRetention": {
     "activeDraftAtomic": true,
     "historyMayTrim": true,
