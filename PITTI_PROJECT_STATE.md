@@ -3338,3 +3338,18 @@ Late-RB lane: current utilization strengthens Emmett Johnson as a genuine contin
 Operational lane: emergency behavior revalidated against canonical controls. Live coach/snapshot healthy => frozen rc4.157. Snapshot/API failure during 2-minute clock => no repair attempt; use visible Sleeper available list plus cached v4/known constraints and ask assistant for pick from visible board if needed. Preserve exactly one QB, hard exclude Geno/Rodgers, no K/DST draft. Manager classification requires pattern evidence; one timeout pick does not prove AUTO. Confirmed AUTO managers increase confidence in Sleeper default-list near-term predictions. RB run changes urgency through return/loss-if-gone, never panic forcing.
 
 Timing/source lane: current reporting confirms waiver claims are disclosed around 13:00 ET / 19:00 CEST today, but publication can lag. Therefore the only genuinely unavailable high-value input is the post-19 result set. Pre-19 autonomous lanes are now materially exhausted without duplicating analysis. Next positive-value work is the new-information delta after waiver results, then final 19:40-19:50 materiality scan. No future result has been invented.
+
+
+## 2026-08-31 ~15:40 CEST — TRUE AUTO BLOCK: strategy triggers, contrarian checks, post-draft board
+
+Multi-source current-day cross-check completed across QB/TE tiers, late-RB/handcuff research, roster cut news, and pre-Week-1 waiver board. No rc4.157 change.
+
+QB trigger audit: current NFL.com has Lamar/Maye/Burrow/Daniels all in the same Tier 2 behind Allen; current Big Blue View final tiers likewise group Lamar/Maye/Burrow as elites and explicitly argue QB depth supports waiting. This validates PITTI's late-QB posture but also shows no structural reason to force Lamar early: opportunity cost remains real. Preserve app/live board as authority; when close, prefer waiting until a tier/return cliff rather than paying brand premium. Hard no QB2 remains.
+
+TE trigger audit: current FantasyPros TE tiers put Loveland in Tier 1 with Bowers/McBride; Warren and Kraft in Tier 2. That supports the canonical Loveland -> Warren -> Kraft path as a meaningful descending ceiling/value ladder, while current broader TE depth argues against panic if Loveland is gone. Do not reach from Kraft merely because Warren disappears if RB/WR value is materially stronger.
+
+Contrarian late-player check: Parker Washington is not a universal sleeper. A current Aug25 avoid/value article explicitly calls him overvalued at ADP, so retain the user's established thresholds rather than promoting him from generic sleeper coverage. This is useful negative evidence against forcing him. Handcuff literature currently highlights Bigsby, Lloyd, Woody Marks, Blake Corum, Mike Washington Jr. and others, but PITTI's upside rule still favors backups with standalone role plus takeover path over pure insurance.
+
+Post-draft board preparation: current pre-Week-1 waiver rankings are already available today. Preserve a post-draft scan immediately after the real draft because user intentionally drafts no K/DST, creating planned roster transactions; prioritize injury/role-created RB/WR upside before filling K/DST at the required time. This is preparation only, not an instruction to make a transaction before seeing the final roster and Week-1 requirements.
+
+Remaining pre-19 positive-value lane after this block: portfolio/pick-path stress simulation using actual live availability cannot be fully determined before the board exists, but contingency logic is prepared. Fresh public information can still change injury/waiver statuses; otherwise avoid repeated player re-analysis without new evidence. At 19:00+ execute claims/destination delta; 19:40-19:50 final materiality scan.
