@@ -2,7 +2,8 @@ import fs from 'node:fs';import assert from 'node:assert/strict';
 const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
 const live=fs.readFileSync(new URL('../live-surface-v3.js',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../live-surface-v3.css',import.meta.url),'utf8');
-assert(app.includes("v11.8.0-rc4.157"));
+const version=Number(app.match(/v11\\.8\\.0-rc4\\.(\\d+)/)?.[1]||0);
+assert(version>=157,'live expert matrix requires rc4.157+');
 assert(live.includes("const V4_EXPERT_MATRIX=["),'live v4 matrix missing');
 assert(live.includes("String(x?.panelId||'').startsWith('expert-v4-')"),'matrix not bound to analyzed v4 row');
 assert(live.includes("x?.intendedExperts"),'exact analyzed panel membership missing');
@@ -24,4 +25,4 @@ assert.deepEqual(rows.map(r=>shape(panels.QB,r)),[rows[0],['Nick Mariano','Justi
 assert.deepEqual(rows.map(r=>shape(panels.RB,r)),[rows[0],['Nick Mariano',null,'Ryan Weisse'],[null,null,'Kev Wheeler']]);
 assert.deepEqual(rows.map(r=>shape(panels.WR,r)),[rows[0],['Nick Mariano','Justin Boone'],['Todd D Clark']]);
 assert.deepEqual(rows.map(r=>shape(panels.TE,r)),[rows[0],[null,'Justin Boone','Ryan Weisse'],[null,'Wolf of Roto Street']]);
-console.log('rc4.157 actual live-surface expert matrix PASS');
+console.log('rc4.157+ actual live-surface expert matrix PASS');
