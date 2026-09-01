@@ -1,20 +1,20 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T1058Z-v217",
-  "updated_at": "2026-09-01T14:50:00Z",
+  "updated_at": "2026-09-01T15:52:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "season-companion-rc4.159",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.166"
+    "source_candidate": "v11.8.0-rc4.167"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.163",
-    "season_candidate": "v11.8.0-rc4.166",
+    "season_candidate": "v11.8.0-rc4.167",
     "candidate_branch": "season-companion-rc4.159",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.166",
+    "test_challenger": "v11.8.0-rc4.167",
     "ci": {
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
@@ -23,7 +23,7 @@
       "scope": "rc4.166 mobile season bootstrap transport + visible fail-closed diagnostics"
     },
     "android_accepted": "v11.8.0-rc4.163",
-    "preview_candidate": "v11.8.0-rc4.166",
+    "preview_candidate": "v11.8.0-rc4.167",
     "android_authority": "v11.8.0-rc4.163",
     "latest_package_sha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
     "package_reference_run": null,
@@ -60,8 +60,8 @@
     ]
   },
   "currentWork": {
-    "status": "SEASON_FIRST_SHADOW_IMPLEMENTATION",
-    "nextGate": "RC4166_CI_AND_PREVIEW_DEPLOY"
+    "status": "RC4167_CANDIDATE_VALIDATION",
+    "nextGate": "RC4167_ALL_GATES_THEN_SINGLE_PREVIEW_DEPLOY"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -80,18 +80,14 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "season-first-ci",
-        "task": "Validate season-first bootstrap independently of historical draft."
+        "id": "rc4167-ci",
+        "task": "Validate season-first default UI, fresh-origin identity recovery and visible fail-closed diagnostics."
       }
     ],
     "ready": [
       {
-        "id": "season-ui-cleanup",
-        "task": "Move draft-only controls/status out of season critical surface after core season-first gate passes."
-      },
-      {
-        "id": "decision-intent-schema-shadow",
-        "task": "Implement additive decision-intent schema after independent season bootstrap is stable."
+        "id": "rc4167-single-deploy",
+        "task": "Deploy one preview batch only after all gates pass."
       }
     ],
     "waiting_external": [],
@@ -251,8 +247,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Additive schema and season-first architecture are autonomous reversible work.",
-      "evaluated_at": "2026-09-01T14:53:00Z"
+      "reason": "rc4.167 autonomous CI/deploy lane remains executable.",
+      "evaluated_at": "2026-09-01T15:52:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
