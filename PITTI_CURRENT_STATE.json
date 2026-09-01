@@ -7,14 +7,14 @@
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.180"
+    "source_candidate": "v11.8.0-rc4.181"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.180 ROOT-CAUSE VALIDATION",
+    "season_candidate": "v11.8.0-rc4.181 STRICT AUTOMATED VALIDATION",
     "candidate_branch": "main",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.180",
+    "test_challenger": "v11.8.0-rc4.181",
     "ci": {
       "candidate_package": "PASS run 33558208020",
       "release_contract_v2": "PASS run 33558208047",
@@ -85,8 +85,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4180_TDZ_ROOT_CAUSE_FIX_VALIDATING",
-    "nextGate": "RC4180_STRICT_VALIDATION"
+    "status": "RC4181_ROOT_CAUSE_FIX_VALIDATING",
+    "nextGate": "RC4181_STRICT_VALIDATION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -105,8 +105,8 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "rc4180-root-cause-validation",
-        "reason": "Static audit found module-wide temporal-dead-zone defect: Season helpers are defined before Sleeper base const S, while top-level startup can reach those helpers; existing parse-only tests could not detect lexical initialization ordering."
+        "id": "rc4181-root-cause-validation",
+        "reason": "Root cause found: Season-first index removed legacy Draft DOM nodes while renderAll/setAuto still dereferenced them during startup, aborting before bootstrapSeasonWorkspace."
       }
     ],
     "ready": [],
@@ -342,7 +342,7 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "rc4.180 root-cause validation executable; no device trial."
+      "reason": "Autonomous rc4.181 validation remains."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
