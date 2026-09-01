@@ -155,13 +155,13 @@
     "packageReferenceRun": 33552319576,
     "deployedPagesVersion": "rc4.176 main Cloudflare Pages PASS",
     "deployedPagesAppByteParityWithMain": true,
-    "currentResearchGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE",
-    "exactNextAction": "New chat must first reconcile actual v224 main/CI/deploy evidence, then execute browser-equivalent Season E2E. rc4.176 is already on the phone; do not request another device refresh or infer acceptance from the version.",
+    "currentResearchGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
+    "exactNextAction": "On already-installed rc4.176, perform one final functional canary only: allow startup to settle, confirm live roster hydration and workspace navigation. No update/reinstall/cache clear.",
     "runtimeVersion": "rc4.176 installed/observed; functional acceptance pending",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "22:09 CEST screenshot: rc4.176 visible, Season shell restored; Sleeper Live-State '-' and Kader still loading in captured frame; static screenshot does not prove navigation/hydration success."
   },
-  "currentGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE",
+  "currentGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
   "handoffGeneration": "20260901T2210Z-v224",
   "handoff_generation": "20260901T2210Z-v224",
   "statusCommand": {

@@ -16,10 +16,10 @@
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.176",
     "ci": {
-      "candidate_package": "PASS on main runtime head 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
-      "release_contract_v2": "PASS on main runtime head 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
-      "project_guardrails": "RESEAL_COMMIT_STRICT_VALIDATION_PENDING",
-      "validated_code_head": "242ea4b982c5226d6958f6704d5c823d6c89aa9c",
+      "candidate_package": "PASS on takeover validation head a27c0912abb1b1a7144442565eabe998087497a3",
+      "release_contract_v2": "PASS on takeover validation head a27c0912abb1b1a7144442565eabe998087497a3",
+      "project_guardrails": "PASS on takeover validation head a27c0912abb1b1a7144442565eabe998087497a3",
+      "validated_code_head": "a27c0912abb1b1a7144442565eabe998087497a3",
       "scope": "rc4.176 full-runtime restoration + automatic-only Season refresh + workspace navigation/truncation regression"
     },
     "android_accepted": "v11.8.0-rc4.169",
@@ -83,9 +83,9 @@
     ]
   },
   "currentWork": {
-    "status": "TAKEOVER_RUNNING_V224_GUARDRAIL_REPAIR_THEN_SEASON_E2E",
-    "nextGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE",
-    "takeoverRule": "New chat first reconciles actual main/CI/deploy against v224, then runs browser-equivalent Season E2E. Do not infer acceptance from rc4.176 being installed."
+    "status": "RC4176_AUTOMATED_SEASON_E2E_PASS_FINAL_FUNCTIONAL_DEVICE_CANARY",
+    "nextGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
+    "takeoverRule": "Do not update/reinstall. Use already-installed rc4.176 for one final functional confirmation only."
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -101,20 +101,9 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "RUNNING",
-    "active": [
-      {
-        "id": "strict-v224-validation",
-        "lane": "regression/release safety",
-        "reason": "strict validation repair iteration"
-      }
-    ],
-    "ready": [
-      {
-        "id": "season-e2e-reconcile",
-        "lane": "regression/release safety"
-      }
-    ],
+    "status": "USER_ACTION_REQUIRED",
+    "active": [],
+    "ready": [],
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
@@ -332,20 +321,25 @@
         "id": "takeover-guardrail-repair",
         "result": "Repaired exact v224 semantic handoff rewrite regressions detected by strict guardrail: new-chat AUTO queue takeover token, rc4.160 retest prohibition, empty/progress response guards, and exact device update policy. Seal marked pending before strict validation.",
         "at": "2026-09-01T20:20:00Z"
+      },
+      {
+        "id": "takeover-strict-validation",
+        "result": "PASS on a27c0912abb1b1a7144442565eabe998087497a3: Project Guardrails, Release Contract v2, Candidate Package, rc4.82 and rc4.83 workflows all success. Season startup/runtime, interaction automatic-only, startup resilience, automatic refresh and workspace-navigation/truncation gates executed successfully inside release/package contracts.",
+        "at": "2026-09-01T20:23:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "AUTO takeover reconstructed queue from currentWork and actual failed strict v224 CI.",
-      "evaluated_at": "2026-09-01T20:18:00Z"
+      "allowed": true,
+      "code": "USER_ACTION_REQUIRED",
+      "reason": "All autonomous rc4.176 takeover/Season E2E gates are PASS. Remaining acceptance requires one final physical functional canary on the already-installed rc4.176; no update/reinstall/refresh is requested.",
+      "evaluated_at": "2026-09-01T20:23:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
     "generation": "20260901T2210Z-v224",
     "transaction_in_progress": false,
-    "status": "RESEAL_PENDING",
-    "second_pass_pass": false
+    "status": "PASS",
+    "second_pass_pass": true
   }
 }

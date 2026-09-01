@@ -66,8 +66,8 @@
     "deployedPagesVersion": "v11.8.0-rc4.176 main Cloudflare Pages PASS",
     "mainGhPagesParity": true,
     "androidVerified": false,
-    "androidAcceptance": "rc4.176 OBSERVED, NOT ACCEPTED. Accept only after automated Season E2E plus functional device evidence; no iterative device debugging.",
-    "devicePromotionPolicy": "RC4.176_ALREADY_ON_DEVICE; NO_FURTHER_DEVICE_PROMOTION_OR_TRIALS_UNTIL_AUTOMATED_SEASON_E2E_PASS"
+    "androidAcceptance": "rc4.176 automated Season E2E PASS; physical functional acceptance still pending.",
+    "devicePromotionPolicy": "NO_UPDATE_REQUIRED_RC4176_ALREADY_INSTALLED; FINAL_FUNCTIONAL_CANARY_ONLY"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -256,11 +256,11 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "HANDOFF_V224_RC4176_OBSERVED_FUNCTIONAL_PENDING",
-    "nextGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE"
+    "status": "RC4176_AUTOMATED_SEASON_E2E_PASS",
+    "nextGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL"
   },
-  "status": "POST_DRAFT_SEASON_COMPANION_V224_HANDOFF_RC4176_OBSERVED_NOT_ACCEPTED",
-  "gate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE",
+  "status": "RC4176_AUTOMATED_SEASON_E2E_PASS_FINAL_DEVICE_CANARY",
+  "gate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
   "nextGate": "New chat: reconcile actual main/CI/deploy against v224, then run browser-equivalent Season E2E for startup hydration, Kader/Waiver/Trades/Lineup navigation, automatic Sleeper sync, automatic ranking refresh, timeout/fail-closed paths, no Draft UI leakage, and no runtime truncation.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
