@@ -88,7 +88,10 @@ function seasonAvailablePlayers(season,players){
     for(const pid of roster?.reserve||[])owned.add(String(pid));
     for(const pid of roster?.taxi||[])owned.add(String(pid));
   }
-  return Object.entries(players||{}).filter(([pid,p])=>!owned.has(String(pid))&&['QB','RB','WR','TE'].includes(p.position)&&p.active!==false&&p.full_name).map(([pid])=>sleeperPlayerRow(pid,players)).map(p=>({p,r:rankFor(p.name,p.pos)})).filter(x=>x.r).sort((a,b)=>(Number.isFinite(a.r.rank)?a.r.rank:9999)-(Number.isFinite(b.r.rank)?b.r.rank:9999)||(a.p.searchRank||9999)-(b.p.searchRank||9999)).map(x=>x.p);
+  // Ownership discovery must be independent from expert-panel hydration. Return the
+  // complete live unowned skill-position pool; ranking/filtering happens downstream.
+  // This prevents a clean startup with cold rank caches from collapsing a valid FA pool to zero.
+  return Object.entries(players||{}).filter(([pid,p])=>!owned.has(String(pid))&&['QB','RB','WR','TE'].includes(String(p.position||'').toUpperCase())&&p.active!==false&&p.full_name).map(([pid])=>sleeperPlayerRow(pid,players)).sort((a,b)=>(a.searchRank||9999)-(b.searchRank||9999));
 }
 
 function activeDraftSurface(){return localStorage.getItem('v118_draftSurface')==='live'?'live':'mock'}
@@ -2661,7 +2664,14 @@ function renderRosterFaAudit(rows,rankedAvailable,draftComplete){
   const liveSeason=rows.some(x=>x?.seasonStatus);
   const drops=rows.filter(x=>liveSeason?(!x.r||Number(x.r?.rank)>90):((Number(x.pk?.pick_no)||999)>80&&(!x.r||Number(x.r?.rank)>90))).map(x=>({...x,capitalScore:liveSeason?seasonRosterCapitalScore(x):rosterBenchCapitalScore(x)})).sort((a,b)=>b.capitalScore-a.capitalScore).slice(0,7);
   const hasQB=counts.QB>=1;
-  const fas=rankedAvailable.slice(0,80).map(p=>({p,r:rankFor(p.name,p.pos),a:adpFor(p.name)})).filter(x=>x.r&&!(hasQB&&x.p.pos==='QB')).slice(0,45);
+  const fas=rankedAvailable.slice(0,160).map(p=>({p,r:rankFor(p.name,p.pos),a:adpFor(p.name)})).filter(x=>x.r&&!(hasQB&&x.p.pos==='QB')).sort((a,b)=>a.r.rank-b.r.rank).slice(0,45);
+  if(rankedAvailable.length>0&&fas.length===0){
+    lastPostDraftPairs=[];
+    els.rosterFaStatus.className='notice warn';
+    els.rosterFaStatus.textContent=`FA-vs-Roster v2 · Live FA-Pool ${rankedAvailable.length} Spieler erkannt · Expertenrankings für den FA-Vergleich noch nicht verfügbar · kein HOLD/ADD-Urteil.`;
+    els.rosterFaList.innerHTML='<div class="notice warn"><b>FA-POOL LIVE, RANKINGS NOCH NICHT BEREIT</b> · Ownership-Sync ist gültig; Bewertung wird nach Ranking-Hydration automatisch neu gerechnet.</div>';
+    return;
+  }
   const pairs=[];
   for(const fa of fas){let best=null;for(const drop of drops){const z=postDraftSwapScore(drop,fa,counts);if(!best||z.score>best.score)best=z;}if(best)pairs.push(best);}
   pairs.sort((a,b)=>b.score-a.score||a.fa.r.rank-b.fa.r.rank);
