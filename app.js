@@ -2721,6 +2721,25 @@ function tradeLineupBenchmark(mine,pos){
   if(ranks.length<depth)return{rank:135,depth,filled:ranks.length,open:true};
   return{rank:ranks[Math.min(depth,ranks.length)-1],depth,filled:ranks.length,open:false};
 }
+function tradeRosterNeed(roster,pos){
+  const depth=TRADE_TARGET_DEPTH[pos]||1;
+  const ranks=roster.filter(m=>m.p.pos===pos&&m.r&&Number.isFinite(m.r.rank)).map(m=>m.r.rank).sort((a,b)=>a-b);
+  const filled=ranks.length,edge=filled<depth?135:ranks[Math.min(depth,filled)-1];
+  return{depth,filled,edge,need:filled<depth?8:clamp((edge-75)/12,0,6)};
+}
+function tradeOfferCandidates(mine,opponent,target){
+  const oppNeeds=['RB','WR','TE','QB'].map(pos=>({pos,...tradeRosterNeed(opponent,pos)})).sort((a,b)=>b.need-a.need);
+  const targetRank=Number(target.x.r?.rank);
+  const offers=mine.filter(m=>m.r&&Number.isFinite(m.r.rank)&&['RB','WR','TE'].includes(m.p.pos)&&norm(m.p.name)!==norm(target.x.p.name)).map(give=>{
+    const need=oppNeeds.find(n=>n.pos===give.p.pos)?.need||0;
+    const marketGap=Math.abs(Number(give.r.rank)-targetRank);
+    const ourBench=tradeLineupBenchmark(mine,give.p.pos),ourCost=clamp((ourBench.rank-Number(give.r.rank))*.12,-4,7);
+    const fairness=clamp(10-marketGap*.18,0,10),opponentUtility=clamp(need+(110-Number(give.r.rank))/35,0,10);
+    const acceptance=clamp(Math.round(25+fairness*4+opponentUtility*3-ourCost*1.5),10,82);
+    return{give,fairness,opponentUtility,ourCost,acceptance,marketGap};
+  }).filter(o=>o.fairness>=3&&o.opponentUtility>=2).sort((a,b)=>b.acceptance-a.acceptance||b.fairness-a.fairness);
+  return{oppNeeds,offers};
+}
 function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   if(!els.tradeStatus||!els.tradeList)return;
   if(!draftComplete){els.tradeStatus.className='notice';els.tradeStatus.textContent='Trade Target Board wird nach Draftabschluss aktiv.';els.tradeList.innerHTML='';return;}
@@ -2741,16 +2760,17 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
       if(x.p.pos==='QB'&&bench.filled>=1&&lineupEdge<8)desirability-=5;
       if(x.p.pos==='TE'&&bench.filled>=1&&lineupEdge<8)desirability-=5;
       if(research)desirability+=.5;
-      if(desirability>=2)targets.push({slot,x,lineupEdge,bench,desirability,research});
+      if(desirability>=2){const offerModel=tradeOfferCandidates(mine,roster,x);targets.push({slot,x,lineupEdge,bench,desirability,research,...offerModel});}
     }
   }
   targets.sort((a,b)=>b.desirability-a.desirability||b.lineupEdge-a.lineupEdge||a.x.r.rank-b.x.r.rank);
   els.tradeStatus.className='notice warn';
-  els.tradeStatus.textContent='Trade Target Board v3 · LIVE Sleeper-Rosters statt Draftkader. Targets werden gegen die marginale eigene Start-/Flex-Geometrie bewertet. Marktwert/Annahme-Plausibilität und Gegenangebot fehlen weiterhin: TARGET DISCOVERY, noch keine ACCEPT/DECLINE-Freigabe.';
+  els.tradeStatus.textContent='Trade Board v4 · LIVE Sleeper-Rosters. Targets + indikative 1:1-Angebote werden gegen eigene Lineup-Kosten, Gegnerbedarf und Panel-Marktparität bewertet. Annahme-% ist nur Plausibilitätsheuristik ohne aktuelle Trade-Marktquelle; keine ACCEPT/DECLINE-Freigabe.';
   els.tradeList.innerHTML=targets.length?`<div class="coach-section-title">Interessante gegnerische Assets — Target Discovery, Verhandlung noch nicht freigegeben</div>`+targets.slice(0,10).map((t,i)=>{
     const x=t.x,market=Number.isFinite(x.a)?` · Draft-ADP ${x.a.toFixed(1)}`:'';
     const geometry=t.bench.open?`offener ${x.p.pos}-Start/Flex-Pfad (${t.bench.filled}/${t.bench.depth})`:`eigene ${x.p.pos}-Lineup-Grenze Panel ${t.bench.rank.toFixed(1)}`;
-    return `<div class="coach-row"><div><b>${i+1}. ${esc(x.p.name)}</b> <span class="tiny">${x.p.pos} · ${x.p.team} · Team/Slot ${t.slot}</span><div class="tiny">Panel ${x.r.rank.toFixed(1)}${market} · ${geometry} · Lineup-Edge ${t.lineupEdge>=0?'+':''}${t.lineupEdge.toFixed(1)} · ${esc(t.research||'keine aktuelle Research-Cache-Evidence')}</div></div><div><b>TARGET</b><div class="tiny">Boone/Markt + Gegnernutzen fehlen</div></div></div>`;
+    const offer=t.offers?.[0],offerText=offer?`Indikativ: GIVE ${esc(offer.give.p.name)} → GET ${esc(x.p.name)} · Fairness ${offer.fairness.toFixed(1)}/10 · Gegnernutzen ${offer.opponentUtility.toFixed(1)}/10 · Annahme-Plausibilität ~${offer.acceptance}%`:'Kein belastbares 1:1-Angebot aus der aktuellen Roster-/Panel-Geometrie';
+    return `<div class="coach-row"><div><b>${i+1}. ${esc(x.p.name)}</b> <span class="tiny">${x.p.pos} · ${x.p.team} · Team/Slot ${t.slot}</span><div class="tiny">Panel ${x.r.rank.toFixed(1)}${market} · ${geometry} · Lineup-Edge ${t.lineupEdge>=0?'+':''}${t.lineupEdge.toFixed(1)} · ${esc(t.research||'keine aktuelle Research-Cache-Evidence')}</div><div class="tiny">${offerText}</div></div><div><b>TARGET</b><div class="tiny">heuristisch · nicht senden</div></div></div>`;
   }).join(''):'<div class="notice ok">Kein klarer Trade-Target-Vorteil aus der aktuellen Panel-/Roster-/Lineup-Baseline.</div>';
 }
 
