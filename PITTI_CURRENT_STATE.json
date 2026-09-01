@@ -7,14 +7,14 @@
     "repo": "Muero42/draft-companion",
     "branch": "season-companion-rc4.159",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.162"
+    "source_candidate": "v11.8.0-rc4.163"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.161",
-    "season_candidate": "v11.8.0-rc4.162",
+    "season_candidate": "v11.8.0-rc4.163",
     "candidate_branch": "season-companion-rc4.159",
     "android_acceptance_pending": false,
-    "test_challenger": "v11.8.0-rc4.162",
+    "test_challenger": "v11.8.0-rc4.163",
     "ci": {
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
@@ -23,7 +23,7 @@
       "scope": "rc4.161 code + executable FA ownership regression + v217 preview-deployment checkpoint/reseal"
     },
     "android_accepted": "v11.8.0-rc4.161",
-    "preview_candidate": "v11.8.0-rc4.162",
+    "preview_candidate": "v11.8.0-rc4.163",
     "android_authority": "v11.8.0-rc4.161",
     "latest_package_sha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
     "package_reference_run": null,
@@ -72,7 +72,7 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "v11.8.0-rc4.162 Season Companion source candidate; Android authority v11.8.0-rc4.161",
+  "source_authority": "v11.8.0-rc4.163 Season Companion source candidate; Android authority v11.8.0-rc4.161",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
@@ -80,18 +80,14 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "week1-source-integration",
-        "task": "Integrate current Week 1 waiver market evidence with expiry/provenance and validate behavior."
+        "id": "rc4163-ci-deploy",
+        "task": "Validate rc4.163 waiver market + live trade roster identity regression, then deploy if green."
       }
     ],
     "ready": [
       {
-        "id": "rc4162-ci-deploy",
-        "task": "Run all gates, repair any regression, then deploy rc4.162 preview if green."
-      },
-      {
         "id": "season-ui-actionability",
-        "task": "Re-inventory season surfaces after rc4.162 validation and continue highest-value safe increment."
+        "task": "Re-inventory season surfaces after rc4.163 validation; continue only if another material safe defect/increment is identified."
       }
     ],
     "waiting_external": [],
@@ -186,6 +182,16 @@
         "id": "rc4161-device-acceptance",
         "result": "PASS from physical Android screenshot: rc4.161 visibly loaded; Waiver/FA surface no longer emits false zero-ranked-FA HOLD. It renders Waiver/FA Priority v1 and a skill-position HOLD based on the loaded baseline, satisfying the specific regression gate.",
         "at": "2026-09-01T11:55:00Z"
+      },
+      {
+        "id": "rc4162-waiver-market",
+        "result": "Implemented fresh pre-Week-1 waiver market signal from Nick Mariano/RotoBaller with explicit source, rank, 10-team applicability, expiry 2026-09-08 and bounded scoring bonus. Signal can unlock WATCH/CLEAR ADD only while fresh and only for live Sleeper free agents.",
+        "at": "2026-09-01T12:10:00Z"
+      },
+      {
+        "id": "rc4163-trade-identity-fix",
+        "result": "Found and fixed live Trade Board identity bug: Sleeper roster_id had been compared to historical draft slot 9. Live own-roster exclusion now uses canonical season.my_roster.roster_id; draft-slot comparison remains fallback only.",
+        "at": "2026-09-01T12:12:00Z"
       }
     ],
     "stop_evaluation": {
