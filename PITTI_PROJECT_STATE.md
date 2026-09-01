@@ -401,3 +401,13 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - The new architectural correction does not chase another downstream startup statement. rc4.174 binds Kader/Ranking listeners immediately after the Season bootstrap implementation, before the large legacy/draft startup tail, and schedules roster hydration from an early microtask. A later synchronous startup exception can no longer leave the Season controls completely inert.
 - Late duplicate onclick wiring is removed; binding is idempotent. Both early listeners provide immediate visible feedback and catch their own failures. Roster bootstrap remains bounded/fail-closed.
 - Automated interaction/startup-resilience gates are updated to require the early binding and early roster-bootstrap rescue. Physical device update remains forbidden until candidate package, behavioral contract, project guardrails and Cloudflare preview are green.
+
+## 2026-09-01 — rc4.175 regression root cause → rc4.176 no-trial repair
+- Physical rc4.175 showed a major regression: Kader/Waiver/Trades could not be selected and Draft controls appeared inside Kader.
+- Repository diff proved the direct cause: rc4.175 app.js had been accidentally truncated from about 395k to about 111k by an unsafe source-range replacement. The truncation removed setWorkspace and [data-workspace-target] click wiring. This was a release-process failure, not a Sleeper/device-cache issue.
+- rc4.176 was built on isolated PR #97 from the full pre-truncation rc4.174 runtime, with only the premature/manual Season refresh path removed. Roster bootstrap and ranking refresh remain automatic.
+- New executable no-regression gate requires app.js >380k, setWorkspace, all five workspace tabs and exact navigation wiring, absence of manual Season refresh controls, and automatic startup after ranking constants initialize.
+- PR #97 exact-head Project Guardrails, behavioral/release contract, Candidate Package and Cloudflare Pages all PASS. Merged to main as 242ea4b982c5226d6958f6704d5c823d6c89aa9c.
+- Main Candidate Package and behavioral-contract PASS; package run 33552319576 artifact 9817918079 digest sha256:6bd37d7dede76187ff6a38dbec625f183189f43c0af0b4b98b89cb563661a513. Main Cloudflare Pages PASS.
+- Canonical strict guard failures immediately after merge were metadata/seal drift (runtime version lock + app blob mismatch), not runtime-test failures; v223 reseal aligns machine state with rc4.176.
+- Installed device remains rc4.175 rejected. Last accepted rollback authority is rc4.169. No further device version may be used for debugging; next device action is one final confirmation after strict reseal PASS.

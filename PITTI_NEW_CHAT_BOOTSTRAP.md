@@ -1,5 +1,5 @@
 # PITTI NEW CHAT BOOTSTRAP — v222
-Generation: `20260901T2050Z-v222`
+Generation: `20260901T2200Z-v223`
 
 ## Current authority
 - POST_DRAFT_SEASON_COMPANION.
@@ -32,3 +32,12 @@ No micro-deployment storm.
 Report known state only; do not work/poll.
 
 - Do NOT repeat rc4.160 device testing.
+
+## v223 CURRENT OVERRIDE — rc4.176 NO-TRIAL RELEASE
+- rc4.175 installed/rejected: accidental app.js truncation removed workspace routing and caused the visible Kader/Draft regression.
+- rc4.176 restores the full runtime and adds executable truncation + workspace navigation gates.
+- All automated candidate gates must pass before any Android action; device is final confirmation only.
+- Current rollback authority rc4.169; current candidate rc4.176.
+- Next gate: FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL.
+- Do NOT repeat rc4.160 device testing or any rc4.171–175 debugging on device.
+- AUTO queue takeover: when server-side gates are executable, complete them silently before requesting the one final device confirmation.

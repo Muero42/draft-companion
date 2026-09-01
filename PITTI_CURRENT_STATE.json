@@ -1,38 +1,38 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260901T2050Z-v222",
-  "updated_at": "2026-09-01T18:50:00Z",
+  "handoff_generation": "20260901T2200Z-v223",
+  "updated_at": "2026-09-01T20:00:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.173"
+    "source_candidate": "v11.8.0-rc4.176"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.174 MAIN GREEN",
+    "season_candidate": "v11.8.0-rc4.176 MAIN AUTOMATED GATES PASS",
     "candidate_branch": "main",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.174",
+    "test_challenger": "v11.8.0-rc4.176",
     "ci": {
-      "candidate_package": "PASS",
-      "release_contract_v2": "PASS",
-      "project_guardrails": "PASS (candidate/pre-seal); canonical seal verification pending",
-      "validated_code_head": "9207b18fef848c7c5e57abf7e4631f185a5e11e0",
-      "scope": "rc4.174 early Season control binding + early roster bootstrap rescue"
+      "candidate_package": "PASS on main runtime head 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
+      "release_contract_v2": "PASS on main runtime head 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
+      "project_guardrails": "RESEAL_COMMIT_STRICT_VALIDATION_PENDING",
+      "validated_code_head": "242ea4b982c5226d6958f6704d5c823d6c89aa9c",
+      "scope": "rc4.176 full-runtime restoration + automatic-only Season refresh + workspace navigation/truncation regression"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "v11.8.0-rc4.174 main deployed PASS",
-    "android_authority": "v11.8.0-rc4.173 observed/rejected",
-    "latest_package_sha256": "sha256:1d06968ad7edbe6a752d4b833a755fdbf8879bed4e512898cd888b823dcde337",
-    "package_reference_run": 33549384025,
+    "preview_candidate": "v11.8.0-rc4.176 main deployed PASS",
+    "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
+    "latest_package_sha256": "sha256:6bd37d7dede76187ff6a38dbec625f183189f43c0af0b4b98b89cb563661a513",
+    "package_reference_run": 33552319576,
     "deployed_pages_app_byte_parity_with_main": true,
-    "deployed_pages_head": "main 9207b18fef848c7c5e57abf7e4631f185a5e11e0 · Cloudflare Pages deploy PASS",
-    "installed_android": "v11.8.0-rc4.173",
-    "latest_android_observed": "v11.8.0-rc4.173",
-    "device_update_policy": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
-    "last_device_failure": "rc4.173 installed; user confirmed both Kader/Ranking buttons were pressed and remained ineffective. Prior legacy-cache hypothesis therefore insufficient."
+    "deployed_pages_head": "main 242ea4b982c5226d6958f6704d5c823d6c89aa9c · Cloudflare Pages deploy PASS",
+    "installed_android": "v11.8.0-rc4.175",
+    "latest_android_observed": "v11.8.0-rc4.175",
+    "device_update_policy": "FINAL_CONFIRMATION_ONLY_AFTER_AUTOMATED_AND_STRICT_RESEAL_GATES_PASS",
+    "last_device_failure": "rc4.175 installed/rejected: app.js was accidentally truncated from ~395k to ~111k, removing setWorkspace/workspace tab wiring; Draft controls leaked into Kader and Kader/Waiver/Trades navigation became inert."
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -64,7 +64,7 @@
     ]
   },
   "currentWork": {
-    "status": "RC4173_MAIN_GATES_PASS_RESEAL_PENDING",
+    "status": "RC4176_RESEAL_STRICT_VALIDATION_PENDING",
     "nextGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL"
   },
   "invariants": {
@@ -76,21 +76,21 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "main rc4.172 device-rejected; rc4.173 candidate isolates malformed legacy research-cache rows and prevents optional research-cache UI from aborting Season startup.",
+  "source_authority": "main rc4.176 restores full rc4.174 runtime after rc4.175 truncation; automated Season startup/interaction/workspace gates PASS before any final device confirmation.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "RUNNING",
-    "active": [
-      {
-        "id": "rc4174-reseal",
-        "task": "Reseal canonical rc4.174 main state and verify strict post-seal guardrails before final device confirmation."
-      }
-    ],
+    "status": "USER_ACTION_REQUIRED",
+    "active": [],
     "ready": [],
     "waiting_external": [],
-    "blocked_user": [],
+    "blocked_user": [
+      {
+        "id": "rc4176-final-device-confirmation",
+        "task": "After strict reseal CI is green, perform one final physical Android/PWA confirmation only; no device debugging or iterative trial-and-error."
+      }
+    ],
     "completed_recent": [
       {
         "id": "auto-protocol-hardening",
@@ -286,17 +286,28 @@
         "id": "device-first-policy-revoked",
         "result": "Reinstated strict release discipline: autonomous tests first; no preview/device promotion until full automated Season startup + interaction gate passes.",
         "at": "2026-09-01T18:50:00Z"
+      },
+      {
+        "id": "rc4175-device-rejection",
+        "result": "Physical Android rc4.175 rejected: workspace router/runtime was truncated; Kader/Waiver/Trades tabs inert and Draft controls leaked into Kader.",
+        "at": "2026-09-01T19:42:00Z"
+      },
+      {
+        "id": "rc4176-automated-repair",
+        "result": "PR #97 rc4.176 restored full runtime, removed premature/manual Season refresh controls, added app-length/workspace-navigation regression; PR guardrails, behavioral-contract, package and Cloudflare Pages all PASS; merged to main 242ea4b982c5226d6958f6704d5c823d6c89aa9c.",
+        "at": "2026-09-01T19:55:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "Canonical rc4.174 reseal remains executable."
+      "allowed": true,
+      "code": "USER_ACTION_REQUIRED",
+      "reason": "All executable code/test/release repair work is complete; after strict reseal CI passes, only one final device confirmation remains.",
+      "evaluated_at": "2026-09-01T20:00:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260901T2050Z-v222",
+    "generation": "20260901T2200Z-v223",
     "transaction_in_progress": false,
     "status": "PASS",
     "second_pass_pass": true

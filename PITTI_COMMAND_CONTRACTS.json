@@ -147,22 +147,22 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.173 installed/rejected",
-    "androidAuthority": "v11.8.0-rc4.173 observed/rejected",
-    "sourceAuthority": "v11.8.0-rc4.174 main green",
-    "latestPackageReextract": "rc4.174 PASS on main 9207b18fef848c7c5e57abf7e4631f185a5e11e0",
-    "latestPackageSha256": "sha256:1d06968ad7edbe6a752d4b833a755fdbf8879bed4e512898cd888b823dcde337",
-    "packageReferenceRun": 33549384025,
-    "deployedPagesVersion": "rc4.174 main Cloudflare Pages PASS",
+    "productionControl": "v11.8.0-rc4.169 accepted rollback authority",
+    "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority; installed rc4.175 rejected",
+    "sourceAuthority": "v11.8.0-rc4.176 main automated gates PASS",
+    "latestPackageReextract": "rc4.176 PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
+    "latestPackageSha256": "sha256:6bd37d7dede76187ff6a38dbec625f183189f43c0af0b4b98b89cb563661a513",
+    "packageReferenceRun": 33552319576,
+    "deployedPagesVersion": "rc4.176 main Cloudflare Pages PASS",
     "deployedPagesAppByteParityWithMain": true,
     "currentResearchGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
-    "exactNextAction": "Reseal canonical rc4.174 main state, verify post-seal guardrails, then one final physical device confirmation.",
-    "runtimeVersion": "rc4.174 main green; rc4.173 installed/rejected",
-    "latestEvidenceBackup": "Draft backups retained as immutable historical evidence only; current roster comes from Sleeper league state."
+    "exactNextAction": "After strict reseal CI PASS, perform exactly one final physical Android/PWA confirmation of rc4.176; no iterative device debugging.",
+    "runtimeVersion": "rc4.176 candidate; rc4.175 installed/rejected",
+    "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state."
   },
   "currentGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
   "handoffGeneration": "20260901T2050Z-v222",
-  "handoff_generation": "20260901T2050Z-v222",
+  "handoff_generation": "20260901T2200Z-v223",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",

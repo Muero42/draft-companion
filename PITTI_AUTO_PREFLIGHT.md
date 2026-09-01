@@ -244,3 +244,9 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - An empty assistant response after tool work is also forbidden because it terminates execution.
 - Visible output requires `active=[]`, `ready=[]`, and `stop_evaluation.allowed=true` with an approved stop code.
 - The platform cannot continue tool work after a visible assistant turn ends; therefore a promise that AUTO “läuft weiter” after sending such a message is functionally false.
+
+## v223 NO-TRIAL DEVICE PROMOTION OVERRIDE
+- Current candidate = v11.8.0-rc4.176; rc4.175 is rejected for proven runtime truncation/workspace-router loss.
+- Device promotion is forbidden while any automated candidate, package, deployment, workspace-navigation, startup/interactions, or strict reseal gate is not PASS.
+- A device check is not a debugging instrument. After all server-side gates pass, exactly one final confirmation is permitted.
+- Runtime truncation regression: app.js must remain >380k and preserve setWorkspace + all workspace tab wiring.
