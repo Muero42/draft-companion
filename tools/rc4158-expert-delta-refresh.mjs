@@ -7,10 +7,11 @@ const manifest=fs.readFileSync('manifest.webmanifest','utf8');
 
 function must(cond,msg){if(!cond){console.error('FAIL:',msg);process.exit(1)}}
 
-must(/const APP_VERSION='v11\\.8\\.0-rc4\\.(?:15[8-9]|1[6-9]\\d|[2-9]\\d{2,})'/.test(app),'app version >= rc4.158');
-must(/v11\\.8\\.0-rc4\\.(?:15[8-9]|1[6-9]\\d|[2-9]\\d{2,})/.test(html),'index version >= rc4.158');
-must(/v11\\.8\\.0-rc4\\.(?:15[8-9]|1[6-9]\\d|[2-9]\\d{2,})/.test(sw),'sw version >= rc4.158');
-must(/v11\\.8\\.0-rc4\\.(?:15[8-9]|1[6-9]\\d|[2-9]\\d{2,})/.test(manifest),'manifest version >= rc4.158');
+const versionOf=s=>Number((String(s).match(/v11\\.8\\.0-rc4\\.(\\d+)/)||[])[1]);
+must(versionOf(app)>=158,'app version >= rc4.158');
+must(versionOf(html)>=158,'index version >= rc4.158');
+must(versionOf(sw)>=158,'sw version >= rc4.158');
+must(versionOf(manifest)>=158,'manifest version >= rc4.158');
 must(html.includes('id="expertDeltaBtn"'),'delta button present');
 must(app.includes("'expertDeltaBtn'"),'delta button wired into ids');
 must(app.includes('async function loadExpertRanks(expertId,{force=false}={})'),'force-capable expert load');
