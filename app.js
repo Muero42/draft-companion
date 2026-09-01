@@ -16,7 +16,9 @@ const WATCHER_BASE_URL='https://pitti-watcher.tim-muero.workers.dev';
 const SEASON_LEAGUE_ID_KEY='v118_seasonLeagueId',SEASON_USER_ID_KEY='v118_seasonUserId';
 function sleeperPlayerRow(pid,players){const p=players?.[String(pid)]||{};return{id:String(pid),name:p.full_name||[p.first_name,p.last_name].filter(Boolean).join(' ')||String(pid),pos:p.position||'',team:p.team||'FA',searchRank:Number(p.search_rank),injury:p.injury_status||null,bye:p.bye_week||null,yearsExp:Number.isFinite(Number(p.years_exp))?Number(p.years_exp):null};}
 async function fetchSeasonLeagueState(draft){
-  const leagueId=String(draft?.league_id||store.text(SEASON_LEAGUE_ID_KEY,'')||'').trim();if(!leagueId)return{ok:false,reason:'NO_LEAGUE_ID'};
+  let leagueId=String(draft?.league_id||store.text(SEASON_LEAGUE_ID_KEY,'')||'').trim();
+  if(!leagueId&&draft?.draft_id){try{const leagues=await jf(`${S}/user/${encodeURIComponent(String(draft.created_by||''))}/leagues/nfl/2026?_=${Date.now()}`,'Ligen',9000);const hit=(leagues||[]).find(l=>String(l.draft_id||'')===String(draft.draft_id));leagueId=String(hit?.league_id||'').trim();}catch{}}
+  if(!leagueId)return{ok:false,reason:'NO_LEAGUE_ID'};
   let userId=store.text(SEASON_USER_ID_KEY,'').trim(),url=new URL(WATCHER_BASE_URL+'/league-state');url.searchParams.set('league_id',leagueId);if(userId)url.searchParams.set('user_id',userId);
   let r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('League-State HTTP '+r.status);let v=await r.json();
   if(!userId){const roster=(v.rosters||[]).find(x=>Number(x.roster_id)===Number(els.slot.value));userId=String(roster?.owner_id||'').trim();if(userId){store.setText(SEASON_USER_ID_KEY,userId);url.searchParams.set('user_id',userId);r=await fetch(url,{cache:'no-store'});if(r.ok)v=await r.json();}}
