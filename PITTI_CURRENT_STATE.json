@@ -7,7 +7,7 @@
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.176"
+    "source_candidate": "v11.8.0-rc4.177"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
@@ -83,9 +83,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4176_AUTOMATED_SEASON_E2E_PASS_FINAL_FUNCTIONAL_DEVICE_CANARY",
-    "nextGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
-    "takeoverRule": "Do not update/reinstall. Use already-installed rc4.176 for one final functional confirmation only."
+    "status": "RC4177_STARTUP_OBSERVABILITY_FIX_VALIDATING",
+    "nextGate": "RC4177_STRICT_VALIDATION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -96,13 +95,19 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "main rc4.176 is the current source/deployed candidate. Physical Android now shows rc4.176, but functional acceptance is pending because the captured Kader frame still shows Live-State '-' and 'Live-Kader wird geladen...'. No device-side trial-and-error.",
+  "source_authority": "rc4.177 candidate adds pre-network JS execution marker and bounded startup watchdog to distinguish physical JS non-execution from network/bootstrap timeout; not device-promoted.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "USER_ACTION_REQUIRED",
-    "active": [],
+    "status": "RUNNING",
+    "active": [
+      {
+        "id": "rc4177-strict-validation",
+        "lane": "regression/release safety",
+        "reason": "candidate created after rc4.176 physical static-placeholder failure"
+      }
+    ],
     "ready": [],
     "waiting_external": [],
     "blocked_user": [],
