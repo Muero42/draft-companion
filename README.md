@@ -87,4 +87,4 @@ v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96
 
 
 ## Season Companion current candidate
-- v11.8.0-rc4.165 — fixes startup season hydration render ordering: canonical live `lastDraftContext` is established before Waiver/FA and Trade surfaces render. Physical Android acceptance pending.
+- v11.8.0-rc4.166 — fixes startup season hydration render ordering: canonical live `lastDraftContext` is established before Waiver/FA and Trade surfaces render. Physical Android acceptance pending.
