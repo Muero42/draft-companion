@@ -1,5 +1,5 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.171 Season Companion preview. **Current installed Android app observed by the user is v11.8.0-rc4.158**; rc4.168 is not Android-accepted until automated Season startup gates pass and one final device canary succeeds.
+> **Current source candidate:** v11.8.0-rc4.172 TEST-ONLY Season Companion candidate. **Current installed Android/PWA observed by the user is v11.8.0-rc4.171 and is functionally rejected**; rc4.172 MUST NOT be promoted to device until automated Season interaction/startup gates pass. Device canary is final confirmation only.
 > **Season mode:** current Sleeper league state is Source of Truth; completed draft roster is immutable historical evidence only.
 > **rc4.158 bounded change:** adds a draft-day v4 expert baseline/delta workflow. Unchanged or failed/incomplete refreshes restore the prior verified baseline; panel rebuild can run cache-only and occurs only for baseline creation/repair or a real ranking delta.
 > **No model change:** expert membership, weights, panel ranks semantics, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
