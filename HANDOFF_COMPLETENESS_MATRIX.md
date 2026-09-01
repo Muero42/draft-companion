@@ -1,19 +1,4 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v223
-Generation: `20260901T2200Z-v223`
+# PITTI HANDOFF COMPLETENESS MATRIX — v224
+Generation: `20260901T2210Z-v224`
 
-PASS requires:
-- source/deployed candidate = rc4.176;
-- installed Android/PWA = rc4.175 observed/rejected;
-- accepted rollback authority = rc4.169;
-- rc4.175 truncation root cause recognized: missing workspace router/tab wiring, Draft controls leaked into Kader;
-- rc4.176 full runtime restored; app-length guard >380k; setWorkspace + all workspace tabs + click wiring executable regression;
-- manual Season Kader/Ranking refresh controls removed; roster bootstrap + ranking refresh automatic;
-- candidate package + behavioral contract + Cloudflare Pages PASS before device;
-- strict reseal PASS before device;
-- next gate = FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL;
-- exactly one final device confirmation; no iterative manual debugging/trial-and-error;
-- live Sleeper roster remains season Source of Truth;
-- transaction canary: Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR;
-- AUTO continuous/no progress/no empty response;
-- STATUS report-only.
-- Empty assistant response after tool work is forbidden.
+PASS requires: rc4.176 source/deployed; rc4.176 physical device observed but NOT accepted; rc4.169 accepted rollback; 22:09 CEST screenshot preserved exactly (Season shell/workspace buttons visible, no Draft controls in captured Kader frame, Live-State '-', Kader loading); v223 semantic contradictions repaired; first new-chat gate = repo/CI/deploy reconciliation + AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE; no further device trial-and-error before autonomous PASS; live Sleeper = Season Source of Truth; draft = immutable history; transaction canary and watcher v0.2.3 preserved; AUTO continuous/re-inventory/no progress/no empty/no promise-only finals; STATUS report-only.

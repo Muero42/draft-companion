@@ -411,3 +411,11 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Main Candidate Package and behavioral-contract PASS; package run 33552319576 artifact 9817918079 digest sha256:6bd37d7dede76187ff6a38dbec625f183189f43c0af0b4b98b89cb563661a513. Main Cloudflare Pages PASS.
 - Canonical strict guard failures immediately after merge were metadata/seal drift (runtime version lock + app blob mismatch), not runtime-test failures; v223 reseal aligns machine state with rc4.176.
 - Installed device remains rc4.175 rejected. Last accepted rollback authority is rc4.169. No further device version may be used for debugging; next device action is one final confirmation after strict reseal PASS.
+
+
+## 2026-09-01 — v224 handoff deep-audit / rc4.176 device observation
+- v223 was 10/10 blob-integrity-consistent but semantically inconsistent: SEAL retained rc4.174/173 pointers; COMMAND retained handoffGeneration v222/device rc4.175 boundary; BOOTSTRAP still presented rc4.171 as current; LOCK retained v222/rc4.161 resume and stale currentWork; CURRENT still said rc4.175 installed. v224 repairs these and makes newer actual evidence authoritative.
+- Physical Android screenshot at 22:09 CEST proves rc4.176 installed. Season shell/workspace buttons are visible and Draft controls are absent in the captured Kader frame, but Sleeper Live-State remains '-' and Live-Kader remains loading. Therefore rc4.176 is observed, NOT functionally accepted; static evidence does not prove navigation/hydration/automatic refresh/timeout behavior.
+- Accepted rollback remains rc4.169. No downgrade to rc4.171-175 and no version-number-as-progress inference.
+- New-chat first gate: repository/CI/deploy reconciliation, then browser-equivalent Season E2E. No more device-side trial-and-error/cache clearing/reinstall/repeated refresh/candidate churn before autonomous diagnosis.
+- AUTO contract re-sealed: same-turn continuation; checkpoint + re-inventory after every package; no progress/status/ack finals, no empty replies, no false 'AUTO läuft weiter'. STATUS report-only.

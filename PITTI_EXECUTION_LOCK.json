@@ -1,12 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-01T20:00:00Z",
+  "updatedAt": "2026-09-01T20:09:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Repo generation 20260901T2200Z-v223 is current authority. rc4.175 is rejected for runtime truncation/workspace navigation loss. rc4.176 is the only current candidate; no device promotion before automated + strict reseal gates pass. Persistent Library mirror may remain stale; never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Repo generation 20260901T2210Z-v224 is current handoff authority. rc4.176 is physically observed but NOT accepted. Captured Kader still shows Sleeper Live-State '-' and 'Live-Kader wird geladen...'. New chat must reconcile actual main/CI/deploy, run browser-equivalent Season E2E, and never downgrade to rc4.171-175 or infer success from version number.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
@@ -16,7 +16,7 @@
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.175 installed/rejected",
+    "latestAndroidObserved": "v11.8.0-rc4.176 installed/observed; functional acceptance pending",
     "latestPreinstallVerified": "rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.176 package/re-extract PASS",
@@ -24,16 +24,16 @@
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
     "latestDeployedCandidate": "v11.8.0-rc4.176 main deployed PASS",
-    "latestAndroidVerified": "v11.8.0-rc4.169 accepted rollback authority",
+    "latestAndroidVerified": "v11.8.0-rc4.169 accepted rollback authority; rc4.176 observation is not acceptance",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33552319576,
     "preinstallReferenceArtifactId": 9817918079,
     "preinstallHashSemantics": "GitHub candidate-package artifact digest; package/re-extract PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.175",
-    "latestAndroidFunctionalVerified": "rc4.169 accepted; rc4.175 rejected for workspace-router truncation",
-    "testChallengerAndroidObserved": false,
+    "latestAndroidVersionObserved": "v11.8.0-rc4.176",
+    "latestAndroidFunctionalVerified": "rc4.169 accepted rollback authority. rc4.176: Season shell visually restored, but captured Live-State/Kader hydration is unresolved.",
+    "testChallengerAndroidObserved": true,
     "testChallengerAndroidAccepted": false,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
@@ -66,8 +66,8 @@
     "deployedPagesVersion": "v11.8.0-rc4.176 main Cloudflare Pages PASS",
     "mainGhPagesParity": true,
     "androidVerified": false,
-    "androidAcceptance": "rc4.176 NOT device accepted yet; one final confirmation only after strict reseal PASS",
-    "devicePromotionPolicy": "FINAL_DEVICE_CONFIRMATION_ALLOWED_AFTER_RC4174_AUTOMATED_PASS_AND_RESEAL"
+    "androidAcceptance": "rc4.176 OBSERVED, NOT ACCEPTED. Accept only after automated Season E2E plus functional device evidence; no iterative device debugging.",
+    "devicePromotionPolicy": "RC4.176_ALREADY_ON_DEVICE; NO_FURTHER_DEVICE_PROMOTION_OR_TRIALS_UNTIL_AUTOMATED_SEASON_E2E_PASS"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -256,12 +256,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4172_AUTOMATED_E2E_PASS_DEVICE_PROMOTION_NOT_YET_DONE",
-    "nextGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL"
+    "status": "HANDOFF_V224_RC4176_OBSERVED_FUNCTIONAL_PENDING",
+    "nextGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE"
   },
-  "status": "POST_DRAFT_SEASON_COMPANION_RC4176_RESEALED_FINAL_DEVICE_CONFIRMATION",
-  "gate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
-  "nextGate": "Autonomously reproduce and pass Season startup + Kader refresh + Rankings refresh + failure-timeout behavior in automated E2E. Only then build/promote next device candidate.",
+  "status": "POST_DRAFT_SEASON_COMPANION_V224_HANDOFF_RC4176_OBSERVED_NOT_ACCEPTED",
+  "gate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE",
+  "nextGate": "New chat: reconcile actual main/CI/deploy against v224, then run browser-equivalent Season E2E for startup hydration, Kader/Waiver/Trades/Lineup navigation, automatic Sleeper sync, automatic ranking refresh, timeout/fail-closed paths, no Draft UI leakage, and no runtime truncation.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -270,11 +270,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260901T2050Z-v222",
+    "generation": "20260901T2210Z-v224",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.161 code/CI complete; physical Android acceptance only.",
+    "resume": "rc4.176 physically observed but not functionally accepted; resume with repository reconciliation + automated Season E2E, not device trial-and-error.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -294,7 +294,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260901T2200Z-v223",
+  "handoff_generation": "20260901T2210Z-v224",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },

@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260901T2200Z-v223",
-  "updated_at": "2026-09-01T20:00:00Z",
+  "handoff_generation": "20260901T2210Z-v224",
+  "updated_at": "2026-09-01T20:09:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -29,10 +29,29 @@
     "package_reference_run": 33552319576,
     "deployed_pages_app_byte_parity_with_main": true,
     "deployed_pages_head": "main 242ea4b982c5226d6958f6704d5c823d6c89aa9c · Cloudflare Pages deploy PASS",
-    "installed_android": "v11.8.0-rc4.175",
-    "latest_android_observed": "v11.8.0-rc4.175",
-    "device_update_policy": "FINAL_CONFIRMATION_ONLY_AFTER_AUTOMATED_AND_STRICT_RESEAL_GATES_PASS",
-    "last_device_failure": "rc4.175 installed/rejected: app.js was accidentally truncated from ~395k to ~111k, removing setWorkspace/workspace tab wiring; Draft controls leaked into Kader and Kader/Waiver/Trades navigation became inert."
+    "installed_android": "v11.8.0-rc4.176",
+    "latest_android_observed": "v11.8.0-rc4.176",
+    "device_update_policy": "NO_FURTHER_DEVICE_TRIALS; RC4.176_ALREADY_OBSERVED; ACCEPT_ONLY_AFTER_AUTOMATED_SEASON_E2E_AND_FUNCTIONAL_DEVICE_EVIDENCE",
+    "last_device_failure": "rc4.175 rejected for proven app.js truncation/workspace-router loss. New device evidence at 22:09 CEST shows rc4.176 installed with Season shell/workspace buttons visually restored, but Sleeper Live-State is still '-' and Kader is still 'Live-Kader wird geladen...' in the captured frame. rc4.176 is OBSERVED, NOT functionally accepted.",
+    "latest_device_evidence": {
+      "version": "v11.8.0-rc4.176",
+      "observed_at": "2026-09-01T20:09:00Z",
+      "evidence": "physical Android screenshot",
+      "partial_pass": [
+        "version rc4.176 visible",
+        "Season Companion shell visible",
+        "Kader/Waiver/Trades workspace buttons visible",
+        "no Draft controls visible in captured Kader frame"
+      ],
+      "unresolved": [
+        "Sleeper Live-State still static dash in captured frame",
+        "Live-Kader still loading in captured frame",
+        "tab click behavior not proven by a static screenshot",
+        "Waiver/Trades/Lineup functional hydration not proven",
+        "automatic Sleeper sync/ranking completion not proven"
+      ],
+      "acceptance": "PENDING"
+    }
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -64,8 +83,9 @@
     ]
   },
   "currentWork": {
-    "status": "RC4176_RESEAL_STRICT_VALIDATION_PENDING",
-    "nextGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL"
+    "status": "HANDOFF_V224_RC4176_DEVICE_OBSERVED_NOT_ACCEPTED",
+    "nextGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE",
+    "takeoverRule": "New chat first reconciles actual main/CI/deploy against v224, then runs browser-equivalent Season E2E. Do not infer acceptance from rc4.176 being installed."
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -76,21 +96,16 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "main rc4.176 restores full rc4.174 runtime after rc4.175 truncation; automated Season startup/interaction/workspace gates PASS before any final device confirmation.",
+  "source_authority": "main rc4.176 is the current source/deployed candidate. Physical Android now shows rc4.176, but functional acceptance is pending because the captured Kader frame still shows Live-State '-' and 'Live-Kader wird geladen...'. No device-side trial-and-error.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "USER_ACTION_REQUIRED",
+    "status": "PROJECT_MILESTONE_REACHED",
     "active": [],
     "ready": [],
     "waiting_external": [],
-    "blocked_user": [
-      {
-        "id": "rc4176-final-device-confirmation",
-        "task": "After strict reseal CI is green, perform one final physical Android/PWA confirmation only; no device debugging or iterative trial-and-error."
-      }
-    ],
+    "blocked_user": [],
     "completed_recent": [
       {
         "id": "auto-protocol-hardening",
@@ -296,18 +311,23 @@
         "id": "rc4176-automated-repair",
         "result": "PR #97 rc4.176 restored full runtime, removed premature/manual Season refresh controls, added app-length/workspace-navigation regression; PR guardrails, behavioral-contract, package and Cloudflare Pages all PASS; merged to main 242ea4b982c5226d6958f6704d5c823d6c89aa9c.",
         "at": "2026-09-01T19:55:00Z"
+      },
+      {
+        "id": "rc4176-device-observation-v224",
+        "result": "Physical Android screenshot at 22:09 CEST confirms rc4.176 is installed and the Season shell/workspace controls are visually restored. In the captured frame Sleeper Live-State remains '-' and Kader remains loading, so this is version/shell evidence only, not functional acceptance.",
+        "at": "2026-09-01T20:09:00Z"
       }
     ],
     "stop_evaluation": {
       "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "All executable code/test/release repair work is complete; after strict reseal CI passes, only one final device confirmation remains.",
-      "evaluated_at": "2026-09-01T20:00:00Z"
+      "code": "PROJECT_MILESTONE_REACHED",
+      "reason": "Explicit handoff requested. The next chat reconstructs autonomous work from currentWork and actual repository evidence.",
+      "evaluated_at": "2026-09-01T20:09:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260901T2200Z-v223",
+    "generation": "20260901T2210Z-v224",
     "transaction_in_progress": false,
     "status": "PASS",
     "second_pass_pass": true

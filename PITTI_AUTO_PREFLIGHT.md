@@ -250,3 +250,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - Device promotion is forbidden while any automated candidate, package, deployment, workspace-navigation, startup/interactions, or strict reseal gate is not PASS.
 - A device check is not a debugging instrument. After all server-side gates pass, exactly one final confirmation is permitted.
 - Runtime truncation regression: app.js must remain >380k and preserve setWorkspace + all workspace tab wiring.
+
+
+## v224 CURRENT OVERRIDE — RC4.176 OBSERVED, NOT ACCEPTED
+Generation: `20260901T2210Z-v224`. Supersedes older current-version/device/gate/handoff pointers above where conflicting. Physical Android at 22:09 CEST visibly runs rc4.176, but captured Kader still has Live-State '-' and Live-Kader loading; this is observation only. Accepted rollback remains rc4.169. First new-chat gate: verify v224 against actual main/CI/deploy, then browser-equivalent Season E2E before any further device action. AUTO/AUTO BLOCK: no interim status/progress/ack, no empty response, no “AUTO läuft weiter”; re-inventory and continue while executable work exists. STATUS report-only.

@@ -1,5 +1,5 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.176 main candidate after full automated repair; it supersedes v11.8.0-rc4.174 and rejects rc4.175 for proven runtime truncation. Android remains rc4.175 observed/rejected until one final post-reseal confirmation.
+> **Current source candidate:** v11.8.0-rc4.176 main candidate. Physical Android/PWA now visibly runs rc4.176, but functional acceptance is pending: the 22:09 CEST Kader screenshot shows the Season shell restored while Sleeper Live-State remains '-' and Live-Kader remains loading. rc4.169 remains accepted rollback authority; no further device trial-and-error before automated Season E2E.
 > **Season mode:** current Sleeper league state is Source of Truth; completed draft roster is immutable historical evidence only.
 > **rc4.158 bounded change:** adds a draft-day v4 expert baseline/delta workflow. Unchanged or failed/incomplete refreshes restore the prior verified baseline; panel rebuild can run cache-only and occurs only for baseline creation/repair or a real ranking delta.
 > **No model change:** expert membership, weights, panel ranks semantics, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
