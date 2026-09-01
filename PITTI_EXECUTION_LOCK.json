@@ -263,7 +263,7 @@
     "nextGate": "DEVICE_RC4165_FINAL_CANARY"
   },
   "status": "POST_DRAFT_SEASON_COMPANION_RC4161_CANDIDATE",
-  "gate": "DEVICE_RC4165_FINAL_CANARY",
+  "gate": "RC4166_CI_AND_PREVIEW_DEPLOY",
   "nextGate": "Device acceptance only after repository/checkpoint reconciliation; no rc4.160 retest.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
