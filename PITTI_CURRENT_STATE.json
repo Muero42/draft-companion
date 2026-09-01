@@ -10,10 +10,10 @@
     "source_candidate": "v11.8.0-rc4.161"
   },
   "runtime": {
-    "accepted_android": "v11.8.0-rc4.158",
+    "accepted_android": "v11.8.0-rc4.161",
     "season_candidate": "v11.8.0-rc4.161",
     "candidate_branch": "season-companion-rc4.159",
-    "android_acceptance_pending": true,
+    "android_acceptance_pending": false,
     "test_challenger": "v11.8.0-rc4.161",
     "ci": {
       "candidate_package": "PASS",
@@ -22,9 +22,9 @@
       "validated_code_head": "62f53c5028ecfbf06c70334b76fa06a9e7455ac8",
       "scope": "rc4.161 code + executable FA ownership regression + v217 preview-deployment checkpoint/reseal"
     },
-    "android_accepted": "v11.8.0-rc4.158",
+    "android_accepted": "v11.8.0-rc4.161",
     "preview_candidate": "v11.8.0-rc4.161",
-    "android_authority": "v11.8.0-rc4.158",
+    "android_authority": "v11.8.0-rc4.161",
     "latest_package_sha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
     "package_reference_run": null,
     "deployed_pages_app_byte_parity_with_main": true,
@@ -60,8 +60,8 @@
     ]
   },
   "currentWork": {
-    "status": "HANDOFF_V217_RESEALED_RC4161_DEVICE_ACCEPTANCE_ONLY",
-    "nextGate": "DEVICE_RC4161_ACCEPTANCE"
+    "status": "RC4161_ACCEPTED_CONTINUE_SEASON_COMPANION",
+    "nextGate": "SEASON_ACTIONABILITY_INCREMENT"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -77,17 +77,25 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "USER_ACTION_REQUIRED",
-    "active": [],
-    "ready": [],
-    "waiting_external": [],
-    "blocked_user": [
+    "status": "RUNNING",
+    "active": [
       {
-        "id": "rc4161-device-acceptance",
-        "task": "Open/reload rc4.161 on Android after new-chat takeover reconciliation. Acceptance target: live Sleeper roster remains correct and Waiver/FA no longer emits false zero-FA HOLD.",
-        "blocking_scope": "device acceptance only"
+        "id": "season-actionability-audit",
+        "task": "Audit current waiver, lineup, trade and special-teams engines after rc4.161 device acceptance; identify highest-value autonomous increment."
       }
     ],
+    "ready": [
+      {
+        "id": "week1-source-integration",
+        "task": "Research and integrate current Week 1 machine-readable evidence where reliable, preserving fail-closed provenance."
+      },
+      {
+        "id": "season-ui-actionability",
+        "task": "Improve season surfaces so current live data yields concrete actionable outputs without false precision."
+      }
+    ],
+    "waiting_external": [],
+    "blocked_user": [],
     "completed_recent": [
       {
         "id": "auto-protocol-hardening",
@@ -173,13 +181,18 @@
         "id": "rc4161-preview-reseal-ci",
         "result": "PASS on head 62f53c5028ecfbf06c70334b76fa06a9e7455ac8: Project Guardrails, Release Contract v2 and Candidate Package all successful after preview deployment repair/reseal.",
         "at": "2026-09-01T12:00:00Z"
+      },
+      {
+        "id": "rc4161-device-acceptance",
+        "result": "PASS from physical Android screenshot: rc4.161 visibly loaded; Waiver/FA surface no longer emits false zero-ranked-FA HOLD. It renders Waiver/FA Priority v1 and a skill-position HOLD based on the loaded baseline, satisfying the specific regression gate.",
+        "at": "2026-09-01T11:55:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "All autonomous deployment repair and verification is exhausted. Physical Android rc4.161 acceptance is now the only remaining gate.",
-      "evaluated_at": "2026-09-01T11:12:00Z"
+      "allowed": false,
+      "code": null,
+      "reason": "Device gate cleared; autonomous season work resumed.",
+      "evaluated_at": "2026-09-01T11:55:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
