@@ -4,7 +4,7 @@ const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../styles.css',import.meta.url),'utf8');
 function between(a,b){const i=app.indexOf(a),j=app.indexOf(b,i+1);assert.ok(i>=0&&j>i,'missing runtime function anchor '+a);return app.slice(i,j)}
-const version=Number((app.match(/const APP_VERSION='v11\\.8\\.0-rc4\\.(\\d+)'/)||[])[1]);assert.ok(version>=171,'requires rc4.171+');
+const version=Number((app.match(/const APP_VERSION='v11\.8\.0-rc4\.(\d+)'/)||[])[1]);assert.ok(version>=171,'requires rc4.171+');
 const seasonState=between('async function fetchSeasonLeagueState','function seasonRosterRows');
 assert.ok(seasonState.includes("S+'/league/'+encodeURIComponent(leagueId)+'/rosters"),'season roster authority must be direct Sleeper');
 assert.ok(!seasonState.includes('WATCHER_BASE_URL'),'roster bootstrap must not depend on watcher');
