@@ -2602,10 +2602,15 @@ function freshAcquisitionEvidence(x,maxAgeMs=7*86400000){
 function seasonHorizonSplit(drop,fa){
   const d=postDraftOpportunityProxy(drop),f=postDraftOpportunityProxy(fa);
   const panel=(Number.isFinite(Number(drop.r?.rank))?Number(drop.r.rank):230)-(Number.isFinite(Number(fa.r?.rank))?Number(fa.r.rank):230);
-  const weekly=clamp((f.value-d.value)*1.15 + panel*.10,-10,10);
-  const ros=clamp(panel*.20 + (postDraftUpsideProxy(fa)-postDraftUpsideProxy(drop))*.65 + (f.value-d.value)*.55,-10,10);
-  const championship=clamp(ros*.7 + (postDraftUpsideProxy(fa)-postDraftUpsideProxy(drop))*.8,-10,10);
-  return{weekly,ros,championship};
+  const upside=postDraftUpsideProxy(fa)-postDraftUpsideProxy(drop);
+  // Weekly value may use only fresh season evidence. Draft/ROS panel rank is deliberately
+  // excluded from THIS WEEK so an old draft rank cannot masquerade as a matchup/role edge.
+  const weeklyEvidence=freshAcquisitionEvidence(fa),dropWeeklyEvidence=freshAcquisitionEvidence(drop);
+  const weeklyFresh=(weeklyEvidence.events+dropWeeklyEvidence.events)>0;
+  const weekly=weeklyFresh?clamp((f.value-d.value)*1.15,-10,10):null;
+  const ros=clamp(panel*.20 + upside*.65 + (f.value-d.value)*.55,-10,10);
+  const championship=clamp(ros*.7 + upside*.8,-10,10);
+  return{weekly,ros,championship,weeklyFresh,weeklyEvidenceEvents:weeklyEvidence.events+dropWeeklyEvidence.events};
 }
 function postDraftSwapScore(drop,fa,ctx){
   const dr=Number(drop.r?.rank),fr=Number(fa.r?.rank);
@@ -2642,10 +2647,10 @@ function renderRosterFaAudit(rows,rankedAvailable,draftComplete){
   const panelAge=Number(store.get('v7_lastRankingUpdate',0)),adpAge=Number(adpMeta.updated||0);
   const provenance=`Panel ${panelAge?new Date(panelAge).toLocaleString('de-DE'):'Zeit unbekannt'} · Sleeper-ADP ${adpAge?new Date(adpAge).toLocaleString('de-DE'):'Zeit unbekannt'} · Research Cache append-only`;
   els.rosterFaStatus.className=`notice ${surfaced.some(x=>x.action==='CLEAR ADD')?'warn':'ok'}`;
-  els.rosterFaStatus.textContent=`FA-vs-Roster v1 · ${fas.length} gerankte Free Agents geprüft · ${drops.length} Drop-Kandidaten · Ownership live aus allen Sleeper-Rostern gegengeprüft · ${provenance}. CLEAR ADD erfordert zusätzlich verifizierte Evidence aus den letzten 7 Tagen; ältere Cache-Evidence kann höchstens WATCH auslösen.`;
+  els.rosterFaStatus.textContent=`FA-vs-Roster v2 · ${fas.length} gerankte Free Agents geprüft · ${drops.length} Drop-Kandidaten · Ownership live aus allen Sleeper-Rostern gegengeprüft · ${provenance}. CLEAR ADD erfordert zusätzlich verifizierte Evidence aus den letzten 7 Tagen; ältere Cache-Evidence kann höchstens WATCH auslösen.`;
   if(!surfaced.length){els.rosterFaList.innerHTML='<div class="notice ok"><b>HOLD</b> · Kein materiell positiver Add/Drop-Swap aus der aktuell geladenen Baseline.</div>';return;}
   els.rosterFaList.innerHTML=`<div class="coach-section-title">Konkrete Add/Drop-Paare</div>`+surfaced.map((x,i)=>{
-    const why=[`THIS WEEK ${x.horizons.weekly>=0?'+':''}${x.horizons.weekly.toFixed(1)}`,`ROS ${x.horizons.ros>=0?'+':''}${x.horizons.ros.toFixed(1)}`,`Championship EV ${x.horizons.championship>=0?'+':''}${x.horizons.championship.toFixed(1)}`,`Panel Δ ${x.panelDelta>=0?'+':''}${x.panelDelta.toFixed(1)}`,`Opportunity Δ ${x.opportunityDelta>=0?'+':''}${x.opportunityDelta.toFixed(1)}`,`Upside Δ ${x.upsideDelta>=0?'+':''}${x.upsideDelta.toFixed(1)}`,`Roster ${x.rosterUtility>=0?'+':''}${x.rosterUtility.toFixed(1)}`];
+    const why=[`THIS WEEK ${Number.isFinite(x.horizons.weekly)?`${x.horizons.weekly>=0?'+':''}${x.horizons.weekly.toFixed(1)}`:'– (frische Weekly-Evidence fehlt)'}`,`ROS ${x.horizons.ros>=0?'+':''}${x.horizons.ros.toFixed(1)}`,`Championship EV ${x.horizons.championship>=0?'+':''}${x.horizons.championship.toFixed(1)}`,`Panel Δ ${x.panelDelta>=0?'+':''}${x.panelDelta.toFixed(1)}`,`Opportunity Δ ${x.opportunityDelta>=0?'+':''}${x.opportunityDelta.toFixed(1)}`,`Upside Δ ${x.upsideDelta>=0?'+':''}${x.upsideDelta.toFixed(1)}`,`Roster ${x.rosterUtility>=0?'+':''}${x.rosterUtility.toFixed(1)}`];
     const fresh=x.fOpp.hint||x.dOpp.hint||'keine aktuelle Research-Cache-Evidence';
     const invalidator=x.action==='CLEAR ADD'?'Rollen-/Health-News oder Panel-Update kippt den materiellen Vorteil':'Neue verifizierte Rollen-/Health-Evidence kann WATCH zu ADD oder HOLD auflösen';
     return `<article class="coach"><div class="coach-head"><div><h3>${i+1}. ${x.action}: ${esc(x.fa.p.name)} → für ${esc(x.drop.p.name)}</h3><div class="tiny">ADD ${x.fa.p.pos} ${x.fa.p.team} · DROP ${x.drop.p.pos} ${x.drop.p.team} · Confidence ${x.confidence}% · ${x.action==='CLEAR ADD'?'sofort prüfen':'monitor / kein Rush'}</div></div><div class="score">${x.score.toFixed(1)}</div></div><div class="tiny">Player Quality: FA Panel ${x.fa.r.rank.toFixed(1)} vs Roster ${Number.isFinite(x.drop.r?.rank)?x.drop.r.rank.toFixed(1):'–'} · ${why.join(' · ')}</div><div class="tiny">Freshness: ${esc(fresh)} · Provenance: ${esc(provenance)}</div><div class="tiny">Invalidator/Recheck: ${esc(invalidator)}</div></article>`;
