@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T10:35:00Z",
+  "updated_at": "2026-09-01T10:39:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -54,8 +54,8 @@
     ]
   },
   "currentWork": {
-    "status": "ROSTER_AUTO_SYNC_PASS_FA_POOL_ZERO_FAIL",
-    "nextGate": "FA_POOL_ROOT_CAUSE_AND_CI"
+    "status": "FA_POOL_BOOTSTRAP_FIX_PENDING_CI",
+    "nextGate": "CI_THEN_DEVICE_RECHECK"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -73,15 +73,15 @@
     "mode": "AUTO",
     "status": "AUTO_RUNNING",
     "active": [],
-    "ready": [
+    "ready": [],
+    "waiting_external": [
       {
-        "id": "fa-pool-zero-root-cause",
+        "id": "fa-pool-bootstrap-ci",
         "lane": "season-sync",
-        "task": "Diagnose why device still has 0 ranked Free Agents despite valid live roster sync; trace ownership/player-pool/ranking intersection end-to-end and fix without draft-availability fallback.",
-        "priority": 100
+        "task": "Zero-FA startup bootstrap root cause fixed and regression-guarded; await CI.",
+        "depends_on_head": "d290954bcb86cb1cf08860bbb60b9c1561fdae4f"
       }
     ],
-    "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
       {
@@ -158,8 +158,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Roster transaction auto-detection passed; FA pool remains materially broken and autonomous diagnosis is READY.",
-      "evaluated_at": "2026-09-01T10:35:00Z"
+      "reason": "FA-pool startup fix waiting on CI; no user action required yet.",
+      "evaluated_at": "2026-09-01T10:39:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
