@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T10:50:00Z",
+  "updated_at": "2026-09-01T10:53:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -71,7 +71,7 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "AUTO_RUNNING",
+    "status": "RUNNING",
     "active": [],
     "ready": [
       {
@@ -164,7 +164,7 @@
       "allowed": false,
       "code": null,
       "reason": "rc4.161 self-test/release work READY.",
-      "evaluated_at": "2026-09-01T10:50:00Z"
+      "evaluated_at": "2026-09-01T10:53:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
