@@ -60,8 +60,8 @@
     ]
   },
   "currentWork": {
-    "status": "FROZEN_DRAFT_RETROSPECTIVE_CONTINUE",
-    "nextGate": "COMPLETE_FROZEN_RETROSPECTIVE_BEFORE_MODEL_OR_SEASON_UI_IMPLEMENTATION"
+    "status": "RETROSPECTIVE_DIAGNOSTIC_COMPLETE",
+    "nextGate": "IMPLEMENT_DECISION_INTENT_SCHEMA_SHADOW_ONLY"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -80,14 +80,18 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "frozen-retrospective-next",
-        "task": "Continue frozen 2026 draft retrospective from PC checkpoint without current-data contamination."
+        "id": "decision-intent-schema-shadow",
+        "task": "Implement additive decision-intent/sequence evidence schema and executable regressions without changing live Coach behavior."
       }
     ],
     "ready": [
       {
-        "id": "retrospective-synthesis-final",
-        "task": "Produce remaining model-development findings from frozen evidence and checkpoint them before implementation."
+        "id": "return-vnext-shadow",
+        "task": "Implement Return-vNext as shadow-only after schema gate passes."
+      },
+      {
+        "id": "season-first-architecture",
+        "task": "Refactor Season Companion to direct Sleeper league-state hydration and move Draft/Mock/Live out of critical season surface; independent of shadow model where safe."
       }
     ],
     "waiting_external": [],
@@ -247,8 +251,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Frozen retrospective still has autonomous work.",
-      "evaluated_at": "2026-09-01T14:50:00Z"
+      "reason": "Additive schema and season-first architecture are autonomous reversible work.",
+      "evaluated_at": "2026-09-01T14:53:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
