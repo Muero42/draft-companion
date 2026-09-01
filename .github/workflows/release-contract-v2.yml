@@ -40,6 +40,7 @@ jobs:
           node tools/rc489-draft-critical.mjs
           node tools/rc490-draft-critical.mjs
           node tools/rc491-return-calibration.mjs
+          node tools/rc496-draft-critical.mjs
           node tools/rc4146-tier-payload-e2e.mjs
           node tools/rc4147-expert-directory-montgomery.mjs
           node tools/rc4148-tier-from-v4-panel.mjs
