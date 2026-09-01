@@ -2,6 +2,17 @@
 Updated: 2026-09-01
 Canonical continuation trigger: **PITTI AUTO**
 
+
+## Canonical execution invariants
+- Source of Truth for PITTI/Draft Companion execution: this canonical project-state checkpoint reconciled against current repository/runtime artifacts.
+- AUTO means end-to-end autonomous execution; interrupt only for a genuine external/user gate.
+- Never silently revive a rejected/obsolete approach.
+- Material decisions, implementations, verifications, failures, rejected approaches, artifact state and next gates must be written here promptly.
+- New-chat recovery: read this file first, then reconcile against current repository/preview/runtime before editing.
+- Built/prepared != deployed != Android verified. Keep those states explicit.
+- Regression prevention is technical where possible; executable guards/tests outrank conversational promises.
+- Historical draft UI contract retained for regression: three selectable profiles; Expert-v2 ALL positions; Expert-v2 WR-only.
+
 ## Authority / non-negotiable state
 - Current work is **post-draft / season operation**, not draft optimization.
 - Repository: `Muero42/draft-companion`; active development branch: `season-companion-rc4.159`.
