@@ -1,29 +1,19 @@
-# PITTI NEW CHAT BOOTSTRAP — v219
-Generation: `20260901T1934Z-v219`
-
-## Mandatory takeover order
-COMMAND -> CURRENT -> SEAL -> EXECUTION_LOCK -> AUTO_PREFLIGHT -> PROJECT_STATE EOF -> CURRENT HANDOFF -> MATRIX -> actual repo/CI/preview/device evidence.
+# PITTI NEW CHAT BOOTSTRAP — v220
+Generation: `20260901T2024Z-v220`
 
 ## Current authority
 - POST_DRAFT_SEASON_COMPANION.
-- rc4.168 merged to main at `ec9cd367ce389201b00469cbea7236a1360ca49b`.
-- Current physically installed Android/PWA observed by the user: rc4.158. Historical rc4.161/163/166 tests do not overwrite that fact.
-- rc4.167 rejected: real browser Season startup failed with `Cannot read properties of undefined (reading 'r')`.
-- rc4.168 removes nonexistent `target.x` dereference and adds executable Season startup runtime regression.
-- Live Sleeper league state is roster/ownership Source of Truth; Draft 1366053132970233856 is immutable archive only.
-- pitti-watcher v0.2.3 contains direct D1 remediation; /league-state is D1-independent.
+- rc4.169 merged to main at `ca75081e4361092e42eb75d5568a21dfe69cca33`.
+- Current installed Android/PWA observed by user: rc4.168.
+- rc4.169 fixes Season workspace leakage, exposes ranking freshness/manual refresh, adds 12h controlled auto-refresh, and isolates Season renderer failures per surface.
+- Live Sleeper league state remains roster/ownership Source of Truth; completed draft is archive only.
+- pitti-watcher v0.2.3 D1 bounded previous-snapshot fix remains active.
 
 ## First gate
-RC4168_PARITY_THEN_DEVICE_REFRESH: one batched gh-pages/season-preview rc4.168 sync + parity verification, then one physical Android/PWA refresh.
+RC4169_PREVIEW_PARITY_THEN_DEVICE_REFRESH: one gh-pages/season-preview sync + parity verification, then one physical Android/PWA refresh.
 
 ## AUTO queue takeover
-AUTO/AUTO BLOCK is continuous same-turn execution. Re-inventory after every package. Waiting gates stop only dependent lanes.
-Never send status/progress/acknowledgement messages while executable AUTO work remains.
-Empty assistant response after tool work is forbidden. Promise-only responses are forbidden.
-Do NOT repeat rc4.160 device testing. Do NOT retest rc4.166 or rc4.167.
-
-## Cloudflare discipline
-No micro-checkpoint commits on auto-deployed runtime branches. Batch material runtime/deploy changes. D1 remediation belongs to pitti-watcher.
+AUTO/AUTO BLOCK is continuous same-turn execution. Re-inventory after every package. Never emit progress/empty/“AUTO läuft weiter” messages while executable work exists. Do NOT repeat rc4.166-168 debugging loops.
 
 ## STATUS
-Report known state only. No tools, polling, work or AUTO continuation.
+Report known state only; no work/polling.

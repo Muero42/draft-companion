@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-01T17:34:00Z",
+  "updatedAt": "2026-09-01T18:24:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,25 +11,25 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.168",
+    "appVersion": "v11.8.0-rc4.169",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.158 currently installed on user device",
-    "latestPreinstallVerified": "rc4.168 Candidate Package + Release Contract PASS on main ec9cd367ce389201b00469cbea7236a1360ca49b",
+    "latestAndroidObserved": "v11.8.0-rc4.168 installed on user device",
+    "latestPreinstallVerified": "rc4.169 Candidate Package + Release Contract PASS on main ca75081e4361092e42eb75d5568a21dfe69cca33",
     "latestResearchChallenger": "v11.8.0-rc4.107",
-    "preinstallArtifact": "rc4.168 package/re-extract current candidate",
-    "preinstallSha256": "sha256:584573b5a16fcc07a9667db877066eb1bf9690464b55750388fb4beaa0ac5074",
+    "preinstallArtifact": "rc4.169 package/re-extract candidate",
+    "preinstallSha256": "sha256:c3f1b5fca3ea51c6f16e5c4c5337c97e7e828614b2fc234ac9c522f99e066620",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
-    "latestDeployedCandidate": "v11.8.0-rc4.168 Cloudflare main production",
-    "latestAndroidVerified": "v11.8.0-rc4.158 currently installed",
-    "androidAuthority": "v11.8.0-rc4.158",
-    "android_authority": "v11.8.0-rc4.158",
+    "latestDeployedCandidate": "v11.8.0-rc4.169 Cloudflare main",
+    "latestAndroidVerified": "v11.8.0-rc4.168 version canary only; functional defects remained",
+    "androidAuthority": "v11.8.0-rc4.168",
+    "android_authority": "v11.8.0-rc4.168",
     "deployedPagesAppByteParityWithMain": false,
-    "preinstallReferenceRun": 33537987309,
-    "preinstallReferenceArtifactId": 9812410348,
+    "preinstallReferenceRun": 33543153583,
+    "preinstallReferenceArtifactId": 9814388343,
     "preinstallHashSemantics": "GitHub candidate-package artifact digest; package/re-extract PASS.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.158",
     "latestAndroidFunctionalVerified": "rc4.158 current-device baseline; rc4.167 browser Season startup rejected; rc4.168 device acceptance pending.",
@@ -61,12 +61,12 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.158",
+    "acceptedAndroidAuthority": "v11.8.0-rc4.168",
     "unreleasedMainDelta": "none: rc4.168 merged main; gh-pages/season-preview parity pending",
-    "deployedPagesVersion": "v11.8.0-rc4.168 Cloudflare main; gh-pages/season-preview rc4.166 pending sync",
+    "deployedPagesVersion": "v11.8.0-rc4.169 Cloudflare main; gh-pages/season-preview rc4.168 pending sync",
     "mainGhPagesParity": false,
     "androidVerified": false,
-    "androidAcceptance": "rc4.168 not yet device accepted; current installed app is rc4.158"
+    "androidAcceptance": "rc4.169 device acceptance pending"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -255,12 +255,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4168_MAIN_CI_DEPLOY_PASS_GHPAGES_PARITY_PENDING",
-    "nextGate": "RC4168_PARITY_THEN_DEVICE_REFRESH"
+    "status": "RC4169_MAIN_PACKAGE_RELEASE_PASS_PREVIEW_PARITY_PENDING",
+    "nextGate": "RC4169_PREVIEW_PARITY_THEN_DEVICE_REFRESH"
   },
-  "status": "POST_DRAFT_SEASON_COMPANION_RC4168_CANDIDATE",
-  "gate": "RC4168_PARITY_THEN_DEVICE_REFRESH",
-  "nextGate": "Synchronize rc4.168 main runtime to gh-pages/season-preview once, verify parity, then one physical Android/PWA refresh.",
+  "status": "POST_DRAFT_SEASON_COMPANION_RC4169_CANDIDATE",
+  "gate": "RC4169_PREVIEW_PARITY_THEN_DEVICE_REFRESH",
+  "nextGate": "Sync rc4.169 to gh-pages/season-preview once, verify parity, then one Android/PWA refresh.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -269,7 +269,7 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260901T1934Z-v219",
+    "generation": "20260901T2024Z-v220",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -293,7 +293,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260901T1934Z-v219",
+  "handoff_generation": "20260901T2024Z-v220",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },

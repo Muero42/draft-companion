@@ -1,28 +1,28 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260901T1934Z-v219",
-  "created_at": "2026-09-01T17:34:00Z",
+  "handoff_generation": "20260901T2024Z-v220",
+  "created_at": "2026-09-01T18:24:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "28107382d981286feac52a5472e55d1b21f163f3",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "679ea974d223a894e3512c3c4eb3700bb0567023",
-    "PITTI_COMMAND_CONTRACTS.json": "69ad4e779e2cf0508f697bae1eb32e024e4f799f",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "c2a6efa6f0563d495f02b3a9bb650b2edde3f859",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "af2fcff39d367f2d2aec930596552ded789e9ec6",
-    "PITTI_EXECUTION_LOCK.json": "d8f0461c087841dbb7f533ed67fe7b6cefd3cb8d",
-    "PITTI_PROJECT_STATE.md": "f4e7de1342b1dcef02e05bf481e992187ebf7d3f",
+    "PITTI_CURRENT_STATE.json": "890341afb19a4829c2418ffc1303fc87a8379693",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "da803a319d51914ec342ffbac8853e64948ccab4",
+    "PITTI_COMMAND_CONTRACTS.json": "e929e2f6890861b5666e8d6dfce43ed49a0cd00b",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "ec7c0fddde2074a7cfcf0b2c1fbeb4307c543332",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "383dc392d8f8244924de697804b5d63df7595c0a",
+    "PITTI_EXECUTION_LOCK.json": "22e5e6fcd627009e9d0a8d6cfea85579d307c89a",
+    "PITTI_PROJECT_STATE.md": "544f7011a40f877bc38eb8471247db46c40e9617",
     "PITTI_AUTO_PREFLIGHT.md": "db5b19a99010e59501b6b57818b56495a9f6c41f",
-    "app.js": "d1c9fbb2dc30de4cc8a3ef23a833bfcc7bbcab1e",
+    "app.js": "e6d6f4027a098f2d4d329ac908a18832a7246001",
     "live-surface-v3.js": "ecbf92859390cd28b1d6b625d856801f5ad1a149"
   },
   "branch_locks": {
     "repo": "Muero42/draft-companion",
     "branch": "season-companion-rc4.159",
     "branch_name_is_runtime_version": false,
-    "source_candidate": "v11.8.0-rc4.168",
+    "source_candidate": "v11.8.0-rc4.169",
     "last_observed_android": "v11.8.0-rc4.166 REJECTED season startup",
     "mode": "POST_DRAFT_SEASON_COMPANION",
     "current_roster_authority": "live Sleeper league state",
@@ -34,7 +34,7 @@
     "last_limited_accepted_android": "v11.8.0-rc4.161",
     "preview_state": "gh-pages season-preview rc4.166; rc4.167 parity pending",
     "source_branch": "main",
-    "installed_android": "v11.8.0-rc4.158"
+    "installed_android": "v11.8.0-rc4.168"
   },
   "checks": {
     "generation_consistent": true,
@@ -55,12 +55,12 @@
     "android_refresh_pending": true,
     "watcher_d1_v023_preserved": true
   },
-  "exact_gate": "RC4168_PARITY_THEN_DEVICE_REFRESH",
+  "exact_gate": "RC4169_PREVIEW_PARITY_THEN_DEVICE_REFRESH",
   "next_sequence": [
-    "main v219 reseal CI",
-    "one gh-pages/season-preview rc4.168 sync",
-    "byte parity verification",
+    "main v220 reseal CI",
+    "one rc4.169 gh-pages/season-preview sync",
+    "parity verification",
     "one Android/PWA refresh"
   ],
-  "note": "v219 atomically reseals rc4.168 after main promotion; historical rc4.161/163/166 observations do not override current installed rc4.158."
+  "note": "v220 reseals rc4.169 after PR #90 promotion; current installed device remains rc4.168 until actual refresh."
 }
