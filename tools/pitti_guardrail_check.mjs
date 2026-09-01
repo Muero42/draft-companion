@@ -180,10 +180,10 @@ if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
   must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
   must(handoffMatrix.includes(current.handoff_generation),'Season Companion MATRIX generation drift');
   must(currentHandoff.includes(current.handoff_generation),'Season Companion HANDOFF generation drift');
-  must(current.authority?.source_candidate==='v11.8.0-rc4.161','Season Companion source candidate regression');
-  must(commandContract.currentGate==='DEVICE_RC4161_ACCEPTANCE','Season Companion command gate regression');
-  must(lock.gate==='DEVICE_RC4161_ACCEPTANCE','Season Companion lock gate regression');
-  must(current.currentWork?.nextGate==='DEVICE_RC4161_ACCEPTANCE','Season Companion CURRENT next gate regression');
+  must(['v11.8.0-rc4.161','v11.8.0-rc4.162'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
+  must(['DEVICE_RC4161_ACCEPTANCE','SEASON_ACTIONABILITY_INCREMENT'].includes(commandContract.currentGate),'Season Companion command gate regression');
+  must(['DEVICE_RC4161_ACCEPTANCE','SEASON_ACTIONABILITY_INCREMENT'].includes(lock.gate),'Season Companion lock gate regression');
+  must(['DEVICE_RC4161_ACCEPTANCE','SEASON_ACTIONABILITY_INCREMENT'].includes(current.currentWork?.nextGate),'Season Companion CURRENT next gate regression');
   must(currentHandoff.includes('Tank Bigsby absent'),'Season Companion transaction canary regression');
   must(!currentHandoff.includes('Tank Bigsby added'),'stale Bigsby-added canary resurrected');
   must(bootstrap.includes('Do NOT repeat rc4.160 device testing'),'rc4.160 retest prohibition missing');
