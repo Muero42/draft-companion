@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T09:24:00Z",
+  "updated_at": "2026-09-01T09:27:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -91,12 +91,6 @@
         "lane": "special-teams",
         "task": "Improve K/DST in-season source/panel model while preserving D/ST quality floor and real Sleeper FA filtering.",
         "priority": 50
-      },
-      {
-        "id": "waiver-v2-regression-test",
-        "lane": "waiver",
-        "task": "Add executable regression for weekly horizon fail-closed behavior and live ownership/FA invariants.",
-        "priority": 95
       }
     ],
     "waiting_external": [
@@ -106,6 +100,12 @@
         "task": "CI revalidation after Waiver v2 fail-closed weekly-evidence hardening.",
         "priority": 90,
         "depends_on_head": "current"
+      },
+      {
+        "id": "waiver-v2-regression-test",
+        "lane": "waiver",
+        "task": "Await CI verification of executable Waiver v2 guard.",
+        "priority": 95
       }
     ],
     "blocked_user": [
@@ -138,8 +138,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "READY work remains.",
-      "evaluated_at": "2026-09-01T09:24:00Z"
+      "reason": "Trade, lineup and special-teams READY lanes remain while Waiver CI waits.",
+      "evaluated_at": "2026-09-01T09:27:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
