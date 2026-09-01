@@ -49,3 +49,6 @@
 .research-evidence-up{color:var(--ok)}
 .research-evidence-risk{color:#ffc4cc}
 .research-evidence-neutral{color:var(--muted)}
+
+/* Season roster: compact Sleeper-like lineup surface */
+.season-lineup{margin-top:8px}.lineup-section-title{font-size:.72rem;font-weight:900;letter-spacing:.08em;color:#9eabc4;margin:14px 2px 6px}.lineup-row{display:grid;grid-template-columns:46px 1fr auto;gap:10px;align-items:center;background:#0b1425;border:1px solid #263a5c;border-radius:11px;padding:8px;margin:5px 0}.pos-chip{display:flex;align-items:center;justify-content:center;min-height:36px;border-radius:9px;font-size:.75rem;font-weight:950;color:#07111f}.pos-chip.qb{background:#ef6ca8}.pos-chip.rb{background:#68dfc1}.pos-chip.wr{background:#62c7f2}.pos-chip.te{background:#f0a75f}.pos-chip.flex{background:#a9b5ca}.lineup-player{min-width:0}.lineup-player b{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.lineup-player span{display:block;font-size:.7rem;color:var(--muted);margin-top:2px}.lineup-state{font-size:.7rem;color:#ef9b9b}.season-lineup+.summary-grid{margin-top:12px}
