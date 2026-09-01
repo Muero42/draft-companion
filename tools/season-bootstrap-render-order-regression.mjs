@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 const src=fs.readFileSync('app.js','utf8');
-const fn=src.indexOf('async function bootstrapSeasonWorkspace()');if(fn<0)throw new Error('bootstrap missing');
+const fn=src.indexOf('async function bootstrapSeasonWorkspace(');if(fn<0)throw new Error('bootstrap missing');
 const end=src.indexOf('\nasync function fetchDraftFresh',fn);const b=src.slice(fn,end);
 const season=b.indexOf('const season=await fetchSeasonLeagueState({})');
 const players=b.indexOf("const players=await jf(\`\${S}/players/nfl?_=\${bust}\`,'Season Spieler',15000)");

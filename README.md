@@ -1,5 +1,5 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.169 Season Companion preview. **Current installed Android app observed by the user is v11.8.0-rc4.158**; rc4.168 is not Android-accepted until automated Season startup gates pass and one final device canary succeeds.
+> **Current source candidate:** v11.8.0-rc4.170 Season Companion preview. **Current installed Android app observed by the user is v11.8.0-rc4.158**; rc4.168 is not Android-accepted until automated Season startup gates pass and one final device canary succeeds.
 > **Season mode:** current Sleeper league state is Source of Truth; completed draft roster is immutable historical evidence only.
 > **rc4.158 bounded change:** adds a draft-day v4 expert baseline/delta workflow. Unchanged or failed/incomplete refreshes restore the prior verified baseline; panel rebuild can run cache-only and occurs only for baseline creation/repair or a real ranking delta.
 > **No model change:** expert membership, weights, panel ranks semantics, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
@@ -87,5 +87,6 @@ v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96
 
 
 ## Season Companion current candidate
+- v11.8.0-rc4.170 — candidate: direct bounded-timeout Sleeper roster bootstrap, explicit Kader refresh with busy/error feedback, and fresh-origin slot-to-roster mapping recovery; Cloudflare watcher remains evidence-only. Pending CI/preview/device acceptance.
 - v11.8.0-rc4.169 — candidate: fixes workspace leakage caused by author CSS overriding `hidden`, adds visible season ranking freshness/manual refresh with 12h controlled auto-refresh, and isolates Season render lanes so one Trade/FA renderer crash cannot blank unrelated live surfaces. Pending CI/preview/device acceptance.
 - v11.8.0-rc4.168 — supersedes failed v11.8.0-rc4.167 and fixes the deterministic Season Trade startup crash caused by `tradeOfferCandidates` dereferencing nonexistent `target.x`; the function now consumes the row actually passed by `renderTradeWorkspace` (`target.r` / `target.p`). A new executable Season bootstrap runtime regression is mandatory in both candidate-package and release-contract gates. Kader remains season-first; Draft is archive only; FAIL-CLOSED behavior remains intact. Current installed Android app remains rc4.158 until automated gates and one final canary pass.
