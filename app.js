@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.161';
+const APP_VERSION='v11.8.0-rc4.162';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2637,6 +2637,18 @@ function seasonHorizonSplit(drop,fa){
   const championship=clamp(ros*.7 + upside*.8,-10,10);
   return{weekly,ros,championship,weeklyFresh,weeklyEvidenceEvents:weeklyEvidence.events+dropWeeklyEvidence.events};
 }
+const WEEK1_WAIVER_MARKET_2026={
+  asOf:'2026-08-31',expiresAt:Date.parse('2026-09-08T12:00:00Z'),source:'RotoBaller · Nick Mariano · Before Week 1 waiver rankings',
+  ranks:{
+    [norm('MarShawn Lloyd')]:{rank:1,move:'ALL'},[norm('Matthew Golden')]:{rank:2,move:'ALL'},[norm('Chris Rodriguez Jr.')]:{rank:3,move:'ALL'},[norm('Mike Washington Jr.')]:{rank:4,move:'ALL'},[norm('Tyler Allgeier')]:{rank:5,move:'ALL'},
+    [norm("Wan'Dale Robinson")]:{rank:6,move:'10+'},[norm('Xavier Worthy')]:{rank:7,move:'10+'},[norm('Keaton Mitchell')]:{rank:8,move:'10+'},[norm('Tyjae Spears')]:{rank:9,move:'10+'},[norm('Jalen Coker')]:{rank:10,move:'10+'},[norm('KC Concepcion')]:{rank:11,move:'10+'},[norm('Tank Bigsby')]:{rank:12,move:'10+'}
+  }
+};
+function week1WaiverMarketSignal(p){
+  const x=WEEK1_WAIVER_MARKET_2026.ranks[norm(p?.name)];if(!x||Date.now()>WEEK1_WAIVER_MARKET_2026.expiresAt)return null;
+  const bonus=x.rank<=5?4:x.rank<=8?3:x.rank<=12?2:0;
+  return{...x,bonus,source:WEEK1_WAIVER_MARKET_2026.source,asOf:WEEK1_WAIVER_MARKET_2026.asOf};
+}
 function postDraftSwapScore(drop,fa,ctx){
   const dr=Number(drop.r?.rank),fr=Number(fa.r?.rank);
   const panelDelta=(Number.isFinite(dr)?dr:230)-(Number.isFinite(fr)?fr:230);
@@ -2649,13 +2661,15 @@ function postDraftSwapScore(drop,fa,ctx){
   if(drop.p.pos==='RB'&&fa.p.pos!=='RB'&&drop.capitalScore<7)rosterUtility-=2.5;
   if((fa.p.pos==='QB'&&ctx.QB>=1)||(fa.p.pos==='TE'&&ctx.TE>=1))rosterUtility-=5; // 10-team 1QB: QB2/TE2 exceptional only
   if(drop.p.injury&&String(drop.p.injury).toUpperCase()==='IR')rosterUtility+=3;
-  const score=clamp(panelDelta*.22,-6,6)+clamp(opportunityDelta,-6,6)+clamp(upsideDelta*.5,-3,3)+rosterUtility;
-  const evidencePresent=(fOpp.events+dOpp.events)>0,faFresh=freshAcquisitionEvidence(fa),dropFresh=freshAcquisitionEvidence(drop),freshEvidencePresent=(faFresh.events+dropFresh.events)>0;
+  const waiverMarket=week1WaiverMarketSignal(fa.p),waiverMarketBonus=Number(waiverMarket?.bonus||0);
+  const score=clamp(panelDelta*.22,-6,6)+clamp(opportunityDelta,-6,6)+clamp(upsideDelta*.5,-3,3)+rosterUtility+waiverMarketBonus;
+  const evidencePresent=(fOpp.events+dOpp.events)>0||!!waiverMarket,faFresh=freshAcquisitionEvidence(fa),dropFresh=freshAcquisitionEvidence(drop),freshEvidencePresent=(faFresh.events+dropFresh.events)>0||!!waiverMarket;
   let action='HOLD';
   if(score>=6&&freshEvidencePresent)action='CLEAR ADD';
   else if(score>=2)action='WATCH';
   const confidence=clamp(Math.round(55+(Number.isFinite(fr)&&Number.isFinite(dr)?15:0)+(freshEvidencePresent?12:evidencePresent?4:0)-(fOpp.rejected+dOpp.rejected)*4),35,88);
-  const horizons=seasonHorizonSplit(drop,fa);return {drop,fa,score,panelDelta,opportunityDelta,upsideDelta,rosterUtility,action,confidence,dOpp,fOpp,evidencePresent,freshEvidencePresent,faFresh,dropFresh,horizons};
+  const horizons=seasonHorizonSplit(drop,fa);if(waiverMarket&&Number.isFinite(horizons.weekly))horizons.weekly=clamp(horizons.weekly+waiverMarketBonus*.6,-10,10);else if(waiverMarket){horizons.weekly=clamp(waiverMarketBonus*.6,-10,10);horizons.weeklyFresh=true;}
+  return {drop,fa,score,panelDelta,opportunityDelta,upsideDelta,rosterUtility,waiverMarketBonus,waiverMarket,action,confidence,dOpp,fOpp,evidencePresent,freshEvidencePresent,faFresh,dropFresh,horizons};
 }
 function renderRosterFaAudit(rows,rankedAvailable,draftComplete){
   if(!els.rosterFaStatus||!els.rosterFaList)return;
@@ -2682,8 +2696,8 @@ function renderRosterFaAudit(rows,rankedAvailable,draftComplete){
   els.rosterFaStatus.textContent=`FA-vs-Roster v2 · ${fas.length} gerankte Free Agents geprüft · ${drops.length} Drop-Kandidaten · Ownership live aus allen Sleeper-Rostern gegengeprüft · ${provenance}. CLEAR ADD erfordert zusätzlich verifizierte Evidence aus den letzten 7 Tagen; ältere Cache-Evidence kann höchstens WATCH auslösen.`;
   if(!surfaced.length){els.rosterFaList.innerHTML='<div class="notice ok"><b>HOLD</b> · Kein materiell positiver Add/Drop-Swap aus der aktuell geladenen Baseline.</div>';return;}
   els.rosterFaList.innerHTML=`<div class="coach-section-title">Konkrete Add/Drop-Paare</div>`+surfaced.map((x,i)=>{
-    const why=[`THIS WEEK ${Number.isFinite(x.horizons.weekly)?`${x.horizons.weekly>=0?'+':''}${x.horizons.weekly.toFixed(1)}`:'– (frische Weekly-Evidence fehlt)'}`,`ROS ${x.horizons.ros>=0?'+':''}${x.horizons.ros.toFixed(1)}`,`Championship EV ${x.horizons.championship>=0?'+':''}${x.horizons.championship.toFixed(1)}`,`Panel Δ ${x.panelDelta>=0?'+':''}${x.panelDelta.toFixed(1)}`,`Opportunity Δ ${x.opportunityDelta>=0?'+':''}${x.opportunityDelta.toFixed(1)}`,`Upside Δ ${x.upsideDelta>=0?'+':''}${x.upsideDelta.toFixed(1)}`,`Roster ${x.rosterUtility>=0?'+':''}${x.rosterUtility.toFixed(1)}`];
-    const fresh=x.fOpp.hint||x.dOpp.hint||'keine aktuelle Research-Cache-Evidence';
+    const why=[`THIS WEEK ${Number.isFinite(x.horizons.weekly)?`${x.horizons.weekly>=0?'+':''}${x.horizons.weekly.toFixed(1)}`:'– (frische Weekly-Evidence fehlt)'}`,`ROS ${x.horizons.ros>=0?'+':''}${x.horizons.ros.toFixed(1)}`,`Championship EV ${x.horizons.championship>=0?'+':''}${x.horizons.championship.toFixed(1)}`,`Panel Δ ${x.panelDelta>=0?'+':''}${x.panelDelta.toFixed(1)}`,`Opportunity Δ ${x.opportunityDelta>=0?'+':''}${x.opportunityDelta.toFixed(1)}`,`Upside Δ ${x.upsideDelta>=0?'+':''}${x.upsideDelta.toFixed(1)}`,`Waiver-Markt ${x.waiverMarketBonus?`+${x.waiverMarketBonus.toFixed(1)}`:'0.0'}`,`Roster ${x.rosterUtility>=0?'+':''}${x.rosterUtility.toFixed(1)}`];
+    const fresh=x.waiverMarket?`${x.waiverMarket.source} · Rank ${x.waiverMarket.rank} · ${x.waiverMarket.move}`:(x.fOpp.hint||x.dOpp.hint||'keine aktuelle Research-Cache-Evidence');
     const invalidator=x.action==='CLEAR ADD'?'Rollen-/Health-News oder Panel-Update kippt den materiellen Vorteil':'Neue verifizierte Rollen-/Health-Evidence kann WATCH zu ADD oder HOLD auflösen';
     return `<article class="coach"><div class="coach-head"><div><h3>${i+1}. ${x.action}: ${esc(x.fa.p.name)} → für ${esc(x.drop.p.name)}</h3><div class="tiny">ADD ${x.fa.p.pos} ${x.fa.p.team} · DROP ${x.drop.p.pos} ${x.drop.p.team} · Confidence ${x.confidence}% · ${x.action==='CLEAR ADD'?'sofort prüfen':'monitor / kein Rush'}</div></div><div class="score">${x.score.toFixed(1)}</div></div><div class="tiny">Player Quality: FA Panel ${x.fa.r.rank.toFixed(1)} vs Roster ${Number.isFinite(x.drop.r?.rank)?x.drop.r.rank.toFixed(1):'–'} · ${why.join(' · ')}</div><div class="tiny">Freshness: ${esc(fresh)} · Provenance: ${esc(provenance)}</div><div class="tiny">Invalidator/Recheck: ${esc(invalidator)}</div></article>`;
   }).join('');
@@ -2715,7 +2729,7 @@ function renderWaiverWorkspace(draftComplete){
   if(!draftComplete){els.waiverStatus.className='notice';els.waiverStatus.textContent='Waiver-Priorität wird nach Draftabschluss aktiv.';els.waiverList.innerHTML='';return;}
   const q=lastPostDraftPairs.filter(x=>x.action!=='HOLD').slice(0,8);
   els.waiverStatus.className=`notice ${q.some(x=>x.action==='CLEAR ADD')?'warn':'ok'}`;
-  els.waiverStatus.textContent='Waiver/FA Priority v1 · nutzt dieselbe FA-vs-Roster Engine wie Team/Roster. Numerisches FAAB bleibt bewusst aus: ohne aktuelle Waiver-Woche, Gegnerbudget/Markt und belastbare Rollen-News wäre ein Betrag Scheingenauigkeit.';
+  els.waiverStatus.textContent='Waiver/FA Priority v2 · LIVE Sleeper-Ownership + FA-vs-Roster Engine + frisches Week-1-Waiver-Marktsignal. Numerisches FAAB bleibt bewusst aus: ohne aktuelle Waiver-Woche, Gegnerbudget/Markt und belastbare Rollen-News wäre ein Betrag Scheingenauigkeit.';
   const special=renderSpecialTeamsBoard();if(!q.length){els.waiverList.innerHTML=special+'<div class="notice ok"><b>SKILL-POSITION HOLD</b> · Aktuell kein materiell positiver RB/WR/TE-Swap aus der geladenen Baseline.</div>';return;}
   els.waiverList.innerHTML=renderSpecialTeamsBoard()+q.map((x,i)=>{
     const urgency=x.action==='CLEAR ADD'?(x.score>=10?'P1 · HIGH':'P1 · CLAIM'):x.score>=4?'P2 · WATCH':'P3 · MONITOR';
