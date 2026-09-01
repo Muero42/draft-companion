@@ -98,3 +98,14 @@ Canonical continuation trigger: **PITTI AUTO**
 - Trade v3 is target discovery only: opponent live rosters and own marginal lineup geometry are present, but market/acceptance plausibility and concrete give/get construction remain intentionally absent.
 - Next model increments remain: Waiver v2 THIS WEEK vs ROS/championship EV; trade offer construction/acceptance plausibility; weekly lineup optimizer; K/DST weekly-source specialization.
 - Live roster/ownership is a hard prerequisite for actionable season recommendations; draft roster is historical fallback only and must fail closed for FA actions when season sync fails.
+
+## Persistent AUTO protocol hardening — 2026-09-01
+- User explicitly approved converting AUTO from a conversational convention into a persistent project state machine.
+- `PITTI_CURRENT_STATE.json:auto_execution_state` is now the canonical work queue with `active`, `ready`, `waiting_external`, `blocked_user`, and `completed_recent`.
+- The no-output rule is explicit: if any safe autonomous item remains in `active` or `ready`, a visible AUTO response is forbidden.
+- CI/deploy/wait states and user-blocked device gates block only their dependent lane; they do not stop independent ready work.
+- Valid visible AUTO termination now requires `active=[]`, `ready=[]`, plus `stop_evaluation.allowed=true` with an approved stop code.
+- Approved stop codes: USER_ACTION_REQUIRED, DECISION_REQUIRED, PROJECT_MILESTONE_REACHED, NO_EXECUTABLE_WORK_REMAINS, SAFETY_OR_IRREVERSIBLE_CONFIRMATION.
+- `PITTI_EXECUTION_LOCK.json`, `PITTI_AUTO_PREFLIGHT.md`, `PITTI_COMMAND_CONTRACTS.json`, and `PITTI_NEW_CHAT_BOOTSTRAP.md` were updated to preserve this behavior across chat switches.
+- `tools/pitti_guardrail_check.mjs` now fails CI if the queue/state-machine contract is missing or if a stop is marked allowed while executable `active/ready` work exists.
+- This does not remove the platform boundary that execution stops after a visible assistant reply; instead it makes ending the turn early a machine-detectable project-state violation whenever the persistent queue still contains executable work.
