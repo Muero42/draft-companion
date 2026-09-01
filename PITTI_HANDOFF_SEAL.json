@@ -7,15 +7,15 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "69d441e1cc001a1f976e2bdebbf0e8799aea5006",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "64a68dc9f179ea3e7c77427613e7f5f0e79f8c2b",
+    "PITTI_CURRENT_STATE.json": "e45b3072b7cfd73d7e53ce3d8fc24e046bdd23b9",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "d9b76652fcedfe24eb5da22054cc55823e2fb6d9",
     "PITTI_COMMAND_CONTRACTS.json": "8bddedca483e2178b7ad51c2be3a8097a637ad84",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "45451aed8824313e91ca2ebe0d5fee955a295da4",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "df56bb039a00bde003ba7a202cfbc0e491b9e78c",
-    "PITTI_EXECUTION_LOCK.json": "bf2e1387e0a1ef6df470ad50ea78ef1ca17379f0",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "73d93695b3d9cda1e6f8d3e84222728c5f16638b",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "6ceb0de1389440ae0be3141a88f1cee16012e241",
+    "PITTI_EXECUTION_LOCK.json": "045adccfcdb171fbf7f1b2d4194591ed536f9bb5",
     "PITTI_PROJECT_STATE.md": "7cd64ac0306ca2f7b61f5975ef731ae5b167427f",
     "PITTI_AUTO_PREFLIGHT.md": "db5b19a99010e59501b6b57818b56495a9f6c41f",
-    "app.js": "6a8e28b4d5fb614c0446c491581c86d894a98b4a",
+    "app.js": "0a6cc450762483f6b2eeef3f56ea045a9e587686",
     "live-surface-v3.js": "ecbf92859390cd28b1d6b625d856801f5ad1a149"
   },
   "branch_locks": {
@@ -56,11 +56,11 @@
     "android_refresh_pending": true,
     "watcher_d1_v023_preserved": true
   },
-  "exact_gate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE",
+  "exact_gate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
   "next_sequence": [
     "automated browser-equivalent Season E2E",
     "fix until PASS without device promotion",
     "single final device confirmation"
   ],
-  "note": "v222 restores test-first discipline after rc4.171 device-side trial-and-error regression."
+  "note": "rc4.172 passed branch automated interaction/package/behavioral/guardrail gates; installed device remains rc4.171 rejected until final confirmation."
 }

@@ -7,11 +7,11 @@
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.171"
+    "source_candidate": "v11.8.0-rc4.172"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.172 TEST-ONLY",
+    "season_candidate": "v11.8.0-rc4.172 TEST-ONLY E2E PASS",
     "candidate_branch": "main",
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.172",
@@ -24,7 +24,7 @@
     },
     "android_accepted": "v11.8.0-rc4.169",
     "preview_candidate": "none promoted for device until automated E2E passes",
-    "android_authority": "v11.8.0-rc4.171 observed installed, NOT accepted",
+    "android_authority": "v11.8.0-rc4.171 observed/rejected",
     "latest_package_sha256": "sha256:c3f1b5fca3ea51c6f16e5c4c5337c97e7e828614b2fc234ac9c522f99e066620",
     "package_reference_run": 33543153583,
     "deployed_pages_app_byte_parity_with_main": false,
@@ -64,8 +64,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4171_REJECTED_DEVICE_TRIAL_AND_ERROR_STOPPED",
-    "nextGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE"
+    "status": "RC4172_AUTOMATED_E2E_PASS_DEVICE_PROMOTION_NOT_YET_DONE",
+    "nextGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
