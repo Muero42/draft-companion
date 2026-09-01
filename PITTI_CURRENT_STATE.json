@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T09:56:00Z",
+  "updated_at": "2026-09-01T10:14:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -71,10 +71,17 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "USER_ACTION_REQUIRED",
+    "status": "AUTO_RUNNING",
     "active": [],
     "ready": [],
-    "waiting_external": [],
+    "waiting_external": [
+      {
+        "id": "mevis-drop-gate-ci",
+        "lane": "special-teams",
+        "task": "Fresh Mevis/drop audit encoded: compare Bigsby/Spears/Gainwell; protect Price/Watson/Downs; await CI guard verification.",
+        "depends_on_head": "9597e3e036e8bd83e408dca567692222d5ee4a26"
+      }
+    ],
     "blocked_user": [
       {
         "id": "rc4160-device-canary",
@@ -138,10 +145,10 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "CI passes after device-found zero-FA false-HOLD fix. One device reload is required to distinguish repaired fail-closed state from successful nonzero live FA sync.",
-      "evaluated_at": "2026-09-01T09:56:00Z"
+      "allowed": false,
+      "code": null,
+      "reason": "Mevis drop-gate model/guard waiting on CI.",
+      "evaluated_at": "2026-09-01T10:14:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
