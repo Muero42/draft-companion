@@ -27,7 +27,8 @@
     "android_authority": "v11.8.0-rc4.158",
     "latest_package_sha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
     "package_reference_run": null,
-    "deployed_pages_app_byte_parity_with_main": false
+    "deployed_pages_app_byte_parity_with_main": true,
+    "deployed_pages_head": "0fdefada9fa4b751b490f552d07e6d47e5fb068e"
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -162,12 +163,17 @@
         "id": "rc4161-selftest-ci",
         "result": "PASS head b307fda15a5c20d63940e1c746a876ed7c49b3ef: release contract, project guardrails and candidate package all success; executable season FA ownership regression included.",
         "at": "2026-09-01T10:56:00Z"
+      },
+      {
+        "id": "rc4161-preview-deploy-repair",
+        "result": "PASS: gh-pages/season-preview synchronized to rc4.161 runtime assets; app/index/sw/manifest verified rc4.161 on gh-pages head 0fdefada9fa4b751b490f552d07e6d47e5fb068e. Prior device rc4.159 screenshot classified as stale preview delivery, not rc4.161 runtime failure.",
+        "at": "2026-09-01T11:55:00Z"
       }
     ],
     "stop_evaluation": {
       "allowed": true,
       "code": "USER_ACTION_REQUIRED",
-      "reason": "All safe autonomous rc4.161 code/regression/release work is exhausted. Physical Android runtime acceptance is the only remaining dependent gate.",
+      "reason": "All autonomous deployment repair and verification is exhausted. Physical Android rc4.161 acceptance is now the only remaining gate.",
       "evaluated_at": "2026-09-01T11:12:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
