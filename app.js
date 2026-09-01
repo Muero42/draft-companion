@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.163';
+const APP_VERSION='v11.8.0-rc4.164';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -1533,7 +1533,8 @@ async function bootstrapSeasonWorkspace(){
   const id=LIVE_DRAFT_ID_2026;
   try{
     const {draft,picks,players}=await fetchDraft(id),teams=Number(draft.settings?.teams||10),rounds=Number(draft.settings?.rounds||15),total=teams*rounds;
-    if(String(draft.status||'').toLowerCase()!=='complete'&&picks.length<total)return;
+    const completed=String(draft.status||'').toLowerCase()==='complete'||picks.length>=total;
+    if(!completed)throw new Error('CANONICAL_DRAFT_NOT_COMPLETE');
     const slot=Number(els.slot.value||9),mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no);
     const season=await fetchSeasonLeagueState({...draft,draft_id:id}),rows=seasonRosterRows(season,players,mine),available=seasonAvailablePlayers(season,players),availableDST=seasonAvailableSpecialTeams(season,players,'DST'),availableK=seasonAvailableSpecialTeams(season,players,'K');
     if(!rows)throw new Error(season?.reason||'MY_ROSTER_UNRESOLVED');
@@ -1545,9 +1546,12 @@ async function bootstrapSeasonWorkspace(){
     els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper-Kader · '+rows.length+' Spieler · Source of Truth: League-State · Reserve/IR '+rows.filter(x=>x.seasonStatus==='RESERVE').length+' · Auto-Sync beim Start.';
     els.rosterSummary.innerHTML=Object.entries(counts).filter(([,n])=>n).map(([pos,n])=>'<div class="summary-item"><b>'+n+'</b><span>'+pos+'</span></div>').join('');
     els.rosterList.innerHTML=seasonLineupHtml(rows,season);
+    lastDraftContext={id,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:true,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL};
+    // Render season workspaces only AFTER the canonical live context exists. Several
+    // surfaces read lastDraftContext; rendering first made startup look like no draft/FA
+    // state even though Sleeper hydration had succeeded moments earlier.
     renderRosterBenchAudit(rows,players,total,true);renderRosterFaAudit(rows,available||[],true);
     renderWaiverWorkspace(true);renderSeasonActionBoard(true);
-    lastDraftContext={id,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:true,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL};
     localStorage.setItem('v118_seasonBootstrapAt',String(Date.now()));
   }catch(e){
     if(els.rosterStatus){els.rosterStatus.className='notice warn';els.rosterStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+esc(e?.message||String(e))+' · keine FA-Aktion freigegeben.';}
