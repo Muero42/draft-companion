@@ -380,3 +380,10 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - rc4.172 remained test-only while branch gates ran. Branch head d653293fce545d5ea67aa00ec52811643cf2acb6 passed package, behavioral contract, guardrails, and Cloudflare checks before merge.
 - New mandatory interaction regression verifies observable Kader/Ranking refresh handlers, immediate busy state, recovery to enabled controls, and bounded Sleeper timeouts. rc4.172 merged only after those automated gates passed.
 - Physical device remains rc4.171 rejected. No rc4.172 device confirmation until main reseal CI is green.
+
+
+## 2026-09-01 — rc4.172 physical failure → rc4.173 startup resilience
+- Physical Android rc4.172 still has ineffective Kader/Ranking refresh controls. Screenshot evidence narrows execution boundary: `seasonRankingAge` is dynamically rendered (`1 Tag(e)`), but `seasonLiveStateAge` remains the static HTML dash and the roster remains the static loading placeholder. JavaScript therefore reached `setWorkspace()` but did not complete the later Season startup-control path.
+- The unguarded `updateResearchCacheStatus()` sat exactly in that boundary and consumed persistent legacy localStorage evidence. A malformed/null legacy evidence row can throw while the previous static E2E gate uses a clean environment, explaining a device-only failure mode.
+- rc4.173 sanitizes legacy research events and makes optional research-cache status fail-isolated. A new executable startup-resilience regression includes malformed-cache input and is wired into release/package gates.
+- rc4.172 is rejected. Do not repeat it. No further physical device test before rc4.173 automated gates pass.
