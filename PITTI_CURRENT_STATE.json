@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T10:26:00Z",
+  "updated_at": "2026-09-01T10:35:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -54,8 +54,8 @@
     ]
   },
   "currentWork": {
-    "status": "MEVIS_DROP_GATE_CI_PASS",
-    "nextGate": "DEVICE_LIVE_SYNC_VERIFY_BIGSBY_AND_MEVIS"
+    "status": "ROSTER_AUTO_SYNC_PASS_FA_POOL_ZERO_FAIL",
+    "nextGate": "FA_POOL_ROOT_CAUSE_AND_CI"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -71,20 +71,18 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "USER_ACTION_REQUIRED",
+    "status": "AUTO_RUNNING",
     "active": [],
-    "ready": [],
-    "waiting_external": [],
-    "blocked_user": [
+    "ready": [
       {
-        "id": "rc4160-device-canary",
-        "task": "Device preview verification: current roster correct, Charbonnet reserve/IR, Bigsby rostered and excluded from FA pool, nonzero real FA pool.",
-        "depends_on": [
-          "rc4160-ci-revalidate"
-        ],
-        "blocking_scope": "device-acceptance-only"
+        "id": "fa-pool-zero-root-cause",
+        "lane": "season-sync",
+        "task": "Diagnose why device still has 0 ranked Free Agents despite valid live roster sync; trace ownership/player-pool/ranking intersection end-to-end and fix without draft-availability fallback.",
+        "priority": 100
       }
     ],
+    "waiting_external": [],
+    "blocked_user": [],
     "completed_recent": [
       {
         "id": "auto-protocol-hardening",
@@ -150,13 +148,18 @@
         "id": "mevis-waiver-ui-ci",
         "result": "PASS on head bb91fa76a248e55599331d4b9b3513bfaa2b5b55: Project Guardrails, candidate package and release contract all successful.",
         "at": "2026-09-01T10:26:00Z"
+      },
+      {
+        "id": "rc4160-device-roster-canary",
+        "result": "PARTIAL PASS from device screenshot: live Sleeper roster auto-synced to 16 players; Harrison Mevis present; Tank Bigsby absent; Charbonnet remains Reserve/IR. Therefore app independently detected the actual Mevis transaction/drop without user disclosure. Remaining failure: FA-vs-Roster still reports 0 ranked free agents, so FA-pool end-to-end is NOT accepted.",
+        "at": "2026-09-01T10:35:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "Mevis decision model/UI/guards and fresh role audit are complete and CI-verified. Next useful project gate is device/live Sleeper refresh to verify current Bigsby transaction and Mevis availability before any real add/drop.",
-      "evaluated_at": "2026-09-01T10:26:00Z"
+      "allowed": false,
+      "code": null,
+      "reason": "Roster transaction auto-detection passed; FA pool remains materially broken and autonomous diagnosis is READY.",
+      "evaluated_at": "2026-09-01T10:35:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
