@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T09:38:00Z",
+  "updated_at": "2026-09-01T09:41:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -73,14 +73,7 @@
     "mode": "AUTO",
     "status": "RUNNING",
     "active": [],
-    "ready": [
-      {
-        "id": "season-increments-ci-finalize",
-        "lane": "regression-release",
-        "task": "Reconcile CI for Waiver v2, Trade v4, Start/Sit v3, Special Teams v2 and repair any failure.",
-        "priority": 100
-      }
-    ],
+    "ready": [],
     "waiting_external": [
       {
         "id": "waiver-v2-horizon-verify",
@@ -112,6 +105,13 @@
         "lane": "special-teams",
         "task": "Special Teams v2 implemented; await CI/syntax verification.",
         "priority": 50
+      },
+      {
+        "id": "season-increments-ci-finalize",
+        "lane": "regression-release",
+        "task": "All current autonomous season increments implemented/checkpointed; CI queued on current head.",
+        "priority": 100,
+        "depends_on_head": "7c9981f51327b3b5a826f3e2210b96c19600748c"
       }
     ],
     "blocked_user": [
@@ -144,8 +144,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Season increments require CI reconciliation; READY work exists.",
-      "evaluated_at": "2026-09-01T09:38:00Z"
+      "reason": "No READY code lane at this instant, but current CI is waiting_external and must be reconciled before device gate; poll when available. Device gate remains dependent only.",
+      "evaluated_at": "2026-09-01T09:41:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
