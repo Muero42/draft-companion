@@ -7,7 +7,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.158">
+  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.166">
   <title>Draft Companion – Final Draft Edition 2026</title>
 
 <style id="workspaceStyles">
@@ -22,7 +22,7 @@
       <h1>Draft Companion</h1>
       <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
     </div>
-    <span class="version">v11.8.0-rc4.158</span>
+    <span class="version">v11.8.0-rc4.166</span>
   </header>
 
   <nav class="workspace-nav" aria-label="Arbeitsbereich">
@@ -171,11 +171,10 @@
 
 
   <section class="card workspace-panel" data-workspace="roster" hidden>
-    <div class="phase-intro"><h2>👥 Kader</h2><p class="tiny">Saisonansicht für Hold/Drop/Protect-Entscheidungen. Dieselbe Player Intelligence wie im Draft, aber ohne Draft-Noise.</p></div>
-    <div class="phase-grid"><div class="phase-tile"><b>Roster State</b><span class="tiny">Aktueller Sleeper-Draftkader mit Panel-/ADP-Baseline und Positionskapital.</span></div><div class="phase-tile"><b>Thesis Protection</b><span class="tiny">Frühe Picks und Spieler mit starkem Panel-/Marktwert werden vor vorschnellen Drops geschützt.</span></div></div>
-    <div id="rosterStatus" class="notice">Noch kein Draft geladen.</div>
+    <div class="phase-intro"><p class="tiny">Aktuelle Sleeper-Aufstellung mit Bench/Reserve und Startalternativen.</p></div>
+    <div id="rosterStatus" class="notice">Live-Kader wird geladen…</div>
+    <div id="rosterList" class="season-lineup"></div>
     <div id="rosterSummary" class="summary-grid"></div>
-    <div id="rosterList" class="coach-list"></div>
     <div id="rosterBenchStatus" class="notice"></div>
     <div id="rosterBenchList" class="coach-list"></div>
     <div id="rosterFaStatus" class="notice"></div>
@@ -246,13 +245,13 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v11.8.0-rc4.158: feste v4-Expertenmatrix im tatsächlich sichtbaren Live-Draft-Surface; Überschrift entfernt; Modelllogik unverändert.</div>
+<div class="freeze-note">v11.8.0-rc4.166: mobiler Season-Startup entkoppelt Draft/Picks vom großen Spielerpool; Startup-Fehler auf Saisonflächen sichtbar.</div>
 <button id="analysisJumpV3" class="snapshot-jump" type="button" aria-label="Zur Analyse" hidden>↓</button>
 </main>
-<script src="live-surface-v3.js?v=v11.8.0-rc4.158" defer></script>
+<script src="live-surface-v3.js?v=v11.8.0-rc4.166" defer></script>
 <script src="expert-v2-board.js?v=20260826"></script>
 <script src="expert-v3-board.js?v=20260828a"></script>
-<script type="module" src="app.js?v=v11.8.0-rc4.158"></script>
+<script type="module" src="app.js?v=v11.8.0-rc4.166"></script>
 <script src="expert-board-export.js?v=20260826e" defer></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>
