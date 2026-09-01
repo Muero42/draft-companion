@@ -37,6 +37,21 @@ async function fetchSeasonLeagueState(draft){
   if(!v?.ok||!v?.my_roster||String(v.my_roster.owner_id||'')!==userId)return{ok:false,reason:'MY_ROSTER_UNRESOLVED',leagueId,userId};store.setText(SEASON_LEAGUE_ID_KEY,leagueId);return{ok:true,leagueId,userId,...v};
 }
 function seasonRosterRows(season,players,draftMine){if(!season?.ok||!season.my_roster)return null;const draftById=new Map((draftMine||[]).map(pk=>[String(pk.player_id),pk])),reserve=new Set((season.my_roster.reserve||[]).map(String));return[...new Set((season.my_roster.players||[]).map(String))].map(pid=>{const p=sleeperPlayerRow(pid,players),base=draftById.get(pid);return{pk:base||{player_id:pid,pick_no:999,metadata:{}},p:{...p,injury:reserve.has(pid)?(p.injury||'IR/RESERVE'):p.injury},r:rankFor(p.name,p.pos),a:adpFor(p.name),seasonStatus:reserve.has(pid)?'RESERVE':'ACTIVE'};});}
+function seasonLineupHtml(rows,season){
+  const byId=new Map(rows.map(x=>[String(x.p.id),x])),starters=(season?.my_roster?.starters||season?.my_starters||[]).map(String).filter(x=>x&&x!=='0');
+  const starterSet=new Set(starters),active=rows.filter(x=>x.seasonStatus!=='RESERVE'),bench=active.filter(x=>!starterSet.has(String(x.p.id))),reserve=rows.filter(x=>x.seasonStatus==='RESERVE');
+  const posClass=p=>['QB','RB','WR','TE'].includes(p)?p.toLowerCase():'flex';
+  const row=(x,label,alt='')=>'<div class="lineup-row"><span class="pos-chip '+posClass(x.p.pos)+'">'+esc(label||x.p.pos)+'</span><div class="lineup-player"><b>'+esc(x.p.name)+'</b><span>'+esc(x.p.team)+(x.p.injury?' · '+esc(x.p.injury):'')+(alt?' · '+esc(alt):'')+'</span></div><b class="lineup-state">'+(x.seasonStatus==='RESERVE'?'IR':'')+'</b></div>';
+  let html='<div class="lineup-section-title">STARTER</div>';
+  for(const pid of starters){const x=byId.get(pid);if(x)html+=row(x,x.p.pos);}
+  if(!starters.length)html+='<div class="notice warn">Sleeper-Starter noch nicht verfügbar; Kader ist geladen.</div>';
+  html+='<div class="lineup-section-title">BENCH</div>'+bench.map(x=>row(x,'BN')).join('');
+  if(reserve.length)html+='<div class="lineup-section-title">RESERVE / IR</div>'+reserve.map(x=>row(x,'IR')).join('');
+  // Lightweight alternatives: strongest bench option by position from the current panel.
+  const alts=bench.filter(x=>x.r).sort((a,b)=>a.r.rank-b.r.rank).slice(0,4);
+  if(alts.length)html+='<div class="lineup-section-title">START-ALTERNATIVEN</div>'+alts.map(x=>row(x,x.p.pos,'Bench-Option · Panel '+x.r.rank.toFixed(1))).join('');
+  return html;
+}
 function seasonAvailablePlayers(season,players){
   if(!season?.ok)return null;
   // Never trust a derived ownership object as the sole FA authority. Build ownership
@@ -1497,7 +1512,7 @@ async function bootstrapSeasonWorkspace(){
     const counts=postDraftRosterCounts(rows);
     els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper-Kader · '+rows.length+' Spieler · Source of Truth: League-State · Reserve/IR '+rows.filter(x=>x.seasonStatus==='RESERVE').length+' · Auto-Sync beim Start.';
     els.rosterSummary.innerHTML=Object.entries(counts).filter(([,n])=>n).map(([pos,n])=>'<div class="summary-item"><b>'+n+'</b><span>'+pos+'</span></div>').join('');
-    els.rosterList.innerHTML=rows.map(x=>'<div class="coach-row"><div><b>'+esc(x.p.name)+'</b> <span class="tiny">'+esc(x.p.pos)+' · '+esc(x.p.team)+'</span><div class="tiny">'+x.seasonStatus+(x.p.injury?' · '+esc(x.p.injury):'')+(x.r?' · Panel '+x.r.rank.toFixed(1):'')+'</div></div><div><b>'+x.seasonStatus+'</b></div></div>').join('');
+    els.rosterList.innerHTML=seasonLineupHtml(rows,season);
     renderRosterBenchAudit(rows,players,total,true);renderRosterFaAudit(rows,available||[],true);
     renderWaiverWorkspace(true);renderSeasonActionBoard(true);
     lastDraftContext={id,current:total,players,picks,mine,teams,rankedAvailable:available||[],draftComplete:true,season,seasonRows:rows};
@@ -3152,7 +3167,7 @@ async function refresh(){
       renderRosterWorkspace(mine,players,current,draftComplete);
       const counts=postDraftRosterCounts(seasonRows);els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper-Kader · '+seasonRows.length+' Spieler · Source of Truth: League-State · Reserve/IR '+seasonRows.filter(x=>x.seasonStatus==='RESERVE').length+' · keine automatische Transaktion.';
       els.rosterSummary.innerHTML=Object.entries(counts).filter(([,n])=>n).map(([pos,n])=>'<div class="summary-item"><b>'+n+'</b><span>'+pos+'</span></div>').join('');
-      els.rosterList.innerHTML=seasonRows.map(x=>'<div class="coach-row"><div><b>'+esc(x.p.name)+'</b> <span class="tiny">'+esc(x.p.pos)+' · '+esc(x.p.team)+'</span><div class="tiny">'+x.seasonStatus+(x.p.injury?' · '+esc(x.p.injury):'')+(x.r?' · Panel '+x.r.rank.toFixed(1):'')+'</div></div><div><b>'+x.seasonStatus+'</b></div></div>').join('');
+      els.rosterList.innerHTML=seasonLineupHtml(seasonRows,season);
       renderRosterBenchAudit(seasonRows,players,current,draftComplete);renderRosterFaAudit(seasonRows,seasonAvailable||[],draftComplete);
     }else{renderRosterWorkspace(mine,players,current,draftComplete);renderRosterFaAudit(mine.map(pk=>{const p=pinfo(String(pk.player_id),pk.metadata,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);return{pk,p,r,a}}),rankedAvailable,draftComplete);if(draftComplete&&els.rosterStatus){els.rosterStatus.className='notice warn';els.rosterStatus.textContent='Season Sync FAIL-CLOSED · '+esc(season?.reason||'League-State nicht verfügbar')+' · Draftkader nur historische Baseline; keine FA-Aktion freigegeben.';}}
     renderTradeWorkspace(picks,players,slot,teams,draftComplete);
