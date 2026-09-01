@@ -1,0 +1,11 @@
+import fs from 'node:fs';
+const s=fs.readFileSync('app.js','utf8');
+const a=s.indexOf('async function bootstrapSeasonWorkspace()'),z=s.indexOf('\nasync function fetchDraftFresh',a);if(a<0||z<0)throw new Error('bootstrap missing');const b=s.slice(a,z);
+const draft=b.indexOf("jf(\`\${S}/draft/\${id}?_=\${bust}\`,'Season Draft',6500)");
+const picks=b.indexOf("jf(\`\${S}/draft/\${id}/picks?_=\${bust}\`,'Season Picks',6500)");
+const completed=b.indexOf("if(!completed)throw new Error('CANONICAL_DRAFT_NOT_COMPLETE')");
+const players=b.indexOf("jf(\`\${S}/players/nfl?_=\${bust}\`,'Season Spieler',15000)");
+if([draft,picks,completed,players].some(x=>x<0))throw new Error('transport stages missing');if(!(draft<completed&&picks<completed&&completed<players))throw new Error('large player pool still gates canonical draft completion');
+if(b.includes('await fetchDraft(id)'))throw new Error('legacy combined draft transport remains in season bootstrap');
+for(const token of ["console.error('PITTI season bootstrap failed'","if(els.waiverWorkspace)els.waiverWorkspace.innerHTML=fail","if(els.tradeWorkspace)els.tradeWorkspace.innerHTML=fail"])if(!b.includes(token))throw new Error('missing fail-visible contract '+token);
+console.log('season mobile bootstrap transport regression PASS');
