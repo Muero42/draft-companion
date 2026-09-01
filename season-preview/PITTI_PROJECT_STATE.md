@@ -349,3 +349,12 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - All rows in a polling batch share `captured_at`; v0.2.3 therefore selects exactly the immediately previous captured_at snapshot, preserving intended comparison while bounding the read to about one batch.
 - Regression forbids GROUP BY/JOIN in the previous-snapshot query. Commit `e4605c9a16ddbec8ff5ee4ab9e3df263f58195c5`; Workers Build PASS.
 - D1-backed watcher feed/history may remain quota-blocked until Cloudflare reset. `/league-state` remains D1-independent.
+
+
+## 2026-09-01 — rc4.169 Season workspace/UI + resilience correction
+- Physical rc4.168 version canary succeeded, but the user correctly reported three remaining product defects: Draft Mock/LIVE/status UI still appeared in season workspaces; ranking refresh was inaccessible outside Draft-Archiv; and Season failures were still too globally coupled.
+- Root cause of the Draft UI leak is concrete: `setWorkspace()` correctly set `hidden`, but author CSS such as `.status-card{display:grid}` overrode the browser's hidden display rule. rc4.169 adds `[hidden]{display:none!important}` and executable regression coverage.
+- Ranking policy is now season-aware: ranking age and manual `Rankings aktualisieren` are visible in non-draft workspaces; a controlled automatic refresh runs only when the last verified ranking update is older than 12h, with a 2h failure retry throttle. Failed refreshes preserve the last verified ranking state.
+- Season bootstrap now isolates render lanes. A Trade renderer exception fails closed only Trades; a FA-vs-Roster failure blocks only its dependent Waiver/Action surfaces. Hydration failures remain global fail-closed. Exact stage/surface appears in diagnostics.
+- The executable Season runtime regression now covers the hidden CSS contract, Season ranking control/auto policy, Trade crash reproduction, and per-surface isolation.
+- PR #90 full candidate gates PASS and merged to main as `ca75081e4361092e42eb75d5568a21dfe69cca33`. Main package and release contract PASS; v220 reseals machine-readable authority before preview sync.
