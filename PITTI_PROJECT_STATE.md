@@ -394,3 +394,10 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Main gates on the merged runtime also passed. Main package run `33548598040` produced digest `sha256:2648118ad21b0a531c9fb7c154a49f7b0d2829aa78e49cb97d3736776a6b1f2f`.
 - Cloudflare Pages deployed rc4.173 from the main commit. Android remains rc4.172 observed/rejected until one final post-reseal device confirmation.
 - Final user canary must specifically prove startup crosses the prior boundary: Sleeper Live-State age changes from the static dash, Kader loads/fails visibly, and both Kader/Ranking refresh controls give immediate feedback. No more device trial-and-error variants.
+
+
+## 2026-09-01 — rc4.173 physical failure confirmed → rc4.174 early-control rescue
+- User confirmed rc4.173 loaded on physical Android, but had already pressed both Season refresh buttons and they remained ineffective. rc4.173 is therefore rejected; the malformed research-cache hypothesis was insufficient.
+- The new architectural correction does not chase another downstream startup statement. rc4.174 binds Kader/Ranking listeners immediately after the Season bootstrap implementation, before the large legacy/draft startup tail, and schedules roster hydration from an early microtask. A later synchronous startup exception can no longer leave the Season controls completely inert.
+- Late duplicate onclick wiring is removed; binding is idempotent. Both early listeners provide immediate visible feedback and catch their own failures. Roster bootstrap remains bounded/fail-closed.
+- Automated interaction/startup-resilience gates are updated to require the early binding and early roster-bootstrap rescue. Physical device update remains forbidden until candidate package, behavioral contract, project guardrails and Cloudflare preview are green.
