@@ -7,14 +7,14 @@
     "repo": "Muero42/draft-companion",
     "branch": "season-companion-rc4.159",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.164"
+    "source_candidate": "v11.8.0-rc4.165"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.163",
-    "season_candidate": "v11.8.0-rc4.164",
+    "season_candidate": "v11.8.0-rc4.165",
     "candidate_branch": "season-companion-rc4.159",
     "android_acceptance_pending": false,
-    "test_challenger": "v11.8.0-rc4.164",
+    "test_challenger": "v11.8.0-rc4.165",
     "ci": {
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
@@ -23,7 +23,7 @@
       "scope": "rc4.164 season bootstrap render ordering"
     },
     "android_accepted": "v11.8.0-rc4.163",
-    "preview_candidate": "v11.8.0-rc4.164",
+    "preview_candidate": "v11.8.0-rc4.165",
     "android_authority": "v11.8.0-rc4.163",
     "latest_package_sha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
     "package_reference_run": null,
@@ -60,8 +60,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4164_DEPLOYED_DEVICE_ACCEPTANCE",
-    "nextGate": "DEVICE_RC4164_LIVE_SEASON_HYDRATION"
+    "status": "RC4165_BROWSER_EQUIVALENT_GATE",
+    "nextGate": "SELFTEST_RC4165_SEASON_STARTUP"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -72,22 +72,26 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "v11.8.0-rc4.164 Season Companion source candidate; Android authority v11.8.0-rc4.163 version observed but season hydration failed",
+  "source_authority": "v11.8.0-rc4.165 candidate; Android authority rc4.163 device-observed with season hydration failure",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "USER_ACTION_REQUIRED",
-    "active": [],
-    "ready": [],
-    "waiting_external": [],
-    "blocked_user": [
+    "status": "RUNNING",
+    "active": [
       {
-        "id": "rc4164-live-hydration",
-        "task": "Reload physical Android rc4.164 and capture Waiver/FA plus Trade surfaces. Expected: live Sleeper context replaces generic HOLD/no-draft states.",
-        "blocking_scope": "physical device + live Sleeper state"
+        "id": "rc4165-browser-equivalent",
+        "task": "Validate complete cold-start season surface rerender including roster FA, trade, waiver, action board and top status after live context assignment."
       }
     ],
+    "ready": [
+      {
+        "id": "rc4165-ci-deploy",
+        "task": "Run all release gates and deploy only after browser-equivalent startup contract passes."
+      }
+    ],
+    "waiting_external": [],
+    "blocked_user": [],
     "completed_recent": [
       {
         "id": "auto-protocol-hardening",
@@ -211,10 +215,10 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "rc4.164 root-cause fix is regression-tested and deployed; only physical live-season hydration can validate the browser/runtime state.",
-      "evaluated_at": "2026-09-01T12:12:00Z"
+      "allowed": false,
+      "code": null,
+      "reason": "Autonomous browser-equivalent validation remains available; device check is not yet justified.",
+      "evaluated_at": "2026-09-01T12:20:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
