@@ -110,6 +110,12 @@ must(policy.includes('USER_DRAFT_QB_LIMIT=1'),'user one-QB runtime invariant mis
 must(app.includes("from './decision-policy.js'"),'decision policy wiring missing');
 must(app.includes("Progressive WR-Sättigung")||app.includes('WR-Sättigung'),'WR saturation canary missing');
 must(app.includes('function simulateReturnV2('),'Return-v2 kernel missing');
+must(app.includes('function seasonHorizonSplit('),'Season waiver horizon split missing');
+must(app.includes('const weekly=weeklyFresh?'),'THIS WEEK waiver horizon must fail closed without fresh evidence');
+must(app.includes("weekly:null")||app.includes("weekly=weeklyFresh?"),'THIS WEEK stale-evidence null path missing');
+must(app.includes("FA-vs-Roster v2"),'Waiver v2 surface missing');
+must(app.includes("frische Weekly-Evidence fehlt"),'Waiver v2 stale weekly explanation missing');
+
 must(app.includes('function applyPlayerQualitySafetyGate('),'Value-Safety gate missing');
 
 for(const name of ['Guilherme Gianni','Michael Bobal']) must(!app.includes(name),`temporary availability-only expert leaked into runtime: ${name}`);
