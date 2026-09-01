@@ -116,3 +116,10 @@ Canonical continuation trigger: **PITTI AUTO**
 - Start/Sit advanced to v3: weekly consensus rank is primary and fresh role/health evidence can modify the weekly edge; ROS/draft panel remains prohibited as a standalone lineup trigger.
 - Special Teams advanced to v2: D/ST Tier 5/6 quality-floor filtering is applied before sorting/surfacing; Tier 4 remains emergency-only. Kicker output remains filtered through the live Sleeper free-agent pool.
 - Executable project guardrails were extended for all four season increments.
+
+## 2026-09-01 — Bigsby transaction correction
+- User corrected the post-draft history: Tank Bigsby had only been selected/intended immediately after the draft; the Sleeper add was not actually completed then.
+- Bigsby remained a real free agent until 2026-09-01, when the user actually added him.
+- Therefore the earlier rc4.160 screenshot without Bigsby was NOT evidence of a stale/partial Sleeper roster response. Do not encode the earlier intended Bigsby add as historical fact.
+- Charbonnet on Reserve/IR remains a confirmed live roster state.
+- Re-verify current live roster/ownership after the now-completed Bigsby transaction; FA-vs-Roster must use the new live state.
