@@ -310,3 +310,11 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Evidence/coverage requirement: candidate generation must retain relevant positional consumers/fallbacks needed for turn analysis (Ferguson miss at 109 is the canonical coverage warning). Never manufacture a Return probability retrospectively for an unscored player.
 - Implementation order after retrospective: (1) persist decision-intent/sequence schema and tests, (2) Return-vNext shadow model with horizon/entropy/slot-obligation features, (3) replay frozen 2026 evidence in shadow only against current Return-v2, (4) only promote after broader historical/mock validation. No ad-hoc tuning to make the 2026 draft fit.
 - Separately, Season Companion architecture remains season-first: live Sleeper league state must hydrate season surfaces independently; historical Draft/Mock/Live UI moves to archive/analysis and must never gate Roster/Waiver/Lineup/Trades.
+
+
+## 2026-09-01 — Cloudflare D1 rows_read incident audit
+- User received Cloudflare account alert: daily D1 free-tier rows_read limit 5,000,000 exceeded; D1 reads error until 2026-09-02 00:00 UTC. Do not treat paid-plan upgrade as the default remediation.
+- Repository audit at current Season Companion branch found NO D1 binding/query usage: no D1/rows_read, prepare(), env.DB, wrangler or database references; the only Cloudflare Worker file (_worker.js) proxies FantasyPros/Sleeper and serves assets, with no D1 access.
+- Therefore this repository cannot presently be the direct source of D1 rows_read. The account-level D1 incident belongs to another Cloudflare Worker/Pages project/database or an external service sharing the same Cloudflare account, unless configuration outside this repository injects a D1 binding (no evidence in repo).
+- PITTI season architecture must remain independent of D1. Sleeper league-state hydration should use Sleeper directly/cacheable worker transport; a D1 quota incident must not gate Roster/Waiver/Lineup/Trades.
+- Follow-up only if needed: identify the Cloudflare project/database from account analytics or deployment configuration; do not alter PITTI code speculatively and do not pay merely to mask an unidentified read amplification source.
