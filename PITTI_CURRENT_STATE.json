@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T09:15:00Z",
+  "updated_at": "2026-09-01T09:20:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -19,7 +19,7 @@
       "candidate_package": "PASS",
       "project_guardrails": "PASS",
       "release_contract_v2": "PASS",
-      "head": "afdcc1ca80556019cfbafe21f0809f324fbd79ae"
+      "head": "b3745e4c679beb8929f8485d89798bb9d2158007"
     },
     "android_accepted": "v11.8.0-rc4.158",
     "preview_candidate": "v11.8.0-rc4.160"
@@ -121,13 +121,18 @@
         "id": "auto-protocol-hardening",
         "result": "Persistent queue/state-machine design authorized by user; implementation in progress.",
         "at": "2026-09-01T09:15:00Z"
+      },
+      {
+        "id": "auto-protocol-hardening",
+        "result": "Persistent AUTO queue/state-machine + no-output guard implemented and CI-verified: Project Guardrails PASS, release-contract-v2 PASS, candidate package PASS on head b3745e4c679beb8929f8485d89798bb9d2158007.",
+        "at": "2026-09-01T09:20:00Z"
       }
     ],
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "READY work exists; visible AUTO status/progress output is forbidden.",
-      "evaluated_at": "2026-09-01T09:15:00Z"
+      "reason": "AUTO protocol verified; PITTI project queue still contains READY work.",
+      "evaluated_at": "2026-09-01T09:20:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
