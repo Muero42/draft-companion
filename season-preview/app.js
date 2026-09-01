@@ -52,6 +52,19 @@ function seasonLineupHtml(rows,season){
   if(alts.length)html+='<div class="lineup-section-title">START-ALTERNATIVEN</div>'+alts.map(x=>row(x,x.p.pos,'Bench-Option · Panel '+x.r.rank.toFixed(1))).join('');
   return html;
 }
+const SEASON_SPECIAL_TEAMS_MODEL={
+  version:'st-v1.0',updated:'2026-09-01',
+  dst:{panelCandidates:['Ted Chmyz — Fantasy Football Blueprint','Nathan Jahnke — PFF','Marc Shannep — Fantasy Knockout','Sean Koerner — Action Network'],specialist:'Joey Pollizze — RotoBaller',qualityFloor:true,horizonWeeks:4},
+  k:{panelCandidates:['Jared Smola / Draft Sharks','Joe Bond — Fantasy Six Pack','Nathan Jahnke — PFF','Sean Koerner — Action Network'],qualityFloor:false,horizonWeeks:1},
+  provenance:'FantasyPros weekly positional accuracy 2023-2025 + current weekly source availability; candidates remain gated until current-week machine-readable rankings are verified.'
+};
+function seasonAvailableSpecialTeams(season,players,pos){
+  if(!season?.ok)return[];
+  const owned=new Set(Object.keys(season.ownership||{}).map(String));
+  for(const roster of season.rosters||[])for(const pid of [...(roster?.players||[]),...(roster?.reserve||[]),...(roster?.taxi||[])])owned.add(String(pid));
+  const wanted=pos==='DST'?new Set(['DEF','DST']):new Set(['K']);
+  return Object.entries(players||{}).filter(([pid,p])=>!owned.has(String(pid))&&wanted.has(String(p.position||'').toUpperCase())&&p.active!==false).map(([pid])=>sleeperPlayerRow(pid,players));
+}
 function seasonAvailablePlayers(season,players){
   if(!season?.ok)return null;
   // Never trust a derived ownership object as the sole FA authority. Build ownership
@@ -1507,7 +1520,7 @@ async function bootstrapSeasonWorkspace(){
     const {draft,picks,players}=await fetchDraft(id),teams=Number(draft.settings?.teams||10),rounds=Number(draft.settings?.rounds||15),total=teams*rounds;
     if(String(draft.status||'').toLowerCase()!=='complete'&&picks.length<total)return;
     const slot=Number(els.slot.value||9),mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no);
-    const season=await fetchSeasonLeagueState({...draft,draft_id:id}),rows=seasonRosterRows(season,players,mine),available=seasonAvailablePlayers(season,players);
+    const season=await fetchSeasonLeagueState({...draft,draft_id:id}),rows=seasonRosterRows(season,players,mine),available=seasonAvailablePlayers(season,players),availableDST=seasonAvailableSpecialTeams(season,players,'DST'),availableK=seasonAvailableSpecialTeams(season,players,'K');
     if(!rows)throw new Error(season?.reason||'MY_ROSTER_UNRESOLVED');
     const counts=postDraftRosterCounts(rows);
     els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper-Kader · '+rows.length+' Spieler · Source of Truth: League-State · Reserve/IR '+rows.filter(x=>x.seasonStatus==='RESERVE').length+' · Auto-Sync beim Start.';
@@ -1515,7 +1528,7 @@ async function bootstrapSeasonWorkspace(){
     els.rosterList.innerHTML=seasonLineupHtml(rows,season);
     renderRosterBenchAudit(rows,players,total,true);renderRosterFaAudit(rows,available||[],true);
     renderWaiverWorkspace(true);renderSeasonActionBoard(true);
-    lastDraftContext={id,current:total,players,picks,mine,teams,rankedAvailable:available||[],draftComplete:true,season,seasonRows:rows};
+    lastDraftContext={id,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:true,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL};
     localStorage.setItem('v118_seasonBootstrapAt',String(Date.now()));
   }catch(e){
     if(els.rosterStatus){els.rosterStatus.className='notice warn';els.rosterStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+esc(e?.message||String(e))+' · keine FA-Aktion freigegeben.';}
