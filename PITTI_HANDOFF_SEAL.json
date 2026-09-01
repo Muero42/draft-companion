@@ -2,9 +2,9 @@
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260901T2210Z-v224",
   "created_at": "2026-09-01T20:23:00Z",
-  "status": "PASS",
-  "handoff_ready": true,
-  "second_pass_pass": true,
+  "status": "SUPERSEDED_PENDING_RESEAL",
+  "handoff_ready": false,
+  "second_pass_pass": false,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_CURRENT_STATE.json": "722a6714dac43f1d7dac561e06486acc865e3ac2",
@@ -42,5 +42,5 @@
     "manual_trial_and_error_forbidden": true
   },
   "exact_gate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
-  "note": "Takeover reconciliation complete. rc4.176 autonomous gates PASS; only one physical functional canary remains."
+  "note": "rc4.177 candidate validation in progress; prior rc4.176 seal intentionally superseded."
 }
