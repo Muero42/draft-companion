@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T09:41:00Z",
+  "updated_at": "2026-09-01T09:45:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -17,9 +17,9 @@
     "test_challenger": "v11.8.0-rc4.160",
     "ci": {
       "candidate_package": "PASS",
-      "project_guardrails": "PASS",
       "release_contract_v2": "PASS",
-      "head": "b3745e4c679beb8929f8485d89798bb9d2158007"
+      "project_guardrails": "PASS",
+      "head": "2abc6b004cde4b19b9ac01786817fa1d8f9de462"
     },
     "android_accepted": "v11.8.0-rc4.158",
     "preview_candidate": "v11.8.0-rc4.160"
@@ -54,8 +54,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4.160_ALL_CI_GATES_PASS",
-    "nextGate": "DEVICE_END_TO_END_CANARY_ON_RC4.160_PREVIEW"
+    "status": "RC4.160_SEASON_INCREMENT_CI_PASS",
+    "nextGate": "DEVICE_END_TO_END_CANARY_ON_CURRENT_RC4.160_PREVIEW"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -71,49 +71,10 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "RUNNING",
+    "status": "USER_ACTION_REQUIRED",
     "active": [],
     "ready": [],
-    "waiting_external": [
-      {
-        "id": "waiver-v2-horizon-verify",
-        "lane": "waiver",
-        "task": "CI revalidation after Waiver v2 fail-closed weekly-evidence hardening.",
-        "priority": 90,
-        "depends_on_head": "current"
-      },
-      {
-        "id": "waiver-v2-regression-test",
-        "lane": "waiver",
-        "task": "Await CI verification of executable Waiver v2 guard.",
-        "priority": 95
-      },
-      {
-        "id": "trade-offer-engine",
-        "lane": "trade",
-        "task": "Trade Board v4 implemented; await CI/syntax verification before marking complete.",
-        "priority": 70
-      },
-      {
-        "id": "weekly-lineup-model",
-        "lane": "lineup",
-        "task": "Start/Sit v3 implemented; await CI/syntax verification.",
-        "priority": 60
-      },
-      {
-        "id": "special-teams-season-panel",
-        "lane": "special-teams",
-        "task": "Special Teams v2 implemented; await CI/syntax verification.",
-        "priority": 50
-      },
-      {
-        "id": "season-increments-ci-finalize",
-        "lane": "regression-release",
-        "task": "All current autonomous season increments implemented/checkpointed; CI queued on current head.",
-        "priority": 100,
-        "depends_on_head": "7c9981f51327b3b5a826f3e2210b96c19600748c"
-      }
-    ],
+    "waiting_external": [],
     "blocked_user": [
       {
         "id": "rc4160-device-canary",
@@ -139,13 +100,43 @@
         "id": "rc4160-ci-revalidate",
         "result": "All three CI gates PASS on head 1abc5a1284eaa93136b5bcba8b9f9f33aa2e982c before Waiver v2 hardening.",
         "at": "2026-09-01T09:24:00Z"
+      },
+      {
+        "id": "waiver-v2-horizon-verify",
+        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
+        "at": "2026-09-01T09:45:00Z"
+      },
+      {
+        "id": "waiver-v2-regression-test",
+        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
+        "at": "2026-09-01T09:45:00Z"
+      },
+      {
+        "id": "trade-offer-engine",
+        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
+        "at": "2026-09-01T09:45:00Z"
+      },
+      {
+        "id": "weekly-lineup-model",
+        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
+        "at": "2026-09-01T09:45:00Z"
+      },
+      {
+        "id": "special-teams-season-panel",
+        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
+        "at": "2026-09-01T09:45:00Z"
+      },
+      {
+        "id": "season-increments-ci-finalize",
+        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
+        "at": "2026-09-01T09:45:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "No READY code lane at this instant, but current CI is waiting_external and must be reconciled before device gate; poll when available. Device gate remains dependent only.",
-      "evaluated_at": "2026-09-01T09:41:00Z"
+      "allowed": true,
+      "code": "USER_ACTION_REQUIRED",
+      "reason": "All autonomous rc4.160 season lanes currently queued are implemented and CI-verified. Remaining acceptance gate requires device runtime: verify live FA pool is nonzero, Bigsby is rostered/not FA, Charbonnet reserve, and new Waiver v2/Trade v4/Start-Sit v3 surfaces render.",
+      "evaluated_at": "2026-09-01T09:45:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
