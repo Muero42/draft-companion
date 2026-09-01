@@ -2546,25 +2546,26 @@ function week1ExternalRank(p){
   const m=p?.pos==='RB'?WEEK1_HALF_PPR_RB26:p?.pos==='WR'?WEEK1_HALF_PPR_WR26:p?.pos==='TE'?WEEK1_HALF_PPR_TE26:null;
   return m?.get(p?.name)||null;
 }
+const WEEK1_RANKS_2026={
+  QB:{'Joe Burrow':1,'Lamar Jackson':2,'Josh Allen':3,'Justin Herbert':4,'Jalen Hurts':5,'Trevor Lawrence':6,'Jayden Daniels':7,'Baker Mayfield':8,'Dak Prescott':9,'Jared Goff':10,'Drake Maye':11,'Caleb Williams':12,'Jaxson Dart':13,'Matthew Stafford':14,'Brock Purdy':15,'Tyler Shough':16,'Patrick Mahomes II':17,'Bo Nix':18,'Kyler Murray':19,'Malik Willis':20,'Jordan Love':21,'C.J. Stroud':22},
+  RB:{'Jahmyr Gibbs':1,'Bijan Robinson':2,'Christian McCaffrey':3,'Ashton Jeanty':4,'Jonathan Taylor':5,'Derrick Henry':6,'Chase Brown':7,'Saquon Barkley':8,'Omarion Hampton':9,"De'Von Achane":10,'Javonte Williams':11,'James Cook III':12,'Kenneth Walker III':13,'Josh Jacobs':14,'Kyren Williams':15,'Breece Hall':16,"D'Andre Swift":17,'Cam Skattebo':18,'Travis Etienne Jr.':19,'David Montgomery':20,'Bucky Irving':21,'Quinshon Judkins':22,'Jaylen Warren':23,'Rhamondre Stevenson':24,'Tony Pollard':25,'J.K. Dobbins':26,'Bhayshul Tuten':27,'Rico Dowdle':28,'Jeremiyah Love':29,'Jordan Mason':30,'Jonathon Brooks':31,'Jadarian Price':32,'Chuba Hubbard':33,'Rachaad White':34,'Kyle Monangai':35,'Jacory Croskey-Merritt':36,'Blake Corum':37,'Kenny Gainwell':38,'Chris Rodriguez Jr.':39,'TreVeyon Henderson':40,'Tyler Allgeier':41,'Aaron Jones Sr.':42,'RJ Harvey':43,'Tyjae Spears':44,'Tyrone Tracy Jr.':45,'Keaton Mitchell':46,'Dylan Sampson':47,'Alvin Kamara':48,'Tank Bigsby':49}
+};
+function week1Rank(p){return WEEK1_RANKS_2026[p?.pos]?.[p?.name]??null}
 function renderRosterBenchAudit(rows,players,current,draftComplete){
   if(!els.rosterBenchStatus||!els.rosterBenchList)return;
   if(!draftComplete){els.rosterBenchStatus.className='notice';els.rosterBenchStatus.textContent='Aufstellungsanalyse wird nach Draftabschluss aktiv.';els.rosterBenchList.innerHTML='';return;}
   const season=lastDraftContext?.season,starters=new Set((season?.my_roster?.starters||[]).map(String).filter(x=>x&&x!=='0'));
   const active=rows.filter(x=>x.seasonStatus!=='RESERVE'),bench=active.filter(x=>!starters.has(String(x.p.id))),starterRows=active.filter(x=>starters.has(String(x.p.id)));
   const flexPos=new Set(['RB','WR','TE']),moves=[];
-  for(const b of bench){
-    const bw=week1ExternalRank(b.p); if(!bw)continue;
-    const candidates=starterRows.filter(s=>{const sw=week1ExternalRank(s.p);return sw&&(s.p.pos===b.p.pos||(flexPos.has(s.p.pos)&&flexPos.has(b.p.pos)));});
-    for(const s of candidates){
-      const sw=week1ExternalRank(s.p),weekEdge=sw-bw;
-      const rosEdge=(s.r&&b.r&&Number.isFinite(s.r.rank)&&Number.isFinite(b.r.rank))?s.r.rank-b.r.rank:0;
-      if(weekEdge>=4)moves.push({b,s,weekEdge,rosEdge,bw,sw});
+  for(const b of bench){const br=week1Rank(b.p);if(!br)continue;
+    for(const s of starterRows){const sr=week1Rank(s.p);if(!sr||!(s.p.pos===b.p.pos||(flexPos.has(s.p.pos)&&flexPos.has(b.p.pos))))continue;
+      const edge=sr-br;if(edge>0)moves.push({b,s,edge,br,sr});
     }
   }
-  moves.sort((x,y)=>y.weekEdge-x.weekEdge||y.rosEdge-x.rosEdge);
+  moves.sort((x,y)=>y.edge-x.edge);
   els.rosterBenchStatus.className='notice ok';
-  els.rosterBenchStatus.textContent='Week 1 Start/Sit v2 · externe Half-PPR-Wochenrankings sind Primärsignal; Draft/ROS-Panel nur Sekundärsignal. Injury-/Rollen-News bleiben Invalidation-Gate bis Kickoff.';
-  els.rosterBenchList.innerHTML=moves.length?'<div class="coach-section-title">WEEK-1-AUFSTELLUNG PRÜFEN</div>'+moves.slice(0,6).map((m,i)=>'<div class="coach-row"><div><b>'+esc(m.b.p.name)+' statt '+esc(m.s.p.name)+'</b><div class="tiny">'+esc(m.b.p.pos)+' '+esc(m.b.p.team)+' → Start · '+esc(m.s.p.pos)+' '+esc(m.s.p.team)+' → Bench · W1 Rank '+m.bw+' vs '+m.sw+' (Edge +'+m.weekEdge+') · ROS/Panel Δ '+(m.rosEdge>=0?'+':'')+m.rosEdge.toFixed(1)+' · News-Recheck vor Lock</div></div><div><b>REVIEW</b></div></div>').join(''):'<div class="notice ok"><b>LINEUP HOLD</b> · Kein interner Wechsel mit ≥4 Plätzen Vorteil im aktuell verifizierten Week-1-Half-PPR-Layer. Vor Kickoff erneut Rollen/Health prüfen.</div>';
+  els.rosterBenchStatus.textContent='Week-1 Start/Sit v2 · aktuelle Sleeper-Aufstellung. Weekly Rank ist primär; ROS/Draft-Panel darf einen Start/Sit-Move nicht allein auslösen. Verletzungs-/Late-News bleiben Recheck-Gate.';
+  els.rosterBenchList.innerHTML=moves.length?'<div class="coach-section-title">WEEK 1 · MÖGLICHE LINEUP-ÄNDERUNGEN</div>'+moves.slice(0,6).map((m,i)=>'<div class="coach-row"><div><b>'+esc(m.b.p.name)+' statt '+esc(m.s.p.name)+'</b><div class="tiny">'+esc(m.b.p.pos)+' '+esc(m.b.p.team)+' W1 #'+m.br+' → Start · '+esc(m.s.p.pos)+' '+esc(m.s.p.team)+' W1 #'+m.sr+' → Bench · Weekly Edge +'+m.edge+' · vor Lock Health/Role prüfen</div></div><div><b>'+(m.edge>=6?'STRONG REVIEW':'REVIEW')+'</b></div></div>').join(''):'<div class="notice ok"><b>LINEUP HOLD</b> · In der aktuell geladenen Week-1-Baseline ist kein Bench-Spieler höher gerankt als ein kompatibler Starter. Vor Lock erneut auf Health/Role prüfen.</div>';
 }
 
 
