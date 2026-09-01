@@ -11,27 +11,27 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.165",
+    "appVersion": "v11.8.0-rc4.167",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.160 preview canary",
+    "latestAndroidObserved": "v11.8.0-rc4.166 rejected season startup",
     "latestPreinstallVerified": "rc4.158 Candidate Package Gate + Release Contract + Project Guardrails PASS",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.158 package/re-extract current authority",
     "preinstallSha256": "sha256:46162cce29bc21c21b1ef826f7ac36d8ebd655cd5c75498f3cfaaf7ac7fbcb7c",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
-    "latestDeployedCandidate": "v11.8.0-rc4.164",
-    "latestAndroidVerified": "v11.8.0-rc4.161",
-    "androidAuthority": "v11.8.0-rc4.161 accepted; rc4.163 pending physical season-surface acceptance",
+    "latestDeployedCandidate": "v11.8.0-rc4.166 gh-pages season-preview",
+    "latestAndroidVerified": "v11.8.0-rc4.161 limited acceptance",
+    "androidAuthority": "v11.8.0-rc4.161",
     "android_authority": "v11.8.0-rc4.161",
-    "deployedPagesAppByteParityWithMain": true,
+    "deployedPagesAppByteParityWithMain": false,
     "preinstallReferenceRun": 33401979026,
     "preinstallReferenceArtifactId": 9761582650,
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.160 preview canary",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.166",
     "latestAndroidFunctionalVerified": "rc4.158 device PASS: version/control visible; v4 day baseline 9/9 complete; prior live expert matrix acceptance preserved.",
     "testChallengerAndroidObserved": true,
     "testChallengerAndroidAccepted": true,
@@ -63,10 +63,10 @@
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.161",
     "unreleasedMainDelta": "Season Companion rc4.162 adds expiring Week-1 waiver market evidence; rc4.161 is accepted Android authority.",
-    "deployedPagesVersion": "v11.8.0-rc4.161 accepted preview",
-    "mainGhPagesParity": true,
-    "androidVerified": true,
-    "androidAcceptance": "rc4.158 PASS 2026-08-31 ~16:36 CEST: version/control visible; v4 expert day baseline 9/9 complete."
+    "deployedPagesVersion": "v11.8.0-rc4.166 (rejected season startup)",
+    "mainGhPagesParity": false,
+    "androidVerified": false,
+    "androidAcceptance": "rc4.167 NOT device accepted; rc4.166 physical season startup failed"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -255,10 +255,10 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4167_CODE_CI_PASS_PREVIEW_PARITY_PENDING",
+    "status": "V218_AUDITED_HANDOFF_RC4167_PREVIEW_PARITY_PENDING",
     "nextGate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY"
   },
-  "status": "POST_DRAFT_SEASON_COMPANION_RC4161_CANDIDATE",
+  "status": "POST_DRAFT_SEASON_COMPANION_RC4167_CANDIDATE",
   "gate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY",
   "nextGate": "Device acceptance only after repository/checkpoint reconciliation; no rc4.160 retest.",
   "deploymentUpdateContract": {

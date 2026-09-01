@@ -144,17 +144,17 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.161 Android accepted",
-    "androidAuthority": "v11.8.0-rc4.166 last observed; rejected season startup",
-    "sourceAuthority": "v11.8.0-rc4.167 Season Companion candidate",
-    "latestPackageReextract": "rc4.163 all three gates PASS",
+    "productionControl": "v11.8.0-rc4.161 limited Android acceptance",
+    "androidAuthority": "v11.8.0-rc4.161",
+    "sourceAuthority": "v11.8.0-rc4.167 Season Companion source candidate",
+    "latestPackageReextract": "rc4.167 exact-head revalidation pending after audited handoff repair",
     "latestPackageSha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
     "packageReferenceRun": null,
-    "deployedPagesVersion": "v11.8.0-rc4.163 preview candidate",
-    "deployedPagesAppByteParityWithMain": true,
+    "deployedPagesVersion": "v11.8.0-rc4.166 on gh-pages season-preview (rejected season startup)",
+    "deployedPagesAppByteParityWithMain": false,
     "currentResearchGate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY",
-    "exactNextAction": "Verify/deploy rc4.167 preview autonomously; then one physical Android season-first canary.",
-    "runtimeVersion": "rc4.165 source candidate; rc4.163 last device-observed",
+    "exactNextAction": "Verify actual head + exact-head CI, then rc4.167 preview parity/deploy as one batch; only then one Android canary.",
+    "runtimeVersion": "rc4.167 source candidate; rc4.166 last physical runtime observed and rejected",
     "latestEvidenceBackup": "Draft backups retained as immutable historical evidence only; current roster comes from Sleeper league state."
   },
   "currentGate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY",
@@ -176,6 +176,6 @@
     "observedTransactionCanary": "rc4.160 device: Harrison Mevis rostered, Tank Bigsby absent, Zach Charbonnet Reserve/IR",
     "rc4161Fix": "live FA ownership pool is independent from expert ranking hydration; zero ranked join must never imply HOLD",
     "regression": "tools/season-fa-ownership-regression.mjs is mandatory in candidate package gate",
-    "nextGate": "DEVICE_RC4161_ACCEPTANCE"
+    "nextGate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY"
   }
 }

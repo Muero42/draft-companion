@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T1812Z-v218",
-  "updated_at": "2026-09-01T16:12:00Z",
+  "updated_at": "2026-09-01T16:24:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -10,25 +10,25 @@
     "source_candidate": "v11.8.0-rc4.167"
   },
   "runtime": {
-    "accepted_android": "v11.8.0-rc4.163",
+    "accepted_android": "v11.8.0-rc4.161",
     "season_candidate": "v11.8.0-rc4.167",
     "candidate_branch": "season-companion-rc4.159",
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.167",
     "ci": {
-      "candidate_package": "PASS",
-      "release_contract_v2": "PASS",
-      "project_guardrails": "PASS",
-      "validated_code_head": "d2d7771f778d7e3ceba86e27fc9d7a0ae059981a",
-      "scope": "rc4.167 season-first UI/hydration authority"
+      "candidate_package": "PENDING_REVALIDATION",
+      "release_contract_v2": "PENDING_REVALIDATION",
+      "project_guardrails": "PENDING_REVALIDATION",
+      "validated_code_head": null,
+      "scope": "v218 audited handoff + rc4.167 season-first candidate"
     },
-    "android_accepted": "v11.8.0-rc4.163",
+    "android_accepted": "v11.8.0-rc4.161",
     "preview_candidate": "v11.8.0-rc4.167",
-    "android_authority": "v11.8.0-rc4.163",
+    "android_authority": "v11.8.0-rc4.161",
     "latest_package_sha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
     "package_reference_run": null,
-    "deployed_pages_app_byte_parity_with_main": true,
-    "deployed_pages_head": "6b830bd3dce122ffa83e43010fc674ab840db1a5"
+    "deployed_pages_app_byte_parity_with_main": false,
+    "deployed_pages_head": "gh-pages season-preview currently rc4.166; rc4.167 parity pending"
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -60,7 +60,7 @@
     ]
   },
   "currentWork": {
-    "status": "RC4167_CODE_CI_PASS_PREVIEW_PARITY_PENDING",
+    "status": "V218_AUDITED_HANDOFF_RC4167_PREVIEW_PARITY_PENDING",
     "nextGate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY"
   },
   "invariants": {
@@ -72,19 +72,14 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "v11.8.0-rc4.166 runtime source on actual reconciled repository head; current Sleeper league state is season authority; frozen draft evidence is retrospective authority",
+  "source_authority": "v11.8.0-rc4.167 source candidate; current Sleeper league state is season authority; frozen draft evidence is retrospective authority",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "HANDOFF_READY",
     "active": [],
-    "ready": [
-      {
-        "id": "rc4167-preview-parity",
-        "task": "Verify/deploy rc4.167 preview as one batch; only after parity request one physical Android canary."
-      }
-    ],
+    "ready": [],
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
@@ -242,8 +237,8 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "Explicit HANDOFF requested; v218 canonical transition created.",
-      "evaluated_at": "2026-09-01T16:12:00Z"
+      "reason": "Explicit HANDOFF requested; v218 deeply audited. New chat reconstructs preview-parity work from currentWork and actual evidence.",
+      "evaluated_at": "2026-09-01T16:24:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
