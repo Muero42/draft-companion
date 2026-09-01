@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T09:53:00Z",
+  "updated_at": "2026-09-01T09:56:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -19,7 +19,7 @@
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
       "project_guardrails": "PASS",
-      "head": "2abc6b004cde4b19b9ac01786817fa1d8f9de462"
+      "head": "af07a1a6f10e9d891253f82be80703958fc88acf"
     },
     "android_accepted": "v11.8.0-rc4.158",
     "preview_candidate": "v11.8.0-rc4.160"
@@ -54,8 +54,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4.160_ZERO_FA_FALSE_HOLD_FIX_PENDING_CI",
-    "nextGate": "CI_THEN_DEVICE_RECHECK"
+    "status": "RC4.160_ZERO_FA_FIX_CI_PASS",
+    "nextGate": "DEVICE_RELOAD_CHECK_FA_NONZERO_OR_EXPLICIT_FAIL_CLOSED"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -71,17 +71,10 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "AUTO_RUNNING",
+    "status": "USER_ACTION_REQUIRED",
     "active": [],
     "ready": [],
-    "waiting_external": [
-      {
-        "id": "rc4160-zero-fa-ci",
-        "lane": "season-sync",
-        "task": "Zero-FA false-HOLD fix committed and guarded; await CI.",
-        "depends_on_head": "current"
-      }
-    ],
+    "waiting_external": [],
     "blocked_user": [
       {
         "id": "rc4160-device-canary",
@@ -137,13 +130,18 @@
         "id": "season-increments-ci-finalize",
         "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
         "at": "2026-09-01T09:45:00Z"
+      },
+      {
+        "id": "rc4160-zero-fa-ci",
+        "result": "PASS head af07a1a6f10e9d891253f82be80703958fc88acf: all three CI gates success. Device screenshot had confirmed live roster/IR, but exposed 0-ranked-FA false HOLD; fixed fail-closed.",
+        "at": "2026-09-01T09:56:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "Zero-FA fix now waiting on CI; no user action until CI passes.",
-      "evaluated_at": "2026-09-01T09:53:00Z"
+      "allowed": true,
+      "code": "USER_ACTION_REQUIRED",
+      "reason": "CI passes after device-found zero-FA false-HOLD fix. One device reload is required to distinguish repaired fail-closed state from successful nonzero live FA sync.",
+      "evaluated_at": "2026-09-01T09:56:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
