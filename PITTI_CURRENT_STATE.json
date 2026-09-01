@@ -16,18 +16,19 @@
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.179",
     "ci": {
-      "candidate_package": "PASS run 33557199679",
-      "release_contract_v2": "PASS run 33557199631",
-      "draft_critical_rc482": "PASS run 33557199678",
-      "draft_critical_rc483": "PASS run 33557199700",
-      "validated_code_head": "7f8ca001dd19ba6d3905dad37dbfa90523a8737e",
-      "scope": "rc4.178 persistent pre-network execution marker + bounded watchdog; strict gates PASS"
+      "candidate_package": "PASS run 33558208020",
+      "release_contract_v2": "PASS run 33558208047",
+      "project_guardrails": "PASS run 33558208112",
+      "draft_critical_rc482": "PASS run 33558208041",
+      "draft_critical_rc483": "PASS run 33558208032",
+      "validated_code_head": "959a5b8abb5792c944623bb230402c7718119bf0",
+      "scope": "rc4.179 post-render persistent execution marker; all strict gates PASS"
     },
     "android_accepted": "v11.8.0-rc4.169",
     "preview_candidate": "v11.8.0-rc4.177 strict gates PASS; physical Android promotion/diagnostic canary required",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
-    "latest_package_sha256": "sha256:797cfa6c1a7109f715a591ce862b4d0cb96a25849abd97df9244c0b50bdd8fa5",
-    "package_reference_run": 33557199679,
+    "latest_package_sha256": "sha256:dc98e19c8b9689ac42c4088985b6e82bfbc2198656e659b6e458fa75000ee0c1",
+    "package_reference_run": 33558208020,
     "deployed_pages_app_byte_parity_with_main": true,
     "deployed_pages_head": "main 242ea4b982c5226d6958f6704d5c823d6c89aa9c · Cloudflare Pages deploy PASS",
     "installed_android": "v11.8.0-rc4.176",
@@ -84,8 +85,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4179_POST_RENDER_MARKER_FIX_VALIDATING",
-    "nextGate": "RC4179_STRICT_VALIDATION"
+    "status": "RC4179_STRICT_VALIDATION_PASS",
+    "nextGate": "DEVICE_RC4179_DIAGNOSTIC_CANARY"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -102,15 +103,15 @@
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "RUNNING",
-    "active": [
-      {
-        "id": "rc4179-strict-validation",
-        "reason": "rc4.178 screenshot proves shared startup renderers overwrite marker before network work; reassert marker after renderAll/setAuto/updateStatus"
-      }
-    ],
+    "active": [],
     "ready": [],
     "waiting_external": [],
-    "blocked_user": [],
+    "blocked_user": [
+      {
+        "id": "device-rc4179-diagnostic-canary",
+        "reason": "Physical Android/PWA evidence required after post-render marker reassertion."
+      }
+    ],
     "completed_recent": [
       {
         "id": "rc4177-strict-validation",
@@ -339,9 +340,9 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "rc4.179 validation executable."
+      "allowed": true,
+      "code": "USER_ACTION_REQUIRED",
+      "reason": "All autonomous rc4.179 validation complete."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
