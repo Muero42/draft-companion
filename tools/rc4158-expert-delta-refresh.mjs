@@ -7,7 +7,7 @@ const manifest=fs.readFileSync('manifest.webmanifest','utf8');
 
 function must(cond,msg){if(!cond){console.error('FAIL:',msg);process.exit(1)}}
 
-const versionOf=s=>Number((String(s).match(/v11\\.8\\.0-rc4\\.(\\d+)/)||[])[1]);
+const versionOf=s=>Number((String(s).match(/v11\.8\.0-rc4\.(\d+)/)||[])[1]);
 must(versionOf(app)>=158,'app version >= rc4.158');
 must(versionOf(html)>=158,'index version >= rc4.158');
 must(versionOf(sw)>=158,'sw version >= rc4.158');
