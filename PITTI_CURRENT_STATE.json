@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T1058Z-v217",
-  "updated_at": "2026-09-01T11:03:00Z",
+  "updated_at": "2026-09-01T11:12:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -19,10 +19,15 @@
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
       "project_guardrails": "PASS",
-      "head": "035f821358ca7f0799a08d59fad9ec2da8de9506"
+      "validated_code_head": "b307fda15a5c20d63940e1c746a876ed7c49b3ef",
+      "scope": "rc4.161 code + executable FA ownership regression; later handoff metadata reseal must also pass"
     },
     "android_accepted": "v11.8.0-rc4.158",
-    "preview_candidate": "v11.8.0-rc4.161"
+    "preview_candidate": "v11.8.0-rc4.161",
+    "android_authority": "v11.8.0-rc4.158",
+    "latest_package_sha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
+    "package_reference_run": null,
+    "deployed_pages_app_byte_parity_with_main": false
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -54,7 +59,7 @@
     ]
   },
   "currentWork": {
-    "status": "HANDOFF_V217_SEALED_RC4161_CI_GREEN",
+    "status": "HANDOFF_V217_RESEALED_RC4161_DEVICE_ACCEPTANCE_ONLY",
     "nextGate": "DEVICE_RC4161_ACCEPTANCE"
   },
   "invariants": {
@@ -78,7 +83,7 @@
     "blocked_user": [
       {
         "id": "rc4161-device-acceptance",
-        "task": "Open/reload rc4.161 on Android only after new chat reconciles checkpoint against repository. Acceptance target: live Sleeper roster remains correct and Waiver/FA no longer emits false zero-FA HOLD.",
+        "task": "Open/reload rc4.161 on Android after new-chat takeover reconciliation. Acceptance target: live Sleeper roster remains correct and Waiver/FA no longer emits false zero-FA HOLD.",
         "blocking_scope": "device acceptance only"
       }
     ],
@@ -162,9 +167,15 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "USER_ACTION_REQUIRED",
-      "reason": "Handoff v217 and rc4.161 are fully repository/CI reconciled. Only physical Android acceptance remains.",
-      "evaluated_at": "2026-09-01T11:03:00Z"
+      "reason": "All safe autonomous rc4.161 code/regression/release work is exhausted. Physical Android runtime acceptance is the only remaining dependent gate.",
+      "evaluated_at": "2026-09-01T11:12:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
+  },
+  "handoff": {
+    "generation": "20260901T1058Z-v217",
+    "transaction_in_progress": false,
+    "status": "PASS",
+    "second_pass_pass": true
   }
 }
