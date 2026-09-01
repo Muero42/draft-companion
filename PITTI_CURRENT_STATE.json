@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T08:55:00Z",
+  "updated_at": "2026-09-01T09:15:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -66,5 +66,69 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "v11.8.0-rc4.160 Season Companion source candidate; Android authority v11.8.0-rc4.158"
+  "source_authority": "v11.8.0-rc4.160 Season Companion source candidate; Android authority v11.8.0-rc4.158",
+  "auto_execution_state": {
+    "schema": "pitti.auto-state.v1",
+    "protocol_version": "1.0.0",
+    "mode": "AUTO",
+    "status": "RUNNING",
+    "active": [],
+    "ready": [
+      {
+        "id": "rc4160-ci-revalidate",
+        "lane": "regression-release",
+        "task": "Revalidate current rc4.160 head after startup/FA/waiver changes; diagnose and repair failures autonomously.",
+        "priority": 100
+      },
+      {
+        "id": "waiver-v2-horizon-verify",
+        "lane": "waiver",
+        "task": "Verify THIS WEEK vs ROS/Championship EV implementation against live-roster/ownership fail-closed contract.",
+        "priority": 90
+      },
+      {
+        "id": "trade-offer-engine",
+        "lane": "trade",
+        "task": "Advance trade target discovery toward concrete give/get construction, opponent utility, fairness and acceptance plausibility without external execution.",
+        "priority": 70
+      },
+      {
+        "id": "weekly-lineup-model",
+        "lane": "lineup",
+        "task": "Advance weekly Start/Sit model beyond ROS rank using weekly/matchup/role/health evidence with fail-closed freshness.",
+        "priority": 60
+      },
+      {
+        "id": "special-teams-season-panel",
+        "lane": "special-teams",
+        "task": "Improve K/DST in-season source/panel model while preserving D/ST quality floor and real Sleeper FA filtering.",
+        "priority": 50
+      }
+    ],
+    "waiting_external": [],
+    "blocked_user": [
+      {
+        "id": "rc4160-device-canary",
+        "task": "Device preview verification: current roster correct, Charbonnet reserve/IR, Bigsby rostered and excluded from FA pool, nonzero real FA pool.",
+        "depends_on": [
+          "rc4160-ci-revalidate"
+        ],
+        "blocking_scope": "device-acceptance-only"
+      }
+    ],
+    "completed_recent": [
+      {
+        "id": "auto-protocol-hardening",
+        "result": "Persistent queue/state-machine design authorized by user; implementation in progress.",
+        "at": "2026-09-01T09:15:00Z"
+      }
+    ],
+    "stop_evaluation": {
+      "allowed": false,
+      "code": null,
+      "reason": "READY work exists; visible AUTO status/progress output is forbidden.",
+      "evaluated_at": "2026-09-01T09:15:00Z"
+    },
+    "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
+  }
 }
