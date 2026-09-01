@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.173';
+const APP_VERSION='v11.8.0-rc4.174';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRefreshLiveBtn','seasonRankingAge','seasonRankingStatus','seasonRefreshRanksBtn','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -1599,6 +1599,33 @@ async function bootstrapSeasonWorkspace({force=false}={}){
     renderSeasonLiveStateFreshness(els.seasonLiveStateStatus?.textContent||'');
   }
 }
+/* rc4.174 — bind critical Season controls before the legacy/draft startup tail.
+   These listeners survive any later top-level startup exception. */
+function bindCriticalSeasonControlsEarly(){
+  if(els.seasonRefreshLiveBtn&&!els.seasonRefreshLiveBtn.dataset.criticalBound){
+    els.seasonRefreshLiveBtn.dataset.criticalBound='1';
+    els.seasonRefreshLiveBtn.addEventListener('click',async()=>{
+      els.seasonRefreshLiveBtn.dataset.clickObserved=String(Date.now());
+      if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice';els.seasonLiveStateStatus.textContent='Kader-Aktualisierung gestartet …';}
+      try{await bootstrapSeasonWorkspace({force:true})}
+      catch(e){if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice bad';els.seasonLiveStateStatus.textContent='Kader-Aktualisierung abgebrochen · '+(e?.message||String(e));}}
+    });
+  }
+  if(els.seasonRefreshRanksBtn&&!els.seasonRefreshRanksBtn.dataset.criticalBound){
+    els.seasonRefreshRanksBtn.dataset.criticalBound='1';
+    els.seasonRefreshRanksBtn.addEventListener('click',async()=>{
+      els.seasonRefreshRanksBtn.dataset.clickObserved=String(Date.now());
+      if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice';els.seasonRankingStatus.textContent='Ranking-Aktualisierung gestartet …';}
+      try{await refreshSeasonRankings({force:true})}
+      catch(e){if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice bad';els.seasonRankingStatus.textContent='Ranking-Aktualisierung abgebrochen · '+(e?.message||String(e));}}
+    });
+  }
+}
+bindCriticalSeasonControlsEarly();
+// Schedule roster hydration now. The microtask still runs if a later synchronous startup
+// statement aborts module evaluation, so Season authority no longer depends on the draft tail.
+queueMicrotask(()=>{void bootstrapSeasonWorkspace().catch(e=>{if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice bad';els.seasonLiveStateStatus.textContent='Kader-Start fehlgeschlagen · '+(e?.message||String(e));}})});
+
 async function fetchDraftFresh(id){
   const first=await fetchDraft(id);
   // Die Kontrollabfrage darf nicht erneut den ~NFL-Spielerpool laden: genau dieser doppelte
@@ -3833,8 +3860,8 @@ async function refreshSeasonRankings({force=false,auto=false}={}){
   }
 }
 rehydrateDerivedExpertPanelsOnStartup();
-if(els.seasonRefreshLiveBtn)els.seasonRefreshLiveBtn.onclick=async()=>{els.seasonRefreshLiveBtn.dataset.clickObserved=String(Date.now());if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice';els.seasonLiveStateStatus.textContent='Kader-Aktualisierung gestartet …';}return await bootstrapSeasonWorkspace({force:true});};
-if(els.seasonRefreshRanksBtn)els.seasonRefreshRanksBtn.onclick=async()=>{els.seasonRefreshRanksBtn.dataset.clickObserved=String(Date.now());if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice';els.seasonRankingStatus.textContent='Ranking-Aktualisierung gestartet …';}return await refreshSeasonRankings({force:true});};
+bindCriticalSeasonControlsEarly();
+
 renderSeasonLiveStateFreshness();
 renderSeasonRankingFreshness();
 setInterval(()=>{if(!document.hidden)void syncWatcherFeed()},15*60*1000);
