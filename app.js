@@ -1534,6 +1534,10 @@ async function bootstrapSeasonWorkspace(){
     const slot=Number(els.slot.value||9),mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no);
     const season=await fetchSeasonLeagueState({...draft,draft_id:id}),rows=seasonRosterRows(season,players,mine),available=seasonAvailablePlayers(season,players),availableDST=seasonAvailableSpecialTeams(season,players,'DST'),availableK=seasonAvailableSpecialTeams(season,players,'K');
     if(!rows)throw new Error(season?.reason||'MY_ROSTER_UNRESOLVED');
+    // Startup bootstrap can run before expert panels/rankCache are hydrated from IndexedDB.
+    // Ownership is already valid at this point, but a rank-gated FA join would then collapse
+    // to zero and falsely render HOLD. Zero ranked skill-position FAs must fail closed here too.
+    if(!Array.isArray(available)||available.length===0)throw new Error('SEASON_FA_POOL_ZERO_INVALID');
     const counts=postDraftRosterCounts(rows);
     els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper-Kader · '+rows.length+' Spieler · Source of Truth: League-State · Reserve/IR '+rows.filter(x=>x.seasonStatus==='RESERVE').length+' · Auto-Sync beim Start.';
     els.rosterSummary.innerHTML=Object.entries(counts).filter(([,n])=>n).map(([pos,n])=>'<div class="summary-item"><b>'+n+'</b><span>'+pos+'</span></div>').join('');
