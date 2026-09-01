@@ -255,15 +255,11 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "branch": "season-companion-rc4.159",
-    "status": "RC4165_DEPLOYED_FINAL_DEVICE_CANARY",
-    "production": false,
-    "androidVerified": false,
-    "runtime": "rc4.165 complete post-hydration rerender candidate",
-    "nextGate": "DEVICE_RC4165_FINAL_CANARY"
+    "status": "RC4167_CODE_CI_PASS_PREVIEW_PARITY_PENDING",
+    "nextGate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY"
   },
   "status": "POST_DRAFT_SEASON_COMPANION_RC4161_CANDIDATE",
-  "gate": "RC4166_CI_AND_PREVIEW_DEPLOY",
+  "gate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY",
   "nextGate": "Device acceptance only after repository/checkpoint reconciliation; no rc4.160 retest.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
@@ -296,7 +292,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260901T1058Z-v217",
+  "handoff_generation": "20260901T1812Z-v218",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
