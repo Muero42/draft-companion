@@ -173,3 +173,12 @@ These are now repaired for v217 before reseal:
 - stale v215/v216/draft-day/current-Bigsby pointers explicitly rejected as current authority.
 
 No runtime/model code was changed by this handoff repair; it is a takeover-integrity correction designed specifically to prevent older documentation from overriding newer fixes.
+
+
+## 2026-09-01 — rc4.161 preview deployment repair
+- Device screenshot exposed that the season-preview URL was still delivering rc4.159 despite rc4.161 source being complete on the season branch.
+- AUTO diagnosed this as a deployment/parity defect rather than a runtime-model failure and synchronized the season-preview runtime assets on gh-pages from the canonical season branch.
+- Verified gh-pages head after sync: `0fdefada9fa4b751b490f552d07e6d47e5fb068e`.
+- Verified on gh-pages: app.js, index.html, sw.js and manifest.webmanifest all advertise/load v11.8.0-rc4.161.
+- Do not treat the earlier rc4.159 browser screenshot as rc4.161 acceptance evidence.
+- Remaining gate is unchanged: DEVICE_RC4161_ACCEPTANCE on physical Android, then continue Season Companion development.
