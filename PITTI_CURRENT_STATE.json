@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T1058Z-v217",
-  "updated_at": "2026-09-01T11:00:00Z",
+  "updated_at": "2026-09-01T11:03:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -19,7 +19,7 @@
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
       "project_guardrails": "PASS",
-      "head": "78838542e3c686493396eaa95333e727fc944f65"
+      "head": "035f821358ca7f0799a08d59fad9ec2da8de9506"
     },
     "android_accepted": "v11.8.0-rc4.158",
     "preview_candidate": "v11.8.0-rc4.161"
@@ -54,7 +54,7 @@
     ]
   },
   "currentWork": {
-    "status": "HANDOFF_V217_SEALED_RC4161_ACCEPTANCE_ONLY",
+    "status": "HANDOFF_V217_SEALED_RC4161_CI_GREEN",
     "nextGate": "DEVICE_RC4161_ACCEPTANCE"
   },
   "invariants": {
@@ -162,8 +162,8 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "USER_ACTION_REQUIRED",
-      "reason": "rc4.161 is code/CI complete; only physical Android runtime acceptance cannot be simulated.",
-      "evaluated_at": "2026-09-01T11:00:00Z"
+      "reason": "Handoff v217 and rc4.161 are fully repository/CI reconciled. Only physical Android acceptance remains.",
+      "evaluated_at": "2026-09-01T11:03:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
