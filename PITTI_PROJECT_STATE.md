@@ -123,3 +123,9 @@ Canonical continuation trigger: **PITTI AUTO**
 - Therefore the earlier rc4.160 screenshot without Bigsby was NOT evidence of a stale/partial Sleeper roster response. Do not encode the earlier intended Bigsby add as historical fact.
 - Charbonnet on Reserve/IR remains a confirmed live roster state.
 - Re-verify current live roster/ownership after the now-completed Bigsby transaction; FA-vs-Roster must use the new live state.
+
+## 2026-09-01 — Mevis early-add gate
+- Fresh public Week-1 evidence checked before encoding: FantasyPros Aug-31 consensus projects Harrison Mevis at 8.4 points, K2 by projection; RotoBaller Aug-31 Week-1 kicker tiers rank him K10/Tier 3. This is meaningful but not consensus proof of a locked elite K1.
+- Mevis is therefore WATCH_NOT_AUTO_ADD, not an automatic drop trigger. His Rams scoring environment and potential season-hold value justify an early-add exception only if live league ownership/market-loss risk plus his projected replacement edge clear the opportunity cost of the weakest roster option.
+- Preserve pre-Week-1 contingent RB option value: do not sacrifice a meaningful RB lottery ticket merely to avoid streaming K.
+- The app Special Teams model now carries this explicit Mevis early-add watch; live Sleeper FA/ownership remains mandatory before any concrete add/drop recommendation.
