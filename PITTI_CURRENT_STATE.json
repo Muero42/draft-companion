@@ -7,14 +7,14 @@
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.172"
+    "source_candidate": "v11.8.0-rc4.173"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.172 TEST-ONLY E2E PASS",
+    "season_candidate": "v11.8.0-rc4.173 STARTUP-RESILIENCE CANDIDATE",
     "candidate_branch": "main",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.172",
+    "test_challenger": "v11.8.0-rc4.173",
     "ci": {
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
@@ -23,16 +23,16 @@
       "scope": "rc4.169 workspace isolation + per-surface fail-closed + controlled season ranking refresh"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "none promoted for device until automated E2E passes",
-    "android_authority": "v11.8.0-rc4.171 observed/rejected",
+    "preview_candidate": "v11.8.0-rc4.173 pending CI",
+    "android_authority": "v11.8.0-rc4.172 observed/rejected",
     "latest_package_sha256": "sha256:c3f1b5fca3ea51c6f16e5c4c5337c97e7e828614b2fc234ac9c522f99e066620",
     "package_reference_run": 33543153583,
     "deployed_pages_app_byte_parity_with_main": false,
     "deployed_pages_head": "Cloudflare main rc4.170 PASS; gh-pages/season-preview rc4.169 pending rc4.170 sync",
-    "installed_android": "v11.8.0-rc4.171",
-    "latest_android_observed": "v11.8.0-rc4.171",
+    "installed_android": "v11.8.0-rc4.172",
+    "latest_android_observed": "v11.8.0-rc4.172",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
-    "last_device_failure": "rc4.171 installed; app still hangs / refresh buttons ineffective"
+    "last_device_failure": "rc4.172 installed; screenshot shows ranking freshness rendered but Sleeper live-state freshness remained at the static dash and both Season refresh controls were ineffective."
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -64,8 +64,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4172_AUTOMATED_E2E_PASS_DEVICE_PROMOTION_NOT_YET_DONE",
-    "nextGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL"
+    "status": "RC4173_STARTUP_RESILIENCE_CANDIDATE",
+    "nextGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -76,19 +76,19 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "main currently rc4.171; physical Android/PWA is rc4.171 but functionally rejected; no further device install before automated Season E2E PASS",
+  "source_authority": "main rc4.172 device-rejected; rc4.173 candidate isolates malformed legacy research-cache rows and prevents optional research-cache UI from aborting Season startup.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "RUNNING",
-    "active": [],
-    "ready": [
+    "active": [
       {
-        "id": "rc4172-final-ci",
-        "task": "Pass main reseal CI after automated E2E; then one final device confirmation only."
+        "id": "rc4173-startup-resilience",
+        "task": "Validate rc4.173 malformed-cache startup recovery and interaction gates before any further device test."
       }
     ],
+    "ready": [],
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
@@ -291,8 +291,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Main reseal CI repair remains executable.",
-      "evaluated_at": "2026-09-01T19:01:00Z"
+      "reason": "Executable rc4.173 validation work remains.",
+      "evaluated_at": "2026-09-01T19:05:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
