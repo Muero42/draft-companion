@@ -2628,15 +2628,20 @@ function renderRosterFaAudit(rows,rankedAvailable,draftComplete){
 function renderSpecialTeamsBoard(){
   const c=lastDraftContext;if(!c?.draftComplete||!els.waiverList)return'';
   const dst=c.availableDST||[],ks=c.availableK||[];
-  const dstNames=new Map([
-    ['JAX',1],['LAC',2],['PIT',3],['SEA',4]
-  ]);
-  const kProj=new Map([['Cameron Dicker',8.7],['Harrison Mevis',8.4],['Brandon Aubrey',8.3],['Jake Bates',8.2],['Jason Myers',8.0],["Ka'imi Fairbairn",8.0],['Cam Little',7.9],['Tyler Loop',7.9]]);
-  const d=dst.map(p=>({p,rank:dstNames.get(String(p.team||p.name||'').toUpperCase())||99})).filter(x=>x.rank<99).sort((a,b)=>a.rank-b.rank);
+  const rb26=[
+    ['JAX',1,1,'CLE',16.5],['LAC',2,1,'ARI',18],['PIT',3,1,'ATL',19.25],['SEA',4,1,'NE',20.5],['HOU',5,1,'BUF',21.5],['DEN',6,1,'KC',23],['LAR',7,1,'SF',22.5],
+    ['KC',8,2,'DEN',20.5],['TEN',9,2,'NYJ',18.5],['DET',10,2,'NO',21.25],['PHI',11,3,'WSH',20.5],['CHI',12,3,'CAR',22.5],['BAL',13,3,'IND',22.5],
+    ['MIN',14,4,'GB',21.5],['LV',15,4,'MIA',21],['BUF',16,4,'HOU',23],['NYJ',17,4,'TEN',18.5],['ATL',18,4,'PIT',22.25]
+  ];
+  const aliases={JAC:'JAX',LA:'LAR',LAC:'LAC',WSH:'WAS',WAS:'WAS',LV:'LV'};
+  const rbMap=new Map(rb26.map(x=>[x[0],{rank:x[1],tier:x[2],opp:x[3],implied:x[4]}]));
+  const normTeam=t=>aliases[String(t||'').toUpperCase()]||String(t||'').toUpperCase();
+  const d=dst.map(p=>({p,rb:rbMap.get(normTeam(p.team||p.name))})).filter(x=>x.rb).sort((a,b)=>a.rb.rank-b.rb.rank);
+  const kProj=new Map([['Cameron Dicker',8.7],['Harrison Mevis',8.4],['Brandon Aubrey',8.3],['Jake Bates',8.2],['Jason Myers',8.0],["Ka'imi Fairbairn",8.0],['Cam Little',7.9],['Tyler Loop',7.9],['Evan McPherson',7.7],['Chris Boswell',7.6]]);
   const k=ks.map(p=>({p,proj:kProj.get(p.name)})).filter(x=>Number.isFinite(x.proj)).sort((a,b)=>b.proj-a.proj);
-  const dHtml=d.length?d.slice(0,5).map((x,i)=>'<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">D/ST · RotoBaller Week 1 Tier/Rank · Ownership live geprüft</div></div><div><b>W1 #'+x.rank+'</b></div></div>').join(''):'<div class="notice">Keine der aktuell verifizierten RotoBaller-Top-D/ST ist im Sleeper-FA-Pool.</div>';
-  const kHtml=k.length?k.slice(0,5).map((x,i)=>'<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">K · FantasyPros Week-1-Projektion · Ownership live geprüft</div></div><div><b>'+x.proj.toFixed(1)+' proj.</b></div></div>').join(''):'<div class="notice">Keiner der aktuell verifizierten Top-Kicker ist im Sleeper-FA-Pool.</div>';
-  return '<div class="coach-section-title">WEEK 1 · D/ST STREAMING</div><div class="notice ok">Matchup + Mindestqualität bleiben Gate. RotoBaller Week 1 ist Spezial-Layer; Weeks 1–4 wird für Hold-Horizon separat gewertet. Keine schwache Defense wird nur wegen eines Papier-Matchups automatisch freigegeben.</div>'+dHtml+'<div class="coach-section-title">WEEK 1 · KICKER</div>'+kHtml;
+  const dHtml=d.length?d.slice(0,7).map((x,i)=>'<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">D/ST · RotoBaller W1 #'+x.rb.rank+' · Tier '+x.rb.tier+' · vs '+esc(x.rb.opp)+' · Opp implied '+x.rb.implied+' · Sleeper frei</div></div><div><b>'+(x.rb.tier<=2?'TARGET':'WATCH')+'</b></div></div>').join(''):'<div class="notice">Keine RotoBaller-Top-18-D/ST ist aktuell im Sleeper-FA-Pool.</div>';
+  const kHtml=k.length?k.slice(0,7).map((x,i)=>'<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">K · FantasyPros W1 Consensus-Projektion · Sleeper frei</div></div><div><b>'+x.proj.toFixed(1)+' proj.</b></div></div>').join(''):'<div class="notice">Keiner der aktuell verifizierten Top-10-Kicker ist im Sleeper-FA-Pool.</div>';
+  return '<div class="coach-section-title">WEEK 1 · D/ST STREAMING</div><div class="notice ok">RotoBaller W1: Rank + Tier + Gegner + Vegas-Implied-Points. Quality-Floor: Tier 5/6 ausgeschlossen; Tier 4 nur Notfall. Weeks 1–4 wird vor finalem Add als Hold-Horizon gegengeprüft.</div>'+dHtml+'<div class="coach-section-title">WEEK 1 · KICKER</div>'+kHtml;
 }
 
 function renderWaiverWorkspace(draftComplete){
