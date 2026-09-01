@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T09:27:00Z",
+  "updated_at": "2026-09-01T09:31:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -75,12 +75,6 @@
     "active": [],
     "ready": [
       {
-        "id": "trade-offer-engine",
-        "lane": "trade",
-        "task": "Advance trade target discovery toward concrete give/get construction, opponent utility, fairness and acceptance plausibility without external execution.",
-        "priority": 70
-      },
-      {
         "id": "weekly-lineup-model",
         "lane": "lineup",
         "task": "Advance weekly Start/Sit model beyond ROS rank using weekly/matchup/role/health evidence with fail-closed freshness.",
@@ -106,6 +100,12 @@
         "lane": "waiver",
         "task": "Await CI verification of executable Waiver v2 guard.",
         "priority": 95
+      },
+      {
+        "id": "trade-offer-engine",
+        "lane": "trade",
+        "task": "Trade Board v4 implemented; await CI/syntax verification before marking complete.",
+        "priority": 70
       }
     ],
     "blocked_user": [
@@ -138,8 +138,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Trade, lineup and special-teams READY lanes remain while Waiver CI waits.",
-      "evaluated_at": "2026-09-01T09:27:00Z"
+      "reason": "Lineup and special-teams READY lanes remain.",
+      "evaluated_at": "2026-09-01T09:31:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
