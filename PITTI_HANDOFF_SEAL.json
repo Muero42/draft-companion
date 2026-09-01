@@ -2,9 +2,9 @@
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260901T2210Z-v224",
   "created_at": "2026-09-01T20:09:00Z",
-  "status": "PASS",
-  "handoff_ready": true,
-  "second_pass_pass": true,
+  "status": "SUPERSEDED_PENDING_RESEAL",
+  "handoff_ready": false,
+  "second_pass_pass": false,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_CURRENT_STATE.json": "ef54193fe747ffa960e4dded4302554e2f966597",
@@ -76,5 +76,5 @@
       "static screenshot does not prove navigation or full hydration"
     ]
   },
-  "note": "v224 repairs stale handoff semantics and preserves the new rc4.176 device evidence. Installed/observed is explicitly distinct from accepted."
+  "note": "Takeover AUTO modified checkpoint/contract files after v224; strict seal integrity is intentionally pending until CI and Season E2E pass, then reseal."
 }
