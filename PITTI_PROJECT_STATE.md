@@ -374,3 +374,9 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Effective immediately: no further preview/device candidate may be promoted until a browser-equivalent automated Season E2E gate passes startup hydration, Kader refresh click, Rankings refresh click, visible busy/success/error transitions, bounded network timeout handling, no indefinite loading, Draft workspace isolation, and per-surface fail-closed isolation.
 - Physical device testing is only final confirmation after automated PASS, never the primary debugging mechanism.
 - rc4.171 is recorded as installed/observed but functionally rejected.
+
+
+## 2026-09-01 — rc4.172 automated gate result
+- rc4.172 remained test-only while branch gates ran. Branch head d653293fce545d5ea67aa00ec52811643cf2acb6 passed package, behavioral contract, guardrails, and Cloudflare checks before merge.
+- New mandatory interaction regression verifies observable Kader/Ranking refresh handlers, immediate busy state, recovery to enabled controls, and bounded Sleeper timeouts. rc4.172 merged only after those automated gates passed.
+- Physical device remains rc4.171 rejected. No rc4.172 device confirmation until main reseal CI is green.

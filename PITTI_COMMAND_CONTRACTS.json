@@ -147,20 +147,20 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.171 installed but rejected",
-    "androidAuthority": "v11.8.0-rc4.171 observed installed, NOT accepted",
-    "sourceAuthority": "main rc4.171; no next device candidate until automated E2E PASS",
+    "productionControl": "v11.8.0-rc4.171 installed/rejected",
+    "androidAuthority": "v11.8.0-rc4.171 observed/rejected",
+    "sourceAuthority": "v11.8.0-rc4.172 automated E2E PASS on main",
     "latestPackageReextract": "rc4.169 PASS on main ca75081e4361092e42eb75d5568a21dfe69cca33",
     "latestPackageSha256": "sha256:c3f1b5fca3ea51c6f16e5c4c5337c97e7e828614b2fc234ac9c522f99e066620",
     "packageReferenceRun": 33543153583,
     "deployedPagesVersion": "rc4.170 main; preview rc4.169 pending",
     "deployedPagesAppByteParityWithMain": false,
-    "currentResearchGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE",
-    "exactNextAction": "Autonomously create/run browser-equivalent Season E2E covering initial hydration, Kader refresh click, Rankings refresh click, visible busy/error/success transitions, and bounded timeout; forbid device promotion on any failure.",
-    "runtimeVersion": "rc4.171 installed/rejected",
+    "currentResearchGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
+    "exactNextAction": "Final server-side reseal/CI, then one device refresh to rc4.172 for confirmation.",
+    "runtimeVersion": "rc4.172 source; rc4.171 installed/rejected",
     "latestEvidenceBackup": "Draft backups retained as immutable historical evidence only; current roster comes from Sleeper league state."
   },
-  "currentGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE",
+  "currentGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
   "handoffGeneration": "20260901T2050Z-v222",
   "handoff_generation": "20260901T2050Z-v222",
   "statusCommand": {

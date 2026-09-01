@@ -85,8 +85,8 @@
     "active": [],
     "ready": [
       {
-        "id": "automated-season-e2e-gate",
-        "task": "Build and pass a browser-equivalent automated Season startup + click-interaction + timeout/error E2E gate before creating/promoting any further device candidate."
+        "id": "rc4172-final-ci",
+        "task": "Pass main reseal CI after automated E2E; then one final device confirmation only."
       }
     ],
     "waiting_external": [],
@@ -291,8 +291,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Automated E2E gate work remains executable.",
-      "evaluated_at": "2026-09-01T18:50:00Z"
+      "reason": "Main reseal CI repair remains executable.",
+      "evaluated_at": "2026-09-01T19:01:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
