@@ -7,8 +7,8 @@ assert.deepEqual(sanitize([null,1,'x',[],{}, {playerKey:'p'}]),[{}, {playerKey:'
 const set=a.indexOf("setWorkspace(localStorage.getItem('v117_workspace')||'roster')");
 const guarded=a.indexOf("try{updateResearchCacheStatus()}catch",set);
 const rehydrate=a.indexOf('rehydrateDerivedExpertPanelsOnStartup();',guarded);
-const freshness=a.indexOf('renderSeasonLiveStateFreshness();',rehydrate);
-const bootstrap=a.indexOf('const rosterResult=await bootstrapSeasonWorkspace();',freshness);
+const marker=a.indexOf("seasonLiveStateAge.textContent='JS gestartet'",rehydrate);
+const bootstrap=a.indexOf('const rosterResult=await bootstrapSeasonWorkspace();',marker);
 const ranks=a.indexOf('void refreshSeasonRankings({auto:true});',bootstrap);
 assert(set>=0&&guarded>set&&rehydrate>guarded&&marker>rehydrate&&bootstrap>marker&&ranks>bootstrap,'automatic Season startup sequence invalid');
 assert(!a.includes('bindCriticalSeasonControlsEarly'),'obsolete manual Season early binding resurrected');
