@@ -1,7 +1,7 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
 const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8'),html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 assert.ok(app.length>380000,'app truncation '+app.length);
-assert.ok(Number((app.match(/const APP_VERSION='v11\\.8\\.0-rc4\\.(\\d+)'/)||[])[1])>=176);
+assert.ok(Number((app.match(/const APP_VERSION='v11\.8\.0-rc4\.(\d+)'/)||[])[1])>=176);
 assert.ok(app.includes('function setWorkspace('));
 assert.ok(app.includes("document.querySelectorAll('[data-workspace-target]').forEach(btn=>btn.addEventListener('click',()=>setWorkspace(btn.dataset.workspaceTarget)))"));
 for(const name of ['roster','waiver','trade','live','draft'])assert.ok(html.includes('data-workspace-target="'+name+'"'),'tab '+name);
