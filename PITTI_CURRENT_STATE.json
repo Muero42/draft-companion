@@ -7,14 +7,14 @@
     "repo": "Muero42/draft-companion",
     "branch": "season-companion-rc4.159",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.165"
+    "source_candidate": "v11.8.0-rc4.166"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.163",
-    "season_candidate": "v11.8.0-rc4.165",
+    "season_candidate": "v11.8.0-rc4.166",
     "candidate_branch": "season-companion-rc4.159",
-    "android_acceptance_pending": false,
-    "test_challenger": "v11.8.0-rc4.165",
+    "android_acceptance_pending": true,
+    "test_challenger": "v11.8.0-rc4.166",
     "ci": {
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
@@ -23,7 +23,7 @@
       "scope": "rc4.165 complete post-hydration season surface rerender + aligned gate state"
     },
     "android_accepted": "v11.8.0-rc4.163",
-    "preview_candidate": "v11.8.0-rc4.165",
+    "preview_candidate": "v11.8.0-rc4.166",
     "android_authority": "v11.8.0-rc4.163",
     "latest_package_sha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
     "package_reference_run": null,
@@ -60,8 +60,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4165_DEPLOYED_FINAL_DEVICE_CANARY",
-    "nextGate": "DEVICE_RC4165_FINAL_CANARY"
+    "status": "RC4166_SOURCE_FIXED_DEPLOY_PENDING",
+    "nextGate": "RC4166_CI_AND_PREVIEW_DEPLOY"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -77,17 +77,16 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "USER_ACTION_REQUIRED",
-    "active": [],
-    "ready": [],
-    "waiting_external": [],
-    "blocked_user": [
+    "status": "ACTIVE",
+    "active": [
       {
-        "id": "rc4165-final-canary",
-        "task": "Reload rc4.165 once on physical Android and capture Waiver/FA + Trade. This is now only the final browser/device canary after autonomous cold-start contract and all CI gates passed.",
-        "blocking_scope": "physical Android browser/service-worker/live Sleeper runtime only"
+        "id": "rc4166-ci-deploy",
+        "task": "Run all release gates and deploy rc4.166 preview after mobile-safe season bootstrap fix."
       }
     ],
+    "ready": [],
+    "waiting_external": [],
+    "blocked_user": [],
     "completed_recent": [
       {
         "id": "auto-protocol-hardening",
@@ -223,13 +222,18 @@
         "id": "rc4165-autonomous-startup-gate",
         "result": "PASS: complete startup contract now requires canonical lastDraftContext before roster FA/trade/waiver/action/status rerender; all three CI gates green at 10ed99243dc8d4b158a44dc7aa8fefdcfd801e06. Preview files already byte-identical/deployed.",
         "at": "2026-09-01T12:28:00Z"
+      },
+      {
+        "id": "rc4165-device-failure-root-cause",
+        "result": "Physical Android rc4.165 failed: Waiver/Trade remained static no-draft placeholders. Re-audit found season bootstrap still coupled draft+picks to the large NFL players endpoint via fetchDraft Promise.all; a mobile timeout aborts all season hydration while catch only exposed failure on roster. rc4.166 separates small completion proof from 15s player load and propagates causal fail-closed state to season surfaces.",
+        "at": "2026-09-01T12:31:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "All repository/browser-equivalent checks available autonomously are green. Only physical Android service-worker/live-Sleeper canary remains.",
-      "evaluated_at": "2026-09-01T12:28:00Z"
+      "allowed": false,
+      "code": "ACTIVE_WORK",
+      "reason": "rc4.166 CI/deploy remains executable.",
+      "evaluated_at": "2026-09-01T12:31:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
