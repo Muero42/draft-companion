@@ -1,12 +1,32 @@
-# PITTI NEW CHAT BOOTSTRAP — v221
-Generation: `20260901T2038Z-v221`
+# PITTI NEW CHAT BOOTSTRAP — v222
+Generation: `20260901T2050Z-v222`
+
+## Current authority
 - POST_DRAFT_SEASON_COMPANION.
-- Main source candidate: rc4.170 at `862e3e92a9b72ec4f2aa5ac923bdd2bd56659a44`.
-- Installed Android/PWA: rc4.169; user reported roster stuck on loading and refresh ineffective.
-- rc4.170 removes Cloudflare watcher from live-roster transport. Live roster loads directly from bounded-timeout Sleeper draft/league-roster endpoints.
-- Explicit Kader aktualisieren control has busy/error feedback and fresh-origin slot->roster recovery.
-- Watcher remains evidence-only; D1 quota cannot hang roster hydration.
+- Main/runtime observed: rc4.171.
+- Physical Android/PWA: rc4.171 is installed, but FUNCTIONALLY REJECTED: app still hangs and refresh controls do not produce the required behavior.
+- Do not infer acceptance from installed version.
+- Strict release policy restored: **autonomous tests first, device install last**.
+
+## Mandatory release gate
+`AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE`
+Before any next device candidate is promoted, automated browser-equivalent E2E must PASS for:
+1. initial Season hydration,
+2. Kader refresh click and visible busy -> success/error transition,
+3. Rankings refresh click and visible busy -> success/error transition,
+4. bounded network timeout/failure handling,
+5. no indefinite loading state,
+6. Draft-only UI hidden outside Draft-Archiv,
+7. Waiver/Trade/Live surfaces remain isolated/fail-closed.
+
+Manual device testing is FINAL CONFIRMATION ONLY after automated PASS. No device-side trial-and-error.
+
 ## AUTO queue takeover
-- AUTO: continuous same-turn; no progress/empty/false continuation responses. Do NOT repeat rc4.160 device testing.
-- Next gate: RC4170_PREVIEW_THEN_DEVICE_REFRESH.
-- STATUS is report-only.
+AUTO/AUTO BLOCK is continuous same-turn execution. Re-inventory after every package.
+Never send status/progress/acknowledgement messages while executable AUTO work remains.
+Empty assistant response after tool work is forbidden.
+No “AUTO läuft weiter” messages.
+No micro-deployment storm.
+
+## STATUS
+Report known state only; do not work/poll.

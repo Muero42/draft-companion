@@ -1,5 +1,14 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v221
-Generation: `20260901T2038Z-v221`
-PASS requires rc4.170 main, installed rc4.169 until refresh, direct Sleeper roster transport with bounded timeouts, no watcher dependency in fetchSeasonLeagueState, explicit live roster refresh feedback, transaction canary preserved, watcher v0.2.3 evidence-only/D1 fix preserved, AUTO continuity/no-output rules, STATUS report-only, next gate RC4170_PREVIEW_THEN_DEVICE_REFRESH.
+# PITTI HANDOFF COMPLETENESS MATRIX — v222
+Generation: `20260901T2050Z-v222`
 
-- Empty assistant response after tool work is forbidden.
+PASS requires:
+- installed Android/PWA = rc4.171 observed;
+- rc4.171 functionally rejected;
+- no acceptance inferred from version installation;
+- next gate = AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE;
+- automated Season E2E covers startup, Kader click, Rankings click, timeout/failure, no indefinite loading, workspace isolation, surface fail-closed isolation;
+- no next device promotion until E2E PASS;
+- device canary is final confirmation only;
+- manual trial-and-error forbidden;
+- AUTO continuous/no progress/no empty response;
+- STATUS report-only.

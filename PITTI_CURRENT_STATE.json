@@ -1,20 +1,20 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260901T2038Z-v221",
-  "updated_at": "2026-09-01T18:38:00Z",
+  "handoff_generation": "20260901T2050Z-v222",
+  "updated_at": "2026-09-01T18:50:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.170"
+    "source_candidate": "v11.8.0-rc4.171"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
     "season_candidate": "v11.8.0-rc4.170",
     "candidate_branch": "main",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.170",
+    "test_challenger": "NONE_UNTIL_AUTOMATED_E2E_PASS",
     "ci": {
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
@@ -23,12 +23,16 @@
       "scope": "rc4.169 workspace isolation + per-surface fail-closed + controlled season ranking refresh"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "v11.8.0-rc4.170",
-    "android_authority": "v11.8.0-rc4.169",
+    "preview_candidate": "none promoted for device until automated E2E passes",
+    "android_authority": "v11.8.0-rc4.171 observed installed, NOT accepted",
     "latest_package_sha256": "sha256:c3f1b5fca3ea51c6f16e5c4c5337c97e7e828614b2fc234ac9c522f99e066620",
     "package_reference_run": 33543153583,
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "Cloudflare main rc4.170 PASS; gh-pages/season-preview rc4.169 pending rc4.170 sync"
+    "deployed_pages_head": "Cloudflare main rc4.170 PASS; gh-pages/season-preview rc4.169 pending rc4.170 sync",
+    "installed_android": "v11.8.0-rc4.171",
+    "latest_android_observed": "v11.8.0-rc4.171",
+    "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
+    "last_device_failure": "rc4.171 installed; app still hangs / refresh buttons ineffective"
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -60,8 +64,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4170_MAIN_MERGED_PREVIEW_PENDING",
-    "nextGate": "RC4170_PREVIEW_THEN_DEVICE_REFRESH"
+    "status": "RC4171_REJECTED_DEVICE_TRIAL_AND_ERROR_STOPPED",
+    "nextGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -72,19 +76,19 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "v11.8.0-rc4.170 merged main source candidate; installed Android/PWA observed by user is rc4.169; live roster now sourced directly from Sleeper",
+  "source_authority": "main currently rc4.171; physical Android/PWA is rc4.171 but functionally rejected; no further device install before automated Season E2E PASS",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "RUNNING",
-    "active": [
+    "active": [],
+    "ready": [
       {
-        "id": "rc4170-preview",
-        "task": "Synchronize rc4.170 to gh-pages/season-preview, verify parity, then stop at one device refresh."
+        "id": "automated-season-e2e-gate",
+        "task": "Build and pass a browser-equivalent automated Season startup + click-interaction + timeout/error E2E gate before creating/promoting any further device candidate."
       }
     ],
-    "ready": [],
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
@@ -272,18 +276,28 @@
         "id": "rc4169-pr-gates",
         "result": "PR #90 exact head 09146c965530c2d6eeda341fbc078e0aa14c9f19 PASS: Candidate Package, Release Contract, Project Guardrails, Cloudflare Pages. Merged to main as ca75081e4361092e42eb75d5568a21dfe69cca33.",
         "at": "2026-09-01T18:24:00Z"
+      },
+      {
+        "id": "rc4171-device-rejection",
+        "result": "User confirmed rc4.171 was already installed and still hung. This invalidates the recent device-first trial-and-error sequence. rc4.171 is observed, not accepted.",
+        "at": "2026-09-01T18:50:00Z"
+      },
+      {
+        "id": "device-first-policy-revoked",
+        "result": "Reinstated strict release discipline: autonomous tests first; no preview/device promotion until full automated Season startup + interaction gate passes.",
+        "at": "2026-09-01T18:50:00Z"
       }
     ],
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "rc4.170 preview parity executable.",
-      "evaluated_at": "2026-09-01T18:38:00Z"
+      "reason": "Automated E2E gate work remains executable.",
+      "evaluated_at": "2026-09-01T18:50:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260901T2038Z-v221",
+    "generation": "20260901T2050Z-v222",
     "transaction_in_progress": false,
     "status": "PASS",
     "second_pass_pass": true

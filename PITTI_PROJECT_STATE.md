@@ -366,3 +366,11 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - rc4.170 removes watcher transport from roster authority. It retrieves draft identity directly from Sleeper with 6s timeout and league rosters directly from Sleeper with 7s timeout, resolves user roster by cached userId -> slot_to_roster_id -> draft_order, and builds ownership locally.
 - Added explicit `Kader aktualisieren` control with busy/success/error feedback and a bootstrap concurrency gate. Watcher remains evidence-only, so D1 quota cannot hang live roster hydration.
 - Candidate PR #91 gates PASS after updating legacy transport regressions; merged main as `862e3e92a9b72ec4f2aa5ac923bdd2bd56659a44`. Main runtime/Cloudflare deployment passed; v221 reseals metadata before one preview sync/device refresh.
+
+
+## 2026-09-01 — release-discipline correction after rc4.171
+- User confirmed rc4.171 had already been installed despite status records still claiming rc4.169/170. rc4.171 still hangs and refresh controls remain ineffective.
+- This proves the recent workflow regressed into device-side trial-and-error and that canonical installed-version tracking was stale.
+- Effective immediately: no further preview/device candidate may be promoted until a browser-equivalent automated Season E2E gate passes startup hydration, Kader refresh click, Rankings refresh click, visible busy/success/error transitions, bounded network timeout handling, no indefinite loading, Draft workspace isolation, and per-surface fail-closed isolation.
+- Physical device testing is only final confirmation after automated PASS, never the primary debugging mechanism.
+- rc4.171 is recorded as installed/observed but functionally rejected.

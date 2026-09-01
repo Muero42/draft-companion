@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260901T2038Z-v221",
-  "created_at": "2026-09-01T18:38:00Z",
+  "handoff_generation": "20260901T2050Z-v222",
+  "created_at": "2026-09-01T18:50:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "2058f215e20e1b67de717dc21d2df6421f39ed85",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "952304b4a3eb9f86753d249002534d067d03e2aa",
-    "PITTI_COMMAND_CONTRACTS.json": "aa4c495ec93a3f41a77617526635e5e2fc9b2c27",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "df9675fab0e53508ed9eaa1da2a66fe40dee2b7a",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "8ea09129e81763127e360ba32862a2bfd93ef8b9",
-    "PITTI_EXECUTION_LOCK.json": "c00db97919e343cd0937c32977cd3c739d31a5cb",
-    "PITTI_PROJECT_STATE.md": "e49cd3103caaa8bd74cfb6b50a953177e526671b",
+    "PITTI_CURRENT_STATE.json": "69d441e1cc001a1f976e2bdebbf0e8799aea5006",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "64a68dc9f179ea3e7c77427613e7f5f0e79f8c2b",
+    "PITTI_COMMAND_CONTRACTS.json": "8bddedca483e2178b7ad51c2be3a8097a637ad84",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "45451aed8824313e91ca2ebe0d5fee955a295da4",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "df56bb039a00bde003ba7a202cfbc0e491b9e78c",
+    "PITTI_EXECUTION_LOCK.json": "bf2e1387e0a1ef6df470ad50ea78ef1ca17379f0",
+    "PITTI_PROJECT_STATE.md": "7cd64ac0306ca2f7b61f5975ef731ae5b167427f",
     "PITTI_AUTO_PREFLIGHT.md": "db5b19a99010e59501b6b57818b56495a9f6c41f",
     "app.js": "6a8e28b4d5fb614c0446c491581c86d894a98b4a",
     "live-surface-v3.js": "ecbf92859390cd28b1d6b625d856801f5ad1a149"
@@ -22,7 +22,7 @@
     "repo": "Muero42/draft-companion",
     "branch": "season-companion-rc4.159",
     "branch_name_is_runtime_version": false,
-    "source_candidate": "v11.8.0-rc4.170",
+    "source_candidate": "v11.8.0-rc4.171",
     "last_observed_android": "v11.8.0-rc4.166 REJECTED season startup",
     "mode": "POST_DRAFT_SEASON_COMPANION",
     "current_roster_authority": "live Sleeper league state",
@@ -34,7 +34,8 @@
     "last_limited_accepted_android": "v11.8.0-rc4.161",
     "preview_state": "gh-pages season-preview rc4.166; rc4.167 parity pending",
     "source_branch": "main",
-    "installed_android": "v11.8.0-rc4.169"
+    "installed_android": "v11.8.0-rc4.171",
+    "android_acceptance": "REJECTED"
   },
   "checks": {
     "generation_consistent": true,
@@ -55,12 +56,11 @@
     "android_refresh_pending": true,
     "watcher_d1_v023_preserved": true
   },
-  "exact_gate": "RC4170_PREVIEW_THEN_DEVICE_REFRESH",
+  "exact_gate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE",
   "next_sequence": [
-    "main v221 reseal CI",
-    "one rc4.170 preview sync",
-    "parity verification",
-    "one Android/PWA refresh"
+    "automated browser-equivalent Season E2E",
+    "fix until PASS without device promotion",
+    "single final device confirmation"
   ],
-  "note": "v221 fixes rc4.169 indefinite roster loading by direct Sleeper transport."
+  "note": "v222 restores test-first discipline after rc4.171 device-side trial-and-error regression."
 }
