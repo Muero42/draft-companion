@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T10:53:00Z",
+  "handoff_generation": "20260901T1058Z-v217",
+  "updated_at": "2026-09-01T10:58:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -19,7 +19,7 @@
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
       "project_guardrails": "PASS",
-      "head": "200250560c8218b8d64dafbbca9ea721597ce854"
+      "head": "b307fda15a5c20d63940e1c746a876ed7c49b3ef"
     },
     "android_accepted": "v11.8.0-rc4.158",
     "preview_candidate": "v11.8.0-rc4.161"
@@ -33,9 +33,9 @@
     }
   },
   "live_roster_canary": {
-    "required": true,
-    "expected_delta": "Zach Charbonnet on IR/reserve; Tank Bigsby on current roster",
-    "verification": "PENDING_DEVICE_RUNTIME"
+    "required": false,
+    "verification": "PASS_DEVICE_RC4160",
+    "observed": "Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR; transaction auto-detected without user disclosing drop."
   },
   "season_contract": {
     "live_roster_and_ownership": "Sleeper league-state via pitti-watcher v0.2.0",
@@ -54,8 +54,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4.161_FA_POOL_SELFTEST_AND_PREVIEW_BUILD",
-    "nextGate": "CI_GREEN_THEN_PROMOTE_PREVIEW"
+    "status": "RC4.161_CI_GREEN_READY_FOR_DEVICE_ACCEPTANCE",
+    "nextGate": "DEVICE_RC4161_ACCEPTANCE"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -71,24 +71,18 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "RUNNING",
+    "status": "USER_ACTION_REQUIRED",
     "active": [],
-    "ready": [
+    "ready": [],
+    "waiting_external": [],
+    "blocked_user": [
       {
-        "id": "rc4161-selftest-ci",
-        "lane": "release",
-        "task": "Run executable FA ownership regression + full release gates on rc4.161 and repair autonomously.",
-        "priority": 100
+        "id": "rc4161-device-acceptance",
+        "task": "Open/reload rc4.161 on Android only after new chat reconciles checkpoint against repository. Acceptance target: live Sleeper roster remains correct and Waiver/FA no longer emits false zero-FA HOLD.",
+        "blocking_scope": "device acceptance only"
       }
     ],
-    "waiting_external": [],
-    "blocked_user": [],
     "completed_recent": [
-      {
-        "id": "auto-protocol-hardening",
-        "result": "Persistent queue/state-machine design authorized by user; implementation in progress.",
-        "at": "2026-09-01T09:15:00Z"
-      },
       {
         "id": "auto-protocol-hardening",
         "result": "Persistent AUTO queue/state-machine + no-output guard implemented and CI-verified: Project Guardrails PASS, release-contract-v2 PASS, candidate package PASS on head b3745e4c679beb8929f8485d89798bb9d2158007.",
@@ -158,13 +152,18 @@
         "id": "fa-pool-bootstrap-ci",
         "result": "PASS head 200250560c8218b8d64dafbbca9ea721597ce854: all three CI gates successful. Root cause was unguarded startup bootstrap zero-rank join; fixed fail-closed.",
         "at": "2026-09-01T10:42:00Z"
+      },
+      {
+        "id": "rc4161-selftest-ci",
+        "result": "PASS head b307fda15a5c20d63940e1c746a876ed7c49b3ef: release contract, project guardrails and candidate package all success; executable season FA ownership regression included.",
+        "at": "2026-09-01T10:56:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "rc4.161 self-test/release work READY.",
-      "evaluated_at": "2026-09-01T10:53:00Z"
+      "allowed": true,
+      "code": "USER_ACTION_REQUIRED",
+      "reason": "rc4.161 is code/CI complete; only physical Android runtime acceptance cannot be simulated.",
+      "evaluated_at": "2026-09-01T10:58:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
