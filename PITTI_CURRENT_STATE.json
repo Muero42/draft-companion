@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T10:19:00Z",
+  "updated_at": "2026-09-01T10:21:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -73,7 +73,14 @@
     "mode": "AUTO",
     "status": "AUTO_RUNNING",
     "active": [],
-    "ready": [],
+    "ready": [
+      {
+        "id": "mevis-decision-research-final",
+        "lane": "research",
+        "task": "Lock evidence conclusion: Mevis cross-source W1 range and Bigsby/Spears/Gainwell role ordering; prevent future recency/sunk-cost rationale.",
+        "priority": 70
+      }
+    ],
     "waiting_external": [
       {
         "id": "mevis-drop-gate-ci",
@@ -153,8 +160,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Mevis model/UI lanes await CI; no user action required.",
-      "evaluated_at": "2026-09-01T10:19:00Z"
+      "reason": "CI queued; independent evidence-lock lane READY.",
+      "evaluated_at": "2026-09-01T10:21:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
