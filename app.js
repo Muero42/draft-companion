@@ -2476,6 +2476,14 @@ function renderRosterBenchAudit(rows,players,current,draftComplete){
 function postDraftRosterCounts(rows){
   const c={QB:0,RB:0,WR:0,TE:0};for(const x of rows)if(c[x.p?.pos]!=null)c[x.p.pos]++;return c;
 }
+function seasonRosterCapitalScore(x){
+  let score=0;const rank=Number(x.r?.rank),adp=Number(x.a);
+  if(Number.isFinite(rank))score+=clamp((rank-95)/12,-4,7);else score+=5;
+  if(Number.isFinite(adp)&&Number.isFinite(rank))score+=clamp((rank-adp)/22,-2,2);
+  if(x.seasonStatus==='RESERVE'||x.p?.injury)score+=String(x.p?.injury||'').toUpperCase()==='IR'?4:2;
+  if(x.p?.pos==='RB')score-=1.25;
+  return score;
+}
 function postDraftOpportunityProxy(x){
   let v=0;
   const ev=actionableResearchEvents(x.p),all=researchPlayerState(x.p);
@@ -2519,7 +2527,8 @@ function renderRosterFaAudit(rows,rankedAvailable,draftComplete){
   if(!els.rosterFaStatus||!els.rosterFaList)return;
   if(!draftComplete){els.rosterFaStatus.className='notice';els.rosterFaStatus.textContent='FA-Vergleich wird nach Draftabschluss aktiv.';els.rosterFaList.innerHTML='';return;}
   const counts=postDraftRosterCounts(rows);
-  const drops=rows.filter(x=>(Number(x.pk?.pick_no)||999)>80&&(!x.r||Number(x.r?.rank)>90)).map(x=>({...x,capitalScore:rosterBenchCapitalScore(x)})).sort((a,b)=>b.capitalScore-a.capitalScore).slice(0,7);
+  const liveSeason=rows.some(x=>x?.seasonStatus);
+  const drops=rows.filter(x=>liveSeason?(!x.r||Number(x.r?.rank)>90):((Number(x.pk?.pick_no)||999)>80&&(!x.r||Number(x.r?.rank)>90))).map(x=>({...x,capitalScore:liveSeason?seasonRosterCapitalScore(x):rosterBenchCapitalScore(x)})).sort((a,b)=>b.capitalScore-a.capitalScore).slice(0,7);
   const fas=rankedAvailable.slice(0,45).map(p=>({p,r:rankFor(p.name,p.pos),a:adpFor(p.name)})).filter(x=>x.r);
   const pairs=[];
   for(const fa of fas){let best=null;for(const drop of drops){const z=postDraftSwapScore(drop,fa,counts);if(!best||z.score>best.score)best=z;}if(best)pairs.push(best);}
