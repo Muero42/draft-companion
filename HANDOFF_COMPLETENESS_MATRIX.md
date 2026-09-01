@@ -1,69 +1,53 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v215
-Generation: `20260831T1455Z-v215`
+# PITTI HANDOFF COMPLETENESS MATRIX — v217
+Generation: `20260901T1058Z-v217`
 
-Takeover is PASS only if ALL items below are recognized without contradiction:
+Takeover is PASS only if ALL current items below are recognized without contradiction.
 
-- Android accepted/observed = **v11.8.0-rc4.158**.
-- Source/deployed runtime = **main/gh-pages v11.8.0-rc4.158**.
-- Runtime parity = **13/13 PASS**.
-- rc4.158 gates = **Project Guardrails PASS · Release Contract PASS · Candidate Package/Re-Extract PASS**.
-- Android rc4.158 smoke = PASS; **Expert Delta button visible**.
-- Device v4 expert day baseline = **9/9 COMPLETE**.
-- Runtime state = **DRAFT_READY_FROZEN**; no runtime/model changes absent a critical draft-blocking defect.
-- Exact next gate = **DRAFT_DAY_TIME_DEPENDENT_FINALIZATION**.
-- Before 19:00 CEST: material-news-only; do not repeat completed static work.
-- At/after 19:00: reconcile waiver claims/destinations and only affected player paths.
-- Around 19:40–19:45: one **Experten-Delta prüfen**; no blanket expert refresh.
-- Around 19:50: operational freeze; 20:00 real draft.
+## Current runtime/release
+- Mode = **POST_DRAFT_SEASON_COMPANION**.
+- Branch = `season-companion-rc4.159` (historical branch label only).
+- Source/preview candidate = **v11.8.0-rc4.161** across app.js/index.html/sw.js/manifest.
+- Accepted Android authority = **v11.8.0-rc4.158** until rc4.161 physical acceptance.
+- Real draft `1366053132970233856` = complete, immutable history.
+- Current roster/ownership authority = live Sleeper league state.
+- rc4.160 device transaction canary = PASS for automatic roster transaction detection: Mevis rostered, Bigsby absent, Charbonnet Reserve/IR.
+- rc4.160 FA audit = FAIL because it could render false `0 ranked FAs → HOLD`.
+- rc4.161 fixes ownership/ranking coupling and adds executable `tools/season-fa-ownership-regression.mjs`.
+- Candidate package, release contract and project guardrails for rc4.161 code = PASS.
+- Exact next gate = **DEVICE_RC4161_ACCEPTANCE**.
+- Do not repeat rc4.160 device test.
 
-## Immutable league/manager locks
-- 10 teams, Half-PPR, slot 9, 15 rounds.
-- Exact order = **1 Michael · 2 Pascal Voerde · 3 Marc Düsseldorf · 4 Thomas · 5 Björn · 6 Pascal Gelderner · 7 Giuliano · 8 Bastian · 9 Muerotechnik · 10 Dutch Marc**.
-- No Michael K; no Moers Venom; Bastian is slot 8.
-- Pascal Voerde and Pascal Gelderner are distinct.
-- Michael history includes 2025.
-- Pascal Voerde identity chain = Bracht Eagles 2017–2022 + Voerde Eagles 2023–2025.
-- Björn 2021 theme and 2023 autodraft excluded from ordinary human-preference learning.
-- Exact picks = **9/12 · 29/32 · 49/52 · 69/72 · 89/92 · 109/112 · 129/132 · 149**.
-- Starter maxima are **not roster caps**.
-- No K/DST draft.
-- Exactly one QB; no QB2.
-- Geno Smith and Aaron Rodgers are hard user exclusions.
+## Season anti-regression locks
+- Draft roster, current roster and transaction history are distinct.
+- Post-draft free agents are players unowned across all live Sleeper rosters; “undrafted” is never sufficient.
+- Live ownership discovery must not depend on expert-ranking hydration.
+- A live FA pool with rankings not ready must show “ranking not ready” and must not infer HOLD.
+- FA actions fail closed if current league state cannot be resolved.
+- No automatic external add/drop, FAAB claim or trade.
+- Mevis/Bigsby decisions must ignore acquisition recency/sunk cost.
+- Price, Watson and Downs are not casual K-drop candidates.
+- Historical Mevis comparison ordering before the actual transaction: Bigsby → Spears → Gainwell.
+- Current Sleeper state supersedes that historical comparison after any transaction.
 
-## Expert/model locks
-- v4 PRIMARY / v5 CHALLENGER / v3 failsafe.
-- v4 QB = Todd D Clark / Sean Koerner / Justin Boone / Dalton Del Don / Nick Mariano / Pat Fitzmaurice.
-- v4 RB = Ryan Weisse / Kev Wheeler / Dalton Del Don / Nick Mariano / Sean Koerner / Pat Fitzmaurice.
-- v4 WR = Sean Koerner / Justin Boone / Todd D Clark / Pat Fitzmaurice / Nick Mariano / Dalton Del Don.
-- v4 TE = Pat Fitzmaurice / Ryan Weisse / Sean Koerner / Justin Boone / Dalton Del Don / Wolf of Roto Street.
-- Visible expert order is visual only: Sean Koerner → Dalton Del Don → Pat Fitzmaurice → Nick Mariano → Justin Boone → Todd D Clark → Ryan Weisse → Kev Wheeler → Wolf of Roto Street.
-- Missing player rank remains **#– / fehlt**; never substitute another expert.
-- Tiers are display context only.
-- Return-v2 is timing evidence, not an automatic pick command.
+## League/model historical locks that must not regress
+- 10-team Half-PPR, 1QB, user slot 9.
+- Starter maxima are not roster caps.
+- Exactly one QB for user draft strategy; Geno Smith and Aaron Rodgers remain hard user exclusions on the user's draft recommendation surface.
+- v4 PRIMARY / v5 CHALLENGER / v3 failsafe historical model remains preserved.
+- Exact 2026 manager order remains Michael / Pascal Voerde / Marc Düsseldorf / Thomas / Björn / Pascal Gelderner / Giuliano / Bastian / Muerotechnik / Dutch Marc.
+- No Michael K; no Moers Venom; Bastian slot 8.
+- Five-WR historical identity remains DeVonta Smith / Zay Flowers / Emeka Egbuka / Tetairoa McMillan / Jaylen Waddle.
 
-## Completed analyses — do not repeat without new evidence
-- 6,000-draft stochastic stress.
-- Manager/autodraft turn stress.
-- Exact pick-pair execution matrix.
-- Five-WR ceiling/floor/market reconciliation.
-- Josh Jacobs exempt-list / discipline calibration.
-- First-pass final-53 reconciliation.
-- Late-RB opportunity classes.
-- Generic market vs Sleeper/Return-v2 precedence.
-- Key injury/legal price overlays.
+## AUTO takeover integrity
+- Generation must be **20260901T1058Z-v217** across CURRENT / SEAL / CURRENT HANDOFF / BOOTSTRAP / MATRIX / LOCK / COMMAND.
+- AUTO persistent queue = `PITTI_CURRENT_STATE.json:auto_execution_state`.
+- No visible AUTO response while `active` or `ready` is non-empty.
+- After every work package, re-inventory and execute the next safe autonomous package in the SAME turn.
+- Waiting CI/deploy/device gates block only dependent lanes.
+- Forbidden terminal/progress messages include “AUTO läuft”, “ich mache weiter”, “CI läuft”, “Commit erstellt”, “keine Nutzerhandlung nötig”.
+- Empty assistant response after tool work is forbidden.
+- Visible stop requires active=[], ready=[], stop_evaluation.allowed=true and an approved stop code.
+- STATUS never starts work or tool calls.
 
-## Five-WR identity lock
-Correct cluster = **DeVonta Smith · Zay Flowers · Emeka Egbuka · Tetairoa McMillan · Jaylen Waddle**.
-Never substitute Higgins or McConkey.
-
-## Live manager/autodraft locks
-- LIVE grid = all nine opponents, ? / AUTO / MANUELL.
-- Mode change is forward-looking from current pick; earlier history must not be rewritten.
-- One timer-expiry pick is insufficient to classify AUTO.
-- Confirmed AUTO disables ordinary historical human-preference layer and uses dedicated autodraft logic.
-- Bastian #8 can be a meaningful mid-round WR snipe risk; Dutch Marc #10 is more variable.
-
-## Takeover integrity
-- Generation must be **20260831T1455Z-v215** across CURRENT / LOCK / COMMAND / SEAL / CURRENT HANDOFF / NEW CHAT BOOTSTRAP / MATRIX.
-- If any authority still says rc4.152/153/154/155/157 as current, takeover FAILS and the handoff transaction must be repaired before ordinary work.
-- Library mirror may be stale; current verified GitHub repo/device evidence wins.
+## Stale-pointer rejection
+Any current pointer that says v215/v216, DRAFT_READY_FROZEN, DRAFT_DAY_TIME_DEPENDENT_FINALIZATION, Bigsby still rostered after the Mevis transaction, rc4.159/160 as the current candidate, or rc4.160 still requiring another device test is stale historical context and MUST NOT override v217.
