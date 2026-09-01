@@ -30,3 +30,5 @@ No micro-deployment storm.
 
 ## STATUS
 Report known state only; do not work/poll.
+
+- Do NOT repeat rc4.160 device testing.
