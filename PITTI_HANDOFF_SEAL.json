@@ -2,9 +2,9 @@
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260901T2050Z-v222",
   "created_at": "2026-09-01T18:50:00Z",
-  "status": "PASS",
-  "handoff_ready": true,
-  "second_pass_pass": true,
+  "status": "SUPERSEDED_PENDING_RESEAL",
+  "handoff_ready": false,
+  "second_pass_pass": false,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_CURRENT_STATE.json": "54ac337d90d21af2deeeefc49571de4432b57909",
@@ -62,5 +62,5 @@
     "fix until PASS without device promotion",
     "single final device confirmation"
   ],
-  "note": "rc4.172 passed branch automated interaction/package/behavioral/guardrail gates; installed device remains rc4.171 rejected until final confirmation."
+  "note": "rc4.173 startup-resilience candidate changed runtime/checkpoint bytes after rc4.172 device failure; old integrity seal intentionally superseded until main promotion and reseal."
 }

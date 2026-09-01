@@ -7,32 +7,32 @@
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.172"
+    "source_candidate": "v11.8.0-rc4.173"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.172 TEST-ONLY E2E PASS",
+    "season_candidate": "v11.8.0-rc4.173 STARTUP-RESILIENCE CANDIDATE",
     "candidate_branch": "main",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.172",
+    "test_challenger": "v11.8.0-rc4.173",
     "ci": {
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
-      "project_guardrails": "PASS_ON_PR_HEAD; MAIN_RESEAL_IN_PROGRESS",
-      "validated_code_head": "ca75081e4361092e42eb75d5568a21dfe69cca33",
-      "scope": "rc4.169 workspace isolation + per-surface fail-closed + controlled season ranking refresh"
+      "project_guardrails": "PASS",
+      "validated_code_head": "f1704d947dccc9fcf1bf6b750728fae68fd41897",
+      "scope": "rc4.173 legacy-cache startup resilience + strengthened Season interaction gate"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "none promoted for device until automated E2E passes",
-    "android_authority": "v11.8.0-rc4.171 observed/rejected",
-    "latest_package_sha256": "sha256:c3f1b5fca3ea51c6f16e5c4c5337c97e7e828614b2fc234ac9c522f99e066620",
-    "package_reference_run": 33543153583,
+    "preview_candidate": "v11.8.0-rc4.173 branch preview deployed PASS",
+    "android_authority": "v11.8.0-rc4.172 observed/rejected",
+    "latest_package_sha256": "sha256:0fc95a3e7613017e5dd65616afe9ab2be7272d838b5f87fb830ddc2ab66204c4",
+    "package_reference_run": 33548313095,
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "Cloudflare main rc4.170 PASS; gh-pages/season-preview rc4.169 pending rc4.170 sync",
-    "installed_android": "v11.8.0-rc4.171",
-    "latest_android_observed": "v11.8.0-rc4.171",
+    "deployed_pages_head": "rc4.173 branch preview f1704d9 PASS; main not yet promoted",
+    "installed_android": "v11.8.0-rc4.172",
+    "latest_android_observed": "v11.8.0-rc4.172",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
-    "last_device_failure": "rc4.171 installed; app still hangs / refresh buttons ineffective"
+    "last_device_failure": "rc4.172 installed; screenshot shows ranking freshness rendered but Sleeper live-state freshness remained at the static dash and both Season refresh controls were ineffective."
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -64,8 +64,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4172_AUTOMATED_E2E_PASS_DEVICE_PROMOTION_NOT_YET_DONE",
-    "nextGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL"
+    "status": "RC4173_ALL_PR_GATES_PASS_MAIN_PROMOTION_PENDING",
+    "nextGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -76,7 +76,7 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "main currently rc4.171; physical Android/PWA is rc4.171 but functionally rejected; no further device install before automated Season E2E PASS",
+  "source_authority": "main rc4.172 device-rejected; rc4.173 candidate isolates malformed legacy research-cache rows and prevents optional research-cache UI from aborting Season startup.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
@@ -85,8 +85,8 @@
     "active": [],
     "ready": [
       {
-        "id": "rc4172-final-ci",
-        "task": "Pass main reseal CI after automated E2E; then one final device confirmation only."
+        "id": "rc4173-main-promotion",
+        "task": "Align runtime/checkpoint lock for rc4.173, merge green PR to main, reseal, rerun main gates, then allow one final device confirmation only if green."
       }
     ],
     "waiting_external": [],
@@ -291,8 +291,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Main reseal CI repair remains executable.",
-      "evaluated_at": "2026-09-01T19:01:00Z"
+      "reason": "Green rc4.173 candidate still requires main promotion/reseal before device confirmation.",
+      "evaluated_at": "2026-09-01T19:15:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },

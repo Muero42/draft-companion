@@ -1,0 +1,15 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+const a=fs.readFileSync('app.js','utf8');
+assert(a.includes("const APP_VERSION='v11.8.0-rc4.173'"),'rc4.173 version missing');
+const ss=a.indexOf('function sanitizeResearchEvents('),se=a.indexOf('\nfunction loadResearchEvents',ss);
+assert(ss>=0&&se>ss,'sanitizeResearchEvents missing');
+const src=a.slice(ss,se).replace('function sanitizeResearchEvents','function');
+const sanitize=new Function('return ('+src+')')();
+assert.deepEqual(sanitize([null,1,'x',[],{}, {playerKey:'p'}]),[{}, {playerKey:'p'}]);
+const set=a.indexOf("setWorkspace(localStorage.getItem('v117_workspace')||'roster')");
+const guarded=a.indexOf("try{updateResearchCacheStatus()}catch",set);
+const live=a.indexOf("if(els.seasonRefreshLiveBtn)els.seasonRefreshLiveBtn.onclick",set);
+const ranks=a.indexOf("if(els.seasonRefreshRanksBtn)els.seasonRefreshRanksBtn.onclick",set);
+const fresh=a.indexOf('renderSeasonLiveStateFreshness();',ranks);
+assert(set>=0&&guarded>set&&live>guarded&&ranks>live&&fresh>ranks,'critical Season control startup sequence invalid');
+console.log('SEASON_STARTUP_RESILIENCE_PASS rc4.173');

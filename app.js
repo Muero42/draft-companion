@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.172';
+const APP_VERSION='v11.8.0-rc4.173';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRefreshLiveBtn','seasonRankingAge','seasonRankingStatus','seasonRefreshRanksBtn','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2919,7 +2919,8 @@ function speedTier(current,next){
 }
 function researchCacheKey(){return 'v117_researchEvidence';}
 const RESEARCH_CACHE_MAX_EVENTS=320;
-function loadResearchEvents(){try{const v=JSON.parse(localStorage.getItem(researchCacheKey())||'[]');return Array.isArray(v)?v:[]}catch{return []}}
+function sanitizeResearchEvents(v){return Array.isArray(v)?v.filter(e=>e&&typeof e==='object'&&!Array.isArray(e)):[]}
+function loadResearchEvents(){try{return sanitizeResearchEvents(JSON.parse(localStorage.getItem(researchCacheKey())||'[]'))}catch{return[]}}
 function compactResearchEvents(events){
   const rows=Array.isArray(events)?events:[],seen=new Set(),out=[];
   for(let i=rows.length-1;i>=0;i--){const e=rows[i],id=evidenceIdentity(e);if(seen.has(id))continue;seen.add(id);out.push(e);if(out.length>=RESEARCH_CACHE_MAX_EVENTS)break}
@@ -3780,7 +3781,8 @@ function setWorkspace(name){
 document.querySelectorAll('[data-workspace-target]').forEach(btn=>btn.addEventListener('click',()=>setWorkspace(btn.dataset.workspaceTarget)));
 setDraftSurface(localStorage.getItem('v118_draftSurface')||'mock');
 setWorkspace(localStorage.getItem('v117_workspace')||'roster');
-updateResearchCacheStatus();
+// Optional research-cache UI must never be allowed to abort Season control wiring.
+try{updateResearchCacheStatus()}catch(e){console.warn('Research cache status startup recovery',e)}
 
 // Derived v2/v3/v4/v5 panels are intentionally not persisted as a second full localStorage
 // copy. Rebuild them deterministically from the persisted per-expert caches on every app
