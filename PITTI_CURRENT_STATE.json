@@ -13,7 +13,8 @@
     "accepted_android": "v11.8.0-rc4.158",
     "season_candidate": "v11.8.0-rc4.160",
     "candidate_branch": "season-companion-rc4.159",
-    "android_acceptance_pending": true
+    "android_acceptance_pending": true,
+    "test_challenger": "v11.8.0-rc4.160"
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -56,5 +57,6 @@
       "Aaron Rodgers"
     ],
     "starter_maxima_not_roster_caps": true
-  }
+  },
+  "source_authority": "v11.8.0-rc4.160 Season Companion source candidate; Android authority v11.8.0-rc4.158"
 }
