@@ -8,3 +8,7 @@ First takeover action: reconcile v224 against actual main/CI/package/deploy evid
 AUTO/AUTO BLOCK: same-turn continuous execution; re-inventory after every package; no progress/status/acknowledgement messages, empty replies, or “AUTO läuft weiter”. STATUS is report-only.
 
 Do not resurrect rc4.171–175 device-debug loops, rc4.175 truncated runtime, stale v222/v223 authority fields, draft-as-season-gate architecture, or manual Kader/Ranking refresh controls removed by rc4.176.
+
+
+## TAKEOVER QUEUE CONTRACT
+AUTO queue takeover: on a new-chat PITTI AUTO, reconstruct stale/empty active+ready from CURRENT.currentWork and actual repository/CI evidence before evaluating any prior handoff stop. Do NOT repeat rc4.160 device testing; its transaction-detection canary is historical PASS evidence.
