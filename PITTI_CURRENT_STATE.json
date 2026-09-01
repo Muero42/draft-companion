@@ -19,16 +19,16 @@
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
       "project_guardrails": "PASS",
-      "validated_code_head": "f1704d947dccc9fcf1bf6b750728fae68fd41897",
-      "scope": "rc4.173 legacy-cache startup resilience + strengthened Season interaction gate"
+      "validated_code_head": "a902b96b40d916b0f892c918dac453761fc50f41",
+      "scope": "rc4.173 main: legacy-cache startup resilience + strengthened Season interaction gate"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "v11.8.0-rc4.173 branch preview deployed PASS",
+    "preview_candidate": "v11.8.0-rc4.173 main deployed PASS",
     "android_authority": "v11.8.0-rc4.172 observed/rejected",
-    "latest_package_sha256": "sha256:0fc95a3e7613017e5dd65616afe9ab2be7272d838b5f87fb830ddc2ab66204c4",
-    "package_reference_run": 33548313095,
-    "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "rc4.173 branch preview f1704d9 PASS; main not yet promoted",
+    "latest_package_sha256": "sha256:2648118ad21b0a531c9fb7c154a49f7b0d2829aa78e49cb97d3736776a6b1f2f",
+    "package_reference_run": 33548598040,
+    "deployed_pages_app_byte_parity_with_main": true,
+    "deployed_pages_head": "main a902b96b40d916b0f892c918dac453761fc50f41 · Cloudflare Pages deploy PASS",
     "installed_android": "v11.8.0-rc4.172",
     "latest_android_observed": "v11.8.0-rc4.172",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
@@ -64,8 +64,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4173_ALL_PR_GATES_PASS_MAIN_PROMOTION_PENDING",
-    "nextGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE"
+    "status": "RC4173_MAIN_GATES_PASS_RESEAL_PENDING",
+    "nextGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -82,13 +82,13 @@
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "RUNNING",
-    "active": [],
-    "ready": [
+    "active": [
       {
-        "id": "rc4173-main-promotion",
-        "task": "Align runtime/checkpoint lock for rc4.173, merge green PR to main, reseal, rerun main gates, then allow one final device confirmation only if green."
+        "id": "rc4173-reseal",
+        "task": "Reseal canonical rc4.173 main state and verify full main guardrails after seal."
       }
     ],
+    "ready": [],
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
@@ -291,8 +291,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Green rc4.173 candidate still requires main promotion/reseal before device confirmation.",
-      "evaluated_at": "2026-09-01T19:15:00Z"
+      "reason": "Canonical reseal still executable before final device confirmation.",
+      "evaluated_at": "2026-09-01T19:18:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
