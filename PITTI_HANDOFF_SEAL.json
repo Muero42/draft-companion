@@ -2,20 +2,20 @@
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260901T2050Z-v222",
   "created_at": "2026-09-01T18:50:00Z",
-  "status": "SUPERSEDED_PENDING_RESEAL",
-  "handoff_ready": false,
-  "second_pass_pass": false,
+  "status": "PASS",
+  "handoff_ready": true,
+  "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "54ac337d90d21af2deeeefc49571de4432b57909",
+    "PITTI_CURRENT_STATE.json": "271183051b48e14fdeb10c772898da82b011bf92",
     "NEW_CHAT_HANDOFF_CURRENT.md": "d9b76652fcedfe24eb5da22054cc55823e2fb6d9",
-    "PITTI_COMMAND_CONTRACTS.json": "269b00dd85f648018f39d41b841c6f252347f403",
+    "PITTI_COMMAND_CONTRACTS.json": "6f7e4b452708299f5ffeea4b48a066fcb496ac5e",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "73d93695b3d9cda1e6f8d3e84222728c5f16638b",
     "HANDOFF_COMPLETENESS_MATRIX.md": "6ceb0de1389440ae0be3141a88f1cee16012e241",
-    "PITTI_EXECUTION_LOCK.json": "045adccfcdb171fbf7f1b2d4194591ed536f9bb5",
-    "PITTI_PROJECT_STATE.md": "bbdc17dddf7d79b5dc91b236449e89f703f5cf90",
+    "PITTI_EXECUTION_LOCK.json": "0e501d7503def5ee5dc263ded6b841d8cdf7aac1",
+    "PITTI_PROJECT_STATE.md": "8b0263fe181aac7afa841000cc4e5d5f752969cb",
     "PITTI_AUTO_PREFLIGHT.md": "db5b19a99010e59501b6b57818b56495a9f6c41f",
-    "app.js": "0a6cc450762483f6b2eeef3f56ea045a9e587686",
+    "app.js": "88936fc805752a528a8511fea708c628c84a0edd",
     "live-surface-v3.js": "ecbf92859390cd28b1d6b625d856801f5ad1a149"
   },
   "branch_locks": {
@@ -62,5 +62,5 @@
     "fix until PASS without device promotion",
     "single final device confirmation"
   ],
-  "note": "rc4.173 startup-resilience candidate changed runtime/checkpoint bytes after rc4.172 device failure; old integrity seal intentionally superseded until main promotion and reseal."
+  "note": "rc4.173 main startup-resilience state resealed after green PR/main gates; Android rc4.172 remains rejected pending one final rc4.173 device confirmation."
 }
