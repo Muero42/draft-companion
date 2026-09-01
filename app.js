@@ -1514,7 +1514,7 @@ async function jf(url,label,timeoutMs=6500){
   finally{clearTimeout(timer)}
 }
 async function fetchDraft(id){const bust=`${Date.now()}-${Math.random().toString(36).slice(2)}`;const[draft,picks,players]=await Promise.all([jf(`${S}/draft/${id}?_=${bust}`,'Draft'),jf(`${S}/draft/${id}/picks?_=${bust}`,'Picks'),jf(`${S}/players/nfl?_=${bust}`,'Spieler',9000)]);return{draft,picks,players}}
-async function bootstrapSeasonWorkspace(){
+async async function bootstrapSeasonWorkspace(){
   if(!navigator.onLine)return;
   const id=LIVE_DRAFT_ID_2026;
   try{
