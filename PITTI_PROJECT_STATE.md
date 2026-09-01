@@ -91,3 +91,10 @@ Canonical continuation trigger: **PITTI AUTO**
 - Candidate-package failure isolated to the historical rc4.158 expert-delta regression asserting the exact rc4.158 version string after the runtime advanced to rc4.160; functional delta-refresh invariants before that point passed.
 - Regression was corrected to accept rc4.158 and later versions while preserving all behavioral assertions. This is a test-harness compatibility fix, not a runtime model change.
 - Android authority remains rc4.158; rc4.160 remains preview/candidate until all gates PASS and device canary is verified.
+
+## Season Companion model audit — AUTO lane
+- Current rc4.160 already has LIVE Sleeper season roster/ownership, reserve/IR separation, FA-vs-roster pair generation, Waiver Priority v1, Special Teams streaming board, Season Action Board v1 and Trade Target Board v3.
+- Waiver v1 explicitly avoids numeric FAAB without current waiver-week/opponent-budget/market evidence; this fail-closed behavior remains correct.
+- Trade v3 is target discovery only: opponent live rosters and own marginal lineup geometry are present, but market/acceptance plausibility and concrete give/get construction remain intentionally absent.
+- Next model increments remain: Waiver v2 THIS WEEK vs ROS/championship EV; trade offer construction/acceptance plausibility; weekly lineup optimizer; K/DST weekly-source specialization.
+- Live roster/ownership is a hard prerequisite for actionable season recommendations; draft roster is historical fallback only and must fail closed for FA actions when season sync fails.
