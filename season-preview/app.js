@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.166';
+const APP_VERSION='v11.8.0-rc4.168';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -16,16 +16,20 @@ const WATCHER_BASE_URL='https://pitti-watcher.tim-muero.workers.dev';
 const SEASON_LEAGUE_ID_KEY='v118_seasonLeagueId',SEASON_USER_ID_KEY='v118_seasonUserId';
 function sleeperPlayerRow(pid,players){const p=players?.[String(pid)]||{};return{id:String(pid),name:p.full_name||[p.first_name,p.last_name].filter(Boolean).join(' ')||String(pid),pos:p.position||'',team:p.team||'FA',searchRank:Number(p.search_rank),injury:p.injury_status||null,bye:p.bye_week||null,yearsExp:Number.isFinite(Number(p.years_exp))?Number(p.years_exp):null};}
 async function fetchSeasonLeagueState(draft){
-  let leagueId=String(draft?.league_id||store.text(SEASON_LEAGUE_ID_KEY,'')||'').trim();
+  let leagueId=String(store.text(SEASON_LEAGUE_ID_KEY,'')||draft?.league_id||'').trim();
+  // First install / new origin: discover season identity once from immutable draft metadata.
+  // This is identity recovery only; after leagueId is cached, season operation never waits on draft state.
+  if(!leagueId){try{const meta=await jf(`${S}/draft/${LIVE_DRAFT_ID_2026}?_=${Date.now()}`,'Season-Identität',5000);leagueId=String(meta?.league_id||'').trim();if(leagueId)store.setText(SEASON_LEAGUE_ID_KEY,leagueId);}catch{}}
+
   if(!leagueId&&draft?.draft_id){try{const leagues=await jf(`${S}/user/${encodeURIComponent(String(draft.created_by||''))}/leagues/nfl/2026?_=${Date.now()}`,'Ligen',9000);const hit=(leagues||[]).find(l=>String(l.draft_id||'')===String(draft.draft_id));leagueId=String(hit?.league_id||'').trim();}catch{}}
   if(!leagueId)return{ok:false,reason:'NO_LEAGUE_ID'};
   // The draft slot is NOT the Sleeper roster_id. Resolve the user's roster from
   // the canonical draft mapping first; stale cached owner IDs are never authoritative.
-  let userId='',url=new URL(WATCHER_BASE_URL+'/league-state');url.searchParams.set('league_id',leagueId);
+  let userId=String(store.text(SEASON_USER_ID_KEY,'')||'').trim(),url=new URL(WATCHER_BASE_URL+'/league-state');url.searchParams.set('league_id',leagueId);
   let r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('League-State HTTP '+r.status);let v=await r.json();
   const slot=Number(els.slot.value||9),mappedRosterId=Number(draft?.slot_to_roster_id?.[String(slot)]??draft?.slot_to_roster_id?.[slot]);
-  let roster=null;
-  if(Number.isFinite(mappedRosterId))roster=(v.rosters||[]).find(x=>Number(x.roster_id)===mappedRosterId);
+  let roster=userId?(v.rosters||[]).find(x=>String(x.owner_id||'')===userId):null;
+  if(!roster&&Number.isFinite(mappedRosterId))roster=(v.rosters||[]).find(x=>Number(x.roster_id)===mappedRosterId);
   if(!roster){
     const order=draft?.draft_order||{};
     const ownerFromSlot=Object.entries(order).find(([,s])=>Number(s)===slot)?.[0]||'';
@@ -1530,52 +1534,36 @@ async function jf(url,label,timeoutMs=6500){
 async function fetchDraft(id){const bust=`${Date.now()}-${Math.random().toString(36).slice(2)}`;const[draft,picks,players]=await Promise.all([jf(`${S}/draft/${id}?_=${bust}`,'Draft'),jf(`${S}/draft/${id}/picks?_=${bust}`,'Picks'),jf(`${S}/players/nfl?_=${bust}`,'Spieler',9000)]);return{draft,picks,players}}
 async function bootstrapSeasonWorkspace(){
   if(!navigator.onLine)return;
-  const id=LIVE_DRAFT_ID_2026;
   try{
-    // Season bootstrap is intentionally independent from the legacy draft-analysis
-    // transport. On mobile, loading the full Sleeper player directory in the same
-    // Promise.all as draft + picks can time out the entire bootstrap, leaving every
-    // season surface at its static "no draft loaded" placeholder. Fetch the small
-    // canonical draft/picks first, prove completion, then load the player directory.
+    // Season-first authority: current league state is loaded before immutable draft history.
+    // Cached league/user identity is canonical for season operation; draft is optional enrichment.
+    const season=await fetchSeasonLeagueState({});
+    if(!season?.ok)throw new Error(season?.reason||'SEASON_LEAGUE_STATE_UNAVAILABLE');
     const bust=`${Date.now()}-${Math.random().toString(36).slice(2)}`;
-    const [draft,picks]=await Promise.all([
-      jf(`${S}/draft/${id}?_=${bust}`,'Season Draft',6500),
-      jf(`${S}/draft/${id}/picks?_=${bust}`,'Season Picks',6500)
-    ]);
-    const teams=Number(draft.settings?.teams||10),rounds=Number(draft.settings?.rounds||15),total=teams*rounds;
-    const completed=String(draft.status||'').toLowerCase()==='complete'||picks.length>=total;
-    if(!completed)throw new Error('CANONICAL_DRAFT_NOT_COMPLETE');
     const players=await jf(`${S}/players/nfl?_=${bust}`,'Season Spieler',15000);
-    const slot=Number(els.slot.value||9),mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no);
-    const season=await fetchSeasonLeagueState({...draft,draft_id:id}),rows=seasonRosterRows(season,players,mine),available=seasonAvailablePlayers(season,players),availableDST=seasonAvailableSpecialTeams(season,players,'DST'),availableK=seasonAvailableSpecialTeams(season,players,'K');
-    if(!rows)throw new Error(season?.reason||'MY_ROSTER_UNRESOLVED');
-    // Startup bootstrap can run before expert panels/rankCache are hydrated from IndexedDB.
-    // Ownership is already valid at this point, but a rank-gated FA join would then collapse
-    // to zero and falsely render HOLD. Zero ranked skill-position FAs must fail closed here too.
+    let draft=null,picks=[],mine=[],teams=10,total=150,slot=Number(els.slot.value||9);
+    try{
+      const id=LIVE_DRAFT_ID_2026;
+      [draft,picks]=await Promise.all([jf(`${S}/draft/${id}?_=${bust}`,'Draft-Archiv',6500),jf(`${S}/draft/${id}/picks?_=${bust}`,'Draft-Picks-Archiv',6500)]);
+      teams=Number(draft?.settings?.teams||10);total=teams*Number(draft?.settings?.rounds||15);
+      mine=(picks||[]).filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no);
+    }catch(e){console.warn('PITTI optional draft archive unavailable',e)}
+    const rows=seasonRosterRows(season,players,mine),available=seasonAvailablePlayers(season,players),availableDST=seasonAvailableSpecialTeams(season,players,'DST'),availableK=seasonAvailableSpecialTeams(season,players,'K');
+    if(!rows)throw new Error('MY_ROSTER_UNRESOLVED');
     if(!Array.isArray(available)||available.length===0)throw new Error('SEASON_FA_POOL_ZERO_INVALID');
     const counts=postDraftRosterCounts(rows);
     els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper-Kader · '+rows.length+' Spieler · Source of Truth: League-State · Reserve/IR '+rows.filter(x=>x.seasonStatus==='RESERVE').length+' · Auto-Sync beim Start.';
     els.rosterSummary.innerHTML=Object.entries(counts).filter(([,n])=>n).map(([pos,n])=>'<div class="summary-item"><b>'+n+'</b><span>'+pos+'</span></div>').join('');
     els.rosterList.innerHTML=seasonLineupHtml(rows,season);
-    lastDraftContext={id,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:true,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL};
-    // Render season workspaces only AFTER the canonical live context exists. Several
-    // surfaces read lastDraftContext; rendering first made startup look like no draft/FA
-    // state even though Sleeper hydration had succeeded moments earlier.
+    lastDraftContext={id:LIVE_DRAFT_ID_2026,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:!!draft,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL,historicalDraftAvailable:!!draft};
     renderRosterBenchAudit(rows,players,total,true);renderRosterFaAudit(rows,available||[],true);
-    renderTradeWorkspace(picks,players,slot,teams,true);
-    renderWaiverWorkspace(true);renderSeasonActionBoard(true);
-    updateStatus();
+    renderTradeWorkspace(picks,players,slot,teams,true);renderWaiverWorkspace(true);renderSeasonActionBoard(true);updateStatus();
     localStorage.setItem('v118_seasonBootstrapAt',String(Date.now()));
   }catch(e){
-    const reason=e?.message||String(e);
-    console.error('PITTI season bootstrap failed',e);
-    // A startup failure must be visible on every season surface, not only on Kader.
-    // This prevents the static "Noch kein abgeschlossener Draft geladen" placeholder
-    // from masquerading as a legitimate state and gives device canaries a causal code.
+    const reason=e?.message||String(e);console.error('PITTI season bootstrap failed',e);
     if(els.rosterStatus){els.rosterStatus.className='notice warn';els.rosterStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+esc(reason)+' · keine FA-Aktion freigegeben.';}
     const fail='<div class="notice bad">Season Auto-Sync FAIL-CLOSED · '+esc(reason)+' · keine Aktion freigegeben.</div>';
-    if(els.waiverWorkspace)els.waiverWorkspace.innerHTML=fail;
-    if(els.tradeWorkspace)els.tradeWorkspace.innerHTML=fail;
+    if(els.waiverStatus){els.waiverStatus.className='notice bad';els.waiverStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+reason+' · keine Aktion freigegeben.';els.waiverList.innerHTML='';}if(els.tradeStatus){els.tradeStatus.className='notice bad';els.tradeStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+reason+' · keine Aktion freigegeben.';els.tradeList.innerHTML='';}
   }
 }
 async function fetchDraftFresh(id){
@@ -2800,8 +2788,8 @@ function tradeRosterNeed(roster,pos){
 }
 function tradeOfferCandidates(mine,opponent,target){
   const oppNeeds=['RB','WR','TE','QB'].map(pos=>({pos,...tradeRosterNeed(opponent,pos)})).sort((a,b)=>b.need-a.need);
-  const targetRank=Number(target.x.r?.rank);
-  const offers=mine.filter(m=>m.r&&Number.isFinite(m.r.rank)&&['RB','WR','TE'].includes(m.p.pos)&&norm(m.p.name)!==norm(target.x.p.name)).map(give=>{
+  const targetRank=Number(target.r?.rank);
+  const offers=mine.filter(m=>m.r&&Number.isFinite(m.r.rank)&&['RB','WR','TE'].includes(m.p.pos)&&norm(m.p.name)!==norm(target.p.name)).map(give=>{
     const need=oppNeeds.find(n=>n.pos===give.p.pos)?.need||0;
     const marketGap=Math.abs(Number(give.r.rank)-targetRank);
     const ourBench=tradeLineupBenchmark(mine,give.p.pos),ourCost=clamp((ourBench.rank-Number(give.r.rank))*.12,-4,7);
@@ -3749,14 +3737,14 @@ if(els.liveViewBtn)els.liveViewBtn.onclick=()=>setDraftSurface('live');
 if(els.livePreviewBtn)els.livePreviewBtn.onclick=async()=>{try{livePreviewActive=true;els.draftMode.value='live';els.livePreviewExitBtn.hidden=false;els.livePreviewStatus.className='notice warn';els.livePreviewStatus.textContent='Read-only Vorschau aktiv …';await refresh();document.body.classList.add('live-coach-active');els.livePreviewStatus.className='notice ok';els.livePreviewStatus.textContent=`Read-only LIVE-Vorschau bei Pick ${Number(els.livePreviewCutoff.value)+1}. Keine Forecast-/Decision-Fixtures geschrieben.`;}catch(e){livePreviewActive=false;els.livePreviewStatus.className='notice bad';els.livePreviewStatus.textContent=e.message;}};
 if(els.livePreviewExitBtn)els.livePreviewExitBtn.onclick=()=>{livePreviewActive=false;document.body.classList.remove('live-coach-active');els.livePreviewExitBtn.hidden=true;els.livePreviewStatus.className='notice';els.livePreviewStatus.textContent='Vorschau inaktiv. Nächste Analyse verwendet den echten Draftzustand.';};
 function setWorkspace(name){
-  const valid=['draft','roster','waiver','trade','live'];if(!valid.includes(name))name='draft';
+  const valid=['draft','roster','waiver','trade','live'];if(!valid.includes(name))name='roster';
   localStorage.setItem('v117_workspace',name);
   document.querySelectorAll('[data-workspace]').forEach(el=>{el.hidden=el.dataset.workspace!==name});
   document.querySelectorAll('[data-workspace-target]').forEach(btn=>{btn.classList.toggle('active',btn.dataset.workspaceTarget===name);btn.setAttribute('aria-pressed',btn.dataset.workspaceTarget===name?'true':'false')});
 }
 document.querySelectorAll('[data-workspace-target]').forEach(btn=>btn.addEventListener('click',()=>setWorkspace(btn.dataset.workspaceTarget)));
 setDraftSurface(localStorage.getItem('v118_draftSurface')||'mock');
-setWorkspace(localStorage.getItem('v117_workspace')||'draft');
+setWorkspace(localStorage.getItem('v117_workspace')||'roster');
 updateResearchCacheStatus();
 
 // Derived v2/v3/v4/v5 panels are intentionally not persisted as a second full localStorage
