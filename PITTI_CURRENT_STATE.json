@@ -1,20 +1,20 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T10:42:00Z",
+  "updated_at": "2026-09-01T10:50:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "season-companion-rc4.159",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.160"
+    "source_candidate": "v11.8.0-rc4.161"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.158",
-    "season_candidate": "v11.8.0-rc4.160",
+    "season_candidate": "v11.8.0-rc4.161",
     "candidate_branch": "season-companion-rc4.159",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.160",
+    "test_challenger": "v11.8.0-rc4.161",
     "ci": {
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
@@ -22,7 +22,7 @@
       "head": "200250560c8218b8d64dafbbca9ea721597ce854"
     },
     "android_accepted": "v11.8.0-rc4.158",
-    "preview_candidate": "v11.8.0-rc4.160"
+    "preview_candidate": "v11.8.0-rc4.161"
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -54,8 +54,8 @@
     ]
   },
   "currentWork": {
-    "status": "ROSTER_AUTO_SYNC_PASS_FA_BOOTSTRAP_FIX_CI_PASS",
-    "nextGate": "DEVICE_FA_POOL_RECHECK"
+    "status": "RC4.161_FA_POOL_SELFTEST_AND_PREVIEW_BUILD",
+    "nextGate": "CI_GREEN_THEN_PROMOTE_PREVIEW"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -66,22 +66,23 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "v11.8.0-rc4.160 Season Companion source candidate; Android authority v11.8.0-rc4.158",
+  "source_authority": "v11.8.0-rc4.161 Season Companion source candidate; Android authority v11.8.0-rc4.158",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "USER_ACTION_REQUIRED",
+    "status": "AUTO_RUNNING",
     "active": [],
-    "ready": [],
-    "waiting_external": [],
-    "blocked_user": [
+    "ready": [
       {
-        "id": "fa-pool-device-recheck",
-        "task": "Reload rc4.160 once. Verify that startup no longer renders 0-ranked-FA HOLD; expected either populated live FA audit after rankings hydrate or explicit SEASON_FA_POOL_ZERO_INVALID fail-closed.",
-        "blocking_scope": "device-acceptance-only"
+        "id": "rc4161-selftest-ci",
+        "lane": "release",
+        "task": "Run executable FA ownership regression + full release gates on rc4.161 and repair autonomously.",
+        "priority": 100
       }
     ],
+    "waiting_external": [],
+    "blocked_user": [],
     "completed_recent": [
       {
         "id": "auto-protocol-hardening",
@@ -160,10 +161,10 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "Roster transaction auto-detection is proven. Zero-FA startup root cause fixed and CI-verified; one device reload is required for end-to-end acceptance.",
-      "evaluated_at": "2026-09-01T10:42:00Z"
+      "allowed": false,
+      "code": null,
+      "reason": "rc4.161 self-test/release work READY.",
+      "evaluated_at": "2026-09-01T10:50:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
