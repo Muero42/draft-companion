@@ -1,20 +1,19 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v218
-Generation: `20260901T1812Z-v218`
+# PITTI HANDOFF COMPLETENESS MATRIX — v219
+Generation: `20260901T1934Z-v219`
 
 PASS requires all:
 - POST_DRAFT_SEASON_COMPANION.
-- rc4.167 current source candidate; re-read actual branch head at takeover.
+- rc4.168 merged main source candidate at `ec9cd367ce389201b00469cbea7236a1360ca49b`.
+- Current installed Android/PWA is rc4.158 until user device actually refreshes.
+- rc4.167 rejected for real Season startup undefined.r.
+- rc4.168 exact target.x root cause fixed and executable Season runtime regression mandatory.
 - Live Sleeper league state is roster/ownership Source of Truth.
-- Draft 1366053132970233856 complete/immutable; archive/analysis only.
-- rc4.166 physical season startup FAILED; reject and do not retest.
-- Last limited accepted Android authority rc4.161; do not infer rc4.163-166 acceptance.
-- gh-pages season-preview is rc4.166; rc4.167 parity/deploy remains pending.
-- rc4.167 architecture: Kader default, Draft-Archiv, season-first hydration, optional draft history, fresh-origin one-time league identity recovery, real fail-closed status nodes, rc4.167 SW/runtime cache.
-- Transaction canary preserved: Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR.
-- Cloudflare/D1: PITTI primary suspect; direct D1 query unproven; deploy storm from micro-commits confirmed anti-pattern; batch runtime changes/deploys.
-- Frozen retrospective/PC continuation from PROJECT_STATE EOF preserved, ex-ante only.
-- AUTO/AUTO BLOCK continuous same-turn; re-inventory after every package; blocked gates isolate dependent lanes.
-- Never send status/progress/acknowledgement messages while executable AUTO work remains.
+- Draft 1366053132970233856 complete/immutable archive only.
+- Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR.
+- pitti-watcher v0.2.3 D1 previous-snapshot read bounded; D1 quota reset remains external.
+- Current release gate = RC4168_PARITY_THEN_DEVICE_REFRESH.
+- AUTO/AUTO BLOCK continuous same-turn; re-inventory after every package.
+- Never send status/progress/acknowledgement messages while executable work remains.
 - Empty assistant response after tool work is forbidden.
 - STATUS is report-only, no tools/work.
-- Stale v217 pointers and stale old-head CI PASS claims cannot override actual evidence.
+- Cloudflare-bound runtime branches are not micro-checkpoint channels.

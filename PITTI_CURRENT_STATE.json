@@ -1,34 +1,34 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260901T1812Z-v218",
-  "updated_at": "2026-09-01T16:24:00Z",
+  "handoff_generation": "20260901T1934Z-v219",
+  "updated_at": "2026-09-01T17:34:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
-    "branch": "season-companion-rc4.159",
+    "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.167"
+    "source_candidate": "v11.8.0-rc4.168"
   },
   "runtime": {
-    "accepted_android": "v11.8.0-rc4.161",
-    "season_candidate": "v11.8.0-rc4.167",
-    "candidate_branch": "season-companion-rc4.159",
+    "accepted_android": "v11.8.0-rc4.158",
+    "season_candidate": "v11.8.0-rc4.168",
+    "candidate_branch": "main",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.167",
+    "test_challenger": "v11.8.0-rc4.168",
     "ci": {
-      "candidate_package": "PENDING_REVALIDATION",
-      "release_contract_v2": "PENDING_REVALIDATION",
-      "project_guardrails": "PENDING_REVALIDATION",
-      "validated_code_head": null,
-      "scope": "v218 audited handoff + rc4.167 season-first candidate"
+      "candidate_package": "PASS",
+      "release_contract_v2": "PASS",
+      "project_guardrails": "PASS_ON_CANDIDATE_HEAD; MAIN_RESEAL_IN_PROGRESS",
+      "validated_code_head": "ec9cd367ce389201b00469cbea7236a1360ca49b",
+      "scope": "rc4.168 exact Season startup crash fix + executable runtime regression + package re-extract"
     },
-    "android_accepted": "v11.8.0-rc4.161",
-    "preview_candidate": "v11.8.0-rc4.167",
-    "android_authority": "v11.8.0-rc4.161",
-    "latest_package_sha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
-    "package_reference_run": null,
+    "android_accepted": "v11.8.0-rc4.158",
+    "preview_candidate": "v11.8.0-rc4.168",
+    "android_authority": "v11.8.0-rc4.158",
+    "latest_package_sha256": "sha256:584573b5a16fcc07a9667db877066eb1bf9690464b55750388fb4beaa0ac5074",
+    "package_reference_run": 33537987309,
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "gh-pages season-preview currently rc4.166; rc4.167 parity pending"
+    "deployed_pages_head": "Cloudflare main ec9cd367ce389201b00469cbea7236a1360ca49b PASS; gh-pages/season-preview rc4.166 pending rc4.168 sync"
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -44,7 +44,7 @@
     "observed": "Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR; transaction auto-detected without user disclosing drop."
   },
   "season_contract": {
-    "live_roster_and_ownership": "Sleeper league-state via pitti-watcher v0.2.0",
+    "live_roster_and_ownership": "Sleeper league-state via pitti-watcher v0.2.3; /league-state is D1-independent",
     "draft_roster": "historical only",
     "current_roster": "live Sleeper roster",
     "transaction_history": "preserve separately",
@@ -60,8 +60,8 @@
     ]
   },
   "currentWork": {
-    "status": "V218_AUDITED_HANDOFF_RC4167_PREVIEW_PARITY_PENDING",
-    "nextGate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY"
+    "status": "RC4168_MAIN_CI_DEPLOY_PASS_GHPAGES_PARITY_PENDING",
+    "nextGate": "RC4168_PARITY_THEN_DEVICE_REFRESH"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -72,13 +72,18 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "v11.8.0-rc4.167 source candidate; current Sleeper league state is season authority; frozen draft evidence is retrospective authority",
+  "source_authority": "v11.8.0-rc4.168 merged main source candidate; current installed Android/PWA observed by user is rc4.158; current Sleeper league state is season authority; frozen draft evidence is retrospective authority",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "HANDOFF_READY",
-    "active": [],
+    "status": "RUNNING",
+    "active": [
+      {
+        "id": "rc4168-release-parity",
+        "task": "Synchronize rc4.168 runtime to gh-pages/season-preview after exact main release validation, then stop only at the single physical Android/PWA refresh gate."
+      }
+    ],
     "ready": [],
     "waiting_external": [],
     "blocked_user": [],
@@ -232,18 +237,38 @@
         "id": "rc4166-autonomous-validation",
         "result": "PASS: season bootstrap now loads small canonical draft+picks first, verifies completion, then loads large player directory separately; failure is visible on Waiver and Trade. All three gates green and preview deployed.",
         "at": "2026-09-01T12:56:00Z"
+      },
+      {
+        "id": "rc4167-device-equivalent-failure",
+        "result": "User browser preview proved rc4.167 Season bootstrap FAIL-CLOSED in Waiver and Trades with Cannot read properties of undefined (reading 'r'). rc4.167 rejected.",
+        "at": "2026-09-01T17:19:00Z"
+      },
+      {
+        "id": "rc4168-root-cause-runtime-gate",
+        "result": "Exact root cause fixed: tradeOfferCandidates received a row but dereferenced nonexistent target.x.r/target.x.p. rc4.168 uses target.r/target.p and adds executable season-bootstrap runtime regression to package + release gates.",
+        "at": "2026-09-01T17:24:00Z"
+      },
+      {
+        "id": "rc4168-candidate-release",
+        "result": "Branch exact gates PASS; PR #89 merged to main as ec9cd367ce389201b00469cbea7236a1360ca49b. Main Candidate Package + Release Contract and Cloudflare Pages deployment PASS; package artifact 9812410348 digest sha256:584573b5a16fcc07a9667db877066eb1bf9690464b55750388fb4beaa0ac5074. v219 reseals main metadata.",
+        "at": "2026-09-01T17:34:00Z"
+      },
+      {
+        "id": "watcher-d1-v023",
+        "result": "pitti-watcher direct D1 binding found. Historical GROUP BY/JOIN previous-snapshot scan on every 15-minute poll replaced by single previous captured_at snapshot query in v0.2.3; regression added; Workers Build PASS on e4605c9a16ddbec8ff5ee4ab9e3df263f58195c5.",
+        "at": "2026-09-01T17:27:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "Explicit HANDOFF requested; v218 deeply audited. New chat reconstructs preview-parity work from currentWork and actual evidence.",
-      "evaluated_at": "2026-09-01T16:24:00Z"
+      "allowed": false,
+      "code": null,
+      "reason": "rc4.168 release parity work remains executable before the device gate.",
+      "evaluated_at": "2026-09-01T17:34:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260901T1058Z-v217",
+    "generation": "20260901T1934Z-v219",
     "transaction_in_progress": false,
     "status": "PASS",
     "second_pass_pass": true

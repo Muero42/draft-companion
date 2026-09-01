@@ -334,3 +334,18 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - AUTO handoff semantics are now consistent: explicit HANDOFF ends at PROJECT_MILESTONE_REACHED with active=[] and ready=[]; the new chat reconstructs the next executable gate from currentWork + actual evidence. No status/progress/promise-only/empty assistant responses are permitted while AUTO has executable work. STATUS remains report-only.
 - Cloudflare discipline remains mandatory: the Pages-connected runtime branch is not a micro-checkpoint channel. Material runtime work must be batched/tested/deployed once. This handoff audit itself is persisted only because it is a material transition checkpoint.
 - New-chat first release gate: re-read actual branch head and exact-head CI; then verify/deploy rc4.167 preview parity in one batch; only afterward request one physical Android canary. Never repeat rc4.160 or rc4.166 device testing.
+
+
+## 2026-09-01 — rc4.168 exact Season startup fix + automated runtime gate
+- User browser evidence rejected rc4.167: Waiver/FA and Trades entered FAIL-CLOSED with `Cannot read properties of undefined (reading 'r')`.
+- Exact root cause: `tradeOfferCandidates(mine, opponent, target)` was passed a row directly but dereferenced nonexistent `target.x.r` and `target.x.p.name`. rc4.168 uses `target.r` and `target.p.name`.
+- Added `tools/season-bootstrap-runtime-regression.mjs`; it executes the real Trade offer function with fixture rows, forbids `target.x`, asserts result shape, protects Season render ordering and preserves FAIL-CLOSED semantics. It runs in Candidate Package and Release Contract.
+- rc4.168 branch gates PASS; PR #89 merged to main as `ec9cd367ce389201b00469cbea7236a1360ca49b`. Main Candidate Package + Release Contract + Cloudflare Pages deploy PASS. Current device remains rc4.158 pending one final refresh.
+- Initial main guardrail failures after merge were metadata-only: sealed v218 still locked rc4.167/app blob. v219 atomically reseals the promoted runtime.
+
+## 2026-09-01 — pitti-watcher v0.2.3 D1 rows_read correction
+- Earlier draft-companion-only audit was incomplete. Separate repo `Muero42/pitti-watcher` directly binds D1 as `env.DB`.
+- Every 15-minute trending run previously reconstructed previous player samples using `GROUP BY player_id` + `MAX(captured_at)` over growing `trending_snapshots` history. With 96 scheduled runs/day, rows_read grows with retained history.
+- All rows in a polling batch share `captured_at`; v0.2.3 therefore selects exactly the immediately previous captured_at snapshot, preserving intended comparison while bounding the read to about one batch.
+- Regression forbids GROUP BY/JOIN in the previous-snapshot query. Commit `e4605c9a16ddbec8ff5ee4ab9e3df263f58195c5`; Workers Build PASS.
+- D1-backed watcher feed/history may remain quota-blocked until Cloudflare reset. `/league-state` remains D1-independent.

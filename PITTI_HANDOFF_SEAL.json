@@ -1,28 +1,28 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260901T1812Z-v218",
-  "created_at": "2026-09-01T16:28:00Z",
+  "handoff_generation": "20260901T1934Z-v219",
+  "created_at": "2026-09-01T17:34:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "ef96e2af56f95dae9d4046bb747c838cd94bc88b",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "4082c93b77431727ab187904d8fd299b4bb7b666",
-    "PITTI_COMMAND_CONTRACTS.json": "228e9cb7445d2fbd08283890c950732edb90fa80",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "1cda17bb0882d811e5302504bc334a41f4192918",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "02a900d73afe9206177abca07b278eb4ba006fa0",
-    "PITTI_EXECUTION_LOCK.json": "5133385a0979d2f3a8885c0e3e9d41703da36cff",
-    "PITTI_PROJECT_STATE.md": "2669748db30c90492fb625048ef3960f40423646",
+    "PITTI_CURRENT_STATE.json": "28107382d981286feac52a5472e55d1b21f163f3",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "679ea974d223a894e3512c3c4eb3700bb0567023",
+    "PITTI_COMMAND_CONTRACTS.json": "69ad4e779e2cf0508f697bae1eb32e024e4f799f",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "c2a6efa6f0563d495f02b3a9bb650b2edde3f859",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "af2fcff39d367f2d2aec930596552ded789e9ec6",
+    "PITTI_EXECUTION_LOCK.json": "d8f0461c087841dbb7f533ed67fe7b6cefd3cb8d",
+    "PITTI_PROJECT_STATE.md": "f4e7de1342b1dcef02e05bf481e992187ebf7d3f",
     "PITTI_AUTO_PREFLIGHT.md": "db5b19a99010e59501b6b57818b56495a9f6c41f",
-    "app.js": "4fa012ee5b0b272e66d8614ad67d36590a8bdbd2",
+    "app.js": "d1c9fbb2dc30de4cc8a3ef23a833bfcc7bbcab1e",
     "live-surface-v3.js": "ecbf92859390cd28b1d6b625d856801f5ad1a149"
   },
   "branch_locks": {
     "repo": "Muero42/draft-companion",
     "branch": "season-companion-rc4.159",
     "branch_name_is_runtime_version": false,
-    "source_candidate": "v11.8.0-rc4.167",
+    "source_candidate": "v11.8.0-rc4.168",
     "last_observed_android": "v11.8.0-rc4.166 REJECTED season startup",
     "mode": "POST_DRAFT_SEASON_COMPANION",
     "current_roster_authority": "live Sleeper league state",
@@ -32,7 +32,9 @@
     "auto_contract": "continuous same-turn; no progress/empty/promise-only terminal messages; STATUS report-only",
     "cloudflare_rule": "batch runtime commits/deploys; no micro-checkpoint use of auto-deployed branch",
     "last_limited_accepted_android": "v11.8.0-rc4.161",
-    "preview_state": "gh-pages season-preview rc4.166; rc4.167 parity pending"
+    "preview_state": "gh-pages season-preview rc4.166; rc4.167 parity pending",
+    "source_branch": "main",
+    "installed_android": "v11.8.0-rc4.158"
   },
   "checks": {
     "generation_consistent": true,
@@ -46,14 +48,19 @@
     "auto_contract_propagated": true,
     "last_limited_accepted_android_rc4161": true,
     "preview_rc4167_parity_pending": true,
-    "exact_head_ci_must_be_reverified_from_actual_github_evidence_on_takeover": true
+    "exact_head_ci_must_be_reverified_from_actual_github_evidence_on_takeover": true,
+    "rc4168_runtime_fix": true,
+    "rc4168_runtime_regression": true,
+    "main_package_release_deploy_pass": true,
+    "android_refresh_pending": true,
+    "watcher_d1_v023_preserved": true
   },
-  "exact_gate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY",
+  "exact_gate": "RC4168_PARITY_THEN_DEVICE_REFRESH",
   "next_sequence": [
-    "new chat reconciles v218 files with actual repo/CI evidence",
-    "verify/deploy rc4.167 preview parity autonomously as one batch",
-    "only after parity request one physical Android season-first canary",
-    "continue season companion from live Sleeper state; do not reopen draft bootstrap trial-and-error"
+    "main v219 reseal CI",
+    "one gh-pages/season-preview rc4.168 sync",
+    "byte parity verification",
+    "one Android/PWA refresh"
   ],
-  "note": "v218 deep-audited handoff. Seal attests file integrity/authority consistency; exact-head CI is external evidence and must be re-read at takeover rather than frozen into metadata."
+  "note": "v219 atomically reseals rc4.168 after main promotion; historical rc4.161/163/166 observations do not override current installed rc4.158."
 }

@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-01T12:19:00Z",
+  "updatedAt": "2026-09-01T17:34:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,30 +11,30 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.167",
+    "appVersion": "v11.8.0-rc4.168",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.166 rejected season startup",
-    "latestPreinstallVerified": "rc4.158 Candidate Package Gate + Release Contract + Project Guardrails PASS",
+    "latestAndroidObserved": "v11.8.0-rc4.158 currently installed on user device",
+    "latestPreinstallVerified": "rc4.168 Candidate Package + Release Contract PASS on main ec9cd367ce389201b00469cbea7236a1360ca49b",
     "latestResearchChallenger": "v11.8.0-rc4.107",
-    "preinstallArtifact": "rc4.158 package/re-extract current authority",
-    "preinstallSha256": "sha256:46162cce29bc21c21b1ef826f7ac36d8ebd655cd5c75498f3cfaaf7ac7fbcb7c",
+    "preinstallArtifact": "rc4.168 package/re-extract current candidate",
+    "preinstallSha256": "sha256:584573b5a16fcc07a9667db877066eb1bf9690464b55750388fb4beaa0ac5074",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
-    "latestDeployedCandidate": "v11.8.0-rc4.166 gh-pages season-preview",
-    "latestAndroidVerified": "v11.8.0-rc4.161 limited acceptance",
-    "androidAuthority": "v11.8.0-rc4.161",
-    "android_authority": "v11.8.0-rc4.161",
+    "latestDeployedCandidate": "v11.8.0-rc4.168 Cloudflare main production",
+    "latestAndroidVerified": "v11.8.0-rc4.158 currently installed",
+    "androidAuthority": "v11.8.0-rc4.158",
+    "android_authority": "v11.8.0-rc4.158",
     "deployedPagesAppByteParityWithMain": false,
-    "preinstallReferenceRun": 33401979026,
-    "preinstallReferenceArtifactId": 9761582650,
-    "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.166",
-    "latestAndroidFunctionalVerified": "rc4.158 device PASS: version/control visible; v4 day baseline 9/9 complete; prior live expert matrix acceptance preserved.",
-    "testChallengerAndroidObserved": true,
-    "testChallengerAndroidAccepted": true,
+    "preinstallReferenceRun": 33537987309,
+    "preinstallReferenceArtifactId": 9812410348,
+    "preinstallHashSemantics": "GitHub candidate-package artifact digest; package/re-extract PASS.",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.158",
+    "latestAndroidFunctionalVerified": "rc4.158 current-device baseline; rc4.167 browser Season startup rejected; rc4.168 device acceptance pending.",
+    "testChallengerAndroidObserved": false,
+    "testChallengerAndroidAccepted": false,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
@@ -61,12 +61,12 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.161",
-    "unreleasedMainDelta": "Season Companion rc4.162 adds expiring Week-1 waiver market evidence; rc4.161 is accepted Android authority.",
-    "deployedPagesVersion": "v11.8.0-rc4.166 (rejected season startup)",
+    "acceptedAndroidAuthority": "v11.8.0-rc4.158",
+    "unreleasedMainDelta": "none: rc4.168 merged main; gh-pages/season-preview parity pending",
+    "deployedPagesVersion": "v11.8.0-rc4.168 Cloudflare main; gh-pages/season-preview rc4.166 pending sync",
     "mainGhPagesParity": false,
     "androidVerified": false,
-    "androidAcceptance": "rc4.167 NOT device accepted; rc4.166 physical season startup failed"
+    "androidAcceptance": "rc4.168 not yet device accepted; current installed app is rc4.158"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -255,12 +255,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "V218_AUDITED_HANDOFF_RC4167_PREVIEW_PARITY_PENDING",
-    "nextGate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY"
+    "status": "RC4168_MAIN_CI_DEPLOY_PASS_GHPAGES_PARITY_PENDING",
+    "nextGate": "RC4168_PARITY_THEN_DEVICE_REFRESH"
   },
-  "status": "POST_DRAFT_SEASON_COMPANION_RC4167_CANDIDATE",
-  "gate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY",
-  "nextGate": "Device acceptance only after repository/checkpoint reconciliation; no rc4.160 retest.",
+  "status": "POST_DRAFT_SEASON_COMPANION_RC4168_CANDIDATE",
+  "gate": "RC4168_PARITY_THEN_DEVICE_REFRESH",
+  "nextGate": "Synchronize rc4.168 main runtime to gh-pages/season-preview once, verify parity, then one physical Android/PWA refresh.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -269,11 +269,12 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260901T1058Z-v217",
+    "generation": "20260901T1934Z-v219",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.161 code/CI complete; physical Android acceptance only."
+    "resume": "rc4.161 code/CI complete; physical Android acceptance only.",
+    "transaction_in_progress": false
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
@@ -292,7 +293,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260901T1812Z-v218",
+  "handoff_generation": "20260901T1934Z-v219",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },

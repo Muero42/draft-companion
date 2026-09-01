@@ -1,57 +1,28 @@
 # NEW CHAT HANDOFF — PITTI SEASON COMPANION
-Handoff generation: `20260901T1812Z-v218`
-Generated: 2026-09-01 18:24 CEST
-
-## CANONICAL MODE
-POST_DRAFT / SEASON_COMPANION. v218 supersedes v217 and stale rc4.161/165/166 takeover pointers.
+Handoff generation: `20260901T1934Z-v219`
+Generated: 2026-09-01 19:34 CEST
 
 ## AUTHORITY
-- Repository Muero42/draft-companion, branch season-companion-rc4.159 (historical label only).
-- Current source candidate **v11.8.0-rc4.167**.
-- Re-read actual branch head and exact-head CI at takeover; do not trust a frozen SHA as timeless authority.
-- Last physically observed Android runtime **rc4.166**; season startup FAILED.
-- Last limited accepted Android authority **rc4.161**. rc4.163-166 are not accepted by inference.
-- gh-pages season-preview currently serves **rc4.166**; rc4.167 preview parity remains pending.
-- Draft 1366053132970233856 is complete/immutable history. Live Sleeper league state is sole operational roster/ownership authority.
+- POST_DRAFT / SEASON_COMPANION.
+- Main source candidate rc4.168 at `ec9cd367ce389201b00469cbea7236a1360ca49b`.
+- Current installed Android/PWA observed by user: rc4.158.
+- rc4.167 browser Season startup FAILED with `Cannot read properties of undefined (reading 'r')` and is rejected.
+- Root cause: `tradeOfferCandidates` received a row but dereferenced nonexistent `target.x.r` / `target.x.p`. rc4.168 uses `target.r` / `target.p`.
+- Executable Season runtime regression now runs the crashed Trade path in both Candidate Package and Release Contract.
+- Main Candidate Package + Release Contract + Cloudflare Pages deployment PASS; v219 atomically reseals main guardrail metadata.
+- Live Sleeper league state is current roster/ownership authority. Draft 1366053132970233856 is immutable history.
+- Transaction canary: Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR.
 
-## RC4.167 ARCHITECTURE
-1. Kader is season default; Waiver/FA, Trades, Live/News are normal season surfaces.
-2. Draft is **Draft-Archiv** and cannot gate season operation.
-3. Season bootstrap hydrates live Sleeper league state first; draft history is optional enrichment.
-4. Fresh-origin league identity may be recovered once from immutable draft metadata, then cached.
-5. Season placeholders are live-state loading/fail-closed messages, never “Noch kein abgeschlossener Draft geladen”.
-6. FAIL-CLOSED bug fixed: actual waiverStatus/waiverList and tradeStatus/tradeList nodes are used instead of nonexistent waiverWorkspace/tradeWorkspace.
-7. rc4.167 SW/runtime version prevents rc4.166 cache masquerading as candidate.
+## CLOUDFLARE / D1
+- Muero42/pitti-watcher directly binds D1 as env.DB.
+- v0.2.2 historical GROUP BY/JOIN scan over growing trending history was a direct rows_read amplification path.
+- v0.2.3 commit e4605c9a16ddbec8ff5ee4ab9e3df263f58195c5 selects only one prior captured_at snapshot; regression added; Workers Build PASS.
+- D1 quota can remain blocked until provider reset. /league-state is D1-independent.
 
-## RELEASE GATE
-Previous v218 draft incorrectly embedded old-head CI PASS while later handoff edits made the actual head fail metadata guardrails. Deep audit found and corrected this.
-New chat must: actual head -> exact-head three CI gates -> rc4.167 preview parity/deploy as one batch -> one Android canary only after parity.
-Do not claim rc4.167 deployed/device-accepted before those gates.
+## AUTO / AUTO BLOCK
+Continuous same-turn execution; re-inventory after every package.
+Never send status/progress/acknowledgement messages, empty responses, or “AUTO läuft weiter” while executable work remains.
+No micro-checkpoint commits on Pages-bound runtime branches.
 
-## PRESERVED TRANSACTION CANARY
-rc4.160 proved: Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR.
-Do NOT repeat rc4.160 device testing. Do NOT retest rc4.166.
-
-## CLOUDFARE / D1
-User uses Cloudflare for no other workload. Treat PITTI as primary suspect for repeated 5,000,000 rows_read alerts until disproven.
-PR #89 proves Cloudflare Pages deploys this project. No direct repo D1 query/binding is proven.
-At least 100 commits in ~3h15m on the Pages-connected branch created a deployment storm: confirmed infrastructure anti-pattern.
-No runtime-branch micro-checkpoints. Batch/test/deploy once. Do not buy paid plan merely to hide root cause.
-
-## FROZEN DRAFT RETROSPECTIVE
-PROJECT_STATE EOF preserves PC continuation: Return-v2 calibration, decision-intent taxonomy, sequencing/single-IR corrections, manager collision/entropy findings, ex-ante pick-value, opportunity-cost/board-flow and final Return-vNext/sequence/market-vs-strategic backlog. No current rankings/outcomes may contaminate it.
-
-## AUTO / AUTO BLOCK — HARD CONTRACT
-- Continuous same-turn loop, not one work package.
-- After every package: checkpoint only if materially necessary -> re-inventory -> execute next safe positive-value package.
-- Waiting CI/deploy/device blocks only dependent lanes.
-- Never send status/progress/acknowledgement messages such as “AUTO läuft”, “ich mache weiter”, “CI läuft”, “Commit erstellt”, or “keine Nutzerhandlung nötig” while executable work exists.
-- Empty assistant response after tool work is forbidden.
-- Promise-only responses are forbidden.
-- Visible AUTO response only when active=[] and ready=[] and stop_evaluation.allowed=true with approved stop code.
-- STATUS is report-only: no tools/work/polling/continuation.
-- Cloudflare discipline: no micro-commit checkpointing on auto-deployed runtime branch.
-
-## TAKEOVER ORDER
-COMMAND -> CURRENT -> SEAL -> EXECUTION_LOCK -> AUTO_PREFLIGHT -> PROJECT_STATE EOF -> this handoff -> BOOTSTRAP -> MATRIX -> actual repo/CI/preview/device evidence.
-On contradiction, newest verified actual evidence + PROJECT_STATE EOF + this v218 handoff win.
+## NEXT GATE
+RC4168_PARITY_THEN_DEVICE_REFRESH: sync gh-pages/season-preview once, verify parity, then exactly one physical Android/PWA refresh. No repeated browser-debugging sequence.
