@@ -3259,14 +3259,22 @@ async function refresh(){
     }else renderCoach(scored,state,current,returnPick);
     renderFpHandoff(id,draftComplete);
     let season=null,seasonRows=null,seasonAvailable=null;
-    if(draftComplete){try{season=await fetchSeasonLeagueState(draft);seasonRows=seasonRosterRows(season,players,mine);seasonAvailable=seasonAvailablePlayers(season,players);}catch(e){season={ok:false,reason:e?.message||String(e)};}}
+    if(draftComplete){try{
+      season=await fetchSeasonLeagueState(draft);seasonRows=seasonRosterRows(season,players,mine);seasonAvailable=seasonAvailablePlayers(season,players);
+      // Season FA is a live ownership surface. A zero result is not a valid quiet baseline:
+      // it usually means ownership/player-id mapping failed or the panel join collapsed.
+      // Fail closed instead of rendering “0 gerankte Free Agents” as HOLD.
+      if(season?.ok&&Array.isArray(seasonAvailable)&&seasonAvailable.length===0){
+        season={...season,ok:false,reason:'SEASON_FA_POOL_ZERO_INVALID'};seasonRows=null;seasonAvailable=null;
+      }
+    }catch(e){season={ok:false,reason:e?.message||String(e)};}}
     if(seasonRows){
       renderRosterWorkspace(mine,players,current,draftComplete);
       const counts=postDraftRosterCounts(seasonRows);els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper-Kader · '+seasonRows.length+' Spieler · Source of Truth: League-State · Reserve/IR '+seasonRows.filter(x=>x.seasonStatus==='RESERVE').length+' · keine automatische Transaktion.';
       els.rosterSummary.innerHTML=Object.entries(counts).filter(([,n])=>n).map(([pos,n])=>'<div class="summary-item"><b>'+n+'</b><span>'+pos+'</span></div>').join('');
       els.rosterList.innerHTML=seasonLineupHtml(seasonRows,season);
       renderRosterBenchAudit(seasonRows,players,current,draftComplete);renderRosterFaAudit(seasonRows,seasonAvailable||[],draftComplete);
-    }else{renderRosterWorkspace(mine,players,current,draftComplete);renderRosterFaAudit(mine.map(pk=>{const p=pinfo(String(pk.player_id),pk.metadata,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);return{pk,p,r,a}}),rankedAvailable,draftComplete);if(draftComplete&&els.rosterStatus){els.rosterStatus.className='notice warn';els.rosterStatus.textContent='Season Sync FAIL-CLOSED · '+esc(season?.reason||'League-State nicht verfügbar')+' · Draftkader nur historische Baseline; keine FA-Aktion freigegeben.';}}
+    }else{renderRosterWorkspace(mine,players,current,draftComplete);if(draftComplete){lastPostDraftPairs=[];if(els.rosterFaStatus){els.rosterFaStatus.className='notice bad';els.rosterFaStatus.textContent='Season FA Sync FAIL-CLOSED · '+esc(season?.reason||'League-State nicht verfügbar')+' · kein FA/HOLD-Urteil aus Draft-Verfügbarkeit.';}if(els.rosterFaList)els.rosterFaList.innerHTML='<div class="notice bad"><b>FA-POOL NICHT VALIDIERT</b> · Live Sleeper Ownership/FA-Pool muss erfolgreich geladen werden, bevor Add/Drop bewertet wird.</div>';}else renderRosterFaAudit(mine.map(pk=>{const p=pinfo(String(pk.player_id),pk.metadata,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);return{pk,p,r,a}}),rankedAvailable,draftComplete);if(draftComplete&&els.rosterStatus){els.rosterStatus.className='notice warn';els.rosterStatus.textContent='Season Sync FAIL-CLOSED · '+esc(season?.reason||'League-State nicht verfügbar')+' · Draftkader nur historische Baseline; keine FA-Aktion freigegeben.';}}
     renderTradeWorkspace(picks,players,slot,teams,draftComplete);
     renderWaiverWorkspace(draftComplete);
     renderSeasonActionBoard(draftComplete);
