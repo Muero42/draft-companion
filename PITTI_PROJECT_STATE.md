@@ -3470,3 +3470,20 @@ This block supersedes all older current-version/device-authority/first-gate poin
 - Hard draft locks: 10-team Half-PPR; slot 9; picks 9/12,29/32,49/52,69/72,89/92,109/112,129/132,149; no K/DST; exactly one QB; Geno Smith + Aaron Rodgers hard excluded; starter maxima are not roster caps.
 - Live manager modes remain forward-only evidence; one timer-expiry pick is insufficient for AUTO classification.
 - Final real-draft chat must start only after a short FINAL PRE-DRAFT HANDOFF around 19:45–19:50 that carries post-waiver deltas + final expert delta + final current status.
+
+
+# POST-DRAFT SEASON COMPANION CHECKPOINT — v216 — 2026-09-01 05:40 CEST
+This checkpoint supersedes all earlier pre-draft NEXT-GATE/current-mode pointers.
+
+- Mode: POST_DRAFT / SEASON_COMPANION.
+- Real draft 1366053132970233856 complete; immutable historical baseline. Last own pick #149 Tyjae Spears.
+- Accepted Android remains rc4.158; do not relabel it as a completed Season Companion.
+- Watcher repository is v0.2.0 and now has public read-only /league-state for Sleeper rosters, ownership and transactions.
+- Season candidate rc4.159 is isolated on branch season-companion-rc4.159.
+- rc4.159 changes the post-draft roster/FA input from draft picks/undrafted pool to live Sleeper league roster + league-wide ownership. It fails closed if the live roster cannot be resolved.
+- Mandatory first E2E canary: Zach Charbonnet is on IR/reserve; Tank Bigsby is on current roster; Bigsby is not a free agent; FA engine uses truly unowned league players.
+- Preserve separate semantics: draft_roster historical, current_roster live, transaction history.
+- Acquisition contract remains concrete ADD X / DROP Y with CLEAR ADD / WATCH / HOLD, confidence, freshness/provenance, invalidator. No automatic external transaction.
+- Watcher evidence remains gated by scheduled-health PASS.
+- FantasyPros A-/92 remains benchmark only.
+- NEXT GATE: static rc4.159 regression -> one Android/device E2E canary -> only then promotion. After acceptance: FAAB/waiver -> lineup/start-sit -> full trade evaluation.
