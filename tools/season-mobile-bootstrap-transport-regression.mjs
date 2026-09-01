@@ -7,5 +7,7 @@ if([season,players,draft].some(x=>x<0))throw new Error('season-first transport s
 if(!(season<players&&players<draft))throw new Error('historical draft precedes/gates live season hydration');
 if(b.includes('CANONICAL_DRAFT_NOT_COMPLETE')||b.includes('await fetchDraft(id)'))throw new Error('legacy draft gate remains in season bootstrap');
 if(!b.includes("catch(e){console.warn('PITTI optional draft archive unavailable'"))throw new Error('draft archive failure is not optional');
-for(const token of ["console.error('PITTI season bootstrap failed'","if(els.waiverWorkspace)els.waiverWorkspace.innerHTML=fail","if(els.tradeWorkspace)els.tradeWorkspace.innerHTML=fail"])if(!b.includes(token))throw new Error('missing fail-visible contract '+token);
+for(const token of ["console.error('PITTI season bootstrap failed'","if(els.waiverStatus)","if(els.tradeStatus)"])if(!b.includes(token))throw new Error('missing fail-visible contract '+token);
 console.log('season-first mobile bootstrap transport regression PASS');
+
+if(!src.includes("'Season-Identität',5000"))throw new Error('fresh-origin league identity recovery missing');

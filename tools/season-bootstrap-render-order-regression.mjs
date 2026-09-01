@@ -15,5 +15,8 @@ if([season,players,draft,ctx,rosterFa,trade,waiver,action,status].some(x=>x<0))t
 if(!(season<players&&players<draft&&ctx<rosterFa&&rosterFa<trade&&trade<waiver&&waiver<action&&action<status))throw new Error('season-first/render ordering invalid');
 if(b.includes('CANONICAL_DRAFT_NOT_COMPLETE'))throw new Error('historical draft still gates season bootstrap');
 if(!b.includes("catch(e){console.warn('PITTI optional draft archive unavailable'"))throw new Error('draft archive is not optional');
-if(!b.includes("if(els.waiverWorkspace)els.waiverWorkspace.innerHTML=fail")||!b.includes("if(els.tradeWorkspace)els.tradeWorkspace.innerHTML=fail"))throw new Error('season failure observability missing');
+if(!b.includes("if(els.waiverStatus)")||!b.includes("if(els.tradeStatus)"))throw new Error('season failure observability missing');
 console.log('season-first bootstrap regression PASS');
+
+if(!src.includes("setWorkspace(localStorage.getItem('v117_workspace')||'roster')"))throw new Error('season workspace is not default');
+if(!src.includes("Season Auto-Sync FAIL-CLOSED"))throw new Error('season failure not visible');
