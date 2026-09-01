@@ -14,7 +14,7 @@ Handoff generation: `20260901T2210Z-v224`
 - pitti-watcher v0.2.3 D1 previous-snapshot optimization remains protected.
 
 ## AUTO / AUTO BLOCK
-Continuous same-turn execution while safe work exists. After every package: checkpoint material changes, re-inventory, dispatch next ready lane. No progress/ack/status-only messages, no empty replies, no “AUTO läuft weiter”/promise-only terminal messages. Waiting CI/deploy blocks only its lane. Visible response only for a concrete result, unavoidable user action/input, safety/irreversible confirmation, or genuine exhaustion after re-inventory.
+Continuous same-turn execution while safe work exists. After every package: checkpoint material changes, re-inventory, dispatch next ready lane. Never send status/progress/acknowledgement messages while executable work exists; no empty replies and no “AUTO läuft weiter”/promise-only terminal messages. Waiting CI/deploy blocks only its lane. Visible response only for a concrete result, unavoidable user action/input, safety/irreversible confirmation, or genuine exhaustion after re-inventory.
 
 ## STATUS
 Report known state only; no polls, tests, mutations or state advancement.
