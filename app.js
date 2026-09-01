@@ -34,7 +34,18 @@ async function fetchSeasonLeagueState(draft){
   userId=String(roster?.owner_id||'').trim();
   if(!userId)return{ok:false,reason:'USER_ROSTER_MAPPING_UNRESOLVED',leagueId,userId};
   store.setText(SEASON_USER_ID_KEY,userId);url.searchParams.set('user_id',userId);r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('League-State user HTTP '+r.status);v=await r.json();
-  if(!v?.ok||!v?.my_roster||String(v.my_roster.owner_id||'')!==userId)return{ok:false,reason:'MY_ROSTER_UNRESOLVED',leagueId,userId};store.setText(SEASON_LEAGUE_ID_KEY,leagueId);return{ok:true,leagueId,userId,...v};
+  if(!v?.ok||!v?.my_roster||String(v.my_roster.owner_id||'')!==userId)return{ok:false,reason:'MY_ROSTER_UNRESOLVED',leagueId,userId};
+  // Canonical live-roster integrity: the user-specific response must describe the same
+  // roster resolved from the unfiltered league response. Otherwise fail closed rather
+  // than silently accepting a stale/partial roster after a post-draft transaction.
+  const expectedRosterId=Number(roster?.roster_id),actualRosterId=Number(v.my_roster?.roster_id);
+  if(Number.isFinite(expectedRosterId)&&Number.isFinite(actualRosterId)&&expectedRosterId!==actualRosterId)return{ok:false,reason:'MY_ROSTER_ID_MISMATCH',leagueId,userId};
+  const canonicalRoster=(v.rosters||[]).find(x=>Number(x.roster_id)===actualRosterId);
+  const canonicalPlayers=new Set([...(canonicalRoster?.players||[]),...(canonicalRoster?.reserve||[])].map(String));
+  const myPlayers=new Set([...(v.my_roster?.players||[]),...(v.my_roster?.reserve||[])].map(String));
+  const missingCanonical=[...canonicalPlayers].filter(pid=>!myPlayers.has(pid));
+  if(missingCanonical.length)return{ok:false,reason:'MY_ROSTER_PARTIAL_RESPONSE',leagueId,userId,missingCanonicalCount:missingCanonical.length};
+  store.setText(SEASON_LEAGUE_ID_KEY,leagueId);return{ok:true,leagueId,userId,...v};
 }
 function seasonRosterRows(season,players,draftMine){if(!season?.ok||!season.my_roster)return null;const draftById=new Map((draftMine||[]).map(pk=>[String(pk.player_id),pk])),reserve=new Set((season.my_roster.reserve||[]).map(String));return[...new Set((season.my_roster.players||[]).map(String))].map(pid=>{const p=sleeperPlayerRow(pid,players),base=draftById.get(pid);return{pk:base||{player_id:pid,pick_no:999,metadata:{}},p:{...p,injury:reserve.has(pid)?(p.injury||'IR/RESERVE'):p.injury},r:rankFor(p.name,p.pos),a:adpFor(p.name),seasonStatus:reserve.has(pid)?'RESERVE':'ACTIVE'};});}
 function seasonLineupHtml(rows,season){
