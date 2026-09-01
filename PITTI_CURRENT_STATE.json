@@ -11,28 +11,28 @@
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.173 STARTUP-RESILIENCE CANDIDATE",
-    "candidate_branch": "main",
+    "season_candidate": "v11.8.0-rc4.174 EARLY-SEASON-CONTROL CANDIDATE",
+    "candidate_branch": "pitti/rc4.174-early-season-controls-v2",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.173",
+    "test_challenger": "v11.8.0-rc4.174",
     "ci": {
-      "candidate_package": "PASS",
-      "release_contract_v2": "PASS",
-      "project_guardrails": "PASS",
-      "validated_code_head": "a902b96b40d916b0f892c918dac453761fc50f41",
-      "scope": "rc4.173 main: legacy-cache startup resilience + strengthened Season interaction gate"
+      "candidate_package": "PENDING",
+      "release_contract_v2": "PENDING",
+      "project_guardrails": "PENDING",
+      "validated_code_head": null,
+      "scope": "rc4.174: bind critical Season controls before legacy/draft startup tail + early roster hydration rescue"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "v11.8.0-rc4.173 main deployed PASS",
-    "android_authority": "v11.8.0-rc4.172 observed/rejected",
+    "preview_candidate": "v11.8.0-rc4.174 PR preview pending automated gates",
+    "android_authority": "v11.8.0-rc4.173 observed/rejected",
     "latest_package_sha256": "sha256:2648118ad21b0a531c9fb7c154a49f7b0d2829aa78e49cb97d3736776a6b1f2f",
     "package_reference_run": 33548598040,
     "deployed_pages_app_byte_parity_with_main": true,
     "deployed_pages_head": "main a902b96b40d916b0f892c918dac453761fc50f41 · Cloudflare Pages deploy PASS",
-    "installed_android": "v11.8.0-rc4.172",
-    "latest_android_observed": "v11.8.0-rc4.172",
+    "installed_android": "v11.8.0-rc4.173",
+    "latest_android_observed": "v11.8.0-rc4.173",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
-    "last_device_failure": "rc4.172 installed; screenshot shows ranking freshness rendered but Sleeper live-state freshness remained at the static dash and both Season refresh controls were ineffective."
+    "last_device_failure": "rc4.173 installed; user confirmed both Kader/Ranking buttons were pressed and remained ineffective. Prior legacy-cache hypothesis therefore insufficient."
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -84,8 +84,8 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "rc4173-reseal",
-        "task": "Reseal canonical rc4.173 main state and verify full main guardrails after seal."
+        "id": "rc4174-early-controls-gates",
+        "task": "Validate rc4.174 early Season control binding and early roster bootstrap through package, behavioral contract, guardrails and Cloudflare preview before any device update."
       }
     ],
     "ready": [],
@@ -291,8 +291,7 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Canonical reseal still executable before final device confirmation.",
-      "evaluated_at": "2026-09-01T19:18:00Z"
+      "reason": "Automated rc4.174 candidate validation remains executable."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
