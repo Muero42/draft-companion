@@ -1,7 +1,7 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.169';
+const APP_VERSION='v11.8.0-rc4.170';
 const $=id=>document.getElementById(id);
-const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonRankingAge','seasonRankingStatus','seasonRefreshRanksBtn','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
+const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRefreshLiveBtn','seasonRankingAge','seasonRankingStatus','seasonRefreshRanksBtn','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
@@ -16,40 +16,25 @@ const WATCHER_BASE_URL='https://pitti-watcher.tim-muero.workers.dev';
 const SEASON_LEAGUE_ID_KEY='v118_seasonLeagueId',SEASON_USER_ID_KEY='v118_seasonUserId';
 function sleeperPlayerRow(pid,players){const p=players?.[String(pid)]||{};return{id:String(pid),name:p.full_name||[p.first_name,p.last_name].filter(Boolean).join(' ')||String(pid),pos:p.position||'',team:p.team||'FA',searchRank:Number(p.search_rank),injury:p.injury_status||null,bye:p.bye_week||null,yearsExp:Number.isFinite(Number(p.years_exp))?Number(p.years_exp):null};}
 async function fetchSeasonLeagueState(draft){
-  let leagueId=String(store.text(SEASON_LEAGUE_ID_KEY,'')||draft?.league_id||'').trim();
-  // First install / new origin: discover season identity once from immutable draft metadata.
-  // This is identity recovery only; after leagueId is cached, season operation never waits on draft state.
-  if(!leagueId){try{const meta=await jf(`${S}/draft/${LIVE_DRAFT_ID_2026}?_=${Date.now()}`,'Season-Identität',5000);leagueId=String(meta?.league_id||'').trim();if(leagueId)store.setText(SEASON_LEAGUE_ID_KEY,leagueId);}catch{}}
-
-  if(!leagueId&&draft?.draft_id){try{const leagues=await jf(`${S}/user/${encodeURIComponent(String(draft.created_by||''))}/leagues/nfl/2026?_=${Date.now()}`,'Ligen',9000);const hit=(leagues||[]).find(l=>String(l.draft_id||'')===String(draft.draft_id));leagueId=String(hit?.league_id||'').trim();}catch{}}
+  let draftMeta=(draft&&draft.draft_id)?draft:null;
+  if(!draftMeta){try{draftMeta=await jf(S+'/draft/'+LIVE_DRAFT_ID_2026+'?_='+Date.now(),'Season-Identität',6000)}catch(e){console.warn('PITTI season identity draft lookup failed',e)}}
+  let leagueId=String(store.text(SEASON_LEAGUE_ID_KEY,'')||draftMeta?.league_id||'').trim();
   if(!leagueId)return{ok:false,reason:'NO_LEAGUE_ID'};
-  // The draft slot is NOT the Sleeper roster_id. Resolve the user's roster from
-  // the canonical draft mapping first; stale cached owner IDs are never authoritative.
-  let userId=String(store.text(SEASON_USER_ID_KEY,'')||'').trim(),url=new URL(WATCHER_BASE_URL+'/league-state');url.searchParams.set('league_id',leagueId);
-  let r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('League-State HTTP '+r.status);let v=await r.json();
-  const slot=Number(els.slot.value||9),mappedRosterId=Number(draft?.slot_to_roster_id?.[String(slot)]??draft?.slot_to_roster_id?.[slot]);
-  let roster=userId?(v.rosters||[]).find(x=>String(x.owner_id||'')===userId):null;
-  if(!roster&&Number.isFinite(mappedRosterId))roster=(v.rosters||[]).find(x=>Number(x.roster_id)===mappedRosterId);
-  if(!roster){
-    const order=draft?.draft_order||{};
-    const ownerFromSlot=Object.entries(order).find(([,s])=>Number(s)===slot)?.[0]||'';
-    if(ownerFromSlot)roster=(v.rosters||[]).find(x=>String(x.owner_id||'')===String(ownerFromSlot));
-  }
-  userId=String(roster?.owner_id||'').trim();
-  if(!userId)return{ok:false,reason:'USER_ROSTER_MAPPING_UNRESOLVED',leagueId,userId};
-  store.setText(SEASON_USER_ID_KEY,userId);url.searchParams.set('user_id',userId);r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('League-State user HTTP '+r.status);v=await r.json();
-  if(!v?.ok||!v?.my_roster||String(v.my_roster.owner_id||'')!==userId)return{ok:false,reason:'MY_ROSTER_UNRESOLVED',leagueId,userId};
-  // Canonical live-roster integrity: the user-specific response must describe the same
-  // roster resolved from the unfiltered league response. Otherwise fail closed rather
-  // than silently accepting a stale/partial roster after a post-draft transaction.
-  const expectedRosterId=Number(roster?.roster_id),actualRosterId=Number(v.my_roster?.roster_id);
-  if(Number.isFinite(expectedRosterId)&&Number.isFinite(actualRosterId)&&expectedRosterId!==actualRosterId)return{ok:false,reason:'MY_ROSTER_ID_MISMATCH',leagueId,userId};
-  const canonicalRoster=(v.rosters||[]).find(x=>Number(x.roster_id)===actualRosterId);
-  const canonicalPlayers=new Set([...(canonicalRoster?.players||[]),...(canonicalRoster?.reserve||[])].map(String));
-  const myPlayers=new Set([...(v.my_roster?.players||[]),...(v.my_roster?.reserve||[])].map(String));
-  const missingCanonical=[...canonicalPlayers].filter(pid=>!myPlayers.has(pid));
-  if(missingCanonical.length)return{ok:false,reason:'MY_ROSTER_PARTIAL_RESPONSE',leagueId,userId,missingCanonicalCount:missingCanonical.length};
-  store.setText(SEASON_LEAGUE_ID_KEY,leagueId);return{ok:true,leagueId,userId,...v};
+  store.setText(SEASON_LEAGUE_ID_KEY,leagueId);
+  const bust=Date.now()+'-'+Math.random().toString(36).slice(2);
+  const rosters=await jf(S+'/league/'+encodeURIComponent(leagueId)+'/rosters?_='+bust,'Sleeper Kader',7000);
+  if(!Array.isArray(rosters)||!rosters.length)return{ok:false,reason:'LEAGUE_ROSTERS_EMPTY',leagueId};
+  const slot=Number(els.slot.value||9);
+  let userId=String(store.text(SEASON_USER_ID_KEY,'')||'').trim();
+  const mappedRosterId=Number(draftMeta?.slot_to_roster_id?.[String(slot)]??draftMeta?.slot_to_roster_id?.[slot]);
+  let roster=userId?rosters.find(x=>String(x.owner_id||'')===userId):null;
+  if(!roster&&Number.isFinite(mappedRosterId))roster=rosters.find(x=>Number(x.roster_id)===mappedRosterId);
+  if(!roster){const order=draftMeta?.draft_order||{};const ownerFromSlot=Object.entries(order).find(([,s])=>Number(s)===slot)?.[0]||'';if(ownerFromSlot)roster=rosters.find(x=>String(x.owner_id||'')===String(ownerFromSlot));}
+  if(!roster)return{ok:false,reason:'USER_ROSTER_MAPPING_UNRESOLVED',leagueId,userId,slot};
+  userId=String(roster.owner_id||'').trim();if(!userId)return{ok:false,reason:'USER_ID_UNRESOLVED',leagueId,slot,rosterId:roster.roster_id};
+  store.setText(SEASON_USER_ID_KEY,userId);
+  const ownership={};for(const r of rosters){const reserve=new Set((r.reserve||[]).map(String)),taxi=new Set((r.taxi||[]).map(String));for(const pid of new Set([...(r.players||[]),...(r.reserve||[]),...(r.taxi||[])].filter(Boolean).map(String))){ownership[pid]={roster_id:r.roster_id,owner_id:r.owner_id,mine:Number(r.roster_id)===Number(roster.roster_id),reserve:reserve.has(pid),taxi:taxi.has(pid)};}}
+  return{ok:true,league_id:leagueId,user_id:userId,roster_id:roster.roster_id,generated_at:Date.now(),my_roster:roster,rosters,my_starters:roster.starters||[],my_players:roster.players||[],my_reserve:roster.reserve||[],ownership,source:'Sleeper direct'};
 }
 function seasonRosterRows(season,players,draftMine){if(!season?.ok||!season.my_roster)return null;const draftById=new Map((draftMine||[]).map(pk=>[String(pk.player_id),pk])),reserve=new Set((season.my_roster.reserve||[]).map(String));return[...new Set((season.my_roster.players||[]).map(String))].map(pid=>{const p=sleeperPlayerRow(pid,players),base=draftById.get(pid);return{pk:base||{player_id:pid,pick_no:999,metadata:{}},p:{...p,injury:reserve.has(pid)?(p.injury||'IR/RESERVE'):p.injury},r:rankFor(p.name,p.pos),a:adpFor(p.name),seasonStatus:reserve.has(pid)?'RESERVE':'ACTIVE'};});}
 function seasonLineupHtml(rows,season){
@@ -1546,8 +1531,18 @@ function blockSeasonDependentSurface(label,reason,statusEl,listEl){
   if(listEl)listEl.innerHTML='';
   return{ok:false,label,reason:'DEPENDENCY_'+reason};
 }
-async function bootstrapSeasonWorkspace(){
-  if(!navigator.onLine)return;
+let seasonBootstrapBusy=false;
+function renderSeasonLiveStateFreshness(note=''){
+  const t=Number(localStorage.getItem('v118_seasonBootstrapAt')||0),age=t?Date.now()-t:Infinity;
+  if(els.seasonLiveStateAge)els.seasonLiveStateAge.textContent=!t?'nicht geladen':age<60000?'< 1 Min.':age<3600000?Math.round(age/60000)+' Min.':Math.round(age/3600000)+' Std.';
+  if(els.seasonLiveStateStatus&&!seasonBootstrapBusy)els.seasonLiveStateStatus.textContent=note||(!t?'Live-Kader noch nicht geladen.':'Live-Kader direkt von Sleeper · zuletzt erfolgreich aktualisiert.');
+}
+async function bootstrapSeasonWorkspace({force=false}={}){
+  if(seasonBootstrapBusy){if(force&&els.seasonLiveStateStatus)els.seasonLiveStateStatus.textContent='Kader-Aktualisierung läuft bereits …';return{ok:false,busy:true};}
+  if(!navigator.onLine){if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice warn';els.seasonLiveStateStatus.textContent='Offline · letzter erfolgreicher Live-Kader bleibt sichtbar.';}return{ok:false,offline:true};}
+  seasonBootstrapBusy=true;
+  if(els.seasonRefreshLiveBtn){els.seasonRefreshLiveBtn.disabled=true;els.seasonRefreshLiveBtn.textContent='Kader lädt …';}
+  if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice';els.seasonLiveStateStatus.textContent='Live-Kader wird direkt von Sleeper geladen …';}
   let stage='league-state';
   try{
     const season=await fetchSeasonLeagueState({});
@@ -1586,11 +1581,19 @@ async function bootstrapSeasonWorkspace(){
     }
     updateStatus();renderSeasonRankingFreshness();
     localStorage.setItem('v118_seasonBootstrapAt',String(Date.now()));
+    if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice ok';els.seasonLiveStateStatus.textContent='Live-Kader direkt von Sleeper aktualisiert.';}
+    return{ok:true};
   }catch(e){
     const reason=stage+' · '+(e?.message||String(e));console.error('PITTI season bootstrap failed',stage,e);
     if(els.rosterStatus){els.rosterStatus.className='notice warn';els.rosterStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+esc(reason)+' · keine FA-Aktion freigegeben.';}
     if(els.waiverStatus){els.waiverStatus.className='notice bad';els.waiverStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+reason+' · keine Aktion freigegeben.';els.waiverList.innerHTML='';}
     if(els.tradeStatus){els.tradeStatus.className='notice bad';els.tradeStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+reason+' · keine Aktion freigegeben.';els.tradeList.innerHTML='';}
+    if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice bad';els.seasonLiveStateStatus.textContent='Kader-Aktualisierung fehlgeschlagen · '+reason;}
+    return{ok:false,error:reason};
+  }finally{
+    seasonBootstrapBusy=false;
+    if(els.seasonRefreshLiveBtn){els.seasonRefreshLiveBtn.disabled=false;els.seasonRefreshLiveBtn.textContent='Kader aktualisieren';}
+    renderSeasonLiveStateFreshness(els.seasonLiveStateStatus?.textContent||'');
   }
 }
 async function fetchDraftFresh(id){
@@ -3825,7 +3828,9 @@ async function refreshSeasonRankings({force=false,auto=false}={}){
   }
 }
 rehydrateDerivedExpertPanelsOnStartup();
+if(els.seasonRefreshLiveBtn)els.seasonRefreshLiveBtn.onclick=()=>void bootstrapSeasonWorkspace({force:true});
 if(els.seasonRefreshRanksBtn)els.seasonRefreshRanksBtn.onclick=()=>void refreshSeasonRankings({force:true});
+renderSeasonLiveStateFreshness();
 renderSeasonRankingFreshness();
 void refreshSeasonRankings({auto:true});
 void syncWatcherFeed();
