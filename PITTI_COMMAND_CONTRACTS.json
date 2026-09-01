@@ -146,18 +146,18 @@
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.161 Android accepted",
     "androidAuthority": "v11.8.0-rc4.161",
-    "sourceAuthority": "v11.8.0-rc4.163 Season Companion candidate",
+    "sourceAuthority": "v11.8.0-rc4.165 Season Companion candidate",
     "latestPackageReextract": "rc4.163 all three gates PASS",
     "latestPackageSha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
     "packageReferenceRun": null,
     "deployedPagesVersion": "v11.8.0-rc4.163 preview candidate",
     "deployedPagesAppByteParityWithMain": true,
-    "currentResearchGate": "DEVICE_RC4163_SEASON_SURFACES",
-    "exactNextAction": "Physical Android rc4.163: capture Waiver/FA and Trade surfaces; no manual data entry.",
-    "runtimeVersion": "rc4.163 deployed candidate; rc4.161 accepted Android authority",
+    "currentResearchGate": "SELFTEST_RC4165_SEASON_STARTUP",
+    "exactNextAction": "Autonomous cold-start/browser-equivalent season surface validation; no device request until self-test and CI pass.",
+    "runtimeVersion": "rc4.165 source candidate; rc4.163 last device-observed",
     "latestEvidenceBackup": "Draft backups retained as immutable historical evidence only; current roster comes from Sleeper league state."
   },
-  "currentGate": "DEVICE_RC4163_SEASON_SURFACES",
+  "currentGate": "SELFTEST_RC4165_SEASON_STARTUP",
   "handoffGeneration": "20260901T1058Z-v217",
   "handoff_generation": "20260901T1058Z-v217",
   "statusCommand": {
