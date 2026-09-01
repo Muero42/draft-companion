@@ -85,8 +85,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4181_AUTOMATED_E2E_PASS",
-    "nextGate": "DEPLOY_PARITY_RC4181"
+    "status": "RC4181_ROOT_CAUSE_FIX_VALIDATING",
+    "nextGate": "RC4181_STRICT_VALIDATION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -105,8 +105,8 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "rc4181-deploy-parity",
-        "reason": "Root-cause candidate passed all automated gates; verify actual deployed Pages bytes before any device action."
+        "id": "rc4181-root-cause-validation",
+        "reason": "Root cause found: Season-first index removed legacy status DOM node onlineState while renderAll/updateStatus still dereferenced it unguarded before bootstrapSeasonWorkspace; rc4.181 null-guards that startup access and adds regression."
       }
     ],
     "ready": [],
@@ -342,7 +342,7 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Deployment parity remains autonomous."
+      "reason": "rc4.181 root-cause validation executable."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
