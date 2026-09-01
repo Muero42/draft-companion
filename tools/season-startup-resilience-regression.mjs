@@ -10,6 +10,6 @@ const rehydrate=a.indexOf('rehydrateDerivedExpertPanelsOnStartup();',guarded);
 const freshness=a.indexOf('renderSeasonLiveStateFreshness();',rehydrate);
 const bootstrap=a.indexOf('const rosterResult=await bootstrapSeasonWorkspace();',freshness);
 const ranks=a.indexOf('void refreshSeasonRankings({auto:true});',bootstrap);
-assert(set>=0&&guarded>set&&rehydrate>guarded&&freshness>rehydrate&&bootstrap>freshness&&ranks>bootstrap,'automatic Season startup sequence invalid');
+assert(set>=0&&guarded>set&&rehydrate>guarded&&marker>rehydrate&&bootstrap>marker&&ranks>bootstrap,'automatic Season startup sequence invalid');
 assert(!a.includes('bindCriticalSeasonControlsEarly'),'obsolete manual Season early binding resurrected');
 console.log('SEASON_STARTUP_RESILIENCE_PASS '+v);
