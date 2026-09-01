@@ -109,3 +109,10 @@ Canonical continuation trigger: **PITTI AUTO**
 - `PITTI_EXECUTION_LOCK.json`, `PITTI_AUTO_PREFLIGHT.md`, `PITTI_COMMAND_CONTRACTS.json`, and `PITTI_NEW_CHAT_BOOTSTRAP.md` were updated to preserve this behavior across chat switches.
 - `tools/pitti_guardrail_check.mjs` now fails CI if the queue/state-machine contract is missing or if a stop is marked allowed while executable `active/ready` work exists.
 - This does not remove the platform boundary that execution stops after a visible assistant reply; instead it makes ending the turn early a machine-detectable project-state violation whenever the persistent queue still contains executable work.
+
+## Season model increments — AUTO 2026-09-01
+- Waiver/FA advanced to v2 horizon semantics. THIS WEEK now fails closed to “–” when no fresh weekly role/health evidence exists; draft/ROS panel rank is not allowed to masquerade as weekly value. ROS and Championship EV remain separately visible.
+- Trade Board advanced to v4: live opponent rosters are scored for positional need; indicative 1:1 GIVE/GET candidates now expose own lineup cost, opponent utility, panel-parity fairness and an explicitly heuristic acceptance plausibility. No trade is sent/executed automatically and the acceptance estimate is not represented as market-calibrated until a current trade-value source is integrated.
+- Start/Sit advanced to v3: weekly consensus rank is primary and fresh role/health evidence can modify the weekly edge; ROS/draft panel remains prohibited as a standalone lineup trigger.
+- Special Teams advanced to v2: D/ST Tier 5/6 quality-floor filtering is applied before sorting/surfacing; Tier 4 remains emergency-only. Kicker output remains filtered through the live Sleeper free-agent pool.
+- Executable project guardrails were extended for all four season increments.
