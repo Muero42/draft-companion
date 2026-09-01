@@ -49,6 +49,23 @@ must(lock.auto?.reinventoryAfterEveryWorkPackage===true,'post-package re-invento
 must(lock.auto?.oneInventoryPerAutoTurnIsInsufficient===true,'single-inventory AUTO regression guard missing');
 must(lock.auto?.promiseOnlyAutoResponseForbidden===true,'promise-only AUTO response prohibition missing');
 must(lock.auto?.externalGateValidStopOnlyAfterIndependentLaneExhaustion===true,'external gate exhaustion invariant missing');
+must(lock.auto?.noVisibleResponseWhileReadyWorkExists===true,'AUTO no-output guard missing');
+must(lock.auto?.stopRequiresMachineReadableEvaluation===true,'AUTO machine-readable stop evaluation missing');
+must(lock.auto?.stateMachine?.version==='pitti-auto-state.v1','AUTO state-machine version missing');
+must(lock.auto?.stateMachine?.persistedIn==='PITTI_CURRENT_STATE.json:auto_execution_state','AUTO state path drift');
+must(lock.auto?.stateMachine?.waitingExternalRule?.includes('never a global stop condition'),'AUTO waiting-external lane isolation missing');
+const autoState=current.auto_execution_state;
+must(autoState?.schema==='pitti.auto-state.v1','CURRENT AUTO queue schema missing');
+for(const bucket of ['active','ready','waiting_external','blocked_user','completed_recent']) must(Array.isArray(autoState?.[bucket]),`CURRENT AUTO queue bucket missing: ${bucket}`);
+const allowedAutoStops=new Set(['USER_ACTION_REQUIRED','DECISION_REQUIRED','PROJECT_MILESTONE_REACHED','NO_EXECUTABLE_WORK_REMAINS','SAFETY_OR_IRREVERSIBLE_CONFIRMATION']);
+const executableAutoWork=(autoState?.active?.length||0)+(autoState?.ready?.length||0);
+if(executableAutoWork>0){
+  must(autoState?.status==='RUNNING','AUTO must remain RUNNING while active/ready work exists');
+  must(autoState?.stop_evaluation?.allowed===false,'AUTO stop cannot be allowed while active/ready work exists');
+}else if(autoState?.stop_evaluation?.allowed===true){
+  must(allowedAutoStops.has(autoState?.stop_evaluation?.code),'AUTO stop code invalid');
+}
+
 
 for(const token of [
   'Source of Truth for PITTI/Draft Companion execution',
@@ -74,7 +91,11 @@ for(const token of [
   'AUTO is a repeated work loop, not a one-package action',
   'Re-inventory after **EVERY** completed work package',
   'Promise-only AUTO responses are invalid',
-  'external/device/OOS gate is a valid interruption only after all independent'
+  'external/device/OOS gate is a valid interruption only after all independent',
+  'AUTO STATE MACHINE / NO-OUTPUT GUARD',
+  'NO-OUTPUT GUARD',
+  'waiting_external',
+  'stop_evaluation.allowed=true'
 ]) must(preflight.includes(token),`preflight gate missing: ${token}`);
 
 must(readme.includes('v11.8.0-rc4.64'),'README production/control baseline drift');
@@ -125,6 +146,12 @@ must(commandContract.auto?.reinventoryAfterEveryWorkPackage===true,'repo command
 must(commandContract.auto?.blockedGateStopsOnlyDependentLane===true,'repo command contract lane isolation drift');
 must(commandContract.auto?.promiseOnlyResponseForbidden===true,'repo command contract promise-only guard drift');
 must(commandContract.auto?.externalGateValidStopOnlyAfterIndependentLaneExhaustion===true,'repo command contract external-gate guard drift');
+must(commandContract.auto?.persistentStateMachine?.mustLoadBeforeAuto===true,'command contract persistent AUTO state machine missing');
+must(commandContract.auto?.persistentStateMachine?.waitingExternalGlobalStop===false,'command contract waiting-external global-stop regression');
+must(commandContract.auto?.persistentStateMachine?.blockedUserGlobalStop===false,'command contract blocked-user global-stop regression');
+must(commandContract.auto?.persistentStateMachine?.stopRequires?.activeEmpty===true&&commandContract.auto?.persistentStateMachine?.stopRequires?.readyEmpty===true&&commandContract.auto?.persistentStateMachine?.stopRequires?.stopEvaluationAllowed===true,'command contract AUTO stop requirements drift');
+must(bootstrap.includes('AUTO queue takeover'),'new-chat AUTO queue takeover missing');
+
 must(commandContract.auto?.autoBlockCorrectionTrigger?.trigger==='AUTO BLOCK','AUTO BLOCK command contract missing');
 if(!candidatePreflight) must(commandContract.currentBoundary?.androidAuthority===current.runtime?.android_authority,'command contract Android authority drift');
 if(!candidatePreflight) must(commandContract.currentBoundary?.latestPackageSha256===current.runtime?.latest_package_sha256,'command contract package reference hash drift');
