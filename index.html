@@ -7,7 +7,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.168">
+  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.169">
   <title>PITTI Season Companion 2026</title>
 
 <style id="workspaceStyles">
@@ -22,7 +22,7 @@
       <h1>PITTI Companion</h1>
       <p>Live-Kader, Waiver, Aufstellung, Trades und News.</p>
     </div>
-    <span class="version">v11.8.0-rc4.168</span>
+    <span class="version">v11.8.0-rc4.169</span>
   </header>
 
   <nav class="workspace-nav" aria-label="Arbeitsbereich">
@@ -32,6 +32,11 @@
     <button class="workspace-tab" data-workspace-target="live">📡 Live / News</button>
     <button class="workspace-tab" data-workspace-target="draft">🏈 Draft-Archiv</button>
   </nav>
+
+  <section class="season-data-card" data-season-only aria-label="Season-Datenstatus">
+    <div class="season-data-row"><div><span class="tiny">Experten-Rankings</span><b id="seasonRankingAge">–</b></div><button id="seasonRefreshRanksBtn" class="secondary" type="button">Rankings aktualisieren</button></div>
+    <div id="seasonRankingStatus" class="notice">Rankings werden aus dem letzten verifizierten Stand geladen und bei Bedarf automatisch aktualisiert.</div>
+  </section>
 
   <div class="draft-surface-nav" data-workspace="draft" aria-label="Draft-Ansicht">
     <button id="mockViewBtn" class="draft-surface-tab active" type="button">Mock / Vorbereitung</button>
@@ -245,13 +250,13 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v11.8.0-rc4.168: Season-first Standardansicht; Live-Sleeper-State unabhängig vom Draft-Archiv; Draft nur noch Analyse/Archiv.</div>
+<div class="freeze-note">v11.8.0-rc4.169: Season-first Standardansicht; Live-Sleeper-State unabhängig vom Draft-Archiv; Draft nur noch Analyse/Archiv.</div>
 <button id="analysisJumpV3" class="snapshot-jump" type="button" aria-label="Zur Analyse" hidden>↓</button>
 </main>
-<script src="live-surface-v3.js?v=v11.8.0-rc4.168" defer></script>
+<script src="live-surface-v3.js?v=v11.8.0-rc4.169" defer></script>
 <script src="expert-v2-board.js?v=20260826"></script>
 <script src="expert-v3-board.js?v=20260828a"></script>
-<script type="module" src="app.js?v=v11.8.0-rc4.168"></script>
+<script type="module" src="app.js?v=v11.8.0-rc4.169"></script>
 <script src="expert-board-export.js?v=20260826e" defer></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>
