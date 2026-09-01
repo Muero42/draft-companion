@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.159';
+const APP_VERSION='v11.8.0-rc4.160';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2682,6 +2682,7 @@ function rerenderPostDraftFromContext(){
   const c=lastDraftContext;
   if(!c?.draftComplete||!Array.isArray(c.mine)||!Array.isArray(c.rankedAvailable)||!c.players)return false;
   const rows=Array.isArray(c.seasonRows)&&c.seasonRows.length?c.seasonRows:c.mine.map(pk=>{const p=pinfo(String(pk.player_id),pk.metadata,c.players),r=rankFor(p.name,p.pos),a=adpFor(p.name);return{pk,p,r,a}});
+  renderRosterBenchAudit(rows,c.players,Number(c.current||150),true);
   renderRosterFaAudit(rows,c.rankedAvailable,true);
   renderTradeWorkspace(c.picks,c.players,Number(els.slot.value),c.teams,true);
   renderWaiverWorkspace(true);
@@ -3387,7 +3388,7 @@ async function refresh(){
     // The final own pick has no return window but still needs a frozen fixture for post-draft retrospective.
     const userDecisionNow=!draftComplete&&next===current;
     if(userDecisionNow)if(!preview)freezeDecisionFixture({draftId:id,current,returnPick,picks,mine,players,rankedAvailable,scored,rv2,mode,strategy,stress,teams,slot,fingerprint,map});
-    lastDraftContext={id,current,next:returnPick,favorites,scored,picks,mine,mode,strategy,stress,map,dataState,players,teams,rankedAvailable,draftComplete};
+    lastDraftContext={id,current,next:returnPick,favorites,scored,picks,mine,mode,strategy,stress,map,dataState,players,teams,rankedAvailable,draftComplete,season,seasonRows,availableDST:season?.ok?seasonAvailableSpecialTeams(season,players,'DST'):[],availableK:season?.ok?seasonAvailableSpecialTeams(season,players,'K'):[]};
     if(els.simulateBtn)els.simulateBtn.disabled=!(Number.isFinite(returnPick)&&returnPick>current);
   }finally{
     setAnalysisBusy(false);
