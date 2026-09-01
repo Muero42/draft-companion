@@ -1,7 +1,7 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.168';
+const APP_VERSION='v11.8.0-rc4.169';
 const $=id=>document.getElementById(id);
-const ids=['onlineState','rankingAge','adpCount','qualityMini','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
+const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonRankingAge','seasonRankingStatus','seasonRefreshRanksBtn','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
@@ -1532,22 +1532,38 @@ async function jf(url,label,timeoutMs=6500){
   finally{clearTimeout(timer)}
 }
 async function fetchDraft(id){const bust=`${Date.now()}-${Math.random().toString(36).slice(2)}`;const[draft,picks,players]=await Promise.all([jf(`${S}/draft/${id}?_=${bust}`,'Draft'),jf(`${S}/draft/${id}/picks?_=${bust}`,'Picks'),jf(`${S}/players/nfl?_=${bust}`,'Spieler',9000)]);return{draft,picks,players}}
+function runSeasonSurface(label,render,statusEl,listEl){
+  try{render();return{ok:true,label}}
+  catch(e){
+    const reason=e?.message||String(e);console.error('PITTI season surface failed',label,e);
+    if(statusEl){statusEl.className='notice bad';statusEl.textContent=label+' FAIL-CLOSED · '+reason+' · keine Aktion freigegeben.';}
+    if(listEl)listEl.innerHTML='';
+    return{ok:false,label,reason};
+  }
+}
+function blockSeasonDependentSurface(label,reason,statusEl,listEl){
+  if(statusEl){statusEl.className='notice bad';statusEl.textContent=label+' FAIL-CLOSED · Abhängigkeit '+reason+' nicht verfügbar · keine Aktion freigegeben.';}
+  if(listEl)listEl.innerHTML='';
+  return{ok:false,label,reason:'DEPENDENCY_'+reason};
+}
 async function bootstrapSeasonWorkspace(){
   if(!navigator.onLine)return;
+  let stage='league-state';
   try{
-    // Season-first authority: current league state is loaded before immutable draft history.
-    // Cached league/user identity is canonical for season operation; draft is optional enrichment.
     const season=await fetchSeasonLeagueState({});
     if(!season?.ok)throw new Error(season?.reason||'SEASON_LEAGUE_STATE_UNAVAILABLE');
+    stage='player-directory';
     const bust=`${Date.now()}-${Math.random().toString(36).slice(2)}`;
     const players=await jf(`${S}/players/nfl?_=${bust}`,'Season Spieler',15000);
     let draft=null,picks=[],mine=[],teams=10,total=150,slot=Number(els.slot.value||9);
+    stage='optional-draft-archive';
     try{
       const id=LIVE_DRAFT_ID_2026;
       [draft,picks]=await Promise.all([jf(`${S}/draft/${id}?_=${bust}`,'Draft-Archiv',6500),jf(`${S}/draft/${id}/picks?_=${bust}`,'Draft-Picks-Archiv',6500)]);
       teams=Number(draft?.settings?.teams||10);total=teams*Number(draft?.settings?.rounds||15);
       mine=(picks||[]).filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no);
     }catch(e){console.warn('PITTI optional draft archive unavailable',e)}
+    stage='live-season-model';
     const rows=seasonRosterRows(season,players,mine),available=seasonAvailablePlayers(season,players),availableDST=seasonAvailableSpecialTeams(season,players,'DST'),availableK=seasonAvailableSpecialTeams(season,players,'K');
     if(!rows)throw new Error('MY_ROSTER_UNRESOLVED');
     if(!Array.isArray(available)||available.length===0)throw new Error('SEASON_FA_POOL_ZERO_INVALID');
@@ -1555,15 +1571,26 @@ async function bootstrapSeasonWorkspace(){
     els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper-Kader · '+rows.length+' Spieler · Source of Truth: League-State · Reserve/IR '+rows.filter(x=>x.seasonStatus==='RESERVE').length+' · Auto-Sync beim Start.';
     els.rosterSummary.innerHTML=Object.entries(counts).filter(([,n])=>n).map(([pos,n])=>'<div class="summary-item"><b>'+n+'</b><span>'+pos+'</span></div>').join('');
     els.rosterList.innerHTML=seasonLineupHtml(rows,season);
-    lastDraftContext={id:LIVE_DRAFT_ID_2026,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:!!draft,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL,historicalDraftAvailable:!!draft};
-    renderRosterBenchAudit(rows,players,total,true);renderRosterFaAudit(rows,available||[],true);
-    renderTradeWorkspace(picks,players,slot,teams,true);renderWaiverWorkspace(true);renderSeasonActionBoard(true);updateStatus();
+    lastDraftContext={id:LIVE_DRAFT_ID_2026,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:true,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL,historicalDraftAvailable:!!draft};
+    lastPostDraftPairs=[];
+    stage='season-surfaces';
+    runSeasonSurface('Aufstellung',()=>renderRosterBenchAudit(rows,players,total,true),els.rosterBenchStatus,els.rosterBenchList);
+    const faLane=runSeasonSurface('FA-vs-Roster',()=>renderRosterFaAudit(rows,available||[],true),els.rosterFaStatus,els.rosterFaList);
+    runSeasonSurface('Trades',()=>renderTradeWorkspace(picks,players,slot,teams,true),els.tradeStatus,els.tradeList);
+    if(faLane.ok){
+      runSeasonSurface('Waiver/FA',()=>renderWaiverWorkspace(true),els.waiverStatus,els.waiverList);
+      runSeasonSurface('Action Board',()=>renderSeasonActionBoard(true),els.seasonActionStatus,els.seasonActionList);
+    }else{
+      blockSeasonDependentSurface('Waiver/FA','FA-vs-Roster',els.waiverStatus,els.waiverList);
+      blockSeasonDependentSurface('Action Board','FA-vs-Roster',els.seasonActionStatus,els.seasonActionList);
+    }
+    updateStatus();renderSeasonRankingFreshness();
     localStorage.setItem('v118_seasonBootstrapAt',String(Date.now()));
   }catch(e){
-    const reason=e?.message||String(e);console.error('PITTI season bootstrap failed',e);
+    const reason=stage+' · '+(e?.message||String(e));console.error('PITTI season bootstrap failed',stage,e);
     if(els.rosterStatus){els.rosterStatus.className='notice warn';els.rosterStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+esc(reason)+' · keine FA-Aktion freigegeben.';}
-    const fail='<div class="notice bad">Season Auto-Sync FAIL-CLOSED · '+esc(reason)+' · keine Aktion freigegeben.</div>';
-    if(els.waiverStatus){els.waiverStatus.className='notice bad';els.waiverStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+reason+' · keine Aktion freigegeben.';els.waiverList.innerHTML='';}if(els.tradeStatus){els.tradeStatus.className='notice bad';els.tradeStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+reason+' · keine Aktion freigegeben.';els.tradeList.innerHTML='';}
+    if(els.waiverStatus){els.waiverStatus.className='notice bad';els.waiverStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+reason+' · keine Aktion freigegeben.';els.waiverList.innerHTML='';}
+    if(els.tradeStatus){els.tradeStatus.className='notice bad';els.tradeStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+reason+' · keine Aktion freigegeben.';els.tradeList.innerHTML='';}
   }
 }
 async function fetchDraftFresh(id){
@@ -3740,7 +3767,9 @@ function setWorkspace(name){
   const valid=['draft','roster','waiver','trade','live'];if(!valid.includes(name))name='roster';
   localStorage.setItem('v117_workspace',name);
   document.querySelectorAll('[data-workspace]').forEach(el=>{el.hidden=el.dataset.workspace!==name});
+  document.querySelectorAll('[data-season-only]').forEach(el=>{el.hidden=name==='draft'});
   document.querySelectorAll('[data-workspace-target]').forEach(btn=>{btn.classList.toggle('active',btn.dataset.workspaceTarget===name);btn.setAttribute('aria-pressed',btn.dataset.workspaceTarget===name?'true':'false')});
+  renderSeasonRankingFreshness();
 }
 document.querySelectorAll('[data-workspace-target]').forEach(btn=>btn.addEventListener('click',()=>setWorkspace(btn.dataset.workspaceTarget)));
 setDraftSurface(localStorage.getItem('v118_draftSurface')||'mock');
@@ -3762,7 +3791,43 @@ function rehydrateDerivedExpertPanelsOnStartup(){
     console.warn('Derived expert-panel startup rehydration failed',e);
   }
 }
+const SEASON_RANKING_AUTO_MS=12*60*60*1000,SEASON_RANKING_RETRY_MS=2*60*60*1000;
+let seasonRankingRefreshBusy=false;
+function renderSeasonRankingFreshness(note=''){
+  if(!els.seasonRankingAge&&!els.seasonRankingStatus)return;
+  const t=Number(store.get('v7_lastRankingUpdate',0)),age=t?Date.now()-t:Infinity;
+  const label=!t?'nicht geladen':age<60*60*1000?Math.max(1,Math.round(age/60000))+' Min.':age<24*60*60*1000?Math.round(age/3600000)+' Std.':Math.floor(age/86400000)+' Tag(e)';
+  if(els.seasonRankingAge){els.seasonRankingAge.textContent=label;els.seasonRankingAge.className=!t?'bad':age>SEASON_RANKING_AUTO_MS?'warn':'ok';}
+  if(els.seasonRankingStatus&&!seasonRankingRefreshBusy)els.seasonRankingStatus.textContent=note||(!t?'Keine verifizierten Rankings geladen. Automatischer Refresh wird versucht.':age>SEASON_RANKING_AUTO_MS?'Rankings älter als 12 Std. · automatischer Refresh wird versucht.':'Rankings aktuell genug · automatischer Refresh erst nach 12 Std.');
+}
+async function refreshSeasonRankings({force=false,auto=false}={}){
+  if(seasonRankingRefreshBusy)return{ok:false,busy:true};
+  const now=Date.now(),last=Number(store.get('v7_lastRankingUpdate',0)),attempt=Number(store.get('v118_lastSeasonRankingRefreshAttempt',0));
+  if(!force&&last&&now-last<SEASON_RANKING_AUTO_MS){renderSeasonRankingFreshness();return{ok:true,skipped:'fresh'};}
+  if(auto&&attempt&&now-attempt<SEASON_RANKING_RETRY_MS){renderSeasonRankingFreshness('Automatischer Ranking-Refresh nach letztem Versuch vorübergehend gedrosselt.');return{ok:false,skipped:'retry-throttle'};}
+  if(!navigator.onLine){renderSeasonRankingFreshness('Offline · letzter verifizierter Ranking-Stand bleibt aktiv.');return{ok:false,offline:true};}
+  seasonRankingRefreshBusy=true;store.set('v118_lastSeasonRankingRefreshAttempt',now);
+  if(els.seasonRefreshRanksBtn){els.seasonRefreshRanksBtn.disabled=true;els.seasonRefreshRanksBtn.textContent='Aktualisiere …';}
+  if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice';els.seasonRankingStatus.textContent='Experten-Rankings werden aktualisiert …';}
+  try{
+    await loadExperts();await loadAllRanks();
+    if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice ok';els.seasonRankingStatus.textContent='Rankings aktualisiert · Saisonflächen werden neu berechnet.';}
+    renderSeasonRankingFreshness('Rankings gerade aktualisiert.');
+    rerenderPostDraftFromContext();
+    return{ok:true};
+  }catch(e){
+    if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice warn';els.seasonRankingStatus.textContent='Ranking-Refresh fehlgeschlagen · letzter verifizierter Stand bleibt aktiv · '+(e?.message||String(e));}
+    return{ok:false,error:e?.message||String(e)};
+  }finally{
+    seasonRankingRefreshBusy=false;
+    if(els.seasonRefreshRanksBtn){els.seasonRefreshRanksBtn.disabled=false;els.seasonRefreshRanksBtn.textContent='Rankings aktualisieren';}
+    renderSeasonRankingFreshness(els.seasonRankingStatus?.textContent||'');
+  }
+}
 rehydrateDerivedExpertPanelsOnStartup();
+if(els.seasonRefreshRanksBtn)els.seasonRefreshRanksBtn.onclick=()=>void refreshSeasonRankings({force:true});
+renderSeasonRankingFreshness();
+void refreshSeasonRankings({auto:true});
 void syncWatcherFeed();
 setInterval(()=>{if(!document.hidden)void syncWatcherFeed()},15*60*1000);
 
