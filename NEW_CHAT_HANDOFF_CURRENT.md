@@ -49,10 +49,14 @@ PC continuation completed the diagnostic retrospective far beyond v217. Preserve
 - Frozen retrospective is ex-ante only; no current rankings or season outcomes may contaminate it.
 - Do not ad-hoc tune 2026. Shadow-model implementation/validation comes later.
 
+## PRESERVED TRANSACTION CANARY
+- rc4.160 device proved automatic live transaction detection: Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR. Do NOT repeat rc4.160 device testing.
+
 ## AUTO / AUTO BLOCK — HARD CONTRACT
 - AUTO is a continuous same-turn loop, not one work package.
 - After every package: checkpoint material change -> re-inventory all independent lanes -> immediately execute next safe positive-value lane.
-- No visible progress/status/acknowledgement/“AUTO läuft weiter” messages while executable work remains. Empty messages are also forbidden.
+- Never send status/progress/acknowledgement messages such as “AUTO läuft”, “ich mache weiter”, “CI läuft”, “Commit erstellt”, or “keine Nutzerhandlung nötig” while executable work remains.
+- Empty assistant response after tool work is forbidden.
 - Visible AUTO response only when active=[], ready=[] and stop_evaluation.allowed=true with approved stop code.
 - STATUS is report-only: no tools/work/polling.
 - Cloudflare deploy amplification changes checkpoint discipline: do NOT persist every AUTO micro-step on the auto-deployed runtime branch. Batch material runtime changes; use existing canonical files only when a handoff/milestone genuinely requires persistence.
