@@ -2672,7 +2672,7 @@ function renderSeasonActionBoard(draftComplete){
 function rerenderPostDraftFromContext(){
   const c=lastDraftContext;
   if(!c?.draftComplete||!Array.isArray(c.mine)||!Array.isArray(c.rankedAvailable)||!c.players)return false;
-  const rows=c.mine.map(pk=>{const p=pinfo(String(pk.player_id),pk.metadata,c.players),r=rankFor(p.name,p.pos),a=adpFor(p.name);return{pk,p,r,a}});
+  const rows=Array.isArray(c.seasonRows)&&c.seasonRows.length?c.seasonRows:c.mine.map(pk=>{const p=pinfo(String(pk.player_id),pk.metadata,c.players),r=rankFor(p.name,p.pos),a=adpFor(p.name);return{pk,p,r,a}});
   renderRosterFaAudit(rows,c.rankedAvailable,true);
   renderTradeWorkspace(c.picks,c.players,Number(els.slot.value),c.teams,true);
   renderWaiverWorkspace(true);
@@ -2691,8 +2691,11 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   if(!els.tradeStatus||!els.tradeList)return;
   if(!draftComplete){els.tradeStatus.className='notice';els.tradeStatus.textContent='Trade Target Board wird nach Draftabschluss aktiv.';els.tradeList.innerHTML='';return;}
   const bySlot={};for(let slot=1;slot<=teams;slot++)bySlot[slot]=[];
-  for(const pk of picks){const slot=Number(pk.draft_slot);if(!bySlot[slot])continue;const p=pinfo(String(pk.player_id),pk.metadata,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk,p,r,a});}
-  const mine=bySlot[userSlot]||[];
+  const live=lastDraftContext?.season;
+  if(live?.ok&&Array.isArray(live.rosters)){
+    for(const rr of live.rosters){const slot=Number(rr.roster_id);if(!bySlot[slot])bySlot[slot]=[];for(const pid of rr.players||[]){const p=sleeperPlayerRow(pid,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk:{player_id:pid,pick_no:999},p,r,a});}}
+  }else for(const pk of picks){const slot=Number(pk.draft_slot);if(!bySlot[slot])continue;const p=pinfo(String(pk.player_id),pk.metadata,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk,p,r,a});}
+  const mine=Array.isArray(lastDraftContext?.seasonRows)&&lastDraftContext.seasonRows.length?lastDraftContext.seasonRows:(bySlot[userSlot]||[]);
   const targets=[];
   for(const [slotS,roster] of Object.entries(bySlot)){
     const slot=Number(slotS);if(slot===userSlot)continue;
@@ -2709,7 +2712,7 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   }
   targets.sort((a,b)=>b.desirability-a.desirability||b.lineupEdge-a.lineupEdge||a.x.r.rank-b.x.r.rank);
   els.tradeStatus.className='notice warn';
-  els.tradeStatus.textContent='Trade Target Board v2 · read-only. Targets werden gegen die marginale eigene Start-/Flex-Geometrie bewertet (WR bis 4, RB bis 3; QB/TE grundsätzlich 1), nicht nur gegen den besten Spieler der Position. Boone-ROS-Marktwert/Annahme-Plausibilität fehlt weiterhin: KEINE ACCEPT/DECLINE- oder Fairness-Empfehlung.';
+  els.tradeStatus.textContent='Trade Target Board v3 · LIVE Sleeper-Rosters statt Draftkader. Targets werden gegen die marginale eigene Start-/Flex-Geometrie bewertet. Marktwert/Annahme-Plausibilität und Gegenangebot fehlen weiterhin: TARGET DISCOVERY, noch keine ACCEPT/DECLINE-Freigabe.';
   els.tradeList.innerHTML=targets.length?`<div class="coach-section-title">Interessante gegnerische Assets — Target Discovery, Verhandlung noch nicht freigegeben</div>`+targets.slice(0,10).map((t,i)=>{
     const x=t.x,market=Number.isFinite(x.a)?` · Draft-ADP ${x.a.toFixed(1)}`:'';
     const geometry=t.bench.open?`offener ${x.p.pos}-Start/Flex-Pfad (${t.bench.filled}/${t.bench.depth})`:`eigene ${x.p.pos}-Lineup-Grenze Panel ${t.bench.rank.toFixed(1)}`;
