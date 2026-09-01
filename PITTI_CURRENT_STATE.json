@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T10:23:00Z",
+  "updated_at": "2026-09-01T10:26:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -19,7 +19,7 @@
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
       "project_guardrails": "PASS",
-      "head": "af07a1a6f10e9d891253f82be80703958fc88acf"
+      "head": "bb91fa76a248e55599331d4b9b3513bfaa2b5b55"
     },
     "android_accepted": "v11.8.0-rc4.158",
     "preview_candidate": "v11.8.0-rc4.160"
@@ -54,8 +54,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4.160_ZERO_FA_FIX_CI_PASS",
-    "nextGate": "DEVICE_RELOAD_CHECK_FA_NONZERO_OR_EXPLICIT_FAIL_CLOSED"
+    "status": "MEVIS_DROP_GATE_CI_PASS",
+    "nextGate": "DEVICE_LIVE_SYNC_VERIFY_BIGSBY_AND_MEVIS"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -71,23 +71,10 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "AUTO_RUNNING",
+    "status": "USER_ACTION_REQUIRED",
     "active": [],
     "ready": [],
-    "waiting_external": [
-      {
-        "id": "mevis-drop-gate-ci",
-        "lane": "special-teams",
-        "task": "Fresh Mevis/drop audit encoded: compare Bigsby/Spears/Gainwell; protect Price/Watson/Downs; await CI guard verification.",
-        "depends_on_head": "9597e3e036e8bd83e408dca567692222d5ee4a26"
-      },
-      {
-        "id": "mevis-waiver-ui-ci",
-        "lane": "waiver",
-        "task": "Mevis live Waiver UI now exposes only Bigsby→Spears→Gainwell drop gate and protects Price/Watson/Downs; await CI.",
-        "depends_on_head": "3d1f59f2a89c4bac33d8c390630eefe514ea9400"
-      }
-    ],
+    "waiting_external": [],
     "blocked_user": [
       {
         "id": "rc4160-device-canary",
@@ -153,13 +140,23 @@
         "id": "mevis-decision-research-final",
         "result": "Evidence locked: Mevis W1 source dispersion preserved; Bigsby/Spears/Gainwell ordering based on role/ceiling only; acquisition-recency bias prohibited.",
         "at": "2026-09-01T10:23:00Z"
+      },
+      {
+        "id": "mevis-drop-gate-ci",
+        "result": "PASS on head bb91fa76a248e55599331d4b9b3513bfaa2b5b55: Project Guardrails, candidate package and release contract all successful.",
+        "at": "2026-09-01T10:26:00Z"
+      },
+      {
+        "id": "mevis-waiver-ui-ci",
+        "result": "PASS on head bb91fa76a248e55599331d4b9b3513bfaa2b5b55: Project Guardrails, candidate package and release contract all successful.",
+        "at": "2026-09-01T10:26:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "Mevis code/UI guard still waiting on CI.",
-      "evaluated_at": "2026-09-01T10:23:00Z"
+      "allowed": true,
+      "code": "USER_ACTION_REQUIRED",
+      "reason": "Mevis decision model/UI/guards and fresh role audit are complete and CI-verified. Next useful project gate is device/live Sleeper refresh to verify current Bigsby transaction and Mevis availability before any real add/drop.",
+      "evaluated_at": "2026-09-01T10:26:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
