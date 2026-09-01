@@ -173,6 +173,24 @@ must(commandContract.auto?.persistentStateMachine?.waitingExternalGlobalStop===f
 must(commandContract.auto?.persistentStateMachine?.blockedUserGlobalStop===false,'command contract blocked-user global-stop regression');
 must(commandContract.auto?.persistentStateMachine?.stopRequires?.activeEmpty===true&&commandContract.auto?.persistentStateMachine?.stopRequires?.readyEmpty===true&&commandContract.auto?.persistentStateMachine?.stopRequires?.stopEvaluationAllowed===true,'command contract AUTO stop requirements drift');
 must(bootstrap.includes('AUTO queue takeover'),'new-chat AUTO queue takeover missing');
+if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
+  must(current.handoff_generation==='20260901T1058Z-v217','Season Companion CURRENT generation must be v217');
+  must(lock.handoff_generation===current.handoff_generation,'Season Companion LOCK generation drift');
+  must(commandContract.handoff_generation===current.handoff_generation,'Season Companion COMMAND generation drift');
+  must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
+  must(handoffMatrix.includes(current.handoff_generation),'Season Companion MATRIX generation drift');
+  must(currentHandoff.includes(current.handoff_generation),'Season Companion HANDOFF generation drift');
+  must(current.authority?.source_candidate==='v11.8.0-rc4.161','Season Companion source candidate regression');
+  must(commandContract.currentGate==='DEVICE_RC4161_ACCEPTANCE','Season Companion command gate regression');
+  must(lock.gate==='DEVICE_RC4161_ACCEPTANCE','Season Companion lock gate regression');
+  must(current.currentWork?.nextGate==='DEVICE_RC4161_ACCEPTANCE','Season Companion CURRENT next gate regression');
+  must(currentHandoff.includes('Tank Bigsby absent'),'Season Companion transaction canary regression');
+  must(!currentHandoff.includes('Tank Bigsby added'),'stale Bigsby-added canary resurrected');
+  must(bootstrap.includes('Do NOT repeat rc4.160 device testing'),'rc4.160 retest prohibition missing');
+  must(handoffMatrix.includes('Empty assistant response after tool work is forbidden'),'AUTO empty-response handoff guard missing');
+  must(currentHandoff.includes('Never send status/progress/acknowledgement messages'),'AUTO progress-response handoff guard missing');
+}
+
 
 must(commandContract.auto?.autoBlockCorrectionTrigger?.trigger==='AUTO BLOCK','AUTO BLOCK command contract missing');
 if(!candidatePreflight) must(commandContract.currentBoundary?.androidAuthority===current.runtime?.android_authority,'command contract Android authority drift');
