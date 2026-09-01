@@ -19,8 +19,8 @@
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
       "project_guardrails": "PASS",
-      "validated_code_head": "99cc6210e30dafdd06403aaca0b7266a111c9824",
-      "scope": "rc4.164 season bootstrap render ordering"
+      "validated_code_head": "9ed4c6ff3e05855d09048d38b06a3bae4e4b8b40",
+      "scope": "rc4.165 complete post-hydration rerender: roster FA -> trade -> waiver -> action -> status"
     },
     "android_accepted": "v11.8.0-rc4.163",
     "preview_candidate": "v11.8.0-rc4.165",
@@ -60,8 +60,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4165_BROWSER_EQUIVALENT_GATE",
-    "nextGate": "SELFTEST_RC4165_SEASON_STARTUP"
+    "status": "RC4165_DEPLOYED_FINAL_DEVICE_CANARY",
+    "nextGate": "DEVICE_RC4165_FINAL_CANARY"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -77,21 +77,17 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "RUNNING",
-    "active": [
-      {
-        "id": "rc4165-browser-equivalent",
-        "task": "Validate complete cold-start season surface rerender including roster FA, trade, waiver, action board and top status after live context assignment."
-      }
-    ],
-    "ready": [
-      {
-        "id": "rc4165-ci-deploy",
-        "task": "Run all release gates and deploy only after browser-equivalent startup contract passes."
-      }
-    ],
+    "status": "USER_ACTION_REQUIRED",
+    "active": [],
+    "ready": [],
     "waiting_external": [],
-    "blocked_user": [],
+    "blocked_user": [
+      {
+        "id": "rc4165-final-canary",
+        "task": "Reload rc4.165 once on physical Android and capture a single screenshot showing top status plus Trade surface. Waiver is covered by autonomous startup-order contract; separate screenshot not required unless Trade/status is wrong.",
+        "blocking_scope": "physical Android cache/service-worker + live network boundary only"
+      }
+    ],
     "completed_recent": [
       {
         "id": "auto-protocol-hardening",
@@ -212,13 +208,23 @@
         "id": "rc4164-root-cause-fix",
         "result": "Root cause identified and fixed: bootstrapSeasonWorkspace rendered Waiver/Trade before assigning lastDraftContext, so those surfaces necessarily saw no season context even after successful Sleeper hydration. rc4.164 assigns canonical context first. All three CI gates PASS and preview deployed.",
         "at": "2026-09-01T12:12:00Z"
+      },
+      {
+        "id": "rc4165-browser-equivalent-gate",
+        "result": "PASS: strengthened executable cold-start contract now requires lastDraftContext before roster FA, Trade, Waiver, Action Board and final updateStatus rerender; silent incomplete-draft return prohibited. All three release gates PASS.",
+        "at": "2026-09-01T12:24:00Z"
+      },
+      {
+        "id": "rc4165-deploy",
+        "result": "PASS: rc4.165 runtime assets deployed to season-preview after green autonomous gate.",
+        "at": "2026-09-01T12:25:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "Autonomous browser-equivalent validation remains available; device check is not yet justified.",
-      "evaluated_at": "2026-09-01T12:20:00Z"
+      "allowed": true,
+      "code": "USER_ACTION_REQUIRED",
+      "reason": "All repeatable startup/hydration behavior is now covered and green autonomously. Only the irreducible physical Android cache/service-worker + live-network boundary remains.",
+      "evaluated_at": "2026-09-01T12:25:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
