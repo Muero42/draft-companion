@@ -387,3 +387,10 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - The unguarded `updateResearchCacheStatus()` sat exactly in that boundary and consumed persistent legacy localStorage evidence. A malformed/null legacy evidence row can throw while the previous static E2E gate uses a clean environment, explaining a device-only failure mode.
 - rc4.173 sanitizes legacy research events and makes optional research-cache status fail-isolated. A new executable startup-resilience regression includes malformed-cache input and is wired into release/package gates.
 - rc4.172 is rejected. Do not repeat it. No further physical device test before rc4.173 automated gates pass.
+
+
+## 2026-09-01 — rc4.173 main promotion PASS
+- rc4.173 startup-resilience candidate passed Candidate Package/Re-Extract, Release Contract v2, Project Guardrails and Cloudflare Pages on PR head, then was squash-merged to main as `a902b96b40d916b0f892c918dac453761fc50f41`.
+- Main gates on the merged runtime also passed. Main package run `33548598040` produced digest `sha256:2648118ad21b0a531c9fb7c154a49f7b0d2829aa78e49cb97d3736776a6b1f2f`.
+- Cloudflare Pages deployed rc4.173 from the main commit. Android remains rc4.172 observed/rejected until one final post-reseal device confirmation.
+- Final user canary must specifically prove startup crosses the prior boundary: Sleeper Live-State age changes from the static dash, Kader loads/fails visibly, and both Kader/Ranking refresh controls give immediate feedback. No more device trial-and-error variants.
