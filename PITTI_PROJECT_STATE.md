@@ -129,3 +129,12 @@ Canonical continuation trigger: **PITTI AUTO**
 - Mevis is therefore WATCH_NOT_AUTO_ADD, not an automatic drop trigger. His Rams scoring environment and potential season-hold value justify an early-add exception only if live league ownership/market-loss risk plus his projected replacement edge clear the opportunity cost of the weakest roster option.
 - Preserve pre-Week-1 contingent RB option value: do not sacrifice a meaningful RB lottery ticket merely to avoid streaming K.
 - The app Special Teams model now carries this explicit Mevis early-add watch; live Sleeper FA/ownership remains mandatory before any concrete add/drop recommendation.
+
+## 2026-09-01 — Mevis concrete drop gate (fresh re-audit)
+- User correctly rejected Price/Watson and, barring extraordinary new evidence, Downs as serious kicker-drop candidates. Do not surface them in ordinary Mevis drop choices.
+- Fresh Sep-1 depth/role audit narrows the actual choice to Tank Bigsby vs Tyjae Spears vs Kenneth Gainwell.
+- Bigsby: PHI RB2 behind Saquon Barkley; current Eagles roster kept Barkley/Bigsby/Shipley, and fresh depth evidence confirms Bigsby second. Highest value is still contingency/injury-driven.
+- Spears: TEN RB2 behind Tony Pollard, but Titans staff has discussed Pollard + Spears as the backfield bellcows and a possible larger rushing role; therefore more standalone weekly pathway than a pure handcuff.
+- Gainwell: TB official depth chart RB2 behind Bucky Irving; recent preseason usage had Irving first before Gainwell entered. Tampa's current roster discussion still supports a defined complementary role.
+- Mevis: FP W1 projection 8.4 (K2 projection, Aug-31 update), Draft Sharks Sep-1 W1 K9, RotoBaller W1 K10/Tier 3. This supports a strong hold/early-add candidate but NOT a cross-source elite-K1 consensus.
+- Current roster-option conclusion for an intentional Mevis add: Bigsby is the preferred drop; Spears is second; Gainwell third. This is based on standalone role + contingent ceiling, not acquisition recency or sunk cost.
