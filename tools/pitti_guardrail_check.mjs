@@ -180,7 +180,7 @@ if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
   must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
   must(handoffMatrix.includes(current.handoff_generation),'Season Companion MATRIX generation drift');
   must(currentHandoff.includes(current.handoff_generation),'Season Companion HANDOFF generation drift');
-  must(['v11.8.0-rc4.161','v11.8.0-rc4.162','v11.8.0-rc4.163','v11.8.0-rc4.164'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
+  must(['v11.8.0-rc4.161','v11.8.0-rc4.162','v11.8.0-rc4.163','v11.8.0-rc4.164','v11.8.0-rc4.165'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
   must(['DEVICE_RC4161_ACCEPTANCE','SEASON_ACTIONABILITY_INCREMENT','DEVICE_RC4163_SEASON_SURFACES'].includes(commandContract.currentGate),'Season Companion command gate regression');
   must(['DEVICE_RC4161_ACCEPTANCE','SEASON_ACTIONABILITY_INCREMENT','DEVICE_RC4163_SEASON_SURFACES'].includes(lock.gate),'Season Companion lock gate regression');
   must(['DEVICE_RC4161_ACCEPTANCE','SEASON_ACTIONABILITY_INCREMENT','DEVICE_RC4163_SEASON_SURFACES'].includes(current.currentWork?.nextGate),'Season Companion CURRENT next gate regression');
