@@ -85,3 +85,9 @@ Canonical continuation trigger: **PITTI AUTO**
 - **AUTO / AUTO BLOCK:** autonomous end-to-end work, no unnecessary interim status messages.
 - **STATUS:** concise state report only, not a trigger for new calculations.
 - **PITTI HANDOFF:** update/reconcile this canonical state, verify code/preview, then hand over.
+
+## rc4.160 AUTO verification update — 2026-09-01
+- Project Guardrails PASS and release-contract-v2 PASS on commit 68e2980d45d64b4014df7874cdb58895349d5e8c.
+- Candidate-package failure isolated to the historical rc4.158 expert-delta regression asserting the exact rc4.158 version string after the runtime advanced to rc4.160; functional delta-refresh invariants before that point passed.
+- Regression was corrected to accept rc4.158 and later versions while preserving all behavioral assertions. This is a test-harness compatibility fix, not a runtime model change.
+- Android authority remains rc4.158; rc4.160 remains preview/candidate until all gates PASS and device canary is verified.
