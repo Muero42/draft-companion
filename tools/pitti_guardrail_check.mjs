@@ -115,6 +115,15 @@ must(app.includes('const weekly=weeklyFresh?'),'THIS WEEK waiver horizon must fa
 must(app.includes("weekly:null")||app.includes("weekly=weeklyFresh?"),'THIS WEEK stale-evidence null path missing');
 must(app.includes("FA-vs-Roster v2"),'Waiver v2 surface missing');
 must(app.includes("frische Weekly-Evidence fehlt"),'Waiver v2 stale weekly explanation missing');
+must(app.includes('Trade Board v4'),'Trade Board v4 surface missing');
+must(app.includes('function tradeOfferCandidates('),'Trade offer construction helper missing');
+must(app.includes('Annahme-Plausibilität'),'Trade acceptance plausibility missing');
+must(app.includes('Week-1 Start/Sit v3'),'Start/Sit v3 surface missing');
+must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
+must(app.includes('Weekly Consensus Rank ist primär'),'weekly rank primary invariant missing');
+must(app.includes('Special Teams v2'),'Special Teams v2 quality-floor surface missing');
+must(app.includes('filter(x=>x.rb&&x.rb.tier<=4)'),'D/ST quality floor must filter tier 5/6 before ranking');
+
 
 must(app.includes('function applyPlayerQualitySafetyGate('),'Value-Safety gate missing');
 
