@@ -30,6 +30,7 @@ assert(start>=0&&end>start,'patchApp extraction failed');
 const patchApp=Function('const BASE='+JSON.stringify(base[1])+',TARGET='+JSON.stringify(base[2])+';\n'+sw.slice(start,end)+'; return patchApp')();
 const patched=patchApp(app);
 new Function(patched.replace(/^import[^\n]*\n/,''));
+assert.equal(patched.replaceAll(base[2],base[1]),app,'service worker must not structurally rewrite canonical app runtime');
 
 // The exact failure that broke rc4.138-rc4.140: adjacent object properties without a comma.
 assert(!/\]\}\s+\[norm\(/.test(app),'fatal RESEARCH_RESIDUAL_PRIORS property adjacency without comma');
