@@ -13,7 +13,7 @@ Generation: `20260901T2024Z-v220`
 RC4169_PREVIEW_PARITY_THEN_DEVICE_REFRESH: one gh-pages/season-preview sync + parity verification, then one physical Android/PWA refresh.
 
 ## AUTO queue takeover
-AUTO/AUTO BLOCK is continuous same-turn execution. Re-inventory after every package. Never emit progress/empty/“AUTO läuft weiter” messages while executable work exists. Do NOT repeat rc4.166-168 debugging loops.
+AUTO/AUTO BLOCK is continuous same-turn execution. Re-inventory after every package. Never emit progress/empty/“AUTO läuft weiter” messages while executable work exists. Do NOT repeat rc4.160 device testing. Do NOT repeat rc4.166-168 debugging loops.
 
 ## STATUS
 Report known state only; no work/polling.

@@ -12,4 +12,5 @@ PASS requires:
 - Watcher v0.2.3 D1 bounded query preserved.
 - Current gate RC4169_PREVIEW_PARITY_THEN_DEVICE_REFRESH.
 - AUTO no progress/empty/false-continuation responses.
+- Empty assistant response after tool work is forbidden.
 - STATUS report-only.
