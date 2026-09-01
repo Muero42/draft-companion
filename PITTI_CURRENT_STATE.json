@@ -11,19 +11,19 @@
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.176 MAIN AUTOMATED GATES PASS",
+    "season_candidate": "v11.8.0-rc4.177 STRICT AUTOMATED VALIDATION",
     "candidate_branch": "main",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.176",
+    "test_challenger": "v11.8.0-rc4.177",
     "ci": {
       "candidate_package": "PASS on takeover validation head a27c0912abb1b1a7144442565eabe998087497a3",
       "release_contract_v2": "PASS on takeover validation head a27c0912abb1b1a7144442565eabe998087497a3",
       "project_guardrails": "PASS on takeover validation head a27c0912abb1b1a7144442565eabe998087497a3",
       "validated_code_head": "a27c0912abb1b1a7144442565eabe998087497a3",
-      "scope": "rc4.176 full-runtime restoration + automatic-only Season refresh + workspace navigation/truncation regression"
+      "scope": "rc4.177 pre-network JS execution marker + bounded Season bootstrap watchdog; strict gates rerunning"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "v11.8.0-rc4.176 main deployed PASS",
+    "preview_candidate": "v11.8.0-rc4.177 main candidate; deployment/physical acceptance pending",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "latest_package_sha256": "sha256:6bd37d7dede76187ff6a38dbec625f183189f43c0af0b4b98b89cb563661a513",
     "package_reference_run": 33552319576,
