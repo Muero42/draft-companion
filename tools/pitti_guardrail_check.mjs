@@ -123,6 +123,7 @@ must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence help
 must(app.includes('Weekly Consensus Rank ist primär'),'weekly rank primary invariant missing');
 must(app.includes('Special Teams v2'),'Special Teams v2 quality-floor surface missing');
 must(app.includes("dropCandidatePolicy:{primary:['Tank Bigsby','Tyjae Spears','Kenneth Gainwell'],protected:['Jadarian Price','Christian Watson','Josh Downs']"),'Mevis drop gate must protect Price/Watson/Downs and compare Bigsby/Spears/Gainwell');
+must(app.includes('DROP-Reihenfolge Bigsby → Spears → Gainwell; Price / Watson / Downs geschützt'),'Waiver UI must surface the guarded Mevis drop order');
 must(app.includes('SEASON_FA_POOL_ZERO_INVALID'),'zero live season FA pool must fail closed');
 must(app.includes('FA-POOL NICHT VALIDIERT'),'invalid season FA pool must be visible');
 must(app.includes('kein FA/HOLD-Urteil aus Draft-Verfügbarkeit'),'post-draft FA must never fall back to draft availability');
