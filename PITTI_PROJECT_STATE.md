@@ -141,3 +141,8 @@ Canonical continuation trigger: **PITTI AUTO**
 
 - Evidence lock: never justify retaining/dropping Bigsby because he was “just added.” Acquisition recency is explicitly non-causal. Re-rank on current role, standalone weekly path, contingent ceiling, roster construction and market replacement only.
 - Cross-source Mevis W1 dispersion is itself decision evidence: FP projection K2/8.4, Draft Sharks K9 (Sep-1), RotoBaller K10/Tier 3. Treat him as a strong candidate with unusually attractive environment/talent, not as a proven consensus weekly K1.
+
+## 2026-09-01 — Device transaction canary + zero-FA root cause
+- Device screenshot after the real Mevis add independently showed Harrison Mevis on roster, Tank Bigsby absent, and Charbonnet still Reserve/IR. This proves the live Sleeper roster transaction sync can detect the add/drop without the user disclosing the dropped player.
+- The same screenshot still rendered “0 gerankte Free Agents / HOLD”. Root cause: bootstrapSeasonWorkspace had a second render path that did not apply the zero-FA fail-closed gate already added to the main analyze path. Startup can occur before expert rank caches are hydrated, so ownership can be valid while the rank-gated FA join collapses to zero.
+- Fix: startup bootstrap now throws SEASON_FA_POOL_ZERO_INVALID on zero ranked skill-position FAs rather than rendering HOLD. Guardrail requires both startup and analyze paths to contain the zero-FA gate.
