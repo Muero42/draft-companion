@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T09:45:00Z",
+  "updated_at": "2026-09-01T09:49:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -54,8 +54,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4.160_SEASON_INCREMENT_CI_PASS",
-    "nextGate": "DEVICE_END_TO_END_CANARY_ON_CURRENT_RC4.160_PREVIEW"
+    "status": "RC4.160_ZERO_FA_FALSE_HOLD_FIX_PENDING_CI",
+    "nextGate": "CI_THEN_DEVICE_RECHECK"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -71,9 +71,16 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "USER_ACTION_REQUIRED",
+    "status": "AUTO_RUNNING",
     "active": [],
-    "ready": [],
+    "ready": [
+      {
+        "id": "rc4160-zero-fa-device-finding",
+        "lane": "season-sync",
+        "task": "Device canary exposed invalid 0-ranked-FA quiet HOLD. Fix committed: zero live FA pool now fail-closed and historical draft availability cannot backfill post-draft FA.",
+        "priority": 100
+      }
+    ],
     "waiting_external": [],
     "blocked_user": [
       {
@@ -133,10 +140,10 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "All autonomous rc4.160 season lanes currently queued are implemented and CI-verified. Remaining acceptance gate requires device runtime: verify live FA pool is nonzero, Bigsby is rostered/not FA, Charbonnet reserve, and new Waiver v2/Trade v4/Start-Sit v3 surfaces render.",
-      "evaluated_at": "2026-09-01T09:45:00Z"
+      "allowed": false,
+      "code": null,
+      "reason": "Device canary found a material false-HOLD bug; fix requires CI before next device verification.",
+      "evaluated_at": "2026-09-01T09:49:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
