@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T08:25:00Z",
+  "updated_at": "2026-09-01T08:55:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -14,7 +14,15 @@
     "season_candidate": "v11.8.0-rc4.160",
     "candidate_branch": "season-companion-rc4.159",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.160"
+    "test_challenger": "v11.8.0-rc4.160",
+    "ci": {
+      "candidate_package": "PASS",
+      "project_guardrails": "PASS",
+      "release_contract_v2": "PASS",
+      "head": "afdcc1ca80556019cfbafe21f0809f324fbd79ae"
+    },
+    "android_accepted": "v11.8.0-rc4.158",
+    "preview_candidate": "v11.8.0-rc4.160"
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -46,8 +54,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4.160_SEASON_COMPANION_PREVIEW_DEPLOYED",
-    "nextGate": "CI_GREEN_THEN_DEVICE_END_TO_END_CANARY"
+    "status": "RC4.160_ALL_CI_GATES_PASS",
+    "nextGate": "DEVICE_END_TO_END_CANARY_ON_RC4.160_PREVIEW"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
