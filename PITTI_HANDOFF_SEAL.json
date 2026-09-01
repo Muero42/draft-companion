@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260901T1058Z-v217",
-  "created_at": "2026-09-01T11:15:00Z",
+  "created_at": "2026-09-01T11:18:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -12,7 +12,7 @@
     "PITTI_COMMAND_CONTRACTS.json": "1680882d7bfecba8b5550b31aeb977192bfce740",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "b8fa65351432fb428ae9194b50ee3dbd01d70882",
     "HANDOFF_COMPLETENESS_MATRIX.md": "2d27f413e9d56f475ae45940726df0c38eb3669b",
-    "PITTI_EXECUTION_LOCK.json": "cc210157e471c3eb829e192fa3f6e9b9c5d15b2e",
+    "PITTI_EXECUTION_LOCK.json": "ac6310f42d4fa8c95a015fabedd34a9070a2625e",
     "PITTI_PROJECT_STATE.md": "ffde6fbf07e6cbbef5c4e877a134bcdedd49c5e6",
     "PITTI_AUTO_PREFLIGHT.md": "db5b19a99010e59501b6b57818b56495a9f6c41f",
     "app.js": "b994fb692fb40edac2a75098f53f680b5b39d3c1",
@@ -57,5 +57,5 @@
     "if coherent, one physical Android rc4.161 acceptance",
     "after acceptance continue Season Companion development from live Sleeper state"
   ],
-  "note": "v217 resealed after explicit second-pass anti-regression audit. Historical v215/v216 draft-day pointers are not current authority."
+  "note": "v217 resealed after second-pass anti-regression audit and Library fail-closed invariant restoration."
 }
