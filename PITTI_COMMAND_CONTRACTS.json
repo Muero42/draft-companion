@@ -149,7 +149,7 @@
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.169 accepted rollback authority",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
-    "sourceAuthority": "v11.8.0-rc4.176 main source/deployed candidate",
+    "sourceAuthority": "v11.8.0-rc4.177 candidate; not device-promoted",
     "latestPackageReextract": "rc4.176 PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestPackageSha256": "sha256:6bd37d7dede76187ff6a38dbec625f183189f43c0af0b4b98b89cb563661a513",
     "packageReferenceRun": 33552319576,
@@ -161,7 +161,7 @@
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "22:09 CEST screenshot: rc4.176 visible, Season shell restored; Sleeper Live-State '-' and Kader still loading in captured frame; static screenshot does not prove navigation/hydration success."
   },
-  "currentGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
+  "currentGate": "RC4177_STRICT_VALIDATION",
   "handoffGeneration": "20260901T2210Z-v224",
   "handoff_generation": "20260901T2210Z-v224",
   "statusCommand": {
