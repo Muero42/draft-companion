@@ -106,7 +106,7 @@
       {
         "id": "strict-v224-validation",
         "lane": "regression/release safety",
-        "reason": "CI running on takeover repair head 01992a54c5b640c9079867c894b19ff38d00d190"
+        "reason": "strict validation repair iteration"
       }
     ],
     "ready": [
@@ -344,7 +344,7 @@
   },
   "handoff": {
     "generation": "20260901T2210Z-v224",
-    "transaction_in_progress": true,
+    "transaction_in_progress": false,
     "status": "RESEAL_PENDING",
     "second_pass_pass": false
   }
