@@ -1,6 +1,6 @@
 {
   "schema": "pitti.command-contract.v1",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "trigger": "PITTI AUTO",
   "sourceOrder": [
     "PITTI_COMMAND_CONTRACTS.json",
@@ -59,7 +59,28 @@
       ],
       "platformBoundary": "After an assistant turn is ended, autonomous execution cannot continue until another user turn. Therefore do not end an AUTO turn early."
     },
-    "visibleResponseGate": "RESULT_OR_UNAVOIDABLE_USER_ACTION_ONLY"
+    "visibleResponseGate": "ACTIVE_AND_READY_EMPTY_PLUS_VALID_STOP_EVALUATION",
+    "persistentStateMachine": {
+      "statePath": "PITTI_CURRENT_STATE.json:auto_execution_state",
+      "mustLoadBeforeAuto": true,
+      "reconstructIfMissingOrStale": true,
+      "dispatch": "highest-priority safe ready item after every package",
+      "noOutputGuard": "visible response forbidden while active.length>0 or ready.length>0",
+      "stopRequires": {
+        "activeEmpty": true,
+        "readyEmpty": true,
+        "stopEvaluationAllowed": true
+      },
+      "allowedStopCodes": [
+        "USER_ACTION_REQUIRED",
+        "DECISION_REQUIRED",
+        "PROJECT_MILESTONE_REACHED",
+        "NO_EXECUTABLE_WORK_REMAINS",
+        "SAFETY_OR_IRREVERSIBLE_CONFIRMATION"
+      ],
+      "waitingExternalGlobalStop": false,
+      "blockedUserGlobalStop": false
+    }
   },
   "interruption": [
     "unavoidable user/device action or information",
