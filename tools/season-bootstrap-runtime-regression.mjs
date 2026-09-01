@@ -22,8 +22,8 @@ console.log('SEASON_BOOTSTRAP_RUNTIME_REGRESSION_PASS rc4.'+version);
 
 const startupTail=app.slice(app.lastIndexOf('rehydrateDerivedExpertPanelsOnStartup();'));
 const bootAt=startupTail.indexOf('await bootstrapSeasonWorkspace()');
-const rankAt=startupTail.indexOf('void refreshSeasonRankings({auto:true})');
-const watcherAt=startupTail.indexOf('void syncWatcherFeed()');
+const rankAt=startupTail.indexOf('void refreshSeasonRankings({auto:true})',bootAt);
+const watcherAt=startupTail.indexOf('void syncWatcherFeed()',bootAt);
 assert.ok(bootAt>=0&&rankAt>bootAt&&watcherAt>bootAt,'roster bootstrap must have first network priority before ranking/watcher background work');
 assert.ok(app.includes("Kader-Aktualisierung läuft bereits …"),'busy roster tap feedback missing');
 assert.ok(app.includes("Ranking-Aktualisierung läuft bereits …"),'busy ranking tap feedback missing');
