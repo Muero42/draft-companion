@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260901T1058Z-v217",
-  "created_at": "2026-09-01T11:18:00Z",
+  "created_at": "2026-09-01T11:58:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "a34a57c35e7a386862657a189002a1bf5ba7bcf7",
+    "PITTI_CURRENT_STATE.json": "f2a22041d3570b58d40058ad23239ab89e80bb49",
     "NEW_CHAT_HANDOFF_CURRENT.md": "5a929961ddd59a0fb32f1ef940feca1ccae19493",
     "PITTI_COMMAND_CONTRACTS.json": "1680882d7bfecba8b5550b31aeb977192bfce740",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "b8fa65351432fb428ae9194b50ee3dbd01d70882",
     "HANDOFF_COMPLETENESS_MATRIX.md": "2d27f413e9d56f475ae45940726df0c38eb3669b",
     "PITTI_EXECUTION_LOCK.json": "ac6310f42d4fa8c95a015fabedd34a9070a2625e",
-    "PITTI_PROJECT_STATE.md": "ffde6fbf07e6cbbef5c4e877a134bcdedd49c5e6",
+    "PITTI_PROJECT_STATE.md": "7ce432dbc29b985a42ed7e8a1eef40ce29e7a92a",
     "PITTI_AUTO_PREFLIGHT.md": "db5b19a99010e59501b6b57818b56495a9f6c41f",
     "app.js": "b994fb692fb40edac2a75098f53f680b5b39d3c1",
     "live-surface-v3.js": "ecbf92859390cd28b1d6b625d856801f5ad1a149"
@@ -48,7 +48,8 @@
     "auto_empty_reply_forbidden": true,
     "auto_promise_only_reply_forbidden": true,
     "waiting_gate_blocks_only_dependent_lane": true,
-    "rc4160_retest_forbidden": true
+    "rc4160_retest_forbidden": true,
+    "preview_rc4161_deployment_parity_verified": true
   },
   "exact_gate": "DEVICE_RC4161_ACCEPTANCE",
   "next_sequence": [
@@ -57,5 +58,5 @@
     "if coherent, one physical Android rc4.161 acceptance",
     "after acceptance continue Season Companion development from live Sleeper state"
   ],
-  "note": "v217 resealed after second-pass anti-regression audit and Library fail-closed invariant restoration."
+  "note": "v217 resealed after autonomous rc4.161 gh-pages season-preview deployment repair; exact gate remains DEVICE_RC4161_ACCEPTANCE."
 }
