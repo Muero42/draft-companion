@@ -41,6 +41,15 @@ assert.equal(patched.replaceAll(base[2],base[1]),app,'service worker must not st
 // The exact failure that broke rc4.138-rc4.140: adjacent object properties without a comma.
 assert(!/\]\}\s+\[norm\(/.test(app),'fatal RESEARCH_RESIDUAL_PRIORS property adjacency without comma');
 
+// Season-first HTML intentionally omits legacy Draft status nodes. Startup render/status
+// must therefore never dereference them unguarded before bootstrapSeasonWorkspace.
+assert(app.includes("if(els.onlineState){els.onlineState.textContent=navigator.onLine?'Online':'Offline';"),'Season-first startup must null-guard legacy onlineState');
+const startupTail=app.slice(app.lastIndexOf('rehydrateDerivedExpertPanelsOnStartup();'));
+const bootAt=startupTail.indexOf('await bootstrapSeasonWorkspace()');
+assert(bootAt>=0,'automatic roster bootstrap missing');
+const preBoot=startupTail.slice(0,bootAt);
+assert(!/els\.onlineState\.(?:textContent|className)/.test(preBoot.replace(/if\(els\.onlineState\)\{[^}]*\}/g,'')),'unguarded legacy onlineState access before Season bootstrap');
+
 // rc4.175 Season startup is automatic-only. Runtime parsing above is the startup gate;
 // manual refresh-handler observability contracts were retired with their controls.
 assert(!app.includes("'seasonRefreshLiveBtn'")&&!app.includes("'seasonRefreshRanksBtn'"),'manual Season controls resurrected');
