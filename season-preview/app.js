@@ -19,10 +19,22 @@ async function fetchSeasonLeagueState(draft){
   let leagueId=String(draft?.league_id||store.text(SEASON_LEAGUE_ID_KEY,'')||'').trim();
   if(!leagueId&&draft?.draft_id){try{const leagues=await jf(`${S}/user/${encodeURIComponent(String(draft.created_by||''))}/leagues/nfl/2026?_=${Date.now()}`,'Ligen',9000);const hit=(leagues||[]).find(l=>String(l.draft_id||'')===String(draft.draft_id));leagueId=String(hit?.league_id||'').trim();}catch{}}
   if(!leagueId)return{ok:false,reason:'NO_LEAGUE_ID'};
-  let userId=store.text(SEASON_USER_ID_KEY,'').trim(),url=new URL(WATCHER_BASE_URL+'/league-state');url.searchParams.set('league_id',leagueId);if(userId)url.searchParams.set('user_id',userId);
+  // The draft slot is NOT the Sleeper roster_id. Resolve the user's roster from
+  // the canonical draft mapping first; stale cached owner IDs are never authoritative.
+  let userId='',url=new URL(WATCHER_BASE_URL+'/league-state');url.searchParams.set('league_id',leagueId);
   let r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('League-State HTTP '+r.status);let v=await r.json();
-  if(!userId){const roster=(v.rosters||[]).find(x=>Number(x.roster_id)===Number(els.slot.value));userId=String(roster?.owner_id||'').trim();if(userId){store.setText(SEASON_USER_ID_KEY,userId);url.searchParams.set('user_id',userId);r=await fetch(url,{cache:'no-store'});if(r.ok)v=await r.json();}}
-  if(!v?.ok||!v?.my_roster)return{ok:false,reason:'MY_ROSTER_UNRESOLVED',leagueId,userId};store.setText(SEASON_LEAGUE_ID_KEY,leagueId);return{ok:true,leagueId,userId,...v};
+  const slot=Number(els.slot.value||9),mappedRosterId=Number(draft?.slot_to_roster_id?.[String(slot)]??draft?.slot_to_roster_id?.[slot]);
+  let roster=null;
+  if(Number.isFinite(mappedRosterId))roster=(v.rosters||[]).find(x=>Number(x.roster_id)===mappedRosterId);
+  if(!roster){
+    const order=draft?.draft_order||{};
+    const ownerFromSlot=Object.entries(order).find(([,s])=>Number(s)===slot)?.[0]||'';
+    if(ownerFromSlot)roster=(v.rosters||[]).find(x=>String(x.owner_id||'')===String(ownerFromSlot));
+  }
+  userId=String(roster?.owner_id||'').trim();
+  if(!userId)return{ok:false,reason:'USER_ROSTER_MAPPING_UNRESOLVED',leagueId,userId};
+  store.setText(SEASON_USER_ID_KEY,userId);url.searchParams.set('user_id',userId);r=await fetch(url,{cache:'no-store'});if(!r.ok)throw new Error('League-State user HTTP '+r.status);v=await r.json();
+  if(!v?.ok||!v?.my_roster||String(v.my_roster.owner_id||'')!==userId)return{ok:false,reason:'MY_ROSTER_UNRESOLVED',leagueId,userId};store.setText(SEASON_LEAGUE_ID_KEY,leagueId);return{ok:true,leagueId,userId,...v};
 }
 function seasonRosterRows(season,players,draftMine){if(!season?.ok||!season.my_roster)return null;const draftById=new Map((draftMine||[]).map(pk=>[String(pk.player_id),pk])),reserve=new Set((season.my_roster.reserve||[]).map(String));return[...new Set((season.my_roster.players||[]).map(String))].map(pid=>{const p=sleeperPlayerRow(pid,players),base=draftById.get(pid);return{pk:base||{player_id:pid,pick_no:999,metadata:{}},p:{...p,injury:reserve.has(pid)?(p.injury||'IR/RESERVE'):p.injury},r:rankFor(p.name,p.pos),a:adpFor(p.name),seasonStatus:reserve.has(pid)?'RESERVE':'ACTIVE'};});}
 function seasonAvailablePlayers(season,players){
