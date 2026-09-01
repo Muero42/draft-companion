@@ -31,7 +31,7 @@
     "deployed_pages_head": "main 242ea4b982c5226d6958f6704d5c823d6c89aa9c · Cloudflare Pages deploy PASS",
     "installed_android": "v11.8.0-rc4.176",
     "latest_android_observed": "v11.8.0-rc4.176",
-    "device_update_policy": "NO_FURTHER_DEVICE_TRIALS; RC4.176_ALREADY_OBSERVED; ACCEPT_ONLY_AFTER_AUTOMATED_SEASON_E2E_AND_FUNCTIONAL_DEVICE_EVIDENCE",
+    "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "rc4.175 rejected for proven app.js truncation/workspace-router loss. New device evidence at 22:09 CEST shows rc4.176 installed with Season shell/workspace buttons visually restored, but Sleeper Live-State is still '-' and Kader is still 'Live-Kader wird geladen...' in the captured frame. rc4.176 is OBSERVED, NOT functionally accepted.",
     "latest_device_evidence": {
       "version": "v11.8.0-rc4.176",
@@ -83,7 +83,7 @@
     ]
   },
   "currentWork": {
-    "status": "HANDOFF_V224_RC4176_DEVICE_OBSERVED_NOT_ACCEPTED",
+    "status": "TAKEOVER_RUNNING_V224_GUARDRAIL_REPAIR_THEN_SEASON_E2E",
     "nextGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE",
     "takeoverRule": "New chat first reconciles actual main/CI/deploy against v224, then runs browser-equivalent Season E2E. Do not infer acceptance from rc4.176 being installed."
   },
@@ -101,9 +101,24 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "PROJECT_MILESTONE_REACHED",
-    "active": [],
-    "ready": [],
+    "status": "RUNNING",
+    "active": [
+      {
+        "id": "takeover-guardrail-repair",
+        "lane": "checkpoint/handoff integrity",
+        "reason": "v224 takeover exposed guardrail contract drift caused by semantic handoff rewrite; repair required before strict validation"
+      }
+    ],
+    "ready": [
+      {
+        "id": "strict-v224-validation",
+        "lane": "regression/release safety"
+      },
+      {
+        "id": "season-e2e-reconcile",
+        "lane": "regression/release safety"
+      }
+    ],
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
@@ -319,10 +334,10 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "Explicit handoff requested. The next chat reconstructs autonomous work from currentWork and actual repository evidence.",
-      "evaluated_at": "2026-09-01T20:09:00Z"
+      "allowed": false,
+      "code": null,
+      "reason": "AUTO takeover reconstructed queue from currentWork and actual failed strict v224 CI.",
+      "evaluated_at": "2026-09-01T20:18:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
