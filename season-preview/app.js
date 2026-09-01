@@ -1461,6 +1461,27 @@ async function jf(url,label,timeoutMs=6500){
   finally{clearTimeout(timer)}
 }
 async function fetchDraft(id){const bust=`${Date.now()}-${Math.random().toString(36).slice(2)}`;const[draft,picks,players]=await Promise.all([jf(`${S}/draft/${id}?_=${bust}`,'Draft'),jf(`${S}/draft/${id}/picks?_=${bust}`,'Picks'),jf(`${S}/players/nfl?_=${bust}`,'Spieler',9000)]);return{draft,picks,players}}
+async function bootstrapSeasonWorkspace(){
+  if(!navigator.onLine)return;
+  const id=LIVE_DRAFT_ID_2026;
+  try{
+    const {draft,picks,players}=await fetchDraft(id),teams=Number(draft.settings?.teams||10),rounds=Number(draft.settings?.rounds||15),total=teams*rounds;
+    if(String(draft.status||'').toLowerCase()!=='complete'&&picks.length<total)return;
+    const slot=Number(els.slot.value||9),mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no);
+    const season=await fetchSeasonLeagueState({...draft,draft_id:id}),rows=seasonRosterRows(season,players,mine),available=seasonAvailablePlayers(season,players);
+    if(!rows)throw new Error(season?.reason||'MY_ROSTER_UNRESOLVED');
+    const counts=postDraftRosterCounts(rows);
+    els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper-Kader · '+rows.length+' Spieler · Source of Truth: League-State · Reserve/IR '+rows.filter(x=>x.seasonStatus==='RESERVE').length+' · Auto-Sync beim Start.';
+    els.rosterSummary.innerHTML=Object.entries(counts).filter(([,n])=>n).map(([pos,n])=>'<div class="summary-item"><b>'+n+'</b><span>'+pos+'</span></div>').join('');
+    els.rosterList.innerHTML=rows.map(x=>'<div class="coach-row"><div><b>'+esc(x.p.name)+'</b> <span class="tiny">'+esc(x.p.pos)+' · '+esc(x.p.team)+'</span><div class="tiny">'+x.seasonStatus+(x.p.injury?' · '+esc(x.p.injury):'')+(x.r?' · Panel '+x.r.rank.toFixed(1):'')+'</div></div><div><b>'+x.seasonStatus+'</b></div></div>').join('');
+    renderRosterBenchAudit(rows,players,total,true);renderRosterFaAudit(rows,available||[],true);
+    renderWaiverWorkspace(true);renderSeasonActionBoard(true);
+    lastDraftContext={id,current:total,players,picks,mine,teams,rankedAvailable:available||[],draftComplete:true,season,seasonRows:rows};
+    localStorage.setItem('v118_seasonBootstrapAt',String(Date.now()));
+  }catch(e){
+    if(els.rosterStatus){els.rosterStatus.className='notice warn';els.rosterStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+esc(e?.message||String(e))+' · keine FA-Aktion freigegeben.';}
+  }
+}
 async function fetchDraftFresh(id){
   const first=await fetchDraft(id);
   // Die Kontrollabfrage darf nicht erneut den ~NFL-Spielerpool laden: genau dieser doppelte
@@ -3545,7 +3566,7 @@ rehydrateDerivedExpertPanelsOnStartup();
 void syncWatcherFeed();
 setInterval(()=>{if(!document.hidden)void syncWatcherFeed()},15*60*1000);
 
-try{renderAll();setAuto();updateStatus();}catch(e){
+try{renderAll();setAuto();updateStatus();void bootstrapSeasonWorkspace();}catch(e){
   console.error('PITTI startup tail failed',e);
   const q=document.getElementById('qualityStatus');
   if(q){q.className='notice bad';q.textContent='Startfehler nach UI-Bindung: '+(e?.message||String(e));}
