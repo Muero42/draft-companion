@@ -1,6 +1,6 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
 const a=fs.readFileSync('app.js','utf8');
-assert(a.includes("const APP_VERSION='v11.8.0-rc4.175'"));
+const v=(a.match(/const APP_VERSION='([^']+)'/)||[])[1];const n=Number((v.match(/rc4\.(\d+)/)||[])[1]);assert.ok(n>=176,'requires rc4.176+');
 const ss=a.indexOf('function sanitizeResearchEvents('),se=a.indexOf('\nfunction loadResearchEvents',ss);assert(ss>=0&&se>ss);
 const sanitize=new Function('return ('+a.slice(ss,se).replace('function sanitizeResearchEvents','function')+')')();
 assert.deepEqual(sanitize([null,1,'x',[],{}, {playerKey:'p'}]),[{}, {playerKey:'p'}]);
@@ -12,4 +12,4 @@ const bootstrap=a.indexOf('const rosterResult=await bootstrapSeasonWorkspace();'
 const ranks=a.indexOf('void refreshSeasonRankings({auto:true});',bootstrap);
 assert(set>=0&&guarded>set&&rehydrate>guarded&&freshness>rehydrate&&bootstrap>freshness&&ranks>bootstrap,'automatic Season startup sequence invalid');
 assert(!a.includes('bindCriticalSeasonControlsEarly'),'obsolete manual Season early binding resurrected');
-console.log('SEASON_STARTUP_RESILIENCE_PASS rc4.175');
+console.log('SEASON_STARTUP_RESILIENCE_PASS '+v);

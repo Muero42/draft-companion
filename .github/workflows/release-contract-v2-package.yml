@@ -30,6 +30,7 @@ jobs:
           node tools/rc489-draft-critical.mjs
           node tools/rc490-draft-critical.mjs
           node tools/rc491-return-calibration.mjs
+          node tools/rc496-draft-critical.mjs
           node tools/rc4146-tier-payload-e2e.mjs
           node tools/rc4147-expert-directory-montgomery.mjs
           node tools/rc4148-tier-from-v4-panel.mjs
@@ -46,6 +47,7 @@ jobs:
           node tools/season-interaction-e2e-gate.mjs
           node tools/season-startup-resilience-regression.mjs
           node tools/season-automatic-refresh-contract.mjs
+          node tools/season-workspace-navigation-regression.mjs
           node tools/season-bootstrap-render-order-regression.mjs
           node tools/season-mobile-bootstrap-transport-regression.mjs
           if grep -q "v11.8.0-rc4.115" app.js; then node tools/rc4115-v5-hybrid.mjs; fi

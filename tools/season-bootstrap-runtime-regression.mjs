@@ -10,14 +10,14 @@ assert.ok(seasonState.includes("S+'/league/'+encodeURIComponent(leagueId)+'/rost
 assert.ok(!seasonState.includes('WATCHER_BASE_URL'),'roster bootstrap must not depend on watcher');
 assert.ok(seasonState.includes('Season-Identität')&&seasonState.includes('slot_to_roster_id')&&seasonState.includes('draft_order'),'fresh-origin mapping recovery missing');
 assert.ok(seasonState.includes("'Sleeper Kader',7000"),'bounded roster timeout missing');
-assert.ok(html.includes('id="seasonRefreshLiveBtn"')&&html.includes('id="seasonLiveStateStatus"'),'live-state refresh UI missing');
-assert.ok(app.includes("seasonRefreshLiveBtn.addEventListener('click'")&&app.includes("bootstrapSeasonWorkspace({force:true})"),'early live refresh wiring missing');
-assert.ok(app.includes('seasonBootstrapBusy')&&app.includes('Kader-Aktualisierung läuft bereits'),'busy feedback missing');
+assert.ok(html.includes('id="seasonLiveStateStatus"'),'live-state status UI missing');
+assert.ok(!html.includes('id="seasonRefreshLiveBtn"')&&!html.includes('id="seasonRefreshRanksBtn"'),'manual Season refresh controls must stay removed');
+assert.ok(app.includes('seasonBootstrapBusy'),'bootstrap concurrency guard missing');
 assert.match(css,/\[hidden\]\s*\{\s*display:none!important\s*\}/);
 const boot=between('async function bootstrapSeasonWorkspace','async function fetchDraftFresh');
 for(const token of ["runSeasonSurface('Aufstellung'","const faLane=runSeasonSurface('FA-vs-Roster'","runSeasonSurface('Trades'","blockSeasonDependentSurface('Waiver/FA'","stage+' · '"])assert.ok(boot.includes(token),'season isolation missing '+token);
 assert.ok(boot.includes('Season Auto-Sync FAIL-CLOSED'),'fail-closed lost');
-assert.ok(app.includes('SEASON_RANKING_AUTO_MS=12*60*60*1000')&&app.includes('refreshSeasonRankings({force:true})'),'ranking refresh policy lost');
+assert.ok(app.includes('SEASON_RANKING_AUTO_MS=12*60*60*1000')&&app.includes('refreshSeasonRankings({auto:true})'),'automatic ranking refresh policy lost');
 console.log('SEASON_BOOTSTRAP_RUNTIME_REGRESSION_PASS rc4.'+version);
 
 const startupTail=app.slice(app.lastIndexOf('rehydrateDerivedExpertPanelsOnStartup();'));
@@ -25,7 +25,7 @@ const bootAt=startupTail.indexOf('await bootstrapSeasonWorkspace()');
 const rankAt=startupTail.indexOf('void refreshSeasonRankings({auto:true})',bootAt);
 const watcherAt=startupTail.indexOf('void syncWatcherFeed()',bootAt);
 assert.ok(bootAt>=0&&rankAt>bootAt&&watcherAt>bootAt,'roster bootstrap must have first network priority before ranking/watcher background work');
-assert.ok(app.includes("Kader-Aktualisierung läuft bereits …"),'busy roster tap feedback missing');
-assert.ok(app.includes("Ranking-Aktualisierung läuft bereits …"),'busy ranking tap feedback missing');
+assert.ok(!app.includes("seasonRefreshLiveBtn.addEventListener('click'"),'manual roster refresh wiring returned');
+assert.ok(!app.includes("seasonRefreshRanksBtn.addEventListener('click'"),'manual ranking refresh wiring returned');
 assert.ok(app.includes("1/3 Sleeper-Liga und Kader")&&app.includes("2/3 Sleeper-Spielerverzeichnis")&&app.includes("3/3 Kader und Saisonflächen"),'roster stage feedback missing');
 console.log('SEASON_STARTUP_PRIORITY_REGRESSION_PASS');
