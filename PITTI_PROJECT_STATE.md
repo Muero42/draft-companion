@@ -182,3 +182,12 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Verified on gh-pages: app.js, index.html, sw.js and manifest.webmanifest all advertise/load v11.8.0-rc4.161.
 - Do not treat the earlier rc4.159 browser screenshot as rc4.161 acceptance evidence.
 - Remaining gate is unchanged: DEVICE_RC4161_ACCEPTANCE on physical Android, then continue Season Companion development.
+
+
+## 2026-09-01 — rc4.161 device PASS → rc4.163 season actionability
+- Physical Android screenshot accepted rc4.161: correct version visible and the prior false zero-ranked-FA HOLD regression is gone.
+- Fresh pre-Week-1 waiver evidence integrated in rc4.162 from Nick Mariano/RotoBaller (2026-08-31): only the top entries explicitly applicable to all/10+ team leagues influence the 10-team model; bounded bonus, explicit provenance, hard expiry 2026-09-08. Static market evidence never overrides live Sleeper ownership.
+- During re-inventory, AUTO found a separate Trade Board identity defect: live Sleeper roster_id was being compared to historical draft slot 9. rc4.163 excludes the user's live roster by canonical season.my_roster.roster_id; draft-slot comparison remains fallback only when live season state is absent.
+- Added executable regressions for Week-1 waiver market expiry/provenance and live trade roster identity; wired both into candidate package gate.
+- rc4.163 all three gates PASS on head bdb006b618d9ae74c7ddedcfd894f42cdc47833e and season-preview is deployed.
+- Remaining gate: physical Android rc4.163 Waiver/FA + Trade surface acceptance against live Sleeper state. No manual roster/FA data entry should be requested.
