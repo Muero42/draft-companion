@@ -39,6 +39,20 @@ If any answer is unsafe/unknown, inspect evidence first.
 - An external/device/OOS gate is a valid interruption only after all independent non-contaminating positive-value lanes have actually been exhausted.
 - If no safe autonomous lane remains, record the exhaustion reason and exact external gate before interrupting.
 
+
+## 4A. AUTO STATE MACHINE / NO-OUTPUT GUARD
+- Persistent queue authority: `PITTI_CURRENT_STATE.json:auto_execution_state`.
+- Queue buckets are `active`, `ready`, `waiting_external`, `blocked_user`, `completed_recent`.
+- After EVERY package or failure: checkpoint material facts, move that lane to its correct bucket, then immediately dispatch the highest-priority safe `ready` lane.
+- `waiting_external` (CI, deploy, remote build, rate limit, scheduled availability) is never a global stop signal. It blocks only dependent work.
+- `blocked_user` also blocks only its dependent lane. Continue every independent `ready` lane first.
+- **NO-OUTPUT GUARD:** before any visible AUTO response, re-inventory. If `active.length > 0` or `ready.length > 0`, DO NOT RESPOND; continue work in the same turn.
+- A visible AUTO response requires `active=[]`, `ready=[]`, and machine-readable `stop_evaluation.allowed=true`.
+- Allowed stop codes only: `USER_ACTION_REQUIRED`, `DECISION_REQUIRED`, `PROJECT_MILESTONE_REACHED`, `NO_EXECUTABLE_WORK_REMAINS`, `SAFETY_OR_IRREVERSIBLE_CONFIRMATION`.
+- Forbidden stop signals: CI/deploy running, commit created, tool call finished, work package finished, “no user action needed”, or existence of parallel work.
+- Never emit “AUTO läuft”, “ich mache weiter”, “CI läuft”, “Commit erstellt” or “keine Nutzerhandlung nötig” as an AUTO terminal response.
+- If the queue is stale or missing after a chat switch, reconstruct it from PROJECT_STATE/CURRENT/repo evidence before ordinary work, and set `stop_evaluation.allowed=false` while any autonomous lane exists.
+
 ## 5. CHECKPOINT WRITE-THROUGH
 Immediately update `PITTI_PROJECT_STATE.md` after material:
 - requirement/decision change,
