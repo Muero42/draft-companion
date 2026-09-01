@@ -10,7 +10,7 @@
     "source_candidate": "v11.8.0-rc4.163"
   },
   "runtime": {
-    "accepted_android": "v11.8.0-rc4.161",
+    "accepted_android": "v11.8.0-rc4.163",
     "season_candidate": "v11.8.0-rc4.163",
     "candidate_branch": "season-companion-rc4.159",
     "android_acceptance_pending": false,
@@ -22,9 +22,9 @@
       "validated_code_head": "bdb006b618d9ae74c7ddedcfd894f42cdc47833e",
       "scope": "rc4.163 Week-1 waiver market evidence + live trade roster identity regression"
     },
-    "android_accepted": "v11.8.0-rc4.161",
+    "android_accepted": "v11.8.0-rc4.163",
     "preview_candidate": "v11.8.0-rc4.163",
-    "android_authority": "v11.8.0-rc4.161",
+    "android_authority": "v11.8.0-rc4.163",
     "latest_package_sha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
     "package_reference_run": null,
     "deployed_pages_app_byte_parity_with_main": true,
@@ -77,17 +77,21 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "USER_ACTION_REQUIRED",
-    "active": [],
-    "ready": [],
-    "waiting_external": [],
-    "blocked_user": [
+    "status": "RUNNING",
+    "active": [
       {
-        "id": "rc4163-season-surfaces",
-        "task": "Open/reload rc4.163 on physical Android and capture Waiver/FA plus Trade surfaces. Verify live available waiver candidates are market-aware and Trade Board excludes own roster by live roster_id.",
-        "blocking_scope": "physical-device live-state acceptance"
+        "id": "rc4163-device-diagnosis",
+        "task": "Classify physical rc4.163 Waiver/FA and Trade surface evidence and diagnose why season live state is not hydrated."
       }
     ],
+    "ready": [
+      {
+        "id": "season-live-bootstrap-fix",
+        "task": "Repair season workspace bootstrap so completed-draft/live Sleeper state hydrates without requiring draft mode interaction; regression-test and deploy."
+      }
+    ],
+    "waiting_external": [],
+    "blocked_user": [],
     "completed_recent": [
       {
         "id": "auto-protocol-hardening",
@@ -193,13 +197,23 @@
         "id": "rc4163-ci-deploy",
         "result": "PASS: release contract, candidate package and project guardrails all green on bdb006b618d9ae74c7ddedcfd894f42cdc47833e; rc4.163 season-preview deployed.",
         "at": "2026-09-01T12:18:00Z"
+      },
+      {
+        "id": "rc4163-device-version",
+        "result": "PASS: physical Android visibly loaded v11.8.0-rc4.163 and Waiver/FA Priority v2 surface.",
+        "at": "2026-09-01T12:05:00Z"
+      },
+      {
+        "id": "rc4163-live-season-surface",
+        "result": "FAIL: Waiver/FA still emits generic skill-position HOLD and Trade says 'Noch kein abgeschlossener Draft geladen.' while top status says Sleeper Draft 'Wartet auf Draft'. This is a season-state bootstrap/hydration defect, not a trade identity acceptance.",
+        "at": "2026-09-01T12:05:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "All identified safe autonomous season increments are implemented, regression-tested and deployed. Remaining validation depends on physical Android live Sleeper state for Waiver/FA and Trade surfaces.",
-      "evaluated_at": "2026-09-01T12:18:00Z"
+      "allowed": false,
+      "code": null,
+      "reason": "rc4.163 version load PASS but live season hydration FAIL visible on device; autonomous diagnosis/fix available.",
+      "evaluated_at": "2026-09-01T12:06:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
