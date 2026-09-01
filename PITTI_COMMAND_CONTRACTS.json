@@ -149,7 +149,7 @@
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.169 accepted rollback authority",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
-    "sourceAuthority": "v11.8.0-rc4.181 root-cause candidate; no device promotion until automated gates PASS",
+    "sourceAuthority": "v11.8.0-rc4.181 root-cause candidate; Season-first missing legacy DOM crash fixed; no device promotion before strict PASS",
     "latestPackageReextract": "rc4.178 PASS run 33557199679 (latest completed validated artifact while rc4.179 validation is in progress)",
     "latestPackageSha256": "sha256:dc98e19c8b9689ac42c4088985b6e82bfbc2198656e659b6e458fa75000ee0c1",
     "packageReferenceRun": 33558208020,
