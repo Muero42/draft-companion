@@ -19,8 +19,8 @@
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
       "project_guardrails": "PASS",
-      "validated_code_head": "bdb006b618d9ae74c7ddedcfd894f42cdc47833e",
-      "scope": "rc4.163 Week-1 waiver market evidence + live trade roster identity regression"
+      "validated_code_head": "99cc6210e30dafdd06403aaca0b7266a111c9824",
+      "scope": "rc4.164 season bootstrap render ordering"
     },
     "android_accepted": "v11.8.0-rc4.163",
     "preview_candidate": "v11.8.0-rc4.164",
@@ -60,8 +60,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4163_DEPLOYED_DEVICE_ACCEPTANCE",
-    "nextGate": "DEVICE_RC4163_SEASON_SURFACES"
+    "status": "RC4164_DEPLOYED_DEVICE_ACCEPTANCE",
+    "nextGate": "DEVICE_RC4164_LIVE_SEASON_HYDRATION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -77,21 +77,17 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "RUNNING",
-    "active": [
-      {
-        "id": "rc4164-validation",
-        "task": "Validate season bootstrap render-order fix through all gates; deploy only if green."
-      }
-    ],
-    "ready": [
-      {
-        "id": "rc4164-deploy-device",
-        "task": "Deploy rc4.164 preview after green gates and request only the minimal physical live-season acceptance."
-      }
-    ],
+    "status": "USER_ACTION_REQUIRED",
+    "active": [],
+    "ready": [],
     "waiting_external": [],
-    "blocked_user": [],
+    "blocked_user": [
+      {
+        "id": "rc4164-live-hydration",
+        "task": "Reload physical Android rc4.164 and capture Waiver/FA plus Trade surfaces. Expected: live Sleeper context replaces generic HOLD/no-draft states.",
+        "blocking_scope": "physical device + live Sleeper state"
+      }
+    ],
     "completed_recent": [
       {
         "id": "auto-protocol-hardening",
@@ -207,13 +203,18 @@
         "id": "rc4163-live-season-surface",
         "result": "FAIL: Waiver/FA still emits generic skill-position HOLD and Trade says 'Noch kein abgeschlossener Draft geladen.' while top status says Sleeper Draft 'Wartet auf Draft'. This is a season-state bootstrap/hydration defect, not a trade identity acceptance.",
         "at": "2026-09-01T12:05:00Z"
+      },
+      {
+        "id": "rc4164-root-cause-fix",
+        "result": "Root cause identified and fixed: bootstrapSeasonWorkspace rendered Waiver/Trade before assigning lastDraftContext, so those surfaces necessarily saw no season context even after successful Sleeper hydration. rc4.164 assigns canonical context first. All three CI gates PASS and preview deployed.",
+        "at": "2026-09-01T12:12:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "rc4.163 version load PASS but live season hydration FAIL visible on device; autonomous diagnosis/fix available.",
-      "evaluated_at": "2026-09-01T12:06:00Z"
+      "allowed": true,
+      "code": "USER_ACTION_REQUIRED",
+      "reason": "rc4.164 root-cause fix is regression-tested and deployed; only physical live-season hydration can validate the browser/runtime state.",
+      "evaluated_at": "2026-09-01T12:12:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
