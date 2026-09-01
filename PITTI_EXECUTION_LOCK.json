@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-31T14:55:00Z",
+  "updatedAt": "2026-09-01T09:15:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -86,7 +86,54 @@
     "autoBlockSilentExecution": true,
     "autoBlockVisibleResponseGate": "RESULT_OR_UNAVOIDABLE_USER_ACTION_ONLY",
     "emptyAssistantResponseForbidden": true,
-    "toolRunEndedIsNotAStopCondition": true
+    "toolRunEndedIsNotAStopCondition": true,
+    "stateMachine": {
+      "version": "pitti-auto-state.v1",
+      "persistedIn": "PITTI_CURRENT_STATE.json:auto_execution_state",
+      "states": [
+        "RUNNING",
+        "USER_ACTION_REQUIRED",
+        "DECISION_REQUIRED",
+        "PROJECT_MILESTONE_REACHED",
+        "NO_EXECUTABLE_WORK_REMAINS"
+      ],
+      "queueBuckets": [
+        "active",
+        "ready",
+        "waiting_external",
+        "blocked_user",
+        "completed_recent"
+      ],
+      "dispatchRule": "After every completed/blocked package: checkpoint -> move lane to correct bucket -> immediately dispatch next READY lane. WAITING_EXTERNAL never stops unrelated READY work.",
+      "noOutputGuard": "Before any visible AUTO response, re-inventory queue. If active or ready contains any safe positive-value work, visible response is forbidden.",
+      "stopRule": "A visible AUTO response is valid only when active=[] and ready=[] and stop_evaluation.allowed=true with an allowed stop code.",
+      "allowedStopCodes": [
+        "USER_ACTION_REQUIRED",
+        "DECISION_REQUIRED",
+        "PROJECT_MILESTONE_REACHED",
+        "NO_EXECUTABLE_WORK_REMAINS",
+        "SAFETY_OR_IRREVERSIBLE_CONFIRMATION"
+      ],
+      "forbiddenStopSignals": [
+        "CI_RUNNING",
+        "DEPLOY_RUNNING",
+        "COMMIT_CREATED",
+        "TOOL_CALL_FINISHED",
+        "WORK_PACKAGE_FINISHED",
+        "NO_USER_ACTION_NEEDED",
+        "PARALLEL_WORK_EXISTS"
+      ],
+      "waitingExternalRule": "waiting_external is a scheduling state, never a global stop condition unless ready=[] and no new autonomous lane can be derived.",
+      "userOutputExamplesForbidden": [
+        "AUTO läuft",
+        "ich mache weiter",
+        "CI läuft",
+        "Commit erstellt",
+        "keine Nutzerhandlung nötig"
+      ]
+    },
+    "noVisibleResponseWhileReadyWorkExists": true,
+    "stopRequiresMachineReadableEvaluation": true
   },
   "league": {
     "teams": 10,
