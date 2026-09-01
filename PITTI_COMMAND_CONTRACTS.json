@@ -152,12 +152,12 @@
     "packageReferenceRun": null,
     "deployedPagesVersion": "v11.8.0-rc4.163 preview candidate",
     "deployedPagesAppByteParityWithMain": true,
-    "currentResearchGate": "SELFTEST_RC4165_SEASON_STARTUP",
-    "exactNextAction": "Autonomous cold-start/browser-equivalent season surface validation; no device request until self-test and CI pass.",
+    "currentResearchGate": "DEVICE_RC4165_FINAL_CANARY",
+    "exactNextAction": "Run final physical Android rc4.165 canary only after autonomous startup/CI/deploy verification is green.",
     "runtimeVersion": "rc4.165 source candidate; rc4.163 last device-observed",
     "latestEvidenceBackup": "Draft backups retained as immutable historical evidence only; current roster comes from Sleeper league state."
   },
-  "currentGate": "SELFTEST_RC4165_SEASON_STARTUP",
+  "currentGate": "DEVICE_RC4165_FINAL_CANARY",
   "handoffGeneration": "20260901T1058Z-v217",
   "handoff_generation": "20260901T1058Z-v217",
   "statusCommand": {
