@@ -158,3 +158,18 @@ Canonical continuation trigger: **PITTI AUTO**
 - rc4.161 final head before handoff: b307fda15a5c20d63940e1c746a876ed7c49b3ef; all three gates PASS: PITTI release contract v2, PITTI Project Guardrails, PITTI candidate package gate.
 - Mevis decision evidence remains locked: do not use acquisition recency/sunk cost. If future K/roster comparison reopens, Price/Watson/Downs are protected from casual K drops; prior Mevis drop ordering was Bigsby → Spears → Gainwell. Bigsby has now actually been dropped for Mevis per live Sleeper sync.
 - Next chat MUST first read PITTI_CURRENT_STATE.json and reconcile it against repository/version/head before AUTO work. Do not repeat rc4.160 device testing. The only remaining rc4.161 release gate is physical Android acceptance: roster still correct and Waiver/FA no false zero-FA HOLD.
+
+
+## Handoff v217 second-pass anti-regression audit — 2026-09-01
+A second-pass review found material stale takeover pointers that could have resurrected pre-draft state despite the new CURRENT checkpoint. Specifically, PITTI_HANDOFF_SEAL was still v215, NEW_CHAT_HANDOFF_CURRENT was v216/rc4.159 with the incorrect historical “Bigsby added” canary, HANDOFF_COMPLETENESS_MATRIX and PITTI_NEW_CHAT_BOOTSTRAP were still v215/DRAFT_READY_FROZEN, and EXECUTION_LOCK / COMMAND_CONTRACTS retained draft-day currentBoundary/currentWork fields.
+
+These are now repaired for v217 before reseal:
+- current source/preview candidate rc4.161; accepted Android authority rc4.158;
+- POST_DRAFT_SEASON_COMPANION and live Sleeper roster/ownership authority;
+- actual transaction canary: Mevis rostered, Bigsby absent, Charbonnet Reserve/IR;
+- rc4.161 FA ownership/ranking decoupling + executable regression;
+- only remaining device gate: DEVICE_RC4161_ACCEPTANCE;
+- AUTO state-machine/no-output semantics explicitly carried into handoff/bootstrap/matrix/preflight;
+- stale v215/v216/draft-day/current-Bigsby pointers explicitly rejected as current authority.
+
+No runtime/model code was changed by this handoff repair; it is a takeover-integrity correction designed specifically to prevent older documentation from overriding newer fixes.
