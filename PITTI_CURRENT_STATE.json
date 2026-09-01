@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T10:14:00Z",
+  "updated_at": "2026-09-01T10:16:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -73,7 +73,14 @@
     "mode": "AUTO",
     "status": "AUTO_RUNNING",
     "active": [],
-    "ready": [],
+    "ready": [
+      {
+        "id": "mevis-waiver-action-design",
+        "lane": "waiver",
+        "task": "Ensure Special Teams early-add candidates can be compared against only eligible live roster drops and never protected Price/Watson/Downs by generic FA-vs-roster fallback.",
+        "priority": 80
+      }
+    ],
     "waiting_external": [
       {
         "id": "mevis-drop-gate-ci",
@@ -147,8 +154,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Mevis drop-gate model/guard waiting on CI.",
-      "evaluated_at": "2026-09-01T10:14:00Z"
+      "reason": "CI waits but independent Mevis waiver-action design is READY.",
+      "evaluated_at": "2026-09-01T10:16:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
