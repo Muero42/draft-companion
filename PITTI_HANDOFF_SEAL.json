@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260901T1812Z-v218",
-  "created_at": "2026-09-01T16:24:00Z",
+  "created_at": "2026-09-01T16:28:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -13,7 +13,7 @@
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "1cda17bb0882d811e5302504bc334a41f4192918",
     "HANDOFF_COMPLETENESS_MATRIX.md": "02a900d73afe9206177abca07b278eb4ba006fa0",
     "PITTI_EXECUTION_LOCK.json": "5133385a0979d2f3a8885c0e3e9d41703da36cff",
-    "PITTI_PROJECT_STATE.md": "92548fae984e7a421232ce66187364e8df98b7e8",
+    "PITTI_PROJECT_STATE.md": "2669748db30c90492fb625048ef3960f40423646",
     "PITTI_AUTO_PREFLIGHT.md": "db5b19a99010e59501b6b57818b56495a9f6c41f",
     "app.js": "4fa012ee5b0b272e66d8614ad67d36590a8bdbd2",
     "live-surface-v3.js": "ecbf92859390cd28b1d6b625d856801f5ad1a149"
@@ -38,7 +38,6 @@
     "generation_consistent": true,
     "second_pass_complete": true,
     "rc4167_code_present": true,
-    "rc4167_exact_head_ci_three_gates_pass": false,
     "rc4166_rejected": true,
     "season_first_authority": true,
     "draft_archive_only": true,
@@ -46,7 +45,8 @@
     "frozen_retrospective_eof_preserved": true,
     "auto_contract_propagated": true,
     "last_limited_accepted_android_rc4161": true,
-    "preview_rc4167_parity_pending": true
+    "preview_rc4167_parity_pending": true,
+    "exact_head_ci_must_be_reverified_from_actual_github_evidence_on_takeover": true
   },
   "exact_gate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY",
   "next_sequence": [
@@ -54,5 +54,6 @@
     "verify/deploy rc4.167 preview parity autonomously as one batch",
     "only after parity request one physical Android season-first canary",
     "continue season companion from live Sleeper state; do not reopen draft bootstrap trial-and-error"
-  ]
+  ],
+  "note": "v218 deep-audited handoff. Seal attests file integrity/authority consistency; exact-head CI is external evidence and must be re-read at takeover rather than frozen into metadata."
 }
