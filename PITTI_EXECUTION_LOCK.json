@@ -11,7 +11,7 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.163",
+    "appVersion": "v11.8.0-rc4.165",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
@@ -23,7 +23,7 @@
     "preinstallSha256": "sha256:46162cce29bc21c21b1ef826f7ac36d8ebd655cd5c75498f3cfaaf7ac7fbcb7c",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
-    "latestDeployedCandidate": "v11.8.0-rc4.163 preview candidate",
+    "latestDeployedCandidate": "v11.8.0-rc4.164",
     "latestAndroidVerified": "v11.8.0-rc4.161",
     "androidAuthority": "v11.8.0-rc4.161 accepted; rc4.163 pending physical season-surface acceptance",
     "android_authority": "v11.8.0-rc4.161",
@@ -256,14 +256,14 @@
   },
   "currentWork": {
     "branch": "season-companion-rc4.159",
-    "status": "RC4163_DEPLOYED_DEVICE_ACCEPTANCE",
+    "status": "RC4165_BROWSER_EQUIVALENT_GATE",
     "production": false,
     "androidVerified": false,
-    "runtime": "rc4.163 CI green and deployed; waiver-market + trade-identity fixes await live device surface verification",
-    "nextGate": "DEVICE_RC4163_SEASON_SURFACES"
+    "runtime": "rc4.165 complete post-hydration rerender candidate",
+    "nextGate": "SELFTEST_RC4165_SEASON_STARTUP"
   },
   "status": "POST_DRAFT_SEASON_COMPANION_RC4161_CANDIDATE",
-  "gate": "DEVICE_RC4163_SEASON_SURFACES",
+  "gate": "SELFTEST_RC4165_SEASON_STARTUP",
   "nextGate": "Device acceptance only after repository/checkpoint reconciliation; no rc4.160 retest.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
