@@ -1,20 +1,20 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T1058Z-v217",
-  "updated_at": "2026-09-01T11:12:00Z",
+  "updated_at": "2026-09-01T12:07:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "season-companion-rc4.159",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.161"
+    "source_candidate": "v11.8.0-rc4.162"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.161",
-    "season_candidate": "v11.8.0-rc4.161",
+    "season_candidate": "v11.8.0-rc4.162",
     "candidate_branch": "season-companion-rc4.159",
     "android_acceptance_pending": false,
-    "test_challenger": "v11.8.0-rc4.161",
+    "test_challenger": "v11.8.0-rc4.162",
     "ci": {
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
@@ -23,7 +23,7 @@
       "scope": "rc4.161 code + executable FA ownership regression + v217 preview-deployment checkpoint/reseal"
     },
     "android_accepted": "v11.8.0-rc4.161",
-    "preview_candidate": "v11.8.0-rc4.161",
+    "preview_candidate": "v11.8.0-rc4.162",
     "android_authority": "v11.8.0-rc4.161",
     "latest_package_sha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
     "package_reference_run": null,
@@ -72,7 +72,7 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "v11.8.0-rc4.161 Season Companion source candidate; Android authority v11.8.0-rc4.158",
+  "source_authority": "v11.8.0-rc4.162 Season Companion source candidate; Android authority v11.8.0-rc4.161",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
@@ -80,18 +80,18 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "season-actionability-audit",
-        "task": "Audit current waiver, lineup, trade and special-teams engines after rc4.161 device acceptance; identify highest-value autonomous increment."
+        "id": "week1-source-integration",
+        "task": "Integrate current Week 1 waiver market evidence with expiry/provenance and validate behavior."
       }
     ],
     "ready": [
       {
-        "id": "week1-source-integration",
-        "task": "Research and integrate current Week 1 machine-readable evidence where reliable, preserving fail-closed provenance."
+        "id": "rc4162-ci-deploy",
+        "task": "Run all gates, repair any regression, then deploy rc4.162 preview if green."
       },
       {
         "id": "season-ui-actionability",
-        "task": "Improve season surfaces so current live data yields concrete actionable outputs without false precision."
+        "task": "Re-inventory season surfaces after rc4.162 validation and continue highest-value safe increment."
       }
     ],
     "waiting_external": [],
