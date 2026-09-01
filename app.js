@@ -25,7 +25,19 @@ async function fetchSeasonLeagueState(draft){
   if(!v?.ok||!v?.my_roster)return{ok:false,reason:'MY_ROSTER_UNRESOLVED',leagueId,userId};store.setText(SEASON_LEAGUE_ID_KEY,leagueId);return{ok:true,leagueId,userId,...v};
 }
 function seasonRosterRows(season,players,draftMine){if(!season?.ok||!season.my_roster)return null;const draftById=new Map((draftMine||[]).map(pk=>[String(pk.player_id),pk])),reserve=new Set((season.my_roster.reserve||[]).map(String));return[...new Set((season.my_roster.players||[]).map(String))].map(pid=>{const p=sleeperPlayerRow(pid,players),base=draftById.get(pid);return{pk:base||{player_id:pid,pick_no:999,metadata:{}},p:{...p,injury:reserve.has(pid)?(p.injury||'IR/RESERVE'):p.injury},r:rankFor(p.name,p.pos),a:adpFor(p.name),seasonStatus:reserve.has(pid)?'RESERVE':'ACTIVE'};});}
-function seasonAvailablePlayers(season,players){if(!season?.ok)return null;const owned=new Set(Object.keys(season.ownership||{}));return Object.entries(players||{}).filter(([pid,p])=>!owned.has(String(pid))&&['QB','RB','WR','TE'].includes(p.position)&&p.active!==false&&p.full_name).map(([pid])=>sleeperPlayerRow(pid,players)).map(p=>({p,r:rankFor(p.name,p.pos)})).filter(x=>x.r&&panelSelectable(x.r.panelId)).sort((a,b)=>a.r.rank-b.r.rank||(a.p.searchRank||9999)-(b.p.searchRank||9999)).map(x=>x.p);}
+function seasonAvailablePlayers(season,players){
+  if(!season?.ok)return null;
+  // Never trust a derived ownership object as the sole FA authority. Build ownership
+  // directly from every live Sleeper roster as well; a player is FA only if absent from
+  // BOTH sources. This prevents rostered stars (e.g. Bowers) from leaking into FA audit.
+  const owned=new Set(Object.keys(season.ownership||{}).map(String));
+  for(const roster of season.rosters||[]){
+    for(const pid of roster?.players||[])owned.add(String(pid));
+    for(const pid of roster?.reserve||[])owned.add(String(pid));
+    for(const pid of roster?.taxi||[])owned.add(String(pid));
+  }
+  return Object.entries(players||{}).filter(([pid,p])=>!owned.has(String(pid))&&['QB','RB','WR','TE'].includes(p.position)&&p.active!==false&&p.full_name).map(([pid])=>sleeperPlayerRow(pid,players)).map(p=>({p,r:rankFor(p.name,p.pos)})).filter(x=>x.r&&panelSelectable(x.r.panelId)).sort((a,b)=>a.r.rank-b.r.rank||(a.p.searchRank||9999)-(b.p.searchRank||9999)).map(x=>x.p);
+}
 
 function activeDraftSurface(){return localStorage.getItem('v118_draftSurface')==='live'?'live':'mock'}
 function resolveActiveDraftId(){return activeDraftSurface()==='live'?LIVE_DRAFT_ID_2026:draftId(els.draftInput.value)}
@@ -2560,7 +2572,7 @@ function renderRosterFaAudit(rows,rankedAvailable,draftComplete){
   const panelAge=Number(store.get('v7_lastRankingUpdate',0)),adpAge=Number(adpMeta.updated||0);
   const provenance=`Panel ${panelAge?new Date(panelAge).toLocaleString('de-DE'):'Zeit unbekannt'} · Sleeper-ADP ${adpAge?new Date(adpAge).toLocaleString('de-DE'):'Zeit unbekannt'} · Research Cache append-only`;
   els.rosterFaStatus.className=`notice ${surfaced.some(x=>x.action==='CLEAR ADD')?'warn':'ok'}`;
-  els.rosterFaStatus.textContent=`FA-vs-Roster v1 · ${fas.length} gerankte Free Agents geprüft · ${drops.length} Drop-Kandidaten · ${provenance}. CLEAR ADD erfordert zusätzlich verifizierte Evidence aus den letzten 7 Tagen; ältere Cache-Evidence kann höchstens WATCH auslösen.`;
+  els.rosterFaStatus.textContent=`FA-vs-Roster v1 · ${fas.length} gerankte Free Agents geprüft · ${drops.length} Drop-Kandidaten · Ownership live aus allen Sleeper-Rostern gegengeprüft · ${provenance}. CLEAR ADD erfordert zusätzlich verifizierte Evidence aus den letzten 7 Tagen; ältere Cache-Evidence kann höchstens WATCH auslösen.`;
   if(!surfaced.length){els.rosterFaList.innerHTML='<div class="notice ok"><b>HOLD</b> · Kein materiell positiver Add/Drop-Swap aus der aktuell geladenen Baseline.</div>';return;}
   els.rosterFaList.innerHTML=`<div class="coach-section-title">Konkrete Add/Drop-Paare</div>`+surfaced.map((x,i)=>{
     const why=[`Panel Δ ${x.panelDelta>=0?'+':''}${x.panelDelta.toFixed(1)}`,`Opportunity Δ ${x.opportunityDelta>=0?'+':''}${x.opportunityDelta.toFixed(1)}`,`Upside Δ ${x.upsideDelta>=0?'+':''}${x.upsideDelta.toFixed(1)}`,`Roster ${x.rosterUtility>=0?'+':''}${x.rosterUtility.toFixed(1)}`];
