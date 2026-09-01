@@ -18,17 +18,17 @@
     "ci": {
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
-      "project_guardrails": "PASS_ON_PR_HEAD; MAIN_RESEAL_IN_PROGRESS",
-      "validated_code_head": "ca75081e4361092e42eb75d5568a21dfe69cca33",
-      "scope": "rc4.169 workspace isolation + per-surface fail-closed + controlled season ranking refresh"
+      "project_guardrails": "PASS",
+      "validated_code_head": "f1704d947dccc9fcf1bf6b750728fae68fd41897",
+      "scope": "rc4.173 legacy-cache startup resilience + strengthened Season interaction gate"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "v11.8.0-rc4.173 pending CI",
+    "preview_candidate": "v11.8.0-rc4.173 branch preview deployed PASS",
     "android_authority": "v11.8.0-rc4.172 observed/rejected",
-    "latest_package_sha256": "sha256:c3f1b5fca3ea51c6f16e5c4c5337c97e7e828614b2fc234ac9c522f99e066620",
-    "package_reference_run": 33543153583,
+    "latest_package_sha256": "sha256:0fc95a3e7613017e5dd65616afe9ab2be7272d838b5f87fb830ddc2ab66204c4",
+    "package_reference_run": 33548313095,
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "Cloudflare main rc4.170 PASS; gh-pages/season-preview rc4.169 pending rc4.170 sync",
+    "deployed_pages_head": "rc4.173 branch preview f1704d9 PASS; main not yet promoted",
     "installed_android": "v11.8.0-rc4.172",
     "latest_android_observed": "v11.8.0-rc4.172",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
@@ -64,7 +64,7 @@
     ]
   },
   "currentWork": {
-    "status": "RC4173_STARTUP_RESILIENCE_CANDIDATE",
+    "status": "RC4173_ALL_PR_GATES_PASS_MAIN_PROMOTION_PENDING",
     "nextGate": "AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE"
   },
   "invariants": {
@@ -82,13 +82,13 @@
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "RUNNING",
-    "active": [
+    "active": [],
+    "ready": [
       {
-        "id": "rc4173-startup-resilience",
-        "task": "Validate rc4.173 malformed-cache startup recovery and interaction gates before any further device test."
+        "id": "rc4173-main-promotion",
+        "task": "Align runtime/checkpoint lock for rc4.173, merge green PR to main, reseal, rerun main gates, then allow one final device confirmation only if green."
       }
     ],
-    "ready": [],
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
@@ -291,8 +291,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Executable rc4.173 validation work remains.",
-      "evaluated_at": "2026-09-01T19:05:00Z"
+      "reason": "Green rc4.173 candidate still requires main promotion/reseal before device confirmation.",
+      "evaluated_at": "2026-09-01T19:15:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
