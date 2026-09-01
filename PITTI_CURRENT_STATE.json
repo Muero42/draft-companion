@@ -19,8 +19,8 @@
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
       "project_guardrails": "PASS",
-      "validated_code_head": "9ed4c6ff3e05855d09048d38b06a3bae4e4b8b40",
-      "scope": "rc4.165 complete post-hydration rerender: roster FA -> trade -> waiver -> action -> status"
+      "validated_code_head": "10ed99243dc8d4b158a44dc7aa8fefdcfd801e06",
+      "scope": "rc4.165 complete post-hydration season surface rerender + aligned gate state"
     },
     "android_accepted": "v11.8.0-rc4.163",
     "preview_candidate": "v11.8.0-rc4.165",
@@ -84,8 +84,8 @@
     "blocked_user": [
       {
         "id": "rc4165-final-canary",
-        "task": "Reload rc4.165 once on physical Android and capture a single screenshot showing top status plus Trade surface. Waiver is covered by autonomous startup-order contract; separate screenshot not required unless Trade/status is wrong.",
-        "blocking_scope": "physical Android cache/service-worker + live network boundary only"
+        "task": "Reload rc4.165 once on physical Android and capture Waiver/FA + Trade. This is now only the final browser/device canary after autonomous cold-start contract and all CI gates passed.",
+        "blocking_scope": "physical Android browser/service-worker/live Sleeper runtime only"
       }
     ],
     "completed_recent": [
@@ -218,13 +218,18 @@
         "id": "rc4165-deploy",
         "result": "PASS: rc4.165 runtime assets deployed to season-preview after green autonomous gate.",
         "at": "2026-09-01T12:25:00Z"
+      },
+      {
+        "id": "rc4165-autonomous-startup-gate",
+        "result": "PASS: complete startup contract now requires canonical lastDraftContext before roster FA/trade/waiver/action/status rerender; all three CI gates green at 10ed99243dc8d4b158a44dc7aa8fefdcfd801e06. Preview files already byte-identical/deployed.",
+        "at": "2026-09-01T12:28:00Z"
       }
     ],
     "stop_evaluation": {
       "allowed": true,
       "code": "USER_ACTION_REQUIRED",
-      "reason": "All repeatable startup/hydration behavior is now covered and green autonomously. Only the irreducible physical Android cache/service-worker + live-network boundary remains.",
-      "evaluated_at": "2026-09-01T12:25:00Z"
+      "reason": "All repository/browser-equivalent checks available autonomously are green. Only physical Android service-worker/live-Sleeper canary remains.",
+      "evaluated_at": "2026-09-01T12:28:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
