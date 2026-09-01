@@ -60,8 +60,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4166_AUTONOMOUS_VALIDATION",
-    "nextGate": "DEVICE_RC4166_DIAGNOSTIC_CANARY"
+    "status": "RC4166_CI_AND_PREVIEW_DEPLOY",
+    "nextGate": "RC4166_CI_AND_PREVIEW_DEPLOY"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -81,13 +81,13 @@
     "active": [
       {
         "id": "rc4166-ci",
-        "task": "Validate staged mobile bootstrap transport and fail-visible season surfaces through release gates."
+        "task": "Run rc4.166 autonomous mobile-bootstrap regressions and all release gates."
       }
     ],
     "ready": [
       {
-        "id": "rc4166-deploy",
-        "task": "Deploy only after all gates green."
+        "id": "rc4166-preview",
+        "task": "Deploy preview only after all gates pass."
       }
     ],
     "waiting_external": [],
@@ -237,8 +237,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Autonomous CI validation available.",
-      "evaluated_at": "2026-09-01T12:38:00Z"
+      "reason": "CI/deploy work remains autonomous.",
+      "evaluated_at": "2026-09-01T12:53:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
