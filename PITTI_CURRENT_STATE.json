@@ -77,7 +77,7 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "ACTIVE",
+    "status": "RUNNING",
     "active": [
       {
         "id": "rc4166-ci-deploy",
