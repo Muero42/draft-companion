@@ -11,7 +11,7 @@ assert.ok(!seasonState.includes('WATCHER_BASE_URL'),'roster bootstrap must not d
 assert.ok(seasonState.includes('Season-Identität')&&seasonState.includes('slot_to_roster_id')&&seasonState.includes('draft_order'),'fresh-origin mapping recovery missing');
 assert.ok(seasonState.includes("'Sleeper Kader',7000"),'bounded roster timeout missing');
 assert.ok(html.includes('id="seasonRefreshLiveBtn"')&&html.includes('id="seasonLiveStateStatus"'),'live-state refresh UI missing');
-assert.ok(app.includes("els.seasonRefreshLiveBtn.onclick=")&&app.includes("bootstrapSeasonWorkspace({force:true})"),'live refresh wiring missing');
+assert.ok(app.includes("seasonRefreshLiveBtn.addEventListener('click'")&&app.includes("bootstrapSeasonWorkspace({force:true})"),'early live refresh wiring missing');
 assert.ok(app.includes('seasonBootstrapBusy')&&app.includes('Kader-Aktualisierung läuft bereits'),'busy feedback missing');
 assert.match(css,/\[hidden\]\s*\{\s*display:none!important\s*\}/);
 const boot=between('async function bootstrapSeasonWorkspace','async function fetchDraftFresh');
