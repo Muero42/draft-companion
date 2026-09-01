@@ -2537,15 +2537,24 @@ function rosterBenchCapitalScore(x){
 }
 function renderRosterBenchAudit(rows,players,current,draftComplete){
   if(!els.rosterBenchStatus||!els.rosterBenchList)return;
-  if(!draftComplete){els.rosterBenchStatus.className='notice';els.rosterBenchStatus.textContent='Bench-Audit wird nach Draftabschluss aktiv.';els.rosterBenchList.innerHTML='';return;}
-  const protectedRows=rows.filter(x=>(Number(x.pk?.pick_no)||999)<=80||Number(x.r?.rank)<=90);
-  const review=rows.filter(x=>!protectedRows.includes(x)).map(x=>({...x,capitalScore:rosterBenchCapitalScore(x)})).sort((a,b)=>b.capitalScore-a.capitalScore).slice(0,5);
+  if(!draftComplete){els.rosterBenchStatus.className='notice';els.rosterBenchStatus.textContent='Aufstellungsanalyse wird nach Draftabschluss aktiv.';els.rosterBenchList.innerHTML='';return;}
+  const season=lastDraftContext?.season,starters=new Set((season?.my_roster?.starters||[]).map(String).filter(x=>x&&x!=='0'));
+  const active=rows.filter(x=>x.seasonStatus!=='RESERVE'),bench=active.filter(x=>!starters.has(String(x.p.id)));
+  const starterRows=active.filter(x=>starters.has(String(x.p.id)));
+  const flexPos=new Set(['RB','WR','TE']);
+  const moves=[];
+  for(const b of bench){
+    if(!b.r||!Number.isFinite(b.r.rank))continue;
+    const candidates=starterRows.filter(s=>s.r&&Number.isFinite(s.r.rank)&&(s.p.pos===b.p.pos||(flexPos.has(s.p.pos)&&flexPos.has(b.p.pos))));
+    for(const s of candidates){
+      const edge=s.r.rank-b.r.rank;
+      if(edge>=4)moves.push({b,s,edge});
+    }
+  }
+  moves.sort((x,y)=>y.edge-x.edge);
   els.rosterBenchStatus.className='notice ok';
-  els.rosterBenchStatus.textContent='Drop-Review v1 · nur Priorisierung des eigenen Bench-Kapitals. Kein Spieler wird ohne Vergleich mit einem konkreten Free Agent zum Drop empfohlen.';
-  els.rosterBenchList.innerHTML=review.length?`<div class="coach-section-title">Zuerst gegen Free Agents vergleichen</div>`+review.map((x,i)=>{
-    const flags=[];if(x.p.injury)flags.push(`Injury ${x.p.injury}`);if(x.p.pos==='RB')flags.push('Contingent-RB-Schutz');if(Number.isFinite(x.r?.rank))flags.push(`Panel ${x.r.rank.toFixed(1)}`);if(Number.isFinite(x.a))flags.push(`ADP ${x.a.toFixed(1)}`);
-    return `<div class="coach-row"><div><b>${i+1}. ${esc(x.p.name)}</b> <span class="tiny">${x.p.pos} · ${x.p.team}</span><div class="tiny">${flags.join(' · ')||'Panel-/Marktdaten unvollständig'}</div></div><div><b>REVIEW ONLY</b><div class="tiny">Kein Drop ohne materiell besseren FA</div></div></div>`;
-  }).join(''):'<div class="notice">Kein klar expendables Bench-Kapital aus der aktuellen Baseline.</div>';
+  els.rosterBenchStatus.textContent='Aktuelle Aufstellung · Start/Sit-Review. Hier nur interne Roster-Moves; Adds/Drops gehören in Waiver / FA.';
+  els.rosterBenchList.innerHTML=moves.length?'<div class="coach-section-title">MÖGLICHE START/SIT-ÄNDERUNGEN</div>'+moves.slice(0,6).map((m,i)=>'<div class="coach-row"><div><b>'+esc(m.b.p.name)+' statt '+esc(m.s.p.name)+'</b><div class="tiny">'+esc(m.b.p.pos)+' '+esc(m.b.p.team)+' → Start · '+esc(m.s.p.pos)+' '+esc(m.s.p.team)+' → Bench · Panel-Edge +'+m.edge.toFixed(1)+' · Matchup/Projection-Gate noch ausstehend</div></div><div><b>REVIEW</b></div></div>').join(''):'<div class="notice ok"><b>LINEUP HOLD</b> · Aus der aktuellen Baseline keine interne Start/Sit-Änderung mit ausreichendem Panel-Edge. Matchup-/Week-Projection-Layer folgt.</div>';
 }
 
 
