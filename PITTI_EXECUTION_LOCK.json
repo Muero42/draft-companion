@@ -11,7 +11,7 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.176",
+    "appVersion": "v11.8.0-rc4.177",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
@@ -256,11 +256,11 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4176_AUTOMATED_SEASON_E2E_PASS",
-    "nextGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL"
+    "status": "RC4177_STARTUP_OBSERVABILITY_FIX_VALIDATING",
+    "nextGate": "RC4177_STRICT_VALIDATION"
   },
-  "status": "RC4176_AUTOMATED_SEASON_E2E_PASS_FINAL_DEVICE_CANARY",
-  "gate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
+  "status": "RC4177_AUTONOMOUS_VALIDATION",
+  "gate": "RC4177_STRICT_VALIDATION",
   "nextGate": "New chat: reconcile actual main/CI/deploy against v224, then run browser-equivalent Season E2E for startup hydration, Kader/Waiver/Trades/Lineup navigation, automatic Sleeper sync, automatic ranking refresh, timeout/fail-closed paths, no Draft UI leakage, and no runtime truncation.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
