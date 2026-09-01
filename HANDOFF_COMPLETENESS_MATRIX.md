@@ -12,3 +12,5 @@ PASS requires:
 - manual trial-and-error forbidden;
 - AUTO continuous/no progress/no empty response;
 - STATUS report-only.
+
+- Empty assistant response after tool work is forbidden.

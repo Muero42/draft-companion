@@ -11,10 +11,10 @@
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.170",
+    "season_candidate": "v11.8.0-rc4.172 TEST-ONLY",
     "candidate_branch": "main",
     "android_acceptance_pending": true,
-    "test_challenger": "NONE_UNTIL_AUTOMATED_E2E_PASS",
+    "test_challenger": "v11.8.0-rc4.172",
     "ci": {
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",

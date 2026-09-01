@@ -10,3 +10,7 @@ Handoff generation: `20260901T2050Z-v222`
 - Device canary may only happen after automated E2E PASS and is final confirmation, not debugging.
 - Manual trial-and-error with unfinished versions is forbidden.
 - AUTO: continuous; no progress/ack messages, no empty replies, no false “AUTO läuft weiter”.
+
+- Transaction canary preserved: Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR.
+
+- Never send status/progress/acknowledgement messages while executable AUTO work remains.
