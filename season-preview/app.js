@@ -2625,14 +2625,28 @@ function renderRosterFaAudit(rows,rankedAvailable,draftComplete){
 
 
 
+function renderSpecialTeamsBoard(){
+  const c=lastDraftContext;if(!c?.draftComplete||!els.waiverList)return'';
+  const dst=c.availableDST||[],ks=c.availableK||[];
+  const dstNames=new Map([
+    ['JAX',1],['LAC',2],['PIT',3],['SEA',4]
+  ]);
+  const kProj=new Map([['Cameron Dicker',8.7],['Harrison Mevis',8.4],['Brandon Aubrey',8.3],['Jake Bates',8.2],['Jason Myers',8.0],["Ka'imi Fairbairn",8.0],['Cam Little',7.9],['Tyler Loop',7.9]]);
+  const d=dst.map(p=>({p,rank:dstNames.get(String(p.team||p.name||'').toUpperCase())||99})).filter(x=>x.rank<99).sort((a,b)=>a.rank-b.rank);
+  const k=ks.map(p=>({p,proj:kProj.get(p.name)})).filter(x=>Number.isFinite(x.proj)).sort((a,b)=>b.proj-a.proj);
+  const dHtml=d.length?d.slice(0,5).map((x,i)=>'<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">D/ST · RotoBaller Week 1 Tier/Rank · Ownership live geprüft</div></div><div><b>W1 #'+x.rank+'</b></div></div>').join(''):'<div class="notice">Keine der aktuell verifizierten RotoBaller-Top-D/ST ist im Sleeper-FA-Pool.</div>';
+  const kHtml=k.length?k.slice(0,5).map((x,i)=>'<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">K · FantasyPros Week-1-Projektion · Ownership live geprüft</div></div><div><b>'+x.proj.toFixed(1)+' proj.</b></div></div>').join(''):'<div class="notice">Keiner der aktuell verifizierten Top-Kicker ist im Sleeper-FA-Pool.</div>';
+  return '<div class="coach-section-title">WEEK 1 · D/ST STREAMING</div><div class="notice ok">Matchup + Mindestqualität bleiben Gate. RotoBaller Week 1 ist Spezial-Layer; Weeks 1–4 wird für Hold-Horizon separat gewertet. Keine schwache Defense wird nur wegen eines Papier-Matchups automatisch freigegeben.</div>'+dHtml+'<div class="coach-section-title">WEEK 1 · KICKER</div>'+kHtml;
+}
+
 function renderWaiverWorkspace(draftComplete){
   if(!els.waiverStatus||!els.waiverList)return;
   if(!draftComplete){els.waiverStatus.className='notice';els.waiverStatus.textContent='Waiver-Priorität wird nach Draftabschluss aktiv.';els.waiverList.innerHTML='';return;}
   const q=lastPostDraftPairs.filter(x=>x.action!=='HOLD').slice(0,8);
   els.waiverStatus.className=`notice ${q.some(x=>x.action==='CLEAR ADD')?'warn':'ok'}`;
   els.waiverStatus.textContent='Waiver/FA Priority v1 · nutzt dieselbe FA-vs-Roster Engine wie Team/Roster. Numerisches FAAB bleibt bewusst aus: ohne aktuelle Waiver-Woche, Gegnerbudget/Markt und belastbare Rollen-News wäre ein Betrag Scheingenauigkeit.';
-  if(!q.length){els.waiverList.innerHTML='<div class="notice ok"><b>NO CLAIM / HOLD</b> · Aktuell kein materieller Swap aus der geladenen Baseline.</div>';return;}
-  els.waiverList.innerHTML=q.map((x,i)=>{
+  const special=renderSpecialTeamsBoard();if(!q.length){els.waiverList.innerHTML=special+'<div class="notice ok"><b>SKILL-POSITION HOLD</b> · Aktuell kein materiell positiver RB/WR/TE-Swap aus der geladenen Baseline.</div>';return;}
+  els.waiverList.innerHTML=renderSpecialTeamsBoard()+q.map((x,i)=>{
     const urgency=x.action==='CLEAR ADD'?(x.score>=10?'P1 · HIGH':'P1 · CLAIM'):x.score>=4?'P2 · WATCH':'P3 · MONITOR';
     const market=x.action==='CLEAR ADD'?'FAAB: nach aktueller Wochen-/Marktprüfung':'FAAB: 0 / kein Blindgebot aus statischer Baseline';
     return `<div class="coach-row"><div><b>${i+1}. ${esc(x.fa.p.name)}</b> <span class="tiny">${x.fa.p.pos} · DROP ${esc(x.drop.p.name)}</span><div class="tiny">${x.action} · Swap-Score ${x.score.toFixed(1)} · Confidence ${x.confidence}% · ${market}</div></div><div><b>${urgency}</b><div class="tiny">Keine automatische Transaktion</div></div></div>`;
