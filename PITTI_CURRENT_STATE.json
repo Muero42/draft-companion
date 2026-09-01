@@ -19,8 +19,8 @@
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
       "project_guardrails": "PASS",
-      "validated_code_head": "43a4a455203142b1828640fe654fdd7a98a8bac6",
-      "scope": "rc4.166 staged mobile season bootstrap + causal fail-visible surfaces"
+      "validated_code_head": "793e9344982a4dc21a2072c22c7b5245bb947b7c",
+      "scope": "rc4.166 mobile season bootstrap transport + visible fail-closed diagnostics"
     },
     "android_accepted": "v11.8.0-rc4.163",
     "preview_candidate": "v11.8.0-rc4.166",
@@ -61,7 +61,7 @@
   },
   "currentWork": {
     "status": "RC4166_DEPLOYED_DIAGNOSTIC_CANARY",
-    "nextGate": "DEVICE_RC4166_DIAGNOSTIC_CANARY"
+    "nextGate": "DEVICE_RC4166_FINAL_CANARY"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -84,8 +84,8 @@
     "blocked_user": [
       {
         "id": "rc4166-diagnostic-canary",
-        "task": "Reload rc4.166 on physical Android and capture Waiver/FA and Trade. Success hydrates live state; failure must now display causal Season Auto-Sync error on both surfaces.",
-        "blocking_scope": "physical Android/live network runtime"
+        "task": "Reload rc4.166 on physical Android. If live hydration succeeds, Waiver/Trade populate. If it fails, both surfaces now expose the exact bootstrap error code/message instead of a generic no-draft placeholder.",
+        "blocking_scope": "physical Android browser/network/live Sleeper only"
       }
     ],
     "completed_recent": [
@@ -233,13 +233,18 @@
         "id": "rc4166-autonomous",
         "result": "PASS: staged draft/picks-before-player-pool bootstrap, explicit failure propagation to Waiver+Trade, dedicated regression wired, all three gates green, preview deployed.",
         "at": "2026-09-01T12:43:00Z"
+      },
+      {
+        "id": "rc4166-autonomous-validation",
+        "result": "PASS: season bootstrap now loads small canonical draft+picks first, verifies completion, then loads large player directory separately; failure is visible on Waiver and Trade. All three gates green and preview deployed.",
+        "at": "2026-09-01T12:56:00Z"
       }
     ],
     "stop_evaluation": {
       "allowed": true,
       "code": "USER_ACTION_REQUIRED",
-      "reason": "All autonomous rc4.166 checks passed; physical Android now either confirms hydration or returns a causal error code rather than an ambiguous placeholder.",
-      "evaluated_at": "2026-09-01T12:43:00Z"
+      "reason": "All autonomous gates green; physical Android canary now either passes or returns causal bootstrap error.",
+      "evaluated_at": "2026-09-01T12:56:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
