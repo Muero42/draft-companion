@@ -8,5 +8,5 @@ Handoff generation: `20260901T2038Z-v221`
 - Visible Kader aktualisieren button reports busy/error/success.
 - Ranking controls/12h auto-refresh and rc4.169 workspace isolation remain preserved.
 - Transaction canary: Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR.
-- AUTO rules unchanged; no interim chatter, empty response, or deployment micro-storm.
+- AUTO rules unchanged. Never send status/progress/acknowledgement messages while executable AUTO work remains. No interim chatter, empty response, or deployment micro-storm.
 - Next gate: RC4170_PREVIEW_THEN_DEVICE_REFRESH.

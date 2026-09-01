@@ -6,6 +6,7 @@ Generation: `20260901T2038Z-v221`
 - rc4.170 removes Cloudflare watcher from live-roster transport. Live roster loads directly from bounded-timeout Sleeper draft/league-roster endpoints.
 - Explicit Kader aktualisieren control has busy/error feedback and fresh-origin slot->roster recovery.
 - Watcher remains evidence-only; D1 quota cannot hang roster hydration.
+## AUTO queue takeover
 - AUTO: continuous same-turn; no progress/empty/false continuation responses. Do NOT repeat rc4.160 device testing.
 - Next gate: RC4170_PREVIEW_THEN_DEVICE_REFRESH.
 - STATUS is report-only.
