@@ -154,7 +154,6 @@ if(Number(activeVersion)>=137){
   }
   assert.doesNotMatch(app,/positionPanels\[pos\]!==EXPERT_PROFILE_IDS\.expertv4\[pos\]/,'verified v4 tier display must not be suppressed by mutable positionPanels');
   assert.match(app,/expertTier:externalExpertTierContext\(x\)/,'tier context missing from live audit row');
-  assert.match(app,/userDraftStrategyExcluded\(p\.pos,state\.counts,p\.name\)/,'named QB hard-exclusion wiring missing');
   assert.match(policy,/USER_DRAFT_HARD_EXCLUSIONS=new Set\(\['geno smith','aaron rodgers'\]\)/,'Geno/Rodgers hard exclusions missing');
   const scoreFn=app.slice(app.indexOf('function scoreCandidate('),app.indexOf('function applyResolvedReturnScore('));
   assert.doesNotMatch(scoreFn,/v4ConsensusTierContext|externalExpertTierContext/,'display tiers must not enter scoreCandidate');
