@@ -104,16 +104,12 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "takeover-guardrail-repair",
-        "lane": "checkpoint/handoff integrity",
-        "reason": "v224 takeover exposed guardrail contract drift caused by semantic handoff rewrite; repair required before strict validation"
+        "id": "strict-v224-validation",
+        "lane": "regression/release safety",
+        "reason": "CI running on takeover repair head 01992a54c5b640c9079867c894b19ff38d00d190"
       }
     ],
     "ready": [
-      {
-        "id": "strict-v224-validation",
-        "lane": "regression/release safety"
-      },
       {
         "id": "season-e2e-reconcile",
         "lane": "regression/release safety"
@@ -331,6 +327,11 @@
         "id": "rc4176-device-observation-v224",
         "result": "Physical Android screenshot at 22:09 CEST confirms rc4.176 is installed and the Season shell/workspace controls are visually restored. In the captured frame Sleeper Live-State remains '-' and Kader remains loading, so this is version/shell evidence only, not functional acceptance.",
         "at": "2026-09-01T20:09:00Z"
+      },
+      {
+        "id": "takeover-guardrail-repair",
+        "result": "Repaired exact v224 semantic handoff rewrite regressions detected by strict guardrail: new-chat AUTO queue takeover token, rc4.160 retest prohibition, empty/progress response guards, and exact device update policy. Seal marked pending before strict validation.",
+        "at": "2026-09-01T20:20:00Z"
       }
     ],
     "stop_evaluation": {
@@ -343,8 +344,8 @@
   },
   "handoff": {
     "generation": "20260901T2210Z-v224",
-    "transaction_in_progress": false,
-    "status": "PASS",
-    "second_pass_pass": true
+    "transaction_in_progress": true,
+    "status": "RESEAL_PENDING",
+    "second_pass_pass": false
   }
 }
