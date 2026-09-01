@@ -1532,9 +1532,20 @@ async function bootstrapSeasonWorkspace(){
   if(!navigator.onLine)return;
   const id=LIVE_DRAFT_ID_2026;
   try{
-    const {draft,picks,players}=await fetchDraft(id),teams=Number(draft.settings?.teams||10),rounds=Number(draft.settings?.rounds||15),total=teams*rounds;
+    // Season bootstrap is intentionally independent from the legacy draft-analysis
+    // transport. On mobile, loading the full Sleeper player directory in the same
+    // Promise.all as draft + picks can time out the entire bootstrap, leaving every
+    // season surface at its static "no draft loaded" placeholder. Fetch the small
+    // canonical draft/picks first, prove completion, then load the player directory.
+    const bust=`${Date.now()}-${Math.random().toString(36).slice(2)}`;
+    const [draft,picks]=await Promise.all([
+      jf(`${S}/draft/${id}?_=${bust}`,'Season Draft',6500),
+      jf(`${S}/draft/${id}/picks?_=${bust}`,'Season Picks',6500)
+    ]);
+    const teams=Number(draft.settings?.teams||10),rounds=Number(draft.settings?.rounds||15),total=teams*rounds;
     const completed=String(draft.status||'').toLowerCase()==='complete'||picks.length>=total;
     if(!completed)throw new Error('CANONICAL_DRAFT_NOT_COMPLETE');
+    const players=await jf(`${S}/players/nfl?_=${bust}`,'Season Spieler',15000);
     const slot=Number(els.slot.value||9),mine=picks.filter(p=>Number(p.draft_slot)===slot).sort((a,b)=>a.pick_no-b.pick_no);
     const season=await fetchSeasonLeagueState({...draft,draft_id:id}),rows=seasonRosterRows(season,players,mine),available=seasonAvailablePlayers(season,players),availableDST=seasonAvailableSpecialTeams(season,players,'DST'),availableK=seasonAvailableSpecialTeams(season,players,'K');
     if(!rows)throw new Error(season?.reason||'MY_ROSTER_UNRESOLVED');
@@ -1556,7 +1567,15 @@ async function bootstrapSeasonWorkspace(){
     updateStatus();
     localStorage.setItem('v118_seasonBootstrapAt',String(Date.now()));
   }catch(e){
-    if(els.rosterStatus){els.rosterStatus.className='notice warn';els.rosterStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+esc(e?.message||String(e))+' · keine FA-Aktion freigegeben.';}
+    const reason=e?.message||String(e);
+    console.error('PITTI season bootstrap failed',e);
+    // A startup failure must be visible on every season surface, not only on Kader.
+    // This prevents the static "Noch kein abgeschlossener Draft geladen" placeholder
+    // from masquerading as a legitimate state and gives device canaries a causal code.
+    if(els.rosterStatus){els.rosterStatus.className='notice warn';els.rosterStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+esc(reason)+' · keine FA-Aktion freigegeben.';}
+    const fail='<div class="notice bad">Season Auto-Sync FAIL-CLOSED · '+esc(reason)+' · keine Aktion freigegeben.</div>';
+    if(els.waiverWorkspace)els.waiverWorkspace.innerHTML=fail;
+    if(els.tradeWorkspace)els.tradeWorkspace.innerHTML=fail;
   }
 }
 async function fetchDraftFresh(id){
