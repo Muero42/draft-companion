@@ -12,3 +12,5 @@ PASS requires recognition of all items:
 - Frozen retrospective PC continuation and final synthesis in PROJECT_STATE EOF are authoritative; no current-data contamination.
 - AUTO/AUTO BLOCK no-progress/no-empty-message contract; STATUS report-only.
 - Stale v217 pointers cannot override v218/current evidence.
+
+- Empty assistant response after tool work is forbidden.
