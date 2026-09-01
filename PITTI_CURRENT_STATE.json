@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T09:20:00Z",
+  "updated_at": "2026-09-01T09:24:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -75,18 +75,6 @@
     "active": [],
     "ready": [
       {
-        "id": "rc4160-ci-revalidate",
-        "lane": "regression-release",
-        "task": "Revalidate current rc4.160 head after startup/FA/waiver changes; diagnose and repair failures autonomously.",
-        "priority": 100
-      },
-      {
-        "id": "waiver-v2-horizon-verify",
-        "lane": "waiver",
-        "task": "Verify THIS WEEK vs ROS/Championship EV implementation against live-roster/ownership fail-closed contract.",
-        "priority": 90
-      },
-      {
         "id": "trade-offer-engine",
         "lane": "trade",
         "task": "Advance trade target discovery toward concrete give/get construction, opponent utility, fairness and acceptance plausibility without external execution.",
@@ -103,9 +91,23 @@
         "lane": "special-teams",
         "task": "Improve K/DST in-season source/panel model while preserving D/ST quality floor and real Sleeper FA filtering.",
         "priority": 50
+      },
+      {
+        "id": "waiver-v2-regression-test",
+        "lane": "waiver",
+        "task": "Add executable regression for weekly horizon fail-closed behavior and live ownership/FA invariants.",
+        "priority": 95
       }
     ],
-    "waiting_external": [],
+    "waiting_external": [
+      {
+        "id": "waiver-v2-horizon-verify",
+        "lane": "waiver",
+        "task": "CI revalidation after Waiver v2 fail-closed weekly-evidence hardening.",
+        "priority": 90,
+        "depends_on_head": "current"
+      }
+    ],
     "blocked_user": [
       {
         "id": "rc4160-device-canary",
@@ -126,13 +128,18 @@
         "id": "auto-protocol-hardening",
         "result": "Persistent AUTO queue/state-machine + no-output guard implemented and CI-verified: Project Guardrails PASS, release-contract-v2 PASS, candidate package PASS on head b3745e4c679beb8929f8485d89798bb9d2158007.",
         "at": "2026-09-01T09:20:00Z"
+      },
+      {
+        "id": "rc4160-ci-revalidate",
+        "result": "All three CI gates PASS on head 1abc5a1284eaa93136b5bcba8b9f9f33aa2e982c before Waiver v2 hardening.",
+        "at": "2026-09-01T09:24:00Z"
       }
     ],
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "AUTO protocol verified; PITTI project queue still contains READY work.",
-      "evaluated_at": "2026-09-01T09:20:00Z"
+      "reason": "READY work remains.",
+      "evaluated_at": "2026-09-01T09:24:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
