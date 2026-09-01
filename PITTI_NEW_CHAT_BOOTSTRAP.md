@@ -47,3 +47,12 @@ Today's v4 baseline is already complete. Do not use blanket expert refresh. Use 
 
 ## Completed work
 Do not rerun the 6,000-draft stress, manager/autodraft stress, five-WR static reconciliation, Jacobs calibration, pick-pair matrix, first-pass 53-man audit, or pre-waiver late-RB board without genuinely new evidence.
+
+
+## AUTO queue takeover
+Before executing `PITTI AUTO` in a new chat:
+1. Load `PITTI_CURRENT_STATE.json:auto_execution_state`.
+2. Reconcile its `active/ready/waiting_external/blocked_user` buckets against actual repo/CI/runtime evidence.
+3. Any orphaned `active` item from a previous chat becomes `ready` unless current evidence proves it completed, failed, or is waiting externally.
+4. Dispatch `ready` work continuously. Do not stop because CI/deploy/device work is waiting if another autonomous lane is ready.
+5. The assistant may produce a visible AUTO response only when `active=[]`, `ready=[]`, and `stop_evaluation.allowed=true` with an allowed stop code.
