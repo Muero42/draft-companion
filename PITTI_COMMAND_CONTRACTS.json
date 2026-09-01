@@ -148,7 +148,7 @@
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.169 accepted rollback authority",
-    "androidAuthority": "v11.8.0-rc4.176 installed/observed but NOT accepted; rc4.169 remains accepted rollback authority",
+    "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
     "sourceAuthority": "v11.8.0-rc4.176 main source/deployed candidate",
     "latestPackageReextract": "rc4.176 PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestPackageSha256": "sha256:6bd37d7dede76187ff6a38dbec625f183189f43c0af0b4b98b89cb563661a513",
