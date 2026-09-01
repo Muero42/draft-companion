@@ -1,6 +1,6 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
 const a=fs.readFileSync('app.js','utf8'),h=fs.readFileSync('index.html','utf8');
-assert.ok(a.includes("const APP_VERSION='v11.8.0-rc4.180'")&&h.includes('v11.8.0-rc4.177'),'rc4.177 version mismatch');
+assert.ok(a.includes("const APP_VERSION='v11.8.0-rc4.181'")&&h.includes('v11.8.0-rc4.177'),'rc4.177 version mismatch');
 const marker=a.indexOf("if(els.seasonLiveStateAge)els.seasonLiveStateAge.textContent='Start…'");
 const freshness=a.indexOf('renderSeasonLiveStateFreshness();',marker);
 const boot=a.indexOf('const rosterResult=await bootstrapSeasonWorkspace();',freshness);
