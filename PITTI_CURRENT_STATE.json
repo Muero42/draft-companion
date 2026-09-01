@@ -11,27 +11,27 @@
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.174 EARLY-SEASON-CONTROL CANDIDATE",
-    "candidate_branch": "pitti/rc4.174-early-season-controls-v2",
+    "season_candidate": "v11.8.0-rc4.174 MAIN GREEN",
+    "candidate_branch": "main",
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.174",
     "ci": {
-      "candidate_package": "PENDING",
-      "release_contract_v2": "PENDING",
-      "project_guardrails": "PENDING",
-      "validated_code_head": null,
-      "scope": "rc4.174: bind critical Season controls before legacy/draft startup tail + early roster hydration rescue"
+      "candidate_package": "PASS",
+      "release_contract_v2": "PASS",
+      "project_guardrails": "PASS (candidate/pre-seal); canonical seal verification pending",
+      "validated_code_head": "9207b18fef848c7c5e57abf7e4631f185a5e11e0",
+      "scope": "rc4.174 early Season control binding + early roster bootstrap rescue"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "v11.8.0-rc4.174 PR preview pending automated gates",
+    "preview_candidate": "v11.8.0-rc4.174 main deployed PASS",
     "android_authority": "v11.8.0-rc4.173 observed/rejected",
-    "latest_package_sha256": "sha256:2648118ad21b0a531c9fb7c154a49f7b0d2829aa78e49cb97d3736776a6b1f2f",
-    "package_reference_run": 33548598040,
+    "latest_package_sha256": "sha256:1d06968ad7edbe6a752d4b833a755fdbf8879bed4e512898cd888b823dcde337",
+    "package_reference_run": 33549384025,
     "deployed_pages_app_byte_parity_with_main": true,
-    "deployed_pages_head": "main a902b96b40d916b0f892c918dac453761fc50f41 · Cloudflare Pages deploy PASS",
+    "deployed_pages_head": "main 9207b18fef848c7c5e57abf7e4631f185a5e11e0 · Cloudflare Pages deploy PASS",
     "installed_android": "v11.8.0-rc4.173",
     "latest_android_observed": "v11.8.0-rc4.173",
-    "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
+    "device_update_policy": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
     "last_device_failure": "rc4.173 installed; user confirmed both Kader/Ranking buttons were pressed and remained ineffective. Prior legacy-cache hypothesis therefore insufficient."
   },
   "real_draft": {
@@ -84,8 +84,8 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "rc4174-early-controls-gates",
-        "task": "Validate rc4.174 early Season control binding and early roster bootstrap through package, behavioral contract, guardrails and Cloudflare preview before any device update."
+        "id": "rc4174-reseal",
+        "task": "Reseal canonical rc4.174 main state and verify strict post-seal guardrails before final device confirmation."
       }
     ],
     "ready": [],
@@ -291,7 +291,7 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Automated rc4.174 candidate validation remains executable."
+      "reason": "Canonical rc4.174 reseal remains executable."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
