@@ -1,6 +1,6 @@
 {
   "schema": "pitti.command-contract.v1",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "trigger": "PITTI AUTO",
   "sourceOrder": [
     "PITTI_COMMAND_CONTRACTS.json",
@@ -144,22 +144,22 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.158 Android accepted/frozen",
+    "productionControl": "v11.8.0-rc4.158 Android accepted",
     "androidAuthority": "v11.8.0-rc4.158",
-    "sourceAuthority": "main/gh-pages v11.8.0-rc4.158 13/13 runtime parity",
-    "latestPackageReextract": "v11.8.0-rc4.158 Candidate Package Gate + Release Contract + Project Guardrails PASS",
-    "latestPackageSha256": "sha256:46162cce29bc21c21b1ef826f7ac36d8ebd655cd5c75498f3cfaaf7ac7fbcb7c",
-    "packageReferenceRun": 33401979026,
-    "deployedPagesVersion": "v11.8.0-rc4.158",
-    "deployedPagesAppByteParityWithMain": true,
-    "currentResearchGate": "DRAFT_DAY_TIME_DEPENDENT_FINALIZATION",
-    "exactNextAction": "Continue material-news-only until 19:00 CEST; then reconcile waiver claims/destinations; around 19:40-19:45 use Experten-Delta prüfen once; final material scan; freeze ~19:50.",
-    "runtimeVersion": "rc4.158 accepted/frozen; v4 expert day baseline 9/9 complete",
-    "latestEvidenceBackup": "draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json — retained as historical evidence; not runtime authority"
+    "sourceAuthority": "v11.8.0-rc4.161 Season Companion candidate on season-companion-rc4.159",
+    "latestPackageReextract": "rc4.161 Candidate Package + Release Contract + Project Guardrails PASS",
+    "latestPackageSha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
+    "packageReferenceRun": null,
+    "deployedPagesVersion": "v11.8.0-rc4.161 preview candidate",
+    "deployedPagesAppByteParityWithMain": false,
+    "currentResearchGate": "DEVICE_RC4161_ACCEPTANCE",
+    "exactNextAction": "New chat reconciles v217 repo/checkpoint first; then one physical Android rc4.161 acceptance. Do not repeat rc4.160 testing or draft-day work.",
+    "runtimeVersion": "rc4.161 source/preview candidate; rc4.158 remains accepted Android authority",
+    "latestEvidenceBackup": "Draft backups retained as immutable historical evidence only; current roster comes from Sleeper league state."
   },
-  "currentGate": "DRAFT_DAY_TIME_DEPENDENT_FINALIZATION",
-  "handoffGeneration": "20260831T1455Z-v215",
-  "handoff_generation": "20260831T1455Z-v215",
+  "currentGate": "DEVICE_RC4161_ACCEPTANCE",
+  "handoffGeneration": "20260901T1058Z-v217",
+  "handoff_generation": "20260901T1058Z-v217",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -168,5 +168,14 @@
     "ciPollingForbidden": true,
     "autoContinuationForbidden": true,
     "reason": "STATUS must not consume chat/tool budget or trigger AUTO."
+  },
+  "seasonCompanion": {
+    "mode": "POST_DRAFT_SEASON_COMPANION",
+    "rosterAuthority": "current Sleeper league state",
+    "draftRoster": "immutable historical baseline only",
+    "observedTransactionCanary": "rc4.160 device: Harrison Mevis rostered, Tank Bigsby absent, Zach Charbonnet Reserve/IR",
+    "rc4161Fix": "live FA ownership pool is independent from expert ranking hydration; zero ranked join must never imply HOLD",
+    "regression": "tools/season-fa-ownership-regression.mjs is mandatory in candidate package gate",
+    "nextGate": "DEVICE_RC4161_ACCEPTANCE"
   }
 }
