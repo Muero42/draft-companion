@@ -4,6 +4,9 @@ const v=(a.match(/const APP_VERSION='([^']+)'/)||[])[1];const n=Number((v.match(
 for(const id of ['seasonRefreshLiveBtn','seasonRefreshRanksBtn']){assert.ok(!h.includes('id="'+id+'"'),'manual Season refresh control resurrected: '+id);assert.ok(!a.includes("'"+id+"'"),'manual Season refresh wiring resurrected: '+id);}
 assert.ok(h.includes('id="seasonLiveStateStatus"')&&h.includes('id="seasonRankingStatus"'),'Season status surfaces missing');
 assert.ok(a.includes('const rosterResult=await bootstrapSeasonWorkspace();'),'automatic roster bootstrap missing');
+assert.ok(a.includes("if(els.expertSearch&&els.expertsList)renderExperts();"),'Season startup must not require removed Draft expert DOM');
+assert.ok(a.includes("if(els.decisionLog)renderLog();"),'Season startup must not require removed Draft decision-log DOM');
+assert.ok(a.includes("if(els.autoRefresh?.checked)"),'Season startup must tolerate absent legacy auto-refresh control');
 assert.ok(a.includes('void refreshSeasonRankings({auto:true});'),'automatic ranking refresh missing');
 assert.ok(a.includes('SEASON_RANKING_AUTO_MS=12*60*60*1000'),'12h ranking freshness policy missing');
 assert.ok(a.includes("setInterval(()=>{if(!document.hidden)void syncWatcherFeed()},15*60*1000)"),'watcher cadence missing');
