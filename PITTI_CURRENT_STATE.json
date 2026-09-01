@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T10:16:00Z",
+  "updated_at": "2026-09-01T10:19:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -73,20 +73,19 @@
     "mode": "AUTO",
     "status": "AUTO_RUNNING",
     "active": [],
-    "ready": [
-      {
-        "id": "mevis-waiver-action-design",
-        "lane": "waiver",
-        "task": "Ensure Special Teams early-add candidates can be compared against only eligible live roster drops and never protected Price/Watson/Downs by generic FA-vs-roster fallback.",
-        "priority": 80
-      }
-    ],
+    "ready": [],
     "waiting_external": [
       {
         "id": "mevis-drop-gate-ci",
         "lane": "special-teams",
         "task": "Fresh Mevis/drop audit encoded: compare Bigsby/Spears/Gainwell; protect Price/Watson/Downs; await CI guard verification.",
         "depends_on_head": "9597e3e036e8bd83e408dca567692222d5ee4a26"
+      },
+      {
+        "id": "mevis-waiver-ui-ci",
+        "lane": "waiver",
+        "task": "Mevis live Waiver UI now exposes only Bigsby→Spears→Gainwell drop gate and protects Price/Watson/Downs; await CI.",
+        "depends_on_head": "3d1f59f2a89c4bac33d8c390630eefe514ea9400"
       }
     ],
     "blocked_user": [
@@ -154,8 +153,8 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "CI waits but independent Mevis waiver-action design is READY.",
-      "evaluated_at": "2026-09-01T10:16:00Z"
+      "reason": "Mevis model/UI lanes await CI; no user action required.",
+      "evaluated_at": "2026-09-01T10:19:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
