@@ -1,6 +1,6 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.158 expert-delta refresh. **Android authority remains accepted v11.8.0-rc4.157** until rc4.158 completes full gates/deployment/device acceptance.
-> **Accepted rc4.157:** live nine-manager control grid, live v3/v4/v5 selector, fast LIVE analysis, global tiers/current player texts and fixed visible v4 expert matrix are device-verified.
+> **Current source candidate:** v11.8.0-rc4.168 Season Companion preview. **Current installed Android app observed by the user is v11.8.0-rc4.158**; rc4.168 is not Android-accepted until automated Season startup gates pass and one final device canary succeeds.
+> **Season mode:** current Sleeper league state is Source of Truth; completed draft roster is immutable historical evidence only.
 > **rc4.158 bounded change:** adds a draft-day v4 expert baseline/delta workflow. Unchanged or failed/incomplete refreshes restore the prior verified baseline; panel rebuild can run cache-only and occurs only for baseline creation/repair or a real ranking delta.
 > **No model change:** expert membership, weights, panel ranks semantics, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
 > **Draft locks:** exact canonical manager order/history; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; starter maxima are not roster caps.
@@ -84,3 +84,7 @@ v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96
 
 
 
+
+
+## Season Companion current candidate
+- v11.8.0-rc4.168 — supersedes failed v11.8.0-rc4.167 and fixes the deterministic Season Trade startup crash caused by `tradeOfferCandidates` dereferencing nonexistent `target.x`; the function now consumes the row actually passed by `renderTradeWorkspace` (`target.r` / `target.p`). A new executable Season bootstrap runtime regression is mandatory in both candidate-package and release-contract gates. Kader remains season-first; Draft is archive only; FAIL-CLOSED behavior remains intact. Current installed Android app remains rc4.158 until automated gates and one final canary pass.

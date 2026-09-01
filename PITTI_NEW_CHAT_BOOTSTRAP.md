@@ -1,49 +1,33 @@
-# PITTI NEW CHAT BOOTSTRAP — v215
-Generation: `20260831T1455Z-v215`
+# PITTI NEW CHAT BOOTSTRAP — v218
+Generation: `20260901T1812Z-v218`
 
 ## Mandatory takeover order
-1. `PITTI_COMMAND_CONTRACTS.json`
-2. `PITTI_CURRENT_STATE.json`
-3. `PITTI_HANDOFF_SEAL.json`
-4. `PITTI_EXECUTION_LOCK.json`
-5. `PITTI_AUTO_PREFLIGHT.md`
-6. `PITTI_PROJECT_STATE.md` to EOF
-7. `NEW_CHAT_HANDOFF_CURRENT.md`
-8. `HANDOFF_COMPLETENESS_MATRIX.md`
-9. actual main/gh-pages/runtime/device evidence
+COMMAND -> CURRENT -> SEAL -> EXECUTION_LOCK -> AUTO_PREFLIGHT -> PROJECT_STATE to EOF -> CURRENT HANDOFF -> MATRIX -> actual repo/CI/preview/device evidence.
 
-## Takeover fail-closed rule
-All current-generation files must agree on **20260831T1455Z-v215** and current authority **Android/main/gh-pages v11.8.0-rc4.158**. Any stale current pointer to rc4.152/153/154/155/157 means takeover is NOT complete; repair the handoff transaction before ordinary project work.
+Fail closed on contradiction. Actual verified evidence and newest PROJECT_STATE EOF override stale historical pointers.
 
 ## Current authority
-- Android/PWA accepted = **v11.8.0-rc4.158**.
-- main↔gh-pages runtime parity = **13/13 PASS**.
-- Full rc4.158 gates = Project Guardrails PASS · Release Contract PASS · Candidate Package/Re-Extract PASS.
-- Expert day baseline = **9/9 COMPLETE** on device.
-- Runtime = **DRAFT_READY_FROZEN**.
-- No runtime/model/source-weight changes before the real draft absent a critical draft-blocking defect.
+- POST_DRAFT_SEASON_COMPANION.
+- rc4.167 source candidate.
+- Live Sleeper league state is current roster/ownership authority.
+- Draft 1366053132970233856 is complete immutable history and must not gate season operation.
+- rc4.166 physical season startup FAILED and must not be retested.
+- Last limited accepted Android authority is rc4.161.
+- gh-pages season-preview currently serves rc4.166; rc4.167 preview parity is not yet established.
 
-## Exact current gate
-**DRAFT_DAY_TIME_DEPENDENT_FINALIZATION**
+## First gate
+Verify actual branch head and exact-head Project Guardrails + Candidate Package + Release Contract. Then verify/deploy rc4.167 preview parity in one batch. Only afterward may one physical Android canary be requested.
 
-- Before 19:00 CEST: material-news-only.
-- At/after 19:00: waiver claim/destination reconciliation for affected players only.
-- Around 19:40–19:45: one `Experten-Delta prüfen`.
-- Final material injury/legal/transaction scan.
-- Around 19:50: operational freeze.
-- 20:00: execution-only real draft.
+## AUTO queue takeover
+Reconstruct PITTI_CURRENT_STATE.json:auto_execution_state from actual evidence and currentWork.nextGate.
+AUTO/AUTO BLOCK is continuous same-turn execution. Re-inventory after every package. Waiting gates stop only dependent lanes.
+Never send status/progress/acknowledgement/promise-only messages such as “AUTO läuft”, “ich mache weiter”, “CI läuft”, “Commit erstellt”, or “keine Nutzerhandlung nötig”.
+Empty assistant response after tool work is forbidden.
+Visible AUTO output requires active=[] and ready=[] plus a valid stop evaluation.
+Do NOT repeat rc4.160 device testing. Do NOT retest rc4.166.
 
-## Immutable draft guards
-Exact order: **1 Michael · 2 Pascal Voerde · 3 Marc Düsseldorf · 4 Thomas · 5 Björn · 6 Pascal Gelderner · 7 Giuliano · 8 Bastian · 9 Muerotechnik · 10 Dutch Marc.**
+## Cloudflare discipline
+The runtime branch is Cloudflare Pages-connected. No micro-checkpoint commits. Batch material changes and deploy once after validation.
 
-Never resurrect Michael K, Moers Venom, Bastian@5, shifted history/evidence/fingerprints, starter-maxima roster caps, K/DST drafting, QB2, or Geno Smith/Aaron Rodgers recommendations.
-
-Correct five-WR cluster: **DeVonta Smith · Zay Flowers · Emeka Egbuka · Tetairoa McMillan · Jaylen Waddle**.
-
-v4 PRIMARY / v5 CHALLENGER / v3 failsafe. Return-v2 is timing context, not an automatic pick command.
-
-## Expert refresh
-Today's v4 baseline is already complete. Do not use blanket expert refresh. Use **Experten-Delta prüfen** only on a material update signal or once in the planned final window. Never refresh experts during the live draft.
-
-## Completed work
-Do not rerun the 6,000-draft stress, manager/autodraft stress, five-WR static reconciliation, Jacobs calibration, pick-pair matrix, first-pass 53-man audit, or pre-waiver late-RB board without genuinely new evidence.
+## STATUS
+Report known state only. No tools, polling, work or AUTO continuation.

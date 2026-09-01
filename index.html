@@ -7,8 +7,8 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.158">
-  <title>Draft Companion – Final Draft Edition 2026</title>
+  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.168">
+  <title>PITTI Season Companion 2026</title>
 
 <style id="workspaceStyles">
 .workspace-nav{display:flex;gap:7px;overflow-x:auto;padding:4px 0 12px;position:sticky;top:0;z-index:20;background:linear-gradient(180deg,var(--bg,#0b1220) 75%,transparent);scrollbar-width:none}.workspace-nav::-webkit-scrollbar{display:none}.workspace-tab{white-space:nowrap;min-width:max-content;padding:9px 13px;border-radius:999px;opacity:.72}.workspace-tab.active{opacity:1;outline:2px solid currentColor}.workspace-panel[hidden]{display:none!important}.draft-surface-nav{display:flex;gap:8px;margin:0 0 12px}.draft-surface-tab{flex:1;padding:10px 12px;border-radius:12px}.draft-surface-tab.active{outline:2px solid currentColor}.live-only{display:none}.draft-live-view .mock-only{display:none!important}.draft-live-view .live-only{display:block}.draft-live-view .advanced-card{display:none!important}.live-lock{border:1px solid rgba(96,165,250,.35);padding:10px;border-radius:10px;margin:10px 0}.preview-box{border:1px dashed rgba(250,204,21,.55);padding:10px;border-radius:10px;margin:10px 0}.preview-box .two{align-items:end}.live-compact-only{display:none}.draft-live-view .live-compact-only{display:block}.live-manager-control{padding:12px;margin:10px 0}.live-control-title{display:flex;justify-content:space-between;gap:8px;align-items:baseline}.live-manager-grid{display:grid;gap:7px;margin-top:8px}.live-manager-row{display:grid;grid-template-columns:minmax(0,1fr) minmax(130px,.9fr);gap:8px;align-items:center}.live-manager-name{font-weight:700;font-size:.9rem}.live-manager-row select{min-height:42px}.live-manager-apply{width:100%;margin-top:10px;min-height:44px}.live-manager-control p{margin:7px 0 0}@media(max-width:520px){.live-manager-row{grid-template-columns:minmax(0,1fr) minmax(120px,.95fr)}.live-manager-row select{font-size:.84rem;padding-left:8px;padding-right:8px}}.draft-live-view.live-coach-active .live-setup-copy{display:none!important}.draft-live-view.live-coach-active .preview-box{padding:8px;margin:6px 0}.draft-live-view.live-coach-active .preview-box>p,.draft-live-view.live-coach-active .preview-box>div.two,.draft-live-view.live-coach-active .preview-box>b{display:none}.draft-live-view.live-coach-active .preview-box #livePreviewStatus{margin:0}.draft-live-view.live-coach-active #draftInput,.draft-live-view.live-coach-active label[for="draftInput"]{display:none}.draft-live-view.live-coach-active [data-workspace="draft"].card{margin:8px 0}.draft-live-view.live-coach-active #coachSectionCard{scroll-margin-top:88px}.draft-live-view .coach .expert-grid,.draft-live-view .coach .coach-section-title,.draft-live-view .coach .tags{display:none}.draft-live-view .coach.live-detail-open .expert-grid,.draft-live-view .coach.live-detail-open .coach-section-title,.draft-live-view .coach.live-detail-open .tags{display:grid}.draft-live-view .coach.live-detail-open .tags{display:flex}.draft-live-view .live-detail-toggle{display:block;width:100%;min-height:34px;margin-top:8px;padding:6px 9px;font-size:.76rem}.draft-live-view .coach:first-of-type .expert-grid,.draft-live-view .coach:first-of-type .coach-section-title,.draft-live-view .coach:first-of-type .tags{display:grid}.draft-live-view .coach:first-of-type .tags{display:flex}.draft-live-view .freeze-note{display:none!important}.phase-intro{margin-bottom:12px}.phase-intro h2{margin-bottom:4px}.phase-grid{display:grid;gap:10px;grid-template-columns:repeat(2,minmax(0,1fr))}.phase-tile{padding:12px;border:1px solid rgba(148,163,184,.22);border-radius:12px}.phase-tile b{display:block;margin-bottom:4px}.compact-details{margin-top:8px}.compact-details>summary{cursor:pointer;font-weight:700;list-style:none;display:flex;align-items:center;gap:7px}.compact-details>summary::-webkit-details-marker{display:none}.compact-details>summary::before{content:"▸";font-size:.9em;transition:transform .15s ease}.compact-details[open]>summary::before{transform:rotate(90deg)}.compact-details .details-body{margin-top:8px}@media(max-width:640px){.phase-grid{grid-template-columns:1fr}.workspace-nav{margin-left:-4px;margin-right:-4px}}
@@ -18,19 +18,19 @@
 <main class="shell">
   <header class="hero">
     <div>
-      <div class="eyebrow">Final Draft Edition 2026</div>
-      <h1>Draft Companion</h1>
-      <p>Expertenpanels, Einzelrankings und Live-Draft-Coach.</p>
+      <div class="eyebrow">Season Companion 2026</div>
+      <h1>PITTI Companion</h1>
+      <p>Live-Kader, Waiver, Aufstellung, Trades und News.</p>
     </div>
-    <span class="version">v11.8.0-rc4.158</span>
+    <span class="version">v11.8.0-rc4.168</span>
   </header>
 
   <nav class="workspace-nav" aria-label="Arbeitsbereich">
-    <button class="workspace-tab active" data-workspace-target="draft">🏈 Draft</button>
-    <button class="workspace-tab" data-workspace-target="roster">👥 Kader</button>
+    <button class="workspace-tab active" data-workspace-target="roster">👥 Kader</button>
     <button class="workspace-tab" data-workspace-target="waiver">⚡ Waiver / FA</button>
     <button class="workspace-tab" data-workspace-target="trade">🔁 Trades</button>
     <button class="workspace-tab" data-workspace-target="live">📡 Live / News</button>
+    <button class="workspace-tab" data-workspace-target="draft">🏈 Draft-Archiv</button>
   </nav>
 
   <div class="draft-surface-nav" data-workspace="draft" aria-label="Draft-Ansicht">
@@ -38,7 +38,7 @@
     <button id="liveViewBtn" class="draft-surface-tab" type="button">LIVE Draft</button>
   </div>
 
-  <section class="status-card">
+  <section class="status-card" data-workspace="draft">
     <div><span>FantasyPros</span><b id="onlineState">–</b></div>
     <div><span>Rankings</span><b id="rankingAge">–</b></div>
     <div><span>Sleeper Draft</span><b id="adpCount">–</b></div>
@@ -171,11 +171,10 @@
 
 
   <section class="card workspace-panel" data-workspace="roster" hidden>
-    <div class="phase-intro"><h2>👥 Kader</h2><p class="tiny">Saisonansicht für Hold/Drop/Protect-Entscheidungen. Dieselbe Player Intelligence wie im Draft, aber ohne Draft-Noise.</p></div>
-    <div class="phase-grid"><div class="phase-tile"><b>Roster State</b><span class="tiny">Aktueller Sleeper-Draftkader mit Panel-/ADP-Baseline und Positionskapital.</span></div><div class="phase-tile"><b>Thesis Protection</b><span class="tiny">Frühe Picks und Spieler mit starkem Panel-/Marktwert werden vor vorschnellen Drops geschützt.</span></div></div>
-    <div id="rosterStatus" class="notice">Noch kein Draft geladen.</div>
+    <div class="phase-intro"><p class="tiny">Aktuelle Sleeper-Aufstellung mit Bench/Reserve und Startalternativen.</p></div>
+    <div id="rosterStatus" class="notice">Live-Kader wird geladen…</div>
+    <div id="rosterList" class="season-lineup"></div>
     <div id="rosterSummary" class="summary-grid"></div>
-    <div id="rosterList" class="coach-list"></div>
     <div id="rosterBenchStatus" class="notice"></div>
     <div id="rosterBenchList" class="coach-list"></div>
     <div id="rosterFaStatus" class="notice"></div>
@@ -184,17 +183,17 @@
   <section class="card workspace-panel" data-workspace="waiver" hidden>
     <div class="phase-intro"><h2>⚡ Waiver / Free Agents</h2><p class="tiny">Nur Akquisitionsentscheidungen: Add, FAAB, Drop-Kandidat, Market Window und nächste Informationsauflösung.</p></div>
     <div class="phase-grid"><div class="phase-tile"><b>Opportunity</b><span class="tiny">Organic, Contingency und Informational Acquisition.</span></div><div class="phase-tile"><b>Acquisition Utility</b><span class="tiny">FAAB, Bench Opportunity Cost und lokale Marktgefahr.</span></div></div>
-    <div id="waiverStatus" class="notice">Noch kein abgeschlossener Draft geladen.</div><div id="waiverList" class="coach-list"></div>
+    <div id="waiverStatus" class="notice">Live-Sleeper-State wird geladen…</div><div id="waiverList" class="coach-list"></div>
   </section>
   <section class="card workspace-panel" data-workspace="trade" hidden>
     <div class="phase-intro"><h2>🔁 Trades</h2><p class="tiny">Trade-Wert getrennt vom Player Belief State: Gegenwert, Roster-Effekt und Throw-In Protection.</p></div>
     <div class="phase-grid"><div class="phase-tile"><b>Trade Compare</b><span class="tiny">Beide Seiten plus beste realistische Alternative.</span></div><div class="phase-tile"><b>Protection Check</b><span class="tiny">ACTIVATING-/unterpreiste Spieler nicht zum alten Marktwert abgeben.</span></div></div>
-    <div id="tradeStatus" class="notice">Noch kein abgeschlossener Draft geladen.</div><div id="tradeList" class="coach-list"></div>
+    <div id="tradeStatus" class="notice">Live-Sleeper-State wird geladen…</div><div id="tradeList" class="coach-list"></div>
   </section>
   <section class="card workspace-panel" data-workspace="live" hidden>
     <div class="phase-intro"><h2>📡 Live / News</h2><p class="tiny">Event-getriebene Ansicht für Injury-, Inactive-, Usage- und Market-Window-Trigger.</p></div>
     <div class="phase-grid"><div class="phase-tile"><b>Trigger Queue</b><span class="tiny">Welche gespeicherte These wurde gerade aktiviert oder invalidiert?</span></div><div class="phase-tile"><b>Research Cache</b><span class="tiny" id="researchCacheStatus">Noch keine versionierte Evidence gespeichert.</span></div></div>
-    <div id="watcherSyncStatus" class="notice">Pitti Watcher: Feed noch nicht geprüft.</div><div id="seasonActionStatus" class="notice">Action Board wartet auf abgeschlossenen Draft.</div><div id="seasonActionList" class="coach-list"></div><div class="notice">Watcher-Ingestion ist read-only und fail-closed: nur ein source-proven scheduled-health PASS darf Evidence übernehmen. Kritische Injury/IR/PUP-State-Deltas ohne echte Quellenchronologie bleiben nicht-actionable.</div>
+    <div id="watcherSyncStatus" class="notice">Pitti Watcher: Feed noch nicht geprüft.</div><div id="seasonActionStatus" class="notice">Live-Sleeper-State wird geladen…</div><div id="seasonActionList" class="coach-list"></div><div class="notice">Watcher-Ingestion ist read-only und fail-closed: nur ein source-proven scheduled-health PASS darf Evidence übernehmen. Kritische Injury/IR/PUP-State-Deltas ohne echte Quellenchronologie bleiben nicht-actionable.</div>
   </section>
 
   <details class="card advanced-card mock-only">
@@ -246,13 +245,13 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v11.8.0-rc4.158: feste v4-Expertenmatrix im tatsächlich sichtbaren Live-Draft-Surface; Überschrift entfernt; Modelllogik unverändert.</div>
+<div class="freeze-note">v11.8.0-rc4.168: Season-first Standardansicht; Live-Sleeper-State unabhängig vom Draft-Archiv; Draft nur noch Analyse/Archiv.</div>
 <button id="analysisJumpV3" class="snapshot-jump" type="button" aria-label="Zur Analyse" hidden>↓</button>
 </main>
-<script src="live-surface-v3.js?v=v11.8.0-rc4.158" defer></script>
+<script src="live-surface-v3.js?v=v11.8.0-rc4.168" defer></script>
 <script src="expert-v2-board.js?v=20260826"></script>
 <script src="expert-v3-board.js?v=20260828a"></script>
-<script type="module" src="app.js?v=v11.8.0-rc4.158"></script>
+<script type="module" src="app.js?v=v11.8.0-rc4.168"></script>
 <script src="expert-board-export.js?v=20260826e" defer></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>

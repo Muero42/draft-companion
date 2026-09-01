@@ -7,10 +7,11 @@ const manifest=fs.readFileSync('manifest.webmanifest','utf8');
 
 function must(cond,msg){if(!cond){console.error('FAIL:',msg);process.exit(1)}}
 
-must(app.includes("const APP_VERSION='v11.8.0-rc4.158'"),'app version');
-must(html.includes('v11.8.0-rc4.158'),'index version');
-must(sw.includes('v11.8.0-rc4.158'),'sw version');
-must(manifest.includes('v11.8.0-rc4.158'),'manifest version');
+const versionOf=s=>Number((String(s).match(/v11\.8\.0-rc4\.(\d+)/)||[])[1]);
+must(versionOf(app)>=158,'app version >= rc4.158');
+must(versionOf(html)>=158,'index version >= rc4.158');
+must(versionOf(sw)>=158,'sw version >= rc4.158');
+must(versionOf(manifest)>=158,'manifest version >= rc4.158');
 must(html.includes('id="expertDeltaBtn"'),'delta button present');
 must(app.includes("'expertDeltaBtn'"),'delta button wired into ids');
 must(app.includes('async function loadExpertRanks(expertId,{force=false}={})'),'force-capable expert load');

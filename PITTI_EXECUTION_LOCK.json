@@ -1,37 +1,37 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-08-31T14:55:00Z",
+  "updatedAt": "2026-09-01T12:19:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Persistent Library CURRENT/Project-State/Handoff/Seal remain stale because upload-back failed with container_session_expired. New chat MUST verify PITTI_COMMAND_CONTRACTS + CURRENT + PASS SEAL + EXECUTION_LOCK + PROJECT_STATE EOF + NEW_CHAT_HANDOFF_CURRENT + repo bootstrap/matrix against any Library state. The newest fully sealed repo generation and verified device facts win; never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Repo v217 is current authority. New chat must verify CURRENT + PASS SEAL + EXECUTION_LOCK + PROJECT_STATE EOF + CURRENT HANDOFF + bootstrap/matrix. Any v215/v216 draft-day pointer is historical only and must not override v217. Persistent Library mirror may remain stale; never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.158",
+    "appVersion": "v11.8.0-rc4.167",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.158",
+    "latestAndroidObserved": "v11.8.0-rc4.166 rejected season startup",
     "latestPreinstallVerified": "rc4.158 Candidate Package Gate + Release Contract + Project Guardrails PASS",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.158 package/re-extract current authority",
     "preinstallSha256": "sha256:46162cce29bc21c21b1ef826f7ac36d8ebd655cd5c75498f3cfaaf7ac7fbcb7c",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
-    "latestDeployedCandidate": "v11.8.0-rc4.158",
-    "latestAndroidVerified": "v11.8.0-rc4.158",
-    "androidAuthority": "v11.8.0-rc4.158 accepted",
-    "android_authority": "v11.8.0-rc4.158",
-    "deployedPagesAppByteParityWithMain": true,
+    "latestDeployedCandidate": "v11.8.0-rc4.166 gh-pages season-preview",
+    "latestAndroidVerified": "v11.8.0-rc4.161 limited acceptance",
+    "androidAuthority": "v11.8.0-rc4.161",
+    "android_authority": "v11.8.0-rc4.161",
+    "deployedPagesAppByteParityWithMain": false,
     "preinstallReferenceRun": 33401979026,
     "preinstallReferenceArtifactId": 9761582650,
     "preinstallHashSemantics": "GitHub candidate-package artifact envelope digest; package/re-extract gate PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.158",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.166",
     "latestAndroidFunctionalVerified": "rc4.158 device PASS: version/control visible; v4 day baseline 9/9 complete; prior live expert matrix acceptance preserved.",
     "testChallengerAndroidObserved": true,
     "testChallengerAndroidAccepted": true,
@@ -61,12 +61,12 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.158",
-    "unreleasedMainDelta": "none",
-    "deployedPagesVersion": "v11.8.0-rc4.158",
-    "mainGhPagesParity": true,
-    "androidVerified": true,
-    "androidAcceptance": "rc4.158 PASS 2026-08-31 ~16:36 CEST: version/control visible; v4 expert day baseline 9/9 complete."
+    "acceptedAndroidAuthority": "v11.8.0-rc4.161",
+    "unreleasedMainDelta": "Season Companion rc4.162 adds expiring Week-1 waiver market evidence; rc4.161 is accepted Android authority.",
+    "deployedPagesVersion": "v11.8.0-rc4.166 (rejected season startup)",
+    "mainGhPagesParity": false,
+    "androidVerified": false,
+    "androidAcceptance": "rc4.167 NOT device accepted; rc4.166 physical season startup failed"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -86,7 +86,54 @@
     "autoBlockSilentExecution": true,
     "autoBlockVisibleResponseGate": "RESULT_OR_UNAVOIDABLE_USER_ACTION_ONLY",
     "emptyAssistantResponseForbidden": true,
-    "toolRunEndedIsNotAStopCondition": true
+    "toolRunEndedIsNotAStopCondition": true,
+    "stateMachine": {
+      "version": "pitti-auto-state.v1",
+      "persistedIn": "PITTI_CURRENT_STATE.json:auto_execution_state",
+      "states": [
+        "RUNNING",
+        "USER_ACTION_REQUIRED",
+        "DECISION_REQUIRED",
+        "PROJECT_MILESTONE_REACHED",
+        "NO_EXECUTABLE_WORK_REMAINS"
+      ],
+      "queueBuckets": [
+        "active",
+        "ready",
+        "waiting_external",
+        "blocked_user",
+        "completed_recent"
+      ],
+      "dispatchRule": "After every completed/blocked package: checkpoint -> move lane to correct bucket -> immediately dispatch next READY lane. WAITING_EXTERNAL never stops unrelated READY work.",
+      "noOutputGuard": "Before any visible AUTO response, re-inventory queue. If active or ready contains any safe positive-value work, visible response is forbidden.",
+      "stopRule": "A visible AUTO response is valid only when active=[] and ready=[] and stop_evaluation.allowed=true with an allowed stop code.",
+      "allowedStopCodes": [
+        "USER_ACTION_REQUIRED",
+        "DECISION_REQUIRED",
+        "PROJECT_MILESTONE_REACHED",
+        "NO_EXECUTABLE_WORK_REMAINS",
+        "SAFETY_OR_IRREVERSIBLE_CONFIRMATION"
+      ],
+      "forbiddenStopSignals": [
+        "CI_RUNNING",
+        "DEPLOY_RUNNING",
+        "COMMIT_CREATED",
+        "TOOL_CALL_FINISHED",
+        "WORK_PACKAGE_FINISHED",
+        "NO_USER_ACTION_NEEDED",
+        "PARALLEL_WORK_EXISTS"
+      ],
+      "waitingExternalRule": "waiting_external is a scheduling state, never a global stop condition unless ready=[] and no new autonomous lane can be derived.",
+      "userOutputExamplesForbidden": [
+        "AUTO läuft",
+        "ich mache weiter",
+        "CI läuft",
+        "Commit erstellt",
+        "keine Nutzerhandlung nötig"
+      ]
+    },
+    "noVisibleResponseWhileReadyWorkExists": true,
+    "stopRequiresMachineReadableEvaluation": true
   },
   "league": {
     "teams": 10,
@@ -208,16 +255,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "branch": "main",
-    "status": "RC4.158_DRAFT_READY_FROZEN",
-    "production": true,
-    "androidVerified": true,
-    "runtime": "main/gh-pages rc4.158 13/13 parity; Android rc4.158 accepted; expert baseline 9/9",
-    "nextGate": "post-19:00 waiver delta; final expert delta ~19:40-19:45; freeze ~19:50"
+    "status": "V218_AUDITED_HANDOFF_RC4167_PREVIEW_PARITY_PENDING",
+    "nextGate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY"
   },
-  "status": "RC4.158_DRAFT_READY_FROZEN",
-  "gate": "DRAFT_DAY_TIME_DEPENDENT_FINALIZATION",
-  "nextGate": "post-19:00 waiver claims/destinations; final expert delta ~19:40-19:45; freeze ~19:50",
+  "status": "POST_DRAFT_SEASON_COMPANION_RC4167_CANDIDATE",
+  "gate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY",
+  "nextGate": "Device acceptance only after repository/checkpoint reconciliation; no rc4.160 retest.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -226,11 +269,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260831T1455Z-v215",
+    "generation": "20260901T1058Z-v217",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.158 accepted/frozen. Continue only remaining time-dependent draft-day gates."
+    "resume": "rc4.161 code/CI complete; physical Android acceptance only."
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
@@ -249,7 +292,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260831T1455Z-v215",
+  "handoff_generation": "20260901T1812Z-v218",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },

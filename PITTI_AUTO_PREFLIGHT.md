@@ -39,6 +39,20 @@ If any answer is unsafe/unknown, inspect evidence first.
 - An external/device/OOS gate is a valid interruption only after all independent non-contaminating positive-value lanes have actually been exhausted.
 - If no safe autonomous lane remains, record the exhaustion reason and exact external gate before interrupting.
 
+
+## 4A. AUTO STATE MACHINE / NO-OUTPUT GUARD
+- Persistent queue authority: `PITTI_CURRENT_STATE.json:auto_execution_state`.
+- Queue buckets are `active`, `ready`, `waiting_external`, `blocked_user`, `completed_recent`.
+- After EVERY package or failure: checkpoint material facts, move that lane to its correct bucket, then immediately dispatch the highest-priority safe `ready` lane.
+- `waiting_external` (CI, deploy, remote build, rate limit, scheduled availability) is never a global stop signal. It blocks only dependent work.
+- `blocked_user` also blocks only its dependent lane. Continue every independent `ready` lane first.
+- **NO-OUTPUT GUARD:** before any visible AUTO response, re-inventory. If `active.length > 0` or `ready.length > 0`, DO NOT RESPOND; continue work in the same turn.
+- A visible AUTO response requires `active=[]`, `ready=[]`, and machine-readable `stop_evaluation.allowed=true`.
+- Allowed stop codes only: `USER_ACTION_REQUIRED`, `DECISION_REQUIRED`, `PROJECT_MILESTONE_REACHED`, `NO_EXECUTABLE_WORK_REMAINS`, `SAFETY_OR_IRREVERSIBLE_CONFIRMATION`.
+- Forbidden stop signals: CI/deploy running, commit created, tool call finished, work package finished, “no user action needed”, or existence of parallel work.
+- Never emit “AUTO läuft”, “ich mache weiter”, “CI läuft”, “Commit erstellt” or “keine Nutzerhandlung nötig” as an AUTO terminal response.
+- If the queue is stale or missing after a chat switch, reconstruct it from PROJECT_STATE/CURRENT/repo evidence before ordinary work, and set `stop_evaluation.allowed=false` while any autonomous lane exists.
+
 ## 5. CHECKPOINT WRITE-THROUGH
 Immediately update `PITTI_PROJECT_STATE.md` after material:
 - requirement/decision change,
@@ -208,3 +222,25 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - Exact manager order = Michael / Pascal Voerde / Marc Düsseldorf / Thomas / Björn / Pascal Gelderner / Giuliano / Bastian / Muerotechnik / Dutch Marc.
 - Correct five-WR cluster = DeVonta Smith / Zay Flowers / Emeka Egbuka / Tetairoa McMillan / Jaylen Waddle.
 - Fresh real-draft chat is created only after a FINAL PRE-DRAFT HANDOFF around 19:45–19:50. That handoff must carry final expert delta + post-waiver deltas + final injury/legal/transaction status and execution locks.
+
+
+## 15. v217 CURRENT OVERRIDE — POST-DRAFT SEASON COMPANION / rc4.161
+- Generation: `20260901T1058Z-v217`. This section supersedes every older current-version, first-gate, generation, draft-day and device-test pointer above where they conflict.
+- Canonical mode = **POST_DRAFT_SEASON_COMPANION**.
+- Branch `season-companion-rc4.159` is historical naming only; current source/preview candidate = **v11.8.0-rc4.161**.
+- Accepted Android authority remains **v11.8.0-rc4.158** until physical rc4.161 acceptance.
+- Current Sleeper league state is the current roster/ownership Source of Truth; the real draft is immutable history.
+- rc4.160 device already proved automatic transaction detection: Mevis rostered, Bigsby absent, Charbonnet Reserve/IR. Do not repeat rc4.160 testing.
+- rc4.161 root fix decouples live FA ownership discovery from expert-ranking hydration. `tools/season-fa-ownership-regression.mjs` must remain in candidate-package CI.
+- Exact current gate after takeover reconciliation = **DEVICE_RC4161_ACCEPTANCE**.
+- Any older instruction saying v178/v205/v207/v212/v214/v215/v216 is the required current generation, DRAFT_READY_FROZEN is current, DRAFT_DAY_TIME_DEPENDENT_FINALIZATION is current, or Bigsby is currently rostered is historical and must not override v217.
+
+### v217 AUTO hard gate
+- `AUTO` and `AUTO BLOCK` must continue autonomously inside the same assistant turn while ANY safe positive-value lane is executable.
+- After every work package: checkpoint material change → re-inventory all independent lanes → immediately execute the next package.
+- A waiting CI/deploy/device lane blocks only that lane; it is never by itself a global stop.
+- **No visible response** while `active` or `ready` contains executable work.
+- Progress/status/acknowledgement messages are forbidden terminal responses: “AUTO läuft”, “ich mache weiter”, “CI läuft”, “Commit erstellt”, “keine Nutzerhandlung nötig”, or equivalents.
+- An empty assistant response after tool work is also forbidden because it terminates execution.
+- Visible output requires `active=[]`, `ready=[]`, and `stop_evaluation.allowed=true` with an approved stop code.
+- The platform cannot continue tool work after a visible assistant turn ends; therefore a promise that AUTO “läuft weiter” after sending such a message is functionally false.

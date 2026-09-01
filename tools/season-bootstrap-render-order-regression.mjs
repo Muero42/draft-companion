@@ -1,0 +1,22 @@
+import fs from 'node:fs';
+const src=fs.readFileSync('app.js','utf8');
+const fn=src.indexOf('async function bootstrapSeasonWorkspace()');if(fn<0)throw new Error('bootstrap missing');
+const end=src.indexOf('\nasync function fetchDraftFresh',fn);const b=src.slice(fn,end);
+const season=b.indexOf('const season=await fetchSeasonLeagueState({})');
+const players=b.indexOf("const players=await jf(\`\${S}/players/nfl?_=\${bust}\`,'Season Spieler',15000)");
+const draft=b.indexOf("jf(\`\${S}/draft/\${id}?_=\${bust}\`,'Draft-Archiv',6500)");
+const ctx=b.indexOf('lastDraftContext={id:LIVE_DRAFT_ID_2026');
+const rosterFa=b.indexOf('renderRosterFaAudit(rows,available||[],true)');
+const trade=b.indexOf('renderTradeWorkspace(picks,players,slot,teams,true)');
+const waiver=b.indexOf('renderWaiverWorkspace(true)');
+const action=b.indexOf('renderSeasonActionBoard(true)');
+const status=b.indexOf('updateStatus();');
+if([season,players,draft,ctx,rosterFa,trade,waiver,action,status].some(x=>x<0))throw new Error('season-first bootstrap tokens missing');
+if(!(season<players&&players<draft&&ctx<rosterFa&&rosterFa<trade&&trade<waiver&&waiver<action&&action<status))throw new Error('season-first/render ordering invalid');
+if(b.includes('CANONICAL_DRAFT_NOT_COMPLETE'))throw new Error('historical draft still gates season bootstrap');
+if(!b.includes("catch(e){console.warn('PITTI optional draft archive unavailable'"))throw new Error('draft archive is not optional');
+if(!b.includes("if(els.waiverStatus)")||!b.includes("if(els.tradeStatus)"))throw new Error('season failure observability missing');
+console.log('season-first bootstrap regression PASS');
+
+if(!src.includes("setWorkspace(localStorage.getItem('v117_workspace')||'roster')"))throw new Error('season workspace is not default');
+if(!src.includes("Season Auto-Sync FAIL-CLOSED"))throw new Error('season failure not visible');

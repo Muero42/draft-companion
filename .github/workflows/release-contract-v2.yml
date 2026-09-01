@@ -23,6 +23,7 @@ jobs:
           node tools/release-contract-v2.mjs
           node tools/runtime-startup-contract.mjs
           node tools/live-presentation-behavior.mjs
+          node tools/season-bootstrap-runtime-regression.mjs
           node tools/rc478-oos-policy.mjs
           PITTI_SKIP_SEAL_INTEGRITY=1 PITTI_CANDIDATE_PREFLIGHT=1 node tools/pitti_guardrail_check.mjs
           node tools/rc482-draft-critical.mjs

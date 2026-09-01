@@ -49,6 +49,23 @@ must(lock.auto?.reinventoryAfterEveryWorkPackage===true,'post-package re-invento
 must(lock.auto?.oneInventoryPerAutoTurnIsInsufficient===true,'single-inventory AUTO regression guard missing');
 must(lock.auto?.promiseOnlyAutoResponseForbidden===true,'promise-only AUTO response prohibition missing');
 must(lock.auto?.externalGateValidStopOnlyAfterIndependentLaneExhaustion===true,'external gate exhaustion invariant missing');
+must(lock.auto?.noVisibleResponseWhileReadyWorkExists===true,'AUTO no-output guard missing');
+must(lock.auto?.stopRequiresMachineReadableEvaluation===true,'AUTO machine-readable stop evaluation missing');
+must(lock.auto?.stateMachine?.version==='pitti-auto-state.v1','AUTO state-machine version missing');
+must(lock.auto?.stateMachine?.persistedIn==='PITTI_CURRENT_STATE.json:auto_execution_state','AUTO state path drift');
+must(lock.auto?.stateMachine?.waitingExternalRule?.includes('never a global stop condition'),'AUTO waiting-external lane isolation missing');
+const autoState=current.auto_execution_state;
+must(autoState?.schema==='pitti.auto-state.v1','CURRENT AUTO queue schema missing');
+for(const bucket of ['active','ready','waiting_external','blocked_user','completed_recent']) must(Array.isArray(autoState?.[bucket]),`CURRENT AUTO queue bucket missing: ${bucket}`);
+const allowedAutoStops=new Set(['USER_ACTION_REQUIRED','DECISION_REQUIRED','PROJECT_MILESTONE_REACHED','NO_EXECUTABLE_WORK_REMAINS','SAFETY_OR_IRREVERSIBLE_CONFIRMATION']);
+const executableAutoWork=(autoState?.active?.length||0)+(autoState?.ready?.length||0);
+if(executableAutoWork>0){
+  must(autoState?.status==='RUNNING','AUTO must remain RUNNING while active/ready work exists');
+  must(autoState?.stop_evaluation?.allowed===false,'AUTO stop cannot be allowed while active/ready work exists');
+}else if(autoState?.stop_evaluation?.allowed===true){
+  must(allowedAutoStops.has(autoState?.stop_evaluation?.code),'AUTO stop code invalid');
+}
+
 
 for(const token of [
   'Source of Truth for PITTI/Draft Companion execution',
@@ -74,7 +91,11 @@ for(const token of [
   'AUTO is a repeated work loop, not a one-package action',
   'Re-inventory after **EVERY** completed work package',
   'Promise-only AUTO responses are invalid',
-  'external/device/OOS gate is a valid interruption only after all independent'
+  'external/device/OOS gate is a valid interruption only after all independent',
+  'AUTO STATE MACHINE / NO-OUTPUT GUARD',
+  'NO-OUTPUT GUARD',
+  'waiting_external',
+  'stop_evaluation.allowed=true'
 ]) must(preflight.includes(token),`preflight gate missing: ${token}`);
 
 must(readme.includes('v11.8.0-rc4.64'),'README production/control baseline drift');
@@ -89,6 +110,28 @@ must(policy.includes('USER_DRAFT_QB_LIMIT=1'),'user one-QB runtime invariant mis
 must(app.includes("from './decision-policy.js'"),'decision policy wiring missing');
 must(app.includes("Progressive WR-Sättigung")||app.includes('WR-Sättigung'),'WR saturation canary missing');
 must(app.includes('function simulateReturnV2('),'Return-v2 kernel missing');
+must(app.includes('function seasonHorizonSplit('),'Season waiver horizon split missing');
+must(app.includes('const weekly=weeklyFresh?'),'THIS WEEK waiver horizon must fail closed without fresh evidence');
+must(app.includes("weekly:null")||app.includes("weekly=weeklyFresh?"),'THIS WEEK stale-evidence null path missing');
+must(app.includes("FA-vs-Roster v2"),'Waiver v2 surface missing');
+must(app.includes("frische Weekly-Evidence fehlt"),'Waiver v2 stale weekly explanation missing');
+must(app.includes('Trade Board v4'),'Trade Board v4 surface missing');
+must(app.includes('function tradeOfferCandidates('),'Trade offer construction helper missing');
+must(app.includes('Annahme-Plausibilität'),'Trade acceptance plausibility missing');
+must(app.includes('Week-1 Start/Sit v3'),'Start/Sit v3 surface missing');
+must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
+must(app.includes('Weekly Consensus Rank ist primär'),'weekly rank primary invariant missing');
+must(app.includes('Special Teams v2'),'Special Teams v2 quality-floor surface missing');
+must(app.includes("dropCandidatePolicy:{primary:['Tank Bigsby','Tyjae Spears','Kenneth Gainwell'],protected:['Jadarian Price','Christian Watson','Josh Downs']"),'Mevis drop gate must protect Price/Watson/Downs and compare Bigsby/Spears/Gainwell');
+must(app.includes('DROP-Reihenfolge Bigsby → Spears → Gainwell; Price / Watson / Downs geschützt'),'Waiver UI must surface the guarded Mevis drop order');
+must(app.includes('SEASON_FA_POOL_ZERO_INVALID'),'zero live season FA pool must fail closed');
+must((app.match(/SEASON_FA_POOL_ZERO_INVALID/g)||[]).length>=2,'zero FA fail-closed gate must cover both startup bootstrap and analyze path');
+must(app.includes('FA-POOL NICHT VALIDIERT'),'invalid season FA pool must be visible');
+must(app.includes('kein FA/HOLD-Urteil aus Draft-Verfügbarkeit'),'post-draft FA must never fall back to draft availability');
+
+must(app.includes('filter(x=>x.rb&&x.rb.tier<=4)'),'D/ST quality floor must filter tier 5/6 before ranking');
+
+
 must(app.includes('function applyPlayerQualitySafetyGate('),'Value-Safety gate missing');
 
 for(const name of ['Guilherme Gianni','Michael Bobal']) must(!app.includes(name),`temporary availability-only expert leaked into runtime: ${name}`);
@@ -125,6 +168,30 @@ must(commandContract.auto?.reinventoryAfterEveryWorkPackage===true,'repo command
 must(commandContract.auto?.blockedGateStopsOnlyDependentLane===true,'repo command contract lane isolation drift');
 must(commandContract.auto?.promiseOnlyResponseForbidden===true,'repo command contract promise-only guard drift');
 must(commandContract.auto?.externalGateValidStopOnlyAfterIndependentLaneExhaustion===true,'repo command contract external-gate guard drift');
+must(commandContract.auto?.persistentStateMachine?.mustLoadBeforeAuto===true,'command contract persistent AUTO state machine missing');
+must(commandContract.auto?.persistentStateMachine?.waitingExternalGlobalStop===false,'command contract waiting-external global-stop regression');
+must(commandContract.auto?.persistentStateMachine?.blockedUserGlobalStop===false,'command contract blocked-user global-stop regression');
+must(commandContract.auto?.persistentStateMachine?.stopRequires?.activeEmpty===true&&commandContract.auto?.persistentStateMachine?.stopRequires?.readyEmpty===true&&commandContract.auto?.persistentStateMachine?.stopRequires?.stopEvaluationAllowed===true,'command contract AUTO stop requirements drift');
+must(bootstrap.includes('AUTO queue takeover'),'new-chat AUTO queue takeover missing');
+if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
+  must(/^20260901T\d{4}Z-v\d+$/.test(String(current.handoff_generation||'')),'Season Companion CURRENT generation malformed');
+  must(lock.handoff_generation===current.handoff_generation,'Season Companion LOCK generation drift');
+  must(commandContract.handoff_generation===current.handoff_generation,'Season Companion COMMAND generation drift');
+  must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
+  must(handoffMatrix.includes(current.handoff_generation),'Season Companion MATRIX generation drift');
+  must(currentHandoff.includes(current.handoff_generation),'Season Companion HANDOFF generation drift');
+  must(['v11.8.0-rc4.161','v11.8.0-rc4.162','v11.8.0-rc4.163','v11.8.0-rc4.164','v11.8.0-rc4.165','v11.8.0-rc4.166','v11.8.0-rc4.167'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
+  must(['DEVICE_RC4161_ACCEPTANCE','SEASON_ACTIONABILITY_INCREMENT','DEVICE_RC4163_SEASON_SURFACES','DEVICE_RC4164_LIVE_SEASON_HYDRATION','SELFTEST_RC4165_SEASON_STARTUP','DEVICE_RC4165_FINAL_CANARY','RC4166_CI_AND_PREVIEW_DEPLOY','DEVICE_RC4166_FINAL_CANARY','VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY'].includes(commandContract.currentGate),'Season Companion command gate regression');
+  must(['DEVICE_RC4161_ACCEPTANCE','SEASON_ACTIONABILITY_INCREMENT','DEVICE_RC4163_SEASON_SURFACES','DEVICE_RC4164_LIVE_SEASON_HYDRATION','SELFTEST_RC4165_SEASON_STARTUP','DEVICE_RC4165_FINAL_CANARY','RC4166_CI_AND_PREVIEW_DEPLOY','DEVICE_RC4166_FINAL_CANARY','VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY'].includes(lock.gate),'Season Companion lock gate regression');
+  must(['DEVICE_RC4161_ACCEPTANCE','SEASON_ACTIONABILITY_INCREMENT','DEVICE_RC4163_SEASON_SURFACES','DEVICE_RC4164_LIVE_SEASON_HYDRATION','SELFTEST_RC4165_SEASON_STARTUP','DEVICE_RC4165_FINAL_CANARY','RC4166_CI_AND_PREVIEW_DEPLOY','DEVICE_RC4166_FINAL_CANARY','RC4167_ALL_GATES_THEN_SINGLE_PREVIEW_DEPLOY','VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY'].includes(current.currentWork?.nextGate),'Season Companion CURRENT next gate regression');
+  must(currentHandoff.includes('Tank Bigsby absent'),'Season Companion transaction canary regression');
+  must(!currentHandoff.includes('Tank Bigsby added'),'stale Bigsby-added canary resurrected');
+  must(bootstrap.includes('Do NOT repeat rc4.160 device testing'),'rc4.160 retest prohibition missing');
+  must(handoffMatrix.includes('Empty assistant response after tool work is forbidden'),'AUTO empty-response handoff guard missing');
+  must(currentHandoff.includes('Never send status/progress/acknowledgement messages'),'AUTO progress-response handoff guard missing');
+}
+
+
 must(commandContract.auto?.autoBlockCorrectionTrigger?.trigger==='AUTO BLOCK','AUTO BLOCK command contract missing');
 if(!candidatePreflight) must(commandContract.currentBoundary?.androidAuthority===current.runtime?.android_authority,'command contract Android authority drift');
 if(!candidatePreflight) must(commandContract.currentBoundary?.latestPackageSha256===current.runtime?.latest_package_sha256,'command contract package reference hash drift');

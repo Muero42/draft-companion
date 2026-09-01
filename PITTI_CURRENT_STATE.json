@@ -1,242 +1,251 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260831T1455Z-v215",
-  "updated_at": "2026-08-31T14:55:00Z",
+  "handoff_generation": "20260901T1812Z-v218",
+  "updated_at": "2026-09-01T16:24:00Z",
+  "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
-    "branch": "main",
-    "library_mirror": "STALE_FAIL_CLOSED",
-    "generated_handoff": "NEW_CHAT_HANDOFF_CURRENT.md"
+    "branch": "season-companion-rc4.159",
+    "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
+    "source_candidate": "v11.8.0-rc4.167"
   },
   "runtime": {
-    "production_control": "v11.8.0-rc4.158 Android accepted and draft-ready",
-    "android_authority": "v11.8.0-rc4.158",
-    "test_challenger": "none",
-    "test_challenger_android_verified": true,
-    "latest_package_reextract": "rc4.158 package/re-extract PASS; Release Contract + Guardrails PASS",
-    "library_recovery_alias": "v11.8.0-rc4.52",
-    "latest_package_sha256": "sha256:46162cce29bc21c21b1ef826f7ac36d8ebd655cd5c75498f3cfaaf7ac7fbcb7c",
-    "deployed_pages": "gh-pages v11.8.0-rc4.158",
-    "deployed_pages_app_byte_parity_with_main": true,
-    "package_reference_run": 33401979026,
-    "package_reference_artifact_id": 9761582650,
-    "package_reference_note": "rc4.158 is current release authority; package/re-extract, Release Contract and Project Guardrails PASS.",
-    "android_version_observed": true,
-    "android_functional_verified": true,
-    "freeze_policy": "DRAFT-FINISH FREEZE: only release-critical corrections and verification. No feature work. Existing expert/source decisions are preserved unless current evidence proves a defect.",
-    "test_challenger_android_observed": true,
-    "android_acceptance_pending": null,
-    "android_observed": "v11.8.0-rc4.158",
-    "android_functional_acceptance": "PASS on rc4.158 device: version visible, expert delta control visible, v4 expert day baseline 9/9 complete; live expert matrix behavior remains accepted.",
-    "rollback_reference": "v11.8.0-rc4.96",
-    "accepted_android_fallback_functional_verified": true,
-    "rc4107_device_refresh_observed": true,
-    "rc4107_refresh_evidence": "2026-08-30 user screenshot: rc4.107; FantasyPros Online; Rankings 2 Min.; Sleeper Draft 1095; Coach bereit/Bereit; API key saved. Generic refresh succeeded; v4/v5 readiness not visible in screenshot.",
-    "rc4107_v45_selector_observed": "v3 enabled/selected; v4 disabled; v5 disabled after successful refresh",
-    "source_candidate": "rc4.158 merged/deployed expert delta refresh",
-    "deployed": "main/gh-pages rc4.158; 13/13 runtime parity PASS",
-    "main_gh_pages_parity": true,
-    "accepted_android": "v11.8.0-rc4.158",
-    "package_reference_artifact_digest": "sha256:4a5c7c00fca33d7869be7c75f80a7005ae5c0f10d3b6c0767cb0b595f6297a18",
-    "android_acceptance": "rc4.158 PASS 2026-08-31 ~16:36 CEST: version/control visible and v4 day baseline 9/9 complete",
-    "android_smoke": "PASS 2026-08-31 ~16:36 CEST: rc4.158 visible; Expert Delta button present; v4 expert day baseline 9/9 complete."
+    "accepted_android": "v11.8.0-rc4.161",
+    "season_candidate": "v11.8.0-rc4.167",
+    "candidate_branch": "season-companion-rc4.159",
+    "android_acceptance_pending": true,
+    "test_challenger": "v11.8.0-rc4.167",
+    "ci": {
+      "candidate_package": "PENDING_REVALIDATION",
+      "release_contract_v2": "PENDING_REVALIDATION",
+      "project_guardrails": "PENDING_REVALIDATION",
+      "validated_code_head": null,
+      "scope": "v218 audited handoff + rc4.167 season-first candidate"
+    },
+    "android_accepted": "v11.8.0-rc4.161",
+    "preview_candidate": "v11.8.0-rc4.167",
+    "android_authority": "v11.8.0-rc4.161",
+    "latest_package_sha256": "PENDING_FINAL_RESEAL_METADATA_ONLY",
+    "package_reference_run": null,
+    "deployed_pages_app_byte_parity_with_main": false,
+    "deployed_pages_head": "gh-pages season-preview currently rc4.166; rc4.167 parity pending"
   },
-  "exact_continuation": {
-    "gate": "DRAFT_DAY_EVIDENCE_DELTA",
-    "auto_starts_mock": false,
-    "instruction": "Use rc4.158 as accepted Android authority. Expert day baseline 9/9 complete. Subsequent expert checks use Experten-Delta prüfen only. No runtime changes absent critical defect."
+  "real_draft": {
+    "draft_id": "1366053132970233856",
+    "status": "complete",
+    "last_user_pick": {
+      "pick": 149,
+      "player": "Tyjae Spears"
+    }
+  },
+  "live_roster_canary": {
+    "required": false,
+    "verification": "PASS_DEVICE_RC4160",
+    "observed": "Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR; transaction auto-detected without user disclosing drop."
+  },
+  "season_contract": {
+    "live_roster_and_ownership": "Sleeper league-state via pitti-watcher v0.2.0",
+    "draft_roster": "historical only",
+    "current_roster": "live Sleeper roster",
+    "transaction_history": "preserve separately",
+    "fa_pool": "players unowned across all league rosters; never merely undrafted players",
+    "watcher_evidence": "fail-closed; companion-feed gate must PASS",
+    "acquisition_output": "concrete ADD X / DROP Y; CLEAR ADD/WATCH/HOLD; confidence/freshness/provenance/invalidator",
+    "external_transactions": "never automatic",
+    "fantasypros": "A-/92 benchmark only",
+    "next_after_live_sync": [
+      "FAAB/waiver market model",
+      "lineup/start-sit",
+      "trade evaluation"
+    ]
+  },
+  "currentWork": {
+    "status": "V218_AUDITED_HANDOFF_RC4167_PREVIEW_PARITY_PENDING",
+    "nextGate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY"
   },
   "invariants": {
+    "league": "10-team Half-PPR 1QB",
     "user_qb_limit": 1,
-    "normal_kdst": false,
-    "starter_maxima_not_roster_caps": true,
-    "wr_saturation_soft": true,
-    "user_overrides_not_coach_labels": true,
-    "rc483_kernel_frozen": false,
-    "long_auto_blocks": true,
-    "blocked_lane_only": true,
-    "rc484_kernel_frozen": true,
-    "no_player_name_qb_exclusions": false,
     "user_qb_hard_exclusions": [
       "Geno Smith",
       "Aaron Rodgers"
-    ]
+    ],
+    "starter_maxima_not_roster_caps": true
   },
-  "handoff": {
-    "generation": "20260831T1455Z-v215",
-    "status": "PASS",
-    "ready": true,
-    "secondPass": true,
-    "resume": "rc4.158 is accepted Android authority and DRAFT_READY_FROZEN. Continue only time-dependent draft-day evidence: material news, post-19:00 waiver claims, final expert delta around 19:40-19:45, then execution freeze.",
-    "acceptedAndroid": "v11.8.0-rc4.158",
-    "deployedCandidate": "main/gh-pages v11.8.0-rc4.158 13/13 runtime parity",
-    "knownTierDefect": "RESOLVED; global cross-position v4 tiers are display context only.",
-    "preDraftPriorityOrder": [
-      "1 Material-news-only monitoring before 19:00; do not repeat completed static work.",
-      "2 After 19:00 CEST reconcile waiver claims/destinations and only affected RB/WR/TE paths.",
-      "3 Around 19:40-19:45 press Experten-Delta prüfen once and inspect actual delta result.",
-      "4 Final material injury/legal/transaction scan.",
-      "5 Around 19:50 operational freeze, then execution-only real draft chat."
-    ]
-  },
-  "source_authority": "main/gh-pages v11.8.0-rc4.158; exact 13/13 runtime parity PASS",
-  "package_authority": "rc4.158 Release Contract + Candidate Package Gate + Project Guardrails PASS",
-  "android_version_observed": "v11.8.0-rc4.158",
-  "android_functional_verified": true,
-  "deployment_authority": "rc4.158 main/gh-pages + Android accepted",
-  "draft_day_plan": {
-    "date": "2026-08-31",
-    "start_local": "20:00 Europe/Berlin",
-    "runtime": "Android rc4.158 is accepted and frozen. No runtime changes absent a critical draft-blocking defect.",
-    "primary_freshness_pass": "completed static/pre-waiver lanes; material-news-only until 19:00 Europe/Berlin",
-    "transaction_delta_scan": "19:00-19:30 Europe/Berlin after 13:00 ET waiver deadline",
-    "final_materiality_scan": "19:40-19:50 Europe/Berlin",
-    "operational_freeze": "~19:50",
-    "transaction_rule": "Official transaction/IR/PUP truth outranks stale Sleeper metadata; same-position move alone is weak evidence unless role/health impact is corroborated.",
-    "draft_chat_rule": "Start a brand-new chat for the real draft after final runtime/freshness checkpoint. That draft chat is execution-only: load DRAFT_CHAT_BOOTSTRAP + canonical state, do not redesign code/model during the draft unless a release-critical emergency makes the app unusable."
-  },
-  "android_acceptance_pending": null,
-  "expert_v4_v5": {
-    "v3": "frozen control/failsafe; embedded team/individual hybrid as historically audited",
-    "v4": "CURRENT RE-AUDIT: individual-only, only experts with obtainable individual rankings. Position-specific optimized weights in app.js EXPERT_V4_BLUEPRINT. Koerner is native v4.",
-    "v5": "CURRENT DEFINITION: v3 + individually verified Sean Koerner; target 15 percentage points funded from Draft Sharks Team first, remainder only if necessary proportionally from other v3 voices.",
-    "coverage_blocker": "RESOLVED operationally; latest evidence backup remains 29/30, so no v5 promotion. v4 PRIMARY / v5 CHALLENGER / v3 failsafe.",
-    "koerner": "individually obtainable through existing FantasyPros API path; no longer a source blocker.",
-    "rank_semantics": "Common published Overall weighted panel is the cross-position Coach scale; positional ranks are diagnostic/internal only on the live decision surface. Compact expert rows show Overall only."
-  },
-  "process_controls": {
-    "status_semantics": "REPORT_ONLY_NO_TOOL_WORK",
-    "auto_semantics": "EXECUTE_CONTINUOUSLY; no promise/status chatter; checkpoint every material change",
-    "no_trial_error": "No cache/app-data clear or reinstall. No blanket expert refresh after today's baseline. Use Experten-Delta prüfen only. No model/runtime retune absent critical defect.",
-    "chat_handoff": "20260831T1455Z-v215: rc4.158 accepted/frozen; 9/9 expert baseline complete; clean pre-waiver handoff; final execution-only handoff required ~19:45.",
-    "source_of_truth": "PITTI_CURRENT_STATE.json + PITTI_EXECUTION_LOCK.json + PITTI_PROJECT_STATE.md EOF + PASS seal + actual repo/runtime evidence.",
-    "guardrail_note": "rc4115 gate now scoped to rc4.115 only; rc4117 has dedicated release-critical contract; rc4114 gate made semantic so preserving Overall provenance does not falsely fail positional aggregation."
-  },
-  "decision_evidence": {
-    "latest_backup": "draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json",
-    "latest_backup_draft_id": "1399782216862588928",
-    "current_fixture_count": 29,
-    "own_pick_states": 15,
-    "paired_pick_states": 14,
-    "missing_exact_pair": {
-      "pick": 29,
-      "profile": "expertv5"
-    },
-    "exact_30_fixture_gate": false,
-    "model_top_same": "11/14 paired states",
-    "model_top_differences": [
+  "source_authority": "v11.8.0-rc4.167 source candidate; current Sleeper league state is season authority; frozen draft evidence is retrospective authority",
+  "auto_execution_state": {
+    "schema": "pitti.auto-state.v1",
+    "protocol_version": "1.0.0",
+    "mode": "AUTO",
+    "status": "HANDOFF_READY",
+    "active": [],
+    "ready": [],
+    "waiting_external": [],
+    "blocked_user": [],
+    "completed_recent": [
       {
-        "pick": 32,
-        "v4": "Javonte Williams",
-        "v5": "Malik Nabers",
-        "chosen": "Malik Nabers"
+        "id": "auto-protocol-hardening",
+        "result": "Persistent AUTO queue/state-machine + no-output guard implemented and CI-verified: Project Guardrails PASS, release-contract-v2 PASS, candidate package PASS on head b3745e4c679beb8929f8485d89798bb9d2158007.",
+        "at": "2026-09-01T09:20:00Z"
       },
       {
-        "pick": 92,
-        "v4": "Dak Prescott",
-        "v5": "Trevor Lawrence",
-        "chosen": "Trevor Lawrence"
+        "id": "rc4160-ci-revalidate",
+        "result": "All three CI gates PASS on head 1abc5a1284eaa93136b5bcba8b9f9f33aa2e982c before Waiver v2 hardening.",
+        "at": "2026-09-01T09:24:00Z"
       },
       {
-        "pick": 129,
-        "v4": "De'Zhaun Stribling",
-        "v5": "Chris Rodriguez",
-        "chosen": "Chris Rodriguez"
+        "id": "waiver-v2-horizon-verify",
+        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
+        "at": "2026-09-01T09:45:00Z"
+      },
+      {
+        "id": "waiver-v2-regression-test",
+        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
+        "at": "2026-09-01T09:45:00Z"
+      },
+      {
+        "id": "trade-offer-engine",
+        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
+        "at": "2026-09-01T09:45:00Z"
+      },
+      {
+        "id": "weekly-lineup-model",
+        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
+        "at": "2026-09-01T09:45:00Z"
+      },
+      {
+        "id": "special-teams-season-panel",
+        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
+        "at": "2026-09-01T09:45:00Z"
+      },
+      {
+        "id": "season-increments-ci-finalize",
+        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
+        "at": "2026-09-01T09:45:00Z"
+      },
+      {
+        "id": "rc4160-zero-fa-ci",
+        "result": "PASS head af07a1a6f10e9d891253f82be80703958fc88acf: all three CI gates success. Device screenshot had confirmed live roster/IR, but exposed 0-ranked-FA false HOLD; fixed fail-closed.",
+        "at": "2026-09-01T09:56:00Z"
+      },
+      {
+        "id": "mevis-decision-research-final",
+        "result": "Evidence locked: Mevis W1 source dispersion preserved; Bigsby/Spears/Gainwell ordering based on role/ceiling only; acquisition-recency bias prohibited.",
+        "at": "2026-09-01T10:23:00Z"
+      },
+      {
+        "id": "mevis-drop-gate-ci",
+        "result": "PASS on head bb91fa76a248e55599331d4b9b3513bfaa2b5b55: Project Guardrails, candidate package and release contract all successful.",
+        "at": "2026-09-01T10:26:00Z"
+      },
+      {
+        "id": "mevis-waiver-ui-ci",
+        "result": "PASS on head bb91fa76a248e55599331d4b9b3513bfaa2b5b55: Project Guardrails, candidate package and release contract all successful.",
+        "at": "2026-09-01T10:26:00Z"
+      },
+      {
+        "id": "rc4160-device-roster-canary",
+        "result": "PARTIAL PASS from device screenshot: live Sleeper roster auto-synced to 16 players; Harrison Mevis present; Tank Bigsby absent; Charbonnet remains Reserve/IR. Therefore app independently detected the actual Mevis transaction/drop without user disclosure. Remaining failure: FA-vs-Roster still reports 0 ranked free agents, so FA-pool end-to-end is NOT accepted.",
+        "at": "2026-09-01T10:35:00Z"
+      },
+      {
+        "id": "fa-pool-bootstrap-ci",
+        "result": "PASS head 200250560c8218b8d64dafbbca9ea721597ce854: all three CI gates successful. Root cause was unguarded startup bootstrap zero-rank join; fixed fail-closed.",
+        "at": "2026-09-01T10:42:00Z"
+      },
+      {
+        "id": "rc4161-selftest-ci",
+        "result": "PASS head b307fda15a5c20d63940e1c746a876ed7c49b3ef: release contract, project guardrails and candidate package all success; executable season FA ownership regression included.",
+        "at": "2026-09-01T10:56:00Z"
+      },
+      {
+        "id": "rc4161-preview-deploy-repair",
+        "result": "PASS: gh-pages/season-preview synchronized to rc4.161 runtime assets; app/index/sw/manifest verified rc4.161 on gh-pages head 0fdefada9fa4b751b490f552d07e6d47e5fb068e. Prior device rc4.159 screenshot classified as stale preview delivery, not rc4.161 runtime failure.",
+        "at": "2026-09-01T11:55:00Z"
+      },
+      {
+        "id": "rc4161-preview-reseal-ci",
+        "result": "PASS on head 62f53c5028ecfbf06c70334b76fa06a9e7455ac8: Project Guardrails, Release Contract v2 and Candidate Package all successful after preview deployment repair/reseal.",
+        "at": "2026-09-01T12:00:00Z"
+      },
+      {
+        "id": "rc4161-device-acceptance",
+        "result": "PASS from physical Android screenshot: rc4.161 visibly loaded; Waiver/FA surface no longer emits false zero-ranked-FA HOLD. It renders Waiver/FA Priority v1 and a skill-position HOLD based on the loaded baseline, satisfying the specific regression gate.",
+        "at": "2026-09-01T11:55:00Z"
+      },
+      {
+        "id": "rc4162-waiver-market",
+        "result": "Implemented fresh pre-Week-1 waiver market signal from Nick Mariano/RotoBaller with explicit source, rank, 10-team applicability, expiry 2026-09-08 and bounded scoring bonus. Signal can unlock WATCH/CLEAR ADD only while fresh and only for live Sleeper free agents.",
+        "at": "2026-09-01T12:10:00Z"
+      },
+      {
+        "id": "rc4163-trade-identity-fix",
+        "result": "Found and fixed live Trade Board identity bug: Sleeper roster_id had been compared to historical draft slot 9. Live own-roster exclusion now uses canonical season.my_roster.roster_id; draft-slot comparison remains fallback only.",
+        "at": "2026-09-01T12:12:00Z"
+      },
+      {
+        "id": "rc4163-ci-deploy",
+        "result": "PASS: release contract, candidate package and project guardrails all green on bdb006b618d9ae74c7ddedcfd894f42cdc47833e; rc4.163 season-preview deployed.",
+        "at": "2026-09-01T12:18:00Z"
+      },
+      {
+        "id": "rc4163-device-version",
+        "result": "PASS: physical Android visibly loaded v11.8.0-rc4.163 and Waiver/FA Priority v2 surface.",
+        "at": "2026-09-01T12:05:00Z"
+      },
+      {
+        "id": "rc4163-live-season-surface",
+        "result": "FAIL: Waiver/FA still emits generic skill-position HOLD and Trade says 'Noch kein abgeschlossener Draft geladen.' while top status says Sleeper Draft 'Wartet auf Draft'. This is a season-state bootstrap/hydration defect, not a trade identity acceptance.",
+        "at": "2026-09-01T12:05:00Z"
+      },
+      {
+        "id": "rc4164-root-cause-fix",
+        "result": "Root cause identified and fixed: bootstrapSeasonWorkspace rendered Waiver/Trade before assigning lastDraftContext, so those surfaces necessarily saw no season context even after successful Sleeper hydration. rc4.164 assigns canonical context first. All three CI gates PASS and preview deployed.",
+        "at": "2026-09-01T12:12:00Z"
+      },
+      {
+        "id": "rc4165-browser-equivalent-gate",
+        "result": "PASS: strengthened executable cold-start contract now requires lastDraftContext before roster FA, Trade, Waiver, Action Board and final updateStatus rerender; silent incomplete-draft return prohibited. All three release gates PASS.",
+        "at": "2026-09-01T12:24:00Z"
+      },
+      {
+        "id": "rc4165-deploy",
+        "result": "PASS: rc4.165 runtime assets deployed to season-preview after green autonomous gate.",
+        "at": "2026-09-01T12:25:00Z"
+      },
+      {
+        "id": "rc4165-autonomous-startup-gate",
+        "result": "PASS: complete startup contract now requires canonical lastDraftContext before roster FA/trade/waiver/action/status rerender; all three CI gates green at 10ed99243dc8d4b158a44dc7aa8fefdcfd801e06. Preview files already byte-identical/deployed.",
+        "at": "2026-09-01T12:28:00Z"
+      },
+      {
+        "id": "rc4165-device-failure-root-cause",
+        "result": "Physical Android rc4.165 failed: Waiver/Trade remained static no-draft placeholders. Re-audit found season bootstrap still coupled draft+picks to the large NFL players endpoint via fetchDraft Promise.all; a mobile timeout aborts all season hydration while catch only exposed failure on roster. rc4.166 separates small completion proof from 15s player load and propagates causal fail-closed state to season surfaces.",
+        "at": "2026-09-01T12:31:00Z"
+      },
+      {
+        "id": "rc4166-autonomous",
+        "result": "PASS: staged draft/picks-before-player-pool bootstrap, explicit failure propagation to Waiver+Trade, dedicated regression wired, all three gates green, preview deployed.",
+        "at": "2026-09-01T12:43:00Z"
+      },
+      {
+        "id": "rc4166-autonomous-validation",
+        "result": "PASS: season bootstrap now loads small canonical draft+picks first, verifies completion, then loads large player directory separately; failure is visible on Waiver and Trade. All three gates green and preview deployed.",
+        "at": "2026-09-01T12:56:00Z"
       }
     ],
-    "return_brier_top10": {
-      "expertv4": 0.09055565742380897,
-      "expertv5": 0.09052057670206158
+    "stop_evaluation": {
+      "allowed": true,
+      "code": "PROJECT_MILESTONE_REACHED",
+      "reason": "Explicit HANDOFF requested; v218 deeply audited. New chat reconstructs preview-parity work from currentWork and actual evidence.",
+      "evaluated_at": "2026-09-01T16:24:00Z"
     },
-    "return_brier_top1": {
-      "expertv4": 0.12218575498575499,
-      "expertv5": 0.1936275403608737
-    },
-    "sparse_top10": {
-      "expertv4": 11,
-      "expertv5": 8
-    },
-    "generic_only_top10": {
-      "expertv4": 34,
-      "expertv5": 28
-    },
-    "mcLaurin_canary": "v4 and v5 both 4/6 coverage; missing Justin Boone + Sean Koerner",
-    "swift_canary": "pick52 top1 in both profiles but researchEvidence empty and researchResidual inactive; visible text therefore generic-only",
-    "audit_tool": "tools/audit-v45-backup.mjs merged on main; CI self-test PASS",
-    "verdict": "Incomplete 29/30 file cannot be used as full promotion evidence. Partial paired evidence does not justify changing v4 PRIMARY / v5 CHALLENGER."
+    "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
-  "currentWork": {
-    "branch": "main",
-    "status": "RC4.158_DRAFT_READY_FROZEN",
-    "production": true,
-    "androidVerified": true,
-    "runtime": "main/gh-pages rc4.158 13/13 parity; Android rc4.158 accepted; expert baseline 9/9",
-    "nextGate": "post-19:00 waiver delta then ~19:40 expert delta and final freeze"
-  },
-  "status": "RC4.158_DRAFT_READY_FROZEN",
-  "gate": "DRAFT_DAY_TIME_DEPENDENT_FINALIZATION",
-  "nextGate": "post-19:00 waiver claims/destinations; final expert delta ~19:40-19:45; freeze ~19:50",
-  "evidenceRetention": {
-    "activeDraftAtomic": true,
-    "historyMayTrim": true,
-    "zeroHistoryRetryActuallyEmpty": true,
-    "rankedPoolRobustShadowNotPersisted": true,
-    "rankCacheRecoveryMayDeleteDecisionFixtures": false,
-    "silentActivePersistFailureForbidden": true,
-    "expectedFullDraftPairs": 15,
-    "expectedFullDraftFixtures": 30,
-    "latestBackupExactCurrentPairs": 2,
-    "latestBackupCurrentPairPicks": [
-      9,
-      12
-    ],
-    "latestBackupHistoricalFixtures": 22
-  },
-  "critical_handoff": {
+  "handoff": {
+    "generation": "20260901T1058Z-v217",
+    "transaction_in_progress": false,
     "status": "PASS",
-    "generation": "20260831T1455Z-v215",
-    "gate": "DRAFT_DAY_TIME_DEPENDENT_FINALIZATION",
-    "reason": "rc4.158 is accepted/frozen; only time-dependent pre-draft evidence remains.",
-    "requirements": [
-      "Material-news-only monitoring before 19:00 CEST.",
-      "Post-19:00 waiver claim/destination reconciliation for affected players only.",
-      "One Experten-Delta prüfen around 19:40-19:45 and inspect result.",
-      "Final material injury/legal/transaction scan.",
-      "Create FINAL PRE-DRAFT HANDOFF, then operational freeze around 19:50."
-    ]
-  },
-  "pending_after_release": [
-    {
-      "priority": "HIGH",
-      "task": "Reliable tier attribution in app",
-      "detail": "Current embedded row.tier/assignTiers geometry is not sufficient as a trusted external tier signal. Before draft, evaluate and implement a clearly sourced reliable tier layer; do not present synthetic gap tiers as expert tiers."
-    },
-    {
-      "priority": "HIGH",
-      "task": "WR comparison requested",
-      "detail": "Compare Emeka Egbuka, Zay Flowers, Tetairoa McMillan and likely Jaylen Waddle (user accidentally named Egbuka twice) after release work; then rank pure upside separately. Preserve panel baseline and use current injury/role context."
-    }
-  ],
-  "latestBackupAudit": {
-    "file": "draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json",
-    "libraryFileId": "file_00000000859c820a815d8dfe0209151b",
-    "appVersion": "v11.8.0-rc4.150",
-    "createdAt": "2026-08-31T09:21:02.895Z",
-    "draftId": "1399843896455929856",
-    "experts": 165,
-    "panels": 21,
-    "sleeperAdp": 1332,
-    "decisionFixtures": 17,
-    "rc4150Fixtures": 10,
-    "returnForecastsResolved": 674,
-    "returnMeanBrier": 0.0907,
-    "conclusion": "No generic Return-v2 retune and no hard WR/RB quota justified. Preserve current model for draft day; use backup as latest calibration baseline.",
-    "report": "research/BACKUP_AUDIT_2026-08-31T09-21-02-891Z.md"
-  },
-  "liveDraftControls": {
-    "managerModeUi": "all nine opponents visible simultaneously; ?/AUTO/MANUELL each",
-    "applySemantics": "single button persists changed mode segments at fresh current pick and immediately recalculates Coach",
-    "expertSelector": "v3/v4/v5 remains visible below manager grid",
-    "speed": "LIVE Return-v2 300 runs; balanced shadow skipped; evidence retained"
+    "second_pass_pass": true
   }
 }
