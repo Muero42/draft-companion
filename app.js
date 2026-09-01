@@ -2535,26 +2535,36 @@ function rosterBenchCapitalScore(x){
   if(x.p?.pos==='RB')score-=1.25; // preserve contingent RB upside unless a clearly better path appears
   return score;
 }
+const WEEK1_HALF_PPR_RB26=new Map([
+  ['Bucky Irving',37],['J.K. Dobbins',53],['Jadarian Price',70],['Rico Dowdle',57],['Jacory Croskey-Merritt',84],['Blake Corum',88]
+]);
+const WEEK1_HALF_PPR_WR26=new Map([
+  ['George Pickens',28],['Justin Jefferson',30],['Christian Watson',49],['Rome Odunze',55],['Chris Godwin',66],['Chris Godwin Jr.',66],['Josh Downs',69],['Courtland Sutton',77],['Deebo Samuel',87],['Deebo Samuel Sr.',87]
+]);
+const WEEK1_HALF_PPR_TE26=new Map([['Isaiah Likely',86]]);
+function week1ExternalRank(p){
+  const m=p?.pos==='RB'?WEEK1_HALF_PPR_RB26:p?.pos==='WR'?WEEK1_HALF_PPR_WR26:p?.pos==='TE'?WEEK1_HALF_PPR_TE26:null;
+  return m?.get(p?.name)||null;
+}
 function renderRosterBenchAudit(rows,players,current,draftComplete){
   if(!els.rosterBenchStatus||!els.rosterBenchList)return;
   if(!draftComplete){els.rosterBenchStatus.className='notice';els.rosterBenchStatus.textContent='Aufstellungsanalyse wird nach Draftabschluss aktiv.';els.rosterBenchList.innerHTML='';return;}
   const season=lastDraftContext?.season,starters=new Set((season?.my_roster?.starters||[]).map(String).filter(x=>x&&x!=='0'));
-  const active=rows.filter(x=>x.seasonStatus!=='RESERVE'),bench=active.filter(x=>!starters.has(String(x.p.id)));
-  const starterRows=active.filter(x=>starters.has(String(x.p.id)));
-  const flexPos=new Set(['RB','WR','TE']);
-  const moves=[];
+  const active=rows.filter(x=>x.seasonStatus!=='RESERVE'),bench=active.filter(x=>!starters.has(String(x.p.id))),starterRows=active.filter(x=>starters.has(String(x.p.id)));
+  const flexPos=new Set(['RB','WR','TE']),moves=[];
   for(const b of bench){
-    if(!b.r||!Number.isFinite(b.r.rank))continue;
-    const candidates=starterRows.filter(s=>s.r&&Number.isFinite(s.r.rank)&&(s.p.pos===b.p.pos||(flexPos.has(s.p.pos)&&flexPos.has(b.p.pos))));
+    const bw=week1ExternalRank(b.p); if(!bw)continue;
+    const candidates=starterRows.filter(s=>{const sw=week1ExternalRank(s.p);return sw&&(s.p.pos===b.p.pos||(flexPos.has(s.p.pos)&&flexPos.has(b.p.pos)));});
     for(const s of candidates){
-      const edge=s.r.rank-b.r.rank;
-      if(edge>=4)moves.push({b,s,edge});
+      const sw=week1ExternalRank(s.p),weekEdge=sw-bw;
+      const rosEdge=(s.r&&b.r&&Number.isFinite(s.r.rank)&&Number.isFinite(b.r.rank))?s.r.rank-b.r.rank:0;
+      if(weekEdge>=4)moves.push({b,s,weekEdge,rosEdge,bw,sw});
     }
   }
-  moves.sort((x,y)=>y.edge-x.edge);
+  moves.sort((x,y)=>y.weekEdge-x.weekEdge||y.rosEdge-x.rosEdge);
   els.rosterBenchStatus.className='notice ok';
-  els.rosterBenchStatus.textContent='Aktuelle Aufstellung · Start/Sit-Review. Hier nur interne Roster-Moves; Adds/Drops gehören in Waiver / FA.';
-  els.rosterBenchList.innerHTML=moves.length?'<div class="coach-section-title">MÖGLICHE START/SIT-ÄNDERUNGEN</div>'+moves.slice(0,6).map((m,i)=>'<div class="coach-row"><div><b>'+esc(m.b.p.name)+' statt '+esc(m.s.p.name)+'</b><div class="tiny">'+esc(m.b.p.pos)+' '+esc(m.b.p.team)+' → Start · '+esc(m.s.p.pos)+' '+esc(m.s.p.team)+' → Bench · Panel-Edge +'+m.edge.toFixed(1)+' · Matchup/Projection-Gate noch ausstehend</div></div><div><b>REVIEW</b></div></div>').join(''):'<div class="notice ok"><b>LINEUP HOLD</b> · Aus der aktuellen Baseline keine interne Start/Sit-Änderung mit ausreichendem Panel-Edge. Matchup-/Week-Projection-Layer folgt.</div>';
+  els.rosterBenchStatus.textContent='Week 1 Start/Sit v2 · externe Half-PPR-Wochenrankings sind Primärsignal; Draft/ROS-Panel nur Sekundärsignal. Injury-/Rollen-News bleiben Invalidation-Gate bis Kickoff.';
+  els.rosterBenchList.innerHTML=moves.length?'<div class="coach-section-title">WEEK-1-AUFSTELLUNG PRÜFEN</div>'+moves.slice(0,6).map((m,i)=>'<div class="coach-row"><div><b>'+esc(m.b.p.name)+' statt '+esc(m.s.p.name)+'</b><div class="tiny">'+esc(m.b.p.pos)+' '+esc(m.b.p.team)+' → Start · '+esc(m.s.p.pos)+' '+esc(m.s.p.team)+' → Bench · W1 Rank '+m.bw+' vs '+m.sw+' (Edge +'+m.weekEdge+') · ROS/Panel Δ '+(m.rosEdge>=0?'+':'')+m.rosEdge.toFixed(1)+' · News-Recheck vor Lock</div></div><div><b>REVIEW</b></div></div>').join(''):'<div class="notice ok"><b>LINEUP HOLD</b> · Kein interner Wechsel mit ≥4 Plätzen Vorteil im aktuell verifizierten Week-1-Half-PPR-Layer. Vor Kickoff erneut Rollen/Health prüfen.</div>';
 }
 
 
