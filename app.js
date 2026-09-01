@@ -77,7 +77,7 @@ function seasonAvailablePlayers(season,players){
     for(const pid of roster?.reserve||[])owned.add(String(pid));
     for(const pid of roster?.taxi||[])owned.add(String(pid));
   }
-  return Object.entries(players||{}).filter(([pid,p])=>!owned.has(String(pid))&&['QB','RB','WR','TE'].includes(p.position)&&p.active!==false&&p.full_name).map(([pid])=>sleeperPlayerRow(pid,players)).map(p=>({p,r:rankFor(p.name,p.pos)})).filter(x=>x.r&&panelSelectable(x.r.panelId)).sort((a,b)=>a.r.rank-b.r.rank||(a.p.searchRank||9999)-(b.p.searchRank||9999)).map(x=>x.p);
+  return Object.entries(players||{}).filter(([pid,p])=>!owned.has(String(pid))&&['QB','RB','WR','TE'].includes(p.position)&&p.active!==false&&p.full_name).map(([pid])=>sleeperPlayerRow(pid,players)).map(p=>({p,r:rankFor(p.name,p.pos)})).filter(x=>x.r).sort((a,b)=>(Number.isFinite(a.r.rank)?a.r.rank:9999)-(Number.isFinite(b.r.rank)?b.r.rank:9999)||(a.p.searchRank||9999)-(b.p.searchRank||9999)).map(x=>x.p);
 }
 
 function activeDraftSurface(){return localStorage.getItem('v118_draftSurface')==='live'?'live':'mock'}
