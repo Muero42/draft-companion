@@ -2576,7 +2576,8 @@ function renderRosterFaAudit(rows,rankedAvailable,draftComplete){
   const counts=postDraftRosterCounts(rows);
   const liveSeason=rows.some(x=>x?.seasonStatus);
   const drops=rows.filter(x=>liveSeason?(!x.r||Number(x.r?.rank)>90):((Number(x.pk?.pick_no)||999)>80&&(!x.r||Number(x.r?.rank)>90))).map(x=>({...x,capitalScore:liveSeason?seasonRosterCapitalScore(x):rosterBenchCapitalScore(x)})).sort((a,b)=>b.capitalScore-a.capitalScore).slice(0,7);
-  const fas=rankedAvailable.slice(0,45).map(p=>({p,r:rankFor(p.name,p.pos),a:adpFor(p.name)})).filter(x=>x.r);
+  const hasQB=counts.QB>=1;
+  const fas=rankedAvailable.slice(0,80).map(p=>({p,r:rankFor(p.name,p.pos),a:adpFor(p.name)})).filter(x=>x.r&&!(hasQB&&x.p.pos==='QB')).slice(0,45);
   const pairs=[];
   for(const fa of fas){let best=null;for(const drop of drops){const z=postDraftSwapScore(drop,fa,counts);if(!best||z.score>best.score)best=z;}if(best)pairs.push(best);}
   pairs.sort((a,b)=>b.score-a.score||a.fa.r.rank-b.fa.r.rank);
