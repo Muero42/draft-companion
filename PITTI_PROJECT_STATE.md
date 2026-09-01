@@ -138,3 +138,6 @@ Canonical continuation trigger: **PITTI AUTO**
 - Gainwell: TB official depth chart RB2 behind Bucky Irving; recent preseason usage had Irving first before Gainwell entered. Tampa's current roster discussion still supports a defined complementary role.
 - Mevis: FP W1 projection 8.4 (K2 projection, Aug-31 update), Draft Sharks Sep-1 W1 K9, RotoBaller W1 K10/Tier 3. This supports a strong hold/early-add candidate but NOT a cross-source elite-K1 consensus.
 - Current roster-option conclusion for an intentional Mevis add: Bigsby is the preferred drop; Spears is second; Gainwell third. This is based on standalone role + contingent ceiling, not acquisition recency or sunk cost.
+
+- Evidence lock: never justify retaining/dropping Bigsby because he was “just added.” Acquisition recency is explicitly non-causal. Re-rank on current role, standalone weekly path, contingent ceiling, roster construction and market replacement only.
+- Cross-source Mevis W1 dispersion is itself decision evidence: FP projection K2/8.4, Draft Sharks K9 (Sep-1), RotoBaller K10/Tier 3. Treat him as a strong candidate with unusually attractive environment/talent, not as a proven consensus weekly K1.
