@@ -1,14 +1,12 @@
 # NEW CHAT HANDOFF — PITTI SEASON COMPANION
-Handoff generation: `20260901T2024Z-v220`
-
-- Main source candidate: **v11.8.0-rc4.169** at `ca75081e4361092e42eb75d5568a21dfe69cca33`.
-- Installed Android/PWA: **v11.8.0-rc4.168**.
-- rc4.169 fixes the proven workspace leak caused by author CSS overriding the HTML hidden state.
-- Draft-only Mock/LIVE/status controls remain exclusively in Draft-Archiv.
-- Season workspaces now expose ranking age + manual refresh; stale rankings auto-refresh after 12h, with 2h retry throttle on failures. Cached verified rankings remain active on refresh failure.
-- Season renderer lanes are isolated: Trade failure cannot blank Waiver/Kader; FA failure blocks only dependent Waiver/Action lanes. Failures include the exact surface/stage.
-- PR #90 full gates PASS; main runtime package/release PASS. Main metadata reseal v220 is the remaining CI bookkeeping step before preview parity.
-- Transaction canary preserved: Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR.
-- Watcher v0.2.3 D1 fix preserved.
-- AUTO rules: continuous. Never send status/progress/acknowledgement messages while executable AUTO work remains. No empty response, no micro-commit deployment storm.
-- Next gate: **RC4169_PREVIEW_PARITY_THEN_DEVICE_REFRESH**.
+Handoff generation: `20260901T2038Z-v221`
+- rc4.170 merged main source candidate at `862e3e92a9b72ec4f2aa5ac923bdd2bd56659a44`.
+- Installed app observed by user: rc4.169.
+- rc4.169 defect: Kader remained indefinitely at loading; refresh gave no useful result.
+- Root cause: Season roster path still depended on watcher fetch without timeout; on cold origin mapping also called fetchSeasonLeagueState({}) without retaining draft metadata for slot mapping.
+- rc4.170 direct Sleeper solution: fetch draft identity with 6s timeout, league rosters with 7s timeout, resolve slot->roster via cached user / slot_to_roster_id / draft_order, build ownership locally.
+- Visible Kader aktualisieren button reports busy/error/success.
+- Ranking controls/12h auto-refresh and rc4.169 workspace isolation remain preserved.
+- Transaction canary: Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR.
+- AUTO rules unchanged; no interim chatter, empty response, or deployment micro-storm.
+- Next gate: RC4170_PREVIEW_THEN_DEVICE_REFRESH.

@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-01T18:24:00Z",
+  "updatedAt": "2026-09-01T18:38:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -11,22 +11,22 @@
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.169",
+    "appVersion": "v11.8.0-rc4.170",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.168 installed on user device",
+    "latestAndroidObserved": "v11.8.0-rc4.169 installed on user device",
     "latestPreinstallVerified": "rc4.169 Candidate Package + Release Contract PASS on main ca75081e4361092e42eb75d5568a21dfe69cca33",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.169 package/re-extract candidate",
     "preinstallSha256": "sha256:c3f1b5fca3ea51c6f16e5c4c5337c97e7e828614b2fc234ac9c522f99e066620",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
-    "latestDeployedCandidate": "v11.8.0-rc4.169 Cloudflare main",
-    "latestAndroidVerified": "v11.8.0-rc4.168 version canary only; functional defects remained",
-    "androidAuthority": "v11.8.0-rc4.168",
-    "android_authority": "v11.8.0-rc4.168",
+    "latestDeployedCandidate": "v11.8.0-rc4.170 Cloudflare main",
+    "latestAndroidVerified": "v11.8.0-rc4.169 version observed; roster remained stuck loading",
+    "androidAuthority": "v11.8.0-rc4.169",
+    "android_authority": "v11.8.0-rc4.169",
     "deployedPagesAppByteParityWithMain": false,
     "preinstallReferenceRun": 33543153583,
     "preinstallReferenceArtifactId": 9814388343,
@@ -61,12 +61,12 @@
       "androidObserved": true,
       "androidAccepted": false
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.168",
+    "acceptedAndroidAuthority": "v11.8.0-rc4.169",
     "unreleasedMainDelta": "none: rc4.168 merged main; gh-pages/season-preview parity pending",
-    "deployedPagesVersion": "v11.8.0-rc4.169 Cloudflare main; gh-pages/season-preview rc4.168 pending sync",
+    "deployedPagesVersion": "rc4.170 main; season-preview rc4.169 pending",
     "mainGhPagesParity": false,
     "androidVerified": false,
-    "androidAcceptance": "rc4.169 device acceptance pending"
+    "androidAcceptance": "rc4.170 pending device refresh"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -255,12 +255,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4169_MAIN_PACKAGE_RELEASE_PASS_PREVIEW_PARITY_PENDING",
-    "nextGate": "RC4169_PREVIEW_PARITY_THEN_DEVICE_REFRESH"
+    "status": "RC4170_MAIN_MERGED_PREVIEW_PENDING",
+    "nextGate": "RC4170_PREVIEW_THEN_DEVICE_REFRESH"
   },
-  "status": "POST_DRAFT_SEASON_COMPANION_RC4169_CANDIDATE",
-  "gate": "RC4169_PREVIEW_PARITY_THEN_DEVICE_REFRESH",
-  "nextGate": "Sync rc4.169 to gh-pages/season-preview once, verify parity, then one Android/PWA refresh.",
+  "status": "POST_DRAFT_SEASON_COMPANION_RC4170_CANDIDATE",
+  "gate": "RC4170_PREVIEW_THEN_DEVICE_REFRESH",
+  "nextGate": "Sync rc4.170 preview once, verify parity, then one Android/PWA refresh.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -269,7 +269,7 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260901T2024Z-v220",
+    "generation": "20260901T2038Z-v221",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -293,7 +293,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260901T2024Z-v220",
+  "handoff_generation": "20260901T2038Z-v221",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },

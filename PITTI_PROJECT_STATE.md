@@ -358,3 +358,11 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Season bootstrap now isolates render lanes. A Trade renderer exception fails closed only Trades; a FA-vs-Roster failure blocks only its dependent Waiver/Action surfaces. Hydration failures remain global fail-closed. Exact stage/surface appears in diagnostics.
 - The executable Season runtime regression now covers the hidden CSS contract, Season ranking control/auto policy, Trade crash reproduction, and per-surface isolation.
 - PR #90 full candidate gates PASS and merged to main as `ca75081e4361092e42eb75d5568a21dfe69cca33`. Main package and release contract PASS; v220 reseals machine-readable authority before preview sync.
+
+
+## 2026-09-01 — rc4.170 roster loading hang correction
+- User confirmed rc4.169 installed but Kader remained indefinitely on “Live-Kader wird geladen…” and refresh produced no useful action.
+- Exact architecture defect: `fetchSeasonLeagueState({})` still used the Cloudflare watcher `/league-state` fetch without an Abort timeout; Cloudflare trouble could therefore leave the whole Season bootstrap pending forever. On a cold origin, the function also discarded the draft metadata after discovering league_id, leaving no slot mapping if no cached userId existed.
+- rc4.170 removes watcher transport from roster authority. It retrieves draft identity directly from Sleeper with 6s timeout and league rosters directly from Sleeper with 7s timeout, resolves user roster by cached userId -> slot_to_roster_id -> draft_order, and builds ownership locally.
+- Added explicit `Kader aktualisieren` control with busy/success/error feedback and a bootstrap concurrency gate. Watcher remains evidence-only, so D1 quota cannot hang live roster hydration.
+- Candidate PR #91 gates PASS after updating legacy transport regressions; merged main as `862e3e92a9b72ec4f2aa5ac923bdd2bd56659a44`. Main runtime/Cloudflare deployment passed; v221 reseals metadata before one preview sync/device refresh.
