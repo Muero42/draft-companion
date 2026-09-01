@@ -16,19 +16,19 @@
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.181",
     "ci": {
-      "candidate_package": "PASS run 33558208020",
-      "release_contract_v2": "PASS run 33558208047",
-      "project_guardrails": "PASS run 33558208112",
-      "draft_critical_rc482": "PASS run 33558208041",
-      "draft_critical_rc483": "PASS run 33558208032",
-      "validated_code_head": "959a5b8abb5792c944623bb230402c7718119bf0",
-      "scope": "rc4.179 post-render persistent execution marker; all strict gates PASS"
+      "candidate_package": "PASS run 33566941054",
+      "release_contract_v2": "PASS run 33566940993",
+      "project_guardrails": "PASS run 33566941008",
+      "draft_critical_rc482": "PASS run 33566941092",
+      "draft_critical_rc483": "PASS run 33566941043",
+      "validated_code_head": "5934748b3564ea07f458e9bd61e3e8dfd0a60a48",
+      "scope": "rc4.181 root-cause fix: Season startup no longer dereferences removed Draft DOM; strengthened interaction E2E gate PASS"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "v11.8.0-rc4.177 strict gates PASS; physical Android promotion/diagnostic canary required",
+    "preview_candidate": "v11.8.0-rc4.181 root-cause candidate; all automated gates PASS; deployment parity next",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
-    "latest_package_sha256": "sha256:dc98e19c8b9689ac42c4088985b6e82bfbc2198656e659b6e458fa75000ee0c1",
-    "package_reference_run": 33558208020,
+    "latest_package_sha256": "sha256:a518f85aaa4994bd7ad39d174ae9915d1abf2950947462e2e9b01b901b341a32",
+    "package_reference_run": 33566941054,
     "deployed_pages_app_byte_parity_with_main": true,
     "deployed_pages_head": "main 242ea4b982c5226d6958f6704d5c823d6c89aa9c · Cloudflare Pages deploy PASS",
     "installed_android": "v11.8.0-rc4.176",
@@ -85,8 +85,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4181_ROOT_CAUSE_FIX_VALIDATING",
-    "nextGate": "RC4181_STRICT_VALIDATION"
+    "status": "RC4181_AUTOMATED_E2E_PASS",
+    "nextGate": "DEPLOY_PARITY_RC4181"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -105,8 +105,8 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "rc4181-root-cause-validation",
-        "reason": "Root cause found: Season-first index removed legacy Draft DOM nodes while renderAll/setAuto still dereferenced them during startup, aborting before bootstrapSeasonWorkspace."
+        "id": "rc4181-deploy-parity",
+        "reason": "Root-cause candidate passed all automated gates; verify actual deployed Pages bytes before any device action."
       }
     ],
     "ready": [],
@@ -342,7 +342,7 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Autonomous rc4.181 validation remains."
+      "reason": "Deployment parity remains autonomous."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
