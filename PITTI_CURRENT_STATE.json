@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T1058Z-v217",
-  "updated_at": "2026-09-01T10:58:00Z",
+  "updated_at": "2026-09-01T11:00:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -19,7 +19,7 @@
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
       "project_guardrails": "PASS",
-      "head": "b307fda15a5c20d63940e1c746a876ed7c49b3ef"
+      "head": "78838542e3c686493396eaa95333e727fc944f65"
     },
     "android_accepted": "v11.8.0-rc4.158",
     "preview_candidate": "v11.8.0-rc4.161"
@@ -54,7 +54,7 @@
     ]
   },
   "currentWork": {
-    "status": "RC4.161_CI_GREEN_READY_FOR_DEVICE_ACCEPTANCE",
+    "status": "HANDOFF_V217_SEALED_RC4161_ACCEPTANCE_ONLY",
     "nextGate": "DEVICE_RC4161_ACCEPTANCE"
   },
   "invariants": {
@@ -163,7 +163,7 @@
       "allowed": true,
       "code": "USER_ACTION_REQUIRED",
       "reason": "rc4.161 is code/CI complete; only physical Android runtime acceptance cannot be simulated.",
-      "evaluated_at": "2026-09-01T10:58:00Z"
+      "evaluated_at": "2026-09-01T11:00:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
