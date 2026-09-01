@@ -1,0 +1,17 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+const a=fs.readFileSync('app.js','utf8'),h=fs.readFileSync('index.html','utf8');
+assert(a.includes("const APP_VERSION='v11.8.0-rc4.172'"));
+for(const id of ['seasonRefreshLiveBtn','seasonLiveStateStatus','seasonRefreshRanksBtn','seasonRankingStatus'])assert(h.includes('id="'+id+'"'),'missing '+id);
+const live=a.slice(a.indexOf('async function bootstrapSeasonWorkspace('),a.indexOf('\nasync function fetchDraftFresh'));
+assert(live.includes("disabled=true;els.seasonRefreshLiveBtn.textContent='Kader lädt …'"),'Kader busy state not immediate');
+assert(live.includes('finally{')&&live.includes("disabled=false;els.seasonRefreshLiveBtn.textContent='Kader aktualisieren'"),'Kader recovery missing');
+const rank=a.slice(a.indexOf('async function refreshSeasonRankings('),a.indexOf('\nrehydrateDerivedExpertPanelsOnStartup();'));
+assert(rank.includes("disabled=true;els.seasonRefreshRanksBtn.textContent='Aktualisiere …'"),'Ranking busy state not immediate');
+assert(rank.includes('finally{')&&rank.includes("disabled=false;els.seasonRefreshRanksBtn.textContent='Rankings aktualisieren'"),'Ranking recovery missing');
+const wire=a.slice(a.indexOf('rehydrateDerivedExpertPanelsOnStartup();'));
+assert(wire.includes("onclick=async()=>{els.seasonRefreshLiveBtn.dataset.clickObserved"),'Kader observable handler missing');
+assert(wire.includes("onclick=async()=>{els.seasonRefreshRanksBtn.dataset.clickObserved"),'Ranking observable handler missing');
+assert(wire.includes("textContent='Kader-Aktualisierung gestartet …'")&&wire.includes("textContent='Ranking-Aktualisierung gestartet …'"),'click feedback missing');
+for(const t of ["'Season-Identität',6000","'Sleeper Kader',7000","'Season Spieler',15000"])assert(a.includes(t),'timeout missing '+t);
+assert(a.includes("e?.name==='AbortError'")&&a.includes('clearTimeout(timer)'),'abort cleanup missing');
+console.log('SEASON_INTERACTION_E2E_GATE_PASS rc4.172');
