@@ -122,6 +122,10 @@ must(app.includes('Week-1 Start/Sit v3'),'Start/Sit v3 surface missing');
 must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
 must(app.includes('Weekly Consensus Rank ist primär'),'weekly rank primary invariant missing');
 must(app.includes('Special Teams v2'),'Special Teams v2 quality-floor surface missing');
+must(app.includes('SEASON_FA_POOL_ZERO_INVALID'),'zero live season FA pool must fail closed');
+must(app.includes('FA-POOL NICHT VALIDIERT'),'invalid season FA pool must be visible');
+must(app.includes('kein FA/HOLD-Urteil aus Draft-Verfügbarkeit'),'post-draft FA must never fall back to draft availability');
+
 must(app.includes('filter(x=>x.rb&&x.rb.tier<=4)'),'D/ST quality floor must filter tier 5/6 before ranking');
 
 
