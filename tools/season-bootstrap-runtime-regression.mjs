@@ -4,7 +4,7 @@ const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
 const html=fs.readFileSync(new URL('../index.html',import.meta.url),'utf8');
 const css=fs.readFileSync(new URL('../styles.css',import.meta.url),'utf8');
 function between(a,b){const i=app.indexOf(a),j=app.indexOf(b,i+1);assert.ok(i>=0&&j>i,'missing runtime function anchor '+a);return app.slice(i,j)}
-const version=Number((app.match(/const APP_VERSION='v11\.8\.0-rc4\.(\d+)'/)||[])[1]);assert.ok(version>=170,'requires rc4.170+');
+const version=Number((app.match(/const APP_VERSION='v11\\.8\\.0-rc4\\.(\\d+)'/)||[])[1]);assert.ok(version>=171,'requires rc4.171+');
 const seasonState=between('async function fetchSeasonLeagueState','function seasonRosterRows');
 assert.ok(seasonState.includes("S+'/league/'+encodeURIComponent(leagueId)+'/rosters"),'season roster authority must be direct Sleeper');
 assert.ok(!seasonState.includes('WATCHER_BASE_URL'),'roster bootstrap must not depend on watcher');
@@ -19,3 +19,13 @@ for(const token of ["runSeasonSurface('Aufstellung'","const faLane=runSeasonSurf
 assert.ok(boot.includes('Season Auto-Sync FAIL-CLOSED'),'fail-closed lost');
 assert.ok(app.includes('SEASON_RANKING_AUTO_MS=12*60*60*1000')&&app.includes('refreshSeasonRankings({force:true})'),'ranking refresh policy lost');
 console.log('SEASON_BOOTSTRAP_RUNTIME_REGRESSION_PASS rc4.'+version);
+
+const startupTail=app.slice(app.lastIndexOf('rehydrateDerivedExpertPanelsOnStartup();'));
+const bootAt=startupTail.indexOf('await bootstrapSeasonWorkspace()');
+const rankAt=startupTail.indexOf('void refreshSeasonRankings({auto:true})');
+const watcherAt=startupTail.indexOf('void syncWatcherFeed()');
+assert.ok(bootAt>=0&&rankAt>bootAt&&watcherAt>bootAt,'roster bootstrap must have first network priority before ranking/watcher background work');
+assert.ok(app.includes("Kader-Aktualisierung läuft bereits …"),'busy roster tap feedback missing');
+assert.ok(app.includes("Ranking-Aktualisierung läuft bereits …"),'busy ranking tap feedback missing');
+assert.ok(app.includes("1/3 Sleeper-Liga und Kader")&&app.includes("2/3 Sleeper-Spielerverzeichnis")&&app.includes("3/3 Kader und Saisonflächen"),'roster stage feedback missing');
+console.log('SEASON_STARTUP_PRIORITY_REGRESSION_PASS');
