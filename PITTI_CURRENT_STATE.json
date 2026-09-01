@@ -1,16 +1,17 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T03:40:00Z",
+  "updated_at": "2026-09-01T08:25:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "season-companion-rc4.159",
-    "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline"
+    "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
+    "source_candidate": "v11.8.0-rc4.160"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.158",
-    "season_candidate": "v11.8.0-rc4.159",
+    "season_candidate": "v11.8.0-rc4.160",
     "candidate_branch": "season-companion-rc4.159",
     "android_acceptance_pending": true
   },
@@ -44,8 +45,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4.159_SEASON_SYNC_CANDIDATE",
-    "nextGate": "STATIC_REGRESSION_THEN_DEVICE_END_TO_END_CANARY"
+    "status": "RC4.160_SEASON_COMPANION_PREVIEW_DEPLOYED",
+    "nextGate": "CI_GREEN_THEN_DEVICE_END_TO_END_CANARY"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
