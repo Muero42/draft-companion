@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260901T0340Z-v216",
-  "updated_at": "2026-09-01T10:21:00Z",
+  "updated_at": "2026-09-01T10:23:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -73,14 +73,7 @@
     "mode": "AUTO",
     "status": "AUTO_RUNNING",
     "active": [],
-    "ready": [
-      {
-        "id": "mevis-decision-research-final",
-        "lane": "research",
-        "task": "Lock evidence conclusion: Mevis cross-source W1 range and Bigsby/Spears/Gainwell role ordering; prevent future recency/sunk-cost rationale.",
-        "priority": 70
-      }
-    ],
+    "ready": [],
     "waiting_external": [
       {
         "id": "mevis-drop-gate-ci",
@@ -155,13 +148,18 @@
         "id": "rc4160-zero-fa-ci",
         "result": "PASS head af07a1a6f10e9d891253f82be80703958fc88acf: all three CI gates success. Device screenshot had confirmed live roster/IR, but exposed 0-ranked-FA false HOLD; fixed fail-closed.",
         "at": "2026-09-01T09:56:00Z"
+      },
+      {
+        "id": "mevis-decision-research-final",
+        "result": "Evidence locked: Mevis W1 source dispersion preserved; Bigsby/Spears/Gainwell ordering based on role/ceiling only; acquisition-recency bias prohibited.",
+        "at": "2026-09-01T10:23:00Z"
       }
     ],
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "CI queued; independent evidence-lock lane READY.",
-      "evaluated_at": "2026-09-01T10:21:00Z"
+      "reason": "Mevis code/UI guard still waiting on CI.",
+      "evaluated_at": "2026-09-01T10:23:00Z"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   }
