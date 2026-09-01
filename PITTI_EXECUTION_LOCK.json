@@ -6,7 +6,7 @@
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Repo v217 is current authority. New chat must verify CURRENT + PASS SEAL + EXECUTION_LOCK + PROJECT_STATE EOF + CURRENT HANDOFF + bootstrap/matrix. Any v215/v216 draft-day pointer is historical only and must not override v217.",
+    "failClosedRecovery": "Repo v217 is current authority. New chat must verify CURRENT + PASS SEAL + EXECUTION_LOCK + PROJECT_STATE EOF + CURRENT HANDOFF + bootstrap/matrix. Any v215/v216 draft-day pointer is historical only and must not override v217. Persistent Library mirror may remain stale; never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
   },
