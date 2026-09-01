@@ -16,6 +16,12 @@ new Function(app.replace(/^import[^\n]*\n/,''));
 // Parse decision policy after removing ESM export keywords.
 new Function(policy.replace(/\bexport\s+/g,''));
 
+// Static parsing is insufficient for module startup: catch temporal-dead-zone regressions
+// where Season helpers reference a lexical dependency declared only much later in the module.
+const seasonHelperAt=app.indexOf('async function fetchSeasonLeagueState');
+const sleeperConstAt=app.indexOf("const S='https://api.sleeper.app/v1'");
+assert(sleeperConstAt>=0&&seasonHelperAt>=0&&sleeperConstAt<seasonHelperAt,'Sleeper base URL must initialize before Season helpers (TDZ startup risk)');
+
 // Browser-visible controls required before any refresh can work.
 for(const id of ['refreshAllBtn','qualityStatus','apiKey','season','scoring','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','strategyMode']){
   assert(new RegExp('id=["\\\']'+id+'["\\\']').test(html),'required DOM id missing: '+id);
