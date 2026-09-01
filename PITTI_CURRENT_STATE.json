@@ -334,10 +334,9 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "All autonomous rc4.176 takeover/Season E2E gates are PASS. Remaining acceptance requires one final physical functional canary on the already-installed rc4.176; no update/reinstall/refresh is requested.",
-      "evaluated_at": "2026-09-01T20:23:00Z"
+      "allowed": false,
+      "code": null,
+      "reason": "Executable rc4.177 validation work remains."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
