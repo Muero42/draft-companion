@@ -1,19 +1,19 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260901T1058Z-v217",
-  "created_at": "2026-09-01T12:01:00Z",
+  "created_at": "2026-09-01T12:22:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "5a2fcd62a831f9a2680741dc08449e35dfcc9a8f",
+    "PITTI_CURRENT_STATE.json": "8eff703888cd697c34d5971649fc193c33bb224d",
     "NEW_CHAT_HANDOFF_CURRENT.md": "5a929961ddd59a0fb32f1ef940feca1ccae19493",
-    "PITTI_COMMAND_CONTRACTS.json": "1680882d7bfecba8b5550b31aeb977192bfce740",
+    "PITTI_COMMAND_CONTRACTS.json": "5eade9080566dd0f60b0cb2756dac2f05a08d0aa",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "b8fa65351432fb428ae9194b50ee3dbd01d70882",
     "HANDOFF_COMPLETENESS_MATRIX.md": "2d27f413e9d56f475ae45940726df0c38eb3669b",
-    "PITTI_EXECUTION_LOCK.json": "ac6310f42d4fa8c95a015fabedd34a9070a2625e",
-    "PITTI_PROJECT_STATE.md": "7ce432dbc29b985a42ed7e8a1eef40ce29e7a92a",
+    "PITTI_EXECUTION_LOCK.json": "f5a62e89038bf4c54007b673555999e8edd9f9f7",
+    "PITTI_PROJECT_STATE.md": "5e0bc7f49c35e2b8107abdff696e5ccaf8b4a67c",
     "PITTI_AUTO_PREFLIGHT.md": "db5b19a99010e59501b6b57818b56495a9f6c41f",
     "app.js": "b994fb692fb40edac2a75098f53f680b5b39d3c1",
     "live-surface-v3.js": "ecbf92859390cd28b1d6b625d856801f5ad1a149"
@@ -50,7 +50,10 @@
     "waiting_gate_blocks_only_dependent_lane": true,
     "rc4160_retest_forbidden": true,
     "preview_rc4161_deployment_parity_verified": true,
-    "preview_reseal_ci_three_gates_pass": true
+    "preview_reseal_ci_three_gates_pass": true,
+    "rc4161_device_acceptance": true,
+    "rc4163_three_gates_pass": true,
+    "rc4163_preview_deployed": true
   },
   "exact_gate": "DEVICE_RC4161_ACCEPTANCE",
   "next_sequence": [
@@ -59,5 +62,5 @@
     "if coherent, one physical Android rc4.161 acceptance",
     "after acceptance continue Season Companion development from live Sleeper state"
   ],
-  "note": "v217 resealed after rc4.161 preview deployment repair and three-gate CI PASS; exact gate remains DEVICE_RC4161_ACCEPTANCE."
+  "note": "v217 resealed after rc4.161 Android acceptance and rc4.163 season-actionability deployment; exact gate DEVICE_RC4163_SEASON_SURFACES."
 }
