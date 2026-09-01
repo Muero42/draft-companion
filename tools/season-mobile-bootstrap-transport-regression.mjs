@@ -1,5 +1,5 @@
 import fs from 'node:fs';
-const src=fs.readFileSync('app.js','utf8');const a=src.indexOf('async function bootstrapSeasonWorkspace()'),z=src.indexOf('\nasync function fetchDraftFresh',a);if(a<0||z<0)throw new Error('bootstrap missing');const b=src.slice(a,z);
+const src=fs.readFileSync('app.js','utf8');const a=src.indexOf('async function bootstrapSeasonWorkspace('),z=src.indexOf('\nasync function fetchDraftFresh',a);if(a<0||z<0)throw new Error('bootstrap missing');const b=src.slice(a,z);
 const season=b.indexOf('const season=await fetchSeasonLeagueState({})');
 const players=b.indexOf("jf(\`\${S}/players/nfl?_=\${bust}\`,'Season Spieler',15000)");
 const draft=b.indexOf("'Draft-Archiv',6500");
@@ -10,4 +10,6 @@ if(!b.includes("catch(e){console.warn('PITTI optional draft archive unavailable'
 for(const token of ["console.error('PITTI season bootstrap failed'","if(els.waiverStatus)","if(els.tradeStatus)"])if(!b.includes(token))throw new Error('missing fail-visible contract '+token);
 console.log('season-first mobile bootstrap transport regression PASS');
 
-if(!src.includes("'Season-Identität',5000"))throw new Error('fresh-origin league identity recovery missing');
+if(!src.includes("'Season-Identität',6000"))throw new Error('fresh-origin league identity recovery missing');
+if(!src.includes("'Sleeper Kader',7000"))throw new Error('direct Sleeper roster timeout missing');
+if(src.slice(src.indexOf('async function fetchSeasonLeagueState'),src.indexOf('function seasonRosterRows')).includes('WATCHER_BASE_URL'))throw new Error('season roster transport still depends on watcher');
