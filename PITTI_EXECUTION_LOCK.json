@@ -256,7 +256,7 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4181_ROOT_CAUSE_FIX_VALIDATING",
+    "status": "RC4181_REMOVED_DRAFT_DOM_STARTUP_FIX_VALIDATING",
     "nextGate": "RC4181_STRICT_VALIDATION"
   },
   "status": "RC4177_AUTONOMOUS_VALIDATION",
