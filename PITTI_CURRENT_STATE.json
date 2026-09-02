@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260901T2210Z-v224",
-  "updated_at": "2026-09-01T20:09:00Z",
+  "handoff_generation": "20260902T0810Z-v225",
+  "updated_at": "2026-09-02T08:10:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -34,29 +34,76 @@
     "installed_android": "v11.8.0-rc4.182",
     "latest_android_observed": "v11.8.0-rc4.182",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
-    "last_device_failure": "rc4.182 physically observed on Android at 09:06 CEST. Workspace isolation is visibly improved (no Draft decision card in Kader), but Sleeper Live-State remains '-' and Kader remains 'Live-Kader wird geladen...'. Therefore rc4.182 is DEVICE_REJECTED for Season hydration and must never be described as merely awaiting physical acceptance.",
+    "last_device_failure": "rc4.182 remains physically installed/observed and rejected. User explicitly reports at 10:09 CEST on 2026-09-02 that both Live-Kader and experts still do not load. Earlier physical screenshot showed Sleeper Live-State '-' and Live-Kader stuck loading; Draft surface leak was absent. Treat Kader+Experten as unresolved startup/initialization symptoms, not separate accepted subsystems.",
     "latest_device_evidence": {
       "version": "v11.8.0-rc4.182",
-      "observed_at": "2026-09-02T07:06:00Z",
-      "evidence": "physical Android screenshot supplied in chat",
+      "observed_at": "2026-09-02T08:09:00Z",
+      "evidence": "physical Android rc4.182 previously screenshot-verified; user explicitly reconfirmed current functional state in chat",
       "pass": [
-        "rc4.182 visibly installed",
-        "Season Companion shell visible",
-        "Kader workspace selected",
-        "Draft decision surface no longer visible in captured Kader frame"
+        "rc4.182 installed",
+        "Season shell visible",
+        "Draft decision surface leak absent in captured Kader frame"
       ],
       "fail": [
-        "Sleeper Live-State remains static dash",
-        "Live-Kader remains loading",
-        "no hydrated roster rows visible"
+        "Sleeper Live-State remains unhydrated",
+        "Live-Kader does not load",
+        "Expert data/panels do not load"
       ],
       "acceptance": "FAIL",
-      "classification": "DEVICE_REJECTED_HYDRATION"
+      "classification": "DEVICE_REJECTED_STARTUP_HYDRATION_AND_EXPERT_INIT"
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.182",
     "source_candidate_status": "DEVICE_REJECTED",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
-    "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL."
+    "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
+    "pr98": {
+      "number": 98,
+      "branch": "pitti/rc4182-hydration-rootcause",
+      "status": "OPEN_NOT_MERGEABLE_BY_POLICY",
+      "mergeable_by_github": true,
+      "head": "de3eed64b4c750c53ad8413deb0c1d71acf85d48",
+      "hypothesis": "early app.js/module startup abort; localStorage cleanup exception path isolated, but latest branch is not validated",
+      "latest_ci": {
+        "candidate_package": {
+          "run": 33607037207,
+          "status": "FAIL",
+          "reason": "PITTI_GUARDRAIL_FAIL: AUTO stop code invalid; Season Companion CURRENT next gate regression"
+        },
+        "project_guardrails": {
+          "run": 33607037186,
+          "status": "FAIL",
+          "reason": "AUTO stop code invalid; Season Companion CURRENT next gate regression"
+        },
+        "release_contract_v2": {
+          "run": 33607037209,
+          "status": "FAIL",
+          "reason": "season-startup-resilience-regression: automatic Season startup sequence invalid; bootstrap runtime and interaction E2E passed before this failure"
+        }
+      },
+      "merge_policy": "DO_NOT_MERGE_OR_PROMOTE_UNTIL_LATEST_HEAD_ALL_STRICT_GATES_PASS_AND_REAL_SHAPE_STARTUP_HARNESS_COVERS_KADER_PLUS_EXPERT_INIT"
+    },
+    "expert_phase_transition": {
+      "priority": "DEFER_UNTIL_LOADING_FIXED",
+      "pre_week1": "retain draft/preseason evidence while introducing in-season track record gradually",
+      "noted_experts": [
+        "Jody Smith (Draft Sharks individual; desired draft-source candidate)",
+        "Justin Boone (strong in-season; planned trade-value anchor when current redraft chart exists)"
+      ],
+      "post_fix_order": [
+        "Kader hydration",
+        "Expert initialization/loading",
+        "FA/Waiver roster-relative evaluation",
+        "Trade evaluation incl. Boone",
+        "gradual Week1+ in-season accuracy weighting"
+      ]
+    },
+    "watcher_parallel": {
+      "main": "pitti-watcher v0.2.5",
+      "d1_status": "acute read/write amplification remediated; recent Cloudflare screenshots showed low current hourly usage",
+      "parked_branch": "pitti-auto/v0.2.6-fa-trade-foundation",
+      "parked_pr": 1,
+      "policy": "secondary lane only; do not let watcher/FA/trade foundation displace Companion startup fix priority"
+    }
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -88,8 +135,8 @@
     ]
   },
   "currentWork": {
-    "status": "PROCESS_ROOT_CAUSE_RECONCILED_RC4182_DEVICE_REJECTED",
-    "nextGate": "NO_NEW_VERSION_UNTIL_HYDRATION_ROOT_CAUSE_REPRODUCED_OFF_DEVICE"
+    "status": "HANDOFF_RC4182_DEVICE_REJECTED_PR98_LATEST_HEAD_FAILING",
+    "nextGate": "NEW_CHAT_RECONCILE_PR98_LATEST_HEAD_FIX_STRICT_GATES_THEN_REAL_SHAPE_STARTUP_KADER_PLUS_EXPERT_INIT"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -105,7 +152,7 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "PAUSED_BY_USER_FOR_PROCESS_ROOT_CAUSE",
+    "status": "HANDOFF_READY",
     "active": [],
     "ready": [],
     "waiting_external": [],
@@ -354,15 +401,17 @@
     ],
     "stop_evaluation": {
       "allowed": true,
-      "code": "USER_REQUESTED_PROCESS_DIAGNOSIS",
-      "reason": "User explicitly requested process/root-cause analysis before further app development."
+      "code": "PROJECT_MILESTONE_REACHED",
+      "reason": "Explicit PITTI HANDOFF requested; new chat must reconstruct executable work from currentWork plus actual PR/main evidence."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260901T2210Z-v224",
-    "transaction_in_progress": false,
-    "status": "PASS",
-    "second_pass_pass": true
+    "generation": "20260902T0810Z-v225",
+    "status": "PASS_PENDING_SEAL",
+    "ready": false,
+    "secondPass": false,
+    "resume": "rc4.182 is installed and DEVICE_REJECTED; latest PR #98 head fails all three strict CI workflows. Fix latest-head guardrail/startup-sequence failures and prove Kader+expert initialization off-device before any new device version.",
+    "transaction_in_progress": false
   }
 }
