@@ -7,6 +7,6 @@ Current truth: rc4.183 installed/observed and DEVICE_REJECTED for Kader FA-card 
 
 First gate: newest PR #102 exact head all strict gates green → merge → verify post-merge deployment → exactly one rc4.184 physical canary.
 
-AUTO/AUTO BLOCK: continuous same-turn execution; checkpoint/re-inventory after every package; no progress/status/ack, no empty replies, no promise-only “AUTO läuft weiter”. External wait does not globally stop independent work. STATUS = report-only.
+AUTO/AUTO BLOCK: continuous same-turn execution; AUTO queue takeover reconstructs/continues active and ready lanes from CURRENT after every chat switch; checkpoint/re-inventory after every package; no progress/status/ack, no empty replies, no promise-only “AUTO läuft weiter”. External wait does not globally stop independent work. STATUS = report-only.
 
 No device-side trial-and-error/cache clearing/reinstall loops. Do not regress to rc4.160 or rc4.171-176 device testing. Accepted rollback = rc4.169. Sleeper direct state is roster/ownership/slot authority; Watcher evidence-only.
