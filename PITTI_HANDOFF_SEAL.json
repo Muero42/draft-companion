@@ -6,33 +6,18 @@
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
-  "integrity": {
-    "HANDOFF_COMPLETENESS_MATRIX.md": "3d933ce8ba09bffcfcb63897328b8395fb1fdbc6",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "0e2ca55c6ed1589249f0d2c70a784e0a25828a15",
-    "PITTI_AUTO_PREFLIGHT.md": "07fe22bbd993ed9934915939692b0a8ee3c54188",
-    "PITTI_COMMAND_CONTRACTS.json": "c0d2e9aa02658aa9eb98410d676d6be1017a45f7",
-    "PITTI_CURRENT_STATE.json": "dfcca8933c5f747bbb017a09039792bc80b69046",
-    "PITTI_EXECUTION_LOCK.json": "85ccbb834ae675f64e5ec8df4d825e7c7f54e41b",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "52e053a069a66779d7ec82b7c5e25bc046350fda",
-    "PITTI_PROJECT_STATE.md": "0f4e2c5b20534e3f54e4d11e17cf04376be3435d",
-    "README.md": "3fa5495264053d1e80ed7693efbf340daa693391",
-    "app.js": "9e9ea16546dafae3763b68d00c50521fe741103e",
-    "index.html": "f58e6e30501876137bdbc0258ecffd6f7b88c540",
-    "live-surface-v3.js": "f2b718382d9d36ef38cfeb281e7348ba337c459e",
-    "manifest.webmanifest": "8f450a6b626dcf0e92a28720933f90b54f08cbac",
-    "sw.js": "92dee47c0f93ccfbdcff46eaeb85d63e0e6998c8",
-    "tools/pitti_guardrail_check.mjs": "1c86a275252d11ea6480acef9884cf26a588c0fd"
-  },
+  "integrity": {},
   "branch_locks": {
     "repo": "Muero42/draft-companion",
-    "branch": "pitti/rc4184-release",
+    "branch": "pitti/rc4184-postmerge-gate-repair",
     "source_candidate": "v11.8.0-rc4.184",
     "accepted_android_authority": "v11.8.0-rc4.169",
     "installed_android": "v11.8.0-rc4.183",
     "android_acceptance": "FAIL_DEVICE_REJECTED_WAIVER_SURFACE_AND_IR_DROP",
-    "exact_gate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY",
+    "exact_gate": "PR103_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_VERIFY",
     "pre_repair_head": "8b02812180dde8b15b48ac734fcb6b88159b8a93",
-    "content_head_before_seal": "8858fc798573fc34c053074115653f1a45bcf221"
+    "content_head_before_seal": "8858fc798573fc34c053074115653f1a45bcf221",
+    "pr103_exact_head": "6dbb4f9040476c95740eeb32b4396855078f73ee"
   },
   "checks": {
     "generation_alignment": true,
@@ -49,6 +34,6 @@
     "expert_phase_plan_preserved": true,
     "integrity_includes_runtime_and_guard": true
   },
-  "exact_gate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY",
-  "note": "v227 is the authoritative takeover handoff. rc4.183 is installed/observed and rejected only for Kader FA-card routing + IR ordinary-drop semantics. #100/#101 are merged. rc4.184 PR #102 remains open/unmerged; the exact head created by this reseal must be all-green before merge/deploy/device canary."
+  "exact_gate": "PR103_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_VERIFY",
+  "note": "PR #103 exact head 6dbb4f9 passed candidate package, project guardrails and release contract. Bootstrap AUTO queue takeover canary restored; runtime product code unchanged."
 }
