@@ -3856,7 +3856,8 @@ async function refreshSeasonRankings({force=false,auto=false}={}){
     renderSeasonRankingFreshness(els.seasonRankingStatus?.textContent||'');
   }
 }
-rehydrateDerivedExpertPanelsOnStartup();
+// Do not run derived-panel rehydration before the physical startup marker. The Season shell
+// must prove module execution first; expert-panel migration is secondary and fail-closed.
 
 // rc4.178: prove that the module reached this exact startup tail, independent of any earlier
 // renderer. Do not let freshness rendering overwrite the execution marker before the first
@@ -3864,6 +3865,7 @@ rehydrateDerivedExpertPanelsOnStartup();
 if(els.seasonLiveStateAge)els.seasonLiveStateAge.textContent='JS gestartet';
 if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice';els.seasonLiveStateStatus.textContent='Season-Modul gestartet · Live-Kader wird vorbereitet …';}
 if(els.rosterStatus)els.rosterStatus.textContent='Season-Modul gestartet · Live-Kader wird vorbereitet …';
+rehydrateDerivedExpertPanelsOnStartup();
 // Freshness is rendered after bootstrap settles; preserving this marker makes the physical canary diagnostic.
 setInterval(()=>{if(!document.hidden)void syncWatcherFeed()},15*60*1000);
 
