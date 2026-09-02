@@ -28,6 +28,7 @@ jobs:
           node tools/season-startup-resilience-regression.mjs
           node tools/season-realshape-startup-e2e.mjs
           node tools/season-expert-phase-policy-regression.mjs
+          node tools/season-lineup-waiver-routing-regression.mjs
           node tools/season-automatic-refresh-contract.mjs
           node tools/season-workspace-navigation-regression.mjs
           node tools/rc478-oos-policy.mjs
