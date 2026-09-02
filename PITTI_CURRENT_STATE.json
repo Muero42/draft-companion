@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260901T2210Z-v224",
-  "updated_at": "2026-09-01T20:09:00Z",
+  "handoff_generation": "20260902T1013CEST-hydration-v225",
+  "updated_at": "2026-09-02T08:13:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -58,7 +58,7 @@
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "hydration_root_cause": {
-      "status": "REPRODUCED_OFF_DEVICE",
+      "status": "FIX_HYPOTHESIS_REPRODUCED_PR98_NOT_VALIDATED",
       "mechanism": "A top-level removeLegacyRankingStorage() executes before the synchronous Season startup marker. If localStorage.removeItem throws in Android WebView, module evaluation aborts before any Season marker/network code. The rc4.182 screenshot remains exactly at index.html static placeholders, matching this pre-startup failure class and not a later network/bootstrap failure.",
       "fix_branch": "pitti/rc4182-hydration-rootcause",
       "regression": "tools/rc4182-hydration-rootcause.mjs",
@@ -68,7 +68,24 @@
         "Workspace control binding and stored workspace/draft-surface restoration are now fail-open before marker.",
         "Direct localStorage cleanup and restore paths before marker are individually guarded."
       ],
-      "scope": "shared pre-network module-start boundary affecting BOTH roster hydration and expert initialization"
+      "scope": "shared pre-network module-start boundary affecting BOTH roster hydration and expert initialization",
+      "note": "Storage-cleanup exception is a concrete pre-marker failure path and has a regression, but latest PR #98 CI disproves readiness: startup resilience ordering contract currently fails. Treat storage cleanup as a fix hypothesis/component, not the sole proven root cause."
+    },
+    "pr98": {
+      "number": 98,
+      "branch": "pitti/rc4182-hydration-rootcause",
+      "latest_head": "ee0e26f2babde33aad04ac42f59e9e761d62e165",
+      "mergeable": true,
+      "merged": false,
+      "latest_ci": "FAIL",
+      "failing_gate": "tools/season-startup-resilience-regression.mjs line 13: automatic Season startup sequence invalid",
+      "passing_observed": [
+        "week1 waiver market regression",
+        "live trade roster identity regression",
+        "SEASON_BOOTSTRAP_RUNTIME_REGRESSION_PASS rc4.182",
+        "SEASON_STARTUP_PRIORITY_REGRESSION_PASS"
+      ],
+      "rule": "Do not merge, version-bump, deploy, or device-test until this regression failure is diagnosed and strict gates pass on the exact PR head."
     }
   },
   "real_draft": {
@@ -101,8 +118,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4182_HYDRATION_FIX_PR98_REVALIDATING",
-    "nextGate": "RC4182_HYDRATION_FIX_STRICT_VALIDATION"
+    "status": "HANDOFF_RC4182_HYDRATION_FIX_PR98_CI_FAILED",
+    "nextGate": "DIAGNOSE_SEASON_STARTUP_RESILIENCE_REGRESSION_BEFORE_ANY_MERGE_OR_DEVICE_VERSION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -118,15 +135,15 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "WAITING_EXTERNAL",
+    "status": "HANDOFF",
     "active": [],
-    "ready": [],
-    "waiting_external": [
+    "ready": [
       {
-        "id": "pr98-revalidation",
-        "reason": "Updated startup gate now models roster-first automatic sequence; strict CI must pass before merge/version."
+        "id": "pr98-startup-resilience-diagnosis",
+        "reason": "Latest exact PR head fails automatic Season startup sequence regression; diagnose before further version work."
       }
     ],
+    "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
       {
@@ -372,13 +389,13 @@
     ],
     "stop_evaluation": {
       "allowed": true,
-      "code": "NO_EXECUTABLE_WORK_REMAINS",
-      "reason": "Only external PR CI remains on this dependent lane; no device action allowed."
+      "code": "HANDOFF_REQUESTED",
+      "reason": "User requested PITTI HANDOFF."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260901T2210Z-v224",
+    "generation": "20260902T1013CEST-hydration-v225",
     "transaction_in_progress": false,
     "status": "PASS",
     "second_pass_pass": true
