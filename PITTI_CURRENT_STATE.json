@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260902T1130Z-v227",
-  "updated_at": "2026-09-02T12:45:00Z",
+  "updated_at": "2026-09-02T13:08:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -16,10 +16,10 @@
     "android_acceptance_pending": false,
     "test_challenger": "v11.8.0-rc4.185",
     "ci": {
-      "candidate_package": "PR #108 prior head failed only on stale Trade Board v4 literal; repaired forward-compatible guard. Latest exact head requires fresh CI.",
+      "candidate_package": "PR #108 head 0a41ca11 failed only because live-trade identity regression required preserved explicit roster_id-vs-draft-slot invariant text; runtime behavior remained correct. Invariant restored on latest head; fresh exact-head CI required.",
       "release_contract_v2": "PR #108 prior post-repair heads passed runtime/static layers; latest exact head requires fresh CI.",
       "project_guardrails": "PR #108 prior post-repair head passed after v4/v5 guard repair; latest exact head requires fresh CI.",
-      "validated_code_head": "2fd2cc212ea4734fae9d604884b53c292e61fc0f",
+      "validated_code_head": "0a41ca11f579719bede99cb04454a606f64bb1d3",
       "scope": "PR #108 trade-slot + league-state/waiver-market candidate; final checkpoint/reseal head pending."
     },
     "android_accepted": "v11.8.0-rc4.169",
@@ -147,8 +147,8 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "PR108_LEAGUE_STATE_WAIVER_MARKET_TRADE_SLOT_VALIDATION",
-    "nextGate": "PR108_FINAL_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
+    "status": "PR108_IDENTITY_INVARIANT_RESTORED_EXACT_HEAD_REVALIDATION",
+    "nextGate": "PR108_LATEST_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
