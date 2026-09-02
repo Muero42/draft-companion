@@ -1,68 +1,47 @@
 # NEW CHAT HANDOFF — PITTI SEASON COMPANION
-Handoff generation: `20260902T0810Z-v225`
-Created: 2026-09-02 10:10 CEST
+Handoff generation: `20260902T1125Z-v226`
+Created: 2026-09-02
 
-## ACTUAL AUTHORITY — DO NOT RECONSTRUCT FROM OLDER CHAT MEMORY
-- Repository authority: `Muero42/draft-companion` main plus actual PR/CI evidence.
-- Android currently runs **v11.8.0-rc4.182**. This version is **DEVICE_REJECTED**, not a candidate awaiting acceptance.
-- User reconfirmed at 10:09 CEST: **Kader still does not load and experts still do not load**.
-- Earlier rc4.182 screenshot: Season shell/Kader workspace visible, Draft decision surface leak absent, but Sleeper Live-State stayed `-` and Live-Kader stayed loading.
-- Accepted rollback authority remains **rc4.169**. Do not call rc4.182 accepted merely because it is installed.
+## AUTHORITY
+Repository: `Muero42/draft-companion`. Always compare this handoff with actual main + current PR exact head/CI before mutation.
 
-## PR #98 — CURRENT BLOCKER
-- PR #98 `pitti/rc4182-hydration-rootcause` is OPEN and unmerged.
-- Latest head: `de3eed64b4c750c53ad8413deb0c1d71acf85d48`.
-- GitHub reports mergeable=true, but **project policy forbids merge/promotion because latest-head CI fails**.
-- Candidate Package run **33607037207 FAIL**: `AUTO stop code invalid` + `Season Companion CURRENT next gate regression`.
-- Project Guardrails run **33607037186 FAIL**: same guardrail failures.
-- Release Contract v2 run **33607037209 FAIL**: `season-startup-resilience-regression` → `automatic Season startup sequence invalid`. In that run, `SEASON_BOOTSTRAP_RUNTIME_REGRESSION_PASS rc4.182` and `SEASON_INTERACTION_E2E_GATE_PASS` occurred before the resilience failure.
-- Earlier PR #98 heads did pass, but that evidence is superseded by the failing latest head. Never cite old-head green CI as current validation.
+Physical Android: **rc4.183 installed/observed but DEVICE_REJECTED**. It crossed the old startup dead-state, but user screenshots proved two remaining defects: FA/Add-Drop cards under Kader and IR/Reserve Zach Charbonnet used as a normal drop target.
 
-## ROOT-CAUSE DISCIPLINE
-- Current leading failure class is **early app.js/module initialization**, before normal Season hydration; PR #98 isolates one concrete localStorage-cleanup exception path.
-- This hypothesis/fix is **not yet accepted**, because latest PR head is red and the physical app also fails expert loading.
-- Treat Kader + Experten as potentially common startup/initialization symptoms until proven otherwise.
-- Before another version: audit/reproduce every pre-startup top-level path needed to reach both Season bootstrap and expert initialization. Do not patch downstream UI blindly.
+## MERGED FIXES
+- PR #100 -> main `4ac2eec9...`: canonical Sleeper roster slots; FLEX RB/WR/TE; WRRB_FLEX RB/WR; REC_FLEX WR/TE; SUPER_FLEX QB/RB/WR/TE; two-TE lineups allowed when slot permits; canonical slot labels instead of occupant position; K/DST excluded from generic skill drop pool; K-only kicker replacement on Waiver/FA; no Sleeper projections/matchup grades; PITTI evidence parity for starters/alternatives.
+- PR #101 -> main `f5f7b393...`: Kader lineup-only; FA/Add-Drop decisions route to Waiver/FA; live ordinary drop candidates must be ACTIVE, so IR/Reserve is never an ordinary drop/capacity target.
 
-## EXACT NEXT ORDER
-1. Load this handoff + CURRENT + LOCK + COMMAND contracts; compare with actual main and PR #98 head/CI.
-2. Fix only the exact latest-head guardrail/startup-sequence failures.
-3. Run strict gates on the exact head.
-4. Run a real-shape/browser-equivalent startup harness proving:
-   - JS startup marker reached,
-   - Sleeper league/roster hydration reaches success or bounded visible fail-closed state,
-   - Kader rows render,
-   - expert initialization/load path executes and produces usable expert/panel state,
-   - no indefinite static placeholders,
-   - no Draft UI leakage into Season workspaces,
-   - removed/optional DOM cannot abort startup.
-5. Only after all automated PASS may one new device version be promoted for a final physical canary.
-6. After loading is fixed: **FA/Waiver first, then Trade**, then gradual Week-1+ in-season expert transition.
+## CURRENT RELEASE CANDIDATE — PR #102
+Branch: `pitti/rc4184-release`. **OPEN / UNMERGED.**
+rc4.184 version promotion initially failed because only app.js was bumped. app.js/index.html/sw.js/README were synchronized. Exact head `6f7a82d702eeb17aafc54b7cdc579e5529c45f80` then showed Project Guardrails PASS and all important runtime/Season semantic regressions PASS, but Candidate Package + Release Contract failed because `manifest.webmanifest` still contained rc4.183. Manifest has now been corrected to rc4.184, creating a newer exact head. The new chat MUST query the actual PR #102 head and its CI; never treat 6f7a82d or any older head as current-green evidence.
 
-## EXPERT PHASE PLAN — PRESERVE BUT DO NOT PRIORITIZE OVER STARTUP
-- Jody Smith is the individual Draft Sharks expert we had wanted for Draft-phase use; preserve as a pre-Week-1 candidate once loading works.
-- Justin Boone is a strong in-season source and his public redraft Trade Value Charts are planned as a major Trade input when the current 2026 redraft chart exists.
-- Pre-Week-1: do not abruptly discard draft/preseason evidence. Transition gradually toward in-season/ROS accuracy after real games begin.
-- No expert-weight redesign may hide or delay the current Kader/Experten loading defect.
+No merge, deploy, or device test until **all gates on the new exact head are green**.
 
-## WATCHER / D1 PARALLEL STATE
-- `Muero42/pitti-watcher` main = **v0.2.5**.
-- Acute D1 amplification is considered remediated; recent Cloudflare screenshots showed low current hourly reads/writes.
-- v0.2.6 FA/trade foundation is isolated on draft PR #1 / branch `pitti-auto/v0.2.6-fa-trade-foundation`; **not main, not production authority**.
-- Keep this as secondary work only until Companion startup is healthy.
+## DEVICE CANARY AFTER GREEN + MERGE/DEPLOY
+One physical rc4.184 test only. It must prove:
+1. Kader contains lineup/start-sit, not FA/Add-Drop cards.
+2. Actual Sleeper slot labels are shown; FLEX eligibility includes RB/WR/TE.
+3. IR/Reserve players are not ordinary drop targets.
+4. Add/Drop decisions appear under Waiver/FA.
+5. Kicker replacement is K-vs-K on Waiver/FA only.
+6. Starter vs alternative comparison uses PITTI panel/projection/matchup evidence, not Sleeper projections/matchup grades.
 
-## AUTO / AUTO BLOCK — EXACT BEHAVIOR
-- AUTO means continuous autonomous work in the same assistant turn while safe executable work exists.
-- After every package: checkpoint material changes, re-inventory all independent lanes, execute the next highest-value safe package.
-- **No progress/status/acknowledgement messages**, no empty messages, no “AUTO läuft weiter”, no promise-only terminal replies.
-- External CI/deploy: at most one immediate status poll. If still pending, checkpoint `waiting_external`, continue independent lanes, and end only if no safe independent work remains.
-- A blocked lane does not stop other independent lanes.
-- Device trial-and-error is forbidden. Device interaction is final confirmation only after automated E2E PASS.
-- Every user device screenshot/version report is a mandatory checkpoint event before further code/promotion.
-- `STATUS` is strictly report-only: no tools, no CI polls, no mutations, no AUTO continuation.
+## EXPERT / DST POLICY PRESERVED
+- Position-specific expert phase policy; gradual transition from preseason/draft evidence into Week-1/in-season evidence.
+- Justin Boone preserved as major in-season/Trade Value source; Jody Smith preserved where phase-appropriate.
+- DST: combine RotoBaller tier assessment with multi-week schedule planning (Polizzi-style). A DST for the over-next week may be stashed early only when a roster spot is genuinely expendable/opportunity cost acceptable and the projected matchup edge is material. Information advantage/current-news reaction remains the larger general lever.
+- FA/Waiver decisions precede Trade work in product priority.
+
+## AUTO / AUTO BLOCK — NON-NEGOTIABLE
+AUTO means continuous autonomous work while safe executable work exists.
+- No intermediate/progress/acknowledgement messages.
+- No empty messages.
+- Never say “AUTO läuft weiter” and then stop.
+- After each package: checkpoint material changes, re-inventory independent lanes, execute next highest-value safe package.
+- External CI/deploy: at most one immediate poll. If pending, mark only that lane waiting and continue independent work. End only when no safe independent work remains.
+- Device screenshots/version reports are immediately canonical evidence before further development/promotion.
+- No device-side trial-and-error/cache clearing/reinstall loops.
+- STATUS is report-only: no polling, mutations, or continuation.
 
 ## ANTI-REGRESSION
-- Do not resurrect rc4.171–176 device-debug loops, rc4.175 truncated runtime, stale handoff generations, stale installed-version fields, or old green CI from a superseded PR head.
-- Do not treat Draft as Season state authority. Current roster = live Sleeper; completed draft = immutable history.
-- No cache/app-data clearing, reinstall, or repeated refresh instructions before server/runtime proof.
-- Preserve current manager identities/team name/QB exclusions and all frozen draft evidence; these are historical, not the current Season blocker.
+Do not resurrect rc4.171-176 debug loops, rc4.175 truncation, old Mevis-for-skill-player logic, Kader FA cards, IR drop targets, occupant-position-as-slot labels, Sleeper projection/matchup scoring, or stale green CI from superseded heads. Draft is immutable history; live Sleeper is current roster/ownership/slot authority.
