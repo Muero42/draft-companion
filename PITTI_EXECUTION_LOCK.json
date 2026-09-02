@@ -8,7 +8,8 @@
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
     "failClosedRecovery": "Repo generation 20260901T2210Z-v224 is current handoff authority. rc4.176 is physically observed but NOT accepted. Captured Kader still shows Sleeper Live-State '-' and 'Live-Kader wird geladen...'. New chat must reconcile actual main/CI/deploy, run browser-equivalent Season E2E, and never downgrade to rc4.171-175 or infer success from version number. Library persistence rule: never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
-    "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror."
+    "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
+    "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision."
   },
   "runtime": {
     "appVersion": "v11.8.0-rc4.182",
@@ -16,7 +17,7 @@
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.176 installed/observed; functional acceptance pending",
+    "latestAndroidObserved": "v11.8.0-rc4.182 installed/observed; hydration rejected",
     "latestPreinstallVerified": "rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.182 package/re-extract PASS",
@@ -31,8 +32,8 @@
     "preinstallReferenceRun": 33597607588,
     "preinstallReferenceArtifactId": 9833935479,
     "preinstallHashSemantics": "GitHub candidate-package artifact digest; package/re-extract PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.176",
-    "latestAndroidFunctionalVerified": "rc4.169 accepted rollback authority. rc4.176: Season shell visually restored, but captured Live-State/Kader hydration is unresolved.",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.182",
+    "latestAndroidFunctionalVerified": "rc4.169 accepted rollback authority. rc4.182 physically observed but DEVICE_REJECTED: Live-State '-' and Kader stuck loading.",
     "testChallengerAndroidObserved": true,
     "testChallengerAndroidAccepted": false,
     "rc499": {
@@ -67,7 +68,7 @@
     "mainGhPagesParity": true,
     "androidVerified": false,
     "androidAcceptance": "rc4.176 automated Season E2E PASS; physical functional acceptance still pending.",
-    "devicePromotionPolicy": "SINGLE_FINAL_RC4182_ACCEPTANCE_ONLY_AFTER_AUTOMATED_PASS"
+    "devicePromotionPolicy": "NO_NEW_DEVICE_VERSION_UNTIL_CURRENT_RC4182_HYDRATION_FAILURE_IS_REPRODUCED_OFF_DEVICE_AND_FIXED_WITH_REAL-SHAPE_REGRESSION"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -256,11 +257,11 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4182_AUTOMATED_PASS",
-    "nextGate": "FINAL_PHYSICAL_RC4182_ACCEPTANCE"
+    "status": "RC4182_DEVICE_REJECTED",
+    "nextGate": "NO_NEW_VERSION_UNTIL_HYDRATION_ROOT_CAUSE_REPRODUCED_OFF_DEVICE"
   },
-  "status": "RC4182_AUTOMATED_PASS",
-  "gate": "FINAL_PHYSICAL_RC4182_ACCEPTANCE",
+  "status": "RC4182_DEVICE_REJECTED_PROCESS_RECONCILED",
+  "gate": "NO_NEW_VERSION_UNTIL_HYDRATION_ROOT_CAUSE_REPRODUCED_OFF_DEVICE",
   "nextGate": "New chat: reconcile actual main/CI/deploy against v224, then run browser-equivalent Season E2E for startup hydration, Kader/Waiver/Trades/Lineup navigation, automatic Sleeper sync, automatic ranking refresh, timeout/fail-closed paths, no Draft UI leakage, and no runtime truncation.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
