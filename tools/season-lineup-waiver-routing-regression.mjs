@@ -10,6 +10,9 @@ assert(a.includes("WEEK 1 · AKTUELLE STARTER · PITTI-WERTE"),'starter PITTI ev
 assert(a.includes("league_rosters=rosters.map"),'full live league roster state missing');
 assert(a.includes("waiver_budget_used"),'opponent FAAB-used input missing');
 assert(a.includes("faab_remaining"),'opponent remaining FAAB input missing');
+assert(a.includes("/transactions/"),'Sleeper transaction market fetch missing');
+assert(a.includes("current_season_bid_prior"),'current-season waiver bid prior missing');
+assert(a.includes("manager_history_prior"),'bounded manager-history waiver prior missing');
 assert(a.includes("function waiverOpponentMarket"),'opponent waiver market model missing');
 assert(a.includes("function renderQbOpportunityBoard"),'QB opportunity market surface missing');
 assert(a.includes("2-Slot-Kosten"),'QB plus future DST two-slot opportunity cost missing');
