@@ -20,7 +20,7 @@
     "latestPreinstallVerified": "rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.182 package/re-extract PASS",
-    "preinstallSha256": "sha256:55c5c92633c049d74ae8a5cd04277a6b4d9131982b14451babc48b476a9b4729",
+    "preinstallSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
     "latestDeployedCandidate": "v11.8.0-rc4.176 main deployed PASS",
@@ -28,8 +28,8 @@
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "deployedPagesAppByteParityWithMain": true,
-    "preinstallReferenceRun": 33597522287,
-    "preinstallReferenceArtifactId": 9833905186,
+    "preinstallReferenceRun": 33597607588,
+    "preinstallReferenceArtifactId": 9833935479,
     "preinstallHashSemantics": "GitHub candidate-package artifact digest; package/re-extract PASS.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.176",
     "latestAndroidFunctionalVerified": "rc4.169 accepted rollback authority. rc4.176: Season shell visually restored, but captured Live-State/Kader hydration is unresolved.",
@@ -67,7 +67,7 @@
     "mainGhPagesParity": true,
     "androidVerified": false,
     "androidAcceptance": "rc4.176 automated Season E2E PASS; physical functional acceptance still pending.",
-    "devicePromotionPolicy": "NO_UPDATE_REQUIRED_RC4176_ALREADY_INSTALLED; FINAL_FUNCTIONAL_CANARY_ONLY"
+    "devicePromotionPolicy": "SINGLE_FINAL_RC4182_ACCEPTANCE_ONLY_AFTER_AUTOMATED_PASS"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -256,11 +256,11 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4182_DRAFT_SURFACE_LEAK_FIX_VALIDATING",
-    "nextGate": "RC4182_STRICT_VALIDATION"
+    "status": "RC4182_AUTOMATED_PASS",
+    "nextGate": "FINAL_PHYSICAL_RC4182_ACCEPTANCE"
   },
-  "status": "RC4182_DRAFT_SURFACE_LEAK_FIX_VALIDATING",
-  "gate": "RC4182_STRICT_VALIDATION",
+  "status": "RC4182_AUTOMATED_PASS",
+  "gate": "FINAL_PHYSICAL_RC4182_ACCEPTANCE",
   "nextGate": "New chat: reconcile actual main/CI/deploy against v224, then run browser-equivalent Season E2E for startup hydration, Kader/Waiver/Trades/Lineup navigation, automatic Sleeper sync, automatic ranking refresh, timeout/fail-closed paths, no Draft UI leakage, and no runtime truncation.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",

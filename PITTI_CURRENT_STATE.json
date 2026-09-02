@@ -16,19 +16,19 @@
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.182",
     "ci": {
-      "candidate_package": "PASS run 33597522287",
-      "release_contract_v2": "PASS run 33597522295",
-      "project_guardrails": "PASS run 33590785682",
-      "draft_critical_rc482": "PASS run 33597522369",
-      "draft_critical_rc483": "PASS run 33597522470",
-      "validated_code_head": "97893502ee64ca7a97a67b514f89b37cda9087a3",
-      "scope": "rc4.182 Draft decision workspace isolation + CSS hidden-state hardening"
+      "candidate_package": "PASS run 33597607588",
+      "release_contract_v2": "PASS run 33597607639",
+      "project_guardrails": "PASS run 33597607658",
+      "draft_critical_rc482": "PASS run 33597607619",
+      "draft_critical_rc483": "PASS run 33597607578",
+      "validated_code_head": "e33ba5cf793d69f15de5ccea58f446a5ad127118",
+      "scope": "rc4.182 Season startup root-cause fix + Draft workspace leak isolation; full strict gates PASS"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "v11.8.0-rc4.181 root-cause fix all strict gates PASS; no repeated diagnostic canary",
+    "preview_candidate": "v11.8.0-rc4.182 strict automated validation PASS; physical Android acceptance deferred until useful single final check",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
-    "latest_package_sha256": "sha256:55c5c92633c049d74ae8a5cd04277a6b4d9131982b14451babc48b476a9b4729",
-    "package_reference_run": 33597522287,
+    "latest_package_sha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
+    "package_reference_run": 33597607588,
     "deployed_pages_app_byte_parity_with_main": true,
     "deployed_pages_head": "main 242ea4b982c5226d6958f6704d5c823d6c89aa9c · Cloudflare Pages deploy PASS",
     "installed_android": "v11.8.0-rc4.176",
@@ -85,8 +85,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4182_CORE_GATES_PASS_FINAL_GUARDRAIL",
-    "nextGate": "RC4182_STRICT_VALIDATION"
+    "status": "RC4182_AUTOMATED_PASS",
+    "nextGate": "FINAL_PHYSICAL_RC4182_ACCEPTANCE"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -102,18 +102,22 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "RUNNING",
-    "active": [
-      {
-        "id": "rc4182-project-guardrail",
-        "lane": "workspace isolation/release safety",
-        "reason": "Canonical checkpoint update triggers final project guardrail on rc4.182."
-      }
-    ],
+    "status": "USER_ACTION_REQUIRED",
+    "active": [],
     "ready": [],
     "waiting_external": [],
-    "blocked_user": [],
+    "blocked_user": [
+      {
+        "id": "final-physical-rc4182-acceptance",
+        "reason": "All autonomous rc4.182 gates PASS. Only a single physical Android acceptance remains; defer until user interaction is otherwise necessary."
+      }
+    ],
     "completed_recent": [
+      {
+        "id": "rc4182-full-validation",
+        "result": "PASS on e33ba5cf793d69f15de5ccea58f446a5ad127118: Project Guardrails, Candidate Package, Release Contract v2, rc4.82, rc4.83. Artifact sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75. Includes removed-Draft-DOM startup fix and hidden-state Draft surface isolation.",
+        "at": "2026-09-02T06:10:00Z"
+      },
       {
         "id": "rc4182-core-validation",
         "result": "PASS on 97893502ee64ca7a97a67b514f89b37cda9087a3: Candidate Package, Release Contract v2, rc4.82 and rc4.83; Draft decision renderer no longer overrides hidden state and CSS respects [hidden].",
@@ -351,9 +355,9 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "rc4.182 validation executable."
+      "allowed": true,
+      "code": "USER_ACTION_REQUIRED",
+      "reason": "All autonomous Companion lanes exhausted after rc4.182 full validation; physical Android acceptance is the only remaining dependent gate."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
