@@ -1,9 +1,13 @@
-# PITTI NEW CHAT BOOTSTRAP — v229
-Generation: `20260902T1325Z-v229`
+Generation: `20260902T1915Z-v230`
+AUTO queue takeover: load CURRENT active/ready lanes and continue them in the same turn.
+No device-side trial-and-error. Empty assistant response after tool work is forbidden. Never send status/progress/acknowledgement messages during AUTO while executable work exists.
+
+# PITTI NEW CHAT BOOTSTRAP — v230
+Generation: `20260902T1915Z-v230`
 
 Read: COMMAND → CURRENT → SEAL → LOCK → PREFLIGHT → PROJECT_STATE EOF → CURRENT HANDOFF → BOOTSTRAP → MATRIX → actual PR/CI evidence.
 
-Current truth: POST_DRAFT_SEASON_COMPANION. v229 final audit removed stale v227/PR102 current pointers from CURRENT/LOCK/PREFLIGHT. rc4.185 is merged source baseline. PR #108 on branch `pitti/trade-slot-geometry` is OPEN/UNMERGED and contains canonical trade-slot geometry, removal of blanket TE2 waiver penalty, full 10-team Sleeper league-state persistence (manager/roster/starter/reserve/taxi/FAAB), and opponent waiver-market inputs. Latest prior exact head 0a41ca11: release contract PASS, project guardrails PASS, candidate package FAIL only because existing live-trade regression requires the explicit invariant text “Sleeper roster_id is a league roster identifier, NOT the historical draft slot.” Runtime identity behavior remained correct. That invariant has now been restored; query latest exact head and CI, never reuse older results.
+Current truth: POST_DRAFT_SEASON_COMPANION. rc4.189 is merged on main at `88c007732f94df7b1624a6c05a0b16af4d33d94f`. Latest physical Android is rc4.188 with Waiver/FA + IR/drop semantic PASS. rc4.169 remains rollback authority. PR #108 is historical/merged, never an open current gate. Current gate is rc4.189 post-merge reseal exact-head all-green, deployment parity, then one rc4.189 device canary.
 
 Lawrence lane: no manual opponent-roster screenshots as architecture. After PR #108 is valid, use Sleeper all-team state for opponent QB need + remaining FAAB + bounded manager/current-season priors. Our acquisition cost must include Lawrence active-slot drop AND the later mandatory D/ST active drop; IR/Reserve never ordinary capacity. Same bye with Jayden Daniels is a negative, not an automatic veto. Draft-era no-QB2 is not an in-season hard ban.
 

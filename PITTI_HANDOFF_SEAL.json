@@ -1,40 +1,40 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260902T1325Z-v229",
-  "created_at": "2026-09-02T13:38:00Z",
+  "handoff_generation": "20260902T1915Z-v230",
+  "created_at": "2026-09-02T19:27:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "08730b1916dcd26c2dd4133997e015cb463ad120",
-    "PITTI_EXECUTION_LOCK.json": "c395b53888b9603686ccbb2dea93b70e53e87801",
-    "PITTI_COMMAND_CONTRACTS.json": "c2661c39418cf27c7cb601d6530acd82fca552fb",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "610795a46d8a7e481cd7004ad861977ce85271e7",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "f051e7c7cebb2fa292f74af91216006c4ca26a77",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "ce6d742e9499a5ca59a945e0960ab581f42d5515",
+    "PITTI_CURRENT_STATE.json": "e63b9847337b5631061844e1ab203f0ddf3c7aa0",
+    "PITTI_EXECUTION_LOCK.json": "ac991708562fd40e8322372541571cca44a547a4",
+    "PITTI_COMMAND_CONTRACTS.json": "32b66f181d1e52707d6fdf9f7cc1baccb0fd4031",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "d131a358ab38c551917b2ffdebf7f3d2a1046bb0",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "64adc4fb880551d3a121e93dd53716c7170202e6",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "3ce690f9624a6df41d115983b17373114f81b5ec",
     "PITTI_AUTO_PREFLIGHT.md": "63ff09db73141ef98dc4d1152bfb5070dd8895cc",
-    "PITTI_PROJECT_STATE.md": "c3b87d0444ff501211840a54474e75e7df6e5a99",
-    "README.md": "57995c2a81cba653896887e6b8bd1495987b7fda",
-    "app.js": "690f409854590d302fc24c8532ccdfd7611394de",
+    "PITTI_PROJECT_STATE.md": "43b6cddb79c19ff06e74755b70e047360408d162",
+    "README.md": "918b631845d99902ac4ffc30cc51c74230894293",
+    "app.js": "7c386fc03de3e956801770215fa5f2b05226b021",
     "live-surface-v3.js": "f2b718382d9d36ef38cfeb281e7348ba337c459e",
-    "manifest.webmanifest": "aeff852699094c06f3811c0c0710572dcdd54ce2",
-    "index.html": "7efb5b7e8ea164ccbf58c25cdaacff8938ec8571",
-    "sw.js": "931703a43e484be8eda63b88747c0ea99a63e6c6",
-    "tools/pitti_guardrail_check.mjs": "656207220162c427be1f4fa5c48b9cdfa90a0bd3",
+    "manifest.webmanifest": "adf3a16945ba2a2cfc7c94a5db18d3bcba631810",
+    "index.html": "23296779c5d469b33dd8a9a4dfc17761bcd29bae",
+    "sw.js": "91c3da30d04b242418a33b3e12a4743033bcc8f9",
+    "tools/pitti_guardrail_check.mjs": "10b9914448ad72950d392f74ee40b3429ab5735d",
     "tools/live-trade-roster-identity-regression.mjs": "c6937f97d562a4d1bd5217e0344af9500d68ca2b",
     "config/season-expert-phase-policy.json": "78156903f4254c6eee836819dc6b8a737835d6c1",
     "season-parallel-contract-regression.mjs": "b0b158697d37c0d9bebeebf5bd132d4a6b355f07"
   },
   "branch_locks": {
     "repo": "Muero42/draft-companion",
-    "branch": "pitti/trade-slot-geometry",
+    "branch": "pitti/rc4189-postmerge-reseal",
     "source_baseline": "v11.8.0-rc4.189",
-    "pr108": "OPEN_UNMERGED",
-    "pr108_content_head_before_seal": "0ac1a1159c49d179f66ee659f5dfe7046e8b19bf",
+    "pr108": "HISTORICAL_MERGED",
+    "latest_main": "88c007732f94df7b1624a6c05a0b16af4d33d94f",
     "latest_physical_android": "v11.8.0-rc4.188 WAIVER_CANARY_PASS",
     "accepted_rollback": "v11.8.0-rc4.169",
-    "next_release": "v11.8.0-rc4.186_AFTER_PR108_ALL_GREEN"
+    "next_release": "v11.8.0-rc4.189_POSTMERGE_RESEAL_THEN_DEVICE_CANARY"
   },
   "checks": {
     "generation_alignment": true,
@@ -53,6 +53,6 @@
     "ir_not_capacity": true,
     "device_trial_and_error_forbidden": true
   },
-  "exact_gate": "PR108_NEWEST_SEALED_HEAD_ALL_STRICT_GATES_GREEN_BEFORE_MERGE",
-  "note": "v229 canonical handoff PASS after final guard audit. PASS certifies handoff consistency only; PR108 release readiness still requires newest sealed exact-head CI all green before merge."
+  "exact_gate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY",
+  "note": "v230 canonical post-merge rc4.189 reseal after guard syntax repair. PASS certifies handoff consistency; exact-head strict CI and deployment parity remain required before one physical rc4.189 canary."
 }
