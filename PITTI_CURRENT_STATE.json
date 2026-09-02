@@ -29,27 +29,24 @@
     "package_reference_run": 33655628112,
     "deployed_pages_app_byte_parity_with_main": false,
     "deployed_pages_head": "PR #113 preview deployed successfully before merge; main merge c4ccbd1959b986e0b810ac97c5ad0900d7fa441d. Physical rc4.188 verification pending.",
-    "installed_android": "v11.8.0-rc4.185",
-    "latest_android_observed": "v11.8.0-rc4.185",
+    "installed_android": "v11.8.0-rc4.188",
+    "latest_android_observed": "v11.8.0-rc4.188",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "rc4.183 is physically installed/observed and DEVICE_REJECTED: FA/Add-Drop cards rendered under Kader and IR/Reserve Zach Charbonnet was used as an ordinary drop target. The former startup/Kader loading dead-state was crossed.",
     "latest_device_evidence": {
-      "version": "v11.8.0-rc4.185",
-      "observed_at": "2026-09-02T14:00:00Z",
-      "evidence": "physical Android screenshot in Draft Companion project chat",
-      "pass": [
-        "rc4.185 visibly installed",
+      "version": "v11.8.0-rc4.188",
+      "evidence": "physical Android screenshot in current Draft Companion project chat at 2026-09-02 19:57 CEST",
+      "observed": [
+        "rc4.188 visibly installed",
         "Sleeper Live-State <1 Min.",
-        "live roster loaded: 16 players",
-        "Reserve/IR count 1",
-        "Kader starter/bench separation rendered",
-        "no FA/Add-Drop cards visible under Kader in captured frame"
+        "expert rankings 1 Std.",
+        "automatic expert refresh after 3 Std. visibly rendered",
+        "Live/News surface rendered"
       ],
-      "fail": [],
-      "acceptance": "PARTIAL_PASS_CURRENT_CAPTURE",
-      "classification": "DEVICE_RC4185_LIVE_ROSTER_AND_KADER_SURFACE_PASS"
+      "acceptance": "PARTIAL_PASS",
+      "classification": "DEVICE_RC4188_VERSION_LIVE_EXPERT_FRESHNESS_PASS_WAIVER_PENDING"
     },
-    "latestAndroidVersionObserved": "v11.8.0-rc4.185",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.188",
     "source_candidate_status": "MERGED_DEVICE_CANARY_PENDING",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
@@ -158,7 +155,7 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "v11.8.0-rc4.188 merged on main at c4ccbd1959b986e0b810ac97c5ad0900d7fa441d; latest physical Android evidence remains rc4.185 partial pass; rc4.188 canary required before transaction recommendations.",
+  "source_authority": "v11.8.0-rc4.188 merged on main at c4ccbd1959b986e0b810ac97c5ad0900d7fa441d; rc4.188 physically observed with live Sleeper and expert freshness healthy; Waiver/FA canary remains required before transaction recommendations.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
@@ -171,7 +168,7 @@
       {
         "id": "rc4188-device-canary",
         "lane": "device",
-        "goal": "Update/reload Android app to rc4.188 and capture Waiver/FA screen so full 10-team Sleeper ownership/FA pool can be physically verified before DST/Lawrence actions.",
+        "goal": "Open Waiver/FA on the already-observed rc4.188 Android app and capture the recommendation cards so ownership/drop semantics can be physically verified before DST/Lawrence actions.",
         "state": "user_action_required"
       }
     ],
@@ -196,6 +193,6 @@
   },
   "status": "RC4188_MERGED_DEVICE_CANARY_REQUIRED",
   "gate": "DEVICE_RC4188_LIVE_10_TEAM_WAIVER_CANARY",
-  "nextGate": "Physical Android rc4.188 Waiver/FA screenshot; no transaction before verification.",
+  "nextGate": "Open Waiver/FA on physically observed rc4.188 and capture one screenshot; no transaction before verification.",
   "handoffGeneration": "20260902T1640Z-v230"
 }
