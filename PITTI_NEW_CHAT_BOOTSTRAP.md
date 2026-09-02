@@ -3,7 +3,7 @@ Generation: `20260902T1640Z-v230`
 
 Read: COMMAND → CURRENT → SEAL → LOCK → PREFLIGHT → PROJECT_STATE EOF → CURRENT HANDOFF → BOOTSTRAP → MATRIX → actual main/runtime/device evidence.
 
-Current truth: POST_DRAFT_SEASON_COMPANION. rc4.188 is merged on main at `c4ccbd1959b986e0b810ac97c5ad0900d7fa441d`. Latest physical Android evidence is rc4.185 PARTIAL PASS; rc4.188 physical Waiver/FA canary is pending. Accepted rollback remains rc4.169.
+Current truth: POST_DRAFT_SEASON_COMPANION. rc4.188 is merged on main at `c4ccbd1959b986e0b810ac97c5ad0900d7fa441d`. Latest physical Android evidence is rc4.188 PARTIAL PASS: version, Sleeper Live-State freshness, expert freshness and 3h refresh policy observed; Waiver/FA canary is pending. Accepted rollback remains rc4.169.
 
 Never resurrect superseded current pointers: PR #108 OPEN, rc4.183 current device, rc4.187 current release, 12h expert refresh, JAX free, static trade depth caps, blanket TE2 penalty, draft-slot identity for live Sleeper rosters, or IR as ordinary drop capacity.
 
