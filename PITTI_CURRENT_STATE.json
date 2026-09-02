@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260902T1125Z-v226",
-  "updated_at": "2026-09-02T11:25:00Z",
+  "handoff_generation": "20260902T1130Z-v227",
+  "updated_at": "2026-09-02T11:30:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -11,55 +11,53 @@
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.184 PR #102 exact-head validation",
-    "candidate_branch": "main",
+    "season_candidate": "v11.8.0-rc4.184 PR #102 exact-head repair/revalidation",
+    "candidate_branch": "pitti/rc4184-release",
     "android_acceptance_pending": false,
     "test_challenger": "v11.8.0-rc4.184",
     "ci": {
-      "candidate_package": "PASS run 33597607588",
-      "release_contract_v2": "PASS run 33597607639",
-      "project_guardrails": "PASS run 33597607658",
-      "draft_critical_rc482": "PASS run 33597607619",
-      "draft_critical_rc483": "PASS run 33597607578",
-      "validated_code_head": "e33ba5cf793d69f15de5ccea58f446a5ad127118",
-      "scope": "rc4.182 Season startup root-cause fix + Draft workspace leak isolation; full strict gates PASS"
+      "candidate_package": "FAIL run 33624621685: behavioral contract stopped on stale guard/canonical metadata",
+      "release_contract_v2": "FAIL run 33624621673: runtime/Season regressions through waiver/IR routing PASS; guard then failed stale source/device/Library metadata",
+      "project_guardrails": "FAIL run 33624621552: execution-lock/anti-regression metadata inconsistencies",
+      "validated_code_head": "8b02812180dde8b15b48ac734fcb6b88159b8a93",
+      "scope": "PR #102 pre-v227 exact head; failures are handoff/guard metadata, not restoration of rejected Kader/IR behavior"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "v11.8.0-rc4.182 strict automated validation PASS; physical Android acceptance deferred until useful single final check",
+    "preview_candidate": "v11.8.0-rc4.184 PR #102 OPEN/UNMERGED; exact-head gates RED on stale handoff/guard metadata while runtime Season semantics passed; no deploy/device canary yet.",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "latest_package_sha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "package_reference_run": 33597607588,
-    "deployed_pages_app_byte_parity_with_main": true,
-    "deployed_pages_head": "main 242ea4b982c5226d6958f6704d5c823d6c89aa9c · Cloudflare Pages deploy PASS",
+    "deployed_pages_app_byte_parity_with_main": false,
+    "deployed_pages_head": "rc4.184 NOT DEPLOYED/NOT VERIFIED; deployment forbidden until PR #102 exact-head strict gates are green and merged.",
     "installed_android": "v11.8.0-rc4.183",
     "latest_android_observed": "v11.8.0-rc4.183",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
-    "last_device_failure": "rc4.182 remains physically installed/observed and rejected. User explicitly reports at 10:09 CEST on 2026-09-02 that both Live-Kader and experts still do not load. Earlier physical screenshot showed Sleeper Live-State '-' and Live-Kader stuck loading; Draft surface leak was absent. Treat Kader+Experten as unresolved startup/initialization symptoms, not separate accepted subsystems.",
+    "last_device_failure": "rc4.183 is physically installed/observed and DEVICE_REJECTED: FA/Add-Drop cards rendered under Kader and IR/Reserve Zach Charbonnet was used as an ordinary drop target. The former startup/Kader loading dead-state was crossed.",
     "latest_device_evidence": {
-      "version": "v11.8.0-rc4.182",
-      "observed_at": "2026-09-02T08:09:00Z",
-      "evidence": "physical Android rc4.182 previously screenshot-verified; user explicitly reconfirmed current functional state in chat",
+      "version": "v11.8.0-rc4.183",
+      "observed_at": "2026-09-02T10:52:00Z",
+      "evidence": "physical Android screenshot in prior chat; Season/Kader rendered and FA-vs-roster analysis executed",
       "pass": [
-        "rc4.182 installed",
-        "Season shell visible",
-        "Draft decision surface leak absent in captured Kader frame"
+        "rc4.183 installed",
+        "former startup dead-state crossed",
+        "Season/Kader UI renders",
+        "FA-vs-roster computation executes"
       ],
       "fail": [
-        "Sleeper Live-State remains unhydrated",
-        "Live-Kader does not load",
-        "Expert data/panels do not load"
+        "FA/Add-Drop cards rendered under Kader instead of Waiver/FA",
+        "Reserve/IR Zach Charbonnet selected as ordinary drop target"
       ],
       "acceptance": "FAIL",
-      "classification": "DEVICE_REJECTED_STARTUP_HYDRATION_AND_EXPERT_INIT"
+      "classification": "DEVICE_REJECTED_WAIVER_SURFACE_AND_IR_DROP_SEMANTICS"
     },
-    "latestAndroidVersionObserved": "v11.8.0-rc4.182",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.183",
     "source_candidate_status": "RELEASE_CANDIDATE_UNMERGED",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
       "number": 98,
       "branch": "pitti/rc4182-hydration-rootcause",
-      "status": "OPEN_NOT_MERGEABLE_BY_POLICY",
+      "status": "HISTORICAL_SUPERSEDED_BY_PR102",
       "mergeable_by_github": true,
       "head": "de3eed64b4c750c53ad8413deb0c1d71acf85d48",
       "hypothesis": "early app.js/module startup abort; localStorage cleanup exception path isolated, but latest branch is not validated",
@@ -80,7 +78,7 @@
           "reason": "season-startup-resilience-regression: automatic Season startup sequence invalid; bootstrap runtime and interaction E2E passed before this failure"
         }
       },
-      "merge_policy": "DO_NOT_MERGE_OR_PROMOTE_UNTIL_LATEST_HEAD_ALL_STRICT_GATES_PASS_AND_REAL_SHAPE_STARTUP_HARNESS_COVERS_KADER_PLUS_EXPERT_INIT"
+      "merge_policy": "HISTORICAL_ONLY_DO_NOT_USE_AS_CURRENT_GATE"
     },
     "expert_phase_transition": {
       "priority": "DEFER_UNTIL_LOADING_FIXED",
@@ -107,7 +105,7 @@
     "pr99": {
       "branch": "pitti/rc4182-hydration-integrated",
       "head": "626023d3ab5e70bdff7c11e1fb1cc22ff955c4b6",
-      "status": "OPEN_MERGEABLE_PENDING_EXACT_HEAD_CI",
+      "status": "HISTORICAL_SUPERSEDED_BY_PR100_PR101_PR102",
       "last_verified": {
         "release_contract": "PASS",
         "project_guardrails": "PASS",
@@ -129,7 +127,7 @@
     "observed": "Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR; transaction auto-detected without user disclosing drop."
   },
   "season_contract": {
-    "live_roster_and_ownership": "Sleeper league-state via pitti-watcher v0.2.3; /league-state is D1-independent",
+    "live_roster_and_ownership": "Sleeper direct draft/league/rosters APIs are current roster and ownership authority; Watcher is evidence-only and must not gate Kader hydration",
     "draft_roster": "historical only",
     "current_roster": "live Sleeper roster",
     "transaction_history": "preserve separately",
@@ -145,7 +143,7 @@
     ]
   },
   "currentWork": {
-    "status": "PR102_EXACT_HEAD_REVALIDATION",
+    "status": "PR102_EXACT_HEAD_HANDOFF_GUARD_REPAIR",
     "nextGate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY"
   },
   "invariants": {
@@ -157,7 +155,7 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "rc4.177 candidate adds pre-network JS execution marker and bounded startup watchdog to distinguish physical JS non-execution from network/bootstrap timeout; not device-promoted.",
+  "source_authority": "v11.8.0-rc4.184 PR #102 release candidate; rc4.183 is the physically observed DEVICE_REJECTED predecessor; accepted rollback remains rc4.169.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
@@ -167,7 +165,7 @@
       {
         "id": "rc4184-pr102-exact-head-validation",
         "lane": "companion",
-        "goal": "Make PR #102 exact head fully green after v226 handoff/seal synchronization.",
+        "goal": "Repair v226/v227 handoff/guard inconsistencies, then make PR #102 exact head fully green before merge/deploy.",
         "state": "active"
       }
     ],
@@ -424,19 +422,19 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "PR #102 exact-head validation and handoff integrity remain executable."
+      "reason": "PR #102 exact-head handoff/guard repair and strict revalidation remain executable."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260902T1125Z-v226",
+    "generation": "20260902T1130Z-v227",
     "status": "PASS_PENDING_STRICT_REVALIDATION",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.183 device rejected for Kader FA cards + IR drop semantics; fixes merged in #100/#101. rc4.184 PR #102 open; exact head must be fully green after v226 metadata synchronization before merge/deploy/device canary.",
+    "resume": "rc4.183 DEVICE_REJECTED for Kader FA cards + IR drop semantics; #100/#101 merged. rc4.184 PR #102 remains open. v227 repairs stale v224/v225/PR98 authority; query the new exact head and require all strict gates green before merge/deploy/device canary.",
     "transaction_in_progress": false
   },
   "status": "HANDOFF_RC4184_PR102_EXACT_HEAD_REVALIDATION",
   "gate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY",
-  "nextGate": "Verify actual PR #102 exact head after v226 seal synchronization; repair only exact failures; merge only all-green head; verify post-merge deploy; then one rc4.184 Android canary."
+  "nextGate": "Verify actual newest PR #102 head after v227 repair; fix only reproduced exact failures; merge only all-green; verify post-merge deployment; then one rc4.184 Android canary."
 }

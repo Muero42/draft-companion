@@ -1,14 +1,18 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v226
-Generation: `20260902T1125Z-v226`
+# PITTI HANDOFF COMPLETENESS MATRIX — v227
+Generation: `20260902T1130Z-v227`
 
-PASS requires all of the following:
-- rc4.183 installed/observed AND DEVICE_REJECTED for Kader FA-card + IR-drop semantics; do not regress to v225 rc4.182 loading diagnosis.
-- PR #100/#101 merged fixes are authority: canonical Sleeper slots; FLEX RB/WR/TE; two TE allowed when slot permits; K/DST isolated; no Sleeper projection/matchup scoring; Kader lineup-only; FA/Add-Drop on Waiver/FA; ACTIVE-only ordinary drop candidates; IR/Reserve never ordinary drop/capacity target.
-- PR #102 rc4.184 is OPEN/UNMERGED. Query actual latest head/CI; no older green/red head is current authority.
-- No merge/deploy/device canary until exact latest-head strict gates all PASS; then verify main/post-merge deploy before one physical canary.
-- Canary proves Kader lineup/start-sit only, canonical slots, FLEX eligibility, IR exclusion, Waiver Add/Drop routing, K-vs-K only, PITTI evidence parity for starters/alternatives.
-- Expert plan preserved: position-specific gradual in-season transition; Boone in-season/trade-value; Jody Smith phase-appropriate.
-- DST policy preserved: RotoBaller tiers + multi-week schedule planning; over-next-week DST stash only when roster opportunity cost is acceptable and matchup edge material.
-- Live Sleeper is current roster/ownership/slot authority; completed draft is immutable history.
-- AUTO/AUTO BLOCK continuous same-turn execution while safe work exists; after every package checkpoint + re-inventory; no progress/status/ack, no empty replies, no promise-only reply, no false “AUTO läuft weiter”; max one immediate external poll; blocked lane does not stop independent lanes; STATUS report-only.
-- Device evidence checkpointed before subsequent code/promotion; no device-side trial-and-error.
+PASS requires:
+- rc4.183 installed/observed and DEVICE_REJECTED specifically for Kader FA-card + IR ordinary-drop semantics; do not regress to rc4.182 non-loading diagnosis.
+- Accepted rollback rc4.169.
+- #100/#101 merged authority: canonical slots; FLEX RB/WR/TE; two TE where legal; K/DST isolated; no Sleeper projection/matchup scoring; Kader lineup-only; Add/Drop on Waiver; ACTIVE-only ordinary drop candidates; IR/Reserve never ordinary drop/capacity target.
+- #102 rc4.184 OPEN/UNMERGED; newest exact head/CI only. Pre-v227 8b028121 RED on stale handoff/guard metadata while runtime Season semantics passed.
+- No merge/deploy/device canary until newest exact-head strict gates all PASS; then verify post-merge deployment before one physical canary.
+- Expert/DST phase policies preserved; Boone/Jody Smith retained as documented.
+- Sleeper direct state current roster/ownership/slot authority; Watcher evidence-only; draft immutable history.
+- AUTO/AUTO BLOCK same-turn continuous execution; checkpoint + re-inventory after every package.
+- Never send status/progress/acknowledgement messages while executable AUTO work remains.
+- Empty assistant response after tool work is forbidden.
+- Promise-only “AUTO läuft weiter” followed by turn termination is forbidden.
+- Max one immediate external poll; blocked lane does not stop independent lanes; STATUS report-only.
+- Device evidence checkpointed before further code/promotion; no device-side trial-and-error.
+- CURRENT/LOCK/COMMAND/BOOTSTRAP/HANDOFF/MATRIX/PREFLIGHT/SEAL agree on v227 before ordinary project work.

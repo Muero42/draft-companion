@@ -6,7 +6,7 @@
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Repo generation 20260902T1125Z-v226 is current handoff authority. rc4.183 is physically observed and DEVICE_REJECTED for Kader FA-card + IR-drop semantics. PR #100/#101 fixes are merged. rc4.184 PR #102 is open/unmerged and requires exact-head all-green validation after v226 synchronization; no device trial-and-error.",
+    "failClosedRecovery": "Repo generation 20260902T1130Z-v227 is current handoff authority. rc4.183 is physically observed and DEVICE_REJECTED for Kader FA-card + IR-drop semantics. PR #100/#101 fixes are merged. rc4.184 PR #102 is open/unmerged and must be exact-head all-green before merge/deploy/device canary. Library persistence rule: never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision."
@@ -20,11 +20,11 @@
     "latestAndroidObserved": "v11.8.0-rc4.183 DEVICE_REJECTED: Kader rendered FA/Add-Drop and IR/Reserve Charbonnet as ordinary drop target",
     "latestPreinstallVerified": "rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "v11.8.0-rc4.107",
-    "preinstallArtifact": "rc4.184 PR #102 exact-head validation pending after v226 sync",
+    "preinstallArtifact": "rc4.184 PR #102 exact-head validation pending after v227 canonical repair",
     "preinstallSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
-    "latestDeployedCandidate": "v11.8.0-rc4.176 main deployed PASS",
+    "latestDeployedCandidate": "last explicitly verified historical deployment rc4.176; rc4.184 is not deployed",
     "latestAndroidVerified": "v11.8.0-rc4.169 accepted rollback authority; rc4.176 observation is not acceptance",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
@@ -63,14 +63,14 @@
       "androidAccepted": false
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.169",
-    "unreleasedMainDelta": "none: rc4.168 merged main; gh-pages/season-preview parity pending",
-    "deployedPagesVersion": "v11.8.0-rc4.176 main Cloudflare Pages PASS",
-    "mainGhPagesParity": true,
+    "unreleasedMainDelta": "main contains merged #100/#101 fixes at f5f7b3933a5416ac64250abad9e425c76435d62f; rc4.184 version promotion remains unmerged PR #102",
+    "deployedPagesVersion": "rc4.184 NOT DEPLOYED/NOT VERIFIED",
+    "mainGhPagesParity": false,
     "androidVerified": false,
-    "androidAcceptance": "rc4.176 automated Season E2E PASS; physical functional acceptance still pending.",
-    "devicePromotionPolicy": "FORBIDDEN until PR #102 latest exact head all strict gates PASS, merge/post-merge deploy verified, then one physical rc4.184 canary.",
-    "pr98Head": "de3eed64b4c750c53ad8413deb0c1d71acf85d48",
-    "pr98LatestHeadCI": "FAIL all 3: candidate package 33607037207; project guardrails 33607037186; release contract 33607037209"
+    "androidAcceptance": "rc4.183 physically observed but rejected for Kader/Waiver and IR-drop semantics",
+    "devicePromotionPolicy": "FORBIDDEN until PR #102 newest exact head all strict gates PASS, merge/post-merge deploy verified, then one physical rc4.184 canary.",
+    "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
+    "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -259,12 +259,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4182_DEVICE_REJECTED_PR98_LATEST_HEAD_FAILING",
-    "nextGate": "NEW_CHAT_RECONCILE_PR98_LATEST_HEAD_FIX_STRICT_GATES_THEN_REAL_SHAPE_STARTUP_KADER_PLUS_EXPERT_INIT"
+    "status": "PR102_EXACT_HEAD_HANDOFF_GUARD_REPAIR",
+    "nextGate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY"
   },
-  "status": "HANDOFF_RC4182_DEVICE_REJECTED_PR98_FAILING",
-  "gate": "NEW_CHAT_RECONCILE_PR98_LATEST_HEAD_FIX_STRICT_GATES_THEN_REAL_SHAPE_STARTUP_KADER_PLUS_EXPERT_INIT",
-  "nextGate": "New chat loads canonical v226 handoff, verifies actual main + PR #98 head/CI, repairs only reproduced startup/gate causes, then runs real-shape Season startup covering Kader and experts. No device trial-and-error.",
+  "status": "HANDOFF_RC4184_PR102_EXACT_HEAD_REVALIDATION",
+  "gate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY",
+  "nextGate": "Verify newest PR #102 exact head after v227 canonical repair; require all strict gates green before merge/deploy; then one physical rc4.184 canary.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -273,11 +273,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260901T2210Z-v224",
-    "status": "PASS",
+    "generation": "20260902T1130Z-v227",
+    "status": "PASS_PENDING_STRICT_REVALIDATION",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.176 physically observed but not functionally accepted; resume with repository reconciliation + automated Season E2E, not device trial-and-error.",
+    "resume": "rc4.183 DEVICE_REJECTED; #100/#101 merged; rc4.184 PR #102 current unmerged release lane; v227 removes stale PR98/v224 authority from current fields.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -297,7 +297,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260902T1125Z-v226",
+  "handoff_generation": "20260902T1130Z-v227",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
