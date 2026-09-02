@@ -83,7 +83,15 @@
     },
     "devicePromotionRequiresAutomatedSeasonE2E": true,
     "manualDeviceCanaryIsFinalConfirmationOnly": true,
-    "manualTrialAndErrorForbidden": true
+    "manualTrialAndErrorForbidden": true,
+    "deviceEvidenceMustCheckpointBeforeFurtherWork": true,
+    "candidateWordingRequiresDeviceReconciliation": true,
+    "externalWaitPolicy": {
+      "rule": "Do not keep an AUTO turn open by repeated CI/deploy polling.",
+      "maxImmediatePolls": 1,
+      "whenPending": "Checkpoint waiting_external. Continue independent executable lanes. If none remain, terminate the turn once with the concrete external wait; do not claim work continues in background.",
+      "statusCommand": "STATUS is report-only and must never be required to unstick or resume a previous AUTO turn."
+    }
   },
   "interruption": [
     "unavoidable user/device action or information",
@@ -149,19 +157,19 @@
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.169 accepted rollback authority",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
-    "sourceAuthority": "v11.8.0-rc4.182 strict automated PASS; final physical acceptance deferred",
+    "sourceAuthority": "v11.8.0-rc4.182 current source head; DEVICE_REJECTED on physical Android for Season hydration",
     "latestPackageReextract": "rc4.182 PASS run 33597607588",
     "latestPackageSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "packageReferenceRun": 33597607588,
     "deployedPagesVersion": "rc4.176 main Cloudflare Pages PASS",
     "deployedPagesAppByteParityWithMain": true,
     "currentResearchGate": "FINAL_PHYSICAL_RC4182_ACCEPTANCE",
-    "exactNextAction": "When user interaction is next necessary, perform one rc4.182 physical acceptance only; no diagnostic version churn.",
-    "runtimeVersion": "rc4.176 installed/observed; functional acceptance pending",
+    "exactNextAction": "Do not create/promote another version. First reproduce the rc4.182 hydration failure off-device with a real-shape startup/runtime harness, then fix exactly that reproduced cause.",
+    "runtimeVersion": "rc4.182 installed/observed; hydration FAIL",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
-    "latestDeviceEvidence": "22:09 CEST screenshot: rc4.176 visible, Season shell restored; Sleeper Live-State '-' and Kader still loading in captured frame; static screenshot does not prove navigation/hydration success."
+    "latestDeviceEvidence": "09:06 CEST screenshot: rc4.182 visible; Kader selected; Draft leak absent; Sleeper Live-State '-' and Live-Kader loading; DEVICE_REJECTED."
   },
-  "currentGate": "FINAL_PHYSICAL_RC4182_ACCEPTANCE",
+  "currentGate": "NO_NEW_VERSION_UNTIL_HYDRATION_ROOT_CAUSE_REPRODUCED_OFF_DEVICE",
   "handoffGeneration": "20260901T2210Z-v224",
   "handoff_generation": "20260901T2210Z-v224",
   "statusCommand": {
