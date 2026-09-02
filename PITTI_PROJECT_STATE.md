@@ -494,3 +494,14 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - AUTO contract is current and non-negotiable: continuous same-turn execution while safe work exists; checkpoint + re-inventory after each package; no interim progress/status/ack responses; no empty response after tool work; no promise-only “AUTO läuft weiter”; waiting external blocks only dependent lane; STATUS report-only.
 
 - Final v229 CI audit exposed two additional handoff-guard defects on sealed head `bf84c32a08fd4f85c63d01b0274e9b867a0b8a2c`: executable guard still capped Season source_candidate at rc4.184, and it accepted seal status only PASS (or explicit pending), while v229 used PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING. Runtime startup and Season semantic regressions passed before these guard failures. Guard is now extended to rc4.185 + PR108 gates; seal will use canonical PASS while exact_gate/note continue to state that PR108 release validation is pending. No product behavior is reverted.
+
+
+## 2026-09-02 — HANDOFF v230 / rc4.189 post-merge reseal
+- Handoff generation: `20260902T1915Z-v230`.
+- rc4.189 is merged on main at `88c007732f94df7b1624a6c05a0b16af4d33d94f`; PR #108 is historical/merged and must never be resurrected as an open current gate.
+- Latest physical Android authority is rc4.188 with Waiver/FA route, live Sleeper ownership, kicker-isolation and active-drop/IR semantics PASS. rc4.169 remains accepted rollback authority until rc4.189 physical acceptance.
+- Post-merge CI on main proved rc4.189 runtime startup and candidate package PASS, but Project Guardrails failed because the squash merge left the handoff seal and several current-gate/AUTO tokens stale. This is a checkpoint/seal defect, not a product-runtime rollback signal.
+- v230 repairs CURRENT/LOCK/COMMAND/bootstrap/handoff/matrix authority to rc4.189 and the actual rc4.188 device evidence, extends the guard to the rc4.189 post-merge reseal gate, and requires a fresh integrity seal.
+- Current gate: `RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY`. Exact-head strict gates must be green, then deployment parity must be verified, then exactly one rc4.189 physical canary. No cache clearing/reinstall trial-and-error.
+- AUTO remains continuous same-turn execution: after every package checkpoint + re-inventory; waiting external blocks only its dependent lane; no progress/status/ack messages, no empty reply, and no promise-only “AUTO läuft weiter” while executable work exists. STATUS is report-only.
+- Watcher v0.2.6 remains isolated in draft PR #1. Skill-position bench drops are now fail-closed unless current replacement/upside evidence exists; Reserve/IR remains excluded and automatic transactions remain forbidden.
