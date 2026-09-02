@@ -254,3 +254,11 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 
 ## v224 CURRENT OVERRIDE — RC4.176 OBSERVED, NOT ACCEPTED
 Generation: `20260901T2210Z-v224`. Supersedes older current-version/device/gate/handoff pointers above where conflicting. Physical Android at 22:09 CEST visibly runs rc4.176, but captured Kader still has Live-State '-' and Live-Kader loading; this is observation only. Accepted rollback remains rc4.169. First new-chat gate: verify v224 against actual main/CI/deploy, then browser-equivalent Season E2E before any further device action. AUTO/AUTO BLOCK: no interim status/progress/ack, no empty response, no “AUTO läuft weiter”; re-inventory and continue while executable work exists. STATUS report-only.
+
+## 4B. DEVICE EVIDENCE + EXTERNAL WAIT HARDENING — 2026-09-02
+
+- A user-supplied physical device screenshot/version observation is a **checkpoint event**, not conversational context. Before any further code/CI/promotion work, update CURRENT + EXECUTION_LOCK + COMMAND_CONTRACTS with installed/observed version and PASS/FAIL evidence.
+- If the same version is physically observed with a functional FAIL, it is **DEVICE_REJECTED**. Never describe it as merely a candidate awaiting acceptance.
+- Never keep an AUTO response open through repeated manual CI/deploy polling. Perform at most one immediate status read after launching/triggering external work.
+- If external work is still pending, checkpoint it in `waiting_external`, execute all independent lanes, then end the turn once if nothing else is executable. Do not claim background continuation.
+- `STATUS` is strictly report-only. It must not be needed to cancel, unstick, or resume an AUTO turn.
