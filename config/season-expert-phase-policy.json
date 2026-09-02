@@ -202,18 +202,32 @@
       "QB": [
         "QB"
       ],
-      "TE": [
-        "TE"
-      ],
       "RB": [
         "RB",
-        "WR"
+        "FLEX",
+        "WRRB_FLEX",
+        "SUPER_FLEX"
       ],
       "WR": [
         "WR",
-        "RB"
+        "FLEX",
+        "WRRB_FLEX",
+        "REC_FLEX",
+        "SUPER_FLEX"
       ],
-      "note": "RB/WR cross-swap only through FLEX assumption; TE/QB cross-position forbidden unless canonical slot identity later proves FLEX."
+      "TE": [
+        "TE",
+        "FLEX",
+        "REC_FLEX",
+        "SUPER_FLEX"
+      ],
+      "K": [
+        "K"
+      ],
+      "DEF": [
+        "DEF"
+      ],
+      "note": "Canonical Sleeper slot eligibility. FLEX=RB/WR/TE; WRRB_FLEX=RB/WR; REC_FLEX=WR/TE; SUPER_FLEX=QB/RB/WR/TE. These are slot rules, never roster caps."
     },
     "display_required": [
       "weekly panel rank",
@@ -230,12 +244,63 @@
       "SUPER_FLEX": "QB/RB/WR/TE"
     },
     "allow_two_te_when_slots_permit": true,
-    "display_canonical_slot_not_player_position": true
+    "display_canonical_slot_not_player_position": true,
+    "visual_semantics": {
+      "slot_chip_source": "canonical Sleeper slot identity",
+      "occupant_position_must_not_recolor_slot": true,
+      "FLEX": [
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "WRRB_FLEX": [
+        "RB",
+        "WR"
+      ],
+      "REC_FLEX": [
+        "WR",
+        "TE"
+      ],
+      "SUPER_FLEX": [
+        "QB",
+        "RB",
+        "WR",
+        "TE"
+      ]
+    }
   },
   "kicker": {
     "comparison_surface": "WAIVER_FA_ONLY",
     "generic_skill_drop_pool": false,
     "compare_only_against_available_kickers": true,
     "current_roster_kicker_is_benchmark": true
+  },
+  "trade": {
+    "boone_trade_value": {
+      "role": "primary current-redraft market/value anchor when available",
+      "dynasty_forbidden": true,
+      "freshness_required": true,
+      "decision_scope": [
+        "TRADE",
+        "ROS_VALUE"
+      ],
+      "must_not_override": [
+        "roster construction",
+        "replacement value",
+        "near-term weekly evidence"
+      ]
+    }
+  },
+  "expert_evidence": {
+    "pat_fitzmaurice_2026_draft_review": {
+      "received": "2026-09-02",
+      "usable": [
+        "overall roster assessment positive",
+        "Bucky Irving bounceback support",
+        "TE identified as softest spot",
+        "roster strength can support later TE upgrade"
+      ],
+      "format_inference_caveat": "Likely interpreted four displayed WR-labelled lineup spots as four fixed WR starters. Do not use his 'loading up at WR' format conclusion as evidence for this league; actual slots are 2 WR plus FLEX slots."
+    }
   }
 }
