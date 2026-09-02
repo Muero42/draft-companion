@@ -1,29 +1,20 @@
 # NEW CHAT HANDOFF — PITTI SEASON COMPANION
-Handoff generation: `20260902T1130Z-v227`
-Created: 2026-09-02
+Handoff generation: `20260902T1315Z-v228`
+Created: 2026-09-02 13:15Z
 
-## AUTHORITY
-Physical Android: **rc4.183 installed/observed but DEVICE_REJECTED** for two explicit semantics: FA/Add-Drop cards under Kader; IR/Reserve Zach Charbonnet used as an ordinary drop target. The former startup dead-state was crossed. Accepted rollback = **rc4.169**.
+## CURRENT AUTHORITY
+Mode POST_DRAFT_SEASON_COMPANION. rc4.185 merged source baseline. PR #108 OPEN/UNMERGED on `pitti/trade-slot-geometry`.
 
-PR #100/#101 are merged authority for canonical Sleeper slots/FLEX eligibility, K-vs-K routing, Kader lineup-only, Waiver Add/Drop routing and ACTIVE-only ordinary drop candidates.
+PR #108 contains: real canonical Sleeper starter/FLEX geometry for Trade Board v5; second TE allowed when it wins legal FLEX; blanket TE2 waiver penalty removed; full ten-team Sleeper league state with manager mapping, players/starters/reserve/taxi, waiver position, FAAB used/remaining persisted; opponent waiver-market foundation. Sleeper live state is roster/ownership authority; draft roster is history; Watcher evidence-only.
 
-## CURRENT RELEASE LANE — PR #102 / rc4.184
-PR #102 is **OPEN / UNMERGED**. Pre-v227 head `8b02812180dde8b15b48ac734fcb6b88159b8a93` was RED because canonical handoff/guard metadata still carried v224/v225/rc4.182/PR98 state. Runtime Season regressions through canonical slots, lineup routing and Waiver/IR semantics passed before the guard failure.
+## EXACT CURRENT FAILURE / REPAIR
+Prior exact head `0a41ca11f579719bede99cb04454a606f64bb1d3`: Release Contract PASS, Project Guardrails PASS, Candidate Package FAIL. Failure was specifically `tools/live-trade-roster-identity-regression.mjs` requiring explicit text: “Sleeper roster_id is a league roster identifier, NOT the historical draft slot.” The v5 runtime already used `myLiveRosterId` correctly; do NOT revert to draft-slot identity. Explicit invariant restored in app.js. Query latest PR #108 head/CI and diagnose exact result.
 
-v227 creates a newer exact head. Query that actual head/CI; no older head is release authority. No merge/deploy/device test until all strict gates are green.
+## LAWRENCE / WAIVER
+Trevor Lawrence was dropped. User is willing to deviate from draft-era no-QB2 because Lawrence and Jayden Daniels are both viewed as strong fantasy QBs; same bye is a cost. Need opponent-specific bid model from live rosters, not screenshots. Price acquisition with TWO active opportunity costs when D/ST still must be added: Lawrence drop now + later D/ST drop. IR/Reserve cannot satisfy ordinary capacity. Final FAAB bid remains pending live opponent analysis.
 
-## FINAL DEVICE CANARY
-Exactly one rc4.184 canary after green + merge + verified deployment: Kader lineup-only; canonical slot labels; FLEX RB/WR/TE (thus two TE where legal); IR/Reserve not ordinary drop; Add/Drop under Waiver/FA; K-vs-K only; PITTI panel/projection/matchup evidence rather than Sleeper scoring.
+## RELEASE / DEVICE
+After PR #108 all-green: merge → rc4.186 promotion → post-merge/deploy byte parity → exactly one physical canary. Latest installed/observed Android rc4.183 is DEVICE_REJECTED for FA/Add-Drop cards under Kader and IR Charbonnet ordinary-drop semantics. Accepted rollback rc4.169. No cache/reinstall/trial loops.
 
-## EXPERT / DST POLICY
-Gradual position-specific in-season transition preserved; Boone remains major in-season/trade-value source; Jody Smith phase-appropriate. DST uses quality tiers + multi-week schedule planning; next-week stash only when opportunity cost is acceptable and edge material.
-
-## AUTO / AUTO BLOCK — NON-NEGOTIABLE
-Never send status/progress/acknowledgement messages while executable AUTO work remains.
-Empty assistant response after tool work is forbidden.
-Promise-only replies are forbidden, especially “AUTO läuft weiter” followed by turn termination.
-After every package: checkpoint material change, re-inventory all independent lanes, execute next safe package in the same turn.
-External wait blocks only its lane; max one immediate poll. Device evidence is checkpointed before further work. No device-side trial-and-error/cache clearing/reinstall loops. STATUS is report-only.
-
-## ANTI-REGRESSION
-Do not resurrect rc4.182 non-loading as current diagnosis, old PR98 gate, rc4.171-176 device-debug loops, Kader FA cards, IR ordinary-drop targets, occupant-position slot labels, Sleeper projection/matchup scoring or superseded CI. Live Sleeper direct state is roster/ownership/slot authority; draft is immutable history.
+## AUTO CONTRACT
+AUTO/AUTO BLOCK means autonomous same-turn execution while any safe positive-value lane exists. After every package checkpoint and re-inventory. No progress/status/acknowledgement terminal messages, no empty replies, no “AUTO läuft weiter” promise. Waiting CI blocks only that lane. STATUS is report-only.
