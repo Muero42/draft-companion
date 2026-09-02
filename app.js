@@ -2784,7 +2784,9 @@ function postDraftSwapScore(drop,fa,ctx){
   if(ctx.WR>=7&&fa.p.pos==='RB'&&drop.p.pos==='WR')rosterUtility+=3;
   if(ctx.RB<=4&&fa.p.pos==='RB'&&drop.p.pos!=='RB')rosterUtility+=1.5;
   if(drop.p.pos==='RB'&&fa.p.pos!=='RB'&&drop.capitalScore<7)rosterUtility-=2.5;
-  if((fa.p.pos==='QB'&&ctx.QB>=1)||(fa.p.pos==='TE'&&ctx.TE>=1))rosterUtility-=5; // 10-team 1QB: QB2/TE2 exceptional only
+  if(fa.p.pos==='QB'&&ctx.QB>=1)rosterUtility-=5; // 1QB league: QB2 remains exceptional.
+  // TE2 is not a generic penalty: this league's FLEX accepts TE. Let panel/opportunity/upside
+  // determine whether the second TE can beat the weakest legal FLEX option.
   if(drop.p.injury&&String(drop.p.injury).toUpperCase()==='IR')rosterUtility+=3;
   const waiverMarket=week1WaiverMarketSignal(fa.p),waiverMarketBonus=Number(waiverMarket?.bonus||0);
   const score=clamp(panelDelta*.22,-6,6)+clamp(opportunityDelta,-6,6)+clamp(upsideDelta*.5,-3,3)+rosterUtility+waiverMarketBonus;
