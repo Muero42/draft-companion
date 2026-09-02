@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260902T1315Z-v228",
-  "updated_at": "2026-09-02T13:15:00Z",
+  "handoff_generation": "20260902T1325Z-v229",
+  "updated_at": "2026-09-02T13:25:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -16,19 +16,19 @@
     "android_acceptance_pending": false,
     "test_challenger": "v11.8.0-rc4.185",
     "ci": {
-      "candidate_package": "PR #108 head 0a41ca11 failed only because live-trade identity regression required preserved explicit roster_id-vs-draft-slot invariant text; runtime behavior remained correct. Invariant restored on latest head; fresh exact-head CI required.",
-      "release_contract_v2": "PR #108 prior post-repair heads passed runtime/static layers; latest exact head requires fresh CI.",
-      "project_guardrails": "PR #108 prior post-repair head passed after v4/v5 guard repair; latest exact head requires fresh CI.",
-      "validated_code_head": "0a41ca11f579719bede99cb04454a606f64bb1d3",
-      "scope": "PR #108 trade-slot + league-state/waiver-market candidate; final checkpoint/reseal head pending."
+      "candidate_package": "PR #108 prior head 0a41ca11 failed only on explicit live roster_id-vs-historical-draft-slot invariant text. Invariant is restored. v229 handoff changes exact head again; fresh exact-head CI required.",
+      "release_contract_v2": "Prior PR #108 product/runtime head passed; v229 handoff exact head requires fresh CI and is not release-authoritative until green.",
+      "project_guardrails": "Prior PR #108 head passed after Trade Board v4/v5 guard repair; v229 exact head requires fresh CI.",
+      "validated_code_head": "7301e4973071d498259e20cec2407511417b7a0d",
+      "scope": "PR #108 trade-slot + full league-state/waiver-market candidate. v229 is handoff-consistency repair; no product behavior rollback."
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "rc4.185 is merged source baseline. PR #108 is open and adds canonical trade-slot geometry, full 10-team Sleeper league-state persistence, opponent FAAB/waiver competition modeling, QB opportunity cards and two-slot QB+D/ST opportunity cost. No deployment/device acceptance yet.",
+    "preview_candidate": "rc4.185 is merged source baseline. PR #108 is OPEN/UNMERGED and adds canonical Trade Board v5 slot geometry, full 10-team Sleeper league-state persistence, opponent FAAB/waiver competition modeling, QB opportunity cards and QB+D/ST two-active-drop opportunity cost. No PR108 deployment/device acceptance.",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "latest_package_sha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "package_reference_run": 33597607588,
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "rc4.185 deployment/device parity not yet accepted; PR #108 must pass exact-head gates before merge and release promotion.",
+    "deployed_pages_head": "rc4.185 source baseline merged; deployment/device parity not accepted. PR #108 not merged/deployed.",
     "installed_android": "v11.8.0-rc4.183",
     "latest_android_observed": "v11.8.0-rc4.183",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
@@ -147,8 +147,8 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "PR108_IDENTITY_INVARIANT_RESTORED_EXACT_HEAD_REVALIDATION",
-    "nextGate": "PR108_LATEST_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
+    "status": "PR108_V229_HANDOFF_REPAIRED_EXACT_HEAD_REVALIDATION",
+    "nextGate": "PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -167,9 +167,9 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "pr108-exact-head-revalidation",
+        "id": "pr108-v229-exact-head-revalidation",
         "lane": "companion",
-        "goal": "Validate latest PR #108 after restoring explicit live roster_id vs historical draft-slot invariant; diagnose any failure without reverting correct season logic.",
+        "goal": "Validate newest PR #108 exact head after v229 handoff consistency repair; fix only reproduced failures without reverting correct Season behavior.",
         "state": "active"
       }
     ],
@@ -177,13 +177,13 @@
       {
         "id": "lawrence-market-live",
         "lane": "waiver",
-        "goal": "After PR #108 validation/merge, use persisted all-10-team Sleeper league state to evaluate Trevor Lawrence opponent QB need, remaining FAAB, manager/current-season priors, same-bye cost and mandatory future D/ST second-drop cost.",
+        "goal": "After PR #108 validation/merge, use persisted all-10-team Sleeper state to evaluate Trevor Lawrence opponent QB need, remaining FAAB, manager/current-season priors, same-bye cost and mandatory future D/ST second-active-drop cost.",
         "state": "dependency_wait"
       },
       {
         "id": "rc4186-promotion",
         "lane": "release",
-        "goal": "After PR #108 all-green merge, promote as rc4.186, verify post-merge/deploy parity, then exactly one physical device canary.",
+        "goal": "After PR #108 all-green merge, promote rc4.186, verify post-merge/deploy parity, then exactly one physical canary.",
         "state": "dependency_wait"
       }
     ],
@@ -444,15 +444,15 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260902T1130Z-v227",
-    "status": "PASS_PENDING_STRICT_REVALIDATION",
+    "generation": "20260902T1325Z-v229",
+    "status": "PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.183 DEVICE_REJECTED for Kader FA cards + IR drop semantics; #100/#101 merged. rc4.184 PR #102 remains open. v227 repairs stale v224/v225/PR98 authority; query the new exact head and require all strict gates green before merge/deploy/device canary.",
+    "resume": "rc4.185 merged baseline; PR #108 open/unmerged. v229 fixes stale v227/PR102 current pointers found during final handoff audit. Query newest PR #108 exact head, preserve live roster_id identity invariant, require all strict gates green; then Lawrence live opponent/FAAB analysis and rc4.186 promotion.",
     "transaction_in_progress": false
   },
-  "status": "PR108_SEASON_MARKET_TRADE_VALIDATION",
-  "gate": "PR108_FINAL_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
-  "nextGate": "Reseal current canonical files against the final PR #108 content head; require all strict gates green; merge; then rc4.186 version promotion/deploy verification before any device canary.",
-  "handoffGeneration": "20260902T1315Z-v228"
+  "status": "PR108_V229_HANDOFF_REPAIRED",
+  "gate": "PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
+  "nextGate": "Query newest PR #108 exact head after v229 handoff repair; all strict gates green before merge; then rc4.186 promotion/deploy parity and exactly one physical canary.",
+  "handoffGeneration": "20260902T1325Z-v229"
 }
