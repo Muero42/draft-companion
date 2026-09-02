@@ -1,7 +1,17 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v224
-Generation: `20260901T2210Z-v224`
+# PITTI HANDOFF COMPLETENESS MATRIX — v225
+Generation: `20260902T0810Z-v225`
 
-PASS requires: rc4.176 source/deployed; rc4.176 physical device observed but NOT accepted; rc4.169 accepted rollback; 22:09 CEST screenshot preserved exactly (Season shell/workspace buttons visible, no Draft controls in captured Kader frame, Live-State '-', Kader loading); v223 semantic contradictions repaired; first new-chat gate = repo/CI/deploy reconciliation + AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE; no further device trial-and-error before autonomous PASS; live Sleeper = Season Source of Truth; draft = immutable history; transaction canary and watcher v0.2.3 preserved; AUTO continuous/re-inventory/no progress/no empty/no promise-only finals; STATUS report-only.
-
-- Empty assistant response after tool work is forbidden.
-- AUTO progress/status-only terminal responses are forbidden while executable work exists.
+PASS requires all of the following to be carried into the new chat:
+- rc4.182 installed/observed AND DEVICE_REJECTED; Kader and experts still fail to load.
+- rc4.169 accepted rollback authority.
+- PR #98 open/unmerged; latest head de3eed64; current latest-head CI is RED, despite older heads having been green.
+- Exact failures preserved: Candidate/Guardrails = AUTO stop code invalid + CURRENT next gate regression; Release = automatic Season startup sequence invalid.
+- No merge/promotion/new device version until exact-head strict gates + real-shape startup E2E prove Kader AND expert initialization.
+- Startup/localStorage hypothesis preserved as unaccepted until validated; no downstream trial-and-error.
+- App problems have priority over expert reweighting/FA/Trade feature work.
+- Expert plan preserved: Jody Smith pre-Week-1 candidate, Boone strong in-season/trade-value anchor, gradual Week1+ transition.
+- Watcher main v0.2.5 D1 remediation preserved; v0.2.6 draft PR #1 isolated/non-authoritative.
+- Live Sleeper is current roster authority; completed draft is immutable historical evidence.
+- AUTO continuous/re-inventory/no progress/no empty/no promise-only; external poll max 1; STATUS report-only.
+- Device evidence must be checkpointed before any subsequent code/promotion wording.
+- No stale handoff, stale installed-version, stale old-head green CI, rc4.175 truncation, or device-debug loop may override these facts.
