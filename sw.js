@@ -1,7 +1,7 @@
-const CACHE='draft-companion-v11.8.0-rc4.183';
+const CACHE='draft-companion-v11.8.0-rc4.184';
 const BACKUP_CACHE='draft-companion-backup-export-v1';
-const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.183','./decision-policy.js','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.183','./live-surface-v3.css?v=v11.8.0-rc4.183','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
-const BASE='v11.8.0-rc4.183',TARGET='v11.8.0-rc4.183';
+const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.184','./decision-policy.js','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.184','./live-surface-v3.css?v=v11.8.0-rc4.184','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
+const BASE='v11.8.0-rc4.184',TARGET='v11.8.0-rc4.184';
 function patchApp(s){
   // rc4.175+: the canonical runtime already contains the historical pre-draft/full-pool
   // and backup-download fixes. Do not mutate current app.js in the service worker.
