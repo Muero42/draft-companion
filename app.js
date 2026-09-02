@@ -2819,8 +2819,11 @@ function postDraftSwapScore(drop,fa,ctx){
   const score=clamp(panelDelta*.22,-6,6)+clamp(opportunityDelta,-6,6)+clamp(upsideDelta*.5,-3,3)+rosterUtility+waiverMarketBonus;
   const evidencePresent=(fOpp.events+dOpp.events)>0||!!waiverMarket,faFresh=freshAcquisitionEvidence(fa),dropFresh=freshAcquisitionEvidence(drop),freshEvidencePresent=(faFresh.events+dropFresh.events)>0||!!waiverMarket;
   let action='HOLD';
+  // In-season acquisition labels must not turn a stale/draft-only comparison into an
+  // apparent drop recommendation. WATCH/CLEAR ADD both require fresh player-specific or
+  // current-week market evidence; otherwise the pair is informational HOLD only.
   if(score>=6&&freshEvidencePresent)action='CLEAR ADD';
-  else if(score>=2)action='WATCH';
+  else if(score>=2&&freshEvidencePresent)action='WATCH';
   const confidence=clamp(Math.round(55+(Number.isFinite(fr)&&Number.isFinite(dr)?15:0)+(freshEvidencePresent?12:evidencePresent?4:0)-(fOpp.rejected+dOpp.rejected)*4),35,88);
   const horizons=seasonHorizonSplit(drop,fa);if(waiverMarket&&Number.isFinite(horizons.weekly))horizons.weekly=clamp(horizons.weekly+waiverMarketBonus*.6,-10,10);else if(waiverMarket){horizons.weekly=clamp(waiverMarketBonus*.6,-10,10);horizons.weeklyFresh=true;}
   return {drop,fa,score,panelDelta,opportunityDelta,upsideDelta,rosterUtility,waiverMarketBonus,waiverMarket,action,confidence,dOpp,fOpp,evidencePresent,freshEvidencePresent,faFresh,dropFresh,horizons};
@@ -2864,27 +2867,30 @@ function renderRosterFaAudit(rows,rankedAvailable,draftComplete,opts={render:tru
 function renderSpecialTeamsBoard(){
   const c=lastDraftContext;if(!c?.draftComplete||!els.waiverList)return'';
   const dst=c.availableDST||[],ks=c.availableK||[];
+  // Current pre-Week-1 waiver priority (RotoBaller, Sep 1 2026), intersected with
+  // LIVE Sleeper ownership below. This supersedes the older embedded DST draft board.
+  // In a 10-team league, 12+/14+-team labels are context rather than an automatic add.
   const rb26=[
-    ['JAX',1,1,'CLE'],['LAC',2,1,'ARI'],['HOU',3,1,'BUF'],['DEN',4,2,'KC'],['BAL',5,2,'IND'],['LAR',6,2,'SF'],['SEA',7,2,'NE'],['CHI',8,2,'CAR'],['TEN',9,2,'NYJ'],
-    ['PIT',10,3,'ATL'],['PHI',11,3,'WAS'],['GB',12,3,'MIN'],['MIN',13,3,'GB'],['BUF',14,3,'HOU'],['LV',15,3,'MIA'],['NYJ',16,4,'TEN'],['NE',17,4,'SEA'],['KC',18,4,'DEN']
+    ['LAC',1,2,'ARI','12+'],['BAL',2,2,'IND','12+'],['GB',3,2,'MIN','12+'],['TEN',4,2,'NYJ','12+'],
+    ['BUF',5,3,'HOU','12+'],['LV',6,3,'MIA','12+'],['CHI',7,4,'CAR','14+'],['NYJ',8,4,'TEN','14+']
   ];
   const aliases={JAC:'JAX',LA:'LAR',LAC:'LAC',WSH:'WAS',WAS:'WAS',LV:'LV'};
   const rbMap=new Map(rb26.map(x=>[x[0],{rank:x[1],tier:x[2],opp:x[3]}]));
   const normTeam=t=>aliases[String(t||'').toUpperCase()]||String(t||'').toUpperCase();
-  const d=dst.map(p=>({p,rb:rbMap.get(normTeam(p.team||p.name))})).filter(x=>x.rb&&x.rb.tier<=4).sort((a,b)=>a.rb.tier-b.rb.tier||a.rb.rank-b.rb.rank);
+  const d=dst.map(p=>({p,rb:rbMap.get(normTeam(p.team||p.name))})).filter(x=>x.rb&&x.rb.tier<=4).sort((a,b)=>a.rb.rank-b.rb.rank);
   const kProj=new Map([['Cameron Dicker',8.7],['Harrison Mevis',8.4],['Brandon Aubrey',8.3],['Jake Bates',8.2],['Jason Myers',8.0],["Ka'imi Fairbairn",8.0],['Cam Little',7.9],['Tyler Loop',7.9],['Evan McPherson',7.7],['Chris Boswell',7.6]]);
   const rosterK=(c.seasonRows||[]).find(x=>x?.p?.pos==='K')?.p||null,rosterKProj=rosterK?kProj.get(rosterK.name):null;
   const k=ks.map(p=>({p,proj:kProj.get(p.name)})).filter(x=>Number.isFinite(x.proj)).map(x=>({...x,edge:Number.isFinite(rosterKProj)?x.proj-rosterKProj:null})).sort((a,b)=>b.proj-a.proj);
-  const dHtml=d.length?d.slice(0,7).map((x,i)=>{const team=normTeam(x.p.team||x.p.name),jax=team==='JAX',label=jax?'PRIORITY W1 · HOLD-HORIZON WEAK':(x.rb.tier<=2?'TARGET':'WATCH'),detail=jax?' · 2025 DST FP #4 · 31 takeaways (#2) · W2 DEN / W3 NE / W4 CIN → eher W1-Stream als 4W-Hold':'';return '<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">D/ST · RotoBaller W1 #'+x.rb.rank+' · Tier '+x.rb.tier+' · vs '+esc(x.rb.opp)+' · Sleeper frei'+detail+'</div></div><div><b>'+label+'</b></div></div>'}).join(''):'<div class="notice">Keine RotoBaller-Top-18-D/ST ist aktuell im Sleeper-FA-Pool.</div>';
+  const dHtml=d.length?d.slice(0,7).map((x,i)=>{const label=x.rb.tier<=2?'TARGET':x.rb.tier===3?'WATCH':'EMERGENCY';return '<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">D/ST · RotoBaller pre-W1 waiver #'+x.rb.rank+' · '+esc(x.rb.move)+' · vs '+esc(x.rb.opp)+' · Sleeper frei</div></div><div><b>'+label+'</b></div></div>'}).join(''):'<div class="notice">Keine RotoBaller-Top-18-D/ST ist aktuell im Sleeper-FA-Pool.</div>';
   const kHtml=k.length?k.slice(0,7).map((x,i)=>{const edge=Number.isFinite(x.edge)?' · Edge ggü. '+esc(rosterK?.name||'Roster-K')+' '+(x.edge>=0?'+':'')+x.edge.toFixed(1):'';const label=Number.isFinite(x.edge)&&x.edge>=1.5?'UPGRADE PRÜFEN':Number.isFinite(x.edge)&&x.edge>0?'KLEINER EDGE':'HOLD';return '<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">K · FantasyPros W1 Consensus-Projektion · Sleeper frei'+edge+'</div></div><div><b>'+x.proj.toFixed(1)+' proj. · '+label+'</b></div></div>'}).join(''):'<div class="notice">Keiner der aktuell verifizierten Week-1-Kicker ist im LIVE Sleeper-FA-Pool; keine statische Liste darf Ownership überschreiben.</div>';
   const kBase=rosterK?'<div class="notice ok"><b>AKTUELLER KICKER: '+esc(rosterK.name)+'</b> · '+(Number.isFinite(rosterKProj)?rosterKProj.toFixed(1)+' proj.':'Projection noch nicht verifiziert')+' · Kicker werden ausschließlich hier gegen verfügbare Kicker verglichen; niemals gegen RB/WR/TE.</div>':'<div class="notice warn">Kein aktueller Roster-Kicker erkannt.</div>';
-  return '<div class="coach-section-title">WEEK 1 · D/ST STREAMING</div><div class="notice ok">Special Teams v2 · RotoBaller W1: Rank + Tier + Gegner. Quality-Floor wird bereits vor Sortierung angewandt: Tier 5/6 ausgeschlossen; Tier 4 nur Notfall. Early-Add-Gate: Vorteil gegenüber nächstbestem freien Stream × Verlust-/Marktrisiko muss den Optionswert des besten Drop-Kandidaten übersteigen. Pre-W1-RB-Optionswert wird erhöht. Weeks 1–4 wird vor finalem Add als Hold-Horizon gegengeprüft.</div>'+dHtml+'<div class="coach-section-title">WEEK 1 · KICKER</div>'+kBase+kHtml;
+  return '<div class="coach-section-title">WEEK 1 · D/ST STREAMING</div><div class="notice ok">Special Teams v2.2 · aktuelles RotoBaller Pre-W1-Waiver-Ranking × LIVE Sleeper-Ownership. 10-Team-Kontext: 12+/14+-Team-Empfehlungen sind Vergleichssignale, kein automatischer Add. Early-Add-Gate: Vorteil gegenüber nächstbestem freien Stream × Verlust-/Marktrisiko muss den Optionswert des besten Drop-Kandidaten übersteigen. Pre-W1-RB-Optionswert wird erhöht. Weeks 1–4 wird vor finalem Add als Hold-Horizon gegengeprüft.</div>'+dHtml+'<div class="coach-section-title">WEEK 1 · KICKER</div>'+kBase+kHtml;
 }
 
 function renderWaiverWorkspace(draftComplete){
   if(!els.waiverStatus||!els.waiverList)return;
   if(!draftComplete){els.waiverStatus.className='notice';els.waiverStatus.textContent='Waiver-Priorität wird nach Draftabschluss aktiv.';els.waiverList.innerHTML='';return;}
-  const q=lastPostDraftPairs.filter(x=>x.action!=='HOLD').slice(0,8);
+  const q=lastPostDraftPairs.filter(x=>x.action!=='HOLD'&&x.freshEvidencePresent).slice(0,8);
   els.waiverStatus.className=`notice ${q.some(x=>x.action==='CLEAR ADD')?'warn':'ok'}`;
   els.waiverStatus.textContent='Waiver/FA Priority v2 · LIVE Sleeper-Ownership + FA-vs-Roster Engine + frisches Week-1-Waiver-Marktsignal. Numerisches FAAB bleibt bewusst aus: ohne aktuelle Waiver-Woche, Gegnerbudget/Markt und belastbare Rollen-News wäre ein Betrag Scheingenauigkeit.';
   const special=renderSpecialTeamsBoard(),qbOpportunities=renderQbOpportunityBoard();if(!q.length){els.waiverList.innerHTML=special+qbOpportunities+'<div class="notice ok"><b>SKILL-POSITION HOLD</b> · Aktuell kein materiell positiver RB/WR/TE-Swap aus der geladenen Baseline.</div>';return;}
@@ -2898,7 +2904,7 @@ function renderWaiverWorkspace(draftComplete){
 function renderSeasonActionBoard(draftComplete){
   if(!els.seasonActionStatus||!els.seasonActionList)return;
   if(!draftComplete){els.seasonActionStatus.className='notice';els.seasonActionStatus.textContent='Action Board wird nach Draftabschluss aktiv.';els.seasonActionList.innerHTML='';return;}
-  const pairs=lastPostDraftPairs||[],clear=pairs.filter(x=>x.action==='CLEAR ADD'),watch=pairs.filter(x=>x.action==='WATCH');
+  const pairs=lastPostDraftPairs||[],clear=pairs.filter(x=>x.action==='CLEAR ADD'&&x.freshEvidencePresent),watch=pairs.filter(x=>x.action==='WATCH'&&x.freshEvidencePresent);
   const urgent=clear.length?`ACTION · ${clear.length} verifizierte CLEAR-ADD-Swap${clear.length===1?'':'s'} prüfen.`:watch.length?`WATCH · ${watch.length} mögliche Roster-Upgrades, aber noch kein verifiziertes Sofortsignal.`:'HOLD · Kein materieller Add/Drop-Trigger aus der geladenen Baseline.';
   els.seasonActionStatus.className=`notice ${clear.length?'warn':'ok'}`;els.seasonActionStatus.textContent=`Season Action Board v1 · ${urgent} Read-only; keine automatische Transaktion.`;
   const q=clear.length?clear.slice(0,4):watch.slice(0,4);
@@ -2953,6 +2959,11 @@ function renderQbOpportunityBoard(){
   const ownBest=Math.min(...ownQbs.map(x=>Number(x.r?.rank)).filter(Number.isFinite),999);
   const qbs=ctx.rankedAvailable.map(p=>({p,r:rankFor(p.name,p.pos)})).filter(x=>x.p?.pos==='QB'&&x.r&&Number.isFinite(x.r.rank))
     .filter(x=>x.r.rank<=Math.max(18,ownBest+8)).sort((a,b)=>a.r.rank-b.r.rank).slice(0,8);
+  // Current Week-1 consensus is a decision gate, not merely a draft-rank opportunity.
+  // Trevor Lawrence is QB10 in the current FantasyPros W1 consensus (Sep 2); preserve
+  // 1QB roster discipline by requiring a material weekly edge before paying two-slot cost.
+  const week1QbConsensus=new Map([[norm('Trevor Lawrence'),10]]);
+  for(const x of qbs)x.week1Rank=week1QbConsensus.get(norm(x.p.name))||null;
   if(!qbs.length)return'';
   const rosterHasDst=(ctx.seasonRows||[]).some(x=>['DEF','DST'].includes(String(x.p?.pos||'').toUpperCase())&&x.seasonStatus==='ACTIVE');
   const dropOrder=seasonActiveDropOrder(),drop1=dropOrder[0],drop2=dropOrder[1];
@@ -2960,12 +2971,13 @@ function renderQbOpportunityBoard(){
     const market=waiverOpponentMarket(x,ctx.players),sameBye=ownQbs.some(q=>q.p?.bye&&x.p?.bye&&Number(q.p.bye)===Number(x.p.bye));
     const maxComp=Math.max(0,...market.map(m=>m.bid_high_pct||0)),marketClear=Math.min(8,Math.max(1,maxComp+1));
     const secondDropProtected=!rosterHasDst&&drop2&&Number(drop2.capitalScore)<2.5;
-    const opportunityPenalty=(!rosterHasDst?1:0)+(sameBye?1:0)+(secondDropProtected?1:0);
+    const noVerifiedWeeklyEdge=!Number.isFinite(x.week1Rank);
+    const opportunityPenalty=(!rosterHasDst?1:0)+(sameBye?1:0)+(secondDropProtected?1:0)+(noVerifiedWeeklyEdge?2:0);
     const ourBandHigh=Math.max(1,marketClear-opportunityPenalty),ourBandLow=Math.max(0,ourBandHigh-2);
-    const decision=ourBandHigh>=maxComp?'BID WINDOW':'PASS ABOVE CAP';
+    const decision=noVerifiedWeeklyEdge?'WATCH — WEEKLY EDGE UNVERIFIED':ourBandHigh>=maxComp?'BID WINDOW':'PASS ABOVE CAP';
     const opponents=market.slice(0,3).map(m=>`${esc(m.manager_name)}: ${m.qbs.length?esc(m.qbs.join('/')):'kein aktiver QB'} · Claim ~${m.claim_probability}% · ${m.bid_low_pct}–${m.bid_high_pct}% FAAB · Restbudget ${Number.isFinite(m.faab_remaining)?m.faab_remaining:'–'}`).join('<br>');
     const cost=!rosterHasDst?` · 2-Slot-Kosten: QB-Add kostet vorauss. ${esc(drop1?.p?.name||'Drop #1')}; spätere D/ST zusätzlich ${esc(drop2?.p?.name||'Drop #2')}`:'';
-    return `<div class="coach-row"><div><b>${esc(x.p.name)}</b><div class="tiny">QB · Panel ${x.r.rank.toFixed(1)}${sameBye?' · gleiche Bye wie aktueller QB':''}${cost}</div><div class="tiny">Stärkste Konkurrenz: ${opponents||'keine belastbare Konkurrenz aus Live-Kadern'}</div></div><div><b>${ourBandLow}–${ourBandHigh}%</b><div class="tiny">${decision} · Markt-Clear ~${marketClear}% · Opportunity-Cost-Abzug ${opportunityPenalty} · kein Autoclaim</div></div></div>`;
+    return `<div class="coach-row"><div><b>${esc(x.p.name)}</b><div class="tiny">QB · Panel ${x.r.rank.toFixed(1)}${Number.isFinite(x.week1Rank)?' · FantasyPros W1 #'+x.week1Rank:''}${sameBye?' · gleiche Bye wie aktueller QB':''}${cost}</div><div class="tiny">Stärkste Konkurrenz: ${opponents||'keine belastbare Konkurrenz aus Live-Kadern'}</div></div><div><b>${ourBandLow}–${ourBandHigh}%</b><div class="tiny">${decision} · Markt-Clear ~${marketClear}% · Opportunity-Cost-Abzug ${opportunityPenalty} · kein Autoclaim</div></div></div>`;
   }).join('');
   return '<div class="coach-section-title">QB-OPTIONEN · LIVE WAIVER-KONKURRENZ</div><div class="notice">Alle neun gegnerischen Sleeper-Kader + verbleibendes FAAB werden beim Season-Sync berücksichtigt. Aktuelle QB-Situation dominiert; bereits beobachtete 2026-Waiver-Gebote und historische QB-Rosterneigung wirken nur als begrenzte Priors. Gebotsbänder sind Schätzungen, keine Gewissheit.</div>'+rows;
 }
