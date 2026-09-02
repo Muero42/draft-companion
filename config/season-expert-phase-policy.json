@@ -133,5 +133,65 @@
     "trade value must be current redraft not dynasty",
     "K/DST do not inherit skill-position weights",
     "phase changes require no user action"
-  ]
+  ],
+  "dst_streaming": {
+    "strategy": "ONE_DST_DEFAULT_SELECTIVE_LOOKAHEAD_STASH",
+    "current_week_channels": [
+      "CURRENT_WEEK_TIER",
+      "STREAMING_WEEKLY",
+      "MATCHUP_ENVIRONMENT"
+    ],
+    "multi_week_channels": [
+      "MULTI_WEEK_STREAMING",
+      "SCHEDULE_LOOKAHEAD"
+    ],
+    "sources": {
+      "current_week": [
+        "RotoBaller DST tiers",
+        "Joey Pollizze weekly DST analysis",
+        "FantasyPros current-week DST ECR"
+      ],
+      "multi_week": [
+        "Joey Pollizze rolling multi-week DST plan"
+      ],
+      "stabilizers": [
+        "Ted Chmyz accuracy prior",
+        "defense quality",
+        "opponent QB/OL",
+        "Vegas implied points/spread",
+        "injuries",
+        "sack/turnover environment"
+      ]
+    },
+    "lookahead": {
+      "scan_weeks_ahead": 2,
+      "default_rostered_dst_count": 1,
+      "second_dst_allowed": true,
+      "requires_exception_gate": true,
+      "prefer_free_agent_acquisition": true,
+      "faab_or_waiver_priority_requires_exceptional_edge": true,
+      "rolling_source_required": true,
+      "stale_multiweek_source_weight": 0
+    },
+    "stash_gate": {
+      "required": [
+        "projected_future_dst_edge_material",
+        "weak_opponent_or_exceptional_matchup_profile",
+        "bench_slot_opportunity_cost_acceptable",
+        "future_availability_risk_material",
+        "transaction_cost_acceptable"
+      ],
+      "score_concept": "expected_future_dst_edge * lineup_win_probability_relevance - bench_option_value - transaction_cost - flexibility_loss",
+      "roster_slot_policy": "Do not reserve a bench slot mechanically for lottery upside; compare its option value against the concrete DST edge.",
+      "revocable": true,
+      "invalidators": [
+        "injury/news creates higher-value bench use",
+        "role change creates superior RB/WR/TE option",
+        "future matchup deteriorates",
+        "stash DST becomes unnecessary or replaceable",
+        "transaction cost rises"
+      ]
+    },
+    "watcher_synergy": "Fast news/role monitoring reduces the value of keeping a slot empty purely for hypothetical events, but does not eliminate bench option value."
+  }
 }
