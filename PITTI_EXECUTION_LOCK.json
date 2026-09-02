@@ -259,10 +259,10 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4189_POSTMERGE_RESEAL",
+    "status": "RC4189_POSTMERGE_RESEAL_SEALED",
     "nextGate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY"
   },
-  "status": "RC4189_POSTMERGE_RESEAL_IN_PROGRESS",
+  "status": "RC4189_POSTMERGE_RESEAL_SEALED_PENDING_CI",
   "gate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY",
   "nextGate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY",
   "deploymentUpdateContract": {
@@ -274,10 +274,10 @@
   },
   "handoff": {
     "generation": "20260902T1915Z-v230",
-    "status": "RC4189_POSTMERGE_RESEAL_VALIDATION_PENDING",
-    "ready": false,
-    "secondPass": false,
-    "resume": "rc4.189 merged main; v230 post-merge reseal exact-head validation, deployment parity, then one device canary.",
+    "status": "PASS_POSTMERGE_RESEAL_PENDING_CI",
+    "ready": true,
+    "secondPass": true,
+    "resume": "rc4.189 merged main; v230 resealed. Require exact-head strict gates green, deployment parity, then one physical canary.",
     "transaction_in_progress": false
   },
   "expertV45": {
