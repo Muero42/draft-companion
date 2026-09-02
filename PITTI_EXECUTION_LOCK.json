@@ -12,12 +12,12 @@
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.185",
+    "appVersion": "v11.8.0-rc4.189",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.183 DEVICE_REJECTED: Kader rendered FA/Add-Drop and IR/Reserve Charbonnet as ordinary drop target",
+    "latestAndroidObserved": "v11.8.0-rc4.188 PASS: Waiver/FA route, live ownership, kicker isolation and active-drop semantics physically verified",
     "latestPreinstallVerified": "rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.185 merged baseline; PR #108 unmerged Season candidate",
@@ -32,7 +32,7 @@
     "preinstallReferenceRun": 33597607588,
     "preinstallReferenceArtifactId": 9833935479,
     "preinstallHashSemantics": "GitHub candidate-package artifact digest; package/re-extract PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.183",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.188",
     "latestAndroidFunctionalVerified": "rc4.169 remains accepted rollback authority; rc4.183 DEVICE_REJECTED",
     "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
@@ -259,11 +259,11 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "PR108_V229_HANDOFF_REPAIRED_EXACT_HEAD_REVALIDATION",
-    "nextGate": "PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
+    "status": "RC4189_RESEAL_EXACT_HEAD_REVALIDATION",
+    "nextGate": "RC4189_EXACT_HEAD_ALL_GREEN_THEN_PROMOTION"
   },
-  "status": "PR108_V229_HANDOFF_REPAIRED",
-  "gate": "PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
+  "status": "RC4189_RESEAL_IN_PROGRESS",
+  "gate": "RC4189_EXACT_HEAD_ALL_GREEN_THEN_PROMOTION",
   "nextGate": "Query newest PR #108 exact head after v229 repair; require all strict gates green, merge, rc4.186 promotion/deploy parity, then one physical canary.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
@@ -274,10 +274,10 @@
   },
   "handoff": {
     "generation": "20260902T1325Z-v229",
-    "status": "PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING",
+    "status": "RC4189_RESEAL_VALIDATION_PENDING",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.185 merged baseline; PR #108 open. v229 removed stale v227/PR102 current authority from CURRENT/LOCK/PREFLIGHT. Revalidate newest exact head; then Lawrence market lane and rc4.186.",
+    "resume": "rc4.189 reseal in progress after PR #115 merge; require exact-head strict gates green before promotion. Lawrence/DST lanes remain evidence-gated.",
     "transaction_in_progress": false
   },
   "expertV45": {
