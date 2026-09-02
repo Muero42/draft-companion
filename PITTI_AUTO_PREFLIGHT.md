@@ -87,14 +87,16 @@ Otherwise continue AUTO.
 - A full paired 15-round v4/v5 mock is invalid unless the exported backup contains exactly 30 active-draft fixtures covering all 15 own picks twice.
 
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
-- Current handoff generation = **20260902T1130Z-v227**.
-- Physical Android = **rc4.183 installed/observed, DEVICE_REJECTED** for Kader FA-card routing + IR ordinary-drop semantics; former startup dead-state was crossed.
-- PR #100/#101 are merged authority. rc4.184 PR #102 is **OPEN / UNMERGED** and must be newest-exact-head all-green before merge/deploy/device canary.
-- Device testing is final confirmation only. No device-side trial-and-error/cache clearing/reinstall loops.
-- AUTO/AUTO BLOCK: no progress/status/acknowledgement/promise-only messages, no empty reply after tool work, never “AUTO läuft weiter” followed by turn termination; checkpoint + re-inventory + continue in the same turn while safe executable work exists.
-- STATUS remains report-only.
-- Live Sleeper direct league/draft/rosters state is current roster/ownership/slot authority; Watcher is evidence-only.
-- Accepted rollback authority remains rc4.169.
+- Current handoff generation = **20260902T1325Z-v229**.
+- Current mode = **POST_DRAFT_SEASON_COMPANION**.
+- Source baseline = **rc4.185 merged**; current candidate = **PR #108 OPEN / UNMERGED** on `pitti/trade-slot-geometry`.
+- Latest physical Android = **rc4.183 installed/observed, DEVICE_REJECTED** for Kader FA-card routing + IR ordinary-drop semantics. Accepted rollback = **rc4.169**.
+- PR #108 preserves canonical Sleeper slots/FLEX (RB/WR/TE), legal two-TE paths, Trade Board v5 real slot geometry, ACTIVE-only ordinary drops, full 10-team Sleeper league state, manager/FAAB inputs, and Lawrence QB2 + future D/ST two-active-drop opportunity cost.
+- The explicit invariant “Sleeper roster_id is a league roster identifier, NOT the historical draft slot.” must remain. Never restore draft-slot identity or static Trade Board positional depths.
+- Newest PR #108 exact head must pass all strict gates before merge. Then rc4.186 promotion, post-merge/deploy parity, and exactly one physical canary.
+- AUTO/AUTO BLOCK = continuous same-turn execution while safe positive-value work exists: no interim progress/status/acknowledgement, no empty response after tool work, no promise-only “AUTO läuft weiter”; checkpoint + re-inventory after every package; external wait blocks only its dependent lane.
+- STATUS = report-only and must not trigger tools/polling/work.
+- Live Sleeper direct league/users/rosters state = current roster/ownership/manager/slot/FAAB authority; Watcher evidence-only; completed draft immutable history.
 
 ## 9. AUTO TURN TERMINATION — HARD GATE
 - Completing one work package is **not** permission to end the assistant turn.
@@ -116,7 +118,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 
 
 ## HISTORICAL v169 TAKEOVER CANARIES — NOT CURRENT AUTHORITY
-- Historical record only: generation `20260829T1244Z-v178` belonged to that old takeover and MUST NOT override current generation 20260902T1130Z-v227.
+- Historical record only: generation `20260829T1244Z-v178` belonged to that old takeover and MUST NOT override current generation 20260902T1325Z-v229.
 - main/source/deployment/accepted Android authority = rc4.104.
 - Exact 13-file main/gh-pages runtime parity = PASS.
 - Android rc4.104 observed; completed post-draft Snapshot path = PASS.
@@ -260,3 +262,10 @@ Generation: `20260901T2210Z-v224`. Supersedes older current-version/device/gate/
 - Never keep an AUTO response open through repeated manual CI/deploy polling. Perform at most one immediate status read after launching/triggering external work.
 - If external work is still pending, checkpoint it in `waiting_external`, execute all independent lanes, then end the turn once if nothing else is executable. Do not claim background continuation.
 - `STATUS` is strictly report-only. It must not be needed to cancel, unstick, or resume an AUTO turn.
+
+
+## v229 CURRENT HANDOFF SUPERSESSION — 2026-09-02
+- Generation `20260902T1325Z-v229` supersedes v227/v228 current pointers wherever they conflict.
+- Any earlier CURRENT statement saying PR #102/rc4.184 is open, or generation v227 is current, is historical only.
+- Current release lane = rc4.185 merged baseline + PR #108 OPEN/UNMERGED; next release after all-green merge = rc4.186.
+- Lawrence lane and full-league-state architecture are current and must survive chat takeover.

@@ -1,34 +1,34 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260902T1130Z-v227",
-  "updated_at": "2026-09-02T11:30:00Z",
+  "handoff_generation": "20260902T1325Z-v229",
+  "updated_at": "2026-09-02T13:36:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.184"
+    "source_candidate": "v11.8.0-rc4.185"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.184 PR #102 exact-head repair/revalidation",
-    "candidate_branch": "pitti/rc4184-release",
+    "season_candidate": "v11.8.0-rc4.185 main + PR #108 season market/trade candidate",
+    "candidate_branch": "pitti/trade-slot-geometry",
     "android_acceptance_pending": false,
-    "test_challenger": "v11.8.0-rc4.184",
+    "test_challenger": "v11.8.0-rc4.185",
     "ci": {
-      "candidate_package": "FAIL run 33624621685: behavioral contract stopped on stale guard/canonical metadata",
-      "release_contract_v2": "FAIL run 33624621673: runtime/Season regressions through waiver/IR routing PASS; guard then failed stale source/device/Library metadata",
-      "project_guardrails": "FAIL run 33624621552: execution-lock/anti-regression metadata inconsistencies",
-      "validated_code_head": "8b02812180dde8b15b48ac734fcb6b88159b8a93",
-      "scope": "PR #102 pre-v227 exact head; failures are handoff/guard metadata, not restoration of rejected Kader/IR behavior"
+      "candidate_package": "v229 sealed head bf84c32 failed only because guard executable still capped source_candidate at rc4.184 and seal status enum accepted only PASS/SUPERSEDED_PENDING_RESEAL. Runtime startup and Season semantic regressions passed before guard failure. Guard updated to rc4.185/PR108; final reseal must use status PASS.",
+      "release_contract_v2": "v229 sealed head bf84c32 reached runtime/Season PASS layers, then same stale guard authority/seal-state failure. No product rollback indicated.",
+      "project_guardrails": "v229 sealed head bf84c32 failed same stale guard source-candidate/seal-state contract; guard updated without reverting product behavior.",
+      "validated_code_head": "bf84c32a08fd4f85c63d01b0274e9b867a0b8a2c",
+      "scope": "PR #108 trade-slot + full league-state/waiver-market candidate. v229 is handoff-consistency repair; no product behavior rollback."
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "v11.8.0-rc4.184 PR #102 OPEN/UNMERGED; exact-head gates RED on stale handoff/guard metadata while runtime Season semantics passed; no deploy/device canary yet.",
+    "preview_candidate": "rc4.185 is merged source baseline. PR #108 is OPEN/UNMERGED and adds canonical Trade Board v5 slot geometry, full 10-team Sleeper league-state persistence, opponent FAAB/waiver competition modeling, QB opportunity cards and QB+D/ST two-active-drop opportunity cost. No PR108 deployment/device acceptance.",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "latest_package_sha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "package_reference_run": 33597607588,
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "rc4.184 NOT DEPLOYED/NOT VERIFIED; deployment forbidden until PR #102 exact-head strict gates are green and merged.",
+    "deployed_pages_head": "rc4.185 source baseline merged; deployment/device parity not accepted. PR #108 not merged/deployed.",
     "installed_android": "v11.8.0-rc4.183",
     "latest_android_observed": "v11.8.0-rc4.183",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
@@ -51,7 +51,7 @@
       "classification": "DEVICE_REJECTED_WAIVER_SURFACE_AND_IR_DROP_SEMANTICS"
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.183",
-    "source_candidate_status": "RELEASE_CANDIDATE_UNMERGED",
+    "source_candidate_status": "RELEASE_CANDIDATE_VALIDATING",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -127,10 +127,10 @@
     "observed": "Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR; transaction auto-detected without user disclosing drop."
   },
   "season_contract": {
-    "live_roster_and_ownership": "Sleeper direct draft/league/rosters APIs are current roster and ownership authority; Watcher is evidence-only and must not gate Kader hydration",
+    "live_roster_and_ownership": "Sleeper direct league/users/rosters state is current 10-team roster, manager, ownership, starter/IR and FAAB authority; current transaction round is optional market evidence; Watcher remains evidence-only.",
     "draft_roster": "historical only",
     "current_roster": "live Sleeper roster",
-    "transaction_history": "preserve separately",
+    "transaction_history": "Persist current Sleeper transaction-round evidence separately; use completed waiver bids only as bounded current-season priors, never as deterministic future bids.",
     "fa_pool": "players unowned across all league rosters; never merely undrafted players",
     "watcher_evidence": "fail-closed; companion-feed gate must PASS",
     "acquisition_output": "concrete ADD X / DROP Y; CLEAR ADD/WATCH/HOLD; confidence/freshness/provenance/invalidator",
@@ -140,11 +140,15 @@
       "FAAB/waiver market model",
       "lineup/start-sit",
       "trade evaluation"
-    ]
+    ],
+    "waiver_competition": "For candidate players, compare all 9 opponent live rosters, QB/position need, remaining FAAB, bounded manager-history prior and current-season waiver-bid prior.",
+    "roster_capacity_cost": "Acquisition evaluation must account for subsequent mandatory D/ST roster slot. If QB2 is added before D/ST, price both expected active drops; IR/Reserve is never an ordinary capacity/drop target.",
+    "qb2_exception": "The draft-specific one-QB rule is not a generic in-season ban. A materially valuable QB2 may surface when upside/value clears roster opportunity cost; same-bye and future D/ST drop cost reduce willingness to pay.",
+    "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "PR102_EXACT_HEAD_HANDOFF_GUARD_REPAIR",
-    "nextGate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY"
+    "status": "PR108_V229_GUARD_AUTHORITY_REPAIRED_FINAL_RESEAL",
+    "nextGate": "PR108_FINAL_RESEALED_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -155,7 +159,7 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "v11.8.0-rc4.184 PR #102 release candidate; rc4.183 is the physically observed DEVICE_REJECTED predecessor; accepted rollback remains rc4.169.",
+  "source_authority": "rc4.185 merged source baseline; PR #108 is current unmerged Season candidate. rc4.183 remains latest physical observation and was rejected; rc4.169 remains accepted rollback.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
@@ -163,13 +167,26 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "rc4184-pr102-exact-head-validation",
+        "id": "pr108-v229-exact-head-revalidation",
         "lane": "companion",
-        "goal": "Repair v226/v227 handoff/guard inconsistencies, then make PR #102 exact head fully green before merge/deploy.",
+        "goal": "Validate newest PR #108 exact head after v229 handoff consistency repair; fix only reproduced failures without reverting correct Season behavior.",
         "state": "active"
       }
     ],
-    "ready": [],
+    "ready": [
+      {
+        "id": "lawrence-market-live",
+        "lane": "waiver",
+        "goal": "After PR #108 validation/merge, use persisted all-10-team Sleeper state to evaluate Trevor Lawrence opponent QB need, remaining FAAB, manager/current-season priors, same-bye cost and mandatory future D/ST second-active-drop cost.",
+        "state": "dependency_wait"
+      },
+      {
+        "id": "rc4186-promotion",
+        "lane": "release",
+        "goal": "After PR #108 all-green merge, promote rc4.186, verify post-merge/deploy parity, then exactly one physical canary.",
+        "state": "dependency_wait"
+      }
+    ],
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
@@ -422,19 +439,20 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "PR #102 exact-head handoff/guard repair and strict revalidation remain executable."
+      "reason": "PR #108 final checkpoint/reseal and exact-head validation remain executable."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260902T1130Z-v227",
-    "status": "PASS_PENDING_STRICT_REVALIDATION",
+    "generation": "20260902T1325Z-v229",
+    "status": "PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.183 DEVICE_REJECTED for Kader FA cards + IR drop semantics; #100/#101 merged. rc4.184 PR #102 remains open. v227 repairs stale v224/v225/PR98 authority; query the new exact head and require all strict gates green before merge/deploy/device canary.",
+    "resume": "rc4.185 merged baseline; PR #108 open/unmerged. v229 fixes stale v227/PR102 current pointers found during final handoff audit. Query newest PR #108 exact head, preserve live roster_id identity invariant, require all strict gates green; then Lawrence live opponent/FAAB analysis and rc4.186 promotion.",
     "transaction_in_progress": false
   },
-  "status": "HANDOFF_RC4184_PR102_EXACT_HEAD_REVALIDATION",
-  "gate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY",
-  "nextGate": "Verify actual newest PR #102 head after v227 repair; fix only reproduced exact failures; merge only all-green; verify post-merge deployment; then one rc4.184 Android canary."
+  "status": "PR108_V229_HANDOFF_REPAIRED",
+  "gate": "PR108_FINAL_RESEALED_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
+  "nextGate": "Final reseal with PASS status after rc4.185/PR108 guard extension; query resulting exact PR #108 head and require all strict gates green.",
+  "handoffGeneration": "20260902T1325Z-v229"
 }

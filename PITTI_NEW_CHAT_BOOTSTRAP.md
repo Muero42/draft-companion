@@ -1,12 +1,12 @@
-# PITTI NEW CHAT BOOTSTRAP — v227
-Generation: `20260902T1130Z-v227`
+# PITTI NEW CHAT BOOTSTRAP — v229
+Generation: `20260902T1325Z-v229`
 
-Read: COMMAND → CURRENT → SEAL → LOCK → PREFLIGHT → PROJECT_STATE EOF → CURRENT HANDOFF → BOOTSTRAP → MATRIX → actual main/PR/CI evidence.
+Read: COMMAND → CURRENT → SEAL → LOCK → PREFLIGHT → PROJECT_STATE EOF → CURRENT HANDOFF → BOOTSTRAP → MATRIX → actual PR/CI evidence.
 
-Current truth: rc4.183 installed/observed and DEVICE_REJECTED for Kader FA-card + IR ordinary-drop semantics; former startup dead-state crossed. #100/#101 merged. rc4.184 PR #102 open/unmerged. v227 repairs stale v224/v225/PR98 authority and creates a new exact head that must be queried.
+Current truth: POST_DRAFT_SEASON_COMPANION. v229 final audit removed stale v227/PR102 current pointers from CURRENT/LOCK/PREFLIGHT. rc4.185 is merged source baseline. PR #108 on branch `pitti/trade-slot-geometry` is OPEN/UNMERGED and contains canonical trade-slot geometry, removal of blanket TE2 waiver penalty, full 10-team Sleeper league-state persistence (manager/roster/starter/reserve/taxi/FAAB), and opponent waiver-market inputs. Latest prior exact head 0a41ca11: release contract PASS, project guardrails PASS, candidate package FAIL only because existing live-trade regression requires the explicit invariant text “Sleeper roster_id is a league roster identifier, NOT the historical draft slot.” Runtime identity behavior remained correct. That invariant has now been restored; query latest exact head and CI, never reuse older results.
 
-First gate: newest PR #102 exact head all strict gates green → merge → verify post-merge deployment → exactly one rc4.184 physical canary.
+Lawrence lane: no manual opponent-roster screenshots as architecture. After PR #108 is valid, use Sleeper all-team state for opponent QB need + remaining FAAB + bounded manager/current-season priors. Our acquisition cost must include Lawrence active-slot drop AND the later mandatory D/ST active drop; IR/Reserve never ordinary capacity. Same bye with Jayden Daniels is a negative, not an automatic veto. Draft-era no-QB2 is not an in-season hard ban.
 
-AUTO/AUTO BLOCK: continuous same-turn execution; AUTO queue takeover reconstructs/continues active and ready lanes from CURRENT after every chat switch; checkpoint/re-inventory after every package; no progress/status/ack, no empty replies, no promise-only “AUTO läuft weiter”. External wait does not globally stop independent work. STATUS = report-only.
+AUTO/AUTO BLOCK: continuous same-turn execution; reconstruct active/ready lanes from CURRENT; checkpoint/re-inventory after every package; no interim progress/status/ack, no empty response, no promise-only continuation. External wait blocks only its lane. STATUS = report-only.
 
-No device-side trial-and-error/cache clearing/reinstall loops. Do not regress to rc4.160 or rc4.171-176 device testing. Accepted rollback = rc4.169. Sleeper direct state is roster/ownership/slot authority; Watcher evidence-only.
+Device: rc4.183 remains latest physical observation and DEVICE_REJECTED for Kader FA-card + IR ordinary-drop semantics. Accepted rollback rc4.169. No device-side trial-and-error; next device action only after rc4.186 automated gates/deploy parity, exactly one canary.
