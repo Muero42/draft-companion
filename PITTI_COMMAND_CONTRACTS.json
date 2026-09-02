@@ -169,7 +169,7 @@
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "09:06 CEST screenshot: rc4.182 visible; Kader selected; Draft leak absent; Sleeper Live-State '-' and Live-Kader loading; DEVICE_REJECTED."
   },
-  "currentGate": "NO_NEW_VERSION_UNTIL_HYDRATION_ROOT_CAUSE_REPRODUCED_OFF_DEVICE",
+  "currentGate": "RC4182_HYDRATION_FIX_STRICT_VALIDATION",
   "handoffGeneration": "20260901T2210Z-v224",
   "handoff_generation": "20260901T2210Z-v224",
   "statusCommand": {
