@@ -24,4 +24,11 @@ assert(p.dst_streaming.stash_gate.required.includes('bench_slot_opportunity_cost
 assert(p.dst_streaming.stash_gate.required.includes('future_availability_risk_material'));
 assert.equal(p.dst_streaming.stash_gate.revocable,true);
 assert(p.dst_streaming.sources.multi_week.some(x=>x.includes('Joey Pollizze')));
+assert.equal(p.lineup.projections_source_policy,'PITTI-selected weekly projection sources; never Sleeper projections');
+assert.equal(p.lineup.matchup_source_policy,'PITTI-selected matchup evidence; never Sleeper matchup grades');
+assert.equal(p.lineup.starter_display_same_fields_as_alternatives,true);
+assert.equal(p.kicker.comparison_surface,'WAIVER_FA_ONLY');
+assert.equal(p.kicker.generic_skill_drop_pool,false);
+assert.equal(p.kicker.compare_only_against_available_kickers,true);
+assert.equal(p.kicker.current_roster_kicker_is_benchmark,true);
 console.log('SEASON_EXPERT_PHASE_POLICY_PASS');
