@@ -2,21 +2,22 @@
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260902T1130Z-v227",
   "created_at": "2026-09-02T11:31:00Z",
-  "status": "SUPERSEDED_PENDING_RESEAL",
-  "handoff_ready": false,
-  "second_pass_pass": false,
+  "status": "PASS",
+  "handoff_ready": true,
+  "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {},
   "branch_locks": {
     "repo": "Muero42/draft-companion",
-    "branch": "pitti/rc4184-release",
+    "branch": "pitti/rc4184-postmerge-gate-repair",
     "source_candidate": "v11.8.0-rc4.184",
     "accepted_android_authority": "v11.8.0-rc4.169",
     "installed_android": "v11.8.0-rc4.183",
     "android_acceptance": "FAIL_DEVICE_REJECTED_WAIVER_SURFACE_AND_IR_DROP",
-    "exact_gate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY",
+    "exact_gate": "PR103_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_VERIFY",
     "pre_repair_head": "8b02812180dde8b15b48ac734fcb6b88159b8a93",
-    "content_head_before_seal": "8858fc798573fc34c053074115653f1a45bcf221"
+    "content_head_before_seal": "8858fc798573fc34c053074115653f1a45bcf221",
+    "pr103_exact_head": "6dbb4f9040476c95740eeb32b4396855078f73ee"
   },
   "checks": {
     "generation_alignment": true,
@@ -33,6 +34,6 @@
     "expert_phase_plan_preserved": true,
     "integrity_includes_runtime_and_guard": true
   },
-  "exact_gate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY",
-  "note": "Post-merge guard exposed missing bootstrap AUTO queue takeover token. PR #103 repairs documentation/guard contract only; reseal after exact-head validation."
+  "exact_gate": "PR103_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_VERIFY",
+  "note": "PR #103 exact head 6dbb4f9 passed candidate package, project guardrails and release contract. Bootstrap AUTO queue takeover canary restored; runtime product code unchanged."
 }
