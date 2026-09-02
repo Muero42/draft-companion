@@ -95,8 +95,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4182_HYDRATION_ROOT_CAUSE_REPRODUCED_OFF_DEVICE",
-    "nextGate": "VALIDATE_STORAGE_CLEANUP_FIX_WITH_REAL_SHAPE_REGRESSION_AND_FULL_GATES"
+    "status": "RC4182_HYDRATION_ROOT_CAUSE_FIX_PR98_WAITING_CI",
+    "nextGate": "PR98_FULL_GATES_THEN_MERGE_AND_ONLY_THEN_VERSION_PROMOTION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -112,15 +112,15 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "AUTO_ACTIVE",
+    "status": "WAITING_EXTERNAL",
     "active": [],
-    "ready": [
+    "ready": [],
+    "waiting_external": [
       {
-        "id": "rc4182-storage-rootcause-validation",
-        "reason": "Run regression and strict gates."
+        "id": "pr98-ci",
+        "reason": "PR #98 opened at head e881446046c4819e72791e1e43b4149776e44e4d. GitHub returned no PR workflow runs on the single permitted immediate status read; wait for external CI before merge/version promotion."
       }
     ],
-    "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
       {
@@ -365,8 +365,9 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": "AUTONOMOUS_VALIDATION_REMAINS"
+      "allowed": true,
+      "code": "EXTERNAL_CI_ONLY",
+      "reason": "Root cause reproduced and bounded fix/regression committed; no independent positive-value lane remains before PR CI."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
