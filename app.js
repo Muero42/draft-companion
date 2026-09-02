@@ -29,6 +29,9 @@ async function fetchSeasonLeagueState(draft){
     jf(S+'/league/'+encodeURIComponent(leagueId)+'/users?_='+bust,'Sleeper Manager',7000).catch(()=>[])
   ]);
   if(!Array.isArray(rosters)||!rosters.length)return{ok:false,reason:'LEAGUE_ROSTERS_EMPTY',leagueId};
+  const transactionRound=Math.max(1,Number(league?.settings?.leg||1));
+  let transactions=[];try{transactions=await jf(S+'/league/'+encodeURIComponent(leagueId)+'/transactions/'+transactionRound+'?_='+bust,'Sleeper Transaktionen',6000)}catch(e){console.warn('PITTI optional transaction market unavailable',e)}
+  if(!Array.isArray(transactions))transactions=[];
   const slot=Number(els.slot.value||9);
   let userId=String(store.text(SEASON_USER_ID_KEY,'')||'').trim();
   const mappedRosterId=Number(draftMeta?.slot_to_roster_id?.[String(slot)]??draftMeta?.slot_to_roster_id?.[slot]);
@@ -43,8 +46,8 @@ async function fetchSeasonLeagueState(draft){
   const league_rosters=rosters.map(r=>{const u=userById[String(r.owner_id||'')]||{},settings=r.settings||{};return{roster_id:Number(r.roster_id),owner_id:String(r.owner_id||''),manager_name:u.display_name||u.username||('Roster '+r.roster_id),players:(r.players||[]).map(String),starters:(r.starters||[]).map(String),reserve:(r.reserve||[]).map(String),taxi:(r.taxi||[]).map(String),waiver_position:Number(settings.waiver_position),waiver_budget_used:Number(settings.waiver_budget_used||0),wins:Number(settings.wins||0),losses:Number(settings.losses||0)};});
   const faabBudget=Number(league?.settings?.waiver_budget||0);
   for(const rr of league_rosters)rr.faab_remaining=faabBudget>0?Math.max(0,faabBudget-rr.waiver_budget_used):null;
-  const state={ok:true,league_id:leagueId,user_id:userId,roster_id:roster.roster_id,generated_at:Date.now(),league,my_roster:roster,rosters,league_rosters,users:Array.isArray(users)?users:[],faab_budget:faabBudget,my_starters:roster.starters||[],my_players:roster.players||[],my_reserve:roster.reserve||[],ownership,source:'Sleeper direct'};
-  try{store.setText('v118_seasonLeagueState',JSON.stringify({generated_at:state.generated_at,league_id:leagueId,faab_budget:faabBudget,rosters:league_rosters}));}catch{}
+  const state={ok:true,league_id:leagueId,user_id:userId,roster_id:roster.roster_id,generated_at:Date.now(),league,my_roster:roster,rosters,league_rosters,users:Array.isArray(users)?users:[],faab_budget:faabBudget,transaction_round:transactionRound,transactions,my_starters:roster.starters||[],my_players:roster.players||[],my_reserve:roster.reserve||[],ownership,source:'Sleeper direct'};
+  try{store.setText('v118_seasonLeagueState',JSON.stringify({generated_at:state.generated_at,league_id:leagueId,faab_budget:faabBudget,transaction_round:transactionRound,rosters:league_rosters,transactions:transactions.map(t=>({transaction_id:t.transaction_id,type:t.type,status:t.status,roster_ids:t.roster_ids,settings:t.settings,adds:t.adds,drops:t.drops,created:t.created}))}));}catch{}
   return state;
 }
 function seasonRosterRows(season,players,draftMine){if(!season?.ok||!season.my_roster)return null;const draftById=new Map((draftMine||[]).map(pk=>[String(pk.player_id),pk])),reserve=new Set((season.my_roster.reserve||[]).map(String));return[...new Set((season.my_roster.players||[]).map(String))].map(pid=>{const p=sleeperPlayerRow(pid,players),base=draftById.get(pid);return{pk:base||{player_id:pid,pick_no:999,metadata:{}},p:{...p,injury:reserve.has(pid)?(p.injury||'IR/RESERVE'):p.injury},r:rankFor(p.name,p.pos),a:adpFor(p.name),seasonStatus:reserve.has(pid)?'RESERVE':'ACTIVE'};});}
@@ -2912,10 +2915,15 @@ function waiverOpponentMarket(target,players){
     const best=qbs[0]?.r?.rank??999,upgrade=target.p?.pos==='QB'?Math.max(0,best-targetRank):0;
     const activeCount=rows.filter(x=>x.seasonStatus==='ACTIVE').length,benchCost=Math.max(0,activeCount-14);
     const remaining=Number.isFinite(Number(rr.faab_remaining))?Number(rr.faab_remaining):Math.max(0,budget-Number(rr.settings?.waiver_budget_used||rr.waiver_budget_used||0));
-    const need=clamp(upgrade/8+(qbs.length===0?5:0)-(qbs.length>=2?1.5:0)-benchCost*.15,0,10);
+    const managerName=rr.manager_name||('Roster '+rr.roster_id),profile=managerProfile(managerName),histQb=Number(profile?.historical?.positions?.QB?.finalCount);
+    const historyPrior=Number.isFinite(histQb)?clamp((histQb-1)*.9,-.3,1.2):0;
+    const txBids=(season.transactions||[]).filter(t=>(t.roster_ids||[]).map(Number).includes(Number(rr.roster_id))&&String(t.type||'').toLowerCase()==='waiver'&&String(t.status||'').toLowerCase()==='complete').map(t=>Number(t.settings?.waiver_bid)).filter(Number.isFinite);
+    const txPrior=txBids.length?clamp((Math.max(...txBids)/Math.max(1,budget))*3,0,1.2):0;
+    const liveNeed=upgrade/8+(qbs.length===0?5:0)-(qbs.length>=2?1.5:0)-benchCost*.15;
+    const need=clamp(liveNeed+historyPrior+txPrior,0,10);
     const claimProbability=clamp(Math.round(8+need*8),5,85);
     const bidMid=clamp(need*.65,0,8),bidLow=Math.max(0,Math.floor(bidMid-1)),bidHigh=Math.min(10,Math.ceil(bidMid+1.5));
-    return{roster_id:Number(rr.roster_id),manager_name:rr.manager_name||('Roster '+rr.roster_id),qbs:qbs.map(x=>x.p.name),need,faab_remaining:remaining,claim_probability:claimProbability,bid_low_pct:bidLow,bid_high_pct:bidHigh};
+    return{roster_id:Number(rr.roster_id),manager_name:managerName,qbs:qbs.map(x=>x.p.name),need,live_need:liveNeed,manager_history_prior:historyPrior,current_season_bid_prior:txPrior,faab_remaining:remaining,claim_probability:claimProbability,bid_low_pct:bidLow,bid_high_pct:bidHigh};
   }).sort((a,b)=>b.need-a.need);
 }
 function seasonActiveDropOrder(){
@@ -2941,7 +2949,7 @@ function renderQbOpportunityBoard(){
     const cost=!rosterHasDst?` · 2-Slot-Kosten: QB-Add kostet vorauss. ${esc(drop1?.p?.name||'Drop #1')}; spätere D/ST zusätzlich ${esc(drop2?.p?.name||'Drop #2')}`:'';
     return `<div class="coach-row"><div><b>${esc(x.p.name)}</b><div class="tiny">QB · Panel ${x.r.rank.toFixed(1)}${sameBye?' · gleiche Bye wie aktueller QB':''}${cost}</div><div class="tiny">Stärkste Konkurrenz: ${opponents||'keine belastbare Konkurrenz aus Live-Kadern'}</div></div><div><b>${ourBandLow}–${ourBandHigh}%</b><div class="tiny">Roster-/FAAB-Marktband · kein Autoclaim</div></div></div>`;
   }).join('');
-  return '<div class="coach-section-title">QB-OPTIONEN · LIVE WAIVER-KONKURRENZ</div><div class="notice">Alle neun gegnerischen Sleeper-Kader + verbleibendes FAAB werden beim Season-Sync berücksichtigt. Gebotsbänder sind current-roster-basierte Schätzungen, keine Gewissheit; Managerhistorie kann später als Prior ergänzt werden.</div>'+rows;
+  return '<div class="coach-section-title">QB-OPTIONEN · LIVE WAIVER-KONKURRENZ</div><div class="notice">Alle neun gegnerischen Sleeper-Kader + verbleibendes FAAB werden beim Season-Sync berücksichtigt. Aktuelle QB-Situation dominiert; bereits beobachtete 2026-Waiver-Gebote und historische QB-Rosterneigung wirken nur als begrenzte Priors. Gebotsbänder sind Schätzungen, keine Gewissheit.</div>'+rows;
 }
 function tradeStarterSlots(){
   const season=lastDraftContext?.season;
