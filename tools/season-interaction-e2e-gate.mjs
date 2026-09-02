@@ -15,4 +15,16 @@ assert(a.includes("e?.name==='AbortError'")&&a.includes('clearTimeout(timer)'),'
 const ss=a.indexOf('function sanitizeResearchEvents('),se=a.indexOf('\nfunction loadResearchEvents',ss);assert(ss>=0&&se>ss);
 const sanitize=new Function('return ('+a.slice(ss,se).replace('function sanitizeResearchEvents','function')+')')();
 assert.equal(sanitize([null,7,'bad',[],{}, {playerId:'ok'}]).length,2);
+
+// Startup-tail dependency audit: every unguarded els.<id> used before the async Season bootstrap must exist in HTML.
+const tailStart=a.indexOf('try{\n  renderAll();setAuto();updateStatus();');
+const bootAt=a.indexOf('const rosterResult=await bootstrapSeasonWorkspace();',tailStart);
+assert.ok(tailStart>=0&&bootAt>tailStart,'Season startup tail not found');
+const tail=a.slice(tailStart,bootAt);
+const htmlIds=new Set([...h.matchAll(/id="([^"]+)"/g)].map(m=>m[1]));
+for(const m of tail.matchAll(/els\.([A-Za-z0-9_]+)/g)){
+  const id=m[1], before=tail.slice(Math.max(0,m.index-80),m.index);
+  if(/if\s*\(\s*els\.[A-Za-z0-9_]+/.test(before)||before.includes('els.'+id+'?'))continue;
+  assert.ok(htmlIds.has(id),'unguarded missing DOM before Season bootstrap: '+id);
+}
 console.log('SEASON_INTERACTION_E2E_GATE_PASS '+v+' automatic-only');
