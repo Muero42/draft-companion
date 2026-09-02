@@ -30,8 +30,14 @@ async function fetchSeasonLeagueState(draft){
   ]);
   if(!Array.isArray(rosters)||!rosters.length)return{ok:false,reason:'LEAGUE_ROSTERS_EMPTY',leagueId};
   const transactionRound=Math.max(1,Number(league?.settings?.leg||1));
-  let transactions=[];try{transactions=await jf(S+'/league/'+encodeURIComponent(leagueId)+'/transactions/'+transactionRound+'?_='+bust,'Sleeper Transaktionen',6000)}catch(e){console.warn('PITTI optional transaction market unavailable',e)}
-  if(!Array.isArray(transactions))transactions=[];
+  const cachedTx=store.get('v118_seasonTransactions',null);
+  let transactions=cachedTx&&String(cachedTx.league_id)===leagueId&&Number(cachedTx.round)===transactionRound&&Array.isArray(cachedTx.transactions)?cachedTx.transactions:[];
+  // Transaction-market evidence is optional and must never delay Kader hydration. Refresh it
+  // asynchronously; live rosters/ownership remain the synchronous Season authority.
+  jf(S+'/league/'+encodeURIComponent(leagueId)+'/transactions/'+transactionRound+'?_='+bust,'Sleeper Transaktionen',5000).then(tx=>{
+    if(!Array.isArray(tx))return;store.set('v118_seasonTransactions',{league_id:leagueId,round:transactionRound,updated_at:Date.now(),transactions:tx});
+    if(lastDraftContext?.season?.league_id===leagueId){lastDraftContext.season.transactions=tx;lastDraftContext.season.transaction_round=transactionRound;if(lastDraftContext?.draftComplete)renderWaiverWorkspace(true);}
+  }).catch(e=>console.warn('PITTI optional transaction market unavailable',e));
   const slot=Number(els.slot.value||9);
   let userId=String(store.text(SEASON_USER_ID_KEY,'')||'').trim();
   const mappedRosterId=Number(draftMeta?.slot_to_roster_id?.[String(slot)]??draftMeta?.slot_to_roster_id?.[slot]);
