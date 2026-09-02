@@ -2871,8 +2871,8 @@ function renderWaiverWorkspace(draftComplete){
   const q=lastPostDraftPairs.filter(x=>x.action!=='HOLD').slice(0,8);
   els.waiverStatus.className=`notice ${q.some(x=>x.action==='CLEAR ADD')?'warn':'ok'}`;
   els.waiverStatus.textContent='Waiver/FA Priority v2 · LIVE Sleeper-Ownership + FA-vs-Roster Engine + frisches Week-1-Waiver-Marktsignal. Numerisches FAAB bleibt bewusst aus: ohne aktuelle Waiver-Woche, Gegnerbudget/Markt und belastbare Rollen-News wäre ein Betrag Scheingenauigkeit.';
-  const special=renderSpecialTeamsBoard();if(!q.length){els.waiverList.innerHTML=special+'<div class="notice ok"><b>SKILL-POSITION HOLD</b> · Aktuell kein materiell positiver RB/WR/TE-Swap aus der geladenen Baseline.</div>';return;}
-  els.waiverList.innerHTML=renderSpecialTeamsBoard()+q.map((x,i)=>{
+  const special=renderSpecialTeamsBoard(),qbOpportunities=renderQbOpportunityBoard();if(!q.length){els.waiverList.innerHTML=special+qbOpportunities+'<div class="notice ok"><b>SKILL-POSITION HOLD</b> · Aktuell kein materiell positiver RB/WR/TE-Swap aus der geladenen Baseline.</div>';return;}
+  els.waiverList.innerHTML=renderSpecialTeamsBoard()+renderQbOpportunityBoard()+q.map((x,i)=>{
     const urgency=x.action==='CLEAR ADD'?(x.score>=10?'P1 · HIGH':'P1 · CLAIM'):x.score>=4?'P2 · WATCH':'P3 · MONITOR';
     const market=x.action==='CLEAR ADD'?'FAAB: nach aktueller Wochen-/Marktprüfung':'FAAB: 0 / kein Blindgebot aus statischer Baseline';
     return `<div class="coach-row"><div><b>${i+1}. ${esc(x.fa.p.name)}</b> <span class="tiny">${x.fa.p.pos} · DROP ${esc(x.drop.p.name)}</span><div class="tiny">${x.action} · Swap-Score ${x.score.toFixed(1)} · Confidence ${x.confidence}% · ${market}</div></div><div><b>${urgency}</b><div class="tiny">Keine automatische Transaktion</div></div></div>`;
@@ -2913,9 +2913,35 @@ function waiverOpponentMarket(target,players){
     const activeCount=rows.filter(x=>x.seasonStatus==='ACTIVE').length,benchCost=Math.max(0,activeCount-14);
     const remaining=Number.isFinite(Number(rr.faab_remaining))?Number(rr.faab_remaining):Math.max(0,budget-Number(rr.settings?.waiver_budget_used||rr.waiver_budget_used||0));
     const need=clamp(upgrade/8+(qbs.length===0?5:0)-(qbs.length>=2?1.5:0)-benchCost*.15,0,10);
-    const bidPct=clamp(Math.round(need*.65),0,8);
-    return{roster_id:Number(rr.roster_id),manager_name:rr.manager_name||('Roster '+rr.roster_id),qbs:qbs.map(x=>x.p.name),need,faab_remaining:remaining,bid_pct:bidPct};
+    const claimProbability=clamp(Math.round(8+need*8),5,85);
+    const bidMid=clamp(need*.65,0,8),bidLow=Math.max(0,Math.floor(bidMid-1)),bidHigh=Math.min(10,Math.ceil(bidMid+1.5));
+    return{roster_id:Number(rr.roster_id),manager_name:rr.manager_name||('Roster '+rr.roster_id),qbs:qbs.map(x=>x.p.name),need,faab_remaining:remaining,claim_probability:claimProbability,bid_low_pct:bidLow,bid_high_pct:bidHigh};
   }).sort((a,b)=>b.need-a.need);
+}
+function seasonActiveDropOrder(){
+  const rows=lastDraftContext?.seasonRows||[];
+  return rows.filter(x=>x?.seasonStatus==='ACTIVE'&&['RB','WR','TE','QB'].includes(x.p?.pos))
+    .map(x=>({...x,capitalScore:seasonRosterCapitalScore(x)}))
+    .sort((a,b)=>b.capitalScore-a.capitalScore);
+}
+function renderQbOpportunityBoard(){
+  const ctx=lastDraftContext,season=ctx?.season;if(!ctx?.draftComplete||!season?.ok||!Array.isArray(ctx.rankedAvailable))return'';
+  const ownQbs=(ctx.seasonRows||[]).filter(x=>x?.seasonStatus==='ACTIVE'&&x.p?.pos==='QB');
+  if(!ownQbs.length)return'';
+  const ownBest=Math.min(...ownQbs.map(x=>Number(x.r?.rank)).filter(Number.isFinite),999);
+  const qbs=ctx.rankedAvailable.map(p=>({p,r:rankFor(p.name,p.pos)})).filter(x=>x.p?.pos==='QB'&&x.r&&Number.isFinite(x.r.rank))
+    .filter(x=>x.r.rank<=Math.max(18,ownBest+8)).sort((a,b)=>a.r.rank-b.r.rank).slice(0,8);
+  if(!qbs.length)return'';
+  const rosterHasDst=(ctx.seasonRows||[]).some(x=>['DEF','DST'].includes(String(x.p?.pos||'').toUpperCase())&&x.seasonStatus==='ACTIVE');
+  const dropOrder=seasonActiveDropOrder(),drop1=dropOrder[0],drop2=dropOrder[1];
+  const rows=qbs.map(x=>{
+    const market=waiverOpponentMarket(x,ctx.players),top=market[0],sameBye=ownQbs.some(q=>q.p?.bye&&x.p?.bye&&Number(q.p.bye)===Number(x.p.bye));
+    const maxComp=Math.max(0,...market.map(m=>m.bid_high_pct||0)),ourBandLow=Math.max(0,maxComp?Math.min(maxComp,2):0),ourBandHigh=Math.min(8,Math.max(2,maxComp+1));
+    const opponents=market.slice(0,3).map(m=>`${esc(m.manager_name)}: ${m.qbs.length?esc(m.qbs.join('/')):'kein aktiver QB'} · Claim ~${m.claim_probability}% · ${m.bid_low_pct}–${m.bid_high_pct}% FAAB`).join('<br>');
+    const cost=!rosterHasDst?` · 2-Slot-Kosten: QB-Add kostet vorauss. ${esc(drop1?.p?.name||'Drop #1')}; spätere D/ST zusätzlich ${esc(drop2?.p?.name||'Drop #2')}`:'';
+    return `<div class="coach-row"><div><b>${esc(x.p.name)}</b><div class="tiny">QB · Panel ${x.r.rank.toFixed(1)}${sameBye?' · gleiche Bye wie aktueller QB':''}${cost}</div><div class="tiny">Stärkste Konkurrenz: ${opponents||'keine belastbare Konkurrenz aus Live-Kadern'}</div></div><div><b>${ourBandLow}–${ourBandHigh}%</b><div class="tiny">Roster-/FAAB-Marktband · kein Autoclaim</div></div></div>`;
+  }).join('');
+  return '<div class="coach-section-title">QB-OPTIONEN · LIVE WAIVER-KONKURRENZ</div><div class="notice">Alle neun gegnerischen Sleeper-Kader + verbleibendes FAAB werden beim Season-Sync berücksichtigt. Gebotsbänder sind current-roster-basierte Schätzungen, keine Gewissheit; Managerhistorie kann später als Prior ergänzt werden.</div>'+rows;
 }
 function tradeStarterSlots(){
   const season=lastDraftContext?.season;
@@ -2971,6 +2997,7 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   const live=lastDraftContext?.season;
   const myLiveRosterId=Number(live?.my_roster?.roster_id);
   if(live?.ok&&Array.isArray(live.rosters)){
+    // Sleeper roster_id is a league roster identifier, NOT the historical draft slot.
     for(const rr of live.rosters){const slot=Number(rr.roster_id);if(!bySlot[slot])bySlot[slot]=[];for(const pid of rr.players||[]){const p=sleeperPlayerRow(pid,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk:{player_id:pid,pick_no:999},p,r,a});}}
   }else for(const pk of picks){const slot=Number(pk.draft_slot);if(!bySlot[slot])continue;const p=pinfo(String(pk.player_id),pk.metadata,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk,p,r,a});}
   const mine=Array.isArray(lastDraftContext?.seasonRows)&&lastDraftContext.seasonRows.length?lastDraftContext.seasonRows:(bySlot[userSlot]||[]);
