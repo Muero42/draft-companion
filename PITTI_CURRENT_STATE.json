@@ -7,14 +7,14 @@
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.185"
+    "source_candidate": "v11.8.0-rc4.189"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
     "season_candidate": "v11.8.0-rc4.185 main + PR #108 season market/trade candidate",
     "candidate_branch": "pitti/trade-slot-geometry",
     "android_acceptance_pending": false,
-    "test_challenger": "v11.8.0-rc4.185",
+    "test_challenger": "v11.8.0-rc4.189",
     "ci": {
       "candidate_package": "v229 sealed head bf84c32 failed only because guard executable still capped source_candidate at rc4.184 and seal status enum accepted only PASS/SUPERSEDED_PENDING_RESEAL. Runtime startup and Season semantic regressions passed before guard failure. Guard updated to rc4.185/PR108; final reseal must use status PASS.",
       "release_contract_v2": "v229 sealed head bf84c32 reached runtime/Season PASS layers, then same stale guard authority/seal-state failure. No product rollback indicated.",
@@ -30,7 +30,7 @@
     "deployed_pages_app_byte_parity_with_main": false,
     "deployed_pages_head": "rc4.185 source baseline merged; deployment/device parity not accepted. PR #108 not merged/deployed.",
     "installed_android": "v11.8.0-rc4.183",
-    "latest_android_observed": "v11.8.0-rc4.183",
+    "latest_android_observed": "v11.8.0-rc4.188",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "rc4.183 is physically installed/observed and DEVICE_REJECTED: FA/Add-Drop cards rendered under Kader and IR/Reserve Zach Charbonnet was used as an ordinary drop target. The former startup/Kader loading dead-state was crossed.",
     "latest_device_evidence": {
@@ -50,8 +50,8 @@
       "acceptance": "FAIL",
       "classification": "DEVICE_REJECTED_WAIVER_SURFACE_AND_IR_DROP_SEMANTICS"
     },
-    "latestAndroidVersionObserved": "v11.8.0-rc4.183",
-    "source_candidate_status": "RELEASE_CANDIDATE_VALIDATING",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.188",
+    "source_candidate_status": "RC4189_RESEAL_VALIDATING",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
