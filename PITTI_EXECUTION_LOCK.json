@@ -297,7 +297,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260902T1325Z-v229",
+  "handoff_generation": "20260902T1640Z-v230",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -332,5 +332,5 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260902T1325Z-v229"
+  "handoffGeneration": "20260902T1640Z-v230"
 }
