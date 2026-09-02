@@ -2944,11 +2944,15 @@ function renderQbOpportunityBoard(){
   const rosterHasDst=(ctx.seasonRows||[]).some(x=>['DEF','DST'].includes(String(x.p?.pos||'').toUpperCase())&&x.seasonStatus==='ACTIVE');
   const dropOrder=seasonActiveDropOrder(),drop1=dropOrder[0],drop2=dropOrder[1];
   const rows=qbs.map(x=>{
-    const market=waiverOpponentMarket(x,ctx.players),top=market[0],sameBye=ownQbs.some(q=>q.p?.bye&&x.p?.bye&&Number(q.p.bye)===Number(x.p.bye));
-    const maxComp=Math.max(0,...market.map(m=>m.bid_high_pct||0)),ourBandLow=Math.max(0,maxComp?Math.min(maxComp,2):0),ourBandHigh=Math.min(8,Math.max(2,maxComp+1));
-    const opponents=market.slice(0,3).map(m=>`${esc(m.manager_name)}: ${m.qbs.length?esc(m.qbs.join('/')):'kein aktiver QB'} · Claim ~${m.claim_probability}% · ${m.bid_low_pct}–${m.bid_high_pct}% FAAB`).join('<br>');
+    const market=waiverOpponentMarket(x,ctx.players),sameBye=ownQbs.some(q=>q.p?.bye&&x.p?.bye&&Number(q.p.bye)===Number(x.p.bye));
+    const maxComp=Math.max(0,...market.map(m=>m.bid_high_pct||0)),marketClear=Math.min(8,Math.max(1,maxComp+1));
+    const secondDropProtected=!rosterHasDst&&drop2&&Number(drop2.capitalScore)<2.5;
+    const opportunityPenalty=(!rosterHasDst?1:0)+(sameBye?1:0)+(secondDropProtected?1:0);
+    const ourBandHigh=Math.max(1,marketClear-opportunityPenalty),ourBandLow=Math.max(0,ourBandHigh-2);
+    const decision=ourBandHigh>=maxComp?'BID WINDOW':'PASS ABOVE CAP';
+    const opponents=market.slice(0,3).map(m=>`${esc(m.manager_name)}: ${m.qbs.length?esc(m.qbs.join('/')):'kein aktiver QB'} · Claim ~${m.claim_probability}% · ${m.bid_low_pct}–${m.bid_high_pct}% FAAB · Restbudget ${Number.isFinite(m.faab_remaining)?m.faab_remaining:'–'}`).join('<br>');
     const cost=!rosterHasDst?` · 2-Slot-Kosten: QB-Add kostet vorauss. ${esc(drop1?.p?.name||'Drop #1')}; spätere D/ST zusätzlich ${esc(drop2?.p?.name||'Drop #2')}`:'';
-    return `<div class="coach-row"><div><b>${esc(x.p.name)}</b><div class="tiny">QB · Panel ${x.r.rank.toFixed(1)}${sameBye?' · gleiche Bye wie aktueller QB':''}${cost}</div><div class="tiny">Stärkste Konkurrenz: ${opponents||'keine belastbare Konkurrenz aus Live-Kadern'}</div></div><div><b>${ourBandLow}–${ourBandHigh}%</b><div class="tiny">Roster-/FAAB-Marktband · kein Autoclaim</div></div></div>`;
+    return `<div class="coach-row"><div><b>${esc(x.p.name)}</b><div class="tiny">QB · Panel ${x.r.rank.toFixed(1)}${sameBye?' · gleiche Bye wie aktueller QB':''}${cost}</div><div class="tiny">Stärkste Konkurrenz: ${opponents||'keine belastbare Konkurrenz aus Live-Kadern'}</div></div><div><b>${ourBandLow}–${ourBandHigh}%</b><div class="tiny">${decision} · Markt-Clear ~${marketClear}% · Opportunity-Cost-Abzug ${opportunityPenalty} · kein Autoclaim</div></div></div>`;
   }).join('');
   return '<div class="coach-section-title">QB-OPTIONEN · LIVE WAIVER-KONKURRENZ</div><div class="notice">Alle neun gegnerischen Sleeper-Kader + verbleibendes FAAB werden beim Season-Sync berücksichtigt. Aktuelle QB-Situation dominiert; bereits beobachtete 2026-Waiver-Gebote und historische QB-Rosterneigung wirken nur als begrenzte Priors. Gebotsbänder sind Schätzungen, keine Gewissheit.</div>'+rows;
 }
