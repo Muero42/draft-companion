@@ -44,3 +44,5 @@ No interim progress/status/acknowledgement messages, no empty replies, no promis
 Waiting CI/deploy/device blocks only the dependent lane. Continue parallel lanes first.
 Visible AUTO output only for concrete result, unavoidable user action/input, safety/irreversible confirmation, or demonstrated exhaustion of all independent work.
 STATUS = report-only; no tools/work/polling.
+
+Never send status/progress/acknowledgement messages while executable AUTO work remains.
