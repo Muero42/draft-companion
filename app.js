@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.189';
+const APP_VERSION='v11.8.0-rc4.190';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -98,9 +98,6 @@ function seasonLineupHtml(rows,season){
   if(!starters.length)html+='<div class="notice warn">Sleeper-Starter noch nicht verfügbar; Kader ist geladen.</div>';
   html+='<div class="lineup-section-title">BENCH</div>'+bench.map(x=>row(x,'BN','','BN')).join('');
   if(reserve.length)html+='<div class="lineup-section-title">RESERVE / IR</div>'+reserve.map(x=>row(x,'IR','','IR')).join('');
-  // Lightweight alternatives: strongest bench option by position from the current panel.
-  const alts=bench.filter(x=>x.r).sort((a,b)=>a.r.rank-b.r.rank).slice(0,4);
-  if(alts.length)html+='<div class="lineup-section-title">START-ALTERNATIVEN</div>'+alts.map(x=>row(x,x.p.pos,'Bench-Option · Panel '+x.r.rank.toFixed(1))).join('');
   return html;
 }
 const SEASON_SPECIAL_TEAMS_MODEL={
@@ -1638,8 +1635,9 @@ async function bootstrapSeasonWorkspace({force=false}={}){
     if(!rows)throw new Error('MY_ROSTER_UNRESOLVED');
     if(!Array.isArray(available)||available.length===0)throw new Error('SEASON_FA_POOL_ZERO_INVALID');
     const counts=postDraftRosterCounts(rows);
-    els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper-Kader · '+rows.length+' Spieler · Source of Truth: League-State · Reserve/IR '+rows.filter(x=>x.seasonStatus==='RESERVE').length+' · Auto-Sync beim Start.';
-    const slotSummary=seasonStarterSlotDefs(season).map(x=>seasonSlotLabel(x.slot)).filter(Boolean);els.rosterSummary.innerHTML=slotSummary.map((slot,i)=>'<div class="summary-item"><b>'+(i+1)+'</b><span>'+esc(slot)+'</span></div>').join('');
+    els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper · '+rows.length+' Spieler · Reserve/IR '+rows.filter(x=>x.seasonStatus==='RESERVE').length+' · Auto-Sync';
+    els.rosterSummary.innerHTML='';
+    els.rosterSummary.style.display='none';
     els.rosterList.innerHTML=seasonLineupHtml(rows,season);
     lastDraftContext={id:LIVE_DRAFT_ID_2026,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:true,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL,historicalDraftAvailable:!!draft};
     lastPostDraftPairs=[];
@@ -2812,8 +2810,10 @@ function postDraftSwapScore(drop,fa,ctx){
   if(ctx.RB<=4&&fa.p.pos==='RB'&&drop.p.pos!=='RB')rosterUtility+=1.5;
   if(drop.p.pos==='RB'&&fa.p.pos!=='RB'&&drop.capitalScore<7)rosterUtility-=2.5;
   if(fa.p.pos==='QB'&&ctx.QB>=1)rosterUtility-=5; // 1QB league: QB2 remains exceptional.
-  // TE2 is not a generic penalty: this league's FLEX accepts TE. Let panel/opportunity/upside
-  // determine whether the second TE can beat the weakest legal FLEX option.
+  // Structural scarcity gate: never recommend dropping the only active QB/TE for another
+  // position. TE may fill FLEX, but PITTI must first preserve a legal primary TE.
+  if(drop.p.pos==='TE'&&ctx.TE<=1&&fa.p.pos!=='TE')rosterUtility-=20;
+  if(drop.p.pos==='QB'&&ctx.QB<=1&&fa.p.pos!=='QB')rosterUtility-=20;
   if(drop.p.injury&&String(drop.p.injury).toUpperCase()==='IR')rosterUtility+=3;
   const waiverMarket=week1WaiverMarketSignal(fa.p),waiverMarketBonus=Number(waiverMarket?.bonus||0);
   const score=clamp(panelDelta*.22,-6,6)+clamp(opportunityDelta,-6,6)+clamp(upsideDelta*.5,-3,3)+rosterUtility+waiverMarketBonus;
@@ -2822,8 +2822,9 @@ function postDraftSwapScore(drop,fa,ctx){
   // In-season acquisition labels must not turn a stale/draft-only comparison into an
   // apparent drop recommendation. WATCH/CLEAR ADD both require fresh player-specific or
   // current-week market evidence; otherwise the pair is informational HOLD only.
-  if(score>=6&&freshEvidencePresent)action='CLEAR ADD';
-  else if(score>=2&&freshEvidencePresent)action='WATCH';
+  const structuralInvalid=(drop.p.pos==='TE'&&ctx.TE<=1&&fa.p.pos!=='TE')||(drop.p.pos==='QB'&&ctx.QB<=1&&fa.p.pos!=='QB');
+  if(!structuralInvalid&&score>=6&&freshEvidencePresent)action='CLEAR ADD';
+  else if(!structuralInvalid&&score>=2&&freshEvidencePresent)action='WATCH';
   const confidence=clamp(Math.round(55+(Number.isFinite(fr)&&Number.isFinite(dr)?15:0)+(freshEvidencePresent?12:evidencePresent?4:0)-(fOpp.rejected+dOpp.rejected)*4),35,88);
   const horizons=seasonHorizonSplit(drop,fa);if(waiverMarket&&Number.isFinite(horizons.weekly))horizons.weekly=clamp(horizons.weekly+waiverMarketBonus*.6,-10,10);else if(waiverMarket){horizons.weekly=clamp(waiverMarketBonus*.6,-10,10);horizons.weeklyFresh=true;}
   return {drop,fa,score,panelDelta,opportunityDelta,upsideDelta,rosterUtility,waiverMarketBonus,waiverMarket,action,confidence,dOpp,fOpp,evidencePresent,freshEvidencePresent,faFresh,dropFresh,horizons};
@@ -3016,16 +3017,21 @@ function tradeRosterNeed(roster,pos){
 }
 function tradeOfferCandidates(mine,opponent,target){
   const oppNeeds=['RB','WR','TE','QB'].map(pos=>({pos,...tradeRosterNeed(opponent,pos)})).sort((a,b)=>b.need-a.need);
-  const targetRank=Number(target.r?.rank);
+  const targetRank=Number(target.r?.rank),targetAdp=Number(target.a);
   const offers=mine.filter(m=>m.r&&Number.isFinite(m.r.rank)&&['RB','WR','TE'].includes(m.p.pos)&&norm(m.p.name)!==norm(target.p.name)).map(give=>{
-    const need=oppNeeds.find(n=>n.pos===give.p.pos)?.need||0;
-    const marketGap=Math.abs(Number(give.r.rank)-targetRank);
+    const need=oppNeeds.find(n=>n.pos===give.p.pos)?.need||0,giveRank=Number(give.r.rank),giveAdp=Number(give.a);
+    // Pre-Week-1 market anchor: managers just chose these assets. Panel rank alone must
+    // never imply that a late pick can buy an elite first-round asset (e.g. JSN -> Gibbs).
+    const panelGap=Math.abs(giveRank-targetRank);
+    const draftGap=Number.isFinite(giveAdp)&&Number.isFinite(targetAdp)?Math.abs(giveAdp-targetAdp):null;
+    const marketGap=Number.isFinite(draftGap)?Math.max(panelGap,draftGap*.85):panelGap;
     const without=mine.filter(x=>x!==give),before=tradeBestLineup(mine),after=tradeBestLineup(without);
     const ourCost=clamp((before.score-after.score)/10,0,10);
-    const fairness=clamp(10-marketGap*.18,0,10),opponentUtility=clamp(need+(110-Number(give.r.rank))/35,0,10);
-    const acceptance=clamp(Math.round(25+fairness*4+opponentUtility*3-ourCost*1.5),10,82);
-    return{give,fairness,opponentUtility,ourCost,acceptance,marketGap};
-  }).filter(o=>o.fairness>=3&&o.opponentUtility>=2).sort((a,b)=>b.acceptance-a.acceptance||b.fairness-a.fairness);
+    const fairness=clamp(10-marketGap*.22,0,10),opponentUtility=clamp(need+(110-giveRank)/35,0,10);
+    const draftPlausible=!Number.isFinite(draftGap)||draftGap<=24;
+    const acceptance=draftPlausible?clamp(Math.round(10+fairness*3+opponentUtility*2-ourCost*1.5),5,55):0;
+    return{give,fairness,opponentUtility,ourCost,acceptance,marketGap,draftGap,draftPlausible};
+  }).filter(o=>o.draftPlausible&&o.fairness>=4.5&&o.opponentUtility>=2.5).sort((a,b)=>b.acceptance-a.acceptance||b.fairness-a.fairness);
   return{oppNeeds,offers};
 }
 function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
@@ -3057,7 +3063,7 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   }
   targets.sort((a,b)=>b.desirability-a.desirability||b.lineupEdge-a.lineupEdge||a.x.r.rank-b.x.r.rank);
   els.tradeStatus.className='notice warn';
-  els.tradeStatus.textContent='Trade Board v5 · LIVE Sleeper-Rosters. Target-Wert wird aus der tatsächlichen kanonischen Starter-/FLEX-Geometrie berechnet; kein statisches RB/WR/TE-Depth-Cap. Ein zweiter TE ist zulässig, wenn er einen echten FLEX-Slot gewinnt. Annahme-% bleibt Heuristik ohne aktuelle Trade-Marktquelle; keine ACCEPT/DECLINE-Freigabe.';
+  els.tradeStatus.textContent='Trade Board v6 · LIVE Sleeper-Rosters × Teamneeds × kanonische Starter-/FLEX-Geometrie. Pre-Week-1 schützt Draft-Kapital vor unrealistischen 1:1-Angeboten; Panel-Rank allein darf keinen Elite-Asset-Trade erzeugen. Ein zweiter TE ist zulässig, wenn er einen echten FLEX-Slot gewinnt. Ohne aktuelle Trade-Value-Quelle bleibt jede Annahme-% konservative Heuristik; keine ACCEPT/DECLINE-Freigabe.';
   els.tradeList.innerHTML=targets.length?`<div class="coach-section-title">Interessante gegnerische Assets — Target Discovery, Verhandlung noch nicht freigegeben</div>`+targets.slice(0,10).map((t,i)=>{
     const x=t.x,market=Number.isFinite(x.a)?` · Draft-ADP ${x.a.toFixed(1)}`:'';
     const geometry=t.marginal.slot?`gewinnt Slot ${seasonSlotLabel(t.marginal.slot,x.p.pos)}`:'kein Starter-Slot';
