@@ -25,6 +25,7 @@ const emergencyQueueContract=text('tools/emergency-queue-contract.mjs');
 const current=JSON.parse(text('PITTI_CURRENT_STATE.json'));
 const seal=JSON.parse(text('PITTI_HANDOFF_SEAL.json'));
 const candidatePreflight=process.env.PITTI_CANDIDATE_PREFLIGHT==='1';
+const candidateVersion=(app.match(/const APP_VERSION='([^']+)'/)||[])[1]||'';
 const handoffGeneration=(currentHandoff.match(/Handoff generation:\s*`([^`]+)`/)||[])[1];
 const gitBlobSha=(p)=>{
   const b=fs.readFileSync(p);
@@ -99,7 +100,8 @@ for(const token of [
 ]) must(preflight.includes(token),`preflight gate missing: ${token}`);
 
 must(readme.includes('v11.8.0-rc4.64'),'README production/control baseline drift');
-must(readme.includes(current.runtime?.test_challenger||'v11.8.0-rc4.86'),'README current candidate missing');
+if(!candidatePreflight) must(readme.includes(current.runtime?.test_challenger||'v11.8.0-rc4.86'),'README current candidate missing');
+else must(candidateVersion&&readme.includes(candidateVersion),'README candidate version missing');
 must(policy.includes("USER_DRAFT_HARD_EXCLUSIONS=new Set(['geno smith','aaron rodgers'])"),'explicit Geno/Rodgers hard exclusions missing');
 must(app.includes("userDraftStrategyExcluded(p.pos,state.counts,p.name)"),'named user exclusion wiring missing');
 must(app.includes('USER HARD EXCLUSION: nicht draften'),'hard-exclusion Coach reason missing');
@@ -118,12 +120,12 @@ must(app.includes("frische Weekly-Evidence fehlt"),'Waiver v2 stale weekly expla
 must(app.includes('Trade Board v4'),'Trade Board v4 surface missing');
 must(app.includes('function tradeOfferCandidates('),'Trade offer construction helper missing');
 must(app.includes('Annahme-Plausibilität'),'Trade acceptance plausibility missing');
-must(app.includes('Week-1 Start/Sit v3'),'Start/Sit v3 surface missing');
+must(app.includes('Week-1 Start/Sit v5'),'Start/Sit canonical-slot surface missing');
 must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
-must(app.includes('Weekly Consensus Rank ist primär'),'weekly rank primary invariant missing');
+must(app.includes('PITTI nutzt eigene Weekly-Panel-Ranks'),'PITTI weekly-panel primary invariant missing');
 must(app.includes('Special Teams v2'),'Special Teams v2 quality-floor surface missing');
 must(app.includes("dropCandidatePolicy:{primary:['Tank Bigsby','Tyjae Spears','Kenneth Gainwell'],protected:['Jadarian Price','Christian Watson','Josh Downs']"),'Mevis drop gate must protect Price/Watson/Downs and compare Bigsby/Spears/Gainwell');
-must(app.includes('DROP-Reihenfolge Bigsby → Spears → Gainwell; Price / Watson / Downs geschützt'),'Waiver UI must surface the guarded Mevis drop order');
+must(app.includes('Kicker werden ausschließlich hier gegen verfügbare Kicker verglichen; niemals gegen RB/WR/TE.'),'Waiver UI must enforce K-only replacement for roster kicker');
 must(app.includes('SEASON_FA_POOL_ZERO_INVALID'),'zero live season FA pool must fail closed');
 must((app.match(/SEASON_FA_POOL_ZERO_INVALID/g)||[]).length>=2,'zero FA fail-closed gate must cover both startup bootstrap and analyze path');
 must(app.includes('FA-POOL NICHT VALIDIERT'),'invalid season FA pool must be visible');

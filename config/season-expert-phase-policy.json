@@ -193,5 +193,49 @@
       ]
     },
     "watcher_synergy": "Fast news/role monitoring reduces the value of keeping a slot empty purely for hypothetical events, but does not eliminate bench option value."
+  },
+  "lineup": {
+    "ownership_and_current_starters_source": "Sleeper only",
+    "projections_source_policy": "PITTI-selected weekly projection sources; never Sleeper projections",
+    "matchup_source_policy": "PITTI-selected matchup evidence; never Sleeper matchup grades",
+    "slot_compatibility": {
+      "QB": [
+        "QB"
+      ],
+      "TE": [
+        "TE"
+      ],
+      "RB": [
+        "RB",
+        "WR"
+      ],
+      "WR": [
+        "WR",
+        "RB"
+      ],
+      "note": "RB/WR cross-swap only through FLEX assumption; TE/QB cross-position forbidden unless canonical slot identity later proves FLEX."
+    },
+    "display_required": [
+      "weekly panel rank",
+      "expected points when verified",
+      "matchup assessment when verified",
+      "source/freshness"
+    ],
+    "starter_display_same_fields_as_alternatives": true,
+    "slot_authority": "Sleeper league.roster_positions mapped by starter index",
+    "slot_labels": {
+      "FLEX": "RB/WR/TE",
+      "WRRB_FLEX": "RB/WR",
+      "REC_FLEX": "WR/TE",
+      "SUPER_FLEX": "QB/RB/WR/TE"
+    },
+    "allow_two_te_when_slots_permit": true,
+    "display_canonical_slot_not_player_position": true
+  },
+  "kicker": {
+    "comparison_surface": "WAIVER_FA_ONLY",
+    "generic_skill_drop_pool": false,
+    "compare_only_against_available_kickers": true,
+    "current_roster_kicker_is_benchmark": true
   }
 }
