@@ -103,6 +103,16 @@
       "parked_branch": "pitti-auto/v0.2.6-fa-trade-foundation",
       "parked_pr": 1,
       "policy": "secondary lane only; do not let watcher/FA/trade foundation displace Companion startup fix priority"
+    },
+    "pr99": {
+      "branch": "pitti/rc4182-hydration-integrated",
+      "head": "626023d3ab5e70bdff7c11e1fb1cc22ff955c4b6",
+      "status": "OPEN_MERGEABLE_PENDING_EXACT_HEAD_CI",
+      "last_verified": {
+        "release_contract": "PASS",
+        "project_guardrails": "PASS",
+        "candidate_package": "FAIL_STALE_BOOTSTRAP_RENDER_ASSERT_REPAIRED"
+      }
     }
   },
   "real_draft": {
@@ -135,8 +145,8 @@
     ]
   },
   "currentWork": {
-    "status": "HANDOFF_RC4182_DEVICE_REJECTED_PR98_LATEST_HEAD_FAILING",
-    "nextGate": "NEW_CHAT_RECONCILE_PR98_LATEST_HEAD_FIX_STRICT_GATES_THEN_REAL_SHAPE_STARTUP_KADER_PLUS_EXPERT_INIT"
+    "status": "PR99_EXACT_HEAD_REVALIDATION",
+    "nextGate": "PR99_ALL_STRICT_GATES_GREEN"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -152,10 +162,16 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "HANDOFF_READY",
+    "status": "RUNNING",
     "active": [],
     "ready": [],
-    "waiting_external": [],
+    "waiting_external": [
+      {
+        "id": "pr99-exact-head-ci",
+        "head": "626023d3ab5e70bdff7c11e1fb1cc22ff955c4b6",
+        "reason": "Candidate-package stale unguarded-workspace assertion repaired; exact-head CI required."
+      }
+    ],
     "blocked_user": [],
     "completed_recent": [
       {
@@ -401,8 +417,8 @@
     ],
     "stop_evaluation": {
       "allowed": true,
-      "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "Explicit PITTI HANDOFF requested; new chat must reconstruct executable work from currentWork plus actual PR/main evidence."
+      "code": "NO_EXECUTABLE_WORK_REMAINS",
+      "reason": "All diagnosed CI failures repaired; exact-head CI is remaining external dependency before merge."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },

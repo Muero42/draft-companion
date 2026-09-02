@@ -46,6 +46,8 @@ jobs:
           node tools/season-bootstrap-runtime-regression.mjs
           node tools/season-interaction-e2e-gate.mjs
           node tools/season-startup-resilience-regression.mjs
+          node tools/season-realshape-startup-e2e.mjs
+          node tools/season-expert-phase-policy-regression.mjs
           node tools/season-automatic-refresh-contract.mjs
           node tools/season-workspace-navigation-regression.mjs
           node tools/season-bootstrap-render-order-regression.mjs

@@ -1,0 +1,197 @@
+{
+  "schema": "pitti.season-expert-phase-policy.v1",
+  "league_scoring": "HALF_PPR",
+  "automatic": true,
+  "phases": {
+    "PRE_W1": {
+      "weeks": [
+        0
+      ]
+    },
+    "EARLY": {
+      "weeks": [
+        1,
+        2,
+        3
+      ]
+    },
+    "MID": {
+      "weeks": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "LATE": {
+      "weeks": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    "PLAYOFF": {
+      "weeks": [
+        15,
+        16,
+        17,
+        18
+      ]
+    }
+  },
+  "core": {
+    "QB": [
+      "Justin Boone",
+      "Dalton Del Don",
+      "Sean Koerner",
+      "Pat Fitzmaurice"
+    ],
+    "RB": [
+      "Justin Boone",
+      "Dalton Del Don",
+      "Kev Wheeler",
+      "Ryan Weisse",
+      "Sean Koerner",
+      "Pat Fitzmaurice"
+    ],
+    "WR": [
+      "Justin Boone",
+      "Dalton Del Don",
+      "Sean Koerner",
+      "Pat Fitzmaurice"
+    ],
+    "TE": [
+      "Dalton Del Don",
+      "Justin Boone",
+      "Sean Koerner",
+      "Pat Fitzmaurice"
+    ],
+    "K": [
+      "Jared Smola",
+      "FantasyPros current-week K ECR"
+    ],
+    "DST": [
+      "Ted Chmyz",
+      "FantasyPros current-week DST ECR"
+    ]
+  },
+  "preseason_residual": [
+    "Jody Smith",
+    "Nick Mariano",
+    "final draft panel"
+  ],
+  "channels": {
+    "START_SIT": [
+      "WEEKLY"
+    ],
+    "K_DST": [
+      "STREAMING_WEEKLY",
+      "MATCHUP_ENVIRONMENT"
+    ],
+    "WAIVER_FA": [
+      "WEEKLY",
+      "ROS",
+      "ROLE_USAGE",
+      "MARKET"
+    ],
+    "TRADE": [
+      "ROS",
+      "TRADE_VALUE",
+      "REPLACEMENT_VALUE",
+      "NEAR_TERM_WEEKLY"
+    ],
+    "DRAFT_PRIOR": [
+      "PRE_W1_RESIDUAL"
+    ]
+  },
+  "adaptive": {
+    "min_completed_weeks_for_major_reweight": 3,
+    "position_specific": true,
+    "update_after_completed_week_only": true,
+    "bounded_weight_change": true,
+    "shrink_to_prior": true,
+    "stale_current_week_weight": 0,
+    "draft_prior_zero_after": "EARLY"
+  },
+  "required_fields": [
+    "position",
+    "decision_channel",
+    "source_updated_at",
+    "rankings_lock_at",
+    "prior_accuracy",
+    "current_2026_accuracy",
+    "sample_weeks",
+    "freshness_state",
+    "effective_weight"
+  ],
+  "invariants": [
+    "no silent fallback from stale weekly ranks to draft ranks",
+    "trade value must be current redraft not dynasty",
+    "K/DST do not inherit skill-position weights",
+    "phase changes require no user action"
+  ],
+  "dst_streaming": {
+    "strategy": "ONE_DST_DEFAULT_SELECTIVE_LOOKAHEAD_STASH",
+    "current_week_channels": [
+      "CURRENT_WEEK_TIER",
+      "STREAMING_WEEKLY",
+      "MATCHUP_ENVIRONMENT"
+    ],
+    "multi_week_channels": [
+      "MULTI_WEEK_STREAMING",
+      "SCHEDULE_LOOKAHEAD"
+    ],
+    "sources": {
+      "current_week": [
+        "RotoBaller DST tiers",
+        "Joey Pollizze weekly DST analysis",
+        "FantasyPros current-week DST ECR"
+      ],
+      "multi_week": [
+        "Joey Pollizze rolling multi-week DST plan"
+      ],
+      "stabilizers": [
+        "Ted Chmyz accuracy prior",
+        "defense quality",
+        "opponent QB/OL",
+        "Vegas implied points/spread",
+        "injuries",
+        "sack/turnover environment"
+      ]
+    },
+    "lookahead": {
+      "scan_weeks_ahead": 2,
+      "default_rostered_dst_count": 1,
+      "second_dst_allowed": true,
+      "requires_exception_gate": true,
+      "prefer_free_agent_acquisition": true,
+      "faab_or_waiver_priority_requires_exceptional_edge": true,
+      "rolling_source_required": true,
+      "stale_multiweek_source_weight": 0
+    },
+    "stash_gate": {
+      "required": [
+        "projected_future_dst_edge_material",
+        "weak_opponent_or_exceptional_matchup_profile",
+        "bench_slot_opportunity_cost_acceptable",
+        "future_availability_risk_material",
+        "transaction_cost_acceptable"
+      ],
+      "score_concept": "expected_future_dst_edge * lineup_win_probability_relevance - bench_option_value - transaction_cost - flexibility_loss",
+      "roster_slot_policy": "Do not reserve a bench slot mechanically for lottery upside; compare its option value against the concrete DST edge.",
+      "revocable": true,
+      "invalidators": [
+        "injury/news creates higher-value bench use",
+        "role change creates superior RB/WR/TE option",
+        "future matchup deteriorates",
+        "stash DST becomes unnecessary or replaceable",
+        "transaction cost rises"
+      ]
+    },
+    "watcher_synergy": "Fast news/role monitoring reduces the value of keeping a slot empty purely for hypothetical events, but does not eliminate bench option value."
+  }
+}

@@ -429,7 +429,9 @@ function loadRankCacheCompact(){
 function removeLegacyRankingStorage(){
   // v7_rankCache and v7_panelRanks are obsolete full duplicates. Removing them first is
   // safe because panels are rebuilt from the per-expert source caches / sealed boards.
-  try{localStorage.removeItem('v7_rankCache');localStorage.removeItem('v7_panelRanks')}catch{}
+  // Cleanup is best-effort: a storage-policy exception must never abort module startup.
+  try{localStorage.removeItem('v7_rankCache')}catch(e){console.warn('Legacy rank-cache cleanup skipped',e)}
+  try{localStorage.removeItem('v7_panelRanks')}catch(e){console.warn('Legacy panel-cache cleanup skipped',e)}
 }
 function pruneNonCriticalStorageForRankWrite(){
   // Decision fixtures are primary draft evidence and must never be sacrificed to refresh
@@ -3670,7 +3672,7 @@ els.savePanelBtn.onclick=()=>{saveCurrentPanel();renderExperts();els.panelStatus
 els.newPanelBtn.onclick=()=>{const name=prompt('Name des Panels:','Custom');if(!name)return;let id=norm(name)||`panel${Date.now()}`;while(panels[id])id+='x';panels[id]={name,members:{}};activePanelId=id;persist();renderAll()};
 els.renamePanelBtn.onclick=()=>{const p=panels[activePanelId],name=prompt('Neuer Name:',p.name);if(name){p.name=name;persist();renderAll()}};
 els.deletePanelBtn.onclick=()=>{if(['standard','pat'].includes(activePanelId))return alert('Standard und Pat bleiben erhalten.');if(confirm('Panel löschen?')){delete panels[activePanelId];delete panelRanks[activePanelId];activePanelId='standard';persist();renderAll()}};
-for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])el.onchange=()=>{positionPanels[pos]=el.value;persist()};
+for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])if(el)el.onchange=()=>{positionPanels[pos]=el.value;persist()};
 if(els.expertProfile){els.expertProfile.value=currentExpertProfile();els.expertProfile.onchange=()=>applyExpertProfile(els.expertProfile.value);}
 if(els.liveManagerApply)els.liveManagerApply.onclick=applyLiveManagerModesToCoach;
 if(els.analysisExpertProfile){
@@ -3800,9 +3802,11 @@ function setWorkspace(name){
   document.querySelectorAll('[data-workspace-target]').forEach(btn=>{btn.classList.toggle('active',btn.dataset.workspaceTarget===name);btn.setAttribute('aria-pressed',btn.dataset.workspaceTarget===name?'true':'false')});
   renderSeasonRankingFreshness();
 }
-document.querySelectorAll('[data-workspace-target]').forEach(btn=>btn.addEventListener('click',()=>setWorkspace(btn.dataset.workspaceTarget)));
-setDraftSurface(localStorage.getItem('v118_draftSurface')||'mock');
-setWorkspace(localStorage.getItem('v117_workspace')||'roster');
+// Startup-critical workspace restoration must be best-effort. Android storage/UI edge cases
+// must not prevent the physical Season startup marker below from executing.
+try{document.querySelectorAll('[data-workspace-target]').forEach(btn=>btn.addEventListener('click',()=>setWorkspace(btn.dataset.workspaceTarget)))}catch(e){console.warn('Workspace control binding skipped',e)}
+try{setDraftSurface(store.text('v118_draftSurface','mock')||'mock')}catch(e){console.warn('Draft surface restore skipped',e)}
+try{setWorkspace(store.text('v117_workspace','roster')||'roster')}catch(e){console.warn('Workspace restore skipped',e)}
 // Optional research-cache UI must never be allowed to abort Season control wiring.
 try{updateResearchCacheStatus()}catch(e){console.warn('Research cache status startup recovery',e)}
 
@@ -3854,7 +3858,8 @@ async function refreshSeasonRankings({force=false,auto=false}={}){
     renderSeasonRankingFreshness(els.seasonRankingStatus?.textContent||'');
   }
 }
-rehydrateDerivedExpertPanelsOnStartup();
+// Do not run derived-panel rehydration before the physical startup marker. The Season shell
+// must prove module execution first; expert-panel migration is secondary and fail-closed.
 
 // rc4.178: prove that the module reached this exact startup tail, independent of any earlier
 // renderer. Do not let freshness rendering overwrite the execution marker before the first
@@ -3862,6 +3867,7 @@ rehydrateDerivedExpertPanelsOnStartup();
 if(els.seasonLiveStateAge)els.seasonLiveStateAge.textContent='JS gestartet';
 if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice';els.seasonLiveStateStatus.textContent='Season-Modul gestartet · Live-Kader wird vorbereitet …';}
 if(els.rosterStatus)els.rosterStatus.textContent='Season-Modul gestartet · Live-Kader wird vorbereitet …';
+rehydrateDerivedExpertPanelsOnStartup();
 // Freshness is rendered after bootstrap settles; preserving this marker makes the physical canary diagnostic.
 setInterval(()=>{if(!document.hidden)void syncWatcherFeed()},15*60*1000);
 
