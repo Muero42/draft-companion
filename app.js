@@ -2819,8 +2819,11 @@ function postDraftSwapScore(drop,fa,ctx){
   const score=clamp(panelDelta*.22,-6,6)+clamp(opportunityDelta,-6,6)+clamp(upsideDelta*.5,-3,3)+rosterUtility+waiverMarketBonus;
   const evidencePresent=(fOpp.events+dOpp.events)>0||!!waiverMarket,faFresh=freshAcquisitionEvidence(fa),dropFresh=freshAcquisitionEvidence(drop),freshEvidencePresent=(faFresh.events+dropFresh.events)>0||!!waiverMarket;
   let action='HOLD';
+  // In-season acquisition labels must not turn a stale/draft-only comparison into an
+  // apparent drop recommendation. WATCH/CLEAR ADD both require fresh player-specific or
+  // current-week market evidence; otherwise the pair is informational HOLD only.
   if(score>=6&&freshEvidencePresent)action='CLEAR ADD';
-  else if(score>=2)action='WATCH';
+  else if(score>=2&&freshEvidencePresent)action='WATCH';
   const confidence=clamp(Math.round(55+(Number.isFinite(fr)&&Number.isFinite(dr)?15:0)+(freshEvidencePresent?12:evidencePresent?4:0)-(fOpp.rejected+dOpp.rejected)*4),35,88);
   const horizons=seasonHorizonSplit(drop,fa);if(waiverMarket&&Number.isFinite(horizons.weekly))horizons.weekly=clamp(horizons.weekly+waiverMarketBonus*.6,-10,10);else if(waiverMarket){horizons.weekly=clamp(waiverMarketBonus*.6,-10,10);horizons.weeklyFresh=true;}
   return {drop,fa,score,panelDelta,opportunityDelta,upsideDelta,rosterUtility,waiverMarketBonus,waiverMarket,action,confidence,dOpp,fOpp,evidencePresent,freshEvidencePresent,faFresh,dropFresh,horizons};
@@ -2884,7 +2887,7 @@ function renderSpecialTeamsBoard(){
 function renderWaiverWorkspace(draftComplete){
   if(!els.waiverStatus||!els.waiverList)return;
   if(!draftComplete){els.waiverStatus.className='notice';els.waiverStatus.textContent='Waiver-Priorität wird nach Draftabschluss aktiv.';els.waiverList.innerHTML='';return;}
-  const q=lastPostDraftPairs.filter(x=>x.action!=='HOLD').slice(0,8);
+  const q=lastPostDraftPairs.filter(x=>x.action!=='HOLD'&&x.freshEvidencePresent).slice(0,8);
   els.waiverStatus.className=`notice ${q.some(x=>x.action==='CLEAR ADD')?'warn':'ok'}`;
   els.waiverStatus.textContent='Waiver/FA Priority v2 · LIVE Sleeper-Ownership + FA-vs-Roster Engine + frisches Week-1-Waiver-Marktsignal. Numerisches FAAB bleibt bewusst aus: ohne aktuelle Waiver-Woche, Gegnerbudget/Markt und belastbare Rollen-News wäre ein Betrag Scheingenauigkeit.';
   const special=renderSpecialTeamsBoard(),qbOpportunities=renderQbOpportunityBoard();if(!q.length){els.waiverList.innerHTML=special+qbOpportunities+'<div class="notice ok"><b>SKILL-POSITION HOLD</b> · Aktuell kein materiell positiver RB/WR/TE-Swap aus der geladenen Baseline.</div>';return;}
@@ -2898,7 +2901,7 @@ function renderWaiverWorkspace(draftComplete){
 function renderSeasonActionBoard(draftComplete){
   if(!els.seasonActionStatus||!els.seasonActionList)return;
   if(!draftComplete){els.seasonActionStatus.className='notice';els.seasonActionStatus.textContent='Action Board wird nach Draftabschluss aktiv.';els.seasonActionList.innerHTML='';return;}
-  const pairs=lastPostDraftPairs||[],clear=pairs.filter(x=>x.action==='CLEAR ADD'),watch=pairs.filter(x=>x.action==='WATCH');
+  const pairs=lastPostDraftPairs||[],clear=pairs.filter(x=>x.action==='CLEAR ADD'&&x.freshEvidencePresent),watch=pairs.filter(x=>x.action==='WATCH'&&x.freshEvidencePresent);
   const urgent=clear.length?`ACTION · ${clear.length} verifizierte CLEAR-ADD-Swap${clear.length===1?'':'s'} prüfen.`:watch.length?`WATCH · ${watch.length} mögliche Roster-Upgrades, aber noch kein verifiziertes Sofortsignal.`:'HOLD · Kein materieller Add/Drop-Trigger aus der geladenen Baseline.';
   els.seasonActionStatus.className=`notice ${clear.length?'warn':'ok'}`;els.seasonActionStatus.textContent=`Season Action Board v1 · ${urgent} Read-only; keine automatische Transaktion.`;
   const q=clear.length?clear.slice(0,4):watch.slice(0,4);
