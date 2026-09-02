@@ -112,3 +112,18 @@ Weight updates occur only after a completed week. Maximum single-update weight m
 - Waiver/FA -> WEEKLY + ROS + ROLE + MARKET.
 - Trade -> ROS + TRADE_VALUE + REPLACEMENT_VALUE; WEEKLY only as near-term modifier.
 - Draft prior -> PRE_W1 residual only, decays to zero.
+
+
+## DST look-ahead stash exception
+Default roster construction remains one DST. PITTI scans the current week plus the next two weeks and may recommend temporarily carrying a second DST only when a quantified future matchup edge beats the opportunity cost of the weakest bench slot.
+
+Pollizze/RotoBaller information is split rather than double-counted: current-week tier evidence belongs to CURRENT_WEEK_TIER; rolling four-week/schedule work belongs to MULTI_WEEK_STREAMING. A stale multi-week article has zero current look-ahead weight.
+
+A stash recommendation requires all of: material future DST edge, exceptional opponent/matchup profile, acceptable bench option cost, meaningful risk the DST will not remain freely available, and acceptable transaction cost. Free-agent acquisition is preferred; FAAB or waiver priority needs a substantially higher edge.
+
+The slot comparison explicitly includes the option value of a speculative RB/WR/TE. It must not assume that an empty/flexible lottery slot is always superior. Fast watcher/news reaction lowers—but never removes—the option value of holding flexibility. Any stash is revocable immediately when injuries, role changes, or other news create a higher-value use.
+
+The decision score concept is:
+expected future DST edge × relevance to matchup win probability − bench option value − transaction cost − flexibility loss.
+
+This is an exception policy, not permission to roster two DSTs routinely.
