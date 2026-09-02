@@ -514,3 +514,10 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - PR #118 remains reviewable/unmerged. Existing isolated fixes: remove redundant numeric roster grid and duplicate start-alternative block; protect only active TE/QB; add pre-W1 draft-capital plausibility gate to trade offers.
 - Codex execution itself is not yet verified from this chat/tool environment; no Codex tool is exposed here. PC setup/end-to-end repo access must be verified before delegating the work package. This is a capability boundary, not a code blocker.
 - Do not merge/deploy rc4.190 merely because the preparation files exist. Codex/implementation output must pass strict gates and review first.
+
+
+## 2026-09-02 — Live/News RB contingency seed
+- Began P0 precompute rather than waiting for Codex: added `data/rb-contingency-seed-2026-09-02.json` covering all 32 RB rooms from current research, with explicit committee/role-split flags and fail-closed confidence.
+- Current RotoWire 2026 handcuff research is used only as a seed/role-analysis source, not authoritative live truth. It explicitly identifies clear contingency profiles (e.g. Corum, Bigsby, Pacheco), committee risks (LAC/NYJ), and unresolved rooms (SF/DAL/MIA/BAL/IND/WAS/KC/MIN/SEA).
+- Research itself exposed why fail-closed provenance is mandatory: at least one seed mapping is internally inconsistent (ARI/Allgeier) and is marked SOURCE_CONFLICT rather than silently accepted. Every room still requires primary/current depth-chart verification before event activation.
+- Next data task: primary/Ourlads reconciliation for low-confidence/conflict rooms, then add live Sleeper ownership and contingent-action layer. No seed entry alone is actionable.
