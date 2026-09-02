@@ -14,3 +14,5 @@ Lawrence: in-season QB2 exception allowed only if live 9-opponent need/FAAB mark
 AUTO/AUTO BLOCK: continuous same-turn execution while safe work exists. Checkpoint + full re-inventory after every package. No progress/status/acknowledgement terminal messages, no empty reply, no “AUTO läuft weiter”, no “keine Handlung erforderlich” stop while another lane is executable. STATUS is report-only.
 
 Immediate gate: one rc4.188 Android Waiver/FA screenshot, no transaction first.
+
+AUTO queue takeover: reconstruct CURRENT active/ready buckets before ordinary work. No device-side trial-and-error.
