@@ -2639,30 +2639,67 @@ const WEEK1_RANKS_2026={
   RB:{'Jahmyr Gibbs':1,'Bijan Robinson':2,'Christian McCaffrey':3,'Ashton Jeanty':4,'Jonathan Taylor':5,'Derrick Henry':6,'Chase Brown':7,'Saquon Barkley':8,'Omarion Hampton':9,"De'Von Achane":10,'Javonte Williams':11,'James Cook III':12,'Kenneth Walker III':13,'Josh Jacobs':14,'Kyren Williams':15,'Breece Hall':16,"D'Andre Swift":17,'Cam Skattebo':18,'Travis Etienne Jr.':19,'David Montgomery':20,'Bucky Irving':21,'Quinshon Judkins':22,'Jaylen Warren':23,'Rhamondre Stevenson':24,'Tony Pollard':25,'J.K. Dobbins':26,'Bhayshul Tuten':27,'Rico Dowdle':28,'Jeremiyah Love':29,'Jordan Mason':30,'Jonathon Brooks':31,'Jadarian Price':32,'Chuba Hubbard':33,'Rachaad White':34,'Kyle Monangai':35,'Jacory Croskey-Merritt':36,'Blake Corum':37,'Kenny Gainwell':38,'Chris Rodriguez Jr.':39,'TreVeyon Henderson':40,'Tyler Allgeier':41,'Aaron Jones Sr.':42,'RJ Harvey':43,'Tyjae Spears':44,'Tyrone Tracy Jr.':45,'Keaton Mitchell':46,'Dylan Sampson':47,'Alvin Kamara':48,'Tank Bigsby':49}
 };
 function week1Rank(p){return WEEK1_RANKS_2026[p?.pos]?.[p?.name]??null}
+const WEEK1_PITTI_PROJECTIONS_2026=new Map([
+  [norm('Kenny Gainwell'),{points:7.2,source:'FantasyPros Week 1 projection',asOf:'2026-09-01'}],
+  [norm('Tyjae Spears'),{points:5.9,source:'FantasyPros Week 1 projection',asOf:'2026-09-02'}],
+  [norm('Christian Watson'),{points:8.5,source:'FantasyPros Week 1 projection',asOf:'2026-08-27'}],
+  [norm('Jadarian Price'),{points:9.7,source:'FantasyPros Week 1 projection',asOf:'2026-08-31'}],
+  [norm('Blake Corum'),{points:8.1,source:'FantasyPros Week 1 projection',asOf:'2026-09-01'}],
+  [norm('Isaiah Likely'),{points:5.7,source:'FantasyPros Week 1 projection',asOf:'2026-08-28'}]
+]);
+const WEEK1_PITTI_MATCHUP_2026=new Map([
+  [norm('Kenny Gainwell'),{grade:'TBD',detail:'kein verifiziertes PITTI-Matchup-Rating geladen'}],
+  [norm('Tyjae Spears'),{grade:'SCHWIERIG',detail:'NYJ · negatives RB-Matchup; vor Lock neu bewerten'}],
+  [norm('Christian Watson'),{grade:'NEUTRAL',detail:'Matchup-Edge nicht stark genug für alleinige Startentscheidung'}],
+  [norm('Jadarian Price'),{grade:'GÜNSTIG',detail:'NE · aktuelles externes W1-Matchup-Signal positiv'}],
+  [norm('Blake Corum'),{grade:'NEUTRAL',detail:'SF · kein klarer Matchup-Boost'}],
+  [norm('Isaiah Likely'),{grade:'GÜNSTIG',detail:'DAL · aktuelles externes W1-Matchup-Signal positiv'}]
+]);
 function weeklyLineupEvidence(p){
   const x={rank:week1Rank(p),external:week1ExternalRank(p),fresh:freshAcquisitionEvidence({p}),opp:postDraftOpportunityProxy({p})};
   const ranks=[x.rank,x.external].filter(Number.isFinite);x.consensus=ranks.length?ranks.reduce((a,b)=>a+b,0)/ranks.length:null;
+  x.projection=WEEK1_PITTI_PROJECTIONS_2026.get(norm(p?.name))||null;
+  x.matchup=WEEK1_PITTI_MATCHUP_2026.get(norm(p?.name))||null;
   x.freshEnough=x.fresh.events>0;return x;
+}
+function seasonStartSitCompatible(starter,bench){
+  if(!starter?.p||!bench?.p)return false;
+  const sp=starter.p.pos,bp=bench.p.pos;
+  if(sp===bp)return true;
+  // Without canonical Sleeper slot labels, never infer that the lone TE/QB starter is a FLEX.
+  // In this league RB/WR may interchange through FLEX; TE may only be displaced by another TE
+  // unless a future slot-aware league-position feed proves the starter occupies FLEX.
+  return (sp==='RB'&&bp==='WR')||(sp==='WR'&&bp==='RB');
+}
+function weeklyEvidenceHtml(e,p){
+  const rank=Number.isFinite(e?.consensus)?'#'+e.consensus.toFixed(1):'–';
+  const pts=Number.isFinite(e?.projection?.points)?e.projection.points.toFixed(1)+' Pkt':'–';
+  const matchup=e?.matchup?e.matchup.grade+' · '+e.matchup.detail:'– · kein verifiziertes PITTI-Matchup-Rating';
+  const source=e?.projection?.source?e.projection.source+' · '+e.projection.asOf:'keine verifizierte Projection geladen';
+  return 'Panel W1 '+rank+' · PITTI-Proj. '+pts+' · Matchup '+esc(matchup)+' · '+esc(source);
 }
 function renderRosterBenchAudit(rows,players,current,draftComplete){
   if(!els.rosterBenchStatus||!els.rosterBenchList)return;
   if(!draftComplete){els.rosterBenchStatus.className='notice';els.rosterBenchStatus.textContent='Aufstellungsanalyse wird nach Draftabschluss aktiv.';els.rosterBenchList.innerHTML='';return;}
   const season=lastDraftContext?.season,starters=new Set((season?.my_roster?.starters||[]).map(String).filter(x=>x&&x!=='0'));
   const active=rows.filter(x=>x.seasonStatus!=='RESERVE'),bench=active.filter(x=>!starters.has(String(x.p.id))),starterRows=active.filter(x=>starters.has(String(x.p.id)));
-  const flexPos=new Set(['RB','WR','TE']),moves=[];
+  const moves=[];
   for(const b of bench){const be=weeklyLineupEvidence(b.p),br=be.consensus;if(!Number.isFinite(br))continue;
-    for(const s of starterRows){const se=weeklyLineupEvidence(s.p),sr=se.consensus;if(!Number.isFinite(sr)||!(s.p.pos===b.p.pos||(flexPos.has(s.p.pos)&&flexPos.has(b.p.pos))))continue;
-      const rankEdge=sr-br,roleEdge=be.opp.value-se.opp.value,edge=rankEdge+roleEdge*.75;
+    for(const s of starterRows){if(!seasonStartSitCompatible(s,b))continue;const se=weeklyLineupEvidence(s.p),sr=se.consensus;if(!Number.isFinite(sr))continue;
+      const rankEdge=sr-br,roleEdge=be.opp.value-se.opp.value;
+      const pointEdge=(Number.isFinite(be.projection?.points)&&Number.isFinite(se.projection?.points))?be.projection.points-se.projection.points:null;
+      const edge=rankEdge+roleEdge*.5+(Number.isFinite(pointEdge)?pointEdge*.8:0);
       const evidenceFresh=be.freshEnough||se.freshEnough;
-      if(edge>0)moves.push({b,s,edge,br,sr,rankEdge,roleEdge,evidenceFresh});
+      if(edge>0)moves.push({b,s,edge,br,sr,rankEdge,roleEdge,pointEdge,evidenceFresh,be,se});
     }
   }
   moves.sort((x,y)=>y.edge-x.edge);
   els.rosterBenchStatus.className='notice ok';
-  els.rosterBenchStatus.textContent='Week-1 Start/Sit v3 · aktuelle Sleeper-Aufstellung. Weekly Consensus Rank ist primär; frische Rollen-/Health-Evidence modifiziert nur den Weekly Edge. ROS/Draft-Panel darf keinen Start/Sit-Move auslösen.';
-  els.rosterBenchList.innerHTML=moves.length?'<div class="coach-section-title">WEEK 1 · MÖGLICHE LINEUP-ÄNDERUNGEN</div>'+moves.slice(0,6).map((m,i)=>'<div class="coach-row"><div><b>'+esc(m.b.p.name)+' statt '+esc(m.s.p.name)+'</b><div class="tiny">'+esc(m.b.p.pos)+' '+esc(m.b.p.team)+' W1 #'+m.br+' → Start · '+esc(m.s.p.pos)+' '+esc(m.s.p.team)+' W1 #'+m.sr.toFixed(1)+' → Bench · Weekly Rank Edge '+(m.rankEdge>=0?'+':'')+m.rankEdge.toFixed(1)+' · Role/Health '+(m.roleEdge>=0?'+':'')+m.roleEdge.toFixed(1)+' · Gesamt '+(m.edge>=0?'+':'')+m.edge.toFixed(1)+(m.evidenceFresh?' · frische Evidence':' · vor Lock Freshness-Recheck')+'</div></div><div><b>'+(m.edge>=6&&m.evidenceFresh?'STRONG REVIEW':'REVIEW')+'</b></div></div>').join(''):'<div class="notice ok"><b>LINEUP HOLD</b> · In der aktuell geladenen Week-1-Baseline ist kein Bench-Spieler höher gerankt als ein kompatibler Starter. Vor Lock erneut auf Health/Role prüfen.</div>';
+  els.rosterBenchStatus.textContent='Week-1 Start/Sit v4 · Sleeper liefert nur die aktuelle Aufstellung/Ownership. PITTI nutzt eigene Weekly-Panel-Ranks, externe verifizierte Projektionen und eigene Matchup-Evidence; Sleeper-Prognosen und Sleeper-Matchup-Bewertungen werden nicht verwendet. TE/QB werden ohne belegten FLEX-Slot nicht positionsfremd ersetzt.';
+  const starterHtml='<div class="coach-section-title">WEEK 1 · AKTUELLE STARTER · PITTI-WERTE</div>'+starterRows.map(s=>{const e=weeklyLineupEvidence(s.p);return '<div class="coach-row"><div><b>'+esc(s.p.name)+'</b><div class="tiny">'+esc(s.p.pos)+' '+esc(s.p.team)+' · '+weeklyEvidenceHtml(e,s.p)+'</div></div><div><b>START</b></div></div>'}).join('');
+  const moveHtml=moves.length?'<div class="coach-section-title">WEEK 1 · MÖGLICHE LINEUP-ÄNDERUNGEN</div>'+moves.slice(0,6).map(m=>'<div class="coach-row"><div><b>'+esc(m.b.p.name)+' statt '+esc(m.s.p.name)+'</b><div class="tiny">BENCH: '+weeklyEvidenceHtml(m.be,m.b.p)+'</div><div class="tiny">STARTER: '+weeklyEvidenceHtml(m.se,m.s.p)+'</div><div class="tiny">Rank Edge '+(m.rankEdge>=0?'+':'')+m.rankEdge.toFixed(1)+(Number.isFinite(m.pointEdge)?' · Proj.-Edge '+(m.pointEdge>=0?'+':'')+m.pointEdge.toFixed(1):' · Proj.-Edge –')+' · Role/Health '+(m.roleEdge>=0?'+':'')+m.roleEdge.toFixed(1)+(m.evidenceFresh?' · frische Evidence':' · vor Lock Freshness-Recheck')+'</div></div><div><b>'+(m.edge>=6&&m.evidenceFresh?'STRONG REVIEW':'REVIEW')+'</b></div></div>').join(''):'<div class="notice ok"><b>LINEUP HOLD</b> · Kein positions-/slot-kompatibler Bench-Spieler schlägt in der geladenen PITTI-Week-1-Baseline einen Starter. Vor Lock Projection/Health/Role aktualisieren.</div>';
+  els.rosterBenchList.innerHTML=starterHtml+moveHtml;
 }
-
 
 function postDraftRosterCounts(rows){
   const c={QB:0,RB:0,WR:0,TE:0};for(const x of rows)if(c[x.p?.pos]!=null)c[x.p.pos]++;return c;
@@ -2746,7 +2783,7 @@ function renderRosterFaAudit(rows,rankedAvailable,draftComplete){
   if(!draftComplete){els.rosterFaStatus.className='notice';els.rosterFaStatus.textContent='FA-Vergleich wird nach Draftabschluss aktiv.';els.rosterFaList.innerHTML='';return;}
   const counts=postDraftRosterCounts(rows);
   const liveSeason=rows.some(x=>x?.seasonStatus);
-  const drops=rows.filter(x=>liveSeason?(!x.r||Number(x.r?.rank)>90):((Number(x.pk?.pick_no)||999)>80&&(!x.r||Number(x.r?.rank)>90))).map(x=>({...x,capitalScore:liveSeason?seasonRosterCapitalScore(x):rosterBenchCapitalScore(x)})).sort((a,b)=>b.capitalScore-a.capitalScore).slice(0,7);
+  const drops=rows.filter(x=>['QB','RB','WR','TE'].includes(x.p?.pos)).filter(x=>liveSeason?(!x.r||Number(x.r?.rank)>90):((Number(x.pk?.pick_no)||999)>80&&(!x.r||Number(x.r?.rank)>90))).map(x=>({...x,capitalScore:liveSeason?seasonRosterCapitalScore(x):rosterBenchCapitalScore(x)})).sort((a,b)=>b.capitalScore-a.capitalScore).slice(0,7);
   const hasQB=counts.QB>=1;
   const fas=rankedAvailable.slice(0,160).map(p=>({p,r:rankFor(p.name,p.pos),a:adpFor(p.name)})).filter(x=>x.r&&!(hasQB&&x.p.pos==='QB')).sort((a,b)=>a.r.rank-b.r.rank).slice(0,45);
   if(rankedAvailable.length>0&&fas.length===0){
@@ -2788,10 +2825,12 @@ function renderSpecialTeamsBoard(){
   const normTeam=t=>aliases[String(t||'').toUpperCase()]||String(t||'').toUpperCase();
   const d=dst.map(p=>({p,rb:rbMap.get(normTeam(p.team||p.name))})).filter(x=>x.rb&&x.rb.tier<=4).sort((a,b)=>a.rb.tier-b.rb.tier||a.rb.rank-b.rb.rank);
   const kProj=new Map([['Cameron Dicker',8.7],['Harrison Mevis',8.4],['Brandon Aubrey',8.3],['Jake Bates',8.2],['Jason Myers',8.0],["Ka'imi Fairbairn",8.0],['Cam Little',7.9],['Tyler Loop',7.9],['Evan McPherson',7.7],['Chris Boswell',7.6]]);
-  const k=ks.map(p=>({p,proj:kProj.get(p.name)})).filter(x=>Number.isFinite(x.proj)).sort((a,b)=>b.proj-a.proj);
+  const rosterK=(c.seasonRows||[]).find(x=>x?.p?.pos==='K')?.p||null,rosterKProj=rosterK?kProj.get(rosterK.name):null;
+  const k=ks.map(p=>({p,proj:kProj.get(p.name)})).filter(x=>Number.isFinite(x.proj)).map(x=>({...x,edge:Number.isFinite(rosterKProj)?x.proj-rosterKProj:null})).sort((a,b)=>b.proj-a.proj);
   const dHtml=d.length?d.slice(0,7).map((x,i)=>{const team=normTeam(x.p.team||x.p.name),jax=team==='JAX',label=jax?'PRIORITY W1 · HOLD-HORIZON WEAK':(x.rb.tier<=2?'TARGET':'WATCH'),detail=jax?' · 2025 DST FP #4 · 31 takeaways (#2) · W2 DEN / W3 NE / W4 CIN → eher W1-Stream als 4W-Hold':'';return '<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">D/ST · RotoBaller W1 #'+x.rb.rank+' · Tier '+x.rb.tier+' · vs '+esc(x.rb.opp)+' · Opp implied '+x.rb.implied+' · Sleeper frei'+detail+'</div></div><div><b>'+label+'</b></div></div>'}).join(''):'<div class="notice">Keine RotoBaller-Top-18-D/ST ist aktuell im Sleeper-FA-Pool.</div>';
-  const kHtml=k.length?k.slice(0,7).map((x,i)=>{const mevis=x.p.name==='Harrison Mevis',drop=mevis?' · Early-Add-Gate: DROP-Reihenfolge Bigsby → Spears → Gainwell; Price / Watson / Downs geschützt':'';return '<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">K · FantasyPros W1 Consensus-Projektion · Sleeper frei'+drop+'</div></div><div><b>'+x.proj.toFixed(1)+' proj.</b></div></div>'}).join(''):'<div class="notice">Keiner der aktuell verifizierten Week-1-Kicker ist im LIVE Sleeper-FA-Pool; keine statische Liste darf Ownership überschreiben.</div>';
-  return '<div class="coach-section-title">WEEK 1 · D/ST STREAMING</div><div class="notice ok">Special Teams v2 · RotoBaller W1: Rank + Tier + Gegner + Vegas-Implied-Points. Quality-Floor wird bereits vor Sortierung angewandt: Tier 5/6 ausgeschlossen; Tier 4 nur Notfall. Early-Add-Gate: Vorteil gegenüber nächstbestem freien Stream × Verlust-/Marktrisiko muss den Optionswert des besten Drop-Kandidaten übersteigen. Pre-W1-RB-Optionswert wird erhöht. Weeks 1–4 wird vor finalem Add als Hold-Horizon gegengeprüft.</div>'+dHtml+'<div class="coach-section-title">WEEK 1 · KICKER</div>'+kHtml;
+  const kHtml=k.length?k.slice(0,7).map((x,i)=>{const edge=Number.isFinite(x.edge)?' · Edge ggü. '+esc(rosterK?.name||'Roster-K')+' '+(x.edge>=0?'+':'')+x.edge.toFixed(1):'';const label=Number.isFinite(x.edge)&&x.edge>=1.5?'UPGRADE PRÜFEN':Number.isFinite(x.edge)&&x.edge>0?'KLEINER EDGE':'HOLD';return '<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">K · FantasyPros W1 Consensus-Projektion · Sleeper frei'+edge+'</div></div><div><b>'+x.proj.toFixed(1)+' proj. · '+label+'</b></div></div>'}).join(''):'<div class="notice">Keiner der aktuell verifizierten Week-1-Kicker ist im LIVE Sleeper-FA-Pool; keine statische Liste darf Ownership überschreiben.</div>';
+  const kBase=rosterK?'<div class="notice ok"><b>AKTUELLER KICKER: '+esc(rosterK.name)+'</b> · '+(Number.isFinite(rosterKProj)?rosterKProj.toFixed(1)+' proj.':'Projection noch nicht verifiziert')+' · Kicker werden ausschließlich hier gegen verfügbare Kicker verglichen; niemals gegen RB/WR/TE.</div>':'<div class="notice warn">Kein aktueller Roster-Kicker erkannt.</div>';
+  return '<div class="coach-section-title">WEEK 1 · D/ST STREAMING</div><div class="notice ok">Special Teams v2 · RotoBaller W1: Rank + Tier + Gegner + Vegas-Implied-Points. Quality-Floor wird bereits vor Sortierung angewandt: Tier 5/6 ausgeschlossen; Tier 4 nur Notfall. Early-Add-Gate: Vorteil gegenüber nächstbestem freien Stream × Verlust-/Marktrisiko muss den Optionswert des besten Drop-Kandidaten übersteigen. Pre-W1-RB-Optionswert wird erhöht. Weeks 1–4 wird vor finalem Add als Hold-Horizon gegengeprüft.</div>'+dHtml+'<div class="coach-section-title">WEEK 1 · KICKER</div>'+kBase+kHtml;
 }
 
 function renderWaiverWorkspace(draftComplete){
