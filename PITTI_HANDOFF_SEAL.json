@@ -31,7 +31,7 @@
     "branch": "main",
     "source_baseline": "v11.8.0-rc4.188",
     "pr108": "MERGED_HISTORICAL",
-    "latest_physical_android": "v11.8.0-rc4.185 PARTIAL_PASS",
+    "latest_physical_android": "v11.8.0-rc4.188 PARTIAL_PASS_WAIVER_PENDING",
     "accepted_rollback": "v11.8.0-rc4.169",
     "next_release": "NONE_BEFORE_DEVICE_RC4188_CANARY"
   },
