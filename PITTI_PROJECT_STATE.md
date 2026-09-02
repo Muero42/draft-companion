@@ -419,3 +419,14 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Accepted rollback remains rc4.169. No downgrade to rc4.171-175 and no version-number-as-progress inference.
 - New-chat first gate: repository/CI/deploy reconciliation, then browser-equivalent Season E2E. No more device-side trial-and-error/cache clearing/reinstall/repeated refresh/candidate churn before autonomous diagnosis.
 - AUTO contract re-sealed: same-turn continuation; checkpoint + re-inventory after every package; no progress/status/ack finals, no empty replies, no false 'AUTO läuft weiter'. STATUS report-only.
+
+
+## 2026-09-02 — v225 handoff / rc4.182 Kader + Experten unresolved
+- Physical Android authority is now explicit: rc4.182 is installed and DEVICE_REJECTED. User reconfirmed at 10:09 CEST that both the live roster and experts still fail to load. Earlier rc4.182 screenshot showed static Sleeper Live-State '-' and Kader loading while the Draft decision-surface leak was absent.
+- Accepted rollback remains rc4.169. Installation/version visibility is not acceptance.
+- PR #98 (`pitti/rc4182-hydration-rootcause`) latest head `de3eed64b4c750c53ad8413deb0c1d71acf85d48` is OPEN/unmerged. Latest exact-head CI supersedes older green heads and is RED: Candidate Package 33607037207 and Project Guardrails 33607037186 fail on AUTO stop-code + CURRENT-next-gate regressions; Release Contract v2 33607037209 fails `season-startup-resilience-regression` with `automatic Season startup sequence invalid`, despite bootstrap-runtime and interaction-E2E passing earlier in that run.
+- Therefore PR #98 must not be merged/promoted yet. New chat must reconcile/fix those exact failures, then run a real-shape startup harness proving both Kader hydration and expert initialization/load path before any further physical version.
+- Root-cause discipline: the early-module/localStorage-cleanup path is a concrete hypothesis/fix candidate, not accepted truth. Kader + expert failures may share the same pre-startup boundary; audit all required top-level startup paths before downstream UI changes.
+- Product priority locked: technical startup → Kader → Experts → FA/Waiver → Trade → gradual in-season expert transition. Jody Smith and Boone are preserved for the later expert/Trade phase but cannot displace the loading defect.
+- Watcher parallel state: pitti-watcher main v0.2.5 with D1 amplification remediation and low recent hourly usage; v0.2.6 FA/trade foundation remains isolated as draft PR #1 and is not production authority.
+- AUTO semantics re-locked: no progress/status/empty/promise-only messages; max one immediate external poll; blocked external lane does not stop independent work; STATUS is report-only; user device evidence is checkpointed immediately.
