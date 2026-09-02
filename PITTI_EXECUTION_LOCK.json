@@ -1,12 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-01T20:09:00Z",
+  "updatedAt": "2026-09-02T08:10:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Repo generation 20260901T2210Z-v224 is current handoff authority. rc4.176 is physically observed but NOT accepted. Captured Kader still shows Sleeper Live-State '-' and 'Live-Kader wird geladen...'. New chat must reconcile actual main/CI/deploy, run browser-equivalent Season E2E, and never downgrade to rc4.171-175 or infer success from version number. Library persistence rule: never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Repo generation 20260902T0810Z-v225 is current takeover repair authority. rc4.182 is installed/observed but DEVICE_REJECTED for Season hydration; rc4.169 remains accepted rollback authority. PR #98 is unmerged and exact-head strict validation is required before merge/version/device test.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision."
@@ -257,12 +257,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4182_DEVICE_REJECTED",
+    "status": "RC4182_HYDRATION_FIX_PR98_REVALIDATING",
     "nextGate": "RC4182_HYDRATION_FIX_STRICT_VALIDATION"
   },
-  "status": "RC4182_DEVICE_REJECTED_PROCESS_RECONCILED",
+  "status": "RC4182_DEVICE_REJECTED_PR98_REVALIDATING",
   "gate": "RC4182_HYDRATION_FIX_STRICT_VALIDATION",
-  "nextGate": "New chat: reconcile actual main/CI/deploy against v224, then run browser-equivalent Season E2E for startup hydration, Kader/Waiver/Trades/Lineup navigation, automatic Sleeper sync, automatic ranking refresh, timeout/fail-closed paths, no Draft UI leakage, and no runtime truncation.",
+  "nextGate": "Validate PR #98 exact head with repaired startup-resilience ordering; no merge/version/device test until all strict gates pass.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -271,12 +271,12 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260901T2210Z-v224",
-    "status": "PASS",
-    "ready": true,
-    "secondPass": true,
-    "resume": "rc4.176 physically observed but not functionally accepted; resume with repository reconciliation + automated Season E2E, not device trial-and-error.",
-    "transaction_in_progress": false
+    "generation": "20260902T0810Z-v225",
+    "status": "REPAIRING",
+    "ready": false,
+    "secondPass": false,
+    "resume": "PR #98 strict revalidation; rc4.182 remains DEVICE_REJECTED; rc4.169 rollback authority.",
+    "transaction_in_progress": true
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
@@ -295,7 +295,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260901T2210Z-v224",
+  "handoff_generation": "20260902T0810Z-v225",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
