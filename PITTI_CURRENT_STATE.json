@@ -85,8 +85,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4181_BROWSER_EQUIVALENT_SEASON_E2E_PASS",
-    "nextGate": "FINAL_PHYSICAL_RC4181_ACCEPTANCE"
+    "status": "RC4181_REVALIDATING_AFTER_STARTUP_FIX",
+    "nextGate": "RC4181_BROWSER_EQUIVALENT_SEASON_E2E"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -103,15 +103,16 @@
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "RUNNING",
-    "active": [],
-    "ready": [],
-    "waiting_external": [],
-    "blocked_user": [
+    "active": [
       {
-        "id": "final-physical-rc4181-acceptance",
-        "reason": "Automated startup dependency audit and all release gates PASS; one physical acceptance required for real Android/PWA runtime."
+        "id": "rc4181-revalidation",
+        "lane": "season startup/release safety",
+        "reason": "Current main metadata/test drift caused all strict gates to fail despite runtime fix."
       }
     ],
+    "ready": [],
+    "waiting_external": [],
+    "blocked_user": [],
     "completed_recent": [
       {
         "id": "rc4177-strict-validation",
@@ -340,9 +341,9 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "No autonomous work remains before final physical acceptance."
+      "allowed": false,
+      "code": null,
+      "reason": "Fresh rc4.181 validation work remains."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
