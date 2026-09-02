@@ -35,16 +35,19 @@
     "last_device_failure": "rc4.183 is physically installed/observed and DEVICE_REJECTED: FA/Add-Drop cards rendered under Kader and IR/Reserve Zach Charbonnet was used as an ordinary drop target. The former startup/Kader loading dead-state was crossed.",
     "latest_device_evidence": {
       "version": "v11.8.0-rc4.188",
-      "evidence": "physical Android screenshot in current Draft Companion project chat at 2026-09-02 19:57 CEST",
+      "evidence": "physical Android screenshots in current Draft Companion project chat at 2026-09-02 20:33 CEST",
       "observed": [
-        "rc4.188 visibly installed",
+        "Waiver / FA route renders correctly",
         "Sleeper Live-State <1 Min.",
-        "expert rankings 1 Std.",
-        "automatic expert refresh after 3 Std. visibly rendered",
-        "Live/News surface rendered"
+        "expert rankings 2 Std. with 3h refresh policy",
+        "DST candidates explicitly marked Sleeper frei",
+        "Kicker comparisons are isolated against Harrison Mevis",
+        "Jalen Coker is shown as active DROP candidate",
+        "Isaiah Likely is WATCH context, not an IR/Reserve drop target",
+        "no IR/Reserve player is visible as ordinary drop candidate in captured Waiver cards"
       ],
-      "acceptance": "PARTIAL_PASS",
-      "classification": "DEVICE_RC4188_VERSION_LIVE_EXPERT_FRESHNESS_PASS_WAIVER_PENDING"
+      "acceptance": "PASS_WITH_SEMANTIC_REVIEW",
+      "classification": "DEVICE_RC4188_WAIVER_ROUTE_AND_ACTIVE_DROP_SEMANTICS_PASS"
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.188",
     "source_candidate_status": "MERGED_DEVICE_CANARY_PENDING",
@@ -143,8 +146,8 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "RC4188_MERGED_PHYSICAL_CANARY_PENDING",
-    "nextGate": "DEVICE_RC4188_LIVE_10_TEAM_WAIVER_CANARY"
+    "status": "RC4188_WAIVER_CANARY_PASS_SEMANTIC_REVIEW",
+    "nextGate": "RC4188_WAIVER_SEMANTIC_REVIEW_AND_HANDOFF_RESEAL"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -192,7 +195,7 @@
     "resume": "rc4.188 is merged/current source. Do not resurrect PR108-open, rc4.183 current-device, rc4.187 release, 12h expert freshness, or JAX-as-free assumptions. Next gate is one physical rc4.188 Waiver/FA canary; then verify all 10 rosters/ownership and derive actual FA pool before DST/Lawrence/trade recommendations."
   },
   "status": "RC4188_MERGED_DEVICE_CANARY_REQUIRED",
-  "gate": "DEVICE_RC4188_LIVE_10_TEAM_WAIVER_CANARY",
+  "gate": "RC4188_WAIVER_SEMANTIC_REVIEW_AND_HANDOFF_RESEAL",
   "nextGate": "Open Waiver/FA on physically observed rc4.188 and capture one screenshot; no transaction before verification.",
   "handoffGeneration": "20260902T1640Z-v230"
 }
