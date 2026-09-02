@@ -163,7 +163,14 @@
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "RUNNING",
-    "active": [],
+    "active": [
+      {
+        "id": "rc4183-exact-head-validation",
+        "lane": "companion",
+        "goal": "Make exact PR #100 head fully green after retiring stale guardrail assertions.",
+        "state": "active"
+      }
+    ],
     "ready": [],
     "waiting_external": [
       {
@@ -413,12 +420,17 @@
         "id": "takeover-strict-validation",
         "result": "PASS on a27c0912abb1b1a7144442565eabe998087497a3: Project Guardrails, Release Contract v2, Candidate Package, rc4.82 and rc4.83 workflows all success. Season startup/runtime, interaction automatic-only, startup resilience, automatic refresh and workspace-navigation/truncation gates executed successfully inside release/package contracts.",
         "at": "2026-09-01T20:23:00Z"
+      },
+      {
+        "id": "rc4183-season-decision-routing",
+        "result": "Implemented canonical roster slot mapping, FLEX RB/WR/TE eligibility, K/DST exclusion from skill drop pool, K-only waiver comparison, PITTI-only projection/matchup policy and starter evidence parity; added release regression.",
+        "at": "2026-09-02T10:47:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "NO_EXECUTABLE_WORK_REMAINS",
-      "reason": "All diagnosed CI failures repaired; exact-head CI is remaining external dependency before merge."
+      "allowed": false,
+      "code": null,
+      "reason": "Exact-head validation and decision-surface release work remain executable."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
@@ -427,7 +439,7 @@
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.182 is installed and DEVICE_REJECTED; Kader + experts still fail. PR #98 latest head de3eed64 is unmerged and latest strict CI is red. Repair exact latest-head guardrail/startup-sequence failures and prove both Kader hydration + expert initialization off-device before any new device version.",
+    "resume": "rc4.183 physical evidence proves Season/Kader startup now renders. Current candidate work corrects decision semantics: canonical Sleeper roster slots, FLEX RB/WR/TE eligibility, K-only kicker comparisons on Waiver/FA, no Sleeper projections/matchup grades, symmetric PITTI evidence for starters/alternatives. Exact-head CI must be fully green before promotion.",
     "transaction_in_progress": false
   }
 }
