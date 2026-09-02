@@ -64,13 +64,13 @@ function seasonStarterSlotMap(season){return new Map(seasonStarterSlotDefs(seaso
 function seasonLineupHtml(rows,season){
   const byId=new Map(rows.map(x=>[String(x.p.id),x])),starters=(season?.my_roster?.starters||season?.my_starters||[]).map(String).filter(x=>x&&x!=='0');
   const slotMap=seasonStarterSlotMap(season),starterSet=new Set(starters),active=rows.filter(x=>x.seasonStatus!=='RESERVE'),bench=active.filter(x=>!starterSet.has(String(x.p.id))),reserve=rows.filter(x=>x.seasonStatus==='RESERVE');
-  const posClass=p=>['QB','RB','WR','TE'].includes(p)?p.toLowerCase():'flex';
-  const row=(x,label,alt='')=>'<div class="lineup-row"><span class="pos-chip '+posClass(x.p.pos)+'">'+esc(label||x.p.pos)+'</span><div class="lineup-player"><b>'+esc(x.p.name)+'</b><span>'+esc(x.p.team)+(x.p.injury?' · '+esc(x.p.injury):'')+(alt?' · '+esc(alt):'')+'</span></div><b class="lineup-state">'+(x.seasonStatus==='RESERVE'?'IR':'')+'</b></div>';
+  const slotClass=(slot,playerPos='')=>{const s=String(slot||'').toUpperCase(),p=String(playerPos||'').toUpperCase();if(s==='FLEX')return'flex-wrt';if(s==='WRRB_FLEX')return'flex-wr';if(s==='REC_FLEX')return'flex-wt';if(s==='SUPER_FLEX')return'flex-super';if(s==='BN'||s==='IR'||s==='TAXI')return s.toLowerCase();if(s==='DEF'||s==='DST')return'dst';if(['QB','RB','WR','TE','K'].includes(s))return s.toLowerCase();return ['QB','RB','WR','TE','K'].includes(p)?p.toLowerCase():'slot-neutral';};
+  const row=(x,label,alt='',slot='')=>'<div class="lineup-row"><span class="pos-chip '+slotClass(slot||label,x.p.pos)+'">'+esc(label||x.p.pos)+'</span><div class="lineup-player"><b>'+esc(x.p.name)+'</b><span>'+esc(x.p.team)+(x.p.injury?' · '+esc(x.p.injury):'')+(alt?' · '+esc(alt):'')+'</span></div><b class="lineup-state">'+(x.seasonStatus==='RESERVE'?'IR':'')+'</b></div>';
   let html='<div class="lineup-section-title">STARTER</div>';
-  for(const pid of starters){const x=byId.get(pid),slot=slotMap.get(pid)?.slot;if(x)html+=row(x,seasonSlotLabel(slot,x.p.pos));}
+  for(const pid of starters){const x=byId.get(pid),slot=slotMap.get(pid)?.slot;if(x)html+=row(x,seasonSlotLabel(slot,x.p.pos),'',slot);}
   if(!starters.length)html+='<div class="notice warn">Sleeper-Starter noch nicht verfügbar; Kader ist geladen.</div>';
-  html+='<div class="lineup-section-title">BENCH</div>'+bench.map(x=>row(x,'BN')).join('');
-  if(reserve.length)html+='<div class="lineup-section-title">RESERVE / IR</div>'+reserve.map(x=>row(x,'IR')).join('');
+  html+='<div class="lineup-section-title">BENCH</div>'+bench.map(x=>row(x,'BN','','BN')).join('');
+  if(reserve.length)html+='<div class="lineup-section-title">RESERVE / IR</div>'+reserve.map(x=>row(x,'IR','','IR')).join('');
   // Lightweight alternatives: strongest bench option by position from the current panel.
   const alts=bench.filter(x=>x.r).sort((a,b)=>a.r.rank-b.r.rank).slice(0,4);
   if(alts.length)html+='<div class="lineup-section-title">START-ALTERNATIVEN</div>'+alts.map(x=>row(x,x.p.pos,'Bench-Option · Panel '+x.r.rank.toFixed(1))).join('');
