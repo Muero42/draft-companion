@@ -429,7 +429,9 @@ function loadRankCacheCompact(){
 function removeLegacyRankingStorage(){
   // v7_rankCache and v7_panelRanks are obsolete full duplicates. Removing them first is
   // safe because panels are rebuilt from the per-expert source caches / sealed boards.
-  try{localStorage.removeItem('v7_rankCache');localStorage.removeItem('v7_panelRanks')}catch{}
+  // Cleanup is best-effort: a storage-policy exception must never abort module startup.
+  try{localStorage.removeItem('v7_rankCache')}catch(e){console.warn('Legacy rank-cache cleanup skipped',e)}
+  try{localStorage.removeItem('v7_panelRanks')}catch(e){console.warn('Legacy panel-cache cleanup skipped',e)}
 }
 function pruneNonCriticalStorageForRankWrite(){
   // Decision fixtures are primary draft evidence and must never be sacrificed to refresh
