@@ -74,10 +74,10 @@
     "pr98": {
       "number": 98,
       "branch": "pitti/rc4182-hydration-rootcause",
-      "latest_head": "06d04acb7bf165ca910f34a0c0b298ec771d6021",
+      "latest_head": "b6af4a18d31356518afd0ff1074b554242ea50f6",
       "mergeable": true,
       "merged": false,
-      "latest_ci": "PENDING_REVALIDATION",
+      "latest_ci": "PENDING_EXACT_HEAD_CI_WITH_REALSHAPE_GATE",
       "failing_gate": "startup resilience regression repaired to assert current fail-open ordering; exact-head CI pending",
       "passing_observed": [
         "week1 waiver market regression",
@@ -85,7 +85,9 @@
         "SEASON_BOOTSTRAP_RUNTIME_REGRESSION_PASS rc4.182",
         "SEASON_STARTUP_PRIORITY_REGRESSION_PASS"
       ],
-      "rule": "Do not merge, version-bump, deploy, or device-test until this regression failure is diagnosed and strict gates pass on the exact PR head."
+      "rule": "Do not merge, version-bump, deploy, or device-test until this regression failure is diagnosed and strict gates pass on the exact PR head.",
+      "head": "b6af4a18d31356518afd0ff1074b554242ea50f6",
+      "integration_note": "main-only divergence classified as state/handoff docs in compare; preserve newest main authority semantics, then runtime/test patch; do not blind-rebase stale PR state."
     }
   },
   "real_draft": {
@@ -118,7 +120,7 @@
     ]
   },
   "currentWork": {
-    "status": "RC4182_HYDRATION_FIX_PR98_REVALIDATING",
+    "status": "RC4182_PR98_REALSHAPE_GATE_ADDED_PENDING_EXACT_HEAD_CI",
     "nextGate": "RC4182_HYDRATION_FIX_STRICT_VALIDATION"
   },
   "invariants": {
@@ -136,14 +138,15 @@
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "RUNNING",
-    "active": [
+    "active": [],
+    "ready": [],
+    "waiting_external": [
       {
-        "id": "pr98-strict-revalidation",
-        "reason": "Startup resilience regression repaired; exact-head CI must validate before merge/version."
+        "id": "pr98-exact-head-ci",
+        "reason": "Exact-head CI must run with newly wired real-shape roster+expert startup gate.",
+        "head": "b6af4a18d31356518afd0ff1074b554242ea50f6"
       }
     ],
-    "ready": [],
-    "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
       {
@@ -388,9 +391,9 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "Strict PR #98 revalidation pending."
+      "allowed": true,
+      "code": "NO_EXECUTABLE_WORK_REMAINS",
+      "reason": "Runtime/startup audit, real-shape gate, conflict classification and checkpoint completed; exact-head CI is the remaining external dependency before integration."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
