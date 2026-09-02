@@ -17,5 +17,7 @@ assert(a.includes("manager_profile_name"),'canonical live-roster to manager-prof
 assert(a.includes("function waiverOpponentMarket"),'opponent waiver market model missing');
 assert(a.includes("function renderQbOpportunityBoard"),'QB opportunity market surface missing');
 assert(a.includes("2-Slot-Kosten"),'QB plus future DST two-slot opportunity cost missing');
+assert(a.includes("opportunityPenalty"),'QB waiver opportunity-cost adjustment missing');
+assert(a.includes("marketClear"),'QB waiver competition clearing-price model missing');
 assert(a.includes("gleiche Bye wie aktueller QB"),'QB same-bye warning missing');
 console.log('SEASON_LINEUP_WAIVER_ROUTING_PASS');
