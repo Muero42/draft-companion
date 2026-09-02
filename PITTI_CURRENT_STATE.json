@@ -56,7 +56,14 @@
     "latestAndroidVersionObserved": "v11.8.0-rc4.182",
     "source_candidate_status": "DEVICE_REJECTED",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
-    "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL."
+    "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
+    "hydration_root_cause": {
+      "status": "REPRODUCED_OFF_DEVICE",
+      "mechanism": "A top-level removeLegacyRankingStorage() executes before the synchronous Season startup marker. If localStorage.removeItem throws in Android WebView, module evaluation aborts before any Season marker/network code. The rc4.182 screenshot remains exactly at index.html static placeholders, matching this pre-startup failure class and not a later network/bootstrap failure.",
+      "fix_branch": "pitti/rc4182-hydration-rootcause",
+      "regression": "tools/rc4182-hydration-rootcause.mjs",
+      "device_action": "FORBIDDEN_PENDING_AUTOMATED_GATES"
+    }
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -88,8 +95,8 @@
     ]
   },
   "currentWork": {
-    "status": "PROCESS_ROOT_CAUSE_RECONCILED_RC4182_DEVICE_REJECTED",
-    "nextGate": "NO_NEW_VERSION_UNTIL_HYDRATION_ROOT_CAUSE_REPRODUCED_OFF_DEVICE"
+    "status": "RC4182_HYDRATION_ROOT_CAUSE_REPRODUCED_OFF_DEVICE",
+    "nextGate": "VALIDATE_STORAGE_CLEANUP_FIX_WITH_REAL_SHAPE_REGRESSION_AND_FULL_GATES"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -105,9 +112,14 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "PAUSED_BY_USER_FOR_PROCESS_ROOT_CAUSE",
+    "status": "AUTO_ACTIVE",
     "active": [],
-    "ready": [],
+    "ready": [
+      {
+        "id": "rc4182-storage-rootcause-validation",
+        "reason": "Run regression and strict gates."
+      }
+    ],
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
@@ -353,9 +365,8 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "USER_REQUESTED_PROCESS_DIAGNOSIS",
-      "reason": "User explicitly requested process/root-cause analysis before further app development."
+      "allowed": false,
+      "code": "AUTONOMOUS_VALIDATION_REMAINS"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
