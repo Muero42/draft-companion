@@ -3986,14 +3986,14 @@ function rehydrateDerivedExpertPanelsOnStartup(){
     console.warn('Derived expert-panel startup rehydration failed',e);
   }
 }
-const SEASON_RANKING_AUTO_MS=12*60*60*1000,SEASON_RANKING_RETRY_MS=2*60*60*1000;
+const SEASON_RANKING_AUTO_MS=3*60*60*1000,SEASON_RANKING_RETRY_MS=45*60*1000;
 let seasonRankingRefreshBusy=false;
 function renderSeasonRankingFreshness(note=''){
   if(!els.seasonRankingAge&&!els.seasonRankingStatus)return;
   const t=Number(store.get('v7_lastRankingUpdate',0)),age=t?Date.now()-t:Infinity;
   const label=!t?'nicht geladen':age<60*60*1000?Math.max(1,Math.round(age/60000))+' Min.':age<24*60*60*1000?Math.round(age/3600000)+' Std.':Math.floor(age/86400000)+' Tag(e)';
   if(els.seasonRankingAge){els.seasonRankingAge.textContent=label;els.seasonRankingAge.className=!t?'bad':age>SEASON_RANKING_AUTO_MS?'warn':'ok';}
-  if(els.seasonRankingStatus&&!seasonRankingRefreshBusy)els.seasonRankingStatus.textContent=note||(!t?'Keine verifizierten Rankings geladen. Automatischer Refresh wird versucht.':age>SEASON_RANKING_AUTO_MS?'Rankings älter als 12 Std. · automatischer Refresh wird versucht.':'Rankings aktuell genug · automatischer Refresh erst nach 12 Std.');
+  if(els.seasonRankingStatus&&!seasonRankingRefreshBusy)els.seasonRankingStatus.textContent=note||(!t?'Keine verifizierten Rankings geladen. Automatischer Refresh wird versucht.':age>SEASON_RANKING_AUTO_MS?'Rankings älter als 3 Std. · automatischer Refresh wird versucht.':'Rankings aktuell genug · automatischer Refresh spätestens nach 3 Std.');
 }
 async function refreshSeasonRankings({force=false,auto=false}={}){
   if(seasonRankingRefreshBusy){if(els.seasonRankingStatus)els.seasonRankingStatus.textContent='Ranking-Aktualisierung läuft bereits …';return{ok:false,busy:true};}
