@@ -1,7 +1,9 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v224
-Generation: `20260901T2210Z-v224`
+# PITTI HANDOFF COMPLETENESS MATRIX — v225
+Generation: `20260902T0810Z-v225`
 
-PASS requires: rc4.176 source/deployed; rc4.176 physical device observed but NOT accepted; rc4.169 accepted rollback; 22:09 CEST screenshot preserved exactly (Season shell/workspace buttons visible, no Draft controls in captured Kader frame, Live-State '-', Kader loading); v223 semantic contradictions repaired; first new-chat gate = repo/CI/deploy reconciliation + AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE; no further device trial-and-error before autonomous PASS; live Sleeper = Season Source of Truth; draft = immutable history; transaction canary and watcher v0.2.3 preserved; AUTO continuous/re-inventory/no progress/no empty/no promise-only finals; STATUS report-only.
+PASS requires: rc4.182 installed/observed and DEVICE_REJECTED for Season hydration; rc4.169 accepted rollback authority; latest physical evidence preserved; PR #98 exact head recorded; startup-resilience regression aligned to current fail-open startup ordering; all strict PR gates green before merge/version/deploy/device test; live Sleeper = Season Source of Truth; draft = immutable history; transaction canary and watcher preserved; AUTO continuous/re-inventory/no progress/no empty/no promise-only finals; STATUS report-only.
 
+- No stale v224/rc4.176 current authority fields.
+- No stale PR-head pointer.
 - Empty assistant response after tool work is forbidden.
 - AUTO progress/status-only terminal responses are forbidden while executable work exists.
