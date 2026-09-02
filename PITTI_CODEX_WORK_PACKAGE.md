@@ -44,3 +44,6 @@ Replace simplistic target-first 1-for-1 generation with bilateral roster-need ev
 
 ## Evidence-source rule
 Source integration is separate from presentation. Implement adapters/cache/freshness/provenance so that current verified Week-N projections, positional ranks, Vegas implied totals, weather/dome, and trade values can be hydrated. Do not hard-code guessed current values into app logic.
+
+## Workstream E — Live / News reaction intelligence
+Read `PITTI_LIVE_NEWS_REACTION_ARCHITECTURE.md`. Implement Live / News as an event activation layer over precomputed 32-team role graphs, not a generic feed. Build provenance/freshness fields, source-tier registry, event dedupe/verification state, prepared contingencies, and league-aware action conversion. Keep diagnostics collapsed. Initial data-build priority is all 32 RB rooms with functional roles and contingent fantasy value; do not equate nominal depth-chart order with role succession.
