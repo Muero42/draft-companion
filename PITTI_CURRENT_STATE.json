@@ -16,19 +16,19 @@
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.181",
     "ci": {
-      "candidate_package": "PASS run 33590619581",
-      "release_contract_v2": "PASS run 33590619664",
-      "project_guardrails": "PASS run 33590619552",
-      "draft_critical_rc482": "PASS run 33590619526",
-      "draft_critical_rc483": "PASS run 33590619551",
-      "validated_code_head": "075f0890ff91b965a931f483cf52e011501cfd4c",
-      "scope": "rc4.181 Season startup decoupled from removed Draft DOM; strict gates PASS"
+      "candidate_package": "PASS run 33590785725",
+      "release_contract_v2": "PASS run 33590785698",
+      "project_guardrails": "PASS run 33590785682",
+      "draft_critical_rc482": "PASS run 33590785695",
+      "draft_critical_rc483": "PASS run 33590785681",
+      "validated_code_head": "35db25a8438a4c070663fae97f73795486d16528",
+      "scope": "rc4.181 removed-Draft-DOM Season startup fix + startup dependency E2E audit PASS"
     },
     "android_accepted": "v11.8.0-rc4.169",
     "preview_candidate": "v11.8.0-rc4.181 root-cause fix all strict gates PASS; no repeated diagnostic canary",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
-    "latest_package_sha256": "sha256:26175ed98280bf3df054c9c29743d60ef1d583ce9fc4e20f583a8489a9b68903",
-    "package_reference_run": 33590619581,
+    "latest_package_sha256": "sha256:2bf8c2c28a85145cddeeb39c1fe216546eadbdefb6569c20355167e36725adff",
+    "package_reference_run": 33590785725,
     "deployed_pages_app_byte_parity_with_main": true,
     "deployed_pages_head": "main 242ea4b982c5226d6958f6704d5c823d6c89aa9c · Cloudflare Pages deploy PASS",
     "installed_android": "v11.8.0-rc4.176",
@@ -85,8 +85,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4181_STRICT_VALIDATION_PASS",
-    "nextGate": "RC4181_BROWSER_EQUIVALENT_SEASON_E2E"
+    "status": "RC4181_BROWSER_EQUIVALENT_SEASON_E2E_PASS",
+    "nextGate": "FINAL_PHYSICAL_RC4181_ACCEPTANCE"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -103,16 +103,15 @@
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "RUNNING",
-    "active": [
-      {
-        "id": "rc4181-browser-equivalent-season-e2e",
-        "lane": "Season runtime",
-        "reason": "Must reproduce full startup/bootstrap without physical device before promotion"
-      }
-    ],
+    "active": [],
     "ready": [],
     "waiting_external": [],
-    "blocked_user": [],
+    "blocked_user": [
+      {
+        "id": "final-physical-rc4181-acceptance",
+        "reason": "Automated startup dependency audit and all release gates PASS; one physical acceptance required for real Android/PWA runtime."
+      }
+    ],
     "completed_recent": [
       {
         "id": "rc4177-strict-validation",
@@ -341,9 +340,9 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "Browser-equivalent Season E2E remains executable."
+      "allowed": true,
+      "code": "USER_ACTION_REQUIRED",
+      "reason": "No autonomous work remains before final physical acceptance."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
