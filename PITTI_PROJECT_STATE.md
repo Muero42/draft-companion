@@ -485,6 +485,7 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 
 
 ## 2026-09-02 — v229 FINAL HANDOFF AUDIT / CURRENT-POINTER REPAIR
+- Handoff generation: `20260902T1325Z-v229`.
 - The requested second-pass handoff audit found three material stale-current defects after v228: PITTI_CURRENT_STATE.handoff still pointed to generation v227 / rc4.184 PR #102; PITTI_EXECUTION_LOCK.authority.failClosedRecovery still declared v227 + PR #102 current; PITTI_AUTO_PREFLIGHT section 8 still labeled v227/PR #102 as CURRENT. These could have resurrected an already superseded release lane in a fresh chat.
 - v229 removes those stale current pointers without modifying product semantics. Historical v226/v227/PR102 entries remain only as chronological provenance and are explicitly superseded.
 - Current authority: POST_DRAFT_SEASON_COMPANION; rc4.185 merged source baseline; PR #108 OPEN/UNMERGED on pitti/trade-slot-geometry; latest physical Android rc4.183 DEVICE_REJECTED for Kader FA-card + IR ordinary-drop semantics; accepted rollback rc4.169.
