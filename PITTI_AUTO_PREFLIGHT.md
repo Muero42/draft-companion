@@ -118,7 +118,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 
 
 ## HISTORICAL v169 TAKEOVER CANARIES — NOT CURRENT AUTHORITY
-- Historical record only: generation `20260829T1244Z-v178` belonged to that old takeover and MUST NOT override current generation 20260902T1130Z-v227.
+- Historical record only: generation `20260829T1244Z-v178` belonged to that old takeover and MUST NOT override current generation 20260902T1325Z-v229.
 - main/source/deployment/accepted Android authority = rc4.104.
 - Exact 13-file main/gh-pages runtime parity = PASS.
 - Android rc4.104 observed; completed post-draft Snapshot path = PASS.
