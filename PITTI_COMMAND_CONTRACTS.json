@@ -149,19 +149,19 @@
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.169 accepted rollback authority",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
-    "sourceAuthority": "v11.8.0-rc4.181 candidate; Season startup removed-Draft-DOM root cause fixed; device promotion prohibited until strict PASS",
+    "sourceAuthority": "v11.8.0-rc4.182 candidate; live Draft decision renderer no longer overrides workspace hidden state; strict validation pending",
     "latestPackageReextract": "rc4.181 PASS run 33597041931",
     "latestPackageSha256": "sha256:797eeb80ad173be458389e2c88682513d89923e2eed1f0c966f11c9f14f180c2",
     "packageReferenceRun": 33597041931,
     "deployedPagesVersion": "rc4.176 main Cloudflare Pages PASS",
     "deployedPagesAppByteParityWithMain": true,
-    "currentResearchGate": "RC4181_BROWSER_EQUIVALENT_SEASON_E2E",
-    "exactNextAction": "Revalidate rc4.181 runtime and corrected startup regressions on a fresh all-green main head before any device action.",
+    "currentResearchGate": "RC4182_STRICT_VALIDATION",
+    "exactNextAction": "Validate rc4.182 workspace-isolation fix across strict release/package/Season navigation gates before any device update.",
     "runtimeVersion": "rc4.176 installed/observed; functional acceptance pending",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "22:09 CEST screenshot: rc4.176 visible, Season shell restored; Sleeper Live-State '-' and Kader still loading in captured frame; static screenshot does not prove navigation/hydration success."
   },
-  "currentGate": "RC4181_BROWSER_EQUIVALENT_SEASON_E2E",
+  "currentGate": "RC4182_STRICT_VALIDATION",
   "handoffGeneration": "20260901T2210Z-v224",
   "handoff_generation": "20260901T2210Z-v224",
   "statusCommand": {
