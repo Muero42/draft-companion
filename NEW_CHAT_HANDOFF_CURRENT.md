@@ -5,7 +5,7 @@ Created: 2026-09-02 16:40Z
 ## CURRENT AUTHORITY
 Mode POST_DRAFT_SEASON_COMPANION.
 Current merged source: **v11.8.0-rc4.188** on `main`, merge commit `c4ccbd1959b986e0b810ac97c5ad0900d7fa441d`.
-Latest physically observed Android: **v11.8.0-rc4.185 PARTIAL PASS**. Accepted rollback authority remains **rc4.169**.
+Latest physically observed Android: **v11.8.0-rc4.188 PARTIAL PASS** (version + Sleeper/expert freshness + 3h policy observed; Waiver/FA still pending). Accepted rollback authority remains **rc4.169**.
 Do NOT restore older "PR #108 open", rc4.183-as-current-device, rc4.187-current-release, 12h expert freshness, or JAX-as-free states.
 
 ## RC4.188 CONTENT / GATES
