@@ -202,6 +202,8 @@ if(current.runtime?.latest_device_evidence?.acceptance==='FAIL'){
 }
 must(commandContract.auto?.deviceEvidenceMustCheckpointBeforeFurtherWork===true,'device evidence checkpoint guard missing');
 must(commandContract.auto?.externalWaitPolicy?.maxImmediatePolls===1,'AUTO external wait bounded-poll guard missing');
+must(app.includes("try{localStorage.removeItem('v7_rankCache')}catch(e){console.warn('Legacy rank-cache cleanup skipped',e)}"),'Android storage cleanup must not abort module startup');
+must(app.includes("try{localStorage.removeItem('v7_panelRanks')}catch(e){console.warn('Legacy panel-cache cleanup skipped',e)}"),'Android panel cleanup must not abort module startup');
 
 if(!candidatePreflight) must(commandContract.currentBoundary?.androidAuthority===current.runtime?.android_authority,'command contract Android authority drift');
 if(!candidatePreflight) must(commandContract.currentBoundary?.latestPackageSha256===current.runtime?.latest_package_sha256,'command contract package reference hash drift');
