@@ -193,6 +193,16 @@ if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
 
 
 must(commandContract.auto?.autoBlockCorrectionTrigger?.trigger==='AUTO BLOCK','AUTO BLOCK command contract missing');
+
+if(current.runtime?.latest_device_evidence?.acceptance==='FAIL'){
+  must(current.runtime?.installed_android===current.runtime?.latest_device_evidence?.version,'device evidence not checkpointed to installed_android');
+  must(current.runtime?.latest_android_observed===current.runtime?.latest_device_evidence?.version,'device evidence not checkpointed to latest_android_observed');
+  must(current.runtime?.source_candidate_status==='DEVICE_REJECTED','failed current device evidence must mark source status DEVICE_REJECTED');
+  must(commandContract.auto?.candidateWordingRequiresDeviceReconciliation===true,'candidate wording/device reconciliation guard missing');
+}
+must(commandContract.auto?.deviceEvidenceMustCheckpointBeforeFurtherWork===true,'device evidence checkpoint guard missing');
+must(commandContract.auto?.externalWaitPolicy?.maxImmediatePolls===1,'AUTO external wait bounded-poll guard missing');
+
 if(!candidatePreflight) must(commandContract.currentBoundary?.androidAuthority===current.runtime?.android_authority,'command contract Android authority drift');
 if(!candidatePreflight) must(commandContract.currentBoundary?.latestPackageSha256===current.runtime?.latest_package_sha256,'command contract package reference hash drift');
 if(!candidatePreflight) must(commandContract.currentBoundary?.packageReferenceRun===current.runtime?.package_reference_run,'package reference run drift');
