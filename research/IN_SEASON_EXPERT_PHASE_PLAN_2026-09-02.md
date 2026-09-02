@@ -64,3 +64,51 @@ Store expert-week-position snapshots before kickoff and realized Half-PPR result
 4. Preserve Jody Smith/Nick Mariano/draft-v4 as PRE_W1 residual only, then decay.
 5. Add weekly accuracy ledger and bounded adaptive weights.
 6. Expose expert source/freshness in UI so a stale list cannot masquerade as current.
+
+
+## Kicker and DST concrete phase automation
+
+K and DST are first-class weekly positions, but they use a separate streaming authority because long-horizon draft rank has very little decision value.
+
+### K panel
+PRE_W1 / W1-3 prior:
+- Jared Smola — primary accuracy prior (2025 K accuracy leader).
+- FantasyPros current-week K ECR — broad market stabilizer.
+- Current team implied points / spread / weather / kicker role — non-expert evidence channel.
+
+W4+:
+- 2026 K weekly accuracy becomes the primary expert-selection signal after a minimum three completed weeks.
+- Keep Smola/multi-year prior with shrinkage until sample is sufficient.
+- Automatically promote challengers only if current weekly rankings are available reliably and their 2026 K accuracy clears the incumbent after shrinkage.
+- Never use draft K rank for start/stream decisions after Week 1.
+
+### DST panel
+PRE_W1 / W1-3 prior:
+- Ted Chmyz — primary accuracy prior (2025 DST accuracy leader).
+- FantasyPros current-week DST ECR — broad market stabilizer.
+- Opponent QB/OL, implied points, spread, sack/turnover environment and injuries — non-expert evidence channel.
+
+W4+:
+- 2026 DST weekly accuracy becomes primary expert-selection evidence after minimum three completed weeks.
+- Chmyz/multi-year prior shrinks as 2026 sample grows.
+- Automatic challenger promotion uses position-specific DST accuracy and source freshness.
+- No season-long DST draft ranking may override current matchup evidence.
+
+### Automatic phase engine contract
+The production implementation must derive phase from NFL week; no user toggle is required for normal operation:
+- PRE_W1: before first regular-season kickoff.
+- EARLY: completed weeks 0-3 / current Weeks 1-3.
+- MID: Weeks 4-8.
+- LATE: Weeks 9-14.
+- PLAYOFF: Week 15+ or league playoff state when available.
+
+Every expert record must carry: position, decision_channel, source_updated_at, rankings_lock_at, prior_accuracy, current_2026_accuracy, sample_weeks, freshness_state, effective_weight.
+
+Weight updates occur only after a completed week. Maximum single-update weight movement is bounded; missing/stale weekly rankings receive zero current-week decision weight rather than falling back silently to draft rankings.
+
+### Decision routing
+- QB/RB/WR/TE start-sit -> WEEKLY.
+- K/DST -> STREAMING_WEEKLY.
+- Waiver/FA -> WEEKLY + ROS + ROLE + MARKET.
+- Trade -> ROS + TRADE_VALUE + REPLACEMENT_VALUE; WEEKLY only as near-term modifier.
+- Draft prior -> PRE_W1 residual only, decays to zero.
