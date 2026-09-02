@@ -4,5 +4,5 @@ const v=(app.match(/const APP_VERSION='([^']+)'/)||[])[1];const n=Number((v.matc
 for(const id of ['seasonRefreshLiveBtn','seasonRefreshRanksBtn']){assert.ok(!html.includes('id="'+id+'"'));assert.ok(!app.includes("'"+id+"'"));}
 assert.ok(app.includes('const rosterResult=await bootstrapSeasonWorkspace();'));
 assert.ok(app.includes('void refreshSeasonRankings({auto:true});'));
-assert.ok(app.includes('SEASON_RANKING_AUTO_MS=12*60*60*1000'));
+assert.ok(app.includes('SEASON_RANKING_AUTO_MS=3*60*60*1000'));
 console.log('SEASON_AUTOMATIC_REFRESH_CONTRACT_PASS '+v);
