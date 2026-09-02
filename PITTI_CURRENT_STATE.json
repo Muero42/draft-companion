@@ -62,7 +62,13 @@
       "mechanism": "A top-level removeLegacyRankingStorage() executes before the synchronous Season startup marker. If localStorage.removeItem throws in Android WebView, module evaluation aborts before any Season marker/network code. The rc4.182 screenshot remains exactly at index.html static placeholders, matching this pre-startup failure class and not a later network/bootstrap failure.",
       "fix_branch": "pitti/rc4182-hydration-rootcause",
       "regression": "tools/rc4182-hydration-rootcause.mjs",
-      "device_action": "FORBIDDEN_PENDING_AUTOMATED_GATES"
+      "device_action": "FORBIDDEN_PENDING_AUTOMATED_GATES",
+      "additional_hardening": [
+        "Derived expert-panel rehydration moved behind physical JS-started marker.",
+        "Workspace control binding and stored workspace/draft-surface restoration are now fail-open before marker.",
+        "Direct localStorage cleanup and restore paths before marker are individually guarded."
+      ],
+      "scope": "shared pre-network module-start boundary affecting BOTH roster hydration and expert initialization"
     }
   },
   "real_draft": {
@@ -95,8 +101,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4182_HYDRATION_FIX_PR98_WAITING_RERUN",
-    "nextGate": "RC4182_HYDRATION_FIX_STRICT_VALIDATION"
+    "status": "RC4182_STARTUP_BOUNDARY_HARDENED_PR98_REVALIDATING",
+    "nextGate": "PR98_UPDATED_HEAD_ALL_GATES_PASS_BEFORE_MERGE_OR_VERSION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -117,8 +123,8 @@
     "ready": [],
     "waiting_external": [
       {
-        "id": "pr98-ci-rerun",
-        "reason": "Initial CI failure diagnosed as gate-state metadata drift; repaired on head 851375985cb8e20bf537eb80df3782d3f129d1d7. Single immediate read returned no workflow runs yet."
+        "id": "pr98-revalidation",
+        "reason": "PR #98 head changed after full pre-marker audit; updated CI must pass before merge/version promotion."
       }
     ],
     "blocked_user": [],
@@ -366,8 +372,8 @@
     ],
     "stop_evaluation": {
       "allowed": true,
-      "code": "NO_EXECUTABLE_WORK_REMAINS",
-      "reason": "All local diagnosis and gate-state repair complete; external CI rerun is the only remaining gate and repeated polling is forbidden."
+      "code": "EXTERNAL_CI_ONLY",
+      "reason": "App-priority startup hardening committed; no device action allowed before updated PR gates."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
