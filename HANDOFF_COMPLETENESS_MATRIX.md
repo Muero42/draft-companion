@@ -1,5 +1,5 @@
 # PITTI HANDOFF COMPLETENESS MATRIX — v229
-Generation: `20260902T1325Z-v229`
+Generation: `20260902T1915Z-v230`
 
 PASS requires all of:
 - POST_DRAFT_SEASON_COMPANION; rc4.185 merged baseline; PR #108 OPEN/UNMERGED current candidate.
@@ -10,3 +10,6 @@ PASS requires all of:
 - IR/Reserve never ordinary drop/capacity target. Kader lineup-only; Add/Drop under Waiver.
 - Latest physical Android rc4.183 DEVICE_REJECTED; accepted rollback rc4.169. No device action until PR108 merge → rc4.186 → automated/post-merge/deploy parity → one canary.
 - AUTO same-turn continuous execution; queue takeover from CURRENT; checkpoint/re-inventory after each package; no interim status/ack, empty reply, or promise-only continuation; external wait only blocks its lane; STATUS report-only.
+
+- REPO v230 — rc4.189 merged main; post-merge reseal exact-head gate pending; rc4.188 physical Waiver/FA PASS; rc4.169 rollback retained.
+- Empty assistant response after tool work is forbidden. AUTO waits may block only dependent lanes.
