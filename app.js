@@ -2905,15 +2905,16 @@ function rerenderPostDraftFromContext(){
   return true;
 }
 function seasonRosterPlayerRows(rr,players){
-  return [...new Set([...(rr?.players||[]),...(rr?.reserve||[]),...(rr?.taxi||[])].map(String))].map(pid=>{const p=sleeperPlayerRow(pid,players);return{p,r:rankFor(p.name,p.pos),seasonStatus:(rr?.reserve||[]).map(String).includes(pid)?'RESERVE':'ACTIVE'};});
+  return [...new Set([...(rr?.players||[]),...(rr?.reserve||[]),...(rr?.taxi||[])].map(String))].map(pid=>{const p=sleeperPlayerRow(pid,players),r=rankFor(p.name,p.pos),weekly=weeklyLineupEvidence(p),currentRank=Number.isFinite(weekly?.consensus)?Number(weekly.consensus):Number(r?.rank);return{p,r,currentRank:Number.isFinite(currentRank)?currentRank:null,seasonStatus:(rr?.reserve||[]).map(String).includes(pid)?'RESERVE':'ACTIVE'};});
 }
 function waiverOpponentMarket(target,players){
   const season=lastDraftContext?.season;if(!season?.ok||!target)return[];
   const mine=Number(season.roster_id),budget=Number(season.faab_budget||0);
   return (season.league_rosters||season.rosters||[]).filter(rr=>Number(rr.roster_id)!==mine).map(rr=>{
-    const rows=seasonRosterPlayerRows(rr,players),qbs=rows.filter(x=>x.p.pos==='QB'&&x.seasonStatus==='ACTIVE').sort((a,b)=>(a.r?.rank??999)-(b.r?.rank??999));
-    const targetRank=target.r?.rank??rankFor(target.p?.name||target.name,target.p?.pos||target.pos)?.rank??999;
-    const best=qbs[0]?.r?.rank??999,upgrade=target.p?.pos==='QB'?Math.max(0,best-targetRank):0;
+    const rows=seasonRosterPlayerRows(rr,players),qbs=rows.filter(x=>x.p.pos==='QB'&&x.seasonStatus==='ACTIVE').sort((a,b)=>(a.currentRank??999)-(b.currentRank??999));
+    const targetPlayer=target.p||target,targetWeekly=weeklyLineupEvidence(targetPlayer),targetDraft=target.r?.rank??rankFor(targetPlayer?.name,targetPlayer?.pos)?.rank;
+    const targetRank=Number.isFinite(targetWeekly?.consensus)?Number(targetWeekly.consensus):(Number.isFinite(Number(targetDraft))?Number(targetDraft):999);
+    const best=qbs[0]?.currentRank??999,upgrade=targetPlayer?.pos==='QB'?Math.max(0,best-targetRank):0;
     const activeCount=rows.filter(x=>x.seasonStatus==='ACTIVE').length,benchCost=Math.max(0,activeCount-14);
     const remaining=Number.isFinite(Number(rr.faab_remaining))?Number(rr.faab_remaining):Math.max(0,budget-Number(rr.settings?.waiver_budget_used||rr.waiver_budget_used||0));
     const managerName=rr.manager_name||('Roster '+rr.roster_id),profileName=rr.manager_profile_name||managerName,profile=managerProfile(profileName),histQb=Number(profile?.historical?.positions?.QB?.finalCount);
