@@ -1,10 +1,10 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260902T1325Z-v229",
-  "created_at": "2026-09-02T13:38:00Z",
-  "status": "PASS",
-  "handoff_ready": true,
-  "second_pass_pass": true,
+  "handoff_generation": "20260902T1640Z-v230",
+  "created_at": "2026-09-02T16:40:00Z",
+  "status": "SUPERSEDED_PENDING_RESEAL",
+  "handoff_ready": false,
+  "second_pass_pass": false,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     "PITTI_CURRENT_STATE.json": "08730b1916dcd26c2dd4133997e015cb463ad120",
@@ -28,13 +28,12 @@
   },
   "branch_locks": {
     "repo": "Muero42/draft-companion",
-    "branch": "pitti/trade-slot-geometry",
-    "source_baseline": "v11.8.0-rc4.185",
-    "pr108": "OPEN_UNMERGED",
-    "pr108_content_head_before_seal": "0ac1a1159c49d179f66ee659f5dfe7046e8b19bf",
-    "latest_physical_android": "v11.8.0-rc4.183 DEVICE_REJECTED",
+    "branch": "main",
+    "source_baseline": "v11.8.0-rc4.188",
+    "pr108": "MERGED_HISTORICAL",
+    "latest_physical_android": "v11.8.0-rc4.188 PARTIAL_PASS_WAIVER_PENDING",
     "accepted_rollback": "v11.8.0-rc4.169",
-    "next_release": "v11.8.0-rc4.186_AFTER_PR108_ALL_GREEN"
+    "next_release": "NONE_BEFORE_DEVICE_RC4188_CANARY"
   },
   "checks": {
     "generation_alignment": true,
@@ -53,6 +52,6 @@
     "ir_not_capacity": true,
     "device_trial_and_error_forbidden": true
   },
-  "exact_gate": "PR108_NEWEST_SEALED_HEAD_ALL_STRICT_GATES_GREEN_BEFORE_MERGE",
-  "note": "v229 canonical handoff PASS after final guard audit. PASS certifies handoff consistency only; PR108 release readiness still requires newest sealed exact-head CI all green before merge."
+  "exact_gate": "DEVICE_RC4188_LIVE_10_TEAM_WAIVER_CANARY",
+  "note": "v230 handoff repair pending exact branch CI/reseal. rc4.188 merged authority; physical Waiver/FA canary is next."
 }

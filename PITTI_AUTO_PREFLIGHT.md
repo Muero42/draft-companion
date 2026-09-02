@@ -87,13 +87,13 @@ Otherwise continue AUTO.
 - A full paired 15-round v4/v5 mock is invalid unless the exported backup contains exactly 30 active-draft fixtures covering all 15 own picks twice.
 
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
-- Current handoff generation = **20260902T1325Z-v229**.
+- Current handoff generation = **20260902T1640Z-v230**.
 - Current mode = **POST_DRAFT_SEASON_COMPANION**.
-- Source baseline = **rc4.185 merged**; current candidate = **PR #108 OPEN / UNMERGED** on `pitti/trade-slot-geometry`.
-- Latest physical Android = **rc4.183 installed/observed, DEVICE_REJECTED** for Kader FA-card routing + IR ordinary-drop semantics. Accepted rollback = **rc4.169**.
+- Current merged source = **rc4.188** on `main`; PR #108 is historical merged lineage, not a current gate.
+- Latest physical Android evidence = **rc4.185 PARTIAL PASS**; rc4.188 Waiver/FA canary pending. Accepted rollback = **rc4.169**.
 - PR #108 preserves canonical Sleeper slots/FLEX (RB/WR/TE), legal two-TE paths, Trade Board v5 real slot geometry, ACTIVE-only ordinary drops, full 10-team Sleeper league state, manager/FAAB inputs, and Lawrence QB2 + future D/ST two-active-drop opportunity cost.
 - The explicit invariant “Sleeper roster_id is a league roster identifier, NOT the historical draft slot.” must remain. Never restore draft-slot identity or static Trade Board positional depths.
-- Newest PR #108 exact head must pass all strict gates before merge. Then rc4.186 promotion, post-merge/deploy parity, and exactly one physical canary.
+- rc4.188 is already merged after strict gates. Immediate next gate is exactly one physical rc4.188 Waiver/FA canary.
 - AUTO/AUTO BLOCK = continuous same-turn execution while safe positive-value work exists: no interim progress/status/acknowledgement, no empty response after tool work, no promise-only “AUTO läuft weiter”; checkpoint + re-inventory after every package; external wait blocks only its dependent lane.
 - STATUS = report-only and must not trigger tools/polling/work.
 - Live Sleeper direct league/users/rosters state = current roster/ownership/manager/slot/FAAB authority; Watcher evidence-only; completed draft immutable history.
@@ -269,3 +269,17 @@ Generation: `20260901T2210Z-v224`. Supersedes older current-version/device/gate/
 - Any earlier CURRENT statement saying PR #102/rc4.184 is open, or generation v227 is current, is historical only.
 - Current release lane = rc4.185 merged baseline + PR #108 OPEN/UNMERGED; next release after all-green merge = rc4.186.
 - Lawrence lane and full-league-state architecture are current and must survive chat takeover.
+
+
+## 10. CURRENT TAKEOVER OVERRIDE — v230 / rc4.188
+This section supersedes any older "CURRENT" wording elsewhere in this historical file.
+- Generation: `20260902T1640Z-v230`.
+- Mode: POST_DRAFT_SEASON_COMPANION.
+- Current merged source: **v11.8.0-rc4.188** on main, merge `c4ccbd1959b986e0b810ac97c5ad0900d7fa441d`.
+- Latest physical Android evidence: **rc4.185 PARTIAL PASS**; rc4.188 physical Waiver/FA canary pending. Accepted rollback rc4.169.
+- PR #108/#110/#111/#113 are not open current gates; relevant product lineage has advanced to merged rc4.188. Old PRs are historical only.
+- 10-team Sleeper state is hard-gated before FA/Waiver/Trade trust.
+- Expert refresh is 3h auto / 45m retry, not 12h.
+- JAX D/ST is unavailable; no static external list may override live ownership.
+- Immediate physical gate: update/reload once to rc4.188, open Waiver/FA, capture screenshot, no transaction first.
+- AUTO hard rule remains unchanged: no interim progress/status/acknowledgement, no empty reply, no promise-only “AUTO läuft weiter”, and no “keine Handlung erforderlich” terminal message while any independent executable lane exists.

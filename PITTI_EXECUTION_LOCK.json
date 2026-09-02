@@ -1,38 +1,38 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-02T13:25:00Z",
+  "updatedAt": "2026-09-02T16:40:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Repo generation 20260902T1325Z-v229 is current handoff authority. rc4.185 is merged source baseline; PR #108 is OPEN/UNMERGED current Season candidate. rc4.183 is latest physical observation and DEVICE_REJECTED for Kader FA-card + IR ordinary-drop semantics; rc4.169 remains accepted rollback. PR #108 must be newest-exact-head all-green before merge, rc4.186 promotion/deploy parity and one device canary. Library persistence rule: never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Handoff v230 authority: rc4.188 merged on main c4ccbd1959b986e0b810ac97c5ad0900d7fa441d. Latest physical Android evidence is rc4.188 partial pass (version/live/expert freshness observed; Waiver/FA pending). PR #108/#110/#111/#113 release lineage is merged/superseded as applicable; old open PRs are historical only. Next gate is one rc4.188 Waiver/FA physical canary; then verify full 10-team Sleeper ownership before any DST/Lawrence transaction recommendation.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.185",
+    "appVersion": "v11.8.0-rc4.188",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.183 DEVICE_REJECTED: Kader rendered FA/Add-Drop and IR/Reserve Charbonnet as ordinary drop target",
-    "latestPreinstallVerified": "rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
+    "latestAndroidObserved": "v11.8.0-rc4.188 PARTIAL_PASS: physical Android screenshot 2026-09-02 19:57 CEST shows rc4.188, Sleeper Live-State <1 Min., expert rankings 1 Std., and 3h automatic refresh policy; Waiver/FA card canary still pending",
+    "latestPreinstallVerified": "rc4.188 Candidate Package + Release Contract + Project Guardrails PASS on PR #113 exact head 98a76cfb6c369e7ff3a36e0e25f95e130c0b9f4e",
     "latestResearchChallenger": "v11.8.0-rc4.107",
-    "preinstallArtifact": "rc4.185 merged baseline; PR #108 unmerged Season candidate",
-    "preinstallSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
+    "preinstallArtifact": "rc4.188 exact candidate package PASS; artifact 9856579953; merged to main c4ccbd1959b986e0b810ac97c5ad0900d7fa441d",
+    "preinstallSha256": "sha256:29f38ea4703b5f96b52ef6f3b6ed49f2385646ff98ca060558b3d30c3156fde8",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
-    "latestDeployedCandidate": "rc4.185 source baseline merged; deployment/device parity not accepted. PR #108 not merged/deployed.",
+    "latestDeployedCandidate": "rc4.188 PR #113 preview deployed successfully; merged to main; physical Android canary pending",
     "latestAndroidVerified": "v11.8.0-rc4.169 accepted rollback authority; rc4.176 observation is not acceptance",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "deployedPagesAppByteParityWithMain": true,
-    "preinstallReferenceRun": 33597607588,
-    "preinstallReferenceArtifactId": 9833935479,
+    "preinstallReferenceRun": 33655628112,
+    "preinstallReferenceArtifactId": 9856579953,
     "preinstallHashSemantics": "GitHub candidate-package artifact digest; package/re-extract PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.183",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.188",
     "latestAndroidFunctionalVerified": "rc4.169 remains accepted rollback authority; rc4.183 DEVICE_REJECTED",
     "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
@@ -63,12 +63,12 @@
       "androidAccepted": false
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.169",
-    "unreleasedMainDelta": "PR #107 is merged on main. PR #108 remains unmerged and adds trade-slot geometry + full league-state/waiver competition/QB opportunity modeling.",
-    "deployedPagesVersion": "rc4.185 source baseline; no accepted PR108 deployment",
+    "unreleasedMainDelta": "none relevant; rc4.188 is current merged source",
+    "deployedPagesVersion": "rc4.188 preview verified pre-merge; rc4.188 now physically observed on Android",
     "mainGhPagesParity": false,
     "androidVerified": false,
-    "androidAcceptance": "rc4.183 physically observed but rejected for Kader/Waiver and IR-drop semantics",
-    "devicePromotionPolicy": "FORBIDDEN until PR #108 final exact head all strict gates PASS, merge, rc4.186 promotion/post-merge deployment parity verified, then one physical canary.",
+    "androidAcceptance": "rc4.188 partial physical pass; Waiver/FA acceptance gate pending",
+    "devicePromotionPolicy": "ONE physical rc4.188 Waiver/FA canary now required; no transaction until full 10-team ownership/FA pool is verified.",
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate"
   },
@@ -259,12 +259,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "PR108_V229_HANDOFF_REPAIRED_EXACT_HEAD_REVALIDATION",
-    "nextGate": "PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
+    "status": "RC4188_MERGED_DEVICE_CANARY_REQUIRED",
+    "nextGate": "DEVICE_RC4188_LIVE_10_TEAM_WAIVER_CANARY"
   },
-  "status": "PR108_V229_HANDOFF_REPAIRED",
-  "gate": "PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
-  "nextGate": "Query newest PR #108 exact head after v229 repair; require all strict gates green, merge, rc4.186 promotion/deploy parity, then one physical canary.",
+  "status": "RC4188_MERGED_DEVICE_CANARY_REQUIRED",
+  "gate": "DEVICE_RC4188_LIVE_10_TEAM_WAIVER_CANARY",
+  "nextGate": "Update/reload rc4.188 once and capture Waiver/FA. No device trial-and-error.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -273,11 +273,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260902T1325Z-v229",
-    "status": "PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING",
-    "ready": true,
-    "secondPass": true,
-    "resume": "rc4.185 merged baseline; PR #108 open. v229 removed stale v227/PR102 current authority from CURRENT/LOCK/PREFLIGHT. Revalidate newest exact head; then Lawrence market lane and rc4.186.",
+    "generation": "20260902T1640Z-v230",
+    "status": "SUPERSEDED_PENDING_RESEAL",
+    "ready": false,
+    "secondPass": false,
+    "resume": "rc4.188 merged and physically observed. Waiver/FA screenshot remains the single device gate. Handoff v230 reseal/CI must pass before merge.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -297,7 +297,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260902T1325Z-v229",
+  "handoff_generation": "20260902T1640Z-v230",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -332,5 +332,5 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260902T1325Z-v229"
+  "handoffGeneration": "20260902T1640Z-v230"
 }
