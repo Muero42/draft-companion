@@ -7,6 +7,7 @@ const bootstrap=a.indexOf('const rosterResult=await bootstrapSeasonWorkspace();'
 const ranks=a.indexOf('void refreshSeasonRankings({auto:true});',bootstrap);
 assert(marker>=0&&rehydrate>marker&&bootstrap>rehydrate&&ranks>bootstrap,'real-shape startup ordering drift');
 for(const id of ['seasonLiveStateAge','seasonLiveStateStatus','rosterStatus','rosterList','expertsList','analysisExpertProfile'])assert(h.includes('id="'+id+'"'),'real-shape Season DOM missing '+id);
+for(const id of ['apiKey','season','scoring','draftInput','autoRefresh','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','strategyMode'])assert(h.includes('id="'+id+'"'),'unguarded startup element missing from DOM '+id);
 const cleanupStart=a.indexOf('function removeLegacyRankingStorage('),cleanupEnd=a.indexOf('\nfunction pruneNonCriticalStorageForRankWrite',cleanupStart);
 assert(cleanupStart>=0&&cleanupEnd>cleanupStart);
 const cleanup=new Function('localStorage','console','return ('+a.slice(cleanupStart,cleanupEnd).replace('function removeLegacyRankingStorage','function')+')')({removeItem(){throw new Error('WebView storage denied')}},{warn(){}});
