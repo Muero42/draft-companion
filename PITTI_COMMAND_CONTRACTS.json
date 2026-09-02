@@ -163,15 +163,15 @@
     "packageReferenceRun": 33597607588,
     "deployedPagesVersion": "rc4.176 main Cloudflare Pages PASS",
     "deployedPagesAppByteParityWithMain": true,
-    "currentResearchGate": "FINAL_PHYSICAL_RC4182_ACCEPTANCE",
-    "exactNextAction": "Do not create/promote another version. First reproduce the rc4.182 hydration failure off-device with a real-shape startup/runtime harness, then fix exactly that reproduced cause.",
+    "currentResearchGate": "RC4182_HYDRATION_FIX_STRICT_VALIDATION",
+    "exactNextAction": "Validate PR #98 exact head after startup-resilience gate repair; no merge/version/device test before all strict gates pass.",
     "runtimeVersion": "rc4.182 installed/observed; hydration FAIL",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "09:06 CEST screenshot: rc4.182 visible; Kader selected; Draft leak absent; Sleeper Live-State '-' and Live-Kader loading; DEVICE_REJECTED."
   },
   "currentGate": "RC4182_HYDRATION_FIX_STRICT_VALIDATION",
-  "handoffGeneration": "20260901T2210Z-v224",
-  "handoff_generation": "20260901T2210Z-v224",
+  "handoffGeneration": "20260902T0810Z-v225",
+  "handoff_generation": "20260902T0810Z-v225",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -188,6 +188,6 @@
     "observedTransactionCanary": "rc4.160 device: Harrison Mevis rostered, Tank Bigsby absent, Zach Charbonnet Reserve/IR",
     "rc4161Fix": "live FA ownership pool is independent from expert ranking hydration; zero ranked join must never imply HOLD",
     "regression": "tools/season-fa-ownership-regression.mjs is mandatory in candidate package gate",
-    "nextGate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY"
+    "nextGate": "RC4182_HYDRATION_FIX_STRICT_VALIDATION"
   }
 }
