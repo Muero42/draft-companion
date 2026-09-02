@@ -17,7 +17,7 @@
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.185 PARTIAL_PASS: live Sleeper state <1 Min., 16-player roster, Reserve/IR 1, Kader starter/bench rendered; rc4.188 not yet physically verified",
+    "latestAndroidObserved": "v11.8.0-rc4.188 PARTIAL_PASS: physical Android screenshot 2026-09-02 19:57 CEST shows rc4.188, Sleeper Live-State <1 Min., expert rankings 1 Std., and 3h automatic refresh policy; Waiver/FA card canary still pending",
     "latestPreinstallVerified": "rc4.188 Candidate Package + Release Contract + Project Guardrails PASS on PR #113 exact head 98a76cfb6c369e7ff3a36e0e25f95e130c0b9f4e",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.188 exact candidate package PASS; artifact 9856579953; merged to main c4ccbd1959b986e0b810ac97c5ad0900d7fa441d",
@@ -32,7 +32,7 @@
     "preinstallReferenceRun": 33655628112,
     "preinstallReferenceArtifactId": 9856579953,
     "preinstallHashSemantics": "GitHub candidate-package artifact digest; package/re-extract PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.185",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.188",
     "latestAndroidFunctionalVerified": "rc4.169 remains accepted rollback authority; rc4.183 DEVICE_REJECTED",
     "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
@@ -64,10 +64,10 @@
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.169",
     "unreleasedMainDelta": "none relevant; rc4.188 is current merged source",
-    "deployedPagesVersion": "rc4.188 preview verified pre-merge; current physical Android remains rc4.185",
+    "deployedPagesVersion": "rc4.188 preview verified pre-merge; rc4.188 now physically observed on Android",
     "mainGhPagesParity": false,
     "androidVerified": false,
-    "androidAcceptance": "rc4.185 partial pass current physical evidence; rc4.188 physical acceptance pending",
+    "androidAcceptance": "rc4.188 partial physical pass; Waiver/FA acceptance gate pending",
     "devicePromotionPolicy": "ONE physical rc4.188 Waiver/FA canary now required; no transaction until full 10-team ownership/FA pool is verified.",
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate"
@@ -273,11 +273,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260902T1325Z-v229",
-    "status": "PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING",
-    "ready": true,
-    "secondPass": true,
-    "resume": "rc4.185 merged baseline; PR #108 open. v229 removed stale v227/PR102 current authority from CURRENT/LOCK/PREFLIGHT. Revalidate newest exact head; then Lawrence market lane and rc4.186.",
+    "generation": "20260902T1640Z-v230",
+    "status": "SUPERSEDED_PENDING_RESEAL",
+    "ready": false,
+    "secondPass": false,
+    "resume": "rc4.188 merged and physically observed. Waiver/FA screenshot remains the single device gate. Handoff v230 reseal/CI must pass before merge.",
     "transaction_in_progress": false
   },
   "expertV45": {
