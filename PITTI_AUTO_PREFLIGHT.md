@@ -89,11 +89,11 @@ Otherwise continue AUTO.
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
 - Current handoff generation = **20260902T1640Z-v230**.
 - Current mode = **POST_DRAFT_SEASON_COMPANION**.
-- Source baseline = **rc4.185 merged**; current candidate = **PR #108 OPEN / UNMERGED** on `pitti/trade-slot-geometry`.
-- Latest physical Android = **rc4.183 installed/observed, DEVICE_REJECTED** for Kader FA-card routing + IR ordinary-drop semantics. Accepted rollback = **rc4.169**.
+- Current merged source = **rc4.188** on `main`; PR #108 is historical merged lineage, not a current gate.
+- Latest physical Android evidence = **rc4.185 PARTIAL PASS**; rc4.188 Waiver/FA canary pending. Accepted rollback = **rc4.169**.
 - PR #108 preserves canonical Sleeper slots/FLEX (RB/WR/TE), legal two-TE paths, Trade Board v5 real slot geometry, ACTIVE-only ordinary drops, full 10-team Sleeper league state, manager/FAAB inputs, and Lawrence QB2 + future D/ST two-active-drop opportunity cost.
 - The explicit invariant “Sleeper roster_id is a league roster identifier, NOT the historical draft slot.” must remain. Never restore draft-slot identity or static Trade Board positional depths.
-- Newest PR #108 exact head must pass all strict gates before merge. Then rc4.186 promotion, post-merge/deploy parity, and exactly one physical canary.
+- rc4.188 is already merged after strict gates. Immediate next gate is exactly one physical rc4.188 Waiver/FA canary.
 - AUTO/AUTO BLOCK = continuous same-turn execution while safe positive-value work exists: no interim progress/status/acknowledgement, no empty response after tool work, no promise-only “AUTO läuft weiter”; checkpoint + re-inventory after every package; external wait blocks only its dependent lane.
 - STATUS = report-only and must not trigger tools/polling/work.
 - Live Sleeper direct league/users/rosters state = current roster/ownership/manager/slot/FAAB authority; Watcher evidence-only; completed draft immutable history.
