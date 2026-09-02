@@ -505,3 +505,12 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Current gate: `RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY`. Exact-head strict gates must be green, then deployment parity must be verified, then exactly one rc4.189 physical canary. No cache clearing/reinstall trial-and-error.
 - AUTO remains continuous same-turn execution: after every package checkpoint + re-inventory; waiting external blocks only its dependent lane; no progress/status/ack messages, no empty reply, and no promise-only “AUTO läuft weiter” while executable work exists. STATUS is report-only.
 - Watcher v0.2.6 remains isolated in draft PR #1. Skill-position bench drops are now fail-closed unless current replacement/upside evidence exists; Reserve/IR remains excluded and automatic transactions remain forbidden.
+
+
+## 2026-09-02 — CODEX PREPARATION / rc4.190
+- Larger Season changes are intentionally grouped for Codex rather than continued as piecemeal chat patches.
+- Added root `AGENTS.md` with canonical authority, anti-regression rules, Season roster geometry, Waiver/Trade invariants, fail-closed evidence policy and AUTO/handoff discipline.
+- Added `PITTI_CODEX_WORK_PACKAGE.md`: compact weekly roster evidence, Waiver/team-needs v3, bilateral Trade/team-needs v2, verified projections/Vegas/weather adapters, and executable regression/release gates.
+- PR #118 remains reviewable/unmerged. Existing isolated fixes: remove redundant numeric roster grid and duplicate start-alternative block; protect only active TE/QB; add pre-W1 draft-capital plausibility gate to trade offers.
+- Codex execution itself is not yet verified from this chat/tool environment; no Codex tool is exposed here. PC setup/end-to-end repo access must be verified before delegating the work package. This is a capability boundary, not a code blocker.
+- Do not merge/deploy rc4.190 merely because the preparation files exist. Codex/implementation output must pass strict gates and review first.
