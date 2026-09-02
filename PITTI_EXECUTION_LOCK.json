@@ -259,11 +259,11 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "PR108_V229_HANDOFF_REPAIRED_EXACT_HEAD_REVALIDATION",
-    "nextGate": "PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
+    "status": "RC4189_RESEAL_EXACT_HEAD_REVALIDATION",
+    "nextGate": "RC4189_EXACT_HEAD_ALL_GREEN_THEN_PROMOTION"
   },
-  "status": "PR108_V229_HANDOFF_REPAIRED",
-  "gate": "PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
+  "status": "RC4189_RESEAL_IN_PROGRESS",
+  "gate": "RC4189_EXACT_HEAD_ALL_GREEN_THEN_PROMOTION",
   "nextGate": "Query newest PR #108 exact head after v229 repair; require all strict gates green, merge, rc4.186 promotion/deploy parity, then one physical canary.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
@@ -274,10 +274,10 @@
   },
   "handoff": {
     "generation": "20260902T1325Z-v229",
-    "status": "PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING",
+    "status": "RC4189_RESEAL_VALIDATION_PENDING",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.185 merged baseline; PR #108 open. v229 removed stale v227/PR102 current authority from CURRENT/LOCK/PREFLIGHT. Revalidate newest exact head; then Lawrence market lane and rc4.186.",
+    "resume": "rc4.189 reseal in progress after PR #115 merge; require exact-head strict gates green before promotion. Lawrence/DST lanes remain evidence-gated.",
     "transaction_in_progress": false
   },
   "expertV45": {
