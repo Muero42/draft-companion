@@ -1,5 +1,9 @@
+Generation: `20260902T1915Z-v230`
+AUTO queue takeover: load CURRENT active/ready lanes and continue them in the same turn.
+No device-side trial-and-error. Empty assistant response after tool work is forbidden. Never send status/progress/acknowledgement messages during AUTO while executable work exists.
+
 # PITTI NEW CHAT BOOTSTRAP — v229
-Generation: `20260902T1325Z-v229`
+Generation: `20260902T1915Z-v230`
 
 Read: COMMAND → CURRENT → SEAL → LOCK → PREFLIGHT → PROJECT_STATE EOF → CURRENT HANDOFF → BOOTSTRAP → MATRIX → actual PR/CI evidence.
 
