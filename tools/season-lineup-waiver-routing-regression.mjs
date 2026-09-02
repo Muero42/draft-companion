@@ -7,4 +7,11 @@ assert(a.includes("league?.roster_positions"),'canonical Sleeper roster slot sou
 assert(a.includes("seasonSlotLabel(slot,x.p.pos)"),'canonical starter slot display missing');
 assert(a.includes("Sleeper-Prognosen und Sleeper-Matchup-Bewertungen werden nicht verwendet"),'Sleeper projection/matchup exclusion missing');
 assert(a.includes("WEEK 1 · AKTUELLE STARTER · PITTI-WERTE"),'starter PITTI evidence block missing');
+assert(a.includes("league_rosters=rosters.map"),'full live league roster state missing');
+assert(a.includes("waiver_budget_used"),'opponent FAAB-used input missing');
+assert(a.includes("faab_remaining"),'opponent remaining FAAB input missing');
+assert(a.includes("function waiverOpponentMarket"),'opponent waiver market model missing');
+assert(a.includes("function renderQbOpportunityBoard"),'QB opportunity market surface missing');
+assert(a.includes("2-Slot-Kosten"),'QB plus future DST two-slot opportunity cost missing');
+assert(a.includes("gleiche Bye wie aktueller QB"),'QB same-bye warning missing');
 console.log('SEASON_LINEUP_WAIVER_ROUTING_PASS');
