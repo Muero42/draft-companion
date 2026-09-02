@@ -15,3 +15,7 @@ console.log('SEASON_WORKSPACE_NAVIGATION_REGRESSION_PASS');
 const liveSurface=fs.readFileSync('live-surface-v3.js','utf8');
 assert.ok(!liveSurface.includes("root.hidden=false"),'live decision renderer must not override workspace hidden state');
 assert.ok(html.includes('id="liveDecisionSurfaceV3"')&&html.includes('data-workspace="draft"'),'live decision surface must remain Draft-scoped');
+
+const liveCss=fs.readFileSync('live-surface-v3.css','utf8');
+assert.ok(liveCss.includes('#liveDecisionSurfaceV3:not([hidden]){display:block!important}'),'decision surface CSS must respect hidden workspace state');
+assert.ok(!liveCss.includes('.pitti-decision-surface-active #liveDecisionSurfaceV3{display:block!important}'),'unscoped Draft display override resurrected');
