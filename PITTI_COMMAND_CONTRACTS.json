@@ -167,7 +167,7 @@
     "exactNextAction": "Physical Android update/reload to rc4.188, open Waiver/FA, capture one screenshot. Then verify complete 10-team Sleeper ownership and derive actual free agents before DST/Lawrence/Trade actions.",
     "runtimeVersion": "rc4.188 merged source; rc4.185 latest physical Android partial pass",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
-    "latestDeviceEvidence": "2026-09-02 current-project rc4.185 screenshot: live state <1 Min., 16 players, Reserve/IR 1, Kader starter/bench rendered; rc4.188 physical canary pending.",
+    "latestDeviceEvidence": "2026-09-02 19:57 CEST rc4.188 screenshot: version installed, Sleeper Live-State <1 Min., expert rankings 1 Std., 3h automatic refresh policy visible; Waiver/FA canary pending.",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate"
   },
   "currentGate": "DEVICE_RC4188_LIVE_10_TEAM_WAIVER_CANARY",
