@@ -3,7 +3,7 @@ Generation: `20260902T1640Z-v230`
 
 PASS requires all of:
 - POST_DRAFT_SEASON_COMPANION; rc4.188 merged main `c4ccbd1959b986e0b810ac97c5ad0900d7fa441d`.
-- Latest physical Android rc4.185 PARTIAL PASS; rc4.188 physical Waiver/FA canary pending; accepted rollback rc4.169.
+- Latest physical Android rc4.188 PARTIAL PASS (version/live/expert freshness observed); physical Waiver/FA canary pending; accepted rollback rc4.169.
 - Never restore PR108-open, rc4.183-current, rc4.187-current, 12h expert refresh, stale PIT #3 DST baseline, unverified implied points, or JAX-as-free assumptions.
 - Full 10-team Sleeper live-state hard gate: exactly 10 rosters, unique roster/owner IDs, raw ownership/index parity, manager mapping, starters/reserve/taxi, waiver position, FAAB used/remaining.
 - Sleeper live state is roster/ownership authority; draft is immutable historical evidence; Watcher evidence-only.
