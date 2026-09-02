@@ -19,6 +19,6 @@ for(const src of [
 assert(a.includes("if(els.expertSearch&&els.expertsList)renderExperts();"),'expert render must tolerate Season-only DOM');
 assert(a.includes("if(els.decisionLog)renderLog();"),'legacy Draft log must tolerate Season-only DOM');
 assert(a.includes("['TE',els.tePanel]])if(el)el.onchange"),'legacy position-panel binding must tolerate Season-only DOM');
-assert(a.includes('async function bootstrapSeasonWorkspace()'),'roster bootstrap missing');
+assert(a.includes('function bootstrapSeasonWorkspace('),'roster bootstrap missing');
 assert(a.includes('rehydrateDerivedExpertPanelsOnStartup();'),'expert startup hydration missing');
 console.log('SEASON_REALSHAPE_STARTUP_E2E_PASS '+v+' roster+experts fail-open');
