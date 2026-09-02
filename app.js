@@ -3672,7 +3672,7 @@ els.savePanelBtn.onclick=()=>{saveCurrentPanel();renderExperts();els.panelStatus
 els.newPanelBtn.onclick=()=>{const name=prompt('Name des Panels:','Custom');if(!name)return;let id=norm(name)||`panel${Date.now()}`;while(panels[id])id+='x';panels[id]={name,members:{}};activePanelId=id;persist();renderAll()};
 els.renamePanelBtn.onclick=()=>{const p=panels[activePanelId],name=prompt('Neuer Name:',p.name);if(name){p.name=name;persist();renderAll()}};
 els.deletePanelBtn.onclick=()=>{if(['standard','pat'].includes(activePanelId))return alert('Standard und Pat bleiben erhalten.');if(confirm('Panel löschen?')){delete panels[activePanelId];delete panelRanks[activePanelId];activePanelId='standard';persist();renderAll()}};
-for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])el.onchange=()=>{positionPanels[pos]=el.value;persist()};
+for(const[pos,el]of [['QB',els.qbPanel],['RB',els.rbPanel],['WR',els.wrPanel],['TE',els.tePanel]])if(el)el.onchange=()=>{positionPanels[pos]=el.value;persist()};
 if(els.expertProfile){els.expertProfile.value=currentExpertProfile();els.expertProfile.onchange=()=>applyExpertProfile(els.expertProfile.value);}
 if(els.liveManagerApply)els.liveManagerApply.onclick=applyLiveManagerModesToCoach;
 if(els.analysisExpertProfile){
