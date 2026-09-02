@@ -3028,6 +3028,7 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
     for(const rr of live.rosters){const slot=Number(rr.roster_id);if(!bySlot[slot])bySlot[slot]=[];for(const pid of rr.players||[]){const p=sleeperPlayerRow(pid,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk:{player_id:pid,pick_no:999},p,r,a});}}
   }else for(const pk of picks){const slot=Number(pk.draft_slot);if(!bySlot[slot])continue;const p=pinfo(String(pk.player_id),pk.metadata,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk,p,r,a});}
   const mine=Array.isArray(lastDraftContext?.seasonRows)&&lastDraftContext.seasonRows.length?lastDraftContext.seasonRows:(bySlot[userSlot]||[]);
+  const liveRosterMeta=new Map((live?.league_rosters||[]).map(rr=>[Number(rr.roster_id),rr]));
   const targets=[];
   for(const [slotS,roster] of Object.entries(bySlot)){
     const slot=Number(slotS);if(live?.ok?slot===myLiveRosterId:slot===userSlot)continue;
@@ -3039,7 +3040,7 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
       // when it wins FLEX; any target must earn a real canonical Sleeper slot.
       if(!marginal.starts)desirability-=6;
       if(research)desirability+=.5;
-      if(desirability>=2){const offerModel=tradeOfferCandidates(mine,roster,x);targets.push({slot,x,lineupEdge,marginal,desirability,research,...offerModel});}
+      if(desirability>=2){const offerModel=tradeOfferCandidates(mine,roster,x),manager=liveRosterMeta.get(slot)||null;targets.push({slot,manager,x,lineupEdge,marginal,desirability,research,...offerModel});}
     }
   }
   targets.sort((a,b)=>b.desirability-a.desirability||b.lineupEdge-a.lineupEdge||a.x.r.rank-b.x.r.rank);
@@ -3048,8 +3049,9 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   els.tradeList.innerHTML=targets.length?`<div class="coach-section-title">Interessante gegnerische Assets — Target Discovery, Verhandlung noch nicht freigegeben</div>`+targets.slice(0,10).map((t,i)=>{
     const x=t.x,market=Number.isFinite(x.a)?` · Draft-ADP ${x.a.toFixed(1)}`:'';
     const geometry=t.marginal.slot?`gewinnt Slot ${seasonSlotLabel(t.marginal.slot,x.p.pos)}`:'kein Starter-Slot';
+    const managerLabel=t.manager?.manager_name||('Roster '+t.slot),faab=Number.isFinite(Number(t.manager?.faab_remaining))?' · FAAB '+Number(t.manager.faab_remaining):'';
     const offer=t.offers?.[0],offerText=offer?`Indikativ: GIVE ${esc(offer.give.p.name)} → GET ${esc(x.p.name)} · Fairness ${offer.fairness.toFixed(1)}/10 · Gegnernutzen ${offer.opponentUtility.toFixed(1)}/10 · Annahme-Plausibilität ~${offer.acceptance}%`:'Kein belastbares 1:1-Angebot aus der aktuellen Roster-/Panel-Geometrie';
-    return `<div class="coach-row"><div><b>${i+1}. ${esc(x.p.name)}</b> <span class="tiny">${x.p.pos} · ${x.p.team} · Team/Slot ${t.slot}</span><div class="tiny">Panel ${x.r.rank.toFixed(1)}${market} · ${geometry} · Lineup-Value +${t.lineupEdge.toFixed(1)} · ${esc(t.research||'keine aktuelle Research-Cache-Evidence')}</div><div class="tiny">${offerText}</div></div><div><b>TARGET</b><div class="tiny">heuristisch · nicht senden</div></div></div>`;
+    return `<div class="coach-row"><div><b>${i+1}. ${esc(x.p.name)}</b> <span class="tiny">${x.p.pos} · ${x.p.team} · ${esc(managerLabel)}${faab}</span><div class="tiny">Panel ${x.r.rank.toFixed(1)}${market} · ${geometry} · Lineup-Value +${t.lineupEdge.toFixed(1)} · ${esc(t.research||'keine aktuelle Research-Cache-Evidence')}</div><div class="tiny">${offerText}</div></div><div><b>TARGET</b><div class="tiny">heuristisch · nicht senden</div></div></div>`;
   }).join(''):'<div class="notice ok">Kein klarer Trade-Target-Vorteil aus der aktuellen Panel-/Roster-/Slot-Baseline.</div>';
 }
 
