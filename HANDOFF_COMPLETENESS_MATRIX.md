@@ -14,3 +14,5 @@ PASS requires all of:
 - JAX D/ST unavailable. No DST availability statement before verified actual Sleeper FA pool.
 - AUTO same-turn continuous execution; checkpoint/re-inventory after every package; no interim status/ack, empty reply, promise-only continuation, or “keine Handlung erforderlich” stop while executable work remains. STATUS report-only.
 - Immediate next gate: one physical rc4.188 Waiver/FA screenshot, no transaction before verification.
+
+- Empty assistant response after tool work is forbidden.
