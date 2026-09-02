@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.186';
+const APP_VERSION='v11.8.0-rc4.188';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2865,21 +2865,20 @@ function renderSpecialTeamsBoard(){
   const c=lastDraftContext;if(!c?.draftComplete||!els.waiverList)return'';
   const dst=c.availableDST||[],ks=c.availableK||[];
   const rb26=[
-    ['JAX',1,1,'CLE',16.5],['LAC',2,1,'ARI',18],['PIT',3,1,'ATL',19.25],['SEA',4,1,'NE',20.5],['HOU',5,1,'BUF',21.5],['DEN',6,1,'KC',23],['LAR',7,1,'SF',22.5],
-    ['KC',8,2,'DEN',20.5],['TEN',9,2,'NYJ',18.5],['DET',10,2,'NO',21.25],['PHI',11,3,'WSH',20.5],['CHI',12,3,'CAR',22.5],['BAL',13,3,'IND',22.5],
-    ['MIN',14,4,'GB',21.5],['LV',15,4,'MIA',21],['BUF',16,4,'HOU',23],['NYJ',17,4,'TEN',18.5],['ATL',18,4,'PIT',22.25]
+    ['JAX',1,1,'CLE'],['LAC',2,1,'ARI'],['HOU',3,1,'BUF'],['DEN',4,2,'KC'],['BAL',5,2,'IND'],['LAR',6,2,'SF'],['SEA',7,2,'NE'],['CHI',8,2,'CAR'],['TEN',9,2,'NYJ'],
+    ['PIT',10,3,'ATL'],['PHI',11,3,'WAS'],['GB',12,3,'MIN'],['MIN',13,3,'GB'],['BUF',14,3,'HOU'],['LV',15,3,'MIA'],['NYJ',16,4,'TEN'],['NE',17,4,'SEA'],['KC',18,4,'DEN']
   ];
   const aliases={JAC:'JAX',LA:'LAR',LAC:'LAC',WSH:'WAS',WAS:'WAS',LV:'LV'};
-  const rbMap=new Map(rb26.map(x=>[x[0],{rank:x[1],tier:x[2],opp:x[3],implied:x[4]}]));
+  const rbMap=new Map(rb26.map(x=>[x[0],{rank:x[1],tier:x[2],opp:x[3]}]));
   const normTeam=t=>aliases[String(t||'').toUpperCase()]||String(t||'').toUpperCase();
   const d=dst.map(p=>({p,rb:rbMap.get(normTeam(p.team||p.name))})).filter(x=>x.rb&&x.rb.tier<=4).sort((a,b)=>a.rb.tier-b.rb.tier||a.rb.rank-b.rb.rank);
   const kProj=new Map([['Cameron Dicker',8.7],['Harrison Mevis',8.4],['Brandon Aubrey',8.3],['Jake Bates',8.2],['Jason Myers',8.0],["Ka'imi Fairbairn",8.0],['Cam Little',7.9],['Tyler Loop',7.9],['Evan McPherson',7.7],['Chris Boswell',7.6]]);
   const rosterK=(c.seasonRows||[]).find(x=>x?.p?.pos==='K')?.p||null,rosterKProj=rosterK?kProj.get(rosterK.name):null;
   const k=ks.map(p=>({p,proj:kProj.get(p.name)})).filter(x=>Number.isFinite(x.proj)).map(x=>({...x,edge:Number.isFinite(rosterKProj)?x.proj-rosterKProj:null})).sort((a,b)=>b.proj-a.proj);
-  const dHtml=d.length?d.slice(0,7).map((x,i)=>{const team=normTeam(x.p.team||x.p.name),jax=team==='JAX',label=jax?'PRIORITY W1 · HOLD-HORIZON WEAK':(x.rb.tier<=2?'TARGET':'WATCH'),detail=jax?' · 2025 DST FP #4 · 31 takeaways (#2) · W2 DEN / W3 NE / W4 CIN → eher W1-Stream als 4W-Hold':'';return '<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">D/ST · RotoBaller W1 #'+x.rb.rank+' · Tier '+x.rb.tier+' · vs '+esc(x.rb.opp)+' · Opp implied '+x.rb.implied+' · Sleeper frei'+detail+'</div></div><div><b>'+label+'</b></div></div>'}).join(''):'<div class="notice">Keine RotoBaller-Top-18-D/ST ist aktuell im Sleeper-FA-Pool.</div>';
+  const dHtml=d.length?d.slice(0,7).map((x,i)=>{const team=normTeam(x.p.team||x.p.name),jax=team==='JAX',label=jax?'PRIORITY W1 · HOLD-HORIZON WEAK':(x.rb.tier<=2?'TARGET':'WATCH'),detail=jax?' · 2025 DST FP #4 · 31 takeaways (#2) · W2 DEN / W3 NE / W4 CIN → eher W1-Stream als 4W-Hold':'';return '<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">D/ST · RotoBaller W1 #'+x.rb.rank+' · Tier '+x.rb.tier+' · vs '+esc(x.rb.opp)+' · Sleeper frei'+detail+'</div></div><div><b>'+label+'</b></div></div>'}).join(''):'<div class="notice">Keine RotoBaller-Top-18-D/ST ist aktuell im Sleeper-FA-Pool.</div>';
   const kHtml=k.length?k.slice(0,7).map((x,i)=>{const edge=Number.isFinite(x.edge)?' · Edge ggü. '+esc(rosterK?.name||'Roster-K')+' '+(x.edge>=0?'+':'')+x.edge.toFixed(1):'';const label=Number.isFinite(x.edge)&&x.edge>=1.5?'UPGRADE PRÜFEN':Number.isFinite(x.edge)&&x.edge>0?'KLEINER EDGE':'HOLD';return '<div class="coach-row"><div><b>'+(i+1)+'. '+esc(x.p.name)+'</b><div class="tiny">K · FantasyPros W1 Consensus-Projektion · Sleeper frei'+edge+'</div></div><div><b>'+x.proj.toFixed(1)+' proj. · '+label+'</b></div></div>'}).join(''):'<div class="notice">Keiner der aktuell verifizierten Week-1-Kicker ist im LIVE Sleeper-FA-Pool; keine statische Liste darf Ownership überschreiben.</div>';
   const kBase=rosterK?'<div class="notice ok"><b>AKTUELLER KICKER: '+esc(rosterK.name)+'</b> · '+(Number.isFinite(rosterKProj)?rosterKProj.toFixed(1)+' proj.':'Projection noch nicht verifiziert')+' · Kicker werden ausschließlich hier gegen verfügbare Kicker verglichen; niemals gegen RB/WR/TE.</div>':'<div class="notice warn">Kein aktueller Roster-Kicker erkannt.</div>';
-  return '<div class="coach-section-title">WEEK 1 · D/ST STREAMING</div><div class="notice ok">Special Teams v2 · RotoBaller W1: Rank + Tier + Gegner + Vegas-Implied-Points. Quality-Floor wird bereits vor Sortierung angewandt: Tier 5/6 ausgeschlossen; Tier 4 nur Notfall. Early-Add-Gate: Vorteil gegenüber nächstbestem freien Stream × Verlust-/Marktrisiko muss den Optionswert des besten Drop-Kandidaten übersteigen. Pre-W1-RB-Optionswert wird erhöht. Weeks 1–4 wird vor finalem Add als Hold-Horizon gegengeprüft.</div>'+dHtml+'<div class="coach-section-title">WEEK 1 · KICKER</div>'+kBase+kHtml;
+  return '<div class="coach-section-title">WEEK 1 · D/ST STREAMING</div><div class="notice ok">Special Teams v2 · RotoBaller W1: Rank + Tier + Gegner. Quality-Floor wird bereits vor Sortierung angewandt: Tier 5/6 ausgeschlossen; Tier 4 nur Notfall. Early-Add-Gate: Vorteil gegenüber nächstbestem freien Stream × Verlust-/Marktrisiko muss den Optionswert des besten Drop-Kandidaten übersteigen. Pre-W1-RB-Optionswert wird erhöht. Weeks 1–4 wird vor finalem Add als Hold-Horizon gegengeprüft.</div>'+dHtml+'<div class="coach-section-title">WEEK 1 · KICKER</div>'+kBase+kHtml;
 }
 
 function renderWaiverWorkspace(draftComplete){
@@ -3029,6 +3028,7 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
     for(const rr of live.rosters){const slot=Number(rr.roster_id);if(!bySlot[slot])bySlot[slot]=[];for(const pid of rr.players||[]){const p=sleeperPlayerRow(pid,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk:{player_id:pid,pick_no:999},p,r,a});}}
   }else for(const pk of picks){const slot=Number(pk.draft_slot);if(!bySlot[slot])continue;const p=pinfo(String(pk.player_id),pk.metadata,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk,p,r,a});}
   const mine=Array.isArray(lastDraftContext?.seasonRows)&&lastDraftContext.seasonRows.length?lastDraftContext.seasonRows:(bySlot[userSlot]||[]);
+  const liveRosterMeta=new Map((live?.league_rosters||[]).map(rr=>[Number(rr.roster_id),rr]));
   const targets=[];
   for(const [slotS,roster] of Object.entries(bySlot)){
     const slot=Number(slotS);if(live?.ok?slot===myLiveRosterId:slot===userSlot)continue;
@@ -3040,7 +3040,7 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
       // when it wins FLEX; any target must earn a real canonical Sleeper slot.
       if(!marginal.starts)desirability-=6;
       if(research)desirability+=.5;
-      if(desirability>=2){const offerModel=tradeOfferCandidates(mine,roster,x);targets.push({slot,x,lineupEdge,marginal,desirability,research,...offerModel});}
+      if(desirability>=2){const offerModel=tradeOfferCandidates(mine,roster,x),manager=liveRosterMeta.get(slot)||null;targets.push({slot,manager,x,lineupEdge,marginal,desirability,research,...offerModel});}
     }
   }
   targets.sort((a,b)=>b.desirability-a.desirability||b.lineupEdge-a.lineupEdge||a.x.r.rank-b.x.r.rank);
@@ -3049,8 +3049,9 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   els.tradeList.innerHTML=targets.length?`<div class="coach-section-title">Interessante gegnerische Assets — Target Discovery, Verhandlung noch nicht freigegeben</div>`+targets.slice(0,10).map((t,i)=>{
     const x=t.x,market=Number.isFinite(x.a)?` · Draft-ADP ${x.a.toFixed(1)}`:'';
     const geometry=t.marginal.slot?`gewinnt Slot ${seasonSlotLabel(t.marginal.slot,x.p.pos)}`:'kein Starter-Slot';
+    const managerLabel=t.manager?.manager_name||('Roster '+t.slot),faab=Number.isFinite(Number(t.manager?.faab_remaining))?' · FAAB '+Number(t.manager.faab_remaining):'';
     const offer=t.offers?.[0],offerText=offer?`Indikativ: GIVE ${esc(offer.give.p.name)} → GET ${esc(x.p.name)} · Fairness ${offer.fairness.toFixed(1)}/10 · Gegnernutzen ${offer.opponentUtility.toFixed(1)}/10 · Annahme-Plausibilität ~${offer.acceptance}%`:'Kein belastbares 1:1-Angebot aus der aktuellen Roster-/Panel-Geometrie';
-    return `<div class="coach-row"><div><b>${i+1}. ${esc(x.p.name)}</b> <span class="tiny">${x.p.pos} · ${x.p.team} · Team/Slot ${t.slot}</span><div class="tiny">Panel ${x.r.rank.toFixed(1)}${market} · ${geometry} · Lineup-Value +${t.lineupEdge.toFixed(1)} · ${esc(t.research||'keine aktuelle Research-Cache-Evidence')}</div><div class="tiny">${offerText}</div></div><div><b>TARGET</b><div class="tiny">heuristisch · nicht senden</div></div></div>`;
+    return `<div class="coach-row"><div><b>${i+1}. ${esc(x.p.name)}</b> <span class="tiny">${x.p.pos} · ${x.p.team} · ${esc(managerLabel)}${faab}</span><div class="tiny">Panel ${x.r.rank.toFixed(1)}${market} · ${geometry} · Lineup-Value +${t.lineupEdge.toFixed(1)} · ${esc(t.research||'keine aktuelle Research-Cache-Evidence')}</div><div class="tiny">${offerText}</div></div><div><b>TARGET</b><div class="tiny">heuristisch · nicht senden</div></div></div>`;
   }).join(''):'<div class="notice ok">Kein klarer Trade-Target-Vorteil aus der aktuellen Panel-/Roster-/Slot-Baseline.</div>';
 }
 
@@ -3986,14 +3987,14 @@ function rehydrateDerivedExpertPanelsOnStartup(){
     console.warn('Derived expert-panel startup rehydration failed',e);
   }
 }
-const SEASON_RANKING_AUTO_MS=12*60*60*1000,SEASON_RANKING_RETRY_MS=2*60*60*1000;
+const SEASON_RANKING_AUTO_MS=3*60*60*1000,SEASON_RANKING_RETRY_MS=45*60*1000;
 let seasonRankingRefreshBusy=false;
 function renderSeasonRankingFreshness(note=''){
   if(!els.seasonRankingAge&&!els.seasonRankingStatus)return;
   const t=Number(store.get('v7_lastRankingUpdate',0)),age=t?Date.now()-t:Infinity;
   const label=!t?'nicht geladen':age<60*60*1000?Math.max(1,Math.round(age/60000))+' Min.':age<24*60*60*1000?Math.round(age/3600000)+' Std.':Math.floor(age/86400000)+' Tag(e)';
   if(els.seasonRankingAge){els.seasonRankingAge.textContent=label;els.seasonRankingAge.className=!t?'bad':age>SEASON_RANKING_AUTO_MS?'warn':'ok';}
-  if(els.seasonRankingStatus&&!seasonRankingRefreshBusy)els.seasonRankingStatus.textContent=note||(!t?'Keine verifizierten Rankings geladen. Automatischer Refresh wird versucht.':age>SEASON_RANKING_AUTO_MS?'Rankings älter als 12 Std. · automatischer Refresh wird versucht.':'Rankings aktuell genug · automatischer Refresh erst nach 12 Std.');
+  if(els.seasonRankingStatus&&!seasonRankingRefreshBusy)els.seasonRankingStatus.textContent=note||(!t?'Keine verifizierten Rankings geladen. Automatischer Refresh wird versucht.':age>SEASON_RANKING_AUTO_MS?'Rankings älter als 3 Std. · automatischer Refresh wird versucht.':'Rankings aktuell genug · automatischer Refresh spätestens nach 3 Std.');
 }
 async function refreshSeasonRankings({force=false,auto=false}={}){
   if(seasonRankingRefreshBusy){if(els.seasonRankingStatus)els.seasonRankingStatus.textContent='Ranking-Aktualisierung läuft bereits …';return{ok:false,busy:true};}
