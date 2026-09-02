@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260902T1325Z-v229",
-  "updated_at": "2026-09-02T13:36:00Z",
+  "updated_at": "2026-09-02T15:11:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -23,35 +23,35 @@
       "scope": "PR #108 trade-slot + full league-state/waiver-market candidate. v229 is handoff-consistency repair; no product behavior rollback."
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "rc4.185 is merged source baseline. PR #108 is OPEN/UNMERGED and adds canonical Trade Board v5 slot geometry, full 10-team Sleeper league-state persistence, opponent FAAB/waiver competition modeling, QB opportunity cards and QB+D/ST two-active-drop opportunity cost. No PR108 deployment/device acceptance.",
+    "preview_candidate": "rc4.185 is merged baseline and PR #108 is merged into main as b00d682c40e231c6be436e4565dc3e33362f4f52. Post-merge workflow/rc4.186 promotion not yet observed.",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "latest_package_sha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "package_reference_run": 33597607588,
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "rc4.185 source baseline merged; deployment/device parity not accepted. PR #108 not merged/deployed.",
-    "installed_android": "v11.8.0-rc4.183",
-    "latest_android_observed": "v11.8.0-rc4.183",
+    "deployed_pages_head": "PR #108 merged main b00d682c40e231c6be436e4565dc3e33362f4f52; no post-merge workflow/status observed; rc4.186 not yet created.",
+    "installed_android": "v11.8.0-rc4.185",
+    "latest_android_observed": "v11.8.0-rc4.185",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "rc4.183 is physically installed/observed and DEVICE_REJECTED: FA/Add-Drop cards rendered under Kader and IR/Reserve Zach Charbonnet was used as an ordinary drop target. The former startup/Kader loading dead-state was crossed.",
     "latest_device_evidence": {
-      "version": "v11.8.0-rc4.183",
-      "observed_at": "2026-09-02T10:52:00Z",
-      "evidence": "physical Android screenshot in prior chat; Season/Kader rendered and FA-vs-roster analysis executed",
+      "version": "v11.8.0-rc4.185",
+      "observed_at": "2026-09-02T14:00:00Z",
+      "evidence": "physical Android screenshot in current project chat",
       "pass": [
-        "rc4.183 installed",
-        "former startup dead-state crossed",
-        "Season/Kader UI renders",
-        "FA-vs-roster computation executes"
+        "rc4.185 visibly installed",
+        "Sleeper Live-State <1 Min.",
+        "live roster loaded: 16 players",
+        "Reserve/IR count 1",
+        "Kader starter/bench separation rendered",
+        "no FA/Add-Drop cards visible under Kader in captured frame",
+        "Charbonnet not rendered as ordinary bench player in captured frame"
       ],
-      "fail": [
-        "FA/Add-Drop cards rendered under Kader instead of Waiver/FA",
-        "Reserve/IR Zach Charbonnet selected as ordinary drop target"
-      ],
-      "acceptance": "FAIL",
-      "classification": "DEVICE_REJECTED_WAIVER_SURFACE_AND_IR_DROP_SEMANTICS"
+      "fail": [],
+      "acceptance": "PARTIAL_PASS_CURRENT_CAPTURE",
+      "classification": "DEVICE_RC4185_LIVE_ROSTER_AND_KADER_SURFACE_PASS"
     },
-    "latestAndroidVersionObserved": "v11.8.0-rc4.183",
-    "source_candidate_status": "RELEASE_CANDIDATE_VALIDATING",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.185",
+    "source_candidate_status": "PR108_MERGED_RC4186_PROMOTION_PENDING",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -147,8 +147,8 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "PR108_V229_GUARD_AUTHORITY_REPAIRED_FINAL_RESEAL",
-    "nextGate": "PR108_FINAL_RESEALED_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
+    "status": "PR108_MERGED_RC4185_DEVICE_OBSERVED_RC4186_PROMOTION_PENDING",
+    "nextGate": "RC4186_REPRODUCIBLE_PROMOTION_AND_POSTMERGE_DEPLOY_PARITY"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -159,32 +159,25 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "rc4.185 merged source baseline; PR #108 is current unmerged Season candidate. rc4.183 remains latest physical observation and was rejected; rc4.169 remains accepted rollback.",
+  "source_authority": "rc4.185 physical/current baseline; PR #108 merged into main b00d682c40e231c6be436e4565dc3e33362f4f52. rc4.186 promotion pending.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "RUNNING",
-    "active": [
-      {
-        "id": "pr108-v229-exact-head-revalidation",
-        "lane": "companion",
-        "goal": "Validate newest PR #108 exact head after v229 handoff consistency repair; fix only reproduced failures without reverting correct Season behavior.",
-        "state": "active"
-      }
-    ],
+    "active": [],
     "ready": [
-      {
-        "id": "lawrence-market-live",
-        "lane": "waiver",
-        "goal": "After PR #108 validation/merge, use persisted all-10-team Sleeper state to evaluate Trevor Lawrence opponent QB need, remaining FAAB, manager/current-season priors, same-bye cost and mandatory future D/ST second-active-drop cost.",
-        "state": "dependency_wait"
-      },
       {
         "id": "rc4186-promotion",
         "lane": "release",
-        "goal": "After PR #108 all-green merge, promote rc4.186, verify post-merge/deploy parity, then exactly one physical canary.",
-        "state": "dependency_wait"
+        "goal": "Establish reproducible rc4.186 promotion from merged main; verify package/deploy parity before one physical canary.",
+        "state": "ready"
+      },
+      {
+        "id": "lawrence-market-live",
+        "lane": "waiver",
+        "goal": "Use merged PR108 live 10-team state to evaluate Trevor Lawrence opponent QB need, FAAB competition, same-bye and future D/ST second-active-drop cost.",
+        "state": "ready"
       }
     ],
     "waiting_external": [],
@@ -439,7 +432,7 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "PR #108 final checkpoint/reseal and exact-head validation remain executable."
+      "reason": "rc4.186 promotion and Lawrence market lanes remain executable."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
@@ -451,8 +444,8 @@
     "resume": "rc4.185 merged baseline; PR #108 open/unmerged. v229 fixes stale v227/PR102 current pointers found during final handoff audit. Query newest PR #108 exact head, preserve live roster_id identity invariant, require all strict gates green; then Lawrence live opponent/FAAB analysis and rc4.186 promotion.",
     "transaction_in_progress": false
   },
-  "status": "PR108_V229_HANDOFF_REPAIRED",
-  "gate": "PR108_FINAL_RESEALED_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
-  "nextGate": "Final reseal with PASS status after rc4.185/PR108 guard extension; query resulting exact PR #108 head and require all strict gates green.",
+  "status": "POSTMERGE_RC4185_DEVICE_CHECKPOINTED",
+  "gate": "RC4186_REPRODUCIBLE_PROMOTION_AND_POSTMERGE_DEPLOY_PARITY",
+  "nextGate": "Establish reproducible rc4.186 promotion from merged main b00d682c40e231c6be436e4565dc3e33362f4f52; verify automated package/deploy parity before any further physical device update.",
   "handoffGeneration": "20260902T1325Z-v229"
 }
