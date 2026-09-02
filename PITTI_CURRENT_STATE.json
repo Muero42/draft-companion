@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260902T1325Z-v229",
-  "updated_at": "2026-09-02T13:25:00Z",
+  "updated_at": "2026-09-02T13:36:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -16,10 +16,10 @@
     "android_acceptance_pending": false,
     "test_challenger": "v11.8.0-rc4.185",
     "ci": {
-      "candidate_package": "PR #108 prior head 0a41ca11 failed only on explicit live roster_id-vs-historical-draft-slot invariant text. Invariant is restored. v229 handoff changes exact head again; fresh exact-head CI required.",
-      "release_contract_v2": "Prior PR #108 product/runtime head passed; v229 handoff exact head requires fresh CI and is not release-authoritative until green.",
-      "project_guardrails": "Prior PR #108 head passed after Trade Board v4/v5 guard repair; v229 exact head requires fresh CI.",
-      "validated_code_head": "7301e4973071d498259e20cec2407511417b7a0d",
+      "candidate_package": "v229 sealed head bf84c32 failed only because guard executable still capped source_candidate at rc4.184 and seal status enum accepted only PASS/SUPERSEDED_PENDING_RESEAL. Runtime startup and Season semantic regressions passed before guard failure. Guard updated to rc4.185/PR108; final reseal must use status PASS.",
+      "release_contract_v2": "v229 sealed head bf84c32 reached runtime/Season PASS layers, then same stale guard authority/seal-state failure. No product rollback indicated.",
+      "project_guardrails": "v229 sealed head bf84c32 failed same stale guard source-candidate/seal-state contract; guard updated without reverting product behavior.",
+      "validated_code_head": "bf84c32a08fd4f85c63d01b0274e9b867a0b8a2c",
       "scope": "PR #108 trade-slot + full league-state/waiver-market candidate. v229 is handoff-consistency repair; no product behavior rollback."
     },
     "android_accepted": "v11.8.0-rc4.169",
@@ -147,8 +147,8 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "PR108_V229_HANDOFF_REPAIRED_EXACT_HEAD_REVALIDATION",
-    "nextGate": "PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
+    "status": "PR108_V229_GUARD_AUTHORITY_REPAIRED_FINAL_RESEAL",
+    "nextGate": "PR108_FINAL_RESEALED_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -452,7 +452,7 @@
     "transaction_in_progress": false
   },
   "status": "PR108_V229_HANDOFF_REPAIRED",
-  "gate": "PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
-  "nextGate": "Query newest PR #108 exact head after v229 handoff repair; all strict gates green before merge; then rc4.186 promotion/deploy parity and exactly one physical canary.",
+  "gate": "PR108_FINAL_RESEALED_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
+  "nextGate": "Final reseal with PASS status after rc4.185/PR108 guard extension; query resulting exact PR #108 head and require all strict gates green.",
   "handoffGeneration": "20260902T1325Z-v229"
 }
