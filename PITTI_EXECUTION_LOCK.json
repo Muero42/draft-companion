@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-02T11:30:00Z",
+  "updatedAt": "2026-09-02T12:45:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -12,7 +12,7 @@
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.184",
+    "appVersion": "v11.8.0-rc4.185",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
@@ -20,7 +20,7 @@
     "latestAndroidObserved": "v11.8.0-rc4.183 DEVICE_REJECTED: Kader rendered FA/Add-Drop and IR/Reserve Charbonnet as ordinary drop target",
     "latestPreinstallVerified": "rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "v11.8.0-rc4.107",
-    "preinstallArtifact": "rc4.184 PR #102 exact-head validation pending after v227 canonical repair",
+    "preinstallArtifact": "rc4.185 merged baseline; PR #108 unmerged Season candidate",
     "preinstallSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
@@ -63,12 +63,12 @@
       "androidAccepted": false
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.169",
-    "unreleasedMainDelta": "main contains merged #100/#101 fixes at f5f7b3933a5416ac64250abad9e425c76435d62f; rc4.184 version promotion remains unmerged PR #102",
-    "deployedPagesVersion": "rc4.184 NOT DEPLOYED/NOT VERIFIED",
+    "unreleasedMainDelta": "PR #107 is merged on main. PR #108 remains unmerged and adds trade-slot geometry + full league-state/waiver competition/QB opportunity modeling.",
+    "deployedPagesVersion": "rc4.185 NOT YET DEVICE-ACCEPTED; PR #108 NOT MERGED",
     "mainGhPagesParity": false,
     "androidVerified": false,
     "androidAcceptance": "rc4.183 physically observed but rejected for Kader/Waiver and IR-drop semantics",
-    "devicePromotionPolicy": "FORBIDDEN until PR #102 newest exact head all strict gates PASS, merge/post-merge deploy verified, then one physical rc4.184 canary.",
+    "devicePromotionPolicy": "FORBIDDEN until PR #108 final exact head all strict gates PASS, merge, rc4.186 promotion/post-merge deployment parity verified, then one physical canary.",
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate"
   },
@@ -259,12 +259,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "PR102_EXACT_HEAD_HANDOFF_GUARD_REPAIR",
-    "nextGate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY"
+    "status": "PR108_LEAGUE_STATE_WAIVER_MARKET_TRADE_SLOT_VALIDATION",
+    "nextGate": "PR108_FINAL_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
   },
-  "status": "HANDOFF_RC4184_PR102_EXACT_HEAD_REVALIDATION",
-  "gate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY",
-  "nextGate": "Verify newest PR #102 exact head after v227 canonical repair; require all strict gates green before merge/deploy; then one physical rc4.184 canary.",
+  "status": "PR108_SEASON_MARKET_TRADE_VALIDATION",
+  "gate": "PR108_FINAL_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
+  "nextGate": "Reseal current canonical files against the final PR #108 content head; require all strict gates green; merge; then rc4.186 version promotion/deploy verification before any device canary.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -274,10 +274,10 @@
   },
   "handoff": {
     "generation": "20260902T1130Z-v227",
-    "status": "PASS_PENDING_STRICT_REVALIDATION",
+    "status": "CURRENT_PROJECT_CHECKPOINT_NOT_NEW_HANDOFF",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.183 DEVICE_REJECTED; #100/#101 merged; rc4.184 PR #102 current unmerged release lane; v227 removes stale PR98/v224 authority from current fields.",
+    "resume": "rc4.185 merged baseline; PR #108 validates full live league state, manager/FAAB/transaction priors, QB waiver competition with same-bye + mandatory D/ST two-drop cost, and canonical trade-slot geometry.",
     "transaction_in_progress": false
   },
   "expertV45": {
