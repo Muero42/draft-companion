@@ -12,12 +12,12 @@
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.185",
+    "appVersion": "v11.8.0-rc4.189",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.183 DEVICE_REJECTED: Kader rendered FA/Add-Drop and IR/Reserve Charbonnet as ordinary drop target",
+    "latestAndroidObserved": "v11.8.0-rc4.188 PASS: Waiver/FA route, live ownership, kicker isolation and active-drop semantics physically verified",
     "latestPreinstallVerified": "rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.185 merged baseline; PR #108 unmerged Season candidate",
@@ -32,7 +32,7 @@
     "preinstallReferenceRun": 33597607588,
     "preinstallReferenceArtifactId": 9833935479,
     "preinstallHashSemantics": "GitHub candidate-package artifact digest; package/re-extract PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.183",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.188",
     "latestAndroidFunctionalVerified": "rc4.169 remains accepted rollback authority; rc4.183 DEVICE_REJECTED",
     "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
