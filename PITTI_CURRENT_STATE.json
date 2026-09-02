@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260902T1130Z-v227",
-  "updated_at": "2026-09-02T13:08:00Z",
+  "handoff_generation": "20260902T1315Z-v228",
+  "updated_at": "2026-09-02T13:15:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -167,17 +167,23 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "pr108-league-waiver-trade-validation",
+        "id": "pr108-exact-head-revalidation",
         "lane": "companion",
-        "goal": "Finish exact-head validation for live league-state persistence, waiver competition/FAAB model, QB2+DST opportunity cost and canonical trade-slot geometry.",
+        "goal": "Validate latest PR #108 after restoring explicit live roster_id vs historical draft-slot invariant; diagnose any failure without reverting correct season logic.",
         "state": "active"
       }
     ],
     "ready": [
       {
-        "id": "rc4186-promotion-after-pr108",
+        "id": "lawrence-market-live",
+        "lane": "waiver",
+        "goal": "After PR #108 validation/merge, use persisted all-10-team Sleeper league state to evaluate Trevor Lawrence opponent QB need, remaining FAAB, manager/current-season priors, same-bye cost and mandatory future D/ST second-drop cost.",
+        "state": "dependency_wait"
+      },
+      {
+        "id": "rc4186-promotion",
         "lane": "release",
-        "goal": "After PR #108 all-green merge, promote the product delta as rc4.186, verify post-merge deploy parity, then one physical canary.",
+        "goal": "After PR #108 all-green merge, promote as rc4.186, verify post-merge/deploy parity, then exactly one physical device canary.",
         "state": "dependency_wait"
       }
     ],
@@ -447,5 +453,6 @@
   },
   "status": "PR108_SEASON_MARKET_TRADE_VALIDATION",
   "gate": "PR108_FINAL_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
-  "nextGate": "Reseal current canonical files against the final PR #108 content head; require all strict gates green; merge; then rc4.186 version promotion/deploy verification before any device canary."
+  "nextGate": "Reseal current canonical files against the final PR #108 content head; require all strict gates green; merge; then rc4.186 version promotion/deploy verification before any device canary.",
+  "handoffGeneration": "20260902T1315Z-v228"
 }
