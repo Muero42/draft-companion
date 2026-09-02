@@ -16,11 +16,11 @@
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.189",
     "ci": {
-      "candidate_package": "rc4.189 reseal exact-head validation pending after checkpoint repair",
-      "release_contract_v2": "rc4.189 reseal exact-head validation pending after checkpoint repair",
-      "project_guardrails": "rc4.189 reseal exact-head validation pending after checkpoint repair",
+      "candidate_package": "v230 head 86f4039 queued after guard syntax repair",
+      "release_contract_v2": "v230 head 86f4039 queued after guard syntax repair",
+      "project_guardrails": "v230 head 86f4039 queued after guard syntax repair",
       "validated_code_head": null,
-      "scope": "rc4.189 runtime parity + checkpoint reseal after merged PR #115"
+      "scope": "rc4.189 post-merge reseal exact-head validation"
     },
     "android_accepted": "v11.8.0-rc4.169",
     "preview_candidate": "rc4.189 merged main at 88c007732f94df7b1624a6c05a0b16af4d33d94f; post-merge reseal and deployment parity required before one physical device canary.",
@@ -168,27 +168,40 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "pr108-v229-exact-head-revalidation",
+        "id": "rc4189-v230-exact-head-revalidation",
         "lane": "companion",
-        "goal": "Validate newest PR #108 exact head after v229 handoff consistency repair; fix only reproduced failures without reverting correct Season behavior.",
+        "goal": "Validate v230 rc4.189 post-merge reseal exact head after guard syntax repair; repair only reproduced failures.",
         "state": "active"
       }
     ],
     "ready": [
       {
-        "id": "lawrence-market-live",
-        "lane": "waiver",
-        "goal": "After PR #108 validation/merge, use persisted all-10-team Sleeper state to evaluate Trevor Lawrence opponent QB need, remaining FAAB, manager/current-season priors, same-bye cost and mandatory future D/ST second-active-drop cost.",
+        "id": "rc4189-deployment-parity",
+        "lane": "release",
+        "goal": "After exact-head all-green, merge v230 reseal if required and verify rc4.189 deployment/runtime parity before device action.",
         "state": "dependency_wait"
       },
       {
-        "id": "rc4186-promotion",
-        "lane": "release",
-        "goal": "After PR #108 all-green merge, promote rc4.186, verify post-merge/deploy parity, then exactly one physical canary.",
+        "id": "lawrence-market-live",
+        "lane": "waiver",
+        "goal": "Use canonical all-10-team Sleeper state to evaluate Trevor Lawrence opponent QB need, remaining FAAB, bounded priors, same-bye cost and mandatory future D/ST second-active-drop cost.",
+        "state": "dependency_wait"
+      },
+      {
+        "id": "watcher-v026-validation",
+        "lane": "watcher",
+        "goal": "Keep v0.2.6 draft isolated; validate syntax/core CI before any merge/deploy.",
         "state": "dependency_wait"
       }
     ],
-    "waiting_external": [],
+    "waiting_external": [
+      {
+        "id": "pr117-ci",
+        "lane": "companion",
+        "goal": "Three strict workflows on exact v230 reseal head 86f4039932863ed7fca7d40e66775d4251f07ef2.",
+        "state": "waiting_external"
+      }
+    ],
     "blocked_user": [],
     "completed_recent": [
       {
@@ -440,7 +453,7 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "PR #108 final checkpoint/reseal and exact-head validation remain executable."
+      "reason": "v230 exact-head validation and dependent release/waiver lanes remain."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
