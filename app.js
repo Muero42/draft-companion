@@ -23,7 +23,11 @@ async function fetchSeasonLeagueState(draft){
   if(!leagueId)return{ok:false,reason:'NO_LEAGUE_ID'};
   store.setText(SEASON_LEAGUE_ID_KEY,leagueId);
   const bust=Date.now()+'-'+Math.random().toString(36).slice(2);
-  const [league,rosters]=await Promise.all([jf(S+'/league/'+encodeURIComponent(leagueId)+'?_='+bust,'Sleeper Liga',7000),jf(S+'/league/'+encodeURIComponent(leagueId)+'/rosters?_='+bust,'Sleeper Kader',7000)]);
+  const [league,rosters,users]=await Promise.all([
+    jf(S+'/league/'+encodeURIComponent(leagueId)+'?_='+bust,'Sleeper Liga',7000),
+    jf(S+'/league/'+encodeURIComponent(leagueId)+'/rosters?_='+bust,'Sleeper Kader',7000),
+    jf(S+'/league/'+encodeURIComponent(leagueId)+'/users?_='+bust,'Sleeper Manager',7000).catch(()=>[])
+  ]);
   if(!Array.isArray(rosters)||!rosters.length)return{ok:false,reason:'LEAGUE_ROSTERS_EMPTY',leagueId};
   const slot=Number(els.slot.value||9);
   let userId=String(store.text(SEASON_USER_ID_KEY,'')||'').trim();
@@ -35,7 +39,13 @@ async function fetchSeasonLeagueState(draft){
   userId=String(roster.owner_id||'').trim();if(!userId)return{ok:false,reason:'USER_ID_UNRESOLVED',leagueId,slot,rosterId:roster.roster_id};
   store.setText(SEASON_USER_ID_KEY,userId);
   const ownership={};for(const r of rosters){const reserve=new Set((r.reserve||[]).map(String)),taxi=new Set((r.taxi||[]).map(String));for(const pid of new Set([...(r.players||[]),...(r.reserve||[]),...(r.taxi||[])].filter(Boolean).map(String))){ownership[pid]={roster_id:r.roster_id,owner_id:r.owner_id,mine:Number(r.roster_id)===Number(roster.roster_id),reserve:reserve.has(pid),taxi:taxi.has(pid)};}}
-  return{ok:true,league_id:leagueId,user_id:userId,roster_id:roster.roster_id,generated_at:Date.now(),league,my_roster:roster,rosters,my_starters:roster.starters||[],my_players:roster.players||[],my_reserve:roster.reserve||[],ownership,source:'Sleeper direct'};
+  const userById=Object.fromEntries((Array.isArray(users)?users:[]).map(u=>[String(u.user_id||''),u]));
+  const league_rosters=rosters.map(r=>{const u=userById[String(r.owner_id||'')]||{},settings=r.settings||{};return{roster_id:Number(r.roster_id),owner_id:String(r.owner_id||''),manager_name:u.display_name||u.username||('Roster '+r.roster_id),players:(r.players||[]).map(String),starters:(r.starters||[]).map(String),reserve:(r.reserve||[]).map(String),taxi:(r.taxi||[]).map(String),waiver_position:Number(settings.waiver_position),waiver_budget_used:Number(settings.waiver_budget_used||0),wins:Number(settings.wins||0),losses:Number(settings.losses||0)};});
+  const faabBudget=Number(league?.settings?.waiver_budget||0);
+  for(const rr of league_rosters)rr.faab_remaining=faabBudget>0?Math.max(0,faabBudget-rr.waiver_budget_used):null;
+  const state={ok:true,league_id:leagueId,user_id:userId,roster_id:roster.roster_id,generated_at:Date.now(),league,my_roster:roster,rosters,league_rosters,users:Array.isArray(users)?users:[],faab_budget:faabBudget,my_starters:roster.starters||[],my_players:roster.players||[],my_reserve:roster.reserve||[],ownership,source:'Sleeper direct'};
+  try{store.setText('v118_seasonLeagueState',JSON.stringify({generated_at:state.generated_at,league_id:leagueId,faab_budget:faabBudget,rosters:league_rosters}));}catch{}
+  return state;
 }
 function seasonRosterRows(season,players,draftMine){if(!season?.ok||!season.my_roster)return null;const draftById=new Map((draftMine||[]).map(pk=>[String(pk.player_id),pk])),reserve=new Set((season.my_roster.reserve||[]).map(String));return[...new Set((season.my_roster.players||[]).map(String))].map(pid=>{const p=sleeperPlayerRow(pid,players),base=draftById.get(pid);return{pk:base||{player_id:pid,pick_no:999,metadata:{}},p:{...p,injury:reserve.has(pid)?(p.injury||'IR/RESERVE'):p.injury},r:rankFor(p.name,p.pos),a:adpFor(p.name),seasonStatus:reserve.has(pid)?'RESERVE':'ACTIVE'};});}
 const SLEEPER_NON_STARTER_SLOTS=new Set(['BN','IR','TAXI']);
@@ -2889,6 +2899,23 @@ function rerenderPostDraftFromContext(){
   renderWaiverWorkspace(true);
   renderSeasonActionBoard(true);
   return true;
+}
+function seasonRosterPlayerRows(rr,players){
+  return [...new Set([...(rr?.players||[]),...(rr?.reserve||[]),...(rr?.taxi||[])].map(String))].map(pid=>{const p=sleeperPlayerRow(pid,players);return{p,r:rankFor(p.name,p.pos),seasonStatus:(rr?.reserve||[]).map(String).includes(pid)?'RESERVE':'ACTIVE'};});
+}
+function waiverOpponentMarket(target,players){
+  const season=lastDraftContext?.season;if(!season?.ok||!target)return[];
+  const mine=Number(season.roster_id),budget=Number(season.faab_budget||0);
+  return (season.league_rosters||season.rosters||[]).filter(rr=>Number(rr.roster_id)!==mine).map(rr=>{
+    const rows=seasonRosterPlayerRows(rr,players),qbs=rows.filter(x=>x.p.pos==='QB'&&x.seasonStatus==='ACTIVE').sort((a,b)=>(a.r?.rank??999)-(b.r?.rank??999));
+    const targetRank=target.r?.rank??rankFor(target.p?.name||target.name,target.p?.pos||target.pos)?.rank??999;
+    const best=qbs[0]?.r?.rank??999,upgrade=target.p?.pos==='QB'?Math.max(0,best-targetRank):0;
+    const activeCount=rows.filter(x=>x.seasonStatus==='ACTIVE').length,benchCost=Math.max(0,activeCount-14);
+    const remaining=Number.isFinite(Number(rr.faab_remaining))?Number(rr.faab_remaining):Math.max(0,budget-Number(rr.settings?.waiver_budget_used||rr.waiver_budget_used||0));
+    const need=clamp(upgrade/8+(qbs.length===0?5:0)-(qbs.length>=2?1.5:0)-benchCost*.15,0,10);
+    const bidPct=clamp(Math.round(need*.65),0,8);
+    return{roster_id:Number(rr.roster_id),manager_name:rr.manager_name||('Roster '+rr.roster_id),qbs:qbs.map(x=>x.p.name),need,faab_remaining:remaining,bid_pct:bidPct};
+  }).sort((a,b)=>b.need-a.need);
 }
 function tradeStarterSlots(){
   const season=lastDraftContext?.season;
