@@ -3802,9 +3802,11 @@ function setWorkspace(name){
   document.querySelectorAll('[data-workspace-target]').forEach(btn=>{btn.classList.toggle('active',btn.dataset.workspaceTarget===name);btn.setAttribute('aria-pressed',btn.dataset.workspaceTarget===name?'true':'false')});
   renderSeasonRankingFreshness();
 }
-document.querySelectorAll('[data-workspace-target]').forEach(btn=>btn.addEventListener('click',()=>setWorkspace(btn.dataset.workspaceTarget)));
-setDraftSurface(localStorage.getItem('v118_draftSurface')||'mock');
-setWorkspace(localStorage.getItem('v117_workspace')||'roster');
+// Startup-critical workspace restoration must be best-effort. Android storage/UI edge cases
+// must not prevent the physical Season startup marker below from executing.
+try{document.querySelectorAll('[data-workspace-target]').forEach(btn=>btn.addEventListener('click',()=>setWorkspace(btn.dataset.workspaceTarget)))}catch(e){console.warn('Workspace control binding skipped',e)}
+try{setDraftSurface(store.text('v118_draftSurface','mock')||'mock')}catch(e){console.warn('Draft surface restore skipped',e)}
+try{setWorkspace(store.text('v117_workspace','roster')||'roster')}catch(e){console.warn('Workspace restore skipped',e)}
 // Optional research-cache UI must never be allowed to abort Season control wiring.
 try{updateResearchCacheStatus()}catch(e){console.warn('Research cache status startup recovery',e)}
 
