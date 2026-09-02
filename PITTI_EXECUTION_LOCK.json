@@ -259,12 +259,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "PR108_LEAGUE_STATE_WAIVER_MARKET_TRADE_SLOT_VALIDATION",
-    "nextGate": "PR108_FINAL_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
+    "status": "PR108_IDENTITY_INVARIANT_RESTORED_EXACT_HEAD_REVALIDATION",
+    "nextGate": "PR108_LATEST_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
   },
   "status": "PR108_SEASON_MARKET_TRADE_VALIDATION",
-  "gate": "PR108_FINAL_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
-  "nextGate": "Reseal current canonical files against the final PR #108 content head; require all strict gates green; merge; then rc4.186 version promotion/deploy verification before any device canary.",
+  "gate": "PR108_LATEST_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
+  "nextGate": "PR108 latest exact head all strict gates green → merge → rc4.186 promotion → post-merge/deploy parity → exactly one physical canary.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -273,11 +273,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260902T1130Z-v227",
-    "status": "CURRENT_PROJECT_CHECKPOINT_NOT_NEW_HANDOFF",
+    "generation": "20260902T1315Z-v228",
+    "status": "CURRENT_HANDOFF_V228",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.185 merged baseline; PR #108 validates full live league state, manager/FAAB/transaction priors, QB waiver competition with same-bye + mandatory D/ST two-drop cost, and canonical trade-slot geometry.",
+    "resume": "rc4.185 merged baseline; PR #108 open. Restore/preserve live roster_id-vs-draft-slot invariant, revalidate exact head, then Lawrence live opponent/FAAB analysis and rc4.186 promotion.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -297,7 +297,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260902T1130Z-v227",
+  "handoff_generation": "20260902T1315Z-v228",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -332,5 +332,5 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260902T1125Z-v226"
+  "handoffGeneration": "20260902T1315Z-v228"
 }
