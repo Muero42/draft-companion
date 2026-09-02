@@ -68,7 +68,7 @@
     "mainGhPagesParity": true,
     "androidVerified": false,
     "androidAcceptance": "rc4.176 automated Season E2E PASS; physical functional acceptance still pending.",
-    "devicePromotionPolicy": "NO_NEW_DEVICE_VERSION_UNTIL_CURRENT_RC4182_HYDRATION_FAILURE_IS_REPRODUCED_OFF_DEVICE_AND_FIXED_WITH_REAL-SHAPE_REGRESSION"
+    "devicePromotionPolicy": "NO_NEW_DEVICE_VERSION_UNTIL_RC4182_HYDRATION_FIX_PASSES_STRICT_VALIDATION_AND_REAL_SHAPE_REGRESSION"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -261,7 +261,7 @@
     "nextGate": "NO_NEW_VERSION_UNTIL_HYDRATION_ROOT_CAUSE_REPRODUCED_OFF_DEVICE"
   },
   "status": "RC4182_DEVICE_REJECTED_PROCESS_RECONCILED",
-  "gate": "NO_NEW_VERSION_UNTIL_HYDRATION_ROOT_CAUSE_REPRODUCED_OFF_DEVICE",
+  "gate": "RC4182_HYDRATION_FIX_STRICT_VALIDATION",
   "nextGate": "New chat: reconcile actual main/CI/deploy against v224, then run browser-equivalent Season E2E for startup hydration, Kader/Waiver/Trades/Lineup navigation, automatic Sleeper sync, automatic ranking refresh, timeout/fail-closed paths, no Draft UI leakage, and no runtime truncation.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
