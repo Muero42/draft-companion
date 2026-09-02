@@ -494,3 +494,19 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - AUTO contract is current and non-negotiable: continuous same-turn execution while safe work exists; checkpoint + re-inventory after each package; no interim progress/status/ack responses; no empty response after tool work; no promise-only “AUTO läuft weiter”; waiting external blocks only dependent lane; STATUS report-only.
 
 - Final v229 CI audit exposed two additional handoff-guard defects on sealed head `bf84c32a08fd4f85c63d01b0274e9b867a0b8a2c`: executable guard still capped Season source_candidate at rc4.184, and it accepted seal status only PASS (or explicit pending), while v229 used PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING. Runtime startup and Season semantic regressions passed before these guard failures. Guard is now extended to rc4.185 + PR108 gates; seal will use canonical PASS while exact_gate/note continue to state that PR108 release validation is pending. No product behavior is reverted.
+
+
+## 2026-09-02 — v230 FINAL HANDOFF / rc4.188 AUTHORITY
+- Handoff generation: `20260902T1640Z-v230`.
+- This EOF checkpoint supersedes v229 current pointers. v229 remains historical provenance only.
+- Current merged source is **v11.8.0-rc4.188** on main, merge commit `c4ccbd1959b986e0b810ac97c5ad0900d7fa441d`.
+- PR #113 exact head `98a76cfb6c369e7ff3a36e0e25f95e130c0b9f4e` passed Project Guardrails, Release Contract v2, Candidate Package and Cloudflare preview before merge.
+- Latest physically observed Android remains **v11.8.0-rc4.185 PARTIAL PASS**: live Sleeper state <1 Min., 16-player roster, Reserve/IR 1, Kader starter/bench rendered, no FA/Add-Drop cards visible in the captured Kader frame. Accepted rollback remains rc4.169.
+- rc4.188 adds the full 10-team Sleeper fail-closed ownership gate, 3h expert freshness / 45m retry, corrected current Week-1 DST baseline with unverified implied-points removed, and live manager identity + FAAB on Trade targets.
+- League representation is now the hard prerequisite: exactly 10 live Sleeper rosters, unique roster/owner identity and parity between raw roster ownership and derived ownership index before FA/Waiver/Trade availability is trusted.
+- User correction remains hard authority: **JAX D/ST is unavailable**. No external ranking may be called available unless present in the verified Sleeper FA pool.
+- Lawrence remains a possible in-season QB2 exception; evaluate all 9 opponent QB needs, live remaining FAAB, bounded transaction/history priors, same Bye Week 7 with Daniels, and TWO active roster costs because D/ST is still missing.
+- Expert freshness is **3 hours**, not 12. Manual/forced refresh remains available.
+- Old open release/research PRs were closed as superseded/historical to reduce accidental regression risk.
+- Immediate next gate is one physical Android rc4.188 Waiver/FA canary. User must not transact first. After the screenshot, verify 10-team ownership/actual FA pool before DST/Lawrence/Trade recommendations.
+- AUTO contract is non-negotiable and persistent: long same-turn blocks, parallel independent lanes, checkpoint + full re-inventory after every package, no interim progress/status/acknowledgement, no empty responses, no promise-only “AUTO läuft weiter”, no “keine Handlung erforderlich” stop while autonomous work remains; STATUS is report-only.
