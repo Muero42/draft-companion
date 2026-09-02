@@ -15,3 +15,9 @@ console.log('PASS rc4.182 Android storage cleanup exception cannot abort Season 
 const marker=app.indexOf("if(els.seasonLiveStateAge)els.seasonLiveStateAge.textContent='JS gestartet';");
 const expertRehydrate=app.indexOf('rehydrateDerivedExpertPanelsOnStartup();');
 if(marker<0||expertRehydrate<0||expertRehydrate<marker)throw new Error('expert rehydration still precedes physical startup marker');
+
+const preMarker=app.slice(0,marker);
+if(preMarker.includes("setDraftSurface(localStorage.getItem('v118_draftSurface')"))throw new Error('unguarded draft-surface localStorage startup restored');
+if(preMarker.includes("setWorkspace(localStorage.getItem('v117_workspace')"))throw new Error('unguarded workspace localStorage startup restored');
+if(!preMarker.includes("try{setDraftSurface(store.text('v118_draftSurface','mock')||'mock')}catch"))throw new Error('draft-surface startup fail-open guard missing');
+if(!preMarker.includes("try{setWorkspace(store.text('v117_workspace','roster')||'roster')}catch"))throw new Error('workspace startup fail-open guard missing');
