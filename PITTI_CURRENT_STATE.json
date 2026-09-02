@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260902T1013CEST-hydration-v225",
-  "updated_at": "2026-09-02T08:13:00Z",
+  "handoff_generation": "20260902T0810Z-v225",
+  "updated_at": "2026-09-02T08:10:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -74,11 +74,11 @@
     "pr98": {
       "number": 98,
       "branch": "pitti/rc4182-hydration-rootcause",
-      "latest_head": "ee0e26f2babde33aad04ac42f59e9e761d62e165",
+      "latest_head": "06d04acb7bf165ca910f34a0c0b298ec771d6021",
       "mergeable": true,
       "merged": false,
-      "latest_ci": "FAIL",
-      "failing_gate": "tools/season-startup-resilience-regression.mjs line 13: automatic Season startup sequence invalid",
+      "latest_ci": "PENDING_REVALIDATION",
+      "failing_gate": "startup resilience regression repaired to assert current fail-open ordering; exact-head CI pending",
       "passing_observed": [
         "week1 waiver market regression",
         "live trade roster identity regression",
@@ -118,8 +118,8 @@
     ]
   },
   "currentWork": {
-    "status": "HANDOFF_RC4182_HYDRATION_FIX_PR98_CI_FAILED",
-    "nextGate": "DIAGNOSE_SEASON_STARTUP_RESILIENCE_REGRESSION_BEFORE_ANY_MERGE_OR_DEVICE_VERSION"
+    "status": "RC4182_HYDRATION_FIX_PR98_REVALIDATING",
+    "nextGate": "RC4182_HYDRATION_FIX_STRICT_VALIDATION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -135,14 +135,14 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "HANDOFF",
-    "active": [],
-    "ready": [
+    "status": "RUNNING",
+    "active": [
       {
-        "id": "pr98-startup-resilience-diagnosis",
-        "reason": "Latest exact PR head fails automatic Season startup sequence regression; diagnose before further version work."
+        "id": "pr98-strict-revalidation",
+        "reason": "Startup resilience regression repaired; exact-head CI must validate before merge/version."
       }
     ],
+    "ready": [],
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
@@ -388,16 +388,16 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "HANDOFF_REQUESTED",
-      "reason": "User requested PITTI HANDOFF."
+      "allowed": false,
+      "code": null,
+      "reason": "Strict PR #98 revalidation pending."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260902T1013CEST-hydration-v225",
-    "transaction_in_progress": false,
-    "status": "PASS",
-    "second_pass_pass": true
+    "generation": "20260902T0810Z-v225",
+    "transaction_in_progress": true,
+    "status": "REPAIRING",
+    "second_pass_pass": false
   }
 }
