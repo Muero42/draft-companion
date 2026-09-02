@@ -13,7 +13,7 @@
     "accepted_android": "v11.8.0-rc4.169",
     "season_candidate": "v11.8.0-rc4.182 STRICT AUTOMATED VALIDATION",
     "candidate_branch": "main",
-    "android_acceptance_pending": true,
+    "android_acceptance_pending": false,
     "test_challenger": "v11.8.0-rc4.182",
     "ci": {
       "candidate_package": "PASS run 33597607588",
@@ -31,29 +31,32 @@
     "package_reference_run": 33597607588,
     "deployed_pages_app_byte_parity_with_main": true,
     "deployed_pages_head": "main 242ea4b982c5226d6958f6704d5c823d6c89aa9c · Cloudflare Pages deploy PASS",
-    "installed_android": "v11.8.0-rc4.176",
-    "latest_android_observed": "v11.8.0-rc4.176",
+    "installed_android": "v11.8.0-rc4.182",
+    "latest_android_observed": "v11.8.0-rc4.182",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
-    "last_device_failure": "rc4.175 rejected for proven app.js truncation/workspace-router loss. New device evidence at 22:09 CEST shows rc4.176 installed with Season shell/workspace buttons visually restored, but Sleeper Live-State is still '-' and Kader is still 'Live-Kader wird geladen...' in the captured frame. rc4.176 is OBSERVED, NOT functionally accepted.",
+    "last_device_failure": "rc4.182 physically observed on Android at 09:06 CEST. Workspace isolation is visibly improved (no Draft decision card in Kader), but Sleeper Live-State remains '-' and Kader remains 'Live-Kader wird geladen...'. Therefore rc4.182 is DEVICE_REJECTED for Season hydration and must never be described as merely awaiting physical acceptance.",
     "latest_device_evidence": {
-      "version": "v11.8.0-rc4.176",
-      "observed_at": "2026-09-01T20:09:00Z",
-      "evidence": "physical Android screenshot",
-      "partial_pass": [
-        "version rc4.176 visible",
+      "version": "v11.8.0-rc4.182",
+      "observed_at": "2026-09-02T07:06:00Z",
+      "evidence": "physical Android screenshot supplied in chat",
+      "pass": [
+        "rc4.182 visibly installed",
         "Season Companion shell visible",
-        "Kader/Waiver/Trades workspace buttons visible",
-        "no Draft controls visible in captured Kader frame"
+        "Kader workspace selected",
+        "Draft decision surface no longer visible in captured Kader frame"
       ],
-      "unresolved": [
-        "Sleeper Live-State still static dash in captured frame",
-        "Live-Kader still loading in captured frame",
-        "tab click behavior not proven by a static screenshot",
-        "Waiver/Trades/Lineup functional hydration not proven",
-        "automatic Sleeper sync/ranking completion not proven"
+      "fail": [
+        "Sleeper Live-State remains static dash",
+        "Live-Kader remains loading",
+        "no hydrated roster rows visible"
       ],
-      "acceptance": "PENDING"
-    }
+      "acceptance": "FAIL",
+      "classification": "DEVICE_REJECTED_HYDRATION"
+    },
+    "latestAndroidVersionObserved": "v11.8.0-rc4.182",
+    "source_candidate_status": "DEVICE_REJECTED",
+    "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
+    "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL."
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -85,8 +88,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4182_AUTOMATED_PASS",
-    "nextGate": "FINAL_PHYSICAL_RC4182_ACCEPTANCE"
+    "status": "PROCESS_ROOT_CAUSE_RECONCILED_RC4182_DEVICE_REJECTED",
+    "nextGate": "NO_NEW_VERSION_UNTIL_HYDRATION_ROOT_CAUSE_REPRODUCED_OFF_DEVICE"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -102,16 +105,11 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "USER_ACTION_REQUIRED",
+    "status": "PAUSED_BY_USER_FOR_PROCESS_ROOT_CAUSE",
     "active": [],
     "ready": [],
     "waiting_external": [],
-    "blocked_user": [
-      {
-        "id": "final-physical-rc4182-acceptance",
-        "reason": "All autonomous rc4.182 gates PASS. Only a single physical Android acceptance remains; defer until user interaction is otherwise necessary."
-      }
-    ],
+    "blocked_user": [],
     "completed_recent": [
       {
         "id": "rc4182-full-validation",
@@ -356,8 +354,8 @@
     ],
     "stop_evaluation": {
       "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "All autonomous Companion lanes exhausted after rc4.182 full validation; physical Android acceptance is the only remaining dependent gate."
+      "code": "USER_REQUESTED_PROCESS_DIAGNOSIS",
+      "reason": "User explicitly requested process/root-cause analysis before further app development."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
