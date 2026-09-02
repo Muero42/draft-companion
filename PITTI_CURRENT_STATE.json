@@ -16,19 +16,19 @@
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.182",
     "ci": {
-      "candidate_package": "PASS run 33597041931",
-      "release_contract_v2": "PASS run 33597041975",
+      "candidate_package": "PASS run 33597522287",
+      "release_contract_v2": "PASS run 33597522295",
       "project_guardrails": "PASS run 33590785682",
-      "draft_critical_rc482": "PASS run 33597041953",
-      "draft_critical_rc483": "PASS run 33597041941",
-      "validated_code_head": "2fe3c9cbcae591dfad775c4fe2a06b8ba23533ac",
-      "scope": "rc4.181 startup root-cause fix + repaired watchdog/startup DOM regressions"
+      "draft_critical_rc482": "PASS run 33597522369",
+      "draft_critical_rc483": "PASS run 33597522470",
+      "validated_code_head": "97893502ee64ca7a97a67b514f89b37cda9087a3",
+      "scope": "rc4.182 Draft decision workspace isolation + CSS hidden-state hardening"
     },
     "android_accepted": "v11.8.0-rc4.169",
     "preview_candidate": "v11.8.0-rc4.181 root-cause fix all strict gates PASS; no repeated diagnostic canary",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
-    "latest_package_sha256": "sha256:797eeb80ad173be458389e2c88682513d89923e2eed1f0c966f11c9f14f180c2",
-    "package_reference_run": 33597041931,
+    "latest_package_sha256": "sha256:55c5c92633c049d74ae8a5cd04277a6b4d9131982b14451babc48b476a9b4729",
+    "package_reference_run": 33597522287,
     "deployed_pages_app_byte_parity_with_main": true,
     "deployed_pages_head": "main 242ea4b982c5226d6958f6704d5c823d6c89aa9c · Cloudflare Pages deploy PASS",
     "installed_android": "v11.8.0-rc4.176",
@@ -85,7 +85,7 @@
     ]
   },
   "currentWork": {
-    "status": "RC4182_DRAFT_SURFACE_LEAK_FIX_VALIDATING",
+    "status": "RC4182_CORE_GATES_PASS_FINAL_GUARDRAIL",
     "nextGate": "RC4182_STRICT_VALIDATION"
   },
   "invariants": {
@@ -105,15 +105,20 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "rc4182-strict-validation",
+        "id": "rc4182-project-guardrail",
         "lane": "workspace isolation/release safety",
-        "reason": "Physical rc4.178 evidence exposed Draft decision surface leaking into Kader because live renderer overrode workspace hidden state."
+        "reason": "Canonical checkpoint update triggers final project guardrail on rc4.182."
       }
     ],
     "ready": [],
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "rc4182-core-validation",
+        "result": "PASS on 97893502ee64ca7a97a67b514f89b37cda9087a3: Candidate Package, Release Contract v2, rc4.82 and rc4.83; Draft decision renderer no longer overrides hidden state and CSS respects [hidden].",
+        "at": "2026-09-02T06:08:00Z"
+      },
       {
         "id": "rc4181-revalidation-core",
         "result": "PASS on 2fe3c9cbcae591dfad775c4fe2a06b8ba23533ac: Candidate Package, Release Contract v2, rc4.82 and rc4.83. Artifact sha256:797eeb80ad173be458389e2c88682513d89923e2eed1f0c966f11c9f14f180c2.",
