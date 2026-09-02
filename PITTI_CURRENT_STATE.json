@@ -148,7 +148,7 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "RC4189_POSTMERGE_RESEAL",
+    "status": "RC4189_POSTMERGE_RESEAL_SEALED",
     "nextGate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY"
   },
   "invariants": {
@@ -446,13 +446,13 @@
   },
   "handoff": {
     "generation": "20260902T1915Z-v230",
-    "status": "RC4189_RESEAL_VALIDATION_PENDING",
+    "status": "PASS_POSTMERGE_RESEAL_PENDING_CI",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.189 reseal in progress after PR #115 merge. Preserve rc4.188 device evidence and live roster_id identity; require exact-head strict gates green before rc4.189 promotion/device canary.",
+    "resume": "rc4.189 merged main; v230 resealed. Require exact-head strict gates green, verify deployment parity, then one rc4.189 physical canary.",
     "transaction_in_progress": false
   },
-  "status": "RC4189_POSTMERGE_RESEAL_IN_PROGRESS",
+  "status": "RC4189_POSTMERGE_RESEAL_SEALED_PENDING_CI",
   "gate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY",
   "nextGate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY",
   "handoffGeneration": "20260902T1915Z-v230"
