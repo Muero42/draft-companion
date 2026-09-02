@@ -11,3 +11,7 @@ const rankConst=app.indexOf('const SEASON_RANKING_AUTO_MS='),startup=app.lastInd
 assert.ok(rankConst>=0&&startup>rankConst,'startup before ranking constants');
 assert.ok(app.includes('void refreshSeasonRankings({auto:true});'));
 console.log('SEASON_WORKSPACE_NAVIGATION_REGRESSION_PASS');
+// liveDecisionSurfaceV3 workspace visibility ownership
+const liveSurface=fs.readFileSync('live-surface-v3.js','utf8');
+assert.ok(!liveSurface.includes("root.hidden=false"),'live decision renderer must not override workspace hidden state');
+assert.ok(h.includes('id="liveDecisionSurfaceV3"')&&h.includes('data-workspace="draft"'),'live decision surface must remain Draft-scoped');
