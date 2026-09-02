@@ -1,12 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-02T12:45:00Z",
+  "updatedAt": "2026-09-02T13:25:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Repo generation 20260902T1130Z-v227 is current handoff authority. rc4.183 is physically observed and DEVICE_REJECTED for Kader FA-card + IR-drop semantics. PR #100/#101 fixes are merged. rc4.184 PR #102 is open/unmerged and must be exact-head all-green before merge/deploy/device canary. Library persistence rule: never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Repo generation 20260902T1325Z-v229 is current handoff authority. rc4.185 is merged source baseline; PR #108 is OPEN/UNMERGED current Season candidate. rc4.183 is latest physical observation and DEVICE_REJECTED for Kader FA-card + IR ordinary-drop semantics; rc4.169 remains accepted rollback. PR #108 must be newest-exact-head all-green before merge, rc4.186 promotion/deploy parity and one device canary. Library persistence rule: never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision."
@@ -24,7 +24,7 @@
     "preinstallSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
-    "latestDeployedCandidate": "last explicitly verified historical deployment rc4.176; rc4.184 is not deployed",
+    "latestDeployedCandidate": "rc4.185 source baseline merged; deployment/device parity not accepted. PR #108 not merged/deployed.",
     "latestAndroidVerified": "v11.8.0-rc4.169 accepted rollback authority; rc4.176 observation is not acceptance",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
@@ -64,7 +64,7 @@
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.169",
     "unreleasedMainDelta": "PR #107 is merged on main. PR #108 remains unmerged and adds trade-slot geometry + full league-state/waiver competition/QB opportunity modeling.",
-    "deployedPagesVersion": "rc4.185 NOT YET DEVICE-ACCEPTED; PR #108 NOT MERGED",
+    "deployedPagesVersion": "rc4.185 source baseline; no accepted PR108 deployment",
     "mainGhPagesParity": false,
     "androidVerified": false,
     "androidAcceptance": "rc4.183 physically observed but rejected for Kader/Waiver and IR-drop semantics",
@@ -259,12 +259,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "PR108_IDENTITY_INVARIANT_RESTORED_EXACT_HEAD_REVALIDATION",
-    "nextGate": "PR108_LATEST_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
+    "status": "PR108_V229_HANDOFF_REPAIRED_EXACT_HEAD_REVALIDATION",
+    "nextGate": "PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
   },
-  "status": "PR108_SEASON_MARKET_TRADE_VALIDATION",
-  "gate": "PR108_LATEST_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
-  "nextGate": "PR108 latest exact head all strict gates green → merge → rc4.186 promotion → post-merge/deploy parity → exactly one physical canary.",
+  "status": "PR108_V229_HANDOFF_REPAIRED",
+  "gate": "PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
+  "nextGate": "Query newest PR #108 exact head after v229 repair; require all strict gates green, merge, rc4.186 promotion/deploy parity, then one physical canary.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -273,11 +273,11 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260902T1315Z-v228",
-    "status": "CURRENT_HANDOFF_V228",
+    "generation": "20260902T1325Z-v229",
+    "status": "PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.185 merged baseline; PR #108 open. Restore/preserve live roster_id-vs-draft-slot invariant, revalidate exact head, then Lawrence live opponent/FAAB analysis and rc4.186 promotion.",
+    "resume": "rc4.185 merged baseline; PR #108 open. v229 removed stale v227/PR102 current authority from CURRENT/LOCK/PREFLIGHT. Revalidate newest exact head; then Lawrence market lane and rc4.186.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -297,7 +297,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260902T1315Z-v228",
+  "handoff_generation": "20260902T1325Z-v229",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -332,5 +332,5 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260902T1315Z-v228"
+  "handoffGeneration": "20260902T1325Z-v229"
 }
