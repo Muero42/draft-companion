@@ -16,19 +16,19 @@
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.181",
     "ci": {
-      "candidate_package": "PASS run 33590785725",
-      "release_contract_v2": "PASS run 33590785698",
+      "candidate_package": "PASS run 33597041931",
+      "release_contract_v2": "PASS run 33597041975",
       "project_guardrails": "PASS run 33590785682",
-      "draft_critical_rc482": "PASS run 33590785695",
-      "draft_critical_rc483": "PASS run 33590785681",
-      "validated_code_head": "35db25a8438a4c070663fae97f73795486d16528",
-      "scope": "rc4.181 removed-Draft-DOM Season startup fix + startup dependency E2E audit PASS"
+      "draft_critical_rc482": "PASS run 33597041953",
+      "draft_critical_rc483": "PASS run 33597041941",
+      "validated_code_head": "2fe3c9cbcae591dfad775c4fe2a06b8ba23533ac",
+      "scope": "rc4.181 startup root-cause fix + repaired watchdog/startup DOM regressions"
     },
     "android_accepted": "v11.8.0-rc4.169",
     "preview_candidate": "v11.8.0-rc4.181 root-cause fix all strict gates PASS; no repeated diagnostic canary",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
-    "latest_package_sha256": "sha256:2bf8c2c28a85145cddeeb39c1fe216546eadbdefb6569c20355167e36725adff",
-    "package_reference_run": 33590785725,
+    "latest_package_sha256": "sha256:797eeb80ad173be458389e2c88682513d89923e2eed1f0c966f11c9f14f180c2",
+    "package_reference_run": 33597041931,
     "deployed_pages_app_byte_parity_with_main": true,
     "deployed_pages_head": "main 242ea4b982c5226d6958f6704d5c823d6c89aa9c · Cloudflare Pages deploy PASS",
     "installed_android": "v11.8.0-rc4.176",
@@ -85,7 +85,7 @@
     ]
   },
   "currentWork": {
-    "status": "RC4181_REVALIDATING_AFTER_STARTUP_FIX",
+    "status": "RC4181_STRICT_REVALIDATION_PASS_PROJECT_GUARDRAIL_FINALIZING",
     "nextGate": "RC4181_BROWSER_EQUIVALENT_SEASON_E2E"
   },
   "invariants": {
@@ -105,15 +105,20 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "rc4181-revalidation",
+        "id": "rc4181-final-guardrail",
         "lane": "season startup/release safety",
-        "reason": "Current main metadata/test drift caused all strict gates to fail despite runtime fix."
+        "reason": "Checkpoint package authority and trigger final guardrail validation on canonical state."
       }
     ],
     "ready": [],
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "rc4181-revalidation-core",
+        "result": "PASS on 2fe3c9cbcae591dfad775c4fe2a06b8ba23533ac: Candidate Package, Release Contract v2, rc4.82 and rc4.83. Artifact sha256:797eeb80ad173be458389e2c88682513d89923e2eed1f0c966f11c9f14f180c2.",
+        "at": "2026-09-02T06:01:30Z"
+      },
       {
         "id": "rc4177-strict-validation",
         "result": "PASS on head aa7f735041b6d867d7e03ee025a3d48782ac120e: candidate package, release contract v2, project guardrails, rc4.82 and rc4.83 all PASS. Artifact 9819382492 digest sha256:994faa3f4da07d9fb073ded83833955f82baeb41e34c99536a11a69ef1b61d05.",
