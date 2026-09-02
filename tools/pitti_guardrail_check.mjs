@@ -120,12 +120,12 @@ must(app.includes("frische Weekly-Evidence fehlt"),'Waiver v2 stale weekly expla
 must(app.includes('Trade Board v4'),'Trade Board v4 surface missing');
 must(app.includes('function tradeOfferCandidates('),'Trade offer construction helper missing');
 must(app.includes('Annahme-Plausibilität'),'Trade acceptance plausibility missing');
-must(app.includes('Week-1 Start/Sit v3'),'Start/Sit v3 surface missing');
+must(app.includes('Week-1 Start/Sit v5'),'Start/Sit canonical-slot surface missing');
 must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
-must(app.includes('Weekly Consensus Rank ist primär'),'weekly rank primary invariant missing');
+must(app.includes('PITTI nutzt eigene Weekly-Panel-Ranks'),'PITTI weekly-panel primary invariant missing');
 must(app.includes('Special Teams v2'),'Special Teams v2 quality-floor surface missing');
 must(app.includes("dropCandidatePolicy:{primary:['Tank Bigsby','Tyjae Spears','Kenneth Gainwell'],protected:['Jadarian Price','Christian Watson','Josh Downs']"),'Mevis drop gate must protect Price/Watson/Downs and compare Bigsby/Spears/Gainwell');
-must(app.includes('DROP-Reihenfolge Bigsby → Spears → Gainwell; Price / Watson / Downs geschützt'),'Waiver UI must surface the guarded Mevis drop order');
+must(app.includes('Kicker werden ausschließlich hier gegen verfügbare Kicker verglichen; niemals gegen RB/WR/TE.'),'Waiver UI must enforce K-only replacement for roster kicker');
 must(app.includes('SEASON_FA_POOL_ZERO_INVALID'),'zero live season FA pool must fail closed');
 must((app.match(/SEASON_FA_POOL_ZERO_INVALID/g)||[]).length>=2,'zero FA fail-closed gate must cover both startup bootstrap and analyze path');
 must(app.includes('FA-POOL NICHT VALIDIERT'),'invalid season FA pool must be visible');
