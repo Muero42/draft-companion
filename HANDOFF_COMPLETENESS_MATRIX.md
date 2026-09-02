@@ -1,17 +1,14 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v225
-Generation: `20260902T0810Z-v225`
+# PITTI HANDOFF COMPLETENESS MATRIX — v226
+Generation: `20260902T1125Z-v226`
 
-PASS requires all of the following to be carried into the new chat:
-- rc4.182 installed/observed AND DEVICE_REJECTED; Kader and experts still fail to load.
-- rc4.169 accepted rollback authority.
-- PR #98 open/unmerged; latest head de3eed64; current latest-head CI is RED, despite older heads having been green.
-- Exact failures preserved: Candidate/Guardrails = AUTO stop code invalid + CURRENT next gate regression; Release = automatic Season startup sequence invalid.
-- No merge/promotion/new device version until exact-head strict gates + real-shape startup E2E prove Kader AND expert initialization.
-- Startup/localStorage hypothesis preserved as unaccepted until validated; no downstream trial-and-error.
-- App problems have priority over expert reweighting/FA/Trade feature work.
-- Expert plan preserved: Jody Smith pre-Week-1 candidate, Boone strong in-season/trade-value anchor, gradual Week1+ transition.
-- Watcher main v0.2.5 D1 remediation preserved; v0.2.6 draft PR #1 isolated/non-authoritative.
-- Live Sleeper is current roster authority; completed draft is immutable historical evidence.
-- AUTO continuous/re-inventory/no progress/no empty/no promise-only; external poll max 1; STATUS report-only.
-- Device evidence must be checkpointed before any subsequent code/promotion wording.
-- No stale handoff, stale installed-version, stale old-head green CI, rc4.175 truncation, or device-debug loop may override these facts.
+PASS requires all of the following:
+- rc4.183 installed/observed AND DEVICE_REJECTED for Kader FA-card + IR-drop semantics; do not regress to v225 rc4.182 loading diagnosis.
+- PR #100/#101 merged fixes are authority: canonical Sleeper slots; FLEX RB/WR/TE; two TE allowed when slot permits; K/DST isolated; no Sleeper projection/matchup scoring; Kader lineup-only; FA/Add-Drop on Waiver/FA; ACTIVE-only ordinary drop candidates; IR/Reserve never ordinary drop/capacity target.
+- PR #102 rc4.184 is OPEN/UNMERGED. Query actual latest head/CI; no older green/red head is current authority.
+- No merge/deploy/device canary until exact latest-head strict gates all PASS; then verify main/post-merge deploy before one physical canary.
+- Canary proves Kader lineup/start-sit only, canonical slots, FLEX eligibility, IR exclusion, Waiver Add/Drop routing, K-vs-K only, PITTI evidence parity for starters/alternatives.
+- Expert plan preserved: position-specific gradual in-season transition; Boone in-season/trade-value; Jody Smith phase-appropriate.
+- DST policy preserved: RotoBaller tiers + multi-week schedule planning; over-next-week DST stash only when roster opportunity cost is acceptable and matchup edge material.
+- Live Sleeper is current roster/ownership/slot authority; completed draft is immutable history.
+- AUTO/AUTO BLOCK continuous same-turn execution while safe work exists; after every package checkpoint + re-inventory; no progress/status/ack, no empty replies, no promise-only reply, no false “AUTO läuft weiter”; max one immediate external poll; blocked lane does not stop independent lanes; STATUS report-only.
+- Device evidence checkpointed before subsequent code/promotion; no device-side trial-and-error.
