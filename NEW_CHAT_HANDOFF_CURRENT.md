@@ -1,5 +1,5 @@
 # NEW CHAT HANDOFF — PITTI SEASON COMPANION
-Handoff generation: `20260902T1325Z-v229`
+Handoff generation: `20260902T1915Z-v230`
 Created: 2026-09-02 13:15Z
 
 ## CURRENT AUTHORITY
@@ -18,3 +18,8 @@ After PR #108 all-green: merge → rc4.186 promotion → post-merge/deploy byte 
 
 ## AUTO CONTRACT
 AUTO/AUTO BLOCK means autonomous same-turn execution while any safe positive-value lane exists. After every package checkpoint and re-inventory. No progress/status/acknowledgement terminal messages, no empty replies, no “AUTO läuft weiter” promise. Waiting CI blocks only that lane. STATUS is report-only.
+
+
+## rc4.189 post-merge authority
+rc4.189 is merged on main at `88c007732f94df7b1624a6c05a0b16af4d33d94f`. Latest physical Android is rc4.188 with Waiver/FA + IR/drop semantic PASS; rc4.169 remains rollback authority. Current gate: RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY.
+Never send status/progress/acknowledgement messages during AUTO while executable work exists. Empty assistant response after tool work is forbidden.
