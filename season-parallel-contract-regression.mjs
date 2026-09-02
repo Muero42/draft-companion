@@ -1,0 +1,13 @@
+import fs from 'node:fs';
+const p=JSON.parse(fs.readFileSync('config/season-expert-phase-policy.json','utf8'));
+const s=p.lineup.slot_compatibility;
+const eq=(a,b)=>JSON.stringify(a)===JSON.stringify(b);
+if(!eq(s.RB,['RB','FLEX','WRRB_FLEX','SUPER_FLEX']))throw Error('RB slot eligibility regression');
+if(!eq(s.WR,['WR','FLEX','WRRB_FLEX','REC_FLEX','SUPER_FLEX']))throw Error('WR slot eligibility regression');
+if(!eq(s.TE,['TE','FLEX','REC_FLEX','SUPER_FLEX']))throw Error('TE slot eligibility regression');
+if(!p.lineup.allow_two_te_when_slots_permit)throw Error('two-TE legality regression');
+if(p.lineup.visual_semantics?.occupant_position_must_not_recolor_slot!==true)throw Error('occupant/slot visual semantics regression');
+if(p.trade?.boone_trade_value?.dynasty_forbidden!==true||p.trade?.boone_trade_value?.freshness_required!==true)throw Error('Boone trade-value contract regression');
+const pat=p.expert_evidence?.pat_fitzmaurice_2026_draft_review;
+if(!pat?.format_inference_caveat||!/four fixed WR/.test(pat.format_inference_caveat))throw Error('Pat format caveat missing');
+console.log('season-parallel-contract-regression: PASS');
