@@ -20,7 +20,7 @@
     "latestPreinstallVerified": "rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.177 package/re-extract PASS",
-    "preinstallSha256": "sha256:d19bd1826ab8051976017f404f7df7916ede25bb6722068ae692abe5ef817ffd",
+    "preinstallSha256": "sha256:26175ed98280bf3df054c9c29743d60ef1d583ce9fc4e20f583a8489a9b68903",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
     "latestDeployedCandidate": "v11.8.0-rc4.176 main deployed PASS",
@@ -28,7 +28,7 @@
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "deployedPagesAppByteParityWithMain": true,
-    "preinstallReferenceRun": 33567195247,
+    "preinstallReferenceRun": 33590619581,
     "preinstallReferenceArtifactId": 9819382492,
     "preinstallHashSemantics": "GitHub candidate-package artifact digest; package/re-extract PASS.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.176",
@@ -256,11 +256,11 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4181_REMOVED_DRAFT_DOM_STARTUP_FIX_VALIDATING",
-    "nextGate": "RC4181_STRICT_VALIDATION"
+    "status": "RC4181_STRICT_VALIDATION_PASS",
+    "nextGate": "RC4181_BROWSER_EQUIVALENT_SEASON_E2E"
   },
   "status": "RC4177_AUTONOMOUS_VALIDATION",
-  "gate": "RC4181_STRICT_VALIDATION",
+  "gate": "RC4181_BROWSER_EQUIVALENT_SEASON_E2E",
   "nextGate": "New chat: reconcile actual main/CI/deploy against v224, then run browser-equivalent Season E2E for startup hydration, Kader/Waiver/Trades/Lineup navigation, automatic Sleeper sync, automatic ranking refresh, timeout/fail-closed paths, no Draft UI leakage, and no runtime truncation.",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
