@@ -430,3 +430,15 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Product priority locked: technical startup → Kader → Experts → FA/Waiver → Trade → gradual in-season expert transition. Jody Smith and Boone are preserved for the later expert/Trade phase but cannot displace the loading defect.
 - Watcher parallel state: pitti-watcher main v0.2.5 with D1 amplification remediation and low recent hourly usage; v0.2.6 FA/trade foundation remains isolated as draft PR #1 and is not production authority.
 - AUTO semantics re-locked: no progress/status/empty/promise-only messages; max one immediate external poll; blocked external lane does not stop independent work; STATUS is report-only; user device evidence is checkpointed immediately.
+
+
+## 2026-09-02 — rc4.183 Season decision-surface correction
+- Physical rc4.183 screenshot proves the former startup dead-state is crossed: Kader/Season UI renders and FA-vs-roster analysis executes. This supersedes v225's statement that Kader still does not load, but is not yet full device acceptance.
+- User rejected decision semantics visible in that screenshot: generic FA engine compared skill players against roster K Harrison Mevis; Start/Sit proposed RB/WR replacements for Isaiah Likely without respecting the actual starter slot; starter cards lacked equivalent panel/projection/matchup evidence.
+- Corrected architecture: Sleeper is authority only for live roster/ownership/current starter IDs and canonical league.roster_positions. Sleeper projections and matchup grades are explicitly excluded.
+- Generic skill-position FA drop pool is QB/RB/WR/TE only; K and DST are excluded. Kicker evaluation exists only on Waiver/FA and compares available kickers against current roster kicker.
+- Start/Sit now maps starter IDs by index to Sleeper roster_positions and uses canonical eligibility. FLEX permits RB/WR/TE, WRRB_FLEX permits RB/WR, REC_FLEX permits WR/TE, SUPER_FLEX permits QB/RB/WR/TE. Therefore two-TE lineups remain valid whenever the actual slot permits TE.
+- Kader lineup labels show canonical slot labels rather than the occupying player's position, fixing Flex slots appearing as WR.
+- Starter and alternative cards use the same PITTI evidence dimensions: weekly panel rank, verified expected points, PITTI matchup evidence, source/freshness.
+- Added season-lineup-waiver-routing-regression and wired it into release/package gates.
+- Latest CI failure after these changes was diagnosed as stale guardrail assertions for superseded Start/Sit v3 wording and the now-invalid Mevis-for-skill-player drop order. Guardrail updated to assert Start/Sit v5/PITTI panel and K-only kicker replacement instead; this is a guard modernization, not restoration of the rejected behavior.
