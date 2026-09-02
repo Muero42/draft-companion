@@ -3017,16 +3017,21 @@ function tradeRosterNeed(roster,pos){
 }
 function tradeOfferCandidates(mine,opponent,target){
   const oppNeeds=['RB','WR','TE','QB'].map(pos=>({pos,...tradeRosterNeed(opponent,pos)})).sort((a,b)=>b.need-a.need);
-  const targetRank=Number(target.r?.rank);
+  const targetRank=Number(target.r?.rank),targetAdp=Number(target.a);
   const offers=mine.filter(m=>m.r&&Number.isFinite(m.r.rank)&&['RB','WR','TE'].includes(m.p.pos)&&norm(m.p.name)!==norm(target.p.name)).map(give=>{
-    const need=oppNeeds.find(n=>n.pos===give.p.pos)?.need||0;
-    const marketGap=Math.abs(Number(give.r.rank)-targetRank);
+    const need=oppNeeds.find(n=>n.pos===give.p.pos)?.need||0,giveRank=Number(give.r.rank),giveAdp=Number(give.a);
+    // Pre-Week-1 market anchor: managers just chose these assets. Panel rank alone must
+    // never imply that a late pick can buy an elite first-round asset (e.g. JSN -> Gibbs).
+    const panelGap=Math.abs(giveRank-targetRank);
+    const draftGap=Number.isFinite(giveAdp)&&Number.isFinite(targetAdp)?Math.abs(giveAdp-targetAdp):null;
+    const marketGap=Number.isFinite(draftGap)?Math.max(panelGap,draftGap*.85):panelGap;
     const without=mine.filter(x=>x!==give),before=tradeBestLineup(mine),after=tradeBestLineup(without);
     const ourCost=clamp((before.score-after.score)/10,0,10);
-    const fairness=clamp(10-marketGap*.18,0,10),opponentUtility=clamp(need+(110-Number(give.r.rank))/35,0,10);
-    const acceptance=clamp(Math.round(25+fairness*4+opponentUtility*3-ourCost*1.5),10,82);
-    return{give,fairness,opponentUtility,ourCost,acceptance,marketGap};
-  }).filter(o=>o.fairness>=3&&o.opponentUtility>=2).sort((a,b)=>b.acceptance-a.acceptance||b.fairness-a.fairness);
+    const fairness=clamp(10-marketGap*.22,0,10),opponentUtility=clamp(need+(110-giveRank)/35,0,10);
+    const draftPlausible=!Number.isFinite(draftGap)||draftGap<=24;
+    const acceptance=draftPlausible?clamp(Math.round(10+fairness*3+opponentUtility*2-ourCost*1.5),5,55):0;
+    return{give,fairness,opponentUtility,ourCost,acceptance,marketGap,draftGap,draftPlausible};
+  }).filter(o=>o.draftPlausible&&o.fairness>=4.5&&o.opponentUtility>=2.5).sort((a,b)=>b.acceptance-a.acceptance||b.fairness-a.fairness);
   return{oppNeeds,offers};
 }
 function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
@@ -3058,7 +3063,7 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   }
   targets.sort((a,b)=>b.desirability-a.desirability||b.lineupEdge-a.lineupEdge||a.x.r.rank-b.x.r.rank);
   els.tradeStatus.className='notice warn';
-  els.tradeStatus.textContent='Trade Board v5 · LIVE Sleeper-Rosters. Target-Wert wird aus der tatsächlichen kanonischen Starter-/FLEX-Geometrie berechnet; kein statisches RB/WR/TE-Depth-Cap. Ein zweiter TE ist zulässig, wenn er einen echten FLEX-Slot gewinnt. Annahme-% bleibt Heuristik ohne aktuelle Trade-Marktquelle; keine ACCEPT/DECLINE-Freigabe.';
+  els.tradeStatus.textContent='Trade Board v6 · LIVE Sleeper-Rosters × Teamneeds × kanonische Starter-/FLEX-Geometrie. Pre-Week-1 schützt Draft-Kapital vor unrealistischen 1:1-Angeboten; Panel-Rank allein darf keinen Elite-Asset-Trade erzeugen. Ein zweiter TE ist zulässig, wenn er einen echten FLEX-Slot gewinnt. Ohne aktuelle Trade-Value-Quelle bleibt jede Annahme-% konservative Heuristik; keine ACCEPT/DECLINE-Freigabe.';
   els.tradeList.innerHTML=targets.length?`<div class="coach-section-title">Interessante gegnerische Assets — Target Discovery, Verhandlung noch nicht freigegeben</div>`+targets.slice(0,10).map((t,i)=>{
     const x=t.x,market=Number.isFinite(x.a)?` · Draft-ADP ${x.a.toFixed(1)}`:'';
     const geometry=t.marginal.slot?`gewinnt Slot ${seasonSlotLabel(t.marginal.slot,x.p.pos)}`:'kein Starter-Slot';
