@@ -13,6 +13,7 @@ assert(a.includes("faab_remaining"),'opponent remaining FAAB input missing');
 assert(a.includes("/transactions/"),'Sleeper transaction market fetch missing');
 assert(a.includes("current_season_bid_prior"),'current-season waiver bid prior missing');
 assert(a.includes("manager_history_prior"),'bounded manager-history waiver prior missing');
+assert(a.includes("manager_profile_name"),'canonical live-roster to manager-profile mapping missing');
 assert(a.includes("function waiverOpponentMarket"),'opponent waiver market model missing');
 assert(a.includes("function renderQbOpportunityBoard"),'QB opportunity market surface missing');
 assert(a.includes("2-Slot-Kosten"),'QB plus future DST two-slot opportunity cost missing');
