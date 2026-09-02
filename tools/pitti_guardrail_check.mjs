@@ -99,7 +99,8 @@ for(const token of [
 ]) must(preflight.includes(token),`preflight gate missing: ${token}`);
 
 must(readme.includes('v11.8.0-rc4.64'),'README production/control baseline drift');
-must(readme.includes(current.runtime?.test_challenger||'v11.8.0-rc4.86'),'README current candidate missing');
+if(!candidatePreflight) must(readme.includes(current.runtime?.test_challenger||'v11.8.0-rc4.86'),'README current candidate missing');
+else must(readme.includes(version),'README candidate version missing');
 must(policy.includes("USER_DRAFT_HARD_EXCLUSIONS=new Set(['geno smith','aaron rodgers'])"),'explicit Geno/Rodgers hard exclusions missing');
 must(app.includes("userDraftStrategyExcluded(p.pos,state.counts,p.name)"),'named user exclusion wiring missing');
 must(app.includes('USER HARD EXCLUSION: nicht draften'),'hard-exclusion Coach reason missing');
