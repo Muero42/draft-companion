@@ -7,6 +7,7 @@ assert.ok(a.includes('const rosterResult=await bootstrapSeasonWorkspace();'),'au
 assert.ok(a.includes("if(els.expertSearch&&els.expertsList)renderExperts();"),'Season startup must not require removed Draft expert DOM');
 assert.ok(a.includes("if(els.decisionLog)renderLog();"),'Season startup must not require removed Draft decision-log DOM');
 assert.ok(a.includes("if(els.autoRefresh?.checked)"),'Season startup must tolerate absent legacy auto-refresh control');
+assert.ok(a.includes("['TE',els.tePanel]])if(el)el.onchange"),'Season startup must tolerate removed Draft position-panel DOM');
 assert.ok(a.includes('void refreshSeasonRankings({auto:true});'),'automatic ranking refresh missing');
 const rosterBoot=a.indexOf('const rosterResult=await bootstrapSeasonWorkspace();');
 const rankBoot=a.indexOf('void refreshSeasonRankings({auto:true});',rosterBoot);
