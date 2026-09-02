@@ -8,6 +8,10 @@ assert.ok(a.includes("if(els.expertSearch&&els.expertsList)renderExperts();"),'S
 assert.ok(a.includes("if(els.decisionLog)renderLog();"),'Season startup must not require removed Draft decision-log DOM');
 assert.ok(a.includes("if(els.autoRefresh?.checked)"),'Season startup must tolerate absent legacy auto-refresh control');
 assert.ok(a.includes('void refreshSeasonRankings({auto:true});'),'automatic ranking refresh missing');
+const rosterBoot=a.indexOf('const rosterResult=await bootstrapSeasonWorkspace();');
+const rankBoot=a.indexOf('void refreshSeasonRankings({auto:true});',rosterBoot);
+const watcherBoot=a.indexOf('void syncWatcherFeed();',rosterBoot);
+assert.ok(rosterBoot>=0&&rankBoot>rosterBoot&&watcherBoot>rosterBoot,'roster must receive startup network priority before ranking/watcher work');
 assert.ok(a.includes('SEASON_RANKING_AUTO_MS=12*60*60*1000'),'12h ranking freshness policy missing');
 assert.ok(a.includes("setInterval(()=>{if(!document.hidden)void syncWatcherFeed()},15*60*1000)"),'watcher cadence missing');
 for(const t of ["'Season-Identität',6000","'Sleeper Kader',7000","'Season Spieler',15000"])assert(a.includes(t),'timeout missing '+t);
