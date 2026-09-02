@@ -1,6 +1,6 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260902T1325Z-v229",
+  "handoff_generation": "20260902T1915Z-v230",
   "updated_at": "2026-09-02T13:36:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
@@ -11,8 +11,8 @@
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.189 reseal candidate after merged PR #115",
-    "candidate_branch": "pitti/rc4189-release-reseal",
+    "season_candidate": "v11.8.0-rc4.189 merged main; post-merge reseal candidate",
+    "candidate_branch": "pitti/rc4189-postmerge-reseal",
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.189",
     "ci": {
@@ -23,7 +23,7 @@
       "scope": "rc4.189 runtime parity + checkpoint reseal after merged PR #115"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "rc4.189 runtime-parity/reseal candidate; product semantics from merged PR #115. No rc4.189 device promotion before exact-head strict gates pass.",
+    "preview_candidate": "rc4.189 merged main at 88c007732f94df7b1624a6c05a0b16af4d33d94f; post-merge reseal and deployment parity required before one physical device canary.",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "latest_package_sha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "package_reference_run": 33597607588,
@@ -148,8 +148,8 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "RC4189_RESEAL_GUARD_AUTHORITY",
-    "nextGate": "RC4189_EXACT_HEAD_ALL_GREEN_THEN_PROMOTION"
+    "status": "RC4189_POSTMERGE_RESEAL",
+    "nextGate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -160,7 +160,7 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "rc4.189 is the current source candidate on the reseal branch after merged PR #115; rc4.188 passed the physical Waiver/FA canary; rc4.169 remains accepted rollback until rc4.189 physical acceptance.",
+  "source_authority": "rc4.189 is merged on main at 88c007732f94df7b1624a6c05a0b16af4d33d94f; rc4.188 passed the physical Waiver/FA canary; rc4.169 remains accepted rollback until rc4.189 physical acceptance.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
@@ -445,15 +445,15 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260902T1325Z-v229",
+    "generation": "20260902T1915Z-v230",
     "status": "RC4189_RESEAL_VALIDATION_PENDING",
     "ready": true,
     "secondPass": true,
     "resume": "rc4.189 reseal in progress after PR #115 merge. Preserve rc4.188 device evidence and live roster_id identity; require exact-head strict gates green before rc4.189 promotion/device canary.",
     "transaction_in_progress": false
   },
-  "status": "RC4189_RESEAL_IN_PROGRESS",
-  "gate": "RC4189_EXACT_HEAD_ALL_GREEN_THEN_PROMOTION",
-  "nextGate": "Final reseal with PASS status after rc4.185/PR108 guard extension; query resulting exact PR #108 head and require all strict gates green.",
-  "handoffGeneration": "20260902T1325Z-v229"
+  "status": "RC4189_POSTMERGE_RESEAL_IN_PROGRESS",
+  "gate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY",
+  "nextGate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY",
+  "handoffGeneration": "20260902T1915Z-v230"
 }
