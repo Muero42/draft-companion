@@ -221,7 +221,16 @@
       "matchup assessment when verified",
       "source/freshness"
     ],
-    "starter_display_same_fields_as_alternatives": true
+    "starter_display_same_fields_as_alternatives": true,
+    "slot_authority": "Sleeper league.roster_positions mapped by starter index",
+    "slot_labels": {
+      "FLEX": "RB/WR/TE",
+      "WRRB_FLEX": "RB/WR",
+      "REC_FLEX": "WR/TE",
+      "SUPER_FLEX": "QB/RB/WR/TE"
+    },
+    "allow_two_te_when_slots_permit": true,
+    "display_canonical_slot_not_player_position": true
   },
   "kicker": {
     "comparison_surface": "WAIVER_FA_ONLY",
