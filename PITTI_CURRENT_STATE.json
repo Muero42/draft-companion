@@ -16,19 +16,19 @@
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.181",
     "ci": {
-      "candidate_package": "PASS run 33567195247",
-      "release_contract_v2": "PASS run 33567195336",
-      "project_guardrails": "PASS run 33567195256",
-      "draft_critical_rc482": "PASS run 33567195243",
-      "draft_critical_rc483": "PASS run 33567195263",
-      "validated_code_head": "9c6fd2ffbb8889340c79cc75643ce1195205ffa7",
-      "scope": "rc4.181 Season-first startup root cause: null-guard missing legacy onlineState; Sleeper S dependency ordering hardened; all strict gates PASS"
+      "candidate_package": "PASS run 33590619581",
+      "release_contract_v2": "PASS run 33590619664",
+      "project_guardrails": "PASS run 33590619552",
+      "draft_critical_rc482": "PASS run 33590619526",
+      "draft_critical_rc483": "PASS run 33590619551",
+      "validated_code_head": "075f0890ff91b965a931f483cf52e011501cfd4c",
+      "scope": "rc4.181 Season startup decoupled from removed Draft DOM; strict gates PASS"
     },
     "android_accepted": "v11.8.0-rc4.169",
     "preview_candidate": "v11.8.0-rc4.181 root-cause fix all strict gates PASS; no repeated diagnostic canary",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
-    "latest_package_sha256": "sha256:d19bd1826ab8051976017f404f7df7916ede25bb6722068ae692abe5ef817ffd",
-    "package_reference_run": 33567195247,
+    "latest_package_sha256": "sha256:26175ed98280bf3df054c9c29743d60ef1d583ce9fc4e20f583a8489a9b68903",
+    "package_reference_run": 33590619581,
     "deployed_pages_app_byte_parity_with_main": true,
     "deployed_pages_head": "main 242ea4b982c5226d6958f6704d5c823d6c89aa9c · Cloudflare Pages deploy PASS",
     "installed_android": "v11.8.0-rc4.176",
@@ -85,8 +85,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4181_REMOVED_DRAFT_DOM_STARTUP_FIX_VALIDATING",
-    "nextGate": "RC4181_STRICT_VALIDATION"
+    "status": "RC4181_STRICT_VALIDATION_PASS",
+    "nextGate": "RC4181_BROWSER_EQUIVALENT_SEASON_E2E"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -105,9 +105,9 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "rc4181-strict-validation",
-        "lane": "season startup/release safety",
-        "reason": "Season startup was synchronously coupled to removed Draft DOM before bootstrapSeasonWorkspace"
+        "id": "rc4181-browser-equivalent-season-e2e",
+        "lane": "Season runtime",
+        "reason": "Must reproduce full startup/bootstrap without physical device before promotion"
       }
     ],
     "ready": [],
@@ -343,7 +343,7 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "rc4.181 validation executable."
+      "reason": "Browser-equivalent Season E2E remains executable."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
