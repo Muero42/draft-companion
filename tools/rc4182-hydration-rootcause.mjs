@@ -11,3 +11,7 @@ if(!app.includes("let rankCache=loadRankCacheCompact();\nremoveLegacyRankingStor
 if(!app.includes("if(els.seasonLiveStateAge)els.seasonLiveStateAge.textContent='JS gestartet';"))throw new Error('physical startup marker missing');
 if(!app.includes("const rosterResult=await bootstrapSeasonWorkspace();"))throw new Error('Season hydration startup tail missing');
 console.log('PASS rc4.182 Android storage cleanup exception cannot abort Season hydration startup');
+
+const marker=app.indexOf("if(els.seasonLiveStateAge)els.seasonLiveStateAge.textContent='JS gestartet';");
+const expertRehydrate=app.indexOf('rehydrateDerivedExpertPanelsOnStartup();');
+if(marker<0||expertRehydrate<0||expertRehydrate<marker)throw new Error('expert rehydration still precedes physical startup marker');
