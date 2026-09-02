@@ -2888,19 +2888,38 @@ function rerenderPostDraftFromContext(){
   renderSeasonActionBoard(true);
   return true;
 }
-const TRADE_TARGET_DEPTH={QB:1,RB:3,WR:4,TE:1};
-function tradeLineupBenchmark(mine,pos){
-  const depth=TRADE_TARGET_DEPTH[pos]||1;
-  const ranks=mine.filter(m=>m.p.pos===pos&&m.r&&Number.isFinite(m.r.rank)).map(m=>m.r.rank).sort((a,b)=>a-b);
-  if(!ranks.length)return{rank:180,depth,filled:0,open:true};
-  if(ranks.length<depth)return{rank:135,depth,filled:ranks.length,open:true};
-  return{rank:ranks[Math.min(depth,ranks.length)-1],depth,filled:ranks.length,open:false};
+function tradeStarterSlots(){
+  const season=lastDraftContext?.season;
+  const slots=Array.isArray(season?.league?.roster_positions)?season.league.roster_positions.map(x=>String(x||'').toUpperCase()).filter(x=>!SLEEPER_NON_STARTER_SLOTS.has(x)):[];
+  return slots.length?slots:['QB','WR','WR','RB','TE','WRRB_FLEX','FLEX','K','DEF'];
+}
+function tradeBestLineup(roster,extra=null){
+  const pool=[...(roster||[])];if(extra)pool.push(extra);
+  const slots=tradeStarterSlots(),used=new Set(),assignments=[];
+  // Scarce fixed slots first, then flexible slots. Lowest panel rank is strongest.
+  const ordered=slots.map((slot,index)=>({slot,index,eligible:pool.filter(x=>x?.r&&Number.isFinite(x.r.rank)&&seasonSlotEligible(slot,x.p.pos)).length}))
+    .sort((a,b)=>a.eligible-b.eligible||a.index-b.index);
+  for(const d of ordered){
+    const candidates=pool.map((x,i)=>({x,i})).filter(z=>!used.has(z.i)&&z.x?.r&&Number.isFinite(z.x.r.rank)&&seasonSlotEligible(d.slot,z.x.p.pos)).sort((a,b)=>a.x.r.rank-b.x.r.rank);
+    if(candidates.length){const z=candidates[0];used.add(z.i);assignments.push({slot:d.slot,index:d.index,player:z.x});}
+    else assignments.push({slot:d.slot,index:d.index,player:null});
+  }
+  assignments.sort((a,b)=>a.index-b.index);
+  const score=assignments.reduce((sum,a)=>sum+(a.player?Math.max(0,180-Number(a.player.r.rank)):0),0);
+  return{slots,assignments,score,used};
+}
+function tradeMarginalLineupValue(roster,target){
+  const before=tradeBestLineup(roster),after=tradeBestLineup(roster,target);
+  const delta=after.score-before.score;
+  const assigned=after.assignments.find(a=>a.player===target);
+  return{delta,before,after,slot:assigned?.slot||null,starts:!!assigned};
 }
 function tradeRosterNeed(roster,pos){
-  const depth=TRADE_TARGET_DEPTH[pos]||1;
-  const ranks=roster.filter(m=>m.p.pos===pos&&m.r&&Number.isFinite(m.r.rank)).map(m=>m.r.rank).sort((a,b)=>a-b);
-  const filled=ranks.length,edge=filled<depth?135:ranks[Math.min(depth,filled)-1];
-  return{depth,filled,edge,need:filled<depth?8:clamp((edge-75)/12,0,6)};
+  const synthetic={p:{pos},r:{rank:75}};
+  const m=tradeMarginalLineupValue(roster,synthetic);
+  const compatible=tradeStarterSlots().filter(s=>seasonSlotEligible(s,pos));
+  const occupied=m.before.assignments.filter(a=>a.player&&seasonSlotEligible(a.slot,pos)).length;
+  return{depth:compatible.length,filled:occupied,edge:m.delta,need:clamp(m.delta/10,0,8)};
 }
 function tradeOfferCandidates(mine,opponent,target){
   const oppNeeds=['RB','WR','TE','QB'].map(pos=>({pos,...tradeRosterNeed(opponent,pos)})).sort((a,b)=>b.need-a.need);
@@ -2908,7 +2927,8 @@ function tradeOfferCandidates(mine,opponent,target){
   const offers=mine.filter(m=>m.r&&Number.isFinite(m.r.rank)&&['RB','WR','TE'].includes(m.p.pos)&&norm(m.p.name)!==norm(target.p.name)).map(give=>{
     const need=oppNeeds.find(n=>n.pos===give.p.pos)?.need||0;
     const marketGap=Math.abs(Number(give.r.rank)-targetRank);
-    const ourBench=tradeLineupBenchmark(mine,give.p.pos),ourCost=clamp((ourBench.rank-Number(give.r.rank))*.12,-4,7);
+    const without=mine.filter(x=>x!==give),before=tradeBestLineup(mine),after=tradeBestLineup(without);
+    const ourCost=clamp((before.score-after.score)/10,0,10);
     const fairness=clamp(10-marketGap*.18,0,10),opponentUtility=clamp(need+(110-Number(give.r.rank))/35,0,10);
     const acceptance=clamp(Math.round(25+fairness*4+opponentUtility*3-ourCost*1.5),10,82);
     return{give,fairness,opponentUtility,ourCost,acceptance,marketGap};
@@ -2922,8 +2942,6 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   const live=lastDraftContext?.season;
   const myLiveRosterId=Number(live?.my_roster?.roster_id);
   if(live?.ok&&Array.isArray(live.rosters)){
-    // Sleeper roster_id is a league roster identifier, NOT the historical draft slot.
-    // Keep it as the live opponent key and exclude our roster by canonical my_roster.roster_id.
     for(const rr of live.rosters){const slot=Number(rr.roster_id);if(!bySlot[slot])bySlot[slot]=[];for(const pid of rr.players||[]){const p=sleeperPlayerRow(pid,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk:{player_id:pid,pick_no:999},p,r,a});}}
   }else for(const pk of picks){const slot=Number(pk.draft_slot);if(!bySlot[slot])continue;const p=pinfo(String(pk.player_id),pk.metadata,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk,p,r,a});}
   const mine=Array.isArray(lastDraftContext?.seasonRows)&&lastDraftContext.seasonRows.length?lastDraftContext.seasonRows:(bySlot[userSlot]||[]);
@@ -2931,25 +2949,25 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   for(const [slotS,roster] of Object.entries(bySlot)){
     const slot=Number(slotS);if(live?.ok?slot===myLiveRosterId:slot===userSlot)continue;
     for(const x of roster){if(!x.r||x.r.rank>110)continue;
-      const bench=tradeLineupBenchmark(mine,x.p.pos),lineupEdge=bench.rank-x.r.rank;
+      const marginal=tradeMarginalLineupValue(mine,x),lineupEdge=marginal.delta;
       const research=researchHint(x.p);
-      let desirability=clamp(lineupEdge*.16,-5,10)+clamp((110-x.r.rank)/20,-2,5);
-      // In this 10-team 1QB league, QB2/TE2 are not generic depth targets. They surface only when they materially beat QB1/TE1.
-      if(x.p.pos==='QB'&&bench.filled>=1&&lineupEdge<8)desirability-=5;
-      if(x.p.pos==='TE'&&bench.filled>=1&&lineupEdge<8)desirability-=5;
+      let desirability=clamp(lineupEdge*.10,-5,12)+clamp((110-x.r.rank)/25,-2,4);
+      // QB/TE depth is not penalized by position count. A second TE can be a genuine starter
+      // when it wins FLEX; any target must earn a real canonical Sleeper slot.
+      if(!marginal.starts)desirability-=6;
       if(research)desirability+=.5;
-      if(desirability>=2){const offerModel=tradeOfferCandidates(mine,roster,x);targets.push({slot,x,lineupEdge,bench,desirability,research,...offerModel});}
+      if(desirability>=2){const offerModel=tradeOfferCandidates(mine,roster,x);targets.push({slot,x,lineupEdge,marginal,desirability,research,...offerModel});}
     }
   }
   targets.sort((a,b)=>b.desirability-a.desirability||b.lineupEdge-a.lineupEdge||a.x.r.rank-b.x.r.rank);
   els.tradeStatus.className='notice warn';
-  els.tradeStatus.textContent='Trade Board v4 · LIVE Sleeper-Rosters. Targets + indikative 1:1-Angebote werden gegen eigene Lineup-Kosten, Gegnerbedarf und Panel-Marktparität bewertet. Annahme-% ist nur Plausibilitätsheuristik ohne aktuelle Trade-Marktquelle; keine ACCEPT/DECLINE-Freigabe.';
+  els.tradeStatus.textContent='Trade Board v5 · LIVE Sleeper-Rosters. Target-Wert wird aus der tatsächlichen kanonischen Starter-/FLEX-Geometrie berechnet; kein statisches RB/WR/TE-Depth-Cap. Ein zweiter TE ist zulässig, wenn er einen echten FLEX-Slot gewinnt. Annahme-% bleibt Heuristik ohne aktuelle Trade-Marktquelle; keine ACCEPT/DECLINE-Freigabe.';
   els.tradeList.innerHTML=targets.length?`<div class="coach-section-title">Interessante gegnerische Assets — Target Discovery, Verhandlung noch nicht freigegeben</div>`+targets.slice(0,10).map((t,i)=>{
     const x=t.x,market=Number.isFinite(x.a)?` · Draft-ADP ${x.a.toFixed(1)}`:'';
-    const geometry=t.bench.open?`offener ${x.p.pos}-Start/Flex-Pfad (${t.bench.filled}/${t.bench.depth})`:`eigene ${x.p.pos}-Lineup-Grenze Panel ${t.bench.rank.toFixed(1)}`;
+    const geometry=t.marginal.slot?`gewinnt Slot ${seasonSlotLabel(t.marginal.slot,x.p.pos)}`:'kein Starter-Slot';
     const offer=t.offers?.[0],offerText=offer?`Indikativ: GIVE ${esc(offer.give.p.name)} → GET ${esc(x.p.name)} · Fairness ${offer.fairness.toFixed(1)}/10 · Gegnernutzen ${offer.opponentUtility.toFixed(1)}/10 · Annahme-Plausibilität ~${offer.acceptance}%`:'Kein belastbares 1:1-Angebot aus der aktuellen Roster-/Panel-Geometrie';
-    return `<div class="coach-row"><div><b>${i+1}. ${esc(x.p.name)}</b> <span class="tiny">${x.p.pos} · ${x.p.team} · Team/Slot ${t.slot}</span><div class="tiny">Panel ${x.r.rank.toFixed(1)}${market} · ${geometry} · Lineup-Edge ${t.lineupEdge>=0?'+':''}${t.lineupEdge.toFixed(1)} · ${esc(t.research||'keine aktuelle Research-Cache-Evidence')}</div><div class="tiny">${offerText}</div></div><div><b>TARGET</b><div class="tiny">heuristisch · nicht senden</div></div></div>`;
-  }).join(''):'<div class="notice ok">Kein klarer Trade-Target-Vorteil aus der aktuellen Panel-/Roster-/Lineup-Baseline.</div>';
+    return `<div class="coach-row"><div><b>${i+1}. ${esc(x.p.name)}</b> <span class="tiny">${x.p.pos} · ${x.p.team} · Team/Slot ${t.slot}</span><div class="tiny">Panel ${x.r.rank.toFixed(1)}${market} · ${geometry} · Lineup-Value +${t.lineupEdge.toFixed(1)} · ${esc(t.research||'keine aktuelle Research-Cache-Evidence')}</div><div class="tiny">${offerText}</div></div><div><b>TARGET</b><div class="tiny">heuristisch · nicht senden</div></div></div>`;
+  }).join(''):'<div class="notice ok">Kein klarer Trade-Target-Vorteil aus der aktuellen Panel-/Roster-/Slot-Baseline.</div>';
 }
 
 function fpStoreKey(draftId){return `v118_fpBenchmark_${draftId}`}
