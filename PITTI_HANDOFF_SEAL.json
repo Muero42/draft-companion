@@ -1,27 +1,27 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260902T1325Z-v229",
-  "created_at": "2026-09-02T13:33:00Z",
-  "status": "PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING",
+  "created_at": "2026-09-02T13:38:00Z",
+  "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "c578fc88fcdba6a5718ec57cb600f66a2372a278",
+    "PITTI_CURRENT_STATE.json": "08730b1916dcd26c2dd4133997e015cb463ad120",
     "PITTI_EXECUTION_LOCK.json": "c395b53888b9603686ccbb2dea93b70e53e87801",
     "PITTI_COMMAND_CONTRACTS.json": "c2661c39418cf27c7cb601d6530acd82fca552fb",
     "PITTI_NEW_CHAT_BOOTSTRAP.md": "610795a46d8a7e481cd7004ad861977ce85271e7",
     "NEW_CHAT_HANDOFF_CURRENT.md": "f051e7c7cebb2fa292f74af91216006c4ca26a77",
     "HANDOFF_COMPLETENESS_MATRIX.md": "ce6d742e9499a5ca59a945e0960ab581f42d5515",
     "PITTI_AUTO_PREFLIGHT.md": "63ff09db73141ef98dc4d1152bfb5070dd8895cc",
-    "PITTI_PROJECT_STATE.md": "446f839bc82ea86c52e192ed502485c12eb1c5f9",
+    "PITTI_PROJECT_STATE.md": "c3b87d0444ff501211840a54474e75e7df6e5a99",
     "README.md": "57995c2a81cba653896887e6b8bd1495987b7fda",
     "app.js": "690f409854590d302fc24c8532ccdfd7611394de",
     "live-surface-v3.js": "f2b718382d9d36ef38cfeb281e7348ba337c459e",
     "manifest.webmanifest": "aeff852699094c06f3811c0c0710572dcdd54ce2",
     "index.html": "7efb5b7e8ea164ccbf58c25cdaacff8938ec8571",
     "sw.js": "931703a43e484be8eda63b88747c0ea99a63e6c6",
-    "tools/pitti_guardrail_check.mjs": "0981a9f0b764777bcf6c1e7feebbaa5b03c854f0",
+    "tools/pitti_guardrail_check.mjs": "656207220162c427be1f4fa5c48b9cdfa90a0bd3",
     "tools/live-trade-roster-identity-regression.mjs": "c6937f97d562a4d1bd5217e0344af9500d68ca2b",
     "config/season-expert-phase-policy.json": "78156903f4254c6eee836819dc6b8a737835d6c1",
     "season-parallel-contract-regression.mjs": "b0b158697d37c0d9bebeebf5bd132d4a6b355f07"
@@ -31,7 +31,7 @@
     "branch": "pitti/trade-slot-geometry",
     "source_baseline": "v11.8.0-rc4.185",
     "pr108": "OPEN_UNMERGED",
-    "pr108_content_head_before_seal": "0147d34128e856dcdaac7674747ca780b757e2ba",
+    "pr108_content_head_before_seal": "0ac1a1159c49d179f66ee659f5dfe7046e8b19bf",
     "latest_physical_android": "v11.8.0-rc4.183 DEVICE_REJECTED",
     "accepted_rollback": "v11.8.0-rc4.169",
     "next_release": "v11.8.0-rc4.186_AFTER_PR108_ALL_GREEN"
@@ -53,6 +53,6 @@
     "ir_not_capacity": true,
     "device_trial_and_error_forbidden": true
   },
-  "exact_gate": "QUERY_NEWEST_SEALED_PR108_HEAD_THEN_ALL_STRICT_GATES_GREEN_BEFORE_MERGE",
-  "note": "v229 final audited handoff. CURRENT/LOCK/COMMAND/BOOTSTRAP/HANDOFF/MATRIX/PREFLIGHT/PROJECT_STATE aligned; no stale v227/PR102 current authority remains. Seal certifies takeover consistency only; newest sealed PR108 head must be freshly CI-validated before merge."
+  "exact_gate": "PR108_NEWEST_SEALED_HEAD_ALL_STRICT_GATES_GREEN_BEFORE_MERGE",
+  "note": "v229 canonical handoff PASS after final guard audit. PASS certifies handoff consistency only; PR108 release readiness still requires newest sealed exact-head CI all green before merge."
 }
