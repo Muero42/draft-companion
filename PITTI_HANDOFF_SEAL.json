@@ -27,8 +27,8 @@
     "installed_android": "v11.8.0-rc4.182",
     "android_acceptance": "FAIL_DEVICE_REJECTED_KADER_AND_EXPERTS",
     "exact_gate": "NEW_CHAT_RECONCILE_PR98_LATEST_HEAD_FIX_STRICT_GATES_THEN_REAL_SHAPE_STARTUP_KADER_PLUS_EXPERT_INIT",
-    "main_head_at_seal": "32f6e186f8c6c0ba75c0224007aae0a0f5ad0db8",
-    "pr98_head": "de3eed64b4c750c53ad8413deb0c1d71acf85d48"
+    "pr98_head": "de3eed64b4c750c53ad8413deb0c1d71acf85d48",
+    "content_head_before_seal": "32f6e186f8c6c0ba75c0224007aae0a0f5ad0db8"
   },
   "checks": {
     "generation_alignment": true,
