@@ -1,0 +1,19 @@
+{
+  "schema":"pitti-source-registry-v1",
+  "updated_at":"2026-09-02",
+  "principles":{
+    "fast_discovery":"Use current structured feeds/depth charts to detect changes quickly.",
+    "factual_confirmation":"Prefer NFL/team primary sources for transactions, injury reports and inactives.",
+    "local_signal":"Maintain per-team credentialed beat sources for practice/coach-role information.",
+    "analysis":"Fantasy analysts interpret opportunity; they do not independently prove factual injury/transaction status.",
+    "latency_metrics":["source_published_at","first_seen","ingested_at","verified_at","decision_at"]
+  },
+  "sources":[
+    {"id":"ourlads_depth","tier":2,"role":["depth_chart_corroboration"],"cadence":"multi-update","current_marker":"2026-09-02 14:21 ET","action_authority":false},
+    {"id":"rotowire_depth","tier":2,"role":["fast_depth_chart_discovery","inactive_roster_change_discovery"],"cadence":"real-time_claimed","current_marker":"2026-09-02","action_authority":false},
+    {"id":"nfl_team_primary","tier":0,"role":["transactions","injury_reports","inactives","official_roster"],"cadence":"event","action_authority":true},
+    {"id":"team_beat_registry","tier":1,"role":["practice_observation","coach_quote","role_change"],"cadence":"event","action_authority":"provisional_until_registry_built"}
+  ],
+  "beat_registry_status":"TODO_32_TEAM_VALIDATION",
+  "activation_rule":"Tier-1 may create provisional WATCH; CLEAR ADD/aggressive FAAB requires primary confirmation or corroboration unless explicitly time-critical and confidence is shown."
+}
