@@ -1,20 +1,20 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260902T0810Z-v225",
-  "updated_at": "2026-09-02T08:10:00Z",
+  "handoff_generation": "20260902T1125Z-v226",
+  "updated_at": "2026-09-02T11:25:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.182"
+    "source_candidate": "v11.8.0-rc4.184"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.182 STRICT AUTOMATED VALIDATION",
+    "season_candidate": "v11.8.0-rc4.184 PR #102 exact-head validation",
     "candidate_branch": "main",
     "android_acceptance_pending": false,
-    "test_challenger": "v11.8.0-rc4.182",
+    "test_challenger": "v11.8.0-rc4.184",
     "ci": {
       "candidate_package": "PASS run 33597607588",
       "release_contract_v2": "PASS run 33597607639",
@@ -31,8 +31,8 @@
     "package_reference_run": 33597607588,
     "deployed_pages_app_byte_parity_with_main": true,
     "deployed_pages_head": "main 242ea4b982c5226d6958f6704d5c823d6c89aa9c · Cloudflare Pages deploy PASS",
-    "installed_android": "v11.8.0-rc4.182",
-    "latest_android_observed": "v11.8.0-rc4.182",
+    "installed_android": "v11.8.0-rc4.183",
+    "latest_android_observed": "v11.8.0-rc4.183",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "rc4.182 remains physically installed/observed and rejected. User explicitly reports at 10:09 CEST on 2026-09-02 that both Live-Kader and experts still do not load. Earlier physical screenshot showed Sleeper Live-State '-' and Live-Kader stuck loading; Draft surface leak was absent. Treat Kader+Experten as unresolved startup/initialization symptoms, not separate accepted subsystems.",
     "latest_device_evidence": {
@@ -53,7 +53,7 @@
       "classification": "DEVICE_REJECTED_STARTUP_HYDRATION_AND_EXPERT_INIT"
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.182",
-    "source_candidate_status": "DEVICE_REJECTED",
+    "source_candidate_status": "RELEASE_CANDIDATE_UNMERGED",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -145,8 +145,8 @@
     ]
   },
   "currentWork": {
-    "status": "PR99_EXACT_HEAD_REVALIDATION",
-    "nextGate": "PR99_ALL_STRICT_GATES_GREEN"
+    "status": "PR102_EXACT_HEAD_REVALIDATION",
+    "nextGate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -165,20 +165,14 @@
     "status": "RUNNING",
     "active": [
       {
-        "id": "rc4183-exact-head-validation",
+        "id": "rc4184-pr102-exact-head-validation",
         "lane": "companion",
-        "goal": "Make exact PR #100 head fully green after retiring stale guardrail assertions.",
+        "goal": "Make PR #102 exact head fully green after v226 handoff/seal synchronization.",
         "state": "active"
       }
     ],
     "ready": [],
-    "waiting_external": [
-      {
-        "id": "pr99-exact-head-ci",
-        "head": "626023d3ab5e70bdff7c11e1fb1cc22ff955c4b6",
-        "reason": "Candidate-package stale unguarded-workspace assertion repaired; exact-head CI required."
-      }
-    ],
+    "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
       {
@@ -430,16 +424,19 @@
     "stop_evaluation": {
       "allowed": false,
       "code": null,
-      "reason": "Exact-head validation and decision-surface release work remain executable."
+      "reason": "PR #102 exact-head validation and handoff integrity remain executable."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260902T0810Z-v225",
-    "status": "PASS",
+    "generation": "20260902T1125Z-v226",
+    "status": "PASS_PENDING_STRICT_REVALIDATION",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.183 physical evidence proves Season/Kader startup now renders. Current candidate work corrects decision semantics: canonical Sleeper roster slots, FLEX RB/WR/TE eligibility, K-only kicker comparisons on Waiver/FA, no Sleeper projections/matchup grades, symmetric PITTI evidence for starters/alternatives. Exact-head CI must be fully green before promotion.",
+    "resume": "rc4.183 device rejected for Kader FA cards + IR drop semantics; fixes merged in #100/#101. rc4.184 PR #102 open; exact head must be fully green after v226 metadata synchronization before merge/deploy/device canary.",
     "transaction_in_progress": false
-  }
+  },
+  "status": "HANDOFF_RC4184_PR102_EXACT_HEAD_REVALIDATION",
+  "gate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY",
+  "nextGate": "Verify actual PR #102 exact head after v226 seal synchronization; repair only exact failures; merge only all-green head; verify post-merge deploy; then one rc4.184 Android canary."
 }
