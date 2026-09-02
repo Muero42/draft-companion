@@ -23,7 +23,7 @@ async function fetchSeasonLeagueState(draft){
   if(!leagueId)return{ok:false,reason:'NO_LEAGUE_ID'};
   store.setText(SEASON_LEAGUE_ID_KEY,leagueId);
   const bust=Date.now()+'-'+Math.random().toString(36).slice(2);
-  const rosters=await jf(S+'/league/'+encodeURIComponent(leagueId)+'/rosters?_='+bust,'Sleeper Kader',7000);
+  const [league,rosters]=await Promise.all([jf(S+'/league/'+encodeURIComponent(leagueId)+'?_='+bust,'Sleeper Liga',7000),jf(S+'/league/'+encodeURIComponent(leagueId)+'/rosters?_='+bust,'Sleeper Kader',7000)]);
   if(!Array.isArray(rosters)||!rosters.length)return{ok:false,reason:'LEAGUE_ROSTERS_EMPTY',leagueId};
   const slot=Number(els.slot.value||9);
   let userId=String(store.text(SEASON_USER_ID_KEY,'')||'').trim();
@@ -35,16 +35,39 @@ async function fetchSeasonLeagueState(draft){
   userId=String(roster.owner_id||'').trim();if(!userId)return{ok:false,reason:'USER_ID_UNRESOLVED',leagueId,slot,rosterId:roster.roster_id};
   store.setText(SEASON_USER_ID_KEY,userId);
   const ownership={};for(const r of rosters){const reserve=new Set((r.reserve||[]).map(String)),taxi=new Set((r.taxi||[]).map(String));for(const pid of new Set([...(r.players||[]),...(r.reserve||[]),...(r.taxi||[])].filter(Boolean).map(String))){ownership[pid]={roster_id:r.roster_id,owner_id:r.owner_id,mine:Number(r.roster_id)===Number(roster.roster_id),reserve:reserve.has(pid),taxi:taxi.has(pid)};}}
-  return{ok:true,league_id:leagueId,user_id:userId,roster_id:roster.roster_id,generated_at:Date.now(),my_roster:roster,rosters,my_starters:roster.starters||[],my_players:roster.players||[],my_reserve:roster.reserve||[],ownership,source:'Sleeper direct'};
+  return{ok:true,league_id:leagueId,user_id:userId,roster_id:roster.roster_id,generated_at:Date.now(),league,my_roster:roster,rosters,my_starters:roster.starters||[],my_players:roster.players||[],my_reserve:roster.reserve||[],ownership,source:'Sleeper direct'};
 }
 function seasonRosterRows(season,players,draftMine){if(!season?.ok||!season.my_roster)return null;const draftById=new Map((draftMine||[]).map(pk=>[String(pk.player_id),pk])),reserve=new Set((season.my_roster.reserve||[]).map(String));return[...new Set((season.my_roster.players||[]).map(String))].map(pid=>{const p=sleeperPlayerRow(pid,players),base=draftById.get(pid);return{pk:base||{player_id:pid,pick_no:999,metadata:{}},p:{...p,injury:reserve.has(pid)?(p.injury||'IR/RESERVE'):p.injury},r:rankFor(p.name,p.pos),a:adpFor(p.name),seasonStatus:reserve.has(pid)?'RESERVE':'ACTIVE'};});}
+const SLEEPER_NON_STARTER_SLOTS=new Set(['BN','IR','TAXI']);
+function seasonStarterSlotDefs(season){
+  const raw=Array.isArray(season?.league?.roster_positions)?season.league.roster_positions:[];
+  const starters=(season?.my_roster?.starters||season?.my_starters||[]).map(String);
+  const startSlots=raw.filter(x=>!SLEEPER_NON_STARTER_SLOTS.has(String(x||'').toUpperCase())).slice(0,starters.length);
+  return starters.map((pid,i)=>({pid,slot:String(startSlots[i]||'').toUpperCase()||null,index:i}));
+}
+function seasonSlotLabel(slot,playerPos=''){
+  const s=String(slot||'').toUpperCase();
+  return ({FLEX:'FLEX',WRRB_FLEX:'W/R',REC_FLEX:'W/T',SUPER_FLEX:'SFLEX',DEF:'DST',DST:'DST'}[s]||s||playerPos||'?');
+}
+function seasonSlotEligible(slot,pos){
+  const s=String(slot||'').toUpperCase(),p=String(pos||'').toUpperCase();
+  if(!s)return false;
+  if(s===p)return true;
+  if(s==='FLEX')return ['RB','WR','TE'].includes(p);
+  if(s==='WRRB_FLEX')return ['RB','WR'].includes(p);
+  if(s==='REC_FLEX')return ['WR','TE'].includes(p);
+  if(s==='SUPER_FLEX')return ['QB','RB','WR','TE'].includes(p);
+  if((s==='DEF'||s==='DST')&&(p==='DEF'||p==='DST'))return true;
+  return false;
+}
+function seasonStarterSlotMap(season){return new Map(seasonStarterSlotDefs(season).map(x=>[x.pid,x]));}
 function seasonLineupHtml(rows,season){
   const byId=new Map(rows.map(x=>[String(x.p.id),x])),starters=(season?.my_roster?.starters||season?.my_starters||[]).map(String).filter(x=>x&&x!=='0');
-  const starterSet=new Set(starters),active=rows.filter(x=>x.seasonStatus!=='RESERVE'),bench=active.filter(x=>!starterSet.has(String(x.p.id))),reserve=rows.filter(x=>x.seasonStatus==='RESERVE');
+  const slotMap=seasonStarterSlotMap(season),starterSet=new Set(starters),active=rows.filter(x=>x.seasonStatus!=='RESERVE'),bench=active.filter(x=>!starterSet.has(String(x.p.id))),reserve=rows.filter(x=>x.seasonStatus==='RESERVE');
   const posClass=p=>['QB','RB','WR','TE'].includes(p)?p.toLowerCase():'flex';
   const row=(x,label,alt='')=>'<div class="lineup-row"><span class="pos-chip '+posClass(x.p.pos)+'">'+esc(label||x.p.pos)+'</span><div class="lineup-player"><b>'+esc(x.p.name)+'</b><span>'+esc(x.p.team)+(x.p.injury?' · '+esc(x.p.injury):'')+(alt?' · '+esc(alt):'')+'</span></div><b class="lineup-state">'+(x.seasonStatus==='RESERVE'?'IR':'')+'</b></div>';
   let html='<div class="lineup-section-title">STARTER</div>';
-  for(const pid of starters){const x=byId.get(pid);if(x)html+=row(x,x.p.pos);}
+  for(const pid of starters){const x=byId.get(pid),slot=slotMap.get(pid)?.slot;if(x)html+=row(x,seasonSlotLabel(slot,x.p.pos));}
   if(!starters.length)html+='<div class="notice warn">Sleeper-Starter noch nicht verfügbar; Kader ist geladen.</div>';
   html+='<div class="lineup-section-title">BENCH</div>'+bench.map(x=>row(x,'BN')).join('');
   if(reserve.length)html+='<div class="lineup-section-title">RESERVE / IR</div>'+reserve.map(x=>row(x,'IR')).join('');
@@ -1589,7 +1612,7 @@ async function bootstrapSeasonWorkspace({force=false}={}){
     if(!Array.isArray(available)||available.length===0)throw new Error('SEASON_FA_POOL_ZERO_INVALID');
     const counts=postDraftRosterCounts(rows);
     els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper-Kader · '+rows.length+' Spieler · Source of Truth: League-State · Reserve/IR '+rows.filter(x=>x.seasonStatus==='RESERVE').length+' · Auto-Sync beim Start.';
-    els.rosterSummary.innerHTML=Object.entries(counts).filter(([,n])=>n).map(([pos,n])=>'<div class="summary-item"><b>'+n+'</b><span>'+pos+'</span></div>').join('');
+    const slotSummary=seasonStarterSlotDefs(season).map(x=>seasonSlotLabel(x.slot)).filter(Boolean);els.rosterSummary.innerHTML=slotSummary.map((slot,i)=>'<div class="summary-item"><b>'+(i+1)+'</b><span>'+esc(slot)+'</span></div>').join('');
     els.rosterList.innerHTML=seasonLineupHtml(rows,season);
     lastDraftContext={id:LIVE_DRAFT_ID_2026,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:true,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL,historicalDraftAvailable:!!draft};
     lastPostDraftPairs=[];
@@ -2662,14 +2685,9 @@ function weeklyLineupEvidence(p){
   x.matchup=WEEK1_PITTI_MATCHUP_2026.get(norm(p?.name))||null;
   x.freshEnough=x.fresh.events>0;return x;
 }
-function seasonStartSitCompatible(starter,bench){
+function seasonStartSitCompatible(starter,bench,slot){
   if(!starter?.p||!bench?.p)return false;
-  const sp=starter.p.pos,bp=bench.p.pos;
-  if(sp===bp)return true;
-  // Without canonical Sleeper slot labels, never infer that the lone TE/QB starter is a FLEX.
-  // In this league RB/WR may interchange through FLEX; TE may only be displaced by another TE
-  // unless a future slot-aware league-position feed proves the starter occupies FLEX.
-  return (sp==='RB'&&bp==='WR')||(sp==='WR'&&bp==='RB');
+  return seasonSlotEligible(slot,bench.p.pos);
 }
 function weeklyEvidenceHtml(e,p){
   const rank=Number.isFinite(e?.consensus)?'#'+e.consensus.toFixed(1):'–';
@@ -2681,23 +2699,23 @@ function weeklyEvidenceHtml(e,p){
 function renderRosterBenchAudit(rows,players,current,draftComplete){
   if(!els.rosterBenchStatus||!els.rosterBenchList)return;
   if(!draftComplete){els.rosterBenchStatus.className='notice';els.rosterBenchStatus.textContent='Aufstellungsanalyse wird nach Draftabschluss aktiv.';els.rosterBenchList.innerHTML='';return;}
-  const season=lastDraftContext?.season,starters=new Set((season?.my_roster?.starters||[]).map(String).filter(x=>x&&x!=='0'));
+  const season=lastDraftContext?.season,starters=new Set((season?.my_roster?.starters||[]).map(String).filter(x=>x&&x!=='0')),slotMap=seasonStarterSlotMap(season);
   const active=rows.filter(x=>x.seasonStatus!=='RESERVE'),bench=active.filter(x=>!starters.has(String(x.p.id))),starterRows=active.filter(x=>starters.has(String(x.p.id)));
   const moves=[];
   for(const b of bench){const be=weeklyLineupEvidence(b.p),br=be.consensus;if(!Number.isFinite(br))continue;
-    for(const s of starterRows){if(!seasonStartSitCompatible(s,b))continue;const se=weeklyLineupEvidence(s.p),sr=se.consensus;if(!Number.isFinite(sr))continue;
+    for(const s of starterRows){const slot=slotMap.get(String(s.p.id))?.slot;if(!seasonStartSitCompatible(s,b,slot))continue;const se=weeklyLineupEvidence(s.p),sr=se.consensus;if(!Number.isFinite(sr))continue;
       const rankEdge=sr-br,roleEdge=be.opp.value-se.opp.value;
       const pointEdge=(Number.isFinite(be.projection?.points)&&Number.isFinite(se.projection?.points))?be.projection.points-se.projection.points:null;
       const edge=rankEdge+roleEdge*.5+(Number.isFinite(pointEdge)?pointEdge*.8:0);
       const evidenceFresh=be.freshEnough||se.freshEnough;
-      if(edge>0)moves.push({b,s,edge,br,sr,rankEdge,roleEdge,pointEdge,evidenceFresh,be,se});
+      if(edge>0)moves.push({b,s,slot,edge,br,sr,rankEdge,roleEdge,pointEdge,evidenceFresh,be,se});
     }
   }
   moves.sort((x,y)=>y.edge-x.edge);
   els.rosterBenchStatus.className='notice ok';
-  els.rosterBenchStatus.textContent='Week-1 Start/Sit v4 · Sleeper liefert nur die aktuelle Aufstellung/Ownership. PITTI nutzt eigene Weekly-Panel-Ranks, externe verifizierte Projektionen und eigene Matchup-Evidence; Sleeper-Prognosen und Sleeper-Matchup-Bewertungen werden nicht verwendet. TE/QB werden ohne belegten FLEX-Slot nicht positionsfremd ersetzt.';
-  const starterHtml='<div class="coach-section-title">WEEK 1 · AKTUELLE STARTER · PITTI-WERTE</div>'+starterRows.map(s=>{const e=weeklyLineupEvidence(s.p);return '<div class="coach-row"><div><b>'+esc(s.p.name)+'</b><div class="tiny">'+esc(s.p.pos)+' '+esc(s.p.team)+' · '+weeklyEvidenceHtml(e,s.p)+'</div></div><div><b>START</b></div></div>'}).join('');
-  const moveHtml=moves.length?'<div class="coach-section-title">WEEK 1 · MÖGLICHE LINEUP-ÄNDERUNGEN</div>'+moves.slice(0,6).map(m=>'<div class="coach-row"><div><b>'+esc(m.b.p.name)+' statt '+esc(m.s.p.name)+'</b><div class="tiny">BENCH: '+weeklyEvidenceHtml(m.be,m.b.p)+'</div><div class="tiny">STARTER: '+weeklyEvidenceHtml(m.se,m.s.p)+'</div><div class="tiny">Rank Edge '+(m.rankEdge>=0?'+':'')+m.rankEdge.toFixed(1)+(Number.isFinite(m.pointEdge)?' · Proj.-Edge '+(m.pointEdge>=0?'+':'')+m.pointEdge.toFixed(1):' · Proj.-Edge –')+' · Role/Health '+(m.roleEdge>=0?'+':'')+m.roleEdge.toFixed(1)+(m.evidenceFresh?' · frische Evidence':' · vor Lock Freshness-Recheck')+'</div></div><div><b>'+(m.edge>=6&&m.evidenceFresh?'STRONG REVIEW':'REVIEW')+'</b></div></div>').join(''):'<div class="notice ok"><b>LINEUP HOLD</b> · Kein positions-/slot-kompatibler Bench-Spieler schlägt in der geladenen PITTI-Week-1-Baseline einen Starter. Vor Lock Projection/Health/Role aktualisieren.</div>';
+  els.rosterBenchStatus.textContent='Week-1 Start/Sit v5 · Sleeper liefert aktuelle Aufstellung, Ownership und die kanonischen Roster-Slots. PITTI nutzt eigene Weekly-Panel-Ranks, externe verifizierte Projektionen und eigene Matchup-Evidence; Sleeper-Prognosen und Sleeper-Matchup-Bewertungen werden nicht verwendet. FLEX=W/R/T, W/R=RB/WR, W/T=WR/TE.';
+  const starterHtml='<div class="coach-section-title">WEEK 1 · AKTUELLE STARTER · PITTI-WERTE</div>'+starterRows.map(s=>{const e=weeklyLineupEvidence(s.p);return '<div class="coach-row"><div><b>'+esc(s.p.name)+'</b><div class="tiny">Slot '+esc(seasonSlotLabel(slotMap.get(String(s.p.id))?.slot,s.p.pos))+' · '+esc(s.p.pos)+' '+esc(s.p.team)+' · '+weeklyEvidenceHtml(e,s.p)+'</div></div><div><b>START</b></div></div>'}).join('');
+  const moveHtml=moves.length?'<div class="coach-section-title">WEEK 1 · MÖGLICHE LINEUP-ÄNDERUNGEN</div>'+moves.slice(0,6).map(m=>'<div class="coach-row"><div><b>'+esc(m.b.p.name)+' statt '+esc(m.s.p.name)+'</b><div class="tiny">Slot '+esc(seasonSlotLabel(m.slot,m.s.p.pos))+' · BENCH: '+weeklyEvidenceHtml(m.be,m.b.p)+'</div><div class="tiny">STARTER: '+weeklyEvidenceHtml(m.se,m.s.p)+'</div><div class="tiny">Rank Edge '+(m.rankEdge>=0?'+':'')+m.rankEdge.toFixed(1)+(Number.isFinite(m.pointEdge)?' · Proj.-Edge '+(m.pointEdge>=0?'+':'')+m.pointEdge.toFixed(1):' · Proj.-Edge –')+' · Role/Health '+(m.roleEdge>=0?'+':'')+m.roleEdge.toFixed(1)+(m.evidenceFresh?' · frische Evidence':' · vor Lock Freshness-Recheck')+'</div></div><div><b>'+(m.edge>=6&&m.evidenceFresh?'STRONG REVIEW':'REVIEW')+'</b></div></div>').join(''):'<div class="notice ok"><b>LINEUP HOLD</b> · Kein positions-/slot-kompatibler Bench-Spieler schlägt in der geladenen PITTI-Week-1-Baseline einen Starter. Vor Lock Projection/Health/Role aktualisieren.</div>';
   els.rosterBenchList.innerHTML=starterHtml+moveHtml;
 }
 
