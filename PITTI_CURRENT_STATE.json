@@ -101,8 +101,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4182_STARTUP_BOUNDARY_HARDENED_PR98_REVALIDATING",
-    "nextGate": "PR98_UPDATED_HEAD_ALL_GATES_PASS_BEFORE_MERGE_OR_VERSION"
+    "status": "RC4182_HYDRATION_FIX_PR98_REVALIDATING",
+    "nextGate": "RC4182_HYDRATION_FIX_STRICT_VALIDATION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -124,7 +124,7 @@
     "waiting_external": [
       {
         "id": "pr98-revalidation",
-        "reason": "PR #98 head changed after full pre-marker audit; updated CI must pass before merge/version promotion."
+        "reason": "Updated startup gate now models roster-first automatic sequence; strict CI must pass before merge/version."
       }
     ],
     "blocked_user": [],
@@ -372,8 +372,8 @@
     ],
     "stop_evaluation": {
       "allowed": true,
-      "code": "EXTERNAL_CI_ONLY",
-      "reason": "App-priority startup hardening committed; no device action allowed before updated PR gates."
+      "code": "NO_EXECUTABLE_WORK_REMAINS",
+      "reason": "Only external PR CI remains on this dependent lane; no device action allowed."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
