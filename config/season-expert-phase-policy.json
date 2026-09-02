@@ -1,0 +1,137 @@
+{
+  "schema": "pitti.season-expert-phase-policy.v1",
+  "league_scoring": "HALF_PPR",
+  "automatic": true,
+  "phases": {
+    "PRE_W1": {
+      "weeks": [
+        0
+      ]
+    },
+    "EARLY": {
+      "weeks": [
+        1,
+        2,
+        3
+      ]
+    },
+    "MID": {
+      "weeks": [
+        4,
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    "LATE": {
+      "weeks": [
+        9,
+        10,
+        11,
+        12,
+        13,
+        14
+      ]
+    },
+    "PLAYOFF": {
+      "weeks": [
+        15,
+        16,
+        17,
+        18
+      ]
+    }
+  },
+  "core": {
+    "QB": [
+      "Justin Boone",
+      "Dalton Del Don",
+      "Sean Koerner",
+      "Pat Fitzmaurice"
+    ],
+    "RB": [
+      "Justin Boone",
+      "Dalton Del Don",
+      "Kev Wheeler",
+      "Ryan Weisse",
+      "Sean Koerner",
+      "Pat Fitzmaurice"
+    ],
+    "WR": [
+      "Justin Boone",
+      "Dalton Del Don",
+      "Sean Koerner",
+      "Pat Fitzmaurice"
+    ],
+    "TE": [
+      "Dalton Del Don",
+      "Justin Boone",
+      "Sean Koerner",
+      "Pat Fitzmaurice"
+    ],
+    "K": [
+      "Jared Smola",
+      "FantasyPros current-week K ECR"
+    ],
+    "DST": [
+      "Ted Chmyz",
+      "FantasyPros current-week DST ECR"
+    ]
+  },
+  "preseason_residual": [
+    "Jody Smith",
+    "Nick Mariano",
+    "final draft panel"
+  ],
+  "channels": {
+    "START_SIT": [
+      "WEEKLY"
+    ],
+    "K_DST": [
+      "STREAMING_WEEKLY",
+      "MATCHUP_ENVIRONMENT"
+    ],
+    "WAIVER_FA": [
+      "WEEKLY",
+      "ROS",
+      "ROLE_USAGE",
+      "MARKET"
+    ],
+    "TRADE": [
+      "ROS",
+      "TRADE_VALUE",
+      "REPLACEMENT_VALUE",
+      "NEAR_TERM_WEEKLY"
+    ],
+    "DRAFT_PRIOR": [
+      "PRE_W1_RESIDUAL"
+    ]
+  },
+  "adaptive": {
+    "min_completed_weeks_for_major_reweight": 3,
+    "position_specific": true,
+    "update_after_completed_week_only": true,
+    "bounded_weight_change": true,
+    "shrink_to_prior": true,
+    "stale_current_week_weight": 0,
+    "draft_prior_zero_after": "EARLY"
+  },
+  "required_fields": [
+    "position",
+    "decision_channel",
+    "source_updated_at",
+    "rankings_lock_at",
+    "prior_accuracy",
+    "current_2026_accuracy",
+    "sample_weeks",
+    "freshness_state",
+    "effective_weight"
+  ],
+  "invariants": [
+    "no silent fallback from stale weekly ranks to draft ranks",
+    "trade value must be current redraft not dynasty",
+    "K/DST do not inherit skill-position weights",
+    "phase changes require no user action"
+  ]
+}
