@@ -57,3 +57,10 @@
 [hidden]{display:none!important}
 
 .season-data-card{margin:12px 0 16px;padding:12px;border:1px solid #263656;border-radius:14px;background:#0d1728}.season-data-row{display:flex;gap:12px;align-items:center;justify-content:space-between}.season-data-row>div{display:flex;flex-direction:column;gap:3px}.season-data-row b{font-size:1.05rem}
+
+/* Season slot semantics: chip color represents the Sleeper slot, never the current occupant. */
+.pos-chip.k{background:#b7a9f3}.pos-chip.dst{background:#c47c67}.pos-chip.bn,.pos-chip.ir,.pos-chip.taxi,.pos-chip.slot-neutral{background:#a9b5ca}
+.pos-chip.flex-wr{background:linear-gradient(90deg,#62c7f2 0 50%,#68dfc1 50% 100%)}
+.pos-chip.flex-wt{background:linear-gradient(90deg,#62c7f2 0 50%,#f0a75f 50% 100%)}
+.pos-chip.flex-wrt{background:linear-gradient(90deg,#62c7f2 0 33.333%,#68dfc1 33.333% 66.666%,#f0a75f 66.666% 100%)}
+.pos-chip.flex-super{background:linear-gradient(90deg,#ef6ca8 0 25%,#68dfc1 25% 50%,#62c7f2 50% 75%,#f0a75f 75% 100%)}
