@@ -1,0 +1,18 @@
+import fs from 'node:fs';import assert from 'node:assert/strict';
+const p=JSON.parse(fs.readFileSync('config/season-expert-phase-policy.json','utf8'));
+assert.equal(p.schema,'pitti.season-expert-phase-policy.v1');
+assert.equal(p.automatic,true);
+for(const pos of ['QB','RB','WR','TE','K','DST'])assert(Array.isArray(p.core[pos])&&p.core[pos].length>=2,'missing '+pos+' expert pool');
+const phaseForWeek=w=>Object.entries(p.phases).find(([,x])=>x.weeks.includes(w))?.[0];
+assert.equal(phaseForWeek(0),'PRE_W1');assert.equal(phaseForWeek(1),'EARLY');assert.equal(phaseForWeek(4),'MID');assert.equal(phaseForWeek(9),'LATE');assert.equal(phaseForWeek(15),'PLAYOFF');
+assert.equal(p.adaptive.position_specific,true);
+assert.equal(p.adaptive.update_after_completed_week_only,true);
+assert.equal(p.adaptive.min_completed_weeks_for_major_reweight,3);
+assert.equal(p.adaptive.stale_current_week_weight,0);
+assert(p.invariants.some(x=>x.includes('no silent fallback')));
+assert(p.invariants.some(x=>x.includes('K/DST')));
+assert(p.channels.START_SIT.includes('WEEKLY'));
+assert(p.channels.K_DST.includes('STREAMING_WEEKLY'));
+assert(p.channels.WAIVER_FA.includes('ROS'));
+assert(p.channels.TRADE.includes('TRADE_VALUE'));
+console.log('SEASON_EXPERT_PHASE_POLICY_PASS');
