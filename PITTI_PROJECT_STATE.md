@@ -442,3 +442,11 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Starter and alternative cards use the same PITTI evidence dimensions: weekly panel rank, verified expected points, PITTI matchup evidence, source/freshness.
 - Added season-lineup-waiver-routing-regression and wired it into release/package gates.
 - Latest CI failure after these changes was diagnosed as stale guardrail assertions for superseded Start/Sit v3 wording and the now-invalid Mevis-for-skill-player drop order. Guardrail updated to assert Start/Sit v5/PITTI panel and K-only kicker replacement instead; this is a guard modernization, not restoration of the rejected behavior.
+
+
+## 2026-09-02 — Device evidence after rc4.183: Waiver surface + IR semantics
+- Physical screenshot at 12:52 proves two remaining semantic defects: FA/Add-Drop cards are still rendered under Kader, and Zach Charbonnet on Reserve/IR is being selected as the drop side of skill-player swaps.
+- Required behavior: Kader is lineup/start-sit only. FA/Add-Drop decisions belong to Waiver/FA. Internal pair computation may run during bootstrap solely to feed Waiver/Action Board.
+- Required behavior: Reserve/IR is not an occupied active roster slot and cannot be used as a normal drop target to make room for a free agent. Live drop candidates must have seasonStatus ACTIVE. IR players remain roster assets for valuation/hold decisions but are excluded from ordinary add/drop capacity comparisons.
+- Candidate PR #101 implements both rules and adds season-waiver-surface-ir-regression. Initial package failure was a stale bootstrap regression token expecting the old visible renderRosterFaAudit call; runtime release gate, project guardrails, and the new semantic regression itself all passed. Bootstrap regression was updated to require computation-only render:false semantics rather than restore the rejected visible Kader surface.
+- No device promotion until exact PR head is fully green.
