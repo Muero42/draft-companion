@@ -87,16 +87,14 @@ Otherwise continue AUTO.
 - A full paired 15-round v4/v5 mock is invalid unless the exported backup contains exactly 30 active-draft fixtures covering all 15 own picks twice.
 
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
-- Never answer an AUTO turn with “AUTO läuft”, “ich mache weiter”, or equivalent future-tense progress prose. Work must be executed before any reply.
-- During PITTI HANDOFF, finish the complete transactional audit/reseal before replying unless an unavoidable blocker prevents it.
-- Current source/deployment authority = **v11.8.0-rc4.129**; latest device-observed operational runtime = **rc4.126**.
-- v4 and v5 are already operational on device. v4 remains PRIMARY; v5 remains CHALLENGER.
-- rc4.129 fixes silent paired-evidence loss: active-draft decisionFixtures are atomic, may not be quota-pruned, and persistence failure must surface explicitly.
-- Exact next gate: **RC4.129_DEVICE_REFRESH_THEN_FULL_30_FIXTURE_V4V5_MOCK**.
-- One controlled refresh to rc4.129; then one complete 15-round realistic mock with BOTH v4 and v5 at every own pick.
-- Backup acceptance requires **30 decisionFixtures = 15 exact pick states × 2 profiles** before any v4/v5 model comparison.
-- Latest backup `draft-companion-v7-backup-2026-08-30T12-47-22-598Z.json` is incomplete paired evidence: 11/15 states; missing 9/12/29/32.
-- No model-weight/source retune from that incomplete backup. No phone trial-and-error.
+- Current handoff generation = **20260902T1130Z-v227**.
+- Physical Android = **rc4.183 installed/observed, DEVICE_REJECTED** for Kader FA-card routing + IR ordinary-drop semantics; former startup dead-state was crossed.
+- PR #100/#101 are merged authority. rc4.184 PR #102 is **OPEN / UNMERGED** and must be newest-exact-head all-green before merge/deploy/device canary.
+- Device testing is final confirmation only. No device-side trial-and-error/cache clearing/reinstall loops.
+- AUTO/AUTO BLOCK: no progress/status/acknowledgement/promise-only messages, no empty reply after tool work, never “AUTO läuft weiter” followed by turn termination; checkpoint + re-inventory + continue in the same turn while safe executable work exists.
+- STATUS remains report-only.
+- Live Sleeper direct league/draft/rosters state is current roster/ownership/slot authority; Watcher is evidence-only.
+- Accepted rollback authority remains rc4.169.
 
 ## 9. AUTO TURN TERMINATION — HARD GATE
 - Completing one work package is **not** permission to end the assistant turn.
@@ -117,8 +115,8 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - visible output is permitted only for a concrete useful end-result, unavoidable user action/input, safety/irreversible confirmation, or a blocker after every independent lane is exhausted.
 
 
-## v169 TAKEOVER CANARIES
-- Handoff generation must be `20260829T1244Z-v178` across CURRENT/SEAL/HANDOFF/bootstrap/matrix/lock.
+## HISTORICAL v169 TAKEOVER CANARIES — NOT CURRENT AUTHORITY
+- Historical record only: generation `20260829T1244Z-v178` belonged to that old takeover and MUST NOT override current generation 20260902T1130Z-v227.
 - main/source/deployment/accepted Android authority = rc4.104.
 - Exact 13-file main/gh-pages runtime parity = PASS.
 - Android rc4.104 observed; completed post-draft Snapshot path = PASS.

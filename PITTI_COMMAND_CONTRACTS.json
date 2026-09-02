@@ -157,22 +157,22 @@
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.169 accepted rollback authority",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
-    "sourceAuthority": "v11.8.0-rc4.182 on main/device; DEVICE_REJECTED. PR #98 latest head de3eed64 is unmerged and latest strict CI is failing.",
+    "sourceAuthority": "rc4.184 PR #102 open/unmerged; rc4.183 physical device rejected for Kader FA-card + IR-drop semantics; fixes #100/#101 merged.",
     "latestPackageReextract": "rc4.182 PASS run 33597607588",
     "latestPackageSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "packageReferenceRun": 33597607588,
-    "deployedPagesVersion": "rc4.176 main Cloudflare Pages PASS",
-    "deployedPagesAppByteParityWithMain": true,
-    "currentResearchGate": "NEW_CHAT_RECONCILE_PR98_LATEST_HEAD_FIX_STRICT_GATES_THEN_REAL_SHAPE_STARTUP_KADER_PLUS_EXPERT_INIT",
-    "exactNextAction": "Reconcile actual main and PR #98 latest head first. Repair the exact guardrail/startup-sequence failures, then execute a real-shape startup harness that proves both Kader hydration and expert initialization/loading before any new Android/PWA promotion.",
-    "runtimeVersion": "rc4.182 installed/observed; Kader + experts FAIL",
+    "deployedPagesVersion": "rc4.184 NOT DEPLOYED/NOT VERIFIED",
+    "deployedPagesAppByteParityWithMain": false,
+    "currentResearchGate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY",
+    "exactNextAction": "Verify actual newest PR #102 exact head after v227 repair; fix only reproduced failures; merge only all-green; verify post-merge deploy; then one physical rc4.184 canary.",
+    "runtimeVersion": "rc4.183 installed/observed DEVICE_REJECTED; rc4.184 PR #102 release candidate unmerged",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
-    "latestDeviceEvidence": "2026-09-02 10:09 CEST user reconfirmation: rc4.182 still has non-loading Kader and experts; earlier screenshot showed Live-State '-' and Kader loading.",
-    "pr98LatestCI": "FAIL: candidate package 33607037207; project guardrails 33607037186; release contract 33607037209."
+    "latestDeviceEvidence": "2026-09-02 12:52 CEST screenshot: rc4.183 crossed startup dead-state but Kader showed FA/Add-Drop cards and IR/Reserve Charbonnet as ordinary drop target.",
+    "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate"
   },
-  "currentGate": "NEW_CHAT_RECONCILE_PR98_LATEST_HEAD_FIX_STRICT_GATES_THEN_REAL_SHAPE_STARTUP_KADER_PLUS_EXPERT_INIT",
-  "handoffGeneration": "20260902T0810Z-v225",
-  "handoff_generation": "20260902T0810Z-v225",
+  "currentGate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY",
+  "handoffGeneration": "20260902T1130Z-v227",
+  "handoff_generation": "20260902T1130Z-v227",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -184,11 +184,11 @@
   },
   "seasonCompanion": {
     "mode": "POST_DRAFT_SEASON_COMPANION",
-    "rosterAuthority": "current Sleeper league state",
+    "rosterAuthority": "current Sleeper direct league/draft/rosters state; Watcher evidence-only",
     "draftRoster": "immutable historical baseline only",
     "observedTransactionCanary": "rc4.160 device: Harrison Mevis rostered, Tank Bigsby absent, Zach Charbonnet Reserve/IR",
     "rc4161Fix": "live FA ownership pool is independent from expert ranking hydration; zero ranked join must never imply HOLD",
     "regression": "tools/season-fa-ownership-regression.mjs is mandatory in candidate package gate",
-    "nextGate": "VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY"
+    "nextGate": "PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY"
   }
 }

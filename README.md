@@ -1,5 +1,5 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.183 Season hydration release candidate. It promotes the exact startup/hydration runtime validated on main after PR #99, including real-shape Kader + expert initialization gates. Physical Android/PWA acceptance remains pending; rc4.169 remains accepted rollback authority until rc4.183 is functionally verified; no device trial-and-error.
+> **Current source candidate:** v11.8.0-rc4.184 Season hydration release candidate. It promotes the exact startup/hydration runtime validated on main after PR #99, including real-shape Kader + expert initialization gates. Physical Android/PWA acceptance remains pending; rc4.169 remains accepted rollback authority until rc4.183 is functionally verified; no device trial-and-error.
 > **Season mode:** current Sleeper league state is Source of Truth; completed draft roster is immutable historical evidence only.
 > **rc4.158 bounded change:** adds a draft-day v4 expert baseline/delta workflow. Unchanged or failed/incomplete refreshes restore the prior verified baseline; panel rebuild can run cache-only and occurs only for baseline creation/repair or a real ranking delta.
 > **No model change:** expert membership, weights, panel ranks semantics, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
