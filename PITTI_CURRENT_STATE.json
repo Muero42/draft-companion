@@ -147,8 +147,8 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "PR108_V229_GUARD_AUTHORITY_REPAIRED_FINAL_RESEAL",
-    "nextGate": "PR108_FINAL_RESEALED_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION"
+    "status": "RC4189_RESEAL_GUARD_AUTHORITY",
+    "nextGate": "RC4189_EXACT_HEAD_ALL_GREEN_THEN_PROMOTION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -159,7 +159,7 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "rc4.185 merged source baseline; PR #108 is current unmerged Season candidate. rc4.183 remains latest physical observation and was rejected; rc4.169 remains accepted rollback.",
+  "source_authority": "rc4.189 is the current source candidate on the reseal branch after merged PR #115; rc4.188 passed the physical Waiver/FA canary; rc4.169 remains accepted rollback until rc4.189 physical acceptance.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
@@ -445,14 +445,14 @@
   },
   "handoff": {
     "generation": "20260902T1325Z-v229",
-    "status": "PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING",
+    "status": "RC4189_RESEAL_VALIDATION_PENDING",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.185 merged baseline; PR #108 open/unmerged. v229 fixes stale v227/PR102 current pointers found during final handoff audit. Query newest PR #108 exact head, preserve live roster_id identity invariant, require all strict gates green; then Lawrence live opponent/FAAB analysis and rc4.186 promotion.",
+    "resume": "rc4.189 reseal in progress after PR #115 merge. Preserve rc4.188 device evidence and live roster_id identity; require exact-head strict gates green before rc4.189 promotion/device canary.",
     "transaction_in_progress": false
   },
-  "status": "PR108_V229_HANDOFF_REPAIRED",
-  "gate": "PR108_FINAL_RESEALED_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION",
+  "status": "RC4189_RESEAL_IN_PROGRESS",
+  "gate": "RC4189_EXACT_HEAD_ALL_GREEN_THEN_PROMOTION",
   "nextGate": "Final reseal with PASS status after rc4.185/PR108 guard extension; query resulting exact PR #108 head and require all strict gates green.",
   "handoffGeneration": "20260902T1325Z-v229"
 }
