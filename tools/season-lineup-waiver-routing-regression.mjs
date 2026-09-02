@@ -11,6 +11,8 @@ assert(a.includes("league_rosters=rosters.map"),'full live league roster state m
 assert(a.includes("waiver_budget_used"),'opponent FAAB-used input missing');
 assert(a.includes("faab_remaining"),'opponent remaining FAAB input missing');
 assert(a.includes("/transactions/"),'Sleeper transaction market fetch missing');
+assert(a.includes("Transaction-market evidence is optional and must never delay Kader hydration"),'transaction market must stay off Kader critical path');
+assert(!a.includes("transactions=await jf(S+'/league/'+encodeURIComponent(leagueId)+'/transactions/"),'transaction market must not block Kader hydration');
 assert(a.includes("current_season_bid_prior"),'current-season waiver bid prior missing');
 assert(a.includes("manager_history_prior"),'bounded manager-history waiver prior missing');
 assert(a.includes("manager_profile_name"),'canonical live-roster to manager-profile mapping missing');
