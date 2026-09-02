@@ -25,6 +25,7 @@ const emergencyQueueContract=text('tools/emergency-queue-contract.mjs');
 const current=JSON.parse(text('PITTI_CURRENT_STATE.json'));
 const seal=JSON.parse(text('PITTI_HANDOFF_SEAL.json'));
 const candidatePreflight=process.env.PITTI_CANDIDATE_PREFLIGHT==='1';
+const candidateVersion=(app.match(/const APP_VERSION='([^']+)'/)||[])[1]||'';
 const handoffGeneration=(currentHandoff.match(/Handoff generation:\s*`([^`]+)`/)||[])[1];
 const gitBlobSha=(p)=>{
   const b=fs.readFileSync(p);
@@ -100,7 +101,7 @@ for(const token of [
 
 must(readme.includes('v11.8.0-rc4.64'),'README production/control baseline drift');
 if(!candidatePreflight) must(readme.includes(current.runtime?.test_challenger||'v11.8.0-rc4.86'),'README current candidate missing');
-else must(readme.includes(version),'README candidate version missing');
+else must(candidateVersion&&readme.includes(candidateVersion),'README candidate version missing');
 must(policy.includes("USER_DRAFT_HARD_EXCLUSIONS=new Set(['geno smith','aaron rodgers'])"),'explicit Geno/Rodgers hard exclusions missing');
 must(app.includes("userDraftStrategyExcluded(p.pos,state.counts,p.name)"),'named user exclusion wiring missing');
 must(app.includes('USER HARD EXCLUSION: nicht draften'),'hard-exclusion Coach reason missing');
