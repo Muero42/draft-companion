@@ -18,5 +18,6 @@ if(!b.includes("catch(e){console.warn('PITTI optional draft archive unavailable'
 if(!b.includes("if(els.waiverStatus)")||!b.includes("if(els.tradeStatus)"))throw new Error('season failure observability missing');
 console.log('season-first bootstrap regression PASS');
 
-if(!src.includes("setWorkspace(store.text('v117_workspace','roster')||'roster')"))throw new Error('season workspace default/guarded restore missing');\nif(src.includes("setWorkspace(localStorage.getItem('v117_workspace')||'roster')"))throw new Error('unguarded season workspace restore resurrected');
+if(!src.includes("setWorkspace(store.text('v117_workspace','roster')||'roster')"))throw new Error('season workspace default/guarded restore missing');
+if(src.includes("setWorkspace(localStorage.getItem('v117_workspace')||'roster')"))throw new Error('unguarded season workspace restore resurrected');
 if(!src.includes("Season Auto-Sync FAIL-CLOSED"))throw new Error('season failure not visible');
