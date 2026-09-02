@@ -1,26 +1,26 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-01T20:09:00Z",
+  "updatedAt": "2026-09-02T11:30:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Repo generation 20260901T2210Z-v224 is current handoff authority. rc4.176 is physically observed but NOT accepted. Captured Kader still shows Sleeper Live-State '-' and 'Live-Kader wird geladen...'. New chat must reconcile actual main/CI/deploy, run browser-equivalent Season E2E, and never downgrade to rc4.171-175 or infer success from version number. Library persistence rule: never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Repo generation 20260902T1125Z-v226 is current handoff authority. rc4.183 is physically observed and DEVICE_REJECTED for Kader FA-card + IR-drop semantics. PR #100/#101 fixes are merged. rc4.184 PR #102 is open/unmerged and requires exact-head all-green validation after v226 synchronization; no device trial-and-error.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision."
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.182",
+    "appVersion": "v11.8.0-rc4.184",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.182; Kader and experts still fail to load",
+    "latestAndroidObserved": "v11.8.0-rc4.183 DEVICE_REJECTED: Kader rendered FA/Add-Drop and IR/Reserve Charbonnet as ordinary drop target",
     "latestPreinstallVerified": "rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "v11.8.0-rc4.107",
-    "preinstallArtifact": "rc4.182 package/re-extract PASS",
+    "preinstallArtifact": "rc4.184 PR #102 exact-head validation pending after v226 sync",
     "preinstallSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
@@ -32,9 +32,9 @@
     "preinstallReferenceRun": 33597607588,
     "preinstallReferenceArtifactId": 9833935479,
     "preinstallHashSemantics": "GitHub candidate-package artifact digest; package/re-extract PASS.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.182",
-    "latestAndroidFunctionalVerified": "rc4.169 remains accepted rollback authority; rc4.182 DEVICE_REJECTED",
-    "testChallengerAndroidObserved": true,
+    "latestAndroidVersionObserved": "v11.8.0-rc4.183",
+    "latestAndroidFunctionalVerified": "rc4.169 remains accepted rollback authority; rc4.183 DEVICE_REJECTED",
+    "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
@@ -68,7 +68,7 @@
     "mainGhPagesParity": true,
     "androidVerified": false,
     "androidAcceptance": "rc4.176 automated Season E2E PASS; physical functional acceptance still pending.",
-    "devicePromotionPolicy": "FORBIDDEN until latest PR/head strict gates all pass AND browser/real-shape startup harness proves both Sleeper Kader hydration and expert initialization/load path.",
+    "devicePromotionPolicy": "FORBIDDEN until PR #102 latest exact head all strict gates PASS, merge/post-merge deploy verified, then one physical rc4.184 canary.",
     "pr98Head": "de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "FAIL all 3: candidate package 33607037207; project guardrails 33607037186; release contract 33607037209"
   },
@@ -331,5 +331,6 @@
     "latestBackupResolvedReturnForecasts": 674,
     "latestBackupReturnMeanBrier": 0.0907
   },
-  "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority."
+  "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
+  "handoffGeneration": "20260902T1125Z-v226"
 }
