@@ -408,10 +408,10 @@
   },
   "handoff": {
     "generation": "20260902T0810Z-v225",
-    "status": "PASS_PENDING_SEAL",
-    "ready": false,
-    "secondPass": false,
-    "resume": "rc4.182 is installed and DEVICE_REJECTED; latest PR #98 head fails all three strict CI workflows. Fix latest-head guardrail/startup-sequence failures and prove Kader+expert initialization off-device before any new device version.",
+    "status": "PASS",
+    "ready": true,
+    "secondPass": true,
+    "resume": "rc4.182 is installed and DEVICE_REJECTED; Kader + experts still fail. PR #98 latest head de3eed64 is unmerged and latest strict CI is red. Repair exact latest-head guardrail/startup-sequence failures and prove both Kader hydration + expert initialization off-device before any new device version.",
     "transaction_in_progress": false
   }
 }
