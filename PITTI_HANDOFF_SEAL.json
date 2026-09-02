@@ -1,20 +1,20 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260902T1315Z-v228",
-  "created_at": "2026-09-02T13:17:00Z",
+  "handoff_generation": "20260902T1325Z-v229",
+  "created_at": "2026-09-02T13:29:00Z",
   "status": "PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "6fb051f2f25abd444c773dc15006fd1a937a4f3a",
-    "PITTI_EXECUTION_LOCK.json": "8cbc7d33f3a6354418202c221f6cd9eddc4786f0",
-    "PITTI_COMMAND_CONTRACTS.json": "fd2ba4d6285a3c41ec9a7b0ff7294c9ada3330a8",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "87b48a7c227e069874cae23708b284ac86b4b8d4",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "68aeb6ae7a40ab36adfcd46c7772b8d780b79e9a",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "7ccd643e9e03a5f3d97a19e5c71a3b35ad9d87c7",
-    "PITTI_AUTO_PREFLIGHT.md": "07fe22bbd993ed9934915939692b0a8ee3c54188",
-    "PITTI_PROJECT_STATE.md": "02f3ac0c58a88f0b782f9412004406fe3113c628",
+    "PITTI_CURRENT_STATE.json": "c578fc88fcdba6a5718ec57cb600f66a2372a278",
+    "PITTI_EXECUTION_LOCK.json": "c395b53888b9603686ccbb2dea93b70e53e87801",
+    "PITTI_COMMAND_CONTRACTS.json": "c2661c39418cf27c7cb601d6530acd82fca552fb",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "610795a46d8a7e481cd7004ad861977ce85271e7",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "f051e7c7cebb2fa292f74af91216006c4ca26a77",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "ce6d742e9499a5ca59a945e0960ab581f42d5515",
+    "PITTI_AUTO_PREFLIGHT.md": "6bcd54973b3d23dd17794be2425f404ce0aa1026",
+    "PITTI_PROJECT_STATE.md": "ffe04ff52a9e2f755200797db56084edfafca9ed",
     "README.md": "57995c2a81cba653896887e6b8bd1495987b7fda",
     "app.js": "690f409854590d302fc24c8532ccdfd7611394de",
     "live-surface-v3.js": "f2b718382d9d36ef38cfeb281e7348ba337c459e",
@@ -23,29 +23,36 @@
     "sw.js": "931703a43e484be8eda63b88747c0ea99a63e6c6",
     "tools/pitti_guardrail_check.mjs": "0981a9f0b764777bcf6c1e7feebbaa5b03c854f0",
     "tools/live-trade-roster-identity-regression.mjs": "c6937f97d562a4d1bd5217e0344af9500d68ca2b",
-    "config/season-expert-phase-policy.json": "78156903f4254c6eee836819dc6b8a737835d6c1"
+    "config/season-expert-phase-policy.json": "78156903f4254c6eee836819dc6b8a737835d6c1",
+    "season-parallel-contract-regression.mjs": "b0b158697d37c0d9bebeebf5bd132d4a6b355f07"
   },
   "branch_locks": {
     "repo": "Muero42/draft-companion",
     "branch": "pitti/trade-slot-geometry",
     "source_baseline": "v11.8.0-rc4.185",
     "pr108": "OPEN_UNMERGED",
-    "pr108_content_head_before_seal": "cf4740deb2a43a0e267e5a31fb38e80d4e776052",
+    "pr108_content_head_before_seal": "9c88c65acffb630e7217e9d841c813c43fa843e1",
     "latest_physical_android": "v11.8.0-rc4.183 DEVICE_REJECTED",
-    "accepted_rollback": "v11.8.0-rc4.169"
+    "accepted_rollback": "v11.8.0-rc4.169",
+    "next_release": "v11.8.0-rc4.186_AFTER_PR108_ALL_GREEN"
   },
   "checks": {
     "generation_alignment": true,
+    "semantic_second_pass": true,
+    "stale_v227_pr102_current_pointers_removed": true,
     "auto_queue_takeover": true,
     "no_progress_ack": true,
     "no_empty_reply": true,
+    "no_promise_only_auto": true,
     "status_report_only": true,
     "live_roster_identity_invariant_restored": true,
     "full_league_state_preserved": true,
-    "lawrence_two_drop_cost_preserved": true,
+    "lawrence_two_active_drop_cost_preserved": true,
     "trade_flex_geometry_preserved": true,
-    "te2_blanket_penalty_forbidden": true
+    "te2_blanket_penalty_forbidden": true,
+    "ir_not_capacity": true,
+    "device_trial_and_error_forbidden": true
   },
-  "exact_gate": "QUERY_NEW_SEALED_PR108_HEAD_THEN_ALL_STRICT_GATES_GREEN_BEFORE_MERGE",
-  "note": "v228 takeover seal. Seal certifies handoff consistency, not PR108 release readiness. Latest sealed head must be freshly queried because seal/checkpoint commits change exact head. Never use 0a41ca11 green/red mix as final authority."
+  "exact_gate": "QUERY_NEWEST_SEALED_PR108_HEAD_THEN_ALL_STRICT_GATES_GREEN_BEFORE_MERGE",
+  "note": "v229 final handoff audit seal. It certifies takeover consistency, not PR108 release readiness. Seal commit changes exact head; next chat must query the newest PR108 head/CI. Historical v226/v227/PR102 sections are provenance only and cannot override v229."
 }
