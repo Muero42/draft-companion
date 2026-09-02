@@ -95,8 +95,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4182_HYDRATION_ROOT_CAUSE_FIX_PR98_WAITING_CI",
-    "nextGate": "PR98_FULL_GATES_THEN_MERGE_AND_ONLY_THEN_VERSION_PROMOTION"
+    "status": "RC4182_HYDRATION_FIX_PR98_GATE_REPAIR",
+    "nextGate": "RC4182_HYDRATION_FIX_STRICT_VALIDATION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -112,15 +112,15 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "WAITING_EXTERNAL",
+    "status": "AUTO_ACTIVE",
     "active": [],
-    "ready": [],
-    "waiting_external": [
+    "ready": [
       {
-        "id": "pr98-ci",
-        "reason": "PR #98 opened at head e881446046c4819e72791e1e43b4149776e44e4d. GitHub returned no PR workflow runs on the single permitted immediate status read; wait for external CI before merge/version promotion."
+        "id": "pr98-ci-gate-repair",
+        "reason": "CI failure is metadata/state-contract drift, not runtime regression. Align canonical gate enums and rerun."
       }
     ],
+    "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
       {
@@ -365,9 +365,9 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "EXTERNAL_CI_ONLY",
-      "reason": "Root cause reproduced and bounded fix/regression committed; no independent positive-value lane remains before PR CI."
+      "allowed": false,
+      "code": "NO_EXECUTABLE_WORK_REMAINS",
+      "reason": "Gate repair is executable."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
