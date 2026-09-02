@@ -1,7 +1,7 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260902T1915Z-v230",
-  "created_at": "2026-09-02T19:15:00Z",
+  "created_at": "2026-09-02T19:22:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
@@ -21,7 +21,7 @@
     "manifest.webmanifest": "adf3a16945ba2a2cfc7c94a5db18d3bcba631810",
     "index.html": "23296779c5d469b33dd8a9a4dfc17761bcd29bae",
     "sw.js": "91c3da30d04b242418a33b3e12a4743033bcc8f9",
-    "tools/pitti_guardrail_check.mjs": "3800b05a04df1f6a40c3410d193a2a17ac3058c2",
+    "tools/pitti_guardrail_check.mjs": "10b9914448ad72950d392f74ee40b3429ab5735d",
     "tools/live-trade-roster-identity-regression.mjs": "c6937f97d562a4d1bd5217e0344af9500d68ca2b",
     "config/season-expert-phase-policy.json": "78156903f4254c6eee836819dc6b8a737835d6c1",
     "season-parallel-contract-regression.mjs": "b0b158697d37c0d9bebeebf5bd132d4a6b355f07"
@@ -54,5 +54,5 @@
     "device_trial_and_error_forbidden": true
   },
   "exact_gate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY",
-  "note": "v230 canonical post-merge rc4.189 reseal. PASS certifies repository handoff consistency for the reseal head only; exact-head strict CI and deployment parity remain required before one physical rc4.189 canary."
+  "note": "v230 canonical post-merge rc4.189 reseal after guard syntax repair. PASS certifies handoff consistency; exact-head strict CI and deployment parity remain required before one physical rc4.189 canary."
 }
