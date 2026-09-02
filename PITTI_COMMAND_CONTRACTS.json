@@ -149,14 +149,14 @@
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.169 accepted rollback authority",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
-    "sourceAuthority": "v11.8.0-rc4.181 root-cause candidate; Season-first missing legacy DOM crash fixed; no device promotion before strict PASS",
+    "sourceAuthority": "v11.8.0-rc4.181 candidate; Season startup removed-Draft-DOM root cause fixed; device promotion prohibited until strict PASS",
     "latestPackageReextract": "latest candidate-package artifact authority from current checkpoint",
     "latestPackageSha256": "sha256:a518f85aaa4994bd7ad39d174ae9915d1abf2950947462e2e9b01b901b341a32",
     "packageReferenceRun": 33566941054,
     "deployedPagesVersion": "rc4.176 main Cloudflare Pages PASS",
     "deployedPagesAppByteParityWithMain": true,
     "currentResearchGate": "FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL",
-    "exactNextAction": "Complete rc4.181 root-cause automated validation; no device trial.",
+    "exactNextAction": "Complete rc4.181 strict automated validation; no device canary before PASS.",
     "runtimeVersion": "rc4.176 installed/observed; functional acceptance pending",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "22:09 CEST screenshot: rc4.176 visible, Season shell restored; Sleeper Live-State '-' and Kader still loading in captured frame; static screenshot does not prove navigation/hydration success."
