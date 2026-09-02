@@ -85,8 +85,8 @@
     ]
   },
   "currentWork": {
-    "status": "RC4181_ROOT_CAUSE_FIX_STRICT_PASS",
-    "nextGate": "FINAL_SINGLE_DEVICE_ACCEPTANCE_RC4181"
+    "status": "RC4181_REMOVED_DRAFT_DOM_STARTUP_FIX_VALIDATING",
+    "nextGate": "RC4181_STRICT_VALIDATION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -103,15 +103,16 @@
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "RUNNING",
-    "active": [],
-    "ready": [],
-    "waiting_external": [],
-    "blocked_user": [
+    "active": [
       {
-        "id": "final-single-device-acceptance-rc4181",
-        "reason": "Root cause is now reproduced by code audit/regression rather than marker trial. One final physical acceptance is unavoidable after automated strict PASS."
+        "id": "rc4181-strict-validation",
+        "lane": "season startup/release safety",
+        "reason": "Season startup was synchronously coupled to removed Draft DOM before bootstrapSeasonWorkspace"
       }
     ],
+    "ready": [],
+    "waiting_external": [],
+    "blocked_user": [],
     "completed_recent": [
       {
         "id": "rc4177-strict-validation",
@@ -340,9 +341,9 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "All autonomous root-cause work and strict validation exhausted; one final device acceptance remains."
+      "allowed": false,
+      "code": null,
+      "reason": "rc4.181 validation executable."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
