@@ -7,7 +7,7 @@
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.189 @ 0c110a5dc6688ebc840da8bb122efcc5d50f77e6"
+    "source_candidate": "v11.8.0-rc4.189"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
@@ -439,7 +439,7 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260902T1915Z-v230",
+    "generation": "20260903T0700Z-v231",
     "status": "PASS_POSTMERGE_RESEAL_PENDING_CI",
     "ready": true,
     "secondPass": true,
