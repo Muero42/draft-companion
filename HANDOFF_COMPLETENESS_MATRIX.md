@@ -1,5 +1,5 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v232
-Generation: `20260903T0720Z-v232`
+# PITTI HANDOFF COMPLETENESS MATRIX — v233
+Generation: `20260903T0745Z-v233`
 
 PASS requires:
 - canonical rc4.189 source on branch `main`; exact HEAD is dynamically verified;

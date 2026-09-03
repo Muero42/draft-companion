@@ -87,16 +87,17 @@ Otherwise continue AUTO.
 - A full paired 15-round v4/v5 mock is invalid unless the exported backup contains exactly 30 active-draft fixtures covering all 15 own picks twice.
 
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
-- Current handoff generation = **20260902T1325Z-v229**.
+- Current handoff generation = **20260903T0745Z-v233**. This is a checkpoint-only stale-current-pointer repair triggered by the second local Codex read-only audit.
 - Current mode = **POST_DRAFT_SEASON_COMPANION**.
-- Source baseline = **rc4.185 merged**; current candidate = **PR #108 OPEN / UNMERGED** on `pitti/trade-slot-geometry`.
-- Latest physical Android = **rc4.183 installed/observed, DEVICE_REJECTED** for Kader FA-card routing + IR ordinary-drop semantics. Accepted rollback = **rc4.169**.
-- PR #108 preserves canonical Sleeper slots/FLEX (RB/WR/TE), legal two-TE paths, Trade Board v5 real slot geometry, ACTIVE-only ordinary drops, full 10-team Sleeper league state, manager/FAAB inputs, and Lawrence QB2 + future D/ST two-active-drop opportunity cost.
-- The explicit invariant “Sleeper roster_id is a league roster identifier, NOT the historical draft slot.” must remain. Never restore draft-slot identity or static Trade Board positional depths.
-- Newest PR #108 exact head must pass all strict gates before merge. Then rc4.186 promotion, post-merge/deploy parity, and exactly one physical canary.
+- Canonical source/runtime = **rc4.189 on branch main**. Verify the exact current main HEAD dynamically; a tracked checkpoint must not hard-code its own containing commit as immutable current authority.
+- Latest physical Android = **rc4.188 PASS** for Waiver/FA routing, live Sleeper ownership, kicker isolation and ACTIVE-drop/IR semantics. Accepted rollback = **rc4.169**.
+- Deployment parity = **UNKNOWN_REQUIRES_REVERIFICATION**. Never infer deployment/device acceptance from source merge.
+- PR #120 is **MERGED/HISTORICAL checkpoint work**, never an open current gate.
+- PR #118 is **OPEN / UNMERGED / NON-PRODUCTION AUTHORITY**, isolated rc4.190 Codex Season Decision Engine work. Do not merge/deploy it until its work package and strict gates complete.
+- Live Sleeper direct league/users/rosters state = current roster/ownership/manager/slot/FAAB authority; Watcher evidence-only; completed draft immutable history.
 - AUTO/AUTO BLOCK = continuous same-turn execution while safe positive-value work exists: no interim progress/status/acknowledgement, no empty response after tool work, no promise-only “AUTO läuft weiter”; checkpoint + re-inventory after every package; external wait blocks only its dependent lane.
 - STATUS = report-only and must not trigger tools/polling/work.
-- Live Sleeper direct league/users/rosters state = current roster/ownership/manager/slot/FAAB authority; Watcher evidence-only; completed draft immutable history.
+- Older sections labelled CURRENT/OVERRIDE are chronological provenance only where they conflict with this section or the newest PROJECT_STATE/CURRENT/LOCK authority. They must never resurrect rc4.185, PR #108, rc4.183 DEVICE_REJECTED, or another superseded release lane as current authority.
 
 ## 9. AUTO TURN TERMINATION — HARD GATE
 - Completing one work package is **not** permission to end the assistant turn.
@@ -264,8 +265,8 @@ Generation: `20260901T2210Z-v224`. Supersedes older current-version/device/gate/
 - `STATUS` is strictly report-only. It must not be needed to cancel, unstick, or resume an AUTO turn.
 
 
-## v229 CURRENT HANDOFF SUPERSESSION — 2026-09-02
+## v229 HANDOFF SUPERSESSION — 2026-09-02 [HISTORICAL — SUPERSEDED BY v230/v231/v232/v233]
 - Generation `20260902T1325Z-v229` supersedes v227/v228 current pointers wherever they conflict.
 - Any earlier CURRENT statement saying PR #102/rc4.184 is open, or generation v227 is current, is historical only.
-- Current release lane = rc4.185 merged baseline + PR #108 OPEN/UNMERGED; next release after all-green merge = rc4.186.
+- Historical v229 release lane was rc4.185 merged baseline + PR #108 OPEN/UNMERGED; that lane is fully superseded and MUST NOT be interpreted as current authority.
 - Lawrence lane and full-league-state architecture are current and must survive chat takeover.
