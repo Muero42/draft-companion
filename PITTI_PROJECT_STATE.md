@@ -17,7 +17,7 @@ Canonical continuation trigger: **PITTI AUTO**
 - Current work is **post-draft / season operation**, not draft optimization.
 - Repository authority: `Muero42/draft-companion`; canonical production/source branch: `main` with dynamically verified HEAD. Historical v231 reconciliation base was `0c110a5dc6688ebc840da8bb122efcc5d50f77e6`; it is not current HEAD authority.
 - Current source runtime/version on canonical `main`: **v11.8.0-rc4.189**. Latest physical Android evidence is **rc4.188 PASS**; accepted rollback authority remains **rc4.169**. Built/source/deployed/device-verified states are distinct.
-- Active larger Season/Codex development is isolated in open PR #118 on `pitti/rc4190-roster-week1-needs`; it is NOT production authority and must not be merged/deployed until its work package and strict gates are complete.
+- Canonical source/runtime rc4.189 (canonical branch main; verify Git/GitHub authority dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.
 - Real 2026 draft ID: **1366053132970233856**, complete.
 - Current Sleeper league roster is Source of Truth. Never reconstruct current roster from the completed draft.
 - HISTORICAL correction: Charbonnet -> IR/Reserve; the initially reported Bigsby add was only intended and occurred later on September 1. See the dated transaction correction below. Preserve draft roster separately from current roster/transaction history.
@@ -538,7 +538,7 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Exact gate: all three strict checks on the final sealed v233 head must PASS, then merge v233, then the local Codex clone must pull canonical main and repeat the read-only authority audit before any writable Codex work.
 
 
-## v234 CURRENT — complete local post-merge authority repair
+## v234 HISTORICAL/SUPERSEDED — complete local post-merge authority repair
 Generation: `20260903T1200Z-v234`. Canonical source/runtime rc4.189 on main (verify HEAD dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL; PR #118 OPEN / UNMERGED / NON-PRODUCTION.
 
 The post-v233 read-only audit was performed on clean main `2749537945ec7e6b96d95e2f6b55a26e455124fa` and failed closed on CURRENT currentWork and BOOTSTRAP gate pointers that still required v233 CI/merge. PR #121 is already merged; these are stale post-merge metadata, not runtime failures.
@@ -550,3 +550,10 @@ Local branch: `pitti/v234-postmerge-authority-repair`, created from the verified
 Local validation must include the full strict guard without bypass, relevant release/package behavioral tests, package re-extraction, and semantic cross-reference/negative regression checks. No remote CI, new device PASS, deployment or Library persistence is claimed. The local commit SHA is obtained from Git after validation and commit; it is not embedded as self-authority.
 
 Validation diagnosis: the initial local suite found five stale validator failures, not a runtime change: two LF-only source assertions failed on Windows CRLF; the ranking test still required a retired manual refresh; the DST test required the draft board superseded by merged rc4.189; the IR test pinned historical rc4.13. Validators retain their behavioral assertions and now verify the established automatic path/current waiver baseline/current authority. Seal hashing uses explicit UTF8_LF_TEXT canonical Git content across platforms; content changes still invalidate integrity.
+
+## v234 CURRENT — promotion-stable authority
+Generation: `20260903T1200Z-v234`. Canonical source/runtime rc4.189 (canonical branch main; verify Git/GitHub authority dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.
+
+Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
+
+Historical v234 branch, base, PR #122 and exact-commit checks are evidence in PITTI_CURRENT_STATE.json historical_superseded.v234_local_request. The same checkpoint applies before and after promotion; current Git/GitHub facts and current user authorization govern the next action.

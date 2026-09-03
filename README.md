@@ -5,7 +5,7 @@
 > **HISTORICAL rc4.158 scope:** expert membership, weights, panel ranks semantics, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
 > **Draft locks:** exact canonical manager order/history; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; starter maxima are not roster caps.
 
-Built/source/package/deployment/device-observed/device-accepted are distinct states. Canonical source/runtime rc4.189 on main (verify HEAD dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL; PR #118 OPEN / UNMERGED / NON-PRODUCTION. Current local checkpoint gate: `LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION`.
+Built/source/package/deployment/device-observed/device-accepted are distinct states. Canonical source/runtime rc4.189 (canonical branch main; verify Git/GitHub authority dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise. Current checkpoint gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`.
 
 Historical release-contract baseline canary retained for regression tooling: `v11.8.0-rc4.64`.
 

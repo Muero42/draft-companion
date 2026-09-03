@@ -87,14 +87,14 @@ Otherwise continue AUTO.
 - A full paired 15-round v4/v5 mock is invalid unless the exported backup contains exactly 30 active-draft fixtures covering all 15 own picks twice.
 
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
-- Current handoff generation = **20260903T1200Z-v234**. This is the local post-merge repair after the performed v233 read-only audit failed closed on residual state pointers.
+- Current handoff generation = **20260903T1200Z-v234**. This checkpoint records the repair after the performed v233 read-only audit failed closed on residual state pointers.
 - Current mode = **POST_DRAFT_SEASON_COMPANION**.
 - Canonical source/runtime = **rc4.189 on branch main**. Verify the exact current main HEAD dynamically; a tracked checkpoint must not hard-code its own containing commit as immutable current authority.
 - Latest physical Android = **rc4.188 PASS** for Waiver/FA routing, live Sleeper ownership, kicker isolation and ACTIVE-drop/IR semantics. Accepted rollback = **rc4.169**.
 - Deployment parity = **UNKNOWN_REQUIRES_REVERIFICATION**. Never infer deployment/device acceptance from source merge.
 - PR #120 and PR #121 / v233 are **MERGED/HISTORICAL checkpoint work**, never open current gates.
-- Current gate: `LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION`. Review the locally validated post-merge authority repair. No v233 merge or strict-CI gate remains. Its local post-merge read-only audit already ran and failed closed on residual state pointers. This work is local only: no push, merge, deployment, network access or PR #118 changes are authorized.
-- PR #118 is **OPEN / UNMERGED / NON-PRODUCTION AUTHORITY**, isolated rc4.190 Codex Season Decision Engine work. Do not merge/deploy it until its work package and strict gates complete.
+- Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
+- Canonical source/runtime rc4.189 (canonical branch main; verify Git/GitHub authority dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.
 - Live Sleeper direct league/users/rosters state = current roster/ownership/manager/slot/FAAB authority; Watcher evidence-only; completed draft immutable history.
 - AUTO/AUTO BLOCK = continuous same-turn execution while safe positive-value work exists: no interim progress/status/acknowledgement, no empty response after tool work, no promise-only “AUTO läuft weiter”; checkpoint + re-inventory after every package; external wait blocks only its dependent lane.
 - STATUS = report-only and must not trigger tools/polling/work.

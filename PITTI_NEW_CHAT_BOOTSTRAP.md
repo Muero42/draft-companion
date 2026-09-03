@@ -4,10 +4,10 @@ No device-side trial-and-error. Empty assistant response after tool work is forb
 
 # PITTI NEW CHAT BOOTSTRAP — v234
 
-Canonical source/runtime rc4.189 on main (verify HEAD dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL; PR #118 OPEN / UNMERGED / NON-PRODUCTION.
+Canonical source/runtime rc4.189 (canonical branch main; verify Git/GitHub authority dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.
 
-Current gate: `LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION`. Review the locally validated post-merge authority repair. No v233 merge or strict-CI gate remains. Its local post-merge read-only audit already ran and failed closed on residual state pointers. This work is local only: no push, merge, deployment, network access or PR #118 changes are authorized.
+Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
 
-Local repair branch: `pitti/v234-postmerge-authority-repair`, based on verified main `2749537945ec7e6b96d95e2f6b55a26e455124fa` (historical base, not the containing repair commit). AGENTS.md and PITTI_CODEX_WORK_PACKAGE.md remain PR #118-only and are intentionally absent here.
+Historical v234 provenance (not an operative boundary): see PITTI_CURRENT_STATE.json historical_superseded.v234_local_request. Verify current file and branch authority dynamically.
 
 AUTO/AUTO BLOCK continuous same-turn execution; checkpoint/re-inventory after every package; waiting blocks only dependent lane; STATUS report-only.

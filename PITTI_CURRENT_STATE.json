@@ -19,16 +19,27 @@
       "evidence": "User-confirmed merged PR; local main base verified without network access."
     },
     "pr118": {
-      "status": "OPEN / UNMERGED / NON-PRODUCTION",
-      "branch": "pitti/rc4190-roster-week1-needs",
-      "evidence": "User-supplied authority; no remote verification or modification."
+      "status": "DYNAMIC_VERIFICATION_REQUIRED",
+      "conservative_boundary": "OPEN / UNMERGED / NON-PRODUCTION UNTIL FRESH GITHUB VERIFICATION",
+      "authorization_source": "CURRENT_USER_AUTHORIZED_WORK_PACKAGE"
     },
-    "local_repair": {
-      "generation": "20260903T1200Z-v234",
-      "branch": "pitti/v234-postmerge-authority-repair",
-      "base_main": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
-      "scope": "CHECKPOINT_GUARDRAIL_ONLY",
-      "remote_actions_authorized": false
+    "promotion": {
+      "status": "DYNAMIC_VERIFICATION_REQUIRED",
+      "verify_before": [
+        "CONTINUATION",
+        "PROMOTION"
+      ],
+      "sources": [
+        "LOCAL_GIT",
+        "CANONICAL_GITHUB"
+      ],
+      "permission_source": "CURRENT_USER_AUTHORIZED_WORK_PACKAGE",
+      "merge_implies_deployment": false,
+      "merge_implies_device_acceptance": false,
+      "unavailable_evidence": "FAIL_CLOSED_DEPENDENT_ACTION",
+      "operative_branch": "DYNAMIC_VERIFICATION_REQUIRED",
+      "pr_status": "DYNAMIC_VERIFICATION_REQUIRED",
+      "exact_head_ci": "DYNAMIC_VERIFICATION_REQUIRED"
     }
   },
   "runtime": {
@@ -38,11 +49,11 @@
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.189",
     "ci": {
-      "candidate_package": "NOT_REVERIFIED_OFFLINE",
-      "release_contract_v2": "NOT_REVERIFIED_OFFLINE",
-      "project_guardrails": "NOT_REVERIFIED_OFFLINE",
+      "candidate_package": "DYNAMIC_VERIFICATION_REQUIRED",
+      "release_contract_v2": "DYNAMIC_VERIFICATION_REQUIRED",
+      "project_guardrails": "DYNAMIC_VERIFICATION_REQUIRED",
       "validated_code_head": null,
-      "scope": "Remote CI unknown in this offline repair; v233 is merged, not a pending CI gate. Local validation is separate."
+      "scope": "Verify exact-head GitHub checks before dependent actions; historical PASS is not evidence for another commit."
     },
     "android_accepted": "v11.8.0-rc4.169",
     "preview_candidate": "rc4.189 on canonical main; current HEAD verified dynamically. Deployment parity requires re-verification before physical rc4.189 canary.",
@@ -172,8 +183,8 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "POSTMERGE_AUTHORITY_REPAIRED_LOCAL_ONLY",
-    "nextGate": "LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION"
+    "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
+    "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -184,7 +195,7 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "Canonical source/runtime rc4.189 on main (verify HEAD dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL; PR #118 OPEN / UNMERGED / NON-PRODUCTION.",
+  "source_authority": "Canonical source/runtime rc4.189 (canonical branch main; verify Git/GitHub authority dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
@@ -319,7 +330,7 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "Bounded local authority repair is ready for review after local validation and semantic reaudit. Remote work and PR #118 are outside this authorization; no v233 wait remains."
+      "reason": "Checkpoint repair milestone recorded. Re-inventory currently authorized work after dynamic authority verification; historical queues do not authorize continuation."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
@@ -328,15 +339,15 @@
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Review the locally validated post-merge authority repair. No v233 merge or strict-CI gate remains. Its local post-merge read-only audit already ran and failed closed on residual state pointers. This work is local only: no push, merge, deployment, network access or PR #118 changes are authorized.",
+    "resume": "Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.",
     "transaction_in_progress": false
   },
-  "status": "POSTMERGE_AUTHORITY_REPAIRED_LOCAL_ONLY",
-  "gate": "LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION",
-  "nextGate": "LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION",
+  "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
+  "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
+  "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "handoffGeneration": "20260903T1200Z-v234",
   "codex": {
-    "status": "POSTMERGE_READONLY_AUDIT_FAIL_CLOSED_REPAIRED_LOCALLY",
+    "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
     "local_main_verified": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
     "working_tree_at_precheck": "clean",
@@ -345,10 +356,7 @@
       "PITTI_CURRENT_STATE.json:153-154 v233 pending strict CI/merge",
       "PITTI_NEW_CHAT_BOOTSTRAP.md:9 v233 merge still current"
     ],
-    "work_pr": 118,
-    "work_branch": "pitti/rc4190-roster-week1-needs",
-    "work_package_authority": "PR_ONLY_NOT_MAIN",
-    "repair_branch": "pitti/v234-postmerge-authority-repair"
+    "scope": "HISTORICAL/SUPERSEDED audit evidence; no operative branch or permission authority"
   },
   "historical_superseded": {
     "classification": "HISTORICAL/SUPERSEDED; never current authority or executable queue",
@@ -387,6 +395,56 @@
         "work_pr": 118,
         "work_branch": "pitti/rc4190-roster-week1-needs",
         "work_package_authority": "PR_ONLY_NOT_MAIN"
+      }
+    },
+    "v234_local_request": {
+      "classification": "HISTORICAL/SUPERSEDED; evidence only, never current authorization",
+      "local_repair": {
+        "generation": "20260903T1200Z-v234",
+        "branch": "pitti/v234-postmerge-authority-repair",
+        "base_main": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
+        "scope": "CHECKPOINT_GUARDRAIL_ONLY",
+        "remote_actions_authorized": false
+      },
+      "gate": "LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION",
+      "resume": "Review the locally validated post-merge authority repair. No v233 merge or strict-CI gate remains. Its local post-merge read-only audit already ran and failed closed on residual state pointers. This work is local only: no push, merge, deployment, network access or PR #118 changes are authorized.",
+      "codex": {
+        "status": "POSTMERGE_READONLY_AUDIT_FAIL_CLOSED_REPAIRED_LOCALLY",
+        "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
+        "local_main_verified": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
+        "working_tree_at_precheck": "clean",
+        "audit_result": "FAIL_CLOSED_ON_RESIDUAL_POSTMERGE_STATE_POINTERS",
+        "audit_findings": [
+          "PITTI_CURRENT_STATE.json:153-154 v233 pending strict CI/merge",
+          "PITTI_NEW_CHAT_BOOTSTRAP.md:9 v233 merge still current"
+        ],
+        "work_pr": 118,
+        "work_branch": "pitti/rc4190-roster-week1-needs",
+        "work_package_authority": "PR_ONLY_NOT_MAIN",
+        "repair_branch": "pitti/v234-postmerge-authority-repair"
+      },
+      "pr118": {
+        "status": "OPEN / UNMERGED / NON-PRODUCTION",
+        "branch": "pitti/rc4190-roster-week1-needs",
+        "evidence": "User-supplied authority; no remote verification or modification."
+      },
+      "ci": {
+        "candidate_package": "NOT_REVERIFIED_OFFLINE",
+        "release_contract_v2": "NOT_REVERIFIED_OFFLINE",
+        "project_guardrails": "NOT_REVERIFIED_OFFLINE",
+        "validated_code_head": null,
+        "scope": "Remote CI unknown in this offline repair; v233 is merged, not a pending CI gate. Local validation is separate."
+      },
+      "pr122": {
+        "pr": 122,
+        "head": "f59c642f41c5b2afa3f73c974bff7c03e3e43699",
+        "status": "OPEN / MERGEABLE / UNMERGED",
+        "checks": {
+          "project_guardrails": "PASS",
+          "release_contract_v2": "PASS",
+          "candidate_package": "PASS"
+        },
+        "evidence": "User-supplied exact-commit observation before this correction; not current GitHub verification or evidence for a later commit"
       }
     }
   }
