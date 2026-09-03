@@ -2,7 +2,7 @@
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260903T0700Z-v231",
   "created_at": "2026-09-03T07:00:00Z",
-  "status": "RECONCILED_PENDING_GUARDS",
+  "status": "SUPERSEDED_PENDING_RESEAL",
   "handoff_ready": false,
   "second_pass_pass": false,
   "integrity_algorithm": "git_blob_sha1",
@@ -35,5 +35,5 @@
     "device_trial_and_error_forbidden": true
   },
   "exact_gate": "AUTHORITY_V231_GUARDS_THEN_CODEX_READ_ONLY_REAUDIT",
-  "note": "v231 authority reconciliation after independent Codex read-only audit exposed stale v230 pointers. PASS/handoff-ready intentionally withheld until strict checkpoint guards validate this generation."
+  "note": "v231 checkpoint authority is intentionally pending reseal while strict candidate-preflight guards validate generation and semantics. Integrity is rebuilt only after those guards pass."
 }
