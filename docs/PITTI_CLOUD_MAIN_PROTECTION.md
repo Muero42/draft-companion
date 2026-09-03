@@ -8,7 +8,7 @@ The Foundation does **not** enable protection, merge, auto-merge or deployment. 
 
 - Target branch: explicit `refs/heads/main`; no exclusions.
 - Enforcement: active. Bypass list: **empty**, including administrators and Apps.
-- Require pull request, at least one approving review, dismiss stale reviews on new commits, require code-owner review. `.github/CODEOWNERS` names `@Muero42`.
+- Require pull request, at least one approving review, dismiss stale reviews on new commits, require code-owner review, and require approval of the most recent reviewable push. `.github/CODEOWNERS` names `@Muero42`.
 - Require these exact check contexts: `guardrails`, `behavioral-contract`, `package`, `pitti-cloud-validation`.
 - Block deletion and non-fast-forward updates.
 - Initially `strict_required_status_checks_policy: false`: exact PR HEAD is explicitly checked; current main must still equal the authorized base at review and promotion. If main moves, fail closed and start a new authorized attempt. Do not silently rebase or reuse old review evidence.
@@ -19,7 +19,7 @@ The first three job names were read from successful GitHub jobs `100656225014`, 
 ## 2. PITTI main update restriction
 
 - Same explicit main target, active, no exclusions.
-- Rule: restrict updates (`update`).
+- Rule: restrict updates (`update`) with `update_allows_fetch_and_merge: false`.
 - Sole bypass: repository administrator role (`RepositoryRole`, actor_id `5`, bypass mode `always`). No Integration, Team, deploy key or Cloud App bypass.
 - This bypass applies only to the update rule. It must not be added to the separate review/check ruleset.
 

@@ -1,8 +1,8 @@
 {
   "type": "object", "additionalProperties": false,
-  "required": ["head","main","verdict","readOnly","independent","findings","checks","deployment","deviceAccepted","mergeAuthorized"],
+  "required": ["repo","pr","runId","diffSha256","head","main","verdict","readOnly","independent","findings","checks","deployment","deviceAccepted","mergeAuthorized"],
   "properties": {
-    "head": {"type":"string"}, "main": {"type":"string"},
+    "repo": {"type":"string","const":"Muero42/draft-companion"}, "pr": {"type":"integer"}, "runId": {"type":"string"}, "diffSha256": {"type":"string","pattern":"^[a-f0-9]{64}$"}, "head": {"type":"string"}, "main": {"type":"string"},
     "verdict": {"type":"string","enum":["PASS","FAIL"]},
     "readOnly": {"type":"boolean"}, "independent": {"type":"boolean"},
     "findings": {"type":"array","items":{"type":"string"}},

@@ -1,0 +1,1 @@
+{"type":"object","additionalProperties":false,"required":["patchBase64","summary"],"properties":{"patchBase64":{"type":"string","maxLength":174764},"summary":{"type":"string","minLength":10,"maxLength":12000}}}
