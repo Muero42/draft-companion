@@ -148,8 +148,8 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "POSTMERGE_AUTHORITY_V232_RESEAL",
-    "nextGate": "V232_GUARDS_THEN_LOCAL_CODEX_PULL_REAUDIT"
+    "status": "POSTMERGE_AUTHORITY_V232_SEALED",
+    "nextGate": "MERGE_V232_THEN_LOCAL_CODEX_PULL_REAUDIT"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -166,18 +166,23 @@
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "RUNNING",
-    "active": [
-      {
-        "id": "v232-postmerge-authority",
-        "lane": "checkpoint",
-        "goal": "Bind canonical checkpoints to actual post-merge main SHA and validate.",
-        "state": "active"
-      }
-    ],
+    "active": [],
     "ready": [],
     "waiting_external": [],
-    "blocked_user": [],
+    "blocked_user": [
+      {
+        "id": "codex-local-pull-reaudit",
+        "lane": "codex",
+        "goal": "After v232 merge, user pulls local PITTI-Codex main and repeats read-only audit.",
+        "state": "blocked_user"
+      }
+    ],
     "completed_recent": [
+      {
+        "id": "v232-postmerge-authority-preflight",
+        "result": "PASS on 9856c07: Project Guardrails, Candidate Package, Release Contract v2 all green.",
+        "at": "2026-09-03T07:25:00Z"
+      },
       {
         "id": "authority-v231-reconcile",
         "result": "PASS candidate-preflight on a6deb3e: Candidate Package, Project Guardrails and Release Contract v2 all green after generation/source/seal-pending repairs.",
@@ -277,26 +282,21 @@
         "id": "rc4161-selftest-ci",
         "result": "PASS head b307fda15a5c20d63940e1c746a876ed7c49b3ef: release contract, project guardrails and candidate package all success; executable season FA ownership regression included.",
         "at": "2026-09-01T10:56:00Z"
-      },
-      {
-        "id": "rc4161-preview-deploy-repair",
-        "result": "PASS: gh-pages/season-preview synchronized to rc4.161 runtime assets; app/index/sw/manifest verified rc4.161 on gh-pages head 0fdefada9fa4b751b490f552d07e6d47e5fb068e. Prior device rc4.159 screenshot classified as stale preview delivery, not rc4.161 runtime failure.",
-        "at": "2026-09-01T11:55:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "Post-merge authority reseal in progress."
+      "allowed": true,
+      "code": "USER_ACTION_REQUIRED",
+      "reason": "After merge, local Codex clone must pull canonical main and re-audit before writable work."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
     "generation": "20260903T0720Z-v232",
-    "status": "PENDING_RESEAL",
-    "ready": false,
-    "secondPass": false,
-    "resume": "Seal actual post-merge main authority, then user pulls local Codex clone and repeats read-only audit.",
+    "status": "PASS",
+    "ready": true,
+    "secondPass": true,
+    "resume": "Merge v232 after final sealed-head CI; then update local Codex clone and repeat read-only audit.",
     "transaction_in_progress": false
   },
   "status": "RC4189_POSTMERGE_RESEAL_SEALED_PENDING_CI",
