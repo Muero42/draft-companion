@@ -19,7 +19,9 @@ Critical corrections:
 - Bastian is slot 8, not slot 5.
 - User's team is Muerotechnik, not "Moers Venom".
 - The pre-rc4.84 app mapping had the correct slot geometry for 5–8: Björn / Pascal Gelderner / Giuliano / Basti. rc4.84 incorrectly changed it to Basti / Björn / Giuliano / Pascal Gelderner.
-- Historical note only: rc4.106 inherited the rc4.84 wrong mapping. Current accepted Android authority is rc4.131; the v203 main/gh-pages delta is unreleased until rc4.132. rc4.132 must hard-assert the exact canonical order and migrate stale localStorage/backup mappings.
+- Historical note only: rc4.106 inherited the rc4.84 wrong mapping. At that HISTORICAL/SUPERSEDED checkpoint, accepted Android authority was rc4.131; the v203 main/gh-pages delta is unreleased until rc4.132. rc4.132 must hard-assert the exact canonical order and migrate stale localStorage/backup mappings.
+
+The rc4.132 implementation instructions above and below are HISTORICAL/SUPERSEDED release tasks; the user-confirmed identity/order facts remain canonical. Current runtime and work gates come from ../PITTI_CURRENT_STATE.json.
 
 ## Identity anchors / history mapping
 - Pascal Voerde = one continuous identity chain: **Pascal_Bracht/Bracht Eagles 2017-2022 + Pascal_Voerde/Voerde Eagles 2023-2025 = 9 canonical seasons**. Never truncate this to the separate Pascal Gelderner 2023-2025 profile.

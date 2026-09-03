@@ -1,15 +1,16 @@
 # NEW CHAT HANDOFF — PITTI SEASON COMPANION
-Handoff generation: `20260903T0745Z-v233`
-Created: 2026-09-03 07:45Z
+Handoff generation: `20260903T1200Z-v234`
+Created: 2026-09-03T09:59:50.439Z
 
 ## CURRENT AUTHORITY
-Canonical source is rc4.189 on branch `main`; the exact current HEAD must be verified dynamically from Git/GitHub. Reconciled base `2471c3666edaa313388d6b79c488940ac6b51f86` is historical evidence only, not current HEAD authority. Latest physical Android rc4.188 PASS; rollback rc4.169. Deployment parity UNKNOWN_REQUIRES_REVERIFICATION.
+Canonical source/runtime rc4.189 on main (verify HEAD dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL; PR #118 OPEN / UNMERGED / NON-PRODUCTION.
 
 ## CODEX
-Local clone: `C:\Users\timmu\Documents\PITTI-Codex`. The first and second read-only audits correctly failed closed on stale authority; the second audit specifically found residual CURRENT pointers in this handoff and PITTI_AUTO_PREFLIGHT.md. PR #118 contains isolated/unmerged Codex work package and AGENTS.md. v232 is merged. Pull local `main` and repeat the read-only audit; PR #118 remains isolated/unmerged and non-production authority until its own work package and strict gates complete.
+Local clone: `C:\Users\timmu\Documents\PITTI-Codex`. The post-v233 local read-only audit verified clean main `2749537945ec7e6b96d95e2f6b55a26e455124fa` and correctly failed closed on residual pending-CI/merge pointers in CURRENT and BOOTSTRAP. Earlier audits are historical. This local repair covers all coupled authority/checkpoint references.
+Repair branch: `pitti/v234-postmerge-authority-repair`; the recorded main SHA is a verified base, never self-authority for the containing commit. PR #118 work package and AGENTS.md are intentionally absent on this branch.
 
 ## CURRENT GATE
-`V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT`. No device trial loops, no unverified deployment claims.
+`LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION`. Review the locally validated post-merge authority repair. No v233 merge or strict-CI gate remains. Its local post-merge read-only audit already ran and failed closed on residual state pointers. This work is local only: no push, merge, deployment, network access or PR #118 changes are authorized.
 
 ## AUTO
-Continuous same-turn execution while safe work exists; checkpoint/re-inventory after every package; external wait blocks only its lane; STATUS report-only.
+Continuous same-turn execution while authorized safe work exists; checkpoint/re-inventory after every package; external wait blocks only its lane; STATUS report-only. Never send status/progress/acknowledgement messages during AUTO while executable work exists. No device trial loops, no unverified deployment claims.

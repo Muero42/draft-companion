@@ -1,5 +1,7 @@
 # Draft Sharks weighting audit — 2026-08-27
 
+> HISTORICAL/SUPERSEDED operational checkpoint: runtime, device, deployment, release/activation gates and CURRENT/OVERRIDE instructions below describe the original dated context only. They must not be executed as current work or override PITTI_CURRENT_STATE.json and NEW_CHAT_HANDOFF_CURRENT.md. Research evidence and durable invariants remain as provenance, subject to later explicit corrections.
+
 Status: RESEARCH / NO RUNTIME MUTATION
 
 ## Current frozen Expert-v2 use

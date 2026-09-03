@@ -15,16 +15,16 @@ Canonical continuation trigger: **PITTI AUTO**
 
 ## Authority / non-negotiable state
 - Current work is **post-draft / season operation**, not draft optimization.
-- Repository authority: `Muero42/draft-companion`; canonical production/source branch: `main` at `0c110a5dc6688ebc840da8bb122efcc5d50f77e6` for this reconciliation.
+- Repository authority: `Muero42/draft-companion`; canonical production/source branch: `main` with dynamically verified HEAD. Historical v231 reconciliation base was `0c110a5dc6688ebc840da8bb122efcc5d50f77e6`; it is not current HEAD authority.
 - Current source runtime/version on canonical `main`: **v11.8.0-rc4.189**. Latest physical Android evidence is **rc4.188 PASS**; accepted rollback authority remains **rc4.169**. Built/source/deployed/device-verified states are distinct.
 - Active larger Season/Codex development is isolated in open PR #118 on `pitti/rc4190-roster-week1-needs`; it is NOT production authority and must not be merged/deployed until its work package and strict gates are complete.
 - Real 2026 draft ID: **1366053132970233856**, complete.
 - Current Sleeper league roster is Source of Truth. Never reconstruct current roster from the completed draft.
-- First real post-draft delta: Zach Charbonnet -> IR/Reserve; Tank Bigsby added. Preserve draft roster separately from current roster/transaction history.
+- HISTORICAL correction: Charbonnet -> IR/Reserve; the initially reported Bigsby add was only intended and occurred later on September 1. See the dated transaction correction below. Preserve draft roster separately from current roster/transaction history.
 - FantasyPros Analyzer A-/92 is benchmark/diagnostic only; it must not overwrite live roster or decisions.
 - No automatic external transactions. Analysis may be autonomous; adds/drops/FAAB/trades require user confirmation before execution.
 
-## Verified implementation state
+## HISTORICAL rc4.160 — Verified implementation state [SUPERSEDED for current implementation/gates]
 - Sleeper live roster sync works and displays the user's current lineup, bench and reserve.
 - Ownership is checked against all live Sleeper rosters before a player can be treated as a free agent.
 - Live context persists season rows plus available D/ST and K pools across rerenders.
@@ -42,7 +42,7 @@ Canonical continuation trigger: **PITTI AUTO**
 - Kader: Sleeper-like roster view, current starters first, bench/reserve, position emphasis, then **possible internal lineup changes** only.
 - Do not repeat the roster in Waiver/FA.
 - Waiver/FA: concrete roster moves, explicitly pairing ADD X / DROP Y; distinguish current-week value from long-term/ROS championship value.
-- Trades: targets and later concrete offers; distinguish value to us, value/need to opponent, fairness, acceptance chance and alternatives.
+- Trades: targets and concrete offers; distinguish value to us, value/need to opponent, fairness, acceptance chance and alternatives.
 - Draft surfaces remain historical/retrospective; season logic must not drift back to draft ADP as primary evidence.
 
 ## League / strategy constraints that still matter
@@ -52,7 +52,7 @@ Canonical continuation trigger: **PITTI AUTO**
 - User expects weekly D/ST streaming unless a defense earns a multiweek hold. Good matchup is valuable but minimum defense quality is mandatory.
 - K/DST expert panels should be developed for in-season accuracy; draft expert panels remain historical baseline, not automatically the current FA truth.
 
-## Highest-priority next work
+## HISTORICAL rc4.160 — Highest-priority next work [SUPERSEDED for current implementation/gates]
 1. **Waiver v2:** separate THIS WEEK vs ROS/Championship EV; incorporate current role/usage, snaps/routes/targets where applicable, depth chart, health, freshness, opponent, replacement cost, market urgency and concrete drop cost. Fail closed when evidence is stale/incomplete.
 2. Add FAAB only when waiver timing, league market/competing claims and evidence support a meaningful estimate; avoid fake precision.
 3. **Trade engine:** from target discovery to concrete offer construction: target -> best offer/package -> our roster/lineup gain -> opponent need/gain -> market/fairness -> estimated acceptance plausibility -> fallback offer. Boone ROS Trade Value can be an input, not sole authority; adapt to 10-team Half-PPR/replacement level.
@@ -71,7 +71,7 @@ Canonical continuation trigger: **PITTI AUTO**
 - Watcher/research-cache evidence remains gated by run-health/provenance; stale cache evidence cannot independently trigger a CLEAR ADD.
 - Draft history must remain immutable while current roster evolves separately.
 
-## Handoff verification performed
+## HISTORICAL rc4.160 — Handoff verification performed [SUPERSEDED for current implementation/gates]
 - Repository code inspected immediately before handoff.
 - Confirmed app version constant rc4.160.
 - Confirmed Week-1 Start/Sit v2 present.
@@ -85,6 +85,9 @@ Canonical continuation trigger: **PITTI AUTO**
 - **AUTO / AUTO BLOCK:** autonomous end-to-end work, no unnecessary interim status messages.
 - **STATUS:** concise state report only, not a trigger for new calculations.
 - **PITTI HANDOFF:** update/reconcile this canonical state, verify code/preview, then hand over.
+
+## HISTORICAL LOG — SUPERSEDED operational authority
+All following dated checkpoints through v233 retain their original facts and wording as history. CURRENT/OVERRIDE/next-gate claims inside them apply only at their original checkpoint; none override the v234 CURRENT section at EOF. Durable product invariants remain unless explicitly superseded.
 
 ## rc4.160 AUTO verification update — 2026-09-01
 - Project Guardrails PASS and release-contract-v2 PASS on commit 68e2980d45d64b4014df7874cdb58895349d5e8c.
@@ -525,7 +528,7 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Self-referential SHA rule: a tracked checkpoint cannot safely declare its own containing commit SHA as immutable current authority because any edit changes that SHA. Canonical Git authority is branch `main` + dynamically verified HEAD; recorded SHAs are historical/reconciled-base evidence only.
 
 
-## 2026-09-03 — v233 Codex second-audit stale-current repair
+## 2026-09-03 — v233 Codex second-audit stale-current repair [MERGED/HISTORICAL — SUPERSEDED by v234]
 - After v232 merged, the local Codex clone fast-forwarded to canonical main `e25dc0df1a534f5f2d8c79dff3d6d007603bafa6`; repository identity/origin/branch/working-tree checks passed.
 - The second read-only Codex authority audit correctly failed closed on residual CURRENT pointers: `NEW_CHAT_HANDOFF_CURRENT.md` still presented reconciled base `2471c366...` as current HEAD, and `PITTI_AUTO_PREFLIGHT.md` still labeled rc4.185 / PR #108 / rc4.183 DEVICE_REJECTED as CURRENT in two places.
 - v233 is checkpoint/governance repair only: no runtime/product semantics change, no PR #118 modification. Canonical runtime remains rc4.189; latest physical PASS rc4.188; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION; PR #118 remains isolated/open/unmerged/non-production authority.
@@ -533,3 +536,17 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - The first v233 CI attempt failed only because the handoff seal used a noncanonical pending state. The guard contract explicitly accepts `SUPERSEDED_PENDING_RESEAL` for pre-seal validation; v233 now uses that state. A later CI attempt exposed generation drift and the exact Library-persistence fail-closed phrase being absent from the updated lock; both are repaired without reverting product behavior.
 - Executable guard authority is extended to the v233 checkpoint gates so post-merge/default guard runs cannot reject the new canonical handoff state merely because their gate allowlist is stale.
 - Exact gate: all three strict checks on the final sealed v233 head must PASS, then merge v233, then the local Codex clone must pull canonical main and repeat the read-only authority audit before any writable Codex work.
+
+
+## v234 CURRENT — complete local post-merge authority repair
+Generation: `20260903T1200Z-v234`. Canonical source/runtime rc4.189 on main (verify HEAD dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL; PR #118 OPEN / UNMERGED / NON-PRODUCTION.
+
+The post-v233 read-only audit was performed on clean main `2749537945ec7e6b96d95e2f6b55a26e455124fa` and failed closed on CURRENT currentWork and BOOTSTRAP gate pointers that still required v233 CI/merge. PR #121 is already merged; these are stale post-merge metadata, not runtime failures.
+
+The repair reconciles duplicate status/gate/resume fields, AUTO queues/stop reason, Codex audit provenance, preflight, handoff, generation and seal. Older v230 queued CI and rc4.182 artifact references are historical only. Old CURRENT/OVERRIDE/supersession claims in chronological records and legacy draft handoffs cannot supersede this section. No historical facts are promoted to deployment or physical acceptance.
+
+Local branch: `pitti/v234-postmerge-authority-repair`, created from the verified main base above. Current gate: `LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION`. Review the locally validated post-merge authority repair. No v233 merge or strict-CI gate remains. Its local post-merge read-only audit already ran and failed closed on residual state pointers. This work is local only: no push, merge, deployment, network access or PR #118 changes are authorized.
+
+Local validation must include the full strict guard without bypass, relevant release/package behavioral tests, package re-extraction, and semantic cross-reference/negative regression checks. No remote CI, new device PASS, deployment or Library persistence is claimed. The local commit SHA is obtained from Git after validation and commit; it is not embedded as self-authority.
+
+Validation diagnosis: the initial local suite found five stale validator failures, not a runtime change: two LF-only source assertions failed on Windows CRLF; the ranking test still required a retired manual refresh; the DST test required the draft board superseded by merged rc4.189; the IR test pinned historical rc4.13. Validators retain their behavioral assertions and now verify the established automatic path/current waiver baseline/current authority. Seal hashing uses explicit UTF8_LF_TEXT canonical Git content across platforms; content changes still invalidate integrity.

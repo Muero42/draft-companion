@@ -1,13 +1,16 @@
 # Draft Companion – Final Draft Edition 2026
 > **Current source candidate:** v11.8.0-rc4.189 Season waiver-semantics candidate. It fails closed on stale skill-position swap evidence, refreshes the pre-Week-1 DST waiver board against LIVE Sleeper ownership, and gates QB2 opportunities with current weekly evidence. Physical Android rc4.188 has passed the live Waiver/FA route canary; rc4.169 remains accepted rollback authority until rc4.189 is physically verified.
 > **Season mode:** current Sleeper league state is Source of Truth; completed draft roster is immutable historical evidence only.
-> **rc4.158 bounded change:** adds a draft-day v4 expert baseline/delta workflow. Unchanged or failed/incomplete refreshes restore the prior verified baseline; panel rebuild can run cache-only and occurs only for baseline creation/repair or a real ranking delta.
-> **No model change:** expert membership, weights, panel ranks semantics, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
+> **HISTORICAL rc4.158 bounded change:** adds a draft-day v4 expert baseline/delta workflow. Unchanged or failed/incomplete refreshes restore the prior verified baseline; panel rebuild can run cache-only and occurs only for baseline creation/repair or a real ranking delta.
+> **HISTORICAL rc4.158 scope:** expert membership, weights, panel ranks semantics, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
 > **Draft locks:** exact canonical manager order/history; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; starter maxima are not roster caps.
 
-Built/source/package/deployment/device-observed/device-accepted are distinct states.
+Built/source/package/deployment/device-observed/device-accepted are distinct states. Canonical source/runtime rc4.189 on main (verify HEAD dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL; PR #118 OPEN / UNMERGED / NON-PRODUCTION. Current local checkpoint gate: `LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION`.
 
 Historical release-contract baseline canary retained for regression tooling: `v11.8.0-rc4.64`.
+
+## HISTORICAL/SUPERSEDED release log
+All release, Android, deployment, gate and CURRENT claims below are historical at the named version; they cannot override the current source/physical/rollback boundary above or PITTI_CURRENT_STATE.json. This includes the obsolete rc4.92 named-QB policy, old package counts, and old Season candidates.
 
 ### rc4.142 startup root-cause
 - rc4.138-rc4.140 contained a fatal missing comma between the Ray Davis and Tyler Warren `RESEARCH_RESIDUAL_PRIORS` entries. The HTML shell/version badge could load while the module failed before any UI handler bound, exactly matching the observed inert `Alles aktualisieren` button and `–` status fields.
@@ -86,7 +89,7 @@ v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96
 
 
 
-## Season Companion current candidate
+## HISTORICAL/SUPERSEDED Season Companion candidates
 - v11.8.0-rc4.171 — candidate: gives live-roster bootstrap first network priority, defers ranking/watcher background traffic until roster settles, keeps refresh buttons interactive while busy, and exposes 1/3–3/3 roster loading stages. Pending CI/preview/device acceptance.
 - v11.8.0-rc4.170 — candidate: direct bounded-timeout Sleeper roster bootstrap, explicit Kader refresh with busy/error feedback, and fresh-origin slot-to-roster mapping recovery; Cloudflare watcher remains evidence-only. Pending CI/preview/device acceptance.
 - v11.8.0-rc4.169 — candidate: fixes workspace leakage caused by author CSS overriding `hidden`, adds visible season ranking freshness/manual refresh with 12h controlled auto-refresh, and isolates Season render lanes so one Trade/FA renderer crash cannot blank unrelated live surfaces. Pending CI/preview/device acceptance.

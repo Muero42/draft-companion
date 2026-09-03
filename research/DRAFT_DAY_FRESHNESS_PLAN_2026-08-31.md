@@ -1,5 +1,7 @@
 # PITTI Draft-Day Freshness Plan — 2026-08-31
 
+> HISTORICAL/SUPERSEDED operational checkpoint: runtime, device, deployment, release/activation gates and CURRENT/OVERRIDE instructions below describe the original dated context only. They must not be executed as current work or override ../PITTI_CURRENT_STATE.json and ../NEW_CHAT_HANDOFF_CURRENT.md. Research evidence and durable invariants remain as provenance, subject to later explicit corrections.
+
 Real draft: 20:00 Germany local time.
 Accepted runtime: v11.8.0-rc4.104. Historical rollback reference: rc4.96.
 Purpose: maximize fresh information without destabilizing the frozen decision kernel.

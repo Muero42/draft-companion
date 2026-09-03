@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260903T0745Z-v233",
-  "updated_at": "2026-09-03T07:45:00Z",
+  "handoff_generation": "20260903T1200Z-v234",
+  "updated_at": "2026-09-03T09:59:50.439Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -9,20 +9,40 @@
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
     "source_candidate": "v11.8.0-rc4.189",
     "git_identity_rule": "Current main SHA is verified dynamically from git/GitHub; never hard-code the containing commit as self-authority.",
-    "reconciled_base_main": "2471c3666edaa313388d6b79c488940ac6b51f86"
+    "reconciled_base_main": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
+    "postmerge": {
+      "checkpoint": "v233",
+      "pr": 121,
+      "status": "MERGED/HISTORICAL",
+      "pending_merge": false,
+      "pending_strict_ci": false,
+      "evidence": "User-confirmed merged PR; local main base verified without network access."
+    },
+    "pr118": {
+      "status": "OPEN / UNMERGED / NON-PRODUCTION",
+      "branch": "pitti/rc4190-roster-week1-needs",
+      "evidence": "User-supplied authority; no remote verification or modification."
+    },
+    "local_repair": {
+      "generation": "20260903T1200Z-v234",
+      "branch": "pitti/v234-postmerge-authority-repair",
+      "base_main": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
+      "scope": "CHECKPOINT_GUARDRAIL_ONLY",
+      "remote_actions_authorized": false
+    }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.189 merged main; post-merge reseal candidate",
+    "season_candidate": "v11.8.0-rc4.189 merged source; physical rc4.189 acceptance remains pending",
     "candidate_branch": "main",
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.189",
     "ci": {
-      "candidate_package": "v230 head 86f4039 queued after guard syntax repair",
-      "release_contract_v2": "v230 head 86f4039 queued after guard syntax repair",
-      "project_guardrails": "v230 head 86f4039 queued after guard syntax repair",
+      "candidate_package": "NOT_REVERIFIED_OFFLINE",
+      "release_contract_v2": "NOT_REVERIFIED_OFFLINE",
+      "project_guardrails": "NOT_REVERIFIED_OFFLINE",
       "validated_code_head": null,
-      "scope": "rc4.189 post-merge reseal exact-head validation"
+      "scope": "Remote CI unknown in this offline repair; v233 is merged, not a pending CI gate. Local validation is separate."
     },
     "android_accepted": "v11.8.0-rc4.169",
     "preview_candidate": "rc4.189 on canonical main; current HEAD verified dynamically. Deployment parity requires re-verification before physical rc4.189 canary.",
@@ -84,7 +104,7 @@
       "merge_policy": "HISTORICAL_ONLY_DO_NOT_USE_AS_CURRENT_GATE"
     },
     "expert_phase_transition": {
-      "priority": "DEFER_UNTIL_LOADING_FIXED",
+      "priority": "Planning only; historical startup blocker superseded by rc4.188 physical PASS. No expert/runtime changes in this repair.",
       "pre_week1": "retain draft/preseason evidence while introducing in-season track record gradually",
       "noted_experts": [
         "Jody Smith (Draft Sharks individual; desired draft-source candidate)",
@@ -103,7 +123,7 @@
       "d1_status": "acute read/write amplification remediated; recent Cloudflare screenshots showed low current hourly usage",
       "parked_branch": "pitti-auto/v0.2.6-fa-trade-foundation",
       "parked_pr": 1,
-      "policy": "secondary lane only; do not let watcher/FA/trade foundation displace Companion startup fix priority"
+      "policy": "HISTORICAL external observation only; not reverified offline and not an active lane of this repair."
     },
     "pr99": {
       "branch": "pitti/rc4182-hydration-integrated",
@@ -114,7 +134,8 @@
         "project_guardrails": "PASS",
         "candidate_package": "FAIL_STALE_BOOTSTRAP_RENDER_ASSERT_REPAIRED"
       }
-    }
+    },
+    "package_reference_scope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.189 installable package claim"
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -127,7 +148,8 @@
   "live_roster_canary": {
     "required": false,
     "verification": "PASS_DEVICE_RC4160",
-    "observed": "Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR; transaction auto-detected without user disclosing drop."
+    "observed": "Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR; transaction auto-detected without user disclosing drop.",
+    "scope": "HISTORICAL rc4.160 transaction canary; latest physical evidence is runtime.latest_device_evidence"
   },
   "season_contract": {
     "live_roster_and_ownership": "Sleeper direct league/users/rosters state is current 10-team roster, manager, ownership, starter/IR and FAAB authority; current transaction round is optional market evidence; Watcher remains evidence-only.",
@@ -150,8 +172,8 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "V233_SEALED_PENDING_STRICT_CI",
-    "nextGate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT"
+    "status": "POSTMERGE_AUTHORITY_REPAIRED_LOCAL_ONLY",
+    "nextGate": "LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -162,31 +184,27 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "rc4.189 on canonical branch main; current HEAD must be verified dynamically. rc4.188 latest physical PASS; rc4.169 rollback; deployment parity unknown until reverified.",
+  "source_authority": "Canonical source/runtime rc4.189 on main (verify HEAD dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL; PR #118 OPEN / UNMERGED / NON-PRODUCTION.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "RUNNING",
+    "status": "PROJECT_MILESTONE_REACHED",
     "active": [],
     "ready": [],
-    "waiting_external": [
-      {
-        "id": "v233-strict-gates",
-        "lane": "handoff",
-        "goal": "Validate exact sealed v233 checkpoint-only stale-current-pointer repair with all three strict GitHub gates.",
-        "state": "waiting_external"
-      }
-    ],
-    "blocked_user": [
-      {
-        "id": "codex-local-reaudit-after-v233",
-        "lane": "codex",
-        "goal": "After v233 merges to main, user pulls local PITTI-Codex main and repeats the read-only authority audit.",
-        "state": "blocked_user"
-      }
-    ],
+    "waiting_external": [],
+    "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "v233-postmerge-local-readonly-audit",
+        "result": "FAIL_CLOSED on verified clean main 2749537945ec7e6b96d95e2f6b55a26e455124fa: residual v233 pending CI/merge pointers; superseded by this local authority repair.",
+        "at": "2026-09-03T09:59:50.439Z"
+      },
+      {
+        "id": "pr121-v233-merge",
+        "result": "MERGED/HISTORICAL; user-confirmed before this local audit. No new remote CI evidence claimed.",
+        "at": "2026-09-03T09:59:50.439Z"
+      },
       {
         "id": "codex-second-readonly-audit",
         "result": "FAIL_CLOSED as designed after pulling main e25dc0d: stale CURRENT pointers found in NEW_CHAT_HANDOFF_CURRENT.md and PITTI_AUTO_PREFLIGHT.md; no Codex writes performed.",
@@ -300,31 +318,76 @@
     ],
     "stop_evaluation": {
       "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "Only after v233 strict gates pass and merge completes: local Codex clone must pull canonical main and repeat read-only authority audit before writable Codex work."
+      "code": "PROJECT_MILESTONE_REACHED",
+      "reason": "Bounded local authority repair is ready for review after local validation and semantic reaudit. Remote work and PR #118 are outside this authorization; no v233 wait remains."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260903T0745Z-v233",
+    "generation": "20260903T1200Z-v234",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "After all three strict gates PASS, merge v233; then local Codex pulls main and repeats the read-only authority audit before writable work.",
+    "resume": "Review the locally validated post-merge authority repair. No v233 merge or strict-CI gate remains. Its local post-merge read-only audit already ran and failed closed on residual state pointers. This work is local only: no push, merge, deployment, network access or PR #118 changes are authorized.",
     "transaction_in_progress": false
   },
-  "status": "V233_SEALED_PENDING_STRICT_CI",
-  "gate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT",
-  "nextGate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT",
-  "handoffGeneration": "20260903T0745Z-v233",
+  "status": "POSTMERGE_AUTHORITY_REPAIRED_LOCAL_ONLY",
+  "gate": "LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION",
+  "nextGate": "LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION",
+  "handoffGeneration": "20260903T1200Z-v234",
   "codex": {
-    "status": "SECOND_READ_ONLY_AUDIT_FAIL_CLOSED_ON_STALE_CURRENT_POINTERS",
+    "status": "POSTMERGE_READONLY_AUDIT_FAIL_CLOSED_REPAIRED_LOCALLY",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
-    "local_main_verified": "e25dc0df1a534f5f2d8c79dff3d6d007603bafa6",
-    "working_tree": "clean",
-    "audit_result": "FAIL_CLOSED_CORRECTLY_ON_NEW_CHAT_HANDOFF_AND_PREFLIGHT_STALE_CURRENT_AUTHORITY",
+    "local_main_verified": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
+    "working_tree_at_precheck": "clean",
+    "audit_result": "FAIL_CLOSED_ON_RESIDUAL_POSTMERGE_STATE_POINTERS",
+    "audit_findings": [
+      "PITTI_CURRENT_STATE.json:153-154 v233 pending strict CI/merge",
+      "PITTI_NEW_CHAT_BOOTSTRAP.md:9 v233 merge still current"
+    ],
     "work_pr": 118,
     "work_branch": "pitti/rc4190-roster-week1-needs",
-    "work_package_authority": "PR_ONLY_NOT_MAIN"
+    "work_package_authority": "PR_ONLY_NOT_MAIN",
+    "repair_branch": "pitti/v234-postmerge-authority-repair"
+  },
+  "historical_superseded": {
+    "classification": "HISTORICAL/SUPERSEDED; never current authority or executable queue",
+    "v233_premerge": {
+      "status": "V233_SEALED_PENDING_STRICT_CI",
+      "gate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT",
+      "ci": {
+        "candidate_package": "v230 head 86f4039 queued after guard syntax repair",
+        "release_contract_v2": "v230 head 86f4039 queued after guard syntax repair",
+        "project_guardrails": "v230 head 86f4039 queued after guard syntax repair",
+        "validated_code_head": null,
+        "scope": "rc4.189 post-merge reseal exact-head validation"
+      },
+      "auto_waiting": [
+        {
+          "id": "v233-strict-gates",
+          "lane": "handoff",
+          "goal": "Validate exact sealed v233 checkpoint-only stale-current-pointer repair with all three strict GitHub gates.",
+          "state": "waiting_external"
+        }
+      ],
+      "auto_blocked": [
+        {
+          "id": "codex-local-reaudit-after-v233",
+          "lane": "codex",
+          "goal": "After v233 merges to main, user pulls local PITTI-Codex main and repeats the read-only authority audit.",
+          "state": "blocked_user"
+        }
+      ],
+      "codex": {
+        "status": "SECOND_READ_ONLY_AUDIT_FAIL_CLOSED_ON_STALE_CURRENT_POINTERS",
+        "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
+        "local_main_verified": "e25dc0df1a534f5f2d8c79dff3d6d007603bafa6",
+        "working_tree": "clean",
+        "audit_result": "FAIL_CLOSED_CORRECTLY_ON_NEW_CHAT_HANDOFF_AND_PREFLIGHT_STALE_CURRENT_AUTHORITY",
+        "work_pr": 118,
+        "work_branch": "pitti/rc4190-roster-week1-needs",
+        "work_package_authority": "PR_ONLY_NOT_MAIN"
+      }
+    }
   }
 }

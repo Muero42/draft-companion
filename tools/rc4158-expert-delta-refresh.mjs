@@ -1,6 +1,7 @@
 import fs from 'node:fs';
 
-const app=fs.readFileSync('app.js','utf8');
+// Preserve exact multi-line assertions while accepting Git's Windows checkout EOL.
+const app=fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n');
 const html=fs.readFileSync('index.html','utf8');
 const sw=fs.readFileSync('sw.js','utf8');
 const manifest=fs.readFileSync('manifest.webmanifest','utf8');

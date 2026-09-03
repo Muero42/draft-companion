@@ -1,16 +1,16 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-03T07:45:00Z",
+  "updatedAt": "2026-09-03T09:59:50.439Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "v233 audit repair: canonical runtime rc4.189 on branch main; exact main HEAD verified dynamically. rc4.188 latest physical PASS; rc4.169 rollback; deployment parity UNKNOWN. Second local Codex read-only audit correctly found stale CURRENT pointers in NEW_CHAT_HANDOFF_CURRENT.md and PITTI_AUTO_PREFLIGHT.md. PR #118 remains isolated/unmerged/non-production authority. Library persistence remains fail-closed: never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Canonical source/runtime rc4.189 on main (verify HEAD dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL; PR #118 OPEN / UNMERGED / NON-PRODUCTION. Review the locally validated post-merge authority repair. No v233 merge or strict-CI gate remains. Its local post-merge read-only audit already ran and failed closed on residual state pointers. This work is local only: no push, merge, deployment, network access or PR #118 changes are authorized. Library persistence remains fail-closed: never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
-    "reconciledBaseMain": "2471c3666edaa313388d6b79c488940ac6b51f86"
+    "reconciledBaseMain": "2749537945ec7e6b96d95e2f6b55a26e455124fa"
   },
   "runtime": {
     "appVersion": "v11.8.0-rc4.189",
@@ -19,12 +19,12 @@
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
     "latestAndroidObserved": "v11.8.0-rc4.188 PASS: Waiver/FA route, live ownership, kicker isolation and active-drop semantics physically verified",
-    "latestPreinstallVerified": "rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
-    "latestResearchChallenger": "v11.8.0-rc4.107",
-    "preinstallArtifact": "rc4.189 merged source; post-merge reseal/device canary pending",
+    "latestPreinstallVerified": "HISTORICAL/SUPERSEDED: rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
+    "latestResearchChallenger": "HISTORICAL/SUPERSEDED: v11.8.0-rc4.107",
+    "preinstallArtifact": "HISTORICAL rc4.182 package reference only; no verified rc4.189 installable artifact is asserted",
     "preinstallSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "preinstallRuntimeFiles": 13,
-    "latestSourceRegressionVerified": "actual visible live-surface expert matrix contract PASS",
+    "latestSourceRegressionVerified": "HISTORICAL prior regression observation; current local checks must run on repaired bytes",
     "latestDeployedCandidate": "UNKNOWN_REQUIRES_REVERIFICATION; do not infer deployment from source main.",
     "latestAndroidVerified": "v11.8.0-rc4.188 Waiver/FA route and IR/drop semantics physically PASS; rc4.169 remains rollback authority",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
@@ -32,7 +32,7 @@
     "deployedPagesAppByteParityWithMain": null,
     "preinstallReferenceRun": 33597607588,
     "preinstallReferenceArtifactId": 9833935479,
-    "preinstallHashSemantics": "GitHub candidate-package artifact digest; package/re-extract PASS.",
+    "preinstallHashSemantics": "HISTORICAL rc4.182 GitHub candidate-package artifact digest; not current rc4.189 package/deployment evidence.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.188",
     "latestAndroidFunctionalVerified": "v11.8.0-rc4.188 Waiver/FA + live ownership + kicker isolation + active-drop/IR semantics PASS",
     "testChallengerAndroidObserved": false,
@@ -61,7 +61,8 @@
       "ghPagesRuntimeFiles": 13,
       "ghPagesByteParityWithCandidate": true,
       "androidObserved": true,
-      "androidAccepted": false
+      "androidAccepted": false,
+      "classification": "HISTORICAL/SUPERSEDED; nested merge, gate, parity and device values apply only to rc4.99"
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.169",
     "unreleasedMainDelta": "none known on canonical main; PR #118 is unmerged isolated Season/Codex development.",
@@ -69,7 +70,7 @@
     "mainGhPagesParity": null,
     "androidVerified": false,
     "androidAcceptance": "rc4.188 physical Waiver/FA PASS; rc4.189 physical acceptance pending",
-    "devicePromotionPolicy": "FORBIDDEN until v230 rc4.189 post-merge reseal exact-head strict gates PASS and deployment parity is verified; then one physical rc4.189 canary.",
+    "devicePromotionPolicy": "FORBIDDEN in this local repair. Any future rc4.189 promotion requires separately authorized exact-source validation, verified deployment parity and one physical canary; v230/v233 are historical checkpoints, not pending merge gates.",
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate"
   },
@@ -260,12 +261,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "V233_SEALED_PENDING_STRICT_CI",
-    "nextGate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT"
+    "status": "POSTMERGE_AUTHORITY_REPAIRED_LOCAL_ONLY",
+    "nextGate": "LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION"
   },
-  "status": "V233_SEALED_PENDING_STRICT_CI",
-  "gate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT",
-  "nextGate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT",
+  "status": "POSTMERGE_AUTHORITY_REPAIRED_LOCAL_ONLY",
+  "gate": "LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION",
+  "nextGate": "LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -274,15 +275,15 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260903T0745Z-v233",
+    "generation": "20260903T1200Z-v234",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "After all three strict gates PASS, merge v233; then local Codex pull/read-only re-audit.",
+    "resume": "Review the locally validated post-merge authority repair. No v233 merge or strict-CI gate remains. Its local post-merge read-only audit already ran and failed closed on residual state pointers. This work is local only: no push, merge, deployment, network access or PR #118 changes are authorized.",
     "transaction_in_progress": false
   },
   "expertV45": {
-    "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
+    "status": "V4_PRIMARY_V5_CHALLENGER; rc4.131 device and 29/30 backup references are HISTORICAL evidence, not latest Android authority",
     "v3": {
       "status": "FROZEN_BASELINE_DEFAULT_FAILSAFE"
     },
@@ -298,7 +299,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260903T0745Z-v233",
+  "handoff_generation": "20260903T1200Z-v234",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -333,5 +334,5 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260903T0745Z-v233"
+  "handoffGeneration": "20260903T1200Z-v234"
 }
