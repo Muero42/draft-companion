@@ -260,10 +260,10 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "V233_STALE_CURRENT_POINTER_REPAIR_VALIDATING",
+    "status": "V233_SEALED_PENDING_STRICT_CI",
     "nextGate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT"
   },
-  "status": "V233_STALE_CURRENT_POINTER_REPAIR_VALIDATING",
+  "status": "V233_SEALED_PENDING_STRICT_CI",
   "gate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT",
   "nextGate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT",
   "deploymentUpdateContract": {
@@ -275,11 +275,11 @@
   },
   "handoff": {
     "generation": "20260903T0745Z-v233",
-    "status": "IN_PROGRESS",
-    "ready": false,
-    "secondPass": false,
-    "resume": "Complete v233 strict gates and merge; then local Codex pull/read-only re-audit.",
-    "transaction_in_progress": true
+    "status": "PASS",
+    "ready": true,
+    "secondPass": true,
+    "resume": "After all three strict gates PASS, merge v233; then local Codex pull/read-only re-audit.",
+    "transaction_in_progress": false
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER_RC4131_ANDROID; LATEST_BACKUP_29_OF_30_NO_PROMOTION",
