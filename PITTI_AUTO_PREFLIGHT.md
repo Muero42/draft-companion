@@ -80,20 +80,21 @@ Otherwise continue AUTO.
 - Geno Smith and Aaron Rodgers are explicit user hard exclusions. Never recommend or draft either player.
 - Excess WR depth must materially reduce redundant WR utility.
 - Expert-v2: Brown excluded; Erickson challenger; Koerner no current-draft acquisition effort; Mariano availability already solved; Draft Sharks counted as one correlated family; availability-only automatic restoration of the old Weisse/Gianni/Bobal trio rejected; Ryan Weisse or others may be freshly qualified individually with evidence.
-- Frozen Expert-v2 weights/profile semantics in `PITTI_EXECUTION_LOCK.json` are authoritative for the current experiment; do not invent, silently renormalize, or retune them without new promotion evidence.
+- Frozen Expert-v2 weights/profile semantics in `PITTI_EXECUTION_LOCK.json` are preserved for the historical Expert-v2 experiment; do not invent, silently renormalize, or retune them without new promotion evidence.
 
 
 - Active-draft decisionFixtures must never be deleted/pruned to recover browser quota; old history/secondary evidence may yield first.
 - A full paired 15-round v4/v5 mock is invalid unless the exported backup contains exactly 30 active-draft fixtures covering all 15 own picks twice.
 
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
-- Current handoff generation = **20260903T0745Z-v233**. This is a checkpoint-only stale-current-pointer repair triggered by the second local Codex read-only audit.
+- Current handoff generation = **20260903T1200Z-v234**. This checkpoint records the repair after the performed v233 read-only audit failed closed on residual state pointers.
 - Current mode = **POST_DRAFT_SEASON_COMPANION**.
 - Canonical source/runtime = **rc4.189 on branch main**. Verify the exact current main HEAD dynamically; a tracked checkpoint must not hard-code its own containing commit as immutable current authority.
 - Latest physical Android = **rc4.188 PASS** for Waiver/FA routing, live Sleeper ownership, kicker isolation and ACTIVE-drop/IR semantics. Accepted rollback = **rc4.169**.
 - Deployment parity = **UNKNOWN_REQUIRES_REVERIFICATION**. Never infer deployment/device acceptance from source merge.
-- PR #120 is **MERGED/HISTORICAL checkpoint work**, never an open current gate.
-- PR #118 is **OPEN / UNMERGED / NON-PRODUCTION AUTHORITY**, isolated rc4.190 Codex Season Decision Engine work. Do not merge/deploy it until its work package and strict gates complete.
+- PR #120 and PR #121 / v233 are **MERGED/HISTORICAL checkpoint work**, never open current gates.
+- Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
+- Canonical source/runtime rc4.189 (canonical branch main; verify Git/GitHub authority dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.
 - Live Sleeper direct league/users/rosters state = current roster/ownership/manager/slot/FAAB authority; Watcher evidence-only; completed draft immutable history.
 - AUTO/AUTO BLOCK = continuous same-turn execution while safe positive-value work exists: no interim progress/status/acknowledgement, no empty response after tool work, no promise-only “AUTO läuft weiter”; checkpoint + re-inventory after every package; external wait blocks only its dependent lane.
 - STATUS = report-only and must not trigger tools/polling/work.
@@ -105,8 +106,8 @@ Otherwise continue AUTO.
 - A normal final, status final, acknowledgement final, **or empty final after tool work** is forbidden while executable autonomous work remains.
 - Because execution cannot continue after the assistant turn is ended without another user message, early turn termination is a functional AUTO failure, not a cosmetic response issue.
 - Valid turn end requires one of: unavoidable user/device input; approval-gated consequential action; unsafe unresolved contradiction; material end result with no higher-value package remaining; or demonstrated exhaustion of all safe positive-value independent lanes.
-- Draft-day correction supersedes rc4.92 for these two names: Geno Smith and Aaron Rodgers are explicit user hard exclusions. Exactly-one-QB remains the user roster strategy after QB1.
-- v145 takeover canary: rc4.94 source/package/deployment/Android Pick-9 presentation PASS. Kenneth Walker must not receive a player-specific boost; the fix remains generic normal-cut-first Top-10 selection.
+- Draft-day correction supersedes rc4.92 for these two names: Geno Smith and Aaron Rodgers are explicit user hard exclusions. Exactly-one-QB remains the historical draft strategy after QB1; the current Season contract permits evidence-backed QB2 opportunities.
+- HISTORICAL/SUPERSEDED v145 takeover canary: rc4.94 source/package/deployment/Android Pick-9 presentation PASS. Kenneth Walker must not receive a player-specific boost; the fix remains generic normal-cut-first Top-10 selection.
 
 
 ## AUTO BLOCK — HARD OUTPUT GATE
@@ -119,7 +120,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 
 
 ## HISTORICAL v169 TAKEOVER CANARIES — NOT CURRENT AUTHORITY
-- Historical record only: generation `20260829T1244Z-v178` belonged to that old takeover and MUST NOT override current generation 20260902T1325Z-v229.
+- Historical record only: generation `20260829T1244Z-v178` belonged to that old takeover and MUST NOT override the then-current historical generation 20260902T1325Z-v229.
 - main/source/deployment/accepted Android authority = rc4.104.
 - Exact 13-file main/gh-pages runtime parity = PASS.
 - Android rc4.104 observed; completed post-draft Snapshot path = PASS.
@@ -141,7 +142,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - v169 rc4.106 canary: embedded Expert-v2/v3 individual rows must appear in Snapshot Coach Top 8; old `KEINE VERIFIZIERT` live-rankCache-only filter is rejected. PR #47 all gates PASS; main merge 0818bc9632eca79c4d055d444a6eae0af53f3a9f; 13/13 pages parity PASS.
 
 
-## 10. v194 CURRENT OVERRIDE — rc4.130
+## 10. v194 CURRENT OVERRIDE — rc4.130 [HISTORICAL/SUPERSEDED — cannot override section 8]
 - This section supersedes older rc4.129/v169 current pointers above; historical sections remain for regression provenance only.
 - Current source/deployment authority = **v11.8.0-rc4.130**; latest fully operational device-observed v4/v5 baseline = **rc4.126**.
 - rc4.129 device mock exposed a fail-closed Decision-Evidence storage error at pick 12. Backup `draft-companion-v7-backup-2026-08-30T13-40-34-982Z.json` contains 4 current-draft fixtures = paired v4/v5 at picks 9/12, plus 22 historical fixtures.
@@ -154,7 +155,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - v4 PRIMARY / v5 CHALLENGER / v3 failsafe; no weight/source retune.
 
 
-## 11. v195 CURRENT OVERRIDE — backup 16-02-06-862Z
+## 11. v195 CURRENT OVERRIDE — backup 16-02-06-862Z [HISTORICAL/SUPERSEDED — cannot override section 8]
 - This section supersedes older rc4.129/30-fixture continuation pointers above.
 - Runtime remains **rc4.130**; no phone update is required for the audit tool.
 - Latest canonical backup is **draft-companion-v7-backup-2026-08-30T16-02-06-862Z.json**.
@@ -164,7 +165,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - Partial 14-pair evidence does not justify a last-minute model retune. **v4 remains PRIMARY, v5 CHALLENGER, v3 failsafe**.
 
 
-## v205 CURRENT OVERRIDE — deep handoff anti-regression
+## v205 CURRENT OVERRIDE — deep handoff anti-regression [HISTORICAL/SUPERSEDED — cannot override section 8]
 - Supersedes older rc4.129/130/131 continuation pointers above where they conflict.
 - First gate is **RC4.132_BUILD_AND_REGRESSION**.
 - rc4.132 scope is mandatory: live-autodraft Return-v2 + Pick32 Nabers/Javonte + exact 2026 manager-order regression + active-manager history repair.
@@ -173,14 +174,14 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - After rc4.132 device acceptance, execute final draft-day freshness agenda. The separate real-draft chat uses `PITTI_DRAFT_CHAT_BOOTSTRAP.md` and is execution-only.
 
 
-## v207 CURRENT OVERRIDE — QB-rule correction
+## v207 CURRENT OVERRIDE — QB-rule correction [HISTORICAL/SUPERSEDED — cannot override section 8]
 - Generation: `20260830T1822Z-v207`.
 - Draft-day authority: Geno Smith and Aaron Rodgers are explicit user hard exclusions. Any older checkpoint saying otherwise is superseded.
 - Correct rule: both are explicit user hard exclusions and must not appear on the user's recommendation/draft surface. This user-specific exclusion does not imply a generic league-wide QB2 rule.
 - First gate remains **RC4.132_BUILD_AND_REGRESSION**; exact order/history locks remain unchanged.
 
 
-## 12. v212 CURRENT OVERRIDE — rc4.142 TIER PAYLOAD ROOT CAUSE
+## 12. v212 CURRENT OVERRIDE — rc4.142 TIER PAYLOAD ROOT CAUSE [HISTORICAL/SUPERSEDED — cannot override section 8]
 - Generation: `20260831T0735Z-v212`. This section supersedes all older current-version/first-gate/device-authority pointers above where they conflict.
 - Android already runs **v11.8.0-rc4.142**.
 - Startup, refresh, Analyze and 125/125 individual descriptions work; Tyler Warren text is restored.
@@ -194,7 +195,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - After tier acceptance: deferred 5-WR analysis, then final draft-day freshness/ADP/expert-board/late-RB/smoke freeze.
 
 
-## 13. v214 CURRENT OVERRIDE — rc4.153 DEVICE ACCEPTANCE THEN FREEZE
+## 13. v214 CURRENT OVERRIDE — rc4.153 DEVICE ACCEPTANCE THEN FREEZE [HISTORICAL/SUPERSEDED — cannot override section 8]
 - Generation: `20260831T1028Z-v214`. This section supersedes every older current-version / first-gate / device-authority pointer above.
 - Accepted Android/PWA authority = **v11.8.0-rc4.152**.
 - Source + deployed runtime candidate = **v11.8.0-rc4.153**.
@@ -208,7 +209,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - Exact manager order/history, no K/DST, exactly one QB, Geno Smith/Aaron Rodgers hard exclusions, starter maxima not roster caps remain immutable.
 
 
-## 14. v215 CURRENT OVERRIDE — rc4.158 ACCEPTED / PRE-WAIVER HANDOFF
+## 14. v215 CURRENT OVERRIDE — rc4.158 ACCEPTED / PRE-WAIVER HANDOFF [HISTORICAL/SUPERSEDED — cannot override section 8]
 - Generation: `20260831T1455Z-v215`. This section supersedes every older current-version / first-gate / device-authority pointer above.
 - Accepted Android/PWA authority = **v11.8.0-rc4.158**.
 - Source/deployment authority = **main/gh-pages v11.8.0-rc4.158**, exact **13/13 runtime parity PASS**.
@@ -225,7 +226,7 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - Fresh real-draft chat is created only after a FINAL PRE-DRAFT HANDOFF around 19:45–19:50. That handoff must carry final expert delta + post-waiver deltas + final injury/legal/transaction status and execution locks.
 
 
-## 15. v217 CURRENT OVERRIDE — POST-DRAFT SEASON COMPANION / rc4.161
+## 15. v217 CURRENT OVERRIDE — POST-DRAFT SEASON COMPANION / rc4.161 [HISTORICAL/SUPERSEDED — cannot override section 8]
 - Generation: `20260901T1058Z-v217`. This section supersedes every older current-version, first-gate, generation, draft-day and device-test pointer above where they conflict.
 - Canonical mode = **POST_DRAFT_SEASON_COMPANION**.
 - Branch `season-companion-rc4.159` is historical naming only; current source/preview candidate = **v11.8.0-rc4.161**.
@@ -246,14 +247,14 @@ When the user writes `AUTO BLOCK`, enter silent execution mode:
 - Visible output requires `active=[]`, `ready=[]`, and `stop_evaluation.allowed=true` with an approved stop code.
 - The platform cannot continue tool work after a visible assistant turn ends; therefore a promise that AUTO “läuft weiter” after sending such a message is functionally false.
 
-## v223 NO-TRIAL DEVICE PROMOTION OVERRIDE
+## v223 NO-TRIAL DEVICE PROMOTION OVERRIDE [HISTORICAL/SUPERSEDED — cannot override section 8]
 - Current candidate = v11.8.0-rc4.176; rc4.175 is rejected for proven runtime truncation/workspace-router loss.
 - Device promotion is forbidden while any automated candidate, package, deployment, workspace-navigation, startup/interactions, or strict reseal gate is not PASS.
 - A device check is not a debugging instrument. After all server-side gates pass, exactly one final confirmation is permitted.
 - Runtime truncation regression: app.js must remain >380k and preserve setWorkspace + all workspace tab wiring.
 
 
-## v224 CURRENT OVERRIDE — RC4.176 OBSERVED, NOT ACCEPTED
+## v224 CURRENT OVERRIDE — RC4.176 OBSERVED, NOT ACCEPTED [HISTORICAL/SUPERSEDED — cannot override section 8]
 Generation: `20260901T2210Z-v224`. Supersedes older current-version/device/gate/handoff pointers above where conflicting. Physical Android at 22:09 CEST visibly runs rc4.176, but captured Kader still has Live-State '-' and Live-Kader loading; this is observation only. Accepted rollback remains rc4.169. First new-chat gate: verify v224 against actual main/CI/deploy, then browser-equivalent Season E2E before any further device action. AUTO/AUTO BLOCK: no interim status/progress/ack, no empty response, no “AUTO läuft weiter”; re-inventory and continue while executable work exists. STATUS report-only.
 
 ## 4B. DEVICE EVIDENCE + EXTERNAL WAIT HARDENING — 2026-09-02
@@ -265,7 +266,7 @@ Generation: `20260901T2210Z-v224`. Supersedes older current-version/device/gate/
 - `STATUS` is strictly report-only. It must not be needed to cancel, unstick, or resume an AUTO turn.
 
 
-## v229 HANDOFF SUPERSESSION — 2026-09-02 [HISTORICAL — SUPERSEDED BY v230/v231/v232/v233]
+## v229 HANDOFF SUPERSESSION — 2026-09-02 [HISTORICAL — SUPERSEDED BY v230/v231/v232/v233] [HISTORICAL/SUPERSEDED — cannot override section 8]
 - Generation `20260902T1325Z-v229` supersedes v227/v228 current pointers wherever they conflict.
 - Any earlier CURRENT statement saying PR #102/rc4.184 is open, or generation v227 is current, is historical only.
 - Historical v229 release lane was rc4.185 merged baseline + PR #108 OPEN/UNMERGED; that lane is fully superseded and MUST NOT be interpreted as current authority.

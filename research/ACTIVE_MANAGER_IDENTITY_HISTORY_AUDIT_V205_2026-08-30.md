@@ -1,5 +1,7 @@
 # PITTI active-manager identity/history audit — v205 — 2026-08-30
 
+> HISTORICAL/SUPERSEDED operational checkpoint: runtime, device, deployment, release/activation gates and CURRENT/OVERRIDE instructions below describe the original dated context only. They must not be executed as current work or override ../PITTI_CURRENT_STATE.json and ../NEW_CHAT_HANDOFF_CURRENT.md. Research evidence and durable invariants remain as provenance, subject to later explicit corrections.
+
 ## Canonical 2026 draft order — HARD LOCK
 Source of truth is the user-confirmed corrected authority, not older chat memory, stale localStorage, or rc4.84-era text:
 

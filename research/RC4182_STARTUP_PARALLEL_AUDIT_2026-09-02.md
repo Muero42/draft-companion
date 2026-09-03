@@ -1,5 +1,7 @@
 # rc4.182 startup parallel audit — 2026-09-02
 
+> HISTORICAL/SUPERSEDED operational checkpoint: runtime, device, deployment, release/activation gates and CURRENT/OVERRIDE instructions below describe the original dated context only. They must not be executed as current work or override ../PITTI_CURRENT_STATE.json and ../NEW_CHAT_HANDOFF_CURRENT.md. Research evidence and durable invariants remain as provenance, subject to later explicit corrections.
+
 ## Authority
 Physical rc4.182 remains DEVICE_REJECTED: Live-State '-', roster loading, experts not initialized. rc4.169 remains accepted rollback authority. No device promotion from this document.
 

@@ -25,6 +25,8 @@ on:
       - 'decision-policy.js'
       - 'tools/analyze-decision-evidence.mjs'
       - 'tools/pitti_guardrail_check.mjs'
+      - 'tools/postmerge-authority-contract.mjs'
+      - 'tools/postmerge-authority-regression.mjs'
       - 'tools/runtime-startup-contract.mjs'
       - 'tools/pre-draft-freshness-gate.mjs'
       - 'tools/emergency-queue-contract.mjs'
@@ -67,6 +69,8 @@ jobs:
         run: echo retired
       - name: v4/v5 backup evidence quality audit self-test
         run: node tools/audit-v45-backup.mjs --self-test
+      - name: Post-merge authority regression
+        run: node tools/postmerge-authority-regression.mjs
       - name: PITTI execution-lock and anti-regression gate
         env:
           PITTI_SKIP_SEAL_INTEGRITY: ${{ github.event_name == 'pull_request' && '1' || '0' }}

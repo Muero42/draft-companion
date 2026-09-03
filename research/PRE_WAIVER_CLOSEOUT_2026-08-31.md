@@ -1,5 +1,7 @@
 # PITTI PRE-WAIVER CLOSEOUT — 2026-08-31 ~16:50 CEST
 
+> HISTORICAL/SUPERSEDED operational checkpoint: runtime, device, deployment, release/activation gates and CURRENT/OVERRIDE instructions below describe the original dated context only. They must not be executed as current work or override ../PITTI_CURRENT_STATE.json and ../NEW_CHAT_HANDOFF_CURRENT.md. Research evidence and durable invariants remain as provenance, subject to later explicit corrections.
+
 Runtime: rc4.158 accepted/frozen; v4 expert baseline 9/9 complete.
 
 ## Freshness scan result
