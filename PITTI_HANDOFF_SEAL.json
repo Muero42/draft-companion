@@ -76,7 +76,7 @@
     ".github/workflows/release-contract-v2-package.yml": "a6744d2c4618cc2c6d75ae71cf3528c731f98107",
     ".github/workflows/release-contract-v2.yml": "85d121480ed4a146f87e4bc2c1ddea7d7285c7a5",
     "tools/season-adversarial-review-regression.mjs": "cdda23901f6f25dd511c74380633bb7afcd52f06",
-    "tools/season-browser-review.mjs": "788e54b21df9160b511b2f78f37ad902177e7560",
+    "tools/season-browser-review.mjs": "13181178e8e21f326364b40d37b1cf46e6eff12b",
     "tools/season-lineup-waiver-routing-regression.mjs": "11bef477231c65ef57ae647e01a7e4db173f44c4",
     "package.json": "2ee9adcf6c50a8fcb3b502d1474dfe43df4beb61",
     "package-lock.json": "63d367a19852f82904990721cc253e059d9acc61",
