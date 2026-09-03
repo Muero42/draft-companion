@@ -1,20 +1,20 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260902T1915Z-v230",
-  "created_at": "2026-09-02T19:27:00Z",
+  "handoff_generation": "20260903T0700Z-v231",
+  "created_at": "2026-09-03T07:12:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "e63b9847337b5631061844e1ab203f0ddf3c7aa0",
-    "PITTI_EXECUTION_LOCK.json": "ac991708562fd40e8322372541571cca44a547a4",
-    "PITTI_COMMAND_CONTRACTS.json": "32b66f181d1e52707d6fdf9f7cc1baccb0fd4031",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "d131a358ab38c551917b2ffdebf7f3d2a1046bb0",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "64adc4fb880551d3a121e93dd53716c7170202e6",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "3ce690f9624a6df41d115983b17373114f81b5ec",
+    "PITTI_CURRENT_STATE.json": "df154ec02eee3dba419a3f04a58eabc58382da44",
+    "PITTI_EXECUTION_LOCK.json": "1423399cde26973eb446b220a951e4cbbb9eb108",
+    "PITTI_COMMAND_CONTRACTS.json": "04098603b5235bc4dd6a1e6a4a8801c6c81c7362",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "d82b2acf76a731e58659485fb0e23e587391bdf2",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "e5b1f634119e7ca9da9a78c8947f24f71a69f5eb",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "cc2440c4198ef39431dbf5a11f486466471ec31a",
     "PITTI_AUTO_PREFLIGHT.md": "63ff09db73141ef98dc4d1152bfb5070dd8895cc",
-    "PITTI_PROJECT_STATE.md": "43b6cddb79c19ff06e74755b70e047360408d162",
+    "PITTI_PROJECT_STATE.md": "ef63b4b411b879651dc9e6b09a8721e6080d696d",
     "README.md": "918b631845d99902ac4ffc30cc51c74230894293",
     "app.js": "7c386fc03de3e956801770215fa5f2b05226b021",
     "live-surface-v3.js": "f2b718382d9d36ef38cfeb281e7348ba337c459e",
@@ -28,13 +28,13 @@
   },
   "branch_locks": {
     "repo": "Muero42/draft-companion",
-    "branch": "pitti/rc4189-postmerge-reseal",
+    "branch": "pitti/rc4189-authority-reconcile",
     "source_baseline": "v11.8.0-rc4.189",
-    "pr108": "HISTORICAL_MERGED",
-    "latest_main": "88c007732f94df7b1624a6c05a0b16af4d33d94f",
+    "base_main": "0c110a5dc6688ebc840da8bb122efcc5d50f77e6",
     "latest_physical_android": "v11.8.0-rc4.188 WAIVER_CANARY_PASS",
     "accepted_rollback": "v11.8.0-rc4.169",
-    "next_release": "v11.8.0-rc4.189_POSTMERGE_RESEAL_THEN_DEVICE_CANARY"
+    "codex_work": "PR #118 OPEN / UNMERGED",
+    "deployment_parity": "UNKNOWN_REQUIRES_REVERIFICATION"
   },
   "checks": {
     "generation_alignment": true,
@@ -53,6 +53,6 @@
     "ir_not_capacity": true,
     "device_trial_and_error_forbidden": true
   },
-  "exact_gate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY",
-  "note": "v230 canonical post-merge rc4.189 reseal after guard syntax repair. PASS certifies handoff consistency; exact-head strict CI and deployment parity remain required before one physical rc4.189 canary."
+  "exact_gate": "MERGE_V231_THEN_CODEX_READ_ONLY_REAUDIT",
+  "note": "v231 canonical checkpoint authority reconciled after independent Codex read-only audit. Candidate-preflight strict gates passed on a6deb3e; this seal binds the final checkpoint files. Merge only after final sealed-head strict gates pass."
 }
