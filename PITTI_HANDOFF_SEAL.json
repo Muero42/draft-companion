@@ -1,20 +1,20 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260903T0700Z-v231",
-  "created_at": "2026-09-03T07:12:00Z",
+  "handoff_generation": "20260903T0720Z-v232",
+  "created_at": "2026-09-03T07:32:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "df154ec02eee3dba419a3f04a58eabc58382da44",
-    "PITTI_EXECUTION_LOCK.json": "1423399cde26973eb446b220a951e4cbbb9eb108",
-    "PITTI_COMMAND_CONTRACTS.json": "04098603b5235bc4dd6a1e6a4a8801c6c81c7362",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "d82b2acf76a731e58659485fb0e23e587391bdf2",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "e5b1f634119e7ca9da9a78c8947f24f71a69f5eb",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "cc2440c4198ef39431dbf5a11f486466471ec31a",
+    "PITTI_CURRENT_STATE.json": "eec43cf56913b7a3a6c7d5eec602fabc86ca70df",
+    "PITTI_EXECUTION_LOCK.json": "c4ef6c6a0f4a84ddb11af53958dbde72b9a0a548",
+    "PITTI_COMMAND_CONTRACTS.json": "652b08d31430773d93506c347ee0fb072d56d0ea",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "13651abfab287755ec41885c512ccfceb0f370f5",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "bae3e6402f4aaed0d8601ce67dbb0113e199453d",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "d7eea4c9d4873ff6a0531d8aacb746174e99f3ce",
     "PITTI_AUTO_PREFLIGHT.md": "63ff09db73141ef98dc4d1152bfb5070dd8895cc",
-    "PITTI_PROJECT_STATE.md": "ef63b4b411b879651dc9e6b09a8721e6080d696d",
+    "PITTI_PROJECT_STATE.md": "40992a3b5e51067da2dfc3142f3a31b769533717",
     "README.md": "918b631845d99902ac4ffc30cc51c74230894293",
     "app.js": "7c386fc03de3e956801770215fa5f2b05226b021",
     "live-surface-v3.js": "f2b718382d9d36ef38cfeb281e7348ba337c459e",
@@ -28,9 +28,10 @@
   },
   "branch_locks": {
     "repo": "Muero42/draft-companion",
-    "branch": "pitti/rc4189-authority-reconcile",
+    "branch": "main",
     "source_baseline": "v11.8.0-rc4.189",
-    "base_main": "0c110a5dc6688ebc840da8bb122efcc5d50f77e6",
+    "git_identity_rule": "Verify current main HEAD dynamically; do not hard-code containing commit as self-authority.",
+    "reconciled_base_main": "2471c3666edaa313388d6b79c488940ac6b51f86",
     "latest_physical_android": "v11.8.0-rc4.188 WAIVER_CANARY_PASS",
     "accepted_rollback": "v11.8.0-rc4.169",
     "codex_work": "PR #118 OPEN / UNMERGED",
@@ -53,6 +54,6 @@
     "ir_not_capacity": true,
     "device_trial_and_error_forbidden": true
   },
-  "exact_gate": "MERGE_V231_THEN_CODEX_READ_ONLY_REAUDIT",
-  "note": "v231 canonical checkpoint authority reconciled after independent Codex read-only audit. Candidate-preflight strict gates passed on a6deb3e; this seal binds the final checkpoint files. Merge only after final sealed-head strict gates pass."
+  "exact_gate": "MERGE_V232_THEN_LOCAL_CODEX_PULL_REAUDIT",
+  "note": "v232 post-merge authority seal. Canonical Git identity is branch main plus dynamically verified HEAD; recorded SHAs are historical/reconciled-base evidence only. Merge only after this exact sealed head passes strict gates."
 }
