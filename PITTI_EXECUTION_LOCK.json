@@ -262,9 +262,9 @@
     "status": "RC4189_POSTMERGE_RESEAL_SEALED",
     "nextGate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY"
   },
-  "status": "RC4189_POSTMERGE_RESEAL_SEALED_PENDING_CI",
-  "gate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY",
-  "nextGate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY",
+  "status": "AUTHORITY_V231_SEALED_PENDING_FINAL_CI",
+  "gate": "MERGE_V231_THEN_CODEX_READ_ONLY_REAUDIT",
+  "nextGate": "MERGE_V231_THEN_CODEX_READ_ONLY_REAUDIT",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -274,10 +274,10 @@
   },
   "handoff": {
     "generation": "20260903T0700Z-v231",
-    "status": "PASS_POSTMERGE_RESEAL_PENDING_CI",
+    "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.189 merged main; v230 resealed. Require exact-head strict gates green, deployment parity, then one physical canary.",
+    "resume": "Merge v231 after strict sealed-head CI, then pull local Codex clone and repeat read-only audit.",
     "transaction_in_progress": false
   },
   "expertV45": {
