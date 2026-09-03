@@ -1,0 +1,45 @@
+name: rc4.62 decision UI
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'tools/apply-rc462-decision-ui.mjs'
+permissions:
+  contents: write
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Apply rc4.62
+        run: node tools/apply-rc462-decision-ui.mjs
+      - name: Regression gates
+        run: |
+          node --check app.js
+          node --check sw.js
+          node --check live-surface-v3.js
+          grep -q "v11.8.0-rc4.62" app.js index.html sw.js live-surface-v3.js
+          grep -q "visibleCoachCandidates(rows)" app.js
+          grep -q "Decision-Signal" live-surface-v3.js
+          grep -q "metric-value" live-surface-v3.js live-surface-v3.css
+          grep -q "NORMAL-CUT WARNUNG" live-surface-v3.js
+          grep -q "10ER-ÜBERSICHT" live-surface-v3.js
+          grep -q "USER_HARD_QB_EXCLUSIONS" app.js
+          grep -q "DRAFT_ACUTE_STATUS_2026" app.js
+      - name: Package and verify
+        run: |
+          zip -X -q Draft_Companion_v11.8.0-rc4.62_FULL_TEST.zip README.md _worker.js app.js icon.svg index.html manifest.webmanifest styles.css sw.js live-surface-v3.js live-surface-v3.css
+          unzip -t Draft_Companion_v11.8.0-rc4.62_FULL_TEST.zip
+          sha256sum Draft_Companion_v11.8.0-rc4.62_FULL_TEST.zip > rc462.sha256
+      - name: Publish runtime and package
+        run: |
+          mkdir -p dist
+          cp Draft_Companion_v11.8.0-rc4.62_FULL_TEST.zip dist/
+          cp Draft_Companion_v11.8.0-rc4.62_FULL_TEST.zip dist/PITTI-rc462.zip
+          cp rc462.sha256 dist/
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add app.js index.html manifest.webmanifest sw.js live-surface-v3.js live-surface-v3.css dist/Draft_Companion_v11.8.0-rc4.62_FULL_TEST.zip dist/PITTI-rc462.zip dist/rc462.sha256
+          git diff --cached --quiet && exit 0
+          git commit -m "Publish rc4.62 decision UI candidate"
+          git push

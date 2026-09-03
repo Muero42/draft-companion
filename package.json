@@ -1,0 +1,16 @@
+{
+  "name": "pitti-cloud-foundation",
+  "version": "1.0.0",
+  "private": true,
+  "engines": { "node": "22.x" },
+  "scripts": {
+    "test": "node tools/strict-suite.mjs",
+    "test:cloud": "node tools/cloud-foundation-regression.mjs",
+    "test:workflows": "node tools/cloud-workflow-check.mjs",
+    "browser:install": "playwright install --with-deps chromium"
+  },
+  "devDependencies": {
+    "playwright": "1.62.1",
+    "yaml": "2.9.0"
+  }
+}

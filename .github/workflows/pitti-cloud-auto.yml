@@ -1,0 +1,255 @@
+name: PITTI Cloud AUTO
+on:
+  workflow_dispatch:
+    inputs:
+      task_id:
+        description: Unique lowercase task identifier
+        required: true
+        type: string
+      task_prompt:
+        description: Concrete authorized task (no secrets)
+        required: true
+        type: string
+      expected_main_sha:
+        description: Exact current main SHA
+        required: true
+        type: string
+      allowed_scope:
+        description: JSON array of exact paths or directory prefixes ending in slash
+        required: true
+        type: string
+      max_attempts:
+        description: One bounded attempt; failure never silently retries or publishes
+        type: choice
+        options: ['1']
+        default: '1'
+      authorization_reference:
+        description: Non-secret reference to this owner's development authorization
+        required: true
+        type: string
+permissions:
+  contents: read
+  actions: read
+  pull-requests: read
+concurrency:
+  group: pitti-cloud-auto
+  cancel-in-progress: false
+env:
+  PITTI_INPUTS: ${{ toJSON(inputs) }}
+  PITTI_WORK: ${{ github.workspace }}/work
+  PITTI_OUTPUT: ${{ github.workspace }}/evidence
+  PITTI_NONDEPLOYING_BRANCHES_CONFIRMED: ${{ vars.PITTI_NONDEPLOYING_BRANCHES_CONFIRMED }}
+jobs:
+  protection:
+    if: github.repository == 'Muero42/draft-companion' && github.ref == 'refs/heads/main' && github.actor == 'Muero42'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    environment: pitti-cloud-publisher
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: '${{ inputs.expected_main_sha }}', path: work, persist-credentials: false}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.23.2'}
+      - id: app
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.PITTI_CLOUD_APP_ID }}
+          private-key: ${{ secrets.PITTI_CLOUD_APP_PRIVATE_KEY }}
+          owner: Muero42
+          repositories: draft-companion
+          permission-contents: write
+      - name: Inspect complete protection with App access, before any candidate code
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+        run: node work/tools/cloud-run.mjs protection
+      - uses: actions/upload-artifact@v4
+        with: {name: 'protection-${{ github.run_id }}-${{ github.run_attempt }}', path: evidence/, if-no-files-found: error}
+  implement:
+    needs: protection
+    if: github.repository == 'Muero42/draft-companion' && github.ref == 'refs/heads/main' && github.actor == 'Muero42'
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    environment: pitti-cloud-development
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.expected_main_sha }}
+          path: control
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.expected_main_sha }}
+          path: work
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.23.2'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.13'}
+      - uses: actions/download-artifact@v4
+        with: {name: 'protection-${{ github.run_id }}-${{ github.run_attempt }}', path: evidence}
+      - name: Canonical bootstrap before agent
+        working-directory: work
+        env:
+          GH_TOKEN: ${{ github.token }}
+          BASE: ${{ inputs.expected_main_sha }}
+        run: |
+          git switch -C main "$BASE"
+          node ../control/tools/cloud-run.mjs preflight
+      - name: Install project tools
+        working-directory: work
+        run: |
+          npm ci --ignore-scripts
+          npx --no-install playwright install --with-deps chromium
+      - name: Official Codex implementation (single bounded attempt)
+        timeout-minutes: 25
+        uses: openai/codex-action@86365089eb2b84e0a8fb0717b304f8bdcb13b20e # verified v1
+        with:
+          openai-api-key: ${{ secrets.PITTI_OPENAI_API_KEY }}
+          codex-version: '0.153.0'
+          working-directory: ${{ github.workspace }}/work
+          prompt-file: ${{ github.workspace }}/evidence/implementation-prompt.md
+          output-file: ${{ github.workspace }}/evidence/implementation-summary.md
+          permission-profile: ':workspace'
+          safety-strategy: drop-sudo
+          codex-args: '["--ephemeral"]'
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.23.2'}
+      - name: Capture scope-checked patch from trusted controller
+        run: node control/tools/cloud-run.mjs capture
+      - uses: actions/upload-artifact@v4
+        with:
+          name: implementation-${{ github.run_id }}-${{ github.run_attempt }}
+          path: evidence/
+          if-no-files-found: error
+  validate:
+    needs: implement
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: '${{ inputs.expected_main_sha }}', path: control, fetch-depth: 0, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with: {ref: '${{ inputs.expected_main_sha }}', path: work, fetch-depth: 0, persist-credentials: false}
+      - uses: actions/download-artifact@v4
+        with: {name: 'implementation-${{ github.run_id }}-${{ github.run_attempt }}', path: evidence}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.23.2'}
+      - uses: actions/setup-python@v5
+        with: {python-version: '3.13'}
+      - run: node control/tools/cloud-run.mjs apply
+      - name: Fresh runner validation without publisher credentials
+        working-directory: work
+        run: |
+          npm ci --ignore-scripts
+          npx --no-install playwright install --with-deps chromium
+          node ../control/tools/cloud-validate.mjs ../evidence/validation
+      - run: node control/tools/cloud-run.mjs validated
+      - uses: actions/upload-artifact@v4
+        with:
+          name: validated-${{ github.run_id }}-${{ github.run_attempt }}
+          path: evidence/
+          if-no-files-found: error
+  publish:
+    needs: validate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: pitti-cloud-publisher
+    outputs:
+      head: ${{ steps.publish.outputs.head }}
+      pr: ${{ steps.publish.outputs.pr }}
+      branch: ${{ steps.publish.outputs.branch }}
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: '${{ inputs.expected_main_sha }}', path: control, fetch-depth: 0, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with: {ref: '${{ inputs.expected_main_sha }}', path: work, fetch-depth: 0, persist-credentials: false}
+      - uses: actions/download-artifact@v4
+        with: {name: 'validated-${{ github.run_id }}-${{ github.run_attempt }}', path: evidence}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.23.2'}
+      - run: node control/tools/cloud-run.mjs apply
+      - name: Repository-scoped short-lived publisher credential
+        id: app
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ vars.PITTI_CLOUD_APP_ID }}
+          private-key: ${{ secrets.PITTI_CLOUD_APP_PRIVATE_KEY }}
+          owner: Muero42
+          repositories: draft-companion
+          permission-contents: write
+          permission-pull-requests: write
+      - name: Publish only validated workbranch; never execute candidate code here
+        id: publish
+        env:
+          GH_TOKEN: ${{ steps.app.outputs.token }}
+        run: node control/tools/cloud-run.mjs publish
+      - uses: actions/upload-artifact@v4
+        with:
+          name: published-${{ steps.publish.outputs.head }}
+          path: evidence/
+          if-no-files-found: error
+  exact-ci:
+    needs: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: '${{ inputs.expected_main_sha }}', path: control, persist-credentials: false}
+      - uses: actions/download-artifact@v4
+        with: {name: 'published-${{ needs.publish.outputs.head }}', path: evidence}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.23.2'}
+      - name: Fresh exact-head CI (App-generated PR events)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node control/tools/cloud-run.mjs ci
+      - uses: actions/upload-artifact@v4
+        with:
+          name: ci-${{ needs.publish.outputs.head }}
+          path: evidence/
+          if-no-files-found: error
+  independent-review:
+    needs: [publish, exact-ci]
+    runs-on: ubuntu-latest
+    timeout-minutes: 35
+    environment: pitti-cloud-development
+    steps:
+      - uses: actions/checkout@v4
+        with: {ref: '${{ inputs.expected_main_sha }}', path: control, fetch-depth: 0, persist-credentials: false}
+      - uses: actions/checkout@v4
+        with: {ref: '${{ needs.publish.outputs.head }}', path: work, fetch-depth: 0, persist-credentials: false}
+      - uses: actions/download-artifact@v4
+        with: {name: 'ci-${{ needs.publish.outputs.head }}', path: evidence}
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.23.2'}
+      - name: Fresh authority, complete diff and CI input
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node control/tools/cloud-run.mjs review-input
+      - name: Separate read-only Codex acceptance
+        timeout-minutes: 25
+        uses: openai/codex-action@86365089eb2b84e0a8fb0717b304f8bdcb13b20e # verified v1
+        with:
+          openai-api-key: ${{ secrets.PITTI_OPENAI_API_KEY }}
+          codex-version: '0.153.0'
+          working-directory: ${{ github.workspace }}/work
+          prompt-file: ${{ github.workspace }}/evidence/review-prompt.md
+          output-file: ${{ github.workspace }}/evidence/review-raw.json
+          output-schema-file: ${{ github.workspace }}/control/tools/cloud-review.schema.json
+          permission-profile: ':read-only'
+          safety-strategy: drop-sudo
+          codex-args: '["--ephemeral"]'
+      - uses: actions/setup-node@v4
+        with: {node-version: '22.23.2'}
+      - name: Bind review receipt and recheck head (no merge implementation)
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: node control/tools/cloud-run.mjs review-receipt
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: review-${{ needs.publish.outputs.head }}
+          path: evidence/
+          if-no-files-found: error

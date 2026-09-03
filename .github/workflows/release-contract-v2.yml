@@ -10,6 +10,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
       - uses: actions/setup-node@v4
         with: {node-version: 22}
       - name: Syntax
@@ -67,4 +70,5 @@ jobs:
       - name: Independent runtime review and strict seal
         run: |
           node tools/season-adversarial-review-regression.mjs
+          node tools/cloud-foundation-regression.mjs
           PITTI_SKIP_SEAL_INTEGRITY=0 PITTI_CANDIDATE_PREFLIGHT=0 node tools/pitti_guardrail_check.mjs

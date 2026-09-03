@@ -43,6 +43,8 @@ Verified provider payloads, a credentialed 32-team beat registry, current primar
 
 ## Deterministic validation and takeover
 
+Cloud-AUTO Foundation execution/configuration contract: `docs/PITTI_CLOUD_AUTO.md`; required server settings: `docs/PITTI_CLOUD_MAIN_PROTECTION.md`. This infrastructure does not change runtime semantics or grant promotion, deployment or physical acceptance. Its own maintenance requires a separately scoped work package.
+
 `node tools/strict-suite.mjs [results.json]` runs the complete strict local suite. `node tools/package-reextract.mjs <output-directory>` requires Python 3 or PITTI_PYTHON and produces a byte-exact 13-file archive/re-extraction receipt. Research seeds/policy files are not live runtime data.
 
 `node tools/season-adversarial-review-regression.mjs` covers counterexamples and legal bilateral packages. `node tools/season-browser-review.mjs <output-directory>` executes the complete module in a mobile Chromium viewport with mocked external responses; provide Playwright through PITTI_PLAYWRIGHT and an optional executable through PITTI_BROWSER. It checks initial week context, navigation, compact rendering, async rerender and automatic evidence expiry. Browser emulation does not establish physical Android acceptance.
