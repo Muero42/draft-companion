@@ -1,0 +1,686 @@
+{
+  "schema": "pitti-rb-contingency-v1",
+  "generated_at": "2026-09-02",
+  "status": "HISTORICAL_RESEARCH_SEED_NOT_ACTION_AUTHORITY",
+  "source_policy": {
+    "depth_chart": [
+      "official_team",
+      "Ourlads"
+    ],
+    "role_analysis": [
+      "current_usage_reporting",
+      "RotoWire",
+      "trusted_fantasy_analysis"
+    ],
+    "activation_requires": "current event verification + live Sleeper ownership",
+    "fail_closed": true
+  },
+  "rooms": [
+    {
+      "team": "NE",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "NE",
+        "lead": "Rhamondre Stevenson",
+        "successors": [
+          "TreVeyon Henderson"
+        ],
+        "shape": "1A/1B possible",
+        "confidence": "medium",
+        "contingency": "Henderson has standalone plus high injury-contingent ceiling"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "PIT",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "PIT",
+        "lead": "Jaylen Warren",
+        "successors": [
+          "Rico Dowdle"
+        ],
+        "shape": "split/takeover risk",
+        "confidence": "medium",
+        "contingency": "Dowdle may already have meaningful role; not a pure handcuff"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "LAR",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "LAR",
+        "lead": "Kyren Williams",
+        "successors": [
+          "Blake Corum"
+        ],
+        "shape": "clear high-value successor with standalone split risk",
+        "confidence": "high",
+        "contingency": "Corum projects as one of highest-value contingency backs"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "CHI",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "CHI",
+        "lead": "D'Andre Swift",
+        "successors": [
+          "Kyle Monangai"
+        ],
+        "shape": "clear high-upside successor",
+        "confidence": "high",
+        "contingency": "Monangai has demonstrated workhorse outcome without Swift"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "CAR",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "CAR",
+        "lead": "Chuba Hubbard",
+        "successors": [
+          "Jonathon Brooks"
+        ],
+        "shape": "possible 1A/1B",
+        "confidence": "medium",
+        "contingency": "Brooks can gain role without injury if health holds"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "TB",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "TB",
+        "lead": "Bucky Irving",
+        "successors": [
+          "Kenneth Gainwell"
+        ],
+        "shape": "primary contingency",
+        "confidence": "medium",
+        "contingency": "Gainwell is a high-priority injury-contingent target"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "DEN",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "DEN",
+        "lead": "J.K. Dobbins",
+        "successors": [
+          "RJ Harvey"
+        ],
+        "shape": "listed RB2 but fantasy market expects meaningful role",
+        "confidence": "medium",
+        "contingency": "Do not infer usage solely from listed order"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "HOU",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "HOU",
+        "lead": "David Montgomery",
+        "successors": [
+          "Woody Marks"
+        ],
+        "shape": "split-capable",
+        "confidence": "medium",
+        "contingency": "Marks receiving skill supports contingent value but Montgomery caps bell-cow path"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "NYG",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "NYG",
+        "lead": "Cam Skattebo",
+        "successors": [
+          "Tyrone Tracy"
+        ],
+        "shape": "1B/high-value contingency",
+        "confidence": "medium",
+        "contingency": "Tracy has prior high-volume evidence"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "NO",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "NO",
+        "lead": "Kendre Miller",
+        "successors": [
+          "Alvin Kamara"
+        ],
+        "shape": "needs current role verification",
+        "confidence": "low",
+        "contingency": "Current hierarchy must be refreshed before activation"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "JAX",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "JAX",
+        "lead": "Bhayshul Tuten",
+        "successors": [
+          "Chris Rodriguez"
+        ],
+        "shape": "primary contingency candidate",
+        "confidence": "medium",
+        "contingency": "Current Week-1 hierarchy requires confirmation"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "DET",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "DET",
+        "lead": "Jahmyr Gibbs",
+        "successors": [
+          "Isiah Pacheco"
+        ],
+        "shape": "clear contingency",
+        "confidence": "high",
+        "contingency": "Pacheco becomes major waiver target if Gibbs misses time"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "PHI",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "PHI",
+        "lead": "Saquon Barkley",
+        "successors": [
+          "Tank Bigsby"
+        ],
+        "shape": "clear contingency",
+        "confidence": "high",
+        "contingency": "Bigsby has strong pure injury-contingent upside"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "ATL",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "ATL",
+        "lead": "Bijan Robinson",
+        "successors": [
+          "Brian Robinson"
+        ],
+        "shape": "early-down contingency",
+        "confidence": "high",
+        "contingency": "Role could expand sharply but offense context matters"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "LV",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "LV",
+        "lead": "Ashton Jeanty",
+        "successors": [
+          "Mike Washington"
+        ],
+        "shape": "primary contingency candidate",
+        "confidence": "medium",
+        "contingency": "Athletic successor; low baseline offense suppresses ceiling"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "TEN",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "TEN",
+        "lead": "Tony Pollard",
+        "successors": [
+          "Tyjae Spears",
+          "Nicholas Singleton"
+        ],
+        "shape": "role-split likely",
+        "confidence": "medium",
+        "contingency": "Spears passing role; Singleton could absorb early downs"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "ARI",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "ARI",
+        "lead": "UNRESOLVED",
+        "successors": [],
+        "shape": "SOURCE_CONFLICT",
+        "confidence": "none",
+        "contingency": "Previous seed incorrectly mapped Atlanta players into Arizona. Purged; block activation until current Arizona primary/depth sources are reconciled.",
+        "verification": "KNOWN_BAD_SEED_PURGED"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "GB",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "GB",
+        "lead": "Josh Jacobs",
+        "successors": [
+          "MarShawn Lloyd"
+        ],
+        "shape": "favorite but uncertainty",
+        "confidence": "medium",
+        "contingency": "Lloyd likely first candidate; verify health/current hierarchy"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "CLE",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "CLE",
+        "lead": "Quinshon Judkins",
+        "successors": [
+          "Dylan Sampson"
+        ],
+        "shape": "favorite but uncertainty",
+        "confidence": "medium",
+        "contingency": "Needs current usage verification"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "BUF",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "BUF",
+        "lead": "James Cook",
+        "successors": [
+          "Ray Davis"
+        ],
+        "shape": "favorite but uncertainty",
+        "confidence": "medium",
+        "contingency": "Davis is likely contingent candidate but role must be verified"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "LAC",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "LAC",
+        "lead": "Omarion Hampton",
+        "successors": [
+          "Keaton Mitchell",
+          "Kimani Vidal"
+        ],
+        "shape": "committee likely",
+        "confidence": "medium",
+        "contingency": "Mitchell speed/receiving vs Vidal volume profile; no fake single handcuff"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "SF",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "SF",
+        "lead": "Christian McCaffrey",
+        "successors": [
+          "Kaelon Black",
+          "Jordan James"
+        ],
+        "shape": "open RB2 battle",
+        "confidence": "low",
+        "contingency": "Very valuable role but successor unresolved"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "NYJ",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "NYJ",
+        "lead": "Breece Hall",
+        "successors": [
+          "Braelon Allen",
+          "Isaiah Davis"
+        ],
+        "shape": "committee likely",
+        "confidence": "medium",
+        "contingency": "Allen power/early-down favorite; Davis passing role"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "CIN",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "CIN",
+        "lead": "Chase Brown",
+        "successors": [
+          "Samaje Perine",
+          "Tahj Brooks"
+        ],
+        "shape": "committee/role inversion possible",
+        "confidence": "medium",
+        "contingency": "Perine current No.2 does not guarantee largest injury role"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "MIN",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "MIN",
+        "lead": "Aaron Jones",
+        "successors": [
+          "Jordan Mason",
+          "Demond Claiborne"
+        ],
+        "shape": "Jones lead; Mason primary listed backup; role split possible",
+        "confidence": "medium",
+        "contingency": "Passing-down role could split; monitor Week-1 deployment",
+        "verification": "Ourlads 2026-09-01 lists Aaron Jones RB1, Jordan Mason RB2, Demond Claiborne RB3"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "DAL",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "DAL",
+        "lead": "UNRESOLVED",
+        "successors": [
+          "Malik Davis",
+          "Jaydon Blue",
+          "Phil Mafah"
+        ],
+        "shape": "muddled",
+        "confidence": "low",
+        "contingency": "Consequential backup battle; no actionable successor yet"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "SEA",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "SEA",
+        "lead": "Jadarian Price",
+        "successors": [
+          "George Holani"
+        ],
+        "shape": "Charbonnet absence / committee context",
+        "confidence": "medium",
+        "contingency": "Holani pass-catching profile; re-evaluate immediately on Charbonnet status"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "MIA",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "MIA",
+        "lead": "De'Von Achane",
+        "successors": [
+          "Jaylen Wright",
+          "Ollie Gordon"
+        ],
+        "shape": "committee likely",
+        "confidence": "low",
+        "contingency": "No clear backup winner"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "BAL",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "BAL",
+        "lead": "Derrick Henry",
+        "successors": [
+          "Justice Hill",
+          "Rasheen Ali",
+          "Adam Randall"
+        ],
+        "shape": "role redistribution likely",
+        "confidence": "low",
+        "contingency": "Hill role may remain stable; outside addition possible"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "IND",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "IND",
+        "lead": "Jonathan Taylor",
+        "successors": [
+          "DJ Giddens",
+          "Seth McGowan"
+        ],
+        "shape": "open backup battle",
+        "confidence": "low",
+        "contingency": "Outside signing possible after injury"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "WAS",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "WAS",
+        "lead": "Rachaad White / Jacory Croskey-Merritt",
+        "successors": [
+          "Kaytron Allen"
+        ],
+        "shape": "committee",
+        "confidence": "low",
+        "contingency": "Current starting hierarchy unresolved; refresh before Week 1"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    },
+    {
+      "team": "KC",
+      "status": "UNKNOWN",
+      "actionable": false,
+      "verifiedAt": null,
+      "sourceUrl": null,
+      "confidence": null,
+      "functionalSuccessors": [],
+      "historicalHypothesis": {
+        "team": "KC",
+        "lead": "Kenneth Walker",
+        "successors": [
+          "Emari Demercado",
+          "Emmett Johnson",
+          "Brashard Smith"
+        ],
+        "shape": "backup unresolved",
+        "confidence": "low",
+        "contingency": "Kareem Hunt/outside veteran remains possible contingency"
+      },
+      "invalidator": "Current primary roster, health and functional-role evidence required"
+    }
+  ],
+  "reconciliation": {
+    "checked_at": "2026-09-02",
+    "ourlads_all_teams_updated": "2026-09-02 14:21 ET",
+    "rotowire_all_teams_updated": "2026-09-02",
+    "policy": "Depth-chart ordinal is corroboration only; functional succession remains separate."
+  },
+  "provenance": {
+    "branch": "origin/pitti/rc4190-roster-week1-needs",
+    "head": "17503032a955ede8cba4d9a64fa4bc78ac1f795b",
+    "verification": "UNAVAILABLE",
+    "note": "Original assertions preserved as hypotheses; no current primary-source verification has been established."
+  }
+}

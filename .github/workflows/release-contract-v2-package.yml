@@ -94,3 +94,15 @@ jobs:
           path: |
             dist/Draft_Companion_*_PREINSTALL.zip
             dist/candidate.sha256
+
+      - name: rc4.190 migration contracts
+        run: |
+          node tools/season-decision-engine-regression.mjs
+          node tools/permission-contract-regression.mjs
+          node tools/takeover-authority-regression.mjs
+          node tools/postmerge-authority-regression.mjs
+
+      - name: Independent runtime review and strict seal
+        run: |
+          node tools/season-adversarial-review-regression.mjs
+          PITTI_SKIP_SEAL_INTEGRITY=0 PITTI_CANDIDATE_PREFLIGHT=0 node tools/pitti_guardrail_check.mjs

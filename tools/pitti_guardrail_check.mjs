@@ -122,10 +122,10 @@ must(app.includes('const weekly=weeklyFresh?'),'THIS WEEK waiver horizon must fa
 must(app.includes("weekly:null")||app.includes("weekly=weeklyFresh?"),'THIS WEEK stale-evidence null path missing');
 must(app.includes("FA-vs-Roster v2"),'Waiver v2 surface missing');
 must(app.includes("frische Weekly-Evidence fehlt"),'Waiver v2 stale weekly explanation missing');
-must((app.includes('Trade Board v4')||app.includes('Trade Board v5')),'Trade Board v4/v5 surface missing');
+must(app.includes('Trade Board v7')&&app.includes('function seasonTradeDecision('),'Trade Board v7 bilateral evidence surface missing');
 must(app.includes('function tradeOfferCandidates('),'Trade offer construction helper missing');
-must(app.includes('Annahme-Plausibilität'),'Trade acceptance plausibility missing');
-must(app.includes('Week-1 Start/Sit v5'),'Start/Sit canonical-slot surface missing');
+must(app.includes('acceptance:null')&&app.includes('result.ourGain>0&&result.opponentGain>0'),'Trade acceptance must require bilateral gain and cannot fabricate a probability');
+must(app.includes(' Start/Sit v5'),'Start/Sit canonical-slot surface missing');
 must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
 must(app.includes('PITTI nutzt eigene Weekly-Panel-Ranks'),'PITTI weekly-panel primary invariant missing');
 must(app.includes('Special Teams v2'),'Special Teams v2 quality-floor surface missing');
@@ -187,7 +187,7 @@ if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
   must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
   must(handoffMatrix.includes(current.handoff_generation),'Season Companion MATRIX generation drift');
   must(currentHandoff.includes(current.handoff_generation),'Season Companion HANDOFF generation drift');
-  must(['v11.8.0-rc4.161','v11.8.0-rc4.162','v11.8.0-rc4.163','v11.8.0-rc4.164','v11.8.0-rc4.165','v11.8.0-rc4.166','v11.8.0-rc4.167','v11.8.0-rc4.168','v11.8.0-rc4.169','v11.8.0-rc4.170','v11.8.0-rc4.171','v11.8.0-rc4.172','v11.8.0-rc4.173','v11.8.0-rc4.174','v11.8.0-rc4.175','v11.8.0-rc4.176','v11.8.0-rc4.177','v11.8.0-rc4.178','v11.8.0-rc4.179','v11.8.0-rc4.180','v11.8.0-rc4.181','v11.8.0-rc4.182','v11.8.0-rc4.183','v11.8.0-rc4.184','v11.8.0-rc4.185','v11.8.0-rc4.186','v11.8.0-rc4.187','v11.8.0-rc4.188','v11.8.0-rc4.189'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
+  must(['v11.8.0-rc4.161','v11.8.0-rc4.162','v11.8.0-rc4.163','v11.8.0-rc4.164','v11.8.0-rc4.165','v11.8.0-rc4.166','v11.8.0-rc4.167','v11.8.0-rc4.168','v11.8.0-rc4.169','v11.8.0-rc4.170','v11.8.0-rc4.171','v11.8.0-rc4.172','v11.8.0-rc4.173','v11.8.0-rc4.174','v11.8.0-rc4.175','v11.8.0-rc4.176','v11.8.0-rc4.177','v11.8.0-rc4.178','v11.8.0-rc4.179','v11.8.0-rc4.180','v11.8.0-rc4.181','v11.8.0-rc4.182','v11.8.0-rc4.183','v11.8.0-rc4.184','v11.8.0-rc4.185','v11.8.0-rc4.186','v11.8.0-rc4.187','v11.8.0-rc4.188','v11.8.0-rc4.190'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
   must(commandContract.currentGate===AUTHORITY_GATE,'Season Companion command gate regression');
   must(lock.gate===AUTHORITY_GATE,'Season Companion lock gate regression');
   must(current.currentWork?.nextGate===AUTHORITY_GATE,'Season Companion CURRENT next gate regression');

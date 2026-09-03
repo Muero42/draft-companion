@@ -1,9 +1,9 @@
 # NEW CHAT HANDOFF — PITTI SEASON COMPANION
-Handoff generation: `20260903T1200Z-v234`
+Handoff generation: `20260903T1230Z-v234`
 Created: 2026-09-03T09:59:50.439Z
 
 ## CURRENT AUTHORITY
-Canonical source/runtime rc4.189 (canonical branch main; verify Git/GitHub authority dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.
+Source/runtime v11.8.0-rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.
 
 ## CODEX
 Local clone: `C:\Users\timmu\Documents\PITTI-Codex`. The post-v233 local read-only audit verified clean main `2749537945ec7e6b96d95e2f6b55a26e455124fa` and correctly failed closed on residual pending-CI/merge pointers in CURRENT and BOOTSTRAP. Earlier audits are historical. This local repair covers all coupled authority/checkpoint references.

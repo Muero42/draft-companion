@@ -1,13 +1,13 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260903T1200Z-v234",
-  "updated_at": "2026-09-03T09:59:50.439Z",
+  "handoff_generation": "20260903T1230Z-v234",
+  "updated_at": "2026-09-03T11:40:32.214Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.189",
+    "source_candidate": "v11.8.0-rc4.190",
     "git_identity_rule": "Current main SHA is verified dynamically from git/GitHub; never hard-code the containing commit as self-authority.",
     "reconciled_base_main": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
     "postmerge": {
@@ -40,14 +40,16 @@
       "operative_branch": "DYNAMIC_VERIFICATION_REQUIRED",
       "pr_status": "DYNAMIC_VERIFICATION_REQUIRED",
       "exact_head_ci": "DYNAMIC_VERIFICATION_REQUIRED"
-    }
+    },
+    "source_scope": "SOURCE_IN_THIS_TREE; canonical main containment is dynamically verified; source/build/package never imply deployment or device acceptance",
+    "permission_contract": "AGENTS.md#pitti-codex-permission-contract"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.189 merged source; physical rc4.189 acceptance remains pending",
-    "candidate_branch": "main",
+    "season_candidate": "v11.8.0-rc4.190 source in this tree; canonical containment requires dynamic verification; physical rc4.190 acceptance remains pending",
+    "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.189",
+    "test_challenger": "v11.8.0-rc4.190",
     "ci": {
       "candidate_package": "DYNAMIC_VERIFICATION_REQUIRED",
       "release_contract_v2": "DYNAMIC_VERIFICATION_REQUIRED",
@@ -56,7 +58,7 @@
       "scope": "Verify exact-head GitHub checks before dependent actions; historical PASS is not evidence for another commit."
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "rc4.189 on canonical main; current HEAD verified dynamically. Deployment parity requires re-verification before physical rc4.189 canary.",
+    "preview_candidate": "rc4.190 source in this tree; canonical containment requires dynamic verification; current HEAD verified dynamically. Deployment parity requires re-verification before physical rc4.190 canary.",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "latest_package_sha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "package_reference_run": 33597607588,
@@ -146,7 +148,7 @@
         "candidate_package": "FAIL_STALE_BOOTSTRAP_RENDER_ASSERT_REPAIRED"
       }
     },
-    "package_reference_scope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.189 installable package claim"
+    "package_reference_scope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.190 installable package claim"
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -195,7 +197,7 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "Canonical source/runtime rc4.189 (canonical branch main; verify Git/GitHub authority dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.",
+  "source_authority": "Source/runtime rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
@@ -335,7 +337,7 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260903T1200Z-v234",
+    "generation": "20260903T1230Z-v234",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -345,7 +347,7 @@
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260903T1200Z-v234",
+  "handoffGeneration": "20260903T1230Z-v234",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -446,6 +448,20 @@
         },
         "evidence": "User-supplied exact-commit observation before this correction; not current GitHub verification or evidence for a later commit"
       }
+    },
+    "rc4190_migration": {
+      "classification": "HISTORICAL provenance only; never current PR status",
+      "base_main": "edc4e670388f90f9209a15194b3b937f01ad1681",
+      "pr122": {
+        "status": "MERGED/HISTORICAL",
+        "head": "5eac75b4a20ee04c366b67c9dcb630318c4beb91"
+      },
+      "pr118": {
+        "head": "17503032a955ede8cba4d9a64fa4bc78ac1f795b",
+        "observed": "OPEN/UNMERGED/NON-PRODUCTION",
+        "classification": "EVIDENCE_ONLY"
+      },
+      "baseline": "154/154 local checks PASS before migration"
     }
   }
 }
