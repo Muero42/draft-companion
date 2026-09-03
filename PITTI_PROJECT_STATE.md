@@ -1,5 +1,5 @@
 # PITTI PROJECT STATE — Season Companion 2026
-Updated: 2026-09-01
+Updated: 2026-09-03
 Canonical continuation trigger: **PITTI AUTO**
 
 
@@ -15,9 +15,9 @@ Canonical continuation trigger: **PITTI AUTO**
 
 ## Authority / non-negotiable state
 - Current work is **post-draft / season operation**, not draft optimization.
-- Repository: `Muero42/draft-companion`; active development branch: `season-companion-rc4.159`.
-- Current code version constant: **v11.8.0-rc4.160**. Branch name remains rc4.159; do not infer code version from branch name.
-- Preview is deployed from `gh-pages/season-preview/` and was synchronized after the latest changes.
+- Repository authority: `Muero42/draft-companion`; canonical production/source branch: `main` at `0c110a5dc6688ebc840da8bb122efcc5d50f77e6` for this reconciliation.
+- Current source runtime/version on canonical `main`: **v11.8.0-rc4.189**. Latest physical Android evidence is **rc4.188 PASS**; accepted rollback authority remains **rc4.169**. Built/source/deployed/device-verified states are distinct.
+- Active larger Season/Codex development is isolated in open PR #118 on `pitti/rc4190-roster-week1-needs`; it is NOT production authority and must not be merged/deployed until its work package and strict gates are complete.
 - Real 2026 draft ID: **1366053132970233856**, complete.
 - Current Sleeper league roster is Source of Truth. Never reconstruct current roster from the completed draft.
 - First real post-draft delta: Zach Charbonnet -> IR/Reserve; Tank Bigsby added. Preserve draft roster separately from current roster/transaction history.
@@ -505,3 +505,11 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Current gate: `RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY`. Exact-head strict gates must be green, then deployment parity must be verified, then exactly one rc4.189 physical canary. No cache clearing/reinstall trial-and-error.
 - AUTO remains continuous same-turn execution: after every package checkpoint + re-inventory; waiting external blocks only its dependent lane; no progress/status/ack messages, no empty reply, and no promise-only “AUTO läuft weiter” while executable work exists. STATUS is report-only.
 - Watcher v0.2.6 remains isolated in draft PR #1. Skill-position bench drops are now fail-closed unless current replacement/upside evidence exists; Reserve/IR remains excluded and automatic transactions remain forbidden.
+
+
+## 2026-09-03 — Codex read-only authority audit / v231 reconciliation
+- Local Codex clone independently verified repository path, clean working tree, origin, branch `main`, and HEAD `0c110a5dc6688ebc840da8bb122efcc5d50f77e6` without modifying state.
+- Audit correctly failed closed on stale/conflicting checkpoint authority: this file's old rc4.159/rc4.160 opening authority, v230 seal's pre-final-main SHA/branch, and contradictory deployment-parity booleans.
+- Reconciliation rule: canonical source authority is actual `main` HEAD `0c110a5...` / rc4.189; latest physical PASS rc4.188; rollback rc4.169. Deployment parity remains **UNKNOWN/REQUIRES_REVERIFICATION**, never infer PASS from stale booleans.
+- `AGENTS.md` and `PITTI_CODEX_WORK_PACKAGE.md` intentionally exist only on open PR #118, not canonical `main`; do not treat their absence on main as data loss.
+- PR #118 is the isolated rc4.190/Codex Season Decision Engine lane. It remains unmerged and non-authoritative until implementation + strict gates.
