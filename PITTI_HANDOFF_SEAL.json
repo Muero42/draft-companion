@@ -1,27 +1,27 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260903T0745Z-v233",
-  "created_at": "2026-09-03T07:45:00Z",
-  "status": "SUPERSEDED_PENDING_RESEAL",
-  "handoff_ready": false,
-  "second_pass_pass": false,
+  "created_at": "2026-09-03T08:05:00Z",
+  "status": "PASS",
+  "handoff_ready": true,
+  "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "eec43cf56913b7a3a6c7d5eec602fabc86ca70df",
-    "PITTI_EXECUTION_LOCK.json": "c4ef6c6a0f4a84ddb11af53958dbde72b9a0a548",
-    "PITTI_COMMAND_CONTRACTS.json": "652b08d31430773d93506c347ee0fb072d56d0ea",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "13651abfab287755ec41885c512ccfceb0f370f5",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "843abe76bea446b4e2c8e68e1e6a4948b26f30ad",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "d7eea4c9d4873ff6a0531d8aacb746174e99f3ce",
-    "PITTI_AUTO_PREFLIGHT.md": "5d4637224098fd8f12f21883f9b5c2f4d47dd145",
-    "PITTI_PROJECT_STATE.md": "40992a3b5e51067da2dfc3142f3a31b769533717",
+    "PITTI_CURRENT_STATE.json": "006346b6987d115676814d5623dbcbb9ea2470cf",
+    "PITTI_EXECUTION_LOCK.json": "d8313cd818538ed267a62cc2480d768bb03d91d3",
+    "PITTI_COMMAND_CONTRACTS.json": "4ddb8738710ac789b98f56533f80846484a1a2c8",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "1bfa55e14e0e9b2169113a72da61db466d0c7df9",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "32ad13e3d571de9f05ab9035bd0fba4e9759d592",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "41f7889ac30de5f6741a9e7a2bad8535264c6de2",
+    "PITTI_AUTO_PREFLIGHT.md": "955d1baf0bdc381673ed965d03498cefd3d5a6be",
+    "PITTI_PROJECT_STATE.md": "d68676095e033cf3468997f7172cb0eb48b94055",
     "README.md": "918b631845d99902ac4ffc30cc51c74230894293",
     "app.js": "7c386fc03de3e956801770215fa5f2b05226b021",
     "live-surface-v3.js": "f2b718382d9d36ef38cfeb281e7348ba337c459e",
     "manifest.webmanifest": "adf3a16945ba2a2cfc7c94a5db18d3bcba631810",
     "index.html": "23296779c5d469b33dd8a9a4dfc17761bcd29bae",
     "sw.js": "91c3da30d04b242418a33b3e12a4743033bcc8f9",
-    "tools/pitti_guardrail_check.mjs": "10b9914448ad72950d392f74ee40b3429ab5735d",
+    "tools/pitti_guardrail_check.mjs": "6a8adf20724e50657a91bc596fdacfc05555aa21",
     "tools/live-trade-roster-identity-regression.mjs": "c6937f97d562a4d1bd5217e0344af9500d68ca2b",
     "config/season-expert-phase-policy.json": "78156903f4254c6eee836819dc6b8a737835d6c1",
     "season-parallel-contract-regression.mjs": "b0b158697d37c0d9bebeebf5bd132d4a6b355f07"
@@ -55,5 +55,5 @@
     "device_trial_and_error_forbidden": true
   },
   "exact_gate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT",
-  "note": "v233 checkpoint-only repair for stale current pointers found by second local Codex read-only audit. Pre-seal candidate validation is allowed only in SUPERSEDED_PENDING_RESEAL state. No product runtime change."
+  "note": "v233 final sealed checkpoint-only repair after the second local Codex read-only audit found residual stale CURRENT pointers. Canonical runtime rc4.189; physical rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN; PR #118 isolated/open/unmerged. Merge only after all three strict gates PASS on this exact sealed head; then local Codex must pull main and repeat read-only authority audit before writable work."
 }
