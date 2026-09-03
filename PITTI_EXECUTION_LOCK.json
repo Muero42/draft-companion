@@ -6,10 +6,11 @@
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "v232 post-merge authority: canonical main HEAD 2471c3666edaa313388d6b79c488940ac6b51f86 / rc4.189. rc4.188 latest physical PASS; rc4.169 rollback. Deployment parity UNKNOWN. PR #118 isolated unmerged rc4.190/Codex work. Library persistence remains fail-closed: never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "v232 authority rule: rc4.189 on canonical branch main; exact current main SHA must be verified dynamically (self-referential SHA in a tracked file is forbidden). rc4.188 latest physical PASS; rc4.169 rollback; deployment parity UNKNOWN. PR #118 isolated unmerged rc4.190/Codex work. Library persistence remains fail-closed: never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
-    "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision."
+    "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
+    "reconciledBaseMain": "2471c3666edaa313388d6b79c488940ac6b51f86"
   },
   "runtime": {
     "appVersion": "v11.8.0-rc4.189",
