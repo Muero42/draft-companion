@@ -2,7 +2,7 @@
 Generation: `20260903T0720Z-v232`
 
 PASS requires:
-- canonical rc4.189 source on main at `2471c3666edaa313388d6b79c488940ac6b51f86`;
+- canonical rc4.189 source on branch `main`; exact HEAD is dynamically verified;
 - rc4.188 latest physical Waiver/FA + IR/drop PASS; rc4.169 rollback;
 - deployment parity UNKNOWN until independently reverified;
 - PR #118 isolated/unmerged rc4.190 Codex work, never production authority;
