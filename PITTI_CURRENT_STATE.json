@@ -150,7 +150,7 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "V233_STALE_CURRENT_POINTER_REPAIR_VALIDATING",
+    "status": "V233_SEALED_PENDING_STRICT_CI",
     "nextGate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT"
   },
   "invariants": {
@@ -174,7 +174,7 @@
       {
         "id": "v233-strict-gates",
         "lane": "handoff",
-        "goal": "Validate exact v233 checkpoint-only stale-current-pointer repair with all three strict GitHub gates.",
+        "goal": "Validate exact sealed v233 checkpoint-only stale-current-pointer repair with all three strict GitHub gates.",
         "state": "waiting_external"
       }
     ],
@@ -307,13 +307,13 @@
   },
   "handoff": {
     "generation": "20260903T0745Z-v233",
-    "status": "IN_PROGRESS",
-    "ready": false,
-    "secondPass": false,
-    "resume": "Complete v233 strict gates and merge; then local Codex pull/read-only re-audit.",
-    "transaction_in_progress": true
+    "status": "PASS",
+    "ready": true,
+    "secondPass": true,
+    "resume": "After all three strict gates PASS, merge v233; then local Codex pulls main and repeats the read-only authority audit before writable work.",
+    "transaction_in_progress": false
   },
-  "status": "V233_STALE_CURRENT_POINTER_REPAIR_VALIDATING",
+  "status": "V233_SEALED_PENDING_STRICT_CI",
   "gate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT",
   "nextGate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT",
   "handoffGeneration": "20260903T0745Z-v233",
