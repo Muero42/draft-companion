@@ -147,8 +147,8 @@ Canonical continuation trigger: **PITTI AUTO**
 - The same screenshot still rendered “0 gerankte Free Agents / HOLD”. Root cause: bootstrapSeasonWorkspace had a second render path that did not apply the zero-FA fail-closed gate already added to the main analyze path. Startup can occur before expert rank caches are hydrated, so ownership can be valid while the rank-gated FA join collapses to zero.
 - Fix: startup bootstrap now throws SEASON_FA_POOL_ZERO_INVALID on zero ranked skill-position FAs rather than rendering HOLD. Guardrail requires both startup and analyze paths to contain the zero-FA gate.
 
-## PITTI HANDOFF v217 — 2026-09-01 10:58Z
-- Canonical branch remains `season-companion-rc4.159`; branch name is historical and MUST NOT be interpreted as runtime version.
+## PITTI HANDOFF v217 — 2026-09-01 10:58Z [HISTORICAL]
+- Historical at v217: branch was `season-companion-rc4.159`; this is NOT current authority.
 - Source/preview candidate is now **v11.8.0-rc4.161** across app.js, index.html, sw.js and manifest.webmanifest. Android accepted authority remains rc4.158 until rc4.161 physical-device acceptance.
 - Real Sleeper draft 1366053132970233856 is immutable history. Current Sleeper league state is the sole current-roster/ownership authority.
 - Device rc4.160 transaction canary PASS: app independently observed Harrison Mevis rostered, Tank Bigsby absent, Zach Charbonnet Reserve/IR. This proves automatic add/drop roster detection; do not ask user which player was dropped when Sleeper can resolve it.
@@ -496,9 +496,9 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Final v229 CI audit exposed two additional handoff-guard defects on sealed head `bf84c32a08fd4f85c63d01b0274e9b867a0b8a2c`: executable guard still capped Season source_candidate at rc4.184, and it accepted seal status only PASS (or explicit pending), while v229 used PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING. Runtime startup and Season semantic regressions passed before these guard failures. Guard is now extended to rc4.185 + PR108 gates; seal will use canonical PASS while exact_gate/note continue to state that PR108 release validation is pending. No product behavior is reverted.
 
 
-## 2026-09-02 — HANDOFF v230 / rc4.189 post-merge reseal
-- Handoff generation: `20260902T1915Z-v230`.
-- rc4.189 is merged on main at `88c007732f94df7b1624a6c05a0b16af4d33d94f`; PR #108 is historical/merged and must never be resurrected as an open current gate.
+## 2026-09-02 — HANDOFF v230 / rc4.189 post-merge reseal [HISTORICAL SUPERSEDED BY v231]
+- Historical handoff generation: `20260902T1915Z-v230`.
+- At that v230 checkpoint rc4.189 was recorded on main at `88c007732f94df7b1624a6c05a0b16af4d33d94f`; current authority is the v231 section at EOF / actual main HEAD; PR #108 is historical/merged and must never be resurrected as an open current gate.
 - Latest physical Android authority is rc4.188 with Waiver/FA route, live Sleeper ownership, kicker-isolation and active-drop/IR semantics PASS. rc4.169 remains accepted rollback authority until rc4.189 physical acceptance.
 - Post-merge CI on main proved rc4.189 runtime startup and candidate package PASS, but Project Guardrails failed because the squash merge left the handoff seal and several current-gate/AUTO tokens stale. This is a checkpoint/seal defect, not a product-runtime rollback signal.
 - v230 repairs CURRENT/LOCK/COMMAND/bootstrap/handoff/matrix authority to rc4.189 and the actual rc4.188 device evidence, extends the guard to the rc4.189 post-merge reseal gate, and requires a fresh integrity seal.
