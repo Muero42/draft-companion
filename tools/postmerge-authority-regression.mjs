@@ -19,6 +19,8 @@ const cases=[
   ['CURRENT local only',d=>d['PITTI_CURRENT_STATE.json'].operative_scope='This work is local only'],
   ['false source containment',d=>d['PITTI_CURRENT_STATE.json'].source_authority='rc4.190 merged source on main'],
   ['permission reference drift',d=>d['PITTI_CURRENT_STATE.json'].authority.permission_contract='historical PR118'],
+  ['frozen migration branch',d=>d['PITTI_CURRENT_STATE.json'].runtime.candidate_branch='pitti/rc4190-v234-migration'],
+  ['nested historical-name bypass',d=>d['PITTI_CURRENT_STATE.json'].authority.historical_superseded={nextGate:'V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT'}],
   ['unmerged gate prerequisite',d=>d['PITTI_COMMAND_CONTRACTS.json'].gate_prerequisite='REQUIRES_UNMERGED_BRANCH'],
   ['static remote authorization',d=>d['PITTI_EXECUTION_LOCK.json'].remote_actions_authorized=false],
   ['immutable current PR122',d=>d['PITTI_CURRENT_STATE.json'].authority.pr122={status:'OPEN'}],

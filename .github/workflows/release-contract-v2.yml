@@ -63,3 +63,8 @@ jobs:
           node tools/permission-contract-regression.mjs
           node tools/takeover-authority-regression.mjs
           node tools/postmerge-authority-regression.mjs
+
+      - name: Independent runtime review and strict seal
+        run: |
+          node tools/season-adversarial-review-regression.mjs
+          PITTI_SKIP_SEAL_INTEGRITY=0 PITTI_CANDIDATE_PREFLIGHT=0 node tools/pitti_guardrail_check.mjs

@@ -47,6 +47,7 @@ export function validateAuthority(data) {
   check(!c.authority.local_repair,'CURRENT.authority.local_repair','operative repair-branch binding forbidden');
   check(c.authority.permission_contract==='AGENTS.md#pitti-codex-permission-contract','CURRENT.authority.permission_contract','canonical permission reference required');
   check(c.authority.source_scope==='SOURCE_IN_THIS_TREE; canonical main containment is dynamically verified; source/build/package never imply deployment or device acceptance','CURRENT.authority.source_scope','source tree must remain separate from canonical containment and deployment');
+  check(c.runtime.candidate_branch==='DYNAMIC_VERIFICATION_REQUIRED','CURRENT.runtime.candidate_branch','operative branch must not be frozen across promotion');
   check(l.runtime?.appVersion==='v11.8.0-rc4.190'&&s.branch_locks?.source_baseline==='v11.8.0-rc4.190','LOCK/SEAL.runtime','runtime changed');
   for(const p of ['installed_android','latest_android_observed','latestAndroidVersionObserved']) check(c.runtime[p]==='v11.8.0-rc4.188',`CURRENT.runtime.${p}`,'latest physical version drift');
   check(c.runtime.latest_device_evidence?.version==='v11.8.0-rc4.188'&&c.runtime.latest_device_evidence.acceptance==='PASS'&&c.runtime.latest_device_evidence.fail.length===0,'CURRENT.runtime.latest_device_evidence','physical evidence drift');
@@ -62,14 +63,14 @@ export function validateAuthority(data) {
   check(a.completed_recent.some(x=>x.id==='v233-postmerge-local-readonly-audit'&&x.result.includes('FAIL_CLOSED')),'AUTO.completed_recent','performed audit missing');
   // Inspect every active JSON string, including aliases and newly added pointers. Historical
   // subtrees are explicit containers, not a magic word capable of hiding an active field.
-  const historicalKeys=new Set(['historical_superseded','completed_recent','pr98','pr99','rc499']);
+  const historicalPaths=new Set(['PITTI_CURRENT_STATE.json.historical_superseded','PITTI_CURRENT_STATE.json.auto_execution_state.completed_recent','PITTI_CURRENT_STATE.json.runtime.pr98','PITTI_CURRENT_STATE.json.runtime.pr99','PITTI_EXECUTION_LOCK.json.runtime.rc499']);
   function walk(value,p) {
     if(typeof value==='string') {
       check(!/rc4\.190\s+(?:merged source|on canonical main)/i.test(value),p,'source cannot assert unverified canonical containment');
       check(!/PR\s*#?\s*(?:118|122)\s+(?:is|=|:)\s*(?:OPEN|MERGED|UNMERGED)|(?:PR_|MERGE_)(?:OPEN|MERGED|UNMERGED)|REQUIRES_UNMERGED/i.test(value),p,'mutable PR state or unmerged prerequisite is not current authority');
       check(!/local[ _-]only|LOCAL_AUTHORITY_REVIEW_ONLY|no push, merge|no merge authorized|requires?\s+(?:an?\s+)?(?:unmerged|repair branch)|pitti\/v234-postmerge-authority-repair/i.test(value),p,'current authority must survive promotion');
       check(!/V233_(?:SEALED_PENDING|STRICT_GATES|STALE_CURRENT)|(?:then|after|until)\s+(?:v233\s+)?(?:merges?|strict gates).*v233|merge v233/i.test(value)||value.includes('No v233 merge'),p,'stale v233 work pointer');
-    } else if(value&&typeof value==='object') for(const [key,v] of Object.entries(value)) if(!historicalKeys.has(key)) {check(!/^(remote_actions_authorized|requires_unmerged|repair_branch|local_repair_branch|merge_status|merged|mergeable|pending_merge|pending_strict_ci)$/.test(key)||p.endsWith('.postmerge'),`${p}.${key}`,'mutable authorization/merge facts cannot be static CURRENT fields'); if(/(?:^|\.)pr\d+$/.test(p)&&key==='status') check(v==='DYNAMIC_VERIFICATION_REQUIRED'||(p.endsWith('.pr121')&&v==='MERGED/HISTORICAL'),`${p}.${key}`,'PR status must be dynamically verified'); walk(v,`${p}.${key}`);}
+    } else if(value&&typeof value==='object') for(const [key,v] of Object.entries(value)) if(!historicalPaths.has(`${p}.${key}`)) {check(!/^(remote_actions_authorized|requires_unmerged|repair_branch|local_repair_branch|merge_status|merged|mergeable|pending_merge|pending_strict_ci)$/.test(key)||p.endsWith('.postmerge'),`${p}.${key}`,'mutable authorization/merge facts cannot be static CURRENT fields'); if(/(?:^|\.)pr\d+$/.test(p)&&key==='status') check(v==='DYNAMIC_VERIFICATION_REQUIRED'||(p.endsWith('.pr121')&&v==='MERGED/HISTORICAL'),`${p}.${key}`,'PR status must be dynamically verified'); walk(v,`${p}.${key}`);}
   }
   for(const p of core) walk(data[p],p);
   for(const p of docs) {

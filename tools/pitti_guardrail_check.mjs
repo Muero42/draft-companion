@@ -125,7 +125,7 @@ must(app.includes("frische Weekly-Evidence fehlt"),'Waiver v2 stale weekly expla
 must(app.includes('Trade Board v7')&&app.includes('function seasonTradeDecision('),'Trade Board v7 bilateral evidence surface missing');
 must(app.includes('function tradeOfferCandidates('),'Trade offer construction helper missing');
 must(app.includes('acceptance:null')&&app.includes('result.ourGain>0&&result.opponentGain>0'),'Trade acceptance must require bilateral gain and cannot fabricate a probability');
-must(app.includes('Week-1 Start/Sit v5'),'Start/Sit canonical-slot surface missing');
+must(app.includes(' Start/Sit v5'),'Start/Sit canonical-slot surface missing');
 must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
 must(app.includes('PITTI nutzt eigene Weekly-Panel-Ranks'),'PITTI weekly-panel primary invariant missing');
 must(app.includes('Special Teams v2'),'Special Teams v2 quality-floor surface missing');
