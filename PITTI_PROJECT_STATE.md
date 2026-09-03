@@ -516,8 +516,10 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 
 
 ## 2026-09-03 — v232 post-merge authority seal
-- v231 checkpoint-only reconciliation merged to canonical `main`; actual new main HEAD is `2471c3666edaa313388d6b79c488940ac6b51f86`.
+- v231 checkpoint-only reconciliation merged to canonical `main`; reconciled base main was `2471c3666edaa313388d6b79c488940ac6b51f86`; current HEAD must always be verified dynamically.
 - Canonical source remains rc4.189; rc4.188 remains latest physical PASS; rc4.169 rollback authority.
 - Deployment parity remains UNKNOWN_REQUIRES_REVERIFICATION. Do not infer deployment/device acceptance from source merge.
 - PR #118 remains isolated/unmerged rc4.190 Codex Season Decision Engine work; AGENTS.md and PITTI_CODEX_WORK_PACKAGE.md are intentionally PR-only until Codex workflow is accepted.
 - Current gate: `V232_GUARDS_THEN_LOCAL_CODEX_PULL_REAUDIT`. After checkpoint-only v232 merge, local Codex clone must pull canonical main and repeat the same read-only audit before writable Codex work.
+
+- Self-referential SHA rule: a tracked checkpoint cannot safely declare its own containing commit SHA as immutable current authority because any edit changes that SHA. Canonical Git authority is branch `main` + dynamically verified HEAD; recorded SHAs are historical/reconciled-base evidence only.
