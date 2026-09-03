@@ -1,20 +1,20 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260903T0720Z-v232",
-  "created_at": "2026-09-03T07:27:00Z",
+  "created_at": "2026-09-03T07:32:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "f55b00ed2508248bb3ce9a2b65228e7e7013e4d9",
-    "PITTI_EXECUTION_LOCK.json": "035af0233d9a303ed12ff476b10e85875b1f60dd",
-    "PITTI_COMMAND_CONTRACTS.json": "1a0827d4f3d20c58eb9a7adab37b6f8e45911649",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "09c03477ede47208a097b5666de356ea2262fe9b",
+    "PITTI_CURRENT_STATE.json": "eec43cf56913b7a3a6c7d5eec602fabc86ca70df",
+    "PITTI_EXECUTION_LOCK.json": "c4ef6c6a0f4a84ddb11af53958dbde72b9a0a548",
+    "PITTI_COMMAND_CONTRACTS.json": "652b08d31430773d93506c347ee0fb072d56d0ea",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "13651abfab287755ec41885c512ccfceb0f370f5",
     "NEW_CHAT_HANDOFF_CURRENT.md": "bae3e6402f4aaed0d8601ce67dbb0113e199453d",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "aafd3d8dc469dfc658188e39c5b1d193e1753d95",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "d7eea4c9d4873ff6a0531d8aacb746174e99f3ce",
     "PITTI_AUTO_PREFLIGHT.md": "63ff09db73141ef98dc4d1152bfb5070dd8895cc",
-    "PITTI_PROJECT_STATE.md": "58ba270d7b75bbcad07418a7d47c12b2ff5fcef6",
+    "PITTI_PROJECT_STATE.md": "40992a3b5e51067da2dfc3142f3a31b769533717",
     "README.md": "918b631845d99902ac4ffc30cc51c74230894293",
     "app.js": "7c386fc03de3e956801770215fa5f2b05226b021",
     "live-surface-v3.js": "f2b718382d9d36ef38cfeb281e7348ba337c459e",
@@ -30,7 +30,8 @@
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_baseline": "v11.8.0-rc4.189",
-    "latest_main": "2471c3666edaa313388d6b79c488940ac6b51f86",
+    "git_identity_rule": "Verify current main HEAD dynamically; do not hard-code containing commit as self-authority.",
+    "reconciled_base_main": "2471c3666edaa313388d6b79c488940ac6b51f86",
     "latest_physical_android": "v11.8.0-rc4.188 WAIVER_CANARY_PASS",
     "accepted_rollback": "v11.8.0-rc4.169",
     "codex_work": "PR #118 OPEN / UNMERGED",
@@ -54,5 +55,5 @@
     "device_trial_and_error_forbidden": true
   },
   "exact_gate": "MERGE_V232_THEN_LOCAL_CODEX_PULL_REAUDIT",
-  "note": "v232 post-merge authority sealed after candidate-preflight all-green on 9856c07. Merge only after this sealed head passes strict gates; then local Codex clone must pull main and repeat read-only audit."
+  "note": "v232 post-merge authority seal. Canonical Git identity is branch main plus dynamically verified HEAD; recorded SHAs are historical/reconciled-base evidence only. Merge only after this exact sealed head passes strict gates."
 }
