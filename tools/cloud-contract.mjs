@@ -33,6 +33,7 @@ export function diffErrors(files,scope,branch,base,expected){
   }
   return e;
 }
+export function pathCollisionErrors(all,changed){const e=[],folded=new Map();for(const f of all){const k=f.normalize('NFC').toLowerCase(),prior=folded.get(k);if(prior&&prior!==f&&(changed.includes(f)||changed.includes(prior)))e.push('candidate collides with existing case/Unicode path: '+f);folded.set(k,f);}return e;}
 export function secretMaterial(text){return /-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----|\bgh[pousr]_[A-Za-z0-9]{30,}|\bgithub_pat_[A-Za-z0-9_]{30,}|\bsk-(?:proj-)?[A-Za-z0-9_-]{40,}|\bAKIA[0-9A-Z]{16}\b/.test(text);}
 export function exactCiErrors(head,observations,pr){
   const e=[];if(!sha(head))e.push('invalid CI head');

@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import {execFileSync} from 'node:child_process';
-import {REPO,CI_FILES,CI_SPECS,REVIEW_TOPICS,requestErrors,diffErrors,secretMaterial,exactCiErrors,reviewErrors,protectionErrors,requirePass} from './cloud-contract.mjs';
+import {REPO,CI_FILES,CI_SPECS,REVIEW_TOPICS,requestErrors,diffErrors,pathCollisionErrors,secretMaterial,exactCiErrors,reviewErrors,protectionErrors,requirePass} from './cloud-contract.mjs';
 import {loadAuthority,validateAuthority,validateContinuationEvidence} from './postmerge-authority-contract.mjs';
 const work=path.resolve(process.env.PITTI_WORK||'.'),out=path.resolve(process.env.PITTI_OUTPUT||'.pitti-cloud-output');
 const git=(...a)=>execFileSync('git',['-c','core.hooksPath=/dev/null',...a],{cwd:work,encoding:'utf8',maxBuffer:20*1024*1024}).trim();
@@ -44,7 +44,7 @@ function changes(r,allowDerived=false){
   const files=git('diff','--name-only','--no-renames',r.expected_main_sha).split('\n').filter(Boolean);
   files.push(...git('ls-files','--others','--exclude-standard').split('\n').filter(Boolean));
   const unique=[...new Set(files)];if(allowDerived)verifyDerivedSeal(unique);requirePass(diffErrors(unique.filter(f=>allowDerived&&f==='PITTI_HANDOFF_SEAL.json'?false:true),r.allowed_scope,git('branch','--show-current'),git('rev-parse','HEAD'),r.expected_main_sha));
-  const all=git('ls-files','-z').split('\0').filter(Boolean),folded=new Map();for(const f of all){const k=f.normalize('NFC').toLowerCase();if(folded.has(k)&&folded.get(k)!==f&&unique.includes(f))throw Error('candidate collides with existing case/Unicode path: '+f);folded.set(k,f);}
+  requirePass(pathCollisionErrors(git('ls-files','-z').split('\0').filter(Boolean),unique));
   for(const f of files){const p=path.join(work,f);if(fs.existsSync(p)){const s=fs.lstatSync(p);if(!s.isFile()||s.size>2*1024*1024)throw Error('regular text files under 2 MiB only: '+f);const b=fs.readFileSync(p);if(b.includes(0)||secretMaterial(b.toString('utf8')))throw Error('binary/secret-material rejected: '+f);}}
   return unique;
 }

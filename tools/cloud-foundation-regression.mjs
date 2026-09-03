@@ -1,7 +1,7 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
 import os from 'node:os';import path from 'node:path';import {execFileSync} from 'node:child_process';
 import crypto from 'node:crypto';
-import {REPO,CI_FILES,REQUIRED_JOBS,REVIEW_TOPICS,requestErrors,diffErrors,exactCiErrors,reviewErrors,promotionErrors,protectionErrors,secretMaterial} from './cloud-contract.mjs';
+import {REPO,CI_FILES,REQUIRED_JOBS,REVIEW_TOPICS,requestErrors,diffErrors,pathCollisionErrors,exactCiErrors,reviewErrors,promotionErrors,protectionErrors,secretMaterial} from './cloud-contract.mjs';
 const head='a'.repeat(40),next='b'.repeat(40),branch='pitti/cloud-auto/test-task-123-1';
 const r={repo:REPO,expected_main_sha:head,task_id:'test-task',task_prompt:'Make one harmless documentation correction.',allowed_scope:['docs/example.md'],max_attempts:1,authorization_reference:'owner-dispatch:test-123',actor:'Muero42',triggering_actor:'Muero42',event:'workflow_dispatch',ref:'refs/heads/main',workflow_sha:head,run_id:'123',run_attempt:'1'};
 const local={repo:REPO,head,main:head,branch:'main',clean:true};
@@ -18,6 +18,7 @@ test('out-of-scope diff',()=>assert(diffErrors(['app.js'],r.allowed_scope,branch
 test('main write target',()=>assert(diffErrors(['docs/example.md'],r.allowed_scope,'main',head,head).length));
 test('path traversal',()=>assert(diffErrors(['docs/../app.js'],['docs/'],branch,head,head).length));
 test('casefold collision',()=>assert(diffErrors(['docs/A.md','docs/a.md'],['docs/'],branch,head,head).length));
+test('existing-file collision rejected in either Git ordering',()=>{for(const files of [['docs/A.md','docs/a.md'],['docs/a.md','docs/A.md']])assert(pathCollisionErrors(files,['docs/A.md']).length);});
 test('hidden and Windows-reserved paths rejected',()=>assert(diffErrors(['docs/.npmrc','docs/NUL.txt'],['docs/'],branch,head,head).length>=2));
 test('controller self modification',()=>assert(diffErrors(['tools/cloud-run.mjs'],['tools/'],branch,head,head).length));
 test('candidate cannot forge derived handoff seal',()=>assert(diffErrors(['PITTI_HANDOFF_SEAL.json'],['PITTI_HANDOFF_SEAL.json'],branch,head,head).length));
@@ -65,6 +66,7 @@ test('real controller captures scoped patch',()=>run(source,'capture'));
 const clone=name=>{const p=path.join(temp,name);git(temp,'clone','--quiet','--branch','main',source,p);return p;};
 test('real schema payload is rebound and applies a trusted derived seal',()=>{const p=clone('payload');git(p,'switch','-c',branch);env.PITTI_IMPLEMENTATION_PAYLOAD=JSON.stringify({patchBase64:fs.readFileSync(path.join(output,'change.patch')).toString('base64'),summary:'Tested fixture implementation.'});run(p,'capture-payload');delete env.PITTI_IMPLEMENTATION_PAYLOAD;assert.equal(fs.readFileSync(path.join(p,'example.md'),'utf8').replace(/\r\n/g,'\n'),'after\n');const implementation=JSON.parse(fs.readFileSync(path.join(output,'implementation.json')));assert(implementation.files.includes('PITTI_HANDOFF_SEAL.json'));assert.equal(JSON.parse(fs.readFileSync(path.join(p,'PITTI_HANDOFF_SEAL.json'))).integrity['example.md'],git(p,'rev-parse',':example.md'));});
 test('real fresh checkout applies same tree',()=>{const p=clone('valid');run(p,'apply');assert.equal(fs.readFileSync(path.join(p,'example.md'),'utf8').replace(/\r\n/g,'\n'),'after\n');assert.equal(git(p,'write-tree'),JSON.parse(fs.readFileSync(path.join(output,'implementation.json'))).tree);});
+test('real validated handoff preserves isolated receipt and rejects stale binding',()=>{const p=clone('receipt');run(p,'apply');const i=JSON.parse(fs.readFileSync(path.join(output,'implementation.json'))),receipt={schema:'pitti.isolated-validation.v1',status:'PASS',repo:REPO,base,run_id:'123',run_attempt:'1',patch_sha256:i.patch_sha256,tree:i.tree};fs.mkdirSync(path.join(output,'validation'),{recursive:true});const f=path.join(output,'validation','validation.json');fs.writeFileSync(f,JSON.stringify(receipt));run(p,'validated');assert.deepEqual(JSON.parse(fs.readFileSync(path.join(output,'validated.json'))),receipt);fs.writeFileSync(f,JSON.stringify({...receipt,run_id:'999'}));assert.throws(()=>run(p,'validated'));fs.writeFileSync(f,JSON.stringify(receipt));});
 test('real dirty publisher checkout rejected',()=>{const p=clone('dirty');fs.writeFileSync(path.join(p,'unexpected.md'),'dirty');assert.throws(()=>run(p,'apply'));});
 test('real request artifact tampering rejected',()=>{const p=clone('tamper');fs.writeFileSync(requestFile,JSON.stringify({...request,allowed_scope:['app.js']}));assert.throws(()=>run(p,'apply'));fs.writeFileSync(requestFile,JSON.stringify(request));});
 test('real patch corruption rejected',()=>{const p=clone('corrupt'),f=path.join(output,'change.patch'),original=fs.readFileSync(f);fs.appendFileSync(f,'corrupt');assert.throws(()=>run(p,'apply'));fs.writeFileSync(f,original);});
