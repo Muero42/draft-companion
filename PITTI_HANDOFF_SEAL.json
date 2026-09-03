@@ -2,7 +2,7 @@
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260903T0745Z-v233",
   "created_at": "2026-09-03T07:45:00Z",
-  "status": "PENDING_RESEAL",
+  "status": "SUPERSEDED_PENDING_RESEAL",
   "handoff_ready": false,
   "second_pass_pass": false,
   "integrity_algorithm": "git_blob_sha1",
@@ -55,5 +55,5 @@
     "device_trial_and_error_forbidden": true
   },
   "exact_gate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT",
-  "note": "v233 checkpoint-only repair for stale current pointers found by second local Codex read-only audit. No product runtime change. Reseal after checkpoint alignment and strict validation."
+  "note": "v233 checkpoint-only repair for stale current pointers found by second local Codex read-only audit. Pre-seal candidate validation is allowed only in SUPERSEDED_PENDING_RESEAL state. No product runtime change."
 }
