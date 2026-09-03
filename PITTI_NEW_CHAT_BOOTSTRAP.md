@@ -4,7 +4,7 @@ No device-side trial-and-error. Empty assistant response after tool work is forb
 
 # PITTI NEW CHAT BOOTSTRAP — v232
 
-Canonical source: rc4.189 on main at `2471c3666edaa313388d6b79c488940ac6b51f86`. Latest physical Android: rc4.188 PASS. Rollback: rc4.169. Deployment parity: UNKNOWN_REQUIRES_REVERIFICATION. PR #118 remains isolated/unmerged rc4.190 Codex work.
+Canonical source: rc4.189 on canonical branch `main` (verify exact HEAD dynamically). Latest physical Android: rc4.188 PASS. Rollback: rc4.169. Deployment parity: UNKNOWN_REQUIRES_REVERIFICATION. PR #118 remains isolated/unmerged rc4.190 Codex work.
 
 Current gate: `V232_GUARDS_THEN_LOCAL_CODEX_PULL_REAUDIT`. After checkpoint-only merge, update the local Codex clone and repeat the same read-only audit before writable Codex work.
 
