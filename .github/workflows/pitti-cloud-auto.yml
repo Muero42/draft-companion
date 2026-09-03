@@ -149,10 +149,10 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --yes bubblewrap
-          (cd control && node tools/cloud-security-regression.mjs)
+          (cd control && sudo --preserve-env=PATH node tools/cloud-security-regression.mjs)
           npm --prefix work ci --ignore-scripts
           node work/node_modules/playwright/cli.js install --with-deps chromium
-          node control/tools/cloud-isolated-validation.mjs control work evidence/validation
+          sudo --preserve-env=PATH,PLAYWRIGHT_BROWSERS_PATH,EXPECTED_BASE,GITHUB_RUN_ID,GITHUB_RUN_ATTEMPT node control/tools/cloud-isolated-validation.mjs control work evidence/validation
       - run: node control/tools/cloud-run.mjs validated
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         with:

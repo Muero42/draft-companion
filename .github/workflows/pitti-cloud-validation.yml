@@ -28,7 +28,7 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install --yes bubblewrap
-          node tools/cloud-security-regression.mjs
+          sudo --preserve-env=PATH node tools/cloud-security-regression.mjs
           npm ci --ignore-scripts
           npx --no-install playwright install --with-deps chromium
       - name: Complete exact-head cloud validation
@@ -38,7 +38,7 @@ jobs:
           PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/pitti-playwright
         run: |
           test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
-          node tools/cloud-isolated-validation.mjs "$GITHUB_WORKSPACE" "$GITHUB_WORKSPACE" "$RUNNER_TEMP/pitti-evidence-$EXPECTED_HEAD/validation"
+          sudo --preserve-env=PATH,EXPECTED_BASE,PLAYWRIGHT_BROWSERS_PATH,GITHUB_RUN_ID,GITHUB_RUN_ATTEMPT node tools/cloud-isolated-validation.mjs "$GITHUB_WORKSPACE" "$GITHUB_WORKSPACE" "$RUNNER_TEMP/pitti-evidence-$EXPECTED_HEAD/validation"
           test -z "$(git status --porcelain=v1 --untracked-files=all)"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
