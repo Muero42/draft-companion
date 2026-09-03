@@ -523,3 +523,13 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Current gate: `V232_GUARDS_THEN_LOCAL_CODEX_PULL_REAUDIT`. After checkpoint-only v232 merge, local Codex clone must pull canonical main and repeat the same read-only audit before writable Codex work.
 
 - Self-referential SHA rule: a tracked checkpoint cannot safely declare its own containing commit SHA as immutable current authority because any edit changes that SHA. Canonical Git authority is branch `main` + dynamically verified HEAD; recorded SHAs are historical/reconciled-base evidence only.
+
+
+## 2026-09-03 — v233 Codex second-audit stale-current repair
+- After v232 merged, the local Codex clone fast-forwarded to canonical main `e25dc0df1a534f5f2d8c79dff3d6d007603bafa6`; repository identity/origin/branch/working-tree checks passed.
+- The second read-only Codex authority audit correctly failed closed on residual CURRENT pointers: `NEW_CHAT_HANDOFF_CURRENT.md` still presented reconciled base `2471c366...` as current HEAD, and `PITTI_AUTO_PREFLIGHT.md` still labeled rc4.185 / PR #108 / rc4.183 DEVICE_REJECTED as CURRENT in two places.
+- v233 is checkpoint/governance repair only: no runtime/product semantics change, no PR #118 modification. Canonical runtime remains rc4.189; latest physical PASS rc4.188; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION; PR #118 remains isolated/open/unmerged/non-production authority.
+- Stale CURRENT wording is replaced by dynamically verified main-HEAD authority and explicit historical/superseded labeling. Handoff generation is advanced to `20260903T0745Z-v233`.
+- The first v233 CI attempt failed only because the handoff seal used a noncanonical pending state. The guard contract explicitly accepts `SUPERSEDED_PENDING_RESEAL` for pre-seal validation; v233 now uses that state. A later CI attempt exposed generation drift and the exact Library-persistence fail-closed phrase being absent from the updated lock; both are repaired without reverting product behavior.
+- Executable guard authority is extended to the v233 checkpoint gates so post-merge/default guard runs cannot reject the new canonical handoff state merely because their gate allowlist is stale.
+- Exact gate: all three strict checks on the final sealed v233 head must PASS, then merge v233, then the local Codex clone must pull canonical main and repeat the read-only authority audit before any writable Codex work.
