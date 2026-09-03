@@ -17,6 +17,8 @@ const cases=[
   ['historical override resurrected',d=>d['PITTI_AUTO_PREFLIGHT.md']+='\n## v233 CURRENT OVERRIDE\n'],
   ['bootstrap premerge gate',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']+='\nCurrent gate: V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT\n'],
   ['CURRENT local only',d=>d['PITTI_CURRENT_STATE.json'].operative_scope='This work is local only'],
+  ['false source containment',d=>d['PITTI_CURRENT_STATE.json'].source_authority='rc4.190 merged source on main'],
+  ['permission reference drift',d=>d['PITTI_CURRENT_STATE.json'].authority.permission_contract='historical PR118'],
   ['unmerged gate prerequisite',d=>d['PITTI_COMMAND_CONTRACTS.json'].gate_prerequisite='REQUIRES_UNMERGED_BRANCH'],
   ['static remote authorization',d=>d['PITTI_EXECUTION_LOCK.json'].remote_actions_authorized=false],
   ['immutable current PR122',d=>d['PITTI_CURRENT_STATE.json'].authority.pr122={status:'OPEN'}],

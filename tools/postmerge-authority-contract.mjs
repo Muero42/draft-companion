@@ -42,15 +42,17 @@ export function validateAuthority(data) {
   check(k.exactNextAction===c.handoff.resume&&k.currentBoundary.exactNextAction===c.handoff.resume,'COMMAND.exactNextAction','resume drift');
   check(c.authority?.postmerge?.pr===121&&c.authority.postmerge.checkpoint==='v233'&&c.authority.postmerge.status==='MERGED/HISTORICAL'&&c.authority.postmerge.pending_merge===false&&c.authority.postmerge.pending_strict_ci===false,'CURRENT.authority.postmerge','PR #121/v233 must be merged/historical, never pending');
   check(c.authority?.pr118?.status==='DYNAMIC_VERIFICATION_REQUIRED'&&c.authority.pr118.conservative_boundary==='OPEN / UNMERGED / NON-PRODUCTION UNTIL FRESH GITHUB VERIFICATION','CURRENT.authority.pr118','PR118 requires fresh external verification before changing its conservative boundary');
-  check(c.authority?.repo==='Muero42/draft-companion'&&c.authority.branch==='main'&&c.authority.source_candidate==='v11.8.0-rc4.189','CURRENT.authority','canonical source identity drift');
+  check(c.authority?.repo==='Muero42/draft-companion'&&c.authority.branch==='main'&&c.authority.source_candidate==='v11.8.0-rc4.190','CURRENT.authority','canonical source identity drift');
   check(JSON.stringify(c.authority.promotion)===JSON.stringify({"status":"DYNAMIC_VERIFICATION_REQUIRED","verify_before":["CONTINUATION","PROMOTION"],"sources":["LOCAL_GIT","CANONICAL_GITHUB"],"permission_source":"CURRENT_USER_AUTHORIZED_WORK_PACKAGE","merge_implies_deployment":false,"merge_implies_device_acceptance":false,"unavailable_evidence":"FAIL_CLOSED_DEPENDENT_ACTION","operative_branch":"DYNAMIC_VERIFICATION_REQUIRED","pr_status":"DYNAMIC_VERIFICATION_REQUIRED","exact_head_ci":"DYNAMIC_VERIFICATION_REQUIRED"}),'CURRENT.authority.promotion','dynamic verification and current authorization contract required');
   check(!c.authority.local_repair,'CURRENT.authority.local_repair','operative repair-branch binding forbidden');
-  check(l.runtime?.appVersion==='v11.8.0-rc4.189'&&s.branch_locks?.source_baseline==='v11.8.0-rc4.189','LOCK/SEAL.runtime','runtime changed');
+  check(c.authority.permission_contract==='AGENTS.md#pitti-codex-permission-contract','CURRENT.authority.permission_contract','canonical permission reference required');
+  check(c.authority.source_scope==='SOURCE_IN_THIS_TREE; canonical main containment is dynamically verified; source/build/package never imply deployment or device acceptance','CURRENT.authority.source_scope','source tree must remain separate from canonical containment and deployment');
+  check(l.runtime?.appVersion==='v11.8.0-rc4.190'&&s.branch_locks?.source_baseline==='v11.8.0-rc4.190','LOCK/SEAL.runtime','runtime changed');
   for(const p of ['installed_android','latest_android_observed','latestAndroidVersionObserved']) check(c.runtime[p]==='v11.8.0-rc4.188',`CURRENT.runtime.${p}`,'latest physical version drift');
   check(c.runtime.latest_device_evidence?.version==='v11.8.0-rc4.188'&&c.runtime.latest_device_evidence.acceptance==='PASS'&&c.runtime.latest_device_evidence.fail.length===0,'CURRENT.runtime.latest_device_evidence','physical evidence drift');
   check(c.runtime.accepted_android==='v11.8.0-rc4.169'&&c.runtime.android_accepted==='v11.8.0-rc4.169'&&l.runtime.acceptedAndroidAuthority==='v11.8.0-rc4.169'&&s.branch_locks.accepted_rollback==='v11.8.0-rc4.169','rollback','rollback drift');
   check(c.runtime.deployed_pages_head==='UNKNOWN_REQUIRES_REVERIFICATION'&&c.runtime.deployed_pages_app_byte_parity_with_main===null&&l.runtime.deployedPagesVersion==='UNKNOWN_REQUIRES_REVERIFICATION'&&l.runtime.deployedPagesAppByteParityWithMain===null&&l.runtime.mainGhPagesParity===null&&k.currentBoundary.deployedPagesVersion==='UNKNOWN_REQUIRES_REVERIFICATION'&&k.currentBoundary.deployedPagesAppByteParityWithMain===null&&s.branch_locks.deployment_parity==='UNKNOWN_REQUIRES_REVERIFICATION','deployment','offline audit cannot assert deployment parity');
-  check(c.runtime.android_acceptance_pending===true&&l.runtime.androidVerified===false,'rc4.189 device','local/source PASS cannot assert physical acceptance');
+  check(c.runtime.android_acceptance_pending===true&&l.runtime.androidVerified===false,'rc4.190 device','local/source PASS cannot assert physical acceptance');
   check(c.runtime.package_reference_scope?.includes('HISTORICAL rc4.182')&&k.currentBoundary.packageReferenceScope===c.runtime.package_reference_scope&&l.runtime.preinstallHashSemantics.startsWith('HISTORICAL rc4.182'),'package','old package digest must remain explicitly historical');
   check(Object.values(c.runtime.ci).filter(v=>v==='DYNAMIC_VERIFICATION_REQUIRED').length===3&&c.runtime.ci.validated_code_head===null,'remote CI','offline repair must not invent current CI');
   check(c.codex.local_main_verified===BASE&&c.codex.working_tree_at_precheck==='clean'&&c.codex.audit_result==='FAIL_CLOSED_ON_RESIDUAL_POSTMERGE_STATE_POINTERS'&&c.codex.status==='HISTORICAL_AUDIT_RECORD','Codex audit','performed post-merge failure must be preserved separately from local repair');
@@ -63,6 +65,7 @@ export function validateAuthority(data) {
   const historicalKeys=new Set(['historical_superseded','completed_recent','pr98','pr99','rc499']);
   function walk(value,p) {
     if(typeof value==='string') {
+      check(!/rc4\.190\s+(?:merged source|on canonical main)/i.test(value),p,'source cannot assert unverified canonical containment');
       check(!/PR\s*#?\s*(?:118|122)\s+(?:is|=|:)\s*(?:OPEN|MERGED|UNMERGED)|(?:PR_|MERGE_)(?:OPEN|MERGED|UNMERGED)|REQUIRES_UNMERGED/i.test(value),p,'mutable PR state or unmerged prerequisite is not current authority');
       check(!/local[ _-]only|LOCAL_AUTHORITY_REVIEW_ONLY|no push, merge|no merge authorized|requires?\s+(?:an?\s+)?(?:unmerged|repair branch)|pitti\/v234-postmerge-authority-repair/i.test(value),p,'current authority must survive promotion');
       check(!/V233_(?:SEALED_PENDING|STRICT_GATES|STALE_CURRENT)|(?:then|after|until)\s+(?:v233\s+)?(?:merges?|strict gates).*v233|merge v233/i.test(value)||value.includes('No v233 merge'),p,'stale v233 work pointer');
@@ -72,7 +75,7 @@ export function validateAuthority(data) {
   for(const p of docs) {
     const text=data[p];
     check(text.includes(AUTHORITY_GATE),p,'current promotion-stable gate missing');
-    for(const token of ['rc4.189','rc4.188','rc4.169','UNKNOWN_REQUIRES_REVERIFICATION','MERGED/HISTORICAL']) check(text.includes(token),p,`current authority token missing: ${token}`);
+    for(const token of ['rc4.190','rc4.188','rc4.169','UNKNOWN_REQUIRES_REVERIFICATION','MERGED/HISTORICAL']) check(text.includes(token),p,`current authority token missing: ${token}`);
     if(p!=='README.md') check(text.includes(generation),p,'generation missing');
     // Scope chronological blocks explicitly. A later CURRENT section returns to active scope.
     let historical=false;

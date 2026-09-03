@@ -1,19 +1,19 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-03T09:59:50.439Z",
+  "updatedAt": "2026-09-03T11:40:32.214Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Canonical source/runtime rc4.189 (canonical branch main; verify Git/GitHub authority dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance. Library persistence remains fail-closed: never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Source/runtime rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance. Library persistence remains fail-closed: never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "reconciledBaseMain": "2749537945ec7e6b96d95e2f6b55a26e455124fa"
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.189",
+    "appVersion": "v11.8.0-rc4.190",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
@@ -21,7 +21,7 @@
     "latestAndroidObserved": "v11.8.0-rc4.188 PASS: Waiver/FA route, live ownership, kicker isolation and active-drop semantics physically verified",
     "latestPreinstallVerified": "HISTORICAL/SUPERSEDED: rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "HISTORICAL/SUPERSEDED: v11.8.0-rc4.107",
-    "preinstallArtifact": "HISTORICAL rc4.182 package reference only; no verified rc4.189 installable artifact is asserted",
+    "preinstallArtifact": "HISTORICAL rc4.182 package reference only; no verified rc4.190 installable artifact is asserted",
     "preinstallSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "HISTORICAL prior regression observation; current local checks must run on repaired bytes",
@@ -32,7 +32,7 @@
     "deployedPagesAppByteParityWithMain": null,
     "preinstallReferenceRun": 33597607588,
     "preinstallReferenceArtifactId": 9833935479,
-    "preinstallHashSemantics": "HISTORICAL rc4.182 GitHub candidate-package artifact digest; not current rc4.189 package/deployment evidence.",
+    "preinstallHashSemantics": "HISTORICAL rc4.182 GitHub candidate-package artifact digest; not current rc4.190 package/deployment evidence.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.188",
     "latestAndroidFunctionalVerified": "v11.8.0-rc4.188 Waiver/FA + live ownership + kicker isolation + active-drop/IR semantics PASS",
     "testChallengerAndroidObserved": false,
@@ -69,7 +69,7 @@
     "deployedPagesVersion": "UNKNOWN_REQUIRES_REVERIFICATION",
     "mainGhPagesParity": null,
     "androidVerified": false,
-    "androidAcceptance": "rc4.188 physical Waiver/FA PASS; rc4.189 physical acceptance pending",
+    "androidAcceptance": "rc4.188 physical Waiver/FA PASS; rc4.190 physical acceptance pending",
     "devicePromotionPolicy": "Requires current user authorization, exact-source validation, verified deployment parity and a physical canary. Source or merge state never proves device acceptance.",
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate"
@@ -275,7 +275,7 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260903T1200Z-v234",
+    "generation": "20260903T1230Z-v234",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -299,7 +299,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260903T1200Z-v234",
+  "handoff_generation": "20260903T1230Z-v234",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -334,5 +334,5 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260903T1200Z-v234"
+  "handoffGeneration": "20260903T1230Z-v234"
 }

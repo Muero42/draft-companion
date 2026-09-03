@@ -1,5 +1,5 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.189';
+const APP_VERSION='v11.8.0-rc4.190';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -92,15 +92,12 @@ function seasonLineupHtml(rows,season){
   const byId=new Map(rows.map(x=>[String(x.p.id),x])),starters=(season?.my_roster?.starters||season?.my_starters||[]).map(String).filter(x=>x&&x!=='0');
   const slotMap=seasonStarterSlotMap(season),starterSet=new Set(starters),active=rows.filter(x=>x.seasonStatus!=='RESERVE'),bench=active.filter(x=>!starterSet.has(String(x.p.id))),reserve=rows.filter(x=>x.seasonStatus==='RESERVE');
   const slotClass=(slot,playerPos='')=>{const s=String(slot||'').toUpperCase(),p=String(playerPos||'').toUpperCase();if(s==='FLEX')return'flex-wrt';if(s==='WRRB_FLEX')return'flex-wr';if(s==='REC_FLEX')return'flex-wt';if(s==='SUPER_FLEX')return'flex-super';if(s==='BN'||s==='IR'||s==='TAXI')return s.toLowerCase();if(s==='DEF'||s==='DST')return'dst';if(['QB','RB','WR','TE','K'].includes(s))return s.toLowerCase();return ['QB','RB','WR','TE','K'].includes(p)?p.toLowerCase():'slot-neutral';};
-  const row=(x,label,alt='',slot='')=>'<div class="lineup-row"><span class="pos-chip '+slotClass(slot||label,x.p.pos)+'">'+esc(label||x.p.pos)+'</span><div class="lineup-player"><b>'+esc(x.p.name)+'</b><span>'+esc(x.p.team)+(x.p.injury?' · '+esc(x.p.injury):'')+(alt?' · '+esc(alt):'')+'</span></div><b class="lineup-state">'+(x.seasonStatus==='RESERVE'?'IR':'')+'</b></div>';
+  const row=(x,label,alt='',slot='')=>'<div class="lineup-row"><span class="pos-chip '+slotClass(slot||label,x.p.pos)+'">'+esc(label||x.p.pos)+'</span><div class="lineup-player"><b>'+esc(x.p.name)+'</b><span>'+esc(x.p.team)+(x.p.injury?' · '+esc(x.p.injury):'')+(alt?' · '+esc(alt):'')+' · '+esc(seasonWeeklyStrip(x.p))+'</span></div><b class="lineup-state">'+(x.seasonStatus==='RESERVE'?'IR':'')+'</b></div>';
   let html='<div class="lineup-section-title">STARTER</div>';
   for(const pid of starters){const x=byId.get(pid),slot=slotMap.get(pid)?.slot;if(x)html+=row(x,seasonSlotLabel(slot,x.p.pos),'',slot);}
   if(!starters.length)html+='<div class="notice warn">Sleeper-Starter noch nicht verfügbar; Kader ist geladen.</div>';
   html+='<div class="lineup-section-title">BENCH</div>'+bench.map(x=>row(x,'BN','','BN')).join('');
   if(reserve.length)html+='<div class="lineup-section-title">RESERVE / IR</div>'+reserve.map(x=>row(x,'IR','','IR')).join('');
-  // Lightweight alternatives: strongest bench option by position from the current panel.
-  const alts=bench.filter(x=>x.r).sort((a,b)=>a.r.rank-b.r.rank).slice(0,4);
-  if(alts.length)html+='<div class="lineup-section-title">START-ALTERNATIVEN</div>'+alts.map(x=>row(x,x.p.pos,'Bench-Option · Panel '+x.r.rank.toFixed(1))).join('');
   return html;
 }
 const SEASON_SPECIAL_TEAMS_MODEL={
@@ -1638,8 +1635,8 @@ async function bootstrapSeasonWorkspace({force=false}={}){
     if(!rows)throw new Error('MY_ROSTER_UNRESOLVED');
     if(!Array.isArray(available)||available.length===0)throw new Error('SEASON_FA_POOL_ZERO_INVALID');
     const counts=postDraftRosterCounts(rows);
-    els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper-Kader · '+rows.length+' Spieler · Source of Truth: League-State · Reserve/IR '+rows.filter(x=>x.seasonStatus==='RESERVE').length+' · Auto-Sync beim Start.';
-    const slotSummary=seasonStarterSlotDefs(season).map(x=>seasonSlotLabel(x.slot)).filter(Boolean);els.rosterSummary.innerHTML=slotSummary.map((slot,i)=>'<div class="summary-item"><b>'+(i+1)+'</b><span>'+esc(slot)+'</span></div>').join('');
+    els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper · '+rows.length+' Spieler · Reserve/IR '+rows.filter(x=>x.seasonStatus==='RESERVE').length+' · Auto-Sync beim Start.';
+    els.rosterSummary.innerHTML='';els.rosterSummary.style.display='none';
     els.rosterList.innerHTML=seasonLineupHtml(rows,season);
     lastDraftContext={id:LIVE_DRAFT_ID_2026,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:true,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL,historicalDraftAvailable:!!draft};
     lastPostDraftPairs=[];
@@ -2706,11 +2703,10 @@ const WEEK1_PITTI_MATCHUP_2026=new Map([
   [norm('Isaiah Likely'),{grade:'GÜNSTIG',detail:'DAL · aktuelles externes W1-Matchup-Signal positiv'}]
 ]);
 function weeklyLineupEvidence(p){
-  const x={rank:week1Rank(p),external:week1ExternalRank(p),fresh:freshAcquisitionEvidence({p}),opp:postDraftOpportunityProxy({p})};
-  const ranks=[x.rank,x.external].filter(Number.isFinite);x.consensus=ranks.length?ranks.reduce((a,b)=>a+b,0)/ranks.length:null;
-  x.projection=WEEK1_PITTI_PROJECTIONS_2026.get(norm(p?.name))||null;
-  x.matchup=WEEK1_PITTI_MATCHUP_2026.get(norm(p?.name))||null;
-  x.freshEnough=x.fresh.events>0;return x;
+  const rank=seasonWeeklyMetric(p,'weekly_rank'),projection=seasonWeeklyMetric(p,'projected_points');
+  const x={rank:rank.value,external:null,consensus:rank.value,fresh:freshAcquisitionEvidence({p}),opp:postDraftOpportunityProxy({p})};
+  x.projection=projection.status==='VERIFIED'?{points:projection.value,source:projection.sourceId,asOf:new Date(projection.publishedAt).toISOString()}:null;
+  x.matchup=null;x.freshEnough=rank.status==='VERIFIED'&&projection.status==='VERIFIED';return x;
 }
 function seasonStartSitCompatible(starter,bench,slot){
   if(!starter?.p||!bench?.p)return false;
@@ -2807,35 +2803,31 @@ function postDraftSwapScore(drop,fa,ctx){
   const dOpp=postDraftOpportunityProxy(drop),fOpp=postDraftOpportunityProxy(fa);
   const opportunityDelta=fOpp.value-dOpp.value;
   const upsideDelta=postDraftUpsideProxy(fa)-postDraftUpsideProxy(drop);
-  let rosterUtility=0;
-  if(ctx.WR>=7&&fa.p.pos==='RB'&&drop.p.pos==='WR')rosterUtility+=3;
-  if(ctx.RB<=4&&fa.p.pos==='RB'&&drop.p.pos!=='RB')rosterUtility+=1.5;
-  if(drop.p.pos==='RB'&&fa.p.pos!=='RB'&&drop.capitalScore<7)rosterUtility-=2.5;
-  if(fa.p.pos==='QB'&&ctx.QB>=1)rosterUtility-=5; // 1QB league: QB2 remains exceptional.
-  // TE2 is not a generic penalty: this league's FLEX accepts TE. Let panel/opportunity/upside
-  // determine whether the second TE can beat the weakest legal FLEX option.
-  if(drop.p.injury&&String(drop.p.injury).toUpperCase()==='IR')rosterUtility+=3;
+  const structural=seasonAcquisitionDecision(drop,fa,ctx.rows||[],ctx.season);
+  const rosterUtility=Number.isFinite(structural.utility)?structural.utility:0;
   const waiverMarket=week1WaiverMarketSignal(fa.p),waiverMarketBonus=Number(waiverMarket?.bonus||0);
   const score=clamp(panelDelta*.22,-6,6)+clamp(opportunityDelta,-6,6)+clamp(upsideDelta*.5,-3,3)+rosterUtility+waiverMarketBonus;
-  const evidencePresent=(fOpp.events+dOpp.events)>0||!!waiverMarket,faFresh=freshAcquisitionEvidence(fa),dropFresh=freshAcquisitionEvidence(drop),freshEvidencePresent=(faFresh.events+dropFresh.events)>0||!!waiverMarket;
+  const evidencePresent=(fOpp.events+dOpp.events)>0||!!waiverMarket,faFresh=freshAcquisitionEvidence(fa),dropFresh=freshAcquisitionEvidence(drop);
+  let freshEvidencePresent=(faFresh.events+dropFresh.events)>0||!!waiverMarket;
+  if(structural.lineupGain!==null)freshEvidencePresent=true;
   let action='HOLD';
   // In-season acquisition labels must not turn a stale/draft-only comparison into an
   // apparent drop recommendation. WATCH/CLEAR ADD both require fresh player-specific or
   // current-week market evidence; otherwise the pair is informational HOLD only.
-  if(score>=6&&freshEvidencePresent)action='CLEAR ADD';
-  else if(score>=2&&freshEvidencePresent)action='WATCH';
+  if(structural.legal&&structural.action==='CLEAR ADD')action='CLEAR ADD';
+  else if(structural.legal&&structural.action==='WATCH')action='WATCH';
   const confidence=clamp(Math.round(55+(Number.isFinite(fr)&&Number.isFinite(dr)?15:0)+(freshEvidencePresent?12:evidencePresent?4:0)-(fOpp.rejected+dOpp.rejected)*4),35,88);
   const horizons=seasonHorizonSplit(drop,fa);if(waiverMarket&&Number.isFinite(horizons.weekly))horizons.weekly=clamp(horizons.weekly+waiverMarketBonus*.6,-10,10);else if(waiverMarket){horizons.weekly=clamp(waiverMarketBonus*.6,-10,10);horizons.weeklyFresh=true;}
-  return {drop,fa,score,panelDelta,opportunityDelta,upsideDelta,rosterUtility,waiverMarketBonus,waiverMarket,action,confidence,dOpp,fOpp,evidencePresent,freshEvidencePresent,faFresh,dropFresh,horizons};
+  return {drop,fa,structural,score,panelDelta,opportunityDelta,upsideDelta,rosterUtility,waiverMarketBonus,waiverMarket,action,confidence,dOpp,fOpp,evidencePresent,freshEvidencePresent,faFresh,dropFresh,horizons};
 }
 function renderRosterFaAudit(rows,rankedAvailable,draftComplete,opts={render:true}){
   if(opts.render&&(!els.rosterFaStatus||!els.rosterFaList))return;
   if(!draftComplete){els.rosterFaStatus.className='notice';els.rosterFaStatus.textContent='FA-Vergleich wird nach Draftabschluss aktiv.';els.rosterFaList.innerHTML='';return;}
-  const counts=postDraftRosterCounts(rows);
+  const counts={...postDraftRosterCounts(rows.filter(x=>x.seasonStatus==='ACTIVE')),rows,season:lastDraftContext?.season};
   const liveSeason=rows.some(x=>x?.seasonStatus);
   const drops=rows.filter(x=>['QB','RB','WR','TE'].includes(x.p?.pos)).filter(x=>!liveSeason||x.seasonStatus==='ACTIVE').filter(x=>liveSeason?(!x.r||Number(x.r?.rank)>90):((Number(x.pk?.pick_no)||999)>80&&(!x.r||Number(x.r?.rank)>90))).map(x=>({...x,capitalScore:liveSeason?seasonRosterCapitalScore(x):rosterBenchCapitalScore(x)})).sort((a,b)=>b.capitalScore-a.capitalScore).slice(0,7);
   const hasQB=counts.QB>=1;
-  const fas=rankedAvailable.slice(0,160).map(p=>({p,r:rankFor(p.name,p.pos),a:adpFor(p.name)})).filter(x=>x.r&&!(hasQB&&x.p.pos==='QB')).sort((a,b)=>a.r.rank-b.r.rank).slice(0,45);
+  const fas=rankedAvailable.slice(0,160).map(p=>({p,r:rankFor(p.name,p.pos),a:adpFor(p.name)})).filter(x=>x.r).sort((a,b)=>a.r.rank-b.r.rank).slice(0,45);
   if(rankedAvailable.length>0&&fas.length===0){
     lastPostDraftPairs=[];
     if(!opts.render)return;
@@ -2845,7 +2837,7 @@ function renderRosterFaAudit(rows,rankedAvailable,draftComplete,opts={render:tru
     return;
   }
   const pairs=[];
-  for(const fa of fas){let best=null;for(const drop of drops){const z=postDraftSwapScore(drop,fa,counts);if(!best||z.score>best.score)best=z;}if(best)pairs.push(best);}
+  for(const fa of fas){let best=null;for(const drop of drops){if(!seasonLegalDrop(drop,fa,rows))continue;const z=postDraftSwapScore(drop,fa,counts);if(!best||z.score>best.score)best=z;}if(best)pairs.push(best);}
   pairs.sort((a,b)=>b.score-a.score||a.fa.r.rank-b.fa.r.rank);
   const surfaced=pairs.filter(x=>x.action!=='HOLD').slice(0,5);lastPostDraftPairs=pairs.slice(0,20);
   if(!opts.render){if(els.rosterFaStatus){els.rosterFaStatus.style.display='none';}if(els.rosterFaList){els.rosterFaList.style.display='none';els.rosterFaList.innerHTML='';}return;}
@@ -2904,19 +2896,17 @@ function renderWaiverWorkspace(draftComplete){
 function renderSeasonActionBoard(draftComplete){
   if(!els.seasonActionStatus||!els.seasonActionList)return;
   if(!draftComplete){els.seasonActionStatus.className='notice';els.seasonActionStatus.textContent='Action Board wird nach Draftabschluss aktiv.';els.seasonActionList.innerHTML='';return;}
-  const pairs=lastPostDraftPairs||[],clear=pairs.filter(x=>x.action==='CLEAR ADD'&&x.freshEvidencePresent),watch=pairs.filter(x=>x.action==='WATCH'&&x.freshEvidencePresent);
-  const urgent=clear.length?`ACTION · ${clear.length} verifizierte CLEAR-ADD-Swap${clear.length===1?'':'s'} prüfen.`:watch.length?`WATCH · ${watch.length} mögliche Roster-Upgrades, aber noch kein verifiziertes Sofortsignal.`:'HOLD · Kein materieller Add/Drop-Trigger aus der geladenen Baseline.';
-  els.seasonActionStatus.className=`notice ${clear.length?'warn':'ok'}`;els.seasonActionStatus.textContent=`Season Action Board v1 · ${urgent} Read-only; keine automatische Transaktion.`;
-  const q=clear.length?clear.slice(0,4):watch.slice(0,4);
-  els.seasonActionList.innerHTML=q.map(x=>`<div class="coach-row"><div><b>${x.action==='CLEAR ADD'?'ADD prüfen':'Watch'}: ${esc(x.fa.p.name)}</b><div class="tiny">gegen ${esc(x.drop.p.name)} · Swap ${x.score.toFixed(1)} · Confidence ${x.confidence}% · ${esc(x.fOpp.hint||x.dOpp.hint||'keine zusätzliche aktuelle Evidence')}</div></div><div><b>${x.action==='CLEAR ADD'?'ACTION':'WATCH'}</b><div class="tiny">Waiver/FA öffnen</div></div></div>`).join('')||'<div class="notice ok"><b>INBOX LEER</b> · Kein aktueller verifizierter Handlungs-Trigger.</div>';
+  els.seasonActionStatus.className='notice';els.seasonActionStatus.textContent='Live / News · verifizierte Ereignisse und vorbereitete Rollenfolgen · keine automatische Transaktion';
+  els.seasonActionList.innerHTML=seasonNewsHtml();
 }
 
 function rerenderPostDraftFromContext(){
   const c=lastDraftContext;
   if(!c?.draftComplete||!Array.isArray(c.mine)||!Array.isArray(c.rankedAvailable)||!c.players)return false;
   const rows=Array.isArray(c.seasonRows)&&c.seasonRows.length?c.seasonRows:c.mine.map(pk=>{const p=pinfo(String(pk.player_id),pk.metadata,c.players),r=rankFor(p.name,p.pos),a=adpFor(p.name);return{pk,p,r,a}});
+  if(els.rosterList&&c.season?.ok)els.rosterList.innerHTML=seasonLineupHtml(rows,c.season);
   renderRosterBenchAudit(rows,c.players,Number(c.current||150),true);
-  renderRosterFaAudit(rows,c.rankedAvailable,true);
+  renderRosterFaAudit(rows,c.rankedAvailable,true,{render:false});
   renderTradeWorkspace(c.picks,c.players,Number(els.slot.value),c.teams,true);
   renderWaiverWorkspace(true);
   renderSeasonActionBoard(true);
@@ -2987,19 +2977,17 @@ function tradeStarterSlots(){
   return slots.length?slots:['QB','WR','WR','RB','TE','WRRB_FLEX','FLEX','K','DEF'];
 }
 function tradeBestLineup(roster,extra=null){
-  const pool=[...(roster||[])];if(extra)pool.push(extra);
-  const slots=tradeStarterSlots(),used=new Set(),assignments=[];
-  // Scarce fixed slots first, then flexible slots. Lowest panel rank is strongest.
-  const ordered=slots.map((slot,index)=>({slot,index,eligible:pool.filter(x=>x?.r&&Number.isFinite(x.r.rank)&&seasonSlotEligible(slot,x.p.pos)).length}))
-    .sort((a,b)=>a.eligible-b.eligible||a.index-b.index);
-  for(const d of ordered){
-    const candidates=pool.map((x,i)=>({x,i})).filter(z=>!used.has(z.i)&&z.x?.r&&Number.isFinite(z.x.r.rank)&&seasonSlotEligible(d.slot,z.x.p.pos)).sort((a,b)=>a.x.r.rank-b.x.r.rank);
-    if(candidates.length){const z=candidates[0];used.add(z.i);assignments.push({slot:d.slot,index:d.index,player:z.x});}
-    else assignments.push({slot:d.slot,index:d.index,player:null});
-  }
-  assignments.sort((a,b)=>a.index-b.index);
-  const score=assignments.reduce((sum,a)=>sum+(a.player?Math.max(0,180-Number(a.player.r.rank)):0),0);
-  return{slots,assignments,score,used};
+  const pool=[...(roster||[])].filter(x=>x.seasonStatus!=='RESERVE'&&x.seasonStatus!=='TAXI');if(extra)pool.push(extra);
+  const slots=tradeStarterSlots();if(slots.length>16)throw new Error('INVALID_STARTER_GEOMETRY');
+  // Exact assignment by slot-mask dynamic programming; no greedy FLEX starvation.
+  let states=new Map([[0,{score:0,choices:[]}]]);
+  pool.forEach((x,i)=>{if(!x?.r||!Number.isFinite(x.r.rank))return;const next=new Map(states);
+    for(const [mask,state] of states)slots.forEach((slot,index)=>{if(mask&(1<<index)||!seasonSlotEligible(slot,x.p.pos))return;
+      const key=mask|(1<<index),score=state.score+Math.max(0,180-x.r.rank),old=next.get(key);
+      if(!old||score>old.score)next.set(key,{score,choices:state.choices.concat({index,i})});});states=next;});
+  const best=[...states.values()].sort((a,b)=>b.score-a.score||b.choices.length-a.choices.length)[0];
+  const assignments=slots.map((slot,index)=>({slot,index,player:pool[best.choices.find(c=>c.index===index)?.i]||null}));
+  return{slots,assignments,score:best.score,used:new Set(best.choices.map(c=>c.i))};
 }
 function tradeMarginalLineupValue(roster,target){
   const before=tradeBestLineup(roster),after=tradeBestLineup(roster,target);
@@ -3016,16 +3004,11 @@ function tradeRosterNeed(roster,pos){
 }
 function tradeOfferCandidates(mine,opponent,target){
   const oppNeeds=['RB','WR','TE','QB'].map(pos=>({pos,...tradeRosterNeed(opponent,pos)})).sort((a,b)=>b.need-a.need);
-  const targetRank=Number(target.r?.rank);
-  const offers=mine.filter(m=>m.r&&Number.isFinite(m.r.rank)&&['RB','WR','TE'].includes(m.p.pos)&&norm(m.p.name)!==norm(target.p.name)).map(give=>{
-    const need=oppNeeds.find(n=>n.pos===give.p.pos)?.need||0;
-    const marketGap=Math.abs(Number(give.r.rank)-targetRank);
-    const without=mine.filter(x=>x!==give),before=tradeBestLineup(mine),after=tradeBestLineup(without);
-    const ourCost=clamp((before.score-after.score)/10,0,10);
-    const fairness=clamp(10-marketGap*.18,0,10),opponentUtility=clamp(need+(110-Number(give.r.rank))/35,0,10);
-    const acceptance=clamp(Math.round(25+fairness*4+opponentUtility*3-ourCost*1.5),10,82);
-    return{give,fairness,opponentUtility,ourCost,acceptance,marketGap};
-  }).filter(o=>o.fairness>=3&&o.opponentUtility>=2).sort((a,b)=>b.acceptance-a.acceptance||b.fairness-a.fairness);
+  const offers=[];
+  for(const give of mine){
+    const packages=[{gives:[give],gets:[target]},...mine.filter(x=>x!==give).map(x=>({gives:[give,x],gets:[target]})),...opponent.filter(x=>x!==target).map(x=>({gives:[give],gets:[target,x]}))];
+    for(const pack of packages){const decision=seasonTradeDecision(mine,opponent,pack.gives,pack.gets,lastDraftContext?.season);
+      if(decision.actionable)offers.push({give,...pack,fairness:10,opponentUtility:decision.opponentGain,ourCost:0,acceptance:null,decision});}}
   return{oppNeeds,offers};
 }
 function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
@@ -3037,7 +3020,7 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   const myLiveRosterId=Number(live?.my_roster?.roster_id);
   if(live?.ok&&Array.isArray(live.rosters)){
     // Sleeper roster_id is a league roster identifier, NOT the historical draft slot.
-    for(const rr of live.rosters){const slot=Number(rr.roster_id);if(!bySlot[slot])bySlot[slot]=[];for(const pid of rr.players||[]){const p=sleeperPlayerRow(pid,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk:{player_id:pid,pick_no:999},p,r,a});}}
+    for(const rr of live.rosters){const slot=Number(rr.roster_id);if(!bySlot[slot])bySlot[slot]=[];for(const pid of rr.players||[]){if((rr.reserve||[]).map(String).includes(String(pid))||(rr.taxi||[]).map(String).includes(String(pid)))continue;const p=sleeperPlayerRow(pid,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk:picks.find(pk=>String(pk.player_id)===String(pid))||{player_id:pid,pick_no:999},p,r,a,seasonStatus:'ACTIVE'});}}
   }else for(const pk of picks){const slot=Number(pk.draft_slot);if(!bySlot[slot])continue;const p=pinfo(String(pk.player_id),pk.metadata,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk,p,r,a});}
   const mine=Array.isArray(lastDraftContext?.seasonRows)&&lastDraftContext.seasonRows.length?lastDraftContext.seasonRows:(bySlot[userSlot]||[]);
   const liveRosterMeta=new Map((live?.league_rosters||[]).map(rr=>[Number(rr.roster_id),rr]));
@@ -3057,14 +3040,125 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   }
   targets.sort((a,b)=>b.desirability-a.desirability||b.lineupEdge-a.lineupEdge||a.x.r.rank-b.x.r.rank);
   els.tradeStatus.className='notice warn';
-  els.tradeStatus.textContent='Trade Board v5 · LIVE Sleeper-Rosters. Target-Wert wird aus der tatsächlichen kanonischen Starter-/FLEX-Geometrie berechnet; kein statisches RB/WR/TE-Depth-Cap. Ein zweiter TE ist zulässig, wenn er einen echten FLEX-Slot gewinnt. Annahme-% bleibt Heuristik ohne aktuelle Trade-Marktquelle; keine ACCEPT/DECLINE-Freigabe.';
+  els.tradeStatus.textContent='Trade Board v7 · LIVE Sleeper-Rosters. Target-Wert wird aus der tatsächlichen kanonischen Starter-/FLEX-Geometrie berechnet; kein statisches RB/WR/TE-Depth-Cap. Ein zweiter TE ist zulässig, wenn er einen echten FLEX-Slot gewinnt. Angebote erfordern aktuelle vergleichbare Trade-Values und beidseitigen Lineup-Nutzen. Keine erfundene Annahmewahrscheinlichkeit; keine ACCEPT/DECLINE-Freigabe.';
   els.tradeList.innerHTML=targets.length?`<div class="coach-section-title">Interessante gegnerische Assets — Target Discovery, Verhandlung noch nicht freigegeben</div>`+targets.slice(0,10).map((t,i)=>{
     const x=t.x,market=Number.isFinite(x.a)?` · Draft-ADP ${x.a.toFixed(1)}`:'';
     const geometry=t.marginal.slot?`gewinnt Slot ${seasonSlotLabel(t.marginal.slot,x.p.pos)}`:'kein Starter-Slot';
     const managerLabel=t.manager?.manager_name||('Roster '+t.slot),faab=Number.isFinite(Number(t.manager?.faab_remaining))?' · FAAB '+Number(t.manager.faab_remaining):'';
-    const offer=t.offers?.[0],offerText=offer?`Indikativ: GIVE ${esc(offer.give.p.name)} → GET ${esc(x.p.name)} · Fairness ${offer.fairness.toFixed(1)}/10 · Gegnernutzen ${offer.opponentUtility.toFixed(1)}/10 · Annahme-Plausibilität ~${offer.acceptance}%`:'Kein belastbares 1:1-Angebot aus der aktuellen Roster-/Panel-Geometrie';
+    const offer=t.offers?.[0],offerText=offer?`Indikativ: GIVE ${esc(offer.gives.map(x=>x.p.name).join(' + '))} → GET ${esc(offer.gets.map(x=>x.p.name).join(' + '))} · Gegnernutzen ${offer.opponentUtility.toFixed(1)} proj. · aktuelle beidseitige Evidenz · Review erforderlich`:'Kein belastbares Angebot: aktuelle beidseitige Bewertungs-Evidence fehlt oder Nutzen/Kapazität reichen nicht';
     return `<div class="coach-row"><div><b>${i+1}. ${esc(x.p.name)}</b> <span class="tiny">${x.p.pos} · ${x.p.team} · ${esc(managerLabel)}${faab}</span><div class="tiny">Panel ${x.r.rank.toFixed(1)}${market} · ${geometry} · Lineup-Value +${t.lineupEdge.toFixed(1)} · ${esc(t.research||'keine aktuelle Research-Cache-Evidence')}</div><div class="tiny">${offerText}</div></div><div><b>TARGET</b><div class="tiny">heuristisch · nicht senden</div></div></div>`;
   }).join(''):'<div class="notice ok">Kein klarer Trade-Target-Vorteil aus der aktuellen Panel-/Roster-/Slot-Baseline.</div>';
+}
+
+// rc4.190 evidence boundary: only explicitly verified, time-bounded observations.
+function seasonEvidenceContext(season=lastDraftContext?.season){return{season:Number(season?.league?.season),week:Number(season?.transaction_round||season?.league?.settings?.leg),scoring:'HALF_PPR'};}
+function seasonEvidenceValue(records,playerId,metric,context,now=Date.now()){
+  const candidates=(Array.isArray(records)?records:[]).filter(x=>x&&typeof x==='object'&&String(x.playerId)===String(playerId)&&x.metric===metric);
+  const valid=candidates.filter(x=>x.status==='VERIFIED'&&x.confidence>=.7&&x.confidence<=1&&x.season===context.season&&x.week===context.week&&x.scoring===context.scoring&&typeof x.value==='number'&&Number.isFinite(x.value)&&x.value>=0&&/^https:\/\//.test(x.sourceUrl||'')&&x.sourceId&&Number.isFinite(x.publishedAt)&&Number.isFinite(x.verifiedAt)&&x.publishedAt<=x.verifiedAt&&x.verifiedAt<=now&&now-x.publishedAt<=86400000&&Number.isFinite(x.expiresAt)&&x.expiresAt>now&&x.expiresAt-x.publishedAt<=86400000&&!x.conflict);
+  if(!valid.length)return{status:candidates.length?'STALE_OR_UNVERIFIED':'UNAVAILABLE',value:null};
+  if(new Set(valid.map(x=>x.value)).size>1)return{status:'CONFLICT',value:null};
+  return{...valid.sort((a,b)=>b.verifiedAt-a.verifiedAt)[0],status:'VERIFIED'};
+}
+function seasonEvidenceCache(){return store.get('v190_seasonEvidence',[]);}
+function seasonWeeklyMetric(p,metric){return seasonEvidenceValue(seasonEvidenceCache(),p?.id,metric,seasonEvidenceContext());}
+function seasonWeeklyStrip(p){
+  const rank=seasonWeeklyMetric(p,'weekly_rank'),points=seasonWeeklyMetric(p,'projected_points'),total=seasonWeeklyMetric(p,'implied_team_total');
+  const label=(e,suffix)=>e.status==='VERIFIED'?e.value+suffix:'nicht verfügbar';
+  return 'W'+(seasonEvidenceContext().week||'?')+' '+p.pos+' '+label(rank,'')+' · Half-PPR '+label(points,' Pkt')+' · Team-Total '+label(total,'')+' · Gegner/Wetter: '+seasonGameContext(p);
+}
+function seasonGameContext(p){
+  const context=seasonEvidenceContext(),now=Date.now(),rows=store.get('v190_gameContext',[]);
+  const e=Array.isArray(rows)?rows.find(x=>x&&String(x.playerId)===String(p.id)&&x.status==='VERIFIED'&&x.season===context.season&&x.week===context.week&&x.publishedAt<=now&&now-x.publishedAt<=21600000&&x.expiresAt>now&&/^https:\/\//.test(x.sourceUrl||'')&&!x.conflict):null;
+  return e?[e.opponent||'Gegner unbekannt',e.dome===true?'DOME':e.weatherSummary||'Wetter nicht verfügbar'].join(' · '):'nicht verfügbar';
+}
+function seasonLiveAuthority(season,now=Date.now()){
+  return season?.ok===true&&season.source==='Sleeper direct'&&Number.isFinite(season.generated_at)&&season.generated_at<=now&&now-season.generated_at<=300000&&Array.isArray(season.league_rosters)&&season.league_rosters.length===10&&season.ownership&&Array.isArray(season.league?.roster_positions);
+}
+function seasonLegalDrop(drop,fa,rows){
+  if(drop?.seasonStatus!=='ACTIVE'||!drop?.p||!fa?.p||String(drop.p.id)===String(fa.p.id))return false;
+  const d=drop.p.pos,f=fa.p.pos;
+  if(d==='K'||f==='K')return d==='K'&&f==='K';
+  if(['DEF','DST'].includes(d)||['DEF','DST'].includes(f))return ['DEF','DST'].includes(d)&&['DEF','DST'].includes(f);
+  if(['QB','TE'].includes(d)&&d!==f&&rows.filter(x=>x.seasonStatus==='ACTIVE'&&x.p?.pos===d).length<=1)return false;
+  return ['QB','RB','WR','TE'].includes(d)&&['QB','RB','WR','TE'].includes(f);
+}
+function seasonProjectionLineup(rows,season){
+  const context=seasonEvidenceContext(season),records=seasonEvidenceCache();
+  const pool=rows.filter(x=>x.seasonStatus==='ACTIVE'&&['QB','RB','WR','TE'].includes(x.p?.pos));
+  const valued=pool.map(x=>({...x,r:{rank:180-(seasonEvidenceValue(records,x.p.id,'projected_points',context).value??0)}}));
+  if(pool.some(x=>seasonEvidenceValue(records,x.p.id,'projected_points',context).status!=='VERIFIED'))return{status:'UNAVAILABLE',score:null};
+  return{status:'VERIFIED',...tradeBestLineup(valued)};
+}
+function seasonAcquisitionDecision(drop,fa,rows,season){
+  const result={legal:seasonLegalDrop(drop,fa,rows),action:'HOLD',lineupGain:null,secondDrop:null,sameBye:false,reason:'Aktuelle verifizierte Weekly-/Rollen-Evidence fehlt'};
+  if(!result.legal){result.reason='Strukturell ungültiger Drop';return result;}
+  if(!seasonLiveAuthority(season)||Object.hasOwn(season.ownership,String(fa.p.id))){result.reason='Live-Ownership nicht bestätigt';return result;}
+  const active=rows.filter(x=>x.seasonStatus==='ACTIVE'),next=active.filter(x=>String(x.p.id)!==String(drop.p.id)).concat({...fa,seasonStatus:'ACTIVE'});
+  const before=seasonProjectionLineup(active,season),after=seasonProjectionLineup(next,season);
+  result.sameBye=fa.p.pos==='QB'&&active.some(x=>x.p.pos==='QB'&&x.p.bye&&fa.p.bye&&Number(x.p.bye)===Number(fa.p.bye));
+  const missingDst=!next.some(x=>['DST','DEF'].includes(x.p.pos));
+  if(missingDst){
+    const options=next.filter(x=>String(x.p.id)!==String(fa.p.id)&&seasonLegalDrop(x,{p:{pos:'RB',id:'__future_dst__'}},next)&&!['K','DST','DEF'].includes(x.p.pos)).map(x=>({x,value:seasonWeeklyMetric(x.p,'projected_points')})).filter(x=>x.value.status==='VERIFIED').sort((a,b)=>a.value.value-b.value.value);
+    result.secondDrop=options[0]?.x||null;
+    if(!result.secondDrop){result.reason='Künftiger D/ST-Drop noch nicht sicher bewertbar';return result;}
+  }
+  if(before.status!=='VERIFIED'||after.status!=='VERIFIED')return result;
+  if(after.assignments.filter(x=>x.player).length<before.assignments.filter(x=>x.player).length){result.reason='Tausch würde einen belegten Starter-Slot verlieren';return result;}
+  result.lineupGain=after.score-before.score;
+  const futureCost=result.secondDrop?seasonWeeklyMetric(result.secondDrop.p,'projected_points').value:0;
+  result.utility=result.lineupGain-futureCost-(result.sameBye?2:0);
+  result.action=result.utility>=2?'CLEAR ADD':result.utility>0?'WATCH':'HOLD';
+  result.reason='Legaler Lineup-Gewinn '+result.lineupGain.toFixed(1)+' · künftige Kapazitätskosten '+futureCost.toFixed(1)+(result.sameBye?' · gleiche Bye':'');
+  return result;
+}
+function seasonTradeDecision(mine,opponent,gives,gets,season){
+  const result={actionable:false,status:'UNAVAILABLE',ourGain:null,opponentGain:null,acceptance:null};
+  if(!seasonLiveAuthority(season)||!gives.length||!gets.length||gives.length>2||gets.length>2)return result;
+  if([...gives,...gets].some(x=>x.seasonStatus!=='ACTIVE'))return result;
+  if(gives.some(x=>!mine.includes(x))||gets.some(x=>!opponent.includes(x)))return result;
+  const nextMine=mine.filter(x=>!gives.includes(x)).concat(gets),nextOpp=opponent.filter(x=>!gets.includes(x)).concat(gives);
+  const capacity=season.league.roster_positions.filter(x=>!['IR','TAXI'].includes(x)).length;
+  if([nextMine,nextOpp].some(r=>r.filter(x=>x.seasonStatus==='ACTIVE').length>capacity))return{...result,status:'CAPACITY_BLOCKED'};
+  for(const [before,after] of [[mine,nextMine],[opponent,nextOpp]])for(const pos of ['QB','TE'])if(before.some(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===pos)&&!after.some(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===pos))return{...result,status:'STRUCTURAL_BLOCKED'};
+  const all=[...gives,...gets],values=all.map(x=>seasonWeeklyMetric(x.p,'trade_value'));
+  if(values.some(v=>v.status!=='VERIFIED')||new Set(values.map(v=>v.sourceId)).size!==1)return result;
+  const draftPicks=all.map(x=>Number(x.pk?.pick_no));
+  if(seasonEvidenceContext(season).week<=1&&(draftPicks.some(n=>!Number.isFinite(n)||n>=999)||Math.max(...draftPicks)-Math.min(...draftPicks)>24))return{...result,status:'DRAFT_PREFERENCE_UNRESOLVED'};
+  const [a,b,c,d]=[mine,nextMine,opponent,nextOpp].map(r=>seasonProjectionLineup(r,season));
+  if([a,b,c,d].some(x=>x.status!=='VERIFIED'))return result;
+  result.ourGain=b.score-a.score;result.opponentGain=d.score-c.score;
+  const giveValue=values.slice(0,gives.length).reduce((n,x)=>n+x.value,0),getValue=values.slice(gives.length).reduce((n,x)=>n+x.value,0);
+  result.actionable=result.ourGain>0&&result.opponentGain>0&&Math.abs(giveValue-getValue)<=Math.max(giveValue,getValue)*.15;
+  result.status=result.actionable?'REVIEW_ONLY':'NO_BILATERAL_GAIN';return result;
+}
+function seasonNewsReactions(events,graphs,season,now=Date.now()){
+  const groups=new Map();
+  for(const e of Array.isArray(events)?events:[]){
+    if(!e?.playerId||!e.eventKey||!Number.isFinite(e.eventOccurredAt))continue;
+    const key=[e.playerId,e.eventKey,e.eventOccurredAt].join('|'),group=groups.get(key)||[];group.push(e);groups.set(key,group);
+  }
+  return [...groups].map(([key,group])=>{
+    const current=group.filter(e=>e.sourcePublishedAt>0&&e.sourcePublishedAt<=now&&now-e.sourcePublishedAt<=86400000&&e.eventOccurredAt<=e.sourcePublishedAt&&/^https:\/\//.test(e.sourceUrl||''));
+    const confirmed=current.filter(e=>e.verified===true&&e.sourceTier===0&&e.sourceOriginality==='primary'&&e.verifiedAt>=e.sourcePublishedAt&&e.verifiedAt<=now);
+    const conflict=current.some(e=>e.conflict)||new Set(confirmed.map(e=>e.status)).size>1;
+    const e=confirmed[0]||current[0]||group[0],graph=(Array.isArray(graphs)?graphs:[]).find(g=>g&&String(g.playerId)===String(e.playerId)&&g.status==='VERIFIED'&&g.verifiedAt<=now&&now-g.verifiedAt<=86400000&&/^https:\/\//.test(g.sourceUrl||'')&&!g.conflict);
+    const verified=!!confirmed.length&&['OUT','INACTIVE','IR','PUP','SUSPENDED','RELEASED'].includes(e.status)&&!conflict&&!!graph&&seasonLiveAuthority(season,now);
+    const successors=verified?(Array.isArray(graph.successors)?graph.successors:[]).filter(s=>s?.playerId&&s.functionalRole&&/^https:\/\//.test(s.roleEvidenceUrl||'')&&s.confidence>=.7&&s.confidence<=1).map(s=>({...s,availability:Object.hasOwn(season.ownership,String(s.playerId))?'OWNED':'FREE_AGENT'})):[];
+    return{key,playerId:e.playerId,status:conflict?'CONFLICT':verified?'VERIFIED_IMPACT':'PROVISIONAL_WATCH',successors,actionable:false,firstSeen:Math.min(...group.map(x=>x.observedAt||now)),publishedAt:e.sourcePublishedAt||null,ingestedAt:e.ingestedAt||now,verifiedAt:verified?e.verifiedAt:null,decisionAt:now,invalidator:graph?.invalidator||'Primärquelle, Rollenwechsel oder Ownership neu prüfen'};
+  });
+}
+function seasonNewsHtml(){
+  const reactions=seasonNewsReactions(loadResearchEvents(),store.get('v190_roleGraphs',[]),lastDraftContext?.season);
+  return reactions.length?reactions.slice(-12).map(e=>{
+    const c=lastDraftContext,actions=e.successors.map(s=>{
+      const raw=c?.players?.[String(s.playerId)];if(!raw)return 'Spielerzuordnung unbekannt';
+      const p=sleeperPlayerRow(s.playerId,c.players);
+      if(s.availability==='OWNED')return p.name+' · Roster/Trade-Auswirkung prüfen; kein FA-Add';
+      const decisions=(c.seasonRows||[]).map(drop=>({drop,...seasonAcquisitionDecision(drop,{p},c.seasonRows,c.season)})).filter(x=>x.action!=='HOLD').sort((a,b)=>b.utility-a.utility);
+      return decisions.length?decisions[0].action+': '+p.name+' / DROP '+decisions[0].drop.p.name+' · '+decisions[0].reason:p.name+' · WATCH; Add/Drop-Evidence nicht ausreichend';
+    });
+    return '<div class="coach-row"><div><b>'+esc(e.status)+'</b><div class="tiny">Spieler '+esc(e.playerId)+' · '+esc(actions.join(' / ')||'Rollenfolge nicht verifiziert')+'</div><div class="tiny">'+esc(e.invalidator)+'</div></div></div>';
+  }).join(''):'<div class="notice">Keine verifizierte aktuelle News-Aktivierung. Research-Seeds sind keine Handlungsempfehlung.</div>';
 }
 
 function fpStoreKey(draftId){return `v118_fpBenchmark_${draftId}`}
@@ -3146,6 +3240,7 @@ function appendResearchEvidence(input){
   const currentCorroboration=Boolean(corroboratedAt&&corroboratedAt<=now+3600000&&now-corroboratedAt<=14*86400000);
   const freshnessVerified=Boolean(chronologyValid&&(publicationRecent||currentCorroboration));
   const e={id:input.id||`ev_${now}_${Math.random().toString(36).slice(2,8)}`,observedAt:Number(input.observedAt||now),sourcePublishedAt:critical?(published||0):(published||Number(input.observedAt||now)),eventOccurredAt:eventAt||null,currentStatusCorroboratedAt:corroboratedAt||null,ingestedAt:Number(input.ingestedAt||now),playerId:String(input.playerId||''),playerKey:norm(input.playerName||input.playerKey||''),evidenceType:String(input.evidenceType||'unknown'),thesisPath:String(input.thesisPath||''),sourceId:String(input.sourceId||''),sourceOriginality:String(input.sourceOriginality||'unknown'),confidence:clamp(Number(input.confidence??.5),0,1),flags:Array.isArray(input.flags)?input.flags.slice(0,8):[],payload:input.payload||{},freshnessVerified:critical?freshnessVerified:true,critical};
+  Object.assign(e,{eventKey:String(input.eventKey||''),status:String(input.status||'UNKNOWN'),sourceUrl:String(input.sourceUrl||''),sourceTier:Number.isInteger(input.sourceTier)?input.sourceTier:null,verified:input.verified===true,verifiedAt:Number(input.verifiedAt||0),conflict:input.conflict===true});
   const events=loadResearchEvents();if(events.some(x=>evidenceIdentity(x)===evidenceIdentity(e)))return {added:false,event:e};events.push(e);const saved=saveResearchEvents(events);if(!saved.ok)return {added:false,event:e,storageFull:true,error:saved.error};updateResearchCacheStatus();return {added:true,event:e,compacted:saved.compacted,quotaRecovered:saved.quotaRecovered};
 }
 function researchEventsAt(cutoff=Infinity){return loadResearchEvents().filter(e=>Number(e.sourcePublishedAt||e.observedAt||0)<=cutoff)}
@@ -3175,6 +3270,16 @@ async function syncWatcherFeed(){
       store.set(WATCHER_SYNC_META_KEY,{at:Date.now(),gate,watcherVersion:v?.watcherVersion||null,added:0});
       if(els.watcherSyncStatus){els.watcherSyncStatus.className=gate==='FAIL'?'notice bad':'notice warn';els.watcherSyncStatus.textContent=`Pitti Watcher: ${gate} · automatische Research-Ingestion bleibt AUS.`}
       return{ok:false,gate,added:0};
+    }
+    if(v.seasonEvidence?.schema==='pitti.season-evidence.v1'){
+      const context=seasonEvidenceContext(),records=Array.isArray(v.seasonEvidence.records)?v.seasonEvidence.records:[];
+      const valid=records.filter(x=>x&&seasonEvidenceValue([x],x.playerId,x.metric,context).status==='VERIFIED').slice(0,4096);
+      try{store.set('v190_seasonEvidence',valid);}catch{}
+      for(const [key,field] of [['v190_gameContext','gameContext'],['v190_roleGraphs','roleGraphs']]){
+        const rows=v.seasonEvidence[field];if(Array.isArray(rows))try{store.set(key,rows.slice(0,512));}catch{}
+      }
+      for(const event of Array.isArray(v.seasonEvidence.events)?v.seasonEvidence.events:[])appendResearchEvidence(event);
+      rerenderPostDraftFromContext();
     }
     let added=0,rejectedCritical=0,storageFull=false,quotaRecovered=false;
     for(const row of Array.isArray(v.events)?v.events:[]){
