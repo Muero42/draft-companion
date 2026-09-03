@@ -1,17 +1,36 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260903T0700Z-v231",
-  "created_at": "2026-09-03T07:00:00Z",
-  "status": "SUPERSEDED_PENDING_RESEAL",
-  "handoff_ready": false,
-  "second_pass_pass": false,
+  "created_at": "2026-09-03T07:12:00Z",
+  "status": "PASS",
+  "handoff_ready": true,
+  "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
-  "integrity": {},
+  "integrity": {
+    "PITTI_CURRENT_STATE.json": "df154ec02eee3dba419a3f04a58eabc58382da44",
+    "PITTI_EXECUTION_LOCK.json": "1423399cde26973eb446b220a951e4cbbb9eb108",
+    "PITTI_COMMAND_CONTRACTS.json": "04098603b5235bc4dd6a1e6a4a8801c6c81c7362",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "d82b2acf76a731e58659485fb0e23e587391bdf2",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "e5b1f634119e7ca9da9a78c8947f24f71a69f5eb",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "cc2440c4198ef39431dbf5a11f486466471ec31a",
+    "PITTI_AUTO_PREFLIGHT.md": "63ff09db73141ef98dc4d1152bfb5070dd8895cc",
+    "PITTI_PROJECT_STATE.md": "ef63b4b411b879651dc9e6b09a8721e6080d696d",
+    "README.md": "918b631845d99902ac4ffc30cc51c74230894293",
+    "app.js": "7c386fc03de3e956801770215fa5f2b05226b021",
+    "live-surface-v3.js": "f2b718382d9d36ef38cfeb281e7348ba337c459e",
+    "manifest.webmanifest": "adf3a16945ba2a2cfc7c94a5db18d3bcba631810",
+    "index.html": "23296779c5d469b33dd8a9a4dfc17761bcd29bae",
+    "sw.js": "91c3da30d04b242418a33b3e12a4743033bcc8f9",
+    "tools/pitti_guardrail_check.mjs": "10b9914448ad72950d392f74ee40b3429ab5735d",
+    "tools/live-trade-roster-identity-regression.mjs": "c6937f97d562a4d1bd5217e0344af9500d68ca2b",
+    "config/season-expert-phase-policy.json": "78156903f4254c6eee836819dc6b8a737835d6c1",
+    "season-parallel-contract-regression.mjs": "b0b158697d37c0d9bebeebf5bd132d4a6b355f07"
+  },
   "branch_locks": {
     "repo": "Muero42/draft-companion",
-    "branch": "main",
+    "branch": "pitti/rc4189-authority-reconcile",
     "source_baseline": "v11.8.0-rc4.189",
-    "latest_main": "0c110a5dc6688ebc840da8bb122efcc5d50f77e6",
+    "base_main": "0c110a5dc6688ebc840da8bb122efcc5d50f77e6",
     "latest_physical_android": "v11.8.0-rc4.188 WAIVER_CANARY_PASS",
     "accepted_rollback": "v11.8.0-rc4.169",
     "codex_work": "PR #118 OPEN / UNMERGED",
@@ -34,6 +53,6 @@
     "ir_not_capacity": true,
     "device_trial_and_error_forbidden": true
   },
-  "exact_gate": "AUTHORITY_V231_GUARDS_THEN_CODEX_READ_ONLY_REAUDIT",
-  "note": "v231 checkpoint authority is intentionally pending reseal while strict candidate-preflight guards validate generation and semantics. Integrity is rebuilt only after those guards pass."
+  "exact_gate": "MERGE_V231_THEN_CODEX_READ_ONLY_REAUDIT",
+  "note": "v231 canonical checkpoint authority reconciled after independent Codex read-only audit. Candidate-preflight strict gates passed on a6deb3e; this seal binds the final checkpoint files. Merge only after final sealed-head strict gates pass."
 }
