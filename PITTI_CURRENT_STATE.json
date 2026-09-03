@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260903T0700Z-v231",
-  "updated_at": "2026-09-03T07:00:00Z",
+  "handoff_generation": "20260903T0720Z-v232",
+  "updated_at": "2026-09-03T07:20:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -23,7 +23,7 @@
       "scope": "rc4.189 post-merge reseal exact-head validation"
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "rc4.189 canonical main at 0c110a5dc6688ebc840da8bb122efcc5d50f77e6; deployment parity requires re-verification before physical rc4.189 canary.",
+    "preview_candidate": "rc4.189 canonical main at 2471c3666edaa313388d6b79c488940ac6b51f86; deployment parity requires re-verification before physical rc4.189 canary.",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "latest_package_sha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "package_reference_run": 33597607588,
@@ -148,8 +148,8 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "AUTHORITY_RECONCILIATION_V231_SEALED",
-    "nextGate": "MERGE_V231_THEN_CODEX_READ_ONLY_REAUDIT"
+    "status": "POSTMERGE_AUTHORITY_V232_RESEAL",
+    "nextGate": "V232_GUARDS_THEN_LOCAL_CODEX_PULL_REAUDIT"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -160,23 +160,23 @@
     ],
     "starter_maxima_not_roster_caps": true
   },
-  "source_authority": "rc4.189 canonical main at 0c110a5dc6688ebc840da8bb122efcc5d50f77e6; rc4.188 latest physical PASS; rc4.169 accepted rollback; deployment parity unknown until reverified.",
+  "source_authority": "rc4.189 canonical main at 2471c3666edaa313388d6b79c488940ac6b51f86; rc4.188 latest physical PASS; rc4.169 accepted rollback; deployment parity unknown until reverified.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
     "status": "RUNNING",
-    "active": [],
-    "ready": [],
-    "waiting_external": [],
-    "blocked_user": [
+    "active": [
       {
-        "id": "codex-local-pull-reaudit",
-        "lane": "codex",
-        "goal": "After v231 merge, user updates local PITTI-Codex clone and reruns read-only audit.",
-        "state": "blocked_user"
+        "id": "v232-postmerge-authority",
+        "lane": "checkpoint",
+        "goal": "Bind canonical checkpoints to actual post-merge main SHA and validate.",
+        "state": "active"
       }
     ],
+    "ready": [],
+    "waiting_external": [],
+    "blocked_user": [],
     "completed_recent": [
       {
         "id": "authority-v231-reconcile",
@@ -285,18 +285,18 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": true,
-      "code": "USER_ACTION_REQUIRED",
-      "reason": "After sealed v231 merge, local Codex clone must be pulled and read-only audit repeated before writable Codex work."
+      "allowed": false,
+      "code": null,
+      "reason": "Post-merge authority reseal in progress."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260903T0700Z-v231",
-    "status": "PASS",
-    "ready": true,
-    "secondPass": true,
-    "resume": "After merge, update local Codex clone to canonical main and repeat the same read-only audit before writable Codex work.",
+    "generation": "20260903T0720Z-v232",
+    "status": "PENDING_RESEAL",
+    "ready": false,
+    "secondPass": false,
+    "resume": "Seal actual post-merge main authority, then user pulls local Codex clone and repeats read-only audit.",
     "transaction_in_progress": false
   },
   "status": "RC4189_POSTMERGE_RESEAL_SEALED_PENDING_CI",
