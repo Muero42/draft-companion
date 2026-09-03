@@ -9,7 +9,7 @@ Canonical source is rc4.189 on branch `main`; the exact current HEAD must be ver
 Local clone: `C:\Users\timmu\Documents\PITTI-Codex`. The first and second read-only audits correctly failed closed on stale authority; the second audit specifically found residual CURRENT pointers in this handoff and PITTI_AUTO_PREFLIGHT.md. PR #118 contains isolated/unmerged Codex work package and AGENTS.md. v232 is merged. Pull local `main` and repeat the read-only audit; PR #118 remains isolated/unmerged and non-production authority until its own work package and strict gates complete.
 
 ## CURRENT GATE
-`V233_STALE_CURRENT_POINTER_REPAIR_THEN_LOCAL_CODEX_REAUDIT`. No device trial loops, no unverified deployment claims.
+`V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT`. No device trial loops, no unverified deployment claims.
 
 ## AUTO
 Continuous same-turn execution while safe work exists; checkpoint/re-inventory after every package; external wait blocks only its lane; STATUS report-only.
