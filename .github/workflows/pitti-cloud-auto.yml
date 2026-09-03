@@ -47,7 +47,7 @@ jobs:
     environment: pitti-cloud-publisher
     steps:
       - uses: actions/checkout@v4
-        with: {ref: '${{ inputs.expected_main_sha }}', path: work, persist-credentials: false}
+        with: {ref: '${{ github.workflow_sha }}', path: control, persist-credentials: false}
       - uses: actions/setup-node@v4
         with: {node-version: '22.23.2'}
       - id: app
@@ -61,7 +61,8 @@ jobs:
       - name: Inspect complete protection with App access, before any candidate code
         env:
           GH_TOKEN: ${{ steps.app.outputs.token }}
-        run: node work/tools/cloud-run.mjs protection
+          PITTI_WORK: ${{ github.workspace }}/control
+        run: node control/tools/cloud-run.mjs protection
       - uses: actions/upload-artifact@v4
         with: {name: 'protection-${{ github.run_id }}-${{ github.run_attempt }}', path: evidence/, if-no-files-found: error}
   implement:
@@ -73,7 +74,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.expected_main_sha }}
+          ref: ${{ github.workflow_sha }}
           path: control
           fetch-depth: 0
           persist-credentials: false
@@ -129,7 +130,7 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-        with: {ref: '${{ inputs.expected_main_sha }}', path: control, fetch-depth: 0, persist-credentials: false}
+        with: {ref: '${{ github.workflow_sha }}', path: control, fetch-depth: 0, persist-credentials: false}
       - uses: actions/checkout@v4
         with: {ref: '${{ inputs.expected_main_sha }}', path: work, fetch-depth: 0, persist-credentials: false}
       - uses: actions/download-artifact@v4
@@ -162,7 +163,7 @@ jobs:
       branch: ${{ steps.publish.outputs.branch }}
     steps:
       - uses: actions/checkout@v4
-        with: {ref: '${{ inputs.expected_main_sha }}', path: control, fetch-depth: 0, persist-credentials: false}
+        with: {ref: '${{ github.workflow_sha }}', path: control, fetch-depth: 0, persist-credentials: false}
       - uses: actions/checkout@v4
         with: {ref: '${{ inputs.expected_main_sha }}', path: work, fetch-depth: 0, persist-credentials: false}
       - uses: actions/download-artifact@v4
@@ -196,7 +197,7 @@ jobs:
     timeout-minutes: 25
     steps:
       - uses: actions/checkout@v4
-        with: {ref: '${{ inputs.expected_main_sha }}', path: control, persist-credentials: false}
+        with: {ref: '${{ github.workflow_sha }}', path: control, persist-credentials: false}
       - uses: actions/download-artifact@v4
         with: {name: 'published-${{ needs.publish.outputs.head }}', path: evidence}
       - uses: actions/setup-node@v4
@@ -217,7 +218,7 @@ jobs:
     environment: pitti-cloud-development
     steps:
       - uses: actions/checkout@v4
-        with: {ref: '${{ inputs.expected_main_sha }}', path: control, fetch-depth: 0, persist-credentials: false}
+        with: {ref: '${{ github.workflow_sha }}', path: control, fetch-depth: 0, persist-credentials: false}
       - uses: actions/checkout@v4
         with: {ref: '${{ needs.publish.outputs.head }}', path: work, fetch-depth: 0, persist-credentials: false}
       - uses: actions/download-artifact@v4

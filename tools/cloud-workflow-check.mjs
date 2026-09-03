@@ -3,6 +3,7 @@ const dir='.github/workflows',all=Object.fromEntries(fs.readdirSync(dir).filter(
 const w=all['pitti-cloud-auto.yml'];assert.deepEqual(Object.keys(w.on),['workflow_dispatch']);
 for(const key of ['task_id','task_prompt','expected_main_sha','allowed_scope','max_attempts','authorization_reference'])assert(w.on.workflow_dispatch.inputs[key]);
 assert.equal(w.permissions.contents,'read');assert(!w.permissions.deployments);
+for(const job of Object.values(w.jobs))for(const s of job.steps)if(s.uses?.startsWith('actions/checkout@')&&s.with.path==='control')assert.equal(s.with.ref,'${{ github.workflow_sha }}','controller must come from trusted workflow SHA, never unverified input');
 assert.equal(w.jobs.publish.needs,'validate');assert.equal(w.jobs.validate.needs,'implement');assert(w.jobs['independent-review'].needs.includes('exact-ci'));
 const actions=Object.values(w.jobs).flatMap(j=>j.steps).filter(x=>x.uses?.startsWith('openai/codex-action@'));
 assert.equal(actions.length,2);assert(actions.every(x=>x.uses.endsWith('86365089eb2b84e0a8fb0717b304f8bdcb13b20e')&&x.with['safety-strategy']==='drop-sudo'));
