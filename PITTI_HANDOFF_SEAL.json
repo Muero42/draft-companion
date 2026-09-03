@@ -1,12 +1,31 @@
 {
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260903T0720Z-v232",
-  "created_at": "2026-09-03T07:20:00Z",
-  "status": "SUPERSEDED_PENDING_RESEAL",
-  "handoff_ready": false,
-  "second_pass_pass": false,
+  "created_at": "2026-09-03T07:27:00Z",
+  "status": "PASS",
+  "handoff_ready": true,
+  "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
-  "integrity": {},
+  "integrity": {
+    "PITTI_CURRENT_STATE.json": "f55b00ed2508248bb3ce9a2b65228e7e7013e4d9",
+    "PITTI_EXECUTION_LOCK.json": "035af0233d9a303ed12ff476b10e85875b1f60dd",
+    "PITTI_COMMAND_CONTRACTS.json": "1a0827d4f3d20c58eb9a7adab37b6f8e45911649",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "09c03477ede47208a097b5666de356ea2262fe9b",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "bae3e6402f4aaed0d8601ce67dbb0113e199453d",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "aafd3d8dc469dfc658188e39c5b1d193e1753d95",
+    "PITTI_AUTO_PREFLIGHT.md": "63ff09db73141ef98dc4d1152bfb5070dd8895cc",
+    "PITTI_PROJECT_STATE.md": "58ba270d7b75bbcad07418a7d47c12b2ff5fcef6",
+    "README.md": "918b631845d99902ac4ffc30cc51c74230894293",
+    "app.js": "7c386fc03de3e956801770215fa5f2b05226b021",
+    "live-surface-v3.js": "f2b718382d9d36ef38cfeb281e7348ba337c459e",
+    "manifest.webmanifest": "adf3a16945ba2a2cfc7c94a5db18d3bcba631810",
+    "index.html": "23296779c5d469b33dd8a9a4dfc17761bcd29bae",
+    "sw.js": "91c3da30d04b242418a33b3e12a4743033bcc8f9",
+    "tools/pitti_guardrail_check.mjs": "10b9914448ad72950d392f74ee40b3429ab5735d",
+    "tools/live-trade-roster-identity-regression.mjs": "c6937f97d562a4d1bd5217e0344af9500d68ca2b",
+    "config/season-expert-phase-policy.json": "78156903f4254c6eee836819dc6b8a737835d6c1",
+    "season-parallel-contract-regression.mjs": "b0b158697d37c0d9bebeebf5bd132d4a6b355f07"
+  },
   "branch_locks": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
@@ -34,6 +53,6 @@
     "ir_not_capacity": true,
     "device_trial_and_error_forbidden": true
   },
-  "exact_gate": "V232_GUARDS_THEN_LOCAL_CODEX_PULL_REAUDIT",
-  "note": "v232 post-merge authority binding is pending strict candidate-preflight guards; integrity will be rebuilt only after those pass."
+  "exact_gate": "MERGE_V232_THEN_LOCAL_CODEX_PULL_REAUDIT",
+  "note": "v232 post-merge authority sealed after candidate-preflight all-green on 9856c07. Merge only after this sealed head passes strict gates; then local Codex clone must pull main and repeat read-only audit."
 }
