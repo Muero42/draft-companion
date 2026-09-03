@@ -6,7 +6,7 @@
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "v231 reconciliation: canonical main HEAD 0c110a5dc6688ebc840da8bb122efcc5d50f77e6 / rc4.189. rc4.188 is latest physical PASS; rc4.169 rollback. Deployment parity is UNKNOWN and must be reverified. PR #118 is isolated unmerged rc4.190/Codex work.",
+    "failClosedRecovery": "v231 reconciliation: canonical main HEAD 0c110a5dc6688ebc840da8bb122efcc5d50f77e6 / rc4.189. rc4.188 is latest physical PASS; rc4.169 rollback. Deployment parity is UNKNOWN and must be reverified. PR #118 is isolated unmerged rc4.190/Codex work. Library persistence remains fail-closed: never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision."
@@ -273,7 +273,7 @@
     "userWorkMinimization": "Assistant performs repo/package/deployment verification and promotion autonomously; user action only for final device refresh/observation."
   },
   "handoff": {
-    "generation": "20260902T1915Z-v230",
+    "generation": "20260903T0700Z-v231",
     "status": "PASS_POSTMERGE_RESEAL_PENDING_CI",
     "ready": true,
     "secondPass": true,
@@ -297,7 +297,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260902T1915Z-v230",
+  "handoff_generation": "20260903T0700Z-v231",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
