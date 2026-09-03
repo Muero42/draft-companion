@@ -169,11 +169,12 @@
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "2026-09-02 rc4.188 physical screenshots: Waiver/FA route, live ownership, kicker isolation and IR/drop semantics PASS.",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
-    "reconciledBaseMain": "2471c3666edaa313388d6b79c488940ac6b51f86"
+    "reconciledBaseMain": "2471c3666edaa313388d6b79c488940ac6b51f86",
+    "nextGate": "V233_STALE_CURRENT_POINTER_REPAIR_THEN_LOCAL_CODEX_REAUDIT"
   },
-  "currentGate": "V232_GUARDS_THEN_LOCAL_CODEX_PULL_REAUDIT",
-  "handoffGeneration": "20260903T0720Z-v232",
-  "handoff_generation": "20260903T0720Z-v232",
+  "currentGate": "V233_STALE_CURRENT_POINTER_REPAIR_THEN_LOCAL_CODEX_REAUDIT",
+  "handoffGeneration": "20260903T0745Z-v233",
+  "handoff_generation": "20260903T0745Z-v233",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -195,5 +196,7 @@
     "waiverCompetition": "Opponent bid estimates are distributions/bands driven primarily by current roster need and remaining FAAB, with bounded current-season transaction and historical-manager priors.",
     "qb2SeasonException": "No generic in-season QB2 ban. Evaluate upside/value vs active roster cost; when D/ST is still missing, include the second future active drop and same-bye penalty.",
     "tradeGeometry": "Use canonical Sleeper starter/FLEX assignment; no static positional depth caps; TE2 can be a starter through legal FLEX."
-  }
+  },
+  "currentResearchGate": "V233_STALE_CURRENT_POINTER_REPAIR_THEN_LOCAL_CODEX_REAUDIT",
+  "exactNextAction": "Validate and merge v233 checkpoint-only stale-current-pointer repair; then user pulls local Codex main and repeats read-only authority audit. PR #118 remains isolated/unmerged."
 }
