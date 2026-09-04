@@ -4,6 +4,7 @@ export const REQUIRED_JOBS=['guardrails','behavioral-contract','package','pitti-
 export const CI_SPECS=[['pitti-project-guardrails.yml','guardrails'],['release-contract-v2.yml','behavioral-contract'],['release-contract-v2-package.yml','package'],['pitti-cloud-validation.yml','pitti-cloud-validation']];
 export const CI_FILES=CI_SPECS.map(x=>x[0]);
 export const REVIEW_TOPICS=['ownership','ir_taxi','last_qb_te','flex_two_te','capacity','k_dst','waiver_evidence','bilateral_trades','acceptance_probability','research_seeds','conflicts','async_routing','navigation','promotion_authority'];
+export const repoApiUrl=(resource='')=>'https://api.github.com/repos/'+REPO+(resource?'/'+resource:'');
 export const sha=x=>typeof x==='string'&&/^[a-f0-9]{40}$/.test(x);
 export function requestErrors(r,local){
   const e=[];
