@@ -1,7 +1,7 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
 import os from 'node:os';import path from 'node:path';import {execFileSync} from 'node:child_process';
 import crypto from 'node:crypto';
-import {REPO,CI_FILES,REQUIRED_JOBS,REVIEW_TOPICS,requestErrors,diffErrors,pathCollisionErrors,exactCiErrors,reviewErrors,promotionErrors,protectionErrors,secretMaterial} from './cloud-contract.mjs';
+import {REPO,CI_FILES,REQUIRED_JOBS,REVIEW_TOPICS,repoApiUrl,requestErrors,diffErrors,pathCollisionErrors,exactCiErrors,reviewErrors,promotionErrors,protectionErrors,secretMaterial} from './cloud-contract.mjs';
 const head='a'.repeat(40),next='b'.repeat(40),branch='pitti/cloud-auto/test-task-123-1';
 const r={repo:REPO,expected_main_sha:head,task_id:'test-task',task_prompt:'Make one harmless documentation correction.',allowed_scope:['docs/example.md'],max_attempts:1,authorization_reference:'owner-dispatch:test-123',actor:'Muero42',triggering_actor:'Muero42',event:'workflow_dispatch',ref:'refs/heads/main',workflow_sha:head,run_id:'123',run_attempt:'1'};
 const local={repo:REPO,head,main:head,branch:'main',clean:true};
@@ -11,6 +11,7 @@ const reviewBinding={pr:1,runId:'123',diffSha256:'d'.repeat(64)};
 const review={repo:REPO,pr:1,runId:'123',diffSha256:'d'.repeat(64),head,main:head,verdict:'PASS',readOnly:true,independent:true,findings:[],checks:REVIEW_TOPICS.map(topic=>({topic,status:'PASS',evidence:'concrete source evidence'})),deployment:false,deviceAccepted:false,mergeAuthorized:false};
 let count=0;const test=(name,fn)=>{fn();count++;console.log('PASS '+name);};
 test('authorized canonical manual bootstrap',()=>assert.deepEqual(requestErrors(r,local),[]));
+test('repository API root has no trailing slash',()=>{assert.equal(repoApiUrl(),'https://api.github.com/repos/'+REPO);assert.equal(repoApiUrl('rulesets'),'https://api.github.com/repos/'+REPO+'/rulesets');});
 for(const [name,patch] of [['wrong expected SHA',{expected_main_sha:next}],['empty scope',{allowed_scope:[]}],['missing authorization',{authorization_reference:''}],['wrong actor',{actor:'other'}],['deployment attempt',{deploy:true}],['source CI is not device acceptance',{deviceAccepted:true}],['automatic trigger',{event:'push'}],['unbounded attempts',{max_attempts:9}]])test(name,()=>assert(requestErrors({...r,...patch},local).length));
 test('dirty checkout',()=>assert(requestErrors(r,{...local,clean:false}).length));
 test('scoped workbranch diff',()=>assert.deepEqual(diffErrors(['docs/example.md'],r.allowed_scope,branch,head,head),[]));

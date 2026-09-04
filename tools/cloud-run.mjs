@@ -4,7 +4,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import crypto from 'node:crypto';
 import {execFileSync} from 'node:child_process';
-import {REPO,CI_FILES,CI_SPECS,REVIEW_TOPICS,requestErrors,diffErrors,pathCollisionErrors,secretMaterial,exactCiErrors,reviewErrors,protectionErrors,requirePass} from './cloud-contract.mjs';
+import {REPO,CI_FILES,CI_SPECS,REVIEW_TOPICS,repoApiUrl,requestErrors,diffErrors,pathCollisionErrors,secretMaterial,exactCiErrors,reviewErrors,protectionErrors,requirePass} from './cloud-contract.mjs';
 import {loadAuthority,validateAuthority,validateContinuationEvidence} from './postmerge-authority-contract.mjs';
 const work=path.resolve(process.env.PITTI_WORK||'.'),out=path.resolve(process.env.PITTI_OUTPUT||'.pitti-cloud-output');
 const git=(...a)=>execFileSync('git',['-c','core.hooksPath=/dev/null',...a],{cwd:work,encoding:'utf8',maxBuffer:20*1024*1024}).trim();
@@ -15,7 +15,7 @@ const token=()=>{if(!process.env.GH_TOKEN)throw Error('GitHub authentication mis
 async function api(resource,method='GET',body){
   const publishPost=resource==='pulls'||['git/blobs','git/trees','git/commits','git/refs'].includes(resource);
   if(method!=='GET'&&!(method==='POST'&&publishPost))throw Error('endpoint mutation forbidden');
-  const r=await fetch('https://api.github.com/repos/'+REPO+'/'+resource,{method,headers:{Authorization:'Bearer '+token(),Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'},...(body?{body:JSON.stringify(body)}:{})});
+  const r=await fetch(repoApiUrl(resource),{method,headers:{Authorization:'Bearer '+token(),Accept:'application/vnd.github+json','X-GitHub-Api-Version':'2022-11-28'},...(body?{body:JSON.stringify(body)}:{})});
   if(!r.ok)throw Error('GitHub '+method+' '+resource+' HTTP '+r.status);
   return r.json();
 }
