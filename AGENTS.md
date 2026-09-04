@@ -66,3 +66,5 @@ These actions require separate explicit authorization:
 - Automatic Sleeper Add/Drop, FAAB bids or trades.
 
 Technical sandbox approval remains independent of this content authorization. Report the exact command and purpose if the sandbox requires approval. Do not delegate a technically available approved development step to the user as a precaution.
+
+QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy.

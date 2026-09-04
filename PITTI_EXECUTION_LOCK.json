@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-03T11:40:32.214Z",
+  "updatedAt": "2026-09-04T15:04:04.277Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -150,7 +150,8 @@
     "starterMaximaAreRosterCaps": false,
     "normalDraftKDst": false,
     "userDraftQbLimit": 1,
-    "userQb2Policy": "HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1"
+    "userQb2Policy": "DRAFT_ONLY_EXCLUSION_AFTER_QB1",
+    "userQb2PolicyScope": "DRAFT_ONLY"
   },
   "canaries": {
     "snapshotIdentityIncludesDraftId": true,
@@ -162,7 +163,6 @@
     "noGenericReturnV2Retune": true,
     "noGenericGlobalQb2Ban": true,
     "userOneQbDraftStrategy": true,
-    "qb2MustNotAppearOnUserCoachSurfaceAfterQb1": true,
     "noGlobalTe2Ban": true,
     "userSpecificQb2ExclusionIsNotGenericLeagueRule": true,
     "noPlayerNameQbExclusions": false,
@@ -193,7 +193,8 @@
     "genoRodgersHardExcluded": true,
     "rc4137V4OnlyTierProvenance": true,
     "rc4137NoEricksonTierLeak": true,
-    "stableCrossPositionExpertDisplayOrder": true
+    "stableCrossPositionExpertDisplayOrder": true,
+    "draftQb2MustNotAppearOnUserCoachSurfaceAfterQb1": true
   },
   "expertV2": {
     "status": "LEGACY_PRESERVED_SUPERSEDED_FOR_NEW_V4_V5_COMPARISON",
@@ -275,7 +276,7 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260903T1230Z-v234",
+    "generation": "20260904T1200Z-v234",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -299,7 +300,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260903T1230Z-v234",
+  "handoff_generation": "20260904T1200Z-v234",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -334,5 +335,6 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260903T1230Z-v234"
+  "handoffGeneration": "20260904T1200Z-v234",
+  "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy"
 }

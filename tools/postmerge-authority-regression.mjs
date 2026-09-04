@@ -3,6 +3,14 @@ import {loadAuthority,validateAuthority,validateContinuationEvidence} from './po
 const baseline=loadAuthority();
 assert.deepEqual(validateAuthority(baseline),[]);
 const cases=[
+  ['global QB cap resurrected',d=>d['PITTI_CURRENT_STATE.json'].invariants.user_qb_limit=1],
+  ['draft QB2 exclusion removed',d=>d['PITTI_CURRENT_STATE.json'].qb_policy.draft.exclude_qb2_after_qb1=false],
+  ['draft limit relaxed',d=>d['PITTI_CURRENT_STATE.json'].qb_policy.draft.qb_limit=2],
+  ['season QB2 forbidden',d=>d['PITTI_CURRENT_STATE.json'].qb_policy.season.qb2_exception_allowed=false],
+  ['season roster capped',d=>d['PITTI_CURRENT_STATE.json'].qb_policy.season.universal_qb_roster_limit=1],
+  ['season weakens draft',d=>d['PITTI_CURRENT_STATE.json'].qb_policy.season_exception_weakens_draft_rule=true],
+  ['unscoped lock restored',d=>d['PITTI_EXECUTION_LOCK.json'].league.userQb2Policy='HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1'],
+  ['unscoped canary restored',d=>d['PITTI_EXECUTION_LOCK.json'].canaries.qb2MustNotAppearOnUserCoachSurfaceAfterQb1=true],
   ['resurrected current gate',d=>d['PITTI_CURRENT_STATE.json'].currentWork.nextGate='V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT'],
   ['hidden duplicate gate',d=>d['PITTI_EXECUTION_LOCK.json'].nextGate='V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT'],
   ['merged PR pending CI',d=>d['PITTI_CURRENT_STATE.json'].authority.postmerge.pending_strict_ci=true],

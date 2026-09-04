@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260903T1230Z-v234",
-  "updated_at": "2026-09-03T11:40:32.214Z",
+  "handoff_generation": "20260904T1200Z-v234",
+  "updated_at": "2026-09-04T15:04:04.277Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -190,12 +190,13 @@
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
-    "user_qb_limit": 1,
     "user_qb_hard_exclusions": [
       "Geno Smith",
       "Aaron Rodgers"
     ],
-    "starter_maxima_not_roster_caps": true
+    "starter_maxima_not_roster_caps": true,
+    "user_draft_qb_limit": 1,
+    "user_draft_qb_limit_scope": "DRAFT_ONLY"
   },
   "source_authority": "Source/runtime rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.",
   "auto_execution_state": {
@@ -337,17 +338,19 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260903T1230Z-v234",
+    "generation": "20260904T1200Z-v234",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
     "resume": "Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.",
-    "transaction_in_progress": false
+    "transaction_in_progress": false,
+    "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
+    "refresh_scope": "QB2_AUTHORITY_REPAIR; Git/GitHub HEAD and CI remain dynamic, never inherited from prior reviewed commits"
   },
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260903T1230Z-v234",
+  "handoffGeneration": "20260904T1200Z-v234",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -462,6 +465,34 @@
         "classification": "EVIDENCE_ONLY"
       },
       "baseline": "154/154 local checks PASS before migration"
+    },
+    "qb2_metadata_repair": {
+      "classification": "HISTORICAL/SUPERSEDED",
+      "previous_generation": "20260903T1230Z-v234",
+      "reviewed_input_head": "ce7e735a65124389560f03119cfb3e4e1959b2c1",
+      "observed_main": "685770c13c977481eb94e4142d227ebc58c10499",
+      "reason": "Unscoped user_qb_limit and QB2 exclusion are replaced by explicit draft-only constraints; season exceptions never weaken draft policy."
     }
+  },
+  "qb_policy": {
+    "draft": {
+      "phase": "DRAFT",
+      "qb_limit": 1,
+      "exclude_qb2_after_qb1": true,
+      "supersession": "FUTURE_EXPLICIT_USER_DECISION_ONLY"
+    },
+    "season": {
+      "phase": "POST_DRAFT_SEASON_COMPANION",
+      "universal_qb_roster_limit": null,
+      "qb2_exception_allowed": true,
+      "contexts": [
+        "waiver",
+        "free_agency",
+        "trade",
+        "roster_optimization"
+      ],
+      "requires": "Explicit context-dependent value, verified evidence, legal capacity, same-bye and future D/ST drop costs; no automatic acquisition"
+    },
+    "season_exception_weakens_draft_rule": false
   }
 }

@@ -87,7 +87,7 @@ Otherwise continue AUTO.
 - A full paired 15-round v4/v5 mock is invalid unless the exported backup contains exactly 30 active-draft fixtures covering all 15 own picks twice.
 
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
-- Current handoff generation = **20260903T1230Z-v234**. This checkpoint records the repair after the performed v233 read-only audit failed closed on residual state pointers.
+- Current handoff generation = **20260904T1200Z-v234**. This checkpoint records the repair after the performed v233 read-only audit failed closed on residual state pointers.
 - Current mode = **POST_DRAFT_SEASON_COMPANION**.
 - Canonical source/runtime = **rc4.190 in this source tree; canonical main containment is dynamically verified**. Verify the exact current main HEAD dynamically; a tracked checkpoint must not hard-code its own containing commit as immutable current authority.
 - Latest physical Android = **rc4.188 PASS** for Waiver/FA routing, live Sleeper ownership, kicker isolation and ACTIVE-drop/IR semantics. Accepted rollback = **rc4.169**.
@@ -271,3 +271,5 @@ Generation: `20260901T2210Z-v224`. Supersedes older current-version/device/gate/
 - Any earlier CURRENT statement saying PR #102/rc4.184 is open, or generation v227 is current, is historical only.
 - Historical v229 release lane was rc4.185 merged baseline + PR #108 OPEN/UNMERGED; that lane is fully superseded and MUST NOT be interpreted as current authority.
 - Lawrence lane and full-league-state architecture are current and must survive chat takeover.
+
+QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy.
