@@ -1,7 +1,7 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
 import os from 'node:os';import path from 'node:path';import {execFileSync} from 'node:child_process';
 import crypto from 'node:crypto';
-import {REPO,CI_FILES,REQUIRED_JOBS,REVIEW_TOPICS,repoApiUrl,requestErrors,diffErrors,pathCollisionErrors,exactCiErrors,reviewErrors,promotionErrors,protectionErrors,secretMaterial} from './cloud-contract.mjs';
+import {REPO,CI_FILES,REQUIRED_JOBS,REVIEW_TOPICS,RULESET_PINS,repoApiUrl,requestErrors,diffErrors,pathCollisionErrors,exactCiErrors,reviewErrors,promotionErrors,protectionErrors,secretMaterial} from './cloud-contract.mjs';
 const head='a'.repeat(40),next='b'.repeat(40),branch='pitti/cloud-auto/test-task-123-1';
 const r={repo:REPO,expected_main_sha:head,task_id:'test-task',task_prompt:'Make one harmless documentation correction.',allowed_scope:['docs/example.md'],max_attempts:1,authorization_reference:'owner-dispatch:test-123',actor:'Muero42',triggering_actor:'Muero42',event:'workflow_dispatch',ref:'refs/heads/main',workflow_sha:head,run_id:'123',run_attempt:'1'};
 const local={repo:REPO,head,main:head,branch:'main',clean:true};
@@ -41,6 +41,10 @@ test('protected main, cloud App cannot update',()=>assert.deepEqual(protectionEr
 const liveLocked={...locked,conditions:{ref_name:{include:['~DEFAULT_BRANCH'],exclude:[]}}};
 const liveUpdates={...updates,conditions:{ref_name:{include:['~DEFAULT_BRANCH'],exclude:[]}},rules:[{type:'update'}]};
 test('real GitHub default-branch and parameterless strict update representation',()=>assert.deepEqual(protectionErrors([liveLocked,liveUpdates],'main'),[]));
+const redactedLocked={...liveLocked,id:RULESET_PINS['PITTI main review and checks'].id,name:'PITTI main review and checks',updated_at:RULESET_PINS['PITTI main review and checks'].updatedAt,bypass_actors:undefined};
+const redactedUpdates={...liveUpdates,id:RULESET_PINS['PITTI main owner promotion'].id,name:'PITTI main owner promotion',updated_at:RULESET_PINS['PITTI main owner promotion'].updatedAt,bypass_actors:undefined};
+test('least-privilege App accepts exact immutable ruleset pins',()=>assert.deepEqual(protectionErrors([redactedLocked,redactedUpdates],'main'),[]));
+test('redacted bypass with changed ruleset version fails closed',()=>assert(protectionErrors([{...redactedLocked,updated_at:'2026-09-04T23:07:15.000+02:00'},redactedUpdates],'main').length));
 test('default token fails closed when canonical default is not main',()=>assert(protectionErrors([liveLocked,liveUpdates],'other').length));
 test('update rule explicitly allowing fetch-and-merge is rejected',()=>assert(protectionErrors([liveLocked,{...liveUpdates,rules:[{type:'update',parameters:{update_allows_fetch_and_merge:true}}]}],'main').length));
 test('unprotected main blocks publisher',()=>assert(protectionErrors([]).length));
