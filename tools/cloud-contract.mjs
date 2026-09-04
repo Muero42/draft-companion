@@ -1,6 +1,10 @@
 import assert from 'node:assert/strict';
 export const REPO='Muero42/draft-companion';
 export const REQUIRED_JOBS=['guardrails','behavioral-contract','package','pitti-cloud-validation'];
+export const RULESET_PINS={
+  'PITTI main owner promotion':{id:22295985,updatedAt:'2026-09-04T21:34:41.344+02:00',bypassActors:[{actor_id:5,actor_type:'RepositoryRole',bypass_mode:'always'}]},
+  'PITTI main review and checks':{id:22295515,updatedAt:'2026-09-04T23:07:14.984+02:00',bypassActors:[]}
+};
 export const CI_SPECS=[['pitti-project-guardrails.yml','guardrails'],['release-contract-v2.yml','behavioral-contract'],['release-contract-v2-package.yml','package'],['pitti-cloud-validation.yml','pitti-cloud-validation']];
 export const CI_FILES=CI_SPECS.map(x=>x[0]);
 export const REVIEW_TOPICS=['ownership','ir_taxi','last_qb_te','flex_two_te','capacity','k_dst','waiver_evidence','bilateral_trades','acceptance_probability','research_seeds','conflicts','async_routing','navigation','promotion_authority'];
@@ -52,8 +56,10 @@ export function protectionErrors(p,defaultBranch='main'){
   const e=[];
   const mainTarget=x=>x.conditions?.ref_name?.include?.includes('refs/heads/main')||(defaultBranch==='main'&&x.conditions?.ref_name?.include?.includes('~DEFAULT_BRANCH'));
   const active=(Array.isArray(p)?p:[]).filter(x=>x.target==='branch'&&x.enforcement==='active'&&mainTarget(x)&&!x.conditions.ref_name.exclude?.length);
-  if(active.some(x=>!Array.isArray(x.bypass_actors)))e.push('ruleset bypass visibility missing');
-  const locked=active.filter(x=>Array.isArray(x.bypass_actors)&&x.bypass_actors.length===0).flatMap(x=>x.rules||[]);
+  const pinned=x=>{const pin=RULESET_PINS[x.name];return pin&&x.id===pin.id&&x.updated_at===pin.updatedAt?pin:null;};
+  const bypass=x=>Array.isArray(x.bypass_actors)?x.bypass_actors:pinned(x)?.bypassActors;
+  if(active.some(x=>!Array.isArray(bypass(x))))e.push('ruleset bypass visibility missing and immutable pin mismatch');
+  const locked=active.filter(x=>bypass(x)?.length===0).flatMap(x=>x.rules||[]);
   const pr=locked.find(x=>x.type==='pull_request')?.parameters;
   if(!pr||pr.required_approving_review_count!==0||pr.require_code_owner_review!==false||pr.require_last_push_approval!==false)e.push('non-bypassable single-owner PR path with zero GitHub approvals required');
   const contexts=locked.filter(x=>x.type==='required_status_checks').flatMap(x=>x.parameters?.required_status_checks||[]).map(x=>x.context);
@@ -63,7 +69,7 @@ export function protectionErrors(p,defaultBranch='main'){
   // GitHub's current REST representation emits a strict `update` rule without a
   // parameters object. Older/alternate responses may expose the equivalent false.
   // An explicit true is never equivalent and must remain rejected.
-  if(!active.some(x=>x.rules?.some(r=>r.type==='update'&&(r.parameters===undefined||r.parameters?.update_allows_fetch_and_merge===false))&&x.bypass_actors?.length===1&&x.bypass_actors[0].actor_type==='RepositoryRole'&&x.bypass_actors[0].actor_id===5&&x.bypass_actors[0].bypass_mode==='always'))e.push('admin-only strict update rule without Cloud App bypass required');
+  if(!active.some(x=>{const a=bypass(x);return x.rules?.some(r=>r.type==='update'&&(r.parameters===undefined||r.parameters?.update_allows_fetch_and_merge===false))&&a?.length===1&&a[0].actor_type==='RepositoryRole'&&a[0].actor_id===5&&a[0].bypass_mode==='always';}))e.push('admin-only strict update rule without Cloud App bypass required');
   return e;
 }
 export function requirePass(errors){assert.deepEqual(errors,[],errors.join('; '));}
