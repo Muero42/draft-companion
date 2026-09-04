@@ -27,6 +27,12 @@ export function validateAuthority(data) {
   const errors=[];
   const check=(ok,p,msg)=>{if(!ok) errors.push(`${p}: ${msg}`);};
   const [c,l,k,s]=core.map(p=>data[p]);
+  const q=c.qb_policy;
+  check(c.invariants.user_draft_qb_limit===1&&c.invariants.user_draft_qb_limit_scope==='DRAFT_ONLY'&&!Object.hasOwn(c.invariants,'user_qb_limit'),'CURRENT.invariants','QB limit must be draft-scoped');
+  check(q?.draft?.phase==='DRAFT'&&q.draft.qb_limit===1&&q.draft.exclude_qb2_after_qb1===true&&q.draft.supersession==='FUTURE_EXPLICIT_USER_DECISION_ONLY','CURRENT.qb_policy.draft','draft QB2 exclusion must remain enforced');
+  check(q?.season?.phase==='POST_DRAFT_SEASON_COMPANION'&&q.season.universal_qb_roster_limit===null&&q.season.qb2_exception_allowed===true&&['waiver','free_agency','trade','roster_optimization'].every(x=>q.season.contexts?.includes(x))&&q.season_exception_weakens_draft_rule===false,'CURRENT.qb_policy.season','contextual season QB2 must not weaken draft or impose roster cap');
+  check(l.league.userQb2Policy==='DRAFT_ONLY_EXCLUSION_AFTER_QB1'&&l.league.userQb2PolicyScope==='DRAFT_ONLY'&&l.canaries.draftQb2MustNotAppearOnUserCoachSurfaceAfterQb1===true&&!Object.hasOwn(l.canaries,'qb2MustNotAppearOnUserCoachSurfaceAfterQb1'),'LOCK.QB2','unscoped QB2 policy forbidden');
+  for(const [label,o] of [['LOCK',l],['COMMAND',k]])check(o.qb_policy_reference==='PITTI_CURRENT_STATE.json:qb_policy',label+'.qb_policy_reference','canonical QB policy reference required');
   const generation=c.handoff_generation;
   check(/^202609\d{2}T\d{4}Z-v234$/.test(generation),'CURRENT.handoff_generation','v234 generation required');
   for(const [label,o] of [['CURRENT',c],['LOCK',l]]) {

@@ -174,8 +174,8 @@
     "packageReferenceScope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.190 installable package claim"
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260903T1230Z-v234",
-  "handoff_generation": "20260903T1230Z-v234",
+  "handoffGeneration": "20260904T1200Z-v234",
+  "handoff_generation": "20260904T1200Z-v234",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -199,5 +199,7 @@
     "tradeGeometry": "Use canonical Sleeper starter/FLEX assignment; no static positional depth caps; TE2 can be a starter through legal FLEX."
   },
   "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "exactNextAction": "Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance."
+  "exactNextAction": "Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.",
+  "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
+  "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy."
 }

@@ -165,7 +165,7 @@ must(['NO_AUTO_RESTORE_AVAILABILITY_ONLY; FRESH_INDIVIDUAL_QUALIFICATION_ALLOWED
 must(e.weightsAreFinalWinner===false,'no Expert-v2 profile may be mislabeled final winner');
 must(e.oldWrOnlyRejectionSemanticsAreAuthority===false,'obsolete WR-only authority resurrected');
 must(lock.league?.userDraftQbLimit===1,'user one-QB strategy lock drift');
-must(lock.league?.userQb2Policy==='HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1','user QB2 policy drift');
+must(lock.league?.userQb2Policy==='DRAFT_ONLY_EXCLUSION_AFTER_QB1','user QB2 policy drift');
 must(/^\d+\.\d+\.\d+$/.test(String(commandContract.version||'')),'repo command contract version malformed');
 must(commandContract.sourceOrder?.includes('PITTI_CURRENT_STATE.json'),'CURRENT missing from takeover source order');
 must(commandContract.sourceOrder?.includes('PITTI_HANDOFF_SEAL.json'),'SEAL missing from takeover source order');

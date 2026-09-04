@@ -1,5 +1,5 @@
 # NEW CHAT HANDOFF — PITTI SEASON COMPANION
-Handoff generation: `20260903T1230Z-v234`
+Handoff generation: `20260904T1200Z-v234`
 Created: 2026-09-03T09:59:50.439Z
 
 ## CURRENT AUTHORITY
@@ -14,3 +14,5 @@ Historical v234 branch/base/PR evidence is stored in PITTI_CURRENT_STATE.json hi
 
 ## AUTO
 Continuous same-turn execution while authorized safe work exists; checkpoint/re-inventory after every package; external wait blocks only its lane; STATUS report-only. Never send status/progress/acknowledgement messages during AUTO while executable work exists. No device trial loops, no unverified deployment claims.
+
+QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy.

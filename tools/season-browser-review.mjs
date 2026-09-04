@@ -10,12 +10,15 @@ const server=http.createServer((req,res)=>{const pathname=decodeURIComponent(new
 await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
 let browser;try{
  browser=await chromium.launch({headless:true,...(process.env.PITTI_BROWSER?{executablePath:process.env.PITTI_BROWSER}:{})});
- const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,serviceWorkers:'block'}),page=await context.newPage(),errors=[];
+ const context=await browser.newContext({viewport:{width:390,height:844},isMobile:true,hasTouch:true,serviceWorkers:'block'}),page=await context.newPage(),errors=[],failedRequests=[];
  page.on('pageerror',e=>errors.push(e.message));
+ page.on('requestfailed',r=>failedRequests.push({url:r.url(),error:r.failure()?.errorText}));
  await page.clock.install();
+ // This scenario models online fixture responses even when the host namespace has no network.
+ await page.addInitScript(()=>Object.defineProperty(navigator,'onLine',{configurable:true,get:()=>true}));
  await page.route('**/*',route=>{const u=new URL(route.request().url());if(u.origin===origin)return route.continue();let body={};if(u.hostname==='api.sleeper.app'){if(u.pathname.endsWith('/players/nfl'))body=players;else if(u.pathname.endsWith('/rosters'))body=rosters;else if(u.pathname.endsWith('/users'))body=rosters.map(r=>({user_id:r.owner_id,display_name:r.owner_id}));else if(u.pathname.includes('/transactions/'))body=[];else if(u.pathname.endsWith('/picks'))body=[];else if(u.pathname.includes('/draft/'))body={draft_id:'1366053132970233856',league_id:'fixture',slot_to_roster_id:{9:1},settings:{teams:10,rounds:15}};else body=league;}return route.fulfill({status:200,contentType:'application/json',body:JSON.stringify(body)});});
  await page.addInitScript(()=>{localStorage.setItem('v118_seasonLeagueId','fixture');localStorage.setItem('v118_seasonUserId','u0');const now=Date.now();localStorage.setItem('v190_seasonEvidence',JSON.stringify(['projected_points','weekly_rank'].map(metric=>({playerId:'q',metric,value:metric==='weekly_rank'?3:17,season:2026,week:2,scoring:'HALF_PPR',status:'VERIFIED',confidence:.9,sourceId:'fixture',sourceUrl:'https://example.test/data',publishedAt:now-1000,verifiedAt:now-500,expiresAt:now+60000}))));});
- await page.goto(origin,{waitUntil:'domcontentloaded'});await page.waitForFunction(()=>window.__review?.context()?.season?.ok,{timeout:30000});
+ await page.goto(origin,{waitUntil:'domcontentloaded'});try{await page.waitForFunction(()=>window.__review?.context()?.season?.ok,{timeout:30000});}catch(error){const diagnostic={errors,failedRequests,body:(await page.locator('body').innerText()).slice(0,16000)};fs.writeFileSync(path.join(output,'startup-failure.json'),JSON.stringify(diagnostic,null,2));console.error(JSON.stringify(diagnostic));throw error;}
  assert.match(await page.locator('#rosterList').innerText(),/W2 QB 3.*17 Pkt/);
  assert.equal(await page.locator('#rosterList .lineup-row').count(),11);
  await page.evaluate(()=>window.__review.rerender());

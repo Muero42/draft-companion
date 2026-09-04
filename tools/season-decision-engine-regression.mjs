@@ -37,6 +37,7 @@ const qb2=player('QB2','QB');cache.set('v190_seasonEvidence',[...rows,qb2].map(p
 const wr2=player('WR2','WR'),fullRows=[...rows,wr2];liveRosters(fullRows);season.league.roster_positions=['QB','RB','WR','TE','FLEX','DEF'];
 cache.set('v190_seasonEvidence',[...fullRows,qb2].map(p=>record(p,'projected_points',p===qb2?30:10)));
 const decision=sandbox.seasonAcquisitionDecision(te2,qb2,fullRows,season);
+check(decision.action==='CLEAR ADD','verified valuable season QB2 can be recommended while QB1 remains rostered');
 check(decision.sameBye===true,'same-bye priced');check(decision.secondDrop!==null,'future D/ST active drop priced');
 check(decision.secondDrop.p.id!=='IR'&&[...fullRows.filter(x=>x!==te2),qb2].filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos==='QB'&&x.p.id!==decision.secondDrop.p.id).length>=1,'future drop leaves an active QB and excludes IR');
 season.league.roster_positions=['RB','WR','BN','BN','BN'];
