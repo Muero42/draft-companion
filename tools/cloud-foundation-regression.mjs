@@ -34,7 +34,7 @@ test('no general merge approval',()=>assert(promotionErrors({head,main:head,pr:1
 test('explicit fresh approval is head, PR and main bound',()=>assert.deepEqual(promotionErrors({head,main:head,pr:1,ci:prCi,review,reviewBinding,authorityPass:true,approval},now),[]));
 test('stale approval rejected',()=>assert(promotionErrors({head,main:head,pr:1,ci:prCi,review,reviewBinding,authorityPass:true,approval:{...approval,issuedAt:now-300001}},now).length));
 test('private key material blocked',()=>assert(secretMaterial('-----BEGIN '+'PRIVATE KEY-----')));
-const locked={target:'branch',enforcement:'active',conditions:{ref_name:{include:['refs/heads/main'],exclude:[]}},bypass_actors:[],rules:[{type:'deletion'},{type:'non_fast_forward'},{type:'pull_request',parameters:{required_approving_review_count:1,dismiss_stale_reviews_on_push:true,require_code_owner_review:true,require_last_push_approval:true}},{type:'required_status_checks',parameters:{required_status_checks:REQUIRED_JOBS.map(context=>({context}))}}]};
+const locked={target:'branch',enforcement:'active',conditions:{ref_name:{include:['refs/heads/main'],exclude:[]}},bypass_actors:[],rules:[{type:'deletion'},{type:'non_fast_forward'},{type:'pull_request',parameters:{required_approving_review_count:0,dismiss_stale_reviews_on_push:true,require_code_owner_review:false,require_last_push_approval:false}},{type:'required_status_checks',parameters:{required_status_checks:REQUIRED_JOBS.map(context=>({context}))}}]};
 const updates={...locked,rules:[{type:'update',parameters:{update_allows_fetch_and_merge:false}}],bypass_actors:[{actor_type:'RepositoryRole',actor_id:5,bypass_mode:'always'}]};
 test('protected main, cloud App cannot update',()=>assert.deepEqual(protectionErrors([locked,updates]),[]));
 const liveLocked={...locked,conditions:{ref_name:{include:['~DEFAULT_BRANCH'],exclude:[]}}};
@@ -43,6 +43,9 @@ test('real GitHub default-branch and parameterless strict update representation'
 test('default token fails closed when canonical default is not main',()=>assert(protectionErrors([liveLocked,liveUpdates],'other').length));
 test('update rule explicitly allowing fetch-and-merge is rejected',()=>assert(protectionErrors([liveLocked,{...liveUpdates,rules:[{type:'update',parameters:{update_allows_fetch_and_merge:true}}]}],'main').length));
 test('unprotected main blocks publisher',()=>assert(protectionErrors([]).length));
+test('human approval deadlock is rejected',()=>assert(protectionErrors([{...locked,rules:locked.rules.map(x=>x.type==='pull_request'?{...x,parameters:{...x.parameters,required_approving_review_count:1}}:x)},updates]).length));
+test('code owner review deadlock is rejected',()=>assert(protectionErrors([{...locked,rules:locked.rules.map(x=>x.type==='pull_request'?{...x,parameters:{...x.parameters,require_code_owner_review:true}}:x)},updates]).length));
+test('last push approval deadlock is rejected',()=>assert(protectionErrors([{...locked,rules:locked.rules.map(x=>x.type==='pull_request'?{...x,parameters:{...x.parameters,require_last_push_approval:true}}:x)},updates]).length));
 test('omitted bypass actors are unknown, not empty',()=>assert(protectionErrors([{...locked,bypass_actors:undefined},updates]).length));
 test('App bypass blocks publisher',()=>assert(protectionErrors([locked,{...updates,bypass_actors:[{actor_type:'Integration',actor_id:1,bypass_mode:'always'}]}]).length));
 test('skipped required job cannot pass CI',()=>assert(exactCiErrors(head,ci.map((x,i)=>i?x:{...x,jobConclusion:'skipped'})).length));

@@ -54,7 +54,7 @@ export function protectionErrors(p,defaultBranch='main'){
   if(active.some(x=>!Array.isArray(x.bypass_actors)))e.push('ruleset bypass visibility missing');
   const locked=active.filter(x=>Array.isArray(x.bypass_actors)&&x.bypass_actors.length===0).flatMap(x=>x.rules||[]);
   const pr=locked.find(x=>x.type==='pull_request')?.parameters;
-  if(!pr||pr.required_approving_review_count<1||!pr.dismiss_stale_reviews_on_push||!pr.require_code_owner_review||pr.require_last_push_approval!==true)e.push('non-bypassable PR + stale/last-push dismissal + owner review required');
+  if(!pr||pr.required_approving_review_count!==0||pr.require_code_owner_review!==false||pr.require_last_push_approval!==false)e.push('non-bypassable single-owner PR path with zero GitHub approvals required');
   const contexts=locked.filter(x=>x.type==='required_status_checks').flatMap(x=>x.parameters?.required_status_checks||[]).map(x=>x.context);
   if(!REQUIRED_JOBS.every(x=>contexts.includes(x)))e.push('required check contexts missing');
   if(!['deletion','non_fast_forward'].every(t=>locked.some(x=>x.type===t)))e.push('non-bypassable force/delete block required');
