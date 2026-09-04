@@ -47,9 +47,10 @@ export function reviewErrors(r,head,main,binding={}){
   return e;
 }
 export function promotionErrors(e,now=Date.now()){const a=e.approval;return [...exactCiErrors(e.head,e.ci,e.pr),...reviewErrors(e.review,e.head,e.main,e.reviewBinding),...(!e.authorityPass?['authority missing']:[]),...(!a||a.head!==e.head||a.main!==e.main||a.pr!==e.pr||a.actor!=='Muero42'||a.type!=='EXPLICIT_USER_MERGE_APPROVAL'||a.explicit!==true||!Number.isFinite(a.issuedAt)||a.issuedAt>now||now-a.issuedAt>300000?['fresh explicit user merge approval for exact PR/head/main required']:[])];}
-export function protectionErrors(p){
+export function protectionErrors(p,defaultBranch='main'){
   const e=[];
-  const active=(Array.isArray(p)?p:[]).filter(x=>x.target==='branch'&&x.enforcement==='active'&&x.conditions?.ref_name?.include?.includes('refs/heads/main')&&!x.conditions.ref_name.exclude?.length);
+  const mainTarget=x=>x.conditions?.ref_name?.include?.includes('refs/heads/main')||(defaultBranch==='main'&&x.conditions?.ref_name?.include?.includes('~DEFAULT_BRANCH'));
+  const active=(Array.isArray(p)?p:[]).filter(x=>x.target==='branch'&&x.enforcement==='active'&&mainTarget(x)&&!x.conditions.ref_name.exclude?.length);
   if(active.some(x=>!Array.isArray(x.bypass_actors)))e.push('ruleset bypass visibility missing');
   const locked=active.filter(x=>Array.isArray(x.bypass_actors)&&x.bypass_actors.length===0).flatMap(x=>x.rules||[]);
   const pr=locked.find(x=>x.type==='pull_request')?.parameters;
@@ -58,7 +59,10 @@ export function protectionErrors(p){
   if(!REQUIRED_JOBS.every(x=>contexts.includes(x)))e.push('required check contexts missing');
   if(!['deletion','non_fast_forward'].every(t=>locked.some(x=>x.type===t)))e.push('non-bypassable force/delete block required');
   // Separate update ruleset: only repository administrators, never an Integration, bypass update restriction.
-  if(!active.some(x=>x.rules?.some(r=>r.type==='update'&&r.parameters?.update_allows_fetch_and_merge===false)&&x.bypass_actors?.length===1&&x.bypass_actors[0].actor_type==='RepositoryRole'&&x.bypass_actors[0].actor_id===5&&x.bypass_actors[0].bypass_mode==='always'))e.push('admin-only strict update rule without Cloud App bypass required');
+  // GitHub's current REST representation emits a strict `update` rule without a
+  // parameters object. Older/alternate responses may expose the equivalent false.
+  // An explicit true is never equivalent and must remain rejected.
+  if(!active.some(x=>x.rules?.some(r=>r.type==='update'&&(r.parameters===undefined||r.parameters?.update_allows_fetch_and_merge===false))&&x.bypass_actors?.length===1&&x.bypass_actors[0].actor_type==='RepositoryRole'&&x.bypass_actors[0].actor_id===5&&x.bypass_actors[0].bypass_mode==='always'))e.push('admin-only strict update rule without Cloud App bypass required');
   return e;
 }
 export function requirePass(errors){assert.deepEqual(errors,[],errors.join('; '));}

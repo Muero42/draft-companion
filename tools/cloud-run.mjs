@@ -19,7 +19,7 @@ async function api(resource,method='GET',body){
   if(!r.ok)throw Error('GitHub '+method+' '+resource+' HTTP '+r.status);
   return r.json();
 }
-async function protection(){const rules=await api('rulesets?includes_parents=true');const details=await Promise.all(rules.map(x=>api('rulesets/'+x.id)));requirePass(protectionErrors(details));return details;}
+async function protection(){const repo=await api('');if(repo.default_branch!=='main')throw Error('canonical default branch is not main');const rules=await api('rulesets?includes_parents=true');const details=await Promise.all(rules.map(x=>api('rulesets/'+x.id)));requirePass(protectionErrors(details,repo.default_branch));return{default_branch:repo.default_branch,rules:details};}
 async function observations(head,pr){
   const all=[];for(let page=1;page<=5;page++){const r=await api('actions/runs?head_sha='+head+'&per_page=100&page='+page);all.push(...r.workflow_runs);if(r.workflow_runs.length<100)break;}
   const selected=CI_SPECS.map(([file])=>all.filter(x=>x.path?.split('/').pop()===file).sort((a,b)=>b.id-a.id)[0]).filter(Boolean);
@@ -55,14 +55,15 @@ const mode=process.argv[2];
 if(mode==='protection'){
   const r=requestFromEnv();
   requirePass(requestErrors(r,{repo:REPO,head:git('rev-parse','HEAD'),main:(await api('branches/main')).commit.sha,branch:'main',clean:git('status','--porcelain=v1','--untracked-files=all')===''}));
-  write(path.join(out,'protection.json'),{main:r.expected_main_sha,run_id:r.run_id,run_attempt:r.run_attempt,rules:await protection()});
+  const protectedMain=await protection();
+  write(path.join(out,'protection.json'),{main:r.expected_main_sha,run_id:r.run_id,run_attempt:r.run_attempt,...protectedMain});
 }else if(mode==='preflight'){
   const r=requestFromEnv();
   requirePass(requestErrors(r,{repo:git('remote','get-url','origin').replace(/^https:\/\/github.com\//,'').replace(/\.git$/,''),head:git('rev-parse','HEAD'),main:(await api('branches/main')).commit.sha,branch:git('branch','--show-current'),clean:git('status','--porcelain=v1','--untracked-files=all')===''}));
   if(process.env.PITTI_NONDEPLOYING_BRANCHES_CONFIRMED!=='true')throw Error('admin must verify cloud workbranches do not auto-deploy');
   const policy=read(path.join(out,'protection.json'));
   if(policy.main!==r.expected_main_sha||policy.run_id!==r.run_id||policy.run_attempt!==r.run_attempt)throw Error('protection receipt mismatch');
-  requirePass(protectionErrors(policy.rules));
+  requirePass(protectionErrors(policy.rules,policy.default_branch));
   const p118=await api('pulls/118');if(p118.merged||p118.state!=='open')throw Error('PR118 boundary changed');
   const merged=(await api('commits/'+r.expected_main_sha+'/pulls')).find(p=>p.merged_at&&p.base.ref==='main'&&p.merge_commit_sha===r.expected_main_sha);
   if(!merged)throw Error('canonical merge containment evidence missing');

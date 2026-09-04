@@ -37,6 +37,11 @@ test('private key material blocked',()=>assert(secretMaterial('-----BEGIN '+'PRI
 const locked={target:'branch',enforcement:'active',conditions:{ref_name:{include:['refs/heads/main'],exclude:[]}},bypass_actors:[],rules:[{type:'deletion'},{type:'non_fast_forward'},{type:'pull_request',parameters:{required_approving_review_count:1,dismiss_stale_reviews_on_push:true,require_code_owner_review:true,require_last_push_approval:true}},{type:'required_status_checks',parameters:{required_status_checks:REQUIRED_JOBS.map(context=>({context}))}}]};
 const updates={...locked,rules:[{type:'update',parameters:{update_allows_fetch_and_merge:false}}],bypass_actors:[{actor_type:'RepositoryRole',actor_id:5,bypass_mode:'always'}]};
 test('protected main, cloud App cannot update',()=>assert.deepEqual(protectionErrors([locked,updates]),[]));
+const liveLocked={...locked,conditions:{ref_name:{include:['~DEFAULT_BRANCH'],exclude:[]}}};
+const liveUpdates={...updates,conditions:{ref_name:{include:['~DEFAULT_BRANCH'],exclude:[]}},rules:[{type:'update'}]};
+test('real GitHub default-branch and parameterless strict update representation',()=>assert.deepEqual(protectionErrors([liveLocked,liveUpdates],'main'),[]));
+test('default token fails closed when canonical default is not main',()=>assert(protectionErrors([liveLocked,liveUpdates],'other').length));
+test('update rule explicitly allowing fetch-and-merge is rejected',()=>assert(protectionErrors([liveLocked,{...liveUpdates,rules:[{type:'update',parameters:{update_allows_fetch_and_merge:true}}]}],'main').length));
 test('unprotected main blocks publisher',()=>assert(protectionErrors([]).length));
 test('omitted bypass actors are unknown, not empty',()=>assert(protectionErrors([{...locked,bypass_actors:undefined},updates]).length));
 test('App bypass blocks publisher',()=>assert(protectionErrors([locked,{...updates,bypass_actors:[{actor_type:'Integration',actor_id:1,bypass_mode:'always'}]}]).length));
