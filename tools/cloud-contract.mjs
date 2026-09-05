@@ -2,8 +2,8 @@ import assert from 'node:assert/strict';
 export const REPO='Muero42/draft-companion';
 export const REQUIRED_JOBS=['guardrails','behavioral-contract','package','pitti-cloud-validation'];
 export const RULESET_PINS={
-  'PITTI main owner promotion':{id:22295985,updatedAt:'2026-09-04T21:34:41.344+02:00',bypassActors:[{actor_id:5,actor_type:'RepositoryRole',bypass_mode:'always'}]},
-  'PITTI main review and checks':{id:22295515,updatedAt:'2026-09-04T23:07:14.984+02:00',bypassActors:[]}
+  'PITTI main owner promotion':{id:22295985,versionId:48721076,bypassActors:[{actor_id:5,actor_type:'RepositoryRole',bypass_mode:'always'}]},
+  'PITTI main review and checks':{id:22295515,versionId:48729302,bypassActors:[]}
 };
 export const CI_SPECS=[['pitti-project-guardrails.yml','guardrails'],['release-contract-v2.yml','behavioral-contract'],['release-contract-v2-package.yml','package'],['pitti-cloud-validation.yml','pitti-cloud-validation']];
 export const CI_FILES=CI_SPECS.map(x=>x[0]);
@@ -56,7 +56,7 @@ export function protectionErrors(p,defaultBranch='main'){
   const e=[];
   const mainTarget=x=>x.conditions?.ref_name?.include?.includes('refs/heads/main')||(defaultBranch==='main'&&x.conditions?.ref_name?.include?.includes('~DEFAULT_BRANCH'));
   const active=(Array.isArray(p)?p:[]).filter(x=>x.target==='branch'&&x.enforcement==='active'&&mainTarget(x)&&!x.conditions.ref_name.exclude?.length);
-  const pinned=x=>{const pin=RULESET_PINS[x.name];return pin&&x.id===pin.id&&x.updated_at===pin.updatedAt?pin:null;};
+  const pinned=x=>{const pin=RULESET_PINS[x.name];return pin&&x.id===pin.id&&x.version_id===pin.versionId?pin:null;};
   const bypass=x=>Array.isArray(x.bypass_actors)?x.bypass_actors:pinned(x)?.bypassActors;
   if(active.some(x=>!Array.isArray(bypass(x))))e.push('ruleset bypass visibility missing and immutable pin mismatch');
   const locked=active.filter(x=>bypass(x)?.length===0).flatMap(x=>x.rules||[]);

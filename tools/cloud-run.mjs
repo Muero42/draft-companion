@@ -19,7 +19,7 @@ async function api(resource,method='GET',body){
   if(!r.ok)throw Error('GitHub '+method+' '+resource+' HTTP '+r.status);
   return r.json();
 }
-async function protection(){const repo=await api('');if(repo.default_branch!=='main')throw Error('canonical default branch is not main');const rules=await api('rulesets?includes_parents=true');const details=await Promise.all(rules.map(x=>api('rulesets/'+x.id)));requirePass(protectionErrors(details,repo.default_branch));return{default_branch:repo.default_branch,rules:details};}
+async function protection(){const repo=await api('');if(repo.default_branch!=='main')throw Error('canonical default branch is not main');const rules=await api('rulesets?includes_parents=true');const details=await Promise.all(rules.map(async x=>{const [detail,history]=await Promise.all([api('rulesets/'+x.id),api('rulesets/'+x.id+'/history?per_page=1')]);return{...detail,version_id:history[0]?.version_id};}));requirePass(protectionErrors(details,repo.default_branch));return{default_branch:repo.default_branch,rules:details};}
 async function observations(head,pr){
   const all=[];for(let page=1;page<=5;page++){const r=await api('actions/runs?head_sha='+head+'&per_page=100&page='+page);all.push(...r.workflow_runs);if(r.workflow_runs.length<100)break;}
   const selected=CI_SPECS.map(([file])=>all.filter(x=>x.path?.split('/').pop()===file).sort((a,b)=>b.id-a.id)[0]).filter(Boolean);
