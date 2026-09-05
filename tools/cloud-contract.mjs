@@ -1,10 +1,6 @@
 import assert from 'node:assert/strict';
 export const REPO='Muero42/draft-companion';
 export const REQUIRED_JOBS=['guardrails','behavioral-contract','package','pitti-cloud-validation'];
-export const RULESET_PINS={
-  'PITTI main owner promotion':{id:22295985,versionId:48721076,bypassActors:[{actor_id:5,actor_type:'RepositoryRole',bypass_mode:'always'}]},
-  'PITTI main review and checks':{id:22295515,versionId:48729302,bypassActors:[]}
-};
 export const CI_SPECS=[['pitti-project-guardrails.yml','guardrails'],['release-contract-v2.yml','behavioral-contract'],['release-contract-v2-package.yml','package'],['pitti-cloud-validation.yml','pitti-cloud-validation']];
 export const CI_FILES=CI_SPECS.map(x=>x[0]);
 export const REVIEW_TOPICS=['ownership','ir_taxi','last_qb_te','flex_two_te','capacity','k_dst','waiver_evidence','bilateral_trades','acceptance_probability','research_seeds','conflicts','async_routing','navigation','promotion_authority'];
@@ -56,9 +52,8 @@ export function protectionErrors(p,defaultBranch='main'){
   const e=[];
   const mainTarget=x=>x.conditions?.ref_name?.include?.includes('refs/heads/main')||(defaultBranch==='main'&&x.conditions?.ref_name?.include?.includes('~DEFAULT_BRANCH'));
   const active=(Array.isArray(p)?p:[]).filter(x=>x.target==='branch'&&x.enforcement==='active'&&mainTarget(x)&&!x.conditions.ref_name.exclude?.length);
-  const pinned=x=>{const pin=RULESET_PINS[x.name];return pin&&x.id===pin.id&&x.version_id===pin.versionId?pin:null;};
-  const bypass=x=>Array.isArray(x.bypass_actors)?x.bypass_actors:pinned(x)?.bypassActors;
-  if(active.some(x=>!Array.isArray(bypass(x))))e.push('ruleset bypass visibility missing and immutable pin mismatch');
+  const bypass=x=>Array.isArray(x.bypass_actors)?x.bypass_actors:null;
+  if(active.some(x=>bypass(x)===null))e.push('ruleset bypass visibility missing; least-privilege API evidence is insufficient');
   const locked=active.filter(x=>bypass(x)?.length===0).flatMap(x=>x.rules||[]);
   const pr=locked.find(x=>x.type==='pull_request')?.parameters;
   if(!pr||pr.required_approving_review_count!==0||pr.require_code_owner_review!==false||pr.require_last_push_approval!==false)e.push('non-bypassable single-owner PR path with zero GitHub approvals required');

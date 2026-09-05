@@ -198,6 +198,13 @@
     "user_draft_qb_limit": 1,
     "user_draft_qb_limit_scope": "DRAFT_ONLY"
   },
+  "cloud_foundation": {
+    "status": "FAIL_CLOSED_GITHUB_RULESET_EVIDENCE_UNAVAILABLE",
+    "diagnosis": "Ruleset history, ruleset versions, and bypass_actors require Administration: write; Metadata: read is insufficient.",
+    "least_privilege_boundary": "The PITTI Cloud App retains Contents/Pull requests write plus Metadata read only; no Administration, main bypass, deployment, or merge capability is authorized.",
+    "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
+    "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
+  },
   "source_authority": "Source/runtime rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
