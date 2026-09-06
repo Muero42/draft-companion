@@ -59,6 +59,8 @@ jobs:
         run: node --check app.js
       - name: Browser/PWA runtime startup contract
         run: node tools/runtime-startup-contract.mjs
+      - name: Waiver team-needs v3 regression
+        run: node tools/season-waiver-team-needs-v3-regression.mjs
       - name: rc4.97 microfix contract
         if: contains(github.head_ref || github.ref_name, 'rc4.97-microfix')
         run: node tools/rc497-microfix.mjs
