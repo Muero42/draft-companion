@@ -2,7 +2,9 @@ name: PITTI cloud validation
 on:
   workflow_dispatch:
   pull_request:
-    branches: [main]
+    branches:
+      - main
+      - pitti/rc4190-roster-week1-needs
   push:
     branches: [main]
 permissions:
