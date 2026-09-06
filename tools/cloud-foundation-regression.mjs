@@ -1,7 +1,7 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
 import os from 'node:os';import path from 'node:path';import {execFileSync} from 'node:child_process';
 import crypto from 'node:crypto';
-import {REPO,CI_FILES,REQUIRED_JOBS,REVIEW_TOPICS,RULESET_PINS,repoApiUrl,requestErrors,diffErrors,pathCollisionErrors,exactCiErrors,reviewErrors,promotionErrors,protectionErrors,secretMaterial} from './cloud-contract.mjs';
+import {REPO,CI_FILES,REQUIRED_JOBS,REVIEW_TOPICS,repoApiUrl,requestErrors,diffErrors,pathCollisionErrors,exactCiErrors,reviewErrors,promotionErrors,protectionErrors,secretMaterial} from './cloud-contract.mjs';
 const head='a'.repeat(40),next='b'.repeat(40),branch='pitti/cloud-auto/test-task-123-1';
 const r={repo:REPO,expected_main_sha:head,task_id:'test-task',task_prompt:'Make one harmless documentation correction.',allowed_scope:['docs/example.md'],max_attempts:1,authorization_reference:'owner-dispatch:test-123',actor:'Muero42',triggering_actor:'Muero42',event:'workflow_dispatch',ref:'refs/heads/main',workflow_sha:head,run_id:'123',run_attempt:'1'};
 const local={repo:REPO,head,main:head,branch:'main',clean:true};
@@ -41,10 +41,15 @@ test('protected main, cloud App cannot update',()=>assert.deepEqual(protectionEr
 const liveLocked={...locked,conditions:{ref_name:{include:['~DEFAULT_BRANCH'],exclude:[]}}};
 const liveUpdates={...updates,conditions:{ref_name:{include:['~DEFAULT_BRANCH'],exclude:[]}},rules:[{type:'update'}]};
 test('real GitHub default-branch and parameterless strict update representation',()=>assert.deepEqual(protectionErrors([liveLocked,liveUpdates],'main'),[]));
-const redactedLocked={...liveLocked,id:RULESET_PINS['PITTI main review and checks'].id,name:'PITTI main review and checks',version_id:RULESET_PINS['PITTI main review and checks'].versionId,bypass_actors:undefined};
-const redactedUpdates={...liveUpdates,id:RULESET_PINS['PITTI main owner promotion'].id,name:'PITTI main owner promotion',version_id:RULESET_PINS['PITTI main owner promotion'].versionId,bypass_actors:undefined};
-test('least-privilege App accepts exact immutable ruleset pins',()=>assert.deepEqual(protectionErrors([redactedLocked,redactedUpdates],'main'),[]));
-test('redacted bypass with changed ruleset version fails closed',()=>assert(protectionErrors([{...redactedLocked,version_id:redactedLocked.version_id+1},redactedUpdates],'main').length));
+const redactedLocked={...liveLocked,id:22295515,name:'PITTI main review and checks',bypass_actors:undefined};
+const redactedUpdates={...liveUpdates,id:22295985,name:'PITTI main owner promotion',bypass_actors:undefined};
+test('least-privilege redaction fails closed even when historical IDs are unchanged',()=>assert(protectionErrors([redactedLocked,redactedUpdates],'main').some(x=>x.includes('bypass visibility missing'))));
+test('client-supplied version metadata cannot substitute for visible bypass actors',()=>assert(protectionErrors([{...redactedLocked,version_id:48729302},{...redactedUpdates,version_id:48721076}],'main').length));
+test('owner-attested timestamps cannot substitute for visible bypass actors',()=>assert(protectionErrors([{...redactedLocked,updated_at:'2026-09-04T23:07:14.984+02:00'},{...redactedUpdates,updated_at:'2026-09-04T21:34:41.344+02:00'}],'main').length));
+test('delete and recreate cannot substitute a fresh metadata identity',()=>assert(protectionErrors([{...redactedLocked,id:32295515,updated_at:'2026-09-06T00:00:00Z'},{...redactedUpdates,id:32295985,updated_at:'2026-09-06T00:00:00Z'}],'main').length));
+test('rollback-shaped live metadata cannot substitute for visible bypass actors',()=>assert(protectionErrors([{...redactedLocked,rules:structuredClone(liveLocked.rules),updated_at:'2026-09-04T23:07:14.984+02:00'},{...redactedUpdates,rules:structuredClone(liveUpdates.rules),updated_at:'2026-09-04T21:34:41.344+02:00'}],'main').length));
+test('extra redacted main ruleset fails closed',()=>assert(protectionErrors([liveLocked,liveUpdates,{...redactedLocked,id:99999999,name:'unexpected main ruleset'}],'main').length));
+test('stale owner attestation fields cannot substitute for visible bypass actors',()=>assert(protectionErrors([{...redactedLocked,attested_at:'2026-09-04T21:00:00Z',attested_bypass_actors:[]},{...redactedUpdates,attested_at:'2026-09-04T21:00:00Z',attested_bypass_actors:[{actor_type:'RepositoryRole',actor_id:5,bypass_mode:'always'}]}],'main').length));
 test('default token fails closed when canonical default is not main',()=>assert(protectionErrors([liveLocked,liveUpdates],'other').length));
 test('update rule explicitly allowing fetch-and-merge is rejected',()=>assert(protectionErrors([liveLocked,{...liveUpdates,rules:[{type:'update',parameters:{update_allows_fetch_and_merge:true}}]}],'main').length));
 test('unprotected main blocks publisher',()=>assert(protectionErrors([]).length));
