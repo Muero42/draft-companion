@@ -3041,64 +3041,43 @@ function tradeRosterNeed(roster,pos){
   const occupied=m.before.assignments.filter(a=>a.player&&seasonSlotEligible(a.slot,pos)).length;
   return{depth:compatible.length,filled:occupied,edge:m.delta,need:clamp(m.delta/10,0,8)};
 }
-function tradeOfferCandidates(mine,opponent,target){
-  const oppNeeds=['RB','WR','TE','QB'].map(pos=>({pos,...tradeRosterNeed(opponent,pos)})).sort((a,b)=>b.need-a.need);
-  const targetRank=Number(target.r?.rank),targetAdp=Number(target.a);
-  const offers=mine.filter(m=>m.r&&Number.isFinite(m.r.rank)&&['RB','WR','TE'].includes(m.p.pos)&&norm(m.p.name)!==norm(target.p.name)).map(give=>{
-    const need=oppNeeds.find(n=>n.pos===give.p.pos)?.need||0,giveRank=Number(give.r.rank),giveAdp=Number(give.a);
-    // Pre-Week-1 market anchor: managers just chose these assets. Panel rank alone must
-    // never imply that a late pick can buy an elite first-round asset (e.g. JSN -> Gibbs).
-    const panelGap=Math.abs(giveRank-targetRank);
-    const draftGap=Number.isFinite(giveAdp)&&Number.isFinite(targetAdp)?Math.abs(giveAdp-targetAdp):null;
-    const marketGap=Number.isFinite(draftGap)?Math.max(panelGap,draftGap*.85):panelGap;
-    const without=mine.filter(x=>x!==give),before=tradeBestLineup(mine),after=tradeBestLineup(without);
-    const ourCost=clamp((before.score-after.score)/10,0,10);
-    const fairness=clamp(10-marketGap*.22,0,10),opponentUtility=clamp(need+(110-giveRank)/35,0,10);
-    const draftPlausible=!Number.isFinite(draftGap)||draftGap<=24;
-    const acceptance=draftPlausible?clamp(Math.round(10+fairness*3+opponentUtility*2-ourCost*1.5),5,55):0;
-    return{give,fairness,opponentUtility,ourCost,acceptance,marketGap,draftGap,draftPlausible};
-  }).filter(o=>o.draftPlausible&&o.fairness>=4.5&&o.opponentUtility>=2.5).sort((a,b)=>b.acceptance-a.acceptance||b.fairness-a.fairness);
-  return{oppNeeds,offers};
+function tradeValueEvidence(season){
+  // Hydration adapter only: no panel rank, ADP, or preseason fallback may masquerade as
+  // current trade value. A provider must supply provenance, as-of time and player values.
+  return globalThis.PittiTradeTeamNeedsV2.adaptEvidence(season?.trade_value_evidence||season?.trade_values||null);
 }
 function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   // Sleeper roster_id is a league roster identifier, NOT the historical draft slot.
   if(!els.tradeStatus||!els.tradeList)return;
-  if(!draftComplete){els.tradeStatus.className='notice';els.tradeStatus.textContent='Trade Target Board wird nach Draftabschluss aktiv.';els.tradeList.innerHTML='';return;}
-  const bySlot={};for(let slot=1;slot<=teams;slot++)bySlot[slot]=[];
+  if(!draftComplete){els.tradeStatus.className='notice';els.tradeStatus.textContent='Trade Team-Needs v2 wird nach Draftabschluss aktiv.';els.tradeList.innerHTML='';return;}
   const live=lastDraftContext?.season;
-  const myLiveRosterId=Number(live?.my_roster?.roster_id);
-  if(live?.ok&&Array.isArray(live.rosters)){
-    // Sleeper roster_id is a league roster identifier, NOT the historical draft slot.
-    for(const rr of live.rosters){const slot=Number(rr.roster_id);if(!bySlot[slot])bySlot[slot]=[];for(const pid of rr.players||[]){const p=sleeperPlayerRow(pid,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk:{player_id:pid,pick_no:999},p,r,a});}}
-  }else for(const pk of picks){const slot=Number(pk.draft_slot);if(!bySlot[slot])continue;const p=pinfo(String(pk.player_id),pk.metadata,players),r=rankFor(p.name,p.pos),a=adpFor(p.name);if(['QB','RB','WR','TE'].includes(p.pos))bySlot[slot].push({pk,p,r,a});}
-  const mine=Array.isArray(lastDraftContext?.seasonRows)&&lastDraftContext.seasonRows.length?lastDraftContext.seasonRows:(bySlot[userSlot]||[]);
-  const liveRosterMeta=new Map((live?.league_rosters||[]).map(rr=>[Number(rr.roster_id),rr]));
-  const targets=[];
-  for(const [slotS,roster] of Object.entries(bySlot)){
-    const slot=Number(slotS);if(live?.ok?slot===myLiveRosterId:slot===userSlot)continue;
-    for(const x of roster){if(!x.r||x.r.rank>110)continue;
-      const marginal=tradeMarginalLineupValue(mine,x),lineupEdge=marginal.delta;
-      const research=researchHint(x.p);
-      let desirability=clamp(lineupEdge*.10,-5,12)+clamp((110-x.r.rank)/25,-2,4);
-      // QB/TE depth is not penalized by position count. A second TE can be a genuine starter
-      // when it wins FLEX; any target must earn a real canonical Sleeper slot.
-      if(!marginal.starts)desirability-=6;
-      if(research)desirability+=.5;
-      if(desirability>=2){const offerModel=tradeOfferCandidates(mine,roster,x),manager=liveRosterMeta.get(slot)||null;targets.push({slot,manager,x,lineupEdge,marginal,desirability,research,...offerModel});}
-    }
+  if(!live?.ok||!Array.isArray(live.rosters)){
+    els.tradeStatus.className='notice warn';els.tradeStatus.textContent='Trade Team-Needs v2 · MONITOR · aktueller Sleeper-Live-Kader fehlt; Draftdaten sind nur historische Evidenz.';els.tradeList.innerHTML='';return;
   }
-  targets.sort((a,b)=>b.desirability-a.desirability||b.lineupEdge-a.lineupEdge||a.x.r.rank-b.x.r.rank);
+  const myLiveRosterId=Number(live?.my_roster?.roster_id),draftPickByPlayer=new Map((picks||[]).map(pk=>[String(pk.player_id),Number(pk.pick_no)]));
+  const byRoster=new Map();
+  for(const rr of live.rosters){
+    const reserve=new Set([...(rr.reserve||[]),...(rr.taxi||[])].map(String));
+    const rows=(rr.players||[]).map(String).map(pid=>{const p=sleeperPlayerRow(pid,players),r=rankFor(p.name,p.pos),a=adpFor(p.name),tradeSkill=['QB','RB','WR','TE'].includes(p.pos);return{pk:{player_id:pid,pick_no:draftPickByPlayer.get(pid)||null},draft_pick:draftPickByPlayer.get(pid)||null,p,r,a,tradeSkill,seasonStatus:reserve.has(pid)?'RESERVE':'ACTIVE'};});
+    byRoster.set(Number(rr.roster_id),rows);
+  }
+  const mine=byRoster.get(myLiveRosterId)||[],evidence=tradeValueEvidence(live),slots=tradeStarterSlots(),maxActive=slots.length+6;
+  const liveRosterMeta=new Map((live.league_rosters||[]).map(rr=>[Number(rr.roster_id),rr])),cards=[];
+  for(const [rosterId,opponent] of byRoster){
+    if(rosterId===myLiveRosterId)continue;
+    const offers=globalThis.PittiTradeTeamNeedsV2.generate({mine,opponent,evidence,slots,maxActive,preWeek1:true});
+    const manager=liveRosterMeta.get(rosterId),myNeeds=globalThis.PittiTradeTeamNeedsV2.needs(mine,evidence.values,slots),opponentNeeds=globalThis.PittiTradeTeamNeedsV2.needs(opponent,evidence.values,slots);
+    cards.push({rosterId,manager,offers,myNeeds,opponentNeeds});
+  }
   els.tradeStatus.className='notice warn';
-  els.tradeStatus.textContent='Trade Board v6 · LIVE Sleeper-Rosters × Teamneeds × kanonische Starter-/FLEX-Geometrie. Pre-Week-1 schützt Draft-Kapital vor unrealistischen 1:1-Angeboten; Panel-Rank allein darf keinen Elite-Asset-Trade erzeugen. Ein zweiter TE ist zulässig, wenn er einen echten FLEX-Slot gewinnt. Ohne aktuelle Trade-Value-Quelle bleibt jede Annahme-% konservative Heuristik; keine ACCEPT/DECLINE-Freigabe.';
-  els.tradeList.innerHTML=targets.length?`<div class="coach-section-title">Interessante gegnerische Assets — Target Discovery, Verhandlung noch nicht freigegeben</div>`+targets.slice(0,10).map((t,i)=>{
-    const x=t.x,market=Number.isFinite(x.a)?` · Draft-ADP ${x.a.toFixed(1)}`:'';
-    const geometry=t.marginal.slot?`gewinnt Slot ${seasonSlotLabel(t.marginal.slot,x.p.pos)}`:'kein Starter-Slot';
-    const managerLabel=t.manager?.manager_name||('Roster '+t.slot),faab=Number.isFinite(Number(t.manager?.faab_remaining))?' · FAAB '+Number(t.manager.faab_remaining):'';
-    const offer=t.offers?.[0],offerText=offer?`Indikativ: GIVE ${esc(offer.give.p.name)} → GET ${esc(x.p.name)} · Fairness ${offer.fairness.toFixed(1)}/10 · Gegnernutzen ${offer.opponentUtility.toFixed(1)}/10 · Annahme-Plausibilität ~${offer.acceptance}%`:'Kein belastbares 1:1-Angebot aus der aktuellen Roster-/Panel-Geometrie';
-    return `<div class="coach-row"><div><b>${i+1}. ${esc(x.p.name)}</b> <span class="tiny">${x.p.pos} · ${x.p.team} · ${esc(managerLabel)}${faab}</span><div class="tiny">Panel ${x.r.rank.toFixed(1)}${market} · ${geometry} · Lineup-Value +${t.lineupEdge.toFixed(1)} · ${esc(t.research||'keine aktuelle Research-Cache-Evidence')}</div><div class="tiny">${offerText}</div></div><div><b>TARGET</b><div class="tiny">heuristisch · nicht senden</div></div></div>`;
-  }).join(''):'<div class="notice ok">Kein klarer Trade-Target-Vorteil aus der aktuellen Panel-/Roster-/Slot-Baseline.</div>';
+  els.tradeStatus.textContent=`Trade Team-Needs v2 · LIVE Sleeper-Rosters bilateral · ${evidence.available?`Trade Values ${evidence.source} (${new Date(evidence.asOf).toISOString().slice(0,10)})`:`MONITOR · ${evidence.reason}`} · Annahme-% ist konservative Heuristik, keine Tatsache · keine automatische Transaktion.`;
+  if(!evidence.available){els.tradeList.innerHTML='<div class="notice warn"><b>NICHT AKTIONSFÄHIG</b> · Aktuelle Trade-Value-Evidenz mit Provenienz/Freshness fehlt oder ist veraltet. Panel-/Preseason-Ränge werden nicht als Ersatz verwendet.</div>';return;}
+  const offers=cards.flatMap(c=>c.offers.map(o=>({...o,card:c}))).sort((a,b)=>(b.myUtility+b.opponentUtility)-(a.myUtility+a.opponentUtility));
+  els.tradeList.innerHTML=offers.length?'<div class="coach-section-title">BILATERALE ANGEBOTE · REVIEW, NICHT SENDEN</div>'+offers.slice(0,10).map((o,i)=>{
+    const managerLabel=o.card.manager?.manager_name||'Gegner',faab=Number.isFinite(Number(o.card.manager?.faab_remaining))?` · FAAB ${Number(o.card.manager.faab_remaining)}`:'',give=o.give.map(x=>esc(x.p.name)).join(' + '),get=o.get.map(x=>esc(x.p.name)).join(' + ');
+    return `<div class="coach-row"><div><b>${i+1}. GIVE ${give} → GET ${get}</b><div class="tiny">${esc(managerLabel)}${faab} · PITTI-Nutzen +${o.myUtility.toFixed(1)} · Gegnernutzen +${o.opponentUtility.toFixed(1)} · Ersatzverlust und Kapazität eingerechnet</div><div class="tiny">Wertquelle ${esc(evidence.source)} · Annahme-Plausibilität ~${o.acceptanceProbability}% · ausdrücklich konservative Heuristik</div></div><div><b>REVIEW</b><div class="tiny">nicht automatisch senden</div></div></div>`;
+  }).join(''):'<div class="notice ok"><b>KEIN BILATERAL PLAUSIBLES ANGEBOT</b> · Kein 1:1-, 2:1- oder 1:2-Paket verbessert nach Ersatzverlust und Kapazitätskosten beide Live-Kader.</div>';
 }
-
 function fpStoreKey(draftId){return `v118_fpBenchmark_${draftId}`}
 function allFpBenchmarks(){const out={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k?.startsWith('v118_fpBenchmark_')){const id=k.slice('v118_fpBenchmark_'.length),v=store.get(k,null);if(v)out[id]=v}}return out}
 function restoreFpBenchmarks(v){const keys=[];for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);if(k?.startsWith('v118_fpBenchmark_'))keys.push(k)}for(const k of keys)localStorage.removeItem(k);for(const[id,b]of Object.entries(v||{}))if(b?.schema==='draft-companion.external-benchmark.fantasypros.v1')store.set(fpStoreKey(id),b)}

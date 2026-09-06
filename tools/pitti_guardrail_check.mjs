@@ -117,8 +117,8 @@ must(app.includes('const weekly=weeklyFresh?'),'THIS WEEK waiver horizon must fa
 must(app.includes("weekly:null")||app.includes("weekly=weeklyFresh?"),'THIS WEEK stale-evidence null path missing');
 must(app.includes("FA-vs-Roster v2"),'Waiver v2 surface missing');
 must(app.includes("frische Weekly-Evidence fehlt"),'Waiver v2 stale weekly explanation missing');
-must(/Trade Board v[4-9]/.test(app),'Trade Board v4+ surface missing');
-must(app.includes('function tradeOfferCandidates('),'Trade offer construction helper missing');
+must(app.includes('Trade Team-Needs v2'),'Trade Team-Needs v2 surface missing');
+must(app.includes('PittiTradeTeamNeedsV2.generate('),'bilateral Trade team-needs v2 offer generation missing');
 must(app.includes('Annahme-Plausibilität'),'Trade acceptance plausibility missing');
 must(app.includes('Week-1 Start/Sit v5'),'Start/Sit canonical-slot surface missing');
 must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
