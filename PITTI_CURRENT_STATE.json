@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260904T1200Z-v234",
-  "updated_at": "2026-09-04T15:04:04.277Z",
+  "handoff_generation": "20260906T1200Z-v235",
+  "updated_at": "2026-09-06T12:00:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -205,7 +205,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "Source/runtime rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.",
+  "source_authority": "Task-local rc4.190 source candidate reconciles local PR #118 package parent dc0a88f with current-main governance parent 6b6093f through bridge 5679cbc. Publication, deployment parity, and physical Android acceptance remain unverified.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
@@ -216,6 +216,11 @@
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "rc4190-release-blocker-reconciliation",
+        "result": "Task-local source reconciles all Season Companion package semantics with current-main governance/security; future D/ST capacity and temporal trade blockers repaired. Exact-head local authoritative gates required before release classification.",
+        "at": "2026-09-06T12:00:00Z"
+      },
       {
         "id": "v233-postmerge-local-readonly-audit",
         "result": "FAIL_CLOSED on verified clean main 2749537945ec7e6b96d95e2f6b55a26e455124fa: residual v233 pending CI/merge pointers; superseded by this local authority repair.",
@@ -345,7 +350,7 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260904T1200Z-v234",
+    "generation": "20260906T1200Z-v235",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -357,7 +362,7 @@
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260904T1200Z-v234",
+  "handoffGeneration": "20260906T1200Z-v235",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",

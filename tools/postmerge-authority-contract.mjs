@@ -34,7 +34,7 @@ export function validateAuthority(data) {
   check(l.league.userQb2Policy==='DRAFT_ONLY_EXCLUSION_AFTER_QB1'&&l.league.userQb2PolicyScope==='DRAFT_ONLY'&&l.canaries.draftQb2MustNotAppearOnUserCoachSurfaceAfterQb1===true&&!Object.hasOwn(l.canaries,'qb2MustNotAppearOnUserCoachSurfaceAfterQb1'),'LOCK.QB2','unscoped QB2 policy forbidden');
   for(const [label,o] of [['LOCK',l],['COMMAND',k]])check(o.qb_policy_reference==='PITTI_CURRENT_STATE.json:qb_policy',label+'.qb_policy_reference','canonical QB policy reference required');
   const generation=c.handoff_generation;
-  check(/^202609\d{2}T\d{4}Z-v234$/.test(generation),'CURRENT.handoff_generation','v234 generation required');
+  check(/^202609\d{2}T\d{4}Z-v235$/.test(generation),'CURRENT.handoff_generation','v235 generation required');
   for(const [label,o] of [['CURRENT',c],['LOCK',l]]) {
     for(const p of ['gate','nextGate']) check(o[p]===AUTHORITY_GATE,`${label}.${p}`,'promotion-stable gate required; merged checkpoint cannot remain pending');
     check(o.currentWork?.nextGate===AUTHORITY_GATE,`${label}.currentWork.nextGate`,'promotion-stable gate required');

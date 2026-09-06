@@ -157,7 +157,7 @@
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.169 accepted rollback authority",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
-    "sourceAuthority": "Source/runtime rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.",
+    "sourceAuthority": "Source/runtime rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 package lineage is locally reconciled through the user-supplied two-parent bridge; publication remains unverified and no merge/deployment/device acceptance is claimed.",
     "latestPackageReextract": "HISTORICAL rc4.182 PASS run 33597607588; not current rc4.190 package authority",
     "latestPackageSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "packageReferenceRun": 33597607588,
@@ -174,8 +174,8 @@
     "packageReferenceScope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.190 installable package claim"
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260904T1200Z-v234",
-  "handoff_generation": "20260904T1200Z-v234",
+  "handoffGeneration": "20260906T1200Z-v235",
+  "handoff_generation": "20260906T1200Z-v235",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",

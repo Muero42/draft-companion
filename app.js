@@ -2948,9 +2948,19 @@ function waiverOpponentMarket(target,players){
     return{roster_id:Number(rr.roster_id),manager_name:managerName,qbs:qbs.map(x=>x.p.name),need,live_need:liveNeed,manager_history_prior:historyPrior,current_season_bid_prior:txPrior,faab_remaining:remaining,claim_probability:claimProbability,bid_low_pct:bidLow,bid_high_pct:bidHigh};
   }).sort((a,b)=>b.need-a.need);
 }
+function seasonStructurallyDroppable(rows,excludedPlayerId=null){
+  const active=(rows||[]).filter(x=>x?.seasonStatus==='ACTIVE');
+  const counts=active.reduce((out,x)=>(out[x.p?.pos]=(out[x.p?.pos]||0)+1,out),{});
+  return active.filter(x=>{
+    if(!x?.p||String(x.p.id)===String(excludedPlayerId))return false;
+    if(!['RB','WR','TE','QB'].includes(x.p.pos))return false;
+    if(x.nonDroppable||x.protected||x.structurallyProtected||x.dropProtected||x.p.nonDroppable||x.p.protected||x.p.structurallyProtected||x.p.dropProtected)return false;
+    return !['QB','TE'].includes(x.p.pos)||counts[x.p.pos]>1;
+  });
+}
 function seasonActiveDropOrder(){
   const rows=lastDraftContext?.seasonRows||[];
-  return rows.filter(x=>x?.seasonStatus==='ACTIVE'&&['RB','WR','TE','QB'].includes(x.p?.pos))
+  return seasonStructurallyDroppable(rows)
     .map(x=>({...x,capitalScore:seasonRosterCapitalScore(x)}))
     .sort((a,b)=>b.capitalScore-a.capitalScore);
 }
@@ -3060,7 +3070,16 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
 }
 
 // rc4.190 evidence boundary: only explicitly verified, time-bounded observations.
-function seasonEvidenceContext(season=lastDraftContext?.season){return{season:Number(season?.league?.season),week:Number(season?.transaction_round||season?.league?.settings?.leg),scoring:'HALF_PPR'};}
+function seasonEvidenceContext(season=lastDraftContext?.season){return{season:Number(season?.league?.season),week:Number(season?.transaction_round??season?.league?.settings?.leg),scoring:'HALF_PPR'};}
+function seasonTemporalPhase(season,now=Date.now()){
+  const rawWeek=season?.transaction_round??season?.league?.settings?.leg;
+  const week=Number(rawWeek);
+  if(rawWeek!==null&&rawWeek!==undefined&&rawWeek!==''&&Number.isInteger(week)&&week>=1)return'IN_SEASON';
+  if(rawWeek!==null&&rawWeek!==undefined&&rawWeek!==''&&Number.isInteger(week)&&week===0)return'PRE_WEEK_1';
+  const startsAt=Date.parse(season?.league?.season_start_date||season?.league?.start_date||season?.season_start_date||'');
+  if(Number.isFinite(startsAt))return now<startsAt?'PRE_WEEK_1':'IN_SEASON';
+  return'AMBIGUOUS';
+}
 function seasonEvidenceValue(records,playerId,metric,context,now=Date.now()){
   const candidates=(Array.isArray(records)?records:[]).filter(x=>x&&typeof x==='object'&&String(x.playerId)===String(playerId)&&x.metric===metric);
   if(candidates.some(x=>x.conflict&&x.season===context.season&&x.week===context.week&&x.scoring===context.scoring&&Number.isFinite(x.publishedAt)&&x.publishedAt<=now&&now-x.publishedAt<=86400000&&x.expiresAt>now))return{status:'CONFLICT',value:null};
@@ -3134,7 +3153,10 @@ function seasonAcquisitionDecision(drop,fa,rows,season){
   let futureCost=0;
   if(missingDst&&next.length>=capacity){
     const filled=after.assignments.filter(x=>x.player).length;
-    const options=next.filter(x=>String(x.p.id)!==String(fa.p.id)&&['QB','RB','WR','TE'].includes(x.p.pos)&&(!['QB','TE'].includes(x.p.pos)||next.filter(y=>y.p.pos===x.p.pos).length>1)).map(x=>({x,lineup:seasonProjectionLineup(next.filter(y=>y!==x),season)})).filter(x=>x.lineup.status==='VERIFIED'&&x.lineup.assignments.filter(a=>a.player).length>=filled).map(x=>({...x,cost:after.score-x.lineup.score})).sort((a,b)=>a.cost-b.cost);
+    // Use the exact structural protection boundary shared with the D/ST capacity planner.
+    // Reserve/IR, sole active QB/TE, special teams and explicitly protected assets can
+    // never be used to manufacture capacity for a preceding waiver acquisition.
+    const options=seasonStructurallyDroppable(next,fa.p.id).map(x=>({x,lineup:seasonProjectionLineup(next.filter(y=>y!==x),season)})).filter(x=>x.lineup.status==='VERIFIED'&&x.lineup.assignments.filter(a=>a.player).length>=filled).map(x=>({...x,cost:after.score-x.lineup.score})).sort((a,b)=>a.cost-b.cost);
     result.secondDrop=options[0]?.x||null;
     if(!result.secondDrop){result.reason='Künftiger D/ST-Drop würde einen Starter-Slot verlieren';return result;}
     futureCost=options[0].cost;
@@ -3157,10 +3179,12 @@ function seasonTradeDecision(mine,opponent,gives,gets,season){
   const capacity=season.league.roster_positions.filter(x=>!['IR','TAXI'].includes(x)).length;
   if([nextMine,nextOpp].some(r=>r.filter(x=>x.seasonStatus==='ACTIVE').length>capacity))return{...result,status:'CAPACITY_BLOCKED'};
   for(const [before,after] of [[mine,nextMine],[opponent,nextOpp]])for(const pos of ['QB','TE'])if(before.some(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===pos)&&!after.some(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===pos))return{...result,status:'STRUCTURAL_BLOCKED'};
+  const temporalPhase=seasonTemporalPhase(season);
+  if(temporalPhase==='AMBIGUOUS')return{...result,status:'TEMPORAL_STATE_UNVERIFIED'};
   const all=[...gives,...gets],values=all.map(x=>seasonWeeklyMetric(x.p,'trade_value',season));
   if(values.some(v=>v.status!=='VERIFIED')||new Set(values.map(v=>JSON.stringify([v.sourceId,v.sourceUrl,v.publishedAt]))).size!==1)return result;
   const draftPicks=all.map(x=>Number(x.pk?.pick_no));
-  if(seasonEvidenceContext(season).week<=1&&(draftPicks.some(n=>!Number.isInteger(n)||n<=0||n>=999)||Math.max(...draftPicks)-Math.min(...draftPicks)>24))return{...result,status:'DRAFT_PREFERENCE_UNRESOLVED'};
+  if(temporalPhase==='PRE_WEEK_1'&&(draftPicks.some(n=>!Number.isInteger(n)||n<=0||n>=999)||Math.max(...draftPicks)-Math.min(...draftPicks)>24))return{...result,status:'DRAFT_PREFERENCE_UNRESOLVED'};
   const [a,b,c,d]=[mine,nextMine,opponent,nextOpp].map(r=>seasonProjectionLineup(r,season));
   if([a,b,c,d].some(x=>x.status!=='VERIFIED'))return result;
   result.ourGain=b.score-a.score;result.opponentGain=d.score-c.score;
