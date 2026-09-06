@@ -54,6 +54,7 @@ jobs:
           node tools/season-trade-team-needs-v2-regression.mjs
           node tools/season-lineup-start-sit-v2-regression.mjs
           node tools/season-matchup-evidence-layer-regression.mjs
+          node tools/season-dst-k-stream-regression.mjs
           node tools/season-automatic-refresh-contract.mjs
           node tools/season-workspace-navigation-regression.mjs
           node tools/season-bootstrap-render-order-regression.mjs
@@ -76,15 +77,16 @@ jobs:
           grep -q "$VERSION" manifest.webmanifest
           PKG="Draft_Companion_${VERSION}_PREINSTALL.zip"
           rm -rf dist && mkdir -p dist/runtime dist/reextract
-          cp index.html app.js season-evidence-layer.js lineup-start-sit-v2.js trade-team-needs-v2.js decision-policy.js styles.css manifest.webmanifest sw.js _worker.js icon.svg live-surface-v3.js live-surface-v3.css expert-board-export.js expert-v2-board.js expert-v3-board.js dist/runtime/
+          cp index.html app.js season-evidence-layer.js lineup-start-sit-v2.js trade-team-needs-v2.js dst-k-season-stream.js decision-policy.js styles.css manifest.webmanifest sw.js _worker.js icon.svg live-surface-v3.js live-surface-v3.css expert-board-export.js expert-v2-board.js expert-v3-board.js dist/runtime/
           (cd dist/runtime && zip -q "../$PKG" *)
-          test "$(unzip -Z1 "dist/$PKG" | wc -l)" -eq 16
+          test "$(unzip -Z1 "dist/$PKG" | wc -l)" -eq 17
           unzip -q "dist/$PKG" -d dist/reextract
           cd dist/reextract
           node --check app.js
           node --check season-evidence-layer.js
           node --check lineup-start-sit-v2.js
           node --check trade-team-needs-v2.js
+          node --check dst-k-season-stream.js
           node --check decision-policy.js
           node --check live-surface-v3.js
           node --check expert-v2-board.js

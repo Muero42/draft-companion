@@ -124,15 +124,18 @@ must(app.includes('Lineup / Start-Sit v2'),'Lineup v2 surface missing');
 must(app.includes("LINEUP_WEEKLY_EVIDENCE_KEY='pitti.lineup-weekly-evidence.v2'"),'weekly lineup evidence interface missing');
 must(app.includes('Keine Preseason-/ECR-/ADP-Ersatzwerte'),'weekly evidence fail-closed invariant missing');
 must(text('lineup-start-sit-v2.js').includes("const DEFAULT_SLOTS=['QB','RB','WR','WR','TE','FLEX','W/R','K','DST']"),'canonical Lineup v2 geometry missing');
-must(app.includes('Special Teams v2'),'Special Teams v2 quality-floor surface missing');
+must(app.includes('D/ST STREAM'),'D/ST season-stream surface missing');
 must(app.includes("dropCandidatePolicy:{primary:['Tank Bigsby','Tyjae Spears','Kenneth Gainwell'],protected:['Jadarian Price','Christian Watson','Josh Downs']"),'Mevis drop gate must protect Price/Watson/Downs and compare Bigsby/Spears/Gainwell');
-must(app.includes('Kicker werden ausschließlich hier gegen verfügbare Kicker verglichen; niemals gegen RB/WR/TE.'),'Waiver UI must enforce K-only replacement for roster kicker');
+const specialTeams=text('dst-k-season-stream.js');
+must(specialTeams.includes("candidates.filter(x=>normPos(x?.p?.pos)==='K')"),'Kicker candidates must be K-only');
+must(specialTeams.includes("candidates.filter(x=>normPos(x?.p?.pos)==='DST')"),'D/ST candidates must be D/ST-only');
+must(specialTeams.includes("row.seasonStatus!=='RESERVE'&&row.seasonStatus!=='IR'"),'Reserve/IR must not satisfy stream capacity');
 must(app.includes('SEASON_FA_POOL_ZERO_INVALID'),'zero live season FA pool must fail closed');
 must((app.match(/SEASON_FA_POOL_ZERO_INVALID/g)||[]).length>=2,'zero FA fail-closed gate must cover both startup bootstrap and analyze path');
 must(app.includes('FA-POOL NICHT VALIDIERT'),'invalid season FA pool must be visible');
 must(app.includes('kein FA/HOLD-Urteil aus Draft-Verfügbarkeit'),'post-draft FA must never fall back to draft availability');
 
-must(app.includes('filter(x=>x.rb&&x.rb.tier<=4)'),'D/ST quality floor must filter tier 5/6 before ranking');
+must(specialTeams.includes("actionable?'STREAM/ADD'"),'D/ST stream must retain an explicit actionable gate');
 
 
 must(app.includes('function applyPlayerQualitySafetyGate('),'Value-Safety gate missing');

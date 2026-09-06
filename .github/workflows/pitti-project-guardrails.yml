@@ -71,6 +71,8 @@ jobs:
         run: node tools/season-lineup-start-sit-v2-regression.mjs
       - name: Matchup Vegas weather evidence regression
         run: node tools/season-matchup-evidence-layer-regression.mjs
+      - name: D/ST and kicker season stream regression
+        run: node tools/season-dst-k-stream-regression.mjs
       - name: rc4.97 microfix contract
         if: contains(github.head_ref || github.ref_name, 'rc4.97-microfix')
         run: node tools/rc497-microfix.mjs

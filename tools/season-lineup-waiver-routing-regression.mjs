@@ -1,7 +1,8 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
 const a=fs.readFileSync('app.js','utf8');
+const special=fs.readFileSync('dst-k-season-stream.js','utf8');
 assert(a.includes("['QB','RB','WR','TE'].includes(x.p?.pos)"),'generic FA drop pool must exclude K/DST');
-assert(a.includes("Kicker werden ausschließlich hier gegen verfügbare Kicker verglichen; niemals gegen RB/WR/TE."),'kicker-only waiver comparison contract missing');
+assert(special.includes("candidates.filter(x=>normPos(x?.p?.pos)==='K')")&&a.includes('nur gegen LIVE verfügbare Kicker; niemals gegen RB/WR/TE/DST.'),'kicker-only waiver comparison contract missing');
 assert(a.includes("if(s==='FLEX')return ['RB','WR','TE'].includes(p);"),'RB/WR/TE FLEX eligibility missing');
 assert(a.includes("league?.roster_positions"),'canonical Sleeper roster slot source missing');
 assert(a.includes("seasonSlotLabel(slot,x.p.pos)"),'canonical starter slot display missing');
