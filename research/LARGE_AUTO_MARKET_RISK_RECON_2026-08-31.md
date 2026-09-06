@@ -1,4 +1,6 @@
 # PITTI LARGE AUTO BLOCK 2 — MARKET + RISK RECONCILIATION
+
+> HISTORICAL/SUPERSEDED operational checkpoint: runtime, device, deployment, release/activation gates and CURRENT/OVERRIDE instructions below describe the original dated context only. They must not be executed as current work or override ../PITTI_CURRENT_STATE.json and ../NEW_CHAT_HANDOFF_CURRENT.md. Research evidence and durable invariants remain as provenance, subject to later explicit corrections.
 Date: 2026-08-31 pre-waiver
 Runtime: rc4.158 accepted/frozen; v4 day baseline 9/9.
 

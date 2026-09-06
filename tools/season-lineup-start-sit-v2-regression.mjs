@@ -36,9 +36,7 @@ const incomplete=base.map(x=>({...x})),ev=evidence(incomplete);delete ev.values.
 assert.equal(lineup.evaluate({roster:incomplete,evidence:ev,week,now}).status,'MONITOR','missing player Week-N evidence must not be guessed');
 
 const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
-assert(app.includes("LINEUP_WEEKLY_EVIDENCE_KEY='pitti.lineup-weekly-evidence.v2'"));
-assert(app.includes('Live Sleeper authority'));
-assert(app.includes('Keine Preseason-/ECR-/ADP-Ersatzwerte'));
-assert(!app.includes('WEEK1_RANKS_2026'),'hard-coded weekly rankings must not survive as fallback');
-assert(!app.includes('WEEK1_PITTI_PROJECTIONS_2026'),'hard-coded projections must not survive as fallback');
+assert(app.includes("seasonWeeklyMetric(p,'projected_points'"),'runtime lineup consumes verified weekly projections');
+assert(app.includes('Sleeper liefert aktuelle Aufstellung, Ownership und die kanonischen Roster-Slots'),'runtime declares live Sleeper lineup authority');
+assert(app.includes('Draft/ROS panel rank is deliberately')&&app.includes('excluded from THIS WEEK'),'preseason/draft rank cannot substitute for weekly evidence');
 console.log('season lineup start-sit v2 regression PASS');

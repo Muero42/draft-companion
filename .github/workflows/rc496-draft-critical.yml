@@ -12,12 +12,16 @@ on:
       - 'tools/rc498-evidence-polarity.mjs'
       - '.github/workflows/rc496-draft-critical.yml'
   workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   draft-critical:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with:
           node-version: 22
       - run: node --check app.js && node --check live-surface-v3.js && node --check expert-v2-board.js && node --check tools/analyze-current-decision-evidence.mjs

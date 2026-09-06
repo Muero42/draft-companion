@@ -1,5 +1,7 @@
 # POST-RC4.158 PARALLEL EVIDENCE BLOCK — 2026-08-31 16:36 CEST
 
+> HISTORICAL/SUPERSEDED operational checkpoint: runtime, device, deployment, release/activation gates and CURRENT/OVERRIDE instructions below describe the original dated context only. They must not be executed as current work or override ../PITTI_CURRENT_STATE.json and ../NEW_CHAT_HANDOFF_CURRENT.md. Research evidence and durable invariants remain as provenance, subject to later explicit corrections.
+
 ## Runtime authority
 - Android rc4.158 accepted.
 - Expert day baseline 9/9 complete on device.

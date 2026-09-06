@@ -1,5 +1,7 @@
 # PITTI In-Season Expert Phase Plan — 2026-09-02
 
+> HISTORICAL/SUPERSEDED operational checkpoint: runtime, device, deployment, release/activation gates and CURRENT/OVERRIDE instructions below describe the original dated context only. They must not be executed as current work or override ../PITTI_CURRENT_STATE.json and ../NEW_CHAT_HANDOFF_CURRENT.md. Research evidence and durable invariants remain as provenance, subject to later explicit corrections.
+
 ## Purpose
 Prepare expert authority for the 10-team Half-PPR Season Companion while the rc4.182 startup repair is gated. This is research/config planning only; it must not displace startup repair or become production authority before expert loading works.
 

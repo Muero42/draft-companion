@@ -58,10 +58,23 @@
     return true;
   }
 
-  function evaluateOffer({mine,opponent,give,get,evidence,slots=DEFAULT_SLOTS,maxActive=15,preWeek1=true}){
+  function temporalPhase({season,currentDate=Date.now()}={}){
+    const rawWeek=season?.week??season?.transaction_round??season?.league?.settings?.leg;
+    const week=Number(rawWeek);
+    if(rawWeek!==null&&rawWeek!==undefined&&rawWeek!==''&&Number.isInteger(week)&&week>=1)return'IN_SEASON';
+    if(rawWeek!==null&&rawWeek!==undefined&&rawWeek!==''&&Number.isInteger(week)&&week===0)return'PRE_WEEK_1';
+    const startsAt=Date.parse(season?.season_start_date||season?.league?.season_start_date||season?.league?.start_date||'');
+    const now=typeof currentDate==='number'?currentDate:Date.parse(currentDate||'');
+    if(Number.isFinite(startsAt)&&Number.isFinite(now))return now<startsAt?'PRE_WEEK_1':'IN_SEASON';
+    return'AMBIGUOUS';
+  }
+
+  function evaluateOffer({mine,opponent,give,get,evidence,slots=DEFAULT_SLOTS,maxActive=15,season,currentDate}){
     const ev=evidence?.values?evidence:adaptEvidence(evidence);
     const result={actionable:false,status:'REJECT',reason:'',acceptanceProbability:null,acceptanceLabel:'conservative heuristic'};
     if(!ev.available){result.status='MONITOR';result.reason=ev.reason||'MISSING_OR_STALE_VALUATION';return result;}
+    const phase=temporalPhase({season,currentDate});
+    if(phase==='AMBIGUOUS'){result.status='MONITOR';result.reason='TEMPORAL_STATE_UNVERIFIED';return result;}
     if(![...give,...get].every(x=>Number.isFinite(valueOf(x,ev.values)))){result.status='MONITOR';result.reason='PLAYER_VALUE_UNAVAILABLE';return result;}
     if(!give.length||!get.length||give.length>2||get.length>2){result.reason='UNSUPPORTED_BUNDLE';return result;}
     const mineActive=active(mine),oppActive=active(opponent),giveIds=new Set(give.map(x=>String(x.p?.id))),getIds=new Set(get.map(x=>String(x.p?.id)));
@@ -71,7 +84,7 @@
     const myBefore=rosterUtility(mineActive,ev.values,slots),myAfter=rosterUtility(mineAfterRoster,ev.values,slots),oppBefore=rosterUtility(oppActive,ev.values,slots),oppAfter=rosterUtility(oppAfterRoster,ev.values,slots);
     result.myUtility=myAfter-myBefore;result.opponentUtility=oppAfter-oppBefore;result.myNeeds=needs(mineActive,ev.values,slots);result.opponentNeeds=needs(oppActive,ev.values,slots);
     if(result.myUtility<=0||result.opponentUtility<=0){result.reason=result.opponentUtility<=0?'OPPONENT_UTILITY_NOT_IMPROVED':'PITTI_UTILITY_NOT_IMPROVED';return result;}
-    const severe=preWeek1&&get.some(receive=>give.every(sent=>Number.isFinite(pickOf(receive))&&Number.isFinite(pickOf(sent))&&pickOf(sent)-pickOf(receive)>24));
+    const severe=phase==='PRE_WEEK_1'&&get.some(receive=>give.every(sent=>Number.isFinite(pickOf(receive))&&Number.isFinite(pickOf(sent))&&pickOf(sent)-pickOf(receive)>24));
     const reversalExplained=[...give,...get].some(x=>{const row=ev.values[String(x.p?.id)]||ev.values[x.p?.name]||{},at=Date.parse(row.reversal_evidence_as_of||'');return row.fresh_reversal_evidence===true&&!!String(row.reversal_evidence_source||'').trim()&&Number.isFinite(at)&&Date.now()-at<=7*86400000&&at<=Date.now()+3600000;});
     if(severe&&!reversalExplained){result.reason='SEVERE_DRAFT_CAPITAL_REVERSAL';return result;}
     const giveValue=give.reduce((n,x)=>n+valueOf(x,ev.values),0),getValue=get.reduce((n,x)=>n+valueOf(x,ev.values),0),gap=Math.abs(giveValue-getValue)/Math.max(giveValue,getValue,1);
@@ -80,16 +93,16 @@
     return result;
   }
 
-  function generate({mine,opponent,evidence,slots=DEFAULT_SLOTS,maxActive=15,preWeek1=true}){
+  function generate({mine,opponent,evidence,slots=DEFAULT_SLOTS,maxActive=15,season,currentDate}){
     const a=tradable(mine),b=tradable(opponent),offers=[];
     const bundles=rows=>[...rows.map(x=>[x]),...rows.flatMap((x,i)=>rows.slice(i+1).map(y=>[x,y]))];
     for(const give of bundles(a))for(const get of bundles(b)){
       if(give.length===2&&get.length===2)continue;
-      const evaluation=evaluateOffer({mine,opponent,give,get,evidence,slots,maxActive,preWeek1});
+      const evaluation=evaluateOffer({mine,opponent,give,get,evidence,slots,maxActive,season,currentDate});
       if(evaluation.actionable)offers.push({give,get,...evaluation});
     }
     return offers.sort((x,y)=>(y.myUtility+y.opponentUtility)-(x.myUtility+x.opponentUtility));
   }
 
-  return{DEFAULT_SLOTS,adaptEvidence,bestLineup,rosterUtility,needs,evaluateOffer,generate};
+  return{DEFAULT_SLOTS,temporalPhase,adaptEvidence,bestLineup,rosterUtility,needs,evaluateOffer,generate};
 });

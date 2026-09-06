@@ -1,5 +1,7 @@
 # PITTI PICK-9 STOCHASTIC STRESS TEST — 2026-08-31
 
+> HISTORICAL/SUPERSEDED operational checkpoint: runtime, device, deployment, release/activation gates and CURRENT/OVERRIDE instructions below describe the original dated context only. They must not be executed as current work or override ../PITTI_CURRENT_STATE.json and ../NEW_CHAT_HANDOFF_CURRENT.md. Research evidence and durable invariants remain as provenance, subject to later explicit corrections.
+
 ## Scope / source
 Actual simulation run performed against canonical backup `draft-companion-v7-backup-2026-08-31T09-21-02-891Z.json` (10-team Half-PPR, slot 9, active v4 positional panels, Sleeper ADP in backup). 6 stress environments × 1,000 runs = **6,000 simulated drafts**.
 

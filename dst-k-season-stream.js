@@ -12,7 +12,7 @@
 
   function protectedDrop(row,roster){
     const pos=normPos(row?.p?.pos),counts=active(roster).reduce((out,x)=>(out[normPos(x?.p?.pos)]=(out[normPos(x?.p?.pos)]||0)+1,out),{});
-    return (pos==='QB'||pos==='TE')&&counts[pos]<=1;
+    return !!(row?.nonDroppable||row?.protected||row?.structurallyProtected||row?.dropProtected||row?.p?.nonDroppable||row?.p?.protected||row?.p?.structurallyProtected||row?.p?.dropProtected)||((pos==='QB'||pos==='TE')&&counts[pos]<=1);
   }
   function ordinaryDrops(roster){
     return active(roster).filter(row=>['QB','RB','WR','TE'].includes(normPos(row?.p?.pos))&&!protectedDrop(row,roster)).sort((a,b)=>Number(a.dropCost??Infinity)-Number(b.dropCost??Infinity));

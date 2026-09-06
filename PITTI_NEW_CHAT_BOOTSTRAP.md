@@ -1,16 +1,17 @@
-Generation: `20260902T1915Z-v230`
-AUTO queue takeover: load CURRENT active/ready lanes and continue them in the same turn.
+Generation: `20260906T1200Z-v235`
+AUTO queue takeover: load CURRENT active/ready lanes and continue them in the same turn within user-authorized scope.
 No device-side trial-and-error. Empty assistant response after tool work is forbidden. Never send status/progress/acknowledgement messages during AUTO while executable work exists.
 
-# PITTI NEW CHAT BOOTSTRAP — v230
-Generation: `20260902T1915Z-v230`
+# PITTI NEW CHAT BOOTSTRAP — v235
 
-Read: COMMAND → CURRENT → SEAL → LOCK → PREFLIGHT → PROJECT_STATE EOF → CURRENT HANDOFF → BOOTSTRAP → MATRIX → actual PR/CI evidence.
+Source/runtime v11.8.0-rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 package lineage is locally reconciled through the authorized two-parent bridge; publication remains unverified and no merge/deployment/device acceptance is claimed.
 
-Current truth: POST_DRAFT_SEASON_COMPANION. rc4.189 is merged on main at `88c007732f94df7b1624a6c05a0b16af4d33d94f`. Latest physical Android is rc4.188 with Waiver/FA + IR/drop semantic PASS. rc4.169 remains rollback authority. PR #108 is historical/merged, never an open current gate. Current gate is rc4.189 post-merge reseal exact-head all-green, deployment parity, then one rc4.189 device canary.
+Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
 
-Lawrence lane: no manual opponent-roster screenshots as architecture. After PR #108 is valid, use Sleeper all-team state for opponent QB need + remaining FAAB + bounded manager/current-season priors. Our acquisition cost must include Lawrence active-slot drop AND the later mandatory D/ST active drop; IR/Reserve never ordinary capacity. Same bye with Jayden Daniels is a negative, not an automatic veto. Draft-era no-QB2 is not an in-season hard ban.
+Historical v235 provenance (not an operative boundary): see PITTI_CURRENT_STATE.json historical_superseded.v235_local_request. Verify current file and branch authority dynamically.
 
-AUTO/AUTO BLOCK: continuous same-turn execution; reconstruct active/ready lanes from CURRENT; checkpoint/re-inventory after every package; no interim progress/status/ack, no empty response, no promise-only continuation. External wait blocks only its lane. STATUS = report-only.
+AUTO/AUTO BLOCK continuous same-turn execution; checkpoint/re-inventory after every package; waiting blocks only dependent lane; STATUS report-only.
 
-Device: rc4.183 remains latest physical observation and DEVICE_REJECTED for Kader FA-card + IR ordinary-drop semantics. Accepted rollback rc4.169. No device-side trial-and-error; next device action only after rc4.186 automated gates/deploy parity, exactly one canary.
+Canonical permission boundary: AGENTS.md. Deterministic local validation: `node tools/strict-suite.mjs`; dynamic takeover: `node tools/takeover-authority.mjs <fresh-github-evidence.json>`. The evidence file is an external observation, never tracked CURRENT status. Read the schema and limits in PITTI_CODEX_WORK_PACKAGE.md.
+
+QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy.

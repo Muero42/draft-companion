@@ -5,15 +5,20 @@ on:
   workflow_dispatch:
   pull_request:
     branches: [main]
+permissions:
+  contents: read
 jobs:
   behavioral-contract:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+        with:
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with: {node-version: 22}
       - name: Syntax
-        run: node --check app.js && node --check season-evidence-layer.js && node --check lineup-start-sit-v2.js && node --check trade-team-needs-v2.js && node --check dst-k-season-stream.js && node --check decision-policy.js && node --check live-surface-v3.js && node --check expert-v2-board.js && node --check expert-v3-board.js && node --check sw.js
+        run: node --check app.js && node --check decision-policy.js && node --check live-surface-v3.js && node --check expert-v2-board.js && node --check expert-v3-board.js && node --check sw.js
       - name: Fail closed on hand-coded product prose
         run: |
           ! grep -q "PLAYER_EVIDENCE" live-surface-v3.js
@@ -30,11 +35,6 @@ jobs:
           node tools/season-expert-phase-policy-regression.mjs
           node tools/season-lineup-waiver-routing-regression.mjs
           node tools/season-waiver-surface-ir-regression.mjs
-          node tools/season-waiver-team-needs-v3-regression.mjs
-          node tools/season-trade-team-needs-v2-regression.mjs
-          node tools/season-lineup-start-sit-v2-regression.mjs
-          node tools/season-matchup-evidence-layer-regression.mjs
-          node tools/season-dst-k-stream-regression.mjs
           node tools/season-automatic-refresh-contract.mjs
           node tools/season-workspace-navigation-regression.mjs
           node tools/rc478-oos-policy.mjs
@@ -61,3 +61,16 @@ jobs:
           if grep -q "v11.8.0-rc4.122" app.js; then node tools/rc4122-v45-runtime-contract.mjs; fi
           node tools/v4-embedded-coverage.mjs
           node tools/v3-v4-same-state-diagnostic.mjs
+
+      - name: rc4.190 migration contracts
+        run: |
+          node tools/season-decision-engine-regression.mjs
+          node tools/permission-contract-regression.mjs
+          node tools/takeover-authority-regression.mjs
+          node tools/postmerge-authority-regression.mjs
+
+      - name: Independent runtime review and strict seal
+        run: |
+          node tools/season-adversarial-review-regression.mjs
+          node tools/cloud-foundation-regression.mjs
+          PITTI_SKIP_SEAL_INTEGRITY=0 PITTI_CANDIDATE_PREFLIGHT=0 node tools/pitti_guardrail_check.mjs

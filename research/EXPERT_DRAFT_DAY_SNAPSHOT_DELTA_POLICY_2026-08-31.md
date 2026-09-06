@@ -1,5 +1,7 @@
 # EXPERT DRAFT-DAY SNAPSHOT / DELTA POLICY — 2026-08-31
 
+> HISTORICAL/SUPERSEDED operational checkpoint: runtime, device, deployment, release/activation gates and CURRENT/OVERRIDE instructions below describe the original dated context only. They must not be executed as current work or override ../PITTI_CURRENT_STATE.json and ../NEW_CHAT_HANDOFF_CURRENT.md. Research evidence and durable invariants remain as provenance, subject to later explicit corrections.
+
 ## Decision
 Do not modify rc4.157 before the real draft. The current runtime already persists each expert acquisition independently in `v7_rank_<expertId>` with an `updated` timestamp and preserves verified source context. A full refresh loops every selected/preset/v4-v5 expert and reacquires all lists.
 

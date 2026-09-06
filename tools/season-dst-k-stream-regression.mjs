@@ -35,6 +35,8 @@ const costlyRoster=baseRoster.map(x=>x.p.id==='rb-drop'?{...x,dropCost:9}:x);
 dst=stream.evaluateDst({roster:costlyRoster,candidates:[futureDst],ownedPlayerIds:[],evidenceCache:cache,week:1,activeLimit:5});
 assert.equal(dst[0].status,'MONITOR','future matchup cannot clear a larger live roster/drop cost');
 assert.equal(stream.ordinaryDrops(costlyRoster).some(x=>x.p.id==='qb-only'||x.p.id==='te-only'||x.p.id==='ir-star'),false,'only-active QB/TE and IR protections must survive shared capacity logic');
+const explicitProtected={...player('protected-rb','Protected RB','RB','PRT'),structurallyProtected:true};
+assert.equal(stream.ordinaryDrops([...costlyRoster,explicitProtected]).some(x=>x.p.id==='protected-rb'),false,'explicit structurally protected player cannot fund D/ST capacity');
 
 const staleRows=rows.map(x=>x.playerId==='dst-future'?{...x,status:'STALE',fresh:false}:x);
 dst=stream.evaluateDst({roster:baseRoster,candidates:[futureDst],ownedPlayerIds:[],evidenceCache:evidence.createCache(staleRows),week:1,activeLimit:5});

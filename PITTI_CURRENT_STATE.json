@@ -1,34 +1,69 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260902T1915Z-v230",
-  "updated_at": "2026-09-02T13:36:00Z",
+  "handoff_generation": "20260906T1200Z-v235",
+  "updated_at": "2026-09-06T12:00:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.189"
+    "source_candidate": "v11.8.0-rc4.190",
+    "git_identity_rule": "Current main SHA is verified dynamically from git/GitHub; never hard-code the containing commit as self-authority.",
+    "reconciled_base_main": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
+    "postmerge": {
+      "checkpoint": "v233",
+      "pr": 121,
+      "status": "MERGED/HISTORICAL",
+      "pending_merge": false,
+      "pending_strict_ci": false,
+      "evidence": "User-confirmed merged PR; local main base verified without network access."
+    },
+    "pr118": {
+      "status": "DYNAMIC_VERIFICATION_REQUIRED",
+      "conservative_boundary": "OPEN / UNMERGED / NON-PRODUCTION UNTIL FRESH GITHUB VERIFICATION",
+      "authorization_source": "CURRENT_USER_AUTHORIZED_WORK_PACKAGE"
+    },
+    "promotion": {
+      "status": "DYNAMIC_VERIFICATION_REQUIRED",
+      "verify_before": [
+        "CONTINUATION",
+        "PROMOTION"
+      ],
+      "sources": [
+        "LOCAL_GIT",
+        "CANONICAL_GITHUB"
+      ],
+      "permission_source": "CURRENT_USER_AUTHORIZED_WORK_PACKAGE",
+      "merge_implies_deployment": false,
+      "merge_implies_device_acceptance": false,
+      "unavailable_evidence": "FAIL_CLOSED_DEPENDENT_ACTION",
+      "operative_branch": "DYNAMIC_VERIFICATION_REQUIRED",
+      "pr_status": "DYNAMIC_VERIFICATION_REQUIRED",
+      "exact_head_ci": "DYNAMIC_VERIFICATION_REQUIRED"
+    },
+    "source_scope": "SOURCE_IN_THIS_TREE; canonical main containment is dynamically verified; source/build/package never imply deployment or device acceptance",
+    "permission_contract": "AGENTS.md#pitti-codex-permission-contract"
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.189 merged main; post-merge reseal candidate",
-    "candidate_branch": "pitti/rc4189-postmerge-reseal",
+    "season_candidate": "v11.8.0-rc4.190 source in this tree; canonical containment requires dynamic verification; physical rc4.190 acceptance remains pending",
+    "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.189",
+    "test_challenger": "v11.8.0-rc4.190",
     "ci": {
-      "candidate_package": "v230 head 86f4039 queued after guard syntax repair",
-      "release_contract_v2": "v230 head 86f4039 queued after guard syntax repair",
-      "project_guardrails": "v230 head 86f4039 queued after guard syntax repair",
+      "candidate_package": "DYNAMIC_VERIFICATION_REQUIRED",
+      "release_contract_v2": "DYNAMIC_VERIFICATION_REQUIRED",
+      "project_guardrails": "DYNAMIC_VERIFICATION_REQUIRED",
       "validated_code_head": null,
-      "scope": "rc4.189 post-merge reseal exact-head validation"
+      "scope": "Verify exact-head GitHub checks before dependent actions; historical PASS is not evidence for another commit."
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "rc4.189 merged main at 88c007732f94df7b1624a6c05a0b16af4d33d94f; post-merge reseal and deployment parity required before one physical device canary.",
+    "preview_candidate": "rc4.190 source in this tree; canonical containment requires dynamic verification; current HEAD verified dynamically. Deployment parity requires re-verification before physical rc4.190 canary.",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "latest_package_sha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "package_reference_run": 33597607588,
-    "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "rc4.188 last physically observed deployment; rc4.189 not yet promoted",
+    "deployed_pages_app_byte_parity_with_main": null,
+    "deployed_pages_head": "UNKNOWN_REQUIRES_REVERIFICATION",
     "installed_android": "v11.8.0-rc4.188",
     "latest_android_observed": "v11.8.0-rc4.188",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
@@ -82,7 +117,7 @@
       "merge_policy": "HISTORICAL_ONLY_DO_NOT_USE_AS_CURRENT_GATE"
     },
     "expert_phase_transition": {
-      "priority": "DEFER_UNTIL_LOADING_FIXED",
+      "priority": "Planning only; historical startup blocker superseded by rc4.188 physical PASS. No expert/runtime changes in this repair.",
       "pre_week1": "retain draft/preseason evidence while introducing in-season track record gradually",
       "noted_experts": [
         "Jody Smith (Draft Sharks individual; desired draft-source candidate)",
@@ -101,7 +136,7 @@
       "d1_status": "acute read/write amplification remediated; recent Cloudflare screenshots showed low current hourly usage",
       "parked_branch": "pitti-auto/v0.2.6-fa-trade-foundation",
       "parked_pr": 1,
-      "policy": "secondary lane only; do not let watcher/FA/trade foundation displace Companion startup fix priority"
+      "policy": "HISTORICAL external observation only; not reverified offline and not an active lane of this repair."
     },
     "pr99": {
       "branch": "pitti/rc4182-hydration-integrated",
@@ -112,7 +147,8 @@
         "project_guardrails": "PASS",
         "candidate_package": "FAIL_STALE_BOOTSTRAP_RENDER_ASSERT_REPAIRED"
       }
-    }
+    },
+    "package_reference_scope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.190 installable package claim"
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -125,7 +161,8 @@
   "live_roster_canary": {
     "required": false,
     "verification": "PASS_DEVICE_RC4160",
-    "observed": "Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR; transaction auto-detected without user disclosing drop."
+    "observed": "Harrison Mevis rostered; Tank Bigsby absent; Zach Charbonnet Reserve/IR; transaction auto-detected without user disclosing drop.",
+    "scope": "HISTORICAL rc4.160 transaction canary; latest physical evidence is runtime.latest_device_evidence"
   },
   "season_contract": {
     "live_roster_and_ownership": "Sleeper direct league/users/rosters state is current 10-team roster, manager, ownership, starter/IR and FAAB authority; current transaction round is optional market evidence; Watcher remains evidence-only.",
@@ -148,62 +185,67 @@
     "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
   },
   "currentWork": {
-    "status": "RC4189_POSTMERGE_RESEAL_SEALED",
-    "nextGate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY"
+    "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
+    "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
-    "user_qb_limit": 1,
     "user_qb_hard_exclusions": [
       "Geno Smith",
       "Aaron Rodgers"
     ],
-    "starter_maxima_not_roster_caps": true
+    "starter_maxima_not_roster_caps": true,
+    "user_draft_qb_limit": 1,
+    "user_draft_qb_limit_scope": "DRAFT_ONLY"
   },
-  "source_authority": "rc4.189 is merged on main at 88c007732f94df7b1624a6c05a0b16af4d33d94f; rc4.188 passed the physical Waiver/FA canary; rc4.169 remains accepted rollback until rc4.189 physical acceptance.",
+  "cloud_foundation": {
+    "status": "FAIL_CLOSED_GITHUB_RULESET_EVIDENCE_UNAVAILABLE",
+    "diagnosis": "Ruleset history, ruleset versions, and bypass_actors require Administration: write; Metadata: read is insufficient.",
+    "least_privilege_boundary": "The PITTI Cloud App retains Contents/Pull requests write plus Metadata read only; no Administration, main bypass, deployment, or merge capability is authorized.",
+    "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
+    "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
+  },
+  "source_authority": "Task-local rc4.190 source candidate reconciles local PR #118 package parent dc0a88f with current-main governance parent 6b6093f through bridge 5679cbc. Publication, deployment parity, and physical Android acceptance remain unverified.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "RUNNING",
-    "active": [
-      {
-        "id": "rc4189-v230-exact-head-revalidation",
-        "lane": "companion",
-        "goal": "Validate v230 rc4.189 post-merge reseal exact head after guard syntax repair; repair only reproduced failures.",
-        "state": "active"
-      }
-    ],
-    "ready": [
-      {
-        "id": "rc4189-deployment-parity",
-        "lane": "release",
-        "goal": "After exact-head all-green, merge v230 reseal if required and verify rc4.189 deployment/runtime parity before device action.",
-        "state": "dependency_wait"
-      },
-      {
-        "id": "lawrence-market-live",
-        "lane": "waiver",
-        "goal": "Use canonical all-10-team Sleeper state to evaluate Trevor Lawrence opponent QB need, remaining FAAB, bounded priors, same-bye cost and mandatory future D/ST second-active-drop cost.",
-        "state": "dependency_wait"
-      },
-      {
-        "id": "watcher-v026-validation",
-        "lane": "watcher",
-        "goal": "Keep v0.2.6 draft isolated; validate syntax/core CI before any merge/deploy.",
-        "state": "dependency_wait"
-      }
-    ],
-    "waiting_external": [
-      {
-        "id": "pr117-ci",
-        "lane": "companion",
-        "goal": "Three strict workflows on exact v230 reseal head 86f4039932863ed7fca7d40e66775d4251f07ef2.",
-        "state": "waiting_external"
-      }
-    ],
+    "status": "PROJECT_MILESTONE_REACHED",
+    "active": [],
+    "ready": [],
+    "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "rc4190-release-blocker-reconciliation",
+        "result": "Task-local source reconciles all Season Companion package semantics with current-main governance/security; future D/ST capacity and temporal trade blockers repaired. Exact-head local authoritative gates required before release classification.",
+        "at": "2026-09-06T12:00:00Z"
+      },
+      {
+        "id": "v233-postmerge-local-readonly-audit",
+        "result": "FAIL_CLOSED on verified clean main 2749537945ec7e6b96d95e2f6b55a26e455124fa: residual v233 pending CI/merge pointers; superseded by this local authority repair.",
+        "at": "2026-09-03T09:59:50.439Z"
+      },
+      {
+        "id": "pr121-v233-merge",
+        "result": "MERGED/HISTORICAL; user-confirmed before this local audit. No new remote CI evidence claimed.",
+        "at": "2026-09-03T09:59:50.439Z"
+      },
+      {
+        "id": "codex-second-readonly-audit",
+        "result": "FAIL_CLOSED as designed after pulling main e25dc0d: stale CURRENT pointers found in NEW_CHAT_HANDOFF_CURRENT.md and PITTI_AUTO_PREFLIGHT.md; no Codex writes performed.",
+        "at": "2026-09-03T07:35:00Z"
+      },
+      {
+        "id": "v232-postmerge-authority-preflight",
+        "result": "PASS on 9856c07: Project Guardrails, Candidate Package, Release Contract v2 all green.",
+        "at": "2026-09-03T07:25:00Z"
+      },
+      {
+        "id": "authority-v231-reconcile",
+        "result": "PASS candidate-preflight on a6deb3e: Candidate Package, Project Guardrails and Release Contract v2 all green after generation/source/seal-pending repairs.",
+        "at": "2026-09-03T07:10:00Z"
+      },
       {
         "id": "rc4182-full-validation",
         "result": "PASS on e33ba5cf793d69f15de5ccea58f446a5ad127118: Project Guardrails, Candidate Package, Release Contract v2, rc4.82, rc4.83. Artifact sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75. Includes removed-Draft-DOM startup fix and hidden-state Draft surface isolation.",
@@ -298,175 +340,171 @@
         "id": "rc4161-selftest-ci",
         "result": "PASS head b307fda15a5c20d63940e1c746a876ed7c49b3ef: release contract, project guardrails and candidate package all success; executable season FA ownership regression included.",
         "at": "2026-09-01T10:56:00Z"
-      },
-      {
-        "id": "rc4161-preview-deploy-repair",
-        "result": "PASS: gh-pages/season-preview synchronized to rc4.161 runtime assets; app/index/sw/manifest verified rc4.161 on gh-pages head 0fdefada9fa4b751b490f552d07e6d47e5fb068e. Prior device rc4.159 screenshot classified as stale preview delivery, not rc4.161 runtime failure.",
-        "at": "2026-09-01T11:55:00Z"
-      },
-      {
-        "id": "rc4161-preview-reseal-ci",
-        "result": "PASS on head 62f53c5028ecfbf06c70334b76fa06a9e7455ac8: Project Guardrails, Release Contract v2 and Candidate Package all successful after preview deployment repair/reseal.",
-        "at": "2026-09-01T12:00:00Z"
-      },
-      {
-        "id": "rc4161-device-acceptance",
-        "result": "PASS from physical Android screenshot: rc4.161 visibly loaded; Waiver/FA surface no longer emits false zero-ranked-FA HOLD. It renders Waiver/FA Priority v1 and a skill-position HOLD based on the loaded baseline, satisfying the specific regression gate.",
-        "at": "2026-09-01T11:55:00Z"
-      },
-      {
-        "id": "rc4162-waiver-market",
-        "result": "Implemented fresh pre-Week-1 waiver market signal from Nick Mariano/RotoBaller with explicit source, rank, 10-team applicability, expiry 2026-09-08 and bounded scoring bonus. Signal can unlock WATCH/CLEAR ADD only while fresh and only for live Sleeper free agents.",
-        "at": "2026-09-01T12:10:00Z"
-      },
-      {
-        "id": "rc4163-trade-identity-fix",
-        "result": "Found and fixed live Trade Board identity bug: Sleeper roster_id had been compared to historical draft slot 9. Live own-roster exclusion now uses canonical season.my_roster.roster_id; draft-slot comparison remains fallback only.",
-        "at": "2026-09-01T12:12:00Z"
-      },
-      {
-        "id": "rc4163-ci-deploy",
-        "result": "PASS: release contract, candidate package and project guardrails all green on bdb006b618d9ae74c7ddedcfd894f42cdc47833e; rc4.163 season-preview deployed.",
-        "at": "2026-09-01T12:18:00Z"
-      },
-      {
-        "id": "rc4163-device-version",
-        "result": "PASS: physical Android visibly loaded v11.8.0-rc4.163 and Waiver/FA Priority v2 surface.",
-        "at": "2026-09-01T12:05:00Z"
-      },
-      {
-        "id": "rc4163-live-season-surface",
-        "result": "FAIL: Waiver/FA still emits generic skill-position HOLD and Trade says 'Noch kein abgeschlossener Draft geladen.' while top status says Sleeper Draft 'Wartet auf Draft'. This is a season-state bootstrap/hydration defect, not a trade identity acceptance.",
-        "at": "2026-09-01T12:05:00Z"
-      },
-      {
-        "id": "rc4164-root-cause-fix",
-        "result": "Root cause identified and fixed: bootstrapSeasonWorkspace rendered Waiver/Trade before assigning lastDraftContext, so those surfaces necessarily saw no season context even after successful Sleeper hydration. rc4.164 assigns canonical context first. All three CI gates PASS and preview deployed.",
-        "at": "2026-09-01T12:12:00Z"
-      },
-      {
-        "id": "rc4165-browser-equivalent-gate",
-        "result": "PASS: strengthened executable cold-start contract now requires lastDraftContext before roster FA, Trade, Waiver, Action Board and final updateStatus rerender; silent incomplete-draft return prohibited. All three release gates PASS.",
-        "at": "2026-09-01T12:24:00Z"
-      },
-      {
-        "id": "rc4165-deploy",
-        "result": "PASS: rc4.165 runtime assets deployed to season-preview after green autonomous gate.",
-        "at": "2026-09-01T12:25:00Z"
-      },
-      {
-        "id": "rc4165-autonomous-startup-gate",
-        "result": "PASS: complete startup contract now requires canonical lastDraftContext before roster FA/trade/waiver/action/status rerender; all three CI gates green at 10ed99243dc8d4b158a44dc7aa8fefdcfd801e06. Preview files already byte-identical/deployed.",
-        "at": "2026-09-01T12:28:00Z"
-      },
-      {
-        "id": "rc4165-device-failure-root-cause",
-        "result": "Physical Android rc4.165 failed: Waiver/Trade remained static no-draft placeholders. Re-audit found season bootstrap still coupled draft+picks to the large NFL players endpoint via fetchDraft Promise.all; a mobile timeout aborts all season hydration while catch only exposed failure on roster. rc4.166 separates small completion proof from 15s player load and propagates causal fail-closed state to season surfaces.",
-        "at": "2026-09-01T12:31:00Z"
-      },
-      {
-        "id": "rc4166-autonomous",
-        "result": "PASS: staged draft/picks-before-player-pool bootstrap, explicit failure propagation to Waiver+Trade, dedicated regression wired, all three gates green, preview deployed.",
-        "at": "2026-09-01T12:43:00Z"
-      },
-      {
-        "id": "rc4166-autonomous-validation",
-        "result": "PASS: season bootstrap now loads small canonical draft+picks first, verifies completion, then loads large player directory separately; failure is visible on Waiver and Trade. All three gates green and preview deployed.",
-        "at": "2026-09-01T12:56:00Z"
-      },
-      {
-        "id": "rc4167-device-equivalent-failure",
-        "result": "User browser preview proved rc4.167 Season bootstrap FAIL-CLOSED in Waiver and Trades with Cannot read properties of undefined (reading 'r'). rc4.167 rejected.",
-        "at": "2026-09-01T17:19:00Z"
-      },
-      {
-        "id": "rc4168-root-cause-runtime-gate",
-        "result": "Exact root cause fixed: tradeOfferCandidates received a row but dereferenced nonexistent target.x.r/target.x.p. rc4.168 uses target.r/target.p and adds executable season-bootstrap runtime regression to package + release gates.",
-        "at": "2026-09-01T17:24:00Z"
-      },
-      {
-        "id": "rc4168-candidate-release",
-        "result": "Branch exact gates PASS; PR #89 merged to main as ec9cd367ce389201b00469cbea7236a1360ca49b. Main Candidate Package + Release Contract and Cloudflare Pages deployment PASS; package artifact 9812410348 digest sha256:584573b5a16fcc07a9667db877066eb1bf9690464b55750388fb4beaa0ac5074. v219 reseals main metadata.",
-        "at": "2026-09-01T17:34:00Z"
-      },
-      {
-        "id": "watcher-d1-v023",
-        "result": "pitti-watcher direct D1 binding found. Historical GROUP BY/JOIN previous-snapshot scan on every 15-minute poll replaced by single previous captured_at snapshot query in v0.2.3; regression added; Workers Build PASS on e4605c9a16ddbec8ff5ee4ab9e3df263f58195c5.",
-        "at": "2026-09-01T17:27:00Z"
-      },
-      {
-        "id": "rc4168-device-version",
-        "result": "User confirmed rc4.168 installed on physical device. Functional defects remained: Draft UI leaked into season workspaces, rankings lacked season control, and Season errors remained insufficiently isolated.",
-        "at": "2026-09-01T18:15:00Z"
-      },
-      {
-        "id": "rc4169-runtime-fixes",
-        "result": "rc4.169 fixes workspace hidden override with [hidden]{display:none!important}; adds season ranking freshness UI/manual refresh and 12h controlled auto-refresh; isolates lineup/FA/trade/waiver/action render failures so one surface cannot blank unrelated live surfaces; adds stage diagnostics.",
-        "at": "2026-09-01T18:20:00Z"
-      },
-      {
-        "id": "rc4169-pr-gates",
-        "result": "PR #90 exact head 09146c965530c2d6eeda341fbc078e0aa14c9f19 PASS: Candidate Package, Release Contract, Project Guardrails, Cloudflare Pages. Merged to main as ca75081e4361092e42eb75d5568a21dfe69cca33.",
-        "at": "2026-09-01T18:24:00Z"
-      },
-      {
-        "id": "rc4171-device-rejection",
-        "result": "User confirmed rc4.171 was already installed and still hung. This invalidates the recent device-first trial-and-error sequence. rc4.171 is observed, not accepted.",
-        "at": "2026-09-01T18:50:00Z"
-      },
-      {
-        "id": "device-first-policy-revoked",
-        "result": "Reinstated strict release discipline: autonomous tests first; no preview/device promotion until full automated Season startup + interaction gate passes.",
-        "at": "2026-09-01T18:50:00Z"
-      },
-      {
-        "id": "rc4175-device-rejection",
-        "result": "Physical Android rc4.175 rejected: workspace router/runtime was truncated; Kader/Waiver/Trades tabs inert and Draft controls leaked into Kader.",
-        "at": "2026-09-01T19:42:00Z"
-      },
-      {
-        "id": "rc4176-automated-repair",
-        "result": "PR #97 rc4.176 restored full runtime, removed premature/manual Season refresh controls, added app-length/workspace-navigation regression; PR guardrails, behavioral-contract, package and Cloudflare Pages all PASS; merged to main 242ea4b982c5226d6958f6704d5c823d6c89aa9c.",
-        "at": "2026-09-01T19:55:00Z"
-      },
-      {
-        "id": "rc4176-device-observation-v224",
-        "result": "Physical Android screenshot at 22:09 CEST confirms rc4.176 is installed and the Season shell/workspace controls are visually restored. In the captured frame Sleeper Live-State remains '-' and Kader remains loading, so this is version/shell evidence only, not functional acceptance.",
-        "at": "2026-09-01T20:09:00Z"
-      },
-      {
-        "id": "takeover-guardrail-repair",
-        "result": "Repaired exact v224 semantic handoff rewrite regressions detected by strict guardrail: new-chat AUTO queue takeover token, rc4.160 retest prohibition, empty/progress response guards, and exact device update policy. Seal marked pending before strict validation.",
-        "at": "2026-09-01T20:20:00Z"
-      },
-      {
-        "id": "takeover-strict-validation",
-        "result": "PASS on a27c0912abb1b1a7144442565eabe998087497a3: Project Guardrails, Release Contract v2, Candidate Package, rc4.82 and rc4.83 workflows all success. Season startup/runtime, interaction automatic-only, startup resilience, automatic refresh and workspace-navigation/truncation gates executed successfully inside release/package contracts.",
-        "at": "2026-09-01T20:23:00Z"
-      },
-      {
-        "id": "rc4183-season-decision-routing",
-        "result": "Implemented canonical roster slot mapping, FLEX RB/WR/TE eligibility, K/DST exclusion from skill drop pool, K-only waiver comparison, PITTI-only projection/matchup policy and starter evidence parity; added release regression.",
-        "at": "2026-09-02T10:47:00Z"
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
-      "code": null,
-      "reason": "v230 exact-head validation and dependent release/waiver lanes remain."
+      "allowed": true,
+      "code": "PROJECT_MILESTONE_REACHED",
+      "reason": "Checkpoint repair milestone recorded. Re-inventory currently authorized work after dynamic authority verification; historical queues do not authorize continuation."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260902T1915Z-v230",
-    "status": "PASS_POSTMERGE_RESEAL_PENDING_CI",
+    "generation": "20260906T1200Z-v235",
+    "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.189 merged main; v230 resealed. Require exact-head strict gates green, verify deployment parity, then one rc4.189 physical canary.",
-    "transaction_in_progress": false
+    "resume": "Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.",
+    "transaction_in_progress": false,
+    "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
+    "refresh_scope": "QB2_AUTHORITY_REPAIR; Git/GitHub HEAD and CI remain dynamic, never inherited from prior reviewed commits"
   },
-  "status": "RC4189_POSTMERGE_RESEAL_SEALED_PENDING_CI",
-  "gate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY",
-  "nextGate": "RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY",
-  "handoffGeneration": "20260902T1915Z-v230"
+  "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
+  "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
+  "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
+  "handoffGeneration": "20260906T1200Z-v235",
+  "codex": {
+    "status": "HISTORICAL_AUDIT_RECORD",
+    "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
+    "local_main_verified": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
+    "working_tree_at_precheck": "clean",
+    "audit_result": "FAIL_CLOSED_ON_RESIDUAL_POSTMERGE_STATE_POINTERS",
+    "audit_findings": [
+      "PITTI_CURRENT_STATE.json:153-154 v233 pending strict CI/merge",
+      "PITTI_NEW_CHAT_BOOTSTRAP.md:9 v233 merge still current"
+    ],
+    "scope": "HISTORICAL/SUPERSEDED audit evidence; no operative branch or permission authority"
+  },
+  "historical_superseded": {
+    "classification": "HISTORICAL/SUPERSEDED; never current authority or executable queue",
+    "v233_premerge": {
+      "status": "V233_SEALED_PENDING_STRICT_CI",
+      "gate": "V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT",
+      "ci": {
+        "candidate_package": "v230 head 86f4039 queued after guard syntax repair",
+        "release_contract_v2": "v230 head 86f4039 queued after guard syntax repair",
+        "project_guardrails": "v230 head 86f4039 queued after guard syntax repair",
+        "validated_code_head": null,
+        "scope": "rc4.189 post-merge reseal exact-head validation"
+      },
+      "auto_waiting": [
+        {
+          "id": "v233-strict-gates",
+          "lane": "handoff",
+          "goal": "Validate exact sealed v233 checkpoint-only stale-current-pointer repair with all three strict GitHub gates.",
+          "state": "waiting_external"
+        }
+      ],
+      "auto_blocked": [
+        {
+          "id": "codex-local-reaudit-after-v233",
+          "lane": "codex",
+          "goal": "After v233 merges to main, user pulls local PITTI-Codex main and repeats the read-only authority audit.",
+          "state": "blocked_user"
+        }
+      ],
+      "codex": {
+        "status": "SECOND_READ_ONLY_AUDIT_FAIL_CLOSED_ON_STALE_CURRENT_POINTERS",
+        "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
+        "local_main_verified": "e25dc0df1a534f5f2d8c79dff3d6d007603bafa6",
+        "working_tree": "clean",
+        "audit_result": "FAIL_CLOSED_CORRECTLY_ON_NEW_CHAT_HANDOFF_AND_PREFLIGHT_STALE_CURRENT_AUTHORITY",
+        "work_pr": 118,
+        "work_branch": "pitti/rc4190-roster-week1-needs",
+        "work_package_authority": "PR_ONLY_NOT_MAIN"
+      }
+    },
+    "v234_local_request": {
+      "classification": "HISTORICAL/SUPERSEDED; evidence only, never current authorization",
+      "local_repair": {
+        "generation": "20260903T1200Z-v234",
+        "branch": "pitti/v234-postmerge-authority-repair",
+        "base_main": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
+        "scope": "CHECKPOINT_GUARDRAIL_ONLY",
+        "remote_actions_authorized": false
+      },
+      "gate": "LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION",
+      "resume": "Review the locally validated post-merge authority repair. No v233 merge or strict-CI gate remains. Its local post-merge read-only audit already ran and failed closed on residual state pointers. This work is local only: no push, merge, deployment, network access or PR #118 changes are authorized.",
+      "codex": {
+        "status": "POSTMERGE_READONLY_AUDIT_FAIL_CLOSED_REPAIRED_LOCALLY",
+        "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
+        "local_main_verified": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
+        "working_tree_at_precheck": "clean",
+        "audit_result": "FAIL_CLOSED_ON_RESIDUAL_POSTMERGE_STATE_POINTERS",
+        "audit_findings": [
+          "PITTI_CURRENT_STATE.json:153-154 v233 pending strict CI/merge",
+          "PITTI_NEW_CHAT_BOOTSTRAP.md:9 v233 merge still current"
+        ],
+        "work_pr": 118,
+        "work_branch": "pitti/rc4190-roster-week1-needs",
+        "work_package_authority": "PR_ONLY_NOT_MAIN",
+        "repair_branch": "pitti/v234-postmerge-authority-repair"
+      },
+      "pr118": {
+        "status": "OPEN / UNMERGED / NON-PRODUCTION",
+        "branch": "pitti/rc4190-roster-week1-needs",
+        "evidence": "User-supplied authority; no remote verification or modification."
+      },
+      "ci": {
+        "candidate_package": "NOT_REVERIFIED_OFFLINE",
+        "release_contract_v2": "NOT_REVERIFIED_OFFLINE",
+        "project_guardrails": "NOT_REVERIFIED_OFFLINE",
+        "validated_code_head": null,
+        "scope": "Remote CI unknown in this offline repair; v233 is merged, not a pending CI gate. Local validation is separate."
+      },
+      "pr122": {
+        "pr": 122,
+        "head": "f59c642f41c5b2afa3f73c974bff7c03e3e43699",
+        "status": "OPEN / MERGEABLE / UNMERGED",
+        "checks": {
+          "project_guardrails": "PASS",
+          "release_contract_v2": "PASS",
+          "candidate_package": "PASS"
+        },
+        "evidence": "User-supplied exact-commit observation before this correction; not current GitHub verification or evidence for a later commit"
+      }
+    },
+    "rc4190_migration": {
+      "classification": "HISTORICAL provenance only; never current PR status",
+      "base_main": "edc4e670388f90f9209a15194b3b937f01ad1681",
+      "pr122": {
+        "status": "MERGED/HISTORICAL",
+        "head": "5eac75b4a20ee04c366b67c9dcb630318c4beb91"
+      },
+      "pr118": {
+        "head": "17503032a955ede8cba4d9a64fa4bc78ac1f795b",
+        "observed": "OPEN/UNMERGED/NON-PRODUCTION",
+        "classification": "EVIDENCE_ONLY"
+      },
+      "baseline": "154/154 local checks PASS before migration"
+    },
+    "qb2_metadata_repair": {
+      "classification": "HISTORICAL/SUPERSEDED",
+      "previous_generation": "20260903T1230Z-v234",
+      "reviewed_input_head": "ce7e735a65124389560f03119cfb3e4e1959b2c1",
+      "observed_main": "685770c13c977481eb94e4142d227ebc58c10499",
+      "reason": "Unscoped user_qb_limit and QB2 exclusion are replaced by explicit draft-only constraints; season exceptions never weaken draft policy."
+    }
+  },
+  "qb_policy": {
+    "draft": {
+      "phase": "DRAFT",
+      "qb_limit": 1,
+      "exclude_qb2_after_qb1": true,
+      "supersession": "FUTURE_EXPLICIT_USER_DECISION_ONLY"
+    },
+    "season": {
+      "phase": "POST_DRAFT_SEASON_COMPANION",
+      "universal_qb_roster_limit": null,
+      "qb2_exception_allowed": true,
+      "contexts": [
+        "waiver",
+        "free_agency",
+        "trade",
+        "roster_optimization"
+      ],
+      "requires": "Explicit context-dependent value, verified evidence, legal capacity, same-bye and future D/ST drop costs; no automatic acquisition"
+    },
+    "season_exception_weakens_draft_rule": false
+  }
 }

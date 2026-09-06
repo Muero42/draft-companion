@@ -22,14 +22,12 @@ on:
       - '.github/workflows/release-contract-v2.yml'
       - '.github/workflows/release-contract-v2-package.yml'
       - 'app.js'
-      - 'lineup-start-sit-v2.js'
-      - 'season-evidence-layer.js'
       - 'decision-policy.js'
       - 'tools/analyze-decision-evidence.mjs'
       - 'tools/pitti_guardrail_check.mjs'
+      - 'tools/postmerge-authority-contract.mjs'
+      - 'tools/postmerge-authority-regression.mjs'
       - 'tools/runtime-startup-contract.mjs'
-      - 'tools/season-lineup-start-sit-v2-regression.mjs'
-      - 'tools/season-matchup-evidence-layer-regression.mjs'
       - 'tools/pre-draft-freshness-gate.mjs'
       - 'tools/emergency-queue-contract.mjs'
       - 'tools/rc4100-turn-portfolio.mjs'
@@ -56,23 +54,15 @@ jobs:
   guardrails:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
         with:
           fetch-depth: 0
+          ref: ${{ github.event.pull_request.head.sha || github.sha }}
+          persist-credentials: false
       - name: Node syntax
         run: node --check app.js
       - name: Browser/PWA runtime startup contract
         run: node tools/runtime-startup-contract.mjs
-      - name: Waiver team-needs v3 regression
-        run: node tools/season-waiver-team-needs-v3-regression.mjs
-      - name: Trade team-needs v2 regression
-        run: node tools/season-trade-team-needs-v2-regression.mjs
-      - name: Lineup start-sit v2 regression
-        run: node tools/season-lineup-start-sit-v2-regression.mjs
-      - name: Matchup Vegas weather evidence regression
-        run: node tools/season-matchup-evidence-layer-regression.mjs
-      - name: D/ST and kicker season stream regression
-        run: node tools/season-dst-k-stream-regression.mjs
       - name: rc4.97 microfix contract
         if: contains(github.head_ref || github.ref_name, 'rc4.97-microfix')
         run: node tools/rc497-microfix.mjs
@@ -81,6 +71,8 @@ jobs:
         run: echo retired
       - name: v4/v5 backup evidence quality audit self-test
         run: node tools/audit-v45-backup.mjs --self-test
+      - name: Post-merge authority regression
+        run: node tools/postmerge-authority-regression.mjs
       - name: PITTI execution-lock and anti-regression gate
         env:
           PITTI_SKIP_SEAL_INTEGRITY: ${{ github.event_name == 'pull_request' && '1' || '0' }}
@@ -93,3 +85,16 @@ jobs:
             echo 'Guardrail hardening must not mutate Draft Companion runtime files.' >&2
             exit 1
           }
+
+      - name: rc4.190 migration contracts
+        run: |
+          node tools/season-decision-engine-regression.mjs
+          node tools/permission-contract-regression.mjs
+          node tools/takeover-authority-regression.mjs
+          node tools/postmerge-authority-regression.mjs
+
+      - name: Independent runtime review and strict seal
+        run: |
+          node tools/season-adversarial-review-regression.mjs
+          node tools/cloud-foundation-regression.mjs
+          PITTI_SKIP_SEAL_INTEGRITY=0 PITTI_CANDIDATE_PREFLIGHT=0 node tools/pitti_guardrail_check.mjs

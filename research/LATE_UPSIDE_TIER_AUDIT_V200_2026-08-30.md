@@ -1,5 +1,7 @@
 # PITTI late-round upside + tier/opportunity-cost audit — v200 — 2026-08-30
 
+> HISTORICAL/SUPERSEDED operational checkpoint: runtime, device, deployment, release/activation gates and CURRENT/OVERRIDE instructions below describe the original dated context only. They must not be executed as current work or override ../PITTI_CURRENT_STATE.json and ../NEW_CHAT_HANDOFF_CURRENT.md. Research evidence and durable invariants remain as provenance, subject to later explicit corrections.
+
 ## Fresh external control
 FantasyPros RB sleeper consensus (Aug 28, 26 experts) currently leads with Jonah Coleman, MarShawn Lloyd, Alvin Kamara, Keaton Mitchell and Tank Bigsby; Braelon Allen, Dylan Sampson, Emmett Johnson, Mike Washington Jr. and others also appear in the sleeper corridor. A separate Aug 26 Derek Brown late-RB article highlights Jordan Mason, Kenny Gainwell, Jacory Croskey-Merritt and Jonah Coleman.
 

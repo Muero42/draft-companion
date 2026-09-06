@@ -1,5 +1,6 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
-const a=fs.readFileSync('app.js','utf8'),h=fs.readFileSync('index.html','utf8');
+// Source assertions must inspect identical logical lines on Windows and Linux.
+const a=fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n'),h=fs.readFileSync('index.html','utf8');
 const v=(a.match(/const APP_VERSION='([^']+)'/)||[])[1];const n=Number((v.match(/rc4\.(\d+)/)||[])[1]);assert.ok(n>=176,'requires rc4.176+');
 for(const id of ['seasonRefreshLiveBtn','seasonRefreshRanksBtn']){assert.ok(!h.includes('id="'+id+'"'),'manual Season refresh control resurrected: '+id);assert.ok(!a.includes("'"+id+"'"),'manual Season refresh wiring resurrected: '+id);}
 assert.ok(h.includes('id="seasonLiveStateStatus"')&&h.includes('id="seasonRankingStatus"'),'Season status surfaces missing');

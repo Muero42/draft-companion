@@ -1,15 +1,17 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v230
-Generation: `20260902T1915Z-v230`
+# PITTI HANDOFF COMPLETENESS MATRIX — v235
+Generation: `20260906T1200Z-v235`
 
-PASS requires all of:
-- POST_DRAFT_SEASON_COMPANION; rc4.189 merged main at `88c007732f94df7b1624a6c05a0b16af4d33d94f`; PR #108 historical/merged, not a current gate.
-- PR108 prior 0a41ca11: release PASS, guardrails PASS, candidate FAIL only explicit live roster_id-vs-draft-slot invariant token; behavior already uses live roster identity. Latest head must be freshly queried.
-- Never restore static trade depth caps or blanket TE2 penalty. FLEX permits RB/WR/TE and two TE where legal.
-- Persist all ten Sleeper rosters + manager mapping + starters/reserve/taxi + waiver position + FAAB used/remaining. Sleeper live state authority; draft history only; Watcher evidence-only.
-- Lawrence: opponent-specific live QB/FAAB market analysis pending; include same-bye negative and two active-drop opportunity cost because D/ST still required. No generic in-season QB2 ban.
-- IR/Reserve never ordinary drop/capacity target. Kader lineup-only; Add/Drop under Waiver.
-- Latest physical Android rc4.188 Waiver/FA + IR/drop semantic PASS; accepted rollback rc4.169. No rc4.189 device action until post-merge reseal exact-head gates and deployment parity PASS; then one canary.
-- AUTO same-turn continuous execution; queue takeover from CURRENT; checkpoint/re-inventory after each package; no interim status/ack, empty reply, or promise-only continuation; external wait only blocks its lane; STATUS report-only.
+PASS requires:
+- Source/runtime v11.8.0-rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 package lineage is locally reconciled through the authorized two-parent bridge; publication remains unverified and no merge/deployment/device acceptance is claimed.
+- Gate `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK` aligned across CURRENT, LOCK, COMMAND, SEAL, bootstrap, handoff and preflight.
+- Post-v233 local read-only audit recorded as performed and FAIL_CLOSED; historical audit evidence retained; no pending v233 CI/merge or repeat-audit queue.
+- Historical branch/base/PR evidence separated from current dynamic authority; no containing-commit SHA claim.
+- Full local strict guard including seal integrity and semantic cross-reference validation; negative tests reject resurrected v233 gates.
+- live Sleeper state roster/ownership authority; draft historical only; IR/Reserve never ordinary drop; no generic TE2/QB2 ban; Lawrence includes future D/ST second-drop cost.
+- Historical version/gate/supersession statements explicitly scoped; no stale package digest promoted to rc4.190.
+- AUTO same-turn continuous execution and STATUS report-only. Empty assistant response after tool work is forbidden.
+- Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
 
-- REPO v230 — rc4.189 merged main; post-merge reseal exact-head gate pending; rc4.188 physical Waiver/FA PASS; rc4.169 rollback retained.
-- Empty assistant response after tool work is forbidden. AUTO waits may block only dependent lanes.
+Canonical permission boundary: AGENTS.md. Deterministic local validation: `node tools/strict-suite.mjs`; dynamic takeover: `node tools/takeover-authority.mjs <fresh-github-evidence.json>`. The evidence file is an external observation, never tracked CURRENT status. Read the schema and limits in PITTI_CODEX_WORK_PACKAGE.md.
+
+QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy.

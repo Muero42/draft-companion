@@ -1,47 +1,11 @@
-name: rc4.61 live surface v3
+name: HISTORICAL ARCHIVE - rc461-live-surface-v3.yml
 on:
-  push:
-    branches: [pitti-auto/rc4.61-live-surface-v3]
-    paths:
-      - 'tools/apply-rc461-live-surface-v3.mjs'
-      - 'live-surface-v3.js'
-      - 'live-surface-v3.css'
-      - '.github/workflows/rc461-live-surface-v3.yml'
+  workflow_dispatch:
 permissions:
-  contents: write
+  contents: read
 jobs:
-  verify:
+  archived:
+    if: ${{ false }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - name: Generate rc4.61 runtime
-        run: node tools/apply-rc461-live-surface-v3.mjs
-      - name: Regression gates
-        run: |
-          node --check app.js
-          node --check sw.js
-          node --check live-surface-v3.js
-          grep -q "window.PITTI_LIVE_DECISION_STATE" app.js
-          grep -q "id=\"liveDecisionSurfaceV3\"" index.html
-          grep -q "id=\"analysisJumpV3\"" index.html
-          grep -q "10ER-ÜBERSICHT" live-surface-v3.js
-          grep -q "Pick-Confidence" live-surface-v3.js
-          grep -q "AUSSERHALB NORMAL-CUT" live-surface-v3.js
-          grep -q "Chat-Handoff kopieren" live-surface-v3.js
-          grep -q "Full Diagnostic" live-surface-v3.js
-          grep -q "USER_HARD_QB_EXCLUSIONS" app.js
-          grep -q "DRAFT_ACUTE_STATUS_2026" app.js
-          grep -q "v11.8.0-rc4.61" app.js index.html sw.js live-surface-v3.js
-      - name: Package test candidate
-        run: |
-          zip -X -q Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip README.md _worker.js app.js icon.svg index.html manifest.webmanifest styles.css sw.js live-surface-v3.js live-surface-v3.css
-          unzip -t Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip
-          sha256sum Draft_Companion_v11.8.0-rc4.61_FULL_TEST.zip
-      - name: Commit generated runtime on branch
-        if: github.event_name == 'push'
-        run: |
-          git config user.name github-actions
-          git config user.email github-actions@github.com
-          git add app.js index.html sw.js
-          git diff --cached --quiet || git commit -m 'rc4.61: generate v3 locked live runtime'
-          git push
+      - run: echo 'Historical workflow retained in docs/archive; never execute as current runtime.'

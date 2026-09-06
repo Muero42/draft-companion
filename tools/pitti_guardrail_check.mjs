@@ -1,5 +1,6 @@
 import fs from 'node:fs';
 import crypto from 'node:crypto';
+import {AUTHORITY_GATE,loadAuthority,validateAuthority} from './postmerge-authority-contract.mjs';
 
 const fail=(msg)=>{console.error(`PITTI_GUARDRAIL_FAIL: ${msg}`);process.exitCode=1};
 const must=(cond,msg)=>{if(!cond)fail(msg)};
@@ -24,11 +25,15 @@ const preDraftFreshnessGate=text('tools/pre-draft-freshness-gate.mjs');
 const emergencyQueueContract=text('tools/emergency-queue-contract.mjs');
 const current=JSON.parse(text('PITTI_CURRENT_STATE.json'));
 const seal=JSON.parse(text('PITTI_HANDOFF_SEAL.json'));
+for(const error of validateAuthority(loadAuthority())) fail(error);
+
 const candidatePreflight=process.env.PITTI_CANDIDATE_PREFLIGHT==='1';
 const candidateVersion=(app.match(/const APP_VERSION='([^']+)'/)||[])[1]||'';
 const handoffGeneration=(currentHandoff.match(/Handoff generation:\s*`([^`]+)`/)||[])[1];
 const gitBlobSha=(p)=>{
-  const b=fs.readFileSync(p);
+  // Seal-listed files are UTF-8 text. Hash canonical LF Git content so a Windows
+  // CRLF checkout and a Linux CI checkout validate the same committed bytes.
+  const b=Buffer.from(fs.readFileSync(p,'utf8').replace(/\r\n/g,'\n'),'utf8');
   const h=crypto.createHash('sha1');
   h.update(Buffer.from(`blob ${b.length}\0`));
   h.update(b);
@@ -117,25 +122,21 @@ must(app.includes('const weekly=weeklyFresh?'),'THIS WEEK waiver horizon must fa
 must(app.includes("weekly:null")||app.includes("weekly=weeklyFresh?"),'THIS WEEK stale-evidence null path missing');
 must(app.includes("FA-vs-Roster v2"),'Waiver v2 surface missing');
 must(app.includes("frische Weekly-Evidence fehlt"),'Waiver v2 stale weekly explanation missing');
-must(app.includes('Trade Team-Needs v2'),'Trade Team-Needs v2 surface missing');
-must(app.includes('PittiTradeTeamNeedsV2.generate('),'bilateral Trade team-needs v2 offer generation missing');
-must(app.includes('Annahme-Plausibilität'),'Trade acceptance plausibility missing');
-must(app.includes('Lineup / Start-Sit v2'),'Lineup v2 surface missing');
-must(app.includes("LINEUP_WEEKLY_EVIDENCE_KEY='pitti.lineup-weekly-evidence.v2'"),'weekly lineup evidence interface missing');
-must(app.includes('Keine Preseason-/ECR-/ADP-Ersatzwerte'),'weekly evidence fail-closed invariant missing');
-must(text('lineup-start-sit-v2.js').includes("const DEFAULT_SLOTS=['QB','RB','WR','WR','TE','FLEX','W/R','K','DST']"),'canonical Lineup v2 geometry missing');
-must(app.includes('D/ST STREAM'),'D/ST season-stream surface missing');
+must(app.includes('Trade Board v7')&&app.includes('function seasonTradeDecision('),'Trade Board v7 bilateral evidence surface missing');
+must(app.includes('function tradeOfferCandidates('),'Trade offer construction helper missing');
+must(app.includes('acceptance:null')&&app.includes('result.ourGain>0&&result.opponentGain>0'),'Trade acceptance must require bilateral gain and cannot fabricate a probability');
+must(app.includes(' Start/Sit v5'),'Start/Sit canonical-slot surface missing');
+must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
+must(app.includes('PITTI nutzt eigene Weekly-Panel-Ranks'),'PITTI weekly-panel primary invariant missing');
+must(app.includes('Special Teams v2'),'Special Teams v2 quality-floor surface missing');
 must(app.includes("dropCandidatePolicy:{primary:['Tank Bigsby','Tyjae Spears','Kenneth Gainwell'],protected:['Jadarian Price','Christian Watson','Josh Downs']"),'Mevis drop gate must protect Price/Watson/Downs and compare Bigsby/Spears/Gainwell');
-const specialTeams=text('dst-k-season-stream.js');
-must(specialTeams.includes("candidates.filter(x=>normPos(x?.p?.pos)==='K')"),'Kicker candidates must be K-only');
-must(specialTeams.includes("candidates.filter(x=>normPos(x?.p?.pos)==='DST')"),'D/ST candidates must be D/ST-only');
-must(specialTeams.includes("row.seasonStatus!=='RESERVE'&&row.seasonStatus!=='IR'"),'Reserve/IR must not satisfy stream capacity');
+must(app.includes('Kicker werden ausschließlich hier gegen verfügbare Kicker verglichen; niemals gegen RB/WR/TE.'),'Waiver UI must enforce K-only replacement for roster kicker');
 must(app.includes('SEASON_FA_POOL_ZERO_INVALID'),'zero live season FA pool must fail closed');
 must((app.match(/SEASON_FA_POOL_ZERO_INVALID/g)||[]).length>=2,'zero FA fail-closed gate must cover both startup bootstrap and analyze path');
 must(app.includes('FA-POOL NICHT VALIDIERT'),'invalid season FA pool must be visible');
 must(app.includes('kein FA/HOLD-Urteil aus Draft-Verfügbarkeit'),'post-draft FA must never fall back to draft availability');
 
-must(specialTeams.includes("actionable?'STREAM/ADD'"),'D/ST stream must retain an explicit actionable gate');
+must(app.includes('filter(x=>x.rb&&x.rb.tier<=4)'),'D/ST quality floor must filter tier 5/6 before ranking');
 
 
 must(app.includes('function applyPlayerQualitySafetyGate('),'Value-Safety gate missing');
@@ -164,7 +165,7 @@ must(['NO_AUTO_RESTORE_AVAILABILITY_ONLY; FRESH_INDIVIDUAL_QUALIFICATION_ALLOWED
 must(e.weightsAreFinalWinner===false,'no Expert-v2 profile may be mislabeled final winner');
 must(e.oldWrOnlyRejectionSemanticsAreAuthority===false,'obsolete WR-only authority resurrected');
 must(lock.league?.userDraftQbLimit===1,'user one-QB strategy lock drift');
-must(lock.league?.userQb2Policy==='HARD_USER_STRATEGY_EXCLUSION_AFTER_QB1','user QB2 policy drift');
+must(lock.league?.userQb2Policy==='DRAFT_ONLY_EXCLUSION_AFTER_QB1','user QB2 policy drift');
 must(/^\d+\.\d+\.\d+$/.test(String(commandContract.version||'')),'repo command contract version malformed');
 must(commandContract.sourceOrder?.includes('PITTI_CURRENT_STATE.json'),'CURRENT missing from takeover source order');
 must(commandContract.sourceOrder?.includes('PITTI_HANDOFF_SEAL.json'),'SEAL missing from takeover source order');
@@ -186,10 +187,10 @@ if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
   must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
   must(handoffMatrix.includes(current.handoff_generation),'Season Companion MATRIX generation drift');
   must(currentHandoff.includes(current.handoff_generation),'Season Companion HANDOFF generation drift');
-  must(['v11.8.0-rc4.161','v11.8.0-rc4.162','v11.8.0-rc4.163','v11.8.0-rc4.164','v11.8.0-rc4.165','v11.8.0-rc4.166','v11.8.0-rc4.167','v11.8.0-rc4.168','v11.8.0-rc4.169','v11.8.0-rc4.170','v11.8.0-rc4.171','v11.8.0-rc4.172','v11.8.0-rc4.173','v11.8.0-rc4.174','v11.8.0-rc4.175','v11.8.0-rc4.176','v11.8.0-rc4.177','v11.8.0-rc4.178','v11.8.0-rc4.179','v11.8.0-rc4.180','v11.8.0-rc4.181','v11.8.0-rc4.182','v11.8.0-rc4.183','v11.8.0-rc4.184','v11.8.0-rc4.185','v11.8.0-rc4.186','v11.8.0-rc4.187','v11.8.0-rc4.188','v11.8.0-rc4.189'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
-  if(!candidatePreflight) must(['DEVICE_RC4161_ACCEPTANCE','SEASON_ACTIONABILITY_INCREMENT','DEVICE_RC4163_SEASON_SURFACES','DEVICE_RC4164_LIVE_SEASON_HYDRATION','SELFTEST_RC4165_SEASON_STARTUP','DEVICE_RC4165_FINAL_CANARY','RC4166_CI_AND_PREVIEW_DEPLOY','DEVICE_RC4166_FINAL_CANARY','VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY','RC4168_PARITY_THEN_DEVICE_REFRESH','RC4169_PREVIEW_PARITY_THEN_DEVICE_REFRESH','RC4170_PREVIEW_THEN_DEVICE_REFRESH','AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE','FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL','RC4177_STRICT_VALIDATION','DEVICE_RC4177_DIAGNOSTIC_CANARY','RC4178_STRICT_VALIDATION','RC4179_STRICT_VALIDATION','RC4180_STRICT_VALIDATION','RC4181_STRICT_VALIDATION','RC4181_BROWSER_EQUIVALENT_SEASON_E2E','RC4182_STRICT_VALIDATION','FINAL_PHYSICAL_RC4182_ACCEPTANCE','PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY','PR108_FINAL_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION','PR108_LATEST_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION','PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION','RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY'].includes(commandContract.currentGate),'Season Companion command gate regression');
-  if(!candidatePreflight) must(['DEVICE_RC4161_ACCEPTANCE','SEASON_ACTIONABILITY_INCREMENT','DEVICE_RC4163_SEASON_SURFACES','DEVICE_RC4164_LIVE_SEASON_HYDRATION','SELFTEST_RC4165_SEASON_STARTUP','DEVICE_RC4165_FINAL_CANARY','RC4166_CI_AND_PREVIEW_DEPLOY','DEVICE_RC4166_FINAL_CANARY','VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY','RC4168_PARITY_THEN_DEVICE_REFRESH','RC4169_PREVIEW_PARITY_THEN_DEVICE_REFRESH','RC4170_PREVIEW_THEN_DEVICE_REFRESH','AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE','FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL','RC4177_STRICT_VALIDATION','DEVICE_RC4177_DIAGNOSTIC_CANARY','RC4178_STRICT_VALIDATION','RC4179_STRICT_VALIDATION','RC4180_STRICT_VALIDATION','RC4181_STRICT_VALIDATION','RC4181_BROWSER_EQUIVALENT_SEASON_E2E','RC4182_STRICT_VALIDATION','FINAL_PHYSICAL_RC4182_ACCEPTANCE','PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY','PR108_FINAL_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION','PR108_LATEST_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION','PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION','RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY'].includes(lock.gate),'Season Companion lock gate regression');
-  if(!candidatePreflight) must(['DEVICE_RC4161_ACCEPTANCE','SEASON_ACTIONABILITY_INCREMENT','DEVICE_RC4163_SEASON_SURFACES','DEVICE_RC4164_LIVE_SEASON_HYDRATION','SELFTEST_RC4165_SEASON_STARTUP','DEVICE_RC4165_FINAL_CANARY','RC4166_CI_AND_PREVIEW_DEPLOY','DEVICE_RC4166_FINAL_CANARY','RC4167_ALL_GATES_THEN_SINGLE_PREVIEW_DEPLOY','VERIFY_RC4167_PREVIEW_THEN_SINGLE_DEVICE_CANARY','RC4168_PARITY_THEN_DEVICE_REFRESH','RC4169_PREVIEW_PARITY_THEN_DEVICE_REFRESH','RC4170_PREVIEW_THEN_DEVICE_REFRESH','AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE','FINAL_DEVICE_CONFIRMATION_AFTER_RESEAL','RC4177_STRICT_VALIDATION','DEVICE_RC4177_DIAGNOSTIC_CANARY','RC4178_STRICT_VALIDATION','RC4179_STRICT_VALIDATION','RC4180_STRICT_VALIDATION','RC4181_STRICT_VALIDATION','RC4181_BROWSER_EQUIVALENT_SEASON_E2E','RC4182_STRICT_VALIDATION','FINAL_PHYSICAL_RC4182_ACCEPTANCE','PR102_ALL_STRICT_GATES_GREEN_THEN_MERGE_POSTMERGE_DEPLOY','PR108_FINAL_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION','PR108_LATEST_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION','PR108_V229_EXACT_HEAD_ALL_GREEN_THEN_MERGE_RC4186_PROMOTION','RC4189_POSTMERGE_RESEAL_ALL_GREEN_THEN_DEVICE_CANARY'].includes(current.currentWork?.nextGate),'Season Companion CURRENT next gate regression');
+  must(['v11.8.0-rc4.161','v11.8.0-rc4.162','v11.8.0-rc4.163','v11.8.0-rc4.164','v11.8.0-rc4.165','v11.8.0-rc4.166','v11.8.0-rc4.167','v11.8.0-rc4.168','v11.8.0-rc4.169','v11.8.0-rc4.170','v11.8.0-rc4.171','v11.8.0-rc4.172','v11.8.0-rc4.173','v11.8.0-rc4.174','v11.8.0-rc4.175','v11.8.0-rc4.176','v11.8.0-rc4.177','v11.8.0-rc4.178','v11.8.0-rc4.179','v11.8.0-rc4.180','v11.8.0-rc4.181','v11.8.0-rc4.182','v11.8.0-rc4.183','v11.8.0-rc4.184','v11.8.0-rc4.185','v11.8.0-rc4.186','v11.8.0-rc4.187','v11.8.0-rc4.188','v11.8.0-rc4.190'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
+  must(commandContract.currentGate===AUTHORITY_GATE,'Season Companion command gate regression');
+  must(lock.gate===AUTHORITY_GATE,'Season Companion lock gate regression');
+  must(current.currentWork?.nextGate===AUTHORITY_GATE,'Season Companion CURRENT next gate regression');
   if(!candidatePreflight) must(String(current.live_roster_canary?.observed||'').includes('Tank Bigsby absent'),'Season Companion transaction canary regression');
   if(!candidatePreflight) must(!String(current.live_roster_canary?.observed||'').includes('Tank Bigsby added'),'stale Bigsby-added canary resurrected');
   if(!candidatePreflight) must(bootstrap.includes('No device-side trial-and-error'),'device trial-and-error prohibition missing');
@@ -220,6 +221,7 @@ if(!candidatePreflight){
   must(current.handoff_generation===handoffGeneration,'CURRENT/Handoff generation mismatch');
 }
 const sealPending=seal.status==='SUPERSEDED_PENDING_RESEAL'&&seal.handoff_ready===false&&seal.second_pass_pass===false;
+must(seal.integrity_normalization==='UTF8_LF_TEXT','seal canonical text normalization missing');
 must((seal.status==='PASS'&&seal.handoff_ready===true&&seal.second_pass_pass===true)||sealPending,'handoff seal state invalid');
 const integrityBypass=process.env.PITTI_SKIP_SEAL_INTEGRITY==='1'||sealPending;
 const requiredSealFiles=['PITTI_CURRENT_STATE.json','NEW_CHAT_HANDOFF_CURRENT.md','PITTI_COMMAND_CONTRACTS.json','PITTI_NEW_CHAT_BOOTSTRAP.md','HANDOFF_COMPLETENESS_MATRIX.md','PITTI_EXECUTION_LOCK.json','PITTI_PROJECT_STATE.md','PITTI_AUTO_PREFLIGHT.md','app.js','live-surface-v3.js'];
@@ -278,7 +280,7 @@ for(const token of ['pitti-decision-evidence-v2','QB2_VIOLATION','WR6_PLUS_COACH
   must(evidenceAnalyzer.includes(token),`Evidence-v2 analyzer invariant missing: ${token}`);
 
 const digest=crypto.createHash('sha256').update(JSON.stringify(lock)).digest('hex');
-if(!process.exitCode)console.log(`PITTI_GUARDRAILS_PASS lock_sha256=${digest} app=${lock.runtime.appVersion} gate=${e.currentGate}`);
+if(!process.exitCode)console.log(`PITTI_GUARDRAILS_PASS lock_sha256=${digest} app=${lock.runtime.appVersion} gate=${commandContract.currentGate}`);
 if(current.currentWork?.nextGate==='AUTOMATED_SEASON_E2E_BEFORE_ANY_DEVICE_UPDATE'){
   must(commandContract.auto?.devicePromotionRequiresAutomatedSeasonE2E===true,'device promotion E2E guard missing');
   must(commandContract.auto?.manualDeviceCanaryIsFinalConfirmationOnly===true,'device canary final-only guard missing');

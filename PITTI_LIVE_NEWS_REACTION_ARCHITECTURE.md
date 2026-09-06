@@ -42,7 +42,7 @@ Tier 2 specialist aggregators:
 Tier 3 analysis:
 - trusted fantasy analysts for role interpretation, not as sole confirmation of a factual injury/transaction.
 
-Speed policy: a Tier-1 direct practice/injury report may trigger a provisional WATCH immediately. CLEAR ADD / aggressive FAAB requires either primary confirmation or corroboration unless the market window is exceptionally short; show confidence explicitly.
+Speed policy: a Tier-1 direct practice/injury report may trigger a provisional WATCH immediately. CLEAR ADD / aggressive FAAB requires either primary confirmation or corroboration without a time-pressure exception; show confidence explicitly.
 
 ## Precompute priority
 P0 all 32 RB rooms: starter(s), handcuff misconception risk, early-down/pass-down/goal-line successors, committee likelihood, free-agent contingent targets.

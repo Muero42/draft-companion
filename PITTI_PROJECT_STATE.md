@@ -1,5 +1,5 @@
 # PITTI PROJECT STATE — Season Companion 2026
-Updated: 2026-09-01
+Updated: 2026-09-03
 Canonical continuation trigger: **PITTI AUTO**
 
 
@@ -15,16 +15,16 @@ Canonical continuation trigger: **PITTI AUTO**
 
 ## Authority / non-negotiable state
 - Current work is **post-draft / season operation**, not draft optimization.
-- Repository: `Muero42/draft-companion`; active development branch: `season-companion-rc4.159`.
-- Current code version constant: **v11.8.0-rc4.160**. Branch name remains rc4.159; do not infer code version from branch name.
-- Preview is deployed from `gh-pages/season-preview/` and was synchronized after the latest changes.
+- Repository authority: `Muero42/draft-companion`; canonical production/source branch: `main` with dynamically verified HEAD. Historical v231 reconciliation base was `0c110a5dc6688ebc840da8bb122efcc5d50f77e6`; it is not current HEAD authority.
+- Current source runtime/version in this tree: **v11.8.0-rc4.190** (verify canonical main containment dynamically). Latest physical Android evidence is **rc4.188 PASS**; accepted rollback authority remains **rc4.169**. Built/source/deployed/device-verified states are distinct.
+- Source/runtime rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.
 - Real 2026 draft ID: **1366053132970233856**, complete.
 - Current Sleeper league roster is Source of Truth. Never reconstruct current roster from the completed draft.
-- First real post-draft delta: Zach Charbonnet -> IR/Reserve; Tank Bigsby added. Preserve draft roster separately from current roster/transaction history.
+- HISTORICAL correction: Charbonnet -> IR/Reserve; the initially reported Bigsby add was only intended and occurred later on September 1. See the dated transaction correction below. Preserve draft roster separately from current roster/transaction history.
 - FantasyPros Analyzer A-/92 is benchmark/diagnostic only; it must not overwrite live roster or decisions.
 - No automatic external transactions. Analysis may be autonomous; adds/drops/FAAB/trades require user confirmation before execution.
 
-## Verified implementation state
+## HISTORICAL rc4.160 — Verified implementation state [SUPERSEDED for current implementation/gates]
 - Sleeper live roster sync works and displays the user's current lineup, bench and reserve.
 - Ownership is checked against all live Sleeper rosters before a player can be treated as a free agent.
 - Live context persists season rows plus available D/ST and K pools across rerenders.
@@ -42,17 +42,17 @@ Canonical continuation trigger: **PITTI AUTO**
 - Kader: Sleeper-like roster view, current starters first, bench/reserve, position emphasis, then **possible internal lineup changes** only.
 - Do not repeat the roster in Waiver/FA.
 - Waiver/FA: concrete roster moves, explicitly pairing ADD X / DROP Y; distinguish current-week value from long-term/ROS championship value.
-- Trades: targets and later concrete offers; distinguish value to us, value/need to opponent, fairness, acceptance chance and alternatives.
+- Trades: targets and concrete offers; distinguish value to us, value/need to opponent, fairness, acceptance chance and alternatives.
 - Draft surfaces remain historical/retrospective; season logic must not drift back to draft ADP as primary evidence.
 
 ## League / strategy constraints that still matter
 - 10-team Half-PPR. Starters: QB, 2 WR, 1 RB, 1 TE, 2 Flex, K, DST; bench 6.
 - Max simultaneously startable: 4 WR, 3 RB, 2 TE.
-- One-QB strategy; QB2 is not generic roster depth. Geno Smith and Aaron Rodgers remain hard exclusions.
+- Draft-only one-QB strategy; season QB2 is a context-dependent exception, not a universal roster cap. Geno Smith and Aaron Rodgers remain hard exclusions.
 - User expects weekly D/ST streaming unless a defense earns a multiweek hold. Good matchup is valuable but minimum defense quality is mandatory.
 - K/DST expert panels should be developed for in-season accuracy; draft expert panels remain historical baseline, not automatically the current FA truth.
 
-## Highest-priority next work
+## HISTORICAL rc4.160 — Highest-priority next work [SUPERSEDED for current implementation/gates]
 1. **Waiver v2:** separate THIS WEEK vs ROS/Championship EV; incorporate current role/usage, snaps/routes/targets where applicable, depth chart, health, freshness, opponent, replacement cost, market urgency and concrete drop cost. Fail closed when evidence is stale/incomplete.
 2. Add FAAB only when waiver timing, league market/competing claims and evidence support a meaningful estimate; avoid fake precision.
 3. **Trade engine:** from target discovery to concrete offer construction: target -> best offer/package -> our roster/lineup gain -> opponent need/gain -> market/fairness -> estimated acceptance plausibility -> fallback offer. Boone ROS Trade Value can be an input, not sole authority; adapt to 10-team Half-PPR/replacement level.
@@ -71,7 +71,7 @@ Canonical continuation trigger: **PITTI AUTO**
 - Watcher/research-cache evidence remains gated by run-health/provenance; stale cache evidence cannot independently trigger a CLEAR ADD.
 - Draft history must remain immutable while current roster evolves separately.
 
-## Handoff verification performed
+## HISTORICAL rc4.160 — Handoff verification performed [SUPERSEDED for current implementation/gates]
 - Repository code inspected immediately before handoff.
 - Confirmed app version constant rc4.160.
 - Confirmed Week-1 Start/Sit v2 present.
@@ -85,6 +85,9 @@ Canonical continuation trigger: **PITTI AUTO**
 - **AUTO / AUTO BLOCK:** autonomous end-to-end work, no unnecessary interim status messages.
 - **STATUS:** concise state report only, not a trigger for new calculations.
 - **PITTI HANDOFF:** update/reconcile this canonical state, verify code/preview, then hand over.
+
+## HISTORICAL LOG — SUPERSEDED operational authority
+All following dated checkpoints through v233 retain their original facts and wording as history. CURRENT/OVERRIDE/next-gate claims inside them apply only at their original checkpoint; none override the v234 CURRENT section at EOF. Durable product invariants remain unless explicitly superseded.
 
 ## rc4.160 AUTO verification update — 2026-09-01
 - Project Guardrails PASS and release-contract-v2 PASS on commit 68e2980d45d64b4014df7874cdb58895349d5e8c.
@@ -147,8 +150,8 @@ Canonical continuation trigger: **PITTI AUTO**
 - The same screenshot still rendered “0 gerankte Free Agents / HOLD”. Root cause: bootstrapSeasonWorkspace had a second render path that did not apply the zero-FA fail-closed gate already added to the main analyze path. Startup can occur before expert rank caches are hydrated, so ownership can be valid while the rank-gated FA join collapses to zero.
 - Fix: startup bootstrap now throws SEASON_FA_POOL_ZERO_INVALID on zero ranked skill-position FAs rather than rendering HOLD. Guardrail requires both startup and analyze paths to contain the zero-FA gate.
 
-## PITTI HANDOFF v217 — 2026-09-01 10:58Z
-- Canonical branch remains `season-companion-rc4.159`; branch name is historical and MUST NOT be interpreted as runtime version.
+## PITTI HANDOFF v217 — 2026-09-01 10:58Z [HISTORICAL]
+- Historical at v217: branch was `season-companion-rc4.159`; this is NOT current authority.
 - Source/preview candidate is now **v11.8.0-rc4.161** across app.js, index.html, sw.js and manifest.webmanifest. Android accepted authority remains rc4.158 until rc4.161 physical-device acceptance.
 - Real Sleeper draft 1366053132970233856 is immutable history. Current Sleeper league state is the sole current-roster/ownership authority.
 - Device rc4.160 transaction canary PASS: app independently observed Harrison Mevis rostered, Tank Bigsby absent, Zach Charbonnet Reserve/IR. This proves automatic add/drop roster detection; do not ask user which player was dropped when Sleeper can resolve it.
@@ -496,9 +499,9 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Final v229 CI audit exposed two additional handoff-guard defects on sealed head `bf84c32a08fd4f85c63d01b0274e9b867a0b8a2c`: executable guard still capped Season source_candidate at rc4.184, and it accepted seal status only PASS (or explicit pending), while v229 used PASS_HANDOFF_ONLY_PR108_VALIDATION_PENDING. Runtime startup and Season semantic regressions passed before these guard failures. Guard is now extended to rc4.185 + PR108 gates; seal will use canonical PASS while exact_gate/note continue to state that PR108 release validation is pending. No product behavior is reverted.
 
 
-## 2026-09-02 — HANDOFF v230 / rc4.189 post-merge reseal
-- Handoff generation: `20260902T1915Z-v230`.
-- rc4.189 is merged on main at `88c007732f94df7b1624a6c05a0b16af4d33d94f`; PR #108 is historical/merged and must never be resurrected as an open current gate.
+## 2026-09-02 — HANDOFF v230 / rc4.189 post-merge reseal [HISTORICAL SUPERSEDED BY v231]
+- Historical handoff generation: `20260902T1915Z-v230`.
+- At that v230 checkpoint rc4.189 was recorded on main at `88c007732f94df7b1624a6c05a0b16af4d33d94f`; current authority is the v231 section at EOF / actual main HEAD; PR #108 is historical/merged and must never be resurrected as an open current gate.
 - Latest physical Android authority is rc4.188 with Waiver/FA route, live Sleeper ownership, kicker-isolation and active-drop/IR semantics PASS. rc4.169 remains accepted rollback authority until rc4.189 physical acceptance.
 - Post-merge CI on main proved rc4.189 runtime startup and candidate package PASS, but Project Guardrails failed because the squash merge left the handoff seal and several current-gate/AUTO tokens stale. This is a checkpoint/seal defect, not a product-runtime rollback signal.
 - v230 repairs CURRENT/LOCK/COMMAND/bootstrap/handoff/matrix authority to rc4.189 and the actual rc4.188 device evidence, extends the guard to the rc4.189 post-merge reseal gate, and requires a fresh integrity seal.
@@ -507,20 +510,95 @@ No runtime/model code was changed by this handoff repair; it is a takeover-integ
 - Watcher v0.2.6 remains isolated in draft PR #1. Skill-position bench drops are now fail-closed unless current replacement/upside evidence exists; Reserve/IR remains excluded and automatic transactions remain forbidden.
 
 
-## 2026-09-02 — CODEX PREPARATION / rc4.190
-- Larger Season changes are intentionally grouped for Codex rather than continued as piecemeal chat patches.
-- Added root `AGENTS.md` with canonical authority, anti-regression rules, Season roster geometry, Waiver/Trade invariants, fail-closed evidence policy and AUTO/handoff discipline.
-- Added `PITTI_CODEX_WORK_PACKAGE.md`: compact weekly roster evidence, Waiver/team-needs v3, bilateral Trade/team-needs v2, verified projections/Vegas/weather adapters, and executable regression/release gates.
-- PR #118 remains reviewable/unmerged. Existing isolated fixes: remove redundant numeric roster grid and duplicate start-alternative block; protect only active TE/QB; add pre-W1 draft-capital plausibility gate to trade offers.
-- Codex execution itself is not yet verified from this chat/tool environment; no Codex tool is exposed here. PC setup/end-to-end repo access must be verified before delegating the work package. This is a capability boundary, not a code blocker.
-- Do not merge/deploy rc4.190 merely because the preparation files exist. Codex/implementation output must pass strict gates and review first.
+## 2026-09-03 — Codex read-only authority audit / v231 reconciliation
+- Local Codex clone independently verified repository path, clean working tree, origin, branch `main`, and HEAD `0c110a5dc6688ebc840da8bb122efcc5d50f77e6` without modifying state.
+- Audit correctly failed closed on stale/conflicting checkpoint authority: this file's old rc4.159/rc4.160 opening authority, v230 seal's pre-final-main SHA/branch, and contradictory deployment-parity booleans.
+- Reconciliation rule: canonical source authority is actual `main` HEAD `0c110a5...` / rc4.189; latest physical PASS rc4.188; rollback rc4.169. Deployment parity remains **UNKNOWN/REQUIRES_REVERIFICATION**, never infer PASS from stale booleans.
+- `AGENTS.md` and `PITTI_CODEX_WORK_PACKAGE.md` intentionally exist only on open PR #118, not canonical `main`; do not treat their absence on main as data loss.
+- PR #118 is the isolated rc4.190/Codex Season Decision Engine lane. It remains unmerged and non-authoritative until implementation + strict gates.
 
 
-## 2026-09-02 — Live/News RB contingency seed
-- Began P0 precompute rather than waiting for Codex: added `data/rb-contingency-seed-2026-09-02.json` covering all 32 RB rooms from current research, with explicit committee/role-split flags and fail-closed confidence.
-- Current RotoWire 2026 handcuff research is used only as a seed/role-analysis source, not authoritative live truth. It explicitly identifies clear contingency profiles (e.g. Corum, Bigsby, Pacheco), committee risks (LAC/NYJ), and unresolved rooms (SF/DAL/MIA/BAL/IND/WAS/KC/MIN/SEA).
-- Research itself exposed why fail-closed provenance is mandatory: at least one seed mapping is internally inconsistent (ARI/Allgeier) and is marked SOURCE_CONFLICT rather than silently accepted. Every room still requires primary/current depth-chart verification before event activation.
-- Next data task: primary/Ourlads reconciliation for low-confidence/conflict rooms, then add live Sleeper ownership and contingent-action layer. No seed entry alone is actionable.
+## 2026-09-03 — v232 post-merge authority seal [HISTORICAL — SUPERSEDED BY v233]
+- v231 checkpoint-only reconciliation merged to canonical `main`; reconciled base main was `2471c3666edaa313388d6b79c488940ac6b51f86`; current HEAD must always be verified dynamically.
+- Canonical source remains rc4.189; rc4.188 remains latest physical PASS; rc4.169 rollback authority.
+- Deployment parity remains UNKNOWN_REQUIRES_REVERIFICATION. Do not infer deployment/device acceptance from source merge.
+- PR #118 remains isolated/unmerged rc4.190 Codex Season Decision Engine work; AGENTS.md and PITTI_CODEX_WORK_PACKAGE.md are intentionally PR-only until Codex workflow is accepted.
+- Historical v232 gate was `V232_GUARDS_THEN_LOCAL_CODEX_PULL_REAUDIT`; it is superseded by the v233 audit-repair gate below.
 
-- RB reconciliation pass: Ourlads all-team depth charts are current to 2026-09-02 14:21 ET; RotoWire all-team depth charts report 2026-09-02 and real-time change/inactive updates. Corrected MIN seed to Aaron Jones -> Jordan Mason -> Demond Claiborne from current Ourlads. Purged the known-bad ARI/Atlanta cross-team seed entirely rather than preserving a contaminated mapping.
-- Added `data/live-news-source-registry.json` with source tiers, action-authority policy, latency timestamps and a mandatory 32-team credentialed beat-reporter registry task. Structured depth feeds are corroboration/discovery, not sole action authority.
+- Self-referential SHA rule: a tracked checkpoint cannot safely declare its own containing commit SHA as immutable current authority because any edit changes that SHA. Canonical Git authority is branch `main` + dynamically verified HEAD; recorded SHAs are historical/reconciled-base evidence only.
+
+
+## 2026-09-03 — v233 Codex second-audit stale-current repair [MERGED/HISTORICAL — SUPERSEDED by v234]
+- After v232 merged, the local Codex clone fast-forwarded to canonical main `e25dc0df1a534f5f2d8c79dff3d6d007603bafa6`; repository identity/origin/branch/working-tree checks passed.
+- The second read-only Codex authority audit correctly failed closed on residual CURRENT pointers: `NEW_CHAT_HANDOFF_CURRENT.md` still presented reconciled base `2471c366...` as current HEAD, and `PITTI_AUTO_PREFLIGHT.md` still labeled rc4.185 / PR #108 / rc4.183 DEVICE_REJECTED as CURRENT in two places.
+- v233 is checkpoint/governance repair only: no runtime/product semantics change, no PR #118 modification. Canonical runtime remains rc4.189; latest physical PASS rc4.188; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION; PR #118 remains isolated/open/unmerged/non-production authority.
+- Stale CURRENT wording is replaced by dynamically verified main-HEAD authority and explicit historical/superseded labeling. Handoff generation is advanced to `20260903T0745Z-v233`.
+- The first v233 CI attempt failed only because the handoff seal used a noncanonical pending state. The guard contract explicitly accepts `SUPERSEDED_PENDING_RESEAL` for pre-seal validation; v233 now uses that state. A later CI attempt exposed generation drift and the exact Library-persistence fail-closed phrase being absent from the updated lock; both are repaired without reverting product behavior.
+- Executable guard authority is extended to the v233 checkpoint gates so post-merge/default guard runs cannot reject the new canonical handoff state merely because their gate allowlist is stale.
+- Exact gate: all three strict checks on the final sealed v233 head must PASS, then merge v233, then the local Codex clone must pull canonical main and repeat the read-only authority audit before any writable Codex work.
+
+
+## v234 HISTORICAL/SUPERSEDED — complete local post-merge authority repair
+Generation: `20260903T1200Z-v234`. Canonical source/runtime rc4.189 on main (verify HEAD dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL; PR #118 OPEN / UNMERGED / NON-PRODUCTION.
+
+The post-v233 read-only audit was performed on clean main `2749537945ec7e6b96d95e2f6b55a26e455124fa` and failed closed on CURRENT currentWork and BOOTSTRAP gate pointers that still required v233 CI/merge. PR #121 is already merged; these are stale post-merge metadata, not runtime failures.
+
+The repair reconciles duplicate status/gate/resume fields, AUTO queues/stop reason, Codex audit provenance, preflight, handoff, generation and seal. Older v230 queued CI and rc4.182 artifact references are historical only. Old CURRENT/OVERRIDE/supersession claims in chronological records and legacy draft handoffs cannot supersede this section. No historical facts are promoted to deployment or physical acceptance.
+
+Local branch: `pitti/v234-postmerge-authority-repair`, created from the verified main base above. Current gate: `LOCAL_AUTHORITY_REVIEW_ONLY_NO_REMOTE_ACTION`. Review the locally validated post-merge authority repair. No v233 merge or strict-CI gate remains. Its local post-merge read-only audit already ran and failed closed on residual state pointers. This work is local only: no push, merge, deployment, network access or PR #118 changes are authorized.
+
+Local validation must include the full strict guard without bypass, relevant release/package behavioral tests, package re-extraction, and semantic cross-reference/negative regression checks. No remote CI, new device PASS, deployment or Library persistence is claimed. The local commit SHA is obtained from Git after validation and commit; it is not embedded as self-authority.
+
+Validation diagnosis: the initial local suite found five stale validator failures, not a runtime change: two LF-only source assertions failed on Windows CRLF; the ranking test still required a retired manual refresh; the DST test required the draft board superseded by merged rc4.189; the IR test pinned historical rc4.13. Validators retain their behavioral assertions and now verify the established automatic path/current waiver baseline/current authority. Seal hashing uses explicit UTF8_LF_TEXT canonical Git content across platforms; content changes still invalidate integrity.
+
+## v234 HISTORICAL/SUPERSEDED — promotion-stable authority before rc4.190 migration
+Generation: `20260903T1200Z-v234`. Canonical source/runtime rc4.189 (canonical branch main; verify Git/GitHub authority dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.
+
+Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
+
+Historical v234 branch, base, PR #122 and exact-commit checks are evidence in PITTI_CURRENT_STATE.json historical_superseded.v234_local_request. The same checkpoint applies before and after promotion; current Git/GitHub facts and current user authorization govern the next action.
+
+## v234 CURRENT — rc4.190 migration
+Generation: `20260904T1200Z-v234`. Source/runtime rc4.190 in this tree; canonical main containment must be verified dynamically. Physical Android rc4.188 PASS; rollback rc4.169; deployment UNKNOWN_REQUIRES_REVERIFICATION. PR121/v233 MERGED/HISTORICAL; PR122 merge recorded as historical provenance. PR118 state requires fresh GitHub verification; its last-observed OPEN/UNMERGED/NON-PRODUCTION boundary remains conservative.
+
+Gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
+
+Canonical permissions: AGENTS.md. Migration classification and evidence gaps: PITTI_CODEX_WORK_PACKAGE.md. Season engine uses legal Sleeper geometry, protects structural starters/IR, isolates K/DST, requires fresh verified weekly/value evidence and bilateral utility; research seeds never authorize an action. No device/deployment claim follows from these source changes.
+
+### Independent runtime review — implementation record
+Historical review input: f7da79e0c8217f2ff41e39d6bcded0c5e8b721f5. Thirteen initial executable counterexamples reproduced wrong explicit week/geometry context, unproved drop ownership, fictitious or illegal future D/ST drops, filtered opponent capacity, duplicate trade assets, lost evidence/role conflicts, republished old events and timestamp-dependent event duplication. Repairs bind decisions to complete live rosters and explicit context, price actual marginal capacity, retain conflicts and use stable event identity. Follow-up review coupled the QB board, confirmation-cache upgrades, comparable trade charts, evidence expiry, Reserve/TAXI exclusion and removal of the duplicate starter grid. Start/Sit now requires fresh projections on both sides and positive point gain; cross-position rank arithmetic cannot authorize a move.
+
+Regression fixtures now model real roster membership instead of an empty ownership index. New adversarial cases, mobile browser execution and stricter promotion negatives complement the existing suite. Test and exact-head CI results are external observations requiring fresh verification; this record never asserts permanent CI PASS, a fixed operative branch, deployment or device acceptance. Gate and authority boundaries above remain unchanged.
+
+### Cloud-AUTO Foundation — implementation record
+
+Historical precheck: clean main `685770c13c977481eb94e4142d227ebc58c10499`, containing merged PR123. This work adds a manual-only, bounded official Codex Action pipeline with isolated protection inspection, implementation, fresh validation, App publisher, exact-head CI and independent read-only review. Documentation: `docs/PITTI_CLOUD_AUTO.md` and `docs/PITTI_CLOUD_MAIN_PROTECTION.md`. Legacy rc461/462/463 writer workflows are archived and disabled. Node 22, pinned Playwright/Chromium, full strict/package/browser checks and real Git artifact negatives support hosted Linux validation.
+
+Server protection, App/environment secrets and hosting exclusions are configuration prerequisites, not applied by this work. Missing bypass visibility fails closed. No PC-off acceptance, merge, deployment, device PASS or permanent CI PASS is claimed. Source rc4.190, physical rc4.188 PASS, rollback rc4.169, deployment UNKNOWN_REQUIRES_REVERIFICATION and the dynamic promotion-stable gate above remain unchanged. PR118 is outside scope. Current Git/GitHub facts and user authorization always supersede this historical implementation record.
+
+### Adversarial PR124 security review — repair record
+
+Codex implementation is the final explicit job step and hands only a schema-bound 128 KiB patch to a fresh job. Validation uses Bubblewrap with read-only trust mounts, no network and a host-written receipt. Publisher ref creation is atomic through GitHub's Git database API and invokes no Git hooks. All action references are immutable; every checkout drops credentials; exact-head CI binds repository, PR/event and one expected successful job. Scope rejects controller/tools/authority/config/hidden/reserved/case-colliding paths; every apply repeats portable Git-mode validation. Workflow reruns and stale generic merge approvals fail closed. Server configuration and PC-off acceptance remain unproved.
+
+Continuation: explicit user authorization now permits further pushes only to the Foundation workbranch including automatic Cloudflare previews, never main merge or production promotion. Elevated D1 writes are recorded separately in docs/PITTI_D1_USAGE_OPEN_FINDING.md; no D1 write tests were added. Linux isolation now proves network/write/environment denial, and requires restricted ptrace plus disabled SIGUSR1 debugger activation for Node supervisors. The online browser fixture explicitly models navigator.onLine while all external responses remain mocked. Exact-head CI remains dynamic evidence, not a permanent claim in this record.
+
+### QB2 authority repair — current user decision
+Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule.
+The prior generation 20260903T1230Z-v234 is historical provenance, not current takeover authority. The new coupled generation is 20260904T1200Z-v234. No runtime/business logic changed. Exact published HEAD and all four CI gates require fresh GitHub verification after the repair commit; ce7e735a65124389560f03119cfb3e4e1959b2c1 is only the historical reviewed input. D1 cause remains UNKNOWN; no D1 write testing. Proceed to separate D1 RCA only after authority and exact-head CI PASS.
+
+Verification record: full local Strict Suite 176/176 PASS, draft runtime exclusion PASS, semantic authority 38 checkpoint negatives plus 9 external-evidence negatives PASS. Added season positive acquisition assertion proves CLEAR ADD for a valuable QB2 with QB1 rostered; 42 season assertions PASS. The initial new assertion incorrectly expected the label ADD; source inspection established the existing CLEAR ADD result, so only the test expectation was corrected. No runtime change. Adversarial reference search found remaining one-QB statements in explicit draft/historical contexts; no active universal QB roster limit remains. Fresh exact-head remote CI is required after publication.
+
+## CURRENT OVERRIDE — Cloud AUTO least-privilege protection repair (2026-09-05)
+- Reproduced root cause from PR #127: the protection controller calls `GET /rulesets/{id}/history`, but GitHub requires **Administration: write** for ruleset history and versions. The PITTI Cloud App is intentionally limited to Contents/Pull requests write plus Metadata read, so HTTP 403 is the correct platform boundary.
+- PR #126's timestamp pin and PR #127's version pin are both rejected as substitutes for live `bypass_actors`: neither proves that a redacted bypass list remains unchanged. Historical IDs/versions remain audit context only, not current protection authority.
+- Least-privilege correction: protection inspection uses only repository/ruleset list/detail reads. Any omitted `bypass_actors` is UNKNOWN and fails closed before candidate implementation or publication. No Ruleset-History/Version request remains.
+- Security boundary intentionally preserved: no App Administration permission, main bypass, merge, deployment, Cloudflare/D1 access, or external transaction. Under GitHub's current API visibility, Cloud AUTO publication remains BLOCKED rather than weakening main-protection verification.
+- Canonical GitHub `origin/main` verification was attempted from this environment and failed with `CONNECT tunnel failed, response 403`; local HEAD `956787fd8b705db303ca9f18bae3fef767a7cb60` contains merged PR #127, but is not claimed as freshly remote-verified authority. This blocks remote-dependent promotion only, not the local reviewed repair.
+- Follow-up adversarial analysis rejected owner-attestation plus Metadata-visible `id`/`updated_at`/rule-body binding: GitHub does not specify that every hidden bypass edit changes a least-privilege-visible field. Delete/recreate, rollback-shaped state, extra targeting rulesets, stale attestations, omitted fields, and inspection-to-ref-creation TOCTOU therefore cannot be converted into a trustworthy automated PASS. Rule-suite evaluation is not a complete authenticated bypass-configuration snapshot. Executable regressions preserve UNKNOWN/fail-closed behavior for each metadata-substitution shape. The minimal remaining gate is current owner inspection of every full bypass list followed by manual promotion; Cloud AUTO remains blocked and no permission elevation, history/version call, blind pin, merge, or deployment is authorized.
+- The custom Cloud AUTO PC-off rehearsal is deferred while that evidence gap remains: its expected result is protection rejection before implementation, workbranch creation, commit, publication, CI, or review, never `PC_UNABHÄNGIG_PASS`. The separately verified GitHub Web/Mobile hosted Codex task plus Update branch UI remains an independent PR-branch handoff capability; it is not `.github/workflows/pitti-cloud-auto.yml` and authorizes neither merge nor deployment.
+
+
+## v235 CURRENT — rc4.190 two-parent release-blocker reconciliation (2026-09-06)
+Generation: `20260906T1200Z-v235`. The user-supplied bridge `5679cbc` was locally verified with package parent `dc0a88f` and current-main parent `6b6093f`; no network authority was required. The reconciled task-local source preserves current-main Cloud AUTO least-privilege/fail-closed governance and the five Season Companion package semantics.
+
+Future D/ST capacity now uses the same structural drop-candidate boundary as the D/ST planner: Reserve/IR, sole active QB/TE, special teams, and explicitly protected/non-droppable assets cannot fund a prior waiver add. Trade draft-capital reversal protection is derived from verified season week/date state: pre-Week-1 is active, Week 1+ disables the hard veto, and ambiguous state is non-actionable. Exact-head strict/release gates remain required. Publication is pending through the Update branch UI; no merge, production deployment, cache/reinstall, fantasy transaction, or Android acceptance is claimed. Physical rc4.188 PASS and rc4.169 rollback authority remain separate historical device facts.

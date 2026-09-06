@@ -1,6 +1,7 @@
 # AGENTS.md — PITTI Companion implementation contract
 
 ## Authority and scope
+- Canonical permission contract: this file, section `PITTI Codex permission contract`. Current user instructions define each work package and override historical permissions. Verify the coupled v234 CURRENT/SEAL through `node tools/pitti_guardrail_check.mjs` and the dynamic Git/GitHub takeover contract before dependent continuation or promotion.
 - Treat `PITTI_CURRENT_STATE.json`, `PITTI_EXECUTION_LOCK.json`, `PITTI_COMMAND_CONTRACTS.json`, and the latest handoff/checkpoint as authoritative. Do not resurrect historical PRs, draft-era roster state, rejected device versions, or superseded fixes.
 - Current mode is POST_DRAFT_SEASON_COMPANION. Sleeper live league state is roster/ownership/starter/reserve/FAAB authority. Draft data is historical evidence only.
 - Work on a feature branch. Never deploy, merge, clear caches, reinstall the app, execute fantasy transactions, or contact third parties unless the task explicitly authorizes it.
@@ -48,3 +49,22 @@
 - Never write “AUTO läuft weiter” unless actual tool/code work follows in the same turn.
 - Never use an empty assistant message as a pseudo-continuation.
 - Material decisions, reproduced failures, fixes, verification results, rejected approaches, and next gates must be checkpointed promptly.
+
+## PITTI Codex permission contract
+Within the authorized PITTI work package, these reversible actions are preapproved:
+- Read/search the repository; create, edit and delete package-related repository files.
+- Create/switch local work branches; make local commits; configure Git repository-locally without weakening global security.
+- Fetch and fast-forward-only pull; push non-production work branches; create/update their pull requests.
+- Run tests, linters, builds, guardrails, regressions, mutation and package/re-extraction checks; create harmless helper scripts and temporary workspace files.
+- Install harmless project dependencies; read CI, diagnose failures and repair the work branch autonomously until its exact-head checks pass.
+
+These actions require separate explicit authorization:
+- Merge to main or another canonical/production branch; force-push; destructive reset or deletion of important/unsaved branches or work.
+- Deployment, production promotion or publication.
+- Changes, disclosure or transfer of secrets, tokens or credentials; security-sensitive system changes outside this workspace.
+- External communication on the user's behalf; purchases or financial/legal obligations.
+- Automatic Sleeper Add/Drop, FAAB bids or trades.
+
+Technical sandbox approval remains independent of this content authorization. Report the exact command and purpose if the sandbox requires approval. Do not delegate a technically available approved development step to the user as a precaution.
+
+QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy.

@@ -1,5 +1,7 @@
 # PITTI MANAGER / AUTODRAFT TURN STRESS — 2026-08-31
 
+> HISTORICAL/SUPERSEDED operational checkpoint: runtime, device, deployment, release/activation gates and CURRENT/OVERRIDE instructions below describe the original dated context only. They must not be executed as current work or override ../PITTI_CURRENT_STATE.json and ../NEW_CHAT_HANDOFF_CURRENT.md. Research evidence and durable invariants remain as provenance, subject to later explicit corrections.
+
 ## Purpose
 Follow-up to the 6,000-draft independent market stress. This pass audits the *production* opponent-model assumptions that matter most at slot 9: the two immediate turn neighbors (Bastian #8 and Dutch Marc #10), live autodraft overrides, and short-turn target collision behavior. No production coefficients are changed.
 

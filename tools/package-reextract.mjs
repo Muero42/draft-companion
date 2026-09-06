@@ -1,0 +1,15 @@
+import fs from 'node:fs';import path from 'node:path';import {execFileSync} from 'node:child_process';import crypto from 'node:crypto';import assert from 'node:assert/strict';
+const root=process.cwd(),parent=process.argv[2];if(!parent)throw new Error('Explicit output directory required');
+const output=path.join(path.resolve(parent),'package-'+crypto.randomUUID()),runtime=path.join(output,'runtime'),extract=path.join(output,'reextract');
+fs.mkdirSync(runtime,{recursive:true});fs.mkdirSync(extract);
+const files=['index.html','app.js','decision-policy.js','styles.css','manifest.webmanifest','sw.js','_worker.js','icon.svg','live-surface-v3.js','live-surface-v3.css','expert-board-export.js','expert-v2-board.js','expert-v3-board.js'];
+const version=fs.readFileSync('app.js','utf8').match(/const APP_VERSION='([^']+)'/)[1];
+for(const f of files)fs.copyFileSync(f,path.join(runtime,f));
+const archive=path.join(output,'Draft_Companion_'+version+'_PREINSTALL.zip'),python=process.env.PITTI_PYTHON||'python3';
+execFileSync(python,['-m','zipfile','-c',archive,...files],{cwd:runtime});execFileSync(python,['-m','zipfile','-e',archive,extract]);
+assert.equal(fs.readdirSync(extract).length,13);
+for(const f of files)assert(fs.readFileSync(path.join(extract,f)).equals(fs.readFileSync(path.join(root,f))),f+' byte parity');
+for(const f of files.filter(f=>f.endsWith('.js')) )execFileSync(process.execPath,['--check',path.join(extract,f)]);
+for(const f of ['index.html','app.js','sw.js','manifest.webmanifest'])assert(fs.readFileSync(path.join(extract,f),'utf8').includes(version),f+' version parity');
+const receipt={version,status:'PACKAGED_ONLY_NOT_DEPLOYED',files:13,sha256:crypto.createHash('sha256').update(fs.readFileSync(archive)).digest('hex'),archive};
+fs.writeFileSync(path.join(output,'receipt.json'),JSON.stringify(receipt,null,2));console.log(JSON.stringify(receipt));
