@@ -22,10 +22,12 @@ on:
       - '.github/workflows/release-contract-v2.yml'
       - '.github/workflows/release-contract-v2-package.yml'
       - 'app.js'
+      - 'lineup-start-sit-v2.js'
       - 'decision-policy.js'
       - 'tools/analyze-decision-evidence.mjs'
       - 'tools/pitti_guardrail_check.mjs'
       - 'tools/runtime-startup-contract.mjs'
+      - 'tools/season-lineup-start-sit-v2-regression.mjs'
       - 'tools/pre-draft-freshness-gate.mjs'
       - 'tools/emergency-queue-contract.mjs'
       - 'tools/rc4100-turn-portfolio.mjs'
@@ -63,6 +65,8 @@ jobs:
         run: node tools/season-waiver-team-needs-v3-regression.mjs
       - name: Trade team-needs v2 regression
         run: node tools/season-trade-team-needs-v2-regression.mjs
+      - name: Lineup start-sit v2 regression
+        run: node tools/season-lineup-start-sit-v2-regression.mjs
       - name: rc4.97 microfix contract
         if: contains(github.head_ref || github.ref_name, 'rc4.97-microfix')
         run: node tools/rc497-microfix.mjs

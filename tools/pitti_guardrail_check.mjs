@@ -120,9 +120,10 @@ must(app.includes("frische Weekly-Evidence fehlt"),'Waiver v2 stale weekly expla
 must(app.includes('Trade Team-Needs v2'),'Trade Team-Needs v2 surface missing');
 must(app.includes('PittiTradeTeamNeedsV2.generate('),'bilateral Trade team-needs v2 offer generation missing');
 must(app.includes('Annahme-Plausibilität'),'Trade acceptance plausibility missing');
-must(app.includes('Week-1 Start/Sit v5'),'Start/Sit canonical-slot surface missing');
-must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
-must(app.includes('PITTI nutzt eigene Weekly-Panel-Ranks'),'PITTI weekly-panel primary invariant missing');
+must(app.includes('Lineup / Start-Sit v2'),'Lineup v2 surface missing');
+must(app.includes("LINEUP_WEEKLY_EVIDENCE_KEY='pitti.lineup-weekly-evidence.v2'"),'weekly lineup evidence interface missing');
+must(app.includes('Keine Preseason-/ECR-/ADP-Ersatzwerte'),'weekly evidence fail-closed invariant missing');
+must(text('lineup-start-sit-v2.js').includes("const DEFAULT_SLOTS=['QB','RB','WR','WR','TE','FLEX','W/R','K','DST']"),'canonical Lineup v2 geometry missing');
 must(app.includes('Special Teams v2'),'Special Teams v2 quality-floor surface missing');
 must(app.includes("dropCandidatePolicy:{primary:['Tank Bigsby','Tyjae Spears','Kenneth Gainwell'],protected:['Jadarian Price','Christian Watson','Josh Downs']"),'Mevis drop gate must protect Price/Watson/Downs and compare Bigsby/Spears/Gainwell');
 must(app.includes('Kicker werden ausschließlich hier gegen verfügbare Kicker verglichen; niemals gegen RB/WR/TE.'),'Waiver UI must enforce K-only replacement for roster kicker');

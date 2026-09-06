@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v4
         with: {node-version: 22}
       - name: Syntax
-        run: node --check app.js && node --check trade-team-needs-v2.js && node --check decision-policy.js && node --check live-surface-v3.js && node --check expert-v2-board.js && node --check expert-v3-board.js && node --check sw.js
+        run: node --check app.js && node --check lineup-start-sit-v2.js && node --check trade-team-needs-v2.js && node --check decision-policy.js && node --check live-surface-v3.js && node --check expert-v2-board.js && node --check expert-v3-board.js && node --check sw.js
       - name: Fail closed on hand-coded product prose
         run: |
           ! grep -q "PLAYER_EVIDENCE" live-surface-v3.js
@@ -32,6 +32,7 @@ jobs:
           node tools/season-waiver-surface-ir-regression.mjs
           node tools/season-waiver-team-needs-v3-regression.mjs
           node tools/season-trade-team-needs-v2-regression.mjs
+          node tools/season-lineup-start-sit-v2-regression.mjs
           node tools/season-automatic-refresh-contract.mjs
           node tools/season-workspace-navigation-regression.mjs
           node tools/rc478-oos-policy.mjs

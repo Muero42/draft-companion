@@ -5,8 +5,8 @@ assert(a.includes("Kicker werden ausschließlich hier gegen verfügbare Kicker v
 assert(a.includes("if(s==='FLEX')return ['RB','WR','TE'].includes(p);"),'RB/WR/TE FLEX eligibility missing');
 assert(a.includes("league?.roster_positions"),'canonical Sleeper roster slot source missing');
 assert(a.includes("seasonSlotLabel(slot,x.p.pos)"),'canonical starter slot display missing');
-assert(a.includes("Sleeper-Prognosen und Sleeper-Matchup-Bewertungen werden nicht verwendet"),'Sleeper projection/matchup exclusion missing');
-assert(a.includes("WEEK 1 · AKTUELLE STARTER · PITTI-WERTE"),'starter PITTI evidence block missing');
+assert(a.includes("Keine Preseason-/ECR-/ADP-Ersatzwerte"),'weekly projection fallback exclusion missing');
+assert(a.includes("EMPFOHLENE WEEK-"),'recommended current-week evidence block missing');
 assert(a.includes("league_rosters=rosters.map"),'full live league roster state missing');
 assert(a.includes("waiver_budget_used"),'opponent FAAB-used input missing');
 assert(a.includes("faab_remaining"),'opponent remaining FAAB input missing');
