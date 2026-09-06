@@ -2672,12 +2672,13 @@ function rosterBenchCapitalScore(x){
   return score;
 }
 const LINEUP_WEEKLY_EVIDENCE_KEY='pitti.lineup-weekly-evidence.v2';
+const SEASON_EVIDENCE_CACHE_KEY='pitti.season-evidence.v1';
 function currentLineupWeek(season=lastDraftContext?.season){
   const week=Number(season?.week??season?.league?.settings?.leg??season?.league?.settings?.week);
   return Number.isInteger(week)&&week>0?week:null;
 }
 function lineupWeeklyEvidence(season=lastDraftContext?.season){
-  const raw=store.get(LINEUP_WEEKLY_EVIDENCE_KEY,null),week=currentLineupWeek(season);
+  const raw=store.get(SEASON_EVIDENCE_CACHE_KEY,null)||store.get(LINEUP_WEEKLY_EVIDENCE_KEY,null),week=currentLineupWeek(season);
   return globalThis.PittiLineupStartSitV2?.adaptEvidence(raw,{week})||{available:false,reason:'LINEUP_ENGINE_UNAVAILABLE',values:{},week};
 }
 function weeklyLineupEvidence(p){
@@ -2688,14 +2689,15 @@ function lineupEvidenceHtml(ev,evidence){
   if(!ev?.available)return 'UNAVAILABLE · '+esc(ev?.reason||'WEEKLY_EVIDENCE_MISSING');
   const context=ev.teamContext;
   const contextText=context?[context.implied_total!=null?`Implied ${Number(context.implied_total).toFixed(1)}`:'',context.dome===true?'DOME':context.weather||''].filter(Boolean).join(' · '):'';
-  return `${ev.projection.toFixed(1)} Half-PPR · ${esc(ev.playerPos||'')}#${ev.rank} · vs ${esc(ev.opponent)}${contextText?' · '+esc(contextText):''} · ${esc(evidence.source)} · ${new Date(evidence.asOf).toISOString()}`;
+  const provenance=ev.provenance?Object.values(ev.provenance).map(x=>`${x.provider} ${x.sourceAsOf} · ${x.status}`).filter((x,i,a)=>a.indexOf(x)===i).join(' / '):`${evidence.source} · ${new Date(evidence.asOf).toISOString()}`;
+  return `${ev.projection.toFixed(1)} Half-PPR · ${esc(ev.playerPos||'')}#${ev.rank} · vs ${esc(ev.opponent)}${contextText?' · '+esc(contextText):''} · ${esc(provenance)}`;
 }
 function renderRosterBenchAudit(rows,players,current,draftComplete){
   if(!els.rosterBenchStatus||!els.rosterBenchList)return;
   if(!draftComplete){els.rosterBenchStatus.className='notice';els.rosterBenchStatus.textContent='Aufstellungsanalyse wird nach Draftabschluss aktiv.';els.rosterBenchList.innerHTML='';return;}
   const season=lastDraftContext?.season;
   if(!season?.ok||!season?.my_roster){els.rosterBenchStatus.className='notice warn';els.rosterBenchStatus.textContent='Lineup v2 UNAVAILABLE · Live-Sleeper-Kader fehlt.';els.rosterBenchList.innerHTML='';return;}
-  const week=currentLineupWeek(season),raw=store.get(LINEUP_WEEKLY_EVIDENCE_KEY,null);
+  const week=currentLineupWeek(season),raw=store.get(SEASON_EVIDENCE_CACHE_KEY,null)||store.get(LINEUP_WEEKLY_EVIDENCE_KEY,null);
   const result=globalThis.PittiLineupStartSitV2?.evaluate({roster:rows,evidence:raw,week});
   if(!result||result.status==='UNAVAILABLE'){
     els.rosterBenchStatus.className='notice warn';

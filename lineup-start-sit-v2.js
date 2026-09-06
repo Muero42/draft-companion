@@ -18,6 +18,10 @@
   const playerKey=row=>String(row?.p?.id??row?.player_id??'');
 
   function adaptEvidence(raw,{week,now=Date.now(),maxAgeMs=7*86400000}={}){
+    if(raw?.schema==='pitti.season-evidence.v1'&&globalThis.PittiSeasonEvidence){
+      const ids=[...new Set((raw.records||[]).map(x=>x.playerId).filter(Boolean))];
+      raw=globalThis.PittiSeasonEvidence.toLineupEvidence(raw,{week,playerIds:ids});
+    }
     const evidenceWeek=Number(raw?.week),requestedWeek=Number(week),asOf=Date.parse(raw?.as_of||raw?.asOf||''),source=String(raw?.source||raw?.provider||'').trim();
     const scoring=String(raw?.scoring||raw?.format||'').toUpperCase().replace(/[^A-Z]/g,'');
     const values=raw?.players||raw?.values;
@@ -26,7 +30,7 @@
     const halfPpr=['HALF','HALFPPR','05PPR'].includes(scoring);
     const available=!!source&&weekMatches&&fresh&&halfPpr&&values&&typeof values==='object';
     const reason=!source?'MISSING_PROVENANCE':!weekMatches?'WEEK_MISMATCH':!halfPpr?'SCORING_MISMATCH':!Number.isFinite(asOf)?'MISSING_AS_OF':!fresh?'STALE_WEEKLY_EVIDENCE':!values?'MISSING_PLAYER_EVIDENCE':'OK';
-    return{available,fresh,source:source||null,asOf:Number.isFinite(asOf)?asOf:null,week:evidenceWeek||null,scoring:halfPpr?'HALF_PPR':null,values:values&&typeof values==='object'?values:{},reason,now,maxAgeMs};
+    return{available,fresh,source:source||null,asOf:Number.isFinite(asOf)?asOf:null,week:evidenceWeek||null,scoring:halfPpr?'HALF_PPR':null,values:values&&typeof values==='object'?values:{},reason,now,maxAgeMs,conflicts:raw?.conflicts||[],cacheSchema:raw?.cacheSchema||null};
   }
 
   function playerEvidence(row,evidence){
@@ -35,7 +39,7 @@
     const available=!!evidence?.available&&Number.isFinite(projection)&&projection>=0&&Number.isInteger(rank)&&rank>0&&!!opponent;
     const context=raw.team_context,contextAt=Date.parse(context?.as_of||context?.asOf||''),contextSource=String(context?.source||context?.provider||'').trim();
     const contextFresh=!!contextSource&&Number.isFinite(contextAt)&&contextAt<=evidence.now+3600000&&evidence.now-contextAt<=evidence.maxAgeMs;
-    return{available,projection:available?projection:null,rank:available?rank:null,opponent:available?opponent:null,teamContext:contextFresh?context:null,reason:!evidence?.available?evidence?.reason:!Number.isFinite(projection)?'MISSING_WEEK_PROJECTION':!Number.isInteger(rank)||rank<=0?'MISSING_POSITIONAL_RANK':!opponent?'MISSING_OPPONENT':'OK'};
+    return{available,projection:available?projection:null,rank:available?rank:null,opponent:available?opponent:null,teamContext:contextFresh?context:null,provenance:available?raw.provenance||null:null,reason:!evidence?.available?evidence?.reason:!Number.isFinite(projection)?'MISSING_WEEK_PROJECTION':!Number.isInteger(rank)||rank<=0?'MISSING_POSITIONAL_RANK':!opponent?'MISSING_OPPONENT':'OK'};
   }
 
   function optimize(roster,evidence,slots=DEFAULT_SLOTS){

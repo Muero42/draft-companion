@@ -1,6 +1,6 @@
 const CACHE='draft-companion-v11.8.0-rc4.190';
 const BACKUP_CACHE='draft-companion-backup-export-v1';
-const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.190','./trade-team-needs-v2.js?v=v11.8.0-rc4.190','./lineup-start-sit-v2.js?v=v11.8.0-rc4.190','./decision-policy.js','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.190','./live-surface-v3.css?v=v11.8.0-rc4.190','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
+const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.190','./trade-team-needs-v2.js?v=v11.8.0-rc4.190','./season-evidence-layer.js?v=v11.8.0-rc4.190','./lineup-start-sit-v2.js?v=v11.8.0-rc4.190','./decision-policy.js','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.190','./live-surface-v3.css?v=v11.8.0-rc4.190','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
 const BASE='v11.8.0-rc4.190',TARGET='v11.8.0-rc4.190';
 function patchApp(s){
   // rc4.175+: the canonical runtime already contains the historical pre-draft/full-pool
