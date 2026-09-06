@@ -57,12 +57,12 @@ Original bytes are retained in `docs/archive/*.yml.historical`. Their executable
 
 Before commit, validation binds to base SHA + exact candidate Git tree + patch SHA256 + run/attempt. After publication, artifacts are named by final commit SHA. They include Strict Suite JSON, browser receipt/screenshot, package ZIP/receipt, authority/takeover evidence, implementation summary, complete diff, CI and read-only review receipt. No desktop path is operative authority; runner paths in package receipts are artifact-local paths.
 
-Later test, only after configuration and separately approved Foundation merge:
+The custom `.github/workflows/pitti-cloud-auto.yml` PC-off procedure is deferred until GitHub exposes a sufficient read-only protection proof. Under the current least-privilege boundary, a rehearsal must expect the protection job to reject an omitted or redacted `bypass_actors` list and stop before implementation, workbranch creation, commit, publication, CI, or review. It therefore cannot establish **PC_UNABHÄNGIG_PASS**.
 
 1. Fully switch off Windows PC; use GitHub Web/Mobile.
 2. Dispatch a harmless documentation-only task with fresh expected_main_sha, unique task_id, explicit scope such as `["docs/cloud-smoke.md"]`, one attempt and an owner authorization reference. Avoid sealed files for the first rehearsal.
-3. Observe cloud startup, unique workbranch, implementation, tests, commit, App push and PR.
-4. Verify four exact-head CI workflows, independent read-only receipt, unchanged main and no deployment. Download SHA-bound artifacts from the web.
-5. Only real observations from this test can establish **PC_UNABHÄNGIG_PASS**. CI alone and this implementation never set it.
+3. Observe the fail-closed protection failure and confirm that no implementation or publication job starts. Do not interpret this negative test as PC-independent acceptance.
 
-Local PC/GCM/Edge are not needed by the proposed normal cycle. Personal browser credentials/backups and optional ADB diagnosis remain local; physical Android/PWA acceptance remains a separate hardware gate. Source rc4.190, physical PASS rc4.188, rollback rc4.169 and deployment UNKNOWN_REQUIRES_REVERIFICATION remain unchanged.
+Separately, the verified GitHub Web/Mobile hosted Codex task plus **Update branch** UI can hand a task result to an existing PR branch without a local PC. That hosted capability is not the custom Cloud AUTO workflow, does not establish **PC_UNABHÄNGIG_PASS**, and grants no merge or deployment authorization.
+
+Local PC/GCM/Edge are not needed for that hosted task and Update branch handoff. Personal browser credentials/backups and optional ADB diagnosis remain local; physical Android/PWA acceptance remains a separate hardware gate. Source rc4.190, physical PASS rc4.188, rollback rc4.169 and deployment UNKNOWN_REQUIRES_REVERIFICATION remain unchanged.
