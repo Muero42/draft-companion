@@ -1,8 +1,8 @@
 # PITTI HANDOFF COMPLETENESS MATRIX — v235
-Generation: `20260906T1200Z-v235`
+Generation: `20260907T1900Z-v236`
 
 PASS requires:
-- Source/runtime v11.8.0-rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 package lineage is locally reconciled through the authorized two-parent bridge; publication remains unverified and no merge/deployment/device acceptance is claimed.
+- Source candidate v11.8.0-rc4.191 preserves merged PR #118 and PR #132 from authenticated canonical main b62e7d5; deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.188 PASS; rollback rc4.169. PR #121 / v233 is MERGED/HISTORICAL.
 - Gate `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK` aligned across CURRENT, LOCK, COMMAND, SEAL, bootstrap, handoff and preflight.
 - Post-v233 local read-only audit recorded as performed and FAIL_CLOSED; historical audit evidence retained; no pending v233 CI/merge or repeat-audit queue.
 - Historical branch/base/PR evidence separated from current dynamic authority; no containing-commit SHA claim.

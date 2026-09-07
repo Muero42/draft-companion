@@ -1,9 +1,9 @@
 # NEW CHAT HANDOFF — PITTI SEASON COMPANION
-Handoff generation: `20260906T1200Z-v235`
+Handoff generation: `20260907T1900Z-v236`
 Created: 2026-09-03T09:59:50.439Z
 
 ## CURRENT AUTHORITY
-Source/runtime v11.8.0-rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 package lineage is locally reconciled through the authorized two-parent bridge; publication remains unverified and no merge/deployment/device acceptance is claimed.
+Source candidate v11.8.0-rc4.191 preserves merged PR #118 and PR #132 from authenticated canonical main b62e7d5; deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.188 PASS; rollback rc4.169. PR #121 / v233 is MERGED/HISTORICAL.
 
 ## CODEX
 Local clone: `C:\Users\timmu\Documents\PITTI-Codex`. The post-v233 local read-only audit verified clean main `2749537945ec7e6b96d95e2f6b55a26e455124fa` and correctly failed closed on residual pending-CI/merge pointers in CURRENT and BOOTSTRAP. Earlier audits are historical. This local repair covers all coupled authority/checkpoint references.
@@ -16,3 +16,5 @@ Historical v235 branch/base/PR evidence is stored in PITTI_CURRENT_STATE.json hi
 Continuous same-turn execution while authorized safe work exists; checkpoint/re-inventory after every package; external wait blocks only its lane; STATUS report-only. Never send status/progress/acknowledgement messages during AUTO while executable work exists. No device trial loops, no unverified deployment claims.
 
 QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy.
+
+Earlier Cloudflare production identity rc4.190 is historical deployment context; rc4.191 remains the unpromoted candidate.

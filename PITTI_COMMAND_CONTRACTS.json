@@ -157,7 +157,7 @@
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.169 accepted rollback authority",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
-    "sourceAuthority": "Source/runtime rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 package lineage is locally reconciled through the user-supplied two-parent bridge; publication remains unverified and no merge/deployment/device acceptance is claimed.",
+    "sourceAuthority": "Source candidate rc4.191 preserves merged PR #118/#132; deployment parity UNKNOWN_REQUIRES_REVERIFICATION; physical rc4.188 PASS and rollback rc4.169 remain separate.",
     "latestPackageReextract": "HISTORICAL rc4.182 PASS run 33597607588; not current rc4.190 package authority",
     "latestPackageSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "packageReferenceRun": 33597607588,
@@ -165,17 +165,23 @@
     "deployedPagesAppByteParityWithMain": null,
     "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
     "exactNextAction": "Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.",
-    "runtimeVersion": "rc4.190 source in this tree; canonical containment requires dynamic verification; rc4.188 physically observed Waiver/FA PASS",
+    "runtimeVersion": "rc4.191 source candidate; canonical containment verified by current user authority; rc4.188 physically observed Waiver/FA PASS",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "2026-09-02 rc4.188 physical screenshots: Waiver/FA route, live ownership, kicker isolation and IR/drop semantics PASS.",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
     "reconciledBaseMain": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
     "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-    "packageReferenceScope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.190 installable package claim"
+    "packageReferenceScope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.190 installable package claim",
+    "localCandidatePackage": {
+      "version": "v11.8.0-rc4.191",
+      "files": 13,
+      "sha256": "sha256:fe6c24cd27c64dae1a23f31d9b928194bc06f2c948ecddb170feb75a9d42c79d",
+      "status": "PACKAGED_ONLY_NOT_DEPLOYED"
+    }
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260906T1200Z-v235",
-  "handoff_generation": "20260906T1200Z-v235",
+  "handoffGeneration": "20260907T1900Z-v236",
+  "handoff_generation": "20260907T1900Z-v236",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",

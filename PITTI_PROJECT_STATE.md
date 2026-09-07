@@ -16,8 +16,8 @@ Canonical continuation trigger: **PITTI AUTO**
 ## Authority / non-negotiable state
 - Current work is **post-draft / season operation**, not draft optimization.
 - Repository authority: `Muero42/draft-companion`; canonical production/source branch: `main` with dynamically verified HEAD. Historical v231 reconciliation base was `0c110a5dc6688ebc840da8bb122efcc5d50f77e6`; it is not current HEAD authority.
-- Current source runtime/version in this tree: **v11.8.0-rc4.190** (verify canonical main containment dynamically). Latest physical Android evidence is **rc4.188 PASS**; accepted rollback authority remains **rc4.169**. Built/source/deployed/device-verified states are distinct.
-- Source/runtime rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise.
+- Current source candidate: **v11.8.0-rc4.191**, preserving merged PR #118/#132; not deployed or physically accepted. Latest physical Android evidence is **rc4.188 PASS**; accepted rollback authority remains **rc4.169**. Built/source/deployed/device-verified states are distinct.
+- Source candidate rc4.191 preserves merged PR #118/#132; latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL.
 - Real 2026 draft ID: **1366053132970233856**, complete.
 - Current Sleeper league roster is Source of Truth. Never reconstruct current roster from the completed draft.
 - HISTORICAL correction: Charbonnet -> IR/Reserve; the initially reported Bigsby add was only intended and occurred later on September 1. See the dated transaction correction below. Preserve draft roster separately from current roster/transaction history.
@@ -602,3 +602,9 @@ Verification record: full local Strict Suite 176/176 PASS, draft runtime exclusi
 Generation: `20260906T1200Z-v235`. The user-supplied bridge `5679cbc` was locally verified with package parent `dc0a88f` and current-main parent `6b6093f`; no network authority was required. The reconciled task-local source preserves current-main Cloud AUTO least-privilege/fail-closed governance and the five Season Companion package semantics.
 
 Future D/ST capacity now uses the same structural drop-candidate boundary as the D/ST planner: Reserve/IR, sole active QB/TE, special teams, and explicitly protected/non-droppable assets cannot fund a prior waiver add. Trade draft-capital reversal protection is derived from verified season week/date state: pre-Week-1 is active, Week 1+ disables the hard veto, and ambiguous state is non-actionable. Exact-head strict/release gates remain required. Publication is pending through the Update branch UI; no merge, production deployment, cache/reinstall, fantasy transaction, or Android acceptance is claimed. Physical rc4.188 PASS and rc4.169 rollback authority remain separate historical device facts.
+
+
+## v236 CURRENT — rc4.191 unique production identity (2026-09-07)
+Generation: `20260907T1900Z-v236`. Authenticated canonical main `b62e7d5e7304b63285189208f52aed3275674f3c` includes merged PR #118 and PR #132. Because PR #132 changed already-published rc4.190 runtime bytes, the no-identity-reuse invariant requires `v11.8.0-rc4.191`.
+
+This candidate changes only runtime/cache/package/checkpoint identity. It is not merged, deployed, released or physically accepted. Deployment parity is UNKNOWN_REQUIRES_REVERIFICATION. Latest physical PASS remains rc4.188 and rollback remains rc4.169. Gate remains `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`; exact-head gates and fresh explicit production authorization are required next.
