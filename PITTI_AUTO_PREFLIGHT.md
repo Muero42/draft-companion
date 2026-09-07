@@ -87,14 +87,14 @@ Otherwise continue AUTO.
 - A full paired 15-round v4/v5 mock is invalid unless the exported backup contains exactly 30 active-draft fixtures covering all 15 own picks twice.
 
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
-- Current handoff generation = **20260906T1200Z-v235**. This checkpoint records the repair after the performed v233 read-only audit failed closed on residual state pointers.
+- Current handoff generation = **20260907T1900Z-v236**. This checkpoint records the repair after the performed v233 read-only audit failed closed on residual state pointers.
 - Current mode = **POST_DRAFT_SEASON_COMPANION**.
-- Canonical source/runtime = **rc4.190 in this source tree; canonical main containment is dynamically verified**. Verify the exact current main HEAD dynamically; a tracked checkpoint must not hard-code its own containing commit as immutable current authority.
+- Canonical source candidate = **rc4.191 preserving merged PR #118/#132; not deployed or physically accepted**. Verify the exact current main HEAD dynamically; a tracked checkpoint must not hard-code its own containing commit as immutable current authority.
 - Latest physical Android = **rc4.188 PASS** for Waiver/FA routing, live Sleeper ownership, kicker isolation and ACTIVE-drop/IR semantics. Accepted rollback = **rc4.169**.
 - Deployment parity = **UNKNOWN_REQUIRES_REVERIFICATION**. Never infer deployment/device acceptance from source merge.
 - PR #120 and PR #121 / v233 are **MERGED/HISTORICAL checkpoint work**, never open current gates.
 - Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
-- Source/runtime v11.8.0-rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 package lineage is locally reconciled through the authorized two-parent bridge; publication remains unverified and no merge/deployment/device acceptance is claimed.
+- Source candidate v11.8.0-rc4.191 preserves merged PR #118/#132; latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. No deployment or device acceptance is claimed.
 - Live Sleeper direct league/users/rosters state = current roster/ownership/manager/slot/FAAB authority; Watcher evidence-only; completed draft immutable history.
 - AUTO/AUTO BLOCK = continuous same-turn execution while safe positive-value work exists: no interim progress/status/acknowledgement, no empty response after tool work, no promise-only “AUTO läuft weiter”; checkpoint + re-inventory after every package; external wait blocks only its dependent lane.
 - STATUS = report-only and must not trigger tools/polling/work.
@@ -273,3 +273,5 @@ Generation: `20260901T2210Z-v224`. Supersedes older current-version/device/gate/
 - Lawrence lane and full-league-state architecture are current and must survive chat takeover.
 
 QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy.
+
+Earlier Cloudflare production identity rc4.190 is historical deployment context; rc4.191 remains the unpromoted candidate.
