@@ -1,7 +1,15 @@
-const CACHE='draft-companion-v11.8.0-rc4.190';
+const CACHE='draft-companion-v11.8.0-rc4.192-static-v2';
 const BACKUP_CACHE='draft-companion-backup-export-v1';
-const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.190','./decision-policy.js','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.190','./live-surface-v3.css?v=v11.8.0-rc4.190','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
-const BASE='v11.8.0-rc4.190',TARGET='v11.8.0-rc4.190';
+const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.192','./decision-policy.js','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.192','./live-surface-v3.css?v=v11.8.0-rc4.192','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
+const BASE='v11.8.0-rc4.192',TARGET='v11.8.0-rc4.192';
+// Only the bounded app shell belongs in CacheStorage. Live API responses have
+// their own freshness rules and may carry a new cache-busting URL on every load.
+const SCOPE=new URL(self.registration.scope);
+const STATIC_URLS=new Map(ASSETS.map(asset=>{const url=new URL(asset,SCOPE);return[url.pathname,url.href]}));
+function staticCacheKey(request){
+  const url=new URL(request.url);
+  return url.origin===SCOPE.origin?STATIC_URLS.get(url.pathname)||null:null;
+}
 function patchApp(s){
   // rc4.175+: the canonical runtime already contains the historical pre-draft/full-pool
   // and backup-download fixes. Do not mutate current app.js in the service worker.
@@ -31,6 +39,43 @@ self.addEventListener('message',e=>{
     e.ports?.[0]?.postMessage({ok:true});
   }catch(err){e.ports?.[0]?.postMessage({ok:false,error:err?.message||String(err)})}})());
 });
-self.addEventListener('install',e=>e.waitUntil((async()=>{const c=await caches.open(CACHE);for(const url of ASSETS){try{const r=await transformed(new Request(url,{cache:'reload'}));if(r.ok)await c.put(url,r.clone())}catch{}}await self.skipWaiting()})()));
-self.addEventListener('activate',e=>e.waitUntil(caches.keys().then(keys=>Promise.all(keys.filter(k=>k!==CACHE&&k!==BACKUP_CACHE).map(k=>caches.delete(k)))).then(()=>self.clients.claim())));
-self.addEventListener('fetch',e=>{if(e.request.method!=='GET')return;const u=new URL(e.request.url);if(u.pathname.startsWith('/__backup_download/')){e.respondWith((async()=>{const r=await caches.match(e.request);return r||new Response('Backup nicht mehr verfügbar.',{status:404})})());return;}e.respondWith((async()=>{try{const r=await transformed(e.request);const c=await caches.open(CACHE);c.put(e.request,r.clone()).catch(()=>{});return r}catch{return (await caches.match(e.request))||Response.error()}})())});
+self.addEventListener('install',e=>e.waitUntil((async()=>{
+  const cache=await caches.open(CACHE);
+  // Do not replace a working offline shell with a partially downloaded one.
+  for(const asset of ASSETS){
+    const url=new URL(asset,SCOPE).href,response=await transformed(new Request(url,{cache:'reload'}));
+    if(!response.ok)throw new Error('Runtime asset unavailable: '+asset);
+    await cache.put(url,response);
+  }
+  await self.skipWaiting();
+})()));
+self.addEventListener('activate',e=>e.waitUntil((async()=>{
+  // Remove only rebuildable app caches, including the former unbounded API
+  // copies. Backup exports and unrelated caches are not part of this migration.
+  for(const key of await caches.keys())if(key.startsWith('draft-companion-v')&&key!==CACHE)await caches.delete(key);
+  await self.clients.claim();
+})()));
+self.addEventListener('fetch',e=>{
+  if(e.request.method!=='GET')return;
+  const url=new URL(e.request.url);
+  if(url.origin===SCOPE.origin&&url.pathname.startsWith('/__backup_download/')){
+    e.respondWith((async()=>{const cache=await caches.open(BACKUP_CACHE);return(await cache.match(e.request))||new Response('Backup nicht mehr verfügbar.',{status:404})})());
+    return;
+  }
+  const key=staticCacheKey(e.request);
+  if(!key)return;
+  e.respondWith((async()=>{
+    try{
+      const response=await transformed(e.request);
+      if(response.ok){
+        // Cache errors must not discard an otherwise usable network response.
+        const copy=response.clone();
+        e.waitUntil(caches.open(CACHE).then(cache=>cache.put(key,copy)).catch(()=>{}));
+      }
+      return response;
+    }catch{
+      const cache=await caches.open(CACHE);
+      return(await cache.match(key))||Response.error();
+    }
+  })());
+});
