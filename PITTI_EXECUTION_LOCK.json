@@ -13,7 +13,7 @@
     "reconciledBaseMain": "2749537945ec7e6b96d95e2f6b55a26e455124fa"
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.191",
+    "appVersion": "v11.8.0-rc4.192",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
@@ -69,14 +69,14 @@
     "deployedPagesVersion": "UNKNOWN_REQUIRES_REVERIFICATION",
     "mainGhPagesParity": null,
     "androidVerified": false,
-    "androidAcceptance": "rc4.188 physical Waiver/FA PASS; rc4.191 physical acceptance pending",
+    "androidAcceptance": "rc4.188 physical Waiver/FA PASS; rc4.192 physical acceptance pending",
     "devicePromotionPolicy": "Requires current user authorization, exact-source validation, verified deployment parity and a physical canary. Source or merge state never proves device acceptance.",
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.191",
+      "version": "v11.8.0-rc4.192",
       "files": 13,
-      "sha256": "sha256:fe6c24cd27c64dae1a23f31d9b928194bc06f2c948ecddb170feb75a9d42c79d",
+      "sha256": "sha256:1815ce89eb8700670f7e93a5e3f3839578023b585ed7eea41655d3e626336b22",
       "status": "PACKAGED_ONLY_NOT_DEPLOYED"
     }
   },
@@ -282,7 +282,7 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260907T1900Z-v236",
+    "generation": "20260909T1018Z-v237",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -306,7 +306,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260907T1900Z-v236",
+  "handoff_generation": "20260909T1018Z-v237",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -341,6 +341,6 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260907T1900Z-v236",
+  "handoffGeneration": "20260909T1018Z-v237",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy"
 }

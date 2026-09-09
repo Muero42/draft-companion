@@ -1,9 +1,9 @@
 # NEW CHAT HANDOFF — PITTI SEASON COMPANION
-Handoff generation: `20260907T1900Z-v236`
+Handoff generation: `20260909T1018Z-v237`
 Created: 2026-09-03T09:59:50.439Z
 
 ## CURRENT AUTHORITY
-Source candidate v11.8.0-rc4.191 preserves merged PR #118 and PR #132 from authenticated canonical main b62e7d5; deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.188 PASS; rollback rc4.169. PR #121 / v233 is MERGED/HISTORICAL.
+Source candidate v11.8.0-rc4.192 preserves merged PR #118 and PR #132 from authenticated canonical main b62e7d5; deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.188 PASS; rollback rc4.169. PR #121 / v233 is MERGED/HISTORICAL.
 
 ## CODEX
 Local clone: `C:\Users\timmu\Documents\PITTI-Codex`. The post-v233 local read-only audit verified clean main `2749537945ec7e6b96d95e2f6b55a26e455124fa` and correctly failed closed on residual pending-CI/merge pointers in CURRENT and BOOTSTRAP. Earlier audits are historical. This local repair covers all coupled authority/checkpoint references.
@@ -17,4 +17,4 @@ Continuous same-turn execution while authorized safe work exists; checkpoint/re-
 
 QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy.
 
-Earlier Cloudflare production identity rc4.190 is historical deployment context; rc4.191 remains the unpromoted candidate.
+Earlier Cloudflare production identity rc4.190 is historical deployment context; rc4.192 remains the unpromoted candidate.

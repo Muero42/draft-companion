@@ -16,8 +16,8 @@ Canonical continuation trigger: **PITTI AUTO**
 ## Authority / non-negotiable state
 - Current work is **post-draft / season operation**, not draft optimization.
 - Repository authority: `Muero42/draft-companion`; canonical production/source branch: `main` with dynamically verified HEAD. Historical v231 reconciliation base was `0c110a5dc6688ebc840da8bb122efcc5d50f77e6`; it is not current HEAD authority.
-- Current source candidate: **v11.8.0-rc4.191**, preserving merged PR #118/#132; not deployed or physically accepted. Latest physical Android evidence is **rc4.188 PASS**; accepted rollback authority remains **rc4.169**. Built/source/deployed/device-verified states are distinct.
-- Source candidate rc4.191 preserves merged PR #118/#132; latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL.
+- Current source candidate: **v11.8.0-rc4.192**, adding the reviewed Watcher-v2 compatibility boundary; not deployed or physically accepted. Latest physical Android evidence is **rc4.188 PASS**; accepted rollback authority remains **rc4.169**. Built/source/deployed/device-verified states are distinct.
+- Source candidate rc4.192 adds exact Watcher-v2 compatibility; latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL.
 - Real 2026 draft ID: **1366053132970233856**, complete.
 - Current Sleeper league roster is Source of Truth. Never reconstruct current roster from the completed draft.
 - HISTORICAL correction: Charbonnet -> IR/Reserve; the initially reported Bigsby add was only intended and occurred later on September 1. See the dated transaction correction below. Preserve draft roster separately from current roster/transaction history.
@@ -608,3 +608,9 @@ Future D/ST capacity now uses the same structural drop-candidate boundary as the
 Generation: `20260907T1900Z-v236`. Authenticated canonical main `b62e7d5e7304b63285189208f52aed3275674f3c` includes merged PR #118 and PR #132. Because PR #132 changed already-published rc4.190 runtime bytes, the no-identity-reuse invariant requires `v11.8.0-rc4.191`.
 
 This candidate changes only runtime/cache/package/checkpoint identity. It is not merged, deployed, released or physically accepted. Deployment parity is UNKNOWN_REQUIRES_REVERIFICATION. Latest physical PASS remains rc4.188 and rollback remains rc4.169. Gate remains `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`; exact-head gates and fresh explicit production authorization are required next.
+
+
+## v237 CURRENT — rc4.192 Watcher-v2 compatibility release closure (2026-09-09)
+Generation: `20260909T1018Z-v237`. This source candidate advances the unique runtime identity to `v11.8.0-rc4.192` for the reviewed Watcher companion-feed v2 compatibility change based on authoritative main `c4f3f77ba33dab0a80f834be477e2a42bddc92bc`.
+
+The functional delta remains limited to accepting the exact `draft-companion.watcher-feed.v2` schema alongside the previously supported v1 schema. Watcher gate PASS, strict Season Evidence validation, ownership, lineup, waiver, trade, FLEX, IR, K and D/ST invariants remain unchanged. This checkpoint and seal describe a source/package candidate only. External mutation status is NONE_PERFORMED; source/build/package remain distinct from deployment and physical acceptance.
