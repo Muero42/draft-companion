@@ -38,9 +38,10 @@ jobs:
           EXPECTED_HEAD: ${{ github.event.pull_request.head.sha || github.sha }}
           EXPECTED_BASE: ${{ github.event.pull_request.base.sha || github.event.before || github.sha }}
           PLAYWRIGHT_BROWSERS_PATH: ${{ runner.temp }}/pitti-playwright
+          PITTI_CANDIDATE_PREFLIGHT: ${{ github.event_name == 'pull_request' && '1' || '0' }}
         run: |
           test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"
-          sudo --preserve-env=PATH,EXPECTED_BASE,PLAYWRIGHT_BROWSERS_PATH,GITHUB_RUN_ID,GITHUB_RUN_ATTEMPT node tools/cloud-isolated-validation.mjs "$GITHUB_WORKSPACE" "$GITHUB_WORKSPACE" "$RUNNER_TEMP/pitti-evidence-$EXPECTED_HEAD/validation"
+          sudo --preserve-env=PATH,EXPECTED_BASE,PLAYWRIGHT_BROWSERS_PATH,GITHUB_RUN_ID,GITHUB_RUN_ATTEMPT,PITTI_CANDIDATE_PREFLIGHT node tools/cloud-isolated-validation.mjs "$GITHUB_WORKSPACE" "$GITHUB_WORKSPACE" "$RUNNER_TEMP/pitti-evidence-$EXPECTED_HEAD/validation"
           test -z "$(git status --porcelain=v1 --untracked-files=all)"
       - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02
         if: always()
