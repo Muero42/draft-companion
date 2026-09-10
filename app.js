@@ -599,11 +599,85 @@ function persist(){
   store.set('v7_positionPanels',positionPanels);store.set('v7_adp',adp);store.set('v72_adpMeta',adpMeta);store.set('v7_decisionLog',decisionLog);
 }
 
+const FP_DIAGNOSTIC_TIMEOUT_MS=10000;
+const WEEKLY_PROJECTION_POSITIONS=['QB','RB','WR','TE'];
+const WEEKLY_PROJECTION_MIN_COUNTS={QB:24,RB:60,WR:70,TE:24};
+function codedError(code,message,status=null){const e=new Error(message);e.code=code;if(status!=null)e.status=status;return e}
+async function fpProxyRequest(path,{timeoutMs=FP_DIAGNOSTIC_TIMEOUT_MS,allowMalformed=false}={}){
+  const key=els.apiKey.value.trim();if(!key)throw codedError('NO_CREDENTIAL','API-Key fehlt.');
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);
+  try{
+    const r=await fetch(`/api/fantasypros?path=${encodeURIComponent(path)}`,{headers:{'x-fp-key':key},cache:'no-store',signal:controller.signal});
+    const text=await r.text();let data;
+    try{data=JSON.parse(text)}catch{if(allowMalformed)data={raw:text.slice(0,1200)};else throw codedError('MALFORMED_PAYLOAD','FantasyPros lieferte kein gültiges JSON.',r.status)}
+    return{ok:r.ok,status:r.status,data};
+  }catch(e){if(e?.name==='AbortError')throw codedError('TIMEOUT',`FantasyPros Timeout nach ${Math.round(timeoutMs/1000)}s`);if(e?.code)throw e;throw codedError('NETWORK','FantasyPros Netzwerkfehler.');}
+  finally{clearTimeout(timer)}
+}
 async function proxyCall(path){
-  const key=els.apiKey.value.trim();if(!key)throw new Error('API-Key fehlt.');
-  const r=await fetch(`/api/fantasypros?path=${encodeURIComponent(path)}`,{headers:{'x-fp-key':key},cache:'no-store'});
-  const text=await r.text();let data;try{data=JSON.parse(text)}catch{data={raw:text.slice(0,1200)}}
-  if(!r.ok){const e=new Error(data?.error||data?.message||`HTTP ${r.status}`);e.status=r.status;throw e}return data;
+  const result=await fpProxyRequest(path,{allowMalformed:true});
+  if(!result.ok){const e=new Error(result.data?.error||result.data?.message||`HTTP ${result.status}`);e.status=result.status;throw e}return result.data;
+}
+function deriveSleeperNflWeek(state,season){
+  const selected=Number(season),returnedSeason=Number(state?.season),week=Number(state?.week);
+  if(!Number.isInteger(selected)||selected<2000)throw codedError('INVALID_SELECTED_SEASON','Ausgewählte Saison ist ungültig.');
+  if(!state||String(state.season_type||'').toLowerCase()!=='regular')throw codedError('SLEEPER_NOT_REGULAR_SEASON','Sleeper meldet keine Regular Season.');
+  if(returnedSeason!==selected)throw codedError('SLEEPER_SEASON_MISMATCH','Sleeper-Saison stimmt nicht mit der Auswahl überein.');
+  if(!Number.isInteger(week)||week<1||week>18)throw codedError('SLEEPER_WEEK_UNAVAILABLE','Sleeper-Woche ist nicht sicher bestimmbar.');
+  return week;
+}
+async function currentSleeperNflWeek(season){
+  const state=await jf(`${S}/state/nfl?_=${Date.now()}`,'Sleeper NFL State',6000);
+  return deriveSleeperNflWeek(state,season);
+}
+function weeklyProjectionMetadata(payload){
+  const out=[];
+  for(const [key,label] of [['source','source'],['updated','updated'],['last_updated','last_updated'],['updated_at','updated_at'],['as_of','as_of'],['date','date']]){
+    const value=payload?.[key];if((typeof value==='string'||typeof value==='number')&&String(value).trim())out.push(`${label}=${String(value).trim().slice(0,120)}`);
+  }
+  return out;
+}
+function summarizeWeeklyProjectionPayload(payload,{position,season,week,status}){
+  const players=Array.isArray(payload?.players)?payload.players:[];
+  const identityCount=players.filter(row=>Number.isFinite(Number(row?.fpid))&&Number(row.fpid)>0).length;
+  const pointsHalfCount=players.filter(row=>typeof row?.stats?.points_half==='number'&&Number.isFinite(row.stats.points_half)).length;
+  const count=players.length,coverage=count?pointsHalfCount/count:0,identityCoverage=count?identityCount/count:0;
+  let reason='';
+  if(!payload||typeof payload!=='object'||Array.isArray(payload))reason='MALFORMED_PAYLOAD';
+  else if(payload.rankings||payload.ranking_type||payload.ros===true||/\bros\b|rest.of.season/i.test(String(payload.type||payload.projections||'')))reason='NON_WEEKLY_PROJECTION_PAYLOAD';
+  else if(Number(payload.season)!==Number(season))reason='WRONG_SEASON';
+  else if(Number(payload.week)!==Number(week))reason='WRONG_WEEK';
+  else if(!Array.isArray(payload.players))reason='MISSING_PLAYERS';
+  else if(players.some(row=>String(row?.position_id||'').toUpperCase()!==position))reason='WRONG_POSITION';
+  const sufficient=!reason&&count>10&&count>=WEEKLY_PROJECTION_MIN_COUNTS[position]&&identityCoverage>=.9&&coverage>=.9;
+  const result=reason?'FAILED':sufficient?'SUFFICIENT':'PARTIAL';
+  return{position,status,season:Number(season),week:Number(week),ros:false,count,overTen:count>10,identityCount,pointsHalfCount,coveragePct:Math.round(coverage*1000)/10,metadata:weeklyProjectionMetadata(payload),result,reason:reason||(!sufficient?'INSUFFICIENT_COVERAGE':'')};
+}
+function weeklyProjectionFailure(position,season,week,error){
+  const status=Number(error?.status),explicitCode=['TIMEOUT','MALFORMED_PAYLOAD','NETWORK','NO_CREDENTIAL'].includes(error?.code)?error.code:null;
+  const code=explicitCode||(status?[401,403,404,429].includes(status)?`HTTP_${status}`:status>=500&&status<=599?'HTTP_5XX':`HTTP_${status}`:error?.code||'NETWORK');
+  return{position,status:Number.isFinite(status)?status:null,season:Number(season),week:week!=null&&Number.isFinite(Number(week))?Number(week):null,ros:false,count:0,overTen:false,identityCount:0,pointsHalfCount:0,coveragePct:0,metadata:[],result:'FAILED',reason:code};
+}
+async function runAuthenticatedWeeklyProjectionDiagnostic(){
+  const season=Number(els.season.value.trim());let week;
+  try{week=await currentSleeperNflWeek(season)}catch(error){const rows=WEEKLY_PROJECTION_POSITIONS.map(position=>weeklyProjectionFailure(position,season,null,error));return{rows,classification:'INSUFFICIENT',reason:`CURRENT_WEEK:${rows[0].reason}`}}
+  const rows=[];
+  for(const position of WEEKLY_PROJECTION_POSITIONS){
+    const path=`/nfl/${season}/projections?week=${week}&position=${position}&scoring=HALF&ros=false`;
+    try{
+      const response=await fpProxyRequest(path);
+      if(!response.ok)rows.push(weeklyProjectionFailure(position,season,week,{status:response.status}));
+      else rows.push(summarizeWeeklyProjectionPayload(response.data,{position,season,week,status:response.status}));
+    }catch(error){rows.push(weeklyProjectionFailure(position,season,week,error))}
+  }
+  const failed=rows.filter(row=>row.result!=='SUFFICIENT');
+  return{rows,classification:failed.length?'INSUFFICIENT':'SUFFICIENT',reason:failed.map(row=>`${row.position}:${row.reason}`).join(',')};
+}
+function formatAuthenticatedWeeklyProjectionDiagnostic(report){
+  const lines=['AUTHENTICATED WEEKLY PROJECTIONS'];
+  for(const row of report.rows){const http=row.status==null?'result':`HTTP ${row.status}`,meta=row.metadata.length?` · ${row.metadata.join(' · ')}`:'';lines.push(`${row.position}: ${http} · season=${row.season} · week=${row.week??'UNAVAILABLE'} · ros=false · players=${row.count} · >10=${row.overTen?'yes':'no'} · FP identity=${row.identityCount} · numeric stats.points_half=${row.pointsHalfCount} · coverage=${row.coveragePct}%${meta} · ${row.result}${row.reason?` (${row.reason})`:''}`)}
+  lines.push(`AUTHENTICATED PROJECTION ACCESS = ${report.classification}${report.reason?` · ${report.reason}`:''}`);
+  return lines;
 }
 function slugifyExpert(name){
   return String(name||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
@@ -4073,6 +4147,9 @@ async function exportExpertV3Challengers(){
 if(els.expertV3AuditBtn)els.expertV3AuditBtn.onclick=()=>exportExpertV3Challengers().catch(e=>{els.expertV3AuditStatus.className='notice bad';els.expertV3AuditStatus.textContent='v3 Audit fehlgeschlagen: '+e.message});
 els.diagnoseBtn.onclick=async()=>{els.diagnostic.textContent='Teste …';try{
   const out=[];
+  const weekly=await runAuthenticatedWeeklyProjectionDiagnostic();
+  out.push(...formatAuthenticatedWeeklyProjectionDiagnostic(weekly),'');
+  els.diagnostic.textContent=out.join('\n');
   try{
     const info=await loadExperts();
     out.push(`✓ Expertenverzeichnis: ${info.count} gesamt · API ${info.api} · öffentlich ${info.public}`);
