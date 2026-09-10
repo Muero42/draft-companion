@@ -41,9 +41,67 @@ evidence.atomicWrite(storage,snapshot);
 assert.equal(JSON.parse(memory.get(evidence.CACHE_KEY)).snapshotId,snapshot.snapshotId);
 assert.equal(memory.has(evidence.TEMP_KEY),false);
 
-const prior='{"schema":"old","snapshotId":"keep"}',failingStorage={setItem(k,v){if(k===evidence.CACHE_KEY)throw Error('quota');memory.set(k,v)},getItem:k=>k===evidence.CACHE_KEY?prior:memory.get(k)??null,removeItem:k=>memory.delete(k)};
-assert.throws(()=>evidence.atomicWrite(failingStorage,snapshot),/quota/);
+// A failed replacement must preserve the previously verified current snapshot.
+const prior='{"schema":"old","snapshotId":"keep"}',failingMemory=new Map([[evidence.CACHE_KEY,prior]]),failingStorage={
+  setItem(k,v){if(k===evidence.CACHE_KEY){const e=new Error('quota');e.name='QuotaExceededError';e.code=22;throw e}failingMemory.set(k,v)},
+  getItem:k=>failingMemory.get(k)??null,
+  removeItem:k=>failingMemory.delete(k)
+};
+assert.throws(()=>evidence.atomicWrite(failingStorage,snapshot),e=>e?.code==='STORAGE_QUOTA_EXCEEDED');
 assert.equal(failingStorage.getItem(evidence.CACHE_KEY),prior,'failed atomic publish must preserve the prior current snapshot');
+assert.equal(failingMemory.has(evidence.TEMP_KEY),false,'quota failure must not strand a second full pending snapshot');
+
+// Regression for the physical Android failure: the old implementation staged a full
+// TEMP copy before CURRENT. Under realistic localStorage pressure that doubled peak
+// demand and could fail even though a direct atomic replacement fits. A stale pending
+// copy from such a failure must be removed before the replacement is attempted.
+const text=JSON.stringify(snapshot),pressureMemory=new Map([
+  [evidence.CACHE_KEY,prior],
+  [evidence.TEMP_KEY,'x'.repeat(text.length)],
+  ['v118_decisionFixtures','ACTIVE_EVIDENCE']
+]);
+const pressureLimit=text.length+prior.length+'ACTIVE_EVIDENCE'.length+256;
+const pressureStorage={
+  setItem(k,v){
+    let total=0;
+    for(const [key,value] of pressureMemory)total+=key===k?0:String(value).length;
+    total+=String(v).length;
+    if(total>pressureLimit){const e=new Error('QuotaExceededError');e.name='QuotaExceededError';e.code=22;throw e}
+    pressureMemory.set(k,v);
+  },
+  getItem:k=>pressureMemory.get(k)??null,
+  removeItem:k=>pressureMemory.delete(k)
+};
+evidence.atomicWrite(pressureStorage,snapshot);
+assert.equal(JSON.parse(pressureMemory.get(evidence.CACHE_KEY)).snapshotId,snapshot.snapshotId,'direct replacement must succeed without double-staging the payload');
+assert.equal(pressureMemory.has(evidence.TEMP_KEY),false,'stale pending snapshot must be removed');
+assert.equal(pressureMemory.get('v118_decisionFixtures'),'ACTIVE_EVIDENCE','active decision evidence must never be pruned');
+
+// If direct replacement still exceeds quota, only the same explicitly rebuildable /
+// historical keys already used by the app quota policy may be evicted before one retry.
+const recoveryMemory=new Map([
+  [evidence.CACHE_KEY,prior],
+  ['v118_decisionFixtures','ACTIVE_EVIDENCE'],
+  ['v118_returnValidation','x'.repeat(text.length)],
+  ['v117_researchEvidence','x'.repeat(text.length)]
+]);
+const recoveryLimit=text.length+prior.length+'ACTIVE_EVIDENCE'.length+256;
+const recoveryStorage={
+  setItem(k,v){
+    let total=0;
+    for(const [key,value] of recoveryMemory)total+=key===k?0:String(value).length;
+    total+=String(v).length;
+    if(total>recoveryLimit){const e=new Error('QuotaExceededError');e.name='QuotaExceededError';e.code=22;throw e}
+    recoveryMemory.set(k,v);
+  },
+  getItem:k=>recoveryMemory.get(k)??null,
+  removeItem:k=>recoveryMemory.delete(k)
+};
+evidence.atomicWrite(recoveryStorage,snapshot);
+assert.equal(JSON.parse(recoveryMemory.get(evidence.CACHE_KEY)).snapshotId,snapshot.snapshotId,'quota recovery retry must publish the verified snapshot');
+assert.equal(recoveryMemory.get('v118_decisionFixtures'),'ACTIVE_EVIDENCE','active decision evidence must survive quota recovery');
+assert.equal(recoveryMemory.has('v118_returnValidation'),false);
+assert.equal(recoveryMemory.has('v117_researchEvidence'),false);
 
 const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8'),valueStart=app.indexOf('function seasonEvidenceValue('),valueEnd=app.indexOf('\nfunction seasonEvidenceCache',valueStart),context={Date,Number,String,Array,Object,RegExp,Set};
 vm.createContext(context);vm.runInContext(app.slice(valueStart,valueEnd)+';globalThis.pick=seasonEvidenceValue;',context);
