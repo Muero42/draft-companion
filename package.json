@@ -7,7 +7,6 @@
     "test": "node tools/strict-suite.mjs",
     "test:cloud": "node tools/cloud-foundation-regression.mjs",
     "test:workflows": "node tools/cloud-workflow-check.mjs",
-    "build:pages": "node tools/stage-pages-runtime.mjs",
     "browser:install": "playwright install --with-deps chromium"
   },
   "devDependencies": {
