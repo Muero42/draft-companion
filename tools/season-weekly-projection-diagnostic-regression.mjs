@@ -28,7 +28,7 @@ function runtime({fetchImpl,jfImpl,season='2026'}={}){
   let capturedUrl='',capturedOptions=null,logCount=0;
   const api=runtime({fetchImpl:async(url,options)=>{capturedUrl=url;capturedOptions=options;return response(200,{ok:true})}});
   const oldLog=console.log;console.log=()=>{logCount++};
-  try{const result=await api.fpProxyRequest('/nfl/2026/projections?week=7&position=QB&scoring=HALF&ros=false');assert.equal(result.status,200)}finally{console.log=oldLog}
+  try{const result=await api.fpProxyRequest('/nfl/2026/projections?week=7&position=QB&ros=false');assert.equal(result.status,200)}finally{console.log=oldLog}
   assert.equal(capturedOptions.headers['x-fp-key'],secretSentinel,'existing x-fp-key credential header must be used');
   assert(!capturedUrl.includes(secretSentinel),'credential must never enter URL/query string');
   assert.equal(logCount,0,'credential request must not log');
@@ -45,7 +45,7 @@ function runtime({fetchImpl,jfImpl,season='2026'}={}){
   assert.equal(report.classification,'SUFFICIENT');
   assert.deepEqual(paths.map(path=>new URL(path,'https://fp.invalid').searchParams.get('position')),['QB','RB','WR','TE']);
   assert(paths.every(path=>path.includes('week=7')&&!path.includes('week=1')),'week must come from current Sleeper NFL state, never a hardcoded Week 1');
-  assert(paths.every(path=>path.includes('scoring=HALF')&&path.includes('ros=false')),'weekly Half-PPR/ros=false semantics missing');
+  assert(paths.every(path=>!new URL(path,'https://fp.invalid').searchParams.has('scoring')&&path.includes('ros=false')),'projection request must omit scoring while preserving ros=false');
   const text=api.formatAuthenticatedWeeklyProjectionDiagnostic(report).join('\n');
   assert.match(text,/>10=yes/);assert.match(text,/numeric stats\.points_half=/);assert.match(text,/updated=2026-09-10/);
   assert(!text.includes(secretSentinel),'API key must never be rendered in diagnostic output');

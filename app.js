@@ -663,7 +663,7 @@ async function runAuthenticatedWeeklyProjectionDiagnostic(){
   try{week=await currentSleeperNflWeek(season)}catch(error){const rows=WEEKLY_PROJECTION_POSITIONS.map(position=>weeklyProjectionFailure(position,season,null,error));return{rows,classification:'INSUFFICIENT',reason:`CURRENT_WEEK:${rows[0].reason}`}}
   const rows=[];
   for(const position of WEEKLY_PROJECTION_POSITIONS){
-    const path=`/nfl/${season}/projections?week=${week}&position=${position}&scoring=HALF&ros=false`;
+    const path=`/nfl/${season}/projections?week=${week}&position=${position}&ros=false`;
     try{
       const response=await fpProxyRequest(path);
       if(!response.ok)rows.push(weeklyProjectionFailure(position,season,week,{status:response.status}));
