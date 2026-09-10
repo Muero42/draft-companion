@@ -94,11 +94,41 @@
     return{ok:true};
   }
 
+  const storageQuotaError=error=>error?.name==='QuotaExceededError'||Number(error?.code)===22;
+  const safeRemove=(storage,key)=>{try{storage.removeItem(key)}catch{}};
   function atomicWrite(storage,snapshot){
-    const text=JSON.stringify(snapshot);storage.setItem(TEMP_KEY,text);
-    const staged=JSON.parse(storage.getItem(TEMP_KEY)||'null');
-    if(!staged||staged.schema!==SCHEMA||staged.snapshotId!==snapshot.snapshotId)throw new Error('WEEKLY_EVIDENCE_ATOMIC_VERIFY_FAILED');
-    storage.setItem(CACHE_KEY,text);storage.removeItem(TEMP_KEY);return snapshot;
+    const text=JSON.stringify(snapshot),validated=JSON.parse(text);
+    if(!validated||validated.schema!==SCHEMA||validated.snapshotId!==snapshot.snapshotId)throw new Error('WEEKLY_EVIDENCE_ATOMIC_VERIFY_FAILED');
+
+    // Web Storage setItem is atomic: if a replacement cannot be stored, the previous
+    // value remains unchanged. Do not stage a second full snapshot in TEMP_KEY because
+    // that doubles peak localStorage demand and can strand a full pending copy after a
+    // QuotaExceededError. Remove any stale pending copy left by older builds first.
+    safeRemove(storage,TEMP_KEY);
+    const commit=()=>{
+      storage.setItem(CACHE_KEY,text);
+      const current=JSON.parse(storage.getItem(CACHE_KEY)||'null');
+      if(!current||current.schema!==SCHEMA||current.snapshotId!==snapshot.snapshotId)throw new Error('WEEKLY_EVIDENCE_ATOMIC_VERIFY_FAILED');
+      return snapshot;
+    };
+
+    try{return commit();}
+    catch(first){
+      if(!storageQuotaError(first))throw first;
+      // Match the existing app quota policy: only obsolete duplicates and explicitly
+      // rebuildable/history caches may be evicted. Current decision evidence and the
+      // previous verified Weekly Evidence snapshot are never deleted for recovery.
+      for(const key of ['v7_rankCache','v7_panelRanks','v118_returnValidation','v117_researchEvidence'])safeRemove(storage,key);
+      try{return commit();}
+      catch(second){
+        if(!storageQuotaError(second))throw second;
+        const error=new Error('Weekly Evidence konnte wegen ausgeschöpftem lokalem Speicher nicht persistiert werden.');
+        error.name='QuotaExceededError';
+        error.code='STORAGE_QUOTA_EXCEEDED';
+        error.cause=second;
+        throw error;
+      }
+    }
   }
 
   return{SCHEMA,CACHE_KEY,TEMP_KEY,MAPPING_VERSION,MAX_AGE_MS,EVIDENCE_TTL_MS,POSITIONS,MIN_COUNTS,sourceTime,sleeperIndexes,mapFantasyProsPlayer,projectionLane,buildSnapshot,validateSnapshot,atomicWrite};
