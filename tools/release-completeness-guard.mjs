@@ -1,8 +1,15 @@
 import fs from 'node:fs';
 import vm from 'node:vm';
+import {RUNTIME_FILES} from './runtime-files.mjs';
 const must=(ok,msg)=>{if(!ok){console.error('RELEASE_GUARD_FAIL:',msg);process.exitCode=1;}};
 const read=f=>fs.readFileSync(f,'utf8');
-const index=read('index.html'),app=read('app.js'),sw=read('sw.js'),manifest=read('manifest.webmanifest'),live=read('live-surface-v3.js'),readme=read('README.md');
+const index=read('index.html'),app=read('app.js'),sw=read('sw.js'),manifest=read('manifest.webmanifest'),live=read('live-surface-v3.js'),weekly=read('weekly-evidence-v2.js'),readme=read('README.md');
+const packageTool=read('tools/package-reextract.mjs');
+const packageListBlock=packageTool.match(/const files=\[([^\]]+)\];/)?.[1]||'';
+const packageFiles=[...packageListBlock.matchAll(/'([^']+)'/g)].map(m=>m[1]);
+must(packageFiles.length>0,'package runtime file list unreadable');
+must(JSON.stringify(packageFiles)===JSON.stringify([...RUNTIME_FILES]),'Pages staging manifest != package runtime file set');
+must(RUNTIME_FILES.includes('weekly-evidence-v2.js'),'Pages staging manifest missing weekly-evidence-v2.js');
 const m=index.match(/<span class="version">(v11\.8\.0-rc4\.\d+)<\/span>/);must(m,'visible version missing');const V=m?.[1];
 if(V){
   const runtime={index,app,sw,manifest,live};
@@ -12,12 +19,16 @@ if(V){
   }
   const head=readme.split(/\r?\n/).slice(0,8).join('\n');const processMode=head.includes('Release Contract v2 (noch kein Installationsrelease)');must(processMode||head.includes(V),`README state is neither explicit process-mode nor ${V}`);
   must(index.includes(`app.js?v=${V}`),`index app.js cache-buster != ${V}`);
+  must(index.includes(`weekly-evidence-v2.js?v=${V}`),`index weekly-evidence-v2.js cache-buster != ${V}`);
   must(index.includes(`live-surface-v3.js?v=${V}`),`index live JS cache-buster != ${V}`);
   must(index.includes(`live-surface-v3.css?v=${V}`),`index live CSS cache-buster != ${V}`);
   must(sw.includes(`./app.js?v=${V}`),`service-worker app.js cache key != ${V}`);
+  must(sw.includes(`./weekly-evidence-v2.js?v=${V}`),`service-worker weekly-evidence-v2.js cache key != ${V}`);
   must(sw.includes(`./live-surface-v3.js?v=${V}`),`service-worker live JS cache key != ${V}`);
   must(sw.includes(`./live-surface-v3.css?v=${V}`),`service-worker live CSS cache key != ${V}`);
 }
+must(weekly.includes('root.PittiWeeklyEvidenceV2=api'),'Weekly Evidence v2 global runtime export missing');
+must(weekly.includes("const SCHEMA='pitti.weekly-evidence.v2'"),'Weekly Evidence v2 schema identity missing');
 for(const x of [
   "GLOBAL_EXPERT_ORDER=['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Nick Mariano','Justin Boone'",
   'headerArrow(x)',
