@@ -1,8 +1,9 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.192';
+const APP_VERSION='v11.8.0-rc4.193';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
+els.seasonRefreshEvidenceBtn=$('seasonRefreshEvidenceBtn');
 const store={get(k,f=null){try{const v=localStorage.getItem(k);return v===null?f:JSON.parse(v)}catch{return f}},set(k,v){localStorage.setItem(k,JSON.stringify(v))},text(k,f=''){return localStorage.getItem(k)??f},setText(k,v){localStorage.setItem(k,v)}};
 let seasonDecisionTimer=null;
 const norm=v=>String(v||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
@@ -610,7 +611,8 @@ async function fpProxyRequest(path,{timeoutMs=FP_DIAGNOSTIC_TIMEOUT_MS,allowMalf
     const r=await fetch(`/api/fantasypros?path=${encodeURIComponent(path)}`,{headers:{'x-fp-key':key},cache:'no-store',signal:controller.signal});
     const text=await r.text();let data;
     try{data=JSON.parse(text)}catch{if(allowMalformed)data={raw:text.slice(0,1200)};else throw codedError('MALFORMED_PAYLOAD','FantasyPros lieferte kein gültiges JSON.',r.status)}
-    return{ok:r.ok,status:r.status,data};
+    const retryRaw=r.headers?.get?.('retry-after')||'',retrySeconds=Number(retryRaw),retryDate=Date.parse(retryRaw),retryAfterMs=Number.isFinite(retrySeconds)?Math.max(0,retrySeconds*1000):Number.isFinite(retryDate)?Math.max(0,retryDate-Date.now()):null;
+    return{ok:r.ok,status:r.status,data,retryAfterMs};
   }catch(e){if(e?.name==='AbortError')throw codedError('TIMEOUT',`FantasyPros Timeout nach ${Math.round(timeoutMs/1000)}s`);if(e?.code)throw e;throw codedError('NETWORK','FantasyPros Netzwerkfehler.');}
   finally{clearTimeout(timer)}
 }
@@ -3146,8 +3148,8 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   }).join(''):'<div class="notice ok">Kein klarer Trade-Target-Vorteil aus der aktuellen Panel-/Roster-/Slot-Baseline.</div>';
 }
 
-// rc4.192 evidence boundary: only explicitly verified, time-bounded observations.
-function seasonEvidenceContext(season=lastDraftContext?.season){return{season:Number(season?.league?.season),week:Number(season?.transaction_round??season?.league?.settings?.leg),scoring:'HALF_PPR'};}
+// Season evidence boundary: only explicitly verified, time-bounded observations.
+function seasonEvidenceContext(season=lastDraftContext?.season){return{season:Number(season?.league?.season),week:Number(season?.current_nfl_week??season?.transaction_round??season?.league?.settings?.leg),scoring:'HALF_PPR'};}
 function seasonTemporalPhase(season,now=Date.now()){
   const rawWeek=season?.transaction_round??season?.league?.settings?.leg;
   const week=Number(rawWeek);
@@ -3159,16 +3161,23 @@ function seasonTemporalPhase(season,now=Date.now()){
 }
 function seasonEvidenceValue(records,playerId,metric,context,now=Date.now()){
   const candidates=(Array.isArray(records)?records:[]).filter(x=>x&&typeof x==='object'&&String(x.playerId)===String(playerId)&&x.metric===metric);
-  if(candidates.some(x=>x.conflict&&x.season===context.season&&x.week===context.week&&x.scoring===context.scoring&&Number.isFinite(x.publishedAt)&&x.publishedAt<=now&&now-x.publishedAt<=86400000&&x.expiresAt>now))return{status:'CONFLICT',value:null};
-  const valid=candidates.filter(x=>x.status==='VERIFIED'&&x.confidence>=.7&&x.confidence<=1&&x.season===context.season&&x.week===context.week&&x.scoring===context.scoring&&typeof x.value==='number'&&Number.isFinite(x.value)&&x.value>=0&&/^https:\/\//.test(x.sourceUrl||'')&&x.sourceId&&Number.isFinite(x.publishedAt)&&Number.isFinite(x.verifiedAt)&&x.publishedAt<=x.verifiedAt&&x.verifiedAt<=now&&now-x.publishedAt<=86400000&&Number.isFinite(x.expiresAt)&&x.expiresAt>now&&x.expiresAt-x.publishedAt<=86400000&&!x.conflict);
+  const timing=x=>{const exact=Number.isFinite(x.publishedAt)?Number(x.publishedAt):x.sourceTimePrecision==='TIMESTAMP'?Date.parse(x.sourcePublishedAt||''):NaN,dateOnly=x.sourceTimePrecision==='DATE'&&/^\d{4}-\d{2}-\d{2}$/.test(x.sourcePublishedDate||'');const verified=Number(x.verifiedAt);return{exact,dateOnly,verified,chronology:Number.isFinite(verified)&&verified<=now&&((Number.isFinite(exact)&&exact<=verified&&now-exact<=86400000)||(dateOnly&&x.sourcePublishedDate<=new Date(verified).toISOString().slice(0,10)&&now-verified<=86400000))};};
+  if(candidates.some(x=>{const t=timing(x);return x.conflict&&x.season===context.season&&x.week===context.week&&x.scoring===context.scoring&&t.chronology&&x.expiresAt>now;}))return{status:'CONFLICT',value:null};
+  const valid=candidates.filter(x=>{const t=timing(x);return x.status==='VERIFIED'&&x.confidence>=.7&&x.confidence<=1&&x.season===context.season&&x.week===context.week&&x.scoring===context.scoring&&typeof x.value==='number'&&Number.isFinite(x.value)&&x.value>=0&&/^https:\/\//.test(x.sourceUrl||'')&&x.sourceId&&t.chronology&&Number.isFinite(x.expiresAt)&&x.expiresAt>now&&x.expiresAt-t.verified<=86400000&&!x.conflict;});
   if(!valid.length)return{status:candidates.length?'STALE_OR_UNVERIFIED':'UNAVAILABLE',value:null};
   if(new Set(valid.map(x=>x.value)).size>1)return{status:'CONFLICT',value:null};
   return{...valid.sort((a,b)=>b.verifiedAt-a.verifiedAt)[0],status:'VERIFIED'};
 }
-function seasonEvidenceCache(){return store.get('v190_seasonEvidence',[]);}
+function seasonEvidenceCache(){
+  const legacy=store.get('v190_seasonEvidence',[]),weekly=store.get(globalThis.PittiWeeklyEvidenceV2?.CACHE_KEY||'pitti.weekly-evidence.v2.current',null),context=seasonEvidenceContext();
+  const usable=globalThis.PittiWeeklyEvidenceV2?.validateSnapshot?.(weekly,context,Date.now())?.ok===true?weekly.records:[];
+  return[...usable,...(Array.isArray(legacy)?legacy:[])];
+}
 function scheduleSeasonDecisionExpiry(){
   if(seasonDecisionTimer)clearTimeout(seasonDecisionTimer);seasonDecisionTimer=null;
   const c=lastDraftContext,now=Date.now(),deadlines=[Number(c?.season?.generated_at)+300001];
+  const weekly=store.get(globalThis.PittiWeeklyEvidenceV2?.CACHE_KEY||'pitti.weekly-evidence.v2.current',null);
+  if(Number.isFinite(weekly?.lastSuccessAt))deadlines.push(Number(weekly.lastSuccessAt)+SEASON_RANKING_AUTO_MS+1);
   for(const [key,ttl] of [['v190_seasonEvidence',86400000],['v190_gameContext',21600000],['v190_roleGraphs',86400000]]){
     const rows=store.get(key,[]);for(const e of Array.isArray(rows)?rows:[])if(e)deadlines.push(e.expiresAt,Number(e.publishedAt??e.verifiedAt)+ttl+1);
   }
@@ -4183,6 +4192,10 @@ els.clearDraftDataBtn.onclick=()=>{if(confirm('Draft-Verbindung zurücksetzen?')
 if(els.draftInput)els.draftInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();els.draftInput.blur();}});
 for(const el of [els.apiKey,els.season,els.scoring,els.draftInput,els.slot,els.topN,els.snapshotMode,els.draftMode,els.replayCutoff,els.managerMap,els.stressMode])el.addEventListener('change',()=>{persist();updateStatus()});
 addEventListener('online',updateStatus);addEventListener('offline',updateStatus);
+addEventListener('online',()=>{if(lastDraftContext?.players)void refreshSeasonRankings({auto:true,trigger:'online'});});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&lastDraftContext?.players)void refreshSeasonRankings({auto:true,trigger:'resume'});});
+if(els.seasonRefreshEvidenceBtn)els.seasonRefreshEvidenceBtn.onclick=()=>void refreshSeasonRankings({force:true,trigger:'manual'});
+for(const el of [els.season,els.scoring])el?.addEventListener('change',()=>{renderSeasonRankingFreshness('Saison-/Scoring-Kontext geändert · alter Weekly-Evidence-Snapshot ist für diesen Kontext ungültig.');if(lastDraftContext?.players)void refreshSeasonRankings({force:true,trigger:'context-change'});});
 setInterval(updateStatus,60000);
 let livePreviewActive=false;
 function populateLivePreviewPoints(){
@@ -4250,32 +4263,49 @@ const SEASON_RANKING_AUTO_MS=3*60*60*1000,SEASON_RANKING_RETRY_MS=45*60*1000;
 let seasonRankingRefreshBusy=false;
 function renderSeasonRankingFreshness(note=''){
   if(!els.seasonRankingAge&&!els.seasonRankingStatus)return;
-  const t=Number(store.get('v7_lastRankingUpdate',0)),age=t?Date.now()-t:Infinity;
+  const snapshot=store.get(globalThis.PittiWeeklyEvidenceV2?.CACHE_KEY||'pitti.weekly-evidence.v2.current',null),t=Number(snapshot?.lastSuccessAt||0),age=t?Date.now()-t:Infinity;
   const label=!t?'nicht geladen':age<60*60*1000?Math.max(1,Math.round(age/60000))+' Min.':age<24*60*60*1000?Math.round(age/3600000)+' Std.':Math.floor(age/86400000)+' Tag(e)';
   if(els.seasonRankingAge){els.seasonRankingAge.textContent=label;els.seasonRankingAge.className=!t?'bad':age>SEASON_RANKING_AUTO_MS?'warn':'ok';}
-  if(els.seasonRankingStatus&&!seasonRankingRefreshBusy)els.seasonRankingStatus.textContent=note||(!t?'Keine verifizierten Rankings geladen. Automatischer Refresh wird versucht.':age>SEASON_RANKING_AUTO_MS?'Rankings älter als 3 Std. · automatischer Refresh wird versucht.':'Rankings aktuell genug · automatischer Refresh spätestens nach 3 Std.');
+  if(els.seasonRankingStatus&&!seasonRankingRefreshBusy)els.seasonRankingStatus.textContent=note||(!t?'Keine verifizierte Weekly Evidence geladen. Automatische Prüfung wird versucht.':age>SEASON_RANKING_AUTO_MS?'Weekly Evidence älter als 3 Std. · automatische Prüfung wird versucht.':'FantasyPros Weekly Projections verifiziert · Expert-Ranks/Matchup-Lanes bleiben separat fail-closed.');
 }
-async function refreshSeasonRankings({force=false,auto=false}={}){
-  if(seasonRankingRefreshBusy){if(els.seasonRankingStatus)els.seasonRankingStatus.textContent='Ranking-Aktualisierung läuft bereits …';return{ok:false,busy:true};}
-  const now=Date.now(),last=Number(store.get('v7_lastRankingUpdate',0)),attempt=Number(store.get('v118_lastSeasonRankingRefreshAttempt',0));
+async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}={}){
+  if(seasonRankingRefreshBusy){if(els.seasonRankingStatus)els.seasonRankingStatus.textContent='Weekly-Evidence-Prüfung läuft bereits …';return{ok:false,busy:true};}
+  const api=globalThis.PittiWeeklyEvidenceV2;
+  if(!api){renderSeasonRankingFreshness('Weekly-Evidence-v2-Modul fehlt · keine Saisonentscheidung freigegeben.');return{ok:false,error:'WEEKLY_EVIDENCE_MODULE_MISSING'};}
+  const now=Date.now(),previous=store.get(api.CACHE_KEY,null),last=Number(previous?.lastSuccessAt||0),attempt=Number(store.get('pitti.weekly-evidence.v2.lastAttempt',0)),retryAfterUntil=Number(store.get('pitti.weekly-evidence.v2.retryAfterUntil',0));
   if(!force&&last&&now-last<SEASON_RANKING_AUTO_MS){renderSeasonRankingFreshness();return{ok:true,skipped:'fresh'};}
+  if(retryAfterUntil>now){renderSeasonRankingFreshness('FantasyPros Rate Limit · erneuter Versuch nach Retry-After.');return{ok:false,skipped:'retry-after'};}
   if(auto&&attempt&&now-attempt<SEASON_RANKING_RETRY_MS){renderSeasonRankingFreshness('Automatischer Ranking-Refresh nach letztem Versuch vorübergehend gedrosselt.');return{ok:false,skipped:'retry-throttle'};}
   if(!navigator.onLine){renderSeasonRankingFreshness('Offline · letzter verifizierter Ranking-Stand bleibt aktiv.');return{ok:false,offline:true};}
-  seasonRankingRefreshBusy=true;store.set('v118_lastSeasonRankingRefreshAttempt',now);
+  if(!lastDraftContext?.players){renderSeasonRankingFreshness('Weekly Evidence wartet auf das Sleeper-Spielerverzeichnis.');return{ok:false,skipped:'players-unavailable'};}
+  seasonRankingRefreshBusy=true;store.set('pitti.weekly-evidence.v2.lastAttempt',now);
   
-  if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice';els.seasonRankingStatus.textContent='Experten-Rankings werden aktualisiert …';}
+  if(els.seasonRefreshEvidenceBtn)els.seasonRefreshEvidenceBtn.disabled=true;
+  if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice';els.seasonRankingStatus.textContent='Weekly Projections QB/RB/WR/TE werden atomar geprüft …';}
   try{
-    await loadExperts();await loadAllRanks();
-    if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice ok';els.seasonRankingStatus.textContent='Rankings aktualisiert · Saisonflächen werden neu berechnet.';}
-    renderSeasonRankingFreshness('Rankings gerade aktualisiert.');
+    const season=Number(els.season.value.trim()),week=await currentSleeperNflWeek(season),payloads={};
+    const responses=await Promise.all(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
+      const path=`/nfl/${season}/projections?week=${week}&position=${position}&ros=false`,response=await fpProxyRequest(path);
+      if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw error;}
+      return[position,response.data];
+    }));
+    for(const [position,payload] of responses)payloads[position]=payload;
+    const snapshot=api.buildSnapshot({season,week,scoring:els.scoring.value,projectionPayloads:payloads,sleeperPlayers:lastDraftContext.players,verifiedAt:Date.now()});
+    if(snapshot.lanes.projections.status!=='AVAILABLE')throw codedError('PROJECTION_LANE_'+snapshot.lanes.projections.status,'Weekly Projection Coverage oder FP→Sleeper-Mapping unvollständig.');
+    api.atomicWrite(localStorage,{...snapshot,refreshTrigger:trigger});
+    store.set('pitti.weekly-evidence.v2.lastSuccess',snapshot.lastSuccessAt);
+    if(lastDraftContext?.season)lastDraftContext.season.current_nfl_week=week;
+    if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice ok';els.seasonRankingStatus.textContent=`Weekly Projections verifiziert · W${week} · ${snapshot.records.length} Spieler · Expert-Ranks/Matchup-Lanes nicht verfügbar.`;}
+    renderSeasonRankingFreshness(els.seasonRankingStatus?.textContent||'Weekly Evidence gerade aktualisiert.');
     rerenderPostDraftFromContext();
-    return{ok:true};
+    return{ok:true,snapshotId:snapshot.snapshotId,count:snapshot.records.length};
   }catch(e){
-    if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice warn';els.seasonRankingStatus.textContent='Ranking-Refresh fehlgeschlagen · letzter verifizierter Stand bleibt aktiv · '+(e?.message||String(e));}
+    if(e?.status===429&&Number.isFinite(e.retryAfterMs))store.set('pitti.weekly-evidence.v2.retryAfterUntil',Date.now()+e.retryAfterMs);
+    if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice warn';els.seasonRankingStatus.textContent='Weekly-Evidence-Prüfung fehlgeschlagen · letzter verifizierter Stand bleibt unverändert · '+(e?.code||e?.message||String(e));}
     return{ok:false,error:e?.message||String(e)};
   }finally{
     seasonRankingRefreshBusy=false;
-    
+    if(els.seasonRefreshEvidenceBtn)els.seasonRefreshEvidenceBtn.disabled=false;
     renderSeasonRankingFreshness(els.seasonRankingStatus?.textContent||'');
   }
 }
@@ -4291,6 +4321,7 @@ if(els.rosterStatus)els.rosterStatus.textContent='Season-Modul gestartet · Live
 rehydrateDerivedExpertPanelsOnStartup();
 // Freshness is rendered after bootstrap settles; preserving this marker makes the physical canary diagnostic.
 setInterval(()=>{if(!document.hidden)void syncWatcherFeed()},15*60*1000);
+setInterval(()=>{if(!document.hidden&&lastDraftContext?.players)void refreshSeasonRankings({auto:true,trigger:'timer'});},SEASON_RANKING_AUTO_MS);
 
 try{
   renderAll();setAuto();updateStatus();

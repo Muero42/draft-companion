@@ -77,13 +77,14 @@ jobs:
           grep -q "$VERSION" manifest.webmanifest
           PKG="Draft_Companion_${VERSION}_PREINSTALL.zip"
           rm -rf dist && mkdir -p dist/runtime dist/reextract
-          cp index.html app.js decision-policy.js styles.css manifest.webmanifest sw.js _worker.js icon.svg live-surface-v3.js live-surface-v3.css expert-board-export.js expert-v2-board.js expert-v3-board.js dist/runtime/
+          cp index.html app.js decision-policy.js weekly-evidence-v2.js styles.css manifest.webmanifest sw.js _worker.js icon.svg live-surface-v3.js live-surface-v3.css expert-board-export.js expert-v2-board.js expert-v3-board.js dist/runtime/
           (cd dist/runtime && zip -q "../$PKG" *)
-          test "$(unzip -Z1 "dist/$PKG" | wc -l)" -eq 13
+          test "$(unzip -Z1 "dist/$PKG" | wc -l)" -eq 14
           unzip -q "dist/$PKG" -d dist/reextract
           cd dist/reextract
           node --check app.js
           node --check decision-policy.js
+          node --check weekly-evidence-v2.js
           node --check live-surface-v3.js
           node --check expert-v2-board.js
           node --check expert-v3-board.js
@@ -108,7 +109,9 @@ jobs:
           node tools/postmerge-authority-regression.mjs
 
       - name: Independent runtime review and strict seal
+        env:
+          PITTI_CANDIDATE_PREFLIGHT: ${{ github.event_name == 'pull_request' && '1' || '0' }}
         run: |
           node tools/season-adversarial-review-regression.mjs
           node tools/cloud-foundation-regression.mjs
-          PITTI_SKIP_SEAL_INTEGRITY=0 PITTI_CANDIDATE_PREFLIGHT=0 node tools/pitti_guardrail_check.mjs
+          PITTI_SKIP_SEAL_INTEGRITY=0 node tools/pitti_guardrail_check.mjs

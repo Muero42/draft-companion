@@ -5,4 +5,6 @@ for(const id of ['seasonRefreshLiveBtn','seasonRefreshRanksBtn']){assert.ok(!htm
 assert.ok(app.includes('const rosterResult=await bootstrapSeasonWorkspace();'));
 assert.ok(app.includes('void refreshSeasonRankings({auto:true});'));
 assert.ok(app.includes('SEASON_RANKING_AUTO_MS=3*60*60*1000'));
+assert.ok(html.includes('id="seasonRefreshEvidenceBtn"'),'manual force-refresh for Weekly Evidence missing');
+assert.ok(app.includes("refreshSeasonRankings({force:true,trigger:'manual'})"),'manual force must reach upstream Weekly Evidence refresh');
 console.log('SEASON_AUTOMATIC_REFRESH_CONTRACT_PASS '+v);
