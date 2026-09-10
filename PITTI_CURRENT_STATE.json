@@ -7,7 +7,7 @@
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.192",
+    "source_candidate": "v11.8.0-rc4.193",
     "git_identity_rule": "Current main SHA is verified dynamically from git/GitHub; never hard-code the containing commit as self-authority.",
     "reconciled_base_main": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
     "postmerge": {
@@ -49,7 +49,7 @@
     "season_candidate": "v11.8.0-rc4.192 production candidate preserving merged PR #118/#132; physical acceptance pending",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.192",
+    "test_challenger": "v11.8.0-rc4.193",
     "ci": {
       "candidate_package": "DYNAMIC_VERIFICATION_REQUIRED",
       "release_contract_v2": "DYNAMIC_VERIFICATION_REQUIRED",
@@ -212,9 +212,9 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "Canonical main/production authority is rc4.192 at d3c3540003c8eb9675009820fc55abc2e7ad6fb7; the separate rc4.193 Weekly-Evidence-v2 branch is not merged, deployed, or device-accepted.",
+  "source_authority": "Canonical main source is rc4.193 at adcf7d8d639979d8446d4a5ca651e73c112a33a6; production remains rc4.192 until separately authorized deployment; rc4.193 is not device-accepted.",
   "weekly_evidence_v2_work": {
-    "status": "LOCAL_IMPLEMENTATION_AND_PACKAGE_PASS",
+    "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
     "base_main": "d3c3540003c8eb9675009820fc55abc2e7ad6fb7",
     "runtime_candidate": "v11.8.0-rc4.193",
@@ -235,7 +235,10 @@
       "sha256": "sha256:fd7697d6b82f4aea95737e56001dbabed10cfd9856d99ae757d0f33427ce2fb5",
       "status": "PACKAGED_ONLY_NOT_DEPLOYED"
     },
-    "next": "complete checkpoint reseal, exact-head suite and independent review, then PR; production deployment remains separately gated"
+    "merged_pr": 137,
+    "merged_main": "adcf7d8d639979d8446d4a5ca651e73c112a33a6",
+    "exact_head_checks": "PASS: release contract v2, candidate package, project guardrails, isolated cloud validation",
+    "next": "production deployment remains separately gated; after deployment verify public byte parity before any physical device acceptance"
   },
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
