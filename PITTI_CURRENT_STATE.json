@@ -212,7 +212,31 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "rc4.192 production candidate preserves merged PR #118/#132 from authenticated main b62e7d5; publication, deployment parity and physical Android acceptance remain unverified.",
+  "source_authority": "Canonical main/production authority is rc4.192 at d3c3540003c8eb9675009820fc55abc2e7ad6fb7; the separate rc4.193 Weekly-Evidence-v2 branch is not merged, deployed, or device-accepted.",
+  "weekly_evidence_v2_work": {
+    "status": "LOCAL_IMPLEMENTATION_AND_PACKAGE_PASS",
+    "branch": "pitti/weekly-evidence-v2-foundation",
+    "base_main": "d3c3540003c8eb9675009820fc55abc2e7ad6fb7",
+    "runtime_candidate": "v11.8.0-rc4.193",
+    "schema": "pitti.weekly-evidence.v2",
+    "implemented": [
+      "atomic versioned snapshot",
+      "current Sleeper week and strict season/week/HALF_PPR context",
+      "complete QB/RB/WR/TE FantasyPros projection ingestion from stats.points_half",
+      "deterministic FantasyPros-to-Sleeper mapping with collision/team-change fail-closed behavior",
+      "3-hour timer plus resume, online, manual force and Retry-After lifecycle",
+      "separate unavailable expert-rank, Vegas, weather and role-graph lanes",
+      "Player Card, Start/Sit, Waiver/FA and Trade consumers read verified projection records"
+    ],
+    "verification": "Weekly Evidence unit/integration, Season regressions, candidate guardrails, release contract, release completeness, bounded service-worker cache and byte-identical package re-extraction pass. The namespace security test now explicitly skips only when required Linux host controls are absent and still executes when present. Browser visual review unavailable because the Playwright browser binary is not installed.",
+    "package": {
+      "version": "v11.8.0-rc4.193",
+      "files": 14,
+      "sha256": "sha256:fd7697d6b82f4aea95737e56001dbabed10cfd9856d99ae757d0f33427ce2fb5",
+      "status": "PACKAGED_ONLY_NOT_DEPLOYED"
+    },
+    "next": "complete checkpoint reseal, exact-head suite and independent review, then PR; production deployment remains separately gated"
+  },
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",

@@ -1,11 +1,13 @@
 # Draft Companion – Final Draft Edition 2026
-> **Current source candidate:** v11.8.0-rc4.192 Watcher-v2 compatibility candidate. It accepts only the explicit Watcher companion-feed v1/v2 schemas and retains the existing PASS gate and strict Season Evidence boundary. Physical Android rc4.188 remains the latest observed PASS; rc4.169 remains accepted rollback authority. No deployment or physical acceptance is claimed.
+> **Current branch candidate:** v11.8.0-rc4.193 Weekly-Evidence-v2 foundation. FantasyPros current-week Half-PPR projections are mapped deterministically to Sleeper IDs and published only after complete QB/RB/WR/TE validation; weekly expert ranks, Vegas, weather and role graphs remain fail-closed. Canonical main is still rc4.192 until this candidate is reviewed and merged. Physical Android rc4.192 remains the latest observed PASS; rc4.169 remains accepted rollback authority. No deployment or physical acceptance of rc4.193 is claimed.
 > **Season mode:** current Sleeper league state is Source of Truth; completed draft roster is immutable historical evidence only.
 > **HISTORICAL rc4.158 bounded change:** adds a draft-day v4 expert baseline/delta workflow. Unchanged or failed/incomplete refreshes restore the prior verified baseline; panel rebuild can run cache-only and occurs only for baseline creation/repair or a real ranking delta.
 > **HISTORICAL rc4.158 scope:** expert membership, weights, panel ranks semantics, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
 > **Draft locks:** exact canonical manager order/history; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; starter maxima are not roster caps.
 
-Built/source/package/deployment/device-observed/device-accepted are distinct states. Source/runtime v11.8.0-rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 was last observed OPEN / UNMERGED / NON-PRODUCTION; retain that conservative boundary until fresh GitHub verification proves otherwise. Current checkpoint gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`.
+Built/source/package/deployment/device-observed/device-accepted are distinct states. Branch runtime is v11.8.0-rc4.193; canonical main and production remain the separately verified rc4.192 authority until promotion. Latest physical Android rc4.192 PASS; rollback rc4.169. Current checkpoint gate: `VERIFY_CANDIDATE_THEN_REVIEW_AND_PROMOTE`.
+
+Promotion-stable checkpoint gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Historical compatibility tokens retained for checkpoint validation: rc4.190, rc4.188, `UNKNOWN_REQUIRES_REVERIFICATION`, `MERGED/HISTORICAL`.
 
 Historical release-contract baseline canary retained for regression tooling: `v11.8.0-rc4.64`.
 

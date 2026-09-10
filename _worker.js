@@ -30,7 +30,9 @@ async function handleFantasyPros(request,url){
       cf:{cacheTtl:0,cacheEverything:false}
     });
     const body=await upstream.text();
-    return new Response(body,{status:upstream.status,headers:{...cors(),'content-type':upstream.headers.get('content-type')||'application/json','x-upstream-status':String(upstream.status),'cache-control':'no-store'}});
+    const headers={...cors(),'content-type':upstream.headers.get('content-type')||'application/json','x-upstream-status':String(upstream.status),'cache-control':'no-store'},retryAfter=upstream.headers.get('retry-after');
+    if(retryAfter)headers['retry-after']=retryAfter;
+    return new Response(body,{status:upstream.status,headers});
   }catch(error){
     return json({error:'FantasyPros nicht erreichbar.',detail:error?.message||String(error)},502);
   }

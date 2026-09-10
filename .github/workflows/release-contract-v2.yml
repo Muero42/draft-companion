@@ -18,7 +18,7 @@ jobs:
       - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020
         with: {node-version: 22}
       - name: Syntax
-        run: node --check app.js && node --check decision-policy.js && node --check live-surface-v3.js && node --check expert-v2-board.js && node --check expert-v3-board.js && node --check sw.js
+        run: node --check app.js && node --check decision-policy.js && node --check weekly-evidence-v2.js && node --check live-surface-v3.js && node --check expert-v2-board.js && node --check expert-v3-board.js && node --check sw.js
       - name: Fail closed on hand-coded product prose
         run: |
           ! grep -q "PLAYER_EVIDENCE" live-surface-v3.js
