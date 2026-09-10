@@ -27,7 +27,7 @@
     "tools/live-trade-roster-identity-regression.mjs": "c6937f97d562a4d1bd5217e0344af9500d68ca2b",
     "config/season-expert-phase-policy.json": "78156903f4254c6eee836819dc6b8a737835d6c1",
     "season-parallel-contract-regression.mjs": "b0b158697d37c0d9bebeebf5bd132d4a6b355f07",
-    ".github/workflows/pitti-project-guardrails.yml": "5ef92909a059bb8e7c5fb79dcfb83e10ee5faa41",
+    ".github/workflows/pitti-project-guardrails.yml": "3ee64e59176810511effd7d0cb8eed9a1b1fd654",
     "NEW_CHAT_HANDOFF_2026-08-31_PREWAIVER.md": "21d66db2fca9c9964659d17032bf86641ab1e966",
     "PITTI_DRAFT_CHAT_BOOTSTRAP.md": "99d176602a7cb2191077a10c848d72c2350da140",
     "RC4_61_LIVE_SURFACE_HANDOFF.md": "308ac26c0fcfac4b9d3227031bcc86b4a1bb9e79",

@@ -94,7 +94,9 @@ jobs:
           node tools/postmerge-authority-regression.mjs
 
       - name: Independent runtime review and strict seal
+        env:
+          PITTI_CANDIDATE_PREFLIGHT: ${{ github.event_name == 'pull_request' && '1' || '0' }}
         run: |
           node tools/season-adversarial-review-regression.mjs
           node tools/cloud-foundation-regression.mjs
-          PITTI_SKIP_SEAL_INTEGRITY=0 PITTI_CANDIDATE_PREFLIGHT=0 node tools/pitti_guardrail_check.mjs
+          PITTI_SKIP_SEAL_INTEGRITY=0 node tools/pitti_guardrail_check.mjs
