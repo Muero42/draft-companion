@@ -7,8 +7,8 @@ Date: 2026-09-10
 - Repository: `Muero42/draft-companion`
 - Canonical source main observed before this evidence record: `fa8dc144ccd8d4c65f06c46429920578a9b20f0c`
 - Runtime/source version: `v11.8.0-rc4.193`
-- Production deployment recorded in the canonical handoff: deployment ID `5002f2a0-e149-4c3b-b49e-ac4668e82c91`, branch `main`, source `fa8dc14`.
-- This document is evidence-only on a non-production branch. It does not authorize or claim merge, deployment, cache clearing, reinstall, or device mutation.
+- Production deployment: deployment ID `5002f2a0-e149-4c3b-b49e-ac4668e82c91`, branch `main`, source `fa8dc14`.
+- This document is maintained on a non-production branch. It does not authorize or claim merge, deployment, cache clearing, reinstall, or fantasy transaction.
 
 ## Physical Android/PWA evidence
 
@@ -25,38 +25,48 @@ Classification: **DEVICE_RC4193_REJECTED_WEEKLY_EVIDENCE_MODULE_MISSING**.
 
 The fail-closed decision behavior is correct, but rc4.193 is **not device-accepted**.
 
-## Production asset observations
+## Production and deployment-specific asset observations
 
-From Chrome on the same Android device, both of these production-alias requests rendered the PITTI Companion HTML/app shell instead of JavaScript source:
+Chrome tests on the same Android device showed that all of the following render the PITTI Companion HTML/app shell instead of JavaScript source:
 
 - `https://draft-companion.pages.dev/weekly-evidence-v2.js?v=v11.8.0-rc4.193`
 - `https://draft-companion.pages.dev/weekly-evidence-v2.js`
+- `https://5002f2a0.draft-companion.pages.dev/weekly-evidence-v2.js`
 
-This proves that the production alias does not currently serve the expected `weekly-evidence-v2.js` asset at that path. The observed response is consistent with SPA/root HTML fallback for a missing or unroutable asset.
+Therefore the failure is not production-alias-only and not query-string-only. The exact successful rc4.193 deployment itself lacks a routable `weekly-evidence-v2.js` asset.
 
 ## Source/package contrast
 
-Canonical source contains `weekly-evidence-v2.js` and the rc4.193 service worker lists `./weekly-evidence-v2.js?v=v11.8.0-rc4.193` in its static app shell. The package/re-extraction tool also explicitly packages 14 runtime files including `weekly-evidence-v2.js` and checks byte parity after extraction.
+Canonical source contains `weekly-evidence-v2.js` and the rc4.193 service worker lists `./weekly-evidence-v2.js?v=v11.8.0-rc4.193` in its static app shell. The package/re-extraction tool explicitly packages 14 runtime files including `weekly-evidence-v2.js` and checks byte parity after extraction.
 
 Therefore the physical failure is downstream of source presence and package/re-extraction inclusion.
 
-## Root-cause boundary
+## Proven root cause — stale Cloudflare Pages staging command
 
-Established:
+The Cloudflare build log for deployment `5002f2a0-e149-4c3b-b49e-ac4668e82c91` proves the staging command remained hard-coded to the historical 13-file runtime set:
 
-- Not a query-string-only problem: both query and no-query production-alias paths fall back to the Companion HTML.
-- Not a missing source file: canonical Git source contains the module.
-- Not explained by the 14-file package generator: it includes the module.
+```text
+Executing user command: node -e "const fs=require('node:fs');const files=['index.html','app.js','decision-policy.js','styles.css','manifest.webmanifest','sw.js','_worker.js','icon.svg','live-surface-v3.js','live-surface-v3.css','expert-board-export.js','expert-v2-board.js','expert-v3-board.js'];fs.mkdirSync('pitti-runtime',{recursive:true});for(const f of files)fs.copyFileSync(f,'pitti-runtime/'+f);if(fs.readdirSync('pitti-runtime').length!==13)throw Error('Unexpected runtime entries');"
+```
 
-Still to distinguish fail-closed:
+`weekly-evidence-v2.js` is absent from that array. The command then succeeds only because it explicitly requires exactly 13 entries. Cloudflare finds `_worker.js` separately in the output directory and reports `Uploading... (12/12)`, matching the dashboard's `12 Files uploaded`; the Worker is not counted as a static uploaded asset.
 
-A. the exact rc4.193 Cloudflare deployment artifact/output itself omitted or failed to route the new 14th runtime file; or
-B. the exact deployment contains it but the production alias is serving a different/stale edge state.
+This establishes the root cause:
 
-Historical deployment evidence for rc4.192 used a 13-file build/deployment parity set. Because rc4.193 adds a 14th runtime file, an unchanged 13-file Cloudflare staging/output list is a high-priority hypothesis, not yet a proven root cause.
+**RC4193_CLOUDFLARE_STAGING_COMMAND_STALE_13_FILE_SET**
 
-## Next gate
+The source/package/runtime contracts moved to a 14-file set for rc4.193, but the Cloudflare Pages build/staging command was not updated. As a result, `weekly-evidence-v2.js` was never copied into `pitti-runtime` and therefore could not be uploaded or served.
 
-Check the exact successful rc4.193 deployment URL for `/weekly-evidence-v2.js` before changing app code or Android state. If the exact deployment also returns the app shell, inspect/fix the Cloudflare build/output asset set and add a release/deployment regression that requires all 14 runtime assets. If the exact deployment returns JavaScript while the production alias falls back, diagnose production alias/edge state instead.
+This is not an Android cache defect, service-worker cache defect, FantasyPros failure, query-routing-only defect, production-alias staleness, or missing Git source file.
 
-No cache clearing, reinstall, production deployment, merge, or fantasy transaction is authorized by this evidence record.
+## Required remediation gate
+
+Before another production deployment:
+
+1. Replace the stale Cloudflare Pages staging command with a 14-file-safe source of truth that includes `weekly-evidence-v2.js`; preferably avoid an independently maintained hard-coded runtime list if the repository already has a canonical runtime manifest/package list.
+2. Require the build to fail if the staged output does not contain the complete canonical runtime set.
+3. Verify the resulting deployment's uploaded asset list includes `weekly-evidence-v2.js` and that both the exact deployment host and production alias return JavaScript for that path.
+4. Only then repeat the physical Android/PWA Weekly Evidence acceptance test.
+5. Do not use reinstall/cache clearing as a substitute for proving server-side asset correctness.
+
+No Cloudflare setting change, retry deployment, merge, cache clear, reinstall, or fantasy transaction is authorized by this evidence record itself.
