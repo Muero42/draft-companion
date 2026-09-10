@@ -180,8 +180,8 @@
     }
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260909T1018Z-v237",
-  "handoff_generation": "20260909T1018Z-v237",
+  "handoffGeneration": "20260910T1139Z-v238",
+  "handoff_generation": "20260910T1139Z-v238",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",

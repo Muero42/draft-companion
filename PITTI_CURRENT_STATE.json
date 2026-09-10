@@ -1,13 +1,13 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260909T1018Z-v237",
-  "updated_at": "2026-09-09T10:18:00Z",
+  "handoff_generation": "20260910T1139Z-v238",
+  "updated_at": "2026-09-10T11:39:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.192",
+    "source_candidate": "v11.8.0-rc4.193",
     "git_identity_rule": "Current main SHA is verified dynamically from git/GitHub; never hard-code the containing commit as self-authority.",
     "reconciled_base_main": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
     "postmerge": {
@@ -46,10 +46,10 @@
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.192 production candidate preserving merged PR #118/#132; physical acceptance pending",
+    "season_candidate": "v11.8.0-rc4.193 cache-distinct weekly-projection diagnostic candidate; physical acceptance pending",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.192",
+    "test_challenger": "v11.8.0-rc4.193",
     "ci": {
       "candidate_package": "DYNAMIC_VERIFICATION_REQUIRED",
       "release_contract_v2": "DYNAMIC_VERIFICATION_REQUIRED",
@@ -58,7 +58,7 @@
       "scope": "Verify exact-head GitHub checks before dependent actions; historical PASS is not evidence for another commit."
     },
     "android_accepted": "v11.8.0-rc4.169",
-    "preview_candidate": "rc4.192 identity-only production candidate; deployment parity requires re-verification before physical canary",
+    "preview_candidate": "rc4.193 restores a unique PWA/service-worker identity for the merged authenticated weekly-projection diagnostic; deployment pending",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "latest_package_sha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "package_reference_run": 33597607588,
@@ -150,9 +150,9 @@
     },
     "package_reference_scope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.190 installable package claim",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.192",
+      "version": "v11.8.0-rc4.193",
       "files": 13,
-      "sha256": "sha256:1815ce89eb8700670f7e93a5e3f3839578023b585ed7eea41655d3e626336b22",
+      "sha256": "sha256:a833de2a6f8762f041d609623a4860445778f319d1874f7428df5af3d7690a34",
       "status": "PACKAGED_ONLY_NOT_DEPLOYED",
       "source_branch": "DYNAMIC_VERIFICATION_REQUIRED"
     }
@@ -212,7 +212,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "rc4.192 production candidate preserves merged PR #118/#132 from authenticated main b62e7d5; publication, deployment parity and physical Android acceptance remain unverified.",
+  "source_authority": "rc4.193 source candidate is based on authenticated main d3c3540, which deployed the weekly-projection diagnostic under reused rc4.192 cache identity; rc4.193 provides the required distinct PWA identity. Publication, deployment parity and physical Android acceptance remain pending.",
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
@@ -357,7 +357,7 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260909T1018Z-v237",
+    "generation": "20260910T1139Z-v238",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -369,7 +369,7 @@
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260909T1018Z-v237",
+  "handoffGeneration": "20260910T1139Z-v238",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",

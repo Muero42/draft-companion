@@ -1,8 +1,9 @@
 # PITTI HANDOFF COMPLETENESS MATRIX — v235
-Generation: `20260909T1018Z-v237`
+Generation: `20260910T1139Z-v238`
 
 PASS requires:
-- Source candidate v11.8.0-rc4.192 preserves merged PR #118 and PR #132 from authenticated canonical main b62e7d5; deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.188 PASS; rollback rc4.169. PR #121 / v233 is MERGED/HISTORICAL.
+- Source candidate v11.8.0-rc4.193 gives the merged authenticated weekly-projection diagnostic a unique PWA/service-worker cache identity. Authenticated main d3c3540 and Cloudflare production were verified on 2026-09-10 to serve the diagnostic under reused rc4.192 identity. rc4.193 publication and physical acceptance remain pending; latest physical Android rc4.188 PASS; rollback rc4.169.
+- rc4.193 deployment parity remains `UNKNOWN_REQUIRES_REVERIFICATION`; PR #121/v233 remains MERGED/HISTORICAL. rc4.190 is historical deployment context only.
 - Gate `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK` aligned across CURRENT, LOCK, COMMAND, SEAL, bootstrap, handoff and preflight.
 - Post-v233 local read-only audit recorded as performed and FAIL_CLOSED; historical audit evidence retained; no pending v233 CI/merge or repeat-audit queue.
 - Historical branch/base/PR evidence separated from current dynamic authority; no containing-commit SHA claim.

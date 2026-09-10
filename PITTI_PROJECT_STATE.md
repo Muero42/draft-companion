@@ -614,3 +614,9 @@ This candidate changes only runtime/cache/package/checkpoint identity. It is not
 Generation: `20260909T1018Z-v237`. This source candidate advances the unique runtime identity to `v11.8.0-rc4.192` for the reviewed Watcher companion-feed v2 compatibility change based on authoritative main `c4f3f77ba33dab0a80f834be477e2a42bddc92bc`.
 
 The functional delta remains limited to accepting the exact `draft-companion.watcher-feed.v2` schema alongside the previously supported v1 schema. Watcher gate PASS, strict Season Evidence validation, ownership, lineup, waiver, trade, FLEX, IR, K and D/ST invariants remain unchanged. This checkpoint and seal describe a source/package candidate only. External mutation status is NONE_PERFORMED; source/build/package remain distinct from deployment and physical acceptance.
+
+
+## v238 CURRENT — rc4.193 weekly-diagnostic cache identity repair (2026-09-10)
+Generation: `20260910T1139Z-v238`. Authenticated GitHub verification found canonical main `d3c3540003c8eb9675009820fc55abc2e7ad6fb7`, the merged PR #135 weekly-projection diagnostic. A fresh Cloudflare production load served that diagnostic code and `stats.points_half` validation, but still advertised and cached it as rc4.192.
+
+This is a release-identity defect: already-installed PWAs can legitimately retain the earlier rc4.192 `app.js` because the service-worker cache name and runtime URLs did not change. The shortest safe correction is rc4.193 across app, HTML URLs/badge, manifest and service-worker cache/base/target. No season decision semantics change. rc4.193 remains a source/package candidate until strict gates, branch publication/CI, explicit merge, production parity and physical-device verification complete. Latest physical PASS remains rc4.188; rollback remains rc4.169.
