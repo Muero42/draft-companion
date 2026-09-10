@@ -59,14 +59,26 @@ The source/package/runtime contracts moved to a 14-file set for rc4.193, but the
 
 This is not an Android cache defect, service-worker cache defect, FantasyPros failure, query-routing-only defect, production-alias staleness, or missing Git source file.
 
+## External Cloudflare configuration correction
+
+At 2026-09-10 21:19 CEST, the Cloudflare Pages Production build configuration was manually saved with:
+
+- Build command: `node tools/stage-pages-runtime.mjs`
+- Build output directory: `pitti-runtime`
+- Production branch: `main`
+- Automatic deployments: `Disabled`
+
+This configuration save did not itself trigger or authorize a production deployment. Because `tools/stage-pages-runtime.mjs` exists only on the PR branch until merge, any manual production deployment must remain blocked until the corresponding repository change is merged and re-verified on canonical `main`.
+
 ## Required remediation gate
 
 Before another production deployment:
 
-1. Replace the stale Cloudflare Pages staging command with a 14-file-safe source of truth that includes `weekly-evidence-v2.js`; preferably avoid an independently maintained hard-coded runtime list if the repository already has a canonical runtime manifest/package list.
-2. Require the build to fail if the staged output does not contain the complete canonical runtime set.
-3. Verify the resulting deployment's uploaded asset list includes `weekly-evidence-v2.js` and that both the exact deployment host and production alias return JavaScript for that path.
-4. Only then repeat the physical Android/PWA Weekly Evidence acceptance test.
-5. Do not use reinstall/cache clearing as a substitute for proving server-side asset correctness.
+1. Merge the repository-side staging hardening only after exact-head checks remain green and explicit merge authorization is given.
+2. Re-verify canonical `main` contains `tools/stage-pages-runtime.mjs` and the 14-entry runtime manifest.
+3. Trigger a production deployment only under separate explicit deployment authorization.
+4. Verify the resulting deployment's uploaded asset list includes `weekly-evidence-v2.js` and that both the exact deployment host and production alias return JavaScript for that path.
+5. Only then repeat the physical Android/PWA Weekly Evidence acceptance test.
+6. Do not use reinstall/cache clearing as a substitute for proving server-side asset correctness.
 
-No Cloudflare setting change, retry deployment, merge, cache clear, reinstall, or fantasy transaction is authorized by this evidence record itself.
+No merge, production deployment, cache clear, reinstall, or fantasy transaction is authorized by this evidence record itself.
