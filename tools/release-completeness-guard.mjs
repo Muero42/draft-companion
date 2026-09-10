@@ -1,8 +1,15 @@
 import fs from 'node:fs';
 import vm from 'node:vm';
+import {RUNTIME_FILES} from './runtime-files.mjs';
 const must=(ok,msg)=>{if(!ok){console.error('RELEASE_GUARD_FAIL:',msg);process.exitCode=1;}};
 const read=f=>fs.readFileSync(f,'utf8');
 const index=read('index.html'),app=read('app.js'),sw=read('sw.js'),manifest=read('manifest.webmanifest'),live=read('live-surface-v3.js'),weekly=read('weekly-evidence-v2.js'),readme=read('README.md');
+const packageTool=read('tools/package-reextract.mjs');
+const packageListBlock=packageTool.match(/const files=\[([^\]]+)\];/)?.[1]||'';
+const packageFiles=[...packageListBlock.matchAll(/'([^']+)'/g)].map(m=>m[1]);
+must(packageFiles.length>0,'package runtime file list unreadable');
+must(JSON.stringify(packageFiles)===JSON.stringify([...RUNTIME_FILES]),'Pages staging manifest != package runtime file set');
+must(RUNTIME_FILES.includes('weekly-evidence-v2.js'),'Pages staging manifest missing weekly-evidence-v2.js');
 const m=index.match(/<span class="version">(v11\.8\.0-rc4\.\d+)<\/span>/);must(m,'visible version missing');const V=m?.[1];
 if(V){
   const runtime={index,app,sw,manifest,live};
