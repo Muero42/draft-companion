@@ -87,18 +87,16 @@ Otherwise continue AUTO.
 - A full paired 15-round v4/v5 mock is invalid unless the exported backup contains exactly 30 active-draft fixtures covering all 15 own picks twice.
 
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
-- Current handoff generation = **20260911T1352Z-v242**. This checkpoint records rc4.196 source merged through PR #143 while preserving rc4.195 production/device authority and keeping rc4.196 deployment/device evidence fail-closed.
+- Current handoff generation = **20260911T1352Z-v242**.
 - Current mode = **POST_DRAFT_SEASON_COMPANION**.
-- Canonical source = **rc4.195 Boone runtime-ingestion and FAAB-basis source, freshly observed merged through PR #141**. The observed merge commit is historical provenance only. Verify the exact current main HEAD dynamically; a tracked checkpoint must not hard-code its own containing commit as immutable current authority. No deployment or physical acceptance follows from the merge.
-- Latest physical Android = **rc4.193 PASS** for Sleeper Live-State, Weekly Evidence, 725 FantasyPros weekly projections, Watcher and quota-safe persistence. Accepted historical rollback = **rc4.169**.
-- Deployment parity = **UNKNOWN_REQUIRES_REVERIFICATION**. Never infer deployment/device acceptance from source merge.
-- PR #120 and PR #121 / v233 are **MERGED/HISTORICAL checkpoint work**, never open current gates.
-- Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
-- Source v11.8.0-rc4.195 is merged; latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 and PR #141 / rc4.195 source merge are MERGED/HISTORICAL. No rc4.195 deployment or device acceptance is claimed.
-- Live Sleeper direct league/users/rosters state = current roster/ownership/manager/slot/FAAB authority; Watcher evidence-only; completed draft immutable history.
-- AUTO/AUTO BLOCK = continuous same-turn execution while safe positive-value work exists: no interim progress/status/acknowledgement, no empty response after tool work, no promise-only “AUTO läuft weiter”; checkpoint + re-inventory after every package; external wait blocks only its dependent lane.
-- STATUS = report-only and must not trigger tools/polling/work.
-- Older sections labelled CURRENT/OVERRIDE are chronological provenance only where they conflict with this section or the newest PROJECT_STATE/CURRENT/LOCK authority. They must never resurrect rc4.185, PR #108, rc4.183 DEVICE_REJECTED, or another superseded release lane as current authority.
+- Canonical source = **v11.8.0-rc4.196, source-merged through PR #143 (MERGED/HISTORICAL)**. The observed merge commit `555487237c9075d5e5ceeb1fee196f4763f87cc3` is historical provenance only; verify current main dynamically.
+- Production/device authority = **v11.8.0-rc4.195 physical PASS**. Preserve its 728-player Weekly Evidence, Watcher, Waiver/Trade fail-closed, Reserve/IR, K-only and Boone 263/264 evidence.
+- rc4.196 is **NOT production-deployed and NOT physically accepted**. Its deployment parity is **UNKNOWN_REQUIRES_REVERIFICATION**; source/package/merge state never implies parity or acceptance.
+- rc4.196 package identity = **17 files**, SHA-256 `a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d`, `PACKAGED_ONLY_NOT_DEPLOYED`.
+- Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Dynamically verify Git/GitHub authority and exact-head CI before dependent continuation or promotion.
+- Live Sleeper direct league/users/rosters state is current roster/ownership/manager/slot/FAAB authority; Watcher is evidence-only and the completed draft is immutable history.
+- AUTO/AUTO BLOCK remains continuous same-turn execution while safe work exists; STATUS remains report-only.
+- Older sections are chronological provenance only and cannot override this section.
 
 ## 9. AUTO TURN TERMINATION — HARD GATE
 - Completing one work package is **not** permission to end the assistant turn.

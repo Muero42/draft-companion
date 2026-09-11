@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
   "handoff_generation": "20260911T1352Z-v242",
-  "updated_at": "2026-09-11T13:52:46Z",
+  "updated_at": "2026-09-11T14:35:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -82,11 +82,11 @@
       "scope": "Fresh GitHub checks observed PASS on canonical main head at reconciliation time; reverify dynamically before dependent continuation or promotion."
     },
     "android_accepted": "v11.8.0-rc4.195",
-    "preview_candidate": "rc4.192 identity-only production candidate; deployment parity requires re-verification before physical canary",
+    "preview_candidate": "v11.8.0-rc4.196 source-merged production-pending; deployment parity UNKNOWN_REQUIRES_REVERIFICATION",
     "android_authority": "v11.8.0-rc4.195 accepted production/device authority",
-    "latest_package_sha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
-    "package_reference_run": 33597607588,
-    "deployed_pages_app_byte_parity_with_main": true,
+    "latest_package_sha256": "sha256:a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d",
+    "package_reference_run": null,
+    "deployed_pages_app_byte_parity_with_main": false,
     "deployed_pages_head": "8aedc4ea3b7b71591cbc45f971ccf85fe5167074",
     "installed_android": "v11.8.0-rc4.195",
     "latest_android_observed": "v11.8.0-rc4.195",
@@ -173,14 +173,16 @@
         "candidate_package": "FAIL_STALE_BOOTSTRAP_RENDER_ASSERT_REPAIRED"
       }
     },
-    "package_reference_scope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.190 installable package claim",
+    "package_reference_scope": "rc4.196 local byte-exact 17-file package identity; PACKAGED_ONLY_NOT_DEPLOYED",
     "local_candidate_package": {
       "version": "v11.8.0-rc4.196",
       "files": 17,
       "sha256": "sha256:a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d",
       "status": "PACKAGED_ONLY_NOT_DEPLOYED",
       "source_scope": "MERGED_TO_CANONICAL_MAIN_VIA_PR143; package remains local artifact identity"
-    }
+    },
+    "deployment_parity": "UNKNOWN_REQUIRES_REVERIFICATION",
+    "deployed_production_version": "v11.8.0-rc4.195"
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -277,6 +279,11 @@
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "v242-rc4196-reconciliation-review-repair",
+        "result": "Blocking independent review repaired every operative authority alias: rc4.196 source-merged through PR #143 with deployment parity UNKNOWN_REQUIRES_REVERIFICATION; rc4.195 remains production/device authority; 17-file package identity preserved; runtime/product bytes unchanged.",
+        "at": "2026-09-11T14:35:00Z"
+      },
       {
         "id": "v242-rc4196-postmerge-authority-reconciliation",
         "result": "Fresh Git/GitHub reconciliation observed PR #143 merged at source head 69a0593410ab5db754090a01d5b0e5beef2ed38b into canonical main as 555487237c9075d5e5ceeb1fee196f4763f87cc3; all exact-main-head GitHub checks passed. Runtime/product bytes and the 17-file package identity are unchanged. rc4.195 remains production/device authority; rc4.196 deployment parity remains UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remains pending.",

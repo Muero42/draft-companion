@@ -1,19 +1,15 @@
-# PITTI HANDOFF COMPLETENESS MATRIX — v240
+# PITTI HANDOFF COMPLETENESS MATRIX — v242
 Generation: `20260911T1352Z-v242`
 
 PASS requires:
-- Source/runtime v11.8.0-rc4.195 was freshly observed merged through PR #141; `f1340a2c...` is historical merge provenance only and current canonical main HEAD remains dynamic. Runtime/live-source/mobile/package evidence is preserved. Deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169. PR #121 / v233 and PR #141 / rc4.195 source merge are MERGED/HISTORICAL.
-- Gate `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK` aligned across CURRENT, LOCK, COMMAND, SEAL, bootstrap, handoff and preflight.
-- Post-v233 local read-only audit recorded as performed and FAIL_CLOSED; historical audit evidence retained; no pending v233 CI/merge or repeat-audit queue.
-- Historical branch/base/PR evidence separated from current dynamic authority; no containing-commit SHA claim.
-- Full local strict guard including seal integrity and semantic cross-reference validation; negative tests reject resurrected v233 gates.
-- live Sleeper state roster/ownership authority; actual free agents only; all nine opponents and remaining FAAB required before a numeric skill-position bid; draft historical only; IR/Reserve never ordinary drop; no generic TE2/QB2 ban; future D/ST second-drop cost preserved.
-- Historical version/gate/supersession statements explicitly scoped; no stale package digest promoted to rc4.190.
-- AUTO same-turn continuous execution and STATUS report-only. Empty assistant response after tool work is forbidden.
-- Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
+- v11.8.0-rc4.196 source is MERGED/HISTORICAL through PR #143; current canonical main is always dynamically verified.
+- v11.8.0-rc4.195 remains production/device authority with its physical acceptance evidence preserved.
+- rc4.196 is NOT production-deployed and NOT physically accepted; deployment parity is `UNKNOWN_REQUIRES_REVERIFICATION`.
+- rc4.196 local package identity is 17 files, SHA-256 `a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d`, `PACKAGED_ONLY_NOT_DEPLOYED`.
+- Gate `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK` is aligned across CURRENT, LOCK, COMMAND, SEAL, bootstrap, handoff and preflight.
+- Source, package, production deployment, deployed-byte parity and physical acceptance remain distinct; no source merge may imply a later state.
+- Full strict, authority, negative-regression, seal-integrity and package/re-extraction checks pass; all 17 runtime blobs match canonical rc4.196 main.
+- Live Sleeper state is roster/ownership authority; Reserve/IR is never an ordinary drop, K comparisons remain K-only, and Waiver/Trade/Boone fail-closed invariants remain intact.
+- AUTO is continuous same-turn execution and STATUS is report-only; historical blocks cannot supersede this active matrix. Empty assistant response after tool work is forbidden.
 
-Canonical permission boundary: AGENTS.md. Deterministic local validation: `node tools/strict-suite.mjs`; dynamic takeover: `node tools/takeover-authority.mjs <fresh-github-evidence.json>`. The evidence file is an external observation, never tracked CURRENT status. Read the schema and limits in PITTI_CODEX_WORK_PACKAGE.md.
-
-QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy. rc4.195 source is merged but is not proven deployed or device-accepted; rc4.193 remains the physical Weekly-Evidence PASS. Boone ingestion is automatic and fail-closed; FAAB percentages use original budget with absolute bids capped by remaining funds.
-
-rc4.196 source is MERGED/HISTORICAL through PR #143; rc4.195 remains production/device authority. rc4.196 deployment parity is UNKNOWN_REQUIRES_REVERIFICATION and no physical acceptance is claimed.
+Canonical permission boundary: AGENTS.md. Dynamic authority must be reverified before dependent continuation or promotion. QB2 authority remains draft-only exclusion after QB1 with evidence-backed, legal-capacity season exceptions as defined in `PITTI_CURRENT_STATE.json:qb_policy`.
