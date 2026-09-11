@@ -1,12 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-11T07:08:00Z",
+  "updatedAt": "2026-09-11T11:17:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Source/runtime rc4.195 is the PR-only Boone runtime-ingestion and FAAB-basis candidate on Draft PR #141 from verified main 5e29f285; latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. No merge/deployment/device acceptance of rc4.195 is claimed. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance. Library persistence remains fail-closed: never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Source/runtime rc4.195 was freshly observed merged through PR #141; the observed merge commit is historical provenance and current canonical main HEAD remains dynamically verified. Latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION; rc4.195 has no physical acceptance. PR #121 / v233 and PR #141 / rc4.195 source merge are MERGED/HISTORICAL. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance. Library persistence remains fail-closed: never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
@@ -282,7 +282,7 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260911T0708Z-v239",
+    "generation": "20260911T1117Z-v240",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -306,7 +306,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260911T0708Z-v239",
+  "handoff_generation": "20260911T1117Z-v240",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -341,6 +341,6 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260911T0708Z-v239",
+  "handoffGeneration": "20260911T1117Z-v240",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy"
 }

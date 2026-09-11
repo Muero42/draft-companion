@@ -34,7 +34,7 @@ export function validateAuthority(data) {
   check(l.league.userQb2Policy==='DRAFT_ONLY_EXCLUSION_AFTER_QB1'&&l.league.userQb2PolicyScope==='DRAFT_ONLY'&&l.canaries.draftQb2MustNotAppearOnUserCoachSurfaceAfterQb1===true&&!Object.hasOwn(l.canaries,'qb2MustNotAppearOnUserCoachSurfaceAfterQb1'),'LOCK.QB2','unscoped QB2 policy forbidden');
   for(const [label,o] of [['LOCK',l],['COMMAND',k]])check(o.qb_policy_reference==='PITTI_CURRENT_STATE.json:qb_policy',label+'.qb_policy_reference','canonical QB policy reference required');
   const generation=c.handoff_generation;
-  check(/^202609\d{2}T\d{4}Z-v239$/.test(generation),'CURRENT.handoff_generation','v239 generation required');
+  check(/^202609\d{2}T\d{4}Z-v240$/.test(generation),'CURRENT.handoff_generation','v240 generation required');
   for(const [label,o] of [['CURRENT',c],['LOCK',l]]) {
     for(const p of ['gate','nextGate']) check(o[p]===AUTHORITY_GATE,`${label}.${p}`,'promotion-stable gate required; merged checkpoint cannot remain pending');
     check(o.currentWork?.nextGate===AUTHORITY_GATE,`${label}.currentWork.nextGate`,'promotion-stable gate required');
@@ -47,6 +47,8 @@ export function validateAuthority(data) {
   check(k.handoff_generation===generation&&k.handoffGeneration===generation&&s.handoff_generation===generation,'COMMAND/SEAL.generation','generation drift');
   check(k.exactNextAction===c.handoff.resume&&k.currentBoundary.exactNextAction===c.handoff.resume,'COMMAND.exactNextAction','resume drift');
   check(c.authority?.postmerge?.pr===121&&c.authority.postmerge.checkpoint==='v233'&&c.authority.postmerge.status==='MERGED/HISTORICAL'&&c.authority.postmerge.pending_merge===false&&c.authority.postmerge.pending_strict_ci===false,'CURRENT.authority.postmerge','PR #121/v233 must be merged/historical, never pending');
+  const rc4195=c.authority?.rc4195_source_merge;
+  check(rc4195?.checkpoint==='v240'&&rc4195.pr===141&&rc4195.status==='MERGED/HISTORICAL'&&rc4195.source_head==='5661d08a3d1e449f6b5ba505c381ec30bff7ecf0'&&rc4195.base_head==='5e29f285103531b81c7579036e7a885e487e0650'&&rc4195.merge_commit==='f1340a2c2d6248212c7652dc58b2f3323f74b1f5'&&rc4195.deployment_proven===false&&rc4195.device_acceptance_proven===false&&String(rc4195.evidence_scope||'').includes('historical merge provenance'),'CURRENT.authority.rc4195_source_merge','PR #141 merge must be timestamped historical provenance without deployment/device inference');
   check(c.authority?.pr118?.status==='DYNAMIC_VERIFICATION_REQUIRED'&&c.authority.pr118.conservative_boundary==='OPEN / UNMERGED / NON-PRODUCTION UNTIL FRESH GITHUB VERIFICATION','CURRENT.authority.pr118','PR118 requires fresh external verification before changing its conservative boundary');
   check(c.authority?.repo==='Muero42/draft-companion'&&c.authority.branch==='main'&&c.authority.source_candidate==='v11.8.0-rc4.195','CURRENT.authority','canonical source identity drift');
   check(JSON.stringify(c.authority.promotion)===JSON.stringify({"status":"DYNAMIC_VERIFICATION_REQUIRED","verify_before":["CONTINUATION","PROMOTION"],"sources":["LOCAL_GIT","CANONICAL_GITHUB"],"permission_source":"CURRENT_USER_AUTHORIZED_WORK_PACKAGE","merge_implies_deployment":false,"merge_implies_device_acceptance":false,"unavailable_evidence":"FAIL_CLOSED_DEPENDENT_ACTION","operative_branch":"DYNAMIC_VERIFICATION_REQUIRED","pr_status":"DYNAMIC_VERIFICATION_REQUIRED","exact_head_ci":"DYNAMIC_VERIFICATION_REQUIRED"}),'CURRENT.authority.promotion','dynamic verification and current authorization contract required');
@@ -54,7 +56,10 @@ export function validateAuthority(data) {
   check(c.authority.permission_contract==='AGENTS.md#pitti-codex-permission-contract','CURRENT.authority.permission_contract','canonical permission reference required');
   check(c.authority.source_scope==='SOURCE_IN_THIS_TREE; canonical main containment is dynamically verified; source/build/package never imply deployment or device acceptance','CURRENT.authority.source_scope','source tree must remain separate from canonical containment and deployment');
   check(c.runtime.candidate_branch==='DYNAMIC_VERIFICATION_REQUIRED','CURRENT.runtime.candidate_branch','operative branch must not be frozen across promotion');
+  check(c.runtime.source_candidate_status==='SOURCE_MERGED_PRODUCTION_PENDING'&&String(c.runtime.season_candidate||'').includes('source merged through PR #141')&&String(c.runtime.season_candidate||'').includes('UNKNOWN_REQUIRES_REVERIFICATION'),'CURRENT.runtime.source merge','merged source must remain separate from deployment and physical acceptance');
+  check(c.runtime.local_candidate_package?.source_scope==='MERGED_TO_CANONICAL_MAIN_VIA_PR141; package remains local artifact identity'&&!Object.hasOwn(c.runtime.local_candidate_package||{},'source_branch'),'CURRENT.runtime.local_candidate_package','package identity must not retain an operative pre-merge branch');
   check(l.runtime?.appVersion==='v11.8.0-rc4.195'&&s.branch_locks?.source_baseline==='v11.8.0-rc4.195','LOCK/SEAL.runtime','runtime changed');
+  check(s.branch_locks?.branch==='main'&&s.branch_locks.reconciled_base_main==='f1340a2c2d6248212c7652dc58b2f3323f74b1f5'&&String(s.branch_locks.codex_work||'').includes('Draft PR #142')&&String(s.note||'').includes('source was freshly observed merged through PR #141'),'SEAL.rc4195 reconciliation','seal must preserve dynamic main authority and historical PR #141 merge provenance');
   for(const p of ['installed_android','latest_android_observed','latestAndroidVersionObserved']) check(c.runtime[p]==='v11.8.0-rc4.193',`CURRENT.runtime.${p}`,'latest physical version drift');
   check(c.runtime.latest_device_evidence?.version==='v11.8.0-rc4.193'&&c.runtime.latest_device_evidence.acceptance==='PASS'&&c.runtime.latest_device_evidence.fail.length===0,'CURRENT.runtime.latest_device_evidence','physical evidence drift');
   check(c.runtime.accepted_android==='v11.8.0-rc4.169'&&c.runtime.android_accepted==='v11.8.0-rc4.169'&&l.runtime.acceptedAndroidAuthority==='v11.8.0-rc4.169'&&s.branch_locks.accepted_rollback==='v11.8.0-rc4.169','rollback','rollback drift');
@@ -94,6 +99,11 @@ export function validateAuthority(data) {
       if(!historical) {check(!/local[ _-]only|LOCAL_AUTHORITY_REVIEW_ONLY|no push, merge|no merge authorized|requires?\s+(?:an?\s+)?unmerged|remote_actions_authorized\s*[=:]\s*false/i.test(line),`${p}:${i+1}`,'active prose must survive promotion'); check(!/V233_STRICT_GATES_THEN_MERGE|V233_SEALED_PENDING_STRICT_CI/.test(line),`${p}:${i+1}`,'active pre-merge v233 pointer');}
     }
   }
+  for(const p of ['PITTI_NEW_CHAT_BOOTSTRAP.md','NEW_CHAT_HANDOFF_CURRENT.md','HANDOFF_COMPLETENESS_MATRIX.md','README.md']) {
+    check(!/(?:rc4\.195[^\n]{0,160}(?:PR-only|not merged|remains unmerged)|PR-only[^\n]{0,160}rc4\.195)/i.test(data[p]),p,'active takeover prose cannot retain rc4.195 PR-only/unmerged authority');
+  }
+  const projectCurrent=(data['PITTI_PROJECT_STATE.md'].split('## v240 CURRENT')[1]||'');
+  check(projectCurrent.includes('PR #141')&&projectCurrent.includes('merged into canonical main')&&projectCurrent.includes('UNKNOWN_REQUIRES_REVERIFICATION'),'PITTI_PROJECT_STATE.md v240 CURRENT','latest project-state authority must record source merge without deployment inference');
   return errors;
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)) {

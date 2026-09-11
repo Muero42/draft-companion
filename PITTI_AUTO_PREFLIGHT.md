@@ -87,14 +87,14 @@ Otherwise continue AUTO.
 - A full paired 15-round v4/v5 mock is invalid unless the exported backup contains exactly 30 active-draft fixtures covering all 15 own picks twice.
 
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
-- Current handoff generation = **20260911T0708Z-v239**. This checkpoint records the rc4.195 Boone runtime-ingestion and FAAB-basis package while preserving the physical rc4.193 Weekly-Evidence PASS.
+- Current handoff generation = **20260911T1117Z-v240**. This checkpoint records the merged rc4.195 Boone runtime-ingestion and FAAB-basis source while preserving the physical rc4.193 Weekly-Evidence PASS.
 - Current mode = **POST_DRAFT_SEASON_COMPANION**.
-- Canonical source candidate = **rc4.195 PR-only Boone runtime-ingestion and FAAB-basis package on Draft PR #141; not merged, deployed or physically accepted**. Verify the exact current main HEAD dynamically; a tracked checkpoint must not hard-code its own containing commit as immutable current authority.
+- Canonical source = **rc4.195 Boone runtime-ingestion and FAAB-basis source, freshly observed merged through PR #141**. The observed merge commit is historical provenance only. Verify the exact current main HEAD dynamically; a tracked checkpoint must not hard-code its own containing commit as immutable current authority. No deployment or physical acceptance follows from the merge.
 - Latest physical Android = **rc4.193 PASS** for Sleeper Live-State, Weekly Evidence, 725 FantasyPros weekly projections, Watcher and quota-safe persistence. Accepted historical rollback = **rc4.169**.
 - Deployment parity = **UNKNOWN_REQUIRES_REVERIFICATION**. Never infer deployment/device acceptance from source merge.
 - PR #120 and PR #121 / v233 are **MERGED/HISTORICAL checkpoint work**, never open current gates.
 - Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
-- Source candidate v11.8.0-rc4.195 is PR-only; latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. No rc4.195 deployment or device acceptance is claimed.
+- Source v11.8.0-rc4.195 is merged; latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 and PR #141 / rc4.195 source merge are MERGED/HISTORICAL. No rc4.195 deployment or device acceptance is claimed.
 - Live Sleeper direct league/users/rosters state = current roster/ownership/manager/slot/FAAB authority; Watcher evidence-only; completed draft immutable history.
 - AUTO/AUTO BLOCK = continuous same-turn execution while safe positive-value work exists: no interim progress/status/acknowledgement, no empty response after tool work, no promise-only “AUTO läuft weiter”; checkpoint + re-inventory after every package; external wait blocks only its dependent lane.
 - STATUS = report-only and must not trigger tools/polling/work.
@@ -274,4 +274,4 @@ Generation: `20260901T2210Z-v224`. Supersedes older current-version/device/gate/
 
 QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy.
 
-Earlier rc4.190/rc4.192/rc4.194 identities are historical. rc4.193 is the physical Weekly-Evidence PASS; rc4.195 remains the unpromoted candidate.
+Earlier rc4.190/rc4.192/rc4.194 identities are historical. rc4.193 is the physical Weekly-Evidence PASS; rc4.195 source is merged while deployment and physical acceptance remain unverified.
