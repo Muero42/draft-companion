@@ -13,6 +13,7 @@
   const EVIDENCE_TTL_MS=24*60*60*1000;
   const POSITIONS=['QB','RB','WR','TE'];
   const MIN_COUNTS={QB:24,RB:60,WR:70,TE:24};
+  const RANK_MIN_COUNTS={QB:20,RB:48,WR:60,TE:20};
   const norm=value=>String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
   const iso=ms=>new Date(ms).toISOString();
   const finite=value=>typeof value==='number'&&Number.isFinite(value)?value:null;
@@ -77,12 +78,54 @@
     return{lane:{id:'fantasypros_weekly_projections',status:available?'AVAILABLE':Object.values(positions).some(x=>x.status!=='UNAVAILABLE')?'PARTIAL':'UNAVAILABLE',coverage:{positions},sourceId:'fantasypros',metric:'projected_points'},records:available?records:[],rejects};
   }
 
-  function buildSnapshot({season,week,scoring:scoringInput,projectionPayloads,sleeperPlayers,verifiedAt=Date.now()}={}){
+  function rankingRows(payload){
+    if(Array.isArray(payload?.players))return payload.players;
+    if(Array.isArray(payload?.rankings))return payload.rankings;
+    if(Array.isArray(payload?.data?.players))return payload.data.players;
+    return null;
+  }
+
+  function rankValue(row){
+    for(const raw of [row?.rank_ecr,row?.ecr,row?.rank,row?.rank_ave,row?.rank_mean]){
+      const value=Number(raw);if(Number.isFinite(value)&&value>0)return value;
+    }
+    return null;
+  }
+
+  // FantasyPros ECR is deliberately a broad current-week stabilizer. It is never
+  // represented as PITTI's selected-expert panel when individual votes are absent.
+  function weeklyRankLane(payloads,{season,week,scoring:scoringInput,sleeperPlayers,verifiedAt=Date.now()}={}){
+    const normalizedScoring=scoring(scoringInput),indexes=sleeperIndexes(sleeperPlayers),records=[],positions={},rejects=[];
+    for(const position of POSITIONS){
+      const payload=payloads?.[position],players=rankingRows(payload),time=sourceTime(payload||{}),minimum=RANK_MIN_COUNTS[position];
+      let reason='';
+      if(!normalizedScoring)reason='WRONG_SCORING';
+      else if(Number(payload?.season??season)!==Number(season))reason='WRONG_SEASON';
+      else if(Number(payload?.week??week)!==Number(week))reason='WRONG_WEEK';
+      else if(scoring(payload?.scoring??payload?.format??scoringInput)!==normalizedScoring)reason='WRONG_SCORING';
+      else if(!players)reason='MISSING_PLAYERS';
+      else if(players.some(row=>String(row?.position_id||row?.position||'').toUpperCase()!==position))reason='WRONG_POSITION';
+      const ranked=(players||[]).filter(row=>rankValue(row)!=null),fresh=time.sourcePublishedAt?verifiedAt-Date.parse(time.sourcePublishedAt)<=EVIDENCE_TTL_MS:time.sourcePublishedDate?time.sourcePublishedDate===iso(verifiedAt).slice(0,10):false;
+      let mapped=0;
+      if(!reason&&ranked.length>=minimum&&fresh)for(const row of ranked){
+        const mapping=mapFantasyProsPlayer(row,indexes);if(!mapping.ok){rejects.push({position,name:String(row?.name||row?.player_name||''),reason:mapping.reason});continue;}
+        mapped++;records.push({schema:SCHEMA,playerId:mapping.player.id,sleeperId:mapping.player.id,sourcePlayerId:mapping.sourcePlayerId,mappingMethod:mapping.method,mappingVersion:MAPPING_VERSION,metric:'weekly_rank',value:rankValue(row),unit:'POSITIONAL_RANK',position,season:Number(season),week:Number(week),scoring:normalizedScoring,status:'VERIFIED',sourceId:'fantasypros_weekly_ecr',sourceUrl:`https://api.fantasypros.com/public/v2/json/nfl/${Number(season)}/consensus-rankings?week=${Number(week)}&position=${position}&scoring=HALF`,expert:null,...time,verifiedAt,expiresAt:verifiedAt+EVIDENCE_TTL_MS,provenance:{provider:'FantasyPros',aggregation:'CURRENT_WEEK_HALF_PPR_ECR',panelMembership:[],coverage:'BROAD_CONSENSUS_ONLY'},confidence:mapping.method==='FANTASY_DATA_ID'?.96:.78});
+      }
+      const coverage=ranked.length?mapped/ranked.length:0,status=!reason&&fresh&&ranked.length>=minimum&&coverage>=.9?'AVAILABLE':mapped?'PARTIAL':'UNAVAILABLE';
+      positions[position]={status,count:(players||[]).length,ranked:ranked.length,mapped,mappingCoverage:Math.round(coverage*1000)/1000,reason:reason||(!fresh?'STALE_SOURCE':ranked.length<minimum?'INSUFFICIENT_SOURCE_COVERAGE':status!=='AVAILABLE'?'INSUFFICIENT_MAPPING_COVERAGE':null),...time};
+    }
+    const available=POSITIONS.every(position=>positions[position].status==='AVAILABLE');
+    return{lane:{id:'fantasypros_weekly_ecr',status:available?'AVAILABLE':Object.values(positions).some(x=>x.status!=='UNAVAILABLE')?'PARTIAL':'UNAVAILABLE',coverage:{positions},metric:'weekly_rank',panelStatus:'BROAD_CONSENSUS_ONLY'},records,rejects};
+  }
+
+  function buildSnapshot({season,week,scoring:scoringInput,projectionPayloads,rankingPayloads,sleeperPlayers,verifiedAt=Date.now()}={}){
     const normalizedScoring=scoring(scoringInput);if(!normalizedScoring)throw new Error('WEEKLY_EVIDENCE_WRONG_SCORING');
     if(!Number.isInteger(Number(season))||!Number.isInteger(Number(week)))throw new Error('WEEKLY_EVIDENCE_INVALID_CONTEXT');
     const projections=projectionLane(projectionPayloads,{season,week,scoring:normalizedScoring,sleeperPlayers,verifiedAt});
-    const lanes={projections:projections.lane,expertWeeklyRanks:{status:'UNAVAILABLE',reason:'NO_QUALIFIED_RUNTIME_INGESTION'},vegas:{status:'UNAVAILABLE',reason:'SOURCE_UNAVAILABLE'},weather:{status:'UNAVAILABLE',reason:'SOURCE_UNAVAILABLE'},roleGraphs:{status:'UNAVAILABLE',reason:'SOURCE_UNAVAILABLE'}};
-    const snapshot={schema:SCHEMA,snapshotId:`wev2-${Number(season)}-${Number(week)}-${normalizedScoring}-${verifiedAt}`,season:Number(season),week:Number(week),scoring:normalizedScoring,fetchedAt:verifiedAt,lastAttemptAt:verifiedAt,lastSuccessAt:projections.lane.status==='AVAILABLE'?verifiedAt:null,status:projections.lane.status==='AVAILABLE'?'DEGRADED':'UNAVAILABLE',lanes,records:projections.records,rejections:projections.rejects,panel:{weeklyRank:{status:'UNAVAILABLE',sources:[],aggregation:null},projection:{status:projections.lane.status,source:'fantasypros'}}};
+    const ranks=weeklyRankLane(rankingPayloads,{season,week,scoring:normalizedScoring,sleeperPlayers,verifiedAt});
+    const lanes={projections:projections.lane,expertWeeklyRanks:ranks.lane,vegas:{status:'UNAVAILABLE',reason:'NO_APPROVED_ROBUST_SOURCE'},weather:{status:'UNAVAILABLE',reason:'GAME_CONTEXT_REQUIRED'},roleGraphs:{status:'UNAVAILABLE',reason:'SOURCE_UNAVAILABLE'}};
+    const records=[...projections.records,...ranks.records];
+    const snapshot={schema:SCHEMA,snapshotId:`wev2-${Number(season)}-${Number(week)}-${normalizedScoring}-${verifiedAt}`,season:Number(season),week:Number(week),scoring:normalizedScoring,fetchedAt:verifiedAt,lastAttemptAt:verifiedAt,lastSuccessAt:projections.lane.status==='AVAILABLE'?verifiedAt:null,status:projections.lane.status==='AVAILABLE'&&ranks.lane.status==='AVAILABLE'?'AVAILABLE':projections.lane.status==='AVAILABLE'?'DEGRADED':'UNAVAILABLE',lanes,records,rejections:[...projections.rejects,...ranks.rejects],panel:{weeklyRank:{status:ranks.lane.status==='AVAILABLE'?'BROAD_CONSENSUS_ONLY':ranks.lane.status,sources:ranks.lane.status==='UNAVAILABLE'?[]:['FantasyPros current-week Half-PPR ECR'],selectedExperts:[],aggregation:'ECR; selected PITTI panel remains separately unavailable'},projection:{status:projections.lane.status,source:'fantasypros'}}};
     return snapshot;
   }
 
@@ -131,5 +174,5 @@
     }
   }
 
-  return{SCHEMA,CACHE_KEY,TEMP_KEY,MAPPING_VERSION,MAX_AGE_MS,EVIDENCE_TTL_MS,POSITIONS,MIN_COUNTS,sourceTime,sleeperIndexes,mapFantasyProsPlayer,projectionLane,buildSnapshot,validateSnapshot,atomicWrite};
+  return{SCHEMA,CACHE_KEY,TEMP_KEY,MAPPING_VERSION,MAX_AGE_MS,EVIDENCE_TTL_MS,POSITIONS,MIN_COUNTS,RANK_MIN_COUNTS,sourceTime,sleeperIndexes,mapFantasyProsPlayer,projectionLane,weeklyRankLane,buildSnapshot,validateSnapshot,atomicWrite};
 });

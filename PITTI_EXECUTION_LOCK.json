@@ -13,7 +13,7 @@
     "reconciledBaseMain": "2749537945ec7e6b96d95e2f6b55a26e455124fa"
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.195",
+    "appVersion": "v11.8.0-rc4.196",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
@@ -29,7 +29,7 @@
     "latestAndroidVerified": "v11.8.0-rc4.193 Weekly Evidence, live state, 725 projections, Watcher and quota recovery physically PASS; rc4.169 remains rollback authority",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
-    "deployedPagesAppByteParityWithMain": null,
+    "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": 33597607588,
     "preinstallReferenceArtifactId": 9833935479,
     "preinstallHashSemantics": "HISTORICAL rc4.182 GitHub candidate-package artifact digest; not current rc4.190 package/deployment evidence.",
@@ -64,12 +64,12 @@
       "androidAccepted": false,
       "classification": "HISTORICAL/SUPERSEDED; nested merge, gate, parity and device values apply only to rc4.99"
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.169",
+    "acceptedAndroidAuthority": "v11.8.0-rc4.195",
     "unreleasedMainDelta": "DYNAMIC_VERIFICATION_REQUIRED against canonical main and relevant PRs; last-observed PR118 boundary is recorded in CURRENT.",
-    "deployedPagesVersion": "UNKNOWN_REQUIRES_REVERIFICATION",
-    "mainGhPagesParity": null,
+    "deployedPagesVersion": "v11.8.0-rc4.195",
+    "mainGhPagesParity": true,
     "androidVerified": false,
-    "androidAcceptance": "rc4.193 physical Weekly-Evidence PASS; rc4.195 physical acceptance pending",
+    "androidAcceptance": "rc4.195 physical Waiver/Trade/Weekly-Evidence PASS; rc4.196 pending",
     "devicePromotionPolicy": "Requires current user authorization, exact-source validation, verified deployment parity and a physical canary. Source or merge state never proves device acceptance.",
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate",
@@ -78,7 +78,8 @@
       "files": 15,
       "sha256": "sha256:01f51099435ef226b410c8f2ab4f23f77498e4e82d8371b48cfa7717ec155eca",
       "status": "PACKAGED_ONLY_NOT_DEPLOYED"
-    }
+    },
+    "acceptedRollback": "v11.8.0-rc4.195"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -137,11 +138,11 @@
       ],
       "waitingExternalRule": "waiting_external is a scheduling state, never a global stop condition unless ready=[] and no new autonomous lane can be derived.",
       "userOutputExamplesForbidden": [
-        "AUTO läuft",
+        "AUTO l\u00e4uft",
         "ich mache weiter",
-        "CI läuft",
+        "CI l\u00e4uft",
         "Commit erstellt",
-        "keine Nutzerhandlung nötig"
+        "keine Nutzerhandlung n\u00f6tig"
       ]
     },
     "noVisibleResponseWhileReadyWorkExists": true,
@@ -282,11 +283,11 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260911T1117Z-v240",
+    "generation": "20260911T1230Z-v241",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.",
+    "resume": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.196 must not be merged or deployed by this task.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -306,7 +307,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260911T1117Z-v240",
+  "handoff_generation": "20260911T1230Z-v241",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -341,6 +342,7 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260911T1117Z-v240",
-  "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy"
+  "handoffGeneration": "20260911T1230Z-v241",
+  "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
+  "updated_at": "2026-09-11T12:30:00Z"
 }

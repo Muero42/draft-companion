@@ -3,6 +3,8 @@ export const RUNTIME_FILES=Object.freeze([
   'app.js',
   'decision-policy.js',
   'weekly-evidence-v2.js',
+  'lineup-start-sit-v2.js',
+  'game-context-v1.js',
   'boone-trade-values-v1.mjs',
   'styles.css',
   'manifest.webmanifest',

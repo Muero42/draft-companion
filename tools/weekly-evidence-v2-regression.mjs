@@ -111,3 +111,17 @@ assert.equal(picked.sourcePublishedAt,null,'consumer must not manufacture a time
 assert(fs.readFileSync(new URL('../_worker.js',import.meta.url),'utf8').includes("headers['retry-after']=retryAfter"),'proxy must preserve upstream Retry-After for the client lifecycle');
 
 console.log('WEEKLY_EVIDENCE_V2_REGRESSION_PASS');
+
+// Weekly rank lane remains independent from projections and labels broad ECR honestly.
+const rankPayloads={};
+for(const [position,count] of Object.entries(evidence.RANK_MIN_COUNTS))rankPayloads[position]={season,week,scoring:'HALF_PPR',updated:'2026-09-10',players:Array.from({length:count},(_,i)=>({fpid:10001+Object.entries(counts).slice(0,Object.keys(counts).indexOf(position)).reduce((n,[,v])=>n+v,0)+i,name:`${position} Player ${i}`,position_id:position,team_id:'AAA',rank_ecr:i+1}))};
+const ranked=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:payloads,rankingPayloads:rankPayloads,sleeperPlayers:players,verifiedAt:now});
+assert.equal(ranked.lanes.expertWeeklyRanks.status,'AVAILABLE');
+assert.equal(ranked.panel.weeklyRank.status,'BROAD_CONSENSUS_ONLY');
+assert(ranked.records.some(x=>x.metric==='weekly_rank'));
+const wrongRank={...rankPayloads,QB:{...rankPayloads.QB,week:2}};
+const degradedRank=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:payloads,rankingPayloads:wrongRank,sleeperPlayers:players,verifiedAt:now});
+assert.equal(degradedRank.lanes.projections.status,'AVAILABLE');
+assert.equal(degradedRank.lanes.expertWeeklyRanks.status,'PARTIAL');
+assert(degradedRank.records.some(x=>x.metric==='projected_points'),'rank failure must preserve projection records');
+assert(!degradedRank.records.some(x=>x.metric==='weekly_rank'&&x.position==='QB'),'wrong-week ranks fail closed');

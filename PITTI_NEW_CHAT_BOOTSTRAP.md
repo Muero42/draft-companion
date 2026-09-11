@@ -1,4 +1,4 @@
-Generation: `20260911T1117Z-v240`
+Generation: `20260911T1230Z-v241`
 AUTO queue takeover: load CURRENT active/ready lanes and continue them in the same turn within user-authorized scope.
 No device-side trial-and-error. Empty assistant response after tool work is forbidden. Never send status/progress/acknowledgement messages during AUTO while executable work exists.
 

@@ -146,26 +146,26 @@
     "treating a backup with fewer than 30 paired fixtures as a complete 15-pick v4/v5 test",
     "JavaScript slice(-0) treated as zero-history eviction; historyKeep=0 must map explicitly to []",
     "treating 29/30 fixture backup as full v4/v5 promotion evidence",
-    "resurrecting any noncanonical 2026 draft order; exact order is Michael/Pascal Voerde/Marc Düsseldorf/Thomas/Björn/Pascal Gelderner/Giuliano/Bastian/Muerotechnik/Dutch Marc",
+    "resurrecting any noncanonical 2026 draft order; exact order is Michael/Pascal Voerde/Marc D\u00fcsseldorf/Thomas/Bj\u00f6rn/Pascal Gelderner/Giuliano/Bastian/Muerotechnik/Dutch Marc",
     "using Michael K as a league identity or aliasing Giuliano to Michael",
     "using Moers Venom as current user team instead of Muerotechnik",
     "using Pascal Voerde's stale 2023-2025-only detailed profile instead of the confirmed Bracht Eagles 2017-2022 + Voerde Eagles 2023-2025 identity chain",
     "dropping Michael_Polk 2025 from manual manager history",
-    "reintroducing Björn 2021 theme or 2023 autodraft into ordinary manager-preference learning",
+    "reintroducing Bj\u00f6rn 2021 theme or 2023 autodraft into ordinary manager-preference learning",
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.193 remains the physically verified Weekly-Evidence runtime; rc4.195 source is merged but deployment parity and physical acceptance remain unverified",
-    "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
+    "productionControl": "v11.8.0-rc4.195 is production/device accepted for released scope; rc4.196 Start/Sit/Weekly Context is source-only and must not be deployed",
+    "androidAuthority": "v11.8.0-rc4.195 accepted production/device authority",
     "sourceAuthority": "Source rc4.195 was freshly observed merged through PR #141; current canonical main HEAD is always dynamically verified and the observed merge commit is historical provenance only. Deployment parity UNKNOWN_REQUIRES_REVERIFICATION; physical rc4.193 Weekly-Evidence PASS and rollback rc4.169 remain separate.",
     "latestPackageReextract": "HISTORICAL rc4.182 PASS run 33597607588; not current rc4.190 package authority",
     "latestPackageSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "packageReferenceRun": 33597607588,
-    "deployedPagesVersion": "UNKNOWN_REQUIRES_REVERIFICATION",
-    "deployedPagesAppByteParityWithMain": null,
+    "deployedPagesVersion": "v11.8.0-rc4.195",
+    "deployedPagesAppByteParityWithMain": true,
     "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-    "exactNextAction": "Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.",
-    "runtimeVersion": "rc4.195 Boone runtime-ingestion and FAAB-basis source merged; rc4.193 remains the physically observed Weekly-Evidence PASS",
+    "exactNextAction": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.196 must not be merged or deployed by this task.",
+    "runtimeVersion": "rc4.196 source candidate; rc4.195 physical production authority",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "2026-09-10 rc4.193 physical acceptance: Sleeper Live-State, Weekly Evidence, 725 FantasyPros projections, Watcher and quota recovery PASS.",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
@@ -180,8 +180,8 @@
     }
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260911T1117Z-v240",
-  "handoff_generation": "20260911T1117Z-v240",
+  "handoffGeneration": "20260911T1230Z-v241",
+  "handoff_generation": "20260911T1230Z-v241",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -207,7 +207,8 @@
     "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
   "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "exactNextAction": "Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.",
+  "exactNextAction": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.196 must not be merged or deployed by this task.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy."
+  "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
+  "updated_at": "2026-09-11T12:30:00Z"
 }

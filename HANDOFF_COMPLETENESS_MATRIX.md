@@ -1,5 +1,5 @@
 # PITTI HANDOFF COMPLETENESS MATRIX — v240
-Generation: `20260911T1117Z-v240`
+Generation: `20260911T1230Z-v241`
 
 PASS requires:
 - Source/runtime v11.8.0-rc4.195 was freshly observed merged through PR #141; `f1340a2c...` is historical merge provenance only and current canonical main HEAD remains dynamic. Runtime/live-source/mobile/package evidence is preserved. Deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169. PR #121 / v233 and PR #141 / rc4.195 source merge are MERGED/HISTORICAL.
