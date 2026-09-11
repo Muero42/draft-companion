@@ -155,33 +155,35 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.195 is production/device accepted for released scope; rc4.196 Start/Sit/Weekly Context is source-only and must not be deployed",
+    "productionControl": "v11.8.0-rc4.195 remains production/device accepted; rc4.196 is source-merged through PR #143 but not deployed or physically accepted",
     "androidAuthority": "v11.8.0-rc4.195 accepted production/device authority",
-    "sourceAuthority": "Source rc4.195 was freshly observed merged through PR #141; current canonical main HEAD is always dynamically verified and the observed merge commit is historical provenance only. Deployment parity UNKNOWN_REQUIRES_REVERIFICATION; physical rc4.193 Weekly-Evidence PASS and rollback rc4.169 remain separate.",
-    "latestPackageReextract": "HISTORICAL rc4.182 PASS run 33597607588; not current rc4.190 package authority",
-    "latestPackageSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
-    "packageReferenceRun": 33597607588,
+    "sourceAuthority": "v11.8.0-rc4.196 source merged through PR #143 at historical merge commit 555487237c9075d5e5ceeb1fee196f4763f87cc3; current main remains dynamically verified. rc4.195 remains production/device authority.",
+    "latestPackageReextract": "rc4.196 byte-exact 17-file local package; PACKAGED_ONLY_NOT_DEPLOYED",
+    "latestPackageSha256": "sha256:a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d",
+    "packageReferenceRun": null,
     "deployedPagesVersion": "v11.8.0-rc4.195",
-    "deployedPagesAppByteParityWithMain": true,
+    "deployedPagesAppByteParityWithMain": false,
     "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
     "exactNextAction": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.196 must not be merged or deployed by this task.",
-    "runtimeVersion": "rc4.196 source candidate; rc4.195 physical production authority",
+    "runtimeVersion": "rc4.196 source-merged production-pending; rc4.195 physical production authority",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
-    "latestDeviceEvidence": "2026-09-10 rc4.193 physical acceptance: Sleeper Live-State, Weekly Evidence, 725 FantasyPros projections, Watcher and quota recovery PASS.",
+    "latestDeviceEvidence": "2026-09-11 rc4.195 physical acceptance: production, Sleeper Live-State, Weekly Evidence 728 players, Watcher, Waiver/Trade fail-closed behavior and Reserve/IR separation PASS.",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
-    "reconciledBaseMain": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
+    "reconciledBaseMain": "555487237c9075d5e5ceeb1fee196f4763f87cc3",
     "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-    "packageReferenceScope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.190 installable package claim",
+    "packageReferenceScope": "rc4.196 local byte-exact 17-file package identity; PACKAGED_ONLY_NOT_DEPLOYED",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.195",
-      "files": 15,
-      "sha256": "sha256:01f51099435ef226b410c8f2ab4f23f77498e4e82d8371b48cfa7717ec155eca",
-      "status": "PACKAGED_ONLY_NOT_DEPLOYED"
-    }
+      "version": "v11.8.0-rc4.196",
+      "files": 17,
+      "sha256": "sha256:a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d",
+      "status": "PACKAGED_ONLY_NOT_DEPLOYED",
+      "sourceScope": "MERGED_TO_CANONICAL_MAIN_VIA_PR143"
+    },
+    "deploymentParity": "UNKNOWN_REQUIRES_REVERIFICATION"
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260911T1230Z-v241",
-  "handoff_generation": "20260911T1230Z-v241",
+  "handoffGeneration": "20260911T1352Z-v242",
+  "handoff_generation": "20260911T1352Z-v242",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -210,5 +212,5 @@
   "exactNextAction": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.196 must not be merged or deployed by this task.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
-  "updated_at": "2026-09-11T12:30:00Z"
+  "updated_at": "2026-09-11T14:35:00Z"
 }
