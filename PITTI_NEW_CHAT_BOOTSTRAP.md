@@ -1,4 +1,4 @@
-Generation: `20260911T1230Z-v241`
+Generation: `20260911T1352Z-v242`
 AUTO queue takeover: load CURRENT active/ready lanes and continue them in the same turn within user-authorized scope.
 No device-side trial-and-error. Empty assistant response after tool work is forbidden. Never send status/progress/acknowledgement messages during AUTO while executable work exists.
 
@@ -17,3 +17,5 @@ Canonical permission boundary: AGENTS.md. Deterministic local validation: `node 
 QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy.
 
 Earlier rc4.190/rc4.192/rc4.194 identities are historical. Preserve rc4.193 Weekly-Evidence behavior and quota-safe persistence; rc4.195 source is merged but remains undeployed/unverified and device-unverified.
+
+rc4.196 source is MERGED/HISTORICAL through PR #143; rc4.195 remains production/device authority. rc4.196 deployment parity is UNKNOWN_REQUIRES_REVERIFICATION and no physical acceptance is claimed.

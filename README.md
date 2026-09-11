@@ -1,5 +1,5 @@
 # Draft Companion – Final Draft Edition 2026 · v11.8.0-rc4.196
-> **Current authority:** v11.8.0-rc4.195 is production/device accepted for its released Waiver/Trade/Weekly-Evidence scope. v11.8.0-rc4.196 is the source-only Start/Sit / Weekly Context candidate on Draft PR #143; it is not deployed or physically accepted.
+> **Current authority:** v11.8.0-rc4.195 is production/device accepted for its released Waiver/Trade/Weekly-Evidence scope. v11.8.0-rc4.196 Start/Sit / Weekly Context source is merged through PR #143; it is not deployed or physically accepted, and deployment parity is UNKNOWN_REQUIRES_REVERIFICATION.
 > **Season mode:** current Sleeper league state is Source of Truth; completed draft roster is immutable historical evidence only.
 > **HISTORICAL rc4.158 bounded change:** adds a draft-day v4 expert baseline/delta workflow. Unchanged or failed/incomplete refreshes restore the prior verified baseline; panel rebuild can run cache-only and occurs only for baseline creation/repair or a real ranking delta.
 > **HISTORICAL rc4.158 scope:** expert membership, weights, panel ranks semantics, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
@@ -108,6 +108,6 @@ v11.8.0-rc4.98 fixes generic Pro/Contra sign routing in the live surface. rc4.96
 - That narrows the failure boundary to startup after workspace selection but before Season live-state/control completion. Legacy local research evidence is now sanitized; optional research-cache status rendering is fail-isolated so it cannot abort startup.
 - A malformed-cache startup regression is now mandatory in release/package validation. No further device test before those automated gates pass.
 
-## v11.8.0-rc4.196 Start/Sit / Weekly Context candidate
+## v11.8.0-rc4.196 Start/Sit / Weekly Context — source merged, production pending
 
-The Draft PR #143 source candidate adds current-week Half-PPR ECR evidence, global legal-slot Start/Sit optimization, and provenance-preserving NFL game context. rc4.195 remains the production/device-accepted authority; rc4.196 is not deployed or physically accepted.
+The source merged through PR #143 adds current-week Half-PPR ECR evidence, global legal-slot Start/Sit optimization, and provenance-preserving NFL game context. rc4.195 remains the production/device-accepted authority; rc4.196 is not deployed or physically accepted.

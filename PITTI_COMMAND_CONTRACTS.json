@@ -155,7 +155,7 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.195 is production/device accepted for released scope; rc4.196 Start/Sit/Weekly Context is source-only and must not be deployed",
+    "productionControl": "v11.8.0-rc4.195 remains production/device accepted; rc4.196 is source-merged through PR #143 but not deployed or physically accepted",
     "androidAuthority": "v11.8.0-rc4.195 accepted production/device authority",
     "sourceAuthority": "Source rc4.195 was freshly observed merged through PR #141; current canonical main HEAD is always dynamically verified and the observed merge commit is historical provenance only. Deployment parity UNKNOWN_REQUIRES_REVERIFICATION; physical rc4.193 Weekly-Evidence PASS and rollback rc4.169 remain separate.",
     "latestPackageReextract": "HISTORICAL rc4.182 PASS run 33597607588; not current rc4.190 package authority",
@@ -165,7 +165,7 @@
     "deployedPagesAppByteParityWithMain": true,
     "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
     "exactNextAction": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.196 must not be merged or deployed by this task.",
-    "runtimeVersion": "rc4.196 source candidate; rc4.195 physical production authority",
+    "runtimeVersion": "rc4.196 source-merged production-pending; rc4.195 physical production authority",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "2026-09-10 rc4.193 physical acceptance: Sleeper Live-State, Weekly Evidence, 725 FantasyPros projections, Watcher and quota recovery PASS.",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
@@ -180,8 +180,8 @@
     }
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260911T1230Z-v241",
-  "handoff_generation": "20260911T1230Z-v241",
+  "handoffGeneration": "20260911T1352Z-v242",
+  "handoff_generation": "20260911T1352Z-v242",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",

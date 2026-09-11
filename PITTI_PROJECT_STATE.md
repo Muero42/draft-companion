@@ -656,7 +656,7 @@ The Boone live-audit evidence is preserved without rerun or inflation: 263/264 o
 
 Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. This reconciliation changes checkpoint/authority and executable authority guards only. It authorizes no merge, production deployment, cache clear/reinstall, physical-device claim or Sleeper transaction. Draft PR #142 is the review vehicle; its exact-head checks are dynamic external evidence and must be verified after publication.
 
-## v241 CURRENT — rc4.195 accepted → rc4.196 Start/Sit / Weekly Context (2026-09-11)
+## v241 HISTORICAL/SUPERSEDED — rc4.195 accepted → rc4.196 Start/Sit / Weekly Context (2026-09-11)
 Canonical origin/main was dynamically verified at `8aedc4ea3b7b71591cbc45f971ccf85fe5167074`; the operative feature head began at `2d6d930c6ae6b47c18a97f3b9bf21cd9e3e5a068`. Binding physical evidence now classifies rc4.195 as production/device PASS for Waiver/Trade/Weekly-Evidence: 728 projected players, Boone 263/264, Reserve/IR separation, K-only comparisons, fail-closed Waiver/Trade HOLD, and no transaction.
 
 The new rc4.196 source candidate adds recurring FantasyPros current-week Half-PPR ECR ingestion without pretending that broad ECR is the selected PITTI panel; projection records survive rank-lane failure. Start/Sit v6 uses a deterministic global legal-slot optimizer, permits two TE through FLEX, isolates K/DST and Reserve/TAXI, uses comparable projected points across positions, and honors verified kickoff locks. Canonical ESPN schedule context supplies opponent, home/away, kickoff, venue and roof only after complete unique week validation. Weather remains unavailable unless a fresh event forecast is exposed; dome games require no weather. Vegas remains unavailable because no robust approved source exists.
@@ -666,3 +666,11 @@ Current gate: `VERIFY_EXACT_HEAD_CI_THEN_REVIEW_NO_MERGE`. rc4.196 is not deploy
 Handoff generation: `20260911T1230Z-v241`.
 
 rc4.196 local verification completed: strict suite 211/211 PASS; 390×844 Chromium mocked-external review PASS with no horizontal overflow or uncaught errors; 17-file package re-extraction byte parity PASS; package SHA-256 `a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d`. Runtime weekly-rank coverage on PITTI's physical roster remains unknown until a separately authorized deployment/device canary. Selected-expert panel coverage remains 0 by design in v1; verified broad FantasyPros Half-PPR ECR is clearly labeled rather than fabricated as Boone/Del Don/Koerner/Fitzmaurice votes. Vegas remains unavailable, and outdoor weather remains unavailable unless the authoritative event payload contains a fresh forecast.
+
+
+## v242 CURRENT — rc4.196 post-merge authority reconciliation (2026-09-11)
+Canonical origin/main was freshly verified at `555487237c9075d5e5ceeb1fee196f4763f87cc3`. PR #143 is MERGED/HISTORICAL; source head `69a0593410ab5db754090a01d5b0e5beef2ed38b` is contained by that main merge commit. Exact-main-head GitHub checks for Project Guardrails, Release Contract v2, Candidate Package, cloud validation and legacy draft-critical gates were observed PASS. These observations are timestamped provenance and require dynamic re-verification before dependent continuation or promotion.
+
+rc4.196 Start/Sit v6, Weekly Expert Evidence v1 and NFL game-context v1 are source-merged. The selected PITTI individual-expert panel remains unavailable in v1; FantasyPros current-week Half-PPR ECR remains broad-consensus evidence only. Vegas and fresh event-bound weather remain fail-closed when verified evidence is unavailable. rc4.195 remains production/device authority with its physical acceptance evidence unchanged. rc4.196 is not production deployed or physically accepted; deployment parity is `UNKNOWN_REQUIRES_REVERIFICATION`.
+
+Runtime/product bytes remain identical to merged rc4.196. Byte-exact package re-extraction preserves 17 runtime files and SHA-256 `a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d`. Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Handoff generation: `20260911T1352Z-v242`.

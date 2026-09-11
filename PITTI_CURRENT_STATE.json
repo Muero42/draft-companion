@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260911T1230Z-v241",
-  "updated_at": "2026-09-11T12:30:00Z",
+  "handoff_generation": "20260911T1352Z-v242",
+  "updated_at": "2026-09-11T13:52:46Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -9,7 +9,7 @@
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
     "source_candidate": "v11.8.0-rc4.196",
     "git_identity_rule": "Current main SHA is verified dynamically from git/GitHub; never hard-code the containing commit as self-authority.",
-    "reconciled_base_main": "8aedc4ea3b7b71591cbc45f971ccf85fe5167074",
+    "reconciled_base_main": "555487237c9075d5e5ceeb1fee196f4763f87cc3",
     "postmerge": {
       "checkpoint": "v233",
       "pr": 121,
@@ -54,20 +54,32 @@
       "exact_head_ci": "DYNAMIC_VERIFICATION_REQUIRED"
     },
     "source_scope": "SOURCE_IN_THIS_TREE; canonical main containment is dynamically verified; source/build/package never imply deployment or device acceptance",
-    "permission_contract": "AGENTS.md#pitti-codex-permission-contract"
+    "permission_contract": "AGENTS.md#pitti-codex-permission-contract",
+    "rc4196_source_merge": {
+      "checkpoint": "v242",
+      "pr": 143,
+      "status": "MERGED/HISTORICAL",
+      "source_head": "69a0593410ab5db754090a01d5b0e5beef2ed38b",
+      "base_head": "8aedc4ea3b7b71591cbc45f971ccf85fe5167074",
+      "merge_commit": "555487237c9075d5e5ceeb1fee196f4763f87cc3",
+      "observed_at": "2026-09-11T13:52:46Z",
+      "evidence_scope": "Fresh GitHub observation of PR #143 and origin/main at reconciliation time; historical merge provenance only, never immutable current-main self-authority.",
+      "deployment_proven": false,
+      "device_acceptance_proven": false
+    }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.195",
-    "season_candidate": "v11.8.0-rc4.196 Start/Sit/Weekly Context source candidate; rc4.195 production/device accepted",
+    "season_candidate": "v11.8.0-rc4.196 Start/Sit/Weekly Context source merged through PR #143; rc4.195 remains production/device accepted",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.196",
     "ci": {
-      "candidate_package": "DYNAMIC_VERIFICATION_REQUIRED",
-      "release_contract_v2": "DYNAMIC_VERIFICATION_REQUIRED",
-      "project_guardrails": "DYNAMIC_VERIFICATION_REQUIRED",
-      "validated_code_head": null,
-      "scope": "Verify exact-head GitHub checks before dependent actions; historical PASS is not evidence for another commit."
+      "candidate_package": "PASS_EXACT_MAIN_HEAD",
+      "release_contract_v2": "PASS_EXACT_MAIN_HEAD",
+      "project_guardrails": "PASS_EXACT_MAIN_HEAD",
+      "validated_code_head": "555487237c9075d5e5ceeb1fee196f4763f87cc3",
+      "scope": "Fresh GitHub checks observed PASS on canonical main head at reconciliation time; reverify dynamically before dependent continuation or promotion."
     },
     "android_accepted": "v11.8.0-rc4.195",
     "preview_candidate": "rc4.192 identity-only production candidate; deployment parity requires re-verification before physical canary",
@@ -100,7 +112,7 @@
       "classification": "DEVICE_RC4195_WAIVER_TRADE_WEEKLY_EVIDENCE_PASS"
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.195",
-    "source_candidate_status": "SOURCE_CANDIDATE_PR_ONLY",
+    "source_candidate_status": "SOURCE_MERGED_PRODUCTION_PENDING",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -167,7 +179,7 @@
       "files": 17,
       "sha256": "sha256:a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d",
       "status": "PACKAGED_ONLY_NOT_DEPLOYED",
-      "source_scope": "DRAFT_PR143_ONLY"
+      "source_scope": "MERGED_TO_CANONICAL_MAIN_VIA_PR143; package remains local artifact identity"
     }
   },
   "real_draft": {
@@ -227,7 +239,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "Canonical main dynamically verified at 8aedc4ea3b7b71591cbc45f971ccf85fe5167074 for this checkpoint. rc4.195 is production deployed and physically accepted for its released scope. rc4.196 Start/Sit/Weekly Context is source-only on Draft PR #143, not deployed or physically accepted.",
+  "source_authority": "Canonical main dynamically verified at 555487237c9075d5e5ceeb1fee196f4763f87cc3 for this checkpoint; rc4.196 source was merged through PR #143. rc4.195 remains production deployed and physically accepted. rc4.196 is not deployed or physically accepted; deployment parity is UNKNOWN_REQUIRES_REVERIFICATION.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -265,6 +277,11 @@
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "v242-rc4196-postmerge-authority-reconciliation",
+        "result": "Fresh Git/GitHub reconciliation observed PR #143 merged at source head 69a0593410ab5db754090a01d5b0e5beef2ed38b into canonical main as 555487237c9075d5e5ceeb1fee196f4763f87cc3; all exact-main-head GitHub checks passed. Runtime/product bytes and the 17-file package identity are unchanged. rc4.195 remains production/device authority; rc4.196 deployment parity remains UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remains pending.",
+        "at": "2026-09-11T13:52:46Z"
+      },
       {
         "id": "rc4196-startsit-weekly-context-v1",
         "result": "LOCAL PASS: FantasyPros current-week Half-PPR ECR ingestion (broad ECR explicitly separate from selected PITTI panel), projection-lane preservation, global legal-slot Start/Sit v6, verified ESPN weekly game context, lock guards, 390x844 Chromium and 17-file byte-exact re-extraction. Vegas remains unavailable; weather remains fail-closed unless fresh event forecast exists.",
@@ -444,7 +461,7 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260911T1230Z-v241",
+    "generation": "20260911T1352Z-v242",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -456,7 +473,7 @@
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260911T1230Z-v241",
+  "handoffGeneration": "20260911T1352Z-v242",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",

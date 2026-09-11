@@ -1,5 +1,5 @@
 # PITTI HANDOFF COMPLETENESS MATRIX — v240
-Generation: `20260911T1230Z-v241`
+Generation: `20260911T1352Z-v242`
 
 PASS requires:
 - Source/runtime v11.8.0-rc4.195 was freshly observed merged through PR #141; `f1340a2c...` is historical merge provenance only and current canonical main HEAD remains dynamic. Runtime/live-source/mobile/package evidence is preserved. Deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169. PR #121 / v233 and PR #141 / rc4.195 source merge are MERGED/HISTORICAL.
@@ -15,3 +15,5 @@ PASS requires:
 Canonical permission boundary: AGENTS.md. Deterministic local validation: `node tools/strict-suite.mjs`; dynamic takeover: `node tools/takeover-authority.mjs <fresh-github-evidence.json>`. The evidence file is an external observation, never tracked CURRENT status. Read the schema and limits in PITTI_CODEX_WORK_PACKAGE.md.
 
 QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy. rc4.195 source is merged but is not proven deployed or device-accepted; rc4.193 remains the physical Weekly-Evidence PASS. Boone ingestion is automatic and fail-closed; FAAB percentages use original budget with absolute bids capped by remaining funds.
+
+rc4.196 source is MERGED/HISTORICAL through PR #143; rc4.195 remains production/device authority. rc4.196 deployment parity is UNKNOWN_REQUIRES_REVERIFICATION and no physical acceptance is claimed.
