@@ -2,7 +2,7 @@
 Generation: `20260911T0708Z-v239`
 
 PASS requires:
-- Source candidate v11.8.0-rc4.195 is PR-only on Draft PR #141 from canonical main `5e29f285...`; local runtime/live-source/mobile/package checks pass and exact-head GitHub checks remain pending. Deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169. PR #121 / v233 MERGED/HISTORICAL.
+- Source candidate v11.8.0-rc4.195 is PR-only on Draft PR #141 from canonical main `5e29f285...`; local runtime/live-source/mobile/package checks pass. Exact head `a08a3e78...` passed all five checks before the checkpoint-only reseal; current exact-head authority remains dynamic. Deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169. PR #121 / v233 MERGED/HISTORICAL.
 - Gate `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK` aligned across CURRENT, LOCK, COMMAND, SEAL, bootstrap, handoff and preflight.
 - Post-v233 local read-only audit recorded as performed and FAIL_CLOSED; historical audit evidence retained; no pending v233 CI/merge or repeat-audit queue.
 - Historical branch/base/PR evidence separated from current dynamic authority; no containing-commit SHA claim.

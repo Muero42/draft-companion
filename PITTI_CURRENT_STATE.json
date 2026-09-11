@@ -257,6 +257,11 @@
         "at": "2026-09-11T07:08:00Z"
       },
       {
+        "id": "rc4195-pr141-exact-head-a08a3e78",
+        "result": "PASS on exact head a08a3e78859c4eb8fb080577cbf37322412761b0: guardrails, behavioral contract, candidate package, isolated cloud validation and automatic non-production Cloudflare branch preview. PR #141 remained Draft; no merge or production deployment.",
+        "at": "2026-09-11T07:17:00Z"
+      },
+      {
         "id": "rc4195-local-package-mobile-faab",
         "result": "LOCAL PASS: focused season/runtime regressions, 390x844 Chromium review with automatic Boone endpoint ingestion, FAAB original-budget semantics including partially spent budget, and 15-file byte-exact package sha256:01f51099435ef226b410c8f2ab4f23f77498e4e82d8371b48cfa7717ec155eca. Exact-head PR CI pending.",
         "at": "2026-09-11T07:08:00Z"

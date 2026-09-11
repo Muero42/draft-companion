@@ -4,7 +4,7 @@ No device-side trial-and-error. Empty assistant response after tool work is forb
 
 # PITTI NEW CHAT BOOTSTRAP — v235
 
-Source candidate v11.8.0-rc4.195 is the PR-only Boone runtime-ingestion and FAAB-basis package on Draft PR #141, based on canonical main `5e29f285...`; local runtime/live-source/mobile/package checks pass, exact-head GitHub checks remain pending, deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169. PR #121 / v233 is MERGED/HISTORICAL.
+Source candidate v11.8.0-rc4.195 is the PR-only Boone runtime-ingestion and FAAB-basis package on Draft PR #141, based on canonical main `5e29f285...`; local runtime/live-source/mobile/package checks pass. Exact head `a08a3e78...` passed all five checks before the checkpoint-only reseal; verify the current head dynamically. Deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169. PR #121 / v233 is MERGED/HISTORICAL.
 
 Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
 
