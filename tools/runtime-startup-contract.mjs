@@ -10,8 +10,9 @@ const version=(app.match(/const APP_VERSION='([^']+)'/)||[])[1];
 assert(version,'APP_VERSION missing');
 for(const src of [html,sw])assert(src.includes(version),'runtime version parity missing: '+version);
 
-// Parse source app after removing its static import.
-new Function(app.replace(/^import[^\n]*\n/,''));
+// Parse source app after removing its static ESM imports.
+const withoutImports=source=>source.replace(/^(?:import[^\n]*\n)+/,'');
+new Function(withoutImports(app));
 
 // Parse decision policy after removing ESM export keywords.
 new Function(policy.replace(/\bexport\s+/g,''));
@@ -35,7 +36,7 @@ const end=sw.indexOf('\nfunction patchText',start);
 assert(start>=0&&end>start,'patchApp extraction failed');
 const patchApp=Function('const BASE='+JSON.stringify(base[1])+',TARGET='+JSON.stringify(base[2])+';\n'+sw.slice(start,end)+'; return patchApp')();
 const patched=patchApp(app);
-new Function(patched.replace(/^import[^\n]*\n/,''));
+new Function(withoutImports(patched));
 assert.equal(patched.replaceAll(base[2],base[1]),app,'service worker must not structurally rewrite canonical app runtime');
 
 // The exact failure that broke rc4.138-rc4.140: adjacent object properties without a comma.

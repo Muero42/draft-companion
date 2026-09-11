@@ -1,15 +1,20 @@
 # Draft Companion – Final Draft Edition 2026
-> **Canonical source:** v11.8.0-rc4.193 Weekly-Evidence-v2, merged through PR #137. FantasyPros current-week Half-PPR projections are mapped deterministically to Sleeper IDs and published only after complete QB/RB/WR/TE validation; weekly expert ranks, Vegas, weather and role graphs remain fail-closed. Production remains rc4.192 pending separate deployment authorization. Physical Android rc4.192 remains the latest observed PASS; rc4.169 remains accepted rollback authority. No deployment or physical acceptance of rc4.193 is claimed.
+> **Feature candidate:** v11.8.0-rc4.195 on Draft PR #141. It preserves the physically verified rc4.193 Weekly-Evidence/quota repair and rc4.194 Waiver/Trade work, then adds automatic provenance-preserving Justin Boone/Yahoo ROS trade-value ingestion. rc4.195 is not merged, deployed or physically accepted.
 > **Season mode:** current Sleeper league state is Source of Truth; completed draft roster is immutable historical evidence only.
 > **HISTORICAL rc4.158 bounded change:** adds a draft-day v4 expert baseline/delta workflow. Unchanged or failed/incomplete refreshes restore the prior verified baseline; panel rebuild can run cache-only and occurs only for baseline creation/repair or a real ranking delta.
 > **HISTORICAL rc4.158 scope:** expert membership, weights, panel ranks semantics, tiers, Coach, Return-v2, manager logic, history and fingerprints are unchanged.
 > **Draft locks:** exact canonical manager order/history; no K/DST; exactly one QB; Geno Smith and Aaron Rodgers hard excluded; starter maxima are not roster caps.
 
-Built/source/package/deployment/device-observed/device-accepted are distinct states. Canonical main source is v11.8.0-rc4.193; production and latest physical Android remain rc4.192 until separately authorized deployment and device verification. Rollback authority remains rc4.169. Current checkpoint gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`.
+Built/source/package/deployment/device-observed/device-accepted are distinct states. Canonical main remains v11.8.0-rc4.193 at the dynamically verified main head; rc4.193 is the latest physically observed Weekly-Evidence PASS. rc4.195 is a PR-only feature candidate and requires exact-head gates plus later physical verification. Deployment parity remains UNKNOWN_REQUIRES_REVERIFICATION; rc4.169 is retained as historical rollback authority; PR #121/v233 is MERGED/HISTORICAL. Current checkpoint gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`.
 
 Promotion-stable checkpoint gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Historical compatibility tokens retained for checkpoint validation: rc4.190, rc4.188, `UNKNOWN_REQUIRES_REVERIFICATION`, `MERGED/HISTORICAL`.
 
 Historical release-contract baseline canary retained for regression tooling: `v11.8.0-rc4.64`.
+
+## rc4.195 season evidence and FAAB convention
+
+- The app automatically requests the current Justin Boone/Yahoo weekly ROS trade-value charts through the Cloudflare Worker. QB uses the published `1QB` column; RB/WR/TE use `HALF`. Publication/update timestamps, source URL, provider/author, weekly edition, mapping method, verification time and expiry are retained on every `trade_value` record. Missing, stale, malformed, ambiguous or partial-position evidence publishes no actionable snapshot.
+- FAAB recommendation percentages always mean **percent of the league's original FAAB budget**. Displayed absolute units use that same original-budget basis and are capped at the manager's actual remaining FAAB. Historical transaction bids remain comparable because Sleeper records them in absolute units against the same original league budget.
 
 ## HISTORICAL/SUPERSEDED release log
 All release, Android, deployment, gate and CURRENT claims below are historical at the named version; they cannot override the current source/physical/rollback boundary above or PITTI_CURRENT_STATE.json. This includes the obsolete rc4.92 named-QB policy, old package counts, and old Season candidates.

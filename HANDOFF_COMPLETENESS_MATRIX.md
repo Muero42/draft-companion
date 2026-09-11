@@ -1,17 +1,17 @@
 # PITTI HANDOFF COMPLETENESS MATRIX — v235
-Generation: `20260909T1018Z-v237`
+Generation: `20260911T0708Z-v239`
 
 PASS requires:
-- Source candidate v11.8.0-rc4.192 preserves merged PR #118 and PR #132 from authenticated canonical main b62e7d5; deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.188 PASS; rollback rc4.169. PR #121 / v233 is MERGED/HISTORICAL.
+- Source candidate v11.8.0-rc4.195 is PR-only on Draft PR #141 from canonical main `5e29f285...`; local runtime/live-source/mobile/package checks pass. Exact head `a08a3e78...` passed all five checks before the checkpoint-only reseal; current exact-head authority remains dynamic. Deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169. PR #121 / v233 MERGED/HISTORICAL.
 - Gate `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK` aligned across CURRENT, LOCK, COMMAND, SEAL, bootstrap, handoff and preflight.
 - Post-v233 local read-only audit recorded as performed and FAIL_CLOSED; historical audit evidence retained; no pending v233 CI/merge or repeat-audit queue.
 - Historical branch/base/PR evidence separated from current dynamic authority; no containing-commit SHA claim.
 - Full local strict guard including seal integrity and semantic cross-reference validation; negative tests reject resurrected v233 gates.
-- live Sleeper state roster/ownership authority; draft historical only; IR/Reserve never ordinary drop; no generic TE2/QB2 ban; Lawrence includes future D/ST second-drop cost.
+- live Sleeper state roster/ownership authority; actual free agents only; all nine opponents and remaining FAAB required before a numeric skill-position bid; draft historical only; IR/Reserve never ordinary drop; no generic TE2/QB2 ban; future D/ST second-drop cost preserved.
 - Historical version/gate/supersession statements explicitly scoped; no stale package digest promoted to rc4.190.
 - AUTO same-turn continuous execution and STATUS report-only. Empty assistant response after tool work is forbidden.
 - Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.
 
 Canonical permission boundary: AGENTS.md. Deterministic local validation: `node tools/strict-suite.mjs`; dynamic takeover: `node tools/takeover-authority.mjs <fresh-github-evidence.json>`. The evidence file is an external observation, never tracked CURRENT status. Read the schema and limits in PITTI_CODEX_WORK_PACKAGE.md.
 
-QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy.
+QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy. rc4.195 is not merged/deployed/device-accepted; rc4.193 remains the physical Weekly-Evidence PASS. Boone ingestion is automatic and fail-closed; FAAB percentages use original budget with absolute bids capped by remaining funds.
