@@ -1,13 +1,13 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260911T0607Z-v238",
-  "updated_at": "2026-09-11T06:07:00Z",
+  "handoff_generation": "20260911T0708Z-v239",
+  "updated_at": "2026-09-11T07:08:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.194",
+    "source_candidate": "v11.8.0-rc4.195",
     "git_identity_rule": "Current main SHA is verified dynamically from git/GitHub; never hard-code the containing commit as self-authority.",
     "reconciled_base_main": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
     "postmerge": {
@@ -46,10 +46,10 @@
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.194 PR-only Waiver/Trade feature candidate; exact-head validation pending",
+    "season_candidate": "v11.8.0-rc4.195 PR-only Boone runtime-ingestion and FAAB-basis candidate; exact-head validation pending",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.194",
+    "test_challenger": "v11.8.0-rc4.195",
     "ci": {
       "candidate_package": "DYNAMIC_VERIFICATION_REQUIRED",
       "release_contract_v2": "DYNAMIC_VERIFICATION_REQUIRED",
@@ -149,9 +149,9 @@
     },
     "package_reference_scope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.190 installable package claim",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.194",
-      "files": 14,
-      "sha256": "sha256:3ac577dfc512d3a0345cac68b7c9cf8e9be60dc3fc4d5a2c7e430e1d5922e630",
+      "version": "v11.8.0-rc4.195",
+      "files": 15,
+      "sha256": "sha256:01f51099435ef226b410c8f2ab4f23f77498e4e82d8371b48cfa7717ec155eca",
       "status": "PACKAGED_ONLY_NOT_DEPLOYED",
       "source_branch": "pitti/codex-waiver-trade-season-v1"
     }
@@ -188,7 +188,9 @@
     "waiver_competition": "For candidate players, compare all 9 opponent live rosters, QB/position need, remaining FAAB, bounded manager-history prior and current-season waiver-bid prior.",
     "roster_capacity_cost": "Acquisition evaluation must account for subsequent mandatory D/ST roster slot. If QB2 is added before D/ST, price both expected active drops; IR/Reserve is never an ordinary capacity/drop target.",
     "qb2_exception": "The draft-specific one-QB rule is not a generic in-season ban. A materially valuable QB2 may surface when upside/value clears roster opportunity cost; same-bye and future D/ST drop cost reduce willingness to pay.",
-    "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot."
+    "trade_geometry": "Trade target value uses actual canonical Sleeper starter/FLEX slots, not static RB/WR/TE depth. A second TE is valid when it wins a legal FLEX slot.",
+    "trade_value_evidence": "Automatic Cloudflare Worker ingestion of current Justin Boone/Yahoo weekly ROS charts: QB 1QB; RB/WR/TE HALF; all four positions, dates, URLs and Sleeper mapping must validate or no actionable snapshot is published.",
+    "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
     "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
@@ -211,7 +213,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "Canonical main is dynamically verified at 5e29f285103531b81c7579036e7a885e487e0650 with rc4.193 physically accepted for Weekly Evidence; rc4.194 is a PR-only Waiver/Trade feature candidate and is not deployed or device-accepted.",
+  "source_authority": "Canonical main was dynamically verified at 5e29f285103531b81c7579036e7a885e487e0650 with rc4.193 physically accepted for Weekly Evidence; rc4.195 is a PR-only Boone runtime-ingestion and FAAB-basis candidate and is not merged, deployed or device-accepted.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -249,6 +251,16 @@
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "boone-trade-value-runtime-ingestion-v1",
+        "result": "LOCAL PASS: real Yahoo 2026 Week-1 ROS charts parsed and mapped 263/264 rows (QB 37/37, RB 87/87, WR 99/100, TE 40/40); current PITTI skill roster 15/15 and opponent assets 119/119 mapped. Production Worker route, automatic app storage, stale/malformed/scoring/collision/partial negatives and fail-closed consumers verified.",
+        "at": "2026-09-11T07:08:00Z"
+      },
+      {
+        "id": "rc4195-local-package-mobile-faab",
+        "result": "LOCAL PASS: focused season/runtime regressions, 390x844 Chromium review with automatic Boone endpoint ingestion, FAAB original-budget semantics including partially spent budget, and 15-file byte-exact package sha256:01f51099435ef226b410c8f2ab4f23f77498e4e82d8371b48cfa7717ec155eca. Exact-head PR CI pending.",
+        "at": "2026-09-11T07:08:00Z"
+      },
       {
         "id": "waiver-trade-local-exact-gates",
         "result": "PASS: strict suite 205/205, targeted Waiver/Trade regressions, Weekly Evidence/quota regressions, mobile Chromium 390x844, and 14-file byte-exact package re-extraction for rc4.194.",
@@ -398,7 +410,7 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260911T0607Z-v238",
+    "generation": "20260911T0708Z-v239",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -410,7 +422,7 @@
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260911T0607Z-v238",
+  "handoffGeneration": "20260911T0708Z-v239",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",

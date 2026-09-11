@@ -155,9 +155,9 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.193 physically verified Weekly-Evidence runtime; rc4.194 remains PR-only",
+    "productionControl": "v11.8.0-rc4.193 physically verified Weekly-Evidence runtime; rc4.195 remains PR-only",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
-    "sourceAuthority": "Source candidate rc4.194 is PR-only on Draft PR #141 from canonical main 5e29f285; deployment parity UNKNOWN_REQUIRES_REVERIFICATION; physical rc4.193 Weekly-Evidence PASS and rollback rc4.169 remain separate.",
+    "sourceAuthority": "Source candidate rc4.195 is PR-only on Draft PR #141 from canonical main 5e29f285; deployment parity UNKNOWN_REQUIRES_REVERIFICATION; physical rc4.193 Weekly-Evidence PASS and rollback rc4.169 remain separate.",
     "latestPackageReextract": "HISTORICAL rc4.182 PASS run 33597607588; not current rc4.190 package authority",
     "latestPackageSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "packageReferenceRun": 33597607588,
@@ -165,7 +165,7 @@
     "deployedPagesAppByteParityWithMain": null,
     "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
     "exactNextAction": "Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.",
-    "runtimeVersion": "rc4.194 PR-only Waiver/Trade candidate; rc4.193 physically observed Weekly-Evidence PASS",
+    "runtimeVersion": "rc4.195 PR-only Boone runtime-ingestion and FAAB-basis candidate; rc4.193 physically observed Weekly-Evidence PASS",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "2026-09-10 rc4.193 physical acceptance: Sleeper Live-State, Weekly Evidence, 725 FantasyPros projections, Watcher and quota recovery PASS.",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
@@ -173,15 +173,15 @@
     "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
     "packageReferenceScope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.190 installable package claim",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.194",
-      "files": 14,
-      "sha256": "sha256:3ac577dfc512d3a0345cac68b7c9cf8e9be60dc3fc4d5a2c7e430e1d5922e630",
+      "version": "v11.8.0-rc4.195",
+      "files": 15,
+      "sha256": "sha256:01f51099435ef226b410c8f2ab4f23f77498e4e82d8371b48cfa7717ec155eca",
       "status": "PACKAGED_ONLY_NOT_DEPLOYED"
     }
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260911T0607Z-v238",
-  "handoff_generation": "20260911T0607Z-v238",
+  "handoffGeneration": "20260911T0708Z-v239",
+  "handoff_generation": "20260911T0708Z-v239",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -202,7 +202,9 @@
     "leagueState": "Persist all ten Sleeper rosters plus manager mapping, starter/reserve/taxi, waiver position, FAAB used/remaining and current transaction-round evidence.",
     "waiverCompetition": "Opponent bid estimates are distributions/bands driven primarily by current roster need and remaining FAAB, with bounded current-season transaction and historical-manager priors.",
     "qb2SeasonException": "No generic in-season QB2 ban. Evaluate upside/value vs active roster cost; when D/ST is still missing, include the second future active drop and same-bye penalty.",
-    "tradeGeometry": "Use canonical Sleeper starter/FLEX assignment; no static positional depth caps; TE2 can be a starter through legal FLEX."
+    "tradeGeometry": "Use canonical Sleeper starter/FLEX assignment; no static positional depth caps; TE2 can be a starter through legal FLEX.",
+    "tradeValueEvidence": "Automatically ingest current Justin Boone/Yahoo weekly ROS charts server-side; QB=1QB, RB/WR/TE=HALF; require all positions, fresh provenance and unambiguous Sleeper mapping or fail closed.",
+    "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
   "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "exactNextAction": "Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.",

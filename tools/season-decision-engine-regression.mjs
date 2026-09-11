@@ -5,7 +5,7 @@ const app=fs.readFileSync('app.js','utf8');
 const functionSource=name=>{const start=app.indexOf('function '+name+'(');assert(start>=0,name);const end=app.indexOf('\nfunction ',start+1);return app.slice(start,end<0?undefined:end);};
 const cache=new Map(),now=Date.now();
 const season={ok:true,source:'Sleeper direct',generated_at:now,league_rosters:Array.from({length:10},(_,i)=>({roster_id:i+1})),ownership:{},league:{season:'2026',roster_positions:['QB','RB','WR','TE','FLEX','WRRB_FLEX','BN','BN','BN','BN','BN','BN']},transaction_round:2};
-const sandbox={Date,console,store:{get:(key,fallback)=>cache.get(key)??fallback},lastDraftContext:{season},SLEEPER_NON_STARTER_SLOTS:new Set(['BN','IR','TAXI']),esc:s=>String(s),loadResearchEvents:()=>[]};
+const sandbox={Date,console,BOONE_TRADE_VALUE_CACHE_KEY:'pitti.boone-trade-values.v1.current',validateBooneTradeValueSnapshot:()=>({ok:false}),store:{get:(key,fallback)=>cache.get(key)??fallback},lastDraftContext:{season},SLEEPER_NON_STARTER_SLOTS:new Set(['BN','IR','TAXI']),esc:s=>String(s),loadResearchEvents:()=>[]};
 vm.createContext(sandbox);
 for(const name of ['seasonSlotEligible','tradeStarterSlots','tradeBestLineup','seasonStructurallyDroppable'])vm.runInContext(functionSource(name),sandbox);
 vm.runInContext(app.slice(app.indexOf('function seasonEvidenceContext('),app.indexOf('function fpStoreKey(')),sandbox);

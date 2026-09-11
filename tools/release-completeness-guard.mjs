@@ -10,6 +10,7 @@ const packageFiles=[...packageListBlock.matchAll(/'([^']+)'/g)].map(m=>m[1]);
 must(packageFiles.length>0,'package runtime file list unreadable');
 must(JSON.stringify(packageFiles)===JSON.stringify([...RUNTIME_FILES]),'Pages staging manifest != package runtime file set');
 must(RUNTIME_FILES.includes('weekly-evidence-v2.js'),'Pages staging manifest missing weekly-evidence-v2.js');
+must(RUNTIME_FILES.includes('boone-trade-values-v1.mjs'),'Pages staging manifest missing Boone trade-value production parser');
 const m=index.match(/<span class="version">(v11\.8\.0-rc4\.\d+)<\/span>/);must(m,'visible version missing');const V=m?.[1];
 if(V){
   const runtime={index,app,sw,manifest,live};
@@ -24,11 +25,13 @@ if(V){
   must(index.includes(`live-surface-v3.css?v=${V}`),`index live CSS cache-buster != ${V}`);
   must(sw.includes(`./app.js?v=${V}`),`service-worker app.js cache key != ${V}`);
   must(sw.includes(`./weekly-evidence-v2.js?v=${V}`),`service-worker weekly-evidence-v2.js cache key != ${V}`);
+  must(sw.includes(`./boone-trade-values-v1.mjs?v=${V}`),`service-worker Boone trade-value module cache key != ${V}`);
   must(sw.includes(`./live-surface-v3.js?v=${V}`),`service-worker live JS cache key != ${V}`);
   must(sw.includes(`./live-surface-v3.css?v=${V}`),`service-worker live CSS cache key != ${V}`);
 }
 must(weekly.includes('root.PittiWeeklyEvidenceV2=api'),'Weekly Evidence v2 global runtime export missing');
 must(weekly.includes("const SCHEMA='pitti.weekly-evidence.v2'"),'Weekly Evidence v2 schema identity missing');
+must(app.includes("from './boone-trade-values-v1.mjs'")&&app.includes('/api/boone-trade-values'),'Boone trade-value automatic production path missing');
 for(const x of [
   "GLOBAL_EXPERT_ORDER=['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Nick Mariano','Justin Boone'",
   'headerArrow(x)',

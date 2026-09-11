@@ -10,6 +10,8 @@ const lock=JSON.parse(text('PITTI_EXECUTION_LOCK.json'));
 const state=text('PITTI_PROJECT_STATE.md');
 const preflight=text('PITTI_AUTO_PREFLIGHT.md');
 const app=text('app.js');
+const worker=text('_worker.js');
+const booneTradeValues=text('boone-trade-values-v1.mjs');
 const rc484=text('tools/rc484-draft-critical.mjs');
 const policy=text('decision-policy.js');
 const readme=text('README.md');
@@ -123,6 +125,10 @@ must(app.includes('Draft/panel ranks and generic news scores may never substitut
 must(app.includes("FA-vs-Roster v2"),'Waiver v2 surface missing');
 must(app.includes("verifizierte Weekly-Projektionen fehlen")&&app.includes('Waiver/FA Decision Board v3'),'Waiver v3 stale weekly explanation missing');
 must(app.includes('Trade Offer Board v8')&&app.includes('function seasonTradeDecision('),'Trade Offer Board v8 bilateral evidence surface missing');
+must(worker.includes("url.pathname==='/api/boone-trade-values'")&&worker.includes('buildBooneTradeValueSnapshot'),'Boone production Worker ingestion path missing');
+must(booneTradeValues.includes("metric:'trade_value'")&&booneTradeValues.includes("selectedColumn:chart.column")&&booneTradeValues.includes("sourceEdition:editionId"),'Boone provenance-preserving trade-value records missing');
+must(app.includes('void refreshTradeValues({auto:true})')&&app.includes("atomicWriteBooneTradeValues(localStorage"),'Boone automatic app refresh/storage path missing');
+must(app.includes("bidBasis:'ORIGINAL_FAAB_BUDGET'")&&app.includes('Math.min(remaining,Math.round(budget*pct/100))'),'FAAB original-budget basis/cap invariant missing');
 must(app.includes('function tradeOfferCandidates('),'Trade offer construction helper missing');
 must(app.includes('acceptance:null')&&app.includes('result.ourGain>0&&result.opponentGain>0')&&app.includes('heuristic:true')&&app.includes("Math.min(55"),'Trade acceptance must require bilateral gain and remain conservative/explicitly heuristic');
 must(app.includes(' Start/Sit v5'),'Start/Sit canonical-slot surface missing');
@@ -187,7 +193,7 @@ if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
   must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
   must(handoffMatrix.includes(current.handoff_generation),'Season Companion MATRIX generation drift');
   must(currentHandoff.includes(current.handoff_generation),'Season Companion HANDOFF generation drift');
-  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
+  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194','v11.8.0-rc4.195'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
   must(commandContract.currentGate===AUTHORITY_GATE,'Season Companion command gate regression');
   must(lock.gate===AUTHORITY_GATE,'Season Companion lock gate regression');
   must(current.currentWork?.nextGate===AUTHORITY_GATE,'Season Companion CURRENT next gate regression');

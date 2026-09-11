@@ -1,8 +1,8 @@
 # PITTI HANDOFF COMPLETENESS MATRIX — v235
-Generation: `20260911T0607Z-v238`
+Generation: `20260911T0708Z-v239`
 
 PASS requires:
-- Source candidate v11.8.0-rc4.194 is PR-only on Draft PR #141 from canonical main `5e29f285...`; deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169. PR #121 / v233 MERGED/HISTORICAL.
+- Source candidate v11.8.0-rc4.195 is PR-only on Draft PR #141 from canonical main `5e29f285...`; local runtime/live-source/mobile/package checks pass and exact-head GitHub checks remain pending. Deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance remain pending. Latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169. PR #121 / v233 MERGED/HISTORICAL.
 - Gate `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK` aligned across CURRENT, LOCK, COMMAND, SEAL, bootstrap, handoff and preflight.
 - Post-v233 local read-only audit recorded as performed and FAIL_CLOSED; historical audit evidence retained; no pending v233 CI/merge or repeat-audit queue.
 - Historical branch/base/PR evidence separated from current dynamic authority; no containing-commit SHA claim.
@@ -14,4 +14,4 @@ PASS requires:
 
 Canonical permission boundary: AGENTS.md. Deterministic local validation: `node tools/strict-suite.mjs`; dynamic takeover: `node tools/takeover-authority.mjs <fresh-github-evidence.json>`. The evidence file is an external observation, never tracked CURRENT status. Read the schema and limits in PITTI_CODEX_WORK_PACKAGE.md.
 
-QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy. rc4.194 is not merged/deployed/device-accepted; rc4.193 remains the physical Weekly-Evidence PASS.
+QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy. rc4.195 is not merged/deployed/device-accepted; rc4.193 remains the physical Weekly-Evidence PASS. Boone ingestion is automatic and fail-closed; FAAB percentages use original budget with absolute bids capped by remaining funds.

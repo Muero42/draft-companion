@@ -4,7 +4,7 @@ import assert from 'node:assert/strict';
 const app=fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n');
 const source=name=>{const start=app.indexOf('function '+name+'(');assert(start>=0,name);const end=app.indexOf('\nfunction ',start+1);return app.slice(start,end<0?undefined:end);};
 const now=Date.now(),cache=new Map();
-const s={Date,console,store:{get:(k,f)=>cache.get(k)??f},lastDraftContext:{season:null},SLEEPER_NON_STARTER_SLOTS:new Set(['BN','IR','TAXI']),esc:String,loadResearchEvents:()=>[]};vm.createContext(s);
+const s={Date,console,BOONE_TRADE_VALUE_CACHE_KEY:'pitti.boone-trade-values.v1.current',validateBooneTradeValueSnapshot:()=>({ok:false}),store:{get:(k,f)=>cache.get(k)??f},lastDraftContext:{season:null},SLEEPER_NON_STARTER_SLOTS:new Set(['BN','IR','TAXI']),esc:String,loadResearchEvents:()=>[]};vm.createContext(s);
 for(const f of ['seasonSlotEligible','tradeStarterSlots','tradeBestLineup','seasonStructurallyDroppable'])vm.runInContext(source(f),s);
 vm.runInContext(app.slice(app.indexOf('function seasonEvidenceContext('),app.indexOf('function fpStoreKey(')),s);
 const p=(id,pos)=>({p:{id,name:id,pos,bye:7},r:{rank:50},seasonStatus:'ACTIVE',pk:{pick_no:20}});

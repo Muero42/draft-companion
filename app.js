@@ -1,5 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
-const APP_VERSION='v11.8.0-rc4.194';
+import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
+const APP_VERSION='v11.8.0-rc4.195';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2862,7 +2863,7 @@ function seasonHorizonSplit(drop,fa,structural=null){
   // structural engine. Draft/panel ranks and generic news scores may never substitute.
   const weekly=Number.isFinite(structural?.lineupGain)?Number(structural.lineupGain):null;
   const dropRos=seasonWeeklyMetric(drop.p,'trade_value'),faRos=seasonWeeklyMetric(fa.p,'trade_value');
-  const comparableRos=dropRos.status==='VERIFIED'&&faRos.status==='VERIFIED'&&JSON.stringify([dropRos.sourceId,dropRos.sourceUrl,dropRos.publishedAt])===JSON.stringify([faRos.sourceId,faRos.sourceUrl,faRos.publishedAt]);
+  const comparableRos=dropRos.status==='VERIFIED'&&faRos.status==='VERIFIED'&&tradeValueEdition(dropRos)===tradeValueEdition(faRos);
   const ros=comparableRos?faRos.value-dropRos.value:null;
   const contingent=roleEvents>0?clamp((f.value-d.value)*1.15+upside*.65,-10,10):null;
   return{weekly,ros,contingent,weeklyFresh:Number.isFinite(weekly),rosFresh:comparableRos,contingentFresh:Number.isFinite(contingent),roleEvents,rosSource:comparableRos?faRos:null};
@@ -2971,8 +2972,10 @@ function waiverMarketSummary(pair,players){
   const valueCap=Number.isFinite(pair.structural?.utility)?clamp(Math.round(pair.structural.utility*2.5+4),1,25):null;
   const high=sufficient&&Number.isFinite(valueCap)?Math.min(valueCap,Math.max(1,marketHigh+1)):null,low=Number.isFinite(high)?Math.max(0,high-3):null;
   const remaining=Number.isFinite(Number(mine?.faab_remaining))?Number(mine.faab_remaining):null;
-  const units=pct=>Number.isFinite(pct)&&Number.isFinite(remaining)?Math.min(remaining,Math.round(remaining*pct/100)):null;
-  return{opponents,evaluated: evaluated.length,sufficient,marketHigh,valueCap,bidLowPct:low,bidHighPct:high,bidLow:units(low),bidHigh:units(high),ownRemaining:remaining,overMarket:sufficient&&Number.isFinite(valueCap)&&valueCap<marketHigh};
+  // Every percentage is based on the league's original FAAB budget. Absolute units
+  // use that same basis and are then capped by the manager's actual remaining FAAB.
+  const units=pct=>Number.isFinite(pct)&&Number.isFinite(remaining)&&Number.isFinite(budget)?Math.min(remaining,Math.round(budget*pct/100)):null;
+  return{opponents,evaluated:evaluated.length,sufficient,marketHigh,valueCap,bidBasis:'ORIGINAL_FAAB_BUDGET',originalBudget:budget,bidLowPct:low,bidHighPct:high,bidLow:units(low),bidHigh:units(high),ownRemaining:remaining,overMarket:sufficient&&Number.isFinite(valueCap)&&valueCap<marketHigh};
 }
 function renderWaiverWorkspace(draftComplete){
   if(!els.waiverStatus||!els.waiverList)return;
@@ -2984,7 +2987,7 @@ function renderWaiverWorkspace(draftComplete){
   els.waiverStatus.textContent='Waiver/FA Decision Board v3 · tatsächliche freie Sleeper-Spieler × aktueller PITTI-Kader × verifizierte Weekly Evidence × alle 9 Gegnerkader und deren verbleibendes FAAB. Fehlt eine dieser Evidenzen, bleibt die Entscheidung WATCH/HOLD und ein Gebot wird nicht erfunden.';
   const cards=q.map((x,i)=>{
     const h=x.horizons,market=x.market,action=x.displayAction,urgency=action==='CLEAR ADD'?'P1 · ACTIONABLE':x.score>=4?'P2 · WATCH':'P3 · MONITOR';
-    const faab=market.sufficient&&!market.overMarket?`${market.bidLowPct}–${market.bidHighPct}%${Number.isFinite(market.bidLow)?` · ${market.bidLow}–${market.bidHigh} von ${market.ownRemaining}`:''}`:market.overMarket?'PASS ÜBER VALUE-CAP':`– · Markt-Evidence ${market.evaluated}/9`;
+    const faab=market.sufficient&&!market.overMarket?`${market.bidLowPct}–${market.bidHighPct}% des Originalbudgets${Number.isFinite(market.bidLow)?` · ${market.bidLow}–${market.bidHigh} Einheiten, Rest ${market.ownRemaining}`:''}`:market.overMarket?'PASS ÜBER VALUE-CAP':`– · Markt-Evidence ${market.evaluated}/9`;
     const horizon=`THIS WEEK ${Number.isFinite(h.weekly)?`${h.weekly>=0?'+':''}${h.weekly.toFixed(1)} Pkt`:'–'} · ROS ${Number.isFinite(h.ros)?`${h.ros>=0?'+':''}${h.ros.toFixed(1)} Value`:'–'} · KONTINGENZ ${Number.isFinite(h.contingent)?`${h.contingent>=0?'+':''}${h.contingent.toFixed(1)}`:'–'}`;
     const rivals=market.opponents.slice(0,3).map(m=>`${esc(m.manager_name)} (${m.need_label}; Rest ${Number.isFinite(m.faab_remaining)?m.faab_remaining:'–'}; ${m.evaluation_status==='VERIFIED'?`${m.bid_low_pct}–${m.bid_high_pct}%`:'Bedarf nicht verifizierbar'})`).join(' · ');
     const invalidator=Number.isFinite(h.weekly)?'Neue Verletzungs-/Rollenmeldung, geänderte Weekly-Projektion, Ownership oder Kaderkapazität':'Weekly-Projektion oder Rollen-Evidence muss verifiziert werden';
@@ -3163,7 +3166,8 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete){
   }
   targets.sort((a,b)=>b.desirability-a.desirability||b.lineupEdge-a.lineupEdge||(a.x.r?.rank??999)-(b.x.r?.rank??999));
   els.tradeStatus.className='notice warn';
-  els.tradeStatus.textContent='Trade Offer Board v8 · LIVE Sleeper-Rosters, echte Starter-/FLEX-Geometrie und aktuelle vergleichbare Trade-Values. Angebote erscheinen nur bei beidseitigem verifiziertem Lineup-Gewinn, legaler Kapazität und plausibler Fairness. Annahme-Plausibilität ist konservativ und ausdrücklich heuristisch; kein Angebot wird automatisch gesendet.';
+  const tradeSnapshot=store.get(BOONE_TRADE_VALUE_CACHE_KEY,null),tradeContext=seasonEvidenceContext(live),tradeValid=validateBooneTradeValueSnapshot(tradeSnapshot,tradeContext,Date.now()).ok,tradeCoverage=tradeValid?`${tradeSnapshot.coverage.mappedRows}/${tradeSnapshot.coverage.sourceRows} gemappt`:'nicht aktuell verfügbar';
+  els.tradeStatus.textContent=`Trade Offer Board v8 · LIVE Sleeper-Rosters, echte Starter-/FLEX-Geometrie und aktuelle vergleichbare Justin-Boone/Yahoo-Trade-Values (${tradeCoverage}). Angebote erscheinen nur bei beidseitigem verifiziertem Lineup-Gewinn, legaler Kapazität und plausibler Fairness. Annahme-Plausibilität ist konservativ und ausdrücklich heuristisch; kein Angebot wird automatisch gesendet.`;
   const actionableTargets=targets.filter(t=>t.offers?.length);
   els.tradeList.innerHTML=actionableTargets.length?`<div class="coach-section-title">KONKRETE ANGEBOTE · REVIEW VOR SENDEN</div>`+actionableTargets.slice(0,8).map((t,i)=>{
     const x=t.x,market=Number.isFinite(x.a)?` · Draft-ADP ${x.a.toFixed(1)}`:'';
@@ -3190,7 +3194,8 @@ function seasonTemporalPhase(season,now=Date.now()){
 }
 function seasonEvidenceValue(records,playerId,metric,context,now=Date.now()){
   const candidates=(Array.isArray(records)?records:[]).filter(x=>x&&typeof x==='object'&&String(x.playerId)===String(playerId)&&x.metric===metric);
-  const timing=x=>{const exact=Number.isFinite(x.publishedAt)?Number(x.publishedAt):x.sourceTimePrecision==='TIMESTAMP'?Date.parse(x.sourcePublishedAt||''):NaN,dateOnly=x.sourceTimePrecision==='DATE'&&/^\d{4}-\d{2}-\d{2}$/.test(x.sourcePublishedDate||'');const verified=Number(x.verifiedAt);return{exact,dateOnly,verified,chronology:Number.isFinite(verified)&&verified<=now&&((Number.isFinite(exact)&&exact<=verified&&now-exact<=86400000)||(dateOnly&&x.sourcePublishedDate<=new Date(verified).toISOString().slice(0,10)&&now-verified<=86400000))};};
+  const maxSourceAge=metric==='trade_value'?8*86400000:86400000;
+  const timing=x=>{const exact=Number.isFinite(x.publishedAt)?Number(x.publishedAt):x.sourceTimePrecision==='TIMESTAMP'?Date.parse(x.sourcePublishedAt||''):NaN,dateOnly=x.sourceTimePrecision==='DATE'&&/^\d{4}-\d{2}-\d{2}$/.test(x.sourcePublishedDate||'');const verified=Number(x.verifiedAt);return{exact,dateOnly,verified,chronology:Number.isFinite(verified)&&verified<=now&&((Number.isFinite(exact)&&exact<=verified&&now-exact<=maxSourceAge)||(dateOnly&&x.sourcePublishedDate<=new Date(verified).toISOString().slice(0,10)&&now-verified<=86400000))};};
   if(candidates.some(x=>{const t=timing(x);return x.conflict&&x.season===context.season&&x.week===context.week&&x.scoring===context.scoring&&t.chronology&&x.expiresAt>now;}))return{status:'CONFLICT',value:null};
   const valid=candidates.filter(x=>{const t=timing(x);return x.status==='VERIFIED'&&x.confidence>=.7&&x.confidence<=1&&x.season===context.season&&x.week===context.week&&x.scoring===context.scoring&&typeof x.value==='number'&&Number.isFinite(x.value)&&x.value>=0&&/^https:\/\//.test(x.sourceUrl||'')&&x.sourceId&&t.chronology&&Number.isFinite(x.expiresAt)&&x.expiresAt>now&&x.expiresAt-t.verified<=86400000&&!x.conflict;});
   if(!valid.length)return{status:candidates.length?'STALE_OR_UNVERIFIED':'UNAVAILABLE',value:null};
@@ -3198,15 +3203,17 @@ function seasonEvidenceValue(records,playerId,metric,context,now=Date.now()){
   return{...valid.sort((a,b)=>b.verifiedAt-a.verifiedAt)[0],status:'VERIFIED'};
 }
 function seasonEvidenceCache(){
-  const legacy=store.get('v190_seasonEvidence',[]),weekly=store.get(globalThis.PittiWeeklyEvidenceV2?.CACHE_KEY||'pitti.weekly-evidence.v2.current',null),context=seasonEvidenceContext();
+  const legacy=store.get('v190_seasonEvidence',[]),weekly=store.get(globalThis.PittiWeeklyEvidenceV2?.CACHE_KEY||'pitti.weekly-evidence.v2.current',null),trade=store.get(BOONE_TRADE_VALUE_CACHE_KEY,null),context=seasonEvidenceContext();
   const usable=globalThis.PittiWeeklyEvidenceV2?.validateSnapshot?.(weekly,context,Date.now())?.ok===true?weekly.records:[];
-  return[...usable,...(Array.isArray(legacy)?legacy:[])];
+  const tradeUsable=validateBooneTradeValueSnapshot(trade,context,Date.now()).ok?trade.records:[];
+  return[...usable,...tradeUsable,...(Array.isArray(legacy)?legacy:[])];
 }
 function scheduleSeasonDecisionExpiry(){
   if(seasonDecisionTimer)clearTimeout(seasonDecisionTimer);seasonDecisionTimer=null;
   const c=lastDraftContext,now=Date.now(),deadlines=[Number(c?.season?.generated_at)+300001];
   const weekly=store.get(globalThis.PittiWeeklyEvidenceV2?.CACHE_KEY||'pitti.weekly-evidence.v2.current',null);
   if(Number.isFinite(weekly?.lastSuccessAt))deadlines.push(Number(weekly.lastSuccessAt)+SEASON_RANKING_AUTO_MS+1);
+  const trade=store.get(BOONE_TRADE_VALUE_CACHE_KEY,null);if(Number.isFinite(trade?.expiresAt))deadlines.push(Number(trade.expiresAt)+1);
   for(const [key,ttl] of [['v190_seasonEvidence',86400000],['v190_gameContext',21600000],['v190_roleGraphs',86400000]]){
     const rows=store.get(key,[]);for(const e of Array.isArray(rows)?rows:[])if(e)deadlines.push(e.expiresAt,Number(e.publishedAt??e.verifiedAt)+ttl+1);
   }
@@ -3215,6 +3222,7 @@ function scheduleSeasonDecisionExpiry(){
   if(Number.isFinite(next))seasonDecisionTimer=setTimeout(()=>{if(lastDraftContext===c)rerenderPostDraftFromContext();},Math.min(next-now,2147483647));
 }
 function seasonWeeklyMetric(p,metric,season=lastDraftContext?.season){return seasonEvidenceValue(seasonEvidenceCache(),p?.id,metric,seasonEvidenceContext(season));}
+function tradeValueEdition(record){return record?.sourceEdition||JSON.stringify([record?.sourceId,record?.sourceUrl,record?.publishedAt]);}
 function seasonWeeklyStrip(p,season=lastDraftContext?.season){
   const rank=seasonWeeklyMetric(p,'weekly_rank',season),points=seasonWeeklyMetric(p,'projected_points',season),total=seasonWeeklyMetric(p,'implied_team_total',season);
   const label=(e,suffix)=>e.status==='VERIFIED'?e.value+suffix:'nicht verfügbar';
@@ -3297,7 +3305,7 @@ function seasonTradeDecision(mine,opponent,gives,gets,season){
   const temporalPhase=seasonTemporalPhase(season);
   if(temporalPhase==='AMBIGUOUS')return{...result,status:'TEMPORAL_STATE_UNVERIFIED'};
   const all=[...gives,...gets],values=all.map(x=>seasonWeeklyMetric(x.p,'trade_value',season));
-  if(values.some(v=>v.status!=='VERIFIED')||new Set(values.map(v=>JSON.stringify([v.sourceId,v.sourceUrl,v.publishedAt]))).size!==1)return result;
+  if(values.some(v=>v.status!=='VERIFIED')||new Set(values.map(tradeValueEdition)).size!==1)return result;
   const giveValue=values.slice(0,gives.length).reduce((n,x)=>n+x.value,0),getValue=values.slice(gives.length).reduce((n,x)=>n+x.value,0),valueSource=values[0];
   const givePicks=gives.map(x=>Number(x.pk?.pick_no)),getPicks=gets.map(x=>Number(x.pk?.pick_no)),draftPicks=[...givePicks,...getPicks];
   if(temporalPhase==='PRE_WEEK_1'&&draftPicks.some(n=>!Number.isInteger(n)||n<=0||n>=999))return{...result,status:'DRAFT_PREFERENCE_UNRESOLVED',giveValue,getValue,valueSource};
@@ -4227,9 +4235,9 @@ els.clearDraftDataBtn.onclick=()=>{if(confirm('Draft-Verbindung zurücksetzen?')
 if(els.draftInput)els.draftInput.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();els.draftInput.blur();}});
 for(const el of [els.apiKey,els.season,els.scoring,els.draftInput,els.slot,els.topN,els.snapshotMode,els.draftMode,els.replayCutoff,els.managerMap,els.stressMode])el.addEventListener('change',()=>{persist();updateStatus()});
 addEventListener('online',updateStatus);addEventListener('offline',updateStatus);
-addEventListener('online',()=>{if(lastDraftContext?.players)void refreshSeasonRankings({auto:true,trigger:'online'});});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden&&lastDraftContext?.players)void refreshSeasonRankings({auto:true,trigger:'resume'});});
-if(els.seasonRefreshEvidenceBtn)els.seasonRefreshEvidenceBtn.onclick=()=>void refreshSeasonRankings({force:true,trigger:'manual'});
+addEventListener('online',()=>{if(lastDraftContext?.players){void refreshSeasonRankings({auto:true,trigger:'online'});void refreshTradeValues({auto:true,trigger:'online'});}});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&lastDraftContext?.players){void refreshSeasonRankings({auto:true,trigger:'resume'});void refreshTradeValues({auto:true,trigger:'resume'});}});
+if(els.seasonRefreshEvidenceBtn)els.seasonRefreshEvidenceBtn.onclick=()=>void Promise.all([refreshSeasonRankings({force:true,trigger:'manual'}),refreshTradeValues({force:true,trigger:'manual'})]);
 for(const el of [els.season,els.scoring])el?.addEventListener('change',()=>{renderSeasonRankingFreshness('Saison-/Scoring-Kontext geändert · alter Weekly-Evidence-Snapshot ist für diesen Kontext ungültig.');if(lastDraftContext?.players)void refreshSeasonRankings({force:true,trigger:'context-change'});});
 setInterval(updateStatus,60000);
 let livePreviewActive=false;
@@ -4344,6 +4352,24 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     renderSeasonRankingFreshness(els.seasonRankingStatus?.textContent||'');
   }
 }
+const SEASON_TRADE_VALUE_AUTO_MS=6*60*60*1000,SEASON_TRADE_VALUE_RETRY_MS=45*60*1000;
+let tradeValueRefreshBusy=false;
+async function refreshTradeValues({force=false,auto=false,trigger='startup'}={}){
+  if(tradeValueRefreshBusy)return{ok:false,busy:true};
+  const now=Date.now(),season=lastDraftContext?.season,context=seasonEvidenceContext(season),previous=store.get(BOONE_TRADE_VALUE_CACHE_KEY,null),valid=validateBooneTradeValueSnapshot(previous,context,now).ok,attempt=Number(store.get('pitti.boone-trade-values.v1.lastAttempt',0));
+  if(!force&&valid&&now-Number(previous.lastSuccessAt)<SEASON_TRADE_VALUE_AUTO_MS)return{ok:true,skipped:'fresh',count:previous.records.length};
+  if(auto&&attempt&&now-attempt<SEASON_TRADE_VALUE_RETRY_MS)return{ok:false,skipped:'retry-throttle'};
+  if(!navigator.onLine||!season?.ok||!Number.isInteger(context.season)||!Number.isInteger(context.week))return{ok:false,skipped:'context-unavailable'};
+  tradeValueRefreshBusy=true;store.set('pitti.boone-trade-values.v1.lastAttempt',now);
+  try{
+    const snapshot=await jf(`/api/boone-trade-values?season=${context.season}&week=${context.week}`,'Justin-Boone-Trade-Values',20000);
+    const checked=validateBooneTradeValueSnapshot(snapshot,context,Date.now());if(!checked.ok)throw new Error('BOONE_TRADE_VALUE_'+checked.reason);
+    atomicWriteBooneTradeValues(localStorage,{...snapshot,refreshTrigger:trigger});
+    rerenderPostDraftFromContext();scheduleSeasonDecisionExpiry();
+    return{ok:true,snapshotId:snapshot.snapshotId,count:snapshot.records.length,coverage:snapshot.coverage};
+  }catch(error){console.warn('PITTI Boone trade-value refresh failed; previous verified snapshot preserved',error);rerenderPostDraftFromContext();return{ok:false,error:error?.message||String(error)};}
+  finally{tradeValueRefreshBusy=false;}
+}
 // Do not run derived-panel rehydration before the physical startup marker. The Season shell
 // must prove module execution first; expert-panel migration is secondary and fail-closed.
 
@@ -4357,6 +4383,7 @@ rehydrateDerivedExpertPanelsOnStartup();
 // Freshness is rendered after bootstrap settles; preserving this marker makes the physical canary diagnostic.
 setInterval(()=>{if(!document.hidden)void syncWatcherFeed()},15*60*1000);
 setInterval(()=>{if(!document.hidden&&lastDraftContext?.players)void refreshSeasonRankings({auto:true,trigger:'timer'});},SEASON_RANKING_AUTO_MS);
+setInterval(()=>{if(!document.hidden&&lastDraftContext?.players)void refreshTradeValues({auto:true,trigger:'timer'});},SEASON_TRADE_VALUE_AUTO_MS);
 
 try{
   renderAll();setAuto();updateStatus();
@@ -4370,6 +4397,7 @@ try{
     // Roster authority always gets first network priority. Ranking/Watcher work starts only
     // after roster bootstrap has either succeeded or failed closed, avoiding mobile connection starvation.
     void refreshSeasonRankings({auto:true});
+    void refreshTradeValues({auto:true});
     void syncWatcherFeed();
     return rosterResult;
   })();

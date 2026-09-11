@@ -20,8 +20,9 @@ function worker(scope='https://example.test/draft-companion/'){
 
 for(const scope of ['https://example.test/','https://example.test/draft-companion/']){
   const w=worker(scope);await w.lifecycle('install');assert(w.skipped);
-  const current=[...w.buckets.keys()][0],shell=w.buckets.get(current),count=shell.size;assert.equal(count,13);
+  const current=[...w.buckets.keys()][0],shell=w.buckets.get(current),count=shell.size;assert.equal(count,14);
   assert([...shell.keys()].some(url=>url.includes('/weekly-evidence-v2.js')),'Weekly Evidence runtime must be available offline');
+  assert([...shell.keys()].some(url=>url.includes('/boone-trade-values-v1.mjs')),'Boone trade-value runtime must be available offline');
   for(let i=0;i<100;i++){
     assert.equal(await w.request('https://api.sleeper.app/v1/players/nfl?_='+i),undefined,'API uses normal network, never CacheStorage');
     assert.equal(await w.request('/api/expert-ranking?refresh='+i),undefined);
