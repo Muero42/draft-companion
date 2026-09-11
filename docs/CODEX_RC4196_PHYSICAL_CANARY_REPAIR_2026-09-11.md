@@ -11,7 +11,7 @@ Classification: **PARTIAL / NOT ACCEPTED** for rc4.196 Start/Sit / Weekly Contex
 
 Preserved PASS evidence:
 - Sleeper Live-State fresh (`< 1 Min.`).
-- Weekly projection lane remains fresh and verified: W1, 728 FantasyPros projection records.
+- Weekly projection fetch/publish lane reports W1 and 728 FantasyPros records.
 - Waiver/FA v3 behavior remains fail-closed; skill-position HOLD preserved.
 - D/ST streaming board rendered as before.
 - Kicker comparisons remain K-only with Harrison Mevis as current kicker.
@@ -21,12 +21,26 @@ Preserved PASS evidence:
 
 Canary failures in the new rc4.196 scope:
 1. Weekly expert-rank lane is physically unavailable. UI reports `Ranks UNAVAILABLE` / `Expert-Ranks ... fail-closed` and all roster players show W1 rank unavailable.
-2. Start/Sit v6 cannot produce actionable reassignment because 14 realistic skill-position players lack complete current rank + projection evidence. UI correctly reports `START/SIT TEILWEISE NICHT BEWERTBAR`.
-3. Game/opponent/lock context is physically unavailable. Roster cards show opponent/weather unavailable and Start/Sit reports Spiel-/Lock-Kontext unavailable.
-4. Half-PPR / team-total context remains unavailable on roster cards; Vegas remains intentionally fail-closed.
+2. The roster cards also show `Half-PPR nicht verfügbar` for every displayed skill player even though the top-level projection lane reports 728 records. This is a publish/consumer-consistency failure and must be repaired; top-level `AVAILABLE` must mean the decision consumer can actually use the published player projections.
+3. Start/Sit v6 cannot produce actionable reassignment because 14 realistic skill-position players lack complete current rank + projection evidence. UI correctly reports `START/SIT TEILWEISE NICHT BEWERTBAR`.
+4. Game/opponent/lock context is physically unavailable. Roster cards show opponent/weather unavailable and Start/Sit reports Spiel-/Lock-Kontext unavailable.
+5. Team-total context remains unavailable; Vegas remains intentionally fail-closed.
 
-Do not mark rc4.196 physically accepted until weekly ranks and game context pass on the installed device.
-Do not roll back solely because of this canary: released rc4.195 Waiver/Trade/Weekly-Projections behavior remains operational and the rc4.196 additions fail closed rather than fabricating decisions.
+Do not mark rc4.196 physically accepted until per-player projections, weekly ranks and game context pass on the installed device.
+Do not roll back solely because of this canary: released rc4.195 Waiver/Trade/weekly-projection fetch behavior remains operational and the rc4.196 additions fail closed rather than fabricating decisions.
+
+## Independently identified Weekly Projection publish/consumer mismatch
+Current `projectionLane()` can publish records and declare the projection lane `AVAILABLE` without requiring source-time metadata to be usable by the downstream decision consumer. The downstream `seasonEvidenceValue()` separately requires chronology evidence (`publishedAt`, or recognized timestamp/date-only source metadata) before it returns a record as `VERIFIED`.
+
+The documented FantasyPros projection response shape guarantees season/week/player projections but does not document a top-level `updated` / `last_updated` field. Therefore a production payload can legitimately produce 728 mapped projection records with `sourceTimePrecision: UNKNOWN`; the top status reports projections verified while roster consumers reject every projection as unverifiable chronology. The physical canary is consistent with exactly this contract mismatch.
+
+Required repair:
+- make projection-lane publication criteria and downstream consumer freshness criteria identical and explicit;
+- never display `Weekly Projections verifiziert` when no roster consumer can use the records;
+- if FantasyPros does not provide trustworthy source publication time for projections, use a bounded request/verification timestamp policy only if it is semantically justified and explicitly labeled as retrieval verification rather than fabricated source publication time;
+- preserve the 3-hour snapshot refresh policy and 24-hour record expiry without weakening fail-closed chronology;
+- add regression coverage in which the production-shaped projection payload has no top-level source timestamp;
+- assert that a snapshot declared projection `AVAILABLE` yields usable `projected_points` for mapped PITTI roster players through the exact `seasonEvidenceValue()` path.
 
 ## Independently identified Weekly-Rank production defect
 The current `weekly-evidence-v2.js` rank parser was regression-tested against synthetic rows using projection-style fields (`fpid`, `name`, `position_id`, `team_id`) and synthetic ISO date metadata.
@@ -77,7 +91,7 @@ After the evidence repair, preserve all existing optimizer invariants:
 Physical acceptance requires the installed Android app, without cache clear/reinstall, to show:
 - `v11.8.0-rc4.197` (or the explicitly chosen repair version);
 - fresh Sleeper Live-State;
-- verified weekly projection lane;
+- a weekly projection lane whose mapped PITTI roster projections are actually consumable by Start/Sit;
 - verified weekly rank lane for the current PITTI roster with honest broad-ECR labeling unless the selected expert panel is separately implemented;
 - verified opponent/kickoff/lock context for current roster teams;
 - Start/Sit v6 either an evidence-backed legal reassignment or a true evidence-backed HOLD, not a blanket missing-evidence state;
@@ -85,7 +99,9 @@ Physical acceptance requires the installed Android app, without cache clear/rein
 
 ## Required validation
 - strict suite
+- weekly evidence regression with production-shaped FantasyPros projections that omit source-time metadata
 - weekly evidence regression with real FantasyPros consensus-ranking response aliases/date metadata
+- integration assertion through the exact `seasonEvidenceValue()` consumer path
 - Start/Sit weekly-context regression with production-shaped ESPN scoreboard fixture
 - failure-mode negatives for wrong week/scoring/position, stale ranks, collisions, team mismatch, partial schedule, duplicate team/event, stale context
 - 390x844 Chromium review
