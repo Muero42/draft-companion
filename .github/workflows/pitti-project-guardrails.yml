@@ -89,6 +89,7 @@ jobs:
       - name: rc4.190 migration contracts
         run: |
           node tools/season-decision-engine-regression.mjs
+          node tools/season-waiver-trade-v1-regression.mjs
           node tools/permission-contract-regression.mjs
           node tools/takeover-authority-regression.mjs
           node tools/postmerge-authority-regression.mjs

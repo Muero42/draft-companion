@@ -9,7 +9,9 @@ const must=[
   "Date.now()>WEEK1_WAIVER_MARKET_2026.expiresAt",
   "const waiverMarket=week1WaiverMarketSignal(fa.p)",
   "freshEvidencePresent=(faFresh.events+dropFresh.events)>0||!!waiverMarket",
-  "Waiver/FA Priority v2"
+  "Waiver/FA Decision Board v3",
+  "evaluated.length===9",
+  "displayAction:x.action==='CLEAR ADD'&&x.market.sufficient&&!x.market.overMarket?'CLEAR ADD':'WATCH'"
 ];
 for(const x of must)if(!s.includes(x))throw new Error('missing waiver-market contract: '+x);
 if(!s.includes("source:'RotoBaller · Nick Mariano · Before Week 1 waiver rankings'"))throw new Error('missing provenance');

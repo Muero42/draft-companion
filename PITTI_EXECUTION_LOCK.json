@@ -6,19 +6,19 @@
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Source/runtime rc4.190 in this tree (verify canonical main containment dynamically); latest physical Android rc4.188 PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. PR #118 package lineage is locally reconciled through the user-supplied two-parent bridge; publication remains unverified and no merge/deployment/device acceptance is claimed. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance. Library persistence remains fail-closed: never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Source/runtime rc4.194 is the PR-only Waiver/Trade candidate on Draft PR #141 from verified main 5e29f285; latest physical Android rc4.193 Weekly-Evidence PASS; rollback rc4.169; deployment parity UNKNOWN_REQUIRES_REVERIFICATION. PR #121 / v233 MERGED/HISTORICAL. No merge/deployment/device acceptance of rc4.194 is claimed. Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance. Library persistence remains fail-closed: never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "reconciledBaseMain": "2749537945ec7e6b96d95e2f6b55a26e455124fa"
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.193",
+    "appVersion": "v11.8.0-rc4.194",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.188 PASS: Waiver/FA route, live ownership, kicker isolation and active-drop semantics physically verified",
+    "latestAndroidObserved": "v11.8.0-rc4.193 PASS: Sleeper Live-State, Weekly Evidence, 725 FantasyPros projections, Watcher and quota-safe persistence physically verified",
     "latestPreinstallVerified": "HISTORICAL/SUPERSEDED: rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "HISTORICAL/SUPERSEDED: v11.8.0-rc4.107",
     "preinstallArtifact": "HISTORICAL rc4.182 package reference only; no verified rc4.190 installable artifact is asserted",
@@ -26,15 +26,15 @@
     "preinstallRuntimeFiles": 13,
     "latestSourceRegressionVerified": "HISTORICAL prior regression observation; current local checks must run on repaired bytes",
     "latestDeployedCandidate": "UNKNOWN_REQUIRES_REVERIFICATION; do not infer deployment from source main.",
-    "latestAndroidVerified": "v11.8.0-rc4.188 Waiver/FA route and IR/drop semantics physically PASS; rc4.169 remains rollback authority",
+    "latestAndroidVerified": "v11.8.0-rc4.193 Weekly Evidence, live state, 725 projections, Watcher and quota recovery physically PASS; rc4.169 remains rollback authority",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
     "android_authority": "v11.8.0-rc4.169 accepted rollback authority",
     "deployedPagesAppByteParityWithMain": null,
     "preinstallReferenceRun": 33597607588,
     "preinstallReferenceArtifactId": 9833935479,
     "preinstallHashSemantics": "HISTORICAL rc4.182 GitHub candidate-package artifact digest; not current rc4.190 package/deployment evidence.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.188",
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.188 Waiver/FA + live ownership + kicker isolation + active-drop/IR semantics PASS",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.193",
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.193 Weekly Evidence module + live state + 725 projections + Watcher + quota recovery PASS",
     "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
     "rc499": {
@@ -69,14 +69,14 @@
     "deployedPagesVersion": "UNKNOWN_REQUIRES_REVERIFICATION",
     "mainGhPagesParity": null,
     "androidVerified": false,
-    "androidAcceptance": "rc4.188 physical Waiver/FA PASS; rc4.192 physical acceptance pending",
+    "androidAcceptance": "rc4.193 physical Weekly-Evidence PASS; rc4.194 physical acceptance pending",
     "devicePromotionPolicy": "Requires current user authorization, exact-source validation, verified deployment parity and a physical canary. Source or merge state never proves device acceptance.",
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.192",
-      "files": 13,
-      "sha256": "sha256:1815ce89eb8700670f7e93a5e3f3839578023b585ed7eea41655d3e626336b22",
+      "version": "v11.8.0-rc4.194",
+      "files": 14,
+      "sha256": "sha256:3ac577dfc512d3a0345cac68b7c9cf8e9be60dc3fc4d5a2c7e430e1d5922e630",
       "status": "PACKAGED_ONLY_NOT_DEPLOYED"
     }
   },
@@ -282,7 +282,7 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260909T1018Z-v237",
+    "generation": "20260911T0607Z-v238",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -306,7 +306,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260909T1018Z-v237",
+  "handoff_generation": "20260911T0607Z-v238",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -341,6 +341,6 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260909T1018Z-v237",
+  "handoffGeneration": "20260911T0607Z-v238",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy"
 }

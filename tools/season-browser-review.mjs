@@ -25,7 +25,7 @@ let browser;try{
  assert.equal(await page.locator('#rosterFaList').isVisible(),false);
  assert.equal(await page.locator('#rosterSummary').isVisible(),false);
  assert.equal(await page.locator('#rosterBenchList').innerText().then(t=>t.includes('Fixture q')),false,'starter grid must not repeat compact roster');
- for(const workspace of ['waiver','trade','live','roster']){const button=page.locator('[data-workspace-target="'+workspace+'"]');assert.equal(await button.count(),1);await button.click();assert.equal(await page.locator('[data-workspace="'+workspace+'"]').first().isVisible(),true);}
+ for(const workspace of ['waiver','trade','live','roster']){const button=page.locator('[data-workspace-target="'+workspace+'"]');assert.equal(await button.count(),1);await button.click();assert.equal(await page.locator('[data-workspace="'+workspace+'"]').first().isVisible(),true);if(workspace==='waiver'){assert.match(await page.locator('#waiverStatus').innerText(),/Waiver\/FA Decision Board v3/);await page.screenshot({path:path.join(output,'waiver-mobile.png'),fullPage:true});}if(workspace==='trade'){assert.match(await page.locator('#tradeStatus').innerText(),/Trade Offer Board v8/);assert.match(await page.locator('#tradeList').innerText(),/TRADE HOLD/);await page.screenshot({path:path.join(output,'trade-mobile.png'),fullPage:true});}}
  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'mobile horizontal overflow');
  assert.deepEqual(errors,[],'uncaught runtime errors');
  await page.screenshot({path:path.join(output,'season-mobile.png'),fullPage:true});
@@ -33,5 +33,5 @@ let browser;try{
  assert.match(await page.locator('#waiverStatus').textContent(),/HOLD.*abgelaufen/);
  assert.match(await page.locator('#tradeStatus').textContent(),/HOLD.*abgelaufen/);
  assert.doesNotMatch(await page.locator('#rosterList').innerText(),/17 Pkt/,'expired projections removed without user interaction');
- const receipt={status:'PASS',browser:'Chromium desktop mobile emulation',viewport:'390x844',network:'all external responses mocked',checks:['real module startup','initial current-week evidence','11 roster rows incl IR','async rerender routing','workspace clicks','no horizontal overflow','no duplicate starter grid','automatic expiry of projections and ownership','no uncaught errors'],physicalAndroid:false};fs.writeFileSync(path.join(output,'browser-review.json'),JSON.stringify(receipt,null,2));console.log(JSON.stringify(receipt));
+ const receipt={status:'PASS',browser:'Chromium desktop mobile emulation',viewport:'390x844',network:'all external responses mocked',checks:['real module startup','initial current-week evidence','11 roster rows incl IR','async rerender routing','Waiver v3 mobile route','Trade v8 fail-closed mobile route','workspace clicks','no horizontal overflow','no duplicate starter grid','automatic expiry of projections and ownership','no uncaught errors'],physicalAndroid:false};fs.writeFileSync(path.join(output,'browser-review.json'),JSON.stringify(receipt,null,2));console.log(JSON.stringify(receipt));
 }finally{await browser?.close();await new Promise(r=>server.close(r));}

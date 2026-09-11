@@ -1,13 +1,13 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260909T1018Z-v237",
-  "updated_at": "2026-09-09T10:18:00Z",
+  "handoff_generation": "20260911T0607Z-v238",
+  "updated_at": "2026-09-11T06:07:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.193",
+    "source_candidate": "v11.8.0-rc4.194",
     "git_identity_rule": "Current main SHA is verified dynamically from git/GitHub; never hard-code the containing commit as self-authority.",
     "reconciled_base_main": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
     "postmerge": {
@@ -46,10 +46,10 @@
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.192 production candidate preserving merged PR #118/#132; physical acceptance pending",
+    "season_candidate": "v11.8.0-rc4.194 PR-only Waiver/Trade feature candidate; exact-head validation pending",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.193",
+    "test_challenger": "v11.8.0-rc4.194",
     "ci": {
       "candidate_package": "DYNAMIC_VERIFICATION_REQUIRED",
       "release_contract_v2": "DYNAMIC_VERIFICATION_REQUIRED",
@@ -64,29 +64,28 @@
     "package_reference_run": 33597607588,
     "deployed_pages_app_byte_parity_with_main": null,
     "deployed_pages_head": "UNKNOWN_REQUIRES_REVERIFICATION",
-    "installed_android": "v11.8.0-rc4.188",
-    "latest_android_observed": "v11.8.0-rc4.188",
+    "installed_android": "v11.8.0-rc4.193",
+    "latest_android_observed": "v11.8.0-rc4.193",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "Historical rc4.183 rejection: FA/Add-Drop cards under Kader and IR/Reserve Charbonnet as ordinary drop target. Superseded by rc4.188 physical Waiver/FA canary PASS; retained only as historical regression evidence.",
     "latest_device_evidence": {
-      "version": "v11.8.0-rc4.188",
-      "observed_at": "2026-09-02T18:33:00Z",
-      "evidence": "physical Android screenshots in current Draft Companion project chat",
+      "version": "v11.8.0-rc4.193",
+      "observed_at": "2026-09-10T19:56:00Z",
+      "evidence": "binding physical Android acceptance recorded in docs/CODEX_WAIVER_TRADE_WORK_PACKAGE_2026-09-10.md",
       "pass": [
-        "rc4.188 installed",
-        "Waiver / FA route renders correctly",
+        "rc4.193 installed",
         "Sleeper Live-State <1 Min.",
-        "expert rankings 2 Std. with 3h refresh policy",
-        "DST candidates marked Sleeper frei",
-        "Kicker comparisons isolated against Harrison Mevis",
-        "Jalen Coker shown as active DROP candidate",
-        "Isaiah Likely WATCH context; no Reserve/IR player visible as ordinary drop candidate"
+        "Weekly Evidence 1 Min.",
+        "FantasyPros weekly projections verified for 725 players",
+        "Watcher surface PASS",
+        "prior missing-module failure resolved",
+        "prior localStorage DOMException code 22 / quota failure resolved without cache clearing or reinstall"
       ],
       "fail": [],
       "acceptance": "PASS",
-      "classification": "DEVICE_RC4188_WAIVER_ROUTE_AND_ACTIVE_DROP_SEMANTICS_PASS"
+      "classification": "DEVICE_RC4193_WEEKLY_EVIDENCE_AND_QUOTA_RECOVERY_PASS"
     },
-    "latestAndroidVersionObserved": "v11.8.0-rc4.188",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.193",
     "source_candidate_status": "RELEASE_CANDIDATE_VALIDATING",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
@@ -150,11 +149,11 @@
     },
     "package_reference_scope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.190 installable package claim",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.192",
-      "files": 13,
-      "sha256": "sha256:1815ce89eb8700670f7e93a5e3f3839578023b585ed7eea41655d3e626336b22",
+      "version": "v11.8.0-rc4.194",
+      "files": 14,
+      "sha256": "sha256:3ac577dfc512d3a0345cac68b7c9cf8e9be60dc3fc4d5a2c7e430e1d5922e630",
       "status": "PACKAGED_ONLY_NOT_DEPLOYED",
-      "source_branch": "DYNAMIC_VERIFICATION_REQUIRED"
+      "source_branch": "pitti/codex-waiver-trade-season-v1"
     }
   },
   "real_draft": {
@@ -212,7 +211,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "Canonical main source is rc4.193 at adcf7d8d639979d8446d4a5ca651e73c112a33a6; production remains rc4.192 until separately authorized deployment; rc4.193 is not device-accepted.",
+  "source_authority": "Canonical main is dynamically verified at 5e29f285103531b81c7579036e7a885e487e0650 with rc4.193 physically accepted for Weekly Evidence; rc4.194 is a PR-only Waiver/Trade feature candidate and is not deployed or device-accepted.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -250,6 +249,21 @@
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "waiver-trade-local-exact-gates",
+        "result": "PASS: strict suite 205/205, targeted Waiver/Trade regressions, Weekly Evidence/quota regressions, mobile Chromium 390x844, and 14-file byte-exact package re-extraction for rc4.194.",
+        "at": "2026-09-11T06:07:00Z"
+      },
+      {
+        "id": "waiver-fa-material-utility-v1",
+        "result": "Implemented Waiver/FA Decision Board v3: actual live FAs, structural ADD/DROP, verified weekly lineup delta, fail-closed ROS/contingency, all-nine opponent positional need and remaining FAAB, bounded current-season/history priors, market-supported bid bands, rivals and invalidators.",
+        "at": "2026-09-11T06:07:00Z"
+      },
+      {
+        "id": "trade-concrete-offers-v1",
+        "result": "Implemented Trade Offer Board v8: legal 1:1/2:1/1:2 packages, bilateral lineup gain, comparable current trade values, immediate draft-reversal guard, conservative capped heuristic acceptance, opponent rationale, fallbacks and invalidators.",
+        "at": "2026-09-11T06:07:00Z"
+      },
       {
         "id": "rc4190-release-blocker-reconciliation",
         "result": "Task-local source reconciles all Season Companion package semantics with current-main governance/security; future D/ST capacity and temporal trade blockers repaired. Exact-head local authoritative gates required before release classification.",
@@ -379,12 +393,12 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "Checkpoint repair milestone recorded. Re-inventory currently authorized work after dynamic authority verification; historical queues do not authorize continuation."
+      "reason": "Waiver-first and Trade-second implementation is complete; local strict validation and exact-head PR gates determine review readiness."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260909T1018Z-v237",
+    "generation": "20260911T0607Z-v238",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -396,7 +410,7 @@
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260909T1018Z-v237",
+  "handoffGeneration": "20260911T0607Z-v238",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",

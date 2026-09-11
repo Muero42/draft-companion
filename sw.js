@@ -1,7 +1,7 @@
-const CACHE='draft-companion-v11.8.0-rc4.193-static-v2';
+const CACHE='draft-companion-v11.8.0-rc4.194-static-v2';
 const BACKUP_CACHE='draft-companion-backup-export-v1';
-const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.193','./decision-policy.js','./weekly-evidence-v2.js?v=v11.8.0-rc4.193','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.193','./live-surface-v3.css?v=v11.8.0-rc4.193','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
-const BASE='v11.8.0-rc4.193',TARGET='v11.8.0-rc4.193';
+const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.194','./decision-policy.js','./weekly-evidence-v2.js?v=v11.8.0-rc4.194','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.194','./live-surface-v3.css?v=v11.8.0-rc4.194','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
+const BASE='v11.8.0-rc4.194',TARGET='v11.8.0-rc4.194';
 // Only the bounded app shell belongs in CacheStorage. Live API responses have
 // their own freshness rules and may carry a new cache-busting URL on every load.
 const SCOPE=new URL(self.registration.scope);

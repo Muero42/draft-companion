@@ -155,9 +155,9 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.169 accepted rollback authority",
+    "productionControl": "v11.8.0-rc4.193 physically verified Weekly-Evidence runtime; rc4.194 remains PR-only",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
-    "sourceAuthority": "Source candidate rc4.192 preserves merged PR #118/#132; deployment parity UNKNOWN_REQUIRES_REVERIFICATION; physical rc4.188 PASS and rollback rc4.169 remain separate.",
+    "sourceAuthority": "Source candidate rc4.194 is PR-only on Draft PR #141 from canonical main 5e29f285; deployment parity UNKNOWN_REQUIRES_REVERIFICATION; physical rc4.193 Weekly-Evidence PASS and rollback rc4.169 remain separate.",
     "latestPackageReextract": "HISTORICAL rc4.182 PASS run 33597607588; not current rc4.190 package authority",
     "latestPackageSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "packageReferenceRun": 33597607588,
@@ -165,23 +165,23 @@
     "deployedPagesAppByteParityWithMain": null,
     "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
     "exactNextAction": "Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.",
-    "runtimeVersion": "rc4.192 source candidate; canonical containment verified by current user authority; rc4.188 physically observed Waiver/FA PASS",
+    "runtimeVersion": "rc4.194 PR-only Waiver/Trade candidate; rc4.193 physically observed Weekly-Evidence PASS",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
-    "latestDeviceEvidence": "2026-09-02 rc4.188 physical screenshots: Waiver/FA route, live ownership, kicker isolation and IR/drop semantics PASS.",
+    "latestDeviceEvidence": "2026-09-10 rc4.193 physical acceptance: Sleeper Live-State, Weekly Evidence, 725 FantasyPros projections, Watcher and quota recovery PASS.",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
     "reconciledBaseMain": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
     "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
     "packageReferenceScope": "HISTORICAL rc4.182 run 33597607588; this digest is not an rc4.190 installable package claim",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.192",
-      "files": 13,
-      "sha256": "sha256:1815ce89eb8700670f7e93a5e3f3839578023b585ed7eea41655d3e626336b22",
+      "version": "v11.8.0-rc4.194",
+      "files": 14,
+      "sha256": "sha256:3ac577dfc512d3a0345cac68b7c9cf8e9be60dc3fc4d5a2c7e430e1d5922e630",
       "status": "PACKAGED_ONLY_NOT_DEPLOYED"
     }
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260909T1018Z-v237",
-  "handoff_generation": "20260909T1018Z-v237",
+  "handoffGeneration": "20260911T0607Z-v238",
+  "handoff_generation": "20260911T0607Z-v238",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",

@@ -22,6 +22,8 @@ assert(a.includes("2-Slot-Kosten"),'QB plus future DST two-slot opportunity cost
 assert(a.includes("opportunityPenalty"),'QB waiver opportunity-cost adjustment missing');
 assert(a.includes("marketClear"),'QB waiver competition clearing-price model missing');
 assert(a.includes("targetWeekly=weeklyLineupEvidence"),'QB waiver opponent need must prefer weekly evidence');
-assert(a.includes("currentRank=Number.isFinite(weekly?.consensus)"),'opponent QB current rank must prefer weekly evidence');
+assert(a.includes("currentRank=weekly?.freshEnough&&Number.isFinite(weekly?.consensus)"),'opponent current rank must require fresh weekly evidence');
+assert(a.includes("position:targetPos")&&a.includes("lineup_gain:lineupGain"),'opponent market must evaluate QB/RB/WR/TE need through live lineup gain');
+assert(a.includes("evaluated.length===9")&&a.includes("const high=sufficient")&&a.includes("bidLowPct:low"),'FAAB range must fail closed unless all nine opponent evaluations are verified');
 assert(a.includes("gleiche Bye wie aktueller QB"),'QB same-bye warning missing');
 console.log('SEASON_LINEUP_WAIVER_ROUTING_PASS');

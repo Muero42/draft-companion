@@ -45,9 +45,12 @@ const mine=[player('ourRB','RB'),player('ourWR','WR'),player('ourExtraWR','WR')]
 liveRosters(mine,opp);
 const pts=[5,20,19,20,5,19];cache.set('v190_seasonEvidence',[...mine,...opp].flatMap((p,i)=>[record(p,'projected_points',pts[i]),record(p,'trade_value',20)]));
 check(sandbox.seasonTradeDecision(mine,opp,[mine[2]],[opp[2]],season).actionable,'bilateral legal improvement passes');
-check(sandbox.seasonTradeDecision(mine,opp,[mine[2]],[opp[2]],season).acceptance===null,'no invented probability');
+const acceptance=sandbox.seasonTradeDecision(mine,opp,[mine[2]],[opp[2]],season).acceptance;
+check(acceptance?.heuristic===true&&acceptance.score>=5&&acceptance.score<=55,'acceptance is conservative and explicitly heuristic');
 cache.set('v190_seasonEvidence',[]);check(!sandbox.seasonTradeDecision(mine,opp,[mine[2]],[opp[2]],season).actionable,'panel alone cannot justify trade');
 season.transaction_round=0;cache.set('v190_seasonEvidence',[...mine,...opp].flatMap((p,i)=>[record(p,'projected_points',pts[i],{week:0}),record(p,'trade_value',20,{week:0})]));
+mine[2].p.name='JSN';opp[2].p.name='Gibbs';mine[2].pk.pick_no=9;opp[2].pk.pick_no=1;
+check(sandbox.seasonTradeDecision(mine,opp,[mine[2]],[opp[2]],season).status==='DRAFT_PREFERENCE_UNRESOLVED','JSN-for-Gibbs immediate reversal remains impossible despite close panel/value numbers');
 mine[2].pk.pick_no=55;opp[2].pk.pick_no=4;
 check(sandbox.seasonTradeDecision(mine,opp,[mine[2]],[opp[2]],season).status==='DRAFT_PREFERENCE_UNRESOLVED','severe actual draft-capital reversal blocked');
 season.transaction_round=2;cache.set('v190_seasonEvidence',[...mine,...opp].flatMap((p,i)=>[record(p,'projected_points',pts[i]),record(p,'trade_value',20)]));
