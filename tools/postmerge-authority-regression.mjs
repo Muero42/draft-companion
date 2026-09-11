@@ -18,7 +18,7 @@ const legacyCases=[
   ['rc4195 merge implies deployment',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4195_source_merge.deployment_proven=true],
   ['rc4195 merge implies device acceptance',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4195_source_merge.device_acceptance_proven=true],
   ['rc4196 merge record removed',d=>delete d['PITTI_CURRENT_STATE.json'].authority.rc4196_source_merge],
-  ['rc4196 verified deployment evidence removed',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4196_source_merge.deployment_proven=false],
+  ['rc4196 merge implies deployment',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4196_source_merge.deployment_proven=true],
   ['rc4196 merge implies device acceptance',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4196_source_merge.device_acceptance_proven=true],
   ['rc4195 operative PR-only status',d=>d['PITTI_CURRENT_STATE.json'].runtime.season_candidate='rc4.195 PR-only on Draft PR #141'],
   ['rc4195 package branch retained',d=>d['PITTI_CURRENT_STATE.json'].runtime.local_candidate_package.source_branch='pitti/codex-waiver-trade-season-v1'],
@@ -39,8 +39,8 @@ const legacyCases=[
   ['generation drift',d=>d['PITTI_EXECUTION_LOCK.json'].handoffGeneration='20260903T0745Z-v233'],
   ['unperformed audit',d=>d['PITTI_CURRENT_STATE.json'].codex.audit_result='PENDING'],
   ['artifact misattribution',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.preinstallHashSemantics='rc4.189 PASS'],
-  ['historical override resurrected',d=>d['PITTI_AUTO_PREFLIGHT.md']+='\n## v233 CURRENT OVERRIDE\n'],
-  ['bootstrap premerge gate',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']+='\nCurrent gate: V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT\n'],
+  ['historical override resurrected',d=>d['PITTI_AUTO_PREFLIGHT.md']='## v233 CURRENT OVERRIDE\n'+d['PITTI_AUTO_PREFLIGHT.md']],
+  ['bootstrap premerge gate',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']='Current gate: V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT\n'+d['PITTI_NEW_CHAT_BOOTSTRAP.md']],
   ['CURRENT local only',d=>d['PITTI_CURRENT_STATE.json'].operative_scope='This work is local only'],
   ['false source containment',d=>d['PITTI_CURRENT_STATE.json'].source_authority='rc4.190 merged source on main'],
   ['permission reference drift',d=>d['PITTI_CURRENT_STATE.json'].authority.permission_contract='historical PR118'],
@@ -52,10 +52,10 @@ const legacyCases=[
   ['immutable current merged PR122',d=>d['PITTI_CURRENT_STATE.json'].authority.pr122={status:'MERGED'}],
   ['static merge boolean',d=>d['PITTI_HANDOFF_SEAL.json'].merged=false],
   ['operative repair branch',d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.local_repair_branch='pitti/v234-postmerge-authority-repair'],
-  ['hidden local prose',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']+='\nThis work is local only.\n'],
+  ['hidden local prose',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']='This work is local only.\n'+d['PITTI_NEW_CHAT_BOOTSTRAP.md']],
   ['hidden immutable PR prose',d=>d['README.md']='PR #122 is OPEN\n'+d['README.md']],
-  ['hidden unmerged prose',d=>d['HANDOFF_COMPLETENESS_MATRIX.md']+='\nThis gate requires an unmerged branch.\n'],
-  ['bootstrap resurrects rc4195 PR-only',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']+='\nrc4.195 remains PR-only and not merged.\n'],
+  ['hidden unmerged prose',d=>d['HANDOFF_COMPLETENESS_MATRIX.md']='This gate requires an unmerged branch.\n'+d['HANDOFF_COMPLETENESS_MATRIX.md']],
+  ['bootstrap resurrects rc4195 PR-only',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']='rc4.195 remains PR-only and not merged.\n'+d['PITTI_NEW_CHAT_BOOTSTRAP.md']],
   ['authorization cannot be inferred from merge',d=>d['PITTI_CURRENT_STATE.json'].authority.promotion.permission_source='MERGE'],
   ['deployment cannot be inferred from merge',d=>d['PITTI_CURRENT_STATE.json'].authority.promotion.merge_implies_deployment=true],
   ['device cannot be inferred from merge',d=>d['PITTI_CURRENT_STATE.json'].authority.promotion.merge_implies_device_acceptance=true],
@@ -90,4 +90,12 @@ const newV243Cases=[
   ['v243 package file count changed',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.localCandidatePackage.files=16],
 ];
 for(const [name,mutate] of newV243Cases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
-console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS legacy=${legacyCases.length} new_v243=${newV243Cases.length} external=${externalCases.length} + unchanged pre/post promotion fixtures + historical preservation`);
+const newAuthorityCases=[
+  ['historical 555487 CI resurrected as current exact-main authority',d=>d['PITTI_CURRENT_STATE.json'].runtime.ci={candidate_package:'PASS_EXACT_MAIN_HEAD',release_contract_v2:'PASS_EXACT_MAIN_HEAD',project_guardrails:'PASS_EXACT_MAIN_HEAD',validated_code_head:'555487237c9075d5e5ceeb1fee196f4763f87cc3',scope:'Fresh exact-main-head CI evidence'}],
+  ['stale v242 deployment statement escapes historical scope',d=>d['NEW_CHAT_HANDOFF_CURRENT.md']='rc4.196 is not production deployed.\n'+d['NEW_CHAT_HANDOFF_CURRENT.md']],
+];
+for(const [name,mutate] of newAuthorityCases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
+const scopedHistorical=structuredClone(baseline);
+scopedHistorical['NEW_CHAT_HANDOFF_CURRENT.md']+='\n## HISTORICAL/SUPERSEDED v242 CONTENT\nrc4.196 is not production deployed; rc4.195 remains current production. PASS_EXACT_MAIN_HEAD applied only to historical head 555487.\n';
+assert.deepEqual(validateAuthority(scopedHistorical),[],'stale v242 statements remain legal only in recognized historical scope');
+console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS legacy=${legacyCases.length} new_v243=${newV243Cases.length} new_authority=${newAuthorityCases.length} external=${externalCases.length} + unchanged pre/post promotion fixtures + historical-scope preservation`);

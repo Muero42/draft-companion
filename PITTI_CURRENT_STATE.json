@@ -63,8 +63,8 @@
       "base_head": "8aedc4ea3b7b71591cbc45f971ccf85fe5167074",
       "merge_commit": "555487237c9075d5e5ceeb1fee196f4763f87cc3",
       "observed_at": "2026-09-11T13:52:46Z",
-      "evidence_scope": "PR #143 merge provenance; production deployment is separately proven by physical Cloudflare evidence for later canonical main 082d770, while device acceptance remains false.",
-      "deployment_proven": true,
+      "evidence_scope": "PR #143 source-merge provenance only; source merge does not prove deployment. Production is separately proven by runtime.production_deployment for later canonical main 082d770; device acceptance remains false.",
+      "deployment_proven": false,
       "device_acceptance_proven": false
     }
   },
@@ -75,11 +75,13 @@
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.196",
     "ci": {
-      "candidate_package": "PASS_EXACT_MAIN_HEAD",
-      "release_contract_v2": "PASS_EXACT_MAIN_HEAD",
-      "project_guardrails": "PASS_EXACT_MAIN_HEAD",
+      "candidate_package": "HISTORICAL_PASS_EXACT_RC4196_SOURCE_MERGE_HEAD",
+      "release_contract_v2": "HISTORICAL_PASS_EXACT_RC4196_SOURCE_MERGE_HEAD",
+      "project_guardrails": "HISTORICAL_PASS_EXACT_RC4196_SOURCE_MERGE_HEAD",
       "validated_code_head": "555487237c9075d5e5ceeb1fee196f4763f87cc3",
-      "scope": "Fresh GitHub checks observed PASS on canonical main head at reconciliation time; reverify dynamically before dependent continuation or promotion."
+      "status": "HISTORICAL_SOURCE_MERGE_CI_NOT_CURRENT_MAIN_AUTHORITY",
+      "evidence_scope": "Checks observed for historical rc4.196 source-merge head 555487 only; not exact-main-head evidence for reconciled canonical main 082d770.",
+      "current_exact_main_head_ci": "DYNAMIC_EXTERNAL_VERIFICATION_REQUIRED_BEFORE_DEPENDENT_CONTINUATION_OR_PROMOTION"
     },
     "android_accepted": "v11.8.0-rc4.195",
     "preview_candidate": "v11.8.0-rc4.196 production deployed on exact main 082d770; physical acceptance blocked",
@@ -293,6 +295,11 @@
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "v243-authority-contract-final-repair",
+        "result": "Scoped 555487 CI as historical-only; restored source-merge deployment_proven=false; recognized HISTORICAL/SUPERSEDED v242 CONTENT structurally and added active-scope escape negatives. Runtime/product bytes unchanged.",
+        "at": "2026-09-11T17:35:00Z"
+      },
       {
         "id": "v243-regression-preservation-repair",
         "result": "Restored/adapted all 56 v242 checkpoint negatives and all 9 external-evidence negatives; retained 13 explicit new-v243 negatives. No consolidation; runtime/product bytes unchanged.",
