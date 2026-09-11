@@ -146,44 +146,50 @@
     "treating a backup with fewer than 30 paired fixtures as a complete 15-pick v4/v5 test",
     "JavaScript slice(-0) treated as zero-history eviction; historyKeep=0 must map explicitly to []",
     "treating 29/30 fixture backup as full v4/v5 promotion evidence",
-    "resurrecting any noncanonical 2026 draft order; exact order is Michael/Pascal Voerde/Marc D\u00fcsseldorf/Thomas/Bj\u00f6rn/Pascal Gelderner/Giuliano/Bastian/Muerotechnik/Dutch Marc",
+    "resurrecting any noncanonical 2026 draft order; exact order is Michael/Pascal Voerde/Marc Düsseldorf/Thomas/Björn/Pascal Gelderner/Giuliano/Bastian/Muerotechnik/Dutch Marc",
     "using Michael K as a league identity or aliasing Giuliano to Michael",
     "using Moers Venom as current user team instead of Muerotechnik",
     "using Pascal Voerde's stale 2023-2025-only detailed profile instead of the confirmed Bracht Eagles 2017-2022 + Voerde Eagles 2023-2025 identity chain",
     "dropping Michael_Polk 2025 from manual manager history",
-    "reintroducing Bj\u00f6rn 2021 theme or 2023 autodraft into ordinary manager-preference learning",
+    "reintroducing Björn 2021 theme or 2023 autodraft into ordinary manager-preference learning",
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.195 remains production/device accepted; rc4.196 is source-merged through PR #143 but not deployed or physically accepted",
-    "androidAuthority": "v11.8.0-rc4.195 accepted production/device authority",
-    "sourceAuthority": "v11.8.0-rc4.196 source merged through PR #143 at historical merge commit 555487237c9075d5e5ceeb1fee196f4763f87cc3; current main remains dynamically verified. rc4.195 remains production/device authority.",
-    "latestPackageReextract": "rc4.196 byte-exact 17-file local package; PACKAGED_ONLY_NOT_DEPLOYED",
+    "productionControl": "v11.8.0-rc4.196 production VERIFIED at exact 082d77003f6616e290146698641aebe63f37b8c2; physical canary RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED",
+    "androidAuthority": "v11.8.0-rc4.196 latest observed production runtime; NOT FULLY ACCEPTED",
+    "sourceAuthority": "rc4.196 merged; canonical main dynamically verified at 082d77003f6616e290146698641aebe63f37b8c2",
+    "latestPackageReextract": "rc4.196 byte-exact 17-file package identity, separate from deployment",
     "latestPackageSha256": "sha256:a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d",
     "packageReferenceRun": null,
-    "deployedPagesVersion": "v11.8.0-rc4.195",
+    "deployedPagesVersion": "v11.8.0-rc4.196",
     "deployedPagesAppByteParityWithMain": false,
     "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-    "exactNextAction": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.196 must not be merged or deployed by this task.",
-    "runtimeVersion": "rc4.196 source-merged production-pending; rc4.195 physical production authority",
+    "exactNextAction": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.196 is production-deployed but not fully physically accepted; runtime repair, merge, and deployment remain separate work packages.",
+    "runtimeVersion": "rc4.196 production deployed; RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
-    "latestDeviceEvidence": "2026-09-11 rc4.195 physical acceptance: production, Sleeper Live-State, Weekly Evidence 728 players, Watcher, Waiver/Trade fail-closed behavior and Reserve/IR separation PASS.",
+    "latestDeviceEvidence": "2026-09-11 rc4.196 RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED: preserved Live/Waiver/DST/K/Trade/Watcher/Reserve lanes; weekly ranks/panel and game context unavailable; 14 Start/Sit skill players incomplete.",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
-    "reconciledBaseMain": "555487237c9075d5e5ceeb1fee196f4763f87cc3",
+    "reconciledBaseMain": "082d77003f6616e290146698641aebe63f37b8c2",
     "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-    "packageReferenceScope": "rc4.196 local byte-exact 17-file package identity; PACKAGED_ONLY_NOT_DEPLOYED",
+    "packageReferenceScope": "rc4.196 17-file package identity; distinct from deployed/device state",
     "localCandidatePackage": {
       "version": "v11.8.0-rc4.196",
       "files": 17,
       "sha256": "sha256:a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d",
-      "status": "PACKAGED_ONLY_NOT_DEPLOYED",
+      "status": "PACKAGE_IDENTITY_VERIFIED_SEPARATE_FROM_DEPLOYMENT",
       "sourceScope": "MERGED_TO_CANONICAL_MAIN_VIA_PR143"
     },
-    "deploymentParity": "UNKNOWN_REQUIRES_REVERIFICATION"
+    "deploymentParity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; ARBITRARY_BYTE_PARITY_NOT_PROVEN",
+    "productionDeployment": {
+      "version": "v11.8.0-rc4.196",
+      "sourceCommit": "082d77003f6616e290146698641aebe63f37b8c2",
+      "status": "VERIFIED_SUCCESS",
+      "deploymentId": "da039536-7733-4b07-8f0c-70cc6e0bc8b7"
+    }
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260911T1352Z-v242",
-  "handoff_generation": "20260911T1352Z-v242",
+  "handoffGeneration": "20260911T1735Z-v243",
+  "handoff_generation": "20260911T1735Z-v243",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -209,8 +215,8 @@
     "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
   "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "exactNextAction": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.196 must not be merged or deployed by this task.",
+  "exactNextAction": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.196 is production-deployed but not fully physically accepted; runtime repair, merge, and deployment remain separate work packages.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
-  "updated_at": "2026-09-11T14:35:00Z"
+  "updated_at": "2026-09-11T17:35:00Z"
 }

@@ -678,3 +678,18 @@ Runtime/product bytes remain identical to merged rc4.196. Byte-exact package re-
 
 ### v242 review repair — operative-alias closure (2026-09-11)
 Independent review found stale operative rc4.193/rc4.169 device, rc4.195 package, and current-main deployment-parity aliases after the initial reconciliation. The repaired authority is singular: rc4.196 is source-merged through PR #143 but NOT deployed or physically accepted; its deployment parity is `UNKNOWN_REQUIRES_REVERIFICATION`. rc4.195 remains production/device authority. The rc4.196 local package is 17 files with SHA-256 `a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d`, `PACKAGED_ONLY_NOT_DEPLOYED`. Runtime/product bytes are unchanged. The postmerge contract now rejects every reviewed stale combination.
+
+
+## v243 CURRENT — rc4.196 production / physical partial pass (2026-09-11)
+
+# rc4.196 physical-partial authority — v243
+Generation: `20260911T1735Z-v243`
+
+Canonical main was dynamically verified at `082d77003f6616e290146698641aebe63f37b8c2`. rc4.196 is source-merged and its Cloudflare Production deployment is **VERIFIED SUCCESS** for that exact commit (deployment `da039536-7733-4b07-8f0c-70cc6e0bc8b7`). This proves deployment identity, not arbitrary byte parity or full device acceptance.
+
+The installed Android/PWA showed `v11.8.0-rc4.196` without cache clearing or reinstall. Canonical verdict: `RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED`. Preserved physical lanes: Sleeper Live `<1 Min.`, W1 projection refresh with an observed 728 records, fail-closed Waiver/FA, D/ST streaming, K-only comparison, Trade Board v8 with Boone/Yahoo 263/264 and HOLD, Watcher PASS, and separate Reserve/IR. Blockers: weekly ranks and selected PITTI panel unavailable; Start/Sit cards did not consume/display valid projections independently; game/opponent/weather/lock context unavailable; 14 realistic skill players lacked complete Rank+Projection evidence. Full rc4.196 acceptance is forbidden until a later fixed build passes a new canary.
+
+rc4.195 is the prior fully accepted historical/rollback reference, **not current production**. rc4.196 package identity remains 17 files, `sha256:a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d`, and is distinct from source, deployment, byte parity, and device acceptance. Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Runtime/product behavior is unchanged by this checkpoint.
+
+### v243 regression-preservation repair (2026-09-11)
+Independent review confirmed that the first v243 reconciliation had reduced the explicit postmerge authority matrix from 56 legacy checkpoint negatives and 9 external-evidence negatives to 17 and 4. The authority contract and regression matrix are now restored semantically: all 56 pre-v243 negatives remain explicit (two are adapted to the deployed/partial model), all 9 external-evidence negatives remain explicit, and 13 separately counted v243 physical-partial/deployment negatives protect the new state. No legacy cases are consolidated. Runtime/product bytes remain unchanged; package identity remains 17 files with SHA-256 `a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d`.

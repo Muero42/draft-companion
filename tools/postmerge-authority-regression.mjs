@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {loadAuthority,validateAuthority,validateContinuationEvidence} from './postmerge-authority-contract.mjs';
 const baseline=loadAuthority();
 assert.deepEqual(validateAuthority(baseline),[]);
-const cases=[
+const legacyCases=[
   ['global QB cap resurrected',d=>d['PITTI_CURRENT_STATE.json'].invariants.user_qb_limit=1],
   ['draft QB2 exclusion removed',d=>d['PITTI_CURRENT_STATE.json'].qb_policy.draft.exclude_qb2_after_qb1=false],
   ['draft limit relaxed',d=>d['PITTI_CURRENT_STATE.json'].qb_policy.draft.qb_limit=2],
@@ -18,7 +18,7 @@ const cases=[
   ['rc4195 merge implies deployment',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4195_source_merge.deployment_proven=true],
   ['rc4195 merge implies device acceptance',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4195_source_merge.device_acceptance_proven=true],
   ['rc4196 merge record removed',d=>delete d['PITTI_CURRENT_STATE.json'].authority.rc4196_source_merge],
-  ['rc4196 merge implies deployment',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4196_source_merge.deployment_proven=true],
+  ['rc4196 verified deployment evidence removed',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4196_source_merge.deployment_proven=false],
   ['rc4196 merge implies device acceptance',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4196_source_merge.device_acceptance_proven=true],
   ['rc4195 operative PR-only status',d=>d['PITTI_CURRENT_STATE.json'].runtime.season_candidate='rc4.195 PR-only on Draft PR #141'],
   ['rc4195 package branch retained',d=>d['PITTI_CURRENT_STATE.json'].runtime.local_candidate_package.source_branch='pitti/codex-waiver-trade-season-v1'],
@@ -29,7 +29,7 @@ const cases=[
   ['lock current-main parity falsely asserted',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.mainGhPagesParity=true],
   ['rc4193 latest physical resurrected',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.latestAndroidVersionObserved='v11.8.0-rc4.193'],
   ['rc4169 Android authority resurrected',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.androidAuthority='v11.8.0-rc4.169 accepted rollback authority'],
-  ['rc4195 physical acceptance marked pending',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.androidVerified=false],
+  ['rc4195 prior accepted rollback marked pending',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.acceptedAndroidAuthority='PENDING'],
   ['rc4196 source reverted to PR-only',d=>d['PITTI_CURRENT_STATE.json'].runtime.source_candidate_status='SOURCE_CANDIDATE_PR_ONLY'],
   ['stale current package version',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.localCandidatePackage.version='v11.8.0-rc4.195'],
   ['stale current package file count',d=>d['PITTI_COMMAND_CONTRACTS.json'].currentBoundary.localCandidatePackage.files=15],
@@ -60,7 +60,7 @@ const cases=[
   ['deployment cannot be inferred from merge',d=>d['PITTI_CURRENT_STATE.json'].authority.promotion.merge_implies_deployment=true],
   ['device cannot be inferred from merge',d=>d['PITTI_CURRENT_STATE.json'].authority.promotion.merge_implies_device_acceptance=true],
 ];
-for(const [name,mutate] of cases) {const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
+for(const [name,mutate] of legacyCases) {const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
 const historical=structuredClone(baseline);
 historical['PITTI_CURRENT_STATE.json'].historical_superseded.example='V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT';
 assert.deepEqual(validateAuthority(historical),[],'explicit historical provenance remains legal');
@@ -74,4 +74,20 @@ for(const e of [evidence,{...evidence,branch:'main',prState:'MERGED',canonicalHe
 }
 const externalCases=[['stale evidence',{fresh:false}],['wrong repository',{repo:'other/repo'}],['dirty tree',{clean:false}],['wrong PR head',{prHead:main}],['checks from older head',{ciHead:main}],['missing gate',{checks:evidence.checks.slice(1)}],['unknown PR state',{prState:'UNKNOWN'}],['no authorization',{authorizedWorkPackage:false}],['unproved merge containment',{branch:'main',prState:'MERGED',canonicalHead:head,containingCommitVerified:false}]];
 for(const [name,patch] of externalCases) assert.ok(validateContinuationEvidence({...evidence,...patch}).length,`reject ${name}`);
-console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS ${cases.length} checkpoint negatives + ${externalCases.length} external-evidence negatives + unchanged pre/post promotion fixtures + historical preservation`);
+const newV243Cases=[
+  ['v243 rc4.196 reverted packaged-only',d=>d['PITTI_CURRENT_STATE.json'].runtime.source_candidate_status='PACKAGED_ONLY_NOT_DEPLOYED'],
+  ['v243 rc4.195 resurrected as production',d=>d['PITTI_CURRENT_STATE.json'].runtime.deployed_production_version='v11.8.0-rc4.195'],
+  ['v243 partial canary promoted to PASS',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.acceptance='PASS'],
+  ['v243 partial classification erased',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.classification='DEVICE_PASS'],
+  ['v243 Start/Sit blockers omitted',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.fail=[]],
+  ['v243 selected-panel blocker omitted',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.fail=d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.fail.filter(x=>!x.includes('selected PITTI panel'))],
+  ['v243 rc4.193 current physical authority',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.version='v11.8.0-rc4.193'],
+  ['v243 rc4.169 current physical authority',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.version='v11.8.0-rc4.169'],
+  ['v243 source deployment device collapsed',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4196_source_merge.device_acceptance_proven=true],
+  ['v243 exact deployment identity removed',d=>delete d['PITTI_CURRENT_STATE.json'].runtime.production_deployment],
+  ['v243 arbitrary byte parity overclaimed',d=>d['PITTI_CURRENT_STATE.json'].runtime.deployed_pages_app_byte_parity_with_main=true],
+  ['v243 package digest changed',d=>d['PITTI_CURRENT_STATE.json'].runtime.local_candidate_package.sha256='sha256:bad'],
+  ['v243 package file count changed',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.localCandidatePackage.files=16],
+];
+for(const [name,mutate] of newV243Cases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
+console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS legacy=${legacyCases.length} new_v243=${newV243Cases.length} external=${externalCases.length} + unchanged pre/post promotion fixtures + historical preservation`);
