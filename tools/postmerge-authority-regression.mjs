@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import {loadAuthority,validateAuthority,validateContinuationEvidence} from './postmerge-authority-contract.mjs';
 const baseline=loadAuthority();
 assert.deepEqual(validateAuthority(baseline),[]);
-const cases=[
+const legacyCases=[
   ['global QB cap resurrected',d=>d['PITTI_CURRENT_STATE.json'].invariants.user_qb_limit=1],
   ['draft QB2 exclusion removed',d=>d['PITTI_CURRENT_STATE.json'].qb_policy.draft.exclude_qb2_after_qb1=false],
   ['draft limit relaxed',d=>d['PITTI_CURRENT_STATE.json'].qb_policy.draft.qb_limit=2],
@@ -29,7 +29,7 @@ const cases=[
   ['lock current-main parity falsely asserted',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.mainGhPagesParity=true],
   ['rc4193 latest physical resurrected',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.latestAndroidVersionObserved='v11.8.0-rc4.193'],
   ['rc4169 Android authority resurrected',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.androidAuthority='v11.8.0-rc4.169 accepted rollback authority'],
-  ['rc4195 physical acceptance marked pending',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.androidVerified=false],
+  ['rc4195 prior accepted rollback marked pending',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.acceptedAndroidAuthority='PENDING'],
   ['rc4196 source reverted to PR-only',d=>d['PITTI_CURRENT_STATE.json'].runtime.source_candidate_status='SOURCE_CANDIDATE_PR_ONLY'],
   ['stale current package version',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.localCandidatePackage.version='v11.8.0-rc4.195'],
   ['stale current package file count',d=>d['PITTI_COMMAND_CONTRACTS.json'].currentBoundary.localCandidatePackage.files=15],
@@ -39,8 +39,8 @@ const cases=[
   ['generation drift',d=>d['PITTI_EXECUTION_LOCK.json'].handoffGeneration='20260903T0745Z-v233'],
   ['unperformed audit',d=>d['PITTI_CURRENT_STATE.json'].codex.audit_result='PENDING'],
   ['artifact misattribution',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.preinstallHashSemantics='rc4.189 PASS'],
-  ['historical override resurrected',d=>d['PITTI_AUTO_PREFLIGHT.md']+='\n## v233 CURRENT OVERRIDE\n'],
-  ['bootstrap premerge gate',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']+='\nCurrent gate: V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT\n'],
+  ['historical override resurrected',d=>d['PITTI_AUTO_PREFLIGHT.md']='## v233 CURRENT OVERRIDE\n'+d['PITTI_AUTO_PREFLIGHT.md']],
+  ['bootstrap premerge gate',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']='Current gate: V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT\n'+d['PITTI_NEW_CHAT_BOOTSTRAP.md']],
   ['CURRENT local only',d=>d['PITTI_CURRENT_STATE.json'].operative_scope='This work is local only'],
   ['false source containment',d=>d['PITTI_CURRENT_STATE.json'].source_authority='rc4.190 merged source on main'],
   ['permission reference drift',d=>d['PITTI_CURRENT_STATE.json'].authority.permission_contract='historical PR118'],
@@ -52,15 +52,15 @@ const cases=[
   ['immutable current merged PR122',d=>d['PITTI_CURRENT_STATE.json'].authority.pr122={status:'MERGED'}],
   ['static merge boolean',d=>d['PITTI_HANDOFF_SEAL.json'].merged=false],
   ['operative repair branch',d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.local_repair_branch='pitti/v234-postmerge-authority-repair'],
-  ['hidden local prose',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']+='\nThis work is local only.\n'],
+  ['hidden local prose',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']='This work is local only.\n'+d['PITTI_NEW_CHAT_BOOTSTRAP.md']],
   ['hidden immutable PR prose',d=>d['README.md']='PR #122 is OPEN\n'+d['README.md']],
-  ['hidden unmerged prose',d=>d['HANDOFF_COMPLETENESS_MATRIX.md']+='\nThis gate requires an unmerged branch.\n'],
-  ['bootstrap resurrects rc4195 PR-only',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']+='\nrc4.195 remains PR-only and not merged.\n'],
+  ['hidden unmerged prose',d=>d['HANDOFF_COMPLETENESS_MATRIX.md']='This gate requires an unmerged branch.\n'+d['HANDOFF_COMPLETENESS_MATRIX.md']],
+  ['bootstrap resurrects rc4195 PR-only',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']='rc4.195 remains PR-only and not merged.\n'+d['PITTI_NEW_CHAT_BOOTSTRAP.md']],
   ['authorization cannot be inferred from merge',d=>d['PITTI_CURRENT_STATE.json'].authority.promotion.permission_source='MERGE'],
   ['deployment cannot be inferred from merge',d=>d['PITTI_CURRENT_STATE.json'].authority.promotion.merge_implies_deployment=true],
   ['device cannot be inferred from merge',d=>d['PITTI_CURRENT_STATE.json'].authority.promotion.merge_implies_device_acceptance=true],
 ];
-for(const [name,mutate] of cases) {const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
+for(const [name,mutate] of legacyCases) {const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
 const historical=structuredClone(baseline);
 historical['PITTI_CURRENT_STATE.json'].historical_superseded.example='V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT';
 assert.deepEqual(validateAuthority(historical),[],'explicit historical provenance remains legal');
@@ -74,4 +74,28 @@ for(const e of [evidence,{...evidence,branch:'main',prState:'MERGED',canonicalHe
 }
 const externalCases=[['stale evidence',{fresh:false}],['wrong repository',{repo:'other/repo'}],['dirty tree',{clean:false}],['wrong PR head',{prHead:main}],['checks from older head',{ciHead:main}],['missing gate',{checks:evidence.checks.slice(1)}],['unknown PR state',{prState:'UNKNOWN'}],['no authorization',{authorizedWorkPackage:false}],['unproved merge containment',{branch:'main',prState:'MERGED',canonicalHead:head,containingCommitVerified:false}]];
 for(const [name,patch] of externalCases) assert.ok(validateContinuationEvidence({...evidence,...patch}).length,`reject ${name}`);
-console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS ${cases.length} checkpoint negatives + ${externalCases.length} external-evidence negatives + unchanged pre/post promotion fixtures + historical preservation`);
+const newV243Cases=[
+  ['v243 rc4.196 reverted packaged-only',d=>d['PITTI_CURRENT_STATE.json'].runtime.source_candidate_status='PACKAGED_ONLY_NOT_DEPLOYED'],
+  ['v243 rc4.195 resurrected as production',d=>d['PITTI_CURRENT_STATE.json'].runtime.deployed_production_version='v11.8.0-rc4.195'],
+  ['v243 partial canary promoted to PASS',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.acceptance='PASS'],
+  ['v243 partial classification erased',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.classification='DEVICE_PASS'],
+  ['v243 Start/Sit blockers omitted',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.fail=[]],
+  ['v243 selected-panel blocker omitted',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.fail=d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.fail.filter(x=>!x.includes('selected PITTI panel'))],
+  ['v243 rc4.193 current physical authority',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.version='v11.8.0-rc4.193'],
+  ['v243 rc4.169 current physical authority',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.version='v11.8.0-rc4.169'],
+  ['v243 source deployment device collapsed',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4196_source_merge.device_acceptance_proven=true],
+  ['v243 exact deployment identity removed',d=>delete d['PITTI_CURRENT_STATE.json'].runtime.production_deployment],
+  ['v243 arbitrary byte parity overclaimed',d=>d['PITTI_CURRENT_STATE.json'].runtime.deployed_pages_app_byte_parity_with_main=true],
+  ['v243 package digest changed',d=>d['PITTI_CURRENT_STATE.json'].runtime.local_candidate_package.sha256='sha256:bad'],
+  ['v243 package file count changed',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.localCandidatePackage.files=16],
+];
+for(const [name,mutate] of newV243Cases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
+const newAuthorityCases=[
+  ['historical 555487 CI resurrected as current exact-main authority',d=>d['PITTI_CURRENT_STATE.json'].runtime.ci={candidate_package:'PASS_EXACT_MAIN_HEAD',release_contract_v2:'PASS_EXACT_MAIN_HEAD',project_guardrails:'PASS_EXACT_MAIN_HEAD',validated_code_head:'555487237c9075d5e5ceeb1fee196f4763f87cc3',scope:'Fresh exact-main-head CI evidence'}],
+  ['stale v242 deployment statement escapes historical scope',d=>d['NEW_CHAT_HANDOFF_CURRENT.md']='rc4.196 is not production deployed.\n'+d['NEW_CHAT_HANDOFF_CURRENT.md']],
+];
+for(const [name,mutate] of newAuthorityCases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
+const scopedHistorical=structuredClone(baseline);
+scopedHistorical['NEW_CHAT_HANDOFF_CURRENT.md']+='\n## HISTORICAL/SUPERSEDED v242 CONTENT\nrc4.196 is not production deployed; rc4.195 remains current production. PASS_EXACT_MAIN_HEAD applied only to historical head 555487.\n';
+assert.deepEqual(validateAuthority(scopedHistorical),[],'stale v242 statements remain legal only in recognized historical scope');
+console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS legacy=${legacyCases.length} new_v243=${newV243Cases.length} new_authority=${newAuthorityCases.length} external=${externalCases.length} + unchanged pre/post promotion fixtures + historical-scope preservation`);
