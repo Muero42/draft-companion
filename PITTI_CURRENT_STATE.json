@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260911T0708Z-v239",
-  "updated_at": "2026-09-11T07:08:00Z",
+  "handoff_generation": "20260911T1117Z-v240",
+  "updated_at": "2026-09-11T11:17:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -17,6 +17,18 @@
       "pending_merge": false,
       "pending_strict_ci": false,
       "evidence": "User-confirmed merged PR; local main base verified without network access."
+    },
+    "rc4195_source_merge": {
+      "checkpoint": "v240",
+      "pr": 141,
+      "status": "MERGED/HISTORICAL",
+      "source_head": "5661d08a3d1e449f6b5ba505c381ec30bff7ecf0",
+      "base_head": "5e29f285103531b81c7579036e7a885e487e0650",
+      "merge_commit": "f1340a2c2d6248212c7652dc58b2f3323f74b1f5",
+      "observed_at": "2026-09-11T11:17:00Z",
+      "evidence_scope": "Fresh GitHub observation of PR #141 and origin/main at reconciliation time; historical merge provenance only, never immutable current-main self-authority.",
+      "deployment_proven": false,
+      "device_acceptance_proven": false
     },
     "pr118": {
       "status": "DYNAMIC_VERIFICATION_REQUIRED",
@@ -46,7 +58,7 @@
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.169",
-    "season_candidate": "v11.8.0-rc4.195 PR-only Boone runtime-ingestion and FAAB-basis candidate; exact-head validation pending",
+    "season_candidate": "v11.8.0-rc4.195 source merged through PR #141; deployment parity UNKNOWN_REQUIRES_REVERIFICATION and physical acceptance pending",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.195",
@@ -86,7 +98,7 @@
       "classification": "DEVICE_RC4193_WEEKLY_EVIDENCE_AND_QUOTA_RECOVERY_PASS"
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.193",
-    "source_candidate_status": "RELEASE_CANDIDATE_VALIDATING",
+    "source_candidate_status": "SOURCE_MERGED_PRODUCTION_PENDING",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -153,7 +165,7 @@
       "files": 15,
       "sha256": "sha256:01f51099435ef226b410c8f2ab4f23f77498e4e82d8371b48cfa7717ec155eca",
       "status": "PACKAGED_ONLY_NOT_DEPLOYED",
-      "source_branch": "pitti/codex-waiver-trade-season-v1"
+      "source_scope": "MERGED_TO_CANONICAL_MAIN_VIA_PR141; package remains local artifact identity"
     }
   },
   "real_draft": {
@@ -213,7 +225,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "Canonical main was dynamically verified at 5e29f285103531b81c7579036e7a885e487e0650 with rc4.193 physically accepted for Weekly Evidence; rc4.195 is a PR-only Boone runtime-ingestion and FAAB-basis candidate and is not merged, deployed or device-accepted.",
+  "source_authority": "Canonical main HEAD must be verified dynamically. Fresh reconciliation observed rc4.195 source merged through PR #141 as merge commit f1340a2c2d6248212c7652dc58b2f3323f74b1f5; that SHA is historical evidence only. Deployment parity remains UNKNOWN_REQUIRES_REVERIFICATION, rc4.195 is not physically accepted, rc4.193 remains the physical Weekly-Evidence PASS and rc4.169 remains rollback authority.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -251,6 +263,11 @@
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "v240-rc4195-postmerge-authority-reconciliation",
+        "result": "Fresh Git/GitHub reconciliation observed PR #141 merged at source head 5661d08a3d1e449f6b5ba505c381ec30bff7ecf0 into canonical main as f1340a2c2d6248212c7652dc58b2f3323f74b1f5; canonical-main HEAD remains dynamic authority. Runtime/product bytes and the 15-file package identity are unchanged. Deployment parity remains UNKNOWN_REQUIRES_REVERIFICATION; rc4.195 physical acceptance remains pending; rc4.193 remains physical Weekly-Evidence PASS and rc4.169 rollback authority.",
+        "at": "2026-09-11T11:17:00Z"
+      },
       {
         "id": "boone-trade-value-runtime-ingestion-v1",
         "result": "LOCAL PASS: real Yahoo 2026 Week-1 ROS charts parsed and mapped 263/264 rows (QB 37/37, RB 87/87, WR 99/100, TE 40/40); current PITTI skill roster 15/15 and opponent assets 119/119 mapped. Production Worker route, automatic app storage, stale/malformed/scoring/collision/partial negatives and fail-closed consumers verified.",
@@ -415,7 +432,7 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260911T0708Z-v239",
+    "generation": "20260911T1117Z-v240",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -427,7 +444,7 @@
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260911T0708Z-v239",
+  "handoffGeneration": "20260911T1117Z-v240",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",

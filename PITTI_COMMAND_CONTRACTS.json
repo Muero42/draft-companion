@@ -155,9 +155,9 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.193 physically verified Weekly-Evidence runtime; rc4.195 remains PR-only",
+    "productionControl": "v11.8.0-rc4.193 remains the physically verified Weekly-Evidence runtime; rc4.195 source is merged but deployment parity and physical acceptance remain unverified",
     "androidAuthority": "v11.8.0-rc4.169 accepted rollback authority",
-    "sourceAuthority": "Source candidate rc4.195 is PR-only on Draft PR #141 from canonical main 5e29f285; deployment parity UNKNOWN_REQUIRES_REVERIFICATION; physical rc4.193 Weekly-Evidence PASS and rollback rc4.169 remain separate.",
+    "sourceAuthority": "Source rc4.195 was freshly observed merged through PR #141; current canonical main HEAD is always dynamically verified and the observed merge commit is historical provenance only. Deployment parity UNKNOWN_REQUIRES_REVERIFICATION; physical rc4.193 Weekly-Evidence PASS and rollback rc4.169 remain separate.",
     "latestPackageReextract": "HISTORICAL rc4.182 PASS run 33597607588; not current rc4.190 package authority",
     "latestPackageSha256": "sha256:fcfc41ac63db12d6b0be9ab3223bef72133f73b2df98d7b57b978ba731447f75",
     "packageReferenceRun": 33597607588,
@@ -165,7 +165,7 @@
     "deployedPagesAppByteParityWithMain": null,
     "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
     "exactNextAction": "Before continuation or promotion, dynamically verify local repository identity, branch, HEAD and working tree against canonical Git/GitHub remote, main HEAD, relevant PR state and exact-head CI. If evidence is unavailable or contradictory, stop the dependent action fail-closed. Then follow the currently user-authorized work package. A source commit or merge never proves deployment parity or physical device acceptance.",
-    "runtimeVersion": "rc4.195 PR-only Boone runtime-ingestion and FAAB-basis candidate; rc4.193 physically observed Weekly-Evidence PASS",
+    "runtimeVersion": "rc4.195 Boone runtime-ingestion and FAAB-basis source merged; rc4.193 remains the physically observed Weekly-Evidence PASS",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "2026-09-10 rc4.193 physical acceptance: Sleeper Live-State, Weekly Evidence, 725 FantasyPros projections, Watcher and quota recovery PASS.",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
@@ -180,8 +180,8 @@
     }
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260911T0708Z-v239",
-  "handoff_generation": "20260911T0708Z-v239",
+  "handoffGeneration": "20260911T1117Z-v240",
+  "handoff_generation": "20260911T1117Z-v240",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
