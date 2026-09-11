@@ -22,7 +22,7 @@ const cases=[
   ['rc4195 seal reverts to PR141 work',d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.codex_work='Draft PR #141 exact-head CI pending'],
   ['stale resume',d=>d['PITTI_EXECUTION_LOCK.json'].handoff.resume='After strict gates PASS, merge v233'],
   ['stale external wait',d=>d['PITTI_CURRENT_STATE.json'].auto_execution_state.waiting_external.push({id:'v233-strict-gates'})],
-  ['false deployment PASS',d=>d['PITTI_CURRENT_STATE.json'].runtime.deployed_pages_app_byte_parity_with_main=true],
+  ['accepted deployment parity removed',d=>d['PITTI_CURRENT_STATE.json'].runtime.deployed_pages_app_byte_parity_with_main=false],
   ['false new device PASS',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.version='v11.8.0-rc4.189'],
   ['PR118 production promotion',d=>d['PITTI_CURRENT_STATE.json'].authority.pr118.status='MERGED/PRODUCTION'],
   ['generation drift',d=>d['PITTI_EXECUTION_LOCK.json'].handoffGeneration='20260903T0745Z-v233'],

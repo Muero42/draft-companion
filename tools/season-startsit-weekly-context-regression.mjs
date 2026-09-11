@@ -1,0 +1,24 @@
+import assert from 'node:assert/strict';
+import lineup from '../lineup-start-sit-v2.js';
+import game from '../game-context-v1.js';
+const now=Date.parse('2026-09-11T12:00:00Z'),week=1;
+const row=(id,pos,projection,status='ACTIVE')=>({p:{id,name:id,pos},seasonStatus:status,projection});
+const roster=[row('qb','QB',20),row('rbA','RB',15),row('rbB','RB',14),row('wrA','WR',17),row('wrB','WR',16),row('teA','TE',25),row('teB','TE',30),row('benchRB','RB',19),row('reserve','WR',99,'RESERVE'),row('k','K',99),row('dst','DST',99)];
+const values=Object.fromEntries(roster.map((x,i)=>[x.p.id,{projected_points:x.projection,positional_rank:i+1}]));
+const ev=lineup.adaptEvidence({week,scoring:'HALF_PPR',source:'verified',as_of:new Date(now).toISOString(),players:values},{week,now});
+const slots=['QB','RB','WR','WR','TE','FLEX','W/R'],current=['qb','rbA','wrA','wrB','teA','rbB','teB'].map((playerId,slotIndex)=>({playerId,slotIndex,slot:slots[slotIndex]}));
+const result=lineup.evaluate({roster,evidence:ev,week,slots,currentAssignments:current,now});
+assert(result.lineup.complete);assert.equal(new Set(result.lineup.assignments.map(x=>x.player.p.id)).size,slots.length);
+assert.equal(result.lineup.assignments.filter(x=>x.player.p.pos==='TE').length,2,'two TE remains legal');
+assert(result.lineup.assignments.some(x=>x.player.p.id==='benchRB'),'global optimizer must promote best projected legal player');
+assert(!result.lineup.assignments.some(x=>['reserve','k','dst'].includes(x.player.p.id)));
+assert.equal(lineup.eligible('W/R','TE'),false);assert.equal(lineup.eligible('FLEX','TE'),true);
+// Cross-position decisions expose projections but never compute a positional-rank edge.
+assert(result.changes.every(x=>!Object.hasOwn(x,'rankEdge')));
+values.rbA.locked=true;const locked=lineup.evaluate({roster,evidence:ev,week,slots,currentAssignments:current,now});assert.equal(locked.lineup.assignments[1].player.p.id,'rbA');
+const event=(id,home,away,indoor=false)=>({id,date:'2026-09-13T17:00:00Z',competitions:[{venue:{fullName:`${home} Field`,indoor},competitors:[{homeAway:'home',team:{abbreviation:home}},{homeAway:'away',team:{abbreviation:away}}]}]});
+const events=[event('1','AAA','BBB'),event('2','CCC','DDD',true)];
+const snap=game.buildSnapshot({season:2026,week,events,verifiedAt:now,sourceUrl:'https://site.api.espn.com/test'});assert.equal(game.validateSnapshot(snap,{season:2026,week},now).ok,true);assert.equal(game.contextForTeam(snap,'AAA',now).opponent,'BBB');assert.equal(game.contextForTeam(snap,'CCC',now).weather.reason,'INDOOR_NO_WEATHER_REQUIRED');
+const conflict=game.buildSnapshot({season:2026,week,events:[...events,event('3','AAA','EEE')],verifiedAt:now,sourceUrl:'https://site.api.espn.com/test'});assert.equal(conflict.status,'PARTIAL');
+assert.equal(game.impliedTeamTotal({total:45}).status,'UNAVAILABLE');
+console.log('SEASON_STARTSIT_WEEKLY_CONTEXT_REGRESSION_PASS');

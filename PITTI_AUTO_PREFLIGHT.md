@@ -87,7 +87,7 @@ Otherwise continue AUTO.
 - A full paired 15-round v4/v5 mock is invalid unless the exported backup contains exactly 30 active-draft fixtures covering all 15 own picks twice.
 
 ## 8. HANDOFF / AUTO RESPONSE DISCIPLINE — CURRENT
-- Current handoff generation = **20260911T1117Z-v240**. This checkpoint records the merged rc4.195 Boone runtime-ingestion and FAAB-basis source while preserving the physical rc4.193 Weekly-Evidence PASS.
+- Current handoff generation = **20260911T1230Z-v241**. This checkpoint records the merged rc4.195 Boone runtime-ingestion and FAAB-basis source while preserving the physical rc4.193 Weekly-Evidence PASS.
 - Current mode = **POST_DRAFT_SEASON_COMPANION**.
 - Canonical source = **rc4.195 Boone runtime-ingestion and FAAB-basis source, freshly observed merged through PR #141**. The observed merge commit is historical provenance only. Verify the exact current main HEAD dynamically; a tracked checkpoint must not hard-code its own containing commit as immutable current authority. No deployment or physical acceptance follows from the merge.
 - Latest physical Android = **rc4.193 PASS** for Sleeper Live-State, Weekly Evidence, 725 FantasyPros weekly projections, Watcher and quota-safe persistence. Accepted historical rollback = **rc4.169**.
