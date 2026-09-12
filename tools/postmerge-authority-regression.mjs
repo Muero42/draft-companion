@@ -75,7 +75,7 @@ for(const e of [evidence,{...evidence,branch:'main',prState:'MERGED',canonicalHe
 const externalCases=[['stale evidence',{fresh:false}],['wrong repository',{repo:'other/repo'}],['dirty tree',{clean:false}],['wrong PR head',{prHead:main}],['checks from older head',{ciHead:main}],['missing gate',{checks:evidence.checks.slice(1)}],['unknown PR state',{prState:'UNKNOWN'}],['no authorization',{authorizedWorkPackage:false}],['unproved merge containment',{branch:'main',prState:'MERGED',canonicalHead:head,containingCommitVerified:false}]];
 for(const [name,patch] of externalCases) assert.ok(validateContinuationEvidence({...evidence,...patch}).length,`reject ${name}`);
 const newV243Cases=[
-  ['v243 rc4.196 reverted packaged-only',d=>d['PITTI_CURRENT_STATE.json'].runtime.source_candidate_status='PACKAGED_ONLY_NOT_DEPLOYED'],
+  ['v243 packaged-only source falsely marked deployed',d=>d['PITTI_CURRENT_STATE.json'].runtime.source_candidate_status='PRODUCTION_DEPLOYED_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED'],
   ['v243 rc4.195 resurrected as production',d=>d['PITTI_CURRENT_STATE.json'].runtime.deployed_production_version='v11.8.0-rc4.195'],
   ['v243 partial canary promoted to PASS',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.acceptance='PASS'],
   ['v243 partial classification erased',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.classification='DEVICE_PASS'],
@@ -95,7 +95,18 @@ const newAuthorityCases=[
   ['stale v242 deployment statement escapes historical scope',d=>d['NEW_CHAT_HANDOFF_CURRENT.md']='rc4.196 is not production deployed.\n'+d['NEW_CHAT_HANDOFF_CURRENT.md']],
 ];
 for(const [name,mutate] of newAuthorityCases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
+const newV244Cases=[
+  ['candidate preflight cannot pass with stale post-merge source lock',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.appVersion='v11.8.0-rc4.196'],
+  ['candidate preflight cannot pass with stale sealed source checkpoint',d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.source_baseline='v11.8.0-rc4.196'],
+  ['candidate preflight cannot canonicalize an environment-specific archive SHA',d=>{d['PITTI_CURRENT_STATE.json'].runtime.latest_package_sha256='sha256:1daf910efe847955f9602458f70deff5dcc694d3fd5eb3eae02e0ce1423feecb';d['PITTI_CURRENT_STATE.json'].runtime.local_candidate_package.sha256=d['PITTI_CURRENT_STATE.json'].runtime.latest_package_sha256;}],
+  ['command boundary cannot retain rc4.196 production commit as reconciled main',d=>d['PITTI_COMMAND_CONTRACTS.json'].currentBoundary.reconciledBaseMain='082d77003f6616e290146698641aebe63f37b8c2'],
+  ['rc4.197 test challenger cannot inherit rc4.196 physical observation',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.testChallengerAndroidObserved=true],
+  ['execution lock timestamp cannot remain at v243',d=>d['PITTI_EXECUTION_LOCK.json'].updatedAt='2026-09-11T17:35:00Z'],
+  ['handoff cannot retain QB2 repair scope',d=>d['PITTI_CURRENT_STATE.json'].handoff.refresh_scope='QB2_AUTHORITY_REPAIR'],
+  ['current rc4.197 audit cannot retain v233 findings',d=>d['PITTI_CURRENT_STATE.json'].codex.audit_findings=['v233 pending strict CI/merge']],
+];
+for(const [name,mutate] of newV244Cases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
 const scopedHistorical=structuredClone(baseline);
 scopedHistorical['NEW_CHAT_HANDOFF_CURRENT.md']+='\n## HISTORICAL/SUPERSEDED v242 CONTENT\nrc4.196 is not production deployed; rc4.195 remains current production. PASS_EXACT_MAIN_HEAD applied only to historical head 555487.\n';
 assert.deepEqual(validateAuthority(scopedHistorical),[],'stale v242 statements remain legal only in recognized historical scope');
-console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS legacy=${legacyCases.length} new_v243=${newV243Cases.length} new_authority=${newAuthorityCases.length} external=${externalCases.length} + unchanged pre/post promotion fixtures + historical-scope preservation`);
+console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS legacy=${legacyCases.length} new_v243=${newV243Cases.length} new_authority=${newAuthorityCases.length} external=${externalCases.length} new_v244=${newV244Cases.length} + unchanged pre/post promotion fixtures + historical-scope preservation`);
