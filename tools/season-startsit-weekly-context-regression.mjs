@@ -15,6 +15,10 @@ assert(!result.lineup.assignments.some(x=>['reserve','k','dst'].includes(x.playe
 assert.equal(lineup.eligible('W/R','TE'),false);assert.equal(lineup.eligible('FLEX','TE'),true);
 // Cross-position decisions expose projections but never compute a positional-rank edge.
 assert(result.changes.every(x=>!Object.hasOwn(x,'rankEdge')));
+const projectionOnlyValues=Object.fromEntries(roster.map(x=>[x.p.id,{projected_points:x.projection,projection_status:'VERIFIED',rank_status:'UNAVAILABLE'}]));
+const projectionOnly=lineup.adaptEvidence({week,scoring:'HALF_PPR',source:'verified projection lane',as_of:new Date(now).toISOString(),players:projectionOnlyValues},{week,now});
+const projectionOnlyResult=lineup.evaluate({roster,evidence:projectionOnly,week,slots,currentAssignments:current,now});
+assert(projectionOnlyResult.lineup.complete);assert(projectionOnlyResult.lineup.assignments.every(x=>x.evidence.rank===null));
 values.rbA.locked=true;const locked=lineup.evaluate({roster,evidence:ev,week,slots,currentAssignments:current,now});assert.equal(locked.lineup.assignments[1].player.p.id,'rbA');
 const event=(id,home,away,indoor=false)=>({id,date:'2026-09-13T17:00:00Z',competitions:[{venue:{fullName:`${home} Field`,indoor},competitors:[{homeAway:'home',team:{abbreviation:home}},{homeAway:'away',team:{abbreviation:away}}]}]});
 const events=[event('1','AAA','BBB'),event('2','CCC','DDD',true)];

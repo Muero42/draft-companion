@@ -1,6 +1,8 @@
 # Draft Companion – Final Draft Edition 2026 · v11.8.0-rc4.196
 ## rc4.196 current production / physical partial authority
 
+> **Draft candidate:** `v11.8.0-rc4.197` repairs Start/Sit projection-lane independence on PR #152. It is not deployed or device-accepted; the rc4.196 production authority below remains unchanged.
+
 # rc4.196 physical-partial authority — v243
 Handoff generation: `20260911T1735Z-v243`
 

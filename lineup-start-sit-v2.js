@@ -38,10 +38,12 @@
   function playerEvidence(row,evidence){
     const raw=evidence?.values?.[playerKey(row)]||evidence?.values?.[row?.p?.name]||{};
     const projection=Number(raw.projected_points??raw.projection_half_ppr??raw.projection),rank=Number(raw.positional_rank??raw.rank),opponent=String(raw.opponent||'').trim();
-    const available=!!evidence?.available&&Number.isFinite(projection)&&projection>=0&&Number.isInteger(rank)&&rank>0;
+    const projectionVerified=raw.projection_status==null||raw.projection_status==='VERIFIED';
+    const projectionAvailable=!!evidence?.available&&projectionVerified&&Number.isFinite(projection)&&projection>=0;
+    const rankVerified=(raw.rank_status==null||raw.rank_status==='VERIFIED')&&Number.isInteger(rank)&&rank>0;
     const context=raw.team_context,contextAt=Date.parse(context?.as_of||context?.asOf||''),contextSource=String(context?.source||context?.provider||'').trim();
     const contextFresh=!!contextSource&&Number.isFinite(contextAt)&&contextAt<=evidence.now+3600000&&evidence.now-contextAt<=evidence.maxAgeMs;
-    return{available,projection:available?projection:null,rank:available?rank:null,opponent:opponent||null,teamContext:contextFresh?context:null,locked:raw.locked===true,provenance:available?raw.provenance||null:null,reason:!evidence?.available?evidence?.reason:!Number.isFinite(projection)?'MISSING_WEEK_PROJECTION':!Number.isInteger(rank)||rank<=0?'MISSING_POSITIONAL_RANK':'OK'};
+    return{available:projectionAvailable,projection:projectionAvailable?projection:null,projectionAvailable,projectionSource:projectionAvailable?(raw.projection_source||raw.provenance?.projection||null):null,rank:rankVerified?rank:null,rankAvailable:rankVerified,rankSource:rankVerified?(raw.rank_source||raw.provenance?.rank||null):null,opponent:opponent||null,teamContext:contextFresh?context:null,locked:raw.locked===true,provenance:projectionAvailable?raw.provenance||null:null,reason:!evidence?.available?evidence?.reason:!projectionVerified?'UNVERIFIED_WEEK_PROJECTION':!Number.isFinite(projection)||projection<0?'MISSING_WEEK_PROJECTION':rankVerified?'OK':'RANK_UNAVAILABLE'};
   }
 
   function optimize(roster,evidence,slots=DEFAULT_SLOTS,currentAssignments=[]){

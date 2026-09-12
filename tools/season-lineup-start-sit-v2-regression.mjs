@@ -7,6 +7,8 @@ const now=Date.now(),week=1;
 const evidence=rows=>lineup.adaptEvidence({week,scoring:'HALF_PPR',source:'Verified Week 1 provider',as_of:new Date(now).toISOString(),players:Object.fromEntries(rows.map((x,i)=>[x.p.id,{projected_points:x.projection,positional_rank:i+1,opponent:'OPP'}]))},{week,now});
 const base=[row('qb','QB',20),row('rb1','RB',15),row('rb2','RB',14),row('wr1','WR',16),row('wr2','WR',13),row('te1','TE',12),row('te2','TE',18),row('k','K',9),row('dst','DST',8),row('bench-wr','WR',8)];
 
+const projectionOnly=rows=>lineup.adaptEvidence({week,scoring:'HALF_PPR',source:'Verified Week 1 projections',as_of:new Date(now).toISOString(),players:Object.fromEntries(rows.map(x=>[x.p.id,{projected_points:x.projection,projection_status:'VERIFIED',positional_rank:null,rank_status:'UNAVAILABLE'}]))},{week,now});
+
 assert.equal(lineup.eligible('FLEX','RB'),true);assert.equal(lineup.eligible('FLEX','WR'),true);assert.equal(lineup.eligible('FLEX','TE'),true);
 assert.equal(lineup.eligible('W/R','RB'),true);assert.equal(lineup.eligible('W/R','WR'),true);assert.equal(lineup.eligible('W/R','TE'),false);
 {
@@ -17,8 +19,26 @@ assert.equal(lineup.eligible('W/R','RB'),true);assert.equal(lineup.eligible('W/R
   assert(result.lineup.assignments.every(x=>lineup.eligible(x.slot,x.player.p.pos)),'every assignment must satisfy exact slot eligibility');
 }
 {
-  const reserve=row('historical-draft-star','RB',99,'RESERVE'),live=[...base,reserve],result=lineup.evaluate({roster:live,evidence:evidence(live),week,now});
-  assert(!result.lineup.assignments.some(x=>x.player?.p.id===reserve.p.id),'Reserve/IR cannot start');
+  const ev=projectionOnly(base),result=lineup.evaluate({roster:base,evidence:ev,week,now});
+  assert.equal(result.status,'RECOMMENDED','projection-only evidence must complete a legal lineup');
+  assert.equal(lineup.playerEvidence(base[0],ev).rank,null,'missing weekly rank remains null');
+  assert.equal(lineup.playerEvidence(base[0],ev).rankAvailable,false);
+  assert.equal(result.lineup.assignments.filter(x=>x.player?.p.pos==='TE').length,2,'projection-only TE2 may win FLEX');
+}
+{
+  const ev=projectionOnly(base);ev.values.qb={positional_rank:1,rank_status:'VERIFIED'};
+  assert.equal(lineup.playerEvidence(base[0],ev).available,false,'rank without a projection must fail closed');
+  assert.equal(lineup.evaluate({roster:base,evidence:ev,week,now}).status,'MONITOR');
+}
+{
+  const cross=[row('qb-x','QB',20),row('rb-x1','RB',15),row('rb-x2','RB',14),row('wr-x1','WR',16),row('wr-x2','WR',13),row('te-x','TE',12),row('wr-flex','WR',19),row('rb-rank','RB',18),row('k-x','K',9),row('dst-x','DST',8)];
+  const ev=projectionOnly(cross);ev.values['wr-flex'].positional_rank=99;ev.values['wr-flex'].rank_status='VERIFIED';ev.values['rb-rank'].positional_rank=1;ev.values['rb-rank'].rank_status='VERIFIED';
+  const result=lineup.evaluate({roster:cross,evidence:ev,week,now});
+  assert(result.lineup.assignments.some(x=>x.player?.p.id==='wr-flex'),'cross-position FLEX/W-R choice follows points, not rank magnitude');
+}
+{
+  const reserve=row('historical-draft-star','RB',99,'RESERVE'),ir=row('ir-star','WR',98,'IR'),taxi=row('taxi-star','TE',97,'TAXI'),live=[...base,reserve,ir,taxi],result=lineup.evaluate({roster:live,evidence:evidence(live),week,now});
+  assert(!result.lineup.assignments.some(x=>['historical-draft-star','ir-star','taxi-star'].includes(x.player?.p.id)),'Reserve/IR/TAXI cannot start');
   assert(!result.lineup.assignedIds.has('historical-only-player'),'historical draft rows cannot overwrite the supplied live roster');
 }
 assert.equal(lineup.eligible('FLEX','K'),false);assert.equal(lineup.eligible('W/R','DST'),false);
