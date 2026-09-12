@@ -103,12 +103,30 @@ assert.equal(recoveryMemory.get('v118_decisionFixtures'),'ACTIVE_EVIDENCE','acti
 assert.equal(recoveryMemory.has('v118_returnValidation'),false);
 assert.equal(recoveryMemory.has('v117_researchEvidence'),false);
 
-const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8'),valueStart=app.indexOf('function seasonEvidenceValue('),valueEnd=app.indexOf('\nfunction seasonEvidenceCache',valueStart),context={Date,Number,String,Array,Object,RegExp,Set};
+const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8'),valueStart=app.indexOf('function seasonEvidenceValue('),valueEnd=app.indexOf('\nfunction seasonEvidenceCache',valueStart),context={Date,Number,String,Array,Object,RegExp,Set,PittiWeeklyEvidenceV2:evidence};
 vm.createContext(context);vm.runInContext(app.slice(valueStart,valueEnd)+';globalThis.pick=seasonEvidenceValue;',context);
 const picked=context.pick(snapshot.records,snapshot.records[0].playerId,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000);
 assert.equal(picked.status,'VERIFIED');
 assert.equal(picked.sourcePublishedAt,null,'consumer must not manufacture a timestamp from date-only source metadata');
 assert(fs.readFileSync(new URL('../_worker.js',import.meta.url),'utf8').includes("headers['retry-after']=retryAfter"),'proxy must preserve upstream Retry-After for the client lifecycle');
+
+// The production projection response has no provider publication timestamp. Its
+// retrieval is explicit and projection-only, while provider publication fields stay null.
+const timestampLess=Object.fromEntries(Object.entries(payloads).map(([position,payload])=>[position,{season,week,players:payload.players.map(row=>({...row}))}]));
+const retrievalSnapshot=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:timestampLess,sleeperPlayers:players,verifiedAt:now});
+assert.equal(retrievalSnapshot.lanes.projections.status,'AVAILABLE');
+assert(retrievalSnapshot.records.every(row=>row.sourceTimePrecision==='RETRIEVAL'&&row.sourcePublishedAt===null&&row.sourcePublishedDate===null));
+const retrievalRecord=retrievalSnapshot.records[0];
+assert.equal(context.pick(retrievalSnapshot.records,retrievalRecord.playerId,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED');
+assert(retrievalSnapshot.records.every(row=>context.pick(retrievalSnapshot.records,row.playerId,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status==='VERIFIED'),'every published mapped projection must pass the exact consumer path');
+for(const mutation of [
+  row=>({...row,verifiedAt:now+2000,expiresAt:now+2000+evidence.EVIDENCE_TTL_MS}),
+  row=>({...row,week:2}),row=>({...row,season:2025}),row=>({...row,scoring:'PPR'}),
+  row=>({...row,verifiedAt:now-evidence.EVIDENCE_TTL_MS-1,expiresAt:now-1}),
+  row=>({...row,sourceId:'unknown'}),row=>({...row,sourceUrl:'https://untrusted.example/projections'})
+])assert.notEqual(context.pick([mutation(retrievalRecord)],retrievalRecord.playerId,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED');
+assert.notEqual(context.pick([{...retrievalRecord,metric:'weekly_rank',unit:'POSITIONAL_RANK'}],retrievalRecord.playerId,'weekly_rank',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED','retrieval chronology must not leak to rank evidence');
+assert.equal(evidence.mapFantasyProsPlayer({player_id:'missing',player_name:'QB Player 0',player_position_id:'QB',player_team_id:'AAA'},indexes).reason,'NAME_POSITION_COLLISION');
 
 console.log('WEEKLY_EVIDENCE_V2_REGRESSION_PASS');
 
@@ -125,3 +143,19 @@ assert.equal(degradedRank.lanes.projections.status,'AVAILABLE');
 assert.equal(degradedRank.lanes.expertWeeklyRanks.status,'PARTIAL');
 assert(degradedRank.records.some(x=>x.metric==='projected_points'),'rank failure must preserve projection records');
 assert(!degradedRank.records.some(x=>x.metric==='weekly_rank'&&x.position==='QB'),'wrong-week ranks fail closed');
+
+const offsets={},productionRanks={};let rankOffset=0;
+for(const [position,count] of Object.entries(evidence.RANK_MIN_COUNTS)){
+  offsets[position]=rankOffset;
+  productionRanks[position]={season,week,scoring:'HALF_PPR',rankings:Array.from({length:count},(_,i)=>({player_id:10001+rankOffset+i,player_name:`${position} Player ${i}`,player_position_id:position,player_team_id:'AAA',rank_ecr:i+1,last_updated:'09/10'}))};
+  rankOffset+=counts[position];
+}
+const productionRanked=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:timestampLess,rankingPayloads:productionRanks,sleeperPlayers:players,verifiedAt:now});
+assert.equal(productionRanked.lanes.expertWeeklyRanks.status,'AVAILABLE');
+for(const position of evidence.POSITIONS){const d=productionRanked.lanes.expertWeeklyRanks.coverage.positions[position];assert.equal(d.sourceRows,evidence.RANK_MIN_COUNTS[position]);assert.equal(d.freshRows,d.rankedRows);assert.equal(d.staleOrAmbiguousTimeCount,0);}
+assert(productionRanked.records.filter(x=>x.metric==='weekly_rank').every(x=>x.sourceTimePrecision==='DATE'&&x.sourcePublishedAt===null&&x.sourcePublishedDate==='2026-09-10'));
+const mixed=structuredClone(productionRanks);mixed.QB.rankings[0].last_updated='08/01';mixed.QB.rankings[1].last_updated='not-a-date';
+const mixedRanked=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:timestampLess,rankingPayloads:mixed,sleeperPlayers:players,verifiedAt:now});
+assert.equal(mixedRanked.lanes.expertWeeklyRanks.coverage.positions.QB.staleOrAmbiguousTimeCount,2);
+assert.equal(mixedRanked.lanes.expertWeeklyRanks.coverage.positions.QB.status,'UNAVAILABLE','fresh-row minimum remains fail closed');
+assert(mixedRanked.records.some(x=>x.metric==='projected_points'),'rank freshness failure must retain projections');
