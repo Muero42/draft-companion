@@ -78,7 +78,7 @@
     "tools/takeover-authority-regression.mjs": "e858959735b2c20c99a33103c77cd8f334654f6b",
     "tools/strict-suite.mjs": "cca7e6e0666491c5e7d89fb4a910bf8eaa5150a5",
     "tools/package-reextract.mjs": "2b97dba8dfb453648939ae8fe9ed6a3506af81d8",
-    ".github/workflows/release-contract-v2-package.yml": "155f5224bc3a08c1d669db17a6c81dd332f1aa2b",
+    ".github/workflows/release-contract-v2-package.yml": "0e3551dc538e7572c0e866de347e62c14c0c6340",
     ".github/workflows/release-contract-v2.yml": "efa2ead83fd225e6bc0ac42f1522d7e5bb4a82e4",
     "tools/season-adversarial-review-regression.mjs": "32c70ceda3896b703392200702718df13c70ba94",
     "tools/season-browser-review.mjs": "161c1cc0f6eaa17c516f91356d412b00e33f5192",

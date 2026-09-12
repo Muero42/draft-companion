@@ -75,20 +75,19 @@ jobs:
           grep -q "$VERSION" index.html
           grep -q "$VERSION" sw.js
           grep -q "$VERSION" manifest.webmanifest
+          mapfile -t RUNTIME_FILES < <(node --input-type=module -e "import {RUNTIME_FILES} from './tools/runtime-files.mjs'; console.log(RUNTIME_FILES.join('\\n'))")
+          test "${#RUNTIME_FILES[@]}" -eq 17
           PKG="Draft_Companion_${VERSION}_PREINSTALL.zip"
           rm -rf dist && mkdir -p dist/runtime dist/reextract
-          cp index.html app.js decision-policy.js weekly-evidence-v2.js boone-trade-values-v1.mjs styles.css manifest.webmanifest sw.js _worker.js icon.svg live-surface-v3.js live-surface-v3.css expert-board-export.js expert-v2-board.js expert-v3-board.js dist/runtime/
+          cp "${RUNTIME_FILES[@]}" dist/runtime/
           (cd dist/runtime && zip -q "../$PKG" *)
-          test "$(unzip -Z1 "dist/$PKG" | wc -l)" -eq 15
+          test "$(unzip -Z1 "dist/$PKG" | wc -l)" -eq "${#RUNTIME_FILES[@]}"
           unzip -q "dist/$PKG" -d dist/reextract
+          for file in "${RUNTIME_FILES[@]}"; do
+            cmp -s "$file" "dist/reextract/$file"
+          done
           cd dist/reextract
-          node --check app.js
-          node --check decision-policy.js
-          node --check weekly-evidence-v2.js
-          node --check boone-trade-values-v1.mjs
-          node --check live-surface-v3.js
-          node --check expert-v2-board.js
-          node --check expert-v3-board.js
+          for file in *.js *.mjs; do node --check "$file"; done
           ! grep -q "PLAYER_EVIDENCE" live-surface-v3.js
           ! grep -q "JETZT-FENSTER\\|EHER JETZT" live-surface-v3.js
           grep -q "panelSelectable(x.r.panelId)" app.js
