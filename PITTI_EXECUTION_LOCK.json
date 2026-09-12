@@ -13,7 +13,7 @@
     "reconciledBaseMain": "082d77003f6616e290146698641aebe63f37b8c2"
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.196",
+    "appVersion": "v11.8.0-rc4.197",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
