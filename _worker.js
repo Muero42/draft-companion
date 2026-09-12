@@ -1,3 +1,5 @@
+import {POSITIONS,WEEK1_URLS,parseBooneChartHtml,buildBooneTradeValueSnapshot,discoverBooneTradeChartUrls} from './boone-trade-values-v1.mjs';
+
 const UPSTREAM='https://api.fantasypros.com/public/v2/json';
 const ALLOWED_PREFIXES=['/nfl/'];
 
@@ -8,9 +10,20 @@ export default {
     if(url.pathname==='/api/sleeper-adp') return handleSleeperAdp(request,url);
     if(url.pathname==='/api/fp-expert-directory') return handleFpExpertDirectory(request,url);
     if(url.pathname==='/api/expert-ranking') return handleExpertRanking(request,url);
+    if(url.pathname==='/api/boone-trade-values') return handleBooneTradeValues(request,url);
+    if(url.pathname==='/api/nfl-week-context') return handleNflWeekContext(request,url);
     return env.ASSETS.fetch(request);
   }
 };
+
+async function handleNflWeekContext(request,url){
+  if(request.method!=='GET')return json({error:'Nur GET ist erlaubt.'},405);
+  const season=Number(url.searchParams.get('season')),week=Number(url.searchParams.get('week'));
+  if(!Number.isInteger(season)||season<2026||season>2100||!Number.isInteger(week)||week<1||week>18)return json({error:'NFL-Wochenkontext ungültig.'},400);
+  const sourceUrl=`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=${season}&seasontype=2&week=${week}&limit=100`;
+  try{const response=await fetch(sourceUrl,{headers:{accept:'application/json'},cf:{cacheTtl:900,cacheEverything:true}});if(!response.ok)return json({error:`NFL schedule HTTP ${response.status}`},502);const payload=await response.json();return json({season,week,sourceUrl,events:Array.isArray(payload?.events)?payload.events:[]});}
+  catch(error){return json({error:'NFL-Spielplan nicht erreichbar.',detail:error?.message||String(error)},502);}
+}
 
 async function handleFantasyPros(request,url){
   if(request.method==='OPTIONS') return new Response(null,{headers:cors()});
@@ -30,7 +43,9 @@ async function handleFantasyPros(request,url){
       cf:{cacheTtl:0,cacheEverything:false}
     });
     const body=await upstream.text();
-    return new Response(body,{status:upstream.status,headers:{...cors(),'content-type':upstream.headers.get('content-type')||'application/json','x-upstream-status':String(upstream.status),'cache-control':'no-store'}});
+    const headers={...cors(),'content-type':upstream.headers.get('content-type')||'application/json','x-upstream-status':String(upstream.status),'cache-control':'no-store'},retryAfter=upstream.headers.get('retry-after');
+    if(retryAfter)headers['retry-after']=retryAfter;
+    return new Response(body,{status:upstream.status,headers});
   }catch(error){
     return json({error:'FantasyPros nicht erreichbar.',detail:error?.message||String(error)},502);
   }
@@ -38,6 +53,42 @@ async function handleFantasyPros(request,url){
 
 function cors(){return {'access-control-allow-origin':'*','access-control-allow-headers':'x-fp-key,content-type','access-control-allow-methods':'GET,OPTIONS'}}
 function json(value,status=200){return new Response(JSON.stringify(value),{status,headers:{...cors(),'content-type':'application/json','cache-control':'no-store'}})}
+
+const BOONE_DISCOVERY_URL='https://sports.yahoo.com/author/justin-boone/';
+const BOONE_HTML_LIMIT=2*1024*1024;
+async function boundedText(response,limit=BOONE_HTML_LIMIT){
+  const declared=Number(response.headers.get('content-length'));if(Number.isFinite(declared)&&declared>limit)throw new Error('HTML_TOO_LARGE');
+  if(!response.body)throw new Error('HTML_BODY_MISSING');
+  const reader=response.body.getReader(),decoder=new TextDecoder(),parts=[];let bytes=0;
+  try{for(;;){const {done,value}=await reader.read();if(done)break;bytes+=value.byteLength;if(bytes>limit)throw new Error('HTML_TOO_LARGE');parts.push(decoder.decode(value,{stream:true}));}parts.push(decoder.decode());return parts.join('');}
+  finally{reader.releaseLock();}
+}
+async function fetchBooneHtml(url,cacheTtl=1800){
+  const response=await fetch(url,{headers:{accept:'text/html,application/xhtml+xml','user-agent':'Mozilla/5.0 (compatible; PITTI-Companion/11.8; +https://pages.dev)'},cf:{cacheTtl,cacheEverything:true}});
+  if(!response.ok)throw new Error(`HTTP_${response.status}`);return boundedText(response);
+}
+async function handleBooneTradeValues(request,url){
+  if(request.method!=='GET')return json({error:'Nur GET ist erlaubt.'},405);
+  const season=Number(url.searchParams.get('season')),week=Number(url.searchParams.get('week'));
+  if(season!==2026||!Number.isInteger(week)||week<1||week>18)return json({error:'Boone-Kontext ungültig.'},400);
+  const verifiedAt=Date.now();
+  try{
+    const [directoryHtml,playersResponse]=await Promise.all([
+      fetchBooneHtml(BOONE_DISCOVERY_URL,900).catch(()=>''),
+      fetch('https://api.sleeper.app/v1/players/nfl',{headers:{accept:'application/json'},cf:{cacheTtl:86400,cacheEverything:true}})
+    ]);
+    if(!playersResponse.ok)return json({error:`Sleeper players HTTP ${playersResponse.status}`},502);
+    const sleeperPlayers=await playersResponse.json(),discovered=discoverBooneTradeChartUrls(directoryHtml,{week}),charts={};
+    await Promise.all(POSITIONS.map(async position=>{
+      const candidates=[...(week===1?[WEEK1_URLS[position]]:[]),...(discovered[position]||[])].filter((value,index,all)=>value&&all.indexOf(value)===index),errors=[];
+      for(const sourceUrl of candidates){try{const html=await fetchBooneHtml(sourceUrl),parsed=parseBooneChartHtml(html,{position,season,week,sourceUrl,now:verifiedAt});if(parsed.ok){charts[position]=parsed;return;}errors.push(parsed.reason);}catch(error){errors.push(error?.message||String(error));}}
+      charts[position]={ok:false,position,reason:errors.join('|')||'SOURCE_URL_UNAVAILABLE'};
+    }));
+    const snapshot=buildBooneTradeValueSnapshot({charts,sleeperPlayers,season,week,verifiedAt});
+    if(snapshot.status!=='AVAILABLE')return json({error:'Boone Trade Values unvollständig; keine Records freigegeben.',...snapshot,rejections:snapshot.rejections.slice(0,100)},422);
+    return json(snapshot);
+  }catch(error){return json({error:'Boone Trade Values nicht erreichbar.',detail:error?.message||String(error)},502);}
+}
 
 
 async function handleSleeperAdp(request,url){
