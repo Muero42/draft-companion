@@ -106,7 +106,15 @@ const newV244Cases=[
   ['current rc4.197 audit cannot retain v233 findings',d=>d['PITTI_CURRENT_STATE.json'].codex.audit_findings=['v233 pending strict CI/merge']],
 ];
 for(const [name,mutate] of newV244Cases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
+const newV245Cases=[
+  ['v245 rejects stale rc4.197 current source candidate after rc4.198 merge',d=>d['PITTI_CURRENT_STATE.json'].authority.source_candidate='v11.8.0-rc4.197'],
+  ['v245 rejects stale rc4.197 execution-lock appVersion',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.appVersion='v11.8.0-rc4.197'],
+  ['v245 rejects stale rc4.197 sealed source baseline and reconciled-main checkpoint',d=>{d['PITTI_HANDOFF_SEAL.json'].branch_locks.source_baseline='v11.8.0-rc4.197';d['PITTI_HANDOFF_SEAL.json'].branch_locks.reconciled_base_main='a2d3b4395d207ce54ccf90d2e028300ba35d40d1';}],
+  ['v245 rejects false rc4.198 production and device promotion',d=>{d['PITTI_CURRENT_STATE.json'].runtime.deployed_production_version='v11.8.0-rc4.198';d['PITTI_EXECUTION_LOCK.json'].runtime.latestAndroidVersionObserved='v11.8.0-rc4.198';d['PITTI_EXECUTION_LOCK.json'].runtime.testChallengerAndroidObserved=true;}],
+  ['v245 rejects collapse of rc4.198 source package into rc4.196 production',d=>{d['PITTI_CURRENT_STATE.json'].runtime.local_candidate_package.version='v11.8.0-rc4.196';d['PITTI_COMMAND_CONTRACTS.json'].currentBoundary.sourceAuthority='rc4.196 source/main and production/device';}],
+];
+for(const [name,mutate] of newV245Cases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
 const scopedHistorical=structuredClone(baseline);
 scopedHistorical['NEW_CHAT_HANDOFF_CURRENT.md']+='\n## HISTORICAL/SUPERSEDED v242 CONTENT\nrc4.196 is not production deployed; rc4.195 remains current production. PASS_EXACT_MAIN_HEAD applied only to historical head 555487.\n';
 assert.deepEqual(validateAuthority(scopedHistorical),[],'stale v242 statements remain legal only in recognized historical scope');
-console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS legacy=${legacyCases.length} new_v243=${newV243Cases.length} new_authority=${newAuthorityCases.length} external=${externalCases.length} new_v244=${newV244Cases.length} + unchanged pre/post promotion fixtures + historical-scope preservation`);
+console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS legacy=${legacyCases.length} new_v243=${newV243Cases.length} new_authority=${newAuthorityCases.length} external=${externalCases.length} new_v244=${newV244Cases.length} new_v245=${newV245Cases.length} + unchanged pre/post promotion fixtures + historical-scope preservation`);

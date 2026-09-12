@@ -1,4 +1,17 @@
-# rc4.197 post-merge source/package authority — v244
+# rc4.198 post-merge source/package authority — v245
+Handoff generation: `20260912T1317Z-v245`
+
+Canonical main was dynamically verified at `826a1f3327ffac643f3c32217246133ea32bd3ac`. `v11.8.0-rc4.198` is the current source/main authority and has a verified **17-file source-byte/re-extraction parity** package with status `PACKAGED_ONLY_NOT_DEPLOYED`. Archive SHA values are observations scoped to one run/environment and MUST NOT be treated as cross-environment archive-byte identity.
+
+Production and device authority remain `v11.8.0-rc4.196` at exact deployed commit `082d77003f6616e290146698641aebe63f37b8c2`, deployment `da039536-7733-4b07-8f0c-70cc6e0bc8b7`, with verdict `RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED`. `v11.8.0-rc4.195` remains the prior fully accepted rollback reference. No rc4.198 deployment or device evidence is claimed.
+
+PR #156 was squash-merged from reviewed head `931713f8f8beaa70edbfb75041b2c708fae66109` onto base `62d7ecf11774700551b6e5a0497ec054e327a0d7` as commit `826a1f3327ffac643f3c32217246133ea32bd3ac` with tree `1e91afc64a61f4aad08f7fc50d687736211b3d87`. This is historical merge provenance only and proves neither deployment nor device acceptance. The rc4.198 archive SHA is noncanonical run/environment-scoped evidence only.
+
+Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks.
+
+## HISTORICAL/SUPERSEDED v244 CONTENT
+
+# rc4.197 post-merge source/package authority — v244 [HISTORICAL/SUPERSEDED]
 > **Draft candidate:** `v11.8.0-rc4.198` on PR #156 repairs weekly projection chronology, production-shaped broad ECR freshness/aliases, and bounded game-context diagnostics. It is not deployed or device-accepted; canonical main remains rc4.197 and production/device authority remains rc4.196.
 
 Handoff generation: `20260912T0545Z-v244`
