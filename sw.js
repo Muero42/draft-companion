@@ -1,4 +1,4 @@
-const CACHE='draft-companion-v11.8.0-rc4.198-static-v3';
+const CACHE='draft-companion-v11.8.0-rc4.198-static-v4';
 const BACKUP_CACHE='draft-companion-backup-export-v1';
 const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.198','./decision-policy.js','./weekly-evidence-v2.js?v=v11.8.0-rc4.198','./lineup-start-sit-v2.js?v=v11.8.0-rc4.198','./game-context-v1.js?v=v11.8.0-rc4.198','./boone-trade-values-v1.mjs?v=v11.8.0-rc4.198','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.198','./live-surface-v3.css?v=v11.8.0-rc4.198','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
 const BASE='v11.8.0-rc4.198',TARGET='v11.8.0-rc4.198';
@@ -29,6 +29,31 @@ async function transformed(req){
   const h=new Headers(net.headers);h.delete('content-length');h.delete('content-encoding');
   return new Response(text,{status:net.status,statusText:net.statusText,headers:h});
 }
+function proxyTimeoutResponse(code,status=504){return new Response(JSON.stringify({error:code}),{status,headers:{'content-type':'application/json','cache-control':'no-store','x-pitti-proxy-boundary':code}})}
+async function boundedFantasyProsAttempt(request,timeoutMs){
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);
+  try{
+    const retryRequest=new Request(request.url,{method:'GET',headers:request.headers,cache:'no-store',signal:controller.signal});
+    return await fetch(retryRequest);
+  }finally{clearTimeout(timer)}
+}
+async function resilientFantasyPros(request,path){
+  const isRank=path.includes('/consensus-rankings?'),isProjection=path.includes('/projections?');
+  if(!isRank&&!isProjection)return fetch(request);
+  const attempts=isRank?1:2,timeoutMs=isRank?2500:4400;
+  let last=null;
+  for(let i=0;i<attempts;i++){
+    try{
+      const response=await boundedFantasyProsAttempt(request,timeoutMs);
+      last=response;
+      if(response.ok||response.status<500||response.status===429)return response;
+    }catch(error){
+      if(error?.name!=='AbortError'&&i===attempts-1)return proxyTimeoutResponse('FANTASYPROS_NETWORK');
+    }
+  }
+  if(last)return last;
+  return proxyTimeoutResponse(isRank?'FANTASYPROS_RANK_TIMEOUT':'FANTASYPROS_PROJECTION_TIMEOUT');
+}
 self.addEventListener('message',e=>{
   const d=e.data||{};if(d.type!=='PITTI_BACKUP_STORE')return;
   e.waitUntil((async()=>{try{
@@ -58,6 +83,13 @@ self.addEventListener('activate',e=>e.waitUntil((async()=>{
 self.addEventListener('fetch',e=>{
   if(e.request.method!=='GET')return;
   const url=new URL(e.request.url);
+  if(url.origin===SCOPE.origin&&url.pathname==='/api/fantasypros'){
+    const path=url.searchParams.get('path')||'';
+    if(path.includes('/consensus-rankings?')||path.includes('/projections?')){
+      e.respondWith(resilientFantasyPros(e.request,path));
+      return;
+    }
+  }
   if(url.origin===SCOPE.origin&&url.pathname.startsWith('/__backup_download/')){
     e.respondWith((async()=>{const cache=await caches.open(BACKUP_CACHE);return(await cache.match(e.request))||new Response('Backup nicht mehr verfügbar.',{status:404})})());
     return;
