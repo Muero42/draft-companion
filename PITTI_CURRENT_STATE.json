@@ -1,15 +1,15 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260911T1735Z-v243",
-  "updated_at": "2026-09-11T17:35:00Z",
+  "handoff_generation": "20260912T0545Z-v244",
+  "updated_at": "2026-09-12T05:45:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "main",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.196",
+    "source_candidate": "v11.8.0-rc4.197",
     "git_identity_rule": "Current main SHA is verified dynamically from git/GitHub; never hard-code the containing commit as self-authority.",
-    "reconciled_base_main": "082d77003f6616e290146698641aebe63f37b8c2",
+    "reconciled_base_main": "a2d3b4395d207ce54ccf90d2e028300ba35d40d1",
     "postmerge": {
       "checkpoint": "v233",
       "pr": 121,
@@ -66,28 +66,40 @@
       "evidence_scope": "PR #143 source-merge provenance only; source merge does not prove deployment. Production is separately proven by runtime.production_deployment for later canonical main 082d770; device acceptance remains false.",
       "deployment_proven": false,
       "device_acceptance_proven": false
+    },
+    "rc4197_source_merge": {
+      "checkpoint": "v244",
+      "pr": 152,
+      "status": "MERGED/HISTORICAL",
+      "source_head": "b5ecfaf0dc40ebbeab06f09dfa99f528530e6db3",
+      "base_head": "c6df4b05b04bc200b5ccd0a827c88f667908e869",
+      "merge_commit": "a2d3b4395d207ce54ccf90d2e028300ba35d40d1",
+      "observed_at": "2026-09-12T05:45:00Z",
+      "evidence_scope": "Fresh Git/GitHub observation for canonical main reconciliation; historical merge provenance only and never deployment/device evidence.",
+      "deployment_proven": false,
+      "device_acceptance_proven": false
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.195",
-    "season_candidate": "v11.8.0-rc4.196 is source-merged and production-deployed; physical canary is PARTIAL PASS / NOT FULLY ACCEPTED",
+    "season_candidate": "v11.8.0-rc4.197 is current source/main and packaged-only; NOT deployed or device observed/accepted",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.196",
+    "test_challenger": "v11.8.0-rc4.197",
     "ci": {
-      "candidate_package": "HISTORICAL_PASS_EXACT_RC4196_SOURCE_MERGE_HEAD",
-      "release_contract_v2": "HISTORICAL_PASS_EXACT_RC4196_SOURCE_MERGE_HEAD",
-      "project_guardrails": "HISTORICAL_PASS_EXACT_RC4196_SOURCE_MERGE_HEAD",
-      "validated_code_head": "555487237c9075d5e5ceeb1fee196f4763f87cc3",
-      "status": "HISTORICAL_SOURCE_MERGE_CI_NOT_CURRENT_MAIN_AUTHORITY",
-      "evidence_scope": "Checks observed for historical rc4.196 source-merge head 555487 only; not exact-main-head evidence for reconciled canonical main 082d770.",
+      "status": "LOCAL_REVERIFICATION_PASS_REMOTE_EXACT_HEAD_DYNAMIC",
+      "validated_code_head": "a2d3b4395d207ce54ccf90d2e028300ba35d40d1",
+      "candidate_package": "LOCAL_PASS_SOURCE_BYTE_PARITY",
+      "release_contract_v2": "LOCAL_STRICT_PASS",
+      "project_guardrails": "LOCAL_PASS",
+      "evidence_scope": "Local post-merge reconciliation verification at canonical main plus authority-only branch changes; GitHub exact-head checks remain dynamically verified before dependent continuation.",
       "current_exact_main_head_ci": "DYNAMIC_EXTERNAL_VERIFICATION_REQUIRED_BEFORE_DEPENDENT_CONTINUATION_OR_PROMOTION"
     },
     "android_accepted": "v11.8.0-rc4.195",
-    "preview_candidate": "v11.8.0-rc4.196 production deployed on exact main 082d770; physical acceptance blocked",
+    "preview_candidate": "v11.8.0-rc4.197 packaged-only / NOT deployed",
     "android_authority": "v11.8.0-rc4.196 latest observed production runtime; NOT FULLY ACCEPTED",
-    "latest_package_sha256": "sha256:a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d",
-    "package_reference_run": null,
+    "latest_package_sha256": null,
+    "package_reference_run": "LOCAL_REEXTRACTION_20260912T0545Z_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
     "deployed_pages_head": "082d77003f6616e290146698641aebe63f37b8c2",
     "installed_android": "v11.8.0-rc4.196",
@@ -120,7 +132,7 @@
       "classification": "RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED"
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.196",
-    "source_candidate_status": "PRODUCTION_DEPLOYED_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED",
+    "source_candidate_status": "PACKAGED_ONLY_NOT_DEPLOYED",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -181,13 +193,14 @@
         "candidate_package": "FAIL_STALE_BOOTSTRAP_RENDER_ASSERT_REPAIRED"
       }
     },
-    "package_reference_scope": "rc4.196 byte-exact 17-file package identity; separate from verified production deployment evidence",
+    "package_reference_scope": "rc4.197 source-byte-exact 17-file package/re-extraction parity; archive SHA is run/environment-scoped and is not cross-environment identity",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.196",
+      "version": "v11.8.0-rc4.197",
       "files": 17,
-      "sha256": "sha256:a654422c907e3127335c20df1956fc974442c3eb3be011a5d8eb1e9b71f4500d",
-      "status": "PACKAGE_IDENTITY_VERIFIED_SEPARATE_FROM_DEPLOYMENT",
-      "source_scope": "MERGED_TO_CANONICAL_MAIN_VIA_PR143; identity preserved independently of production/device state"
+      "sha256": null,
+      "status": "PACKAGED_ONLY_NOT_DEPLOYED",
+      "source_scope": "CANONICAL_MAIN_a2d3b4395d207ce54ccf90d2e028300ba35d40d1; source-byte parity verified independently of production/device state",
+      "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_OBSERVATION_NOT_CANONICAL_IDENTITY"
     },
     "deployment_parity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; ARBITRARY_BYTE_PARITY_NOT_PROVEN",
     "deployed_production_version": "v11.8.0-rc4.196",
@@ -257,7 +270,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "Canonical main dynamically verified at 082d77003f6616e290146698641aebe63f37b8c2 for v243; rc4.196 source is merged and its exact commit production deployment is verified. Physical canary is RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED; rc4.195 is prior fully accepted rollback reference, not current production.",
+  "source_authority": "Canonical main dynamically verified at a2d3b4395d207ce54ccf90d2e028300ba35d40d1 for v244; rc4.197 is current source/main and packaged-only, NOT deployed. Production/device authority remains rc4.196 with RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED; rc4.195 remains prior fully accepted rollback.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -295,6 +308,10 @@
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "v244-rc4197-postmerge-authority-reconciliation",
+        "result": "rc4.197 current source/main and 17-file packaged-only authority reconciled; production/device remain rc4.196, rc4.195 prior accepted rollback; no runtime/product bytes changed."
+      },
       {
         "id": "v243-authority-contract-final-repair",
         "result": "Scoped 555487 CI as historical-only; restored source-merge deployment_proven=false; recognized HISTORICAL/SUPERSEDED v242 CONTENT structurally and added active-scope escape negatives. Runtime/product bytes unchanged.",
@@ -499,30 +516,31 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260911T1735Z-v243",
+    "generation": "20260912T0545Z-v244",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.196 is production-deployed but not fully physically accepted; runtime repair, merge, and deployment remain separate work packages.",
+    "resume": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.197 is current source/main and packaged-only, NOT deployed; production/device authority remains rc4.196 and rc4.195 remains the prior fully accepted rollback.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "QB2_AUTHORITY_REPAIR; Git/GitHub HEAD and CI remain dynamic, never inherited from prior reviewed commits"
+    "refresh_scope": "RC4.197_POSTMERGE_AUTHORITY_RECONCILIATION; Git/GitHub HEAD and CI remain dynamic, never inherited from prior reviewed commits"
   },
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260911T1735Z-v243",
+  "handoffGeneration": "20260912T0545Z-v244",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
-    "local_main_verified": "2749537945ec7e6b96d95e2f6b55a26e455124fa",
+    "local_main_verified": "a2d3b4395d207ce54ccf90d2e028300ba35d40d1",
     "working_tree_at_precheck": "clean",
-    "audit_result": "FAIL_CLOSED_ON_RESIDUAL_POSTMERGE_STATE_POINTERS",
+    "audit_result": "POSTMERGE_RC4197_SOURCE_LOCK_RECONCILED",
     "audit_findings": [
-      "PITTI_CURRENT_STATE.json:153-154 v233 pending strict CI/merge",
-      "PITTI_NEW_CHAT_BOOTSTRAP.md:9 v233 merge still current"
+      "rc4.197 source/main advanced while the post-merge execution lock and seal source baseline remained stale at rc4.196",
+      "v244 reconciled CURRENT/LOCK/COMMAND/SEAL and handoff aliases while preserving rc4.196 production/device authority and rc4.195 prior accepted rollback"
     ],
-    "scope": "HISTORICAL/SUPERSEDED audit evidence; no operative branch or permission authority"
+    "scope": "HISTORICAL/SUPERSEDED audit evidence; no operative branch or permission authority",
+    "verified_starting_branch_head": "5259735222cd1ab5ac74f3a336e0af3dce0502fb"
   },
   "historical_superseded": {
     "classification": "HISTORICAL/SUPERSEDED; never current authority or executable queue",
