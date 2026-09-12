@@ -1,19 +1,19 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-12T05:45:00Z",
+  "updatedAt": "2026-09-12T13:17:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Canonical main dynamically verified at a2d3b4395d207ce54ccf90d2e028300ba35d40d1 for v244; rc4.197 is current source/main and packaged-only, NOT deployed. Production/device authority remains rc4.196 with RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED; rc4.195 remains prior fully accepted rollback. Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.197 is current source/main and packaged-only, NOT deployed; production/device authority remains rc4.196 and rc4.195 remains the prior fully accepted rollback. never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Canonical main dynamically verified at 826a1f3327ffac643f3c32217246133ea32bd3ac for v245; rc4.198 is current source/main and packaged-only, NOT deployed. Production/device authority remains rc4.196 with RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED; rc4.195 remains prior fully accepted rollback. Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.198 is current source/main and packaged-only, NOT deployed; production/device authority remains rc4.196 and rc4.195 remains the prior fully accepted rollback. never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
-    "reconciledBaseMain": "a2d3b4395d207ce54ccf90d2e028300ba35d40d1"
+    "reconciledBaseMain": "826a1f3327ffac643f3c32217246133ea32bd3ac"
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.197",
+    "appVersion": "v11.8.0-rc4.198",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
@@ -21,7 +21,7 @@
     "latestAndroidObserved": "v11.8.0-rc4.196 RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED",
     "latestPreinstallVerified": "HISTORICAL/SUPERSEDED: rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "HISTORICAL/SUPERSEDED: v11.8.0-rc4.107",
-    "preinstallArtifact": "rc4.197 17-file source-byte-parity package (separate from deployment)",
+    "preinstallArtifact": "rc4.198 17-file source-byte-parity package (separate from deployment)",
     "preinstallSha256": null,
     "preinstallRuntimeFiles": 17,
     "latestSourceRegressionVerified": "HISTORICAL prior regression observation; current local checks must run on repaired bytes",
@@ -30,9 +30,9 @@
     "androidAuthority": "v11.8.0-rc4.196 latest observed production runtime; NOT FULLY ACCEPTED",
     "android_authority": "v11.8.0-rc4.196 latest observed production runtime; NOT FULLY ACCEPTED",
     "deployedPagesAppByteParityWithMain": false,
-    "preinstallReferenceRun": "LOCAL_REEXTRACTION_20260912T0545Z_ARCHIVE_SHA_NONCANONICAL",
+    "preinstallReferenceRun": "LOCAL_REEXTRACTION_20260912T1317Z_ARCHIVE_SHA_NONCANONICAL",
     "preinstallReferenceArtifactId": null,
-    "preinstallHashSemantics": "rc4.197 source-byte parity; archive SHA is run/environment-scoped and cannot establish cross-environment identity.",
+    "preinstallHashSemantics": "rc4.198 source-byte parity; archive SHA is run/environment-scoped and cannot establish cross-environment identity.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.196",
     "latestAndroidFunctionalVerified": "v11.8.0-rc4.196 RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED",
     "testChallengerAndroidObserved": false,
@@ -74,11 +74,11 @@
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.197",
+      "version": "v11.8.0-rc4.198",
       "files": 17,
       "sha256": null,
       "status": "PACKAGED_ONLY_NOT_DEPLOYED",
-      "sourceScope": "CANONICAL_MAIN_a2d3b4395d207ce54ccf90d2e028300ba35d40d1",
+      "sourceScope": "CANONICAL_MAIN_826a1f3327ffac643f3c32217246133ea32bd3ac",
       "archiveShaSemantics": "RUN_AND_ENVIRONMENT_SCOPED_NOT_CANONICAL"
     },
     "acceptedRollback": "v11.8.0-rc4.195",
@@ -146,11 +146,11 @@
       ],
       "waitingExternalRule": "waiting_external is a scheduling state, never a global stop condition unless ready=[] and no new autonomous lane can be derived.",
       "userOutputExamplesForbidden": [
-        "AUTO l\u00e4uft",
+        "AUTO läuft",
         "ich mache weiter",
-        "CI l\u00e4uft",
+        "CI läuft",
         "Commit erstellt",
-        "keine Nutzerhandlung n\u00f6tig"
+        "keine Nutzerhandlung nötig"
       ]
     },
     "noVisibleResponseWhileReadyWorkExists": true,
@@ -291,11 +291,11 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260912T0545Z-v244",
+    "generation": "20260912T1317Z-v245",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.197 is current source/main and packaged-only, NOT deployed; production/device authority remains rc4.196 and rc4.195 remains the prior fully accepted rollback.",
+    "resume": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.198 is current source/main and packaged-only, NOT deployed; production/device authority remains rc4.196 and rc4.195 remains the prior fully accepted rollback.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -315,7 +315,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260912T0545Z-v244",
+  "handoff_generation": "20260912T1317Z-v245",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -350,8 +350,8 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260912T0545Z-v244",
+  "handoffGeneration": "20260912T1317Z-v245",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-09-12T05:45:00Z",
-  "exactNextAction": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.197 is current source/main and packaged-only, NOT deployed; production/device authority remains rc4.196 and rc4.195 remains the prior fully accepted rollback."
+  "updated_at": "2026-09-12T13:17:00Z",
+  "exactNextAction": "Before continuation or promotion, dynamically verify canonical Git/GitHub authority and exact-head checks, then follow the authorized work package. rc4.198 is current source/main and packaged-only, NOT deployed; production/device authority remains rc4.196 and rc4.195 remains the prior fully accepted rollback."
 }
