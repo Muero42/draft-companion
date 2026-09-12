@@ -51,10 +51,7 @@ assert.throws(()=>evidence.atomicWrite(failingStorage,snapshot),e=>e?.code==='ST
 assert.equal(failingStorage.getItem(evidence.CACHE_KEY),prior,'failed atomic publish must preserve the prior current snapshot');
 assert.equal(failingMemory.has(evidence.TEMP_KEY),false,'quota failure must not strand a second full pending snapshot');
 
-// Regression for the physical Android failure: the old implementation staged a full
-// TEMP copy before CURRENT. Under realistic localStorage pressure that doubled peak
-// demand and could fail even though a direct atomic replacement fits. A stale pending
-// copy from such a failure must be removed before the replacement is attempted.
+// A stale pending copy from the old double-staging implementation is safe to remove.
 const text=JSON.stringify(snapshot),pressureMemory=new Map([
   [evidence.CACHE_KEY,prior],
   [evidence.TEMP_KEY,'x'.repeat(text.length)],
@@ -76,32 +73,6 @@ evidence.atomicWrite(pressureStorage,snapshot);
 assert.equal(JSON.parse(pressureMemory.get(evidence.CACHE_KEY)).snapshotId,snapshot.snapshotId,'direct replacement must succeed without double-staging the payload');
 assert.equal(pressureMemory.has(evidence.TEMP_KEY),false,'stale pending snapshot must be removed');
 assert.equal(pressureMemory.get('v118_decisionFixtures'),'ACTIVE_EVIDENCE','active decision evidence must never be pruned');
-
-// If direct replacement still exceeds quota, only the same explicitly rebuildable /
-// historical keys already used by the app quota policy may be evicted before one retry.
-const recoveryMemory=new Map([
-  [evidence.CACHE_KEY,prior],
-  ['v118_decisionFixtures','ACTIVE_EVIDENCE'],
-  ['v118_returnValidation','x'.repeat(text.length)],
-  ['v117_researchEvidence','x'.repeat(text.length)]
-]);
-const recoveryLimit=text.length+prior.length+'ACTIVE_EVIDENCE'.length+256;
-const recoveryStorage={
-  setItem(k,v){
-    let total=0;
-    for(const [key,value] of recoveryMemory)total+=key===k?0:String(value).length;
-    total+=String(v).length;
-    if(total>recoveryLimit){const e=new Error('QuotaExceededError');e.name='QuotaExceededError';e.code=22;throw e}
-    recoveryMemory.set(k,v);
-  },
-  getItem:k=>recoveryMemory.get(k)??null,
-  removeItem:k=>recoveryMemory.delete(k)
-};
-evidence.atomicWrite(recoveryStorage,snapshot);
-assert.equal(JSON.parse(recoveryMemory.get(evidence.CACHE_KEY)).snapshotId,snapshot.snapshotId,'quota recovery retry must publish the verified snapshot');
-assert.equal(recoveryMemory.get('v118_decisionFixtures'),'ACTIVE_EVIDENCE','active decision evidence must survive quota recovery');
-assert.equal(recoveryMemory.has('v118_returnValidation'),false);
-assert.equal(recoveryMemory.has('v117_researchEvidence'),false);
 
 const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8'),valueStart=app.indexOf('function seasonEvidenceValue('),valueEnd=app.indexOf('\nfunction seasonEvidenceCache',valueStart),context={Date,Number,String,Array,Object,RegExp,Set,PittiWeeklyEvidenceV2:evidence};
 vm.createContext(context);vm.runInContext(app.slice(valueStart,valueEnd)+';globalThis.pick=seasonEvidenceValue;',context);
@@ -127,8 +98,6 @@ for(const mutation of [
 ])assert.notEqual(context.pick([mutation(retrievalRecord)],retrievalRecord.playerId,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED');
 assert.notEqual(context.pick([{...retrievalRecord,metric:'weekly_rank',unit:'POSITIONAL_RANK'}],retrievalRecord.playerId,'weekly_rank',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED','retrieval chronology must not leak to rank evidence');
 assert.equal(evidence.mapFantasyProsPlayer({player_id:'missing',player_name:'QB Player 0',player_position_id:'QB',player_team_id:'AAA'},indexes).reason,'NAME_POSITION_COLLISION');
-
-console.log('WEEKLY_EVIDENCE_V2_REGRESSION_PASS');
 
 // Weekly rank lane remains independent from projections and labels broad ECR honestly.
 const rankPayloads={};
@@ -159,3 +128,46 @@ const mixedRanked=evidence.buildSnapshot({season,week,scoring:'HALF',projectionP
 assert.equal(mixedRanked.lanes.expertWeeklyRanks.coverage.positions.QB.staleOrAmbiguousTimeCount,2);
 assert.equal(mixedRanked.lanes.expertWeeklyRanks.coverage.positions.QB.status,'UNAVAILABLE','fresh-row minimum remains fail closed');
 assert(mixedRanked.records.some(x=>x.metric==='projected_points'),'rank freshness failure must retain projections');
+
+// Physical rc4.198 regression: when localStorage cannot fit the full projection+rank
+// snapshot, replacing the previous current snapshot with a smaller projection-only
+// snapshot must succeed without deleting protected research, return validation or active
+// decision evidence. Rank evidence fails closed and projections remain consumable.
+const quotaSnapshot=structuredClone(productionRanked);
+const previousProjectionOnly=evidence.projectionOnlyStorageSnapshot(quotaSnapshot);
+assert(previousProjectionOnly&&previousProjectionOnly.records.every(row=>row.metric==='projected_points'));
+const previousText=JSON.stringify({...previousProjectionOnly,snapshotId:'previous-weekly'}),fullText=JSON.stringify(quotaSnapshot),projectionOnlyText=JSON.stringify(previousProjectionOnly);
+assert(fullText.length>projectionOnlyText.length,'quota fallback fixture requires full snapshot to be larger');
+const protectedResearch='RESEARCH_EVIDENCE_'+('r'.repeat(4096)),protectedReturns='RETURN_VALIDATION_'+('v'.repeat(4096)),protectedDecision='ACTIVE_EVIDENCE_'+('d'.repeat(4096));
+const quotaMemory=new Map([
+  [evidence.CACHE_KEY,previousText],
+  ['v117_researchEvidence',protectedResearch],
+  ['v118_returnValidation',protectedReturns],
+  ['v118_decisionFixtures',protectedDecision]
+]);
+const protectedSize=protectedResearch.length+protectedReturns.length+protectedDecision.length;
+const quotaLimit=protectedSize+previousText.length+Math.max(4096,Math.floor((fullText.length-projectionOnlyText.length)/3));
+assert(protectedSize+projectionOnlyText.length<quotaLimit&&protectedSize+fullText.length>quotaLimit,'quota fixture must allow projection-only replacement but reject full snapshot');
+const quotaStorage={
+  setItem(k,v){
+    let total=0;
+    for(const [key,value] of quotaMemory)total+=key===k?0:String(value).length;
+    total+=String(v).length;
+    if(total>quotaLimit){const e=new Error('QuotaExceededError');e.name='QuotaExceededError';e.code=22;throw e}
+    quotaMemory.set(k,v);
+  },
+  getItem:k=>quotaMemory.get(k)??null,
+  removeItem:k=>quotaMemory.delete(k)
+};
+const quotaResult=evidence.atomicWrite(quotaStorage,quotaSnapshot),persistedQuota=JSON.parse(quotaMemory.get(evidence.CACHE_KEY));
+assert.equal(quotaResult.persistence?.mode,'LOCAL_STORAGE_PROJECTION_ONLY');
+assert.equal(persistedQuota.lanes.projections.status,'AVAILABLE');
+assert.equal(persistedQuota.lanes.expertWeeklyRanks.status,'UNAVAILABLE');
+assert.equal(persistedQuota.panel.weeklyRank.status,'UNAVAILABLE');
+assert(persistedQuota.records.length>0&&persistedQuota.records.every(row=>row.metric==='projected_points'));
+assert.equal(quotaMemory.get('v117_researchEvidence'),protectedResearch,'append-only research evidence must survive weekly quota recovery');
+assert.equal(quotaMemory.get('v118_returnValidation'),protectedReturns,'return validation evidence must survive weekly quota recovery');
+assert.equal(quotaMemory.get('v118_decisionFixtures'),protectedDecision,'active decision evidence must survive weekly quota recovery');
+assert.equal(context.pick(persistedQuota.records,persistedQuota.records[0].playerId,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED','projection-only persisted fallback must remain consumable');
+
+console.log('WEEKLY_EVIDENCE_V2_REGRESSION_PASS');
