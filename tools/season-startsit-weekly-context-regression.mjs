@@ -24,5 +24,10 @@ const event=(id,home,away,indoor=false)=>({id,date:'2026-09-13T17:00:00Z',compet
 const events=[event('1','AAA','BBB'),event('2','CCC','DDD',true)];
 const snap=game.buildSnapshot({season:2026,week,events,verifiedAt:now,sourceUrl:'https://site.api.espn.com/test'});assert.equal(game.validateSnapshot(snap,{season:2026,week},now).ok,true);assert.equal(game.contextForTeam(snap,'AAA',now).opponent,'BBB');assert.equal(game.contextForTeam(snap,'CCC',now).weather.reason,'INDOOR_NO_WEATHER_REQUIRED');
 const conflict=game.buildSnapshot({season:2026,week,events:[...events,event('3','AAA','EEE')],verifiedAt:now,sourceUrl:'https://site.api.espn.com/test'});assert.equal(conflict.status,'PARTIAL');
+assert.equal(conflict.rejections[0].reason,'DUPLICATE_TEAM_ACROSS_EVENTS');
+assert.deepEqual(conflict.coverage,{sourceEvents:3,acceptedGames:2,acceptedTeams:4,games:2,teams:4});
+const incomplete=game.buildSnapshot({season:2026,week,events:[event('1','AAA','BBB'),{id:'bad',date:new Date(now+9999).toISOString(),competitions:[{competitors:[{homeAway:'home',team:{abbreviation:'CCC'}},{homeAway:'away',team:{abbreviation:'DDD'}}]}]}],verifiedAt:now,sourceUrl:'https://site.api.espn.com/test'});
+assert.equal(incomplete.status,'PARTIAL');assert.equal(incomplete.rejections[0].reason,'MISSING_VENUE');assert.equal(incomplete.games.length,0,'partial week remains fail closed');
+const failed=game.failureSnapshot({season:2026,week,httpStatus:503,reason:'HTTP_ERROR',verifiedAt:now});assert.equal(failed.status,'UNAVAILABLE');assert.deepEqual(failed.rejections,[{eventId:null,reason:'HTTP_ERROR',httpStatus:503}]);
 assert.equal(game.impliedTeamTotal({total:45}).status,'UNAVAILABLE');
 console.log('SEASON_STARTSIT_WEEKLY_CONTEXT_REGRESSION_PASS');
