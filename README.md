@@ -1,4 +1,6 @@
 # rc4.197 post-merge source/package authority — v244
+> **Draft candidate:** `v11.8.0-rc4.198` on PR #156 repairs weekly projection chronology, production-shaped broad ECR freshness/aliases, and bounded game-context diagnostics. It is not deployed or device-accepted; canonical main remains rc4.197 and production/device authority remains rc4.196.
+
 Handoff generation: `20260912T0545Z-v244`
 
 Canonical main was dynamically verified at `a2d3b4395d207ce54ccf90d2e028300ba35d40d1`. `v11.8.0-rc4.197` is the current source/main authority and has a verified **17-file source-byte/re-extraction parity** package with status `PACKAGED_ONLY_NOT_DEPLOYED`. Archive SHA values are observations scoped to one run/environment and MUST NOT be treated as cross-environment archive-byte identity.
