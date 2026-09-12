@@ -165,32 +165,57 @@
 
   const storageQuotaError=error=>error?.name==='QuotaExceededError'||Number(error?.code)===22;
   const safeRemove=(storage,key)=>{try{storage.removeItem(key)}catch{}};
+  function projectionOnlyStorageSnapshot(snapshot){
+    const records=(Array.isArray(snapshot?.records)?snapshot.records:[]).filter(record=>record?.metric==='projected_points');
+    if(snapshot?.lanes?.projections?.status!=='AVAILABLE'||!records.length)return null;
+    return{
+      ...snapshot,
+      status:'DEGRADED',
+      records,
+      rejections:[...(Array.isArray(snapshot.rejections)?snapshot.rejections:[]),{lane:'expertWeeklyRanks',reason:'STORAGE_QUOTA_PROJECTION_ONLY'}],
+      lanes:{...snapshot.lanes,expertWeeklyRanks:{...(snapshot.lanes?.expertWeeklyRanks||{}),status:'UNAVAILABLE',reason:'STORAGE_QUOTA_PROJECTION_ONLY'}},
+      panel:{...snapshot.panel,weeklyRank:{status:'UNAVAILABLE',sources:[],selectedExperts:[],aggregation:'BROAD_CONSENSUS_NOT_PERSISTED_STORAGE_QUOTA'}},
+      persistence:{mode:'LOCAL_STORAGE_PROJECTION_ONLY',reason:'STORAGE_QUOTA'}
+    };
+  }
   function atomicWrite(storage,snapshot){
-    const text=JSON.stringify(snapshot),validated=JSON.parse(text);
-    if(!validated||validated.schema!==SCHEMA||validated.snapshotId!==snapshot.snapshotId)throw new Error('WEEKLY_EVIDENCE_ATOMIC_VERIFY_FAILED');
+    const serialize=candidate=>{
+      const text=JSON.stringify(candidate),validated=JSON.parse(text);
+      if(!validated||validated.schema!==SCHEMA||validated.snapshotId!==snapshot.snapshotId)throw new Error('WEEKLY_EVIDENCE_ATOMIC_VERIFY_FAILED');
+      return text;
+    };
+    const commit=candidate=>{
+      const text=serialize(candidate);
+      storage.setItem(CACHE_KEY,text);
+      const current=JSON.parse(storage.getItem(CACHE_KEY)||'null');
+      if(!current||current.schema!==SCHEMA||current.snapshotId!==snapshot.snapshotId)throw new Error('WEEKLY_EVIDENCE_ATOMIC_VERIFY_FAILED');
+      return current;
+    };
 
     // Web Storage setItem is atomic: if a replacement cannot be stored, the previous
     // value remains unchanged. Do not stage a second full snapshot in TEMP_KEY because
     // that doubles peak localStorage demand and can strand a full pending copy after a
     // QuotaExceededError. Remove any stale pending copy left by older builds first.
     safeRemove(storage,TEMP_KEY);
-    const commit=()=>{
-      storage.setItem(CACHE_KEY,text);
-      const current=JSON.parse(storage.getItem(CACHE_KEY)||'null');
-      if(!current||current.schema!==SCHEMA||current.snapshotId!==snapshot.snapshotId)throw new Error('WEEKLY_EVIDENCE_ATOMIC_VERIFY_FAILED');
-      return snapshot;
-    };
-
-    try{return commit();}
+    try{return commit(snapshot);}
     catch(first){
       if(!storageQuotaError(first))throw first;
-      // Match the existing app quota policy: only obsolete duplicates and explicitly
-      // rebuildable/history caches may be evicted. Current decision evidence and the
-      // previous verified Weekly Evidence snapshot are never deleted for recovery.
-      for(const key of ['v7_rankCache','v7_panelRanks','v118_returnValidation','v117_researchEvidence'])safeRemove(storage,key);
-      try{return commit();}
+      // Only obsolete duplicate rank caches are expendable. Research, return-validation,
+      // active decision evidence and the previous verified Weekly Evidence snapshot are
+      // protected and must never be sacrificed merely to make a refresh fit.
+      for(const key of ['v7_rankCache','v7_panelRanks'])safeRemove(storage,key);
+      try{return commit(snapshot);}
       catch(second){
         if(!storageQuotaError(second))throw second;
+        // Rank evidence is optional and already independently fail-closed. If the full
+        // fresh snapshot cannot replace the previous one, persist all verified projection
+        // records without ranks. This is normally smaller than the previous full snapshot
+        // and keeps Start/Sit/Waiver projection evidence usable under storage pressure.
+        const projectionOnly=projectionOnlyStorageSnapshot(snapshot);
+        if(projectionOnly){
+          try{return commit(projectionOnly);}
+          catch(third){if(!storageQuotaError(third))throw third;}
+        }
         const error=new Error('Weekly Evidence konnte wegen ausgeschöpftem lokalem Speicher nicht persistiert werden.');
         error.name='QuotaExceededError';
         error.code='STORAGE_QUOTA_EXCEEDED';
@@ -200,5 +225,5 @@
     }
   }
 
-  return{SCHEMA,CACHE_KEY,TEMP_KEY,MAPPING_VERSION,MAX_AGE_MS,EVIDENCE_TTL_MS,POSITIONS,MIN_COUNTS,RANK_MIN_COUNTS,sourceTime,retrievalProjectionChronology,weeklyRecordChronology,sleeperIndexes,mapFantasyProsPlayer,projectionLane,weeklyRankLane,buildSnapshot,validateSnapshot,atomicWrite};
+  return{SCHEMA,CACHE_KEY,TEMP_KEY,MAPPING_VERSION,MAX_AGE_MS,EVIDENCE_TTL_MS,POSITIONS,MIN_COUNTS,RANK_MIN_COUNTS,sourceTime,retrievalProjectionChronology,weeklyRecordChronology,sleeperIndexes,mapFantasyProsPlayer,projectionLane,weeklyRankLane,buildSnapshot,validateSnapshot,projectionOnlyStorageSnapshot,atomicWrite};
 });
