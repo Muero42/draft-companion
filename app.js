@@ -4314,8 +4314,11 @@ function persistSeasonProjectionRetryAfter(results,observedAt=Date.now()){
   const delays=(Array.isArray(results)?results:[]).filter(result=>result?.status==='rejected').map(result=>Number(result.reason?.retryAfterMs)).filter(delay=>Number.isFinite(delay)&&delay>0);
   if(!delays.length)return Number(store.get('pitti.weekly-evidence.v2.retryAfterUntil',0))||0;
   const key='pitti.weekly-evidence.v2.retryAfterUntil',current=Number(store.get(key,0))||0,next=observedAt+Math.max(...delays),until=Math.max(current,next);
-  store.set(key,until);
+  try{store.set(key,until)}catch(error){console.warn('Weekly Evidence Retry-After metadata could not be persisted; verified projection publication continues',error)}
   return until;
+}
+function persistSeasonWeeklyMetadata(key,value){
+  try{store.set(key,value);return true}catch(error){console.warn('Weekly Evidence auxiliary metadata could not be persisted; committed snapshot remains authoritative',key,error);return false}
 }
 function seasonProjectionCoverage(snapshot){
   const positions=snapshot?.lanes?.projections?.coverage?.positions||{},statuses=Object.fromEntries(WEEKLY_PROJECTION_POSITIONS.map(position=>[position,String(positions[position]?.status||'UNAVAILABLE')]));
@@ -4368,8 +4371,8 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     for(const response of rankResponses)if(response.status==='fulfilled'){const [position,payload]=response.value;if(payload)rankingPayloads[position]=payload;}
     const snapshot=api.buildSnapshot({season,week,scoring:els.scoring.value,projectionPayloads:payloads,rankingPayloads,sleeperPlayers:lastDraftContext.players,priorSnapshot:persistedProjectionSnapshot,verifiedAt:Date.now()});
     const persistedSnapshot=api.atomicWrite(localStorage,{...snapshot,refreshTrigger:trigger});
-    try{const contextApi=globalThis.PittiGameContextV1,response=await fetch(`/api/nfl-week-context?season=${season}&week=${week}`,{cache:'no-store'}),data=await response.json();if(contextApi){const gameSnapshot=response.ok?contextApi.buildSnapshot({...data,verifiedAt:Date.now()}):contextApi.failureSnapshot({season,week,httpStatus:response.status,reason:'HTTP_ERROR',verifiedAt:Date.now()});store.set(contextApi.CACHE_KEY,gameSnapshot);}}catch(error){const contextApi=globalThis.PittiGameContextV1;if(contextApi)store.set(contextApi.CACHE_KEY,contextApi.failureSnapshot({season,week,reason:'FETCH_OR_JSON_ERROR',verifiedAt:Date.now()}));console.warn('Game context unavailable; lineup lock/opponent remains fail-closed',error);}
-    store.set('pitti.weekly-evidence.v2.lastSuccess',persistedSnapshot.lastSuccessAt);
+    try{const contextApi=globalThis.PittiGameContextV1,response=await fetch(`/api/nfl-week-context?season=${season}&week=${week}`,{cache:'no-store'}),data=await response.json();if(contextApi){const gameSnapshot=response.ok?contextApi.buildSnapshot({...data,verifiedAt:Date.now()}):contextApi.failureSnapshot({season,week,httpStatus:response.status,reason:'HTTP_ERROR',verifiedAt:Date.now()});persistSeasonWeeklyMetadata(contextApi.CACHE_KEY,gameSnapshot);}}catch(error){const contextApi=globalThis.PittiGameContextV1;if(contextApi)persistSeasonWeeklyMetadata(contextApi.CACHE_KEY,contextApi.failureSnapshot({season,week,reason:'FETCH_OR_JSON_ERROR',verifiedAt:Date.now()}));console.warn('Game context unavailable; lineup lock/opponent remains fail-closed',error);}
+    persistSeasonWeeklyMetadata('pitti.weekly-evidence.v2.lastSuccess',persistedSnapshot.lastSuccessAt);
     if(lastDraftContext?.season)lastDraftContext.season.current_nfl_week=week;
     completionNote=`Weekly Evidence · W${week} · ${persistedSnapshot.records.length} Records · Ranks ${persistedSnapshot.lanes.expertWeeklyRanks.status} · PITTI-Panel ${persistedSnapshot.panel.weeklyRank.status}`;
     rerenderPostDraftFromContext();
