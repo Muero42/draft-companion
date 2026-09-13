@@ -352,6 +352,6 @@
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
   "handoffGeneration": "20260913T1200Z-v246",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-09-12T13:17:00Z",
+  "updated_at": "2026-09-13T12:00:00Z",
   "exactNextAction": "Dynamically verify local Git and canonical GitHub main/PR/exact-head CI before dependent continuation or promotion. rc4.199 is source/candidate authority in this tree and is NOT production-deployed or device-observed/accepted. Production/device evidence remains rc4.198 at 493e5aac9cea5a7a667efec81e1bdc733935baf9 with RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA; rc4.195 remains the prior fully accepted rollback."
 }
