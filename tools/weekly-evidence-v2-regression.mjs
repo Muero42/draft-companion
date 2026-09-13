@@ -126,6 +126,10 @@ const ranked=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloa
 assert.equal(ranked.lanes.expertWeeklyRanks.status,'AVAILABLE');
 assert.equal(ranked.panel.weeklyRank.status,'BROAD_CONSENSUS_ONLY');
 assert(ranked.records.some(x=>x.metric==='weekly_rank'));
+const partialProjectionFullRanks=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{QB:payloads.QB,RB:payloads.RB,TE:payloads.TE},rankingPayloads:rankPayloads,sleeperPlayers:players,verifiedAt:now});
+assert.equal(partialProjectionFullRanks.lanes.projections.status,'PARTIAL');
+assert.equal(partialProjectionFullRanks.lanes.expertWeeklyRanks.status,'AVAILABLE');
+assert.equal(partialProjectionFullRanks.status,'DEGRADED','fully available ranks must not promote partial projection coverage to top-level AVAILABLE');
 const wrongRank={...rankPayloads,QB:{...rankPayloads.QB,week:2}};
 const degradedRank=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:payloads,rankingPayloads:wrongRank,sleeperPlayers:players,verifiedAt:now});
 assert.equal(degradedRank.lanes.projections.status,'AVAILABLE');
