@@ -40,6 +40,18 @@ assert.deepEqual(evidence.validateSnapshot(unavailable,{season,week,scoring:'HAL
 const retained=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:wrong,sleeperPlayers:players,priorSnapshot:snapshot,verifiedAt:now+1000});
 assert(retained.records.some(record=>record.position==='QB'&&record.verifiedAt===now),'still-valid prior failed-position records may be retained without restamping');
 assert.equal(retained.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE','retained records must not falsely mark a failed fresh position available');
+// A mapped fresh response cannot claim replacement ownership until its provider
+// chronology passes the same validation used by consumers. Another healthy position
+// makes this a production-shaped partial snapshot that is actually publishable.
+const futureChronology={...payloads,QB:{...payloads.QB,updated:'2026-09-11T12:00:00Z'}};
+const priorQb=snapshot.records.filter(record=>record.position==='QB');
+const chronologyRetained=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:futureChronology,sleeperPlayers:players,priorSnapshot:snapshot,verifiedAt:now+1000});
+assert.equal(chronologyRetained.lanes.projections.coverage.positions.QB.status,'PARTIAL');
+assert.equal(chronologyRetained.lanes.projections.coverage.positions.RB.status,'AVAILABLE','another healthy position keeps the partial snapshot publishable');
+assert.deepEqual(chronologyRetained.records.filter(record=>record.position==='QB'),priorQb,'invalid fresh chronology must retain prior projection byte-for-value without restamping');
+const chronologyStorage=new Map(),chronologyStore={setItem:(key,value)=>chronologyStorage.set(key,value),getItem:key=>chronologyStorage.get(key)??null,removeItem:key=>chronologyStorage.delete(key)};
+evidence.atomicWrite(chronologyStore,chronologyRetained);
+assert.deepEqual(JSON.parse(chronologyStorage.get(evidence.CACHE_KEY)).records.filter(record=>record.position==='QB'),priorQb,'persisted partial snapshot must preserve chronology-valid prior evidence');
 const allFailed=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{},sleeperPlayers:players,priorSnapshot:snapshot,verifiedAt:now+2000});
 assert.equal(allFailed.lanes.projections.status,'UNAVAILABLE');
 assert.equal(allFailed.lastSuccessAt,snapshot.lastSuccessAt,'an all-position failure cannot claim a fresh success');

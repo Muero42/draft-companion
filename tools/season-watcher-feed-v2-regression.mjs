@@ -19,7 +19,7 @@ async function run(feed){
     watcherEvidenceInput:row=>({id:`watcher_${row.id}`,playerId:String(row.player_id||''),critical:false}),
     appendResearchEvidence:input=>{ingested.push(input);return{added:true,event:input}},
     seasonEvidenceContext:()=>({season:2026,week:1,scoring:'HALF_PPR'}),
-    seasonEvidenceValue:()=>({status:'UNAVAILABLE'}),
+    seasonEvidenceValue:()=>({status:'VERIFIED'}),
     rerenderPostDraftFromContext:()=>{},updateResearchCacheStatus:()=>{}
   };
   vm.createContext(context);vm.runInContext(syncSource,context);
@@ -49,6 +49,16 @@ const laneEvents=[event,{id:'evt-2',player_id:'player-2',fundamental_or_market:'
 const marketOnly=await run({schema:'draft-companion.watcher-feed.v2',gate:{overall:'PASS',market:'PASS',player_state_status:'FAIL'},events:laneEvents});
 assert.deepEqual(marketOnly.ingested.map(x=>x.id),['watcher_evt-1']);
 assert.match(marketOnly.status.textContent,/TEILWEISE VERFÜGBAR · Markt PASS · Player-State FAIL/);
+const seasonEvidence={schema:'pitti.season-evidence.v1',records:[{playerId:'player-2',metric:'snap_share'}],events:[{id:'season-fundamental',player_id:'player-2'}],roleGraphs:[{playerId:'player-2',role:'starter'}],gameContext:[{gameId:'game-1'}]};
+const failedStateEvidence=await run({schema:'draft-companion.watcher-feed.v2',gate:{overall:'PASS',market:'PASS',player_state_status:'FAIL'},seasonEvidence,events:[event]});
+assert.deepEqual(failedStateEvidence.ingested.map(x=>x.id),['watcher_evt-1'],'healthy market events remain ingestible');
+assert(!failedStateEvidence.writes.some(x=>['v190_seasonEvidence','v190_roleGraphs'].includes(x.key)),'failed player-state lane cannot persist season records or role graphs');
+assert(!failedStateEvidence.ingested.some(x=>x.id==='season-fundamental'),'failed player-state lane cannot ingest nested fundamental events');
+assert(failedStateEvidence.writes.some(x=>x.key==='v190_gameContext'),'healthy market lane retains game-context ingestion');
+const healthyStateEvidence=await run({schema:'draft-companion.watcher-feed.v2',gate:{overall:'PASS',market:'PASS',player_state_status:'PASS'},seasonEvidence,events:[]});
+assert(healthyStateEvidence.writes.some(x=>x.key==='v190_seasonEvidence'));
+assert(healthyStateEvidence.writes.some(x=>x.key==='v190_roleGraphs'));
+assert(healthyStateEvidence.ingested.some(x=>x.id==='season-fundamental'),'healthy player-state lane retains nested fundamental ingestion');
 const stateOnly=await run({schema:'draft-companion.watcher-feed.v2',gate:{overall:'PASS',market:'STALE',player_state_status:'PASS'},events:laneEvents});
 assert.deepEqual(stateOnly.ingested.map(x=>x.id),['watcher_evt-2']);
 assert.match(stateOnly.status.textContent,/Markt STALE · Player-State PASS/);
