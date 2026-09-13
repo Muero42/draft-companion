@@ -34,7 +34,37 @@ assert.equal(evidence.mapFantasyProsPlayer({name:'QB Player 1',position_id:'QB',
 const wrong={...payloads,QB:{...payloads.QB,week:2}};
 const unavailable=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:wrong,sleeperPlayers:players,verifiedAt:now});
 assert.equal(unavailable.lanes.projections.status,'PARTIAL');
-assert.equal(unavailable.records.length,0,'partial multi-position fetch must not publish a mixed snapshot');
+assert.equal(unavailable.records.length,Object.values(counts).reduce((a,b)=>a+b,0)-counts.QB,'healthy positions must remain independently publishable');
+assert(!unavailable.records.some(record=>record.position==='QB'),'the failed fresh position must remain unavailable');
+assert.deepEqual(evidence.validateSnapshot(unavailable,{season,week,scoring:'HALF_PPR'},now),{ok:true},'record-valid partial projection evidence remains consumable');
+const retained=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:wrong,sleeperPlayers:players,priorSnapshot:snapshot,verifiedAt:now+1000});
+assert(retained.records.some(record=>record.position==='QB'&&record.verifiedAt===now),'still-valid prior failed-position records may be retained without restamping');
+assert.equal(retained.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE','retained records must not falsely mark a failed fresh position available');
+// An AVAILABLE position is a complete authoritative refresh. If a formerly
+// projected player disappears, that old row must disappear too; only lanes that
+// failed to refresh may retain chronology-valid prior evidence.
+const omittedRbId=snapshot.records.find(record=>record.position==='RB').playerId,newRbId='fresh-rb-replacement';
+const refreshedPlayers={...players,[newRbId]:{full_name:'RB Fresh Replacement',position:'RB',team:'AAA',fantasy_data_id:999999}};
+const refreshedRb={...payloads.RB,players:[...payloads.RB.players.slice(1),{fpid:999999,name:'RB Fresh Replacement',position_id:'RB',team_id:'AAA',stats:{points_half:9.5}}]};
+const authoritativeRb=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{...wrong,RB:refreshedRb},sleeperPlayers:refreshedPlayers,priorSnapshot:snapshot,verifiedAt:now+1000});
+assert.equal(authoritativeRb.lanes.projections.coverage.positions.RB.status,'AVAILABLE');
+assert(!authoritativeRb.records.some(record=>record.metric==='projected_points'&&record.position==='RB'&&record.playerId===omittedRbId),'an AVAILABLE RB refresh must remove an omitted prior RB immediately');
+assert(authoritativeRb.records.some(record=>record.metric==='projected_points'&&record.position==='QB'&&record.verifiedAt===now),'a failed QB lane may still retain chronology-valid prior projections');
+// A mapped fresh response cannot claim replacement ownership until its provider
+// chronology passes the same validation used by consumers. Another healthy position
+// makes this a production-shaped partial snapshot that is actually publishable.
+const futureChronology={...payloads,QB:{...payloads.QB,updated:'2026-09-11T12:00:00Z'}};
+const priorQb=snapshot.records.filter(record=>record.position==='QB');
+const chronologyRetained=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:futureChronology,sleeperPlayers:players,priorSnapshot:snapshot,verifiedAt:now+1000});
+assert.equal(chronologyRetained.lanes.projections.coverage.positions.QB.status,'PARTIAL');
+assert.equal(chronologyRetained.lanes.projections.coverage.positions.RB.status,'AVAILABLE','another healthy position keeps the partial snapshot publishable');
+assert.deepEqual(chronologyRetained.records.filter(record=>record.position==='QB'),priorQb,'invalid fresh chronology must retain prior projection byte-for-value without restamping');
+const chronologyStorage=new Map(),chronologyStore={setItem:(key,value)=>chronologyStorage.set(key,value),getItem:key=>chronologyStorage.get(key)??null,removeItem:key=>chronologyStorage.delete(key)};
+evidence.atomicWrite(chronologyStore,chronologyRetained);
+assert.deepEqual(JSON.parse(chronologyStorage.get(evidence.CACHE_KEY)).records.filter(record=>record.position==='QB'),priorQb,'persisted partial snapshot must preserve chronology-valid prior evidence');
+const allFailed=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{},sleeperPlayers:players,priorSnapshot:snapshot,verifiedAt:now+2000});
+assert.equal(allFailed.lanes.projections.status,'UNAVAILABLE');
+assert.equal(allFailed.lastSuccessAt,snapshot.lastSuccessAt,'an all-position failure cannot claim a fresh success');
 
 const memory=new Map(),storage={setItem(k,v){memory.set(k,v)},getItem:k=>memory.get(k)??null,removeItem:k=>memory.delete(k)};
 evidence.atomicWrite(storage,snapshot);
@@ -106,6 +136,10 @@ const ranked=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloa
 assert.equal(ranked.lanes.expertWeeklyRanks.status,'AVAILABLE');
 assert.equal(ranked.panel.weeklyRank.status,'BROAD_CONSENSUS_ONLY');
 assert(ranked.records.some(x=>x.metric==='weekly_rank'));
+const partialProjectionFullRanks=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{QB:payloads.QB,RB:payloads.RB,TE:payloads.TE},rankingPayloads:rankPayloads,sleeperPlayers:players,verifiedAt:now});
+assert.equal(partialProjectionFullRanks.lanes.projections.status,'PARTIAL');
+assert.equal(partialProjectionFullRanks.lanes.expertWeeklyRanks.status,'AVAILABLE');
+assert.equal(partialProjectionFullRanks.status,'DEGRADED','fully available ranks must not promote partial projection coverage to top-level AVAILABLE');
 const wrongRank={...rankPayloads,QB:{...rankPayloads.QB,week:2}};
 const degradedRank=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:payloads,rankingPayloads:wrongRank,sleeperPlayers:players,verifiedAt:now});
 assert.equal(degradedRank.lanes.projections.status,'AVAILABLE');

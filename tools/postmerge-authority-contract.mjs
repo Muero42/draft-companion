@@ -3,7 +3,13 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 export const AUTHORITY_GATE='VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK';
-const MAIN='826a1f3327ffac643f3c32217246133ea32bd3ac';
+export const GENERATION='20260913T1200Z-v246';
+const SOURCE='v11.8.0-rc4.199';
+const PROD='v11.8.0-rc4.198';
+const PROD_COMMIT='493e5aac9cea5a7a667efec81e1bdc733935baf9';
+const DEPLOYMENT='81598205-07db-47c9-93ef-3a968d460682';
+const DEVICE_VERDICT='RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA';
+const RC4198_MERGE='826a1f3327ffac643f3c32217246133ea32bd3ac';
 const core=['PITTI_CURRENT_STATE.json','PITTI_EXECUTION_LOCK.json','PITTI_COMMAND_CONTRACTS.json','PITTI_HANDOFF_SEAL.json'];
 const docs=['PITTI_NEW_CHAT_BOOTSTRAP.md','NEW_CHAT_HANDOFF_CURRENT.md','HANDOFF_COMPLETENESS_MATRIX.md','PITTI_AUTO_PREFLIGHT.md','PITTI_PROJECT_STATE.md','README.md'];
 // External observations are deliberately not persisted as current checkpoint facts.
@@ -16,7 +22,14 @@ export function validateContinuationEvidence(e) {
   if(e?.prState==='OPEN') {if(e.prHead!==e.head||e.branch==='main'||!e.branch) errors.push('open PR exact-head branch evidence required');}
   else if(e?.prState==='MERGED') {if(e.branch!=='main'||e.head!==e.canonicalHead||e.containingCommitVerified!==true) errors.push('merged canonical containment evidence required');}
   else errors.push('verified PR state required');
-  if(e?.ciHead!==e?.head||e?.checks?.length!==3||!['project_guardrails','release_contract_v2','candidate_package'].every(n=>e.checks.some(x=>x.name===n&&x.result==='PASS'))) errors.push('all three exact-head checks required');
+  const requiredChecks=['project_guardrails','release_contract_v2','candidate_package'];
+  const checks=Array.isArray(e?.checks)?e.checks:[];
+  // Require one authoritative result per required check. Duplicate or unknown rows are
+  // ambiguous external evidence, especially when a stale PASS accompanies a current FAIL.
+  if(e?.ciHead!==e?.head||checks.length!==requiredChecks.length||!requiredChecks.every(name=>{
+    const matching=checks.filter(check=>check?.name===name);
+    return matching.length===1&&matching[0].result==='PASS';
+  })) errors.push('all three unambiguous exact-head checks required');
   if(e?.authorizedWorkPackage!==true) errors.push('current user authorization required');
   return errors;
 }
@@ -34,7 +47,7 @@ export function validateAuthority(data) {
   check(l.league.userQb2Policy==='DRAFT_ONLY_EXCLUSION_AFTER_QB1'&&l.league.userQb2PolicyScope==='DRAFT_ONLY'&&l.canaries.draftQb2MustNotAppearOnUserCoachSurfaceAfterQb1===true&&!Object.hasOwn(l.canaries,'qb2MustNotAppearOnUserCoachSurfaceAfterQb1'),'LOCK.QB2','unscoped QB2 policy forbidden');
   for(const [label,o] of [['LOCK',l],['COMMAND',k]])check(o.qb_policy_reference==='PITTI_CURRENT_STATE.json:qb_policy',label+'.qb_policy_reference','canonical QB policy reference required');
   const generation=c.handoff_generation;
-  check(/^20260912T\d{4}Z-v245$/.test(generation),'CURRENT.handoff_generation','v245 generation required');
+  check(generation===GENERATION,'CURRENT.handoff_generation','v246 generation required');
   for(const [label,o] of [['CURRENT',c],['LOCK',l]]) {
     for(const p of ['gate','nextGate']) check(o[p]===AUTHORITY_GATE,`${label}.${p}`,'promotion-stable gate required; merged checkpoint cannot remain pending');
     check(o.currentWork?.nextGate===AUTHORITY_GATE,`${label}.currentWork.nextGate`,'promotion-stable gate required');
@@ -46,7 +59,7 @@ export function validateAuthority(data) {
   for(const [p,value] of Object.entries({currentGate:k.currentGate,currentResearchGate:k.currentResearchGate,boundary:k.currentBoundary?.currentResearchGate,boundaryNext:k.currentBoundary?.nextGate,season:k.seasonCompanion?.nextGate,seal:s.exact_gate})) check(value===AUTHORITY_GATE,`COMMAND/SEAL.${p}`,'gate drift');
   check(k.handoff_generation===generation&&k.handoffGeneration===generation&&s.handoff_generation===generation,'COMMAND/SEAL.generation','generation drift');
   check(k.exactNextAction===c.handoff.resume&&k.currentBoundary.exactNextAction===c.handoff.resume,'COMMAND.exactNextAction','resume drift');
-  check(k.currentBoundary.reconciledBaseMain===MAIN,'COMMAND.currentBoundary.reconciledBaseMain','source/main reconciliation cannot point to the older production commit');
+  check(k.currentBoundary.reconciledBaseMain==='DYNAMIC_EXTERNAL_EVIDENCE','COMMAND.currentBoundary.reconciledBaseMain','canonical main must remain dynamic external evidence');
   check(c.authority?.postmerge?.pr===121&&c.authority.postmerge.checkpoint==='v233'&&c.authority.postmerge.status==='MERGED/HISTORICAL'&&c.authority.postmerge.pending_merge===false&&c.authority.postmerge.pending_strict_ci===false,'CURRENT.authority.postmerge','PR #121/v233 must be merged/historical, never pending');
   const rc4195=c.authority?.rc4195_source_merge;
   check(rc4195?.checkpoint==='v240'&&rc4195.pr===141&&rc4195.status==='MERGED/HISTORICAL'&&rc4195.source_head==='5661d08a3d1e449f6b5ba505c381ec30bff7ecf0'&&rc4195.base_head==='5e29f285103531b81c7579036e7a885e487e0650'&&rc4195.merge_commit==='f1340a2c2d6248212c7652dc58b2f3323f74b1f5'&&rc4195.deployment_proven===false&&rc4195.device_acceptance_proven===false&&String(rc4195.evidence_scope||'').includes('historical merge provenance'),'CURRENT.authority.rc4195_source_merge','PR #141 merge must be timestamped historical provenance without deployment/device inference');
@@ -56,33 +69,35 @@ export function validateAuthority(data) {
   const rc4197=c.authority?.rc4197_source_merge;
   check(rc4197?.checkpoint==='v244'&&rc4197.pr===152&&rc4197.status==='MERGED/HISTORICAL'&&rc4197.merge_commit==='a2d3b4395d207ce54ccf90d2e028300ba35d40d1'&&rc4197.deployment_proven===false&&rc4197.device_acceptance_proven===false&&String(rc4197.evidence_scope||'').includes('historical merge provenance only'),'CURRENT.authority.rc4197_source_merge','PR #152 source merge must not infer deployment or device acceptance');
   const rc4198=c.authority?.rc4198_source_merge;
-  check(rc4198?.checkpoint==='v245'&&rc4198.pr===156&&rc4198.status==='MERGED/HISTORICAL'&&rc4198.source_head==='931713f8f8beaa70edbfb75041b2c708fae66109'&&rc4198.base_head==='62d7ecf11774700551b6e5a0497ec054e327a0d7'&&rc4198.merge_commit===MAIN&&rc4198.merged_tree==='1e91afc64a61f4aad08f7fc50d687736211b3d87'&&rc4198.deployment_proven===false&&rc4198.device_acceptance_proven===false&&String(rc4198.evidence_scope||'').includes('historical merge provenance only'),'CURRENT.authority.rc4198_source_merge','PR #156 squash-merge provenance must not infer deployment or device acceptance');
-  check(c.authority?.repo==='Muero42/draft-companion'&&c.authority.branch==='main'&&c.authority.source_candidate==='v11.8.0-rc4.198'&&c.authority.reconciled_base_main===MAIN,'CURRENT.authority','canonical source identity drift');
+  check(rc4198?.checkpoint==='v245'&&rc4198.pr===156&&rc4198.status==='MERGED/HISTORICAL'&&rc4198.source_head==='931713f8f8beaa70edbfb75041b2c708fae66109'&&rc4198.base_head==='62d7ecf11774700551b6e5a0497ec054e327a0d7'&&rc4198.merge_commit===RC4198_MERGE&&rc4198.merged_tree==='1e91afc64a61f4aad08f7fc50d687736211b3d87'&&rc4198.deployment_proven===false&&rc4198.device_acceptance_proven===false&&String(rc4198.evidence_scope||'').includes('historical merge provenance only'),'CURRENT.authority.rc4198_source_merge','PR #156 squash-merge provenance must not infer deployment or device acceptance');
+  check(c.authority?.repo==='Muero42/draft-companion'&&c.authority.branch==='DYNAMIC_VERIFICATION_REQUIRED'&&c.authority.source_candidate===SOURCE&&c.authority.reconciled_base_main==='DYNAMIC_EXTERNAL_EVIDENCE','CURRENT.authority','promotion-stable source identity drift');
   check(JSON.stringify(c.authority.promotion)===JSON.stringify({"status":"DYNAMIC_VERIFICATION_REQUIRED","verify_before":["CONTINUATION","PROMOTION"],"sources":["LOCAL_GIT","CANONICAL_GITHUB"],"permission_source":"CURRENT_USER_AUTHORIZED_WORK_PACKAGE","merge_implies_deployment":false,"merge_implies_device_acceptance":false,"unavailable_evidence":"FAIL_CLOSED_DEPENDENT_ACTION","operative_branch":"DYNAMIC_VERIFICATION_REQUIRED","pr_status":"DYNAMIC_VERIFICATION_REQUIRED","exact_head_ci":"DYNAMIC_VERIFICATION_REQUIRED"}),'CURRENT.authority.promotion','dynamic verification and current authorization contract required');
   check(!c.authority.local_repair,'CURRENT.authority.local_repair','operative repair-branch binding forbidden');
   check(c.authority.permission_contract==='AGENTS.md#pitti-codex-permission-contract','CURRENT.authority.permission_contract','canonical permission reference required');
-  check(c.authority.source_scope==='SOURCE_IN_THIS_TREE; canonical main containment is dynamically verified; source/build/package never imply deployment or device acceptance','CURRENT.authority.source_scope','source tree must remain separate from canonical containment and deployment');
+  check(c.authority.source_scope==='SOURCE_IN_THIS_TREE; canonical main containment is dynamically verified; source/build/package/preview never imply production deployment or device acceptance','CURRENT.authority.source_scope','source tree must remain separate from canonical containment and deployment');
+  const candidate=c.authority.rc4199_candidate;
+  check(candidate?.checkpoint==='v246'&&candidate.version===SOURCE&&candidate.status==='SOURCE_CANDIDATE_NOT_PRODUCTION'&&candidate.deployment_proven===false&&candidate.device_observation_proven===false&&candidate.device_acceptance_proven===false&&candidate.pr_state==='DYNAMIC_VERIFICATION_REQUIRED'&&candidate.canonical_containment==='DYNAMIC_VERIFICATION_REQUIRED','CURRENT.authority.rc4199_candidate','rc4.199 must remain a dynamic, non-production source candidate');
+  check(String(c.runtime.preview_candidate||'').includes('non-production'),'CURRENT.runtime.preview_candidate','preview evidence must remain non-production');
   check(c.runtime.candidate_branch==='DYNAMIC_VERIFICATION_REQUIRED','CURRENT.runtime.candidate_branch','operative branch must not be frozen across promotion');
-  check(c.runtime.source_candidate_status==='PACKAGED_ONLY_NOT_DEPLOYED'&&String(c.runtime.season_candidate||'').includes('current source/main')&&String(c.runtime.season_candidate||'').includes('NOT deployed'),'CURRENT.runtime.source merge','rc4.198 source/package must remain separate from production and device authority');
-  check(String(c.runtime.local_candidate_package?.source_scope||'').includes('source-byte parity verified independently of production/device state')&&!Object.hasOwn(c.runtime.local_candidate_package||{},'source_branch'),'CURRENT.runtime.local_candidate_package','package identity must not retain an operative pre-merge branch');
-  check(l.runtime?.appVersion==='v11.8.0-rc4.198'&&s.branch_locks?.source_baseline==='v11.8.0-rc4.198','LOCK/SEAL.runtime','post-merge source lock/checkpoint stale');
-  check(s.branch_locks?.branch==='main'&&s.branch_locks.reconciled_base_main===MAIN&&String(s.branch_locks.codex_work||'').includes('PR #158')&&String(s.note||'').includes('PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED'),'SEAL.rc4198 reconciliation','seal must separate rc4.198 source/package from rc4.196 production/device and rc4.195 rollback');
-  for(const p of ['installed_android','latest_android_observed','latestAndroidVersionObserved']) check(c.runtime[p]==='v11.8.0-rc4.196',`CURRENT.runtime.${p}`,'latest physical version drift');
+  check(c.runtime.source_candidate_status==='SOURCE_CANDIDATE_NOT_PRODUCTION'&&String(c.runtime.season_candidate||'').includes('current source/candidate authority')&&String(c.runtime.season_candidate||'').includes('NOT production-deployed'),'CURRENT.runtime.source merge','rc4.199 source/package must remain separate from production and device authority');
+  check(String(c.runtime.local_candidate_package?.source_scope||'').includes('source-byte parity independently verified')&&!Object.hasOwn(c.runtime.local_candidate_package||{},'source_branch'),'CURRENT.runtime.local_candidate_package','package identity must not retain an operative pre-merge branch');
+  check(l.runtime?.appVersion===SOURCE&&s.branch_locks?.source_baseline===SOURCE,'LOCK/SEAL.runtime','v246 source lock/checkpoint stale');
+  check(s.branch_locks?.branch==='DYNAMIC_VERIFICATION_REQUIRED'&&s.branch_locks.reconciled_base_main==='DYNAMIC_EXTERNAL_EVIDENCE'&&String(s.branch_locks.codex_work||'').includes('v246 rc4.199')&&String(s.note||'').includes(DEVICE_VERDICT),'SEAL.rc4199 reconciliation','seal must separate rc4.199 source/package from rc4.198 production/device and rc4.195 rollback');
+  for(const p of ['installed_android','latest_android_observed','latestAndroidVersionObserved']) check(c.runtime[p]===PROD,`CURRENT.runtime.${p}`,'latest physical version drift');
   const device=c.runtime.latest_device_evidence;
-  check(device?.version==='v11.8.0-rc4.196'&&device.acceptance==='PARTIAL_PASS_NOT_ACCEPTED'&&device.classification==='RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED','CURRENT.runtime.latest_device_evidence','partial physical evidence drift');
-  for(const token of ['weekly rank lane UNAVAILABLE','selected PITTI panel lane UNAVAILABLE','14 realistic skill players']) check(device?.fail?.some(x=>x.includes(token)),`CURRENT.device.fail.${token}`,'active blocker missing');
+  check(device?.version===PROD&&device.acceptance==='PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA'&&device.classification===DEVICE_VERDICT,'CURRENT.runtime.latest_device_evidence','partial physical evidence drift');
   check(c.runtime.accepted_android==='v11.8.0-rc4.195'&&c.runtime.android_accepted==='v11.8.0-rc4.195'&&String(l.runtime.acceptedAndroidAuthority).startsWith('v11.8.0-rc4.195')&&String(s.branch_locks.accepted_rollback).startsWith('v11.8.0-rc4.195'),'rollback','prior fully accepted rollback drift');
-  check(c.runtime.deployed_pages_head==='082d77003f6616e290146698641aebe63f37b8c2'&&c.runtime.deployed_production_version==='v11.8.0-rc4.196'&&c.runtime.deployed_pages_app_byte_parity_with_main===false&&String(c.runtime.deployment_parity).includes('ARBITRARY_BYTE_PARITY_NOT_PROVEN')&&l.runtime.deployedPagesVersion==='v11.8.0-rc4.196'&&l.runtime.deployedPagesAppByteParityWithMain===false&&l.runtime.mainGhPagesParity===false&&k.currentBoundary.deployedPagesVersion==='v11.8.0-rc4.196'&&k.currentBoundary.deployedPagesAppByteParityWithMain===false&&String(k.currentBoundary.deploymentParity).includes('ARBITRARY_BYTE_PARITY_NOT_PROVEN'),'deployment','exact deployment identity must remain separate from unsupported byte parity');
-  check(c.runtime.production_deployment?.status==='VERIFIED_SUCCESS'&&c.runtime.production_deployment.source_commit==='082d77003f6616e290146698641aebe63f37b8c2'&&c.runtime.production_deployment.deployment_id==='da039536-7733-4b07-8f0c-70cc6e0bc8b7','deployment evidence','exact rc4.196 production evidence required');
-  check(c.runtime.android_acceptance_pending===true&&l.runtime.androidVerified===false&&l.runtime.testChallengerAndroidObserved===false&&l.runtime.latestAndroidVersionObserved==='v11.8.0-rc4.196'&&String(l.runtime.androidAuthority).includes('NOT FULLY ACCEPTED')&&l.runtime.android_authority===l.runtime.androidAuthority,'device','rc4.198 must remain unobserved while rc4.196 remains latest physical authority');
-  for(const [label,pkg] of [['CURRENT',c.runtime.local_candidate_package],['LOCK',l.runtime.localCandidatePackage],['COMMAND',k.currentBoundary.localCandidatePackage]]) check(pkg?.version==='v11.8.0-rc4.198'&&pkg.files===17&&pkg.sha256===null&&pkg.status==='PACKAGED_ONLY_NOT_DEPLOYED'&&String(pkg.archive_sha_semantics||pkg.archiveShaSemantics).includes('RUN_AND_ENVIRONMENT_SCOPED'),`${label}.package`,'rc4.198 17-file package and scoped archive semantics required');
+  check(c.runtime.deployed_pages_head===PROD_COMMIT&&c.runtime.deployed_production_version===PROD&&c.runtime.deployed_pages_app_byte_parity_with_main===false&&String(c.runtime.deployment_parity).includes('ARBITRARY_BYTE_PARITY_NOT_PROVEN')&&l.runtime.deployedPagesVersion===PROD&&l.runtime.deployedPagesAppByteParityWithMain===false&&l.runtime.mainGhPagesParity===false&&k.currentBoundary.deployedPagesVersion===PROD&&k.currentBoundary.deployedPagesAppByteParityWithMain===false&&String(k.currentBoundary.deploymentParity).includes('ARBITRARY_BYTE_PARITY_NOT_PROVEN'),'deployment','exact deployment identity must remain separate from unsupported byte parity');
+  check(c.runtime.production_deployment?.version===PROD&&c.runtime.production_deployment.status==='VERIFIED_SUCCESS'&&c.runtime.production_deployment.source_commit===PROD_COMMIT&&c.runtime.production_deployment.deployment_id===DEPLOYMENT,'deployment evidence','exact rc4.198 production evidence required');
+  check(c.runtime.android_acceptance_pending===true&&l.runtime.androidVerified===false&&l.runtime.testChallengerAndroidObserved===false&&l.runtime.latestAndroidVersionObserved===PROD&&String(l.runtime.androidAuthority).includes('NOT ACCEPTED')&&l.runtime.android_authority===l.runtime.androidAuthority,'device','rc4.199 must remain unobserved while rc4.198 remains latest physical authority');
+  for(const [label,pkg] of [['CURRENT',c.runtime.local_candidate_package],['LOCK',l.runtime.localCandidatePackage],['COMMAND',k.currentBoundary.localCandidatePackage]]) check(pkg?.version===SOURCE&&pkg.files===17&&pkg.sha256===null&&pkg.status==='PACKAGED_ONLY_NOT_DEPLOYED'&&String(pkg.archive_sha_semantics||pkg.archiveShaSemantics).includes('RUN_AND_ENVIRONMENT_SCOPED'),`${label}.package`,'rc4.199 17-file package and scoped archive semantics required');
   check(c.runtime.latest_package_sha256===null&&String(c.runtime.package_reference_run).includes('ARCHIVE_SHA_NONCANONICAL')&&l.runtime.preinstallSha256===null&&l.runtime.preinstallRuntimeFiles===17&&String(l.runtime.preinstallReferenceRun).includes('ARCHIVE_SHA_NONCANONICAL')&&k.currentBoundary.latestPackageSha256===null&&String(k.currentBoundary.packageReferenceRun).includes('ARCHIVE_SHA_NONCANONICAL'),'package aliases','archive SHA must not become cross-environment canonical identity');
-  check(c.runtime.package_reference_scope.includes('rc4.198 source-byte-exact 17-file')&&k.currentBoundary.packageReferenceScope.includes('no cross-environment archive SHA identity')&&l.runtime.preinstallHashSemantics.includes('archive SHA is run/environment-scoped'),'package scope','package scope must be current, source-byte exact, and non-deployment');
+  check(c.runtime.package_reference_scope.includes('rc4.199 source-byte-exact 17-file')&&k.currentBoundary.packageReferenceScope.includes('no cross-environment archive SHA identity')&&l.runtime.preinstallHashSemantics.includes('archive SHA is run/environment-scoped'),'package scope','package scope must be current, source-byte exact, and non-deployment');
   const ci=c.runtime.ci;
-  check(ci.validated_code_head===MAIN&&ci.status==='LOCAL_REVERIFICATION_PASS_REMOTE_EXACT_HEAD_DYNAMIC'&&ci.candidate_package==='LOCAL_PASS_SOURCE_BYTE_PARITY'&&ci.current_exact_main_head_ci==='DYNAMIC_EXTERNAL_VERIFICATION_REQUIRED_BEFORE_DEPENDENT_CONTINUATION_OR_PROMOTION','remote CI','local rc4.198 verification and dynamic external exact-head boundary required');
-  check(c.codex.local_main_verified===MAIN&&c.codex.working_tree_at_precheck==='clean'&&c.codex.audit_result==='POSTMERGE_RC4198_SOURCE_LOCK_RECONCILED'&&c.codex.status==='HISTORICAL_AUDIT_RECORD'&&c.codex.audit_findings?.length===2&&c.codex.audit_findings.every(x=>x.includes('rc4.198')||x.includes('v245')),'Codex audit','performed rc4.198 post-merge reconciliation missing or mixed with stale v233 findings');
-  check(c.handoff.refresh_scope.startsWith('RC4.198_POSTMERGE_AUTHORITY_RECONCILIATION'),'CURRENT.handoff.refresh_scope','stale checkpoint repair scope');
-  check(l.updatedAt===c.updated_at,'LOCK.updatedAt','v245 timestamp alias drift');
+  check(ci.validated_code_head==='DYNAMIC_EXTERNAL_EVIDENCE'&&ci.status==='LOCAL_VALIDATION_RECORDED_EXTERNAL_EXACT_HEAD_DYNAMIC'&&ci.candidate_package==='LOCAL_PASS_SOURCE_BYTE_PARITY'&&ci.current_exact_main_head_ci==='DYNAMIC_EXTERNAL_VERIFICATION_REQUIRED_BEFORE_DEPENDENT_CONTINUATION_OR_PROMOTION','remote CI','local rc4.199 verification and dynamic external exact-head boundary required');
+  check(c.codex.local_main_verified===RC4198_MERGE&&c.codex.working_tree_at_precheck==='clean'&&c.codex.audit_result==='POSTMERGE_RC4198_SOURCE_LOCK_RECONCILED'&&c.codex.status==='HISTORICAL_AUDIT_RECORD'&&c.codex.audit_findings?.length===2&&c.codex.audit_findings.every(x=>x.includes('rc4.198')||x.includes('v245')),'Codex audit','performed rc4.198 post-merge reconciliation missing or mixed with stale v233 findings');
+  check(c.handoff.refresh_scope.startsWith('RC4.199_P1N_AUTHORITY_RECONCILIATION'),'CURRENT.handoff.refresh_scope','stale checkpoint repair scope');
+  check(l.updatedAt===c.updated_at&&l.updated_at===c.updated_at,'LOCK.timestamps','v246 timestamp alias drift');
   const a=c.auto_execution_state;
   for(const bucket of ['active','ready','waiting_external','blocked_user']) check(Array.isArray(a[bucket])&&a[bucket].length===0,`AUTO.${bucket}`,'completed checkpoint package must not retain stale work or external waits');
   check(a.status==='PROJECT_MILESTONE_REACHED'&&a.stop_evaluation?.allowed===true&&a.stop_evaluation.code==='PROJECT_MILESTONE_REACHED','AUTO.stop','terminal state must agree with exhausted authorized scope');
@@ -102,13 +117,13 @@ export function validateAuthority(data) {
   for(const p of docs) {
     const text=data[p];
     check(text.includes(AUTHORITY_GATE),p,'current promotion-stable gate missing');
-    for(const token of ['rc4.198','rc4.196','rc4.195','RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED','17-file','cross-environment']) check(text.includes(token),p,`current authority token missing: ${token}`);
+    for(const token of ['rc4.199','rc4.198','rc4.195',DEVICE_VERDICT,'17-file','cross-environment']) check(text.includes(token),p,`current authority token missing: ${token}`);
     if(p!=='README.md') check(text.includes(generation),p,'generation missing');
     // Scope chronological blocks explicitly. A later CURRENT section returns to active scope.
     let historical=false;
     for(const [i,line] of text.split(/\r?\n/).entries()) {
       if(/^##? .*HISTORICAL(?:\/SUPERSEDED)? (?:LOG|release log)/.test(line)||/^## HISTORICAL\/SUPERSEDED .* CONTENT$/.test(line)) historical=true;
-      if(/^## v245 CURRENT/.test(line)) historical=false;
+      if(/^## v246 CURRENT/.test(line)) historical=false;
       if(!historical) check(!/rc4\.196 (?:is )?(?:not production[- ]deployed|undeployed)|rc4\.195 (?:is|remains) (?:the )?current production|PASS_EXACT_MAIN_HEAD/i.test(line),`${p}:${i+1}`,'stale v242 deployment/device/CI statement escaped historical scope');
       if(!historical) check(!/PR\s*#?\s*(?:118|122)\s+(?:is|=|:)\s*(?:OPEN|MERGED|UNMERGED)|REQUIRES_UNMERGED|pitti\/v234-postmerge-authority-repair/i.test(line),`${p}:${i+1}`,'current prose cannot freeze PR state or operative repair branch');
       if(/^## .*v\d+.*(?:OVERRIDE|SUPERSESSION)/.test(line)) check(line.includes('HISTORICAL/SUPERSEDED'),`${p}:${i+1}`,'old override lacks local historical label');
@@ -118,8 +133,8 @@ export function validateAuthority(data) {
   for(const p of ['PITTI_NEW_CHAT_BOOTSTRAP.md','NEW_CHAT_HANDOFF_CURRENT.md','HANDOFF_COMPLETENESS_MATRIX.md','README.md']) {
     check(!/(?:rc4\.195[^\n]{0,160}(?:PR-only|not merged|remains unmerged)|PR-only[^\n]{0,160}rc4\.195)/i.test(data[p]),p,'active takeover prose cannot retain rc4.195 PR-only/unmerged authority');
   }
-  const projectCurrent=(data['PITTI_PROJECT_STATE.md'].split('## v245 CURRENT')[1]?.split('## HISTORICAL/SUPERSEDED v244 CONTENT')[0]||'');
-  check(projectCurrent.includes(MAIN)&&projectCurrent.includes('PACKAGED_ONLY_NOT_DEPLOYED')&&projectCurrent.includes('PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED')&&projectCurrent.includes('cross-environment'),'PITTI_PROJECT_STATE.md v245 CURRENT','latest project-state authority must separate source/package from production/device');
+  const projectCurrent=(data['PITTI_PROJECT_STATE.md'].split('## v246 CURRENT')[1]?.split('## HISTORICAL/SUPERSEDED v245 CONTENT')[0]||'');
+  check(projectCurrent.includes('mutable external evidence')&&projectCurrent.includes('not production-deployed')&&projectCurrent.includes(DEVICE_VERDICT)&&projectCurrent.includes('run/environment-scoped'),'PITTI_PROJECT_STATE.md v246 CURRENT','latest project-state authority must separate source/package from production/device');
   return errors;
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)) {

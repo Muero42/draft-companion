@@ -74,13 +74,18 @@ for(const e of [evidence,{...evidence,branch:'main',prState:'MERGED',canonicalHe
 }
 const externalCases=[['stale evidence',{fresh:false}],['wrong repository',{repo:'other/repo'}],['dirty tree',{clean:false}],['wrong PR head',{prHead:main}],['checks from older head',{ciHead:main}],['missing gate',{checks:evidence.checks.slice(1)}],['unknown PR state',{prState:'UNKNOWN'}],['no authorization',{authorizedWorkPackage:false}],['unproved merge containment',{branch:'main',prState:'MERGED',canonicalHead:head,containingCommitVerified:false}]];
 for(const [name,patch] of externalCases) assert.ok(validateContinuationEvidence({...evidence,...patch}).length,`reject ${name}`);
+for(const [name,checks] of [
+  ['duplicate PASS and FAIL', [...evidence.checks,{name:'project_guardrails',result:'FAIL'}]],
+  ['duplicate PASS results', [...evidence.checks,{name:'project_guardrails',result:'PASS'}]],
+  ['mixed required result', evidence.checks.map(check=>check.name==='project_guardrails'?{...check,result:'FAIL'}:check)],
+]) assert.ok(validateContinuationEvidence({...evidence,checks}).length,`reject ${name}`);
 const newV243Cases=[
   ['v243 packaged-only source falsely marked deployed',d=>d['PITTI_CURRENT_STATE.json'].runtime.source_candidate_status='PRODUCTION_DEPLOYED_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED'],
   ['v243 rc4.195 resurrected as production',d=>d['PITTI_CURRENT_STATE.json'].runtime.deployed_production_version='v11.8.0-rc4.195'],
   ['v243 partial canary promoted to PASS',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.acceptance='PASS'],
   ['v243 partial classification erased',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.classification='DEVICE_PASS'],
-  ['v243 Start/Sit blockers omitted',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.fail=[]],
-  ['v243 selected-panel blocker omitted',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.fail=d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.fail.filter(x=>!x.includes('selected PITTI panel'))],
+  // The rc4.196 content blockers were narrowly superseded by the corrected rc4.198
+  // physical evidence, whose sole active blocker is the storage-quota verdict.
   ['v243 rc4.193 current physical authority',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.version='v11.8.0-rc4.193'],
   ['v243 rc4.169 current physical authority',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.version='v11.8.0-rc4.169'],
   ['v243 source deployment device collapsed',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4196_source_merge.device_acceptance_proven=true],
@@ -110,11 +115,21 @@ const newV245Cases=[
   ['v245 rejects stale rc4.197 current source candidate after rc4.198 merge',d=>d['PITTI_CURRENT_STATE.json'].authority.source_candidate='v11.8.0-rc4.197'],
   ['v245 rejects stale rc4.197 execution-lock appVersion',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.appVersion='v11.8.0-rc4.197'],
   ['v245 rejects stale rc4.197 sealed source baseline and reconciled-main checkpoint',d=>{d['PITTI_HANDOFF_SEAL.json'].branch_locks.source_baseline='v11.8.0-rc4.197';d['PITTI_HANDOFF_SEAL.json'].branch_locks.reconciled_base_main='a2d3b4395d207ce54ccf90d2e028300ba35d40d1';}],
-  ['v245 rejects false rc4.198 production and device promotion',d=>{d['PITTI_CURRENT_STATE.json'].runtime.deployed_production_version='v11.8.0-rc4.198';d['PITTI_EXECUTION_LOCK.json'].runtime.latestAndroidVersionObserved='v11.8.0-rc4.198';d['PITTI_EXECUTION_LOCK.json'].runtime.testChallengerAndroidObserved=true;}],
+  ['v246 rejects false rc4.199 production and device promotion',d=>{d['PITTI_CURRENT_STATE.json'].runtime.deployed_production_version='v11.8.0-rc4.199';d['PITTI_EXECUTION_LOCK.json'].runtime.latestAndroidVersionObserved='v11.8.0-rc4.199';d['PITTI_EXECUTION_LOCK.json'].runtime.testChallengerAndroidObserved=true;}],
   ['v245 rejects collapse of rc4.198 source package into rc4.196 production',d=>{d['PITTI_CURRENT_STATE.json'].runtime.local_candidate_package.version='v11.8.0-rc4.196';d['PITTI_COMMAND_CONTRACTS.json'].currentBoundary.sourceAuthority='rc4.196 source/main and production/device';}],
 ];
 for(const [name,mutate] of newV245Cases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
+const newV246Cases=[
+  ['v246 generation regresses to v245',d=>d['PITTI_CURRENT_STATE.json'].handoff_generation='20260912T1317Z-v245'],
+  ['v246 source regresses to rc4.198',d=>d['PITTI_CURRENT_STATE.json'].authority.source_candidate='v11.8.0-rc4.198'],
+  ['v246 rc4.198 production commit replaced by later main',d=>d['PITTI_CURRENT_STATE.json'].runtime.production_deployment.source_commit='c9f7eb1a3dea788fb56eac517dab63b39ed9ef59'],
+  ['v246 rc4.199 candidate implies device acceptance',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4199_candidate.device_acceptance_proven=true],
+  ['v246 preview mislabeled production',d=>d['PITTI_CURRENT_STATE.json'].runtime.preview_candidate='v11.8.0-rc4.199 PRODUCTION'],
+  ['v246 PR state frozen',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4199_candidate.pr_state='OPEN'],
+  ['v246 lock snake-case timestamp stale',d=>d['PITTI_EXECUTION_LOCK.json'].updated_at='2026-09-12T13:17:00Z'],
+];
+for(const [name,mutate] of newV246Cases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
 const scopedHistorical=structuredClone(baseline);
 scopedHistorical['NEW_CHAT_HANDOFF_CURRENT.md']+='\n## HISTORICAL/SUPERSEDED v242 CONTENT\nrc4.196 is not production deployed; rc4.195 remains current production. PASS_EXACT_MAIN_HEAD applied only to historical head 555487.\n';
 assert.deepEqual(validateAuthority(scopedHistorical),[],'stale v242 statements remain legal only in recognized historical scope');
-console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS legacy=${legacyCases.length} new_v243=${newV243Cases.length} new_authority=${newAuthorityCases.length} external=${externalCases.length} new_v244=${newV244Cases.length} new_v245=${newV245Cases.length} + unchanged pre/post promotion fixtures + historical-scope preservation`);
+console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v246 legacy=${legacyCases.length} new_v243=${newV243Cases.length} new_authority=${newAuthorityCases.length} external=${externalCases.length + 3} new_v244=${newV244Cases.length} new_v245=${newV245Cases.length} new_v246=${newV246Cases.length} + unchanged pre/post promotion fixtures + historical-scope preservation`);
