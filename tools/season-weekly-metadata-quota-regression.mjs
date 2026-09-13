@@ -14,10 +14,10 @@ function sourceOf(name,{async=false}={}){
   throw new Error(`${name} unterminated`);
 }
 
-const retryKey='pitti.weekly-evidence.v2.retryAfterUntil',lastSuccessKey='pitti.weekly-evidence.v2.lastSuccess';
-const cache=new Map(),quotaKeys=new Set([retryKey,lastSuccessKey]),store={
+const attemptKey='pitti.weekly-evidence.v2.lastAttempt',retryKey='pitti.weekly-evidence.v2.retryAfterUntil',lastSuccessKey='pitti.weekly-evidence.v2.lastSuccess';
+const cache=new Map(),quotaKeys=new Set([attemptKey,retryKey,lastSuccessKey]),quotaAttempts=new Map(),store={
   get:(key,fallback)=>cache.has(key)?cache.get(key):fallback,
-  set:(key,value)=>{if(quotaKeys.has(key))throw Object.assign(new Error('quota full'),{name:'QuotaExceededError'});cache.set(key,value);return true}
+  set:(key,value)=>{if(quotaKeys.has(key)){quotaAttempts.set(key,(quotaAttempts.get(key)||0)+1);throw Object.assign(new Error('quota full'),{name:'QuotaExceededError'});}cache.set(key,value);return true}
 };
 const positions=['QB','RB','WR','TE'],records=[...Array(8)].map((_,i)=>({metric:'projected_points',playerId:String(i)}));
 const projectionSnapshot={snapshotId:'projection-partial',lastSuccessAt:100,status:'DEGRADED',records,lanes:{projections:{status:'PARTIAL',coverage:{positions:{QB:{status:'AVAILABLE'},RB:{status:'AVAILABLE'},WR:{status:'UNAVAILABLE'},TE:{status:'AVAILABLE'}}}},expertWeeklyRanks:{status:'UNAVAILABLE'}},panel:{weeklyRank:{status:'UNAVAILABLE'}}};
@@ -54,6 +54,7 @@ vm.runInContext([
 ].join('\n'),context);
 
 const result=await context.refreshSeasonRankings({force:true,trigger:'metadata-quota-regression'});
+assert.equal(quotaAttempts.get(attemptKey),1,'lastAttempt must use the quota-safe auxiliary metadata path');
 assert.equal(writes,2,'Retry-After quota failure must not block projection-stage or final publication');
 assert.equal(cache.get(api.CACHE_KEY),persistedFallback,'the successful final fallback must remain authoritative');
 assert.equal(result.ok,true,'post-commit metadata quota failure must not become an outer refresh failure');
@@ -68,6 +69,8 @@ assert.match(els.seasonRankingStatus.textContent,/Ranks UNAVAILABLE/);
 assert.doesNotMatch(els.seasonRankingStatus.textContent,/letzter verifizierter Stand bleibt unverändert/);
 assert.equal(cache.has(retryKey),false,'failed auxiliary Retry-After persistence must remain best-effort');
 assert.equal(cache.has(lastSuccessKey),false,'failed last-success side-key persistence must remain best-effort');
+assert.equal(cache.has(attemptKey),false,'failed lastAttempt side-key persistence must remain best-effort');
+assert.equal(vm.runInContext('seasonRankingRefreshBusy',context),false,'lastAttempt quota failure must not leave refresh busy');
 
 const retrySource=sourceOf('persistSeasonProjectionRetryAfter');
 assert.match(retrySource,/Math\.max\(current,next\)/,'Retry-After persistence must retain max/non-shortening semantics');

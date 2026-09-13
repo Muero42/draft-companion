@@ -4347,12 +4347,13 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
   if(auto&&attempt&&now-attempt<SEASON_RANKING_RETRY_MS){renderSeasonRankingFreshness('Automatischer Ranking-Refresh nach letztem Versuch vorübergehend gedrosselt.');return{ok:false,skipped:'retry-throttle'};}
   if(!navigator.onLine){renderSeasonRankingFreshness('Offline · letzter verifizierter Ranking-Stand bleibt aktiv.');return{ok:false,offline:true};}
   if(!lastDraftContext?.players){renderSeasonRankingFreshness('Weekly Evidence wartet auf das Sleeper-Spielerverzeichnis.');return{ok:false,skipped:'players-unavailable'};}
-  seasonRankingRefreshBusy=true;store.set('pitti.weekly-evidence.v2.lastAttempt',now);
+  seasonRankingRefreshBusy=true;
   let completionNote='';
   
   if(els.seasonRefreshEvidenceBtn)els.seasonRefreshEvidenceBtn.disabled=true;
   if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice';els.seasonRankingStatus.textContent='Weekly Projections QB/RB/WR/TE werden atomar geprüft …';}
   try{
+    persistSeasonWeeklyMetadata('pitti.weekly-evidence.v2.lastAttempt',now);
     const season=Number(els.season.value.trim()),week=await currentSleeperNflWeek(season),payloads={},rankingPayloads={};
     const responses=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
       const path=`/nfl/${season}/projections?week=${week}&position=${position}&ros=false`,response=await fpProxyRequest(path);
