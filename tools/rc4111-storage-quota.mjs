@@ -14,7 +14,7 @@ for(const required of [
   "localStorage.removeItem('v7_rankCache')",
   "localStorage.removeItem('v7_panelRanks')",
   "pruneNonCriticalStorageForRankWrite()",
-  "return{ok:false,error:third}"
+  "return{ok:false,error:second}"
 ])if(!quota.includes(required))throw new Error('quota contract missing '+required);
 if(!src.includes("let panelRanks={};"))throw new Error('panelRanks must not hydrate obsolete duplicate');
 if(src.includes("store.set('v7_rank_'+expertId,result)"))throw new Error('unsafe expert cache write remains');
@@ -40,6 +40,6 @@ function runStore(initial,quotaPredicate){
 {
  const {ctx,m}=runStore({v118_decisionFixtures:'ACTIVE_EVIDENCE',v118_returnValidation:'HISTORY',v117_researchEvidence:'HISTORY'},(k,v,m)=>m.has('v118_decisionFixtures'));
  const r=ctx.persistExpertRankCache('x',{ranks:{a:{rank:1}}});
- if(r.ok||!m.has('v118_decisionFixtures')||m.has('v118_returnValidation')||m.has('v117_researchEvidence')||m.has('v7_rank_x'))throw new Error('active decision evidence must survive rank-cache quota recovery');
+ if(r.ok||!m.has('v118_decisionFixtures')||!m.has('v118_returnValidation')||!m.has('v117_researchEvidence')||m.has('v7_rank_x'))throw new Error('all protected evidence must survive rank-cache quota recovery');
 }
 console.log('rc4.111 storage quota regression PASS');
