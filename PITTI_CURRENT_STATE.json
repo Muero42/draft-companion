@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260913T1800Z-v248",
-  "updated_at": "2026-09-13T18:00:00Z",
+  "handoff_generation": "20260913T1930Z-v249",
+  "updated_at": "2026-09-13T19:30:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -109,7 +109,7 @@
       }
     },
     "rc4200_candidate": {
-      "checkpoint": "v248",
+      "checkpoint": "v249",
       "version": "v11.8.0-rc4.200",
       "status": "SOURCE_CANDIDATE_NOT_PRODUCTION",
       "deployment_proven": false,
@@ -119,14 +119,25 @@
       "canonical_containment": "DYNAMIC_VERIFICATION_REQUIRED"
     },
     "rc4199_physical_failure": {
-      "checkpoint": "v248",
+      "checkpoint": "v249",
       "version": "v11.8.0-rc4.199",
       "source_commit": "2a62e52cb88187470542840053c72cd310b18e2b",
       "observed_at": "2026-09-13",
       "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4199_PHYSICAL_WEEKLY_PROJECTION_FAIL_2026-09-13.md",
       "acceptance": "FAILED",
       "classification": "RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH",
-      "scope": "Physical Android/PWA observation; does not identify a Cloudflare deployment ID or imply acceptance."
+      "scope": "Physical Android/PWA failure after the separately verified rc4.199 Production deployment; deployment success does not imply device acceptance."
+    },
+    "rc4199_production_deployment": {
+      "checkpoint": "v249",
+      "version": "v11.8.0-rc4.199",
+      "source_commit": "2a62e52cb88187470542840053c72cd310b18e2b",
+      "status": "VERIFIED_SUCCESS",
+      "branch": "main",
+      "deployment_id": "48ab58ba-53d5-4b74-b7e6-16629256a9ee",
+      "device_acceptance_proven": false,
+      "physical_failure": "RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH",
+      "evidence_scope": "Verified Cloudflare Production deployment identity, separate from the subsequent failed physical Android/PWA observation."
     }
   },
   "runtime": {
@@ -145,11 +156,11 @@
     },
     "android_accepted": "v11.8.0-rc4.195",
     "preview_candidate": "v11.8.0-rc4.200 preview/package evidence is non-production",
-    "android_authority": "v11.8.0-rc4.198 latest physically observed production runtime; RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA",
+    "android_authority": "v11.8.0-rc4.199 latest physically observed production runtime; RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; NOT ACCEPTED",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "493e5aac9cea5a7a667efec81e1bdc733935baf9",
+    "deployed_pages_head": "2a62e52cb88187470542840053c72cd310b18e2b",
     "installed_android": "v11.8.0-rc4.199",
     "latest_android_observed": "v11.8.0-rc4.199",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
@@ -233,14 +244,14 @@
       "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_OBSERVATION_NOT_CANONICAL_IDENTITY"
     },
     "deployment_parity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; ARBITRARY_BYTE_PARITY_NOT_PROVEN",
-    "deployed_production_version": "v11.8.0-rc4.198",
+    "deployed_production_version": "v11.8.0-rc4.199",
     "production_deployment": {
-      "version": "v11.8.0-rc4.198",
-      "source_commit": "493e5aac9cea5a7a667efec81e1bdc733935baf9",
+      "version": "v11.8.0-rc4.199",
+      "source_commit": "2a62e52cb88187470542840053c72cd310b18e2b",
       "status": "VERIFIED_SUCCESS",
-      "deployment_id": "81598205-07db-47c9-93ef-3a968d460682",
-      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4198_PHYSICAL_STORAGE_QUOTA_2026-09-12.md",
-      "evidence_scope": "Verified production deployment identity; does not prove arbitrary byte parity or physical acceptance."
+      "branch": "main",
+      "deployment_id": "48ab58ba-53d5-4b74-b7e6-16629256a9ee",
+      "evidence_scope": "Verified Cloudflare Production deployment identity; subsequent physical failure means device acceptance remains false."
     }
   },
   "real_draft": {
@@ -300,7 +311,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "Canonical main dynamically verified at 826a1f3327ffac643f3c32217246133ea32bd3ac for v245; rc4.198 is current source/main and packaged-only, NOT deployed. Production/device authority remains rc4.196 with RC4.196_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED; rc4.195 remains prior fully accepted rollback.",
+  "source_authority": "rc4.200 is source/candidate authority in this tree. Newest verified Production is rc4.199 at main@2a62e52cb88187470542840053c72cd310b18e2b; it failed physical acceptance. rc4.198 is previous deployment history and rc4.195 is the prior fully accepted rollback.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -550,11 +561,11 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260913T1800Z-v248",
+    "generation": "20260913T1930Z-v249",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Verify rc4.200 source candidate dynamically before promotion. rc4.199 physically failed with RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.200 is not deployed or device-observed/accepted. Formal verified production deployment identity remains rc4.198; rc4.195 remains the accepted rollback.",
+    "resume": "Verify rc4.200 source candidate dynamically before promotion. rc4.199 Production deployment is verified at exact main commit 2a62e52cb88187470542840053c72cd310b18e2b and separately failed physical acceptance with RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.200 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
     "refresh_scope": "RC4.200_WEEKLY_PROJECTION_SEMANTIC_REPAIR_AFTER_RC4.199_PHYSICAL_FAIL"
@@ -562,7 +573,7 @@
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260913T1800Z-v248",
+  "handoffGeneration": "20260913T1930Z-v249",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",

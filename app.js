@@ -4356,13 +4356,13 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     persistSeasonWeeklyMetadata('pitti.weekly-evidence.v2.lastAttempt',now);
     const season=Number(els.season.value.trim()),week=await currentSleeperNflWeek(season),payloads={},rankingPayloads={};
     const responses=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
-      // FantasyPros documents `week` as the weekly selector and HALF as the NFL
-      // scoring token. Do not send the optional ROS switch on a weekly request.
-      const path=`/nfl/${season}/projections?week=${week}&position=${position}&scoring=HALF`,response=await fpProxyRequest(path);
+      // FantasyPros documents `week` as the projections endpoint's weekly selector.
+      // Explicit ros=false avoids ambiguity; that operation does not accept scoring.
+      const path=`/nfl/${season}/projections?week=${week}&position=${position}&ros=false`,response=await fpProxyRequest(path);
       if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw error;}
       // Request provenance is deliberately outside the provider payload. The
       // evidence validator must prove scope from response.data itself.
-      return[position,{providerPayload:response.data,requestProvenance:{season,week,position,scoring:'HALF',scope:'WEEKLY'}}];
+      return[position,{providerPayload:response.data,requestProvenance:{season,week,position,ros:false,scope:'WEEKLY'}}];
     }));
     persistSeasonProjectionRetryAfter(responses,Date.now());
     for(const response of responses)if(response.status==='fulfilled'){const [position,payload]=response.value;payloads[position]=payload;}

@@ -36,8 +36,9 @@ async function handleFantasyPros(request,url){
   }
   if(path.includes('/projections?')){
     const upstreamUrl=new URL(UPSTREAM+path),week=Number(upstreamUrl.searchParams.get('week'));
-    if(!Number.isInteger(week)||week<1||week>18||upstreamUrl.searchParams.get('scoring')!=='HALF'||upstreamUrl.searchParams.has('ros')){
-      return json({error:'Weekly projections require explicit week and HALF scoring without ROS ambiguity.'},400);
+    const ros=upstreamUrl.searchParams.get('ros');
+    if(!Number.isInteger(week)||week<1||week>18||(ros!==null&&ros!=='false')){
+      return json({error:'Weekly projections require an explicit week without ROS ambiguity.'},400);
     }
   }
   const key=request.headers.get('x-fp-key');

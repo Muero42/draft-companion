@@ -4,6 +4,9 @@ import vm from 'node:vm';
 import evidence from '../weekly-evidence-v2.js';
 
 const now=Date.parse('2026-09-10T12:00:00Z'),season=2026,week=1;
+const appSource=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
+const workerSource=fs.readFileSync(new URL('../_worker.js',import.meta.url),'utf8');
+assert(!/projections\?[^`'"\n]*scoring=HALF/.test(appSource+workerSource),'NFL projections must never reintroduce the unsupported scoring=HALF request parameter');
 const counts={QB:24,RB:60,WR:70,TE:24},players={},payloads={};
 let id=1;
 for(const [position,count] of Object.entries(counts)){
@@ -12,7 +15,7 @@ for(const [position,count] of Object.entries(counts)){
     players[String(id)]={full_name:`${position} Player ${i}`,position,team:'AAA',fantasy_data_id:10000+id};
     rows.push({fpid:10000+id,name:`${position} Player ${i}`,position_id:position,team_id:'AAA',stats:{points:999,points_half:20-i/100}});
   }
-  payloads[position]={season,week,scoring:'HALF',positions:position,updated:'2026-09-10',players:rows};
+  payloads[position]={providerPayload:{season,week,scoring:'STD',positions:position,updated:'2026-09-10',players:rows},requestProvenance:{season,week,position,ros:false,scope:'WEEKLY'}};
 }
 
 const snapshot=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:payloads,sleeperPlayers:players,verifiedAt:now});
@@ -21,7 +24,7 @@ assert.equal(snapshot.lanes.projections.status,'AVAILABLE');
 assert.equal(snapshot.records.length,Object.values(counts).reduce((a,b)=>a+b,0));
 assert(snapshot.records.every(r=>r.metric==='projected_points'&&r.value!==999&&r.provenance.field==='stats.points_half'));
 assert(snapshot.records.every(r=>r.sourcePublishedAt===null&&r.sourcePublishedDate==='2026-09-10'&&r.sourceTimePrecision==='DATE'),'date-only source precision must never be fabricated into a timestamp');
-assert(snapshot.records.every(r=>new URL(r.sourceUrl).searchParams.get('scoring')==='HALF'&&!new URL(r.sourceUrl).searchParams.has('ros')));
+assert(snapshot.records.every(r=>r.provenance.providerScoring==='STD'&&new URL(r.sourceUrl).searchParams.get('ros')==='false'&&!new URL(r.sourceUrl).searchParams.has('scoring')),'provider STD metadata must not suppress valid stats.points_half or leak an unsupported scoring request');
 assert.deepEqual(evidence.validateSnapshot(snapshot,{season,week,scoring:'HALF_PPR'},now),{ok:true});
 assert.equal(evidence.validateSnapshot(snapshot,{season,week:2,scoring:'HALF_PPR'},now).reason,'CONTEXT_MISMATCH');
 assert.equal(evidence.validateSnapshot(snapshot,{season,week,scoring:'PPR'},now).reason,'CONTEXT_MISMATCH');
@@ -30,7 +33,7 @@ assert.equal(evidence.validateSnapshot(snapshot,{season,week,scoring:'HALF'},now
 // rc4.199 physical failure: season/ROS-scale WR values must fail the entire WR
 // position independently and can never enter a verified consumer record.
 const seasonScaleWr=structuredClone(payloads);
-for(const [i,value] of [270.6,224.8,210.6].entries())seasonScaleWr.WR.players[i].stats.points_half=value;
+for(const [i,value] of [270.6,224.8,210.6].entries())seasonScaleWr.WR.providerPayload.players[i].stats.points_half=value;
 const semanticMismatch=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:seasonScaleWr,sleeperPlayers:players,verifiedAt:now});
 assert.equal(semanticMismatch.lanes.projections.coverage.positions.WR.status,'UNAVAILABLE');
 assert.equal(semanticMismatch.lanes.projections.coverage.positions.WR.reason,'WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH');
@@ -39,7 +42,7 @@ assert.equal(semanticMismatch.lanes.projections.coverage.positions.RB.status,'AV
 
 // Client request context is provenance, never provider proof. Missing or wrong
 // upstream scope remains unavailable even when the request asked for Week 1 HALF.
-const missingProviderScope={providerPayload:{players:payloads.QB.players},requestProvenance:{season,week,position:'QB',scoring:'HALF',scope:'WEEKLY'}};
+const missingProviderScope={providerPayload:{players:payloads.QB.providerPayload.players},requestProvenance:{season,week,position:'QB',ros:false,scope:'WEEKLY'}};
 const manufactured=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{QB:missingProviderScope},sleeperPlayers:players,verifiedAt:now});
 assert.equal(manufactured.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE');
 assert.equal(manufactured.records.length,0);
@@ -55,7 +58,7 @@ const indexes=evidence.sleeperIndexes({...players,collision:{full_name:'QB Playe
 assert.equal(evidence.mapFantasyProsPlayer({name:'QB Player 0',position_id:'QB',team_id:'AAA'},indexes).reason,'NAME_POSITION_COLLISION');
 assert.equal(evidence.mapFantasyProsPlayer({name:'QB Player 1',position_id:'QB',team_id:'BBB'},indexes).reason,'TEAM_MISMATCH');
 
-const wrong={...payloads,QB:{...payloads.QB,week:2}};
+const wrong={...payloads,QB:{...payloads.QB,providerPayload:{...payloads.QB.providerPayload,week:2}}};
 const unavailable=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:wrong,sleeperPlayers:players,verifiedAt:now});
 assert.equal(unavailable.lanes.projections.status,'PARTIAL');
 assert.equal(unavailable.records.length,Object.values(counts).reduce((a,b)=>a+b,0)-counts.QB,'healthy positions must remain independently publishable');
@@ -69,7 +72,7 @@ assert.equal(retained.lanes.projections.coverage.positions.QB.status,'UNAVAILABL
 // failed to refresh may retain chronology-valid prior evidence.
 const omittedRbId=snapshot.records.find(record=>record.position==='RB').playerId,newRbId='fresh-rb-replacement';
 const refreshedPlayers={...players,[newRbId]:{full_name:'RB Fresh Replacement',position:'RB',team:'AAA',fantasy_data_id:999999}};
-const refreshedRb={...payloads.RB,players:[...payloads.RB.players.slice(1),{fpid:999999,name:'RB Fresh Replacement',position_id:'RB',team_id:'AAA',stats:{points_half:9.5}}]};
+const refreshedRb={...payloads.RB,providerPayload:{...payloads.RB.providerPayload,players:[...payloads.RB.providerPayload.players.slice(1),{fpid:999999,name:'RB Fresh Replacement',position_id:'RB',team_id:'AAA',stats:{points_half:9.5}}]}};
 const authoritativeRb=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{...wrong,RB:refreshedRb},sleeperPlayers:refreshedPlayers,priorSnapshot:snapshot,verifiedAt:now+1000});
 assert.equal(authoritativeRb.lanes.projections.coverage.positions.RB.status,'AVAILABLE');
 assert(!authoritativeRb.records.some(record=>record.metric==='projected_points'&&record.position==='RB'&&record.playerId===omittedRbId),'an AVAILABLE RB refresh must remove an omitted prior RB immediately');
@@ -77,7 +80,7 @@ assert(authoritativeRb.records.some(record=>record.metric==='projected_points'&&
 // A mapped fresh response cannot claim replacement ownership until its provider
 // chronology passes the same validation used by consumers. Another healthy position
 // makes this a production-shaped partial snapshot that is actually publishable.
-const futureChronology={...payloads,QB:{...payloads.QB,updated:'2026-09-11T12:00:00Z'}};
+const futureChronology={...payloads,QB:{...payloads.QB,providerPayload:{...payloads.QB.providerPayload,updated:'2026-09-11T12:00:00Z'}}};
 const priorQb=snapshot.records.filter(record=>record.position==='QB');
 const chronologyRetained=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:futureChronology,sleeperPlayers:players,priorSnapshot:snapshot,verifiedAt:now+1000});
 assert.equal(chronologyRetained.lanes.projections.coverage.positions.QB.status,'PARTIAL');
@@ -137,7 +140,7 @@ assert(fs.readFileSync(new URL('../_worker.js',import.meta.url),'utf8').includes
 
 // The production projection response has no provider publication timestamp. Its
 // retrieval is explicit and projection-only, while provider publication fields stay null.
-const timestampLess=Object.fromEntries(Object.entries(payloads).map(([position,payload])=>[position,{season,week,scoring:'HALF',positions:position,players:payload.players.map(row=>({...row}))}]));
+const timestampLess=Object.fromEntries(Object.entries(payloads).map(([position,envelope])=>[position,{providerPayload:{season,week,scoring:'STD',positions:position,players:envelope.providerPayload.players.map(row=>({...row}))},requestProvenance:{season,week,position,ros:false,scope:'WEEKLY'}}]));
 const retrievalSnapshot=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:timestampLess,sleeperPlayers:players,verifiedAt:now});
 assert.equal(retrievalSnapshot.lanes.projections.status,'AVAILABLE');
 assert(retrievalSnapshot.records.every(row=>row.sourceTimePrecision==='RETRIEVAL'&&row.sourcePublishedAt===null&&row.sourcePublishedDate===null));
