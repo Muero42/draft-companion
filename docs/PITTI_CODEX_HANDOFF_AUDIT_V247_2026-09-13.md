@@ -189,7 +189,7 @@ The overall result must be `FAIL_CLOSED` if either P1 is still open, if authorit
 
 ## 9. SAFE NEXT SEQUENCE IF AUDIT IS CLEAN AS A HANDOFF
 
-A handoff audit may be `PASS` for accuracy even while the engineering state remains fail-closed. If the bridge accurately records open blockers, the next chat should:
+`HANDOFF_COMPLETENESS` may be `PASS` for accuracy while the engineering state remains fail-closed. The machine-readable overall audit result must still be `FAIL_CLOSED` whenever P1-A or P1-B remains open. If the bridge accurately records open blockers, the next chat should:
 
 1. fresh live verify authority
 2. check for a newly published Codex P1 repair
