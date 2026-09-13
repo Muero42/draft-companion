@@ -3463,13 +3463,16 @@ async function syncWatcherFeed(){
       return{ok:false,gate,added:0};
     }
     if(v.seasonEvidence?.schema==='pitti.season-evidence.v1'){
-      const context=seasonEvidenceContext(),records=Array.isArray(v.seasonEvidence.records)?v.seasonEvidence.records:[];
-      const valid=records.filter(x=>x&&['VERIFIED','CONFLICT'].includes(seasonEvidenceValue([x],x.playerId,x.metric,context).status)).slice(0,4096);
-      try{store.set('v190_seasonEvidence',valid);}catch{}
-      for(const [key,field] of [['v190_gameContext','gameContext'],['v190_roleGraphs','roleGraphs']]){
-        const rows=v.seasonEvidence[field];if(Array.isArray(rows))try{store.set(key,rows.slice(0,512));}catch{}
+      if(healthyPlayerState){
+        const context=seasonEvidenceContext(),records=Array.isArray(v.seasonEvidence.records)?v.seasonEvidence.records:[];
+        const valid=records.filter(x=>x&&['VERIFIED','CONFLICT'].includes(seasonEvidenceValue([x],x.playerId,x.metric,context).status)).slice(0,4096);
+        try{store.set('v190_seasonEvidence',valid);}catch{}
+        const roleGraphs=v.seasonEvidence.roleGraphs;if(Array.isArray(roleGraphs))try{store.set('v190_roleGraphs',roleGraphs.slice(0,512));}catch{}
+        for(const event of Array.isArray(v.seasonEvidence.events)?v.seasonEvidence.events:[])appendResearchEvidence(event);
       }
-      for(const event of Array.isArray(v.seasonEvidence.events)?v.seasonEvidence.events:[])appendResearchEvidence(event);
+      if(healthyMarket){
+        const gameContext=v.seasonEvidence.gameContext;if(Array.isArray(gameContext))try{store.set('v190_gameContext',gameContext.slice(0,512));}catch{}
+      }
       rerenderPostDraftFromContext();
     }
     let added=0,rejectedCritical=0,storageFull=false,quotaRecovered=false;
