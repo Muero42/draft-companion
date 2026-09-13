@@ -722,13 +722,36 @@ Independent review confirmed that the first v243 reconciliation had reduced the 
 The `555487237c9075d5e5ceeb1fee196f4763f87cc3` CI record is retained only as historical rc4.196 source-merge-head evidence and is explicitly not current exact-main-head evidence for reconciled main `082d77003f6616e290146698641aebe63f37b8c2`; dependent continuation/promotion requires fresh dynamic external exact-head CI. `authority.rc4196_source_merge.deployment_proven=false` again enforces merge != deployment, while `runtime.production_deployment` remains the sole exact production proof. Headings matching `HISTORICAL/SUPERSEDED … CONTENT` are recognized historical scope; stale v242 deployment/device/CI statements fail if they escape to active scope. Regression totals: 56 legacy, 13 existing v243, 2 additional authority defects, and 9 external-evidence negatives.
 
 
-## v246 CURRENT — rc4.199 promotion-stable source/candidate authority (2026-09-13)
+## HISTORICAL/SUPERSEDED v248 CONTENT
 
-### rc4.199 source/candidate authority — v246
-Handoff generation: `20260913T1200Z-v246`
+### rc4.200 promotion-stable source/candidate authority (2026-09-13)
 
-`v11.8.0-rc4.199` is the current source/candidate authority in this tree. Canonical `main`, PR state, containing commit, and exact-head CI are mutable external evidence and MUST be freshly verified; they are not frozen into this checkpoint. The same checkpoint bytes are valid before and after promotion. Source, merge, 17-file package/re-extraction, and preview never imply production deployment or device acceptance. Archive ZIP SHA/digests are run/environment-scoped and noncanonical.
+### rc4.200 source/candidate authority — v248
+Handoff generation: `20260913T1800Z-v248`
 
-Newest verified production and physical-device evidence remains `v11.8.0-rc4.198` from production source `493e5aac9cea5a7a667efec81e1bdc733935baf9`, Cloudflare deployment `81598205-07db-47c9-93ef-3a968d460682`, with verdict `RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA`. Evidence: `docs/PITTI_BRIDGE_HANDOFF_RC4198_PHYSICAL_STORAGE_QUOTA_2026-09-12.md`. The later canonical-main observation `c9f7eb1a3dea788fb56eac517dab63b39ed9ef59` is source history only and is not claimed deployed. rc4.199 is not production-deployed, physically observed, or device-accepted. `v11.8.0-rc4.195` remains the prior fully accepted rollback reference.
+`v11.8.0-rc4.200` is the current source/candidate authority in this tree. Canonical `main`, PR state, containing commit, and exact-head CI are mutable external evidence and MUST be freshly verified; they are not frozen into this checkpoint. The same checkpoint bytes are valid before and after promotion. Source, merge, 17-file package/re-extraction, and preview never imply production deployment or device acceptance. Archive ZIP SHA/digests are run/environment-scoped and noncanonical.
+
+Newest verified production and physical-device evidence remains `v11.8.0-rc4.198` from production source `493e5aac9cea5a7a667efec81e1bdc733935baf9`, Cloudflare deployment `81598205-07db-47c9-93ef-3a968d460682`, with verdict `RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA`. Evidence: `docs/PITTI_BRIDGE_HANDOFF_RC4198_PHYSICAL_STORAGE_QUOTA_2026-09-12.md`. The later canonical-main observation `c9f7eb1a3dea788fb56eac517dab63b39ed9ef59` is source history only and is not claimed deployed. rc4.200 is not production-deployed, physically observed, or device-accepted. `v11.8.0-rc4.195` remains the prior fully accepted rollback reference.
 
 Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Runtime/product behavior is unchanged by this authority-only checkpoint.
+
+
+## HISTORICAL/SUPERSEDED v248 CONTENT
+
+### rc4.200 weekly-projection semantic repair (2026-09-13)
+
+`v11.8.0-rc4.200` is the unmerged source candidate. Canonical main/PR/CI remain mutable external evidence. Source, merge, preview, and the 17-file package do not imply deployment or acceptance; archive hashes remain run/environment-scoped and noncanonical.
+
+The newest physical observation is `v11.8.0-rc4.199` with verdict `RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH` (`docs/PITTI_BRIDGE_HANDOFF_RC4199_PHYSICAL_WEEKLY_PROJECTION_FAIL_2026-09-13.md`). The formally identified production deployment remains rc4.198 at source `493e5aac9cea5a7a667efec81e1bdc733935baf9`; rc4.195 remains the accepted rollback. rc4.200 is not production-deployed, observed, or accepted.
+
+Gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`.
+
+## v249 CURRENT — rc4.200 weekly-projection contract and authority repair (2026-09-13)
+
+Handoff generation: `20260913T1930Z-v249`. `v11.8.0-rc4.200` remains source/candidate authority in this tree; canonical main, PR state, containment, and exact-head CI remain mutable external evidence and require dynamic verification. The 17-file package is source-byte/re-extraction evidence only, with run/environment-scoped archive identity.
+
+Newest verified Production is `v11.8.0-rc4.199` from exact source/main commit `2a62e52cb88187470542840053c72cd310b18e2b`, Cloudflare Production deployment `48ab58ba-53d5-4b74-b7e6-16629256a9ee`, status `success`, branch `main`. Its separate physical Android/PWA result is `RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH`, so rc4.199 is deployed but **not device-accepted**. rc4.198 is previous historical deployment evidence; `v11.8.0-rc4.195` remains the prior fully accepted rollback. rc4.200 is not production-deployed, physically observed, or device-accepted.
+
+FantasyPros weekly projections use documented `week` and `ros=false` request context without an unsupported `scoring` parameter. Provider `season`, `week`, and `positions` prove response scope; `stats.points_half` supplies Half-PPR values. Provider response metadata such as `scoring=STD` does not suppress valid `stats.points_half`, while independent one-game ceilings continue to reject season/ROS-scale values.
+
+Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. No merge, deployment, promotion, cache/app-data clearing, reinstall, device acceptance, or Sleeper transaction is authorized by this checkpoint.

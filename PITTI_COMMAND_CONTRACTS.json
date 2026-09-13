@@ -155,25 +155,25 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.198 production VERIFIED at exact 493e5aac9cea5a7a667efec81e1bdc733935baf9; physical RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA",
-    "androidAuthority": "v11.8.0-rc4.198 latest physically observed production runtime; RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA",
-    "sourceAuthority": "rc4.199 source/candidate authority in this tree; canonical main/PR state dynamically verified; NOT production deployed",
-    "latestPackageReextract": "rc4.199 source-byte-exact 17-file package; archive SHA run/environment-scoped",
+    "productionControl": "v11.8.0-rc4.199 Production VERIFIED at exact main 2a62e52cb88187470542840053c72cd310b18e2b, deployment 48ab58ba-53d5-4b74-b7e6-16629256a9ee; physical acceptance FAILED separately",
+    "androidAuthority": "v11.8.0-rc4.199 latest physically observed production runtime; RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; NOT ACCEPTED",
+    "sourceAuthority": "rc4.200 source/candidate authority in this tree; canonical main/PR state dynamically verified; NOT production deployed",
+    "latestPackageReextract": "rc4.200 source-byte-exact 17-file package; archive SHA run/environment-scoped",
     "latestPackageSha256": null,
     "packageReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
-    "deployedPagesVersion": "v11.8.0-rc4.198",
+    "deployedPagesVersion": "v11.8.0-rc4.199",
     "deployedPagesAppByteParityWithMain": false,
     "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-    "exactNextAction": "Dynamically verify local Git and canonical GitHub main/PR/exact-head CI before dependent continuation or promotion. rc4.199 is source/candidate authority in this tree and is NOT production-deployed or device-observed/accepted. Production/device evidence remains rc4.198 at 493e5aac9cea5a7a667efec81e1bdc733935baf9 with RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA; rc4.195 remains the prior fully accepted rollback.",
-    "runtimeVersion": "rc4.199 source candidate; rc4.198 production/device partial-not-accepted",
+    "exactNextAction": "Verify rc4.200 source candidate dynamically before promotion. rc4.199 Production deployment is verified at exact main commit 2a62e52cb88187470542840053c72cd310b18e2b and separately failed physical acceptance with RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.200 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
+    "runtimeVersion": "rc4.200 source candidate; rc4.199 Production deployed but physical-failed/not accepted",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
-    "latestDeviceEvidence": "2026-09-12 RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA",
+    "latestDeviceEvidence": "2026-09-13 RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
     "reconciledBaseMain": "DYNAMIC_EXTERNAL_EVIDENCE",
     "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-    "packageReferenceScope": "rc4.199 17-file source-byte parity; no cross-environment archive SHA identity",
+    "packageReferenceScope": "rc4.200 17-file source-byte parity; no cross-environment archive SHA identity",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.199",
+      "version": "v11.8.0-rc4.200",
       "files": 17,
       "sha256": null,
       "status": "PACKAGED_ONLY_NOT_DEPLOYED",
@@ -182,15 +182,16 @@
     },
     "deploymentParity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; ARBITRARY_BYTE_PARITY_NOT_PROVEN",
     "productionDeployment": {
-      "version": "v11.8.0-rc4.198",
-      "sourceCommit": "493e5aac9cea5a7a667efec81e1bdc733935baf9",
+      "version": "v11.8.0-rc4.199",
+      "sourceCommit": "2a62e52cb88187470542840053c72cd310b18e2b",
       "status": "VERIFIED_SUCCESS",
-      "deploymentId": "81598205-07db-47c9-93ef-3a968d460682"
+      "branch": "main",
+      "deploymentId": "48ab58ba-53d5-4b74-b7e6-16629256a9ee"
     }
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260913T1200Z-v246",
-  "handoff_generation": "20260913T1200Z-v246",
+  "handoffGeneration": "20260913T1930Z-v249",
+  "handoff_generation": "20260913T1930Z-v249",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -216,7 +217,7 @@
     "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
   "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "exactNextAction": "Dynamically verify local Git and canonical GitHub main/PR/exact-head CI before dependent continuation or promotion. rc4.199 is source/candidate authority in this tree and is NOT production-deployed or device-observed/accepted. Production/device evidence remains rc4.198 at 493e5aac9cea5a7a667efec81e1bdc733935baf9 with RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA; rc4.195 remains the prior fully accepted rollback.",
+  "exactNextAction": "Verify rc4.200 source candidate dynamically before promotion. rc4.199 Production deployment is verified at exact main commit 2a62e52cb88187470542840053c72cd310b18e2b and separately failed physical acceptance with RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.200 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
   "updated_at": "2026-09-12T13:17:00Z"

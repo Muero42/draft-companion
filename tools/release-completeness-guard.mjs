@@ -30,7 +30,7 @@ if(V){
   must(sw.includes(`./live-surface-v3.css?v=${V}`),`service-worker live CSS cache key != ${V}`);
 }
 must(weekly.includes('root.PittiWeeklyEvidenceV2=api'),'Weekly Evidence v2 global runtime export missing');
-must(weekly.includes("const SCHEMA='pitti.weekly-evidence.v2'"),'Weekly Evidence v2 schema identity missing');
+must(weekly.includes("const SCHEMA='pitti.weekly-evidence.v3'"),'Weekly Evidence v2 schema identity missing');
 must(app.includes("from './boone-trade-values-v1.mjs'")&&app.includes('/api/boone-trade-values'),'Boone trade-value automatic production path missing');
 for(const x of [
   "GLOBAL_EXPERT_ORDER=['Draft Sharks Team','Dalton Del Don','Pat Fitzmaurice','Nick Mariano','Justin Boone'",

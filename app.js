@@ -1,6 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
-const APP_VERSION='v11.8.0-rc4.199';
+const APP_VERSION='v11.8.0-rc4.200';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -4356,9 +4356,13 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     persistSeasonWeeklyMetadata('pitti.weekly-evidence.v2.lastAttempt',now);
     const season=Number(els.season.value.trim()),week=await currentSleeperNflWeek(season),payloads={},rankingPayloads={};
     const responses=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
+      // FantasyPros documents `week` as the projections endpoint's weekly selector.
+      // Explicit ros=false avoids ambiguity; that operation does not accept scoring.
       const path=`/nfl/${season}/projections?week=${week}&position=${position}&ros=false`,response=await fpProxyRequest(path);
       if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw error;}
-      return[position,response.data];
+      // Request provenance is deliberately outside the provider payload. The
+      // evidence validator must prove scope from response.data itself.
+      return[position,{providerPayload:response.data,requestProvenance:{season,week,position,ros:false,scope:'WEEKLY'}}];
     }));
     persistSeasonProjectionRetryAfter(responses,Date.now());
     for(const response of responses)if(response.status==='fulfilled'){const [position,payload]=response.value;payloads[position]=payload;}

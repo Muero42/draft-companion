@@ -34,6 +34,13 @@ async function handleFantasyPros(request,url){
   if(!path.startsWith('/')||!ALLOWED_PREFIXES.some(prefix=>path.startsWith(prefix))){
     return json({error:'Nicht erlaubter API-Pfad.',path},400);
   }
+  if(path.includes('/projections?')){
+    const upstreamUrl=new URL(UPSTREAM+path),week=Number(upstreamUrl.searchParams.get('week'));
+    const ros=upstreamUrl.searchParams.get('ros');
+    if(!Number.isInteger(week)||week<1||week>18||(ros!==null&&ros!=='false')){
+      return json({error:'Weekly projections require an explicit week without ROS ambiguity.'},400);
+    }
+  }
   const key=request.headers.get('x-fp-key');
   if(!key) return json({error:'API-Key fehlt.'},401);
 

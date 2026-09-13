@@ -1,9 +1,9 @@
-# rc4.199 source/candidate authority — v246
-Handoff generation: `20260913T1200Z-v246`
+# rc4.200 source/candidate authority — v249
+Handoff generation: `20260913T1930Z-v249`
 
-`v11.8.0-rc4.199` is the current source/candidate authority in this tree. Canonical `main`, PR state, containing commit, and exact-head CI are mutable external evidence and MUST be freshly verified; they are not frozen into this checkpoint. The same checkpoint bytes are valid before and after promotion. Source, merge, 17-file package/re-extraction, and preview never imply production deployment or device acceptance. Archive ZIP SHA/digests are run/environment-scoped and noncanonical.
+`v11.8.0-rc4.200` is the current source/candidate authority in this tree. Canonical `main`, PR state, containing commit, and exact-head CI are mutable external evidence and MUST be freshly verified; they are not frozen into this checkpoint. The same checkpoint bytes are valid before and after promotion. Source, merge, 17-file package/re-extraction, and preview never imply production deployment or device acceptance. Archive ZIP SHA/digests are run/environment-scoped and noncanonical.
 
-Newest verified production and physical-device evidence remains `v11.8.0-rc4.198` from production source `493e5aac9cea5a7a667efec81e1bdc733935baf9`, Cloudflare deployment `81598205-07db-47c9-93ef-3a968d460682`, with verdict `RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA`. Evidence: `docs/PITTI_BRIDGE_HANDOFF_RC4198_PHYSICAL_STORAGE_QUOTA_2026-09-12.md`. The later canonical-main observation `c9f7eb1a3dea788fb56eac517dab63b39ed9ef59` is source history only and is not claimed deployed. rc4.199 is not production-deployed, physically observed, or device-accepted. `v11.8.0-rc4.195` remains the prior fully accepted rollback reference.
+Newest verified Production is `v11.8.0-rc4.199` from exact source/main commit `2a62e52cb88187470542840053c72cd310b18e2b`, Cloudflare Production deployment `48ab58ba-53d5-4b74-b7e6-16629256a9ee`, status `success`, branch `main`. Its separate physical Android/PWA result is `RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH`, so rc4.199 is deployed but **not device-accepted**. rc4.198 is previous historical deployment evidence; `v11.8.0-rc4.195` remains the prior fully accepted rollback. rc4.200 is not production-deployed, physically observed, or device-accepted.
 
 Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Runtime/product behavior is unchanged by this authority-only checkpoint.
 
