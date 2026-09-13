@@ -60,8 +60,30 @@ assert.match(els.seasonRankingStatus.textContent,/Ranks UNAVAILABLE/);
 assert.doesNotMatch(els.seasonRankingStatus.textContent,/Ranks AVAILABLE/);
 
 const refreshSource=sourceOf('refreshSeasonRankings',{async:true});
-assert.match(refreshSource,/const persistedProjectionSnapshot=api\.atomicWrite/);
+assert.match(refreshSource,/persistedProjectionSnapshot=api\.atomicWrite/);
 assert.match(refreshSource,/priorSnapshot:persistedProjectionSnapshot/);
 assert.match(refreshSource,/const persistedSnapshot=api\.atomicWrite/);
+
+// Once the projection-stage commit succeeds it is authoritative minimum
+// progress, even if the later full write and its internal projection-only quota
+// fallback both fail (represented by atomicWrite throwing on the final call).
+writes=0;renderedSnapshot=null;
+api.atomicWrite=function(storage,candidate){
+  writes++;
+  if(writes===2)throw Object.assign(new Error('final and fallback quota failure'),{code:'STORAGE_QUOTA_EXCEEDED'});
+  const actual={...projectionSnapshot,refreshStage:candidate.refreshStage};cache.set(this.CACHE_KEY,actual);return actual;
+};
+const degradedResult=await context.refreshSeasonRankings({force:true,trigger:'final-write-failure-regression'});
+assert.equal(writes,2);
+assert.equal(degradedResult.ok,true,'a committed projection stage must not be reported as generic stale-state failure');
+assert.equal(degradedResult.degraded,true);
+assert.equal(degradedResult.snapshotId,projectionSnapshot.snapshotId);
+assert.equal(degradedResult.rankStatus,'UNAVAILABLE');
+assert.equal(cache.get(api.CACHE_KEY).snapshotId,projectionSnapshot.snapshotId,'cache must retain the committed projection-stage authority');
+assert.equal(renderedSnapshot.snapshotId,projectionSnapshot.snapshotId,'rerender must use committed projection-stage authority');
+assert.match(els.seasonRankingStatus.textContent,/Projektionen gespeichert/);
+assert.match(els.seasonRankingStatus.textContent,/Rank-Persistenz fehlgeschlagen/);
+assert.doesNotMatch(els.seasonRankingStatus.textContent,/letzter verifizierter Stand bleibt unverändert/);
+assert.equal(vm.runInContext('seasonRankingRefreshBusy',context),false,'busy state must reset after final persistence failure');
 
 console.log('SEASON_WEEKLY_PERSISTED_SNAPSHOT_REGRESSION_PASS');
