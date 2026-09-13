@@ -720,3 +720,15 @@ Independent review confirmed that the first v243 reconciliation had reduced the 
 
 ### v243 authority-contract final repair (2026-09-11)
 The `555487237c9075d5e5ceeb1fee196f4763f87cc3` CI record is retained only as historical rc4.196 source-merge-head evidence and is explicitly not current exact-main-head evidence for reconciled main `082d77003f6616e290146698641aebe63f37b8c2`; dependent continuation/promotion requires fresh dynamic external exact-head CI. `authority.rc4196_source_merge.deployment_proven=false` again enforces merge != deployment, while `runtime.production_deployment` remains the sole exact production proof. Headings matching `HISTORICAL/SUPERSEDED … CONTENT` are recognized historical scope; stale v242 deployment/device/CI statements fail if they escape to active scope. Regression totals: 56 legacy, 13 existing v243, 2 additional authority defects, and 9 external-evidence negatives.
+
+
+## v246 CURRENT — rc4.199 promotion-stable source/candidate authority (2026-09-13)
+
+### rc4.199 source/candidate authority — v246
+Handoff generation: `20260913T1200Z-v246`
+
+`v11.8.0-rc4.199` is the current source/candidate authority in this tree. Canonical `main`, PR state, containing commit, and exact-head CI are mutable external evidence and MUST be freshly verified; they are not frozen into this checkpoint. The same checkpoint bytes are valid before and after promotion. Source, merge, 17-file package/re-extraction, and preview never imply production deployment or device acceptance. Archive ZIP SHA/digests are run/environment-scoped and noncanonical.
+
+Newest verified production and physical-device evidence remains `v11.8.0-rc4.198` from production source `493e5aac9cea5a7a667efec81e1bdc733935baf9`, Cloudflare deployment `81598205-07db-47c9-93ef-3a968d460682`, with verdict `RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA`. Evidence: `docs/PITTI_BRIDGE_HANDOFF_RC4198_PHYSICAL_STORAGE_QUOTA_2026-09-12.md`. The later canonical-main observation `c9f7eb1a3dea788fb56eac517dab63b39ed9ef59` is source history only and is not claimed deployed. rc4.199 is not production-deployed, physically observed, or device-accepted. `v11.8.0-rc4.195` remains the prior fully accepted rollback reference.
+
+Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Runtime/product behavior is unchanged by this authority-only checkpoint.
