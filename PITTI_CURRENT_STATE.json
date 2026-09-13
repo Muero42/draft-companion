@@ -1,13 +1,13 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260913T1200Z-v246",
-  "updated_at": "2026-09-13T12:00:00Z",
+  "handoff_generation": "20260913T1800Z-v248",
+  "updated_at": "2026-09-13T18:00:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.199",
+    "source_candidate": "v11.8.0-rc4.200",
     "git_identity_rule": "Canonical main identity and candidate containment are freshly verified externally; no commit or mutable PR state is immutable checkpoint authority.",
     "reconciled_base_main": "DYNAMIC_EXTERNAL_EVIDENCE",
     "postmerge": {
@@ -93,7 +93,7 @@
       "device_acceptance_proven": false
     },
     "rc4198_production_device_evidence": {
-      "checkpoint": "v246",
+      "checkpoint": "v248",
       "version": "v11.8.0-rc4.198",
       "source_commit": "493e5aac9cea5a7a667efec81e1bdc733935baf9",
       "status": "VERIFIED_SUCCESS",
@@ -108,23 +108,33 @@
         "classification": "RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA"
       }
     },
-    "rc4199_candidate": {
-      "checkpoint": "v246",
-      "version": "v11.8.0-rc4.199",
+    "rc4200_candidate": {
+      "checkpoint": "v248",
+      "version": "v11.8.0-rc4.200",
       "status": "SOURCE_CANDIDATE_NOT_PRODUCTION",
       "deployment_proven": false,
       "device_observation_proven": false,
       "device_acceptance_proven": false,
       "pr_state": "DYNAMIC_VERIFICATION_REQUIRED",
       "canonical_containment": "DYNAMIC_VERIFICATION_REQUIRED"
+    },
+    "rc4199_physical_failure": {
+      "checkpoint": "v248",
+      "version": "v11.8.0-rc4.199",
+      "source_commit": "2a62e52cb88187470542840053c72cd310b18e2b",
+      "observed_at": "2026-09-13",
+      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4199_PHYSICAL_WEEKLY_PROJECTION_FAIL_2026-09-13.md",
+      "acceptance": "FAILED",
+      "classification": "RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH",
+      "scope": "Physical Android/PWA observation; does not identify a Cloudflare deployment ID or imply acceptance."
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.195",
-    "season_candidate": "v11.8.0-rc4.199 is current source/candidate authority in this tree; NOT production-deployed or device-observed/accepted",
+    "season_candidate": "v11.8.0-rc4.200 is current source/candidate authority in this tree; NOT production-deployed or device-observed/accepted",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.199",
+    "test_challenger": "v11.8.0-rc4.200",
     "ci": {
       "status": "LOCAL_VALIDATION_RECORDED_EXTERNAL_EXACT_HEAD_DYNAMIC",
       "validated_code_head": "DYNAMIC_EXTERNAL_EVIDENCE",
@@ -134,24 +144,24 @@
       "current_exact_main_head_ci": "DYNAMIC_EXTERNAL_VERIFICATION_REQUIRED_BEFORE_DEPENDENT_CONTINUATION_OR_PROMOTION"
     },
     "android_accepted": "v11.8.0-rc4.195",
-    "preview_candidate": "v11.8.0-rc4.199 preview/package evidence is non-production",
+    "preview_candidate": "v11.8.0-rc4.200 preview/package evidence is non-production",
     "android_authority": "v11.8.0-rc4.198 latest physically observed production runtime; RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
     "deployed_pages_head": "493e5aac9cea5a7a667efec81e1bdc733935baf9",
-    "installed_android": "v11.8.0-rc4.198",
-    "latest_android_observed": "v11.8.0-rc4.198",
+    "installed_android": "v11.8.0-rc4.199",
+    "latest_android_observed": "v11.8.0-rc4.199",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "Historical rc4.183 rejection: FA/Add-Drop cards under Kader and IR/Reserve Charbonnet as ordinary drop target. Superseded by rc4.188 physical Waiver/FA canary PASS; retained only as historical regression evidence.",
     "latest_device_evidence": {
-      "version": "v11.8.0-rc4.198",
-      "observed_at": "2026-09-12",
-      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4198_PHYSICAL_STORAGE_QUOTA_2026-09-12.md",
-      "acceptance": "PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA",
-      "classification": "RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA"
+      "version": "v11.8.0-rc4.199",
+      "observed_at": "2026-09-13",
+      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4199_PHYSICAL_WEEKLY_PROJECTION_FAIL_2026-09-13.md",
+      "acceptance": "FAILED",
+      "classification": "RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH"
     },
-    "latestAndroidVersionObserved": "v11.8.0-rc4.198",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.199",
     "source_candidate_status": "SOURCE_CANDIDATE_NOT_PRODUCTION",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
@@ -213,9 +223,9 @@
         "candidate_package": "FAIL_STALE_BOOTSTRAP_RENDER_ASSERT_REPAIRED"
       }
     },
-    "package_reference_scope": "rc4.199 source-byte-exact 17-file package/re-extraction parity; archive SHA is run/environment-scoped and is not cross-environment identity",
+    "package_reference_scope": "rc4.200 source-byte-exact 17-file package/re-extraction parity; archive SHA is run/environment-scoped and is not cross-environment identity",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.199",
+      "version": "v11.8.0-rc4.200",
       "files": 17,
       "sha256": null,
       "status": "PACKAGED_ONLY_NOT_DEPLOYED",
@@ -540,19 +550,19 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260913T1200Z-v246",
+    "generation": "20260913T1800Z-v248",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Dynamically verify local Git and canonical GitHub main/PR/exact-head CI before dependent continuation or promotion. rc4.199 is source/candidate authority in this tree and is NOT production-deployed or device-observed/accepted. Production/device evidence remains rc4.198 at 493e5aac9cea5a7a667efec81e1bdc733935baf9 with RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA; rc4.195 remains the prior fully accepted rollback.",
+    "resume": "Verify rc4.200 source candidate dynamically before promotion. rc4.199 physically failed with RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.200 is not deployed or device-observed/accepted. Formal verified production deployment identity remains rc4.198; rc4.195 remains the accepted rollback.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "RC4.199_P1N_AUTHORITY_RECONCILIATION; promotion-stable bytes; Git/GitHub main, PR state and exact-head CI are dynamic external evidence"
+    "refresh_scope": "RC4.200_WEEKLY_PROJECTION_SEMANTIC_REPAIR_AFTER_RC4.199_PHYSICAL_FAIL"
   },
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260913T1200Z-v246",
+  "handoffGeneration": "20260913T1800Z-v248",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",

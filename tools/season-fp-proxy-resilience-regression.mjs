@@ -56,7 +56,7 @@ function harness(sequence=[]){
 
 {
   const h=harness([new Response('upstream failed',{status:503}),new Response('{"players":[]}',{status:200,headers:{'content-type':'application/json'}})]);
-  const path=encodeURIComponent('/nfl/2026/projections?week=1&position=RB&ros=false');
+  const path=encodeURIComponent('/nfl/2026/projections?week=1&position=RB&scoring=HALF');
   const response=await h.request(`https://example.test/api/fantasypros?path=${path}`);
   assert.equal(response.status,200,'projection lane gets one bounded retry on transient 5xx');
   assert.equal(h.calls.length,2,'projection retry count must remain bounded');
@@ -64,7 +64,7 @@ function harness(sequence=[]){
 
 {
   const h=harness([new Response('rate limited',{status:429})]);
-  const path=encodeURIComponent('/nfl/2026/projections?week=1&position=WR&ros=false');
+  const path=encodeURIComponent('/nfl/2026/projections?week=1&position=WR&scoring=HALF');
   const response=await h.request(`https://example.test/api/fantasypros?path=${path}`);
   assert.equal(response.status,429,'429 must preserve provider backoff semantics');
   assert.equal(h.calls.length,1,'429 must not be retried by the service worker');

@@ -5,7 +5,9 @@
 })(typeof globalThis!=='undefined'?globalThis:this,function(){
   'use strict';
 
-  const SCHEMA='pitti.weekly-evidence.v2';
+  // v3 invalidates rc4.199 records whose request metadata could be mistaken for
+  // provider evidence and whose values were not guarded against ROS/season scope.
+  const SCHEMA='pitti.weekly-evidence.v3';
   const CACHE_KEY='pitti.weekly-evidence.v2.current';
   const TEMP_KEY='pitti.weekly-evidence.v2.pending';
   const MAPPING_VERSION='fp-sleeper-v1';
@@ -14,6 +16,10 @@
   const POSITIONS=['QB','RB','WR','TE'];
   const MIN_COUNTS={QB:24,RB:60,WR:70,TE:24};
   const RANK_MIN_COUNTS={QB:20,RB:48,WR:60,TE:20};
+  // These are deliberately generous corruption/scope ceilings, not player ranks
+  // or expected outcomes. A one-game Half-PPR payload exceeding them is unsafe to
+  // distinguish from the season/ROS payload physically observed on rc4.199.
+  const WEEKLY_HALF_PPR_MAX={QB:80,RB:70,WR:70,TE:70};
   const norm=value=>String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
   const iso=ms=>new Date(ms).toISOString();
   const finite=value=>typeof value==='number'&&Number.isFinite(value)?value:null;
@@ -42,11 +48,12 @@
 
   function retrievalProjectionChronology(record,context={},now=Date.now()){
     const verified=Number(record?.verifiedAt),expires=Number(record?.expiresAt);
-    return record?.metric==='projected_points'&&record?.sourceTimePrecision==='RETRIEVAL'&&record?.sourcePublishedAt==null&&record?.sourcePublishedDate==null&&record?.sourceId==='fantasypros'&&record?.provenance?.provider==='FantasyPros'&&record?.provenance?.field==='stats.points_half'&&record?.provenance?.ros===false&&Number(record?.season)===Number(context.season)&&Number(record?.week)===Number(context.week)&&record?.scoring==='HALF_PPR'&&record?.unit==='HALF_PPR_POINTS'&&/^https:\/\/api\.fantasypros\.com\/public\/v2\/json\/nfl\/\d{4}\/projections\?/.test(record?.sourceUrl||'')&&Number.isFinite(record?.value)&&Number.isFinite(record?.confidence)&&record.confidence>=.7&&record.confidence<=1&&Number.isFinite(verified)&&verified<=now&&now-verified<=MAX_AGE_MS&&Number.isFinite(expires)&&expires>now&&expires-verified<=EVIDENCE_TTL_MS;
+    return record?.schema===SCHEMA&&record?.metric==='projected_points'&&record?.sourceTimePrecision==='RETRIEVAL'&&record?.sourcePublishedAt==null&&record?.sourcePublishedDate==null&&record?.sourceId==='fantasypros'&&record?.provenance?.provider==='FantasyPros'&&record?.provenance?.field==='stats.points_half'&&record?.provenance?.providerScope==='WEEKLY'&&record?.provenance?.providerScoring==='HALF'&&record?.provenance?.request?.scoring==='HALF'&&record?.provenance?.request?.week===Number(context.week)&&Number(record?.season)===Number(context.season)&&Number(record?.week)===Number(context.week)&&record?.scoring==='HALF_PPR'&&record?.unit==='HALF_PPR_POINTS'&&/^https:\/\/api\.fantasypros\.com\/public\/v2\/json\/nfl\/\d{4}\/projections\?/.test(record?.sourceUrl||'')&&new URL(record.sourceUrl).searchParams.get('scoring')==='HALF'&&!new URL(record.sourceUrl).searchParams.has('ros')&&Number.isFinite(record?.value)&&record.value>=0&&record.value<=WEEKLY_HALF_PPR_MAX[record.position]&&Number.isFinite(record?.confidence)&&record.confidence>=.7&&record.confidence<=1&&Number.isFinite(verified)&&verified<=now&&now-verified<=MAX_AGE_MS&&Number.isFinite(expires)&&expires>now&&expires-verified<=EVIDENCE_TTL_MS;
   }
   function weeklyRecordChronology(record,context={},now=Date.now()){
     const verified=Number(record?.verifiedAt);
-    if(!Number.isFinite(verified)||verified>now||Number(record?.season)!==Number(context.season)||Number(record?.week)!==Number(context.week)||record?.scoring!=='HALF_PPR')return false;
+    if(record?.schema!==SCHEMA||!Number.isFinite(verified)||verified>now||Number(record?.season)!==Number(context.season)||Number(record?.week)!==Number(context.week)||record?.scoring!=='HALF_PPR')return false;
+    if(record?.metric==='projected_points'&&(!Number.isFinite(record?.value)||record.value<0||record.value>WEEKLY_HALF_PPR_MAX[record.position]||record?.provenance?.providerScope!=='WEEKLY'||record?.provenance?.providerScoring!=='HALF'))return false;
     if(record?.sourceTimePrecision==='RETRIEVAL')return retrievalProjectionChronology(record,context,now);
     if(!['projected_points','weekly_rank'].includes(record?.metric)||!['fantasypros','fantasypros_weekly_ecr'].includes(record?.sourceId)||!/^https:\/\/api\.fantasypros\.com\//.test(record?.sourceUrl||''))return false;
     if(record?.sourceTimePrecision==='TIMESTAMP'){
@@ -80,20 +87,23 @@
   function projectionLane(payloads,{season,week,scoring:scoringInput,sleeperPlayers,verifiedAt=Date.now()}={}){
     const normalizedScoring=scoring(scoringInput),indexes=sleeperIndexes(sleeperPlayers),records=[],positions={},rejects=[];
     for(const position of POSITIONS){
-      const payload=payloads?.[position],players=Array.isArray(payload?.players)?payload.players:[],rawTime=sourceTime(payload),time=rawTime.sourceTimePrecision==='UNKNOWN'?{sourcePublishedAt:null,sourcePublishedDate:null,sourceTimePrecision:'RETRIEVAL'}:rawTime;
+      const envelope=payloads?.[position],payload=envelope?.providerPayload||envelope,request=envelope?.providerPayload?envelope.requestProvenance:null,players=Array.isArray(payload?.players)?payload.players:[],rawTime=sourceTime(payload),time=rawTime.sourceTimePrecision==='UNKNOWN'?{sourcePublishedAt:null,sourcePublishedDate:null,sourceTimePrecision:'RETRIEVAL'}:rawTime;
       let reason='';
       if(!normalizedScoring)reason='WRONG_SCORING';
       else if(Number(payload?.season)!==Number(season))reason='WRONG_SEASON';
       else if(Number(payload?.week)!==Number(week))reason='WRONG_WEEK';
+      else if(scoring(payload?.scoring)!==normalizedScoring)reason='WRONG_PROVIDER_SCORING';
+      else if(String(payload?.positions??'').toUpperCase()!==position)reason='WRONG_PROVIDER_POSITION';
       else if(!Array.isArray(payload?.players))reason='MISSING_PLAYERS';
       else if(players.some(row=>String(row?.position_id??row?.player_position_id??row?.position??'').toUpperCase()!==position))reason='WRONG_POSITION';
-      const numeric=players.filter(row=>finite(row?.stats?.points_half)!=null).length,minimum=MIN_COUNTS[position],sourceSufficient=!reason&&players.length>=minimum&&numeric/Math.max(players.length,1)>=.9;
+      const numeric=players.filter(row=>finite(row?.stats?.points_half)!=null).length,scopeMismatch=players.some(row=>{const value=finite(row?.stats?.points_half);return value!=null&&(value<0||value>WEEKLY_HALF_PPR_MAX[position])}),minimum=MIN_COUNTS[position],sourceSufficient=!reason&&!scopeMismatch&&players.length>=minimum&&numeric/Math.max(players.length,1)>=.9;
+      if(!reason&&scopeMismatch)reason='WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH';
       let mapped=0;
       if(sourceSufficient){for(const row of players){
         const value=finite(row?.stats?.points_half);if(value==null)continue;
         const mapping=mapFantasyProsPlayer(row,indexes);if(!mapping.ok){rejects.push({position,name:String(row?.name||''),sourcePlayerId:mapping.sourcePlayerId,reason:mapping.reason});continue;}
         mapped++;
-        const record={schema:SCHEMA,playerId:mapping.player.id,sleeperId:mapping.player.id,sourcePlayerId:mapping.sourcePlayerId,mappingMethod:mapping.method,mappingVersion:MAPPING_VERSION,metric:'projected_points',value,unit:'HALF_PPR_POINTS',position,season:Number(season),week:Number(week),scoring:normalizedScoring,status:'VERIFIED',sourceId:'fantasypros',sourceUrl:`https://api.fantasypros.com/public/v2/json/nfl/${Number(season)}/projections?week=${Number(week)}&position=${position}&ros=false`,expert:null,...time,verifiedAt,expiresAt:verifiedAt+EVIDENCE_TTL_MS,provenance:{provider:'FantasyPros',field:'stats.points_half',requestScoringParameter:null,ros:false},confidence:mapping.method==='FANTASY_DATA_ID'?.98:.8};
+        const record={schema:SCHEMA,playerId:mapping.player.id,sleeperId:mapping.player.id,sourcePlayerId:mapping.sourcePlayerId,mappingMethod:mapping.method,mappingVersion:MAPPING_VERSION,metric:'projected_points',value,unit:'HALF_PPR_POINTS',position,season:Number(season),week:Number(week),scoring:normalizedScoring,status:'VERIFIED',sourceId:'fantasypros',sourceUrl:`https://api.fantasypros.com/public/v2/json/nfl/${Number(season)}/projections?week=${Number(week)}&position=${position}&scoring=HALF`,expert:null,...time,verifiedAt,expiresAt:verifiedAt+EVIDENCE_TTL_MS,provenance:{provider:'FantasyPros',field:'stats.points_half',providerScope:'WEEKLY',providerScoring:String(payload.scoring).toUpperCase(),request:request||{season:Number(season),week:Number(week),position,scoring:'HALF'}},confidence:mapping.method==='FANTASY_DATA_ID'?.98:.8};
         if(weeklyRecordChronology(record,{season,week,scoring:normalizedScoring},verifiedAt))records.push(record);
         else rejects.push({position,name:String(row?.name||''),sourcePlayerId:mapping.sourcePlayerId,reason:'INVALID_PROVIDER_CHRONOLOGY'});
       }}
@@ -231,5 +241,5 @@
     }
   }
 
-  return{SCHEMA,CACHE_KEY,TEMP_KEY,MAPPING_VERSION,MAX_AGE_MS,EVIDENCE_TTL_MS,POSITIONS,MIN_COUNTS,RANK_MIN_COUNTS,sourceTime,retrievalProjectionChronology,weeklyRecordChronology,sleeperIndexes,mapFantasyProsPlayer,projectionLane,weeklyRankLane,buildSnapshot,validateSnapshot,projectionOnlyStorageSnapshot,atomicWrite};
+  return{SCHEMA,CACHE_KEY,TEMP_KEY,MAPPING_VERSION,MAX_AGE_MS,EVIDENCE_TTL_MS,POSITIONS,MIN_COUNTS,RANK_MIN_COUNTS,WEEKLY_HALF_PPR_MAX,sourceTime,retrievalProjectionChronology,weeklyRecordChronology,sleeperIndexes,mapFantasyProsPlayer,projectionLane,weeklyRankLane,buildSnapshot,validateSnapshot,projectionOnlyStorageSnapshot,atomicWrite};
 });

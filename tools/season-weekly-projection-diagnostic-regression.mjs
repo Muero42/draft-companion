@@ -28,7 +28,7 @@ function runtime({fetchImpl,jfImpl,season='2026'}={}){
   let capturedUrl='',capturedOptions=null,logCount=0;
   const api=runtime({fetchImpl:async(url,options)=>{capturedUrl=url;capturedOptions=options;return response(200,{ok:true})}});
   const oldLog=console.log;console.log=()=>{logCount++};
-  try{const result=await api.fpProxyRequest('/nfl/2026/projections?week=7&position=QB&ros=false');assert.equal(result.status,200)}finally{console.log=oldLog}
+  try{const result=await api.fpProxyRequest('/nfl/2026/projections?week=7&position=QB&scoring=HALF');assert.equal(result.status,200)}finally{console.log=oldLog}
   assert.equal(capturedOptions.headers['x-fp-key'],secretSentinel,'existing x-fp-key credential header must be used');
   assert(!capturedUrl.includes(secretSentinel),'credential must never enter URL/query string');
   assert.equal(logCount,0,'credential request must not log');

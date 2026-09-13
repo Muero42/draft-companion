@@ -61,7 +61,7 @@ for(const [position,count] of Object.entries(counts)){
     players[id]={full_name:`${position} ${i}`,position,team:'AAA',fantasy_data_id:10_000+id};
     rows.push({fpid:10_000+id,name:`${position} ${i}`,position_id:position,team_id:'AAA',stats:{points_half:10}});
   }
-  payloads[position]={season,week,players:rows};
+  payloads[position]={season,week,scoring:'HALF',positions:position,players:rows};
 }
 const partial=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{QB:payloads.QB,RB:payloads.RB,TE:payloads.TE},sleeperPlayers:players,verifiedAt:now});
 assert.equal(partial.lanes.projections.status,'PARTIAL');
