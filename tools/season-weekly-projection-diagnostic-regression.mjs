@@ -8,7 +8,7 @@ const end=app.indexOf('function slugifyExpert',start);
 assert(start>=0&&end>start,'weekly projection diagnostic production block missing');
 const source=app.slice(start,end)+`;globalThis.__weeklyDiagnostic={fpProxyRequest,proxyCall,deriveSleeperNflWeek,summarizeWeeklyProjectionPayload,weeklyProjectionFailure,runAuthenticatedWeeklyProjectionDiagnostic,formatAuthenticatedWeeklyProjectionDiagnostic};`;
 const secretSentinel='SENSITIVE_SENTINEL_DO_NOT_RENDER';
-const response=(status,data,raw=null)=>({ok:status>=200&&status<300,status,async text(){return raw??JSON.stringify(data)}});
+const response=(status,data,raw=null,headers={})=>({ok:status>=200&&status<300,status,headers:{get:name=>headers[String(name).toLowerCase()]??null},async text(){return raw??JSON.stringify(data)}});
 const projectedRows=(position,count,{missingPoints=0,missingIds=0}={})=>Array.from({length:count},(_,i)=>({
   ...(i<missingIds?{}:{fpid:1000+i}),name:`${position} Player ${i+1}`,position_id:position,
   stats:i<missingPoints?{points:99}:{points:99,points_half:20-i/10}
@@ -80,6 +80,10 @@ for(const [status,reason] of [[401,'HTTP_401'],[403,'HTTP_403'],[404,'HTTP_404']
   assert.equal((await api.proxyCall('/legacy-diagnostic')).raw,'not json','existing proxyCall malformed-200 behavior must remain intact');
   const report=await api.runAuthenticatedWeeklyProjectionDiagnostic();
   assert(report.rows.every(row=>row.reason==='MALFORMED_PAYLOAD'),'malformed payload must remain distinguishable');
+}
+{
+  const api=runtime({fetchImpl:async()=>response(429,null,'',{ 'retry-after':'120' })});
+  await assert.rejects(api.fpProxyRequest('/nfl/2026/projections?week=7&position=WR'),error=>error.code==='MALFORMED_PAYLOAD'&&error.status===429&&error.retryAfterMs===120_000,'empty/non-JSON 429 must retain status and Retry-After metadata for settled-result persistence');
 }
 {
   const api=runtime({fetchImpl:(url,options)=>new Promise((resolve,reject)=>options.signal.addEventListener('abort',()=>{const error=new Error('aborted');error.name='AbortError';reject(error)}))});

@@ -5,8 +5,9 @@ import evidence from '../weekly-evidence-v2.js';
 
 const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
 function sourceOf(name){
-  const start=app.indexOf(`function ${name}(`);assert(start>=0,`${name} missing`);
-  const brace=app.indexOf('{',start);let depth=0;
+  let start=app.indexOf(`function ${name}(`);assert(start>=0,`${name} missing`);
+  if(app.slice(Math.max(0,start-6),start)==='async ')start-=6;
+  const brace=app.indexOf('){',start)+1;assert(brace>0,`${name} body missing`);let depth=0;
   for(let i=brace;i<app.length;i++){
     if(app[i]==='{')depth++;
     else if(app[i]==='}'&&--depth===0)return app.slice(start,i+1);
@@ -19,12 +20,17 @@ const cache=new Map(),store={
   set:(key,value)=>{cache.set(key,value);return true}
 };
 const els={seasonRankingAge:{textContent:'',className:''},seasonRankingStatus:{textContent:'',className:''}};
-const context={Date,Number,String,Array,Object,Math,store,els,WEEKLY_PROJECTION_POSITIONS:['QB','RB','WR','TE'],SEASON_RANKING_AUTO_MS:3*60*60*1000,seasonRankingRefreshBusy:false,PittiWeeklyEvidenceV2:evidence};
+const context={Date,Number,String,Array,Object,Math,store,els,WEEKLY_PROJECTION_POSITIONS:['QB','RB','WR','TE'],SEASON_RANKING_AUTO_MS:3*60*60*1000,seasonRankingRefreshBusy:false,PittiWeeklyEvidenceV2:evidence,FP_DIAGNOSTIC_TIMEOUT_MS:10_000,AbortController,setTimeout,clearTimeout,els:{...els,apiKey:{value:'test-key'}}};
 context.globalThis=context;
 vm.createContext(context);
-vm.runInContext([sourceOf('persistSeasonProjectionRetryAfter'),sourceOf('seasonProjectionCoverage'),sourceOf('renderSeasonRankingFreshness')].join('\n'),context);
+vm.runInContext([sourceOf('codedError'),sourceOf('fpProxyRequest'),sourceOf('persistSeasonProjectionRetryAfter'),sourceOf('seasonProjectionCoverage'),sourceOf('renderSeasonRankingFreshness')].join('\n'),context);
 
 const retryKey='pitti.weekly-evidence.v2.retryAfterUntil',observedAt=1_000_000;
+context.fetch=async()=>({ok:false,status:429,headers:{get:name=>name.toLowerCase()==='retry-after'?'120':null},text:async()=>''});
+const malformed429=await Promise.allSettled([context.fpProxyRequest('/nfl/2026/projections?week=7&position=WR')]);
+context.persistSeasonProjectionRetryAfter(malformed429,observedAt);
+assert.equal(cache.get(retryKey),observedAt+120_000,'non-JSON HTTP 429 must carry Retry-After through settled-result persistence');
+cache.delete(retryKey);
 context.persistSeasonProjectionRetryAfter([
   {status:'rejected',reason:{status:429,retryAfterMs:30_000}},
   {status:'fulfilled',value:['RB',{}]}
