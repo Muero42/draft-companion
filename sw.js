@@ -1,7 +1,7 @@
-const CACHE='draft-companion-v11.8.0-rc4.198-static-v4';
+const CACHE='draft-companion-v11.8.0-rc4.199-static-v4';
 const BACKUP_CACHE='draft-companion-backup-export-v1';
-const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.198','./decision-policy.js','./weekly-evidence-v2.js?v=v11.8.0-rc4.198','./lineup-start-sit-v2.js?v=v11.8.0-rc4.198','./game-context-v1.js?v=v11.8.0-rc4.198','./boone-trade-values-v1.mjs?v=v11.8.0-rc4.198','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.198','./live-surface-v3.css?v=v11.8.0-rc4.198','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
-const BASE='v11.8.0-rc4.198',TARGET='v11.8.0-rc4.198';
+const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.199','./decision-policy.js','./weekly-evidence-v2.js?v=v11.8.0-rc4.199','./lineup-start-sit-v2.js?v=v11.8.0-rc4.199','./game-context-v1.js?v=v11.8.0-rc4.199','./boone-trade-values-v1.mjs?v=v11.8.0-rc4.199','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.199','./live-surface-v3.css?v=v11.8.0-rc4.199','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
+const BASE='v11.8.0-rc4.199',TARGET='v11.8.0-rc4.199';
 // Only the bounded app shell belongs in CacheStorage. Live API responses have
 // their own freshness rules and may carry a new cache-busting URL on every load.
 const SCOPE=new URL(self.registration.scope);
@@ -34,7 +34,8 @@ async function boundedFantasyProsAttempt(request,timeoutMs){
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);
   try{
     const retryRequest=new Request(request.url,{method:'GET',headers:request.headers,cache:'no-store',signal:controller.signal});
-    return await fetch(retryRequest);
+    const response=await fetch(retryRequest),body=await response.arrayBuffer();
+    return new Response(body,{status:response.status,statusText:response.statusText,headers:response.headers});
   }finally{clearTimeout(timer)}
 }
 async function resilientFantasyPros(request,path){

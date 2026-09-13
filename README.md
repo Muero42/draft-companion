@@ -1,3 +1,5 @@
+# v11.8.0-rc4.199 integrated P0 candidate (PR #162; not deployed or device-accepted)
+
 # rc4.198 post-merge source/package authority — v245
 Handoff generation: `20260912T1317Z-v245`
 

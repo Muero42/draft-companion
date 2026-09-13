@@ -12,6 +12,9 @@ function harness(sequence=[]){
     if(next==='ABORT')return await new Promise((resolve,reject)=>{
       request.signal?.addEventListener('abort',()=>{const error=new Error('aborted');error.name='AbortError';reject(error);},{once:true});
     });
+    if(next==='BODY_STALL')return new Response(new ReadableStream({start(controller){
+      request.signal?.addEventListener('abort',()=>{const error=new Error('aborted body');error.name='AbortError';controller.error(error);},{once:true});
+    }}),{status:200,headers:{'content-type':'application/json'}});
     if(next instanceof Response)return next;
     return new Response(JSON.stringify({ok:true}),{status:200,headers:{'content-type':'application/json'}});
   };
@@ -31,6 +34,15 @@ function harness(sequence=[]){
     return result?await result:undefined;
   };
   return{request,calls};
+}
+
+{
+  const h=harness(['BODY_STALL']);
+  const path=encodeURIComponent('/nfl/2026/consensus-rankings?week=1&position=TE&scoring=HALF');
+  const response=await h.request(`https://example.test/api/fantasypros?path=${path}`);
+  assert.equal(response.status,504,'headers without a completed body remain inside the rank deadline');
+  assert.match(await response.text(),/FANTASYPROS_RANK_TIMEOUT/);
+  assert.equal(h.calls.length,1,'a stalled rank body must not add a retry');
 }
 
 {
