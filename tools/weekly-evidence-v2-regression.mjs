@@ -40,6 +40,16 @@ assert.deepEqual(evidence.validateSnapshot(unavailable,{season,week,scoring:'HAL
 const retained=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:wrong,sleeperPlayers:players,priorSnapshot:snapshot,verifiedAt:now+1000});
 assert(retained.records.some(record=>record.position==='QB'&&record.verifiedAt===now),'still-valid prior failed-position records may be retained without restamping');
 assert.equal(retained.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE','retained records must not falsely mark a failed fresh position available');
+// An AVAILABLE position is a complete authoritative refresh. If a formerly
+// projected player disappears, that old row must disappear too; only lanes that
+// failed to refresh may retain chronology-valid prior evidence.
+const omittedRbId=snapshot.records.find(record=>record.position==='RB').playerId,newRbId='fresh-rb-replacement';
+const refreshedPlayers={...players,[newRbId]:{full_name:'RB Fresh Replacement',position:'RB',team:'AAA',fantasy_data_id:999999}};
+const refreshedRb={...payloads.RB,players:[...payloads.RB.players.slice(1),{fpid:999999,name:'RB Fresh Replacement',position_id:'RB',team_id:'AAA',stats:{points_half:9.5}}]};
+const authoritativeRb=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{...wrong,RB:refreshedRb},sleeperPlayers:refreshedPlayers,priorSnapshot:snapshot,verifiedAt:now+1000});
+assert.equal(authoritativeRb.lanes.projections.coverage.positions.RB.status,'AVAILABLE');
+assert(!authoritativeRb.records.some(record=>record.metric==='projected_points'&&record.position==='RB'&&record.playerId===omittedRbId),'an AVAILABLE RB refresh must remove an omitted prior RB immediately');
+assert(authoritativeRb.records.some(record=>record.metric==='projected_points'&&record.position==='QB'&&record.verifiedAt===now),'a failed QB lane may still retain chronology-valid prior projections');
 // A mapped fresh response cannot claim replacement ownership until its provider
 // chronology passes the same validation used by consumers. Another healthy position
 // makes this a production-shaped partial snapshot that is actually publishable.

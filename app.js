@@ -4348,7 +4348,7 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
   if(!navigator.onLine){renderSeasonRankingFreshness('Offline · letzter verifizierter Ranking-Stand bleibt aktiv.');return{ok:false,offline:true};}
   if(!lastDraftContext?.players){renderSeasonRankingFreshness('Weekly Evidence wartet auf das Sleeper-Spielerverzeichnis.');return{ok:false,skipped:'players-unavailable'};}
   seasonRankingRefreshBusy=true;
-  let completionNote='';
+  let completionNote='',persistedProjectionSnapshot=null,persistedAuthoritativeSnapshot=null;
   
   if(els.seasonRefreshEvidenceBtn)els.seasonRefreshEvidenceBtn.disabled=true;
   if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice';els.seasonRankingStatus.textContent='Weekly Projections QB/RB/WR/TE werden atomar geprüft …';}
@@ -4364,14 +4364,17 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     for(const response of responses)if(response.status==='fulfilled'){const [position,payload]=response.value;payloads[position]=payload;}
     const projectionSnapshot=api.buildSnapshot({season,week,scoring:els.scoring.value,projectionPayloads:payloads,sleeperPlayers:lastDraftContext.players,priorSnapshot:previous,verifiedAt:Date.now()});
     if(!Object.values(projectionSnapshot.lanes.projections.coverage.positions).some(position=>position.status==='AVAILABLE'))throw codedError('PROJECTION_LANE_UNAVAILABLE','Keine frische Weekly Projection Position verfügbar.');
-    const persistedProjectionSnapshot=api.atomicWrite(localStorage,{...projectionSnapshot,refreshTrigger:trigger,refreshStage:'PROJECTIONS'});
+    persistedProjectionSnapshot=api.atomicWrite(localStorage,{...projectionSnapshot,refreshTrigger:trigger,refreshStage:'PROJECTIONS'});
+    persistedAuthoritativeSnapshot=persistedProjectionSnapshot;
     const rankResponses=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
       const path=`/nfl/${season}/consensus-rankings?week=${week}&position=${position}&scoring=HALF`,response=await fpProxyRequest(path);
-      if(!response.ok)return[position,null];return[position,{...response.data,season,week,scoring:'HALF_PPR'}];
+      if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw error;}return[position,{...response.data,season,week,scoring:'HALF_PPR'}];
     }));
+    persistSeasonProjectionRetryAfter(rankResponses,Date.now());
     for(const response of rankResponses)if(response.status==='fulfilled'){const [position,payload]=response.value;if(payload)rankingPayloads[position]=payload;}
     const snapshot=api.buildSnapshot({season,week,scoring:els.scoring.value,projectionPayloads:payloads,rankingPayloads,sleeperPlayers:lastDraftContext.players,priorSnapshot:persistedProjectionSnapshot,verifiedAt:Date.now()});
     const persistedSnapshot=api.atomicWrite(localStorage,{...snapshot,refreshTrigger:trigger});
+    persistedAuthoritativeSnapshot=persistedSnapshot;
     try{const contextApi=globalThis.PittiGameContextV1,response=await fetch(`/api/nfl-week-context?season=${season}&week=${week}`,{cache:'no-store'}),data=await response.json();if(contextApi){const gameSnapshot=response.ok?contextApi.buildSnapshot({...data,verifiedAt:Date.now()}):contextApi.failureSnapshot({season,week,httpStatus:response.status,reason:'HTTP_ERROR',verifiedAt:Date.now()});persistSeasonWeeklyMetadata(contextApi.CACHE_KEY,gameSnapshot);}}catch(error){const contextApi=globalThis.PittiGameContextV1;if(contextApi)persistSeasonWeeklyMetadata(contextApi.CACHE_KEY,contextApi.failureSnapshot({season,week,reason:'FETCH_OR_JSON_ERROR',verifiedAt:Date.now()}));console.warn('Game context unavailable; lineup lock/opponent remains fail-closed',error);}
     persistSeasonWeeklyMetadata('pitti.weekly-evidence.v2.lastSuccess',persistedSnapshot.lastSuccessAt);
     if(lastDraftContext?.season)lastDraftContext.season.current_nfl_week=week;
@@ -4380,6 +4383,12 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     return{ok:true,snapshotId:persistedSnapshot.snapshotId,count:persistedSnapshot.records.length,status:persistedSnapshot.status,projectionStatus:persistedSnapshot.lanes.projections.status,rankStatus:persistedSnapshot.lanes.expertWeeklyRanks.status};
   }catch(e){
     if(e?.status===429&&Number.isFinite(e.retryAfterMs))persistSeasonProjectionRetryAfter([{status:'rejected',reason:e}],Date.now());
+    if(persistedAuthoritativeSnapshot){
+      persistSeasonWeeklyMetadata('pitti.weekly-evidence.v2.lastSuccess',persistedAuthoritativeSnapshot.lastSuccessAt);
+      completionNote=`Weekly Evidence · Projektionen gespeichert · spätere Rank-Persistenz fehlgeschlagen (${e?.code||e?.message||String(e)}) · ${persistedAuthoritativeSnapshot.records.length} Records · Ranks ${persistedAuthoritativeSnapshot.lanes.expertWeeklyRanks.status}`;
+      rerenderPostDraftFromContext();
+      return{ok:true,degraded:true,snapshotId:persistedAuthoritativeSnapshot.snapshotId,count:persistedAuthoritativeSnapshot.records.length,status:persistedAuthoritativeSnapshot.status,projectionStatus:persistedAuthoritativeSnapshot.lanes.projections.status,rankStatus:persistedAuthoritativeSnapshot.lanes.expertWeeklyRanks.status,rankPersistenceError:e?.code||e?.message||String(e)};
+    }
     completionNote='Weekly-Evidence-Prüfung fehlgeschlagen · letzter verifizierter Stand bleibt unverändert · '+(e?.code||e?.message||String(e));
     return{ok:false,error:e?.message||String(e)};
   }finally{
