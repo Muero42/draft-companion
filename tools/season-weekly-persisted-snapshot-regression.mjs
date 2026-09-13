@@ -38,6 +38,7 @@ const context={
   currentSleeperNflWeek:async()=>7,fpProxyRequest:async path=>({ok:true,status:200,data:path.includes('consensus-rankings')?{rank:true}:{projection:true}}),
   fetch:async()=>({ok:false,status:503,json:async()=>({})}),
   codedError:(code,message)=>Object.assign(new Error(message),{code}),persistSeasonProjectionRetryAfter:()=>0,
+  persistSeasonWeeklyMetadata:(key,value)=>store.set(key,value),
   renderSeasonRankingFreshness:note=>{renderedSnapshot=cache.get(api.CACHE_KEY);els.seasonRankingStatus.textContent=note},
   rerenderPostDraftFromContext:()=>{rerenders++},PittiWeeklyEvidenceV2:api
 };
