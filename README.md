@@ -1,7 +1,7 @@
+# v11.8.0-rc4.199 integrated P0 candidate (PR #162; not deployed or device-accepted)
+
 # rc4.198 post-merge source/package authority — v245
 Handoff generation: `20260912T1317Z-v245`
-
-> **Unmerged candidate-only notice:** `v11.8.0-rc4.199` is the proposed runtime identity for the PR #162 P0 operational-restore candidate. This notice exists only to satisfy candidate preflight and does **not** promote rc4.199 to source/main, deployment, device, or handoff authority. The coupled CURRENT/SEAL authority reconciliation remains deferred until the P0 restore is settled.
 
 Canonical main was dynamically verified at `826a1f3327ffac643f3c32217246133ea32bd3ac`. `v11.8.0-rc4.198` is the current source/main authority and has a verified **17-file source-byte/re-extraction parity** package with status `PACKAGED_ONLY_NOT_DEPLOYED`. Archive SHA values are observations scoped to one run/environment and MUST NOT be treated as cross-environment archive-byte identity.
 

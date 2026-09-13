@@ -34,7 +34,15 @@ assert.equal(evidence.mapFantasyProsPlayer({name:'QB Player 1',position_id:'QB',
 const wrong={...payloads,QB:{...payloads.QB,week:2}};
 const unavailable=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:wrong,sleeperPlayers:players,verifiedAt:now});
 assert.equal(unavailable.lanes.projections.status,'PARTIAL');
-assert.equal(unavailable.records.length,0,'partial multi-position fetch must not publish a mixed snapshot');
+assert.equal(unavailable.records.length,Object.values(counts).reduce((a,b)=>a+b,0)-counts.QB,'healthy positions must remain independently publishable');
+assert(!unavailable.records.some(record=>record.position==='QB'),'the failed fresh position must remain unavailable');
+assert.deepEqual(evidence.validateSnapshot(unavailable,{season,week,scoring:'HALF_PPR'},now),{ok:true},'record-valid partial projection evidence remains consumable');
+const retained=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:wrong,sleeperPlayers:players,priorSnapshot:snapshot,verifiedAt:now+1000});
+assert(retained.records.some(record=>record.position==='QB'&&record.verifiedAt===now),'still-valid prior failed-position records may be retained without restamping');
+assert.equal(retained.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE','retained records must not falsely mark a failed fresh position available');
+const allFailed=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{},sleeperPlayers:players,priorSnapshot:snapshot,verifiedAt:now+2000});
+assert.equal(allFailed.lanes.projections.status,'UNAVAILABLE');
+assert.equal(allFailed.lastSuccessAt,snapshot.lastSuccessAt,'an all-position failure cannot claim a fresh success');
 
 const memory=new Map(),storage={setItem(k,v){memory.set(k,v)},getItem:k=>memory.get(k)??null,removeItem:k=>memory.delete(k)};
 evidence.atomicWrite(storage,snapshot);

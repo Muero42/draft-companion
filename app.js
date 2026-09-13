@@ -1,6 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
-const APP_VERSION='v11.8.0-rc4.198';
+const APP_VERSION='v11.8.0-rc4.199';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -485,10 +485,9 @@ function removeLegacyRankingStorage(){
   try{localStorage.removeItem('v7_panelRanks')}catch(e){console.warn('Legacy panel-cache cleanup skipped',e)}
 }
 function pruneNonCriticalStorageForRankWrite(){
-  // Decision fixtures are primary draft evidence and must never be sacrificed to refresh
-  // reproducible ranking caches. Evict only secondary/rebuildable data here.
-  const keys=['v118_returnValidation','v117_researchEvidence'];
-  for(const key of keys){try{localStorage.removeItem(key)}catch{}}
+  // Rank caches are rebuildable. Research, return validation, decision fixtures and
+  // current Season/Weekly evidence are not, so there is nothing else safe to evict.
+  removeLegacyRankingStorage();
 }
 function persistExpertRankCache(expertId,result){
   const key='v7_rank_'+expertId,payload=JSON.stringify(result);
@@ -496,11 +495,7 @@ function persistExpertRankCache(expertId,result){
   catch(first){
     removeLegacyRankingStorage();
     try{localStorage.setItem(key,payload);return{ok:true,recovered:true}}
-    catch(second){
-      pruneNonCriticalStorageForRankWrite();
-      try{localStorage.setItem(key,payload);return{ok:true,recovered:true}}
-      catch(third){return{ok:false,error:third}}
-    }
+    catch(second){pruneNonCriticalStorageForRankWrite();return{ok:false,error:second}}
   }
 }
 let rankCache=loadRankCacheCompact();
@@ -3458,7 +3453,10 @@ async function syncWatcherFeed(){
     if(!r.ok)throw new Error(`HTTP ${r.status}`);
     const v=await r.json();
     if(!['draft-companion.watcher-feed.v1','draft-companion.watcher-feed.v2'].includes(v?.schema))throw new Error('Feed-Schema nicht verfügbar');
-    const gate=String(v?.gate?.overall||'UNKNOWN');
+    const gate=String(v?.gate?.overall||'UNKNOWN'),isV2=v.schema==='draft-companion.watcher-feed.v2';
+    const market=String(v?.gate?.market||'UNKNOWN'),playerState=String(v?.gate?.player_state_status||'UNKNOWN');
+    const healthyMarket=!isV2||market==='PASS',healthyPlayerState=!isV2||playerState==='PASS';
+    if(isV2&&gate==='PASS'&&!healthyMarket&&!healthyPlayerState)throw new Error('Watcher v2 Gate inkonsistent: overall PASS ohne gesunde Sub-Lane');
     if(gate!=='PASS'){
       store.set(WATCHER_SYNC_META_KEY,{at:Date.now(),gate,watcherVersion:v?.watcherVersion||null,added:0});
       if(els.watcherSyncStatus){els.watcherSyncStatus.className=gate==='FAIL'?'notice bad':'notice warn';els.watcherSyncStatus.textContent=`Pitti Watcher: ${gate} · automatische Research-Ingestion bleibt AUS.`}
@@ -3476,15 +3474,18 @@ async function syncWatcherFeed(){
     }
     let added=0,rejectedCritical=0,storageFull=false,quotaRecovered=false;
     for(const row of Array.isArray(v.events)?v.events:[]){
+      const eventLane=String(row?.fundamental_or_market||'fundamental');
+      if(isV2&&((eventLane==='market'&&!healthyMarket)||(eventLane!=='market'&&!healthyPlayerState)))continue;
       const input=watcherEvidenceInput(row),out=appendResearchEvidence(input);
       if(out.added)added++;
       if(out.storageFull)storageFull=true;
       if(out.quotaRecovered)quotaRecovered=true;
       if(out.event?.critical&&!out.event?.freshnessVerified)rejectedCritical++;
     }
-    try{store.set(WATCHER_SYNC_META_KEY,{at:Date.now(),gate,watcherVersion:v.watcherVersion||null,generatedAt:v.generatedAt||null,added,rejectedCritical,storageFull,quotaRecovered})}catch{};
+    try{store.set(WATCHER_SYNC_META_KEY,{at:Date.now(),gate,market:isV2?market:null,playerState:isV2?playerState:null,watcherVersion:v.watcherVersion||null,generatedAt:v.generatedAt||null,added,rejectedCritical,storageFull,quotaRecovered})}catch{};
     if(added>0){updateResearchCacheStatus();rerenderPostDraftFromContext();}
-    if(els.watcherSyncStatus){els.watcherSyncStatus.className=storageFull?'notice warn':'notice ok';els.watcherSyncStatus.textContent=storageFull?`Pitti Watcher: PASS · lokaler Evidence-Speicher voll; bestehender Cache bleibt erhalten, neue Events werden bis zur Speicherbereinigung nicht persistiert.`:`Pitti Watcher: PASS · ${added} neue Evidence-Events${quotaRecovered?' · Cache automatisch kompaktiert':''} · kritische State-Deltas ohne Quellenchronologie bleiben nicht-actionable (${rejectedCritical}).`}
+    const health=isV2&&(!healthyMarket||!healthyPlayerState)?`TEILWEISE VERFÜGBAR · Markt ${market} · Player-State ${playerState}`:'PASS';
+    if(els.watcherSyncStatus){els.watcherSyncStatus.className=storageFull||health!=='PASS'?'notice warn':'notice ok';els.watcherSyncStatus.textContent=storageFull?`Pitti Watcher: ${health} · lokaler Evidence-Speicher voll; bestehender Cache bleibt erhalten, neue Events werden nicht persistiert.`:`Pitti Watcher: ${health} · ${added} neue Evidence-Events${quotaRecovered?' · Cache automatisch kompaktiert':''} · kritische State-Deltas ohne Quellenchronologie bleiben nicht-actionable (${rejectedCritical}).`}
     return{ok:true,gate,added,rejectedCritical,storageFull,quotaRecovered};
   }catch(e){
     if(els.watcherSyncStatus){els.watcherSyncStatus.className='notice warn';els.watcherSyncStatus.textContent=`Pitti Watcher nicht automatisch verfügbar (${e?.name==='AbortError'?'Timeout':e.message}). Bestehender Cache bleibt unverändert.`}
@@ -4329,19 +4330,21 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
   if(els.seasonRankingStatus){els.seasonRankingStatus.className='notice';els.seasonRankingStatus.textContent='Weekly Projections QB/RB/WR/TE werden atomar geprüft …';}
   try{
     const season=Number(els.season.value.trim()),week=await currentSleeperNflWeek(season),payloads={},rankingPayloads={};
-    const responses=await Promise.all(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
+    const responses=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
       const path=`/nfl/${season}/projections?week=${week}&position=${position}&ros=false`,response=await fpProxyRequest(path);
       if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw error;}
       return[position,response.data];
     }));
-    for(const [position,payload] of responses)payloads[position]=payload;
-    const rankResponses=await Promise.all(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
+    for(const response of responses)if(response.status==='fulfilled'){const [position,payload]=response.value;payloads[position]=payload;}
+    const projectionSnapshot=api.buildSnapshot({season,week,scoring:els.scoring.value,projectionPayloads:payloads,sleeperPlayers:lastDraftContext.players,priorSnapshot:previous,verifiedAt:Date.now()});
+    if(!Object.values(projectionSnapshot.lanes.projections.coverage.positions).some(position=>position.status==='AVAILABLE'))throw codedError('PROJECTION_LANE_UNAVAILABLE','Keine frische Weekly Projection Position verfügbar.');
+    api.atomicWrite(localStorage,{...projectionSnapshot,refreshTrigger:trigger,refreshStage:'PROJECTIONS'});
+    const rankResponses=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
       const path=`/nfl/${season}/consensus-rankings?week=${week}&position=${position}&scoring=HALF`,response=await fpProxyRequest(path);
       if(!response.ok)return[position,null];return[position,{...response.data,season,week,scoring:'HALF_PPR'}];
     }));
-    for(const [position,payload] of rankResponses)if(payload)rankingPayloads[position]=payload;
-    const snapshot=api.buildSnapshot({season,week,scoring:els.scoring.value,projectionPayloads:payloads,rankingPayloads,sleeperPlayers:lastDraftContext.players,verifiedAt:Date.now()});
-    if(snapshot.lanes.projections.status!=='AVAILABLE')throw codedError('PROJECTION_LANE_'+snapshot.lanes.projections.status,'Weekly Projection Coverage oder FP→Sleeper-Mapping unvollständig.');
+    for(const response of rankResponses)if(response.status==='fulfilled'){const [position,payload]=response.value;if(payload)rankingPayloads[position]=payload;}
+    const snapshot=api.buildSnapshot({season,week,scoring:els.scoring.value,projectionPayloads:payloads,rankingPayloads,sleeperPlayers:lastDraftContext.players,priorSnapshot:projectionSnapshot,verifiedAt:Date.now()});
     api.atomicWrite(localStorage,{...snapshot,refreshTrigger:trigger});
     try{const contextApi=globalThis.PittiGameContextV1,response=await fetch(`/api/nfl-week-context?season=${season}&week=${week}`,{cache:'no-store'}),data=await response.json();if(contextApi){const gameSnapshot=response.ok?contextApi.buildSnapshot({...data,verifiedAt:Date.now()}):contextApi.failureSnapshot({season,week,httpStatus:response.status,reason:'HTTP_ERROR',verifiedAt:Date.now()});store.set(contextApi.CACHE_KEY,gameSnapshot);}}catch(error){const contextApi=globalThis.PittiGameContextV1;if(contextApi)store.set(contextApi.CACHE_KEY,contextApi.failureSnapshot({season,week,reason:'FETCH_OR_JSON_ERROR',verifiedAt:Date.now()}));console.warn('Game context unavailable; lineup lock/opponent remains fail-closed',error);}
     store.set('pitti.weekly-evidence.v2.lastSuccess',snapshot.lastSuccessAt);

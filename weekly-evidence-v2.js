@@ -100,7 +100,7 @@
       positions[position]={status,count:players.length,numericPointsHalf:numeric,mapped,mappingCoverage:Math.round(mappingCoverage*1000)/1000,reason:reason||(!sourceSufficient?'INSUFFICIENT_SOURCE_COVERAGE':status==='PARTIAL'?'INSUFFICIENT_MAPPING_COVERAGE':null),...time};
     }
     const available=POSITIONS.every(position=>positions[position].status==='AVAILABLE');
-    return{lane:{id:'fantasypros_weekly_projections',status:available?'AVAILABLE':Object.values(positions).some(x=>x.status!=='UNAVAILABLE')?'PARTIAL':'UNAVAILABLE',coverage:{positions},sourceId:'fantasypros',metric:'projected_points'},records:available?records:[],rejects};
+    return{lane:{id:'fantasypros_weekly_projections',status:available?'AVAILABLE':Object.values(positions).some(x=>x.status!=='UNAVAILABLE')?'PARTIAL':'UNAVAILABLE',coverage:{positions},sourceId:'fantasypros',metric:'projected_points'},records,rejects};
   }
 
   function rankingRows(payload){
@@ -144,21 +144,24 @@
     return{lane:{id:'fantasypros_weekly_ecr',status:available?'AVAILABLE':Object.values(positions).some(x=>x.status!=='UNAVAILABLE')?'PARTIAL':'UNAVAILABLE',coverage:{positions},metric:'weekly_rank',panelStatus:'BROAD_CONSENSUS_ONLY'},records,rejects};
   }
 
-  function buildSnapshot({season,week,scoring:scoringInput,projectionPayloads,rankingPayloads,sleeperPlayers,verifiedAt=Date.now()}={}){
+  function buildSnapshot({season,week,scoring:scoringInput,projectionPayloads,rankingPayloads,sleeperPlayers,priorSnapshot,verifiedAt=Date.now()}={}){
     const normalizedScoring=scoring(scoringInput);if(!normalizedScoring)throw new Error('WEEKLY_EVIDENCE_WRONG_SCORING');
     if(!Number.isInteger(Number(season))||!Number.isInteger(Number(week)))throw new Error('WEEKLY_EVIDENCE_INVALID_CONTEXT');
     const projections=projectionLane(projectionPayloads,{season,week,scoring:normalizedScoring,sleeperPlayers,verifiedAt});
     const ranks=weeklyRankLane(rankingPayloads,{season,week,scoring:normalizedScoring,sleeperPlayers,verifiedAt});
     const lanes={projections:projections.lane,expertWeeklyRanks:ranks.lane,vegas:{status:'UNAVAILABLE',reason:'NO_APPROVED_ROBUST_SOURCE'},weather:{status:'UNAVAILABLE',reason:'GAME_CONTEXT_REQUIRED'},roleGraphs:{status:'UNAVAILABLE',reason:'SOURCE_UNAVAILABLE'}};
-    const records=[...projections.records,...ranks.records];
-    const snapshot={schema:SCHEMA,snapshotId:`wev2-${Number(season)}-${Number(week)}-${normalizedScoring}-${verifiedAt}`,season:Number(season),week:Number(week),scoring:normalizedScoring,fetchedAt:verifiedAt,lastAttemptAt:verifiedAt,lastSuccessAt:projections.lane.status==='AVAILABLE'?verifiedAt:null,status:projections.lane.status==='AVAILABLE'&&ranks.lane.status==='AVAILABLE'?'AVAILABLE':projections.lane.status==='AVAILABLE'?'DEGRADED':'UNAVAILABLE',lanes,records,rejections:[...projections.rejects,...ranks.rejects],panel:{weeklyRank:{status:ranks.lane.status==='AVAILABLE'?'BROAD_CONSENSUS_ONLY':ranks.lane.status,sources:ranks.lane.status==='UNAVAILABLE'?[]:['FantasyPros current-week Half-PPR ECR'],selectedExperts:[],aggregation:'ECR; selected PITTI panel remains separately unavailable'},projection:{status:projections.lane.status,source:'fantasypros'}}};
+    const fresh=[...projections.records,...ranks.records],freshKeys=new Set(fresh.map(record=>`${record.metric}|${record.position}|${record.playerId}`));
+    const priorValid=priorSnapshot?.schema===SCHEMA&&Number(priorSnapshot.season)===Number(season)&&Number(priorSnapshot.week)===Number(week)&&priorSnapshot.scoring===normalizedScoring&&Array.isArray(priorSnapshot.records)?priorSnapshot.records.filter(record=>weeklyRecordChronology(record,{season,week,scoring:normalizedScoring},verifiedAt)&&!freshKeys.has(`${record.metric}|${record.position}|${record.playerId}`)):[];
+    const records=[...fresh,...priorValid];
+    const freshProjectionAvailable=Object.values(projections.lane.coverage.positions).some(position=>position.status==='AVAILABLE');
+    const snapshot={schema:SCHEMA,snapshotId:`wev2-${Number(season)}-${Number(week)}-${normalizedScoring}-${verifiedAt}`,season:Number(season),week:Number(week),scoring:normalizedScoring,fetchedAt:verifiedAt,lastAttemptAt:verifiedAt,lastSuccessAt:freshProjectionAvailable?verifiedAt:Number(priorSnapshot?.lastSuccessAt)||null,status:freshProjectionAvailable&&ranks.lane.status==='AVAILABLE'?'AVAILABLE':freshProjectionAvailable?'DEGRADED':'UNAVAILABLE',lanes,records,rejections:[...projections.rejects,...ranks.rejects],retainedPriorRecords:priorValid.length,panel:{weeklyRank:{status:ranks.lane.status==='AVAILABLE'?'BROAD_CONSENSUS_ONLY':ranks.lane.status,sources:ranks.lane.status==='UNAVAILABLE'?[]:['FantasyPros current-week Half-PPR ECR'],selectedExperts:[],aggregation:'ECR; selected PITTI panel remains separately unavailable'},projection:{status:projections.lane.status,source:'fantasypros'}}};
     return snapshot;
   }
 
   function validateSnapshot(snapshot,context={},now=Date.now()){
     if(!snapshot||snapshot.schema!==SCHEMA||!snapshot.snapshotId)return{ok:false,reason:'SCHEMA'};
     if(Number(snapshot.season)!==Number(context.season)||Number(snapshot.week)!==Number(context.week)||snapshot.scoring!==scoring(context.scoring))return{ok:false,reason:'CONTEXT_MISMATCH'};
-    if(snapshot.lanes?.projections?.status!=='AVAILABLE'||!Array.isArray(snapshot.records)||!snapshot.records.length)return{ok:false,reason:'PROJECTION_LANE_UNAVAILABLE'};
+    if(!['AVAILABLE','PARTIAL'].includes(snapshot.lanes?.projections?.status)||!Array.isArray(snapshot.records)||!snapshot.records.some(record=>record?.metric==='projected_points'&&weeklyRecordChronology(record,context,now)))return{ok:false,reason:'PROJECTION_LANE_UNAVAILABLE'};
     if(!Number.isFinite(snapshot.lastSuccessAt)||snapshot.lastSuccessAt>now||now-snapshot.lastSuccessAt>MAX_AGE_MS)return{ok:false,reason:'STALE'};
     return{ok:true};
   }
@@ -167,7 +170,7 @@
   const safeRemove=(storage,key)=>{try{storage.removeItem(key)}catch{}};
   function projectionOnlyStorageSnapshot(snapshot){
     const records=(Array.isArray(snapshot?.records)?snapshot.records:[]).filter(record=>record?.metric==='projected_points');
-    if(snapshot?.lanes?.projections?.status!=='AVAILABLE'||!records.length)return null;
+    if(!['AVAILABLE','PARTIAL'].includes(snapshot?.lanes?.projections?.status)||!records.length)return null;
     return{
       ...snapshot,
       status:'DEGRADED',

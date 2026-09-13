@@ -26,8 +26,8 @@ async function run(feed){
   return{result:await context.syncWatcherFeed(),writes,ingested,status:context.els.watcherSyncStatus};
 }
 
-const event={id:'evt-1',player_id:'player-1'};
-const pass=await run({schema:'draft-companion.watcher-feed.v2',gate:{overall:'PASS'},events:[event]});
+const event={id:'evt-1',player_id:'player-1',fundamental_or_market:'market'};
+const pass=await run({schema:'draft-companion.watcher-feed.v2',gate:{overall:'PASS',market:'PASS',player_state_status:'PASS'},events:[event]});
 assert.equal(pass.result.ok,true);assert.equal(pass.result.gate,'PASS');assert.equal(pass.result.added,1);
 assert.equal(pass.ingested.length,1,'v2 PASS reaches existing research ingestion');
 assert(!pass.writes.some(x=>x.key==='v190_seasonEvidence'),'v2 without seasonEvidence cannot populate weekly metrics');
@@ -44,4 +44,15 @@ for(const schema of ['draft-companion.watcher-feed.v3','unknown',null]){
 
 const legacy=await run({schema:'draft-companion.watcher-feed.v1',gate:{overall:'PASS'},events:[event]});
 assert.equal(legacy.ingested.length,1,'the previously supported exact v1 schema remains compatible');
+
+const laneEvents=[event,{id:'evt-2',player_id:'player-2',fundamental_or_market:'fundamental'}];
+const marketOnly=await run({schema:'draft-companion.watcher-feed.v2',gate:{overall:'PASS',market:'PASS',player_state_status:'FAIL'},events:laneEvents});
+assert.deepEqual(marketOnly.ingested.map(x=>x.id),['watcher_evt-1']);
+assert.match(marketOnly.status.textContent,/TEILWEISE VERFÜGBAR · Markt PASS · Player-State FAIL/);
+const stateOnly=await run({schema:'draft-companion.watcher-feed.v2',gate:{overall:'PASS',market:'STALE',player_state_status:'PASS'},events:laneEvents});
+assert.deepEqual(stateOnly.ingested.map(x=>x.id),['watcher_evt-2']);
+assert.match(stateOnly.status.textContent,/Markt STALE · Player-State PASS/);
+const inconsistent=await run({schema:'draft-companion.watcher-feed.v2',gate:{overall:'PASS',market:'FAIL',player_state_status:'STALE'},events:laneEvents});
+assert.equal(inconsistent.result.ok,false);assert.equal(inconsistent.ingested.length,0);
+assert.match(inconsistent.status.textContent,/inkonsistent/);
 console.log('SEASON_WATCHER_FEED_V2_PASS');
