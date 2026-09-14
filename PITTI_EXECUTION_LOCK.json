@@ -30,7 +30,7 @@
         "repository": "Muero42/draft-companion",
         "pr": 163,
         "lane": "HISTORICAL_DISCOVERABLE_V248_ANCHOR_ONLY",
-        "verification": "MUTABLE_LIVE_STATE_REVERIFY; MUST_NOT_OVERRIDE_V251",
+        "verification": "MUTABLE_LIVE_STATE_REVERIFY; MUST_NOT_OVERRIDE_V252",
         "head": "DYNAMIC_EXTERNAL_EVIDENCE"
       },
       {
@@ -55,7 +55,7 @@
     "preinstallSha256": null,
     "preinstallRuntimeFiles": 17,
     "latestSourceRegressionVerified": "HISTORICAL prior regression observation; current local checks must run on repaired bytes",
-    "latestDeployedCandidate": "v11.8.0-rc4.201 production VERIFIED at bd666824dac9264795de687e915faaa06c5a4f20; device NOT ACCEPTED",
+    "latestDeployedCandidate": "v11.8.0-rc4.202 production VERIFIED at main@4e2b9af1c8562c0273f39503c2c1c90a15acce00, Cloudflare deployment d1e38b4b-27ed-4f87-bfa7-0e99f282de5d; device observed FAILED; NOT ACCEPTED",
     "latestAndroidVerified": "v11.8.0-rc4.202 RC4.202_PHYSICAL_FAIL_YEARLESS_PROJECTION_CHRONOLOGY_REJECTED",
     "androidAuthority": "v11.8.0-rc4.202 physically observed; FAILED fresh weekly projection lane; NOT ACCEPTED",
     "android_authority": "v11.8.0-rc4.202 physically observed; FAILED fresh weekly projection lane; NOT ACCEPTED",

@@ -143,6 +143,10 @@ const newV246Cases=[
   ['v251 stale rc4.200 refresh scope rejected',d=>d['PITTI_CURRENT_STATE.json'].handoff.refresh_scope='RC4.200_WEEKLY_PROJECTION_SEMANTIC_REPAIR_AFTER_RC4.199_PHYSICAL_FAIL'],
   ['v251 stale sealed physical alias rejected',d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.latest_physical_android='v11.8.0-rc4.200 RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; NOT ACCEPTED'],
   ['v251 stale sealed deployment alias rejected',d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.deployment_parity='rc4.200 VERIFIED Production at main@039fbd3ff169f5476c54e893702bf3aad18035b5'],
+  ['v252 rejects stale rc4.202 deployment alias',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4202_candidate.deployment_proven=false],
+  ['v252 rejects stale rc4.202 device-observation alias',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4202_candidate.device_observation_proven=false],
+  ['v252 rejects stale latest deployed candidate',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.latestDeployedCandidate='v11.8.0-rc4.201'],
+  ['v252 rejects PR163 v251 takeover wording',d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.mutable_live_verification_targets.draft_companion_pr_163=d['PITTI_HANDOFF_SEAL.json'].branch_locks.mutable_live_verification_targets.draft_companion_pr_163.replace('v252','v251')],
   ['v252 source authority cannot resurrect rc4.201 as newest Production',d=>d['PITTI_CURRENT_STATE.json'].source_authority=d['PITTI_CURRENT_STATE.json'].source_authority.replace('Newest verified Production and physical failed observation is v11.8.0-rc4.202','Newest verified Production and physical failed observation is v11.8.0-rc4.201')],
 ];
 for(const [name,mutate] of newV246Cases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}

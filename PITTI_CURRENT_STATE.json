@@ -143,14 +143,16 @@
       "evidence_scope": "Historical verified Production deployment and separate failed physical observation; immutable rc4.199 evidence remains preserved."
     },
     "rc4202_candidate": {
-      "checkpoint": "v251",
+      "checkpoint": "v252",
       "version": "v11.8.0-rc4.202",
-      "status": "MERGED/HISTORICAL_PRODUCTION_PHYSICAL_FAIL",
-      "deployment_proven": false,
-      "device_observation_proven": false,
+      "status": "MERGED/HISTORICAL_PRODUCTION_DEVICE_OBSERVED_FAILED",
+      "deployment_proven": true,
+      "device_observation_proven": true,
       "device_acceptance_proven": false,
       "pr_state": "DYNAMIC_VERIFICATION_REQUIRED",
-      "canonical_containment": "DYNAMIC_VERIFICATION_REQUIRED"
+      "canonical_containment": "DYNAMIC_VERIFICATION_REQUIRED",
+      "source_commit": "4e2b9af1c8562c0273f39503c2c1c90a15acce00",
+      "deployment_id": "d1e38b4b-27ed-4f87-bfa7-0e99f282de5d"
     },
     "rc4201_physical_failure": {
       "checkpoint": "v251",
