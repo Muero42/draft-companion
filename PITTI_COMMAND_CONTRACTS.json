@@ -155,25 +155,25 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.199 Production VERIFIED at exact main 2a62e52cb88187470542840053c72cd310b18e2b, deployment 48ab58ba-53d5-4b74-b7e6-16629256a9ee; physical acceptance FAILED separately",
-    "androidAuthority": "v11.8.0-rc4.199 latest physically observed production runtime; RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; NOT ACCEPTED",
-    "sourceAuthority": "rc4.200 source/candidate authority in this tree; canonical main/PR state dynamically verified; NOT production deployed",
-    "latestPackageReextract": "rc4.200 source-byte-exact 17-file package; archive SHA run/environment-scoped",
+    "productionControl": "v11.8.0-rc4.200 Production VERIFIED at exact main 039fbd3ff169f5476c54e893702bf3aad18035b5, deployment f57beed4-3794-4bae-a047-612d046432f7; physical acceptance FAILED separately",
+    "androidAuthority": "v11.8.0-rc4.200 latest physically observed production runtime; RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; NOT ACCEPTED",
+    "sourceAuthority": "rc4.201 source/candidate authority in this tree; canonical main/PR state dynamically verified; NOT production deployed",
+    "latestPackageReextract": "rc4.201 source-byte-exact 17-file package; archive SHA run/environment-scoped",
     "latestPackageSha256": null,
     "packageReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
-    "deployedPagesVersion": "v11.8.0-rc4.199",
+    "deployedPagesVersion": "v11.8.0-rc4.200",
     "deployedPagesAppByteParityWithMain": false,
     "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-    "exactNextAction": "Verify rc4.200 source candidate dynamically before promotion. rc4.199 Production deployment is verified at exact main commit 2a62e52cb88187470542840053c72cd310b18e2b and separately failed physical acceptance with RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.200 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
-    "runtimeVersion": "rc4.200 source candidate; rc4.199 Production deployed but physical-failed/not accepted",
+    "exactNextAction": "Verify rc4.201 source candidate dynamically before promotion. rc4.200 Production deployment is verified at exact main commit 039fbd3ff169f5476c54e893702bf3aad18035b5 and separately failed physical acceptance with RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; rc4.201 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
+    "runtimeVersion": "rc4.201 source candidate; rc4.200 Production deployed but physical-failed/not accepted",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
-    "latestDeviceEvidence": "2026-09-13 RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH",
+    "latestDeviceEvidence": "2026-09-13 RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
     "reconciledBaseMain": "DYNAMIC_EXTERNAL_EVIDENCE",
     "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-    "packageReferenceScope": "rc4.200 17-file source-byte parity; no cross-environment archive SHA identity",
+    "packageReferenceScope": "rc4.201 17-file source-byte parity; no cross-environment archive SHA identity",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.200",
+      "version": "v11.8.0-rc4.201",
       "files": 17,
       "sha256": null,
       "status": "PACKAGED_ONLY_NOT_DEPLOYED",
@@ -182,16 +182,16 @@
     },
     "deploymentParity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; ARBITRARY_BYTE_PARITY_NOT_PROVEN",
     "productionDeployment": {
-      "version": "v11.8.0-rc4.199",
-      "sourceCommit": "2a62e52cb88187470542840053c72cd310b18e2b",
+      "version": "v11.8.0-rc4.200",
+      "sourceCommit": "039fbd3ff169f5476c54e893702bf3aad18035b5",
       "status": "VERIFIED_SUCCESS",
       "branch": "main",
-      "deploymentId": "48ab58ba-53d5-4b74-b7e6-16629256a9ee"
+      "deploymentId": "f57beed4-3794-4bae-a047-612d046432f7"
     }
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260913T1930Z-v249",
-  "handoff_generation": "20260913T1930Z-v249",
+  "handoffGeneration": "20260914T1200Z-v250",
+  "handoff_generation": "20260914T1200Z-v250",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -217,8 +217,8 @@
     "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
   "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "exactNextAction": "Verify rc4.200 source candidate dynamically before promotion. rc4.199 Production deployment is verified at exact main commit 2a62e52cb88187470542840053c72cd310b18e2b and separately failed physical acceptance with RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.200 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
+  "exactNextAction": "Verify rc4.201 source candidate dynamically before promotion. rc4.200 Production deployment is verified at exact main commit 039fbd3ff169f5476c54e893702bf3aad18035b5 and separately failed physical acceptance with RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; rc4.201 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
-  "updated_at": "2026-09-12T13:17:00Z"
+  "updated_at": "2026-09-14T12:00:00Z"
 }

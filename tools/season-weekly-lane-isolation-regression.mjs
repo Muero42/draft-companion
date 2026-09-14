@@ -12,5 +12,5 @@ assert.match(refresh,/Promise\.allSettled\(WEEKLY_PROJECTION_POSITIONS[\s\S]*con
 const projectionWrite=refresh.indexOf("refreshStage:'PROJECTIONS'"),rankStart=refresh.indexOf('consensus-rankings');
 assert(projectionWrite>=0&&rankStart>projectionWrite,'verified projections must persist before optional rank acquisition starts');
 assert(!refresh.includes("snapshot.lanes.projections.status!=='AVAILABLE'"),'partial record-valid projection snapshots must not be globally rejected');
-assert.match(refresh,/some\(position=>position\.status==='AVAILABLE'\)/,'all-projection-failure must fail closed before replacing prior evidence');
+assert.match(refresh,/!freshUsable\.length\|\|!projectionValidation\.ok/,'all-zero consumer-usable projections must fail closed before replacing prior evidence');
 console.log('SEASON_WEEKLY_LANE_ISOLATION_PASS');

@@ -755,3 +755,11 @@ Newest verified Production is `v11.8.0-rc4.199` from exact source/main commit `2
 FantasyPros weekly projections use documented `week` and `ros=false` request context without an unsupported `scoring` parameter. Provider `season`, `week`, and `positions` prove response scope; `stats.points_half` supplies Half-PPR values. Provider response metadata such as `scoring=STD` does not suppress valid `stats.points_half`, while independent one-game ceilings continue to reject season/ROS-scale values.
 
 Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. No merge, deployment, promotion, cache/app-data clearing, reinstall, device acceptance, or Sleeper transaction is authorized by this checkpoint.
+
+## v250 CURRENT — rc4.201 weekly consumer/mapping/status repair (2026-09-14)
+
+Handoff generation: `20260914T1200Z-v250`. `v11.8.0-rc4.201` is source/candidate authority in this tree; canonical main, PR state, containment, and exact-head CI remain mutable external evidence. The 17-file package remains source-byte/re-extraction evidence only, with run/environment-scoped archive identity.
+
+`v11.8.0-rc4.200` separately has verified Production deployment success at exact `main@039fbd3ff169f5476c54e893702bf3aad18035b5`, Cloudflare deployment `f57beed4-3794-4bae-a047-612d046432f7`, status `success`, branch `main`. Physical Android/PWA acceptance separately **FAILED** as `RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK`; rc4.200 is not device-accepted. rc4.195 remains the prior fully accepted rollback reference.
+
+rc4.201 repairs only same-path mapping/consumer diagnostics, valid-PARTIAL refresh persistence, and cache-status validation. It preserves `week + position + ros=false` with no projections `scoring` parameter, weekly semantic ceilings, chronology and position isolation. Source, merge, package, preview, deployment, and device acceptance remain separate. Next gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`.

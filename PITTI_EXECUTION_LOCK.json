@@ -1,40 +1,40 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-13T19:30:00Z",
+  "updatedAt": "2026-09-14T12:00:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Dynamically verify local Git and canonical GitHub main/PR/exact-head CI before dependent continuation or promotion. rc4.200 is source/candidate authority in this tree and is NOT production-deployed or device-observed/accepted. Production/device evidence remains rc4.198 at 493e5aac9cea5a7a667efec81e1bdc733935baf9 with RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA; rc4.195 remains the prior fully accepted rollback. never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Dynamically verify local Git and canonical GitHub main/PR/exact-head CI before dependent continuation or promotion. rc4.201 is source/candidate authority in this tree and is NOT production-deployed or device-observed/accepted. Production/device evidence remains rc4.198 at 493e5aac9cea5a7a667efec81e1bdc733935baf9 with RC4.198_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_STORAGE_QUOTA; rc4.195 remains the prior fully accepted rollback. never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "reconciledBaseMain": "DYNAMIC_EXTERNAL_EVIDENCE"
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.200",
+    "appVersion": "v11.8.0-rc4.201",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.199 RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH",
+    "latestAndroidObserved": "v11.8.0-rc4.200 RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK",
     "latestPreinstallVerified": "HISTORICAL/SUPERSEDED: rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "HISTORICAL/SUPERSEDED: v11.8.0-rc4.107",
-    "preinstallArtifact": "rc4.200 17-file source-byte-parity package (separate from deployment)",
+    "preinstallArtifact": "rc4.201 17-file source-byte-parity package (separate from deployment)",
     "preinstallSha256": null,
     "preinstallRuntimeFiles": 17,
     "latestSourceRegressionVerified": "HISTORICAL prior regression observation; current local checks must run on repaired bytes",
-    "latestDeployedCandidate": "v11.8.0-rc4.199 production VERIFIED at 2a62e52cb88187470542840053c72cd310b18e2b; device NOT ACCEPTED",
-    "latestAndroidVerified": "v11.8.0-rc4.199 RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH",
-    "androidAuthority": "v11.8.0-rc4.199 physically observed; FAILED weekly projection semantics; NOT ACCEPTED",
-    "android_authority": "v11.8.0-rc4.199 physically observed; FAILED weekly projection semantics; NOT ACCEPTED",
+    "latestDeployedCandidate": "v11.8.0-rc4.200 production VERIFIED at 039fbd3ff169f5476c54e893702bf3aad18035b5; device NOT ACCEPTED",
+    "latestAndroidVerified": "v11.8.0-rc4.200 RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK",
+    "androidAuthority": "v11.8.0-rc4.200 physically observed; FAILED weekly projection semantics; NOT ACCEPTED",
+    "android_authority": "v11.8.0-rc4.200 physically observed; FAILED weekly projection semantics; NOT ACCEPTED",
     "deployedPagesAppByteParityWithMain": false,
     "preinstallReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "preinstallReferenceArtifactId": null,
-    "preinstallHashSemantics": "rc4.200 source-byte parity; archive SHA is run/environment-scoped and cannot establish cross-environment identity.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.199",
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.199 RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH",
+    "preinstallHashSemantics": "rc4.201 source-byte parity; archive SHA is run/environment-scoped and cannot establish cross-environment identity.",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.200",
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.200 RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK",
     "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
     "rc499": {
@@ -66,15 +66,15 @@
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.195 PRIOR_FULL_ACCEPTANCE_ROLLBACK_REFERENCE",
     "unreleasedMainDelta": "DYNAMIC_VERIFICATION_REQUIRED against canonical main and relevant PRs; last-observed PR118 boundary is recorded in CURRENT.",
-    "deployedPagesVersion": "v11.8.0-rc4.199",
+    "deployedPagesVersion": "v11.8.0-rc4.200",
     "mainGhPagesParity": false,
     "androidVerified": false,
-    "androidAcceptance": "RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH",
+    "androidAcceptance": "RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK",
     "devicePromotionPolicy": "Requires current user authorization, exact-source validation, verified deployment parity and a physical canary. Source or merge state never proves device acceptance.",
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.200",
+      "version": "v11.8.0-rc4.201",
       "files": 17,
       "sha256": null,
       "status": "PACKAGED_ONLY_NOT_DEPLOYED",
@@ -83,11 +83,11 @@
     },
     "acceptedRollback": "v11.8.0-rc4.195",
     "productionDeployment": {
-      "version": "v11.8.0-rc4.199",
-      "sourceCommit": "2a62e52cb88187470542840053c72cd310b18e2b",
+      "version": "v11.8.0-rc4.200",
+      "sourceCommit": "039fbd3ff169f5476c54e893702bf3aad18035b5",
       "status": "VERIFIED_SUCCESS",
       "branch": "main",
-      "deploymentId": "48ab58ba-53d5-4b74-b7e6-16629256a9ee"
+      "deploymentId": "f57beed4-3794-4bae-a047-612d046432f7"
     }
   },
   "auto": {
@@ -292,11 +292,11 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260913T1930Z-v249",
+    "generation": "20260914T1200Z-v250",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Verify rc4.200 source candidate dynamically before promotion. rc4.199 Production deployment is verified at exact main commit 2a62e52cb88187470542840053c72cd310b18e2b and separately failed physical acceptance with RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.200 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
+    "resume": "Verify rc4.201 source candidate dynamically before promotion. rc4.200 Production deployment is verified at exact main commit 039fbd3ff169f5476c54e893702bf3aad18035b5 and separately failed physical acceptance with RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; rc4.201 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -316,7 +316,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260913T1930Z-v249",
+  "handoff_generation": "20260914T1200Z-v250",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -351,9 +351,9 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260913T1930Z-v249",
+  "handoffGeneration": "20260914T1200Z-v250",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-09-13T19:30:00Z",
-  "exactNextAction": "Verify rc4.200 source candidate dynamically before promotion. rc4.199 Production deployment is verified at exact main commit 2a62e52cb88187470542840053c72cd310b18e2b and separately failed physical acceptance with RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.200 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
-  "failClosedRecovery": "Verify rc4.200 source candidate dynamically before promotion. rc4.199 Production deployment is verified at exact main commit 2a62e52cb88187470542840053c72cd310b18e2b and separately failed physical acceptance with RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.200 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback. Never claim a newer Library generation persisted unless files.list proves it."
+  "updated_at": "2026-09-14T12:00:00Z",
+  "exactNextAction": "Verify rc4.201 source candidate dynamically before promotion. rc4.200 Production deployment is verified at exact main commit 039fbd3ff169f5476c54e893702bf3aad18035b5 and separately failed physical acceptance with RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; rc4.201 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
+  "failClosedRecovery": "Verify rc4.201 source candidate dynamically before promotion. rc4.200 Production deployment is verified at exact main commit 039fbd3ff169f5476c54e893702bf3aad18035b5 and separately failed physical acceptance with RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; rc4.201 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback. Never claim a newer Library generation persisted unless files.list proves it."
 }
