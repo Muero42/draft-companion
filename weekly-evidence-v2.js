@@ -20,6 +20,7 @@
   // or expected outcomes. A one-game Half-PPR payload exceeding them is unsafe to
   // distinguish from the season/ROS payload physically observed on rc4.199.
   const WEEKLY_HALF_PPR_MAX={QB:80,RB:70,WR:70,TE:70};
+  const PROJECTION_RESPONSE_CLASSIFICATION={ABSENT_TRANSIENT:'ABSENT_TRANSIENT',CURRENT_ACCEPTED:'CURRENT_ACCEPTED',DEFINITIVE_REJECTION:'DEFINITIVE_REJECTION'};
   const norm=value=>String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
   const iso=ms=>new Date(ms).toISOString();
   const finite=value=>typeof value==='number'&&Number.isFinite(value)?value:null;
@@ -87,16 +88,22 @@
   function projectionLane(payloads,{season,week,scoring:scoringInput,sleeperPlayers,verifiedAt=Date.now()}={}){
     const normalizedScoring=scoring(scoringInput),indexes=sleeperIndexes(sleeperPlayers),records=[],positions={},rejects=[];
     for(const position of POSITIONS){
-      const envelope=payloads?.[position],payload=envelope?.providerPayload||envelope,request=envelope?.providerPayload?envelope.requestProvenance:null,players=Array.isArray(payload?.players)?payload.players:[],rawTime=sourceTime(payload),time=rawTime.sourceTimePrecision==='UNKNOWN'?{sourcePublishedAt:null,sourcePublishedDate:null,sourceTimePrecision:'RETRIEVAL'}:rawTime;
+      const hasLane=Object.prototype.hasOwnProperty.call(payloads||{},position),envelope=hasLane?payloads[position]:null,isEnvelope=envelope!=null&&typeof envelope==='object'&&Object.prototype.hasOwnProperty.call(envelope,'providerPayload'),payload=isEnvelope?envelope.providerPayload:envelope,request=isEnvelope?envelope.requestProvenance:null,responsePresent=hasLane&&(isEnvelope||payload!=null),players=Array.isArray(payload?.players)?payload.players:[],rawTime=sourceTime(payload),time=rawTime.sourceTimePrecision==='UNKNOWN'?{sourcePublishedAt:null,sourcePublishedDate:null,sourceTimePrecision:'RETRIEVAL'}:rawTime;
+      const invalidRequest=isEnvelope&&(Number(request?.season)!==Number(season)||Number(request?.week)!==Number(week)||String(request?.position||'').toUpperCase()!==position||request?.ros!==false||request?.scope!=='WEEKLY');
       let reason='';
       if(!normalizedScoring)reason='WRONG_SCORING';
+      else if(!responsePresent)reason=invalidRequest?'INVALID_REQUEST_PROVENANCE':'NO_CURRENT_PROVIDER_RESPONSE';
+      else if(payload==null||typeof payload!=='object'||Array.isArray(payload)||!Object.prototype.hasOwnProperty.call(payload,'season')||!Object.prototype.hasOwnProperty.call(payload,'week'))reason='MALFORMED_PROVIDER_RESPONSE';
       else if(Number(payload?.season)!==Number(season))reason='WRONG_SEASON';
       else if(Number(payload?.week)!==Number(week))reason='WRONG_WEEK';
-      else if(String(payload?.positions??'').toUpperCase()!==position)reason='WRONG_PROVIDER_POSITION';
+      else if(invalidRequest||!isEnvelope)reason='INVALID_REQUEST_PROVENANCE';
+      else if(Object.prototype.hasOwnProperty.call(payload||{},'positions')&&String(payload.positions||'').toUpperCase()!==position)reason='WRONG_PROVIDER_POSITION';
+      else if(payload?.ros===true)reason='CONTRADICTORY_PROVIDER_ROS_SCOPE';
       else if(!Array.isArray(payload?.players))reason='MISSING_PLAYERS';
       else if(players.some(row=>String(row?.position_id??row?.player_position_id??row?.position??'').toUpperCase()!==position))reason='WRONG_POSITION';
-      const numeric=players.filter(row=>finite(row?.stats?.points_half)!=null).length,scopeMismatch=players.some(row=>{const value=finite(row?.stats?.points_half);return value!=null&&(value<0||value>WEEKLY_HALF_PPR_MAX[position])}),minimum=MIN_COUNTS[position],sourceSufficient=!reason&&!scopeMismatch&&players.length>=minimum&&numeric/Math.max(players.length,1)>=.9;
+      const numericValues=players.map(row=>finite(row?.stats?.points_half)).filter(value=>value!=null),numeric=numericValues.length,scopeMismatch=numericValues.some(value=>value<0||value>WEEKLY_HALF_PPR_MAX[position]),allZero=numeric>0&&numericValues.every(value=>value===0),minimum=MIN_COUNTS[position],sourceSufficient=!reason&&!scopeMismatch&&!allZero&&players.length>=minimum&&numeric/Math.max(players.length,1)>=.9;
       if(!reason&&scopeMismatch)reason='WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH';
+      if(!reason&&allZero)reason='ALL_ZERO_WEEKLY_PROJECTION_DISTRIBUTION';
       let mapped=0;
       if(sourceSufficient){for(const row of players){
         const value=finite(row?.stats?.points_half);if(value==null)continue;
@@ -106,11 +113,16 @@
         if(weeklyRecordChronology(record,{season,week,scoring:normalizedScoring},verifiedAt))records.push(record);
         else rejects.push({position,name:String(row?.name||''),sourcePlayerId:mapping.sourcePlayerId,reason:'INVALID_PROVIDER_CHRONOLOGY'});
       }}
-      const mappedRecords=records.filter(record=>record.position===position),consumerUsable=mappedRecords.filter(record=>weeklyRecordChronology(record,{season,week,scoring:normalizedScoring},verifiedAt)).length;
-      const mappingCoverage=numeric?mapped/numeric:0,status=sourceSufficient&&mappingCoverage>=.9&&consumerUsable===mapped?'AVAILABLE':sourceSufficient?'PARTIAL':'UNAVAILABLE';
+      const mappedRecords=records.filter(record=>record.position===position),mappedConsumerUsable=mappedRecords.filter(record=>weeklyRecordChronology(record,{season,week,scoring:normalizedScoring},verifiedAt)).length;
+      const mappingCoverage=numeric?mapped/numeric:0,status=sourceSufficient&&mappingCoverage>=.9&&mappedConsumerUsable===mapped?'AVAILABLE':sourceSufficient?'PARTIAL':'UNAVAILABLE';
       const rejectReasonCounts={};for(const reject of rejects.filter(item=>item.position===position))rejectReasonCounts[reject.reason]=(rejectReasonCounts[reject.reason]||0)+1;
       const finalReason=reason||(!sourceSufficient?'INSUFFICIENT_SOURCE_COVERAGE':status==='PARTIAL'?'INSUFFICIENT_MAPPING_COVERAGE':null);
-      positions[position]={status,sourceRows:players.length,count:players.length,numericPointsHalf:numeric,mappedRows:mapped,mapped,mappingCoverage:Math.round(mappingCoverage*1000)/1000,consumerUsableRecords:consumerUsable,rejectReasonCounts,finalLaneStatus:status,finalLaneReason:finalReason,reason:finalReason,...time};
+      const responseClassification=!responsePresent&&!invalidRequest?PROJECTION_RESPONSE_CLASSIFICATION.ABSENT_TRANSIENT:status==='AVAILABLE'?PROJECTION_RESPONSE_CLASSIFICATION.CURRENT_ACCEPTED:PROJECTION_RESPONSE_CLASSIFICATION.DEFINITIVE_REJECTION;
+      // Mapping is part of the authoritative lane gate. Do not let individually
+      // mapped rows escape from a position whose aggregate mapping failed closed.
+      if(responseClassification===PROJECTION_RESPONSE_CLASSIFICATION.DEFINITIVE_REJECTION)for(let i=records.length-1;i>=0;i--)if(records[i].position===position)records.splice(i,1);
+      const consumerUsable=responseClassification===PROJECTION_RESPONSE_CLASSIFICATION.CURRENT_ACCEPTED?mappedConsumerUsable:0;
+      positions[position]={status,responseClassification,sourceRows:players.length,count:players.length,numericPointsHalf:numeric,mappedRows:mapped,mapped,mappingCoverage:Math.round(mappingCoverage*1000)/1000,consumerUsableRecords:consumerUsable,rejectReasonCounts,finalLaneStatus:status,finalLaneReason:finalReason,reason:finalReason,...time};
     }
     const available=POSITIONS.every(position=>positions[position].status==='AVAILABLE');
     return{lane:{id:'fantasypros_weekly_projections',status:available?'AVAILABLE':Object.values(positions).some(x=>x.status!=='UNAVAILABLE')?'PARTIAL':'UNAVAILABLE',coverage:{positions},sourceId:'fantasypros',metric:'projected_points'},records,rejects};
@@ -165,7 +177,11 @@
     const lanes={projections:projections.lane,expertWeeklyRanks:ranks.lane,vegas:{status:'UNAVAILABLE',reason:'NO_APPROVED_ROBUST_SOURCE'},weather:{status:'UNAVAILABLE',reason:'GAME_CONTEXT_REQUIRED'},roleGraphs:{status:'UNAVAILABLE',reason:'SOURCE_UNAVAILABLE'}};
     const fresh=[...projections.records,...ranks.records],freshKeys=new Set(fresh.map(record=>`${record.metric}|${record.position}|${record.playerId}`));
     const laneAvailable=(metric,position)=>metric==='projected_points'?projections.lane.coverage.positions[position]?.status==='AVAILABLE':metric==='weekly_rank'?ranks.lane.coverage.positions[position]?.status==='AVAILABLE':false;
-    const priorValid=priorSnapshot?.schema===SCHEMA&&Number(priorSnapshot.season)===Number(season)&&Number(priorSnapshot.week)===Number(week)&&priorSnapshot.scoring===normalizedScoring&&Array.isArray(priorSnapshot.records)?priorSnapshot.records.filter(record=>weeklyRecordChronology(record,{season,week,scoring:normalizedScoring},verifiedAt)&&!laneAvailable(record.metric,record.position)&&!freshKeys.has(`${record.metric}|${record.position}|${record.playerId}`)):[];
+    // Carry-forward is reserved for a lane for which no provider response exists.
+    // Any present response (or contradictory authenticated request context) owns its
+    // lane and purges prior rows when it cannot satisfy the weekly invariants.
+    const explicitlyRejected=(metric,position)=>metric==='projected_points'&&projections.lane.coverage.positions[position]?.responseClassification===PROJECTION_RESPONSE_CLASSIFICATION.DEFINITIVE_REJECTION;
+    const priorValid=priorSnapshot?.schema===SCHEMA&&Number(priorSnapshot.season)===Number(season)&&Number(priorSnapshot.week)===Number(week)&&priorSnapshot.scoring===normalizedScoring&&Array.isArray(priorSnapshot.records)?priorSnapshot.records.filter(record=>weeklyRecordChronology(record,{season,week,scoring:normalizedScoring},verifiedAt)&&!laneAvailable(record.metric,record.position)&&!explicitlyRejected(record.metric,record.position)&&!freshKeys.has(`${record.metric}|${record.position}|${record.playerId}`)):[];
     const records=[...fresh,...priorValid];
     const freshProjectionUsable=projections.records.length>0;
     const snapshot={schema:SCHEMA,snapshotId:`wev2-${Number(season)}-${Number(week)}-${normalizedScoring}-${verifiedAt}`,season:Number(season),week:Number(week),scoring:normalizedScoring,fetchedAt:verifiedAt,lastAttemptAt:verifiedAt,lastSuccessAt:freshProjectionUsable?verifiedAt:Number(priorSnapshot?.lastSuccessAt)||null,status:projections.lane.status==='AVAILABLE'&&ranks.lane.status==='AVAILABLE'?'AVAILABLE':freshProjectionUsable?'DEGRADED':'UNAVAILABLE',lanes,records,rejections:[...projections.rejects,...ranks.rejects],retainedPriorRecords:priorValid.length,panel:{weeklyRank:{status:ranks.lane.status==='AVAILABLE'?'BROAD_CONSENSUS_ONLY':ranks.lane.status,sources:ranks.lane.status==='UNAVAILABLE'?[]:['FantasyPros current-week Half-PPR ECR'],selectedExperts:[],aggregation:'ECR; selected PITTI panel remains separately unavailable'},projection:{status:projections.lane.status,source:'fantasypros'}}};

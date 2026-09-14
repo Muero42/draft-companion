@@ -1,6 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
-const APP_VERSION='v11.8.0-rc4.201';
+const APP_VERSION='v11.8.0-rc4.202';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -600,15 +600,15 @@ const FP_DIAGNOSTIC_TIMEOUT_MS=10000;
 const WEEKLY_PROJECTION_POSITIONS=['QB','RB','WR','TE'];
 const WEEKLY_PROJECTION_MIN_COUNTS={QB:24,RB:60,WR:70,TE:24};
 function codedError(code,message,status=null){const e=new Error(message);e.code=code;if(status!=null)e.status=status;return e}
-async function fpProxyRequest(path,{timeoutMs=FP_DIAGNOSTIC_TIMEOUT_MS,allowMalformed=false}={}){
+async function fpProxyRequest(path,{timeoutMs=FP_DIAGNOSTIC_TIMEOUT_MS,allowMalformed=false,preserveMalformed=false}={}){
   const key=els.apiKey.value.trim();if(!key)throw codedError('NO_CREDENTIAL','API-Key fehlt.');
   const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),timeoutMs);
   try{
     const r=await fetch(`/api/fantasypros?path=${encodeURIComponent(path)}`,{headers:{'x-fp-key':key},cache:'no-store',signal:controller.signal});
     const status=r.status,retryRaw=r.headers?.get?.('retry-after')||'',retrySeconds=Number(retryRaw),retryDate=Date.parse(retryRaw),retryAfterMs=Number.isFinite(retrySeconds)?Math.max(0,retrySeconds*1000):Number.isFinite(retryDate)?Math.max(0,retryDate-Date.now()):null;
-    const text=await r.text();let data;
-    try{data=JSON.parse(text)}catch{if(allowMalformed)data={raw:text.slice(0,1200)};else{const error=codedError('MALFORMED_PAYLOAD','FantasyPros lieferte kein gültiges JSON.',status);error.retryAfterMs=retryAfterMs;throw error}}
-    return{ok:r.ok,status,data,retryAfterMs};
+    const text=await r.text();let data,bodyState='JSON';
+    try{data=JSON.parse(text)}catch{if(preserveMalformed){data=null;bodyState='INVALID_JSON'}else if(allowMalformed)data={raw:text.slice(0,1200)};else{const error=codedError('MALFORMED_PAYLOAD','FantasyPros lieferte kein gültiges JSON.',status);error.retryAfterMs=retryAfterMs;throw error}}
+    return{ok:r.ok,status,data,retryAfterMs,bodyState};
   }catch(e){if(e?.name==='AbortError')throw codedError('TIMEOUT',`FantasyPros Timeout nach ${Math.round(timeoutMs/1000)}s`);if(e?.code)throw e;throw codedError('NETWORK','FantasyPros Netzwerkfehler.');}
   finally{clearTimeout(timer)}
 }
@@ -4369,11 +4369,11 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     const responses=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
       // FantasyPros documents `week` as the projections endpoint's weekly selector.
       // Explicit ros=false avoids ambiguity; that operation does not accept scoring.
-      const path=`/nfl/${season}/projections?week=${week}&position=${position}&ros=false`,response=await fpProxyRequest(path);
+      const path=`/nfl/${season}/projections?week=${week}&position=${position}&ros=false`,response=await fpProxyRequest(path,{preserveMalformed:true});
       if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw error;}
       // Request provenance is deliberately outside the provider payload. The
       // evidence validator must prove scope from response.data itself.
-      return[position,{providerPayload:response.data,requestProvenance:{season,week,position,ros:false,scope:'WEEKLY'}}];
+      return[position,{providerPayload:response.data,providerResponse:{present:true,bodyState:response.bodyState},requestProvenance:{season,week,position,ros:false,scope:'WEEKLY'}}];
     }));
     persistSeasonProjectionRetryAfter(responses,Date.now());
     for(const response of responses)if(response.status==='fulfilled'){const [position,payload]=response.value;payloads[position]=payload;}

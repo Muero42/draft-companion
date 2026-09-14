@@ -756,10 +756,29 @@ FantasyPros weekly projections use documented `week` and `ros=false` request con
 
 Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. No merge, deployment, promotion, cache/app-data clearing, reinstall, device acceptance, or Sleeper transaction is authorized by this checkpoint.
 
-## v250 CURRENT — rc4.201 weekly consumer/mapping/status repair (2026-09-14)
+## HISTORICAL/SUPERSEDED v250 CONTENT — rc4.201 weekly consumer/mapping/status repair (2026-09-14)
 
 Handoff generation: `20260914T0601Z-v250`. `v11.8.0-rc4.201` is source/candidate authority in this tree; canonical main, PR state, containment, and exact-head CI remain mutable external evidence. The 17-file package remains source-byte/re-extraction evidence only, with run/environment-scoped archive identity.
 
 `v11.8.0-rc4.200` separately has verified Production deployment success at exact `main@039fbd3ff169f5476c54e893702bf3aad18035b5`, Cloudflare deployment `f57beed4-3794-4bae-a047-612d046432f7`, status `success`, branch `main`. Physical Android/PWA acceptance separately **FAILED** as `RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK`; rc4.200 is not device-accepted. rc4.199 is the immediately prior verified Production (`2a62e52cb88187470542840053c72cd310b18e2b`, deployment `48ab58ba-53d5-4b74-b7e6-16629256a9ee`) and separately failed physically with `RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH`; rc4.198 is older history; rc4.195 remains the prior fully accepted rollback reference.
 
 rc4.201 repairs only same-path mapping/consumer diagnostics, valid-PARTIAL refresh persistence, and cache-status validation. It preserves `week + position + ros=false` with no projections `scoring` parameter, weekly semantic ceilings, chronology and position isolation. Source, merge, package, preview, deployment, and device acceptance remain separate. Next gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`.
+
+
+## v251 CURRENT — rc4.202 physical projection consumer repair (2026-09-14)
+
+### rc4.202 source/candidate authority — v251
+Handoff generation: `20260914T1054Z-v251`
+
+`v11.8.0-rc4.202` is the current source/candidate authority in this tree. Canonical `main`, PR state, containing commit, and exact-head CI are mutable external evidence and MUST be freshly verified. Source, merge, 17-file package/re-extraction, and preview never imply Production deployment, physical observation, or device acceptance. Archive ZIP identity is run/environment-scoped and noncanonical.
+
+Newest verified Production is `v11.8.0-rc4.201` from exact `main@bd666824dac9264795de687e915faaa06c5a4f20`, Cloudflare deployment `cd1814a9-8602-4efd-b08c-b3676f231be8`, status `success`. Its separate physical verdict is `RC4.201_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_STALE_STATUS_REPAIRED`: rc4.201 is Production-deployed and device-observed but **not device-accepted**. Immutable evidence: `docs/PITTI_BRIDGE_HANDOFF_RC4201_PHYSICAL_PROJECTION_LANE_FAIL_2026-09-14.md`.
+
+Preserved history remains explicit: rc4.200 is the immediately prior verified Production at `039fbd3ff169f5476c54e893702bf3aad18035b5`, deployment `f57beed4-3794-4bae-a047-612d046432f7`, with separate failed physical verdict `RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK`; rc4.199 is prior Production/history with verdict `RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH`; rc4.198 is older history; rc4.195 remains the prior fully accepted rollback.
+
+## Mutable live takeover targets
+Fresh live READ-ONLY verification must cover Draft Companion PR #172 as historical merged rc4.201 provenance only, the new rc4.202 follow-up PR as the current candidate lane once created, Draft Companion PR #163 as a historical/discoverable v248 anchor only, and separate pitti-watcher PR #6 at expected head `77221ceeb900458e95c32d78c1ad395a37422e5d` subject to fresh live verification. These are mutable verification targets, not immutable authority. Keep source, package, preview, Production, device-observed, and device-accepted distinct.
+
+Root cause and repair boundary: the authenticated current-week FantasyPros response did not echo the optional top-level `positions` field. rc4.201 treated that absent response echo as `WRONG_PROVIDER_POSITION` before player mapping, making all four HTTP-200 lanes consumer-zero despite valid request provenance, homogeneous positional rows, FP identity, and numeric `stats.points_half`. rc4.202 uses the actual authenticated request provenance plus every row's position; wrong season/week/position/ROS/scope, malformed, season-like, stale, and all-zero inputs remain fail-closed. No projections `scoring` query parameter is introduced, and `stats.points_half` remains authoritative.
+
+Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. rc4.202 is not Production-deployed, physically observed, or device-accepted.

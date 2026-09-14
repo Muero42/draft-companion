@@ -155,25 +155,25 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.200 Production VERIFIED at exact main 039fbd3ff169f5476c54e893702bf3aad18035b5, deployment f57beed4-3794-4bae-a047-612d046432f7; physical acceptance FAILED separately",
-    "androidAuthority": "v11.8.0-rc4.200 latest physically observed production runtime; RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; NOT ACCEPTED",
-    "sourceAuthority": "rc4.201 source/candidate authority in this tree; canonical main/PR state dynamically verified; NOT production deployed",
-    "latestPackageReextract": "rc4.201 source-byte-exact 17-file package; archive SHA run/environment-scoped",
+    "productionControl": "v11.8.0-rc4.201 Production VERIFIED at exact main bd666824dac9264795de687e915faaa06c5a4f20, deployment cd1814a9-8602-4efd-b08c-b3676f231be8; physical acceptance FAILED separately",
+    "androidAuthority": "v11.8.0-rc4.201 latest physically observed production runtime; RC4.201_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_STALE_STATUS_REPAIRED; NOT ACCEPTED",
+    "sourceAuthority": "rc4.202 source/candidate authority in this tree; canonical main/PR state dynamically verified; NOT production deployed",
+    "latestPackageReextract": "rc4.202 source-byte-exact 17-file package; archive SHA run/environment-scoped",
     "latestPackageSha256": null,
     "packageReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
-    "deployedPagesVersion": "v11.8.0-rc4.200",
+    "deployedPagesVersion": "v11.8.0-rc4.201",
     "deployedPagesAppByteParityWithMain": false,
     "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-    "exactNextAction": "Dynamically verify local Git and canonical GitHub main, mutable PR targets, and exact-head CI before dependent continuation or promotion. v11.8.0-rc4.201 is source/candidate authority in this tree only and is NOT Production-deployed or device-observed/accepted. Newest verified Production is v11.8.0-rc4.200 at main@039fbd3ff169f5476c54e893702bf3aad18035b5, Cloudflare deployment f57beed4-3794-4bae-a047-612d046432f7, status success; its separately newest physical verdict is FAILED RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK. rc4.199 is the immediate prior Production/history at 2a62e52cb88187470542840053c72cd310b18e2b, deployment 48ab58ba-53d5-4b74-b7e6-16629256a9ee, with separate verdict RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH. rc4.198 is older history; rc4.195 remains the prior fully accepted rollback. Never reactivate v248/rc4.198 as current, and never claim a newer Library generation persisted unless files.list proves it.",
-    "runtimeVersion": "rc4.201 source candidate; rc4.200 Production deployed but physical-failed/not accepted",
+    "exactNextAction": "Dynamically verify local Git and canonical GitHub main, mutable PR targets, and exact-head CI before dependent continuation or promotion. v11.8.0-rc4.202 is source/candidate authority in this tree only and is NOT Production-deployed or device-observed/accepted. Newest verified Production is v11.8.0-rc4.201 at main@bd666824dac9264795de687e915faaa06c5a4f20, Cloudflare deployment cd1814a9-8602-4efd-b08c-b3676f231be8, status success; its separately newest physical verdict is FAILED RC4.201_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_STALE_STATUS_REPAIRED. rc4.200 is the immediate prior Production/history at 039fbd3ff169f5476c54e893702bf3aad18035b5, deployment f57beed4-3794-4bae-a047-612d046432f7, with separate verdict RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK. rc4.199 remains preserved prior history at 2a62e52cb88187470542840053c72cd310b18e2b, deployment 48ab58ba-53d5-4b74-b7e6-16629256a9ee, verdict RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.198 is older history; rc4.195 remains the prior fully accepted rollback. Never reactivate v248/rc4.198 as current, and never claim a newer Library generation persisted unless files.list proves it.",
+    "runtimeVersion": "rc4.202 source candidate; rc4.201 Production deployed but physical-failed/not accepted",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
-    "latestDeviceEvidence": "2026-09-13 RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK",
+    "latestDeviceEvidence": "2026-09-14 RC4.201_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_STALE_STATUS_REPAIRED",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
     "reconciledBaseMain": "DYNAMIC_EXTERNAL_EVIDENCE",
     "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-    "packageReferenceScope": "rc4.201 17-file source-byte parity; no cross-environment archive SHA identity",
+    "packageReferenceScope": "rc4.202 17-file source-byte parity; no cross-environment archive SHA identity",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.201",
+      "version": "v11.8.0-rc4.202",
       "files": 17,
       "sha256": null,
       "status": "PACKAGED_ONLY_NOT_DEPLOYED",
@@ -182,16 +182,16 @@
     },
     "deploymentParity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; ARBITRARY_BYTE_PARITY_NOT_PROVEN",
     "productionDeployment": {
-      "version": "v11.8.0-rc4.200",
-      "sourceCommit": "039fbd3ff169f5476c54e893702bf3aad18035b5",
+      "version": "v11.8.0-rc4.201",
+      "sourceCommit": "bd666824dac9264795de687e915faaa06c5a4f20",
       "status": "VERIFIED_SUCCESS",
       "branch": "main",
-      "deploymentId": "f57beed4-3794-4bae-a047-612d046432f7"
+      "deploymentId": "cd1814a9-8602-4efd-b08c-b3676f231be8"
     }
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260914T0601Z-v250",
-  "handoff_generation": "20260914T0601Z-v250",
+  "handoffGeneration": "20260914T1054Z-v251",
+  "handoff_generation": "20260914T1054Z-v251",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -217,8 +217,8 @@
     "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
   "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "exactNextAction": "Dynamically verify local Git and canonical GitHub main, mutable PR targets, and exact-head CI before dependent continuation or promotion. v11.8.0-rc4.201 is source/candidate authority in this tree only and is NOT Production-deployed or device-observed/accepted. Newest verified Production is v11.8.0-rc4.200 at main@039fbd3ff169f5476c54e893702bf3aad18035b5, Cloudflare deployment f57beed4-3794-4bae-a047-612d046432f7, status success; its separately newest physical verdict is FAILED RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK. rc4.199 is the immediate prior Production/history at 2a62e52cb88187470542840053c72cd310b18e2b, deployment 48ab58ba-53d5-4b74-b7e6-16629256a9ee, with separate verdict RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH. rc4.198 is older history; rc4.195 remains the prior fully accepted rollback. Never reactivate v248/rc4.198 as current, and never claim a newer Library generation persisted unless files.list proves it.",
+  "exactNextAction": "Dynamically verify local Git and canonical GitHub main, mutable PR targets, and exact-head CI before dependent continuation or promotion. v11.8.0-rc4.202 is source/candidate authority in this tree only and is NOT Production-deployed or device-observed/accepted. Newest verified Production is v11.8.0-rc4.201 at main@bd666824dac9264795de687e915faaa06c5a4f20, Cloudflare deployment cd1814a9-8602-4efd-b08c-b3676f231be8, status success; its separately newest physical verdict is FAILED RC4.201_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_STALE_STATUS_REPAIRED. rc4.200 is the immediate prior Production/history at 039fbd3ff169f5476c54e893702bf3aad18035b5, deployment f57beed4-3794-4bae-a047-612d046432f7, with separate verdict RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK. rc4.199 remains preserved prior history at 2a62e52cb88187470542840053c72cd310b18e2b, deployment 48ab58ba-53d5-4b74-b7e6-16629256a9ee, verdict RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.198 is older history; rc4.195 remains the prior fully accepted rollback. Never reactivate v248/rc4.198 as current, and never claim a newer Library generation persisted unless files.list proves it.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
-  "updated_at": "2026-09-14T06:01:00Z"
+  "updated_at": "2026-09-14T10:54:00Z"
 }

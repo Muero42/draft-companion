@@ -37,6 +37,25 @@ function runtime({fetchImpl,jfImpl,season='2026',lastDraftContext=null}={}){
 }
 
 {
+  // Production-shaped rc4.201 response: HTTP 200 with current scope, fpid and
+  // stats.points_half coverage, but no optional top-level `positions` echo.
+  const counts={QB:24,RB:60,WR:70,TE:24},players={};let id=1000;
+  for(const [position,count] of Object.entries(counts))for(let i=0;i<count;i++,id++)players[`sleeper-${id}`]={full_name:`${position} Player ${i+1}`,position,team:'AAA',fantasy_data_id:id};
+  const seasonState={my_roster:{players:['sleeper-1000'],reserve:[],taxi:[]}};
+  const api=runtime({lastDraftContext:{players,season:seasonState},jfImpl:async()=>({season:'2026',season_type:'regular',week:7}),fetchImpl:async url=>{
+    const path=decodeURIComponent(new URL(url,'https://local.invalid').searchParams.get('path')),position=new URL(path,'https://fp.invalid').searchParams.get('position');
+    const offset=Object.entries(counts).slice(0,Object.keys(counts).indexOf(position)).reduce((sum,[,count])=>sum+count,0);
+    return response(200,{season:2026,week:7,ros:false,players:projectedRows(position,counts[position]).map((row,i)=>({...row,fpid:1000+offset+i}))});
+  }});
+  const report=await api.runAuthenticatedWeeklyProjectionDiagnostic();
+  assert.equal(report.classification,'SUFFICIENT');
+  assert.deepEqual(report.consumer.validation,{ok:true});
+  assert.equal(report.consumer.roster.usableCount,1);
+  assert(report.consumer.positions.every(row=>row.consumerUsableRecords===counts[row.position]&&row.finalLaneStatus==='AVAILABLE'));
+  assert.match(api.formatAuthenticatedWeeklyProjectionDiagnostic(report).join('\n'),/END-TO-END CONSUMER = USABLE/);
+}
+
+{
   let capturedUrl='',capturedOptions=null,logCount=0;
   const api=runtime({fetchImpl:async(url,options)=>{capturedUrl=url;capturedOptions=options;return response(200,{ok:true})}});
   const oldLog=console.log;console.log=()=>{logCount++};
@@ -44,6 +63,14 @@ function runtime({fetchImpl,jfImpl,season='2026',lastDraftContext=null}={}){
   assert.equal(capturedOptions.headers['x-fp-key'],secretSentinel,'existing x-fp-key credential header must be used');
   assert(!capturedUrl.includes(secretSentinel),'credential must never enter URL/query string');
   assert.equal(logCount,0,'credential request must not log');
+}
+
+{
+  const api=runtime({fetchImpl:async()=>response(200,null,'{not valid json')});
+  const result=await api.fpProxyRequest('/nfl/2026/projections?week=7&position=QB&ros=false',{preserveMalformed:true});
+  assert.equal(result.ok,true,'HTTP success remains a fulfilled current response');
+  assert.equal(result.data,null,'invalid JSON must not fabricate provider fields');
+  assert.equal(result.bodyState,'INVALID_JSON','collector must preserve malformed HTTP-success provenance');
 }
 
 {

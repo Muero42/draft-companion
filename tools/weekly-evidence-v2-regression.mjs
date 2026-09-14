@@ -65,8 +65,8 @@ assert.equal(unavailable.records.length,Object.values(counts).reduce((a,b)=>a+b,
 assert(!unavailable.records.some(record=>record.position==='QB'),'the failed fresh position must remain unavailable');
 assert.deepEqual(evidence.validateSnapshot(unavailable,{season,week,scoring:'HALF_PPR'},now),{ok:true},'record-valid partial projection evidence remains consumable');
 const retained=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:wrong,sleeperPlayers:players,priorSnapshot:snapshot,verifiedAt:now+1000});
-assert(retained.records.some(record=>record.position==='QB'&&record.verifiedAt===now),'still-valid prior failed-position records may be retained without restamping');
-assert.equal(retained.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE','retained records must not falsely mark a failed fresh position available');
+assert(!retained.records.some(record=>record.position==='QB'),'a present wrong-week response must purge prior failed-position records');
+assert.equal(retained.lanes.projections.coverage.positions.QB.responseClassification,'DEFINITIVE_REJECTION');
 // An AVAILABLE position is a complete authoritative refresh. If a formerly
 // projected player disappears, that old row must disappear too; only lanes that
 // failed to refresh may retain chronology-valid prior evidence.
@@ -76,22 +76,25 @@ const refreshedRb={...payloads.RB,providerPayload:{...payloads.RB.providerPayloa
 const authoritativeRb=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{...wrong,RB:refreshedRb},sleeperPlayers:refreshedPlayers,priorSnapshot:snapshot,verifiedAt:now+1000});
 assert.equal(authoritativeRb.lanes.projections.coverage.positions.RB.status,'AVAILABLE');
 assert(!authoritativeRb.records.some(record=>record.metric==='projected_points'&&record.position==='RB'&&record.playerId===omittedRbId),'an AVAILABLE RB refresh must remove an omitted prior RB immediately');
-assert(authoritativeRb.records.some(record=>record.metric==='projected_points'&&record.position==='QB'&&record.verifiedAt===now),'a failed QB lane may still retain chronology-valid prior projections');
+assert(!authoritativeRb.records.some(record=>record.metric==='projected_points'&&record.position==='QB'),'a definitive failed QB lane must not retain chronology-valid prior projections');
 // A mapped fresh response cannot claim replacement ownership until its provider
 // chronology passes the same validation used by consumers. Another healthy position
 // makes this a production-shaped partial snapshot that is actually publishable.
 const futureChronology={...payloads,QB:{...payloads.QB,providerPayload:{...payloads.QB.providerPayload,updated:'2026-09-11T12:00:00Z'}}};
-const priorQb=snapshot.records.filter(record=>record.position==='QB');
 const chronologyRetained=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:futureChronology,sleeperPlayers:players,priorSnapshot:snapshot,verifiedAt:now+1000});
 assert.equal(chronologyRetained.lanes.projections.coverage.positions.QB.status,'PARTIAL');
 assert.equal(chronologyRetained.lanes.projections.coverage.positions.RB.status,'AVAILABLE','another healthy position keeps the partial snapshot publishable');
-assert.deepEqual(chronologyRetained.records.filter(record=>record.position==='QB'),priorQb,'invalid fresh chronology must retain prior projection byte-for-value without restamping');
+assert.equal(chronologyRetained.lanes.projections.coverage.positions.QB.responseClassification,'DEFINITIVE_REJECTION');
+assert.equal(chronologyRetained.records.filter(record=>record.position==='QB').length,0,'a present response with invalid chronology must purge prior projections');
 const chronologyStorage=new Map(),chronologyStore={setItem:(key,value)=>chronologyStorage.set(key,value),getItem:key=>chronologyStorage.get(key)??null,removeItem:key=>chronologyStorage.delete(key)};
 evidence.atomicWrite(chronologyStore,chronologyRetained);
-assert.deepEqual(JSON.parse(chronologyStorage.get(evidence.CACHE_KEY)).records.filter(record=>record.position==='QB'),priorQb,'persisted partial snapshot must preserve chronology-valid prior evidence');
+assert.equal(JSON.parse(chronologyStorage.get(evidence.CACHE_KEY)).records.filter(record=>record.position==='QB').length,0,'persisted partial snapshot must exclude definitively rejected evidence');
 const allFailed=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{},sleeperPlayers:players,priorSnapshot:snapshot,verifiedAt:now+2000});
 assert.equal(allFailed.lanes.projections.status,'UNAVAILABLE');
 assert.equal(allFailed.lastSuccessAt,snapshot.lastSuccessAt,'an all-position failure cannot claim a fresh success');
+assert.equal(allFailed.lanes.projections.coverage.positions.QB.reason,'NO_CURRENT_PROVIDER_RESPONSE','an absent response must be classified before provider season fields are inspected');
+assert.equal(allFailed.lanes.projections.coverage.positions.QB.responseClassification,'ABSENT_TRANSIENT');
+assert(allFailed.records.some(record=>record.metric==='projected_points'&&record.position==='QB'&&record.verifiedAt===now),'an absent/transient lane retains chronology-valid stale fallback without restamping');
 
 const memory=new Map(),storage={setItem(k,v){memory.set(k,v)},getItem:k=>memory.get(k)??null,removeItem:k=>memory.delete(k)};
 evidence.atomicWrite(storage,snapshot);
@@ -147,6 +150,115 @@ assert(retrievalSnapshot.records.every(row=>row.sourceTimePrecision==='RETRIEVAL
 const retrievalRecord=retrievalSnapshot.records[0];
 assert.equal(context.pick(retrievalSnapshot.records,retrievalRecord.playerId,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED');
 assert(retrievalSnapshot.records.every(row=>context.pick(retrievalSnapshot.records,row.playerId,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status==='VERIFIED'),'every published mapped projection must pass the exact consumer path');
+
+// rc4.201 physical reproduction: the authenticated projection response carried
+// current season/week rows, FP identity and numeric stats.points_half, but did not
+// echo the optional top-level `positions` field. The consumer incorrectly rejected
+// all four successful request lanes before mapping, producing zero usable records.
+const rc4201Physical=Object.fromEntries(Object.entries(payloads).map(([position,envelope])=>[position,{
+  providerPayload:{season,week,scoring:'STD',ros:false,players:envelope.providerPayload.players.map(row=>({...row}))},
+  requestProvenance:{season,week,position,ros:false,scope:'WEEKLY'}
+}]));
+const rc4202Repaired=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:rc4201Physical,sleeperPlayers:players,verifiedAt:now});
+assert.equal(rc4202Repaired.lanes.projections.status,'AVAILABLE','request provenance and homogeneous row positions make an omitted response positions echo consumer-usable');
+assert.equal(rc4202Repaired.records.filter(row=>row.metric==='projected_points').length,Object.values(counts).reduce((sum,count)=>sum+count,0));
+assert.deepEqual(evidence.validateSnapshot(rc4202Repaired,{season,week,scoring:'HALF_PPR'},now),{ok:true});
+for(const position of evidence.POSITIONS)assert.equal(rc4202Repaired.lanes.projections.coverage.positions[position].consumerUsableRecords,counts[position]);
+
+// The provider position echo is optional, but it is still evidence when present:
+// both omission and an exact match are valid, while a contradiction fails closed.
+const matchingPositionEcho=structuredClone(rc4201Physical);
+matchingPositionEcho.QB.providerPayload.positions='QB';
+const matchingPositionAccepted=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:matchingPositionEcho,sleeperPlayers:players,verifiedAt:now});
+assert.equal(matchingPositionAccepted.lanes.projections.coverage.positions.QB.status,'AVAILABLE','a matching explicit provider position echo must remain acceptable');
+assert.equal(matchingPositionAccepted.lanes.projections.coverage.positions.QB.consumerUsableRecords,counts.QB);
+const contradictoryPositionEcho=structuredClone(rc4201Physical);
+contradictoryPositionEcho.QB.providerPayload.positions='RB';
+const contradictoryPositionRejected=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:contradictoryPositionEcho,sleeperPlayers:players,verifiedAt:now});
+assert.equal(contradictoryPositionRejected.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE','a contradictory explicit provider position echo must fail closed');
+assert.equal(contradictoryPositionRejected.lanes.projections.coverage.positions.QB.reason,'WRONG_PROVIDER_POSITION');
+assert.equal(contradictoryPositionRejected.lanes.projections.coverage.positions.QB.consumerUsableRecords,0);
+assert(!contradictoryPositionRejected.records.some(row=>row.metric==='projected_points'&&row.position==='QB'),'contradictory provider position rows must never be persisted or reach weekly consumers');
+
+for(const [label,mutate,reason] of [
+  ['wrong request week',request=>({...request,week:week+1}),'INVALID_REQUEST_PROVENANCE'],
+  ['wrong request season',request=>({...request,season:season-1}),'INVALID_REQUEST_PROVENANCE'],
+  ['ROS request',request=>({...request,ros:true}),'INVALID_REQUEST_PROVENANCE'],
+  ['missing request scope',request=>({...request,scope:null}),'INVALID_REQUEST_PROVENANCE']
+]){
+  const invalid={...rc4201Physical,QB:{...rc4201Physical.QB,requestProvenance:mutate(rc4201Physical.QB.requestProvenance)}};
+  const rejected=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:invalid,sleeperPlayers:players,verifiedAt:now});
+  assert.equal(rejected.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE',label);
+  assert.equal(rejected.lanes.projections.coverage.positions.QB.reason,reason,label);
+  assert(!rejected.records.some(row=>row.metric==='projected_points'&&row.position==='QB'),label);
+}
+const allZero=structuredClone(rc4201Physical);
+for(const row of allZero.QB.providerPayload.players)row.stats.points_half=0;
+const allZeroRejected=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:allZero,sleeperPlayers:players,verifiedAt:now});
+assert.equal(allZeroRejected.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE','an all-zero weekly distribution must fail closed even with valid authenticated request provenance');
+assert.equal(allZeroRejected.lanes.projections.coverage.positions.QB.reason,'ALL_ZERO_WEEKLY_PROJECTION_DISTRIBUTION');
+assert(!allZeroRejected.records.some(row=>row.metric==='projected_points'&&row.position==='QB'),'all-zero rows must never be persisted as AVAILABLE projection evidence');
+const contradictoryRos=structuredClone(rc4201Physical);
+contradictoryRos.QB.providerPayload.ros=true;
+const contradictoryRosRejected=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:contradictoryRos,sleeperPlayers:players,verifiedAt:now});
+assert.equal(contradictoryRosRejected.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE','an explicit provider ros:true echo must override and contradict weekly request provenance');
+assert.equal(contradictoryRosRejected.lanes.projections.coverage.positions.QB.reason,'CONTRADICTORY_PROVIDER_ROS_SCOPE');
+assert(!contradictoryRosRejected.records.some(row=>row.metric==='projected_points'&&row.position==='QB'),'explicit provider ROS rows must never reach weekly consumers');
+
+// Explicitly invalid current evidence is different from an absent/transient lane:
+// in a mixed refresh it must purge chronology-valid prior records for that lane.
+for(const [label,mutate,reason] of [
+  ['wrong season',payload=>{payload.QB.providerPayload.season=season-1},'WRONG_SEASON'],
+  ['wrong week',payload=>{payload.QB.providerPayload.week=week+1},'WRONG_WEEK'],
+  ['invalid request provenance',payload=>{payload.QB.requestProvenance.scope='ROS'},'INVALID_REQUEST_PROVENANCE'],
+  ['contradictory provider position',payload=>{payload.QB.providerPayload.positions='RB'},'WRONG_PROVIDER_POSITION'],
+  ['contradictory provider ROS',payload=>{payload.QB.providerPayload.ros=true},'CONTRADICTORY_PROVIDER_ROS_SCOPE'],
+  ['wrong row position',payload=>{payload.QB.providerPayload.players[0].position_id='RB'},'WRONG_POSITION'],
+  ['weekly semantic ceiling mismatch',payload=>{payload.QB.providerPayload.players[0].stats.points_half=evidence.WEEKLY_HALF_PPR_MAX.QB+1},'WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH'],
+  ['all-zero distribution',payload=>{for(const row of payload.QB.providerPayload.players)row.stats.points_half=0},'ALL_ZERO_WEEKLY_PROJECTION_DISTRIBUTION'],
+  ['present malformed response',payload=>{payload.QB.providerPayload={players:[]}},'MALFORMED_PROVIDER_RESPONSE'],
+  ['present null response',payload=>{payload.QB.providerPayload=null},'MALFORMED_PROVIDER_RESPONSE']
+]){
+  const mixedRefresh=structuredClone(rc4201Physical);mutate(mixedRefresh);
+  const purged=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:mixedRefresh,sleeperPlayers:players,priorSnapshot:retrievalSnapshot,verifiedAt:now+1000});
+  assert.equal(purged.lanes.projections.coverage.positions.QB.reason,reason,label);
+  assert.equal(purged.lanes.projections.coverage.positions.QB.responseClassification,'DEFINITIVE_REJECTION',`${label}: present incompatible evidence must be classified as definitive`);
+  assert.equal(purged.lanes.projections.coverage.positions.RB.status,'AVAILABLE',`${label}: another successful position must preserve legitimate PARTIAL behavior`);
+  assert.equal(purged.lanes.projections.status,'PARTIAL',`${label}: mixed refresh remains PARTIAL`);
+  assert.deepEqual(evidence.validateSnapshot(purged,{season,week,scoring:'HALF_PPR'},now+1000),{ok:true},`${label}: mixed snapshot remains valid`);
+  assert.equal(purged.records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,0,`${label}: prior QB projections must be purged`);
+  const priorQbPlayer=retrievalSnapshot.records.find(row=>row.metric==='projected_points'&&row.position==='QB').playerId;
+  assert.notEqual(context.pick(purged.records,priorQbPlayer,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED',`${label}: exact weekly consumer must not return the rejected lane`);
+  const persisted=new Map(),store={setItem:(key,value)=>persisted.set(key,value),getItem:key=>persisted.get(key)??null,removeItem:key=>persisted.delete(key)};
+  evidence.atomicWrite(store,purged);
+  assert.equal(JSON.parse(persisted.get(evidence.CACHE_KEY)).records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,0,`${label}: persisted snapshot must contain no rejected-lane records`);
+}
+// Numeric source coverage alone is insufficient: mapped rows from a position
+// below the aggregate identity threshold must not escape into a mixed snapshot.
+const subThresholdMapping=structuredClone(rc4201Physical);
+for(let i=0;i<3;i++){subThresholdMapping.QB.providerPayload.players[i].fpid=`unmapped-${i}`;subThresholdMapping.QB.providerPayload.players[i].name=`Unknown QB ${i}`;}
+const mappingPurged=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:subThresholdMapping,sleeperPlayers:players,priorSnapshot:retrievalSnapshot,verifiedAt:now+1000});
+const mappingDiagnostics=mappingPurged.lanes.projections.coverage.positions.QB;
+assert.equal(mappingDiagnostics.responseClassification,'DEFINITIVE_REJECTION');
+assert.equal(mappingDiagnostics.reason,'INSUFFICIENT_MAPPING_COVERAGE');
+assert.equal(mappingDiagnostics.mappedRows,21);
+assert.equal(mappingDiagnostics.consumerUsableRecords,0);
+assert.equal(mappingPurged.lanes.projections.coverage.positions.RB.status,'AVAILABLE');
+assert.equal(mappingPurged.lanes.projections.status,'PARTIAL');
+assert.equal(mappingPurged.records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,0,'sub-threshold mapping must purge both fresh and prior QB projections');
+const mappingPriorPlayer=retrievalSnapshot.records.find(row=>row.metric==='projected_points'&&row.position==='QB').playerId;
+assert.notEqual(context.pick(mappingPurged.records,mappingPriorPlayer,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED','consumer must not return a mapped row from a definitively rejected position');
+const mappingPersisted=new Map(),mappingStore={setItem:(key,value)=>mappingPersisted.set(key,value),getItem:key=>mappingPersisted.get(key)??null,removeItem:key=>mappingPersisted.delete(key)};
+evidence.atomicWrite(mappingStore,mappingPurged);
+assert.equal(JSON.parse(mappingPersisted.get(evidence.CACHE_KEY)).records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,0);
+const transientMixed=structuredClone(rc4201Physical);delete transientMixed.QB;
+const carried=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:transientMixed,sleeperPlayers:players,priorSnapshot:retrievalSnapshot,verifiedAt:now+1000});
+assert.equal(carried.lanes.projections.coverage.positions.QB.responseClassification,'ABSENT_TRANSIENT');
+assert.equal(carried.lanes.projections.coverage.positions.RB.status,'AVAILABLE');
+assert.equal(carried.lanes.projections.status,'PARTIAL');
+assert(carried.records.some(row=>row.metric==='projected_points'&&row.position==='QB'&&row.verifiedAt===now),'a transport-style absent lane must retain chronology-valid prior evidence');
+const carriedQbPlayer=retrievalSnapshot.records.find(row=>row.metric==='projected_points'&&row.position==='QB').playerId;
+assert.equal(context.pick(carried.records,carriedQbPlayer,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED','intentional stale fallback remains consumer-eligible only for absent/transient lanes');
 for(const mutation of [
   row=>({...row,verifiedAt:now+2000,expiresAt:now+2000+evidence.EVIDENCE_TTL_MS}),
   row=>({...row,week:2}),row=>({...row,season:2025}),row=>({...row,scoring:'PPR'}),
