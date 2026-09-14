@@ -92,7 +92,7 @@
       if(!normalizedScoring)reason='WRONG_SCORING';
       else if(Number(payload?.season)!==Number(season))reason='WRONG_SEASON';
       else if(Number(payload?.week)!==Number(week))reason='WRONG_WEEK';
-      else if(String(payload?.positions??'').toUpperCase()!==position)reason='WRONG_PROVIDER_POSITION';
+      else if(Number(request?.season)!==Number(season)||Number(request?.week)!==Number(week)||String(request?.position||'').toUpperCase()!==position||request?.ros!==false||request?.scope!=='WEEKLY')reason='INVALID_REQUEST_PROVENANCE';
       else if(!Array.isArray(payload?.players))reason='MISSING_PLAYERS';
       else if(players.some(row=>String(row?.position_id??row?.player_position_id??row?.position??'').toUpperCase()!==position))reason='WRONG_POSITION';
       const numeric=players.filter(row=>finite(row?.stats?.points_half)!=null).length,scopeMismatch=players.some(row=>{const value=finite(row?.stats?.points_half);return value!=null&&(value<0||value>WEEKLY_HALF_PPR_MAX[position])}),minimum=MIN_COUNTS[position],sourceSufficient=!reason&&!scopeMismatch&&players.length>=minimum&&numeric/Math.max(players.length,1)>=.9;

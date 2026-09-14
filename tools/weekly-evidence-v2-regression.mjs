@@ -147,6 +147,33 @@ assert(retrievalSnapshot.records.every(row=>row.sourceTimePrecision==='RETRIEVAL
 const retrievalRecord=retrievalSnapshot.records[0];
 assert.equal(context.pick(retrievalSnapshot.records,retrievalRecord.playerId,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED');
 assert(retrievalSnapshot.records.every(row=>context.pick(retrievalSnapshot.records,row.playerId,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status==='VERIFIED'),'every published mapped projection must pass the exact consumer path');
+
+// rc4.201 physical reproduction: the authenticated projection response carried
+// current season/week rows, FP identity and numeric stats.points_half, but did not
+// echo the optional top-level `positions` field. The consumer incorrectly rejected
+// all four successful request lanes before mapping, producing zero usable records.
+const rc4201Physical=Object.fromEntries(Object.entries(payloads).map(([position,envelope])=>[position,{
+  providerPayload:{season,week,scoring:'STD',ros:false,players:envelope.providerPayload.players.map(row=>({...row}))},
+  requestProvenance:{season,week,position,ros:false,scope:'WEEKLY'}
+}]));
+const rc4202Repaired=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:rc4201Physical,sleeperPlayers:players,verifiedAt:now});
+assert.equal(rc4202Repaired.lanes.projections.status,'AVAILABLE','request provenance and homogeneous row positions make an omitted response positions echo consumer-usable');
+assert.equal(rc4202Repaired.records.filter(row=>row.metric==='projected_points').length,Object.values(counts).reduce((sum,count)=>sum+count,0));
+assert.deepEqual(evidence.validateSnapshot(rc4202Repaired,{season,week,scoring:'HALF_PPR'},now),{ok:true});
+for(const position of evidence.POSITIONS)assert.equal(rc4202Repaired.lanes.projections.coverage.positions[position].consumerUsableRecords,counts[position]);
+
+for(const [label,mutate,reason] of [
+  ['wrong request week',request=>({...request,week:week+1}),'INVALID_REQUEST_PROVENANCE'],
+  ['wrong request season',request=>({...request,season:season-1}),'INVALID_REQUEST_PROVENANCE'],
+  ['ROS request',request=>({...request,ros:true}),'INVALID_REQUEST_PROVENANCE'],
+  ['missing request scope',request=>({...request,scope:null}),'INVALID_REQUEST_PROVENANCE']
+]){
+  const invalid={...rc4201Physical,QB:{...rc4201Physical.QB,requestProvenance:mutate(rc4201Physical.QB.requestProvenance)}};
+  const rejected=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:invalid,sleeperPlayers:players,verifiedAt:now});
+  assert.equal(rejected.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE',label);
+  assert.equal(rejected.lanes.projections.coverage.positions.QB.reason,reason,label);
+  assert(!rejected.records.some(row=>row.metric==='projected_points'&&row.position==='QB'),label);
+}
 for(const mutation of [
   row=>({...row,verifiedAt:now+2000,expiresAt:now+2000+evidence.EVIDENCE_TTL_MS}),
   row=>({...row,week:2}),row=>({...row,season:2025}),row=>({...row,scoring:'PPR'}),
