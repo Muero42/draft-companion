@@ -1,9 +1,9 @@
-# rc4.200 source/candidate authority — v249
-Handoff generation: `20260913T1930Z-v249`
+# rc4.201 source/candidate authority — v250
+Handoff generation: `20260914T0601Z-v250`
 
-`v11.8.0-rc4.200` is the current source/candidate authority in this tree. Canonical `main`, PR state, containing commit, and exact-head CI are mutable external evidence and MUST be freshly verified; they are not frozen into this checkpoint. The same checkpoint bytes are valid before and after promotion. Source, merge, 17-file package/re-extraction, and preview never imply production deployment or device acceptance. Archive ZIP SHA/digests are run/environment-scoped and noncanonical.
+`v11.8.0-rc4.201` is the current source/candidate authority in this tree. Canonical `main`, PR state, containing commit, and exact-head CI are mutable external evidence and MUST be freshly verified; they are not frozen into this checkpoint. The same checkpoint bytes are valid before and after promotion. Source, merge, 17-file package/re-extraction, and preview never imply production deployment or device acceptance. Archive ZIP SHA/digests are run/environment-scoped and noncanonical.
 
-Newest verified Production is `v11.8.0-rc4.199` from exact source/main commit `2a62e52cb88187470542840053c72cd310b18e2b`, Cloudflare Production deployment `48ab58ba-53d5-4b74-b7e6-16629256a9ee`, status `success`, branch `main`. Its separate physical Android/PWA result is `RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH`, so rc4.199 is deployed but **not device-accepted**. rc4.198 is previous historical deployment evidence; `v11.8.0-rc4.195` remains the prior fully accepted rollback. rc4.200 is not production-deployed, physically observed, or device-accepted.
+Newest verified Production is `v11.8.0-rc4.200` from exact source/main commit `039fbd3ff169f5476c54e893702bf3aad18035b5`, Cloudflare Production deployment `f57beed4-3794-4bae-a047-612d046432f7`, status `success`, branch `main`. Its separate physical Android/PWA result is `RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK`, so rc4.200 is deployed but **not device-accepted**. rc4.199 is the immediately prior verified Production (`2a62e52cb88187470542840053c72cd310b18e2b`, deployment `48ab58ba-53d5-4b74-b7e6-16629256a9ee`) and separately failed physically with `RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH`; rc4.198 is older deployment/device history; `v11.8.0-rc4.195` remains the prior fully accepted rollback. rc4.201 is not production-deployed, physically observed, or device-accepted.
 
 Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Runtime/product behavior is unchanged by this authority-only checkpoint.
 

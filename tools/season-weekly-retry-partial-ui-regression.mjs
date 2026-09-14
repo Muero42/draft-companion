@@ -20,10 +20,10 @@ const cache=new Map(),store={
   set:(key,value)=>{cache.set(key,value);return true}
 };
 const els={seasonRankingAge:{textContent:'',className:''},seasonRankingStatus:{textContent:'',className:''}};
-const context={Date,Number,String,Array,Object,Math,store,els,WEEKLY_PROJECTION_POSITIONS:['QB','RB','WR','TE'],SEASON_RANKING_AUTO_MS:3*60*60*1000,seasonRankingRefreshBusy:false,PittiWeeklyEvidenceV2:evidence,FP_DIAGNOSTIC_TIMEOUT_MS:10_000,AbortController,setTimeout,clearTimeout,els:{...els,apiKey:{value:'test-key'}}};
+const context={Date,Number,String,Array,Object,Math,store,els,WEEKLY_PROJECTION_POSITIONS:['QB','RB','WR','TE'],SEASON_RANKING_AUTO_MS:3*60*60*1000,seasonRankingRefreshBusy:false,PittiWeeklyEvidenceV2:evidence,FP_DIAGNOSTIC_TIMEOUT_MS:10_000,AbortController,setTimeout,clearTimeout,lastDraftContext:{season:{league:{season:2026},current_nfl_week:1}},els:{...els,apiKey:{value:'test-key'}}};
 context.globalThis=context;
 vm.createContext(context);
-vm.runInContext([sourceOf('codedError'),sourceOf('fpProxyRequest'),sourceOf('persistSeasonProjectionRetryAfter'),sourceOf('seasonProjectionCoverage'),sourceOf('renderSeasonRankingFreshness')].join('\n'),context);
+vm.runInContext([sourceOf('codedError'),sourceOf('fpProxyRequest'),sourceOf('persistSeasonProjectionRetryAfter'),sourceOf('seasonEvidenceContext'),sourceOf('seasonProjectionCoverage'),sourceOf('renderSeasonRankingFreshness')].join('\n'),context);
 
 const retryKey='pitti.weekly-evidence.v2.retryAfterUntil',observedAt=1_000_000;
 context.fetch=async()=>({ok:false,status:429,headers:{get:name=>name.toLowerCase()==='retry-after'?'120':null},text:async()=>''});
@@ -79,5 +79,15 @@ cache.set(evidence.CACHE_KEY,healthy);
 context.renderSeasonRankingFreshness();
 assert.match(els.seasonRankingStatus.className,/ok/,'all healthy positions retain the normal success state');
 assert.match(els.seasonRankingStatus.textContent,/Projections AVAILABLE.*QB AVAILABLE.*RB AVAILABLE.*WR AVAILABLE.*TE AVAILABLE/);
+
+cache.set(evidence.CACHE_KEY,{schema:'pitti.weekly-evidence.v2',lastSuccessAt:now,lanes:{projections:{status:'AVAILABLE'}}});
+context.renderSeasonRankingFreshness('Weekly-Evidence-Prüfung fehlgeschlagen · HTTP_503');
+assert.match(els.seasonRankingStatus.className,/bad/,'schema-invalid old cache must never render green');
+assert.match(els.seasonRankingStatus.textContent,/kein gültiger aktueller Projection-Snapshot verfügbar/,'failed refresh plus invalid cache must be truthful');
+cache.set(evidence.CACHE_KEY,healthy);
+context.renderSeasonRankingFreshness('Weekly-Evidence-Prüfung fehlgeschlagen · HTTP_503');
+assert.match(els.seasonRankingStatus.className,/ok/,'valid retained cache remains usable');
+assert.match(els.seasonRankingStatus.textContent,/letzter verifizierter gültiger Snapshot wird unverändert beibehalten/,'failed refresh must label retained valid evidence');
+assert.equal(cache.get(evidence.CACHE_KEY).lastSuccessAt,now,'rendering retained evidence must not restamp it');
 
 console.log('SEASON_WEEKLY_RETRY_PARTIAL_UI_REGRESSION_PASS');

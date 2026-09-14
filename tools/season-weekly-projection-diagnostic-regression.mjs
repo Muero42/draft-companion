@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import evidence from '../weekly-evidence-v2.js';
 
 const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
 const start=app.indexOf('const FP_DIAGNOSTIC_TIMEOUT_MS=');
@@ -13,15 +14,26 @@ const projectedRows=(position,count,{missingPoints=0,missingIds=0}={})=>Array.fr
   ...(i<missingIds?{}:{fpid:1000+i}),name:`${position} Player ${i+1}`,position_id:position,
   stats:i<missingPoints?{points:99}:{points:99,points_half:20-i/10}
 }));
-function runtime({fetchImpl,jfImpl,season='2026'}={}){
+function runtime({fetchImpl,jfImpl,season='2026',lastDraftContext=null}={}){
   const context={
     AbortController,setTimeout,clearTimeout,Date,Math,Number,String,Array,Object,RegExp,Error,
     fetch:fetchImpl||(()=>{throw new Error('unexpected fetch')}),
     jf:jfImpl||(()=>Promise.resolve({season,season_type:'regular',week:7})),
-    S:'https://api.sleeper.app/v1',els:{apiKey:{value:secretSentinel},season:{value:String(season)}}
+    S:'https://api.sleeper.app/v1',PittiWeeklyEvidenceV2:evidence,lastDraftContext,els:{apiKey:{value:secretSentinel},season:{value:String(season)}}
   };
   vm.runInNewContext(source,context);
   return context.__weeklyDiagnostic;
+}
+
+{
+  const counts={QB:24,RB:60,WR:70,TE:24},players={'roster-qb':{full_name:'Roster Quarterback',position:'QB',team:'AAA',fantasy_data_id:999999}},seasonState={my_roster:{players:['roster-qb'],reserve:[],taxi:[]}};
+  const api=runtime({lastDraftContext:{players,season:seasonState},jfImpl:async()=>({season:'2026',season_type:'regular',week:7}),fetchImpl:async url=>{const path=decodeURIComponent(new URL(url,'https://local.invalid').searchParams.get('path')),position=new URL(path,'https://fp.invalid').searchParams.get('position');return response(200,{season:2026,week:7,positions:position,players:projectedRows(position,counts[position]),updated:'2026-09-10'})}});
+  const report=await api.runAuthenticatedWeeklyProjectionDiagnostic();
+  assert.equal(report.classification,'SUFFICIENT','provider access may be fully sufficient');
+  assert.equal(report.consumer.validation.ok,false,'same-path consumer must expose downstream mapping failure');
+  assert(report.consumer.positions.every(row=>row.sourceRows===counts[row.position]&&row.consumerUsableRecords===0&&row.rejectReasonCounts.NO_MATCH===counts[row.position]));
+  assert.equal(JSON.stringify(report.consumer.roster.unusable.map(player=>[player.name,player.id])),JSON.stringify([['Roster Quarterback','roster-qb']]),'roster diagnostic must identify exact unusable active skill player');
+  assert.match(api.formatAuthenticatedWeeklyProjectionDiagnostic(report).join('\n'),/AUTHENTICATED PROJECTION ACCESS = SUFFICIENT[\s\S]*END-TO-END CONSUMER = UNAVAILABLE/);
 }
 
 {
