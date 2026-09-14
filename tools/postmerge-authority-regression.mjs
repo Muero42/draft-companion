@@ -135,18 +135,22 @@ const newV246Cases=[
   ['v251 generation regresses to v245',d=>d['PITTI_CURRENT_STATE.json'].handoff_generation='20260912T1317Z-v245'],
   ['v251 source regresses to rc4.198',d=>d['PITTI_CURRENT_STATE.json'].authority.source_candidate='v11.8.0-rc4.198'],
   ['v251 rejects restoring rc4.198 as newest production',d=>{d['PITTI_CURRENT_STATE.json'].runtime.deployed_production_version='v11.8.0-rc4.198';d['PITTI_CURRENT_STATE.json'].runtime.production_deployment={version:'v11.8.0-rc4.198',source_commit:'493e5aac9cea5a7a667efec81e1bdc733935baf9',status:'VERIFIED_SUCCESS',deployment_id:'81598205-07db-47c9-93ef-3a968d460682'};}],
-  ['v251 rc4.202 candidate implies device acceptance',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4202_candidate.device_acceptance_proven=true],
-  ['v251 preview mislabeled production',d=>d['PITTI_CURRENT_STATE.json'].runtime.preview_candidate='v11.8.0-rc4.202 PRODUCTION'],
-  ['v251 PR state frozen',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4202_candidate.pr_state='OPEN'],
+  ['v251 rc4.202 candidate implies device acceptance',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4203_candidate.device_acceptance_proven=true],
+  ['v251 preview mislabeled production',d=>d['PITTI_CURRENT_STATE.json'].runtime.preview_candidate='v11.8.0-rc4.203 PRODUCTION'],
+  ['v251 PR state frozen',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4203_candidate.pr_state='OPEN'],
   ['v251 lock snake-case timestamp stale',d=>d['PITTI_EXECUTION_LOCK.json'].updated_at='2026-09-12T13:17:00Z'],
   ['v251 cannot erase rc4.200 Production/physical history',d=>{delete d['PITTI_CURRENT_STATE.json'].authority.rc4200_production_deployment;delete d['PITTI_CURRENT_STATE.json'].authority.rc4200_physical_failure;}],
   ['v251 stale rc4.200 refresh scope rejected',d=>d['PITTI_CURRENT_STATE.json'].handoff.refresh_scope='RC4.200_WEEKLY_PROJECTION_SEMANTIC_REPAIR_AFTER_RC4.199_PHYSICAL_FAIL'],
   ['v251 stale sealed physical alias rejected',d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.latest_physical_android='v11.8.0-rc4.200 RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; NOT ACCEPTED'],
   ['v251 stale sealed deployment alias rejected',d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.deployment_parity='rc4.200 VERIFIED Production at main@039fbd3ff169f5476c54e893702bf3aad18035b5'],
-  ['v251 audit cannot resurrect rc4.200 as newest Production',d=>d['docs/PITTI_CODEX_HANDOFF_AUDIT_V251_2026-09-14.md']=d['docs/PITTI_CODEX_HANDOFF_AUDIT_V251_2026-09-14.md'].replace('v11.8.0-rc4.201 is the newest verified Production','rc4.200 is the newest verified Production')],
+  ['v252 rejects stale rc4.202 deployment alias',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4202_candidate.deployment_proven=false],
+  ['v252 rejects stale rc4.202 device-observation alias',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4202_candidate.device_observation_proven=false],
+  ['v252 rejects stale latest deployed candidate',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.latestDeployedCandidate='v11.8.0-rc4.201'],
+  ['v252 rejects PR163 v251 takeover wording',d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.mutable_live_verification_targets.draft_companion_pr_163=d['PITTI_HANDOFF_SEAL.json'].branch_locks.mutable_live_verification_targets.draft_companion_pr_163.replace('v252','v251')],
+  ['v252 source authority cannot resurrect rc4.201 as newest Production',d=>d['PITTI_CURRENT_STATE.json'].source_authority=d['PITTI_CURRENT_STATE.json'].source_authority.replace('Newest verified Production and physical failed observation is v11.8.0-rc4.202','Newest verified Production and physical failed observation is v11.8.0-rc4.201')],
 ];
 for(const [name,mutate] of newV246Cases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
 const scopedHistorical=structuredClone(baseline);
 scopedHistorical['NEW_CHAT_HANDOFF_CURRENT.md']+='\n## HISTORICAL/SUPERSEDED v242 CONTENT\nrc4.196 is not production deployed; rc4.195 remains current production. PASS_EXACT_MAIN_HEAD applied only to historical head 555487.\n';
 assert.deepEqual(validateAuthority(scopedHistorical),[],'stale v242 statements remain legal only in recognized historical scope');
-console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v251 legacy=${legacyCases.length} new_v243=${newV243Cases.length} new_authority=${newAuthorityCases.length} external=${externalCases.length + 3} new_v244=${newV244Cases.length} new_v245=${newV245Cases.length} new_v251=${newV246Cases.length} + unchanged pre/post promotion fixtures + historical-scope preservation`);
+console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v252 legacy=${legacyCases.length} new_v243=${newV243Cases.length} new_authority=${newAuthorityCases.length} external=${externalCases.length + 3} new_v244=${newV244Cases.length} new_v245=${newV245Cases.length} new_v251=${newV246Cases.length} + unchanged pre/post promotion fixtures + historical-scope preservation`);

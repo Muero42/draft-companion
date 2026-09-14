@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
+import {execFileSync} from 'node:child_process';
 import evidence from '../weekly-evidence-v2.js';
 
 const now=Date.parse('2026-09-10T12:00:00Z'),season=2026,week=1;
@@ -164,6 +165,48 @@ assert.equal(rc4202Repaired.lanes.projections.status,'AVAILABLE','request proven
 assert.equal(rc4202Repaired.records.filter(row=>row.metric==='projected_points').length,Object.values(counts).reduce((sum,count)=>sum+count,0));
 assert.deepEqual(evidence.validateSnapshot(rc4202Repaired,{season,week,scoring:'HALF_PPR'},now),{ok:true});
 for(const position of evidence.POSITIONS)assert.equal(rc4202Repaired.lanes.projections.coverage.positions[position].consumerUsableRecords,counts[position]);
+
+// rc4.202 physical reproduction: FantasyPros' production response can publish a
+// yearless current-week update date. Date.parse('09/10') resolves to 2001 in JS,
+// so treating it as an absolute timestamp rejected every otherwise mapped row as
+// stale INVALID_PROVIDER_CHRONOLOGY. Infer only the requested season and only
+// inside the existing bounded eight-day retrieval window.
+const physicalNow=Date.parse('2026-09-14T12:00:00Z');
+const yearlessCurrentWeek=structuredClone(rc4201Physical);
+for(const envelope of Object.values(yearlessCurrentWeek))envelope.providerPayload.updated='09/14';
+const rc4203Repaired=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:yearlessCurrentWeek,sleeperPlayers:players,verifiedAt:physicalNow});
+assert.equal(rc4203Repaired.lanes.projections.status,'AVAILABLE');
+assert.equal(rc4203Repaired.records.filter(row=>row.metric==='projected_points').length,Object.values(counts).reduce((sum,count)=>sum+count,0));
+assert(rc4203Repaired.records.every(row=>row.sourceTimePrecision==='DATE'&&row.sourcePublishedDate==='2026-09-14'&&row.sourcePublishedAt===null));
+assert.deepEqual(evidence.validateSnapshot(rc4203Repaired,{season,week,scoring:'HALF_PPR'},physicalNow),{ok:true});
+for(const position of evidence.POSITIONS)assert.equal(rc4203Repaired.lanes.projections.coverage.positions[position].consumerUsableRecords,counts[position]);
+
+for(const timezone of ['UTC','Europe/Berlin','America/Los_Angeles']){
+  const script=`const e=require('./weekly-evidence-v2.js');process.stdout.write(JSON.stringify(e.sourceTime({updated:'September 14'},{season:2026,verifiedAt:Date.parse('2026-09-14T12:00:00Z'),allowSeasonDateInference:true})))`;
+  const result=JSON.parse(execFileSync(process.execPath,['-e',script],{cwd:new URL('..',import.meta.url),env:{...process.env,TZ:timezone},encoding:'utf8'}));
+  assert.deepEqual(result,{sourcePublishedAt:null,sourcePublishedDate:'2026-09-14',sourceTimePrecision:'DATE'},`named yearless dates must retain calendar components in ${timezone}`);
+}
+
+for(const malformed of ['13/40','02/30','September 32','not-a-date']){
+  const malformedPayload=structuredClone(yearlessCurrentWeek);
+  malformedPayload.QB.providerPayload.updated=malformed;
+  const rejected=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:malformedPayload,sleeperPlayers:players,priorSnapshot:rc4203Repaired,verifiedAt:physicalNow+1000});
+  const lane=rejected.lanes.projections.coverage.positions.QB;
+  assert.equal(lane.responseClassification,'DEFINITIVE_REJECTION',`${malformed} must be an explicit chronology rejection`);
+  assert.equal(lane.reason,'INVALID_PROVIDER_CHRONOLOGY',`${malformed} must not become retrieval chronology`);
+  assert.equal(lane.consumerUsableRecords,0);
+  assert(!rejected.records.some(row=>row.metric==='projected_points'&&row.position==='QB'),'a rejected lane must purge both current and prior projection rows');
+}
+
+const chronologyAbsent=structuredClone(rc4201Physical);
+const retrievalFallback=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:chronologyAbsent,sleeperPlayers:players,verifiedAt:physicalNow});
+assert.equal(retrievalFallback.lanes.projections.status,'AVAILABLE','truly absent chronology retains safe retrieval fallback');
+assert(retrievalFallback.records.every(row=>row.sourceTimePrecision==='RETRIEVAL'));
+
+const outOfWindowYearless=structuredClone(yearlessCurrentWeek);
+for(const envelope of Object.values(outOfWindowYearless))envelope.providerPayload.updated='08/01';
+const staleYearless=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:outOfWindowYearless,sleeperPlayers:players,verifiedAt:physicalNow});
+assert.equal(staleYearless.records.filter(row=>row.metric==='projected_points').length,0,'yearless dates outside the bounded retrieval window must remain fail-closed');
 
 // The provider position echo is optional, but it is still evidence when present:
 // both omission and an exact match are valid, while a contradiction fails closed.

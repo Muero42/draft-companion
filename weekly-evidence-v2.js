@@ -25,24 +25,38 @@
   const iso=ms=>new Date(ms).toISOString();
   const finite=value=>typeof value==='number'&&Number.isFinite(value)?value:null;
   const scoring=value=>['HALF','HALF_PPR','HALF-PPR'].includes(String(value||'').toUpperCase())?'HALF_PPR':null;
+  const invalidSourceTime=()=>({sourcePublishedAt:null,sourcePublishedDate:null,sourceTimePrecision:'INVALID'});
+  function calendarDate(year,month,day){
+    if(!Number.isInteger(year)||!Number.isInteger(month)||!Number.isInteger(day)||year<1||month<1||month>12||day<1||day>31)return null;
+    const ms=Date.UTC(year,month-1,day),date=new Date(ms);
+    return date.getUTCFullYear()===year&&date.getUTCMonth()===month-1&&date.getUTCDate()===day?{ms,date:`${String(year).padStart(4,'0')}-${String(month).padStart(2,'0')}-${String(day).padStart(2,'0')}`}:null;
+  }
 
   function sourceTime(payload,{season,verifiedAt,allowSeasonDateInference=false}={}){
     for(const key of ['updated','last_updated','updated_at','as_of','date']){
+      if(!Object.prototype.hasOwnProperty.call(payload||{},key))continue;
       const raw=payload?.[key];
-      if(raw==null||String(raw).trim()==='')continue;
+      if(raw==null||String(raw).trim()==='')return invalidSourceTime();
       const value=String(raw).trim();
-      if(/^\d{4}-\d{2}-\d{2}$/.test(value))return{sourcePublishedAt:null,sourcePublishedDate:value,sourceTimePrecision:'DATE'};
+      const absoluteDate=value.match(/^(\d{4})-(\d{2})-(\d{2})$/);
+      if(absoluteDate){
+        const date=calendarDate(Number(absoluteDate[1]),Number(absoluteDate[2]),Number(absoluteDate[3]));
+        return date?{sourcePublishedAt:null,sourcePublishedDate:date.date,sourceTimePrecision:'DATE'}:invalidSourceTime();
+      }
       if(allowSeasonDateInference&&Number.isInteger(Number(season))&&Number.isFinite(verifiedAt)){
         const match=value.match(/^(\d{1,2})[\/-](\d{1,2})$/);
         const named=value.match(/^([A-Za-z]{3,9})\s+(\d{1,2})$/);
-        const inferred=match?`${Number(season)}-${String(Number(match[1])).padStart(2,'0')}-${String(Number(match[2])).padStart(2,'0')}`:named?`${named[1]} ${named[2]}, ${Number(season)}`:null;
-        const ms=inferred?Date.parse(inferred):NaN;
+        const monthNames=['january','february','march','april','may','june','july','august','september','october','november','december'];
+        const namedMonth=named?monthNames.findIndex(month=>month.startsWith(named[1].toLowerCase())&&named[1].length>=3)+1:0;
+        const inferred=match?calendarDate(Number(season),Number(match[1]),Number(match[2])):named&&namedMonth?calendarDate(Number(season),namedMonth,Number(named[2])):null;
         // A yearless NFL-week date is accepted only in the requested season and
         // close to the retrieval. Keep DATE precision; never manufacture a time.
-        if(Number.isFinite(ms)&&Math.abs(verifiedAt-ms)<8*86400000)return{sourcePublishedAt:null,sourcePublishedDate:iso(ms).slice(0,10),sourceTimePrecision:'DATE'};
+        if(inferred&&Math.abs(verifiedAt-inferred.ms)<8*86400000)return{sourcePublishedAt:null,sourcePublishedDate:inferred.date,sourceTimePrecision:'DATE'};
+        if(match||named)return invalidSourceTime();
       }
       const ms=typeof raw==='number'?(raw<1e12?raw*1000:raw):Date.parse(value);
       if(Number.isFinite(ms))return{sourcePublishedAt:iso(ms),sourcePublishedDate:null,sourceTimePrecision:'TIMESTAMP'};
+      return invalidSourceTime();
     }
     return{sourcePublishedAt:null,sourcePublishedDate:null,sourceTimePrecision:'UNKNOWN'};
   }
@@ -88,7 +102,7 @@
   function projectionLane(payloads,{season,week,scoring:scoringInput,sleeperPlayers,verifiedAt=Date.now()}={}){
     const normalizedScoring=scoring(scoringInput),indexes=sleeperIndexes(sleeperPlayers),records=[],positions={},rejects=[];
     for(const position of POSITIONS){
-      const hasLane=Object.prototype.hasOwnProperty.call(payloads||{},position),envelope=hasLane?payloads[position]:null,isEnvelope=envelope!=null&&typeof envelope==='object'&&Object.prototype.hasOwnProperty.call(envelope,'providerPayload'),payload=isEnvelope?envelope.providerPayload:envelope,request=isEnvelope?envelope.requestProvenance:null,responsePresent=hasLane&&(isEnvelope||payload!=null),players=Array.isArray(payload?.players)?payload.players:[],rawTime=sourceTime(payload),time=rawTime.sourceTimePrecision==='UNKNOWN'?{sourcePublishedAt:null,sourcePublishedDate:null,sourceTimePrecision:'RETRIEVAL'}:rawTime;
+      const hasLane=Object.prototype.hasOwnProperty.call(payloads||{},position),envelope=hasLane?payloads[position]:null,isEnvelope=envelope!=null&&typeof envelope==='object'&&Object.prototype.hasOwnProperty.call(envelope,'providerPayload'),payload=isEnvelope?envelope.providerPayload:envelope,request=isEnvelope?envelope.requestProvenance:null,responsePresent=hasLane&&(isEnvelope||payload!=null),players=Array.isArray(payload?.players)?payload.players:[],rawTime=sourceTime(payload,{season,verifiedAt,allowSeasonDateInference:true}),time=rawTime.sourceTimePrecision==='UNKNOWN'?{sourcePublishedAt:null,sourcePublishedDate:null,sourceTimePrecision:'RETRIEVAL'}:rawTime;
       const invalidRequest=isEnvelope&&(Number(request?.season)!==Number(season)||Number(request?.week)!==Number(week)||String(request?.position||'').toUpperCase()!==position||request?.ros!==false||request?.scope!=='WEEKLY');
       let reason='';
       if(!normalizedScoring)reason='WRONG_SCORING';
@@ -99,6 +113,7 @@
       else if(invalidRequest||!isEnvelope)reason='INVALID_REQUEST_PROVENANCE';
       else if(Object.prototype.hasOwnProperty.call(payload||{},'positions')&&String(payload.positions||'').toUpperCase()!==position)reason='WRONG_PROVIDER_POSITION';
       else if(payload?.ros===true)reason='CONTRADICTORY_PROVIDER_ROS_SCOPE';
+      else if(rawTime.sourceTimePrecision==='INVALID')reason='INVALID_PROVIDER_CHRONOLOGY';
       else if(!Array.isArray(payload?.players))reason='MISSING_PLAYERS';
       else if(players.some(row=>String(row?.position_id??row?.player_position_id??row?.position??'').toUpperCase()!==position))reason='WRONG_POSITION';
       const numericValues=players.map(row=>finite(row?.stats?.points_half)).filter(value=>value!=null),numeric=numericValues.length,scopeMismatch=numericValues.some(value=>value<0||value>WEEKLY_HALF_PPR_MAX[position]),allZero=numeric>0&&numericValues.every(value=>value===0),minimum=MIN_COUNTS[position],sourceSufficient=!reason&&!scopeMismatch&&!allZero&&players.length>=minimum&&numeric/Math.max(players.length,1)>=.9;
