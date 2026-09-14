@@ -53,6 +53,7 @@ const legacyCases=[
   ['bootstrap premerge gate',d=>d['PITTI_NEW_CHAT_BOOTSTRAP.md']='Current gate: V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT\n'+d['PITTI_NEW_CHAT_BOOTSTRAP.md']],
   ['CURRENT local only',d=>d['PITTI_CURRENT_STATE.json'].operative_scope='This work is local only'],
   ['false source containment',d=>d['PITTI_CURRENT_STATE.json'].source_authority='rc4.190 merged source on main'],
+  ['stale source authority resurrects rc4.200 as newest Production',d=>d['PITTI_CURRENT_STATE.json'].source_authority='rc4.202 source/candidate; newest verified Production is rc4.200'],
   ['permission reference drift',d=>d['PITTI_CURRENT_STATE.json'].authority.permission_contract='historical PR118'],
   ['frozen migration branch',d=>d['PITTI_CURRENT_STATE.json'].runtime.candidate_branch='pitti/rc4190-v234-migration'],
   ['nested historical-name bypass',d=>d['PITTI_CURRENT_STATE.json'].authority.historical_superseded={nextGate:'V233_STRICT_GATES_THEN_MERGE_AND_LOCAL_CODEX_REAUDIT'}],
@@ -139,6 +140,9 @@ const newV246Cases=[
   ['v251 PR state frozen',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4202_candidate.pr_state='OPEN'],
   ['v251 lock snake-case timestamp stale',d=>d['PITTI_EXECUTION_LOCK.json'].updated_at='2026-09-12T13:17:00Z'],
   ['v251 cannot erase rc4.200 Production/physical history',d=>{delete d['PITTI_CURRENT_STATE.json'].authority.rc4200_production_deployment;delete d['PITTI_CURRENT_STATE.json'].authority.rc4200_physical_failure;}],
+  ['v251 stale rc4.200 refresh scope rejected',d=>d['PITTI_CURRENT_STATE.json'].handoff.refresh_scope='RC4.200_WEEKLY_PROJECTION_SEMANTIC_REPAIR_AFTER_RC4.199_PHYSICAL_FAIL'],
+  ['v251 stale sealed physical alias rejected',d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.latest_physical_android='v11.8.0-rc4.200 RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; NOT ACCEPTED'],
+  ['v251 stale sealed deployment alias rejected',d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.deployment_parity='rc4.200 VERIFIED Production at main@039fbd3ff169f5476c54e893702bf3aad18035b5'],
 ];
 for(const [name,mutate] of newV246Cases){const d=structuredClone(baseline);mutate(d);assert.ok(validateAuthority(d).length>0,`must reject ${name}`);}
 const scopedHistorical=structuredClone(baseline);

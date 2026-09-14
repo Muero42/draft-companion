@@ -345,7 +345,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "rc4.202 is source/candidate authority in this tree. Newest verified Production is rc4.200 at main@039fbd3ff169f5476c54e893702bf3aad18035b5; it failed physical acceptance. rc4.198 is previous deployment history and rc4.195 is the prior fully accepted rollback.",
+  "source_authority": "v11.8.0-rc4.202 is source/candidate authority in this tree and is not Production or device accepted. Newest verified Production is v11.8.0-rc4.201 at main@bd666824dac9264795de687e915faaa06c5a4f20, Cloudflare deployment cd1814a9-8602-4efd-b08c-b3676f231be8; its newest physical observation failed with RC4.201_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_STALE_STATUS_REPAIRED. rc4.200 is the immediate prior Production/history, rc4.199 is prior history, rc4.198 is older history, and rc4.195 is the prior fully accepted rollback.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -602,7 +602,7 @@
     "resume": "Dynamically verify local Git and canonical GitHub main, mutable PR targets, and exact-head CI before dependent continuation or promotion. v11.8.0-rc4.202 is source/candidate authority in this tree only and is NOT Production-deployed or device-observed/accepted. Newest verified Production is v11.8.0-rc4.201 at main@bd666824dac9264795de687e915faaa06c5a4f20, Cloudflare deployment cd1814a9-8602-4efd-b08c-b3676f231be8, status success; its separately newest physical verdict is FAILED RC4.201_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_STALE_STATUS_REPAIRED. rc4.200 is the immediate prior Production/history at 039fbd3ff169f5476c54e893702bf3aad18035b5, deployment f57beed4-3794-4bae-a047-612d046432f7, with separate verdict RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK. rc4.199 remains preserved prior history at 2a62e52cb88187470542840053c72cd310b18e2b, deployment 48ab58ba-53d5-4b74-b7e6-16629256a9ee, verdict RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.198 is older history; rc4.195 remains the prior fully accepted rollback. Never reactivate v248/rc4.198 as current, and never claim a newer Library generation persisted unless files.list proves it.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "RC4.200_WEEKLY_PROJECTION_SEMANTIC_REPAIR_AFTER_RC4.199_PHYSICAL_FAIL"
+    "refresh_scope": "RC4.202_WEEKLY_PROJECTION_CONSUMER_REPAIR_AFTER_RC4.201_PHYSICAL_FAIL"
   },
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",

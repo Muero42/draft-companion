@@ -93,10 +93,12 @@
       else if(Number(payload?.season)!==Number(season))reason='WRONG_SEASON';
       else if(Number(payload?.week)!==Number(week))reason='WRONG_WEEK';
       else if(Number(request?.season)!==Number(season)||Number(request?.week)!==Number(week)||String(request?.position||'').toUpperCase()!==position||request?.ros!==false||request?.scope!=='WEEKLY')reason='INVALID_REQUEST_PROVENANCE';
+      else if(payload?.ros===true)reason='CONTRADICTORY_PROVIDER_ROS_SCOPE';
       else if(!Array.isArray(payload?.players))reason='MISSING_PLAYERS';
       else if(players.some(row=>String(row?.position_id??row?.player_position_id??row?.position??'').toUpperCase()!==position))reason='WRONG_POSITION';
-      const numeric=players.filter(row=>finite(row?.stats?.points_half)!=null).length,scopeMismatch=players.some(row=>{const value=finite(row?.stats?.points_half);return value!=null&&(value<0||value>WEEKLY_HALF_PPR_MAX[position])}),minimum=MIN_COUNTS[position],sourceSufficient=!reason&&!scopeMismatch&&players.length>=minimum&&numeric/Math.max(players.length,1)>=.9;
+      const numericValues=players.map(row=>finite(row?.stats?.points_half)).filter(value=>value!=null),numeric=numericValues.length,scopeMismatch=numericValues.some(value=>value<0||value>WEEKLY_HALF_PPR_MAX[position]),allZero=numeric>0&&numericValues.every(value=>value===0),minimum=MIN_COUNTS[position],sourceSufficient=!reason&&!scopeMismatch&&!allZero&&players.length>=minimum&&numeric/Math.max(players.length,1)>=.9;
       if(!reason&&scopeMismatch)reason='WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH';
+      if(!reason&&allZero)reason='ALL_ZERO_WEEKLY_PROJECTION_DISTRIBUTION';
       let mapped=0;
       if(sourceSufficient){for(const row of players){
         const value=finite(row?.stats?.points_half);if(value==null)continue;

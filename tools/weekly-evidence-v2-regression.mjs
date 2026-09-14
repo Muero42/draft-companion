@@ -174,6 +174,18 @@ for(const [label,mutate,reason] of [
   assert.equal(rejected.lanes.projections.coverage.positions.QB.reason,reason,label);
   assert(!rejected.records.some(row=>row.metric==='projected_points'&&row.position==='QB'),label);
 }
+const allZero=structuredClone(rc4201Physical);
+for(const row of allZero.QB.providerPayload.players)row.stats.points_half=0;
+const allZeroRejected=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:allZero,sleeperPlayers:players,verifiedAt:now});
+assert.equal(allZeroRejected.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE','an all-zero weekly distribution must fail closed even with valid authenticated request provenance');
+assert.equal(allZeroRejected.lanes.projections.coverage.positions.QB.reason,'ALL_ZERO_WEEKLY_PROJECTION_DISTRIBUTION');
+assert(!allZeroRejected.records.some(row=>row.metric==='projected_points'&&row.position==='QB'),'all-zero rows must never be persisted as AVAILABLE projection evidence');
+const contradictoryRos=structuredClone(rc4201Physical);
+contradictoryRos.QB.providerPayload.ros=true;
+const contradictoryRosRejected=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:contradictoryRos,sleeperPlayers:players,verifiedAt:now});
+assert.equal(contradictoryRosRejected.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE','an explicit provider ros:true echo must override and contradict weekly request provenance');
+assert.equal(contradictoryRosRejected.lanes.projections.coverage.positions.QB.reason,'CONTRADICTORY_PROVIDER_ROS_SCOPE');
+assert(!contradictoryRosRejected.records.some(row=>row.metric==='projected_points'&&row.position==='QB'),'explicit provider ROS rows must never reach weekly consumers');
 for(const mutation of [
   row=>({...row,verifiedAt:now+2000,expiresAt:now+2000+evidence.EVIDENCE_TTL_MS}),
   row=>({...row,week:2}),row=>({...row,season:2025}),row=>({...row,scoring:'PPR'}),
