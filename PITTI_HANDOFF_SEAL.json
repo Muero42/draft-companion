@@ -1,21 +1,21 @@
 {
   "schema": "pitti.handoff-seal.v1",
-  "handoff_generation": "20260914T1200Z-v250",
+  "handoff_generation": "20260914T0601Z-v250",
   "created_at": "2026-09-13T19:30:00Z",
   "status": "PASS",
   "handoff_ready": true,
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "a9a0bf7de716ad4e2adb4c2e6eef4aac62eb57c5",
-    "PITTI_EXECUTION_LOCK.json": "3c147c21258226f83f1156a0865b0add09aef898",
-    "PITTI_COMMAND_CONTRACTS.json": "4598953506f77bd116dc439503d537d8f7444f28",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "189bf65da35444e05f80636a75fbc90d1cf56512",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "2f2cf4bc67de6b282a3ad6b2992bb92dfb6f044f",
-    "HANDOFF_COMPLETENESS_MATRIX.md": "707b0c1c9392de7f6b5d20ae1137a7c055e53663",
-    "PITTI_AUTO_PREFLIGHT.md": "03a9d2dcf8f8773e1cd025c36d1c10dc4f269aa3",
-    "PITTI_PROJECT_STATE.md": "38c0454dab8eb3b4d0b9fc2fc51036303218daba",
-    "README.md": "e451ea6226cfc908d701023071e5aaf8a26bfa2a",
+    "PITTI_CURRENT_STATE.json": "e46874f54e95a3e504de8ac178bf7dc8966d5511",
+    "PITTI_EXECUTION_LOCK.json": "c84d6b1dee0da87e07792f54d05552322b85fb4f",
+    "PITTI_COMMAND_CONTRACTS.json": "e05ef1104637abe452cbd0e3aeaf574e2cefb5fc",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "6a95c069ec5f1ace0fe9ebefc50fd3951df4691f",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "8fb989ead4359040c3494435d9126bbeabb4c1ba",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "1b37027b01c0ac08f43c713a2cb680a6bf862771",
+    "PITTI_AUTO_PREFLIGHT.md": "66d73791b8e269f9e755205bb2f5cf7c8f9a7eda",
+    "PITTI_PROJECT_STATE.md": "73d716515cd9543d1d652ff81ed41cf2b8031bf4",
+    "README.md": "b0963b81de00c2edfbae6cb0bf12d4ece81aace1",
     "app.js": "c6b712a30556984a341e99867298094fe93c95bb",
     "live-surface-v3.js": "f2b718382d9d36ef38cfeb281e7348ba337c459e",
     "manifest.webmanifest": "a502104558543744f685842250ffe04551335679",
@@ -41,8 +41,8 @@
     "research/RC4182_STARTUP_PARALLEL_AUDIT_2026-09-02.md": "86e6ee5a5308969a917b9477a06f6fff6ec87501",
     "research/RC498_V155_OPEN_AUDIT_CONTRACT_2026-08-28.md": "704552e9afbc44403b2c67bff908ead1817f4c5b",
     "research/TAKEOVER_AUDIT_V180_2026-08-29.md": "01103b783fe1d3fdedf4d9bab9c550f113b2c740",
-    "tools/postmerge-authority-contract.mjs": "0cf0b53bb5a595079a6356076b1ef4b038f14e84",
-    "tools/postmerge-authority-regression.mjs": "03e67f9aa3e361503d245dbb0d52ec88edad29e7",
+    "tools/postmerge-authority-contract.mjs": "16a190ed39d0e4e43087393ca0c90625225fc763",
+    "tools/postmerge-authority-regression.mjs": "c31684019ed511cc77d1f8a6c46b7d7e3609964b",
     "Draft_Companion_IR_Stash_And_Fetch_Regression_2026-08-13.js": "91f62ce0e47b3d8360b4558f6b952392036179ea",
     "tools/rc4158-expert-delta-refresh.mjs": "517474d9270e2247d69dbf4bc85723636a544dee",
     "tools/season-interaction-e2e-gate.mjs": "bc7434a1f9961c9c9fb5ce0cc868bf4e09222fc7",
@@ -130,8 +130,9 @@
     "tools/runtime-startup-contract.mjs": "a44934d18d6f9c75af54af576fd5cc90c0c5ba1a",
     "game-context-v1.js": "8cdcd1d845ccfcd3c1ecc02d72385989af7c762a",
     "tools/season-startsit-weekly-context-regression.mjs": "83a3394f08f138d5a319f7203024f0695ec13a1e",
-    "docs/PITTI_BRIDGE_HANDOFF_V250_2026-09-14.md": "db0e849eb17b7e61ec0a1c93f0140319d98c5d1d",
-    "docs/PITTI_CODEX_HANDOFF_AUDIT_V250_2026-09-14.md": "9ef59fa46ed8a0bda58a2dd6800808853355da5f"
+    "docs/PITTI_BRIDGE_HANDOFF_V250_2026-09-14.md": "0c29795401e79136b4cfb99cd42702db2531e6ac",
+    "docs/PITTI_CODEX_HANDOFF_AUDIT_V250_2026-09-14.md": "7ab588711faf34871103567c2df81e5b6f3cbaa0",
+    "docs/PITTI_BRIDGE_HANDOFF_RC4200_PHYSICAL_PROJECTION_LANE_FAIL_2026-09-14.md": "231c5548ab8522c99d3160db4bd1ac4ca0bd1c84"
   },
   "branch_locks": {
     "repo": "Muero42/draft-companion",
@@ -178,5 +179,5 @@
   "exact_gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "note": "rc4.201 source candidate; rc4.200 Production deployment is verified and RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK is separately the newest physical evidence; rc4.198 is previous deployment history and rc4.195 remains rollback.",
   "integrity_normalization": "UTF8_LF_TEXT",
-  "updated_at": "2026-09-14T12:00:00Z"
+  "updated_at": "2026-09-14T06:01:00Z"
 }

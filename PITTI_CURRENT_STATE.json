@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260914T1200Z-v250",
-  "updated_at": "2026-09-14T12:00:00Z",
+  "handoff_generation": "20260914T0601Z-v250",
+  "updated_at": "2026-09-14T06:01:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -123,7 +123,7 @@
       "version": "v11.8.0-rc4.200",
       "source_commit": "039fbd3ff169f5476c54e893702bf3aad18035b5",
       "observed_at": "2026-09-13",
-      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4199_PHYSICAL_WEEKLY_PROJECTION_FAIL_2026-09-13.md",
+      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4200_PHYSICAL_PROJECTION_LANE_FAIL_2026-09-14.md",
       "acceptance": "FAILED",
       "classification": "RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK",
       "scope": "Physical Android/PWA failure after the separately verified rc4.200 Production deployment; deployment success does not imply device acceptance."
@@ -138,6 +138,19 @@
       "device_acceptance_proven": false,
       "physical_failure": "RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK",
       "evidence_scope": "Verified Cloudflare Production deployment identity, separate from the subsequent failed physical Android/PWA observation."
+    },
+    "rc4199_production_device_history": {
+      "checkpoint": "v249-history",
+      "version": "v11.8.0-rc4.199",
+      "source_commit": "2a62e52cb88187470542840053c72cd310b18e2b",
+      "status": "VERIFIED_SUCCESS",
+      "branch": "main",
+      "deployment_id": "48ab58ba-53d5-4b74-b7e6-16629256a9ee",
+      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4199_PHYSICAL_WEEKLY_PROJECTION_FAIL_2026-09-13.md",
+      "device_acceptance_proven": false,
+      "physical_failure": "RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH",
+      "history_order": "IMMEDIATELY_PRIOR_TO_RC4.200; NEWER_THAN_RC4.198",
+      "evidence_scope": "Historical verified Production deployment and separate failed physical observation; immutable rc4.199 evidence remains preserved."
     }
   },
   "runtime": {
@@ -168,7 +181,7 @@
     "latest_device_evidence": {
       "version": "v11.8.0-rc4.200",
       "observed_at": "2026-09-13",
-      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4199_PHYSICAL_WEEKLY_PROJECTION_FAIL_2026-09-13.md",
+      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4200_PHYSICAL_PROJECTION_LANE_FAIL_2026-09-14.md",
       "acceptance": "FAILED",
       "classification": "RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK"
     },
@@ -561,7 +574,7 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260914T1200Z-v250",
+    "generation": "20260914T0601Z-v250",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -573,7 +586,7 @@
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260914T1200Z-v250",
+  "handoffGeneration": "20260914T0601Z-v250",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",

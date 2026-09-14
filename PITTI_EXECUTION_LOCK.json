@@ -1,6 +1,6 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-14T12:00:00Z",
+  "updatedAt": "2026-09-14T06:01:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
@@ -292,7 +292,7 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260914T1200Z-v250",
+    "generation": "20260914T0601Z-v250",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -316,7 +316,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260914T1200Z-v250",
+  "handoff_generation": "20260914T0601Z-v250",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -351,9 +351,9 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260914T1200Z-v250",
+  "handoffGeneration": "20260914T0601Z-v250",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-09-14T12:00:00Z",
+  "updated_at": "2026-09-14T06:01:00Z",
   "exactNextAction": "Verify rc4.201 source candidate dynamically before promotion. rc4.200 Production deployment is verified at exact main commit 039fbd3ff169f5476c54e893702bf3aad18035b5 and separately failed physical acceptance with RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; rc4.201 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
   "failClosedRecovery": "Verify rc4.201 source candidate dynamically before promotion. rc4.200 Production deployment is verified at exact main commit 039fbd3ff169f5476c54e893702bf3aad18035b5 and separately failed physical acceptance with RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; rc4.201 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback. Never claim a newer Library generation persisted unless files.list proves it."
 }

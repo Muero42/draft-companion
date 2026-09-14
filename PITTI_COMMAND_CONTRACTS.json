@@ -190,8 +190,8 @@
     }
   },
   "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260914T1200Z-v250",
-  "handoff_generation": "20260914T1200Z-v250",
+  "handoffGeneration": "20260914T0601Z-v250",
+  "handoff_generation": "20260914T0601Z-v250",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -220,5 +220,5 @@
   "exactNextAction": "Verify rc4.201 source candidate dynamically before promotion. rc4.200 Production deployment is verified at exact main commit 039fbd3ff169f5476c54e893702bf3aad18035b5 and separately failed physical acceptance with RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; rc4.201 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
-  "updated_at": "2026-09-14T12:00:00Z"
+  "updated_at": "2026-09-14T06:01:00Z"
 }

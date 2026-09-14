@@ -3,16 +3,23 @@ import path from 'node:path';
 import {fileURLToPath} from 'node:url';
 
 export const AUTHORITY_GATE='VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK';
-export const GENERATION='20260914T1200Z-v250';
+export const GENERATION='20260914T0601Z-v250';
+const CHECKPOINT_AT='2026-09-14T06:01:00Z';
 const SOURCE='v11.8.0-rc4.201';
 const PROD='v11.8.0-rc4.200';
 const PROD_COMMIT='039fbd3ff169f5476c54e893702bf3aad18035b5';
 const DEPLOYMENT='f57beed4-3794-4bae-a047-612d046432f7';
 const DEVICE_VERSION='v11.8.0-rc4.200';
 const DEVICE_VERDICT='RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK';
+const DEVICE_EVIDENCE='docs/PITTI_BRIDGE_HANDOFF_RC4200_PHYSICAL_PROJECTION_LANE_FAIL_2026-09-14.md';
+const RC4199_COMMIT='2a62e52cb88187470542840053c72cd310b18e2b';
+const RC4199_DEPLOYMENT='48ab58ba-53d5-4b74-b7e6-16629256a9ee';
+const RC4199_VERDICT='RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH';
+const RC4199_EVIDENCE='docs/PITTI_BRIDGE_HANDOFF_RC4199_PHYSICAL_WEEKLY_PROJECTION_FAIL_2026-09-13.md';
 const RC4198_MERGE='826a1f3327ffac643f3c32217246133ea32bd3ac';
 const core=['PITTI_CURRENT_STATE.json','PITTI_EXECUTION_LOCK.json','PITTI_COMMAND_CONTRACTS.json','PITTI_HANDOFF_SEAL.json'];
 const docs=['PITTI_NEW_CHAT_BOOTSTRAP.md','NEW_CHAT_HANDOFF_CURRENT.md','HANDOFF_COMPLETENESS_MATRIX.md','PITTI_AUTO_PREFLIGHT.md','PITTI_PROJECT_STATE.md','README.md'];
+const immutableEvidence=[DEVICE_EVIDENCE,RC4199_EVIDENCE];
 // External observations are deliberately not persisted as current checkpoint facts.
 // This pure decision check consumes freshly collected evidence; it does not fetch it
 // or authorize an action. Both PR and canonical-main contexts use the same contract.
@@ -35,7 +42,7 @@ export function validateContinuationEvidence(e) {
   return errors;
 }
 export function loadAuthority(root='.') {
-  return Object.fromEntries([...core,...docs].map(p=>[p,core.includes(p)?JSON.parse(fs.readFileSync(path.join(root,p),'utf8')):fs.readFileSync(path.join(root,p),'utf8')]));
+  return Object.fromEntries([...core,...docs,...immutableEvidence].map(p=>[p,core.includes(p)?JSON.parse(fs.readFileSync(path.join(root,p),'utf8')):fs.readFileSync(path.join(root,p),'utf8')]));
 }
 export function validateAuthority(data) {
   const errors=[];
@@ -49,6 +56,7 @@ export function validateAuthority(data) {
   for(const [label,o] of [['LOCK',l],['COMMAND',k]])check(o.qb_policy_reference==='PITTI_CURRENT_STATE.json:qb_policy',label+'.qb_policy_reference','canonical QB policy reference required');
   const generation=c.handoff_generation;
   check(generation===GENERATION,'CURRENT.handoff_generation','v250 generation required');
+  check(c.updated_at===CHECKPOINT_AT&&l.updatedAt===CHECKPOINT_AT&&l.updated_at===CHECKPOINT_AT&&k.updated_at===CHECKPOINT_AT&&s.updated_at===CHECKPOINT_AT,'checkpoint timestamp','all v250 timestamp aliases must use the actual non-future repair checkpoint');
   for(const [label,o] of [['CURRENT',c],['LOCK',l]]) {
     for(const p of ['gate','nextGate']) check(o[p]===AUTHORITY_GATE,`${label}.${p}`,'promotion-stable gate required; merged checkpoint cannot remain pending');
     check(o.currentWork?.nextGate===AUTHORITY_GATE,`${label}.currentWork.nextGate`,'promotion-stable gate required');
@@ -86,7 +94,14 @@ export function validateAuthority(data) {
   check(s.branch_locks?.branch==='DYNAMIC_VERIFICATION_REQUIRED'&&s.branch_locks.reconciled_base_main==='DYNAMIC_EXTERNAL_EVIDENCE'&&String(s.branch_locks.codex_work||'').includes('v250 rc4.201')&&String(s.note||'').includes(DEVICE_VERDICT),'SEAL.rc4200 reconciliation','seal must separate rc4.201 source/package from rc4.200 production/physical-failure evidence and rc4.195 rollback');
   for(const p of ['installed_android','latest_android_observed','latestAndroidVersionObserved']) check(c.runtime[p]===DEVICE_VERSION,`CURRENT.runtime.${p}`,'latest physical version drift');
   const device=c.runtime.latest_device_evidence;
-  check(device?.version===DEVICE_VERSION&&device.acceptance==='FAILED'&&device.classification===DEVICE_VERDICT,'CURRENT.runtime.latest_device_evidence','partial physical evidence drift');
+  check(device?.version===DEVICE_VERSION&&device.evidence===DEVICE_EVIDENCE&&device.acceptance==='FAILED'&&device.classification===DEVICE_VERDICT,'CURRENT.runtime.latest_device_evidence','rc4.200 physical evidence drift');
+  check(c.authority.rc4200_physical_failure?.evidence===DEVICE_EVIDENCE,'CURRENT.authority.rc4200_physical_failure.evidence','rc4.200 requires its dedicated immutable evidence record');
+  const rc4199=c.authority.rc4199_production_device_history;
+  check(rc4199?.version==='v11.8.0-rc4.199'&&rc4199.source_commit===RC4199_COMMIT&&rc4199.deployment_id===RC4199_DEPLOYMENT&&rc4199.status==='VERIFIED_SUCCESS'&&rc4199.evidence===RC4199_EVIDENCE&&rc4199.physical_failure===RC4199_VERDICT&&rc4199.device_acceptance_proven===false&&String(rc4199.history_order||'').includes('IMMEDIATELY_PRIOR_TO_RC4.200'),'CURRENT.authority.rc4199_production_device_history','rc4.199 deployment and separate physical-failure history must remain between rc4.200 and rc4.198');
+  const rc4200Evidence=data[DEVICE_EVIDENCE]||'';
+  for(const token of [PROD_COMMIT,DEPLOYMENT,DEVICE_VERDICT,'PROJECTION_LANE_UNAVAILABLE','13 active skill players','stats.points_half','SUFFICIENT']) check(rc4200Evidence.includes(token),DEVICE_EVIDENCE,`immutable rc4.200 observation missing: ${token}`);
+  const rc4199Evidence=data[RC4199_EVIDENCE]||'';
+  check(rc4199Evidence.includes('v11.8.0-rc4.199')&&rc4199Evidence.includes(RC4199_VERDICT),RC4199_EVIDENCE,'immutable rc4.199 observation identity drift');
   check(c.runtime.accepted_android==='v11.8.0-rc4.195'&&c.runtime.android_accepted==='v11.8.0-rc4.195'&&String(l.runtime.acceptedAndroidAuthority).startsWith('v11.8.0-rc4.195')&&String(s.branch_locks.accepted_rollback).startsWith('v11.8.0-rc4.195'),'rollback','prior fully accepted rollback drift');
   check(c.runtime.deployed_pages_head===PROD_COMMIT&&c.runtime.deployed_production_version===PROD&&c.runtime.deployed_pages_app_byte_parity_with_main===false&&String(c.runtime.deployment_parity).includes('ARBITRARY_BYTE_PARITY_NOT_PROVEN')&&l.runtime.deployedPagesVersion===PROD&&l.runtime.deployedPagesAppByteParityWithMain===false&&l.runtime.mainGhPagesParity===false&&k.currentBoundary.deployedPagesVersion===PROD&&k.currentBoundary.deployedPagesAppByteParityWithMain===false&&String(k.currentBoundary.deploymentParity).includes('ARBITRARY_BYTE_PARITY_NOT_PROVEN'),'deployment','exact deployment identity must remain separate from unsupported byte parity');
   check(c.runtime.production_deployment?.version===PROD&&c.runtime.production_deployment.status==='VERIFIED_SUCCESS'&&c.runtime.production_deployment.source_commit===PROD_COMMIT&&c.runtime.production_deployment.branch==='main'&&c.runtime.production_deployment.deployment_id===DEPLOYMENT,'deployment evidence','exact rc4.200 Production evidence required');
@@ -119,7 +134,7 @@ export function validateAuthority(data) {
   for(const p of docs) {
     const text=data[p];
     check(text.includes(AUTHORITY_GATE),p,'current promotion-stable gate missing');
-    for(const token of ['rc4.201','rc4.200','rc4.198','rc4.195',DEVICE_VERDICT,'17-file','cross-environment']) check(text.includes(token),p,`current authority token missing: ${token}`);
+    for(const token of ['rc4.201','rc4.200','rc4.199','rc4.198','rc4.195',DEVICE_VERDICT,RC4199_VERDICT,'17-file','cross-environment']) check(text.includes(token),p,`current authority token missing: ${token}`);
     if(p!=='README.md') check(text.includes(generation),p,'generation missing');
     // Scope chronological blocks explicitly. A later CURRENT section returns to active scope.
     let historical=false;
