@@ -162,6 +162,21 @@ assert.equal(rc4202Repaired.records.filter(row=>row.metric==='projected_points')
 assert.deepEqual(evidence.validateSnapshot(rc4202Repaired,{season,week,scoring:'HALF_PPR'},now),{ok:true});
 for(const position of evidence.POSITIONS)assert.equal(rc4202Repaired.lanes.projections.coverage.positions[position].consumerUsableRecords,counts[position]);
 
+// The provider position echo is optional, but it is still evidence when present:
+// both omission and an exact match are valid, while a contradiction fails closed.
+const matchingPositionEcho=structuredClone(rc4201Physical);
+matchingPositionEcho.QB.providerPayload.positions='QB';
+const matchingPositionAccepted=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:matchingPositionEcho,sleeperPlayers:players,verifiedAt:now});
+assert.equal(matchingPositionAccepted.lanes.projections.coverage.positions.QB.status,'AVAILABLE','a matching explicit provider position echo must remain acceptable');
+assert.equal(matchingPositionAccepted.lanes.projections.coverage.positions.QB.consumerUsableRecords,counts.QB);
+const contradictoryPositionEcho=structuredClone(rc4201Physical);
+contradictoryPositionEcho.QB.providerPayload.positions='RB';
+const contradictoryPositionRejected=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:contradictoryPositionEcho,sleeperPlayers:players,verifiedAt:now});
+assert.equal(contradictoryPositionRejected.lanes.projections.coverage.positions.QB.status,'UNAVAILABLE','a contradictory explicit provider position echo must fail closed');
+assert.equal(contradictoryPositionRejected.lanes.projections.coverage.positions.QB.reason,'WRONG_PROVIDER_POSITION');
+assert.equal(contradictoryPositionRejected.lanes.projections.coverage.positions.QB.consumerUsableRecords,0);
+assert(!contradictoryPositionRejected.records.some(row=>row.metric==='projected_points'&&row.position==='QB'),'contradictory provider position rows must never be persisted or reach weekly consumers');
+
 for(const [label,mutate,reason] of [
   ['wrong request week',request=>({...request,week:week+1}),'INVALID_REQUEST_PROVENANCE'],
   ['wrong request season',request=>({...request,season:season-1}),'INVALID_REQUEST_PROVENANCE'],
