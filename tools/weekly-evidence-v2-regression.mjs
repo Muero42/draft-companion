@@ -165,6 +165,26 @@ assert.equal(rc4202Repaired.records.filter(row=>row.metric==='projected_points')
 assert.deepEqual(evidence.validateSnapshot(rc4202Repaired,{season,week,scoring:'HALF_PPR'},now),{ok:true});
 for(const position of evidence.POSITIONS)assert.equal(rc4202Repaired.lanes.projections.coverage.positions[position].consumerUsableRecords,counts[position]);
 
+// rc4.202 physical reproduction: FantasyPros' production response can publish a
+// yearless current-week update date. Date.parse('09/10') resolves to 2001 in JS,
+// so treating it as an absolute timestamp rejected every otherwise mapped row as
+// stale INVALID_PROVIDER_CHRONOLOGY. Infer only the requested season and only
+// inside the existing bounded eight-day retrieval window.
+const physicalNow=Date.parse('2026-09-14T12:00:00Z');
+const yearlessCurrentWeek=structuredClone(rc4201Physical);
+for(const envelope of Object.values(yearlessCurrentWeek))envelope.providerPayload.updated='09/14';
+const rc4203Repaired=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:yearlessCurrentWeek,sleeperPlayers:players,verifiedAt:physicalNow});
+assert.equal(rc4203Repaired.lanes.projections.status,'AVAILABLE');
+assert.equal(rc4203Repaired.records.filter(row=>row.metric==='projected_points').length,Object.values(counts).reduce((sum,count)=>sum+count,0));
+assert(rc4203Repaired.records.every(row=>row.sourceTimePrecision==='DATE'&&row.sourcePublishedDate==='2026-09-14'&&row.sourcePublishedAt===null));
+assert.deepEqual(evidence.validateSnapshot(rc4203Repaired,{season,week,scoring:'HALF_PPR'},physicalNow),{ok:true});
+for(const position of evidence.POSITIONS)assert.equal(rc4203Repaired.lanes.projections.coverage.positions[position].consumerUsableRecords,counts[position]);
+
+const outOfWindowYearless=structuredClone(yearlessCurrentWeek);
+for(const envelope of Object.values(outOfWindowYearless))envelope.providerPayload.updated='08/01';
+const staleYearless=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:outOfWindowYearless,sleeperPlayers:players,verifiedAt:physicalNow});
+assert.equal(staleYearless.records.filter(row=>row.metric==='projected_points').length,0,'yearless dates outside the bounded retrieval window must remain fail-closed');
+
 // The provider position echo is optional, but it is still evidence when present:
 // both omission and an exact match are valid, while a contradiction fails closed.
 const matchingPositionEcho=structuredClone(rc4201Physical);

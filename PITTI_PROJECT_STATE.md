@@ -782,3 +782,21 @@ Fresh live READ-ONLY verification must cover Draft Companion PR #172 as historic
 Root cause and repair boundary: the authenticated current-week FantasyPros response did not echo the optional top-level `positions` field. rc4.201 treated that absent response echo as `WRONG_PROVIDER_POSITION` before player mapping, making all four HTTP-200 lanes consumer-zero despite valid request provenance, homogeneous positional rows, FP identity, and numeric `stats.points_half`. rc4.202 uses the actual authenticated request provenance plus every row's position; wrong season/week/position/ROS/scope, malformed, season-like, stale, and all-zero inputs remain fail-closed. No projections `scoring` query parameter is introduced, and `stats.points_half` remains authoritative.
 
 Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. rc4.202 is not Production-deployed, physically observed, or device-accepted.
+
+
+## v252 CURRENT — rc4.203 bounded projection chronology repair (2026-09-14)
+
+Handoff generation: `20260914T1727Z-v252`
+
+`v11.8.0-rc4.203` is the current source/package/preview candidate in this tree and is not Production-deployed, device-observed, or device-accepted. Canonical `main`, PR state, containing commit, and exact-head CI remain mutable external evidence. The 17-file package has `PACKAGED_ONLY_NOT_DEPLOYED` semantics and its archive identity is run/environment-scoped, never cross-environment authority.
+
+Newest verified Production and newest device-observed failure is `v11.8.0-rc4.202` at exact `main@4e2b9af1c8562c0273f39503c2c1c90a15acce00`, Cloudflare deployment `d1e38b4b-27ed-4f87-bfa7-0e99f282de5d`, status `success`. Its separate physical verdict is `RC4.202_PHYSICAL_FAIL_YEARLESS_PROJECTION_CHRONOLOGY_REJECTED`; it is **not device-accepted**. Immutable observation: `docs/PITTI_BRIDGE_HANDOFF_RC4202_PHYSICAL_PROJECTION_LANE_FAIL_2026-09-14.md`.
+
+Preserved history remains explicit: rc4.201 is the immediate prior Production/physical-failure history, followed by rc4.200, rc4.199, and older rc4.198; rc4.195 remains the accepted rollback.
+
+## Mutable live takeover targets
+Fresh live READ-ONLY verification must cover merged PR #173 as historical rc4.202 provenance only, the new rc4.203 follow-up Draft PR as the current candidate lane, PR #172 as historical rc4.201 provenance only, PR #163 as a historical/discoverable v248 anchor only, and separate pitti-watcher PR #6 at expected head `77221ceeb900458e95c32d78c1ad395a37422e5d`. These are mutable verification targets. Keep source, package, preview, Production, device-observed, and device-accepted distinct.
+
+Root cause and repair boundary: a yearless current FantasyPros projection update date such as `09/14` reached `Date.parse`, became a 2001 timestamp, and made every otherwise mapped current-week record fail `INVALID_PROVIDER_CHRONOLOGY`. rc4.203 applies the existing bounded requested-season inference (within eight days of authenticated retrieval) to projections. Out-of-window dates and every malformed, contradictory, wrong season/week/position/ROS/provenance, season-scale, all-zero, or definitively unmapped lane still purge current and prior rows. `stats.points_half` remains Half-PPR authority and the projections request still has no unsupported `scoring` parameter.
+
+Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`.

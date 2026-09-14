@@ -45,14 +45,16 @@ function runtime({fetchImpl,jfImpl,season='2026',lastDraftContext=null}={}){
   const api=runtime({lastDraftContext:{players,season:seasonState},jfImpl:async()=>({season:'2026',season_type:'regular',week:7}),fetchImpl:async url=>{
     const path=decodeURIComponent(new URL(url,'https://local.invalid').searchParams.get('path')),position=new URL(path,'https://fp.invalid').searchParams.get('position');
     const offset=Object.entries(counts).slice(0,Object.keys(counts).indexOf(position)).reduce((sum,[,count])=>sum+count,0);
-    return response(200,{season:2026,week:7,ros:false,players:projectedRows(position,counts[position]).map((row,i)=>({...row,fpid:1000+offset+i}))});
+    return response(200,{season:2026,week:7,ros:false,updated:'09/14',players:projectedRows(position,counts[position]).map((row,i)=>({...row,fpid:1000+offset+i}))});
   }});
   const report=await api.runAuthenticatedWeeklyProjectionDiagnostic();
   assert.equal(report.classification,'SUFFICIENT');
   assert.deepEqual(report.consumer.validation,{ok:true});
   assert.equal(report.consumer.roster.usableCount,1);
   assert(report.consumer.positions.every(row=>row.consumerUsableRecords===counts[row.position]&&row.finalLaneStatus==='AVAILABLE'));
-  assert.match(api.formatAuthenticatedWeeklyProjectionDiagnostic(report).join('\n'),/END-TO-END CONSUMER = USABLE/);
+  const formatted=api.formatAuthenticatedWeeklyProjectionDiagnostic(report).join('\n');
+  assert.match(formatted,/source-time=DATE:2026-09-14/);
+  assert.match(formatted,/END-TO-END CONSUMER = USABLE/);
 }
 
 {
