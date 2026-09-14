@@ -19,6 +19,7 @@ const RC4199_EVIDENCE='docs/PITTI_BRIDGE_HANDOFF_RC4199_PHYSICAL_WEEKLY_PROJECTI
 const WATCHER_EXPECTED_HEAD='77221ceeb900458e95c32d78c1ad395a37422e5d';
 const RC4198_MERGE='826a1f3327ffac643f3c32217246133ea32bd3ac';
 const core=['PITTI_CURRENT_STATE.json','PITTI_EXECUTION_LOCK.json','PITTI_COMMAND_CONTRACTS.json','PITTI_HANDOFF_SEAL.json'];
+const V251_AUDIT='docs/PITTI_CODEX_HANDOFF_AUDIT_V251_2026-09-14.md';
 const docs=['PITTI_NEW_CHAT_BOOTSTRAP.md','NEW_CHAT_HANDOFF_CURRENT.md','HANDOFF_COMPLETENESS_MATRIX.md','PITTI_AUTO_PREFLIGHT.md','PITTI_PROJECT_STATE.md','README.md'];
 const immutableEvidence=[DEVICE_EVIDENCE,RC4199_EVIDENCE];
 // External observations are deliberately not persisted as current checkpoint facts.
@@ -43,7 +44,7 @@ export function validateContinuationEvidence(e) {
   return errors;
 }
 export function loadAuthority(root='.') {
-  return Object.fromEntries([...core,...docs,...immutableEvidence].map(p=>[p,core.includes(p)?JSON.parse(fs.readFileSync(path.join(root,p),'utf8')):fs.readFileSync(path.join(root,p),'utf8')]));
+  return Object.fromEntries([...core,...docs,...immutableEvidence,V251_AUDIT].map(p=>[p,core.includes(p)?JSON.parse(fs.readFileSync(path.join(root,p),'utf8')):fs.readFileSync(path.join(root,p),'utf8')]));
 }
 export function validateAuthority(data) {
   const errors=[];
@@ -82,6 +83,9 @@ export function validateAuthority(data) {
   check(rc4198?.checkpoint==='v245'&&rc4198.pr===156&&rc4198.status==='MERGED/HISTORICAL'&&rc4198.source_head==='931713f8f8beaa70edbfb75041b2c708fae66109'&&rc4198.base_head==='62d7ecf11774700551b6e5a0497ec054e327a0d7'&&rc4198.merge_commit===RC4198_MERGE&&rc4198.merged_tree==='1e91afc64a61f4aad08f7fc50d687736211b3d87'&&rc4198.deployment_proven===false&&rc4198.device_acceptance_proven===false&&String(rc4198.evidence_scope||'').includes('historical merge provenance only'),'CURRENT.authority.rc4198_source_merge','PR #156 squash-merge provenance must not infer deployment or device acceptance');
   check(c.authority?.repo==='Muero42/draft-companion'&&c.authority.branch==='DYNAMIC_VERIFICATION_REQUIRED'&&c.authority.source_candidate===SOURCE&&c.authority.reconciled_base_main==='DYNAMIC_EXTERNAL_EVIDENCE','CURRENT.authority','promotion-stable source identity drift');
   for(const token of [SOURCE,PROD,PROD_COMMIT,DEPLOYMENT,DEVICE_VERDICT,'rc4.200 is the immediate prior Production/history','rc4.199 is prior history','rc4.198 is older history','rc4.195']) check(String(c.source_authority||'').includes(token),'CURRENT.source_authority',`source authority chronology missing: ${token}`);
+  const v251Audit=String(data[V251_AUDIT]||'');
+  for(const token of [SOURCE,'source/package/preview candidate only',PROD,PROD_COMMIT,DEPLOYMENT,DEVICE_VERDICT,'not device-accepted','rc4.200 is the immediate prior Production/physical-failure history','rc4.199','older rc4.198','rc4.195 remains the accepted rollback']) check(v251Audit.includes(token),V251_AUDIT,`current audit authority missing: ${token}`);
+  check(!v251Audit.includes('rc4.200 is the newest verified Production')&&!v251Audit.includes('rc4.200 is the newest failed physical observation'),V251_AUDIT,'stale rc4.200 newest-authority statement forbidden');
   check(JSON.stringify(c.authority.promotion)===JSON.stringify({"status":"DYNAMIC_VERIFICATION_REQUIRED","verify_before":["CONTINUATION","PROMOTION"],"sources":["LOCAL_GIT","CANONICAL_GITHUB"],"permission_source":"CURRENT_USER_AUTHORIZED_WORK_PACKAGE","merge_implies_deployment":false,"merge_implies_device_acceptance":false,"unavailable_evidence":"FAIL_CLOSED_DEPENDENT_ACTION","operative_branch":"DYNAMIC_VERIFICATION_REQUIRED","pr_status":"DYNAMIC_VERIFICATION_REQUIRED","exact_head_ci":"DYNAMIC_VERIFICATION_REQUIRED"}),'CURRENT.authority.promotion','dynamic verification and current authorization contract required');
   check(!c.authority.local_repair,'CURRENT.authority.local_repair','operative repair-branch binding forbidden');
   check(c.authority.permission_contract==='AGENTS.md#pitti-codex-permission-contract','CURRENT.authority.permission_contract','canonical permission reference required');

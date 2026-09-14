@@ -20,6 +20,9 @@
   // or expected outcomes. A one-game Half-PPR payload exceeding them is unsafe to
   // distinguish from the season/ROS payload physically observed on rc4.199.
   const WEEKLY_HALF_PPR_MAX={QB:80,RB:70,WR:70,TE:70};
+  // Positive evidence that a current provider lane is unsafe must invalidate
+  // retained evidence. Absent/transient lanes may still use the stale fallback.
+  const PURGE_PRIOR_PROJECTION_REASONS=new Set(['WRONG_PROVIDER_POSITION','CONTRADICTORY_PROVIDER_ROS_SCOPE','ALL_ZERO_WEEKLY_PROJECTION_DISTRIBUTION']);
   const norm=value=>String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
   const iso=ms=>new Date(ms).toISOString();
   const finite=value=>typeof value==='number'&&Number.isFinite(value)?value:null;
@@ -168,7 +171,8 @@
     const lanes={projections:projections.lane,expertWeeklyRanks:ranks.lane,vegas:{status:'UNAVAILABLE',reason:'NO_APPROVED_ROBUST_SOURCE'},weather:{status:'UNAVAILABLE',reason:'GAME_CONTEXT_REQUIRED'},roleGraphs:{status:'UNAVAILABLE',reason:'SOURCE_UNAVAILABLE'}};
     const fresh=[...projections.records,...ranks.records],freshKeys=new Set(fresh.map(record=>`${record.metric}|${record.position}|${record.playerId}`));
     const laneAvailable=(metric,position)=>metric==='projected_points'?projections.lane.coverage.positions[position]?.status==='AVAILABLE':metric==='weekly_rank'?ranks.lane.coverage.positions[position]?.status==='AVAILABLE':false;
-    const priorValid=priorSnapshot?.schema===SCHEMA&&Number(priorSnapshot.season)===Number(season)&&Number(priorSnapshot.week)===Number(week)&&priorSnapshot.scoring===normalizedScoring&&Array.isArray(priorSnapshot.records)?priorSnapshot.records.filter(record=>weeklyRecordChronology(record,{season,week,scoring:normalizedScoring},verifiedAt)&&!laneAvailable(record.metric,record.position)&&!freshKeys.has(`${record.metric}|${record.position}|${record.playerId}`)):[];
+    const explicitlyRejected=(metric,position)=>metric==='projected_points'&&PURGE_PRIOR_PROJECTION_REASONS.has(projections.lane.coverage.positions[position]?.reason);
+    const priorValid=priorSnapshot?.schema===SCHEMA&&Number(priorSnapshot.season)===Number(season)&&Number(priorSnapshot.week)===Number(week)&&priorSnapshot.scoring===normalizedScoring&&Array.isArray(priorSnapshot.records)?priorSnapshot.records.filter(record=>weeklyRecordChronology(record,{season,week,scoring:normalizedScoring},verifiedAt)&&!laneAvailable(record.metric,record.position)&&!explicitlyRejected(record.metric,record.position)&&!freshKeys.has(`${record.metric}|${record.position}|${record.playerId}`)):[];
     const records=[...fresh,...priorValid];
     const freshProjectionUsable=projections.records.length>0;
     const snapshot={schema:SCHEMA,snapshotId:`wev2-${Number(season)}-${Number(week)}-${normalizedScoring}-${verifiedAt}`,season:Number(season),week:Number(week),scoring:normalizedScoring,fetchedAt:verifiedAt,lastAttemptAt:verifiedAt,lastSuccessAt:freshProjectionUsable?verifiedAt:Number(priorSnapshot?.lastSuccessAt)||null,status:projections.lane.status==='AVAILABLE'&&ranks.lane.status==='AVAILABLE'?'AVAILABLE':freshProjectionUsable?'DEGRADED':'UNAVAILABLE',lanes,records,rejections:[...projections.rejects,...ranks.rejects],retainedPriorRecords:priorValid.length,panel:{weeklyRank:{status:ranks.lane.status==='AVAILABLE'?'BROAD_CONSENSUS_ONLY':ranks.lane.status,sources:ranks.lane.status==='UNAVAILABLE'?[]:['FantasyPros current-week Half-PPR ECR'],selectedExperts:[],aggregation:'ECR; selected PITTI panel remains separately unavailable'},projection:{status:projections.lane.status,source:'fantasypros'}}};
