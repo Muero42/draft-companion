@@ -66,6 +66,14 @@ function runtime({fetchImpl,jfImpl,season='2026',lastDraftContext=null}={}){
 }
 
 {
+  const api=runtime({fetchImpl:async()=>response(200,null,'{not valid json')});
+  const result=await api.fpProxyRequest('/nfl/2026/projections?week=7&position=QB&ros=false',{preserveMalformed:true});
+  assert.equal(result.ok,true,'HTTP success remains a fulfilled current response');
+  assert.equal(result.data,null,'invalid JSON must not fabricate provider fields');
+  assert.equal(result.bodyState,'INVALID_JSON','collector must preserve malformed HTTP-success provenance');
+}
+
+{
   const paths=[];
   const api=runtime({
     jfImpl:async url=>{assert.match(url,/\/state\/nfl\?/);return{season:'2026',season_type:'regular',week:7}},

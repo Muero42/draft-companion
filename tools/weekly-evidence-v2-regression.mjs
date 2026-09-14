@@ -216,7 +216,8 @@ for(const [label,mutate,reason] of [
   ['wrong row position',payload=>{payload.QB.providerPayload.players[0].position_id='RB'},'WRONG_POSITION'],
   ['weekly semantic ceiling mismatch',payload=>{payload.QB.providerPayload.players[0].stats.points_half=evidence.WEEKLY_HALF_PPR_MAX.QB+1},'WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH'],
   ['all-zero distribution',payload=>{for(const row of payload.QB.providerPayload.players)row.stats.points_half=0},'ALL_ZERO_WEEKLY_PROJECTION_DISTRIBUTION'],
-  ['present malformed response',payload=>{payload.QB.providerPayload={players:[]}},'MALFORMED_PROVIDER_RESPONSE']
+  ['present malformed response',payload=>{payload.QB.providerPayload={players:[]}},'MALFORMED_PROVIDER_RESPONSE'],
+  ['present null response',payload=>{payload.QB.providerPayload=null},'MALFORMED_PROVIDER_RESPONSE']
 ]){
   const mixedRefresh=structuredClone(rc4201Physical);mutate(mixedRefresh);
   const purged=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:mixedRefresh,sleeperPlayers:players,priorSnapshot:retrievalSnapshot,verifiedAt:now+1000});
@@ -232,6 +233,24 @@ for(const [label,mutate,reason] of [
   evidence.atomicWrite(store,purged);
   assert.equal(JSON.parse(persisted.get(evidence.CACHE_KEY)).records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,0,`${label}: persisted snapshot must contain no rejected-lane records`);
 }
+// Numeric source coverage alone is insufficient: mapped rows from a position
+// below the aggregate identity threshold must not escape into a mixed snapshot.
+const subThresholdMapping=structuredClone(rc4201Physical);
+for(let i=0;i<3;i++){subThresholdMapping.QB.providerPayload.players[i].fpid=`unmapped-${i}`;subThresholdMapping.QB.providerPayload.players[i].name=`Unknown QB ${i}`;}
+const mappingPurged=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:subThresholdMapping,sleeperPlayers:players,priorSnapshot:retrievalSnapshot,verifiedAt:now+1000});
+const mappingDiagnostics=mappingPurged.lanes.projections.coverage.positions.QB;
+assert.equal(mappingDiagnostics.responseClassification,'DEFINITIVE_REJECTION');
+assert.equal(mappingDiagnostics.reason,'INSUFFICIENT_MAPPING_COVERAGE');
+assert.equal(mappingDiagnostics.mappedRows,21);
+assert.equal(mappingDiagnostics.consumerUsableRecords,0);
+assert.equal(mappingPurged.lanes.projections.coverage.positions.RB.status,'AVAILABLE');
+assert.equal(mappingPurged.lanes.projections.status,'PARTIAL');
+assert.equal(mappingPurged.records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,0,'sub-threshold mapping must purge both fresh and prior QB projections');
+const mappingPriorPlayer=retrievalSnapshot.records.find(row=>row.metric==='projected_points'&&row.position==='QB').playerId;
+assert.notEqual(context.pick(mappingPurged.records,mappingPriorPlayer,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED','consumer must not return a mapped row from a definitively rejected position');
+const mappingPersisted=new Map(),mappingStore={setItem:(key,value)=>mappingPersisted.set(key,value),getItem:key=>mappingPersisted.get(key)??null,removeItem:key=>mappingPersisted.delete(key)};
+evidence.atomicWrite(mappingStore,mappingPurged);
+assert.equal(JSON.parse(mappingPersisted.get(evidence.CACHE_KEY)).records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,0);
 const transientMixed=structuredClone(rc4201Physical);delete transientMixed.QB;
 const carried=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:transientMixed,sleeperPlayers:players,priorSnapshot:retrievalSnapshot,verifiedAt:now+1000});
 assert.equal(carried.lanes.projections.coverage.positions.QB.responseClassification,'ABSENT_TRANSIENT');
