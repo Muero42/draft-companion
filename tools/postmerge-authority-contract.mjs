@@ -16,6 +16,7 @@ const RC4199_COMMIT='2a62e52cb88187470542840053c72cd310b18e2b';
 const RC4199_DEPLOYMENT='48ab58ba-53d5-4b74-b7e6-16629256a9ee';
 const RC4199_VERDICT='RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH';
 const RC4199_EVIDENCE='docs/PITTI_BRIDGE_HANDOFF_RC4199_PHYSICAL_WEEKLY_PROJECTION_FAIL_2026-09-13.md';
+const WATCHER_EXPECTED_HEAD='77221ceeb900458e95c32d78c1ad395a37422e5d';
 const RC4198_MERGE='826a1f3327ffac643f3c32217246133ea32bd3ac';
 const core=['PITTI_CURRENT_STATE.json','PITTI_EXECUTION_LOCK.json','PITTI_COMMAND_CONTRACTS.json','PITTI_HANDOFF_SEAL.json'];
 const docs=['PITTI_NEW_CHAT_BOOTSTRAP.md','NEW_CHAT_HANDOFF_CURRENT.md','HANDOFF_COMPLETENESS_MATRIX.md','PITTI_AUTO_PREFLIGHT.md','PITTI_PROJECT_STATE.md','README.md'];
@@ -96,6 +97,21 @@ export function validateAuthority(data) {
   const device=c.runtime.latest_device_evidence;
   check(device?.version===DEVICE_VERSION&&device.evidence===DEVICE_EVIDENCE&&device.acceptance==='FAILED'&&device.classification===DEVICE_VERDICT,'CURRENT.runtime.latest_device_evidence','rc4.200 physical evidence drift');
   check(c.authority.rc4200_physical_failure?.evidence===DEVICE_EVIDENCE,'CURRENT.authority.rc4200_physical_failure.evidence','rc4.200 requires its dedicated immutable evidence record');
+  const recovery=[l.authority?.failClosedRecovery,l.handoff?.resume,l.exactNextAction,l.failClosedRecovery];
+  for(const [i,value] of recovery.entries()) for(const token of [SOURCE,PROD,PROD_COMMIT,DEPLOYMENT,DEVICE_VERDICT,'rc4.199',RC4199_COMMIT,RC4199_DEPLOYMENT,RC4199_VERDICT,'rc4.198 is older history','rc4.195']) check(String(value||'').includes(token),`LOCK.recovery[${i}]`,`fail-closed recovery boundary missing: ${token}`);
+  for(const [i,value] of recovery.entries()) check(!String(value).includes('Production/device evidence remains rc4.198'),`LOCK.recovery[${i}]`,'fail-closed recovery cannot reactivate rc4.198/v248 as current');
+  const targets=l.authority?.liveVerificationTargets;
+  check(Array.isArray(targets)&&targets.length===3,'LOCK.authority.liveVerificationTargets','exactly three mutable takeover lanes required');
+  const pr172=targets?.find(x=>x.repository==='Muero42/draft-companion'&&x.pr===172);
+  const pr163=targets?.find(x=>x.repository==='Muero42/draft-companion'&&x.pr===163);
+  const watcher=targets?.find(x=>x.repository==='Muero42/pitti-watcher'&&x.pr===6);
+  check(pr172?.lane==='CURRENT_RC4.201_CANDIDATE'&&String(pr172.verification).includes('MUTABLE_LIVE_STATE')&&pr172.head==='DYNAMIC_EXTERNAL_EVIDENCE','LOCK.liveVerificationTargets.PR172','current candidate PR must be a mutable exact-head verification target');
+  check(pr163?.lane==='HISTORICAL_DISCOVERABLE_V248_ANCHOR_ONLY'&&String(pr163.verification).includes('MUST_NOT_OVERRIDE_V250')&&pr163.head==='DYNAMIC_EXTERNAL_EVIDENCE','LOCK.liveVerificationTargets.PR163','PR #163 must remain historical/discoverable only');
+  check(watcher?.lane==='SEPARATE_WATCHER_LANE'&&String(watcher.verification).includes('MUTABLE_LIVE_STATE')&&watcher.expectedHead===WATCHER_EXPECTED_HEAD,'LOCK.liveVerificationTargets.watcher','watcher PR #6 must remain separate and freshly verified against its expected head');
+  const sealedTargets=s.branch_locks?.mutable_live_verification_targets;
+  check(String(sealedTargets?.draft_companion_pr_172||'').includes('current rc4.201 candidate')&&String(sealedTargets?.draft_companion_pr_172||'').includes('fresh live verification'),'SEAL.liveTargets.PR172','sealed takeover must name mutable PR #172 lane');
+  check(String(sealedTargets?.draft_companion_pr_163||'').includes('historical/discoverable v248')&&String(sealedTargets?.draft_companion_pr_163||'').includes('cannot override v250'),'SEAL.liveTargets.PR163','sealed takeover must constrain PR #163 to historical discovery');
+  check(String(sealedTargets?.pitti_watcher_pr_6||'').includes('separate watcher lane')&&String(sealedTargets?.pitti_watcher_pr_6||'').includes(WATCHER_EXPECTED_HEAD),'SEAL.liveTargets.watcher','sealed takeover must name watcher PR #6 and expected head');
   const rc4199=c.authority.rc4199_production_device_history;
   check(rc4199?.version==='v11.8.0-rc4.199'&&rc4199.source_commit===RC4199_COMMIT&&rc4199.deployment_id===RC4199_DEPLOYMENT&&rc4199.status==='VERIFIED_SUCCESS'&&rc4199.evidence===RC4199_EVIDENCE&&rc4199.physical_failure===RC4199_VERDICT&&rc4199.device_acceptance_proven===false&&String(rc4199.history_order||'').includes('IMMEDIATELY_PRIOR_TO_RC4.200'),'CURRENT.authority.rc4199_production_device_history','rc4.199 deployment and separate physical-failure history must remain between rc4.200 and rc4.198');
   const rc4200Evidence=data[DEVICE_EVIDENCE]||'';
@@ -150,6 +166,7 @@ export function validateAuthority(data) {
   for(const p of ['PITTI_NEW_CHAT_BOOTSTRAP.md','NEW_CHAT_HANDOFF_CURRENT.md','HANDOFF_COMPLETENESS_MATRIX.md','README.md']) {
     check(!/(?:rc4\.195[^\n]{0,160}(?:PR-only|not merged|remains unmerged)|PR-only[^\n]{0,160}rc4\.195)/i.test(data[p]),p,'active takeover prose cannot retain rc4.195 PR-only/unmerged authority');
   }
+  for(const p of ['PITTI_NEW_CHAT_BOOTSTRAP.md','NEW_CHAT_HANDOFF_CURRENT.md']) for(const token of ['PR #172','PR #163','pitti-watcher PR #6',WATCHER_EXPECTED_HEAD,'mutable verification targets','source, package, preview, Production, device-observed, and device-accepted']) check(data[p].includes(token),p,`explicit mutable takeover target/separation missing: ${token}`);
   const projectCurrent=(data['PITTI_PROJECT_STATE.md'].split('## v250 CURRENT')[1]?.split('## HISTORICAL/SUPERSEDED v245 CONTENT')[0]||'');
   check(data['PITTI_PROJECT_STATE.md'].includes('mutable external evidence')&&data['PITTI_PROJECT_STATE.md'].includes('not production-deployed')&&data['PITTI_PROJECT_STATE.md'].includes(DEVICE_VERDICT)&&projectCurrent.includes('run/environment-scoped'),'PITTI_PROJECT_STATE.md v250 CURRENT','latest project-state authority must separate source/package from production/device');
   return errors;

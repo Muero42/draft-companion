@@ -7,11 +7,11 @@
   "second_pass_pass": true,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
-    "PITTI_CURRENT_STATE.json": "e46874f54e95a3e504de8ac178bf7dc8966d5511",
-    "PITTI_EXECUTION_LOCK.json": "c84d6b1dee0da87e07792f54d05552322b85fb4f",
-    "PITTI_COMMAND_CONTRACTS.json": "e05ef1104637abe452cbd0e3aeaf574e2cefb5fc",
-    "PITTI_NEW_CHAT_BOOTSTRAP.md": "6a95c069ec5f1ace0fe9ebefc50fd3951df4691f",
-    "NEW_CHAT_HANDOFF_CURRENT.md": "8fb989ead4359040c3494435d9126bbeabb4c1ba",
+    "PITTI_CURRENT_STATE.json": "157c9625d021d8d55f41577bb50c6fe2995b658a",
+    "PITTI_EXECUTION_LOCK.json": "31b434d5bbfc60d16e6d35962816407bcf65eb29",
+    "PITTI_COMMAND_CONTRACTS.json": "c7b84b0eae57277aa7ed0081611f2f200c32cd8c",
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "07f8c67a0ebbd04b6dd13c642ad39a139796e9e4",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "126fdda8b9ebd16c0c5cfab7078bd397646cb053",
     "HANDOFF_COMPLETENESS_MATRIX.md": "1b37027b01c0ac08f43c713a2cb680a6bf862771",
     "PITTI_AUTO_PREFLIGHT.md": "66d73791b8e269f9e755205bb2f5cf7c8f9a7eda",
     "PITTI_PROJECT_STATE.md": "73d716515cd9543d1d652ff81ed41cf2b8031bf4",
@@ -41,8 +41,8 @@
     "research/RC4182_STARTUP_PARALLEL_AUDIT_2026-09-02.md": "86e6ee5a5308969a917b9477a06f6fff6ec87501",
     "research/RC498_V155_OPEN_AUDIT_CONTRACT_2026-08-28.md": "704552e9afbc44403b2c67bff908ead1817f4c5b",
     "research/TAKEOVER_AUDIT_V180_2026-08-29.md": "01103b783fe1d3fdedf4d9bab9c550f113b2c740",
-    "tools/postmerge-authority-contract.mjs": "16a190ed39d0e4e43087393ca0c90625225fc763",
-    "tools/postmerge-authority-regression.mjs": "c31684019ed511cc77d1f8a6c46b7d7e3609964b",
+    "tools/postmerge-authority-contract.mjs": "753fcc97cebca9f3036913f03e07b759c8443b94",
+    "tools/postmerge-authority-regression.mjs": "bd1a928217ca925988d8bc5e2d77c3bb189f5ce5",
     "Draft_Companion_IR_Stash_And_Fetch_Regression_2026-08-13.js": "91f62ce0e47b3d8360b4558f6b952392036179ea",
     "tools/rc4158-expert-delta-refresh.mjs": "517474d9270e2247d69dbf4bc85723636a544dee",
     "tools/season-interaction-e2e-gate.mjs": "bc7434a1f9961c9c9fb5ce0cc868bf4e09222fc7",
@@ -144,7 +144,12 @@
     "accepted_rollback": "v11.8.0-rc4.195 PRIOR_FULL_ACCEPTANCE",
     "codex_work": "v250 rc4.201 weekly consumer/mapping/status repair",
     "deployment_parity": "rc4.200 VERIFIED Production at main@039fbd3ff169f5476c54e893702bf3aad18035b5, deployment f57beed4-3794-4bae-a047-612d046432f7; physical acceptance failed separately",
-    "pr121": "v233 MERGED/HISTORICAL"
+    "pr121": "v233 MERGED/HISTORICAL",
+    "mutable_live_verification_targets": {
+      "draft_companion_pr_172": "current rc4.201 candidate lane; PR state, exact head and exact-head checks require fresh live verification",
+      "draft_companion_pr_163": "historical/discoverable v248 anchor only; mutable state requires fresh verification and cannot override v250",
+      "pitti_watcher_pr_6": "separate watcher lane; freshly verify mutable state and expected head 77221ceeb900458e95c32d78c1ad395a37422e5d"
+    }
   },
   "checks": {
     "generation_alignment": true,
@@ -177,7 +182,7 @@
     "package_reextract_17_files": true
   },
   "exact_gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "note": "rc4.201 source candidate; rc4.200 Production deployment is verified and RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK is separately the newest physical evidence; rc4.198 is previous deployment history and rc4.195 remains rollback.",
+  "note": "rc4.201 source candidate only; rc4.200 Production at main@039fbd3ff169f5476c54e893702bf3aad18035b5, deployment f57beed4-3794-4bae-a047-612d046432f7 status success, is the newest Production boundary, while RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK is separately the newest failed physical evidence; rc4.199 is immediate prior Production/history with RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH, rc4.198 is older history, and rc4.195 remains rollback. Mutable PR verification targets are Draft Companion #172 (current candidate), Draft Companion #163 (historical/discoverable v248 only), and separate pitti-watcher #6 (expected head 77221ceeb900458e95c32d78c1ad395a37422e5d), all subject to fresh live verification.",
   "integrity_normalization": "UTF8_LF_TEXT",
   "updated_at": "2026-09-14T06:01:00Z"
 }

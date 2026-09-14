@@ -5,6 +5,9 @@ Handoff generation: `20260914T0601Z-v250`
 
 Newest verified Production is `v11.8.0-rc4.200` from exact source/main commit `039fbd3ff169f5476c54e893702bf3aad18035b5`, Cloudflare Production deployment `f57beed4-3794-4bae-a047-612d046432f7`, status `success`, branch `main`. Its separate physical Android/PWA result is `RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK`, so rc4.200 is deployed but **not device-accepted**. rc4.199 is the immediately prior verified Production (`2a62e52cb88187470542840053c72cd310b18e2b`, deployment `48ab58ba-53d5-4b74-b7e6-16629256a9ee`) and separately failed physically with `RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH`; rc4.198 is older deployment/device history; `v11.8.0-rc4.195` remains the prior fully accepted rollback. rc4.201 is not production-deployed, physically observed, or device-accepted.
 
+## Mutable live takeover targets
+Fresh live READ-ONLY verification must explicitly cover these targets before dependent continuation: Draft Companion PR #172 is the current rc4.201 candidate lane; Draft Companion PR #163 is a historical/discoverable v248 anchor only and cannot override v250; pitti-watcher PR #6 is a separate watcher lane whose expected head is `77221ceeb900458e95c32d78c1ad395a37422e5d`, subject to fresh live verification. PR state and heads are mutable verification targets, not immutable checkpoint authority. Keep source, package, preview, Production, device-observed, and device-accepted states separate.
+
 Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. Runtime/product behavior is unchanged by this authority-only checkpoint.
 
 ## HISTORICAL/SUPERSEDED CHECKPOINT CONTENT

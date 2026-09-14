@@ -578,7 +578,7 @@
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Verify rc4.201 source candidate dynamically before promotion. rc4.200 Production deployment is verified at exact main commit 039fbd3ff169f5476c54e893702bf3aad18035b5 and separately failed physical acceptance with RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK; rc4.201 is not deployed or device-observed/accepted. rc4.198 is previous deployment history; rc4.195 remains the accepted rollback.",
+    "resume": "Dynamically verify local Git and canonical GitHub main, mutable PR targets, and exact-head CI before dependent continuation or promotion. v11.8.0-rc4.201 is source/candidate authority in this tree only and is NOT Production-deployed or device-observed/accepted. Newest verified Production is v11.8.0-rc4.200 at main@039fbd3ff169f5476c54e893702bf3aad18035b5, Cloudflare deployment f57beed4-3794-4bae-a047-612d046432f7, status success; its separately newest physical verdict is FAILED RC4.200_PHYSICAL_FAIL_FRESH_PROJECTION_LANE_UNAVAILABLE_AND_STALE_STATUS_LEAK. rc4.199 is the immediate prior Production/history at 2a62e52cb88187470542840053c72cd310b18e2b, deployment 48ab58ba-53d5-4b74-b7e6-16629256a9ee, with separate verdict RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH. rc4.198 is older history; rc4.195 remains the prior fully accepted rollback. Never reactivate v248/rc4.198 as current, and never claim a newer Library generation persisted unless files.list proves it.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
     "refresh_scope": "RC4.200_WEEKLY_PROJECTION_SEMANTIC_REPAIR_AFTER_RC4.199_PHYSICAL_FAIL"
