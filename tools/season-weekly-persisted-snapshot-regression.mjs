@@ -86,4 +86,15 @@ assert.match(els.seasonRankingStatus.textContent,/Rank-Persistenz fehlgeschlagen
 assert.doesNotMatch(els.seasonRankingStatus.textContent,/letzter verifizierter Stand bleibt unverändert/);
 assert.equal(vm.runInContext('seasonRankingRefreshBusy',context),false,'busy state must reset after final persistence failure');
 
+// A week-context failure before provider retrieval must leave the last verified
+// Weekly Evidence snapshot byte-for-byte untouched (auxiliary attempt metadata is allowed).
+const retainedSnapshot={...projectionSnapshot,snapshotId:'retained-before-week-context-timeout'};
+cache.set(api.CACHE_KEY,retainedSnapshot);writes=0;renderedSnapshot=null;
+context.currentSleeperNflWeek=async()=>{throw Object.assign(new Error('Kein frischer verifizierter Sleeper-Wochenkontext verfügbar.'),{code:'SLEEPER_WEEK_FALLBACK_UNVERIFIED'})};
+const failedContextResult=await context.refreshSeasonRankings({force:true,trigger:'week-context-timeout-regression'});
+assert.equal(failedContextResult.ok,false);
+assert.equal(writes,0,'failed week context must not write a replacement snapshot');
+assert.equal(cache.get(api.CACHE_KEY),retainedSnapshot,'last verified snapshot must remain the exact stored object');
+assert.match(els.seasonRankingStatus.textContent,/letzter verifizierter Stand bleibt unverändert/);
+
 console.log('SEASON_WEEKLY_PERSISTED_SNAPSHOT_REGRESSION_PASS');

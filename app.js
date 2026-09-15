@@ -1,6 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
-const APP_VERSION='v11.8.0-rc4.204';
+const APP_VERSION='v11.8.0-rc4.205';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -625,8 +625,26 @@ function deriveSleeperNflWeek(state,season){
   return week;
 }
 async function currentSleeperNflWeek(season){
-  const state=await jf(`${S}/state/nfl?_=${Date.now()}`,'Sleeper NFL State',6000);
-  return deriveSleeperNflWeek(state,season);
+  try{
+    const state=await jf(`${S}/state/nfl?_=${Date.now()}`,'Sleeper NFL State',6000);
+    return deriveSleeperNflWeek(state,season);
+  }catch(error){
+    if(!isTransientSleeperNflStateError(error))throw error;
+    return deriveSleeperLeagueWeekFallback(lastDraftContext?.season,season,Date.now());
+  }
+}
+function isTransientSleeperNflStateError(error){
+  const code=String(error?.code||'').toUpperCase(),name=String(error?.name||''),message=String(error?.message||error||'');
+  return code==='TIMEOUT'||code==='NETWORK'||name==='AbortError'||name==='TypeError'||/^Sleeper NFL State: Timeout nach \d+s$/i.test(message)||/\b(?:networkerror|network request failed|failed to fetch|load failed)\b/i.test(message);
+}
+function deriveSleeperLeagueWeekFallback(state,season,now=Date.now()){
+  const selected=Number(season),verifiedAt=Number(state?.generated_at),league=state?.league,leagueSeason=Number(league?.season),week=Number(league?.settings?.leg),transactionRound=Number(state?.transaction_round),age=Number(now)-verifiedAt;
+  if(!Number.isInteger(selected)||selected<2000)throw codedError('INVALID_SELECTED_SEASON','Ausgewählte Saison ist ungültig.');
+  if(state?.ok!==true||state?.source!=='Sleeper direct'||!Number.isFinite(verifiedAt)||verifiedAt>Number(now)||age>300000)throw codedError('SLEEPER_WEEK_FALLBACK_UNVERIFIED','Kein frischer verifizierter Sleeper-Wochenkontext verfügbar.');
+  if(leagueSeason!==selected)throw codedError('SLEEPER_WEEK_FALLBACK_SEASON_MISMATCH','Sleeper-Liga-Saison stimmt nicht mit der Auswahl überein.');
+  if(String(league?.status||'').toLowerCase()!=='in_season'||(league?.season_type!=null&&String(league.season_type).toLowerCase()!=='regular'))throw codedError('SLEEPER_WEEK_FALLBACK_NOT_REGULAR_SEASON','Sleeper-Liga meldet keine aktive Regular Season.');
+  if(!Number.isInteger(week)||week<1||week>18||!Number.isInteger(transactionRound)||transactionRound!==week)throw codedError('SLEEPER_WEEK_FALLBACK_AMBIGUOUS','Sleeper-Liga-Woche ist nicht eindeutig verifiziert.');
+  return week;
 }
 function weeklyProjectionMetadata(payload){
   const out=[];
