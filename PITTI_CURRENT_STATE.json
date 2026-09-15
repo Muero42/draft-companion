@@ -235,7 +235,7 @@
     },
     "android_accepted": "v11.8.0-rc4.195",
     "preview_candidate": "v11.8.0-rc4.203 historical preview evidence; Production separately verified",
-    "android_authority": "v11.8.0-rc4.202 latest physically observed production runtime; RC4.202_PHYSICAL_FAIL_YEARLESS_PROJECTION_CHRONOLOGY_REJECTED; NOT ACCEPTED",
+    "android_authority": "v11.8.0-rc4.203 latest physically observed Production runtime; RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH; FAILED; NOT ACCEPTED",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
@@ -394,7 +394,8 @@
   },
   "source_authority": "rc4.203 canonical current source/main and newest verified Production/device-observed runtime at main@fb458e076de6710a91f1162e504b5b79fb67167c, deployment ef65bcf6-92d1-4c34-9873-c362bec002c7; FAILED RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH; NOT ACCEPTED. rc4.202 -> rc4.201 -> rc4.200 -> rc4.199 -> rc4.198 are history; rc4.195 accepted rollback.",
   "weekly_evidence_v2_work": {
-    "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
+    "classification": "HISTORICAL/SUPERSEDED_RC4.193_WORK_PACKAGE_DO_NOT_USE_AS_CURRENT_RELEASE_AUTHORITY",
+    "status": "HISTORICAL_MERGED_RC4.193_WORK_PACKAGE",
     "branch": "pitti/weekly-evidence-v2-foundation",
     "base_main": "d3c3540003c8eb9675009820fc55abc2e7ad6fb7",
     "runtime_candidate": "v11.8.0-rc4.193",
@@ -418,7 +419,7 @@
     "merged_pr": 137,
     "merged_main": "adcf7d8d639979d8446d4a5ca651e73c112a33a6",
     "exact_head_checks": "PASS: release contract v2, candidate package, project guardrails, isolated cloud validation",
-    "next": "production deployment remains separately gated; after deployment verify public byte parity before any physical device acceptance"
+    "next": "HISTORICAL ONLY: rc4.193 deployment was the then-future gate; current release authority and next gate are defined by v253 top-level authority fields"
   },
   "auto_execution_state": {
     "schema": "pitti.auto-state.v1",

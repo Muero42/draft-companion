@@ -6,6 +6,7 @@ export const AUTHORITY_GATE='RC4203_SECRET_SAFE_PROVIDER_AB_DIAGNOSTIC_THEN_PROV
 const MAIN='fb458e076de6710a91f1162e504b5b79fb67167c', DEPLOY='ef65bcf6-92d1-4c34-9873-c362bec002c7';
 const VERDICT='RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH';
 const WATCHER='77221ceeb900458e95c32d78c1ad395a37422e5d';
+const PR175_HEAD='0bd7a77361b95cf212b9e59417f20dc820461dc3';
 const jsonFiles=['PITTI_CURRENT_STATE.json','PITTI_EXECUTION_LOCK.json','PITTI_COMMAND_CONTRACTS.json','PITTI_HANDOFF_SEAL.json'];
 export function validateContinuationEvidence(e) {
   const errors=[];
@@ -27,14 +28,23 @@ export function validateAuthority(d){
  const a=c.authority?.rc4203_candidate;
  check(a?.status==='MERGED/HISTORICAL_PRODUCTION_DEVICE_OBSERVED_FAILED'&&a.source_commit===MAIN&&a.deployment_id===DEPLOY&&a.deployment_proven===true&&a.device_observation_proven===true&&a.device_acceptance_proven===false,'CURRENT: rc4.203 authority contradiction');
  check(c.runtime?.deployed_production_version==='v11.8.0-rc4.203'&&c.runtime?.latestAndroidVersionObserved==='v11.8.0-rc4.203','CURRENT: stale rc4.202 newest alias');
- check(String(l.runtime?.latestDeployedCandidate).includes(MAIN)&&String(l.runtime?.latestDeployedCandidate).includes(DEPLOY)&&String(l.runtime?.latestDeployedCandidate).includes('NOT ACCEPTED'),'LOCK: deployment/device alias');
+ check(String(c.runtime?.android_authority).includes('rc4.203')&&String(c.runtime?.android_authority).includes(VERDICT)&&String(c.runtime?.android_authority).includes('NOT ACCEPTED'),'CURRENT: stale Android authority alias');
+ check(c.weekly_evidence_v2_work?.classification?.startsWith('HISTORICAL/SUPERSEDED_')&&c.weekly_evidence_v2_work?.status==='HISTORICAL_MERGED_RC4.193_WORK_PACKAGE'&&String(c.weekly_evidence_v2_work?.next).startsWith('HISTORICAL ONLY:'),'CURRENT: rc4.193 work package presented as current');
+ const lr=l.runtime, deployment=lr?.productionDeployment, targets=l.authority?.liveVerificationTargets||[];
+ check(String(lr?.latestDeployedCandidate).includes(MAIN)&&String(lr?.latestDeployedCandidate).includes(DEPLOY)&&String(lr?.latestDeployedCandidate).includes('NOT ACCEPTED'),'LOCK: deployment/device alias');
+ check(['latestAndroidObserved','latestAndroidVerified','latestAndroidFunctionalVerified','androidAuthority','android_authority','androidAcceptance'].every(key=>String(lr?.[key]).toLowerCase().includes('rc4.203')&&String(lr?.[key]).includes('NOT ACCEPTED')),'LOCK: stale latest Android alias');
+ check(deployment?.version==='v11.8.0-rc4.203'&&deployment?.sourceCommit===MAIN&&deployment?.deploymentId===DEPLOY&&deployment?.deviceAcceptanceProven===false&&deployment?.physicalFailure===VERDICT,'LOCK: stale Production deployment alias');
+ check(targets.some(x=>x.pr===175&&x.lane==='CURRENT_V253_HANDOFF_DRAFT_NON_PRODUCTION'&&x.head===PR175_HEAD)&&targets.some(x=>x.pr===174&&x.lane==='HISTORICAL_MERGED_RC4.203_PROVENANCE_ONLY_NEVER_CANDIDATE')&&!targets.some(x=>String(x.pr).includes('DYNAMIC')||String(x.lane).includes('CURRENT_RC4.203_CANDIDATE')),'LOCK: mutable PR target contradiction');
+ const boundary=k.currentBoundary;
+ check([boundary?.productionControl,boundary?.androidAuthority,boundary?.sourceAuthority,boundary?.runtimeVersion,boundary?.latestDeviceEvidence].every(x=>String(x).toLowerCase().includes('rc4.203'))&&String(boundary?.productionControl).includes(MAIN)&&String(boundary?.productionControl).includes(DEPLOY)&&String(boundary?.androidAuthority).includes(VERDICT),'COMMAND: stale current boundary alias');
  check([c.next_gate,l.exactNextAction,k.exactNextAction,s.exact_gate].every(x=>x===AUTHORITY_GATE),'provider A/B gate bypass');
  const activeDocs=docs.slice(0,6);
- for(const f of activeDocs){const current=d[f].split('## HISTORICAL/SUPERSEDED CHECKPOINT CONTENT')[0]; for(const t of [GENERATION,MAIN,DEPLOY,VERDICT,AUTHORITY_GATE,'PR #174','PR #163','pitti-watcher']) check(current.includes(t),`${f}: missing ${t}`); check(!/rc4\.203[^\n]{0,100}(?:not Production|non-Production|source.only)/i.test(current),`${f}: rc4.203 source-only resurrection`);}
+ for(const f of activeDocs){const current=d[f].split('## HISTORICAL/SUPERSEDED CHECKPOINT CONTENT')[0]; for(const t of [GENERATION,MAIN,DEPLOY,VERDICT,AUTHORITY_GATE,'PR #175','PR #174','PR #163','pitti-watcher']) check(current.includes(t),`${f}: missing ${t}`); check(!/rc4\.203[^\n]{0,100}(?:not Production|non-Production|source.only)/i.test(current),`${f}: rc4.203 source-only resurrection`);}
  const diagnosis=d[docs[9]]; for(const t of ['PROVEN','DISPROVEN','UNKNOWN','pre-mapping','ros=false','min/p50/p95/max','Waiver/FA','Trade','Definition of Done']) check(diagnosis.includes(t),`diagnosis: missing ${t}`);
  check(d[docs[8]].includes('**PASS.**')&&d[docs[8]].includes(WATCHER),'audit incomplete');
  check(s.status==='PASS'&&s.handoff_ready===true&&s.second_pass_pass===true,'SEAL not ready/pass');
  check(String(s.branch_locks?.mutable_live_verification_targets?.draft_companion_pr_163||'').includes('cannot override v253'),'SEAL: PR163 can override v253');
+ check(String(s.branch_locks?.mutable_live_verification_targets?.draft_companion_pr_175||'').includes(PR175_HEAD)&&String(s.branch_locks?.mutable_live_verification_targets?.draft_companion_pr_175||'').includes('handoff-only'),'SEAL: PR175 is not the current handoff-only Draft lane');
  check(JSON.stringify(l).includes(WATCHER)&&JSON.stringify(s).includes(WATCHER),'watcher isolation/head missing');
  return e;
 }
