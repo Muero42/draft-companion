@@ -1,3 +1,18 @@
+# rc4.203 Production/device-failure authority — v253
+Handoff generation: `20260915T0558Z-v253`
+
+## v253 CURRENT
+Canonical `main@fb458e076de6710a91f1162e504b5b79fb67167c` is rc4.203, merged via historical PR #174 and successfully Production-deployed as `ef65bcf6-92d1-4c34-9873-c362bec002c7`. Android/PWA observed `v11.8.0-rc4.203`, but Weekly Evidence failed `PROJECTION_LANE_UNAVAILABLE`; the physical verdict is `RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH`, FAILED and **NOT device-accepted**. Production success and device acceptance remain distinct. rc4.202 -> rc4.201 -> rc4.200 -> rc4.199 -> rc4.198 are historical; rc4.195 remains the accepted rollback reference.
+
+The proven first boundary is pre-mapping semantic scope: at least one numeric `stats.points_half` per QB/RB/WR/TE lane exceeded the weekly ceiling. Missing access/numerics, mapping, proxy mutation, and chronology are disproven as the first failure. Broad season scale, sparse outliers, and query-shape impact remain UNKNOWN.
+
+Exact gate: `RC4203_SECRET_SAFE_PROVIDER_AB_DIAGNOSTIC_THEN_PROVEN_REPAIR`. First fresh-verify handoff-only Draft PR #175 at public head `0bd7a77361b95cf212b9e59417f20dc820461dc3`, main, historical merged PR #174 (never a candidate), historical/discoverable PR #163 (cannot override v253), and separate `pitti-watcher` PR #6 at expected head `77221ceeb900458e95c32d78c1ad395a37422e5d`; then execute exactly one secret-safe same-credential provider A/B. These are mutable verification targets. Keep source, package, preview, Production, device-observed, and device-accepted distinct. No speculative rc4.204, automatic Sleeper transaction, app reinstall, cache/app-data clear, or device loop. AUTO works silently on independent safe work; AUTO BLOCK affects only the dependent lane; STATUS is report-only.
+
+Takeover reading order: `AGENTS.md`, CURRENT, LOCK, COMMAND, immutable rc4.203 evidence, root-cause diagnosis, v253 bridge, v253 audit, SEAL, then this file. Start/Sit is WEEKLY-primary; Waiver/FA and Trade are not globally blocked by WEEKLY when sufficient independent evidence exists; K/DST is separate; freshness is cadence-aware.
+
+## HISTORICAL/SUPERSEDED CHECKPOINT CONTENT
+The content below is retained only as history and cannot override v253.
+
 ## v245 CURRENT — rc4.198 post-merge source/package authority — v245
 Handoff generation: `20260912T1317Z-v245`
 
@@ -784,7 +799,7 @@ Root cause and repair boundary: the authenticated current-week FantasyPros respo
 Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. rc4.202 is not Production-deployed, physically observed, or device-accepted.
 
 
-## v252 CURRENT — rc4.203 bounded projection chronology repair (2026-09-14)
+## HISTORICAL/SUPERSEDED v252 CURRENT — rc4.203 bounded projection chronology repair (2026-09-14)
 
 Handoff generation: `20260914T1727Z-v252`
 
