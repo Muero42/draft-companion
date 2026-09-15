@@ -1,13 +1,13 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260914T1727Z-v252",
-  "updated_at": "2026-09-14T17:27:00Z",
+  "handoff_generation": "20260915T1206Z-v254",
+  "updated_at": "2026-09-15T12:06:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.203",
+    "source_candidate": "v11.8.0-rc4.204",
     "git_identity_rule": "Canonical main identity and candidate containment are freshly verified externally; no commit or mutable PR state is immutable checkpoint authority.",
     "reconciled_base_main": "DYNAMIC_EXTERNAL_EVIDENCE",
     "postmerge": {
@@ -176,14 +176,16 @@
       "evidence_scope": "Verified Cloudflare Production deployment identity, separate from the subsequent failed physical Android/PWA observation."
     },
     "rc4203_candidate": {
-      "checkpoint": "v252",
+      "checkpoint": "v253-history",
       "version": "v11.8.0-rc4.203",
-      "status": "SOURCE_CANDIDATE_NOT_PRODUCTION",
-      "deployment_proven": false,
-      "device_observation_proven": false,
+      "status": "MERGED/HISTORICAL_PRODUCTION_DEVICE_OBSERVED_FAILED",
+      "deployment_proven": true,
+      "device_observation_proven": true,
       "device_acceptance_proven": false,
-      "pr_state": "DYNAMIC_VERIFICATION_REQUIRED",
-      "canonical_containment": "DYNAMIC_VERIFICATION_REQUIRED"
+      "source_commit": "fb458e076de6710a91f1162e504b5b79fb67167c",
+      "deployment_id": "ef65bcf6-92d1-4c34-9873-c362bec002c7",
+      "physical_failure": "RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH",
+      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4203_PHYSICAL_PROJECTION_LANE_FAIL_2026-09-15.md"
     },
     "rc4202_production_deployment": {
       "checkpoint": "v252",
@@ -205,42 +207,103 @@
       "acceptance": "FAILED",
       "classification": "RC4.202_PHYSICAL_FAIL_YEARLESS_PROJECTION_CHRONOLOGY_REJECTED",
       "scope": "Physical Android/PWA failure after the separately verified rc4.202 Production deployment; deployment success does not imply device acceptance."
+    },
+    "rc4203_production_deployment": {
+      "checkpoint": "v253-history",
+      "version": "v11.8.0-rc4.203",
+      "source_commit": "fb458e076de6710a91f1162e504b5b79fb67167c",
+      "status": "VERIFIED_SUCCESS",
+      "branch": "main",
+      "deployment_id": "ef65bcf6-92d1-4c34-9873-c362bec002c7",
+      "device_acceptance_proven": false,
+      "physical_failure": "RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH",
+      "evidence_scope": "Historical verified Production deployment identity, separate from the failed physical Android/PWA observation."
+    },
+    "rc4203_physical_failure": {
+      "checkpoint": "v253-history",
+      "version": "v11.8.0-rc4.203",
+      "source_commit": "fb458e076de6710a91f1162e504b5b79fb67167c",
+      "observed_at": "2026-09-15",
+      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4203_PHYSICAL_PROJECTION_LANE_FAIL_2026-09-15.md",
+      "acceptance": "FAIL",
+      "classification": "RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH",
+      "scope": "Historical physical Android/PWA failure after the separately verified rc4.203 Production deployment; deployment success did not imply device acceptance."
+    },
+    "rc4204_source_merge": {
+      "checkpoint": "v254",
+      "version": "v11.8.0-rc4.204",
+      "pr": 176,
+      "status": "MERGED/SOURCE_ONLY_NOT_PRODUCTION",
+      "base_head": "fb458e076de6710a91f1162e504b5b79fb67167c",
+      "repair_head": "fe8b6a397dac2b60522cb959ffdb225b767fbcae",
+      "merge_commit": "8baf1799589550373d36357258d6d882e79e9842",
+      "canonical_branch": "main",
+      "deployment_proven": false,
+      "device_observation_proven": false,
+      "device_acceptance_proven": false,
+      "repair_semantics": "FantasyPros weekly requests with explicit week + position omit ros; ros=false must not be restored; no unsupported scoring parameter is introduced; stats.points_half remains Half-PPR authority.",
+      "validation": {
+        "focused": "7/7 PASS",
+        "strict": "225/225 PASS",
+        "package_reextract": "PASS",
+        "observed_archive_sha256": "d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3",
+        "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_OBSERVATION_NOT_CANONICAL_IDENTITY",
+        "exact_head_ci": [
+          "PITTI cloud validation PASS",
+          "PITTI Project Guardrails PASS",
+          "PITTI release contract v2 PASS",
+          "PITTI candidate package gate PASS",
+          "Cloudflare Pages preview PASS"
+        ]
+      }
+    },
+    "rc4204_candidate": {
+      "checkpoint": "v254",
+      "version": "v11.8.0-rc4.204",
+      "status": "SOURCE_MERGED_NOT_PRODUCTION",
+      "deployment_proven": false,
+      "device_observation_proven": false,
+      "device_acceptance_proven": false,
+      "pr_state": "MERGED/HISTORICAL_PROVENANCE",
+      "canonical_containment": "MERGE_COMMIT_RECORDED_REVERIFY_LIVE_BEFORE_PROMOTION"
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.195",
-    "season_candidate": "v11.8.0-rc4.203 is current source/candidate authority in this tree; NOT production-deployed or device-observed/accepted",
+    "season_candidate": "v11.8.0-rc4.204 is merged source authority; NOT Production-deployed, device-observed, or device-accepted",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.203",
+    "test_challenger": "v11.8.0-rc4.204",
     "ci": {
-      "status": "LOCAL_VALIDATION_RECORDED_EXTERNAL_EXACT_HEAD_DYNAMIC",
-      "validated_code_head": "DYNAMIC_EXTERNAL_EVIDENCE",
-      "candidate_package": "LOCAL_PASS_SOURCE_BYTE_PARITY",
-      "release_contract_v2": "LOCAL_STRICT_PASS",
-      "project_guardrails": "LOCAL_PASS",
-      "current_exact_main_head_ci": "DYNAMIC_EXTERNAL_VERIFICATION_REQUIRED_BEFORE_DEPENDENT_CONTINUATION_OR_PROMOTION"
+      "status": "PR176_EXACT_HEAD_CI_PASS_SOURCE_MERGED_NOT_DEPLOYED",
+      "validated_code_head": "fe8b6a397dac2b60522cb959ffdb225b767fbcae",
+      "candidate_package": "PASS_EXACT_REPAIR_HEAD",
+      "release_contract_v2": "PASS_EXACT_REPAIR_HEAD",
+      "project_guardrails": "PASS_EXACT_REPAIR_HEAD",
+      "cloud_validation": "PASS_EXACT_REPAIR_HEAD",
+      "cloudflare_preview": "PASS_EXACT_REPAIR_HEAD_NON_PRODUCTION",
+      "current_exact_main_head_ci": "MERGE_COMMIT_CONTAINS_EXACT_HEAD; REVERIFY_LIVE_BEFORE_PROMOTION"
     },
     "android_accepted": "v11.8.0-rc4.195",
-    "preview_candidate": "v11.8.0-rc4.203 preview/package evidence is non-production",
-    "android_authority": "v11.8.0-rc4.202 latest physically observed production runtime; RC4.202_PHYSICAL_FAIL_YEARLESS_PROJECTION_CHRONOLOGY_REJECTED; NOT ACCEPTED",
+    "preview_candidate": "v11.8.0-rc4.204 preview/package evidence is non-production",
+    "android_authority": "v11.8.0-rc4.203 latest physically observed Production runtime; RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH; FAILED; NOT ACCEPTED",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "4e2b9af1c8562c0273f39503c2c1c90a15acce00",
-    "installed_android": "v11.8.0-rc4.202",
-    "latest_android_observed": "v11.8.0-rc4.202",
+    "deployed_pages_head": "fb458e076de6710a91f1162e504b5b79fb67167c",
+    "installed_android": "v11.8.0-rc4.203",
+    "latest_android_observed": "v11.8.0-rc4.203",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "Historical rc4.183 rejection: FA/Add-Drop cards under Kader and IR/Reserve Charbonnet as ordinary drop target. Superseded by rc4.188 physical Waiver/FA canary PASS; retained only as historical regression evidence.",
     "latest_device_evidence": {
-      "version": "v11.8.0-rc4.202",
-      "observed_at": "2026-09-14",
-      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4202_PHYSICAL_PROJECTION_LANE_FAIL_2026-09-14.md",
-      "acceptance": "FAILED",
-      "classification": "RC4.202_PHYSICAL_FAIL_YEARLESS_PROJECTION_CHRONOLOGY_REJECTED"
+      "version": "v11.8.0-rc4.203",
+      "observed_at": "2026-09-15",
+      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4203_PHYSICAL_PROJECTION_LANE_FAIL_2026-09-15.md",
+      "acceptance": "FAIL",
+      "classification": "RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH"
     },
-    "latestAndroidVersionObserved": "v11.8.0-rc4.202",
-    "source_candidate_status": "SOURCE_CANDIDATE_NOT_PRODUCTION",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.203",
+    "source_candidate_status": "RELEASE_CANDIDATE_VALIDATING",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -301,24 +364,25 @@
         "candidate_package": "FAIL_STALE_BOOTSTRAP_RENDER_ASSERT_REPAIRED"
       }
     },
-    "package_reference_scope": "rc4.203 source-byte-exact 17-file package/re-extraction parity; archive SHA is run/environment-scoped and is not cross-environment identity",
+    "package_reference_scope": "rc4.204 source-byte-exact 17-file package/re-extraction validation; archive SHA is run/environment-scoped and is not cross-environment identity",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.203",
+      "version": "v11.8.0-rc4.204",
       "files": 17,
       "sha256": null,
       "status": "PACKAGED_ONLY_NOT_DEPLOYED",
       "source_scope": "SOURCE_IN_THIS_TREE; source-byte parity independently verified; canonical containment dynamic",
-      "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_OBSERVATION_NOT_CANONICAL_IDENTITY"
+      "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_OBSERVATION_NOT_CANONICAL_IDENTITY",
+      "validation_observed_archive_sha256": "d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3"
     },
     "deployment_parity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; ARBITRARY_BYTE_PARITY_NOT_PROVEN",
-    "deployed_production_version": "v11.8.0-rc4.202",
+    "deployed_production_version": "v11.8.0-rc4.203",
     "production_deployment": {
-      "version": "v11.8.0-rc4.202",
-      "source_commit": "4e2b9af1c8562c0273f39503c2c1c90a15acce00",
+      "version": "v11.8.0-rc4.203",
+      "source_commit": "fb458e076de6710a91f1162e504b5b79fb67167c",
       "status": "VERIFIED_SUCCESS",
       "branch": "main",
-      "deployment_id": "d1e38b4b-27ed-4f87-bfa7-0e99f282de5d",
-      "evidence_scope": "Verified Cloudflare Production deployment identity; subsequent physical failure means device acceptance remains false."
+      "deployment_id": "ef65bcf6-92d1-4c34-9873-c362bec002c7",
+      "evidence_scope": "Verified historical Production deployment identity; rc4.204 remains undeployed and the subsequent rc4.203 physical failure remains not accepted."
     }
   },
   "real_draft": {
@@ -359,7 +423,7 @@
   },
   "currentWork": {
     "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-    "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK"
+    "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -378,7 +442,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "v11.8.0-rc4.203 is source/candidate authority in this tree and is not Production or device accepted. Newest verified Production and physical failed observation is v11.8.0-rc4.202 at main@4e2b9af1c8562c0273f39503c2c1c90a15acce00, Cloudflare deployment d1e38b4b-27ed-4f87-bfa7-0e99f282de5d, verdict RC4.202_PHYSICAL_FAIL_YEARLESS_PROJECTION_CHRONOLOGY_REJECTED. rc4.201 is the immediate prior Production/history, then rc4.200, rc4.199 and rc4.198; rc4.195 is the prior fully accepted rollback.",
+  "source_authority": "v11.8.0-rc4.204 is merged source authority at main@8baf1799589550373d36357258d6d882e79e9842 from PR #176 head fe8b6a397dac2b60522cb959ffdb225b767fbcae; NOT Production or device accepted. Latest verified Production/device-observed runtime is v11.8.0-rc4.203 at main@fb458e076de6710a91f1162e504b5b79fb67167c, deployment ef65bcf6-92d1-4c34-9873-c362bec002c7; FAILED RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH; NOT ACCEPTED. rc4.202 -> rc4.201 -> rc4.200 -> rc4.199 -> rc4.198 remain history; rc4.195 is the accepted rollback.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -628,19 +692,19 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260914T1727Z-v252",
+    "generation": "20260915T1206Z-v254",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Dynamically verify local Git and canonical GitHub main, mutable PR targets, and exact-head CI before dependent continuation or promotion. v11.8.0-rc4.203 is source/candidate authority only and is NOT Production-deployed or device-observed/accepted. Newest verified Production is v11.8.0-rc4.202 at main@4e2b9af1c8562c0273f39503c2c1c90a15acce00, Cloudflare deployment d1e38b4b-27ed-4f87-bfa7-0e99f282de5d, status success; physical verdict FAILED RC4.202_PHYSICAL_FAIL_YEARLESS_PROJECTION_CHRONOLOGY_REJECTED. rc4.201 is immediate prior Production/history, then rc4.200; rc4.199 remains prior history at 2a62e52cb88187470542840053c72cd310b18e2b, deployment 48ab58ba-53d5-4b74-b7e6-16629256a9ee, verdict RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.198 is older history; rc4.195 remains the prior fully accepted rollback. never claim a newer Library generation persisted unless files.list proves it.",
+    "resume": "Freshly verify canonical main and exact source authority, merged PR #176 provenance, historical/discoverable handoff-only PR #175, and separate pitti-watcher PR #6. v11.8.0-rc4.204 is merged source at main@8baf1799589550373d36357258d6d882e79e9842 from authorized repair head fe8b6a397dac2b60522cb959ffdb225b767fbcae; it is NOT Production-deployed, device-observed, or device-accepted. Weekly FantasyPros requests with explicit week + position omit ros; ros=false must not be restored and no unsupported scoring parameter was introduced. stats.points_half remains Half-PPR authority and weekly fail-closed validation remains active. Latest verified Production/device observation remains v11.8.0-rc4.203 at main@fb458e076de6710a91f1162e504b5b79fb67167c, deployment ef65bcf6-92d1-4c34-9873-c362bec002c7, FAILED/NOT ACCEPTED with RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH. The pre-merge archive SHA d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3 is run/environment-scoped validation evidence only. Proceed only through a separately authorized Production deployment gate; source/package/preview never implies Production or device acceptance; never claim a newer Library generation persisted unless files.list proves it.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "RC4.203_YEARLESS_PROJECTION_CHRONOLOGY_REPAIR_AFTER_RC4.202_PHYSICAL_FAIL"
+    "refresh_scope": "RC4.204_WEEKLY_PROJECTION_ROS_OMISSION_AFTER_RC4.203_PHYSICAL_FAIL"
   },
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-  "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260914T1727Z-v252",
+  "gate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
+  "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
+  "handoffGeneration": "20260915T1206Z-v254",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",

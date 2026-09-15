@@ -1,18 +1,18 @@
-# rc4.204 local repair candidate — v252 superseded pending reseal
-Handoff generation: `20260914T1727Z-v252`
+# rc4.204 post-merge source authority — v254
+Handoff generation: `20260915T1206Z-v254`
 
-`v11.8.0-rc4.204` is an unsealed local repair candidate and is not Production-deployed, device-observed, or device-accepted. The prior v252 handoff is explicitly superseded pending a later authorized reseal; it is not rewritten or replaced here. Canonical `main`, PR state, containing commit, and exact-head CI remain mutable external evidence. Any 17-file package has `PACKAGED_ONLY_NOT_DEPLOYED` semantics and its archive identity is run/environment-scoped, never cross-environment authority.
+`v11.8.0-rc4.204` is merged source authority at canonical `main@8baf1799589550373d36357258d6d882e79e9842`, from merged PR #176 head `fe8b6a397dac2b60522cb959ffdb225b767fbcae`. It is not Production-deployed, device-observed, or device-accepted. Source, package, preview, Production, device-observed, and device-accepted remain distinct. The 17-file package remains `PACKAGED_ONLY_NOT_DEPLOYED`; observed archive SHA `d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3` is run/environment-scoped validation evidence, never canonical cross-environment identity.
 
-Newest verified Production and newest device-observed failure is `v11.8.0-rc4.202` at exact `main@4e2b9af1c8562c0273f39503c2c1c90a15acce00`, Cloudflare deployment `d1e38b4b-27ed-4f87-bfa7-0e99f282de5d`, status `success`. Its separate physical verdict is `RC4.202_PHYSICAL_FAIL_YEARLESS_PROJECTION_CHRONOLOGY_REJECTED`; it is **not device-accepted**. Immutable observation: `docs/PITTI_BRIDGE_HANDOFF_RC4202_PHYSICAL_PROJECTION_LANE_FAIL_2026-09-14.md`.
-
-Preserved history remains explicit: rc4.201 is the immediate prior Production/physical-failure history, followed by rc4.200, rc4.199 (`RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH`), and older rc4.198; rc4.195 remains the accepted rollback.
+Latest verified Production/device observation remains `v11.8.0-rc4.203` at `main@fb458e076de6710a91f1162e504b5b79fb67167c`, deployment `ef65bcf6-92d1-4c34-9873-c362bec002c7`. Its physical verdict is `RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH`: FAILED and NOT ACCEPTED. rc4.202, rc4.201, rc4.200, rc4.199 (`RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH`), and rc4.198 remain history; rc4.195 remains the accepted rollback.
 
 ## Mutable live takeover targets
-Fresh live READ-ONLY verification must cover merged PR #173 as historical rc4.202 provenance only, the new rc4.203 follow-up Draft PR as the current candidate lane, PR #172 as historical rc4.201 provenance only, PR #163 as a historical/discoverable v248 anchor only, and separate pitti-watcher PR #6 at expected head `77221ceeb900458e95c32d78c1ad395a37422e5d`. These are mutable verification targets. Keep source, package, preview, Production, device-observed, and device-accepted distinct.
+Fresh read-only verification must cover merged PR #176 as rc4.204 source provenance, PR #175 as historical/discoverable v253 handoff-only Draft evidence, PR #163 as historical/discoverable v248 only, and separate pitti-watcher PR #6 at expected head `77221ceeb900458e95c32d78c1ad395a37422e5d`. PR #175 must not become a runtime repair lane or override v254.
 
-Current local repair boundary: FantasyPros weekly projection requests use explicit season/week/position and omit the `ros` and unsupported `scoring` query parameters. Request provenance records that omitted-ROS query shape without treating it as provider proof. Malformed, contradictory, wrong season/week/position/ROS/provenance, ranking, season-scale, all-zero, out-of-safety, stale, or definitively unmapped lanes remain fail-closed. `stats.points_half` remains Half-PPR authority.
+Repair boundary: the provider A/B root cause was proven before implementation. FantasyPros weekly projection requests use explicit season/week/position and omit `ros`; `ros=false` must not be restored, and no unsupported `scoring` parameter was introduced. Request provenance cannot override provider evidence. Malformed, contradictory, wrong season/week/position/ROS, ranking, season-scale, all-zero, out-of-safety, stale, or mapping-unsafe lanes remain fail-closed. `stats.points_half` remains Half-PPR authority.
 
-Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`.
+Current gate: `ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE`. This is eligibility only; deployment and physical acceptance remain separate, unauthorized actions.
+
+## HISTORICAL/SUPERSEDED v252 CONTENT
 
 ## HISTORICAL/SUPERSEDED CHECKPOINT CONTENT
 # v11.8.0-rc4.201 integrated P0 candidate (PR #162; not deployed or device-accepted)
