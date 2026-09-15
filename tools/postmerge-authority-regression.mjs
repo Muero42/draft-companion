@@ -13,6 +13,8 @@ const cases=[
  ['LOCK Android alias resurrected',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.latestAndroidVerified='v11.8.0-rc4.202'],
  ['LOCK Production alias resurrected',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.productionDeployment.version='v11.8.0-rc4.202'],
  ['COMMAND boundary resurrected',d=>d['PITTI_COMMAND_CONTRACTS.json'].currentBoundary.productionControl='rc4.202 latest Production'],
+ ['COMMAND deployment object resurrected',d=>d['PITTI_COMMAND_CONTRACTS.json'].currentBoundary.productionDeployment.version='v11.8.0-rc4.202'],
+ ['COMMAND Season gate resurrected',d=>d['PITTI_COMMAND_CONTRACTS.json'].seasonCompanion.nextGate='VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK'],
  ['PR163 overrides',d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.mutable_live_verification_targets.draft_companion_pr_163='may override v253'],
  ['watcher conflation',d=>d['PITTI_EXECUTION_LOCK.json']=JSON.parse(JSON.stringify(d['PITTI_EXECUTION_LOCK.json']).replaceAll('77221ceeb900458e95c32d78c1ad395a37422e5d','draft-companion-lane'))],
  ['UNKNOWN asserted',d=>d['docs/RC4203_WEEKLY_PROJECTION_ROOT_CAUSE_DIAGNOSIS_2026-09-14.md']=d['docs/RC4203_WEEKLY_PROJECTION_ROOT_CAUSE_DIAGNOSIS_2026-09-14.md'].replaceAll('UNKNOWN','PROVEN')],
