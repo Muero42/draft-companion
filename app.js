@@ -1,6 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
-const APP_VERSION='v11.8.0-rc4.203';
+const APP_VERSION='v11.8.0-rc4.204';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -650,12 +650,12 @@ function summarizeWeeklyProjectionPayload(payload,{position,season,week,status})
   const sufficient=!reason&&count>10&&count>=WEEKLY_PROJECTION_MIN_COUNTS[position]&&identityCoverage>=.9&&coverage>=.9;
   const result=reason?'FAILED':sufficient?'SUFFICIENT':'PARTIAL';
   const sourceChronology=globalThis.PittiWeeklyEvidenceV2?.sourceTime?.(payload,{season,verifiedAt:Date.now(),allowSeasonDateInference:true})||{sourceTimePrecision:'UNAVAILABLE'};
-  return{position,status,season:Number(season),week:Number(week),ros:false,count,overTen:count>10,identityCount,pointsHalfCount,coveragePct:Math.round(coverage*1000)/10,metadata:weeklyProjectionMetadata(payload),sourceChronology,result,reason:reason||(!sufficient?'INSUFFICIENT_COVERAGE':'')};
+  return{position,status,season:Number(season),week:Number(week),queryShape:'EXPLICIT_WEEK_POSITION_ROS_OMITTED',count,overTen:count>10,identityCount,pointsHalfCount,coveragePct:Math.round(coverage*1000)/10,metadata:weeklyProjectionMetadata(payload),sourceChronology,result,reason:reason||(!sufficient?'INSUFFICIENT_COVERAGE':'')};
 }
 function weeklyProjectionFailure(position,season,week,error){
   const status=Number(error?.status),explicitCode=['TIMEOUT','MALFORMED_PAYLOAD','NETWORK','NO_CREDENTIAL'].includes(error?.code)?error.code:null;
   const code=explicitCode||(status?[401,403,404,429].includes(status)?`HTTP_${status}`:status>=500&&status<=599?'HTTP_5XX':`HTTP_${status}`:error?.code||'NETWORK');
-  return{position,status:Number.isFinite(status)?status:null,season:Number(season),week:week!=null&&Number.isFinite(Number(week))?Number(week):null,ros:false,count:0,overTen:false,identityCount:0,pointsHalfCount:0,coveragePct:0,metadata:[],result:'FAILED',reason:code};
+  return{position,status:Number.isFinite(status)?status:null,season:Number(season),week:week!=null&&Number.isFinite(Number(week))?Number(week):null,queryShape:'EXPLICIT_WEEK_POSITION_ROS_OMITTED',count:0,overTen:false,identityCount:0,pointsHalfCount:0,coveragePct:0,metadata:[],result:'FAILED',reason:code};
 }
 function weeklyProjectionConsumerDiagnostic(payloads,{season,week,sleeperPlayers,seasonState,verifiedAt=Date.now()}={}){
   const api=globalThis.PittiWeeklyEvidenceV2;if(!api||!sleeperPlayers)return{available:false,reason:!api?'WEEKLY_EVIDENCE_MODULE_MISSING':'SLEEPER_PLAYERS_UNAVAILABLE',positions:[],roster:{activeSkillCount:0,usableCount:0,unusable:[]}};
@@ -670,11 +670,11 @@ async function runAuthenticatedWeeklyProjectionDiagnostic(){
   try{week=await currentSleeperNflWeek(season)}catch(error){const rows=WEEKLY_PROJECTION_POSITIONS.map(position=>weeklyProjectionFailure(position,season,null,error));return{rows,classification:'INSUFFICIENT',reason:`CURRENT_WEEK:${rows[0].reason}`}}
   const rows=[],payloads={};
   for(const position of WEEKLY_PROJECTION_POSITIONS){
-    const path=`/nfl/${season}/projections?week=${week}&position=${position}&ros=false`;
+    const path=`/nfl/${season}/projections?week=${week}&position=${position}`;
     try{
       const response=await fpProxyRequest(path);
       if(!response.ok)rows.push(weeklyProjectionFailure(position,season,week,{status:response.status}));
-      else{rows.push(summarizeWeeklyProjectionPayload(response.data,{position,season,week,status:response.status}));payloads[position]={providerPayload:response.data,requestProvenance:{season,week,position,ros:false,scope:'WEEKLY'}};}
+      else{rows.push(summarizeWeeklyProjectionPayload(response.data,{position,season,week,status:response.status}));payloads[position]={providerPayload:response.data,requestProvenance:{season,week,position,scope:'WEEKLY',queryShape:'EXPLICIT_WEEK_POSITION_ROS_OMITTED'}};}
     }catch(error){rows.push(weeklyProjectionFailure(position,season,week,error))}
   }
   const failed=rows.filter(row=>row.result!=='SUFFICIENT');
@@ -683,7 +683,7 @@ async function runAuthenticatedWeeklyProjectionDiagnostic(){
 }
 function formatAuthenticatedWeeklyProjectionDiagnostic(report){
   const lines=['AUTHENTICATED WEEKLY PROJECTIONS'];
-  for(const row of report.rows){const http=row.status==null?'result':`HTTP ${row.status}`,meta=row.metadata.length?` · ${row.metadata.join(' · ')}`:'',chronology=row.sourceChronology?` · source-time=${row.sourceChronology.sourceTimePrecision}:${row.sourceChronology.sourcePublishedDate||row.sourceChronology.sourcePublishedAt||'none'}`:'';lines.push(`${row.position}: ${http} · season=${row.season} · week=${row.week??'UNAVAILABLE'} · ros=false · players=${row.count} · >10=${row.overTen?'yes':'no'} · FP identity=${row.identityCount} · numeric stats.points_half=${row.pointsHalfCount} · coverage=${row.coveragePct}%${meta}${chronology} · ${row.result}${row.reason?` (${row.reason})`:''}`)}
+  for(const row of report.rows){const http=row.status==null?'result':`HTTP ${row.status}`,meta=row.metadata.length?` · ${row.metadata.join(' · ')}`:'',chronology=row.sourceChronology?` · source-time=${row.sourceChronology.sourceTimePrecision}:${row.sourceChronology.sourcePublishedDate||row.sourceChronology.sourcePublishedAt||'none'}`:'';lines.push(`${row.position}: ${http} · season=${row.season} · week=${row.week??'UNAVAILABLE'} · query=week+position · ros=omitted · players=${row.count} · >10=${row.overTen?'yes':'no'} · FP identity=${row.identityCount} · numeric stats.points_half=${row.pointsHalfCount} · coverage=${row.coveragePct}%${meta}${chronology} · ${row.result}${row.reason?` (${row.reason})`:''}`)}
   lines.push(`AUTHENTICATED PROJECTION ACCESS = ${report.classification}${report.reason?` · ${report.reason}`:''}`);
   if(report.consumer?.available){for(const row of report.consumer.positions){const rejects=Object.entries(row.rejectReasonCounts||{}).slice(0,8).map(([reason,count])=>`${reason}=${count}`).join(',')||'none';lines.push(`${row.position} CONSUMER: source=${row.sourceRows} · numeric=${row.numericPointsHalf} · mapped=${row.mappedRows} · mapping=${Math.round(Number(row.mappingCoverage||0)*1000)/10}% · usable=${row.consumerUsableRecords} · lane=${row.finalLaneStatus}${row.finalLaneReason?` (${row.finalLaneReason})`:''} · rejects=${rejects}`)}const roster=report.consumer.roster;lines.push(`CURRENT ROSTER PROJECTIONS: ${roster.usableCount}/${roster.activeSkillCount} usable`);for(const player of roster.unusable)lines.push(`UNUSABLE ACTIVE: ${player.name} · ${player.position} · Sleeper ${player.id}`);lines.push(`END-TO-END CONSUMER = ${report.consumer.validation.ok?'USABLE':`UNAVAILABLE (${report.consumer.validation.reason})`}`)}
   else lines.push(`END-TO-END CONSUMER = UNAVAILABLE (${report.consumer?.reason||'UNKNOWN'})`);
@@ -4369,12 +4369,12 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     const season=Number(els.season.value.trim()),week=await currentSleeperNflWeek(season),payloads={},rankingPayloads={};
     const responses=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
       // FantasyPros documents `week` as the projections endpoint's weekly selector.
-      // Explicit ros=false avoids ambiguity; that operation does not accept scoring.
-      const path=`/nfl/${season}/projections?week=${week}&position=${position}&ros=false`,response=await fpProxyRequest(path,{preserveMalformed:true});
+      // The weekly request explicitly selects week/position and omits ROS and scoring.
+      const path=`/nfl/${season}/projections?week=${week}&position=${position}`,response=await fpProxyRequest(path,{preserveMalformed:true});
       if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw error;}
       // Request provenance is deliberately outside the provider payload. The
       // evidence validator must prove scope from response.data itself.
-      return[position,{providerPayload:response.data,providerResponse:{present:true,bodyState:response.bodyState},requestProvenance:{season,week,position,ros:false,scope:'WEEKLY'}}];
+      return[position,{providerPayload:response.data,providerResponse:{present:true,bodyState:response.bodyState},requestProvenance:{season,week,position,scope:'WEEKLY',queryShape:'EXPLICIT_WEEK_POSITION_ROS_OMITTED'}}];
     }));
     persistSeasonProjectionRetryAfter(responses,Date.now());
     for(const response of responses)if(response.status==='fulfilled'){const [position,payload]=response.value;payloads[position]=payload;}
