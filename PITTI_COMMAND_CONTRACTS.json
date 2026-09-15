@@ -182,11 +182,11 @@
     },
     "deploymentParity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; ARBITRARY_BYTE_PARITY_NOT_PROVEN",
     "productionDeployment": {
-      "version": "v11.8.0-rc4.202",
-      "sourceCommit": "4e2b9af1c8562c0273f39503c2c1c90a15acce00",
+      "version": "v11.8.0-rc4.203",
+      "sourceCommit": "fb458e076de6710a91f1162e504b5b79fb67167c",
       "status": "VERIFIED_SUCCESS",
       "branch": "main",
-      "deploymentId": "d1e38b4b-27ed-4f87-bfa7-0e99f282de5d"
+      "deploymentId": "ef65bcf6-92d1-4c34-9873-c362bec002c7"
     }
   },
   "currentGate": "RC4203_SECRET_SAFE_PROVIDER_AB_DIAGNOSTIC_THEN_PROVEN_REPAIR",
@@ -208,7 +208,7 @@
     "observedTransactionCanary": "HISTORICAL rc4.160 device: Harrison Mevis rostered, Tank Bigsby absent, Zach Charbonnet Reserve/IR",
     "rc4161Fix": "live FA ownership pool is independent from expert ranking hydration; zero ranked join must never imply HOLD",
     "regression": "tools/season-fa-ownership-regression.mjs is mandatory in candidate package gate",
-    "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
+    "nextGate": "RC4203_SECRET_SAFE_PROVIDER_AB_DIAGNOSTIC_THEN_PROVEN_REPAIR",
     "leagueState": "Persist all ten Sleeper rosters plus manager mapping, starter/reserve/taxi, waiver position, FAAB used/remaining and current transaction-round evidence.",
     "waiverCompetition": "Opponent bid estimates are distributions/bands driven primarily by current roster need and remaining FAAB, with bounded current-season transaction and historical-manager priors.",
     "qb2SeasonException": "No generic in-season QB2 ban. Evaluate upside/value vs active roster cost; when D/ST is still missing, include the second future active drop and same-bye penalty.",
