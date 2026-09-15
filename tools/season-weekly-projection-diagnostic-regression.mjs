@@ -45,7 +45,7 @@ function runtime({fetchImpl,jfImpl,season='2026',lastDraftContext=null}={}){
   const api=runtime({lastDraftContext:{players,season:seasonState},jfImpl:async()=>({season:'2026',season_type:'regular',week:7}),fetchImpl:async url=>{
     const path=decodeURIComponent(new URL(url,'https://local.invalid').searchParams.get('path')),position=new URL(path,'https://fp.invalid').searchParams.get('position');
     const offset=Object.entries(counts).slice(0,Object.keys(counts).indexOf(position)).reduce((sum,[,count])=>sum+count,0);
-    return response(200,{season:2026,week:7,ros:false,updated:'09/14',players:projectedRows(position,counts[position]).map((row,i)=>({...row,fpid:1000+offset+i}))});
+    return response(200,{season:2026,week:7,updated:'09/14',players:projectedRows(position,counts[position]).map((row,i)=>({...row,fpid:1000+offset+i}))});
   }});
   const report=await api.runAuthenticatedWeeklyProjectionDiagnostic();
   assert.equal(report.classification,'SUFFICIENT');
@@ -61,7 +61,7 @@ function runtime({fetchImpl,jfImpl,season='2026',lastDraftContext=null}={}){
   let capturedUrl='',capturedOptions=null,logCount=0;
   const api=runtime({fetchImpl:async(url,options)=>{capturedUrl=url;capturedOptions=options;return response(200,{ok:true})}});
   const oldLog=console.log;console.log=()=>{logCount++};
-  try{const result=await api.fpProxyRequest('/nfl/2026/projections?week=7&position=QB&ros=false');assert.equal(result.status,200)}finally{console.log=oldLog}
+  try{const result=await api.fpProxyRequest('/nfl/2026/projections?week=7&position=QB');assert.equal(result.status,200)}finally{console.log=oldLog}
   assert.equal(capturedOptions.headers['x-fp-key'],secretSentinel,'existing x-fp-key credential header must be used');
   assert(!capturedUrl.includes(secretSentinel),'credential must never enter URL/query string');
   assert.equal(logCount,0,'credential request must not log');
@@ -69,7 +69,7 @@ function runtime({fetchImpl,jfImpl,season='2026',lastDraftContext=null}={}){
 
 {
   const api=runtime({fetchImpl:async()=>response(200,null,'{not valid json')});
-  const result=await api.fpProxyRequest('/nfl/2026/projections?week=7&position=QB&ros=false',{preserveMalformed:true});
+  const result=await api.fpProxyRequest('/nfl/2026/projections?week=7&position=QB',{preserveMalformed:true});
   assert.equal(result.ok,true,'HTTP success remains a fulfilled current response');
   assert.equal(result.data,null,'invalid JSON must not fabricate provider fields');
   assert.equal(result.bodyState,'INVALID_JSON','collector must preserve malformed HTTP-success provenance');
@@ -86,9 +86,10 @@ function runtime({fetchImpl,jfImpl,season='2026',lastDraftContext=null}={}){
   assert.equal(report.classification,'SUFFICIENT');
   assert.deepEqual(paths.map(path=>new URL(path,'https://fp.invalid').searchParams.get('position')),['QB','RB','WR','TE']);
   assert(paths.every(path=>path.includes('week=7')&&!path.includes('week=1')),'week must come from current Sleeper NFL state, never a hardcoded Week 1');
-  assert(paths.every(path=>!new URL(path,'https://fp.invalid').searchParams.has('scoring')&&path.includes('ros=false')),'projection request must omit scoring while preserving ros=false');
+  assert(paths.every(path=>{const params=new URL(path,'https://fp.invalid').searchParams;return !params.has('scoring')&&!params.has('ros')}),'authenticated weekly projection requests must omit both scoring and ros');
   const text=api.formatAuthenticatedWeeklyProjectionDiagnostic(report).join('\n');
   assert.match(text,/>10=yes/);assert.match(text,/numeric stats\.points_half=/);assert.match(text,/updated=2026-09-10/);
+  assert.match(text,/query=week\+position · ros=omitted/);assert(!text.includes('ros=false'),'diagnostic output must describe the omitted-ROS query truthfully');
   assert(!text.includes(secretSentinel),'API key must never be rendered in diagnostic output');
 }
 
@@ -138,4 +139,11 @@ for(const [status,reason] of [[401,'HTTP_401'],[403,'HTTP_403'],[404,'HTTP_404']
 
 assert(app.includes("const info=await loadExperts()")&&app.includes("for(const name of ['Pat Fitzmaurice'")&&app.includes('loadSleeperAdpDirect()'),'existing API diagnostic behavior must remain in place');
 assert(!app.slice(start,end).includes('console.'),'weekly diagnostic production path must not log');
+const productionStart=app.indexOf('async function refreshSeasonRankings('),productionEnd=app.indexOf('\nfunction startSeasonRankingRefreshScheduler',productionStart),productionBlock=app.slice(productionStart,productionEnd);
+for(const [label,block] of [['authenticated diagnostic',app.slice(start,end)],['production refresh',productionBlock]]){
+  assert(block.includes('/projections?week=${week}&position=${position}'),`${label} must request explicit week and position`);
+  assert(!/\/projections\?[^`'"\n]*\bros=/.test(block),`${label} weekly projection request must omit ros`);
+  assert(block.includes("queryShape:'EXPLICIT_WEEK_POSITION_ROS_OMITTED'"),`${label} must record truthful omitted-ROS request provenance`);
+  assert(!/requestProvenance:\{[^}]*\bros\s*:/.test(block),`${label} must not record a ros value in request provenance`);
+}
 console.log('SEASON_WEEKLY_PROJECTION_DIAGNOSTIC_REGRESSION_PASS');
