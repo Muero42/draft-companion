@@ -784,7 +784,7 @@ Root cause and repair boundary: the authenticated current-week FantasyPros respo
 Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`. rc4.202 is not Production-deployed, physically observed, or device-accepted.
 
 
-## v252 CURRENT — rc4.203 bounded projection chronology repair (2026-09-14)
+## HISTORICAL/SUPERSEDED v252 CONTENT — rc4.203 bounded projection chronology repair (2026-09-14)
 
 Handoff generation: `20260914T1727Z-v252`
 
@@ -800,3 +800,13 @@ Fresh live READ-ONLY verification must cover merged PR #173 as historical rc4.20
 Root cause and repair boundary: a yearless current FantasyPros projection update date such as `09/14` reached `Date.parse`, became a 2001 timestamp, and made every otherwise mapped current-week record fail `INVALID_PROVIDER_CHRONOLOGY`. rc4.203 applies the existing bounded requested-season inference (within eight days of authenticated retrieval) to projections. Out-of-window dates and every malformed, contradictory, wrong season/week/position/ROS/provenance, season-scale, all-zero, or definitively unmapped lane still purge current and prior rows. `stats.points_half` remains Half-PPR authority and the projections request still has no unsupported `scoring` parameter.
 
 Current gate: `VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK`.
+## v254 CURRENT — rc4.204 post-merge authority
+Handoff generation: `20260915T1206Z-v254`
+
+Canonical source is `v11.8.0-rc4.204` at `main@8baf1799589550373d36357258d6d882e79e9842`, merged through PR #176 from repair head `fe8b6a397dac2b60522cb959ffdb225b767fbcae`. It is not Production-deployed, device-observed, or device-accepted. The provider A/B root cause was proven before implementation: weekly explicit week + position requests must omit `ros`; `ros=false` must not be restored. No unsupported scoring parameter was introduced, `stats.points_half` remains authoritative, and existing weekly fail-closed gates remain active.
+
+Pre-merge validation: focused 7/7 PASS, strict 225/225 PASS, package/re-extraction PASS, and all five exact-head PR #176 checks passed. Observed archive SHA `d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3` is run/environment-scoped and noncanonical.
+
+Latest verified Production/device observation remains `v11.8.0-rc4.203` at `main@fb458e076de6710a91f1162e504b5b79fb67167c`, deployment `ef65bcf6-92d1-4c34-9873-c362bec002c7`, with `RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH`: FAILED/NOT ACCEPTED. rc4.202 through rc4.198 remain history; rc4.195 remains accepted rollback. PR #175 is historical/discoverable v253 handoff-only evidence and cannot override v254 or become the runtime lane. pitti-watcher PR #6 remains separate at expected head `77221ceeb900458e95c32d78c1ad395a37422e5d`.
+
+Current gate: `ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE`. This records eligibility only, not deployment authorization or execution. Runtime/product behavior is unchanged by v254.

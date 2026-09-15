@@ -1,3 +1,19 @@
+# rc4.204 post-merge source authority — v254
+Handoff generation: `20260915T1206Z-v254`
+
+`v11.8.0-rc4.204` is merged source authority at canonical `main@8baf1799589550373d36357258d6d882e79e9842`, produced by merged PR #176 from authorized repair head `fe8b6a397dac2b60522cb959ffdb225b767fbcae`. It is **not Production-deployed, device-observed, or device-accepted**. Source, package, preview, Production, device-observed, and device-accepted remain distinct.
+
+The proven repair is bounded: FantasyPros weekly projections with explicit week + position omit the `ros` query parameter. `ros=false` must not be restored as weekly semantics; no unsupported scoring parameter was introduced. `stats.points_half` remains Half-PPR projection authority, and contradictory season/week/position/ROS, malformed, all-zero, out-of-safety, mapping-unsafe, or stale evidence remains fail-closed.
+
+Validation provenance: focused 7/7 PASS; strict 225/225 PASS; package/re-extraction PASS. The observed archive SHA-256 `d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3` is run/environment-scoped evidence, never canonical cross-environment identity. PR #176 exact-head CI passed PITTI cloud validation, Project Guardrails, release contract v2, candidate package gate, and Cloudflare Pages Preview; preview is not Production.
+
+Latest verified Production/device observation remains `v11.8.0-rc4.203` at `main@fb458e076de6710a91f1162e504b5b79fb67167c`, deployment `ef65bcf6-92d1-4c34-9873-c362bec002c7`. Its physical verdict is `RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH`: FAILED and NOT ACCEPTED. rc4.202 → rc4.201 → rc4.200 → rc4.199 (`RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH`) → rc4.198 remain history; rc4.195 remains the accepted rollback.
+
+Mutable verification targets: PR #176 is merged rc4.204 source provenance; PR #175 is historical/discoverable v253 handoff-only Draft evidence and must not become a runtime lane or override v254; PR #163 is historical/discoverable v248 only; pitti-watcher PR #6 remains separate at expected head `77221ceeb900458e95c32d78c1ad395a37422e5d`. Freshly verify mutable GitHub state before dependent action.
+
+Current gate: `ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE`. This is eligibility only, not authorization or execution. No device-side trial-and-error is authorized. Never send status/progress/acknowledgement messages during AUTO while executable work remains. Empty assistant response after tool work is forbidden.
+
+## HISTORICAL/SUPERSEDED v252 CONTENT
 # rc4.203 source/candidate authority — v252
 Handoff generation: `20260914T1727Z-v252`
 
