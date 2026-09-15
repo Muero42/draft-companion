@@ -161,16 +161,16 @@
     "latestPackageReextract": "rc4.203 source-byte-exact 17-file package; archive SHA run/environment-scoped",
     "latestPackageSha256": null,
     "packageReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
-    "deployedPagesVersion": "v11.8.0-rc4.202",
+    "deployedPagesVersion": "v11.8.0-rc4.203",
     "deployedPagesAppByteParityWithMain": false,
-    "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-    "exactNextAction": "Dynamically verify local Git and canonical GitHub main, mutable PR targets, and exact-head CI before dependent continuation or promotion. v11.8.0-rc4.203 is source/candidate authority only and is NOT Production-deployed or device-observed/accepted. Newest verified Production is v11.8.0-rc4.202 at main@4e2b9af1c8562c0273f39503c2c1c90a15acce00, Cloudflare deployment d1e38b4b-27ed-4f87-bfa7-0e99f282de5d, status success; physical verdict FAILED RC4.202_PHYSICAL_FAIL_YEARLESS_PROJECTION_CHRONOLOGY_REJECTED. rc4.201 is immediate prior Production/history, then rc4.200; rc4.199 remains prior history at 2a62e52cb88187470542840053c72cd310b18e2b, deployment 48ab58ba-53d5-4b74-b7e6-16629256a9ee, verdict RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.198 is older history; rc4.195 remains the prior fully accepted rollback. never claim a newer Library generation persisted unless files.list proves it.",
+    "currentResearchGate": "RC4203_SECRET_SAFE_PROVIDER_AB_DIAGNOSTIC_THEN_PROVEN_REPAIR",
+    "exactNextAction": "Fresh-verify canonical GitHub main, merged PR #174, historical PR #163, and separate pitti-watcher PR #6, then execute exactly RC4203_SECRET_SAFE_PROVIDER_AB_DIAGNOSTIC_THEN_PROVEN_REPAIR. rc4.203 is Production-deployed and device-observed FAILED/NOT ACCEPTED at main@fb458e076de6710a91f1162e504b5b79fb67167c, deployment ef65bcf6-92d1-4c34-9873-c362bec002c7. Preserve rc4.202 -> rc4.201 -> rc4.200 -> rc4.199 -> rc4.198 history and rc4.195 accepted rollback.",
     "runtimeVersion": "rc4.203 source candidate; rc4.202 Production deployed but physical-failed/not accepted",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "2026-09-14 RC4.202_PHYSICAL_FAIL_YEARLESS_PROJECTION_CHRONOLOGY_REJECTED",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
     "reconciledBaseMain": "DYNAMIC_EXTERNAL_EVIDENCE",
-    "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
+    "nextGate": "RC4203_SECRET_SAFE_PROVIDER_AB_DIAGNOSTIC_THEN_PROVEN_REPAIR",
     "packageReferenceScope": "rc4.203 17-file source-byte parity; no cross-environment archive SHA identity",
     "localCandidatePackage": {
       "version": "v11.8.0-rc4.203",
@@ -189,9 +189,9 @@
       "deploymentId": "d1e38b4b-27ed-4f87-bfa7-0e99f282de5d"
     }
   },
-  "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260914T1727Z-v252",
-  "handoff_generation": "20260914T1727Z-v252",
+  "currentGate": "RC4203_SECRET_SAFE_PROVIDER_AB_DIAGNOSTIC_THEN_PROVEN_REPAIR",
+  "handoffGeneration": "20260915T0558Z-v253",
+  "handoff_generation": "20260915T0558Z-v253",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -216,9 +216,9 @@
     "tradeValueEvidence": "Automatically ingest current Justin Boone/Yahoo weekly ROS charts server-side; QB=1QB, RB/WR/TE=HALF; require all positions, fresh provenance and unambiguous Sleeper mapping or fail closed.",
     "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
-  "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "exactNextAction": "Dynamically verify local Git and canonical GitHub main, mutable PR targets, and exact-head CI before dependent continuation or promotion. v11.8.0-rc4.203 is source/candidate authority only and is NOT Production-deployed or device-observed/accepted. Newest verified Production is v11.8.0-rc4.202 at main@4e2b9af1c8562c0273f39503c2c1c90a15acce00, Cloudflare deployment d1e38b4b-27ed-4f87-bfa7-0e99f282de5d, status success; physical verdict FAILED RC4.202_PHYSICAL_FAIL_YEARLESS_PROJECTION_CHRONOLOGY_REJECTED. rc4.201 is immediate prior Production/history, then rc4.200; rc4.199 remains prior history at 2a62e52cb88187470542840053c72cd310b18e2b, deployment 48ab58ba-53d5-4b74-b7e6-16629256a9ee, verdict RC4.199_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_MISMATCH; rc4.198 is older history; rc4.195 remains the prior fully accepted rollback. never claim a newer Library generation persisted unless files.list proves it.",
+  "currentResearchGate": "RC4203_SECRET_SAFE_PROVIDER_AB_DIAGNOSTIC_THEN_PROVEN_REPAIR",
+  "exactNextAction": "RC4203_SECRET_SAFE_PROVIDER_AB_DIAGNOSTIC_THEN_PROVEN_REPAIR",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
-  "updated_at": "2026-09-14T17:27:00Z"
+  "updated_at": "2026-09-15T05:58:00Z"
 }
