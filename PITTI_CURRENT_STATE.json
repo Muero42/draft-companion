@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260919T0000Z-v255",
-  "updated_at": "2026-09-19T00:00:00Z",
+  "handoff_generation": "20260919T1813Z-v256",
+  "updated_at": "2026-09-19T18:13:35Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -294,13 +294,62 @@
       "classification": "RC4.204_PHYSICAL_PARTIAL_WEEKLY_PROJECTION_PASS_SLEEPER_NFL_STATE_TIMEOUT",
       "fantasypros_result": "PHYSICAL_PASS_OMITTED_ROS_WEEKLY_PROJECTION",
       "remaining_failure": "Sleeper NFL State: Timeout nach 6s"
+    },
+    "reconciled_main": "2fca8f155d195df7521b5810b31bf71c58fc8358",
+    "rc4205_physical_acceptance": {
+      "checkpoint": "v256",
+      "version": "v11.8.0-rc4.205",
+      "authority_main": "2fca8f155d195df7521b5810b31bf71c58fc8358",
+      "runtime_source_commit": "cdf7510034ffea179accd1e855f351775cef492f",
+      "observed_at": "2026-09-19",
+      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4205_PHYSICAL_PASS_2026-09-19.md",
+      "acceptance": "PASS_BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR",
+      "classification": "RC4.205_PHYSICAL_PASS_BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR",
+      "device_observation_proven": true,
+      "bounded_device_acceptance_proven": true,
+      "full_independent_evidence_acceptance_proven": false,
+      "sleeper_live_state": {
+        "status": "PASS",
+        "age_display": "< 1 Min.",
+        "message": "Live-Kader direkt von Sleeper aktualisiert.",
+        "live_roster_rendered": true,
+        "observed_players": [
+          "Blake Corum",
+          "Jadarian Price",
+          "Rico Dowdle",
+          "Trevor Lawrence",
+          "George Pickens",
+          "Josh Downs"
+        ]
+      },
+      "weekly_evidence": {
+        "status": "PASS",
+        "age_display": "1 Min.",
+        "message": "FantasyPros Weekly Projections verifiziert",
+        "week": 2,
+        "records": 518,
+        "available_projection_lanes": [
+          "RB",
+          "WR",
+          "TE"
+        ],
+        "prior_sleeper_timeout_blocked_refresh": false
+      },
+      "independent_unavailable_lanes": [
+        "Expert-Ranks / Ranks",
+        "PITTI-Panel",
+        "QB projections",
+        "Team Total",
+        "opponent/weather"
+      ],
+      "watcher_observation": "Pitti Watcher UI reported PASS / 250 new Evidence-Events; observation only, no watcher authority mutation."
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.195",
     "season_candidate": "v11.8.0-rc4.205 canonical source and successfully Cloudflare-deployed; NOT device-observed or accepted",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
-    "android_acceptance_pending": true,
+    "android_acceptance_pending": false,
     "test_challenger": "v11.8.0-rc4.205",
     "ci": {
       "status": "PR176_EXACT_HEAD_CI_PASS_SOURCE_MERGED_NOT_DEPLOYED",
@@ -314,24 +363,31 @@
     },
     "android_accepted": "v11.8.0-rc4.195",
     "preview_candidate": "v11.8.0-rc4.205 deployed source; physical acceptance pending",
-    "android_authority": "v11.8.0-rc4.204 latest physically observed runtime; RC4.204_PHYSICAL_PARTIAL_WEEKLY_PROJECTION_PASS_SLEEPER_NFL_STATE_TIMEOUT; PARTIAL PASS / NOT ACCEPTED",
+    "android_authority": "v11.8.0-rc4.205 physically verified PASS for bounded Sleeper timeout repair; independent evidence lanes remain unavailable/fail-closed",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": true,
     "deployed_pages_head": "cdf7510034ffea179accd1e855f351775cef492f",
-    "installed_android": "v11.8.0-rc4.204",
-    "latest_android_observed": "v11.8.0-rc4.204",
+    "installed_android": "v11.8.0-rc4.205",
+    "latest_android_observed": "v11.8.0-rc4.205",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "Historical rc4.183 rejection: FA/Add-Drop cards under Kader and IR/Reserve Charbonnet as ordinary drop target. Superseded by rc4.188 physical Waiver/FA canary PASS; retained only as historical regression evidence.",
     "latest_device_evidence": {
-      "version": "v11.8.0-rc4.204",
-      "observed_at": "2026-09-15",
-      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4204_PHYSICAL_SLEEPER_TIMEOUT_2026-09-15.md",
-      "acceptance": "PARTIAL_PASS_NOT_ACCEPTED",
-      "classification": "RC4.204_PHYSICAL_PARTIAL_WEEKLY_PROJECTION_PASS_SLEEPER_NFL_STATE_TIMEOUT"
+      "version": "v11.8.0-rc4.205",
+      "observed_at": "2026-09-19",
+      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4205_PHYSICAL_PASS_2026-09-19.md",
+      "acceptance": "PASS_BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR",
+      "classification": "RC4.205_PHYSICAL_PASS_BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR",
+      "independent_unavailable_lanes": [
+        "Expert-Ranks / Ranks",
+        "PITTI-Panel",
+        "QB projections",
+        "Team Total",
+        "opponent/weather"
+      ]
     },
-    "latestAndroidVersionObserved": "v11.8.0-rc4.204",
-    "source_candidate_status": "DEPLOYED_PENDING_PHYSICAL_ACCEPTANCE",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.205",
+    "source_candidate_status": "PHYSICAL_PASS_BOUNDED_SLEEPER_TIMEOUT_REPAIR",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -410,8 +466,9 @@
       "status": "VERIFIED_SUCCESS_FROM_AUTHORIZED_HANDOFF",
       "branch": "main",
       "deployment_id": null,
-      "device_acceptance_proven": false,
-      "evidence_scope": "Successful Cloudflare deployment associated with RC4.205 merged main is proven; deployment identifier unavailable; no physical/device inference."
+      "device_acceptance_proven": true,
+      "evidence_scope": "Successful Cloudflare deployment associated with RC4.205 merged main is proven; deployment identifier unavailable; no physical/device inference.",
+      "device_acceptance_scope": "BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR_ONLY"
     }
   },
   "real_draft": {
@@ -452,7 +509,7 @@
   },
   "currentWork": {
     "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-    "nextGate": "RC4.205_PHYSICAL_DEVICE_VERIFICATION_PENDING"
+    "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -471,7 +528,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "v11.8.0-rc4.205 canonical main source at cdf7510034ffea179accd1e855f351775cef492f; successful Cloudflare deployment associated with the commit, deployment ID unavailable; device acceptance pending. v11.8.0-rc4.204 remains last physical/device-observed boundary at 95e8f8fb0f711dd978a0cf6f85120d5e381a37ea, deployment 056e6aaf-2d58-42d6-942b-02f2196cfcdc: FantasyPros weekly projection succeeded; Sleeper NFL State timeout after 6s; not accepted. Historical rc4.203, rc4.202, rc4.201, rc4.200, rc4.199, rc4.198, and rc4.195 remain history only.",
+  "source_authority": "v11.8.0-rc4.205 authority at main@2fca8f155d195df7521b5810b31bf71c58fc8358, preserving runtime-source main@cdf7510034ffea179accd1e855f351775cef492f; physical PASS for bounded Sleeper timeout repair. RC4.204 remains historical partial/not accepted evidence. Independent evidence lanes remain unavailable/fail-closed.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -721,19 +778,19 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260919T0000Z-v255",
+    "generation": "20260919T1813Z-v256",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Freshly verify canonical main and exact RC4.205 source/deployment authority. v11.8.0-rc4.205 is canonical source at main@cdf7510034ffea179accd1e855f351775cef492f from merged PR #178 head d21215c92568c058731bdb3f9a2621b70513f106. A successful Cloudflare deployment associated with that merged main commit is proven by the authorized handoff, but no deployment identifier is available in the repository/public GitHub deployment API; deployment does not prove device observation or acceptance. RC4.205 is NOT physically/device observed and remains PENDING PHYSICAL ACCEPTANCE. The last verified physical/device-observed boundary remains v11.8.0-rc4.204 at main@95e8f8fb0f711dd978a0cf6f85120d5e381a37ea, Cloudflare deployment 056e6aaf-2d58-42d6-942b-02f2196cfcdc: the FantasyPros omitted-ROS weekly projection repair was physically successful, while Sleeper NFL State timed out after 6s; NOT ACCEPTED. Weekly FantasyPros requests use explicit week + position, omit ros, never restore ros=false, omit unsupported scoring, and retain stats.points_half. Next gate: physical/device verification of the RC4.205 bounded Sleeper timeout recovery. PR #179 is diagnostic-only, closed/unmerged, and must never be repair authority. Never claim a newer Library generation persisted unless files.list proves it.",
+    "resume": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 authority is reconciled through main@2fca8f155d195df7521b5810b31bf71c58fc8358; the preserved runtime-source lineage is main@cdf7510034ffea179accd1e855f351775cef492f. Physical Android verification on 2026-09-19 PASSED the bounded Sleeper week-context timeout repair: Sleeper Live-State refreshed at < 1 Min., the live roster rendered, and Weekly Evidence refreshed at 1 Min. with W2 / 518 records and RB/WR/TE projection lanes AVAILABLE. The prior RC4.204 Sleeper NFL State timeout did not block refresh. This bounded PASS does not convert independent unavailable lanes into success: Expert-Ranks/Ranks, PITTI-Panel, QB projections, Team Total, and opponent/weather remain unavailable/fail-closed. FantasyPros requests remain explicit week + position, omit ros, never restore ros=false, omit unsupported scoring, and retain stats.points_half. Pitti Watcher PASS / 250 new Evidence-Events is observation only and does not alter or reseal pitti-watcher. Next gate is separately authorized diagnosis of independent unavailable evidence lanes; no runtime change, deployment, device action, or transaction is authorized by this checkpoint. Never claim a newer Library generation persisted unless files.list proves it.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
     "refresh_scope": "RC4.204_WEEKLY_PROJECTION_ROS_OMISSION_AFTER_RC4.203_PHYSICAL_FAIL"
   },
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-  "gate": "RC4.205_PHYSICAL_DEVICE_VERIFICATION_PENDING",
-  "nextGate": "RC4.205_PHYSICAL_DEVICE_VERIFICATION_PENDING",
-  "handoffGeneration": "20260919T0000Z-v255",
+  "gate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
+  "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
+  "handoffGeneration": "20260919T1813Z-v256",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
