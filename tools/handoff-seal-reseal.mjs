@@ -7,9 +7,12 @@ if(seal.status!=='PASS'||seal.handoff_ready!==true||seal.second_pass_pass!==true
 if(seal.integrity_algorithm!=='git_blob_sha1'||seal.integrity_normalization!=='UTF8_LF_TEXT')throw new Error('unsupported seal convention');
 
 const additions=[
-  'docs/PITTI_BRIDGE_HANDOFF_RC4203_PHYSICAL_PROJECTION_LANE_FAIL_2026-09-15.md',
-  'docs/PITTI_BRIDGE_HANDOFF_V254_2026-09-15.md',
-  'docs/PITTI_CODEX_HANDOFF_AUDIT_V254_2026-09-15.md',
+  'docs/PITTI_BRIDGE_HANDOFF_RC4205_PHYSICAL_PASS_2026-09-19.md',
+  'docs/PITTI_BRIDGE_HANDOFF_V256_2026-09-19.md',
+  'docs/PITTI_CODEX_HANDOFF_AUDIT_V256_2026-09-19.md',
+  'docs/PITTI_BRIDGE_HANDOFF_RC4204_PHYSICAL_SLEEPER_TIMEOUT_2026-09-15.md',
+  'docs/PITTI_BRIDGE_HANDOFF_V255_2026-09-19.md',
+  'docs/PITTI_CODEX_HANDOFF_AUDIT_V255_2026-09-19.md',
   'tools/handoff-seal-reseal.mjs',
   'tools/postmerge-authority-contract.mjs',
   'tools/postmerge-authority-regression.mjs'
