@@ -1,3 +1,5 @@
+> **CURRENT AUTHORITY — v255 (`20260919T0000Z-v255`)**: `v11.8.0-rc4.205` is canonical source at `main@cdf7510034ffea179accd1e855f351775cef492f` and has a successful Cloudflare deployment associated with that commit; deployment ID is unavailable and this is not physical acceptance. `v11.8.0-rc4.204` remains the last physical/device-observed boundary: FantasyPros weekly projection passed, `Sleeper NFL State: Timeout nach 6s` remained, and the build was not accepted. RC4.205 is pending physical acceptance. Next gate: `RC4.205_PHYSICAL_DEVICE_VERIFICATION_PENDING`. PR #179 is closed/unmerged and diagnostic-only. Earlier v254 statements below are historical.
+
 ## v245 CURRENT — rc4.198 post-merge source/package authority — v245
 Handoff generation: `20260912T1317Z-v245`
 

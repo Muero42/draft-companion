@@ -1,12 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-15T12:06:00Z",
+  "updatedAt": "2026-09-19T00:00:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Freshly verify canonical main and exact source authority, merged PR #176 provenance, historical/discoverable handoff-only PR #175, and separate pitti-watcher PR #6. v11.8.0-rc4.204 is merged source at main@8baf1799589550373d36357258d6d882e79e9842 from authorized repair head fe8b6a397dac2b60522cb959ffdb225b767fbcae; it is NOT Production-deployed, device-observed, or device-accepted. Weekly FantasyPros requests with explicit week + position omit ros; ros=false must not be restored and no unsupported scoring parameter was introduced. stats.points_half remains Half-PPR authority and weekly fail-closed validation remains active. Latest verified Production/device observation remains v11.8.0-rc4.203 at main@fb458e076de6710a91f1162e504b5b79fb67167c, deployment ef65bcf6-92d1-4c34-9873-c362bec002c7, FAILED/NOT ACCEPTED with RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH. The pre-merge archive SHA d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3 is run/environment-scoped validation evidence only. Proceed only through a separately authorized Production deployment gate; source/package/preview never implies Production or device acceptance; never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Freshly verify canonical main and exact RC4.205 source/deployment authority. v11.8.0-rc4.205 is canonical source at main@cdf7510034ffea179accd1e855f351775cef492f from merged PR #178 head d21215c92568c058731bdb3f9a2621b70513f106. A successful Cloudflare deployment associated with that merged main commit is proven by the authorized handoff, but no deployment identifier is available in the repository/public GitHub deployment API; deployment does not prove device observation or acceptance. RC4.205 is NOT physically/device observed and remains PENDING PHYSICAL ACCEPTANCE. The last verified physical/device-observed boundary remains v11.8.0-rc4.204 at main@95e8f8fb0f711dd978a0cf6f85120d5e381a37ea, Cloudflare deployment 056e6aaf-2d58-42d6-942b-02f2196cfcdc: the FantasyPros omitted-ROS weekly projection repair was physically successful, while Sleeper NFL State timed out after 6s; NOT ACCEPTED. Weekly FantasyPros requests use explicit week + position, omit ros, never restore ros=false, omit unsupported scoring, and retain stats.points_half. Next gate: physical/device verification of the RC4.205 bounded Sleeper timeout recovery. PR #179 is diagnostic-only, closed/unmerged, and must never be repair authority. never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
@@ -14,57 +14,49 @@
     "liveVerificationTargets": [
       {
         "repository": "Muero42/draft-companion",
-        "pr": 176,
-        "lane": "HISTORICAL_MERGED_RC4.204_SOURCE_PROVENANCE",
+        "pr": 178,
+        "lane": "HISTORICAL_MERGED_RC4.205_SOURCE_PROVENANCE",
         "verification": "MUTABLE_LIVE_STATE_REVERIFY; EXPECT MERGED FROM AUTHORIZED_HEAD",
+        "expectedHead": "d21215c92568c058731bdb3f9a2621b70513f106"
+      },
+      {
+        "repository": "Muero42/draft-companion",
+        "pr": 179,
+        "lane": "DIAGNOSTIC_ONLY_CLOSED_UNMERGED_NOT_REPAIR_AUTHORITY",
+        "verification": "MUST_REMAIN_CLOSED_UNMERGED",
+        "expectedHead": "085d94e28d86acb3d11467deb738e4621c1d874e"
+      },
+      {
+        "repository": "Muero42/draft-companion",
+        "pr": 176,
+        "lane": "HISTORICAL_MERGED_RC4.204_REPAIR_PROVENANCE",
         "expectedHead": "fe8b6a397dac2b60522cb959ffdb225b767fbcae"
-      },
-      {
-        "repository": "Muero42/draft-companion",
-        "pr": 175,
-        "lane": "HISTORICAL_DISCOVERABLE_V253_HANDOFF_DRAFT_ONLY",
-        "verification": "MUTABLE_LIVE_STATE_REVERIFY; MUST_NOT_OVERRIDE_V254_OR_BECOME_RUNTIME_LANE",
-        "head": "DYNAMIC_EXTERNAL_EVIDENCE"
-      },
-      {
-        "repository": "Muero42/draft-companion",
-        "pr": 163,
-        "lane": "HISTORICAL_DISCOVERABLE_V248_ANCHOR_ONLY",
-        "verification": "MUTABLE_LIVE_STATE_REVERIFY; MUST_NOT_OVERRIDE_V254",
-        "head": "DYNAMIC_EXTERNAL_EVIDENCE"
-      },
-      {
-        "repository": "Muero42/pitti-watcher",
-        "pr": 6,
-        "lane": "SEPARATE_WATCHER_LANE",
-        "verification": "MUTABLE_LIVE_STATE_REVERIFY_AGAINST_EXPECTED_HEAD",
-        "expectedHead": "77221ceeb900458e95c32d78c1ad395a37422e5d"
       }
     ]
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.204",
+    "appVersion": "v11.8.0-rc4.205",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.203 RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH; FAILED; NOT ACCEPTED",
+    "latestAndroidObserved": "v11.8.0-rc4.204 RC4.204_PHYSICAL_PARTIAL_WEEKLY_PROJECTION_PASS_SLEEPER_NFL_STATE_TIMEOUT; PARTIAL PASS; NOT ACCEPTED",
     "latestPreinstallVerified": "HISTORICAL/SUPERSEDED: rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "HISTORICAL/SUPERSEDED: v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.204 17-file source-byte-parity package (separate from deployment)",
     "preinstallSha256": null,
     "preinstallRuntimeFiles": 17,
     "latestSourceRegressionVerified": "HISTORICAL prior regression observation; current local checks must run on repaired bytes",
-    "latestDeployedCandidate": "v11.8.0-rc4.203 Production VERIFIED at main@fb458e076de6710a91f1162e504b5b79fb67167c, Cloudflare deployment ef65bcf6-92d1-4c34-9873-c362bec002c7; device observed FAILED; NOT ACCEPTED",
-    "latestAndroidVerified": "v11.8.0-rc4.203 RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH; FAILED; NOT ACCEPTED",
-    "androidAuthority": "v11.8.0-rc4.203 physically observed; FAILED weekly projection semantic-scope pre-mapping; NOT ACCEPTED",
-    "android_authority": "v11.8.0-rc4.203 physically observed; FAILED weekly projection semantic-scope pre-mapping; NOT ACCEPTED",
-    "deployedPagesAppByteParityWithMain": false,
+    "latestDeployedCandidate": "v11.8.0-rc4.205 Production deployment VERIFIED at main@cdf7510034ffea179accd1e855f351775cef492f; physical acceptance pending",
+    "latestAndroidVerified": "v11.8.0-rc4.204 RC4.204_PHYSICAL_PARTIAL_WEEKLY_PROJECTION_PASS_SLEEPER_NFL_STATE_TIMEOUT; PARTIAL PASS; NOT ACCEPTED",
+    "androidAuthority": "v11.8.0-rc4.204 physically observed; FantasyPros PASS; Sleeper timeout; NOT ACCEPTED",
+    "android_authority": "v11.8.0-rc4.204 physically observed; FantasyPros PASS; Sleeper timeout; NOT ACCEPTED",
+    "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "preinstallReferenceArtifactId": null,
     "preinstallHashSemantics": "rc4.204 source-byte parity; archive SHA is run/environment-scoped and cannot establish cross-environment identity.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.203",
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.203 physically verified failure; RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH; NOT ACCEPTED",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.204",
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.204 FantasyPros PASS; Sleeper NFL State timeout after 6s; NOT ACCEPTED",
     "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
     "rc499": {
@@ -96,31 +88,30 @@
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.195 PRIOR_FULL_ACCEPTANCE_ROLLBACK_REFERENCE",
     "unreleasedMainDelta": "DYNAMIC_VERIFICATION_REQUIRED against canonical main and relevant PRs; last-observed PR118 boundary is recorded in CURRENT.",
-    "deployedPagesVersion": "v11.8.0-rc4.203",
+    "deployedPagesVersion": "v11.8.0-rc4.205",
     "mainGhPagesParity": false,
     "androidVerified": false,
-    "androidAcceptance": "RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH; FAILED; NOT ACCEPTED",
+    "androidAcceptance": "RC4.205 PENDING PHYSICAL ACCEPTANCE",
     "devicePromotionPolicy": "Requires current user authorization, exact-source validation, verified deployment parity and a physical canary. Source or merge state never proves device acceptance.",
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.204",
+      "version": "v11.8.0-rc4.205",
       "files": 17,
       "sha256": null,
-      "status": "PACKAGED_ONLY_NOT_DEPLOYED",
+      "status": "SOURCE_AUTHORITY_RESEALED_PACKAGE_REVALIDATION_REQUIRED",
       "sourceScope": "SOURCE_IN_THIS_TREE_CANONICAL_CONTAINMENT_RECORDED_REVERIFY_LIVE",
       "archiveShaSemantics": "RUN_AND_ENVIRONMENT_SCOPED_NOT_CANONICAL",
       "validationObservedArchiveSha256": "d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3"
     },
     "acceptedRollback": "v11.8.0-rc4.195",
     "productionDeployment": {
-      "version": "v11.8.0-rc4.203",
-      "sourceCommit": "fb458e076de6710a91f1162e504b5b79fb67167c",
-      "status": "VERIFIED_SUCCESS",
+      "version": "v11.8.0-rc4.205",
+      "sourceCommit": "cdf7510034ffea179accd1e855f351775cef492f",
+      "status": "VERIFIED_SUCCESS_FROM_AUTHORIZED_HANDOFF",
       "branch": "main",
-      "deploymentId": "ef65bcf6-92d1-4c34-9873-c362bec002c7",
-      "deviceAcceptanceProven": false,
-      "physicalFailure": "RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH"
+      "deploymentId": null,
+      "deviceAcceptanceProven": false
     }
   },
   "auto": {
@@ -312,11 +303,11 @@
   },
   "currentWork": {
     "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-    "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE"
+    "nextGate": "RC4.205_PHYSICAL_DEVICE_VERIFICATION_PENDING"
   },
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-  "gate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
-  "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
+  "gate": "RC4.205_PHYSICAL_DEVICE_VERIFICATION_PENDING",
+  "nextGate": "RC4.205_PHYSICAL_DEVICE_VERIFICATION_PENDING",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -325,11 +316,11 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260915T1206Z-v254",
+    "generation": "20260919T0000Z-v255",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Freshly verify canonical main and exact source authority, merged PR #176 provenance, historical/discoverable handoff-only PR #175, and separate pitti-watcher PR #6. v11.8.0-rc4.204 is merged source at main@8baf1799589550373d36357258d6d882e79e9842 from authorized repair head fe8b6a397dac2b60522cb959ffdb225b767fbcae; it is NOT Production-deployed, device-observed, or device-accepted. Weekly FantasyPros requests with explicit week + position omit ros; ros=false must not be restored and no unsupported scoring parameter was introduced. stats.points_half remains Half-PPR authority and weekly fail-closed validation remains active. Latest verified Production/device observation remains v11.8.0-rc4.203 at main@fb458e076de6710a91f1162e504b5b79fb67167c, deployment ef65bcf6-92d1-4c34-9873-c362bec002c7, FAILED/NOT ACCEPTED with RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH. The pre-merge archive SHA d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3 is run/environment-scoped validation evidence only. Proceed only through a separately authorized Production deployment gate; source/package/preview never implies Production or device acceptance; never claim a newer Library generation persisted unless files.list proves it.",
+    "resume": "Freshly verify canonical main and exact RC4.205 source/deployment authority. v11.8.0-rc4.205 is canonical source at main@cdf7510034ffea179accd1e855f351775cef492f from merged PR #178 head d21215c92568c058731bdb3f9a2621b70513f106. A successful Cloudflare deployment associated with that merged main commit is proven by the authorized handoff, but no deployment identifier is available in the repository/public GitHub deployment API; deployment does not prove device observation or acceptance. RC4.205 is NOT physically/device observed and remains PENDING PHYSICAL ACCEPTANCE. The last verified physical/device-observed boundary remains v11.8.0-rc4.204 at main@95e8f8fb0f711dd978a0cf6f85120d5e381a37ea, Cloudflare deployment 056e6aaf-2d58-42d6-942b-02f2196cfcdc: the FantasyPros omitted-ROS weekly projection repair was physically successful, while Sleeper NFL State timed out after 6s; NOT ACCEPTED. Weekly FantasyPros requests use explicit week + position, omit ros, never restore ros=false, omit unsupported scoring, and retain stats.points_half. Next gate: physical/device verification of the RC4.205 bounded Sleeper timeout recovery. PR #179 is diagnostic-only, closed/unmerged, and must never be repair authority. Never claim a newer Library generation persisted unless files.list proves it.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -349,7 +340,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260915T1206Z-v254",
+  "handoff_generation": "20260919T0000Z-v255",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -384,9 +375,9 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260915T1206Z-v254",
+  "handoffGeneration": "20260919T0000Z-v255",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-09-15T12:06:00Z",
-  "exactNextAction": "Freshly verify canonical main and exact source authority, merged PR #176 provenance, historical/discoverable handoff-only PR #175, and separate pitti-watcher PR #6. v11.8.0-rc4.204 is merged source at main@8baf1799589550373d36357258d6d882e79e9842 from authorized repair head fe8b6a397dac2b60522cb959ffdb225b767fbcae; it is NOT Production-deployed, device-observed, or device-accepted. Weekly FantasyPros requests with explicit week + position omit ros; ros=false must not be restored and no unsupported scoring parameter was introduced. stats.points_half remains Half-PPR authority and weekly fail-closed validation remains active. Latest verified Production/device observation remains v11.8.0-rc4.203 at main@fb458e076de6710a91f1162e504b5b79fb67167c, deployment ef65bcf6-92d1-4c34-9873-c362bec002c7, FAILED/NOT ACCEPTED with RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH. The pre-merge archive SHA d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3 is run/environment-scoped validation evidence only. Proceed only through a separately authorized Production deployment gate; source/package/preview never implies Production or device acceptance; never claim a newer Library generation persisted unless files.list proves it.",
+  "updated_at": "2026-09-19T00:00:00Z",
+  "exactNextAction": "Freshly verify canonical main and exact RC4.205 source/deployment authority. v11.8.0-rc4.205 is canonical source at main@cdf7510034ffea179accd1e855f351775cef492f from merged PR #178 head d21215c92568c058731bdb3f9a2621b70513f106. A successful Cloudflare deployment associated with that merged main commit is proven by the authorized handoff, but no deployment identifier is available in the repository/public GitHub deployment API; deployment does not prove device observation or acceptance. RC4.205 is NOT physically/device observed and remains PENDING PHYSICAL ACCEPTANCE. The last verified physical/device-observed boundary remains v11.8.0-rc4.204 at main@95e8f8fb0f711dd978a0cf6f85120d5e381a37ea, Cloudflare deployment 056e6aaf-2d58-42d6-942b-02f2196cfcdc: the FantasyPros omitted-ROS weekly projection repair was physically successful, while Sleeper NFL State timed out after 6s; NOT ACCEPTED. Weekly FantasyPros requests use explicit week + position, omit ros, never restore ros=false, omit unsupported scoring, and retain stats.points_half. Next gate: physical/device verification of the RC4.205 bounded Sleeper timeout recovery. PR #179 is diagnostic-only, closed/unmerged, and must never be repair authority. Never claim a newer Library generation persisted unless files.list proves it.",
   "failClosedRecovery": "Freshly verify canonical main and exact source authority, merged PR #176 provenance, historical/discoverable handoff-only PR #175, and separate pitti-watcher PR #6. v11.8.0-rc4.204 is merged source at main@8baf1799589550373d36357258d6d882e79e9842 from authorized repair head fe8b6a397dac2b60522cb959ffdb225b767fbcae; it is NOT Production-deployed, device-observed, or device-accepted. Weekly FantasyPros requests with explicit week + position omit ros; ros=false must not be restored and no unsupported scoring parameter was introduced. stats.points_half remains Half-PPR authority and weekly fail-closed validation remains active. Latest verified Production/device observation remains v11.8.0-rc4.203 at main@fb458e076de6710a91f1162e504b5b79fb67167c, deployment ef65bcf6-92d1-4c34-9873-c362bec002c7, FAILED/NOT ACCEPTED with RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH. The pre-merge archive SHA d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3 is run/environment-scoped validation evidence only. Proceed only through a separately authorized Production deployment gate; source/package/preview never implies Production or device acceptance; never claim a newer Library generation persisted unless files.list proves it."
 }
