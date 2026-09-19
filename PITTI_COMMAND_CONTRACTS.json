@@ -155,22 +155,22 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.203 Production VERIFIED at exact main fb458e076de6710a91f1162e504b5b79fb67167c, deployment ef65bcf6-92d1-4c34-9873-c362bec002c7; physical acceptance FAILED separately",
-    "androidAuthority": "v11.8.0-rc4.203 latest physically observed Production runtime; RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH; FAILED; NOT ACCEPTED",
-    "sourceAuthority": "v11.8.0-rc4.204 merged source at main@8baf1799589550373d36357258d6d882e79e9842 from PR #176 head fe8b6a397dac2b60522cb959ffdb225b767fbcae; NOT Production deployed or device accepted",
+    "productionControl": "v11.8.0-rc4.205 Production authority reconciled through main@2fca8f155d195df7521b5810b31bf71c58fc8358; runtime source preserved at cdf7510034ffea179accd1e855f351775cef492f",
+    "androidAuthority": "v11.8.0-rc4.205 physically verified PASS for bounded Sleeper timeout repair; independent evidence lanes remain unavailable/fail-closed",
+    "sourceAuthority": "v11.8.0-rc4.205 authority reconciled through main@2fca8f155d195df7521b5810b31bf71c58fc8358; runtime-source lineage main@cdf7510034ffea179accd1e855f351775cef492f",
     "latestPackageReextract": "rc4.204 source-byte-exact 17-file package; archive SHA run/environment-scoped",
     "latestPackageSha256": null,
     "packageReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
-    "deployedPagesVersion": "v11.8.0-rc4.203",
-    "deployedPagesAppByteParityWithMain": false,
-    "currentResearchGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
-    "exactNextAction": "Freshly verify canonical main and exact source authority, merged PR #176 provenance, historical/discoverable handoff-only PR #175, and separate pitti-watcher PR #6. v11.8.0-rc4.204 is merged source at main@8baf1799589550373d36357258d6d882e79e9842 from authorized repair head fe8b6a397dac2b60522cb959ffdb225b767fbcae; it is NOT Production-deployed, device-observed, or device-accepted. Weekly FantasyPros requests with explicit week + position omit ros; ros=false must not be restored and no unsupported scoring parameter was introduced. stats.points_half remains Half-PPR authority and weekly fail-closed validation remains active. Latest verified Production/device observation remains v11.8.0-rc4.203 at main@fb458e076de6710a91f1162e504b5b79fb67167c, deployment ef65bcf6-92d1-4c34-9873-c362bec002c7, FAILED/NOT ACCEPTED with RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH. The pre-merge archive SHA d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3 is run/environment-scoped validation evidence only. Proceed only through a separately authorized Production deployment gate; source/package/preview never implies Production or device acceptance; never claim a newer Library generation persisted unless files.list proves it.",
-    "runtimeVersion": "rc4.204 merged source; rc4.203 Production deployed and physical-failed/not accepted",
+    "deployedPagesVersion": "v11.8.0-rc4.205",
+    "deployedPagesAppByteParityWithMain": true,
+    "currentResearchGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
+    "exactNextAction": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 authority is reconciled through main@2fca8f155d195df7521b5810b31bf71c58fc8358; the preserved runtime-source lineage is main@cdf7510034ffea179accd1e855f351775cef492f. Physical Android verification on 2026-09-19 PASSED the bounded Sleeper week-context timeout repair: Sleeper Live-State refreshed at < 1 Min., the live roster rendered, and Weekly Evidence refreshed at 1 Min. with W2 / 518 records and RB/WR/TE projection lanes AVAILABLE. The prior RC4.204 Sleeper NFL State timeout did not block refresh. This bounded PASS does not convert independent unavailable lanes into success: Expert-Ranks/Ranks, PITTI-Panel, QB projections, Team Total, and opponent/weather remain unavailable/fail-closed. FantasyPros requests remain explicit week + position, omit ros, never restore ros=false, omit unsupported scoring, and retain stats.points_half. Pitti Watcher PASS / 250 new Evidence-Events is observation only and does not alter or reseal pitti-watcher. Next gate is separately authorized diagnosis of independent unavailable evidence lanes; no runtime change, deployment, device action, or transaction is authorized by this checkpoint. Never claim a newer Library generation persisted unless files.list proves it.",
+    "runtimeVersion": "rc4.205 source/deployed/physically verified for bounded Sleeper timeout repair",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
-    "latestDeviceEvidence": "2026-09-15 RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH; FAILED; NOT ACCEPTED",
+    "latestDeviceEvidence": "2026-09-19 RC4.205_PHYSICAL_PASS_BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR; independent lanes unavailable",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
     "reconciledBaseMain": "DYNAMIC_EXTERNAL_EVIDENCE",
-    "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
+    "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
     "packageReferenceScope": "rc4.204 17-file source-byte parity; no cross-environment archive SHA identity",
     "localCandidatePackage": {
       "version": "v11.8.0-rc4.204",
@@ -183,16 +183,19 @@
     },
     "deploymentParity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; ARBITRARY_BYTE_PARITY_NOT_PROVEN",
     "productionDeployment": {
-      "version": "v11.8.0-rc4.203",
-      "sourceCommit": "fb458e076de6710a91f1162e504b5b79fb67167c",
-      "status": "VERIFIED_SUCCESS",
+      "version": "v11.8.0-rc4.205",
+      "sourceCommit": "2fca8f155d195df7521b5810b31bf71c58fc8358",
+      "status": "VERIFIED_SUCCESS_FROM_AUTHORIZED_HANDOFF",
       "branch": "main",
-      "deploymentId": "ef65bcf6-92d1-4c34-9873-c362bec002c7"
+      "deploymentId": null,
+      "runtimeSourceCommit": "cdf7510034ffea179accd1e855f351775cef492f",
+      "deviceAcceptanceProven": true,
+      "deviceAcceptanceScope": "BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR_ONLY"
     }
   },
-  "currentGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
-  "handoffGeneration": "20260915T1206Z-v254",
-  "handoff_generation": "20260915T1206Z-v254",
+  "currentGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
+  "handoffGeneration": "20260919T1813Z-v256",
+  "handoff_generation": "20260919T1813Z-v256",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -209,7 +212,7 @@
     "observedTransactionCanary": "HISTORICAL rc4.160 device: Harrison Mevis rostered, Tank Bigsby absent, Zach Charbonnet Reserve/IR",
     "rc4161Fix": "live FA ownership pool is independent from expert ranking hydration; zero ranked join must never imply HOLD",
     "regression": "tools/season-fa-ownership-regression.mjs is mandatory in candidate package gate",
-    "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
+    "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
     "leagueState": "Persist all ten Sleeper rosters plus manager mapping, starter/reserve/taxi, waiver position, FAAB used/remaining and current transaction-round evidence.",
     "waiverCompetition": "Opponent bid estimates are distributions/bands driven primarily by current roster need and remaining FAAB, with bounded current-season transaction and historical-manager priors.",
     "qb2SeasonException": "No generic in-season QB2 ban. Evaluate upside/value vs active roster cost; when D/ST is still missing, include the second future active drop and same-bye penalty.",
@@ -217,9 +220,9 @@
     "tradeValueEvidence": "Automatically ingest current Justin Boone/Yahoo weekly ROS charts server-side; QB=1QB, RB/WR/TE=HALF; require all positions, fresh provenance and unambiguous Sleeper mapping or fail closed.",
     "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
-  "currentResearchGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
-  "exactNextAction": "Freshly verify canonical main and exact source authority, merged PR #176 provenance, historical/discoverable handoff-only PR #175, and separate pitti-watcher PR #6. v11.8.0-rc4.204 is merged source at main@8baf1799589550373d36357258d6d882e79e9842 from authorized repair head fe8b6a397dac2b60522cb959ffdb225b767fbcae; it is NOT Production-deployed, device-observed, or device-accepted. Weekly FantasyPros requests with explicit week + position omit ros; ros=false must not be restored and no unsupported scoring parameter was introduced. stats.points_half remains Half-PPR authority and weekly fail-closed validation remains active. Latest verified Production/device observation remains v11.8.0-rc4.203 at main@fb458e076de6710a91f1162e504b5b79fb67167c, deployment ef65bcf6-92d1-4c34-9873-c362bec002c7, FAILED/NOT ACCEPTED with RC4.203_PHYSICAL_FAIL_WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH. The pre-merge archive SHA d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3 is run/environment-scoped validation evidence only. Proceed only through a separately authorized Production deployment gate; source/package/preview never implies Production or device acceptance; never claim a newer Library generation persisted unless files.list proves it.",
+  "currentResearchGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
+  "exactNextAction": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 authority is reconciled through main@2fca8f155d195df7521b5810b31bf71c58fc8358; the preserved runtime-source lineage is main@cdf7510034ffea179accd1e855f351775cef492f. Physical Android verification on 2026-09-19 PASSED the bounded Sleeper week-context timeout repair: Sleeper Live-State refreshed at < 1 Min., the live roster rendered, and Weekly Evidence refreshed at 1 Min. with W2 / 518 records and RB/WR/TE projection lanes AVAILABLE. The prior RC4.204 Sleeper NFL State timeout did not block refresh. This bounded PASS does not convert independent unavailable lanes into success: Expert-Ranks/Ranks, PITTI-Panel, QB projections, Team Total, and opponent/weather remain unavailable/fail-closed. FantasyPros requests remain explicit week + position, omit ros, never restore ros=false, omit unsupported scoring, and retain stats.points_half. Pitti Watcher PASS / 250 new Evidence-Events is observation only and does not alter or reseal pitti-watcher. Next gate is separately authorized diagnosis of independent unavailable evidence lanes; no runtime change, deployment, device action, or transaction is authorized by this checkpoint. Never claim a newer Library generation persisted unless files.list proves it.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
-  "updated_at": "2026-09-15T12:06:00Z"
+  "updated_at": "2026-09-19T18:13:35Z"
 }

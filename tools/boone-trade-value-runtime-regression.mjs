@@ -2,9 +2,9 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import {POSITIONS,MIN_COUNTS,WEEK1_URLS,parseBooneChartHtml,buildBooneTradeValueSnapshot,validateBooneTradeValueSnapshot,mapBoonePlayer,sleeperIndexes} from '../boone-trade-values-v1.mjs';
 
-const now=Date.parse('2026-09-11T08:00:00Z'),season=2026,week=1;
+const now=Date.parse('2026-09-19T08:00:00Z'),season=2026,week=1;
 const labels={QB:'quarterback',RB:'running back',WR:'wide receiver',TE:'tight end'};
-const html=(position,{count=MIN_COUNTS[position],date='2026-09-09T19:47:44Z',header=position==='QB'?['Rk','Player','1QB','2QB']:['Rk','Player','HALF','PPR'],duplicate=false}={})=>{
+const html=(position,{count=MIN_COUNTS[position],date='2026-09-18T19:47:44Z',header=position==='QB'?['Rk','Player','1QB','2QB']:['Rk','Player','HALF','PPR'],duplicate=false}={})=>{
   const rows=Array.from({length:count},(_,i)=>`<tr><td>${i+1}</td><td>${position} Player ${duplicate&&i===count-1?0:i}</td><td>${100-i}</td><td>${150-i}</td></tr>`).join('');
   return `<html><head><script type="application/ld+json">{"author":{"name":"Justin Boone"},"datePublished":"${date}","dateModified":"${date}"}</script></head><body><h1>Fantasy Football Week 1: Justin Boone's ${labels[position]} Trade Value Charts</h1><p>Join a Yahoo Fantasy Football league for the 2026 NFL season. Rest-of-season ${position} trade values.</p><table><tr>${header.map(x=>`<th>${x}</th>`).join('')}</tr>${rows}</table></body></html>`;
 };
@@ -18,7 +18,7 @@ const snapshot=buildBooneTradeValueSnapshot({charts,sleeperPlayers:players,seaso
 assert.equal(snapshot.status,'AVAILABLE');assert.equal(snapshot.records.length,Object.values(MIN_COUNTS).reduce((a,b)=>a+b,0));
 assert.equal(validateBooneTradeValueSnapshot(snapshot,{season,week,scoring:'HALF_PPR'},now).ok,true);
 assert(snapshot.records.every(row=>row.metric==='trade_value'&&row.sourceProvider==='Yahoo Sports'&&row.sourceAuthor==='Justin Boone'&&row.sourceEdition===snapshot.sourceEdition&&row.verifiedAt===now&&row.expiresAt>now));
-assert(snapshot.records.every(row=>row.sourcePublishedAt==='2026-09-09T19:47:44.000Z'&&row.sourceUpdatedAt==='2026-09-09T19:47:44.000Z'));
+assert(snapshot.records.every(row=>row.sourcePublishedAt==='2026-09-18T19:47:44.000Z'&&row.sourceUpdatedAt==='2026-09-18T19:47:44.000Z'));
 
 assert.equal(parseBooneChartHtml(html('QB',{date:'2026-08-01T00:00:00Z'}),{position:'QB',season,week,sourceUrl:WEEK1_URLS.QB,now}).reason,'STALE_OR_INVALID_SOURCE_DATE');
 assert.equal(parseBooneChartHtml('<html>Justin Boone Week 1 2026 quarterback trade value</html>',{position:'QB',season,week,sourceUrl:WEEK1_URLS.QB,now}).reason,'STALE_OR_INVALID_SOURCE_DATE');
