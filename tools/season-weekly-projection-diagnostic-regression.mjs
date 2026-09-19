@@ -2,14 +2,15 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import evidence from '../weekly-evidence-v2.js';
+import gameContext from '../game-context-v1.js';
 
 const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
 const start=app.indexOf('const FP_DIAGNOSTIC_TIMEOUT_MS=');
 const end=app.indexOf('function slugifyExpert',start);
 assert(start>=0&&end>start,'weekly projection diagnostic production block missing');
-const source=app.slice(start,end)+`;globalThis.__weeklyDiagnostic={fpProxyRequest,proxyCall,deriveSleeperNflWeek,summarizeWeeklyProjectionPayload,weeklyProjectionFailure,runAuthenticatedWeeklyProjectionDiagnostic,formatAuthenticatedWeeklyProjectionDiagnostic};`;
+const source=app.slice(start,end)+`;globalThis.__weeklyDiagnostic={fpProxyRequest,proxyCall,deriveSleeperNflWeek,summarizeWeeklyProjectionPayload,weeklyProjectionFailure,runAuthenticatedWeeklyProjectionDiagnostic,formatAuthenticatedWeeklyProjectionDiagnostic,runCurrentWeekRankDiagnostic,runCanonicalGameContextDiagnostic,runPhysicalEvidenceLaneDiagnostic,formatPhysicalEvidenceLaneDiagnostic};`;
 const secretSentinel='SENSITIVE_SENTINEL_DO_NOT_RENDER';
-const response=(status,data,raw=null,headers={})=>({ok:status>=200&&status<300,status,headers:{get:name=>headers[String(name).toLowerCase()]??null},async text(){return raw??JSON.stringify(data)}});
+const response=(status,data,raw=null,headers={})=>({ok:status>=200&&status<300,status,headers:{get:name=>headers[String(name).toLowerCase()]??null},async text(){return raw??JSON.stringify(data)},async json(){if(raw!=null)return JSON.parse(raw);return data}});
 const projectedRows=(position,count,{missingPoints=0,missingIds=0}={})=>Array.from({length:count},(_,i)=>({
   ...(i<missingIds?{}:{fpid:1000+i}),name:`${position} Player ${i+1}`,position_id:position,
   stats:i<missingPoints?{points:99}:{points:99,points_half:20-i/10}
@@ -19,7 +20,7 @@ function runtime({fetchImpl,jfImpl,season='2026',lastDraftContext=null}={}){
     AbortController,setTimeout,clearTimeout,Date,Math,Number,String,Array,Object,RegExp,Error,
     fetch:fetchImpl||(()=>{throw new Error('unexpected fetch')}),
     jf:jfImpl||(()=>Promise.resolve({season,season_type:'regular',week:7})),
-    S:'https://api.sleeper.app/v1',PittiWeeklyEvidenceV2:evidence,lastDraftContext,els:{apiKey:{value:secretSentinel},season:{value:String(season)}}
+    S:'https://api.sleeper.app/v1',APP_VERSION:'v11.8.0-rc4.205',PittiWeeklyEvidenceV2:evidence,PittiGameContextV1:gameContext,lastDraftContext,els:{apiKey:{value:secretSentinel},season:{value:String(season)}}
   };
   vm.runInNewContext(source,context);
   return context.__weeklyDiagnostic;
@@ -137,7 +138,30 @@ for(const [status,reason] of [[401,'HTTP_401'],[403,'HTTP_403'],[404,'HTTP_404']
   assert.throws(()=>api.deriveSleeperNflWeek({season:'2026',season_type:'pre',week:0},2026),error=>error.code==='SLEEPER_NOT_REGULAR_SEASON');
 }
 
-assert(app.includes("const info=await loadExperts()")&&app.includes("for(const name of ['Pat Fitzmaurice'")&&app.includes('loadSleeperAdpDirect()'),'existing API diagnostic behavior must remain in place');
+{
+  const counts={QB:24,RB:60,WR:70,TE:24},players={};let next=1000;
+  for(const [position,count] of Object.entries(counts))for(let i=0;i<count;i++,next++)players[`sleeper-${next}`]={full_name:`${position} Player ${i+1}`,position,team:'AAA',fantasy_data_id:next};
+  const seasonState={my_roster:{players:['sleeper-1000','sleeper-1024'],reserve:[],taxi:[]}},events=[['1','AAA','BBB',true],['2','CCC','DDD',null],['3','EEE','FFF',false]].map(([id,home,away,indoor])=>({id,date:'2026-09-27T17:00:00Z',competitions:[{venue:{fullName:`${home} Field`,...(indoor===null?{}:{indoor})},competitors:[{homeAway:'home',team:{abbreviation:home}},{homeAway:'away',team:{abbreviation:away}}]}]}));
+  const paths=[],api=runtime({lastDraftContext:{players,season:seasonState},jfImpl:async()=>({season:'2026',season_type:'regular',week:2}),fetchImpl:async url=>{
+    const parsed=new URL(url,'https://local.invalid');
+    if(parsed.pathname==='/api/nfl-week-context')return response(200,{season:2026,week:2,sourceUrl:'https://site.api.espn.com/sanitized',events});
+    const path=decodeURIComponent(parsed.searchParams.get('path'));paths.push(path);const upstream=new URL(path,'https://fp.invalid'),position=upstream.searchParams.get('position');
+    if(upstream.pathname.endsWith('/projections')&&position==='QB')return response(429,{error:'redacted'},null,{'retry-after':'120'});
+    const offset=Object.entries(counts).slice(0,Object.keys(counts).indexOf(position)).reduce((sum,[,count])=>sum+count,0),rows=projectedRows(position,counts[position]).map((row,i)=>({...row,fpid:1000+offset+i,...(upstream.pathname.endsWith('/consensus-rankings')?{rank_ecr:i+1}:{})}));
+    return response(200,{season:2026,week:2,updated:'2026-09-19',players:rows});
+  }});
+  const report=await api.runPhysicalEvidenceLaneDiagnostic(),text=api.formatPhysicalEvidenceLaneDiagnostic(report);
+  assert.equal(report.weeklyProjections.positions.QB.httpStatus,429);assert.equal(report.weeklyProjections.positions.QB.retryAfterSeconds,120);
+  assert.equal(report.weeklyProjections.positions.RB.scoringParameterPresent,false);assert.equal(report.weeklyProjections.positions.RB.rosPresent,false);
+  assert.equal(report.expertRanks.status,'AVAILABLE');assert.equal(report.expertRanks.positions.QB.primaryRejectionReason,null);
+  assert.equal(report.canonicalGameContext.status,'AVAILABLE');assert.equal(report.canonicalGameContext.coverage.acceptedGames,3);
+  assert.deepEqual(report.canonicalGameContext.games.map(row=>row.weatherReason),['INDOOR_NO_WEATHER_REQUIRED','ROOF_UNKNOWN','FRESH_FORECAST_UNAVAILABLE']);
+  assert(paths.filter(path=>path.includes('/consensus-rankings?')).length===4&&paths.filter(path=>path.includes('/consensus-rankings?')).every(path=>path.includes('week=2')&&path.includes('scoring=HALF')),'rank diagnostic must use current-week consensus path');
+  assert(paths.filter(path=>path.includes('/projections?')).every(path=>path.includes('week=2')&&!path.includes('ros=')&&!path.includes('scoring=')),'projection diagnostic must preserve explicit week/position with ros and scoring omitted');
+  assert(!text.includes(secretSentinel));for(const key of ['weeklyProjections','expertRanks','canonicalGameContext','apiKeyIncluded','authorizationHeadersIncluded','rawProviderBodiesIncluded','cookiesIncluded','tokensIncluded'])assert(text.includes(key),`combined report missing ${key}`);
+}
+
+assert(app.includes('runPhysicalEvidenceLaneDiagnostic')&&app.includes("'diagnosticCopyBtn'")&&app.includes('Diagnose kopieren'),'one-pass physical diagnostic UI missing');
 assert(!app.slice(start,end).includes('console.'),'weekly diagnostic production path must not log');
 const productionStart=app.indexOf('async function refreshSeasonRankings('),productionEnd=app.indexOf('\nfunction startSeasonRankingRefreshScheduler',productionStart),productionBlock=app.slice(productionStart,productionEnd);
 for(const [label,block] of [['authenticated diagnostic',app.slice(start,end)],['production refresh',productionBlock]]){
