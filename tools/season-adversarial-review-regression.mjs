@@ -4,7 +4,8 @@ import assert from 'node:assert/strict';
 const app=fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n');
 const source=name=>{const start=app.indexOf('function '+name+'(');assert(start>=0,name);const end=app.indexOf('\nfunction ',start+1);return app.slice(start,end<0?undefined:end);};
 const now=Date.now(),cache=new Map();
-const s={Date,console,BOONE_TRADE_VALUE_CACHE_KEY:'pitti.boone-trade-values.v1.current',validateBooneTradeValueSnapshot:()=>({ok:false}),store:{get:(k,f)=>cache.get(k)??f},lastDraftContext:{season:null},SLEEPER_NON_STARTER_SLOTS:new Set(['BN','IR','TAXI']),esc:String,loadResearchEvents:()=>[]};vm.createContext(s);
+const gameContext={CACHE_KEY:'pitti.game-context.v1.current',validateSnapshot:(snapshot,context)=>snapshot?.season===context.season&&snapshot?.week===context.week&&snapshot?.status==='AVAILABLE'?{ok:true}:{ok:false},contextForTeam:(snapshot,team)=>snapshot.games.find(game=>[game.homeTeam,game.awayTeam].includes(team))||{status:'UNAVAILABLE'}};
+const s={Date,console,PittiGameContextV1:gameContext,BOONE_TRADE_VALUE_CACHE_KEY:'pitti.boone-trade-values.v1.current',validateBooneTradeValueSnapshot:()=>({ok:false}),store:{get:(k,f)=>cache.get(k)??f},lastDraftContext:{season:null},SLEEPER_NON_STARTER_SLOTS:new Set(['BN','IR','TAXI']),esc:String,loadResearchEvents:()=>[]};vm.createContext(s);
 for(const f of ['seasonSlotEligible','tradeStarterSlots','tradeBestLineup','seasonStructurallyDroppable'])vm.runInContext(source(f),s);
 vm.runInContext(app.slice(app.indexOf('function seasonEvidenceContext('),app.indexOf('function fpStoreKey(')),s);
 const p=(id,pos)=>({p:{id,name:id,pos,bye:7},r:{rank:50},seasonStatus:'ACTIVE',pk:{pick_no:20}});
@@ -27,6 +28,7 @@ test('protected future drops cannot manufacture a CLEAR ADD',()=>{const q=p('onl
 s.lastDraftContext.season=season;
 test('explicit conflict survives another valid record',()=>{const r=rec(rb,'projected_points',20);assert.equal(s.seasonEvidenceValue([r,{...r,conflict:true}],rb.p.id,'projected_points',{season:2026,week:2,scoring:'HALF_PPR'},now).value,null);});
 test('conflicting weather cannot pick first row',()=>{const a={playerId:'rb',season:2026,week:2,status:'VERIFIED',confidence:.9,publishedAt:now-1000,verifiedAt:now-500,expiresAt:now+1000,sourceUrl:'https://example.test/game',opponent:'A',dome:true};cache.set('v190_gameContext',[a,{...a,opponent:'B',dome:false}]);assert.equal(s.seasonGameContext(rb.p,season),'nicht verfügbar');});
+test('canonical game-context cache feeds opponent without depending on legacy watcher rows',()=>{cache.set(gameContext.CACHE_KEY,{season:2026,week:2,status:'AVAILABLE',games:[{status:'VERIFIED',homeTeam:'AAA',awayTeam:'BBB',opponent:'BBB',roof:'OUTDOOR',weather:{status:'UNAVAILABLE',reason:'FRESH_FORECAST_UNAVAILABLE'}}]});rb.p.team='AAA';assert.equal(s.seasonGameContext(rb.p,season),'BBB · Wetter nicht verfügbar');cache.delete(gameContext.CACHE_KEY);});
 const opp=[p('or','RB'),p('ow','WR'),p('oe','RB')];
 test('filtered opponent roster cannot bypass live capacity',()=>{const hidden=p('ok','K');const live=own(mine,[...opp,hidden],['RB','WR','K','BN']);s.lastDraftContext.season=live;evidence([...mine,...opp],[5,20,19,20,5,19]);assert.equal(s.seasonTradeDecision(mine,opp,[extra],[opp[2]],live).actionable,false);});
 test('duplicate assets cannot create phantom trade value',()=>{const live=own(mine,opp,['RB','WR','BN','BN']);s.lastDraftContext.season=live;evidence([...mine,...opp],[5,20,19,20,5,19]);assert.equal(s.seasonTradeDecision(mine,opp,[extra,extra],[opp[2],opp[2]],live).actionable,false);});
