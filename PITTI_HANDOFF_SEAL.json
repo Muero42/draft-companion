@@ -138,7 +138,7 @@
     "tools/season-trade-team-needs-v2-regression.mjs": "aa1f2ffc3e585a73ffd5c1c4a8d42e270a6cef5b",
     "tools/season-waiver-team-needs-v3-regression.mjs": "99af1927a7d96f779ca47a617d5e0f25e1fd2dd2",
     "tools/season-waiver-trade-v1-regression.mjs": "e56f00a5f0c8bbc8d618b64d7b75ec4019074397",
-    "tools/season-weekly-projection-diagnostic-regression.mjs": "b990118567cce7806466d012cc14acaa4a1c84db",
+    "tools/season-weekly-projection-diagnostic-regression.mjs": "edbe045fe63d12296de09d861bea1d464923494b",
     "tools/strict-suite.mjs": "cca7e6e0666491c5e7d89fb4a910bf8eaa5150a5",
     "tools/takeover-authority-regression.mjs": "e858959735b2c20c99a33103c77cd8f334654f6b",
     "tools/takeover-authority.mjs": "88318daa1bce7c64fa686816e2aae2e557f629b2",

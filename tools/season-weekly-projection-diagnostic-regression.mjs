@@ -10,6 +10,11 @@ const end=app.indexOf('function slugifyExpert',start);
 assert(start>=0&&end>start,'weekly projection diagnostic production block missing');
 const source=app.slice(start,end)+`;globalThis.__weeklyDiagnostic={fpProxyRequest,proxyCall,deriveSleeperNflWeek,summarizeWeeklyProjectionPayload,weeklyProjectionFailure,runAuthenticatedWeeklyProjectionDiagnostic,formatAuthenticatedWeeklyProjectionDiagnostic,runCurrentWeekRankDiagnostic,runCanonicalGameContextDiagnostic,runPhysicalEvidenceLaneDiagnostic,formatPhysicalEvidenceLaneDiagnostic};`;
 const secretSentinel='SENSITIVE_SENTINEL_DO_NOT_RENDER';
+const fixedNow=Date.parse('2026-09-19T12:00:00Z');
+class FixedDate extends Date{
+  constructor(...args){super(...(args.length?args:[fixedNow]))}
+  static now(){return fixedNow}
+}
 const response=(status,data,raw=null,headers={})=>({ok:status>=200&&status<300,status,headers:{get:name=>headers[String(name).toLowerCase()]??null},async text(){return raw??JSON.stringify(data)},async json(){if(raw!=null)return JSON.parse(raw);return data}});
 const projectedRows=(position,count,{missingPoints=0,missingIds=0}={})=>Array.from({length:count},(_,i)=>({
   ...(i<missingIds?{}:{fpid:1000+i}),name:`${position} Player ${i+1}`,position_id:position,
@@ -17,7 +22,7 @@ const projectedRows=(position,count,{missingPoints=0,missingIds=0}={})=>Array.fr
 }));
 function runtime({fetchImpl,jfImpl,season='2026',lastDraftContext=null}={}){
   const context={
-    AbortController,setTimeout,clearTimeout,Date,Math,Number,String,Array,Object,RegExp,Error,
+    AbortController,setTimeout,clearTimeout,Date:FixedDate,Math,Number,String,Array,Object,RegExp,Error,
     fetch:fetchImpl||(()=>{throw new Error('unexpected fetch')}),
     jf:jfImpl||(()=>Promise.resolve({season,season_type:'regular',week:7})),
     S:'https://api.sleeper.app/v1',APP_VERSION:'v11.8.0-rc4.205',PittiWeeklyEvidenceV2:evidence,PittiGameContextV1:gameContext,lastDraftContext,els:{apiKey:{value:secretSentinel},season:{value:String(season)}}
