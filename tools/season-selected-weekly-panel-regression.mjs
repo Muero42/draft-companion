@@ -36,6 +36,7 @@ assert.equal(selected.lane.status,'AVAILABLE');
 assert.equal(selected.records.length,Object.values(counts).reduce((a,b)=>a+b,0));
 assert(selected.records.every(row=>row.metric==='weekly_rank'&&row.sourceId==='fantasypros_pitti_selected_weekly_panel'));
 assert(selected.records.every(row=>row.provenance.identityBound===true&&row.provenance.aggregation==='FILTERED_ECR_SELECTED_PITTI_PANEL'));
+const noFilterEcho=structuredClone(selectedPayloads);for(const position of evidence.POSITIONS)delete noFilterEcho[position].providerPayload.filters;const noEchoResult=evidence.selectedWeeklyRankLane(noFilterEcho,{season,week,scoring:'HALF_PPR',sleeperPlayers:players,verifiedAt:now});assert.equal(noEchoResult.lane.status,'AVAILABLE','exact returned expert membership must prove identity when the provider omits its filter echo');
 for(const position of evidence.POSITIONS){
   assert.equal(selected.lane.coverage.positions[position].status,'AVAILABLE');
   assert.deepEqual(selected.lane.coverage.positions[position].missingExperts,[]);
