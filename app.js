@@ -623,10 +623,10 @@ async function acquireSelectedWeeklyRankPayloads({season,week}){
   const resolved=await resolveSeasonWeeklyExpertIds(season),selectedRankingPayloads={};
   const requests=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
     const row=resolved.byPosition[position],requested=row.requested,ids=requested.map(expert=>expert.id).sort((a,b)=>Number(a)-Number(b));
-    if(!ids.length)return[position,{providerPayload:null,requestProvenance:{season,week,position,scoring:'HALF',experts:'show',requestedExpertIds:[]},requestedExperts:[],configuredExpertNames:row.configured,missingDirectoryExperts:row.missing}];
+    if(!ids.length)return[position,{providerPayload:null,providerResponsePresent:false,requestProvenance:{season,week,position,scoring:'HALF',experts:'show',requestedExpertIds:[]},requestedExperts:[],configuredExpertNames:row.configured,missingDirectoryExperts:row.missing}];
     const path=`/nfl/${season}/consensus-rankings?week=${week}&position=${position}&scoring=HALF&filters=${ids.join(':')}&experts=show`,response=await fpProxyRequest(path);
     if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros selected panel HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw Object.assign(error,{position});}
-    return[position,{providerPayload:response.data,requestProvenance:{season,week,position,scoring:'HALF',experts:'show',requestedExpertIds:ids},requestedExperts:requested,configuredExpertNames:row.configured,missingDirectoryExperts:row.missing}];
+    return[position,{providerPayload:response.data,providerResponsePresent:true,requestProvenance:{season,week,position,scoring:'HALF',experts:'show',requestedExpertIds:ids},requestedExperts:requested,configuredExpertNames:row.configured,missingDirectoryExperts:row.missing}];
   }));
   for(const result of requests)if(result.status==='fulfilled'){const [position,payload]=result.value;selectedRankingPayloads[position]=payload;}
   return{selectedRankingPayloads,requests,directoryResults:resolved.directoryResults,resolved:resolved.byPosition};
