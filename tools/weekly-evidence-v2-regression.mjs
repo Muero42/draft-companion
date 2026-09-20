@@ -334,7 +334,7 @@ const rankPayloads={};
 for(const [position,count] of Object.entries(evidence.RANK_MIN_COUNTS))rankPayloads[position]={season,week,scoring:'HALF_PPR',updated:'2026-09-10',players:Array.from({length:count},(_,i)=>({fpid:10001+Object.entries(counts).slice(0,Object.keys(counts).indexOf(position)).reduce((n,[,v])=>n+v,0)+i,name:`${position} Player ${i}`,position_id:position,team_id:'AAA',rank_ecr:i+1}))};
 const ranked=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:payloads,rankingPayloads:rankPayloads,sleeperPlayers:players,verifiedAt:now});
 assert.equal(ranked.lanes.expertWeeklyRanks.status,'AVAILABLE');
-assert.equal(ranked.panel.weeklyRank.status,'BROAD_CONSENSUS_ONLY');
+assert.equal(ranked.panel.weeklyRank.status,'UNAVAILABLE');assert.equal(ranked.panel.broadWeeklyEcr.status,'AVAILABLE');
 assert(ranked.records.some(x=>x.metric==='broad_weekly_ecr_rank'));
 const partialProjectionFullRanks=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{QB:payloads.QB,RB:payloads.RB,TE:payloads.TE},rankingPayloads:rankPayloads,sleeperPlayers:players,verifiedAt:now});
 assert.equal(partialProjectionFullRanks.lanes.projections.status,'PARTIAL');
