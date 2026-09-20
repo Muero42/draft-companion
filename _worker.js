@@ -16,13 +16,31 @@ export default {
   }
 };
 
+const NFL_WEEK_MIN_GAMES=13,NFL_WEEK_MAX_GAMES=16;
+function espnWeekCandidates(season,week){
+  const base='https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
+  return[
+    `${base}?dates=${season}&seasontype=2&week=${week}&limit=100`,
+    `${base}?seasontype=2&week=${week}&limit=100`,
+    `${base}?dates=${season}&week=${week}&seasontype=2&limit=100`
+  ];
+}
 async function handleNflWeekContext(request,url){
   if(request.method!=='GET')return json({error:'Nur GET ist erlaubt.'},405);
   const season=Number(url.searchParams.get('season')),week=Number(url.searchParams.get('week'));
   if(!Number.isInteger(season)||season<2026||season>2100||!Number.isInteger(week)||week<1||week>18)return json({error:'NFL-Wochenkontext ungültig.'},400);
-  const sourceUrl=`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=${season}&seasontype=2&week=${week}&limit=100`;
-  try{const response=await fetch(sourceUrl,{headers:{accept:'application/json'},cf:{cacheTtl:900,cacheEverything:true}});if(!response.ok)return json({error:'NFL schedule upstream unavailable.',failureType:'UPSTREAM_HTTP_ERROR',upstreamStatus:response.status,sourceUrl},502);const payload=await response.json();return json({season,week,sourceUrl,events:Array.isArray(payload?.events)?payload.events:[]});}
-  catch{return json({error:'NFL-Spielplan nicht erreichbar.',failureType:'FETCH_EXCEPTION',upstreamStatus:null,sourceUrl},502);}
+  const attempts=[];
+  for(const sourceUrl of espnWeekCandidates(season,week)){
+    try{
+      const response=await fetch(sourceUrl,{headers:{accept:'application/json','accept-language':'en-US,en;q=0.9','user-agent':'Mozilla/5.0 (compatible; PITTI-Companion/11.8; +https://pages.dev)'},cf:{cacheTtl:900,cacheEverything:true}});
+      if(!response.ok){attempts.push({sourceUrl,failureType:'UPSTREAM_HTTP_ERROR',upstreamStatus:response.status});continue;}
+      const payload=await response.json(),events=Array.isArray(payload?.events)?payload.events:[];
+      if(events.length<NFL_WEEK_MIN_GAMES||events.length>NFL_WEEK_MAX_GAMES){attempts.push({sourceUrl,failureType:'INCOMPLETE_WEEK',upstreamStatus:response.status,sourceEvents:events.length});continue;}
+      return json({season,week,sourceUrl,events,acquisition:{provider:'ESPN',variant:attempts.length+1,sourceEvents:events.length,attempts:attempts.map(x=>({failureType:x.failureType,upstreamStatus:x.upstreamStatus,sourceEvents:x.sourceEvents??null}))}});
+    }catch{attempts.push({sourceUrl,failureType:'FETCH_EXCEPTION',upstreamStatus:null});}
+  }
+  const last=attempts[attempts.length-1]||{},lastHttp=[...attempts].reverse().find(x=>x.failureType==='UPSTREAM_HTTP_ERROR'),failureType=attempts.some(x=>x.failureType==='UPSTREAM_HTTP_ERROR')?'UPSTREAM_HTTP_ERROR':attempts.some(x=>x.failureType==='INCOMPLETE_WEEK')?'INCOMPLETE_WEEK':'FETCH_EXCEPTION';
+  return json({error:'NFL schedule upstream unavailable.',failureType,upstreamStatus:failureType==='UPSTREAM_HTTP_ERROR'?(lastHttp?.upstreamStatus??null):null,sourceUrl:last.sourceUrl||null,attempts:attempts.map(x=>({failureType:x.failureType,upstreamStatus:x.upstreamStatus,sourceEvents:x.sourceEvents??null}))},502);
 }
 
 async function handleFantasyPros(request,url){
