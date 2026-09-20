@@ -150,7 +150,7 @@ for(const [status,reason] of [[401,'HTTP_401'],[403,'HTTP_403'],[404,'HTTP_404']
 {
   const counts={QB:24,RB:60,WR:70,TE:24},players={};let next=1000;
   for(const [position,count] of Object.entries(counts))for(let i=0;i<count;i++,next++)players[`sleeper-${next}`]={full_name:`${position} Player ${i+1}`,position,team:'AAA',fantasy_data_id:next};
-  const seasonState={my_roster:{players:['sleeper-1000','sleeper-1024'],reserve:[],taxi:[]}},events=[['1','AAA','BBB',true],['2','CCC','DDD',null],['3','EEE','FFF',false]].map(([id,home,away,indoor])=>({id,date:'2026-09-27T17:00:00Z',competitions:[{venue:{fullName:`${home} Field`,...(indoor===null?{}:{indoor})},competitors:[{homeAway:'home',team:{abbreviation:home}},{homeAway:'away',team:{abbreviation:away}}]}]}));
+  const seasonState={my_roster:{players:['sleeper-1000','sleeper-1024'],reserve:[],taxi:[]}},gamePairs=[['AAA','BBB'],['CCC','DDD'],['EEE','FFF'],['GGG','HHH'],['III','JJJ'],['KKK','LLL'],['MMM','NNN'],['OOO','PPP'],['QQQ','RRR'],['SSS','TTT'],['UUU','VVV'],['WWW','XXX'],['YYY','ZZZ']],events=gamePairs.map(([home,away],i)=>({id:String(i+1),date:'2026-09-27T17:00:00Z',competitions:[{venue:{fullName:`${home} Field`,...(i===0?{indoor:true}:i===1?{}:{indoor:false})},competitors:[{homeAway:'home',team:{abbreviation:home}},{homeAway:'away',team:{abbreviation:away}}]}]}));
   const paths=[],api=runtime({lastDraftContext:{players,season:seasonState},jfImpl:async()=>({season:'2026',season_type:'regular',week:2}),fetchImpl:async url=>{
     const parsed=new URL(url,'https://local.invalid');
     if(parsed.pathname==='/api/nfl-week-context')return response(200,{season:2026,week:2,sourceUrl:'https://site.api.espn.com/sanitized',events});
@@ -163,8 +163,8 @@ for(const [status,reason] of [[401,'HTTP_401'],[403,'HTTP_403'],[404,'HTTP_404']
   assert.equal(report.weeklyProjections.positions.QB.httpStatus,429);assert.equal(report.weeklyProjections.positions.QB.retryAfterSeconds,120);
   assert.equal(report.weeklyProjections.positions.RB.scoringParameterPresent,false);assert.equal(report.weeklyProjections.positions.RB.rosPresent,false);
   assert.equal(report.expertRanks.status,'AVAILABLE');assert.equal(report.expertRanks.positions.QB.primaryRejectionReason,null);
-  assert.equal(report.canonicalGameContext.status,'AVAILABLE');assert.equal(report.canonicalGameContext.coverage.acceptedGames,3);
-  assert.deepEqual(report.canonicalGameContext.games.map(row=>row.weatherReason),['INDOOR_NO_WEATHER_REQUIRED','ROOF_UNKNOWN','FRESH_FORECAST_UNAVAILABLE']);
+  assert.equal(report.canonicalGameContext.status,'AVAILABLE');assert.equal(report.canonicalGameContext.coverage.acceptedGames,13);
+  assert.deepEqual(report.canonicalGameContext.games.slice(0,3).map(row=>row.weatherReason),['INDOOR_NO_WEATHER_REQUIRED','ROOF_UNKNOWN','FRESH_FORECAST_UNAVAILABLE']);
   assert(paths.filter(path=>path.includes('/consensus-rankings?')).length===4&&paths.filter(path=>path.includes('/consensus-rankings?')).every(path=>path.includes('week=2')&&path.includes('scoring=HALF')),'rank diagnostic must use current-week consensus path');
   assert(paths.filter(path=>path.includes('/projections?')).every(path=>path.includes('week=2')&&!path.includes('ros=')&&!path.includes('scoring=')),'projection diagnostic must preserve explicit week/position with ros and scoring omitted');
   assert(!text.includes(secretSentinel));for(const key of ['weeklyProjections','expertRanks','canonicalGameContext','apiKeyIncluded','authorizationHeadersIncluded','rawProviderBodiesIncluded','cookiesIncluded','tokensIncluded'])assert(text.includes(key),`combined report missing ${key}`);
