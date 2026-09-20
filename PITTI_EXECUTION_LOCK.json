@@ -1,12 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-20T10:36:57Z",
+  "updatedAt": "2026-09-20T11:00:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is Production-deployed at exact main@66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1, Cloudflare deployment ec6cd004-6e54-480f-8752-e8e37755ac66, check 106063674827 PASS. User-supplied physical diagnostic captured 2026-09-20T10:36:57.320Z on v11.8.0-rc4.205 physically PASSED the bounded PR #186 repair scope: weekly QB projections are HTTP 200 with 80/80 mapped and 100% coverage; the active skill roster is 13/13 projection-usable with no unusable player, resolving the prior Trevor Lawrence JAC/JAX mapping failure. Canonical game context still has no game data because the upstream returns HTTP 403, but the repaired contract is physically proven: app returns sanitized HTTP 502, upstreamStatus 403, failureType UPSTREAM_HTTP_ERROR, no secrets/raw body. Broad current Expert-Ranks are AVAILABLE all four positions, but this does not establish PITTI-Panel. Team Total remains unproven/unavailable; opponent/weather remains unavailable because canonical game context data is unavailable. Physical classification: RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS. Do not manufacture PITTI-Panel, Team Total, game/opponent/weather evidence, and never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 remains Production/device accepted for the bounded PR #186 repair scope (RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE). Independent Evidence Lane Diagnosis is complete. Broad current weekly Expert-Ranks are physically AVAILABLE. PITTI-Panel remains unavailable because Season weekly ingestion uses broad consensus only while the selected-panel machinery is still draft/preseason; FantasyPros supports exact expert filters and rankings/experts, so a bounded current-week selected-expert pipeline is technically viable but not yet implemented. Canonical game-context data remains unavailable because the Cloudflare Worker receives ESPN upstream HTTP 403; the repaired failure-provenance contract is correct. Team Total remains unavailable because no approved runtime total+spread source exists, although the existing impliedTeamTotal helper can consume a future verified same-event pair. Opponent/weather remains dependent on restored complete game context and fresh event forecast. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR. No runtime repair, deployment, fantasy transaction, or Pitti Watcher mutation is authorized by this diagnosis checkpoint.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
@@ -29,7 +29,34 @@
         "mergeCommit": "01ceef33dba6d79be48461d85532a1e2a39bd9aa",
         "tree": "d1c9e2660e60d305a8a1f4727404d676e83c2164"
       }
-    ]
+    ],
+    "independentEvidenceLaneDiagnosis": {
+      "status": "DIAGNOSIS_COMPLETE_NO_RUNTIME_REPAIR_AUTHORIZED",
+      "expert_ranks": "PHYSICAL_AVAILABLE_BROAD_WEEKLY_ECR_ALL_QB_RB_WR_TE",
+      "pitti_panel": {
+        "status": "UNAVAILABLE_ROOT_CAUSE_IDENTIFIED",
+        "root_cause": "Season weekly refresh requests broad FantasyPros consensus-rankings only and never supplies selected expert filters/identity binding. Existing live selected-panel ingestion is draft/preseason week=0/type=DRAFT infrastructure, so broad weekly ECR cannot become the selected PITTI panel without fabricating expert votes.",
+        "external_evidence": "FantasyPros API documents consensus-rankings filters as a whitelist of expert IDs and exposes rankings/experts; current Week 2 public expert pages/directories show individual weekly rankings are published.",
+        "bounded_repair": "Add current-week selected-expert acquisition using exact FantasyPros expert IDs, explicit week/position/HALF context, experts=show/filter binding, freshness/coverage checks, and fail-closed per-position panel construction. Never substitute broad ECR for missing selected experts."
+      },
+      "canonical_game_context": {
+        "status": "UNAVAILABLE_ROOT_CAUSE_IDENTIFIED",
+        "root_cause": "Production Worker reaches the canonical ESPN scoreboard request but receives upstream HTTP 403. Physical evidence proves the app/worker failure-provenance contract is correct; parser/mapping is not the blocking defect.",
+        "external_evidence": "Public ESPN endpoint references document the same weekly scoreboard family; recent third-party Week 2 evidence cites an ESPN site.web.api scoreboard variant. Any fallback must be proven from the Cloudflare runtime before promotion.",
+        "bounded_repair": "Test a narrowly allowlisted ESPN-hosted fallback/headers strategy in non-production first, require exact season/week and complete unique 32-team/16-game-or-bye-safe schedule validation, preserve sanitized failure provenance, and fail closed on disagreement or partial coverage."
+      },
+      "team_total": {
+        "status": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
+        "root_cause": "game-context-v1 already contains impliedTeamTotal(total,spread,...) but no runtime lane acquires a verified same-event total+spread pair; games are hard-coded vegas=UNAVAILABLE/NO_APPROVED_ROBUST_SOURCE.",
+        "external_evidence": "Public ESPN core odds examples expose event-scoped overUnder and spread fields. That is a candidate source only, not yet approved or Cloudflare-proven for PITTI.",
+        "bounded_repair": "Only after schedule/event IDs are reliably available, validate one approved ESPN odds provider policy, same-event total+spread, timestamp/freshness and side orientation, then call the existing impliedTeamTotal helper. No synthetic totals from projections."
+      },
+      "weather_opponent": {
+        "status": "DEPENDENT_UNAVAILABLE",
+        "root_cause": "Opponent, kickoff, venue/roof and event weather depend on complete canonical game-context events. Upstream schedule 403 therefore blocks the lane. Weather additionally remains fail-closed unless a fresh event-bound forecast is present.",
+        "bounded_repair": "Restore verified game context first; retain existing fresh-event weather requirements and no-weather-needed dome semantics."
+      }
+    }
   },
   "runtime": {
     "appVersion": "v11.8.0-rc4.205",
@@ -301,12 +328,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "PR186_PHYSICAL_REPAIR_ACCEPTED_BOUNDED_REMAINING_INDEPENDENT_LANES_FAIL_CLOSED",
-    "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS"
+    "status": "INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS_COMPLETE_BOUNDED_REPAIR_REQUIRES_SEPARATE_AUTHORIZATION",
+    "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR"
   },
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-  "gate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
-  "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
+  "gate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR",
+  "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -315,11 +342,11 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260920T1036Z-v259",
+    "generation": "20260920T1100Z-v260",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is Production-deployed at exact main@66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1, Cloudflare deployment ec6cd004-6e54-480f-8752-e8e37755ac66, check 106063674827 PASS. User-supplied physical diagnostic captured 2026-09-20T10:36:57.320Z on v11.8.0-rc4.205 physically PASSED the bounded PR #186 repair scope: weekly QB projections are HTTP 200 with 80/80 mapped and 100% coverage; the active skill roster is 13/13 projection-usable with no unusable player, resolving the prior Trevor Lawrence JAC/JAX mapping failure. Canonical game context still has no game data because the upstream returns HTTP 403, but the repaired contract is physically proven: app returns sanitized HTTP 502, upstreamStatus 403, failureType UPSTREAM_HTTP_ERROR, no secrets/raw body. Broad current Expert-Ranks are AVAILABLE all four positions, but this does not establish PITTI-Panel. Team Total remains unproven/unavailable; opponent/weather remains unavailable because canonical game context data is unavailable. Physical classification: RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS. Do not manufacture PITTI-Panel, Team Total, game/opponent/weather evidence, and never claim a newer Library generation persisted unless files.list proves it.",
+    "resume": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 remains Production/device accepted for the bounded PR #186 repair scope (RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE). Independent Evidence Lane Diagnosis is complete. Broad current weekly Expert-Ranks are physically AVAILABLE. PITTI-Panel remains unavailable because Season weekly ingestion uses broad consensus only while the selected-panel machinery is still draft/preseason; FantasyPros supports exact expert filters and rankings/experts, so a bounded current-week selected-expert pipeline is technically viable but not yet implemented. Canonical game-context data remains unavailable because the Cloudflare Worker receives ESPN upstream HTTP 403; the repaired failure-provenance contract is correct. Team Total remains unavailable because no approved runtime total+spread source exists, although the existing impliedTeamTotal helper can consume a future verified same-event pair. Opponent/weather remains dependent on restored complete game context and fresh event forecast. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR. No runtime repair, deployment, fantasy transaction, or Pitti Watcher mutation is authorized by this diagnosis checkpoint.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -339,7 +366,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260920T1036Z-v259",
+  "handoff_generation": "20260920T1100Z-v260",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -374,9 +401,9 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260920T1036Z-v259",
+  "handoffGeneration": "20260920T1100Z-v260",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-09-20T10:36:57Z",
-  "exactNextAction": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is Production-deployed at exact main@66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1, Cloudflare deployment ec6cd004-6e54-480f-8752-e8e37755ac66, check 106063674827 PASS. User-supplied physical diagnostic captured 2026-09-20T10:36:57.320Z on v11.8.0-rc4.205 physically PASSED the bounded PR #186 repair scope: weekly QB projections are HTTP 200 with 80/80 mapped and 100% coverage; the active skill roster is 13/13 projection-usable with no unusable player, resolving the prior Trevor Lawrence JAC/JAX mapping failure. Canonical game context still has no game data because the upstream returns HTTP 403, but the repaired contract is physically proven: app returns sanitized HTTP 502, upstreamStatus 403, failureType UPSTREAM_HTTP_ERROR, no secrets/raw body. Broad current Expert-Ranks are AVAILABLE all four positions, but this does not establish PITTI-Panel. Team Total remains unproven/unavailable; opponent/weather remains unavailable because canonical game context data is unavailable. Physical classification: RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS. Do not manufacture PITTI-Panel, Team Total, game/opponent/weather evidence, and never claim a newer Library generation persisted unless files.list proves it.",
-  "failClosedRecovery": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is Production-deployed at exact main@66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1, Cloudflare deployment ec6cd004-6e54-480f-8752-e8e37755ac66, check 106063674827 PASS. User-supplied physical diagnostic captured 2026-09-20T10:36:57.320Z on v11.8.0-rc4.205 physically PASSED the bounded PR #186 repair scope: weekly QB projections are HTTP 200 with 80/80 mapped and 100% coverage; the active skill roster is 13/13 projection-usable with no unusable player, resolving the prior Trevor Lawrence JAC/JAX mapping failure. Canonical game context still has no game data because the upstream returns HTTP 403, but the repaired contract is physically proven: app returns sanitized HTTP 502, upstreamStatus 403, failureType UPSTREAM_HTTP_ERROR, no secrets/raw body. Broad current Expert-Ranks are AVAILABLE all four positions, but this does not establish PITTI-Panel. Team Total remains unproven/unavailable; opponent/weather remains unavailable because canonical game context data is unavailable. Physical classification: RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS. Do not manufacture PITTI-Panel, Team Total, game/opponent/weather evidence, and never claim a newer Library generation persisted unless files.list proves it."
+  "updated_at": "2026-09-20T11:00:00Z",
+  "exactNextAction": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 remains Production/device accepted for the bounded PR #186 repair scope (RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE). Independent Evidence Lane Diagnosis is complete. Broad current weekly Expert-Ranks are physically AVAILABLE. PITTI-Panel remains unavailable because Season weekly ingestion uses broad consensus only while the selected-panel machinery is still draft/preseason; FantasyPros supports exact expert filters and rankings/experts, so a bounded current-week selected-expert pipeline is technically viable but not yet implemented. Canonical game-context data remains unavailable because the Cloudflare Worker receives ESPN upstream HTTP 403; the repaired failure-provenance contract is correct. Team Total remains unavailable because no approved runtime total+spread source exists, although the existing impliedTeamTotal helper can consume a future verified same-event pair. Opponent/weather remains dependent on restored complete game context and fresh event forecast. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR. No runtime repair, deployment, fantasy transaction, or Pitti Watcher mutation is authorized by this diagnosis checkpoint.",
+  "failClosedRecovery": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 remains Production/device accepted for the bounded PR #186 repair scope (RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE). Independent Evidence Lane Diagnosis is complete. Broad current weekly Expert-Ranks are physically AVAILABLE. PITTI-Panel remains unavailable because Season weekly ingestion uses broad consensus only while the selected-panel machinery is still draft/preseason; FantasyPros supports exact expert filters and rankings/experts, so a bounded current-week selected-expert pipeline is technically viable but not yet implemented. Canonical game-context data remains unavailable because the Cloudflare Worker receives ESPN upstream HTTP 403; the repaired failure-provenance contract is correct. Team Total remains unavailable because no approved runtime total+spread source exists, although the existing impliedTeamTotal helper can consume a future verified same-event pair. Opponent/weather remains dependent on restored complete game context and fresh event forecast. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR. No runtime repair, deployment, fantasy transaction, or Pitti Watcher mutation is authorized by this diagnosis checkpoint."
 }
