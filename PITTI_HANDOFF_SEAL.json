@@ -41,7 +41,7 @@
     "RC4_61_LIVE_SURFACE_HANDOFF.md": "308ac26c0fcfac4b9d3227031bcc86b4a1bb9e79",
     "README.md": "89e2b59aa111d334d57e38e2e7a9564f123352f6",
     "_worker.js": "8573a1869c778d67d59a9707468dcb2e3bf772ac",
-    "app.js": "b6efe9c3cd3fd8e4f044e8f2e4e731d667a5f712",
+    "app.js": "85e2ab8a37df83b8d50635f451be1ce3fcc6251e",
     "boone-trade-values-v1.mjs": "8bd247948b09ca79da43071c5388998466866be4",
     "config/season-expert-phase-policy.json": "78156903f4254c6eee836819dc6b8a737835d6c1",
     "data/live-news-source-registry.json": "d1e515af8c54c2ea2a150ed9e4f72d76eeb7f2a0",
@@ -143,7 +143,7 @@
     "tools/season-lineup-waiver-routing-regression.mjs": "2c31d3b458254f3274c4a8c12b8e7db51651bd3c",
     "tools/season-matchup-evidence-layer-regression.mjs": "ae4930bce1a6902633ba8ec6f326df56eb5837d6",
     "tools/season-ranking-freshness-regression.mjs": "422d99a34f369c0d0cda05bf1be26e6d176919a9",
-    "tools/season-selected-weekly-panel-regression.mjs": "f3f3a12a46faa7e4a451744f6e5fb24adee13d82",
+    "tools/season-selected-weekly-panel-regression.mjs": "e96c95225d8bb3ec1656a8d3f071fdade7020588",
     "tools/season-service-worker-cache-regression.mjs": "f5a313e26fc93ecbe6768b0f60a01df67d21bb94",
     "tools/season-startsit-weekly-context-regression.mjs": "3dbb64d7dc232b1ca618860fa9405135b387b892",
     "tools/season-trade-team-needs-v2-regression.mjs": "aa1f2ffc3e585a73ffd5c1c4a8d42e270a6cef5b",
@@ -158,7 +158,7 @@
     "tools/week1-waiver-market-regression.mjs": "a6b954ce529c8d173f901ec8e479048a8095e62b",
     "tools/weekly-evidence-v2-regression.mjs": "71079da5900e115e041e59c86f04d99f6dedd9fd",
     "trade-team-needs-v2.js": "30b504c0d1f2ac2c4cc3ac066d876ffce04b212a",
-    "weekly-evidence-v2.js": "6d69112d80503c785bcb47fcac1b2adad0a8500d"
+    "weekly-evidence-v2.js": "c9708028adacff4a492ea27af7aa925f6b5d3cdc"
   },
   "branch_locks": {
     "source_baseline": "v11.8.0-rc4.205 reviewed runtime/source repair PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131, merge 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164",
@@ -211,7 +211,7 @@
     "package_reextract_17_files": true
   },
   "exact_gate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR",
-  "note": "v260 remains canonical. PR #191 rc4.206 candidate checkpoint records full automated PASS at reviewed runtime head, 17-file byte-exact re-extraction with noncanonical run-scoped ZIP identity, and a separate explicit merge/Production authorization gate. No merge, Production deployment, Team Total source, or device acceptance is claimed.",
+  "note": "v260 remains canonical. PR #191 rc4.206 candidate is resealed after selected-panel carry-forward semantics were corrected: absence of a current selected-rank provider response may retain still-fresh same-week prior selected ranks, while any contradictory current response purges that position. Broad ECR remains distinct; game context remains bounded and fail-closed. No merge, Production deployment, Team Total source, or device acceptance is claimed.",
   "integrity_normalization": "UTF8_LF_TEXT",
   "updated_at": "2026-09-20T11:00:00Z"
 }
