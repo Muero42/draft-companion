@@ -31,6 +31,8 @@ const incompleteEvents=events.map(x=>structuredClone(x));incompleteEvents[2]={id
 const incomplete=game.buildSnapshot({season:2026,week,events:incompleteEvents,verifiedAt:now,sourceUrl:'https://site.api.espn.com/test'});
 assert.equal(incomplete.status,'PARTIAL');assert.equal(incomplete.rejections.find(x=>x.eventId==='3')?.reason,'MISSING_VENUE');assert.equal(incomplete.games.length,0,'partial week remains fail closed');
 const shortWeek=game.buildSnapshot({season:2026,week,events:events.slice(0,12),verifiedAt:now,sourceUrl:'https://site.api.espn.com/test'});assert.equal(shortWeek.status,'PARTIAL');assert.equal(shortWeek.games.length,0);assert.equal(shortWeek.rejections[0].reason,'INCOMPLETE_WEEK_EVENT_COUNT');
+const forgedShort={...snap,games:snap.games.slice(0,2),coverage:{...snap.coverage,sourceEvents:2,acceptedGames:2,acceptedTeams:4,games:2,teams:4}};assert.equal(game.validateSnapshot(forgedShort,{season:2026,week},now).reason,'INCOMPLETE_WEEK','consumer validation must reject forged short AVAILABLE snapshots');
+const forgedDuplicate=structuredClone(snap);forgedDuplicate.games[1].homeTeam=forgedDuplicate.games[0].homeTeam;assert.equal(game.validateSnapshot(forgedDuplicate,{season:2026,week},now).reason,'INCOMPLETE_WEEK','consumer validation must reject duplicate-team snapshots');
 const failed=game.failureSnapshot({season:2026,week,httpStatus:503,reason:'HTTP_ERROR',verifiedAt:now});assert.equal(failed.status,'UNAVAILABLE');assert.deepEqual(failed.rejections,[{eventId:null,reason:'HTTP_ERROR',httpStatus:503}]);
 assert.equal(game.impliedTeamTotal({total:45}).status,'UNAVAILABLE');
 console.log('SEASON_STARTSIT_WEEKLY_CONTEXT_REGRESSION_PASS');
