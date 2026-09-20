@@ -23,6 +23,7 @@
   const WEEKLY_HALF_PPR_MAX={QB:80,RB:70,WR:70,TE:70};
   const PROJECTION_RESPONSE_CLASSIFICATION={ABSENT_TRANSIENT:'ABSENT_TRANSIENT',CURRENT_ACCEPTED:'CURRENT_ACCEPTED',DEFINITIVE_REJECTION:'DEFINITIVE_REJECTION'};
   const norm=value=>String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
+  const team=value=>({JAC:'JAX',WSH:'WAS',LA:'LAR'}[String(value||'').trim().toUpperCase()]||String(value||'').trim().toUpperCase());
   const iso=ms=>new Date(ms).toISOString();
   const finite=value=>typeof value==='number'&&Number.isFinite(value)?value:null;
   const scoring=value=>['HALF','HALF_PPR','HALF-PPR'].includes(String(value||'').toUpperCase())?'HALF_PPR':null;
@@ -82,7 +83,7 @@
     const byFp=new Map(),byNamePosition=new Map();
     for(const [id,player] of Object.entries(players||{})){
       if(!player||!POSITIONS.includes(String(player.position||'').toUpperCase()))continue;
-      const row={id:String(id),name:player.full_name||[player.first_name,player.last_name].filter(Boolean).join(' '),position:String(player.position).toUpperCase(),team:String(player.team||'FA').toUpperCase()};
+      const row={id:String(id),name:player.full_name||[player.first_name,player.last_name].filter(Boolean).join(' '),position:String(player.position).toUpperCase(),team:team(player.team||'FA')};
       const fp=String(player.fantasy_data_id??'').trim();
       if(fp){const rows=byFp.get(fp)||[];rows.push(row);byFp.set(fp,rows);}
       const key=`${norm(row.name)}|${row.position}`,rows=byNamePosition.get(key)||[];rows.push(row);byNamePosition.set(key,rows);
@@ -95,7 +96,7 @@
     if(fpid){const found=indexes.byFp.get(fpid)||[];if(found.length===1&&found[0].position===position)return{ok:true,player:found[0],method:'FANTASY_DATA_ID',sourcePlayerId:fpid};if(found.length>1)return{ok:false,reason:'FP_ID_COLLISION',sourcePlayerId:fpid};}
     const name=String(row?.name||row?.player_name||'').trim(),found=indexes.byNamePosition.get(`${norm(name)}|${position}`)||[];
     if(found.length!==1)return{ok:false,reason:found.length?'NAME_POSITION_COLLISION':'NO_MATCH',sourcePlayerId:fpid||null};
-    const sourceTeam=String(row?.team_id??row?.player_team_id??row?.team??'').toUpperCase(),sleeperTeam=found[0].team;
+    const sourceTeam=team(row?.team_id??row?.player_team_id??row?.team??''),sleeperTeam=found[0].team;
     if(sourceTeam&&sleeperTeam&&sourceTeam!=='FA'&&sleeperTeam!=='FA'&&sourceTeam!==sleeperTeam)return{ok:false,reason:'TEAM_MISMATCH',sourcePlayerId:fpid||null};
     return{ok:true,player:found[0],method:'EXACT_NAME_POSITION_TEAM',sourcePlayerId:fpid||null};
   }

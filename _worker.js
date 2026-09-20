@@ -21,8 +21,8 @@ async function handleNflWeekContext(request,url){
   const season=Number(url.searchParams.get('season')),week=Number(url.searchParams.get('week'));
   if(!Number.isInteger(season)||season<2026||season>2100||!Number.isInteger(week)||week<1||week>18)return json({error:'NFL-Wochenkontext ungültig.'},400);
   const sourceUrl=`https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?dates=${season}&seasontype=2&week=${week}&limit=100`;
-  try{const response=await fetch(sourceUrl,{headers:{accept:'application/json'},cf:{cacheTtl:900,cacheEverything:true}});if(!response.ok)return json({error:`NFL schedule HTTP ${response.status}`},502);const payload=await response.json();return json({season,week,sourceUrl,events:Array.isArray(payload?.events)?payload.events:[]});}
-  catch(error){return json({error:'NFL-Spielplan nicht erreichbar.',detail:error?.message||String(error)},502);}
+  try{const response=await fetch(sourceUrl,{headers:{accept:'application/json'},cf:{cacheTtl:900,cacheEverything:true}});if(!response.ok)return json({error:'NFL schedule upstream unavailable.',failureType:'UPSTREAM_HTTP_ERROR',upstreamStatus:response.status,sourceUrl},502);const payload=await response.json();return json({season,week,sourceUrl,events:Array.isArray(payload?.events)?payload.events:[]});}
+  catch{return json({error:'NFL-Spielplan nicht erreichbar.',failureType:'FETCH_EXCEPTION',upstreamStatus:null,sourceUrl},502);}
 }
 
 async function handleFantasyPros(request,url){

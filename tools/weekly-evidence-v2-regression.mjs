@@ -68,6 +68,9 @@ assert(!upgraded.records.some(record=>record.position==='WR'),'invalid rc4.199 e
 const indexes=evidence.sleeperIndexes({...players,collision:{full_name:'QB Player 0',position:'QB',team:'AAA'}});
 assert.equal(evidence.mapFantasyProsPlayer({name:'QB Player 0',position_id:'QB',team_id:'AAA'},indexes).reason,'NAME_POSITION_COLLISION');
 assert.equal(evidence.mapFantasyProsPlayer({name:'QB Player 1',position_id:'QB',team_id:'BBB'},indexes).reason,'TEAM_MISMATCH');
+const lawrenceIndexes=evidence.sleeperIndexes({'7523':{full_name:'Trevor Lawrence',position:'QB',team:'JAX',fantasy_data_id:22490}});
+assert.deepEqual(evidence.mapFantasyProsPlayer({fpid:999999,name:'Trevor Lawrence',position_id:'QB',team_id:'JAC'},lawrenceIndexes),{ok:true,player:{id:'7523',name:'Trevor Lawrence',position:'QB',team:'JAX'},method:'EXACT_NAME_POSITION_TEAM',sourcePlayerId:'999999'},'FantasyPros JAC and Sleeper JAX are the same verified franchise identity');
+assert.equal(evidence.mapFantasyProsPlayer({fpid:999999,name:'Trevor Lawrence',position_id:'QB',team_id:'TEN'},lawrenceIndexes).reason,'TEAM_MISMATCH','canonical aliasing must not weaken cross-team rejection');
 
 const wrong={...payloads,QB:{...payloads.QB,providerPayload:{...payloads.QB.providerPayload,week:2}}};
 const unavailable=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:wrong,sleeperPlayers:players,verifiedAt:now});

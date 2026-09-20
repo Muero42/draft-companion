@@ -137,6 +137,10 @@ for(const [status,reason] of [[401,'HTTP_401'],[403,'HTTP_403'],[404,'HTTP_404']
   assert.throws(()=>api.deriveSleeperNflWeek({season:'2025',season_type:'regular',week:7},2026),error=>error.code==='SLEEPER_SEASON_MISMATCH');
   assert.throws(()=>api.deriveSleeperNflWeek({season:'2026',season_type:'pre',week:0},2026),error=>error.code==='SLEEPER_NOT_REGULAR_SEASON');
 }
+{
+  const api=runtime({fetchImpl:async()=>response(502,{error:'sanitized',failureType:'UPSTREAM_HTTP_ERROR',upstreamStatus:403})}),game=await api.runCanonicalGameContextDiagnostic({season:2026,week:2});
+  assert.equal(game.httpStatus,502);assert.equal(game.upstreamStatus,403);assert.equal(game.failureType,'UPSTREAM_HTTP_ERROR');assert.equal(game.status,'UNAVAILABLE');assert.equal(game.validation,'INCOMPLETE_WEEK');
+}
 
 {
   const counts={QB:24,RB:60,WR:70,TE:24},players={};let next=1000;
