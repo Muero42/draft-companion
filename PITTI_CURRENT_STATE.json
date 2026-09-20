@@ -796,7 +796,7 @@
     "completed_recent": [
       {
         "id": "rc4206-pr191-exact-head-pass",
-        "result": "PASS at 46b0f036e575a63849d09f1d2cc07b3b3384dcf6 / tree 52ba62b959d6f3f0c5740b387c62f3133becdf07: guardrails, behavioral contract, candidate package, isolated cloud validation and Cloudflare preview all green; package SHA-256 3b8c416f0a9830b455815b52c55e912cf7d23c59c59532cb01404b3626c17cd5. PR #191 remains Draft/unmerged and main remains 1fe6821115e1af2baa08a53b477601add856db28.",
+        "result": "PASS at reviewed runtime head 46b0f036e575a63849d09f1d2cc07b3b3384dcf6 / tree 52ba62b959d6f3f0c5740b387c62f3133becdf07: guardrails, behavioral contract, candidate package, isolated cloud validation and Cloudflare preview all green. 17-file package/re-extraction PASS; ZIP hashes are run-scoped/noncanonical and two runs produced different archive hashes with byte-identical extracted runtime files. PR #191 remains Draft/unmerged and main remains 1fe6821115e1af2baa08a53b477601add856db28.",
         "at": "2026-09-20T15:23:00Z"
       },
       {
@@ -1198,8 +1198,6 @@
     "head_sha": "46b0f036e575a63849d09f1d2cc07b3b3384dcf6",
     "tree_sha": "52ba62b959d6f3f0c5740b387c62f3133becdf07",
     "preview_url": "https://d0767675.draft-companion.pages.dev",
-    "package_sha256": "3b8c416f0a9830b455815b52c55e912cf7d23c59c59532cb01404b3626c17cd5",
-    "package_artifact_id": 10607243760,
     "exact_head_checks": {
       "guardrails": "PASS",
       "behavioral_contract": "PASS",
@@ -1218,6 +1216,22 @@
     "merge_authorized": false,
     "production_deployment_authorized": false,
     "physical_device_accepted": false,
-    "observed_at": "2026-09-20T15:23:00Z"
+    "observed_at": "2026-09-20T15:23:00Z",
+    "package_reextract": {
+      "status": "PASS_17_RUNTIME_FILES_BYTE_EXACT",
+      "archive_identity_semantics": "RUN_ENVIRONMENT_SCOPED_NONCANONICAL",
+      "reviewed_runtime_head_observation": {
+        "head_sha": "46b0f036e575a63849d09f1d2cc07b3b3384dcf6",
+        "artifact_id": 10607243760,
+        "observed_inner_zip_sha256": "3b8c416f0a9830b455815b52c55e912cf7d23c59c59532cb01404b3626c17cd5"
+      },
+      "checkpoint_head_observation": {
+        "head_sha": "436050a0a8bd45564d2c544a94d5592860598353",
+        "artifact_id": 10607044345,
+        "observed_inner_zip_sha256": "2f2e9cce9498db1d9c4bc43c8e5585116ba776c58eb4aaf925577da579184c0b"
+      },
+      "cross_run_runtime_file_bytes_equal": true,
+      "note": "Archive SHA differs across runs because ZIP identity is noncanonical; all 17 runtime filenames and extracted file bytes were independently compared and are identical."
+    }
   }
 }
