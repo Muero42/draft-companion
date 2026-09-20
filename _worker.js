@@ -21,8 +21,8 @@ function espnWeekCandidates(season,week){
   const base='https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard';
   return[
     `${base}?dates=${season}&seasontype=2&week=${week}&limit=100`,
-    `${base}?season=${season}&seasontype=2&week=${week}&limit=100`,
-    `${base}?dates=${season}&season=${season}&seasontype=2&week=${week}&limit=100`
+    `${base}?week=${week}&seasontype=2&limit=100`,
+    `${base}?season=${season}&week=${week}&seasontype=2&limit=100`
   ];
 }
 async function handleNflWeekContext(request,url){
