@@ -23,6 +23,7 @@ for(const position of evidence.POSITIONS){
   const expert_pub=Object.fromEntries(requested.map(x=>[x.id,x.site]));
   selectedPayloads[position]={
     providerPayload:{season,week,position_id:position,scoring:'HALF',filters:ids.join(':'),total_experts:ids.length,expert_name,expert_pub,last_updated:'09/20',players:structuredClone(rows)},
+    providerResponsePresent:true,
     requestProvenance:{season,week,position,scoring:'HALF',experts:'show',requestedExpertIds:ids},
     requestedExperts:requested,
     configuredExpertNames:[...expertNames[position]],
@@ -87,6 +88,21 @@ const fewRejected=evidence.selectedWeeklyRankLane(tooFew,{season,week,scoring:'H
 assert.equal(fewRejected.lane.coverage.positions.QB.status,'UNAVAILABLE');
 assert.equal(fewRejected.lane.coverage.positions.QB.reason,'INSUFFICIENT_SELECTED_EXPERTS');
 assert.equal(fewRejected.records.filter(row=>row.position==='QB').length,0);
+
+// A missing current selected-rank response may retain still-fresh same-week prior
+// selected evidence, but a contradictory current response must purge that position.
+const priorSelected=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',selectedRankingPayloads:selectedPayloads,sleeperPlayers:players,verifiedAt:now});
+assert(priorSelected.records.some(row=>row.metric==='weekly_rank'&&row.position==='QB'));
+const absentCurrent=structuredClone(selectedPayloads);
+absentCurrent.QB={...absentCurrent.QB,providerPayload:null,providerResponsePresent:false};
+const retained=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',selectedRankingPayloads:absentCurrent,sleeperPlayers:players,priorSnapshot:priorSelected,verifiedAt:now+1000});
+assert.equal(retained.lanes.pittiSelectedWeeklyRanks.coverage.positions.QB.responsePresent,false);
+assert(retained.records.some(row=>row.metric==='weekly_rank'&&row.position==='QB'),'fresh prior selected QB ranks must survive a missing current provider response');
+const contradictoryCurrent=structuredClone(selectedPayloads);
+contradictoryCurrent.QB.providerPayload.week=week+1;
+const purged=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',selectedRankingPayloads:contradictoryCurrent,sleeperPlayers:players,priorSnapshot:priorSelected,verifiedAt:now+1000});
+assert.equal(purged.lanes.pittiSelectedWeeklyRanks.coverage.positions.QB.responsePresent,true);
+assert(!purged.records.some(row=>row.metric==='weekly_rank'&&row.position==='QB'),'contradictory current selected QB response must purge prior rank evidence');
 
 // Broad ECR is retained only as an explicitly separate stabilizer lane.
 const broad=evidence.weeklyRankLane(broadPayloads,{season,week,scoring:'HALF_PPR',sleeperPlayers:players,verifiedAt:now});
