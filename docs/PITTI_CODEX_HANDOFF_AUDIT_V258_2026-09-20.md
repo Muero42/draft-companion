@@ -1,6 +1,6 @@
 # PITTI v258 Production authority audit — 2026-09-20
 
-Generation: `20260920T1011Z-v258`
+Generation: `20260920T1011Z-v258`\n\nVersion: `v11.8.0-rc4.205`
 
 ## Verified external authority
 
