@@ -75,7 +75,7 @@
     "docs/archive/rc462-decision-ui.yml.historical": "500f06c436bb1face6432f5ad030ef4c4d82ddfe",
     "docs/archive/rc463-mock-live-parity.yml.historical": "3934ca7c8f268cf5ae04f289083ba4b7a8690657",
     "dst-k-season-stream.js": "b9725f304d9aa5e3f16ca8828add4cc2952a2295",
-    "game-context-v1.js": "642faf9e223b4263b51d6b72e940c98f1c915ab3",
+    "game-context-v1.js": "3b0f87670e105bd39efa406f3372f956ef6c8aba",
     "index.html": "a884289bd182fa9fd5186475605d8ca14aa8ac4f",
     "lineup-start-sit-v2.js": "bc75e25175d99c33804b6976f95153e5ba83e570",
     "live-surface-v3.js": "f2b718382d9d36ef38cfeb281e7348ba337c459e",
@@ -145,7 +145,7 @@
     "tools/season-ranking-freshness-regression.mjs": "422d99a34f369c0d0cda05bf1be26e6d176919a9",
     "tools/season-selected-weekly-panel-regression.mjs": "3f7b8f55f1119778d66c2a679d9a79795c07dc4b",
     "tools/season-service-worker-cache-regression.mjs": "f5a313e26fc93ecbe6768b0f60a01df67d21bb94",
-    "tools/season-startsit-weekly-context-regression.mjs": "20f17df2ec432a79461fa8cfe6885488398bc2c4",
+    "tools/season-startsit-weekly-context-regression.mjs": "3dbb64d7dc232b1ca618860fa9405135b387b892",
     "tools/season-trade-team-needs-v2-regression.mjs": "aa1f2ffc3e585a73ffd5c1c4a8d42e270a6cef5b",
     "tools/season-waiver-team-needs-v3-regression.mjs": "99af1927a7d96f779ca47a617d5e0f25e1fd2dd2",
     "tools/season-waiver-trade-v1-regression.mjs": "e56f00a5f0c8bbc8d618b64d7b75ec4019074397",
@@ -211,7 +211,7 @@
     "package_reextract_17_files": true
   },
   "exact_gate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR",
-  "note": "v260 remains canonical. PR #191 rc4.206 candidate bytes are resealed after the exact broad-ECR metric-label correction and the distinct documented ESPN week-variant fallback refinement. No merge, Production deployment, device acceptance, or Team Total source is claimed.",
+  "note": "v260 remains canonical. PR #191 rc4.206 candidate is resealed after adversarial review hardened consumer-side game-context completeness/uniqueness validation, while selected PITTI ranks remain exact-ID and broad ECR remains distinct. No merge or Production/device acceptance is claimed.",
   "integrity_normalization": "UTF8_LF_TEXT",
   "updated_at": "2026-09-20T11:00:00Z"
 }
