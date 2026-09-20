@@ -91,6 +91,7 @@ assert.equal(fewRejected.records.filter(row=>row.position==='QB').length,0);
 const broad=evidence.weeklyRankLane(broadPayloads,{season,week,scoring:'HALF_PPR',sleeperPlayers:players,verifiedAt:now});
 assert.equal(broad.lane.status,'AVAILABLE');
 assert.equal(broad.lane.panelStatus,'BROAD_CONSENSUS_ONLY');
+assert.equal(broad.lane.metric,'broad_weekly_ecr_rank');
 assert(broad.records.every(row=>row.metric==='broad_weekly_ecr_rank'&&row.sourceId==='fantasypros_weekly_ecr'));
 
 console.log('SEASON_SELECTED_WEEKLY_PANEL_REGRESSION_PASS');
