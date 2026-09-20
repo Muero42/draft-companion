@@ -225,7 +225,7 @@
       else if(String(payload?.position_id??payload?.position??position).toUpperCase()!==position)reason='WRONG_POSITION';
       else if(scoring(payload?.scoring??payload?.format??scoringInput)!==normalizedScoring)reason='WRONG_SCORING';
       else if(!players)reason='MISSING_PLAYERS';
-      else if(!sameIds(providerFilterIds,requestedIds))reason='FILTER_IDENTITY_MISMATCH';
+      else if(providerFilterIds.length&&!sameIds(providerFilterIds,requestedIds))reason='FILTER_IDENTITY_MISMATCH';
       else if(!membership.length||unexpectedMembership.length||!Number.isFinite(totalExperts)||totalExperts!==membership.length)reason='UNPROVEN_EXPERT_IDENTITY';
       else if(actualMembership.length<minimumExperts)reason='INSUFFICIENT_SELECTED_EXPERTS';
       else if(players.some(row=>String(row?.position_id??row?.player_position_id??row?.position??'').toUpperCase()!==position))reason='WRONG_POSITION';
