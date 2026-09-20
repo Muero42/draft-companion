@@ -1,13 +1,13 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260920T1100Z-v260",
-  "updated_at": "2026-09-20T11:00:00Z",
+  "handoff_generation": "20260920T1624Z-v262",
+  "updated_at": "2026-09-20T16:24:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.205",
+    "source_candidate": "v11.8.0-rc4.206",
     "git_identity_rule": "Canonical main identity and candidate containment are freshly verified externally; no commit or mutable PR state is immutable checkpoint authority.",
     "reconciled_base_main": "DYNAMIC_EXTERNAL_EVIDENCE",
     "postmerge": {
@@ -531,7 +531,7 @@
       "checkpoint": "v260",
       "observed_at": "2026-09-20T11:00:00Z",
       "authorized": true,
-      "status": "DIAGNOSIS_COMPLETE_NO_RUNTIME_REPAIR_AUTHORIZED",
+      "status": "SUPERSEDED_BY_AUTHORIZED_RC4206_SOURCE_REPAIR_MERGED",
       "expert_ranks": "PHYSICAL_AVAILABLE_BROAD_WEEKLY_ECR_ALL_QB_RB_WR_TE",
       "pitti_panel": {
         "status": "UNAVAILABLE_ROOT_CAUSE_IDENTIFIED",
@@ -556,14 +556,54 @@
         "root_cause": "Opponent, kickoff, venue/roof and event weather depend on complete canonical game-context events. Upstream schedule 403 therefore blocks the lane. Weather additionally remains fail-closed unless a fresh event-bound forecast is present.",
         "bounded_repair": "Restore verified game context first; retain existing fresh-event weather requirements and no-weather-needed dome semantics."
       }
+    },
+    "rc4206_pr191_source_merge": {
+      "checkpoint": "v262",
+      "version": "v11.8.0-rc4.206",
+      "pr": 191,
+      "status": "MERGED/CANONICAL_SOURCE_NOT_PRODUCTION_VERIFIED",
+      "base_head": "1fe6821115e1af2baa08a53b477601add856db28",
+      "reviewed_head": "888b0a8f62608ff2afabf3564409f0198f78e8fd",
+      "merge_commit": "d5954d66877df877f950a4a41f32baad59a66748",
+      "merged_tree": "07248a6ac3c5f8872893a2c805155be8a1a5e806",
+      "canonical_branch": "main",
+      "exact_head_ci": [
+        "PITTI Project Guardrails PASS",
+        "PITTI release contract v2 PASS",
+        "PITTI candidate package gate PASS",
+        "PITTI cloud validation PASS",
+        "Cloudflare Pages preview PASS"
+      ],
+      "postmerge_ci_observation": {
+        "commit": "d5954d66877df877f950a4a41f32baad59a66748",
+        "cloudflare_pages": "PASS",
+        "project_guardrails": "FAIL_STALE_V260_AUTHORITY_CONTRACT",
+        "release_contract_v2": "FAIL_STALE_V260_AUTHORITY_CONTRACT",
+        "candidate_package": "FAIL_STALE_V260_AUTHORITY_CONTRACT",
+        "cloud_validation": "FAIL_STALE_V260_AUTHORITY_CONTRACT",
+        "classification": "AUTHORITY_CHECKPOINT_DRIFT_AFTER_AUTHORIZED_SOURCE_MERGE_NOT_RUNTIME_ROLLBACK_EVIDENCE"
+      },
+      "repair_scope": "Selected weekly PITTI-panel exact expert-ID lane plus bounded ESPN-hosted canonical game-context acquisition and stronger consumer completeness/uniqueness validation. Broad ECR stays separate; Team Total remains fail-closed unavailable.",
+      "production_deployment_proven": false,
+      "device_observation_proven": false,
+      "device_acceptance_proven": false
+    },
+    "independent_evidence_lane_repair": {
+      "status": "SOURCE_MERGED_NOT_PRODUCTION_OR_DEVICE_VERIFIED",
+      "broad_expert_ranks": "AVAILABLE_PREEXISTING",
+      "pitti_panel": "SOURCE_IMPLEMENTED_EXACT_ID_SELECTED_WEEKLY_PANEL_PHYSICAL_UNVERIFIED",
+      "canonical_game_context": "SOURCE_IMPLEMENTED_BOUNDED_ESPN_VARIANTS_PHYSICAL_UNVERIFIED",
+      "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
+      "weather_opponent": "DEPENDENT_ON_PHYSICAL_GAME_CONTEXT_VERIFICATION",
+      "source_merge": "d5954d66877df877f950a4a41f32baad59a66748"
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.195",
-    "season_candidate": "v11.8.0-rc4.205 Production deployed and bounded physical PASS for PR #186 Lawrence mapping + game-context failure provenance",
+    "season_candidate": "v11.8.0-rc4.206 source-merged via PR #191; Production/device verification not yet authorized",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "android_acceptance_pending": false,
-    "test_challenger": "v11.8.0-rc4.205",
+    "test_challenger": "v11.8.0-rc4.206",
     "ci": {
       "status": "PR176_EXACT_HEAD_CI_PASS_SOURCE_MERGED_NOT_DEPLOYED",
       "validated_code_head": "fe8b6a397dac2b60522cb959ffdb225b767fbcae",
@@ -575,11 +615,11 @@
       "current_exact_main_head_ci": "MERGE_COMMIT_CONTAINS_EXACT_HEAD; REVERIFY_LIVE_BEFORE_PROMOTION"
     },
     "android_accepted": "v11.8.0-rc4.195",
-    "preview_candidate": "v11.8.0-rc4.205 Production deployed at exact main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80; branch-preview evidence is historical",
+    "preview_candidate": "v11.8.0-rc4.206 PR #191 exact-head preview/CI PASS; source merged at d5954d66877df877f950a4a41f32baad59a66748; Production/device not claimed",
     "android_authority": "v11.8.0-rc4.205 physical PASS for bounded PR #186 Lawrence mapping + game-context failure-provenance repair; PITTI-Panel, Team Total, and game/opponent/weather data remain unavailable/fail-closed",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
-    "deployed_pages_app_byte_parity_with_main": true,
+    "deployed_pages_app_byte_parity_with_main": false,
     "deployed_pages_head": "66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1",
     "installed_android": "v11.8.0-rc4.205",
     "latest_android_observed": "v11.8.0-rc4.205",
@@ -602,7 +642,7 @@
       ]
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.205",
-    "source_candidate_status": "PHYSICAL_PASS_BOUNDED_PR186_LAWRENCE_GAME_CONTEXT_REPAIR",
+    "source_candidate_status": "SOURCE_MERGED_NOT_PRODUCTION_VERIFIED",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -665,11 +705,11 @@
     },
     "package_reference_scope": "rc4.204 source-byte-exact 17-file package/re-extraction validation; archive SHA is run/environment-scoped and is not cross-environment identity",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.205",
+      "version": "v11.8.0-rc4.206",
       "files": 17,
       "sha256": null,
-      "status": "SOURCE_AUTHORITY_RESEALED_PACKAGE_REVALIDATION_REQUIRED",
-      "source_scope": "SOURCE_IN_THIS_TREE; source-byte parity independently verified; canonical containment dynamic",
+      "status": "SOURCE_MERGED_RECONCILIATION_PENDING_EXACT_HEAD_CI",
+      "source_scope": "RUNTIME_SOURCE_MERGED_AT_d5954d66877df877f950a4a41f32baad59a66748_PRODUCTION_NOT_CLAIMED",
       "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_OBSERVATION_NOT_CANONICAL_IDENTITY",
       "validation_observed_archive_sha256": "d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3"
     },
@@ -688,11 +728,13 @@
     },
     "independent_evidence_lane_status": {
       "broad_expert_ranks": "AVAILABLE",
-      "pitti_panel": "UNAVAILABLE_ROOT_CAUSE_IDENTIFIED",
+      "pitti_panel": "SOURCE_REPAIR_MERGED_PHYSICAL_UNVERIFIED",
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
-      "game_context": "UNAVAILABLE_ESPN_UPSTREAM_HTTP_403",
-      "opponent_weather": "UNAVAILABLE_DEPENDENT_ON_GAME_CONTEXT"
-    }
+      "game_context": "SOURCE_REPAIR_MERGED_PHYSICAL_UNVERIFIED",
+      "opponent_weather": "UNAVAILABLE_PENDING_PHYSICAL_GAME_CONTEXT_VERIFICATION"
+    },
+    "mainGhPagesParity": false,
+    "deployedPagesAppByteParityWithMain": false
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -731,8 +773,8 @@
     "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
-    "status": "INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS_COMPLETE_BOUNDED_REPAIR_REQUIRES_SEPARATE_AUTHORIZATION",
-    "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR"
+    "status": "RC4206_SOURCE_MERGED_AUTHORITY_RECONCILIATION_PREPARED_PRODUCTION_REQUIRES_SEPARATE_AUTHORIZATION",
+    "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -788,12 +830,17 @@
     "ready": [],
     "waiting_external": [
       {
-        "id": "pr191-explicit-merge-authorization",
-        "reason": "Final rc4.206 runtime review and exact-head automated validation passed. Merging PR #191 changes canonical main and triggers Cloudflare Production deployment, so explicit user approval is required."
+        "id": "rc4206-production-authorization",
+        "reason": "rc4.206 source is merged/reconciled; Production deployment requires separate authorization and exact deployment verification."
       }
     ],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "rc4206-pr191-source-merge",
+        "result": "PR #191 merged reviewed head 888b0a8f62608ff2afabf3564409f0198f78e8fd as canonical source d5954d66877df877f950a4a41f32baad59a66748; runtime repair remains non-Production until separately authorized.",
+        "at": "2026-09-20T16:24:00Z"
+      },
       {
         "id": "rc4206-pr191-final-runtime-pass",
         "result": "PASS: reviewed runtime c18c99edbbe28dbc55f1396f4870e319ed609917 / tree afecd5370c9209079ebaa18a3384e57106e595ff; validation head 44401e32c914ba9da41d19add7ff48cc26bd249d differs only by PITTI_HANDOFF_SEAL.json and passed Guardrails, Behavioral Contract, Candidate Package, PITTI Cloud Validation (STRICT_SUITE 232/232, isolated validation PASS) and Cloudflare Pages Preview. Canonical main remains 1fe6821115e1af2baa08a53b477601add856db28; PR #191 remains Draft/unmerged.",
@@ -942,113 +989,29 @@
         "id": "rc4181-revalidation-core",
         "result": "PASS on 2fe3c9cbcae591dfad775c4fe2a06b8ba23533ac: Candidate Package, Release Contract v2, rc4.82 and rc4.83. Artifact sha256:797eeb80ad173be458389e2c88682513d89923e2eed1f0c966f11c9f14f180c2.",
         "at": "2026-09-02T06:01:30Z"
-      },
-      {
-        "id": "rc4177-strict-validation",
-        "result": "PASS on head aa7f735041b6d867d7e03ee025a3d48782ac120e: candidate package, release contract v2, project guardrails, rc4.82 and rc4.83 all PASS. Artifact 9819382492 digest sha256:994faa3f4da07d9fb073ded83833955f82baeb41e34c99536a11a69ef1b61d05.",
-        "at": "2026-09-01T20:35:08Z"
-      },
-      {
-        "id": "auto-protocol-hardening",
-        "result": "Persistent AUTO queue/state-machine + no-output guard implemented and CI-verified: Project Guardrails PASS, release-contract-v2 PASS, candidate package PASS on head b3745e4c679beb8929f8485d89798bb9d2158007.",
-        "at": "2026-09-01T09:20:00Z"
-      },
-      {
-        "id": "rc4160-ci-revalidate",
-        "result": "All three CI gates PASS on head 1abc5a1284eaa93136b5bcba8b9f9f33aa2e982c before Waiver v2 hardening.",
-        "at": "2026-09-01T09:24:00Z"
-      },
-      {
-        "id": "waiver-v2-horizon-verify",
-        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
-        "at": "2026-09-01T09:45:00Z"
-      },
-      {
-        "id": "waiver-v2-regression-test",
-        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
-        "at": "2026-09-01T09:45:00Z"
-      },
-      {
-        "id": "trade-offer-engine",
-        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
-        "at": "2026-09-01T09:45:00Z"
-      },
-      {
-        "id": "weekly-lineup-model",
-        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
-        "at": "2026-09-01T09:45:00Z"
-      },
-      {
-        "id": "special-teams-season-panel",
-        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
-        "at": "2026-09-01T09:45:00Z"
-      },
-      {
-        "id": "season-increments-ci-finalize",
-        "result": "PASS on current head 2abc6b004cde4b19b9ac01786817fa1d8f9de462: Candidate Package PASS, Release Contract v2 PASS, Project Guardrails job PASS.",
-        "at": "2026-09-01T09:45:00Z"
-      },
-      {
-        "id": "rc4160-zero-fa-ci",
-        "result": "PASS head af07a1a6f10e9d891253f82be80703958fc88acf: all three CI gates success. Device screenshot had confirmed live roster/IR, but exposed 0-ranked-FA false HOLD; fixed fail-closed.",
-        "at": "2026-09-01T09:56:00Z"
-      },
-      {
-        "id": "mevis-decision-research-final",
-        "result": "Evidence locked: Mevis W1 source dispersion preserved; Bigsby/Spears/Gainwell ordering based on role/ceiling only; acquisition-recency bias prohibited.",
-        "at": "2026-09-01T10:23:00Z"
-      },
-      {
-        "id": "mevis-drop-gate-ci",
-        "result": "PASS on head bb91fa76a248e55599331d4b9b3513bfaa2b5b55: Project Guardrails, candidate package and release contract all successful.",
-        "at": "2026-09-01T10:26:00Z"
-      },
-      {
-        "id": "mevis-waiver-ui-ci",
-        "result": "PASS on head bb91fa76a248e55599331d4b9b3513bfaa2b5b55: Project Guardrails, candidate package and release contract all successful.",
-        "at": "2026-09-01T10:26:00Z"
-      },
-      {
-        "id": "rc4160-device-roster-canary",
-        "result": "PARTIAL PASS from device screenshot: live Sleeper roster auto-synced to 16 players; Harrison Mevis present; Tank Bigsby absent; Charbonnet remains Reserve/IR. Therefore app independently detected the actual Mevis transaction/drop without user disclosure. Remaining failure: FA-vs-Roster still reports 0 ranked free agents, so FA-pool end-to-end is NOT accepted.",
-        "at": "2026-09-01T10:35:00Z"
-      },
-      {
-        "id": "fa-pool-bootstrap-ci",
-        "result": "PASS head 200250560c8218b8d64dafbbca9ea721597ce854: all three CI gates successful. Root cause was unguarded startup bootstrap zero-rank join; fixed fail-closed.",
-        "at": "2026-09-01T10:42:00Z"
-      },
-      {
-        "id": "rc4161-selftest-ci",
-        "result": "PASS head b307fda15a5c20d63940e1c746a876ed7c49b3ef: release contract, project guardrails and candidate package all success; executable season FA ownership regression included.",
-        "at": "2026-09-01T10:56:00Z"
-      },
-      {
-        "id": "v245-rc4198-postmerge-authority-reconciliation",
-        "result": "rc4.198 current source/main and 17-file packaged-only authority reconciled; production/device remain rc4.196, rc4.195 prior accepted rollback; no runtime/product bytes changed."
       }
     ],
     "stop_evaluation": {
       "allowed": true,
-      "code": "DECISION_REQUIRED",
-      "reason": "All autonomous bounded-repair, adversarial review, packaging, preview and exact-head validation work is complete; merge/Production deployment requires explicit user approval."
+      "code": "PROJECT_MILESTONE_REACHED",
+      "reason": "Source merge and authority reconciliation are complete; Production promotion is a separately authorized gate."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260920T1100Z-v260",
+    "generation": "20260920T1624Z-v262",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 remains Production/device accepted for the bounded PR #186 repair scope (RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE). Independent Evidence Lane Diagnosis is complete. Broad current weekly Expert-Ranks are physically AVAILABLE. PITTI-Panel remains unavailable because Season weekly ingestion uses broad consensus only while the selected-panel machinery is still draft/preseason; FantasyPros supports exact expert filters and rankings/experts, so a bounded current-week selected-expert pipeline is technically viable but not yet implemented. Canonical game-context data remains unavailable because the Cloudflare Worker receives ESPN upstream HTTP 403; the repaired failure-provenance contract is correct. Team Total remains unavailable because no approved runtime total+spread source exists, although the existing impliedTeamTotal helper can consume a future verified same-event pair. Opponent/weather remains dependent on restored complete game context and fresh event forecast. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR. No runtime repair, deployment, fantasy transaction, or Pitti Watcher mutation is authorized by this diagnosis checkpoint.",
+    "resume": "Freshly verify canonical main and v262 authority. v11.8.0-rc4.206 is source-merged via PR #191 at d5954d66877df877f950a4a41f32baad59a66748; Production/device authority remains rc4.205 (RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE) until separately authorized and verified. Selected PITTI weekly panel and bounded ESPN game-context repairs are source-implemented but physically unverified. Team Total remains unavailable. Next gate: ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS"
+    "refresh_scope": "RC4206_POSTMERGE_AUTHORITY_RECONCILIATION"
   },
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-  "gate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR",
-  "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR",
-  "handoffGeneration": "20260920T1100Z-v260",
+  "gate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
+  "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
+  "handoffGeneration": "20260920T1624Z-v262",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -1247,5 +1210,6 @@
     "reviewed_runtime_head_sha": "c18c99edbbe28dbc55f1396f4870e319ed609917",
     "reviewed_runtime_tree_sha": "afecd5370c9209079ebaa18a3384e57106e595ff",
     "exact_head_validation_sha": "44401e32c914ba9da41d19add7ff48cc26bd249d"
-  }
+  },
+  "updatedAt": "2026-09-20T16:24:00Z"
 }
