@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260920T0835Z-v257",
-  "updated_at": "2026-09-20T08:35:00Z",
+  "handoff_generation": "20260920T1011Z-v258",
+  "updated_at": "2026-09-20T10:11:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -362,17 +362,39 @@
         "Cloudflare Pages preview PASS"
       ],
       "preview_proven": true,
-      "production_deployment_proven": false,
+      "production_deployment_proven": true,
       "device_observation_proven": false,
       "device_acceptance_proven": false,
-      "repair_scope": "Canonical game-context upstream failure classification, canonical game-context consumer path, Trevor Lawrence JAC/JAX team alias mapping, and deterministic regression fixture time. Production weekly freshness/chronology semantics unchanged."
+      "repair_scope": "Canonical game-context upstream failure classification, canonical game-context consumer path, Trevor Lawrence JAC/JAX team alias mapping, and deterministic regression fixture time. Production weekly freshness/chronology semantics unchanged.",
+      "production_deployment_commit": "6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80",
+      "production_deployment_id": "a3342287-3b3b-4961-9819-f2fac696b743"
+    },
+    "rc4205_pr186_production_deployment": {
+      "checkpoint": "v258",
+      "version": "v11.8.0-rc4.205",
+      "pr": 186,
+      "source_repair_merge": "01ceef33dba6d79be48461d85532a1e2a39bd9aa",
+      "reviewed_head": "9c407d5a705713a630d7e62f020b72b48169d131",
+      "source_tree": "d1c9e2660e60d305a8a1f4727404d676e83c2164",
+      "deployed_main": "6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80",
+      "deployed_tree": "369226b85ff4d51da480720687fb369c94344578",
+      "deployment_id": "a3342287-3b3b-4961-9819-f2fac696b743",
+      "cloudflare_check_run_id": 106050669714,
+      "status": "VERIFIED_SUCCESS",
+      "branch": "main",
+      "exact_commit_deployment_proven": true,
+      "runtime_file_identity_with_source_repair": true,
+      "arbitrary_public_byte_parity_proven": false,
+      "physical_device_observation_proven": false,
+      "physical_device_acceptance_proven": false,
+      "evidence_scope": "GitHub Cloudflare Pages check proves successful deployment for exact main commit. Runtime files app.js, _worker.js and weekly-evidence-v2.js are byte-identical to the reviewed PR #186 source repair merge. Arbitrary served-byte parity was not independently fetched."
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.195",
-    "season_candidate": "v11.8.0-rc4.205 merged source at main@01ceef33dba6d79be48461d85532a1e2a39bd9aa; NOT Production-deployed or newly device-observed/accepted",
+    "season_candidate": "v11.8.0-rc4.205 Production deployed at exact main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80; PR #186 Lawrence/game-context repair awaiting physical device verification",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
-    "android_acceptance_pending": false,
+    "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.205",
     "ci": {
       "status": "PR176_EXACT_HEAD_CI_PASS_SOURCE_MERGED_NOT_DEPLOYED",
@@ -385,12 +407,12 @@
       "current_exact_main_head_ci": "MERGE_COMMIT_CONTAINS_EXACT_HEAD; REVERIFY_LIVE_BEFORE_PROMOTION"
     },
     "android_accepted": "v11.8.0-rc4.195",
-    "preview_candidate": "v11.8.0-rc4.205 PR #186 exact-head branch preview PASS; preview is non-production",
+    "preview_candidate": "v11.8.0-rc4.205 Production deployed at exact main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80; branch-preview evidence is historical",
     "android_authority": "v11.8.0-rc4.205 physically verified PASS for bounded Sleeper timeout repair; independent evidence lanes remain unavailable/fail-closed",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "cdf7510034ffea179accd1e855f351775cef492f",
+    "deployed_pages_head": "6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80",
     "installed_android": "v11.8.0-rc4.205",
     "latest_android_observed": "v11.8.0-rc4.205",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
@@ -410,7 +432,7 @@
       ]
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.205",
-    "source_candidate_status": "SOURCE_MERGED_AWAITING_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT",
+    "source_candidate_status": "PRODUCTION_DEPLOYED_AWAITING_PR186_PHYSICAL_DEVICE_VERIFICATION",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -481,17 +503,18 @@
       "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_OBSERVATION_NOT_CANONICAL_IDENTITY",
       "validation_observed_archive_sha256": "d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3"
     },
-    "deployment_parity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; ARBITRARY_BYTE_PARITY_NOT_PROVEN",
+    "deployment_parity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; RUNTIME_SOURCE_BLOBS_MATCH_REVIEWED_REPAIR; ARBITRARY_PUBLIC_BYTE_PARITY_NOT_PROVEN",
     "deployed_production_version": "v11.8.0-rc4.205",
     "production_deployment": {
       "version": "v11.8.0-rc4.205",
-      "source_commit": "cdf7510034ffea179accd1e855f351775cef492f",
-      "status": "VERIFIED_SUCCESS_FROM_AUTHORIZED_HANDOFF",
+      "source_commit": "6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80",
+      "status": "VERIFIED_SUCCESS_CLOUDFLARE_PAGES_EXACT_COMMIT",
       "branch": "main",
-      "deployment_id": null,
-      "device_acceptance_proven": true,
-      "evidence_scope": "Prior v11.8.0-rc4.205 Production runtime source cdf7510034ffea179accd1e855f351775cef492f remains verified and physically accepted only for the bounded Sleeper timeout repair; main@01ceef33dba6d79be48461d85532a1e2a39bd9aa has no proven Production deployment yet.",
-      "device_acceptance_scope": "BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR_ONLY"
+      "deployment_id": "a3342287-3b3b-4961-9819-f2fac696b743",
+      "cloudflare_check_run_id": 106050669714,
+      "device_acceptance_proven": false,
+      "evidence_scope": "Exact current main 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80 received successful Cloudflare Pages deployment check 106050669714; PR #186 runtime source files remain byte-identical through the v257 authority-only merge. New PR #186 repair has not been physically/device verified.",
+      "device_acceptance_scope": "PR186_LAWRENCE_GAME_CONTEXT_REPAIR_PENDING"
     }
   },
   "real_draft": {
@@ -531,8 +554,8 @@
     "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
-    "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-    "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE"
+    "status": "PRODUCTION_DEPLOYED_AWAITING_PHYSICAL_DEVICE_VERIFICATION",
+    "nextGate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -551,7 +574,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "v11.8.0-rc4.205 canonical source at main@01ceef33dba6d79be48461d85532a1e2a39bd9aa from merged PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; NOT Production-proven. Production/device authority remains runtime-source main@cdf7510034ffea179accd1e855f351775cef492f with bounded physical PASS for Sleeper week-context timeout repair only. Independent evidence lanes remain unavailable/fail-closed.",
+  "source_authority": "v11.8.0-rc4.205 reviewed runtime/source repair is PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131, merge 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; current canonical main 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80 is its authority-only descendant and is successfully Cloudflare Production-deployed as deployment a3342287-3b3b-4961-9819-f2fac696b743. PR #186 repair has NOT yet been physically/device verified.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -588,12 +611,17 @@
     "ready": [],
     "waiting_external": [
       {
-        "id": "v257-postmerge-authority-exact-head-ci",
-        "reason": "Post-merge authority reconciliation PR exact-head CI must pass before any merge decision."
+        "id": "v258-production-authority-exact-head-ci",
+        "reason": "Production-authority reconciliation PR exact-head CI must pass before merge decision."
       }
     ],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "rc4205-pr186-production-deployment",
+        "result": "Cloudflare Pages exact-main deployment PASS for 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80; deployment a3342287-3b3b-4961-9819-f2fac696b743; device acceptance remains pending for PR #186 repair.",
+        "at": "2026-09-20T10:11:00Z"
+      },
       {
         "id": "pr186-source-merge",
         "result": "PR #186 merged as canonical main 01ceef33dba6d79be48461d85532a1e2a39bd9aa; tree d1c9e2660e60d305a8a1f4727404d676e83c2164; new main is source-only until separately authorized Production deployment is proven.",
@@ -806,24 +834,24 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "Post-merge authority reconciliation published to a non-production branch; exact-head remote CI is the remaining gate."
+      "reason": "Production deployment is proven; checkpoint reconciliation published to a non-production branch and exact-head CI is the remaining autonomous gate."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260920T0835Z-v257",
+    "generation": "20260920T1011Z-v258",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 source authority is merged through PR #186 at main@01ceef33dba6d79be48461d85532a1e2a39bd9aa, exact reviewed head 9c407d5a705713a630d7e62f020b72b48169d131, tree d1c9e2660e60d305a8a1f4727404d676e83c2164. This new main is NOT proven Production-deployed or device-observed. Current Production/device authority remains the prior v11.8.0-rc4.205 runtime source main@cdf7510034ffea179accd1e855f351775cef492f, physically verified only for the bounded Sleeper week-context timeout repair. Independent lanes remain unavailable/fail-closed: Expert-Ranks/Ranks, PITTI-Panel, QB projections, Team Total, and opponent/weather. PR #186 exact-head Project Guardrails, release contract v2, candidate package, PITTI cloud validation, and Cloudflare branch preview passed before merge. The deterministic cloud-gate fixture repair changed test time only; production 24-hour freshness/chronology remains unchanged. Next gate is ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE; no deployment, device action, fantasy transaction, or external communication is authorized by this checkpoint. Never claim newer Production/device evidence without fresh verification.",
+    "resume": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is now Cloudflare Production-deployed from exact main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80, deployment a3342287-3b3b-4961-9819-f2fac696b743, Cloudflare Pages check 106050669714 PASS. The underlying reviewed runtime/source repair remains PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131 merged as 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; runtime blobs are unchanged by the v257 authority-only merge to 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80. Exact-commit deployment identity is proven; arbitrary public served-byte parity was not independently fetched in this environment. No new physical/device observation of the PR #186 Lawrence/game-context repair exists yet. The prior physical PASS remains bounded to the earlier Sleeper week-context timeout repair only. Next gate: RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING. Physical verification must confirm the current app/runtime and specifically Lawrence QB projection mapping plus canonical game-context behavior without converting independent unavailable lanes into success. Never claim device acceptance without user-supplied physical evidence, and never claim a newer Library generation persisted unless files.list proves it.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "RC4.204_WEEKLY_PROJECTION_ROS_OMISSION_AFTER_RC4.203_PHYSICAL_FAIL"
+    "refresh_scope": "RC4.205_PR186_LAWRENCE_GAME_CONTEXT_PRODUCTION_DEPLOYED"
   },
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-  "gate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
-  "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
-  "handoffGeneration": "20260920T0835Z-v257",
+  "gate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING",
+  "nextGate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING",
+  "handoffGeneration": "20260920T1011Z-v258",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",

@@ -155,22 +155,22 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.205 Production/device authority remains runtime-source main@cdf7510034ffea179accd1e855f351775cef492f; bounded physical acceptance only. New canonical source main@01ceef33dba6d79be48461d85532a1e2a39bd9aa from PR #186 is not Production-proven.",
+    "productionControl": "v11.8.0-rc4.205 Cloudflare Production VERIFIED at exact current main 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80, deployment a3342287-3b3b-4961-9819-f2fac696b743; PR #186 repair physical/device verification pending",
     "androidAuthority": "v11.8.0-rc4.205 physically verified PASS for bounded Sleeper timeout repair; independent evidence lanes remain unavailable/fail-closed",
-    "sourceAuthority": "v11.8.0-rc4.205 canonical source main@01ceef33dba6d79be48461d85532a1e2a39bd9aa from merged PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; NOT Production-deployed or newly device accepted",
+    "sourceAuthority": "v11.8.0-rc4.205 reviewed runtime/source repair PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131, merge 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; current deployed main 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80 is authority-only descendant with identical runtime blobs",
     "latestPackageReextract": "rc4.204 source-byte-exact 17-file package; archive SHA run/environment-scoped",
     "latestPackageSha256": null,
     "packageReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployedPagesVersion": "v11.8.0-rc4.205",
     "deployedPagesAppByteParityWithMain": false,
-    "currentResearchGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
-    "exactNextAction": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 source authority is merged through PR #186 at main@01ceef33dba6d79be48461d85532a1e2a39bd9aa, exact reviewed head 9c407d5a705713a630d7e62f020b72b48169d131, tree d1c9e2660e60d305a8a1f4727404d676e83c2164. This new main is NOT proven Production-deployed or device-observed. Current Production/device authority remains the prior v11.8.0-rc4.205 runtime source main@cdf7510034ffea179accd1e855f351775cef492f, physically verified only for the bounded Sleeper week-context timeout repair. Independent lanes remain unavailable/fail-closed: Expert-Ranks/Ranks, PITTI-Panel, QB projections, Team Total, and opponent/weather. PR #186 exact-head Project Guardrails, release contract v2, candidate package, PITTI cloud validation, and Cloudflare branch preview passed before merge. The deterministic cloud-gate fixture repair changed test time only; production 24-hour freshness/chronology remains unchanged. Next gate is ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE; no deployment, device action, fantasy transaction, or external communication is authorized by this checkpoint. Never claim newer Production/device evidence without fresh verification.",
-    "runtimeVersion": "rc4.205 merged source main@01ceef33dba6d79be48461d85532a1e2a39bd9aa; Production/device remain prior runtime-source cdf7510034ffea179accd1e855f351775cef492f",
+    "currentResearchGate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING",
+    "exactNextAction": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is now Cloudflare Production-deployed from exact main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80, deployment a3342287-3b3b-4961-9819-f2fac696b743, Cloudflare Pages check 106050669714 PASS. The underlying reviewed runtime/source repair remains PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131 merged as 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; runtime blobs are unchanged by the v257 authority-only merge to 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80. Exact-commit deployment identity is proven; arbitrary public served-byte parity was not independently fetched in this environment. No new physical/device observation of the PR #186 Lawrence/game-context repair exists yet. The prior physical PASS remains bounded to the earlier Sleeper week-context timeout repair only. Next gate: RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING. Physical verification must confirm the current app/runtime and specifically Lawrence QB projection mapping plus canonical game-context behavior without converting independent unavailable lanes into success. Never claim device acceptance without user-supplied physical evidence, and never claim a newer Library generation persisted unless files.list proves it.",
+    "runtimeVersion": "rc4.205 Production deployed at main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80; PR #186 repair physical verification pending",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "2026-09-19 RC4.205_PHYSICAL_PASS_BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR; independent lanes unavailable",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
     "reconciledBaseMain": "DYNAMIC_EXTERNAL_EVIDENCE",
-    "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
+    "nextGate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING",
     "packageReferenceScope": "rc4.204 17-file source-byte parity; no cross-environment archive SHA identity",
     "localCandidatePackage": {
       "version": "v11.8.0-rc4.204",
@@ -184,18 +184,18 @@
     "deploymentParity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; ARBITRARY_BYTE_PARITY_NOT_PROVEN",
     "productionDeployment": {
       "version": "v11.8.0-rc4.205",
-      "sourceCommit": "cdf7510034ffea179accd1e855f351775cef492f",
-      "status": "VERIFIED_PRIOR_RUNTIME_NOT_CURRENT_MAIN",
+      "sourceCommit": "6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80",
+      "status": "VERIFIED_SUCCESS_CLOUDFLARE_PAGES_EXACT_COMMIT",
       "branch": "main",
-      "deploymentId": null,
-      "runtimeSourceCommit": "cdf7510034ffea179accd1e855f351775cef492f",
-      "deviceAcceptanceProven": true,
-      "deviceAcceptanceScope": "BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR_ONLY"
+      "deploymentId": "a3342287-3b3b-4961-9819-f2fac696b743",
+      "cloudflareCheckRunId": 106050669714,
+      "deviceAcceptanceProven": false,
+      "deviceAcceptanceScope": "PR186_LAWRENCE_GAME_CONTEXT_REPAIR_PENDING"
     }
   },
-  "currentGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
-  "handoffGeneration": "20260920T0835Z-v257",
-  "handoff_generation": "20260920T0835Z-v257",
+  "currentGate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING",
+  "handoffGeneration": "20260920T1011Z-v258",
+  "handoff_generation": "20260920T1011Z-v258",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -212,7 +212,7 @@
     "observedTransactionCanary": "HISTORICAL rc4.160 device: Harrison Mevis rostered, Tank Bigsby absent, Zach Charbonnet Reserve/IR",
     "rc4161Fix": "live FA ownership pool is independent from expert ranking hydration; zero ranked join must never imply HOLD",
     "regression": "tools/season-fa-ownership-regression.mjs is mandatory in candidate package gate",
-    "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
+    "nextGate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING",
     "leagueState": "Persist all ten Sleeper rosters plus manager mapping, starter/reserve/taxi, waiver position, FAAB used/remaining and current transaction-round evidence.",
     "waiverCompetition": "Opponent bid estimates are distributions/bands driven primarily by current roster need and remaining FAAB, with bounded current-season transaction and historical-manager priors.",
     "qb2SeasonException": "No generic in-season QB2 ban. Evaluate upside/value vs active roster cost; when D/ST is still missing, include the second future active drop and same-bye penalty.",
@@ -220,9 +220,9 @@
     "tradeValueEvidence": "Automatically ingest current Justin Boone/Yahoo weekly ROS charts server-side; QB=1QB, RB/WR/TE=HALF; require all positions, fresh provenance and unambiguous Sleeper mapping or fail closed.",
     "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
-  "currentResearchGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
-  "exactNextAction": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 source authority is merged through PR #186 at main@01ceef33dba6d79be48461d85532a1e2a39bd9aa, exact reviewed head 9c407d5a705713a630d7e62f020b72b48169d131, tree d1c9e2660e60d305a8a1f4727404d676e83c2164. This new main is NOT proven Production-deployed or device-observed. Current Production/device authority remains the prior v11.8.0-rc4.205 runtime source main@cdf7510034ffea179accd1e855f351775cef492f, physically verified only for the bounded Sleeper week-context timeout repair. Independent lanes remain unavailable/fail-closed: Expert-Ranks/Ranks, PITTI-Panel, QB projections, Team Total, and opponent/weather. PR #186 exact-head Project Guardrails, release contract v2, candidate package, PITTI cloud validation, and Cloudflare branch preview passed before merge. The deterministic cloud-gate fixture repair changed test time only; production 24-hour freshness/chronology remains unchanged. Next gate is ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE; no deployment, device action, fantasy transaction, or external communication is authorized by this checkpoint. Never claim newer Production/device evidence without fresh verification.",
+  "currentResearchGate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING",
+  "exactNextAction": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is now Cloudflare Production-deployed from exact main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80, deployment a3342287-3b3b-4961-9819-f2fac696b743, Cloudflare Pages check 106050669714 PASS. The underlying reviewed runtime/source repair remains PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131 merged as 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; runtime blobs are unchanged by the v257 authority-only merge to 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80. Exact-commit deployment identity is proven; arbitrary public served-byte parity was not independently fetched in this environment. No new physical/device observation of the PR #186 Lawrence/game-context repair exists yet. The prior physical PASS remains bounded to the earlier Sleeper week-context timeout repair only. Next gate: RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING. Physical verification must confirm the current app/runtime and specifically Lawrence QB projection mapping plus canonical game-context behavior without converting independent unavailable lanes into success. Never claim device acceptance without user-supplied physical evidence, and never claim a newer Library generation persisted unless files.list proves it.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
-  "updated_at": "2026-09-20T08:35:00Z"
+  "updated_at": "2026-09-20T10:11:00Z"
 }
