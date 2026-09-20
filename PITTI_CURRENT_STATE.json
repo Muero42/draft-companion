@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260919T1813Z-v256",
-  "updated_at": "2026-09-19T18:13:35Z",
+  "handoff_generation": "20260920T0835Z-v257",
+  "updated_at": "2026-09-20T08:35:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -295,7 +295,7 @@
       "fantasypros_result": "PHYSICAL_PASS_OMITTED_ROS_WEEKLY_PROJECTION",
       "remaining_failure": "Sleeper NFL State: Timeout nach 6s"
     },
-    "reconciled_main": "2fca8f155d195df7521b5810b31bf71c58fc8358",
+    "reconciled_main": "01ceef33dba6d79be48461d85532a1e2a39bd9aa",
     "rc4205_physical_acceptance": {
       "checkpoint": "v256",
       "version": "v11.8.0-rc4.205",
@@ -343,11 +343,34 @@
         "opponent/weather"
       ],
       "watcher_observation": "Pitti Watcher UI reported PASS / 250 new Evidence-Events; observation only, no watcher authority mutation."
+    },
+    "rc4205_pr186_source_merge": {
+      "checkpoint": "v257",
+      "version": "v11.8.0-rc4.205",
+      "pr": 186,
+      "status": "MERGED/CANONICAL_SOURCE_NOT_PRODUCTION_VERIFIED",
+      "base_head": "f6ed040544ca5ccc1adfff6b578922b11b4a9c88",
+      "repair_head": "9c407d5a705713a630d7e62f020b72b48169d131",
+      "merge_commit": "01ceef33dba6d79be48461d85532a1e2a39bd9aa",
+      "merged_tree": "d1c9e2660e60d305a8a1f4727404d676e83c2164",
+      "canonical_branch": "main",
+      "exact_head_ci": [
+        "PITTI Project Guardrails PASS",
+        "PITTI release contract v2 PASS",
+        "PITTI candidate package gate PASS",
+        "PITTI cloud validation PASS",
+        "Cloudflare Pages preview PASS"
+      ],
+      "preview_proven": true,
+      "production_deployment_proven": false,
+      "device_observation_proven": false,
+      "device_acceptance_proven": false,
+      "repair_scope": "Canonical game-context upstream failure classification, canonical game-context consumer path, Trevor Lawrence JAC/JAX team alias mapping, and deterministic regression fixture time. Production weekly freshness/chronology semantics unchanged."
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.195",
-    "season_candidate": "v11.8.0-rc4.205 canonical source and successfully Cloudflare-deployed; NOT device-observed or accepted",
+    "season_candidate": "v11.8.0-rc4.205 merged source at main@01ceef33dba6d79be48461d85532a1e2a39bd9aa; NOT Production-deployed or newly device-observed/accepted",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "android_acceptance_pending": false,
     "test_challenger": "v11.8.0-rc4.205",
@@ -362,11 +385,11 @@
       "current_exact_main_head_ci": "MERGE_COMMIT_CONTAINS_EXACT_HEAD; REVERIFY_LIVE_BEFORE_PROMOTION"
     },
     "android_accepted": "v11.8.0-rc4.195",
-    "preview_candidate": "v11.8.0-rc4.205 deployed source; physical acceptance pending",
+    "preview_candidate": "v11.8.0-rc4.205 PR #186 exact-head branch preview PASS; preview is non-production",
     "android_authority": "v11.8.0-rc4.205 physically verified PASS for bounded Sleeper timeout repair; independent evidence lanes remain unavailable/fail-closed",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
-    "deployed_pages_app_byte_parity_with_main": true,
+    "deployed_pages_app_byte_parity_with_main": false,
     "deployed_pages_head": "cdf7510034ffea179accd1e855f351775cef492f",
     "installed_android": "v11.8.0-rc4.205",
     "latest_android_observed": "v11.8.0-rc4.205",
@@ -387,7 +410,7 @@
       ]
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.205",
-    "source_candidate_status": "PHYSICAL_PASS_BOUNDED_SLEEPER_TIMEOUT_REPAIR",
+    "source_candidate_status": "SOURCE_MERGED_AWAITING_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -467,7 +490,7 @@
       "branch": "main",
       "deployment_id": null,
       "device_acceptance_proven": true,
-      "evidence_scope": "Successful Cloudflare deployment associated with RC4.205 merged main is proven; deployment identifier unavailable; no physical/device inference.",
+      "evidence_scope": "Prior v11.8.0-rc4.205 Production runtime source cdf7510034ffea179accd1e855f351775cef492f remains verified and physically accepted only for the bounded Sleeper timeout repair; main@01ceef33dba6d79be48461d85532a1e2a39bd9aa has no proven Production deployment yet.",
       "device_acceptance_scope": "BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR_ONLY"
     }
   },
@@ -509,7 +532,7 @@
   },
   "currentWork": {
     "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-    "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS"
+    "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -528,7 +551,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "v11.8.0-rc4.205 authority at main@2fca8f155d195df7521b5810b31bf71c58fc8358, preserving runtime-source main@cdf7510034ffea179accd1e855f351775cef492f; physical PASS for bounded Sleeper timeout repair. RC4.204 remains historical partial/not accepted evidence. Independent evidence lanes remain unavailable/fail-closed.",
+  "source_authority": "v11.8.0-rc4.205 canonical source at main@01ceef33dba6d79be48461d85532a1e2a39bd9aa from merged PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; NOT Production-proven. Production/device authority remains runtime-source main@cdf7510034ffea179accd1e855f351775cef492f with bounded physical PASS for Sleeper week-context timeout repair only. Independent evidence lanes remain unavailable/fail-closed.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -560,12 +583,22 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "PROJECT_MILESTONE_REACHED",
+    "status": "WAITING_EXTERNAL",
     "active": [],
     "ready": [],
-    "waiting_external": [],
+    "waiting_external": [
+      {
+        "id": "v257-postmerge-authority-exact-head-ci",
+        "reason": "Post-merge authority reconciliation PR exact-head CI must pass before any merge decision."
+      }
+    ],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "pr186-source-merge",
+        "result": "PR #186 merged as canonical main 01ceef33dba6d79be48461d85532a1e2a39bd9aa; tree d1c9e2660e60d305a8a1f4727404d676e83c2164; new main is source-only until separately authorized Production deployment is proven.",
+        "at": "2026-09-20T08:35:00Z"
+      },
       {
         "id": "v244-rc4197-postmerge-authority-reconciliation",
         "result": "rc4.197 current source/main and 17-file packaged-only authority reconciled; production/device remain rc4.196, rc4.195 prior accepted rollback; no runtime/product bytes changed."
@@ -773,24 +806,24 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "Local implementation complete; exact-head remote CI and review are the remaining non-merge gates."
+      "reason": "Post-merge authority reconciliation published to a non-production branch; exact-head remote CI is the remaining gate."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260919T1813Z-v256",
+    "generation": "20260920T0835Z-v257",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 authority is reconciled through main@2fca8f155d195df7521b5810b31bf71c58fc8358; the preserved runtime-source lineage is main@cdf7510034ffea179accd1e855f351775cef492f. Physical Android verification on 2026-09-19 PASSED the bounded Sleeper week-context timeout repair: Sleeper Live-State refreshed at < 1 Min., the live roster rendered, and Weekly Evidence refreshed at 1 Min. with W2 / 518 records and RB/WR/TE projection lanes AVAILABLE. The prior RC4.204 Sleeper NFL State timeout did not block refresh. This bounded PASS does not convert independent unavailable lanes into success: Expert-Ranks/Ranks, PITTI-Panel, QB projections, Team Total, and opponent/weather remain unavailable/fail-closed. FantasyPros requests remain explicit week + position, omit ros, never restore ros=false, omit unsupported scoring, and retain stats.points_half. Pitti Watcher PASS / 250 new Evidence-Events is observation only and does not alter or reseal pitti-watcher. Next gate is separately authorized diagnosis of independent unavailable evidence lanes; no runtime change, deployment, device action, or transaction is authorized by this checkpoint. Never claim a newer Library generation persisted unless files.list proves it.",
+    "resume": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 source authority is merged through PR #186 at main@01ceef33dba6d79be48461d85532a1e2a39bd9aa, exact reviewed head 9c407d5a705713a630d7e62f020b72b48169d131, tree d1c9e2660e60d305a8a1f4727404d676e83c2164. This new main is NOT proven Production-deployed or device-observed. Current Production/device authority remains the prior v11.8.0-rc4.205 runtime source main@cdf7510034ffea179accd1e855f351775cef492f, physically verified only for the bounded Sleeper week-context timeout repair. Independent lanes remain unavailable/fail-closed: Expert-Ranks/Ranks, PITTI-Panel, QB projections, Team Total, and opponent/weather. PR #186 exact-head Project Guardrails, release contract v2, candidate package, PITTI cloud validation, and Cloudflare branch preview passed before merge. The deterministic cloud-gate fixture repair changed test time only; production 24-hour freshness/chronology remains unchanged. Next gate is ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE; no deployment, device action, fantasy transaction, or external communication is authorized by this checkpoint. Never claim newer Production/device evidence without fresh verification.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
     "refresh_scope": "RC4.204_WEEKLY_PROJECTION_ROS_OMISSION_AFTER_RC4.203_PHYSICAL_FAIL"
   },
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-  "gate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
-  "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
-  "handoffGeneration": "20260919T1813Z-v256",
+  "gate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
+  "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
+  "handoffGeneration": "20260920T0835Z-v257",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
