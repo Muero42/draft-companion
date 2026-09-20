@@ -788,12 +788,17 @@
     "ready": [],
     "waiting_external": [
       {
-        "id": "v260-independent-evidence-diagnosis-exact-head-ci",
-        "reason": "Diagnosis authority PR exact-head CI must pass before any merge decision."
+        "id": "pr191-explicit-merge-authorization",
+        "reason": "PR #191 exact-head automated validation and review are complete. Merging changes canonical main and triggers Cloudflare Production deployment, so explicit user approval is required."
       }
     ],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "rc4206-pr191-exact-head-pass",
+        "result": "PASS at 46b0f036e575a63849d09f1d2cc07b3b3384dcf6 / tree 52ba62b959d6f3f0c5740b387c62f3133becdf07: guardrails, behavioral contract, candidate package, isolated cloud validation and Cloudflare preview all green; package SHA-256 3b8c416f0a9830b455815b52c55e912cf7d23c59c59532cb01404b3626c17cd5. PR #191 remains Draft/unmerged and main remains 1fe6821115e1af2baa08a53b477601add856db28.",
+        "at": "2026-09-20T15:23:00Z"
+      },
       {
         "id": "independent-evidence-lane-diagnosis-v260",
         "result": "Diagnosis complete: broad weekly ECR available; PITTI-Panel root cause is missing current-week selected-expert pipeline; game context blocked by ESPN upstream 403; Team Total has no approved runtime odds source; opponent/weather depends on game context.",
@@ -1020,8 +1025,8 @@
     ],
     "stop_evaluation": {
       "allowed": true,
-      "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "Authorized diagnosis is complete; bounded runtime repair requires separate authorization after authority checkpoint CI/merge."
+      "code": "DECISION_REQUIRED",
+      "reason": "All autonomous bounded-repair, adversarial review, packaging and exact-head validation work is complete; merge/Production deployment requires explicit user approval."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
@@ -1183,5 +1188,36 @@
       "requires": "Explicit context-dependent value, verified evidence, legal capacity, same-bye and future D/ST drop costs; no automatic acquisition"
     },
     "season_exception_weakens_draft_rule": false
+  },
+  "candidate_work": {
+    "status": "RC4.206_PR191_EXACT_HEAD_AUTOMATED_PASS_AWAITING_EXPLICIT_MERGE_AUTHORIZATION",
+    "version": "v11.8.0-rc4.206",
+    "pr": 191,
+    "branch": "pitti/independent-evidence-bounded-repair-20260920",
+    "base_sha": "1fe6821115e1af2baa08a53b477601add856db28",
+    "head_sha": "46b0f036e575a63849d09f1d2cc07b3b3384dcf6",
+    "tree_sha": "52ba62b959d6f3f0c5740b387c62f3133becdf07",
+    "preview_url": "https://d0767675.draft-companion.pages.dev",
+    "package_sha256": "3b8c416f0a9830b455815b52c55e912cf7d23c59c59532cb01404b3626c17cd5",
+    "package_artifact_id": 10607243760,
+    "exact_head_checks": {
+      "guardrails": "PASS",
+      "behavioral_contract": "PASS",
+      "candidate_package": "PASS",
+      "pitti_cloud_validation": "PASS",
+      "cloudflare_pages_preview": "PASS"
+    },
+    "review_repairs": [
+      "Selected PITTI weekly panel is exact-ID/current-week/current-position/HALF and broad ECR is a distinct broad_weekly_ecr_rank lane.",
+      "Selected-panel acquisition is isolated so directory/provider failures cannot erase healthy projection or broad-ECR lanes.",
+      "Provider filter echo may be absent only when explicit returned expert membership/count still proves a bounded selected panel; wrong echoed filters or unexpected experts fail closed.",
+      "Canonical game context uses bounded ESPN-hosted scoreboard variants, exact season/week/type validation, 13-16 game completeness, unique event/team identity, and consumer-side revalidation.",
+      "Team Total remains unavailable; no odds source or synthetic total was introduced."
+    ],
+    "canonical_main_unchanged": true,
+    "merge_authorized": false,
+    "production_deployment_authorized": false,
+    "physical_device_accepted": false,
+    "observed_at": "2026-09-20T15:23:00Z"
   }
 }
