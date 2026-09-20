@@ -4451,12 +4451,15 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     if(!freshUsable.length||!projectionValidation.ok)throw codedError('PROJECTION_LANE_UNAVAILABLE','Keine frischen verbrauchbaren Weekly Projection Records verfügbar.');
     persistedProjectionSnapshot=api.atomicWrite(localStorage,{...projectionSnapshot,refreshTrigger:trigger,refreshStage:'PROJECTIONS'});
     persistedAuthoritativeSnapshot=persistedProjectionSnapshot;
+    const selectedAcquisitionPromise=typeof acquireSelectedWeeklyRankPayloads==='function'
+      ?acquireSelectedWeeklyRankPayloads({season,week}).catch(error=>({selectedRankingPayloads:{},requests:[{status:'rejected',reason:error}],directoryResults:[],resolved:{}}))
+      :Promise.resolve({selectedRankingPayloads:{},requests:[],directoryResults:[],resolved:{}});
     const [rankResponses,selectedAcquisition]=await Promise.all([
       Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
         const path=`/nfl/${season}/consensus-rankings?week=${week}&position=${position}&scoring=HALF`,response=await fpProxyRequest(path);
         if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros broad ECR HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw Object.assign(error,{position});}return[position,{...response.data,season,week,scoring:'HALF_PPR'}];
       })),
-      acquireSelectedWeeklyRankPayloads({season,week})
+      selectedAcquisitionPromise
     ]);
     persistSeasonProjectionRetryAfter([...rankResponses,...selectedAcquisition.requests,...selectedAcquisition.directoryResults],Date.now());
     for(const response of rankResponses)if(response.status==='fulfilled'){const [position,payload]=response.value;if(payload)rankingPayloads[position]=payload;}
