@@ -335,7 +335,7 @@ for(const [position,count] of Object.entries(evidence.RANK_MIN_COUNTS))rankPaylo
 const ranked=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:payloads,rankingPayloads:rankPayloads,sleeperPlayers:players,verifiedAt:now});
 assert.equal(ranked.lanes.expertWeeklyRanks.status,'AVAILABLE');
 assert.equal(ranked.panel.weeklyRank.status,'BROAD_CONSENSUS_ONLY');
-assert(ranked.records.some(x=>x.metric==='weekly_rank'));
+assert(ranked.records.some(x=>x.metric==='broad_weekly_ecr_rank'));
 const partialProjectionFullRanks=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:{QB:payloads.QB,RB:payloads.RB,TE:payloads.TE},rankingPayloads:rankPayloads,sleeperPlayers:players,verifiedAt:now});
 assert.equal(partialProjectionFullRanks.lanes.projections.status,'PARTIAL');
 assert.equal(partialProjectionFullRanks.lanes.expertWeeklyRanks.status,'AVAILABLE');
@@ -345,7 +345,7 @@ const degradedRank=evidence.buildSnapshot({season,week,scoring:'HALF',projection
 assert.equal(degradedRank.lanes.projections.status,'AVAILABLE');
 assert.equal(degradedRank.lanes.expertWeeklyRanks.status,'PARTIAL');
 assert(degradedRank.records.some(x=>x.metric==='projected_points'),'rank failure must preserve projection records');
-assert(!degradedRank.records.some(x=>x.metric==='weekly_rank'&&x.position==='QB'),'wrong-week ranks fail closed');
+assert(!degradedRank.records.some(x=>x.metric==='broad_weekly_ecr_rank'&&x.position==='QB'),'wrong-week broad ECR ranks fail closed');
 
 const offsets={},productionRanks={};let rankOffset=0;
 for(const [position,count] of Object.entries(evidence.RANK_MIN_COUNTS)){
@@ -356,7 +356,7 @@ for(const [position,count] of Object.entries(evidence.RANK_MIN_COUNTS)){
 const productionRanked=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:timestampLess,rankingPayloads:productionRanks,sleeperPlayers:players,verifiedAt:now});
 assert.equal(productionRanked.lanes.expertWeeklyRanks.status,'AVAILABLE');
 for(const position of evidence.POSITIONS){const d=productionRanked.lanes.expertWeeklyRanks.coverage.positions[position];assert.equal(d.sourceRows,evidence.RANK_MIN_COUNTS[position]);assert.equal(d.freshRows,d.rankedRows);assert.equal(d.staleOrAmbiguousTimeCount,0);}
-assert(productionRanked.records.filter(x=>x.metric==='weekly_rank').every(x=>x.sourceTimePrecision==='DATE'&&x.sourcePublishedAt===null&&x.sourcePublishedDate==='2026-09-10'));
+assert(productionRanked.records.filter(x=>x.metric==='broad_weekly_ecr_rank').every(x=>x.sourceTimePrecision==='DATE'&&x.sourcePublishedAt===null&&x.sourcePublishedDate==='2026-09-10'));
 const mixed=structuredClone(productionRanks);mixed.QB.rankings[0].last_updated='08/01';mixed.QB.rankings[1].last_updated='not-a-date';
 const mixedRanked=evidence.buildSnapshot({season,week,scoring:'HALF',projectionPayloads:timestampLess,rankingPayloads:mixed,sleeperPlayers:players,verifiedAt:now});
 assert.equal(mixedRanked.lanes.expertWeeklyRanks.coverage.positions.QB.staleOrAmbiguousTimeCount,2);
