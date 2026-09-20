@@ -218,7 +218,7 @@
       if(!normalizedScoring)reason='WRONG_SCORING';
       else if(!envelope)reason='NO_CURRENT_PROVIDER_RESPONSE';
       else if(!requestValid)reason='INVALID_REQUEST_PROVENANCE';
-      else if(directoryMissing.length||requested.length<minimumExperts)reason='EXPERT_ID_DIRECTORY_INCOMPLETE';
+      else if(requested.length<minimumExperts)reason='INSUFFICIENT_RESOLVED_EXPERT_IDS';
       else if(payload==null||typeof payload!=='object'||Array.isArray(payload))reason='MALFORMED_PROVIDER_RESPONSE';
       else if(Number(payload?.season??payload?.year??season)!==Number(season))reason='WRONG_SEASON';
       else if(Number(payload?.week)!==Number(week))reason='WRONG_WEEK';
