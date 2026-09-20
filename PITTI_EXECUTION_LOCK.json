@@ -1,12 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-20T10:11:00Z",
+  "updatedAt": "2026-09-20T10:36:57Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is now Cloudflare Production-deployed from exact main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80, deployment a3342287-3b3b-4961-9819-f2fac696b743, Cloudflare Pages check 106050669714 PASS. The underlying reviewed runtime/source repair remains PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131 merged as 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; runtime blobs are unchanged by the v257 authority-only merge to 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80. Exact-commit deployment identity is proven; arbitrary public served-byte parity was not independently fetched in this environment. No new physical/device observation of the PR #186 Lawrence/game-context repair exists yet. The prior physical PASS remains bounded to the earlier Sleeper week-context timeout repair only. Next gate: RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING. Physical verification must confirm the current app/runtime and specifically Lawrence QB projection mapping plus canonical game-context behavior without converting independent unavailable lanes into success. Never claim device acceptance without user-supplied physical evidence, and never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is Production-deployed at exact main@66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1, Cloudflare deployment ec6cd004-6e54-480f-8752-e8e37755ac66, check 106063674827 PASS. User-supplied physical diagnostic captured 2026-09-20T10:36:57.320Z on v11.8.0-rc4.205 physically PASSED the bounded PR #186 repair scope: weekly QB projections are HTTP 200 with 80/80 mapped and 100% coverage; the active skill roster is 13/13 projection-usable with no unusable player, resolving the prior Trevor Lawrence JAC/JAX mapping failure. Canonical game context still has no game data because the upstream returns HTTP 403, but the repaired contract is physically proven: app returns sanitized HTTP 502, upstreamStatus 403, failureType UPSTREAM_HTTP_ERROR, no secrets/raw body. Broad current Expert-Ranks are AVAILABLE all four positions, but this does not establish PITTI-Panel. Team Total remains unproven/unavailable; opponent/weather remains unavailable because canonical game context data is unavailable. Physical classification: RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS. Do not manufacture PITTI-Panel, Team Total, game/opponent/weather evidence, and never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
@@ -14,27 +14,20 @@
     "liveVerificationTargets": [
       {
         "repository": "Muero42/draft-companion",
-        "pr": 187,
-        "lane": "HISTORICAL_MERGED_V257_AUTHORITY_PROVENANCE",
+        "pr": 188,
+        "lane": "HISTORICAL_MERGED_V258_PRODUCTION_AUTHORITY",
         "verification": "MERGED",
-        "expectedHead": "2ab06f80c18e3c12e261544a98d2583b9d83c986",
-        "mergeCommit": "6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80",
-        "tree": "369226b85ff4d51da480720687fb369c94344578"
+        "expectedHead": "4770913dec4a77ca0590ace2969d06f3aaf9a609",
+        "mergeCommit": "66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1"
       },
       {
         "repository": "Muero42/draft-companion",
         "pr": 186,
         "lane": "CURRENT_RC4.205_RUNTIME_REPAIR_PROVENANCE",
-        "verification": "MERGED_DEPLOYED_PENDING_PHYSICAL",
+        "verification": "MERGED_DEPLOYED_PHYSICAL_PASS_BOUNDED",
         "expectedHead": "9c407d5a705713a630d7e62f020b72b48169d131",
         "mergeCommit": "01ceef33dba6d79be48461d85532a1e2a39bd9aa",
         "tree": "d1c9e2660e60d305a8a1f4727404d676e83c2164"
-      },
-      {
-        "repository": "Muero42/draft-companion",
-        "pr": 185,
-        "lane": "CLOSED_DIRTY_PUBLICATION_UNMERGED_NOT_AUTHORITY",
-        "verification": "HISTORICAL_ONLY"
       }
     ]
   },
@@ -44,25 +37,25 @@
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.205 RC4.205_PHYSICAL_PASS_BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR",
+    "latestAndroidObserved": "v11.8.0-rc4.205 RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE",
     "latestPreinstallVerified": "HISTORICAL/SUPERSEDED: rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "HISTORICAL/SUPERSEDED: v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.204 17-file source-byte-parity package (separate from deployment)",
     "preinstallSha256": null,
     "preinstallRuntimeFiles": 17,
     "latestSourceRegressionVerified": "HISTORICAL prior regression observation; current local checks must run on repaired bytes",
-    "latestDeployedCandidate": "v11.8.0-rc4.205 exact main 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80; Cloudflare deployment a3342287-3b3b-4961-9819-f2fac696b743; PR #186 physical verification pending",
+    "latestDeployedCandidate": "v11.8.0-rc4.205 exact main 66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1; deployment ec6cd004-6e54-480f-8752-e8e37755ac66; bounded physical PR #186 repair PASS",
     "latestAndroidVerified": "v11.8.0-rc4.205 bounded Sleeper timeout repair PASS",
-    "androidAuthority": "v11.8.0-rc4.205 physical PASS for bounded Sleeper timeout repair; independent lanes fail-closed",
-    "android_authority": "v11.8.0-rc4.205 physical PASS for bounded Sleeper timeout repair; independent lanes fail-closed",
-    "deployedPagesAppByteParityWithMain": false,
+    "androidAuthority": "v11.8.0-rc4.205 physical PASS for bounded PR #186 Lawrence mapping + game-context failure-provenance repair; PITTI-Panel, Team Total, and game/opponent/weather data remain unavailable/fail-closed",
+    "android_authority": "v11.8.0-rc4.205 physical PASS for bounded PR #186 Lawrence mapping + game-context failure-provenance repair; PITTI-Panel, Team Total, and game/opponent/weather data remain unavailable/fail-closed",
+    "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "preinstallReferenceArtifactId": null,
     "preinstallHashSemantics": "rc4.204 source-byte parity; archive SHA is run/environment-scoped and cannot establish cross-environment identity.",
     "latestAndroidVersionObserved": "v11.8.0-rc4.205",
     "latestAndroidFunctionalVerified": "v11.8.0-rc4.205 Live-State and Weekly Evidence refresh PASS; independent lanes unavailable",
-    "testChallengerAndroidObserved": false,
-    "testChallengerAndroidAccepted": false,
+    "testChallengerAndroidObserved": true,
+    "testChallengerAndroidAccepted": true,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
@@ -93,7 +86,7 @@
     "acceptedAndroidAuthority": "v11.8.0-rc4.195 PRIOR_FULL_ACCEPTANCE_ROLLBACK_REFERENCE",
     "unreleasedMainDelta": "DYNAMIC_VERIFICATION_REQUIRED against canonical main and relevant PRs; last-observed PR118 boundary is recorded in CURRENT.",
     "deployedPagesVersion": "v11.8.0-rc4.205",
-    "mainGhPagesParity": false,
+    "mainGhPagesParity": true,
     "androidVerified": true,
     "androidAcceptance": "PASS_BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR",
     "devicePromotionPolicy": "Requires current user authorization, exact-source validation, verified deployment parity and a physical canary. Source or merge state never proves device acceptance.",
@@ -118,7 +111,7 @@
       "deviceAcceptanceProven": true,
       "deviceAcceptanceScope": "BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR_ONLY"
     },
-    "deployedPagesHead": "6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80"
+    "deployedPagesHead": "66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -308,12 +301,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "PRODUCTION_DEPLOYED_AWAITING_PHYSICAL_DEVICE_VERIFICATION",
-    "nextGate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING"
+    "status": "PR186_PHYSICAL_REPAIR_ACCEPTED_BOUNDED_REMAINING_INDEPENDENT_LANES_FAIL_CLOSED",
+    "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS"
   },
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-  "gate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING",
-  "nextGate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING",
+  "gate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
+  "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -322,11 +315,11 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260920T1011Z-v258",
+    "generation": "20260920T1036Z-v259",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is now Cloudflare Production-deployed from exact main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80, deployment a3342287-3b3b-4961-9819-f2fac696b743, Cloudflare Pages check 106050669714 PASS. The underlying reviewed runtime/source repair remains PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131 merged as 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; runtime blobs are unchanged by the v257 authority-only merge to 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80. Exact-commit deployment identity is proven; arbitrary public served-byte parity was not independently fetched in this environment. No new physical/device observation of the PR #186 Lawrence/game-context repair exists yet. The prior physical PASS remains bounded to the earlier Sleeper week-context timeout repair only. Next gate: RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING. Physical verification must confirm the current app/runtime and specifically Lawrence QB projection mapping plus canonical game-context behavior without converting independent unavailable lanes into success. Never claim device acceptance without user-supplied physical evidence, and never claim a newer Library generation persisted unless files.list proves it.",
+    "resume": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is Production-deployed at exact main@66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1, Cloudflare deployment ec6cd004-6e54-480f-8752-e8e37755ac66, check 106063674827 PASS. User-supplied physical diagnostic captured 2026-09-20T10:36:57.320Z on v11.8.0-rc4.205 physically PASSED the bounded PR #186 repair scope: weekly QB projections are HTTP 200 with 80/80 mapped and 100% coverage; the active skill roster is 13/13 projection-usable with no unusable player, resolving the prior Trevor Lawrence JAC/JAX mapping failure. Canonical game context still has no game data because the upstream returns HTTP 403, but the repaired contract is physically proven: app returns sanitized HTTP 502, upstreamStatus 403, failureType UPSTREAM_HTTP_ERROR, no secrets/raw body. Broad current Expert-Ranks are AVAILABLE all four positions, but this does not establish PITTI-Panel. Team Total remains unproven/unavailable; opponent/weather remains unavailable because canonical game context data is unavailable. Physical classification: RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS. Do not manufacture PITTI-Panel, Team Total, game/opponent/weather evidence, and never claim a newer Library generation persisted unless files.list proves it.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -346,7 +339,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260920T1011Z-v258",
+  "handoff_generation": "20260920T1036Z-v259",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -381,9 +374,9 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260920T1011Z-v258",
+  "handoffGeneration": "20260920T1036Z-v259",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-09-20T10:11:00Z",
-  "exactNextAction": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is now Cloudflare Production-deployed from exact main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80, deployment a3342287-3b3b-4961-9819-f2fac696b743, Cloudflare Pages check 106050669714 PASS. The underlying reviewed runtime/source repair remains PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131 merged as 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; runtime blobs are unchanged by the v257 authority-only merge to 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80. Exact-commit deployment identity is proven; arbitrary public served-byte parity was not independently fetched in this environment. No new physical/device observation of the PR #186 Lawrence/game-context repair exists yet. The prior physical PASS remains bounded to the earlier Sleeper week-context timeout repair only. Next gate: RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING. Physical verification must confirm the current app/runtime and specifically Lawrence QB projection mapping plus canonical game-context behavior without converting independent unavailable lanes into success. Never claim device acceptance without user-supplied physical evidence, and never claim a newer Library generation persisted unless files.list proves it.",
-  "failClosedRecovery": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is now Cloudflare Production-deployed from exact main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80, deployment a3342287-3b3b-4961-9819-f2fac696b743, Cloudflare Pages check 106050669714 PASS. The underlying reviewed runtime/source repair remains PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131 merged as 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; runtime blobs are unchanged by the v257 authority-only merge to 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80. Exact-commit deployment identity is proven; arbitrary public served-byte parity was not independently fetched in this environment. No new physical/device observation of the PR #186 Lawrence/game-context repair exists yet. The prior physical PASS remains bounded to the earlier Sleeper week-context timeout repair only. Next gate: RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING. Physical verification must confirm the current app/runtime and specifically Lawrence QB projection mapping plus canonical game-context behavior without converting independent unavailable lanes into success. Never claim device acceptance without user-supplied physical evidence, and never claim a newer Library generation persisted unless files.list proves it."
+  "updated_at": "2026-09-20T10:36:57Z",
+  "exactNextAction": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is Production-deployed at exact main@66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1, Cloudflare deployment ec6cd004-6e54-480f-8752-e8e37755ac66, check 106063674827 PASS. User-supplied physical diagnostic captured 2026-09-20T10:36:57.320Z on v11.8.0-rc4.205 physically PASSED the bounded PR #186 repair scope: weekly QB projections are HTTP 200 with 80/80 mapped and 100% coverage; the active skill roster is 13/13 projection-usable with no unusable player, resolving the prior Trevor Lawrence JAC/JAX mapping failure. Canonical game context still has no game data because the upstream returns HTTP 403, but the repaired contract is physically proven: app returns sanitized HTTP 502, upstreamStatus 403, failureType UPSTREAM_HTTP_ERROR, no secrets/raw body. Broad current Expert-Ranks are AVAILABLE all four positions, but this does not establish PITTI-Panel. Team Total remains unproven/unavailable; opponent/weather remains unavailable because canonical game context data is unavailable. Physical classification: RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS. Do not manufacture PITTI-Panel, Team Total, game/opponent/weather evidence, and never claim a newer Library generation persisted unless files.list proves it.",
+  "failClosedRecovery": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is Production-deployed at exact main@66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1, Cloudflare deployment ec6cd004-6e54-480f-8752-e8e37755ac66, check 106063674827 PASS. User-supplied physical diagnostic captured 2026-09-20T10:36:57.320Z on v11.8.0-rc4.205 physically PASSED the bounded PR #186 repair scope: weekly QB projections are HTTP 200 with 80/80 mapped and 100% coverage; the active skill roster is 13/13 projection-usable with no unusable player, resolving the prior Trevor Lawrence JAC/JAX mapping failure. Canonical game context still has no game data because the upstream returns HTTP 403, but the repaired contract is physically proven: app returns sanitized HTTP 502, upstreamStatus 403, failureType UPSTREAM_HTTP_ERROR, no secrets/raw body. Broad current Expert-Ranks are AVAILABLE all four positions, but this does not establish PITTI-Panel. Team Total remains unproven/unavailable; opponent/weather remains unavailable because canonical game context data is unavailable. Physical classification: RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS. Do not manufacture PITTI-Panel, Team Total, game/opponent/weather evidence, and never claim a newer Library generation persisted unless files.list proves it."
 }

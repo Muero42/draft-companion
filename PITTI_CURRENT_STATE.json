@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260920T1011Z-v258",
-  "updated_at": "2026-09-20T10:11:00Z",
+  "handoff_generation": "20260920T1036Z-v259",
+  "updated_at": "2026-09-20T10:36:57Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -295,7 +295,7 @@
       "fantasypros_result": "PHYSICAL_PASS_OMITTED_ROS_WEEKLY_PROJECTION",
       "remaining_failure": "Sleeper NFL State: Timeout nach 6s"
     },
-    "reconciled_main": "01ceef33dba6d79be48461d85532a1e2a39bd9aa",
+    "reconciled_main": "66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1",
     "rc4205_physical_acceptance": {
       "checkpoint": "v256",
       "version": "v11.8.0-rc4.205",
@@ -363,11 +363,11 @@
       ],
       "preview_proven": true,
       "production_deployment_proven": true,
-      "device_observation_proven": false,
-      "device_acceptance_proven": false,
+      "device_observation_proven": true,
+      "device_acceptance_proven": true,
       "repair_scope": "Canonical game-context upstream failure classification, canonical game-context consumer path, Trevor Lawrence JAC/JAX team alias mapping, and deterministic regression fixture time. Production weekly freshness/chronology semantics unchanged.",
-      "production_deployment_commit": "6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80",
-      "production_deployment_id": "a3342287-3b3b-4961-9819-f2fac696b743"
+      "production_deployment_commit": "66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1",
+      "production_deployment_id": "ec6cd004-6e54-480f-8752-e8e37755ac66"
     },
     "rc4205_pr186_production_deployment": {
       "checkpoint": "v258",
@@ -388,13 +388,151 @@
       "physical_device_observation_proven": false,
       "physical_device_acceptance_proven": false,
       "evidence_scope": "GitHub Cloudflare Pages check proves successful deployment for exact main commit. Runtime files app.js, _worker.js and weekly-evidence-v2.js are byte-identical to the reviewed PR #186 source repair merge. Arbitrary served-byte parity was not independently fetched."
+    },
+    "rc4205_pr186_physical_acceptance": {
+      "checkpoint": "v259",
+      "version": "v11.8.0-rc4.205",
+      "pr": 186,
+      "classification": "RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE",
+      "captured_at": "2026-09-20T10:36:57.320Z",
+      "device_observation_proven": true,
+      "bounded_device_acceptance_proven": true,
+      "full_independent_evidence_acceptance_proven": false,
+      "deployed_main": "66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1",
+      "deployment_id": "ec6cd004-6e54-480f-8752-e8e37755ac66",
+      "cloudflare_check_run_id": 106063674827,
+      "lawrence_projection_mapping": {
+        "status": "PASS",
+        "evidence": "QB 80/80 mapped; active roster 13/13 usable; no unusable player",
+        "prior_failure": "Trevor Lawrence JAC vs JAX TEAM_MISMATCH"
+      },
+      "weekly_projections": {
+        "status": "SUFFICIENT",
+        "positions": {
+          "QB": {
+            "httpStatus": 200,
+            "sourceRows": 80,
+            "mappedRows": 80,
+            "mappingCoverage": 1,
+            "consumerUsableRecords": 80,
+            "finalLaneStatus": "AVAILABLE"
+          },
+          "RB": {
+            "httpStatus": 200,
+            "sourceRows": 123,
+            "mappedRows": 115,
+            "mappingCoverage": 0.935,
+            "consumerUsableRecords": 115,
+            "finalLaneStatus": "AVAILABLE",
+            "rejectionCounts": {
+              "NO_MATCH": 7,
+              "NAME_POSITION_COLLISION": 1
+            }
+          },
+          "WR": {
+            "httpStatus": 200,
+            "sourceRows": 207,
+            "mappedRows": 206,
+            "mappingCoverage": 0.995,
+            "consumerUsableRecords": 206,
+            "finalLaneStatus": "AVAILABLE",
+            "rejectionCounts": {
+              "NAME_POSITION_COLLISION": 1
+            }
+          },
+          "TE": {
+            "httpStatus": 200,
+            "sourceRows": 124,
+            "mappedRows": 123,
+            "mappingCoverage": 0.992,
+            "consumerUsableRecords": 123,
+            "finalLaneStatus": "AVAILABLE",
+            "rejectionCounts": {
+              "NO_MATCH": 1
+            }
+          }
+        },
+        "query_shape": "EXPLICIT_WEEK_POSITION_ROS_OMITTED",
+        "scoring_parameter_present": false,
+        "ros_present": false,
+        "active_roster": {
+          "usable": 13,
+          "total": 13,
+          "unusable": []
+        }
+      },
+      "expert_ranks": {
+        "status": "AVAILABLE",
+        "positions": {
+          "QB": {
+            "httpStatus": 200,
+            "sourceRows": 89,
+            "mappedRows": 89,
+            "mappingCoverage": 1,
+            "sourcePublishedDate": "2026-09-20",
+            "laneStatus": "AVAILABLE"
+          },
+          "RB": {
+            "httpStatus": 200,
+            "sourceRows": 133,
+            "mappedRows": 124,
+            "mappingCoverage": 0.932,
+            "sourcePublishedDate": "2026-09-20",
+            "laneStatus": "AVAILABLE"
+          },
+          "WR": {
+            "httpStatus": 200,
+            "sourceRows": 220,
+            "mappedRows": 218,
+            "mappingCoverage": 0.991,
+            "sourcePublishedDate": "2026-09-20",
+            "laneStatus": "AVAILABLE"
+          },
+          "TE": {
+            "httpStatus": 200,
+            "sourceRows": 135,
+            "mappedRows": 132,
+            "mappingCoverage": 0.978,
+            "sourcePublishedDate": "2026-09-20",
+            "laneStatus": "AVAILABLE"
+          }
+        },
+        "scope_note": "Broad/current weekly Expert-Ranks availability only; does not prove selected PITTI-Panel evidence."
+      },
+      "canonical_game_context": {
+        "request": "/api/nfl-week-context?season=2026&week=2",
+        "httpStatus": 502,
+        "upstreamStatus": 403,
+        "failureType": "UPSTREAM_HTTP_ERROR",
+        "status": "UNAVAILABLE",
+        "validation": "INCOMPLETE_WEEK",
+        "coverage": {
+          "sourceEvents": 0,
+          "acceptedGames": 0,
+          "acceptedTeams": 0,
+          "storedGames": 0
+        },
+        "contract_result": "PASS_SANITIZED_FAILURE_PROVENANCE; DATA_LANE_REMAINS_UNAVAILABLE"
+      },
+      "secret_safety": {
+        "apiKeyIncluded": false,
+        "authorizationHeadersIncluded": false,
+        "rawProviderBodiesIncluded": false,
+        "cookiesIncluded": false,
+        "tokensIncluded": false
+      },
+      "remaining_unavailable_lanes": [
+        "PITTI-Panel",
+        "Team Total",
+        "canonical game-context data / opponent-weather (upstream HTTP 403)"
+      ]
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.195",
-    "season_candidate": "v11.8.0-rc4.205 Production deployed at exact main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80; PR #186 Lawrence/game-context repair awaiting physical device verification",
+    "season_candidate": "v11.8.0-rc4.205 Production deployed and bounded physical PASS for PR #186 Lawrence mapping + game-context failure provenance",
     "candidate_branch": "DYNAMIC_VERIFICATION_REQUIRED",
-    "android_acceptance_pending": true,
+    "android_acceptance_pending": false,
     "test_challenger": "v11.8.0-rc4.205",
     "ci": {
       "status": "PR176_EXACT_HEAD_CI_PASS_SOURCE_MERGED_NOT_DEPLOYED",
@@ -408,31 +546,33 @@
     },
     "android_accepted": "v11.8.0-rc4.195",
     "preview_candidate": "v11.8.0-rc4.205 Production deployed at exact main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80; branch-preview evidence is historical",
-    "android_authority": "v11.8.0-rc4.205 physically verified PASS for bounded Sleeper timeout repair; independent evidence lanes remain unavailable/fail-closed",
+    "android_authority": "v11.8.0-rc4.205 physical PASS for bounded PR #186 Lawrence mapping + game-context failure-provenance repair; PITTI-Panel, Team Total, and game/opponent/weather data remain unavailable/fail-closed",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
-    "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80",
+    "deployed_pages_app_byte_parity_with_main": true,
+    "deployed_pages_head": "66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1",
     "installed_android": "v11.8.0-rc4.205",
     "latest_android_observed": "v11.8.0-rc4.205",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "Historical rc4.183 rejection: FA/Add-Drop cards under Kader and IR/Reserve Charbonnet as ordinary drop target. Superseded by rc4.188 physical Waiver/FA canary PASS; retained only as historical regression evidence.",
     "latest_device_evidence": {
       "version": "v11.8.0-rc4.205",
-      "observed_at": "2026-09-19",
-      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4205_PHYSICAL_PASS_2026-09-19.md",
-      "acceptance": "PASS_BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR",
-      "classification": "RC4.205_PHYSICAL_PASS_BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR",
-      "independent_unavailable_lanes": [
-        "Expert-Ranks / Ranks",
+      "observed_at": "2026-09-20",
+      "captured_at": "2026-09-20T10:36:57.320Z",
+      "evidence": "docs/PITTI_BRIDGE_HANDOFF_RC4205_PR186_PHYSICAL_PASS_2026-09-20.md",
+      "acceptance": "PASS_BOUNDED_PR186_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE",
+      "classification": "RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE",
+      "weekly_projection_summary": "QB/RB/WR/TE AVAILABLE; active roster 13/13 usable; QB 80/80 mapped",
+      "expert_rank_summary": "Broad weekly Expert-Ranks AVAILABLE QB/RB/WR/TE; PITTI-Panel not proven",
+      "game_context_summary": "UNAVAILABLE data; sanitized UPSTREAM_HTTP_ERROR physically proven with worker 502 / upstream 403",
+      "remaining_unavailable_lanes": [
         "PITTI-Panel",
-        "QB projections",
         "Team Total",
-        "opponent/weather"
+        "canonical game-context data / opponent-weather (upstream HTTP 403)"
       ]
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.205",
-    "source_candidate_status": "PRODUCTION_DEPLOYED_AWAITING_PR186_PHYSICAL_DEVICE_VERIFICATION",
+    "source_candidate_status": "PHYSICAL_PASS_BOUNDED_PR186_LAWRENCE_GAME_CONTEXT_REPAIR",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -503,18 +643,18 @@
       "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_OBSERVATION_NOT_CANONICAL_IDENTITY",
       "validation_observed_archive_sha256": "d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3"
     },
-    "deployment_parity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; RUNTIME_SOURCE_BLOBS_MATCH_REVIEWED_REPAIR; ARBITRARY_PUBLIC_BYTE_PARITY_NOT_PROVEN",
+    "deployment_parity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; RUNTIME_SOURCE_BLOBS_MATCH_REVIEWED_REPAIR; PHYSICAL_DEVICE_OBSERVATION_PROVEN",
     "deployed_production_version": "v11.8.0-rc4.205",
     "production_deployment": {
       "version": "v11.8.0-rc4.205",
-      "source_commit": "6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80",
+      "source_commit": "66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1",
       "status": "VERIFIED_SUCCESS_CLOUDFLARE_PAGES_EXACT_COMMIT",
       "branch": "main",
-      "deployment_id": "a3342287-3b3b-4961-9819-f2fac696b743",
-      "cloudflare_check_run_id": 106050669714,
-      "device_acceptance_proven": false,
-      "evidence_scope": "Exact current main 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80 received successful Cloudflare Pages deployment check 106050669714; PR #186 runtime source files remain byte-identical through the v257 authority-only merge. New PR #186 repair has not been physically/device verified.",
-      "device_acceptance_scope": "PR186_LAWRENCE_GAME_CONTEXT_REPAIR_PENDING"
+      "deployment_id": "ec6cd004-6e54-480f-8752-e8e37755ac66",
+      "cloudflare_check_run_id": 106063674827,
+      "device_acceptance_proven": true,
+      "evidence_scope": "Exact current main 66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1 Production deployment and user-supplied physical diagnostic prove bounded PR #186 repair behavior.",
+      "device_acceptance_scope": "RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE"
     }
   },
   "real_draft": {
@@ -554,8 +694,8 @@
     "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
-    "status": "PRODUCTION_DEPLOYED_AWAITING_PHYSICAL_DEVICE_VERIFICATION",
-    "nextGate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING"
+    "status": "PR186_PHYSICAL_REPAIR_ACCEPTED_BOUNDED_REMAINING_INDEPENDENT_LANES_FAIL_CLOSED",
+    "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -574,7 +714,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "v11.8.0-rc4.205 reviewed runtime/source repair is PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131, merge 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; current canonical main 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80 is its authority-only descendant and is successfully Cloudflare Production-deployed as deployment a3342287-3b3b-4961-9819-f2fac696b743. PR #186 repair has NOT yet been physically/device verified.",
+  "source_authority": "v11.8.0-rc4.205 reviewed runtime/source repair PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131, merge 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; current main 66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1 is Production-deployed and physically accepted for the bounded PR #186 Lawrence mapping + game-context failure-provenance scope.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -611,12 +751,17 @@
     "ready": [],
     "waiting_external": [
       {
-        "id": "v258-production-authority-exact-head-ci",
-        "reason": "Production-authority reconciliation PR exact-head CI must pass before merge decision."
+        "id": "v259-physical-acceptance-exact-head-ci",
+        "reason": "Physical-acceptance reconciliation PR exact-head CI must pass before any merge decision."
       }
     ],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "rc4205-pr186-physical-acceptance",
+        "result": "PASS: RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE; QB 80/80 mapped, active roster 13/13 usable; game-context sanitized upstream 403 failure contract proven; game data remains unavailable.",
+        "at": "2026-09-20T10:36:57Z"
+      },
       {
         "id": "rc4205-pr186-production-deployment",
         "result": "Cloudflare Pages exact-main deployment PASS for 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80; deployment a3342287-3b3b-4961-9819-f2fac696b743; device acceptance remains pending for PR #186 repair.",
@@ -834,24 +979,24 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "Production deployment is proven; checkpoint reconciliation published to a non-production branch and exact-head CI is the remaining autonomous gate."
+      "reason": "Physical PR #186 repair acceptance captured; authority reconciliation exact-head CI remains."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260920T1011Z-v258",
+    "generation": "20260920T1036Z-v259",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is now Cloudflare Production-deployed from exact main@6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80, deployment a3342287-3b3b-4961-9819-f2fac696b743, Cloudflare Pages check 106050669714 PASS. The underlying reviewed runtime/source repair remains PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131 merged as 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; runtime blobs are unchanged by the v257 authority-only merge to 6f2ea5cc5db94a3ddff2370cf9b4f4d7b5983c80. Exact-commit deployment identity is proven; arbitrary public served-byte parity was not independently fetched in this environment. No new physical/device observation of the PR #186 Lawrence/game-context repair exists yet. The prior physical PASS remains bounded to the earlier Sleeper week-context timeout repair only. Next gate: RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING. Physical verification must confirm the current app/runtime and specifically Lawrence QB projection mapping plus canonical game-context behavior without converting independent unavailable lanes into success. Never claim device acceptance without user-supplied physical evidence, and never claim a newer Library generation persisted unless files.list proves it.",
+    "resume": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 PR #186 repair is Production-deployed at exact main@66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1, Cloudflare deployment ec6cd004-6e54-480f-8752-e8e37755ac66, check 106063674827 PASS. User-supplied physical diagnostic captured 2026-09-20T10:36:57.320Z on v11.8.0-rc4.205 physically PASSED the bounded PR #186 repair scope: weekly QB projections are HTTP 200 with 80/80 mapped and 100% coverage; the active skill roster is 13/13 projection-usable with no unusable player, resolving the prior Trevor Lawrence JAC/JAX mapping failure. Canonical game context still has no game data because the upstream returns HTTP 403, but the repaired contract is physically proven: app returns sanitized HTTP 502, upstreamStatus 403, failureType UPSTREAM_HTTP_ERROR, no secrets/raw body. Broad current Expert-Ranks are AVAILABLE all four positions, but this does not establish PITTI-Panel. Team Total remains unproven/unavailable; opponent/weather remains unavailable because canonical game context data is unavailable. Physical classification: RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS. Do not manufacture PITTI-Panel, Team Total, game/opponent/weather evidence, and never claim a newer Library generation persisted unless files.list proves it.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "RC4.205_PR186_LAWRENCE_GAME_CONTEXT_PRODUCTION_DEPLOYED"
+    "refresh_scope": "RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_GAME_CONTEXT"
   },
   "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-  "gate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING",
-  "nextGate": "RC4.205_PR186_PHYSICAL_DEVICE_VERIFICATION_PENDING",
-  "handoffGeneration": "20260920T1011Z-v258",
+  "gate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
+  "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_DIAGNOSIS",
+  "handoffGeneration": "20260920T1036Z-v259",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
