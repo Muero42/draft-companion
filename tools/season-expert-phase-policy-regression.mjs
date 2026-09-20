@@ -1,5 +1,9 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
 const p=JSON.parse(fs.readFileSync('config/season-expert-phase-policy.json','utf8'));
+const app=fs.readFileSync('app.js','utf8'),selectedBlock=app.match(/const SEASON_WEEKLY_SELECTED_EXPERTS=({[^;]+});/)?.[1];
+assert(selectedBlock,'season selected weekly expert policy missing from app');
+for(const pos of ['QB','RB','WR','TE'])for(const name of p.core[pos])assert(selectedBlock.includes(`'${name}'`),`selected weekly app policy missing ${pos} ${name}`);
+assert(app.includes("filters=${ids.join(':')}&experts=show"),'selected weekly request must bind exact expert IDs and request provider expert identity');
 assert.equal(p.schema,'pitti.season-expert-phase-policy.v1');
 assert.equal(p.automatic,true);
 for(const pos of ['QB','RB','WR','TE','K','DST'])assert(Array.isArray(p.core[pos])&&p.core[pos].length>=2,'missing '+pos+' expert pool');

@@ -1,7 +1,7 @@
-const CACHE='draft-companion-v11.8.0-rc4.205-static-v1';
+const CACHE='draft-companion-v11.8.0-rc4.206-static-v1';
 const BACKUP_CACHE='draft-companion-backup-export-v1';
-const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.205','./decision-policy.js','./weekly-evidence-v2.js?v=v11.8.0-rc4.205','./lineup-start-sit-v2.js?v=v11.8.0-rc4.205','./game-context-v1.js?v=v11.8.0-rc4.205','./boone-trade-values-v1.mjs?v=v11.8.0-rc4.205','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.205','./live-surface-v3.css?v=v11.8.0-rc4.205','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
-const BASE='v11.8.0-rc4.205',TARGET='v11.8.0-rc4.205';
+const ASSETS=['./','./index.html','./styles.css','./app.js?v=v11.8.0-rc4.206','./decision-policy.js','./weekly-evidence-v2.js?v=v11.8.0-rc4.206','./lineup-start-sit-v2.js?v=v11.8.0-rc4.206','./game-context-v1.js?v=v11.8.0-rc4.206','./boone-trade-values-v1.mjs?v=v11.8.0-rc4.206','./manifest.webmanifest','./icon.svg','./live-surface-v3.js?v=v11.8.0-rc4.206','./live-surface-v3.css?v=v11.8.0-rc4.206','./expert-board-export.js?v=20260826e','./expert-v2-board.js?v=20260826e','./expert-v3-board.js?v=20260828a'];
+const BASE='v11.8.0-rc4.206',TARGET='v11.8.0-rc4.206';
 // Only the bounded app shell belongs in CacheStorage. Live API responses have
 // their own freshness rules and may carry a new cache-busting URL on every load.
 const SCOPE=new URL(self.registration.scope);

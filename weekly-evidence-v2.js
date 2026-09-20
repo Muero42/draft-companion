@@ -16,6 +16,7 @@
   const POSITIONS=['QB','RB','WR','TE'];
   const MIN_COUNTS={QB:24,RB:60,WR:70,TE:24};
   const RANK_MIN_COUNTS={QB:20,RB:48,WR:60,TE:20};
+  const SELECTED_PANEL_MIN_EXPERTS={QB:2,RB:3,WR:2,TE:2};
   const WEEKLY_PROJECTION_QUERY_SHAPE='EXPLICIT_WEEK_POSITION_ROS_OMITTED';
   // These are deliberately generous corruption/scope ceilings, not player ranks
   // or expected outcomes. A one-game Half-PPR payload exceeding them is unsafe to
@@ -72,7 +73,9 @@
     if(record?.schema!==SCHEMA||!Number.isFinite(verified)||verified>now||Number(record?.season)!==Number(context.season)||Number(record?.week)!==Number(context.week)||record?.scoring!=='HALF_PPR')return false;
     if(record?.metric==='projected_points'&&(!Number.isFinite(record?.value)||record.value<0||record.value>WEEKLY_HALF_PPR_MAX[record.position]||record?.provenance?.providerScope!=='WEEKLY'))return false;
     if(record?.sourceTimePrecision==='RETRIEVAL')return retrievalProjectionChronology(record,context,now);
-    if(!['projected_points','weekly_rank'].includes(record?.metric)||!['fantasypros','fantasypros_weekly_ecr'].includes(record?.sourceId)||!/^https:\/\/api\.fantasypros\.com\//.test(record?.sourceUrl||''))return false;
+    if(!['projected_points','weekly_rank','broad_weekly_ecr_rank'].includes(record?.metric)||!['fantasypros','fantasypros_weekly_ecr','fantasypros_pitti_selected_weekly_panel'].includes(record?.sourceId)||!/^https:\/\/api\.fantasypros\.com\//.test(record?.sourceUrl||''))return false;
+    if(record?.metric==='weekly_rank'&&record?.sourceId!=='fantasypros_pitti_selected_weekly_panel')return false;
+    if(record?.metric==='broad_weekly_ecr_rank'&&record?.sourceId!=='fantasypros_weekly_ecr')return false;
     if(record?.sourceTimePrecision==='TIMESTAMP'){
       const published=Date.parse(record?.sourcePublishedAt||'');return Number.isFinite(published)&&published<=verified&&now-published<=EVIDENCE_TTL_MS;
     }
@@ -177,32 +180,91 @@
       let mapped=0;
       if(!reason&&freshRows.length>=minimum)for(const {row,time} of freshRows){
         const mapping=mapFantasyProsPlayer(row,indexes);if(!mapping.ok){rejects.push({position,name:String(row?.name||row?.player_name||''),reason:mapping.reason});continue;}
-        mapped++;records.push({schema:SCHEMA,playerId:mapping.player.id,sleeperId:mapping.player.id,sourcePlayerId:mapping.sourcePlayerId,mappingMethod:mapping.method,mappingVersion:MAPPING_VERSION,metric:'weekly_rank',value:rankValue(row),unit:'POSITIONAL_RANK',position,season:Number(season),week:Number(week),scoring:normalizedScoring,status:'VERIFIED',sourceId:'fantasypros_weekly_ecr',sourceUrl:`https://api.fantasypros.com/public/v2/json/nfl/${Number(season)}/consensus-rankings?week=${Number(week)}&position=${position}&scoring=HALF`,expert:null,...time,verifiedAt,expiresAt:verifiedAt+EVIDENCE_TTL_MS,provenance:{provider:'FantasyPros',aggregation:'CURRENT_WEEK_HALF_PPR_ECR',panelMembership:[],coverage:'BROAD_CONSENSUS_ONLY'},confidence:mapping.method==='FANTASY_DATA_ID'?.96:.78});
+        mapped++;records.push({schema:SCHEMA,playerId:mapping.player.id,sleeperId:mapping.player.id,sourcePlayerId:mapping.sourcePlayerId,mappingMethod:mapping.method,mappingVersion:MAPPING_VERSION,metric:'broad_weekly_ecr_rank',value:rankValue(row),unit:'POSITIONAL_RANK',position,season:Number(season),week:Number(week),scoring:normalizedScoring,status:'VERIFIED',sourceId:'fantasypros_weekly_ecr',sourceUrl:`https://api.fantasypros.com/public/v2/json/nfl/${Number(season)}/consensus-rankings?week=${Number(week)}&position=${position}&scoring=HALF`,expert:null,...time,verifiedAt,expiresAt:verifiedAt+EVIDENCE_TTL_MS,provenance:{provider:'FantasyPros',aggregation:'CURRENT_WEEK_HALF_PPR_ECR',panelMembership:[],coverage:'BROAD_CONSENSUS_ONLY'},confidence:mapping.method==='FANTASY_DATA_ID'?.96:.78});
       }
       const coverage=ranked.length?mapped/ranked.length:0,status=!reason&&freshRows.length>=minimum&&freshRows.length/ranked.length>=.9&&coverage>=.9?'AVAILABLE':mapped?'PARTIAL':'UNAVAILABLE';
       const primaryReason=reason||(freshRows.length<minimum||freshRows.length/ranked.length<.9?'STALE_OR_AMBIGUOUS_ROW_TIME':status!=='AVAILABLE'?'INSUFFICIENT_MAPPING_COVERAGE':null);
       positions[position]={status,sourceRows:(players||[]).length,rankedRows:ranked.length,freshRows:freshRows.length,mappedRows:mapped,mappingCoverage:Math.round(coverage*1000)/1000,staleOrAmbiguousTimeCount:staleOrAmbiguous,primaryRejectionReason:primaryReason,reason:primaryReason};
     }
     const available=POSITIONS.every(position=>positions[position].status==='AVAILABLE');
-    return{lane:{id:'fantasypros_weekly_ecr',status:available?'AVAILABLE':Object.values(positions).some(x=>x.status!=='UNAVAILABLE')?'PARTIAL':'UNAVAILABLE',coverage:{positions},metric:'weekly_rank',panelStatus:'BROAD_CONSENSUS_ONLY'},records,rejects};
+    return{lane:{id:'fantasypros_weekly_ecr',status:available?'AVAILABLE':Object.values(positions).some(x=>x.status!=='UNAVAILABLE')?'PARTIAL':'UNAVAILABLE',coverage:{positions},metric:'broad_weekly_ecr_rank',panelStatus:'BROAD_CONSENSUS_ONLY'},records,rejects};
   }
 
-  function buildSnapshot({season,week,scoring:scoringInput,projectionPayloads,rankingPayloads,sleeperPlayers,priorSnapshot,verifiedAt=Date.now()}={}){
+
+  function explicitExpertMembership(payload){
+    const names=payload?.expert_name&&typeof payload.expert_name==='object'&&!Array.isArray(payload.expert_name)?payload.expert_name:{};
+    const pubs=payload?.expert_pub&&typeof payload.expert_pub==='object'&&!Array.isArray(payload.expert_pub)?payload.expert_pub:{};
+    const ids=[...new Set([...Object.keys(names),...Object.keys(pubs)].filter(id=>/^\d+$/.test(String(id))))];
+    return ids.map(id=>({id:String(id),name:String(names[id]||'').trim(),site:String(pubs[id]||'').trim()}));
+  }
+  function numericFilterIds(value){return [...new Set(String(value??'').match(/\d+/g)||[])].sort((a,b)=>Number(a)-Number(b));}
+  function sameIds(a,b){const aa=[...new Set((a||[]).map(String))].sort((x,y)=>Number(x)-Number(y)),bb=[...new Set((b||[]).map(String))].sort((x,y)=>Number(x)-Number(y));return aa.length===bb.length&&aa.every((id,index)=>id===bb[index]);}
+
+  // Selected weekly ranks are provider-generated consensus restricted to the exact
+  // current PITTI expert IDs. Broad ECR remains a separate lane and can never stand
+  // in for a missing selected expert or a missing selected panel.
+  function selectedWeeklyRankLane(payloads,{season,week,scoring:scoringInput,sleeperPlayers,verifiedAt=Date.now()}={}){
+    const normalizedScoring=scoring(scoringInput),indexes=sleeperIndexes(sleeperPlayers),records=[],positions={},rejects=[];
+    for(const position of POSITIONS){
+      const envelope=payloads?.[position],payload=envelope?.providerPayload,request=envelope?.requestProvenance||{},requested=(Array.isArray(envelope?.requestedExperts)?envelope.requestedExperts:[]).map(expert=>({id:String(expert?.id||''),name:String(expert?.name||'').trim()})).filter(expert=>/^\d+$/.test(expert.id)&&expert.name);
+      const configuredNames=(Array.isArray(envelope?.configuredExpertNames)?envelope.configuredExpertNames:requested.map(expert=>expert.name)).map(String);
+      const directoryMissing=(Array.isArray(envelope?.missingDirectoryExperts)?envelope.missingDirectoryExperts:[]).map(String);
+      const requestedIds=requested.map(expert=>expert.id),providerFilterIds=numericFilterIds(payload?.filters),membership=explicitExpertMembership(payload),membershipIds=membership.map(expert=>expert.id),totalExperts=Number(payload?.total_experts);
+      const players=rankingRows(payload),payloadTime=sourceTime(payload||{},{season,verifiedAt,allowSeasonDateInference:true}),minimum=RANK_MIN_COUNTS[position],minimumExperts=SELECTED_PANEL_MIN_EXPERTS[position];
+      const knownNames=new Map(requested.map(expert=>[expert.id,expert.name])),actualMembership=membership.filter(expert=>requestedIds.includes(expert.id)).map(expert=>({...expert,name:expert.name||knownNames.get(expert.id)||''}));
+      const actualIds=actualMembership.map(expert=>expert.id),missingRequested=requested.filter(expert=>!actualIds.includes(expert.id)).map(expert=>expert.name),unexpectedMembership=membership.filter(expert=>!requestedIds.includes(expert.id));
+      const requestValid=Number(request?.season)===Number(season)&&Number(request?.week)===Number(week)&&String(request?.position||'').toUpperCase()===position&&String(request?.scoring||'').toUpperCase()==='HALF'&&request?.experts==='show'&&sameIds(request?.requestedExpertIds,requestedIds);
+      let reason='';
+      if(!normalizedScoring)reason='WRONG_SCORING';
+      else if(!envelope)reason='NO_CURRENT_PROVIDER_RESPONSE';
+      else if(!requestValid)reason='INVALID_REQUEST_PROVENANCE';
+      else if(requested.length<minimumExperts)reason='INSUFFICIENT_RESOLVED_EXPERT_IDS';
+      else if(payload==null||typeof payload!=='object'||Array.isArray(payload))reason='MALFORMED_PROVIDER_RESPONSE';
+      else if(Number(payload?.season??payload?.year??season)!==Number(season))reason='WRONG_SEASON';
+      else if(Number(payload?.week)!==Number(week))reason='WRONG_WEEK';
+      else if(String(payload?.position_id??payload?.position??position).toUpperCase()!==position)reason='WRONG_POSITION';
+      else if(scoring(payload?.scoring??payload?.format??scoringInput)!==normalizedScoring)reason='WRONG_SCORING';
+      else if(!players)reason='MISSING_PLAYERS';
+      else if(providerFilterIds.length&&!sameIds(providerFilterIds,requestedIds))reason='FILTER_IDENTITY_MISMATCH';
+      else if(!membership.length||unexpectedMembership.length||!Number.isFinite(totalExperts)||totalExperts!==membership.length)reason='UNPROVEN_EXPERT_IDENTITY';
+      else if(actualMembership.length<minimumExperts)reason='INSUFFICIENT_SELECTED_EXPERTS';
+      else if(players.some(row=>String(row?.position_id??row?.player_position_id??row?.position??'').toUpperCase()!==position))reason='WRONG_POSITION';
+      const ranked=(players||[]).filter(row=>rankValue(row)!=null),timed=ranked.map(row=>({row,time:sourceTime(row,{season,verifiedAt,allowSeasonDateInference:true})})).map(x=>x.time.sourceTimePrecision==='UNKNOWN'?{...x,time:payloadTime}:x),isFresh=time=>time.sourcePublishedAt?Date.parse(time.sourcePublishedAt)<=verifiedAt&&verifiedAt-Date.parse(time.sourcePublishedAt)<=EVIDENCE_TTL_MS:time.sourcePublishedDate?time.sourcePublishedDate<=iso(verifiedAt).slice(0,10)&&verifiedAt-Date.parse(time.sourcePublishedDate)<EVIDENCE_TTL_MS:false,freshRows=timed.filter(x=>isFresh(x.time)),staleOrAmbiguous=timed.length-freshRows.length;
+      let mapped=0;
+      const sourceReady=!reason&&freshRows.length>=minimum&&freshRows.length/Math.max(ranked.length,1)>=.9;
+      if(sourceReady)for(const {row,time} of freshRows){
+        const mapping=mapFantasyProsPlayer(row,indexes);if(!mapping.ok){rejects.push({position,name:String(row?.name||row?.player_name||''),reason:mapping.reason,lane:'pittiSelectedWeeklyRanks'});continue;}
+        mapped++;
+        const filters=requestedIds.slice().sort((a,b)=>Number(a)-Number(b)).join(':');
+        records.push({schema:SCHEMA,playerId:mapping.player.id,sleeperId:mapping.player.id,sourcePlayerId:mapping.sourcePlayerId,mappingMethod:mapping.method,mappingVersion:MAPPING_VERSION,metric:'weekly_rank',value:rankValue(row),unit:'POSITIONAL_RANK',position,season:Number(season),week:Number(week),scoring:normalizedScoring,status:'VERIFIED',sourceId:'fantasypros_pitti_selected_weekly_panel',sourceUrl:`https://api.fantasypros.com/public/v2/json/nfl/${Number(season)}/consensus-rankings?week=${Number(week)}&position=${position}&scoring=HALF&filters=${filters}&experts=show`,expert:null,...time,verifiedAt,expiresAt:verifiedAt+EVIDENCE_TTL_MS,provenance:{provider:'FantasyPros',aggregation:'FILTERED_ECR_SELECTED_PITTI_PANEL',requestedExperts:requested,actualExperts:actualMembership,missingSelectedExperts:[...directoryMissing,...missingRequested],providerFilters:providerFilterIds,totalExperts,identityBound:true},confidence:mapping.method==='FANTASY_DATA_ID'?.97:.8});
+      }
+      const coverage=ranked.length?mapped/ranked.length:0,status=sourceReady&&coverage>=.9?'AVAILABLE':mapped?'PARTIAL':'UNAVAILABLE';
+      const primaryReason=reason||(!sourceReady?'STALE_OR_AMBIGUOUS_ROW_TIME':status!=='AVAILABLE'?'INSUFFICIENT_MAPPING_COVERAGE':null);
+      if(status!=='AVAILABLE')for(let i=records.length-1;i>=0;i--)if(records[i].position===position)records.splice(i,1);
+      positions[position]={status,responsePresent:envelope?.providerResponsePresent===true,sourceRows:(players||[]).length,rankedRows:ranked.length,freshRows:freshRows.length,mappedRows:status==='AVAILABLE'?mapped:0,mappingCoverage:Math.round(coverage*1000)/1000,staleOrAmbiguousTimeCount:staleOrAmbiguous,configuredExperts:configuredNames,requestedExperts:requested,actualExperts:actualMembership,missingExperts:[...directoryMissing,...missingRequested],primaryRejectionReason:primaryReason,reason:primaryReason};
+    }
+    const available=POSITIONS.every(position=>positions[position].status==='AVAILABLE'),some=POSITIONS.some(position=>positions[position].status==='AVAILABLE');
+    return{lane:{id:'fantasypros_pitti_selected_weekly_panel',status:available?'AVAILABLE':some?'PARTIAL':'UNAVAILABLE',coverage:{positions},metric:'weekly_rank',panelStatus:available?'AVAILABLE':some?'PARTIAL':'UNAVAILABLE'},records,rejects};
+  }
+
+  function buildSnapshot({season,week,scoring:scoringInput,projectionPayloads,rankingPayloads,selectedRankingPayloads,sleeperPlayers,priorSnapshot,verifiedAt=Date.now()}={}){
     const normalizedScoring=scoring(scoringInput);if(!normalizedScoring)throw new Error('WEEKLY_EVIDENCE_WRONG_SCORING');
     if(!Number.isInteger(Number(season))||!Number.isInteger(Number(week)))throw new Error('WEEKLY_EVIDENCE_INVALID_CONTEXT');
     const projections=projectionLane(projectionPayloads,{season,week,scoring:normalizedScoring,sleeperPlayers,verifiedAt});
     const ranks=weeklyRankLane(rankingPayloads,{season,week,scoring:normalizedScoring,sleeperPlayers,verifiedAt});
-    const lanes={projections:projections.lane,expertWeeklyRanks:ranks.lane,vegas:{status:'UNAVAILABLE',reason:'NO_APPROVED_ROBUST_SOURCE'},weather:{status:'UNAVAILABLE',reason:'GAME_CONTEXT_REQUIRED'},roleGraphs:{status:'UNAVAILABLE',reason:'SOURCE_UNAVAILABLE'}};
-    const fresh=[...projections.records,...ranks.records],freshKeys=new Set(fresh.map(record=>`${record.metric}|${record.position}|${record.playerId}`));
-    const laneAvailable=(metric,position)=>metric==='projected_points'?projections.lane.coverage.positions[position]?.status==='AVAILABLE':metric==='weekly_rank'?ranks.lane.coverage.positions[position]?.status==='AVAILABLE':false;
+    const selectedRanks=selectedWeeklyRankLane(selectedRankingPayloads,{season,week,scoring:normalizedScoring,sleeperPlayers,verifiedAt});
+    const lanes={projections:projections.lane,expertWeeklyRanks:ranks.lane,pittiSelectedWeeklyRanks:selectedRanks.lane,vegas:{status:'UNAVAILABLE',reason:'NO_APPROVED_ROBUST_SOURCE'},weather:{status:'UNAVAILABLE',reason:'GAME_CONTEXT_REQUIRED'},roleGraphs:{status:'UNAVAILABLE',reason:'SOURCE_UNAVAILABLE'}};
+    const fresh=[...projections.records,...selectedRanks.records,...ranks.records],freshKeys=new Set(fresh.map(record=>`${record.metric}|${record.position}|${record.playerId}`));
+    const laneAvailable=(metric,position)=>metric==='projected_points'?projections.lane.coverage.positions[position]?.status==='AVAILABLE':metric==='weekly_rank'?selectedRanks.lane.coverage.positions[position]?.status==='AVAILABLE':metric==='broad_weekly_ecr_rank'?ranks.lane.coverage.positions[position]?.status==='AVAILABLE':false;
     // Carry-forward is reserved for a lane for which no provider response exists.
     // Any present response (or contradictory authenticated request context) owns its
     // lane and purges prior rows when it cannot satisfy the weekly invariants.
-    const explicitlyRejected=(metric,position)=>metric==='projected_points'&&projections.lane.coverage.positions[position]?.responseClassification===PROJECTION_RESPONSE_CLASSIFICATION.DEFINITIVE_REJECTION;
+    const explicitlyRejected=(metric,position)=>metric==='projected_points'?projections.lane.coverage.positions[position]?.responseClassification===PROJECTION_RESPONSE_CLASSIFICATION.DEFINITIVE_REJECTION:metric==='weekly_rank'?selectedRanks.lane.coverage.positions[position]?.responsePresent===true&&selectedRanks.lane.coverage.positions[position]?.status!=='AVAILABLE':metric==='broad_weekly_ecr_rank'?ranks.lane.coverage.positions[position]?.status!=='AVAILABLE'&&Object.prototype.hasOwnProperty.call(rankingPayloads||{},position):false;
     const priorValid=priorSnapshot?.schema===SCHEMA&&Number(priorSnapshot.season)===Number(season)&&Number(priorSnapshot.week)===Number(week)&&priorSnapshot.scoring===normalizedScoring&&Array.isArray(priorSnapshot.records)?priorSnapshot.records.filter(record=>weeklyRecordChronology(record,{season,week,scoring:normalizedScoring},verifiedAt)&&!laneAvailable(record.metric,record.position)&&!explicitlyRejected(record.metric,record.position)&&!freshKeys.has(`${record.metric}|${record.position}|${record.playerId}`)):[];
     const records=[...fresh,...priorValid];
     const freshProjectionUsable=projections.records.length>0;
-    const snapshot={schema:SCHEMA,snapshotId:`wev2-${Number(season)}-${Number(week)}-${normalizedScoring}-${verifiedAt}`,season:Number(season),week:Number(week),scoring:normalizedScoring,fetchedAt:verifiedAt,lastAttemptAt:verifiedAt,lastSuccessAt:freshProjectionUsable?verifiedAt:Number(priorSnapshot?.lastSuccessAt)||null,status:projections.lane.status==='AVAILABLE'&&ranks.lane.status==='AVAILABLE'?'AVAILABLE':freshProjectionUsable?'DEGRADED':'UNAVAILABLE',lanes,records,rejections:[...projections.rejects,...ranks.rejects],retainedPriorRecords:priorValid.length,panel:{weeklyRank:{status:ranks.lane.status==='AVAILABLE'?'BROAD_CONSENSUS_ONLY':ranks.lane.status,sources:ranks.lane.status==='UNAVAILABLE'?[]:['FantasyPros current-week Half-PPR ECR'],selectedExperts:[],aggregation:'ECR; selected PITTI panel remains separately unavailable'},projection:{status:projections.lane.status,source:'fantasypros'}}};
+    const selectedExpertSummary=Object.fromEntries(POSITIONS.map(position=>[position,{status:selectedRanks.lane.coverage.positions[position]?.status||'UNAVAILABLE',requested:selectedRanks.lane.coverage.positions[position]?.requestedExperts||[],actual:selectedRanks.lane.coverage.positions[position]?.actualExperts||[],missing:selectedRanks.lane.coverage.positions[position]?.missingExperts||[]}]));
+    const snapshot={schema:SCHEMA,snapshotId:`wev2-${Number(season)}-${Number(week)}-${normalizedScoring}-${verifiedAt}`,season:Number(season),week:Number(week),scoring:normalizedScoring,fetchedAt:verifiedAt,lastAttemptAt:verifiedAt,lastSuccessAt:freshProjectionUsable?verifiedAt:Number(priorSnapshot?.lastSuccessAt)||null,status:projections.lane.status==='AVAILABLE'&&selectedRanks.lane.status==='AVAILABLE'?'AVAILABLE':freshProjectionUsable?'DEGRADED':'UNAVAILABLE',lanes,records,rejections:[...projections.rejects,...selectedRanks.rejects,...ranks.rejects],retainedPriorRecords:priorValid.length,panel:{weeklyRank:{status:selectedRanks.lane.status,sources:selectedRanks.lane.status==='UNAVAILABLE'?[]:['FantasyPros filtered current-week Half-PPR consensus'],selectedExperts:selectedExpertSummary,aggregation:'Exact configured PITTI expert IDs only; missing experts remain missing; no broad-ECR fallback'},broadWeeklyEcr:{status:ranks.lane.status,sources:ranks.lane.status==='UNAVAILABLE'?[]:['FantasyPros current-week Half-PPR ECR'],aggregation:'BROAD_CONSENSUS_ONLY'},projection:{status:projections.lane.status,source:'fantasypros'}}};
     return snapshot;
   }
 
@@ -224,8 +286,8 @@
       status:'DEGRADED',
       records,
       rejections:[...(Array.isArray(snapshot.rejections)?snapshot.rejections:[]),{lane:'expertWeeklyRanks',reason:'STORAGE_QUOTA_PROJECTION_ONLY'}],
-      lanes:{...snapshot.lanes,expertWeeklyRanks:{...(snapshot.lanes?.expertWeeklyRanks||{}),status:'UNAVAILABLE',reason:'STORAGE_QUOTA_PROJECTION_ONLY'}},
-      panel:{...snapshot.panel,weeklyRank:{status:'UNAVAILABLE',sources:[],selectedExperts:[],aggregation:'BROAD_CONSENSUS_NOT_PERSISTED_STORAGE_QUOTA'}},
+      lanes:{...snapshot.lanes,expertWeeklyRanks:{...(snapshot.lanes?.expertWeeklyRanks||{}),status:'UNAVAILABLE',reason:'STORAGE_QUOTA_PROJECTION_ONLY'},pittiSelectedWeeklyRanks:{...(snapshot.lanes?.pittiSelectedWeeklyRanks||{}),status:'UNAVAILABLE',reason:'STORAGE_QUOTA_PROJECTION_ONLY'}},
+      panel:{...snapshot.panel,weeklyRank:{status:'UNAVAILABLE',sources:[],selectedExperts:{},aggregation:'SELECTED_PANEL_NOT_PERSISTED_STORAGE_QUOTA'},broadWeeklyEcr:{status:'UNAVAILABLE',sources:[],aggregation:'BROAD_CONSENSUS_NOT_PERSISTED_STORAGE_QUOTA'}},
       persistence:{mode:'LOCAL_STORAGE_PROJECTION_ONLY',reason:'STORAGE_QUOTA'}
     };
   }
@@ -276,5 +338,5 @@
     }
   }
 
-  return{SCHEMA,CACHE_KEY,TEMP_KEY,MAPPING_VERSION,MAX_AGE_MS,EVIDENCE_TTL_MS,POSITIONS,MIN_COUNTS,RANK_MIN_COUNTS,WEEKLY_PROJECTION_QUERY_SHAPE,WEEKLY_HALF_PPR_MAX,sourceTime,retrievalProjectionChronology,weeklyRecordChronology,sleeperIndexes,mapFantasyProsPlayer,projectionLane,weeklyRankLane,buildSnapshot,validateSnapshot,projectionOnlyStorageSnapshot,atomicWrite};
+  return{SCHEMA,CACHE_KEY,TEMP_KEY,MAPPING_VERSION,MAX_AGE_MS,EVIDENCE_TTL_MS,POSITIONS,MIN_COUNTS,RANK_MIN_COUNTS,SELECTED_PANEL_MIN_EXPERTS,WEEKLY_PROJECTION_QUERY_SHAPE,WEEKLY_HALF_PPR_MAX,sourceTime,retrievalProjectionChronology,weeklyRecordChronology,sleeperIndexes,mapFantasyProsPlayer,projectionLane,weeklyRankLane,selectedWeeklyRankLane,buildSnapshot,validateSnapshot,projectionOnlyStorageSnapshot,atomicWrite};
 });
