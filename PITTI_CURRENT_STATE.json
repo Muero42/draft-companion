@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260923T1834Z-v263",
-  "updated_at": "2026-09-23T18:34:00Z",
+  "handoff_generation": "20260923T1915Z-v264",
+  "updated_at": "2026-09-23T19:15:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -604,20 +604,41 @@
       "failing_lanes": ["selected PITTI weekly panel", "canonical game context/opponent"],
       "team_total": "UNAVAILABLE_FAIL_CLOSED"
     },
+    "rc4207_pr193_source_production": {
+      "checkpoint": "v264",
+      "version": "v11.8.0-rc4.207",
+      "pr": 193,
+      "reviewed_head": "8ee120890f7aae7a7bda93a4f1e34d18526a2979",
+      "merge_commit": "90a87948d03264860978e6150ec22d9352694448",
+      "merged_tree": "a5f55cba7e8d114de552060b0dd96565ee400d10",
+      "canonical_branch": "main",
+      "production_deployment_id": "ac148866-adac-4a2f-9c3e-34475daf38b6",
+      "cloudflare_check_run_id": 107339846378,
+      "status": "MERGED_CANONICAL_SOURCE_AND_PRODUCTION_PHYSICAL_PENDING",
+      "production_deployment_proven": true,
+      "public_version_proven": true,
+      "public_game_context_proven": true,
+      "public_game_context": "season=2026 week=3 provider=ESPN variant=4 source=cdn.espn.com events=16 after three sanitized upstream-403 attempts",
+      "selected_panel_runtime_bytes_proven": true,
+      "selected_panel_authenticated_device_result": "PENDING",
+      "device_observation_proven": false,
+      "device_acceptance_proven": false,
+      "team_total": "UNAVAILABLE_FAIL_CLOSED"
+    },
     "independent_evidence_lane_repair": {
-      "status": "RC4.206_PRODUCTION_DEVICE_REJECTED_RC4.207_BOUNDED_REPAIR_LOCAL",
+      "status": "RC4.207_SOURCE_PRODUCTION_VERIFIED_PHYSICAL_PENDING",
       "broad_expert_ranks": "AVAILABLE_PREEXISTING",
-      "pitti_panel": "RC4.206_UNAVAILABLE_RC4.207_CURRENT_CONSENSUS_IDENTITY_REPAIR_NOT_DEPLOYED",
-      "canonical_game_context": "RC4.206_UNAVAILABLE_UPSTREAM_403_RC4.207_OFFICIAL_CDN_FALLBACK_NOT_DEPLOYED",
+      "pitti_panel": "RC4.207_PRODUCTION_RUNTIME_PRESENT_AUTHENTICATED_DEVICE_RESULT_PENDING",
+      "canonical_game_context": "RC4.207_PRODUCTION_SERVER_PASS_2026_WEEK3_16_EVENTS_PHYSICAL_RENDER_PENDING",
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
       "weather_opponent": "DEPENDENT_ON_PHYSICAL_GAME_CONTEXT_VERIFICATION",
-      "source_merge": "d5954d66877df877f950a4a41f32baad59a66748"
+      "source_merge": "90a87948d03264860978e6150ec22d9352694448"
     }
   },
   "runtime": {
-    "accepted_android": "v11.8.0-rc4.195",
-    "season_candidate": "v11.8.0-rc4.207 bounded local repair; not Production-deployed or device-observed",
-    "candidate_branch": "codex/rc4.206-physical-failure-repair",
+    "accepted_android": "v11.8.0-rc4.205",
+    "season_candidate": "v11.8.0-rc4.207 canonical source and Production; physical/device verification pending",
+    "candidate_branch": "main",
     "android_acceptance_pending": false,
     "test_challenger": "v11.8.0-rc4.207",
     "ci": {
@@ -630,13 +651,13 @@
       "cloudflare_preview": "PASS_EXACT_REPAIR_HEAD_NON_PRODUCTION",
       "current_exact_main_head_ci": "MERGE_COMMIT_CONTAINS_EXACT_HEAD; REVERIFY_LIVE_BEFORE_PROMOTION"
     },
-    "android_accepted": "v11.8.0-rc4.195",
-    "preview_candidate": "v11.8.0-rc4.207 local repair pending exact-head CI and non-Production preview",
+    "android_accepted": "v11.8.0-rc4.205",
+    "preview_candidate": "v11.8.0-rc4.207 PR #193 merged and Production-deployed; physical/device verification pending",
     "android_authority": "rc4.206 is latest observed but not accepted; rc4.205 remains last device-accepted control",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "d5954d66877df877f950a4a41f32baad59a66748",
+    "deployed_pages_head": "90a87948d03264860978e6150ec22d9352694448",
     "installed_android": "v11.8.0-rc4.206",
     "latest_android_observed": "v11.8.0-rc4.206",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
@@ -658,7 +679,7 @@
       ]
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.206",
-    "source_candidate_status": "LOCAL_BOUNDED_REPAIR_NOT_PRODUCTION_OR_DEVICE_VERIFIED",
+    "source_candidate_status": "SOURCE_MERGED_PRODUCTION_VERIFIED_PHYSICAL_PENDING",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -724,31 +745,31 @@
       "version": "v11.8.0-rc4.207",
       "files": 17,
       "sha256": null,
-      "status": "LOCAL_REPAIR_PENDING_EXACT_HEAD_CI",
-      "source_scope": "FEATURE_BRANCH_ONLY_NOT_PRODUCTION_NOT_DEVICE_ACCEPTED",
+      "status": "SOURCE_MERGED_PRODUCTION_VERIFIED_PHYSICAL_PENDING",
+      "source_scope": "CANONICAL_MAIN_90a87948d03264860978e6150ec22d9352694448",
       "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_OBSERVATION_NOT_CANONICAL_IDENTITY",
       "validation_observed_archive_sha256": "d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3"
     },
     "deployment_parity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; RUNTIME_SOURCE_BLOBS_MATCH_REVIEWED_REPAIR; PHYSICAL_DEVICE_OBSERVATION_PROVEN",
-    "deployed_production_version": "v11.8.0-rc4.206",
+    "deployed_production_version": "v11.8.0-rc4.207",
     "production_deployment": {
-      "version": "v11.8.0-rc4.206",
-      "source_commit": "d5954d66877df877f950a4a41f32baad59a66748",
+      "version": "v11.8.0-rc4.207",
+      "source_commit": "90a87948d03264860978e6150ec22d9352694448",
       "status": "VERIFIED_SUCCESS_CLOUDFLARE_PAGES_EXACT_COMMIT",
       "branch": "main",
-      "deployment_id": "8322e9b3-a293-4454-8ef9-d5e98c217889",
-      "cloudflare_check_run_id": null,
+      "deployment_id": "ac148866-adac-4a2f-9c3e-34475daf38b6",
+      "cloudflare_check_run_id": 107339846378,
       "device_acceptance_proven": false,
-      "evidence_scope": "User-provided exact Production deployment identity plus physical Android/PWA observation; deployment success is distinct from rejected device acceptance.",
-      "device_acceptance_scope": "RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE",
+      "evidence_scope": "Exact main deployment plus public served-version and complete Week-3 game-context runtime proof; authenticated selected-panel physical/device result remains pending.",
+      "device_acceptance_scope": "RC4.207_PHYSICAL_DEVICE_VERIFICATION_PENDING",
       "last_device_accepted_control": "v11.8.0-rc4.205"
     },
     "independent_evidence_lane_status": {
       "broad_expert_ranks": "AVAILABLE",
-      "pitti_panel": "RC4.206_PHYSICAL_UNAVAILABLE_RC4.207_REPAIR_NOT_DEPLOYED",
+      "pitti_panel": "RC4.207_PRODUCTION_RUNTIME_PRESENT_AUTHENTICATED_DEVICE_RESULT_PENDING",
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
-      "game_context": "RC4.206_PHYSICAL_UNAVAILABLE_RC4.207_REPAIR_NOT_DEPLOYED",
-      "opponent_weather": "UNAVAILABLE_PENDING_PHYSICAL_GAME_CONTEXT_VERIFICATION"
+      "game_context": "RC4.207_PRODUCTION_SERVER_PASS_2026_WEEK3_16_EVENTS_PHYSICAL_PENDING",
+      "opponent_weather": "PRODUCTION_GAME_CONTEXT_AVAILABLE_PHYSICAL_RENDER_PENDING"
     },
     "mainGhPagesParity": false,
     "deployedPagesAppByteParityWithMain": false
@@ -790,8 +811,8 @@
     "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
-    "status": "RC4207_DRAFT_PR_EXACT_HEAD_PASS_AWAITING_SEPARATE_MERGE_AUTHORIZATION",
-    "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT"
+    "status": "RC4207_PRODUCTION_VERIFIED_PHYSICAL_PENDING",
+    "nextGate": "RC4207_PHYSICAL_DEVICE_VERIFICATION_PENDING"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -810,7 +831,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "v11.8.0-rc4.206 is canonical source and Production authority at main@d5954d66877df877f950a4a41f32baad59a66748, tree 07248a6ac3c5f8872893a2c805155be8a1a5e806, deployment 8322e9b3-a293-4454-8ef9-d5e98c217889. Physical/device acceptance is false; rc4.205 remains the last device-accepted control. rc4.207 is a feature-branch-only repair candidate.",
+  "source_authority": "v11.8.0-rc4.207 is canonical source and Production authority at main@90a87948d03264860978e6150ec22d9352694448, tree a5f55cba7e8d114de552060b0dd96565ee400d10, deployment ac148866-adac-4a2f-9c3e-34475daf38b6. Public version and game context pass; physical/device acceptance remains pending. rc4.205 remains last device-accepted control.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -847,12 +868,17 @@
     "ready": [],
     "waiting_external": [
       {
-        "id": "rc4207-merge-authorization",
-        "reason": "Draft PR #193 exact-head gates and non-Production preview passed. Merge would trigger automatic Production deployment and requires separate explicit authorization."
+        "id": "rc4207-physical-device-verification",
+        "reason": "rc4.207 source and Production are verified; authenticated selected PITTI panel and physical opponent/game-context rendering require one device canary."
       }
     ],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "rc4207-pr193-production",
+        "result": "PR #193 merged as main 90a87948d03264860978e6150ec22d9352694448; Cloudflare deployment ac148866-adac-4a2f-9c3e-34475daf38b6 PASS; public rc4.207 bytes PASS; Week-3 game context PASS with 16 ESPN CDN events.",
+        "at": "2026-09-23T19:15:00Z"
+      },
       {
         "id": "rc4207-pr193-exact-head-pass",
         "result": "Draft PR #193 head d482faeeefcd5ff79b30b9718354ecb3b19230b2 passed guardrails, behavioral-contract, package, pitti-cloud-validation, and Cloudflare Pages non-Production preview.",
@@ -1021,24 +1047,24 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "All independently authorized repair, regression, PR, CI, and non-Production preview work is complete; merge and automatic Production deployment require separate explicit authorization."
+      "reason": "Source merge, Production deployment and public server verification are complete; physical Android/PWA verification requires the user's device and stored FantasyPros credential."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260923T1834Z-v263",
+    "generation": "20260923T1915Z-v264",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.206 is canonical source and Production at main@d5954d66877df877f950a4a41f32baad59a66748 / deployment 8322e9b3-a293-4454-8ef9-d5e98c217889, but physical acceptance is false. rc4.205 is the last device-accepted control. rc4.207 is a bounded repair candidate only; Team Total remains unavailable. PR #192 is stale and not merge-ready unchanged.",
+    "resume": "rc4.207 is canonical source and Production at main@90a87948d03264860978e6150ec22d9352694448 / deployment ac148866-adac-4a2f-9c3e-34475daf38b6. Public version and Week-3 game context pass; physical/device acceptance remains pending, rc4.205 remains last device-accepted control, and Team Total remains unavailable.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "RC4206_PHYSICAL_FAILURE_RC4207_BOUNDED_REPAIR"
+    "refresh_scope": "RC4207_SOURCE_PRODUCTION_AUTHORITY_PHYSICAL_PENDING"
   },
-    "status": "RC4207_DRAFT_PR_EXACT_HEAD_PASS_AWAITING_SEPARATE_MERGE_AUTHORIZATION",
-    "gate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
-    "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
-  "handoffGeneration": "20260923T1834Z-v263",
+  "status": "RC4207_PRODUCTION_VERIFIED_PHYSICAL_PENDING",
+  "gate": "RC4207_PHYSICAL_DEVICE_VERIFICATION_PENDING",
+  "nextGate": "RC4207_PHYSICAL_DEVICE_VERIFICATION_PENDING",
+  "handoffGeneration": "20260923T1915Z-v264",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -1185,13 +1211,13 @@
     "season_exception_weakens_draft_rule": false
   },
   "candidate_work": {
-    "status": "RC4.207_DRAFT_PR_EXACT_HEAD_PASS_NOT_MERGED_NOT_DEPLOYED",
+    "status": "RC4.207_MERGED_PRODUCTION_VERIFIED_PHYSICAL_PENDING",
     "version": "v11.8.0-rc4.207",
     "pr": 193,
     "branch": "codex/rc4.206-physical-failure-repair",
     "base_sha": "d5954d66877df877f950a4a41f32baad59a66748",
-    "head_sha": "d482faeeefcd5ff79b30b9718354ecb3b19230b2",
-    "tree_sha": "e5023a150d3b6543c0256efc6917f53c1f6b16e5",
+    "head_sha": "8ee120890f7aae7a7bda93a4f1e34d18526a2979",
+    "tree_sha": "a5f55cba7e8d114de552060b0dd96565ee400d10",
     "preview_url": "CLOUDFLARE_PAGES_PR_PREVIEW_CHECK_PASS",
     "exact_head_checks": {
       "guardrails": "PASS",
@@ -1208,11 +1234,11 @@
       "Canonical game context uses bounded ESPN-hosted scoreboard variants, exact season/week/type validation, 13-16 game completeness, unique event/team identity, and consumer-side revalidation.",
       "Team Total remains unavailable; no odds source or synthetic total was introduced."
     ],
-    "canonical_main_unchanged": true,
-    "merge_authorized": false,
-    "production_deployment_authorized": false,
+    "canonical_main_unchanged": false,
+    "merge_authorized": true,
+    "production_deployment_authorized": true,
     "physical_device_accepted": false,
-    "observed_at": "2026-09-23T18:34:00Z",
+    "observed_at": "2026-09-23T19:15:00Z",
     "package_reextract": {
       "status": "PASS_17_RUNTIME_FILES_BYTE_EXACT",
       "archive_identity_semantics": "RUN_ENVIRONMENT_SCOPED_NONCANONICAL",
@@ -1238,5 +1264,5 @@
     "reviewed_runtime_tree_sha": "afecd5370c9209079ebaa18a3384e57106e595ff",
     "exact_head_validation_sha": "44401e32c914ba9da41d19add7ff48cc26bd249d"
   },
-  "updatedAt": "2026-09-23T18:34:00Z"
+  "updatedAt": "2026-09-23T19:15:00Z"
 }
