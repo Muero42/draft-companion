@@ -8,4 +8,6 @@ The v262 claim that rc4.205 remained Production authority is superseded. `v11.8.
 
 The rc4.207 repair is bounded to current-week selected-expert identity acquisition and one official ESPN CDN schedule fallback. It preserves projection, Sleeper hydration, Start/Sit, broad-ECR separation, complete-week uniqueness validation, sanitized errors, and fail-closed semantics. Team Total remains unavailable. No merge, Production deployment, Watcher mutation, external communication change, or Sleeper/fantasy transaction is part of this checkpoint.
 
-Next safe gate: `RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW` — exact-head local/CI validation and a non-Production Cloudflare preview for the repair PR.
+Draft PR #193 passed exact-head local/CI validation and its non-Production Cloudflare preview at `d482faeeefcd5ff79b30b9718354ecb3b19230b2`.
+
+Next safe gate: `SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT`. The current work package forbids that merge/deployment.

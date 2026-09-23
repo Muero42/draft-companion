@@ -36,4 +36,6 @@ The bounded rc4.207 repair changes `_worker.js` `espnScoreboardUrls`, `normalize
 
 `v11.8.0-rc4.207` exists only on `codex/rc4.206-physical-failure-repair`. It is not Production-deployed, device-observed, device-accepted, merged, or authorized for automatic fantasy transactions. Pitti Watcher was not modified; its remote-secured branch remains `codex/watcher-p0-chunked-frames` at `3122adf0a71d7ae5e4d896b2b4824dede7c1ea5a`, pending Production cost calibration before budget/outbox activation.
 
-Exact next gate: `RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW`. A passing repair PR may then be reviewed for a separately authorized merge. Because automatic Production deployments are enabled on `main`, merging is itself a Production-impacting action and is forbidden in this work package.
+Draft PR #193 passed exact-head Guardrails, Behavioral Contract, Candidate Package, isolated Cloud Validation, and the non-Production Cloudflare Pages preview at `d482faeeefcd5ff79b30b9718354ecb3b19230b2` / tree `e5023a150d3b6543c0256efc6917f53c1f6b16e5`.
+
+Exact next gate: `SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT`. Because automatic Production deployments are enabled on `main`, merging is itself a Production-impacting action and is forbidden in this work package.

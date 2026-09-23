@@ -790,8 +790,8 @@
     "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
-    "status": "RC4207_BOUNDED_REPAIR_PENDING_EXACT_HEAD_PR_VALIDATION",
-    "nextGate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW"
+    "status": "RC4207_DRAFT_PR_EXACT_HEAD_PASS_AWAITING_SEPARATE_MERGE_AUTHORIZATION",
+    "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -842,17 +842,22 @@
     "schema": "pitti.auto-state.v1",
     "protocol_version": "1.0.0",
     "mode": "AUTO",
-    "status": "RUNNING",
-    "active": [
+    "status": "WAITING_EXTERNAL",
+    "active": [],
+    "ready": [],
+    "waiting_external": [
       {
-        "id": "rc4207-exact-head-validation",
-        "reason": "Run local gates, publish the non-production repair branch/PR, and verify exact-head CI without merge or Production deployment."
+        "id": "rc4207-merge-authorization",
+        "reason": "Draft PR #193 exact-head gates and non-Production preview passed. Merge would trigger automatic Production deployment and requires separate explicit authorization."
       }
     ],
-    "ready": [],
-    "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "rc4207-pr193-exact-head-pass",
+        "result": "Draft PR #193 head d482faeeefcd5ff79b30b9718354ecb3b19230b2 passed guardrails, behavioral-contract, package, pitti-cloud-validation, and Cloudflare Pages non-Production preview.",
+        "at": "2026-09-23T18:34:00Z"
+      },
       {
         "id": "rc4206-physical-failure-v263",
         "result": "rc4.206 source and Production authority confirmed at main@d5954d66877df877f950a4a41f32baad59a66748 / deployment 8322e9b3-a293-4454-8ef9-d5e98c217889; device acceptance FALSE with selected PITTI panel and game context unavailable; rc4.205 remains last device-accepted control.",
@@ -1014,9 +1019,9 @@
       }
     ],
     "stop_evaluation": {
-      "allowed": false,
+      "allowed": true,
       "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "Temporary checkpoint while exact-head validation is still active; completion requires PR/CI evidence."
+      "reason": "All independently authorized repair, regression, PR, CI, and non-Production preview work is complete; merge and automatic Production deployment require separate explicit authorization."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
@@ -1030,9 +1035,9 @@
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
     "refresh_scope": "RC4206_PHYSICAL_FAILURE_RC4207_BOUNDED_REPAIR"
   },
-  "status": "RC4207_BOUNDED_REPAIR_PENDING_EXACT_HEAD_PR_VALIDATION",
-  "gate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW",
-  "nextGate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW",
+    "status": "RC4207_DRAFT_PR_EXACT_HEAD_PASS_AWAITING_SEPARATE_MERGE_AUTHORIZATION",
+    "gate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
+    "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
   "handoffGeneration": "20260923T1834Z-v263",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
@@ -1180,14 +1185,14 @@
     "season_exception_weakens_draft_rule": false
   },
   "candidate_work": {
-    "status": "RC4.207_LOCAL_BOUNDED_REPAIR_PENDING_EXACT_HEAD_PR_VALIDATION",
+    "status": "RC4.207_DRAFT_PR_EXACT_HEAD_PASS_NOT_MERGED_NOT_DEPLOYED",
     "version": "v11.8.0-rc4.207",
-    "pr": null,
+    "pr": 193,
     "branch": "codex/rc4.206-physical-failure-repair",
     "base_sha": "d5954d66877df877f950a4a41f32baad59a66748",
-    "head_sha": "PENDING_FINAL_COMMIT",
-    "tree_sha": "PENDING_FINAL_COMMIT",
-    "preview_url": null,
+    "head_sha": "d482faeeefcd5ff79b30b9718354ecb3b19230b2",
+    "tree_sha": "e5023a150d3b6543c0256efc6917f53c1f6b16e5",
+    "preview_url": "CLOUDFLARE_PAGES_PR_PREVIEW_CHECK_PASS",
     "exact_head_checks": {
       "guardrails": "PASS",
       "behavioral_contract": "PASS",

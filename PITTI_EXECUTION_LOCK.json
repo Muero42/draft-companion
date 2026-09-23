@@ -346,12 +346,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4207_BOUNDED_REPAIR_PENDING_EXACT_HEAD_PR_VALIDATION",
-    "nextGate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW"
+    "status": "RC4207_DRAFT_PR_EXACT_HEAD_PASS_AWAITING_SEPARATE_MERGE_AUTHORIZATION",
+    "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT"
   },
-  "status": "RC4207_BOUNDED_REPAIR_PENDING_EXACT_HEAD_PR_VALIDATION",
-  "gate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW",
-  "nextGate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW",
+  "status": "RC4207_DRAFT_PR_EXACT_HEAD_PASS_AWAITING_SEPARATE_MERGE_AUTHORIZATION",
+  "gate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
+  "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -364,7 +364,7 @@
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.206 is canonical source and Production but not device-accepted. rc4.205 remains last device-accepted control. Validate rc4.207 exact head and non-Production preview; do not merge or deploy.",
+    "resume": "rc4.206 is canonical source and Production but not device-accepted; rc4.205 remains last device-accepted control. Draft PR #193 for rc4.207 passed exact-head CI and non-Production preview. Do not merge or deploy without separate explicit authorization.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -422,6 +422,6 @@
   "handoffGeneration": "20260923T1834Z-v263",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "updated_at": "2026-09-23T18:34:00Z",
-  "exactNextAction": "Validate rc4.207 at the exact repair head with local gates, GitHub CI, and non-Production preview. Do not merge or deploy. Team Total remains unavailable; PR #192 is stale and not merge-ready unchanged.",
+  "exactNextAction": "Review Draft PR #193. The next promotion step is a separately authorized merge, which will trigger automatic Production deployment. Do not merge or deploy under the current work package. Team Total remains unavailable; PR #192 is stale and not merge-ready unchanged.",
   "failClosedRecovery": "If rc4.207 exact-head evidence is incomplete or contradictory, keep rc4.206 Production rejected, rc4.205 as last device-accepted control, and all selected-panel/game-context/Team-Total lanes fail-closed."
 }

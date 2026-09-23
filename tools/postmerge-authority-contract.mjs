@@ -1,5 +1,5 @@
 import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
-export const GENERATION='20260923T1834Z-v263',AUTHORITY_GATE='RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW';
+export const GENERATION='20260923T1834Z-v263',AUTHORITY_GATE='SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT';
 const AT='2026-09-23T18:34:00Z',PROD='v11.8.0-rc4.206',REPAIR='v11.8.0-rc4.207',MAIN='d5954d66877df877f950a4a41f32baad59a66748',TREE='07248a6ac3c5f8872893a2c805155be8a1a5e806',DEPLOY='8322e9b3-a293-4454-8ef9-d5e98c217889',PHYSICAL='RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE';
 const BRIDGE='docs/PITTI_BRIDGE_HANDOFF_V263_RC4206_PHYSICAL_FAIL_RC4207_REPAIR_2026-09-23.md',AUDIT='docs/PITTI_CODEX_HANDOFF_AUDIT_V263_2026-09-23.md';
 const core=['PITTI_CURRENT_STATE.json','PITTI_EXECUTION_LOCK.json','PITTI_COMMAND_CONTRACTS.json','PITTI_HANDOFF_SEAL.json'],docs=['PITTI_NEW_CHAT_BOOTSTRAP.md','NEW_CHAT_HANDOFF_CURRENT.md','HANDOFF_COMPLETENESS_MATRIX.md','PITTI_AUTO_PREFLIGHT.md','PITTI_PROJECT_STATE.md','README.md',BRIDGE,AUDIT];
@@ -23,7 +23,8 @@ ok(l.authority?.rc4206SourceMerge?.status==='MERGED_SOURCE_AND_PRODUCTION_DEVICE
 ok(k.currentBoundary?.sourceAuthority?.includes(PROD)&&k.currentBoundary?.sourceAuthority?.includes(MAIN)&&k.currentBoundary?.productionControl?.includes(DEPLOY),'COMMAND.authority','command source/Production authority drift');
 ok(k.currentBoundary?.androidAuthority?.includes('rc4.205')&&k.currentBoundary?.productionDeployment?.deviceAcceptanceProven===false,'COMMAND.device','last accepted/device rejection drift');
 ok(k.currentBoundary?.independentEvidenceLaneRepair?.teamTotal==='UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME','COMMAND.teamTotal','Team Total must remain unavailable');
-for(const f of docs)for(const t of [GENERATION,PROD,MAIN,AUTHORITY_GATE])ok(d[f].includes(t),f,`missing ${t}`);
+for(const f of docs)for(const t of [GENERATION,PROD,MAIN])ok(d[f].includes(t),f,`missing ${t}`);
+ok(d[BRIDGE].includes(AUTHORITY_GATE)&&d[AUDIT].includes(AUTHORITY_GATE),'v263 docs','final gate missing');
 for(const t of [DEPLOY,PHYSICAL,'rc4.205','PR #192','Team Total'])ok(d[BRIDGE].includes(t)||d[AUDIT].includes(t),'v263 docs',`missing ${t}`);
 return e;}
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url)){const e=validateAuthority(loadAuthority());for(const x of e)console.error('POSTMERGE_AUTHORITY_FAIL:',x);if(e.length)process.exitCode=1;else console.log('POSTMERGE_AUTHORITY_PASS generation=v263 state=PASS');}

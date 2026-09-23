@@ -163,14 +163,14 @@
     "packageReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployedPagesVersion": "v11.8.0-rc4.206",
     "deployedPagesAppByteParityWithMain": false,
-    "currentResearchGate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW",
-    "exactNextAction": "Validate rc4.207 exact head and non-Production preview; do not merge or deploy. PR #192 is stale and must not be merged unchanged.",
+    "currentResearchGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
+    "exactNextAction": "Review Draft PR #193; merge would trigger automatic Production deployment and requires separate explicit authorization. PR #192 remains stale and must not be merged unchanged.",
     "runtimeVersion": "v11.8.0-rc4.207 feature-branch repair / rc4.206 source+Production authority / rc4.205 last device-accepted control",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": "2026-09-23 RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE; Sleeper roster and weekly QB/RB/WR/TE projections pass",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
     "reconciledBaseMain": "DYNAMIC_EXTERNAL_EVIDENCE",
-    "nextGate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW",
+    "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
     "packageReferenceScope": "rc4.204 17-file source-byte parity; no cross-environment archive SHA identity",
     "localCandidatePackage": {
       "version": "v11.8.0-rc4.204",
@@ -228,7 +228,7 @@
       "teamTotal": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
     }
   },
-  "currentGate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW",
+  "currentGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
   "handoffGeneration": "20260923T1834Z-v263",
   "handoff_generation": "20260923T1834Z-v263",
   "statusCommand": {
@@ -247,7 +247,7 @@
     "observedTransactionCanary": "HISTORICAL rc4.160 device: Harrison Mevis rostered, Tank Bigsby absent, Zach Charbonnet Reserve/IR",
     "rc4161Fix": "live FA ownership pool is independent from expert ranking hydration; zero ranked join must never imply HOLD",
     "regression": "tools/season-fa-ownership-regression.mjs is mandatory in candidate package gate",
-    "nextGate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW",
+    "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
     "leagueState": "Persist all ten Sleeper rosters plus manager mapping, starter/reserve/taxi, waiver position, FAAB used/remaining and current transaction-round evidence.",
     "waiverCompetition": "Opponent bid estimates are distributions/bands driven primarily by current roster need and remaining FAAB, with bounded current-season transaction and historical-manager priors.",
     "qb2SeasonException": "No generic in-season QB2 ban. Evaluate upside/value vs active roster cost; when D/ST is still missing, include the second future active drop and same-bye penalty.",
@@ -255,8 +255,8 @@
     "tradeValueEvidence": "Automatically ingest current Justin Boone/Yahoo weekly ROS charts server-side; QB=1QB, RB/WR/TE=HALF; require all positions, fresh provenance and unambiguous Sleeper mapping or fail closed.",
     "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
-  "currentResearchGate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW",
-  "exactNextAction": "Validate rc4.207 at the exact feature-branch head with local gates, GitHub CI and non-Production preview. Do not merge or deploy. Team Total remains unavailable and PR #192 remains stale/not merge-ready unchanged.",
+  "currentResearchGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
+  "exactNextAction": "Review Draft PR #193. Any merge will trigger automatic Production deployment and therefore requires separate explicit authorization. Team Total remains unavailable and PR #192 remains stale/not merge-ready unchanged.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
   "updated_at": "2026-09-23T18:34:00Z",
