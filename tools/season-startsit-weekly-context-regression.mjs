@@ -24,6 +24,8 @@ const event=(id,home,away,indoor=false)=>({id,date:'2026-09-13T17:00:00Z',compet
 const pairs=[['AAA','BBB'],['CCC','DDD'],['EEE','FFF'],['GGG','HHH'],['III','JJJ'],['KKK','LLL'],['MMM','NNN'],['OOO','PPP'],['QQQ','RRR'],['SSS','TTT'],['UUU','VVV'],['WWW','XXX'],['YYY','ZZZ']];
 const events=pairs.map(([home,away],i)=>event(String(i+1),home,away,i===1));
 const snap=game.buildSnapshot({season:2026,week,events,verifiedAt:now,sourceUrl:'https://site.api.espn.com/test'});assert.equal(game.validateSnapshot(snap,{season:2026,week},now).ok,true);assert.equal(game.contextForTeam(snap,'AAA',now).opponent,'BBB');assert.equal(game.contextForTeam(snap,'CCC',now).weather.reason,'INDOOR_NO_WEATHER_REQUIRED');
+const cdnSnap=game.buildSnapshot({season:2026,week,events,verifiedAt:now,sourceUrl:'https://cdn.espn.com/core/nfl/scoreboard?xhr=1&year=2026&seasontype=2&week=2'});assert.equal(game.validateSnapshot(cdnSnap,{season:2026,week},now).ok,true,'official ESPN CDN scoreboard must remain subject to the complete-week consumer validation');
+const untrustedSnap=game.buildSnapshot({season:2026,week,events,verifiedAt:now,sourceUrl:'https://example.invalid/scoreboard'});assert.equal(game.validateSnapshot(untrustedSnap,{season:2026,week},now).ok,false,'non-ESPN schedule sources must stay fail-closed');
 const conflict=game.buildSnapshot({season:2026,week,events:[...events,event('14','AAA','NEW')],verifiedAt:now,sourceUrl:'https://site.api.espn.com/test'});assert.equal(conflict.status,'PARTIAL');
 assert.equal(conflict.rejections.find(x=>x.eventId==='14')?.reason,'DUPLICATE_TEAM_ACROSS_EVENTS');
 assert.equal(conflict.games.length,0,'conflicting week remains fail closed');

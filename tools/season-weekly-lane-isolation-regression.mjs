@@ -9,7 +9,8 @@ assert.match(refresh,/Promise\.allSettled\(WEEKLY_PROJECTION_POSITIONS/,'project
 assert.match(refresh,/const projectionSnapshot=api\.buildSnapshot/,'projection-stage snapshot must be built');
 assert.match(refresh,/refreshStage:'PROJECTIONS'/,'projection-stage snapshot must be persisted explicitly');
 assert.match(refresh,/Promise\.allSettled\(WEEKLY_PROJECTION_POSITIONS[\s\S]*consensus-rankings/,'rank positions must settle independently');
-assert.match(refresh,/acquireSelectedWeeklyRankPayloads\(\{season,week\}\)/,'selected PITTI weekly panel must be acquired independently from broad ECR');
+assert.match(refresh,/acquireSelectedWeeklyRankPayloads\(\{season,week,directoryPayloads:rankingPayloads\}\)/,'selected PITTI weekly panel must use only current-week expert identity metadata from the separate broad response');
+assert.match(refresh,/scoring=HALF&experts=show/,'broad weekly acquisition must explicitly request provider expert identity metadata');
 assert.match(refresh,/selectedRankingPayloads:selectedAcquisition\.selectedRankingPayloads/,'selected PITTI panel payloads must have a dedicated snapshot lane');
 const projectionWrite=refresh.indexOf("refreshStage:'PROJECTIONS'"),rankStart=refresh.indexOf('consensus-rankings');
 assert(projectionWrite>=0&&rankStart>projectionWrite,'verified projections must persist before optional rank acquisition starts');

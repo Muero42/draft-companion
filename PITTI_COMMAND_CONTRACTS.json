@@ -155,22 +155,22 @@
     "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.205 Production VERIFIED at exact main 66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1, deployment ec6cd004-6e54-480f-8752-e8e37755ac66; bounded PR #186 physical PASS recorded",
-    "androidAuthority": "v11.8.0-rc4.205 physical PASS for bounded PR #186 Lawrence mapping + game-context failure-provenance repair; PITTI-Panel, Team Total, and game/opponent/weather data remain unavailable/fail-closed",
-    "sourceAuthority": "v11.8.0-rc4.205 reviewed runtime/source repair PR #186 head 9c407d5a705713a630d7e62f020b72b48169d131, merge 01ceef33dba6d79be48461d85532a1e2a39bd9aa, tree d1c9e2660e60d305a8a1f4727404d676e83c2164; current main 66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1 is Production-deployed and physically accepted for bounded Lawrence mapping + game-context failure provenance",
+    "productionControl": "v11.8.0-rc4.206 Production authority at main@d5954d66877df877f950a4a41f32baad59a66748 / deployment 8322e9b3-a293-4454-8ef9-d5e98c217889; device acceptance FALSE",
+    "androidAuthority": "rc4.206 is latest observed but not accepted; rc4.205 remains last device-accepted control",
+    "sourceAuthority": "v11.8.0-rc4.206 canonical source authority via PR #191 at main@d5954d66877df877f950a4a41f32baad59a66748, tree 07248a6ac3c5f8872893a2c805155be8a1a5e806; rc4.207 is feature-branch-only repair",
     "latestPackageReextract": "rc4.204 source-byte-exact 17-file package; archive SHA run/environment-scoped",
     "latestPackageSha256": null,
     "packageReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
-    "deployedPagesVersion": "v11.8.0-rc4.205",
-    "deployedPagesAppByteParityWithMain": true,
-    "currentResearchGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR",
-    "exactNextAction": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 remains Production/device accepted for the bounded PR #186 repair scope (RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE). Independent Evidence Lane Diagnosis is complete. Broad current weekly Expert-Ranks are physically AVAILABLE. PITTI-Panel remains unavailable because Season weekly ingestion uses broad consensus only while the selected-panel machinery is still draft/preseason; FantasyPros supports exact expert filters and rankings/experts, so a bounded current-week selected-expert pipeline is technically viable but not yet implemented. Canonical game-context data remains unavailable because the Cloudflare Worker receives ESPN upstream HTTP 403; the repaired failure-provenance contract is correct. Team Total remains unavailable because no approved runtime total+spread source exists, although the existing impliedTeamTotal helper can consume a future verified same-event pair. Opponent/weather remains dependent on restored complete game context and fresh event forecast. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR. No runtime repair, deployment, fantasy transaction, or Pitti Watcher mutation is authorized by this diagnosis checkpoint.",
-    "runtimeVersion": "rc4.205 Production + bounded PR #186 physical PASS at main@66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1",
+    "deployedPagesVersion": "v11.8.0-rc4.206",
+    "deployedPagesAppByteParityWithMain": false,
+    "currentResearchGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
+    "exactNextAction": "Review Draft PR #193; merge would trigger automatic Production deployment and requires separate explicit authorization. PR #192 remains stale and must not be merged unchanged.",
+    "runtimeVersion": "v11.8.0-rc4.207 feature-branch repair / rc4.206 source+Production authority / rc4.205 last device-accepted control",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
-    "latestDeviceEvidence": "2026-09-20 RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE; QB 80/80 mapped, active roster 13/13 usable; game-context failure provenance PASS, data unavailable",
+    "latestDeviceEvidence": "2026-09-23 RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE; Sleeper roster and weekly QB/RB/WR/TE projections pass",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
     "reconciledBaseMain": "DYNAMIC_EXTERNAL_EVIDENCE",
-    "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR",
+    "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
     "packageReferenceScope": "rc4.204 17-file source-byte parity; no cross-environment archive SHA identity",
     "localCandidatePackage": {
       "version": "v11.8.0-rc4.204",
@@ -183,17 +183,18 @@
     },
     "deploymentParity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; ARBITRARY_BYTE_PARITY_NOT_PROVEN",
     "productionDeployment": {
-      "version": "v11.8.0-rc4.205",
-      "sourceCommit": "66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1",
-      "status": "VERIFIED_SUCCESS_CLOUDFLARE_PAGES_EXACT_COMMIT",
+      "version": "v11.8.0-rc4.206",
+      "sourceCommit": "d5954d66877df877f950a4a41f32baad59a66748",
+      "status": "VERIFIED_SUCCESS_DEVICE_REJECTED",
       "branch": "main",
-      "deploymentId": "ec6cd004-6e54-480f-8752-e8e37755ac66",
-      "cloudflareCheckRunId": 106063674827,
-      "deviceAcceptanceProven": true,
-      "deviceAcceptanceScope": "RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE"
+      "deploymentId": "8322e9b3-a293-4454-8ef9-d5e98c217889",
+      "cloudflareCheckRunId": null,
+      "deviceAcceptanceProven": false,
+      "deviceAcceptanceScope": "RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE",
+      "lastDeviceAcceptedControl": "v11.8.0-rc4.205"
     },
     "independentEvidenceLaneDiagnosis": {
-      "status": "DIAGNOSIS_COMPLETE_NO_RUNTIME_REPAIR_AUTHORIZED",
+      "status": "SUPERSEDED_BY_AUTHORIZED_RC4206_SOURCE_REPAIR_MERGED",
       "expert_ranks": "PHYSICAL_AVAILABLE_BROAD_WEEKLY_ECR_ALL_QB_RB_WR_TE",
       "pitti_panel": {
         "status": "UNAVAILABLE_ROOT_CAUSE_IDENTIFIED",
@@ -218,11 +219,18 @@
         "root_cause": "Opponent, kickoff, venue/roof and event weather depend on complete canonical game-context events. Upstream schedule 403 therefore blocks the lane. Weather additionally remains fail-closed unless a fresh event-bound forecast is present.",
         "bounded_repair": "Restore verified game context first; retain existing fresh-event weather requirements and no-weather-needed dome semantics."
       }
+    },
+    "independentEvidenceLaneRepair": {
+      "status": "RC4.206_PRODUCTION_DEVICE_REJECTED_RC4.207_REPAIR_NOT_DEPLOYED",
+      "sourceMerge": "d5954d66877df877f950a4a41f32baad59a66748",
+      "pittiPanel": "SOURCE_IMPLEMENTED_PHYSICAL_UNVERIFIED",
+      "gameContext": "SOURCE_IMPLEMENTED_PHYSICAL_UNVERIFIED",
+      "teamTotal": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
     }
   },
-  "currentGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR",
-  "handoffGeneration": "20260920T1100Z-v260",
-  "handoff_generation": "20260920T1100Z-v260",
+  "currentGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
+  "handoffGeneration": "20260923T1834Z-v263",
+  "handoff_generation": "20260923T1834Z-v263",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -239,7 +247,7 @@
     "observedTransactionCanary": "HISTORICAL rc4.160 device: Harrison Mevis rostered, Tank Bigsby absent, Zach Charbonnet Reserve/IR",
     "rc4161Fix": "live FA ownership pool is independent from expert ranking hydration; zero ranked join must never imply HOLD",
     "regression": "tools/season-fa-ownership-regression.mjs is mandatory in candidate package gate",
-    "nextGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR",
+    "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
     "leagueState": "Persist all ten Sleeper rosters plus manager mapping, starter/reserve/taxi, waiver position, FAAB used/remaining and current transaction-round evidence.",
     "waiverCompetition": "Opponent bid estimates are distributions/bands driven primarily by current roster need and remaining FAAB, with bounded current-season transaction and historical-manager priors.",
     "qb2SeasonException": "No generic in-season QB2 ban. Evaluate upside/value vs active roster cost; when D/ST is still missing, include the second future active drop and same-bye penalty.",
@@ -247,9 +255,10 @@
     "tradeValueEvidence": "Automatically ingest current Justin Boone/Yahoo weekly ROS charts server-side; QB=1QB, RB/WR/TE=HALF; require all positions, fresh provenance and unambiguous Sleeper mapping or fail closed.",
     "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
-  "currentResearchGate": "SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR",
-  "exactNextAction": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 remains Production/device accepted for the bounded PR #186 repair scope (RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE). Independent Evidence Lane Diagnosis is complete. Broad current weekly Expert-Ranks are physically AVAILABLE. PITTI-Panel remains unavailable because Season weekly ingestion uses broad consensus only while the selected-panel machinery is still draft/preseason; FantasyPros supports exact expert filters and rankings/experts, so a bounded current-week selected-expert pipeline is technically viable but not yet implemented. Canonical game-context data remains unavailable because the Cloudflare Worker receives ESPN upstream HTTP 403; the repaired failure-provenance contract is correct. Team Total remains unavailable because no approved runtime total+spread source exists, although the existing impliedTeamTotal helper can consume a future verified same-event pair. Opponent/weather remains dependent on restored complete game context and fresh event forecast. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR. No runtime repair, deployment, fantasy transaction, or Pitti Watcher mutation is authorized by this diagnosis checkpoint.",
+  "currentResearchGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
+  "exactNextAction": "Review Draft PR #193. Any merge will trigger automatic Production deployment and therefore requires separate explicit authorization. Team Total remains unavailable and PR #192 remains stale/not merge-ready unchanged.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
-  "updated_at": "2026-09-20T11:00:00Z"
+  "updated_at": "2026-09-23T18:34:00Z",
+  "updatedAt": "2026-09-23T18:34:00Z"
 }

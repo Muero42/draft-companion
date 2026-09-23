@@ -7,11 +7,12 @@ try{
   const calls=[];
   globalThis.fetch=async(url,options)=>{calls.push({url:String(url),options});return new Response('forbidden',{status:403})};
   let runtime=await load('http');let response=await runtime.fetch(new Request('https://pitti.invalid/api/nfl-week-context?season=2026&week=2'),{ASSETS:{fetch:()=>new Response('asset')}}),body=await response.json();
-  assert.equal(response.status,502);assert.equal(body.failureType,'UPSTREAM_HTTP_ERROR');assert.equal(body.upstreamStatus,403);assert.equal(calls.length,3,'bounded ESPN-hosted acquisition must exhaust exactly three sanctioned variants');
-  assert(calls.every(call=>call.url.startsWith('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?')));
+  assert.equal(response.status,502);assert.equal(body.failureType,'UPSTREAM_HTTP_ERROR');assert.equal(body.upstreamStatus,403);assert.equal(calls.length,4,'bounded ESPN-hosted acquisition must exhaust three site API variants plus one CDN fallback');
+  assert(calls.slice(0,3).every(call=>call.url.startsWith('https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard?')));
+  assert(calls[3].url.startsWith('https://cdn.espn.com/core/nfl/scoreboard?'));
   assert(calls.every(call=>call.options?.headers?.accept==='application/json'&&/PITTI-Companion/.test(call.options?.headers?.['user-agent']||'')));
   assert(calls.every(call=>call.options?.cf?.cacheTtl===900&&call.options?.cf?.cacheEverything===true));
-  assert(Array.isArray(body.attempts)&&body.attempts.length===3);
+  assert(Array.isArray(body.attempts)&&body.attempts.length===4);
   assert(!JSON.stringify(body).includes('forbidden'),'raw upstream response body must never leak');
   globalThis.fetch=async()=>{throw new Error('secret upstream detail')};runtime=await load('exception');response=await runtime.fetch(new Request('https://pitti.invalid/api/nfl-week-context?season=2026&week=2'),{ASSETS:{fetch:()=>new Response('asset')}});body=await response.json();
   assert.equal(response.status,502);assert.deepEqual({failureType:body.failureType,upstreamStatus:body.upstreamStatus},{failureType:'FETCH_EXCEPTION',upstreamStatus:null});assert(!JSON.stringify(body).includes('secret upstream detail'),'fetch exception detail must remain sanitized');
@@ -19,5 +20,10 @@ try{
   runtime=await load('fallback');response=await runtime.fetch(new Request('https://pitti.invalid/api/nfl-week-context?season=2026&week=2'),{ASSETS:{fetch:()=>new Response('asset')}});body=await response.json();
   assert.equal(response.status,200);assert.equal(body.events.length,13);assert.equal(body.acquisition.variant,2);assert.equal(body.acquisition.attempts[0].failureType,'INCOMPLETE_WEEK');
   attempt=0;globalThis.fetch=async()=>new Response(JSON.stringify({season:{year:2025,type:2},week:{number:2},events:Array.from({length:13},(_,i)=>({id:String(i+1)}))}),{status:200,headers:{'content-type':'application/json'}});runtime=await load('context');response=await runtime.fetch(new Request('https://pitti.invalid/api/nfl-week-context?season=2026&week=2'),{ASSETS:{fetch:()=>new Response('asset')}});body=await response.json();assert.equal(response.status,502);assert.equal(body.failureType,'CONTEXT_MISMATCH');
+  attempt=0;globalThis.fetch=async url=>{attempt++;if(attempt<=3)return new Response('forbidden',{status:403});return new Response(JSON.stringify({content:{sbData:{season:{year:2026,type:2},week:{number:2},events:Array.from({length:13},(_,i)=>({id:String(i+1)}))}}}),{status:200,headers:{'content-type':'application/json'}})};
+  runtime=await load('cdn-fallback');response=await runtime.fetch(new Request('https://pitti.invalid/api/nfl-week-context?season=2026&week=2'),{ASSETS:{fetch:()=>new Response('asset')}});body=await response.json();
+  assert.equal(response.status,200);assert.equal(body.events.length,13);assert.equal(body.acquisition.variant,4);assert.equal(body.acquisition.attempts.length,3);assert.match(body.sourceUrl,/^https:\/\/cdn\.espn\.com\/core\/nfl\/scoreboard\?/);
+  globalThis.fetch=async url=>new Response(JSON.stringify({content:{sbData:{season:{year:2026,type:2},week:{number:3},events:Array.from({length:13},(_,i)=>({id:String(i+1)}))}}}),{status:200,headers:{'content-type':'application/json'}});
+  runtime=await load('cdn-wrong-week');response=await runtime.fetch(new Request('https://pitti.invalid/api/nfl-week-context?season=2026&week=2'),{ASSETS:{fetch:()=>new Response('asset')}});body=await response.json();assert.equal(response.status,502);assert.equal(body.failureType,'CONTEXT_MISMATCH');
 }finally{globalThis.fetch=nativeFetch}
 console.log('SEASON_GAME_CONTEXT_WORKER_REGRESSION_PASS');
