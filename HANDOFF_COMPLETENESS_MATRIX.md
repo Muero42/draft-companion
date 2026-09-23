@@ -96,3 +96,4 @@ PASS requires:
 - AUTO is continuous same-turn execution and STATUS is report-only; historical blocks cannot supersede this active matrix. Empty assistant response after tool work is forbidden.
 
 Canonical permission boundary: AGENTS.md. Dynamic authority must be reverified before dependent continuation or promotion. QB2 authority remains draft-only exclusion after QB1 with evidence-backed, legal-capacity season exceptions as defined in `PITTI_CURRENT_STATE.json:qb_policy`.
+> REPO v263 — Generation: `20260923T1834Z-v263`. rc4.206 source + Production authority is confirmed; device acceptance is false. rc4.205 is last device-accepted control. rc4.207 bounded repair awaits exact-head CI/non-Production preview. PR #192 is stale and not merge-ready unchanged. Gate: `RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW`.

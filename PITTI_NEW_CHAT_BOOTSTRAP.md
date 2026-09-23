@@ -102,3 +102,4 @@ QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded u
 Earlier rc4.190/rc4.192/rc4.194 identities are historical and cannot override the v242 authority above.
 
 rc4.196 source is MERGED/HISTORICAL through PR #143; rc4.195 remains production/device authority. rc4.196 deployment parity is UNKNOWN_REQUIRES_REVERIFICATION and no physical acceptance is claimed.
+> CURRENT v263 (`20260923T1834Z-v263`): rc4.206 is source + Production authority at `main@d5954d66877df877f950a4a41f32baad59a66748`, deployment `8322e9b3-a293-4454-8ef9-d5e98c217889`, but device acceptance is false. rc4.205 is last device-accepted control. rc4.207 is an unmerged repair candidate. PR #192 is stale/not merge-ready unchanged. Gate: `RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW`.

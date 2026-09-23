@@ -1,12 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-20T16:24:00Z",
+  "updatedAt": "2026-09-23T18:34:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 remains Production/device accepted for the bounded PR #186 repair scope (RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE). Independent Evidence Lane Diagnosis is complete. Broad current weekly Expert-Ranks are physically AVAILABLE. PITTI-Panel remains unavailable because Season weekly ingestion uses broad consensus only while the selected-panel machinery is still draft/preseason; FantasyPros supports exact expert filters and rankings/experts, so a bounded current-week selected-expert pipeline is technically viable but not yet implemented. Canonical game-context data remains unavailable because the Cloudflare Worker receives ESPN upstream HTTP 403; the repaired failure-provenance contract is correct. Team Total remains unavailable because no approved runtime total+spread source exists, although the existing impliedTeamTotal helper can consume a future verified same-event pair. Opponent/weather remains dependent on restored complete game context and fresh event forecast. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR. No runtime repair, deployment, fantasy transaction, or Pitti Watcher mutation is authorized by this diagnosis checkpoint. never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "rc4.206 is canonical source and Production at main@d5954d66877df877f950a4a41f32baad59a66748 / deployment 8322e9b3-a293-4454-8ef9-d5e98c217889, but is not device-accepted. rc4.205 is the last device-accepted control. rc4.207 is feature-branch-only; Team Total remains unavailable. PR #192 is stale and must not be merged unchanged; never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
@@ -58,45 +58,48 @@
       }
     },
     "rc4206SourceMerge": {
-      "status": "MERGED_SOURCE_ONLY_NOT_PRODUCTION",
+      "status": "MERGED_SOURCE_AND_PRODUCTION_DEVICE_REJECTED",
       "version": "v11.8.0-rc4.206",
       "pr": 191,
       "reviewedHead": "888b0a8f62608ff2afabf3564409f0198f78e8fd",
       "mergeCommit": "d5954d66877df877f950a4a41f32baad59a66748",
-      "tree": "07248a6ac3c5f8872893a2c805155be8a1a5e806"
+      "tree": "07248a6ac3c5f8872893a2c805155be8a1a5e806",
+      "deploymentId": "8322e9b3-a293-4454-8ef9-d5e98c217889",
+      "deviceAcceptanceProven": false,
+      "physicalVerdict": "RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE"
     },
     "independentEvidenceLaneRepair": {
-      "status": "SOURCE_MERGED_NOT_PRODUCTION_OR_DEVICE_VERIFIED",
-      "pittiPanel": "SOURCE_IMPLEMENTED_PHYSICAL_UNVERIFIED",
-      "gameContext": "SOURCE_IMPLEMENTED_PHYSICAL_UNVERIFIED",
+      "status": "RC4.206_PRODUCTION_DEVICE_REJECTED_RC4.207_REPAIR_NOT_DEPLOYED",
+      "pittiPanel": "RC4.206_UNAVAILABLE_RC4.207_CURRENT_CONSENSUS_IDENTITY_REPAIR",
+      "gameContext": "RC4.206_UNAVAILABLE_UPSTREAM_403_RC4.207_OFFICIAL_CDN_FALLBACK",
       "teamTotal": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
     }
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.206",
+    "appVersion": "v11.8.0-rc4.207",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.205 RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE",
+    "latestAndroidObserved": "v11.8.0-rc4.206 RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE",
     "latestPreinstallVerified": "HISTORICAL/SUPERSEDED: rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "HISTORICAL/SUPERSEDED: v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.204 17-file source-byte-parity package (separate from deployment)",
     "preinstallSha256": null,
     "preinstallRuntimeFiles": 17,
     "latestSourceRegressionVerified": "PR #191 exact reviewed head 888b0a8f62608ff2afabf3564409f0198f78e8fd all candidate gates PASS; post-merge d595 failures are stale-v260 authority reconciliation failures",
-    "latestDeployedCandidate": "rc4.205 Production remains control at 66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1; v11.8.0-rc4.206 source merged only",
-    "latestAndroidVerified": "v11.8.0-rc4.205 bounded Sleeper timeout repair PASS",
-    "androidAuthority": "v11.8.0-rc4.205 physical PASS for bounded PR #186 Lawrence mapping + game-context failure-provenance repair; PITTI-Panel, Team Total, and game/opponent/weather data remain unavailable/fail-closed",
-    "android_authority": "v11.8.0-rc4.205 physical PASS for bounded PR #186 Lawrence mapping + game-context failure-provenance repair; PITTI-Panel, Team Total, and game/opponent/weather data remain unavailable/fail-closed",
+    "latestDeployedCandidate": "rc4.206 Production at d5954d66877df877f950a4a41f32baad59a66748 / deployment 8322e9b3-a293-4454-8ef9-d5e98c217889; physical acceptance FALSE",
+    "latestAndroidVerified": "v11.8.0-rc4.206 observed and rejected; rc4.205 remains last device-accepted control",
+    "androidAuthority": "rc4.206 is latest observed but not accepted; rc4.205 remains last device-accepted control",
+    "android_authority": "rc4.206 is latest observed but not accepted; rc4.205 remains last device-accepted control",
     "deployedPagesAppByteParityWithMain": false,
     "preinstallReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "preinstallReferenceArtifactId": null,
     "preinstallHashSemantics": "rc4.204 source-byte parity; archive SHA is run/environment-scoped and cannot establish cross-environment identity.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.205",
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.205 Live-State and Weekly Evidence refresh PASS; independent lanes unavailable",
-    "testChallengerAndroidObserved": true,
-    "testChallengerAndroidAccepted": true,
+    "latestAndroidVersionObserved": "v11.8.0-rc4.206",
+    "latestAndroidFunctionalVerified": "rc4.206 partial pass: Sleeper roster and weekly projections pass; selected panel and game context unavailable",
+    "testChallengerAndroidObserved": false,
+    "testChallengerAndroidAccepted": false,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
@@ -126,7 +129,7 @@
     },
     "acceptedAndroidAuthority": "v11.8.0-rc4.195 PRIOR_FULL_ACCEPTANCE_ROLLBACK_REFERENCE",
     "unreleasedMainDelta": "DYNAMIC_VERIFICATION_REQUIRED against canonical main and relevant PRs; last-observed PR118 boundary is recorded in CURRENT.",
-    "deployedPagesVersion": "v11.8.0-rc4.205",
+    "deployedPagesVersion": "v11.8.0-rc4.206",
     "mainGhPagesParity": true,
     "androidVerified": true,
     "androidAcceptance": "PASS_BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR",
@@ -134,25 +137,26 @@
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.206",
+      "version": "v11.8.0-rc4.207",
       "files": 17,
       "sha256": null,
-      "status": "SOURCE_MERGED_RECONCILIATION_PENDING_EXACT_HEAD_CI",
+      "status": "LOCAL_REPAIR_PENDING_EXACT_HEAD_CI",
       "sourceScope": "SOURCE_IN_THIS_TREE_CANONICAL_CONTAINMENT_RECORDED_REVERIFY_LIVE",
       "archiveShaSemantics": "RUN_AND_ENVIRONMENT_SCOPED_NOT_CANONICAL",
       "validationObservedArchiveSha256": "d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3"
     },
     "acceptedRollback": "v11.8.0-rc4.195",
     "productionDeployment": {
-      "version": "v11.8.0-rc4.205",
-      "sourceCommit": "cdf7510034ffea179accd1e855f351775cef492f",
-      "status": "VERIFIED_SUCCESS_FROM_AUTHORIZED_HANDOFF",
+      "version": "v11.8.0-rc4.206",
+      "sourceCommit": "d5954d66877df877f950a4a41f32baad59a66748",
+      "status": "VERIFIED_SUCCESS_DEVICE_REJECTED",
       "branch": "main",
-      "deploymentId": null,
-      "deviceAcceptanceProven": true,
-      "deviceAcceptanceScope": "BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR_ONLY"
+      "deploymentId": "8322e9b3-a293-4454-8ef9-d5e98c217889",
+      "deviceAcceptanceProven": false,
+      "deviceAcceptanceScope": "RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE",
+      "lastDeviceAcceptedControl": "v11.8.0-rc4.205"
     },
-    "deployedPagesHead": "66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1"
+    "deployedPagesHead": "d5954d66877df877f950a4a41f32baad59a66748"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -342,12 +346,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4206_SOURCE_MERGED_AUTHORITY_RECONCILIATION_PREPARED_PRODUCTION_REQUIRES_SEPARATE_AUTHORIZATION",
-    "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE"
+    "status": "RC4207_BOUNDED_REPAIR_PENDING_EXACT_HEAD_PR_VALIDATION",
+    "nextGate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW"
   },
-  "status": "AUTHORITY_RECONCILED_REVERIFY_BEFORE_CONTINUATION",
-  "gate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
-  "nextGate": "ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE",
+  "status": "RC4207_BOUNDED_REPAIR_PENDING_EXACT_HEAD_PR_VALIDATION",
+  "gate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW",
+  "nextGate": "RC4207_EXACT_HEAD_CI_AND_NONPRODUCTION_PREVIEW",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -356,11 +360,11 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260920T1624Z-v262",
+    "generation": "20260923T1834Z-v263",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "v11.8.0-rc4.206 source merged at d5954d66877df877f950a4a41f32baad59a66748; Production/device remain rc4.205 until separately authorized and verified. Next gate ELIGIBLE_FOR_SEPARATELY_AUTHORIZED_PRODUCTION_DEPLOYMENT_GATE.",
+    "resume": "rc4.206 is canonical source and Production but not device-accepted. rc4.205 remains last device-accepted control. Validate rc4.207 exact head and non-Production preview; do not merge or deploy.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -380,7 +384,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260920T1624Z-v262",
+  "handoff_generation": "20260923T1834Z-v263",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -415,9 +419,9 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260920T1624Z-v262",
+  "handoffGeneration": "20260923T1834Z-v263",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-09-20T16:24:00Z",
-  "exactNextAction": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 remains Production/device accepted for the bounded PR #186 repair scope (RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE). Independent Evidence Lane Diagnosis is complete. Broad current weekly Expert-Ranks are physically AVAILABLE. PITTI-Panel remains unavailable because Season weekly ingestion uses broad consensus only while the selected-panel machinery is still draft/preseason; FantasyPros supports exact expert filters and rankings/experts, so a bounded current-week selected-expert pipeline is technically viable but not yet implemented. Canonical game-context data remains unavailable because the Cloudflare Worker receives ESPN upstream HTTP 403; the repaired failure-provenance contract is correct. Team Total remains unavailable because no approved runtime total+spread source exists, although the existing impliedTeamTotal helper can consume a future verified same-event pair. Opponent/weather remains dependent on restored complete game context and fresh event forecast. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR. No runtime repair, deployment, fantasy transaction, or Pitti Watcher mutation is authorized by this diagnosis checkpoint. never claim a newer Library generation persisted unless files.list proves it.",
-  "failClosedRecovery": "Freshly verify canonical main and coupled authority generation. v11.8.0-rc4.205 remains Production/device accepted for the bounded PR #186 repair scope (RC4.205_PR186_PHYSICAL_PASS_LAWRENCE_MAPPING_AND_GAME_CONTEXT_FAILURE_PROVENANCE). Independent Evidence Lane Diagnosis is complete. Broad current weekly Expert-Ranks are physically AVAILABLE. PITTI-Panel remains unavailable because Season weekly ingestion uses broad consensus only while the selected-panel machinery is still draft/preseason; FantasyPros supports exact expert filters and rankings/experts, so a bounded current-week selected-expert pipeline is technically viable but not yet implemented. Canonical game-context data remains unavailable because the Cloudflare Worker receives ESPN upstream HTTP 403; the repaired failure-provenance contract is correct. Team Total remains unavailable because no approved runtime total+spread source exists, although the existing impliedTeamTotal helper can consume a future verified same-event pair. Opponent/weather remains dependent on restored complete game context and fresh event forecast. Next gate: SEPARATELY_AUTHORIZED_INDEPENDENT_EVIDENCE_LANE_BOUNDED_REPAIR. No runtime repair, deployment, fantasy transaction, or Pitti Watcher mutation is authorized by this diagnosis checkpoint. never claim a newer Library generation persisted unless files.list proves it."
+  "updated_at": "2026-09-23T18:34:00Z",
+  "exactNextAction": "Validate rc4.207 at the exact repair head with local gates, GitHub CI, and non-Production preview. Do not merge or deploy. Team Total remains unavailable; PR #192 is stale and not merge-ready unchanged.",
+  "failClosedRecovery": "If rc4.207 exact-head evidence is incomplete or contradictory, keep rc4.206 Production rejected, rc4.205 as last device-accepted control, and all selected-panel/game-context/Team-Total lanes fail-closed."
 }
