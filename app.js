@@ -602,25 +602,25 @@ const WEEKLY_PROJECTION_MIN_COUNTS={QB:24,RB:60,WR:70,TE:24};
 const SEASON_WEEKLY_SELECTED_EXPERTS={QB:['Justin Boone','Dalton Del Don','Sean Koerner','Pat Fitzmaurice'],RB:['Justin Boone','Dalton Del Don','Kev Wheeler','Ryan Weisse','Sean Koerner','Pat Fitzmaurice'],WR:['Justin Boone','Dalton Del Don','Sean Koerner','Pat Fitzmaurice'],TE:['Dalton Del Don','Justin Boone','Sean Koerner','Pat Fitzmaurice']};
 function codedError(code,message,status=null){const e=new Error(message);e.code=code;if(status!=null)e.status=status;return e}
 function normalizedExpertName(value){return norm(String(value||''));}
-async function resolveSeasonWeeklyExpertIds(season){
+function consensusWeeklyExperts(payload){
+  const names=payload?.expert_name&&typeof payload.expert_name==='object'&&!Array.isArray(payload.expert_name)?payload.expert_name:{};
+  const pubs=payload?.expert_pub&&typeof payload.expert_pub==='object'&&!Array.isArray(payload.expert_pub)?payload.expert_pub:{};
+  return Object.entries(names).map(([id,name])=>({id:String(id),name:String(name||'').trim(),site:String(pubs[id]||'')})).filter(expert=>/^\d+$/.test(expert.id)&&expert.name);
+}
+async function resolveSeasonWeeklyExpertIds(directoryPayloads={}){
   const byPosition={};
-  const directoryResults=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
-    const response=await fpProxyRequest(`/nfl/${season}/rankings/experts?position=${position}&include_overall=true`);
-    if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros expert directory HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw Object.assign(error,{position});}
-    return[position,extractExperts(response.data)];
-  }));
-  for(const result of directoryResults)if(result.status==='fulfilled'){
-    const [position,rows]=result.value,positionMap=new Map();
+  for(const position of WEEKLY_PROJECTION_POSITIONS){
+    const rows=consensusWeeklyExperts(directoryPayloads[position]),positionMap=new Map();
     for(const expert of rows)positionMap.set(normalizedExpertName(expert.name),expert);
     const configured=SEASON_WEEKLY_SELECTED_EXPERTS[position],requested=[],missing=[];
     for(const name of configured){const expert=positionMap.get(normalizedExpertName(name));if(expert&&/^\d+$/.test(String(expert.id)))requested.push({id:String(expert.id),name,site:String(expert.site||'')});else missing.push(name);}
     byPosition[position]={configured:[...configured],requested,missing};
   }
   for(const position of WEEKLY_PROJECTION_POSITIONS)byPosition[position]??={configured:[...SEASON_WEEKLY_SELECTED_EXPERTS[position]],requested:[],missing:[...SEASON_WEEKLY_SELECTED_EXPERTS[position]]};
-  return{byPosition,directoryResults};
+  return{byPosition,directoryResults:[]};
 }
-async function acquireSelectedWeeklyRankPayloads({season,week}){
-  const resolved=await resolveSeasonWeeklyExpertIds(season),selectedRankingPayloads={};
+async function acquireSelectedWeeklyRankPayloads({season,week,directoryPayloads={}}){
+  const resolved=await resolveSeasonWeeklyExpertIds(directoryPayloads),selectedRankingPayloads={};
   const requests=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
     const row=resolved.byPosition[position],requested=row.requested,ids=requested.map(expert=>expert.id).sort((a,b)=>Number(a)-Number(b));
     if(!ids.length)return[position,{providerPayload:null,providerResponsePresent:false,requestProvenance:{season,week,position,scoring:'HALF',experts:'show',requestedExpertIds:[]},requestedExperts:[],configuredExpertNames:row.configured,missingDirectoryExperts:row.missing}];
@@ -4451,18 +4451,15 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     if(!freshUsable.length||!projectionValidation.ok)throw codedError('PROJECTION_LANE_UNAVAILABLE','Keine frischen verbrauchbaren Weekly Projection Records verfügbar.');
     persistedProjectionSnapshot=api.atomicWrite(localStorage,{...projectionSnapshot,refreshTrigger:trigger,refreshStage:'PROJECTIONS'});
     persistedAuthoritativeSnapshot=persistedProjectionSnapshot;
-    const selectedAcquisitionPromise=typeof acquireSelectedWeeklyRankPayloads==='function'
-      ?acquireSelectedWeeklyRankPayloads({season,week}).catch(error=>({selectedRankingPayloads:{},requests:[{status:'rejected',reason:error}],directoryResults:[],resolved:{}}))
-      :Promise.resolve({selectedRankingPayloads:{},requests:[],directoryResults:[],resolved:{}});
-    const [rankResponses,selectedAcquisition]=await Promise.all([
-      Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
-        const path=`/nfl/${season}/consensus-rankings?week=${week}&position=${position}&scoring=HALF`,response=await fpProxyRequest(path);
-        if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros broad ECR HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw Object.assign(error,{position});}return[position,{...response.data,season,week,scoring:'HALF_PPR'}];
-      })),
-      selectedAcquisitionPromise
-    ]);
-    persistSeasonProjectionRetryAfter([...rankResponses,...selectedAcquisition.requests,...selectedAcquisition.directoryResults],Date.now());
+    const rankResponses=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
+      const path=`/nfl/${season}/consensus-rankings?week=${week}&position=${position}&scoring=HALF&experts=show`,response=await fpProxyRequest(path);
+      if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros broad ECR HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw Object.assign(error,{position});}return[position,{...response.data,season,week,scoring:'HALF_PPR'}];
+    }));
     for(const response of rankResponses)if(response.status==='fulfilled'){const [position,payload]=response.value;if(payload)rankingPayloads[position]=payload;}
+    const selectedAcquisition=typeof acquireSelectedWeeklyRankPayloads==='function'
+      ?await acquireSelectedWeeklyRankPayloads({season,week,directoryPayloads:rankingPayloads}).catch(error=>({selectedRankingPayloads:{},requests:[{status:'rejected',reason:error}],directoryResults:[],resolved:{}}))
+      :{selectedRankingPayloads:{},requests:[],directoryResults:[],resolved:{}};
+    persistSeasonProjectionRetryAfter([...rankResponses,...selectedAcquisition.requests,...selectedAcquisition.directoryResults],Date.now());
     const snapshot=api.buildSnapshot({season,week,scoring:els.scoring.value,projectionPayloads:payloads,rankingPayloads,selectedRankingPayloads:selectedAcquisition.selectedRankingPayloads,sleeperPlayers:lastDraftContext.players,priorSnapshot:persistedProjectionSnapshot,verifiedAt:Date.now()});
     const persistedSnapshot=api.atomicWrite(localStorage,{...snapshot,refreshTrigger:trigger});
     persistedAuthoritativeSnapshot=persistedSnapshot;

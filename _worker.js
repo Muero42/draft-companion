@@ -22,8 +22,16 @@ function espnWeekCandidates(season,week){
   return[
     `${base}?dates=${season}&seasontype=2&week=${week}&limit=100`,
     `${base}?week=${week}&seasontype=2&limit=100`,
-    `${base}?season=${season}&week=${week}&seasontype=2&limit=100`
+    `${base}?season=${season}&week=${week}&seasontype=2&limit=100`,
+    `https://cdn.espn.com/core/nfl/scoreboard?xhr=1&year=${season}&seasontype=2&week=${week}`
   ];
+}
+function normalizedEspnWeekPayload(payload,sourceUrl){
+  if(/^https:\/\/cdn\.espn\.com\/core\/nfl\/scoreboard\?/.test(sourceUrl)){
+    const scoreboard=payload?.content?.sbData;
+    return{season:Number(scoreboard?.season?.year),seasonType:Number(scoreboard?.season?.type),week:Number(scoreboard?.week?.number),events:Array.isArray(scoreboard?.events)?scoreboard.events:[]};
+  }
+  return{season:Number(payload?.season?.year),seasonType:Number(payload?.season?.type),week:Number(payload?.week?.number),events:Array.isArray(payload?.events)?payload.events:[]};
 }
 async function handleNflWeekContext(request,url){
   if(request.method!=='GET')return json({error:'Nur GET ist erlaubt.'},405);
@@ -34,8 +42,8 @@ async function handleNflWeekContext(request,url){
     try{
       const response=await fetch(sourceUrl,{headers:{accept:'application/json','accept-language':'en-US,en;q=0.9','user-agent':'Mozilla/5.0 (compatible; PITTI-Companion/11.8; +https://pages.dev)'},cf:{cacheTtl:900,cacheEverything:true}});
       if(!response.ok){attempts.push({sourceUrl,failureType:'UPSTREAM_HTTP_ERROR',upstreamStatus:response.status});continue;}
-      const payload=await response.json(),events=Array.isArray(payload?.events)?payload.events:[],payloadSeason=Number(payload?.season?.year),payloadSeasonType=Number(payload?.season?.type),payloadWeek=Number(payload?.week?.number);
-      if(payloadSeason!==season||payloadSeasonType!==2||payloadWeek!==week){attempts.push({sourceUrl,failureType:'CONTEXT_MISMATCH',upstreamStatus:response.status,sourceEvents:events.length});continue;}
+      const payload=await response.json(),normalized=normalizedEspnWeekPayload(payload,sourceUrl),events=normalized.events;
+      if(normalized.season!==season||normalized.seasonType!==2||normalized.week!==week){attempts.push({sourceUrl,failureType:'CONTEXT_MISMATCH',upstreamStatus:response.status,sourceEvents:events.length});continue;}
       if(events.length<NFL_WEEK_MIN_GAMES||events.length>NFL_WEEK_MAX_GAMES){attempts.push({sourceUrl,failureType:'INCOMPLETE_WEEK',upstreamStatus:response.status,sourceEvents:events.length});continue;}
       return json({season,week,sourceUrl,events,acquisition:{provider:'ESPN',variant:attempts.length+1,sourceEvents:events.length,attempts:attempts.map(x=>({failureType:x.failureType,upstreamStatus:x.upstreamStatus,sourceEvents:x.sourceEvents??null}))}});
     }catch{attempts.push({sourceUrl,failureType:'FETCH_EXCEPTION',upstreamStatus:null});}
