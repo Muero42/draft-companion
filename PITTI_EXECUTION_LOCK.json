@@ -1,12 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-23T18:34:00Z",
+  "updatedAt": "2026-09-24T09:45:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "rc4.206 is canonical source and Production at main@d5954d66877df877f950a4a41f32baad59a66748 / deployment 8322e9b3-a293-4454-8ef9-d5e98c217889, but is not device-accepted. rc4.205 is the last device-accepted control. rc4.207 is feature-branch-only; Team Total remains unavailable. PR #192 is stale and must not be merged unchanged; never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "v11.8.0-rc4.210 is canonical source and Production at main@27c1429a455a5507406a3c9c7ddda0531070f30b / deployment 8c2d3d2f-232a-4d79-a6c7-80639d3b7052; exact-tree physical acceptance PASS. Selected PITTI panel and canonical game context are available. Team Total remains fail-closed unavailable.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
@@ -69,37 +69,51 @@
       "physicalVerdict": "RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE"
     },
     "independentEvidenceLaneRepair": {
-      "status": "RC4.206_PRODUCTION_DEVICE_REJECTED_RC4.207_REPAIR_NOT_DEPLOYED",
-      "pittiPanel": "RC4.206_UNAVAILABLE_RC4.207_CURRENT_CONSENSUS_IDENTITY_REPAIR",
-      "gameContext": "RC4.206_UNAVAILABLE_UPSTREAM_403_RC4.207_OFFICIAL_CDN_FALLBACK",
+      "status": "RC4.210_PRODUCTION_EXACT_TREE_PHYSICAL_ACCEPTED",
+      "pittiPanel": "AVAILABLE_FILTERED_SELECTED_PITTI_PANEL_PHYSICAL_AND_CONSUMER_CONFIRMED",
+      "gameContext": "AVAILABLE_PHYSICAL_WEEK3_16_GAMES_32_TEAMS",
+      "teamTotal": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
+    },
+    "rc4210SourceProduction": {
+      "status": "MERGED_SOURCE_PRODUCTION_EXACT_TREE_PHYSICAL_ACCEPTED",
+      "version": "v11.8.0-rc4.210",
+      "pr": 198,
+      "reviewedHead": "b18151d4b51189634afd0403e6d7c850db579102",
+      "mergeCommit": "27c1429a455a5507406a3c9c7ddda0531070f30b",
+      "tree": "dbd808856a0e56fcfc899977a072360ded3f119a",
+      "deploymentId": "8c2d3d2f-232a-4d79-a6c7-80639d3b7052",
+      "cloudflareCheckRunId": 107578665328,
+      "physicalVerdict": "RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED",
+      "selectedPanel": "AVAILABLE",
+      "gameContext": "AVAILABLE_WEEK3_16_GAMES_32_TEAMS",
       "teamTotal": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
     }
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.207",
+    "appVersion": "v11.8.0-rc4.210",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "v11.8.0-rc4.206 RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE",
+    "latestAndroidObserved": "v11.8.0-rc4.210 RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED",
     "latestPreinstallVerified": "HISTORICAL/SUPERSEDED: rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "HISTORICAL/SUPERSEDED: v11.8.0-rc4.107",
     "preinstallArtifact": "rc4.204 17-file source-byte-parity package (separate from deployment)",
     "preinstallSha256": null,
     "preinstallRuntimeFiles": 17,
-    "latestSourceRegressionVerified": "PR #191 exact reviewed head 888b0a8f62608ff2afabf3564409f0198f78e8fd all candidate gates PASS; post-merge d595 failures are stale-v260 authority reconciliation failures",
-    "latestDeployedCandidate": "rc4.206 Production at d5954d66877df877f950a4a41f32baad59a66748 / deployment 8322e9b3-a293-4454-8ef9-d5e98c217889; physical acceptance FALSE",
-    "latestAndroidVerified": "v11.8.0-rc4.206 observed and rejected; rc4.205 remains last device-accepted control",
-    "androidAuthority": "rc4.206 is latest observed but not accepted; rc4.205 remains last device-accepted control",
-    "android_authority": "rc4.206 is latest observed but not accepted; rc4.205 remains last device-accepted control",
+    "latestSourceRegressionVerified": "PR #198 reviewed head b18151d4b51189634afd0403e6d7c850db579102: focused/strict/package and exact-head candidate gates PASS; exact tree dbd808856a0e56fcfc899977a072360ded3f119a physically accepted before merge",
+    "latestDeployedCandidate": "v11.8.0-rc4.210 Production at 27c1429a455a5507406a3c9c7ddda0531070f30b / deployment 8c2d3d2f-232a-4d79-a6c7-80639d3b7052; Cloudflare PASS; exact-tree physical PASS",
+    "latestAndroidVerified": "v11.8.0-rc4.210 exact-tree physical PASS (RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED)",
+    "androidAuthority": "v11.8.0-rc4.210 exact-tree physical PASS; Production main uses identical tree dbd808856a0e56fcfc899977a072360ded3f119a",
+    "android_authority": "v11.8.0-rc4.210 exact-tree physical PASS; Production main uses identical tree dbd808856a0e56fcfc899977a072360ded3f119a",
     "deployedPagesAppByteParityWithMain": false,
     "preinstallReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "preinstallReferenceArtifactId": null,
     "preinstallHashSemantics": "rc4.204 source-byte parity; archive SHA is run/environment-scoped and cannot establish cross-environment identity.",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.206",
-    "latestAndroidFunctionalVerified": "rc4.206 partial pass: Sleeper roster and weekly projections pass; selected panel and game context unavailable",
-    "testChallengerAndroidObserved": false,
-    "testChallengerAndroidAccepted": false,
+    "latestAndroidVersionObserved": "v11.8.0-rc4.210",
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.210 RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED",
+    "testChallengerAndroidObserved": true,
+    "testChallengerAndroidAccepted": true,
     "rc499": {
       "status": "ANDROID_RC4.99_OBSERVED_SOURCE_SEMANTIC_HARDENING_PENDING_PACKAGE",
       "branch": "pitti/rc4.99-wr-saturation-semantic-audit",
@@ -127,36 +141,37 @@
       "androidAccepted": false,
       "classification": "HISTORICAL/SUPERSEDED; nested merge, gate, parity and device values apply only to rc4.99"
     },
-    "acceptedAndroidAuthority": "v11.8.0-rc4.195 PRIOR_FULL_ACCEPTANCE_ROLLBACK_REFERENCE",
+    "acceptedAndroidAuthority": "v11.8.0-rc4.210",
     "unreleasedMainDelta": "DYNAMIC_VERIFICATION_REQUIRED against canonical main and relevant PRs; last-observed PR118 boundary is recorded in CURRENT.",
-    "deployedPagesVersion": "v11.8.0-rc4.206",
+    "deployedPagesVersion": "v11.8.0-rc4.210",
     "mainGhPagesParity": true,
     "androidVerified": true,
-    "androidAcceptance": "PASS_BOUNDED_SLEEPER_WEEK_CONTEXT_TIMEOUT_REPAIR",
+    "androidAcceptance": "PASS",
     "devicePromotionPolicy": "Requires current user authorization, exact-source validation, verified deployment parity and a physical canary. Source or merge state never proves device acceptance.",
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.207",
+      "version": "v11.8.0-rc4.210",
       "files": 17,
       "sha256": null,
-      "status": "LOCAL_REPAIR_PENDING_EXACT_HEAD_CI",
+      "status": "VALIDATED_PREMERGE_SOURCE_PACKAGE_PHYSICAL_ACCEPTED",
       "sourceScope": "SOURCE_IN_THIS_TREE_CANONICAL_CONTAINMENT_RECORDED_REVERIFY_LIVE",
       "archiveShaSemantics": "RUN_AND_ENVIRONMENT_SCOPED_NOT_CANONICAL",
-      "validationObservedArchiveSha256": "d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3"
+      "validationObservedArchiveSha256": "1856e35b9e717e763c9f942941bf9dcf79530e768c613a1d66d7750c7514d11e"
     },
     "acceptedRollback": "v11.8.0-rc4.195",
     "productionDeployment": {
-      "version": "v11.8.0-rc4.206",
-      "sourceCommit": "d5954d66877df877f950a4a41f32baad59a66748",
-      "status": "VERIFIED_SUCCESS_DEVICE_REJECTED",
+      "version": "v11.8.0-rc4.210",
+      "sourceCommit": "27c1429a455a5507406a3c9c7ddda0531070f30b",
+      "status": "VERIFIED_SUCCESS_EXACT_TREE_PHYSICAL_ACCEPTED",
       "branch": "main",
-      "deploymentId": "8322e9b3-a293-4454-8ef9-d5e98c217889",
-      "deviceAcceptanceProven": false,
-      "deviceAcceptanceScope": "RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE",
-      "lastDeviceAcceptedControl": "v11.8.0-rc4.205"
+      "deploymentId": "8c2d3d2f-232a-4d79-a6c7-80639d3b7052",
+      "cloudflareCheckRunId": 107578665328,
+      "deviceAcceptanceProven": true,
+      "deviceAcceptanceScope": "RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED; exact-tree physical preview PASS and identical Production tree",
+      "lastDeviceAcceptedControl": "v11.8.0-rc4.210"
     },
-    "deployedPagesHead": "d5954d66877df877f950a4a41f32baad59a66748"
+    "deployedPagesHead": "27c1429a455a5507406a3c9c7ddda0531070f30b"
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,
@@ -346,12 +361,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4207_DRAFT_PR_EXACT_HEAD_PASS_AWAITING_SEPARATE_MERGE_AUTHORIZATION",
-    "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT"
+    "status": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED_RECONCILED",
+    "nextGate": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED"
   },
-  "status": "RC4207_DRAFT_PR_EXACT_HEAD_PASS_AWAITING_SEPARATE_MERGE_AUTHORIZATION",
-  "gate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
-  "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
+  "status": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED_RECONCILED",
+  "gate": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED",
+  "nextGate": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -360,11 +375,11 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260923T1834Z-v263",
+    "generation": "20260924T0945Z-v265",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.206 is canonical source and Production but not device-accepted; rc4.205 remains last device-accepted control. Draft PR #193 for rc4.207 passed exact-head CI and non-Production preview. Do not merge or deploy without separate explicit authorization.",
+    "resume": "v11.8.0-rc4.210 Production and exact-tree physical acceptance PASS; selected PITTI persistence/consumer confirmed; Team Total remains unavailable.",
     "transaction_in_progress": false
   },
   "expertV45": {
@@ -384,7 +399,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260923T1834Z-v263",
+  "handoff_generation": "20260924T0945Z-v265",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -419,9 +434,9 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260923T1834Z-v263",
+  "handoffGeneration": "20260924T0945Z-v265",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-09-23T18:34:00Z",
+  "updated_at": "2026-09-24T09:45:00Z",
   "exactNextAction": "Review Draft PR #193. The next promotion step is a separately authorized merge, which will trigger automatic Production deployment. Do not merge or deploy under the current work package. Team Total remains unavailable; PR #192 is stale and not merge-ready unchanged.",
   "failClosedRecovery": "If rc4.207 exact-head evidence is incomplete or contradictory, keep rc4.206 Production rejected, rc4.205 as last device-accepted control, and all selected-panel/game-context/Team-Total lanes fail-closed."
 }
