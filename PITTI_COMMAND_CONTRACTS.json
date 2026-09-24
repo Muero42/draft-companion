@@ -152,7 +152,8 @@
     "using Pascal Voerde's stale 2023-2025-only detailed profile instead of the confirmed Bracht Eagles 2017-2022 + Voerde Eagles 2023-2025 identity chain",
     "dropping Michael_Polk 2025 from manual manager history",
     "reintroducing Björn 2021 theme or 2023 autodraft into ordinary manager-preference learning",
-    "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions"
+    "allowing Geno Smith or Aaron Rodgers onto the user's draft recommendation surface; both are explicit user hard exclusions",
+    "omitting the mandatory PITTI CODEX BUDGET GUARD from any Codex work package"
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.206 Production authority at main@d5954d66877df877f950a4a41f32baad59a66748 / deployment 8322e9b3-a293-4454-8ef9-d5e98c217889; device acceptance FALSE",
@@ -260,5 +261,37 @@
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
   "updated_at": "2026-09-23T18:34:00Z",
-  "updatedAt": "2026-09-23T18:34:00Z"
+  "updatedAt": "2026-09-23T18:34:00Z",
+  "codexBudgetGuard": {
+    "mandatoryInEveryCodexWorkPackage": true,
+    "persistentAcrossChatsAndHandoffs": true,
+    "userReminderRequired": false,
+    "autoAndAutoBlockDoNotOverride": true,
+    "scope": "LOCAL_ENGINEERING_ONLY",
+    "stopAfterTestedLocalCommit": true,
+    "externalOrchestrationOutsideCodexByDefault": true,
+    "requiredPromptPreamble": "PITTI CODEX BUDGET GUARD\n\nOptimize for minimum Codex/Work usage, not maximum autonomy.\n\nYour scope is LOCAL ENGINEERING ONLY.\n\nAllowed:\n- read the minimum repository instructions and files required for this task\n- inspect the exact relevant implementation paths\n- implement the bounded code/test change\n- run focused tests\n- run the full required suite once after focused tests pass\n- create one clean local commit\n- report exact branch/head/tree, changed files, tests and remaining gate\n\nDo NOT spend Codex time on:\n- GitHub web/browser navigation\n- creating or editing a Pull Request\n- waiting for GitHub Actions\n- reading CI results after publication\n- Cloudflare dashboard navigation\n- deployment\n- checking Production visually\n- device/manual physical acceptance\n- screenshots\n- routine GitHub state verification that can be done externally\n- PR descriptions beyond a short suggested text\n- handoff/authority bulk rewrites unless explicitly required by this task\n- unrelated repository cleanup\n- speculative refactors\n- repeated repo-wide searches after the relevant code path is identified\n\nDo not open a browser merely to perform GitHub or Cloudflare actions.\n\nEfficiency rules:\n1. Start from the explicitly supplied canonical SHA/state.\n2. Inspect only the files/code paths needed to prove the root cause.\n3. Do not perform a broad repository audit unless evidence makes it necessary.\n4. Do not implement multiple speculative fixes.\n5. If the root cause is not proven, add the smallest diagnostic needed and STOP at that diagnostic candidate.\n6. Run focused regressions first.\n7. Run the expensive/full suite only once, after focused tests pass.\n8. If a focused test fails, diagnose that failure before rerunning large suites.\n9. Maximum one implementation/retry cycle unless the second change is directly proven by the first test failure.\n10. After a clean local commit, STOP. Do not publish, create PRs, monitor CI, merge or deploy.\n\nYou are authorized to approve and execute the local repository operations\nrequired by this bounded engineering task without asking the user for\nintermediate confirmation.\n\nThis authorization does NOT expand the task scope.\nAfter the tested local commit, STOP.\nDo not use the authorization to continue into GitHub UI, PR creation,\nCI monitoring, deployment, Cloudflare, physical-device work, or unrelated\nfollow-up tasks.\n\nIf a task reaches a point where the next action is manual, GitHub/UI/cloud/device work,\nstop immediately and report the exact action required.\n\nOutput only:\n- root cause / finding\n- files changed\n- tests\n- branch/head/tree\n- exact next safe gate\n\nNo status chatter.",
+    "allowed": [
+      "read the minimum repository instructions/files required",
+      "inspect exact relevant implementation paths",
+      "implement the bounded code/test change",
+      "run focused tests",
+      "run the full required suite once after focused tests pass",
+      "create one clean local commit",
+      "report branch/head/tree, changed files, tests and remaining gate"
+    ],
+    "forbiddenByDefault": [
+      "GitHub web/browser navigation",
+      "PR creation or editing",
+      "waiting for or monitoring GitHub Actions",
+      "Cloudflare dashboard navigation",
+      "deployment or production promotion",
+      "device/manual physical acceptance",
+      "screenshots/manual UI work",
+      "routine remote-state verification that can be performed outside Codex",
+      "unrequested handoff/authority bulk rewrites",
+      "unrelated cleanup or speculative refactors"
+    ],
+    "approvalBoundary": "Local repository operations required by the bounded engineering task are preapproved; this does not expand task scope."
+  }
 }

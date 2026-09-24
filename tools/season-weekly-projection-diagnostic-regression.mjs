@@ -172,8 +172,10 @@ for(const [status,reason] of [[401,'HTTP_401'],[403,'HTTP_403'],[404,'HTTP_404']
   assert.equal(report.selectedPittiPanel.status,'AVAILABLE');assert.equal(report.selectedPittiPanel.positions.QB.filteredRequestHttpStatus,200);assert.equal(report.selectedPittiPanel.positions.QB.requestedExpertCount,4);assert.deepEqual(report.selectedPittiPanel.positions.QB.providerReturnedExpertNames,selectedNames.QB);
   assert.equal(report.canonicalGameContext.status,'AVAILABLE');assert.equal(report.canonicalGameContext.coverage.acceptedGames,13);
   assert.deepEqual(report.canonicalGameContext.games.slice(0,3).map(row=>row.weatherReason),['INDOOR_NO_WEATHER_REQUIRED','ROOF_UNKNOWN','FRESH_FORECAST_UNAVAILABLE']);
-  assert(paths.filter(path=>path.includes('/consensus-rankings?')).length===8&&paths.filter(path=>path.includes('/consensus-rankings?')).every(path=>path.includes('week=2')&&path.includes('scoring=HALF')),'one-pass diagnostic must reuse four broad responses for identity, then issue one selected request per position');
-  assert(paths.filter(path=>path.includes('/projections?')).every(path=>path.includes('week=2')&&!path.includes('ros=')&&!path.includes('scoring=')),'projection diagnostic must preserve explicit week/position with ros and scoring omitted');
+  assert(paths.length===12,'diagnostic must issue exactly three bounded four-request FantasyPros groups');
+  assert(paths.slice(0,4).every(path=>path.includes('/projections?')&&path.includes('week=2')&&!path.includes('ros=')&&!path.includes('scoring=')),'projection diagnostic must run first and preserve explicit week/position with ros and scoring omitted');
+  assert(paths.slice(4,8).every(path=>path.includes('/consensus-rankings?')&&path.includes('week=2')&&path.includes('scoring=HALF')&&path.includes('experts=show')&&!path.includes('filters=')),'broad rank diagnostic must run second and request expert identity metadata');
+  assert(paths.slice(8,12).every(path=>path.includes('/consensus-rankings?')&&path.includes('week=2')&&path.includes('scoring=HALF')&&path.includes('experts=show')&&path.includes('filters=')),'selected PITTI diagnostic must run third with exact expert filters');
   assert(!text.includes(secretSentinel));for(const key of ['weeklyProjections','expertRanks','selectedPittiPanel','persistence','requestRateLimit','startSitCompletion','canonicalGameContext','apiKeyIncluded','authorizationHeadersIncluded','rawProviderBodiesIncluded','cookiesIncluded','tokensIncluded'])assert(text.includes(key),`combined report missing ${key}`);
 }
 
