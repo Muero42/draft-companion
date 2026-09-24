@@ -6,7 +6,7 @@
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "v11.8.0-rc4.210 is canonical source and Production at main@27c1429a455a5507406a3c9c7ddda0531070f30b / deployment 8c2d3d2f-232a-4d79-a6c7-80639d3b7052; exact-tree physical acceptance PASS. Selected PITTI panel and canonical game context are available. Team Total remains fail-closed unavailable.",
+    "failClosedRecovery": "v11.8.0-rc4.210 is canonical source and Production at main@27c1429a455a5507406a3c9c7ddda0531070f30b / deployment 8c2d3d2f-232a-4d79-a6c7-80639d3b7052; exact-tree physical acceptance PASS. Selected PITTI panel and canonical game context are available. Team Total remains fail-closed unavailable. Library mirror remains stale; never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
