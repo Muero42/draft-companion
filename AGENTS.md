@@ -67,4 +67,80 @@ These actions require separate explicit authorization:
 
 Technical sandbox approval remains independent of this content authorization. Report the exact command and purpose if the sandbox requires approval. Do not delegate a technically available approved development step to the user as a precaution.
 
+## PITTI Codex budget guard — mandatory in every Codex work package
+- This rule is persistent project authority, not a chat-memory preference. It applies after chat changes, handoffs, AUTO/AUTO BLOCK, and future checkpoint generations.
+- Every PITTI Codex assignment MUST already contain the complete guard below when it is handed to Codex. The user must not have to remember or re-add it.
+- AUTO/AUTO BLOCK never overrides or broadens this budget boundary.
+- Codex is an engineering executor, not the project orchestrator. GitHub/PR/CI/Cloudflare/device follow-up stays outside Codex unless a later user instruction explicitly overrides this rule for that specific task.
+
+```text
+PITTI CODEX BUDGET GUARD
+
+Optimize for minimum Codex/Work usage, not maximum autonomy.
+
+Your scope is LOCAL ENGINEERING ONLY.
+
+Allowed:
+- read the minimum repository instructions and files required for this task
+- inspect the exact relevant implementation paths
+- implement the bounded code/test change
+- run focused tests
+- run the full required suite once after focused tests pass
+- create one clean local commit
+- report exact branch/head/tree, changed files, tests and remaining gate
+
+Do NOT spend Codex time on:
+- GitHub web/browser navigation
+- creating or editing a Pull Request
+- waiting for GitHub Actions
+- reading CI results after publication
+- Cloudflare dashboard navigation
+- deployment
+- checking Production visually
+- device/manual physical acceptance
+- screenshots
+- routine GitHub state verification that can be done externally
+- PR descriptions beyond a short suggested text
+- handoff/authority bulk rewrites unless explicitly required by this task
+- unrelated repository cleanup
+- speculative refactors
+- repeated repo-wide searches after the relevant code path is identified
+
+Do not open a browser merely to perform GitHub or Cloudflare actions.
+
+Efficiency rules:
+1. Start from the explicitly supplied canonical SHA/state.
+2. Inspect only the files/code paths needed to prove the root cause.
+3. Do not perform a broad repository audit unless evidence makes it necessary.
+4. Do not implement multiple speculative fixes.
+5. If the root cause is not proven, add the smallest diagnostic needed and STOP at that diagnostic candidate.
+6. Run focused regressions first.
+7. Run the expensive/full suite only once, after focused tests pass.
+8. If a focused test fails, diagnose that failure before rerunning large suites.
+9. Maximum one implementation/retry cycle unless the second change is directly proven by the first test failure.
+10. After a clean local commit, STOP. Do not publish, create PRs, monitor CI, merge or deploy.
+
+You are authorized to approve and execute the local repository operations
+required by this bounded engineering task without asking the user for
+intermediate confirmation.
+
+This authorization does NOT expand the task scope.
+After the tested local commit, STOP.
+Do not use the authorization to continue into GitHub UI, PR creation,
+CI monitoring, deployment, Cloudflare, physical-device work, or unrelated
+follow-up tasks.
+
+If a task reaches a point where the next action is manual, GitHub/UI/cloud/device work,
+stop immediately and report the exact action required.
+
+Output only:
+- root cause / finding
+- files changed
+- tests
+- branch/head/tree
+- exact next safe gate
+
+No status chatter.
+```
+
 QB2 phase authority: Draft: after QB1, QB2 recommendation/drafting is excluded until a future explicit user decision. Season: context-dependent QB2 exceptions through waiver/free agency/trade/roster optimization remain possible with verified evidence and legal capacity; same-bye and future D/ST costs matter. Season exceptions never retroactively weaken the draft rule. Canonical machine policy: PITTI_CURRENT_STATE.json:qb_policy.
