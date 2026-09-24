@@ -1,6 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
-const APP_VERSION='v11.8.0-rc4.208';
+const APP_VERSION='v11.8.0-rc4.209';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -607,10 +607,10 @@ function consensusWeeklyExperts(payload){
   const pubs=payload?.expert_pub&&typeof payload.expert_pub==='object'&&!Array.isArray(payload.expert_pub)?payload.expert_pub:{};
   return Object.entries(names).map(([id,name])=>({id:String(id),name:String(name||'').trim(),site:String(pubs[id]||'')})).filter(expert=>/^\d+$/.test(expert.id)&&expert.name);
 }
-function exactPublicDirectoryExpertMap(rows){
+function exactRankingExpertMap(rows){
   const candidates=new Map();
   for(const row of Array.isArray(rows)?rows:[]){
-    const name=String(row?.name||'').trim(),id=String(row?.apiId??'').trim();
+    const name=String(row?.name||'').trim(),id=String(row?.id??'').trim();
     if(!name||!/^\d+$/.test(id))continue;
     const key=normalizedExpertName(name),byId=candidates.get(key)||new Map();
     if(!byId.has(id))byId.set(id,{id,name,site:String(row?.site||'')});
@@ -620,7 +620,7 @@ function exactPublicDirectoryExpertMap(rows){
   for(const [key,byId] of candidates)if(byId.size===1)exact.set(key,[...byId.values()][0]);
   return exact;
 }
-async function resolveSeasonWeeklyExpertIds(directoryPayloads={}){
+async function resolveSeasonWeeklyExpertIds(season,directoryPayloads={}){
   const byPosition={},broadByPosition={};let needsFallback=false;
   for(const position of WEEKLY_PROJECTION_POSITIONS){
     const rows=consensusWeeklyExperts(directoryPayloads[position]),positionMap=new Map();
@@ -628,16 +628,16 @@ async function resolveSeasonWeeklyExpertIds(directoryPayloads={}){
     broadByPosition[position]=positionMap;
     if(SEASON_WEEKLY_SELECTED_EXPERTS[position].some(name=>!positionMap.has(normalizedExpertName(name))))needsFallback=true;
   }
-  const directoryResults=needsFallback?await Promise.allSettled([loadPublicExpertDirectory()]):[],publicRows=directoryResults[0]?.status==='fulfilled'?directoryResults[0].value:[],publicMap=exactPublicDirectoryExpertMap(publicRows);
+  const directoryResults=needsFallback?await Promise.allSettled([fpProxyRequest(`/nfl/${season}/rankings/experts?include_overall=true`,{preserveMalformed:true})]):[],directoryResponse=directoryResults[0]?.status==='fulfilled'?directoryResults[0].value:null,directoryMap=exactRankingExpertMap(directoryResponse?.ok?extractExperts(directoryResponse.data):[]);
   for(const position of WEEKLY_PROJECTION_POSITIONS){
     const configured=SEASON_WEEKLY_SELECTED_EXPERTS[position],requested=[],missing=[],positionMap=broadByPosition[position];
-    for(const name of configured){const key=normalizedExpertName(name),broad=positionMap.get(key),fallback=publicMap.get(key),expert=broad&&/^\d+$/.test(String(broad.id))?broad:fallback;if(expert)requested.push({id:String(expert.id),name,site:String(expert.site||'')});else missing.push(name);}
+    for(const name of configured){const key=normalizedExpertName(name),broad=positionMap.get(key),fallback=directoryMap.get(key),expert=broad&&/^\d+$/.test(String(broad.id))?broad:fallback;if(expert)requested.push({id:String(expert.id),name,site:String(expert.site||'')});else missing.push(name);}
     byPosition[position]={configured:[...configured],requested,missing};
   }
   return{byPosition,directoryResults};
 }
 async function acquireSelectedWeeklyRankPayloads({season,week,directoryPayloads={}}){
-  const resolved=await resolveSeasonWeeklyExpertIds(directoryPayloads),selectedRankingPayloads={};
+  const resolved=await resolveSeasonWeeklyExpertIds(season,directoryPayloads),selectedRankingPayloads={};
   const requests=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
     const row=resolved.byPosition[position],requested=row.requested,ids=requested.map(expert=>expert.id).sort((a,b)=>Number(a)-Number(b));
     if(!ids.length)return[position,{providerPayload:null,providerResponsePresent:false,providerHttpStatus:null,retryAfterMs:null,requestProvenance:{season,week,position,scoring:'HALF',experts:'show',requestedExpertIds:[]},requestedExperts:[],configuredExpertNames:row.configured,missingDirectoryExperts:row.missing}];
