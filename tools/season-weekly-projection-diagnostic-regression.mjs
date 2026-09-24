@@ -10,7 +10,8 @@ const end=app.indexOf('function slugifyExpert',start);
 assert(start>=0&&end>start,'weekly projection diagnostic production block missing');
 const parserStart=app.indexOf('function arrays('),parserEnd=app.indexOf('const DRAFT_POOL_LIMITS',parserStart);
 assert(parserStart>=0&&parserEnd>parserStart,'shared expert parser production block missing');
-const source=app.slice(start,end)+app.slice(parserStart,parserEnd)+`;globalThis.__weeklyDiagnostic={fpProxyRequest,proxyCall,deriveSleeperNflWeek,summarizeWeeklyProjectionPayload,weeklyProjectionFailure,runAuthenticatedWeeklyProjectionDiagnostic,formatAuthenticatedWeeklyProjectionDiagnostic,runCurrentWeekRankDiagnostic,runSelectedPittiPanelDiagnostic,weeklyEvidencePersistenceDiagnostic,startSitCompletionDiagnostic,runCanonicalGameContextDiagnostic,runPhysicalEvidenceLaneDiagnostic,formatPhysicalEvidenceLaneDiagnostic};`;
+const productionSource=app.slice(start,end)+app.slice(parserStart,parserEnd)+`;globalThis.__weeklyDiagnostic={fpProxyRequest,proxyCall,deriveSleeperNflWeek,summarizeWeeklyProjectionPayload,weeklyProjectionFailure,runAuthenticatedWeeklyProjectionDiagnostic,formatAuthenticatedWeeklyProjectionDiagnostic,runCurrentWeekRankDiagnostic,runSelectedPittiPanelDiagnostic,weeklyEvidencePersistenceDiagnostic,startSitCompletionDiagnostic,runCanonicalGameContextDiagnostic,runPhysicalEvidenceLaneDiagnostic,formatPhysicalEvidenceLaneDiagnostic};`;
+const source=productionSource.replace('const FP_REQUEST_START_INTERVAL_MS=1100;','const FP_REQUEST_START_INTERVAL_MS=0;');
 const secretSentinel='SENSITIVE_SENTINEL_DO_NOT_RENDER';
 const fixedNow=Date.parse('2026-09-19T12:00:00Z');
 class FixedDate extends Date{
@@ -18,6 +19,32 @@ class FixedDate extends Date{
   static now(){return fixedNow}
 }
 const response=(status,data,raw=null,headers={})=>({ok:status>=200&&status<300,status,headers:{get:name=>headers[String(name).toLowerCase()]??null},async text(){return raw??JSON.stringify(data)},async json(){if(raw!=null)return JSON.parse(raw);return data}});
+{
+  let now=10000,nextTimerId=1,fetchCount=0;
+  const timers=new Map(),timerStarts=[],starts=[];
+  class PaceDate extends Date{constructor(...args){super(...(args.length?args:[now]))}static now(){return now}}
+  const context={
+    AbortController,Date:PaceDate,Math,Number,String,Array,Object,RegExp,Error,Promise,URL,Map,Set,
+    setTimeout:(fn,delay)=>{const id=nextTimerId++;timers.set(id,{at:now+Number(delay||0),fn});timerStarts.push({at:now,delay:Number(delay||0)});return id},
+    clearTimeout:id=>timers.delete(id),
+    norm:value=>String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim(),
+    fetch:async(url,options)=>{fetchCount++;starts.push({at:now,url,options});if(fetchCount===1)throw new Error('fixture network failure');if(fetchCount===3)return response(429,{error:'redacted'},null,{'retry-after':'0'});return response(200,{ok:true})},
+    els:{apiKey:{value:secretSentinel},season:{value:'2026'}},S:'https://api.sleeper.app/v1',APP_VERSION:'v11.8.0-rc4.210',PittiWeeklyEvidenceV2:evidence,PittiGameContextV1:gameContext,lastDraftContext:null,store:{get:()=>null}
+  };
+  vm.runInNewContext(productionSource,context);
+  const requests=[context.__weeklyDiagnostic.fpProxyRequest('/nfl/2026/projections?week=2&position=QB',{timeoutMs:50}),context.__weeklyDiagnostic.fpProxyRequest('/nfl/2026/projections?week=2&position=RB',{timeoutMs:50}),context.__weeklyDiagnostic.fpProxyRequest('/nfl/2026/projections?week=2&position=WR',{timeoutMs:50})],settledPromise=Promise.allSettled(requests);
+  const flush=async()=>{for(let i=0;i<12;i++)await Promise.resolve()};
+  await flush();
+  for(let steps=0;timers.size&&steps<12;steps++){
+    const [id,timer]=[...timers.entries()].sort((a,b)=>a[1].at-b[1].at)[0];timers.delete(id);now=timer.at;timer.fn();await flush();
+  }
+  const settled=await settledPromise;
+  assert.deepEqual(starts.map(row=>row.at),[10000,11100,12200],'concurrent callers must start provider fetches at least 1100ms apart');
+  assert.deepEqual(timerStarts.filter(row=>row.delay===50).map(row=>row.at),[10000,11100,12200],'network timeout must be created only when each queued request actually starts');
+  assert.equal(settled[0].status,'rejected');assert.equal(settled[0].reason.code,'NETWORK');assert.equal(settled[1].value.status,200);assert.equal(settled[2].value.status,429);assert.equal(settled[2].value.retryAfterMs,0);
+  assert.equal(fetchCount,3,'failed and HTTP 429 requests must not retry or poison the pacing queue');
+  assert(starts.every(row=>row.options.headers['x-fp-key']===secretSentinel&&!row.url.includes(secretSentinel)),'paced requests must preserve secret-safe credential transport');
+}
 const projectedRows=(position,count,{missingPoints=0,missingIds=0}={})=>Array.from({length:count},(_,i)=>({
   ...(i<missingIds?{}:{fpid:1000+i}),name:`${position} Player ${i+1}`,position_id:position,
   stats:i<missingPoints?{points:99}:{points:99,points_half:20-i/10}
@@ -31,7 +58,7 @@ function runtime({fetchImpl,jfImpl,season='2026',lastDraftContext=null,storageSn
     AbortController,setTimeout,clearTimeout,Date:FixedDate,Math,Number,String,Array,Object,RegExp,Error,norm:value=>String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim(),
     fetch:fetchImpl||(()=>{throw new Error('unexpected fetch')}),
     jf:jfImpl||(()=>Promise.resolve({season,season_type:'regular',week:7})),
-    S:'https://api.sleeper.app/v1',APP_VERSION:'v11.8.0-rc4.209',PittiWeeklyEvidenceV2:evidence,PittiGameContextV1:gameContext,PittiLineupStartSitV2:lineupStartSitV2,lastDraftContext,localStorage,store,seasonWeeklyEvidenceValueMap:weeklyValueMap,seasonLiveAuthority:liveAuthority,els:{apiKey:{value:secretSentinel},season:{value:String(season)}}
+    S:'https://api.sleeper.app/v1',APP_VERSION:'v11.8.0-rc4.210',PittiWeeklyEvidenceV2:evidence,PittiGameContextV1:gameContext,PittiLineupStartSitV2:lineupStartSitV2,lastDraftContext,localStorage,store,seasonWeeklyEvidenceValueMap:weeklyValueMap,seasonLiveAuthority:liveAuthority,els:{apiKey:{value:secretSentinel},season:{value:String(season)}}
   };
   vm.runInNewContext(source,context);
   return context.__weeklyDiagnostic;
