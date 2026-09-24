@@ -28,8 +28,9 @@ function runtime({fetchImpl,jfImpl,season='2026',lastDraftContext=null,storageSn
   const context={
     AbortController,setTimeout,clearTimeout,Date:FixedDate,Math,Number,String,Array,Object,RegExp,Error,norm:value=>String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim(),
     fetch:fetchImpl||(()=>{throw new Error('unexpected fetch')}),
+    loadPublicExpertDirectory:async()=>{try{const r=await (fetchImpl||(()=>{throw new Error('unexpected fetch')}))(`/api/fp-expert-directory?season=${encodeURIComponent(String(season))}`,{cache:'no-store'}),data=await r.json();return r.ok&&Array.isArray(data.experts)?data.experts:[]}catch{return[]}},
     jf:jfImpl||(()=>Promise.resolve({season,season_type:'regular',week:7})),
-    S:'https://api.sleeper.app/v1',APP_VERSION:'v11.8.0-rc4.207',PittiWeeklyEvidenceV2:evidence,PittiGameContextV1:gameContext,PittiLineupStartSitV2:lineupStartSitV2,lastDraftContext,localStorage,store,seasonWeeklyEvidenceValueMap:weeklyValueMap,seasonLiveAuthority:liveAuthority,els:{apiKey:{value:secretSentinel},season:{value:String(season)}}
+    S:'https://api.sleeper.app/v1',APP_VERSION:'v11.8.0-rc4.208',PittiWeeklyEvidenceV2:evidence,PittiGameContextV1:gameContext,PittiLineupStartSitV2:lineupStartSitV2,lastDraftContext,localStorage,store,seasonWeeklyEvidenceValueMap:weeklyValueMap,seasonLiveAuthority:liveAuthority,els:{apiKey:{value:secretSentinel},season:{value:String(season)}}
   };
   vm.runInNewContext(source,context);
   return context.__weeklyDiagnostic;
@@ -155,21 +156,24 @@ for(const [status,reason] of [[401,'HTTP_401'],[403,'HTTP_403'],[404,'HTTP_404']
   const counts={QB:24,RB:60,WR:70,TE:24},players={};let next=1000;
   for(const [position,count] of Object.entries(counts))for(let i=0;i<count;i++,next++)players[`sleeper-${next}`]={full_name:`${position} Player ${i+1}`,position,team:'AAA',fantasy_data_id:next};
   const selectedNames={QB:['Justin Boone','Dalton Del Don','Sean Koerner','Pat Fitzmaurice'],RB:['Justin Boone','Dalton Del Don','Kev Wheeler','Ryan Weisse','Sean Koerner','Pat Fitzmaurice'],WR:['Justin Boone','Dalton Del Don','Sean Koerner','Pat Fitzmaurice'],TE:['Dalton Del Don','Justin Boone','Sean Koerner','Pat Fitzmaurice']};
+  const publicRows=[];let nextExpert=100;for(const name of [...new Set(Object.values(selectedNames).flat())])publicRows.push({name,site:'Fixture',apiId:String(++nextExpert)});const idToName=Object.fromEntries(publicRows.map(row=>[row.apiId,row.name]));let directoryCalls=0;
   const seasonState={my_roster:{players:['sleeper-1000','sleeper-1024'],reserve:[],taxi:[]}},gamePairs=[['AAA','BBB'],['CCC','DDD'],['EEE','FFF'],['GGG','HHH'],['III','JJJ'],['KKK','LLL'],['MMM','NNN'],['OOO','PPP'],['QQQ','RRR'],['SSS','TTT'],['UUU','VVV'],['WWW','XXX'],['YYY','ZZZ']],events=gamePairs.map(([home,away],i)=>({id:String(i+1),date:'2026-09-27T17:00:00Z',competitions:[{venue:{fullName:`${home} Field`,...(i===0?{indoor:true}:i===1?{}:{indoor:false})},competitors:[{homeAway:'home',team:{abbreviation:home}},{homeAway:'away',team:{abbreviation:away}}]}]}));
   const paths=[],api=runtime({lastDraftContext:{players,season:seasonState},jfImpl:async()=>({season:'2026',season_type:'regular',week:2}),fetchImpl:async url=>{
     const parsed=new URL(url,'https://local.invalid');
     if(parsed.pathname==='/api/nfl-week-context')return response(200,{season:2026,week:2,sourceUrl:'https://site.api.espn.com/sanitized',events});
+    if(parsed.pathname==='/api/fp-expert-directory'){directoryCalls++;return response(200,{count:publicRows.length,experts:publicRows});}
     const path=decodeURIComponent(parsed.searchParams.get('path'));paths.push(path);const upstream=new URL(path,'https://fp.invalid'),position=upstream.searchParams.get('position');
     if(upstream.pathname.endsWith('/projections')&&position==='QB')return response(429,{error:'redacted'},null,{'retry-after':'120'});
-    const offset=Object.entries(counts).slice(0,Object.keys(counts).indexOf(position)).reduce((sum,[,count])=>sum+count,0),rows=projectedRows(position,counts[position]).map((row,i)=>({...row,fpid:1000+offset+i,...(upstream.pathname.endsWith('/consensus-rankings')?{rank_ecr:i+1}:{})})),directory=Object.fromEntries(selectedNames[position].map((name,i)=>[String(100+i),name])),filterIds=(upstream.searchParams.get('filters')||'').split(':').filter(Boolean),expertName=filterIds.length?Object.fromEntries(filterIds.map(id=>[id,directory[id]])):directory;
-    return response(200,{season:2026,week:2,position_id:position,scoring:'HALF',updated:'2026-09-19',...(upstream.pathname.endsWith('/consensus-rankings')?{filters:filterIds.join(':'),total_experts:Object.keys(expertName).length,expert_name:expertName,expert_pub:Object.fromEntries(Object.keys(expertName).map(id=>[id,'Fixture']))}:{}),players:rows});
+    const offset=Object.entries(counts).slice(0,Object.keys(counts).indexOf(position)).reduce((sum,[,count])=>sum+count,0),rows=projectedRows(position,counts[position]).map((row,i)=>({...row,fpid:1000+offset+i,...(upstream.pathname.endsWith('/consensus-rankings')?{rank_ecr:i+1}:{})})),filterIds=(upstream.searchParams.get('filters')||'').split(':').filter(Boolean),expertName=Object.fromEntries(filterIds.map(id=>[id,idToName[id]]));
+    return response(200,{season:2026,week:2,position_id:position,scoring:'HALF',updated:'2026-09-19',...(upstream.pathname.endsWith('/consensus-rankings')&&filterIds.length?{filters:filterIds.join(':'),total_experts:Object.keys(expertName).length,expert_name:expertName,expert_pub:Object.fromEntries(Object.keys(expertName).map(id=>[id,'Fixture']))}:{}),players:rows});
   }});
   const report=await api.runPhysicalEvidenceLaneDiagnostic(),text=api.formatPhysicalEvidenceLaneDiagnostic(report);
   assert.equal(report.schema,'pitti.physical-evidence-lanes-diagnostic.v2');
   assert.equal(report.weeklyProjections.positions.QB.httpStatus,429);assert.equal(report.weeklyProjections.positions.QB.retryAfterSeconds,120);
   assert.equal(report.weeklyProjections.positions.RB.scoringParameterPresent,false);assert.equal(report.weeklyProjections.positions.RB.rosPresent,false);
   assert.equal(report.expertRanks.status,'AVAILABLE');assert.equal(report.expertRanks.positions.QB.primaryRejectionReason,null);
-  assert.equal(report.selectedPittiPanel.status,'AVAILABLE');assert.equal(report.selectedPittiPanel.positions.QB.filteredRequestHttpStatus,200);assert.equal(report.selectedPittiPanel.positions.QB.requestedExpertCount,4);assert.deepEqual(report.selectedPittiPanel.positions.QB.providerReturnedExpertNames,selectedNames.QB);
+  assert.equal(report.selectedPittiPanel.status,'AVAILABLE',JSON.stringify(report.selectedPittiPanel));assert.equal(report.selectedPittiPanel.positions.QB.filteredRequestHttpStatus,200);assert.equal(report.selectedPittiPanel.positions.QB.requestedExpertCount,4);assert.deepEqual(report.selectedPittiPanel.positions.QB.providerReturnedExpertNames,selectedNames.QB);
+  assert.equal(directoryCalls,1,'diagnostic v2 must exercise the same single-call public-directory fallback as production');
   assert.equal(report.canonicalGameContext.status,'AVAILABLE');assert.equal(report.canonicalGameContext.coverage.acceptedGames,13);
   assert.deepEqual(report.canonicalGameContext.games.slice(0,3).map(row=>row.weatherReason),['INDOOR_NO_WEATHER_REQUIRED','ROOF_UNKNOWN','FRESH_FORECAST_UNAVAILABLE']);
   assert(paths.length===12,'diagnostic must issue exactly three bounded four-request FantasyPros groups');

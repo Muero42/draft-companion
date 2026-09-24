@@ -1,6 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
-const APP_VERSION='v11.8.0-rc4.207';
+const APP_VERSION='v11.8.0-rc4.208';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -607,17 +607,34 @@ function consensusWeeklyExperts(payload){
   const pubs=payload?.expert_pub&&typeof payload.expert_pub==='object'&&!Array.isArray(payload.expert_pub)?payload.expert_pub:{};
   return Object.entries(names).map(([id,name])=>({id:String(id),name:String(name||'').trim(),site:String(pubs[id]||'')})).filter(expert=>/^\d+$/.test(expert.id)&&expert.name);
 }
+function exactPublicDirectoryExpertMap(rows){
+  const candidates=new Map();
+  for(const row of Array.isArray(rows)?rows:[]){
+    const name=String(row?.name||'').trim(),id=String(row?.apiId??'').trim();
+    if(!name||!/^\d+$/.test(id))continue;
+    const key=normalizedExpertName(name),byId=candidates.get(key)||new Map();
+    if(!byId.has(id))byId.set(id,{id,name,site:String(row?.site||'')});
+    candidates.set(key,byId);
+  }
+  const exact=new Map();
+  for(const [key,byId] of candidates)if(byId.size===1)exact.set(key,[...byId.values()][0]);
+  return exact;
+}
 async function resolveSeasonWeeklyExpertIds(directoryPayloads={}){
-  const byPosition={};
+  const byPosition={},broadByPosition={};let needsFallback=false;
   for(const position of WEEKLY_PROJECTION_POSITIONS){
     const rows=consensusWeeklyExperts(directoryPayloads[position]),positionMap=new Map();
     for(const expert of rows)positionMap.set(normalizedExpertName(expert.name),expert);
-    const configured=SEASON_WEEKLY_SELECTED_EXPERTS[position],requested=[],missing=[];
-    for(const name of configured){const expert=positionMap.get(normalizedExpertName(name));if(expert&&/^\d+$/.test(String(expert.id)))requested.push({id:String(expert.id),name,site:String(expert.site||'')});else missing.push(name);}
+    broadByPosition[position]=positionMap;
+    if(SEASON_WEEKLY_SELECTED_EXPERTS[position].some(name=>!positionMap.has(normalizedExpertName(name))))needsFallback=true;
+  }
+  const directoryResults=needsFallback?await Promise.allSettled([loadPublicExpertDirectory()]):[],publicRows=directoryResults[0]?.status==='fulfilled'?directoryResults[0].value:[],publicMap=exactPublicDirectoryExpertMap(publicRows);
+  for(const position of WEEKLY_PROJECTION_POSITIONS){
+    const configured=SEASON_WEEKLY_SELECTED_EXPERTS[position],requested=[],missing=[],positionMap=broadByPosition[position];
+    for(const name of configured){const key=normalizedExpertName(name),broad=positionMap.get(key),fallback=publicMap.get(key),expert=broad&&/^\d+$/.test(String(broad.id))?broad:fallback;if(expert)requested.push({id:String(expert.id),name,site:String(expert.site||'')});else missing.push(name);}
     byPosition[position]={configured:[...configured],requested,missing};
   }
-  for(const position of WEEKLY_PROJECTION_POSITIONS)byPosition[position]??={configured:[...SEASON_WEEKLY_SELECTED_EXPERTS[position]],requested:[],missing:[...SEASON_WEEKLY_SELECTED_EXPERTS[position]]};
-  return{byPosition,directoryResults:[]};
+  return{byPosition,directoryResults};
 }
 async function acquireSelectedWeeklyRankPayloads({season,week,directoryPayloads={}}){
   const resolved=await resolveSeasonWeeklyExpertIds(directoryPayloads),selectedRankingPayloads={};
