@@ -1,13 +1,13 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260923T1834Z-v263",
-  "updated_at": "2026-09-23T18:34:00Z",
+  "handoff_generation": "20260924T0945Z-v265",
+  "updated_at": "2026-09-24T09:45:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.207",
+    "source_candidate": "v11.8.0-rc4.210",
     "git_identity_rule": "Canonical main identity and candidate containment are freshly verified externally; no commit or mutable PR state is immutable checkpoint authority.",
     "reconciled_base_main": "DYNAMIC_EXTERNAL_EVIDENCE",
     "postmerge": {
@@ -600,8 +600,14 @@
       "device_observed_at": "2026-09-23",
       "device_acceptance_proven": false,
       "classification": "RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE",
-      "passing_lanes": ["Sleeper live roster", "FantasyPros weekly projections QB/RB/WR/TE"],
-      "failing_lanes": ["selected PITTI weekly panel", "canonical game context/opponent"],
+      "passing_lanes": [
+        "Sleeper live roster",
+        "FantasyPros weekly projections QB/RB/WR/TE"
+      ],
+      "failing_lanes": [
+        "selected PITTI weekly panel",
+        "canonical game context/opponent"
+      ],
       "team_total": "UNAVAILABLE_FAIL_CLOSED"
     },
     "independent_evidence_lane_repair": {
@@ -612,14 +618,32 @@
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
       "weather_opponent": "DEPENDENT_ON_PHYSICAL_GAME_CONTEXT_VERIFICATION",
       "source_merge": "d5954d66877df877f950a4a41f32baad59a66748"
+    },
+    "rc4210_pr198_source_production": {
+      "checkpoint": "v265",
+      "version": "v11.8.0-rc4.210",
+      "pr": 198,
+      "reviewed_head": "b18151d4b51189634afd0403e6d7c850db579102",
+      "merge_commit": "27c1429a455a5507406a3c9c7ddda0531070f30b",
+      "merged_tree": "dbd808856a0e56fcfc899977a072360ded3f119a",
+      "status": "MERGED_CANONICAL_SOURCE_PRODUCTION_EXACT_TREE_PHYSICAL_ACCEPTED",
+      "production_deployment_id": "8c2d3d2f-232a-4d79-a6c7-80639d3b7052",
+      "cloudflare_check_run_id": 107578665328,
+      "production_deployment_proven": true,
+      "physical_preview": "https://3c3f1cde.draft-companion.pages.dev",
+      "physical_acceptance_proven": true,
+      "physical_classification": "RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED",
+      "physical_scope": "Exact rc4.210 Git tree physically accepted on Cloudflare non-Production preview before merge; squash merge produced the identical tree and Cloudflare Production deployed that exact main commit.",
+      "postmerge_ci": "Authority-coupled jobs failed on stale v263 runtime version lock metadata; Cloudflare Pages Production deployment succeeded. v265 is the checkpoint-only reconciliation.",
+      "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
     }
   },
   "runtime": {
-    "accepted_android": "v11.8.0-rc4.195",
-    "season_candidate": "v11.8.0-rc4.207 bounded local repair; not Production-deployed or device-observed",
-    "candidate_branch": "codex/rc4.206-physical-failure-repair",
+    "accepted_android": "v11.8.0-rc4.210",
+    "season_candidate": "v11.8.0-rc4.210 canonical source + Production; exact-tree physical PASS",
+    "candidate_branch": "main via merged PR #198",
     "android_acceptance_pending": false,
-    "test_challenger": "v11.8.0-rc4.207",
+    "test_challenger": "v11.8.0-rc4.210",
     "ci": {
       "status": "PR176_EXACT_HEAD_CI_PASS_SOURCE_MERGED_NOT_DEPLOYED",
       "validated_code_head": "fe8b6a397dac2b60522cb959ffdb225b767fbcae",
@@ -630,35 +654,36 @@
       "cloudflare_preview": "PASS_EXACT_REPAIR_HEAD_NON_PRODUCTION",
       "current_exact_main_head_ci": "MERGE_COMMIT_CONTAINS_EXACT_HEAD; REVERIFY_LIVE_BEFORE_PROMOTION"
     },
-    "android_accepted": "v11.8.0-rc4.195",
-    "preview_candidate": "v11.8.0-rc4.207 local repair pending exact-head CI and non-Production preview",
-    "android_authority": "rc4.206 is latest observed but not accepted; rc4.205 remains last device-accepted control",
+    "android_accepted": "v11.8.0-rc4.210",
+    "preview_candidate": "v11.8.0-rc4.210 exact-tree physical PASS at https://3c3f1cde.draft-companion.pages.dev",
+    "android_authority": "v11.8.0-rc4.210 exact-tree physical acceptance PASS; Production main deploys identical tree dbd808856a0e56fcfc899977a072360ded3f119a",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "d5954d66877df877f950a4a41f32baad59a66748",
-    "installed_android": "v11.8.0-rc4.206",
-    "latest_android_observed": "v11.8.0-rc4.206",
+    "deployed_pages_head": "27c1429a455a5507406a3c9c7ddda0531070f30b",
+    "installed_android": "v11.8.0-rc4.210",
+    "latest_android_observed": "v11.8.0-rc4.210",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "Historical rc4.183 rejection: FA/Add-Drop cards under Kader and IR/Reserve Charbonnet as ordinary drop target. Superseded by rc4.188 physical Waiver/FA canary PASS; retained only as historical regression evidence.",
     "latest_device_evidence": {
-      "version": "v11.8.0-rc4.206",
-      "observed_at": "2026-09-23",
-      "captured_at": "2026-09-23T18:34:00Z",
-      "evidence": "docs/PITTI_BRIDGE_HANDOFF_V263_RC4206_PHYSICAL_FAIL_RC4207_REPAIR_2026-09-23.md",
-      "acceptance": "PARTIAL_PASS_NOT_ACCEPTED",
-      "classification": "RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE",
-      "weekly_projection_summary": "FantasyPros QB/RB/WR/TE AVAILABLE; Sleeper live roster PASS",
-      "expert_rank_summary": "Broad ECR may be unavailable before refresh; selected PITTI panel remains unavailable and never falls back to broad ECR",
-      "game_context_summary": "UNAVAILABLE; production Worker returns sanitized HTTP 502 after all site.api ESPN variants return upstream 403",
+      "version": "v11.8.0-rc4.210",
+      "observed_at": "2026-09-24",
+      "captured_at": "2026-09-24T09:36:43Z",
+      "evidence": "docs/PITTI_BRIDGE_HANDOFF_V265_RC4210_PRODUCTION_PHYSICAL_PASS_2026-09-24.md",
+      "acceptance": "PASS",
+      "classification": "RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED",
+      "weekly_projection_summary": "FantasyPros QB/RB/WR/TE projections AVAILABLE; active skill roster 12/12 usable",
+      "expert_rank_summary": "Broad ECR AVAILABLE; Selected PITTI Panel AVAILABLE with filtered QB/RB/WR/TE HTTP 200; Sean Koerner remains explicitly missing/fail-closed",
+      "persistence_consumer_summary": "After one Jetzt prüfen refresh, current Week-3 positional ranks and Half-PPR projections persisted into roster rows and were consumed by Start/Sit.",
+      "game_context_summary": "PASS: canonical 2026 Week 3, 16 games / 32 teams; opponents rendered; dome weather no-weather-required semantics preserved.",
       "remaining_unavailable_lanes": [
-        "PITTI-Panel",
         "Team Total",
-        "canonical game-context data / opponent-weather (upstream HTTP 403)"
-      ]
+        "outdoor weather without a fresh verified forecast"
+      ],
+      "secret_safety": "PASS"
     },
-    "latestAndroidVersionObserved": "v11.8.0-rc4.206",
-    "source_candidate_status": "LOCAL_BOUNDED_REPAIR_NOT_PRODUCTION_OR_DEVICE_VERIFIED",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.210",
+    "source_candidate_status": "SOURCE_PRODUCTION_EXACT_TREE_PHYSICAL_ACCEPTED",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -721,37 +746,38 @@
     },
     "package_reference_scope": "rc4.204 source-byte-exact 17-file package/re-extraction validation; archive SHA is run/environment-scoped and is not cross-environment identity",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.207",
+      "version": "v11.8.0-rc4.210",
       "files": 17,
       "sha256": null,
-      "status": "LOCAL_REPAIR_PENDING_EXACT_HEAD_CI",
+      "status": "VALIDATED_PREMERGE_SOURCE_PACKAGE_PHYSICAL_ACCEPTED",
       "source_scope": "FEATURE_BRANCH_ONLY_NOT_PRODUCTION_NOT_DEVICE_ACCEPTED",
       "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_OBSERVATION_NOT_CANONICAL_IDENTITY",
-      "validation_observed_archive_sha256": "d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3"
+      "validation_observed_archive_sha256": "d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3",
+      "validationObservedArchiveSha256": "1856e35b9e717e763c9f942941bf9dcf79530e768c613a1d66d7750c7514d11e"
     },
     "deployment_parity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; RUNTIME_SOURCE_BLOBS_MATCH_REVIEWED_REPAIR; PHYSICAL_DEVICE_OBSERVATION_PROVEN",
-    "deployed_production_version": "v11.8.0-rc4.206",
+    "deployed_production_version": "v11.8.0-rc4.210",
     "production_deployment": {
-      "version": "v11.8.0-rc4.206",
-      "source_commit": "d5954d66877df877f950a4a41f32baad59a66748",
-      "status": "VERIFIED_SUCCESS_CLOUDFLARE_PAGES_EXACT_COMMIT",
+      "version": "v11.8.0-rc4.210",
+      "source_commit": "27c1429a455a5507406a3c9c7ddda0531070f30b",
+      "status": "VERIFIED_SUCCESS_EXACT_TREE_PHYSICAL_ACCEPTED",
       "branch": "main",
-      "deployment_id": "8322e9b3-a293-4454-8ef9-d5e98c217889",
-      "cloudflare_check_run_id": null,
-      "device_acceptance_proven": false,
-      "evidence_scope": "User-provided exact Production deployment identity plus physical Android/PWA observation; deployment success is distinct from rejected device acceptance.",
-      "device_acceptance_scope": "RC4.206_PHYSICAL_PARTIAL_PASS_NOT_ACCEPTED_SELECTED_PANEL_AND_GAME_CONTEXT_UNAVAILABLE",
-      "last_device_accepted_control": "v11.8.0-rc4.205"
+      "deployment_id": "8c2d3d2f-232a-4d79-a6c7-80639d3b7052",
+      "cloudflare_check_run_id": 107578665328,
+      "device_acceptance_proven": true,
+      "device_acceptance_scope": "RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED; exact-tree preview physical pass plus identical Production tree",
+      "last_device_accepted_control": "v11.8.0-rc4.210"
     },
     "independent_evidence_lane_status": {
-      "broad_expert_ranks": "AVAILABLE",
-      "pitti_panel": "RC4.206_PHYSICAL_UNAVAILABLE_RC4.207_REPAIR_NOT_DEPLOYED",
+      "broad_expert_ranks": "AVAILABLE_PHYSICAL_QB_RB_WR_TE",
+      "pitti_panel": "AVAILABLE_PHYSICAL_SELECTED_FILTERED_PANEL_QB_RB_WR_TE",
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
-      "game_context": "RC4.206_PHYSICAL_UNAVAILABLE_RC4.207_REPAIR_NOT_DEPLOYED",
-      "opponent_weather": "UNAVAILABLE_PENDING_PHYSICAL_GAME_CONTEXT_VERIFICATION"
+      "game_context": "AVAILABLE_PHYSICAL_WEEK3_16_GAMES_32_TEAMS",
+      "opponent_weather": "OPPONENT_AVAILABLE; DOME_NO_WEATHER_REQUIRED; OUTDOOR_WEATHER_FAIL_CLOSED_WITHOUT_FRESH_FORECAST"
     },
     "mainGhPagesParity": false,
-    "deployedPagesAppByteParityWithMain": false
+    "deployedPagesAppByteParityWithMain": false,
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.210 RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED"
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -790,8 +816,8 @@
     "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
-    "status": "RC4207_DRAFT_PR_EXACT_HEAD_PASS_AWAITING_SEPARATE_MERGE_AUTHORIZATION",
-    "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT"
+    "status": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED_RECONCILED",
+    "nextGate": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -845,14 +871,14 @@
     "status": "WAITING_EXTERNAL",
     "active": [],
     "ready": [],
-    "waiting_external": [
-      {
-        "id": "rc4207-merge-authorization",
-        "reason": "Draft PR #193 exact-head gates and non-Production preview passed. Merge would trigger automatic Production deployment and requires separate explicit authorization."
-      }
-    ],
+    "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "rc4210-production-physical-pass-v265",
+        "result": "PR #198 merged as main 27c1429a455a5507406a3c9c7ddda0531070f30b; Cloudflare Production deployment 8c2d3d2f-232a-4d79-a6c7-80639d3b7052 PASS; exact tree dbd808856a0e56fcfc899977a072360ded3f119a had already passed physical rc4.210 selected-panel/persistence/consumer/game-context acceptance.",
+        "at": "2026-09-24T09:45:00Z"
+      },
       {
         "id": "rc4207-pr193-exact-head-pass",
         "result": "Draft PR #193 head d482faeeefcd5ff79b30b9718354ecb3b19230b2 passed guardrails, behavioral-contract, package, pitti-cloud-validation, and Cloudflare Pages non-Production preview.",
@@ -1021,24 +1047,24 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "All independently authorized repair, regression, PR, CI, and non-Production preview work is complete; merge and automatic Production deployment require separate explicit authorization."
+      "reason": "rc4.210 source, Production deployment and exact-tree physical acceptance are proven; v265 reconciles checkpoint metadata. No dependent merge/deploy gate remains."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260923T1834Z-v263",
+    "generation": "20260924T0945Z-v265",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "rc4.206 is canonical source and Production at main@d5954d66877df877f950a4a41f32baad59a66748 / deployment 8322e9b3-a293-4454-8ef9-d5e98c217889, but physical acceptance is false. rc4.205 is the last device-accepted control. rc4.207 is a bounded repair candidate only; Team Total remains unavailable. PR #192 is stale and not merge-ready unchanged.",
+    "resume": "v11.8.0-rc4.210 is canonical source and Production at main@27c1429a455a5507406a3c9c7ddda0531070f30b / deployment 8c2d3d2f-232a-4d79-a6c7-80639d3b7052; exact-tree physical acceptance PASS (RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED). Selected PITTI ranks persist into roster/Start-Sit. Team Total remains unavailable.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "RC4206_PHYSICAL_FAILURE_RC4207_BOUNDED_REPAIR"
+    "refresh_scope": "RC4210_PRODUCTION_PHYSICAL_ACCEPTANCE_AUTHORITY"
   },
-    "status": "RC4207_DRAFT_PR_EXACT_HEAD_PASS_AWAITING_SEPARATE_MERGE_AUTHORIZATION",
-    "gate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
-    "nextGate": "SEPARATELY_AUTHORIZED_RC4207_MERGE_AND_AUTOMATIC_PRODUCTION_DEPLOYMENT",
-  "handoffGeneration": "20260923T1834Z-v263",
+  "status": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED_RECONCILED",
+  "gate": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED",
+  "nextGate": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED",
+  "handoffGeneration": "20260924T0945Z-v265",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -1238,5 +1264,5 @@
     "reviewed_runtime_tree_sha": "afecd5370c9209079ebaa18a3384e57106e595ff",
     "exact_head_validation_sha": "44401e32c914ba9da41d19add7ff48cc26bd249d"
   },
-  "updatedAt": "2026-09-23T18:34:00Z"
+  "updatedAt": "2026-09-24T09:45:00Z"
 }
