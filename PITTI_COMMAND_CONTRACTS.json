@@ -157,7 +157,7 @@
   ],
   "currentBoundary": {
     "productionControl": "v11.8.0-rc4.210 Production authority at main@27c1429a455a5507406a3c9c7ddda0531070f30b / deployment 8c2d3d2f-232a-4d79-a6c7-80639d3b7052; exact-tree physical acceptance PASS",
-    "androidAuthority": "v11.8.0-rc4.210 exact-tree physical acceptance PASS (RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED); Production tree identical",
+    "androidAuthority": "v11.8.0-rc4.210 exact-tree physical acceptance PASS; Production main deploys identical tree dbd808856a0e56fcfc899977a072360ded3f119a",
     "sourceAuthority": "v11.8.0-rc4.210 canonical source via PR #198 reviewed head b18151d4b51189634afd0403e6d7c850db579102, main@27c1429a455a5507406a3c9c7ddda0531070f30b, tree dbd808856a0e56fcfc899977a072360ded3f119a",
     "latestPackageReextract": "rc4.204 source-byte-exact 17-file package; archive SHA run/environment-scoped",
     "latestPackageSha256": null,
