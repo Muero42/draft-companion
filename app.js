@@ -1,6 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
-const APP_VERSION='v11.8.0-rc4.207';
+const APP_VERSION='v11.8.0-rc4.209';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -607,26 +607,43 @@ function consensusWeeklyExperts(payload){
   const pubs=payload?.expert_pub&&typeof payload.expert_pub==='object'&&!Array.isArray(payload.expert_pub)?payload.expert_pub:{};
   return Object.entries(names).map(([id,name])=>({id:String(id),name:String(name||'').trim(),site:String(pubs[id]||'')})).filter(expert=>/^\d+$/.test(expert.id)&&expert.name);
 }
-async function resolveSeasonWeeklyExpertIds(directoryPayloads={}){
-  const byPosition={};
+function exactRankingExpertMap(rows){
+  const candidates=new Map();
+  for(const row of Array.isArray(rows)?rows:[]){
+    const name=String(row?.name||'').trim(),id=String(row?.id??'').trim();
+    if(!name||!/^\d+$/.test(id))continue;
+    const key=normalizedExpertName(name),byId=candidates.get(key)||new Map();
+    if(!byId.has(id))byId.set(id,{id,name,site:String(row?.site||'')});
+    candidates.set(key,byId);
+  }
+  const exact=new Map();
+  for(const [key,byId] of candidates)if(byId.size===1)exact.set(key,[...byId.values()][0]);
+  return exact;
+}
+async function resolveSeasonWeeklyExpertIds(season,directoryPayloads={}){
+  const byPosition={},broadByPosition={};let needsFallback=false;
   for(const position of WEEKLY_PROJECTION_POSITIONS){
     const rows=consensusWeeklyExperts(directoryPayloads[position]),positionMap=new Map();
     for(const expert of rows)positionMap.set(normalizedExpertName(expert.name),expert);
-    const configured=SEASON_WEEKLY_SELECTED_EXPERTS[position],requested=[],missing=[];
-    for(const name of configured){const expert=positionMap.get(normalizedExpertName(name));if(expert&&/^\d+$/.test(String(expert.id)))requested.push({id:String(expert.id),name,site:String(expert.site||'')});else missing.push(name);}
+    broadByPosition[position]=positionMap;
+    if(SEASON_WEEKLY_SELECTED_EXPERTS[position].some(name=>!positionMap.has(normalizedExpertName(name))))needsFallback=true;
+  }
+  const directoryResults=needsFallback?await Promise.allSettled([fpProxyRequest(`/nfl/${season}/rankings/experts?include_overall=true`,{preserveMalformed:true})]):[],directoryResponse=directoryResults[0]?.status==='fulfilled'?directoryResults[0].value:null,directoryMap=exactRankingExpertMap(directoryResponse?.ok?extractExperts(directoryResponse.data):[]);
+  for(const position of WEEKLY_PROJECTION_POSITIONS){
+    const configured=SEASON_WEEKLY_SELECTED_EXPERTS[position],requested=[],missing=[],positionMap=broadByPosition[position];
+    for(const name of configured){const key=normalizedExpertName(name),broad=positionMap.get(key),fallback=directoryMap.get(key),expert=broad&&/^\d+$/.test(String(broad.id))?broad:fallback;if(expert)requested.push({id:String(expert.id),name,site:String(expert.site||'')});else missing.push(name);}
     byPosition[position]={configured:[...configured],requested,missing};
   }
-  for(const position of WEEKLY_PROJECTION_POSITIONS)byPosition[position]??={configured:[...SEASON_WEEKLY_SELECTED_EXPERTS[position]],requested:[],missing:[...SEASON_WEEKLY_SELECTED_EXPERTS[position]]};
-  return{byPosition,directoryResults:[]};
+  return{byPosition,directoryResults};
 }
 async function acquireSelectedWeeklyRankPayloads({season,week,directoryPayloads={}}){
-  const resolved=await resolveSeasonWeeklyExpertIds(directoryPayloads),selectedRankingPayloads={};
+  const resolved=await resolveSeasonWeeklyExpertIds(season,directoryPayloads),selectedRankingPayloads={};
   const requests=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
     const row=resolved.byPosition[position],requested=row.requested,ids=requested.map(expert=>expert.id).sort((a,b)=>Number(a)-Number(b));
-    if(!ids.length)return[position,{providerPayload:null,providerResponsePresent:false,requestProvenance:{season,week,position,scoring:'HALF',experts:'show',requestedExpertIds:[]},requestedExperts:[],configuredExpertNames:row.configured,missingDirectoryExperts:row.missing}];
+    if(!ids.length)return[position,{providerPayload:null,providerResponsePresent:false,providerHttpStatus:null,retryAfterMs:null,requestProvenance:{season,week,position,scoring:'HALF',experts:'show',requestedExpertIds:[]},requestedExperts:[],configuredExpertNames:row.configured,missingDirectoryExperts:row.missing}];
     const path=`/nfl/${season}/consensus-rankings?week=${week}&position=${position}&scoring=HALF&filters=${ids.join(':')}&experts=show`,response=await fpProxyRequest(path);
     if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros selected panel HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw Object.assign(error,{position});}
-    return[position,{providerPayload:response.data,providerResponsePresent:true,requestProvenance:{season,week,position,scoring:'HALF',experts:'show',requestedExpertIds:ids},requestedExperts:requested,configuredExpertNames:row.configured,missingDirectoryExperts:row.missing}];
+    return[position,{providerPayload:response.data,providerResponsePresent:true,providerHttpStatus:response.status,retryAfterMs:response.retryAfterMs,requestProvenance:{season,week,position,scoring:'HALF',experts:'show',requestedExpertIds:ids},requestedExperts:requested,configuredExpertNames:row.configured,missingDirectoryExperts:row.missing}];
   }));
   for(const result of requests)if(result.status==='fulfilled'){const [position,payload]=result.value;selectedRankingPayloads[position]=payload;}
   return{selectedRankingPayloads,requests,directoryResults:resolved.directoryResults,resolved:resolved.byPosition};
@@ -744,10 +761,10 @@ function sanitizedProjectionDiagnostic(report){
   for(const row of report?.consumer?.positions||[]){const target=byPosition[row.position]||(byPosition[row.position]={position:row.position});Object.assign(target,{mappedRows:row.mappedRows,mappingCoverage:row.mappingCoverage,consumerUsableRecords:row.consumerUsableRecords,finalLaneStatus:row.finalLaneStatus,finalLaneReason:row.finalLaneReason||null,rejectionCounts:row.rejectReasonCounts||{}})}
   return{status:report?.classification||'UNAVAILABLE',positions:byPosition,activeRoster:report?.consumer?.available?{usable:report.consumer.roster.usableCount,total:report.consumer.roster.activeSkillCount,unusable:report.consumer.roster.unusable.map(player=>({id:player.id,name:player.name,position:player.position}))}:{status:'UNAVAILABLE',reason:report?.consumer?.reason||'UNKNOWN'}};
 }
-async function runCurrentWeekRankDiagnostic({season,week,sleeperPlayers}={}){
+async function runCurrentWeekRankDiagnostic({season,week,sleeperPlayers,directoryPayloadSink}={}){
   const api=globalThis.PittiWeeklyEvidenceV2,payloads={},requests={};
   const settled=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
-    const path=`/nfl/${season}/consensus-rankings?week=${week}&position=${position}&scoring=HALF`,response=await fpProxyRequest(path,{preserveMalformed:true});
+    const path=`/nfl/${season}/consensus-rankings?week=${week}&position=${position}&scoring=HALF&experts=show`,response=await fpProxyRequest(path,{preserveMalformed:true});
     requests[position]={httpStatus:response.status,retryAfterSeconds:diagnosticRetryAfter(response.retryAfterMs),week,position,scoring:'HALF',acquisitionReason:response.ok&&response.data?null:response.ok?'MALFORMED_JSON':response.status===429?'HTTP_429':`HTTP_${response.status}`};
     if(!response.ok||!response.data)throw Object.assign(codedError(requests[position].acquisitionReason,`Rank HTTP ${response.status}`,response.status),{position,retryAfterMs:response.retryAfterMs});
     payloads[position]={...response.data,season,week,scoring:'HALF_PPR'};
@@ -756,7 +773,43 @@ async function runCurrentWeekRankDiagnostic({season,week,sleeperPlayers}={}){
   if(!api||!sleeperPlayers)return{status:'UNAVAILABLE',reason:!api?'WEEKLY_EVIDENCE_MODULE_MISSING':'SLEEPER_PLAYERS_UNAVAILABLE',positions:requests};
   const snapshot=api.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:{},rankingPayloads:payloads,sleeperPlayers,verifiedAt:Date.now()});
   for(const position of WEEKLY_PROJECTION_POSITIONS){const coverage=snapshot.lanes.expertWeeklyRanks.coverage.positions[position]||{},time=api.sourceTime(payloads[position]||{},{season,verifiedAt:snapshot.fetchedAt,allowSeasonDateInference:true});requests[position]={...requests[position],sourceRows:coverage.sourceRows||0,rankedRows:coverage.rankedRows||0,freshRows:coverage.freshRows||0,staleOrAmbiguousChronologyCount:coverage.staleOrAmbiguousTimeCount||0,chronologyPrecision:time.sourceTimePrecision||null,sourcePublishedAt:time.sourcePublishedAt||null,sourcePublishedDate:time.sourcePublishedDate||null,mappedRows:coverage.mappedRows||0,mappingCoverage:coverage.mappingCoverage||0,laneStatus:coverage.status||'UNAVAILABLE',primaryRejectionReason:requests[position].acquisitionReason||coverage.primaryRejectionReason||coverage.reason||null};}
+  if(directoryPayloadSink&&typeof directoryPayloadSink==='object')directoryPayloadSink.payloads=payloads;
   return{status:snapshot.lanes.expertWeeklyRanks.status,positions:requests};
+}
+async function runSelectedPittiPanelDiagnostic({season,week,sleeperPlayers,directoryPayloads={}}={}){
+  const api=globalThis.PittiWeeklyEvidenceV2;
+  if(!api||!sleeperPlayers)return{status:'UNAVAILABLE',reason:!api?'WEEKLY_EVIDENCE_MODULE_MISSING':'SLEEPER_PLAYERS_UNAVAILABLE',positions:{}};
+  const acquired=await acquireSelectedWeeklyRankPayloads({season,week,directoryPayloads}),snapshot=api.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:{},rankingPayloads:{},selectedRankingPayloads:acquired.selectedRankingPayloads,sleeperPlayers,verifiedAt:Date.now()}),coverage=snapshot.lanes.pittiSelectedWeeklyRanks.coverage.positions||{},settledByPosition={};
+  acquired.requests.forEach((result,index)=>{
+    const fallback=WEEKLY_PROJECTION_POSITIONS[index];
+    if(result.status==='fulfilled'){
+      const [position,envelope]=result.value;settledByPosition[position]={httpStatus:Number.isInteger(envelope.providerHttpStatus)?envelope.providerHttpStatus:null,retryAfterSeconds:diagnosticRetryAfter(envelope.retryAfterMs),acquisitionReason:envelope.providerResponsePresent?null:'NO_RESOLVED_EXPERT_IDS'};
+    }else{
+      const position=result.reason?.position||fallback;settledByPosition[position]={httpStatus:Number.isInteger(result.reason?.status)?result.reason.status:null,retryAfterSeconds:diagnosticRetryAfter(result.reason?.retryAfterMs),acquisitionReason:result.reason?.code||'NETWORK'};
+    }
+  });
+  const positions={};
+  for(const position of WEEKLY_PROJECTION_POSITIONS){
+    const resolved=acquired.resolved[position]||{configured:SEASON_WEEKLY_SELECTED_EXPERTS[position]||[],requested:[],missing:SEASON_WEEKLY_SELECTED_EXPERTS[position]||[]},lane=coverage[position]||{},request=settledByPosition[position]||{httpStatus:null,retryAfterSeconds:null,acquisitionReason:'REQUEST_NOT_RECORDED'},envelope=acquired.selectedRankingPayloads[position],actual=consensusWeeklyExperts(envelope?.providerPayload).map(expert=>({id:String(expert.id),name:String(expert.name||''),site:String(expert.site||'')})),requested=(resolved.requested||[]).map(expert=>({id:String(expert.id),name:String(expert.name||''),site:String(expert.site||'')})),missing=[...new Set([...(resolved.missing||[]),...(lane.missingExperts||[])].map(String))];
+    positions[position]={configuredExpertNames:[...(resolved.configured||[])],resolvedExperts:requested,missingConfiguredExperts:missing,filteredRequestHttpStatus:request.httpStatus,retryAfterSeconds:request.retryAfterSeconds,requestedExpertIds:requested.map(expert=>expert.id),requestedExpertCount:requested.length,providerReturnedExperts:actual,providerReturnedExpertIds:actual.map(expert=>expert.id),providerReturnedExpertNames:actual.map(expert=>expert.name),providerReturnedExpertCount:actual.length,sourceRows:lane.sourceRows||0,rankedRows:lane.rankedRows||0,freshRows:lane.freshRows||0,mappedRows:lane.mappedRows||0,mappingCoverage:lane.mappingCoverage||0,finalLaneStatus:lane.status||'UNAVAILABLE',primaryRejectionReason:request.acquisitionReason||lane.primaryRejectionReason||lane.reason||null};
+  }
+  return{status:snapshot.lanes.pittiSelectedWeeklyRanks.status,positions};
+}
+function weeklyEvidencePersistenceDiagnostic(){
+  const api=globalThis.PittiWeeklyEvidenceV2,key=api?.CACHE_KEY||'pitti.weekly-evidence.v2.current',snapshot=store.get(key,null),records=Array.isArray(snapshot?.records)?snapshot.records:[],metricCounts={projected_points:0,weekly_rank:0,broad_weekly_ecr_rank:0};
+  for(const record of records)if(Object.hasOwn(metricCounts,record?.metric))metricCounts[record.metric]++;
+  const lane=name=>({status:snapshot?.lanes?.[name]?.status||'UNAVAILABLE',reason:snapshot?.lanes?.[name]?.reason||null});
+  let localStorageUsageEstimate={status:'UNAVAILABLE',reason:'LOCAL_STORAGE_UNAVAILABLE'};
+  try{if(typeof localStorage!=='undefined'){let characters=0;for(let i=0;i<localStorage.length;i++){const itemKey=localStorage.key(i);characters+=String(itemKey||'').length+String(localStorage.getItem(itemKey)||'').length;}localStorageUsageEstimate={status:'AVAILABLE',itemCount:localStorage.length,characters,upperBoundBytesUtf16:characters*2};}}catch{localStorageUsageEstimate={status:'UNAVAILABLE',reason:'LOCAL_STORAGE_MEASUREMENT_FAILED'}}
+  const projectionOnly=snapshot?.persistence?.mode==='LOCAL_STORAGE_PROJECTION_ONLY'||snapshot?.lanes?.expertWeeklyRanks?.reason==='STORAGE_QUOTA_PROJECTION_ONLY'||snapshot?.lanes?.pittiSelectedWeeklyRanks?.reason==='STORAGE_QUOTA_PROJECTION_ONLY';
+  return{snapshotPresent:!!snapshot,snapshotId:snapshot?.snapshotId||null,recordCount:records.length,metricCounts,lanes:{projections:lane('projections'),expertWeeklyRanks:lane('expertWeeklyRanks'),pittiSelectedWeeklyRanks:lane('pittiSelectedWeeklyRanks')},persistence:{mode:snapshot?.persistence?.mode||null,reason:snapshot?.persistence?.reason||null},retainedPriorRecords:Number(snapshot?.retainedPriorRecords)||0,localStorageUsageEstimate,quotaEvidence:{projectionOnly,reason:projectionOnly?'STORAGE_QUOTA_PROJECTION_ONLY':null}};
+}
+function startSitCompletionDiagnostic({season,week}={}){
+  const context=typeof lastDraftContext==='undefined'?null:lastDraftContext,seasonState=context?.season,rows=Array.isArray(context?.seasonRows)?context.seasonRows:[],optimizer=globalThis.PittiLineupStartSitV2;
+  if(!seasonState||!rows.length||!optimizer)return{status:'UNAVAILABLE',primaryIncompletionReason:!optimizer?'START_SIT_MODULE_MISSING':!seasonState?'SEASON_STATE_UNAVAILABLE':'ROSTER_ROWS_UNAVAILABLE'};
+  const starterGeometry=(seasonState.league?.roster_positions||[]).map((slot,index)=>({slot:String(slot).replace('WRRB_FLEX','W/R').replace('REC_FLEX','W/T').replace('DEF','DST'),playerId:String(seasonState.my_roster?.starters?.[index]||'')})).filter(row=>['QB','RB','WR','TE','FLEX','W/R','W/T','SUPER_FLEX'].includes(row.slot)),slots=starterGeometry.map(row=>row.slot),active=rows.filter(row=>!['RESERVE','IR','TAXI'].includes(row.seasonStatus)),weeklyValues=seasonWeeklyEvidenceValueMap(active,seasonState,week),values=weeklyValues.values,weekly=store.get(globalThis.PittiWeeklyEvidenceV2?.CACHE_KEY||'pitti.weekly-evidence.v2.current',null),asOf=weekly?.lastSuccessAt?new Date(weekly.lastSuccessAt).toISOString():null,evidence=optimizer.adaptEvidence({week,scoring:'HALF_PPR',source:'FantasyPros weekly projection + selected PITTI weekly ranks',as_of:asOf,players:values},{week,now:Date.now()}),result=optimizer.evaluate({roster:active,evidence,week,slots,currentAssignments:starterGeometry.map((row,slotIndex)=>({...row,slotIndex})),now:Date.now()}),skill=active.filter(row=>WEEKLY_PROJECTION_POSITIONS.includes(String(row.p?.pos||'').toUpperCase())),missingProjection=skill.filter(row=>!values[String(row.p?.id)]),missingRank=skill.filter(row=>values[String(row.p?.id)]?.rank_available!==true),assignments=result?.lineup?.assignments||[],unfilledSlots=assignments.filter(row=>!row.player).map(row=>row.slot),optimizerComplete=result?.lineup?.complete===true,liveAuthority=seasonLiveAuthority(seasonState),consumerComplete=optimizerComplete&&liveAuthority;
+  const primaryIncompletionReason=consumerComplete?null:result?.status==='UNAVAILABLE'?result.reason:!optimizerComplete?'UNFILLED_LEGAL_STARTER_SLOTS':!liveAuthority?'LIVE_SEASON_AUTHORITY_UNAVAILABLE':'UNKNOWN_INCOMPLETE_REASON';
+  return{status:consumerComplete?'COMPLETE':'INCOMPLETE',optimizerStatus:result?.status||'UNAVAILABLE',optimizerReason:result?.reason||null,optimizerComplete,liveSeasonAuthority:liveAuthority,consumerComplete,primaryIncompletionReason,slots,filledSlotCount:assignments.filter(row=>row.player).length,unfilledSlots,activeSkillCount:skill.length,projectionUsableCount:skill.length-missingProjection.length,missingProjectionCount:missingProjection.length,missingProjectionPositions:Object.fromEntries(WEEKLY_PROJECTION_POSITIONS.map(position=>[position,missingProjection.filter(row=>row.p?.pos===position).length])),missingRankCount:missingRank.length};
 }
 async function runCanonicalGameContextDiagnostic({season,week}={}){
   const api=globalThis.PittiGameContextV1,path=`/api/nfl-week-context?season=${season}&week=${week}`;let httpStatus=null,upstreamStatus=null,failureType=null,snapshot;
@@ -769,9 +822,16 @@ async function runCanonicalGameContextDiagnostic({season,week}={}){
 async function runPhysicalEvidenceLaneDiagnostic(){
   const season=Number(els.season.value.trim());let week=null,weekReason=null;
   try{week=await currentSleeperNflWeek(season)}catch(error){weekReason=error?.code||'CURRENT_WEEK_UNAVAILABLE'}
-  const context={season,week,sleeperPlayers:lastDraftContext?.players},projectionPromise=runAuthenticatedWeeklyProjectionDiagnostic(),rankPromise=week?runCurrentWeekRankDiagnostic(context):Promise.resolve({status:'UNAVAILABLE',reason:weekReason,positions:{}}),gamePromise=week?runCanonicalGameContextDiagnostic({season,week}):Promise.resolve({request:null,httpStatus:null,status:'UNAVAILABLE',validation:weekReason,coverage:{sourceEvents:0,acceptedGames:0,acceptedTeams:0,storedGames:0},games:[],rejections:[]});
-  const [projectionResult,rankResult,gameResult]=await Promise.allSettled([projectionPromise,rankPromise,gamePromise]),value=(result,fallback)=>result.status==='fulfilled'?result.value:fallback;
-  return{schema:'pitti.physical-evidence-lanes-diagnostic.v1',appVersion:APP_VERSION,season,week,capturedAt:new Date().toISOString(),weeklyProjections:sanitizedProjectionDiagnostic(value(projectionResult,{classification:'UNAVAILABLE',reason:'COLLECTION_FAILED',rows:[]})),expertRanks:value(rankResult,{status:'UNAVAILABLE',reason:'COLLECTION_FAILED',positions:{}}),canonicalGameContext:value(gameResult,{request:null,httpStatus:null,status:'UNAVAILABLE',validation:'COLLECTION_FAILED',coverage:{sourceEvents:0,acceptedGames:0,acceptedTeams:0,storedGames:0},games:[],rejections:[]}),secretSafety:{apiKeyIncluded:false,authorizationHeadersIncluded:false,rawProviderBodiesIncluded:false,cookiesIncluded:false,tokensIncluded:false}};
+  const rankDirectory={},context={season,week,sleeperPlayers:lastDraftContext?.players},gamePromise=week?runCanonicalGameContextDiagnostic({season,week}):Promise.resolve({request:null,httpStatus:null,status:'UNAVAILABLE',validation:weekReason,coverage:{sourceEvents:0,acceptedGames:0,acceptedTeams:0,storedGames:0},games:[],rejections:[]}),settle=promise=>promise.then(value=>({status:'fulfilled',value}),reason=>({status:'rejected',reason}));
+  // Mirror Production FantasyPros pressure by keeping the three four-request groups sequential:
+  // projections -> broad ranks/identity metadata -> selected PITTI filters. The diagnostic still
+  // continues after a degraded group so one physical run can distinguish rate-limit, storage and
+  // selected-identity failures without creating an artificial eight-request burst.
+  const projectionResult=await settle(runAuthenticatedWeeklyProjectionDiagnostic());
+  const rankResult=week?await settle(runCurrentWeekRankDiagnostic({...context,directoryPayloadSink:rankDirectory})):{status:'fulfilled',value:{status:'UNAVAILABLE',reason:weekReason,positions:{}}};
+  const selectedResult=week?await settle(runSelectedPittiPanelDiagnostic({...context,directoryPayloads:rankDirectory.payloads||{}})):{status:'fulfilled',value:{status:'UNAVAILABLE',reason:weekReason,positions:{}}};
+  const gameResult=await settle(gamePromise),value=(result,fallback)=>result.status==='fulfilled'?result.value:fallback,weeklyProjections=sanitizedProjectionDiagnostic(value(projectionResult,{classification:'UNAVAILABLE',reason:'COLLECTION_FAILED',rows:[]})),expertRanks=value(rankResult,{status:'UNAVAILABLE',reason:'COLLECTION_FAILED',positions:{}}),selectedPittiPanel=value(selectedResult,{status:'UNAVAILABLE',reason:'COLLECTION_FAILED',positions:{}});
+  return{schema:'pitti.physical-evidence-lanes-diagnostic.v2',appVersion:APP_VERSION,season,week,capturedAt:new Date().toISOString(),weeklyProjections,expertRanks,selectedPittiPanel,persistence:weeklyEvidencePersistenceDiagnostic(),requestRateLimit:{projections:Object.fromEntries(Object.entries(weeklyProjections.positions||{}).map(([position,row])=>[position,{httpStatus:row.httpStatus,retryAfterSeconds:row.retryAfterSeconds}])),broadExpertRanks:Object.fromEntries(Object.entries(expertRanks.positions||{}).map(([position,row])=>[position,{httpStatus:row.httpStatus,retryAfterSeconds:row.retryAfterSeconds}])),selectedPittiPanel:Object.fromEntries(Object.entries(selectedPittiPanel.positions||{}).map(([position,row])=>[position,{httpStatus:row.filteredRequestHttpStatus,retryAfterSeconds:row.retryAfterSeconds}]))},startSitCompletion:week?startSitCompletionDiagnostic({season,week}):{status:'UNAVAILABLE',primaryIncompletionReason:weekReason},canonicalGameContext:value(gameResult,{request:null,httpStatus:null,status:'UNAVAILABLE',validation:'COLLECTION_FAILED',coverage:{sourceEvents:0,acceptedGames:0,acceptedTeams:0,storedGames:0},games:[],rejections:[]}),secretSafety:{apiKeyIncluded:false,authorizationHeadersIncluded:false,rawProviderBodiesIncluded:false,cookiesIncluded:false,tokensIncluded:false}};
 }
 function formatPhysicalEvidenceLaneDiagnostic(report){return`PITTI PHYSICAL EVIDENCE-LANES DIAGNOSTIC\n${JSON.stringify(report,null,2)}`}
 function slugifyExpert(name){
