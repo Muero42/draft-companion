@@ -20,10 +20,10 @@ const cache=new Map(),store={
   set:(key,value)=>{cache.set(key,value);return true}
 };
 const els={seasonRankingAge:{textContent:'',className:''},seasonRankingStatus:{textContent:'',className:''}};
-const context={Date,Number,String,Array,Object,Math,store,els,WEEKLY_PROJECTION_POSITIONS:['QB','RB','WR','TE'],SEASON_RANKING_AUTO_MS:3*60*60*1000,seasonRankingRefreshBusy:false,PittiWeeklyEvidenceV2:evidence,FP_DIAGNOSTIC_TIMEOUT_MS:10_000,AbortController,setTimeout,clearTimeout,lastDraftContext:{season:{league:{season:2026},current_nfl_week:1}},els:{...els,apiKey:{value:'test-key'}}};
+const context={Date,Number,String,Array,Object,Math,Promise,store,els,WEEKLY_PROJECTION_POSITIONS:['QB','RB','WR','TE'],SEASON_RANKING_AUTO_MS:3*60*60*1000,seasonRankingRefreshBusy:false,PittiWeeklyEvidenceV2:evidence,FP_DIAGNOSTIC_TIMEOUT_MS:10_000,FP_REQUEST_START_INTERVAL_MS:0,fpRequestStartQueue:Promise.resolve(),fpLastRequestStartedAt:0,AbortController,setTimeout,clearTimeout,lastDraftContext:{season:{league:{season:2026},current_nfl_week:1}},els:{...els,apiKey:{value:'test-key'}}};
 context.globalThis=context;
 vm.createContext(context);
-vm.runInContext([sourceOf('codedError'),sourceOf('fpProxyRequest'),sourceOf('persistSeasonProjectionRetryAfter'),sourceOf('seasonEvidenceContext'),sourceOf('seasonProjectionCoverage'),sourceOf('renderSeasonRankingFreshness')].join('\n'),context);
+vm.runInContext([sourceOf('codedError'),sourceOf('scheduleFpRequestStart'),sourceOf('fpProxyRequest'),sourceOf('persistSeasonProjectionRetryAfter'),sourceOf('seasonEvidenceContext'),sourceOf('seasonProjectionCoverage'),sourceOf('renderSeasonRankingFreshness')].join('\n'),context);
 
 const retryKey='pitti.weekly-evidence.v2.retryAfterUntil',observedAt=1_000_000;
 context.fetch=async()=>({ok:false,status:429,headers:{get:name=>name.toLowerCase()==='retry-after'?'120':null},text:async()=>''});
