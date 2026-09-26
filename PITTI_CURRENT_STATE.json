@@ -1,15 +1,15 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260924T0945Z-v265",
-  "updated_at": "2026-09-24T09:45:00Z",
+  "handoff_generation": "20260926T1839Z-v266",
+  "updated_at": "2026-09-26T18:39:41Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.210",
+    "source_candidate": "v11.8.0-rc4.211",
     "git_identity_rule": "Canonical main identity and candidate containment are freshly verified externally; no commit or mutable PR state is immutable checkpoint authority.",
-    "reconciled_base_main": "DYNAMIC_EXTERNAL_EVIDENCE",
+    "reconciled_base_main": "84971e64b89757f2b59e6f4cae7891fd8c372843",
     "postmerge": {
       "checkpoint": "v233",
       "pr": 121,
@@ -295,7 +295,7 @@
       "fantasypros_result": "PHYSICAL_PASS_OMITTED_ROS_WEEKLY_PROJECTION",
       "remaining_failure": "Sleeper NFL State: Timeout nach 6s"
     },
-    "reconciled_main": "66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1",
+    "reconciled_main": "84971e64b89757f2b59e6f4cae7891fd8c372843",
     "rc4205_physical_acceptance": {
       "checkpoint": "v256",
       "version": "v11.8.0-rc4.205",
@@ -636,54 +636,68 @@
       "physical_scope": "Exact rc4.210 Git tree physically accepted on Cloudflare non-Production preview before merge; squash merge produced the identical tree and Cloudflare Production deployed that exact main commit.",
       "postmerge_ci": "Authority-coupled jobs failed on stale v263 runtime version lock metadata; Cloudflare Pages Production deployment succeeded. v265 is the checkpoint-only reconciliation.",
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
+    },
+    "rc4211_pr200_source_production": {
+      "checkpoint": "v266",
+      "version": "v11.8.0-rc4.211",
+      "pr": 200,
+      "reviewed_head": "e3503a9f5a06e37d7d9795051d0a18eb06caa65e",
+      "merge_commit": "84971e64b89757f2b59e6f4cae7891fd8c372843",
+      "merged_tree": "b93018542ab7402b228b986e627e02aeffcabdc1",
+      "production_deployment_id": "2564389d-2890-4d76-a582-ed66c0eb7185",
+      "cloudflare_check_run_id": 108449050892,
+      "production_deployment_proven": true,
+      "physical_acceptance_proven": true,
+      "physical_classification": "RC4.211_PHYSICAL_PASS_STALE_SPECIAL_TEAMS_GUARD_AND_WEEK_LABEL_CONFIRMED",
+      "physical_scope": "STALE_SPECIAL_TEAMS_TEMPORAL_SAFETY_AND_CURRENT_WEEK_QB_LABEL; Sleeper ownership and K isolation preserved. Exact inspected Preview tree equals Production tree. No broad weekly-evidence reacceptance.",
+      "postmerge_ci": "Supplied main CI: SEAL: seal drift / runtime version lock drift; Cloudflare main PASS. v266 authority-only reconciliation.",
+      "evidence_source": "USER_SUPPLIED_EXTERNAL_AUTHORITY_AND_PHYSICAL_PREVIEW",
+      "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
     }
   },
   "runtime": {
-    "accepted_android": "v11.8.0-rc4.210",
-    "season_candidate": "v11.8.0-rc4.210 canonical source + Production; exact-tree physical PASS",
-    "candidate_branch": "main via merged PR #198",
+    "accepted_android": "v11.8.0-rc4.211",
+    "season_candidate": "v11.8.0-rc4.211 is canonical source + Production via PR #200 reviewed head e3503a9f5a06e37d7d9795051d0a18eb06caa65e, main@84971e64b89757f2b59e6f4cae7891fd8c372843, tree b93018542ab7402b228b986e627e02aeffcabdc1, deployment 2564389d-2890-4d76-a582-ed66c0eb7185 / check 108449050892. Bounded physical PASS: RC4.211_PHYSICAL_PASS_STALE_SPECIAL_TEAMS_GUARD_AND_WEEK_LABEL_CONFIRMED. rc4.210 remains LAST_BROAD_PHYSICAL_EVIDENCE_BASELINE for Weekly Evidence, selected PITTI panel, Start/Sit persistence and Game Context. Current Preview weekly evidence was not loaded; unavailable is not a proven regression. Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; outdoor weather remains fail-closed without fresh verified forecast.",
+    "candidate_branch": "main via merged PR #200",
     "android_acceptance_pending": false,
-    "test_challenger": "v11.8.0-rc4.210",
+    "test_challenger": "v11.8.0-rc4.211",
     "ci": {
-      "status": "PR176_EXACT_HEAD_CI_PASS_SOURCE_MERGED_NOT_DEPLOYED",
-      "validated_code_head": "fe8b6a397dac2b60522cb959ffdb225b767fbcae",
-      "candidate_package": "PASS_EXACT_REPAIR_HEAD",
-      "release_contract_v2": "PASS_EXACT_REPAIR_HEAD",
-      "project_guardrails": "PASS_EXACT_REPAIR_HEAD",
-      "cloud_validation": "PASS_EXACT_REPAIR_HEAD",
-      "cloudflare_preview": "PASS_EXACT_REPAIR_HEAD_NON_PRODUCTION",
-      "current_exact_main_head_ci": "MERGE_COMMIT_CONTAINS_EXACT_HEAD; REVERIFY_LIVE_BEFORE_PROMOTION"
+      "status": "PR200_FINAL_EXACT_HEAD_PASS_MAIN_AUTHORITY_METADATA_DRIFT",
+      "validated_code_head": "e3503a9f5a06e37d7d9795051d0a18eb06caa65e",
+      "candidate_package": "PASS",
+      "release_contract_v2": "PASS",
+      "project_guardrails": "PASS",
+      "cloud_validation": "PASS",
+      "cloudflare_preview": "PASS",
+      "current_exact_main_head_ci": "SUPPLIED_MAIN_SEAL_AND_RUNTIME_LOCK_DRIFT; V266_LOCAL_RECONCILIATION_NOT_REMOTE_VALIDATED"
     },
-    "android_accepted": "v11.8.0-rc4.210",
-    "preview_candidate": "v11.8.0-rc4.210 exact-tree physical PASS at https://3c3f1cde.draft-companion.pages.dev",
-    "android_authority": "v11.8.0-rc4.210 exact-tree physical acceptance PASS; Production main deploys identical tree dbd808856a0e56fcfc899977a072360ded3f119a",
+    "android_accepted": "v11.8.0-rc4.211",
+    "preview_candidate": "v11.8.0-rc4.211 exact-tree bounded physical PASS; preview URL not supplied",
+    "android_authority": "v11.8.0-rc4.211 RC4.211_PHYSICAL_PASS_STALE_SPECIAL_TEAMS_GUARD_AND_WEEK_LABEL_CONFIRMED; STALE_SPECIAL_TEAMS_TEMPORAL_SAFETY_AND_CURRENT_WEEK_QB_LABEL; Sleeper ownership and K isolation preserved. Exact inspected Preview tree equals Production tree. No broad weekly-evidence reacceptance.",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "27c1429a455a5507406a3c9c7ddda0531070f30b",
+    "deployed_pages_head": "84971e64b89757f2b59e6f4cae7891fd8c372843",
     "installed_android": "v11.8.0-rc4.210",
-    "latest_android_observed": "v11.8.0-rc4.210",
+    "installation_observation_scope": "Historical last installed-version observation only; rc4.211 was physically inspected on Preview. A new installation was not supplied or performed. Current source/Production is rc4.211.",
+    "latest_android_observed": "v11.8.0-rc4.211",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "Historical rc4.183 rejection: FA/Add-Drop cards under Kader and IR/Reserve Charbonnet as ordinary drop target. Superseded by rc4.188 physical Waiver/FA canary PASS; retained only as historical regression evidence.",
     "latest_device_evidence": {
-      "version": "v11.8.0-rc4.210",
-      "observed_at": "2026-09-24",
-      "captured_at": "2026-09-24T09:36:43Z",
-      "evidence": "docs/PITTI_BRIDGE_HANDOFF_V265_RC4210_PRODUCTION_PHYSICAL_PASS_2026-09-24.md",
+      "version": "v11.8.0-rc4.211",
+      "recorded_at": "2026-09-26T18:39:41Z",
+      "evidence": "docs/PITTI_BRIDGE_HANDOFF_V266_RC4211_PRODUCTION_BOUNDED_PHYSICAL_PASS_2026-09-26.md",
+      "evidence_source": "USER_SUPPLIED_EXACT_TREE_PREVIEW_OBSERVATION",
       "acceptance": "PASS",
-      "classification": "RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED",
-      "weekly_projection_summary": "FantasyPros QB/RB/WR/TE projections AVAILABLE; active skill roster 12/12 usable",
-      "expert_rank_summary": "Broad ECR AVAILABLE; Selected PITTI Panel AVAILABLE with filtered QB/RB/WR/TE HTTP 200; Sean Koerner remains explicitly missing/fail-closed",
-      "persistence_consumer_summary": "After one Jetzt prüfen refresh, current Week-3 positional ranks and Half-PPR projections persisted into roster rows and were consumed by Start/Sit.",
-      "game_context_summary": "PASS: canonical 2026 Week 3, 16 games / 32 teams; opponents rendered; dome weather no-weather-required semantics preserved.",
-      "remaining_unavailable_lanes": [
-        "Team Total",
-        "outdoor weather without a fresh verified forecast"
-      ],
-      "secret_safety": "PASS"
+      "classification": "RC4.211_PHYSICAL_PASS_STALE_SPECIAL_TEAMS_GUARD_AND_WEEK_LABEL_CONFIRMED",
+      "scope": "STALE_SPECIAL_TEAMS_TEMPORAL_SAFETY_AND_CURRENT_WEEK_QB_LABEL; Sleeper ownership and K isolation preserved. Exact inspected Preview tree equals Production tree. No broad weekly-evidence reacceptance.",
+      "tree": "b93018542ab7402b228b986e627e02aeffcabdc1",
+      "weekly_projection_summary": "NOT_REOBSERVED; Preview current ranks/projections unavailable without loaded weekly evidence; not proven regression",
+      "broad_evidence_reobserved": false,
+      "last_broad_physical_baseline": "v11.8.0-rc4.210"
     },
-    "latestAndroidVersionObserved": "v11.8.0-rc4.210",
-    "source_candidate_status": "SOURCE_PRODUCTION_EXACT_TREE_PHYSICAL_ACCEPTED",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.211",
+    "source_candidate_status": "SOURCE_PRODUCTION_EXACT_TREE_BOUNDED_PHYSICAL_ACCEPTED",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -744,40 +758,91 @@
         "candidate_package": "FAIL_STALE_BOOTSTRAP_RENDER_ASSERT_REPAIRED"
       }
     },
-    "package_reference_scope": "rc4.204 source-byte-exact 17-file package/re-extraction validation; archive SHA is run/environment-scoped and is not cross-environment identity",
+    "package_reference_scope": "rc4.211 reviewed 17-file byte-exact runtime package; archive SHA noncanonical",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.210",
+      "version": "v11.8.0-rc4.211",
       "files": 17,
       "sha256": null,
-      "status": "VALIDATED_PREMERGE_SOURCE_PACKAGE_PHYSICAL_ACCEPTED",
-      "source_scope": "FEATURE_BRANCH_ONLY_NOT_PRODUCTION_NOT_DEVICE_ACCEPTED",
-      "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_OBSERVATION_NOT_CANONICAL_IDENTITY",
-      "validation_observed_archive_sha256": "d9fc7432c5cbea4a48a3fda97c13151bb56e0a14a8ea7deeb81822faa51400f3",
-      "validationObservedArchiveSha256": "1856e35b9e717e763c9f942941bf9dcf79530e768c613a1d66d7750c7514d11e"
+      "status": "VALIDATED_PREMERGE_17_RUNTIME_FILES_BYTE_EXACT",
+      "source_scope": "PR200_REVIEWED_TREE_EQUALS_MERGED_PRODUCTION_TREE",
+      "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_NONCANONICAL"
     },
-    "deployment_parity": "VERIFIED_EXACT_COMMIT_DEPLOYMENT; RUNTIME_SOURCE_BLOBS_MATCH_REVIEWED_REPAIR; PHYSICAL_DEVICE_OBSERVATION_PROVEN",
-    "deployed_production_version": "v11.8.0-rc4.210",
+    "deployment_parity": "VERIFIED_IDENTICAL_PREVIEW_PR_MAIN_TREE_BOUNDED_PHYSICAL_SCOPE",
+    "deployed_production_version": "v11.8.0-rc4.211",
     "production_deployment": {
-      "version": "v11.8.0-rc4.210",
-      "source_commit": "27c1429a455a5507406a3c9c7ddda0531070f30b",
-      "status": "VERIFIED_SUCCESS_EXACT_TREE_PHYSICAL_ACCEPTED",
+      "version": "v11.8.0-rc4.211",
+      "source_commit": "84971e64b89757f2b59e6f4cae7891fd8c372843",
+      "tree": "b93018542ab7402b228b986e627e02aeffcabdc1",
+      "status": "VERIFIED_SUCCESS_EXACT_TREE_BOUNDED_PHYSICAL_ACCEPTED",
       "branch": "main",
-      "deployment_id": "8c2d3d2f-232a-4d79-a6c7-80639d3b7052",
-      "cloudflare_check_run_id": 107578665328,
+      "deployment_id": "2564389d-2890-4d76-a582-ed66c0eb7185",
+      "cloudflare_check_run_id": 108449050892,
       "device_acceptance_proven": true,
-      "device_acceptance_scope": "RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED; exact-tree preview physical pass plus identical Production tree",
-      "last_device_accepted_control": "v11.8.0-rc4.210"
+      "device_acceptance_scope": "STALE_SPECIAL_TEAMS_TEMPORAL_SAFETY_AND_CURRENT_WEEK_QB_LABEL; Sleeper ownership and K isolation preserved. Exact inspected Preview tree equals Production tree. No broad weekly-evidence reacceptance.",
+      "physical_classification": "RC4.211_PHYSICAL_PASS_STALE_SPECIAL_TEAMS_GUARD_AND_WEEK_LABEL_CONFIRMED",
+      "last_device_accepted_control": "v11.8.0-rc4.211",
+      "last_broad_physical_baseline": "v11.8.0-rc4.210",
+      "evidence_source": "USER_SUPPLIED_EXTERNAL_AUTHORITY"
     },
     "independent_evidence_lane_status": {
-      "broad_expert_ranks": "AVAILABLE_PHYSICAL_QB_RB_WR_TE",
-      "pitti_panel": "AVAILABLE_PHYSICAL_SELECTED_FILTERED_PANEL_QB_RB_WR_TE",
+      "broad_expert_ranks": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
+      "pitti_panel": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
-      "game_context": "AVAILABLE_PHYSICAL_WEEK3_16_GAMES_32_TEAMS",
-      "opponent_weather": "OPPONENT_AVAILABLE; DOME_NO_WEATHER_REQUIRED; OUTDOOR_WEATHER_FAIL_CLOSED_WITHOUT_FRESH_FORECAST"
+      "game_context": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
+      "opponent_weather": "LAST_BROAD_PASS_RC4210; OUTDOOR_WEATHER_FAIL_CLOSED_WITHOUT_FRESH_FORECAST",
+      "evidence_baseline": "v11.8.0-rc4.210",
+      "rc4211_preview_weekly_evidence": "UNAVAILABLE_NOT_LOADED_NOT_PROVEN_REGRESSION"
     },
     "mainGhPagesParity": false,
     "deployedPagesAppByteParityWithMain": false,
-    "latestAndroidFunctionalVerified": "v11.8.0-rc4.210 RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED"
+    "latestAndroidFunctionalVerified": "v11.8.0-rc4.211 RC4.211_PHYSICAL_PASS_STALE_SPECIAL_TEAMS_GUARD_AND_WEEK_LABEL_CONFIRMED",
+    "last_broad_physical_evidence_baseline": {
+      "status": "LAST_BROAD_PHYSICAL_EVIDENCE_BASELINE",
+      "version": "v11.8.0-rc4.210",
+      "classification": "RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED",
+      "evidence": {
+        "version": "v11.8.0-rc4.210",
+        "observed_at": "2026-09-24",
+        "captured_at": "2026-09-24T09:36:43Z",
+        "evidence": "docs/PITTI_BRIDGE_HANDOFF_V265_RC4210_PRODUCTION_PHYSICAL_PASS_2026-09-24.md",
+        "acceptance": "PASS",
+        "classification": "RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED",
+        "weekly_projection_summary": "FantasyPros QB/RB/WR/TE projections AVAILABLE; active skill roster 12/12 usable",
+        "expert_rank_summary": "Broad ECR AVAILABLE; Selected PITTI Panel AVAILABLE with filtered QB/RB/WR/TE HTTP 200; Sean Koerner remains explicitly missing/fail-closed",
+        "persistence_consumer_summary": "After one Jetzt prüfen refresh, current Week-3 positional ranks and Half-PPR projections persisted into roster rows and were consumed by Start/Sit.",
+        "game_context_summary": "PASS: canonical 2026 Week 3, 16 games / 32 teams; opponents rendered; dome weather no-weather-required semantics preserved.",
+        "remaining_unavailable_lanes": [
+          "Team Total",
+          "outdoor weather without a fresh verified forecast"
+        ],
+        "secret_safety": "PASS"
+      },
+      "lane_status": {
+        "broad_expert_ranks": "AVAILABLE_PHYSICAL_QB_RB_WR_TE",
+        "pitti_panel": "AVAILABLE_PHYSICAL_SELECTED_FILTERED_PANEL_QB_RB_WR_TE",
+        "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
+        "game_context": "AVAILABLE_PHYSICAL_WEEK3_16_GAMES_32_TEAMS",
+        "opponent_weather": "OPPONENT_AVAILABLE; DOME_NO_WEATHER_REQUIRED; OUTDOOR_WEATHER_FAIL_CLOSED_WITHOUT_FRESH_FORECAST"
+      },
+      "source_production": {
+        "checkpoint": "v265",
+        "version": "v11.8.0-rc4.210",
+        "pr": 198,
+        "reviewed_head": "b18151d4b51189634afd0403e6d7c850db579102",
+        "merge_commit": "27c1429a455a5507406a3c9c7ddda0531070f30b",
+        "merged_tree": "dbd808856a0e56fcfc899977a072360ded3f119a",
+        "status": "MERGED_CANONICAL_SOURCE_PRODUCTION_EXACT_TREE_PHYSICAL_ACCEPTED",
+        "production_deployment_id": "8c2d3d2f-232a-4d79-a6c7-80639d3b7052",
+        "cloudflare_check_run_id": 107578665328,
+        "production_deployment_proven": true,
+        "physical_preview": "https://3c3f1cde.draft-companion.pages.dev",
+        "physical_acceptance_proven": true,
+        "physical_classification": "RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED",
+        "physical_scope": "Exact rc4.210 Git tree physically accepted on Cloudflare non-Production preview before merge; squash merge produced the identical tree and Cloudflare Production deployed that exact main commit.",
+        "postmerge_ci": "Authority-coupled jobs failed on stale v263 runtime version lock metadata; Cloudflare Pages Production deployment succeeded. v265 is the checkpoint-only reconciliation.",
+        "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
+      }
+    }
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -816,8 +881,8 @@
     "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
-    "status": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED_RECONCILED",
-    "nextGate": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED"
+    "status": "RC4211_PRODUCTION_BOUNDED_PHYSICAL_ACCEPTED_RECONCILED",
+    "nextGate": "RC4211_PRODUCTION_BOUNDED_PHYSICAL_ACCEPTED"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -836,7 +901,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "v11.8.0-rc4.206 is canonical source and Production authority at main@d5954d66877df877f950a4a41f32baad59a66748, tree 07248a6ac3c5f8872893a2c805155be8a1a5e806, deployment 8322e9b3-a293-4454-8ef9-d5e98c217889. Physical/device acceptance is false; rc4.205 remains the last device-accepted control. rc4.207 is a feature-branch-only repair candidate.",
+  "source_authority": "v11.8.0-rc4.211 is canonical source + Production via PR #200 reviewed head e3503a9f5a06e37d7d9795051d0a18eb06caa65e, main@84971e64b89757f2b59e6f4cae7891fd8c372843, tree b93018542ab7402b228b986e627e02aeffcabdc1, deployment 2564389d-2890-4d76-a582-ed66c0eb7185 / check 108449050892. Bounded physical PASS: RC4.211_PHYSICAL_PASS_STALE_SPECIAL_TEAMS_GUARD_AND_WEEK_LABEL_CONFIRMED. rc4.210 remains LAST_BROAD_PHYSICAL_EVIDENCE_BASELINE for Weekly Evidence, selected PITTI panel, Start/Sit persistence and Game Context. Current Preview weekly evidence was not loaded; unavailable is not a proven regression. Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; outdoor weather remains fail-closed without fresh verified forecast.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -874,6 +939,10 @@
     "waiting_external": [],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "rc4211-production-bounded-physical-v266",
+        "result": "v11.8.0-rc4.211 is canonical source + Production via PR #200 reviewed head e3503a9f5a06e37d7d9795051d0a18eb06caa65e, main@84971e64b89757f2b59e6f4cae7891fd8c372843, tree b93018542ab7402b228b986e627e02aeffcabdc1, deployment 2564389d-2890-4d76-a582-ed66c0eb7185 / check 108449050892. Bounded physical PASS: RC4.211_PHYSICAL_PASS_STALE_SPECIAL_TEAMS_GUARD_AND_WEEK_LABEL_CONFIRMED. rc4.210 remains LAST_BROAD_PHYSICAL_EVIDENCE_BASELINE for Weekly Evidence, selected PITTI panel, Start/Sit persistence and Game Context. Current Preview weekly evidence was not loaded; unavailable is not a proven regression. Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; outdoor weather remains fail-closed without fresh verified forecast."
+      },
       {
         "id": "rc4210-production-physical-pass-v265",
         "result": "PR #198 merged as main 27c1429a455a5507406a3c9c7ddda0531070f30b; Cloudflare Production deployment 8c2d3d2f-232a-4d79-a6c7-80639d3b7052 PASS; exact tree dbd808856a0e56fcfc899977a072360ded3f119a had already passed physical rc4.210 selected-panel/persistence/consumer/game-context acceptance.",
@@ -1047,24 +1116,24 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "rc4.210 source, Production deployment and exact-tree physical acceptance are proven; v265 reconciles checkpoint metadata. No dependent merge/deploy gate remains."
+      "reason": "Authorized local authority reconciliation only; external publication requires a separate work package."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260924T0945Z-v265",
+    "generation": "20260926T1839Z-v266",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "v11.8.0-rc4.210 is canonical source and Production at main@27c1429a455a5507406a3c9c7ddda0531070f30b / deployment 8c2d3d2f-232a-4d79-a6c7-80639d3b7052; exact-tree physical acceptance PASS (RC4.210_PHYSICAL_PASS_SELECTED_PITTI_PERSISTENCE_AND_CONSUMER_CONFIRMED). Selected PITTI ranks persist into roster/Start-Sit. Team Total remains unavailable.",
+    "resume": "v11.8.0-rc4.211 is canonical source + Production via PR #200 reviewed head e3503a9f5a06e37d7d9795051d0a18eb06caa65e, main@84971e64b89757f2b59e6f4cae7891fd8c372843, tree b93018542ab7402b228b986e627e02aeffcabdc1, deployment 2564389d-2890-4d76-a582-ed66c0eb7185 / check 108449050892. Bounded physical PASS: RC4.211_PHYSICAL_PASS_STALE_SPECIAL_TEAMS_GUARD_AND_WEEK_LABEL_CONFIRMED. rc4.210 remains LAST_BROAD_PHYSICAL_EVIDENCE_BASELINE for Weekly Evidence, selected PITTI panel, Start/Sit persistence and Game Context. Current Preview weekly evidence was not loaded; unavailable is not a proven regression. Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; outdoor weather remains fail-closed without fresh verified forecast.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "RC4210_PRODUCTION_PHYSICAL_ACCEPTANCE_AUTHORITY"
+    "refresh_scope": "RC4211_PRODUCTION_BOUNDED_PHYSICAL_AUTHORITY"
   },
-  "status": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED_RECONCILED",
-  "gate": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED",
-  "nextGate": "RC4210_PRODUCTION_PHYSICAL_ACCEPTED",
-  "handoffGeneration": "20260924T0945Z-v265",
+  "status": "RC4211_PRODUCTION_BOUNDED_PHYSICAL_ACCEPTED_RECONCILED",
+  "gate": "RC4211_PRODUCTION_BOUNDED_PHYSICAL_ACCEPTED",
+  "nextGate": "RC4211_PRODUCTION_BOUNDED_PHYSICAL_ACCEPTED",
+  "handoffGeneration": "20260926T1839Z-v266",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -1187,6 +1256,60 @@
       "reviewed_input_head": "ce7e735a65124389560f03119cfb3e4e1959b2c1",
       "observed_main": "685770c13c977481eb94e4142d227ebc58c10499",
       "reason": "Unscoped user_qb_limit and QB2 exclusion are replaced by explicit draft-only constraints; season exceptions never weaken draft policy."
+    },
+    "rc4207_candidate_work": {
+      "status": "RC4.207_DRAFT_PR_EXACT_HEAD_PASS_NOT_MERGED_NOT_DEPLOYED",
+      "version": "v11.8.0-rc4.207",
+      "pr": 193,
+      "branch": "codex/rc4.206-physical-failure-repair",
+      "base_sha": "d5954d66877df877f950a4a41f32baad59a66748",
+      "head_sha": "d482faeeefcd5ff79b30b9718354ecb3b19230b2",
+      "tree_sha": "e5023a150d3b6543c0256efc6917f53c1f6b16e5",
+      "preview_url": "CLOUDFLARE_PAGES_PR_PREVIEW_CHECK_PASS",
+      "exact_head_checks": {
+        "guardrails": "PASS",
+        "behavioral_contract": "PASS",
+        "candidate_package": "PASS",
+        "pitti_cloud_validation": "PASS",
+        "cloudflare_pages_preview": "PASS"
+      },
+      "review_repairs": [
+        "Selected PITTI weekly panel is exact-ID/current-week/current-position/HALF and broad ECR is a distinct broad_weekly_ecr_rank lane.",
+        "Selected-panel acquisition is isolated so directory/provider failures cannot erase healthy projection or broad-ECR lanes.",
+        "Missing current selected-rank provider response may retain only still-fresh same-week prior selected ranks; a contradictory current selected response purges that position.",
+        "Provider filter echo may be absent only when explicit returned expert membership/count still proves a bounded selected panel; wrong echoed filters or unexpected experts fail closed.",
+        "Canonical game context uses bounded ESPN-hosted scoreboard variants, exact season/week/type validation, 13-16 game completeness, unique event/team identity, and consumer-side revalidation.",
+        "Team Total remains unavailable; no odds source or synthetic total was introduced."
+      ],
+      "canonical_main_unchanged": true,
+      "merge_authorized": false,
+      "production_deployment_authorized": false,
+      "physical_device_accepted": false,
+      "observed_at": "2026-09-23T18:34:00Z",
+      "package_reextract": {
+        "status": "PASS_17_RUNTIME_FILES_BYTE_EXACT",
+        "archive_identity_semantics": "RUN_ENVIRONMENT_SCOPED_NONCANONICAL",
+        "reviewed_runtime_head_observation": {
+          "head_sha": "46b0f036e575a63849d09f1d2cc07b3b3384dcf6",
+          "artifact_id": 10607243760,
+          "observed_inner_zip_sha256": "3b8c416f0a9830b455815b52c55e912cf7d23c59c59532cb01404b3626c17cd5"
+        },
+        "checkpoint_head_observation": {
+          "head_sha": "436050a0a8bd45564d2c544a94d5592860598353",
+          "artifact_id": 10607044345,
+          "observed_inner_zip_sha256": "2f2e9cce9498db1d9c4bc43c8e5585116ba776c58eb4aaf925577da579184c0b"
+        },
+        "cross_run_runtime_file_bytes_equal": true,
+        "note": "Candidate package/re-extraction gate passed all 17 runtime files byte-exact. Archive/artifact digests remain run/environment-scoped and noncanonical.",
+        "latest_exact_head_observation": {
+          "head_sha": "44401e32c914ba9da41d19add7ff48cc26bd249d",
+          "artifact_id": 10607279135,
+          "workflow_artifact_digest": "sha256:adea13334119e9c0b10f0e00d7d58b6979c6de0af048c4d6650dbe53e94315a5"
+        }
+      },
+      "reviewed_runtime_head_sha": "c18c99edbbe28dbc55f1396f4870e319ed609917",
+      "reviewed_runtime_tree_sha": "afecd5370c9209079ebaa18a3384e57106e595ff",
+      "exact_head_validation_sha": "44401e32c914ba9da41d19add7ff48cc26bd249d"
     }
   },
   "qb_policy": {
@@ -1211,58 +1334,12 @@
     "season_exception_weakens_draft_rule": false
   },
   "candidate_work": {
-    "status": "RC4.207_DRAFT_PR_EXACT_HEAD_PASS_NOT_MERGED_NOT_DEPLOYED",
-    "version": "v11.8.0-rc4.207",
-    "pr": 193,
-    "branch": "codex/rc4.206-physical-failure-repair",
-    "base_sha": "d5954d66877df877f950a4a41f32baad59a66748",
-    "head_sha": "d482faeeefcd5ff79b30b9718354ecb3b19230b2",
-    "tree_sha": "e5023a150d3b6543c0256efc6917f53c1f6b16e5",
-    "preview_url": "CLOUDFLARE_PAGES_PR_PREVIEW_CHECK_PASS",
-    "exact_head_checks": {
-      "guardrails": "PASS",
-      "behavioral_contract": "PASS",
-      "candidate_package": "PASS",
-      "pitti_cloud_validation": "PASS",
-      "cloudflare_pages_preview": "PASS"
-    },
-    "review_repairs": [
-      "Selected PITTI weekly panel is exact-ID/current-week/current-position/HALF and broad ECR is a distinct broad_weekly_ecr_rank lane.",
-      "Selected-panel acquisition is isolated so directory/provider failures cannot erase healthy projection or broad-ECR lanes.",
-      "Missing current selected-rank provider response may retain only still-fresh same-week prior selected ranks; a contradictory current selected response purges that position.",
-      "Provider filter echo may be absent only when explicit returned expert membership/count still proves a bounded selected panel; wrong echoed filters or unexpected experts fail closed.",
-      "Canonical game context uses bounded ESPN-hosted scoreboard variants, exact season/week/type validation, 13-16 game completeness, unique event/team identity, and consumer-side revalidation.",
-      "Team Total remains unavailable; no odds source or synthetic total was introduced."
-    ],
-    "canonical_main_unchanged": true,
-    "merge_authorized": false,
-    "production_deployment_authorized": false,
-    "physical_device_accepted": false,
-    "observed_at": "2026-09-23T18:34:00Z",
-    "package_reextract": {
-      "status": "PASS_17_RUNTIME_FILES_BYTE_EXACT",
-      "archive_identity_semantics": "RUN_ENVIRONMENT_SCOPED_NONCANONICAL",
-      "reviewed_runtime_head_observation": {
-        "head_sha": "46b0f036e575a63849d09f1d2cc07b3b3384dcf6",
-        "artifact_id": 10607243760,
-        "observed_inner_zip_sha256": "3b8c416f0a9830b455815b52c55e912cf7d23c59c59532cb01404b3626c17cd5"
-      },
-      "checkpoint_head_observation": {
-        "head_sha": "436050a0a8bd45564d2c544a94d5592860598353",
-        "artifact_id": 10607044345,
-        "observed_inner_zip_sha256": "2f2e9cce9498db1d9c4bc43c8e5585116ba776c58eb4aaf925577da579184c0b"
-      },
-      "cross_run_runtime_file_bytes_equal": true,
-      "note": "Candidate package/re-extraction gate passed all 17 runtime files byte-exact. Archive/artifact digests remain run/environment-scoped and noncanonical.",
-      "latest_exact_head_observation": {
-        "head_sha": "44401e32c914ba9da41d19add7ff48cc26bd249d",
-        "artifact_id": 10607279135,
-        "workflow_artifact_digest": "sha256:adea13334119e9c0b10f0e00d7d58b6979c6de0af048c4d6650dbe53e94315a5"
-      }
-    },
-    "reviewed_runtime_head_sha": "c18c99edbbe28dbc55f1396f4870e319ed609917",
-    "reviewed_runtime_tree_sha": "afecd5370c9209079ebaa18a3384e57106e595ff",
-    "exact_head_validation_sha": "44401e32c914ba9da41d19add7ff48cc26bd249d"
+    "version": "v11.8.0-rc4.211",
+    "pr": 200,
+    "status": "MERGED_PRODUCTION_BOUNDED_PHYSICAL_ACCEPTED",
+    "head_sha": "e3503a9f5a06e37d7d9795051d0a18eb06caa65e",
+    "merge_commit": "84971e64b89757f2b59e6f4cae7891fd8c372843",
+    "tree_sha": "b93018542ab7402b228b986e627e02aeffcabdc1"
   },
-  "updatedAt": "2026-09-24T09:45:00Z"
+  "updatedAt": "2026-09-26T18:39:41Z"
 }
