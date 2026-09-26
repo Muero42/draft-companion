@@ -134,15 +134,23 @@ must(app.includes('acceptance:null')&&app.includes('result.ourGain>0&&result.opp
 must(app.includes(' Start/Sit v6'),'Start/Sit canonical-slot surface missing');
 must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
 must(app.includes('globale legale Slot-Optimierung'),'PITTI weekly-panel primary invariant missing');
-must(app.includes('Special Teams v2'),'Special Teams v2 quality-floor surface missing');
+must(app.includes("const SPECIAL_TEAMS_W1_BASELINE_EXPIRES_AT=Date.parse('2026-09-08T12:00:00Z')"),'Special Teams Week-1 expiry boundary missing');
+must(app.includes('function historicalSpecialTeamsBaselineAllowed({week,now}={})')&&app.includes("typeof week==='number'&&Number.isInteger(week)&&week===1")&&app.includes('now<=SPECIAL_TEAMS_W1_BASELINE_EXPIRES_AT'),'Special Teams historical baseline temporal guard missing');
+must(app.includes('if(!historicalSpecialTeamsBaselineAllowed({week,now}))'),'Special Teams historical baseline must not be unconditional');
+must(app.includes('Current-week Special Teams evidence is not verified.')&&app.includes('No ADD / TARGET / UPGRADE conclusion is authorized'),'Special Teams in-season fail-closed surface missing');
+must(app.includes("x.weeklyRank=seasonWeeklyMetric(x.p,'weekly_rank',season).value")&&app.includes("'FantasyPros W'+currentWeek:'FantasyPros Weekly'"),'QB current-week rank label contract missing');
 must(app.includes("dropCandidatePolicy:{primary:['Tank Bigsby','Tyjae Spears','Kenneth Gainwell'],protected:['Jadarian Price','Christian Watson','Josh Downs']"),'Mevis drop gate must protect Price/Watson/Downs and compare Bigsby/Spears/Gainwell');
-must(app.includes('Kicker werden ausschließlich hier gegen verfügbare Kicker verglichen; niemals gegen RB/WR/TE.'),'Waiver UI must enforce K-only replacement for roster kicker');
+must(app.includes("find(x=>x?.p?.pos==='K')")&&app.includes('const k=ks.map('),'Waiver comparison must use the roster K and live K candidates only');
 must(app.includes('SEASON_FA_POOL_ZERO_INVALID'),'zero live season FA pool must fail closed');
 must((app.match(/SEASON_FA_POOL_ZERO_INVALID/g)||[]).length>=2,'zero FA fail-closed gate must cover both startup bootstrap and analyze path');
 must(app.includes('FA-POOL NICHT VALIDIERT'),'invalid season FA pool must be visible');
 must(app.includes('kein FA/HOLD-Urteil aus Draft-Verfügbarkeit'),'post-draft FA must never fall back to draft availability');
 
-must(app.includes('filter(x=>x.rb&&x.rb.tier<=4)'),'D/ST quality floor must filter tier 5/6 before ranking');
+must(app.includes('filter(x=>x.rb&&x.rb.tier<=4)'),'valid historical Week-1 D/ST baseline quality floor missing');
+const runtimeFiles=text('tools/runtime-files.mjs');
+must(!runtimeFiles.includes("'dst-k-season-stream.js'")&&!runtimeFiles.includes("'season-evidence-layer.js'"),'retired dynamic Special Teams modules must remain outside runtime manifest');
+for(const file of ['index.html','sw.js'])for(const module of ['dst-k-season-stream.js','season-evidence-layer.js'])must(!text(file).includes(module),file+' must not reactivate '+module);
+must((runtimeFiles.match(/^\s*'[^']+',?$/gm)||[]).length===17,'canonical runtime manifest must remain exactly 17 files');
 
 
 must(app.includes('function applyPlayerQualitySafetyGate('),'Value-Safety gate missing');

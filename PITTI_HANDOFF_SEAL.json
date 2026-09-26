@@ -2,9 +2,9 @@
   "schema": "pitti.handoff-seal.v1",
   "handoff_generation": "20260924T0945Z-v265",
   "created_at": "2026-09-24T09:45:00Z",
-  "status": "PASS",
-  "handoff_ready": true,
-  "second_pass_pass": true,
+  "status": "SUPERSEDED_PENDING_RESEAL",
+  "handoff_ready": false,
+  "second_pass_pass": false,
   "integrity_algorithm": "git_blob_sha1",
   "integrity": {
     ".github/CODEOWNERS": "88de8f04e880884168066c366f51223c8ba3cb01",

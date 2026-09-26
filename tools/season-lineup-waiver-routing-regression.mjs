@@ -1,7 +1,7 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
 const a=fs.readFileSync('app.js','utf8');
 assert(a.includes("['QB','RB','WR','TE'].includes(x.p?.pos)"),'generic FA drop pool must exclude K/DST');
-assert(a.includes("Kicker werden ausschließlich hier gegen verfügbare Kicker verglichen; niemals gegen RB/WR/TE."),'kicker-only waiver comparison contract missing');
+assert(a.includes("find(x=>x?.p?.pos==='K')")&&a.includes('const k=ks.map('),'kicker comparison must select a K roster baseline and live K candidates');
 assert(a.includes("if(s==='FLEX')return ['RB','WR','TE'].includes(p);"),'RB/WR/TE FLEX eligibility missing');
 assert(a.includes("league?.roster_positions"),'canonical Sleeper roster slot source missing');
 assert(a.includes("seasonSlotLabel(slot,x.p.pos)"),'canonical starter slot display missing');
@@ -18,6 +18,20 @@ assert(a.includes("manager_history_prior"),'bounded manager-history waiver prior
 assert(a.includes("manager_profile_name"),'canonical live-roster to manager-profile mapping missing');
 assert(a.includes("function waiverOpponentMarket"),'opponent waiver market model missing');
 assert(a.includes("function renderQbOpportunityBoard"),'QB opportunity market surface missing');
+assert(a.includes("x.weeklyRank=seasonWeeklyMetric(x.p,'weekly_rank',season).value"),'QB opportunity must retain current weekly-rank acquisition');
+assert(a.includes("'FantasyPros W'+currentWeek:'FantasyPros Weekly'"),'QB opportunity label must use current week or a neutral fallback');
+assert(!a.includes("FantasyPros W1 #'+x.week1Rank"),'QB current weekly evidence must not carry a fixed W1 label');
+const qbSource=a.slice(a.indexOf('function renderQbOpportunityBoard(){'),a.indexOf('\nfunction tradeStarterSlots'));
+const contextSource=a.match(/function seasonEvidenceContext\([^\n]+/)[0];
+for(const week of [3,undefined,NaN,0,1.5]){
+  const season={ok:true,current_nfl_week:week},ctx={draftComplete:true,season,seasonRows:[{p:{pos:'QB',name:'Own QB'},seasonStatus:'ACTIVE',r:{rank:10}}],rankedAvailable:[{pos:'QB',name:'Free QB'}]};
+  let metricCalls=0;
+  const render=Function('lastDraftContext','rankFor','seasonWeeklyMetric','seasonAcquisitionDecision','waiverOpponentMarket','esc',contextSource+'\n'+qbSource+';return renderQbOpportunityBoard;')(
+    ctx,()=>({rank:12}),(player,metric,currentSeason)=>{assert.equal(player.name,'Free QB');assert.equal(metric,'weekly_rank');assert.equal(currentSeason,season);metricCalls++;return{value:7};},()=>({action:'HOLD'}),()=>[],String);
+  const html=render();assert.equal(metricCalls,1);
+  assert(html.includes(week===3?'FantasyPros W3 #7':'FantasyPros Weekly #7'),'QB label must reflect current week or neutral fallback');
+  assert(!html.includes('FantasyPros W1'),'QB current-week evidence must not emit a fixed W1 label');
+}
 assert(a.includes("2-Slot-Kosten"),'QB plus future DST two-slot opportunity cost missing');
 assert(a.includes("opportunityPenalty"),'QB waiver opportunity-cost adjustment missing');
 assert(a.includes("marketClear"),'QB waiver competition clearing-price model missing');
