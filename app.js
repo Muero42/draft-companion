@@ -1,6 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
-const APP_VERSION='v11.8.0-rc4.210';
+const APP_VERSION='v11.8.0-rc4.211';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -3107,9 +3107,19 @@ function renderRosterFaAudit(rows,rankedAvailable,draftComplete,opts={render:tru
 
 
 
-function renderSpecialTeamsBoard(){
+const SPECIAL_TEAMS_W1_BASELINE_EXPIRES_AT=Date.parse('2026-09-08T12:00:00Z');
+function historicalSpecialTeamsBaselineAllowed({week,now}={}){
+  return typeof week==='number'&&Number.isInteger(week)&&week===1&&typeof now==='number'&&Number.isFinite(now)&&now<=SPECIAL_TEAMS_W1_BASELINE_EXPIRES_AT;
+}
+function renderSpecialTeamsBoard(now=Date.now()){
   const c=lastDraftContext;if(!c?.draftComplete||!els.waiverList)return'';
   const dst=c.availableDST||[],ks=c.availableK||[];
+  const week=seasonEvidenceContext(c.season).week,validWeek=Number.isInteger(week)&&week>=1;
+  if(!historicalSpecialTeamsBaselineAllowed({week,now})){
+    const rosterK=(c.seasonRows||[]).find(x=>x?.p?.pos==='K')?.p||null;
+    const rosterKState=rosterK?'<div class="notice ok"><b>AKTUELLER KICKER: '+esc(rosterK.name)+'</b> · Live Sleeper roster authority. Kicker werden ausschließlich hier gegen verfügbare Kicker verglichen; niemals gegen RB/WR/TE.</div>':'<div class="notice warn">Kein aktueller Roster-Kicker erkannt.</div>';
+    return '<div class="coach-section-title">WEEK '+(validWeek?week:'?')+' · D/ST + K</div><div class="notice warn"><b>Current-week Special Teams evidence is not verified.</b> Historical Week-1 rankings/projections are not used as current recommendations. Live Sleeper ownership remains authoritative. No ADD / TARGET / UPGRADE conclusion is authorized from historical Week-1 evidence.</div><div class="notice">Live verfügbar: '+dst.length+' D/ST · '+ks.length+' Kicker. Keine Qualitätsreihenfolge ohne verifizierte Current-week Evidence.</div>'+rosterKState;
+  }
   // Current pre-Week-1 waiver priority (RotoBaller, Sep 1 2026), intersected with
   // LIVE Sleeper ownership below. This supersedes the older embedded DST draft board.
   // In a 10-team league, 12+/14+-team labels are context rather than an automatic add.
@@ -3238,12 +3248,13 @@ function seasonActiveDropOrder(){
 }
 function renderQbOpportunityBoard(){
   const ctx=lastDraftContext,season=ctx?.season;if(!ctx?.draftComplete||!season?.ok||!Array.isArray(ctx.rankedAvailable))return'';
+  const currentWeek=seasonEvidenceContext(season).week,weeklyRankLabel=Number.isInteger(currentWeek)&&currentWeek>=1?'FantasyPros W'+currentWeek:'FantasyPros Weekly';
   const ownQbs=(ctx.seasonRows||[]).filter(x=>x?.seasonStatus==='ACTIVE'&&x.p?.pos==='QB');
   if(!ownQbs.length)return'';
   const ownBest=Math.min(...ownQbs.map(x=>Number(x.r?.rank)).filter(Number.isFinite),999);
   const qbs=ctx.rankedAvailable.map(p=>({p,r:rankFor(p.name,p.pos)})).filter(x=>x.p?.pos==='QB'&&x.r&&Number.isFinite(x.r.rank))
     .filter(x=>x.r.rank<=Math.max(18,ownBest+8)).sort((a,b)=>a.r.rank-b.r.rank).slice(0,8);
-  for(const x of qbs)x.week1Rank=seasonWeeklyMetric(x.p,'weekly_rank',season).value;
+  for(const x of qbs)x.weeklyRank=seasonWeeklyMetric(x.p,'weekly_rank',season).value;
   if(!qbs.length)return'';
   const rosterHasDst=(ctx.seasonRows||[]).some(x=>['DEF','DST'].includes(String(x.p?.pos||'').toUpperCase())&&x.seasonStatus==='ACTIVE');
   const rows=qbs.map(x=>{
@@ -3252,13 +3263,13 @@ function renderQbOpportunityBoard(){
     const market=waiverOpponentMarket(x,ctx.players),sameBye=ownQbs.some(q=>q.p?.bye&&x.p?.bye&&Number(q.p.bye)===Number(x.p.bye));
     const maxComp=Math.max(0,...market.map(m=>m.bid_high_pct||0)),marketClear=Math.min(8,Math.max(1,maxComp+1));
     const secondDropProtected=!rosterHasDst&&drop2&&Number(drop2.capitalScore)<2.5;
-    const noVerifiedWeeklyEdge=!structural||!Number.isFinite(x.week1Rank);
+    const noVerifiedWeeklyEdge=!structural||!Number.isFinite(x.weeklyRank);
     const opportunityPenalty=(!rosterHasDst?1:0)+(sameBye?1:0)+(secondDropProtected?1:0)+(noVerifiedWeeklyEdge?2:0);
     const ourBandHigh=Math.max(1,marketClear-opportunityPenalty),ourBandLow=Math.max(0,ourBandHigh-2);
     const decision=noVerifiedWeeklyEdge?'WATCH — WEEKLY EDGE UNVERIFIED':ourBandHigh>=maxComp?'BID WINDOW':'PASS ABOVE CAP';
     const opponents=market.slice(0,3).map(m=>`${esc(m.manager_name)}: ${m.position_players.length?esc(m.position_players.join('/')):'kein aktiver QB'} · ${m.evaluation_status==='VERIFIED'?`Claim ~${m.claim_probability}% · ${m.bid_low_pct}–${m.bid_high_pct}% FAAB`:'Bedarf nicht verifizierbar'} · Restbudget ${Number.isFinite(m.faab_remaining)?m.faab_remaining:'–'}`).join('<br>');
     const cost=structural?` · ADD ${esc(x.p.name)} / DROP ${esc(drop1.p.name)}${drop2?' · 2-Slot-Kosten: spätere D/ST zusätzlich '+esc(drop2.p.name):''}`:' · HOLD: legaler Replacement und künftige Kapazität nicht bestätigt';
-    return `<div class="coach-row"><div><b>${esc(x.p.name)}</b><div class="tiny">QB · Panel ${x.r.rank.toFixed(1)}${Number.isFinite(x.week1Rank)?' · FantasyPros W1 #'+x.week1Rank:''}${sameBye?' · gleiche Bye wie aktueller QB':''}${cost}</div><div class="tiny">Stärkste Konkurrenz: ${opponents||'keine belastbare Konkurrenz aus Live-Kadern'}</div></div><div><b>${ourBandLow}–${ourBandHigh}%</b><div class="tiny">${decision} · Markt-Clear ~${marketClear}% · Opportunity-Cost-Abzug ${opportunityPenalty} · kein Autoclaim</div></div></div>`;
+    return `<div class="coach-row"><div><b>${esc(x.p.name)}</b><div class="tiny">QB · Panel ${x.r.rank.toFixed(1)}${Number.isFinite(x.weeklyRank)?' · '+weeklyRankLabel+' #'+x.weeklyRank:''}${sameBye?' · gleiche Bye wie aktueller QB':''}${cost}</div><div class="tiny">Stärkste Konkurrenz: ${opponents||'keine belastbare Konkurrenz aus Live-Kadern'}</div></div><div><b>${ourBandLow}–${ourBandHigh}%</b><div class="tiny">${decision} · Markt-Clear ~${marketClear}% · Opportunity-Cost-Abzug ${opportunityPenalty} · kein Autoclaim</div></div></div>`;
   }).join('');
   return '<div class="coach-section-title">QB-OPTIONEN · LIVE WAIVER-KONKURRENZ</div><div class="notice">Alle neun gegnerischen Sleeper-Kader + verbleibendes FAAB werden beim Season-Sync berücksichtigt. Aktuelle QB-Situation dominiert; bereits beobachtete 2026-Waiver-Gebote und historische QB-Rosterneigung wirken nur als begrenzte Priors. Gebotsbänder sind Schätzungen, keine Gewissheit.</div>'+rows;
 }
