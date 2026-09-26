@@ -12,11 +12,22 @@ const sealed=structuredClone(pending);Object.assign(sealed['PITTI_HANDOFF_SEAL.j
 // Canonical mutations use the sealed fixture under normal mode, never the caller's environment.
 const b=sealed;assert.deepEqual(validateAuthority(b),[],'baseline v266 authority must validate');const cases=[['generation',d=>d['PITTI_CURRENT_STATE.json'].handoff_generation='old'],['source',d=>d['PITTI_CURRENT_STATE.json'].authority.source_candidate='v11.8.0-rc4.207'],['merge',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4211_pr200_source_production.merge_commit='a'.repeat(40)],['deployment',d=>d['PITTI_CURRENT_STATE.json'].runtime.production_deployment.deployment_id='wrong'],['physical',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.acceptance='FAIL'],['panel',d=>d['PITTI_CURRENT_STATE.json'].runtime.independent_evidence_lane_status.pitti_panel='BROAD_ECR'],['game',d=>d['PITTI_CURRENT_STATE.json'].runtime.independent_evidence_lane_status.game_context='UNAVAILABLE'],['team total',d=>d['PITTI_CURRENT_STATE.json'].runtime.independent_evidence_lane_status.team_total='AVAILABLE'],['command gate',d=>d['PITTI_COMMAND_CONTRACTS.json'].currentGate='DONE'],['lock version',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.appVersion='v11.8.0-rc4.207'],['lock deployment',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.productionDeployment.deploymentId=null],['seal',d=>d['PITTI_HANDOFF_SEAL.json'].exact_gate='DONE']];for(const[n,f]of cases){const d=structuredClone(b);f(d);assert(validateAuthority(d).length,`must reject ${n}`)}
 for(const mutate of [
+ d=>d['PITTI_CURRENT_STATE.json'].authority.independent_evidence_lane_repair.broad_evidence_reobserved=true,
  d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.broad_evidence_reobserved=true,
  d=>d['PITTI_CURRENT_STATE.json'].runtime.last_broad_physical_evidence_baseline.version='v11.8.0-rc4.211',
  d=>d['PITTI_CURRENT_STATE.json'].runtime.last_broad_physical_evidence_baseline.lane_status.pitti_panel='UNAVAILABLE',
  d=>d['PITTI_CURRENT_STATE.json'].runtime.independent_evidence_lane_status.broad_expert_ranks='AVAILABLE_PHYSICAL_QB_RB_WR_TE'
 ]){const d=structuredClone(b);mutate(d);assert(validateAuthority(d).length,'bounded physical/history corruption must fail');}
+const historicalRepair=b['PITTI_CURRENT_STATE.json'].historical_superseded.rc4206_rc4207_independent_evidence_lane_repair;
+assert.equal(historicalRepair.status,'RC4.206_PRODUCTION_DEVICE_REJECTED_RC4.207_BOUNDED_REPAIR_LOCAL');
+for(const mode of ['0','1']){
+  process.env.PITTI_CANDIDATE_PREFLIGHT=mode;
+  for(const key of ['status','source_merge','broad_expert_ranks','pitti_panel','canonical_game_context','weather_opponent']){
+    const d=structuredClone(mode==='1'?pending:b);d['PITTI_CURRENT_STATE.json'].authority.independent_evidence_lane_repair[key]=historicalRepair[key];
+    assert(validateAuthority(d).some(error=>error.startsWith('CURRENT.repairAlias:')),`stale active alias ${key} must fail in mode ${mode}`);
+  }
+}
+process.env.PITTI_CANDIDATE_PREFLIGHT='0';
 const h='a'.repeat(40),ev={fresh:true,repo:'Muero42/draft-companion',canonicalBranch:'main',canonicalHead:h,head:h,clean:true,branch:'main',prState:'MERGED',containingCommitVerified:true,ciHead:h,authorizedWorkPackage:true,checks:['project_guardrails','release_contract_v2','candidate_package'].map(name=>({name,result:'PASS'}))};assert.deepEqual(validateContinuationEvidence(ev),[]);for(const f of[x=>x.fresh=false,x=>x.clean=false,x=>x.containingCommitVerified=false,x=>x.ciHead='b'.repeat(40),x=>x.authorizedWorkPackage=false,x=>x.checks.push({name:'project_guardrails',result:'PASS'})]){const x=structuredClone(ev);f(x);assert(validateContinuationEvidence(x).length)}console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v266 mutations=${cases.length} external=6`);
 } finally {
   if(candidateEnv===undefined)delete process.env.PITTI_CANDIDATE_PREFLIGHT;else process.env.PITTI_CANDIDATE_PREFLIGHT=candidateEnv;

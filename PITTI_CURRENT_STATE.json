@@ -611,13 +611,16 @@
       "team_total": "UNAVAILABLE_FAIL_CLOSED"
     },
     "independent_evidence_lane_repair": {
-      "status": "RC4.206_PRODUCTION_DEVICE_REJECTED_RC4.207_BOUNDED_REPAIR_LOCAL",
-      "broad_expert_ranks": "AVAILABLE_PREEXISTING",
-      "pitti_panel": "RC4.206_UNAVAILABLE_RC4.207_CURRENT_CONSENSUS_IDENTITY_REPAIR_NOT_DEPLOYED",
-      "canonical_game_context": "RC4.206_UNAVAILABLE_UPSTREAM_403_RC4.207_OFFICIAL_CDN_FALLBACK_NOT_DEPLOYED",
+      "status": "RC4211_PRODUCTION_BOUNDED_PHYSICAL_ACCEPTED",
+      "version": "v11.8.0-rc4.211",
+      "last_broad_physical_evidence_baseline": "v11.8.0-rc4.210",
+      "broad_evidence_reobserved": false,
+      "broad_expert_ranks": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
+      "pitti_panel": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
+      "canonical_game_context": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
-      "weather_opponent": "DEPENDENT_ON_PHYSICAL_GAME_CONTEXT_VERIFICATION",
-      "source_merge": "d5954d66877df877f950a4a41f32baad59a66748"
+      "weather_opponent": "LAST_BROAD_PASS_RC4210; OUTDOOR_WEATHER_FAIL_CLOSED_WITHOUT_FRESH_FORECAST",
+      "source_merge": "84971e64b89757f2b59e6f4cae7891fd8c372843"
     },
     "rc4210_pr198_source_production": {
       "checkpoint": "v265",
@@ -1148,6 +1151,15 @@
     "verified_starting_branch_head": "c48bc553555e0ae758f3cb738a9e6e8c729ad7c1"
   },
   "historical_superseded": {
+    "rc4206_rc4207_independent_evidence_lane_repair": {
+      "status": "RC4.206_PRODUCTION_DEVICE_REJECTED_RC4.207_BOUNDED_REPAIR_LOCAL",
+      "broad_expert_ranks": "AVAILABLE_PREEXISTING",
+      "pitti_panel": "RC4.206_UNAVAILABLE_RC4.207_CURRENT_CONSENSUS_IDENTITY_REPAIR_NOT_DEPLOYED",
+      "canonical_game_context": "RC4.206_UNAVAILABLE_UPSTREAM_403_RC4.207_OFFICIAL_CDN_FALLBACK_NOT_DEPLOYED",
+      "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
+      "weather_opponent": "DEPENDENT_ON_PHYSICAL_GAME_CONTEXT_VERIFICATION",
+      "source_merge": "d5954d66877df877f950a4a41f32baad59a66748"
+    },
     "classification": "HISTORICAL/SUPERSEDED; never current authority or executable queue",
     "v233_premerge": {
       "status": "V233_SEALED_PENDING_STRICT_CI",
