@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260927T1754Z-v268",
-  "updated_at": "2026-09-27T17:54:00Z",
+  "handoff_generation": "20260927T1930Z-v269",
+  "updated_at": "2026-09-27T19:30:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -9,7 +9,7 @@
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
     "source_candidate": "v11.8.0-rc4.211",
     "git_identity_rule": "Canonical main identity and candidate containment are freshly verified externally; no commit or mutable PR state is immutable checkpoint authority.",
-    "reconciled_base_main": "2f15bba5dd78e8b4993631c60003b6ae59a930cd",
+    "reconciled_base_main": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
     "postmerge": {
       "checkpoint": "v233",
       "pr": 121,
@@ -611,7 +611,7 @@
       "team_total": "UNAVAILABLE_FAIL_CLOSED"
     },
     "independent_evidence_lane_repair": {
-      "status": "TRADE_OPPONENT_NEED_RATIONALE_MISMATCH_BOUNDED_REPAIR",
+      "status": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING",
       "version": "v11.8.0-rc4.211",
       "last_broad_physical_evidence_baseline": "v11.8.0-rc4.210",
       "broad_evidence_reobserved": false,
@@ -620,7 +620,7 @@
       "canonical_game_context": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
       "weather_opponent": "LAST_BROAD_PASS_RC4210; OUTDOOR_WEATHER_FAIL_CLOSED_WITHOUT_FRESH_FORECAST",
-      "source_merge": "2f15bba5dd78e8b4993631c60003b6ae59a930cd"
+      "source_merge": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1"
     },
     "rc4210_pr198_source_production": {
       "checkpoint": "v265",
@@ -640,47 +640,44 @@
       "postmerge_ci": "Authority-coupled jobs failed on stale v263 runtime version lock metadata; Cloudflare Pages Production deployment succeeded. v265 is the checkpoint-only reconciliation.",
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
     },
-    "rc4211_pr205_source_production": {
-      "checkpoint": "v268",
+    "rc4211_pr207_source_production": {
+      "checkpoint": "v269",
       "version": "v11.8.0-rc4.211",
-      "pr": 205,
-      "reviewed_head": "dc00ef71688f74ba740ec227330a19f7d7e71023",
-      "merge_commit": "2f15bba5dd78e8b4993631c60003b6ae59a930cd",
-      "merged_tree": "8825347883a2eee0fd53f7d45514580b246de08e",
-      "reviewed_tree": "8825347883a2eee0fd53f7d45514580b246de08e",
-      "direct_parents": [
-        "afab233cbb6057882a6288fe9f59ad666f89d0c7",
-        "dc00ef71688f74ba740ec227330a19f7d7e71023"
-      ],
-      "production_deployment_id": "cfc7aea7-031d-45e8-97ae-2a50fc949142",
-      "cloudflare_check_run_id": 108670306726,
+      "pr": 207,
+      "reviewed_head": "e4fa9077fa130ee9129ed8ef532dfda503270f97",
+      "merge_commit": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
+      "merged_tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
+      "reviewed_tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
+      "direct_parent": "445833a6d60b27bb955d190e7fab2e0111503aef",
+      "production_deployment_id": "6890109e-fbcc-44b7-81c3-26835b35b208",
+      "cloudflare_check_run_id": 108690436763,
       "production_deployment_proven": true,
-      "physical_acceptance_proven": true,
-      "physical_classification": "RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER",
-      "physical_scope": "POSTMERGE_PRODUCTION_PHONE_CANARY: W3; Sleeper Live-State <1 Min.; FantasyPros Weekly Projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo Trade Values 251/251 mapped; Trade Offer Board consumed current values and rendered a concrete bilateral offer; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted by this canary.",
+      "physical_acceptance_proven": false,
+      "physical_classification": "PR207_EXACT_PRODUCTION_TREE_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING",
+      "physical_scope": "NONE_FOR_CURRENT_TREE; historical PR205 physical evidence on 8825347883a2eee0fd53f7d45514580b246de08e is not inherited after the app.js rationale change",
       "premerge_ci": "PASS",
       "postmerge_ci": "PASS",
-      "evidence_source": "LIVE_GITHUB_VERIFIED_POSTMERGE_DEPLOYMENT; USER_SUPPLIED_PHYSICAL_SCREENSHOTS",
-      "runtime_delta": "BOONE_WEEK_DISCOVERY_REPAIR_ONLY",
+      "evidence_source": "LIVE_GITHUB_VERIFIED_EXACT_HEAD_AND_POSTMERGE",
+      "runtime_delta": "TRADE_OPPONENT_NEED_RATIONALE_UI_ONLY",
       "decision_semantic_drift": false,
-      "parity_decisions": 16,
-      "boone_current_week_mapping": "251/251",
+      "app_blob": "c065c7bbf1877bfb7931045bc68dc99bf8aa306b",
+      "focused_regression_blob": "2ab7c89b530b723209e39c0ffb49b7868428c5ef",
+      "repair_semantics": "Unsupported positional need claim removed; neutral Roster-Fit wording only because generic oppNeeds is synthetic/unverified for the concrete GIVE package.",
       "peaked_gate": "PEAKED_SOURCE_CONTRACT_NOT_VERIFIED",
-      "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
-      "trade_rationale_finding": "TRADE_OPPONENT_NEED_RATIONALE_MISMATCH: the visible opponent rationale can name the highest generic opponent need (oppNeeds[0]) instead of the position actually addressed by the offered GIVE package; observed as 'Bedarf RB wird adressiert' for GIVE George Pickens (WR) / GET Brock Bowers (TE). Trade legality, Boone values, fairness and bilateral lineup-gain checks remain separately computed."
+      "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.211",
-    "season_candidate": "v11.8.0-rc4.211 remains the 17-file runtime. PR #205 reviewed head dc00ef71688f74ba740ec227330a19f7d7e71023, merged as main 2f15bba5dd78e8b4993631c60003b6ae59a930cd, identical reviewed/merged tree 8825347883a2eee0fd53f7d45514580b246de08e; Cloudflare Pages deployment cfc7aea7-031d-45e8-97ae-2a50fc949142 / check 108670306726 SUCCESS for exact main. Post-deploy phone canary at 2026-09-27 19:54 CEST physically showed Week 3 live Sleeper state, weekly projections AVAILABLE for QB/RB/WR/TE, Justin-Boone/Yahoo trade values 251/251 mapped, and a concrete Trade Offer Board consumer using current values; no trade is sent automatically. Classification: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER. Physical scope is bounded: Broad ECR and selected PITTI Panel remained unavailable/fail-closed in the observation; full game-context was not reaccepted; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Separate open finding: TRADE_OPPONENT_NEED_RATIONALE_MISMATCH: the visible opponent rationale can name the highest generic opponent need (oppNeeds[0]) instead of the position actually addressed by the offered GIVE package; observed as 'Bedarf RB wird adressiert' for GIVE George Pickens (WR) / GET Brock Bowers (TE). Trade legality, Boone values, fairness and bilateral lineup-gain checks remain separately computed. Next gate: TRADE_OPPONENT_NEED_RATIONALE_MISMATCH_BOUNDED_REPAIR.",
-    "candidate_branch": "main via merged PR #205",
-    "android_acceptance_pending": false,
+    "season_candidate": "v11.8.0-rc4.211 remains the 17-file runtime. PR #207 reviewed head e4fa9077fa130ee9129ed8ef532dfda503270f97, merged as main 4f503ecd9bdb2efde6750583ff8dfc92dffafcb1, identical reviewed/merged tree e496f5b8190b48c7a475bdba768b968575d40ca2; Cloudflare Pages deployment 6890109e-fbcc-44b7-81c3-26835b35b208 / check 108690436763 SUCCESS for exact main. The bounded runtime delta is trade-rationale presentation only: the unverified positional claim derived from t.oppNeeds[0] was replaced by neutral truthful \"Roster-Fit verbessert\"; app blob c065c7bbf1877bfb7931045bc68dc99bf8aa306b, focused regression blob 2ab7c89b530b723209e39c0ffb49b7868428c5ef. Codex focused trade regressions PASS, full strict suite 240/240 PASS, exact-head PR CI PASS, and postmerge CI PASS. Boone source/values, seasonTradeDecision, seasonProjectionLineup, bilateral gain, capacity, fairness, conservative acceptance and no-auto-send semantics are unchanged. Current exact-tree Production physical canary is PENDING. Historical PR205 Boone physical PASS remains historical only on tree 8825347883a2eee0fd53f7d45514580b246de08e and is not inherited by this changed app.js tree. Broad ECR, selected PITTI Panel and full game-context are not reaccepted here; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Next gate: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING.",
+    "candidate_branch": "main via merged PR #207",
+    "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.211",
     "ci": {
-      "status": "PR205_PREMERGE_AND_POSTMERGE_PASS",
-      "validated_code_head": "dc00ef71688f74ba740ec227330a19f7d7e71023",
+      "status": "PR207_PREMERGE_AND_POSTMERGE_PASS",
+      "validated_code_head": "e4fa9077fa130ee9129ed8ef532dfda503270f97",
       "current_exact_main_head_ci": "PASS",
-      "validated_main": "2f15bba5dd78e8b4993631c60003b6ae59a930cd",
+      "validated_main": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
       "evidence_source": "LIVE_GITHUB_VERIFIED_THIS_RECONCILIATION",
       "candidate_package": "PASS",
       "release_contract_v2": "PASS",
@@ -690,12 +687,12 @@
       "draft_critical": "ALL_PASS"
     },
     "android_accepted": "v11.8.0-rc4.211",
-    "preview_candidate": "PR205 reviewed tree equals merged tree; Production Boone physical canary PASS",
-    "android_authority": "RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on current Production tree 8825347883a2eee0fd53f7d45514580b246de08e; scope bounded to Boone/current-week trade consumer plus observed live roster and weekly projections. Broad lanes are not implicitly reaccepted.",
+    "preview_candidate": "PR207 reviewed tree equals merged tree; Production deployed; physical trade-rationale canary pending",
+    "android_authority": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "2f15bba5dd78e8b4993631c60003b6ae59a930cd",
+    "deployed_pages_head": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
     "installed_android": "v11.8.0-rc4.210",
     "installation_observation_scope": "Historical last installed-version observation only; rc4.211 was physically inspected on Preview. A new installation was not supplied or performed. Current source/Production is rc4.211.",
     "latest_android_observed": "v11.8.0-rc4.211",
@@ -715,11 +712,14 @@
       "trade_consumer_summary": "Concrete Pickens-for-Bowers offer rendered: PITTI +1.6 projected lineup points; opponent +2.4; market GIVE 40.0 / GET 39.0; 2.5% variance; acceptance heuristic EHER NIEDRIG 27%; no automatic send.",
       "broad_evidence_reobserved": false,
       "last_broad_physical_baseline": "v11.8.0-rc4.210",
-      "evidence_scope": "CURRENT_PR205_PRODUCTION_BOUNDED_PHYSICAL_ACCEPTANCE",
-      "trade_rationale_finding": "TRADE_OPPONENT_NEED_RATIONALE_MISMATCH: the visible opponent rationale can name the highest generic opponent need (oppNeeds[0]) instead of the position actually addressed by the offered GIVE package; observed as 'Bedarf RB wird adressiert' for GIVE George Pickens (WR) / GET Brock Bowers (TE). Trade legality, Boone values, fairness and bilateral lineup-gain checks remain separately computed."
+      "evidence_scope": "HISTORICAL_PR205_TREE_ONLY_NOT_CURRENT_PRODUCTION_ACCEPTANCE",
+      "trade_rationale_finding": "TRADE_OPPONENT_NEED_RATIONALE_MISMATCH: the visible opponent rationale can name the highest generic opponent need (oppNeeds[0]) instead of the position actually addressed by the offered GIVE package; observed as 'Bedarf RB wird adressiert' for GIVE George Pickens (WR) / GET Brock Bowers (TE). Trade legality, Boone values, fairness and bilateral lineup-gain checks remain separately computed.",
+      "current_tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
+      "current_tree_acceptance": "PENDING",
+      "current_tree_classification": "PR207_EXACT_PRODUCTION_TREE_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING"
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.211",
-    "source_candidate_status": "SOURCE_PRODUCTION_DEPLOYED_CI_PASS_BOUNDED_PHYSICAL_ACCEPTED",
+    "source_candidate_status": "SOURCE_PRODUCTION_DEPLOYED_CI_PASS_PHYSICAL_PENDING",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -789,23 +789,23 @@
       "source_scope": "PR203_REVIEWED_TREE_EQUALS_MERGED_PRODUCTION_TREE",
       "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_NONCANONICAL"
     },
-    "deployment_parity": "PR205_REVIEWED_TREE_EQUALS_MERGED_TREE; EXACT_MAIN_CLOUDFLARE_DEPLOYMENT_SUCCESS; BOUNDED_PRODUCTION_PHONE_CANARY_PASS",
+    "deployment_parity": "PR207_REVIEWED_TREE_EQUALS_MERGED_TREE; EXACT_MAIN_CLOUDFLARE_DEPLOYMENT_SUCCESS; PHYSICAL_CANARY_PENDING",
     "deployed_production_version": "v11.8.0-rc4.211",
     "production_deployment": {
       "version": "v11.8.0-rc4.211",
-      "source_commit": "2f15bba5dd78e8b4993631c60003b6ae59a930cd",
-      "tree": "8825347883a2eee0fd53f7d45514580b246de08e",
-      "status": "VERIFIED_SUCCESS_BOUNDED_PHYSICAL_ACCEPTED",
+      "source_commit": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
+      "tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
+      "status": "VERIFIED_SUCCESS_PHYSICAL_PENDING",
       "branch": "main",
-      "deployment_id": "cfc7aea7-031d-45e8-97ae-2a50fc949142",
-      "cloudflare_check_run_id": 108670306726,
-      "deployment_check_id": "cfc7aea7-031d-45e8-97ae-2a50fc949142",
-      "device_acceptance_proven": true,
-      "device_acceptance_scope": "POSTMERGE_PRODUCTION_PHONE_CANARY: W3; Sleeper Live-State <1 Min.; FantasyPros Weekly Projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo Trade Values 251/251 mapped; Trade Offer Board consumed current values and rendered a concrete bilateral offer; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted by this canary.",
-      "physical_classification": "RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER",
-      "last_device_accepted_control": "v11.8.0-rc4.211",
+      "deployment_id": "6890109e-fbcc-44b7-81c3-26835b35b208",
+      "cloudflare_check_run_id": 108690436763,
+      "deployment_check_id": "6890109e-fbcc-44b7-81c3-26835b35b208",
+      "device_acceptance_proven": false,
+      "device_acceptance_scope": "NONE_FOR_CURRENT_TREE",
+      "physical_classification": "PR207_EXACT_PRODUCTION_TREE_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING",
+      "last_device_accepted_control": "v11.8.0-rc4.211 HISTORICAL_PR205_TREE_ONLY",
       "last_broad_physical_baseline": "v11.8.0-rc4.210",
-      "evidence_source": "LIVE_GITHUB_DEPLOYMENT_AND_USER_SUPPLIED_PHONE_CANARY"
+      "evidence_source": "LIVE_GITHUB_EXACT_MAIN_DEPLOYMENT"
     },
     "independent_evidence_lane_status": {
       "broad_expert_ranks": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
@@ -819,7 +819,7 @@
     },
     "mainGhPagesParity": false,
     "deployedPagesAppByteParityWithMain": false,
-    "latestAndroidFunctionalVerified": "RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on current tree 8825347883a2eee0fd53f7d45514580b246de08e; bounded scope only.",
+    "latestAndroidFunctionalVerified": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
     "last_broad_physical_evidence_baseline": {
       "status": "LAST_BROAD_PHYSICAL_EVIDENCE_BASELINE",
       "version": "v11.8.0-rc4.210",
@@ -868,13 +868,12 @@
       }
     },
     "current_physical_acceptance": {
-      "tree": "8825347883a2eee0fd53f7d45514580b246de08e",
-      "acceptance": "PASS",
-      "classification": "RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER",
-      "proven": true,
-      "scope": "POSTMERGE_PRODUCTION_PHONE_CANARY: W3; Sleeper Live-State <1 Min.; FantasyPros Weekly Projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo Trade Values 251/251 mapped; Trade Offer Board consumed current values and rendered a concrete bilateral offer; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted by this canary."
+      "tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
+      "acceptance": "PENDING",
+      "classification": "PR207_EXACT_PRODUCTION_TREE_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING",
+      "proven": false
     },
-    "accepted_android_scope": "RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER; POSTMERGE_PRODUCTION_PHONE_CANARY: W3; Sleeper Live-State <1 Min.; FantasyPros Weekly Projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo Trade Values 251/251 mapped; Trade Offer Board consumed current values and rendered a concrete bilateral offer; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted by this canary."
+    "accepted_android_scope": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary."
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -913,9 +912,8 @@
     "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
-    "status": "RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER_RECONCILED_WITH_OPEN_TRADE_RATIONALE_FINDING",
-    "nextGate": "TRADE_OPPONENT_NEED_RATIONALE_MISMATCH_BOUNDED_REPAIR",
-    "finding": "TRADE_OPPONENT_NEED_RATIONALE_MISMATCH: the visible opponent rationale can name the highest generic opponent need (oppNeeds[0]) instead of the position actually addressed by the offered GIVE package; observed as 'Bedarf RB wird adressiert' for GIVE George Pickens (WR) / GET Brock Bowers (TE). Trade legality, Boone values, fairness and bilateral lineup-gain checks remain separately computed."
+    "status": "PR207_SOURCE_PRODUCTION_CI_PASS_PHYSICAL_CANARY_PENDING_RECONCILED",
+    "nextGate": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -934,7 +932,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "v11.8.0-rc4.211 remains the 17-file runtime. PR #205 reviewed head dc00ef71688f74ba740ec227330a19f7d7e71023, merged as main 2f15bba5dd78e8b4993631c60003b6ae59a930cd, identical reviewed/merged tree 8825347883a2eee0fd53f7d45514580b246de08e; Cloudflare Pages deployment cfc7aea7-031d-45e8-97ae-2a50fc949142 / check 108670306726 SUCCESS for exact main. Post-deploy phone canary at 2026-09-27 19:54 CEST physically showed Week 3 live Sleeper state, weekly projections AVAILABLE for QB/RB/WR/TE, Justin-Boone/Yahoo trade values 251/251 mapped, and a concrete Trade Offer Board consumer using current values; no trade is sent automatically. Classification: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER. Physical scope is bounded: Broad ECR and selected PITTI Panel remained unavailable/fail-closed in the observation; full game-context was not reaccepted; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Separate open finding: TRADE_OPPONENT_NEED_RATIONALE_MISMATCH: the visible opponent rationale can name the highest generic opponent need (oppNeeds[0]) instead of the position actually addressed by the offered GIVE package; observed as 'Bedarf RB wird adressiert' for GIVE George Pickens (WR) / GET Brock Bowers (TE). Trade legality, Boone values, fairness and bilateral lineup-gain checks remain separately computed. Next gate: TRADE_OPPONENT_NEED_RATIONALE_MISMATCH_BOUNDED_REPAIR.",
+  "source_authority": "v11.8.0-rc4.211 remains the 17-file runtime. PR #207 reviewed head e4fa9077fa130ee9129ed8ef532dfda503270f97, merged as main 4f503ecd9bdb2efde6750583ff8dfc92dffafcb1, identical reviewed/merged tree e496f5b8190b48c7a475bdba768b968575d40ca2; Cloudflare Pages deployment 6890109e-fbcc-44b7-81c3-26835b35b208 / check 108690436763 SUCCESS for exact main. The bounded runtime delta is trade-rationale presentation only: the unverified positional claim derived from t.oppNeeds[0] was replaced by neutral truthful \"Roster-Fit verbessert\"; app blob c065c7bbf1877bfb7931045bc68dc99bf8aa306b, focused regression blob 2ab7c89b530b723209e39c0ffb49b7868428c5ef. Codex focused trade regressions PASS, full strict suite 240/240 PASS, exact-head PR CI PASS, and postmerge CI PASS. Boone source/values, seasonTradeDecision, seasonProjectionLineup, bilateral gain, capacity, fairness, conservative acceptance and no-auto-send semantics are unchanged. Current exact-tree Production physical canary is PENDING. Historical PR205 Boone physical PASS remains historical only on tree 8825347883a2eee0fd53f7d45514580b246de08e and is not inherited by this changed app.js tree. Broad ECR, selected PITTI Panel and full game-context are not reaccepted here; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Next gate: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -969,9 +967,20 @@
     "status": "WAITING_EXTERNAL",
     "active": [],
     "ready": [],
-    "waiting_external": [],
+    "waiting_external": [
+      {
+        "id": "pr207-production-trade-rationale-physical-canary",
+        "gate": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING",
+        "reason": "Current exact Production tree requires one bounded phone/PWA observation of the repaired trade rationale."
+      }
+    ],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "pr207-trade-rationale-source-production-v269",
+        "result": "v11.8.0-rc4.211 remains the 17-file runtime. PR #207 reviewed head e4fa9077fa130ee9129ed8ef532dfda503270f97, merged as main 4f503ecd9bdb2efde6750583ff8dfc92dffafcb1, identical reviewed/merged tree e496f5b8190b48c7a475bdba768b968575d40ca2; Cloudflare Pages deployment 6890109e-fbcc-44b7-81c3-26835b35b208 / check 108690436763 SUCCESS for exact main. The bounded runtime delta is trade-rationale presentation only: the unverified positional claim derived from t.oppNeeds[0] was replaced by neutral truthful \"Roster-Fit verbessert\"; app blob c065c7bbf1877bfb7931045bc68dc99bf8aa306b, focused regression blob 2ab7c89b530b723209e39c0ffb49b7868428c5ef. Codex focused trade regressions PASS, full strict suite 240/240 PASS, exact-head PR CI PASS, and postmerge CI PASS. Boone source/values, seasonTradeDecision, seasonProjectionLineup, bilateral gain, capacity, fairness, conservative acceptance and no-auto-send semantics are unchanged. Current exact-tree Production physical canary is PENDING. Historical PR205 Boone physical PASS remains historical only on tree 8825347883a2eee0fd53f7d45514580b246de08e and is not inherited by this changed app.js tree. Broad ECR, selected PITTI Panel and full game-context are not reaccepted here; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Next gate: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING.",
+        "at": "2026-09-27T19:30:00Z"
+      },
       {
         "id": "pr205-production-boone-physical-v268",
         "result": "v11.8.0-rc4.211 remains the 17-file runtime. PR #205 reviewed head dc00ef71688f74ba740ec227330a19f7d7e71023, merged as main 2f15bba5dd78e8b4993631c60003b6ae59a930cd, identical reviewed/merged tree 8825347883a2eee0fd53f7d45514580b246de08e; Cloudflare Pages deployment cfc7aea7-031d-45e8-97ae-2a50fc949142 / check 108670306726 SUCCESS for exact main. Post-deploy phone canary at 2026-09-27 19:54 CEST physically showed Week 3 live Sleeper state, weekly projections AVAILABLE for QB/RB/WR/TE, Justin-Boone/Yahoo trade values 251/251 mapped, and a concrete Trade Offer Board consumer using current values; no trade is sent automatically. Classification: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER. Physical scope is bounded: Broad ECR and selected PITTI Panel remained unavailable/fail-closed in the observation; full game-context was not reaccepted; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Separate open finding: TRADE_OPPONENT_NEED_RATIONALE_MISMATCH: the visible opponent rationale can name the highest generic opponent need (oppNeeds[0]) instead of the position actually addressed by the offered GIVE package; observed as 'Bedarf RB wird adressiert' for GIVE George Pickens (WR) / GET Brock Bowers (TE). Trade legality, Boone values, fairness and bilateral lineup-gain checks remain separately computed. Next gate: TRADE_OPPONENT_NEED_RATIONALE_MISMATCH_BOUNDED_REPAIR.",
@@ -1153,26 +1162,26 @@
     ],
     "stop_evaluation": {
       "allowed": true,
-      "code": "PROJECT_MILESTONE_REACHED",
-      "reason": "Authorized local authority reconciliation only; external publication requires a separate work package."
+      "code": "USER_ACTION_REQUIRED",
+      "reason": "One bounded Production phone/PWA canary is required; no further autonomous repository work is safe before that observation."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260927T1754Z-v268",
+    "generation": "20260927T1930Z-v269",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "v11.8.0-rc4.211 remains the 17-file runtime. PR #205 reviewed head dc00ef71688f74ba740ec227330a19f7d7e71023, merged as main 2f15bba5dd78e8b4993631c60003b6ae59a930cd, identical reviewed/merged tree 8825347883a2eee0fd53f7d45514580b246de08e; Cloudflare Pages deployment cfc7aea7-031d-45e8-97ae-2a50fc949142 / check 108670306726 SUCCESS for exact main. Post-deploy phone canary at 2026-09-27 19:54 CEST physically showed Week 3 live Sleeper state, weekly projections AVAILABLE for QB/RB/WR/TE, Justin-Boone/Yahoo trade values 251/251 mapped, and a concrete Trade Offer Board consumer using current values; no trade is sent automatically. Classification: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER. Physical scope is bounded: Broad ECR and selected PITTI Panel remained unavailable/fail-closed in the observation; full game-context was not reaccepted; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Separate open finding: TRADE_OPPONENT_NEED_RATIONALE_MISMATCH: the visible opponent rationale can name the highest generic opponent need (oppNeeds[0]) instead of the position actually addressed by the offered GIVE package; observed as 'Bedarf RB wird adressiert' for GIVE George Pickens (WR) / GET Brock Bowers (TE). Trade legality, Boone values, fairness and bilateral lineup-gain checks remain separately computed. Next gate: TRADE_OPPONENT_NEED_RATIONALE_MISMATCH_BOUNDED_REPAIR.",
+    "resume": "v11.8.0-rc4.211 remains the 17-file runtime. PR #207 reviewed head e4fa9077fa130ee9129ed8ef532dfda503270f97, merged as main 4f503ecd9bdb2efde6750583ff8dfc92dffafcb1, identical reviewed/merged tree e496f5b8190b48c7a475bdba768b968575d40ca2; Cloudflare Pages deployment 6890109e-fbcc-44b7-81c3-26835b35b208 / check 108690436763 SUCCESS for exact main. The bounded runtime delta is trade-rationale presentation only: the unverified positional claim derived from t.oppNeeds[0] was replaced by neutral truthful \"Roster-Fit verbessert\"; app blob c065c7bbf1877bfb7931045bc68dc99bf8aa306b, focused regression blob 2ab7c89b530b723209e39c0ffb49b7868428c5ef. Codex focused trade regressions PASS, full strict suite 240/240 PASS, exact-head PR CI PASS, and postmerge CI PASS. Boone source/values, seasonTradeDecision, seasonProjectionLineup, bilateral gain, capacity, fairness, conservative acceptance and no-auto-send semantics are unchanged. Current exact-tree Production physical canary is PENDING. Historical PR205 Boone physical PASS remains historical only on tree 8825347883a2eee0fd53f7d45514580b246de08e and is not inherited by this changed app.js tree. Broad ECR, selected PITTI Panel and full game-context are not reaccepted here; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Next gate: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "V268_PR205_PRODUCTION_BOONE_PHYSICAL_PASS",
-    "readiness_scope": "STRUCTURAL_HANDOFF_PLUS_BOUNDED_PR205_PRODUCTION_PHYSICAL_PASS"
+    "refresh_scope": "V269_PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PENDING",
+    "readiness_scope": "STRUCTURAL_HANDOFF_ONLY_CURRENT_PR207_EXACT_TREE_PHYSICAL_PENDING"
   },
-  "status": "RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER_RECONCILED_WITH_OPEN_TRADE_RATIONALE_FINDING",
-  "gate": "TRADE_OPPONENT_NEED_RATIONALE_MISMATCH_BOUNDED_REPAIR",
-  "nextGate": "TRADE_OPPONENT_NEED_RATIONALE_MISMATCH_BOUNDED_REPAIR",
-  "handoffGeneration": "20260927T1754Z-v268",
+  "status": "PR207_SOURCE_PRODUCTION_CI_PASS_PHYSICAL_CANARY_PENDING_RECONCILED",
+  "gate": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING",
+  "nextGate": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING",
+  "handoffGeneration": "20260927T1930Z-v269",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -1401,6 +1410,35 @@
       "parity_decisions": 16,
       "peaked_gate": "PEAKED_SOURCE_CONTRACT_NOT_VERIFIED",
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
+    },
+    "rc4211_pr205_source_production": {
+      "checkpoint": "v268",
+      "version": "v11.8.0-rc4.211",
+      "pr": 205,
+      "reviewed_head": "dc00ef71688f74ba740ec227330a19f7d7e71023",
+      "merge_commit": "2f15bba5dd78e8b4993631c60003b6ae59a930cd",
+      "merged_tree": "8825347883a2eee0fd53f7d45514580b246de08e",
+      "reviewed_tree": "8825347883a2eee0fd53f7d45514580b246de08e",
+      "direct_parents": [
+        "afab233cbb6057882a6288fe9f59ad666f89d0c7",
+        "dc00ef71688f74ba740ec227330a19f7d7e71023"
+      ],
+      "production_deployment_id": "cfc7aea7-031d-45e8-97ae-2a50fc949142",
+      "cloudflare_check_run_id": 108670306726,
+      "production_deployment_proven": true,
+      "physical_acceptance_proven": true,
+      "physical_classification": "RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER",
+      "physical_scope": "POSTMERGE_PRODUCTION_PHONE_CANARY: W3; Sleeper Live-State <1 Min.; FantasyPros Weekly Projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo Trade Values 251/251 mapped; Trade Offer Board consumed current values and rendered a concrete bilateral offer; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted by this canary.",
+      "premerge_ci": "PASS",
+      "postmerge_ci": "PASS",
+      "evidence_source": "LIVE_GITHUB_VERIFIED_POSTMERGE_DEPLOYMENT; USER_SUPPLIED_PHYSICAL_SCREENSHOTS",
+      "runtime_delta": "BOONE_WEEK_DISCOVERY_REPAIR_ONLY",
+      "decision_semantic_drift": false,
+      "parity_decisions": 16,
+      "boone_current_week_mapping": "251/251",
+      "peaked_gate": "PEAKED_SOURCE_CONTRACT_NOT_VERIFIED",
+      "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
+      "trade_rationale_finding": "TRADE_OPPONENT_NEED_RATIONALE_MISMATCH: the visible opponent rationale can name the highest generic opponent need (oppNeeds[0]) instead of the position actually addressed by the offered GIVE package; observed as 'Bedarf RB wird adressiert' for GIVE George Pickens (WR) / GET Brock Bowers (TE). Trade legality, Boone values, fairness and bilateral lineup-gain checks remain separately computed."
     }
   },
   "qb_policy": {
@@ -1426,13 +1464,13 @@
   },
   "candidate_work": {
     "version": "v11.8.0-rc4.211",
-    "pr": 205,
-    "status": "MERGED_PRODUCTION_CI_PASS_BOUNDED_PHYSICAL_ACCEPTED",
-    "head_sha": "dc00ef71688f74ba740ec227330a19f7d7e71023",
-    "merge_commit": "2f15bba5dd78e8b4993631c60003b6ae59a930cd",
-    "tree_sha": "8825347883a2eee0fd53f7d45514580b246de08e",
-    "physical_classification": "RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER"
+    "pr": 207,
+    "status": "MERGED_PRODUCTION_CI_PASS_PHYSICAL_PENDING",
+    "head_sha": "e4fa9077fa130ee9129ed8ef532dfda503270f97",
+    "merge_commit": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
+    "tree_sha": "e496f5b8190b48c7a475bdba768b968575d40ca2",
+    "physical_classification": "PR207_EXACT_PRODUCTION_TREE_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING"
   },
-  "updatedAt": "2026-09-27T17:54:00Z",
-  "exactNextAction": "Bounded repair of TRADE_OPPONENT_NEED_RATIONALE_MISMATCH: the visible opponent rationale can name the highest generic opponent need (oppNeeds[0]) instead of the position actually addressed by the offered GIVE package; observed as 'Bedarf RB wird adressiert' for GIVE George Pickens (WR) / GET Brock Bowers (TE). Trade legality, Boone values, fairness and bilateral lineup-gain checks remain separately computed. Preserve all Boone source-boundary, comparable-value, bilateral-lineup-gain, capacity, fairness and no-auto-send semantics."
+  "updatedAt": "2026-09-27T19:30:00Z",
+  "exactNextAction": "On the Production phone/PWA, fully reload/open v11.8.0-rc4.211, refresh live evidence, open Trades, and verify any rendered concrete offer uses truthful neutral \"Roster-Fit verbessert\" wording and never claims an unsupported positional need such as \"Bedarf RB wird adressiert\". Also confirm Boone trade values still load and no automatic send occurs. If no concrete offer is rendered, report that exact state rather than forcing a trade."
 }
