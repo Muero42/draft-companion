@@ -14,7 +14,7 @@ async function run(feed){
     AbortController,clearTimeout,setTimeout,
     WATCHER_FEED_URL:'https://watcher.test/companion-feed',WATCHER_SYNC_META_KEY:'watcher-meta',
     els:{watcherSyncStatus:{}},
-    fetch:async()=>({ok:true,json:async()=>feed}),
+    fetch:async()=>{if(feed instanceof Error)throw feed;return{ok:true,json:async()=>feed};},
     store:{set:(key,value)=>writes.push({key,value})},
     watcherEvidenceInput:row=>({id:`watcher_${row.id}`,playerId:String(row.player_id||''),critical:false}),
     appendResearchEvidence:input=>{ingested.push(input);return{added:true,event:input}},
@@ -26,6 +26,12 @@ async function run(feed){
   return{result:await context.syncWatcherFeed(),writes,ingested,status:context.els.watcherSyncStatus};
 }
 
+for(const error of [Object.assign(new Error('timeout'),{name:'AbortError'}),new TypeError('Failed to fetch')]){
+  const failure=await run(error);
+  assert.equal(failure.result.ok,false);
+  assert.equal(failure.ingested.length,0);
+  assert(!failure.writes.some(x=>x.key!=='watcher-meta'),'timeout/network failure must retain every existing evidence cache');
+}
 const event={id:'evt-1',player_id:'player-1',fundamental_or_market:'market'};
 const pass=await run({schema:'draft-companion.watcher-feed.v2',gate:{overall:'PASS',market:'PASS',player_state_status:'PASS'},events:[event]});
 assert.equal(pass.result.ok,true);assert.equal(pass.result.gate,'PASS');assert.equal(pass.result.added,1);

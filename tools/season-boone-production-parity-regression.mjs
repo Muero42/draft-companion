@@ -62,5 +62,5 @@ assert.equal(adaptBooneTradeEvidence,diagnosticAdapter,'one shared source contra
 assert.equal(adaptBooneTradeEvidence(snapshot,{season:2026,week:2,scoring:'HALF_PPR'},now).secondarySourceGate,PEAKED_GATE);
 assert.equal(RUNTIME_FILES.length,17);assert(!RUNTIME_FILES.includes('trade-boone-source-contract-v1.mjs'));
 const runtime=fs.readFileSync('boone-trade-values-v1.mjs','utf8');assert(!runtime.includes("from './trade-team-needs-v2.js'"));assert(!app.includes('evaluateBooneTradeOffer'));
-assert(app.includes("APP_VERSION='v11.8.0-rc4.211'"));
+assert(app.includes("APP_VERSION='v11.8.0-rc4.212'"));
 console.log(`BOONE_PRODUCTION_PARITY_PASS ${parity} equal decisions; strict evidence negatives; 17 runtime files; no formula drift`);
