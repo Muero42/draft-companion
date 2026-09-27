@@ -156,22 +156,22 @@
     "omitting the mandatory PITTI CODEX BUDGET GUARD from any Codex work package"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.211 remains the 17-file runtime. PR #207 reviewed head e4fa9077fa130ee9129ed8ef532dfda503270f97, merged as main 4f503ecd9bdb2efde6750583ff8dfc92dffafcb1, identical reviewed/merged tree e496f5b8190b48c7a475bdba768b968575d40ca2; Cloudflare Pages deployment 6890109e-fbcc-44b7-81c3-26835b35b208 / check 108690436763 SUCCESS for exact main. The bounded runtime delta is trade-rationale presentation only: the unverified positional claim derived from t.oppNeeds[0] was replaced by neutral truthful \"Roster-Fit verbessert\"; app blob c065c7bbf1877bfb7931045bc68dc99bf8aa306b, focused regression blob 2ab7c89b530b723209e39c0ffb49b7868428c5ef. Codex focused trade regressions PASS, full strict suite 240/240 PASS, exact-head PR CI PASS, and postmerge CI PASS. Boone source/values, seasonTradeDecision, seasonProjectionLineup, bilateral gain, capacity, fairness, conservative acceptance and no-auto-send semantics are unchanged. Current exact-tree Production physical canary is PENDING. Historical PR205 Boone physical PASS remains historical only on tree 8825347883a2eee0fd53f7d45514580b246de08e and is not inherited by this changed app.js tree. Broad ECR, selected PITTI Panel and full game-context are not reaccepted here; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Next gate: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING.",
-    "androidAuthority": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
-    "sourceAuthority": "v11.8.0-rc4.211 remains the 17-file runtime. PR #207 reviewed head e4fa9077fa130ee9129ed8ef532dfda503270f97, merged as main 4f503ecd9bdb2efde6750583ff8dfc92dffafcb1, identical reviewed/merged tree e496f5b8190b48c7a475bdba768b968575d40ca2; Cloudflare Pages deployment 6890109e-fbcc-44b7-81c3-26835b35b208 / check 108690436763 SUCCESS for exact main. The bounded runtime delta is trade-rationale presentation only: the unverified positional claim derived from t.oppNeeds[0] was replaced by neutral truthful \"Roster-Fit verbessert\"; app blob c065c7bbf1877bfb7931045bc68dc99bf8aa306b, focused regression blob 2ab7c89b530b723209e39c0ffb49b7868428c5ef. Codex focused trade regressions PASS, full strict suite 240/240 PASS, exact-head PR CI PASS, and postmerge CI PASS. Boone source/values, seasonTradeDecision, seasonProjectionLineup, bilateral gain, capacity, fairness, conservative acceptance and no-auto-send semantics are unchanged. Current exact-tree Production physical canary is PENDING. Historical PR205 Boone physical PASS remains historical only on tree 8825347883a2eee0fd53f7d45514580b246de08e and is not inherited by this changed app.js tree. Broad ECR, selected PITTI Panel and full game-context are not reaccepted here; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Next gate: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING.",
+    "productionControl": "PR207 repair physically accepted on Production; 2026-09-27 21:58 CEST phone canary: rc4.211, Sleeper <1 Min., W3 projections QB/RB/WR/TE AVAILABLE, Boone/Yahoo 251/251, Pickens-for-Bowers rendered with neutral \"Roster-Fit verbessert\", unsupported RB-need claim absent, no automatic send; broad lanes not reaccepted.",
+    "androidAuthority": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL on deployed main 90fbbfea411ade27f8ed249d771de12a026b9f15 / tree 689f57f968e3ddf71ad827cec5b361f0ed2a0d7a; bounded scope only.",
+    "sourceAuthority": "PR207 repair physically accepted on Production; 2026-09-27 21:58 CEST phone canary: rc4.211, Sleeper <1 Min., W3 projections QB/RB/WR/TE AVAILABLE, Boone/Yahoo 251/251, Pickens-for-Bowers rendered with neutral \"Roster-Fit verbessert\", unsupported RB-need claim absent, no automatic send; broad lanes not reaccepted.",
     "latestPackageReextract": "rc4.211 17 runtime files byte-exact; archive SHA noncanonical",
     "latestPackageSha256": null,
     "packageReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployedPagesVersion": "v11.8.0-rc4.211",
     "deployedPagesAppByteParityWithMain": false,
-    "currentResearchGate": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING",
-    "exactNextAction": "On the Production phone/PWA, fully reload/open v11.8.0-rc4.211, refresh live evidence, open Trades, and verify any rendered concrete offer uses truthful neutral \"Roster-Fit verbessert\" wording and never claims an unsupported positional need such as \"Bedarf RB wird adressiert\". Also confirm Boone trade values still load and no automatic send occurs. If no concrete offer is rendered, report that exact state rather than forcing a trade.",
-    "runtimeVersion": "v11.8.0-rc4.211 source + Production; PR207 rationale repair deployed; physical canary pending",
+    "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
+    "exactNextAction": "No open Draft runtime repair is authorized. Freshly verify canonical authority before any future work.",
+    "runtimeVersion": "v11.8.0-rc4.211 source + Production; PR207 trade-rationale physical PASS",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
-    "latestDeviceEvidence": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
+    "latestDeviceEvidence": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL on deployed main 90fbbfea411ade27f8ed249d771de12a026b9f15 / tree 689f57f968e3ddf71ad827cec5b361f0ed2a0d7a; bounded scope only.",
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
-    "reconciledBaseMain": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
-    "nextGate": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING",
+    "reconciledBaseMain": "90fbbfea411ade27f8ed249d771de12a026b9f15",
+    "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
     "packageReferenceScope": "rc4.211 reviewed tree; package distinct from deployment/physical scope",
     "localCandidatePackage": {
       "version": "v11.8.0-rc4.211",
@@ -181,22 +181,22 @@
       "source_scope": "PR203_REVIEWED_TREE_EQUALS_MERGED_PRODUCTION_TREE",
       "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_NONCANONICAL"
     },
-    "deploymentParity": "PR207 reviewed tree equals merged tree; exact main Cloudflare deployment success; physical canary pending",
+    "deploymentParity": "main 90fbbfea411ade27f8ed249d771de12a026b9f15 deployed before physical canary",
     "productionDeployment": {
       "version": "v11.8.0-rc4.211",
-      "sourceCommit": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
-      "tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
-      "status": "VERIFIED_SUCCESS_PHYSICAL_PENDING",
+      "sourceCommit": "90fbbfea411ade27f8ed249d771de12a026b9f15",
+      "tree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a",
+      "runtimeSourceCommit": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
+      "runtimeTree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
+      "status": "VERIFIED_SUCCESS_PHYSICAL_ACCEPTED",
       "branch": "main",
-      "deploymentId": "6890109e-fbcc-44b7-81c3-26835b35b208",
-      "cloudflareCheckRunId": 108690436763,
-      "deploymentCheckId": "6890109e-fbcc-44b7-81c3-26835b35b208",
-      "deviceAcceptanceProven": false,
-      "deviceAcceptanceScope": "NONE_FOR_CURRENT_TREE",
-      "physicalClassification": "PR207_EXACT_PRODUCTION_TREE_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING",
-      "lastDeviceAcceptedControl": "v11.8.0-rc4.211 HISTORICAL_PR205_TREE_ONLY",
+      "deploymentId": "4804403c-1728-4bab-82b4-9a31de984fd4",
+      "deviceAcceptanceProven": true,
+      "deviceAcceptanceScope": "2026-09-27 21:58 CEST phone canary: rc4.211, Sleeper <1 Min., W3 projections QB/RB/WR/TE AVAILABLE, Boone/Yahoo 251/251, Pickens-for-Bowers rendered with neutral \"Roster-Fit verbessert\", unsupported RB-need claim absent, no automatic send; broad lanes not reaccepted.",
+      "physicalClassification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
+      "lastDeviceAcceptedControl": "v11.8.0-rc4.211",
       "lastBroadPhysicalBaseline": "v11.8.0-rc4.210",
-      "evidenceSource": "LIVE_GITHUB_EXACT_MAIN_DEPLOYMENT"
+      "evidenceSource": "LIVE_GITHUB_EXACT_MAIN_DEPLOYMENT_AND_USER_PHONE_CANARY"
     },
     "independentEvidenceLaneDiagnosis": {
       "status": "SUPERSEDED_BY_AUTHORIZED_RC4206_SOURCE_REPAIR_MERGED",
@@ -280,17 +280,18 @@
         "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
       }
     },
-    "tradeRationaleFinding": "RESOLVED_IN_SOURCE_AND_PRODUCTION_AWAITING_PHYSICAL_CANARY",
+    "tradeRationaleFinding": "RESOLVED_PHYSICAL_PASS_NEUTRAL_ROSTER_FIT",
     "tradeRationaleRepair": {
-      "status": "MERGED_DEPLOYED_CI_PASS_PHYSICAL_PENDING",
+      "status": "MERGED_DEPLOYED_CI_PASS_PHYSICAL_ACCEPTED",
       "appBlob": "c065c7bbf1877bfb7931045bc68dc99bf8aa306b",
       "focusedRegressionBlob": "2ab7c89b530b723209e39c0ffb49b7868428c5ef",
-      "semantics": "Neutral Roster-Fit wording; no synthetic positional-need claim."
+      "physicalClassification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
+      "physicalScope": "2026-09-27 21:58 CEST phone canary: rc4.211, Sleeper <1 Min., W3 projections QB/RB/WR/TE AVAILABLE, Boone/Yahoo 251/251, Pickens-for-Bowers rendered with neutral \"Roster-Fit verbessert\", unsupported RB-need claim absent, no automatic send; broad lanes not reaccepted."
     }
   },
-  "currentGate": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING",
-  "handoffGeneration": "20260927T1930Z-v269",
-  "handoff_generation": "20260927T1930Z-v269",
+  "currentGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
+  "handoffGeneration": "20260927T1958Z-v270",
+  "handoff_generation": "20260927T1958Z-v270",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -315,12 +316,12 @@
     "tradeValueEvidence": "Automatically ingest current Justin Boone/Yahoo weekly ROS charts server-side; QB=1QB, RB/WR/TE=HALF; require all positions, fresh provenance and unambiguous Sleeper mapping or fail closed.",
     "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
-  "currentResearchGate": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING",
-  "exactNextAction": "On the Production phone/PWA, fully reload/open v11.8.0-rc4.211, refresh live evidence, open Trades, and verify any rendered concrete offer uses truthful neutral \"Roster-Fit verbessert\" wording and never claims an unsupported positional need such as \"Bedarf RB wird adressiert\". Also confirm Boone trade values still load and no automatic send occurs. If no concrete offer is rendered, report that exact state rather than forcing a trade.",
+  "currentResearchGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
+  "exactNextAction": "No open Draft runtime repair is authorized. Freshly verify canonical authority before any future work.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
-  "updated_at": "2026-09-27T19:30:00Z",
-  "updatedAt": "2026-09-27T19:30:00Z",
+  "updated_at": "2026-09-27T19:58:00Z",
+  "updatedAt": "2026-09-27T19:58:00Z",
   "codexBudgetGuard": {
     "mandatoryInEveryCodexWorkPackage": true,
     "persistentAcrossChatsAndHandoffs": true,
