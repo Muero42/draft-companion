@@ -116,7 +116,7 @@
     "season-parallel-contract-regression.mjs": "b0b158697d37c0d9bebeebf5bd132d4a6b355f07",
     "sw.js": "073201fe851ae2f025da2633bbd5eeefe1142000",
     "tools/boone-trade-value-live-audit.mjs": "8c1270bc721a264e1a5d6829b3f24b1583c1aaee",
-    "tools/boone-trade-value-runtime-regression.mjs": "1718efe3e228f4a69b85336d0e8e020a8cba66b9",
+    "tools/boone-trade-value-runtime-regression.mjs": "58074bd0a2d2d4644fb7bb26f7401b1fbd347a23",
     "tools/cloud-contract.mjs": "1e845da0f8b859d4f40ba92c562f881e3a079343",
     "tools/cloud-foundation-regression.mjs": "7a409db76c77fd4bc5c1164590b1e1e470dbae7a",
     "tools/cloud-implementation.schema.json": "b40ad0d5929f025a6a07879e136504dce279c0d7",
