@@ -42,4 +42,17 @@ assert.equal(summary.bidLowPct,null,'incomplete market cannot fabricate a FAAB b
 
 for(const token of ['Waiver/FA Decision Board v3','ADD ${esc(x.fa.p.name)} / DROP ${esc(x.drop.p.name)}','THIS WEEK','ROS','KONTINGENZ','Stärkste Konkurrenz','Invalidator','Trade Offer Board v8','KONKRETE ANGEBOTE','ausdrücklich heuristisch','Fallback:','TRADE HOLD'])assert.ok(app.includes(token),`mobile decision surface missing ${token}`);
 assert.ok(app.indexOf("'<div class=\"coach-section-title\">JETZT ENTSCHEIDEN · SKILL-POSITIONEN</div>'+skill")<app.indexOf('renderQbOpportunityBoard()+renderSpecialTeamsBoard()'),'skill ADD/DROP decisions must render before secondary QB and special-team lanes');
+// Exercise the actual card rationale with an otherwise actionable WR-for-TE offer.
+// tradeRosterNeed uses a synthetic rank-75 player, not verified positional need.
+const rationaleSource=app.match(/const opponentReason=([^\n]+);/)[1];
+const give={p:{name:'George Pickens',pos:'WR'}},get={p:{name:'Brock Bowers',pos:'TE'}};
+const decision={actionable:true,opponentGain:2,ourGain:3,giveValue:40,getValue:42};
+const offer={gives:[give],gets:[get],decision};
+for(const wrNeed of [0,4]){
+  const t={oppNeeds:[{pos:'RB',need:8},{pos:'WR',need:wrNeed}],offers:[offer]};
+  const rationale=vm.runInNewContext(rationaleSource,{t,offer,d:decision,managerLabel:'Opponent',esc:String});
+  assert.ok(!rationale.includes('Bedarf RB wird adressiert'),'WR GIVE must not claim the highest generic RB need is addressed');
+  assert.ok(rationale.includes('Roster-Fit verbessert'),'unverified synthetic needs require neutral Roster-Fit wording');
+  assert.ok(!/Bedarf (RB|WR|TE|QB)/.test(rationale),'generic rank-based need is not verified positional evidence');
+}
 console.log('SEASON_WAIVER_TRADE_V1_PASS: nine-team market, fail-closed FAAB, mobile actions and concrete trades');
