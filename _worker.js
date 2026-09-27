@@ -89,6 +89,7 @@ function cors(){return {'access-control-allow-origin':'*','access-control-allow-
 function json(value,status=200){return new Response(JSON.stringify(value),{status,headers:{...cors(),'content-type':'application/json','cache-control':'no-store'}})}
 
 const BOONE_DISCOVERY_URL='https://sports.yahoo.com/author/justin-boone/';
+const BOONE_NEWS_URLS=['https://sports.yahoo.com/fantasy/news/','https://sports.yahoo.com/fantasy/football/news/'];
 const BOONE_HTML_LIMIT=2*1024*1024;
 async function boundedText(response,limit=BOONE_HTML_LIMIT){
   const declared=Number(response.headers.get('content-length'));if(Number.isFinite(declared)&&declared>limit)throw new Error('HTML_TOO_LARGE');
@@ -98,8 +99,41 @@ async function boundedText(response,limit=BOONE_HTML_LIMIT){
   finally{reader.releaseLock();}
 }
 async function fetchBooneHtml(url,cacheTtl=1800){
-  const response=await fetch(url,{headers:{accept:'text/html,application/xhtml+xml','user-agent':'Mozilla/5.0 (compatible; PITTI-Companion/11.8; +https://pages.dev)'},cf:{cacheTtl,cacheEverything:true}});
+  const response=await fetch(url,{signal:AbortSignal.timeout(5000),headers:{accept:'text/html,application/xhtml+xml','user-agent':'Mozilla/5.0 (compatible; PITTI-Companion/11.8; +https://pages.dev)'},cf:{cacheTtl,cacheEverything:true}});
   if(!response.ok)throw new Error(`HTTP_${response.status}`);return boundedText(response);
+}
+function booneFailure(error){
+  const http=String(error?.message||'').match(/^HTTP_(\d{3})$/);
+  if(http)return{failureType:'HTTP_'+http[1],upstreamStatus:Number(http[1])};
+  return{failureType:['HTML_TOO_LARGE','HTML_BODY_MISSING'].includes(error?.message)?error.message:['TimeoutError','AbortError'].includes(error?.name)?'TIMEOUT':'NETWORK_ERROR',upstreamStatus:null};
+}
+async function discoverBooneCandidates({season,week}){
+  const candidates=Object.fromEntries(POSITIONS.map(p=>[p,[]])),attempts=[],pages=new Map(),seeded=new Set();
+  const merge=found=>{for(const p of POSITIONS)for(const url of found[p])if(candidates[p].length<2&&!candidates[p].includes(url))candidates[p].push(url);};
+  const complete=()=>POSITIONS.every(p=>candidates[p].length);
+  const counts=()=>Object.fromEntries(POSITIONS.map(p=>[p,candidates[p].length]));
+  const article=url=>{if(!pages.has(url))pages.set(url,fetchBooneHtml(url));return pages.get(url);};
+  for(const [i,url] of [BOONE_DISCOVERY_URL,...BOONE_NEWS_URLS].entries()){
+    if(complete())break;
+    const lane=['AUTHOR','FANTASY_NEWS','FANTASY_FOOTBALL_NEWS'][i];
+    try{
+      const html=await fetchBooneHtml(url,900),found=discoverBooneTradeChartUrls(html,{season,week});merge(found);
+      const positions=POSITIONS.filter(p=>found[p].length);
+      attempts.push({discoverySource:url,status:'FETCHED',failureType:positions.length?null:lane+'_NO_EXACT_WEEK_SEED',upstreamStatus:200,candidateCounts:counts(),positionsDiscovered:positions});
+    }catch(error){const failure=booneFailure(error);attempts.push({discoverySource:url,status:'FAILED',...failure,failureType:lane+'_'+failure.failureType,candidateCounts:counts(),positionsDiscovered:[]});}
+    // At most two validated seed articles, no recursive crawl or pagination.
+    for(const position of POSITIONS){
+      if(complete()||seeded.size>=2)break;
+      const seed=candidates[position].find(u=>!seeded.has(u));if(!seed)continue;seeded.add(seed);
+      try{
+        const html=await article(seed),parsed=parseBooneChartHtml(html,{position,season,week,sourceUrl:seed});
+        if(!parsed.ok){attempts.push({discoverySource:seed,status:'REJECTED',failureType:'SEED_PARSE_REJECTED',reason:parsed.reason});continue;}
+        merge(discoverBooneTradeChartUrls(html,{season,week}));
+        attempts.push({discoverySource:seed,status:'VALIDATED_SEED',failureType:complete()?null:'SEED_CROSSLINKS_INCOMPLETE',candidateCounts:counts(),positionsDiscovered:POSITIONS.filter(p=>candidates[p].length)});
+      }catch(error){attempts.push({discoverySource:seed,status:'FAILED',...booneFailure(error)});}
+    }
+  }
+  return{candidates,attempts,article};
 }
 async function handleBooneTradeValues(request,url){
   if(request.method!=='GET')return json({error:'Nur GET ist erlaubt.'},405);
@@ -107,21 +141,22 @@ async function handleBooneTradeValues(request,url){
   if(season!==2026||!Number.isInteger(week)||week<1||week>18)return json({error:'Boone-Kontext ungültig.'},400);
   const verifiedAt=Date.now();
   try{
-    const [directoryHtml,playersResponse]=await Promise.all([
-      fetchBooneHtml(BOONE_DISCOVERY_URL,900).catch(()=>''),
+    const [discovery,playersResponse]=await Promise.all([
+      discoverBooneCandidates({season,week}),
       fetch('https://api.sleeper.app/v1/players/nfl',{headers:{accept:'application/json'},cf:{cacheTtl:86400,cacheEverything:true}})
     ]);
     if(!playersResponse.ok)return json({error:`Sleeper players HTTP ${playersResponse.status}`},502);
-    const sleeperPlayers=await playersResponse.json(),discovered=discoverBooneTradeChartUrls(directoryHtml,{week}),charts={};
+    const sleeperPlayers=await playersResponse.json(),discovered=discovery.candidates,charts={};
     await Promise.all(POSITIONS.map(async position=>{
-      const candidates=[...(week===1?[WEEK1_URLS[position]]:[]),...(discovered[position]||[])].filter((value,index,all)=>value&&all.indexOf(value)===index),errors=[];
-      for(const sourceUrl of candidates){try{const html=await fetchBooneHtml(sourceUrl),parsed=parseBooneChartHtml(html,{position,season,week,sourceUrl,now:verifiedAt});if(parsed.ok){charts[position]=parsed;return;}errors.push(parsed.reason);}catch(error){errors.push(error?.message||String(error));}}
+      const candidates=[...(week===1?[WEEK1_URLS[position]]:[]),...(discovered[position]||[])].filter((value,index,all)=>value&&all.indexOf(value)===index).slice(0,2),errors=[];
+      for(const sourceUrl of candidates){try{const html=await discovery.article(sourceUrl),parsed=parseBooneChartHtml(html,{position,season,week,sourceUrl,now:verifiedAt});if(parsed.ok){charts[position]=parsed;return;}errors.push('SOURCE_PARSE_REJECTED:'+parsed.reason);}catch(error){errors.push(booneFailure(error).failureType);}}
       charts[position]={ok:false,position,reason:errors.join('|')||'SOURCE_URL_UNAVAILABLE'};
     }));
     const snapshot=buildBooneTradeValueSnapshot({charts,sleeperPlayers,season,week,verifiedAt});
+    snapshot.acquisition={attempts:discovery.attempts,candidateCounts:Object.fromEntries(POSITIONS.map(p=>[p,Math.min(2,discovered[p].length+(week===1?1:0))])),terminal:Object.fromEntries(POSITIONS.map(p=>[p,charts[p].ok?'VALIDATED':charts[p].reason]))};
     if(snapshot.status!=='AVAILABLE')return json({error:'Boone Trade Values unvollständig; keine Records freigegeben.',...snapshot,rejections:snapshot.rejections.slice(0,100)},422);
     return json(snapshot);
-  }catch(error){return json({error:'Boone Trade Values nicht erreichbar.',detail:error?.message||String(error)},502);}
+  }catch(error){return json({error:'Boone Trade Values nicht erreichbar.',acquisition:booneFailure(error)},502);}
 }
 
 

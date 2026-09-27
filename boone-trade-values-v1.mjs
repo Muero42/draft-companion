@@ -130,11 +130,15 @@ function atomicWriteBooneTradeValues(storage,snapshot){
   const text=JSON.stringify(snapshot),parsed=JSON.parse(text);if(!parsed||parsed.schema!==SCHEMA||parsed.snapshotId!==snapshot.snapshotId)throw new Error('BOONE_TRADE_VALUE_ATOMIC_VERIFY_FAILED');
   storage.setItem(CACHE_KEY,text);const current=JSON.parse(storage.getItem(CACHE_KEY)||'null');if(current?.snapshotId!==snapshot.snapshotId)throw new Error('BOONE_TRADE_VALUE_ATOMIC_VERIFY_FAILED');return snapshot;
 }
-function discoverBooneTradeChartUrls(html,{week}={}){
+function discoverBooneTradeChartUrls(html,{week,season}={}){
   const out=Object.fromEntries(POSITIONS.map(position=>[position,[]]));
   for(const match of String(html||'').matchAll(/<a\b[^>]*href=["']([^"']+)["'][^>]*>([\s\S]*?)<\/a>/gi)){
-    const url=yahooUrl(match[1]),label=stripHtml(match[2]);if(!url||!/Justin Boone|Boone/i.test(label)||!/trade value/i.test(label)||!new RegExp(`\\bWeek\\s+${Number(week)}\\b`,'i').test(label))continue;
-    for(const position of POSITIONS)if(POSITION_LABELS[position].test(label)||new RegExp(`\\b${position}\\b`,'i').test(label)){if(!out[position].includes(url))out[position].push(url);}
+    const candidate=yahooUrl(match[1]);if(!candidate)continue;
+    const parsed=new URL(candidate);parsed.search='';parsed.hash='';const url=parsed.href;
+    const label=(stripHtml(match[2])+' '+parsed.pathname).replace(/[-_]+/g,' ');
+    const weeks=[...label.matchAll(/\bweek\s+(\d+)\b/gi)].map(m=>Number(m[1])),years=[...label.matchAll(/\b20\d{2}\b/g)].map(m=>Number(m[0]));
+    if(!/Justin\s+Boone/i.test(label)||!/trade\s+value/i.test(label)||!weeks.length||weeks.some(w=>w!==Number(week))||(season!=null&&years.some(y=>y!==Number(season))))continue;
+    for(const position of POSITIONS)if(POSITION_LABELS[position].test(label)||new RegExp(`\\b${position}\\b`,'i').test(label)){if(out[position].length<2&&!out[position].includes(url))out[position].push(url);}
   }
   return out;
 }
