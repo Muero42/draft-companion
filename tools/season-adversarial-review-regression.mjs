@@ -5,7 +5,8 @@ const app=fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n');
 const source=name=>{const start=app.indexOf('function '+name+'(');assert(start>=0,name);const end=app.indexOf('\nfunction ',start+1);return app.slice(start,end<0?undefined:end);};
 const now=Date.now(),cache=new Map();
 const gameContext={CACHE_KEY:'pitti.game-context.v1.current',validateSnapshot:(snapshot,context)=>snapshot?.season===context.season&&snapshot?.week===context.week&&snapshot?.status==='AVAILABLE'?{ok:true}:{ok:false},contextForTeam:(snapshot,team)=>snapshot.games.find(game=>[game.homeTeam,game.awayTeam].includes(team))||{status:'UNAVAILABLE'}};
-const s={Date,console,PittiGameContextV1:gameContext,BOONE_TRADE_VALUE_CACHE_KEY:'pitti.boone-trade-values.v1.current',validateBooneTradeValueSnapshot:()=>({ok:false}),store:{get:(k,f)=>cache.get(k)??f},lastDraftContext:{season:null},SLEEPER_NON_STARTER_SLOTS:new Set(['BN','IR','TAXI']),esc:String,loadResearchEvents:()=>[]};vm.createContext(s);
+// Decision-unit fixtures mock the source boundary; real validation is covered by the Production parity regression.
+const s={Date,console,PittiGameContextV1:gameContext,BOONE_TRADE_VALUE_CACHE_KEY:'pitti.boone-trade-values.v1.current',adaptBooneTradeEvidence:()=>({available:true,values:Object.fromEntries((cache.get('v190_seasonEvidence')||[]).filter(r=>r.metric==='trade_value').map(r=>[r.playerId,r]))}),store:{get:(k,f)=>cache.get(k)??f},lastDraftContext:{season:null},SLEEPER_NON_STARTER_SLOTS:new Set(['BN','IR','TAXI']),esc:String,loadResearchEvents:()=>[]};vm.createContext(s);
 for(const f of ['seasonSlotEligible','tradeStarterSlots','tradeBestLineup','seasonStructurallyDroppable'])vm.runInContext(source(f),s);
 vm.runInContext(app.slice(app.indexOf('function seasonEvidenceContext('),app.indexOf('function fpStoreKey(')),s);
 const p=(id,pos)=>({p:{id,name:id,pos,bye:7},r:{rank:50},seasonStatus:'ACTIVE',pk:{pick_no:20}});
