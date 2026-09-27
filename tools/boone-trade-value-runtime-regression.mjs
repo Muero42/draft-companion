@@ -43,7 +43,7 @@ assert(runtime.includes("'boone-trade-values-v1.mjs'"),'production parser missin
 const moduleUrl=new URL('../boone-trade-values-v1.mjs',import.meta.url).href;
 const executableWorker=worker.replace("'./boone-trade-values-v1.mjs'",JSON.stringify(moduleUrl));
 const {default:workerRuntime}=await import(`data:text/javascript;base64,${Buffer.from(executableWorker).toString('base64')}`);
-const nativeFetch=globalThis.fetch;
+const nativeFetch=globalThis.fetch,nativeNow=Date.now;
 globalThis.fetch=async input=>{
   const url=String(input);
   if(url==='https://sports.yahoo.com/author/justin-boone/')return new Response('<html></html>',{status:200,headers:{'content-type':'text/html'}});
@@ -53,10 +53,12 @@ globalThis.fetch=async input=>{
   throw new Error('Unexpected production fetch '+url);
 };
 try{
+  // Worker source-age checks use the same fixed clock as these synthetic charts.
+  Date.now=()=>now;
   const response=await workerRuntime.fetch(new Request('https://pitti.invalid/api/boone-trade-values?season=2026&week=1'),{ASSETS:{fetch:()=>new Response('asset')}});
   assert.equal(response.status,200,'actual production Worker route must ingest all sources');
   const payload=await response.json();
   assert.equal(payload.status,'AVAILABLE');
   assert.equal(payload.records.length,snapshot.records.length);
-}finally{globalThis.fetch=nativeFetch;}
+}finally{globalThis.fetch=nativeFetch;Date.now=nativeNow;}
 console.log('BOONE_TRADE_VALUE_RUNTIME_REGRESSION_PASS: production endpoint, parsing, mapping, freshness and negative coverage');
