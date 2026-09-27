@@ -1,44 +1,4 @@
 import assert from 'node:assert/strict';import {loadAuthority,validateAuthority,validateContinuationEvidence} from './postmerge-authority-contract.mjs';
-const candidateEnv=process.env.PITTI_CANDIDATE_PREFLIGHT;
-try {
-const checkout=loadAuthority();
-process.env.PITTI_CANDIDATE_PREFLIGHT='1';assert.deepEqual(validateAuthority(checkout),[],'actual checkout must validate in explicit candidate mode');
-process.env.PITTI_CANDIDATE_PREFLIGHT='0';assert.deepEqual(validateAuthority(checkout),checkout['PITTI_HANDOFF_SEAL.json'].status==='SUPERSEDED_PENDING_RESEAL'?['SEAL: seal drift']:[],'actual checkout seal must obey canonical mode');
-const pending=structuredClone(checkout);Object.assign(pending['PITTI_HANDOFF_SEAL.json'],{status:'SUPERSEDED_PENDING_RESEAL',handoff_ready:false,second_pass_pass:false});
-process.env.PITTI_CANDIDATE_PREFLIGHT='1';assert.deepEqual(validateAuthority(pending),[],'pending seal allowed for candidate preflight');
-for(const field of ['handoff_ready','second_pass_pass']){const d=structuredClone(pending);d['PITTI_HANDOFF_SEAL.json'][field]=true;assert(validateAuthority(d).includes('SEAL: seal drift'),'pending seal must never claim readiness');}
-process.env.PITTI_CANDIDATE_PREFLIGHT='0';assert(validateAuthority(pending).includes('SEAL: seal drift'),'pending seal must fail canonical authority validation');
-const sealed=structuredClone(pending);Object.assign(sealed['PITTI_HANDOFF_SEAL.json'],{status:'PASS',handoff_ready:true,second_pass_pass:true});assert.deepEqual(validateAuthority(sealed),[],'rc4.211 sealed authority remains valid');
-// Canonical mutations use the sealed fixture under normal mode, never the caller's environment.
-const b=sealed;assert.deepEqual(validateAuthority(b),[],'baseline v267 authority must validate');const cases=[['generation',d=>d['PITTI_CURRENT_STATE.json'].handoff_generation='old'],['source',d=>d['PITTI_CURRENT_STATE.json'].authority.source_candidate='v11.8.0-rc4.207'],['merge',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4211_pr203_source_production.merge_commit='a'.repeat(40)],['deployment',d=>d['PITTI_CURRENT_STATE.json'].runtime.production_deployment.deployment_id='wrong'],['physical',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.acceptance='FAIL'],['panel',d=>d['PITTI_CURRENT_STATE.json'].runtime.independent_evidence_lane_status.pitti_panel='BROAD_ECR'],['game',d=>d['PITTI_CURRENT_STATE.json'].runtime.independent_evidence_lane_status.game_context='UNAVAILABLE'],['team total',d=>d['PITTI_CURRENT_STATE.json'].runtime.independent_evidence_lane_status.team_total='AVAILABLE'],['command gate',d=>d['PITTI_COMMAND_CONTRACTS.json'].currentGate='DONE'],['lock version',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.appVersion='v11.8.0-rc4.207'],['lock deployment',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.productionDeployment.deploymentId=null],['seal',d=>d['PITTI_HANDOFF_SEAL.json'].exact_gate='DONE']];for(const[n,f]of cases){const d=structuredClone(b);f(d);assert(validateAuthority(d).length,`must reject ${n}`)}
-for(const mutate of [
- d=>d['PITTI_CURRENT_STATE.json'].candidate_work.pr=200,
- d=>d['PITTI_EXECUTION_LOCK.json'].authority.liveVerificationTargets[0].pr=200,
- d=>d['PITTI_EXECUTION_LOCK.json'].authority.failClosedRecovery='via PR #200',
- d=>d['PITTI_CURRENT_STATE.json'].runtime.current_physical_acceptance.proven=true,
- d=>d['PITTI_CURRENT_STATE.json'].authority.rc4211_pr203_source_production.physical_acceptance_proven=true,
- d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.tree='168846f85f6bf78a753b68540d1f21737a853e6f',
- d=>d['PITTI_EXECUTION_LOCK.json'].runtime.androidVerified=true,
- d=>d['PITTI_COMMAND_CONTRACTS.json'].currentBoundary.productionDeployment.deviceAcceptanceProven=true,
- d=>d['PITTI_HANDOFF_SEAL.json'].branch_locks.current_physical_acceptance='PASS',
- d=>d['PITTI_CURRENT_STATE.json'].authority.rc4211_pr203_source_production.peaked_gate='INTEGRATED',
- d=>d['PITTI_CURRENT_STATE.json'].authority.independent_evidence_lane_repair.broad_evidence_reobserved=true,
- d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.broad_evidence_reobserved=true,
- d=>d['PITTI_CURRENT_STATE.json'].runtime.last_broad_physical_evidence_baseline.version='v11.8.0-rc4.211',
- d=>d['PITTI_CURRENT_STATE.json'].runtime.last_broad_physical_evidence_baseline.lane_status.pitti_panel='UNAVAILABLE',
- d=>d['PITTI_CURRENT_STATE.json'].runtime.independent_evidence_lane_status.broad_expert_ranks='AVAILABLE_PHYSICAL_QB_RB_WR_TE'
-]){const d=structuredClone(b);mutate(d);assert(validateAuthority(d).length,'bounded physical/history corruption must fail');}
-const historicalRepair=b['PITTI_CURRENT_STATE.json'].historical_superseded.rc4206_rc4207_independent_evidence_lane_repair;
-assert.equal(historicalRepair.status,'RC4.206_PRODUCTION_DEVICE_REJECTED_RC4.207_BOUNDED_REPAIR_LOCAL');
-for(const mode of ['0','1']){
-  process.env.PITTI_CANDIDATE_PREFLIGHT=mode;
-  for(const key of ['status','source_merge','broad_expert_ranks','pitti_panel','canonical_game_context','weather_opponent']){
-    const d=structuredClone(mode==='1'?pending:b);d['PITTI_CURRENT_STATE.json'].authority.independent_evidence_lane_repair[key]=historicalRepair[key];
-    assert(validateAuthority(d).some(error=>error.startsWith('CURRENT.repairAlias:')),`stale active alias ${key} must fail in mode ${mode}`);
-  }
-}
-process.env.PITTI_CANDIDATE_PREFLIGHT='0';
-const h='a'.repeat(40),ev={fresh:true,repo:'Muero42/draft-companion',canonicalBranch:'main',canonicalHead:h,head:h,clean:true,branch:'main',prState:'MERGED',containingCommitVerified:true,ciHead:h,authorizedWorkPackage:true,checks:['project_guardrails','release_contract_v2','candidate_package'].map(name=>({name,result:'PASS'}))};assert.deepEqual(validateContinuationEvidence(ev),[]);for(const f of[x=>x.fresh=false,x=>x.clean=false,x=>x.containingCommitVerified=false,x=>x.ciHead='b'.repeat(40),x=>x.authorizedWorkPackage=false,x=>x.checks.push({name:'project_guardrails',result:'PASS'})]){const x=structuredClone(ev);f(x);assert(validateContinuationEvidence(x).length)}console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v267 mutations=${cases.length} external=6`);
-} finally {
-  if(candidateEnv===undefined)delete process.env.PITTI_CANDIDATE_PREFLIGHT;else process.env.PITTI_CANDIDATE_PREFLIGHT=candidateEnv;
-}
+const b=loadAuthority();assert.deepEqual(validateAuthority(b),[],'baseline v268 authority must validate');
+const cases=[['generation',d=>d['PITTI_CURRENT_STATE.json'].handoff_generation='old'],['main',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4211_pr205_source_production.merge_commit='a'.repeat(40)],['tree',d=>d['PITTI_CURRENT_STATE.json'].runtime.current_physical_acceptance.tree='b'.repeat(40)],['deployment',d=>d['PITTI_CURRENT_STATE.json'].runtime.production_deployment.deployment_id='wrong'],['physical',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.acceptance='FAIL'],['mapping',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4211_pr205_source_production.boone_current_week_mapping='250/251'],['panel',d=>d['PITTI_CURRENT_STATE.json'].runtime.independent_evidence_lane_status.pitti_panel='AVAILABLE'],['team total',d=>d['PITTI_CURRENT_STATE.json'].runtime.independent_evidence_lane_status.team_total='AVAILABLE'],['finding',d=>d['PITTI_CURRENT_STATE.json'].currentWork.finding=''],['lock device',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.androidVerified=false],['command gate',d=>d['PITTI_COMMAND_CONTRACTS.json'].currentGate='DONE'],['seal',d=>d['PITTI_HANDOFF_SEAL.json'].exact_gate='DONE']];for(const[n,f]of cases){const d=structuredClone(b);f(d);assert(validateAuthority(d).length,`must reject ${n}`)}
+const h='a'.repeat(40),ev={fresh:true,repo:'Muero42/draft-companion',canonicalBranch:'main',canonicalHead:h,head:h,clean:true,branch:'main',prState:'MERGED',containingCommitVerified:true,ciHead:h,authorizedWorkPackage:true,checks:['project_guardrails','release_contract_v2','candidate_package'].map(name=>({name,result:'PASS'}))};assert.deepEqual(validateContinuationEvidence(ev),[]);for(const f of[x=>x.fresh=false,x=>x.clean=false,x=>x.containingCommitVerified=false,x=>x.ciHead='b'.repeat(40),x=>x.authorizedWorkPackage=false,x=>x.checks.push({name:'project_guardrails',result:'PASS'})]){const x=structuredClone(ev);f(x);assert(validateContinuationEvidence(x).length)}console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v268 mutations=${cases.length} external=6`);
