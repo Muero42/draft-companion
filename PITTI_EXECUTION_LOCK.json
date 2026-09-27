@@ -191,10 +191,10 @@
       "runtimeTree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
       "status": "VERIFIED_SUCCESS_PHYSICAL_ACCEPTED",
       "branch": "main",
-      "deploymentId": "6890109e-fbcc-44b7-81c3-26835b35b208",
-      "cloudflareCheckRunId": 108690436763,
+      "deploymentId": "4804403c-1728-4bab-82b4-9a31de984fd4",
+      "cloudflareCheckRunId": 108692303883,
       "deploymentCheckId": "4804403c-1728-4bab-82b4-9a31de984fd4",
-      "deviceAcceptanceProven": false,
+      "deviceAcceptanceProven": true,
       "deviceAcceptanceScope": "2026-09-27 21:58 CEST bounded phone canary: corrected neutral Roster-Fit verbessert wording physically observed; unsupported RB-need claim absent; Boone 251/251 and no-auto-send preserved",
       "physicalClassification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
       "lastDeviceAcceptedControl": "v11.8.0-rc4.211",
@@ -448,9 +448,9 @@
     "status": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_RECONCILED",
     "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK"
   },
-  "status": "PR207_SOURCE_PRODUCTION_CI_PASS_PHYSICAL_CANARY_PENDING_RECONCILED",
+  "status": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_RECONCILED",
   "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "nextGate": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING",
+  "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -463,9 +463,9 @@
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "v11.8.0-rc4.211 remains the 17-file runtime. PR #207 reviewed head e4fa9077fa130ee9129ed8ef532dfda503270f97, merged as main 4f503ecd9bdb2efde6750583ff8dfc92dffafcb1, identical reviewed/merged tree e496f5b8190b48c7a475bdba768b968575d40ca2; Cloudflare Pages deployment 6890109e-fbcc-44b7-81c3-26835b35b208 / check 108690436763 SUCCESS for exact main. The bounded runtime delta is trade-rationale presentation only: the unverified positional claim derived from t.oppNeeds[0] was replaced by neutral truthful \"Roster-Fit verbessert\"; app blob c065c7bbf1877bfb7931045bc68dc99bf8aa306b, focused regression blob 2ab7c89b530b723209e39c0ffb49b7868428c5ef. Codex focused trade regressions PASS, full strict suite 240/240 PASS, exact-head PR CI PASS, and postmerge CI PASS. Boone source/values, seasonTradeDecision, seasonProjectionLineup, bilateral gain, capacity, fairness, conservative acceptance and no-auto-send semantics are unchanged. Current exact-tree Production physical canary is PENDING. Historical PR205 Boone physical PASS remains historical only on tree 8825347883a2eee0fd53f7d45514580b246de08e and is not inherited by this changed app.js tree. Broad ECR, selected PITTI Panel and full game-context are not reaccepted here; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Next gate: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING.",
+    "resume": "PR207 trade-rationale repair is Production-physically accepted on deployed main 90fbbfea411ade27f8ed249d771de12a026b9f15. The 2026-09-27 21:58 CEST phone canary shows the corrected neutral \"Roster-Fit verbessert\" wording; unsupported RB-need claim absent; Boone 251/251 and no-auto-send preserved. Broad lanes are not implicitly reaccepted.",
     "transaction_in_progress": false,
-    "readiness_scope": "STRUCTURAL_HANDOFF_ONLY_CURRENT_PR207_EXACT_TREE_PHYSICAL_PENDING"
+    "readiness_scope": "STRUCTURAL_HANDOFF_PLUS_PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS"
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER; rc4.131 device and 29/30 backup references are HISTORICAL evidence, not latest Android authority",
@@ -522,6 +522,6 @@
   "handoffGeneration": "20260927T1958Z-v270",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "updated_at": "2026-09-27T19:58:00Z",
-  "exactNextAction": "On the Production phone/PWA, fully reload/open v11.8.0-rc4.211, refresh live evidence, open Trades, and verify any rendered concrete offer uses truthful neutral \"Roster-Fit verbessert\" wording and never claims an unsupported positional need such as \"Bedarf RB wird adressiert\". Also confirm Boone trade values still load and no automatic send occurs. If no concrete offer is rendered, report that exact state rather than forcing a trade.",
+  "exactNextAction": "No open Draft runtime repair is authorized. Freshly verify canonical authority before future work.",
   "failClosedRecovery": "v11.8.0-rc4.211 remains the 17-file runtime. PR #207 reviewed head e4fa9077fa130ee9129ed8ef532dfda503270f97, merged as main 4f503ecd9bdb2efde6750583ff8dfc92dffafcb1, identical reviewed/merged tree e496f5b8190b48c7a475bdba768b968575d40ca2; Cloudflare Pages deployment 6890109e-fbcc-44b7-81c3-26835b35b208 / check 108690436763 SUCCESS for exact main. The bounded runtime delta is trade-rationale presentation only: the unverified positional claim derived from t.oppNeeds[0] was replaced by neutral truthful \"Roster-Fit verbessert\"; app blob c065c7bbf1877bfb7931045bc68dc99bf8aa306b, focused regression blob 2ab7c89b530b723209e39c0ffb49b7868428c5ef. Codex focused trade regressions PASS, full strict suite 240/240 PASS, exact-head PR CI PASS, and postmerge CI PASS. Boone source/values, seasonTradeDecision, seasonProjectionLineup, bilateral gain, capacity, fairness, conservative acceptance and no-auto-send semantics are unchanged. Current exact-tree Production physical canary is PENDING. Historical PR205 Boone physical PASS remains historical only on tree 8825347883a2eee0fd53f7d45514580b246de08e and is not inherited by this changed app.js tree. Broad ECR, selected PITTI Panel and full game-context are not reaccepted here; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Next gate: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING. Library mirror remains stale; never claim a newer Library generation persisted unless files.list proves it."
 }
