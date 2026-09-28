@@ -7,8 +7,8 @@ assert(start>=0&&end>start,'Special Teams temporal implementation missing');
 const implementation=source.slice(start,end);
 const makeSurface=(week,overrides={})=>{
   const lastDraftContext={draftComplete:true,season:{},availableDST:[{name:'Chargers D/ST',team:'LAC'},{name:'Bills D/ST',team:'BUF'},{name:'Bears D/ST',team:'CHI'}],availableK:[{name:'Cameron Dicker'},{name:'Cam Little'}],seasonRows:[{p:{name:'Cameron Dicker',pos:'QB'}},{p:{name:'Chris Boswell',pos:'K'}}],...overrides};
-  return Function('lastDraftContext','els','seasonEvidenceContext','esc',implementation+';return {historicalSpecialTeamsBaselineAllowed,renderSpecialTeamsBoard};')(
-    lastDraftContext,{waiverList:{}},()=>({week}),value=>String(value)
+  return Function('lastDraftContext','els','seasonEvidenceContext','esc','renderSeasonDstPlanner',implementation+';return {historicalSpecialTeamsBaselineAllowed,renderSpecialTeamsBoard};')(
+    lastDraftContext,{waiverList:{}},()=>({week}),value=>String(value),()=> 'PRODUCTION_DST_PLANNER_ROUTE'
   );
 };
 const before=Date.parse('2026-09-08T11:59:59Z'),after=Date.parse('2026-09-08T12:00:01Z');
@@ -25,10 +25,11 @@ for(const [name,week,now] of [['week 1 after expiry',1,after],['week 3 before ex
   const api=makeSurface(week),html=api.renderSpecialTeamsBoard(now);
   assert.equal(api.historicalSpecialTeamsBaselineAllowed({week,now}),false,name+' must block historical baseline');
   for(const token of forbidden)assert(!html.includes(token),name+' emitted stale evidence: '+token);
-  assert(html.includes('Current-week Special Teams evidence is not verified.'),name+' must render fail-closed explanation');
-  assert(html.includes('Live Sleeper ownership remains authoritative.'),name+' must preserve live ownership authority');
-  assert(html.includes('3 D/ST · 2 Kicker')&&html.includes('AKTUELLER KICKER: Chris Boswell'),'fail-closed surface must retain live counts and roster kicker');
-  assert(!html.includes('Chargers D/ST')&&!html.includes('Cam Little')&&!html.includes('proj.')&&!html.includes('vs HOU')&&!html.includes('vs CAR'),'fail-closed surface cannot rank free agents or show old matchups/projections');
+  assert.equal(html,'PRODUCTION_DST_PLANNER_ROUTE',name+' routes to production planner');
+}
+for(const week of [4,5,6]){
+  const html=makeSurface(week).renderSpecialTeamsBoard(Date.parse('2026-09-30T12:00:00Z'));
+  assert.equal(html,'PRODUCTION_DST_PLANNER_ROUTE');
 }
 for(const invalid of [undefined,null,Number.NaN,Infinity,'bad'])assert.equal(allowed.historicalSpecialTeamsBaselineAllowed({week:1,now:invalid}),false,'invalid time must fail closed');
 for(const stale of ["['PIT',3,1,'ATL',19.25]","Opp implied '+x.rb.implied","Vegas-Implied-Points"]) assert(!source.includes(stale),'stale/unverified DST evidence resurrected: '+stale);

@@ -1478,5 +1478,64 @@
     "authority_tree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a"
   },
   "updatedAt": "2026-09-27T19:58:00Z",
-  "exactNextAction": "No open Draft Companion runtime repair is authorized. Before future work, freshly verify canonical main and the new problem/evidence."
+  "exactNextAction": "No open Draft Companion runtime repair is authorized. Before future work, freshly verify canonical main and the new problem/evidence.",
+  "week4_season_readiness": {
+    "classification": "WEEK4_SEASON_READY_LOCAL_CANDIDATE",
+    "version": "v11.8.0-rc4.212",
+    "canonical_parent": "2a157f6458e5940e13629110267dcf6f82823f11",
+    "canonical_tree": "6f2715534691f4f8953db4882be6869c6efad9e1",
+    "branch": "codex/week4-season-readiness-closure",
+    "scope": "LOCAL_ONLY_NOT_PRODUCTION_OR_PHYSICAL_ACCEPTANCE",
+    "evidence": "docs/WEEK4_SEASON_READINESS_LOCAL.md",
+    "defects_fixed": [
+      "Fresh prior-week snapshot bypassed Sleeper week lookup",
+      "Provider failure or Retry-After retained prior-week consumer context",
+      "Broad ECR integration overwrote explicit provider week/scoring/season"
+    ],
+    "verified": [
+      "21 requested focused scripts pass; added Week 3 -> 4 persistence/consumer regression",
+      "390x844 local Chromium fixture review PASS; no screenshots, no uncaught runtime errors or horizontal overflow",
+      "Watcher timeout/network failure preserves evidence caches",
+      "Boone 16 decision parity cases and 17-file runtime manifest unchanged",
+      "Week 4/5/6 special-teams surface rejects stale Week-1 evidence",
+      "Shipped D/ST planner PASS: current/+1/+2, Week 4/5/6, ADD/STASH/HOLD/MONITOR, live ownership, protected active capacity, no Week-1 leakage",
+      "23 focused scripts PASS; mobile Chromium 390x844 D/ST horizon rendering PASS"
+    ],
+    "strict_suite": {
+      "runs": 1,
+      "total": 244,
+      "passed": 244,
+      "status": "ALL_PASS",
+      "syntax": "PASS",
+      "scope": "Final D/ST runtime and test tree; subsequent changes only record this receipt and reseal checkpoint metadata"
+    },
+    "nonblocking_unavailable": [
+      "Team Total",
+      "outdoor weather without verified forecast",
+      "selected panel/game context when their independent provider lane fails"
+    ],
+    "acceptance_gap": null,
+    "next_safe_gate": "External review/publication and exact amended-head CI, then separately authorized promotion and physical acceptance. No push/PR/deployment performed.",
+    "dst_production": {
+      "path": "app.js:seasonDstPlan -> renderSeasonDstPlanner -> renderSpecialTeamsBoard",
+      "horizon": "Sleeper current week / +1 / +2, capped at Week 18",
+      "evidence": "Existing Season projection + game-context records with matching game ID, freshness and conflict checks; no new provider",
+      "capacity": "Active-only; protected/sole QB/TE and starter-coverage guards; verified lineup loss plus explicit 0.5 points per advance week slot-cost policy",
+      "actions": "ADD margin 0.75; STASH net margin 1.25; otherwise HOLD or MONITOR with missing evidence",
+      "optional": "Team Total/weather excluded from score; missing enrichment does not block verified core projection comparisons",
+      "live_provider_coverage": "Not claimed; unavailable D/ST projections or game context remain MONITOR"
+    },
+    "prior_strict_suite": {
+      "runs": 1,
+      "passed": 240,
+      "total": 242,
+      "failed": [
+        "tools/season-ranking-freshness-regression.mjs",
+        "Draft_Companion_IR_Stash_And_Fetch_Regression_2026-08-13.js"
+      ],
+      "diagnosis": "Two outdated test expectations (context-aware freshness guard and explicit local candidate version); both corrected and focused reruns plus syntax checks PASS. Full suite intentionally not rerun.",
+      "remaining_reproduced_test_failures": 0,
+      "all_suite_syntax_checks": "PASS"
+    }
+  }
 }

@@ -137,7 +137,8 @@ must(app.includes('globale legale Slot-Optimierung'),'PITTI weekly-panel primary
 must(app.includes("const SPECIAL_TEAMS_W1_BASELINE_EXPIRES_AT=Date.parse('2026-09-08T12:00:00Z')"),'Special Teams Week-1 expiry boundary missing');
 must(app.includes('function historicalSpecialTeamsBaselineAllowed({week,now}={})')&&app.includes("typeof week==='number'&&Number.isInteger(week)&&week===1")&&app.includes('now<=SPECIAL_TEAMS_W1_BASELINE_EXPIRES_AT'),'Special Teams historical baseline temporal guard missing');
 must(app.includes('if(!historicalSpecialTeamsBaselineAllowed({week,now}))'),'Special Teams historical baseline must not be unconditional');
-must(app.includes('Current-week Special Teams evidence is not verified.')&&app.includes('No ADD / TARGET / UPGRADE conclusion is authorized'),'Special Teams in-season fail-closed surface missing');
+must(app.includes('return renderSeasonDstPlanner(c,now)')&&app.includes("const status=missing.length?'MONITOR':net>=threshold?(offset?'STASH':'ADD'):'HOLD'"),'Special Teams shipped evidence/capacity-gated planner missing');
+must(app.includes('week+1,week+2')&&app.includes('seasonStructurallyDroppable(active)')&&fs.existsSync('tools/season-dst-production-regression.mjs'),'Special Teams forward-horizon/capacity regression missing');
 must(app.includes("x.weeklyRank=seasonWeeklyMetric(x.p,'weekly_rank',season).value")&&app.includes("'FantasyPros W'+currentWeek:'FantasyPros Weekly'"),'QB current-week rank label contract missing');
 must(app.includes("dropCandidatePolicy:{primary:['Tank Bigsby','Tyjae Spears','Kenneth Gainwell'],protected:['Jadarian Price','Christian Watson','Josh Downs']"),'Mevis drop gate must protect Price/Watson/Downs and compare Bigsby/Spears/Gainwell');
 must(app.includes("find(x=>x?.p?.pos==='K')")&&app.includes('const k=ks.map('),'Waiver comparison must use the roster K and live K candidates only');
