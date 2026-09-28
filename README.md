@@ -1,8 +1,18 @@
+Handoff generation: `20260928T1918Z-v272`
+Generation: `20260928T1918Z-v272`
+> **CURRENT AUTHORITY — v272**: v11.8.0-rc4.214: PR #213 reviewed head 63162c9427fa70f1897331c15ffb2c6a38d50701, merged canonical main a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee, identical reviewed/merged tree 2ebb61df4f077f419b91b048d321781b43785332. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (a10c3257-2342-4fa4-a15a-d191306199b1, check 109091210171); PHYSICAL PENDING. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: RC4214_PRODUCTION_COMBINED_PHYSICAL_ACCEPTANCE_PENDING.
+
+After external publication and green exact-head/postmerge authority checks, separately authorized combined rc4.214 Production physical acceptance: visible version, live Sleeper freshness, four-position projections/Broad ECR/selected PITTI including RB containment and strict identity, full persisted ranks and top-key diagnostic, complete legal Start/Sit without QB omission, Game Context PASS 16 games/32 teams, D/ST current/+1/+2 ownership/capacity, no fabricated Team Total/weather and no automatic transactions. No device action in this authority-only task.
+
+Details: `docs/PITTI_V272_RC4214_POSTMERGE_AUTHORITY.md`. rc4.214 PHYSICAL PENDING; rc4.213 and rc4.212 diagnostics are historical and bounded; rc4.210 remains last broad fully accepted physical baseline.
+
+## HISTORICAL v271 AND EARLIER — NOT CURRENT AUTHORITY
+
 Local candidate v11.8.0-rc4.214: RB row containment and Weekly Evidence quota recovery. Not deployed or physically accepted. See docs/PITTI_RC4214_RB_STORAGE_EVIDENCE_REPAIR.md.
 
 Handoff generation: `20260928T1813Z-v271`
 Generation: `20260928T1813Z-v271`
-> **CURRENT AUTHORITY — v271**: v11.8.0-rc4.213: PR #211 reviewed head 481012802973301f2d9094fbccc1f6488e3e8afd, merged canonical main 158499e1b2395d9313292a0070055d539e5ce7ea, identical reviewed/merged tree d1a2bc6c7d9d5fdba83c03155682d3bf18322318. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ad38e02b-0553-4244-b4e4-7677c5090183, check 109061736154); PHYSICAL PENDING. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING.
+> **HISTORICAL AUTHORITY — v271**: v11.8.0-rc4.213: PR #211 reviewed head 481012802973301f2d9094fbccc1f6488e3e8afd, merged canonical main 158499e1b2395d9313292a0070055d539e5ce7ea, identical reviewed/merged tree d1a2bc6c7d9d5fdba83c03155682d3bf18322318. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ad38e02b-0553-4244-b4e4-7677c5090183, check 109061736154); PHYSICAL PENDING. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING.
 
 After external publication and green authority/postmerge checks, separately authorized rc4.213 Production evidence-lanes canary: Broad ECR DATE repair, projections, RB provider shape, selected PITTI identity, Start/Sit live authority, 16-game/32-team context and D/ST current/+1/+2. No device action authorized in this authority-only task.
 
