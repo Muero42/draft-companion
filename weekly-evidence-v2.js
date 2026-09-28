@@ -189,18 +189,29 @@
 
   // FantasyPros ECR is deliberately a broad current-week stabilizer. It is never
   // represented as PITTI's selected-expert panel when individual votes are absent.
+  function containRankingRows(players,position,rejects,lane){
+    const accepted=[];
+    for(const row of players||[]){
+      const actual=String(row?.position_id??row?.player_position_id??row?.position??'').toUpperCase();
+      if(actual===position)accepted.push(row);
+      else rejects.push({lane,position,rowPosition:actual,reason:'WRONG_POSITION'});
+    }
+    return{accepted,rejected:(players||[]).length-accepted.length,ratio:players?.length?accepted.length/players.length:0};
+  }
   function weeklyRankLane(payloads,{season,week,scoring:scoringInput,sleeperPlayers,verifiedAt=Date.now()}={}){
     const normalizedScoring=scoring(scoringInput),indexes=sleeperIndexes(sleeperPlayers),records=[],positions={},rejects=[];
     for(const position of POSITIONS){
       const payload=payloads?.[position],players=rankingRows(payload),payloadTime=sourceTime(payload||{},{season,verifiedAt,allowSeasonDateInference:true}),minimum=RANK_MIN_COUNTS[position];
+      const contained=containRankingRows(players,position,rejects,'expertWeeklyRanks');
       let reason='';
       if(!normalizedScoring)reason='WRONG_SCORING';
+      else if(String(payload?.position_id??payload?.position??position).toUpperCase()!==position)reason='WRONG_POSITION';
       else if(Number(payload?.season??season)!==Number(season))reason='WRONG_SEASON';
       else if(Number(payload?.week??week)!==Number(week))reason='WRONG_WEEK';
       else if(scoring(payload?.scoring??payload?.format??scoringInput)!==normalizedScoring)reason='WRONG_SCORING';
       else if(!players)reason='MISSING_PLAYERS';
-      else if(players.some(row=>String(row?.position_id??row?.player_position_id??row?.position??'').toUpperCase()!==position))reason='WRONG_POSITION';
-      const ranked=(players||[]).filter(row=>rankValue(row)!=null),timed=ranked.map(row=>({row,time:sourceTime(row,{season,verifiedAt,allowSeasonDateInference:true})})).map(x=>x.time.sourceTimePrecision==='UNKNOWN'?{...x,time:payloadTime}:x),isFresh=time=>rankingSourceFresh(time,verifiedAt),freshRows=timed.filter(x=>isFresh(x.time)),staleOrAmbiguous=timed.length-freshRows.length;
+      else if(contained.ratio<.9)reason='WRONG_POSITION';
+      const ranked=contained.accepted.filter(row=>rankValue(row)!=null),timed=ranked.map(row=>({row,time:sourceTime(row,{season,verifiedAt,allowSeasonDateInference:true})})).map(x=>x.time.sourceTimePrecision==='UNKNOWN'?{...x,time:payloadTime}:x),isFresh=time=>rankingSourceFresh(time,verifiedAt),freshRows=timed.filter(x=>isFresh(x.time)),staleOrAmbiguous=timed.length-freshRows.length;
       let mapped=0;
       if(!reason&&freshRows.length>=minimum)for(const {row,time} of freshRows){
         const mapping=mapFantasyProsPlayer(row,indexes);if(!mapping.ok){rejects.push({position,name:String(row?.name||row?.player_name||''),reason:mapping.reason});continue;}
@@ -208,7 +219,7 @@
       }
       const coverage=ranked.length?mapped/ranked.length:0,status=!reason&&freshRows.length>=minimum&&freshRows.length/ranked.length>=.9&&coverage>=.9?'AVAILABLE':mapped?'PARTIAL':'UNAVAILABLE';
       const primaryReason=reason||(freshRows.length<minimum||freshRows.length/ranked.length<.9?'STALE_OR_AMBIGUOUS_ROW_TIME':status!=='AVAILABLE'?'INSUFFICIENT_MAPPING_COVERAGE':null);
-      positions[position]={status,sourceRows:(players||[]).length,rankedRows:ranked.length,freshRows:freshRows.length,mappedRows:mapped,mappingCoverage:Math.round(coverage*1000)/1000,staleOrAmbiguousTimeCount:staleOrAmbiguous,primaryRejectionReason:primaryReason,reason:primaryReason};
+      positions[position]={status,sourceRows:(players||[]).length,rejectedPositionRows:contained.rejected,samePositionCoverage:contained.ratio,rankedRows:ranked.length,freshRows:freshRows.length,mappedRows:mapped,mappingCoverage:Math.round(coverage*1000)/1000,staleOrAmbiguousTimeCount:staleOrAmbiguous,primaryRejectionReason:primaryReason,reason:primaryReason};
     }
     const available=POSITIONS.every(position=>positions[position].status==='AVAILABLE');
     return{lane:{id:'fantasypros_weekly_ecr',status:available?'AVAILABLE':Object.values(positions).some(x=>x.status!=='UNAVAILABLE')?'PARTIAL':'UNAVAILABLE',coverage:{positions},metric:'broad_weekly_ecr_rank',panelStatus:'BROAD_CONSENSUS_ONLY'},records,rejects};
@@ -237,6 +248,7 @@
       const players=rankingRows(payload),payloadTime=sourceTime(payload||{},{season,verifiedAt,allowSeasonDateInference:true}),minimum=RANK_MIN_COUNTS[position],minimumExperts=SELECTED_PANEL_MIN_EXPERTS[position];
       const knownNames=new Map(requested.map(expert=>[expert.id,expert.name])),actualMembership=membership.filter(expert=>requestedIds.includes(expert.id)).map(expert=>({...expert,name:expert.name||knownNames.get(expert.id)||''}));
       const actualIds=actualMembership.map(expert=>expert.id),missingRequested=requested.filter(expert=>!actualIds.includes(expert.id)).map(expert=>expert.name),unexpectedMembership=membership.filter(expert=>!requestedIds.includes(expert.id));
+      const contained=containRankingRows(players,position,rejects,'pittiSelectedWeeklyRanks');
       const requestValid=Number(request?.season)===Number(season)&&Number(request?.week)===Number(week)&&String(request?.position||'').toUpperCase()===position&&String(request?.scoring||'').toUpperCase()==='HALF'&&request?.experts==='show'&&sameIds(request?.requestedExpertIds,requestedIds);
       let reason='';
       if(!normalizedScoring)reason='WRONG_SCORING';
@@ -252,8 +264,8 @@
       else if(providerFilterIds.length&&!sameIds(providerFilterIds,requestedIds))reason='FILTER_IDENTITY_MISMATCH';
       else if(!membership.length||unexpectedMembership.length||!Number.isFinite(totalExperts)||totalExperts!==membership.length)reason='UNPROVEN_EXPERT_IDENTITY';
       else if(actualMembership.length<minimumExperts)reason='INSUFFICIENT_SELECTED_EXPERTS';
-      else if(players.some(row=>String(row?.position_id??row?.player_position_id??row?.position??'').toUpperCase()!==position))reason='WRONG_POSITION';
-      const ranked=(players||[]).filter(row=>rankValue(row)!=null),timed=ranked.map(row=>({row,time:sourceTime(row,{season,verifiedAt,allowSeasonDateInference:true})})).map(x=>x.time.sourceTimePrecision==='UNKNOWN'?{...x,time:payloadTime}:x),isFresh=time=>rankingSourceFresh(time,verifiedAt),freshRows=timed.filter(x=>isFresh(x.time)),staleOrAmbiguous=timed.length-freshRows.length;
+      else if(contained.ratio<.9)reason='WRONG_POSITION';
+      const ranked=contained.accepted.filter(row=>rankValue(row)!=null),timed=ranked.map(row=>({row,time:sourceTime(row,{season,verifiedAt,allowSeasonDateInference:true})})).map(x=>x.time.sourceTimePrecision==='UNKNOWN'?{...x,time:payloadTime}:x),isFresh=time=>rankingSourceFresh(time,verifiedAt),freshRows=timed.filter(x=>isFresh(x.time)),staleOrAmbiguous=timed.length-freshRows.length;
       let mapped=0;
       const sourceReady=!reason&&freshRows.length>=minimum&&freshRows.length/Math.max(ranked.length,1)>=.9;
       if(sourceReady)for(const {row,time} of freshRows){
@@ -265,7 +277,7 @@
       const coverage=ranked.length?mapped/ranked.length:0,status=sourceReady&&coverage>=.9?'AVAILABLE':mapped?'PARTIAL':'UNAVAILABLE';
       const primaryReason=reason||(!sourceReady?'STALE_OR_AMBIGUOUS_ROW_TIME':status!=='AVAILABLE'?'INSUFFICIENT_MAPPING_COVERAGE':null);
       if(status!=='AVAILABLE')for(let i=records.length-1;i>=0;i--)if(records[i].position===position)records.splice(i,1);
-      positions[position]={status,responsePresent:envelope?.providerResponsePresent===true,sourceRows:(players||[]).length,rankedRows:ranked.length,freshRows:freshRows.length,mappedRows:status==='AVAILABLE'?mapped:0,mappingCoverage:Math.round(coverage*1000)/1000,staleOrAmbiguousTimeCount:staleOrAmbiguous,configuredExperts:configuredNames,requestedExperts:requested,actualExperts:actualMembership,missingExperts:[...directoryMissing,...missingRequested],primaryRejectionReason:primaryReason,reason:primaryReason};
+      positions[position]={status,responsePresent:envelope?.providerResponsePresent===true,sourceRows:(players||[]).length,rejectedPositionRows:contained.rejected,samePositionCoverage:contained.ratio,rankedRows:ranked.length,freshRows:freshRows.length,mappedRows:status==='AVAILABLE'?mapped:0,mappingCoverage:Math.round(coverage*1000)/1000,staleOrAmbiguousTimeCount:staleOrAmbiguous,configuredExperts:configuredNames,requestedExperts:requested,actualExperts:actualMembership,missingExperts:[...directoryMissing,...missingRequested],primaryRejectionReason:primaryReason,reason:primaryReason};
     }
     const available=POSITIONS.every(position=>positions[position].status==='AVAILABLE'),some=POSITIONS.some(position=>positions[position].status==='AVAILABLE');
     return{lane:{id:'fantasypros_pitti_selected_weekly_panel',status:available?'AVAILABLE':some?'PARTIAL':'UNAVAILABLE',coverage:{positions},metric:'weekly_rank',panelStatus:available?'AVAILABLE':some?'PARTIAL':'UNAVAILABLE'},records,rejects};
@@ -344,6 +356,18 @@
       try{return commit(snapshot);}
       catch(second){
         if(!storageQuotaError(second))throw second;
+        // Individual numeric expert caches contain provider-rebuildable draft ranks.
+        // Reclaim one at a time, largest first, stopping as soon as the full write fits.
+        const caches=[];
+        for(let i=0;i<storage.length;i++){
+          const key=storage.key(i);
+          if(/^v7_rank_\d+$/.test(key))caches.push({key,size:String(storage.getItem(key)||'').length});
+        }
+        caches.sort((a,b)=>b.size-a.size);
+        for(const {key} of caches){
+          safeRemove(storage,key);
+          try{return commit(snapshot);}catch(retry){if(!storageQuotaError(retry))throw retry;}
+        }
         // Rank evidence is optional and already independently fail-closed. If the full
         // fresh snapshot cannot replace the previous one, persist all verified projection
         // records without ranks. This is normally smaller than the previous full snapshot

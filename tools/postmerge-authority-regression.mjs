@@ -1,3 +1,4 @@
+import fs from 'node:fs';
 import {execFileSync,spawnSync} from 'node:child_process';import {RUNTIME_FILES} from './runtime-files.mjs';import {MAIN} from './postmerge-authority-contract.mjs';
 import assert from 'node:assert/strict';import {loadAuthority,validateAuthority,validateContinuationEvidence} from './postmerge-authority-contract.mjs';
 const b=loadAuthority();assert.deepEqual(validateAuthority(b),[],'baseline v271 authority must validate');
@@ -28,6 +29,22 @@ for(const f of[x=>x.fresh=false,x=>x.clean=false,x=>x.containingCommitVerified=f
 console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v271 mutations=${cases.length} external=6`);
 
 assert.equal(RUNTIME_FILES.length,17);
+// rc4.214 is an explicitly authorized runtime candidate, not the authority-only v271 tree.
+// Retain the historical 17/17 proof against canonical rc4.213 and independently
+// require all runtime files outside the five-file repair/version scope unchanged.
+const candidateVersion=(fs.readFileSync('app.js','utf8').match(/const APP_VERSION='([^']+)'/)||[])[1];
+const candidate=candidateVersion==='v11.8.0-rc4.214';
+assert(['v11.8.0-rc4.213','v11.8.0-rc4.214'].includes(candidateVersion),'unregistered runtime candidate');
+const baseline='4229a24d0e2960f279c3f05dd69c80d9530f75dc';
+const changedRuntime=new Set(['app.js','index.html','sw.js','manifest.webmanifest','weekly-evidence-v2.js']);
+if(candidate){
+ const probe=spawnSync('git',['cat-file','-e',baseline+'^{commit}'],{encoding:'utf8'});
+ if(probe.error)throw probe.error;
+ if(probe.status!==0){
+  assert.equal(execFileSync('git',['rev-parse','--is-shallow-repository'],{encoding:'utf8'}).trim(),'true');
+  execFileSync('git',['fetch','--no-tags','--depth=1','origin',baseline],{stdio:'inherit'});
+ }
+}
 const parentProbe=spawnSync('git',['cat-file','-e',MAIN+'^{commit}'],{encoding:'utf8'});
 if(parentProbe.error)throw parentProbe.error;
 if(parentProbe.status!==0){
@@ -36,5 +53,7 @@ if(parentProbe.status!==0){
   execFileSync('git',['fetch','--no-tags','--depth=1','origin',MAIN],{stdio:'inherit'});
   execFileSync('git',['cat-file','-e',MAIN+'^{commit}'],{stdio:'inherit'});
 }
-for(const file of RUNTIME_FILES){const expected=execFileSync('git',['rev-parse',MAIN+':'+file],{encoding:'utf8'}).trim(),actual=execFileSync('git',['hash-object','--path='+file,file],{encoding:'utf8'}).trim();assert.equal(actual,expected,'authority-only runtime blob changed: '+file);}
+for(const file of RUNTIME_FILES){const expected=execFileSync('git',['rev-parse',MAIN+':'+file],{encoding:'utf8'}).trim(),actual=execFileSync('git',candidate?['rev-parse',baseline+':'+file]:['hash-object','--path='+file,file],{encoding:'utf8'}).trim();assert.equal(actual,expected,'authority-only runtime blob changed: '+file);if(candidate&&!changedRuntime.has(file))assert.equal(execFileSync('git',['hash-object','--path='+file,file],{encoding:'utf8'}).trim(),expected,'out-of-scope candidate runtime change: '+file);}
 console.log('V271_RUNTIME_IDENTITY_PASS 17/17 parent '+MAIN);
+
+if(candidate)console.log('RC4214_CANDIDATE_SCOPE_PASS 12 unchanged runtime files; historical baseline identity 17/17');
