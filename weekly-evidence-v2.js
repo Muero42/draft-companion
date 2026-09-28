@@ -156,6 +156,30 @@
     return null;
   }
 
+  // DATE is a calendar interval, never an exact midnight publication time.
+  // Reject dates whose entire day lies outside the existing freshness window.
+  function rankingSourceFresh(time,verifiedAt){
+    if(time.sourceTimePrecision==='TIMESTAMP'){
+      const published=Date.parse(time.sourcePublishedAt||'');
+      return Number.isFinite(published)&&published<=verifiedAt&&verifiedAt-published<=EVIDENCE_TTL_MS;
+    }
+    if(time.sourceTimePrecision!=='DATE'||!/^\d{4}-\d{2}-\d{2}$/.test(time.sourcePublishedDate||''))return false;
+    const day=Date.parse(time.sourcePublishedDate),dayEnd=day+86400000;
+    return Number.isFinite(day)&&time.sourcePublishedDate<=iso(verifiedAt).slice(0,10)&&verifiedAt-dayEnd<EVIDENCE_TTL_MS;
+  }
+
+  function rankingPayloadDiagnostic(payload){
+    const allowed=['QB','RB','WR','TE','K','DST','DEF'];
+    const cleanPosition=value=>allowed.includes(String(value||'').toUpperCase())?String(value).toUpperCase():value==null?'MISSING':'OTHER';
+    const positionCounts={};
+    for(const row of rankingRows(payload)||[]){
+      const position=cleanPosition(row?.position_id??row?.player_position_id??row?.position);
+      positionCounts[position]=(positionCounts[position]||0)+1;
+    }
+    const identityFieldTypes=Object.fromEntries(['expert_name','expert_pub','total_experts','filters','experts'].map(key=>[key,payload?.[key]==null?'ABSENT':Array.isArray(payload[key])?'ARRAY':typeof payload[key]]));
+    return{providerPosition:cleanPosition(payload?.position_id??payload?.position),positionCounts,identityFieldTypes};
+  }
+
   function rankValue(row){
     for(const raw of [row?.rank_ecr,row?.ecr,row?.rank,row?.rank_ave,row?.rank_mean]){
       const value=Number(raw);if(Number.isFinite(value)&&value>0)return value;
@@ -176,7 +200,7 @@
       else if(scoring(payload?.scoring??payload?.format??scoringInput)!==normalizedScoring)reason='WRONG_SCORING';
       else if(!players)reason='MISSING_PLAYERS';
       else if(players.some(row=>String(row?.position_id??row?.player_position_id??row?.position??'').toUpperCase()!==position))reason='WRONG_POSITION';
-      const ranked=(players||[]).filter(row=>rankValue(row)!=null),timed=ranked.map(row=>({row,time:sourceTime(row,{season,verifiedAt,allowSeasonDateInference:true})})).map(x=>x.time.sourceTimePrecision==='UNKNOWN'?{...x,time:payloadTime}:x),isFresh=time=>time.sourcePublishedAt?Date.parse(time.sourcePublishedAt)<=verifiedAt&&verifiedAt-Date.parse(time.sourcePublishedAt)<=EVIDENCE_TTL_MS:time.sourcePublishedDate?time.sourcePublishedDate<=iso(verifiedAt).slice(0,10)&&verifiedAt-Date.parse(time.sourcePublishedDate)<EVIDENCE_TTL_MS:false,freshRows=timed.filter(x=>isFresh(x.time)),staleOrAmbiguous=timed.length-freshRows.length;
+      const ranked=(players||[]).filter(row=>rankValue(row)!=null),timed=ranked.map(row=>({row,time:sourceTime(row,{season,verifiedAt,allowSeasonDateInference:true})})).map(x=>x.time.sourceTimePrecision==='UNKNOWN'?{...x,time:payloadTime}:x),isFresh=time=>rankingSourceFresh(time,verifiedAt),freshRows=timed.filter(x=>isFresh(x.time)),staleOrAmbiguous=timed.length-freshRows.length;
       let mapped=0;
       if(!reason&&freshRows.length>=minimum)for(const {row,time} of freshRows){
         const mapping=mapFantasyProsPlayer(row,indexes);if(!mapping.ok){rejects.push({position,name:String(row?.name||row?.player_name||''),reason:mapping.reason});continue;}
@@ -229,7 +253,7 @@
       else if(!membership.length||unexpectedMembership.length||!Number.isFinite(totalExperts)||totalExperts!==membership.length)reason='UNPROVEN_EXPERT_IDENTITY';
       else if(actualMembership.length<minimumExperts)reason='INSUFFICIENT_SELECTED_EXPERTS';
       else if(players.some(row=>String(row?.position_id??row?.player_position_id??row?.position??'').toUpperCase()!==position))reason='WRONG_POSITION';
-      const ranked=(players||[]).filter(row=>rankValue(row)!=null),timed=ranked.map(row=>({row,time:sourceTime(row,{season,verifiedAt,allowSeasonDateInference:true})})).map(x=>x.time.sourceTimePrecision==='UNKNOWN'?{...x,time:payloadTime}:x),isFresh=time=>time.sourcePublishedAt?Date.parse(time.sourcePublishedAt)<=verifiedAt&&verifiedAt-Date.parse(time.sourcePublishedAt)<=EVIDENCE_TTL_MS:time.sourcePublishedDate?time.sourcePublishedDate<=iso(verifiedAt).slice(0,10)&&verifiedAt-Date.parse(time.sourcePublishedDate)<EVIDENCE_TTL_MS:false,freshRows=timed.filter(x=>isFresh(x.time)),staleOrAmbiguous=timed.length-freshRows.length;
+      const ranked=(players||[]).filter(row=>rankValue(row)!=null),timed=ranked.map(row=>({row,time:sourceTime(row,{season,verifiedAt,allowSeasonDateInference:true})})).map(x=>x.time.sourceTimePrecision==='UNKNOWN'?{...x,time:payloadTime}:x),isFresh=time=>rankingSourceFresh(time,verifiedAt),freshRows=timed.filter(x=>isFresh(x.time)),staleOrAmbiguous=timed.length-freshRows.length;
       let mapped=0;
       const sourceReady=!reason&&freshRows.length>=minimum&&freshRows.length/Math.max(ranked.length,1)>=.9;
       if(sourceReady)for(const {row,time} of freshRows){
@@ -338,5 +362,5 @@
     }
   }
 
-  return{SCHEMA,CACHE_KEY,TEMP_KEY,MAPPING_VERSION,MAX_AGE_MS,EVIDENCE_TTL_MS,POSITIONS,MIN_COUNTS,RANK_MIN_COUNTS,SELECTED_PANEL_MIN_EXPERTS,WEEKLY_PROJECTION_QUERY_SHAPE,WEEKLY_HALF_PPR_MAX,sourceTime,retrievalProjectionChronology,weeklyRecordChronology,sleeperIndexes,mapFantasyProsPlayer,projectionLane,weeklyRankLane,selectedWeeklyRankLane,buildSnapshot,validateSnapshot,projectionOnlyStorageSnapshot,atomicWrite};
+  return{rankingPayloadDiagnostic,SCHEMA,CACHE_KEY,TEMP_KEY,MAPPING_VERSION,MAX_AGE_MS,EVIDENCE_TTL_MS,POSITIONS,MIN_COUNTS,RANK_MIN_COUNTS,SELECTED_PANEL_MIN_EXPERTS,WEEKLY_PROJECTION_QUERY_SHAPE,WEEKLY_HALF_PPR_MAX,sourceTime,retrievalProjectionChronology,weeklyRecordChronology,sleeperIndexes,mapFantasyProsPlayer,projectionLane,weeklyRankLane,selectedWeeklyRankLane,buildSnapshot,validateSnapshot,projectionOnlyStorageSnapshot,atomicWrite};
 });
