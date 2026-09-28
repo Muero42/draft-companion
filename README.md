@@ -1,3 +1,5 @@
+Local candidate: v11.8.0-rc4.213. See RC4213_EVIDENCE_REPAIR.md; physical acceptance pending.
+
 > **LOCAL CANDIDATE v11.8.0-rc4.212**: Week rollover checks Sleeper before cache/retry gates and invalidates prior-week consumers before optional acquisition. Local verification is recorded in `PITTI_CURRENT_STATE.json:week4_season_readiness`; Production/device evidence below applies only to its recorded rc4.211 tree.
 
 Handoff generation: `20260927T1958Z-v270`
