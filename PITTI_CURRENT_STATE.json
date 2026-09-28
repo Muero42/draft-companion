@@ -1,15 +1,15 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260927T1958Z-v270",
-  "updated_at": "2026-09-27T19:58:00Z",
+  "handoff_generation": "20260928T1813Z-v271",
+  "updated_at": "2026-09-28T18:13:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.211",
+    "source_candidate": "v11.8.0-rc4.213",
     "git_identity_rule": "Canonical main identity and candidate containment are freshly verified externally; no commit or mutable PR state is immutable checkpoint authority.",
-    "reconciled_base_main": "90fbbfea411ade27f8ed249d771de12a026b9f15",
+    "reconciled_base_main": "158499e1b2395d9313292a0070055d539e5ce7ea",
     "postmerge": {
       "checkpoint": "v233",
       "pr": 121,
@@ -295,7 +295,7 @@
       "fantasypros_result": "PHYSICAL_PASS_OMITTED_ROS_WEEKLY_PROJECTION",
       "remaining_failure": "Sleeper NFL State: Timeout nach 6s"
     },
-    "reconciled_main": "7b2ac9c7aaf1383ca303a609c3db35d023d0596e",
+    "reconciled_main": "158499e1b2395d9313292a0070055d539e5ce7ea",
     "rc4205_physical_acceptance": {
       "checkpoint": "v256",
       "version": "v11.8.0-rc4.205",
@@ -640,86 +640,96 @@
       "postmerge_ci": "Authority-coupled jobs failed on stale v263 runtime version lock metadata; Cloudflare Pages Production deployment succeeded. v265 is the checkpoint-only reconciliation.",
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME"
     },
-    "rc4211_pr207_source_production": {
-      "checkpoint": "v270",
-      "version": "v11.8.0-rc4.211",
-      "pr": 207,
-      "reviewed_head": "e4fa9077fa130ee9129ed8ef532dfda503270f97",
-      "merge_commit": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
-      "merged_tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
-      "reviewed_tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
-      "direct_parent": "445833a6d60b27bb955d190e7fab2e0111503aef",
-      "production_deployment_id": "4804403c-1728-4bab-82b4-9a31de984fd4",
-      "cloudflare_check_run_id": 108692303883,
+    "rc4213_source_production": {
+      "checkpoint": "v271",
+      "version": "v11.8.0-rc4.213",
+      "pr": 211,
+      "reviewed_head": "481012802973301f2d9094fbccc1f6488e3e8afd",
+      "reviewed_tree": "d1a2bc6c7d9d5fdba83c03155682d3bf18322318",
+      "merge_commit": "158499e1b2395d9313292a0070055d539e5ce7ea",
+      "merged_tree": "d1a2bc6c7d9d5fdba83c03155682d3bf18322318",
+      "source_status": "MERGED_CANONICAL",
+      "production_status": "DEPLOYED_SUCCESS",
+      "physical_status": "PENDING",
+      "production_deployment_id": "ad38e02b-0553-4244-b4e4-7677c5090183",
+      "cloudflare_check_run_id": 109061736154,
       "production_deployment_proven": true,
-      "physical_acceptance_proven": true,
-      "physical_classification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
-      "physical_scope": "2026-09-27 21:58 CEST Production phone canary after exact main deployment: rc4.211; Sleeper Live-State <1 Min.; W3 FantasyPros projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo 251/251; concrete GIVE George Pickens / GET Brock Bowers; opponent +2.3 projected points; market 40.0/39.0; corrected neutral \"Roster-Fit verbessert\"; unsupported RB-need claim absent; conservative heuristic retained; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted.",
-      "premerge_ci": "PASS",
-      "postmerge_ci": "PASS",
-      "evidence_source": "LIVE_GITHUB_EXACT_MAIN_DEPLOYMENT_PLUS_USER_SUPPLIED_PRODUCTION_PHONE_SCREENSHOT",
-      "runtime_delta": "TRADE_OPPONENT_NEED_RATIONALE_UI_ONLY",
-      "decision_semantic_drift": false,
-      "app_blob": "c065c7bbf1877bfb7931045bc68dc99bf8aa306b",
-      "focused_regression_blob": "2ab7c89b530b723209e39c0ffb49b7868428c5ef",
-      "repair_semantics": "Unsupported positional need claim removed; neutral Roster-Fit wording only because generic oppNeeds is synthetic/unverified for the concrete GIVE package.",
-      "peaked_gate": "PEAKED_SOURCE_CONTRACT_NOT_VERIFIED",
-      "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
-      "authority_reconciled_main": "90fbbfea411ade27f8ed249d771de12a026b9f15",
-      "authority_tree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a",
-      "repair_status": "PHYSICAL_PASS_CORRECTED_NEUTRAL_RATIONALE"
+      "physical_acceptance_proven": false,
+      "evidence_source": "USER_SUPPLIED_EXTERNAL_EVIDENCE",
+      "premerge_exact_head_ci": "PASS",
+      "premerge_local_strict": "246/246 PASS exit 0",
+      "postmerge_authority_checks": "FAILED_RUNTIME_VERSION_LOCK_DRIFT; reconciliation pending external checks",
+      "repair_scope": {
+        "broad_ecr": "DATE metadata treated as exact midnight timestamp; repaired with calendar-date precision, no invented publication time or global TTL extension",
+        "rb_wrong_position": "ROOT_CAUSE_NOT_PROVEN_FROM_RAW_ROWS; strict position validation unchanged",
+        "selected_pitti": "PROVIDER_EXPERT_IDENTITY_UNPROVEN; fail closed unless exact requested-expert identity established",
+        "start_sit": "NO_DISTINCT_LIVE_AUTHORITY_PREDICATE_DEFECT_PROVEN"
+      },
+      "local_reconciliation_validation": {
+        "focused_authority": "PASS",
+        "seal_integrity": "PASS",
+        "runtime_blobs": "17/17 identical to 158499e1b2395d9313292a0070055d539e5ce7ea",
+        "strict_suite": "246/246 PASS exit 0; one run",
+        "scope": "LOCAL_AUTHORITY_VALIDATION_ONLY; external postmerge checks and physical canary remain pending"
+      }
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.211",
-    "season_candidate": "v11.8.0-rc4.211 remains the 17-file runtime. PR #207 reviewed head e4fa9077fa130ee9129ed8ef532dfda503270f97, merged as main 4f503ecd9bdb2efde6750583ff8dfc92dffafcb1, identical reviewed/merged tree e496f5b8190b48c7a475bdba768b968575d40ca2; Cloudflare Pages deployment 6890109e-fbcc-44b7-81c3-26835b35b208 / check 108690436763 SUCCESS for exact main. The bounded runtime delta is trade-rationale presentation only: the unverified positional claim derived from t.oppNeeds[0] was replaced by neutral truthful \"Roster-Fit verbessert\"; app blob c065c7bbf1877bfb7931045bc68dc99bf8aa306b, focused regression blob 2ab7c89b530b723209e39c0ffb49b7868428c5ef. Codex focused trade regressions PASS, full strict suite 240/240 PASS, exact-head PR CI PASS, and postmerge CI PASS. Boone source/values, seasonTradeDecision, seasonProjectionLineup, bilateral gain, capacity, fairness, conservative acceptance and no-auto-send semantics are unchanged. Current exact-tree Production physical canary is PENDING. Historical PR205 Boone physical PASS remains historical only on tree 8825347883a2eee0fd53f7d45514580b246de08e and is not inherited by this changed app.js tree. Broad ECR, selected PITTI Panel and full game-context are not reaccepted here; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Next gate: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING.",
-    "candidate_branch": "main via merged PR #207",
-    "android_acceptance_pending": false,
-    "test_challenger": "v11.8.0-rc4.211",
+    "season_candidate": "v11.8.0-rc4.213: PR #211 reviewed head 481012802973301f2d9094fbccc1f6488e3e8afd, merged canonical main 158499e1b2395d9313292a0070055d539e5ce7ea, identical reviewed/merged tree d1a2bc6c7d9d5fdba83c03155682d3bf18322318. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ad38e02b-0553-4244-b4e4-7677c5090183, check 109061736154); PHYSICAL PENDING. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING.",
+    "candidate_branch": "main via merged PR #211",
+    "android_acceptance_pending": true,
+    "test_challenger": "v11.8.0-rc4.213",
     "ci": {
-      "status": "PR207_POSTMERGE_AND_V269_EXACT_MAIN_PASS",
-      "validated_code_head": "e4fa9077fa130ee9129ed8ef532dfda503270f97",
-      "current_exact_main_head_ci": "PASS",
-      "validated_main": "90fbbfea411ade27f8ed249d771de12a026b9f15",
-      "evidence_source": "LIVE_GITHUB_VERIFIED_THIS_RECONCILIATION",
-      "candidate_package": "PASS",
-      "release_contract_v2": "PASS",
-      "project_guardrails": "PASS",
-      "cloud_validation": "PASS",
-      "cloudflare_pages": "PASS",
-      "draft_critical": "ALL_PASS"
+      "status": "PREMERGE_PASS_POSTMERGE_AUTHORITY_DRIFT",
+      "validated_code_head": "481012802973301f2d9094fbccc1f6488e3e8afd",
+      "validated_main": "158499e1b2395d9313292a0070055d539e5ce7ea",
+      "current_exact_main_head_ci": "FAILED_AUTHORITY_DRIFT",
+      "evidence_source": "USER_SUPPLIED_EXTERNAL_EVIDENCE",
+      "premerge_strict": "246/246 PASS exit 0"
     },
     "android_accepted": "v11.8.0-rc4.211",
-    "preview_candidate": "PR207 reviewed tree equals merged tree; Production deployed; physical trade-rationale canary pending",
-    "android_authority": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL on deployed main 90fbbfea411ade27f8ed249d771de12a026b9f15 / tree 689f57f968e3ddf71ad827cec5b361f0ed2a0d7a; bounded scope only.",
+    "preview_candidate": "PR211 reviewed tree equals merged tree; Production deployed; physical pending",
+    "android_authority": "rc4.213 PHYSICAL PENDING; rc4.212 bounded phone/API diagnostic is historical only; rc4.210 remains last broad physical baseline.",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "90fbbfea411ade27f8ed249d771de12a026b9f15",
-    "installed_android": "v11.8.0-rc4.210",
-    "installation_observation_scope": "Historical last installed-version observation only; rc4.211 was physically inspected on Preview. A new installation was not supplied or performed. Current source/Production is rc4.211.",
-    "latest_android_observed": "v11.8.0-rc4.211",
+    "deployed_pages_head": "158499e1b2395d9313292a0070055d539e5ce7ea",
+    "installed_android": "v11.8.0-rc4.212",
+    "installation_observation_scope": "User-supplied phone runtime observed 2026-09-28; installation mechanism not separately verified",
+    "latest_android_observed": "v11.8.0-rc4.212",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "Historical rc4.183 rejection: FA/Add-Drop cards under Kader and IR/Reserve Charbonnet as ordinary drop target. Superseded by rc4.188 physical Waiver/FA canary PASS; retained only as historical regression evidence.",
     "latest_device_evidence": {
-      "version": "v11.8.0-rc4.211",
-      "recorded_at": "2026-09-27T19:58:00Z",
-      "evidence": "USER_SUPPLIED_PRODUCTION_PHONE_SCREENSHOT_2026-09-27T21:58_CEST",
-      "evidence_source": "USER_SUPPLIED_PRODUCTION_PHONE_SCREENSHOT",
-      "acceptance": "PASS",
-      "classification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
-      "scope": "2026-09-27 21:58 CEST Production phone canary after exact main deployment: rc4.211; Sleeper Live-State <1 Min.; W3 FantasyPros projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo 251/251; concrete GIVE George Pickens / GET Brock Bowers; opponent +2.3 projected points; market 40.0/39.0; corrected neutral \"Roster-Fit verbessert\"; unsupported RB-need claim absent; conservative heuristic retained; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted.",
-      "tree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a",
-      "runtime_tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
-      "weekly_projection_summary": "PHYSICAL_AVAILABLE_QB_RB_WR_TE",
-      "trade_value_summary": "JUSTIN_BOONE_YAHOO_251_OF_251_MAPPED_AND_CONSUMED",
-      "trade_consumer_summary": "Pickens-for-Bowers offer physically shows corrected neutral \"Roster-Fit verbessert\"; unsupported RB-need claim absent; no automatic send.",
-      "broad_evidence_reobserved": false,
-      "last_broad_physical_baseline": "v11.8.0-rc4.210",
-      "evidence_scope": "CURRENT_PR207_PRODUCTION_BOUNDED_PHYSICAL_ACCEPTANCE"
+      "version": "v11.8.0-rc4.212",
+      "observed_at": "2026-09-28",
+      "acceptance": "PARTIAL_PASS_BOUNDED_HISTORICAL",
+      "classification": "RC4212_BOUNDED_PHONE_AND_API_DIAGNOSTIC_RANK_LANES_UNAVAILABLE",
+      "evidence_source": "USER_SUPPLIED_PHONE_SCREENSHOTS_AND_API_DIAGNOSTIC",
+      "tree": null,
+      "evidence_scope": "HISTORICAL_RC4212_ONLY_NOT_RC4213_ACCEPTANCE",
+      "week": 3,
+      "sleeper_live_age": "<1 Min.",
+      "projection_positions": [
+        "QB",
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "projection_records": 488,
+      "active_projection_roster": "13/13 usable",
+      "roster_players": 16,
+      "reserve_ir": 1,
+      "start_sit": "LINEUP OPTIMAL visible",
+      "trade": "Boone/Yahoo 251/251; Trade Board v8 functioning; no automatic send",
+      "broad_ecr": "UNAVAILABLE; HTTP 200 rejected by chronology/position validation",
+      "selected_pitti": "UNAVAILABLE; HTTP 200 but returned expert identity unproven",
+      "game_context": "AVAILABLE / PASS; 16 games / 32 teams",
+      "team_total": "UNAVAILABLE",
+      "outdoor_weather": "FAIL_CLOSED_WITHOUT_FRESH_FORECAST"
     },
-    "latestAndroidVersionObserved": "v11.8.0-rc4.211",
-    "source_candidate_status": "SOURCE_PRODUCTION_DEPLOYED_CI_PASS_PHYSICAL_ACCEPTED",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.212",
+    "source_candidate_status": "SOURCE_PRODUCTION_DEPLOYED_PHYSICAL_PENDING",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -780,48 +790,39 @@
         "candidate_package": "FAIL_STALE_BOOTSTRAP_RENDER_ASSERT_REPAIRED"
       }
     },
-    "package_reference_scope": "rc4.211 reviewed 17-file byte-exact runtime package; archive SHA noncanonical",
+    "package_reference_scope": "rc4.213 17-file runtime preserved byte-identically to canonical parent; package is not physical acceptance",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.211",
+      "version": "v11.8.0-rc4.213",
       "files": 17,
       "sha256": null,
-      "status": "VALIDATED_PREMERGE_17_RUNTIME_FILES_BYTE_EXACT",
-      "source_scope": "PR203_REVIEWED_TREE_EQUALS_MERGED_PRODUCTION_TREE",
-      "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_NONCANONICAL"
+      "status": "PARENT_RUNTIME_17_FILE_IDENTITY_REQUIRED",
+      "source_scope": "PR211_REVIEWED_TREE_EQUALS_MERGED_TREE"
     },
-    "deployment_parity": "PR207_REVIEWED_TREE_EQUALS_MERGED_TREE; EXACT_MAIN_CLOUDFLARE_DEPLOYMENT_SUCCESS; PHYSICAL_CANARY_PENDING",
-    "deployed_production_version": "v11.8.0-rc4.211",
+    "deployment_parity": "PR211_REVIEWED_TREE_EQUALS_MERGED_TREE; USER_SUPPLIED_PRODUCTION_SUCCESS; PHYSICAL_PENDING",
+    "deployed_production_version": "v11.8.0-rc4.213",
     "production_deployment": {
-      "version": "v11.8.0-rc4.211",
-      "source_commit": "90fbbfea411ade27f8ed249d771de12a026b9f15",
-      "tree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a",
-      "runtime_source_commit": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
-      "runtime_tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
-      "status": "VERIFIED_SUCCESS_PHYSICAL_ACCEPTED",
+      "version": "v11.8.0-rc4.213",
+      "source_commit": "158499e1b2395d9313292a0070055d539e5ce7ea",
+      "tree": "d1a2bc6c7d9d5fdba83c03155682d3bf18322318",
+      "status": "DEPLOYED_SUCCESS",
       "branch": "main",
-      "deployment_id": "4804403c-1728-4bab-82b4-9a31de984fd4",
-      "cloudflare_check_run_id": 108692303883,
-      "deployment_check_id": "4804403c-1728-4bab-82b4-9a31de984fd4",
-      "device_acceptance_proven": true,
-      "device_acceptance_scope": "2026-09-27 21:58 CEST Production phone canary after exact main deployment: rc4.211; Sleeper Live-State <1 Min.; W3 FantasyPros projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo 251/251; concrete GIVE George Pickens / GET Brock Bowers; opponent +2.3 projected points; market 40.0/39.0; corrected neutral \"Roster-Fit verbessert\"; unsupported RB-need claim absent; conservative heuristic retained; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted.",
-      "physical_classification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
-      "last_device_accepted_control": "v11.8.0-rc4.211",
-      "last_broad_physical_baseline": "v11.8.0-rc4.210",
-      "evidence_source": "LIVE_GITHUB_EXACT_MAIN_DEPLOYMENT_AND_USER_SUPPLIED_PHONE_CANARY"
+      "deployment_id": "ad38e02b-0553-4244-b4e4-7677c5090183",
+      "cloudflare_check_run_id": 109061736154,
+      "deployment_check_id": "ad38e02b-0553-4244-b4e4-7677c5090183",
+      "device_acceptance_proven": false,
+      "physical_classification": "RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING",
+      "evidence_source": "USER_SUPPLIED_EXTERNAL_EVIDENCE"
     },
     "independent_evidence_lane_status": {
-      "broad_expert_ranks": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
-      "pitti_panel": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
+      "broad_expert_ranks": "RC4213_PHYSICAL_PENDING; LAST_BROAD_PASS_RC4210; RC4212_UNAVAILABLE",
+      "pitti_panel": "RC4213_PHYSICAL_PENDING; IDENTITY_UNPROVEN; RC4212_UNAVAILABLE",
+      "game_context": "RC4213_PHYSICAL_PENDING; RC4212_DIAGNOSTIC_PASS_16_GAMES_32_TEAMS",
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
-      "game_context": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
-      "opponent_weather": "LAST_BROAD_PASS_RC4210; OUTDOOR_WEATHER_FAIL_CLOSED_WITHOUT_FRESH_FORECAST",
-      "evidence_baseline": "v11.8.0-rc4.210",
-      "rc4211_preview_weekly_evidence": "SUPERSEDED_BY_PR205_PRODUCTION_CANARY",
-      "pr205_production_weekly_evidence": "PROJECTIONS_AVAILABLE_QB_RB_WR_TE; BROAD_ECR_AND_SELECTED_PITTI_PANEL_NOT_REACCEPTED"
+      "outdoor_weather": "FAIL_CLOSED_WITHOUT_FRESH_FORECAST"
     },
     "mainGhPagesParity": false,
     "deployedPagesAppByteParityWithMain": false,
-    "latestAndroidFunctionalVerified": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL on deployed main 90fbbfea411ade27f8ed249d771de12a026b9f15 / tree 689f57f968e3ddf71ad827cec5b361f0ed2a0d7a; bounded scope only.",
+    "latestAndroidFunctionalVerified": "HISTORICAL rc4.212 bounded phone/API observation: projections and Game Context verified; Broad ECR and selected PITTI unavailable. No rc4.213 physical acceptance.",
     "last_broad_physical_evidence_baseline": {
       "status": "LAST_BROAD_PHYSICAL_EVIDENCE_BASELINE",
       "version": "v11.8.0-rc4.210",
@@ -870,15 +871,14 @@
       }
     },
     "current_physical_acceptance": {
-      "tree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a",
-      "runtime_tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
-      "acceptance": "PASS",
-      "classification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
-      "proven": true,
-      "scope": "2026-09-27 21:58 CEST Production phone canary after exact main deployment: rc4.211; Sleeper Live-State <1 Min.; W3 FantasyPros projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo 251/251; concrete GIVE George Pickens / GET Brock Bowers; opponent +2.3 projected points; market 40.0/39.0; corrected neutral \"Roster-Fit verbessert\"; unsupported RB-need claim absent; conservative heuristic retained; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted."
+      "version": "v11.8.0-rc4.213",
+      "tree": "d1a2bc6c7d9d5fdba83c03155682d3bf18322318",
+      "acceptance": "PENDING",
+      "proven": false,
+      "classification": "RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING"
     },
     "accepted_android_scope": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
-    "androidAuthority": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL on deployed main 90fbbfea411ade27f8ed249d771de12a026b9f15 / tree 689f57f968e3ddf71ad827cec5b361f0ed2a0d7a; bounded scope only."
+    "androidAuthority": "rc4.213 PHYSICAL PENDING; rc4.212 bounded phone/API diagnostic is historical only; rc4.210 remains last broad physical baseline."
   },
   "real_draft": {
     "draft_id": "1366053132970233856",
@@ -917,8 +917,8 @@
     "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
-    "status": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_RECONCILED",
-    "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK"
+    "status": "RC4213_POSTMERGE_AUTHORITY_RECONCILED_PHYSICAL_PENDING",
+    "nextGate": "RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -937,7 +937,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "PR207 trade-rationale repair is Production-physically accepted on deployed main 90fbbfea411ade27f8ed249d771de12a026b9f15. 2026-09-27 21:58 CEST Production phone canary after exact main deployment: rc4.211; Sleeper Live-State <1 Min.; W3 FantasyPros projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo 251/251; concrete GIVE George Pickens / GET Brock Bowers; opponent +2.3 projected points; market 40.0/39.0; corrected neutral \"Roster-Fit verbessert\"; unsupported RB-need claim absent; conservative heuristic retained; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted. Classification: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL. Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED.",
+  "source_authority": "v11.8.0-rc4.213: PR #211 reviewed head 481012802973301f2d9094fbccc1f6488e3e8afd, merged canonical main 158499e1b2395d9313292a0070055d539e5ce7ea, identical reviewed/merged tree d1a2bc6c7d9d5fdba83c03155682d3bf18322318. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ad38e02b-0553-4244-b4e4-7677c5090183, check 109061736154); PHYSICAL PENDING. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -972,9 +972,20 @@
     "status": "IDLE",
     "active": [],
     "ready": [],
-    "waiting_external": [],
+    "waiting_external": [
+      {
+        "id": "rc4213-physical-diagnostic",
+        "gate": "RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING",
+        "reason": "Separately authorized external physical canary after authority checks"
+      }
+    ],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "v271-rc4213-authority-reconciliation",
+        "result": "v11.8.0-rc4.213: PR #211 reviewed head 481012802973301f2d9094fbccc1f6488e3e8afd, merged canonical main 158499e1b2395d9313292a0070055d539e5ce7ea, identical reviewed/merged tree d1a2bc6c7d9d5fdba83c03155682d3bf18322318. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ad38e02b-0553-4244-b4e4-7677c5090183, check 109061736154); PHYSICAL PENDING. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING.",
+        "at": "2026-09-28T18:13:00Z"
+      },
       {
         "id": "pr207-production-trade-rationale-physical-v270",
         "result": "PR207 trade-rationale repair is Production-physically accepted on deployed main 90fbbfea411ade27f8ed249d771de12a026b9f15. 2026-09-27 21:58 CEST Production phone canary after exact main deployment: rc4.211; Sleeper Live-State <1 Min.; W3 FantasyPros projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo 251/251; concrete GIVE George Pickens / GET Brock Bowers; opponent +2.3 projected points; market 40.0/39.0; corrected neutral \"Roster-Fit verbessert\"; unsupported RB-need claim absent; conservative heuristic retained; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted. Classification: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL. Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED.",
@@ -1167,25 +1178,25 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "NO_EXECUTABLE_WORK_REMAINS",
-      "reason": "PR207 bounded Production physical canary passed; no executable Draft runtime work remains."
+      "reason": "Authorized local authority package complete; external publication/checks and physical diagnostic are outside scope"
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260927T1958Z-v270",
+    "generation": "20260928T1813Z-v271",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "PR207 trade-rationale repair is Production-physically accepted on deployed main 90fbbfea411ade27f8ed249d771de12a026b9f15. 2026-09-27 21:58 CEST Production phone canary after exact main deployment: rc4.211; Sleeper Live-State <1 Min.; W3 FantasyPros projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo 251/251; concrete GIVE George Pickens / GET Brock Bowers; opponent +2.3 projected points; market 40.0/39.0; corrected neutral \"Roster-Fit verbessert\"; unsupported RB-need claim absent; conservative heuristic retained; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted. Classification: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL. Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED.",
+    "resume": "After external publication and green authority/postmerge checks, separately authorized rc4.213 Production evidence-lanes canary: Broad ECR DATE repair, projections, RB provider shape, selected PITTI identity, Start/Sit live authority, 16-game/32-team context and D/ST current/+1/+2. No device action authorized in this authority-only task.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "V270_PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS",
-    "readiness_scope": "STRUCTURAL_HANDOFF_PLUS_PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS"
+    "refresh_scope": "V271_RC4213_POSTMERGE_AUTHORITY_ONLY",
+    "readiness_scope": "STRUCTURAL_HANDOFF_ONLY_NOT_DEVICE_ACCEPTANCE"
   },
-  "status": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_RECONCILED",
-  "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "handoffGeneration": "20260927T1958Z-v270",
+  "status": "RC4213_POSTMERGE_AUTHORITY_RECONCILED_PHYSICAL_PENDING",
+  "gate": "RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING",
+  "nextGate": "RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING",
+  "handoffGeneration": "20260928T1813Z-v271",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -1443,6 +1454,131 @@
       "peaked_gate": "PEAKED_SOURCE_CONTRACT_NOT_VERIFIED",
       "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
       "trade_rationale_finding": "TRADE_OPPONENT_NEED_RATIONALE_MISMATCH: the visible opponent rationale can name the highest generic opponent need (oppNeeds[0]) instead of the position actually addressed by the offered GIVE package; observed as 'Bedarf RB wird adressiert' for GIVE George Pickens (WR) / GET Brock Bowers (TE). Trade legality, Boone values, fairness and bilateral lineup-gain checks remain separately computed."
+    },
+    "v270_runtime": {
+      "ci": {
+        "status": "PR207_POSTMERGE_AND_V269_EXACT_MAIN_PASS",
+        "validated_code_head": "e4fa9077fa130ee9129ed8ef532dfda503270f97",
+        "current_exact_main_head_ci": "PASS",
+        "validated_main": "90fbbfea411ade27f8ed249d771de12a026b9f15",
+        "evidence_source": "LIVE_GITHUB_VERIFIED_THIS_RECONCILIATION",
+        "candidate_package": "PASS",
+        "release_contract_v2": "PASS",
+        "project_guardrails": "PASS",
+        "cloud_validation": "PASS",
+        "cloudflare_pages": "PASS",
+        "draft_critical": "ALL_PASS"
+      },
+      "production_deployment": {
+        "version": "v11.8.0-rc4.211",
+        "source_commit": "90fbbfea411ade27f8ed249d771de12a026b9f15",
+        "tree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a",
+        "runtime_source_commit": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
+        "runtime_tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
+        "status": "VERIFIED_SUCCESS_PHYSICAL_ACCEPTED",
+        "branch": "main",
+        "deployment_id": "4804403c-1728-4bab-82b4-9a31de984fd4",
+        "cloudflare_check_run_id": 108692303883,
+        "deployment_check_id": "4804403c-1728-4bab-82b4-9a31de984fd4",
+        "device_acceptance_proven": true,
+        "device_acceptance_scope": "2026-09-27 21:58 CEST Production phone canary after exact main deployment: rc4.211; Sleeper Live-State <1 Min.; W3 FantasyPros projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo 251/251; concrete GIVE George Pickens / GET Brock Bowers; opponent +2.3 projected points; market 40.0/39.0; corrected neutral \"Roster-Fit verbessert\"; unsupported RB-need claim absent; conservative heuristic retained; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted.",
+        "physical_classification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
+        "last_device_accepted_control": "v11.8.0-rc4.211",
+        "last_broad_physical_baseline": "v11.8.0-rc4.210",
+        "evidence_source": "LIVE_GITHUB_EXACT_MAIN_DEPLOYMENT_AND_USER_SUPPLIED_PHONE_CANARY"
+      },
+      "current_physical_acceptance": {
+        "tree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a",
+        "runtime_tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
+        "acceptance": "PASS",
+        "classification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
+        "proven": true,
+        "scope": "2026-09-27 21:58 CEST Production phone canary after exact main deployment: rc4.211; Sleeper Live-State <1 Min.; W3 FantasyPros projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo 251/251; concrete GIVE George Pickens / GET Brock Bowers; opponent +2.3 projected points; market 40.0/39.0; corrected neutral \"Roster-Fit verbessert\"; unsupported RB-need claim absent; conservative heuristic retained; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted."
+      },
+      "latest_device_evidence": {
+        "version": "v11.8.0-rc4.211",
+        "recorded_at": "2026-09-27T19:58:00Z",
+        "evidence": "USER_SUPPLIED_PRODUCTION_PHONE_SCREENSHOT_2026-09-27T21:58_CEST",
+        "evidence_source": "USER_SUPPLIED_PRODUCTION_PHONE_SCREENSHOT",
+        "acceptance": "PASS",
+        "classification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
+        "scope": "2026-09-27 21:58 CEST Production phone canary after exact main deployment: rc4.211; Sleeper Live-State <1 Min.; W3 FantasyPros projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo 251/251; concrete GIVE George Pickens / GET Brock Bowers; opponent +2.3 projected points; market 40.0/39.0; corrected neutral \"Roster-Fit verbessert\"; unsupported RB-need claim absent; conservative heuristic retained; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted.",
+        "tree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a",
+        "runtime_tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
+        "weekly_projection_summary": "PHYSICAL_AVAILABLE_QB_RB_WR_TE",
+        "trade_value_summary": "JUSTIN_BOONE_YAHOO_251_OF_251_MAPPED_AND_CONSUMED",
+        "trade_consumer_summary": "Pickens-for-Bowers offer physically shows corrected neutral \"Roster-Fit verbessert\"; unsupported RB-need claim absent; no automatic send.",
+        "broad_evidence_reobserved": false,
+        "last_broad_physical_baseline": "v11.8.0-rc4.210",
+        "evidence_scope": "CURRENT_PR207_PRODUCTION_BOUNDED_PHYSICAL_ACCEPTANCE"
+      },
+      "independent_evidence_lane_status": {
+        "broad_expert_ranks": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
+        "pitti_panel": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
+        "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
+        "game_context": "NOT_REOBSERVED_RC4211_LAST_BROAD_PASS_RC4210",
+        "opponent_weather": "LAST_BROAD_PASS_RC4210; OUTDOOR_WEATHER_FAIL_CLOSED_WITHOUT_FRESH_FORECAST",
+        "evidence_baseline": "v11.8.0-rc4.210",
+        "rc4211_preview_weekly_evidence": "SUPERSEDED_BY_PR205_PRODUCTION_CANARY",
+        "pr205_production_weekly_evidence": "PROJECTIONS_AVAILABLE_QB_RB_WR_TE; BROAD_ECR_AND_SELECTED_PITTI_PANEL_NOT_REACCEPTED"
+      }
+    },
+    "rc4211_pr207_source_production": {
+      "checkpoint": "v270",
+      "version": "v11.8.0-rc4.211",
+      "pr": 207,
+      "reviewed_head": "e4fa9077fa130ee9129ed8ef532dfda503270f97",
+      "merge_commit": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
+      "merged_tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
+      "reviewed_tree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
+      "direct_parent": "445833a6d60b27bb955d190e7fab2e0111503aef",
+      "production_deployment_id": "4804403c-1728-4bab-82b4-9a31de984fd4",
+      "cloudflare_check_run_id": 108692303883,
+      "production_deployment_proven": true,
+      "physical_acceptance_proven": true,
+      "physical_classification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
+      "physical_scope": "2026-09-27 21:58 CEST Production phone canary after exact main deployment: rc4.211; Sleeper Live-State <1 Min.; W3 FantasyPros projections QB/RB/WR/TE AVAILABLE; Justin-Boone/Yahoo 251/251; concrete GIVE George Pickens / GET Brock Bowers; opponent +2.3 projected points; market 40.0/39.0; corrected neutral \"Roster-Fit verbessert\"; unsupported RB-need claim absent; conservative heuristic retained; no automatic send. Broad ECR, selected PITTI Panel, full game-context and Team Total were not reaccepted.",
+      "premerge_ci": "PASS",
+      "postmerge_ci": "PASS",
+      "evidence_source": "LIVE_GITHUB_EXACT_MAIN_DEPLOYMENT_PLUS_USER_SUPPLIED_PRODUCTION_PHONE_SCREENSHOT",
+      "runtime_delta": "TRADE_OPPONENT_NEED_RATIONALE_UI_ONLY",
+      "decision_semantic_drift": false,
+      "app_blob": "c065c7bbf1877bfb7931045bc68dc99bf8aa306b",
+      "focused_regression_blob": "2ab7c89b530b723209e39c0ffb49b7868428c5ef",
+      "repair_semantics": "Unsupported positional need claim removed; neutral Roster-Fit wording only because generic oppNeeds is synthetic/unverified for the concrete GIVE package.",
+      "peaked_gate": "PEAKED_SOURCE_CONTRACT_NOT_VERIFIED",
+      "team_total": "UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME",
+      "authority_reconciled_main": "90fbbfea411ade27f8ed249d771de12a026b9f15",
+      "authority_tree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a",
+      "repair_status": "PHYSICAL_PASS_CORRECTED_NEUTRAL_RATIONALE"
+    },
+    "rc4212_physical": {
+      "version": "v11.8.0-rc4.212",
+      "observed_at": "2026-09-28",
+      "acceptance": "PARTIAL_PASS_BOUNDED_HISTORICAL",
+      "classification": "RC4212_BOUNDED_PHONE_AND_API_DIAGNOSTIC_RANK_LANES_UNAVAILABLE",
+      "evidence_source": "USER_SUPPLIED_PHONE_SCREENSHOTS_AND_API_DIAGNOSTIC",
+      "tree": null,
+      "evidence_scope": "HISTORICAL_RC4212_ONLY_NOT_RC4213_ACCEPTANCE",
+      "week": 3,
+      "sleeper_live_age": "<1 Min.",
+      "projection_positions": [
+        "QB",
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "projection_records": 488,
+      "active_projection_roster": "13/13 usable",
+      "roster_players": 16,
+      "reserve_ir": 1,
+      "start_sit": "LINEUP OPTIMAL visible",
+      "trade": "Boone/Yahoo 251/251; Trade Board v8 functioning; no automatic send",
+      "broad_ecr": "UNAVAILABLE; HTTP 200 rejected by chronology/position validation",
+      "selected_pitti": "UNAVAILABLE; HTTP 200 but returned expert identity unproven",
+      "game_context": "AVAILABLE / PASS; 16 games / 32 teams",
+      "team_total": "UNAVAILABLE",
+      "outdoor_weather": "FAIL_CLOSED_WITHOUT_FRESH_FORECAST"
     }
   },
   "qb_policy": {
@@ -1467,18 +1603,16 @@
     "season_exception_weakens_draft_rule": false
   },
   "candidate_work": {
-    "version": "v11.8.0-rc4.211",
-    "pr": 207,
-    "status": "MERGED_PRODUCTION_CI_PASS_PHYSICAL_ACCEPTED",
-    "head_sha": "e4fa9077fa130ee9129ed8ef532dfda503270f97",
-    "merge_commit": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
-    "tree_sha": "e496f5b8190b48c7a475bdba768b968575d40ca2",
-    "physical_classification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
-    "authority_main": "90fbbfea411ade27f8ed249d771de12a026b9f15",
-    "authority_tree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a"
+    "version": "v11.8.0-rc4.213",
+    "pr": 211,
+    "status": "MERGED_CANONICAL_PRODUCTION_DEPLOYED_PHYSICAL_PENDING",
+    "head_sha": "481012802973301f2d9094fbccc1f6488e3e8afd",
+    "merge_commit": "158499e1b2395d9313292a0070055d539e5ce7ea",
+    "tree_sha": "d1a2bc6c7d9d5fdba83c03155682d3bf18322318",
+    "physical_classification": "RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING"
   },
-  "updatedAt": "2026-09-27T19:58:00Z",
-  "exactNextAction": "No open Draft Companion runtime repair is authorized. Before future work, freshly verify canonical main and the new problem/evidence.",
+  "updatedAt": "2026-09-28T18:13:00Z",
+  "exactNextAction": "After external publication and green authority/postmerge checks, separately authorized rc4.213 Production evidence-lanes canary: Broad ECR DATE repair, projections, RB provider shape, selected PITTI identity, Start/Sit live authority, 16-game/32-team context and D/ST current/+1/+2. No device action authorized in this authority-only task.",
   "week4_season_readiness": {
     "classification": "WEEK4_SEASON_READY_LOCAL_CANDIDATE",
     "version": "v11.8.0-rc4.212",
