@@ -1,9 +1,19 @@
+Handoff generation: `20260928T1813Z-v271`
+Generation: `20260928T1813Z-v271`
+> **CURRENT AUTHORITY — v271**: v11.8.0-rc4.213: PR #211 reviewed head 481012802973301f2d9094fbccc1f6488e3e8afd, merged canonical main 158499e1b2395d9313292a0070055d539e5ce7ea, identical reviewed/merged tree d1a2bc6c7d9d5fdba83c03155682d3bf18322318. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ad38e02b-0553-4244-b4e4-7677c5090183, check 109061736154); PHYSICAL PENDING. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING.
+
+After external publication and green authority/postmerge checks, separately authorized rc4.213 Production evidence-lanes canary: Broad ECR DATE repair, projections, RB provider shape, selected PITTI identity, Start/Sit live authority, 16-game/32-team context and D/ST current/+1/+2. No device action authorized in this authority-only task.
+
+Detailed reconciliation: `docs/PITTI_V271_RC4213_POSTMERGE_AUTHORITY.md`. Historical records below do not confer rc4.213 physical acceptance.
+
+## HISTORICAL v270 AND EARLIER
+
 Local candidate: v11.8.0-rc4.213. See RC4213_EVIDENCE_REPAIR.md; physical acceptance pending.
 
 > **LOCAL CANDIDATE v11.8.0-rc4.212**: Week rollover checks Sleeper before cache/retry gates and invalidates prior-week consumers before optional acquisition. Local verification is recorded in `PITTI_CURRENT_STATE.json:week4_season_readiness`; Production/device evidence below applies only to its recorded rc4.211 tree.
 
 Handoff generation: `20260927T1958Z-v270`
-> **CURRENT AUTHORITY — v270 (`20260927T1958Z-v270`)**: v11.8.0-rc4.211 remains the 17-file runtime. PR #207 trade-rationale repair is Production-physically accepted after exact deployed main 90fbbfea411ade27f8ed249d771de12a026b9f15 / tree 689f57f968e3ddf71ad827cec5b361f0ed2a0d7a, Cloudflare deployment 4804403c-1728-4bab-82b4-9a31de984fd4. The 2026-09-27 21:58 CEST phone canary shows Sleeper <1 Min., Week-3 FantasyPros projections QB/RB/WR/TE AVAILABLE, Justin-Boone/Yahoo 251/251, and GIVE George Pickens / GET Brock Bowers with corrected neutral "Roster-Fit verbessert"; the unsupported "Bedarf RB wird adressiert" claim is absent. Bilateral gain, market 40.0/39.0, conservative acceptance heuristic and no-auto-send remain. Classification: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL. Broad ECR, selected PITTI Panel and full game-context are not reaccepted by this bounded canary; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Next gate: VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK.
+> **HISTORICAL AUTHORITY — v270 (`20260927T1958Z-v270`)**: v11.8.0-rc4.211 remains the 17-file runtime. PR #207 trade-rationale repair is Production-physically accepted after exact deployed main 90fbbfea411ade27f8ed249d771de12a026b9f15 / tree 689f57f968e3ddf71ad827cec5b361f0ed2a0d7a, Cloudflare deployment 4804403c-1728-4bab-82b4-9a31de984fd4. The 2026-09-27 21:58 CEST phone canary shows Sleeper <1 Min., Week-3 FantasyPros projections QB/RB/WR/TE AVAILABLE, Justin-Boone/Yahoo 251/251, and GIVE George Pickens / GET Brock Bowers with corrected neutral "Roster-Fit verbessert"; the unsupported "Bedarf RB wird adressiert" claim is absent. Bilateral gain, market 40.0/39.0, conservative acceptance heuristic and no-auto-send remain. Classification: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL. Broad ECR, selected PITTI Panel and full game-context are not reaccepted by this bounded canary; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Next gate: VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK.
 
 ## HISTORICAL/SUPERSEDED v269 AND EARLIER — NOT CURRENT PRODUCTION
 

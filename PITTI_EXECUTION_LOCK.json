@@ -1,44 +1,25 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-09-27T19:58:00Z",
+  "updatedAt": "2026-09-28T18:13:00Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "PR207 Production trade-rationale physical PASS is current: neutral \"Roster-Fit verbessert\" physically observed on the concrete Pickens-for-Bowers offer; unsupported RB-need claim absent; Boone 251/251 and no-auto-send preserved. Broad ECR, selected PITTI Panel and full game-context were not reaccepted; Team Total remains fail-closed. Library mirror remains stale; never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "rc4.213 PHYSICAL PENDING; rc4.212 bounded phone/API diagnostic is historical only; rc4.210 remains last broad physical baseline. Fail closed on missing current evidence; never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
-    "reconciledBaseMain": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
+    "reconciledBaseMain": "158499e1b2395d9313292a0070055d539e5ce7ea",
     "liveVerificationTargets": [
       {
-        "repository": "Muero42/draft-companion",
-        "pr": 207,
-        "lane": "CURRENT_PR207_SOURCE_PRODUCTION_BOUNDED_PHYSICAL_ACCEPTED",
-        "verification": "LIVE_GITHUB_EXACT_MAIN_DEPLOYED_CI_PASS_PLUS_USER_PHONE_CANARY",
-        "expectedHead": "e4fa9077fa130ee9129ed8ef532dfda503270f97",
-        "mergeCommit": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
-        "runtimeTree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
-        "authorityMain": "90fbbfea411ade27f8ed249d771de12a026b9f15",
-        "authorityTree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a"
-      },
-      {
-        "repository": "Muero42/draft-companion",
-        "pr": 188,
-        "lane": "HISTORICAL_MERGED_V258_PRODUCTION_AUTHORITY",
-        "verification": "MERGED",
-        "expectedHead": "4770913dec4a77ca0590ace2969d06f3aaf9a609",
-        "mergeCommit": "66a6551d4a4520bd06f3b77a2f6bbdb297bfe6f1"
-      },
-      {
-        "repository": "Muero42/draft-companion",
-        "pr": 186,
-        "lane": "HISTORICAL_RC4.205_RUNTIME_REPAIR_PROVENANCE",
-        "verification": "MERGED_DEPLOYED_PHYSICAL_PASS_BOUNDED",
-        "expectedHead": "9c407d5a705713a630d7e62f020b72b48169d131",
-        "mergeCommit": "01ceef33dba6d79be48461d85532a1e2a39bd9aa",
-        "tree": "d1c9e2660e60d305a8a1f4727404d676e83c2164"
+        "pr": 211,
+        "reviewedHead": "481012802973301f2d9094fbccc1f6488e3e8afd",
+        "mergeCommit": "158499e1b2395d9313292a0070055d539e5ce7ea",
+        "runtimeTree": "d1a2bc6c7d9d5fdba83c03155682d3bf18322318",
+        "authorityMain": "158499e1b2395d9313292a0070055d539e5ce7ea",
+        "authorityTree": "d1a2bc6c7d9d5fdba83c03155682d3bf18322318",
+        "evidenceSource": "USER_SUPPLIED_EXTERNAL_EVIDENCE"
       }
     ],
     "independentEvidenceLaneDiagnosis": {
@@ -116,28 +97,28 @@
     }
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.212",
+    "appVersion": "v11.8.0-rc4.213",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
     "builtIsNotAndroidVerified": true,
-    "latestAndroidObserved": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
+    "latestAndroidObserved": "HISTORICAL rc4.212 bounded phone/API observation: projections and Game Context verified; Broad ECR and selected PITTI unavailable. No rc4.213 physical acceptance.",
     "latestPreinstallVerified": "HISTORICAL/SUPERSEDED: rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "HISTORICAL/SUPERSEDED: v11.8.0-rc4.107",
-    "preinstallArtifact": "rc4.211 17-file runtime package",
+    "preinstallArtifact": "rc4.213 17-file runtime; unchanged by authority reconciliation",
     "preinstallSha256": null,
     "preinstallRuntimeFiles": 17,
-    "latestSourceRegressionVerified": "PR207 e4fa9077fa130ee9129ed8ef532dfda503270f97 / main 4f503ecd9bdb2efde6750583ff8dfc92dffafcb1: exact reviewed/merged tree e496f5b8190b48c7a475bdba768b968575d40ca2; focused + strict + exact-head + postmerge CI PASS",
-    "latestDeployedCandidate": "v11.8.0-rc4.211 remains the 17-file runtime. PR #207 reviewed head e4fa9077fa130ee9129ed8ef532dfda503270f97, merged as main 4f503ecd9bdb2efde6750583ff8dfc92dffafcb1, identical reviewed/merged tree e496f5b8190b48c7a475bdba768b968575d40ca2; Cloudflare Pages deployment 6890109e-fbcc-44b7-81c3-26835b35b208 / check 108690436763 SUCCESS for exact main. The bounded runtime delta is trade-rationale presentation only: the unverified positional claim derived from t.oppNeeds[0] was replaced by neutral truthful \"Roster-Fit verbessert\"; app blob c065c7bbf1877bfb7931045bc68dc99bf8aa306b, focused regression blob 2ab7c89b530b723209e39c0ffb49b7868428c5ef. Codex focused trade regressions PASS, full strict suite 240/240 PASS, exact-head PR CI PASS, and postmerge CI PASS. Boone source/values, seasonTradeDecision, seasonProjectionLineup, bilateral gain, capacity, fairness, conservative acceptance and no-auto-send semantics are unchanged. Current exact-tree Production physical canary is PENDING. Historical PR205 Boone physical PASS remains historical only on tree 8825347883a2eee0fd53f7d45514580b246de08e and is not inherited by this changed app.js tree. Broad ECR, selected PITTI Panel and full game-context are not reaccepted here; Team Total remains UNAVAILABLE_NO_APPROVED_SOURCE_IN_RUNTIME; PEAKED_SOURCE_CONTRACT_NOT_VERIFIED. Next gate: PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_CANARY_PENDING.",
+    "latestSourceRegressionVerified": "USER_SUPPLIED_EXTERNAL_EVIDENCE: PR211 head 481012802973301f2d9094fbccc1f6488e3e8afd exact-head CI PASS and strict 246/246 PASS exit 0; postmerge authority checks failed on stale runtime lock.",
+    "latestDeployedCandidate": "v11.8.0-rc4.213: PR #211 reviewed head 481012802973301f2d9094fbccc1f6488e3e8afd, merged canonical main 158499e1b2395d9313292a0070055d539e5ce7ea, identical reviewed/merged tree d1a2bc6c7d9d5fdba83c03155682d3bf18322318. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ad38e02b-0553-4244-b4e4-7677c5090183, check 109061736154); PHYSICAL PENDING. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING.",
     "latestAndroidVerified": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
-    "androidAuthority": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
-    "android_authority": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
+    "androidAuthority": "rc4.213 PHYSICAL PENDING; rc4.212 bounded phone/API diagnostic is historical only; rc4.210 remains last broad physical baseline.",
+    "android_authority": "rc4.213 PHYSICAL PENDING; rc4.212 bounded phone/API diagnostic is historical only; rc4.210 remains last broad physical baseline.",
     "deployedPagesAppByteParityWithMain": false,
     "preinstallReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "preinstallReferenceArtifactId": null,
     "preinstallHashSemantics": "Archive SHA remains run/environment scoped; not canonical identity",
-    "latestAndroidVersionObserved": "v11.8.0-rc4.211",
-    "latestAndroidFunctionalVerified": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.212",
+    "latestAndroidFunctionalVerified": "HISTORICAL rc4.212 bounded phone/API observation: projections and Game Context verified; Broad ECR and selected PITTI unavailable. No rc4.213 physical acceptance.",
     "testChallengerAndroidObserved": false,
     "testChallengerAndroidAccepted": false,
     "rc499": {
@@ -169,10 +150,10 @@
     },
     "acceptedAndroidAuthority": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
     "unreleasedMainDelta": "DYNAMIC_VERIFICATION_REQUIRED against canonical main and relevant PRs; last-observed PR118 boundary is recorded in CURRENT.",
-    "deployedPagesVersion": "v11.8.0-rc4.211",
-    "mainGhPagesParity": true,
-    "androidVerified": true,
-    "androidAcceptance": "PASS",
+    "deployedPagesVersion": "v11.8.0-rc4.213",
+    "mainGhPagesParity": false,
+    "androidVerified": false,
+    "androidAcceptance": "PENDING",
     "devicePromotionPolicy": "Requires current user authorization, exact-source validation, verified deployment parity and a physical canary. Source or merge state never proves device acceptance.",
     "pr98Head": "HISTORICAL de3eed64b4c750c53ad8413deb0c1d71acf85d48",
     "pr98LatestHeadCI": "HISTORICAL/SUPERSEDED; do not use as current gate",
@@ -186,24 +167,19 @@
     },
     "acceptedRollback": "v11.8.0-rc4.195",
     "productionDeployment": {
-      "version": "v11.8.0-rc4.211",
-      "sourceCommit": "90fbbfea411ade27f8ed249d771de12a026b9f15",
-      "tree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a",
-      "runtimeSourceCommit": "4f503ecd9bdb2efde6750583ff8dfc92dffafcb1",
-      "runtimeTree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
-      "status": "VERIFIED_SUCCESS_PHYSICAL_ACCEPTED",
+      "version": "v11.8.0-rc4.213",
+      "sourceCommit": "158499e1b2395d9313292a0070055d539e5ce7ea",
+      "tree": "d1a2bc6c7d9d5fdba83c03155682d3bf18322318",
+      "status": "DEPLOYED_SUCCESS",
       "branch": "main",
-      "deploymentId": "4804403c-1728-4bab-82b4-9a31de984fd4",
-      "cloudflareCheckRunId": 108692303883,
-      "deploymentCheckId": "4804403c-1728-4bab-82b4-9a31de984fd4",
-      "deviceAcceptanceProven": true,
-      "deviceAcceptanceScope": "2026-09-27 21:58 CEST bounded phone canary: corrected neutral Roster-Fit verbessert wording physically observed; unsupported RB-need claim absent; Boone 251/251 and no-auto-send preserved",
-      "physicalClassification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
-      "lastDeviceAcceptedControl": "v11.8.0-rc4.211",
-      "lastBroadPhysicalBaseline": "v11.8.0-rc4.210",
-      "evidenceSource": "LIVE_GITHUB_EXACT_MAIN_DEPLOYMENT_AND_USER_SUPPLIED_PHONE_CANARY"
+      "deploymentId": "ad38e02b-0553-4244-b4e4-7677c5090183",
+      "cloudflareCheckRunId": 109061736154,
+      "deploymentCheckId": "ad38e02b-0553-4244-b4e4-7677c5090183",
+      "deviceAcceptanceProven": false,
+      "physicalClassification": "RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING",
+      "evidenceSource": "USER_SUPPLIED_EXTERNAL_EVIDENCE"
     },
-    "deployedPagesHead": "90fbbfea411ade27f8ed249d771de12a026b9f15",
+    "deployedPagesHead": "158499e1b2395d9313292a0070055d539e5ce7ea",
     "lastBroadPhysicalEvidenceBaseline": {
       "status": "LAST_BROAD_PHYSICAL_EVIDENCE_BASELINE",
       "version": "v11.8.0-rc4.210",
@@ -252,18 +228,44 @@
       }
     },
     "currentPhysicalAcceptance": {
-      "tree": "689f57f968e3ddf71ad827cec5b361f0ed2a0d7a",
-      "runtimeTree": "e496f5b8190b48c7a475bdba768b968575d40ca2",
-      "acceptance": "PASS",
-      "classification": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_ROSTER_FIT_NEUTRAL",
-      "proven": true
+      "version": "v11.8.0-rc4.213",
+      "tree": "d1a2bc6c7d9d5fdba83c03155682d3bf18322318",
+      "acceptance": "PENDING",
+      "proven": false
     },
     "localCandidate": {
-      "version": "v11.8.0-rc4.212",
-      "classification": "WEEK4_SEASON_READY_LOCAL_CANDIDATE",
-      "evidence": "docs/WEEK4_SEASON_READINESS_LOCAL.md",
-      "productionProven": false,
+      "version": "v11.8.0-rc4.213",
+      "classification": "MERGED_CANONICAL_PRODUCTION_DEPLOYED_PHYSICAL_PENDING",
+      "productionProven": true,
       "deviceAcceptanceProven": false
+    },
+    "latestDeviceEvidence": {
+      "version": "v11.8.0-rc4.212",
+      "observed_at": "2026-09-28",
+      "acceptance": "PARTIAL_PASS_BOUNDED_HISTORICAL",
+      "classification": "RC4212_BOUNDED_PHONE_AND_API_DIAGNOSTIC_RANK_LANES_UNAVAILABLE",
+      "evidence_source": "USER_SUPPLIED_PHONE_SCREENSHOTS_AND_API_DIAGNOSTIC",
+      "tree": null,
+      "evidence_scope": "HISTORICAL_RC4212_ONLY_NOT_RC4213_ACCEPTANCE",
+      "week": 3,
+      "sleeper_live_age": "<1 Min.",
+      "projection_positions": [
+        "QB",
+        "RB",
+        "WR",
+        "TE"
+      ],
+      "projection_records": 488,
+      "active_projection_roster": "13/13 usable",
+      "roster_players": 16,
+      "reserve_ir": 1,
+      "start_sit": "LINEUP OPTIMAL visible",
+      "trade": "Boone/Yahoo 251/251; Trade Board v8 functioning; no automatic send",
+      "broad_ecr": "UNAVAILABLE; HTTP 200 rejected by chronology/position validation",
+      "selected_pitti": "UNAVAILABLE; HTTP 200 but returned expert identity unproven",
+      "game_context": "AVAILABLE / PASS; 16 games / 32 teams",
+      "team_total": "UNAVAILABLE",
+      "outdoor_weather": "FAIL_CLOSED_WITHOUT_FRESH_FORECAST"
     }
   },
   "auto": {
@@ -454,12 +456,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_RECONCILED",
-    "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK"
+    "status": "RC4213_POSTMERGE_AUTHORITY_RECONCILED_PHYSICAL_PENDING",
+    "nextGate": "RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING"
   },
-  "status": "PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS_RECONCILED",
-  "gate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
-  "nextGate": "VERIFY_CANONICAL_AUTHORITY_THEN_AUTHORIZED_WORK",
+  "status": "RC4213_POSTMERGE_AUTHORITY_RECONCILED_PHYSICAL_PENDING",
+  "gate": "RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING",
+  "nextGate": "RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -468,13 +470,14 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20260927T1958Z-v270",
+    "generation": "20260928T1813Z-v271",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "PR207 trade-rationale repair is Production-physically accepted on deployed main 90fbbfea411ade27f8ed249d771de12a026b9f15. The 2026-09-27 21:58 CEST phone canary shows the corrected neutral \"Roster-Fit verbessert\" wording; unsupported RB-need claim absent; Boone 251/251 and no-auto-send preserved. Broad lanes are not implicitly reaccepted.",
+    "resume": "After external publication and green authority/postmerge checks, separately authorized rc4.213 Production evidence-lanes canary: Broad ECR DATE repair, projections, RB provider shape, selected PITTI identity, Start/Sit live authority, 16-game/32-team context and D/ST current/+1/+2. No device action authorized in this authority-only task.",
     "transaction_in_progress": false,
-    "readiness_scope": "STRUCTURAL_HANDOFF_PLUS_PR207_PRODUCTION_TRADE_RATIONALE_PHYSICAL_PASS"
+    "readiness_scope": "STRUCTURAL_HANDOFF_ONLY_NOT_DEVICE_ACCEPTANCE",
+    "refresh_scope": "V271_RC4213_POSTMERGE_AUTHORITY_ONLY"
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER; rc4.131 device and 29/30 backup references are HISTORICAL evidence, not latest Android authority",
@@ -493,7 +496,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20260927T1958Z-v270",
+  "handoff_generation": "20260928T1813Z-v271",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -528,9 +531,9 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20260927T1958Z-v270",
+  "handoffGeneration": "20260928T1813Z-v271",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-09-27T19:58:00Z",
-  "exactNextAction": "No open Draft runtime repair is authorized. Freshly verify canonical authority before future work.",
+  "updated_at": "2026-09-28T18:13:00Z",
+  "exactNextAction": "After external publication and green authority/postmerge checks, separately authorized rc4.213 Production evidence-lanes canary: Broad ECR DATE repair, projections, RB provider shape, selected PITTI identity, Start/Sit live authority, 16-game/32-team context and D/ST current/+1/+2. No device action authorized in this authority-only task.",
   "failClosedRecovery": "PR207 Production trade-rationale physical PASS is current: neutral \"Roster-Fit verbessert\" physically observed on the concrete Pickens-for-Bowers offer; unsupported RB-need claim absent; Boone 251/251 and no-auto-send preserved. Broad ECR, selected PITTI Panel and full game-context were not reaccepted; Team Total remains fail-closed. Library mirror remains stale; never claim a newer Library generation persisted unless files.list proves it."
 }
