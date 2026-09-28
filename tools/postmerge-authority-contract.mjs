@@ -1,10 +1,19 @@
 import fs from 'node:fs';import path from 'node:path';import {fileURLToPath} from 'node:url';
-export const GENERATION='20260928T1918Z-v272',AUTHORITY_GATE='RC4214_PRODUCTION_COMBINED_PHYSICAL_ACCEPTANCE_PENDING';
+export const GENERATION='20260928T1918Z-v272',AUTHORITY_GATE='V272_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING';
 export const MAIN='a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee',TREE='2ebb61df4f077f419b91b048d321781b43785332';
 const AT='2026-09-28T19:18:00Z',V='v11.8.0-rc4.214',REVIEWED='63162c9427fa70f1897331c15ffb2c6a38d50701',DEPLOY='a10c3257-2342-4fa4-a15a-d191306199b1';
 const core=['PITTI_CURRENT_STATE.json','PITTI_EXECUTION_LOCK.json','PITTI_COMMAND_CONTRACTS.json','PITTI_HANDOFF_SEAL.json'],docs=['PITTI_NEW_CHAT_BOOTSTRAP.md','NEW_CHAT_HANDOFF_CURRENT.md','HANDOFF_COMPLETENESS_MATRIX.md','PITTI_AUTO_PREFLIGHT.md','PITTI_PROJECT_STATE.md','README.md','docs/PITTI_V272_RC4214_POSTMERGE_AUTHORITY.md'];
 export function loadAuthority(root='.'){return Object.fromEntries([...core,...docs].map(p=>[p,core.includes(p)?JSON.parse(fs.readFileSync(path.join(root,p),'utf8')):fs.readFileSync(path.join(root,p),'utf8')]));}
 export function validateContinuationEvidence(e){const x=[];if(e?.fresh!==true||e?.repo!=='Muero42/draft-companion'||e?.canonicalBranch!=='main')x.push('fresh canonical Git/GitHub identity required');if(!/^[a-f0-9]{40}$/.test(e?.head??'')||!/^[a-f0-9]{40}$/.test(e?.canonicalHead??'')||e?.clean!==true)x.push('verified HEADs and clean worktree required');if(e?.prState==='OPEN'){if(e.prHead!==e.head||e.branch==='main'||!e.branch)x.push('open PR exact-head branch evidence required');}else if(e?.prState==='MERGED'){if(e.branch!=='main'||e.head!==e.canonicalHead||e.containingCommitVerified!==true)x.push('merged canonical containment evidence required');}else x.push('verified PR state required');const req=['project_guardrails','release_contract_v2','candidate_package'],checks=Array.isArray(e?.checks)?e.checks:[];if(e?.ciHead!==e?.head||checks.length!==req.length||!req.every(n=>checks.filter(z=>z?.name===n&&z.result==='PASS').length===1))x.push('all three unambiguous exact-head checks required');if(e?.authorizedWorkPackage!==true)x.push('current user authorization required');return x;}
+export const PHYSICAL_GATE='RC4214_PRODUCTION_COMBINED_PHYSICAL_ACCEPTANCE_PENDING';
+export function validatePhysicalPrerequisites(e){
+ const errors=validateContinuationEvidence(e);
+ if(e?.publicationExactHeadPass!==true||e?.v272Merged!==true||e?.postmergeChecksPass!==true||e?.prState!=='MERGED')errors.push('publication, v272 merge and postmerge checks required');
+ if(e?.canonicalHead===MAIN||e?.authorityParent!==MAIN||!/^[a-f0-9]{40}$/.test(e?.canonicalTree??'')||e?.canonicalTree===TREE)errors.push('fresh post-v272 canonical identity required');
+ if(e?.production?.status!=='SUCCESS'||e?.production?.sourceCommit!==e?.canonicalHead||e?.production?.tree!==e?.canonicalTree||!e?.production?.deploymentId)errors.push('successful exact post-v272 Production required');
+ if(e?.runtimeVersion!==V||e?.runtimeFileCount!==17||e?.runtimeIdentityBase!==MAIN||e?.runtimeBlobsIdentical!==true)errors.push('rc4.214 runtime identity required');
+ return errors;
+}
 export function validateAuthority(d){
  const e=[],ok=(v,p,m)=>{if(!v)e.push(p+': '+m)},c=d[core[0]],l=d[core[1]],k=d[core[2]],s=d[core[3]],a=c.authority?.rc4214_source_production;
  for(const [label,o] of [['CURRENT',c],['LOCK',l]]){
@@ -14,14 +23,20 @@ export function validateAuthority(d){
   ok(o.handoff?.generation===GENERATION&&o.handoff.status==='PASS'&&o.handoff.ready===true&&o.handoff.secondPass===true&&o.handoff.transaction_in_progress===false,label,'handoff');
  }
  ok(k.handoff_generation===GENERATION&&k.handoffGeneration===GENERATION&&k.updated_at===AT&&k.currentGate===AUTHORITY_GATE&&k.currentResearchGate===AUTHORITY_GATE&&k.currentBoundary?.nextGate===AUTHORITY_GATE,'COMMAND','coupled generation/gate');
- ok(s.handoff_generation===GENERATION&&s.created_at===AT&&s.updated_at===AT&&s.status==='PASS'&&s.handoff_ready===true&&s.second_pass_pass===true&&s.exact_gate===AUTHORITY_GATE&&s.branch_locks?.current_physical_acceptance===AUTHORITY_GATE,'SEAL','structural readiness only');
+ ok(s.handoff_generation===GENERATION&&s.created_at===AT&&s.updated_at===AT&&s.status==='PASS'&&s.handoff_ready===true&&s.second_pass_pass===true&&s.exact_gate===AUTHORITY_GATE&&s.branch_locks?.current_physical_acceptance==='BLOCKED_BY_'+AUTHORITY_GATE,'SEAL','structural readiness only');
  ok(c.authority?.source_candidate===V&&l.runtime?.appVersion===V&&a?.pr===213&&a.reviewed_head===REVIEWED&&a.merge_commit===MAIN&&a.reviewed_tree===TREE&&a.merged_tree===TREE,'CURRENT.identity','PR213 reviewed/merged equality');
  ok(a?.source_status==='MERGED_CANONICAL'&&a.production_status==='DEPLOYED_SUCCESS'&&a.physical_status==='PENDING'&&a.production_deployment_proven===true&&a.physical_acceptance_proven===false,'CURRENT.classification','source/Production/physical separation');
  ok(a?.production_deployment_id===DEPLOY&&a.cloudflare_check_run_id===109091210171&&a.evidence_source==='USER_SUPPLIED_EXTERNAL_EVIDENCE'&&a.premerge_exact_head_ci==='PASS'&&a.premerge_local_strict==='248/248 PASS exit 0','CURRENT.provenance','external evidence boundary');
  ok(c.runtime?.source_candidate_status==='SOURCE_PRODUCTION_DEPLOYED_PHYSICAL_PENDING'&&c.runtime.deployed_production_version===V&&c.runtime.android_acceptance_pending===true,'CURRENT.runtime','physical pending');
+ const stages=[c.authority_continuation,l.authorityContinuation,k.currentBoundary?.authorityContinuation,s.authority_continuation];
+ for(const stage of stages)ok(stage?.status==='LOCAL_CORRECTIVE_AUTHORITY_CANDIDATE'&&stage.current_gate===AUTHORITY_GATE&&stage.physical_gate===PHYSICAL_GATE&&stage.physical_executable===false&&stage.runtime_source_commit===MAIN&&stage.authority_parent===MAIN&&stage.canonical_main==='DYNAMIC_VERIFICATION_REQUIRED'&&stage.canonical_tree==='DYNAMIC_VERIFICATION_REQUIRED'&&stage.post_v272_production==='DYNAMIC_VERIFICATION_REQUIRED'&&JSON.stringify(stage.sequence)===JSON.stringify(['PUBLICATION_EXACT_HEAD_CHECKS','V272_MERGE_POSTMERGE_CHECKS','RESOLVE_NEW_CANONICAL_MAIN','VERIFY_NEW_MAIN_PRODUCTION_DEPLOYMENT',PHYSICAL_GATE]),'continuation','premerge state and ordered gates');
+ ok(['installed_android','latest_android_observed','latestAndroidVersionObserved'].every(key=>c.runtime[key]==='v11.8.0-rc4.213')&&l.runtime.latestAndroidVersionObserved==='v11.8.0-rc4.213','observed aliases','newest bounded diagnostic must be rc4.213');
+ ok(c.authority.reconciled_main==='DYNAMIC_VERIFICATION_REQUIRED'&&c.authority.canonical_main==='DYNAMIC_VERIFICATION_REQUIRED','canonical identity','must be dynamic');
+ ok(c.auto_execution_state.waiting_external.length===1&&c.auto_execution_state.waiting_external[0].gate===AUTHORITY_GATE&&c.auto_execution_state.ready.length===0,'AUTO','publication must precede physical');
+ for(const f of docs){const current=d[f].split('## HISTORICAL v271 AND EARLIER')[0];ok(!current.includes('merged canonical main '+MAIN)&&!current.includes('Not deployed or physically accepted.'),f,'no stale current identity/deployment wording');}
  const prod=c.runtime?.production_deployment,physical=c.runtime?.current_physical_acceptance;
  ok(prod?.source_commit===MAIN&&prod.tree===TREE&&prod.deployment_id===DEPLOY&&prod.cloudflare_check_run_id===109091210171&&prod.device_acceptance_proven===false&&prod.status==='DEPLOYED_SUCCESS','CURRENT.production','deployment identity');
- ok(physical?.version===V&&physical.tree===TREE&&physical.acceptance==='PENDING'&&physical.proven===false,'CURRENT.physical','no inherited acceptance');
+ ok(physical?.version===V&&physical.tree===null&&physical.canonical_main==='DYNAMIC_VERIFICATION_REQUIRED'&&physical.executable===false&&physical.acceptance==='PENDING'&&physical.proven===false,'CURRENT.physical','no inherited acceptance');
  ok(c.runtime?.ci?.current_exact_main_head_ci==='FAILED_AUTHORITY_DRIFT'&&c.runtime.ci.evidence_source==='USER_SUPPLIED_EXTERNAL_EVIDENCE','CURRENT.CI','do not invent postmerge green CI');
  const h=c.runtime?.latest_device_evidence;
  ok(h?.version==='v11.8.0-rc4.213'&&h.evidence_scope==='HISTORICAL_BOUNDED_RC4213_ONLY_NOT_RC4214_ACCEPTANCE'&&h.projections.activeRoster==='13/13 usable at acquisition'&&h.broad_ecr.RB.positionCounts.RB===111&&h.broad_ecr.RB.positionCounts.OTHER===1&&h.selected_pitti.RB.positionCounts.RB===106&&h.persistence.projected_points===416&&h.persistence.weekly_rank===0&&h.persistence.broad_weekly_ecr_rank===0&&h.persistence.characters===4889317&&h.start_sit.projectionUsableCount===12&&h.start_sit.unfilledSlots[0]==='QB'&&h.game_context.games===16&&h.game_context.teams===32,'CURRENT.history','bounded rc4213 observation');

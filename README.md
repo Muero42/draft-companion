@@ -1,14 +1,17 @@
 Handoff generation: `20260928T1918Z-v272`
 Generation: `20260928T1918Z-v272`
-> **CURRENT AUTHORITY — v272**: v11.8.0-rc4.214: PR #213 reviewed head 63162c9427fa70f1897331c15ffb2c6a38d50701, merged canonical main a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee, identical reviewed/merged tree 2ebb61df4f077f419b91b048d321781b43785332. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (a10c3257-2342-4fa4-a15a-d191306199b1, check 109091210171); PHYSICAL PENDING. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: RC4214_PRODUCTION_COMBINED_PHYSICAL_ACCEPTANCE_PENDING.
+> **CURRENT AUTHORITY — v272**: v11.8.0-rc4.214: PR #213 reviewed head 63162c9427fa70f1897331c15ffb2c6a38d50701, rc4.214 runtime merge / v272 parent a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee, identical reviewed/merged tree 2ebb61df4f077f419b91b048d321781b43785332. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (a10c3257-2342-4fa4-a15a-d191306199b1, check 109091210171); PHYSICAL PENDING. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: V272_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING.
 
-After external publication and green exact-head/postmerge authority checks, separately authorized combined rc4.214 Production physical acceptance: visible version, live Sleeper freshness, four-position projections/Broad ECR/selected PITTI including RB containment and strict identity, full persisted ranks and top-key diagnostic, complete legal Start/Sit without QB omission, Game Context PASS 16 games/32 teams, D/ST current/+1/+2 ownership/capacity, no fabricated Team Total/weather and no automatic transactions. No device action in this authority-only task.
+Externally publish the corrective v272 authority candidate and obtain exact-head checks; then merge v272 and obtain postmerge checks, resolve NEW canonical main/tree from fresh evidence, and verify successful Production deployment of that exact new main/tree with rc4.214 and 17 runtime blobs identical to the rc4.214 runtime merge/base. Only then enable RC4214_PRODUCTION_COMBINED_PHYSICAL_ACCEPTANCE_PENDING. No physical/device action is currently executable.
 
 Details: `docs/PITTI_V272_RC4214_POSTMERGE_AUTHORITY.md`. rc4.214 PHYSICAL PENDING; rc4.213 and rc4.212 diagnostics are historical and bounded; rc4.210 remains last broad fully accepted physical baseline.
 
+
+Current v272 state: LOCAL CORRECTIVE AUTHORITY CANDIDATE; publication/merge/postmerge and post-v272 Production evidence pending. The known PR213 Production deployment does not prove deployment of the future v272 merge. Future canonical main/tree must be freshly resolved; the physical acceptance binds to that new main/tree and its successful Production deployment. rc4.213 is the newest historical bounded observed installation, not accepted; rc4.210 remains the last broad accepted baseline.
+
 ## HISTORICAL v271 AND EARLIER — NOT CURRENT AUTHORITY
 
-Local candidate v11.8.0-rc4.214: RB row containment and Weekly Evidence quota recovery. Not deployed or physically accepted. See docs/PITTI_RC4214_RB_STORAGE_EVIDENCE_REPAIR.md.
+Historical pre-PR213-merge candidate note: rc4.214 was then not deployed or physically accepted. PR213 Production deployment is now proven; physical acceptance remains pending. See docs/PITTI_RC4214_RB_STORAGE_EVIDENCE_REPAIR.md.
 
 Handoff generation: `20260928T1813Z-v271`
 Generation: `20260928T1813Z-v271`

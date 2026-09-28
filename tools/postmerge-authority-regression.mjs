@@ -1,6 +1,6 @@
 import fs from 'node:fs';
 import {execFileSync,spawnSync} from 'node:child_process';import {RUNTIME_FILES} from './runtime-files.mjs';import {MAIN} from './postmerge-authority-contract.mjs';
-import assert from 'node:assert/strict';import {loadAuthority,validateAuthority,validateContinuationEvidence} from './postmerge-authority-contract.mjs';
+import assert from 'node:assert/strict';import {loadAuthority,validateAuthority,validateContinuationEvidence,validatePhysicalPrerequisites} from './postmerge-authority-contract.mjs';
 const b=loadAuthority();assert.deepEqual(validateAuthority(b),[],'baseline v272 authority must validate');
 const cases=[
  ['generation',d=>d['PITTI_CURRENT_STATE.json'].handoff_generation='old'],
@@ -23,6 +23,13 @@ const cases=[
  ['quota policy',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4214_source_production.repair_scope.storage='CLEAR_ALL'],
  ['historical quota',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.persistence.projected_points=488],
  ['historical source',d=>d['PITTI_CURRENT_STATE.json'].historical_superseded.rc4213_source_production.pr=213],
+ ['latest observed',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_android_observed='v11.8.0-rc4.212'],
+ ['installed observed',d=>d['PITTI_CURRENT_STATE.json'].runtime.installed_android='v11.8.0-rc4.212'],
+ ['camel observed',d=>d['PITTI_CURRENT_STATE.json'].runtime.latestAndroidVersionObserved='v11.8.0-rc4.212'],
+ ['lock observed',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.latestAndroidVersionObserved='v11.8.0-rc4.212'],
+ ['premature physical',d=>d['PITTI_CURRENT_STATE.json'].authority_continuation.physical_executable=true],
+ ['stale main',d=>d['PITTI_CURRENT_STATE.json'].authority.canonical_main=MAIN],
+ ['wrong waiting gate',d=>d['PITTI_CURRENT_STATE.json'].auto_execution_state.waiting_external[0].gate='RC4213_PHYSICAL_PENDING'],
  ['seal',d=>d['PITTI_HANDOFF_SEAL.json'].exact_gate='DONE']
 ];
 for(const[n,f]of cases){const d=structuredClone(b);f(d);assert(validateAuthority(d).length,`must reject ${n}`)}
@@ -43,3 +50,9 @@ if(parentProbe.status!==0){
 }
 for(const file of RUNTIME_FILES){const expected=execFileSync('git',['rev-parse',MAIN+':'+file],{encoding:'utf8'}).trim(),actual=execFileSync('git',['hash-object','--path='+file,file],{encoding:'utf8'}).trim();assert.equal(actual,expected,'authority-only runtime blob changed: '+file);}
 console.log('V272_RUNTIME_IDENTITY_PASS 17/17 parent '+MAIN);
+
+const physicalEvidence={...ev,canonicalTree:'c'.repeat(40),publicationExactHeadPass:true,v272Merged:true,postmergeChecksPass:true,authorityParent:MAIN,production:{status:'SUCCESS',sourceCommit:h,tree:'c'.repeat(40),deploymentId:'new-v272-deployment'},runtimeVersion:'v11.8.0-rc4.214',runtimeFileCount:17,runtimeIdentityBase:MAIN,runtimeBlobsIdentical:true};
+assert.deepEqual(validatePhysicalPrerequisites(physicalEvidence),[]);
+const physicalMutations=[e=>e.publicationExactHeadPass=false,e=>e.v272Merged=false,e=>e.postmergeChecksPass=false,e=>e.canonicalHead=MAIN,e=>e.canonicalTree='2ebb61df4f077f419b91b048d321781b43785332',e=>e.production.sourceCommit=MAIN,e=>e.production.tree='d'.repeat(40),e=>e.production.status='PENDING',e=>e.runtimeFileCount=16,e=>e.runtimeBlobsIdentical=false,e=>e.runtimeVersion='v11.8.0-rc4.213',e=>e.fresh=false];
+for(const mutate of physicalMutations){const e=structuredClone(physicalEvidence);mutate(e);assert(validatePhysicalPrerequisites(e).length,'premature/stale physical prerequisite accepted');}
+console.log('V272_CONTINUATION_PASS: aliases, publication-first state, dynamic main, physical prerequisite positive + '+physicalMutations.length+' negatives');
