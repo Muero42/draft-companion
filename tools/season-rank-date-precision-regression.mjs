@@ -46,7 +46,8 @@ assert.equal(evidence.selectedWeeklyRankLane(missing,context).records.length,0,'
 const wrong=structuredClone(selected);wrong.QB.providerPayload.expert_name['999']='Unexpected';
 assert.equal(evidence.selectedWeeklyRankLane(wrong,context).lane.coverage.positions.QB.status,'UNAVAILABLE');
 const mixed=structuredClone(rankings);mixed.RB.players[0].position_id='WR';
-assert.equal(evidence.weeklyRankLane(mixed,context).lane.coverage.positions.RB.reason,'WRONG_POSITION','no provider-body proof authorizes relaxing this guard');
+assert.equal(evidence.weeklyRankLane(mixed,context).lane.coverage.positions.RB.status,'AVAILABLE','isolated wrong-position row is contained');
+assert.equal(evidence.weeklyRankLane(mixed,context).lane.coverage.positions.RB.rejectedPositionRows,1);
 assert.deepEqual(evidence.rankingPayloadDiagnostic(mixed.RB).positionCounts,{WR:1,RB:111});
 assert.equal(evidence.rankingPayloadDiagnostic(missing.RB.providerPayload).identityFieldTypes.expert_name,'ABSENT');
 const snapshot=evidence.buildSnapshot({...context,projectionPayloads:projections,rankingPayloads:rankings,selectedRankingPayloads:missing});

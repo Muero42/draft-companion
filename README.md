@@ -1,3 +1,5 @@
+Local candidate v11.8.0-rc4.214: RB row containment and Weekly Evidence quota recovery. Not deployed or physically accepted. See docs/PITTI_RC4214_RB_STORAGE_EVIDENCE_REPAIR.md.
+
 Handoff generation: `20260928T1813Z-v271`
 Generation: `20260928T1813Z-v271`
 > **CURRENT AUTHORITY — v271**: v11.8.0-rc4.213: PR #211 reviewed head 481012802973301f2d9094fbccc1f6488e3e8afd, merged canonical main 158499e1b2395d9313292a0070055d539e5ce7ea, identical reviewed/merged tree d1a2bc6c7d9d5fdba83c03155682d3bf18322318. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ad38e02b-0553-4244-b4e4-7677c5090183, check 109061736154); PHYSICAL PENDING. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: RC4213_PRODUCTION_PHYSICAL_EVIDENCE_LANES_DIAGNOSTIC_PENDING.
