@@ -9,7 +9,7 @@
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
     "source_candidate": "v11.8.0-rc4.215",
     "git_identity_rule": "Canonical main identity and candidate containment are freshly verified externally; no commit or mutable PR state is immutable checkpoint authority.",
-    "reconciled_base_main": "a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee",
+    "reconciled_base_main": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
     "postmerge": {
       "checkpoint": "v233",
       "pr": 121,
@@ -732,7 +732,7 @@
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee",
+    "deployed_pages_head": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
     "installed_android": "v11.8.0-rc4.214",
     "installation_observation_scope": "User-supplied phone runtime observed 2026-09-28; installation mechanism not separately verified",
     "latest_android_observed": "v11.8.0-rc4.214",
@@ -762,7 +762,7 @@
       "dst": "UNCHANGED_CURRENT_PLUS1_PLUS2_PLANNER"
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.214",
-    "source_candidate_status": "RELEASE_CANDIDATE_VALIDATING",
+    "source_candidate_status": "MERGED_CANONICAL_PRODUCTION_DEPLOYED_PHYSICAL_PENDING",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -823,13 +823,14 @@
         "candidate_package": "FAIL_STALE_BOOTSTRAP_RENDER_ASSERT_REPAIRED"
       }
     },
-    "package_reference_scope": "rc4.214 17-file runtime preserved byte-identically to canonical parent; package is not physical acceptance",
+    "package_reference_scope": "rc4.215 canonical 17-file runtime identity only; no new archive SHA or package re-extraction evidence; no served-byte parity or physical acceptance inferred",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.214",
+      "version": "v11.8.0-rc4.215",
       "files": 17,
       "sha256": null,
-      "status": "PARENT_RUNTIME_17_FILE_IDENTITY_REQUIRED",
-      "source_scope": "PR213_REVIEWED_TREE_EQUALS_MERGED_TREE"
+      "status": "RUNTIME_IDENTITY_ONLY_NO_PACKAGE_REEXTRACTION_CLAIM",
+      "source_scope": "PR215_REVIEWED_TREE_EQUALS_MERGED_TREE",
+      "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_NONCANONICAL"
     },
     "deployment_parity": "PR215_REVIEWED_TREE_EQUALS_MERGED_TREE; LIVE_GITHUB_PRODUCTION_SUCCESS; PHYSICAL_PENDING",
     "deployed_production_version": "v11.8.0-rc4.215",

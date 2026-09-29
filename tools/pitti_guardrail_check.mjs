@@ -221,6 +221,7 @@ if(current.runtime?.latest_device_evidence?.acceptance==='FAIL'){
   must(current.runtime?.latest_android_observed===current.runtime?.latest_device_evidence?.version,'device evidence not checkpointed to latest_android_observed');
   const failedDeviceIsSource=String(current.authority?.source_candidate||'')===String(current.runtime?.latest_device_evidence?.version||'');
   if(failedDeviceIsSource) must(current.runtime?.source_candidate_status==='DEVICE_REJECTED','failed current source device evidence must mark source status DEVICE_REJECTED');
+  else if(current.runtime?.source_candidate_status==='MERGED_CANONICAL_PRODUCTION_DEPLOYED_PHYSICAL_PENDING') must(current.runtime_candidate?.merged===true&&current.runtime_candidate?.production_proven===true&&current.runtime_candidate?.physical_accepted===false&&current.runtime?.production_deployment?.status==='DEPLOYED_SUCCESS'&&current.runtime?.current_physical_acceptance?.acceptance==='PENDING','merged/deployed source status requires separate Production and pending physical evidence');
   else must(['RELEASE_CANDIDATE_UNMERGED','RELEASE_CANDIDATE_VALIDATING','DEVICE_REJECTED'].includes(current.runtime?.source_candidate_status),'newer source candidate status inconsistent with failed older device evidence');
   must(commandContract.auto?.candidateWordingRequiresDeviceReconciliation===true,'candidate wording/device reconciliation guard missing');
 }
