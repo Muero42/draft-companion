@@ -202,7 +202,7 @@ if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
   must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
   must(handoffMatrix.includes(current.handoff_generation),'Season Companion MATRIX generation drift');
   must(currentHandoff.includes(current.handoff_generation),'Season Companion HANDOFF generation drift');
-  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194','v11.8.0-rc4.195','v11.8.0-rc4.196','v11.8.0-rc4.197','v11.8.0-rc4.198','v11.8.0-rc4.200','v11.8.0-rc4.201','v11.8.0-rc4.202','v11.8.0-rc4.203','v11.8.0-rc4.204','v11.8.0-rc4.205','v11.8.0-rc4.206','v11.8.0-rc4.207','v11.8.0-rc4.210','v11.8.0-rc4.211','v11.8.0-rc4.213','v11.8.0-rc4.214'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
+  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194','v11.8.0-rc4.195','v11.8.0-rc4.196','v11.8.0-rc4.197','v11.8.0-rc4.198','v11.8.0-rc4.200','v11.8.0-rc4.201','v11.8.0-rc4.202','v11.8.0-rc4.203','v11.8.0-rc4.204','v11.8.0-rc4.205','v11.8.0-rc4.206','v11.8.0-rc4.207','v11.8.0-rc4.210','v11.8.0-rc4.211','v11.8.0-rc4.213','v11.8.0-rc4.214','v11.8.0-rc4.215'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
   must(commandContract.currentGate===AUTHORITY_GATE,'Season Companion command gate regression');
   must(lock.gate===AUTHORITY_GATE,'Season Companion lock gate regression');
   must(current.currentWork?.nextGate===AUTHORITY_GATE,'Season Companion CURRENT next gate regression');
@@ -221,6 +221,7 @@ if(current.runtime?.latest_device_evidence?.acceptance==='FAIL'){
   must(current.runtime?.latest_android_observed===current.runtime?.latest_device_evidence?.version,'device evidence not checkpointed to latest_android_observed');
   const failedDeviceIsSource=String(current.authority?.source_candidate||'')===String(current.runtime?.latest_device_evidence?.version||'');
   if(failedDeviceIsSource) must(current.runtime?.source_candidate_status==='DEVICE_REJECTED','failed current source device evidence must mark source status DEVICE_REJECTED');
+  else if(current.runtime?.source_candidate_status==='MERGED_CANONICAL_PRODUCTION_DEPLOYED_PHYSICAL_PENDING') must(current.runtime_candidate?.merged===true&&current.runtime_candidate?.production_proven===true&&current.runtime_candidate?.physical_accepted===false&&current.runtime?.production_deployment?.status==='DEPLOYED_SUCCESS'&&current.runtime?.current_physical_acceptance?.acceptance==='PENDING','merged/deployed source status requires separate Production and pending physical evidence');
   else must(['RELEASE_CANDIDATE_UNMERGED','RELEASE_CANDIDATE_VALIDATING','DEVICE_REJECTED'].includes(current.runtime?.source_candidate_status),'newer source candidate status inconsistent with failed older device evidence');
   must(commandContract.auto?.candidateWordingRequiresDeviceReconciliation===true,'candidate wording/device reconciliation guard missing');
 }

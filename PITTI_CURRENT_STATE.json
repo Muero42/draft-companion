@@ -1,15 +1,15 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260929T1322Z-v274",
-  "updated_at": "2026-09-29T13:22:22Z",
+  "handoff_generation": "20260929T1738Z-v275",
+  "updated_at": "2026-09-29T17:38:00Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.214",
+    "source_candidate": "v11.8.0-rc4.215",
     "git_identity_rule": "Canonical main identity and candidate containment are freshly verified externally; no commit or mutable PR state is immutable checkpoint authority.",
-    "reconciled_base_main": "a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee",
+    "reconciled_base_main": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
     "postmerge": {
       "checkpoint": "v233",
       "pr": 121,
@@ -295,7 +295,7 @@
       "fantasypros_result": "PHYSICAL_PASS_OMITTED_ROS_WEEKLY_PROJECTION",
       "remaining_failure": "Sleeper NFL State: Timeout nach 6s"
     },
-    "reconciled_main": "faa6d37971fd6149b039f1b6c5a6106c5e978f10",
+    "reconciled_main": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
     "rc4205_physical_acceptance": {
       "checkpoint": "v256",
       "version": "v11.8.0-rc4.205",
@@ -677,30 +677,62 @@
       },
       "identity_scope": "PR213_RUNTIME_SOURCE_AND_DEPLOYMENT_PROVENANCE_ONLY; NOT_FUTURE_CANONICAL_MAIN"
     },
-    "canonical_main": "faa6d37971fd6149b039f1b6c5a6106c5e978f10",
-    "canonical_tree": "33f1503af8250f47fa9892d1aeaef27ece5f45fe"
+    "canonical_main": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
+    "canonical_tree": "3ca1006598b3ee843da68e6292f54ec5bd40a9e5",
+    "rc4215_source_production": {
+      "checkpoint": "v275",
+      "version": "v11.8.0-rc4.215",
+      "pr": 215,
+      "reviewed_head": "092f36fa46c90feaf733cc3b7784046beb194c03",
+      "reviewed_tree": "3ca1006598b3ee843da68e6292f54ec5bd40a9e5",
+      "merge_commit": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
+      "merged_tree": "3ca1006598b3ee843da68e6292f54ec5bd40a9e5",
+      "source_status": "MERGED_CANONICAL",
+      "production_status": "DEPLOYED_SUCCESS",
+      "physical_status": "PENDING",
+      "production_deployment_id": "ec99d1fa-6eea-4448-9047-e881bcd025ce",
+      "cloudflare_check_run_id": 109437418574,
+      "production_deployment_proven": true,
+      "physical_acceptance_proven": false,
+      "evidence_source": "LIVE_GITHUB_VERIFIED",
+      "premerge_exact_head_ci": "PASS",
+      "premerge_local_strict": "252/252 PASS exit 0",
+      "postmerge_authority_checks": "FAILED_RUNTIME_VERSION_LOCK_DRIFT_ONLY; Cloudflare Pages exact-main deployment SUCCESS; v275 authority reconciliation required",
+      "runtime_identity": "PR215_REVIEWED_TREE_EQUALS_MERGED_TREE; 17/17 runtime files identical",
+      "repair_scope": {
+        "retrieval_time": "RETRIEVAL evidence renders verified retrieval time without inventing provider publication time; missing/invalid times cannot throw",
+        "live_roster_refresh": "STRICT_5_MINUTE_AUTHORITY; single-flight refresh at ~4 minutes plus resume/online/manual recovery; failed refresh remains fail-closed",
+        "startup_identity": "PERSISTED_LEAGUE_USER_FAST_PATH; verified cached owner/roster draft-slot and manager-profile mapping preserved; historical draft/archive no longer blocks startup",
+        "dst": "UNCHANGED_CURRENT_PLUS1_PLUS2_PLANNER",
+        "provider_retry": "UNCHANGED_BOUNDED_POLICY"
+      },
+      "identity_scope": "PR215_RUNTIME_SOURCE_AND_CURRENT_MAIN_PROVENANCE_ONLY; FUTURE_V275_AUTHORITY_MAIN_DYNAMIC"
+    }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.211",
-    "season_candidate": "v11.8.0-rc4.214: PR #213 reviewed head 63162c9427fa70f1897331c15ffb2c6a38d50701, historical rc4.214 runtime merge a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee, identical PR213 reviewed/runtime-merge tree 2ebb61df4f077f419b91b048d321781b43785332. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (a10c3257-2342-4fa4-a15a-d191306199b1, check 109091210171); PHYSICAL FAIL / NOT ACCEPTED. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: RC4215_PR_EXACT_HEAD_CI_PENDING. Current canonical main faa6d37971fd6149b039f1b6c5a6106c5e978f10 / tree 33f1503af8250f47fa9892d1aeaef27ece5f45fe. rc4.215 branch codex/rc4215-season-live-refresh-repair PUBLISHED; HEAD DYNAMIC_VERIFICATION_REQUIRED; no PR, unmerged, nonproduction, not physically accepted. Freshly resolve remote branch HEAD immediately before PR creation and bind PR/CI to that exact observed SHA.",
-    "candidate_branch": "main via merged PR #213",
+    "season_candidate": "v11.8.0-rc4.215: PR #215 reviewed head 092f36fa46c90feaf733cc3b7784046beb194c03, merged canonical main 2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c, identical reviewed/merged tree 3ca1006598b3ee843da68e6292f54ec5bd40a9e5. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ec99d1fa-6eea-4448-9047-e881bcd025ce, check 109437418574); PHYSICAL PENDING. Premerge Exact-HEAD CI PASS. Postmerge authority-coupled checks failed only on runtime version lock drift while Cloudflare Pages deployed exact main successfully. Next gate: V275_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING. v275 is authority-only; physical acceptance must bind the future post-v275 canonical main/tree and its successful Production deployment.",
+    "candidate_branch": "main via merged PR #215",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.214",
+    "test_challenger": "v11.8.0-rc4.215",
     "ci": {
-      "status": "PREMERGE_PASS_POSTMERGE_AUTHORITY_DRIFT",
-      "validated_code_head": "63162c9427fa70f1897331c15ffb2c6a38d50701",
-      "validated_main": "a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee",
+      "status": "PREMERGE_EXACT_HEAD_PASS_POSTMERGE_AUTHORITY_DRIFT",
+      "validated_code_head": "092f36fa46c90feaf733cc3b7784046beb194c03",
+      "validated_main": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
       "current_exact_main_head_ci": "FAILED_AUTHORITY_DRIFT",
-      "evidence_source": "USER_SUPPLIED_EXTERNAL_EVIDENCE",
-      "premerge_strict": "248/248 PASS exit 0"
+      "failure_reason": "RUNTIME_VERSION_LOCK_DRIFT_ONLY",
+      "cloudflare_pages": "DEPLOYED_SUCCESS",
+      "cloudflare_check_run_id": 109437418574,
+      "evidence_source": "LIVE_GITHUB_VERIFIED",
+      "premerge_strict": "252/252 PASS exit 0"
     },
     "android_accepted": "v11.8.0-rc4.211",
-    "preview_candidate": "PR213 reviewed tree equals merged tree; Production deployed; physical pending",
-    "android_authority": "rc4.214 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: Waiver RETRIEVAL time crash and live-authority expiry without recovery; D/ST gate incomplete. Positive evidence lanes, RB containment, healthy persistence, complete 13/13 Start/Sit and 16-game/32-team context remain bounded historical findings. rc4.215 is local only, no Production or physical acceptance.",
+    "preview_candidate": "PR215 reviewed tree equals merged tree; Production deployed; physical pending behind v275 authority reconciliation",
+    "android_authority": "rc4.215 Production DEPLOYED_SUCCESS; PHYSICAL PENDING. Latest physical device evidence remains rc4.214 FAIL / NOT ACCEPTED (Waiver RETRIEVAL timestamp crash; live-authority expiry without lightweight recovery; D/ST gate incomplete). Bounded rc4.214 positives remain historical; rc4.210 remains the last broad fully accepted physical baseline.",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee",
+    "deployed_pages_head": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
     "installed_android": "v11.8.0-rc4.214",
     "installation_observation_scope": "User-supplied phone runtime observed 2026-09-28; installation mechanism not separately verified",
     "latest_android_observed": "v11.8.0-rc4.214",
@@ -730,7 +762,7 @@
       "dst": "UNCHANGED_CURRENT_PLUS1_PLUS2_PLANNER"
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.214",
-    "source_candidate_status": "DEVICE_REJECTED",
+    "source_candidate_status": "MERGED_CANONICAL_PRODUCTION_DEPLOYED_PHYSICAL_PENDING",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
     "pr98": {
@@ -791,28 +823,29 @@
         "candidate_package": "FAIL_STALE_BOOTSTRAP_RENDER_ASSERT_REPAIRED"
       }
     },
-    "package_reference_scope": "rc4.214 17-file runtime preserved byte-identically to canonical parent; package is not physical acceptance",
+    "package_reference_scope": "rc4.215 canonical 17-file runtime identity only; no new archive SHA or package re-extraction evidence; no served-byte parity or physical acceptance inferred",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.214",
+      "version": "v11.8.0-rc4.215",
       "files": 17,
       "sha256": null,
-      "status": "PARENT_RUNTIME_17_FILE_IDENTITY_REQUIRED",
-      "source_scope": "PR213_REVIEWED_TREE_EQUALS_MERGED_TREE"
+      "status": "RUNTIME_IDENTITY_ONLY_NO_PACKAGE_REEXTRACTION_CLAIM",
+      "source_scope": "PR215_REVIEWED_TREE_EQUALS_MERGED_TREE",
+      "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_NONCANONICAL"
     },
-    "deployment_parity": "PR213_REVIEWED_TREE_EQUALS_MERGED_TREE; USER_SUPPLIED_PRODUCTION_SUCCESS; PHYSICAL_FAIL_NOT_ACCEPTED",
-    "deployed_production_version": "v11.8.0-rc4.214",
+    "deployment_parity": "PR215_REVIEWED_TREE_EQUALS_MERGED_TREE; LIVE_GITHUB_PRODUCTION_SUCCESS; PHYSICAL_PENDING",
+    "deployed_production_version": "v11.8.0-rc4.215",
     "production_deployment": {
-      "version": "v11.8.0-rc4.214",
-      "source_commit": "a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee",
-      "tree": "2ebb61df4f077f419b91b048d321781b43785332",
+      "version": "v11.8.0-rc4.215",
+      "source_commit": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
+      "tree": "3ca1006598b3ee843da68e6292f54ec5bd40a9e5",
       "status": "DEPLOYED_SUCCESS",
       "branch": "main",
-      "deployment_id": "a10c3257-2342-4fa4-a15a-d191306199b1",
-      "cloudflare_check_run_id": 109091210171,
-      "deployment_check_id": "a10c3257-2342-4fa4-a15a-d191306199b1",
+      "deployment_id": "ec99d1fa-6eea-4448-9047-e881bcd025ce",
+      "cloudflare_check_run_id": 109437418574,
+      "deployment_check_id": "ec99d1fa-6eea-4448-9047-e881bcd025ce",
       "device_acceptance_proven": false,
-      "physical_classification": "RC4214_PHYSICAL_FAIL_NOT_ACCEPTED",
-      "evidence_source": "USER_SUPPLIED_EXTERNAL_EVIDENCE"
+      "physical_classification": "RC4215_PHYSICAL_PENDING",
+      "evidence_source": "LIVE_GITHUB_VERIFIED"
     },
     "independent_evidence_lane_status": {
       "broad_expert_ranks": "RC4214_BOUNDED_POSITIVE_NOT_ACCEPTED; AVAILABLE",
@@ -872,18 +905,18 @@
       }
     },
     "current_physical_acceptance": {
-      "version": "v11.8.0-rc4.214",
+      "version": "v11.8.0-rc4.215",
       "tree": null,
-      "acceptance": "FAIL",
+      "acceptance": "PENDING",
       "proven": false,
-      "classification": "RC4214_PHYSICAL_FAIL_NOT_ACCEPTED",
-      "canonical_main": "faa6d37971fd6149b039f1b6c5a6106c5e978f10",
-      "production_deployment": "DEPLOYED_SUCCESS; exact historical deployment provenance retained separately",
+      "classification": "RC4215_PHYSICAL_PENDING",
+      "canonical_main": "DYNAMIC_POST_V275_REQUIRED",
+      "production_deployment": "CURRENT_RUNTIME_MERGE_DEPLOYED; FUTURE_POST_V275_DEPLOYMENT_REQUIRED",
       "executable": false,
-      "prerequisite_gate": "RC4215_PR_EXACT_HEAD_CI_PENDING"
+      "prerequisite_gate": "V275_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING"
     },
     "accepted_android_scope": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
-    "androidAuthority": "rc4.214 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: Waiver RETRIEVAL time crash and live-authority expiry without recovery; D/ST gate incomplete. Positive evidence lanes, RB containment, healthy persistence, complete 13/13 Start/Sit and 16-game/32-team context remain bounded historical findings. rc4.215 is local only, no Production or physical acceptance.",
+    "androidAuthority": "rc4.215 Production DEPLOYED_SUCCESS; PHYSICAL PENDING. Latest physical device evidence remains rc4.214 FAIL / NOT ACCEPTED (Waiver RETRIEVAL timestamp crash; live-authority expiry without lightweight recovery; D/ST gate incomplete). Bounded rc4.214 positives remain historical; rc4.210 remains the last broad fully accepted physical baseline.",
     "installed_android_scope": "MOST_RECENT_PHYSICALLY_OBSERVED_INSTALLATION; BOUNDED_DIAGNOSTIC_NOT_ACCEPTANCE"
   },
   "real_draft": {
@@ -923,8 +956,8 @@
     "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
-    "status": "RC4215_BRANCH_PUBLISHED_PR_PENDING",
-    "nextGate": "RC4215_PR_EXACT_HEAD_CI_PENDING"
+    "status": "V275_AUTHORITY_BRANCH_PUBLISHED_PR_PENDING",
+    "nextGate": "V275_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -943,7 +976,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "v11.8.0-rc4.214: PR #213 reviewed head 63162c9427fa70f1897331c15ffb2c6a38d50701, historical rc4.214 runtime merge a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee, identical PR213 reviewed/runtime-merge tree 2ebb61df4f077f419b91b048d321781b43785332. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (a10c3257-2342-4fa4-a15a-d191306199b1, check 109091210171); PHYSICAL FAIL / NOT ACCEPTED. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: RC4215_PR_EXACT_HEAD_CI_PENDING. Current canonical main faa6d37971fd6149b039f1b6c5a6106c5e978f10 / tree 33f1503af8250f47fa9892d1aeaef27ece5f45fe. rc4.215 branch codex/rc4215-season-live-refresh-repair PUBLISHED; HEAD DYNAMIC_VERIFICATION_REQUIRED; no PR, unmerged, nonproduction, not physically accepted. Freshly resolve remote branch HEAD immediately before PR creation and bind PR/CI to that exact observed SHA.",
+  "source_authority": "v11.8.0-rc4.215: PR #215 reviewed head 092f36fa46c90feaf733cc3b7784046beb194c03, merged canonical main 2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c, identical reviewed/merged tree 3ca1006598b3ee843da68e6292f54ec5bd40a9e5. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ec99d1fa-6eea-4448-9047-e881bcd025ce, check 109437418574); PHYSICAL PENDING. Premerge Exact-HEAD CI PASS. Postmerge authority-coupled checks failed only on runtime version lock drift while Cloudflare Pages deployed exact main successfully. Next gate: V275_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING. v275 is authority-only; physical acceptance must bind the future post-v275 canonical main/tree and its successful Production deployment.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -980,13 +1013,18 @@
     "ready": [],
     "waiting_external": [
       {
-        "id": "rc4215-candidate-publication",
-        "gate": "RC4215_PR_EXACT_HEAD_CI_PENDING",
-        "reason": "Local rc4.215 candidate requires external exact-head validation before promotion"
+        "id": "v275-authority-publication",
+        "gate": "V275_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING",
+        "reason": "rc4.215 runtime is merged/deployed; authority-only v275 exact-head publication/merge is required before physical acceptance"
       }
     ],
     "blocked_user": [],
     "completed_recent": [
+      {
+        "id": "rc4215-pr215-source-production-merge",
+        "result": "PR #215 reviewed head 092f36fa46c90feaf733cc3b7784046beb194c03 merged as canonical main 2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c with identical tree 3ca1006598b3ee843da68e6292f54ec5bd40a9e5; Exact-HEAD CI PASS; Cloudflare Pages deployment ec99d1fa-6eea-4448-9047-e881bcd025ce / check 109437418574 SUCCESS; postmerge authority-coupled checks failed only on runtime version lock drift. PHYSICAL PENDING.",
+        "at": "2026-09-29T17:38:00Z"
+      },
       {
         "id": "v272-rc4214-authority-reconciliation",
         "result": "Local v272 authority-only reconciliation; focused checks and strict 248/248 PASS; physical acceptance PENDING",
@@ -1189,25 +1227,25 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "NO_EXECUTABLE_WORK_REMAINS",
-      "reason": "Local correction complete; publication, merge, postmerge identity and Production evidence must precede physical acceptance"
+      "reason": "Only external v275 authority publication/exact-head gate remains."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260929T1322Z-v274",
+    "generation": "20260929T1738Z-v275",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Freshly verify remote branch HEAD -> create rc4.215 PR against main -> require Exact-HEAD CI for that observed PR head. Then merge, resolve new canonical main/tree, verify exact-main Production SUCCESS, then rc4.215 physical acceptance. External actions are outside this local package.",
+    "resume": "Freshly verify remote v275 authority branch HEAD -> create v275 authority PR against main -> require Exact-HEAD CI for that observed PR head. Then merge v275, resolve the new canonical main/tree, verify exact-main Production SUCCESS, then run one combined rc4.215 physical acceptance.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "V274_RC4215_SELF_REFERENCE_SAFE_AUTHORITY",
+    "refresh_scope": "V275_RC4215_POSTMERGE_AUTHORITY",
     "readiness_scope": "STRUCTURAL_HANDOFF_ONLY_NOT_DEVICE_ACCEPTANCE"
   },
-  "status": "V274_RC4215_PR_EXACT_HEAD_CI_PENDING",
-  "gate": "RC4215_PR_EXACT_HEAD_CI_PENDING",
-  "nextGate": "RC4215_PR_EXACT_HEAD_CI_PENDING",
-  "handoffGeneration": "20260929T1322Z-v274",
+  "status": "V275_RC4215_POSTMERGE_AUTHORITY_RECONCILIATION",
+  "gate": "V275_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING",
+  "nextGate": "V275_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING",
+  "handoffGeneration": "20260929T1738Z-v275",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -1786,17 +1824,17 @@
     "season_exception_weakens_draft_rule": false
   },
   "candidate_work": {
-    "version": "v11.8.0-rc4.214",
-    "pr": 213,
-    "status": "MERGED_CANONICAL_PRODUCTION_DEPLOYED_PHYSICAL_FAIL_NOT_ACCEPTED",
-    "head_sha": "63162c9427fa70f1897331c15ffb2c6a38d50701",
-    "merge_commit": "a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee",
-    "tree_sha": "2ebb61df4f077f419b91b048d321781b43785332",
-    "physical_classification": "RC4214_PHYSICAL_FAIL_NOT_ACCEPTED",
-    "identity_scope": "HISTORICAL_PR213_RUNTIME_CANDIDATE; CURRENT_RC4215_PUBLICATION_IN_AUTHORITY_CONTINUATION"
+    "version": "v11.8.0-rc4.215",
+    "pr": 215,
+    "status": "MERGED_CANONICAL_PRODUCTION_DEPLOYED_PHYSICAL_PENDING",
+    "head_sha": "092f36fa46c90feaf733cc3b7784046beb194c03",
+    "merge_commit": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
+    "tree_sha": "3ca1006598b3ee843da68e6292f54ec5bd40a9e5",
+    "physical_classification": "RC4215_PHYSICAL_PENDING",
+    "identity_scope": "PR215_RUNTIME_MERGE; CURRENT_V275_AUTHORITY_RECONCILIATION"
   },
-  "updatedAt": "2026-09-29T13:22:22Z",
-  "exactNextAction": "Freshly verify remote branch HEAD -> create rc4.215 PR against main -> require Exact-HEAD CI for that observed PR head.",
+  "updatedAt": "2026-09-29T17:38:00Z",
+  "exactNextAction": "Freshly verify remote v275 authority branch HEAD -> create v275 authority PR against main -> require Exact-HEAD CI for that observed PR head.",
   "week4_season_readiness": {
     "classification": "WEEK4_SEASON_READY_LOCAL_CANDIDATE",
     "version": "v11.8.0-rc4.212",
@@ -1858,84 +1896,87 @@
   },
   "authority_continuation": {
     "status": "BRANCH_PUBLISHED_PR_NOT_CREATED",
-    "current_gate": "RC4215_PR_EXACT_HEAD_CI_PENDING",
+    "current_gate": "V275_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING",
     "physical_gate": "RC4215_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING",
     "physical_executable": false,
-    "runtime_source_commit": "DYNAMIC_VERIFICATION_REQUIRED",
-    "authority_parent": "faa6d37971fd6149b039f1b6c5a6106c5e978f10",
-    "canonical_main": "faa6d37971fd6149b039f1b6c5a6106c5e978f10",
-    "canonical_tree": "33f1503af8250f47fa9892d1aeaef27ece5f45fe",
+    "runtime_source_commit": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
+    "authority_parent": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
+    "canonical_main": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
+    "canonical_tree": "3ca1006598b3ee843da68e6292f54ec5bd40a9e5",
     "future_canonical_main": "DYNAMIC_VERIFICATION_REQUIRED",
     "future_canonical_tree": "DYNAMIC_VERIFICATION_REQUIRED",
-    "post_rc4215_production": "DYNAMIC_VERIFICATION_REQUIRED",
+    "post_v275_production": "DYNAMIC_VERIFICATION_REQUIRED",
     "sequence": [
-      "FRESH_REMOTE_BRANCH_HEAD_VERIFICATION",
-      "RC4215_PR_CREATION_AGAINST_MAIN",
-      "RC4215_EXACT_HEAD_CI",
-      "RC4215_MERGE_POSTMERGE_CHECKS",
+      "FRESH_REMOTE_V275_BRANCH_HEAD_VERIFICATION",
+      "V275_AUTHORITY_PR_CREATION_AGAINST_MAIN",
+      "V275_AUTHORITY_EXACT_HEAD_CI",
+      "V275_AUTHORITY_MERGE_POSTMERGE_CHECKS",
       "RESOLVE_NEW_CANONICAL_MAIN",
       "VERIFY_NEW_MAIN_PRODUCTION_DEPLOYMENT",
       "RC4215_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING"
     ],
-    "physical_binding": "FRESH_POST_RC4215_MAIN_AND_TREE; EXACT_SUCCESSFUL_PRODUCTION_DEPLOYMENT; RC4215_17_RUNTIME_FILES_MATCH_REVIEWED_CANDIDATE",
-    "published_branch": "codex/rc4215-season-live-refresh-repair",
+    "physical_binding": "FRESH_POST_V275_MAIN_AND_TREE; EXACT_SUCCESSFUL_PRODUCTION_DEPLOYMENT; RC4215_17_RUNTIME_FILES_MATCH_REVIEWED_PR215_TREE",
+    "published_branch": "codex/v275-rc4215-postmerge-authority",
     "published_head": "DYNAMIC_VERIFICATION_REQUIRED",
-    "exact_head_rule": "Freshly resolve remote branch HEAD immediately before PR creation and bind PR/CI to that exact observed SHA.",
-    "historical_validation_and_publication": {
-      "evidence_scope": "HISTORICAL_OBSERVATIONS_NOT_IMMUTABLE_BRANCH_HEAD",
-      "evidence_source": "USER_SUPPLIED_EXTERNAL_EVIDENCE",
-      "first_published_head": "860323b908217c11272b74f9e5b2c2a2c417b1c5",
-      "later_published_head": "74f8751b3d07bd6302fb6d3d4df6f9ff32482475",
-      "observed_before": "V274_AUTHORITY_ONLY_FOLLOWUP",
-      "ahead": 2,
-      "behind": 0,
-      "focused": {
-        "head": "74f8751b3d07bd6302fb6d3d4df6f9ff32482475",
-        "passed": 12,
-        "total": 12
-      },
-      "strict": {
-        "head": "74f8751b3d07bd6302fb6d3d4df6f9ff32482475",
+    "exact_head_rule": "Freshly resolve the remote v275 authority branch HEAD immediately before PR creation and bind PR/CI to that exact observed SHA.",
+    "historical_runtime_merge": {
+      "evidence_scope": "HISTORICAL_EXACT_HEAD_AND_MERGE_RECEIPT",
+      "evidence_source": "LIVE_GITHUB_VERIFIED",
+      "pr": 215,
+      "reviewed_head": "092f36fa46c90feaf733cc3b7784046beb194c03",
+      "reviewed_tree": "3ca1006598b3ee843da68e6292f54ec5bd40a9e5",
+      "merge_commit": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
+      "merged_tree": "3ca1006598b3ee843da68e6292f54ec5bd40a9e5",
+      "premerge_exact_head_ci": "PASS",
+      "local_strict": {
         "passed": 252,
         "total": 252,
-        "exit_code": 0,
-        "runs": 1
+        "exit_code": 0
+      },
+      "postmerge_ci": "FAILED_RUNTIME_VERSION_LOCK_DRIFT_ONLY",
+      "production_deployment": {
+        "status": "SUCCESS",
+        "deployment_id": "ec99d1fa-6eea-4448-9047-e881bcd025ce",
+        "cloudflare_check_run_id": 109437418574
       }
     }
   },
   "runtime_candidate": {
     "version": "v11.8.0-rc4.215",
-    "base": "faa6d37971fd6149b039f1b6c5a6106c5e978f10",
-    "status": "BRANCH_PUBLISHED_PR_NOT_CREATED",
-    "published_head": "DYNAMIC_VERIFICATION_REQUIRED",
-    "published_tree": "DYNAMIC_VERIFICATION_REQUIRED",
-    "pr": null,
-    "merged": false,
-    "production_proven": false,
+    "base": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
+    "status": "MERGED_CANONICAL_PRODUCTION_DEPLOYED_PHYSICAL_PENDING",
+    "reviewed_head": "092f36fa46c90feaf733cc3b7784046beb194c03",
+    "reviewed_tree": "3ca1006598b3ee843da68e6292f54ec5bd40a9e5",
+    "merge_commit": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
+    "merged_tree": "3ca1006598b3ee843da68e6292f54ec5bd40a9e5",
+    "pr": 215,
+    "merged": true,
+    "production_proven": true,
     "physical_accepted": false,
-    "gate": "RC4215_PR_EXACT_HEAD_CI_PENDING",
-    "publication_status": "BRANCH_PUBLISHED_PR_NOT_CREATED",
-    "published_branch": "codex/rc4215-season-live-refresh-repair",
-    "exact_head_rule": "Freshly resolve remote branch HEAD immediately before PR creation and bind PR/CI to that exact observed SHA.",
-    "historical_validation_and_publication": {
-      "evidence_scope": "HISTORICAL_OBSERVATIONS_NOT_IMMUTABLE_BRANCH_HEAD",
-      "evidence_source": "USER_SUPPLIED_EXTERNAL_EVIDENCE",
-      "first_published_head": "860323b908217c11272b74f9e5b2c2a2c417b1c5",
-      "later_published_head": "74f8751b3d07bd6302fb6d3d4df6f9ff32482475",
-      "observed_before": "V274_AUTHORITY_ONLY_FOLLOWUP",
-      "ahead": 2,
-      "behind": 0,
-      "focused": {
-        "head": "74f8751b3d07bd6302fb6d3d4df6f9ff32482475",
-        "passed": 12,
-        "total": 12
-      },
-      "strict": {
-        "head": "74f8751b3d07bd6302fb6d3d4df6f9ff32482475",
+    "gate": "V275_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING",
+    "publication_status": "RUNTIME_MERGED_AUTHORITY_RECONCILIATION_PENDING",
+    "authority_branch": "codex/v275-rc4215-postmerge-authority",
+    "authority_published_head": "DYNAMIC_VERIFICATION_REQUIRED",
+    "exact_head_rule": "Freshly resolve the remote v275 authority branch HEAD immediately before PR creation and bind PR/CI to that exact observed SHA.",
+    "historical_runtime_merge": {
+      "evidence_scope": "HISTORICAL_EXACT_HEAD_AND_MERGE_RECEIPT",
+      "evidence_source": "LIVE_GITHUB_VERIFIED",
+      "pr": 215,
+      "reviewed_head": "092f36fa46c90feaf733cc3b7784046beb194c03",
+      "reviewed_tree": "3ca1006598b3ee843da68e6292f54ec5bd40a9e5",
+      "merge_commit": "2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c",
+      "merged_tree": "3ca1006598b3ee843da68e6292f54ec5bd40a9e5",
+      "premerge_exact_head_ci": "PASS",
+      "local_strict": {
         "passed": 252,
         "total": 252,
-        "exit_code": 0,
-        "runs": 1
+        "exit_code": 0
+      },
+      "postmerge_ci": "FAILED_RUNTIME_VERSION_LOCK_DRIFT_ONLY",
+      "production_deployment": {
+        "status": "SUCCESS",
+        "deployment_id": "ec99d1fa-6eea-4448-9047-e881bcd025ce",
+        "cloudflare_check_run_id": 109437418574
       }
     }
   }
