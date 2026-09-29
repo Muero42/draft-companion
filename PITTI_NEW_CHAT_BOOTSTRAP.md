@@ -1,3 +1,18 @@
+Handoff generation: `20260929T1738Z-v275`
+Generation: `20260929T1738Z-v275`
+## CURRENT AUTHORITY v275 — rc4.215 post-merge reconciliation
+v11.8.0-rc4.215: PR #215 reviewed head 092f36fa46c90feaf733cc3b7784046beb194c03, merged canonical main 2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c, identical reviewed/merged tree 3ca1006598b3ee843da68e6292f54ec5bd40a9e5. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ec99d1fa-6eea-4448-9047-e881bcd025ce, check 109437418574); PHYSICAL PENDING. Premerge Exact-HEAD CI PASS. Postmerge authority-coupled checks failed only on runtime version lock drift while Cloudflare Pages deployed exact main successfully. Next gate: V275_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING. v275 is authority-only; physical acceptance must bind the future post-v275 canonical main/tree and its successful Production deployment.
+Canonical main: `2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c`; tree: `3ca1006598b3ee843da68e6292f54ec5bd40a9e5`.
+Runtime: `v11.8.0-rc4.215`; PR #215 reviewed head `092f36fa46c90feaf733cc3b7784046beb194c03`; reviewed/merged tree identity PASS.
+Postmerge CI classification: authority-only failure — `RUNTIME_VERSION_LOCK_DRIFT_ONLY`; Cloudflare Pages exact-main deployment SUCCESS.
+Current gate: `V275_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING`.
+published_branch = codex/v275-rc4215-postmerge-authority; published_head = DYNAMIC_VERIFICATION_REQUIRED.
+Freshly resolve the remote v275 authority branch HEAD immediately before PR creation and bind PR/CI to that exact observed SHA.
+Continuation: fresh remote v275 HEAD -> authority PR against main -> exact-head CI -> merge -> resolve NEW canonical main/tree -> exact-main Production SUCCESS -> `RC4215_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING`.
+Physical: rc4.215 PENDING and not executable before the post-v275 exact-main deployment. Latest device evidence remains rc4.214 FAIL / NOT ACCEPTED; rc4.210 remains the last broad accepted baseline.
+17 runtime files are unchanged by v275.
+
+## HISTORICAL v274 CHECKPOINT — superseded by v275
 Handoff generation: `20260929T1322Z-v274`
 Generation: `20260929T1322Z-v274`
 CURRENT AUTHORITY v274: runtime candidate v11.8.0-rc4.215; published_branch = codex/rc4215-season-live-refresh-repair; publication_status = BRANCH_PUBLISHED_PR_NOT_CREATED; published_head = DYNAMIC_VERIFICATION_REQUIRED. Unmerged, nonproduction, not physically accepted.
