@@ -3,10 +3,10 @@ const src=fs.readFileSync('app.js','utf8');const a=src.indexOf('async function b
 const season=b.indexOf('const season=await fetchSeasonLeagueState({})');
 const players=b.indexOf("jf(\`\${S}/players/nfl?_=\${bust}\`,'Season Spieler',15000)");
 const draft=b.indexOf("'Draft-Archiv',6500");
-if([season,players,draft].some(x=>x<0))throw new Error('season-first transport stages missing');
-if(!(season<players&&players<draft))throw new Error('historical draft precedes/gates live season hydration');
+if([season,players].some(x=>x<0))throw new Error('season-first transport stages missing');
+if(!(season<players&&draft===-1))throw new Error('historical draft precedes/gates live season hydration');
 if(b.includes('CANONICAL_DRAFT_NOT_COMPLETE')||b.includes('await fetchDraft(id)'))throw new Error('legacy draft gate remains in season bootstrap');
-if(!b.includes("catch(e){console.warn('PITTI optional draft archive unavailable'"))throw new Error('draft archive failure is not optional');
+if(draft!==-1)throw new Error('optional historical archive must not block live bootstrap');
 for(const token of ["console.error('PITTI season bootstrap failed'","if(els.waiverStatus)","if(els.tradeStatus)"])if(!b.includes(token))throw new Error('missing fail-visible contract '+token);
 console.log('season-first mobile bootstrap transport regression PASS');
 

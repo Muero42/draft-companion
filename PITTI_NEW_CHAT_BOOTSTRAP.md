@@ -1,3 +1,8 @@
+Local runtime candidate v11.8.0-rc4.215; rc4.214 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: Waiver RETRIEVAL time crash and live-authority expiry without recovery; D/ST gate incomplete. Positive evidence lanes, RB containment, healthy persistence, complete 13/13 Start/Sit and 16-game/32-team context remain bounded historical findings. rc4.215 is local only, no Production or physical acceptance.
+Current local gate: RC4215_LOCAL_REPAIR_EXACT_HEAD_VALIDATION_PENDING. See docs/PITTI_RC4215_SEASON_REPAIR.md.
+
+## HISTORICAL v272 CHECKPOINT — superseded by current local candidate above
+
 Handoff generation: `20260928T1918Z-v272`
 Generation: `20260928T1918Z-v272`
 > **CURRENT AUTHORITY — v272**: v11.8.0-rc4.214: PR #213 reviewed head 63162c9427fa70f1897331c15ffb2c6a38d50701, rc4.214 runtime merge / v272 parent a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee, identical reviewed/merged tree 2ebb61df4f077f419b91b048d321781b43785332. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (a10c3257-2342-4fa4-a15a-d191306199b1, check 109091210171); PHYSICAL PENDING. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: V272_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING.

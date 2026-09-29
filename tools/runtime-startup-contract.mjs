@@ -51,9 +51,8 @@ assert(bootAt>=0,'automatic roster bootstrap missing');
 const preBoot=startupTail.slice(0,bootAt);
 assert(!/els\.onlineState\.(?:textContent|className)/.test(preBoot.replace(/if\(els\.onlineState\)\{[^}]*\}/g,'')),'unguarded legacy onlineState access before Season bootstrap');
 
-// rc4.175 Season startup is automatic-only. Runtime parsing above is the startup gate;
-// manual refresh-handler observability contracts were retired with their controls.
-assert(!app.includes("'seasonRefreshLiveBtn'")&&!app.includes("'seasonRefreshRanksBtn'"),'manual Season controls resurrected');
+// Automatic startup remains; rc4.215 adds explicit lightweight roster recovery.
+assert(app.includes("els.seasonRefreshLiveBtn.onclick=()=>void refreshSeasonLiveRoster({force:true,trigger:'manual'})")&&!app.includes("'seasonRefreshRanksBtn'"),'manual roster recovery must use the lightweight path');
 assert(app.includes('const rosterResult=await bootstrapSeasonWorkspace();'),'automatic roster bootstrap missing');
 assert(app.includes('void refreshSeasonRankings({auto:true});'),'automatic ranking refresh missing');
 

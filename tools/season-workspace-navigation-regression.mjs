@@ -5,7 +5,7 @@ assert.ok(Number((app.match(/const APP_VERSION='v11\.8\.0-rc4\.(\d+)'/)||[])[1])
 assert.ok(app.includes('function setWorkspace('));
 assert.ok(app.includes("document.querySelectorAll('[data-workspace-target]').forEach(btn=>btn.addEventListener('click',()=>setWorkspace(btn.dataset.workspaceTarget)))"));
 for(const name of ['roster','waiver','trade','live','draft'])assert.ok(html.includes('data-workspace-target="'+name+'"'),'tab '+name);
-for(const id of ['seasonRefreshLiveBtn','seasonRefreshRanksBtn']){assert.ok(!html.includes('id="'+id+'"'));assert.ok(!app.includes("'"+id+"'"));}
+for(const id of ['seasonRefreshRanksBtn']){assert.ok(!html.includes('id="'+id+'"'));assert.ok(!app.includes("'"+id+"'"));}
 assert.ok(!app.includes('bindCriticalSeasonControlsEarly'));
 const rankConst=app.indexOf('const SEASON_RANKING_AUTO_MS='),startup=app.lastIndexOf('const rosterResult=await bootstrapSeasonWorkspace();');
 assert.ok(rankConst>=0&&startup>rankConst,'startup before ranking constants');

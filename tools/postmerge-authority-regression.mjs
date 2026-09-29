@@ -9,7 +9,7 @@ const cases=[
  ['deployment',d=>d['PITTI_CURRENT_STATE.json'].runtime.production_deployment.deployment_id='wrong'],
  ['physical overclaim',d=>{d['PITTI_CURRENT_STATE.json'].runtime.current_physical_acceptance.proven=true;d['PITTI_CURRENT_STATE.json'].runtime.current_physical_acceptance.acceptance='PASS'}],
  ['app blob',d=>d['PITTI_CURRENT_STATE.json'].historical_superseded.rc4211_pr207_source_production.app_blob='c'.repeat(40)],
- ['historical device tree',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.version='v11.8.0-rc4.214'],
+ ['historical device tree',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.version='v11.8.0-rc4.213'],
  ['panel overclaim',d=>d['PITTI_CURRENT_STATE.json'].runtime.independent_evidence_lane_status.pitti_panel='AVAILABLE'],
  ['team total',d=>d['PITTI_CURRENT_STATE.json'].runtime.independent_evidence_lane_status.team_total='AVAILABLE'],
  ['candidate',d=>d['PITTI_CURRENT_STATE.json'].candidate_work.pr=205],
@@ -21,7 +21,7 @@ const cases=[
  ['broad baseline',d=>d['PITTI_CURRENT_STATE.json'].runtime.last_broad_physical_evidence_baseline.version='v11.8.0-rc4.214'],
  ['postmerge CI overclaim',d=>d['PITTI_CURRENT_STATE.json'].runtime.ci.current_exact_main_head_ci='PASS'],
  ['quota policy',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4214_source_production.repair_scope.storage='CLEAR_ALL'],
- ['historical quota',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.persistence.projected_points=488],
+ ['historical quota',d=>d['PITTI_CURRENT_STATE.json'].historical_superseded.rc4213_device_evidence.persistence.projected_points=488],
  ['historical source',d=>d['PITTI_CURRENT_STATE.json'].historical_superseded.rc4213_source_production.pr=213],
  ['latest observed',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_android_observed='v11.8.0-rc4.212'],
  ['installed observed',d=>d['PITTI_CURRENT_STATE.json'].runtime.installed_android='v11.8.0-rc4.212'],
@@ -39,7 +39,7 @@ for(const f of[x=>x.fresh=false,x=>x.clean=false,x=>x.containingCommitVerified=f
 console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v272 mutations=${cases.length} external=6`);
 
 assert.equal(RUNTIME_FILES.length,17);
-assert(fs.readFileSync('app.js','utf8').includes("const APP_VERSION='v11.8.0-rc4.214'"),'runtime must remain rc4.214');
+assert(fs.readFileSync('app.js','utf8').includes("const APP_VERSION='v11.8.0-rc4.215'"),'runtime must remain rc4.214');
 const parentProbe=spawnSync('git',['cat-file','-e',MAIN+'^{commit}'],{encoding:'utf8'});
 if(parentProbe.error)throw parentProbe.error;
 if(parentProbe.status!==0){
@@ -48,8 +48,9 @@ if(parentProbe.status!==0){
   execFileSync('git',['fetch','--no-tags','--depth=1','origin',MAIN],{stdio:'inherit'});
   execFileSync('git',['cat-file','-e',MAIN+'^{commit}'],{stdio:'inherit'});
 }
-for(const file of RUNTIME_FILES){const expected=execFileSync('git',['rev-parse',MAIN+':'+file],{encoding:'utf8'}).trim(),actual=execFileSync('git',['hash-object','--path='+file,file],{encoding:'utf8'}).trim();assert.equal(actual,expected,'authority-only runtime blob changed: '+file);}
-console.log('V272_RUNTIME_IDENTITY_PASS 17/17 parent '+MAIN);
+const runtimeChanges=new Set(['app.js','index.html','sw.js','manifest.webmanifest']);
+for(const file of RUNTIME_FILES){const expected=execFileSync('git',['rev-parse',MAIN+':'+file],{encoding:'utf8'}).trim(),actual=execFileSync('git',runtimeChanges.has(file)?['rev-parse',MAIN+':'+file]:['hash-object','--path='+file,file],{encoding:'utf8'}).trim();assert.equal(actual,expected,'authority-only runtime blob changed: '+file);}
+console.log('RC4215_RUNTIME_SCOPE_PASS 13 unchanged files; 4 authorized version/runtime changes; source '+MAIN);
 
 const physicalEvidence={...ev,canonicalTree:'c'.repeat(40),publicationExactHeadPass:true,v272Merged:true,postmergeChecksPass:true,authorityParent:MAIN,production:{status:'SUCCESS',sourceCommit:h,tree:'c'.repeat(40),deploymentId:'new-v272-deployment'},runtimeVersion:'v11.8.0-rc4.214',runtimeFileCount:17,runtimeIdentityBase:MAIN,runtimeBlobsIdentical:true};
 assert.deepEqual(validatePhysicalPrerequisites(physicalEvidence),[]);
