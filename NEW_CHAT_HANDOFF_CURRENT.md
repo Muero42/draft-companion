@@ -1,7 +1,13 @@
-Local runtime candidate v11.8.0-rc4.215; rc4.214 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: Waiver RETRIEVAL time crash and live-authority expiry without recovery; D/ST gate incomplete. Positive evidence lanes, RB containment, healthy persistence, complete 13/13 Start/Sit and 16-game/32-team context remain bounded historical findings. rc4.215 is local only, no Production or physical acceptance.
-Current local gate: RC4215_LOCAL_REPAIR_EXACT_HEAD_VALIDATION_PENDING. See docs/PITTI_RC4215_SEASON_REPAIR.md.
+Handoff generation: `20260929T1200Z-v273`
+Generation: `20260929T1200Z-v273`
+CURRENT AUTHORITY v273: runtime candidate v11.8.0-rc4.215; branch PUBLISHED at 860323b908217c11272b74f9e5b2c2a2c417b1c5; PR not yet created, unmerged, nonproduction, not physically accepted. This corrective commit remains LOCAL_UNPUBLISHED.
+Canonical main faa6d37971fd6149b039f1b6c5a6106c5e978f10; tree 33f1503af8250f47fa9892d1aeaef27ece5f45fe. Production v11.8.0-rc4.214 DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED.
+Next gate: RC4215_PUBLICATION_EXACT_HEAD_CI_PENDING. External corrective publication / PR exact-head CI -> merge -> resolve NEW canonical main/tree -> exact-main Production SUCCESS -> RC4215_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING.
+Bounded rc4.214 positives: projections, Broad ECR, selected PITTI, RB containment, healthy persistence, 13/13 Start/Sit, Game Context 16/32. Failures: WAIVER_RETRIEVAL_INVALID_TIME_VALUE; LIVE_AUTHORITY_EXPIRES_WITHOUT_LIGHTWEIGHT_RECOVERY; DST_PHYSICAL_GATE_NOT_COMPLETED.
+Known final published-head receipt: 252/252 PASS, exit 0 at 860323b908217c11272b74f9e5b2c2a2c417b1c5. Future main/tree/deployment/acceptance are not claimed.
+Details: docs/PITTI_V273_RC4215_PRE_PR_AUTHORITY.md and docs/PITTI_RC4215_SEASON_REPAIR.md.
 
-## HISTORICAL v272 CHECKPOINT — superseded by current local candidate above
+## HISTORICAL v272 CHECKPOINT — superseded by v273 authority above
 
 Handoff generation: `20260928T1918Z-v272`
 Generation: `20260928T1918Z-v272`

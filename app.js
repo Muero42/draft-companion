@@ -57,7 +57,9 @@ async function fetchSeasonLeagueState(draft){
   const ownership={};for(const r of rosters){const reserve=new Set((r.reserve||[]).map(String)),taxi=new Set((r.taxi||[]).map(String));for(const pid of new Set([...(r.players||[]),...(r.reserve||[]),...(r.taxi||[])].filter(Boolean).map(String))){ownership[pid]={roster_id:r.roster_id,owner_id:r.owner_id,mine:Number(r.roster_id)===Number(roster.roster_id),reserve:reserve.has(pid),taxi:taxi.has(pid)};}}
   const userById=Object.fromEntries((Array.isArray(users)?users:[]).map(u=>[String(u.user_id||''),u]));
   const draftSlotByOwner=Object.fromEntries(Object.entries(draftMeta?.draft_order||{}).map(([owner,slot])=>[String(owner),Number(slot)]));
-  const league_rosters=rosters.map(r=>{const ownerId=String(r.owner_id||''),u=userById[ownerId]||{},settings=r.settings||{},draftSlot=draftSlotByOwner[ownerId]||null,profileName=draftSlot?ACTIVE_2026_MANAGER_MAP?.[draftSlot]||null:null;return{roster_id:Number(r.roster_id),owner_id:ownerId,draft_slot:draftSlot,manager_name:u.display_name||u.username||profileName||('Roster '+r.roster_id),manager_profile_name:profileName,players:(r.players||[]).map(String),starters:(r.starters||[]).map(String),reserve:(r.reserve||[]).map(String),taxi:(r.taxi||[]).map(String),waiver_position:Number(settings.waiver_position),waiver_budget_used:Number(settings.waiver_budget_used||0),wins:Number(settings.wins||0),losses:Number(settings.losses||0)};});
+  const cachedIdentity=store.get('v118_seasonLeagueState',null);
+  const cachedRosters=String(cachedIdentity?.league_id||'')===leagueId&&Array.isArray(cachedIdentity?.rosters)?cachedIdentity.rosters:[];
+  const league_rosters=rosters.map(r=>{const ownerId=String(r.owner_id||''),u=userById[ownerId]||{},settings=r.settings||{},cachedMatches=cachedRosters.filter(x=>String(x.owner_id||'')===ownerId&&Number(x.roster_id)===Number(r.roster_id)),cached=cachedMatches.length===1?cachedMatches[0]:null,cachedSlot=Number(cached?.draft_slot),verifiedCachedSlot=Number.isInteger(cachedSlot)&&cachedSlot>=1&&cachedSlot<=10&&cached?.manager_profile_name&&ACTIVE_2026_MANAGER_MAP?.[cachedSlot]===cached.manager_profile_name?cachedSlot:null,draftSlot=draftSlotByOwner[ownerId]||verifiedCachedSlot,profileName=draftSlot?ACTIVE_2026_MANAGER_MAP?.[draftSlot]||null:null;return{roster_id:Number(r.roster_id),owner_id:ownerId,draft_slot:draftSlot,manager_name:u.display_name||u.username||profileName||('Roster '+r.roster_id),manager_profile_name:profileName,players:(r.players||[]).map(String),starters:(r.starters||[]).map(String),reserve:(r.reserve||[]).map(String),taxi:(r.taxi||[]).map(String),waiver_position:Number(settings.waiver_position),waiver_budget_used:Number(settings.waiver_budget_used||0),wins:Number(settings.wins||0),losses:Number(settings.losses||0)};});
   const expectedTeams=Number(league?.total_rosters||league?.settings?.num_teams||draftMeta?.settings?.teams||10);
   if(expectedTeams!==10||rosters.length!==expectedTeams||league_rosters.length!==expectedTeams)return{ok:false,reason:'LEAGUE_ROSTER_COUNT_MISMATCH',leagueId,expectedTeams,actualRosters:rosters.length};
   const rosterIds=league_rosters.map(r=>Number(r.roster_id)),ownerIds=league_rosters.map(r=>String(r.owner_id||'')).filter(Boolean);
@@ -1884,7 +1886,9 @@ function seasonBootstrapWatchdogArm(){
 function seasonBootstrapWatchdogClear(token){if(store.text('v118_seasonBootstrapToken','')===token)store.setText('v118_seasonBootstrapToken','');}
 
 function renderSeasonLiveStateFreshness(note=''){
-  const t=Number(localStorage.getItem('v118_seasonBootstrapAt')||0),age=t?Date.now()-t:Infinity;
+  const season=lastDraftContext?.season,now=Date.now(),bootstrap=Number(localStorage.getItem('v118_seasonBootstrapAt')||0);
+  const stamp=season?(season.ok===true&&season.source==='Sleeper direct'?season.generated_at:0):(bootstrap>0&&now-bootstrap<=300000?bootstrap:0);
+  const t=Number.isFinite(stamp)&&stamp>0&&stamp<=now?stamp:0,age=t?now-t:Infinity;
   if(els.seasonLiveStateAge)els.seasonLiveStateAge.textContent=!t?'nicht geladen':age<60000?'< 1 Min.':age<3600000?Math.round(age/60000)+' Min.':Math.round(age/3600000)+' Std.';
   if(els.seasonLiveStateStatus&&!seasonBootstrapBusy)els.seasonLiveStateStatus.textContent=note||(!t?'Live-Kader noch nicht geladen.':'Live-Kader direkt von Sleeper · zuletzt erfolgreich aktualisiert.');
 }
@@ -3312,7 +3316,7 @@ function waiverOpponentMarket(target,players){
     const lineupGain=before.status==='VERIFIED'&&after.status==='VERIFIED'?Math.max(0,after.score-before.score):null;
     const activeCount=active.length,capacity=season.league.roster_positions.filter(x=>!['IR','TAXI'].includes(String(x).toUpperCase())).length,benchCost=Math.max(0,activeCount-capacity+1);
     const remaining=Number.isFinite(Number(rr.faab_remaining))?Number(rr.faab_remaining):Math.max(0,budget-Number(rr.settings?.waiver_budget_used||rr.waiver_budget_used||0));
-    const managerName=rr.manager_name||('Roster '+rr.roster_id),profileName=rr.manager_profile_name||managerName,profile=managerProfile(profileName),histCount=Number(profile?.historical?.positions?.[targetPos]?.finalCount);
+    const managerName=rr.manager_name||('Roster '+rr.roster_id),profileName=rr.manager_profile_name||null,profile=profileName?managerProfile(profileName):null,histCount=Number(profile?.historical?.positions?.[targetPos]?.finalCount);
     const historyPrior=Number.isFinite(histCount)?clamp((histCount-Math.max(1,positional.length))*.25,-.25,.75):0;
     const txBids=(season.transactions||[]).filter(t=>(t.roster_ids||[]).map(Number).includes(Number(rr.roster_id))&&String(t.type||'').toLowerCase()==='waiver'&&String(t.status||'').toLowerCase()==='complete').map(t=>Number(t.settings?.waiver_bid)).filter(Number.isFinite);
     const txPrior=txBids.length?clamp((Math.max(...txBids)/Math.max(1,budget))*2,0,1):0;

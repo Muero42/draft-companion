@@ -1,6 +1,6 @@
 # rc4.215 Season runtime repair
 
-Canonical base: faa6d37971fd6149b039f1b6c5a6106c5e978f10; tree 33f1503af8250f47fa9892d1aeaef27ece5f45fe. Local candidate v11.8.0-rc4.215; no Production or physical acceptance claimed.
+Canonical base: faa6d37971fd6149b039f1b6c5a6106c5e978f10; tree 33f1503af8250f47fa9892d1aeaef27ece5f45fe. Published branch candidate v11.8.0-rc4.215 at 860323b908217c11272b74f9e5b2c2a2c417b1c5; new corrective work remains local; no Production or physical acceptance claimed.
 
 Proven findings: weeklyLineupEvidence formatted absent publishedAt on legitimate RETRIEVAL records; live authority expired at five minutes with no roster recovery; persisted league/user identity still waited on historical draft identity, and bootstrap awaited optional completed-draft archive before rendering.
 
@@ -14,11 +14,11 @@ Transient projection finding: an immediate diagnostic success does not identify 
 
 rc4.214 is checkpointed Production DEPLOYED_SUCCESS / PHYSICAL FAIL (NOT ACCEPTED), preserving the positive projections/Broad ECR/selected PITTI/RB/persistence/13-of-13 Start/Sit/Game Context observations. D/ST physical acceptance remains incomplete, and its current/+1/+2 scoring is unchanged. rc4.210 remains the broad accepted baseline.
 
-Focused validation: retrieval/waiver, live refresh and bootstrap, identity fallback, strict TTL, single flight, six-hour directory bound, manual/resume/timer, existing D/ST Week4/5/6 fail-closed, RB/storage, metadata quota, lineup, Boone, service worker and navigation checks PASS. No physical/device test. Complete strict suite exactly once: 249/252 PASS, exit 1. Three obsolete expectation failures: runtime-startup-contract prohibited the requested manual control; season-bootstrap-render-order and season-mobile-bootstrap-transport required the removed optional archive wait. Those expectations were corrected to enforce lightweight manual recovery and nonblocking archive; all three targeted reruns PASS. Runtime unchanged after the suite. No full-suite rerun; green final-tree full verification remains the next gate.
+Historical initial repair validation: retrieval/waiver, live refresh and bootstrap, identity fallback, strict TTL, single flight, six-hour directory bound, manual/resume/timer, existing D/ST Week4/5/6 fail-closed, RB/storage, metadata quota, lineup, Boone, service worker and navigation checks PASS. No physical/device test. Complete strict suite exactly once: 249/252 PASS, exit 1. Three obsolete expectation failures: runtime-startup-contract prohibited the requested manual control; season-bootstrap-render-order and season-mobile-bootstrap-transport required the removed optional archive wait. Those expectations were corrected to enforce lightweight manual recovery and nonblocking archive; all three targeted reruns PASS. Runtime unchanged after the suite. A later separately authorized final verification on 860323b908217c11272b74f9e5b2c2a2c417b1c5 completed 252/252 PASS, exit 0, exactly once on that final commit; no files changed. This is the final published-head receipt.
 
-Next safe gate: RC4215_PUBLICATION_EXACT_HEAD_CI_THEN_PRODUCTION_PHYSICAL_ACCEPTANCE; publication and all external actions require separate authorization.
+Next safe gate: RC4215_PUBLICATION_EXACT_HEAD_CI_PENDING; publication and all external actions require separate authorization.
 
-Changed files (27):
+Historical initial repair changed files (27):
 - HANDOFF_COMPLETENESS_MATRIX.md
 - NEW_CHAT_HANDOFF_CURRENT.md
 - PITTI_AUTO_PREFLIGHT.md
@@ -46,3 +46,7 @@ Changed files (27):
 - tools/season-mobile-bootstrap-transport-regression.mjs
 - tools/season-retrieval-waiver-regression.mjs
 - tools/season-workspace-navigation-regression.mjs
+
+## v273 corrective follow-up
+
+Visible age uses current Sleeper season.generated_at; a failed refresh retains the previous age and TTL. Bootstrap fallback is limited to five minutes without current context. Cached canonical manager mapping requires matching league, owner, roster, draft slot and canonical profile; missing mapping gives no historical prior. Persisted identity still performs zero blocking draft requests; lightweight refresh preserves mapping. Coupled current authority is v273; known published receipt above is separate from this local corrective work. See PITTI_V273_RC4215_PRE_PR_AUTHORITY.md.
