@@ -1,3 +1,26 @@
+Handoff generation: `20260929T1322Z-v274`
+Generation: `20260929T1322Z-v274`
+CURRENT AUTHORITY v274: runtime candidate v11.8.0-rc4.215; published_branch = codex/rc4215-season-live-refresh-repair; publication_status = BRANCH_PUBLISHED_PR_NOT_CREATED; published_head = DYNAMIC_VERIFICATION_REQUIRED. Unmerged, nonproduction, not physically accepted.
+Exact-head rule: Freshly resolve remote branch HEAD immediately before PR creation and bind PR/CI to that exact observed SHA.
+Canonical main faa6d37971fd6149b039f1b6c5a6106c5e978f10; tree 33f1503af8250f47fa9892d1aeaef27ece5f45fe. Production v11.8.0-rc4.214 DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED.
+Next gate: RC4215_PR_EXACT_HEAD_CI_PENDING. Freshly verify remote branch HEAD -> create rc4.215 PR against main -> require Exact-HEAD CI for that observed PR head.
+Continuation: fresh remote HEAD -> PR against main -> exact-head CI -> merge -> resolve new canonical main/tree -> exact-main Production SUCCESS -> RC4215_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING.
+Historical evidence: 74f8751b3d07bd6302fb6d3d4df6f9ff32482475 externally observed published before this follow-up; focused 12/12 PASS; strict 252/252 PASS, Exit 0, exactly once. Historical SHAs are receipts, never immutable future branch HEAD.
+Details: docs/PITTI_V274_RC4215_SELF_REFERENCE_SAFE_AUTHORITY.md. No future merge, deployment or physical acceptance claimed.
+
+## HISTORICAL v273 CHECKPOINT — superseded by v274
+
+Handoff generation: `20260929T1200Z-v273`
+Generation: `20260929T1200Z-v273`
+CURRENT AUTHORITY v273: runtime candidate v11.8.0-rc4.215; branch PUBLISHED at 860323b908217c11272b74f9e5b2c2a2c417b1c5; PR not yet created, unmerged, nonproduction, not physically accepted. This corrective commit remains LOCAL_UNPUBLISHED.
+Canonical main faa6d37971fd6149b039f1b6c5a6106c5e978f10; tree 33f1503af8250f47fa9892d1aeaef27ece5f45fe. Production v11.8.0-rc4.214 DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED.
+Next gate: RC4215_PUBLICATION_EXACT_HEAD_CI_PENDING. External corrective publication / PR exact-head CI -> merge -> resolve NEW canonical main/tree -> exact-main Production SUCCESS -> RC4215_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING.
+Bounded rc4.214 positives: projections, Broad ECR, selected PITTI, RB containment, healthy persistence, 13/13 Start/Sit, Game Context 16/32. Failures: WAIVER_RETRIEVAL_INVALID_TIME_VALUE; LIVE_AUTHORITY_EXPIRES_WITHOUT_LIGHTWEIGHT_RECOVERY; DST_PHYSICAL_GATE_NOT_COMPLETED.
+Known final published-head receipt: 252/252 PASS, exit 0 at 860323b908217c11272b74f9e5b2c2a2c417b1c5. Future main/tree/deployment/acceptance are not claimed.
+Details: docs/PITTI_V273_RC4215_PRE_PR_AUTHORITY.md and docs/PITTI_RC4215_SEASON_REPAIR.md.
+
+## HISTORICAL v272 CHECKPOINT — superseded by v273 authority above
+
 Handoff generation: `20260928T1918Z-v272`
 Generation: `20260928T1918Z-v272`
 > **CURRENT AUTHORITY — v272**: v11.8.0-rc4.214: PR #213 reviewed head 63162c9427fa70f1897331c15ffb2c6a38d50701, rc4.214 runtime merge / v272 parent a1e6c0e4ca22a4709353840d78414f2ba6d3d5ee, identical reviewed/merged tree 2ebb61df4f077f419b91b048d321781b43785332. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (a10c3257-2342-4fa4-a15a-d191306199b1, check 109091210171); PHYSICAL PENDING. CI/deployment facts are USER_SUPPLIED_EXTERNAL_EVIDENCE; Git parent/tree verified locally after fetch. Postmerge authority failure was runtime version lock drift, not a new runtime defect. Next gate: V272_AUTHORITY_PUBLICATION_EXACT_HEAD_CHECKS_PENDING.

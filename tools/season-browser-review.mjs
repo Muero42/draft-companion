@@ -34,8 +34,9 @@ let browser;try{
  assert.deepEqual(errors,[],'uncaught runtime errors');
 
  await page.clock.fastForward(300010);
- assert.match(await page.locator('#waiverStatus').textContent(),/HOLD.*abgelaufen/);
- assert.match(await page.locator('#tradeStatus').textContent(),/HOLD.*abgelaufen/);
- assert.doesNotMatch(await page.locator('#rosterList').innerText(),/17 Pkt/,'expired projections removed without user interaction');
- const receipt={status:'PASS',browser:'Chromium desktop mobile emulation',viewport:'390x844',network:'all external responses mocked',checks:['real module startup','automatic Boone endpoint ingestion','Week-4 Sleeper state and current-week evidence','live/ranking/Start-Sit status areas','11 roster rows incl IR','async rerender routing','Waiver v3 mobile route','shipped D/ST Week 4/5/6 MONITOR and exact missing evidence','Trade v8 fail-closed mobile route','workspace clicks','no horizontal overflow','no duplicate starter grid','automatic expiry of projections and ownership','no uncaught errors'],physicalAndroid:false};fs.writeFileSync(path.join(output,'browser-review.json'),JSON.stringify(receipt,null,2));console.log(JSON.stringify(receipt));
+ assert.match(await page.locator('#waiverStatus').textContent(),/Waiver\/FA Decision Board v3/,'successful four-minute live refresh keeps Waiver authority fresh');
+ assert.match(await page.locator('#tradeStatus').textContent(),/Trade Offer Board v8/,'successful four-minute live refresh keeps Trade authority fresh');
+ assert.match(await page.locator('#seasonLiveStateAge').textContent(),/(?:< 1 Min\.|1 Min\.)/,'visible live age follows refreshed season.generated_at');
+ assert.doesNotMatch(await page.locator('#rosterList').innerText(),/17 Pkt/,'expired projections are removed even while ownership refresh succeeds');
+ const receipt={status:'PASS',browser:'Chromium desktop mobile emulation',viewport:'390x844',network:'all external responses mocked',checks:['real module startup','automatic Boone endpoint ingestion','Week-4 Sleeper state and current-week evidence','live/ranking/Start-Sit status areas','11 roster rows incl IR','async rerender routing','Waiver v3 mobile route','shipped D/ST Week 4/5/6 MONITOR and exact missing evidence','Trade v8 fail-closed mobile route','workspace clicks','no horizontal overflow','no duplicate starter grid','automatic four-minute ownership refresh with renewed visible age','independent expiry of stale projections','no uncaught errors'],physicalAndroid:false};fs.writeFileSync(path.join(output,'browser-review.json'),JSON.stringify(receipt,null,2));console.log(JSON.stringify(receipt));
 }finally{await browser?.close();await new Promise(r=>server.close(r));}
