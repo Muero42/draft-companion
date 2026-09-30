@@ -1,8 +1,8 @@
-Handoff generation: `20260930T0615Z-v276`
-Generation: `20260930T0615Z-v276`
-CURRENT: v11.8.0-rc4.216 LOCAL_UNPUBLISHED candidate on codex/rc4216-waiver-dst-decision-quality. Canonical main e325e952c1e7ea93da3572afb1bef70337f0a5e8; tree b0eac858e6b6314b6a4e313960c50686bd236e56.
-rc4.215 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: RC4215_PHYSICAL_FAIL_DECISION_QUALITY. Live refresh, <1 Min. Sleeper state, correct roster, W4 projections and resolved RETRIEVAL time failure physically confirmed. Waiver relevance/negative-score and D/ST ranking/duplicate/evidence defects remain. rc4.216 is a LOCAL_UNPUBLISHED runtime candidate; Jefferson is not a defect; rc4.210 remains the broad accepted physical baseline.
-Next gate: RC4216_LOCAL_REVIEW_AND_PUBLICATION_PENDING. Review local rc4.216 candidate; external publication and exact-head PR/CI require separate authorization. Then merge, verify exact-main Production, and perform rc4.216 physical acceptance.
+Handoff generation: `20260930T0938Z-v277`
+Generation: `20260930T0938Z-v277`
+CURRENT: v11.8.0-rc4.216 PUBLISHED_PR_CANDIDATE (PR217 OPEN) candidate on codex/rc4216-waiver-dst-decision-quality. Canonical main e325e952c1e7ea93da3572afb1bef70337f0a5e8; tree b0eac858e6b6314b6a4e313960c50686bd236e56.
+rc4.215 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: RC4215_PHYSICAL_FAIL_DECISION_QUALITY. Live refresh, <1 Min. Sleeper state, correct roster, W4 projections and resolved RETRIEVAL time failure physically confirmed. Waiver relevance/negative-score and D/ST ranking/duplicate/evidence defects remain. rc4.216 is a PUBLISHED_PR_CANDIDATE (PR217 OPEN) runtime candidate; Jefferson is not a defect; rc4.210 remains the broad accepted physical baseline.
+Next gate: RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING. Publish the local PR217 authority correction only when authorized; freshly resolve PR217 head and require exact-head CI. Merge and Production remain separate future gates; resolve new canonical main/tree and exact-main deployment before rc4.216 physical acceptance.
 No future commit, package, deployment or physical acceptance claimed. D/ST current-week acquisition is independent; +1/+2 remain fail-closed without verified evidence.
 Details: docs/PITTI_RC4216_DECISION_QUALITY.md.
 
@@ -13,3 +13,7 @@ D/ST: FantasyPros weekly position=DST via existing authenticated proxy, separate
 Deterministic focused regression and repository-pinned 390x844 Chromium review cover projection-only suppression, positive candidate retention, evidence sorting, duplicate defense exclusion, compact unavailable/future lanes, no horizontal overflow and no uncaught exceptions. Strict validation receipt belongs to the final local commit report.
 
 Adversarial review correction: unanchored positive-role matching accepted negated flags (for example "no role up") and surfaced WATCH without other current corroboration. The focused regression reproduced WATCH instead of HOLD. Positive flags now require an exact recognized role label; negated or contradictory flags veto that role event. Current rank/trade corroboration and all D/ST logic remain unchanged. Regression covers negated role/workload/lead-role flags and mixed positive/negative flags. Corrective validation is recorded in the final local commit receipt; no publication or physical acceptance is claimed.
+Source lock: rc4.216. Production and latest physical observation: rc4.215, RC4215_PHYSICAL_FAIL_DECISION_QUALITY. PR217 is not merged; rc4.216 has no deployment or physical acceptance. Observed f08ea197e4252aabe0d3e024c4b1078deda02f82 CI 5/5 SUCCESS and cloud strict 254/254 PASS are historical exact-head receipts; the corrective head requires fresh verification.
+
+
+PR217 authority repair: production-mode guardrail reproduced "runtime version lock drift" on f08ea197. Source/candidate aliases now bind rc4.216 while rc4.215 Production and physical records remain unchanged. The main-mode equality assertion is retained; authority regressions reject source/lock/runtime disagreement even in candidate preflight and execute both guardrail modes with seal integrity enabled. All 17 runtime blobs must match the published f08ea197 commit. No CI receipt for that historical head certifies this corrective commit.

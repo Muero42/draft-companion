@@ -202,7 +202,7 @@ if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
   must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
   must(handoffMatrix.includes(current.handoff_generation),'Season Companion MATRIX generation drift');
   must(currentHandoff.includes(current.handoff_generation),'Season Companion HANDOFF generation drift');
-  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194','v11.8.0-rc4.195','v11.8.0-rc4.196','v11.8.0-rc4.197','v11.8.0-rc4.198','v11.8.0-rc4.200','v11.8.0-rc4.201','v11.8.0-rc4.202','v11.8.0-rc4.203','v11.8.0-rc4.204','v11.8.0-rc4.205','v11.8.0-rc4.206','v11.8.0-rc4.207','v11.8.0-rc4.210','v11.8.0-rc4.211','v11.8.0-rc4.213','v11.8.0-rc4.214','v11.8.0-rc4.215'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
+  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194','v11.8.0-rc4.195','v11.8.0-rc4.196','v11.8.0-rc4.197','v11.8.0-rc4.198','v11.8.0-rc4.200','v11.8.0-rc4.201','v11.8.0-rc4.202','v11.8.0-rc4.203','v11.8.0-rc4.204','v11.8.0-rc4.205','v11.8.0-rc4.206','v11.8.0-rc4.207','v11.8.0-rc4.210','v11.8.0-rc4.211','v11.8.0-rc4.213','v11.8.0-rc4.214','v11.8.0-rc4.215','v11.8.0-rc4.216'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
   must(commandContract.currentGate===AUTHORITY_GATE,'Season Companion command gate regression');
   must(lock.gate===AUTHORITY_GATE,'Season Companion lock gate regression');
   must(current.currentWork?.nextGate===AUTHORITY_GATE,'Season Companion CURRENT next gate regression');

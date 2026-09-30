@@ -156,17 +156,17 @@
     "omitting the mandatory PITTI CODEX BUDGET GUARD from any Codex work package"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.215 PR215 reviewed 092f36fa46c90feaf733cc3b7784046beb194c03, runtime source 2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c; historical deployment ec99d1fa-6eea-4448-9047-e881bcd025ce. Current canonical main e325e952c1e7ea93da3572afb1bef70337f0a5e8 tree b0eac858e6b6314b6a4e313960c50686bd236e56 exact-main CI and Production SUCCESS externally verified. rc4.215 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: RC4215_PHYSICAL_FAIL_DECISION_QUALITY. Live refresh, <1 Min. Sleeper state, correct roster, W4 projections and resolved RETRIEVAL time failure physically confirmed. Waiver relevance/negative-score and D/ST ranking/duplicate/evidence defects remain. rc4.216 is a LOCAL_UNPUBLISHED runtime candidate; Jefferson is not a defect; rc4.210 remains the broad accepted physical baseline. Next gate: RC4216_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
-    "androidAuthority": "rc4.215 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: RC4215_PHYSICAL_FAIL_DECISION_QUALITY. Live refresh, <1 Min. Sleeper state, correct roster, W4 projections and resolved RETRIEVAL time failure physically confirmed. Waiver relevance/negative-score and D/ST ranking/duplicate/evidence defects remain. rc4.216 is a LOCAL_UNPUBLISHED runtime candidate; Jefferson is not a defect; rc4.210 remains the broad accepted physical baseline.",
-    "sourceAuthority": "v11.8.0-rc4.215 PR215 reviewed 092f36fa46c90feaf733cc3b7784046beb194c03, runtime source 2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c; historical deployment ec99d1fa-6eea-4448-9047-e881bcd025ce. Current canonical main e325e952c1e7ea93da3572afb1bef70337f0a5e8 tree b0eac858e6b6314b6a4e313960c50686bd236e56 exact-main CI and Production SUCCESS externally verified. rc4.215 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: RC4215_PHYSICAL_FAIL_DECISION_QUALITY. Live refresh, <1 Min. Sleeper state, correct roster, W4 projections and resolved RETRIEVAL time failure physically confirmed. Waiver relevance/negative-score and D/ST ranking/duplicate/evidence defects remain. rc4.216 is a LOCAL_UNPUBLISHED runtime candidate; Jefferson is not a defect; rc4.210 remains the broad accepted physical baseline. Next gate: RC4216_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
+    "productionControl": "v11.8.0-rc4.215 PR215 reviewed 092f36fa46c90feaf733cc3b7784046beb194c03, runtime source 2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c; historical deployment ec99d1fa-6eea-4448-9047-e881bcd025ce. Current canonical main e325e952c1e7ea93da3572afb1bef70337f0a5e8 tree b0eac858e6b6314b6a4e313960c50686bd236e56 exact-main CI and Production SUCCESS externally verified. rc4.215 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: RC4215_PHYSICAL_FAIL_DECISION_QUALITY. Live refresh, <1 Min. Sleeper state, correct roster, W4 projections and resolved RETRIEVAL time failure physically confirmed. Waiver relevance/negative-score and D/ST ranking/duplicate/evidence defects remain. rc4.216 is a PUBLISHED_PR_CANDIDATE runtime candidate; Jefferson is not a defect; rc4.210 remains the broad accepted physical baseline. Next gate: RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING",
+    "androidAuthority": "rc4.215 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: RC4215_PHYSICAL_FAIL_DECISION_QUALITY. Live refresh, <1 Min. Sleeper state, correct roster, W4 projections and resolved RETRIEVAL time failure physically confirmed. Waiver relevance/negative-score and D/ST ranking/duplicate/evidence defects remain. rc4.216 is a PUBLISHED_PR_CANDIDATE runtime candidate; Jefferson is not a defect; rc4.210 remains the broad accepted physical baseline.",
+    "sourceAuthority": "v11.8.0-rc4.215 PR215 reviewed 092f36fa46c90feaf733cc3b7784046beb194c03, runtime source 2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c; historical deployment ec99d1fa-6eea-4448-9047-e881bcd025ce. Current canonical main e325e952c1e7ea93da3572afb1bef70337f0a5e8 tree b0eac858e6b6314b6a4e313960c50686bd236e56 exact-main CI and Production SUCCESS externally verified. rc4.215 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: RC4215_PHYSICAL_FAIL_DECISION_QUALITY. Live refresh, <1 Min. Sleeper state, correct roster, W4 projections and resolved RETRIEVAL time failure physically confirmed. Waiver relevance/negative-score and D/ST ranking/duplicate/evidence defects remain. rc4.216 is a PUBLISHED_PR_CANDIDATE runtime candidate; Jefferson is not a defect; rc4.210 remains the broad accepted physical baseline. Next gate: RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING",
     "latestPackageReextract": "NO_NEW_REEXTRACTION_EVIDENCE; historical rc4.214 entry described runtime blob identity only, not a new package event",
     "latestPackageSha256": null,
     "packageReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployedPagesVersion": "v11.8.0-rc4.215",
     "deployedPagesAppByteParityWithMain": false,
-    "currentResearchGate": "RC4216_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
-    "exactNextAction": "Review local rc4.216 candidate; external publication and exact-head PR/CI require separate authorization. Then merge, verify exact-main Production, and perform rc4.216 physical acceptance.",
-    "runtimeVersion": "v11.8.0-rc4.215",
+    "currentResearchGate": "RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING",
+    "exactNextAction": "Publish the local PR217 authority correction only when authorized; freshly resolve PR217 head and require exact-head CI. Merge and Production remain separate future gates; resolve new canonical main/tree and exact-main deployment before rc4.216 physical acceptance.",
+    "runtimeVersion": "v11.8.0-rc4.216",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": {
       "version": "v11.8.0-rc4.215",
@@ -195,15 +195,16 @@
     },
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
     "reconciledBaseMain": "e325e952c1e7ea93da3572afb1bef70337f0a5e8",
-    "nextGate": "RC4216_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
-    "packageReferenceScope": "rc4.215 canonical 17-file runtime identity only; no new archive SHA or package re-extraction evidence; no served-byte parity or physical acceptance inferred",
+    "nextGate": "RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING",
+    "packageReferenceScope": "rc4.216 published 17-file runtime identity only; no new archive SHA or package re-extraction evidence; no served-byte parity or physical acceptance inferred",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.215",
+      "version": "v11.8.0-rc4.216",
       "files": 17,
       "sha256": null,
       "status": "RUNTIME_IDENTITY_ONLY_NO_PACKAGE_REEXTRACTION_CLAIM",
-      "source_scope": "PR215_REVIEWED_TREE_EQUALS_MERGED_TREE",
-      "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_NONCANONICAL"
+      "source_scope": "PR217_PUBLISHED_RUNTIME_IDENTITY_ONLY",
+      "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_NONCANONICAL",
+      "runtime_identity_head": "f08ea197e4252aabe0d3e024c4b1078deda02f82"
     },
     "deploymentParity": "PR215_REVIEWED_TREE_EQUALS_MERGED_TREE; LIVE_GITHUB_PRODUCTION_SUCCESS; PHYSICAL_FAIL_DECISION_QUALITY",
     "productionDeployment": {
@@ -325,8 +326,8 @@
       "dst": "UNCHANGED_CURRENT_PLUS1_PLUS2_PLANNER"
     },
     "authorityContinuation": {
-      "status": "LOCAL_RC4216_CANDIDATE",
-      "current_gate": "RC4216_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
+      "status": "PUBLISHED_RC4216_PR217_CANDIDATE",
+      "current_gate": "RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING",
       "physical_gate": "RC4216_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING",
       "physical_executable": false,
       "canonical_main": "e325e952c1e7ea93da3572afb1bef70337f0a5e8",
@@ -335,29 +336,49 @@
       "future_canonical_main": "DYNAMIC_VERIFICATION_REQUIRED",
       "future_canonical_tree": "DYNAMIC_VERIFICATION_REQUIRED",
       "sequence": [
-        "LOCAL_REVIEW",
+        "CORRECTIVE_HEAD_PUBLICATION",
         "PUBLICATION_EXACT_HEAD_CI",
         "RC4216_MERGE",
         "RESOLVE_NEW_CANONICAL_MAIN",
         "VERIFY_NEW_MAIN_PRODUCTION_DEPLOYMENT",
         "RC4216_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING"
-      ]
+      ],
+      "published_branch": "codex/rc4216-waiver-dst-decision-quality",
+      "published_head": "DYNAMIC_VERIFICATION_REQUIRED",
+      "exact_head_rule": "Freshly resolve remote branch and PR217 HEAD before publication/review; bind all CI to that exact observed SHA. Historical receipts do not certify a later corrective head.",
+      "pr": 217
     },
     "runtimeCandidate": {
       "version": "v11.8.0-rc4.216",
       "base": "e325e952c1e7ea93da3572afb1bef70337f0a5e8",
-      "status": "LOCAL_UNPUBLISHED",
+      "status": "PUBLISHED_PR_CANDIDATE",
       "branch": "codex/rc4216-waiver-dst-decision-quality",
       "merged": false,
-      "pr": null,
+      "pr": 217,
       "production_proven": false,
       "physical_accepted": false,
-      "gate": "RC4216_LOCAL_REVIEW_AND_PUBLICATION_PENDING"
+      "gate": "RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING",
+      "pr_state": "OPEN",
+      "published_head": "DYNAMIC_VERIFICATION_REQUIRED",
+      "exact_head_rule": "Freshly resolve remote branch and PR217 HEAD before publication/review; bind all CI to that exact observed SHA. Historical receipts do not certify a later corrective head.",
+      "merge_commit": null,
+      "production_deployment": null,
+      "physical_status": "PENDING",
+      "historical_published_receipt": {
+        "head": "f08ea197e4252aabe0d3e024c4b1078deda02f82",
+        "tree": "076e4c70d5505819fed0f51296e1feb8990d9147",
+        "pr": 217,
+        "pr_state": "OPEN",
+        "checks": "5/5 SUCCESS",
+        "strict": "254/254 PASS",
+        "evidence_source": "USER_SUPPLIED_EXACT_HEAD_CI",
+        "scope": "HISTORICAL_OBSERVED_HEAD_ONLY_NOT_FUTURE_CORRECTIVE_HEAD"
+      }
     }
   },
-  "currentGate": "RC4216_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
-  "handoffGeneration": "20260930T0615Z-v276",
-  "handoff_generation": "20260930T0615Z-v276",
+  "currentGate": "RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING",
+  "handoffGeneration": "20260930T0938Z-v277",
+  "handoff_generation": "20260930T0938Z-v277",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -374,7 +395,7 @@
     "observedTransactionCanary": "HISTORICAL rc4.160 device: Harrison Mevis rostered, Tank Bigsby absent, Zach Charbonnet Reserve/IR",
     "rc4161Fix": "live FA ownership pool is independent from expert ranking hydration; zero ranked join must never imply HOLD",
     "regression": "tools/season-fa-ownership-regression.mjs is mandatory in candidate package gate",
-    "nextGate": "RC4216_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
+    "nextGate": "RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING",
     "leagueState": "Persist all ten Sleeper rosters plus manager mapping, starter/reserve/taxi, waiver position, FAAB used/remaining and current transaction-round evidence.",
     "waiverCompetition": "Opponent bid estimates are distributions/bands driven primarily by current roster need and remaining FAAB, with bounded current-season transaction and historical-manager priors.",
     "qb2SeasonException": "No generic in-season QB2 ban. Evaluate upside/value vs active roster cost; when D/ST is still missing, include the second future active drop and same-bye penalty.",
@@ -382,12 +403,12 @@
     "tradeValueEvidence": "Automatically ingest current Justin Boone/Yahoo weekly ROS charts server-side; QB=1QB, RB/WR/TE=HALF; require all positions, fresh provenance and unambiguous Sleeper mapping or fail closed.",
     "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
-  "currentResearchGate": "RC4216_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
-  "exactNextAction": "Review local rc4.216 candidate; external publication and exact-head PR/CI require separate authorization. Then merge, verify exact-main Production, and perform rc4.216 physical acceptance.",
+  "currentResearchGate": "RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING",
+  "exactNextAction": "Publish the local PR217 authority correction only when authorized; freshly resolve PR217 head and require exact-head CI. Merge and Production remain separate future gates; resolve new canonical main/tree and exact-main deployment before rc4.216 physical acceptance.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
-  "updated_at": "2026-09-30T06:15:38Z",
-  "updatedAt": "2026-09-30T06:15:38Z",
+  "updated_at": "2026-09-30T09:38:31Z",
+  "updatedAt": "2026-09-30T09:38:31Z",
   "codexBudgetGuard": {
     "mandatoryInEveryCodexWorkPackage": true,
     "persistentAcrossChatsAndHandoffs": true,
