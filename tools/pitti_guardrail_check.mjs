@@ -139,7 +139,7 @@ must(app.includes('function historicalSpecialTeamsBaselineAllowed({week,now}={})
 must(app.includes('if(!historicalSpecialTeamsBaselineAllowed({week,now}))'),'Special Teams historical baseline must not be unconditional');
 must(app.includes('return renderSeasonDstPlanner(c,now)')&&app.includes("const status=missing.length?'MONITOR':net>=threshold?(offset?'STASH':'ADD'):'HOLD'"),'Special Teams shipped evidence/capacity-gated planner missing');
 must(app.includes('week+1,week+2')&&app.includes('seasonStructurallyDroppable(active)')&&fs.existsSync('tools/season-dst-production-regression.mjs'),'Special Teams forward-horizon/capacity regression missing');
-must(app.includes("x.weeklyRank=seasonWeeklyMetric(x.p,'weekly_rank',season).value")&&app.includes("'FantasyPros W'+currentWeek:'FantasyPros Weekly'"),'QB current-week rank label contract missing');
+must(app.includes("x.weeklyRank=weekly.status==='VERIFIED'?weekly.value:null")&&app.includes("'FantasyPros W'+currentWeek:'FantasyPros Weekly'"),'QB current-week rank label contract missing');
 must(app.includes("dropCandidatePolicy:{primary:['Tank Bigsby','Tyjae Spears','Kenneth Gainwell'],protected:['Jadarian Price','Christian Watson','Josh Downs']"),'Mevis drop gate must protect Price/Watson/Downs and compare Bigsby/Spears/Gainwell');
 must(app.includes("find(x=>x?.p?.pos==='K')")&&app.includes('const k=ks.map('),'Waiver comparison must use the roster K and live K candidates only');
 must(app.includes('SEASON_FA_POOL_ZERO_INVALID'),'zero live season FA pool must fail closed');
@@ -202,7 +202,7 @@ if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
   must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
   must(handoffMatrix.includes(current.handoff_generation),'Season Companion MATRIX generation drift');
   must(currentHandoff.includes(current.handoff_generation),'Season Companion HANDOFF generation drift');
-  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194','v11.8.0-rc4.195','v11.8.0-rc4.196','v11.8.0-rc4.197','v11.8.0-rc4.198','v11.8.0-rc4.200','v11.8.0-rc4.201','v11.8.0-rc4.202','v11.8.0-rc4.203','v11.8.0-rc4.204','v11.8.0-rc4.205','v11.8.0-rc4.206','v11.8.0-rc4.207','v11.8.0-rc4.210','v11.8.0-rc4.211','v11.8.0-rc4.213','v11.8.0-rc4.214','v11.8.0-rc4.215','v11.8.0-rc4.216'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
+  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194','v11.8.0-rc4.195','v11.8.0-rc4.196','v11.8.0-rc4.197','v11.8.0-rc4.198','v11.8.0-rc4.200','v11.8.0-rc4.201','v11.8.0-rc4.202','v11.8.0-rc4.203','v11.8.0-rc4.204','v11.8.0-rc4.205','v11.8.0-rc4.206','v11.8.0-rc4.207','v11.8.0-rc4.210','v11.8.0-rc4.211','v11.8.0-rc4.213','v11.8.0-rc4.214','v11.8.0-rc4.215','v11.8.0-rc4.216','v11.8.0-rc4.217'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
   must(commandContract.currentGate===AUTHORITY_GATE,'Season Companion command gate regression');
   must(lock.gate===AUTHORITY_GATE,'Season Companion lock gate regression');
   must(current.currentWork?.nextGate===AUTHORITY_GATE,'Season Companion CURRENT next gate regression');

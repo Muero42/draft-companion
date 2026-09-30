@@ -1,3 +1,13 @@
+Handoff generation: `20260930T1926Z-v279`
+Generation: `20260930T1926Z-v279`
+CURRENT: Source candidate v11.8.0-rc4.217 LOCAL_UNPUBLISHED; bounded QB FAAB fail-closed repair. Production remains rc4.216 PR217 reviewed 84a87966409ce1420d6462c6bce62177d3adaf44, canonical main 4d78271c325426c85e94e12be6e521547cdeaa34, tree e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d, deployment 6804fdb6-e9d7-4530-b1b6-188f24329a50 DEPLOYED_SUCCESS. rc4.216 PHYSICAL FAIL / NOT ACCEPTED: RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN. Positive W4 evidence and all eight D/ST opponents preserved; CHI->NYJ correct, no mapping repair. W5/W6 MONITOR correct; transient duplicate MONITOR not reproducible. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remains historical; rc4.210 remains broad accepted baseline. Next gate: RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING.
+Next action: Review the local rc4.217 QB FAAB fail-closed candidate. Publication, PR, exact-head CI, merge, new-main Production verification and physical acceptance require their separately authorized gates. Stop after the tested local commit.
+Physical positives: Sleeper <1 Min.; W4 1376 records ~1 Min.; Broad ECR, PITTI Panel and QB/RB/WR/TE projections AVAILABLE; unsupported skill ADD/DROP HOLD; CIN not duplicated. Opponents MIN->MIA, BUF->NE, CHI->NYJ, CLE->PIT, ATL->NO, ARI->NYG, DET->CAR, LAC->SEA correct. W5/W6 fail closed. No D/ST change authorized.
+Regression reproduced the rc4.216 PITTI percentage band without structural acquisition. rc4.217 reuses waiverMarketSummary sufficiency; no bid without verified structural/weekly and 9/9 market evidence; existing QB penalties preserved.
+AUTO: keine Zwischenmeldungen, keine leeren Antworten, kein „AUTO läuft weiter“. STATUS = nur Status. Externe/irreversible Aktionen nur nach Freigabe. Budget Guard bleibt verpflichtend. Kein Push, PR, Merge, Deployment oder Physical-Test. Preserve intentional local v278 parent ebe9b05dfbc344d6487068a0e84a9f5937728bd3.
+
+## HISTORICAL v278 RC4216 HANDOFF
+
 Handoff generation: `20260930T1717Z-v278`
 Generation: `20260930T1717Z-v278`
 CURRENT: Source and Production: v11.8.0-rc4.216; PR217 MERGED, reviewed head 84a87966409ce1420d6462c6bce62177d3adaf44, canonical main 4d78271c325426c85e94e12be6e521547cdeaa34, identical reviewed/merged tree e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d. Production DEPLOYED_SUCCESS: 6804fdb6-e9d7-4530-b1b6-188f24329a50 (check 109981281507). Post-merge 8/8 checks SUCCESS; cloud STRICT_SUITE 254/254 PASS. rc4.216 physical PENDING / NOT ACCEPTED. Latest physical observation remains rc4.215: RC4215_PHYSICAL_FAIL_DECISION_QUALITY, with positive Live/RETRIEVAL evidence preserved. rc4.210 remains the prior broad physical baseline. Next gate: RC4216_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING.
