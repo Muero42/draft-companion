@@ -14,14 +14,14 @@
   const MAX_AGE_MS=3*60*60*1000;
   const EVIDENCE_TTL_MS=24*60*60*1000;
   const POSITIONS=['QB','RB','WR','TE'];
-  const MIN_COUNTS={QB:24,RB:60,WR:70,TE:24};
+  const MIN_COUNTS={QB:24,RB:60,WR:70,TE:24,DST:20};
   const RANK_MIN_COUNTS={QB:20,RB:48,WR:60,TE:20};
   const SELECTED_PANEL_MIN_EXPERTS={QB:2,RB:3,WR:2,TE:2};
   const WEEKLY_PROJECTION_QUERY_SHAPE='EXPLICIT_WEEK_POSITION_ROS_OMITTED';
   // These are deliberately generous corruption/scope ceilings, not player ranks
   // or expected outcomes. A one-game Half-PPR payload exceeding them is unsafe to
   // distinguish from the season/ROS payload physically observed on rc4.199.
-  const WEEKLY_HALF_PPR_MAX={QB:80,RB:70,WR:70,TE:70};
+  const WEEKLY_HALF_PPR_MAX={QB:80,RB:70,WR:70,TE:70,DST:60};
   const PROJECTION_RESPONSE_CLASSIFICATION={ABSENT_TRANSIENT:'ABSENT_TRANSIENT',CURRENT_ACCEPTED:'CURRENT_ACCEPTED',DEFINITIVE_REJECTION:'DEFINITIVE_REJECTION'};
   const norm=value=>String(value||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/\b(jr|sr|ii|iii|iv)\b\.?/g,'').replace(/[^a-z0-9]/g,'');
   const team=value=>({JAC:'JAX',WSH:'WAS',LA:'LAR'}[String(value||'').trim().toUpperCase()]||String(value||'').trim().toUpperCase());
@@ -83,20 +83,26 @@
   }
 
   function sleeperIndexes(players){
-    const byFp=new Map(),byNamePosition=new Map();
+    const byFp=new Map(),byNamePosition=new Map(),byDefenseTeam=new Map();
     for(const [id,player] of Object.entries(players||{})){
-      if(!player||!POSITIONS.includes(String(player.position||'').toUpperCase()))continue;
-      const row={id:String(id),name:player.full_name||[player.first_name,player.last_name].filter(Boolean).join(' '),position:String(player.position).toUpperCase(),team:team(player.team||'FA')};
+      if(!player||![...POSITIONS,'DEF','DST'].includes(String(player.position||'').toUpperCase()))continue;
+      const row={id:String(id),name:player.full_name||[player.first_name,player.last_name].filter(Boolean).join(' '),position:String(player.position).toUpperCase()==='DEF'?'DST':String(player.position).toUpperCase(),team:team(player.team||'FA')};
+      if(row.position==='DST'){const rows=byDefenseTeam.get(row.team)||[];rows.push(row);byDefenseTeam.set(row.team,rows);}
       const fp=String(player.fantasy_data_id??'').trim();
       if(fp){const rows=byFp.get(fp)||[];rows.push(row);byFp.set(fp,rows);}
       const key=`${norm(row.name)}|${row.position}`,rows=byNamePosition.get(key)||[];rows.push(row);byNamePosition.set(key,rows);
     }
-    return{byFp,byNamePosition};
+    return{byFp,byNamePosition,byDefenseTeam};
   }
 
   function mapFantasyProsPlayer(row,indexes){
     const fpid=String(row?.fpid??row?.player_id??'').trim(),position=String(row?.position_id??row?.player_position_id??row?.position??'').toUpperCase();
     if(fpid){const found=indexes.byFp.get(fpid)||[];if(found.length===1&&found[0].position===position)return{ok:true,player:found[0],method:'FANTASY_DATA_ID',sourcePlayerId:fpid};if(found.length>1)return{ok:false,reason:'FP_ID_COLLISION',sourcePlayerId:fpid};}
+    if(position==='DST'){
+      const sourceTeam=team(row?.team_id??row?.player_team_id??row?.team??''),found=indexes.byDefenseTeam.get(sourceTeam)||[],canonical=found.filter(p=>p.id===sourceTeam),selected=canonical.length===1?canonical:found;
+      if(!/^(ARI|ATL|BAL|BUF|CAR|CHI|CIN|CLE|DAL|DEN|DET|GB|HOU|IND|JAX|KC|LAC|LAR|LV|MIA|MIN|NE|NO|NYG|NYJ|PHI|PIT|SEA|SF|TB|TEN|WAS)$/.test(sourceTeam)||selected.length!==1)return{ok:false,reason:'DST_TEAM_AMBIGUOUS_OR_UNMAPPED',sourcePlayerId:fpid||null};
+      return{ok:true,player:selected[0],method:'EXACT_CANONICAL_DEFENSE_TEAM',sourcePlayerId:fpid||null};
+    }
     const name=String(row?.name||row?.player_name||'').trim(),found=indexes.byNamePosition.get(`${norm(name)}|${position}`)||[];
     if(found.length!==1)return{ok:false,reason:found.length?'NAME_POSITION_COLLISION':'NO_MATCH',sourcePlayerId:fpid||null};
     const sourceTeam=team(row?.team_id??row?.player_team_id??row?.team??''),sleeperTeam=found[0].team;
@@ -104,9 +110,9 @@
     return{ok:true,player:found[0],method:'EXACT_NAME_POSITION_TEAM',sourcePlayerId:fpid||null};
   }
 
-  function projectionLane(payloads,{season,week,scoring:scoringInput,sleeperPlayers,verifiedAt=Date.now()}={}){
+  function projectionLane(payloads,{season,week,scoring:scoringInput,sleeperPlayers,verifiedAt=Date.now(),positions:requestedPositions=POSITIONS}={}){
     const normalizedScoring=scoring(scoringInput),indexes=sleeperIndexes(sleeperPlayers),records=[],positions={},rejects=[];
-    for(const position of POSITIONS){
+    for(const position of requestedPositions){
       const hasLane=Object.prototype.hasOwnProperty.call(payloads||{},position),envelope=hasLane?payloads[position]:null,isEnvelope=envelope!=null&&typeof envelope==='object'&&Object.prototype.hasOwnProperty.call(envelope,'providerPayload'),payload=isEnvelope?envelope.providerPayload:envelope,request=isEnvelope?envelope.requestProvenance:null,responsePresent=hasLane&&(isEnvelope||payload!=null),players=Array.isArray(payload?.players)?payload.players:[],rawTime=sourceTime(payload,{season,verifiedAt,allowSeasonDateInference:true}),time=rawTime.sourceTimePrecision==='UNKNOWN'?{sourcePublishedAt:null,sourcePublishedDate:null,sourceTimePrecision:'RETRIEVAL'}:rawTime;
       const invalidRequest=isEnvelope&&(Number(request?.season)!==Number(season)||Number(request?.week)!==Number(week)||String(request?.position||'').toUpperCase()!==position||request?.scope!=='WEEKLY'||request?.queryShape!==WEEKLY_PROJECTION_QUERY_SHAPE||Object.prototype.hasOwnProperty.call(request||{},'ros'));
       let reason='';
@@ -130,7 +136,7 @@
         const value=finite(row?.stats?.points_half);if(value==null)continue;
         const mapping=mapFantasyProsPlayer(row,indexes);if(!mapping.ok){rejects.push({position,name:String(row?.name||''),sourcePlayerId:mapping.sourcePlayerId,reason:mapping.reason});continue;}
         mapped++;
-        const record={schema:SCHEMA,playerId:mapping.player.id,sleeperId:mapping.player.id,sourcePlayerId:mapping.sourcePlayerId,mappingMethod:mapping.method,mappingVersion:MAPPING_VERSION,metric:'projected_points',value,unit:'HALF_PPR_POINTS',position,season:Number(season),week:Number(week),scoring:normalizedScoring,status:'VERIFIED',sourceId:'fantasypros',sourceUrl:`https://api.fantasypros.com/public/v2/json/nfl/${Number(season)}/projections?week=${Number(week)}&position=${position}`,expert:null,...time,verifiedAt,expiresAt:verifiedAt+EVIDENCE_TTL_MS,provenance:{provider:'FantasyPros',field:'stats.points_half',providerScope:'WEEKLY',providerScoring:String(payload.scoring||'').toUpperCase()||null,request},confidence:mapping.method==='FANTASY_DATA_ID'?.98:.8};
+        const record={schema:SCHEMA,playerId:mapping.player.id,sleeperId:mapping.player.id,sourcePlayerId:mapping.sourcePlayerId,mappingMethod:mapping.method,mappingVersion:MAPPING_VERSION,team:mapping.player.team,metric:'projected_points',value,unit:'HALF_PPR_POINTS',position,season:Number(season),week:Number(week),scoring:normalizedScoring,status:'VERIFIED',sourceId:'fantasypros',sourceUrl:`https://api.fantasypros.com/public/v2/json/nfl/${Number(season)}/projections?week=${Number(week)}&position=${position}`,expert:null,...time,verifiedAt,expiresAt:verifiedAt+EVIDENCE_TTL_MS,provenance:{provider:'FantasyPros',field:'stats.points_half',providerScope:'WEEKLY',providerScoring:String(payload.scoring||'').toUpperCase()||null,request},confidence:mapping.method==='FANTASY_DATA_ID'?.98:.8};
         if(weeklyRecordChronology(record,{season,week,scoring:normalizedScoring},verifiedAt))records.push(record);
         else rejects.push({position,name:String(row?.name||''),sourcePlayerId:mapping.sourcePlayerId,reason:'INVALID_PROVIDER_CHRONOLOGY'});
       }}
@@ -145,7 +151,7 @@
       const consumerUsable=responseClassification===PROJECTION_RESPONSE_CLASSIFICATION.CURRENT_ACCEPTED?mappedConsumerUsable:0;
       positions[position]={status,responseClassification,sourceRows:players.length,count:players.length,numericPointsHalf:numeric,mappedRows:mapped,mapped,mappingCoverage:Math.round(mappingCoverage*1000)/1000,consumerUsableRecords:consumerUsable,rejectReasonCounts,finalLaneStatus:status,finalLaneReason:finalReason,reason:finalReason,...time};
     }
-    const available=POSITIONS.every(position=>positions[position].status==='AVAILABLE');
+    const available=requestedPositions.every(position=>positions[position].status==='AVAILABLE');
     return{lane:{id:'fantasypros_weekly_projections',status:available?'AVAILABLE':Object.values(positions).some(x=>x.status!=='UNAVAILABLE')?'PARTIAL':'UNAVAILABLE',coverage:{positions},sourceId:'fantasypros',metric:'projected_points'},records,rejects};
   }
 

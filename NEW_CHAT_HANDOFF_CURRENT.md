@@ -1,3 +1,13 @@
+Handoff generation: `20260930T0615Z-v276`
+Generation: `20260930T0615Z-v276`
+CURRENT: v11.8.0-rc4.216 LOCAL_UNPUBLISHED candidate on codex/rc4216-waiver-dst-decision-quality. Canonical main e325e952c1e7ea93da3572afb1bef70337f0a5e8; tree b0eac858e6b6314b6a4e313960c50686bd236e56.
+rc4.215 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: RC4215_PHYSICAL_FAIL_DECISION_QUALITY. Live refresh, <1 Min. Sleeper state, correct roster, W4 projections and resolved RETRIEVAL time failure physically confirmed. Waiver relevance/negative-score and D/ST ranking/duplicate/evidence defects remain. rc4.216 is a LOCAL_UNPUBLISHED runtime candidate; Jefferson is not a defect; rc4.210 remains the broad accepted physical baseline.
+Next gate: RC4216_LOCAL_REVIEW_AND_PUBLICATION_PENDING. Review local rc4.216 candidate; external publication and exact-head PR/CI require separate authorization. Then merge, verify exact-main Production, and perform rc4.216 physical acceptance.
+No future commit, package, deployment or physical acceptance claimed. D/ST current-week acquisition is independent; +1/+2 remain fail-closed without verified evidence.
+Details: docs/PITTI_RC4216_DECISION_QUALITY.md.
+
+## HISTORICAL v275 CHECKPOINT
+
 Handoff generation: `20260929T1738Z-v275`
 Generation: `20260929T1738Z-v275`
 ## CURRENT AUTHORITY v275 — rc4.215 post-merge reconciliation
