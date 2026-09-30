@@ -1,3 +1,15 @@
+Handoff generation: `20260930T0938Z-v277`
+Generation: `20260930T0938Z-v277`
+CURRENT: v11.8.0-rc4.216 PUBLISHED_PR_CANDIDATE (PR217 OPEN) candidate on codex/rc4216-waiver-dst-decision-quality. Canonical main e325e952c1e7ea93da3572afb1bef70337f0a5e8; tree b0eac858e6b6314b6a4e313960c50686bd236e56.
+rc4.215 Production DEPLOYED_SUCCESS; PHYSICAL FAIL / NOT ACCEPTED: RC4215_PHYSICAL_FAIL_DECISION_QUALITY. Live refresh, <1 Min. Sleeper state, correct roster, W4 projections and resolved RETRIEVAL time failure physically confirmed. Waiver relevance/negative-score and D/ST ranking/duplicate/evidence defects remain. rc4.216 is a PUBLISHED_PR_CANDIDATE (PR217 OPEN) runtime candidate; Jefferson is not a defect; rc4.210 remains the broad accepted physical baseline.
+Next gate: RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING. Publish the local PR217 authority correction only when authorized; freshly resolve PR217 head and require exact-head CI. Merge and Production remain separate future gates; resolve new canonical main/tree and exact-main deployment before rc4.216 physical acceptance.
+No future commit, package, deployment or physical acceptance claimed. D/ST current-week acquisition is independent; +1/+2 remain fail-closed without verified evidence.
+Details: docs/PITTI_RC4216_DECISION_QUALITY.md.
+
+Source lock: rc4.216. Production and latest physical observation: rc4.215, RC4215_PHYSICAL_FAIL_DECISION_QUALITY. PR217 is not merged; rc4.216 has no deployment or physical acceptance. Observed f08ea197e4252aabe0d3e024c4b1078deda02f82 CI 5/5 SUCCESS and cloud strict 254/254 PASS are historical exact-head receipts; the corrective head requires fresh verification.
+
+## HISTORICAL v275 CHECKPOINT
+
 Handoff generation: `20260929T1738Z-v275`
 Generation: `20260929T1738Z-v275`
 ## CURRENT AUTHORITY v275 — rc4.215 post-merge reconciliation

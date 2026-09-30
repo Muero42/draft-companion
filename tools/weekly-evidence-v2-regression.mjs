@@ -10,7 +10,7 @@ const workerSource=fs.readFileSync(new URL('../_worker.js',import.meta.url),'utf
 const evidenceSource=fs.readFileSync(new URL('../weekly-evidence-v2.js',import.meta.url),'utf8');
 assert(!/projections\?[^`'"\n]*scoring=HALF/.test(appSource+workerSource),'NFL projections must never reintroduce the unsupported scoring=HALF request parameter');
 assert(!/projections\?[^`'"\n]*ros=false/.test(appSource+workerSource+evidenceSource),'weekly FantasyPros projection requests and source URLs must omit ros');
-assert.deepEqual(evidence.WEEKLY_HALF_PPR_MAX,{QB:80,RB:70,WR:70,TE:70},'canonical weekly Half-PPR safety ceilings must remain intact');
+assert.deepEqual(evidence.WEEKLY_HALF_PPR_MAX,{QB:80,RB:70,WR:70,TE:70,DST:60},'canonical weekly Half-PPR safety ceilings must remain intact');
 const counts={QB:24,RB:60,WR:70,TE:24},players={},payloads={};
 let id=1;
 for(const [position,count] of Object.entries(counts)){
