@@ -1,3 +1,12 @@
+Handoff generation: `20260930T1717Z-v278`
+Generation: `20260930T1717Z-v278`
+CURRENT: Source and Production: v11.8.0-rc4.216; PR217 MERGED, reviewed head 84a87966409ce1420d6462c6bce62177d3adaf44, canonical main 4d78271c325426c85e94e12be6e521547cdeaa34, identical reviewed/merged tree e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d. Production DEPLOYED_SUCCESS: 6804fdb6-e9d7-4530-b1b6-188f24329a50 (check 109981281507). Post-merge 8/8 checks SUCCESS; cloud STRICT_SUITE 254/254 PASS. rc4.216 physical PENDING / NOT ACCEPTED. Latest physical observation remains rc4.215: RC4215_PHYSICAL_FAIL_DECISION_QUALITY, with positive Live/RETRIEVAL evidence preserved. rc4.210 remains the prior broad physical baseline. Next gate: RC4216_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING.
+Next action: Await separately authorized rc4.216 physical acceptance against canonical main 4d78271c325426c85e94e12be6e521547cdeaa34 and its successful Production deployment. No automatic device action, push, PR, merge or deployment. Local handoff commit is not the deployed canonical commit.
+Local branch: codex/rc4216-waiver-dst-decision-quality; handoff-only commit is local/unpublished and must never be confused with canonical Production main. Runtime remains identical to the merged 17-file runtime.
+AUTO: keine Zwischenmeldungen; keine leeren Antworten; niemals "AUTO läuft weiter" als Fortsetzungsersatz. STATUS = ausschließlich Status, keine Aktionen. Externe oder irreversible Aktionen nur nach ausdrücklicher Freigabe. PITTI CODEX BUDGET GUARD bleibt verpflichtend: nur lokales, begrenztes Engineering; keine Runtime-/Feature-Änderung in diesem Handoff; keine erneuten Tests ohne konkreten Authority-Widerspruch; kein Push, PR, Merge, Deployment oder Physical-Test. Nach sauberem lokalem Handoff-Commit STOP.
+
+## HISTORICAL v277 PRE-MERGE CHECKPOINT
+
 Handoff generation: `20260930T0938Z-v277`
 Generation: `20260930T0938Z-v277`
 CURRENT: v11.8.0-rc4.216 PUBLISHED_PR_CANDIDATE (PR217 OPEN) candidate on codex/rc4216-waiver-dst-decision-quality. Canonical main e325e952c1e7ea93da3572afb1bef70337f0a5e8; tree b0eac858e6b6314b6a4e313960c50686bd236e56.
