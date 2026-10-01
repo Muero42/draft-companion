@@ -155,7 +155,7 @@
     "tools/season-adversarial-review-regression.mjs": "298e0d503b804c77550ece9f59c69c7bac36bfb6",
     "tools/season-automatic-refresh-contract.mjs": "c9ff36e9f0d3b14e6b7fcd00b76f334be3a00a32",
     "tools/season-boone-production-parity-regression.mjs": "ce2f158ec1d280c3e13c0e700a5ccd6306625c70",
-    "tools/season-browser-review.mjs": "09435012883c59a73174285a8491cfe3a5c137d3",
+    "tools/season-browser-review.mjs": "454455899390014f09d202168fa3d4d369c7c069",
     "tools/season-decision-engine-regression.mjs": "b898b14487b437caf203a19d9e4983fee1ee1db0",
     "tools/season-decision-quality-regression.mjs": "f0ee1a31f93b5f0b76ea8ac82bb91ef241488fc5",
     "tools/season-dst-k-stream-regression.mjs": "fc52fb6411a93acbe12fb9988b08ae32479f8a62",
