@@ -196,7 +196,7 @@ must(commandContract.auto?.persistentStateMachine?.blockedUserGlobalStop===false
 must(commandContract.auto?.persistentStateMachine?.stopRequires?.activeEmpty===true&&commandContract.auto?.persistentStateMachine?.stopRequires?.readyEmpty===true&&commandContract.auto?.persistentStateMachine?.stopRequires?.stopEvaluationAllowed===true,'command contract AUTO stop requirements drift');
 if(!candidatePreflight) must(bootstrap.includes('AUTO queue takeover'),'new-chat AUTO queue takeover missing');
 if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
-  must(/^202609\d{2}T\d{4}Z-v\d+$/.test(String(current.handoff_generation||'')),'Season Companion CURRENT generation malformed');
+  must(/^20\d{2}(?:0[1-9]|1[0-2])(?:0[1-9]|[12]\d|3[01])T(?:[01]\d|2[0-3])[0-5]\dZ-v\d+$/.test(String(current.handoff_generation||'')),'Season Companion CURRENT generation malformed');
   must(lock.handoff_generation===current.handoff_generation,'Season Companion LOCK generation drift');
   must(commandContract.handoff_generation===current.handoff_generation,'Season Companion COMMAND generation drift');
   must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
