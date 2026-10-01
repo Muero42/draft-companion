@@ -3,7 +3,7 @@ const src=fs.readFileSync('app.js','utf8');
 const fn=src.indexOf('async function bootstrapSeasonWorkspace(');if(fn<0)throw new Error('bootstrap missing');
 const end=src.indexOf('\nasync function fetchDraftFresh',fn);const b=src.slice(fn,end);
 const season=b.indexOf('const season=await fetchSeasonLeagueState({})');
-const players=b.indexOf("const players=await jf(\`\${S}/players/nfl?_=\${bust}\`,'Season Spieler',15000)");
+const players=b.indexOf('const directory=seasonDirectoryFresh(cached)?cached:await seasonDirectoryRefresh()');
 const draft=b.indexOf("jf(\`\${S}/draft/\${id}?_=\${bust}\`,'Draft-Archiv',6500)");
 const ctx=b.indexOf('lastDraftContext={id:LIVE_DRAFT_ID_2026');
 const rosterFa=b.indexOf("renderRosterFaAudit(rows,available||[],true,{render:false})");

@@ -6,6 +6,7 @@ const ALLOWED_PREFIXES=['/nfl/'];
 export default {
   async fetch(request, env) {
     const url=new URL(request.url);
+    if(url.pathname==='/api/season-players') return handleSeasonPlayers(request);
     if(url.pathname==='/api/fantasypros') return handleFantasyPros(request,url);
     if(url.pathname==='/api/sleeper-adp') return handleSleeperAdp(request,url);
     if(url.pathname==='/api/fp-expert-directory') return handleFpExpertDirectory(request,url);
@@ -657,4 +658,25 @@ async function handleExpertRanking(request,url){
   }
 
   return json({error:`${name}: keine ausreichend vollständige automatische Overall-Quelle. ${attempts.filter(Boolean).join(' | ')}`},404);
+}
+
+async function handleSeasonPlayers(request){
+  if(request.method!=='GET')return json({error:'GET required'},405);
+  try{
+    const fetchedAt=Date.now();
+    // Unlike the daily ADP directory, decision identity must fit the six-hour bound.
+    const response=await fetch('https://api.sleeper.app/v1/players/nfl',{signal:AbortSignal.timeout(12000),headers:{accept:'application/json'},cf:{cacheTtl:0,cacheEverything:false}});
+    if(!response.ok)throw Error('DIRECTORY_HTTP_'+response.status);
+    const raw=JSON.parse(await boundedText(response,32*1024*1024)),players={};
+    if(!raw||Array.isArray(raw)||typeof raw!=='object')throw Error('DIRECTORY_SHAPE');
+    const fields=['full_name','first_name','last_name','position','team','active','search_rank','injury_status','bye_week','years_exp','fantasy_data_id'];
+    for(const [id,p] of Object.entries(raw)){
+      if(!/^[a-zA-Z0-9]+$/.test(id)||!p||!['QB','RB','WR','TE','K','DEF','DST'].includes(p.position))continue;
+      const row={player_id:id};for(const key of fields){const value=p[key];if(value===null||typeof value==='boolean'||(typeof value==='number'&&Number.isFinite(value))||(typeof value==='string'&&value.length<=120))row[key]=value;}
+      players[id]=row;
+    }
+    const count=Object.keys(players).length;if(!count||count>12000)throw Error('DIRECTORY_COUNT');
+    const body=JSON.stringify({schema:'pitti.players.v1',fetchedAt,players});if(new TextEncoder().encode(body).byteLength>2*1024*1024)throw Error('DIRECTORY_TOO_LARGE');
+    return new Response(body,{headers:{...cors(),'content-type':'application/json','cache-control':'no-store'}});
+  }catch{return json({error:'Compact player directory unavailable'},502);}
 }

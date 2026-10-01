@@ -43,7 +43,7 @@ const context={
   fetch:async()=>({ok:false,status:503,json:async()=>({})}),
   codedError:(code,message,status)=>Object.assign(new Error(message),{code,status}),
   renderSeasonRankingFreshness:note=>{renderedSnapshot=cache.get(api.CACHE_KEY);els.seasonRankingStatus.textContent=note},
-  rerenderPostDraftFromContext:()=>{rerenders++},PittiWeeklyEvidenceV2:api
+  queueSeasonRerender:()=>{rerenders++},PittiWeeklyEvidenceV2:api
 };
 context.globalThis=context;
 vm.createContext(context);

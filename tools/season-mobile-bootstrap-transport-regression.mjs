@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 const src=fs.readFileSync('app.js','utf8');const a=src.indexOf('async function bootstrapSeasonWorkspace('),z=src.indexOf('\nasync function fetchDraftFresh',a);if(a<0||z<0)throw new Error('bootstrap missing');const b=src.slice(a,z);
 const season=b.indexOf('const season=await fetchSeasonLeagueState({})');
-const players=b.indexOf("jf(\`\${S}/players/nfl?_=\${bust}\`,'Season Spieler',15000)");
+const players=b.indexOf('const directory=seasonDirectoryFresh(cached)?cached:await seasonDirectoryRefresh()');
 const draft=b.indexOf("'Draft-Archiv',6500");
 if([season,players].some(x=>x<0))throw new Error('season-first transport stages missing');
 if(!(season<players&&draft===-1))throw new Error('historical draft precedes/gates live season hydration');

@@ -1,15 +1,15 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20260930T1926Z-v279",
-  "updated_at": "2026-09-30T19:26:04Z",
+  "handoff_generation": "20261001T0905Z-v281",
+  "updated_at": "2026-10-01T09:05:11Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.217",
+    "source_candidate": "v11.8.0-rc4.218",
     "git_identity_rule": "Canonical main identity and candidate containment are freshly verified externally; no commit or mutable PR state is immutable checkpoint authority.",
-    "reconciled_base_main": "4d78271c325426c85e94e12be6e521547cdeaa34",
+    "reconciled_base_main": "c7a509e6865ade6e56043f23b19e2577a3755293",
     "postmerge": {
       "checkpoint": "v233",
       "pr": 121,
@@ -295,7 +295,7 @@
       "fantasypros_result": "PHYSICAL_PASS_OMITTED_ROS_WEEKLY_PROJECTION",
       "remaining_failure": "Sleeper NFL State: Timeout nach 6s"
     },
-    "reconciled_main": "4d78271c325426c85e94e12be6e521547cdeaa34",
+    "reconciled_main": "c7a509e6865ade6e56043f23b19e2577a3755293",
     "rc4205_physical_acceptance": {
       "checkpoint": "v256",
       "version": "v11.8.0-rc4.205",
@@ -677,8 +677,8 @@
       },
       "identity_scope": "PR213_RUNTIME_SOURCE_AND_DEPLOYMENT_PROVENANCE_ONLY; NOT_FUTURE_CANONICAL_MAIN"
     },
-    "canonical_main": "4d78271c325426c85e94e12be6e521547cdeaa34",
-    "canonical_tree": "e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d",
+    "canonical_main": "c7a509e6865ade6e56043f23b19e2577a3755293",
+    "canonical_tree": "ea845a05e9bb8e42049d930f029289370b5e15d2",
     "rc4215_source_production": {
       "checkpoint": "v275",
       "version": "v11.8.0-rc4.215",
@@ -725,75 +725,85 @@
       "evidence_source": "LIVE_GITHUB_API_AND_CLOUD_JOB_LOG",
       "physical_acceptance_proven": false,
       "physical_classification": "RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN"
+    },
+    "rc4217_source_production": {
+      "checkpoint": "v280",
+      "version": "v11.8.0-rc4.217",
+      "pr": 218,
+      "reviewed_head": "dcf82193065b3384b211c0e7791a70aa6b34b849",
+      "reviewed_tree": "ea845a05e9bb8e42049d930f029289370b5e15d2",
+      "merge_commit": "c7a509e6865ade6e56043f23b19e2577a3755293",
+      "merged_tree": "ea845a05e9bb8e42049d930f029289370b5e15d2",
+      "canonical_parent": "4d78271c325426c85e94e12be6e521547cdeaa34",
+      "source_status": "MERGED_CANONICAL",
+      "production_status": "DEPLOYED_SUCCESS",
+      "production_deployment_proven": true,
+      "production_deployment_id": "be6f1d5f-b252-4b35-8d22-f34b6806b26b",
+      "cloudflare_check_run_id": 110277323738,
+      "physical_status": "FAIL",
+      "physical_acceptance_proven": false,
+      "premerge_exact_head_ci": "PASS",
+      "postmerge_checks": "8/8 SUCCESS",
+      "cloud_strict": "254/254 PASS",
+      "cloud_job": 110277133766,
+      "evidence_source": "USER_SUPPLIED_EXTERNAL_EVIDENCE; ORIGIN_MAIN_PARENT_TREE_VERIFIED_LOCALLY",
+      "physical_classification": "RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS"
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.211",
-    "season_candidate": "Source candidate v11.8.0-rc4.217 LOCAL_UNPUBLISHED; bounded QB FAAB fail-closed repair. Production remains rc4.216 PR217 reviewed 84a87966409ce1420d6462c6bce62177d3adaf44, canonical main 4d78271c325426c85e94e12be6e521547cdeaa34, tree e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d, deployment 6804fdb6-e9d7-4530-b1b6-188f24329a50 DEPLOYED_SUCCESS. rc4.216 PHYSICAL FAIL / NOT ACCEPTED: RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN. Positive W4 evidence and all eight D/ST opponents preserved; CHI->NYJ correct, no mapping repair. W5/W6 MONITOR correct; transient duplicate MONITOR not reproducible. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remains historical; rc4.210 remains broad accepted baseline. Next gate: RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
+    "season_candidate": "Source candidate v11.8.0-rc4.218 LOCAL_UNPUBLISHED. Production remains v11.8.0-rc4.217, PR218 reviewed dcf82193065b3384b211c0e7791a70aa6b34b849, canonical main c7a509e6865ade6e56043f23b19e2577a3755293, tree ea845a05e9bb8e42049d930f029289370b5e15d2, deployment be6f1d5f-b252-4b35-8d22-f34b6806b26b DEPLOYED_SUCCESS. rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED, approximately two minutes at stage 2 with blocked interaction. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and its positive Live/Weekly/DST observations remain historical; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad accepted baseline. rc4.218 physical PENDING, not merged or deployed. Next gate: RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
     "candidate_branch": "main via merged PR #215",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.217",
+    "test_challenger": "v11.8.0-rc4.218",
     "ci": {
       "status": "PASS",
       "current_exact_main_head_ci": "PASS",
-      "validated_main": "4d78271c325426c85e94e12be6e521547cdeaa34",
+      "validated_main": "c7a509e6865ade6e56043f23b19e2577a3755293",
       "cloudflare_pages": "DEPLOYED_SUCCESS",
       "checks": "8/8 SUCCESS",
       "strict": "254/254 PASS",
-      "cloud_job": 109981007333,
-      "evidence_source": "LIVE_GITHUB_API_AND_CLOUD_JOB_LOG"
+      "cloud_job": 110277133766,
+      "evidence_source": "USER_SUPPLIED_EXTERNAL_EVIDENCE"
     },
     "android_accepted": "v11.8.0-rc4.211",
-    "preview_candidate": "v11.8.0-rc4.217 LOCAL_UNPUBLISHED",
-    "android_authority": "Source candidate v11.8.0-rc4.217 LOCAL_UNPUBLISHED; bounded QB FAAB fail-closed repair. Production remains rc4.216 PR217 reviewed 84a87966409ce1420d6462c6bce62177d3adaf44, canonical main 4d78271c325426c85e94e12be6e521547cdeaa34, tree e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d, deployment 6804fdb6-e9d7-4530-b1b6-188f24329a50 DEPLOYED_SUCCESS. rc4.216 PHYSICAL FAIL / NOT ACCEPTED: RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN. Positive W4 evidence and all eight D/ST opponents preserved; CHI->NYJ correct, no mapping repair. W5/W6 MONITOR correct; transient duplicate MONITOR not reproducible. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remains historical; rc4.210 remains broad accepted baseline. Next gate: RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
+    "preview_candidate": "v11.8.0-rc4.218 LOCAL_UNPUBLISHED",
+    "android_authority": "Source candidate v11.8.0-rc4.218 LOCAL_UNPUBLISHED. Production remains v11.8.0-rc4.217, PR218 reviewed dcf82193065b3384b211c0e7791a70aa6b34b849, canonical main c7a509e6865ade6e56043f23b19e2577a3755293, tree ea845a05e9bb8e42049d930f029289370b5e15d2, deployment be6f1d5f-b252-4b35-8d22-f34b6806b26b DEPLOYED_SUCCESS. rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED, approximately two minutes at stage 2 with blocked interaction. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and its positive Live/Weekly/DST observations remain historical; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad accepted baseline. rc4.218 physical PENDING, not merged or deployed. Next gate: RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
-    "deployed_pages_head": "4d78271c325426c85e94e12be6e521547cdeaa34",
-    "installed_android": "v11.8.0-rc4.216",
+    "deployed_pages_head": "c7a509e6865ade6e56043f23b19e2577a3755293",
+    "installed_android": "v11.8.0-rc4.217",
     "installation_observation_scope": "User-supplied phone runtime observed 2026-09-28; installation mechanism not separately verified",
-    "latest_android_observed": "v11.8.0-rc4.216",
+    "latest_android_observed": "v11.8.0-rc4.217",
     "device_update_policy": "FORBIDDEN_UNTIL_AUTOMATED_SEASON_E2E_PASS",
     "last_device_failure": "Historical rc4.183 rejection: FA/Add-Drop cards under Kader and IR/Reserve Charbonnet as ordinary drop target. Superseded by rc4.188 physical Waiver/FA canary PASS; retained only as historical regression evidence.",
     "latest_device_evidence": {
-      "version": "v11.8.0-rc4.216",
+      "version": "v11.8.0-rc4.217",
       "acceptance": "FAIL",
-      "classification": "RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN",
-      "evidence_source": "USER_SUPPLIED_CORRECTED_PHYSICAL_EVIDENCE",
-      "positive": {
-        "app_version": "v11.8.0-rc4.216",
-        "live_refresh": "PASS",
-        "sleeper_age": "< 1 Min.",
-        "weekly_evidence": "W4_AVAILABLE",
-        "weekly_records": 1376,
-        "weekly_age": "~1 Min.",
-        "broad_ecr": "AVAILABLE",
-        "pitti_panel": "AVAILABLE",
-        "projections": "QB_RB_WR_TE_AVAILABLE",
-        "unsupported_skill_add_drop": "HOLD",
-        "roster_dst_not_duplicated": "CIN",
-        "dst_opponents": {
-          "MIN": "MIA",
-          "BUF": "NE",
-          "CHI": "NYJ",
-          "CLE": "PIT",
-          "ATL": "NO",
-          "ARI": "NYG",
-          "DET": "CAR",
-          "LAC": "SEA"
-        },
-        "future_w5_w6": "MONITOR_WITHOUT_VERIFIED_EVIDENCE"
-      },
-      "failures": [
-        "QB_FAAB_BAND_RENDERED_WITH_UNVERIFIED_WEEKLY_OR_STRUCTURAL_EVIDENCE"
-      ],
-      "corrections": {
-        "chi_nyj": "CORRECT_NO_MAPPING_REPAIR_WARRANTED",
-        "transient_monitor_box": "NOT_REPRODUCED_NO_REPAIR"
-      },
-      "jefferson_is_defect": false
+      "classification": "RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS",
+      "subfinding": "STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED",
+      "evidence_source": "USER_SUPPLIED_PHYSICAL_OBSERVATION",
+      "observed": "Approximately two minutes at 2/3 Sleeper player-directory loading; scrolling/workspace interaction blocked.",
+      "positive": {},
+      "jefferson_is_defect": false,
+      "root_cause_precision": {
+        "physical_symptom": "User observed approximately two minutes at stage 2 with blocked scrolling/workspace interaction; rc4217 remains physically rejected.",
+        "proven_code_paths": [
+          "rc4217 cold bootstrap fetched and parsed the raw directory on the browser path",
+          "derived surfaces ran consecutively without cooperative yields",
+          "rc4218 initial candidate permitted absent directory metadata and had five direct rerender call sites outside its coalescer"
+        ],
+        "deterministic_evidence": "Compact payload bounds, six-hour TTL, missing/expired authority rejection, early shell, cooperative task boundaries and coalescer behavior; no Android performance measurement.",
+        "remaining_hypotheses": [
+          "dominant cause and duration of the physical event-loop stall",
+          "raw JSON parse contribution versus synchronous derived work",
+          "physical rerender storm frequency"
+        ],
+        "physical_responsiveness_proven": false
+      }
     },
-    "latestAndroidVersionObserved": "v11.8.0-rc4.216",
+    "latestAndroidVersionObserved": "v11.8.0-rc4.217",
     "source_candidate_status": "RELEASE_CANDIDATE_UNMERGED",
     "device_evidence_checkpoint_rule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "candidate_wording_rule": "Never call source_candidate a candidate awaiting device acceptance when source_candidate_status is DEVICE_REJECTED or latest_device_evidence for the same version has acceptance=FAIL.",
@@ -855,30 +865,30 @@
         "candidate_package": "FAIL_STALE_BOOTSTRAP_RENDER_ASSERT_REPAIRED"
       }
     },
-    "package_reference_scope": "rc4.217 local 17-file runtime identity only; no new archive SHA or package re-extraction evidence; no served-byte parity or physical acceptance inferred",
+    "package_reference_scope": "rc4.218 local 17-file runtime identity only; no new archive SHA or package re-extraction evidence; no served-byte parity or physical acceptance inferred",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.217",
+      "version": "v11.8.0-rc4.218",
       "files": 17,
       "sha256": null,
       "status": "RUNTIME_IDENTITY_ONLY_NO_PACKAGE_REEXTRACTION_CLAIM",
-      "source_scope": "RC4217_LOCAL_RUNTIME_NO_PACKAGE_REEXTRACTION_CLAIM",
+      "source_scope": "RC4218_LOCAL_RUNTIME_NO_PACKAGE_REEXTRACTION_CLAIM",
       "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_NONCANONICAL",
       "runtime_identity_head": "RESOLVE_LOCAL_HEAD_AFTER_COMMIT"
     },
-    "deployment_parity": "PR217_REVIEWED_TREE_EQUALS_MERGED_TREE; LIVE_GITHUB_PRODUCTION_SUCCESS; PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN",
-    "deployed_production_version": "v11.8.0-rc4.216",
+    "deployment_parity": "PR218_REVIEWED_TREE_EQUALS_MERGED_TREE; LIVE_GITHUB_PRODUCTION_SUCCESS; PHYSICAL_FAIL_REFRESH_RESPONSIVENESS",
+    "deployed_production_version": "v11.8.0-rc4.217",
     "production_deployment": {
-      "version": "v11.8.0-rc4.216",
-      "source_commit": "4d78271c325426c85e94e12be6e521547cdeaa34",
-      "tree": "e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d",
+      "version": "v11.8.0-rc4.217",
+      "source_commit": "c7a509e6865ade6e56043f23b19e2577a3755293",
+      "tree": "ea845a05e9bb8e42049d930f029289370b5e15d2",
       "status": "DEPLOYED_SUCCESS",
       "branch": "main",
-      "deployment_id": "6804fdb6-e9d7-4530-b1b6-188f24329a50",
-      "cloudflare_check_run_id": 109981281507,
-      "deployment_check_id": "6804fdb6-e9d7-4530-b1b6-188f24329a50",
+      "deployment_id": "be6f1d5f-b252-4b35-8d22-f34b6806b26b",
+      "cloudflare_check_run_id": 110277323738,
+      "deployment_check_id": "be6f1d5f-b252-4b35-8d22-f34b6806b26b",
       "device_acceptance_proven": false,
-      "physical_classification": "RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN",
-      "evidence_source": "LIVE_GITHUB_CHECK_RUN_VERIFIED"
+      "physical_classification": "RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS",
+      "evidence_source": "USER_SUPPLIED_EXTERNAL_EVIDENCE"
     },
     "independent_evidence_lane_status": {
       "broad_expert_ranks": "RC4214_BOUNDED_POSITIVE_NOT_ACCEPTED; AVAILABLE",
@@ -938,19 +948,19 @@
       }
     },
     "current_physical_acceptance": {
-      "version": "v11.8.0-rc4.216",
-      "tree": "e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d",
+      "version": "v11.8.0-rc4.217",
+      "tree": "ea845a05e9bb8e42049d930f029289370b5e15d2",
       "acceptance": "FAIL",
       "proven": false,
-      "classification": "RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN",
-      "canonical_main": "4d78271c325426c85e94e12be6e521547cdeaa34",
+      "canonical_main": "c7a509e6865ade6e56043f23b19e2577a3755293",
       "production_deployment": "DEPLOYED_SUCCESS",
       "executable": false,
-      "prerequisite_gate": "RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
-      "execution_authorization": "SEPARATE_EXPLICIT_USER_AUTHORIZATION_REQUIRED"
+      "prerequisite_gate": "RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
+      "execution_authorization": "SEPARATE_EXPLICIT_USER_AUTHORIZATION_REQUIRED",
+      "classification": "RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS"
     },
     "accepted_android_scope": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
-    "androidAuthority": "Source candidate v11.8.0-rc4.217 LOCAL_UNPUBLISHED; bounded QB FAAB fail-closed repair. Production remains rc4.216 PR217 reviewed 84a87966409ce1420d6462c6bce62177d3adaf44, canonical main 4d78271c325426c85e94e12be6e521547cdeaa34, tree e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d, deployment 6804fdb6-e9d7-4530-b1b6-188f24329a50 DEPLOYED_SUCCESS. rc4.216 PHYSICAL FAIL / NOT ACCEPTED: RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN. Positive W4 evidence and all eight D/ST opponents preserved; CHI->NYJ correct, no mapping repair. W5/W6 MONITOR correct; transient duplicate MONITOR not reproducible. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remains historical; rc4.210 remains broad accepted baseline. Next gate: RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
+    "androidAuthority": "Source candidate v11.8.0-rc4.218 LOCAL_UNPUBLISHED. Production remains v11.8.0-rc4.217, PR218 reviewed dcf82193065b3384b211c0e7791a70aa6b34b849, canonical main c7a509e6865ade6e56043f23b19e2577a3755293, tree ea845a05e9bb8e42049d930f029289370b5e15d2, deployment be6f1d5f-b252-4b35-8d22-f34b6806b26b DEPLOYED_SUCCESS. rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED, approximately two minutes at stage 2 with blocked interaction. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and its positive Live/Weekly/DST observations remain historical; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad accepted baseline. rc4.218 physical PENDING, not merged or deployed. Next gate: RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
     "installed_android_scope": "MOST_RECENT_PHYSICALLY_OBSERVED_INSTALLATION; BOUNDED_DIAGNOSTIC_NOT_ACCEPTANCE"
   },
   "real_draft": {
@@ -990,8 +1000,8 @@
     "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
-    "status": "RC4217_LOCAL_CANDIDATE",
-    "nextGate": "RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING"
+    "status": "RC4218_LOCAL_CANDIDATE",
+    "nextGate": "RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -1010,7 +1020,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "Source candidate v11.8.0-rc4.217 LOCAL_UNPUBLISHED; bounded QB FAAB fail-closed repair. Production remains rc4.216 PR217 reviewed 84a87966409ce1420d6462c6bce62177d3adaf44, canonical main 4d78271c325426c85e94e12be6e521547cdeaa34, tree e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d, deployment 6804fdb6-e9d7-4530-b1b6-188f24329a50 DEPLOYED_SUCCESS. rc4.216 PHYSICAL FAIL / NOT ACCEPTED: RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN. Positive W4 evidence and all eight D/ST opponents preserved; CHI->NYJ correct, no mapping repair. W5/W6 MONITOR correct; transient duplicate MONITOR not reproducible. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remains historical; rc4.210 remains broad accepted baseline. Next gate: RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
+  "source_authority": "Source candidate v11.8.0-rc4.218 LOCAL_UNPUBLISHED. Production remains v11.8.0-rc4.217, PR218 reviewed dcf82193065b3384b211c0e7791a70aa6b34b849, canonical main c7a509e6865ade6e56043f23b19e2577a3755293, tree ea845a05e9bb8e42049d930f029289370b5e15d2, deployment be6f1d5f-b252-4b35-8d22-f34b6806b26b DEPLOYED_SUCCESS. rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED, approximately two minutes at stage 2 with blocked interaction. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and its positive Live/Weekly/DST observations remain historical; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad accepted baseline. rc4.218 physical PENDING, not merged or deployed. Next gate: RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -1047,9 +1057,9 @@
     "ready": [],
     "waiting_external": [
       {
-        "id": "rc4217-local-review-publication",
-        "gate": "RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
-        "reason": "Review the local rc4.217 QB FAAB fail-closed candidate. Publication, PR, exact-head CI, merge, new-main Production verification and physical acceptance require their separately authorized gates. Stop after the tested local commit."
+        "id": "rc4218-review-publication",
+        "gate": "RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
+        "reason": "Review the local rc4.218 compact player-directory and cooperative UI candidate. Publication, exact-head CI, merge, Production and physical acceptance require separately authorized gates. Stop after the tested local commit."
       }
     ],
     "blocked_user": [],
@@ -1261,25 +1271,25 @@
     "stop_evaluation": {
       "allowed": true,
       "code": "NO_EXECUTABLE_WORK_REMAINS",
-      "reason": "Local rc4.216 review and external publication gate; no external action authorized here."
+      "reason": "Local rc4.218 review/publication gate; no external action authorized."
     },
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20260930T1926Z-v279",
+    "generation": "20261001T0905Z-v281",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "Review the local rc4.217 QB FAAB fail-closed candidate. Publication, PR, exact-head CI, merge, new-main Production verification and physical acceptance require their separately authorized gates. Stop after the tested local commit.",
+    "resume": "Review the local rc4.218 compact player-directory and cooperative UI candidate. Publication, exact-head CI, merge, Production and physical acceptance require separately authorized gates. Stop after the tested local commit.",
     "transaction_in_progress": false,
     "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-    "refresh_scope": "V279_RC4217_QB_FAAB_FAIL_CLOSED",
+    "refresh_scope": "V281_RC4218_COMPACT_DIRECTORY_RESPONSIVENESS",
     "readiness_scope": "STRUCTURAL_HANDOFF_ONLY_NOT_DEVICE_ACCEPTANCE"
   },
-  "status": "RC4217_LOCAL_CANDIDATE",
-  "gate": "RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
-  "nextGate": "RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
-  "handoffGeneration": "20260930T1926Z-v279",
+  "status": "RC4218_LOCAL_CANDIDATE",
+  "gate": "RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
+  "nextGate": "RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
+  "handoffGeneration": "20261001T0905Z-v281",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -2141,6 +2151,166 @@
         "archive_sha_semantics": "RUN_AND_ENVIRONMENT_SCOPED_NONCANONICAL",
         "runtime_identity_head": "RESOLVE_LOCAL_HEAD_AFTER_COMMIT"
       }
+    },
+    "v279_before_v280": {
+      "runtime_candidate": {
+        "version": "v11.8.0-rc4.217",
+        "base": "ebe9b05dfbc344d6487068a0e84a9f5937728bd3",
+        "canonical_base": "4d78271c325426c85e94e12be6e521547cdeaa34",
+        "status": "LOCAL_UNPUBLISHED",
+        "branch": "codex/rc4216-waiver-dst-decision-quality",
+        "pr": null,
+        "pr_state": null,
+        "merged": false,
+        "published_head": null,
+        "merge_commit": null,
+        "production_deployment": null,
+        "production_proven": false,
+        "physical_accepted": false,
+        "physical_status": "PENDING",
+        "gate": "RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
+        "exact_head_rule": "Resolve the future published candidate HEAD freshly; local validation is not publication, deployment or physical acceptance."
+      },
+      "candidate_work": {
+        "version": "v11.8.0-rc4.217",
+        "pr": null,
+        "status": "LOCAL_UNPUBLISHED",
+        "head_sha": "RESOLVE_LOCAL_HEAD_AFTER_COMMIT",
+        "tree_sha": "RESOLVE_LOCAL_TREE_AFTER_COMMIT",
+        "merge_commit": null,
+        "production_proven": false,
+        "physical_accepted": false
+      },
+      "authority_continuation": {
+        "status": "LOCAL_RC4217_CANDIDATE",
+        "current_gate": "RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
+        "physical_gate": "RC4217_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING",
+        "physical_executable": false,
+        "canonical_main": "4d78271c325426c85e94e12be6e521547cdeaa34",
+        "canonical_tree": "e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d",
+        "authority_parent": "e325e952c1e7ea93da3572afb1bef70337f0a5e8",
+        "future_canonical_main": "DYNAMIC_VERIFICATION_REQUIRED",
+        "future_canonical_tree": "DYNAMIC_VERIFICATION_REQUIRED",
+        "sequence": [
+          "LOCAL_REVIEW",
+          "PUBLICATION_EXACT_HEAD_CI",
+          "RC4217_MERGE",
+          "RESOLVE_NEW_CANONICAL_MAIN",
+          "VERIFY_NEW_MAIN_PRODUCTION_DEPLOYMENT",
+          "RC4217_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING"
+        ],
+        "published_branch": "codex/rc4216-waiver-dst-decision-quality",
+        "published_head": null,
+        "exact_head_rule": "Resolve the future published candidate HEAD freshly; local validation is not publication, deployment or physical acceptance.",
+        "pr": null
+      },
+      "production_deployment": {
+        "version": "v11.8.0-rc4.216",
+        "source_commit": "4d78271c325426c85e94e12be6e521547cdeaa34",
+        "tree": "e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d",
+        "status": "DEPLOYED_SUCCESS",
+        "branch": "main",
+        "deployment_id": "6804fdb6-e9d7-4530-b1b6-188f24329a50",
+        "cloudflare_check_run_id": 109981281507,
+        "deployment_check_id": "6804fdb6-e9d7-4530-b1b6-188f24329a50",
+        "device_acceptance_proven": false,
+        "physical_classification": "RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN",
+        "evidence_source": "LIVE_GITHUB_CHECK_RUN_VERIFIED"
+      },
+      "current_physical_acceptance": {
+        "version": "v11.8.0-rc4.216",
+        "tree": "e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d",
+        "acceptance": "FAIL",
+        "proven": false,
+        "classification": "RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN",
+        "canonical_main": "4d78271c325426c85e94e12be6e521547cdeaa34",
+        "production_deployment": "DEPLOYED_SUCCESS",
+        "executable": false,
+        "prerequisite_gate": "RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
+        "execution_authorization": "SEPARATE_EXPLICIT_USER_AUTHORIZATION_REQUIRED"
+      },
+      "ci": {
+        "status": "PASS",
+        "current_exact_main_head_ci": "PASS",
+        "validated_main": "4d78271c325426c85e94e12be6e521547cdeaa34",
+        "cloudflare_pages": "DEPLOYED_SUCCESS",
+        "checks": "8/8 SUCCESS",
+        "strict": "254/254 PASS",
+        "cloud_job": 109981007333,
+        "evidence_source": "LIVE_GITHUB_API_AND_CLOUD_JOB_LOG"
+      },
+      "source_authority": "Source candidate v11.8.0-rc4.217 LOCAL_UNPUBLISHED; bounded QB FAAB fail-closed repair. Production remains rc4.216 PR217 reviewed 84a87966409ce1420d6462c6bce62177d3adaf44, canonical main 4d78271c325426c85e94e12be6e521547cdeaa34, tree e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d, deployment 6804fdb6-e9d7-4530-b1b6-188f24329a50 DEPLOYED_SUCCESS. rc4.216 PHYSICAL FAIL / NOT ACCEPTED: RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN. Positive W4 evidence and all eight D/ST opponents preserved; CHI->NYJ correct, no mapping repair. W5/W6 MONITOR correct; transient duplicate MONITOR not reproducible. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remains historical; rc4.210 remains broad accepted baseline. Next gate: RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING."
+    },
+    "v280_before_rc4218": {
+      "generation": "20261001T0825Z-v280",
+      "source_authority": "Source and Production v11.8.0-rc4.217; PR218 MERGED, reviewed dcf82193065b3384b211c0e7791a70aa6b34b849, canonical main c7a509e6865ade6e56043f23b19e2577a3755293, identical reviewed/merged tree ea845a05e9bb8e42049d930f029289370b5e15d2, deployment be6f1d5f-b252-4b35-8d22-f34b6806b26b DEPLOYED_SUCCESS. Exact PR-head CI PASS; postmerge 8/8 SUCCESS; cloud STRICT_SUITE 254/254 PASS (job 110277133766). rc4.217 physical PENDING / NOT ACCEPTED. Latest physically observed rc4.216 remains historical FAIL / NOT ACCEPTED: RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN. Positive W4 evidence preserved; CHI->NYJ correct; CIN not duplicated; W5/W6 MONITOR. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remains historical; rc4.210 remains historical broad accepted baseline. Next gate: RC4217_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING.",
+      "runtime_candidate": {
+        "version": "v11.8.0-rc4.217",
+        "base": "ebe9b05dfbc344d6487068a0e84a9f5937728bd3",
+        "canonical_base": "4d78271c325426c85e94e12be6e521547cdeaa34",
+        "status": "MERGED_CANONICAL_PRODUCTION_DEPLOYED_PHYSICAL_PENDING",
+        "branch": "codex/rc4216-waiver-dst-decision-quality",
+        "pr": 218,
+        "pr_state": "MERGED",
+        "merged": true,
+        "published_head": "dcf82193065b3384b211c0e7791a70aa6b34b849",
+        "merge_commit": "c7a509e6865ade6e56043f23b19e2577a3755293",
+        "production_deployment": "be6f1d5f-b252-4b35-8d22-f34b6806b26b",
+        "production_proven": true,
+        "physical_accepted": false,
+        "physical_status": "PENDING",
+        "gate": "RC4217_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING",
+        "exact_head_rule": "PR218 merged receipt is immutable; freshly verify canonical main and deployment before any separately authorized physical acceptance."
+      },
+      "latest_device_evidence": {
+        "version": "v11.8.0-rc4.216",
+        "acceptance": "FAIL",
+        "classification": "RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN",
+        "evidence_source": "USER_SUPPLIED_CORRECTED_PHYSICAL_EVIDENCE",
+        "positive": {
+          "app_version": "v11.8.0-rc4.216",
+          "live_refresh": "PASS",
+          "sleeper_age": "< 1 Min.",
+          "weekly_evidence": "W4_AVAILABLE",
+          "weekly_records": 1376,
+          "weekly_age": "~1 Min.",
+          "broad_ecr": "AVAILABLE",
+          "pitti_panel": "AVAILABLE",
+          "projections": "QB_RB_WR_TE_AVAILABLE",
+          "unsupported_skill_add_drop": "HOLD",
+          "roster_dst_not_duplicated": "CIN",
+          "dst_opponents": {
+            "MIN": "MIA",
+            "BUF": "NE",
+            "CHI": "NYJ",
+            "CLE": "PIT",
+            "ATL": "NO",
+            "ARI": "NYG",
+            "DET": "CAR",
+            "LAC": "SEA"
+          },
+          "future_w5_w6": "MONITOR_WITHOUT_VERIFIED_EVIDENCE"
+        },
+        "failures": [
+          "QB_FAAB_BAND_RENDERED_WITH_UNVERIFIED_WEEKLY_OR_STRUCTURAL_EVIDENCE"
+        ],
+        "corrections": {
+          "chi_nyj": "CORRECT_NO_MAPPING_REPAIR_WARRANTED",
+          "transient_monitor_box": "NOT_REPRODUCED_NO_REPAIR"
+        },
+        "jefferson_is_defect": false
+      },
+      "current_physical_acceptance": {
+        "version": "v11.8.0-rc4.217",
+        "tree": "ea845a05e9bb8e42049d930f029289370b5e15d2",
+        "acceptance": "PENDING",
+        "proven": false,
+        "canonical_main": "c7a509e6865ade6e56043f23b19e2577a3755293",
+        "production_deployment": "DEPLOYED_SUCCESS",
+        "executable": false,
+        "prerequisite_gate": "RC4217_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING",
+        "execution_authorization": "SEPARATE_EXPLICIT_USER_AUTHORIZATION_REQUIRED"
+      }
     }
   },
   "qb_policy": {
@@ -2165,7 +2335,7 @@
     "season_exception_weakens_draft_rule": false
   },
   "candidate_work": {
-    "version": "v11.8.0-rc4.217",
+    "version": "v11.8.0-rc4.218",
     "pr": null,
     "status": "LOCAL_UNPUBLISHED",
     "head_sha": "RESOLVE_LOCAL_HEAD_AFTER_COMMIT",
@@ -2174,8 +2344,8 @@
     "production_proven": false,
     "physical_accepted": false
   },
-  "updatedAt": "2026-09-30T19:26:04Z",
-  "exactNextAction": "Review the local rc4.217 QB FAAB fail-closed candidate. Publication, PR, exact-head CI, merge, new-main Production verification and physical acceptance require their separately authorized gates. Stop after the tested local commit.",
+  "updatedAt": "2026-10-01T09:05:11Z",
+  "exactNextAction": "Review the local rc4.218 compact player-directory and cooperative UI candidate. Publication, exact-head CI, merge, Production and physical acceptance require separately authorized gates. Stop after the tested local commit.",
   "week4_season_readiness": {
     "classification": "WEEK4_SEASON_READY_LOCAL_CANDIDATE",
     "version": "v11.8.0-rc4.212",
@@ -2236,34 +2406,34 @@
     }
   },
   "authority_continuation": {
-    "status": "LOCAL_RC4217_CANDIDATE",
-    "current_gate": "RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
-    "physical_gate": "RC4217_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING",
+    "status": "LOCAL_RC4218_CANDIDATE",
+    "current_gate": "RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
+    "physical_gate": "RC4218_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING",
     "physical_executable": false,
-    "canonical_main": "4d78271c325426c85e94e12be6e521547cdeaa34",
-    "canonical_tree": "e1db9d94109f1f2ec6ba4e7a8a9fc5f2baf4fe3d",
-    "authority_parent": "e325e952c1e7ea93da3572afb1bef70337f0a5e8",
+    "canonical_main": "c7a509e6865ade6e56043f23b19e2577a3755293",
+    "canonical_tree": "ea845a05e9bb8e42049d930f029289370b5e15d2",
+    "authority_parent": "4d78271c325426c85e94e12be6e521547cdeaa34",
     "future_canonical_main": "DYNAMIC_VERIFICATION_REQUIRED",
     "future_canonical_tree": "DYNAMIC_VERIFICATION_REQUIRED",
     "sequence": [
       "LOCAL_REVIEW",
       "PUBLICATION_EXACT_HEAD_CI",
-      "RC4217_MERGE",
+      "RC4218_MERGE",
       "RESOLVE_NEW_CANONICAL_MAIN",
       "VERIFY_NEW_MAIN_PRODUCTION_DEPLOYMENT",
-      "RC4217_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING"
+      "RC4218_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING"
     ],
-    "published_branch": "codex/rc4216-waiver-dst-decision-quality",
+    "published_branch": "codex/rc4218-startup-responsiveness",
     "published_head": null,
-    "exact_head_rule": "Resolve the future published candidate HEAD freshly; local validation is not publication, deployment or physical acceptance.",
+    "exact_head_rule": "Freshly resolve the future published rc4.218 candidate HEAD; local validation is not publication, deployment or physical acceptance.",
     "pr": null
   },
   "runtime_candidate": {
-    "version": "v11.8.0-rc4.217",
-    "base": "ebe9b05dfbc344d6487068a0e84a9f5937728bd3",
-    "canonical_base": "4d78271c325426c85e94e12be6e521547cdeaa34",
+    "version": "v11.8.0-rc4.218",
+    "base": "3b9bbce2d4b7d9fb36c21c671bf04a7cfbcd9a75",
+    "canonical_base": "c7a509e6865ade6e56043f23b19e2577a3755293",
     "status": "LOCAL_UNPUBLISHED",
-    "branch": "codex/rc4216-waiver-dst-decision-quality",
+    "branch": "codex/rc4218-startup-responsiveness",
     "pr": null,
     "pr_state": null,
     "merged": false,
@@ -2273,7 +2443,7 @@
     "production_proven": false,
     "physical_accepted": false,
     "physical_status": "PENDING",
-    "gate": "RC4217_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
-    "exact_head_rule": "Resolve the future published candidate HEAD freshly; local validation is not publication, deployment or physical acceptance."
+    "gate": "RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING",
+    "exact_head_rule": "Freshly resolve the future published rc4.218 candidate HEAD; local validation is not publication, deployment or physical acceptance."
   }
 }

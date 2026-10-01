@@ -16,7 +16,7 @@ const watcherBoot=a.indexOf('void syncWatcherFeed();',rosterBoot);
 assert.ok(rosterBoot>=0&&rankBoot>rosterBoot&&watcherBoot>rosterBoot,'roster must receive startup network priority before ranking/watcher work');
 assert.ok(a.includes('SEASON_RANKING_AUTO_MS=3*60*60*1000'),'3h ranking freshness policy missing');
 assert.ok(a.includes("setInterval(()=>{if(!document.hidden)void syncWatcherFeed()},15*60*1000)"),'watcher cadence missing');
-for(const t of ["'Season-Identität',6000","'Sleeper Kader',7000","'Season Spieler',15000"])assert(a.includes(t),'timeout missing '+t);
+for(const t of ["'Season-Identität',6000","'Sleeper Kader',7000",'setTimeout(()=>controller.abort(),15000)'])assert(a.includes(t),'timeout missing '+t);
 assert(a.includes("e?.name==='AbortError'")&&a.includes('clearTimeout(timer)'),'abort cleanup missing');
 const ss=a.indexOf('function sanitizeResearchEvents('),se=a.indexOf('\nfunction loadResearchEvents',ss);assert(ss>=0&&se>ss);
 const sanitize=new Function('return ('+a.slice(ss,se).replace('function sanitizeResearchEvents','function')+')')();
