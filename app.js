@@ -1,6 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,adaptBooneTradeEvidence,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
-const APP_VERSION='v11.8.0-rc4.217';
+const APP_VERSION='v11.8.0-rc4.218';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -1837,6 +1837,45 @@ function blockSeasonDependentSurface(label,reason,statusEl,listEl){
   return{ok:false,label,reason:'DEPENDENCY_'+reason};
 }
 const SEASON_LIVE_REFRESH_MS=240000,SEASON_LIVE_RETRY_MS=60000,SEASON_PLAYERS_MAX_AGE_MS=6*60*60*1000;
+
+const SEASON_DIRECTORY_CACHE='pitti-player-directory-v1',SEASON_DIRECTORY_URL='/api/season-players',SEASON_DIRECTORY_BYTES=2*1024*1024;
+function seasonUiYield(){return new Promise(resolve=>setTimeout(resolve,0));}
+function seasonDirectoryFresh(snapshot,now=Date.now()){return snapshot?.schema==='pitti.players.v1'&&Number.isFinite(snapshot.fetchedAt)&&snapshot.fetchedAt<=now&&now-snapshot.fetchedAt<SEASON_PLAYERS_MAX_AGE_MS&&snapshot.players&&typeof snapshot.players==='object'&&!Array.isArray(snapshot.players);}
+async function seasonDirectoryDecode(response){
+  if(!response?.ok)throw Error('PLAYER_DIRECTORY_HTTP');
+  const reader=response.body.getReader(),parts=[];let size=0;
+  try{for(;;){const {done,value}=await reader.read();if(done)break;size+=value.byteLength;if(size>SEASON_DIRECTORY_BYTES)throw Error('PLAYER_DIRECTORY_TOO_LARGE');parts.push(value);}}finally{await reader.cancel().catch(()=>{});reader.releaseLock();}
+  await seasonUiYield();
+  const bytes=new Uint8Array(size);let offset=0;for(const part of parts){bytes.set(part,offset);offset+=part.length;}
+  const snapshot=JSON.parse(new TextDecoder().decode(bytes));
+  if(snapshot?.schema!=='pitti.players.v1'||!snapshot.players||Array.isArray(snapshot.players)||Object.keys(snapshot.players).length>12000)throw Error('PLAYER_DIRECTORY_SHAPE');
+  return snapshot;
+}
+async function seasonDirectoryCached(){try{const cache=await caches.open(SEASON_DIRECTORY_CACHE),response=await cache.match(SEASON_DIRECTORY_URL);return response?await seasonDirectoryDecode(response):null;}catch{return null;}}
+async function seasonDirectoryRefresh(){
+  const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),15000);
+  try{
+    const snapshot=await seasonDirectoryDecode(await fetch(SEASON_DIRECTORY_URL,{cache:'no-store',signal:controller.signal}));
+    if(!seasonDirectoryFresh(snapshot))throw Error('PLAYER_DIRECTORY_STALE');
+    // One compact, size-bounded cache entry; never consume localStorage quota.
+    try{const cache=await caches.open(SEASON_DIRECTORY_CACHE);await cache.put(SEASON_DIRECTORY_URL,new Response(JSON.stringify(snapshot),{headers:{'content-type':'application/json'}}));}catch{}
+    return snapshot;
+  }finally{clearTimeout(timer);}
+}
+function seasonDirectoryBind(season,snapshot){season.player_directory={fetchedAt:seasonDirectoryFresh(snapshot)?snapshot.fetchedAt:0};}
+function seasonRosterShell(season,players){
+  const rows=seasonRosterRows(season,players,[]);
+  els.rosterList.innerHTML=seasonLineupHtml(rows||[],season);
+  return rows;
+}
+let seasonRenderQueued=false,seasonRenderRunning=false;
+function queueSeasonRerender(){
+  seasonRenderQueued=true;
+  if(seasonRenderRunning)return;
+  seasonRenderRunning=true;
+  void (async()=>{try{do{await seasonUiYield();seasonRenderQueued=false;await rerenderPostDraftFromContext();}while(seasonRenderQueued);}finally{seasonRenderRunning=false;}})().catch(error=>console.error('Season rerender failed',error));
+}
+
 let seasonLiveRefreshPromise=null,seasonLiveRefreshAttempt=0;
 function refreshSeasonLiveRoster({force=false,trigger='timer'}={}){
   if(seasonLiveRefreshPromise)return seasonLiveRefreshPromise;
@@ -1853,7 +1892,10 @@ function refreshSeasonLiveRoster({force=false,trigger='timer'}={}){
       const season=await fetchSeasonLeagueState({});
       if(!seasonLiveAuthority(season))throw new Error(season?.reason||'LIVE_AUTHORITY_UNAVAILABLE');
       let players=c.players,playersLoadedAt=c.playersLoadedAt||now;
-      if(now-playersLoadedAt>=SEASON_PLAYERS_MAX_AGE_MS){players=await jf(S+'/players/nfl?_='+Date.now(),'Season Spieler',15000);playersLoadedAt=Date.now();}
+      await seasonUiYield();
+      if(now-playersLoadedAt>=SEASON_PLAYERS_MAX_AGE_MS){const snapshot=await seasonDirectoryRefresh();players=snapshot.players;playersLoadedAt=snapshot.fetchedAt;}
+      seasonDirectoryBind(season,{schema:'pitti.players.v1',players,fetchedAt:playersLoadedAt});
+      await seasonUiYield();
       const rows=seasonRosterRows(season,players,c.mine),available=seasonAvailablePlayers(season,players),availableDST=seasonAvailableSpecialTeams(season,players,'DST'),availableK=seasonAvailableSpecialTeams(season,players,'K');
       if(!rows||!available?.length||!seasonRosterAuthority(rows,season,season.roster_id))throw new Error('LIVE_ROSTER_MODEL_INVALID');
       if(lastDraftContext!==c)return{ok:false,skipped:'context-replaced'};
@@ -1905,9 +1947,16 @@ async function bootstrapSeasonWorkspace({force=false}={}){
     const season=await fetchSeasonLeagueState({});
     if(!season?.ok)throw new Error(season?.reason||'SEASON_LEAGUE_STATE_UNAVAILABLE');
     stage='player-directory';
-    const bust=`${Date.now()}-${Math.random().toString(36).slice(2)}`;
-    if(els.seasonLiveStateStatus)els.seasonLiveStateStatus.textContent='2/3 Sleeper-Spielerverzeichnis wird geladen …';
-    const players=await jf(`${S}/players/nfl?_=${bust}`,'Season Spieler',15000);
+    await seasonUiYield();
+    const cached=await seasonDirectoryCached();
+    seasonDirectoryBind(season,cached);
+    seasonRosterShell(season,cached?.players||{});
+    await seasonUiYield();
+    if(els.seasonLiveStateStatus)els.seasonLiveStateStatus.textContent='2/3 Sleeper-Spielerverzeichnis wird geprüft …';
+    const directory=seasonDirectoryFresh(cached)?cached:await seasonDirectoryRefresh();
+    const players=directory.players;
+    seasonDirectoryBind(season,directory);
+    await seasonUiYield();
     let draft=null,picks=[],mine=[],teams=10,total=150,slot=Number(els.slot.value||9);
     // Completed draft history is loaded only by the explicit Draft archive path.
     // Live ownership/roster identity is already proven; it must not wait for history.
@@ -1920,13 +1969,17 @@ async function bootstrapSeasonWorkspace({force=false}={}){
     els.rosterStatus.className='notice ok';els.rosterStatus.textContent='LIVE Sleeper · '+rows.length+' Spieler · Reserve/IR '+rows.filter(x=>x.seasonStatus==='RESERVE').length+' · Auto-Sync beim Start.';
     els.rosterSummary.innerHTML='';els.rosterSummary.style.display='none';
     els.rosterList.innerHTML=seasonLineupHtml(rows,season);
-    lastDraftContext={id:LIVE_DRAFT_ID_2026,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:true,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL,historicalDraftAvailable:!!draft,playersLoadedAt:Date.now()};
+    lastDraftContext={id:LIVE_DRAFT_ID_2026,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:true,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL,historicalDraftAvailable:!!draft,playersLoadedAt:directory.fetchedAt};
     lastPostDraftPairs=[];
     stage='season-surfaces';
+    await seasonUiYield();
     runSeasonSurface('Aufstellung',()=>renderRosterBenchAudit(rows,players,total,true),els.rosterBenchStatus,els.rosterBenchList);
+    await seasonUiYield();
     const faLane=runSeasonSurface('FA-vs-Roster',()=>renderRosterFaAudit(rows,available||[],true,{render:false}),els.rosterFaStatus,els.rosterFaList);
+    await seasonUiYield();
     runSeasonSurface('Trades',()=>renderTradeWorkspace(picks,players,slot,teams,true),els.tradeStatus,els.tradeList);
     if(faLane.ok){
+    await seasonUiYield();
       runSeasonSurface('Waiver/FA',()=>renderWaiverWorkspace(true),els.waiverStatus,els.waiverList);
       runSeasonSurface('Action Board',()=>renderSeasonActionBoard(true),els.seasonActionStatus,els.seasonActionList);
     }else{
@@ -3302,15 +3355,23 @@ function renderSeasonActionBoard(draftComplete){
   els.seasonActionList.innerHTML=seasonNewsHtml();
 }
 
-function rerenderPostDraftFromContext(){
+async function rerenderPostDraftFromContext(){
   const c=lastDraftContext;
   if(!c?.draftComplete||!Array.isArray(c.mine)||!Array.isArray(c.rankedAvailable)||!c.players)return false;
   const rows=Array.isArray(c.seasonRows)&&c.seasonRows.length?c.seasonRows:c.mine.map(pk=>{const p=pinfo(String(pk.player_id),pk.metadata,c.players),r=rankFor(p.name,p.pos),a=adpFor(p.name);return{pk,p,r,a}});
   if(els.rosterList&&c.season?.ok)els.rosterList.innerHTML=seasonLineupHtml(rows,c.season);
+  await seasonUiYield();
+  if(lastDraftContext!==c)return false;
   runSeasonSurface('Aufstellung',()=>renderRosterBenchAudit(rows,c.players,Number(c.current||150),true),els.rosterBenchStatus,els.rosterBenchList);
+  await seasonUiYield();
+  if(lastDraftContext!==c)return false;
   const faLane=runSeasonSurface('FA-vs-Roster',()=>renderRosterFaAudit(rows,c.rankedAvailable,true,{render:false}),els.rosterFaStatus,els.rosterFaList);
+  await seasonUiYield();
+  if(lastDraftContext!==c)return false;
   runSeasonSurface('Trades',()=>renderTradeWorkspace(c.picks,c.players,Number(els.slot.value),c.teams,true),els.tradeStatus,els.tradeList);
   if(faLane.ok){
+  await seasonUiYield();
+  if(lastDraftContext!==c)return false;
     runSeasonSurface('Waiver/FA',()=>renderWaiverWorkspace(true),els.waiverStatus,els.waiverList);
     runSeasonSurface('Action Board',()=>renderSeasonActionBoard(true),els.seasonActionStatus,els.seasonActionList);
   }else{
@@ -3513,7 +3574,7 @@ function seasonEvidenceCache(){
 }
 function scheduleSeasonDecisionExpiry(){
   if(seasonDecisionTimer)clearTimeout(seasonDecisionTimer);seasonDecisionTimer=null;
-  const c=lastDraftContext,now=Date.now(),deadlines=[Number(c?.season?.generated_at)+300001];
+  const c=lastDraftContext,now=Date.now(),deadlines=[Number(c?.season?.generated_at)+300001,Number(c?.season?.player_directory?.fetchedAt)+SEASON_PLAYERS_MAX_AGE_MS];
   const weekly=store.get(globalThis.PittiWeeklyEvidenceV2?.CACHE_KEY||'pitti.weekly-evidence.v2.current',null);
   if(Number.isFinite(weekly?.lastSuccessAt))deadlines.push(Number(weekly.lastSuccessAt)+SEASON_RANKING_AUTO_MS+1);
   const trade=store.get(BOONE_TRADE_VALUE_CACHE_KEY,null);if(Number.isFinite(trade?.expiresAt))deadlines.push(Number(trade.expiresAt)+1);
@@ -3545,7 +3606,7 @@ function seasonGameContext(p,season=lastDraftContext?.season){
   return e?[e.opponent||'Gegner unbekannt',e.dome===true?'DOME':e.weatherSummary||'Wetter nicht verfügbar'].join(' · '):'nicht verfügbar';
 }
 function seasonLiveAuthority(season,now=Date.now()){
-  return season?.ok===true&&season.source==='Sleeper direct'&&Number.isFinite(season.generated_at)&&season.generated_at<=now&&now-season.generated_at<=300000&&Array.isArray(season.league_rosters)&&season.league_rosters.length===10&&season.ownership&&Array.isArray(season.league?.roster_positions);
+  return (!season?.player_directory||(Number.isFinite(season.player_directory.fetchedAt)&&season.player_directory.fetchedAt>0&&season.player_directory.fetchedAt<=now&&now-season.player_directory.fetchedAt<6*60*60*1000))&&season?.ok===true&&season.source==='Sleeper direct'&&Number.isFinite(season.generated_at)&&season.generated_at<=now&&now-season.generated_at<=300000&&Array.isArray(season.league_rosters)&&season.league_rosters.length===10&&season.ownership&&Array.isArray(season.league?.roster_positions);
 }
 function seasonRosterAuthority(rows,season,rosterId){
   const roster=season?.league_rosters?.find(r=>Number(r.roster_id)===Number(rosterId));
@@ -4653,7 +4714,7 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     // Preserve old snapshot bytes on failure, but immediately stop consuming them.
     const priorWeek=Number(lastDraftContext?.season?.current_nfl_week??lastDraftContext?.season?.transaction_round??lastDraftContext?.season?.league?.settings?.leg);
     if(lastDraftContext?.season)lastDraftContext.season.current_nfl_week=week;
-    if(Number.isInteger(priorWeek)&&priorWeek!==week)rerenderPostDraftFromContext();
+    if(Number.isInteger(priorWeek)&&priorWeek!==week)queueSeasonRerender();
     const sameContext=Number(previous?.season)===season&&Number(previous?.week)===week;
     const valid=api.validateSnapshot?.(previous,{season,week,scoring:els.scoring.value},now)?.ok===true;
     if(!force&&valid&&last&&now-last<SEASON_RANKING_AUTO_MS)return{ok:true,skipped:'fresh'};
@@ -4694,14 +4755,14 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     persistSeasonWeeklyMetadata('pitti.weekly-evidence.v2.lastSuccess',persistedSnapshot.lastSuccessAt);
     if(lastDraftContext?.season)lastDraftContext.season.current_nfl_week=week;
     completionNote=`Weekly Evidence · W${week} · ${persistedSnapshot.records.length} Records · Broad ECR ${persistedSnapshot.lanes.expertWeeklyRanks.status} · PITTI-Panel ${persistedSnapshot.lanes.pittiSelectedWeeklyRanks.status}`;
-    rerenderPostDraftFromContext();
+    queueSeasonRerender();
     return{ok:true,snapshotId:persistedSnapshot.snapshotId,count:persistedSnapshot.records.length,status:persistedSnapshot.status,projectionStatus:persistedSnapshot.lanes.projections.status,rankStatus:persistedSnapshot.lanes.expertWeeklyRanks.status};
   }catch(e){
     if(e?.status===429&&Number.isFinite(e.retryAfterMs))persistSeasonProjectionRetryAfter([{status:'rejected',reason:e}],Date.now());
     if(persistedAuthoritativeSnapshot){
       persistSeasonWeeklyMetadata('pitti.weekly-evidence.v2.lastSuccess',persistedAuthoritativeSnapshot.lastSuccessAt);
       completionNote=`Weekly Evidence · Projektionen gespeichert · spätere Rank-Persistenz fehlgeschlagen (${e?.code||e?.message||String(e)}) · ${persistedAuthoritativeSnapshot.records.length} Records · Ranks ${persistedAuthoritativeSnapshot.lanes.expertWeeklyRanks.status}`;
-      rerenderPostDraftFromContext();
+      queueSeasonRerender();
       return{ok:true,degraded:true,snapshotId:persistedAuthoritativeSnapshot.snapshotId,count:persistedAuthoritativeSnapshot.records.length,status:persistedAuthoritativeSnapshot.status,projectionStatus:persistedAuthoritativeSnapshot.lanes.projections.status,rankStatus:persistedAuthoritativeSnapshot.lanes.expertWeeklyRanks.status,rankPersistenceError:e?.code||e?.message||String(e)};
     }
     completionNote='Weekly-Evidence-Prüfung fehlgeschlagen · letzter verifizierter Stand bleibt unverändert · '+(e?.code||e?.message||String(e));
@@ -4725,9 +4786,9 @@ async function refreshTradeValues({force=false,auto=false,trigger='startup'}={})
     const snapshot=await jf(`/api/boone-trade-values?season=${context.season}&week=${context.week}`,'Justin-Boone-Trade-Values',20000);
     const checked=validateBooneTradeValueSnapshot(snapshot,context,Date.now());if(!checked.ok)throw new Error('BOONE_TRADE_VALUE_'+checked.reason);
     atomicWriteBooneTradeValues(localStorage,{...snapshot,refreshTrigger:trigger});
-    rerenderPostDraftFromContext();scheduleSeasonDecisionExpiry();
+    queueSeasonRerender();scheduleSeasonDecisionExpiry();
     return{ok:true,snapshotId:snapshot.snapshotId,count:snapshot.records.length,coverage:snapshot.coverage};
-  }catch(error){console.warn('PITTI Boone trade-value refresh failed; previous verified snapshot preserved',error);rerenderPostDraftFromContext();return{ok:false,error:error?.message||String(error)};}
+  }catch(error){console.warn('PITTI Boone trade-value refresh failed; previous verified snapshot preserved',error);queueSeasonRerender();return{ok:false,error:error?.message||String(error)};}
   finally{tradeValueRefreshBusy=false;}
 }
 // Do not run derived-panel rehydration before the physical startup marker. The Season shell

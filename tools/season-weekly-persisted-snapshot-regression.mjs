@@ -40,7 +40,7 @@ const context={
   codedError:(code,message)=>Object.assign(new Error(message),{code}),persistSeasonProjectionRetryAfter:()=>0,
   persistSeasonWeeklyMetadata:(key,value)=>store.set(key,value),
   renderSeasonRankingFreshness:note=>{renderedSnapshot=cache.get(api.CACHE_KEY);els.seasonRankingStatus.textContent=note},
-  rerenderPostDraftFromContext:()=>{rerenders++},PittiWeeklyEvidenceV2:api
+  queueSeasonRerender:()=>{rerenders++},PittiWeeklyEvidenceV2:api
 };
 context.globalThis=context;
 vm.createContext(context);
