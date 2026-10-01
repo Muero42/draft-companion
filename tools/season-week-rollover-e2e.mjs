@@ -20,7 +20,7 @@ const row=(id,status='ACTIVE')=>({p:{id,name:id,pos:players[id].position,team:'B
 const rows=['QB0','RB0','WR0','WR1','TE0','RB2','WR2','RB3'].map(id=>row(id));rows.push(row('RB4','RESERVE'));
 const target=row('RB1'),drop=rows[1],slots=['QB','RB','WR','WR','TE','FLEX','WRRB_FLEX','K','DEF',...Array(6).fill('BN')];
 const rosters=Array.from({length:10},(_,i)=>({roster_id:i+1,players:i?[]:rows.map(x=>x.p.id),reserve:i?[]:['RB4'],taxi:[],starters:i?[]:rows.slice(0,7).map(x=>x.p.id)}));
-const season={ok:true,source:'Sleeper direct',generated_at:now,league:{season:'2026',settings:{leg:3},roster_positions:slots},transaction_round:3,current_nfl_week:3,my_roster:rosters[0],league_rosters:rosters,ownership:Object.fromEntries(rows.map(x=>[x.p.id,{roster_id:1,reserve:x.seasonStatus==='RESERVE',taxi:false}]))};
+const season={ok:true,source:'Sleeper direct',generated_at:now,player_directory:{fetchedAt:now},league:{season:'2026',settings:{leg:3},roster_positions:slots},transaction_round:3,current_nfl_week:3,my_roster:rosters[0],league_rosters:rosters,ownership:Object.fromEntries(rows.map(x=>[x.p.id,{roster_id:1,reserve:x.seasonStatus==='RESERVE',taxi:false}]))};
 const cache=new Map(),storage={getItem:k=>cache.has(k)?JSON.stringify(cache.get(k)):null,setItem:(k,v)=>cache.set(k,JSON.parse(v)),removeItem:k=>cache.delete(k)};
 let reportedWeek=3,failProjections=false,staleRanks=false,requests=[],observedWeeks=[];
 class Clock extends Date{static now(){return now;}}

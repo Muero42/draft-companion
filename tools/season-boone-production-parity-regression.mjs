@@ -32,7 +32,7 @@ function fixture(){
   const mine=[p('RB0','RB'),p('WR0','WR'),p('WR1','WR'),p('QB0','QB'),p('TE0','TE')];
   const opponent=[p('RB1','RB'),p('WR2','WR'),p('RB2','RB'),p('QB1','QB'),p('TE1','TE')];
   const rosters=Array.from({length:10},(_,i)=>({roster_id:i+1,players:(i===0?mine:i===1?opponent:[]).map(r=>r.p.id),reserve:[],taxi:[]}));
-  const season={ok:true,source:'Sleeper direct',generated_at:now,league_rosters:rosters,my_roster:rosters[0],ownership:Object.fromEntries(rosters.flatMap(r=>r.players.map(id=>[id,{roster_id:r.roster_id,reserve:false,taxi:false}]))),league:{season:'2026',roster_positions:['QB','RB','WR','TE','BN','BN','BN']},current_nfl_week:2,transaction_round:2};
+  const season={ok:true,source:'Sleeper direct',generated_at:now,player_directory:{fetchedAt:now},league_rosters:rosters,my_roster:rosters[0],ownership:Object.fromEntries(rosters.flatMap(r=>r.players.map(id=>[id,{roster_id:r.roster_id,reserve:false,taxi:false}]))),league:{season:'2026',roster_positions:['QB','RB','WR','TE','BN','BN','BN']},current_nfl_week:2,transaction_round:2};
   const points=[5,20,19,15,10,20,5,19,15,10];
   const projections=[...mine,...opponent].map((r,i)=>({playerId:r.p.id,metric:'projected_points',value:points[i],season:2026,week:2,scoring:'HALF_PPR',status:'VERIFIED',confidence:.9,sourceId:'synthetic-weekly',sourceUrl:'https://example.test/weekly',publishedAt:now-1000,verifiedAt:now,expiresAt:now+60000}));
   return{mine,opponent,give:[mine[2]],get:[opponent[2]],season,projections,snapshot:structuredClone(snapshot)};

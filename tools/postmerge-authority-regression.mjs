@@ -1,6 +1,9 @@
 import fs from 'node:fs';import {execFileSync,spawnSync} from 'node:child_process';import {RUNTIME_FILES} from './runtime-files.mjs';import assert from 'node:assert/strict';import {MAIN,TREE,BASE,BASE_TREE,OBSERVED,CANONICAL,CANONICAL_TREE,PREVIOUS_MAIN,PREVIOUS_TREE,REVIEWED,PRODUCTION_DEPLOY,loadAuthority,validateAuthority,validateContinuationEvidence,validatePhysicalPrerequisites} from './postmerge-authority-contract.mjs';
 const b=loadAuthority();assert.deepEqual(validateAuthority(b),[],'baseline v275 authority must validate');
 const cases=[
+ ['candidate branch mismatch',d=>d['PITTI_CURRENT_STATE.json'].runtime_candidate.branch='codex/rc4218-mobile-refresh-responsiveness'],
+ ['continuation branch mismatch',d=>d['PITTI_EXECUTION_LOCK.json'].authorityContinuation.published_branch='codex/rc4216-waiver-dst-decision-quality'],
+ ['root cause overclaim',d=>d['PITTI_CURRENT_STATE.json'].runtime.latest_device_evidence.subfinding='STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION'],
  ['current main reverts',d=>d['PITTI_CURRENT_STATE.json'].authority.canonical_main=PREVIOUS_MAIN],
  ['Production reverts',d=>d['PITTI_CURRENT_STATE.json'].runtime.deployed_production_version='v11.8.0-rc4.216'],
  ['PR218 receipt changes',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4217_source_production.reviewed_head='f'.repeat(40)],

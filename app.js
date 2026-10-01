@@ -1890,23 +1890,24 @@ function refreshSeasonLiveRoster({force=false,trigger='timer'}={}){
   seasonLiveRefreshPromise=(async()=>{
     try{
       const season=await fetchSeasonLeagueState({});
-      if(!seasonLiveAuthority(season))throw new Error(season?.reason||'LIVE_AUTHORITY_UNAVAILABLE');
-      let players=c.players,playersLoadedAt=c.playersLoadedAt||now;
+      if(!season?.ok)throw new Error(season?.reason||'LIVE_AUTHORITY_UNAVAILABLE');
+      let players=c.players,playersLoadedAt=c.playersLoadedAt||0;
       await seasonUiYield();
-      if(now-playersLoadedAt>=SEASON_PLAYERS_MAX_AGE_MS){const snapshot=await seasonDirectoryRefresh();players=snapshot.players;playersLoadedAt=snapshot.fetchedAt;}
+      if(!Number.isFinite(playersLoadedAt)||playersLoadedAt<=0||playersLoadedAt>now||now-playersLoadedAt>=SEASON_PLAYERS_MAX_AGE_MS){const snapshot=await seasonDirectoryRefresh();players=snapshot.players;playersLoadedAt=snapshot.fetchedAt;}
       seasonDirectoryBind(season,{schema:'pitti.players.v1',players,fetchedAt:playersLoadedAt});
+      if(!seasonLiveAuthority(season))throw new Error('LIVE_OR_DIRECTORY_AUTHORITY_UNAVAILABLE');
       await seasonUiYield();
       const rows=seasonRosterRows(season,players,c.mine),available=seasonAvailablePlayers(season,players),availableDST=seasonAvailableSpecialTeams(season,players,'DST'),availableK=seasonAvailableSpecialTeams(season,players,'K');
       if(!rows||!available?.length||!seasonRosterAuthority(rows,season,season.roster_id))throw new Error('LIVE_ROSTER_MODEL_INVALID');
       if(lastDraftContext!==c)return{ok:false,skipped:'context-replaced'};
       if(Number(season.transaction_round)===Number(c.season?.transaction_round)&&c.season?.current_nfl_week)season.current_nfl_week=c.season.current_nfl_week;
       lastDraftContext={...c,season,players,playersLoadedAt,seasonRows:rows,rankedAvailable:available,availableDST,availableK};
-      rerenderPostDraftFromContext();scheduleSeasonDecisionExpiry();
+      queueSeasonRerender();scheduleSeasonDecisionExpiry();
       if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice ok';els.seasonLiveStateStatus.textContent='Live-Kader direkt von Sleeper aktualisiert.';}
       return{ok:true,trigger};
     }catch(error){
       // Keep old data visible; the unchanged five-minute authority guard still expires it.
-      if(lastDraftContext===c){rerenderPostDraftFromContext();scheduleSeasonDecisionExpiry();}
+      if(lastDraftContext===c){queueSeasonRerender();scheduleSeasonDecisionExpiry();}
       if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice warn';els.seasonLiveStateStatus.textContent='Kader-Aktualisierung fehlgeschlagen · letzter Stand bleibt sichtbar; Aktionen nur mit frischer Live-Authority.';}
       return{ok:false,error:error?.message||String(error)};
     }finally{seasonLiveRefreshPromise=null;if(els.seasonRefreshLiveBtn)els.seasonRefreshLiveBtn.disabled=false;renderSeasonLiveStateFreshness(els.seasonLiveStateStatus?.textContent||'');}
@@ -3583,7 +3584,7 @@ function scheduleSeasonDecisionExpiry(){
   }
   for(const e of loadResearchEvents())deadlines.push(Number(e.sourcePublishedAt)+86400001,Number(e.eventOccurredAt)+86400001);
   const next=Math.min(...deadlines.filter(t=>Number.isFinite(t)&&t>now));
-  if(Number.isFinite(next))seasonDecisionTimer=setTimeout(()=>{if(lastDraftContext===c)rerenderPostDraftFromContext();},Math.min(next-now,2147483647));
+  if(Number.isFinite(next))seasonDecisionTimer=setTimeout(()=>{if(lastDraftContext===c)queueSeasonRerender();},Math.min(next-now,2147483647));
 }
 function seasonWeeklyMetric(p,metric,season=lastDraftContext?.season){return seasonEvidenceValue(seasonEvidenceCache(),p?.id,metric,seasonEvidenceContext(season));}
 function tradeValueEdition(record){return record?.sourceEdition||JSON.stringify([record?.sourceId,record?.sourceUrl,record?.publishedAt]);}
@@ -3606,7 +3607,7 @@ function seasonGameContext(p,season=lastDraftContext?.season){
   return e?[e.opponent||'Gegner unbekannt',e.dome===true?'DOME':e.weatherSummary||'Wetter nicht verfügbar'].join(' · '):'nicht verfügbar';
 }
 function seasonLiveAuthority(season,now=Date.now()){
-  return (!season?.player_directory||(Number.isFinite(season.player_directory.fetchedAt)&&season.player_directory.fetchedAt>0&&season.player_directory.fetchedAt<=now&&now-season.player_directory.fetchedAt<6*60*60*1000))&&season?.ok===true&&season.source==='Sleeper direct'&&Number.isFinite(season.generated_at)&&season.generated_at<=now&&now-season.generated_at<=300000&&Array.isArray(season.league_rosters)&&season.league_rosters.length===10&&season.ownership&&Array.isArray(season.league?.roster_positions);
+  return (Number.isFinite(season?.player_directory?.fetchedAt)&&season.player_directory.fetchedAt>0&&season.player_directory.fetchedAt<=now&&now-season.player_directory.fetchedAt<6*60*60*1000)&&season?.ok===true&&season.source==='Sleeper direct'&&Number.isFinite(season.generated_at)&&season.generated_at<=now&&now-season.generated_at<=300000&&Array.isArray(season.league_rosters)&&season.league_rosters.length===10&&season.ownership&&Array.isArray(season.league?.roster_positions);
 }
 function seasonRosterAuthority(rows,season,rosterId){
   const roster=season?.league_rosters?.find(r=>Number(r.roster_id)===Number(rosterId));
@@ -3845,7 +3846,7 @@ async function syncWatcherFeed(){
       if(healthyMarket){
         const gameContext=v.seasonEvidence.gameContext;if(Array.isArray(gameContext))try{store.set('v190_gameContext',gameContext.slice(0,512));}catch{}
       }
-      rerenderPostDraftFromContext();
+      queueSeasonRerender();
     }
     let added=0,rejectedCritical=0,storageFull=false,quotaRecovered=false;
     for(const row of Array.isArray(v.events)?v.events:[]){
@@ -3858,7 +3859,7 @@ async function syncWatcherFeed(){
       if(out.event?.critical&&!out.event?.freshnessVerified)rejectedCritical++;
     }
     try{store.set(WATCHER_SYNC_META_KEY,{at:Date.now(),gate,market:isV2?market:null,playerState:isV2?playerState:null,watcherVersion:v.watcherVersion||null,generatedAt:v.generatedAt||null,added,rejectedCritical,storageFull,quotaRecovered})}catch{};
-    if(added>0){updateResearchCacheStatus();rerenderPostDraftFromContext();}
+    if(added>0){updateResearchCacheStatus();queueSeasonRerender();}
     const health=isV2&&(!healthyMarket||!healthyPlayerState)?`TEILWEISE VERFÜGBAR · Markt ${market} · Player-State ${playerState}`:'PASS';
     if(els.watcherSyncStatus){els.watcherSyncStatus.className=storageFull||health!=='PASS'?'notice warn':'notice ok';els.watcherSyncStatus.textContent=storageFull?`Pitti Watcher: ${health} · lokaler Evidence-Speicher voll; bestehender Cache bleibt erhalten, neue Events werden nicht persistiert.`:`Pitti Watcher: ${health} · ${added} neue Evidence-Events${quotaRecovered?' · Cache automatisch kompaktiert':''} · kritische State-Deltas ohne Quellenchronologie bleiben nicht-actionable (${rejectedCritical}).`}
     return{ok:true,gate,added,rejectedCritical,storageFull,quotaRecovered};

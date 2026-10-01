@@ -752,7 +752,7 @@
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.211",
-    "season_candidate": "Source candidate v11.8.0-rc4.218 LOCAL_UNPUBLISHED. Production remains v11.8.0-rc4.217, PR218 reviewed dcf82193065b3384b211c0e7791a70aa6b34b849, canonical main c7a509e6865ade6e56043f23b19e2577a3755293, tree ea845a05e9bb8e42049d930f029289370b5e15d2, deployment be6f1d5f-b252-4b35-8d22-f34b6806b26b DEPLOYED_SUCCESS. rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION, approximately two minutes at stage 2 with blocked interaction. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and its positive Live/Weekly/DST observations remain historical; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad accepted baseline. rc4.218 physical PENDING, not merged or deployed. Next gate: RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
+    "season_candidate": "Source candidate v11.8.0-rc4.218 LOCAL_UNPUBLISHED. Production remains v11.8.0-rc4.217, PR218 reviewed dcf82193065b3384b211c0e7791a70aa6b34b849, canonical main c7a509e6865ade6e56043f23b19e2577a3755293, tree ea845a05e9bb8e42049d930f029289370b5e15d2, deployment be6f1d5f-b252-4b35-8d22-f34b6806b26b DEPLOYED_SUCCESS. rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED, approximately two minutes at stage 2 with blocked interaction. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and its positive Live/Weekly/DST observations remain historical; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad accepted baseline. rc4.218 physical PENDING, not merged or deployed. Next gate: RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
     "candidate_branch": "main via merged PR #215",
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.218",
@@ -768,7 +768,7 @@
     },
     "android_accepted": "v11.8.0-rc4.211",
     "preview_candidate": "v11.8.0-rc4.218 LOCAL_UNPUBLISHED",
-    "android_authority": "Source candidate v11.8.0-rc4.218 LOCAL_UNPUBLISHED. Production remains v11.8.0-rc4.217, PR218 reviewed dcf82193065b3384b211c0e7791a70aa6b34b849, canonical main c7a509e6865ade6e56043f23b19e2577a3755293, tree ea845a05e9bb8e42049d930f029289370b5e15d2, deployment be6f1d5f-b252-4b35-8d22-f34b6806b26b DEPLOYED_SUCCESS. rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION, approximately two minutes at stage 2 with blocked interaction. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and its positive Live/Weekly/DST observations remain historical; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad accepted baseline. rc4.218 physical PENDING, not merged or deployed. Next gate: RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
+    "android_authority": "Source candidate v11.8.0-rc4.218 LOCAL_UNPUBLISHED. Production remains v11.8.0-rc4.217, PR218 reviewed dcf82193065b3384b211c0e7791a70aa6b34b849, canonical main c7a509e6865ade6e56043f23b19e2577a3755293, tree ea845a05e9bb8e42049d930f029289370b5e15d2, deployment be6f1d5f-b252-4b35-8d22-f34b6806b26b DEPLOYED_SUCCESS. rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED, approximately two minutes at stage 2 with blocked interaction. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and its positive Live/Weekly/DST observations remain historical; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad accepted baseline. rc4.218 physical PENDING, not merged or deployed. Next gate: RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
@@ -782,11 +782,26 @@
       "version": "v11.8.0-rc4.217",
       "acceptance": "FAIL",
       "classification": "RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS",
-      "subfinding": "STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION",
+      "subfinding": "STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED",
       "evidence_source": "USER_SUPPLIED_PHYSICAL_OBSERVATION",
       "observed": "Approximately two minutes at 2/3 Sleeper player-directory loading; scrolling/workspace interaction blocked.",
       "positive": {},
-      "jefferson_is_defect": false
+      "jefferson_is_defect": false,
+      "root_cause_precision": {
+        "physical_symptom": "User observed approximately two minutes at stage 2 with blocked scrolling/workspace interaction; rc4217 remains physically rejected.",
+        "proven_code_paths": [
+          "rc4217 cold bootstrap fetched and parsed the raw directory on the browser path",
+          "derived surfaces ran consecutively without cooperative yields",
+          "rc4218 initial candidate permitted absent directory metadata and had five direct rerender call sites outside its coalescer"
+        ],
+        "deterministic_evidence": "Compact payload bounds, six-hour TTL, missing/expired authority rejection, early shell, cooperative task boundaries and coalescer behavior; no Android performance measurement.",
+        "remaining_hypotheses": [
+          "dominant cause and duration of the physical event-loop stall",
+          "raw JSON parse contribution versus synchronous derived work",
+          "physical rerender storm frequency"
+        ],
+        "physical_responsiveness_proven": false
+      }
     },
     "latestAndroidVersionObserved": "v11.8.0-rc4.217",
     "source_candidate_status": "RELEASE_CANDIDATE_UNMERGED",
@@ -945,7 +960,7 @@
       "classification": "RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS"
     },
     "accepted_android_scope": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
-    "androidAuthority": "Source candidate v11.8.0-rc4.218 LOCAL_UNPUBLISHED. Production remains v11.8.0-rc4.217, PR218 reviewed dcf82193065b3384b211c0e7791a70aa6b34b849, canonical main c7a509e6865ade6e56043f23b19e2577a3755293, tree ea845a05e9bb8e42049d930f029289370b5e15d2, deployment be6f1d5f-b252-4b35-8d22-f34b6806b26b DEPLOYED_SUCCESS. rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION, approximately two minutes at stage 2 with blocked interaction. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and its positive Live/Weekly/DST observations remain historical; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad accepted baseline. rc4.218 physical PENDING, not merged or deployed. Next gate: RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
+    "androidAuthority": "Source candidate v11.8.0-rc4.218 LOCAL_UNPUBLISHED. Production remains v11.8.0-rc4.217, PR218 reviewed dcf82193065b3384b211c0e7791a70aa6b34b849, canonical main c7a509e6865ade6e56043f23b19e2577a3755293, tree ea845a05e9bb8e42049d930f029289370b5e15d2, deployment be6f1d5f-b252-4b35-8d22-f34b6806b26b DEPLOYED_SUCCESS. rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED, approximately two minutes at stage 2 with blocked interaction. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and its positive Live/Weekly/DST observations remain historical; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad accepted baseline. rc4.218 physical PENDING, not merged or deployed. Next gate: RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
     "installed_android_scope": "MOST_RECENT_PHYSICALLY_OBSERVED_INSTALLATION; BOUNDED_DIAGNOSTIC_NOT_ACCEPTANCE"
   },
   "real_draft": {
@@ -1005,7 +1020,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "Source candidate v11.8.0-rc4.218 LOCAL_UNPUBLISHED. Production remains v11.8.0-rc4.217, PR218 reviewed dcf82193065b3384b211c0e7791a70aa6b34b849, canonical main c7a509e6865ade6e56043f23b19e2577a3755293, tree ea845a05e9bb8e42049d930f029289370b5e15d2, deployment be6f1d5f-b252-4b35-8d22-f34b6806b26b DEPLOYED_SUCCESS. rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION, approximately two minutes at stage 2 with blocked interaction. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and its positive Live/Weekly/DST observations remain historical; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad accepted baseline. rc4.218 physical PENDING, not merged or deployed. Next gate: RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
+  "source_authority": "Source candidate v11.8.0-rc4.218 LOCAL_UNPUBLISHED. Production remains v11.8.0-rc4.217, PR218 reviewed dcf82193065b3384b211c0e7791a70aa6b34b849, canonical main c7a509e6865ade6e56043f23b19e2577a3755293, tree ea845a05e9bb8e42049d930f029289370b5e15d2, deployment be6f1d5f-b252-4b35-8d22-f34b6806b26b DEPLOYED_SUCCESS. rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED, approximately two minutes at stage 2 with blocked interaction. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and its positive Live/Weekly/DST observations remain historical; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad accepted baseline. rc4.218 physical PENDING, not merged or deployed. Next gate: RC4218_LOCAL_REVIEW_AND_PUBLICATION_PENDING.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",

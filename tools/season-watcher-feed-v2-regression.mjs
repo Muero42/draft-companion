@@ -20,7 +20,7 @@ async function run(feed){
     appendResearchEvidence:input=>{ingested.push(input);return{added:true,event:input}},
     seasonEvidenceContext:()=>({season:2026,week:1,scoring:'HALF_PPR'}),
     seasonEvidenceValue:()=>({status:'VERIFIED'}),
-    rerenderPostDraftFromContext:()=>{},updateResearchCacheStatus:()=>{}
+    queueSeasonRerender:()=>{},updateResearchCacheStatus:()=>{}
   };
   vm.createContext(context);vm.runInContext(syncSource,context);
   return{result:await context.syncWatcherFeed(),writes,ingested,status:context.els.watcherSyncStatus};
