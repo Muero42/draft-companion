@@ -8,7 +8,7 @@ const players=Object.fromEntries(rows.map(([id,position])=>[id,{full_name:'Fixtu
 const rosters=Array.from({length:10},(_,i)=>({roster_id:i+1,owner_id:'u'+i,players:i===0?rows.slice(0,11).map(x=>x[0]):[],starters:i===0?rows.slice(0,9).map(x=>x[0]):[],reserve:i===0?['ir']:[],taxi:[],settings:{waiver_budget_used:0}}));
 const league={league_id:'fixture',season:'2026',total_rosters:10,settings:{leg:4,waiver_budget:100},roster_positions:['QB','RB','WR','WR','TE','FLEX','WRRB_FLEX','K','DEF',...Array(6).fill('BN')]};
 const tradeSnapshot=()=>{const now=Date.now(),url='https://sports.yahoo.com/fantasy/article/fantasy-football-week-1-justin-boones-rb-trade-value-charts-193804763.html',ids=rows.filter(([,position])=>['QB','RB','WR','TE'].includes(position)).map(([id])=>id);return{schema:'pitti.boone-trade-values.v1',snapshotId:'browser-fixture-'+now,season:2026,week:4,scoring:'HALF_PPR',sourceId:'yahoo_justin_boone_trade_values',sourceProvider:'Yahoo Sports',sourceAuthor:'Justin Boone',sourceEdition:'boone-yahoo-2026-week-4',fetchedAt:now,lastSuccessAt:now,expiresAt:now+86400000,status:'AVAILABLE',coverage:{positions:Object.fromEntries(['QB','RB','WR','TE'].map(position=>[position,{status:'AVAILABLE',sourceCount:30,mapped:30,mappingCoverage:1,sourceUrl:url,publishedAt:now-1000}])),sourceRows:120,mappedRows:120},records:ids.map((playerId,index)=>({schema:'pitti.season-evidence.v1',playerId,sleeperId:playerId,sourcePlayerName:players[playerId].full_name,mappingMethod:'EXACT_NORMALIZED_NAME_POSITION',mappingVersion:'boone-sleeper-v1',metric:'trade_value',value:50-index,unit:'BOONE_TRADE_VALUE',position:players[playerId].position,season:2026,week:4,scoring:'HALF_PPR',status:'VERIFIED',sourceId:'yahoo_justin_boone_trade_values',sourceProvider:'Yahoo Sports',sourceAuthor:'Justin Boone',sourceEdition:'boone-yahoo-2026-week-4',sourceUrl:url,publishedAt:now-1000,sourcePublishedAt:new Date(now-1000).toISOString(),sourceUpdatedAt:new Date(now-1000).toISOString(),sourceTimePrecision:'TIMESTAMP',verifiedAt:now,expiresAt:now+86400000,provenance:{provider:'Yahoo Sports',author:'Justin Boone',chartPosition:players[playerId].position,selectedColumn:players[playerId].position==='QB'?'1QB':'HALF'},confidence:.95})),rejections:[]};};
-const server=http.createServer((req,res)=>{const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname),file=path.resolve(root,'.'+(pathname==='/'?'/index.html':pathname));if(!file.startsWith(root+path.sep)||!fs.existsSync(file)){res.writeHead(404).end();return;}res.setHeader('content-type',/\.m?js$/.test(file)?'text/javascript':file.endsWith('.css')?'text/css':file.endsWith('.html')?'text/html':'application/json');let body=fs.readFileSync(file);if(file===path.join(root,'app.js'))body=body.toString()+"\nwindow.__review={context:()=>lastDraftContext,rerender:rerenderPostDraftFromContext,news:seasonNewsReactions,pairs:()=>lastPostDraftPairs};";res.end(body);});
+const server=http.createServer((req,res)=>{const pathname=decodeURIComponent(new URL(req.url,'http://localhost').pathname),file=path.resolve(root,'.'+(pathname==='/'?'/index.html':pathname));if(!file.startsWith(root+path.sep)||!fs.existsSync(file)){res.writeHead(404).end();return;}res.setHeader('content-type',/\.m?js$/.test(file)?'text/javascript':file.endsWith('.css')?'text/css':file.endsWith('.html')?'text/html':'application/json');let body=fs.readFileSync(file);if(file===path.join(root,'app.js'))body=body.toString()+"\nwindow.__review={context:()=>lastDraftContext,rerender:rerenderPostDraftFromContext,news:seasonNewsReactions,pairs:()=>lastPostDraftPairs,state:()=>({queued:seasonRenderQueued,running:seasonRenderRunning,revision:seasonRenderRevision,live:!!seasonLiveRefreshPromise,generated:lastDraftContext?.season?.generated_at,now:Date.now()})};";res.end(body);});
 await new Promise(r=>server.listen(0,'127.0.0.1',r));const origin='http://127.0.0.1:'+server.address().port;
 let browser;try{
  browser=await chromium.launch({headless:true,...(process.env.PITTI_BROWSER?{executablePath:process.env.PITTI_BROWSER}:{})});
@@ -35,7 +35,38 @@ let browser;try{
  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'mobile horizontal overflow');
  assert.deepEqual(errors,[],'uncaught runtime errors');
 
+ // Read-only test hooks are appended to the served module, never shipped in app.js.
+ await page.evaluate(()=>{
+   window.__refreshReview={holds:[]};
+   window.__refreshObserver=new MutationObserver(()=>{
+     const waiver=document.querySelector('#waiverStatus').textContent,trade=document.querySelector('#tradeStatus').textContent;
+     const state=window.__review.state();
+     // Capture the clearing boundary once per revision, before its new partial work.
+     if(waiver.startsWith('HOLD')&&trade.startsWith('HOLD')&&!window.__refreshReview.holds.some(h=>h.state.revision===state.revision))window.__refreshReview.holds.push({
+       empty:['rosterBenchList','rosterFaList','tradeList','waiverList','seasonActionList'].every(id=>!document.getElementById(id)?.innerHTML),
+       pairs:window.__review.pairs().length,state
+     });
+   });
+   window.__refreshObserver.observe(document.body,{childList:true,subtree:true,characterData:true});
+ });
+ const refreshBefore=await page.evaluate(()=>window.__review.state());
  await page.clock.fastForward(300010);
+ // fastForward coalesces elapsed intervals; fetch continuations can schedule zero-delay
+ // yields after it returns. Service those timers explicitly, with a finite virtual budget.
+ let refreshFinal,drainSteps=0;
+ for(;drainSteps<200;drainSteps++){
+   await page.clock.runFor(10);
+   refreshFinal=await page.evaluate(()=>({state:window.__review.state(),waiver:document.querySelector('#waiverStatus').textContent,trade:document.querySelector('#tradeStatus').textContent}));
+   if(!refreshFinal.state.running&&!refreshFinal.state.queued&&!refreshFinal.state.live&&refreshFinal.state.generated>refreshBefore.generated&&refreshFinal.waiver.includes('Waiver/FA Decision Board v3')&&refreshFinal.trade.includes('Trade Offer Board v8'))break;
+ }
+ await page.evaluate(()=>window.__refreshObserver.disconnect());
+ const transientHolds=await page.evaluate(()=>window.__refreshReview.holds);
+ assert(transientHolds.length>0,'refresh must expose transient fail-closed HOLD');
+ assert(transientHolds.every(h=>h.empty&&h.pairs===0),'no stale ADD/trade recommendation survives supersession');
+ assert(transientHolds.some(h=>h.state.running||h.state.queued),'HOLD belongs to pending replacement render');
+ assert(drainSteps<200,'automatic refresh must finish within bounded virtual drain; no pending render');
+ assert(refreshFinal.state.revision>refreshBefore.revision,'automatic refresh queues replacement render');
+ assert.deepEqual(errors,[],'automatic refresh has no uncaught browser errors');
  assert.match(await page.locator('#waiverStatus').textContent(),/Waiver\/FA Decision Board v3/,'successful four-minute live refresh keeps Waiver authority fresh');
  assert.match(await page.locator('#tradeStatus').textContent(),/Trade Offer Board v8/,'successful four-minute live refresh keeps Trade authority fresh');
  assert.match(await page.locator('#seasonLiveStateAge').textContent(),/(?:< 1 Min\.|1 Min\.)/,'visible live age follows refreshed season.generated_at');
@@ -58,5 +89,5 @@ let browser;try{
  await page.evaluate(()=>{localStorage.removeItem('pitti.weekly-dst.v1.current');return window.__review.rerender()});assert.equal(await page.locator('#waiverList details article').count(),0,'zero-evidence compact horizons');assert.deepEqual(errors,[]);
 
  assert.equal(rawDirectoryRequests,0,'browser review must not request raw Sleeper directory');
- const receipt={compactDirectoryRequests,rawDirectoryRequests,status:'PASS',browser:'Chromium desktop mobile emulation',viewport:'390x844',network:'all external responses mocked',checks:['real module startup','automatic Boone endpoint ingestion','Week-4 Sleeper state and current-week evidence','live/ranking/Start-Sit status areas','11 roster rows incl IR','async rerender routing','Waiver v3 mobile route','shipped D/ST Week 4/5/6 MONITOR and exact missing evidence','Trade v8 fail-closed mobile route','workspace clicks','no horizontal overflow','no duplicate starter grid','automatic four-minute ownership refresh with renewed visible age','independent expiry of stale projections','waiver projection-only suppression and ranked survivor','DST net ordering and team dedup','compact zero-evidence and future horizons','no uncaught errors'],physicalAndroid:false};fs.writeFileSync(path.join(output,'browser-review.json'),JSON.stringify(receipt,null,2));console.log(JSON.stringify(receipt));
+ const receipt={refresh:{drainSteps,transientHolds,before:refreshBefore,final:refreshFinal},compactDirectoryRequests,rawDirectoryRequests,status:'PASS',browser:'Chromium desktop mobile emulation',viewport:'390x844',network:'all external responses mocked',checks:['real module startup','automatic Boone endpoint ingestion','Week-4 Sleeper state and current-week evidence','live/ranking/Start-Sit status areas','11 roster rows incl IR','async rerender routing','Waiver v3 mobile route','shipped D/ST Week 4/5/6 MONITOR and exact missing evidence','Trade v8 fail-closed mobile route','workspace clicks','no horizontal overflow','no duplicate starter grid','automatic four-minute ownership refresh with renewed visible age','independent expiry of stale projections','waiver projection-only suppression and ranked survivor','DST net ordering and team dedup','compact zero-evidence and future horizons','no uncaught errors'],physicalAndroid:false};fs.writeFileSync(path.join(output,'browser-review.json'),JSON.stringify(receipt,null,2));console.log(JSON.stringify(receipt));
 }finally{await browser?.close();await new Promise(r=>server.close(r));}
