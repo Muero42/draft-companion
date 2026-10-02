@@ -67,7 +67,7 @@ check(!sandbox.seasonNewsReactions([event],[{...graph,status:'SEED'}],season,now
 check(!sandbox.seasonNewsReactions([event],[{...graph,successors:[{playerId:'nominalRB2',ordinal:2}]}],season,now)[0].successors.length,'ordinal is not functional succession');
 check(sandbox.seasonNewsReactions([event,{...event,status:'ACTIVE'}],[graph],season,now)[0].status==='CONFLICT','conflicting primary reports fail closed');
 check(sandbox.seasonNewsReactions([event],[graph],{...season,ownership:{back1:{}}},now)[0].successors[0].availability==='OWNED','owned successor is not FA');
-check(app.includes('renderRosterFaAudit(rows,c.rankedAvailable,true,{render:false})'),'async rerender cannot resurrect Kader FA surface');
+check(app.includes('renderRosterFaAudit(rows,c.rankedAvailable,true,{render:false,cooperative:true})'),'async rerender cannot resurrect Kader FA surface');
 check(!app.includes('START-ALTERNATIVEN'),'duplicate lightweight alternatives removed');
 const seed=JSON.parse(fs.readFileSync('data/rb-contingency-seed-2026-09-02.json'));
 check(seed.rooms.length===32&&new Set(seed.rooms.map(x=>x.team)).size===32,'32 distinct RB rooms');
