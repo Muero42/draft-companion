@@ -91,7 +91,7 @@ console.log('CURRENT_ALIAS_REGRESSION_PASS '+aliasMutations.length+' negatives; 
 const h='a'.repeat(40),ev={fresh:true,repo:'Muero42/draft-companion',canonicalBranch:'main',canonicalHead:h,head:h,clean:true,branch:'main',prState:'MERGED',containingCommitVerified:true,ciHead:h,authorizedWorkPackage:true,checks:['project_guardrails','release_contract_v2','candidate_package'].map(name=>({name,result:'PASS'}))};
 assert.deepEqual(validateContinuationEvidence(ev),[]);
 for(const f of[x=>x.fresh=false,x=>x.clean=false,x=>x.containingCommitVerified=false,x=>x.ciHead='b'.repeat(40),x=>x.authorizedWorkPackage=false,x=>x.checks.push({name:'project_guardrails',result:'PASS'})]){const x=structuredClone(ev);f(x);assert(validateContinuationEvidence(x).length)}
-console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v286 mutations=${cases.length} external=6`);
+console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v287 mutations=${cases.length} external=6`);
 assert.equal(RUNTIME_FILES.length,17);assert(fs.readFileSync('app.js','utf8').includes("const APP_VERSION='v11.8.0-rc4.220'"),'runtime candidate must be rc4.220');
 const published=CANONICAL;
 for(const file of RUNTIME_FILES.filter(file=>!['app.js','index.html','sw.js','manifest.webmanifest'].includes(file)))assert.equal(execFileSync('git',['rev-parse',published+':'+file],{encoding:'utf8'}).trim(),execFileSync('git',['hash-object','--path='+file,file],{encoding:'utf8'}).trim(),'published runtime changed: '+file);

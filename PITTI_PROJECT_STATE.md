@@ -1,9 +1,11 @@
-Handoff generation: `20261002T1946Z-v286`
-Generation: `20261002T1946Z-v286`
+Handoff generation: `20261002T2007Z-v287`
+Generation: `20261002T2007Z-v287`
 
-v11.8.0-rc4.220 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Deliberate trade opportunity model expansion; rc4.219 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.219 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical 7565a44e3ad92191317ed8ad828cf4b98afb6939, reviewed 45498cd11d05e53a2d072aa3f42aa399e0992064, tree faa3dafdd4b88a2895bea229db0ed45d5426aa74, deployment 5f2f6a9d-e1a2-47a7-ae6b-881ba1f0f1a8. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4220_LOCAL_ADVERSARIAL_REVIEW_PENDING.
+v11.8.0-rc4.220 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Deliberate trade opportunity model expansion; rc4.219 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.219 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical 7565a44e3ad92191317ed8ad828cf4b98afb6939, reviewed 45498cd11d05e53a2d072aa3f42aa399e0992064, tree faa3dafdd4b88a2895bea229db0ed45d5426aa74, deployment 5f2f6a9d-e1a2-47a7-ae6b-881ba1f0f1a8. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING.
 
-Bounded 1:1 / 2:1 / 1:2 / 2:2; separate weekly+bench utility, Boone market price and uncalibrated acceptance. Verified percentile divergence only; missing/stale evidence fails closed. No automatic send. STOP after one tested local commit. RC4220_LOCAL_ADVERSARIAL_REVIEW_PENDING. No push, PR, merge, deployment or physical testing authorized.
+Bounded 1:1 / 2:1 / 1:2 / 2:2; separate weekly+bench utility, Boone market price and uncalibrated acceptance. Verified percentile divergence only; missing/stale evidence fails closed. No automatic send. STOP after one tested local commit. RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. No push, PR, merge, deployment or physical testing authorized.
+
+Corrected local adversarial review: material divergence margins, exact owner/player draft mapping, continuous symmetric market cost and explicit partial current-round behavior scope. See docs/PITTI_RC4220_ADVERSARIAL_LOCAL_REVIEW.md.
 
 ## HISTORICAL v285 and earlier (immutable evidence)
 

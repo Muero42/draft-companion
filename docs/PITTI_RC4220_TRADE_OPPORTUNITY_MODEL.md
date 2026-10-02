@@ -1,3 +1,9 @@
+Current generation: 20261002T2007Z-v287; next gate RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. Corrective adversarial review: docs/PITTI_RC4220_ADVERSARIAL_LOCAL_REVIEW.md.
+
+Current corrections: material per-position differences require at least max(0.5 projected points, 2%) and max(1 Boone unit, 2%) before ranks separate. Draft penalty requires exact unique live owner and player/pick binding; missing/ambiguous mapping is neutral. Market deviation penalizes both directions continuously, without a 50% admission cliff. Behavior evidence is explicitly partial current-round data, bounded to 128 transactions, not full-season manager personality.
+
+## HISTORICAL v286 implementation receipt
+
 # RC4.220 local trade opportunity model
 
 Generation: 20261002T1946Z-v286. Next gate: RC4220_LOCAL_ADVERSARIAL_REVIEW_PENDING.

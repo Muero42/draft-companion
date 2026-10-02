@@ -3603,7 +3603,7 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete,opts={}
     const needs=d.opponentFit.needs.filter(n=>n.after>n.before).map(n=>n.position+' '+n.before+' → '+n.after).join(', ');
     const divergence=d.opportunities.map(o=>o.kind+' '+o.player+': '+o.reason).join(' · ');
     const invalidator='Neue Weekly-/Rollen-Evidence, Boone-Ausgabe, Ownership, Bye oder Kapazität; vor Versand vollständig neu verifizieren.';
-    return `<article class="coach trade-offer-card"><div class="coach-head"><div><h3>${i+1}. ${esc(category)} · GET ${esc(offer.gets.map(x=>x.p.name).join(' + '))}</h3><div class="tiny">GIVE ${esc(offer.gives.map(x=>x.p.name).join(' + '))} · an ${esc(managerLabel)}${faab}</div></div><div class="score">${esc(d.acceptance.label)}</div></div><div class="tiny"><b>PITTI BENEFIT:</b> Weekly ${sign(d.ourGain)} Pkt · Bench-Replacement ${sign(d.benchGain)} Pkt · Nutzenindex ${d.ourUtility.toFixed(1)} (Bench-Gewicht 0,25; keine ROS-Projektion erfunden)</div><div class="tiny"><b>MARKET PRICE:</b> GIVE ${d.giveValue.toFixed(1)} / GET ${d.getValue.toFixed(1)} Boone · ${esc(d.marketClass)} · Abweichung ${d.fairnessPct.toFixed(1)}%</div><div class="tiny"><b>OPPONENT FIT:</b> Weekly ${sign(d.opponentGain)} Pkt · ${esc(needs||'keine zusätzliche Positionstiefe')}${d.opponentGain<=0?' · PITTI bewertet seine Startaufstellung als gleich oder schwächer; explorativ.':''}</div><div class="tiny"><b>ACCEPTANCE PLAUSIBILITY:</b> ${esc(d.acceptance.label)} · ausdrücklich heuristisch, unkalibriert · Confidence ${esc(d.managerEvidence.confidence)}</div><div class="tiny"><b>WHY THEY MIGHT ACCEPT:</b> ${esc(d.acceptance.reason)} Aktuelle verifizierte Positionskäufe: ${d.managerEvidence.currentAcquisitions}; Draft-Historie stark geschrumpft, kein Beweis für Bereitschaft.</div><div class="tiny"><b>WHY WE WANT IT:</b> Verifizierter Lineup-/Bench-Nutzen · ${esc(divergence||'keine verifizierte Buy-low/Sell-high-Divergenz')}</div><div class="tiny"><b>Fallback:</b> Weitere Pakete erst nach erneuter Evidenzprüfung.</div><div class="tiny"><b>INVALIDATOR:</b> ${esc(invalidator)}</div><div class="tiny">Kein Angebot automatisch senden.</div></article>`;
+    return `<article class="coach trade-offer-card"><div class="coach-head"><div><h3>${i+1}. ${esc(category)} · GET ${esc(offer.gets.map(x=>x.p.name).join(' + '))}</h3><div class="tiny">GIVE ${esc(offer.gives.map(x=>x.p.name).join(' + '))} · an ${esc(managerLabel)}${faab}</div></div><div class="score">${esc(d.acceptance.label)}</div></div><div class="tiny"><b>PITTI BENEFIT:</b> Weekly ${sign(d.ourGain)} Pkt · Bench-Replacement ${sign(d.benchGain)} Pkt · Nutzenindex ${d.ourUtility.toFixed(1)} (Bench-Gewicht 0,25; keine ROS-Projektion erfunden)</div><div class="tiny"><b>MARKET PRICE:</b> GIVE ${d.giveValue.toFixed(1)} / GET ${d.getValue.toFixed(1)} Boone · ${esc(d.marketClass)} · Abweichung ${d.fairnessPct.toFixed(1)}%</div><div class="tiny"><b>OPPONENT FIT:</b> Weekly ${sign(d.opponentGain)} Pkt · ${esc(needs||'keine zusätzliche Positionstiefe')}${d.opponentGain<=0?' · PITTI bewertet seine Startaufstellung als gleich oder schwächer; explorativ.':''}</div><div class="tiny"><b>ACCEPTANCE PLAUSIBILITY:</b> ${esc(d.acceptance.label)} · ausdrücklich heuristisch, unkalibriert · Confidence ${esc(d.managerEvidence.confidence)}</div><div class="tiny"><b>WHY THEY MIGHT ACCEPT:</b> ${esc(d.acceptance.reason)} Verifizierte Positionszugänge: ${d.managerEvidence.currentAcquisitions} im partiellen Transaktions-Snapshot W${esc(d.managerEvidence.transactionRound)}; keine vollständige Saisonhistorie. Draft-Evidence ${esc(d.managerEvidence.historicalMapping)}; nur bei exakter Owner-Zuordnung geschrumpft, kein Beweis für Bereitschaft.</div><div class="tiny"><b>WHY WE WANT IT:</b> Verifizierter Lineup-/Bench-Nutzen · ${esc(divergence||'keine verifizierte Buy-low/Sell-high-Divergenz')}</div><div class="tiny"><b>Fallback:</b> Weitere Pakete erst nach erneuter Evidenzprüfung.</div><div class="tiny"><b>INVALIDATOR:</b> ${esc(invalidator)}</div><div class="tiny">Kein Angebot automatisch senden.</div></article>`;
   }).join(''):'<div class="notice ok"><b>TRADE HOLD</b> · Kein legales Paket mit positivem verifiziertem PITTI-Nutzen und ausreichender Gegner-Plausibilität. Fehlende Evidence bleibt fail-closed.</div>';
 }
 
@@ -3756,7 +3756,10 @@ function seasonTradeDecision(mine,opponent,gives,gets,season){
   result.ourGain=b.score-a.score;result.opponentGain=d.score-c.score;result.giveValue=giveValue;result.getValue=getValue;result.valueSource=valueSource;
   result.fairnessPct=Math.max(giveValue,getValue)>0?Math.abs(giveValue-getValue)/Math.max(giveValue,getValue)*100:100;
   const currentWeek=Number(seasonEvidenceContext(season).week),earlySeason=Number.isInteger(currentWeek)&&currentWeek<=2;
-  result.revealedPreferencePenalty=earlySeason&&opponentReversal?12:0;
+  const opponentOwner=season.league_rosters.find(r=>Number(r.roster_id)===Number(oppId))?.owner_id;
+  // Draft-slot/name aliases never establish manager identity. Missing or ambiguous owner mapping is neutral.
+  const historicalMapped=!!opponentOwner&&season.league_rosters.filter(r=>String(r.owner_id||'')===String(opponentOwner)).length===1&&gets.every(x=>String(x.pk?.picked_by||'')===String(opponentOwner)&&String(x.pk?.player_id||'')===String(x.p.id));
+  result.revealedPreferencePenalty=earlySeason&&opponentReversal&&historicalMapped?12:0;
   // Weekly points and bench replacement share one scale; Boone remains a separate market axis.
   // No speculative role/news bonus: unavailable forward evidence contributes nothing.
   const points=x=>seasonWeeklyMetric(x.p,'projected_points',season).value;
@@ -3772,12 +3775,12 @@ function seasonTradeDecision(mine,opponent,gives,gets,season){
   const strongNeed=result.opponentFit.severe||result.opponentFit.depthRepair;
   const tx=[...new Map((Array.isArray(season.transactions)?season.transactions:[]).slice(0,128).filter(t=>t?.transaction_id).map(t=>[String(t.transaction_id),t])).values()].filter(t=>(!t.season||String(t.season)===String(season.league.season))&&new Date(t.created).getUTCFullYear()===Number(season.league.season)&&t.status==='complete'&&Number.isFinite(t.created)&&t.created<=Date.now()&&Date.now()-t.created<=30*86400000&&(t.roster_ids||[]).map(Number).includes(Number(oppId)));
   const acquired=tx.filter(t=>Object.keys(t.adds||{}).some(id=>Number(t.adds[id])===Number(oppId)&&gives.some(x=>x.p.pos===(lastDraftContext?.players?.[id]?.position)))).length;
-  result.managerEvidence={currentAcquisitions:acquired,historicalWeight:.25,confidence:strongNeed?'LIVE_ROSTER_VERIFIED':acquired?'CURRENT_TRANSACTION_MODERATE':'UNKNOWN'};
+  result.managerEvidence={currentAcquisitions:acquired,transactionScope:'CURRENT_ROUND_PARTIAL',transactionRound:season.transaction_round,historicalWeight:historicalMapped?.25:0,historicalMapping:historicalMapped?'EXACT_UNIQUE_OWNER_AND_PLAYER':'UNKNOWN_NEUTRAL',confidence:strongNeed?'LIVE_ROSTER_VERIFIED':acquired?'CURRENT_ROUND_PARTIAL_MODERATE':'UNKNOWN'};
   const deviation=(getValue-giveValue)/Math.max(1,giveValue,getValue);
   result.marketClass=result.fairnessPct<=15?'MARKET_CLOSE':result.fairnessPct<=30?'MODEST_PREMIUM_DISCOUNT':result.fairnessPct<=50?'AGGRESSIVE':'IMPLAUSIBLY_LOPSIDED';
   // score is a heuristic ordering index, never a calibrated probability.
   const multi=(gives.length+gets.length-2)*3;
-  const score=Math.max(5,Math.min(55,Math.round(22+Math.min(12,Math.max(0,result.opponentGain)*2)+(result.opponentFit.severe?14:result.opponentFit.depthRepair?9:0)+Math.min(4,acquired*2)-Math.max(0,deviation)*40-Math.min(10,Math.max(0,-result.opponentGain)*.5)-multi-result.revealedPreferencePenalty*.25)));
+  const score=Math.max(5,Math.min(55,Math.round(22+Math.min(12,Math.max(0,result.opponentGain)*2)+(result.opponentFit.severe?14:result.opponentFit.depthRepair?9:0)+Math.min(4,acquired*2)-Math.abs(deviation)*40-Math.min(10,Math.max(0,-result.opponentGain)*.5)-multi-result.revealedPreferencePenalty*.25)));
   result.acceptance={score,label:score>=42?'HIGH':score>=30?'MEDIUM':score>=18?'LOW':'VERY LOW',heuristic:true,calibrated:false,reason:strongNeed?'Verifizierte aktuelle Positionslücke/Tiefenbedarf; Projektion und Marktpreis bleiben separat.':result.opponentGain>0?'Verifizierter Lineup-Fit; Manager-Willen unbekannt.':'Marktpreisvorteil; Manager-Willen unbekannt.'};
   result.opportunities=[];
   // Comparable percentile divergence in the same verified positional pool, not points=value.
@@ -3788,14 +3791,15 @@ function seasonTradeDecision(mine,opponent,gives,gets,season){
     let candidates=divergencePools.get(x.p.pos);if(!candidates){const context=seasonEvidenceContext(season);candidates=ids.map(id=>known.get(id)||{id,pos:lastDraftContext?.players?.[id]?.position}).filter(p=>p.pos===x.p.pos).map(p=>({id:String(p.id),weekly:seasonEvidenceValue(byId.get(String(p.id))||[],p.id,'projected_points',context),market:seasonEvidenceValue(byId.get(String(p.id))||[],p.id,'trade_value',context)})).filter(v=>v.weekly.status==='VERIFIED'&&v.market.status==='VERIFIED');divergencePools.set(x.p.pos,candidates);}
     if(candidates.length<4)return null;
     const row=candidates.find(r=>r.id===String(x.p.id));if(!row)return null;
-    return (candidates.filter(r=>r.weekly.value<row.weekly.value).length-candidates.filter(r=>r.market.value<row.market.value).length)/(candidates.length-1);
+    // Evidence ranks must have material separation; floating-point noise is a tie.
+    const weeklyMargin=Math.max(.5,Math.abs(row.weekly.value)*.02),marketMargin=Math.max(1,Math.abs(row.market.value)*.02);
+    return (candidates.filter(r=>row.weekly.value-r.weekly.value>=weeklyMargin).length-candidates.filter(r=>row.market.value-r.market.value>=marketMargin).length)/(candidates.length-1);
   };
   for(const x of gets){const delta=divergence(x);if(delta!==null&&delta>=.34)result.opportunities.push({kind:'BUY LOW',player:x.p.name,divergence:delta,reason:'Verifizierter Weekly-Perzentilrang über aktuellem Boone-Perzentilrang; kein ROS-Versprechen.'});}
   for(const x of gives){const delta=divergence(x);if(delta!==null&&delta<=-.34)result.opportunities.push({kind:'SELL HIGH',player:x.p.name,divergence:delta,reason:'Aktueller Boone-Perzentilrang über verifiziertem Weekly-Perzentilrang; kein erfundener Rollenwechsel.'});}
   result.exploratory=result.opponentGain<=0||result.marketClass==='AGGRESSIVE'||result.marketClass==='IMPLAUSIBLY_LOPSIDED';
   const credible=strongNeed||result.opponentGain>0||giveValue>getValue*1.1;
-  const lopsided=result.fairnessPct>50;
-  result.actionable=result.ourUtility>.5&&score>=18&&credible&&(!lopsided||(strongNeed&&acquired>=2));
+  result.actionable=result.ourUtility>.5&&score>=18&&credible;
   result.status=result.actionable?'REVIEW_ONLY':result.ourUtility<=.5?'NO_PITTI_UTILITY':'ACCEPTANCE_UNSUPPORTED';return result;
 }
 function seasonNewsReactions(events,graphs,season,now=Date.now()){

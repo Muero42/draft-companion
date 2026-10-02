@@ -33,7 +33,7 @@ mine[2].p.pos='RB';opp[2].p.pos='WR';reset();
 const extra=[player('rb3','RB'),player('wr3','WR')];cache.set('v190_seasonEvidence',[...cache.get('v190_seasonEvidence'),...extra.flatMap(p=>[record(p,'projected_points',15),record(p,'trade_value',25)])]);
 // Four comparable players per position are required before identifying divergence.
 const more=[player('rb4','RB'),player('wr4','WR')];cache.set('v190_seasonEvidence',[...cache.get('v190_seasonEvidence'),...more.flatMap(p=>[record(p,'projected_points',18),record(p,'trade_value',28)])]);
-let records=cache.get('v190_seasonEvidence');records.find(x=>x.playerId==='msell'&&x.metric==='trade_value').value=30;records.find(x=>x.playerId==='obuy'&&x.metric==='trade_value').value=20;
+let records=cache.get('v190_seasonEvidence');records.find(x=>x.playerId==='msell'&&x.metric==='trade_value').value=30;records.find(x=>x.playerId==='obuy'&&x.metric==='trade_value').value=25;
 sandbox.lastDraftContext.players=Object.fromEntries([...mine,...opp,...extra,...more].map(x=>[x.p.id,{position:x.p.pos}]));
 d=sandbox.seasonTradeDecision(mine,opp,[mine[2]],[opp[2]],season);assert(d.actionable);assert(d.opportunities.some(x=>x.kind==='BUY LOW'));assert(d.opportunities.some(x=>x.kind==='SELL HIGH'));
 for(const mutate of [r=>r.filter(x=>x.metric!=='trade_value'),r=>r.map(x=>x.metric==='trade_value'?{...x,expiresAt:now-1}:x),r=>r.map(x=>x.metric==='projected_points'?{...x,expiresAt:now-1}:x)]){reset();cache.set('v190_seasonEvidence',mutate(cache.get('v190_seasonEvidence')));assert(!sandbox.seasonTradeDecision(mine,opp,[mine[2]],[opp[2]],season).actionable,'missing/stale valuation or lineup fails closed');}
