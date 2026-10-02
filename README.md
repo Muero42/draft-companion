@@ -1,3 +1,11 @@
+Handoff generation: `20261002T2031Z-v288`
+
+v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR221 SQUASH MERGED, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. PHYSICAL PENDING / NOT ACCEPTED / NOT PHYSICALLY ACCEPTED. rc4.219 RESPONSIVENESS PHYSICAL PASS remains USER_CONFIRMED historical evidence; full functional Production acceptance PENDING. Historical RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY, RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and RC4215_PHYSICAL_FAIL_DECISION_QUALITY preserved. Next gate: RC4220_ANDROID_PHYSICAL_ACCEPTANCE_PENDING.
+
+Exact-main checks 8/8 SUCCESS; cloud Strict Suite 264/264 PASS. Runtime manifest 17; all 16 public static assets match canonical UTF8/LF content; worker deployment and endpoints verified. Browser compact requests 1, raw requests 0. Week-4 Boone 253/253, game context 16 games/32 teams/4 DOME/weather fail-closed; Watcher PASS. Local Authority-only checkpoint, NOT PUSHED. STOP. rc4.220 merged canonical main, postmerge exact-head CI and Production surfaces verified. Android/PWA physical acceptance requires a separate real-device work package. No fantasy transaction, trade sending, cache clear or reinstall authorized.
+
+## HISTORICAL v287 and earlier (immutable evidence)
+
 Handoff generation: `20261002T2007Z-v287`
 Generation: `20261002T2007Z-v287`
 
