@@ -1,6 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,adaptBooneTradeEvidence,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
-const APP_VERSION='v11.8.0-rc4.219';
+const APP_VERSION='v11.8.0-rc4.220';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -3233,15 +3233,21 @@ function seasonFaWork(rows,rankedAvailable){return(function*(){
   return{fas,pairs,drops};
 })();}
 function seasonTradeOfferWork(mine,opponent,target){return(function*(){
-  const oppNeeds=['RB','WR','TE','QB'].map(pos=>({pos,...tradeRosterNeed(opponent,pos)})).sort((a,b)=>b.need-a.need);
-  const offers=[];
+  // Six live skill assets per side before expansion: at most 126 evaluations per target.
+  const pool=rows=>rows.filter(x=>x.seasonStatus==='ACTIVE'&&['QB','RB','WR','TE'].includes(x.p.pos)).sort((a,b)=>opponent.filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===a.p.pos).length-opponent.filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===b.p.pos).length||mine.filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===b.p.pos).length-mine.filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===a.p.pos).length).slice(0,6);
+  const sells=pool(mine),seconds=pool(opponent).filter(x=>String(x.p.id)!==String(target.p.id)).slice(0,5),offers=[];
+  const oppNeeds=['RB','WR','TE','QB'].map(pos=>({pos,count:opponent.filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===pos).length}));
   let units=0;
-  for(const give of mine){
-    const packages=[{gives:[give],gets:[target]},...mine.filter(x=>x!==give).map(x=>({gives:[give,x],gets:[target]})),...opponent.filter(x=>x!==target).map(x=>({gives:[give],gets:[target,x]}))];
-    for(const pack of packages){const decision=seasonTradeDecision(mine,opponent,pack.gives,pack.gets,lastDraftContext?.season);
-      if(decision.actionable)offers.push({give,...pack,fairness:decision.fairnessPct,opponentUtility:decision.opponentGain,ourCost:decision.ourGain,acceptance:decision.acceptance,decision});if(++units%4===0)yield;}}
-  offers.sort((a,b)=>(b.acceptance?.score??0)-(a.acceptance?.score??0)||b.opponentUtility-a.opponentUtility||b.ourCost-a.ourCost||a.fairness-b.fairness);
-  return{oppNeeds,offers};
+  for(let i=0;i<sells.length;i++){
+    const giving=[[sells[i]],...sells.slice(i+1).map(x=>[sells[i],x])];
+    for(const gives of giving)for(const gets of [[target],...seconds.map(x=>[target,x])]){
+      const decision=seasonTradeDecision(mine,opponent,gives,gets,lastDraftContext?.season);
+      if(decision.actionable)offers.push({give:gives[0],gives,gets,fairness:decision.fairnessPct,opponentUtility:decision.opponentGain,ourCost:decision.ourGain,acceptance:decision.acceptance,decision});
+      if(++units%4===0)yield;
+    }
+  }
+  offers.sort((a,b)=>(b.acceptance?.score??0)-(a.acceptance?.score??0)||(b.decision.ourUtility??0)-(a.decision.ourUtility??0)||a.fairness-b.fairness||a.gives.map(x=>x.p.id).join().localeCompare(b.gives.map(x=>x.p.id).join()));
+  return{oppNeeds,offers:offers.slice(0,12),evaluated:units};
 })();}
 function seasonTradeTargetWork(picks,players,userSlot,teams){return(function*(){
   const bySlot={};for(let slot=1;slot<=teams;slot++)bySlot[slot]=[];
@@ -3256,15 +3262,10 @@ function seasonTradeTargetWork(picks,players,userSlot,teams){return(function*(){
   const targets=[];
   for(const [slotS,roster] of Object.entries(bySlot)){
     const slot=Number(slotS);if(live?.ok?slot===myLiveRosterId:slot===userSlot)continue;
-    for(const x of roster){yield;const currentValue=seasonWeeklyMetric(x.p,'trade_value',live);if(!['QB','RB','WR','TE'].includes(x.p.pos)||(currentValue.status!=='VERIFIED'&&(!x.r||x.r.rank>110)))continue;
-      const marginal=tradeMarginalLineupValue(mine,x),lineupEdge=marginal.delta;
-      const research=researchHint(x.p);
-      let desirability=clamp(lineupEdge*.10,-5,12)+(x.r?clamp((110-x.r.rank)/25,-2,4):0)+(currentValue.status==='VERIFIED'?1:0);
-      // QB/TE depth is not penalized by position count. A second TE can be a genuine starter
-      // when it wins FLEX; any target must earn a real canonical Sleeper slot.
-      if(!marginal.starts)desirability-=6;
-      if(research)desirability+=.5;
-      if(desirability>=2){const offerModel=yield* seasonTradeOfferWork(mine,roster,x),manager=liveRosterMeta.get(slot)||null;targets.push({slot,manager,x,lineupEdge,marginal,desirability,research,...offerModel});}
+    const targetPool=roster.filter(x=>x.seasonStatus==='ACTIVE'&&['QB','RB','WR','TE'].includes(x.p.pos)).sort((a,b)=>mine.filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===a.p.pos).length-mine.filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===b.p.pos).length).slice(0,6);
+    for(const x of targetPool){yield;const currentValue=seasonWeeklyMetric(x.p,'trade_value',live);if(currentValue.status!=='VERIFIED')continue;
+      const offerModel=yield* seasonTradeOfferWork(mine,roster,x),manager=liveRosterMeta.get(slot)||null;
+      if(offerModel.offers.length)targets.push({slot,manager,x,lineupEdge:offerModel.offers[0].decision.ourGain,marginal:{},desirability:offerModel.offers[0].decision.ourUtility,research:researchHint(x.p),...offerModel});
     }
   }
   targets.sort((a,b)=>b.desirability-a.desirability||b.lineupEdge-a.lineupEdge||(a.x.r?.rank??999)-(b.x.r?.rank??999));
@@ -3587,20 +3588,23 @@ function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete,opts={}
   const live=lastDraftContext?.season,targets=opts.targets||seasonDrainWorkSync(seasonTradeTargetWork(picks,players,userSlot,teams));
   els.tradeStatus.className='notice warn';
   const tradeSnapshot=store.get(BOONE_TRADE_VALUE_CACHE_KEY,null),tradeContext=seasonEvidenceContext(live),tradeValid=validateBooneTradeValueSnapshot(tradeSnapshot,tradeContext,Date.now()).ok,tradeCoverage=tradeValid?`${tradeSnapshot.coverage.mappedRows}/${tradeSnapshot.coverage.sourceRows} gemappt`:'nicht aktuell verfügbar';
-  els.tradeStatus.textContent=`Trade Offer Board v8 · LIVE Sleeper-Rosters, echte Starter-/FLEX-Geometrie und aktuelle vergleichbare Justin-Boone/Yahoo-Trade-Values (${tradeCoverage}). Angebote erscheinen nur bei beidseitigem verifiziertem Lineup-Gewinn, legaler Kapazität und plausibler Fairness. Annahme-Plausibilität ist konservativ und ausdrücklich heuristisch; kein Angebot wird automatisch gesendet.`;
-  const actionableTargets=targets.filter(t=>t.offers?.length);
-  els.tradeList.innerHTML=actionableTargets.length?`<div class="coach-section-title">KONKRETE ANGEBOTE · REVIEW VOR SENDEN</div>`+actionableTargets.slice(0,8).map((t,i)=>{
-    const x=t.x,market=Number.isFinite(x.a)?` · Draft-ADP ${x.a.toFixed(1)}`:'';
-    const geometry=t.marginal.slot?`gewinnt Slot ${seasonSlotLabel(t.marginal.slot,x.p.pos)}`:'kein Starter-Slot';
-    const managerLabel=t.manager?.manager_name||('Roster '+t.slot),faab=Number.isFinite(Number(t.manager?.faab_remaining))?' · FAAB '+Number(t.manager.faab_remaining):'';
-    const offer=t.offers[0],d=offer.decision,source=String(d.valueSource?.sourceId||'verifizierte Quelle'),sourceDate=Number.isFinite(d.valueSource?.publishedAt)?new Date(d.valueSource.publishedAt).toLocaleDateString('de-DE'):'Datum unbekannt';
-    const fallback=t.offers.slice(1,3).map(o=>`GIVE ${esc(o.gives.map(y=>y.p.name).join(' + '))} / GET ${esc(o.gets.map(y=>y.p.name).join(' + '))}`).join(' · ');
-    // oppNeeds is synthetic rank-based need, not verified need for this GIVE package.
-    // Only the concrete package's verified positive lineup gain supports this claim.
-    const opponentReason=`${esc(managerLabel)} gewinnt ${d.opponentGain.toFixed(1)} verifizierte Startaufstellungs-Punkte; Paketwert ${d.giveValue.toFixed(1)} für ${d.getValue.toFixed(1)} und Roster-Fit verbessert.`;
-    const invalidator='Neue Verletzungs-/Rollenmeldung, geänderte Live-Ownership/Kapazität, Weekly-Projektion oder neue Trade-Value-Ausgabe; vor Versand neu rechnen.';
-    return `<article class="coach trade-offer-card"><div class="coach-head"><div><h3>${i+1}. GET ${esc(offer.gets.map(y=>y.p.name).join(' + '))}</h3><div class="tiny">GIVE ${esc(offer.gives.map(y=>y.p.name).join(' + '))} · an ${esc(managerLabel)}${faab}</div></div><div class="score">${esc(d.acceptance.label)}</div></div><div class="tiny"><b>PITTI:</b> +${d.ourGain.toFixed(1)} proj. · ${geometry}</div><div class="tiny"><b>Gegner:</b> +${d.opponentGain.toFixed(1)} proj. · ${opponentReason}</div><div class="tiny"><b>Markt:</b> GIVE ${d.giveValue.toFixed(1)} / GET ${d.getValue.toFixed(1)} · Abweichung ${d.fairnessPct.toFixed(1)}% · ${esc(source)} · ${sourceDate}</div><div class="tiny"><b>Annahme:</b> ${esc(d.acceptance.label)} (${d.acceptance.score}% · ausdrücklich heuristisch) · ${esc(d.acceptance.reason)}</div><div class="tiny"><b>Fallback:</b> ${fallback||'kein zweites legales beidseitig positives Paket'}</div><div class="tiny"><b>Invalidator:</b> ${esc(invalidator)}</div><div class="tiny">${esc(t.research||'Rollen-/News-Evidence nicht zusätzlich verfügbar')} · Nicht automatisch senden.</div></article>`;
-  }).join(''):'<div class="notice ok"><b>TRADE HOLD</b> · Kein legales beidseitig positives Angebot mit aktueller vergleichbarer Trade-Value-Evidence. Target-Interesse allein wird nicht als Angebot dargestellt.</div>';
+  els.tradeStatus.textContent=`Trade Offer Board v9 · LIVE Sleeper-Rosters · Boone/Yahoo (${tradeCoverage}). PITTI-Nutzen, Marktpreis und Gegner-Plausibilität separat; keine kalibrierten Annahme-Prozente. Review vor Versand.`;
+  const seen=new Set(),all=[];
+  for(const t of targets)for(const offer of t.offers||[]){const key=offer.gives.map(x=>x.p.id).sort().join(',')+'>'+offer.gets.map(x=>x.p.id).sort().join(',');if(!seen.has(key)){seen.add(key);all.push({t,offer});}}
+  all.sort((a,b)=>b.offer.acceptance.score-a.offer.acceptance.score||b.offer.decision.ourUtility-a.offer.decision.ourUtility);
+  const shortlist=[],chosen=new Set();
+  for(const [category,match] of [['BEST REALISTIC OFFER',d=>!d.exploratory],['BUY-LOW OPPORTUNITY',d=>d.opportunities.some(o=>o.kind==='BUY LOW')],['SELL-HIGH OPPORTUNITY',d=>d.opportunities.some(o=>o.kind==='SELL HIGH')],['EXPLORATORY / AGGRESSIVE OFFER',d=>d.exploratory]]){
+    const row=all.find(x=>!chosen.has(x)&&match(x.offer.decision));if(row){chosen.add(row);shortlist.push({...row,category});}
+  }
+  els.tradeList.innerHTML=shortlist.length?'<div class="coach-section-title">KONKRETE ANGEBOTE · REVIEW VOR SENDEN</div>'+shortlist.map(({t,offer,category},i)=>{
+    const d=offer.decision;
+    const managerLabel=t.manager?.manager_name||('Roster '+t.slot),faab=t.manager?.faab_remaining!==null&&t.manager?.faab_remaining!==undefined&&Number.isFinite(Number(t.manager.faab_remaining))?' · FAAB '+Number(t.manager.faab_remaining):'';
+    const sign=n=>(n>=0?'+':'')+n.toFixed(1);
+    const needs=d.opponentFit.needs.filter(n=>n.after>n.before).map(n=>n.position+' '+n.before+' → '+n.after).join(', ');
+    const divergence=d.opportunities.map(o=>o.kind+' '+o.player+': '+o.reason).join(' · ');
+    const invalidator='Neue Weekly-/Rollen-Evidence, Boone-Ausgabe, Ownership, Bye oder Kapazität; vor Versand vollständig neu verifizieren.';
+    return `<article class="coach trade-offer-card"><div class="coach-head"><div><h3>${i+1}. ${esc(category)} · GET ${esc(offer.gets.map(x=>x.p.name).join(' + '))}</h3><div class="tiny">GIVE ${esc(offer.gives.map(x=>x.p.name).join(' + '))} · an ${esc(managerLabel)}${faab}</div></div><div class="score">${esc(d.acceptance.label)}</div></div><div class="tiny"><b>PITTI BENEFIT:</b> Weekly ${sign(d.ourGain)} Pkt · Bench-Replacement ${sign(d.benchGain)} Pkt · Nutzenindex ${d.ourUtility.toFixed(1)} (Bench-Gewicht 0,25; keine ROS-Projektion erfunden)</div><div class="tiny"><b>MARKET PRICE:</b> GIVE ${d.giveValue.toFixed(1)} / GET ${d.getValue.toFixed(1)} Boone · ${esc(d.marketClass)} · Abweichung ${d.fairnessPct.toFixed(1)}%</div><div class="tiny"><b>OPPONENT FIT:</b> Weekly ${sign(d.opponentGain)} Pkt · ${esc(needs||'keine zusätzliche Positionstiefe')}${d.opponentGain<=0?' · PITTI bewertet seine Startaufstellung als gleich oder schwächer; explorativ.':''}</div><div class="tiny"><b>ACCEPTANCE PLAUSIBILITY:</b> ${esc(d.acceptance.label)} · ausdrücklich heuristisch, unkalibriert · Confidence ${esc(d.managerEvidence.confidence)}</div><div class="tiny"><b>WHY THEY MIGHT ACCEPT:</b> ${esc(d.acceptance.reason)} Verifizierte Positionszugänge: ${d.managerEvidence.currentAcquisitions} im partiellen Transaktions-Snapshot W${esc(d.managerEvidence.transactionRound)}; keine vollständige Saisonhistorie. Draft-Evidence ${esc(d.managerEvidence.historicalMapping)}; nur bei exakter Owner-Zuordnung geschrumpft, kein Beweis für Bereitschaft.</div><div class="tiny"><b>WHY WE WANT IT:</b> Verifizierter Lineup-/Bench-Nutzen · ${esc(divergence||'keine verifizierte Buy-low/Sell-high-Divergenz')}</div><div class="tiny"><b>Fallback:</b> Weitere Pakete erst nach erneuter Evidenzprüfung.</div><div class="tiny"><b>INVALIDATOR:</b> ${esc(invalidator)}</div><div class="tiny">Kein Angebot automatisch senden.</div></article>`;
+  }).join(''):'<div class="notice ok"><b>TRADE HOLD</b> · Kein legales Paket mit positivem verifiziertem PITTI-Nutzen und ausreichender Gegner-Plausibilität. Fehlende Evidence bleibt fail-closed.</div>';
 }
 
 // Season evidence boundary: only explicitly verified, time-bounded observations.
@@ -3752,10 +3756,51 @@ function seasonTradeDecision(mine,opponent,gives,gets,season){
   result.ourGain=b.score-a.score;result.opponentGain=d.score-c.score;result.giveValue=giveValue;result.getValue=getValue;result.valueSource=valueSource;
   result.fairnessPct=Math.max(giveValue,getValue)>0?Math.abs(giveValue-getValue)/Math.max(giveValue,getValue)*100:100;
   const currentWeek=Number(seasonEvidenceContext(season).week),earlySeason=Number.isInteger(currentWeek)&&currentWeek<=2;
-  result.revealedPreferencePenalty=earlySeason&&opponentReversal?12:0;
-  result.actionable=result.ourGain>0&&result.opponentGain>0&&result.fairnessPct<=15;
-  if(result.actionable){const multiAssetPenalty=(gives.length+gets.length-2)*3,score=Math.max(5,Math.min(55,Math.round(24+Math.min(16,result.opponentGain*2)-result.fairnessPct*.7-multiAssetPenalty-result.revealedPreferencePenalty)));result.acceptance={score,label:score>=40?'MITTEL':score>=25?'EHER NIEDRIG':'NIEDRIG',heuristic:true,reason:result.revealedPreferencePenalty?'Frische Draft-Präferenz senkt die Plausibilität trotz aktuellem Fit.':'Beidseitiger Lineup-Gewinn und Markt-Fairness; Managerpräferenz bleibt unbekannt.'};}
-  result.status=result.actionable?'REVIEW_ONLY':'NO_BILATERAL_GAIN';return result;
+  const opponentOwner=season.league_rosters.find(r=>Number(r.roster_id)===Number(oppId))?.owner_id;
+  // Draft-slot/name aliases never establish manager identity. Missing or ambiguous owner mapping is neutral.
+  const historicalMapped=!!opponentOwner&&season.league_rosters.filter(r=>String(r.owner_id||'')===String(opponentOwner)).length===1&&gets.every(x=>String(x.pk?.picked_by||'')===String(opponentOwner)&&String(x.pk?.player_id||'')===String(x.p.id));
+  result.revealedPreferencePenalty=earlySeason&&opponentReversal&&historicalMapped?12:0;
+  // Weekly points and bench replacement share one scale; Boone remains a separate market axis.
+  // No speculative role/news bonus: unavailable forward evidence contributes nothing.
+  const points=x=>seasonWeeklyMetric(x.p,'projected_points',season).value;
+  const bench=(rows,lineup)=>{
+    const used=new Set((lineup.assignments||[]).map(x=>String(x.player?.p?.id)));
+    return ['QB','RB','WR','TE'].reduce((sum,pos)=>sum+rows.filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===pos&&!used.has(String(x.p.id))).map(points).filter(Number.isFinite).sort((a,b)=>b-a).slice(0,2).reduce((n,v)=>n+v,0),0);
+  };
+  result.benchGain=bench(nextMine,b)-bench(mine,a);
+  result.ourUtility=result.ourGain+result.benchGain*.25;
+  const counts=(rows,pos)=>rows.filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===pos).length;
+  const needs=gives.map(x=>({position:x.p.pos,before:counts(opponent,x.p.pos),after:counts(nextOpp,x.p.pos)}));
+  result.opponentFit={needs,severe:needs.some(n=>n.before===0&&n.after>0),depthRepair:needs.some(n=>n.before===1&&n.after>=2),lineupDelta:result.opponentGain};
+  const strongNeed=result.opponentFit.severe||result.opponentFit.depthRepair;
+  const tx=[...new Map((Array.isArray(season.transactions)?season.transactions:[]).slice(0,128).filter(t=>t?.transaction_id).map(t=>[String(t.transaction_id),t])).values()].filter(t=>(!t.season||String(t.season)===String(season.league.season))&&new Date(t.created).getUTCFullYear()===Number(season.league.season)&&t.status==='complete'&&Number.isFinite(t.created)&&t.created<=Date.now()&&Date.now()-t.created<=30*86400000&&(t.roster_ids||[]).map(Number).includes(Number(oppId)));
+  const acquired=tx.filter(t=>Object.keys(t.adds||{}).some(id=>Number(t.adds[id])===Number(oppId)&&gives.some(x=>x.p.pos===(lastDraftContext?.players?.[id]?.position)))).length;
+  result.managerEvidence={currentAcquisitions:acquired,transactionScope:'CURRENT_ROUND_PARTIAL',transactionRound:season.transaction_round,historicalWeight:historicalMapped?.25:0,historicalMapping:historicalMapped?'EXACT_UNIQUE_OWNER_AND_PLAYER':'UNKNOWN_NEUTRAL',confidence:strongNeed?'LIVE_ROSTER_VERIFIED':acquired?'CURRENT_ROUND_PARTIAL_MODERATE':'UNKNOWN'};
+  const deviation=(getValue-giveValue)/Math.max(1,giveValue,getValue);
+  result.marketClass=result.fairnessPct<=15?'MARKET_CLOSE':result.fairnessPct<=30?'MODEST_PREMIUM_DISCOUNT':result.fairnessPct<=50?'AGGRESSIVE':'IMPLAUSIBLY_LOPSIDED';
+  // score is a heuristic ordering index, never a calibrated probability.
+  const multi=(gives.length+gets.length-2)*3;
+  const score=Math.max(5,Math.min(55,Math.round(22+Math.min(12,Math.max(0,result.opponentGain)*2)+(result.opponentFit.severe?14:result.opponentFit.depthRepair?9:0)+Math.min(4,acquired*2)-Math.abs(deviation)*40-Math.min(10,Math.max(0,-result.opponentGain)*.5)-multi-result.revealedPreferencePenalty*.25)));
+  result.acceptance={score,label:score>=42?'HIGH':score>=30?'MEDIUM':score>=18?'LOW':'VERY LOW',heuristic:true,calibrated:false,reason:strongNeed?'Verifizierte aktuelle Positionslücke/Tiefenbedarf; Projektion und Marktpreis bleiben separat.':result.opponentGain>0?'Verifizierter Lineup-Fit; Manager-Willen unbekannt.':'Marktpreisvorteil; Manager-Willen unbekannt.'};
+  result.opportunities=[];
+  // Comparable percentile divergence in the same verified positional pool, not points=value.
+  const known=new Map([...mine,...opponent].map(x=>[String(x.p.id),x.p]));
+  const evidence=seasonEvidenceCache(),byId=new Map();for(const r of evidence){if(!r?.playerId)continue;const id=String(r.playerId),rows=byId.get(id)||[];rows.push(r);byId.set(id,rows);}
+  const ids=[...new Set(evidence.filter(r=>r?.metric==='projected_points').map(r=>String(r.playerId)))].sort().slice(0,512),divergencePools=new Map();
+  const divergence=x=>{
+    let candidates=divergencePools.get(x.p.pos);if(!candidates){const context=seasonEvidenceContext(season);candidates=ids.map(id=>known.get(id)||{id,pos:lastDraftContext?.players?.[id]?.position}).filter(p=>p.pos===x.p.pos).map(p=>({id:String(p.id),weekly:seasonEvidenceValue(byId.get(String(p.id))||[],p.id,'projected_points',context),market:seasonEvidenceValue(byId.get(String(p.id))||[],p.id,'trade_value',context)})).filter(v=>v.weekly.status==='VERIFIED'&&v.market.status==='VERIFIED');divergencePools.set(x.p.pos,candidates);}
+    if(candidates.length<4)return null;
+    const row=candidates.find(r=>r.id===String(x.p.id));if(!row)return null;
+    // Evidence ranks must have material separation; floating-point noise is a tie.
+    const weeklyMargin=Math.max(.5,Math.abs(row.weekly.value)*.02),marketMargin=Math.max(1,Math.abs(row.market.value)*.02);
+    return (candidates.filter(r=>row.weekly.value-r.weekly.value>=weeklyMargin).length-candidates.filter(r=>row.market.value-r.market.value>=marketMargin).length)/(candidates.length-1);
+  };
+  for(const x of gets){const delta=divergence(x);if(delta!==null&&delta>=.34)result.opportunities.push({kind:'BUY LOW',player:x.p.name,divergence:delta,reason:'Verifizierter Weekly-Perzentilrang über aktuellem Boone-Perzentilrang; kein ROS-Versprechen.'});}
+  for(const x of gives){const delta=divergence(x);if(delta!==null&&delta<=-.34)result.opportunities.push({kind:'SELL HIGH',player:x.p.name,divergence:delta,reason:'Aktueller Boone-Perzentilrang über verifiziertem Weekly-Perzentilrang; kein erfundener Rollenwechsel.'});}
+  result.exploratory=result.opponentGain<=0||result.marketClass==='AGGRESSIVE'||result.marketClass==='IMPLAUSIBLY_LOPSIDED';
+  const credible=strongNeed||result.opponentGain>0||giveValue>getValue*1.1;
+  result.actionable=result.ourUtility>.5&&score>=18&&credible;
+  result.status=result.actionable?'REVIEW_ONLY':result.ourUtility<=.5?'NO_PITTI_UTILITY':'ACCEPTANCE_UNSUPPORTED';return result;
 }
 function seasonNewsReactions(events,graphs,season,now=Date.now()){
   const groups=new Map();

@@ -31,7 +31,7 @@ let browser;try{
  assert.equal(await page.locator('#rosterFaList').isVisible(),false);
  assert.equal(await page.locator('#rosterSummary').isVisible(),false);
  assert.equal(await page.locator('#rosterBenchList').innerText().then(t=>t.includes('Fixture q')),false,'starter grid must not repeat compact roster');
- for(const workspace of ['waiver','trade','live','roster']){const button=page.locator('[data-workspace-target="'+workspace+'"]');assert.equal(await button.count(),1);await button.click();assert.equal(await page.locator('[data-workspace="'+workspace+'"]').first().isVisible(),true);if(workspace==='waiver'){const board=await page.locator('#waiverList').innerText();for(const w of [4,5,6])assert(board.includes('WEEK '+w));assert(board.includes('MONITOR'));assert(!board.includes('Fixture fd'),'missing DST evidence must not produce pseudo-ranked cards');assert(!board.includes('Current-week Special Teams evidence is not verified.'));assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'waiver mobile overflow');assert.match(await page.locator('#waiverStatus').innerText(),/Waiver\/FA Decision Board v3/);}if(workspace==='trade'){assert.match(await page.locator('#tradeStatus').innerText(),/Trade Offer Board v8/);assert.match(await page.locator('#tradeList').innerText(),/TRADE HOLD/);}}
+ for(const workspace of ['waiver','trade','live','roster']){const button=page.locator('[data-workspace-target="'+workspace+'"]');assert.equal(await button.count(),1);await button.click();assert.equal(await page.locator('[data-workspace="'+workspace+'"]').first().isVisible(),true);if(workspace==='waiver'){const board=await page.locator('#waiverList').innerText();for(const w of [4,5,6])assert(board.includes('WEEK '+w));assert(board.includes('MONITOR'));assert(!board.includes('Fixture fd'),'missing DST evidence must not produce pseudo-ranked cards');assert(!board.includes('Current-week Special Teams evidence is not verified.'));assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'waiver mobile overflow');assert.match(await page.locator('#waiverStatus').innerText(),/Waiver\/FA Decision Board v3/);}if(workspace==='trade'){assert.match(await page.locator('#tradeStatus').innerText(),/Trade Offer Board v9/);assert.match(await page.locator('#tradeList').innerText(),/TRADE HOLD/);}}
  assert(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),'mobile horizontal overflow');
  assert.deepEqual(errors,[],'uncaught runtime errors');
 
@@ -57,7 +57,7 @@ let browser;try{
  for(;drainSteps<200;drainSteps++){
    await page.clock.runFor(10);
    refreshFinal=await page.evaluate(()=>({state:window.__review.state(),waiver:document.querySelector('#waiverStatus').textContent,trade:document.querySelector('#tradeStatus').textContent}));
-   if(!refreshFinal.state.running&&!refreshFinal.state.queued&&!refreshFinal.state.live&&refreshFinal.state.generated>refreshBefore.generated&&refreshFinal.waiver.includes('Waiver/FA Decision Board v3')&&refreshFinal.trade.includes('Trade Offer Board v8'))break;
+   if(!refreshFinal.state.running&&!refreshFinal.state.queued&&!refreshFinal.state.live&&refreshFinal.state.generated>refreshBefore.generated&&refreshFinal.waiver.includes('Waiver/FA Decision Board v3')&&refreshFinal.trade.includes('Trade Offer Board v9'))break;
  }
  await page.evaluate(()=>window.__refreshObserver.disconnect());
  const transientHolds=await page.evaluate(()=>window.__refreshReview.holds);
@@ -68,7 +68,7 @@ let browser;try{
  assert(refreshFinal.state.revision>refreshBefore.revision,'automatic refresh queues replacement render');
  assert.deepEqual(errors,[],'automatic refresh has no uncaught browser errors');
  assert.match(await page.locator('#waiverStatus').textContent(),/Waiver\/FA Decision Board v3/,'successful four-minute live refresh keeps Waiver authority fresh');
- assert.match(await page.locator('#tradeStatus').textContent(),/Trade Offer Board v8/,'successful four-minute live refresh keeps Trade authority fresh');
+ assert.match(await page.locator('#tradeStatus').textContent(),/Trade Offer Board v9/,'successful four-minute live refresh keeps Trade authority fresh');
  assert.match(await page.locator('#seasonLiveStateAge').textContent(),/(?:< 1 Min\.|1 Min\.)/,'visible live age follows refreshed season.generated_at');
  assert.doesNotMatch(await page.locator('#rosterList').innerText(),/17 Pkt/,'expired projections are removed even while ownership refresh succeeds');
 

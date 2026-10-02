@@ -124,13 +124,13 @@ must(app.includes("const weekly=Number.isFinite(structural?.lineupGain)?Number(s
 must(app.includes('Draft/panel ranks and generic news scores may never substitute'),'THIS WEEK stale-evidence fail-closed path missing');
 must(app.includes("FA-vs-Roster v2"),'Waiver v2 surface missing');
 must(app.includes("verifizierte Weekly-Projektionen fehlen")&&app.includes('Waiver/FA Decision Board v3'),'Waiver v3 stale weekly explanation missing');
-must(app.includes('Trade Offer Board v8')&&app.includes('function seasonTradeDecision('),'Trade Offer Board v8 bilateral evidence surface missing');
+must(app.includes('Trade Offer Board v9')&&app.includes('function seasonTradeDecision('),'Trade Offer Board v9 bilateral evidence surface missing');
 must(worker.includes("url.pathname==='/api/boone-trade-values'")&&worker.includes('buildBooneTradeValueSnapshot'),'Boone production Worker ingestion path missing');
 must(booneTradeValues.includes("metric:'trade_value'")&&booneTradeValues.includes("selectedColumn:chart.column")&&booneTradeValues.includes("sourceEdition:editionId"),'Boone provenance-preserving trade-value records missing');
 must(app.includes('void refreshTradeValues({auto:true})')&&app.includes("atomicWriteBooneTradeValues(localStorage"),'Boone automatic app refresh/storage path missing');
 must(app.includes("bidBasis:'ORIGINAL_FAAB_BUDGET'")&&app.includes('Math.min(remaining,Math.round(budget*pct/100))'),'FAAB original-budget basis/cap invariant missing');
 must(app.includes('function seasonTradeOfferWork(')&&app.includes('yield* seasonTradeOfferWork(mine,roster,x)'),'Production cooperative Trade offer construction missing');
-must(app.includes('acceptance:null')&&app.includes('result.ourGain>0&&result.opponentGain>0')&&app.includes('heuristic:true')&&app.includes("Math.min(55"),'Trade acceptance must require bilateral gain and remain conservative/explicitly heuristic');
+must(app.includes('acceptance:null')&&app.includes('result.ourUtility>.5&&score>=18&&credible')&&!app.includes('result.ourGain>0&&result.opponentGain>0')&&app.includes('heuristic:true')&&app.includes("Math.min(55"),'Trade acceptance must require verified PITTI utility and credible acceptance and remain conservative/explicitly heuristic');
 must(app.includes(' Start/Sit v6'),'Start/Sit canonical-slot surface missing');
 must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
 must(app.includes('globale legale Slot-Optimierung'),'PITTI weekly-panel primary invariant missing');
@@ -202,7 +202,7 @@ if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
   must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
   must(handoffMatrix.includes(current.handoff_generation),'Season Companion MATRIX generation drift');
   must(currentHandoff.includes(current.handoff_generation),'Season Companion HANDOFF generation drift');
-  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194','v11.8.0-rc4.195','v11.8.0-rc4.196','v11.8.0-rc4.197','v11.8.0-rc4.198','v11.8.0-rc4.200','v11.8.0-rc4.201','v11.8.0-rc4.202','v11.8.0-rc4.203','v11.8.0-rc4.204','v11.8.0-rc4.205','v11.8.0-rc4.206','v11.8.0-rc4.207','v11.8.0-rc4.210','v11.8.0-rc4.211','v11.8.0-rc4.213','v11.8.0-rc4.214','v11.8.0-rc4.215','v11.8.0-rc4.216','v11.8.0-rc4.217','v11.8.0-rc4.218','v11.8.0-rc4.219'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
+  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194','v11.8.0-rc4.195','v11.8.0-rc4.196','v11.8.0-rc4.197','v11.8.0-rc4.198','v11.8.0-rc4.200','v11.8.0-rc4.201','v11.8.0-rc4.202','v11.8.0-rc4.203','v11.8.0-rc4.204','v11.8.0-rc4.205','v11.8.0-rc4.206','v11.8.0-rc4.207','v11.8.0-rc4.210','v11.8.0-rc4.211','v11.8.0-rc4.213','v11.8.0-rc4.214','v11.8.0-rc4.215','v11.8.0-rc4.216','v11.8.0-rc4.217','v11.8.0-rc4.218','v11.8.0-rc4.219','v11.8.0-rc4.220'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
   must(commandContract.currentGate===AUTHORITY_GATE,'Season Companion command gate regression');
   must(lock.gate===AUTHORITY_GATE,'Season Companion lock gate regression');
   must(current.currentWork?.nextGate===AUTHORITY_GATE,'Season Companion CURRENT next gate regression');

@@ -79,5 +79,7 @@ for(const f of [oldTrade,newTrade]){
 const originalOffers=oldTrade.box.tradeOfferCandidates(mine,opp,opp[2]);
 const cooperativeOffers=await newTrade.box.seasonRunWork(newTrade.box.seasonTradeOfferWork(mine,opp,opp[2]));
 assert(originalOffers.offers.length>0,'real bilateral verified gain fixture must exercise actionable offers');
-assert.equal(JSON.stringify(cooperativeOffers),JSON.stringify(originalOffers),'pre-repair trade scores, acceptance, package order and ties');
-console.log('RC4219_REAL_TRADE_PARITY_PASS: original vs cooperative actual bilateral decisions and package sorting');
+const syncWork=newTrade.box.seasonTradeOfferWork(mine,opp,opp[2]);let syncStep;do{syncStep=syncWork.next()}while(!syncStep.done);const synchronousOffers=syncStep.value;
+assert(cooperativeOffers.offers.length>0,'RC4220 preserves the positive bilateral fixture');
+assert.equal(JSON.stringify(cooperativeOffers),JSON.stringify(synchronousOffers),'RC4220 sync vs cooperative decisions, acceptance, package order and ties');
+console.log('RC4219_REAL_TRADE_PARITY_PASS: current synchronous vs cooperative actual bilateral decisions and package sorting');
