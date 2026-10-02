@@ -1,6 +1,10 @@
 import fs from 'node:fs';import {execFileSync,spawnSync} from 'node:child_process';import {RUNTIME_FILES} from './runtime-files.mjs';import assert from 'node:assert/strict';import {MAIN,TREE,BASE,BASE_TREE,OBSERVED,CANONICAL,CANONICAL_TREE,PREVIOUS_MAIN,PREVIOUS_TREE,REVIEWED,PRODUCTION_DEPLOY,loadAuthority,validateAuthority,validateContinuationEvidence,validatePhysicalPrerequisites} from './postmerge-authority-contract.mjs';
 const b=loadAuthority();assert.deepEqual(validateAuthority(b),[],'baseline v275 authority must validate');
 const cases=[
+ ['stale current physical alias',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.currentPhysicalAcceptance.acceptance='PENDING'],
+ ['stale camel-case Android alias',d=>d['PITTI_CURRENT_STATE.json'].runtime.androidAuthority='rc4.218 PHYSICAL PENDING'],
+ ['review gate replacing physical classification',d=>d['PITTI_COMMAND_CONTRACTS.json'].currentBoundary.productionDeployment.physicalClassification='RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING'],
+ ['historical source observation rewrite',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4218_source_production.observed_at='2026-10-02T08:11:29Z'],
  ['rc4218 canonical receipt drift',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4218_source_production.merge_commit='f'.repeat(40)],
  ['rc4218 raw startup regression',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4218_source_production.rawDirectoryRequests=1],
  ['rc4218 physical responsiveness overclaim',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4218_source_production.physical_responsiveness_proven=true],
@@ -83,7 +87,7 @@ console.log('CURRENT_ALIAS_REGRESSION_PASS '+aliasMutations.length+' negatives; 
 const h='a'.repeat(40),ev={fresh:true,repo:'Muero42/draft-companion',canonicalBranch:'main',canonicalHead:h,head:h,clean:true,branch:'main',prState:'MERGED',containingCommitVerified:true,ciHead:h,authorizedWorkPackage:true,checks:['project_guardrails','release_contract_v2','candidate_package'].map(name=>({name,result:'PASS'}))};
 assert.deepEqual(validateContinuationEvidence(ev),[]);
 for(const f of[x=>x.fresh=false,x=>x.clean=false,x=>x.containingCommitVerified=false,x=>x.ciHead='b'.repeat(40),x=>x.authorizedWorkPackage=false,x=>x.checks.push({name:'project_guardrails',result:'PASS'})]){const x=structuredClone(ev);f(x);assert(validateContinuationEvidence(x).length)}
-console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v283 mutations=${cases.length} external=6`);
+console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v284 mutations=${cases.length} external=6`);
 assert.equal(RUNTIME_FILES.length,17);assert(fs.readFileSync('app.js','utf8').includes("const APP_VERSION='v11.8.0-rc4.219'"),'runtime candidate must be rc4.219');
 const published=CANONICAL;
 for(const file of RUNTIME_FILES.filter(file=>!['app.js','index.html','sw.js','manifest.webmanifest'].includes(file)))assert.equal(execFileSync('git',['rev-parse',published+':'+file],{encoding:'utf8'}).trim(),execFileSync('git',['hash-object','--path='+file,file],{encoding:'utf8'}).trim(),'published runtime changed: '+file);

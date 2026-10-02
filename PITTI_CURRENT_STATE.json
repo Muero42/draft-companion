@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20261002T0800Z-v283",
-  "updated_at": "2026-10-02T08:00:00Z",
+  "handoff_generation": "20261002T0811Z-v284",
+  "updated_at": "2026-10-02T08:11:29Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -776,12 +776,12 @@
       "rawDirectoryRequests": 0,
       "uncaught_browser_errors": 0,
       "evidence_source": "LIVE_GITHUB_EXACT_MAIN_AND_USER_CONFIRMED_PRODUCTION",
-      "observed_at": "2026-10-02T08:00:00Z"
+      "observed_at": "2026-10-01T20:27:18Z"
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.211",
-    "season_candidate": "Source and Production v11.8.0-rc4.218 DEPLOYED_SUCCESS; PR219 MERGED via SQUASH, reviewed a65d54cec5375124915c79f68adc2956f5ec825b, canonical main 264dd7a3120e529e9a4a5e819dd0a40c7f2fe729, identical reviewed/merged tree f877ce8306ff88ebefb47108f26629ce9f2aece8, parent c7a509e6865ade6e56043f23b19e2577a3755293, deployment d67752f0-75d4-4789-a3a2-2911743b662d. Exact-main 8/8 SUCCESS; cloud Strict Suite 256/256 PASS; browser 390x844 PASS, compactDirectoryRequests=1, rawDirectoryRequests=0, no uncaught errors. rc4.218 PHYSICAL PENDING / NOT ACCEPTED; physical responsiveness NOT YET PROVEN. Latest observed rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED remains a hypothesis. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and positive Live/Weekly/DST history preserved; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad physical baseline. Next gate: RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING.",
+    "season_candidate": "v11.8.0-rc4.219 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Production remains v11.8.0-rc4.218 DEPLOYED_SUCCESS, PR219 MERGED, canonical 264dd7a3120e529e9a4a5e819dd0a40c7f2fe729, reviewed a65d54cec5375124915c79f68adc2956f5ec825b, tree f877ce8306ff88ebefb47108f26629ce9f2aece8. rc4.218 PHYSICAL FAIL / NOT ACCEPTED: RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY; real Android/PWA navigation possible while loading, Waiver -> Kader delayed approximately 10–20 seconds USER-ESTIMATED, improvement over rc4.217 preserved. rc4.217 RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN; rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY; rc4.210 historical broad accepted baseline only. Next gate: RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. Production deployment d67752f0-75d4-4789-a3a2-2911743b662d is historical rc4.218 evidence only.",
     "candidate_branch": "main via merged PR #215",
     "android_acceptance_pending": true,
     "test_challenger": "v11.8.0-rc4.219",
@@ -800,7 +800,7 @@
     },
     "android_accepted": "v11.8.0-rc4.211",
     "preview_candidate": "v11.8.0-rc4.218 MERGED_CANONICAL_PRODUCTION_DEPLOYED",
-    "android_authority": "v11.8.0-rc4.219 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Production remains v11.8.0-rc4.218 DEPLOYED_SUCCESS, PR219 MERGED, canonical 264dd7a3120e529e9a4a5e819dd0a40c7f2fe729, reviewed a65d54cec5375124915c79f68adc2956f5ec825b, tree f877ce8306ff88ebefb47108f26629ce9f2aece8. rc4.218 PHYSICAL FAIL / NOT ACCEPTED: RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY; real Android/PWA navigation possible while loading, Waiver -> Kader delayed approximately 10–20 seconds USER-ESTIMATED, improvement over rc4.217 preserved. rc4.217 RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN; rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY; rc4.210 historical broad accepted baseline only. Next gate: RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING.",
+    "android_authority": "v11.8.0-rc4.219 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Production remains v11.8.0-rc4.218 DEPLOYED_SUCCESS, PR219 MERGED, canonical 264dd7a3120e529e9a4a5e819dd0a40c7f2fe729, reviewed a65d54cec5375124915c79f68adc2956f5ec825b, tree f877ce8306ff88ebefb47108f26629ce9f2aece8. rc4.218 PHYSICAL FAIL / NOT ACCEPTED: RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY; real Android/PWA navigation possible while loading, Waiver -> Kader delayed approximately 10–20 seconds USER-ESTIMATED, improvement over rc4.217 preserved. rc4.217 RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN; rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY; rc4.210 historical broad accepted baseline only. Next gate: RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. Production deployment d67752f0-75d4-4789-a3a2-2911743b662d is historical rc4.218 evidence only.",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": false,
@@ -816,7 +816,7 @@
       "classification": "RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY",
       "proven": false,
       "executable": false,
-      "prerequisite_gate": "RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING",
+      "prerequisite_gate": "RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
       "canonical_main": "264dd7a3120e529e9a4a5e819dd0a40c7f2fe729",
       "subfinding": "RESIDUAL_SINGLE_SURFACE_LONG_TASK_SUSPECTED",
       "evidence_source": "USER_SUPPLIED_REAL_ANDROID_PWA_PRODUCTION",
@@ -912,7 +912,7 @@
       "cloudflare_check_run_id": 110488059817,
       "deployment_check_id": "d67752f0-75d4-4789-a3a2-2911743b662d",
       "device_acceptance_proven": false,
-      "physical_classification": "RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING",
+      "physical_classification": "RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY",
       "evidence_source": "USER_SUPPLIED_EXTERNAL_EVIDENCE",
       "deployment_url": "https://d67752f0.draft-companion.pages.dev",
       "production_url": "https://draft-companion.pages.dev"
@@ -980,7 +980,7 @@
       "classification": "RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY",
       "proven": false,
       "executable": false,
-      "prerequisite_gate": "RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING",
+      "prerequisite_gate": "RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
       "canonical_main": "264dd7a3120e529e9a4a5e819dd0a40c7f2fe729",
       "subfinding": "RESIDUAL_SINGLE_SURFACE_LONG_TASK_SUSPECTED",
       "evidence_source": "USER_SUPPLIED_REAL_ANDROID_PWA_PRODUCTION",
@@ -994,7 +994,7 @@
       "improvement_over_rc4217_preserved": true
     },
     "accepted_android_scope": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
-    "androidAuthority": "Source and Production v11.8.0-rc4.218 DEPLOYED_SUCCESS; PR219 MERGED via SQUASH, reviewed a65d54cec5375124915c79f68adc2956f5ec825b, canonical main 264dd7a3120e529e9a4a5e819dd0a40c7f2fe729, identical reviewed/merged tree f877ce8306ff88ebefb47108f26629ce9f2aece8, parent c7a509e6865ade6e56043f23b19e2577a3755293, deployment d67752f0-75d4-4789-a3a2-2911743b662d. Exact-main 8/8 SUCCESS; cloud Strict Suite 256/256 PASS; browser 390x844 PASS, compactDirectoryRequests=1, rawDirectoryRequests=0, no uncaught errors. rc4.218 PHYSICAL PENDING / NOT ACCEPTED; physical responsiveness NOT YET PROVEN. Latest observed rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED remains a hypothesis. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and positive Live/Weekly/DST history preserved; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad physical baseline. Next gate: RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING.",
+    "androidAuthority": "v11.8.0-rc4.219 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Production remains v11.8.0-rc4.218 DEPLOYED_SUCCESS, PR219 MERGED, canonical 264dd7a3120e529e9a4a5e819dd0a40c7f2fe729, reviewed a65d54cec5375124915c79f68adc2956f5ec825b, tree f877ce8306ff88ebefb47108f26629ce9f2aece8. rc4.218 PHYSICAL FAIL / NOT ACCEPTED: RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY; real Android/PWA navigation possible while loading, Waiver -> Kader delayed approximately 10–20 seconds USER-ESTIMATED, improvement over rc4.217 preserved. rc4.217 RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN; rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY; rc4.210 historical broad accepted baseline only. Next gate: RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. Production deployment d67752f0-75d4-4789-a3a2-2911743b662d is historical rc4.218 evidence only.",
     "installed_android_scope": "MOST_RECENT_PHYSICALLY_OBSERVED_INSTALLATION; BOUNDED_DIAGNOSTIC_NOT_ACCEPTANCE"
   },
   "real_draft": {
@@ -1035,7 +1035,7 @@
   },
   "currentWork": {
     "status": "RC4218_PRODUCTION_PHYSICAL_PENDING",
-    "nextGate": "RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING"
+    "nextGate": "RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -1054,7 +1054,7 @@
     "controller_behavior": "Use Metadata-readable ruleset list/detail only; omitted bypass_actors is UNKNOWN and blocks implementation/publication. Stored ruleset IDs or versions are not accepted as proof.",
     "remaining_gate": "Cloud AUTO publication remains blocked unless GitHub exposes sufficient read-only bypass evidence or an independently reviewed architecture preserves equivalent fail-closed proof without privileged App rights."
   },
-  "source_authority": "Source and Production v11.8.0-rc4.218 DEPLOYED_SUCCESS; PR219 MERGED via SQUASH, reviewed a65d54cec5375124915c79f68adc2956f5ec825b, canonical main 264dd7a3120e529e9a4a5e819dd0a40c7f2fe729, identical reviewed/merged tree f877ce8306ff88ebefb47108f26629ce9f2aece8, parent c7a509e6865ade6e56043f23b19e2577a3755293, deployment d67752f0-75d4-4789-a3a2-2911743b662d. Exact-main 8/8 SUCCESS; cloud Strict Suite 256/256 PASS; browser 390x844 PASS, compactDirectoryRequests=1, rawDirectoryRequests=0, no uncaught errors. rc4.218 PHYSICAL PENDING / NOT ACCEPTED; physical responsiveness NOT YET PROVEN. Latest observed rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED remains a hypothesis. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and positive Live/Weekly/DST history preserved; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad physical baseline. Next gate: RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING.",
+  "source_authority": "v11.8.0-rc4.219 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Production remains v11.8.0-rc4.218 DEPLOYED_SUCCESS, PR219 MERGED, canonical 264dd7a3120e529e9a4a5e819dd0a40c7f2fe729, reviewed a65d54cec5375124915c79f68adc2956f5ec825b, tree f877ce8306ff88ebefb47108f26629ce9f2aece8. rc4.218 PHYSICAL FAIL / NOT ACCEPTED: RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY; real Android/PWA navigation possible while loading, Waiver -> Kader delayed approximately 10–20 seconds USER-ESTIMATED, improvement over rc4.217 preserved. rc4.217 RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN; rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY; rc4.210 historical broad accepted baseline only. Next gate: RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. Production deployment d67752f0-75d4-4789-a3a2-2911743b662d is historical rc4.218 evidence only.",
   "weekly_evidence_v2_work": {
     "status": "MERGED_TO_CANONICAL_MAIN_PRODUCTION_PENDING",
     "branch": "pitti/weekly-evidence-v2-foundation",
@@ -1091,7 +1091,7 @@
     "ready": [],
     "waiting_external": [
       {
-        "gate": "RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING"
+        "gate": "RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING"
       }
     ],
     "blocked_user": [],
@@ -1308,7 +1308,7 @@
     "invariant": "If active or ready is non-empty, AUTO must continue in the same assistant turn; waiting_external or blocked_user stops only dependent lanes."
   },
   "handoff": {
-    "generation": "20261002T0800Z-v283",
+    "generation": "20261002T0811Z-v284",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -1319,9 +1319,9 @@
     "readiness_scope": "STRUCTURAL_HANDOFF_ONLY_NOT_DEVICE_ACCEPTANCE"
   },
   "status": "RC4219_LOCAL_CANDIDATE",
-  "gate": "RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING",
-  "nextGate": "RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING",
-  "handoffGeneration": "20261002T0800Z-v283",
+  "gate": "RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
+  "nextGate": "RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
+  "handoffGeneration": "20261002T0811Z-v284",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -2462,10 +2462,10 @@
     "merge_commit": null,
     "production_proven": false,
     "physical_accepted": false,
-    "next_gate": "RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING"
+    "next_gate": "RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING"
   },
-  "updatedAt": "2026-10-02T08:00:00Z",
-  "exactNextAction": "Local rc4.219 adversarial review against the final committed tree. STOP: no push, PR, CI monitoring, merge, deployment or physical acceptance authorized.",
+  "updatedAt": "2026-10-02T08:11:29Z",
+  "exactNextAction": "Corrected rc4.219 local adversarial review complete. Publication and exact-head CI are the next external gate and require a separate authorized work package. STOP locally; no publication or deployment authorized.",
   "week4_season_readiness": {
     "classification": "WEEK4_SEASON_READY_LOCAL_CANDIDATE",
     "version": "v11.8.0-rc4.212",
@@ -2526,14 +2526,14 @@
     }
   },
   "authority_continuation": {
-    "status": "LOCAL_CANDIDATE_ADVERSARIAL_REVIEW_PENDING",
-    "current_gate": "RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING",
-    "physical_gate": "RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING",
+    "status": "LOCAL_CANDIDATE_REVIEWED_PUBLICATION_PENDING",
+    "current_gate": "RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
+    "physical_gate": "RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
     "physical_executable": false,
     "canonical_main": "264dd7a3120e529e9a4a5e819dd0a40c7f2fe729",
     "canonical_tree": "f877ce8306ff88ebefb47108f26629ce9f2aece8",
     "sequence": [
-      "RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING"
+      "RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING"
     ],
     "published_branch": null,
     "branch": "codex/rc4219-residual-interaction-latency",
@@ -2554,7 +2554,7 @@
     "production_proven": false,
     "physical_accepted": false,
     "physical_status": "NOT_PHYSICALLY_ACCEPTED",
-    "gate": "RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING",
+    "gate": "RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
     "exact_head_rule": "Only an exact final-tree local validation receipt certifies this candidate. Historical PR219/cloud results do not certify rc4.219."
   },
   "recovery_rc4219": {
@@ -2573,5 +2573,22 @@
     "prior_rc4219_strict_evidence": "ABSENT",
     "diagnosis": "SYNCHRONOUS_FA_RANKING_AND_PAIR_SCORING_WITH_REPEATED_EVIDENCE_PARSE_PROVEN_BY_DETERMINISTIC_ORDERING; DEVICE_DURATION_NOT_INSTRUMENTED",
     "validation_receipt": "External local receipt tied to staged final tree; never claim old cloud CI validates candidate"
+  },
+  "review_rc4219": {
+    "reviewed_head": "36da1388876bdc86b3dec97e44b7f6608f884489",
+    "reviewed_tree": "9a149caf4dc6943fdcba859f50ee84eed0ce4d42",
+    "reviewed_files": 26,
+    "verdict": "REPAIRED",
+    "findings": [
+      "WHOLE_RENDER_PASS_REVISION_NOT_PINNED_STALE_WAIVER_AFTER_TRADE_CANCELLATION",
+      "STALE_CURRENT_PHYSICAL_AND_SOURCE_AUTHORITY_ALIASES",
+      "ORDERING_REGRESSION_FAILED_BASELINE_FOR_MISSING_HELPERS_NOT_SENTINEL_ORDER",
+      "UNUSED_TRADE_OFFER_COMPATIBILITY_WRAPPER_REQUIRED_ONLY_BY_STALE_GUARD"
+    ],
+    "initial_two_assertion_changes": "VALID_NO_FANTASY_TEST_WEAKENING",
+    "real_scorer_and_trade_parity": "PASS",
+    "scope": "LOCAL_ENGINEERING_ONLY",
+    "validation_receipt": ".pitti-cloud-output/rc4219-review/exact-tree-receipt.json",
+    "physical_acceptance_proven": false
   }
 }

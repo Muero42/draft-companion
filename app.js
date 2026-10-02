@@ -1869,8 +1869,20 @@ function seasonRosterShell(season,players){
   return rows;
 }
 let seasonRenderQueued=false,seasonRenderRunning=false,seasonRenderRevision=0;
+function seasonClearDecisionSurfaces(){
+  lastPostDraftPairs=[];
+  for(const [status,list] of [[els.rosterBenchStatus,els.rosterBenchList],[els.rosterFaStatus,els.rosterFaList],[els.tradeStatus,els.tradeList],[els.waiverStatus,els.waiverList],[els.seasonActionStatus,els.seasonActionList]]){
+    if(list)list.innerHTML='';
+    if(status){status.className='notice warn';status.textContent='HOLD · Berechnung ausstehend oder überholt; keine Aktion freigegeben.';}
+  }
+}
+function seasonRenderPassCurrent(c,revision,deadline){
+  if(lastDraftContext===c&&seasonRenderRevision===revision&&Date.now()<deadline)return true;
+  seasonClearDecisionSurfaces();return false;
+}
 function queueSeasonRerender(){
   seasonRenderQueued=true;seasonRenderRevision++;
+  seasonClearDecisionSurfaces();
   if(seasonRenderRunning)return;
   seasonRenderRunning=true;
   void (async()=>{try{do{await seasonUiYield();seasonRenderQueued=false;await rerenderPostDraftFromContext();}while(seasonRenderQueued);}finally{seasonRenderRunning=false;}})().catch(error=>console.error('Season rerender failed',error));
@@ -1973,21 +1985,30 @@ async function bootstrapSeasonWorkspace({force=false}={}){
     lastDraftContext={id:LIVE_DRAFT_ID_2026,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:true,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL,historicalDraftAvailable:!!draft,playersLoadedAt:directory.fetchedAt};
     lastPostDraftPairs=[];
     stage='season-surfaces';seasonRenderRunning=true;
+    const renderContext=lastDraftContext,renderRevision=seasonRenderRevision,renderDeadline=seasonDecisionDeadline(renderContext,Date.now());
+    const current=()=>seasonRenderPassCurrent(renderContext,renderRevision,renderDeadline);
     for(const el of [els.waiverList,els.tradeList,els.seasonActionList])if(el)el.innerHTML='';
     await seasonUiYield();
+    if(!current())return{ok:false,skipped:'render-superseded'};
     await runSeasonSurface('Aufstellung',()=>renderRosterBenchAudit(rows,players,total,true),els.rosterBenchStatus,els.rosterBenchList);
     await seasonUiYield();
+    if(!current())return{ok:false,skipped:'render-superseded'};
     const faLane=await runSeasonSurface('FA-vs-Roster',()=>renderRosterFaAudit(rows,available||[],true,{render:false,cooperative:true}),els.rosterFaStatus,els.rosterFaList);
     await seasonUiYield();
+    if(!current())return{ok:false,skipped:'render-superseded'};
     await runSeasonSurface('Trades',()=>renderTradeWorkspace(picks,players,slot,teams,true,{cooperative:true}),els.tradeStatus,els.tradeList);
+    if(!current())return{ok:false,skipped:'render-superseded'};
     if(faLane.ok){
     await seasonUiYield();
+      if(!current())return{ok:false,skipped:'render-superseded'};
       await runSeasonSurface('Waiver/FA',()=>renderWaiverWorkspace(true),els.waiverStatus,els.waiverList);
+      if(!current())return{ok:false,skipped:'render-superseded'};
       await runSeasonSurface('Action Board',()=>renderSeasonActionBoard(true),els.seasonActionStatus,els.seasonActionList);
     }else{
       blockSeasonDependentSurface('Waiver/FA','FA-vs-Roster',els.waiverStatus,els.waiverList);
       blockSeasonDependentSurface('Action Board','FA-vs-Roster',els.seasonActionStatus,els.seasonActionList);
     }
+    if(!current())return{ok:false,skipped:'render-superseded'};
     updateStatus();renderSeasonRankingFreshness();
     scheduleSeasonDecisionExpiry();
     localStorage.setItem('v118_seasonBootstrapAt',String(Date.now()));
@@ -3422,29 +3443,33 @@ function renderSeasonActionBoard(draftComplete){
 }
 
 async function rerenderPostDraftFromContext(){
-  const c=lastDraftContext;
+  const c=lastDraftContext,revision=seasonRenderRevision,deadline=seasonDecisionDeadline(c,Date.now());
+  const current=()=>seasonRenderPassCurrent(c,revision,deadline);
   for(const el of [els.waiverList,els.tradeList,els.seasonActionList])if(el)el.innerHTML='';
   if(!c?.draftComplete||!Array.isArray(c.mine)||!Array.isArray(c.rankedAvailable)||!c.players)return false;
   const rows=Array.isArray(c.seasonRows)&&c.seasonRows.length?c.seasonRows:c.mine.map(pk=>{const p=pinfo(String(pk.player_id),pk.metadata,c.players),r=rankFor(p.name,p.pos),a=adpFor(p.name);return{pk,p,r,a}});
   if(els.rosterList&&c.season?.ok)els.rosterList.innerHTML=seasonLineupHtml(rows,c.season);
   await seasonUiYield();
-  if(lastDraftContext!==c)return false;
+  if(!current())return false;
   await runSeasonSurface('Aufstellung',()=>renderRosterBenchAudit(rows,c.players,Number(c.current||150),true),els.rosterBenchStatus,els.rosterBenchList);
   await seasonUiYield();
-  if(lastDraftContext!==c)return false;
+  if(!current())return false;
   const faLane=await runSeasonSurface('FA-vs-Roster',()=>renderRosterFaAudit(rows,c.rankedAvailable,true,{render:false,cooperative:true}),els.rosterFaStatus,els.rosterFaList);
   await seasonUiYield();
-  if(lastDraftContext!==c)return false;
+  if(!current())return false;
   await runSeasonSurface('Trades',()=>renderTradeWorkspace(c.picks,c.players,Number(els.slot.value),c.teams,true,{cooperative:true}),els.tradeStatus,els.tradeList);
+  if(!current())return false;
   if(faLane.ok){
   await seasonUiYield();
-  if(lastDraftContext!==c)return false;
+  if(!current())return false;
     await runSeasonSurface('Waiver/FA',()=>renderWaiverWorkspace(true),els.waiverStatus,els.waiverList);
+    if(!current())return false;
     await runSeasonSurface('Action Board',()=>renderSeasonActionBoard(true),els.seasonActionStatus,els.seasonActionList);
   }else{
     blockSeasonDependentSurface('Waiver/FA','FA-vs-Roster',els.waiverStatus,els.waiverList);
     blockSeasonDependentSurface('Action Board','FA-vs-Roster',els.seasonActionStatus,els.seasonActionList);
   }
+  if(!current())return false;
   scheduleSeasonDecisionExpiry();
   return true;
 }
@@ -3553,8 +3578,6 @@ function tradeRosterNeed(roster,pos){
   const occupied=m.before.assignments.filter(a=>a.player&&seasonSlotEligible(a.slot,pos)).length;
   return{depth:compatible.length,filled:occupied,edge:m.delta,need:clamp(m.delta/10,0,8)};
 }
-function tradeOfferCandidates(mine,opponent,target){return seasonDrainWorkSync(seasonTradeOfferWork(mine,opponent,target));}
-
 function renderTradeWorkspace(picks,players,userSlot,teams,draftComplete,opts={}){
   if(opts.cooperative&&draftComplete)return seasonRunWork(seasonTradeTargetWork(picks,players,userSlot,teams)).then(targets=>renderTradeWorkspace(picks,players,userSlot,teams,draftComplete,{targets}));
   // Sleeper roster_id is a league roster identifier, NOT the historical draft slot.

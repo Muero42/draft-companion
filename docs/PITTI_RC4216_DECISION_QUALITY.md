@@ -1,3 +1,12 @@
+Handoff generation: `20261002T0811Z-v284`
+Generation: `20261002T0811Z-v284`
+CURRENT: v11.8.0-rc4.219 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Production remains v11.8.0-rc4.218 DEPLOYED_SUCCESS, PR219 MERGED, canonical 264dd7a3120e529e9a4a5e819dd0a40c7f2fe729, reviewed a65d54cec5375124915c79f68adc2956f5ec825b, tree f877ce8306ff88ebefb47108f26629ce9f2aece8. rc4.218 PHYSICAL FAIL / NOT ACCEPTED: RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY; real Android/PWA navigation possible while loading, Waiver -> Kader delayed approximately 10–20 seconds USER-ESTIMATED, improvement over rc4.217 preserved. rc4.217 RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN; rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY; rc4.210 historical broad accepted baseline only. Next gate: RC4219_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. Production deployment d67752f0-75d4-4789-a3a2-2911743b662d is historical rc4.218 evidence only.
+
+Corrected rc4.219 local adversarial review complete. Publication and exact-head CI are the next external gate and require a separate authorized work package. STOP locally; no publication or deployment authorized.
+Review findings and exact validation protocol: docs/PITTI_RC4219_ADVERSARIAL_LOCAL_REVIEW.md. No device-side trial-and-error. Empty assistant response after tool work is forbidden. Never send status/progress/acknowledgement messages.
+
+## HISTORICAL v283 checkpoint (superseded current aliases)
+
 Handoff generation: `20261002T0800Z-v283`
 Generation: `20261002T0800Z-v283`
 CURRENT: v11.8.0-rc4.219 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Production remains v11.8.0-rc4.218 DEPLOYED_SUCCESS, PR219 MERGED, canonical 264dd7a3120e529e9a4a5e819dd0a40c7f2fe729, reviewed a65d54cec5375124915c79f68adc2956f5ec825b, tree f877ce8306ff88ebefb47108f26629ce9f2aece8. rc4.218 PHYSICAL FAIL / NOT ACCEPTED: RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY; real Android/PWA navigation possible while loading, Waiver -> Kader delayed approximately 10–20 seconds USER-ESTIMATED, improvement over rc4.217 preserved. rc4.217 RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN; rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY; rc4.210 historical broad accepted baseline only. Next gate: RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING.

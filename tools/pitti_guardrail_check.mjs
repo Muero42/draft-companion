@@ -129,7 +129,7 @@ must(worker.includes("url.pathname==='/api/boone-trade-values'")&&worker.include
 must(booneTradeValues.includes("metric:'trade_value'")&&booneTradeValues.includes("selectedColumn:chart.column")&&booneTradeValues.includes("sourceEdition:editionId"),'Boone provenance-preserving trade-value records missing');
 must(app.includes('void refreshTradeValues({auto:true})')&&app.includes("atomicWriteBooneTradeValues(localStorage"),'Boone automatic app refresh/storage path missing');
 must(app.includes("bidBasis:'ORIGINAL_FAAB_BUDGET'")&&app.includes('Math.min(remaining,Math.round(budget*pct/100))'),'FAAB original-budget basis/cap invariant missing');
-must(app.includes('function tradeOfferCandidates('),'Trade offer construction helper missing');
+must(app.includes('function seasonTradeOfferWork(')&&app.includes('yield* seasonTradeOfferWork(mine,roster,x)'),'Production cooperative Trade offer construction missing');
 must(app.includes('acceptance:null')&&app.includes('result.ourGain>0&&result.opponentGain>0')&&app.includes('heuristic:true')&&app.includes("Math.min(55"),'Trade acceptance must require bilateral gain and remain conservative/explicitly heuristic');
 must(app.includes(' Start/Sit v6'),'Start/Sit canonical-slot surface missing');
 must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');

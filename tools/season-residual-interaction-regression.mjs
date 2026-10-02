@@ -78,7 +78,7 @@ await assert.rejects(box.seasonRunWork(box.seasonFaWork(rows,pool)),/SUPERSEDED/
 // Actual queue: Weekly/Trade/Watcher/failure/expiry requests coalesce while busy.
 const queueStart=app.indexOf('let seasonRenderQueued='),queueEnd=app.indexOf('\nlet seasonLiveRefreshPromise',queueStart);
 let runs=0,active=0,maxActive=0,release;
-const queue={console,setTimeout,seasonUiYield:()=>new Promise(r=>setImmediate(r)),rerenderPostDraftFromContext:async()=>{runs++;active++;maxActive=Math.max(maxActive,active);if(runs===1)await new Promise(r=>release=r);active--;}};
+const queue={console,setTimeout,els:{},lastPostDraftPairs:[],seasonUiYield:()=>new Promise(r=>setImmediate(r)),rerenderPostDraftFromContext:async()=>{runs++;active++;maxActive=Math.max(maxActive,active);if(runs===1)await new Promise(r=>release=r);active--;}};
 vm.createContext(queue);vm.runInContext(app.slice(queueStart,queueEnd),queue);
 queue.queueSeasonRerender();queue.queueSeasonRerender();queue.queueSeasonRerender();
 while(!release)await new Promise(r=>setImmediate(r));
