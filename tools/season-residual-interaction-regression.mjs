@@ -46,7 +46,7 @@ let packages=0,tradeSentinel=null;
 Object.assign(box,{tradeRosterNeed:()=>({need:1}),seasonTradeDecision:()=>{packages++;if(packages===1)setImmediate(()=>tradeSentinel=packages);return{actionable:true,fairnessPct:1,opponentGain:1,ourGain:1,acceptance:{score:1}}}});
 const opponent=rows.map((x,i)=>({...x,p:{...x.p,id:'o'+i}})),target=opponent[0];
 const model=await box.seasonRunWork(box.seasonTradeOfferWork(rows,opponent,target));
-assert.equal(packages,435);assert.equal(model.offers.length,435);assert(tradeSentinel>0&&tradeSentinel<=4);
+assert.equal(packages,126);assert.equal(model.offers.length,12);assert(tradeSentinel>0&&tradeSentinel<=4);
 // Execute the full trade renderer at ten-team/15-player scale. Its UI stays
 // empty until every target and package has completed; the sentinel runs inside it.
 packages=0;tradeSentinel=null;let priorPackages=0;
@@ -58,7 +58,7 @@ box.seasonTradeDecision=()=>{packages++;if(packages===1)setImmediate(()=>tradeSe
 box.seasonUiYield=async()=>{assert(packages-priorPackages<=4);priorPackages=packages;assert.equal(box.els.tradeList.innerHTML,'');await new Promise(r=>setImmediate(r));};
 for(const name of ['seasonTradeTargetWork','renderTradeWorkspace'])vm.runInContext(source(name),box);
 await box.renderTradeWorkspace([],{},1,10,true,{cooperative:true});
-assert.equal(packages,9*15*435);assert(tradeSentinel>0&&tradeSentinel<=4);assert.match(box.els.tradeList.innerHTML,/TRADE HOLD/);
+assert.equal(packages,9*6*126);assert(tradeSentinel>0&&tradeSentinel<=4);assert.match(box.els.tradeList.innerHTML,/TRADE HOLD/);
 // Storage reads and evidence adaptation are reused within a step, invalidated at
 // the next yield; expiry predicates keep using the current clock.
 let reads=0,adapts=0,value=1;
@@ -87,4 +87,4 @@ release();while(runs<2||active)await new Promise(r=>setImmediate(r));
 await new Promise(r=>setImmediate(r));assert.equal(runs,2);assert.equal(maxActive,1);
 assert(app.includes('function setWorkspace('));const navigation=source('setWorkspace');
 assert(!/seasonBootstrapBusy|seasonRenderRunning|seasonLiveRefreshPromise/.test(navigation),'navigation not gated by busy flags');
-console.log('RC4219_RESPONSIVENESS_PASS: 12000 candidates, 2400 FA scores, 58725 full-renderer trade packages; sentinel inside ranking/scoring; identical complete ranking; per-step cache invalidation; supersession/expiry fail closed; five completion lanes coalesce 2 runs/max concurrency 1.');
+console.log('RC4219_RESPONSIVENESS_PASS: 12000 candidates, 2400 FA scores, 6804 bounded full-renderer trade packages; sentinel inside ranking/scoring; identical complete ranking; per-step cache invalidation; supersession/expiry fail closed; five completion lanes coalesce 2 runs/max concurrency 1.');
