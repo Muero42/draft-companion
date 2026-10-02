@@ -15,7 +15,7 @@ assert.ok(html.includes('id="seasonRefreshLiveBtn"')&&!html.includes('id="season
 assert.ok(app.includes('seasonBootstrapBusy'),'bootstrap concurrency guard missing');
 assert.match(css,/\[hidden\]\s*\{\s*display:none!important\s*\}/);
 const boot=between('async function bootstrapSeasonWorkspace','async function fetchDraftFresh');
-for(const token of ["runSeasonSurface('Aufstellung'","const faLane=runSeasonSurface('FA-vs-Roster'","runSeasonSurface('Trades'","blockSeasonDependentSurface('Waiver/FA'","stage+' · '"])assert.ok(boot.includes(token),'season isolation missing '+token);
+for(const token of ["runSeasonSurface('Aufstellung'","const faLane=await runSeasonSurface('FA-vs-Roster'","runSeasonSurface('Trades'","blockSeasonDependentSurface('Waiver/FA'","stage+' · '"])assert.ok(boot.includes(token),'season isolation missing '+token);
 assert.ok(boot.includes('Season Auto-Sync FAIL-CLOSED'),'fail-closed lost');
 assert.ok(app.includes('SEASON_RANKING_AUTO_MS=3*60*60*1000')&&app.includes('refreshSeasonRankings({auto:true})'),'automatic ranking refresh policy lost');
 console.log('SEASON_BOOTSTRAP_RUNTIME_REGRESSION_PASS rc4.'+version);

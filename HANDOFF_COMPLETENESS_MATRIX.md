@@ -1,3 +1,12 @@
+Handoff generation: `20261002T0800Z-v283`
+Generation: `20261002T0800Z-v283`
+CURRENT: v11.8.0-rc4.219 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Production remains v11.8.0-rc4.218 DEPLOYED_SUCCESS, PR219 MERGED, canonical 264dd7a3120e529e9a4a5e819dd0a40c7f2fe729, reviewed a65d54cec5375124915c79f68adc2956f5ec825b, tree f877ce8306ff88ebefb47108f26629ce9f2aece8. rc4.218 PHYSICAL FAIL / NOT ACCEPTED: RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY; real Android/PWA navigation possible while loading, Waiver -> Kader delayed approximately 10–20 seconds USER-ESTIMATED, improvement over rc4.217 preserved. rc4.217 RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN; rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY; rc4.210 historical broad accepted baseline only. Next gate: RC4219_LOCAL_ADVERSARIAL_REVIEW_PENDING.
+
+Local rc4.219 adversarial review against the final committed tree. STOP: no push, PR, CI monitoring, merge, deployment or physical acceptance authorized.
+See docs/PITTI_RC4219_LOCAL_RECOVERY.md for recovered state, diagnosis and ordering proof. No device-side trial-and-error. Empty assistant response after tool work is forbidden. Never send status/progress/acknowledgement messages.
+
+## HISTORICAL v282 checkpoint (superseded current aliases)
+
 Handoff generation: `20261001T2027Z-v282`
 Generation: `20261001T2027Z-v282`
 CURRENT: Source and Production v11.8.0-rc4.218 DEPLOYED_SUCCESS; PR219 MERGED via SQUASH, reviewed a65d54cec5375124915c79f68adc2956f5ec825b, canonical main 264dd7a3120e529e9a4a5e819dd0a40c7f2fe729, identical reviewed/merged tree f877ce8306ff88ebefb47108f26629ce9f2aece8, parent c7a509e6865ade6e56043f23b19e2577a3755293, deployment d67752f0-75d4-4789-a3a2-2911743b662d. Exact-main 8/8 SUCCESS; cloud Strict Suite 256/256 PASS; browser 390x844 PASS, compactDirectoryRequests=1, rawDirectoryRequests=0, no uncaught errors. rc4.218 PHYSICAL PENDING / NOT ACCEPTED; physical responsiveness NOT YET PROVEN. Latest observed rc4.217 PHYSICAL FAIL / NOT ACCEPTED: RC4217_PHYSICAL_FAIL_REFRESH_RESPONSIVENESS; STARTUP_PLAYER_DIRECTORY_EVENT_LOOP_STARVATION_SUSPECTED remains a hypothesis. rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and positive Live/Weekly/DST history preserved; CHI->NYJ correct, CIN dedup and W5/W6 MONITOR preserved. rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY historical; rc4.210 historical broad physical baseline. Next gate: RC4218_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING.
