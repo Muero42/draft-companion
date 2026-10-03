@@ -1,3 +1,11 @@
+Handoff generation: `20261003T1340Z-v292`
+
+v11.8.0-rc4.222 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR223 SQUASH MERGED, canonical c1561bc414b380621c6c59137d4827115125e623, reviewed 26087f745449979c837167e73c5a5cba5258e84b, tree f2d61adc4064f6c276f762c5df7685f802fe7abe, deployment 76ec53bb-6a7b-4e09-a81d-f7476a374a0e. PHYSICAL PENDING / NOT ACCEPTED / NOT PHYSICALLY ACCEPTED. rc4.219 and rc4.220 RESPONSIVENESS PHYSICAL PASS remain USER_CONFIRMED historical evidence; rc4.221 latest user observation PARTIAL (524 records, trade HOLD), full functional acceptance NOT granted; rc4.222 FUNCTIONAL SURFACE PHYSICAL ACCEPTANCE PENDING; full functional Production acceptance PENDING. Historical RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY, RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and RC4215_PHYSICAL_FAIL_DECISION_QUALITY preserved. Next gate: RC4222_ANDROID_FUNCTIONAL_SURFACE_ACCEPTANCE_PENDING.
+
+Exact-main checks 8/8 SUCCESS; cloud Strict Suite 268/268 PASS. Runtime manifest 17; all 16 public static assets match canonical UTF8/LF content; worker deployment and endpoints verified. Exact-head cloud mocked mobile browser compact requests1, raw0, no uncaught errors; no physical claim. Week-4 Boone 253/253, game context16/32, 10 outdoor forecasts + London FORECAST_FETCH_OR_VALIDITY_FAILED, four DOME, 15 current odds, one completed game excluded; Watcher PASS. Local Authority-only checkpoint, NOT PUSHED. STOP. rc4.222 merged canonical main, postmerge exact-head CI and Production surfaces verified. Android/PWA physical acceptance requires a separate real-device work package. No fantasy transaction, trade sending, cache clear or reinstall authorized.
+
+## HISTORICAL v291 and earlier (immutable evidence)
+
 Generation: `20261003T1254Z-v291`
 Handoff generation: `20261003T1254Z-v291`
 
