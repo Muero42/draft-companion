@@ -7,6 +7,12 @@ if(seal.status!=='PASS'||seal.handoff_ready!==true||seal.second_pass_pass!==true
 if(seal.integrity_algorithm!=='git_blob_sha1'||seal.integrity_normalization!=='UTF8_LF_TEXT')throw new Error('unsupported seal convention');
 
 const additions=[
+  'docs/PITTI_RC4224_ROSTER_SURFACE_AUDIT.md',
+  'tools/season-rc4224-roster-presentation-regression.mjs',
+  'tools/rc4224-authority.mjs',
+  'tools/fixtures/rc4224/authority-digests.json',
+  'tools/fixtures/rc4224/runtime-blobs.json',
+  'tools/fixtures/rc4224/sleeper-week4.json',
   'docs/PITTI_RC4223_MINOR_RANK_COUNT_AUDIT.md',
   'docs/PITTI_RC4223_PRODUCTION_RECEIPT.json',
   'docs/PITTI_RC4223_LOCK_RANK_PERSISTENCE_AUDIT.md',

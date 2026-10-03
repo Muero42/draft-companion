@@ -131,9 +131,9 @@ must(app.includes('void refreshTradeValues({auto:true})')&&app.includes("atomicW
 must(app.includes("bidBasis:'ORIGINAL_FAAB_BUDGET'")&&app.includes('Math.min(remaining,Math.round(budget*pct/100))'),'FAAB original-budget basis/cap invariant missing');
 must(app.includes('function seasonTradeOfferWork(')&&app.includes('yield* seasonTradeOfferWork(mine,roster,x)'),'Production cooperative Trade offer construction missing');
 must(app.includes('acceptance:null')&&app.includes('result.ourUtility>.5&&score>=18&&credible')&&!app.includes('result.ourGain>0&&result.opponentGain>0')&&app.includes('heuristic:true')&&app.includes("Math.min(55"),'Trade acceptance must require verified PITTI utility and credible acceptance and remain conservative/explicitly heuristic');
-must(app.includes(' Start/Sit v6'),'Start/Sit canonical-slot surface missing');
+must(app.includes('Start/Sit · aktuelle Aufstellung geprüft'),'Start/Sit canonical-slot surface missing');
 must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
-must(app.includes('globale legale Slot-Optimierung'),'PITTI weekly-panel primary invariant missing');
+must(app.includes('const result=optimizer?.evaluate?.({roster:active,evidence,week,slots,currentAssignments,now:Date.now()})'),'PITTI weekly-panel primary invariant missing');
 must(app.includes("const SPECIAL_TEAMS_W1_BASELINE_EXPIRES_AT=Date.parse('2026-09-08T12:00:00Z')"),'Special Teams Week-1 expiry boundary missing');
 must(app.includes('function historicalSpecialTeamsBaselineAllowed({week,now}={})')&&app.includes("typeof week==='number'&&Number.isInteger(week)&&week===1")&&app.includes('now<=SPECIAL_TEAMS_W1_BASELINE_EXPIRES_AT'),'Special Teams historical baseline temporal guard missing');
 must(app.includes('if(!historicalSpecialTeamsBaselineAllowed({week,now}))'),'Special Teams historical baseline must not be unconditional');
@@ -202,7 +202,7 @@ if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
   must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
   must(handoffMatrix.includes(current.handoff_generation),'Season Companion MATRIX generation drift');
   must(currentHandoff.includes(current.handoff_generation),'Season Companion HANDOFF generation drift');
-  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194','v11.8.0-rc4.195','v11.8.0-rc4.196','v11.8.0-rc4.197','v11.8.0-rc4.198','v11.8.0-rc4.200','v11.8.0-rc4.201','v11.8.0-rc4.202','v11.8.0-rc4.203','v11.8.0-rc4.204','v11.8.0-rc4.205','v11.8.0-rc4.206','v11.8.0-rc4.207','v11.8.0-rc4.210','v11.8.0-rc4.211','v11.8.0-rc4.213','v11.8.0-rc4.214','v11.8.0-rc4.215','v11.8.0-rc4.216','v11.8.0-rc4.217','v11.8.0-rc4.218','v11.8.0-rc4.219','v11.8.0-rc4.220','v11.8.0-rc4.221','v11.8.0-rc4.222','v11.8.0-rc4.223'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
+  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194','v11.8.0-rc4.195','v11.8.0-rc4.196','v11.8.0-rc4.197','v11.8.0-rc4.198','v11.8.0-rc4.200','v11.8.0-rc4.201','v11.8.0-rc4.202','v11.8.0-rc4.203','v11.8.0-rc4.204','v11.8.0-rc4.205','v11.8.0-rc4.206','v11.8.0-rc4.207','v11.8.0-rc4.210','v11.8.0-rc4.211','v11.8.0-rc4.213','v11.8.0-rc4.214','v11.8.0-rc4.215','v11.8.0-rc4.216','v11.8.0-rc4.217','v11.8.0-rc4.218','v11.8.0-rc4.219','v11.8.0-rc4.220','v11.8.0-rc4.221','v11.8.0-rc4.222','v11.8.0-rc4.223','v11.8.0-rc4.224'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
   must(commandContract.currentGate===AUTHORITY_GATE,'Season Companion command gate regression');
   must(lock.gate===AUTHORITY_GATE,'Season Companion lock gate regression');
   must(current.currentWork?.nextGate===AUTHORITY_GATE,'Season Companion CURRENT next gate regression');

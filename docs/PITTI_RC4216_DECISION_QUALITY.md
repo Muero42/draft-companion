@@ -1,3 +1,23 @@
+Generation: `20261003T1814Z-v296`
+Handoff generation: `20261003T1814Z-v296`
+
+v11.8.0-rc4.224 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / ANDROID UI PHYSICAL PENDING / NOT ACCEPTED. Production remains rc4.223 canonical 7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4 tree 5c9e2244b035419a4b6d6bdf159e1680ff729ff7. Historical Android rc4.223 core repaired functionality USER_CONFIRMED PASS remains intact. Next gate: RC4224_EXACT_HEAD_CLOUD_VALIDATION_PENDING.
+
+RC4224 authorized sequence: tested local candidate -> push/PR -> exact-head cloud full Strict and browser PASS -> adversarial review -> clean green merge -> Production parity -> Authority reconciliation. Android UI acceptance PENDING; rc4223 historical core PASS preserved; no fantasy transaction.
+
+See docs/PITTI_RC4224_ROSTER_SURFACE_AUDIT.md.
+
+## HISTORICAL v295 and earlier (immutable evidence)
+
+Generation: `20261003T1601Z-v295`
+Handoff generation: `20261003T1601Z-v295`
+
+v11.8.0-rc4.223 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR225 squash merged 7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4, reviewed 853b0bf170ea775a07dc1ca8b006d018dc15491f, tree 5c9e2244b035419a4b6d6bdf159e1680ff729ff7, deployment f39eaba5-5b89-4c25-a46b-bcb35edcd128. ANDROID CORE FUNCTIONAL ACCEPTANCE PASS / USER_CONFIRMED. Minor UI count cleanup does not reopen acceptance and has no new physical-test claim. PHYSICAL PENDING / NOT ACCEPTED / NOT PHYSICALLY ACCEPTED descriptions in prior receipts are historical pre-device observations. Historical RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY, RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and RC4215_PHYSICAL_FAIL_DECISION_QUALITY preserved. Next gate: RC4223_MINOR_UI_COMPLETE_CORE_PHYSICAL_PASS.
+
+STOP. rc4.223 minor UI/diagnostic fix merged; canonical cloud and Production static parity verified. Android core repaired functionality remains USER_CONFIRMED PASS; minor cleanup does not reopen functional acceptance. No further physical testing required by this work package.
+
+## HISTORICAL v294 and earlier
+
 Generation: `20261003T1533Z-v294`
 Handoff generation: `20261003T1533Z-v294`
 

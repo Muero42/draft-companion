@@ -1,6 +1,8 @@
 import fs from 'node:fs';import {execFileSync,spawnSync} from 'node:child_process';import {RUNTIME_FILES} from './runtime-files.mjs';import assert from 'node:assert/strict';import {MAIN,TREE,BASE,BASE_TREE,OBSERVED,CANONICAL,CANONICAL_TREE,PREVIOUS_MAIN,PREVIOUS_TREE,REVIEWED,PRODUCTION_DEPLOY,loadAuthority,validateAuthority,validateContinuationEvidence,validatePhysicalPrerequisites} from './postmerge-authority-contract.mjs';
 const b=loadAuthority();assert.deepEqual(validateAuthority(b),[],'baseline v275 authority must validate');
 const cases=[
+ ['minor UI canonical head drift',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4223_minor_ui_source_production.merge_commit='f'.repeat(40)],
+ ['minor UI physical overclaim',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4223_minor_ui_source_production.minor_ui_physical_test_proven=true],
  ['rc4223 core PASS lost',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4223_android_core_acceptance.acceptance='PENDING'],
  ['rc4223 core acceptance reopened',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4223_android_core_acceptance.functional_acceptance_reopened=true],
  ['rc4223 stale cloud head',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4223_source_production.merge_commit='f'.repeat(40)],
@@ -48,13 +50,13 @@ const cases=[
  ['main',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4215_source_production.merge_commit='a'.repeat(40)],
  ['tree',d=>d['PITTI_CURRENT_STATE.json'].authority.rc4215_source_production.merged_tree='b'.repeat(40)],
  ['deployment',d=>d['PITTI_CURRENT_STATE.json'].runtime.production_deployment.deployment_id='wrong'],
- ['physical overclaim',d=>{d['PITTI_CURRENT_STATE.json'].runtime.current_physical_acceptance.proven=true;d['PITTI_CURRENT_STATE.json'].runtime.current_physical_acceptance.acceptance='PASS'}],
+ ['physical overclaim',d=>{d['PITTI_CURRENT_STATE.json'].runtime.current_physical_acceptance.proven=true;d['PITTI_CURRENT_STATE.json'].runtime.current_physical_acceptance.acceptance='FULL_PASS'}],
  ['source',d=>d['PITTI_CURRENT_STATE.json'].authority.source_candidate='v11.8.0-rc4.214'],
  ['source reverts to Production',d=>d['PITTI_CURRENT_STATE.json'].authority.source_candidate='v11.8.0-rc4.215'],
  ['lock reverts to Production',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.appVersion='v11.8.0-rc4.215'],
- ['runtime/source mismatch',d=>d['app.js']=d['app.js'].replace("const APP_VERSION='v11.8.0-rc4.223'","const APP_VERSION='v11.8.0-rc4.224'")],
+ ['runtime/source mismatch',d=>d['app.js']=d['app.js'].replace("const APP_VERSION='v11.8.0-rc4.224'","const APP_VERSION='v11.8.0-rc4.223'")],
  ['published regresses to local',d=>d['PITTI_CURRENT_STATE.json'].runtime_candidate.status='PUBLISHED_PR_CANDIDATE'],
- ['candidate deployment proof missing',d=>d['PITTI_CURRENT_STATE.json'].runtime_candidate.production_proven=false],
+ ['candidate deployment proof missing',d=>d['PITTI_CURRENT_STATE.json'].runtime_candidate.production_proven=true],
  ['immutable candidate head',d=>d['PITTI_EXECUTION_LOCK.json'].runtimeCandidate.published_head='f'.repeat(40)],
  ['lock runtime',d=>d['PITTI_EXECUTION_LOCK.json'].runtime.appVersion='v11.8.0-rc4.214'],
  ['wrong CHI diagnosis',d=>d['PITTI_CURRENT_STATE.json'].historical_superseded.v280_before_rc4218.latest_device_evidence.positive.dst_opponents.CHI='NYG'],
@@ -62,8 +64,8 @@ const cases=[
  ['postmerge CI overclaim',d=>d['PITTI_CURRENT_STATE.json'].runtime.ci.current_exact_main_head_ci='FAILED_AUTHORITY_DRIFT'],
  ['team total',d=>d['PITTI_CURRENT_STATE.json'].runtime.independent_evidence_lane_status.team_total='AVAILABLE'],
  ['premature physical',d=>d['PITTI_CURRENT_STATE.json'].authority_continuation.physical_executable=true],
- ['wrong waiting gate',d=>d['PITTI_CURRENT_STATE.json'].auto_execution_state.waiting_external[0].gate='RC4215_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING'],
- ['candidate merge proof missing',d=>d['PITTI_CURRENT_STATE.json'].runtime_candidate.merged=false],
+ ['unexpected waiting gate',d=>d['PITTI_CURRENT_STATE.json'].auto_execution_state.waiting_external.push({gate:'RC4215_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING'})],
+ ['candidate merge proof missing',d=>d['PITTI_CURRENT_STATE.json'].runtime_candidate.merged=true],
  ['candidate physical',d=>d['PITTI_EXECUTION_LOCK.json'].runtimeCandidate.physical_accepted=true],
  ['immutable authority head',d=>d['PITTI_HANDOFF_SEAL.json'].authority_continuation.canonical_main='f'.repeat(40)],
  ['old action',d=>d['PITTI_COMMAND_CONTRACTS.json'].currentBoundary.exactNextAction='create rc4.215 PR'],
@@ -115,15 +117,12 @@ console.log('CURRENT_ALIAS_REGRESSION_PASS '+aliasMutations.length+' negatives; 
 const h='a'.repeat(40),ev={fresh:true,repo:'Muero42/draft-companion',canonicalBranch:'main',canonicalHead:h,head:h,clean:true,branch:'main',prState:'MERGED',containingCommitVerified:true,ciHead:h,authorizedWorkPackage:true,checks:['project_guardrails','release_contract_v2','candidate_package'].map(name=>({name,result:'PASS'}))};
 assert.deepEqual(validateContinuationEvidence(ev),[]);
 for(const f of[x=>x.fresh=false,x=>x.clean=false,x=>x.containingCommitVerified=false,x=>x.ciHead='b'.repeat(40),x=>x.authorizedWorkPackage=false,x=>x.checks.push({name:'project_guardrails',result:'PASS'})]){const x=structuredClone(ev);f(x);assert(validateContinuationEvidence(x).length)}
-console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v294 mutations=${cases.length} external=6`);
-assert.equal(RUNTIME_FILES.length,17);assert(fs.readFileSync('app.js','utf8').includes("const APP_VERSION='v11.8.0-rc4.223'"),'runtime candidate must be rc4.223');
-const published='c1561bc414b380621c6c59137d4827115125e623';
-const reviewedRuntime=JSON.parse(fs.readFileSync('tools/fixtures/rc4223/runtime-blobs.json'));assert.deepEqual(Object.keys(reviewedRuntime).sort(),[...RUNTIME_FILES].sort());for(const file of RUNTIME_FILES){if(['app.js','sw.js'].includes(file)){const original=execFileSync('git',['show','977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f:'+file],{encoding:'utf8',maxBuffer:4e6}).replace(/\r\n/g,'\n');let expected=original;if(file==='app.js'){expected=expected.replace('missingRank=skill.filter(row=>values[String(row.p?.id)]?.rank_available!==true)','missingRank=skill.filter(row=>values[String(row.p?.id)]?.lineup_eligible===true&&values[String(row.p?.id)]?.projection_available===true&&values[String(row.p?.id)]?.rank_available!==true)').replace("missingRank=active.filter(x=>['QB','RB','WR','TE'].includes(x.p.pos)&&values[String(x.p.id)]?.rank_available!==true)","missingRank=active.filter(x=>['QB','RB','WR','TE'].includes(x.p.pos)&&values[String(x.p.id)]?.lineup_eligible===true&&values[String(x.p.id)]?.projection_available===true&&values[String(x.p.id)]?.rank_available!==true)");}else expected=expected.replace('rc4.223-static-v1','rc4.223-static-v2');assert.equal(fs.readFileSync(file,'utf8').replace(/\r\n/g,'\n'),expected,'minor UI scope drift: '+file);assert.equal(execFileSync('git',['rev-parse','977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f:'+file],{encoding:'utf8'}).trim(),reviewedRuntime[file],'historical rc4223 identity changed');}else assert.equal(execFileSync('git',['hash-object','--path='+file,file],{encoding:'utf8'}).trim(),reviewedRuntime[file],'reviewed rc4223 runtime changed: '+file);}
-const historicalRuntime=JSON.parse(fs.readFileSync('tools/fixtures/rc4222/runtime-blobs.json'));for(const file of RUNTIME_FILES)assert.equal(execFileSync('git',['rev-parse',published+':'+file],{encoding:'utf8'}).trim(),historicalRuntime[file],'historical rc4222 identity changed: '+file);
-for(const file of RUNTIME_FILES.filter(file=>!['app.js','index.html','sw.js','manifest.webmanifest','_worker.js','weekly-evidence-v2.js','game-context-v1.js','lineup-start-sit-v2.js'].includes(file)))assert.equal(historicalRuntime[file],reviewedRuntime[file],'unrelated runtime changed: '+file);
-console.log('RC4223_RUNTIME_SCOPE_PASS manifest=17; app2 rank predicates + sw cache suffix; 15 runtime files unchanged; historical17 identities verified; exact2 rank predicates and static cache suffix only; canonical baseline '+published);
+console.log(`POSTMERGE_AUTHORITY_REGRESSION_PASS generation=v295 mutations=${cases.length} external=6`);
+assert.equal(RUNTIME_FILES.length,17);assert(fs.readFileSync('app.js','utf8').includes("const APP_VERSION='v11.8.0-rc4.224'"));
+const runtime224=JSON.parse(fs.readFileSync('tools/fixtures/rc4224/runtime-blobs.json')),runtime223=JSON.parse(fs.readFileSync('tools/fixtures/rc4223/runtime-blobs.json'));assert.deepEqual(Object.keys(runtime224).sort(),[...RUNTIME_FILES].sort());for(const file of RUNTIME_FILES){assert.equal(execFileSync('git',['hash-object','--path='+file,file],{encoding:'utf8'}).trim(),runtime224[file],'RC4224 candidate bytes drift: '+file);assert.equal(execFileSync('git',['rev-parse','977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f:'+file],{encoding:'utf8'}).trim(),runtime223[file],'historical rc4223 receipt changed: '+file);if(!['app.js','index.html','styles.css','game-context-v1.js','sw.js','manifest.webmanifest'].includes(file))assert.equal(runtime224[file],execFileSync('git',['rev-parse','7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4:'+file],{encoding:'utf8'}).trim(),'unrelated runtime changed: '+file);}
+console.log('RC4224_RUNTIME_SCOPE_PASS manifest17, six presentation/version files, eleven unchanged; historical rc4223 identities retained');
 for(const mode of ['candidate','main']){const env={...process.env,PITTI_SKIP_SEAL_INTEGRITY:'0'};delete env.PITTI_CANDIDATE_PREFLIGHT;if(mode==='candidate')env.PITTI_CANDIDATE_PREFLIGHT='1';const r=spawnSync(process.execPath,['tools/pitti_guardrail_check.mjs'],{encoding:'utf8',env});assert.equal(r.status,0,mode+' guardrail must pass with normal seal integrity: '+r.stdout+r.stderr);console.log('RC4222_'+mode.toUpperCase()+'_GUARDRAIL_PASS');}
-const future='c'.repeat(40),physical={...ev,canonicalHead:CANONICAL,head:CANONICAL,ciHead:CANONICAL,canonicalTree:CANONICAL_TREE,publicationExactHeadPass:true,rc4223Merged:true,postmergeChecksPass:true,authorityParent:'c1561bc414b380621c6c59137d4827115125e623',production:{status:'SUCCESS',sourceCommit:CANONICAL,tree:CANONICAL_TREE,deploymentId:'future-v275-deployment'},runtimeVersion:'v11.8.0-rc4.223',runtimeFileCount:17,reviewedCandidateHead:REVIEWED,runtimeIdentityBase:REVIEWED,runtimeBlobsIdentical:true};
+const future='c'.repeat(40),physical={...ev,canonicalHead:CANONICAL,head:CANONICAL,ciHead:CANONICAL,canonicalTree:CANONICAL_TREE,publicationExactHeadPass:true,rc4223Merged:true,postmergeChecksPass:true,authorityParent:'977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f',production:{status:'SUCCESS',sourceCommit:CANONICAL,tree:CANONICAL_TREE,deploymentId:'future-v275-deployment'},runtimeVersion:'v11.8.0-rc4.223',runtimeFileCount:17,reviewedCandidateHead:REVIEWED,runtimeIdentityBase:REVIEWED,runtimeBlobsIdentical:true};
 assert.deepEqual(validatePhysicalPrerequisites(physical),[]);
 assert(validatePhysicalPrerequisites({...physical,canonicalHead:'c7a509e6865ade6e56043f23b19e2577a3755293'}).length,'prior rc4217 canonical main cannot authorize rc4218 physical');
 const muts=[e=>e.publicationExactHeadPass=false,e=>e.rc4223Merged=false,e=>e.postmergeChecksPass=false,e=>e.canonicalHead=MAIN,e=>e.canonicalTree=TREE,e=>e.production.status='PENDING',e=>e.production.sourceCommit=MAIN,e=>e.runtimeFileCount=16,e=>e.runtimeBlobsIdentical=false,e=>e.runtimeVersion='v11.8.0-rc4.214'];

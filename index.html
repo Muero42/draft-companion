@@ -7,7 +7,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.223">
+  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.224">
   <title>PITTI Season Companion 2026</title>
 
 <style id="workspaceStyles">
@@ -22,7 +22,7 @@
       <h1>PITTI Companion</h1>
       <p>Live-Kader, Waiver, Aufstellung, Trades und News.</p>
     </div>
-    <span class="version">v11.8.0-rc4.223</span>
+    <span class="version">v11.8.0-rc4.224</span>
   </header>
 
   <nav class="workspace-nav" aria-label="Arbeitsbereich">
@@ -33,14 +33,14 @@
     <button class="workspace-tab" data-workspace-target="draft">🏈 Draft-Archiv</button>
   </nav>
 
-  <section class="season-data-card" data-season-only aria-label="Season-Datenstatus">
+  <section id="seasonDataCard" class="season-data-card" data-season-only aria-label="Season-Datenstatus">
+    <div id="seasonDataCompact" class="season-data-compact" role="status" hidden></div>
     <div class="season-data-row"><div><span class="tiny">Sleeper Live-State</span><b id="seasonLiveStateAge">–</b></div><button id="seasonRefreshLiveBtn" class="secondary" type="button">Kader aktualisieren</button></div>
     <div id="seasonLiveStateStatus" class="notice">Live-Kader wird automatisch direkt von Sleeper geladen.</div>
     <div class="season-data-row"><div><span class="tiny">Weekly Evidence</span><b id="seasonRankingAge">–</b></div><button id="seasonRefreshEvidenceBtn" class="secondary" type="button">Jetzt prüfen</button></div>
     <div id="seasonRankingStatus" class="notice">Weekly-Projektionen und aktuelle Datenquellen werden geprüft.</div>
-    <button id="seasonDiagnosticCopyBtn" class="secondary" type="button">Daten-Diagnose kopieren</button>
-    <p id="seasonDiagnosticStatus" class="tiny">Aktuelle Kader-Abdeckung und Datenquellen · ohne Zugangsdaten.</p>
-    <textarea id="seasonDiagnosticOutput" hidden readonly aria-label="Daten-Diagnose zum Kopieren"></textarea>
+    <div id="seasonContextStatus" class="notice warn" hidden></div>
+
   </section>
 
   <div class="draft-surface-nav" data-workspace="draft" aria-label="Draft-Ansicht">
@@ -187,12 +187,12 @@
     <div id="rosterSummary" class="summary-grid"></div>
     <div id="rosterBenchStatus" class="notice"></div>
     <div id="rosterBenchList" class="coach-list"></div>
-    <div id="rosterFaStatus" class="notice"></div>
-    <div id="rosterFaList" class="coach-list"></div>
+
   </section>
   <section class="card workspace-panel" data-workspace="waiver" hidden>
     <div class="phase-intro"><h2>⚡ Waiver / Free Agents</h2><p class="tiny">Nur Akquisitionsentscheidungen: Add, FAAB, Drop-Kandidat, Market Window und nächste Informationsauflösung.</p></div>
     <div class="phase-grid"><div class="phase-tile"><b>Opportunity</b><span class="tiny">Organic, Contingency und Informational Acquisition.</span></div><div class="phase-tile"><b>Acquisition Utility</b><span class="tiny">FAAB, Bench Opportunity Cost und lokale Marktgefahr.</span></div></div>
+    <div id="rosterFaStatus" class="notice" hidden></div><div id="rosterFaList" class="coach-list" hidden></div>
     <div id="waiverStatus" class="notice">Live-Sleeper-State wird geladen…</div><div id="waiverList" class="coach-list"></div>
   </section>
   <section class="card workspace-panel" data-workspace="trade" hidden>
@@ -206,8 +206,11 @@
     <div id="watcherSyncStatus" class="notice">Pitti Watcher: Feed noch nicht geprüft.</div><div id="seasonActionStatus" class="notice">Live-Sleeper-State wird geladen…</div><div id="seasonActionList" class="coach-list"></div><div class="notice">Watcher-Ingestion ist read-only und fail-closed: nur ein source-proven scheduled-health PASS darf Evidence übernehmen. Kritische Injury/IR/PUP-State-Deltas ohne echte Quellenchronologie bleiben nicht-actionable.</div>
   </section>
 
-  <details class="card advanced-card mock-only">
+  <details class="card advanced-card">
     <summary>⚙️ Erweitert</summary>
+    <div class="advanced-section" data-season-only><h3>Season-Daten und Details</h3><button id="seasonDiagnosticCopyBtn" class="secondary" type="button">Daten-Diagnose kopieren</button>
+    <p id="seasonDiagnosticStatus" class="tiny">Aktuelle Kader-Abdeckung und Datenquellen · ohne Zugangsdaten.</p>
+    <textarea id="seasonDiagnosticOutput" hidden readonly aria-label="Daten-Diagnose zum Kopieren"></textarea><details><summary>Spieler-Datenquellen</summary><pre id="seasonRosterProvenance" class="diagnostic"></pre></details><details><summary>Start/Sit-Details</summary><pre id="seasonOptimizerDetails" class="diagnostic"></pre></details></div>
     <div class="advanced-section">
       <h3>FantasyPros API</h3>
       <label for="apiKey">API-Key</label>
@@ -255,16 +258,16 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v11.8.0-rc4.223: stale Week-1 Special Teams evidence is time-guarded; selected PITTI identity and canonical game-context validation remain fail-closed.</div>
+<div class="freeze-note">v11.8.0-rc4.224: stale Week-1 Special Teams evidence is time-guarded; selected PITTI identity and canonical game-context validation remain fail-closed.</div>
 <button id="analysisJumpV3" class="snapshot-jump" type="button" aria-label="Zur Analyse" hidden>↓</button>
 </main>
-<script src="live-surface-v3.js?v=v11.8.0-rc4.223" defer></script>
-<script src="weekly-evidence-v2.js?v=v11.8.0-rc4.223" defer></script>
-<script src="lineup-start-sit-v2.js?v=v11.8.0-rc4.223" defer></script>
-<script src="game-context-v1.js?v=v11.8.0-rc4.223" defer></script>
+<script src="live-surface-v3.js?v=v11.8.0-rc4.224" defer></script>
+<script src="weekly-evidence-v2.js?v=v11.8.0-rc4.224" defer></script>
+<script src="lineup-start-sit-v2.js?v=v11.8.0-rc4.224" defer></script>
+<script src="game-context-v1.js?v=v11.8.0-rc4.224" defer></script>
 <script src="expert-v2-board.js?v=20260826"></script>
 <script src="expert-v3-board.js?v=20260828a"></script>
-<script type="module" src="app.js?v=v11.8.0-rc4.223"></script>
+<script type="module" src="app.js?v=v11.8.0-rc4.224"></script>
 <script src="expert-board-export.js?v=20260826e" defer></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>

@@ -22,7 +22,7 @@ const cache=new Map(),store={
 const els={seasonRankingAge:{textContent:'',className:''},seasonRankingStatus:{textContent:'',className:''}};
 const context={Date,Number,String,Array,Object,Math,Promise,store,els,WEEKLY_PROJECTION_POSITIONS:['QB','RB','WR','TE'],SEASON_PROJECTION_POSITIONS:['QB','RB','WR','TE','K','DST'],SEASON_RANKING_AUTO_MS:3*60*60*1000,seasonRankingRefreshBusy:false,PittiWeeklyEvidenceV2:evidence,FP_DIAGNOSTIC_TIMEOUT_MS:10_000,FP_REQUEST_START_INTERVAL_MS:0,fpRequestStartQueue:Promise.resolve(),fpLastRequestStartedAt:0,AbortController,setTimeout,clearTimeout,lastDraftContext:{season:{league:{season:2026},current_nfl_week:1}},els:{...els,apiKey:{value:'test-key'}}};
 context.globalThis=context;
-vm.createContext(context);
+context.renderSeasonDataCompactHeader=()=>{};vm.createContext(context);
 vm.runInContext([sourceOf('codedError'),sourceOf('scheduleFpRequestStart'),sourceOf('fpProxyRequest'),sourceOf('persistSeasonProjectionRetryAfter'),sourceOf('seasonEvidenceContext'),sourceOf('seasonProjectionCoverage'),sourceOf('renderSeasonRankingFreshness')].join('\n'),context);
 
 const retryKey='pitti.weekly-evidence.v2.retryAfterUntil',observedAt=1_000_000;
