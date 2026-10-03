@@ -1,0 +1,451 @@
+{
+  "scope": "SOURCE_QUALIFICATION_NOT_LIVE_PRIMARY_PROJECTION_OR_INDIVIDUAL_PANEL",
+  "observedAt": 1791060056111,
+  "season": 2026,
+  "week": 4,
+  "completedWeeks": [
+    1,
+    2,
+    3
+  ],
+  "usageRows": 949,
+  "identityMethod": "UNIQUE_GSIS_SLEEPER_CROSSWALK",
+  "directories": {
+    "WR": [
+      {
+        "id": "285",
+        "name": "Dalton Del Don",
+        "sourceUpdatedAt": 1791057972000,
+        "priorPositionRank": 13,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 14,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "3585",
+        "name": "Ryan Weisse",
+        "sourceUpdatedAt": 1791040124000,
+        "priorPositionRank": 135,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 150,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "835",
+        "name": "Kev Wheeler",
+        "sourceUpdatedAt": 1791023350000,
+        "priorPositionRank": 34,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 22,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "22",
+        "name": "Pat Fitzmaurice",
+        "sourceUpdatedAt": 1790979866000,
+        "priorPositionRank": 20,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 84,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "317",
+        "name": "Justin Boone",
+        "sourceUpdatedAt": 1790956151000,
+        "priorPositionRank": 1,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 19,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "120",
+        "name": "Sean Koerner",
+        "sourceUpdatedAt": 1790896336000,
+        "priorPositionRank": 27,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 18,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      }
+    ],
+    "QB": [
+      {
+        "id": "285",
+        "name": "Dalton Del Don",
+        "sourceUpdatedAt": 1791057015000,
+        "priorPositionRank": 9,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 107,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "3585",
+        "name": "Ryan Weisse",
+        "sourceUpdatedAt": 1791025098000,
+        "priorPositionRank": 103,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 23,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "835",
+        "name": "Kev Wheeler",
+        "sourceUpdatedAt": 1791023350000,
+        "priorPositionRank": 14,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 130,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "22",
+        "name": "Pat Fitzmaurice",
+        "sourceUpdatedAt": 1790979866000,
+        "priorPositionRank": 42,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 154,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "317",
+        "name": "Justin Boone",
+        "sourceUpdatedAt": 1790956151000,
+        "priorPositionRank": 6,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 48,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "120",
+        "name": "Sean Koerner",
+        "sourceUpdatedAt": 1790895378000,
+        "priorPositionRank": 7,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 28,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      }
+    ],
+    "RB": [
+      {
+        "id": "3585",
+        "name": "Ryan Weisse",
+        "sourceUpdatedAt": 1791025098000,
+        "priorPositionRank": 36,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 123,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "835",
+        "name": "Kev Wheeler",
+        "sourceUpdatedAt": 1791023350000,
+        "priorPositionRank": 24,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 40,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "285",
+        "name": "Dalton Del Don",
+        "sourceUpdatedAt": 1790993053000,
+        "priorPositionRank": 12,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 42,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "22",
+        "name": "Pat Fitzmaurice",
+        "sourceUpdatedAt": 1790979865000,
+        "priorPositionRank": 45,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 37,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "317",
+        "name": "Justin Boone",
+        "sourceUpdatedAt": 1790956150000,
+        "priorPositionRank": 5,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 32,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "120",
+        "name": "Sean Koerner",
+        "sourceUpdatedAt": 1790884501000,
+        "priorPositionRank": 7,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 1,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      }
+    ],
+    "TE": [
+      {
+        "id": "835",
+        "name": "Kev Wheeler",
+        "sourceUpdatedAt": 1791059281000,
+        "priorPositionRank": 21,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 42,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "3585",
+        "name": "Ryan Weisse",
+        "sourceUpdatedAt": 1791025098000,
+        "priorPositionRank": 134,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 153,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "285",
+        "name": "Dalton Del Don",
+        "sourceUpdatedAt": 1790993053000,
+        "priorPositionRank": 10,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 43,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "22",
+        "name": "Pat Fitzmaurice",
+        "sourceUpdatedAt": 1790979866000,
+        "priorPositionRank": 47,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 19,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "317",
+        "name": "Justin Boone",
+        "sourceUpdatedAt": 1790956151000,
+        "priorPositionRank": 18,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 30,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      },
+      {
+        "id": "120",
+        "name": "Sean Koerner",
+        "sourceUpdatedAt": 1790896336000,
+        "priorPositionRank": 44,
+        "priorSourceUrl": "https://www.fantasypros.com/nfl/accuracy/?year=2025",
+        "currentOrdinalReference": 127,
+        "currentOrdinalCompletedThrough": 3,
+        "accuracyUpdatedAt": null,
+        "accuracyStatus": "PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN"
+      }
+    ]
+  },
+  "players": [
+    {
+      "name": "George Pickens",
+      "id": "8137",
+      "usage": [
+        {
+          "playerId": "8137",
+          "gsisId": "00-0037247",
+          "position": "WR",
+          "team": "DAL",
+          "season": 2026,
+          "week": 1,
+          "gameId": "2026_01_DAL_NYG",
+          "completed": true,
+          "completedAt": 1789374000000,
+          "attempts": 0,
+          "carries": 0,
+          "carryShare": 0,
+          "targets": 6,
+          "targetShare": 0.2,
+          "receptions": 3,
+          "receivingAirYards": 104,
+          "airYardsShare": 0.336569579288026,
+          "wopr": 0.535598705501618,
+          "receivingFirstDowns": 2,
+          "fantasyHalf": 4.3,
+          "tds": 0
+        },
+        {
+          "playerId": "8137",
+          "gsisId": "00-0037247",
+          "position": "WR",
+          "team": "DAL",
+          "season": 2026,
+          "week": 2,
+          "gameId": "2026_02_WAS_DAL",
+          "completed": true,
+          "completedAt": 1789964700000,
+          "attempts": 0,
+          "carries": 0,
+          "carryShare": 0,
+          "targets": 8,
+          "targetShare": 0.258064516129032,
+          "receptions": 6,
+          "receivingAirYards": 83,
+          "airYardsShare": 0.34016393442623,
+          "wopr": 0.625211528291909,
+          "receivingFirstDowns": 4,
+          "fantasyHalf": 7,
+          "tds": 0
+        },
+        {
+          "playerId": "8137",
+          "gsisId": "00-0037247",
+          "position": "WR",
+          "team": "DAL",
+          "season": 2026,
+          "week": 3,
+          "gameId": "2026_03_BAL_DAL",
+          "completed": true,
+          "completedAt": 1790569500000,
+          "attempts": 0,
+          "carries": 0,
+          "carryShare": 0,
+          "targets": 11,
+          "targetShare": 0.275,
+          "receptions": 7,
+          "receivingAirYards": 80,
+          "airYardsShare": 0.294117647058824,
+          "wopr": 0.618382352941176,
+          "receivingFirstDowns": 4,
+          "fantasyHalf": 11.7,
+          "tds": 0
+        }
+      ],
+      "publicBroadReference": {
+        "rank": 15,
+        "projectionReference": "12.1",
+        "opponent": "at HOU"
+      }
+    },
+    {
+      "name": "Josh Downs",
+      "id": "9500",
+      "usage": [
+        {
+          "playerId": "9500",
+          "gsisId": "00-0038997",
+          "position": "WR",
+          "team": "IND",
+          "season": 2026,
+          "week": 1,
+          "gameId": "2026_01_BAL_IND",
+          "completed": true,
+          "completedAt": 1789347600000,
+          "attempts": 0,
+          "carries": 0,
+          "carryShare": 0,
+          "targets": 4,
+          "targetShare": 0.137931034482759,
+          "receptions": 2,
+          "receivingAirYards": 36,
+          "airYardsShare": 0.17910447761194,
+          "wopr": 0.332269686052496,
+          "receivingFirstDowns": 2,
+          "fantasyHalf": 4.7,
+          "tds": 0
+        },
+        {
+          "playerId": "9500",
+          "gsisId": "00-0038997",
+          "position": "WR",
+          "team": "IND",
+          "season": 2026,
+          "week": 2,
+          "gameId": "2026_02_IND_KC",
+          "completed": true,
+          "completedAt": 1789978800000,
+          "attempts": 0,
+          "carries": 0,
+          "carryShare": 0,
+          "targets": 9,
+          "targetShare": 0.3,
+          "receptions": 7,
+          "receivingAirYards": 73,
+          "airYardsShare": 0.450617283950617,
+          "wopr": 0.765432098765432,
+          "receivingFirstDowns": 6,
+          "fantasyHalf": 10.7,
+          "tds": 0
+        },
+        {
+          "playerId": "9500",
+          "gsisId": "00-0038997",
+          "position": "WR",
+          "team": "IND",
+          "season": 2026,
+          "week": 3,
+          "gameId": "2026_03_HOU_IND",
+          "completed": true,
+          "completedAt": 1790557200000,
+          "attempts": 0,
+          "carries": 0,
+          "carryShare": 0,
+          "targets": 11,
+          "targetShare": 0.314285714285714,
+          "receptions": 5,
+          "receivingAirYards": 172,
+          "airYardsShare": 0.612099644128114,
+          "wopr": 0.899898322318251,
+          "receivingFirstDowns": 4,
+          "fantasyHalf": 10.2,
+          "tds": 0
+        }
+      ],
+      "publicBroadReference": {
+        "rank": 19,
+        "projectionReference": "11.3",
+        "opponent": "at WAS"
+      }
+    }
+  ],
+  "accuracyBackfill": "CURRENT_2026_ACCURACY_INSUFFICIENT: public report limited to ten rows; published ordinal references have no proven accuracy update timestamp; attempted individual filters returned broad consensus. No synthetic history.",
+  "calibration": "INSUFFICIENT_REPRODUCIBLE_SAME_PROVIDER_PRELOCK_HISTORY"
+}

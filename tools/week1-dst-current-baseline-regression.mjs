@@ -33,7 +33,7 @@ for(const week of [4,5,6]){
 }
 for(const invalid of [undefined,null,Number.NaN,Infinity,'bad'])assert.equal(allowed.historicalSpecialTeamsBaselineAllowed({week:1,now:invalid}),false,'invalid time must fail closed');
 for(const stale of ["['PIT',3,1,'ATL',19.25]","Opp implied '+x.rb.implied","Vegas-Implied-Points"]) assert(!source.includes(stale),'stale/unverified DST evidence resurrected: '+stale);
-assert.equal(RUNTIME_FILES.length,17);
+assert.equal(RUNTIME_FILES.length,18);
 for(const retired of ['dst-k-season-stream.js','season-evidence-layer.js']){
   assert(!RUNTIME_FILES.includes(retired));
   for(const file of ['index.html','sw.js'])assert(!fs.readFileSync(file,'utf8').includes(retired),file+' must not reactivate '+retired);

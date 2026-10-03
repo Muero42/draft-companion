@@ -129,3 +129,7 @@ The decision score concept is:
 expected future DST edge × relevance to matchup win probability − bench option value − transaction cost − flexibility loss.
 
 This is an exception policy, not permission to roster two DSTs routinely.
+
+## RC4.226 Runtime realization
+
+`season-decision-engine-v1.mjs` realizes the automatic Weekly phase policy. Draft accuracy weight is zero at Runtime. Historical in-season ordinals provide explicitly heuristic prior categories, shrunk with six equivalent prior weeks. Only exact individual pre-lock Half-PPR snapshots scored after completed weeks can update current accuracy. Movement3pp/update, cap30%, four experts/75% coverage, two bounded challengers and two-update promotion stability. Unknown current accuracy stays neutral; current stale ranks vote zero. Source qualification/backfill and conservative uncalibrated decision rules are recorded in `docs/PITTI_RC4226_ADAPTIVE_DECISION_AUDIT.md`. Historical operational commands above do not authorize publication.

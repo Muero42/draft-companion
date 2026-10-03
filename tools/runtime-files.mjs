@@ -1,6 +1,7 @@
 export const RUNTIME_FILES=Object.freeze([
   'index.html',
   'app.js',
+  'season-decision-engine-v1.mjs',
   'decision-policy.js',
   'weekly-evidence-v2.js',
   'lineup-start-sit-v2.js',

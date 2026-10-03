@@ -302,5 +302,22 @@
       ],
       "format_inference_caveat": "Likely interpreted four displayed WR-labelled lineup spots as four fixed WR starters. Do not use his 'loading up at WR' format conclusion as evidence for this league; actual slots are 2 WR plus FLEX slots."
     }
+  },
+  "runtime_v1": {
+    "module": "season-decision-engine-v1.mjs",
+    "decision_channel": "WEEKLY",
+    "draft_accuracy_weight": 0,
+    "prior_equivalent_weeks": 6,
+    "completed_update_movement_bound": 0.03,
+    "max_expert_weight": 0.3,
+    "min_verified_experts": 4,
+    "min_panel_coverage": 0.75,
+    "max_challengers": 2,
+    "promotion_confirmed_updates": 2,
+    "accuracy_method": "PAIRWISE_ORDERING_HALF_PPR_TOP_CORE",
+    "scoring": "HALF_PPR",
+    "current_accuracy_unknown": "NEUTRAL_PRIOR_SHRINKAGE_NOT_ZERO_ACCURACY",
+    "fallback": "EXPLICIT_UNWEIGHTED_SELECTED_OR_BROAD",
+    "near_tie_method": "UNCALIBRATED_CONSERVATIVE_FALLBACK"
   }
 }
