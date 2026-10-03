@@ -1,3 +1,25 @@
+Generation: `20261003T1914Z-v298`
+Handoff generation: `20261003T1914Z-v298`
+
+v11.8.0-rc4.225 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / ANDROID UI PHYSICAL PENDING / NOT ACCEPTED. Production remains rc4.224 canonical 9a4422a2b562ec0dc3688aa2b663f29709b9c3af tree 8138135db5c775c98ed48aa381119c9b956ffe9f. Historical Android rc4.223 core repaired functionality USER_CONFIRMED PASS remains intact. Next gate: RC4225_EXACT_HEAD_CLOUD_VALIDATION_PENDING.
+
+RC4225 authorized sequence: tested local candidate -> push/PR -> exact-head cloud full Strict and browser PASS -> adversarial review -> clean green merge -> Production parity -> Authority reconciliation. Android UI acceptance PENDING; rc4223 historical core PASS preserved; no fantasy transaction.
+
+See docs/PITTI_RC4225_ROSTER_SURFACE_AUDIT.md.
+
+## HISTORICAL v297 and earlier (immutable evidence)
+
+Generation: `20261003T1832Z-v297`
+Handoff generation: `20261003T1832Z-v297`
+
+v11.8.0-rc4.224 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR226 squash merged 9a4422a2b562ec0dc3688aa2b663f29709b9c3af, reviewed 4bbbf3aa650adfa37b6d2d3129e4eb28572ca58b, tree 8138135db5c775c98ed48aa381119c9b956ffe9f, deployment 18998487-d441-4c33-ba5b-e5ed2000688a. ANDROID UI ACCEPTANCE PENDING / NOT PHYSICALLY ACCEPTED. Historical rc4.223 core repaired functionality USER_CONFIRMED PASS preserved; no agent physical test. Next gate: RC4224_ANDROID_UI_ACCEPTANCE_PENDING.
+
+RC4.224 merged and Production verified; STOP at Android UI acceptance PENDING. User reviews Kader on real Android. Historical rc4.223 core repaired functionality PASS preserved. Local v297 Authority commit is not published or certified by historical runtime CI.
+
+See docs/PITTI_RC4224_ROSTER_SURFACE_AUDIT.md and docs/PITTI_RC4224_PRODUCTION_RECEIPT.json.
+
+## HISTORICAL v296 and earlier (immutable evidence)
+
 Generation: `20261003T1814Z-v296`
 Handoff generation: `20261003T1814Z-v296`
 

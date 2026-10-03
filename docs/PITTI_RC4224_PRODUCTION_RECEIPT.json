@@ -1,0 +1,136 @@
+{
+  "checkpoint": "v297",
+  "version": "v11.8.0-rc4.224",
+  "pr": 226,
+  "reviewed_head": "4bbbf3aa650adfa37b6d2d3129e4eb28572ca58b",
+  "reviewed_tree": "8138135db5c775c98ed48aa381119c9b956ffe9f",
+  "merge_commit": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+  "merged_tree": "8138135db5c775c98ed48aa381119c9b956ffe9f",
+  "canonical_parent": "7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4",
+  "merge_method": "SQUASH",
+  "merged_at": "2026-10-03T18:27:54Z",
+  "source_status": "MERGED_CANONICAL",
+  "production_status": "DEPLOYED_SUCCESS",
+  "production_branch": "main",
+  "production_deployment_id": "18998487-d441-4c33-ba5b-e5ed2000688a",
+  "cloudflare_check_run_id": 111265026478,
+  "production_deployment_proven": true,
+  "premerge_exact_head_ci": "5/5 SUCCESS",
+  "premerge_cloud_job": 111264422343,
+  "cloud_strict": "277/277 PASS",
+  "cloud_job": 111264944243,
+  "postmerge_checks": "8/8 SUCCESS",
+  "postmerge_check_runs": [
+    {
+      "id": 111265026478,
+      "name": "Cloudflare Pages",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+      "url": "https://github.com/Muero42/draft-companion/runs/111265026478",
+      "externalId": "18998487-d441-4c33-ba5b-e5ed2000688a"
+    },
+    {
+      "id": 111264944400,
+      "name": "behavioral-contract",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37144287827/job/111264944400",
+      "externalId": "07fe9c0d-c60f-547d-bea7-9a07e3c76b05"
+    },
+    {
+      "id": 111264944383,
+      "name": "draft-critical",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37144287821/job/111264944383",
+      "externalId": "1c52c46a-7078-5f54-86a8-37041f5621d0"
+    },
+    {
+      "id": 111264944345,
+      "name": "draft-critical",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37144287797/job/111264944345",
+      "externalId": "a8c157ca-900c-55fb-94f9-40006cf7ec98"
+    },
+    {
+      "id": 111264944304,
+      "name": "guardrails",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37144287815/job/111264944304",
+      "externalId": "2b193c38-0ee1-5160-9a1e-a989974d99ad"
+    },
+    {
+      "id": 111264944243,
+      "name": "pitti-cloud-validation",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37144287798/job/111264944243",
+      "externalId": "4c6146b7-82b3-5cdf-8305-3f58053a45ce"
+    },
+    {
+      "id": 111264944218,
+      "name": "package",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37144287812/job/111264944218",
+      "externalId": "69c8a635-0f5c-53a7-a29c-10edd5cf6393"
+    },
+    {
+      "id": 111264944185,
+      "name": "draft-critical",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37144287802/job/111264944185",
+      "externalId": "880e64c4-98ef-524d-a06f-cba435d6690e"
+    }
+  ],
+  "served_static_files": 16,
+  "served_static_parity": "PASS_UTF8_LF",
+  "runtime_files": 17,
+  "browser_review": "PASS",
+  "browser_scope": "EXACT_HEAD_CLOUD_OFFLINE_MOBILE_EMULATION",
+  "mobile_widths": [
+    360,
+    390,
+    430
+  ],
+  "rawDirectoryRequests": 0,
+  "compactDirectoryRequests": 1,
+  "uncaught_browser_errors": 0,
+  "transient_hold_empty": true,
+  "replacement_render_complete": true,
+  "actual_scores": {
+    "source": "https://api.sleeper.app/v1/league/1366053132957646848/matchups/4",
+    "rosterId": 4,
+    "rows": 10,
+    "CLE": 9,
+    "Judkins": 18.6
+  },
+  "game_context": {
+    "source": "https://draft-companion.pages.dev/api/nfl-week-context?season=2026&week=4",
+    "events": 16,
+    "CLE_PIT": "FINAL"
+  },
+  "league_scoring": {
+    "week": 4,
+    "receivingPoints": 0.5
+  },
+  "matchup_limitation": "NO_REPEATABLE_CURRENT_WR_CB_SOURCE_PROVEN_NO_RUNTIME_NAMES",
+  "historical_rc4223_core_acceptance": "USER_CONFIRMED_PASS_PRESERVED",
+  "physical_status": "PENDING",
+  "physical_classification": "RC4224_ANDROID_UI_ACCEPTANCE_PENDING",
+  "physical_acceptance_proven": false,
+  "agent_physical_test": false,
+  "evidence_source": "LIVE_GITHUB_AND_PRODUCTION_VERIFIED",
+  "observed_at": "2026-10-03T18:32:20Z"
+}
