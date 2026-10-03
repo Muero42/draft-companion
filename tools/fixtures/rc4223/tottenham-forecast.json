@@ -1,0 +1,31 @@
+{
+  "sourceUrl": "https://api.open-meteo.com/v1/forecast?latitude=51.6044&longitude=-0.0664&hourly=temperature_2m,precipitation_probability,wind_speed_10m,wind_gusts_10m&timezone=GMT&forecast_days=16",
+  "sampledAt": "2026-10-03T14:52:47.123Z",
+  "latitude": 51.600163,
+  "longitude": -0.06819153,
+  "utc_offset_seconds": 0,
+  "hourly_units": {
+    "time": "iso8601",
+    "temperature_2m": "°C",
+    "precipitation_probability": "%",
+    "wind_speed_10m": "km/h",
+    "wind_gusts_10m": "km/h"
+  },
+  "hourly": {
+    "time": [
+      "2026-10-04T13:00"
+    ],
+    "temperature_2m": [
+      21.1
+    ],
+    "precipitation_probability": [
+      0
+    ],
+    "wind_speed_10m": [
+      10.4
+    ],
+    "wind_gusts_10m": [
+      23.4
+    ]
+  }
+}

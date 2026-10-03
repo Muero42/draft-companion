@@ -292,7 +292,7 @@ for(const [label,mutate,reason] of [
   assert.notEqual(context.pick(purged.records,priorQbPlayer,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED',`${label}: exact weekly consumer must not return the rejected lane`);
   const persisted=new Map(),store={setItem:(key,value)=>persisted.set(key,value),getItem:key=>persisted.get(key)??null,removeItem:key=>persisted.delete(key)};
   evidence.atomicWrite(store,purged);
-  assert.equal(JSON.parse(persisted.get(evidence.CACHE_KEY)).records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,0,`${label}: persisted snapshot must contain no rejected-lane records`);
+  assert.equal(evidence.decodeStorageSnapshot(JSON.parse(persisted.get(evidence.CACHE_KEY))).records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,0,`${label}: persisted snapshot must contain no rejected-lane records`);
 }
 // Numeric source coverage alone is insufficient: mapped rows from a position
 // below the aggregate identity threshold must not escape into a mixed snapshot.
@@ -312,7 +312,7 @@ assert.notEqual(context.pick(mappingPurged.records,mappingPriorPlayer,'projected
 assert.equal(context.pick(mappingPurged.records,mappingPurged.records.find(r=>r.position==='QB').playerId,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED','individually verified partial rows remain usable');
 const mappingPersisted=new Map(),mappingStore={setItem:(key,value)=>mappingPersisted.set(key,value),getItem:key=>mappingPersisted.get(key)??null,removeItem:key=>mappingPersisted.delete(key)};
 evidence.atomicWrite(mappingStore,mappingPurged);
-assert.equal(JSON.parse(mappingPersisted.get(evidence.CACHE_KEY)).records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,21);
+assert.equal(evidence.decodeStorageSnapshot(JSON.parse(mappingPersisted.get(evidence.CACHE_KEY))).records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,21);
 const transientMixed=structuredClone(rc4201Physical);delete transientMixed.QB;
 const carried=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:transientMixed,sleeperPlayers:players,priorSnapshot:retrievalSnapshot,verifiedAt:now+1000});
 assert.equal(carried.lanes.projections.coverage.positions.QB.responseClassification,'ABSENT_TRANSIENT');
@@ -371,7 +371,7 @@ assert(mixedRanked.records.some(x=>x.metric==='projected_points'),'rank freshnes
 const quotaSnapshot=structuredClone(productionRanked);
 const previousProjectionOnly=evidence.projectionOnlyStorageSnapshot(quotaSnapshot);
 assert(previousProjectionOnly&&previousProjectionOnly.records.every(row=>row.metric==='projected_points'));
-const previousText=JSON.stringify({...previousProjectionOnly,snapshotId:'previous-weekly'}),fullText=JSON.stringify(quotaSnapshot),projectionOnlyText=JSON.stringify(previousProjectionOnly);
+const previousText=JSON.stringify({...previousProjectionOnly,snapshotId:'previous-weekly'}),fullText=JSON.stringify(evidence.encodeStorageSnapshot(quotaSnapshot)),projectionOnlyText=JSON.stringify(evidence.encodeStorageSnapshot(previousProjectionOnly));
 assert(fullText.length>projectionOnlyText.length,'quota fallback fixture requires full snapshot to be larger');
 const protectedResearch='RESEARCH_EVIDENCE_'+('r'.repeat(4096)),protectedReturns='RETURN_VALIDATION_'+('v'.repeat(4096)),protectedDecision='ACTIVE_EVIDENCE_'+('d'.repeat(4096));
 const quotaMemory=new Map([
@@ -381,7 +381,7 @@ const quotaMemory=new Map([
   ['v118_decisionFixtures',protectedDecision]
 ]);
 const protectedSize=protectedResearch.length+protectedReturns.length+protectedDecision.length;
-const quotaLimit=protectedSize+previousText.length+Math.max(4096,Math.floor((fullText.length-projectionOnlyText.length)/3));
+const quotaLimit=protectedSize+projectionOnlyText.length+Math.max(1500,Math.floor((fullText.length-projectionOnlyText.length)/3));
 assert(protectedSize+projectionOnlyText.length<quotaLimit&&protectedSize+fullText.length>quotaLimit,'quota fixture must allow projection-only replacement but reject full snapshot');
 const quotaStorage={
   setItem(k,v){
@@ -394,7 +394,7 @@ const quotaStorage={
   getItem:k=>quotaMemory.get(k)??null,
   removeItem:k=>quotaMemory.delete(k)
 };
-const quotaResult=evidence.atomicWrite(quotaStorage,quotaSnapshot),persistedQuota=JSON.parse(quotaMemory.get(evidence.CACHE_KEY));
+const quotaResult=evidence.atomicWrite(quotaStorage,quotaSnapshot),persistedQuota=evidence.decodeStorageSnapshot(JSON.parse(quotaMemory.get(evidence.CACHE_KEY)));
 assert.equal(quotaResult.persistence?.mode,'LOCAL_STORAGE_PROJECTION_ONLY');
 assert.equal(persistedQuota.lanes.projections.status,'AVAILABLE');
 assert.equal(persistedQuota.lanes.expertWeeklyRanks.status,'UNAVAILABLE');

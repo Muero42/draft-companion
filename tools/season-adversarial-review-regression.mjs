@@ -9,6 +9,11 @@ const gameContext={CACHE_KEY:'pitti.game-context.v1.current',validateSnapshot:(s
 const s={Date,console,PittiGameContextV1:gameContext,BOONE_TRADE_VALUE_CACHE_KEY:'pitti.boone-trade-values.v1.current',adaptBooneTradeEvidence:()=>({available:true,values:Object.fromEntries((cache.get('v190_seasonEvidence')||[]).filter(r=>r.metric==='trade_value').map(r=>[r.playerId,r]))}),store:{get:(k,f)=>cache.get(k)??f},lastDraftContext:{season:null},SLEEPER_NON_STARTER_SLOTS:new Set(['BN','IR','TAXI']),esc:String,loadResearchEvents:()=>[]};vm.createContext(s);
 for(const f of ['seasonSlotEligible','tradeStarterSlots','tradeBestLineup','seasonStructurallyDroppable'])vm.runInContext(source(f),s);
 vm.runInContext(app.slice(app.indexOf('function seasonEvidenceContext('),app.indexOf('function fpStoreKey(')),s);
+// Existing decision-model positives have verified future games at the provider boundary.
+// The real full-week lock/stale/context consumer is exercised by rc4223-eligibility.
+s.seasonDstTeam=x=>x;const eligibility=s.seasonCurrentWeekEligibility;
+s.seasonCurrentWeekEligibility=(row,season,now)=>{const original=s.PittiGameContextV1;s.PittiGameContextV1={CACHE_KEY:'verified-future-game-fixture',validateSnapshot:()=>({ok:true}),contextForTeam:()=>({status:'VERIFIED',locked:false})};try{return eligibility(row,season,now)}finally{s.PittiGameContextV1=original}};
+
 const p=(id,pos)=>({p:{id,name:id,pos,bye:7},r:{rank:50},seasonStatus:'ACTIVE',pk:{pick_no:20}});
 const own=(mine,opp=[],slots=['RB','WR','BN'])=>{const rosters=Array.from({length:10},(_,i)=>({roster_id:i+1,owner_id:'owner'+i,players:(i===0?mine:i===1?opp:[]).map(x=>x.p.id),reserve:[],taxi:[]}));return{ok:true,source:'Sleeper direct',generated_at:now,player_directory:{fetchedAt:now},league_id:'fixture',roster_id:1,my_roster:rosters[0],league_rosters:rosters,rosters,ownership:Object.fromEntries(rosters.flatMap(r=>r.players.map(id=>[id,{roster_id:r.roster_id,mine:r.roster_id===1,reserve:false,taxi:false}]))),league:{season:'2026',roster_positions:slots},transaction_round:2};};
 const rec=(x,metric,value,patch={})=>({playerId:x.p.id,metric,value,season:2026,week:2,scoring:'HALF_PPR',status:'VERIFIED',confidence:.9,sourceId:'test',sourceUrl:'https://example.test/chart',publishedAt:now-1000,verifiedAt:now-500,expiresAt:now+60000,...patch});

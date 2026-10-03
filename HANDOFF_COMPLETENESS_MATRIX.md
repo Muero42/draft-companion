@@ -1,3 +1,14 @@
+Generation: `20261003T1453Z-v293`
+Handoff generation: `20261003T1453Z-v293`
+
+v11.8.0-rc4.223 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Lock / eligibility and durable rank persistence repair; no acceptance threshold change. Production remains v11.8.0-rc4.222 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical c1561bc414b380621c6c59137d4827115125e623, reviewed 26087f745449979c837167e73c5a5cba5258e84b, tree f2d61adc4064f6c276f762c5df7685f802fe7abe, deployment 76ec53bb-6a7b-4e09-a81d-f7476a374a0e. rc4.222 USER OBSERVED PARTIAL: W4 615 persisted projection records; all six projection lanes AVAILABLE; all four selected identity lanes AVAILABLE before persistence; rank persistence and LOCK/OUT residual defects; trade STALE_RECOMPUTATION_REQUIRED; full functional acceptance NOT granted. PHYSICAL PENDING / NOT ACCEPTED. rc4.219/220 responsiveness PASS preserved; historical RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY, RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and RC4215_PHYSICAL_FAIL_DECISION_QUALITY preserved. Next gate: RC4223_FINAL_LOCAL_VALIDATION_PUBLICATION_PENDING.
+
+Current user authorizes RC4223 data completeness repair, focused/adversarial review, one final Strict Suite, exact-head publication/CI, green merge and Production read-only verification. No fantasy transaction or manager communication.
+
+See docs/PITTI_RC4223_LOCK_RANK_PERSISTENCE_AUDIT.md.
+
+## HISTORICAL v292 and earlier (immutable evidence)
+
 Generation: `20261003T1340Z-v292`
 
 v11.8.0-rc4.222 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR223 SQUASH MERGED, canonical c1561bc414b380621c6c59137d4827115125e623, reviewed 26087f745449979c837167e73c5a5cba5258e84b, tree f2d61adc4064f6c276f762c5df7685f802fe7abe, deployment 76ec53bb-6a7b-4e09-a81d-f7476a374a0e. PHYSICAL PENDING / NOT ACCEPTED / NOT PHYSICALLY ACCEPTED. rc4.219 and rc4.220 RESPONSIVENESS PHYSICAL PASS remain USER_CONFIRMED historical evidence; rc4.221 latest user observation PARTIAL (524 records, trade HOLD), full functional acceptance NOT granted; rc4.222 FUNCTIONAL SURFACE PHYSICAL ACCEPTANCE PENDING; full functional Production acceptance PENDING. Historical RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY, RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and RC4215_PHYSICAL_FAIL_DECISION_QUALITY preserved. Next gate: RC4222_ANDROID_FUNCTIONAL_SURFACE_ACCEPTANCE_PENDING.

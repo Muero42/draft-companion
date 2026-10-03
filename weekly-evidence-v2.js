@@ -346,6 +346,50 @@
 
   const storageQuotaError=error=>error?.name==='QuotaExceededError'||Number(error?.code)===22;
   const safeRemove=(storage,key)=>{try{storage.removeItem(key)}catch{}};
+  const STORAGE_ENCODING='pitti.weekly-storage.v1';
+  const RECORD_FIELDS=['playerId','sleeperId','sourcePlayerId','value','team','mappingMethod','confidence'];
+  function encodeStorageSnapshot(snapshot){
+    const templates=[],indices=new Map(),rows=[];
+    for(const record of snapshot.records||[]){
+      const base={...record};
+      const values=RECORD_FIELDS.map(key=>{const value=base[key];if(value!==null)delete base[key];return value===undefined?null:value});
+      const signature=JSON.stringify(base);
+      let index=indices.get(signature);
+      if(index===undefined){index=templates.length;templates.push(base);indices.set(signature,index)}
+      rows.push([index,...values]);
+    }
+    return{...snapshot,records:[],storageEncoding:STORAGE_ENCODING,recordTemplates:templates,recordRows:rows};
+  }
+  function decodeStorageSnapshot(snapshot){
+    if(!snapshot?.storageEncoding)return snapshot;
+    if(snapshot.storageEncoding!==STORAGE_ENCODING||!Array.isArray(snapshot.recordTemplates)||!Array.isArray(snapshot.recordRows))throw new Error('WEEKLY_EVIDENCE_STORAGE_ENCODING');
+    const records=snapshot.recordRows.map(row=>{
+      if(!Array.isArray(row)||row.length!==RECORD_FIELDS.length+1||!Number.isInteger(row[0])||row[0]<0||row[0]>=snapshot.recordTemplates.length)throw new Error('WEEKLY_EVIDENCE_STORAGE_ROW');
+      const base=snapshot.recordTemplates[row[0]];
+      if(!base||typeof base!=='object'||Array.isArray(base))throw new Error('WEEKLY_EVIDENCE_STORAGE_TEMPLATE');
+      const record={...base};
+      RECORD_FIELDS.forEach((key,i)=>{if(row[i+1]!==null)record[key]=row[i+1]});
+      return record;
+    });
+    const {storageEncoding,recordTemplates,recordRows,...normal}=snapshot;
+    return{...normal,records};
+  }
+  function storageDiagnostics(storage){
+    let estimatedCharacters=0;
+    const largestSafeCaches=[];
+    try{for(let i=0;i<storage.length;i++){
+      const key=storage.key(i),characters=String(storage.getItem(key)||'').length;
+      estimatedCharacters+=String(key||'').length+characters;
+      if(key===CACHE_KEY||key===TEMP_KEY||/^v7_(rankCache|panelRanks|rank_\d+)$/.test(key))largestSafeCaches.push({key,characters,estimatedBytes:characters*2});
+    }}catch{}
+    return{estimatedCharacters,estimatedBytes:estimatedCharacters*2,largestSafeCaches:largestSafeCaches.sort((a,b)=>b.characters-a.characters).slice(0,5)};
+  }
+  const metricCounts=snapshot=>Object.fromEntries(['projected_points','weekly_rank','broad_weekly_ecr_rank'].map(metric=>[metric,(snapshot?.records||[]).filter(r=>r.metric===metric).length]));
+  const laneStatuses=snapshot=>Object.fromEntries(['projections','expertWeeklyRanks','pittiSelectedWeeklyRanks'].map(key=>[key,snapshot?.lanes?.[key]?.status||'UNAVAILABLE']));
+  function persistenceDiagnostic(snapshot){
+    const p=snapshot?.persistence||{},counts=metricCounts(snapshot),count=n=>Number.isInteger(n)&&n>=0?n:null,statuses=values=>Object.fromEntries(['projections','expertWeeklyRanks','pittiSelectedWeeklyRanks'].map(key=>[key,['AVAILABLE','PARTIAL','UNAVAILABLE'].includes(values?.[key])?values[key]:null]));
+    return{mode:['LOCAL_STORAGE_COMPACT','LOCAL_STORAGE_PROJECTION_ONLY'].includes(p.mode)?p.mode:null,reason:p.reason==='STORAGE_QUOTA'?p.reason:null,projectionOnly:p.mode==='LOCAL_STORAGE_PROJECTION_ONLY',totalRecords:snapshot?.records?.length||0,counts,rankRecordsBefore:count(p.rankRecordsBefore),rankRecordsAfter:counts.weekly_rank+counts.broad_weekly_ecr_rank,lanesBefore:statuses(p.lanesBefore),lanesAfter:laneStatuses(snapshot)};
+  }
   function projectionOnlyStorageSnapshot(snapshot){
     const records=(Array.isArray(snapshot?.records)?snapshot.records:[]).filter(record=>record?.metric==='projected_points');
     if(!['AVAILABLE','PARTIAL'].includes(snapshot?.lanes?.projections?.status)||!records.length)return null;
@@ -354,21 +398,25 @@
       status:'DEGRADED',
       records,
       rejections:[...(Array.isArray(snapshot.rejections)?snapshot.rejections:[]),{lane:'expertWeeklyRanks',reason:'STORAGE_QUOTA_PROJECTION_ONLY'}],
-      lanes:{...snapshot.lanes,expertWeeklyRanks:{...(snapshot.lanes?.expertWeeklyRanks||{}),status:'UNAVAILABLE',reason:'STORAGE_QUOTA_PROJECTION_ONLY'},pittiSelectedWeeklyRanks:{...(snapshot.lanes?.pittiSelectedWeeklyRanks||{}),status:'UNAVAILABLE',reason:'STORAGE_QUOTA_PROJECTION_ONLY'}},
+      lanes:{...snapshot.lanes,...Object.fromEntries(['expertWeeklyRanks','pittiSelectedWeeklyRanks'].map(key=>[key,{...(snapshot.lanes?.[key]||{}),status:'UNAVAILABLE',reason:'STORAGE_QUOTA_PROJECTION_ONLY',coverage:{...snapshot.lanes?.[key]?.coverage,positions:Object.fromEntries(Object.entries(snapshot.lanes?.[key]?.coverage?.positions||{}).map(([position,value])=>[position,{...value,status:'UNAVAILABLE',reason:'STORAGE_QUOTA_PROJECTION_ONLY',persistedRows:0}]))}}]))},
       panel:{...snapshot.panel,weeklyRank:{status:'UNAVAILABLE',sources:[],selectedExperts:{},aggregation:'SELECTED_PANEL_NOT_PERSISTED_STORAGE_QUOTA'},broadWeeklyEcr:{status:'UNAVAILABLE',sources:[],aggregation:'BROAD_CONSENSUS_NOT_PERSISTED_STORAGE_QUOTA'}},
       persistence:{mode:'LOCAL_STORAGE_PROJECTION_ONLY',reason:'STORAGE_QUOTA'}
     };
   }
   function atomicWrite(storage,snapshot){
+    const beforeCounts=metricCounts(snapshot),beforeLanes=laneStatuses(snapshot);
     const serialize=candidate=>{
-      const text=JSON.stringify(candidate),validated=JSON.parse(text);
+      const text=JSON.stringify(encodeStorageSnapshot(candidate)),validated=decodeStorageSnapshot(JSON.parse(text));
       if(!validated||validated.schema!==SCHEMA||validated.snapshotId!==snapshot.snapshotId)throw new Error('WEEKLY_EVIDENCE_ATOMIC_VERIFY_FAILED');
       return text;
     };
     const commit=candidate=>{
-      const text=serialize(candidate);
+      const candidateCounts=metricCounts(candidate);
+      const diagnosed={...candidate,persistence:{...candidate.persistence,mode:candidate.persistence?.mode||'LOCAL_STORAGE_COMPACT',reason:candidate.persistence?.reason||null,projectionOnly:candidate.persistence?.mode==='LOCAL_STORAGE_PROJECTION_ONLY',countsBefore:beforeCounts,countsAfter:candidateCounts,rankRecordsBefore:beforeCounts.weekly_rank+beforeCounts.broad_weekly_ecr_rank,rankRecordsAfter:candidateCounts.weekly_rank+candidateCounts.broad_weekly_ecr_rank,lanesBefore:beforeLanes,lanesAfter:laneStatuses(candidate)}};
+      const text=serialize(diagnosed);
       storage.setItem(CACHE_KEY,text);
-      const current=JSON.parse(storage.getItem(CACHE_KEY)||'null');
+      const persistedText=storage.getItem(CACHE_KEY);if(persistedText!==text)throw new Error('WEEKLY_EVIDENCE_ATOMIC_VERIFY_FAILED');
+      const current=decodeStorageSnapshot(JSON.parse(persistedText||'null'));
       if(!current||current.schema!==SCHEMA||current.snapshotId!==snapshot.snapshotId)throw new Error('WEEKLY_EVIDENCE_ATOMIC_VERIFY_FAILED');
       return current;
     };
@@ -418,5 +466,5 @@
     }
   }
 
-  return{sleeperProjectionLane,rankingPayloadDiagnostic,SCHEMA,CACHE_KEY,TEMP_KEY,MAPPING_VERSION,MAX_AGE_MS,EVIDENCE_TTL_MS,POSITIONS,PROJECTION_POSITIONS,MIN_COUNTS,RANK_MIN_COUNTS,SELECTED_PANEL_MIN_EXPERTS,WEEKLY_PROJECTION_QUERY_SHAPE,WEEKLY_HALF_PPR_MAX,sourceTime,retrievalProjectionChronology,weeklyRecordChronology,sleeperIndexes,mapFantasyProsPlayer,projectionLane,weeklyRankLane,selectedWeeklyRankLane,buildSnapshot,validateSnapshot,projectionOnlyStorageSnapshot,atomicWrite};
+  return{sleeperProjectionLane,rankingPayloadDiagnostic,SCHEMA,CACHE_KEY,TEMP_KEY,MAPPING_VERSION,MAX_AGE_MS,EVIDENCE_TTL_MS,POSITIONS,PROJECTION_POSITIONS,MIN_COUNTS,RANK_MIN_COUNTS,SELECTED_PANEL_MIN_EXPERTS,WEEKLY_PROJECTION_QUERY_SHAPE,WEEKLY_HALF_PPR_MAX,sourceTime,retrievalProjectionChronology,weeklyRecordChronology,sleeperIndexes,mapFantasyProsPlayer,projectionLane,weeklyRankLane,selectedWeeklyRankLane,buildSnapshot,validateSnapshot,projectionOnlyStorageSnapshot,encodeStorageSnapshot,decodeStorageSnapshot,storageDiagnostics,persistenceDiagnostic,metricCounts,laneStatuses,atomicWrite};
 });

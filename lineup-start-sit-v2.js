@@ -39,15 +39,16 @@
     const raw=evidence?.values?.[playerKey(row)]||evidence?.values?.[row?.p?.name]||{};
     const projection=Number(raw.projected_points??raw.projection_half_ppr??raw.projection),rank=Number(raw.positional_rank??raw.rank),opponent=String(raw.opponent||'').trim();
     const projectionVerified=raw.projection_status==null||raw.projection_status==='VERIFIED';
+    const startable=raw.lineup_eligible!==false;
     const projectionAvailable=!!evidence?.available&&projectionVerified&&Number.isFinite(projection)&&projection>=0;
     const rankVerified=(raw.rank_status==null||raw.rank_status==='VERIFIED')&&Number.isInteger(rank)&&rank>0;
     const context=raw.team_context,contextAt=Date.parse(context?.as_of||context?.asOf||''),contextSource=String(context?.source||context?.provider||'').trim();
     const contextFresh=!!contextSource&&Number.isFinite(contextAt)&&contextAt<=evidence.now+3600000&&evidence.now-contextAt<=evidence.maxAgeMs;
-    return{available:projectionAvailable,projection:projectionAvailable?projection:null,projectionAvailable,projectionSource:projectionAvailable?(raw.projection_source||raw.provenance?.projection||null):null,rank:rankVerified?rank:null,rankAvailable:rankVerified,rankSource:rankVerified?(raw.rank_source||raw.provenance?.rank||null):null,opponent:opponent||null,teamContext:contextFresh?context:null,locked:raw.locked===true,provenance:projectionAvailable?raw.provenance||null:null,reason:!evidence?.available?evidence?.reason:!projectionVerified?'UNVERIFIED_WEEK_PROJECTION':!Number.isFinite(projection)||projection<0?'MISSING_WEEK_PROJECTION':rankVerified?'OK':'RANK_UNAVAILABLE'};
+    return{available:projectionAvailable&&startable&&!raw.locked,lineupEligible:startable,projection:projectionAvailable?projection:null,projectionAvailable,projectionSource:projectionAvailable?(raw.projection_source||raw.provenance?.projection||null):null,rank:rankVerified?rank:null,rankAvailable:rankVerified,rankSource:rankVerified?(raw.rank_source||raw.provenance?.rank||null):null,opponent:opponent||null,teamContext:contextFresh?context:null,locked:raw.locked===true,provenance:projectionAvailable?raw.provenance||null:null,reason:!evidence?.available?evidence?.reason:!projectionVerified?'UNVERIFIED_WEEK_PROJECTION':!Number.isFinite(projection)||projection<0?'MISSING_WEEK_PROJECTION':rankVerified?'OK':'RANK_UNAVAILABLE'};
   }
 
   function optimize(roster,evidence,slots=DEFAULT_SLOTS,currentAssignments=[]){
-    const pool=active(roster).map((row,index)=>({row,index,ev:playerEvidence(row,evidence)})).filter(x=>x.ev.available);
+    const pool=active(roster).map((row,index)=>({row,index,ev:playerEvidence(row,evidence)})).filter(x=>x.ev.available||x.ev.locked);
     const fixed=new Map();
     for(const assignment of currentAssignments||[]){const found=pool.find(x=>playerKey(x.row)===String(assignment?.playerId));if(found?.ev.locked&&eligible(assignment.slot,found.row?.p?.pos))fixed.set(Number(assignment.slotIndex),found);}
     let best={score:-Infinity,assignments:[]};
@@ -55,7 +56,7 @@
       if(slotIndex===slots.length){if(score>best.score)best={score,assignments:[...assignments]};return;}
       const slot=slots[slotIndex],locked=fixed.get(slotIndex),choices=locked&&!used.has(locked.index)?[locked]:pool.filter(x=>!used.has(x.index)&&eligible(slot,x.row?.p?.pos)&&!x.ev.locked);
       if(!choices.length){visit(slotIndex+1,used,[...assignments,{slot,player:null,evidence:null}],score);return;}
-      for(const choice of choices){used.add(choice.index);assignments.push({slot,player:choice.row,evidence:choice.ev});visit(slotIndex+1,used,assignments,score+choice.ev.projection);assignments.pop();used.delete(choice.index);}
+      for(const choice of choices){used.add(choice.index);assignments.push({slot,player:choice.row,evidence:choice.ev});visit(slotIndex+1,used,assignments,score+(choice.ev.locked?0:choice.ev.projection));assignments.pop();used.delete(choice.index);}
     }
     visit(0,new Set(),[],0);
     const assignedIds=new Set(best.assignments.filter(x=>x.player).map(x=>playerKey(x.player)));
@@ -68,7 +69,7 @@
     const bench=active(roster).filter(x=>!lineup.assignedIds.has(playerKey(x))).map(row=>({row,ev:playerEvidence(row,evidence)})).filter(x=>x.ev.available&&SKILL.has(normPos(x.row?.p?.pos)));
     const out=[];
     for(const starter of lineup.assignments){
-      if(!starter.player||!SKILL.has(normPos(starter.player.p?.pos)))continue;
+      if(!starter.player||starter.evidence?.locked||!SKILL.has(normPos(starter.player.p?.pos)))continue;
       for(const candidate of bench){
         if(!eligible(starter.slot,candidate.row.p?.pos))continue;
         const edge=candidate.ev.projection-starter.evidence.projection;
@@ -82,7 +83,7 @@
     const ev=evidence?.values&&Object.hasOwn(evidence,'available')?evidence:adaptEvidence(evidence,{week,now});
     if(!ev.available)return{status:'UNAVAILABLE',reason:ev.reason,evidence:ev,lineup:null,alternatives:[]};
     const lineup=optimize(roster,ev,slots,currentAssignments),alts=alternatives(roster,ev,lineup),currentBySlot=new Map((currentAssignments||[]).map(x=>[Number(x.slotIndex),String(x.playerId)]));
-    const changes=lineup.assignments.flatMap((assignment,index)=>{const before=currentBySlot.get(index),after=playerKey(assignment.player);if(!before||!after||before===after)return[];const start=roster.find(x=>playerKey(x)===after),sit=roster.find(x=>playerKey(x)===before),startEv=playerEvidence(start,ev),sitEv=playerEvidence(sit,ev);return[{slot:assignment.slot,slotIndex:index,start,sit,delta:Number.isFinite(startEv.projection)&&Number.isFinite(sitEv.projection)?startEv.projection-sitEv.projection:null,startEvidence:startEv,sitEvidence:sitEv}];});
+    const changes=lineup.assignments.flatMap((assignment,index)=>{const before=currentBySlot.get(index),after=playerKey(assignment.player);if(!before||!after||before===after)return[];const start=roster.find(x=>playerKey(x)===after),sit=roster.find(x=>playerKey(x)===before),startEv=playerEvidence(start,ev),sitEv=playerEvidence(sit,ev);if(startEv.locked||sitEv.locked||!startEv.available)return[];return[{slot:assignment.slot,slotIndex:index,start,sit,delta:Number.isFinite(startEv.projection)&&Number.isFinite(sitEv.projection)?startEv.projection-sitEv.projection:null,startEvidence:startEv,sitEvidence:sitEv}];});
     return{status:lineup.complete?'RECOMMENDED':'MONITOR',reason:lineup.complete?'OK':'INCOMPLETE_VERIFIED_LINEUP',evidence:ev,lineup,alternatives:alts,changes};
   }
 

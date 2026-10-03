@@ -1,0 +1,12 @@
+import assert from 'node:assert/strict';import fs from 'node:fs';import worker from '../_worker.js';import game from '../game-context-v1.js';
+const raw=JSON.parse(fs.readFileSync(new URL('./fixtures/rc4222/espn-week4.json',import.meta.url))),forecast=JSON.parse(fs.readFileSync(new URL('./fixtures/rc4223/tottenham-forecast.json',import.meta.url))),now=Date.parse('2026-10-03T14:00Z'),oldFetch=globalThis.fetch,oldNow=Date.now;
+let mutate=p=>p,http=200;
+Date.now=()=>now;
+try{
+ globalThis.fetch=async url=>{const u=String(url);if(u.includes('/scoreboard'))return Response.json({season:{year:2026,type:2},week:{number:4},events:structuredClone(raw.events)});if(u.includes('/summary?event=')){const event=raw.events.find(e=>u.endsWith(e.id)),c=event.competitions[0];return Response.json({header:{id:event.id,competitions:[{date:event.date,competitors:c.competitors}]},gameInfo:{venue:c.venue}});}if(u.includes('api.open-meteo.com'))return Response.json(mutate(structuredClone(forecast)),{status:http});throw Error('unexpected source');};
+ const read=async()=>{const response=await worker.fetch(new Request('https://fixture.invalid/api/nfl-week-context?season=2026&week=4'),{});return game.contextForTeam(game.buildSnapshot({...await response.json(),verifiedAt:now}),'WAS',now).weather;};
+ let weather=await read();assert.equal(weather.status,'VERIFIED');assert.equal(weather.forecastAt,'2026-10-04T13:00Z');assert.equal(weather.temperature,21.1);assert.equal(weather.windKmh,10.4);assert.equal(weather.gustKmh,23.4);assert.equal(weather.eventId,'401872965');assert.equal(weather.venueId,'5534');assert.deepEqual(weather.teams,['IND','WAS']);assert.equal(weather.kickoffAt,'2026-10-04T13:30:00.000Z');
+ for(const [reason,change] of [['FORECAST_RESPONSE_COORDINATES',p=>p.latitude+=1],['FORECAST_UTC_OFFSET',p=>p.utc_offset_seconds=3600],['FORECAST_KICKOFF_HOUR',p=>p.hourly.time=['2026-10-04T12:59:59']],['FORECAST_UNITS',p=>p.hourly_units.wind_speed_10m='mph'],['FORECAST_NUMERIC_VALUES',p=>p.hourly.temperature_2m=[null]]]){mutate=p=>{change(p);return p};weather=await read();assert.equal(weather.status,'UNAVAILABLE');assert.equal(weather.reason,reason);}
+ mutate=p=>p;http=429;assert.equal((await read()).reason,'FORECAST_HTTP_429');
+}finally{globalThis.fetch=oldFetch;Date.now=oldNow;}
+console.log('RC4223_TOTTENHAM_REGRESSION_PASS: measured public response, exact 30-minute boundary, unchanged event/venue binding, safe reason codes and fail-closed HTTP/coordinate/time/unit/numeric negatives');
