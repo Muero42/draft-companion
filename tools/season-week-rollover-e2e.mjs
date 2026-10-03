@@ -3,7 +3,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import assert from 'node:assert/strict';
 import weekly from '../weekly-evidence-v2.js';
-import lineup from '../lineup-start-sit-v2.js';
+import lineup from '../lineup-start-sit-v2.js';import game from '../game-context-v1.js';
 const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
 function source(name){
   const match=new RegExp(`(?:async )?function ${name}\\(`).exec(app);assert(match,name);
@@ -27,7 +27,7 @@ class Clock extends Date{static now(){return now;}}
 const sandbox={Date:Clock,console,URL,Number,String,Array,Object,Math,Promise,Map,Set,
   PittiWeeklyEvidenceV2:weekly,PittiLineupStartSitV2:lineup,
   WEEKLY_PROJECTION_POSITIONS:['QB','RB','WR','TE'],SEASON_PROJECTION_POSITIONS:['QB','RB','WR','TE','K','DST'],SEASON_RANKING_AUTO_MS:10800000,SEASON_RANKING_RETRY_MS:2700000,
-  seasonRankingRefreshBusy:false,localStorage:storage,store:{get:(k,f)=>cache.get(k)??f,set:(k,v)=>{cache.set(k,v);return true;}},
+  seasonRankingRefreshBusy:false,seasonGameContextFlight:null,localStorage:storage,store:{get:(k,f)=>k===weekly.CACHE_KEY?weekly.decodeStorageSnapshot(cache.get(k)??f):cache.get(k)??f,set:(k,v)=>{cache.set(k,v);return true;}},
   els:{season:{value:'2026'},scoring:{value:'HALF'},seasonRefreshEvidenceBtn:{},seasonRankingStatus:{}},navigator:{onLine:true},
   lastDraftContext:{season,players},S:'https://api.sleeper.app/v1',
   jf:async()=>({season:'2026',season_type:'regular',week:reportedWeek}),
@@ -38,14 +38,14 @@ const sandbox={Date:Clock,console,URL,Number,String,Array,Object,Math,Promise,Ma
   queueSeasonRerender:()=>observedWeeks.push(season.current_nfl_week),
   BOONE_TRADE_VALUE_CACHE_KEY:'trade',adaptBooneTradeEvidence:()=>({available:false,values:{}}),SLEEPER_NON_STARTER_SLOTS:new Set(['BN','IR','TAXI'])
 };sandbox.globalThis=sandbox;vm.createContext(sandbox);
-for(const name of ['deriveSleeperNflWeek','currentSleeperNflWeek','isTransientSleeperNflStateError','deriveSleeperLeagueWeekFallback','refreshSeasonGameContext','refreshSeasonRankings','seasonEvidenceContext','seasonEvidenceValue','seasonEvidenceCache','seasonWeeklyMetric','seasonWeeklyEvidenceValueMap','seasonSlotEligible','tradeStarterSlots','tradeBestLineup','seasonLiveAuthority','seasonRosterAuthority','seasonLegalDrop','seasonProjectionLineup','seasonAcquisitionDecision'])vm.runInContext(source(name),sandbox);
+for(const name of ['deriveSleeperNflWeek','currentSleeperNflWeek','isTransientSleeperNflStateError','deriveSleeperLeagueWeekFallback','refreshSeasonGameContext','refreshSeasonRankings','seasonEvidenceContext','seasonEvidenceValue','seasonEvidenceCache','seasonWeeklyMetric','seasonWeeklyEvidenceValueMap','seasonCurrentWeekEligibility','seasonDstTeam','seasonSlotEligible','tradeStarterSlots','tradeBestLineup','seasonLiveAuthority','seasonRosterAuthority','seasonLegalDrop','seasonProjectionLineup','seasonAcquisitionDecision'])vm.runInContext(source(name),sandbox);
 const initial=await sandbox.refreshSeasonRankings({auto:true});assert.equal(initial.ok,true);
-const week3=cache.get(weekly.CACHE_KEY);assert.equal(week3.week,3);assert.equal(week3.lanes.projections.status,'AVAILABLE');
+const week3=weekly.decodeStorageSnapshot(cache.get(weekly.CACHE_KEY));assert.equal(week3.week,3);assert.equal(week3.lanes.projections.status,'AVAILABLE');
 requests=[];const same=await sandbox.refreshSeasonRankings({auto:true});assert.equal(same.skipped,'fresh');assert.equal(requests.length,0);assert.equal(season.current_nfl_week,3,'never infer Week 4 from calendar date');
 reportedWeek=4;staleRanks=true;requests=[];
 const rollover=await sandbox.refreshSeasonRankings({auto:true,trigger:'resume'});
 assert.equal(rollover.ok,true);assert.notEqual(rollover.skipped,'fresh','fresh Week 3 must not suppress authoritative Week 4 refresh');
-assert.equal(season.current_nfl_week,4);const week4=cache.get(weekly.CACHE_KEY);
+assert.equal(season.current_nfl_week,4);const week4=weekly.decodeStorageSnapshot(cache.get(weekly.CACHE_KEY));
 assert.equal(week4.lanes.expertWeeklyRanks.status,'UNAVAILABLE','provider Week-3 ranks cannot be relabeled as Week 4');assert.equal(week4.week,4);assert(week4.records.length>0&&week4.records.every(r=>r.week===4));
 assert.equal(requests.filter(p=>p.includes('/projections?week=4')).length,6);
 assert.equal(weekly.validateSnapshot(week3,{season:2026,week:4,scoring:'HALF_PPR'},now).ok,false);
@@ -54,8 +54,13 @@ const values=sandbox.seasonWeeklyEvidenceValueMap(rows,season,4,now);
 assert.equal(values.gameValid,false);assert(!values.values.RB4,'Reserve excluded');
 const evidence=lineup.adaptEvidence({week:4,scoring:'HALF_PPR',source:'verified',as_of:new Date(now).toISOString(),players:values.values},{week:4,now});
 const result=lineup.evaluate({roster:rows,evidence,week:4,slots:['QB','RB','WR','WR','TE','FLEX','W/R'],currentAssignments:rows.slice(0,7).map((x,slotIndex)=>({playerId:x.p.id,slotIndex})),now});
-assert(result.lineup.complete,'Start/Sit survives unavailable ranks, Team Total, weather and game context');
-assert(result.changes.length>0,'current-week projections produce useful lineup changes');
+assert.equal(result.lineup.complete,false,'missing game context fails closed despite current points');assert.equal(result.changes.length,0);assert.equal(sandbox.seasonAcquisitionDecision(drop,target,rows,season).action,'HOLD');
+const schedule=JSON.parse(fs.readFileSync(new URL('./fixtures/rc4222/espn-week4.json',import.meta.url)));
+cache.set(game.CACHE_KEY,game.buildSnapshot({season:2026,week:4,events:schedule.events,sourceUrl:'https://site.api.espn.com/apis/site/v2/sports/football/nfl/scoreboard',verifiedAt:now}));sandbox.PittiGameContextV1=game;
+const unlockedValues=sandbox.seasonWeeklyEvidenceValueMap(rows,season,4,now);assert.equal(unlockedValues.gameValid,true);
+const unlockedEvidence=lineup.adaptEvidence({week:4,scoring:'HALF_PPR',source:'verified',as_of:new Date(now).toISOString(),players:unlockedValues.values},{week:4,now});
+const unlockedResult=lineup.evaluate({roster:rows,evidence:unlockedEvidence,week:4,slots:['QB','RB','WR','WR','TE','FLEX','W/R'],currentAssignments:rows.slice(0,7).map((x,slotIndex)=>({playerId:x.p.id,slotIndex})),now});
+assert(unlockedResult.lineup.complete,'verified future games permit Start/Sit despite unavailable optional ranks/weather/totals');assert(unlockedResult.changes.length>0,'current-week points produce useful unlocked lineup changes');
 assert.equal(sandbox.seasonAcquisitionDecision(drop,target,rows,season).action,'CLEAR ADD','Week 4 live-unowned ADD/DROP uses actual current records');
 season.ownership.RB1={roster_id:10};assert.equal(sandbox.seasonAcquisitionDecision(drop,target,rows,season).action,'HOLD');delete season.ownership.RB1;
 assert.equal(sandbox.seasonAcquisitionDecision(rows.at(-1),target,rows,season).action,'HOLD');

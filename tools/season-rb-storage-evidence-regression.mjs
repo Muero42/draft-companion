@@ -32,7 +32,7 @@ assert.equal(snapshot.lanes.projections.status,'AVAILABLE');
 const protectedKeys=['v7_apiKey','pitti.season.state','v117_researchEvidence','v118_returnValidation','v118_decisionFixtures','v7_decisionLog','pitti.boone','pitti.watcher','v7_rank_history'];
 function storage(limit,extra={}){
  const memory=new Map([...protectedKeys.map(k=>[k,'SECRET_'+k]),[evidence.CACHE_KEY,JSON.stringify({...snapshot,snapshotId:'previous'})],...Object.entries(extra)]),attempts=[];
- return{memory,attempts,get length(){return memory.size},key:i=>[...memory.keys()][i],getItem:k=>memory.get(k)??null,removeItem:k=>memory.delete(k),setItem(k,v){attempts.push(JSON.parse(v));const size=[...memory].reduce((sum,[key,value])=>sum+(key===k?0:value.length),v.length);if(size>limit)throw Object.assign(new Error('quota'),{name:'QuotaExceededError'});memory.set(k,v)}};
+ return{memory,attempts,get length(){return memory.size},key:i=>[...memory.keys()][i],getItem:k=>memory.get(k)??null,removeItem:k=>memory.delete(k),setItem(k,v){attempts.push(evidence.decodeStorageSnapshot(JSON.parse(v)));const size=[...memory].reduce((sum,[key,value])=>sum+(key===k?0:value.length),v.length);if(size>limit)throw Object.assign(new Error('quota'),{name:'QuotaExceededError'});memory.set(k,v)}};
 }
 const fullSize=JSON.stringify(snapshot).length,protectedSize=protectedKeys.reduce((n,k)=>n+('SECRET_'+k).length,0);
 const recovered=storage(fullSize+protectedSize+20,{'v7_rank_317':'x'.repeat(fullSize),'v7_rank_285':'small'});
@@ -40,9 +40,9 @@ const persisted=evidence.atomicWrite(recovered,snapshot);
 assert(!persisted.persistence?.mode?.includes('PROJECTION_ONLY'));assert.equal(recovered.memory.has('v7_rank_317'),false);assert.equal(recovered.memory.get('v7_rank_285'),'small','stop eviction once full snapshot fits');
 assert(recovered.attempts.length>=3);assert(recovered.attempts.every(x=>x.records.some(r=>r.metric==='weekly_rank')));
 for(const key of protectedKeys)assert.equal(recovered.memory.get(key),'SECRET_'+key);
-const read=JSON.parse(recovered.getItem(evidence.CACHE_KEY));
+const read=evidence.decodeStorageSnapshot(JSON.parse(recovered.getItem(evidence.CACHE_KEY)));
 for(const position of evidence.POSITIONS){const expected=snapshot.records.filter(r=>r.metric==='projected_points'&&r.position===position);const actual=read.records.filter(r=>r.metric==='projected_points'&&r.position===position&&evidence.weeklyRecordChronology(r,context,now));assert(expected.length>0);assert.deepEqual(actual,expected,'all available projection positions survive read-back');}
-const fallback=storage(JSON.stringify(evidence.projectionOnlyStorageSnapshot(snapshot)).length+protectedSize+10,{'v7_rank_317':'x'.repeat(fullSize)});
+const fallback=storage(JSON.stringify(evidence.encodeStorageSnapshot(evidence.projectionOnlyStorageSnapshot(snapshot))).length+protectedSize+Math.floor((JSON.stringify(evidence.encodeStorageSnapshot(snapshot)).length-JSON.stringify(evidence.encodeStorageSnapshot(evidence.projectionOnlyStorageSnapshot(snapshot))).length)/3),{'v7_rank_317':'x'.repeat(fullSize)});
 assert.equal(evidence.atomicWrite(fallback,snapshot).persistence.mode,'LOCAL_STORAGE_PROJECTION_ONLY');
 for(const key of protectedKeys)assert.equal(fallback.memory.get(key),'SECRET_'+key);
 const blocked=storage(1,{'v7_rank_317':'rebuildable'}),previous=blocked.getItem(evidence.CACHE_KEY);

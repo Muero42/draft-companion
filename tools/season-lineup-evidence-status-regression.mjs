@@ -4,7 +4,7 @@ assert(app.includes('Start/Sit v6'));
 assert(app.includes('globale legale Slot-Optimierung'));
 assert(app.includes('START/SIT TEILWEISE NICHT BEWERTBAR'));
 assert(app.includes('LINEUP OPTIMAL'));
-assert(app.includes("projection.status!=='VERIFIED'||!Number.isFinite(projection.value)"),'optimizer map requires a verified finite projection');
+assert(app.includes("projection_available:projection.status==='VERIFIED'"),'optimizer map explicitly separates verified projection availability from lock metadata');
 assert(app.includes("positional_rank:rankAvailable?rank.value:null"),'unavailable weekly rank stays null');
 assert(app.includes("rank_status:rankAvailable?'VERIFIED':'UNAVAILABLE'"),'rank lane remains explicitly scoped');
 assert(!app.includes("rank.status==='VERIFIED'&&projection.status==='VERIFIED'"),'rank must not gate projection consumption');

@@ -19,8 +19,10 @@ evidence.push(addPlayer('target','WR',18,7),addPlayer('taxi9','WR',30,1));
 const season={ok:true,source:'Sleeper direct',generated_at:now,player_directory:{fetchedAt:now},roster_id:1,my_roster:rosters[0],league_rosters:rosters,rosters,transactions:[{type:'waiver',status:'complete',roster_ids:[2],settings:{waiver_bid:9}}],faab_budget:100,league:{season:'2026',roster_positions:['RB','WR','TE','FLEX','BN']},transaction_round:2,ownership:Object.fromEntries(rosters.flatMap(r=>[...r.players,...r.taxi].map(id=>[id,{roster_id:r.roster_id,reserve:false,taxi:r.taxi.includes(id)}])))};
 // Decision-unit fixtures mock the source boundary; real validation is covered by the Production parity regression.
 const sandbox={Date,console,globalThis:{},lastDraftContext:{season,players:playerRows},SLEEPER_NON_STARTER_SLOTS:new Set(['BN','IR','TAXI']),BOONE_TRADE_VALUE_CACHE_KEY:'pitti.boone-trade-values.v1.current',adaptBooneTradeEvidence:()=>({available:false,values:{}}),store:{get:(k,f)=>cache.get(k)??f},rankFor:name=>({rank:rank.get(name)??100}),weeklyLineupEvidence:p=>({consensus:rank.get(p.name)??null}),managerProfile:()=>({historical:{positions:{WR:{finalCount:2}}}}),clamp:(v,min,max)=>Math.max(min,Math.min(max,v))};
-vm.createContext(sandbox);
-for(const name of ['sleeperPlayerRow','seasonSlotEligible','tradeStarterSlots','tradeBestLineup','seasonEvidenceContext','seasonEvidenceValue','seasonEvidenceCache','seasonWeeklyMetric','seasonLiveAuthority','seasonProjectionLineup','seasonRosterPlayerRows','waiverOpponentMarket','waiverMarketSummary'])vm.runInContext(source(name),sandbox);
+// These model-unit fixtures provide verified future game context at the source boundary.
+  Object.assign(sandbox,{seasonDstTeam:x=>x,PittiGameContextV1:{CACHE_KEY:'verified-future-game-fixture',validateSnapshot:()=>({ok:true}),contextForTeam:()=>({status:'VERIFIED',locked:false})}});if(sandbox.globalThis)sandbox.globalThis.PittiGameContextV1=sandbox.PittiGameContextV1;
+  vm.createContext(sandbox);
+for(const name of ['sleeperPlayerRow','seasonSlotEligible','tradeStarterSlots','tradeBestLineup','seasonEvidenceContext','seasonEvidenceValue','seasonEvidenceCache','seasonWeeklyMetric','seasonLiveAuthority','seasonCurrentWeekEligibility','seasonProjectionLineup','seasonRosterPlayerRows','waiverOpponentMarket','waiverMarketSummary'])vm.runInContext(source(name),sandbox);
 cache.set('v190_seasonEvidence',evidence);
 const target={p:{id:'target',name:'target',pos:'WR',team:'TST'},r:{rank:7},seasonStatus:'ACTIVE'};
 

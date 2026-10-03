@@ -1,0 +1,41 @@
+# RC4.223 lock and rank persistence repair
+
+Local candidate. Publication, exact-head CI, merge and Production verification remain pending. Android acceptance remains pending.
+
+Starting Git authority: clean v292 branch `codex/v292-rc4222-postmerge-authority`, HEAD `0b065047a0bf56856efc9eaacd2fb20459bd09fa`, tree `fce292cd4afc2ac90748c6feb3aff409ae5be476`, parent / fetched canonical main `c1561bc414b380621c6c59137d4827115125e623`. Starting guardrail passed. Current feature branch is `codex/rc4223-lock-rank-persistence`.
+
+The supplied rc4.222 Android evidence establishes exact selected membership for all four positions. Its 615 total records equal its projection count exactly. The previous public-replay inability to establish selected identities does not describe this device run. No full physical acceptance is claimed.
+
+## Proven defects and repairs
+
+- The quota fallback filters out every rank record and overwrites overall rank status while leaving per-position acquisition statuses AVAILABLE. A fixture using the physical counts reproduces this exact inconsistency. This proves the mechanism matches the physical shape; device byte usage and quota exception were not exported and are not invented.
+- The physical-shaped synthetic snapshot has 615 projection, 485 selected and 485 Broad records: 1,585 total. Its original serialization is 1,601,843 characters. Shared normalized provenance templates reduce it to 109,389 characters with an exact record/provenance round trip. Atomic replacement and decoded readback retain all records; protected evidence and prior snapshot survive quota failure. Emergency projection-only persistence marks constituent lanes unavailable and exports pre/post counts explicitly.
+- Existing Start/Sit filtering admitted numeric OUT projections and counted OUT missing projections as realistic candidates. Provider metadata now remains available separately from fresh current-week eligibility. OUT/PUP/IR/SUSPENDED are not current-week startable; Questionable remains eligible.
+- Locked starters are fixed even without projection or actual-score evidence. Their pregame projection contributes zero prospective utility. Locked bench assets cannot enter recommendations or alternatives. Locked trade / waiver assets cannot generate retrospective current-week gain; their market values remain separate. Played D/ST stays unavailable for future acquisition decisions and displays LOCKED / pregame metadata.
+- Stale game snapshots with an old verified timestamp and future expiry could pass validation. Validation now enforces the canonical six-hour age and expiry duration.
+- Valid current normalized evidence supersedes duplicate legacy records for the same player/metric. Selected ranks take precedence; current Broad ECR is the fallback, including optimizer context.
+- The best offer category is now BEST REVIEW OFFER. Existing acceptance thresholds and conservative heuristic labels remain unchanged.
+
+## Weather and diagnostics
+
+The direct Tottenham Open-Meteo probe returned HTTP 200 with valid response coordinates, GMT, units and the 13:00 UTC forecast exactly 30 minutes before the 13:30 kickoff. A fresh canonical Production read also returned VERIFIED London weather: 21.1 C, precipitation 0%, wind 10.4 km/h, gust 23.4 km/h, correctly bound to WAS/IND, venue 5534 and the kickoff. This disproves a persistent coordinate or half-hour conversion defect. The earlier generic failure does not identify its precise transient cause. New safe failure codes distinguish HTTP, timeout, location, timezone, hour, units and numeric failures without emitting bodies or credentials.
+
+Safe Season export now includes persisted total and metric counts, mode, quota flag, ranks before/after, lane statuses before/after, serialized characters, storage estimates and strictly allowlisted cache names/sizes. It excludes API keys, headers, tokens, cookies and provider bodies.
+
+## Validation checkpoint
+
+Focused persistence, eligibility, kickoff, trade-away/target, waiver, D/ST, selected identity, Broad fallback, stale-context and protected-cache regressions pass (36/36 focused checks). Browser mobile emulation confirms actual compact storage consumption after page reload and reopening a document in the same storage context. It is mocked desktop Chromium evidence, not Android acceptance.
+
+Measured desktop physical-shaped fixture: construction approximately 24 ms, original serialization approximately 4 ms, compact persistence approximately 13–16 ms, decoded reload below 1 ms. Browser fixture: construction 20–22 ms and persistence 9–12 ms. The public Production-equivalent replay took 27,046 ms with 1,728 cooperative yields and a maximum slice of 49.07 ms. Existing cancellation, stale revision, bounded work-unit reuse and fail-closed regressions pass.
+
+The complete local Strict Suite ran exactly once: **270/274**, with four obsolete fixtures failing. Test-only corrections provide verified future game evidence for old positive decision cases, decode the compact snapshot before checking retained records, and explicitly require HOLD/incomplete Start/Sit when game context is absent. The rollover integration additionally proves actionable decisions resume with a verified full-week future schedule. All four corrected focused regressions pass; no runtime source changed after the single full run. The local full suite was not rerun. Final exact-head cloud **274/274** is required before merge; CI, deployment and postmerge verification remain pending.
+
+Fresh public inputs captured 2026-10-03T14:49:37.590Z establish 9 opponents / 54 targets / 6,804 evaluations / 6,384 unique packages. The runtime counting convention yields 2,987 legal, 1,662 evidence-complete/scored evaluations, 695 utility failures, 1,474 acceptance failures, 646 credible failures and 32 admitted offers. Gate failures overlap. Unique scored packages are 1,558; unique legal packages are 2,811. The public snapshot contains 445 projection records and 395 current Broad ECR records. It does not claim access to the authenticated Android projection/panel payload. The device's 615-record acquisition is independently covered by the physical-shape persistence fixture.
+
+The visible category ordering selects BEST REVIEW OFFER: Kenyon Sadiq + Chris Olave for Chase Brown + Jalen Hurts (prospective utility approximately 1.05 points; LOW heuristic acceptance, score 26). EXPLORATORY / AGGRESSIVE OFFER: Kenyon Sadiq + George Pickens for D'Andre Swift + Baker Mayfield (approximately 0.87 points; LOW, score 24). These are diagnostic model outputs, not a recommendation to send a trade. An OUT asset may retain Boone value; no current-week projection from OUT or a locked game contributes to these prospective gains. Category renaming makes the review obligation explicit without increasing acceptance scores.
+
+No fantasy transaction, trade sending, manager communication, cache clearing, reinstall or physical-device action was performed.
+
+## Exact-head cloud correction
+
+Cloud validation for 195254e1ab5a18953bae10b28c42e89ba7e91d47 passed the complete Strict Suite 274/274. Its browser review then timed out when reopening a page: the fixture set navigator.onLine only on the first page, whereas the cloud runner intentionally has no network. The application correctly refused an offline bootstrap. The online fixture override now belongs to the browser context so reopened pages receive the same mocked boundary. All reload, selected-rank and fail-closed assertions remain intact; no runtime code changed. Corrected browser review, reseal and guardrail pass locally. The corrected final head still requires fresh cloud checks before merge.
