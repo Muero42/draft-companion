@@ -1,0 +1,477 @@
+{
+  "generation": "20261003T1533Z-v294",
+  "canonicalMain": "977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f",
+  "canonicalTree": "0a7842f40151f5a78219d14dcf407e039ae5816d",
+  "reviewedHead": "77db022eea0ae8741a887fc8167c5fb5e675315d",
+  "deployment": "77b24737-c88c-4e12-8be3-591a57465098",
+  "cloudflareCheck": 111233312948,
+  "premerge": "5/5 SUCCESS; Strict274/274; mocked mobile browser PASS",
+  "postmerge": {
+    "checkpoint": "v294",
+    "version": "v11.8.0-rc4.223",
+    "pr": 224,
+    "reviewed_head": "77db022eea0ae8741a887fc8167c5fb5e675315d",
+    "reviewed_tree": "0a7842f40151f5a78219d14dcf407e039ae5816d",
+    "merge_commit": "977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f",
+    "merged_tree": "0a7842f40151f5a78219d14dcf407e039ae5816d",
+    "canonical_parent": "c1561bc414b380621c6c59137d4827115125e623",
+    "merge_method": "SQUASH",
+    "merged_at": "2026-10-03T15:31:06Z",
+    "source_status": "MERGED_CANONICAL",
+    "production_status": "DEPLOYED_SUCCESS",
+    "production_deployment_id": "77b24737-c88c-4e12-8be3-591a57465098",
+    "cloudflare_check_run_id": 111233312948,
+    "production_branch": "main",
+    "production_deployment_proven": true,
+    "physical_status": "PENDING",
+    "physical_classification": "RC4223_ANDROID_FUNCTIONAL_SURFACE_ACCEPTANCE_PENDING",
+    "physical_acceptance_proven": false,
+    "physical_responsiveness_proven": false,
+    "premerge_exact_head_ci": "PASS",
+    "postmerge_checks": "8/8 SUCCESS",
+    "postmerge_check_runs": [
+      {
+        "id": 111233312948,
+        "name": "Cloudflare Pages",
+        "status": "completed",
+        "result": "SUCCESS",
+        "head": "977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f",
+        "url": "https://github.com/Muero42/draft-companion/runs/111233312948",
+        "externalId": "77b24737-c88c-4e12-8be3-591a57465098"
+      },
+      {
+        "id": 111233242682,
+        "name": "draft-critical",
+        "status": "completed",
+        "result": "SUCCESS",
+        "head": "977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f",
+        "url": "https://github.com/Muero42/draft-companion/actions/runs/37133522893/job/111233242682",
+        "externalId": "8c7d8c3f-bcd1-5753-a55e-eb88c0e7259b"
+      },
+      {
+        "id": 111233242568,
+        "name": "draft-critical",
+        "status": "completed",
+        "result": "SUCCESS",
+        "head": "977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f",
+        "url": "https://github.com/Muero42/draft-companion/actions/runs/37133522945/job/111233242568",
+        "externalId": "e73b5f67-db6e-55cf-a560-4c54fb86f3e8"
+      },
+      {
+        "id": 111233242404,
+        "name": "draft-critical",
+        "status": "completed",
+        "result": "SUCCESS",
+        "head": "977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f",
+        "url": "https://github.com/Muero42/draft-companion/actions/runs/37133522885/job/111233242404",
+        "externalId": "04c25635-8e96-5c1b-ad43-7c1d5ff11528"
+      },
+      {
+        "id": 111233242357,
+        "name": "behavioral-contract",
+        "status": "completed",
+        "result": "SUCCESS",
+        "head": "977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f",
+        "url": "https://github.com/Muero42/draft-companion/actions/runs/37133522888/job/111233242357",
+        "externalId": "713bbbe0-1a13-5c80-9e54-315b6e471d21"
+      },
+      {
+        "id": 111233242349,
+        "name": "guardrails",
+        "status": "completed",
+        "result": "SUCCESS",
+        "head": "977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f",
+        "url": "https://github.com/Muero42/draft-companion/actions/runs/37133522881/job/111233242349",
+        "externalId": "b3dd504d-572f-5744-92ec-57be80573630"
+      },
+      {
+        "id": 111233242272,
+        "name": "pitti-cloud-validation",
+        "status": "completed",
+        "result": "SUCCESS",
+        "head": "977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f",
+        "url": "https://github.com/Muero42/draft-companion/actions/runs/37133522886/job/111233242272",
+        "externalId": "7d96f2a1-1b4a-579e-a2ff-b0711d6861e3"
+      },
+      {
+        "id": 111233242258,
+        "name": "package",
+        "status": "completed",
+        "result": "SUCCESS",
+        "head": "977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f",
+        "url": "https://github.com/Muero42/draft-companion/actions/runs/37133522899/job/111233242258",
+        "externalId": "5c1f08d2-0184-5feb-bd40-dcff9b0274b2"
+      }
+    ],
+    "cloud_strict": "274/274 PASS",
+    "cloud_job": 111233242272,
+    "cloud_run": 37133522886,
+    "browser_review": "PASS",
+    "browser_scope": "EXACT_HEAD_CLOUD_OFFLINE_MOBILE_EMULATION",
+    "compactDirectoryRequests": 1,
+    "rawDirectoryRequests": 0,
+    "uncaught_browser_errors": 0,
+    "transient_hold_empty": true,
+    "replacement_render_complete": true,
+    "refresh_render_flags_settled": true,
+    "rc4223_trade_model": "PASS",
+    "rc4219_responsiveness_regressions": "PASS",
+    "runtime_files": 17,
+    "served_static_files": 16,
+    "served_static_parity": "PASS_UTF8_LF",
+    "worker": "EXACT_CANONICAL_DEPLOYMENT_AND_READONLY_ENDPOINTS",
+    "read_only_surfaces": {
+      "boone": "HTTP200_AVAILABLE_W4_253/253_ALL4LANES",
+      "context": "HTTP200_16GAMES_32TEAMS_11_OUTDOOR_FORECASTS_4DOME_15_CURRENT_ODDS_1_COMPLETED",
+      "watcher": "HTTP200_PASS_ALL_LANES_250EVENTS",
+      "trade": "V9_REVIEWED_RUNTIME_PARITY_PASS"
+    },
+    "evidence_source": "LIVE_GITHUB_AND_PRODUCTION_VERIFIED",
+    "observed_at": "2026-10-03T15:33:42Z"
+  },
+  "production": {
+    "at": "2026-10-03T15:33:07.400Z",
+    "canonical": "977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f",
+    "boone": {
+      "validation": {
+        "ok": true
+      },
+      "status": "AVAILABLE",
+      "coverage": {
+        "positions": {
+          "QB": {
+            "status": "AVAILABLE",
+            "sourceCount": 43,
+            "mapped": 43,
+            "mappingCoverage": 1,
+            "sourceUrl": "https://sports.yahoo.com/fantasy/article/2026-trade-value-charts--justin-boones-fantasy-football-quarterback-breakdown-for-week-4-155803006.html",
+            "publishedAt": 1790783883000,
+            "updatedAt": 1790783883000,
+            "reason": null
+          },
+          "RB": {
+            "status": "AVAILABLE",
+            "sourceCount": 87,
+            "mapped": 87,
+            "mappingCoverage": 1,
+            "sourceUrl": "https://sports.yahoo.com/fantasy/article/2026-trade-value-charts--justin-boones-fantasy-football-running-back-breakdown-for-week-4-155845493.html",
+            "publishedAt": 1790783925000,
+            "updatedAt": 1790783925000,
+            "reason": null
+          },
+          "WR": {
+            "status": "AVAILABLE",
+            "sourceCount": 87,
+            "mapped": 87,
+            "mappingCoverage": 1,
+            "sourceUrl": "https://sports.yahoo.com/fantasy/article/2026-trade-value-charts--justin-boones-fantasy-football-wide-receiver-breakdown-for-week-4-155922836.html",
+            "publishedAt": 1790783962000,
+            "updatedAt": 1790783962000,
+            "reason": null
+          },
+          "TE": {
+            "status": "AVAILABLE",
+            "sourceCount": 36,
+            "mapped": 36,
+            "mappingCoverage": 1,
+            "sourceUrl": "https://sports.yahoo.com/fantasy/article/2026-trade-value-charts--justin-boones-fantasy-football-tight-end-breakdown-for-week-4-160015741.html",
+            "publishedAt": 1790784015000,
+            "updatedAt": 1790784015000,
+            "reason": null
+          }
+        },
+        "sourceRows": 253,
+        "mappedRows": 253
+      }
+    },
+    "context": {
+      "validation": {
+        "ok": true
+      },
+      "games": 16,
+      "teams": 32,
+      "dome": 4,
+      "weather": 11,
+      "odds": 15,
+      "unavailable": [
+        {
+          "event": "401872964",
+          "roof": "OUTDOOR",
+          "weather": "GAME_ALREADY_STARTED",
+          "odds": "GAME_ALREADY_STARTED"
+        },
+        {
+          "event": "401872967",
+          "roof": "DOME",
+          "weather": "INDOOR_NO_WEATHER_REQUIRED"
+        },
+        {
+          "event": "401872974",
+          "roof": "DOME",
+          "weather": "INDOOR_NO_WEATHER_REQUIRED"
+        },
+        {
+          "event": "401872976",
+          "roof": "DOME",
+          "weather": "INDOOR_NO_WEATHER_REQUIRED"
+        },
+        {
+          "event": "401872979",
+          "roof": "DOME",
+          "weather": "INDOOR_NO_WEATHER_REQUIRED"
+        }
+      ]
+    },
+    "weekly": {
+      "validation": {
+        "ok": true
+      },
+      "positions": {
+        "QB": 32,
+        "RB": 96,
+        "WR": 155,
+        "TE": 98,
+        "K": 32,
+        "DST": 32
+      },
+      "broad": {
+        "QB": {
+          "status": "UNAVAILABLE",
+          "mapped": 0,
+          "reason": "MISSING_PLAYERS"
+        },
+        "RB": {
+          "status": "AVAILABLE",
+          "mapped": 109,
+          "reason": null
+        },
+        "WR": {
+          "status": "AVAILABLE",
+          "mapped": 175,
+          "reason": null
+        },
+        "TE": {
+          "status": "AVAILABLE",
+          "mapped": 110,
+          "reason": null
+        }
+      },
+      "publicFailures": {
+        "QB": "PUBLIC_QB_PAGE_STD_ONLY_NOT_HALF_PPR"
+      },
+      "selected": "UNAVAILABLE",
+      "rosterCoverage": [
+        13,
+        15
+      ],
+      "roster": [
+        {
+          "id": "11584",
+          "name": "Bucky Irving",
+          "injury": null,
+          "points": 12.84
+        },
+        {
+          "id": "11586",
+          "name": "Blake Corum",
+          "injury": null,
+          "points": 6.76
+        },
+        {
+          "id": "12512",
+          "name": "Quinshon Judkins",
+          "injury": null,
+          "points": 9.76
+        },
+        {
+          "id": "12711",
+          "name": "Tyler Loop",
+          "injury": null,
+          "points": 8.07
+        },
+        {
+          "id": "13286",
+          "name": "Jadarian Price",
+          "injury": "Out",
+          "points": null
+        },
+        {
+          "id": "13330",
+          "name": "Kenyon Sadiq",
+          "injury": "Questionable",
+          "points": 8.78
+        },
+        {
+          "id": "6794",
+          "name": "Justin Jefferson",
+          "injury": "Out",
+          "points": null
+        },
+        {
+          "id": "7523",
+          "name": "Trevor Lawrence",
+          "injury": null,
+          "points": 20.33
+        },
+        {
+          "id": "8131",
+          "name": "Isaiah Likely",
+          "injury": null,
+          "points": 9.3
+        },
+        {
+          "id": "8137",
+          "name": "George Pickens",
+          "injury": null,
+          "points": 12.07
+        },
+        {
+          "id": "8144",
+          "name": "Chris Olave",
+          "injury": null,
+          "points": 16.18
+        },
+        {
+          "id": "8167",
+          "name": "Christian Watson",
+          "injury": null,
+          "points": 13.2
+        },
+        {
+          "id": "9488",
+          "name": "Jaxon Smith-Njigba",
+          "injury": null,
+          "points": 19.11
+        },
+        {
+          "id": "9500",
+          "name": "Josh Downs",
+          "injury": null,
+          "points": 10.66
+        },
+        {
+          "id": "CLE",
+          "injury": null,
+          "points": 7.91
+        }
+      ]
+    },
+    "watcher": {
+      "gate": {
+        "overall": "PASS",
+        "market": "PASS",
+        "player_state_status": "PASS",
+        "trending": {
+          "id": 5194,
+          "started_at": 1791041417122,
+          "finished_at": 1791041418448,
+          "ok": true,
+          "item_count": 157
+        },
+        "player_state": {
+          "id": 5149,
+          "started_at": 1791001037121,
+          "finished_at": 1791038837558,
+          "ok": true,
+          "item_count": 4364
+        },
+        "market_latest_attempt": {
+          "id": 5194,
+          "started_at": 1791041417122,
+          "finished_at": 1791041418448,
+          "ok": true,
+          "item_count": 157
+        },
+        "market_latest_accepted": {
+          "id": 5194,
+          "started_at": 1791041417122,
+          "finished_at": 1791041418448,
+          "ok": true,
+          "item_count": 157
+        },
+        "market_latest_completed_failure": null,
+        "player_state_latest_attempt": {
+          "id": 5149,
+          "started_at": 1791001037121,
+          "finished_at": 1791038837558,
+          "ok": true,
+          "item_count": 4364
+        },
+        "player_state_latest_accepted": {
+          "id": 5149,
+          "started_at": 1791001037121,
+          "finished_at": 1791038837558,
+          "ok": true,
+          "item_count": 4364
+        },
+        "player_state_latest_completed_failure": {
+          "id": 4080,
+          "started_at": 1790050660759,
+          "finished_at": 1790056378590,
+          "ok": false,
+          "item_count": 0
+        }
+      },
+      "events": 250
+    }
+  },
+  "localValidation": "Complete local Strict exactly once270/274. Four obsolete fixtures and reopened-page online fixture corrected TEST-ONLY; focused PASS. Final candidate and canonical cloud full274/274 with browser PASS. Runtime unchanged after local full.",
+  "rankPersistence": {
+    "scope": "PHYSICAL_SHAPED_SYNTHETIC_FIXTURE_NOT_DEVICE_BYTE_MEASUREMENT",
+    "projection": 615,
+    "selected": 485,
+    "broad": 485,
+    "total": 1585,
+    "beforeChars": 1601843,
+    "afterChars": 109389,
+    "exactProvenanceRoundtrip": true,
+    "browserReopenRankVerified": true,
+    "emergencyFallback": "DEGRADED_EXPLICIT_ALL_RANK_LANES_UNAVAILABLE"
+  },
+  "tradeReplay": {
+    "captureAt": "2026-10-03T14:49:37.590Z",
+    "scope": "FRESH_PUBLIC_PRODUCTION_EQUIVALENT_INPUTS_NOT_AUTHENTICATED_ANDROID_PAYLOAD",
+    "opponents": 9,
+    "targets": 54,
+    "evaluations": 6804,
+    "uniquePackages": 6384,
+    "legal": 2987,
+    "evidenceComplete": 1662,
+    "scored": 1662,
+    "utilityFailures": 695,
+    "acceptanceFailures": 1474,
+    "credibleFailures": 646,
+    "admitted": 32,
+    "overlappingFailureGates": true,
+    "elapsedMs": 27046,
+    "yields": 1728,
+    "maxSliceMs": 49.06970000000001,
+    "topReview": "Sadiq+Olave -> Chase Brown+Hurts; LOW26; utility1.05",
+    "exploratory": "Sadiq+Pickens -> Swift+Mayfield; LOW24; utility0.87",
+    "acceptanceThresholds": "UNCHANGED"
+  },
+  "tottenham": {
+    "eventId": "401872965",
+    "kickoffAt": "2026-10-04T13:30:00.000Z",
+    "venueId": "5534",
+    "teams": [
+      "IND",
+      "WAS"
+    ],
+    "weather": {
+      "status": "VERIFIED",
+      "sourceId": "open_meteo",
+      "sourceUrl": "https://api.open-meteo.com/v1/forecast?latitude=51.6044&longitude=-0.0664&hourly=temperature_2m,precipitation_probability,wind_speed_10m,wind_gusts_10m&timezone=GMT&forecast_days=16",
+      "latitude": 51.6044,
+      "longitude": -0.0664,
+      "verifiedAt": 1791041585653,
+      "forecastAt": "2026-10-04T13:00Z",
+      "temperature": 21.1,
+      "precipitationProbability": 0,
+      "windKmh": 10.4,
+      "gustKmh": 23.4
+    }
+  },
+  "physicalAndroid": "PENDING_NO_AGENT_PHYSICAL_TEST",
+  "next": "ONE final Android refresh/test: confirm rc4.223; refresh Season; check selected ranks/Broad fallback, OUT warning, CLE LOCKED, London weather, tabs/scrolling. Only if a residual remains, copy ONE diagnostic export."
+}
