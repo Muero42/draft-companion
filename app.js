@@ -149,10 +149,8 @@ async function refreshSeasonActualScores(season){
     if(!snapshot||lastDraftContext?.season!==season||seasonEvidenceContext(lastDraftContext.season).week!==c.week)return{ok:false,reason:'CONTEXT_OR_RESPONSE'};
     try{store.set(SEASON_ACTUAL_CACHE,snapshot);}catch{return{ok:false,reason:'STORAGE'};}
     // Presentation-only refresh: no trade/waiver work or changed decision revision.
-    if(els.rosterList&&lastDraftContext.seasonRows)els.rosterList.innerHTML=seasonLineupHtml(lastDraftContext.seasonRows,season);
-    renderSeasonDataCompactHeader();
     return{ok:true};
-  }catch{if(lastDraftContext?.season===season&&els.rosterList&&lastDraftContext.seasonRows)els.rosterList.innerHTML=seasonLineupHtml(lastDraftContext.seasonRows,season);renderSeasonDataCompactHeader();return{ok:false,reason:'ACTUAL_POINTS_FETCH_FAILED'};}})();seasonActualFlight=flight;
+  }catch{return{ok:false,reason:'ACTUAL_POINTS_FETCH_FAILED'};}finally{if(lastDraftContext?.season===season){if(els.rosterList&&lastDraftContext.seasonRows)els.rosterList.innerHTML=seasonLineupHtml(lastDraftContext.seasonRows,season);renderSeasonDataCompactHeader();}}})();seasonActualFlight=flight;
   try{return await flight.promise;}finally{if(seasonActualFlight===flight)seasonActualFlight=null;}
 }
 function seasonDisplayContext(season,now=Date.now()){
