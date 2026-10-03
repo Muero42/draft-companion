@@ -3256,7 +3256,10 @@ function seasonTradeTargetPool(roster,mine,live){
   const count=pos=>mine.filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===pos).length;
   candidates.sort((a,b)=>b.market.value-a.market.value||(b.weekly.status==='VERIFIED'?b.weekly.value:0)-(a.weekly.status==='VERIFIED'?a.weekly.value:0)||count(a.x.p.pos)-count(b.x.p.pos)||String(a.x.p.id).localeCompare(String(b.x.p.id)));
   const chosen=candidates.slice(0,2),positions=new Set(chosen.map(x=>x.x.p.pos));
-  for(const row of candidates)if(!positions.has(row.x.p.pos)&&chosen.length<6){chosen.push(row);positions.add(row.x.p.pos);}
+  // Coverage is a search heuristic: do not displace the marginal top-six asset
+  // for a representative worth less than half its verified market value.
+  const coverageFloor=(candidates[Math.min(5,candidates.length-1)]?.market.value??0)/2;
+  for(const row of candidates)if(row.market.value>=coverageFloor&&!positions.has(row.x.p.pos)&&chosen.length<6){chosen.push(row);positions.add(row.x.p.pos);}
   for(const row of candidates)if(chosen.length<6&&!chosen.includes(row))chosen.push(row);
   return chosen.map(row=>row.x);
 }

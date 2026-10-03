@@ -6,7 +6,7 @@
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained. never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained. never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
@@ -92,7 +92,7 @@
       "appBlob": "c065c7bbf1877bfb7931045bc68dc99bf8aa306b",
       "focusedRegressionBlob": "2ab7c89b530b723209e39c0ffb49b7868428c5ef"
     },
-    "sourceBaseline": "v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained.",
+    "sourceBaseline": "v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained.",
     "historical_source_baseline_before_pr217": "v11.8.0-rc4.215: PR #215 reviewed head 092f36fa46c90feaf733cc3b7784046beb194c03, merged canonical main 2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c, identical reviewed/merged tree 3ca1006598b3ee843da68e6292f54ec5bd40a9e5. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ec99d1fa-6eea-4448-9047-e881bcd025ce, check 109437418574); PHYSICAL PENDING. Premerge Exact-HEAD CI PASS. Postmerge authority-coupled checks failed only on runtime version lock drift while Cloudflare Pages deployed exact main successfully. Next gate: RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING. v275 is authority-only; physical acceptance must bind the future post-v275 canonical main/tree and its successful Production deployment.",
     "historical_live_targets_before_v278": [
       {
@@ -120,10 +120,10 @@
     "preinstallSha256": null,
     "preinstallRuntimeFiles": 17,
     "latestSourceRegressionVerified": "rc4.221 local final tree: focused regressions; complete Strict Suite must pass once before commit. rc4.220 canonical cloud results are historical only.",
-    "latestDeployedCandidate": "v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained.",
+    "latestDeployedCandidate": "v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained.",
     "latestAndroidVerified": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
-    "androidAuthority": "v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained.",
-    "android_authority": "v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained.",
+    "androidAuthority": "v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained.",
+    "android_authority": "v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained.",
     "deployedPagesAppByteParityWithMain": false,
     "preinstallReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "preinstallReferenceArtifactId": null,
@@ -466,11 +466,11 @@
   },
   "currentWork": {
     "status": "RC4221_LOCAL_CANDIDATE",
-    "nextGate": "RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING"
+    "nextGate": "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING"
   },
   "status": "RC4221_LOCAL_CANDIDATE",
-  "gate": "RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING",
-  "nextGate": "RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING",
+  "gate": "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
+  "nextGate": "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -543,17 +543,17 @@
   "handoffGeneration": "20261003T0844Z-v289",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "updated_at": "2026-10-03T08:44:43Z",
-  "exactNextAction": "STOP after one tested local commit. RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING. No push, PR, merge, deployment or physical testing authorized.",
+  "exactNextAction": "STOP after one tested corrective local commit. RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. No push, PR, merge, deployment or physical testing authorized.",
   "failClosedRecovery": "PR207 Production trade-rationale physical PASS is current: neutral \"Roster-Fit verbessert\" physically observed on the concrete Pickens-for-Bowers offer; unsupported RB-need claim absent; Boone 251/251 and no-auto-send preserved. Broad ECR, selected PITTI Panel and full game-context were not reaccepted; Team Total remains fail-closed. Library mirror remains stale; never claim a newer Library generation persisted unless files.list proves it.",
   "authorityContinuation": {
-    "status": "LOCAL_ENGINEERING_COMPLETE_REVIEW_PENDING",
-    "current_gate": "RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING",
+    "status": "LOCAL_ADVERSARIAL_REVIEW_COMPLETE",
+    "current_gate": "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
     "physical_gate": "RC4220_ANDROID_PHYSICAL_ACCEPTANCE_PENDING",
     "physical_executable": false,
     "canonical_main": "dc363599ce465b25c449fe479ba7ee773071d74f",
     "canonical_tree": "62ac9365d98f5a35a68a115840f5e06cb2d5f64b",
     "sequence": [
-      "RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING"
+      "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING"
     ],
     "published_branch": null,
     "branch": "codex/rc4221-trade-search-space-repair",
@@ -575,7 +575,7 @@
     "production_proven": false,
     "physical_accepted": false,
     "physical_status": "NOT_PHYSICALLY_ACCEPTED",
-    "gate": "RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING",
+    "gate": "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
     "exact_head_rule": "PR221 reviewed and merged trees are verified historical receipts. Only fresh exact-head CI can certify a future Authority branch; canonical runtime CI never certifies an unpublished Authority commit."
   }
 }

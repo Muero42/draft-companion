@@ -21,6 +21,24 @@ const invalid=[row('stale','WR',100,{stale:true}),row('zero','QB',0),{...row('ir
 assert(!select([...opponent,...invalid]).some(x=>invalid.includes(x)));
 assert(select(opponent.filter(x=>x.p.pos==='WR')).every(x=>x.p.pos==='WR'),'no unsupported positional quota');
 assert.equal(select(invalid).length,0,'no stale/zero/special/IR admission');
+// Quality-qualified coverage, not a compulsory slot for each positive-valued position.
+for(const pos of ['WR','RB']){
+  const heavy=Array.from({length:7},(_,i)=>row(pos+i,pos,100-i*10));
+  const weak=row('weak-q','QB',0.01),representative=row('good-t','TE',30);
+  const pool=select([...heavy,weak,representative]);
+  assert(!pool.includes(weak),'near-zero coverage must not displace a strong market asset');
+  assert(pool.includes(representative),'quality-qualified lower-market position remains discoverable');
+  assert.equal(pool.length,6);assert(pool.includes(heavy[0])&&pool.includes(heavy[1]));
+  assert.deepEqual(pool.map(x=>x.p.id),select([...heavy,weak,representative].reverse()).map(x=>x.p.id));
+}
+const elite=[row('elite-q','QB',100),row('elite-t','TE',95),...Array.from({length:6},(_,i)=>row('elite-w'+i,'WR',90-i*5)),row('elite-r','RB',40)];
+assert(select(elite).includes(elite[0])&&select(elite).includes(elite[1]),'elite QB/TE market leaders cannot be starved');
+const shallow=[row('only-w','WR',80),row('only-r','RB',1)];
+assert.equal(select(shallow).length,2,'shallow pools retain available assets without padding');
+const ties=['WR','RB','TE','QB','WR','RB','TE','QB'].map((pos,i)=>row('tie'+i,pos,20));
+assert.deepEqual(select(ties).map(x=>x.p.id),select(ties.slice().reverse()).map(x=>x.p.id),'equal-value ties use positional abundance then stable ID, never input order');
+const boundary=[...Array.from({length:6},(_,i)=>row('b'+i,'WR',100-i*10)),row('at-floor','TE',25),row('below-floor','QB',24.99)];
+assert(select(boundary).includes(boundary[6]));assert(!select(boundary).includes(boundary[7]),'half marginal-value coverage boundary is explicit');
 assert(app.includes('const targetPool=seasonTradeTargetPool(roster,mine,live)'));
 assert(app.includes('slice(0,6)'), 'six-asset sell bound preserved');
 assert(app.includes('slice(0,5)'), 'five-secondary bound preserved');
