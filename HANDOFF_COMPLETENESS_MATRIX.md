@@ -1,3 +1,12 @@
+Handoff generation: `20261003T0844Z-v289`
+Generation: `20261003T0844Z-v289`
+
+v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained.
+
+Bounded 1:1 / 2:1 / 1:2 / 2:2; separate weekly+bench utility, Boone market price and uncalibrated acceptance. Verified percentile divergence only; missing/stale evidence fails closed. No automatic send. STOP after one tested local commit. RC4221_LOCAL_ADVERSARIAL_REVIEW_PENDING. No push, PR, merge, deployment or physical testing authorized.
+
+## HISTORICAL v288 and earlier (immutable evidence)
+
 Generation: `20261002T2031Z-v288`
 
 Handoff generation: `20261002T2031Z-v288`

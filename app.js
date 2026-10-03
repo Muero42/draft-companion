@@ -1,6 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,adaptBooneTradeEvidence,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
-const APP_VERSION='v11.8.0-rc4.220';
+const APP_VERSION='v11.8.0-rc4.221';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -3249,6 +3249,17 @@ function seasonTradeOfferWork(mine,opponent,target){return(function*(){
   offers.sort((a,b)=>(b.acceptance?.score??0)-(a.acceptance?.score??0)||(b.decision.ourUtility??0)-(a.decision.ourUtility??0)||a.fairness-b.fairness||a.gives.map(x=>x.p.id).join().localeCompare(b.gives.map(x=>x.p.id).join()));
   return{oppNeeds,offers:offers.slice(0,12),evaluated:units};
 })();}
+function seasonTradeTargetPool(roster,mine,live){
+  // Six targets: current market leaders plus evidence-backed position coverage.
+  // Own positional abundance is a tie-breaker, never a primary admission gate.
+  const candidates=roster.filter(x=>x.seasonStatus==='ACTIVE'&&['QB','RB','WR','TE'].includes(x.p.pos)).map(x=>({x,market:seasonWeeklyMetric(x.p,'trade_value',live),weekly:seasonWeeklyMetric(x.p,'projected_points',live)})).filter(x=>x.market.status==='VERIFIED'&&x.market.value>0);
+  const count=pos=>mine.filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===pos).length;
+  candidates.sort((a,b)=>b.market.value-a.market.value||(b.weekly.status==='VERIFIED'?b.weekly.value:0)-(a.weekly.status==='VERIFIED'?a.weekly.value:0)||count(a.x.p.pos)-count(b.x.p.pos)||String(a.x.p.id).localeCompare(String(b.x.p.id)));
+  const chosen=candidates.slice(0,2),positions=new Set(chosen.map(x=>x.x.p.pos));
+  for(const row of candidates)if(!positions.has(row.x.p.pos)&&chosen.length<6){chosen.push(row);positions.add(row.x.p.pos);}
+  for(const row of candidates)if(chosen.length<6&&!chosen.includes(row))chosen.push(row);
+  return chosen.map(row=>row.x);
+}
 function seasonTradeTargetWork(picks,players,userSlot,teams){return(function*(){
   const bySlot={};for(let slot=1;slot<=teams;slot++)bySlot[slot]=[];
   const live=lastDraftContext?.season;
@@ -3262,7 +3273,7 @@ function seasonTradeTargetWork(picks,players,userSlot,teams){return(function*(){
   const targets=[];
   for(const [slotS,roster] of Object.entries(bySlot)){
     const slot=Number(slotS);if(live?.ok?slot===myLiveRosterId:slot===userSlot)continue;
-    const targetPool=roster.filter(x=>x.seasonStatus==='ACTIVE'&&['QB','RB','WR','TE'].includes(x.p.pos)).sort((a,b)=>mine.filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===a.p.pos).length-mine.filter(x=>x.seasonStatus==='ACTIVE'&&x.p.pos===b.p.pos).length).slice(0,6);
+    const targetPool=seasonTradeTargetPool(roster,mine,live);
     for(const x of targetPool){yield;const currentValue=seasonWeeklyMetric(x.p,'trade_value',live);if(currentValue.status!=='VERIFIED')continue;
       const offerModel=yield* seasonTradeOfferWork(mine,roster,x),manager=liveRosterMeta.get(slot)||null;
       if(offerModel.offers.length)targets.push({slot,manager,x,lineupEdge:offerModel.offers[0].decision.ourGain,marginal:{},desirability:offerModel.offers[0].decision.ourUtility,research:researchHint(x.p),...offerModel});
