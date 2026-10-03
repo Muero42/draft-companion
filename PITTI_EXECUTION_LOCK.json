@@ -295,7 +295,17 @@
       "productionProven": true,
       "deviceAcceptanceProven": false
     },
-    "historical_source_regression_before_pr217": "PR215 reviewed head 092f36fa46c90feaf733cc3b7784046beb194c03: exact-head CI PASS; local strict 252/252 PASS exit 0 per recorded rc4215_source_production evidence. Postmerge authority checks: RUNTIME_VERSION_LOCK_DRIFT_ONLY."
+    "historical_source_regression_before_pr217": "PR215 reviewed head 092f36fa46c90feaf733cc3b7784046beb194c03: exact-head CI PASS; local strict 252/252 PASS exit 0 per recorded rc4215_source_production evidence. Postmerge authority checks: RUNTIME_VERSION_LOCK_DRIFT_ONLY.",
+    "rc4223AndroidCoreAcceptance": {
+      "version": "v11.8.0-rc4.223",
+      "acceptance": "PASS",
+      "scope": "CORE_REPAIRED_FUNCTIONALITY",
+      "evidence_source": "CURRENT_USER_WORK_PACKAGE",
+      "recorded_at": "2026-10-03T15:52:39.348Z",
+      "minor_ui_residual": "MISSING_RANK_COUNT_INCLUDED_OUT_PLAYERS",
+      "functional_acceptance_reopened": false,
+      "agent_physical_test": false
+    }
   },
   "auto": {
     "continueWhileAutonomousWorkExists": true,

@@ -1326,6 +1326,16 @@
       },
       "evidence_source": "LIVE_GITHUB_AND_PRODUCTION_VERIFIED",
       "observed_at": "2026-10-03T15:33:42Z"
+    },
+    "rc4223_android_core_acceptance": {
+      "version": "v11.8.0-rc4.223",
+      "acceptance": "PASS",
+      "scope": "CORE_REPAIRED_FUNCTIONALITY",
+      "evidence_source": "CURRENT_USER_WORK_PACKAGE",
+      "recorded_at": "2026-10-03T15:52:39.348Z",
+      "minor_ui_residual": "MISSING_RANK_COUNT_INCLUDED_OUT_PLAYERS",
+      "functional_acceptance_reopened": false,
+      "agent_physical_test": false
     }
   },
   "runtime": {
