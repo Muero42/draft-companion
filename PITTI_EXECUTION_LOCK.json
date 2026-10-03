@@ -1,22 +1,22 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-10-03T18:14:57Z",
+  "updatedAt": "2026-10-03T18:32:20Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "v11.8.0-rc4.223 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR225 squash merged 7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4, reviewed 853b0bf170ea775a07dc1ca8b006d018dc15491f, tree 5c9e2244b035419a4b6d6bdf159e1680ff729ff7, deployment f39eaba5-5b89-4c25-a46b-bcb35edcd128. ANDROID CORE FUNCTIONAL ACCEPTANCE PASS / USER_CONFIRMED. Minor UI count cleanup does not reopen acceptance and has no new physical-test claim. PHYSICAL PENDING / NOT ACCEPTED / NOT PHYSICALLY ACCEPTED descriptions in prior receipts are historical pre-device observations. Historical RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY, RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and RC4215_PHYSICAL_FAIL_DECISION_QUALITY preserved. Next gate: RC4223_MINOR_UI_COMPLETE_CORE_PHYSICAL_PASS. never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "v11.8.0-rc4.224 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR226 squash merged 9a4422a2b562ec0dc3688aa2b663f29709b9c3af, reviewed 4bbbf3aa650adfa37b6d2d3129e4eb28572ca58b, tree 8138135db5c775c98ed48aa381119c9b956ffe9f, deployment 18998487-d441-4c33-ba5b-e5ed2000688a. ANDROID UI ACCEPTANCE PENDING / NOT PHYSICALLY ACCEPTED. Historical rc4.223 core repaired functionality USER_CONFIRMED PASS preserved; no agent physical test. Next gate: RC4224_ANDROID_UI_ACCEPTANCE_PENDING. never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
-    "reconciledBaseMain": "7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4",
+    "reconciledBaseMain": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
     "liveVerificationTargets": [
       {
-        "pr": 225,
-        "reviewedHead": "853b0bf170ea775a07dc1ca8b006d018dc15491f",
-        "mergeCommit": "7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4",
-        "runtimeTree": "5c9e2244b035419a4b6d6bdf159e1680ff729ff7"
+        "pr": 226,
+        "reviewedHead": "4bbbf3aa650adfa37b6d2d3129e4eb28572ca58b",
+        "mergeCommit": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+        "runtimeTree": "8138135db5c775c98ed48aa381119c9b956ffe9f"
       }
     ],
     "independentEvidenceLaneDiagnosis": {
@@ -116,14 +116,14 @@
     "latestAndroidObserved": "HISTORICAL rc4.213 Production diagnostic: acquisitions 13/13; isolated OTHER row rejected RB; quota persisted 416 projections and no ranks; Start/Sit QB unfilled (12/13); Game Context PASS 16 games / 32 teams. Not rc4.214 acceptance.",
     "latestPreinstallVerified": "HISTORICAL/SUPERSEDED: rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "HISTORICAL/SUPERSEDED: v11.8.0-rc4.107",
-    "preinstallArtifact": "rc4.224 local 17-file runtime identity only; no archive/re-extraction claim",
+    "preinstallArtifact": "rc4.224 reviewed 17-file runtime identity only; no archive or package re-extraction claim",
     "preinstallSha256": null,
     "preinstallRuntimeFiles": 17,
-    "latestSourceRegressionVerified": "rc4.224 focused regressions and offline browser 360/390/430 PASS; no local full Strict. Exact-head cloud full Strict REQUIRED. rc4.223 canonical historical only.",
-    "latestDeployedCandidate": "v11.8.0-rc4.223 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR225 squash merged 7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4, reviewed 853b0bf170ea775a07dc1ca8b006d018dc15491f, tree 5c9e2244b035419a4b6d6bdf159e1680ff729ff7, deployment f39eaba5-5b89-4c25-a46b-bcb35edcd128. ANDROID CORE FUNCTIONAL ACCEPTANCE PASS / USER_CONFIRMED. Minor UI count cleanup does not reopen acceptance and has no new physical-test claim. PHYSICAL PENDING / NOT ACCEPTED / NOT PHYSICALLY ACCEPTED descriptions in prior receipts are historical pre-device observations. Historical RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY, RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and RC4215_PHYSICAL_FAIL_DECISION_QUALITY preserved. Next gate: RC4223_MINOR_UI_COMPLETE_CORE_PHYSICAL_PASS.",
+    "latestSourceRegressionVerified": "rc4.224 canonical final tree cloud 277/277 PASS and browser 360/390/430 PASS; historical only for future unpublished Authority commits.",
+    "latestDeployedCandidate": "v11.8.0-rc4.224 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR226 squash merged 9a4422a2b562ec0dc3688aa2b663f29709b9c3af, reviewed 4bbbf3aa650adfa37b6d2d3129e4eb28572ca58b, tree 8138135db5c775c98ed48aa381119c9b956ffe9f, deployment 18998487-d441-4c33-ba5b-e5ed2000688a. ANDROID UI ACCEPTANCE PENDING / NOT PHYSICALLY ACCEPTED. Historical rc4.223 core repaired functionality USER_CONFIRMED PASS preserved; no agent physical test. Next gate: RC4224_ANDROID_UI_ACCEPTANCE_PENDING.",
     "latestAndroidVerified": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
-    "androidAuthority": "v11.8.0-rc4.224 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / ANDROID UI PHYSICAL PENDING / NOT ACCEPTED. Production remains rc4.223 canonical 7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4 tree 5c9e2244b035419a4b6d6bdf159e1680ff729ff7. Historical Android rc4.223 core repaired functionality USER_CONFIRMED PASS remains intact. Next gate: RC4224_EXACT_HEAD_CLOUD_VALIDATION_PENDING.",
-    "android_authority": "v11.8.0-rc4.224 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / ANDROID UI PHYSICAL PENDING / NOT ACCEPTED. Production remains rc4.223 canonical 7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4 tree 5c9e2244b035419a4b6d6bdf159e1680ff729ff7. Historical Android rc4.223 core repaired functionality USER_CONFIRMED PASS remains intact. Next gate: RC4224_EXACT_HEAD_CLOUD_VALIDATION_PENDING.",
+    "androidAuthority": "v11.8.0-rc4.224 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR226 squash merged 9a4422a2b562ec0dc3688aa2b663f29709b9c3af, reviewed 4bbbf3aa650adfa37b6d2d3129e4eb28572ca58b, tree 8138135db5c775c98ed48aa381119c9b956ffe9f, deployment 18998487-d441-4c33-ba5b-e5ed2000688a. ANDROID UI ACCEPTANCE PENDING / NOT PHYSICALLY ACCEPTED. Historical rc4.223 core repaired functionality USER_CONFIRMED PASS preserved; no agent physical test. Next gate: RC4224_ANDROID_UI_ACCEPTANCE_PENDING.",
+    "android_authority": "v11.8.0-rc4.224 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR226 squash merged 9a4422a2b562ec0dc3688aa2b663f29709b9c3af, reviewed 4bbbf3aa650adfa37b6d2d3129e4eb28572ca58b, tree 8138135db5c775c98ed48aa381119c9b956ffe9f, deployment 18998487-d441-4c33-ba5b-e5ed2000688a. ANDROID UI ACCEPTANCE PENDING / NOT PHYSICALLY ACCEPTED. Historical rc4.223 core repaired functionality USER_CONFIRMED PASS preserved; no agent physical test. Next gate: RC4224_ANDROID_UI_ACCEPTANCE_PENDING.",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "preinstallReferenceArtifactId": null,
@@ -161,7 +161,7 @@
     },
     "acceptedAndroidAuthority": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
     "unreleasedMainDelta": "DYNAMIC_VERIFICATION_REQUIRED against canonical main and relevant PRs; last-observed PR118 boundary is recorded in CURRENT.",
-    "deployedPagesVersion": "v11.8.0-rc4.223",
+    "deployedPagesVersion": "v11.8.0-rc4.224",
     "mainGhPagesParity": false,
     "androidVerified": false,
     "androidAcceptance": "FAIL",
@@ -173,23 +173,23 @@
       "files": 17,
       "sha256": null,
       "status": "REVIEWED_RUNTIME_IDENTITY_NO_PACKAGE_REEXTRACTION_CLAIM",
-      "source_scope": "RC4224_LOCAL_RUNTIME_NO_PACKAGE_REEXTRACTION_CLAIM",
-      "runtime_identity_head": null
+      "source_scope": "RC4224_REVIEWED_RUNTIME_SERVED_STATIC_PARITY",
+      "runtime_identity_head": "4bbbf3aa650adfa37b6d2d3129e4eb28572ca58b"
     },
     "acceptedRollback": "v11.8.0-rc4.195",
     "productionDeployment": {
-      "version": "v11.8.0-rc4.223",
-      "sourceCommit": "7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4",
-      "tree": "5c9e2244b035419a4b6d6bdf159e1680ff729ff7",
-      "deploymentId": "f39eaba5-5b89-4c25-a46b-bcb35edcd128",
-      "cloudflareCheckRunId": 111237920079,
+      "version": "v11.8.0-rc4.224",
+      "sourceCommit": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+      "tree": "8138135db5c775c98ed48aa381119c9b956ffe9f",
+      "deploymentId": "18998487-d441-4c33-ba5b-e5ed2000688a",
+      "cloudflareCheckRunId": 111265026478,
       "status": "DEPLOYED_SUCCESS",
-      "deviceAcceptanceProven": true,
-      "physicalClassification": "RC4223_MINOR_UI_COMPLETE_CORE_PHYSICAL_PASS",
-      "physical_scope": "CORE_REPAIRED_FUNCTIONALITY",
-      "minor_ui_physical_test_proven": false
+      "deviceAcceptanceProven": false,
+      "physicalClassification": "RC4224_ANDROID_UI_ACCEPTANCE_PENDING",
+      "physical_scope": "ROSTER_DECISION_SURFACE_UI",
+      "agent_physical_test": false
     },
-    "deployedPagesHead": "7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4",
+    "deployedPagesHead": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
     "lastBroadPhysicalEvidenceBaseline": {
       "status": "LAST_BROAD_PHYSICAL_EVIDENCE_BASELINE",
       "version": "v11.8.0-rc4.210",
@@ -244,13 +244,13 @@
       "classification": "RC4224_ANDROID_UI_ACCEPTANCE_PENDING",
       "proven": false,
       "executable": false,
-      "prerequisite_gate": "RC4224_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-      "canonical_main": "7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4",
+      "prerequisite_gate": "RC4224_ANDROID_UI_ACCEPTANCE_PENDING",
+      "canonical_main": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
       "agent_physical_test": false
     },
     "localCandidate": {
       "version": "v11.8.0-rc4.224",
-      "productionProven": false,
+      "productionProven": true,
       "deviceAcceptanceProven": false
     },
     "latestDeviceEvidence": {
@@ -498,12 +498,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "RC4224_LOCAL_CANDIDATE",
-    "nextGate": "RC4224_EXACT_HEAD_CLOUD_VALIDATION_PENDING"
+    "status": "RC4224_PRODUCTION_PHYSICAL_PENDING",
+    "nextGate": "RC4224_ANDROID_UI_ACCEPTANCE_PENDING"
   },
-  "status": "RC4224_LOCAL_CANDIDATE",
-  "gate": "RC4224_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-  "nextGate": "RC4224_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
+  "status": "RC4224_PRODUCTION_PHYSICAL_PENDING",
+  "gate": "RC4224_ANDROID_UI_ACCEPTANCE_PENDING",
+  "nextGate": "RC4224_ANDROID_UI_ACCEPTANCE_PENDING",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -512,7 +512,7 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20261003T1814Z-v296",
+    "generation": "20261003T1832Z-v297",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -538,7 +538,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20261003T1814Z-v296",
+  "handoff_generation": "20261003T1832Z-v297",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -573,42 +573,42 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20261003T1814Z-v296",
+  "handoffGeneration": "20261003T1832Z-v297",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-10-03T18:14:57Z",
-  "exactNextAction": "RC4224 authorized sequence: tested local candidate -> push/PR -> exact-head cloud full Strict and browser PASS -> adversarial review -> clean green merge -> Production parity -> Authority reconciliation. Android UI acceptance PENDING; rc4223 historical core PASS preserved; no fantasy transaction.",
+  "updated_at": "2026-10-03T18:32:20Z",
+  "exactNextAction": "RC4.224 merged and Production verified; STOP at Android UI acceptance PENDING. User reviews Kader on real Android. Historical rc4.223 core repaired functionality PASS preserved. Local v297 Authority commit is not published or certified by historical runtime CI.",
   "failClosedRecovery": "PR207 Production trade-rationale physical PASS is current: neutral \"Roster-Fit verbessert\" physically observed on the concrete Pickens-for-Bowers offer; unsupported RB-need claim absent; Boone 251/251 and no-auto-send preserved. Broad ECR, selected PITTI Panel and full game-context were not reaccepted; Team Total remains fail-closed. Library mirror remains stale; never claim a newer Library generation persisted unless files.list proves it.",
   "authorityContinuation": {
-    "status": "LOCAL_VALIDATED_PUBLICATION_AUTHORIZED",
-    "branch": "codex/rc4224-roster-decision-surface",
+    "status": "SOURCE_PRODUCTION_VERIFIED_PHYSICAL_PENDING",
+    "branch": "codex/v297-rc4224-production-authority",
     "published_branch": null,
-    "current_gate": "RC4224_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
+    "current_gate": "RC4224_ANDROID_UI_ACCEPTANCE_PENDING",
     "physical_gate": "RC4224_ANDROID_UI_ACCEPTANCE_PENDING",
     "physical_executable": false,
-    "canonical_main": "7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4",
-    "canonical_tree": "5c9e2244b035419a4b6d6bdf159e1680ff729ff7",
+    "canonical_main": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+    "canonical_tree": "8138135db5c775c98ed48aa381119c9b956ffe9f",
     "sequence": [
-      "RC4224_EXACT_HEAD_CLOUD_VALIDATION_PENDING"
+      "RC4224_ANDROID_UI_ACCEPTANCE_PENDING"
     ],
-    "exact_head_rule": "Only exact machine-read candidate HEAD cloud checks authorize promotion; historical rc4223 CI/Production/core physical PASS cannot certify rc4224 UI."
+    "exact_head_rule": "PR226 reviewed exact-head cloud 277/277 and canonical Production are verified historical receipts. Only fresh exact-head CI certifies a future Authority branch; these checks do not certify the unpublished v297 Authority commit."
   },
   "runtimeCandidate": {
     "version": "v11.8.0-rc4.224",
     "branch": "codex/rc4224-roster-decision-surface",
     "base": "c911943d4f01d542b7b517b20734b57f67b149a4",
     "base_tree": "6947d0aeacfa6756b21271dea0fa89ed2b3a6647",
-    "canonical_base": "7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4",
-    "status": "LOCAL_CANDIDATE",
-    "pr": null,
-    "pr_state": null,
-    "merged": false,
-    "published_head": null,
-    "merge_commit": null,
-    "production_deployment": null,
-    "production_proven": false,
+    "canonical_base": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+    "status": "MERGED_CANONICAL_PRODUCTION_DEPLOYED",
+    "pr": 226,
+    "pr_state": "MERGED",
+    "merged": true,
+    "published_head": "4bbbf3aa650adfa37b6d2d3129e4eb28572ca58b",
+    "merge_commit": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+    "production_deployment": "18998487-d441-4c33-ba5b-e5ed2000688a",
+    "production_proven": true,
     "physical_accepted": false,
     "physical_status": "PENDING_NOT_ACCEPTED",
-    "gate": "RC4224_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-    "exact_head_rule": "Only exact machine-read candidate HEAD cloud checks authorize promotion; historical rc4223 CI/Production/core physical PASS cannot certify rc4224 UI."
+    "gate": "RC4224_ANDROID_UI_ACCEPTANCE_PENDING",
+    "exact_head_rule": "PR226 reviewed exact-head cloud 277/277 and canonical Production are verified historical receipts. Only fresh exact-head CI certifies a future Authority branch; these checks do not certify the unpublished v297 Authority commit."
   }
 }
