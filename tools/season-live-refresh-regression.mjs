@@ -7,7 +7,7 @@ const state=()=>({ok:true,source:'Sleeper direct',generated_at:now,player_direct
 const els=new Proxy({},{get(o,k){return o[k]??=( {style:{},value:k==='slot'?'9':'',textContent:'',innerHTML:'',disabled:false});}});
 const c={players:{new:{position:'QB'}},playersLoadedAt:now,mine:[],season:state()};
 const sandbox={setTimeout,clearTimeout,Date:Clock,console,els,navigator:{onLine:true},lastDraftContext:c,seasonBootstrapBusy:false,fetchSeasonLeagueState:async()=>{fetches++;await new Promise(r=>release=r);return state();},seasonRosterRows:()=>[{p:{id:'new',pos:'QB'},seasonStatus:'ACTIVE'}],seasonAvailablePlayers:()=>[{p:{id:'free'}}],seasonAvailableSpecialTeams:(_s,_p,pos)=>[pos],rerenderPostDraftFromContext:()=>{renders++},scheduleSeasonDecisionExpiry:()=>{},localStorage:{getItem:()=>String(1_000_000)},renderSeasonLiveStateFreshness:()=>{},jf:async()=>{dirs++;return c.players},S:'https://api.sleeper.app/v1'};
-sandbox.refreshSeasonActualScores=async()=>({ok:false});
+sandbox.refreshSeasonWrMatchup=async()=>({ok:false});sandbox.refreshSeasonActualScores=async()=>({ok:false});
 vm.createContext(sandbox);vm.runInContext(app.slice(app.indexOf('const SEASON_LIVE_REFRESH_MS='),app.indexOf('let seasonBootstrapBusy=false;'))+source('seasonLiveAuthority')+'\n'+source('seasonRosterAuthority')+'\n'+source('renderSeasonLiveStateFreshness'),sandbox);
 sandbox.queueSeasonRerender=()=>{renders++};sandbox.seasonDirectoryRefresh=async()=>{dirs++;return{schema:'pitti.players.v1',players:c.players,fetchedAt:now}};sandbox.renderSeasonLiveStateFreshness();assert.equal(els.seasonLiveStateAge.textContent,'< 1 Min.');
 assert.equal(sandbox.seasonLiveAuthority(c.season,now+300000),true);assert.equal(sandbox.seasonLiveAuthority(c.season,now+300001),false);

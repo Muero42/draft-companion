@@ -8,7 +8,7 @@ assert(app.includes("projection_available:projection.status==='VERIFIED'"),'opti
 assert(app.includes("positional_rank:rankAvailable?rank.value:null"),'unavailable weekly rank stays null');
 assert(app.includes("rank_status:rankAvailable?'VERIFIED':'UNAVAILABLE'"),'rank lane remains explicitly scoped');
 assert(!app.includes("rank.status==='VERIFIED'&&projection.status==='VERIFIED'"),'rank must not gate projection consumption');
-assert(app.includes("const rankLabel")||app.includes("rank=(p,e)=>e.rankAvailable?p.pos+e.rank:''"),'missing rank omitted without seasonal substitution');
+assert(app.includes("rankText=rank.status==='VERIFIED'"),'missing rank omitted without seasonal substitution');
 assert(app.includes("!['RESERVE','IR','TAXI'].includes"),'inactive players excluded');
-assert(app.includes('start-sit-action')&&app.includes('↑ ')&&app.includes(' rein · ↓ '),'compact action presentation retains start/sit direction');
+assert(app.includes('start-sit-action')&&app.includes('↑ ')&&app.includes(' starten</span>')&&app.includes(' Bank</span>'),'compact action presentation retains start/sit direction');
 console.log('SEASON_LINEUP_EVIDENCE_STATUS_PASS');

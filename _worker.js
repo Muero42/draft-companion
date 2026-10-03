@@ -14,9 +14,33 @@ export default {
     if(url.pathname==='/api/boone-trade-values') return handleBooneTradeValues(request,url);
     if(url.pathname==='/api/weekly-public-evidence')return handleWeeklyPublicEvidence(request,url);
     if(url.pathname==='/api/nfl-week-context') return handleNflWeekContext(request,url);
+    if(url.pathname==='/api/wr-matchup-context') return handleWrMatchupContext(request,url);
     return env.ASSETS.fetch(request);
   }
 };
+
+const WR_MATCHUP_URL='https://www.fantasypros.com/nfl/matchups/wr.php';
+function parseWrMatchupCalendar(html,season,week,now=Date.now()){
+  if(typeof html!=='string'||html.length>2*1024*1024||!html.includes('<h1>'+season+' Matchup Calendar</h1>'))throw Error('CALENDAR_SEASON');
+  const table=html.match(/<table[^>]*id="data"[\s\S]*?<\/table>/)?.[0],head=table?.match(/<thead>[\s\S]*?<\/thead>/)?.[0],headers=[...(head||'').matchAll(/<th\b([^>]*)>(\d+)<\/th>/g)];
+  if(headers.length!==18||headers.some((h,i)=>Number(h[2])!==i+1)||Number(headers.find(h=>!h[1].includes('hidden-mobile'))?.[2])!==week)throw Error('CALENDAR_WEEK');
+  const teams=new Set('ARI ATL BAL BUF CAR CHI CIN CLE DAL DEN DET GB HOU IND JAX KC LAC LAR LV MIA MIN NE NO NYG NYJ PHI PIT SEA SF TB TEN WAS'.split(' ')),records=new Map();
+  for(const match of table.matchAll(/<tr\b[^>]*class="mpb-[^>]*>[\s\S]*?<\/tr>/g)){
+    const cells=[...match[0].matchAll(/<td\b[^>]*>([\s\S]*?)<\/td>/g)].map(x=>x[1]);if(cells.length!==20)throw Error('CALENDAR_COLUMNS');
+    const team=canonicalNflTeam(cells[1].match(/<small class="grey">([A-Z]{2,3})<\/small>/)?.[1]),cell=cells[week+1];if(team==='FA')continue;if(!teams.has(team))throw Error('CALENDAR_TEAM');
+    if(/\bBYE\b/.test(cell))continue;
+    const opponent=canonicalNflTeam(cell.match(/matchup-cell__opponents-text[^>]*>\s*(?:vs\.|at)\s+([A-Z]{2,3})\s*</)?.[1]),stars=Number(cell.match(/This is a ([1-5]) star matchup\. WRs /)?.[1]),rank=Number(cell.match(/data-rank="(\d+)"/)?.[1]);
+    if(!teams.has(opponent)||team===opponent||!stars||!Number.isInteger(rank)||rank<1||rank>32)throw Error('CALENDAR_RATING');
+    const record={team,opponent,stars,position:'WR',scope:'TEAM_POSITION'},previous=records.get(team);if(previous&&JSON.stringify(previous)!==JSON.stringify(record))throw Error('CALENDAR_CONFLICT');records.set(team,record);
+  }
+  if(records.size<26||records.size>32)throw Error('CALENDAR_COVERAGE');
+  return{schema:'pitti.team-wr-matchup.v1',status:'VERIFIED',season,week,scope:'TEAM_POSITION',sourceId:'fantasypros_wr_matchup_calendar',sourceUrl:WR_MATCHUP_URL,sourceWeekMarker:week,verifiedAt:now,expiresAt:now+6*3600000,records:[...records.values()]};
+}
+async function handleWrMatchupContext(request,url){
+  if(request.method!=='GET')return json({error:'GET only'},405);
+  const season=Number(url.searchParams.get('season')),week=Number(url.searchParams.get('week'));if(!Number.isInteger(season)||season<2026||season>2100||!Number.isInteger(week)||week<1||week>18)return json({error:'Invalid context'},400);
+  try{const response=await fetch(WR_MATCHUP_URL,{signal:AbortSignal.timeout(8000),cf:{cacheTtl:900,cacheEverything:true}});if(!response.ok)throw Error('HTTP');return json(parseWrMatchupCalendar(await boundedText(response,2*1024*1024),season,week));}catch{return json({schema:'pitti.team-wr-matchup.v1',status:'UNAVAILABLE',reason:'CURRENT_WR_CALENDAR_NOT_VERIFIED',season,week},502);}
+}
 
 
 // Verified coordinates bound to ESPN venue ID AND name; never infer location from home team.
