@@ -57,6 +57,6 @@ assert.equal(lineup.evaluate({roster:incomplete,evidence:ev,week,now}).status,'M
 
 const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
 assert(app.includes("seasonWeeklyMetric(p,'projected_points'"),'runtime lineup consumes verified weekly projections');
-assert(app.includes('Sleeper liefert aktuelle Aufstellung, Ownership und die kanonischen Roster-Slots'),'runtime declares live Sleeper lineup authority');
+assert(app.includes('const starterGeometry=(season?.league?.roster_positions||[])')&&app.includes('season?.my_roster?.starters?.[index]'),'runtime declares live Sleeper lineup authority');
 assert(app.includes('THIS WEEK is the verified legal-lineup projection delta')&&app.includes('Draft/panel ranks and generic news scores may never substitute'),'preseason/draft rank cannot substitute for weekly evidence');
 console.log('season lineup start-sit v2 regression PASS');

@@ -1,6 +1,6 @@
 import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePolicy} from './decision-policy.js';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,adaptBooneTradeEvidence,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
-const APP_VERSION='v11.8.0-rc4.223';
+const APP_VERSION='v11.8.0-rc4.224';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -101,15 +101,123 @@ function seasonLineupHtml(rows,season){
   const byId=new Map(rows.map(x=>[String(x.p.id),x])),starters=(season?.my_roster?.starters||season?.my_starters||[]).map(String).filter(x=>x&&x!=='0');
   const slotMap=seasonStarterSlotMap(season),starterSet=new Set(starters),active=rows.filter(x=>x.seasonStatus!=='RESERVE'&&x.seasonStatus!=='TAXI'),bench=active.filter(x=>!starterSet.has(String(x.p.id))),reserve=rows.filter(x=>x.seasonStatus==='RESERVE');
   const slotClass=(slot,playerPos='')=>{const s=String(slot||'').toUpperCase(),p=String(playerPos||'').toUpperCase();if(s==='FLEX')return'flex-wrt';if(s==='WRRB_FLEX')return'flex-wr';if(s==='REC_FLEX')return'flex-wt';if(s==='SUPER_FLEX')return'flex-super';if(s==='BN'||s==='IR'||s==='TAXI')return s.toLowerCase();if(s==='DEF'||s==='DST')return'dst';if(['QB','RB','WR','TE','K'].includes(s))return s.toLowerCase();return ['QB','RB','WR','TE','K'].includes(p)?p.toLowerCase():'slot-neutral';};
-  const row=(x,label,alt='',slot='')=>'<div class="lineup-row"><span class="pos-chip '+slotClass(slot||label,x.p.pos)+'">'+esc(label||x.p.pos)+'</span><div class="lineup-player"><b>'+esc(x.p.name)+'</b><span>'+esc(x.p.team)+(x.p.injury?' · '+esc(x.p.injury):'')+(alt?' · '+esc(alt):'')+' · '+esc(seasonWeeklyStrip(x.p,season))+'</span></div><b class="lineup-state">'+(x.seasonStatus==='RESERVE'?'IR':'')+'</b></div>';
+  const display=seasonDisplayContext(season),models=new Map(rows.map(x=>[String(x.p.id),seasonRosterDisplayModel(x,display)]));
+  const row=(x,label,alt='',slot='')=>seasonRosterCardHtml(models.get(String(x.p.id)),label||x.p.pos,slotClass(slot||label,x.p.pos));
   let html='<div class="lineup-section-title">STARTER</div>';
   for(const pid of starters){const x=byId.get(pid),slot=slotMap.get(pid)?.slot;if(x)html+=row(x,seasonSlotLabel(slot,x.p.pos),'',slot);}
   if(!starters.length)html+='<div class="notice warn">Sleeper-Starter noch nicht verfügbar; Kader ist geladen.</div>';
   html+='<div class="lineup-section-title">BENCH</div>'+bench.map(x=>row(x,'BN','','BN')).join('');
   const taxi=rows.filter(x=>x.seasonStatus==='TAXI');if(taxi.length)html+='<div class="lineup-section-title">TAXI</div>'+taxi.map(x=>row(x,'TAXI','','TAXI')).join('');
   if(reserve.length)html+='<div class="lineup-section-title">RESERVE / IR</div>'+reserve.map(x=>row(x,'IR','','IR')).join('');
+  const detail=$('seasonRosterProvenance');if(detail)detail.textContent=JSON.stringify([...models.values()].map(m=>({player:m.name,projection:{sourceId:m.provenance.projection.sourceId,sourceUrl:m.provenance.projection.sourceUrl,verifiedAt:m.provenance.projection.verifiedAt,status:m.provenance.projection.status},rank:{sourceId:m.provenance.rank.sourceId,sourceUrl:m.provenance.rank.sourceUrl,verifiedAt:m.provenance.rank.verifiedAt,status:m.provenance.rank.status},game:seasonRosterGameProvenance(m.provenance.game),actual:m.actual})),null,2);
   return html;
 }
+function seasonRosterGameProvenance(game){
+  if(!game)return null;const pick=(o,keys)=>Object.fromEntries(keys.filter(k=>o?.[k]!==undefined).map(k=>[k,o[k]]));return{...pick(game,['status','eventId','team','opponent','home','kickoffAt','venue','roof','gameState','locked','sourceId','sourceUrl','verifiedAt','expiresAt']),weather:pick(game.weather,['status','reason','sourceId','sourceUrl','forecastAt','verifiedAt','expiresAt','temperature','windKmh','gustKmh','precipitationProbability']),vegas:pick(game.vegas,['status','reason','provider','sourceId','sourceUrl','verifiedAt','expiresAt','total','homeSpread','awaySpread','homeImpliedTotal','awayImpliedTotal'])};
+}
+const SEASON_ACTUAL_CACHE='pitti.season-actual-points.v1',SEASON_ACTUAL_MAX_AGE_MS=120000;
+let seasonActualFlight=null,seasonActualTimer=null;
+function seasonActualSnapshot(payload,season,now=Date.now()){
+  const context=seasonEvidenceContext(season),leagueId=String(season?.league_id||''),rosterId=Number(season?.roster_id),list=Array.isArray(payload)?payload:[],own=list.filter(r=>Number(r.roster_id)===rosterId);
+  if(!leagueId||!Number.isInteger(context.week)||context.week<1||context.week>18||list.length!==Number(season?.league?.total_rosters||10)||new Set(list.map(r=>r.roster_id)).size!==list.length||own.length!==1)return null;
+  const row=own[0],ids=new Set((row.players||[]).map(String)),owned=new Set((season.my_roster?.players||[]).map(String)),scores={};
+  if(!row.players_points||typeof row.players_points!=='object'||Array.isArray(row.players_points))return null;
+  for(const [id,value]of Object.entries(row.players_points))if(ids.has(id)&&owned.has(id)&&typeof value==='number'&&Number.isFinite(value))scores[id]=value;
+  return{schema:'pitti.season-actual-points.v1',season:context.season,week:context.week,leagueId,rosterId,scores,verifiedAt:now,expiresAt:now+SEASON_ACTUAL_MAX_AGE_MS,sourceId:'sleeper_league_matchups',sourceUrl:'https://api.sleeper.app/v1/league/'+encodeURIComponent(leagueId)+'/matchups/'+context.week};
+}
+function seasonActualPoints(snapshot,p,season,game,now=Date.now()){
+  const c=seasonEvidenceContext(season),expected='https://api.sleeper.app/v1/league/'+encodeURIComponent(String(season?.league_id||''))+'/matchups/'+c.week;
+  const valid=snapshot?.schema==='pitti.season-actual-points.v1'&&snapshot.sourceId==='sleeper_league_matchups'&&snapshot.sourceUrl===expected&&snapshot.leagueId===String(season?.league_id||'')&&snapshot.rosterId===Number(season?.roster_id)&&snapshot.season===c.season&&snapshot.week===c.week&&Number.isFinite(snapshot.verifiedAt)&&snapshot.verifiedAt<=now&&now-snapshot.verifiedAt<=SEASON_ACTUAL_MAX_AGE_MS&&snapshot.expiresAt>now&&snapshot.expiresAt-snapshot.verifiedAt<=SEASON_ACTUAL_MAX_AGE_MS&&seasonLiveAuthority(season,now)&&game?.locked===true&&['LIVE','FINAL'].includes(game.gameState)&&Object.hasOwn(snapshot.scores||{},String(p.id))&&typeof snapshot.scores[p.id]==='number'&&Number.isFinite(snapshot.scores[p.id]);
+  return valid?{status:'VERIFIED',value:snapshot.scores[p.id],gameState:game.gameState,sourceUrl:snapshot.sourceUrl,verifiedAt:snapshot.verifiedAt}:{status:'UNAVAILABLE'};
+}
+function seasonActualScoreDiagnostic(season=lastDraftContext?.season){
+  const snapshot=store.get(SEASON_ACTUAL_CACHE,null),c=seasonEvidenceContext(season),expected='https://api.sleeper.app/v1/league/'+encodeURIComponent(String(season?.league_id||''))+'/matchups/'+c.week,valid=snapshot?.schema==='pitti.season-actual-points.v1'&&snapshot.leagueId===String(season?.league_id||'')&&snapshot.rosterId===Number(season?.roster_id)&&snapshot.season===c.season&&snapshot.week===c.week&&snapshot.sourceUrl===expected&&snapshot.sourceId==='sleeper_league_matchups',owned=new Set((season?.my_roster?.players||[]).map(String));
+  return{status:valid&&snapshot.verifiedAt<=Date.now()&&snapshot.expiresAt>Date.now()&&Date.now()-snapshot.verifiedAt<=SEASON_ACTUAL_MAX_AGE_MS?'AVAILABLE':valid?'STALE':'UNAVAILABLE',season:c.season,week:c.week,sourceId:'sleeper_league_matchups',sourceUrl:valid?expected:null,verifiedAt:valid&&Number.isFinite(snapshot.verifiedAt)?snapshot.verifiedAt:null,expiresAt:valid&&Number.isFinite(snapshot.expiresAt)?snapshot.expiresAt:null,scores:valid?Object.fromEntries(Object.entries(snapshot.scores||{}).filter(([id,value])=>owned.has(id)&&typeof value==='number'&&Number.isFinite(value))):{}};
+}
+function scheduleSeasonActualRefresh(){
+  clearTimeout(seasonActualTimer);seasonActualTimer=setTimeout(()=>{const season=lastDraftContext?.season;if(season&&document.visibilityState!=='hidden')refreshSeasonActualScores(season);else if(season)scheduleSeasonActualRefresh();},60000);
+}
+async function refreshSeasonActualScores(season){
+  const c=seasonEvidenceContext(season),key=[season?.league_id,season?.roster_id,c.season,c.week].join('|');
+  if(!seasonLiveAuthority(season)||!Number.isInteger(c.week)||c.week<1||c.week>18||!season.league_id)return{ok:false};
+  scheduleSeasonActualRefresh();
+  if(!navigator.onLine){if(els.rosterList&&lastDraftContext?.season===season&&lastDraftContext.seasonRows)els.rosterList.innerHTML=seasonLineupHtml(lastDraftContext.seasonRows,season);renderSeasonDataCompactHeader();return{ok:false,reason:'OFFLINE'};}
+  refreshSeasonGameContext(c).catch(()=>{});
+  const previous=store.get(SEASON_ACTUAL_CACHE,null);if(previous?.leagueId===String(season.league_id)&&previous.week===c.week&&previous.rosterId===Number(season.roster_id)&&previous.season===c.season&&previous.verifiedAt<=Date.now()&&Date.now()-previous.verifiedAt<60000)return{ok:true,cached:true};
+  if(seasonActualFlight?.key===key)return seasonActualFlight.promise;
+  const flight={key,promise:null};flight.promise=(async()=>{try{const url='https://api.sleeper.app/v1/league/'+encodeURIComponent(season.league_id)+'/matchups/'+c.week,payload=await jf(url,'Aktuelle Spielerpunkte',7000),snapshot=seasonActualSnapshot(payload,season);
+    if(!snapshot||lastDraftContext?.season!==season||seasonEvidenceContext(lastDraftContext.season).week!==c.week)return{ok:false,reason:'CONTEXT_OR_RESPONSE'};
+    try{store.set(SEASON_ACTUAL_CACHE,snapshot);}catch{return{ok:false,reason:'STORAGE'};}
+    // Presentation-only refresh: no trade/waiver work or changed decision revision.
+    if(els.rosterList&&lastDraftContext.seasonRows)els.rosterList.innerHTML=seasonLineupHtml(lastDraftContext.seasonRows,season);
+    renderSeasonDataCompactHeader();
+    return{ok:true};
+  }catch{if(lastDraftContext?.season===season&&els.rosterList&&lastDraftContext.seasonRows)els.rosterList.innerHTML=seasonLineupHtml(lastDraftContext.seasonRows,season);renderSeasonDataCompactHeader();return{ok:false,reason:'ACTUAL_POINTS_FETCH_FAILED'};}})();seasonActualFlight=flight;
+  try{return await flight.promise;}finally{if(seasonActualFlight===flight)seasonActualFlight=null;}
+}
+function seasonDisplayContext(season,now=Date.now()){
+  const context=seasonEvidenceContext(season),api=globalThis.PittiGameContextV1,snapshot=store.get(api?.CACHE_KEY||'pitti.game-context.v1.current',null),valid=api?.validateSnapshot?.(snapshot,context,now)?.ok===true;
+  const games=valid?snapshot.games:[],current=games.filter(g=>g.vegas?.status==='VERIFIED'&&g.vegas.expiresAt>now&&Date.parse(g.kickoffAt)>now);
+  const totals=current.flatMap(g=>[g.vegas.homeImpliedTotal,g.vegas.awayImpliedTotal]).filter(Number.isFinite).sort((a,b)=>a-b),gameTotals=current.map(g=>g.vegas.total).sort((a,b)=>a-b),scripts=current.flatMap(g=>[-g.vegas.homeSpread,-g.vegas.awaySpread]).sort((a,b)=>a-b);
+  return{season,context,now,api,snapshot,valid,live:seasonLiveAuthority(season,now),records:seasonEvidenceCache(),actual:store.get(SEASON_ACTUAL_CACHE,null),totals,gameTotals,scripts};
+}
+function seasonSignalGrade(score){return score>=.75?'POSITIVE':score<=.25?'NEGATIVE':'NEUTRAL';}
+function seasonSignalLabel(grade){return grade==='POSITIVE'?'↑ gut':grade==='NEGATIVE'?'↓ schwierig':'= neutral';}
+function seasonPercentile(values,value){return values.length?(values.filter(v=>v<value).length+.5*values.filter(v=>v===value).length)/values.length:.5;}
+function seasonEnvironmentSignal(p,game,context){
+  if(game?.locked||game?.vegas?.status!=='VERIFIED'||game.vegas.expiresAt<=context.now)return{status:'UNAVAILABLE'};
+  const dst=['DST','DEF'].includes(p.pos),teamTotal=dst?(game.home?game.vegas.awayImpliedTotal:game.vegas.homeImpliedTotal):game.impliedTeamTotal,spread=game.spread,total=game.vegas.total;
+  if(![teamTotal,spread,total].every(Number.isFinite))return{status:'UNAVAILABLE'};
+  const teamPct=seasonPercentile(context.totals,teamTotal),totalPct=seasonPercentile(context.gameTotals,total),scriptPct=seasonPercentile(context.scripts,-spread),score=dst ? .85*(1-teamPct)+.15*scriptPct:p.pos==='RB' ? .8*teamPct+.2*scriptPct:p.pos==='K'?teamPct:.75*teamPct+.25*totalPct,grade=context.totals.length>=16?seasonSignalGrade(score):'NEUTRAL';
+  return{status:context.totals.length>=16?'VERIFIED':'PARTIAL',grade,strength:context.totals.length>=16?score:null,shortLabel:seasonSignalLabel(grade),detail:(dst?'Gegner ':game.team+' ')+teamTotal.toFixed(1)+' · '+(spread>0?'+':'')+spread+' '+(spread<0?'Favorit':spread>0?'Außenseiter':'ausgeglichen')+' · O/U '+total,provenance:game.vegas};
+}
+function seasonWeatherSignal(p,game){
+  if(game?.locked||game?.roof==='DOME'||game?.roof!=='OUTDOOR'||game?.weather?.status!=='VERIFIED')return{status:'UNAVAILABLE'};
+  const w=game.weather;if(![w.temperature,w.windKmh,w.precipitationProbability].every(Number.isFinite))return{status:'UNAVAILABLE'};
+  const passing=['QB','WR','TE','K'].includes(p.pos),strong=w.windKmh>=40||(Number.isFinite(w.gustKmh)&&w.gustKmh>=60),moderate=w.windKmh>=25||(Number.isFinite(w.gustKmh)&&w.gustKmh>=40),extreme=w.temperature>=35||w.temperature<=-10,rain=w.precipitationProbability>=70;
+  const grade=strong&&passing?'NEGATIVE':moderate||extreme||rain?'MIXED':'NEUTRAL',shortLabel=grade==='NEGATIVE'?'↓ Passing/Kicking riskant':grade==='MIXED'?'? beachten':'= kein Einfluss';
+  return{status:'VERIFIED',grade,shortLabel,detail:Math.round(w.temperature)+'° · '+(rain?'Regenrisiko '+w.precipitationProbability+'%':w.precipitationProbability<30?'trocken':'Regenrisiko '+w.precipitationProbability+'%')+' · '+Math.round(w.windKmh)+' km/h',provenance:w};
+}
+function seasonMatchupSignal(p,game,context,evidence=null){
+  if(!game||game.locked)return{status:'UNAVAILABLE'};
+  const e=evidence,valid=e?.schema==='pitti.matchup-presentation.v1'&&e.season===context.context.season&&e.week===context.context.week&&String(e.playerId)===String(p.id)&&e.team===game.team&&e.opponent===game.opponent&&e.status==='VERIFIED'&&e.sourceId==='fantasypros_wr_cb_article'&&/^https:\/\/www\.fantasypros\.com\/\d{4}\/\d{2}\//.test(e.sourceUrl||'')&&e.sourceUrl.includes('/'+context.context.season+'/')&&e.sourceUrl.includes('week-'+context.context.week+'-')&&Number.isFinite(e.verifiedAt)&&e.verifiedAt<=context.now&&context.now-e.verifiedAt<=6*3600000&&e.expiresAt>context.now&&e.expiresAt-e.verifiedAt<=6*3600000&&['POSITIVE','NEUTRAL','NEGATIVE'].includes(e.grade);
+  // No runtime feed is currently qualified. This typed boundary supports a future validated feed.
+  if(!valid)return{status:'UNAVAILABLE',reason:'NO_VERIFIED_POSITIONAL_MATCHUP'};
+  return{status:'VERIFIED',grade:e.grade,strength:e.strength,shortLabel:seasonSignalLabel(e.grade),detail:[['Slot','Outside'].includes(e.alignment)?e.alignment:null,Array.isArray(e.defenders)?e.defenders.filter(x=>typeof x==='string'&&x.length<80).join(' / '):null,e.detail].filter(Boolean).join(' · '),defenders:e.defenders||[],alignment:e.alignment,provenance:e};
+}
+function seasonRoleSignal(p,context){
+  return context.live&&/questionable/i.test(p.injury||'')?{status:'PARTIAL',grade:'MIXED',shortLabel:'? vor Kickoff prüfen',detail:'Questionable',provenance:{sourceId:'sleeper_live_player_status',verifiedAt:context.season.player_directory?.fetchedAt}}:{status:'UNAVAILABLE'};
+}
+function seasonRosterDisplayModel(row,context){
+  const p=row.p,metric=m=>seasonEvidenceValue(context.records,p.id,m,context.context,context.now),points=metric('projected_points'),selected=metric('weekly_rank'),broad=metric('broad_weekly_ecr_rank'),rank=selected.status==='VERIFIED'?selected:broad,game=context.valid?context.api.contextForTeam(context.snapshot,seasonDstTeam(p.team),context.now):null,actual=seasonActualPoints(context.actual,p,context.season,game,context.now),injury=String(p.injury||''),badges=[];
+  if(row.seasonStatus==='RESERVE'||/\b(IR|PUP)\b/i.test(injury))badges.push({label:/PUP/i.test(injury)?'IR/PUP':'IR',kind:'risk'});
+  else if(context.live&&/^(out|suspended)$/i.test(injury))badges.push({label:'OUT',kind:'risk'});else if(context.live&&/questionable/i.test(injury))badges.push({label:'Q',kind:'mixed'});
+  if(game?.locked)badges.push({label:['LIVE','FINAL'].includes(game.gameState)?game.gameState:'LOCKED',kind:'game'});
+  if(game?.roof==='DOME')badges.push({label:'DOME',kind:'dome'});
+  const projection=points.status==='VERIFIED'?points.value:null,score=actual.status==='VERIFIED'?(projection!==null?projection.toFixed(1)+' → ':'')+actual.value.toFixed(1):game?.locked?(projection!==null?projection.toFixed(1):'—'):context.live&&game&&!badges.some(b=>b.kind==='risk')&&projection!==null?projection.toFixed(1):'—';
+  const rankText=rank.status==='VERIFIED'?(['DEF','DST'].includes(p.pos)?'DST':p.pos)+rank.value:null;
+  const matchup=seasonMatchupSignal(p,game,context),environment=seasonEnvironmentSignal(p,game,context),weather=seasonWeatherSignal(p,game),role=seasonRoleSignal(p,context),signals=[];
+  if(!game?.locked){if(matchup.status==='VERIFIED')signals.push({label:'MATCHUP',...matchup});if(environment.status!=='UNAVAILABLE')signals.push({label:'SPIELUMFELD',...environment});if(weather.status!=='UNAVAILABLE')signals.push({label:'WETTER',...weather});if(role.status!=='UNAVAILABLE'&&signals.length<3)signals.push({label:'STATUS',...role});}
+  let delta=null;if(actual.status==='VERIFIED'&&actual.gameState==='FINAL'&&projection!==null){const value=actual.value-projection,tolerance=Math.max(2,Math.abs(projection)*.2);delta={value,grade:value>tolerance?'POSITIVE':value< -tolerance?'NEGATIVE':'NEUTRAL',tolerance};}
+  return{id:String(p.id),name:p.name,position:p.pos,team:p.team,opponent:game?.opponent||null,home:game?.home,score,projection,rank:rankText,badges,signals:signals.slice(0,3),delta,locked:game?.locked===true,actual,provenance:{projection:points,rank,game,matchup,role},missingProspective:!game?.locked&&score==='—'&&!badges.some(b=>b.kind==='risk')};
+}
+function seasonRosterCardHtml(model,chip,chipClass){
+  const signal=s=>'<div class="roster-signal"><span class="roster-row-label">'+esc(s.label)+'</span><span><strong class="signal-'+esc(s.grade.toLowerCase())+'">'+esc(s.shortLabel)+'</strong> · '+esc(s.detail)+'</span></div>';
+  const badges=model.badges.map(b=>'<span class="roster-badge badge-'+b.kind+'">'+esc(b.label)+'</span>').join(''),opponent=model.opponent?model.team+(model.home?' vs ':' @ ')+model.opponent:model.team;
+  const delta=model.delta?'<div class="roster-final-delta signal-'+model.delta.grade.toLowerCase()+'">'+(model.delta.value>=0?'+':'')+model.delta.value.toFixed(1)+' ggü. Prognose</div>':'';
+  return'<article class="lineup-row roster-decision-card" aria-label="'+esc(model.name)+'"><span class="pos-chip '+esc(chipClass)+'">'+esc(chip)+'</span><div class="roster-card-content"><div class="roster-card-heading"><b class="roster-player-name">'+esc(model.name)+'</b><b class="roster-points" aria-label="'+(model.locked?'Pre-Game / aktuelle Punkte':'Erwartete Punkte')+'">'+esc(model.score)+'</b></div><div class="roster-card-meta"><span>'+esc(opponent)+'</span>'+(model.rank?'<b>'+esc(model.rank)+'</b>':'')+badges+(model.locked&&model.actual.status!=='VERIFIED'?'<span class="roster-pre-game">Pre-Game</span>':'')+'</div>'+delta+model.signals.map(signal).join('')+(model.missingProspective?'<div class="roster-evidence-warning">Punkte / aktueller Spielkontext fehlen</div>':'')+'</div></article>';
+}
+function seasonRosterContextHealthy(season,snapshot,now=Date.now()){
+  const relevant=new Set((lastDraftContext?.seasonRows||[]).filter(r=>r.seasonStatus==='ACTIVE').map(r=>seasonDstTeam(r.p.team))),api=globalThis.PittiGameContextV1,actual=store.get(SEASON_ACTUAL_CACHE,null);
+  return relevant.size>0&&[...relevant].every(team=>{const game=api?.contextForTeam?.(snapshot,team,now);if(!game||game.status!=='VERIFIED')return false;if(game.locked){const rows=(lastDraftContext?.seasonRows||[]).filter(r=>seasonDstTeam(r.p.team)===team&&r.seasonStatus==='ACTIVE');return rows.every(r=>seasonActualPoints(actual,r.p,season,game,now).status==='VERIFIED');}return game.vegas?.status==='VERIFIED'&&(game.roof==='DOME'||game.weather?.status==='VERIFIED');});
+}
+function renderSeasonDataCompactHeader(){
+  const card=$('seasonDataCard'),strip=$('seasonDataCompact');if(!card||!strip)return;
+  const season=lastDraftContext?.season,c=seasonEvidenceContext(season),api=globalThis.PittiWeeklyEvidenceV2,w=store.get(api?.CACHE_KEY||'pitti.weekly-evidence.v2.current',null),gapi=globalThis.PittiGameContextV1,g=store.get(gapi?.CACHE_KEY||'pitti.game-context.v1.current',null),healthy=seasonLiveAuthority(season)&&api?.validateSnapshot?.(w,c)?.ok===true&&gapi?.validateSnapshot?.(g,c)?.ok===true&&seasonProjectionCoverage(w).complete&&seasonRosterContextHealthy(season,g,Date.now())&&[w?.lanes?.expertWeeklyRanks?.status,w?.lanes?.pittiSelectedWeeklyRanks?.status].includes('AVAILABLE')&&!/fehlgeschlagen|offline|FAIL/i.test((els.seasonLiveStateStatus?.textContent||'')+' '+(els.seasonRankingStatus?.textContent||''));
+  const contextStatus=$('seasonContextStatus');if(contextStatus){contextStatus.hidden=healthy||!season;contextStatus.textContent=healthy?'':'Aktueller Spielkontext, Wetter oder Spielpunkte teilweise offen · Details unter Erweitert.';}if(els.rosterStatus)els.rosterStatus.hidden=healthy;
+  card.classList.toggle('is-healthy',healthy);strip.hidden=!healthy;strip.textContent=healthy?'✓ Kader '+(els.seasonLiveStateAge?.textContent||'')+' · ✓ Weekly '+(els.seasonRankingAge?.textContent||'')+' · '+w.records.length+' Records':'';
+}
+
 const SEASON_SPECIAL_TEAMS_MODEL={
   version:'st-v2.1',updated:'2026-09-01',
   acquisitionPolicy:{dstEarlyAdd:'compare replacement edge vs weakest roster option value and market-loss risk',kEarlyAdd:'allow durable top-tier candidate only when projected edge plus market-loss risk clears weakest roster option value',rbPreWeek1OptionValue:'elevated',defaultTiming:'wait unless K/DST scarcity or durable edge clears roster-option threshold'},
@@ -1915,6 +2023,7 @@ function refreshSeasonLiveRoster({force=false,trigger='timer'}={}){
       if(lastDraftContext!==c)return{ok:false,skipped:'context-replaced'};
       if(Number(season.transaction_round)===Number(c.season?.transaction_round)&&c.season?.current_nfl_week)season.current_nfl_week=c.season.current_nfl_week;
       lastDraftContext={...c,season,players,playersLoadedAt,seasonRows:rows,rankedAvailable:available,availableDST,availableK};
+      refreshSeasonActualScores(season);
       queueSeasonRerender();scheduleSeasonDecisionExpiry();
       if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice ok';els.seasonLiveStateStatus.textContent='Live-Kader direkt von Sleeper aktualisiert.';}
       return{ok:true,trigger};
@@ -1947,6 +2056,7 @@ function renderSeasonLiveStateFreshness(note=''){
   const t=Number.isFinite(stamp)&&stamp>0&&stamp<=now?stamp:0,age=t?now-t:Infinity;
   if(els.seasonLiveStateAge)els.seasonLiveStateAge.textContent=!t?'nicht geladen':age<60000?'< 1 Min.':age<3600000?Math.round(age/60000)+' Min.':Math.round(age/3600000)+' Std.';
   if(els.seasonLiveStateStatus&&!seasonBootstrapBusy)els.seasonLiveStateStatus.textContent=note||(!t?'Live-Kader noch nicht geladen.':'Live-Kader direkt von Sleeper · zuletzt erfolgreich aktualisiert.');
+  if(typeof renderSeasonDataCompactHeader==='function')renderSeasonDataCompactHeader();
 }
 async function bootstrapSeasonWorkspace({force=false}={}){
   if(seasonBootstrapBusy||seasonLiveRefreshPromise){if(force&&els.seasonLiveStateStatus)els.seasonLiveStateStatus.textContent='Kader-Aktualisierung läuft bereits …';return{ok:false,busy:true};}
@@ -1985,6 +2095,7 @@ async function bootstrapSeasonWorkspace({force=false}={}){
     els.rosterList.innerHTML=seasonLineupHtml(rows,season);
     lastDraftContext={id:LIVE_DRAFT_ID_2026,current:total,players,picks,mine,teams,rankedAvailable:available||[],availableDST,availableK,draftComplete:true,season,seasonRows:rows,specialTeamsModel:SEASON_SPECIAL_TEAMS_MODEL,historicalDraftAvailable:!!draft,playersLoadedAt:directory.fetchedAt};
     lastPostDraftPairs=[];
+    refreshSeasonActualScores(season);
     stage='season-surfaces';seasonRenderRunning=true;
     const renderContext=lastDraftContext,renderRevision=seasonRenderRevision,renderDeadline=seasonDecisionDeadline(renderContext,Date.now());
     const current=()=>seasonRenderPassCurrent(renderContext,renderRevision,renderDeadline);
@@ -3107,11 +3218,12 @@ function renderRosterBenchAudit(rows,players,current,draftComplete){
   const result=optimizer?.evaluate?.({roster:active,evidence,week,slots,currentAssignments,now:Date.now()});
   const missingProjection=active.filter(x=>['QB','RB','WR','TE'].includes(x.p.pos)&&seasonCurrentWeekEligibility(x,season).eligible&&values[String(x.p.id)]?.projection_available!==true),missingRank=active.filter(x=>['QB','RB','WR','TE'].includes(x.p.pos)&&values[String(x.p.id)]?.lineup_eligible===true&&values[String(x.p.id)]?.projection_available===true&&values[String(x.p.id)]?.rank_available!==true),complete=result?.lineup?.complete&&seasonLiveAuthority(season),changes=result?.changes||[];
   els.rosterBenchStatus.className=complete&&!missingProjection.length?'notice ok':'notice warn';
-  els.rosterBenchStatus.textContent=`Week-${week||'?'} Start/Sit v6 · Sleeper liefert aktuelle Aufstellung, Ownership und die kanonischen Roster-Slots. globale legale Slot-Optimierung; Projektionen mit ausgewiesenem Provider; Matchup-Bewertungen werden nicht erfunden. · Projektionen sind positionsübergreifend vergleichbar; Positionsränge werden nie gegeneinander subtrahiert. ${gameValid?'Spiel-/Lock-Kontext verifiziert.':'Spiel-/Lock-Kontext nicht verfügbar.'}`;
-  const cards=changes.map(m=>{const start=m.startEvidence,sit=m.sitEvidence,delta=Number.isFinite(m.delta)?(m.delta>=0?'+':'')+m.delta.toFixed(1):'–',same=m.start?.p?.pos===m.sit?.p?.pos,rankLabel=e=>e.rankAvailable?'#'+e.rank:'Rang nicht verfügbar';return `<article class="coach trade-offer-card"><div class="coach-head"><div><h3>${esc(m.slot)} · START ${esc(m.start?.p?.name||'–')}</h3><div class="tiny">SIT ${esc(m.sit?.p?.name||'–')} · Lineup-Delta ${delta} Pkt</div></div><div class="score">${Number(m.delta)>0?'START':'REASSIGN'}</div></div><div class="tiny">START: ${start.projection?.toFixed?.(1)??start.projection} Pkt · ${m.start?.p?.pos} ${rankLabel(start)} · ${esc(start.opponent||'Gegner nicht verfügbar')}</div><div class="tiny">SIT: ${sit.projection?.toFixed?.(1)??sit.projection} Pkt · ${m.sit?.p?.pos} ${rankLabel(sit)} · ${esc(sit.opponent||'Gegner nicht verfügbar')}</div><div class="tiny">${same?'Positionsrang unterstützt den Vergleich nur, wenn verfügbar.':'Cross-Position: Entscheidung ausschließlich über Half-PPR-Projektion; Positionsränge sind nur Kontext.'} · Recheck bei Injury/Role-News und vor Kickoff.</div></article>`;}).join('');
-  const hold=complete&&!changes.length?'<div class="notice ok"><b>LINEUP OPTIMAL</b> · Gesperrte Starter bleiben fixiert; die verifizierten künftigen Half-PPR-Projektionen werden in den übrigen legalen Slots maximiert.</div>':'';
-  const unavailable=missingProjection.length?`<div class="notice warn"><b>START/SIT TEILWEISE NICHT BEWERTBAR</b> · ${missingProjection.length} realistische aktive Skill-Spieler ohne verifizierte aktuelle Half-PPR-Projektion. Betroffene Entscheidungen bleiben offen; vorhandene Spieler-Evidence wird nicht gelöscht.</div>`:!complete?'<div class="notice warn"><b>AUFSTELLUNG OFFEN</b> · Frische Live-/Spiel-Autorität und eine vollständige legale Belegung mit aktuell berechtigten Spielern sind erforderlich. OUT und gesperrte Bankspieler sind keine frei einsetzbaren Kandidaten.</div>':'';
-  const rankNotice=missingRank.length?`<div class="notice"><b>POSITIONSRANG NICHT VERFÜGBAR</b> · ${missingRank.length} aktive Skill-Spieler bleiben projektionsbasiert bewertbar; es wird kein Saisonrang eingesetzt.</div>`:'';
+  els.rosterBenchStatus.textContent=complete?'Start/Sit · aktuelle Aufstellung geprüft':'Start/Sit · Daten oder legale Belegung offen';
+  const cards=changes.map(m=>{const start=m.startEvidence,sit=m.sitEvidence,delta=Number.isFinite(m.delta)?(m.delta>=0?'+':'')+m.delta.toFixed(1):'–',rank=(p,e)=>e.rankAvailable?p.pos+e.rank:'';return '<article class="start-sit-action"><b>↑ '+esc(m.start?.p?.name||'–')+' rein · ↓ '+esc(m.sit?.p?.name||'–')+' raus · '+delta+'</b><span>'+esc(m.slot)+' · '+(start.projection?.toFixed?.(1)??'—')+' '+esc(rank(m.start.p,start))+' vs '+(sit.projection?.toFixed?.(1)??'—')+' '+esc(rank(m.sit.p,sit))+'</span></article>';}).join('');
+  const hold=complete&&!changes.length?'<div class="notice ok"><b>LINEUP OPTIMAL</b></div>':'';
+  const unavailable=missingProjection.length?'<div class="notice warn"><b>START/SIT OFFEN</b> · '+missingProjection.length+' berechtigte Spieler ohne aktuelle Punkte.</div>':!complete?'<div class="notice warn"><b>AUFSTELLUNG OFFEN</b> · Aktueller Kader / Spielkontext oder legale Belegung fehlt.</div>':'';
+  const rankNotice=missingRank.length?'<div class="notice">Rang fehlt · '+missingRank.length+' Spieler bleiben mit aktuellen Punkten bewertbar.</div>':'';
+  const advanced=typeof $==='function'?$('seasonOptimizerDetails'):null;if(advanced)advanced.textContent=JSON.stringify({week,gameValid,complete,missingProjection:missingProjection.map(x=>x.p.name),missingRank:missingRank.map(x=>x.p.name),changes:changes.map(m=>({slot:m.slot,start:m.start.p.name,sit:m.sit.p.name,delta:m.delta,startEvidence:m.startEvidence,sitEvidence:m.sitEvidence}))},null,2);
   els.rosterBenchList.innerHTML=unavailable+rankNotice+hold+(cards||(!hold&&!unavailable?'<div class="notice">Keine Änderung mit positivem verifiziertem Projektionsdelta.</div>':''));
 }
 function postDraftRosterCounts(rows){
@@ -4754,7 +4866,7 @@ if(els.draftInput)els.draftInput.addEventListener('keydown',e=>{if(e.key==='Ente
 for(const el of [els.apiKey,els.season,els.scoring,els.draftInput,els.slot,els.topN,els.snapshotMode,els.draftMode,els.replayCutoff,els.managerMap,els.stressMode])el.addEventListener('change',()=>{persist();updateStatus()});
 addEventListener('online',updateStatus);addEventListener('offline',updateStatus);
 addEventListener('online',()=>{void refreshSeasonLiveRoster({trigger:'online'});if(lastDraftContext?.players){void refreshSeasonRankings({auto:true,trigger:'online'});void refreshTradeValues({auto:true,trigger:'online'});}});
-document.addEventListener('visibilitychange',()=>{if(!document.hidden)void refreshSeasonLiveRoster({trigger:'resume'});if(!document.hidden&&lastDraftContext?.players){void refreshSeasonRankings({auto:true,trigger:'resume'});void refreshTradeValues({auto:true,trigger:'resume'});}});
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&lastDraftContext?.season)void refreshSeasonActualScores(lastDraftContext.season);if(!document.hidden)void refreshSeasonLiveRoster({trigger:'resume'});if(!document.hidden&&lastDraftContext?.players){void refreshSeasonRankings({auto:true,trigger:'resume'});void refreshTradeValues({auto:true,trigger:'resume'});}});
 if(els.seasonRefreshLiveBtn)els.seasonRefreshLiveBtn.onclick=()=>void refreshSeasonLiveRoster({force:true,trigger:'manual'});
 
 function seasonDataDiagnostic(){
@@ -4764,7 +4876,7 @@ function seasonDataDiagnostic(){
  const positions=Object.fromEntries(SEASON_PROJECTION_POSITIONS.map(p=>{const v=w?.lanes?.projections?.coverage?.positions?.[p]||{},f=w?.lanes?.projections?.fallback?.coverage?.[p]||{};return[p,{status:v.status||'UNAVAILABLE',reason:v.reason||null,sourceRows:v.sourceRows||0,numericRows:v.numericPointsHalf||0,mappedRows:v.mappedRows||0,consumerUsable:records.filter(r=>r.metric==='projected_points'&&r.position===p&&api.weeklyRecordChronology(r,context,now)).length,fallbackSource:f.sourceRows||0,fallbackMapped:f.mappedRows||0,fallbackRejected:f.rejectedRows||0,rejects:v.rejectReasonCounts||{}}]}));
  const relevant=new Set(active.map(r=>seasonDstTeam(r.p.team))),games=gamesValid?(g.games||[]).filter(x=>relevant.has(x.homeTeam)||relevant.has(x.awayTeam)).map(x=>{const game=gapi.contextForTeam(g,x.homeTeam,now);return{event:x.eventId,teams:[x.homeTeam,x.awayTeam],kickoff:x.kickoffAt,venue:x.venue,roof:x.roof,weather:{status:game.weather?.status,reason:game.weather?.reason||null,provider:game.weather?.sourceId||null,forecastAt:game.weather?.forecastAt||null},odds:{status:game.vegas?.status,reason:game.vegas?.reason||null,provider:game.vegas?.provider||null,total:game.vegas?.total??null,homeSpread:game.vegas?.homeSpread??null,homeTotal:game.vegas?.homeImpliedTotal??null,awayTotal:game.vegas?.awayImpliedTotal??null}}}):[];
  const ranks={};for(const lane of ['expertWeeklyRanks','pittiSelectedWeeklyRanks']){const v=w?.lanes?.[lane];ranks[lane]={status:v?.status||'UNAVAILABLE',positions:Object.fromEntries(WEEKLY_PROJECTION_POSITIONS.map(p=>{const x=v?.coverage?.positions?.[p]||{};return[p,{status:x.status||'UNAVAILABLE',reason:x.primaryRejectionReason||x.reason||null,sourceRows:x.sourceRows||0,mappedRows:x.mappedRows||0,requestedExperts:(x.requestedExperts||[]).map(e=>({id:e.id,name:e.name})),actualExperts:(x.actualExperts||[]).map(e=>({id:e.id,name:e.name})),missingExperts:(x.missingExperts||[]).map(e=>({id:e.id,name:e.name}))}]}))};}
- return{schema:'pitti.season-data-diagnostic.v1',version:APP_VERSION,...context,capturedAt:now,weekly:{id:w?.snapshotId||null,fetchedAt:w?.fetchedAt||null,lastSuccessAt:w?.lastSuccessAt||null,valid,positions,ranks,totalPersistedRecords:w?.records?.length||0,metricCounts:api?.metricCounts?.(w)||{},persistence:api?.persistenceDiagnostic?.(w)||null,serializedCharacters:typeof localStorage==='undefined'?null:String(localStorage.getItem(api?.CACHE_KEY||'pitti.weekly-evidence.v2.current')||'').length,storage:typeof localStorage==='undefined'?null:api?.storageDiagnostics?.(localStorage)||null},rosterCoverage:[roster.filter(r=>r.projection!==null).length,roster.length],roster,gameContext:{id:g?.snapshotId||null,valid:gamesValid,games},boone:{status:validateBooneTradeValueSnapshot(b,context,now).ok?'AVAILABLE':'UNAVAILABLE',mapped:b?.coverage?.mappedRows||0,rows:b?.coverage?.sourceRows||0,edition:b?.edition||null},trade:lastSeasonTradeFunnel?{...lastSeasonTradeFunnel,status:lastSeasonTradeFunnel.season===context.season&&lastSeasonTradeFunnel.week===context.week&&lastSeasonTradeFunnel.seasonGeneratedAt===c?.season?.generated_at&&lastSeasonTradeFunnel.weeklySnapshotId===(w?.snapshotId??null)&&lastSeasonTradeFunnel.booneSnapshotId===(b?.snapshotId??null)&&now>=lastSeasonTradeFunnel.capturedAt&&now-lastSeasonTradeFunnel.capturedAt<300000?'CURRENT':'STALE_RECOMPUTATION_REQUIRED'}:null,secretSafety:'ALLOWLIST_ONLY_NO_KEYS_HEADERS_TOKENS_OR_RAW_BODIES'};
+ return{actualScores:seasonActualScoreDiagnostic(c?.season),schema:'pitti.season-data-diagnostic.v1',version:APP_VERSION,...context,capturedAt:now,weekly:{id:w?.snapshotId||null,fetchedAt:w?.fetchedAt||null,lastSuccessAt:w?.lastSuccessAt||null,valid,positions,ranks,totalPersistedRecords:w?.records?.length||0,metricCounts:api?.metricCounts?.(w)||{},persistence:api?.persistenceDiagnostic?.(w)||null,serializedCharacters:typeof localStorage==='undefined'?null:String(localStorage.getItem(api?.CACHE_KEY||'pitti.weekly-evidence.v2.current')||'').length,storage:typeof localStorage==='undefined'?null:api?.storageDiagnostics?.(localStorage)||null},rosterCoverage:[roster.filter(r=>r.projection!==null).length,roster.length],roster,gameContext:{id:g?.snapshotId||null,valid:gamesValid,games},boone:{status:validateBooneTradeValueSnapshot(b,context,now).ok?'AVAILABLE':'UNAVAILABLE',mapped:b?.coverage?.mappedRows||0,rows:b?.coverage?.sourceRows||0,edition:b?.edition||null},trade:lastSeasonTradeFunnel?{...lastSeasonTradeFunnel,status:lastSeasonTradeFunnel.season===context.season&&lastSeasonTradeFunnel.week===context.week&&lastSeasonTradeFunnel.seasonGeneratedAt===c?.season?.generated_at&&lastSeasonTradeFunnel.weeklySnapshotId===(w?.snapshotId??null)&&lastSeasonTradeFunnel.booneSnapshotId===(b?.snapshotId??null)&&now>=lastSeasonTradeFunnel.capturedAt&&now-lastSeasonTradeFunnel.capturedAt<300000?'CURRENT':'STALE_RECOMPUTATION_REQUIRED'}:null,secretSafety:'ALLOWLIST_ONLY_NO_KEYS_HEADERS_TOKENS_OR_RAW_BODIES'};
 }
 async function copySeasonDataDiagnostic(){const output=JSON.stringify(seasonDataDiagnostic()),area=$('seasonDiagnosticOutput'),status=$('seasonDiagnosticStatus');try{await navigator.clipboard.writeText(output);if(status)status.textContent='Diagnose kopiert · keine Schlüssel oder Zugangsdaten.';}catch{if(area){area.hidden=false;area.value=output;area.select();}if(status)status.textContent='Diagnose markieren und kopieren · keine Zugangsdaten.';}}
 const seasonDiagnosticButton=$('seasonDiagnosticCopyBtn');if(seasonDiagnosticButton)seasonDiagnosticButton.onclick=copySeasonDataDiagnostic;
@@ -4862,10 +4974,11 @@ function renderSeasonRankingFreshness(note=''){
     els.seasonRankingStatus.className='notice '+(!t?'bad':age>SEASON_RANKING_AUTO_MS||!coverage.complete?'warn':'ok');
     els.seasonRankingStatus.textContent=`${base} · ${coverage.label}.`;
   }
+  renderSeasonDataCompactHeader();
 }
 let seasonGameContextFlight=null;
 async function refreshSeasonGameContext({season,week}){
- const api=globalThis.PittiGameContextV1;if(!api)return;const previous=store.get(api.CACHE_KEY,null);if(api.validateSnapshot(previous,{season,week})?.ok&&Date.now()-previous.verifiedAt<15*60000)return previous;
+ const api=globalThis.PittiGameContextV1;if(!api)return;const previous=store.get(api.CACHE_KEY,null);const statusRefresh=previous?.games?.some(g=>!g.gameState||g.gameState==='LIVE'||g.gameState==='PREGAME'&&Date.now()>=Date.parse(g.kickoffAt));if(api.validateSnapshot(previous,{season,week})?.ok&&previous.games.every(g=>g.gameState)&&Date.now()-previous.verifiedAt<(statusRefresh?60000:15*60000))return previous;
  const key=season+'|'+week;if(seasonGameContextFlight?.key===key)return seasonGameContextFlight.promise;
  const flight={key,promise:null};flight.promise=(async()=>{
  try{const r=await fetch('/api/nfl-week-context?season='+season+'&week='+week,{cache:'no-store'}),p=await r.json();if(seasonEvidenceContext().season!==season||seasonEvidenceContext().week!==week)return;const snapshot=r.ok?api.buildSnapshot({...p,verifiedAt:Date.now()}):api.failureSnapshot({season,week,reason:p.failureType||'UPSTREAM_UNAVAILABLE'});persistSeasonWeeklyMetadata(api.CACHE_KEY,snapshot);queueSeasonRerender();return snapshot;}catch{if(seasonEvidenceContext().season===season&&seasonEvidenceContext().week===week)persistSeasonWeeklyMetadata(api.CACHE_KEY,api.failureSnapshot({season,week,reason:'CONTEXT_FETCH_FAILED'}));}

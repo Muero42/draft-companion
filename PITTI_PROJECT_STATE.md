@@ -1,3 +1,14 @@
+Generation: `20261003T1814Z-v296`
+Handoff generation: `20261003T1814Z-v296`
+
+v11.8.0-rc4.224 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / ANDROID UI PHYSICAL PENDING / NOT ACCEPTED. Production remains rc4.223 canonical 7437f12b47fa20c5d2ae0ede0bfa8a53dbf952e4 tree 5c9e2244b035419a4b6d6bdf159e1680ff729ff7. Historical Android rc4.223 core repaired functionality USER_CONFIRMED PASS remains intact. Next gate: RC4224_EXACT_HEAD_CLOUD_VALIDATION_PENDING.
+
+RC4224 authorized sequence: tested local candidate -> push/PR -> exact-head cloud full Strict and browser PASS -> adversarial review -> clean green merge -> Production parity -> Authority reconciliation. Android UI acceptance PENDING; rc4223 historical core PASS preserved; no fantasy transaction.
+
+See docs/PITTI_RC4224_ROSTER_SURFACE_AUDIT.md.
+
+## HISTORICAL v295 and earlier (immutable evidence)
+
 Generation: `20261003T1601Z-v295`
 Handoff generation: `20261003T1601Z-v295`
 
