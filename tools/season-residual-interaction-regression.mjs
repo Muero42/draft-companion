@@ -53,10 +53,10 @@ packages=0;tradeSentinel=null;let priorPackages=0;
 const rosters=Array.from({length:10},(_,i)=>({roster_id:i+1,players:rows.map((_,j)=>'team'+i+'-'+j),reserve:[],taxi:[]}));
 box.lastDraftContext={season:{ok:true,my_roster:rosters[0],rosters,league_rosters:rosters},seasonRows:rows};
 box.els={tradeStatus:{},tradeList:{innerHTML:''}};
-Object.assign(box,{sleeperPlayerRow:id=>({id,name:id,pos:'WR'}),seasonWeeklyMetric:()=>({status:'VERIFIED'}),tradeMarginalLineupValue:()=>({delta:10,starts:true}),researchHint:()=>null,clamp:(n,lo,hi)=>Math.max(lo,Math.min(hi,n)),BOONE_TRADE_VALUE_CACHE_KEY:'trade',seasonEvidenceContext:()=>({}),validateBooneTradeValueSnapshot:()=>({ok:false}),seasonLiveAuthority:()=>true});
+Object.assign(box,{sleeperPlayerRow:id=>({id,name:id,pos:'WR'}),seasonWeeklyMetric:()=>({value:10,status:'VERIFIED'}),tradeMarginalLineupValue:()=>({delta:10,starts:true}),researchHint:()=>null,clamp:(n,lo,hi)=>Math.max(lo,Math.min(hi,n)),BOONE_TRADE_VALUE_CACHE_KEY:'trade',seasonEvidenceContext:()=>({}),validateBooneTradeValueSnapshot:()=>({ok:false}),seasonLiveAuthority:()=>true});
 box.seasonTradeDecision=()=>{packages++;if(packages===1)setImmediate(()=>tradeSentinel=packages);return{actionable:false};};
 box.seasonUiYield=async()=>{assert(packages-priorPackages<=4);priorPackages=packages;assert.equal(box.els.tradeList.innerHTML,'');await new Promise(r=>setImmediate(r));};
-for(const name of ['seasonTradeTargetWork','renderTradeWorkspace'])vm.runInContext(source(name),box);
+for(const name of ['seasonTradeTargetPool','seasonTradeTargetWork','renderTradeWorkspace'])vm.runInContext(source(name),box);
 await box.renderTradeWorkspace([],{},1,10,true,{cooperative:true});
 assert.equal(packages,9*6*126);assert(tradeSentinel>0&&tradeSentinel<=4);assert.match(box.els.tradeList.innerHTML,/TRADE HOLD/);
 // Storage reads and evidence adaptation are reused within a step, invalidated at

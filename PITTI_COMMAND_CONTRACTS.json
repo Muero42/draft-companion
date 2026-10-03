@@ -156,17 +156,17 @@
     "omitting the mandatory PITTI CODEX BUDGET GUARD from any Codex work package"
   ],
   "currentBoundary": {
-    "productionControl": "v11.8.0-rc4.220 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Deliberate trade opportunity model expansion; rc4.219 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.219 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical 7565a44e3ad92191317ed8ad828cf4b98afb6939, reviewed 45498cd11d05e53a2d072aa3f42aa399e0992064, tree faa3dafdd4b88a2895bea229db0ed45d5426aa74, deployment 5f2f6a9d-e1a2-47a7-ae6b-881ba1f0f1a8. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING.",
-    "androidAuthority": "v11.8.0-rc4.220 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Deliberate trade opportunity model expansion; rc4.219 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.219 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical 7565a44e3ad92191317ed8ad828cf4b98afb6939, reviewed 45498cd11d05e53a2d072aa3f42aa399e0992064, tree faa3dafdd4b88a2895bea229db0ed45d5426aa74, deployment 5f2f6a9d-e1a2-47a7-ae6b-881ba1f0f1a8. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING.",
-    "sourceAuthority": "v11.8.0-rc4.220 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Deliberate trade opportunity model expansion; rc4.219 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.219 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical 7565a44e3ad92191317ed8ad828cf4b98afb6939, reviewed 45498cd11d05e53a2d072aa3f42aa399e0992064, tree faa3dafdd4b88a2895bea229db0ed45d5426aa74, deployment 5f2f6a9d-e1a2-47a7-ae6b-881ba1f0f1a8. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.216 RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING.",
+    "productionControl": "v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained.",
+    "androidAuthority": "v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained.",
+    "sourceAuthority": "v11.8.0-rc4.221 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Bounded WR search-space repair; Weekly snapshot recovery blocked; no credible or acceptance threshold change; rc4.220 RESPONSIVENESS PHYSICAL PASS is USER_CONFIRMED and preserved, full functional acceptance PENDING. Production remains v11.8.0-rc4.220 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical dc363599ce465b25c449fe479ba7ee773071d74f, reviewed d2e768b305e01f24ddf1bf4d8ecc1c011061f132, tree 62ac9365d98f5a35a68a115840f5e06cb2d5f64b, deployment 603189e1-970e-4dd4-b96a-e4d21ebaa958. Full PHYSICAL PENDING / NOT ACCEPTED. Historical rc4.218 RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY and rc4.215 RC4215_PHYSICAL_FAIL_DECISION_QUALITY remain evidence. Next gate: RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. rc4.219 RESPONSIVENESS PHYSICAL PASS preserved; historical RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN retained.",
     "latestPackageReextract": "NO_NEW_REEXTRACTION_EVIDENCE; historical rc4.214 entry described runtime blob identity only, not a new package event",
     "latestPackageSha256": null,
     "packageReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
-    "deployedPagesVersion": "v11.8.0-rc4.219",
+    "deployedPagesVersion": "v11.8.0-rc4.220",
     "deployedPagesAppByteParityWithMain": false,
-    "currentResearchGate": "RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
-    "exactNextAction": "STOP. rc4.220 corrected local review complete; publication and exact-head CI require a separately authorized external work package. No push, PR, merge, deployment or physical testing authorized.",
-    "runtimeVersion": "v11.8.0-rc4.220",
+    "currentResearchGate": "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
+    "exactNextAction": "STOP after one tested corrective local commit. RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. No push, PR, merge, deployment or physical testing authorized.",
+    "runtimeVersion": "v11.8.0-rc4.221",
     "latestEvidenceBackup": "Draft backups remain immutable historical evidence only; current roster comes from Sleeper league state.",
     "latestDeviceEvidence": {
       "version": "v11.8.0-rc4.217",
@@ -194,27 +194,27 @@
       }
     },
     "pr98LatestCI": "HISTORICAL/SUPERSEDED by #100/#101/#102; never use as current gate",
-    "reconciledBaseMain": "7565a44e3ad92191317ed8ad828cf4b98afb6939",
-    "nextGate": "RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
-    "packageReferenceScope": "rc4.220 local 17-file runtime identity only; no package/re-extraction evidence",
+    "reconciledBaseMain": "dc363599ce465b25c449fe479ba7ee773071d74f",
+    "nextGate": "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
+    "packageReferenceScope": "rc4.221 local 17-file runtime identity only; no package/re-extraction evidence",
     "localCandidatePackage": {
-      "version": "v11.8.0-rc4.220",
+      "version": "v11.8.0-rc4.221",
       "files": 17,
       "sha256": null,
       "status": "RUNTIME_IDENTITY_ONLY_NO_PACKAGE_REEXTRACTION_CLAIM",
-      "source_scope": "RC4220_LOCAL_RUNTIME_NO_PACKAGE_REEXTRACTION_CLAIM",
+      "source_scope": "RC4221_LOCAL_RUNTIME_NO_PACKAGE_REEXTRACTION_CLAIM",
       "runtime_identity_head": null
     },
-    "deploymentParity": "RC4220_LOCAL_ONLY_PRODUCTION_REMAINS_RC4219",
+    "deploymentParity": "RC4221_LOCAL_ONLY_PRODUCTION_REMAINS_RC4220",
     "productionDeployment": {
-      "version": "v11.8.0-rc4.219",
-      "sourceCommit": "7565a44e3ad92191317ed8ad828cf4b98afb6939",
-      "tree": "faa3dafdd4b88a2895bea229db0ed45d5426aa74",
-      "deploymentId": "5f2f6a9d-e1a2-47a7-ae6b-881ba1f0f1a8",
-      "cloudflareCheckRunId": 110835956059,
+      "version": "v11.8.0-rc4.220",
+      "sourceCommit": "dc363599ce465b25c449fe479ba7ee773071d74f",
+      "tree": "62ac9365d98f5a35a68a115840f5e06cb2d5f64b",
+      "deploymentId": "603189e1-970e-4dd4-b96a-e4d21ebaa958",
+      "cloudflareCheckRunId": 111016162932,
       "status": "DEPLOYED_SUCCESS",
       "deviceAcceptanceProven": false,
-      "physicalClassification": "RC4219_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING"
+      "physicalClassification": "RC4220_ANDROID_PHYSICAL_ACCEPTANCE_PENDING"
     },
     "independentEvidenceLaneDiagnosis": {
       "status": "SUPERSEDED_BY_AUTHORIZED_RC4206_SOURCE_REPAIR_MERGED",
@@ -322,25 +322,25 @@
       "dst": "UNCHANGED_CURRENT_PLUS1_PLUS2_PLANNER"
     },
     "authorityContinuation": {
-      "status": "CORRECTED_LOCAL_REVIEW_COMPLETE",
-      "current_gate": "RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
-      "physical_gate": "RC4219_PRODUCTION_PHYSICAL_ACCEPTANCE_PENDING",
+      "status": "LOCAL_ADVERSARIAL_REVIEW_COMPLETE",
+      "current_gate": "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
+      "physical_gate": "RC4220_ANDROID_PHYSICAL_ACCEPTANCE_PENDING",
       "physical_executable": false,
-      "canonical_main": "7565a44e3ad92191317ed8ad828cf4b98afb6939",
-      "canonical_tree": "faa3dafdd4b88a2895bea229db0ed45d5426aa74",
+      "canonical_main": "dc363599ce465b25c449fe479ba7ee773071d74f",
+      "canonical_tree": "62ac9365d98f5a35a68a115840f5e06cb2d5f64b",
       "sequence": [
-        "RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING"
+        "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING"
       ],
       "published_branch": null,
-      "branch": "codex/rc4220-trade-opportunity-model",
-      "exact_head_rule": "Runtime PR220 head and merged tree are verified historical receipts. Only fresh exact-head CI can certify any future Authority branch; never inherit canonical runtime CI for a new candidate."
+      "branch": "codex/rc4221-trade-search-space-repair",
+      "exact_head_rule": "PR221 reviewed and merged trees are verified historical receipts. Only fresh exact-head CI can certify a future Authority branch; canonical runtime CI never certifies an unpublished Authority commit."
     },
     "runtimeCandidate": {
-      "version": "v11.8.0-rc4.220",
-      "branch": "codex/rc4220-trade-opportunity-model",
-      "base": "32681046e0e24956ed521f7615dc67ffd06ea6a2",
-      "base_tree": "c1c2a1f9f95ff6a9c9b2068ceddda02392aed49e",
-      "canonical_base": "7565a44e3ad92191317ed8ad828cf4b98afb6939",
+      "version": "v11.8.0-rc4.221",
+      "branch": "codex/rc4221-trade-search-space-repair",
+      "base": "390127b332d34fcebea4bd6244e2660f5c7a2210",
+      "base_tree": "1bb00d2e19b34b126efb2c96ad36289f10439c2d",
+      "canonical_base": "dc363599ce465b25c449fe479ba7ee773071d74f",
       "status": "LOCAL_CANDIDATE",
       "pr": null,
       "pr_state": null,
@@ -351,13 +351,13 @@
       "production_proven": false,
       "physical_accepted": false,
       "physical_status": "NOT_PHYSICALLY_ACCEPTED",
-      "gate": "RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
-      "exact_head_rule": "Runtime PR220 head and merged tree are verified historical receipts. Only fresh exact-head CI can certify any future Authority branch; never inherit canonical runtime CI for a new candidate."
+      "gate": "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
+      "exact_head_rule": "PR221 reviewed and merged trees are verified historical receipts. Only fresh exact-head CI can certify a future Authority branch; canonical runtime CI never certifies an unpublished Authority commit."
     }
   },
-  "currentGate": "RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
-  "handoffGeneration": "20261002T2007Z-v287",
-  "handoff_generation": "20261002T2007Z-v287",
+  "currentGate": "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
+  "handoffGeneration": "20261003T0844Z-v289",
+  "handoff_generation": "20261003T0844Z-v289",
   "statusCommand": {
     "trigger": "STATUS",
     "meaning": "Report current known PITTI state only.",
@@ -374,7 +374,7 @@
     "observedTransactionCanary": "HISTORICAL rc4.160 device: Harrison Mevis rostered, Tank Bigsby absent, Zach Charbonnet Reserve/IR",
     "rc4161Fix": "live FA ownership pool is independent from expert ranking hydration; zero ranked join must never imply HOLD",
     "regression": "tools/season-fa-ownership-regression.mjs is mandatory in candidate package gate",
-    "nextGate": "RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
+    "nextGate": "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
     "leagueState": "Persist all ten Sleeper rosters plus manager mapping, starter/reserve/taxi, waiver position, FAAB used/remaining and current transaction-round evidence.",
     "waiverCompetition": "Opponent bid estimates are distributions/bands driven primarily by current roster need and remaining FAAB, with bounded current-season transaction and historical-manager priors.",
     "qb2SeasonException": "No generic in-season QB2 ban. Evaluate upside/value vs active roster cost; when D/ST is still missing, include the second future active drop and same-bye penalty.",
@@ -382,12 +382,12 @@
     "tradeValueEvidence": "Automatically ingest current Justin Boone/Yahoo weekly ROS charts server-side; QB=1QB, RB/WR/TE=HALF; require all positions, fresh provenance and unambiguous Sleeper mapping or fail closed.",
     "faabBasis": "All recommendation percentages use original league FAAB budget; absolute units use the same basis and are capped by actual remaining FAAB."
   },
-  "currentResearchGate": "RC4220_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
-  "exactNextAction": "STOP. rc4.220 corrected local review complete; publication and exact-head CI require a separately authorized external work package. No push, PR, merge, deployment or physical testing authorized.",
+  "currentResearchGate": "RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING",
+  "exactNextAction": "STOP after one tested corrective local commit. RC4221_CORRECTED_LOCAL_REVIEW_COMPLETE_PUBLICATION_PENDING. No push, PR, merge, deployment or physical testing authorized.",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
   "draftQb2Contract": "DRAFT_ONLY: after QB1 exclude QB2 recommendations/drafting until a future explicit user decision. Season exceptions never supersede this draft strategy.",
-  "updated_at": "2026-10-02T20:07:20Z",
-  "updatedAt": "2026-10-02T20:07:20Z",
+  "updated_at": "2026-10-03T08:44:43Z",
+  "updatedAt": "2026-10-03T08:44:43Z",
   "codexBudgetGuard": {
     "mandatoryInEveryCodexWorkPackage": true,
     "persistentAcrossChatsAndHandoffs": true,
