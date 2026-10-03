@@ -7,6 +7,7 @@ if(seal.status!=='PASS'||seal.handoff_ready!==true||seal.second_pass_pass!==true
 if(seal.integrity_algorithm!=='git_blob_sha1'||seal.integrity_normalization!=='UTF8_LF_TEXT')throw new Error('unsupported seal convention');
 
 const additions=[
+  'docs/PITTI_RC4223_PRODUCTION_RECEIPT.json',
   'docs/PITTI_RC4223_LOCK_RANK_PERSISTENCE_AUDIT.md',
   'tools/season-rc4223-persistence-lock-regression.mjs',
   'tools/season-rc4223-eligibility-regression.mjs',

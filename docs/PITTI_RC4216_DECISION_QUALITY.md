@@ -1,3 +1,12 @@
+Generation: `20261003T1533Z-v294`
+Handoff generation: `20261003T1533Z-v294`
+
+v11.8.0-rc4.223 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR224 SQUASH MERGED, canonical 977390b3c440de8f4e1e61aa4f6b9f064a2f0c2f, reviewed 77db022eea0ae8741a887fc8167c5fb5e675315d, tree 0a7842f40151f5a78219d14dcf407e039ae5816d, deployment 77b24737-c88c-4e12-8be3-591a57465098. PHYSICAL PENDING / NOT ACCEPTED / NOT PHYSICALLY ACCEPTED. rc4.219 and rc4.220 RESPONSIVENESS PHYSICAL PASS remain USER_CONFIRMED historical evidence; rc4.222 latest user observation PARTIAL (615 projection-only persisted records; all4 selected memberships verified; LOCK/OUT/rank persistence residuals), full functional acceptance NOT granted; rc4.223 LOCK/RANK/ELIGIBILITY PHYSICAL ACCEPTANCE PENDING; full functional Production acceptance PENDING. Historical RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY, RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and RC4215_PHYSICAL_FAIL_DECISION_QUALITY preserved. Next gate: RC4223_ANDROID_FUNCTIONAL_SURFACE_ACCEPTANCE_PENDING.
+
+Exact-main checks 8/8 SUCCESS; cloud Strict Suite 274/274 PASS. Runtime manifest 17; all 16 public static assets match canonical UTF8/LF content; worker deployment and endpoints verified. Exact-head cloud mocked mobile browser compact requests1, raw0, no uncaught errors; no physical claim. Week-4 Boone 253/253, game context16/32, 11 outdoor forecasts including verified Tottenham, four DOME, 15 current odds, one completed game excluded; Watcher PASS. Local Authority-only checkpoint, NOT PUSHED. STOP. rc4.223 merged canonical main, postmerge exact-head CI and Production surfaces verified. Android/PWA physical acceptance remains PENDING for one final user Android refresh/test. No fantasy transaction, trade sending, cache clear or reinstall authorized.
+
+## HISTORICAL v293 and earlier (immutable evidence)
+
 Generation: `20261003T1453Z-v293`
 Handoff generation: `20261003T1453Z-v293`
 
