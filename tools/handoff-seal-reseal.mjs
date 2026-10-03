@@ -7,6 +7,9 @@ if(seal.status!=='PASS'||seal.handoff_ready!==true||seal.second_pass_pass!==true
 if(seal.integrity_algorithm!=='git_blob_sha1'||seal.integrity_normalization!=='UTF8_LF_TEXT')throw new Error('unsupported seal convention');
 
 const additions=[
+  'tools/fixtures/rc4225/initial-runtime-blobs.json',
+  'docs/PITTI_RC4225_PRODUCTION_RECEIPT.json',
+  'docs/PITTI_RC4225_PRODUCTION_RECEIPT.json',
   'docs/PITTI_RC4225_ROSTER_SURFACE_AUDIT.md',
   'tools/season-rc4225-roster-refinement-regression.mjs',
   'tools/rc4225-authority.mjs',

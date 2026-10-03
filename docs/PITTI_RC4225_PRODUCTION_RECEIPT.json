@@ -1,0 +1,121 @@
+{
+  "checkpoint": "v299",
+  "version": "v11.8.0-rc4.225",
+  "pr": 227,
+  "reviewed_head": "c8e3ade87f6b35f26285267de712ece065e121c0",
+  "reviewed_tree": "e746fe429b39638b5abdab43fbaa31f19f46265c",
+  "merge_commit": "d01f021ef2802df2467618412476cb26d8a05818",
+  "merged_tree": "e746fe429b39638b5abdab43fbaa31f19f46265c",
+  "canonical_parent": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+  "merge_method": "SQUASH",
+  "merged_at": "2026-10-03T19:22:39Z",
+  "source_status": "MERGED_CANONICAL",
+  "production_status": "DEPLOYED_SUCCESS",
+  "production_branch": "main",
+  "production_deployment_id": "1a81e4e7-7031-48ca-a3c5-ef598d3d8948",
+  "cloudflare_check_run_id": 111274906732,
+  "production_deployment_proven": true,
+  "premerge_exact_head_ci": "5/5 SUCCESS",
+  "premerge_cloud_job": 111274189249,
+  "cloud_strict": "280/280 PASS",
+  "cloud_job": 111274837528,
+  "postmerge_checks": "8/8 SUCCESS",
+  "postmerge_check_runs": [
+    {
+      "id": 111274906732,
+      "name": "Cloudflare Pages",
+      "head": "d01f021ef2802df2467618412476cb26d8a05818",
+      "result": "SUCCESS"
+    },
+    {
+      "id": 111274837885,
+      "name": "guardrails",
+      "head": "d01f021ef2802df2467618412476cb26d8a05818",
+      "result": "SUCCESS"
+    },
+    {
+      "id": 111274837814,
+      "name": "behavioral-contract",
+      "head": "d01f021ef2802df2467618412476cb26d8a05818",
+      "result": "SUCCESS"
+    },
+    {
+      "id": 111274837745,
+      "name": "draft-critical",
+      "head": "d01f021ef2802df2467618412476cb26d8a05818",
+      "result": "SUCCESS"
+    },
+    {
+      "id": 111274837632,
+      "name": "package",
+      "head": "d01f021ef2802df2467618412476cb26d8a05818",
+      "result": "SUCCESS"
+    },
+    {
+      "id": 111274837606,
+      "name": "draft-critical",
+      "head": "d01f021ef2802df2467618412476cb26d8a05818",
+      "result": "SUCCESS"
+    },
+    {
+      "id": 111274837546,
+      "name": "draft-critical",
+      "head": "d01f021ef2802df2467618412476cb26d8a05818",
+      "result": "SUCCESS"
+    },
+    {
+      "id": 111274837528,
+      "name": "pitti-cloud-validation",
+      "head": "d01f021ef2802df2467618412476cb26d8a05818",
+      "result": "SUCCESS"
+    }
+  ],
+  "served_static_files": 16,
+  "served_static_parity": "PASS_UTF8_LF",
+  "runtime_files": 17,
+  "browser_review": "PASS",
+  "browser_scope": "EXACT_HEAD_CLOUD_OFFLINE_MOBILE_EMULATION",
+  "mobile_widths": [
+    360,
+    390,
+    430
+  ],
+  "rawDirectoryRequests": 0,
+  "compactDirectoryRequests": 1,
+  "uncaught_browser_errors": 0,
+  "transient_hold_empty": true,
+  "replacement_render_complete": true,
+  "actual_scores": {
+    "source": "https://api.sleeper.app/v1/league/1366053132957646848/matchups/4",
+    "rosterId": 4,
+    "rows": 10,
+    "CLE": 9,
+    "Judkins": 18.6
+  },
+  "game_context": {
+    "source": "https://draft-companion.pages.dev/api/nfl-week-context?season=2026&week=4",
+    "events": 16,
+    "CLE_PIT": "FINAL"
+  },
+  "league_scoring": {
+    "week": 4,
+    "receivingPoints": 0.5
+  },
+  "matchup_limitation": "TEAM_POSITION_ONLY_NO_ALIGNMENT_SHADOW_OR_DEFENDER_ASSIGNMENT",
+  "historical_rc4223_core_acceptance": "USER_CONFIRMED_PASS_PRESERVED",
+  "physical_status": "PENDING",
+  "physical_classification": "RC4225_ANDROID_UI_ACCEPTANCE_PENDING",
+  "physical_acceptance_proven": false,
+  "agent_physical_test": false,
+  "evidence_source": "LIVE_GITHUB_AND_PRODUCTION_VERIFIED",
+  "observed_at": "2026-10-03T19:29:44Z",
+  "matchup": {
+    "direct_wr_cb": "UNAVAILABLE",
+    "team_level_wr": "VERIFIED",
+    "scope": "TEAM_POSITION",
+    "sourceUrl": "https://www.fantasypros.com/nfl/matchups/wr.php",
+    "teams": 32,
+    "fail_closed": true
+  },
+  "adversarial_review": "PASS_UNCHANGED: starter-set equivalence, fixed locks, prospective utility separation, eligibility, stale context, cancellation, data persistence and optional source fail-closed"
+}

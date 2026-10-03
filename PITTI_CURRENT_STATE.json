@@ -1,7 +1,7 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20261003T1914Z-v298",
-  "updated_at": "2026-10-03T19:14:41Z",
+  "handoff_generation": "20261003T1934Z-v300",
+  "updated_at": "2026-10-03T19:34:42Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
@@ -9,7 +9,7 @@
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
     "source_candidate": "v11.8.0-rc4.225",
     "git_identity_rule": "Canonical main identity and candidate containment are freshly verified externally; no commit or mutable PR state is immutable checkpoint authority.",
-    "reconciled_base_main": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+    "reconciled_base_main": "d01f021ef2802df2467618412476cb26d8a05818",
     "postmerge": {
       "checkpoint": "v233",
       "pr": 121,
@@ -295,7 +295,7 @@
       "fantasypros_result": "PHYSICAL_PASS_OMITTED_ROS_WEEKLY_PROJECTION",
       "remaining_failure": "Sleeper NFL State: Timeout nach 6s"
     },
-    "reconciled_main": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+    "reconciled_main": "d01f021ef2802df2467618412476cb26d8a05818",
     "rc4205_physical_acceptance": {
       "checkpoint": "v256",
       "version": "v11.8.0-rc4.205",
@@ -677,8 +677,8 @@
       },
       "identity_scope": "PR213_RUNTIME_SOURCE_AND_DEPLOYMENT_PROVENANCE_ONLY; NOT_FUTURE_CANONICAL_MAIN"
     },
-    "canonical_main": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
-    "canonical_tree": "8138135db5c775c98ed48aa381119c9b956ffe9f",
+    "canonical_main": "d01f021ef2802df2467618412476cb26d8a05818",
+    "canonical_tree": "e746fe429b39638b5abdab43fbaa31f19f46265c",
     "rc4215_source_production": {
       "checkpoint": "v275",
       "version": "v11.8.0-rc4.215",
@@ -1549,6 +1549,248 @@
       "agent_physical_test": false,
       "evidence_source": "LIVE_GITHUB_AND_PRODUCTION_VERIFIED",
       "observed_at": "2026-10-03T18:32:20Z"
+    },
+    "rc4225_source_production": {
+      "checkpoint": "v299",
+      "version": "v11.8.0-rc4.225",
+      "pr": 227,
+      "reviewed_head": "c8e3ade87f6b35f26285267de712ece065e121c0",
+      "reviewed_tree": "e746fe429b39638b5abdab43fbaa31f19f46265c",
+      "merge_commit": "d01f021ef2802df2467618412476cb26d8a05818",
+      "merged_tree": "e746fe429b39638b5abdab43fbaa31f19f46265c",
+      "canonical_parent": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+      "merge_method": "SQUASH",
+      "merged_at": "2026-10-03T19:22:39Z",
+      "source_status": "MERGED_CANONICAL",
+      "production_status": "DEPLOYED_SUCCESS",
+      "production_branch": "main",
+      "production_deployment_id": "1a81e4e7-7031-48ca-a3c5-ef598d3d8948",
+      "cloudflare_check_run_id": 111274906732,
+      "production_deployment_proven": true,
+      "premerge_exact_head_ci": "5/5 SUCCESS",
+      "premerge_cloud_job": 111274189249,
+      "cloud_strict": "280/280 PASS",
+      "cloud_job": 111274837528,
+      "postmerge_checks": "8/8 SUCCESS",
+      "postmerge_check_runs": [
+        {
+          "id": 111274906732,
+          "name": "Cloudflare Pages",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837885,
+          "name": "guardrails",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837814,
+          "name": "behavioral-contract",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837745,
+          "name": "draft-critical",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837632,
+          "name": "package",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837606,
+          "name": "draft-critical",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837546,
+          "name": "draft-critical",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837528,
+          "name": "pitti-cloud-validation",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        }
+      ],
+      "served_static_files": 16,
+      "served_static_parity": "PASS_UTF8_LF",
+      "runtime_files": 17,
+      "browser_review": "PASS",
+      "browser_scope": "EXACT_HEAD_CLOUD_OFFLINE_MOBILE_EMULATION",
+      "mobile_widths": [
+        360,
+        390,
+        430
+      ],
+      "rawDirectoryRequests": 0,
+      "compactDirectoryRequests": 1,
+      "uncaught_browser_errors": 0,
+      "transient_hold_empty": true,
+      "replacement_render_complete": true,
+      "actual_scores": {
+        "source": "https://api.sleeper.app/v1/league/1366053132957646848/matchups/4",
+        "rosterId": 4,
+        "rows": 10,
+        "CLE": 9,
+        "Judkins": 18.6
+      },
+      "game_context": {
+        "source": "https://draft-companion.pages.dev/api/nfl-week-context?season=2026&week=4",
+        "events": 16,
+        "CLE_PIT": "FINAL"
+      },
+      "league_scoring": {
+        "week": 4,
+        "receivingPoints": 0.5
+      },
+      "matchup_limitation": "TEAM_POSITION_ONLY_NO_ALIGNMENT_SHADOW_OR_DEFENDER_ASSIGNMENT",
+      "historical_rc4223_core_acceptance": "USER_CONFIRMED_PASS_PRESERVED",
+      "physical_status": "PENDING",
+      "physical_classification": "RC4225_ANDROID_UI_ACCEPTANCE_PENDING",
+      "physical_acceptance_proven": false,
+      "agent_physical_test": false,
+      "evidence_source": "LIVE_GITHUB_AND_PRODUCTION_VERIFIED",
+      "observed_at": "2026-10-03T19:29:44Z",
+      "matchup": {
+        "direct_wr_cb": "UNAVAILABLE",
+        "team_level_wr": "VERIFIED",
+        "scope": "TEAM_POSITION",
+        "sourceUrl": "https://www.fantasypros.com/nfl/matchups/wr.php",
+        "teams": 32,
+        "fail_closed": true
+      },
+      "adversarial_review": "PASS_UNCHANGED: starter-set equivalence, fixed locks, prospective utility separation, eligibility, stale context, cancellation, data persistence and optional source fail-closed"
+    },
+    "rc4225_initial_source_production": {
+      "checkpoint": "v299",
+      "version": "v11.8.0-rc4.225",
+      "pr": 227,
+      "reviewed_head": "c8e3ade87f6b35f26285267de712ece065e121c0",
+      "reviewed_tree": "e746fe429b39638b5abdab43fbaa31f19f46265c",
+      "merge_commit": "d01f021ef2802df2467618412476cb26d8a05818",
+      "merged_tree": "e746fe429b39638b5abdab43fbaa31f19f46265c",
+      "canonical_parent": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+      "merge_method": "SQUASH",
+      "merged_at": "2026-10-03T19:22:39Z",
+      "source_status": "MERGED_CANONICAL",
+      "production_status": "DEPLOYED_SUCCESS",
+      "production_branch": "main",
+      "production_deployment_id": "1a81e4e7-7031-48ca-a3c5-ef598d3d8948",
+      "cloudflare_check_run_id": 111274906732,
+      "production_deployment_proven": true,
+      "premerge_exact_head_ci": "5/5 SUCCESS",
+      "premerge_cloud_job": 111274189249,
+      "cloud_strict": "280/280 PASS",
+      "cloud_job": 111274837528,
+      "postmerge_checks": "8/8 SUCCESS",
+      "postmerge_check_runs": [
+        {
+          "id": 111274906732,
+          "name": "Cloudflare Pages",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837885,
+          "name": "guardrails",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837814,
+          "name": "behavioral-contract",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837745,
+          "name": "draft-critical",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837632,
+          "name": "package",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837606,
+          "name": "draft-critical",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837546,
+          "name": "draft-critical",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        },
+        {
+          "id": 111274837528,
+          "name": "pitti-cloud-validation",
+          "head": "d01f021ef2802df2467618412476cb26d8a05818",
+          "result": "SUCCESS"
+        }
+      ],
+      "served_static_files": 16,
+      "served_static_parity": "PASS_UTF8_LF",
+      "runtime_files": 17,
+      "browser_review": "PASS",
+      "browser_scope": "EXACT_HEAD_CLOUD_OFFLINE_MOBILE_EMULATION",
+      "mobile_widths": [
+        360,
+        390,
+        430
+      ],
+      "rawDirectoryRequests": 0,
+      "compactDirectoryRequests": 1,
+      "uncaught_browser_errors": 0,
+      "transient_hold_empty": true,
+      "replacement_render_complete": true,
+      "actual_scores": {
+        "source": "https://api.sleeper.app/v1/league/1366053132957646848/matchups/4",
+        "rosterId": 4,
+        "rows": 10,
+        "CLE": 9,
+        "Judkins": 18.6
+      },
+      "game_context": {
+        "source": "https://draft-companion.pages.dev/api/nfl-week-context?season=2026&week=4",
+        "events": 16,
+        "CLE_PIT": "FINAL"
+      },
+      "league_scoring": {
+        "week": 4,
+        "receivingPoints": 0.5
+      },
+      "matchup_limitation": "TEAM_POSITION_ONLY_NO_ALIGNMENT_SHADOW_OR_DEFENDER_ASSIGNMENT",
+      "historical_rc4223_core_acceptance": "USER_CONFIRMED_PASS_PRESERVED",
+      "physical_status": "PENDING",
+      "physical_classification": "RC4225_ANDROID_UI_ACCEPTANCE_PENDING",
+      "physical_acceptance_proven": false,
+      "agent_physical_test": false,
+      "evidence_source": "LIVE_GITHUB_AND_PRODUCTION_VERIFIED",
+      "observed_at": "2026-10-03T19:29:44Z",
+      "matchup": {
+        "direct_wr_cb": "UNAVAILABLE",
+        "team_level_wr": "VERIFIED",
+        "scope": "TEAM_POSITION",
+        "sourceUrl": "https://www.fantasypros.com/nfl/matchups/wr.php",
+        "teams": 32,
+        "fail_closed": true
+      },
+      "adversarial_review": "PASS_UNCHANGED: starter-set equivalence, fixed locks, prospective utility separation, eligibility, stale context, cancellation, data persistence and optional source fail-closed"
     }
   },
   "runtime": {
@@ -1560,10 +1802,10 @@
     "ci": {
       "status": "PASS",
       "current_exact_main_head_ci": "PASS",
-      "validated_main": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+      "validated_main": "d01f021ef2802df2467618412476cb26d8a05818",
       "checks": "8/8 SUCCESS",
-      "strict": "277/277 PASS",
-      "cloud_job": 111264944243,
+      "strict": "280/280 PASS",
+      "cloud_job": 111274837528,
       "cloudflare_pages": "DEPLOYED_SUCCESS",
       "browser_review": "PASS",
       "compactDirectoryRequests": 1,
@@ -1572,11 +1814,11 @@
     },
     "android_accepted": "v11.8.0-rc4.211",
     "preview_candidate": "v11.8.0-rc4.225 LOCAL_ONLY",
-    "android_authority": "v11.8.0-rc4.225 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / ANDROID UI PHYSICAL PENDING / NOT ACCEPTED. Production remains rc4.224 canonical 9a4422a2b562ec0dc3688aa2b663f29709b9c3af tree 8138135db5c775c98ed48aa381119c9b956ffe9f. Historical Android rc4.223 core repaired functionality USER_CONFIRMED PASS remains intact. Next gate: RC4225_EXACT_HEAD_CLOUD_VALIDATION_PENDING.",
+    "android_authority": "v11.8.0-rc4.225 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / ANDROID UI PHYSICAL PENDING / NOT ACCEPTED. Production remains rc4.225 canonical d01f021ef2802df2467618412476cb26d8a05818 tree e746fe429b39638b5abdab43fbaa31f19f46265c. Historical Android rc4.223 core repaired functionality USER_CONFIRMED PASS remains intact. Next gate: RC4225_EXACT_HEAD_CLOUD_VALIDATION_PENDING.",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "deployed_pages_app_byte_parity_with_main": true,
-    "deployed_pages_head": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+    "deployed_pages_head": "d01f021ef2802df2467618412476cb26d8a05818",
     "installed_android": "v11.8.0-rc4.222",
     "installation_observation_scope": "User-supplied phone runtime observed 2026-09-28; installation mechanism not separately verified",
     "latest_android_observed": "v11.8.0-rc4.222",
@@ -1685,16 +1927,16 @@
       "runtime_identity_head": null
     },
     "deployment_parity": "RC4225_LOCAL_ONLY_PRODUCTION_REMAINS_RC4223",
-    "deployed_production_version": "v11.8.0-rc4.224",
+    "deployed_production_version": "v11.8.0-rc4.225",
     "production_deployment": {
-      "version": "v11.8.0-rc4.224",
-      "source_commit": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
-      "tree": "8138135db5c775c98ed48aa381119c9b956ffe9f",
-      "deployment_id": "18998487-d441-4c33-ba5b-e5ed2000688a",
-      "cloudflare_check_run_id": 111265026478,
+      "version": "v11.8.0-rc4.225",
+      "source_commit": "d01f021ef2802df2467618412476cb26d8a05818",
+      "tree": "e746fe429b39638b5abdab43fbaa31f19f46265c",
+      "deployment_id": "1a81e4e7-7031-48ca-a3c5-ef598d3d8948",
+      "cloudflare_check_run_id": 111274906732,
       "status": "DEPLOYED_SUCCESS",
       "device_acceptance_proven": false,
-      "physical_classification": "RC4224_ANDROID_UI_ACCEPTANCE_PENDING",
+      "physical_classification": "RC4225_ANDROID_UI_ACCEPTANCE_PENDING",
       "physical_scope": "ROSTER_DECISION_SURFACE_UI",
       "agent_physical_test": false
     },
@@ -1765,11 +2007,11 @@
       "proven": false,
       "executable": false,
       "prerequisite_gate": "RC4225_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-      "canonical_main": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+      "canonical_main": "d01f021ef2802df2467618412476cb26d8a05818",
       "agent_physical_test": false
     },
     "accepted_android_scope": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
-    "androidAuthority": "v11.8.0-rc4.225 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / ANDROID UI PHYSICAL PENDING / NOT ACCEPTED. Production remains rc4.224 canonical 9a4422a2b562ec0dc3688aa2b663f29709b9c3af tree 8138135db5c775c98ed48aa381119c9b956ffe9f. Historical Android rc4.223 core repaired functionality USER_CONFIRMED PASS remains intact. Next gate: RC4225_EXACT_HEAD_CLOUD_VALIDATION_PENDING.",
+    "androidAuthority": "v11.8.0-rc4.225 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / ANDROID UI PHYSICAL PENDING / NOT ACCEPTED. Production remains rc4.225 canonical d01f021ef2802df2467618412476cb26d8a05818 tree e746fe429b39638b5abdab43fbaa31f19f46265c. Historical Android rc4.223 core repaired functionality USER_CONFIRMED PASS remains intact. Next gate: RC4225_EXACT_HEAD_CLOUD_VALIDATION_PENDING.",
     "installed_android_scope": "MOST_RECENT_PHYSICALLY_OBSERVED_INSTALLATION; BOUNDED_DIAGNOSTIC_NOT_ACCEPTANCE"
   },
   "real_draft": {
@@ -1873,11 +2115,11 @@
     "stop_evaluation": {
       "allowed": false,
       "code": "ACTIVE_WORK_REMAINS",
-      "reason": "RC4225 exact-head publication/promotion explicitly authorized by current user work package"
+      "reason": "Proven malformed optional WR cache repair; exact-head corrective validation pending"
     }
   },
   "handoff": {
-    "generation": "20261003T1914Z-v298",
+    "generation": "20261003T1934Z-v300",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -1890,7 +2132,7 @@
   "status": "RC4224_PRODUCTION_PHYSICAL_PENDING",
   "gate": "RC4225_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
   "nextGate": "RC4225_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-  "handoffGeneration": "20261003T1914Z-v298",
+  "handoffGeneration": "20261003T1934Z-v300",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -3535,10 +3777,10 @@
   },
   "candidate_work": {
     "version": "v11.8.0-rc4.225",
-    "branch": "codex/rc4225-roster-surface-refinement",
-    "base": "96d2e682bed8491d12591347b8fd88c8b5b8f079",
-    "base_tree": "ec642f5ff3359746ca089ab3829c720a6d8df410",
-    "canonical_base": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+    "branch": "codex/rc4225-matchup-cache-guard",
+    "base": "d01f021ef2802df2467618412476cb26d8a05818",
+    "base_tree": "e746fe429b39638b5abdab43fbaa31f19f46265c",
+    "canonical_base": "d01f021ef2802df2467618412476cb26d8a05818",
     "status": "LOCAL_CANDIDATE",
     "pr": null,
     "pr_state": null,
@@ -3557,7 +3799,7 @@
     "merge_after_exact_head_ci_authorized": true,
     "scope": "ROSTER_DECISION_SURFACE_PRESENTATION_AND_READONLY_ACTUAL_POINTS"
   },
-  "updatedAt": "2026-10-03T19:14:41Z",
+  "updatedAt": "2026-10-03T19:34:42Z",
   "exactNextAction": "RC4225 authorized sequence: tested local candidate -> push/PR -> exact-head cloud full Strict and browser PASS -> adversarial review -> clean green merge -> Production parity -> Authority reconciliation. Android UI acceptance PENDING; rc4223 historical core PASS preserved; no fantasy transaction.",
   "week4_season_readiness": {
     "classification": "WEEK4_SEASON_READY_LOCAL_CANDIDATE",
@@ -3620,13 +3862,13 @@
   },
   "authority_continuation": {
     "status": "LOCAL_VALIDATED_PUBLICATION_AUTHORIZED",
-    "branch": "codex/rc4225-roster-surface-refinement",
+    "branch": "codex/rc4225-matchup-cache-guard",
     "published_branch": null,
     "current_gate": "RC4225_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
     "physical_gate": "RC4225_ANDROID_UI_ACCEPTANCE_PENDING",
     "physical_executable": false,
-    "canonical_main": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
-    "canonical_tree": "8138135db5c775c98ed48aa381119c9b956ffe9f",
+    "canonical_main": "d01f021ef2802df2467618412476cb26d8a05818",
+    "canonical_tree": "e746fe429b39638b5abdab43fbaa31f19f46265c",
     "sequence": [
       "RC4225_EXACT_HEAD_CLOUD_VALIDATION_PENDING"
     ],
@@ -3634,10 +3876,10 @@
   },
   "runtime_candidate": {
     "version": "v11.8.0-rc4.225",
-    "branch": "codex/rc4225-roster-surface-refinement",
-    "base": "96d2e682bed8491d12591347b8fd88c8b5b8f079",
-    "base_tree": "ec642f5ff3359746ca089ab3829c720a6d8df410",
-    "canonical_base": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+    "branch": "codex/rc4225-matchup-cache-guard",
+    "base": "d01f021ef2802df2467618412476cb26d8a05818",
+    "base_tree": "e746fe429b39638b5abdab43fbaa31f19f46265c",
+    "canonical_base": "d01f021ef2802df2467618412476cb26d8a05818",
     "status": "LOCAL_CANDIDATE",
     "pr": null,
     "pr_state": null,
