@@ -1,72 +1,72 @@
 {
-  "checkpoint": "v299",
+  "checkpoint": "v301",
   "version": "v11.8.0-rc4.225",
-  "pr": 227,
-  "reviewed_head": "c8e3ade87f6b35f26285267de712ece065e121c0",
-  "reviewed_tree": "e746fe429b39638b5abdab43fbaa31f19f46265c",
-  "merge_commit": "d01f021ef2802df2467618412476cb26d8a05818",
-  "merged_tree": "e746fe429b39638b5abdab43fbaa31f19f46265c",
-  "canonical_parent": "9a4422a2b562ec0dc3688aa2b663f29709b9c3af",
+  "pr": 228,
+  "reviewed_head": "e22a9ee019d06d85391065339e54f9e5b37d19c9",
+  "reviewed_tree": "f793be8d6d5c309e7fd4a9379ac756c99dd3cbbd",
+  "merge_commit": "c4f067a0ee9acb0d91f46ac6f9e116d073d2f915",
+  "merged_tree": "f793be8d6d5c309e7fd4a9379ac756c99dd3cbbd",
+  "canonical_parent": "d01f021ef2802df2467618412476cb26d8a05818",
   "merge_method": "SQUASH",
-  "merged_at": "2026-10-03T19:22:39Z",
+  "merged_at": "2026-10-03T19:39:00Z",
   "source_status": "MERGED_CANONICAL",
   "production_status": "DEPLOYED_SUCCESS",
   "production_branch": "main",
-  "production_deployment_id": "1a81e4e7-7031-48ca-a3c5-ef598d3d8948",
-  "cloudflare_check_run_id": 111274906732,
+  "production_deployment_id": "35251d85-b2d5-4684-b737-dcfa0bd9e620",
+  "cloudflare_check_run_id": 111277773021,
   "production_deployment_proven": true,
   "premerge_exact_head_ci": "5/5 SUCCESS",
-  "premerge_cloud_job": 111274189249,
+  "premerge_cloud_job": 111277170533,
   "cloud_strict": "280/280 PASS",
-  "cloud_job": 111274837528,
+  "cloud_job": 111277695112,
   "postmerge_checks": "8/8 SUCCESS",
   "postmerge_check_runs": [
     {
-      "id": 111274906732,
+      "id": 111277773021,
       "name": "Cloudflare Pages",
-      "head": "d01f021ef2802df2467618412476cb26d8a05818",
+      "head": "c4f067a0ee9acb0d91f46ac6f9e116d073d2f915",
       "result": "SUCCESS"
     },
     {
-      "id": 111274837885,
+      "id": 111277695346,
       "name": "guardrails",
-      "head": "d01f021ef2802df2467618412476cb26d8a05818",
+      "head": "c4f067a0ee9acb0d91f46ac6f9e116d073d2f915",
       "result": "SUCCESS"
     },
     {
-      "id": 111274837814,
-      "name": "behavioral-contract",
-      "head": "d01f021ef2802df2467618412476cb26d8a05818",
-      "result": "SUCCESS"
-    },
-    {
-      "id": 111274837745,
-      "name": "draft-critical",
-      "head": "d01f021ef2802df2467618412476cb26d8a05818",
-      "result": "SUCCESS"
-    },
-    {
-      "id": 111274837632,
+      "id": 111277695198,
       "name": "package",
-      "head": "d01f021ef2802df2467618412476cb26d8a05818",
+      "head": "c4f067a0ee9acb0d91f46ac6f9e116d073d2f915",
       "result": "SUCCESS"
     },
     {
-      "id": 111274837606,
-      "name": "draft-critical",
-      "head": "d01f021ef2802df2467618412476cb26d8a05818",
-      "result": "SUCCESS"
-    },
-    {
-      "id": 111274837546,
-      "name": "draft-critical",
-      "head": "d01f021ef2802df2467618412476cb26d8a05818",
-      "result": "SUCCESS"
-    },
-    {
-      "id": 111274837528,
+      "id": 111277695112,
       "name": "pitti-cloud-validation",
-      "head": "d01f021ef2802df2467618412476cb26d8a05818",
+      "head": "c4f067a0ee9acb0d91f46ac6f9e116d073d2f915",
+      "result": "SUCCESS"
+    },
+    {
+      "id": 111277695105,
+      "name": "draft-critical",
+      "head": "c4f067a0ee9acb0d91f46ac6f9e116d073d2f915",
+      "result": "SUCCESS"
+    },
+    {
+      "id": 111277695081,
+      "name": "draft-critical",
+      "head": "c4f067a0ee9acb0d91f46ac6f9e116d073d2f915",
+      "result": "SUCCESS"
+    },
+    {
+      "id": 111277695060,
+      "name": "draft-critical",
+      "head": "c4f067a0ee9acb0d91f46ac6f9e116d073d2f915",
+      "result": "SUCCESS"
+    },
+    {
+      "id": 111277695033,
+      "name": "behavioral-contract",
+      "head": "c4f067a0ee9acb0d91f46ac6f9e116d073d2f915",
       "result": "SUCCESS"
     }
   ],
@@ -108,7 +108,7 @@
   "physical_acceptance_proven": false,
   "agent_physical_test": false,
   "evidence_source": "LIVE_GITHUB_AND_PRODUCTION_VERIFIED",
-  "observed_at": "2026-10-03T19:29:44Z",
+  "observed_at": "2026-10-03T19:42:12Z",
   "matchup": {
     "direct_wr_cb": "UNAVAILABLE",
     "team_level_wr": "VERIFIED",
@@ -117,5 +117,5 @@
     "teams": 32,
     "fail_closed": true
   },
-  "adversarial_review": "PASS_UNCHANGED: starter-set equivalence, fixed locks, prospective utility separation, eligibility, stale context, cancellation, data persistence and optional source fail-closed"
+  "adversarial_review": "PASS_CORRECTED: malformed optional cache reproduced and repaired; starter-set equivalence, fixed locks, prospective utility separation, eligibility, stale context, cancellation, data persistence and optional source fail-closed"
 }
