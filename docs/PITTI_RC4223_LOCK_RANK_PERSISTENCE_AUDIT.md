@@ -35,3 +35,7 @@ Fresh public inputs captured 2026-10-03T14:49:37.590Z establish 9 opponents / 54
 The visible category ordering selects BEST REVIEW OFFER: Kenyon Sadiq + Chris Olave for Chase Brown + Jalen Hurts (prospective utility approximately 1.05 points; LOW heuristic acceptance, score 26). EXPLORATORY / AGGRESSIVE OFFER: Kenyon Sadiq + George Pickens for D'Andre Swift + Baker Mayfield (approximately 0.87 points; LOW, score 24). These are diagnostic model outputs, not a recommendation to send a trade. An OUT asset may retain Boone value; no current-week projection from OUT or a locked game contributes to these prospective gains. Category renaming makes the review obligation explicit without increasing acceptance scores.
 
 No fantasy transaction, trade sending, manager communication, cache clearing, reinstall or physical-device action was performed.
+
+## Exact-head cloud correction
+
+Cloud validation for 195254e1ab5a18953bae10b28c42e89ba7e91d47 passed the complete Strict Suite 274/274. Its browser review then timed out when reopening a page: the fixture set navigator.onLine only on the first page, whereas the cloud runner intentionally has no network. The application correctly refused an offline bootstrap. The online fixture override now belongs to the browser context so reopened pages receive the same mocked boundary. All reload, selected-rank and fail-closed assertions remain intact; no runtime code changed. Corrected browser review, reseal and guardrail pass locally. The corrected final head still requires fresh cloud checks before merge.
