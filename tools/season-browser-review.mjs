@@ -22,7 +22,7 @@ let browser;try{
  await page.addInitScript(()=>{localStorage.setItem('v118_seasonLeagueId','fixture');localStorage.setItem('v118_seasonUserId','u0');const now=Date.now();localStorage.setItem('v190_seasonEvidence',JSON.stringify(['projected_points','weekly_rank'].map(metric=>({playerId:'q',metric,value:metric==='weekly_rank'?3:17,season:2026,week:4,scoring:'HALF_PPR',status:'VERIFIED',confidence:.9,sourceId:'fixture',sourceUrl:'https://example.test/data',publishedAt:now-1000,verifiedAt:now-500,expiresAt:now+60000}))));});
  await page.goto(origin,{waitUntil:'domcontentloaded'});try{await page.waitForFunction(()=>window.__review?.context()?.season?.ok,{timeout:30000});}catch(error){const diagnostic={errors,failedRequests,body:(await page.locator('body').innerText()).slice(0,16000)};fs.writeFileSync(path.join(output,'startup-failure.json'),JSON.stringify(diagnostic,null,2));console.error(JSON.stringify(diagnostic));throw error;}
  assert(compactDirectoryRequests>0,'compact directory fixture consumed');assert.equal(rawDirectoryRequests,0,'normal startup must not request raw Sleeper directory');
- assert.match(await page.locator('#rosterList').innerText(),/W4 QB 3.*17 Pkt/);
+ const rosterText=await page.locator('#rosterList').innerText();assert.match(rosterText,/Proj.: 17.00 Half-PPR/);assert.match(rosterText,/W4 Pos.-Rang: #3 PITTI/);assert.equal(await page.locator('#seasonDiagnosticCopyBtn').count(),1,'mobile Season diagnostic action present');
  await page.waitForFunction(()=>document.querySelector('#tradeStatus')?.textContent?.includes('gemappt'),{timeout:10000});
  assert.equal(await page.locator('#rosterList .lineup-row').count(),11);
  for(const id of ['seasonLiveStateStatus','seasonRankingStatus','rosterBenchStatus'])assert((await page.locator('#'+id).textContent()).trim().length>0,id+' must render');
@@ -70,7 +70,7 @@ let browser;try{
  assert.match(await page.locator('#waiverStatus').textContent(),/Waiver\/FA Decision Board v3/,'successful four-minute live refresh keeps Waiver authority fresh');
  assert.match(await page.locator('#tradeStatus').textContent(),/Trade Offer Board v9/,'successful four-minute live refresh keeps Trade authority fresh');
  assert.match(await page.locator('#seasonLiveStateAge').textContent(),/(?:< 1 Min\.|1 Min\.)/,'visible live age follows refreshed season.generated_at');
- assert.doesNotMatch(await page.locator('#rosterList').innerText(),/17 Pkt/,'expired projections are removed even while ownership refresh succeeds');
+ assert.doesNotMatch(await page.locator('#rosterList').innerText(),/Proj\.: 17\.00 Half-PPR/,'expired projections are removed even while ownership refresh succeeds');
 
  const f=dstFixture(await page.evaluate(()=>Date.now()));
  await page.evaluate(f=>{

@@ -12,10 +12,58 @@ export default {
     if(url.pathname==='/api/fp-expert-directory') return handleFpExpertDirectory(request,url);
     if(url.pathname==='/api/expert-ranking') return handleExpertRanking(request,url);
     if(url.pathname==='/api/boone-trade-values') return handleBooneTradeValues(request,url);
+    if(url.pathname==='/api/weekly-public-evidence')return handleWeeklyPublicEvidence(request,url);
     if(url.pathname==='/api/nfl-week-context') return handleNflWeekContext(request,url);
     return env.ASSETS.fetch(request);
   }
 };
+
+
+// Verified coordinates bound to ESPN venue ID AND name; never infer location from home team.
+const WEATHER_VENUES={
+ '3679':['Huntington Bank Field',41.506111,-81.699444],
+ '5534':['Tottenham Hotspur Stadium',51.6044,-.0664],
+ '11938':['Highmark Stadium',42.773056,-78.792222],
+ '3933':['Soldier Field',41.8623,-87.6167],
+ '3874':['Paycor Stadium',39.095,-84.516],
+ '3839':['MetLife Stadium',40.813611,-74.074444],
+ '3806':['Lincoln Financial Field',39.900833,-75.1675],
+ '3886':['Raymond James Stadium',27.975833,-82.503333],
+ '3814':['M&T Bank Stadium',39.278056,-76.622778],
+ '4738':["Levi's Stadium",37.403,-121.97],
+ '3673':['Lumen Field',47.5952,-122.3316],
+ '3628':['Bank of America Stadium',35.2258,-80.8528]
+};
+async function publicJson(url,ttl=900){const r=await fetch(url,{headers:{accept:'application/json'},signal:AbortSignal.timeout(8000),cf:{cacheTtl:ttl,cacheEverything:true}});if(!r.ok)throw Error('PUBLIC_HTTP_'+r.status);return r.json();}
+const canonicalNflTeam=s=>({WSH:'WAS',JAC:'JAX',LA:'LAR'}[s]||s);
+async function enrichWeekEvents(events,scoreboardUrl){
+ // At most four concurrent events; each failure affects one optional lane only.
+ let index=0;await Promise.all(Array.from({length:Math.min(4,events.length)},async()=>{while(index<events.length){const e=events[index++],c=e?.competitions?.[0],kickoff=Date.parse(e.date||'');if(!c||!e.id||!Number.isFinite(kickoff))continue;const now=Date.now(),binding={eventId:String(e.id),kickoffAt:new Date(kickoff).toISOString(),venueId:String(c.venue?.id||''),teams:(c.competitors||[]).map(x=>canonicalNflTeam(x.team?.abbreviation)).sort()};
+   c.pittiAcquiredAt=now;
+   if(kickoff<=now){c.pittiWeather={status:'UNAVAILABLE',reason:'GAME_ALREADY_STARTED'};continue;}
+   const embedded=c.weather,embeddedAt=Date.parse(embedded?.lastUpdated||''),embeddedValid=c.venue?.indoor===false&&typeof embedded?.temperature==='number'&&Number.isFinite(embedded.temperature)&&embedded.temperature>=-60&&embedded.temperature<=140&&(!embedded.lastUpdated||(Number.isFinite(embeddedAt)&&embeddedAt<=now&&now-embeddedAt<=3600000));
+   if(embeddedValid)c.pittiWeather={...binding,status:'VERIFIED',sourceId:'espn_scoreboard_weather',sourceUrl:scoreboardUrl,verifiedAt:now,expiresAt:Math.min(kickoff,now+3600000),forecastAt:binding.kickoffAt,temperature:embedded.temperature,temperatureUnit:'F',summary:String(embedded.displayValue||embedded.temperature+' °F')};
+   if(embeddedValid&&c.odds?.length)continue;
+   let summary=null;
+   if(c.venue?.indoor===false||!c.odds?.length){try{summary=await publicJson('https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event='+encodeURIComponent(e.id));const sc=summary.header?.competitions?.[0];if(String(summary.header?.id)!==String(e.id)||Date.parse(sc?.date)!==kickoff||JSON.stringify((sc?.competitors||[]).map(x=>canonicalNflTeam(x.team?.abbreviation)).sort())!==JSON.stringify(binding.teams)||String(summary.gameInfo?.venue?.id)!==binding.venueId)summary=null;}catch{}}
+   if(!c.odds?.length&&summary?.pickcenter?.length)c.odds=summary.pickcenter;
+   if(c.venue?.indoor!==false||embeddedValid)continue;
+   const w=summary?.gameInfo?.weather;if(typeof w?.temperature==='number'&&Number.isFinite(w.temperature)&&w.temperature>=-60&&w.temperature<=140){c.pittiWeather={...binding,status:'VERIFIED',sourceId:'espn_event_summary_weather',sourceUrl:'https://site.api.espn.com/apis/site/v2/sports/football/nfl/summary?event='+e.id,verifiedAt:now,expiresAt:Math.min(kickoff,now+3600000),forecastAt:binding.kickoffAt,temperature:w.temperature,temperatureUnit:'F',precipitationProbability:typeof w.precipitation==='number'?w.precipitation:null,summary:w.temperature+' °F'+(typeof w.precipitation==='number'?' · Niederschlag '+w.precipitation+'%':'')};}
+   const v=WEATHER_VENUES[binding.venueId];if(!v||v[0]!==c.venue?.fullName){if(c.pittiWeather?.status==='VERIFIED')continue;c.pittiWeather={status:'UNAVAILABLE',reason:'VENUE_COORDINATES_UNVERIFIED'};continue;}
+   const sourceUrl='https://api.open-meteo.com/v1/forecast?latitude='+v[1]+'&longitude='+v[2]+'&hourly=temperature_2m,precipitation_probability,wind_speed_10m,wind_gusts_10m&timezone=GMT&forecast_days=16';
+   try{const p=await publicJson(sourceUrl,1800),h=p.hourly||{},ts=h.time||[],nearest=ts.map((t,i)=>({i,d:Math.abs(Date.parse(t+'Z')-kickoff)})).sort((a,b)=>a.d-b.d)[0],i=nearest?.i;
+    if(p.utc_offset_seconds!==0||typeof p.latitude!=='number'||!Number.isFinite(p.latitude)||typeof p.longitude!=='number'||!Number.isFinite(p.longitude)||Math.abs(p.latitude-v[1])>.15||Math.abs(p.longitude-v[2])>.15||!Number.isFinite(nearest?.d)||nearest.d>1800000||!nearest||p.hourly_units?.temperature_2m!=='°C'||p.hourly_units?.wind_speed_10m!=='km/h'||p.hourly_units?.wind_gusts_10m!=='km/h'||p.hourly_units?.precipitation_probability!=='%'||![h.temperature_2m?.[i],h.precipitation_probability?.[i],h.wind_speed_10m?.[i],h.wind_gusts_10m?.[i]].every(x=>typeof x==='number'&&Number.isFinite(x)))throw Error('FORECAST_SHAPE');
+    c.pittiWeather={...binding,status:'VERIFIED',sourceId:'open_meteo',sourceUrl,coordinateSource:'https://en.wikipedia.org/wiki/'+encodeURIComponent(v[0].replaceAll(' ','_')),latitude:v[1],longitude:v[2],verifiedAt:now,expiresAt:Math.min(kickoff,now+3600000),forecastAt:ts[i]+'Z',temperature:h.temperature_2m[i],temperatureUnit:'C',precipitationProbability:h.precipitation_probability[i],windKmh:h.wind_speed_10m[i],gustKmh:h.wind_gusts_10m[i],summary:h.temperature_2m[i]+' °C · Regen '+h.precipitation_probability[i]+'% · Wind '+h.wind_speed_10m[i]+' km/h · Böen '+h.wind_gusts_10m[i]+' km/h'};
+   }catch{if(c.pittiWeather?.status!=='VERIFIED')c.pittiWeather={status:'UNAVAILABLE',reason:'FORECAST_FETCH_OR_VALIDITY_FAILED'};}
+ }}));
+}
+async function handleWeeklyPublicEvidence(request,url){
+ if(request.method!=='GET')return json({error:'GET only'},405);const season=Number(url.searchParams.get('season')),week=Number(url.searchParams.get('week'));if(!Number.isInteger(season)||season<2026||season>2100||!Number.isInteger(week)||week<1||week>18)return json({error:'Invalid week'},400);
+ const verifiedAt=Date.now(),sourceUrl='https://api.sleeper.app/projections/nfl/'+season+'/'+week+'?season_type=regular',ranks={},failures={};let sleeper=null;
+ await Promise.all([publicJson(sourceUrl,900).then(rows=>{if(!Array.isArray(rows))throw Error('SHAPE');sleeper={season,week,sourceUrl,verifiedAt,rows:rows.filter(r=>['QB','RB','WR','TE','K','DEF','DST'].includes(r.player?.position)).map(r=>({player_id:r.player_id,player:{position:r.player?.position},team:r.team,stats:{pts_half_ppr:r.stats?.pts_half_ppr},category:r.category,sport:r.sport,season:r.season,week:r.week,season_type:r.season_type,updated_at:r.updated_at,last_modified:r.last_modified,company:r.company}))};}).catch(()=>{failures.projections='PUBLIC_SLEEPER_UNAVAILABLE'}),...['RB','WR','TE'].map(async position=>{const sourceUrl='https://www.fantasypros.com/nfl/rankings/half-point-ppr-'+position.toLowerCase()+'.php';try{const r=await fetch(sourceUrl,{signal:AbortSignal.timeout(8000),cf:{cacheTtl:900,cacheEverything:true}});if(!r.ok)throw Error('HTTP');const html=await boundedText(r),match=html.match(/var ecrData = (.*?);/),p=match?JSON.parse(match[1]):null;if(p?.sport!=='NFL'||p.ranking_type_name!=='weekly'||Number(p.year)!==season||Number(p.week)!==week||p.scoring!=='HALF'||p.position_id!==position||!Array.isArray(p.players))throw Error('CONTEXT');ranks[position]={...p,season:Number(p.year),sourceUrl,publicWeeklySource:true};}catch{failures[position]='PUBLIC_RANK_CONTEXT_OR_FETCH_FAILED'}})]);
+ failures.QB='PUBLIC_QB_PAGE_STD_ONLY_NOT_HALF_PPR';
+ return json({season,week,verifiedAt,sleeperProjectionPayload:sleeper,rankingPayloads:ranks,failures});
+}
 
 const NFL_WEEK_MIN_GAMES=13,NFL_WEEK_MAX_GAMES=16;
 function espnWeekCandidates(season,week){
@@ -46,6 +94,7 @@ async function handleNflWeekContext(request,url){
       const payload=await response.json(),normalized=normalizedEspnWeekPayload(payload,sourceUrl),events=normalized.events;
       if(normalized.season!==season||normalized.seasonType!==2||normalized.week!==week){attempts.push({sourceUrl,failureType:'CONTEXT_MISMATCH',upstreamStatus:response.status,sourceEvents:events.length});continue;}
       if(events.length<NFL_WEEK_MIN_GAMES||events.length>NFL_WEEK_MAX_GAMES){attempts.push({sourceUrl,failureType:'INCOMPLETE_WEEK',upstreamStatus:response.status,sourceEvents:events.length});continue;}
+      await enrichWeekEvents(events,sourceUrl);
       return json({season,week,sourceUrl,events,acquisition:{provider:'ESPN',variant:attempts.length+1,sourceEvents:events.length,attempts:attempts.map(x=>({failureType:x.failureType,upstreamStatus:x.upstreamStatus,sourceEvents:x.sourceEvents??null}))}});
     }catch{attempts.push({sourceUrl,failureType:'FETCH_EXCEPTION',upstreamStatus:null});}
   }

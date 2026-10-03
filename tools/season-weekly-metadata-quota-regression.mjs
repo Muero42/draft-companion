@@ -19,12 +19,12 @@ const cache=new Map(),quotaKeys=new Set([attemptKey,retryKey,lastSuccessKey]),qu
   get:(key,fallback)=>cache.has(key)?cache.get(key):fallback,
   set:(key,value)=>{if(quotaKeys.has(key)){quotaAttempts.set(key,(quotaAttempts.get(key)||0)+1);throw Object.assign(new Error('quota full'),{name:'QuotaExceededError'});}cache.set(key,value);return true}
 };
-const positions=['QB','RB','WR','TE'],records=[...Array(8)].map((_,i)=>({metric:'projected_points',playerId:String(i)}));
-const projectionSnapshot={snapshotId:'projection-partial',lastSuccessAt:100,status:'DEGRADED',records,lanes:{projections:{status:'PARTIAL',coverage:{positions:{QB:{status:'AVAILABLE'},RB:{status:'AVAILABLE'},WR:{status:'UNAVAILABLE'},TE:{status:'AVAILABLE'}}}},expertWeeklyRanks:{status:'UNAVAILABLE'}},panel:{weeklyRank:{status:'UNAVAILABLE'}}};
+const positions=['QB','RB','WR','TE'],records=[...Array(8)].map((_,i)=>({metric:'projected_points',playerId:String(i),verifiedAt:1000}));
+const projectionSnapshot={fetchedAt:1000,snapshotId:'projection-partial',lastSuccessAt:100,status:'DEGRADED',records,lanes:{projections:{status:'PARTIAL',coverage:{positions:{QB:{status:'AVAILABLE'},RB:{status:'AVAILABLE'},WR:{status:'UNAVAILABLE'},TE:{status:'AVAILABLE'}}}},expertWeeklyRanks:{status:'UNAVAILABLE'}},panel:{weeklyRank:{status:'UNAVAILABLE'}}};
 const finalCandidate={...projectionSnapshot,snapshotId:'full-before-quota',records:[...records,{metric:'weekly_rank',playerId:'rank'}],lanes:{...projectionSnapshot.lanes,expertWeeklyRanks:{status:'AVAILABLE'}},panel:{weeklyRank:{status:'BROAD_CONSENSUS_ONLY'}}};
 const persistedFallback={...projectionSnapshot,snapshotId:'full-before-quota',persistence:{mode:'LOCAL_STORAGE_PROJECTION_ONLY'},lanes:{...projectionSnapshot.lanes,expertWeeklyRanks:{status:'UNAVAILABLE',reason:'STORAGE_QUOTA_PROJECTION_ONLY'}}};
 let writes=0,rerenders=0,renderedSnapshot=null;
-const api={CACHE_KEY:'weekly',buildSnapshot:({rankingPayloads})=>Object.keys(rankingPayloads||{}).length?finalCandidate:projectionSnapshot,atomicWrite(storage,candidate){
+const api={weeklyRecordChronology:()=>true,CACHE_KEY:'weekly',buildSnapshot:({rankingPayloads})=>Object.keys(rankingPayloads||{}).length?finalCandidate:projectionSnapshot,atomicWrite(storage,candidate){
   writes++;
   const actual=writes===1?{...projectionSnapshot,refreshStage:candidate.refreshStage}:persistedFallback;
   cache.set(this.CACHE_KEY,actual);
@@ -33,7 +33,7 @@ const api={CACHE_KEY:'weekly',buildSnapshot:({rankingPayloads})=>Object.keys(ran
 const els={season:{value:'2026'},scoring:{value:'HALF'},seasonRefreshEvidenceBtn:{disabled:false},seasonRankingStatus:{className:'',textContent:''}};
 const context={
   Date:{now:()=>1_000},Number,String,Array,Object,Math,Promise,console,
-  WEEKLY_PROJECTION_POSITIONS:positions,SEASON_RANKING_AUTO_MS:1,SEASON_RANKING_RETRY_MS:1,
+  WEEKLY_PROJECTION_POSITIONS:positions,SEASON_PROJECTION_POSITIONS:[...positions,'K','DST'],SEASON_RANKING_AUTO_MS:1,SEASON_RANKING_RETRY_MS:1,
   seasonRankingRefreshBusy:false,store,els,navigator:{onLine:true},lastDraftContext:{players:{},season:{}},localStorage:{},
   currentSleeperNflWeek:async()=>7,
   fpProxyRequest:async path=>{
@@ -50,7 +50,7 @@ vm.createContext(context);
 vm.runInContext([
   sourceOf('persistSeasonProjectionRetryAfter'),
   sourceOf('persistSeasonWeeklyMetadata'),
-  sourceOf('refreshSeasonRankings',{async:true})
+  sourceOf('refreshSeasonGameContext',{async:true}),sourceOf('refreshSeasonRankings',{async:true})
 ].join('\n'),context);
 
 const result=await context.refreshSeasonRankings({force:true,trigger:'metadata-quota-regression'});

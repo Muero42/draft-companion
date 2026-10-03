@@ -1,3 +1,23 @@
+Generation: `20261003T1254Z-v291`
+Handoff generation: `20261003T1254Z-v291`
+
+v11.8.0-rc4.222 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED. Data completeness repair; no acceptance threshold change. Production remains v11.8.0-rc4.221 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS, canonical b4df56bbfdaeb266b7eae33e2ad8ebdc655a75d1, reviewed 5b0d57f340823fa9dd7b2532460c792900c826ec, tree a2274042ea49b817dfb3883e0d58cc77cb450203, deployment 4cf15993-b578-44eb-a08b-fd21f9f117e3. rc4.221 USER OBSERVED PARTIAL: W4 524 records, QB/RB/WR/TE AVAILABLE, Boone 253/253, navigation observed, trade HOLD; full functional acceptance NOT granted. PHYSICAL PENDING / NOT ACCEPTED. rc4.219/220 responsiveness PASS preserved; historical RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY, RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and RC4215_PHYSICAL_FAIL_DECISION_QUALITY preserved. Next gate: RC4222_FINAL_LOCAL_VALIDATION_PUBLICATION_PENDING.
+
+Current user authorizes RC4222 data completeness repair, focused/adversarial review, one final Strict Suite, exact-head publication/CI, green merge and Production read-only verification. No fantasy transaction or manager communication.
+
+See docs/PITTI_RC4222_DATA_COMPLETENESS_AUDIT.md.
+
+## HISTORICAL v290 and earlier (immutable evidence)
+
+Generation: `20261003T1056Z-v290`
+Handoff generation: `20261003T1056Z-v290`
+
+v11.8.0-rc4.221 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR222 SQUASH MERGED, canonical b4df56bbfdaeb266b7eae33e2ad8ebdc655a75d1, reviewed 5b0d57f340823fa9dd7b2532460c792900c826ec, tree a2274042ea49b817dfb3883e0d58cc77cb450203, deployment 4cf15993-b578-44eb-a08b-fd21f9f117e3. PHYSICAL PENDING / NOT ACCEPTED / NOT PHYSICALLY ACCEPTED. rc4.219 and rc4.220 RESPONSIVENESS PHYSICAL PASS remain USER_CONFIRMED historical evidence; rc4.220 TRADE FUNCTIONAL ACCEPTANCE NOT GRANTED; rc4.221 TRADE FUNCTIONAL ACCEPTANCE PENDING; full functional Production acceptance PENDING. Historical RC4218_PHYSICAL_FAIL_RESIDUAL_INTERACTION_LATENCY, RC4216_PHYSICAL_FAIL_QB_FAAB_FAIL_OPEN and RC4215_PHYSICAL_FAIL_DECISION_QUALITY preserved. Next gate: RC4221_ANDROID_TRADE_FUNCTIONAL_ACCEPTANCE_PENDING.
+
+Exact-main checks 8/8 SUCCESS; cloud Strict Suite 266/266 PASS. Runtime manifest 17; all 16 public static assets match canonical UTF8/LF content; worker deployment and endpoints verified. Browser compact requests 1, raw requests 0. Week-4 Boone 253/253, game context 16 games/32 teams/4 DOME/weather fail-closed; Watcher PASS. Local Authority-only checkpoint, NOT PUSHED. STOP. rc4.221 merged canonical main, postmerge exact-head CI and Production surfaces verified. Android/PWA physical acceptance requires a separate real-device work package. No fantasy transaction, trade sending, cache clear or reinstall authorized.
+
+## HISTORICAL v289 and earlier (immutable evidence)
+
 Handoff generation: `20261003T0844Z-v289`
 Generation: `20261003T0844Z-v289`
 

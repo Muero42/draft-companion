@@ -1,0 +1,805 @@
+{
+  "season": 2026,
+  "week": 4,
+  "sourceUrl": "https://cdn.espn.com/core/nfl/scoreboard?xhr=1&year=2026&seasontype=2&week=4",
+  "events": [
+    {
+      "id": "401872964",
+      "date": "2026-10-02T00:15Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "Cleveland",
+              "state": "OH"
+            },
+            "fullName": "Huntington Bank Field",
+            "indoor": false,
+            "id": "3679"
+          },
+          "competitors": [
+            {
+              "id": "5",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "CLE"
+              }
+            },
+            {
+              "id": "23",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "PIT"
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872965",
+      "date": "2026-10-04T13:30Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "England",
+              "city": "London"
+            },
+            "fullName": "Tottenham Hotspur Stadium",
+            "indoor": false,
+            "id": "5534"
+          },
+          "competitors": [
+            {
+              "id": "28",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "WSH"
+              }
+            },
+            {
+              "id": "11",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "IND"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "IND -4.5",
+              "spread": 4.5,
+              "overUnder": 47.5,
+              "homeTeamOdds": {
+                "favorite": false
+              },
+              "awayTeamOdds": {
+                "favorite": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872971",
+      "date": "2026-10-04T17:00Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "Orchard Park",
+              "state": "NY"
+            },
+            "fullName": "Highmark Stadium",
+            "indoor": false,
+            "id": "11938"
+          },
+          "competitors": [
+            {
+              "id": "2",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "BUF"
+              }
+            },
+            {
+              "id": "17",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "NE"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "BUF -7",
+              "spread": -7,
+              "overUnder": 49.5,
+              "homeTeamOdds": {
+                "favorite": true
+              },
+              "awayTeamOdds": {
+                "favorite": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872972",
+      "date": "2026-10-04T17:00Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "Chicago",
+              "state": "IL"
+            },
+            "fullName": "Soldier Field",
+            "indoor": false,
+            "id": "3933"
+          },
+          "competitors": [
+            {
+              "id": "3",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "CHI"
+              }
+            },
+            {
+              "id": "20",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "NYJ"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "CHI -3.5",
+              "spread": -3.5,
+              "overUnder": 43.5,
+              "homeTeamOdds": {
+                "favorite": true
+              },
+              "awayTeamOdds": {
+                "favorite": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872969",
+      "date": "2026-10-04T17:00Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "Cincinnati",
+              "state": "OH"
+            },
+            "fullName": "Paycor Stadium",
+            "indoor": false,
+            "id": "3874"
+          },
+          "competitors": [
+            {
+              "id": "4",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "CIN"
+              }
+            },
+            {
+              "id": "30",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "JAX"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "CIN -2.5",
+              "spread": -2.5,
+              "overUnder": 51.5,
+              "homeTeamOdds": {
+                "favorite": true
+              },
+              "awayTeamOdds": {
+                "favorite": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872966",
+      "date": "2026-10-04T17:00Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "East Rutherford",
+              "state": "NJ"
+            },
+            "fullName": "MetLife Stadium",
+            "indoor": false,
+            "id": "3839"
+          },
+          "competitors": [
+            {
+              "id": "19",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "NYG"
+              }
+            },
+            {
+              "id": "22",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "ARI"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "ARI -2.5",
+              "spread": 2.5,
+              "overUnder": 44.5,
+              "homeTeamOdds": {
+                "favorite": false
+              },
+              "awayTeamOdds": {
+                "favorite": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872970",
+      "date": "2026-10-04T17:00Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "Philadelphia",
+              "state": "PA"
+            },
+            "fullName": "Lincoln Financial Field",
+            "indoor": false,
+            "id": "3806"
+          },
+          "competitors": [
+            {
+              "id": "21",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "PHI"
+              }
+            },
+            {
+              "id": "14",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "LAR"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "LAR -3.5",
+              "spread": 3.5,
+              "overUnder": 42.5,
+              "homeTeamOdds": {
+                "favorite": false
+              },
+              "awayTeamOdds": {
+                "favorite": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872968",
+      "date": "2026-10-04T17:00Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "Tampa",
+              "state": "FL"
+            },
+            "fullName": "Raymond James Stadium",
+            "indoor": false,
+            "id": "3886"
+          },
+          "competitors": [
+            {
+              "id": "27",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "TB"
+              }
+            },
+            {
+              "id": "9",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "GB"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "GB -3",
+              "spread": 3,
+              "overUnder": 39.5,
+              "homeTeamOdds": {
+                "favorite": false
+              },
+              "awayTeamOdds": {
+                "favorite": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872973",
+      "date": "2026-10-04T17:00Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "Baltimore",
+              "state": "MD"
+            },
+            "fullName": "M&T Bank Stadium",
+            "indoor": false,
+            "id": "3814"
+          },
+          "competitors": [
+            {
+              "id": "33",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "BAL"
+              }
+            },
+            {
+              "id": "10",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "TEN"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "BAL -11.5",
+              "spread": -11.5,
+              "overUnder": 42.5,
+              "homeTeamOdds": {
+                "favorite": true
+              },
+              "awayTeamOdds": {
+                "favorite": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872967",
+      "date": "2026-10-04T17:00Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "Houston",
+              "state": "TX"
+            },
+            "fullName": "Reliant Stadium",
+            "indoor": true,
+            "id": "3891"
+          },
+          "competitors": [
+            {
+              "id": "34",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "HOU"
+              }
+            },
+            {
+              "id": "6",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "DAL"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "HOU -3",
+              "spread": -3,
+              "overUnder": 48.5,
+              "homeTeamOdds": {
+                "favorite": true
+              },
+              "awayTeamOdds": {
+                "favorite": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872974",
+      "date": "2026-10-04T20:05Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "Minneapolis",
+              "state": "MN"
+            },
+            "fullName": "U.S. Bank Stadium",
+            "indoor": true,
+            "id": "5239"
+          },
+          "competitors": [
+            {
+              "id": "16",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "MIN"
+              }
+            },
+            {
+              "id": "15",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "MIA"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "MIN -10",
+              "spread": -10,
+              "overUnder": 38.5,
+              "homeTeamOdds": {
+                "favorite": true
+              },
+              "awayTeamOdds": {
+                "favorite": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872976",
+      "date": "2026-10-04T20:25Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "Las Vegas",
+              "state": "NV"
+            },
+            "fullName": "Allegiant Stadium",
+            "indoor": true,
+            "id": "6501"
+          },
+          "competitors": [
+            {
+              "id": "13",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "LV"
+              }
+            },
+            {
+              "id": "12",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "KC"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "KC -4.5",
+              "spread": 4.5,
+              "overUnder": 47.5,
+              "homeTeamOdds": {
+                "favorite": false
+              },
+              "awayTeamOdds": {
+                "favorite": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872975",
+      "date": "2026-10-04T20:25Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "Santa Clara",
+              "state": "CA"
+            },
+            "fullName": "Levi's Stadium",
+            "indoor": false,
+            "id": "4738"
+          },
+          "competitors": [
+            {
+              "id": "25",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "SF"
+              }
+            },
+            {
+              "id": "7",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "DEN"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "SF -3",
+              "spread": -3,
+              "overUnder": 47.5,
+              "homeTeamOdds": {
+                "favorite": true
+              },
+              "awayTeamOdds": {
+                "favorite": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872977",
+      "date": "2026-10-04T20:25Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "Seattle",
+              "state": "WA"
+            },
+            "fullName": "Lumen Field",
+            "indoor": false,
+            "id": "3673"
+          },
+          "competitors": [
+            {
+              "id": "26",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "SEA"
+              }
+            },
+            {
+              "id": "24",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "LAC"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "SEA -7",
+              "spread": -7,
+              "overUnder": 42.5,
+              "homeTeamOdds": {
+                "favorite": true
+              },
+              "awayTeamOdds": {
+                "favorite": false
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872978",
+      "date": "2026-10-05T00:20Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "Charlotte",
+              "state": "NC"
+            },
+            "fullName": "Bank of America Stadium",
+            "indoor": false,
+            "id": "3628"
+          },
+          "competitors": [
+            {
+              "id": "29",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "CAR"
+              }
+            },
+            {
+              "id": "8",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "DET"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "DET -3.5",
+              "spread": 3.5,
+              "overUnder": 50.5,
+              "homeTeamOdds": {
+                "favorite": false
+              },
+              "awayTeamOdds": {
+                "favorite": true
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "401872979",
+      "date": "2026-10-06T00:15Z",
+      "competitions": [
+        {
+          "venue": {
+            "address": {
+              "country": "USA",
+              "city": "New Orleans",
+              "state": "LA"
+            },
+            "fullName": "Caesars Superdome",
+            "indoor": true,
+            "id": "3493"
+          },
+          "competitors": [
+            {
+              "id": "18",
+              "homeAway": "home",
+              "team": {
+                "abbreviation": "NO"
+              }
+            },
+            {
+              "id": "1",
+              "homeAway": "away",
+              "team": {
+                "abbreviation": "ATL"
+              }
+            }
+          ],
+          "odds": [
+            {
+              "provider": {
+                "id": "100",
+                "name": "DraftKings"
+              },
+              "details": "NO -2.5",
+              "spread": -2.5,
+              "overUnder": 47.5,
+              "homeTeamOdds": {
+                "favorite": true
+              },
+              "awayTeamOdds": {
+                "favorite": false
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
