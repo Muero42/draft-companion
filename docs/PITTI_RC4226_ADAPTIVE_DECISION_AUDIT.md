@@ -170,3 +170,8 @@ Frozen configured prior-only weights; effective current individual weights zero 
   ]
 }
 ```
+
+## Exact-head CI correction
+
+Initial head604e1102 cloud Strict283/287: startup parser stopped at an assignment between static imports; release completeness/package manifest/service-worker count guards still assumed17 runtime/16 static files. Corrected import ordering and all canonical package/cache counts to18/17 while preserving every byte-parity/offline/atomic-install assertion. New engine must be present in package and offline cache. No algorithm or eligibility assertion weakened. Focused startup/package/release/cache/workflow regressions pass. Historical17-file receipts remain frozen.
+
