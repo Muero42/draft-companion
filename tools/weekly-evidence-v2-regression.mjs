@@ -10,7 +10,7 @@ const workerSource=fs.readFileSync(new URL('../_worker.js',import.meta.url),'utf
 const evidenceSource=fs.readFileSync(new URL('../weekly-evidence-v2.js',import.meta.url),'utf8');
 assert(!/projections\?[^`'"\n]*scoring=HALF/.test(appSource+workerSource),'NFL projections must never reintroduce the unsupported scoring=HALF request parameter');
 assert(!/projections\?[^`'"\n]*ros=false/.test(appSource+workerSource+evidenceSource),'weekly FantasyPros projection requests and source URLs must omit ros');
-assert.deepEqual(evidence.WEEKLY_HALF_PPR_MAX,{QB:80,RB:70,WR:70,TE:70,DST:60},'canonical weekly Half-PPR safety ceilings must remain intact');
+assert.deepEqual(evidence.WEEKLY_HALF_PPR_MAX,{QB:80,RB:70,WR:70,TE:70,K:40,DST:60},'canonical weekly Half-PPR safety ceilings must remain intact');
 const counts={QB:24,RB:60,WR:70,TE:24},players={},payloads={};
 let id=1;
 for(const [position,count] of Object.entries(counts)){
@@ -300,18 +300,19 @@ const subThresholdMapping=structuredClone(rc4201Physical);
 for(let i=0;i<3;i++){subThresholdMapping.QB.providerPayload.players[i].fpid=`unmapped-${i}`;subThresholdMapping.QB.providerPayload.players[i].name=`Unknown QB ${i}`;}
 const mappingPurged=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:subThresholdMapping,sleeperPlayers:players,priorSnapshot:retrievalSnapshot,verifiedAt:now+1000});
 const mappingDiagnostics=mappingPurged.lanes.projections.coverage.positions.QB;
-assert.equal(mappingDiagnostics.responseClassification,'DEFINITIVE_REJECTION');
+assert.equal(mappingDiagnostics.responseClassification,'CURRENT_ACCEPTED');
 assert.equal(mappingDiagnostics.reason,'INSUFFICIENT_MAPPING_COVERAGE');
 assert.equal(mappingDiagnostics.mappedRows,21);
-assert.equal(mappingDiagnostics.consumerUsableRecords,0);
+assert.equal(mappingDiagnostics.consumerUsableRecords,21);
 assert.equal(mappingPurged.lanes.projections.coverage.positions.RB.status,'AVAILABLE');
 assert.equal(mappingPurged.lanes.projections.status,'PARTIAL');
-assert.equal(mappingPurged.records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,0,'sub-threshold mapping must purge both fresh and prior QB projections');
+assert.equal(mappingPurged.records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,21,'partial mapping preserves exactly independently verified fresh rows');
 const mappingPriorPlayer=retrievalSnapshot.records.find(row=>row.metric==='projected_points'&&row.position==='QB').playerId;
-assert.notEqual(context.pick(mappingPurged.records,mappingPriorPlayer,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED','consumer must not return a mapped row from a definitively rejected position');
+assert.notEqual(context.pick(mappingPurged.records,mappingPriorPlayer,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED','an unmapped current player must never borrow a prior row');
+assert.equal(context.pick(mappingPurged.records,mappingPurged.records.find(r=>r.position==='QB').playerId,'projected_points',{season,week,scoring:'HALF_PPR'},now+1000).status,'VERIFIED','individually verified partial rows remain usable');
 const mappingPersisted=new Map(),mappingStore={setItem:(key,value)=>mappingPersisted.set(key,value),getItem:key=>mappingPersisted.get(key)??null,removeItem:key=>mappingPersisted.delete(key)};
 evidence.atomicWrite(mappingStore,mappingPurged);
-assert.equal(JSON.parse(mappingPersisted.get(evidence.CACHE_KEY)).records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,0);
+assert.equal(JSON.parse(mappingPersisted.get(evidence.CACHE_KEY)).records.filter(row=>row.metric==='projected_points'&&row.position==='QB').length,21);
 const transientMixed=structuredClone(rc4201Physical);delete transientMixed.QB;
 const carried=evidence.buildSnapshot({season,week,scoring:'HALF_PPR',projectionPayloads:transientMixed,sleeperPlayers:players,priorSnapshot:retrievalSnapshot,verifiedAt:now+1000});
 assert.equal(carried.lanes.projections.coverage.positions.QB.responseClassification,'ABSENT_TRANSIENT');

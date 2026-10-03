@@ -12,7 +12,7 @@ function source(name){
   throw Error(name);
 }
 const now=Date.parse('2026-09-30T12:00:00Z'),players={},payloads={};
-for(const [position,count] of Object.entries({QB:24,RB:60,WR:70,TE:24})){
+for(const [position,count] of Object.entries({QB:24,RB:60,WR:70,TE:24,K:20,DST:20})){
   const rows=Array.from({length:count},(_,i)=>{const id=position+i;players[id]={full_name:id,position,team:'BUF',fantasy_data_id:Object.keys(players).length+1000};return{fpid:players[id].fantasy_data_id,name:id,position_id:position,team_id:'BUF',stats:{points_half:i===0?10:25}};});
   payloads[position]={season:2026,week:3,positions:position,scoring:'STD',updated:'2026-09-30',players:rows};
 }
@@ -26,7 +26,7 @@ let reportedWeek=3,failProjections=false,staleRanks=false,requests=[],observedWe
 class Clock extends Date{static now(){return now;}}
 const sandbox={Date:Clock,console,URL,Number,String,Array,Object,Math,Promise,Map,Set,
   PittiWeeklyEvidenceV2:weekly,PittiLineupStartSitV2:lineup,
-  WEEKLY_PROJECTION_POSITIONS:['QB','RB','WR','TE'],SEASON_RANKING_AUTO_MS:10800000,SEASON_RANKING_RETRY_MS:2700000,
+  WEEKLY_PROJECTION_POSITIONS:['QB','RB','WR','TE'],SEASON_PROJECTION_POSITIONS:['QB','RB','WR','TE','K','DST'],SEASON_RANKING_AUTO_MS:10800000,SEASON_RANKING_RETRY_MS:2700000,
   seasonRankingRefreshBusy:false,localStorage:storage,store:{get:(k,f)=>cache.get(k)??f,set:(k,v)=>{cache.set(k,v);return true;}},
   els:{season:{value:'2026'},scoring:{value:'HALF'},seasonRefreshEvidenceBtn:{},seasonRankingStatus:{}},navigator:{onLine:true},
   lastDraftContext:{season,players},S:'https://api.sleeper.app/v1',
@@ -38,7 +38,7 @@ const sandbox={Date:Clock,console,URL,Number,String,Array,Object,Math,Promise,Ma
   queueSeasonRerender:()=>observedWeeks.push(season.current_nfl_week),
   BOONE_TRADE_VALUE_CACHE_KEY:'trade',adaptBooneTradeEvidence:()=>({available:false,values:{}}),SLEEPER_NON_STARTER_SLOTS:new Set(['BN','IR','TAXI'])
 };sandbox.globalThis=sandbox;vm.createContext(sandbox);
-for(const name of ['deriveSleeperNflWeek','currentSleeperNflWeek','isTransientSleeperNflStateError','deriveSleeperLeagueWeekFallback','refreshSeasonRankings','seasonEvidenceContext','seasonEvidenceValue','seasonEvidenceCache','seasonWeeklyMetric','seasonWeeklyEvidenceValueMap','seasonSlotEligible','tradeStarterSlots','tradeBestLineup','seasonLiveAuthority','seasonRosterAuthority','seasonLegalDrop','seasonProjectionLineup','seasonAcquisitionDecision'])vm.runInContext(source(name),sandbox);
+for(const name of ['deriveSleeperNflWeek','currentSleeperNflWeek','isTransientSleeperNflStateError','deriveSleeperLeagueWeekFallback','refreshSeasonGameContext','refreshSeasonRankings','seasonEvidenceContext','seasonEvidenceValue','seasonEvidenceCache','seasonWeeklyMetric','seasonWeeklyEvidenceValueMap','seasonSlotEligible','tradeStarterSlots','tradeBestLineup','seasonLiveAuthority','seasonRosterAuthority','seasonLegalDrop','seasonProjectionLineup','seasonAcquisitionDecision'])vm.runInContext(source(name),sandbox);
 const initial=await sandbox.refreshSeasonRankings({auto:true});assert.equal(initial.ok,true);
 const week3=cache.get(weekly.CACHE_KEY);assert.equal(week3.week,3);assert.equal(week3.lanes.projections.status,'AVAILABLE');
 requests=[];const same=await sandbox.refreshSeasonRankings({auto:true});assert.equal(same.skipped,'fresh');assert.equal(requests.length,0);assert.equal(season.current_nfl_week,3,'never infer Week 4 from calendar date');
@@ -47,7 +47,7 @@ const rollover=await sandbox.refreshSeasonRankings({auto:true,trigger:'resume'})
 assert.equal(rollover.ok,true);assert.notEqual(rollover.skipped,'fresh','fresh Week 3 must not suppress authoritative Week 4 refresh');
 assert.equal(season.current_nfl_week,4);const week4=cache.get(weekly.CACHE_KEY);
 assert.equal(week4.lanes.expertWeeklyRanks.status,'UNAVAILABLE','provider Week-3 ranks cannot be relabeled as Week 4');assert.equal(week4.week,4);assert(week4.records.length>0&&week4.records.every(r=>r.week===4));
-assert.equal(requests.filter(p=>p.includes('/projections?week=4')).length,4);
+assert.equal(requests.filter(p=>p.includes('/projections?week=4')).length,6);
 assert.equal(weekly.validateSnapshot(week3,{season:2026,week:4,scoring:'HALF_PPR'},now).ok,false);
 assert.equal(sandbox.seasonWeeklyMetric(target.p,'projected_points').week,4);
 const values=sandbox.seasonWeeklyEvidenceValueMap(rows,season,4,now);

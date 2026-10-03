@@ -19,7 +19,7 @@ const rb=p('rb','RB'),wr=p('wr','WR'),extra=p('extra','WR'),fa=p('fa','RB'),mine
 let season=own(mine);s.lastDraftContext.season=season;evidence([...mine,fa],[5,20,19,30]);
 await test('explicit lineup context survives another loaded league',()=>{s.lastDraftContext.season=own([],[],['QB']);assert.equal(s.seasonProjectionLineup(mine,season).score,25);s.lastDraftContext.season=season;});
 s.lastDraftContext.season=season;
-await test('initial weekly strip uses supplied week rather than old context',()=>{cache.set('v190_seasonEvidence',[rec(rb,'projected_points',17),rec(rb,'weekly_rank',3)]);s.lastDraftContext.season={...season,transaction_round:1};assert.match(s.seasonWeeklyStrip(rb.p,season),/W2 RB 3.*17 Pkt/);});
+await test('initial weekly strip uses supplied week rather than old context',()=>{cache.set('v190_seasonEvidence',[rec(rb,'projected_points',17),rec(rb,'weekly_rank',3)]);s.lastDraftContext.season={...season,transaction_round:1};const strip=s.seasonWeeklyStrip(rb.p,season);assert.match(strip,/Proj.: 17.00 Half-PPR/);assert.match(strip,/W2 Pos.-Rang: #3 PITTI/);assert(!strip.includes('W1 Pos.-Rang'),'supplied context must override old loaded week');});
 s.lastDraftContext.season=season;evidence([...mine,fa],[5,20,19,30]);
 await test('no mandatory DST in geometry means no future DST drop',()=>assert.equal(s.seasonAcquisitionDecision(extra,fa,mine,season).secondDrop,null));
 await test('unowned drop cannot authorize a FA acquisition',()=>assert.equal(s.seasonAcquisitionDecision(extra,fa,mine,own([rb,wr])).action,'HOLD'));

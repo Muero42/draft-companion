@@ -1,0 +1,19 @@
+{
+  "index.html": "e423b1d4649c56e2f400a8167e5e2c03eb8e3046",
+  "app.js": "323d39121b144adfb2e9c9dde23a7a1fcf268b11",
+  "decision-policy.js": "d2e2f58b020e3c5c3f4c42c717677a4e81f0833a",
+  "weekly-evidence-v2.js": "28b0bacb187575c834c2ab9cc83f1a9a57c5d1c6",
+  "lineup-start-sit-v2.js": "bc75e25175d99c33804b6976f95153e5ba83e570",
+  "game-context-v1.js": "e3c116ef154fb8f1d6dbb21fa56f1bc7a02e9f3b",
+  "boone-trade-values-v1.mjs": "0f517562a594f8362fa64e024a53e378d377cbac",
+  "styles.css": "7e3fcb4c68fab527d155eea29d73e395a4a0fdcc",
+  "manifest.webmanifest": "78b0290687a82d97efe61c2083e91dced5a338e9",
+  "sw.js": "1c19835f055446535c256ceb237a4007a3245f16",
+  "_worker.js": "0cc87f812bc110c3d6eee8461c765ef1a6828157",
+  "icon.svg": "14c9ef925901ed72ed38f30a512157e2d8c67f51",
+  "live-surface-v3.js": "f2b718382d9d36ef38cfeb281e7348ba337c459e",
+  "live-surface-v3.css": "46fc61478d7fc3e8170c6296101038a5fd184028",
+  "expert-board-export.js": "86f9ab6deac3729328ae3506d6d04f940b733e90",
+  "expert-v2-board.js": "6920163c56e93306f9ab49ae7619ade724703830",
+  "expert-v3-board.js": "b8e869f5384e5dc2a0f353e632ecfabf7958debd"
+}

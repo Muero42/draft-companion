@@ -8,10 +8,10 @@ import {RUNTIME_FILES} from './runtime-files.mjs';
 
 const app=fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n');
 const source=name=>{const i=app.indexOf('function '+name+'(');assert(i>=0,name);return app.slice(i,app.indexOf('\nfunction ',i+1));};
-// Frozen baseline from canonical 5fd246dd5ac2cab6780926817247a14a53261d32.
-// Lineup semantics remain frozen; RC4.220 deliberately changes trade admission.
+// RC4.222 reviewed lineup boundary: unavailable OUT bench assets no longer
+// poison unrelated weekly comparisons; valid injury-tagged projections remain.
 // Compare cache adapters using the same current decision model.
-for(const [name,hash] of Object.entries({seasonProjectionLineup:'228ad5a9558e6bd3e5303439ca9e1d0a2252d3fdde86d1c6dcd6cb052e0723c0'}))assert.equal(crypto.createHash('sha256').update(source(name)).digest('hex'),hash,name+' semantic source unchanged');
+for(const [name,hash] of Object.entries({seasonProjectionLineup:'ee0986be93f72aca4744987fd23028a680c0b9a3613c5bdb125d24fe3e51458e'}))assert.equal(crypto.createHash('sha256').update(source(name)).digest('hex'),hash,name+' semantic source unchanged');
 const oldCache=`function seasonEvidenceCache(){
   const legacy=store.get('v190_seasonEvidence',[]),weekly=store.get(globalThis.PittiWeeklyEvidenceV2?.CACHE_KEY||'pitti.weekly-evidence.v2.current',null),trade=store.get(BOONE_TRADE_VALUE_CACHE_KEY,null),context=seasonEvidenceContext();
   const usable=globalThis.PittiWeeklyEvidenceV2?.validateSnapshot?.(weekly,context,Date.now())?.ok===true?weekly.records:[];
@@ -49,6 +49,8 @@ let parity=0;
 const compare=f=>{const before=execute(f,true),after=execute(f);assert.deepEqual(after.result,before.result,'all decision fields including acceptance must match');parity++;return after.result;};
 const valid=fixture(),pass=compare(valid);
 assert.equal(pass.actionable,true);assert.equal(pass.ourGain,14);assert.equal(pass.opponentGain,14);assert.equal(pass.giveValue,20);assert.equal(pass.getValue,20);assert.equal(pass.acceptance.heuristic,true);
+for(const injury of ['Out','Questionable',null]){const f=fixture(),extra={p:{id:'unprojected',name:'Unprojected bench',pos:'WR',injury},pk:{pick_no:999},seasonStatus:'ACTIVE'};f.mine.push(extra);f.season.my_roster.players.push(extra.p.id);f.season.ownership[extra.p.id]={roster_id:1,status:'ACTIVE'};const result=compare(f);if(injury==='Out')assert.equal(result.actionable,true,'verified OUT without projection is excluded only from weekly lineup math');else assert.equal(result.status,'UNAVAILABLE','unknown availability never becomes an invented zero');}
+{const f=fixture();f.mine[0].p.injury='Out';const withProjection=compare(f);assert.equal(withProjection.ourGain,14,'a valid provider projection survives an OUT tag');}
 for(const value of [17,16.99]){const f=fixture();f.snapshot.records.find(r=>r.playerId==='WR1').value=value;const r=compare(f);assert.equal(r.actionable,true,'market deviation is continuous, not a 15% hard gate');}
 for(const phase of [0,1,2]){const f=fixture();f.season.transaction_round=phase;f.give[0].pk.pick_no=55;f.get[0].pk.pick_no=4;f.get[0].pk.picked_by='fixture-opponent';f.get[0].pk.player_id=f.get[0].p.id;f.season.league_rosters[1].owner_id='fixture-opponent';const r=compare(f);if(!phase)assert.equal(r.status,'DRAFT_PREFERENCE_UNRESOLVED');else assert.equal(r.revealedPreferencePenalty,12);}
 {const f=fixture();f.projections.find(r=>r.playerId==='RB2').value=1;assert.equal(compare(f).actionable,false,'market values alone cannot create projected lineup gain');}
@@ -63,5 +65,5 @@ assert.equal(adaptBooneTradeEvidence,diagnosticAdapter,'one shared source contra
 assert.equal(adaptBooneTradeEvidence(snapshot,{season:2026,week:2,scoring:'HALF_PPR'},now).secondarySourceGate,PEAKED_GATE);
 assert.equal(RUNTIME_FILES.length,17);assert(!RUNTIME_FILES.includes('trade-boone-source-contract-v1.mjs'));
 const runtime=fs.readFileSync('boone-trade-values-v1.mjs','utf8');assert(!runtime.includes("from './trade-team-needs-v2.js'"));assert(!app.includes('evaluateBooneTradeOffer'));
-assert(app.includes("APP_VERSION='v11.8.0-rc4.221'"));
+assert(app.includes("APP_VERSION='v11.8.0-rc4.222'"));
 console.log(`BOONE_PRODUCTION_PARITY_PASS ${parity} equal decisions; strict evidence negatives; 17 runtime files; cache adapter parity; deliberate RC4220 model`);
