@@ -7,12 +7,13 @@ const packageTool=fs.readFileSync('tools/package-reextract.mjs','utf8');
 const block=packageTool.match(/const files=\[([^\]]+)\];/)?.[1]||'';
 const packageFiles=[...block.matchAll(/'([^']+)'/g)].map(m=>m[1]);
 
-assert.equal(RUNTIME_FILES.length,17,'canonical runtime manifest must remain 17 files');
+assert.equal(RUNTIME_FILES.length,18,'canonical runtime manifest must contain all 18 runtime files');
 assert.deepEqual(packageFiles,[...RUNTIME_FILES],'package-reextract must match canonical runtime manifest exactly');
+assert(RUNTIME_FILES.includes('season-decision-engine-v1.mjs'),'adaptive Season engine must be packaged');
 assert(RUNTIME_FILES.includes('lineup-start-sit-v2.js'),'Start/Sit optimizer must be packaged');
 assert(RUNTIME_FILES.includes('game-context-v1.js'),'game-context adapter must be packaged');
 assert(workflow.includes("import {RUNTIME_FILES} from './tools/runtime-files.mjs'"),'candidate package workflow must consume canonical runtime manifest');
-assert(workflow.includes('test "${#RUNTIME_FILES[@]}" -eq 17'),'candidate package workflow must guard the canonical count');
+assert(workflow.includes('test "${#RUNTIME_FILES[@]}" -eq 18'),'candidate package workflow must guard the canonical count');
 assert(workflow.includes('cp "${RUNTIME_FILES[@]}" dist/runtime/'),'candidate package workflow must stage the canonical manifest');
 assert(workflow.includes('cmp -s "$file" "dist/reextract/$file"'),'candidate package workflow must byte-compare every re-extracted runtime file');
 assert(!workflow.includes('test "$(unzip -Z1 "dist/$PKG" | wc -l)" -eq 15'),'stale 15-file candidate package assertion must not return');

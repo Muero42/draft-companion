@@ -23,3 +23,55 @@ PR227 merged d01f021ef2802df2467618412476cb26d8a05818; reviewed c8e3ade87f6b35f2
 ## Proven corrective candidate
 
 After PR227 promotion, adversarial malformed-local-cache input reproduced `snapshot.records.find is not a function`. Optional cache validation must precede record access. The correction checks the whole snapshot first and rejects null/non-object records; invalid optional input omits MATCHUP and preserves Kader. Focused malformed-record regressions preserve all earlier positives. Service-worker shell cache revision v2 ensures the same-version correction is acquired normally. No projection/optimizer/source-acquisition change; no repeat visual cycle. Initial PR227 receipts/runtime blobs remain retained separately. Exact-head corrective cloud validation required before promotion.
+
+## Production reconciliation
+
+PR228 merged c4f067a0ee9acb0d91f46ac6f9e116d073d2f915; reviewed e22a9ee019d06d85391065339e54f9e5b37d19c9; tree f793be8d6d5c309e7fd4a9379ac756c99dd3cbbd is identical. Deployment 35251d85-b2d5-4684-b737-dcfa0bd9e620. Exact-head premerge 5/5 and canonical postmerge 8/8 SUCCESS; cloud Strict 280/280 PASS before and after merge, browser PASS. 16 static files match normalized UTF8/LF. Production WR endpoint VERIFIED for 32 teams, direct WR/CB UNAVAILABLE. CLE9 / Judkins18.6 FINAL verified read-only; Week4 receiving0.5. Focused regressions and adversarial 21/21 pass; no optimizer/acquisition changes. Current v301 Authority remains a local unpublished commit; canonical CI does not certify that future commit. ANDROID UI ACCEPTANCE PENDING; next action is one real Android Kader review. Historical rc4223 core PASS preserved.
+
+## Published file inventory
+
+41 files across PR227 and corrective PR228, including the carried-forward local v297 Authority reconciliation. Runtime changes are app.js, styles.css, index.html, _worker.js, sw.js and manifest.webmanifest; the other eleven runtime files are unchanged.
+
+- HANDOFF_COMPLETENESS_MATRIX.md
+- NEW_CHAT_HANDOFF_CURRENT.md
+- PITTI_AUTO_PREFLIGHT.md
+- PITTI_COMMAND_CONTRACTS.json
+- PITTI_CURRENT_STATE.json
+- PITTI_EXECUTION_LOCK.json
+- PITTI_HANDOFF_SEAL.json
+- PITTI_NEW_CHAT_BOOTSTRAP.md
+- PITTI_PROJECT_STATE.md
+- README.md
+- _worker.js
+- app.js
+- docs/PITTI_RC4216_DECISION_QUALITY.md
+- docs/PITTI_RC4224_PRODUCTION_RECEIPT.json
+- docs/PITTI_RC4224_ROSTER_SURFACE_AUDIT.md
+- docs/PITTI_RC4225_PRODUCTION_RECEIPT.json
+- docs/PITTI_RC4225_ROSTER_SURFACE_AUDIT.md
+- index.html
+- manifest.webmanifest
+- styles.css
+- sw.js
+- tools/fixtures/rc4224/authority-digests.json
+- tools/fixtures/rc4225/authority-digests.json
+- tools/fixtures/rc4225/initial-runtime-blobs.json
+- tools/fixtures/rc4225/runtime-blobs.json
+- tools/fixtures/rc4225/wr-calendar.html
+- tools/handoff-seal-reseal.mjs
+- tools/pitti_guardrail_check.mjs
+- tools/postmerge-authority-contract.mjs
+- tools/postmerge-authority-regression.mjs
+- tools/rc4224-authority.mjs
+- tools/rc4225-authority.mjs
+- tools/season-boone-production-parity-regression.mjs
+- tools/season-browser-review.mjs
+- tools/season-lineup-evidence-status-regression.mjs
+- tools/season-live-refresh-regression.mjs
+- tools/season-player-directory-regression.mjs
+- tools/season-rc4219-adversarial-regression.mjs
+- tools/season-rc4223-eligibility-regression.mjs
+- tools/season-rc4224-roster-presentation-regression.mjs
+- tools/season-rc4225-roster-refinement-regression.mjs
+
+The v299 reconciliation was prepared in the worktree and carried into v300; no separate v299 commit was made. Final v301 is a local Authority commit, not certified by historical runtime CI.

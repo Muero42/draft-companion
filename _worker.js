@@ -7,6 +7,7 @@ export default {
   async fetch(request, env) {
     const url=new URL(request.url);
     if(url.pathname==='/api/season-players') return handleSeasonPlayers(request);
+    if(url.pathname==='/api/season-decision-sources') return handleSeasonDecisionSources(request,url);
     if(url.pathname==='/api/fantasypros') return handleFantasyPros(request,url);
     if(url.pathname==='/api/sleeper-adp') return handleSleeperAdp(request,url);
     if(url.pathname==='/api/fp-expert-directory') return handleFpExpertDirectory(request,url);
@@ -735,6 +736,40 @@ async function handleExpertRanking(request,url){
   }
 
   return json({error:`${name}: keine ausreichend vollständige automatische Overall-Quelle. ${attempts.filter(Boolean).join(' | ')}`},404);
+}
+
+function decisionCsv(text,filters={},fields=null){
+  if(typeof text!=='string'||text.length>5*1024*1024)throw Error('CSV_SIZE');
+  const rows=[];let row=[],cell='',quoted=false;for(let i=0;i<text.length;i++){const c=text[i];if(c==='"'){if(quoted&&text[i+1]==='"'){cell+='"';i++;}else quoted=!quoted;}else if(c===','&&!quoted){row.push(cell);cell='';}else if(c==='\n'&&!quoted){row.push(cell.replace(/\r$/,''));rows.push(row);row=[];cell='';}else cell+=c;}if(quoted)throw Error('CSV_QUOTES');if(cell||row.length){row.push(cell.replace(/\r$/,''));rows.push(row);}const keys=rows.shift();if(!keys||new Set(keys).size!==keys.length)throw Error('CSV_HEADER');const tests=Object.entries(filters).map(([key,value])=>[keys.indexOf(key),value]);if(tests.some(([i])=>i<0))throw Error('CSV_REQUIRED_FIELD');const selected=keys.map((k,i)=>[k,i]).filter(([k])=>!fields||fields.includes(k));return rows.filter(r=>r.length===keys.length&&tests.every(([i,v])=>v instanceof Set?v.has(r[i]):r[i]===String(v))).map(r=>Object.fromEntries(selected.map(([k,i])=>[k,r[i]])));
+}
+function decisionNumber(value){return value!==''&&value!==null&&value!==undefined&&value!=='NA'&&Number.isFinite(Number(value))?Number(value):null;}
+function parseDecisionUsage(statsText,idText,scheduleText,season,week,now=Date.now()){
+  const schedules=decisionCsv(scheduleText,{season,game_type:'REG'},['game_id','season','game_type','week','home_score','away_score','result','gameday','gametime']),stats=decisionCsv(statsText,{season,season_type:'REG'},['season','week','player_id','game_id','position','team','attempts','carries','targets','target_share','receptions','receiving_air_yards','air_yards_share','wopr','receiving_first_downs','fantasy_points_ppr','passing_tds','rushing_tds','receiving_tds']).filter(r=>r.player_id&&r.game_id),ids=decisionCsv(idText,{gsis_id:new Set(stats.map(r=>r.player_id))},['gsis_id','sleeper_id']);
+  if(schedules.length<250||stats.length<100||!stats.every(r=>r.player_id&&r.game_id)||!ids.some(r=>r.gsis_id&&r.sleeper_id))throw Error('USAGE_SOURCE_COVERAGE');
+  const byGsis=new Map(),bySleeper=new Map(),badGsis=new Set(),badSleeper=new Set();for(const r of ids){if(!/^00-\d+$/.test(r.gsis_id||'')||!/^\d+$/.test(r.sleeper_id||''))continue;const old=byGsis.get(r.gsis_id),rev=bySleeper.get(r.sleeper_id);if((old&&old!==r.sleeper_id)||(rev&&rev!==r.gsis_id)||badGsis.has(r.gsis_id)||badSleeper.has(r.sleeper_id)){badGsis.add(r.gsis_id);badSleeper.add(r.sleeper_id);byGsis.set(r.gsis_id,null);bySleeper.set(r.sleeper_id,null);}else{byGsis.set(r.gsis_id,r.sleeper_id);bySleeper.set(r.sleeper_id,r.gsis_id);}}
+  const schedule=new Map(schedules.map(g=>[g.game_id,g])),completedWeeks=[];
+  // Scores/result are populated by the schedule provider only after completion.
+  // Eight hours after an EST-bound kickoff is conservative in both EST and EDT.
+  const complete=g=>g&&decisionNumber(g.home_score)!==null&&decisionNumber(g.away_score)!==null&&decisionNumber(g.result)!==null&&Date.parse(g.gameday+'T'+g.gametime+'-05:00')+8*3600000<=now;
+  for(let w=1;w<week;w++){const games=schedules.filter(g=>Number(g.week)===w);if(games.length>=12&&games.every(complete))completedWeeks.push(w);else break;}
+  const teamCarries=new Map();for(const r of stats){const key=r.game_id+'|'+r.team;const n=decisionNumber(r.carries);if(n!==null)teamCarries.set(key,(teamCarries.get(key)||0)+n);}
+  const records=[];for(const r of stats){if(!['QB','RB','WR','TE'].includes(r.position))continue;const g=schedule.get(r.game_id),playerId=byGsis.get(r.player_id),w=Number(r.week);if(!playerId||bySleeper.get(playerId)!==r.player_id||!g||Number(g.week)!==w||w>=week||!complete(g))continue;const carries=decisionNumber(r.carries),targetShare=decisionNumber(r.target_share),airYardsShare=decisionNumber(r.air_yards_share),fp=decisionNumber(r.fantasy_points_ppr),receptions=decisionNumber(r.receptions);if(targetShare!==null&&(targetShare<0||targetShare>1)||airYardsShare!==null&&(airYardsShare<0||airYardsShare>2))continue;
+    records.push({playerId,gsisId:r.player_id,position:r.position,team:canonicalNflTeam(r.team),season,week:w,gameId:r.game_id,completed:true,completedAt:Date.parse(g.gameday+'T'+g.gametime+'-05:00')+8*3600000,attempts:decisionNumber(r.attempts),carries,carryShare:carries!==null&&teamCarries.get(r.game_id+'|'+r.team)>0?carries/teamCarries.get(r.game_id+'|'+r.team):null,targets:decisionNumber(r.targets),targetShare,receptions,receivingAirYards:decisionNumber(r.receiving_air_yards),airYardsShare,wopr:decisionNumber(r.wopr),receivingFirstDowns:decisionNumber(r.receiving_first_downs),fantasyHalf:fp!==null&&receptions!==null?fp-.5*receptions:null,tdPoints:[r.passing_tds,r.rushing_tds,r.receiving_tds].every(x=>decisionNumber(x)!==null)?4*Number(r.passing_tds)+6*(Number(r.rushing_tds)+Number(r.receiving_tds)):null,tds:[r.passing_tds,r.rushing_tds,r.receiving_tds].every(x=>decisionNumber(x)!==null)?Number(r.passing_tds)+Number(r.rushing_tds)+Number(r.receiving_tds):null});}
+  if(records.length<100)throw Error('USAGE_ID_MAPPING_COVERAGE');return{schema:'pitti.current-usage.v1',status:'VERIFIED',season,verifiedAt:now,sourceUrl:'https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_'+season+'.csv',identitySource:'https://raw.githubusercontent.com/dynastyprocess/data/master/files/db_playerids.csv',identityMethod:'UNIQUE_GSIS_SLEEPER_CROSSWALK',completedWeeks,records};
+}
+function parseDecisionExperts(html,position,season,week,now=Date.now()){
+  const match=html.match(/var expertGroupsData = (.*?);/),j=match?JSON.parse(match[1]):null;
+  if(j?.sport!=='NFL'||Number(j.season)!==season||j.type!=='weekly'||j.position!==position||Number(j.accuracy_weekly_last_season)!==season-1||!Array.isArray(j.expert_data))throw Error('EXPERT_DIRECTORY_CONTEXT');
+  // Accuracy scope is declared separately from current ranking timestamps. A ranking
+  // update must never masquerade as an accuracy-ledger update timestamp.
+  const experts=j.expert_data.filter(e=>Number.isInteger(Number(e.id))&&e.name&&Number(e.id)>0).map(e=>({id:String(e.id),name:e.name,sourceUpdatedAt:Number(e.last_updated)*1000,priorPositionRank:Number.isInteger(Number(e.in_season_ly_pos_rank))&&Number(e.in_season_ly_pos_rank)>0?Number(e.in_season_ly_pos_rank):null,priorSourceUrl:'https://www.fantasypros.com/nfl/accuracy/?year='+(season-1),currentOrdinalReference:Number(e.in_season_pos_rank)||null,currentOrdinalCompletedThrough:Number(j.accuracy_weekly_week)||null,accuracyUpdatedAt:null,accuracyStatus:'PUBLISHED_ORDINAL_REFERENCE_ONLY_TIMESTAMP_UNPROVEN'}));
+  if(experts.length<30||new Set(experts.map(e=>e.id)).size!==experts.length||new Set(experts.map(e=>e.name)).size!==experts.length)throw Error('EXPERT_DIRECTORY_COVERAGE');return{position,season,week,verifiedAt:now,experts};
+}
+async function handleSeasonDecisionSources(request,url){
+  if(request.method!=='GET')return json({error:'GET only'},405);const season=Number(url.searchParams.get('season')),week=Number(url.searchParams.get('week'));if(!Number.isInteger(season)||season<2026||season>2100||!Number.isInteger(week)||week<1||week>18)return json({error:'Invalid context'},400);
+  const now=Date.now(),failures={},directories={};let usage=null;const read=async url=>{const r=await fetch(url,{signal:AbortSignal.timeout(9000),cf:{cacheTtl:3600,cacheEverything:true}});if(!r.ok)throw Error('HTTP_'+r.status);return boundedText(r,5*1024*1024);};
+  await Promise.all([Promise.all([read('https://github.com/nflverse/nflverse-data/releases/download/stats_player/stats_player_week_'+season+'.csv'),read('https://raw.githubusercontent.com/dynastyprocess/data/master/files/db_playerids.csv'),read('https://github.com/nflverse/nflverse-data/releases/download/schedules/games.csv')]).then(([s,i,g])=>{usage=parseDecisionUsage(s,i,g,season,week,now);}).catch(()=>{failures.usage='SOURCE_OR_IDENTITY_UNAVAILABLE';}),...['QB','RB','WR','TE'].map(async position=>{const u='https://www.fantasypros.com/nfl/rankings/'+(position==='QB'?'qb':'half-point-ppr-'+position.toLowerCase())+'.php';try{directories[position]=parseDecisionExperts(await read(u),position,season,week,now);}catch{failures[position]='CURRENT_EXPERT_DIRECTORY_UNAVAILABLE';}})]);
+  return json({schema:'pitti.season-decision-sources.v1',season,week,verifiedAt:now,usage,directories,failures});
 }
 
 async function handleSeasonPlayers(request){

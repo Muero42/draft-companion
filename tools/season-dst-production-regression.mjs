@@ -36,5 +36,5 @@ season.league.roster_positions.push('BN');plan=s.seasonDstPlan(c,now);assert.equ
 cache.set('v190_seasonEvidence',evidence.map(r=>r.playerId==='free'&&r.week===4?{...r,value:10}:r));let d=s.seasonDstPlan(c,now).horizons[0].decisions[0];assert.equal(d.status,'ADD');assert.equal(d.capacity.drop.p.id,'old','current D/ST replaces only D/ST');
 cache.set('v190_gameContext',[]);assert(s.seasonDstPlan(c,now).horizons.every(h=>h.decisions[0].status==='MONITOR'));
 season.generated_at=now-300001;assert.equal(s.seasonDstPlan(c,now).live,false);assert(!s.renderSpecialTeamsBoard(now).includes('STASH ·'));
-assert.equal(RUNTIME_FILES.length,17);assert(RUNTIME_FILES.includes('app.js'));assert(!RUNTIME_FILES.includes('dst-k-season-stream.js'));assert(app.includes('return renderSeasonDstPlanner(c,now)'));
+assert.equal(RUNTIME_FILES.length,18);assert(RUNTIME_FILES.includes('app.js'));assert(!RUNTIME_FILES.includes('dst-k-season-stream.js'));assert(app.includes('return renderSeasonDstPlanner(c,now)'));
 console.log('SEASON_DST_PRODUCTION_PASS: shipped Week 4/5/6 planner, binding/freshness, ownership, protected capacity, thresholds, optional context isolation');

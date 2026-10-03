@@ -133,7 +133,8 @@ must(app.includes('function seasonTradeOfferWork(')&&app.includes('yield* season
 must(app.includes('acceptance:null')&&app.includes('result.ourUtility>.5&&score>=18&&credible')&&!app.includes('result.ourGain>0&&result.opponentGain>0')&&app.includes('heuristic:true')&&app.includes("Math.min(55"),'Trade acceptance must require verified PITTI utility and credible acceptance and remain conservative/explicitly heuristic');
 must(app.includes('Start/Sit · aktuelle Aufstellung geprüft'),'Start/Sit canonical-slot surface missing');
 must(app.includes('function weeklyLineupEvidence('),'weekly lineup evidence helper missing');
-must(app.includes('const result=optimizer?.evaluate?.({roster:active,evidence,week,slots,currentAssignments,now:Date.now()})'),'PITTI weekly-panel primary invariant missing');
+must(app.includes('let result=optimizer?.evaluate?.({roster:active,evidence,week,slots,currentAssignments,now:Date.now()})'),'PITTI weekly-panel baseline invariant missing');
+must(app.includes('result=decisionApi.decideLineup({roster:active,decisions,currentAssignments,legacy:result'), 'adaptive Start/Sit must preserve legal baseline');
 must(app.includes("const SPECIAL_TEAMS_W1_BASELINE_EXPIRES_AT=Date.parse('2026-09-08T12:00:00Z')"),'Special Teams Week-1 expiry boundary missing');
 must(app.includes('function historicalSpecialTeamsBaselineAllowed({week,now}={})')&&app.includes("typeof week==='number'&&Number.isInteger(week)&&week===1")&&app.includes('now<=SPECIAL_TEAMS_W1_BASELINE_EXPIRES_AT'),'Special Teams historical baseline temporal guard missing');
 must(app.includes('if(!historicalSpecialTeamsBaselineAllowed({week,now}))'),'Special Teams historical baseline must not be unconditional');
@@ -151,7 +152,7 @@ must(app.includes('filter(x=>x.rb&&x.rb.tier<=4)'),'valid historical Week-1 D/ST
 const runtimeFiles=text('tools/runtime-files.mjs');
 must(!runtimeFiles.includes("'dst-k-season-stream.js'")&&!runtimeFiles.includes("'season-evidence-layer.js'"),'retired dynamic Special Teams modules must remain outside runtime manifest');
 for(const file of ['index.html','sw.js'])for(const module of ['dst-k-season-stream.js','season-evidence-layer.js'])must(!text(file).includes(module),file+' must not reactivate '+module);
-must((runtimeFiles.match(/^\s*'[^']+',?$/gm)||[]).length===17,'canonical runtime manifest must remain exactly 17 files');
+must((runtimeFiles.match(/^\s*'[^']+',?$/gm)||[]).length===18,'canonical runtime manifest must contain all 18 files including adaptive Season engine');
 
 
 must(app.includes('function applyPlayerQualitySafetyGate('),'Value-Safety gate missing');
@@ -202,7 +203,7 @@ if(current.mode==='POST_DRAFT_SEASON_COMPANION'){
   must(bootstrap.includes(current.handoff_generation),'Season Companion BOOTSTRAP generation drift');
   must(handoffMatrix.includes(current.handoff_generation),'Season Companion MATRIX generation drift');
   must(currentHandoff.includes(current.handoff_generation),'Season Companion HANDOFF generation drift');
-  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194','v11.8.0-rc4.195','v11.8.0-rc4.196','v11.8.0-rc4.197','v11.8.0-rc4.198','v11.8.0-rc4.200','v11.8.0-rc4.201','v11.8.0-rc4.202','v11.8.0-rc4.203','v11.8.0-rc4.204','v11.8.0-rc4.205','v11.8.0-rc4.206','v11.8.0-rc4.207','v11.8.0-rc4.210','v11.8.0-rc4.211','v11.8.0-rc4.213','v11.8.0-rc4.214','v11.8.0-rc4.215','v11.8.0-rc4.216','v11.8.0-rc4.217','v11.8.0-rc4.218','v11.8.0-rc4.219','v11.8.0-rc4.220','v11.8.0-rc4.221','v11.8.0-rc4.222','v11.8.0-rc4.223','v11.8.0-rc4.224','v11.8.0-rc4.225'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
+  must(['v11.8.0-rc4.192','v11.8.0-rc4.193','v11.8.0-rc4.194','v11.8.0-rc4.195','v11.8.0-rc4.196','v11.8.0-rc4.197','v11.8.0-rc4.198','v11.8.0-rc4.200','v11.8.0-rc4.201','v11.8.0-rc4.202','v11.8.0-rc4.203','v11.8.0-rc4.204','v11.8.0-rc4.205','v11.8.0-rc4.206','v11.8.0-rc4.207','v11.8.0-rc4.210','v11.8.0-rc4.211','v11.8.0-rc4.213','v11.8.0-rc4.214','v11.8.0-rc4.215','v11.8.0-rc4.216','v11.8.0-rc4.217','v11.8.0-rc4.218','v11.8.0-rc4.219','v11.8.0-rc4.220','v11.8.0-rc4.221','v11.8.0-rc4.222','v11.8.0-rc4.223','v11.8.0-rc4.224','v11.8.0-rc4.225','v11.8.0-rc4.226'].includes(current.authority?.source_candidate),'Season Companion source candidate regression');
   must(commandContract.currentGate===AUTHORITY_GATE,'Season Companion command gate regression');
   must(lock.gate===AUTHORITY_GATE,'Season Companion lock gate regression');
   must(current.currentWork?.nextGate===AUTHORITY_GATE,'Season Companion CURRENT next gate regression');

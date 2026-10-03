@@ -1,3 +1,4 @@
+import * as runtime from '../season-decision-engine-v1.mjs';
 import fs from 'node:fs';import assert from 'node:assert/strict';
 const p=JSON.parse(fs.readFileSync('config/season-expert-phase-policy.json','utf8'));
 const app=fs.readFileSync('app.js','utf8'),selectedBlock=app.match(/const SEASON_WEEKLY_SELECTED_EXPERTS=({[^;]+});/)?.[1];
@@ -35,4 +36,4 @@ assert.equal(p.kicker.comparison_surface,'WAIVER_FA_ONLY');
 assert.equal(p.kicker.generic_skill_drop_pool,false);
 assert.equal(p.kicker.compare_only_against_available_kickers,true);
 assert.equal(p.kicker.current_roster_kicker_is_benchmark,true);
-console.log('SEASON_EXPERT_PHASE_POLICY_PASS');
+for(const pos of runtime.POSITIONS)assert.deepEqual(runtime.CORE[pos],p.core[pos]);for(let week=0;week<=18;week++)assert.equal(runtime.phaseForWeek(week),phaseForWeek(week));assert.equal(p.runtime_v1.draft_accuracy_weight,0);assert.equal(runtime.POLICY.movement,p.runtime_v1.completed_update_movement_bound);assert.equal(runtime.POLICY.maxWeight,p.runtime_v1.max_expert_weight);assert.equal(runtime.POLICY.priorWeeks,p.runtime_v1.prior_equivalent_weeks);assert.equal(p.runtime_v1.accuracy_method,runtime.POLICY.accuracyMethod);console.log('SEASON_EXPERT_PHASE_POLICY_PASS configuration and Runtime coupled');
