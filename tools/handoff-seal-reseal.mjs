@@ -7,6 +7,10 @@ if(seal.status!=='PASS'||seal.handoff_ready!==true||seal.second_pass_pass!==true
 if(seal.integrity_algorithm!=='git_blob_sha1'||seal.integrity_normalization!=='UTF8_LF_TEXT')throw new Error('unsupported seal convention');
 
 const additions=[
+  'tools/fixtures/rc4227/local-candidate.json',
+  'tools/season-rc4227-normal-acquisition-regression.mjs',
+  'tools/season-rc4227-acquisition-audit-regression.mjs',
+  'docs/PITTI_RC4227_ACQUISITION_CHECKPOINT.md',
   'docs/PITTI_RC4226_RELEASE_REPORT.md',
   'docs/PITTI_RC4226_PRODUCTION_RECEIPT.json',
   'season-decision-engine-v1.mjs',

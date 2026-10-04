@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 
 const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
+const acquisitionSource=app.slice(app.indexOf('let seasonDecisionSources='),app.indexOf('function seasonDecisionReadLearning('))+app.slice(app.indexOf('function seasonAcquisitionHttpReason('),app.indexOf('function seasonAcquisitionDirectory('))+sourceOf('diagnosticRetryAfter');
 function sourceOf(name,{async=false}={}){
   const marker=`${async?'async ':''}function ${name}(`,start=app.indexOf(marker);assert(start>=0,`${name} missing`);
   const brace=app.indexOf('){',start)+1;let depth=0;
@@ -19,7 +20,7 @@ async function run({projectionFailures={},rankFailures={},existingRetry=0,malfor
   const context={Date:{now:()=>1000},Number,String,Array,Object,Math,Promise,console,WEEKLY_PROJECTION_POSITIONS:positions,SEASON_PROJECTION_POSITIONS:[...positions,'K','DST'],SEASON_RANKING_AUTO_MS:1,SEASON_RANKING_RETRY_MS:1,seasonRankingRefreshBusy:false,store,els:{season:{value:'2026'},scoring:{value:'HALF'},seasonRefreshEvidenceBtn:{},seasonRankingStatus:{}},navigator:{onLine:true},lastDraftContext:{players:{},season:{}},localStorage:{},currentSleeperNflWeek:async()=>1,
     fpProxyRequest:async (path,options)=>{calls++;const position=new URLSearchParams(path.split('?')[1]).get('position'),isProjection=path.includes('/projections'),failure=isProjection?projectionFailures[position]:rankFailures[position];if(failure?.reject)throw Object.assign(new Error('malformed 429'),failure);if(failure)return{ok:false,status:failure.status,retryAfterMs:failure.retryAfterMs,data:null};if(isProjection&&position===malformedProjectionPosition){assert.equal(options?.preserveMalformed,true);return{ok:true,status:200,data:null,bodyState:'INVALID_JSON'}}return{ok:true,status:200,data:{},bodyState:'JSON'}},
     fetch:async()=>({ok:false,status:503,json:async()=>({})}),codedError:(code,message,status)=>Object.assign(new Error(message),{code,status}),persistSeasonWeeklyMetadata:(key,value)=>store.set(key,value),renderSeasonRankingFreshness:()=>{},queueSeasonRerender:()=>{},PittiWeeklyEvidenceV2:api};
-  context.globalThis=context;vm.createContext(context);vm.runInContext([sourceOf('persistSeasonProjectionRetryAfter'),sourceOf('refreshSeasonGameContext',{async:true}),sourceOf('refreshSeasonRankings',{async:true})].join('\n'),context);
+  context.globalThis=context;vm.createContext(context);vm.runInContext(acquisitionSource+'\n'+[sourceOf('persistSeasonProjectionRetryAfter'),sourceOf('refreshSeasonGameContext',{async:true}),sourceOf('refreshSeasonRankings',{async:true})].join('\n'),context);
   return{result:await context.refreshSeasonRankings({force:true}),cache,calls,writes,get capturedProjectionPayloads(){return capturedProjectionPayloads}};
 }
 

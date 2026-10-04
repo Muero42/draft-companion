@@ -37,7 +37,7 @@ const sandbox={Date:Clock,console,URL,Number,String,Array,Object,Math,Promise,Ma
   persistSeasonProjectionRetryAfter:()=>0,persistSeasonWeeklyMetadata:(k,v)=>cache.set(k,v),renderSeasonRankingFreshness:()=>{},
   queueSeasonRerender:()=>observedWeeks.push(season.current_nfl_week),
   BOONE_TRADE_VALUE_CACHE_KEY:'trade',adaptBooneTradeEvidence:()=>({available:false,values:{}}),SLEEPER_NON_STARTER_SLOTS:new Set(['BN','IR','TAXI'])
-};sandbox.globalThis=sandbox;vm.createContext(sandbox);
+};sandbox.globalThis=sandbox;vm.createContext(sandbox);vm.runInContext(app.slice(app.indexOf('let seasonDecisionSources='),app.indexOf('function seasonDecisionReadLearning('))+source('diagnosticRetryAfter')+source('seasonAcquisitionHttpReason'),sandbox);
 for(const name of ['deriveSleeperNflWeek','currentSleeperNflWeek','isTransientSleeperNflStateError','deriveSleeperLeagueWeekFallback','refreshSeasonGameContext','refreshSeasonRankings','seasonEvidenceContext','seasonEvidenceValue','seasonEvidenceCache','seasonWeeklyMetric','seasonWeeklyEvidenceValueMap','seasonCurrentWeekEligibility','seasonDstTeam','seasonSlotEligible','tradeStarterSlots','tradeBestLineup','seasonLiveAuthority','seasonRosterAuthority','seasonLegalDrop','seasonProjectionLineup','seasonAcquisitionDecision'])vm.runInContext(source(name),sandbox);
 const initial=await sandbox.refreshSeasonRankings({auto:true});assert.equal(initial.ok,true);
 const week3=weekly.decodeStorageSnapshot(cache.get(weekly.CACHE_KEY));assert.equal(week3.week,3);assert.equal(week3.lanes.projections.status,'AVAILABLE');

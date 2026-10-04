@@ -35,7 +35,7 @@ function harness({directoryResponse={ok:true,status:200,retryAfterMs:null,data:d
     Number,String,Array,Object,RegExp,Error,Promise,URL,Map,Set
   };
   context.globalThis=context;vm.createContext(context);
-  vm.runInContext(app.slice(start,end)+app.slice(parserStart,parserEnd)+';globalThis.__selectedAcquisition={consensusWeeklyExperts,exactRankingExpertMap,resolveSeasonWeeklyExpertIds,acquireSelectedWeeklyRankPayloads,SEASON_WEEKLY_SELECTED_EXPERTS};',context);
+  vm.runInContext(app.slice(start,end)+app.slice(parserStart,parserEnd)+app.slice(app.indexOf('let seasonDecisionSources='),app.indexOf('function seasonDecisionReadLearning('))+';globalThis.__selectedAcquisition={consensusWeeklyExperts,exactRankingExpertMap,resolveSeasonWeeklyExpertIds,acquireSelectedWeeklyRankPayloads,SEASON_WEEKLY_SELECTED_EXPERTS};',context);
   return{api:context.__selectedAcquisition,calls,get directoryCalls(){return directoryCalls},get selectedCalls(){return calls.filter(path=>path.includes('/consensus-rankings?'))}};
 }
 function broadIdentityPayloads(){

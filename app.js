@@ -236,6 +236,10 @@ function seasonRosterDecisionHealth(season,snapshot,now=Date.now()){
   return{healthy:reasons.length===0,reasons};
 }
 function seasonRosterContextHealthy(season,snapshot,now=Date.now()){return seasonRosterDecisionHealth(season,snapshot,now).healthy;}
+function seasonExpertPanelHealth(season){
+  const context=seasonEvidenceContext(season),panels=seasonDecisionReadLearning().panels||{},now=Date.now(),ready=['QB','RB','WR','TE'].filter(position=>{const p=panels[position];return p?.season===context.season&&p.week===context.week&&p.coverage>=.75&&(p.experts||[]).filter(e=>e.freshnessState==='VERIFIED_CURRENT_INDIVIDUAL'&&e.effectiveWeight>0&&Number.isFinite(e.sourceUpdatedAt)&&e.sourceUpdatedAt<=now&&now-e.sourceUpdatedAt<=72*3600000).length>=4;}).length;
+  return{status:ready===4?'HEALTHY':ready?'PARTIAL':'OPEN',label:ready===4?'Daten aktuell':ready?'PITTI-Panel teilweise':'PITTI-Panel offen'};
+}
 function renderSeasonDataCompactHeader(){
   const card=$('seasonDataCard'),strip=$('seasonDataCompact');if(!card||!strip)return;
   const season=lastDraftContext?.season,c=seasonEvidenceContext(season),api=globalThis.PittiWeeklyEvidenceV2,w=store.get(api?.CACHE_KEY||'pitti.weekly-evidence.v2.current',null),gapi=globalThis.PittiGameContextV1,g=store.get(gapi?.CACHE_KEY||'pitti.game-context.v1.current',null),health=seasonRosterDecisionHealth(season,g,Date.now());
@@ -243,7 +247,7 @@ function renderSeasonDataCompactHeader(){
   if(gapi?.validateSnapshot?.(g,c)?.ok!==true)health.reasons.push({code:'GAME_SNAPSHOT_INVALID_OR_STALE'});
   const healthy=health.reasons.length===0,details=$('seasonHealthDetails');if(details)details.textContent=JSON.stringify(health.reasons,null,2);
   const contextStatus=$('seasonContextStatus');if(contextStatus){contextStatus.hidden=healthy||!season;contextStatus.textContent=healthy?'':'Entscheidungsdaten teilweise offen · '+health.reasons.map(r=>r.code+(r.player?' ('+r.player+')':'')).join(' · ')+' · Details unter Erweitert.';}if(els.rosterStatus)els.rosterStatus.hidden=healthy;
-  card.classList.toggle('is-healthy',healthy);strip.hidden=!healthy;strip.textContent=healthy?'✓ Kader '+(els.seasonLiveStateAge?.textContent||'')+' · ✓ Weekly '+(els.seasonRankingAge?.textContent||'')+' · Daten aktuell':'';
+  card.classList.toggle('is-healthy',healthy);strip.hidden=!healthy;strip.textContent=healthy?'✓ Kader '+(els.seasonLiveStateAge?.textContent||'')+' · ✓ Weekly '+(els.seasonRankingAge?.textContent||'')+' · '+seasonExpertPanelHealth(season).label:'';
 }
 
 const SEASON_SPECIAL_TEAMS_MODEL={
@@ -762,36 +766,37 @@ function consensusWeeklyExperts(payload){
   return Object.entries(names).map(([id,name])=>({id:String(id),name:String(name||'').trim(),site:String(pubs[id]||'')})).filter(expert=>/^\d+$/.test(expert.id)&&expert.name);
 }
 function exactRankingExpertMap(rows){
-  const candidates=new Map();
+  const candidates=new Map(),namesById=new Map();
   for(const row of Array.isArray(rows)?rows:[]){
     const name=String(row?.name||'').trim(),id=String(row?.id??'').trim();
     if(!name||!/^\d+$/.test(id))continue;
     const key=normalizedExpertName(name),byId=candidates.get(key)||new Map();
+    const names=namesById.get(id)||new Set();names.add(key);namesById.set(id,names);
     if(!byId.has(id))byId.set(id,{id,name,site:String(row?.site||'')});
     candidates.set(key,byId);
   }
   const exact=new Map();
-  for(const [key,byId] of candidates)if(byId.size===1)exact.set(key,[...byId.values()][0]);
+  for(const [key,byId] of candidates)if(byId.size===1&&namesById.get([...byId.keys()][0]).size===1)exact.set(key,[...byId.values()][0]);
   return exact;
 }
-async function resolveSeasonWeeklyExpertIds(season,directoryPayloads={}){
-  const byPosition={},broadByPosition={};let needsFallback=false;
+async function resolveSeasonWeeklyExpertIds(season,directoryPayloads={},requestedWeek=null){
+  const week=requestedWeek??await currentSleeperNflWeek(season),canonical=await acquireSeasonExpertDirectory({season:Number(season),week}),byPosition={},broadByPosition={},canonicalByPosition={};let needsFallback=false;
   for(const position of WEEKLY_PROJECTION_POSITIONS){
-    const rows=consensusWeeklyExperts(directoryPayloads[position]),positionMap=new Map();
-    for(const expert of rows)positionMap.set(normalizedExpertName(expert.name),expert);
+    const rows=consensusWeeklyExperts(directoryPayloads[position]),positionMap=exactRankingExpertMap(rows),known=canonicalSeasonExperts(canonical,position,{season:Number(season),week});
+    canonicalByPosition[position]=known;
     broadByPosition[position]=positionMap;
-    if(SEASON_WEEKLY_SELECTED_EXPERTS[position].some(name=>!positionMap.has(normalizedExpertName(name))))needsFallback=true;
+    if(SEASON_WEEKLY_SELECTED_EXPERTS[position].some(name=>!known.some(e=>normalizedExpertName(e.name)===normalizedExpertName(name))&&!positionMap.has(normalizedExpertName(name))))needsFallback=true;
   }
   const directoryResults=needsFallback?await Promise.allSettled([fpProxyRequest(`/nfl/${season}/rankings/experts?include_overall=true`,{preserveMalformed:true})]):[],directoryResponse=directoryResults[0]?.status==='fulfilled'?directoryResults[0].value:null,directoryMap=exactRankingExpertMap(directoryResponse?.ok?extractExperts(directoryResponse.data):[]);
   for(const position of WEEKLY_PROJECTION_POSITIONS){
     const configured=SEASON_WEEKLY_SELECTED_EXPERTS[position],requested=[],missing=[],positionMap=broadByPosition[position];
-    for(const name of configured){const key=normalizedExpertName(name),broad=positionMap.get(key),fallback=directoryMap.get(key),expert=broad&&/^\d+$/.test(String(broad.id))?broad:fallback;if(expert)requested.push({id:String(expert.id),name,site:String(expert.site||'')});else missing.push(name);}
+    for(const name of configured){const key=normalizedExpertName(name),known=canonicalByPosition[position].find(e=>normalizedExpertName(e.name)===key),ambiguous=canonical?.directories?.[position]?.experts?.some(e=>normalizedExpertName(e.name)===key)&&!known,expert=ambiguous?null:known||positionMap.get(key)||directoryMap.get(key);if(expert)requested.push({id:String(expert.id),name,site:String(expert.site||'')});else missing.push(name);}
     byPosition[position]={configured:[...configured],requested,missing};
   }
   return{byPosition,directoryResults};
 }
 async function acquireSelectedWeeklyRankPayloads({season,week,directoryPayloads={}}){
-  const resolved=await resolveSeasonWeeklyExpertIds(season,directoryPayloads),selectedRankingPayloads={};
+  const resolved=await resolveSeasonWeeklyExpertIds(season,directoryPayloads,week),selectedRankingPayloads={};
   const requests=await Promise.allSettled(WEEKLY_PROJECTION_POSITIONS.map(async position=>{
     const row=resolved.byPosition[position],requested=row.requested,ids=requested.map(expert=>expert.id).sort((a,b)=>Number(a)-Number(b));
     if(!ids.length)return[position,{providerPayload:null,providerResponsePresent:false,providerHttpStatus:null,retryAfterMs:null,requestProvenance:{season,week,position,scoring:'HALF',experts:'show',requestedExpertIds:[]},requestedExperts:[],configuredExpertNames:row.configured,missingDirectoryExperts:row.missing}];
@@ -4974,6 +4979,53 @@ document.addEventListener('visibilitychange',()=>{if(!document.hidden&&lastDraft
 if(els.seasonRefreshLiveBtn)els.seasonRefreshLiveBtn.onclick=()=>void refreshSeasonLiveRoster({force:true,trigger:'manual'});
 
 let seasonDecisionSources=null,seasonDecisionSourceFlight=null,seasonDecisionRetryAt=0,seasonDecisionModels=null,seasonDecisionLearning=null;
+let seasonExpertDirectoryFlight=null,seasonAcquisitionState=null;
+const SEASON_ACQUISITION_KEY='pitti.season-acquisition.v1';
+function currentSeasonDirectory(source,{season,week},now=Date.now()){
+  return source?.schema==='pitti.season-decision-sources.v1'&&source.season===season&&source.week===week&&Number.isFinite(source.verifiedAt)&&source.verifiedAt<=now&&now-source.verifiedAt<3600000;
+}
+function canonicalSeasonExperts(source,position,context){
+  if(!currentSeasonDirectory(source,context))return[];
+  const d=source.directories?.[position];if(d?.position!==position||d.season!==context.season||d.week!==context.week)return[];
+  const rows=Array.isArray(d.experts)?d.experts:[],exact=exactRankingExpertMap(rows);
+  return rows.filter(e=>/^\d+$/.test(String(e?.id))&&exact.get(normalizedExpertName(e.name))?.id===String(e.id)&&rows.filter(x=>normalizedExpertName(x?.name)===normalizedExpertName(e.name)).length===1);
+}
+async function acquireSeasonExpertDirectory(context){
+  if(currentSeasonDirectory(seasonDecisionSources,context))return seasonDecisionSources;
+  if(seasonExpertDirectoryFlight?.season===context.season&&seasonExpertDirectoryFlight?.week===context.week)return seasonExpertDirectoryFlight.promise;
+  const bound=typeof lastDraftContext==='undefined'?null:lastDraftContext?.season;
+  const promise=(async()=>{try{const source=await jf(`/api/season-decision-sources?season=${context.season}&week=${context.week}`,'Season Expert-Verzeichnis',12000);if(bound&&lastDraftContext?.season!==bound)return null;if(!currentSeasonDirectory(source,context))return null;seasonDecisionSources=source;return source;}catch{return null;}})();
+  const flight={...context,promise};seasonExpertDirectoryFlight=flight;try{return await promise;}finally{if(seasonExpertDirectoryFlight===flight)seasonExpertDirectoryFlight=null;}
+}
+const SEASON_ACQUISITION_REASONS=["HTTP_5XX","NO_CREDENTIAL","TIMEOUT","NETWORK","MALFORMED_PAYLOAD","WRONG_SEASON","WRONG_WEEK","WRONG_POSITION","WRONG_SCORING","WRONG_RANKING_TYPE","EXPERT_IDENTITY_MISMATCH","TOTAL_EXPERTS_NOT_ONE","FILTER_NOT_HONORED","STALE_SOURCE","MISSING_PLAYERS","INSUFFICIENT_DEPTH","UNVERIFIED_RANK_VALUE","PLAYER_MAPPING_INSUFFICIENT","GAME_LOCK_CONTEXT_UNAVAILABLE","CURRENT_PLAYER_ROWS_LOCKED","DIRECTORY_ID_UNRESOLVED","VALIDATION_REJECTED","INVALID_REQUEST_PROVENANCE","NO_CURRENT_PROVIDER_RESPONSE","MALFORMED_PROVIDER_RESPONSE","NON_WEEKLY_PROJECTION_PAYLOAD","CONTRADICTORY_PROVIDER_ROS_SCOPE","WRONG_PROVIDER_POSITION","INVALID_PROVIDER_CHRONOLOGY","WEEKLY_PROJECTION_SEMANTIC_SCOPE_MISMATCH","ALL_ZERO_WEEKLY_PROJECTION_DISTRIBUTION","NO_NUMERIC_PROVIDER_PROJECTION","INSUFFICIENT_SOURCE_COVERAGE","INSUFFICIENT_MAPPING_COVERAGE","FP_ID_COLLISION","DST_TEAM_AMBIGUOUS_OR_UNMAPPED","NAME_POSITION_COLLISION","NO_MATCH","TEAM_MISMATCH"];
+function seasonAcquisitionSafeReason(reason){return !reason?null:SEASON_ACQUISITION_REASONS.includes(reason)||/^HTTP_[45][0-9]{2}$/.test(reason)?reason:'VALIDATION_REJECTED';}
+const SEASON_ACQUISITION_FIELDS=['players','data','response','results','rankings','projections','season','year','week','position','position_id','positions','scoring','ranking_type_name','filters','total_experts','expert_name','expert_pub','updated','updated_at','last_updated','date','as_of'];
+function seasonAcquisitionShape(payload){
+  const type=payload===null?'NULL':Array.isArray(payload)?'ARRAY':typeof payload==='object'?'OBJECT':typeof payload==='string'?'STRING':'OTHER',keys=type==='OBJECT'?Object.keys(payload):[],arrays=[];
+  for(const key of ['players','data','response','results','rankings','projections']){const v=payload?.[key];if(Array.isArray(v))arrays.push({path:key,count:v.length});else if(v&&typeof v==='object')for(const nested of ['players','data','results','rankings','projections'])if(Array.isArray(v[nested]))arrays.push({path:key+'.'+nested,count:v[nested].length});}
+  return{topLevelType:type,topLevelKeys:keys.filter(k=>SEASON_ACQUISITION_FIELDS.includes(k)).slice(0,24),otherKeyCount:keys.filter(k=>!SEASON_ACQUISITION_FIELDS.includes(k)).length,candidateArrays:arrays.slice(0,12)};
+}
+function seasonAcquisitionSafeEntry(e,context){
+  e=e&&typeof e==='object'?e:{};return({kind:e.kind==='INDIVIDUAL_EXPERT'?'INDIVIDUAL_EXPERT':'PRIMARY_PROJECTION',season:context.season,week:context.week,position:['QB','RB','WR','TE','K','DST'].includes(e.position)?e.position:null,requestedExpertId:/^\d+$/.test(String(e.requestedExpertId))?String(e.requestedExpertId):null,requestedExpertName:typeof e.requestedExpertName==='string'&&/^[A-Za-z .'-]{1,120}$/.test(e.requestedExpertName)?canonicalSeasonExperts(seasonDecisionSources,e.position,context).find(x=>String(x.id)===e.requestedExpertId&&x.name===e.requestedExpertName)?.name||null:null,httpStatus:Number.isInteger(e.httpStatus)?e.httpStatus:null,retryAfterSeconds:typeof e.retryAfterSeconds==='number'?e.retryAfterSeconds:null,bodyState:['JSON','INVALID_JSON','EMPTY','UNKNOWN','NO_RESPONSE'].includes(e.bodyState)?e.bodyState:'UNKNOWN',topLevelType:['OBJECT','ARRAY','NULL','STRING','OTHER'].includes(e.topLevelType)?e.topLevelType:'OTHER',otherKeyCount:Number.isInteger(e.otherKeyCount)?e.otherKeyCount:0,topLevelKeys:(Array.isArray(e.topLevelKeys)?e.topLevelKeys:[]).filter(k=>SEASON_ACQUISITION_FIELDS.includes(k)).slice(0,24),candidateArrays:(Array.isArray(e.candidateArrays)?e.candidateArrays:[]).filter(a=>a&&/^(players|data|response|results|rankings|projections)(\.(players|data|results|rankings|projections))?$/.test(a.path)).slice(0,12).map(a=>({path:a.path,count:Number.isInteger(a.count)?a.count:0})),sourceRows:Number.isInteger(e.sourceRows)?e.sourceRows:0,numericRows:Number.isInteger(e.numericRows)?e.numericRows:0,mappedRows:Number.isInteger(e.mappedRows)?e.mappedRows:0,mappingRejected:Number.isInteger(e.mappingRejected)?e.mappingRejected:0,lockRejected:Number.isInteger(e.lockRejected)?e.lockRejected:0,rejectionReason:seasonAcquisitionSafeReason(e.rejectionReason),capturedAt:Number.isFinite(e.capturedAt)?e.capturedAt:null,retryAt:Number.isFinite(e.retryAt)?e.retryAt:null});
+}
+function seasonAcquisitionStore(context){
+  if(!seasonAcquisitionState){const raw=store.get(SEASON_ACQUISITION_KEY,null);if(raw?.schema==='pitti.season-acquisition.v1'&&raw.season===context.season&&raw.week===context.week){seasonAcquisitionState={schema:raw.schema,season:context.season,week:context.week,expertAcquisition:{byPosition:{}},projectionAcquisition:{byPosition:{}}};for(const position of ['QB','RB','WR','TE','K','DST']){const r=raw.expertAcquisition?.byPosition?.[position]?.requests;if(Array.isArray(r))seasonAcquisitionState.expertAcquisition.byPosition[position]={requests:r.slice(-10).map(e=>seasonAcquisitionSafeEntry(e,context))};const p=raw.projectionAcquisition?.byPosition?.[position];if(p&&typeof p==='object')seasonAcquisitionState.projectionAcquisition.byPosition[position]=seasonAcquisitionSafeEntry(p,context);}};}
+  if(seasonAcquisitionState?.season!==context.season||seasonAcquisitionState.week!==context.week)seasonAcquisitionState={schema:'pitti.season-acquisition.v1',season:context.season,week:context.week,expertAcquisition:{byPosition:{}},projectionAcquisition:{byPosition:{}}};
+  return seasonAcquisitionState;
+}
+function seasonAcquisitionRecord(kind,context,{expert=null,response=null,error=null,rejectionReason=null,mappedRows=0,mappingRejected=0,lockRejected=0}={}){
+  const state=seasonAcquisitionStore(context),payload=response?.data,rows=Array.isArray(payload?.players)?payload.players:[],shape=seasonAcquisitionShape(payload),reason=rejectionReason||seasonAcquisitionHttpReason(response,error),allowed=seasonAcquisitionSafeReason(reason);
+  const entry={kind,season:context.season,week:context.week,position:context.position,requestedExpertId:expert&&/^\d+$/.test(String(expert.id))?String(expert.id):null,requestedExpertName:expert?.name||null,capturedAt:Date.now(),httpStatus:Number.isInteger(response?.status??error?.status)?response?.status??error.status:null,retryAfterSeconds:diagnosticRetryAfter(response?.retryAfterMs??error?.retryAfterMs),bodyState:['JSON','INVALID_JSON','EMPTY'].includes(response?.bodyState)?response.bodyState:response?'UNKNOWN':'NO_RESPONSE',...shape,sourceRows:rows.length,numericRows:rows.filter(r=>typeof r?.stats?.points_half==='number'&&Number.isFinite(r.stats.points_half)).length,mappedRows,mappingRejected,lockRejected,rejectionReason:allowed,result:allowed?'UNAVAILABLE':'VERIFIED',retryAt:allowed?Date.now()+(['HTTP_401','HTTP_403'].includes(allowed)?3600000:allowed==='HTTP_429'?Math.max(response?.retryAfterMs||error?.retryAfterMs||0,15*60000):15*60000):null};
+  if(kind==='INDIVIDUAL_EXPERT'){const p=state.expertAcquisition.byPosition[context.position]||{identitySource:'CANONICAL_CURRENT_SEASON_DIRECTORY',requests:[]};p.requests=p.requests.filter(r=>r.requestedExpertId!==entry.requestedExpertId);p.requests.push(entry);p.requests=p.requests.slice(-10);state.expertAcquisition.byPosition[context.position]=p;}else state.projectionAcquisition.byPosition[context.position]=entry;
+  return entry;
+}
+function seasonAcquisitionPersist(context){
+  const encoded=JSON.stringify(seasonAcquisitionStore(context));if(encoded.length>24000)return;try{localStorage.setItem(SEASON_ACQUISITION_KEY,encoded);}catch{/* Diagnostics cannot interrupt valid evidence. */}
+}
+function seasonAcquisitionDiagnostic(context){
+  const state=seasonAcquisitionStore(context),safe=e=>seasonAcquisitionSafeEntry(e,context);
+  return{schema:state.schema,season:context.season,week:context.week,expertAcquisition:{byPosition:Object.fromEntries(['QB','RB','WR','TE'].map(p=>{const rawPanel=seasonDecisionReadLearning().panels[p],panel=rawPanel?.season===context.season&&rawPanel.week===context.week?rawPanel:null;return[p,{identitySource:'CANONICAL_CURRENT_SEASON_DIRECTORY',activeRequired:panel?.activeNames?.length||SEASON_WEEKLY_SELECTED_EXPERTS[p].length,activeResolved:canonicalSeasonExperts(seasonDecisionSources,p,context).filter(e=>(panel?.activeNames||SEASON_WEEKLY_SELECTED_EXPERTS[p]).includes(e.name)).length,effectiveCoverage:panel?.coverage||0,requests:(state.expertAcquisition?.byPosition?.[p]?.requests||[]).slice(-10).map(safe)}];}))},projectionAcquisition:{byPosition:Object.fromEntries(['QB','RB','WR','TE','K','DST'].filter(p=>state.projectionAcquisition?.byPosition?.[p]).map(p=>[p,safe(state.projectionAcquisition.byPosition[p])]))}};
+}
 function seasonDecisionReadLearning(){
   if(seasonDecisionLearning)return seasonDecisionLearning;const raw=store.get('pitti.season-expert-learning.v1',null);
   seasonDecisionLearning={schema:'pitti.season-expert-learning.v1',ledger:[],snapshots:[],panels:{}};
@@ -4988,30 +5040,39 @@ function seasonDecisionPersistLearning(){
 }
 async function refreshSeasonDecisionSources(season,{force=false}={}){
   const api=globalThis.PittiSeasonDecisionV1;if(!api||!navigator.onLine||!seasonLiveAuthority(season))return;
-  if(seasonDecisionSourceFlight)return seasonDecisionSourceFlight;const context=seasonEvidenceContext(season),now=Date.now();
-  if(now<seasonDecisionRetryAt)return;
-  if(!force&&seasonDecisionSources?.season===context.season&&seasonDecisionSources?.week===context.week&&now-seasonDecisionSources.verifiedAt<3600000){await prepareSeasonDecisionEvidence(season);return;}
-  const flight=(async()=>{try{const source=await jf('/api/season-decision-sources?season='+context.season+'&week='+context.week,'Season Entscheidungsquellen',12000);if(lastDraftContext?.season!==season)return;
-    if(source?.schema!=='pitti.season-decision-sources.v1'||source.season!==context.season||source.week!==context.week||!Number.isFinite(source.verifiedAt)||source.verifiedAt>Date.now()||Date.now()-source.verifiedAt>3600000)throw Error('DECISION_SOURCE_CONTEXT');
-    seasonDecisionSources=source;const learning=seasonDecisionReadLearning(),completed=source.usage?.completedWeeks||[],oldPanels={...learning.panels};
+  if(seasonDecisionSourceFlight)return seasonDecisionSourceFlight;const context=seasonEvidenceContext(season);
+  if(Date.now()<seasonDecisionRetryAt)return;
+  const flight=(async()=>{try{const source=await acquireSeasonExpertDirectory(context);if(lastDraftContext?.season!==season)return;
+    if(!currentSeasonDirectory(source,context))throw Error('DECISION_SOURCE_CONTEXT');
+    const learning=seasonDecisionReadLearning(),completed=source.usage?.completedWeeks||[],oldPanels={...learning.panels};
     for(const snapshot of learning.snapshots.filter(s=>s.season===context.season&&completed.includes(s.week))){const actual={season:context.season,week:snapshot.week,scoring:'HALF_PPR',status:'VERIFIED',verifiedAt:source.usage?.verifiedAt,players:(source.usage?.records||[]).filter(r=>r.week===snapshot.week&&r.completed).map(r=>({playerId:r.playerId,position:r.position,points:r.fantasyHalf}))},record=api.scoreSnapshot(snapshot,actual,{...context,completedWeeks:completed});if(record&&!learning.ledger.some(r=>r.season===record.season&&r.week===record.week&&r.position===record.position&&r.expertId===record.expertId))learning.ledger.push(record);await seasonUiYield();}
-    for(const position of api.POSITIONS){const directory=source.directories?.[position]?.experts||[],previous=learning.panels[position];learning.panels[position]=api.adaptivePanel({...context,position,directory,ledger:learning.ledger,completedWeeks:completed,previous});}
-    // Existing credential + pacing only. No per-player requests and no credential export.
-    if(els.apiKey?.value?.trim()){const index=globalThis.PittiWeeklyEvidenceV2?.sleeperIndexes(lastDraftContext.players),gameApi=globalThis.PittiGameContextV1,game=store.get(gameApi?.CACHE_KEY||'pitti.game-context.v1.current',null);let rateLimited=false;
-      for(const position of api.POSITIONS){for(const expert of learning.panels[position].experts){if(rateLimited)break;const cached=learning.snapshots.find(s=>s.season===context.season&&s.week===context.week&&s.position===position&&s.expertId===expert.id);
-          if(cached&&Date.now()-cached.generatedAt<6*3600000)continue;
-          if(!Number.isFinite(expert.sourceUpdatedAt)||Date.now()-expert.sourceUpdatedAt>72*3600000)continue;
-          if(lastDraftContext?.season!==season)return;
-          try{const response=await fpProxyRequest(`/nfl/${context.season}/consensus-rankings?week=${context.week}&position=${position}&scoring=HALF&filters=${expert.id}&experts=show`,{timeoutMs:8000});
-            if(response.status===429){rateLimited=true;seasonDecisionRetryAt=Date.now()+Math.max(response.retryAfterMs||0,15*60000);continue;}
-            if(lastDraftContext?.season!==season)return;
-            if(!response.ok||!api.individualPayloadValid(response.data,{...context,position,expertId:expert.id,expertName:expert.name,sourceUpdatedAt:expert.sourceUpdatedAt}))continue;
-            const ranks=response.data.players.filter(r=>Number(r.rank_ecr)<=api.POLICY.depth[position]).flatMap(r=>{const mapped=globalThis.PittiWeeklyEvidenceV2.mapFantasyProsPlayer(r,index);if(!mapped.ok)return[];const teamGame=gameApi.validateSnapshot(game,context,Date.now()).ok?gameApi.contextForTeam(game,seasonDstTeam(mapped.player.team)):null;if(teamGame?.status!=='VERIFIED'||!Number.isFinite(Date.parse(teamGame.kickoffAt)))return[];return[{playerId:mapped.player.id,rank:Number(r.rank_ecr),rankingLockAt:Date.parse(teamGame.kickoffAt),sourceUpdatedAt:expert.sourceUpdatedAt}];});
-            const next=api.captureSnapshot(cached,{schema:'pitti.expert-week-snapshot.v1',...context,position,expertId:expert.id,expertName:expert.name,priorAccuracy:expert.priorAccuracy,effectiveWeight:expert.effectiveWeight,channel:'WEEKLY',sourceUrl:'https://api.fantasypros.com/public/v2/json/nfl/'+context.season+'/consensus-rankings',ranks},Date.now());learning.snapshots=learning.snapshots.filter(s=>!(s.season===context.season&&s.week===context.week&&s.position===position&&s.expertId===expert.id));if(next)learning.snapshots.push(next);
-          }catch{/* Individual failure stays unavailable, never provider consensus. */}await seasonUiYield();}
-      }
+    for(const position of api.POSITIONS)learning.panels[position]=api.adaptivePanel({...context,position,directory:canonicalSeasonExperts(source,position,context),ledger:learning.ledger,completedWeeks:completed,previous:learning.panels[position]});
+    const index=globalThis.PittiWeeklyEvidenceV2?.sleeperIndexes(lastDraftContext.players),gameApi=globalThis.PittiGameContextV1,game=store.get(gameApi?.CACHE_KEY||'pitti.game-context.v1.current',null);
+    const snapshotFresh=(s,position)=>s&&s.ranks.length>=api.POLICY.depth[position]*.7&&s.ranks.every(r=>Number.isFinite(r.sourceUpdatedAt)&&r.sourceUpdatedAt<=Date.now()&&Date.now()-r.sourceUpdatedAt<=72*3600000);
+    const work=api.POSITIONS.flatMap(position=>learning.panels[position].experts.map(expert=>({position,expert}))).sort((a,b)=>(a.expert.membershipState==='ACTIVE'?0:1)-(b.expert.membershipState==='ACTIVE'?0:1));
+    for(const {position,expert}of work){if(lastDraftContext?.season!==season)return;if(Date.now()<seasonDecisionRetryAt)break;
+      const ctx={...context,position},cached=learning.snapshots.find(s=>s.season===context.season&&s.week===context.week&&s.position===position&&s.expertId===expert.id&&s.expertName===expert.name),prior=seasonAcquisitionStore(context).expertAcquisition.byPosition[position]?.requests?.find(r=>r.requestedExpertId===expert.id);
+      if(snapshotFresh(cached,position)&&cached.generatedAt<=Date.now()&&Date.now()-cached.generatedAt<6*3600000)continue;
+      if(prior?.retryAt>Date.now()&&(!force||['HTTP_401','HTTP_403','HTTP_429'].includes(prior.rejectionReason)))continue;
+      if(!/^\d+$/.test(expert.id)){seasonAcquisitionRecord('INDIVIDUAL_EXPERT',ctx,{expert,rejectionReason:'DIRECTORY_ID_UNRESOLVED'});continue;}
+      if(!Number.isFinite(expert.sourceUpdatedAt)||expert.sourceUpdatedAt>Date.now()||Date.now()-expert.sourceUpdatedAt>72*3600000){seasonAcquisitionRecord('INDIVIDUAL_EXPERT',ctx,{expert,rejectionReason:'STALE_SOURCE'});continue;}
+      let response=null;
+      try{
+        response=await fpProxyRequest(`/nfl/${context.season}/consensus-rankings?week=${context.week}&position=${position}&scoring=HALF&filters=${expert.id}&experts=show`,{timeoutMs:8000,preserveMalformed:true});
+        if(lastDraftContext?.season!==season)return;
+        const rejection=seasonAcquisitionHttpReason(response)||api.individualPayloadReason(response.data,{...ctx,expertId:expert.id,expertName:expert.name,sourceUpdatedAt:expert.sourceUpdatedAt});
+        if(rejection){const record=seasonAcquisitionRecord('INDIVIDUAL_EXPERT',ctx,{expert,response,rejectionReason:rejection});if(['HTTP_401','HTTP_403','HTTP_429'].includes(rejection))seasonDecisionRetryAt=record.retryAt;continue;}
+        let mappingRejected=0,lockRejected=0;
+        const ranks=response.data.players.filter(r=>Number(r.rank_ecr)<=api.POLICY.depth[position]).flatMap(r=>{const mapped=globalThis.PittiWeeklyEvidenceV2.mapFantasyProsPlayer(r,index);if(!mapped.ok){mappingRejected++;return[];}const teamGame=gameApi?.validateSnapshot(game,context,Date.now()).ok?gameApi.contextForTeam(game,seasonDstTeam(mapped.player.team)):null;if(teamGame?.status!=='VERIFIED'||!Number.isFinite(Date.parse(teamGame.kickoffAt))){lockRejected++;return[];}return[{playerId:mapped.player.id,rank:Number(r.rank_ecr),rankingLockAt:Date.parse(teamGame.kickoffAt),sourceUpdatedAt:expert.sourceUpdatedAt}];});
+        const next=api.captureSnapshot(cached,{schema:'pitti.expert-week-snapshot.v1',...context,position,expertId:expert.id,expertName:expert.name,priorAccuracy:expert.priorAccuracy,effectiveWeight:expert.effectiveWeight,channel:'WEEKLY',sourceUrl:'https://api.fantasypros.com/public/v2/json/nfl/'+context.season+'/consensus-rankings',ranks},Date.now());
+        const reason=lockRejected?'GAME_LOCK_CONTEXT_UNAVAILABLE':mappingRejected&&ranks.length<api.POLICY.depth[position]*.7?'PLAYER_MAPPING_INSUFFICIENT':!snapshotFresh(next,position)?'CURRENT_PLAYER_ROWS_LOCKED':null;
+        seasonAcquisitionRecord('INDIVIDUAL_EXPERT',ctx,{expert,response,rejectionReason:reason,mappedRows:ranks.length,mappingRejected,lockRejected});
+        learning.snapshots=learning.snapshots.filter(s=>!(s.season===context.season&&s.week===context.week&&s.position===position&&s.expertId===expert.id));if(next)learning.snapshots.push(next);
+      }catch(error){if(lastDraftContext?.season!==season)return;const record=seasonAcquisitionRecord('INDIVIDUAL_EXPERT',ctx,{expert,response,error});if(['HTTP_401','HTTP_403','HTTP_429'].includes(record.rejectionReason))seasonDecisionRetryAt=record.retryAt;}finally{await seasonUiYield();}
     }
-    if(lastDraftContext?.season!==season)return;for(const position of api.POSITIONS){const directory=(source.directories?.[position]?.experts||[]).map(e=>({...e,currentRankVerified:learning.snapshots.some(s=>s.season===context.season&&s.week===context.week&&s.position===position&&s.expertId===e.id&&s.ranks.length>=api.POLICY.depth[position]*.7)}));learning.panels[position]=api.adaptivePanel({...context,position,directory,ledger:learning.ledger,completedWeeks:completed,previous:oldPanels[position]});}learning.snapshots=learning.snapshots.filter(s=>s.season===context.season&&s.week>=context.week-2);learning.ledger=learning.ledger.filter(r=>r.season===context.season).slice(-2000);seasonDecisionPersistLearning();await prepareSeasonDecisionEvidence(season);queueSeasonRerender();
+    if(lastDraftContext?.season!==season)return;
+    for(const position of api.POSITIONS){const directory=canonicalSeasonExperts(source,position,context).map(e=>({...e,currentRankVerified:learning.snapshots.some(s=>s.season===context.season&&s.week===context.week&&s.position===position&&s.expertId===String(e.id)&&s.expertName===e.name&&snapshotFresh(s,position))}));learning.panels[position]=api.adaptivePanel({...context,position,directory,ledger:learning.ledger,completedWeeks:completed,previous:oldPanels[position]});}
+    learning.snapshots=learning.snapshots.filter(s=>s.season===context.season&&s.week>=context.week-2);learning.ledger=learning.ledger.filter(r=>r.season===context.season).slice(-2000);seasonDecisionPersistLearning();seasonAcquisitionPersist(context);await prepareSeasonDecisionEvidence(season);queueSeasonRerender();
   }catch{seasonDecisionRetryAt=Date.now()+15*60000;}})();seasonDecisionSourceFlight=flight;try{await flight;}finally{if(seasonDecisionSourceFlight===flight)seasonDecisionSourceFlight=null;}
 }
 async function prepareSeasonDecisionEvidence(season){
@@ -5042,7 +5103,7 @@ function seasonDataDiagnostic(){
  const positions=Object.fromEntries(SEASON_PROJECTION_POSITIONS.map(p=>{const v=w?.lanes?.projections?.coverage?.positions?.[p]||{},f=w?.lanes?.projections?.fallback?.coverage?.[p]||{};return[p,{status:v.status||'UNAVAILABLE',reason:v.reason||null,sourceRows:v.sourceRows||0,numericRows:v.numericPointsHalf||0,mappedRows:v.mappedRows||0,consumerUsable:records.filter(r=>r.metric==='projected_points'&&r.position===p&&api.weeklyRecordChronology(r,context,now)).length,fallbackSource:f.sourceRows||0,fallbackMapped:f.mappedRows||0,fallbackRejected:f.rejectedRows||0,rejects:v.rejectReasonCounts||{}}]}));
  const relevant=new Set(active.map(r=>seasonDstTeam(r.p.team))),games=gamesValid?(g.games||[]).filter(x=>relevant.has(x.homeTeam)||relevant.has(x.awayTeam)).map(x=>{const game=gapi.contextForTeam(g,x.homeTeam,now);return{event:x.eventId,teams:[x.homeTeam,x.awayTeam],kickoff:x.kickoffAt,venue:x.venue,roof:x.roof,weather:{status:game.weather?.status,reason:game.weather?.reason||null,provider:game.weather?.sourceId||null,forecastAt:game.weather?.forecastAt||null},odds:{status:game.vegas?.status,reason:game.vegas?.reason||null,provider:game.vegas?.provider||null,total:game.vegas?.total??null,homeSpread:game.vegas?.homeSpread??null,homeTotal:game.vegas?.homeImpliedTotal??null,awayTotal:game.vegas?.awayImpliedTotal??null}}}):[];
  const ranks={};for(const lane of ['expertWeeklyRanks','pittiSelectedWeeklyRanks']){const v=w?.lanes?.[lane];ranks[lane]={status:v?.status||'UNAVAILABLE',positions:Object.fromEntries(WEEKLY_PROJECTION_POSITIONS.map(p=>{const x=v?.coverage?.positions?.[p]||{};return[p,{status:x.status||'UNAVAILABLE',reason:x.primaryRejectionReason||x.reason||null,sourceRows:x.sourceRows||0,mappedRows:x.mappedRows||0,requestedExperts:(x.requestedExperts||[]).map(e=>({id:e.id,name:e.name})),actualExperts:(x.actualExperts||[]).map(e=>({id:e.id,name:e.name})),missingExperts:(x.missingExperts||[]).map(seasonMissingExpertDiagnostic)}]}))};}
- return{decisionEngine:typeof seasonDecisionDiagnostic==='function'?seasonDecisionDiagnostic(active):null,actualScores:seasonActualScoreDiagnostic(c?.season),schema:'pitti.season-data-diagnostic.v1',version:APP_VERSION,...context,capturedAt:now,weekly:{id:w?.snapshotId||null,fetchedAt:w?.fetchedAt||null,lastSuccessAt:w?.lastSuccessAt||null,valid,positions,ranks,totalPersistedRecords:w?.records?.length||0,metricCounts:api?.metricCounts?.(w)||{},persistence:api?.persistenceDiagnostic?.(w)||null,serializedCharacters:typeof localStorage==='undefined'?null:String(localStorage.getItem(api?.CACHE_KEY||'pitti.weekly-evidence.v2.current')||'').length,storage:typeof localStorage==='undefined'?null:api?.storageDiagnostics?.(localStorage)||null},rosterCoverage:[roster.filter(r=>r.projection!==null).length,roster.length],roster,gameContext:{id:g?.snapshotId||null,valid:gamesValid,games},boone:{status:validateBooneTradeValueSnapshot(b,context,now).ok?'AVAILABLE':'UNAVAILABLE',mapped:b?.coverage?.mappedRows||0,rows:b?.coverage?.sourceRows||0,edition:b?.edition||null},trade:lastSeasonTradeFunnel?{...lastSeasonTradeFunnel,status:lastSeasonTradeFunnel.season===context.season&&lastSeasonTradeFunnel.week===context.week&&lastSeasonTradeFunnel.seasonGeneratedAt===c?.season?.generated_at&&lastSeasonTradeFunnel.weeklySnapshotId===(w?.snapshotId??null)&&lastSeasonTradeFunnel.booneSnapshotId===(b?.snapshotId??null)&&now>=lastSeasonTradeFunnel.capturedAt&&now-lastSeasonTradeFunnel.capturedAt<300000?'CURRENT':'STALE_RECOMPUTATION_REQUIRED'}:null,secretSafety:'ALLOWLIST_ONLY_NO_KEYS_HEADERS_TOKENS_OR_RAW_BODIES'};
+ return{...seasonAcquisitionDiagnostic(context),decisionEngine:typeof seasonDecisionDiagnostic==='function'?seasonDecisionDiagnostic(active):null,actualScores:seasonActualScoreDiagnostic(c?.season),schema:'pitti.season-data-diagnostic.v1',version:APP_VERSION,...context,capturedAt:now,weekly:{id:w?.snapshotId||null,fetchedAt:w?.fetchedAt||null,lastSuccessAt:w?.lastSuccessAt||null,valid,positions,ranks,totalPersistedRecords:w?.records?.length||0,metricCounts:api?.metricCounts?.(w)||{},persistence:api?.persistenceDiagnostic?.(w)||null,serializedCharacters:typeof localStorage==='undefined'?null:String(localStorage.getItem(api?.CACHE_KEY||'pitti.weekly-evidence.v2.current')||'').length,storage:typeof localStorage==='undefined'?null:api?.storageDiagnostics?.(localStorage)||null},rosterCoverage:[roster.filter(r=>r.projection!==null).length,roster.length],roster,gameContext:{id:g?.snapshotId||null,valid:gamesValid,games},boone:{status:validateBooneTradeValueSnapshot(b,context,now).ok?'AVAILABLE':'UNAVAILABLE',mapped:b?.coverage?.mappedRows||0,rows:b?.coverage?.sourceRows||0,edition:b?.edition||null},trade:lastSeasonTradeFunnel?{...lastSeasonTradeFunnel,status:lastSeasonTradeFunnel.season===context.season&&lastSeasonTradeFunnel.week===context.week&&lastSeasonTradeFunnel.seasonGeneratedAt===c?.season?.generated_at&&lastSeasonTradeFunnel.weeklySnapshotId===(w?.snapshotId??null)&&lastSeasonTradeFunnel.booneSnapshotId===(b?.snapshotId??null)&&now>=lastSeasonTradeFunnel.capturedAt&&now-lastSeasonTradeFunnel.capturedAt<300000?'CURRENT':'STALE_RECOMPUTATION_REQUIRED'}:null,secretSafety:'ALLOWLIST_ONLY_NO_KEYS_HEADERS_TOKENS_OR_RAW_BODIES'};
 }
 async function copySeasonDataDiagnostic(){const output=JSON.stringify(seasonDataDiagnostic()),area=$('seasonDiagnosticOutput'),status=$('seasonDiagnosticStatus');try{await navigator.clipboard.writeText(output);if(status)status.textContent='Diagnose kopiert · keine Schlüssel oder Zugangsdaten.';}catch{if(area){area.hidden=false;area.value=output;area.select();}if(status)status.textContent='Diagnose markieren und kopieren · keine Zugangsdaten.';}}
 const seasonDiagnosticButton=$('seasonDiagnosticCopyBtn');if(seasonDiagnosticButton)seasonDiagnosticButton.onclick=copySeasonDataDiagnostic;
@@ -5191,16 +5252,19 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     const responses=await Promise.allSettled(SEASON_PROJECTION_POSITIONS.map(async position=>{
       // FantasyPros documents `week` as the projections endpoint's weekly selector.
       // The weekly request explicitly selects week/position and omits ROS and scoring.
-      const path=`/nfl/${season}/projections?week=${week}&position=${position}`,response=await fpProxyRequest(path,{preserveMalformed:true});
+      const bound=lastDraftContext.season,path=`/nfl/${season}/projections?week=${week}&position=${position}`;let response;try{response=await fpProxyRequest(path,{preserveMalformed:true});}catch(error){if(lastDraftContext?.season===bound)seasonAcquisitionRecord('PRIMARY_PROJECTION',{season,week,position},{error});throw error;}
+      if(lastDraftContext?.season===bound)seasonAcquisitionRecord('PRIMARY_PROJECTION',{season,week,position},{response});
       if(!response.ok){const error=codedError(response.status===429?'HTTP_429':response.status>=500?'HTTP_5XX':`HTTP_${response.status}`,`FantasyPros HTTP ${response.status}`,response.status);error.retryAfterMs=response.retryAfterMs;throw error;}
       // Request provenance is deliberately outside the provider payload. The
       // evidence validator must prove scope from response.data itself.
       return[position,{providerPayload:response.data,providerResponse:{present:true,bodyState:response.bodyState},requestProvenance:{season,week,position,scope:'WEEKLY',queryShape:'EXPLICIT_WEEK_POSITION_ROS_OMITTED'}}];
     }));
+    seasonAcquisitionPersist({season,week});
     persistSeasonProjectionRetryAfter(responses,Date.now());
     for(const response of responses)if(response.status==='fulfilled'){const [position,payload]=response.value;payloads[position]=payload;}
     const publicEvidence=await publicPromise;
     const projectionSnapshot=api.buildSnapshot({season,week,scoring:els.scoring.value,projectionPayloads:payloads,projectionPositions:SEASON_PROJECTION_POSITIONS,sleeperProjectionPayload:publicEvidence?.sleeperProjectionPayload,sleeperPlayers:lastDraftContext.players,priorSnapshot:previous,verifiedAt:Date.now()});
+    for(const position of SEASON_PROJECTION_POSITIONS){const entry=seasonAcquisitionStore({season,week}).projectionAcquisition.byPosition[position],coverage=projectionSnapshot.lanes?.projections?.coverage?.positions?.[position];if(entry&&coverage){entry.mappedRows=coverage.mappedRows||0;entry.numericRows=coverage.numericPointsHalf||0;entry.mappingRejected=coverage.rejectReasonCounts?.PLAYER_MAPPING_FAILED||0;if(!entry.rejectionReason)entry.rejectionReason=seasonAcquisitionSafeReason(coverage.primaryRejectionReason||coverage.reason);}}seasonAcquisitionPersist({season,week});
     const freshUsable=projectionSnapshot.records.filter(record=>record.metric==='projected_points'&&api.weeklyRecordChronology(record,{season,week},Date.now())&&(record.sourceId==='sleeper_rotowire'||Number(record.verifiedAt)===Number(projectionSnapshot.fetchedAt)));
     const projectionValidation=api.validateSnapshot?.(projectionSnapshot,{season,week,scoring:els.scoring.value},Date.now())||{ok:true};
     if(!freshUsable.length||!projectionValidation.ok)throw codedError('PROJECTION_LANE_UNAVAILABLE','Keine frischen verbrauchbaren Weekly Projection Records verfügbar.');
@@ -5224,7 +5288,7 @@ async function refreshSeasonRankings({force=false,auto=false,trigger='startup'}=
     if(lastDraftContext?.season)lastDraftContext.season.current_nfl_week=week;
     completionNote=`Weekly Evidence · W${week} · ${persistedSnapshot.records.length} Records · Broad ECR ${persistedSnapshot.lanes.expertWeeklyRanks.status} · PITTI-Panel ${persistedSnapshot.lanes.pittiSelectedWeeklyRanks.status}`;
     queueSeasonRerender();
-    if(typeof refreshSeasonDecisionSources==='function'&&lastDraftContext?.season)void refreshSeasonDecisionSources(lastDraftContext.season);
+    if(typeof refreshSeasonDecisionSources==='function'&&lastDraftContext?.season)void refreshSeasonDecisionSources(lastDraftContext.season,{force});
     return{ok:true,snapshotId:persistedSnapshot.snapshotId,count:persistedSnapshot.records.length,status:persistedSnapshot.status,projectionStatus:persistedSnapshot.lanes.projections.status,rankStatus:persistedSnapshot.lanes.expertWeeklyRanks.status};
   }catch(e){
     if(e?.status===429&&Number.isFinite(e.retryAfterMs))persistSeasonProjectionRetryAfter([{status:'rejected',reason:e}],Date.now());

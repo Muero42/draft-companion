@@ -10,7 +10,7 @@ const end=app.indexOf('function slugifyExpert',start);
 assert(start>=0&&end>start,'weekly projection diagnostic production block missing');
 const parserStart=app.indexOf('function arrays('),parserEnd=app.indexOf('const DRAFT_POOL_LIMITS',parserStart);
 assert(parserStart>=0&&parserEnd>parserStart,'shared expert parser production block missing');
-const productionSource=app.slice(start,end)+app.slice(parserStart,parserEnd)+`;globalThis.__weeklyDiagnostic={fpProxyRequest,proxyCall,deriveSleeperNflWeek,summarizeWeeklyProjectionPayload,weeklyProjectionFailure,runAuthenticatedWeeklyProjectionDiagnostic,formatAuthenticatedWeeklyProjectionDiagnostic,runCurrentWeekRankDiagnostic,runSelectedPittiPanelDiagnostic,weeklyEvidencePersistenceDiagnostic,startSitCompletionDiagnostic,runCanonicalGameContextDiagnostic,runPhysicalEvidenceLaneDiagnostic,formatPhysicalEvidenceLaneDiagnostic};`;
+const productionSource=app.slice(start,end)+app.slice(parserStart,parserEnd)+app.slice(app.indexOf('let seasonDecisionSources='),app.indexOf('function seasonDecisionReadLearning('))+`;globalThis.__weeklyDiagnostic={fpProxyRequest,proxyCall,deriveSleeperNflWeek,summarizeWeeklyProjectionPayload,weeklyProjectionFailure,runAuthenticatedWeeklyProjectionDiagnostic,formatAuthenticatedWeeklyProjectionDiagnostic,runCurrentWeekRankDiagnostic,runSelectedPittiPanelDiagnostic,weeklyEvidencePersistenceDiagnostic,startSitCompletionDiagnostic,runCanonicalGameContextDiagnostic,runPhysicalEvidenceLaneDiagnostic,formatPhysicalEvidenceLaneDiagnostic};`;
 const source=productionSource.replace('const FP_REQUEST_START_INTERVAL_MS=1100;','const FP_REQUEST_START_INTERVAL_MS=0;');
 const secretSentinel='SENSITIVE_SENTINEL_DO_NOT_RENDER';
 const fixedNow=Date.parse('2026-09-19T12:00:00Z');

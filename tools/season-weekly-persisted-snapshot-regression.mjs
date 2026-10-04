@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 
 const app=fs.readFileSync(new URL('../app.js',import.meta.url),'utf8');
+const acquisitionSource=app.slice(app.indexOf('let seasonDecisionSources='),app.indexOf('function seasonDecisionReadLearning('))+app.slice(app.indexOf('function seasonAcquisitionHttpReason('),app.indexOf('function seasonAcquisitionDirectory('))+sourceOf('diagnosticRetryAfter');
 function sourceOf(name,{async=false}={}){
   const marker=`${async?'async ':''}function ${name}(`,start=app.indexOf(marker);
   assert(start>=0,`${name} missing`);
@@ -44,7 +45,7 @@ const context={
 };
 context.globalThis=context;
 vm.createContext(context);
-vm.runInContext(sourceOf('refreshSeasonGameContext',{async:true}),context);vm.runInContext(sourceOf('refreshSeasonRankings',{async:true}),context);
+vm.runInContext(acquisitionSource+'\n'+sourceOf('refreshSeasonGameContext',{async:true}),context);vm.runInContext(sourceOf('refreshSeasonRankings',{async:true}),context);
 
 const result=await context.refreshSeasonRankings({force:true,trigger:'quota-regression'});
 assert.equal(writes,2,'projection-stage and final snapshots must both be persisted');
