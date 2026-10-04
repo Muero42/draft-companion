@@ -1,3 +1,13 @@
+Generation: `20261004T2239Z-v304`
+Handoff generation: `20261004T2239Z-v304`
+
+v11.8.0-rc4.227 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / ANDROID PHYSICAL PENDING.
+RC4.227 release-bound local candidate; exact-head cloud validation requires a separately authorized publication package. Production remains rc4.226 on 31e915fd6cce95ee9ec073c00113c8a2fc9e26c4. No push, PR, merge, deployment or RC4.227 Android acceptance is proven.
+
+User evidence on rc4.226: FantasyPros primary projections AVAILABLE; selected filtered consensus AVAILABLE and not individual votes; adaptive coverage/weights zero, weightedExpertRank null. No retrospective individual history is invented.
+
+## HISTORICAL v303 and earlier (immutable evidence)
+
 Generation: `20261004T0557Z-v303`
 Handoff generation: `20261004T0557Z-v303`
 

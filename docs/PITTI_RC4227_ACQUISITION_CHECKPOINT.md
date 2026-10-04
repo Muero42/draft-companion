@@ -257,3 +257,107 @@ Files in this bounded commit (16):
 - `tools/season-weekly-rank-retry-regression.mjs`
 - `tools/fixtures/rc4227/local-candidate.json`
 - `tools/season-rc4227-normal-acquisition-regression.mjs`
+
+## RC4.227 release binding / Authority reconciliation
+
+Functional parent: 5f45a42d27bab64063b7e0c7dfb738c2d1094382.
+Runtime version/cache/manifest is now v11.8.0-rc4.227. Eighteen-file parity against
+that parent proves byte-identical product logic after replacing only the version
+literal. No projection, expert, diagnostic, localStorage or decision logic changed.
+
+Current candidate vocabulary: RELEASE_CANDIDATE_UNMERGED. Publication readiness
+is represented separately from publication: local-candidate.unpublished remains
+true, publicationReady=true, Production/providerContractVerified=false and Android
+PENDING. HEAD/tree bind directly from Git after the single local commit; no
+self-referential guessed hash is stored. The functional parent remains explicit.
+
+Generation convention is UTC timestamp plus one increment from the coupled v303
+CURRENT/LOCK/COMMAND/SEAL: 20261004T2239Z-v304 (2026-10-05 in Europe/Berlin).
+All six current-facing handoff/readme prefixes carry that generation; their full
+previous bytes remain under HISTORICAL. Original rc4.226 authority/runtime fixtures
+and all historical source/Production receipts remain immutable. New rc4.227 pins
+protect current candidate aliases, Production separation and structural seal.
+
+Production remains rc4.226 on main 31e915fd6cce95ee9ec073c00113c8a2fc9e26c4,
+tree 859a10fe9d824c4a39fdbf0c5716ff576084eb06. User's current rc4.226 diagnostic
+evidence is recorded separately: FantasyPros primary projections and filtered
+selected consensus AVAILABLE; adaptive coverage/weights zero, weighted rank null.
+Selected consensus is not individual votes; historical null accuracy/sampleWeeks
+zero is not replaced with invented retrospective evidence. RC4.227 physical PENDING.
+
+Focused release/version/cache/manifest/runtime parity, preservation/overclaim
+negatives, authority/seal and diff gates are being completed before the one full
+Strict run for this new release-binding tree. No push/PR/merge/deployment/device
+work is authorized here. Next gate after the tested commit is a separate exact-head
+publication package; never promote from historical rc4.226 CI.
+
+Focused release/authority/seal/startup/cache/Boone-parity/syntax/diff checks PASS.
+Runtime parity is eighteen files against the exact functional parent. The prior
+Boone fixture also preserves its own seventeen-file legacy parity scope.
+
+Release-binding file classification:
+
+- `HANDOFF_COMPLETENESS_MATRIX.md`: RELEASE_DOC_REQUIRED_BY_GUARD
+- `NEW_CHAT_HANDOFF_CURRENT.md`: RELEASE_DOC_REQUIRED_BY_GUARD
+- `PITTI_AUTO_PREFLIGHT.md`: RELEASE_DOC_REQUIRED_BY_GUARD
+- `PITTI_COMMAND_CONTRACTS.json`: CANDIDATE_AUTHORITY
+- `PITTI_CURRENT_STATE.json`: CANDIDATE_AUTHORITY
+- `PITTI_EXECUTION_LOCK.json`: CANDIDATE_AUTHORITY
+- `PITTI_HANDOFF_SEAL.json`: SEAL
+- `PITTI_NEW_CHAT_BOOTSTRAP.md`: RELEASE_DOC_REQUIRED_BY_GUARD
+- `PITTI_PROJECT_STATE.md`: RELEASE_DOC_REQUIRED_BY_GUARD
+- `README.md`: RELEASE_DOC_REQUIRED_BY_GUARD
+- `app.js`: VERSION_BINDING
+- `docs/PITTI_RC4227_ACQUISITION_CHECKPOINT.md`: RELEASE_DOC_REQUIRED_BY_GUARD
+- `index.html`: VERSION_BINDING
+- `manifest.webmanifest`: MANIFEST_BINDING
+- `sw.js`: CACHE_BINDING
+- `tools/fixtures/rc4227/local-candidate.json`: TEST/FIXTURE_DIRECTLY_REQUIRED
+- `tools/handoff-seal-reseal.mjs`: SEAL
+- `tools/pitti_guardrail_check.mjs`: TEST/FIXTURE_DIRECTLY_REQUIRED
+- `tools/postmerge-authority-contract.mjs`: TEST/FIXTURE_DIRECTLY_REQUIRED
+- `tools/postmerge-authority-regression.mjs`: TEST/FIXTURE_DIRECTLY_REQUIRED
+- `tools/season-boone-production-parity-regression.mjs`: TEST/FIXTURE_DIRECTLY_REQUIRED
+- `tools/fixtures/rc4227/authority-digests.json`: TEST/FIXTURE_DIRECTLY_REQUIRED
+- `tools/rc4227-authority.mjs`: TEST/FIXTURE_DIRECTLY_REQUIRED
+- `tools/season-rc4227-release-binding-regression.mjs`: TEST/FIXTURE_DIRECTLY_REQUIRED
+
+The release-binding parity regression now uses a sealed immutable functional
+baseline extracted directly from Git at 5f45a42d, rather than requiring the feature
+branch checkout name or its old commit object during future detached-head/cloud
+or postmerge validation. It compares normalized runtime Git blobs, historical
+Production receipt digests and full retained historical document digests. No
+product behavior changed. `tools/fixtures/rc4227/functional-baseline.json` is
+TEST/FIXTURE_DIRECTLY_REQUIRED. Total bounded release-binding files: 25.
+
+### Release-binding Strict run — sandbox-only failure
+
+The one authorized full run completed with 292/294 PASS. Both failed entries
+are the same cloud-foundation-regression.mjs, discovered by workflow and run again
+by the suite's cloud-foundation entry. Its first failing operation was local
+`git init -b main`: the managed sandbox denied writing temporary .git/config.
+No release, authority, runtime or product assertion failed. No test/code change
+was made for this environment failure. A focused run with technical sandbox
+permission completed CLOUD_FOUNDATION_REGRESSION_PASS, all 63 cases.
+
+A second full run has not been executed. The user has been asked for the explicit
+budget exception required by section I. No commit may be created until the
+complete suite is green. Runtime and release-test bytes remain unchanged from
+the first run; all work remains preserved locally. No publication occurred.
+
+### Authorized second Strict / final local release validation
+
+The user explicitly authorized exactly one second complete Strict run with the
+technical sandbox permission needed by temporary Git fixture repositories.
+That run completed **294/294 PASS**, exit 0. No source or test code changed
+between the first and second full runs. The first 292/294 result remains recorded
+above as the sandbox-only failure; there was no third full run.
+
+Release binding, eighteen-file functional parity, authority and version/cache
+checks are green. Final checkpoint and seal-hash reconciliation records this
+result without changing product behavior or claiming cloud/Production/Android
+acceptance. Exactly one local release-binding commit follows, then Git-read
+branch/HEAD/tree/parent/clean-worktree verification and STOP.
+
+Next gate: READY_FOR_EXACT_HEAD_PUBLICATION under a separate publication package.
+No push, PR, merge or deployment is authorized or performed in this gate.

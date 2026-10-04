@@ -1,0 +1,53 @@
+{
+  "schema": "pitti.rc4227.functional-baseline.v1",
+  "head": "5f45a42d27bab64063b7e0c7dfb738c2d1094382",
+  "runtimeBlobs": {
+    "index.html": "545bfde55a985bd8761037b9f1a27cee5f471d64",
+    "app.js": "bd8d44ea4bcad17fe2348ce63e427c1098d33bcc",
+    "season-decision-engine-v1.mjs": "27ed0ec81aec7c2fcdc073f37132375f2b446b49",
+    "decision-policy.js": "d2e2f58b020e3c5c3f4c42c717677a4e81f0833a",
+    "weekly-evidence-v2.js": "13e3d1b94e978c2f63baa4cf1d2f1ca8c251f414",
+    "lineup-start-sit-v2.js": "bb9f7b08a6eb895f42f34abf8c2eb074a581a0e6",
+    "game-context-v1.js": "e3101c8cb6213b48d1a4032c31bf0ffa2ae3689e",
+    "boone-trade-values-v1.mjs": "0f517562a594f8362fa64e024a53e378d377cbac",
+    "styles.css": "19b36d1fad8d67d28e8f01a8440015b73202d667",
+    "manifest.webmanifest": "ae8d308ee5f15165f96d1d11940ecff6ee4cedd8",
+    "sw.js": "8645d11fa99d97dafba110cdb3fb0b7d39e0f699",
+    "_worker.js": "93205052cce488f99083e0bf7f27ad6bc75f4be3",
+    "icon.svg": "14c9ef925901ed72ed38f30a512157e2d8c67f51",
+    "live-surface-v3.js": "23e0e2d34da2f392d1448cf0ef2de3282d6dc6f8",
+    "live-surface-v3.css": "800dfa60dc708196306642a145633086934a323a",
+    "expert-board-export.js": "86f9ab6deac3729328ae3506d6d04f940b733e90",
+    "expert-v2-board.js": "6920163c56e93306f9ab49ae7619ade724703830",
+    "expert-v3-board.js": "b8e869f5384e5dc2a0f353e632ecfabf7958debd"
+  },
+  "preservedAuthorityDigests": {
+    "rc4210_pr198_source_production": "6dc0952402566970454dbb9a7875563becb2438e081e584a9b1eec655ee48244",
+    "rc4214_source_production": "86280eb2da99375f0f081d5360848106ef39e6d7653b1bd6a408488843b9468f",
+    "rc4215_source_production": "f1036f7e0aeb2fedef1baedfdadd097db6d0fde5a6303488644052903df9b6b7",
+    "rc4216_source_production": "1662e26ea1259acfe4ebf6ade00f3fca85ca45f727dec486e820650395885a98",
+    "rc4217_source_production": "c7ccbf05391f0b06ef5b3501c8c04dcdc8e939fa66a53342f701e6d34b9b6c50",
+    "rc4218_source_production": "b0bbc5153118be6b1792ff32e5e3c09a9bb41438d8eab4006bb2bcd19ca86153",
+    "rc4219_source_production": "649c198c2b724742a81a05522eeedbe313a3395747ec5753fb3eeaf3d258dd3d",
+    "rc4220_source_production": "92803b55b41d7b6c99bb2e383fe943c3345bda4302e136f1fe16122d39659d7b",
+    "rc4221_source_production": "0f42be19bfa65907539e424de20b7058e1c32e1e6d4574517b44d21e1bf60457",
+    "rc4222_source_production": "9ca852902c9e6585c80a05e477b7a29affc5fc845601f9578516a8b337f37abf",
+    "rc4223_source_production": "93577e892ec95ffec6b5284d761aae23dea9013d938b19d0fab40806300024c1",
+    "rc4223_android_core_acceptance": "f9cde6778ad2cab976a83b5473e444fcf63c45b5f78f5cf387fc2164b15b28ce",
+    "rc4223_minor_ui_source_production": "56b1a17cf58da64ec15e057a11e58aebded6388ffc6ca2a5685c3810f30eb11c",
+    "rc4224_source_production": "9ccd5d675bd9621ced85247a9830d81f66b8604bd9644968ed3a0eae584e0f89",
+    "rc4225_source_production": "24576334a8dcf7cc4846e38fb004fb7a8340dc4f1e04cd3d6f85871b4da4a93c",
+    "rc4225_initial_source_production": "08b447731892a2746244a7e1b743b27f1b01434ea39e12f53fa14e910f9f5e7a",
+    "rc4226_source_production": "7d112da5f68e3878a4c620dd36bb5c3175a6197d815a012a02b77912ad129b99"
+  },
+  "productionDeploymentDigest": "6a0cb05f0cada131a9bab7c84db10cc75d480be4a3af64b601d5d18a1d8fd23b",
+  "productionCiDigest": "99cde3f9d94c2607d4dbcbcd51b90311926d9ca4775b70589291d9cffd12bc13",
+  "historicalDocumentDigests": {
+    "PITTI_NEW_CHAT_BOOTSTRAP.md": "da05cac4f629708683c38bcef9809577cf0ac51fc1973cd45cae35063321de0a",
+    "NEW_CHAT_HANDOFF_CURRENT.md": "4f2c6a872c1ec92174a7e14917cc439692aa42a5255aba1c0f7f622c090b2a10",
+    "HANDOFF_COMPLETENESS_MATRIX.md": "91233bcf4b30fdc9997476899402365cf5ce37a84c7d27f4964dcc0c4db4a39f",
+    "PITTI_AUTO_PREFLIGHT.md": "322a63e220d775bf19b563f5e9b4cc50f6216891fd0b6ea57014ef3c9cc274ff",
+    "PITTI_PROJECT_STATE.md": "b5cf58d0e199cde8f597feb8f6c533894a7654d6c7a3e3b94591401f2ce03342",
+    "README.md": "49bdbc7e4292c01734caab0c8b404528219299f5cb518c7d551bea5ebe161d85"
+  }
+}
