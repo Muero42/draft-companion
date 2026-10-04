@@ -7,6 +7,8 @@ if(seal.status!=='PASS'||seal.handoff_ready!==true||seal.second_pass_pass!==true
 if(seal.integrity_algorithm!=='git_blob_sha1'||seal.integrity_normalization!=='UTF8_LF_TEXT')throw new Error('unsupported seal convention');
 
 const additions=[
+  'docs/PITTI_RC4226_RELEASE_REPORT.md',
+  'docs/PITTI_RC4226_PRODUCTION_RECEIPT.json',
   'season-decision-engine-v1.mjs',
   'docs/PITTI_RC4226_ADAPTIVE_DECISION_AUDIT.md',
   'tools/season-rc4226-adaptive-decision-regression.mjs',
