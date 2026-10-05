@@ -1,8 +1,9 @@
+import {rc4228HistoricalApp} from './rc4229-diagnostic-baseline.mjs';
 // Synthetic structural fixtures only: no captured or authenticated provider evidence.
 import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';
 import * as engine from '../season-decision-engine-v1.mjs';import weekly from '../weekly-evidence-v2.js';
 import {rc4227HistoricalApp} from './rc4228-diagnostic-baseline.mjs';import crypto from 'node:crypto';
-const app=fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n'),start=app.indexOf('// BEGIN RC4228 DIAGNOSTIC ONLY'),end=app.indexOf('// END RC4228 DIAGNOSTIC ONLY'),now=Date.parse('2026-10-05T08:00:00Z'),secret='SECRET_SENTINEL_NEVER_EXPORT';
+const app=rc4228HistoricalApp(fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n')),start=app.indexOf('// BEGIN RC4228 DIAGNOSTIC ONLY'),end=app.indexOf('// END RC4228 DIAGNOSTIC ONLY'),now=Date.parse('2026-10-05T08:00:00Z'),secret='SECRET_SENTINEL_NEVER_EXPORT';
 const players=Object.fromEntries(Array.from({length:engine.POLICY.depth.QB},(_,i)=>[String(i+1),{full_name:'Synthetic QB '+i,position:'QB',team:'BUF',fantasy_data_id:i+1}]));
 const payload={season:2026,week:4,position_id:'QB',scoring:'HALF',ranking_type_name:'weekly',expert_name:{317:'Justin Boone'},total_experts:1,filters:'317',last_updated:'10/05',players:Object.entries(players).map(([id,p],i)=>({fpid:Number(id),name:p.full_name,position_id:'QB',team_id:'BUF',rank_ecr:i+1,rank_min:i+1,rank_max:i+1,rank_ave:i+1}))};
 const expert={id:'317',name:'Justin Boone',sourceUpdatedAt:now-1000};
