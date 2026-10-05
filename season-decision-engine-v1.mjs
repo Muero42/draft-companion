@@ -7,8 +7,26 @@ export const POLICY=Object.freeze({priorWeeks:6,movement:.03,maxWeight:.30,minEx
 const finite=x=>typeof x==='number'&&Number.isFinite(x),clamp=(x,a,b)=>Math.max(a,Math.min(b,x));
 export const phaseForWeek=w=>w===0?'PRE_W1':w>=1&&w<=3?'EARLY':w<=8&&w>=4?'MID':w<=14&&w>=9?'LATE':w<=18&&w>=15?'PLAYOFF':'UNAVAILABLE';
 export function individualPayloadValid(payload,{season,week,position,expertId,expertName,sourceUpdatedAt,now=Date.now()}={}){
+  return individualPayloadReason(payload,{season,week,position,expertId,expertName,sourceUpdatedAt,now})===null;
+}
+// Diagnose the existing strict contract without accepting any unproven provider shape.
+export function individualPayloadReason(payload,{season,week,position,expertId,expertName,sourceUpdatedAt,now=Date.now()}={}){
   const names=payload?.expert_name,ids=names&&typeof names==='object'&&!Array.isArray(names)?Object.keys(names):[];
-  return Number(payload?.season??payload?.year)===season&&Number(payload?.week)===week&&String(payload?.position??payload?.position_id)===position&&payload?.scoring==='HALF'&&payload?.ranking_type_name==='weekly'&&ids.length===1&&ids[0]===String(expertId)&&names[expertId]===expertName&&Number(payload.total_experts)===1&&String(payload.filters)===String(expertId)&&finite(sourceUpdatedAt)&&sourceUpdatedAt<=now&&now-sourceUpdatedAt<=72*3600000&&Array.isArray(payload.players)&&payload.players.length>=POLICY.depth[position]&&payload.players.every(r=>String(r.position_id??r.player_position_id)===position&&Number.isInteger(Number(r.rank_ecr))&&Number(r.rank_ecr)>0&&Number(r.rank_min)===Number(r.rank_ecr)&&Number(r.rank_max)===Number(r.rank_ecr)&&Number(r.rank_ave)===Number(r.rank_ecr));
+  if(Number(payload?.season??payload?.year)!==season)return 'WRONG_SEASON';
+  if(Number(payload?.week)!==week)return 'WRONG_WEEK';
+  if(String(payload?.position??payload?.position_id)!==position)return 'WRONG_POSITION';
+  if(payload?.scoring!=='HALF')return 'WRONG_SCORING';
+  if(payload?.ranking_type_name!=='weekly')return 'WRONG_RANKING_TYPE';
+  if(ids.length!==1||ids[0]!==String(expertId)||names[expertId]!==expertName)return 'EXPERT_IDENTITY_MISMATCH';
+  if(Number(payload.total_experts)!==1)return 'TOTAL_EXPERTS_NOT_ONE';
+  if(String(payload.filters)!==String(expertId))return 'FILTER_NOT_HONORED';
+  if(!finite(sourceUpdatedAt)||sourceUpdatedAt>now||now-sourceUpdatedAt>72*3600000)return 'STALE_SOURCE';
+  if(!Array.isArray(payload.players))return 'MISSING_PLAYERS';
+  if(payload.players.length<POLICY.depth[position])return 'INSUFFICIENT_DEPTH';
+  if(payload.players.some(r=>!r||typeof r!=='object'))return 'UNVERIFIED_RANK_VALUE';
+  if(payload.players.some(r=>String(r.position_id??r.player_position_id)!==position))return 'WRONG_POSITION';
+  if(!payload.players.every(r=>Number.isInteger(Number(r.rank_ecr))&&Number(r.rank_ecr)>0&&Number(r.rank_min)===Number(r.rank_ecr)&&Number(r.rank_max)===Number(r.rank_ecr)&&Number(r.rank_ave)===Number(r.rank_ecr)))return 'UNVERIFIED_RANK_VALUE';
+  return null;
 }
 const unavailable=(reason='SOURCE_UNAVAILABLE')=>({status:'UNAVAILABLE',grade:'UNKNOWN',confidence:0,signals:[],reason});
 export function cappedWeights(raw,cap=POLICY.maxWeight){

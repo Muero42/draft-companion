@@ -7,7 +7,7 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.226">
+  <link rel="stylesheet" href="live-surface-v3.css?v=v11.8.0-rc4.227">
   <title>PITTI Season Companion 2026</title>
 
 <style id="workspaceStyles">
@@ -22,7 +22,7 @@
       <h1>PITTI Companion</h1>
       <p>Live-Kader, Waiver, Aufstellung, Trades und News.</p>
     </div>
-    <span class="version">v11.8.0-rc4.226</span>
+    <span class="version">v11.8.0-rc4.227</span>
   </header>
 
   <nav class="workspace-nav" aria-label="Arbeitsbereich">
@@ -209,6 +209,7 @@
   <details class="card advanced-card">
     <summary>⚙️ Erweitert</summary>
     <div class="advanced-section" data-season-only><h3>Season-Daten und Details</h3><button id="seasonDiagnosticCopyBtn" class="secondary" type="button">Daten-Diagnose kopieren</button>
+    <button id="seasonAcquisitionAuditBtn" class="secondary" type="button">Akquisition gezielt diagnostizieren</button>
     <p id="seasonDiagnosticStatus" class="tiny">Aktuelle Kader-Abdeckung und Datenquellen · ohne Zugangsdaten.</p>
     <textarea id="seasonDiagnosticOutput" hidden readonly aria-label="Daten-Diagnose zum Kopieren"></textarea><details><summary>Spieler-Datenquellen</summary><pre id="seasonRosterProvenance" class="diagnostic"></pre></details><details><summary>Start/Sit-Details</summary><pre id="seasonHealthDetails"></pre><pre id="seasonOptimizerDetails" class="diagnostic"></pre></details></div>
     <div class="advanced-section">
@@ -258,16 +259,16 @@
       <p class="tiny">Backups enthalten niemals den API-Key.</p>
     </div>
   </details>
-<div class="freeze-note">v11.8.0-rc4.226: stale Week-1 Special Teams evidence is time-guarded; selected PITTI identity and canonical game-context validation remain fail-closed.</div>
+<div class="freeze-note">v11.8.0-rc4.227: stale Week-1 Special Teams evidence is time-guarded; selected PITTI identity and canonical game-context validation remain fail-closed.</div>
 <button id="analysisJumpV3" class="snapshot-jump" type="button" aria-label="Zur Analyse" hidden>↓</button>
 </main>
-<script src="live-surface-v3.js?v=v11.8.0-rc4.226" defer></script>
-<script src="weekly-evidence-v2.js?v=v11.8.0-rc4.226" defer></script>
-<script src="lineup-start-sit-v2.js?v=v11.8.0-rc4.226" defer></script>
-<script src="game-context-v1.js?v=v11.8.0-rc4.226" defer></script>
+<script src="live-surface-v3.js?v=v11.8.0-rc4.227" defer></script>
+<script src="weekly-evidence-v2.js?v=v11.8.0-rc4.227" defer></script>
+<script src="lineup-start-sit-v2.js?v=v11.8.0-rc4.227" defer></script>
+<script src="game-context-v1.js?v=v11.8.0-rc4.227" defer></script>
 <script src="expert-v2-board.js?v=20260826"></script>
 <script src="expert-v3-board.js?v=20260828a"></script>
-<script type="module" src="app.js?v=v11.8.0-rc4.226"></script>
+<script type="module" src="app.js?v=v11.8.0-rc4.227"></script>
 <script src="expert-board-export.js?v=20260826e" defer></script>
 <script>if('serviceWorker' in navigator){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.warn));}</script>
 </body>

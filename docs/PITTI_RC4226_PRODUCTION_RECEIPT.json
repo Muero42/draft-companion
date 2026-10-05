@@ -1,0 +1,170 @@
+{
+  "checkpoint": "v303",
+  "version": "v11.8.0-rc4.226",
+  "pr": 229,
+  "reviewed_head": "49e15386373d00266817fdf7377ffe766cacf17a",
+  "reviewed_tree": "859a10fe9d824c4a39fdbf0c5716ff576084eb06",
+  "merge_commit": "31e915fd6cce95ee9ec073c00113c8a2fc9e26c4",
+  "merged_tree": "859a10fe9d824c4a39fdbf0c5716ff576084eb06",
+  "canonical_parent": "c4f067a0ee9acb0d91f46ac6f9e116d073d2f915",
+  "merge_method": "SQUASH",
+  "merged_at": "2026-10-03T21:35:11Z",
+  "source_status": "MERGED_CANONICAL",
+  "production_status": "DEPLOYED_SUCCESS",
+  "production_branch": "main",
+  "production_deployment_id": "5a108780-9443-4ed0-9e1c-f784a1eb0c48",
+  "cloudflare_check_run_id": 111298370004,
+  "production_deployment_proven": true,
+  "decision_sources": {
+    "http": 200,
+    "records": 949,
+    "completedWeeks": [
+      1,
+      2,
+      3
+    ],
+    "directories": {
+      "RB": 171,
+      "QB": 171,
+      "TE": 171,
+      "WR": 171
+    },
+    "failures": {}
+  },
+  "premerge_exact_head_ci": "5/5 SUCCESS",
+  "premerge_cloud_job": 111297938370,
+  "cloud_strict": "287/287 PASS",
+  "cloud_job": 111298290128,
+  "postmerge_checks": "8/8 SUCCESS",
+  "postmerge_check_runs": [
+    {
+      "id": 111298370004,
+      "name": "Cloudflare Pages",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "31e915fd6cce95ee9ec073c00113c8a2fc9e26c4",
+      "url": "https://github.com/Muero42/draft-companion/runs/111298370004",
+      "externalId": "5a108780-9443-4ed0-9e1c-f784a1eb0c48"
+    },
+    {
+      "id": 111298291312,
+      "name": "draft-critical",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "31e915fd6cce95ee9ec073c00113c8a2fc9e26c4",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37155621971/job/111298291312",
+      "externalId": "5e37f368-067b-50ba-ad4c-a388df164896"
+    },
+    {
+      "id": 111298290715,
+      "name": "draft-critical",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "31e915fd6cce95ee9ec073c00113c8a2fc9e26c4",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37155621769/job/111298290715",
+      "externalId": "4387063c-31f2-50fc-8b9f-676d40cc1c75"
+    },
+    {
+      "id": 111298290669,
+      "name": "behavioral-contract",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "31e915fd6cce95ee9ec073c00113c8a2fc9e26c4",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37155621780/job/111298290669",
+      "externalId": "ba535557-3c6d-5b4f-8b43-182c9f233953"
+    },
+    {
+      "id": 111298290528,
+      "name": "draft-critical",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "31e915fd6cce95ee9ec073c00113c8a2fc9e26c4",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37155621693/job/111298290528",
+      "externalId": "71d49d4e-f06f-5287-9098-4dc71cb0252e"
+    },
+    {
+      "id": 111298290376,
+      "name": "guardrails",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "31e915fd6cce95ee9ec073c00113c8a2fc9e26c4",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37155621735/job/111298290376",
+      "externalId": "3026f831-086a-5c9f-be78-9024c2032761"
+    },
+    {
+      "id": 111298290311,
+      "name": "package",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "31e915fd6cce95ee9ec073c00113c8a2fc9e26c4",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37155621709/job/111298290311",
+      "externalId": "245e0174-9788-53c1-b1ae-a533e50fe2fa"
+    },
+    {
+      "id": 111298290128,
+      "name": "pitti-cloud-validation",
+      "status": "completed",
+      "result": "SUCCESS",
+      "head": "31e915fd6cce95ee9ec073c00113c8a2fc9e26c4",
+      "url": "https://github.com/Muero42/draft-companion/actions/runs/37155621688/job/111298290128",
+      "externalId": "7beab369-8f42-595e-8a35-8a506d44fd8e"
+    }
+  ],
+  "served_static_files": 18,
+  "served_static_parity": "PASS_UTF8_LF",
+  "runtime_files": 18,
+  "browser_review": "PASS",
+  "browser_scope": "EXACT_HEAD_CLOUD_OFFLINE_MOBILE_EMULATION",
+  "mobile_widths": [
+    360,
+    390,
+    430
+  ],
+  "rawDirectoryRequests": 0,
+  "compactDirectoryRequests": 1,
+  "uncaught_browser_errors": 0,
+  "transient_hold_empty": true,
+  "replacement_render_complete": true,
+  "actual_scores": {
+    "source": "https://api.sleeper.app/v1/league/1366053132957646848/matchups/4",
+    "rosterId": 4,
+    "rows": 10,
+    "CLE": 9,
+    "Judkins": 18.6
+  },
+  "game_context": {
+    "source": "https://draft-companion.pages.dev/api/nfl-week-context?season=2026&week=4",
+    "http": 502,
+    "upstreamStatus": 403,
+    "status": "UNAVAILABLE_FAIL_CLOSED",
+    "events": 0,
+    "CLE_PIT": "NOT_PROVEN_BY_PRODUCTION_ENDPOINT",
+    "independentDirectSource": {
+      "url": "https://cdn.espn.com/core/nfl/scoreboard?xhr=1&year=2026&seasontype=2&week=4",
+      "http": 200,
+      "CLE_PIT": "FINAL"
+    }
+  },
+  "league_scoring": {
+    "week": 4,
+    "receivingPoints": 0.5
+  },
+  "matchup_limitation": "NO_REPEATABLE_CURRENT_WR_CB_SOURCE_PROVEN_NO_RUNTIME_NAMES",
+  "historical_rc4223_core_acceptance": "USER_CONFIRMED_PASS_PRESERVED",
+  "physical_status": "PENDING",
+  "physical_classification": "RC4226_ANDROID_UI_ACCEPTANCE_PENDING",
+  "physical_acceptance_proven": false,
+  "agent_physical_test": false,
+  "evidence_source": "LIVE_GITHUB_AND_PRODUCTION_VERIFIED",
+  "observed_at": "2026-10-04T05:57:26Z",
+  "production_functional_surface_status": "STATIC_AND_NEW_SOURCES_PASS_EXISTING_ESPN_UPSTREAM_DEGRADED",
+  "matchup": {
+    "http": 200,
+    "status": "VERIFIED",
+    "sourceUrl": "https://www.fantasypros.com/nfl/matchups/wr.php",
+    "teams": 32,
+    "directDefenders": "UNAVAILABLE"
+  },
+  "adversarial_review": "PASS_CORRECTED: source anonymous rows, FA shape, diagnostic rationale, normalized axes and startup/package contracts repaired; no test weakening; final exact-head287/287",
+  "learning_limitations": "CURRENT_2026_ACCURACY_INSUFFICIENT; prospective exact prelock learning; current individual ranks/effective weights not physically verified; unproven votes zero"
+}

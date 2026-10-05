@@ -1,3 +1,26 @@
+Generation: `20261004T2239Z-v304`
+Handoff generation: `20261004T2239Z-v304`
+
+v11.8.0-rc4.227 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / ANDROID PHYSICAL PENDING.
+RC4.227 release-bound local candidate; exact-head cloud validation requires a separately authorized publication package. Production remains rc4.226 on 31e915fd6cce95ee9ec073c00113c8a2fc9e26c4. No push, PR, merge, deployment or RC4.227 Android acceptance is proven.
+
+User evidence on rc4.226: FantasyPros primary projections AVAILABLE; selected filtered consensus AVAILABLE and not individual votes; adaptive coverage/weights zero, weightedExpertRank null. No retrospective individual history is invented.
+
+## HISTORICAL v303 and earlier (immutable evidence)
+
+Generation: `20261004T0557Z-v303`
+Handoff generation: `20261004T0557Z-v303`
+
+v11.8.0-rc4.226 SOURCE / PRODUCTION DEPLOYED / DEPLOYED_SUCCESS; PR229 squash merged 31e915fd6cce95ee9ec073c00113c8a2fc9e26c4, reviewed 49e15386373d00266817fdf7377ffe766cacf17a, tree 859a10fe9d824c4a39fdbf0c5716ff576084eb06, deployment 5a108780-9443-4ed0-9e1c-f784a1eb0c48. ANDROID UI ACCEPTANCE PENDING / NOT PHYSICALLY ACCEPTED. Historical rc4.223 core repaired functionality USER_CONFIRMED PASS preserved; no agent physical test. Next gate: RC4226_ANDROID_UI_ACCEPTANCE_PENDING.
+
+RC4.226 merged and Production verified; STOP at Android UI acceptance PENDING. User reviews Kader on real Android. Historical rc4.223 core repaired functionality PASS preserved. Local v303 Authority commit is not published or certified by historical runtime CI.
+
+See docs/PITTI_RC4226_ADAPTIVE_DECISION_AUDIT.md and docs/PITTI_RC4226_PRODUCTION_RECEIPT.json.
+
+Current Production ESPN week-context acquisition returns HTTP502 / upstream403 from Worker; direct primary source returns200 and FINAL. Existing Runtime path unchanged; failed context remains unavailable/fail-closed. New decision sources VERIFIED949records/completed1–3/all4directories; all17staticassets match main. Deployment and exact-headCI PASS do not prove full current live surface or Android acceptance.
+
+## HISTORICAL v302 and earlier (immutable evidence)
+
 Generation: `20261003T2124Z-v302`
 Handoff generation: `20261003T2124Z-v302`
 
