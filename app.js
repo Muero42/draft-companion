@@ -1113,7 +1113,7 @@ function seasonIndividualRankRouteShape(payload,{season,week}){
   const expertCountConsistent=!counts.truncated&&counts.found.length<=1&&(counts.found.length===0||integer(counts.found[0].value)===ids?.length);
   const chronology=api?.sourceTime?.(payload||{},{season,verifiedAt:Date.now(),allowSeasonDateInference:true});
   const time=chronology?.sourcePublishedAt?Date.parse(chronology.sourcePublishedAt):chronology?.sourcePublishedDate?Date.parse(chronology.sourcePublishedDate):NaN;
-  const age=Date.now()-time,freshChronology=Number.isFinite(age)&&age>=-3600000&&age<=36*3600000;
+  const age=Date.now()-time,freshChronology=Number.isFinite(age)&&age>=0&&age<=36*3600000;
   const depth=engine?.POLICY?.depth?.QB,sufficientDepthAndMapping=Number.isInteger(depth)&&rows.length<=2000&&numericRows>=depth&&mapped.size>=depth*.7&&mapped.size>=numericRows*.7&&ambiguousRows===0;
   return {season:normalizedSeason,week:normalizedWeek,topLevelKeys:['season','week','experts','players','ecr_experts'].filter(k=>payload&&Object.hasOwn(payload,k)),playersCount:rows.length,ecrExpertsExists:!!payload&&Object.hasOwn(payload,'ecr_experts'),expert317Present:ids?.includes(317)===true,expert317Only:ids?.length===1&&ids[0]===317,relevantExpertCount:ids?.length??null,expertMetadataPaths:metadata.found.slice(0,4).map(x=>['ecr_experts',...x.path].join('.')),playerRowKeys:[...rowKeys],rankMetricNames:[...metrics],rankDimensionPaths:[...paths].slice(0,4),numericRows,mappedRows:mapped.size,contextProven,metadataUnambiguous,expertCountConsistent,rankContextProven:rows.length>0&&contextRows===rows.length&&ambiguousRows===0,sufficientDepthAndMapping,freshChronology,strictAccepted:false,rejectionReason:contextProven?null:'FILTERED_CONTEXT_AMBIGUOUS'};
 }
