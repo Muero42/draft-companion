@@ -63,3 +63,15 @@ assert.equal(games.games[0].weather.reason,'INDOOR_NO_WEATHER_REQUIRED');
 assert(games.games.slice(1).every(g=>g.weather.reason==='FRESH_FORECAST_UNAVAILABLE'));
 assert(games.games.every(g=>g.vegas.status==='UNAVAILABLE'));
 console.log('SEASON_RANK_DATE_PRECISION_PASS: W3 previous-date ranks, stale rejection, 488 projections, identity isolation and bounded shape diagnostics');
+
+// The browser persistence fixture follows its explicit clock even across UTC boundaries.
+const {physicalShape}=await import('./fixtures/rc4223/physical-shape.mjs');
+for(const anchor of [undefined,Date.parse('2026-10-05T05:53:00Z'),Date.parse('2026-11-09T23:30:00-08:00')]){
+ const shape=physicalShape(anchor),stamp=new Date(shape.now).toISOString(),date=stamp.slice(5,10).replace('-', '/');
+ assert.deepEqual(shape,physicalShape(anchor),'same anchor gives deterministic fixture');
+ for(const position of evidence.POSITIONS){assert.equal(shape.ranks[position].last_updated,date);assert.equal(shape.selected[position].providerPayload.last_updated,date);}
+ const built=evidence.buildSnapshot({season:shape.season,week:shape.week,scoring:'HALF_PPR',projectionPayloads:shape.projections,projectionPositions:evidence.PROJECTION_POSITIONS,rankingPayloads:shape.ranks,selectedRankingPayloads:shape.selected,sleeperPlayers:shape.players,verifiedAt:shape.now});
+ assert.equal(built.records.length,1585,stamp);
+ assert(built.records.filter(r=>r.metric!=='projected_points').every(r=>r.sourceTimePrecision==='DATE'&&r.sourcePublishedDate===stamp.slice(0,10)));
+}
+console.log('PHYSICAL_SHAPE_TIME_STABLE_PASS default, Oct-05, Nov-10 UTC anchors; 1585 records each');
