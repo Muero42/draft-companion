@@ -26,10 +26,11 @@ for(const [patch,reason]of [[{season:2025},'WRONG_SEASON'],[{week:3},'WRONG_WEEK
 assert.equal(decision.individualPayloadReason(base,{...options,sourceUpdatedAt:now-73*3600000}),'STALE_SOURCE');
 assert.equal(decision.individualPayloadReason({...base,players:base.players.map((r,i)=>i?r:null)},options),'UNVERIFIED_RANK_VALUE');
 const a=context(),[audit,shared]=await Promise.all([a.box.runSeasonAcquisitionAudit(),a.box.runSeasonAcquisitionAudit()]);
-assert.strictEqual(audit,shared);assert.equal(a.calls.length,10,'four shape probes and six primary projections, never whole directory or per-player');
+assert.strictEqual(audit,shared);assert.equal(a.calls.length,10,'four shape probes and six primary projections; unresolved representative is not guessed');
 assert(a.calls.every(c=>c.options.preserveMalformed===true));
 for(const p of decision.POSITIONS){const row=audit.expertAcquisition.byPosition[p];assert.equal(row.activeResolved,decision.CORE[p].length);assert.equal(row.requests[0].result,'STRICT_SHAPE_ACCEPTED_NOT_SNAPSHOT');assert.equal(row.requests[0].mappedRows,decision.POLICY.depth[p]);}
 for(const p of [...decision.POSITIONS,'K','DST']){const row=audit.projectionAcquisition.byPosition[p];assert.equal(row.responseClassification,'SUFFICIENT');assert.equal(row.mappedRows,evidence.MIN_COUNTS[p]);}
+assert.equal(audit.individualRankRouteResearch.reason,'DIRECTORY_ID_UNRESOLVED');
 assert(!JSON.stringify(audit).includes(secret));assert(!JSON.stringify(audit).includes('rawPayload'));
 assert.equal((await a.box.runSeasonAcquisitionAudit()).status,'BACKOFF');assert.equal(a.calls.length,10,'repeated manual audit cannot create a request storm');
 const name=a.box.seasonMissingExpertDiagnostic('Justin Boone');assert.equal(name.name,'Justin Boone');assert.equal(name.id,null);assert.equal(name.reason,'DIRECTORY_ID_UNRESOLVED');

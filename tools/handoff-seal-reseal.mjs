@@ -7,6 +7,12 @@ if(seal.status!=='PASS'||seal.handoff_ready!==true||seal.second_pass_pass!==true
 if(seal.integrity_algorithm!=='git_blob_sha1'||seal.integrity_normalization!=='UTF8_LF_TEXT')throw new Error('unsupported seal convention');
 
 const additions=[
+  'tools/rc4228-authority.mjs',
+  'tools/fixtures/rc4228/release-binding.json',
+  'tools/season-rc4228-release-binding-regression.mjs',
+  'tools/rc4228-diagnostic-baseline.mjs',
+  'tools/season-rc4228-route-diagnostic-regression.mjs',
+  'docs/PITTI_RC4228_ROUTE_DIAGNOSTIC_CHECKPOINT.md',
   'tools/rc4227-authority.mjs',
   'tools/fixtures/rc4227/functional-baseline.json',
   'tools/fixtures/rc4227/authority-digests.json',

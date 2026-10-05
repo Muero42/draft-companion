@@ -2,7 +2,7 @@ import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePol
 import * as SeasonDecision from './season-decision-engine-v1.mjs';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,adaptBooneTradeEvidence,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
 globalThis.PittiSeasonDecisionV1=SeasonDecision;
-const APP_VERSION='v11.8.0-rc4.227';
+const APP_VERSION='v11.8.0-rc4.228';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -1040,10 +1040,45 @@ async function runSeasonAcquisitionAudit(){
       try{const response=await fpProxyRequest(`/nfl/${season}/projections?week=${week}&position=${position}`,{timeoutMs:8000,preserveMalformed:true});Object.assign(entry,{httpStatus:response.status,retryAfterSeconds:diagnosticRetryAfter(response.retryAfterMs),bodyState:response.bodyState||null,rejectionReason:seasonAcquisitionHttpReason(response)});if(!entry.rejectionReason){const summary=summarizeWeeklyProjectionPayload(response.data,{...context,position,status:response.status}),rows=Array.isArray(response.data?.players)?response.data.players:[],api=globalThis.PittiWeeklyEvidenceV2,index=api?.sleeperIndexes?.(lastDraftContext?.players||{});Object.assign(entry,{responseClassification:summary.result,sourceRows:summary.count,numericRows:summary.pointsHalfCount,identityRows:summary.identityCount,mappedRows:index?rows.filter(r=>api.mapFantasyProsPlayer(r,index).ok).length:0,rejectionReason:summary.reason||null,sourcePublishedAt:summary.sourceChronology?.sourcePublishedAt||null,sourcePublishedDate:summary.sourceChronology?.sourcePublishedDate||null});}if([401,403,429].includes(response.status)){stopProjections=true;seasonAcquisitionAuditRetryAt=Math.max(seasonAcquisitionAuditRetryAt,Date.now()+(response.status===429?Math.max(response.retryAfterMs||0,15*60000):3600000));}}
       catch(error){entry.rejectionReason=seasonAcquisitionHttpReason(null,error);}await seasonUiYield();
     }
+    // RC4228 explicit-only route research; never publishes evidence.
+    report.individualRankRouteResearch=await seasonIndividualRankRouteResearch({...context,source,blocked:stopAll||stopExperts||stopProjections});
     seasonAcquisitionAuditRetryAt=Math.max(seasonAcquisitionAuditRetryAt,Date.now()+15*60000);
     return report;
   })();seasonAcquisitionAuditFlight=flight;try{return await flight;}finally{if(seasonAcquisitionAuditFlight===flight)seasonAcquisitionAuditFlight=null;}
 }
+// BEGIN RC4228 DIAGNOSTIC ONLY
+let seasonIndividualRouteRetryAt=0;
+async function seasonIndividualRankRouteResearch({season,week,source,blocked=false}){
+  const result={schema:'pitti.individual-rank-route-research.v1',status:'DIAGNOSTIC_ONLY',candidate:'DOCUMENTED_RANKINGS_WEEK_FILTER',requestedExpertId:'317',requestedExpertName:'Justin Boone',position:'QB',requests:[],adapterImplemented:false};
+  if(blocked||Date.now()<seasonIndividualRouteRetryAt){result.reason='BATCH_STOPPED_OR_BACKOFF';return result;}
+  const expert=seasonAcquisitionDirectory(source,'QB',{season,week}).find(e=>String(e.id)==='317'&&e.name==='Justin Boone');
+  if(!expert){result.reason='DIRECTORY_ID_UNRESOLVED';return result;}
+  const request={candidate:result.candidate,httpStatus:null,retryAfterSeconds:null,bodyState:'NO_RESPONSE',rejectionReason:null};result.requests.push(request);
+  try{
+    // Official /rankings parameters: week, filters, range, rankstats. No undocumented selectors.
+    const response=await fpProxyRequest(`/nfl/${season}/rankings?week=${week}&filters=317&range=true&rankstats=true`,{timeoutMs:8000,preserveMalformed:true});
+    request.httpStatus=Number.isInteger(response.status)?response.status:null;
+    request.retryAfterSeconds=diagnosticRetryAfter(response.retryAfterMs);
+    request.bodyState=['JSON','INVALID_JSON','EMPTY'].includes(response.bodyState)?response.bodyState:'UNKNOWN';
+    Object.assign(request,seasonIndividualRankRouteShape(response.data,{season,week,expert}));
+    request.rejectionReason=seasonAcquisitionHttpReason(response)||request.rejectionReason;
+    if([401,403,429].includes(response.status))seasonIndividualRouteRetryAt=Date.now()+Math.max(response.retryAfterMs||0,response.status===429?15*60000:3600000);
+  }catch(error){request.rejectionReason=seasonAcquisitionHttpReason(null,error);}
+  seasonIndividualRouteRetryAt=Math.max(seasonIndividualRouteRetryAt,Date.now()+15*60000);
+  return result;
+}
+function seasonIndividualRankRouteShape(payload,{season,week,expert}){
+  const api=globalThis.PittiWeeklyEvidenceV2,engine=globalThis.PittiSeasonDecisionV1,now=Date.now(),rows=Array.isArray(payload?.players)?payload.players:[],identity=payload?.expert_name;
+  const ids=identity&&typeof identity==='object'&&!Array.isArray(identity)?Object.keys(identity).filter(id=>/^\d+$/.test(id)).slice(0,20):[];
+  const exact=ids.length===1&&ids[0]==='317'&&identity['317']==='Justin Boone';
+  const chronology=api?.sourceTime(payload||{},{season,verifiedAt:now,allowSeasonDateInference:true}),index=api?.sleeperIndexes(lastDraftContext?.players||{});
+  const rankFields=['rank_ecr','rank_min','rank_max','rank_ave'];
+  let reason=engine?.individualPayloadReason(payload,{season,week,position:'QB',expertId:'317',expertName:'Justin Boone',sourceUpdatedAt:expert.sourceUpdatedAt,now})||(!engine?'DECISION_ENGINE_MODULE_UNAVAILABLE':null);
+  const mapped=index?rows.filter(r=>r&&api.mapFantasyProsPlayer(r,index).ok).length:0;
+  if(!reason){const lane=api.weeklyRankLane({QB:payload},{season,week,scoring:'HALF_PPR',verifiedAt:now,sleeperPlayers:lastDraftContext?.players||{}});if(chronology?.sourceTimePrecision==='UNKNOWN'||chronology?.sourceTimePrecision==='INVALID')reason='STALE_OR_AMBIGUOUS_ROW_TIME';else if(!lane.records.length)reason=lane.lane.coverage.positions.QB.primaryRejectionReason||'STALE_OR_AMBIGUOUS_ROW_TIME';else if(mapped<engine.POLICY.depth.QB*.7)reason='PLAYER_MAPPING_INSUFFICIENT';}
+  return {topLevelType:payload===null?'NULL':Array.isArray(payload)?'ARRAY':typeof payload==='object'?'OBJECT':'OTHER',topLevelKeys:payload&&typeof payload==='object'?Object.keys(payload).filter(k=>['players','season','year','week','position','position_id','scoring','ranking_type_name','expert_name','experts','ecr_experts','total_experts','filters','last_updated','updated_at','date'].includes(k)):[],sourceRows:rows.length,season:Number.isInteger(payload?.season??payload?.year)?payload.season??payload.year:null,week:Number.isInteger(payload?.week)?payload.week:null,position:['QB','RB','WR','TE'].includes(payload?.position??payload?.position_id)?payload.position??payload.position_id:null,scoring:['HALF','PPR','STD'].includes(payload?.scoring)?payload.scoring:null,rankingType:['weekly','ros','draft','overall'].includes(payload?.ranking_type_name)?payload.ranking_type_name:null,returnedExpertIds:ids,returnedExpertNames:exact?['Justin Boone']:[],expertMetadataCount:identity&&typeof identity==='object'?Object.keys(identity).length:0,totalExperts:Number.isInteger(payload?.total_experts)?payload.total_experts:null,selectorEcho:/^\d+(:\d+)*$/.test(String(payload?.filters))?String(payload.filters):null,exactExpertIdentity:exact,rankFields:rankFields.filter(k=>rows.some(r=>typeof r?.[k]==='number'&&Number.isFinite(r[k]))),numericRows:rows.filter(r=>typeof r?.rank_ecr==='number'&&Number.isFinite(r.rank_ecr)).length,mappedRows:mapped,chronologyFieldsPresent:['updated','last_updated','updated_at','as_of','date'].filter(k=>Object.prototype.hasOwnProperty.call(payload||{},k)),sourcePublishedAt:chronology?.sourcePublishedAt||null,sourcePublishedDate:chronology?.sourcePublishedDate||null,rejectionReason:reason,strictAccepted:reason===null};
+}
+// END RC4228 DIAGNOSTIC ONLY
 function slugifyExpert(name){
   return String(name||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'')
     .replace(/['’]/g,'').replace(/[^a-z0-9]+/g,'-').replace(/^-+|-+$/g,'');

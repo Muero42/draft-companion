@@ -1,6 +1,14 @@
 Generation: `20261004T2239Z-v304`
 Handoff generation: `20261004T2239Z-v304`
 
+v11.8.0-rc4.228 LOCAL DIAGNOSTIC RELEASE_CANDIDATE_UNMERGED / UNPUBLISHED / NOT DEPLOYED / PHYSICAL PROVIDER EVIDENCE PENDING.
+Production remains rc4.227 on f0234123bb25e509e9f396f9f438a66f81d158b3, tree 2fd0921d559526f9d7123f3719fddf3bd754092a, deployment f4d98ddf-dd04-4c41-a40c-a1289a5a7d1f. No adapter or individual evidence proven. Next gate RC4228_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING.
+
+## HISTORICAL v304 rc4227 (immutable evidence)
+
+Generation: `20261004T2239Z-v304`
+Handoff generation: `20261004T2239Z-v304`
+
 v11.8.0-rc4.227 LOCAL CANDIDATE / NOT PUBLISHED / NOT DEPLOYED / ANDROID PHYSICAL PENDING.
 RC4.227 release-bound local candidate; exact-head cloud validation requires a separately authorized publication package. Production remains rc4.226 on 31e915fd6cce95ee9ec073c00113c8a2fc9e26c4. No push, PR, merge, deployment or RC4.227 Android acceptance is proven.
 
