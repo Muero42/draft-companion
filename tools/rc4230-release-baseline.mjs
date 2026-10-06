@@ -1,6 +1,10 @@
 import fs from 'node:fs';
 export const rc4230Binding=()=>JSON.parse(fs.readFileSync(new URL('./fixtures/rc4230/release-binding.json',import.meta.url)));
-export const rc4230FunctionalRuntime=text=>text.replaceAll('v11.8.0-rc4.230','v11.8.0-rc4.229');
+export const rc4230FunctionalRuntime=text=>{
+  const correction=rc4230Binding().diagnosticCorrection;
+  if(correction&&text.includes(correction.value))text=text.replace(correction.value,correction.old);
+  return text.replaceAll('v11.8.0-rc4.230','v11.8.0-rc4.229');
+};
 export function rc4229AuthorityBeforeBinding(d){
   if(d['PITTI_CURRENT_STATE.json']?.authority?.source_candidate!=='v11.8.0-rc4.230')return d;
   const copy=structuredClone(d),f=rc4230Binding();

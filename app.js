@@ -1088,7 +1088,8 @@ async function seasonIndividualRankRouteResearch({season,week,source,blocked=fal
     await seasonUiYield();
   }
   const [control,filtered]=result.requests;
-  if(control?.httpStatus===200&&control.contextProven&&control.metadataUnambiguous&&!control.expert317Present)result.outcome='EXPERT_NOT_ADVERTISED_FOR_CONTEXT';
+  if(control?.httpStatus===200&&control.bodyState==='JSON'&&control.contextProven&&control.expectedContextAbsent&&filtered?.httpStatus===200&&filtered.bodyState==='JSON')result.outcome='EXPECTED_CONTEXT_NOT_ADVERTISED';
+  else if(control?.httpStatus===200&&control.contextProven&&control.metadataUnambiguous&&!control.expert317Present)result.outcome='EXPERT_NOT_ADVERTISED_FOR_CONTEXT';
   else if(control?.httpStatus===200&&control.contextProven&&control.metadataUnambiguous&&control.expert317Present&&filtered?.httpStatus===200&&!['MALFORMED_PAYLOAD','HTTP_200'].includes(filtered.rejectionReason)){
     if(filtered.playersCount===0)result.outcome='FILTERED_RESPONSE_EMPTY_OR_UNUSABLE';
     else if(filtered.contextProven&&filtered.metadataUnambiguous&&filtered.expert317Only&&filtered.expertCountConsistent&&filtered.rankContextProven){
@@ -1096,11 +1097,40 @@ async function seasonIndividualRankRouteResearch({season,week,source,blocked=fal
       else if(filtered.sufficientDepthAndMapping&&filtered.freshChronology)result.outcome='FILTERED_STRUCTURAL_CANDIDATE';
     }
   }
+  if(result.requests.some(r=>r.topologyTruncated))result.outcome='FILTERED_CONTEXT_AMBIGUOUS';
   return result;
 }
 function seasonIndividualRankRouteShape(payload,{season,week}){
   const integer=v=>typeof v==='number'&&Number.isSafeInteger(v)?v:typeof v==='string'&&/^\d{1,6}$/.test(v)?Number(v):null;
   const target=`WK${week}-HALF`,allowed=k=>/^(WK\d{1,2}-(STD|HALF|PPR)|STD|HALF|PPR|QB|RB|WR|TE|ALL|FLX|OP|K|DST|ECR|ECR_MIN|ECR_MAX|ECR_AVG|ECR_STD)$/.test(k);
+  // Observational inventory; numeric wrappers never establish target context.
+  function inventory(root,kind){
+    const entries=[],profile={knownDimensionKeyCount:0,numericKeyCount:0,otherKeyCount:0,topologyTruncated:false};let nodes=0,malformed=false;
+    const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
+    function walk(v,path,depth){
+      if(++nodes>512||depth>5||entries.length>=64){profile.topologyTruncated=true;return;}
+      const keys=object(v)?Object.keys(v):[];
+      const numericMap=keys.length>0&&keys.every(k=>/^\d{1,6}$/.test(k))&&keys.every(k=>v[k]===true||v[k]===1);
+      if(Array.isArray(v)||numericMap||!object(v)){
+        if(!path.length){malformed=true;return;}
+        if(kind==='expert'){
+          const ids=Array.isArray(v)&&v.length<=2000?v.map(integer):numericMap&&keys.length<=2000?keys.map(integer):null;
+          if(numericMap)profile.numericKeyCount+=Math.min(keys.length,2000);
+          const valid=ids!==null&&ids.every(id=>id!==null&&id>0)&&new Set(ids).size===ids.length;
+          entries.push({path:path.join('.'),validExpertCount:valid?ids.length:null,containsConfiguredExpert317:valid&&ids.includes(317)});if(!valid)malformed=true;
+          if((Array.isArray(v)&&v.length>2000)||keys.length>2000)profile.topologyTruncated=true;
+        }else{const valid=kind==='count'?integer(v)!==null&&integer(v)>=0:typeof v==='number'&&Number.isFinite(v);entries.push({path:path.join('.'),valid});if(!valid)malformed=true;}
+        return;
+      }
+      if(keys.length>128){profile.topologyTruncated=true;return;}
+      if(!keys.length&&path.length)malformed=true;
+      for(const key of keys){if(allowed(key)){profile.knownDimensionKeyCount++;walk(v[key],[...path,key],depth+1);}else if(/^\d{1,6}$/.test(key)){profile.numericKeyCount++;walk(v[key],path,depth+1);}else profile.otherKeyCount++;}
+    }
+    if(object(root))walk(root,[],0);else malformed=true;
+    return {entries,profile,complete:!malformed&&!profile.topologyTruncated&&profile.otherKeyCount===0&&profile.numericKeyCount===0};
+  }
+  const expertInventory=inventory(payload?.ecr_experts,'expert'),countInventory=inventory(payload?.experts,'count'),rankInventory=new Map();
+  let topologyTruncated=expertInventory.profile.topologyTruncated||countInventory.profile.topologyTruncated;
   // Only documented dimension labels are traversed/exported; arbitrary key names never escape.
   function dimensions(root){const found=[];let visited=0,truncated=false;
     function walk(value,path,depth){if(++visited>512||depth>5){truncated=true;return;}if(path.includes(target)&&path.includes('QB')){if(path.length!==2){truncated=true;return;}found.push({path,value});return;}
@@ -1110,10 +1140,12 @@ function seasonIndividualRankRouteShape(payload,{season,week}){
   const metadata=dimensions(payload?.ecr_experts),counts=dimensions(payload?.experts),rows=Array.isArray(payload?.players)?payload.players:[];
   let ids=null;if(metadata.found.length===1){const value=metadata.found[0].value;
     if(Array.isArray(value)&&value.length<=2000){const parsed=value.map(integer);if(parsed.every(v=>v!==null&&v>0)&&new Set(parsed).size===parsed.length)ids=parsed;}
-    else if(value&&typeof value==='object'&&!Array.isArray(value)){const keys=Object.keys(value);if(keys.length<=2000&&keys.every(k=>integer(k)>0)&&keys.every(k=>value[k]===true||value[k]===1))ids=keys.map(integer);}
+    else if(value&&typeof value==='object'&&!Array.isArray(value)){const keys=Object.keys(value);if(keys.length>0&&keys.length<=2000&&keys.every(k=>integer(k)>0)&&keys.every(k=>value[k]===true||value[k]===1))ids=keys.map(integer);}
   }
   const api=globalThis.PittiWeeklyEvidenceV2,engine=globalThis.PittiSeasonDecisionV1,index=api?.sleeperIndexes?.(lastDraftContext?.players||{}),mapped=new Set(),paths=new Set(),metrics=new Set(),rowKeys=new Set();let numericRows=0,ambiguousRows=0,contextRows=0;
   for(const row of rows.slice(0,2000)){
+    const observed=inventory(row?.rank?.ECR,'rank');topologyTruncated||=observed.profile.topologyTruncated;
+    for(const path of new Set(observed.entries.map(x=>x.path))){if(!rankInventory.has(path)&&rankInventory.size>=64){topologyTruncated=true;continue;}rankInventory.set(path,(rankInventory.get(path)||0)+1);}
     for(const key of ['id','fpid','player_id','player_name','name','position_id','team_id','rank'])if(row&&Object.hasOwn(row,key))rowKeys.add(key);
     for(const key of ['ECR','ECR_MIN','ECR_MAX','ECR_AVG','ECR_STD'])if(row?.rank&&Object.hasOwn(row.rank,key))metrics.add(key);
     const ranks=dimensions(row?.rank?.ECR);for(const x of ranks.found)paths.add(['rank','ECR',...x.path].join('.'));
@@ -1130,8 +1162,13 @@ function seasonIndividualRankRouteShape(payload,{season,week}){
   const chronology=api?.sourceTime?.(payload||{},{season,verifiedAt:Date.now(),allowSeasonDateInference:true});
   const time=chronology?.sourcePublishedAt?Date.parse(chronology.sourcePublishedAt):chronology?.sourcePublishedDate?Date.parse(chronology.sourcePublishedDate):NaN;
   const age=Date.now()-time,freshChronology=Number.isFinite(age)&&age>=0&&age<=36*3600000;
+  const chronologyStatus=!Number.isFinite(age)?'MISSING_OR_UNPARSABLE':age<0?'FUTURE':freshChronology?'FRESH':'STALE';
+  topologyTruncated||=rows.length>2000;
+  const expectedPath=p=>p===target+'.QB'||p==='QB.'+target;
+  const ordinaryContext=p=>/^(WK\d{1,2}-(STD|HALF|PPR)|STD|HALF|PPR)\.(QB|RB|WR|TE|ALL|FLX|OP|K|DST)$/.test(p)||/^(QB|RB|WR|TE|ALL|FLX|OP|K|DST)\.(WK\d{1,2}-(STD|HALF|PPR)|STD|HALF|PPR)$/.test(p);
+  const expectedContextAbsent=expertInventory.complete&&countInventory.complete&&[...expertInventory.entries,...countInventory.entries].every(x=>ordinaryContext(x.path))&&!expertInventory.entries.some(x=>expectedPath(x.path))&&!countInventory.entries.some(x=>expectedPath(x.path));
   const depth=engine?.POLICY?.depth?.QB,sufficientDepthAndMapping=Number.isInteger(depth)&&rows.length<=2000&&numericRows>=depth&&mapped.size>=depth*.7&&mapped.size>=numericRows*.7&&ambiguousRows===0;
-  return {season:normalizedSeason,week:normalizedWeek,topLevelKeys:['season','week','experts','players','ecr_experts'].filter(k=>payload&&Object.hasOwn(payload,k)),playersCount:rows.length,ecrExpertsExists:!!payload&&Object.hasOwn(payload,'ecr_experts'),expert317Present:ids?.includes(317)===true,expert317Only:ids?.length===1&&ids[0]===317,relevantExpertCount:ids?.length??null,expertMetadataPaths:metadata.found.slice(0,4).map(x=>['ecr_experts',...x.path].join('.')),playerRowKeys:[...rowKeys],rankMetricNames:[...metrics],rankDimensionPaths:[...paths].slice(0,4),numericRows,mappedRows:mapped.size,contextProven,metadataUnambiguous,expertCountConsistent,rankContextProven:rows.length>0&&contextRows===rows.length&&ambiguousRows===0,sufficientDepthAndMapping,freshChronology,strictAccepted:false,rejectionReason:contextProven?null:'FILTERED_CONTEXT_AMBIGUOUS'};
+  return {availableExpertDimensionPaths:expertInventory.entries,availableCountDimensionPaths:countInventory.entries,availableRankDimensionPaths:[...rankInventory].map(([path,rows])=>({path,rows})),expertTopologyProfile:expertInventory.profile,countTopologyProfile:countInventory.profile,topologyTruncated,expectedContextAbsent,chronologyStatus,chronologyFields:['last_updated','updated','updated_at','as_of','date'].filter(k=>payload&&Object.hasOwn(payload,k)),season:normalizedSeason,week:normalizedWeek,topLevelKeys:['season','week','experts','players','ecr_experts'].filter(k=>payload&&Object.hasOwn(payload,k)),playersCount:rows.length,ecrExpertsExists:!!payload&&Object.hasOwn(payload,'ecr_experts'),expert317Present:ids?.includes(317)===true,expert317Only:ids?.length===1&&ids[0]===317,relevantExpertCount:ids?.length??null,expertMetadataPaths:metadata.found.slice(0,4).map(x=>['ecr_experts',...x.path].join('.')),playerRowKeys:[...rowKeys],rankMetricNames:[...metrics],rankDimensionPaths:[...paths].slice(0,4),numericRows,mappedRows:mapped.size,contextProven,metadataUnambiguous,expertCountConsistent,rankContextProven:rows.length>0&&contextRows===rows.length&&ambiguousRows===0,sufficientDepthAndMapping,freshChronology,strictAccepted:false,rejectionReason:contextProven?null:'FILTERED_CONTEXT_AMBIGUOUS'};
 }
 // END RC4228 DIAGNOSTIC ONLY
 function slugifyExpert(name){

@@ -355,7 +355,13 @@
           "depth and Sleeper mapping",
           "directory corroboration with no identity overclaim"
         ],
-        "merge_eligible": false
+        "merge_eligible": false,
+        "accepted_conclusions": [
+          "STRUCTURAL_CANDIDATE",
+          "CONCLUSIVE_UNAVAILABLE"
+        ],
+        "ambiguous_acceptable": false,
+        "acceptance_rule": "Fresh exact-head Week-5 live control and filtered evidence: context, target, chronology/depth/mapping structurally proven OR conclusive context/target unavailable or unusable with filtered response characterized. AMBIGUOUS is not accepted. No adapter, identity overclaim, persistence or consumption. Separate merge authorization remains required."
       }
     },
     "runtimeCandidate": {
@@ -404,7 +410,13 @@
           "depth and Sleeper mapping",
           "directory corroboration with no identity overclaim"
         ],
-        "merge_eligible": false
+        "merge_eligible": false,
+        "accepted_conclusions": [
+          "STRUCTURAL_CANDIDATE",
+          "CONCLUSIVE_UNAVAILABLE"
+        ],
+        "ambiguous_acceptable": false,
+        "acceptance_rule": "Fresh exact-head Week-5 live control and filtered evidence: context, target, chronology/depth/mapping structurally proven OR conclusive context/target unavailable or unusable with filtered response characterized. AMBIGUOUS is not accepted. No adapter, identity overclaim, persistence or consumption. Separate merge authorization remains required."
       },
       "merge_eligible": false
     }
