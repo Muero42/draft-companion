@@ -1,22 +1,22 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-10-06T06:20:40Z",
+  "updatedAt": "2026-10-06T08:36:29Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "v11.8.0-rc4.228 Production 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 / tree 2580f9e87715b8cc7e92c6d53189b5e9a6a798ba / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven. RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance. Library mirror remains historical/unverified; no persistent writeback claim. never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven. RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance. Library mirror remains historical/unverified; no persistent writeback claim. never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
-    "reconciledBaseMain": "8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447",
+    "reconciledBaseMain": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
     "liveVerificationTargets": [
       {
         "pr": 231,
         "reviewedHead": "7d73a445c9cbad34eb9508b3b07a9a575b583d22",
-        "mergeCommit": "8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447",
-        "runtimeTree": "2580f9e87715b8cc7e92c6d53189b5e9a6a798ba",
+        "mergeCommit": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
+        "runtimeTree": "7c6984ea77f70fd56a261110225476047d93fdd1",
         "evidenceSource": "USER_SUPPLIED_VERIFIED_PRODUCTION_RECEIPT"
       }
     ],
@@ -93,7 +93,7 @@
       "appBlob": "c065c7bbf1877bfb7931045bc68dc99bf8aa306b",
       "focusedRegressionBlob": "2ab7c89b530b723209e39c0ffb49b7868428c5ef"
     },
-    "sourceBaseline": "v11.8.0-rc4.228 Production 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 / tree 2580f9e87715b8cc7e92c6d53189b5e9a6a798ba / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven.",
+    "sourceBaseline": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven.",
     "historical_source_baseline_before_pr217": "v11.8.0-rc4.215: PR #215 reviewed head 092f36fa46c90feaf733cc3b7784046beb194c03, merged canonical main 2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c, identical reviewed/merged tree 3ca1006598b3ee843da68e6292f54ec5bd40a9e5. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ec99d1fa-6eea-4448-9047-e881bcd025ce, check 109437418574); PHYSICAL PENDING. Premerge Exact-HEAD CI PASS. Postmerge authority-coupled checks failed only on runtime version lock drift while Cloudflare Pages deployed exact main successfully. Next gate: RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING. v275 is authority-only; physical acceptance must bind the future post-v275 canonical main/tree and its successful Production deployment.",
     "historical_live_targets_before_v278": [
       {
@@ -109,7 +109,7 @@
     ]
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.229",
+    "appVersion": "v11.8.0-rc4.230",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
@@ -117,14 +117,14 @@
     "latestAndroidObserved": "HISTORICAL rc4.213 Production diagnostic: acquisitions 13/13; isolated OTHER row rejected RB; quota persisted 416 projections and no ranks; Start/Sit QB unfilled (12/13); Game Context PASS 16 games / 32 teams. Not rc4.214 acceptance.",
     "latestPreinstallVerified": "HISTORICAL/SUPERSEDED: rc4.176 Candidate Package + Release Contract PASS on main 242ea4b982c5226d6958f6704d5c823d6c89aa9c",
     "latestResearchChallenger": "HISTORICAL/SUPERSEDED: v11.8.0-rc4.107",
-    "preinstallArtifact": "RC4229 local 18-file diagnostic runtime; no archive or package re-extraction claim",
+    "preinstallArtifact": "RC4230 local 18-file diagnostic runtime; no archive or package re-extraction claim",
     "preinstallSha256": null,
     "preinstallRuntimeFiles": 17,
-    "latestSourceRegressionVerified": "RC4228 canonical cloud 300/300 and 8/8 checks PASS; historical Production receipt does not certify this local RC4229 candidate.",
-    "latestDeployedCandidate": "v11.8.0-rc4.228 Production 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 / tree 2580f9e87715b8cc7e92c6d53189b5e9a6a798ba / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven.",
+    "latestSourceRegressionVerified": "RC4228 canonical cloud 300/300 and 8/8 checks PASS; historical Production receipt does not certify this local RC4230 candidate.",
+    "latestDeployedCandidate": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.",
     "latestAndroidVerified": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
-    "androidAuthority": "v11.8.0-rc4.228 Production 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 / tree 2580f9e87715b8cc7e92c6d53189b5e9a6a798ba / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven.",
-    "android_authority": "v11.8.0-rc4.228 Production 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 / tree 2580f9e87715b8cc7e92c6d53189b5e9a6a798ba / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven.",
+    "androidAuthority": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.",
+    "android_authority": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.",
     "deployedPagesAppByteParityWithMain": true,
     "preinstallReferenceRun": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
     "preinstallReferenceArtifactId": null,
@@ -162,7 +162,7 @@
     },
     "acceptedAndroidAuthority": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
     "unreleasedMainDelta": "DYNAMIC_VERIFICATION_REQUIRED against canonical main and relevant PRs; last-observed PR118 boundary is recorded in CURRENT.",
-    "deployedPagesVersion": "v11.8.0-rc4.228",
+    "deployedPagesVersion": "v11.8.0-rc4.229",
     "mainGhPagesParity": false,
     "androidVerified": false,
     "androidAcceptance": "FAIL",
@@ -191,7 +191,7 @@
       "physical_scope": "ROSTER_DECISION_SURFACE_UI",
       "agent_physical_test": false
     },
-    "deployedPagesHead": "8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447",
+    "deployedPagesHead": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
     "lastBroadPhysicalEvidenceBaseline": {
       "status": "LAST_BROAD_PHYSICAL_EVIDENCE_BASELINE",
       "version": "v11.8.0-rc4.210",
@@ -501,11 +501,11 @@
   },
   "currentWork": {
     "status": "RELEASE_CANDIDATE_UNMERGED",
-    "nextGate": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING"
+    "nextGate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING"
   },
   "status": "RELEASE_CANDIDATE_UNMERGED",
-  "gate": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-  "nextGate": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
+  "gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
+  "nextGate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -514,14 +514,14 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20261006T0620Z-v305",
+    "generation": "20261006T0836Z-v306",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
-    "resume": "RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance.",
+    "resume": "RC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim.",
     "transaction_in_progress": false,
     "readiness_scope": "STRUCTURAL_HANDOFF_ONLY_NOT_DEVICE_ACCEPTANCE",
-    "refresh_scope": "V305_RC4229_DIAGNOSTIC_RELEASE_BINDING"
+    "refresh_scope": "V306_RC4230_DIAGNOSTIC_RELEASE_BINDING"
   },
   "expertV45": {
     "status": "V4_PRIMARY_V5_CHALLENGER; rc4.131 device and 29/30 backup references are HISTORICAL evidence, not latest Android authority",
@@ -540,7 +540,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20261006T0620Z-v305",
+  "handoff_generation": "20261006T0836Z-v306",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -575,30 +575,52 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20261006T0620Z-v305",
+  "handoffGeneration": "20261006T0836Z-v306",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-10-06T06:20:40Z",
-  "exactNextAction": "RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance.",
+  "updated_at": "2026-10-06T08:36:29Z",
+  "exactNextAction": "RC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim.",
   "failClosedRecovery": "PR207 Production trade-rationale physical PASS is current: neutral \"Roster-Fit verbessert\" physically observed on the concrete Pickens-for-Bowers offer; unsupported RB-need claim absent; Boone 251/251 and no-auto-send preserved. Broad ECR, selected PITTI Panel and full game-context were not reaccepted; Team Total remains fail-closed. Library mirror remains stale; never claim a newer Library generation persisted unless files.list proves it.",
   "authorityContinuation": {
     "status": "RELEASE_CANDIDATE_UNMERGED",
-    "branch": "codex/rc4229-rankings-shape-diagnostic",
+    "branch": "codex/rc4230-acquisition-contract-stabilization",
     "published_branch": null,
-    "current_gate": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-    "physical_gate": "RC4229_FRESH_EXPLICIT_REAL_ROUTE_AUDIT_PENDING",
+    "current_gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
+    "physical_gate": "RC4230_ANDROID_ACCEPTANCE_PENDING",
     "physical_executable": false,
-    "canonical_main": "8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447",
-    "canonical_tree": "2580f9e87715b8cc7e92c6d53189b5e9a6a798ba",
+    "canonical_main": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
+    "canonical_tree": "7c6984ea77f70fd56a261110225476047d93fdd1",
     "sequence": [
-      "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING"
+      "RC4230_RELEASE_BOUND_HEAD_ADVERSARIAL_REVIEW_BEFORE_PUBLICATION",
+      "EXPLICIT_PUBLICATION_AUTHORIZATION",
+      "EXACT_HEAD_CI_AND_CLOUD_PASS",
+      "REAL_WEEK5_PR_PREVIEW_ACQUISITION_AUDIT_PASS",
+      "SEPARATE_MERGE_AUTHORIZATION"
     ],
-    "exact_head_rule": "Machine-read final release HEAD/tree after commit; prior functional Strict 303/303 certifies only 347ee60a552a52084c7ba8b0b73ee6a1bbcbed31. Fresh exact-head cloud required; separate publication authorization."
+    "exact_head_rule": "Machine-read final release HEAD/tree after commit; prior functional Strict 310/310 certifies only 5be01f00c74f7b611058130f6a84c2a2c2c76aba. Fresh exact-head cloud required; separate publication authorization.",
+    "preview_audit": {
+      "required": true,
+      "status": "PENDING",
+      "season": 2026,
+      "week": 5,
+      "environment": "CLOUDFLARE_PR_PREVIEW",
+      "exact_head_bound": true,
+      "acceptance_proven": false,
+      "requirements": [
+        "control advertises or explicitly excludes configured ID317",
+        "filtered ID317 response",
+        "actual scoring/context dimensions",
+        "chronology",
+        "depth and Sleeper mapping",
+        "directory corroboration with no identity overclaim"
+      ],
+      "merge_eligible": false
+    }
   },
   "runtimeCandidate": {
-    "version": "v11.8.0-rc4.229",
-    "branch": "codex/rc4229-rankings-shape-diagnostic",
-    "base": "347ee60a552a52084c7ba8b0b73ee6a1bbcbed31",
-    "canonical_base": "8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447",
+    "version": "v11.8.0-rc4.230",
+    "branch": "codex/rc4230-acquisition-contract-stabilization",
+    "base": "5be01f00c74f7b611058130f6a84c2a2c2c76aba",
+    "canonical_base": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
     "status": "RELEASE_CANDIDATE_UNMERGED",
     "pr": null,
     "pr_state": null,
@@ -609,18 +631,39 @@
     "production_proven": false,
     "physical_accepted": false,
     "physical_status": "PENDING_NOT_ACCEPTED",
-    "gate": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-    "next_gate": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
+    "gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
+    "next_gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
     "head_sha": null,
     "tree_sha": null,
     "head_binding": "CURRENT_GIT_HEAD_AFTER_LOCAL_COMMIT",
-    "functional_head": "347ee60a552a52084c7ba8b0b73ee6a1bbcbed31",
+    "functional_head": "5be01f00c74f7b611058130f6a84c2a2c2c76aba",
     "publication_authorized": false,
     "merge_after_exact_head_ci_authorized": false,
-    "exact_head_rule": "Machine-read final release HEAD/tree after commit; prior functional Strict 303/303 certifies only 347ee60a552a52084c7ba8b0b73ee6a1bbcbed31. Fresh exact-head cloud required; separate publication authorization.",
+    "exact_head_rule": "Machine-read final release HEAD/tree after commit. Functional Strict 310/310 applies only to 5be01f00c74f7b611058130f6a84c2a2c2c76aba. Fresh exact-head cloud CI AND real Week-5 PR-preview audit acceptance are required before separate merge authorization.",
     "scope": "DIAGNOSTIC_ONLY_RELEASE_BINDING",
     "published": false,
     "deployed": false,
-    "adapter_implemented": false
+    "adapter_implemented": false,
+    "exact_head_ci": "PENDING",
+    "cloud_validation": "PENDING",
+    "preview_audit": {
+      "required": true,
+      "status": "PENDING",
+      "season": 2026,
+      "week": 5,
+      "environment": "CLOUDFLARE_PR_PREVIEW",
+      "exact_head_bound": true,
+      "acceptance_proven": false,
+      "requirements": [
+        "control advertises or explicitly excludes configured ID317",
+        "filtered ID317 response",
+        "actual scoring/context dimensions",
+        "chronology",
+        "depth and Sleeper mapping",
+        "directory corroboration with no identity overclaim"
+      ],
+      "merge_eligible": false
+    },
+    "merge_eligible": false
   }
 }

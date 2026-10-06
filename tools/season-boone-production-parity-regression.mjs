@@ -1,3 +1,4 @@
+import {rc4230FunctionalRuntime} from './rc4230-release-baseline.mjs';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import crypto from 'node:crypto';
@@ -6,7 +7,7 @@ import {adaptBooneTradeEvidence,validateBooneTradeValueSnapshot,buildBooneTradeV
 import {adaptBooneTradeEvidence as diagnosticAdapter} from '../trade-boone-source-contract-v1.mjs';
 import {RUNTIME_FILES} from './runtime-files.mjs';
 
-const app=fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n');
+const app=rc4230FunctionalRuntime(fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n'));
 const source=name=>{const i=app.indexOf('function '+name+'(');assert(i>=0,name);return app.slice(i,app.indexOf('\nfunction ',i+1));};
 // RC4.222 reviewed lineup boundary: unavailable OUT bench assets no longer
 // poison unrelated weekly comparisons; valid injury-tagged provider metadata remains; fresh OUT is not startable.

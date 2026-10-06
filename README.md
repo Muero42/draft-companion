@@ -1,3 +1,18 @@
+# v11.8.0-rc4.230 release binding — 20261006T0836Z-v306
+
+Generation: `20261006T0836Z-v306`
+Handoff generation: `20261006T0836Z-v306`
+
+RC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim.
+
+v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.
+
+Candidate v11.8.0-rc4.230: UNMERGED / UNPUBLISHED / UNDEPLOYED; preview acceptance PENDING.
+
+---
+
+## Historical v305 checkpoint (superseded current fields)
+
 Generation: `20261006T0620Z-v305`
 Handoff generation: `20261006T0620Z-v305`
 
