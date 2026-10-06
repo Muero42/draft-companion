@@ -12,14 +12,26 @@ const players=Object.fromEntries(Array.from({length:24},(_,i)=>[String(i+1),{ful
 const payload=(ids=[317])=>({season:2026,week:5,experts:{'WK5-HALF':{QB:ids.length}},ecr_experts:{'WK5-HALF':{QB:ids}},last_updated:new Date(now).toISOString(),players:Object.entries(players).map(([id,p],i)=>({id:Number(id),player_name:p.full_name,position_id:'QB',team_id:'BUF',rank:{ECR:{'WK5-HALF':{QB:i+1}}}}))});
 const source=(experts=[{id:'317',name:'Justin Boone'}])=>({schema:'pitti.season-decision-sources.v1',season:2026,week:5,verifiedAt:now,directories:{QB:{position:'QB',season:2026,week:5,verifiedAt:now,experts}}});
 const begin=app.indexOf('// BEGIN RC4228 DIAGNOSTIC ONLY'),end=app.indexOf('// END RC4228 DIAGNOSTIC ONLY');
+const names=app.split('\n').find(line=>line.startsWith('const norm='))+'\n'+app.split('\n').find(line=>line.startsWith('function normalizedExpertName('));
 const http=app.slice(app.indexOf('function seasonAcquisitionHttpReason('),app.indexOf('function seasonAcquisitionDirectory('));
 function setup({directory=source(),control=payload([317,22]),filtered=payload(),status=200,error=null,bodyState='JSON'}={}){
   const calls=[],box={Date:class extends Date{static now(){return now}},PittiWeeklyEvidenceV2:weekly,PittiSeasonDecisionV1:engine,lastDraftContext:{players},seasonUiYield:async()=>{},diagnosticRetryAfter:ms=>ms==null?null:ms/1000,fpProxyRequest:async(route,options)=>{calls.push({route,options});if(error)throw error;return{status,bodyState,data:calls.length===1?control:filtered,retryAfterMs:7200000};}};
-  vm.createContext(box);vm.runInContext(http+app.slice(begin,end),box);
+  vm.createContext(box);vm.runInContext(names+http+app.slice(begin,end),box);
   return{calls,box,run:(extra={})=>box.seasonIndividualRankRouteResearch({season:2026,week:5,source:directory,...extra})};
 }
 let cases=0;
 const directoryCases=[
+  ['lowercase',source([{id:'317',name:'justin boone'}]),'MATCH'],
+  ['uppercase',source([{id:'317',name:'JUSTIN BOONE'}]),'MATCH'],
+  ['formatting',source([{id:'317',name:' Justin  Boone '}]),'MATCH'],
+  ['equivalent duplicates',source([{id:'317',name:'Justin Boone'},{id:'317',name:'JUSTIN BOONE'}]),'MATCH'],
+  ['normalized wrong ID',source([{id:'999',name:'JUSTIN BOONE'}]),'CONFLICT'],
+  ['hidden normalized conflict',source([{id:'317',name:'Justin Boone'},{id:'999',name:'JUSTIN BOONE'}]),'CONFLICT'],
+  ['cased wrong name',source([{id:'317',name:'ANOTHER EXPERT'}]),'CONFLICT'],
+  ['normalized dual conflict',source([{id:'317',name:'ANOTHER EXPERT'},{id:'999',name:'justin boone'}]),'CONFLICT'],
+  ['unrelated duplicates',source([{id:'22',name:'Other Expert'},{id:'22',name:'OTHER EXPERT'}]),'UNRESOLVED'],
+  ['stale normalized conflict',{...source([{id:'999',name:'JUSTIN BOONE'}]),verifiedAt:now-3600001},'UNRESOLVED'],
+  ['wrong-context normalized conflict',{...source([{id:'999',name:'JUSTIN BOONE'}]),week:4},'UNRESOLVED'],
   ['match',source(),'MATCH'],['empty',source([]),'UNRESOLVED'],['null',null,'UNRESOLVED'],['absent',{},'UNRESOLVED'],
   ['stale',{...source(),verifiedAt:now-3600001},'UNRESOLVED'],['wrong week',{...source(),week:4},'UNRESOLVED'],
   ['future',{...source(),verifiedAt:now+1},'UNRESOLVED'],['bad schema',{...source(),schema:'invalid'},'UNRESOLVED'],
@@ -76,8 +88,20 @@ for(const file of RUNTIME_FILES){const actual=fs.readFileSync(file,'utf8').repla
 assert.equal((app.match(/await seasonIndividualRankRouteResearch\(/g)||[]).length,1);assert(app.slice(app.indexOf('async function runSeasonAcquisitionAudit('),begin).includes('await seasonIndividualRankRouteResearch'));
 
 // Copy UI executes production handlers; it only copies the last produced acquisition report.
-const ids=['seasonDiagnosticStatus','seasonDiagnosticOutput','seasonAcquisitionCopyBtn','seasonAcquisitionAuditBtn'],els=Object.fromEntries(ids.map(id=>[id,{disabled:id==='seasonAcquisitionCopyBtn',select(){this.selected=true;}}]));let acquired=0;const copied=[],report={schema:'pitti.season-acquisition-audit.v1',value:'original'};
-const box={$:id=>els[id],navigator:{clipboard:{writeText:async text=>copied.push(text)}},runSeasonAcquisitionAudit:async()=>{acquired++;return report;}};vm.createContext(box);vm.runInContext(app.slice(app.indexOf('// RC4230 separate copy'),app.indexOf('\n\nif(els.seasonRefreshEvidenceBtn)')),box);
+const ids=['seasonDiagnosticStatus','seasonDiagnosticOutput','seasonAcquisitionCopyBtn','seasonAcquisitionAuditBtn'],els=Object.fromEntries(ids.map(id=>[id,{disabled:id==='seasonAcquisitionCopyBtn',select(){this.selected=true;}}]));let acquired=0,auditResult;const copied=[],report={schema:'pitti.season-acquisition-audit.v1',value:'original'};
+const box={$:id=>els[id],navigator:{clipboard:{writeText:async text=>copied.push(text)}},runSeasonAcquisitionAudit:async()=>{acquired++;return auditResult?await auditResult():report;}};vm.createContext(box);vm.runInContext(app.slice(app.indexOf('// RC4230 separate copy'),app.indexOf('\n\nif(els.seasonRefreshEvidenceBtn)')),box);
 await els.seasonAcquisitionCopyBtn.onclick();assert.equal(copied.length,0);await els.seasonAcquisitionAuditBtn.onclick();assert.equal(els.seasonAcquisitionCopyBtn.disabled,false);els.seasonDiagnosticOutput.value='generic report';await els.seasonAcquisitionCopyBtn.onclick();assert.equal(copied[0],JSON.stringify(report));assert.equal(acquired,1);box.navigator.clipboard.writeText=async()=>{throw Error('clipboard');};await els.seasonAcquisitionCopyBtn.onclick();assert.equal(els.seasonDiagnosticOutput.value,JSON.stringify(report));assert.equal(els.seasonDiagnosticOutput.selected,true);assert.equal(acquired,1);
+// A new attempt must invalidate A before its first await, including its textarea fallback.
+box.navigator.clipboard.writeText=async text=>copied.push(text);
+let rejectB;auditResult=()=>new Promise((resolve,reject)=>{rejectB=reject;});
+const pendingB=els.seasonAcquisitionAuditBtn.onclick();assert.equal(els.seasonAcquisitionCopyBtn.disabled,true);assert.equal(els.seasonDiagnosticOutput.value,'');assert.equal(els.seasonDiagnosticOutput.hidden,true);const count=copied.length;await els.seasonAcquisitionCopyBtn.onclick();assert.equal(copied.length,count);
+rejectB(Error('audit failure'));await pendingB;const failure=els.seasonDiagnosticStatus.textContent;assert(failure.includes('nicht verfügbar'));await els.seasonAcquisitionCopyBtn.onclick();assert.equal(copied.length,count);assert.equal(els.seasonDiagnosticStatus.textContent,failure);assert.equal(els.seasonAcquisitionCopyBtn.disabled,true);
+// Failure with no stored report stays unavailable.
+auditResult=async()=>{throw Error('again');};await els.seasonAcquisitionAuditBtn.onclick();await els.seasonAcquisitionCopyBtn.onclick();assert.equal(copied.length,count);assert.equal(els.seasonAcquisitionCopyBtn.disabled,true);
+const latest={schema:'pitti.season-acquisition-audit.v1',value:'latest'};auditResult=async()=>latest;await els.seasonAcquisitionAuditBtn.onclick();assert.equal(els.seasonAcquisitionCopyBtn.disabled,false);const acquisitions=acquired;await els.seasonAcquisitionCopyBtn.onclick();await els.seasonAcquisitionCopyBtn.onclick();assert.equal(copied.at(-1),JSON.stringify(latest));assert.equal(copied.at(-2),JSON.stringify(latest));assert.equal(acquired,acquisitions);
+// An older clipboard promise cannot overwrite a newer attempt's error/status or restore its textarea.
+for(const rejectClipboard of [false,true]){auditResult=async()=>latest;await els.seasonAcquisitionAuditBtn.onclick();let finishCopy;box.navigator.clipboard.writeText=()=>new Promise((resolve,reject)=>{finishCopy=()=>rejectClipboard?reject(Error('clipboard')):resolve();});const pendingCopy=els.seasonAcquisitionCopyBtn.onclick();auditResult=async()=>{throw Error('later failure');};await els.seasonAcquisitionAuditBtn.onclick();const status=els.seasonDiagnosticStatus.textContent;finishCopy();await pendingCopy;assert.equal(els.seasonDiagnosticStatus.textContent,status);assert.equal(els.seasonDiagnosticOutput.value,'');assert.equal(els.seasonAcquisitionCopyBtn.disabled,true);}
+auditResult=async()=>({schema:'pitti.season-data-diagnostic.v1'});await els.seasonAcquisitionAuditBtn.onclick();assert.equal(els.seasonAcquisitionCopyBtn.disabled,true);
+console.log('RC4230_COPY_SEQUENCE_PASS initial/success/pending/failure/latest/repeated/clipboard-race; no acquisition on copy');
 assert(fs.readFileSync('index.html','utf8').includes('id="seasonAcquisitionCopyBtn" class="secondary" type="button" disabled'));
 console.log('RC4230_ACQUISITION_CONTRACT_PASS '+cases+' table cases; directory raw-conflict; transport/cardinality/backoff; nested fail-closed; chronology; secrets; exact18-runtime-inverse; copy no request');

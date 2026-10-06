@@ -1052,13 +1052,15 @@ async function runSeasonAcquisitionAudit(){
 function seasonIndividualDiagnosticDirectoryIdentity(source,{season,week,now=Date.now()}){
   const directory=source?.directories?.QB;
   if(source?.schema!=='pitti.season-decision-sources.v1'||source.season!==season||source.week!==week||!Number.isFinite(source.verifiedAt)||source.verifiedAt>now||now-source.verifiedAt>3600000||directory?.position!=='QB'||directory.season!==season||directory.week!==week||!Number.isFinite(directory.verifiedAt)||directory.verifiedAt>now||now-directory.verifiedAt>3600000)return 'UNRESOLVED';
+  const targetName=normalizedExpertName('Justin Boone');
   let match=false;
   // Inspect qualified raw rows BEFORE normal directory uniqueness filtering.
   for(const row of Array.isArray(directory.experts)?directory.experts:[]){
     const id=String(row?.id??''),name=typeof row?.name==='string'?row.name.trim():'';
     if(!/^\d+$/.test(id)||!name)continue;
-    if((id==='317'&&name!=='Justin Boone')||(name==='Justin Boone'&&id!=='317'))return 'CONFLICT';
-    if(id==='317'&&name==='Justin Boone')match=true;
+    const normalizedName=normalizedExpertName(name);
+    if((id==='317'&&normalizedName!==targetName)||(normalizedName===targetName&&id!=='317'))return 'CONFLICT';
+    if(id==='317'&&normalizedName===targetName)match=true;
   }
   return match?'MATCH':'UNRESOLVED';
 }
@@ -5200,11 +5202,11 @@ let lastSeasonAcquisitionReportText=null;
 async function copySeasonAcquisitionDiagnostic(){
   if(lastSeasonAcquisitionReportText===null)return;
   const output=lastSeasonAcquisitionReportText,area=$('seasonDiagnosticOutput'),status=$('seasonDiagnosticStatus');
-  try{await navigator.clipboard.writeText(output);if(status)status.textContent='Akquisitionsdiagnose kopiert · keine Zugangsdaten.';}
-  catch{if(area){area.hidden=false;area.value=output;area.select();}if(status)status.textContent='Akquisitionsdiagnose markieren und kopieren · keine Zugangsdaten.';}
+  try{await navigator.clipboard.writeText(output);if(output!==lastSeasonAcquisitionReportText)return;if(status)status.textContent='Akquisitionsdiagnose kopiert · keine Zugangsdaten.';}
+  catch{if(output!==lastSeasonAcquisitionReportText)return;if(area){area.hidden=false;area.value=output;area.select();}if(status)status.textContent='Akquisitionsdiagnose markieren und kopieren · keine Zugangsdaten.';}
 }
 const seasonAcquisitionCopyButton=$('seasonAcquisitionCopyBtn');if(seasonAcquisitionCopyButton)seasonAcquisitionCopyButton.onclick=copySeasonAcquisitionDiagnostic;
-const seasonAcquisitionAuditButton=$('seasonAcquisitionAuditBtn');if(seasonAcquisitionAuditButton)seasonAcquisitionAuditButton.onclick=async()=>{const status=$('seasonDiagnosticStatus'),area=$('seasonDiagnosticOutput');seasonAcquisitionAuditButton.disabled=true;try{if(status)status.textContent='Begrenzte Akquisitionsdiagnose läuft …';const report=await runSeasonAcquisitionAudit();lastSeasonAcquisitionReportText=JSON.stringify(report);if(seasonAcquisitionCopyButton)seasonAcquisitionCopyButton.disabled=false;if(area){area.hidden=false;area.value=lastSeasonAcquisitionReportText;}if(status)status.textContent='Akquisitionsdiagnose bereit · keine Zugangsdaten oder Rohantworten.';}catch{if(status)status.textContent='Akquisitionsdiagnose nicht verfügbar · keine Zugangsdaten ausgegeben.';}finally{seasonAcquisitionAuditButton.disabled=false;}};
+const seasonAcquisitionAuditButton=$('seasonAcquisitionAuditBtn');if(seasonAcquisitionAuditButton)seasonAcquisitionAuditButton.onclick=async()=>{const status=$('seasonDiagnosticStatus'),area=$('seasonDiagnosticOutput');seasonAcquisitionAuditButton.disabled=true;lastSeasonAcquisitionReportText=null;if(seasonAcquisitionCopyButton)seasonAcquisitionCopyButton.disabled=true;if(area){area.value='';area.hidden=true;}try{if(status)status.textContent='Begrenzte Akquisitionsdiagnose läuft …';const report=await runSeasonAcquisitionAudit();if(report?.schema!=='pitti.season-acquisition-audit.v1')throw new Error('INVALID_ACQUISITION_REPORT');lastSeasonAcquisitionReportText=JSON.stringify(report);if(seasonAcquisitionCopyButton)seasonAcquisitionCopyButton.disabled=false;if(area){area.hidden=false;area.value=lastSeasonAcquisitionReportText;}if(status)status.textContent='Akquisitionsdiagnose bereit · keine Zugangsdaten oder Rohantworten.';}catch{if(status)status.textContent='Akquisitionsdiagnose nicht verfügbar · keine Zugangsdaten ausgegeben.';}finally{seasonAcquisitionAuditButton.disabled=false;}};
 
 if(els.seasonRefreshEvidenceBtn)els.seasonRefreshEvidenceBtn.onclick=()=>void Promise.all([refreshSeasonRankings({force:true,trigger:'manual'}),refreshTradeValues({force:true,trigger:'manual'})]);
 for(const el of [els.season,els.scoring])el?.addEventListener('change',()=>{renderSeasonRankingFreshness('Saison-/Scoring-Kontext geändert · alter Weekly-Evidence-Snapshot ist für diesen Kontext ungültig.');if(lastDraftContext?.players)void refreshSeasonRankings({force:true,trigger:'context-change'});});
