@@ -1,3 +1,11 @@
+Generation: `20261006T0620Z-v305`
+Handoff generation: `20261006T0620Z-v305`
+
+v11.8.0-rc4.229 RELEASE_CANDIDATE_UNMERGED / LOCAL / UNPUBLISHED / NOT DEPLOYED / NOT PHYSICALLY ACCEPTED / DIAGNOSTIC ONLY.
+Production rc4.228: 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447, tree 2580f9e87715b8cc7e92c6d53189b5e9a6a798ba, deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4, PR231 MERGED / DEPLOYED_SUCCESS. Fresh explicit rc4.229 real route audit remains pending; adapterImplemented:false. Next gate RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING.
+
+## HISTORICAL v304 rc4228 (immutable evidence)
+
 Generation: `20261004T2239Z-v304`
 Handoff generation: `20261004T2239Z-v304`
 

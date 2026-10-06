@@ -1,6 +1,7 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';
 // Retain exact historical RC4228 assertions while testing the new block independently.
 export function rc4228HistoricalApp(text){
+ text=text.replaceAll('v11.8.0-rc4.229','v11.8.0-rc4.228');
   if(!text.includes('// RC4229 nested route shape research:'))return text;
   const begin='// BEGIN RC4228 DIAGNOSTIC ONLY\n',end='// END RC4228 DIAGNOSTIC ONLY\n';
   assert.equal(text.split(begin).length,2);assert.equal(text.split(end).length,2);
