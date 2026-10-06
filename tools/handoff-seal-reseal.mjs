@@ -7,6 +7,9 @@ if(seal.status!=='PASS'||seal.handoff_ready!==true||seal.second_pass_pass!==true
 if(seal.integrity_algorithm!=='git_blob_sha1'||seal.integrity_normalization!=='UTF8_LF_TEXT')throw new Error('unsupported seal convention');
 
 const additions=[
+  'tools/rc4230-diagnostic-baseline.mjs',
+  'tools/fixtures/rc4230/historical-patches.json',
+  'tools/season-rc4230-acquisition-contract-regression.mjs',
   'tools/rc4229-authority.mjs',
   'tools/rc4229-release-baseline.mjs',
   'tools/season-rc4229-release-binding-regression.mjs',

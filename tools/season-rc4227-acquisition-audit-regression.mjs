@@ -1,10 +1,11 @@
+import {rc4229HistoricalRuntime} from './rc4230-diagnostic-baseline.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import * as decision from '../season-decision-engine-v1.mjs';
 import evidence from '../weekly-evidence-v2.js';
 
-const app=fs.readFileSync('app.js','utf8'),now=Date.parse('2026-10-04T08:00:00Z'),secret='SECRET_SENTINEL_NEVER_EXPORT';
+const app=rc4229HistoricalRuntime('app.js',fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n')),now=Date.parse('2026-10-04T08:00:00Z'),secret='SECRET_SENTINEL_NEVER_EXPORT';
 const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
 const source={schema:'pitti.season-decision-sources.v1',season:2026,week:4,verifiedAt:now,directories:{}},players={};
 const fpId=(position,i)=>1000+['QB','RB','WR','TE','K','DST'].indexOf(position)*100+i;

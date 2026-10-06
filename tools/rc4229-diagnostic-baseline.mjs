@@ -1,6 +1,8 @@
+import {rc4229HistoricalRuntime} from './rc4230-diagnostic-baseline.mjs';
 import fs from 'node:fs';import assert from 'node:assert/strict';
 // Retain exact historical RC4228 assertions while testing the new block independently.
 export function rc4228HistoricalApp(text){
+ text=rc4229HistoricalRuntime('app.js',text);
  text=text.replaceAll('v11.8.0-rc4.229','v11.8.0-rc4.228');
   if(!text.includes('// RC4229 nested route shape research:'))return text;
   const begin='// BEGIN RC4228 DIAGNOSTIC ONLY\n',end='// END RC4228 DIAGNOSTIC ONLY\n';

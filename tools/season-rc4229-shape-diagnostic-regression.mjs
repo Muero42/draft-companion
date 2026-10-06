@@ -1,6 +1,7 @@
+import {rc4229HistoricalRuntime} from './rc4230-diagnostic-baseline.mjs';
 import assert from 'node:assert/strict';import fs from 'node:fs';import vm from 'node:vm';import {execFileSync} from 'node:child_process';
 import * as engine from '../season-decision-engine-v1.mjs';import weekly from '../weekly-evidence-v2.js';import {rc4228HistoricalApp} from './rc4229-diagnostic-baseline.mjs';
-const app=fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n'),canonical=execFileSync('git',['show','8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447:app.js'],{encoding:'utf8'}).replace(/\r\n/g,'\n');
+const app=rc4229HistoricalRuntime('app.js',fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n')),canonical=execFileSync('git',['show','8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447:app.js'],{encoding:'utf8'}).replace(/\r\n/g,'\n');
 assert.equal(rc4228HistoricalApp(app),canonical,'every byte outside the explicit diagnostic block is immutable');
 const now=Date.parse('2026-10-05T08:00:00Z'),secret='SECRET_SENTINEL_NEVER_EXPORT',players=Object.fromEntries(Array.from({length:24},(_,i)=>[String(i+1),{full_name:'Synthetic QB '+i,position:'QB',team:'BUF',fantasy_data_id:i+1}]));
 const payload=(ids=[317])=>({season:'2026',week:'4',experts:{'WK4-HALF':{QB:ids.length}},ecr_experts:{'WK4-HALF':{QB:ids}},last_updated:'10/05',players:Object.entries(players).map(([id,p],i)=>({id:Number(id),player_name:p.full_name,position_id:'QB',team_id:'BUF',rank:{ECR:{'WK4-HALF':{QB:i+1}},ECR_MIN:{'WK4-HALF':{QB:i+1}}}}))});

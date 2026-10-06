@@ -1048,12 +1048,26 @@ async function runSeasonAcquisitionAudit(){
 }
 // BEGIN RC4228 DIAGNOSTIC ONLY
 // RC4229 nested route shape research: no evidence publication or adapter.
+// RC4230 configured diagnostic target; directory is corroboration, never an acquisition prerequisite.
+function seasonIndividualDiagnosticDirectoryIdentity(source,{season,week,now=Date.now()}){
+  const directory=source?.directories?.QB;
+  if(source?.schema!=='pitti.season-decision-sources.v1'||source.season!==season||source.week!==week||!Number.isFinite(source.verifiedAt)||source.verifiedAt>now||now-source.verifiedAt>3600000||directory?.position!=='QB'||directory.season!==season||directory.week!==week||!Number.isFinite(directory.verifiedAt)||directory.verifiedAt>now||now-directory.verifiedAt>3600000)return 'UNRESOLVED';
+  let match=false;
+  // Inspect qualified raw rows BEFORE normal directory uniqueness filtering.
+  for(const row of Array.isArray(directory.experts)?directory.experts:[]){
+    const id=String(row?.id??''),name=typeof row?.name==='string'?row.name.trim():'';
+    if(!/^\d+$/.test(id)||!name)continue;
+    if((id==='317'&&name!=='Justin Boone')||(name==='Justin Boone'&&id!=='317'))return 'CONFLICT';
+    if(id==='317'&&name==='Justin Boone')match=true;
+  }
+  return match?'MATCH':'UNRESOLVED';
+}
 let seasonIndividualRouteRetryAt=0;
 async function seasonIndividualRankRouteResearch({season,week,source,blocked=false}){
-  const result={schema:'pitti.individual-rank-route-research.v2',status:'DIAGNOSTIC_ONLY',requestedExpertId:'317',requestedExpertName:'Justin Boone',position:'QB',requests:[],adapterImplemented:false,outcome:'FILTERED_CONTEXT_AMBIGUOUS'};
+  const directoryIdentityStatus=seasonIndividualDiagnosticDirectoryIdentity(source,{season,week});
+  const result={identityBasis:'CONFIGURED_DIAGNOSTIC_TARGET',directoryIdentityStatus,directoryIdentityProven:directoryIdentityStatus==='MATCH',strictAccepted:false,secretSafety:'ALLOWLIST_ONLY_NO_KEYS_HEADERS_TOKENS_OR_RAW_BODIES',schema:'pitti.individual-rank-route-research.v2',status:'DIAGNOSTIC_ONLY',requestedExpertId:'317',requestedExpertName:'Justin Boone',position:'QB',requests:[],adapterImplemented:false,outcome:'FILTERED_CONTEXT_AMBIGUOUS'};
   if(blocked||Date.now()<seasonIndividualRouteRetryAt){result.reason='BATCH_STOPPED_OR_BACKOFF';return result;}
-  const expert=seasonAcquisitionDirectory(source,'QB',{season,week}).find(e=>String(e.id)==='317'&&e.name==='Justin Boone');
-  if(!expert){result.reason='DIRECTORY_ID_UNRESOLVED';return result;}
+  if(directoryIdentityStatus==='CONFLICT'){result.reason='DIRECTORY_IDENTITY_CONFLICT';return result;}
   // Reserve backoff before awaiting: even concurrent explicit calls cannot multiply probes.
   seasonIndividualRouteRetryAt=Date.now()+15*60000;
   for(const candidate of ['UNFILTERED_CONTROL','FILTERED_317']){
@@ -5181,7 +5195,16 @@ function seasonDataDiagnostic(){
 }
 async function copySeasonDataDiagnostic(){const output=JSON.stringify(seasonDataDiagnostic()),area=$('seasonDiagnosticOutput'),status=$('seasonDiagnosticStatus');try{await navigator.clipboard.writeText(output);if(status)status.textContent='Diagnose kopiert · keine Schlüssel oder Zugangsdaten.';}catch{if(area){area.hidden=false;area.value=output;area.select();}if(status)status.textContent='Diagnose markieren und kopieren · keine Zugangsdaten.';}}
 const seasonDiagnosticButton=$('seasonDiagnosticCopyBtn');if(seasonDiagnosticButton)seasonDiagnosticButton.onclick=copySeasonDataDiagnostic;
-const seasonAcquisitionAuditButton=$('seasonAcquisitionAuditBtn');if(seasonAcquisitionAuditButton)seasonAcquisitionAuditButton.onclick=async()=>{const status=$('seasonDiagnosticStatus'),area=$('seasonDiagnosticOutput');seasonAcquisitionAuditButton.disabled=true;try{if(status)status.textContent='Begrenzte Akquisitionsdiagnose läuft …';const report=await runSeasonAcquisitionAudit();if(area){area.hidden=false;area.value=JSON.stringify(report);}if(status)status.textContent='Akquisitionsdiagnose bereit · keine Zugangsdaten oder Rohantworten.';}catch{if(status)status.textContent='Akquisitionsdiagnose nicht verfügbar · keine Zugangsdaten ausgegeben.';}finally{seasonAcquisitionAuditButton.disabled=false;}};
+// RC4230 separate copy of the already-produced acquisition report; never acquire on copy.
+let lastSeasonAcquisitionReportText=null;
+async function copySeasonAcquisitionDiagnostic(){
+  if(lastSeasonAcquisitionReportText===null)return;
+  const output=lastSeasonAcquisitionReportText,area=$('seasonDiagnosticOutput'),status=$('seasonDiagnosticStatus');
+  try{await navigator.clipboard.writeText(output);if(status)status.textContent='Akquisitionsdiagnose kopiert · keine Zugangsdaten.';}
+  catch{if(area){area.hidden=false;area.value=output;area.select();}if(status)status.textContent='Akquisitionsdiagnose markieren und kopieren · keine Zugangsdaten.';}
+}
+const seasonAcquisitionCopyButton=$('seasonAcquisitionCopyBtn');if(seasonAcquisitionCopyButton)seasonAcquisitionCopyButton.onclick=copySeasonAcquisitionDiagnostic;
+const seasonAcquisitionAuditButton=$('seasonAcquisitionAuditBtn');if(seasonAcquisitionAuditButton)seasonAcquisitionAuditButton.onclick=async()=>{const status=$('seasonDiagnosticStatus'),area=$('seasonDiagnosticOutput');seasonAcquisitionAuditButton.disabled=true;try{if(status)status.textContent='Begrenzte Akquisitionsdiagnose läuft …';const report=await runSeasonAcquisitionAudit();lastSeasonAcquisitionReportText=JSON.stringify(report);if(seasonAcquisitionCopyButton)seasonAcquisitionCopyButton.disabled=false;if(area){area.hidden=false;area.value=lastSeasonAcquisitionReportText;}if(status)status.textContent='Akquisitionsdiagnose bereit · keine Zugangsdaten oder Rohantworten.';}catch{if(status)status.textContent='Akquisitionsdiagnose nicht verfügbar · keine Zugangsdaten ausgegeben.';}finally{seasonAcquisitionAuditButton.disabled=false;}};
 
 if(els.seasonRefreshEvidenceBtn)els.seasonRefreshEvidenceBtn.onclick=()=>void Promise.all([refreshSeasonRankings({force:true,trigger:'manual'}),refreshTradeValues({force:true,trigger:'manual'})]);
 for(const el of [els.season,els.scoring])el?.addEventListener('change',()=>{renderSeasonRankingFreshness('Saison-/Scoring-Kontext geändert · alter Weekly-Evidence-Snapshot ist für diesen Kontext ungültig.');if(lastDraftContext?.players)void refreshSeasonRankings({force:true,trigger:'context-change'});});
