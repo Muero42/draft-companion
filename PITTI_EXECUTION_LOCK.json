@@ -6,18 +6,20 @@
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven. RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance. Library mirror remains historical/unverified; no persistent writeback claim. never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; reviewed PR head c5612d947512ebdb6dc8ec632c5cbbda4b883132; postmerge 8/8 SUCCESS. Physical acceptance unproven. Candidate v11.8.0-rc4.230 / generation 20261006T0836Z-v306 remains UNMERGED / UNPUBLISHED / UNDEPLOYED; bind candidate HEAD/tree via runtimeCandidate.head_binding CURRENT_GIT_HEAD_AFTER_LOCAL_COMMIT. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 PR-preview acquisition audit acceptance are required before separate merge authorization. Preview acceptance PENDING; no adapter or physical acceptance claim. Library mirror remains historical/unverified; no persistent writeback claim; never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
     "reconciledBaseMain": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
     "liveVerificationTargets": [
       {
-        "pr": 231,
-        "reviewedHead": "7d73a445c9cbad34eb9508b3b07a9a575b583d22",
+        "pr": 232,
+        "reviewedHead": "c5612d947512ebdb6dc8ec632c5cbbda4b883132",
         "mergeCommit": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
         "runtimeTree": "7c6984ea77f70fd56a261110225476047d93fdd1",
-        "evidenceSource": "USER_SUPPLIED_VERIFIED_PRODUCTION_RECEIPT"
+        "evidenceSource": "USER_SUPPLIED_VERIFIED_PRODUCTION_RECEIPT",
+        "version": "v11.8.0-rc4.229",
+        "deploymentId": "0951da55-4845-49ec-ada3-550922c071e7"
       }
     ],
     "independentEvidenceLaneDiagnosis": {
@@ -93,7 +95,7 @@
       "appBlob": "c065c7bbf1877bfb7931045bc68dc99bf8aa306b",
       "focusedRegressionBlob": "2ab7c89b530b723209e39c0ffb49b7868428c5ef"
     },
-    "sourceBaseline": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven.",
+    "sourceBaseline": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; reviewed PR head c5612d947512ebdb6dc8ec632c5cbbda4b883132; postmerge 8/8 SUCCESS. Physical acceptance unproven.",
     "historical_source_baseline_before_pr217": "v11.8.0-rc4.215: PR #215 reviewed head 092f36fa46c90feaf733cc3b7784046beb194c03, merged canonical main 2bd7bb286238f5e6ed4268e952cfc3d8a9dc006c, identical reviewed/merged tree 3ca1006598b3ee843da68e6292f54ec5bd40a9e5. SOURCE MERGED_CANONICAL; PRODUCTION DEPLOYED_SUCCESS (ec99d1fa-6eea-4448-9047-e881bcd025ce, check 109437418574); PHYSICAL PENDING. Premerge Exact-HEAD CI PASS. Postmerge authority-coupled checks failed only on runtime version lock drift while Cloudflare Pages deployed exact main successfully. Next gate: RC4216_PR217_CORRECTIVE_HEAD_PUBLICATION_PENDING. v275 is authority-only; physical acceptance must bind the future post-v275 canonical main/tree and its successful Production deployment.",
     "historical_live_targets_before_v278": [
       {

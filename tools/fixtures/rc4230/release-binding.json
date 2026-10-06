@@ -1558,11 +1558,13 @@
       ],
       "value": [
         {
-          "pr": 231,
-          "reviewedHead": "7d73a445c9cbad34eb9508b3b07a9a575b583d22",
+          "pr": 232,
+          "reviewedHead": "c5612d947512ebdb6dc8ec632c5cbbda4b883132",
           "mergeCommit": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
           "runtimeTree": "7c6984ea77f70fd56a261110225476047d93fdd1",
-          "evidenceSource": "USER_SUPPLIED_VERIFIED_PRODUCTION_RECEIPT"
+          "evidenceSource": "USER_SUPPLIED_VERIFIED_PRODUCTION_RECEIPT",
+          "version": "v11.8.0-rc4.229",
+          "deploymentId": "0951da55-4845-49ec-ada3-550922c071e7"
         }
       ]
     },
@@ -1570,13 +1572,13 @@
       "file": "PITTI_EXECUTION_LOCK.json",
       "path": "authority.sourceBaseline",
       "old": "v11.8.0-rc4.228 Production 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 / tree 2580f9e87715b8cc7e92c6d53189b5e9a6a798ba / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven.",
-      "value": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven."
+      "value": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; reviewed PR head c5612d947512ebdb6dc8ec632c5cbbda4b883132; postmerge 8/8 SUCCESS. Physical acceptance unproven."
     },
     {
       "file": "PITTI_EXECUTION_LOCK.json",
       "path": "authority.failClosedRecovery",
       "old": "v11.8.0-rc4.228 Production 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 / tree 2580f9e87715b8cc7e92c6d53189b5e9a6a798ba / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven. RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance. Library mirror remains historical/unverified; no persistent writeback claim. never claim a newer Library generation persisted unless files.list proves it.",
-      "value": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven. RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance. Library mirror remains historical/unverified; no persistent writeback claim. never claim a newer Library generation persisted unless files.list proves it."
+      "value": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; reviewed PR head c5612d947512ebdb6dc8ec632c5cbbda4b883132; postmerge 8/8 SUCCESS. Physical acceptance unproven. Candidate v11.8.0-rc4.230 / generation 20261006T0836Z-v306 remains UNMERGED / UNPUBLISHED / UNDEPLOYED; bind candidate HEAD/tree via runtimeCandidate.head_binding CURRENT_GIT_HEAD_AFTER_LOCAL_COMMIT. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 PR-preview acquisition audit acceptance are required before separate merge authorization. Preview acceptance PENDING; no adapter or physical acceptance claim. Library mirror remains historical/unverified; no persistent writeback claim; never claim a newer Library generation persisted unless files.list proves it."
     },
     {
       "file": "PITTI_EXECUTION_LOCK.json",
