@@ -14,8 +14,8 @@ const source=(experts=[{id:'317',name:'Justin Boone'}])=>({schema:'pitti.season-
 const begin=app.indexOf('// BEGIN RC4228 DIAGNOSTIC ONLY'),end=app.indexOf('// END RC4228 DIAGNOSTIC ONLY');
 const names=app.split('\n').find(line=>line.startsWith('const norm='))+'\n'+app.split('\n').find(line=>line.startsWith('function normalizedExpertName('));
 const http=app.slice(app.indexOf('function seasonAcquisitionHttpReason('),app.indexOf('function seasonAcquisitionDirectory('));
-function setup({directory=source(),control=payload([317,22]),filtered=payload(),status=200,error=null,bodyState='JSON'}={}){
-  const calls=[],box={Date:class extends Date{static now(){return now}},PittiWeeklyEvidenceV2:weekly,PittiSeasonDecisionV1:engine,lastDraftContext:{players},seasonUiYield:async()=>{},diagnosticRetryAfter:ms=>ms==null?null:ms/1000,fpProxyRequest:async(route,options)=>{calls.push({route,options});if(error)throw error;return{status,bodyState,data:calls.length===1?control:filtered,retryAfterMs:7200000};}};
+function setup({directory=source(),control=payload([317,22]),filtered=payload(),status=200,error=null,bodyState='JSON',filteredBodyState=bodyState}={}){
+  const calls=[],box={Date:class extends Date{static now(){return now}},PittiWeeklyEvidenceV2:weekly,PittiSeasonDecisionV1:engine,lastDraftContext:{players},seasonUiYield:async()=>{},diagnosticRetryAfter:ms=>ms==null?null:ms/1000,fpProxyRequest:async(route,options)=>{calls.push({route,options});if(error)throw error;return{status,bodyState:calls.length===1?bodyState:filteredBodyState,data:calls.length===1?control:filtered,retryAfterMs:7200000};}};
   vm.createContext(box);vm.runInContext(names+http+app.slice(begin,end),box);
   return{calls,box,run:(extra={})=>box.seasonIndividualRankRouteResearch({season:2026,week:5,source:directory,...extra})};
 }
@@ -72,7 +72,7 @@ const filteredCases=[
  ['STD',changed(payload(),p=>p.players.forEach(row=>row.rank.ECR={'WK5-STD':{QB:1}}))],
  ['PPR',changed(payload(),p=>p.players.forEach(row=>row.rank.ECR={'WK5-PPR':{QB:1}}))],
  ['multiple ranks',changed(payload(),p=>p.players.forEach(row=>row.rank.ECR={QB:{'WK5-HALF':1},'WK5-HALF':{QB:1}}))],
- ['malformed',null,'FILTERED_RESPONSE_EMPTY_OR_UNUSABLE']
+ ['malformed',null,'FILTERED_CONTEXT_AMBIGUOUS']
 ];
 for(const [name,filtered,outcome='FILTERED_CONTEXT_AMBIGUOUS'] of filteredCases){const r=await setup({filtered}).run();assert.equal(r.outcome,outcome,'filtered '+name);cases++;}
 for(const [name,time,valid] of [['now',now,true],['past',now-60000,true],['36h',now-36*3600000,true],['old',now-36*3600000-1,false],['future1',now+1,false],['future30m',now+1800000,false],['missing',null,false],['invalid','invalid',false]]){
@@ -85,6 +85,19 @@ const poisoned=changed(payload(),p=>{p.token=secret;p.ecr_experts[secret]={QB:[s
 
 // Inventory exercises the extracted production parser without any provider access.
 const shape=p=>setup().box.seasonIndividualRankRouteShape(p,{season:2026,week:5});
+const genuineEmpty={...payload(),players:[]};
+for(const [name,filtered,expected='FILTERED_CONTEXT_AMBIGUOUS',bodyState='JSON'] of [
+  ['wrong week empty',{...genuineEmpty,week:4}],
+  ['wrong season empty',{...genuineEmpty,season:2025}],
+  ['null empty',null],
+  ['unknown metadata empty',{...genuineEmpty,ecr_experts:{SECRET_KEY_NAME:{QB:[317]}}}],
+  ['malformed body',genuineEmpty,'FILTERED_CONTEXT_AMBIGUOUS','INVALID_JSON'],
+  ['missing players',changed(payload(),p=>{delete p.players;})],
+  ['non-array players',{...genuineEmpty,players:{}}],
+  ['truncated empty',{...genuineEmpty,ecr_experts:Object.fromEntries(Array.from({length:129},(_,i)=>[String(i+1),{QB:[317]}]))}],
+  ['proven empty',genuineEmpty,'FILTERED_RESPONSE_EMPTY_OR_UNUSABLE'],
+  ['positive unchanged',payload(),'FILTERED_STRUCTURAL_CANDIDATE']
+]){const x=setup({filtered,filteredBodyState:bodyState}),r=await x.run();assert.equal(r.outcome,expected,name);assert.equal(r.requests[1].playersArrayPresent,Array.isArray(filtered?.players),name);assert.equal(x.calls.length,2);assert.equal(r.strictAccepted,false);assert.equal(r.adapterImplemented,false);cases++;}
 const exact=shape(payload());assert.equal(exact.availableExpertDimensionPaths[0].path,'WK5-HALF.QB');assert.equal(exact.availableExpertDimensionPaths[0].validExpertCount,1);assert.equal(exact.availableExpertDimensionPaths[0].containsConfiguredExpert317,true);assert.equal(exact.availableRankDimensionPaths[0].rows,24);
 for(const [dimension,position] of [['WK5-PPR','QB'],['WK5-HALF','RB']]){
   const p=payload();p.ecr_experts={[dimension]:{[position]:[317,987654]}};p.experts={[dimension]:{[position]:2}};
