@@ -177,6 +177,63 @@ for(const [name,p,expected='FILTERED_CONTEXT_AMBIGUOUS'] of [
  ['wrong rank context',changed(canonicalPositive,p=>p.players.forEach(r=>delete r.rank.ECR.HALF))],
 ]){assert.equal((await setup({control:freshControl,filtered:p}).run()).outcome,expected,name);cases++;}
 
+// Consensus fixtures follow the public v2 experts_available contract; no provider calls.
+const consensusPlayers=Object.fromEntries(Array.from({length:67},(_,i)=>[String(i+1),{full_name:'Fixture QB '+i,position:'QB',team:'BUF',fantasy_data_id:i+1}]));
+const consensusPayload=()=>({season:2026,week:5,position:'QB',scoring:'HALF',ranking_type_name:'weekly',filters:'317',total_experts:1,expert_name:{317:'Justin Boone'},expert_pub:{317:new Date(now).toISOString()},last_updated:new Date(now).toISOString(),players:Object.entries(consensusPlayers).map(([id,p],i)=>({player_id:Number(id),player_name:p.full_name,position_id:'QB',team_id:'BUF',rank_ecr:i+1,rank_min:i+1,rank_max:i+1,rank_ave:i+1}))});
+const availabilityPayload=()=>({...consensusPayload(),filters:null,experts_available:{total:1,included:[317],excluded:[],last_update:now/1000}});
+const broadPayload=()=>({...consensusPayload(),filters:null,total_experts:14,expert_name:{22:'Other'}});
+function consensusSetup({control=availabilityPayload(),filtered=consensusPayload(),directory=source(),status=200,bodyState='JSON',error=false}={}){
+ const x=setup({directory});x.box.lastDraftContext={players:consensusPlayers};const calls=[];
+ x.box.fpProxyRequest=async(route,options)=>{calls.push({route,options});if(error)throw {code:'TIMEOUT',message:secret};return {status,bodyState,data:calls.length===1?control:filtered,retryAfterMs:7200000};};
+ return {calls,run:extra=>x.box.seasonConsensusFilterResearch({season:2026,week:5,source:directory,...extra}),box:x.box};
+}
+let consensusCases=0;
+for(const [name,control,filtered,expected='AMBIGUOUS',directory=source()] of [
+ ['exact',availabilityPayload(),consensusPayload(),'EXACT_INDIVIDUAL_FILTER'],
+ ['real broad fallback',availabilityPayload(),broadPayload(),'FILTER_NOT_HONORED'],
+ ['wrong filter broad',availabilityPayload(),{...broadPayload(),filters:'22'},'FILTER_NOT_HONORED'],
+ ['unavailable',changed(availabilityPayload(),p=>{p.experts_available={total:1,included:[22],excluded:[],last_update:now/1000};p.expert_name={22:'Other'};}),broadPayload(),'EXPERT_NOT_AVAILABLE_FOR_CONTEXT'],
+ ['absent versus exact',changed(availabilityPayload(),p=>{p.experts_available={total:1,included:[22],excluded:[],last_update:now/1000};p.expert_name={22:'Other'};}),consensusPayload()],
+ ['filtered availability contradiction',availabilityPayload(),{...consensusPayload(),experts_available:{total:1,included:[22],excluded:[],last_update:now/1000}}],
+ ['missing availability',consensusPayload(),broadPayload()],
+ ['malformed availability',changed(availabilityPayload(),p=>p.experts_available.included='317'),broadPayload()],
+ ['stale availability',changed(availabilityPayload(),p=>p.experts_available.last_update-=37*3600),broadPayload()],
+ ['future availability',changed(availabilityPayload(),p=>p.experts_available.last_update++),broadPayload()],
+ ['duplicate availability',changed(availabilityPayload(),p=>p.experts_available.included=[317,317]),broadPayload()],
+ ['overlap availability',changed(availabilityPayload(),p=>p.experts_available.excluded=[317]),broadPayload()],
+ ['wrong availability total',changed(availabilityPayload(),p=>p.experts_available.total=14),broadPayload()],
+ ['missing chronology',availabilityPayload(),changed(broadPayload(),p=>delete p.last_updated)],
+ ['stale chronology',availabilityPayload(),{...broadPayload(),last_updated:new Date(now-37*3600000).toISOString()}],
+ ['future chronology',availabilityPayload(),{...broadPayload(),last_updated:new Date(now+1).toISOString()}],
+ ['conflicting chronology',availabilityPayload(),{...broadPayload(),last_updated_ts:now/1000-172800}],
+ ['wrong week',availabilityPayload(),{...broadPayload(),week:4}],
+ ['wrong season',availabilityPayload(),{...broadPayload(),season:2025}],
+ ['wrong position',availabilityPayload(),{...broadPayload(),position:'RB'}],
+ ['wrong scoring',availabilityPayload(),{...broadPayload(),scoring:'PPR'}],
+ ['wrong type',availabilityPayload(),{...broadPayload(),ranking_type_name:'draft'}],
+ ['context conflict',availabilityPayload(),{...broadPayload(),year:2025}],
+ ['control wrong context',{...availabilityPayload(),week:4},broadPayload()],
+ ['unknown filters',availabilityPayload(),{...broadPayload(),filters:{317:true}}],
+ ['bad names',availabilityPayload(),{...broadPayload(),expert_name:[]}],
+ ['wrong name',availabilityPayload(),{...consensusPayload(),expert_name:{317:'Other'}}],
+ ['foreign target name',availabilityPayload(),{...broadPayload(),expert_name:{22:'Justin Boone'}}],
+ ['broad conflicting bound name',availabilityPayload(),{...broadPayload(),expert_name:{317:'Justin Boone'}}],
+ ['shallow',availabilityPayload(),{...consensusPayload(),players:consensusPayload().players.slice(0,2)}],
+ ['unmapped',availabilityPayload(),changed(consensusPayload(),p=>p.players.forEach(r=>{r.player_id=99999;r.player_name='Unknown';}))],
+ ['non numeric',availabilityPayload(),changed(consensusPayload(),p=>p.players[0].rank_ecr='bad')],
+ ['non collapsed ranks',availabilityPayload(),changed(consensusPayload(),p=>p.players[0].rank_ave=1.5)],
+ ['no rows',availabilityPayload(),{...consensusPayload(),players:[]}],
+ ['directory conflict',availabilityPayload(),consensusPayload(),'AMBIGUOUS',source([{id:'317',name:'Other'}])],
+]){const x=consensusSetup({control,filtered,directory}),r=await x.run();assert.equal(r.outcome,expected,'consensus '+name);assert(x.calls.length<=2);assert.equal(r.strictAccepted,false);assert.equal(r.adapterImplemented,false);assert(!JSON.stringify(r).includes('Other'));consensusCases++;}
+const actualFallback=await consensusSetup({filtered:broadPayload()}).run();assert.equal(actualFallback.requests[1].existingStrictRejection,'FILTER_NOT_HONORED');assert.equal(actualFallback.requests[1].sourceRows,67);assert.equal(actualFallback.requests[1].mappedRows,67);
+assert.equal(engine.individualPayloadValid(broadPayload(),{season:2026,week:5,position:'QB',expertId:'317',expertName:'Justin Boone',sourceUpdatedAt:now,now}),false);
+for(const opts of [{status:401},{status:403},{status:429},{error:true},{bodyState:'INVALID_JSON'}]){const x=consensusSetup(opts),r=await x.run();assert.equal(r.outcome,'AMBIGUOUS');const n=x.calls.length;await x.run();assert.equal(x.calls.length,n);assert(n<=2);consensusCases++;}
+const concurrent=consensusSetup();await Promise.all([concurrent.run(),concurrent.run()]);assert.equal(concurrent.calls.length,2);assert.deepEqual(concurrent.calls.map(c=>c.route),['/nfl/2026/consensus-rankings?week=5&position=QB&scoring=HALF&experts=available','/nfl/2026/consensus-rankings?week=5&position=QB&scoring=HALF&filters=317&experts=show']);
+const blockedConsensus=consensusSetup();await blockedConsensus.run({blocked:true});assert.equal(blockedConsensus.calls.length,0);
+const poisonedConsensus=await consensusSetup({filtered:changed(broadPayload(),p=>{p[secret]=secret;p.expert_name={987654:secret};p.expert_pub={987654:secret};})}).run();assert(!JSON.stringify(poisonedConsensus).includes(secret));assert(!JSON.stringify(poisonedConsensus).includes('987654'));
+assert.equal((app.match(/await seasonConsensusFilterResearch\(/g)||[]).length,1);assert(app.slice(app.indexOf('async function runSeasonAcquisitionAudit('),begin).includes('await seasonConsensusFilterResearch'));
+console.log('RC4230_CONSENSUS_FILTER_PASS '+consensusCases+' cases; real 67-row fallback; exact/absent/contradiction; two-request budget; secret safety; diagnostic only');
+
 // Exact inverse proof pins every unmodified runtime byte, including all consumers/normal traffic.
 for(const file of RUNTIME_FILES){const actual=fs.readFileSync(file,'utf8').replace(/\r\n/g,'\n'),baseline=execFileSync('git',['show','a7f27740d33a7a39127d51515cc2fd8c3d9f28ff:'+file],{encoding:'utf8'});assert.equal(rc4229HistoricalRuntime(file,actual),baseline,file+' exact bounded delta');}
 assert.equal((app.match(/await seasonIndividualRankRouteResearch\(/g)||[]).length,1);assert(app.slice(app.indexOf('async function runSeasonAcquisitionAudit('),begin).includes('await seasonIndividualRankRouteResearch'));

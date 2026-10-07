@@ -4,9 +4,10 @@ import {validateRc4230ProductionIdentity} from './rc4230-authority.mjs';
 const f=rc4230Binding(),read=p=>fs.readFileSync(p,'utf8').replace(/\r\n/g,'\n'),historical=p=>execFileSync('git',['show',f.functionalHead+':'+p],{encoding:'utf8'}),blob=s=>{const b=Buffer.from(s);return crypto.createHash('sha1').update(Buffer.from('blob '+b.length+'\0')).update(b).digest('hex');};
 assert.equal(RUNTIME_FILES.length,18);
 const correction=f.diagnosticCorrection,baseApp=execFileSync('git',['show','fdab8774d63ea8e3ea142395f6f752f12168d90b:app.js'],{encoding:'utf8'});
-assert.equal(correction.baseHead,'fdab8774d63ea8e3ea142395f6f752f12168d90b');assert(baseApp.includes(correction.old));assert(read('app.js').includes(correction.value));assert.equal(read('app.js').replace(correction.value,correction.old),baseApp,'only diagnostic block changed from reviewed release');
+assert.equal(correction.baseHead,'fdab8774d63ea8e3ea142395f6f752f12168d90b');assert(baseApp.includes(correction.old));assert(read('app.js').includes(correction.value));assert.equal(f.consensusCorrections.filter(p=>p.file==='app.js').reduce((text,p)=>text.replace(p.value,p.old),read('app.js')).replace(correction.value,correction.old),baseApp,'only diagnostic block changed from reviewed release');
 for(const p of RUNTIME_FILES){assert.equal(blob(read(p)),f.runtimeBlobs[p]);assert.equal(rc4230FunctionalRuntime(read(p)),historical(p),'approved functional bytes '+p);assert.equal(blob(historical(p)),f.functionalBlobs[p]);}
 for(const p of ['app.js','index.html','sw.js','manifest.webmanifest'])assert.deepEqual([...new Set(read(p).match(/v11\.8\.0-rc4\.\d+/g))],[f.version]);
+for(const p of f.consensusCorrections){const prior=execFileSync('git',['show','b960186b389ab9beca1308769edf20abfd08b744:'+p.file],{encoding:'utf8'});assert(prior.includes(p.old));assert(read(p.file).includes(p.value));if(p.file!=='app.js')assert.equal(read(p.file).replace(p.value,p.old),prior,'exact rejection-precedence delta');}
 const d=loadAuthority(),old=rc4229AuthorityBeforeBinding(d);assert.deepEqual(validateAuthority(d),[]);
 assert.deepEqual(validateRc4230ProductionIdentity(d),[]);
 // Mutate every component independently, bypassing fixture equality entirely.

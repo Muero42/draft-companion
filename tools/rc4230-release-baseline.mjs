@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 export const rc4230Binding=()=>JSON.parse(fs.readFileSync(new URL('./fixtures/rc4230/release-binding.json',import.meta.url)));
 export const rc4230FunctionalRuntime=text=>{
-  const correction=rc4230Binding().diagnosticCorrection;
+  const binding=rc4230Binding(),correction=binding.diagnosticCorrection;
+  for(const patch of binding.consensusCorrections||[])if(text.includes(patch.value))text=text.replace(patch.value,patch.old);
   if(correction&&text.includes(correction.value))text=text.replace(correction.value,correction.old);
   return text.replaceAll('v11.8.0-rc4.230','v11.8.0-rc4.229');
 };
