@@ -113,6 +113,70 @@ const frequencies=payload();frequencies.players[0].rank.ECR={'WK5-PPR':{QB:1}};c
 for(const [value,status] of [[new Date(now).toISOString(),'FRESH'],[new Date(now-36*3600000-1).toISOString(),'STALE'],[new Date(now+1).toISOString(),'FUTURE'],[undefined,'MISSING_OR_UNPARSABLE'],['bad','MISSING_OR_UNPARSABLE']]){const p=payload();if(value===undefined)delete p.last_updated;else p.last_updated=value;assert.equal(shape(p).chronologyStatus,status);cases++;}
 const absent=shape(payload([987654]));assert.equal(absent.availableExpertDimensionPaths[0].containsConfiguredExpert317,false);assert(!JSON.stringify(absent).includes('987654'));cases++;
 
+// Real provider topology: week is top-level, QB availability is STD, ranks include HALF.
+const realTopology=(fresh=false)=>{
+  const p=payload(Array.from({length:14},(_,i)=>i===0?317:i));
+  p.ecr_experts={STD:{QB:[317,...Array.from({length:13},(_,i)=>i+1)]},HALF:{RB:[317],WR:[317],TE:[317]}};
+  p.experts={STD:{QB:14},HALF:{RB:1,WR:1,TE:1}};
+  p.players.forEach((r,i)=>r.rank.ECR={STD:{QB:i+1},HALF:{QB:i+1},PPR:{QB:i+1}});
+  if(!fresh)delete p.last_updated;
+  return p;
+};
+const realControl=realTopology(),realEmpty={...realTopology(),players:[]};
+const real=await setup({control:realControl,filtered:realEmpty}).run();
+assert.equal(real.requests[0].metadataUnambiguous,true);assert.equal(real.requests[0].expectedContextAbsent,false);
+assert.equal(real.requests[0].availabilityRankContextProven,true);assert.equal(real.requests[0].expert317Present,true);
+assert.equal(real.requests[1].chronologyStatus,'MISSING_OR_UNPARSABLE');
+assert.equal(real.outcome,'FILTERED_CONTEXT_AMBIGUOUS','missing chronology is deliberately not conclusive');cases++;
+const freshControl=realTopology(true),freshEmpty={...realTopology(true),players:[]};
+for(const [name,control,filtered,directory=source(),expected='FILTERED_CONTEXT_AMBIGUOUS'] of [
+ ['fresh bound negative',freshControl,freshEmpty,source(),'FILTERED_RESPONSE_EMPTY_OR_UNUSABLE'],
+ ['unknown directory',freshControl,freshEmpty,null],
+ ['conflicting directory',freshControl,freshEmpty,source([{id:'317',name:'Wrong'}])],
+ ['missing filtered chronology',freshControl,realEmpty],
+ ['missing control chronology',realControl,freshEmpty],
+ ['wrong week',freshControl,{...freshEmpty,week:4}],
+ ['wrong season',freshControl,{...freshEmpty,season:2025}],
+ ['no requested rank context',changed(freshControl,p=>p.players.forEach(r=>delete r.rank.ECR.HALF)),freshEmpty],
+ ['malformed ranks',changed(freshControl,p=>p.players[0].rank.ECR.HALF.QB='bad'),freshEmpty],
+ ['conflicting rank week',changed(freshControl,p=>p.players[0].rank.ECR['WK4-HALF']={QB:1}),freshEmpty],
+ ['unknown ranks',changed(freshControl,p=>p.players[0].rank.ECR[secret]=1),freshEmpty],
+ ['unknown metadata',freshControl,changed(freshEmpty,p=>p.ecr_experts[secret]=[317])],
+ ['malformed metadata',freshControl,changed(freshEmpty,p=>p.ecr_experts.STD.QB=null)],
+ ['wrong count',freshControl,changed(freshEmpty,p=>p.experts.STD.QB=15)],
+ ['no configured target',freshControl,changed(freshEmpty,p=>p.ecr_experts.STD.QB[0]=999)],
+ ['conflicting alias',freshControl,changed(freshEmpty,p=>{p.ecr_experts['WK5-HALF']={QB:[999]};})],
+ ['conflicting week metadata',freshControl,changed(freshEmpty,p=>{p.ecr_experts['WK4-HALF']={QB:[317]};})],
+ ['conflicting counts path',freshControl,changed(freshEmpty,p=>{p.experts={HALF:{QB:14}};})],
+ ['truncated',freshControl,changed(freshEmpty,p=>p.ecr_experts.STD.QB=Array.from({length:2001},(_,i)=>i+1))],
+ ['not array',freshControl,{...freshEmpty,players:{}}],
+ ['stale',freshControl,{...freshEmpty,last_updated:new Date(now-37*3600000).toISOString()}],
+ ['future',freshControl,{...freshEmpty,last_updated:new Date(now+1).toISOString()}],
+]){const x=setup({control,filtered,directory}),r=await x.run();assert.equal(r.outcome,expected,name);assert(x.calls.length<=2);assert.equal(r.strictAccepted,false);assert.equal(r.adapterImplemented,false);assert(!JSON.stringify(r).includes(secret));cases++;}
+// Other positions in the all-position control do not erase the observed HALF.QB rank context.
+const mixedControl=changed(freshControl,p=>p.players.push({rank:{ECR:{HALF:{RB:1}}}}));
+assert.equal((await setup({control:mixedControl,filtered:freshEmpty}).run()).outcome,'FILTERED_RESPONSE_EMPTY_OR_UNUSABLE');cases++;
+// Numeric expert-ID maps are valid leaves, not numeric topology wrappers.
+const mappedExperts=changed(freshControl,p=>p.ecr_experts.STD.QB=Object.fromEntries(p.ecr_experts.STD.QB.map(id=>[id,true])));
+assert.equal(shape(mappedExperts).metadataTopologyComplete,true);assert.equal(shape(mappedExperts).expert317Present,true);cases++;
+for(const position of ['QB','K','DST','RB','WR','TE'])for(const scoring of ['HALF','PPR']){
+ const p={season:2026,week:5,ecr_experts:{STD:{[position]:[317]}},experts:{STD:{[position]:1}},players:[{rank:{ECR:{[scoring]:{[position]:1}}}}]};
+ const r=setup().box.seasonIndividualRankRouteShape(p,{season:2026,week:5,position,scoring});
+ assert.equal(r.metadataUnambiguous,['QB','K','DST'].includes(position),position+' '+scoring+' neutral availability');
+ assert.equal(r.availabilityRankContextProven,true);cases++;
+}
+const canonicalPositive=changed(realTopology(true),p=>{p.ecr_experts.STD.QB=[317];p.experts.STD.QB=1;});
+for(const [name,p,expected='FILTERED_CONTEXT_AMBIGUOUS'] of [
+ ['positive',canonicalPositive,'FILTERED_STRUCTURAL_CANDIDATE'],
+ ['zero ranks without chronology',changed(canonicalPositive,p=>{delete p.last_updated;p.players.forEach(r=>r.rank.ECR.HALF.QB=0);})],
+ ['no chronology',changed(canonicalPositive,p=>delete p.last_updated)],
+ ['multiple experts',freshControl],
+ ['shallow',{...canonicalPositive,players:canonicalPositive.players.slice(0,2)}],
+ ['unmapped',changed(canonicalPositive,p=>p.players.forEach(r=>{r.id=99999;r.player_name='Unknown';}))],
+ ['unknown rank leaf',changed(canonicalPositive,p=>p.players[0].rank.ECR[secret]=1)],
+ ['wrong rank context',changed(canonicalPositive,p=>p.players.forEach(r=>delete r.rank.ECR.HALF))],
+]){assert.equal((await setup({control:freshControl,filtered:p}).run()).outcome,expected,name);cases++;}
+
 // Exact inverse proof pins every unmodified runtime byte, including all consumers/normal traffic.
 for(const file of RUNTIME_FILES){const actual=fs.readFileSync(file,'utf8').replace(/\r\n/g,'\n'),baseline=execFileSync('git',['show','a7f27740d33a7a39127d51515cc2fd8c3d9f28ff:'+file],{encoding:'utf8'});assert.equal(rc4229HistoricalRuntime(file,actual),baseline,file+' exact bounded delta');}
 assert.equal((app.match(/await seasonIndividualRankRouteResearch\(/g)||[]).length,1);assert(app.slice(app.indexOf('async function runSeasonAcquisitionAudit('),begin).includes('await seasonIndividualRankRouteResearch'));
