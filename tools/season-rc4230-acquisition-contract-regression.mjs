@@ -213,7 +213,7 @@ for(const [name,control,filtered,expected='AMBIGUOUS',directory=source()] of [
  ['wrong type',availabilityPayload(),{...broadPayload(),ranking_type_name:'draft'}],
  ['context conflict',availabilityPayload(),{...broadPayload(),year:2025}],
  ['control wrong context',{...availabilityPayload(),week:4},broadPayload()],
- ['unknown filters',availabilityPayload(),{...broadPayload(),filters:{317:true}}],
+ ['unknown filters',availabilityPayload(),{...broadPayload(),filters:{317:true}},'FILTER_NOT_HONORED'],
  ['bad names',availabilityPayload(),{...broadPayload(),expert_name:[]}],
  ['wrong name',availabilityPayload(),{...consensusPayload(),expert_name:{317:'Other'}}],
  ['foreign target name',availabilityPayload(),{...broadPayload(),expert_name:{22:'Justin Boone'}}],
@@ -233,6 +233,27 @@ const blockedConsensus=consensusSetup();await blockedConsensus.run({blocked:true
 const poisonedConsensus=await consensusSetup({filtered:changed(broadPayload(),p=>{p[secret]=secret;p.expert_name={987654:secret};p.expert_pub={987654:secret};})}).run();assert(!JSON.stringify(poisonedConsensus).includes(secret));assert(!JSON.stringify(poisonedConsensus).includes('987654'));
 assert.equal((app.match(/await seasonConsensusFilterResearch\(/g)||[]).length,1);assert(app.slice(app.indexOf('async function runSeasonAcquisitionAudit('),begin).includes('await seasonConsensusFilterResearch'));
 console.log('RC4230_CONSENSUS_FILTER_PASS '+consensusCases+' cases; real 67-row fallback; exact/absent/contradiction; two-request budget; secret safety; diagnostic only');
+
+// Pinned real-parent semantic evidence; synthetic player identities only supply mapping fixtures.
+const replay=JSON.parse(fs.readFileSync('tools/fixtures/rc4230/parent-consensus-evidence.json'));
+assert.equal(replay.sourceHead,'5a09c23499933933249ad62406fdbaf3796ccac8');
+const replayNow=Date.parse(replay.now),replayTime=replay.capturedDate+'T08:00:00Z';
+function replayPayload(availability=false){const p={...consensusPayload(),...replay.context,total_experts:replay.totalExperts,filters:null,expert_name:{22:'Other'},expert_pub:{317:replayTime},last_updated:replayTime};delete p.season;delete p.position;if(availability)p.experts_available={total:1,included:[317],excluded:[],last_update:Date.parse(replayTime)/1000};return p;}
+async function runReplay(filtered,control=replayPayload(true)){
+ const x=consensusSetup({control,filtered});x.box.Date=class extends Date{static now(){return replayNow}};return x.run();
+}
+let replayCases=0;
+for(const variant of replay.filterVariants){const p=replayPayload();if(variant==='ABSENT')delete p.filters;else p.filters=({NULL:null,MALFORMED_OBJECT:{317:true},MALFORMED_ARRAY:[317],UNKNOWN_STRING:secret,WRONG_ID:'999'})[variant];const r=await runReplay(p);assert.equal(r.outcome,replay.expectedOutcome,variant);assert.equal(r.requests[0].availabilityContains317,true);assert.equal(r.requests[1].season,2026);assert.equal(r.requests[1].position,'QB');assert.equal(r.requests[1].sourceDate,'2026-10-08');assert.equal(r.requests[1].mappedRows,67);assert.equal(r.strictAccepted,false);assert.equal(r.adapterImplemented,false);assert(!JSON.stringify(r).includes(secret));replayCases++;}
+for(const [name,patch] of [
+ ['season conflict',{season:2025}],['year conflict',{season:2026,year:2025}],['position conflict',{position:'WR'}],['position_id conflict',{position:'QB',position_id:'WR'}],['missing year',{year:null}],['missing position',{position_id:null}],['wrong week',{week:4}],['wrong scoring',{scoring:'PPR'}],['wrong type',{ranking_type_name:'ros'}],['stale',{last_updated:'2026-10-06T00:00:00Z'}],['missing chronology',{last_updated:null}],['identity conflict',{expert_name:{317:'Other'}}],['single unbound',{total_experts:1}],['missing total',{total_experts:null}],['insufficient rows',{players:[]}],['availability contradiction',{experts_available:{total:1,included:[22],excluded:[],last_update:Date.parse(replayTime)/1000}}]
+]){assert.equal((await runReplay({...replayPayload(),...patch})).outcome,'AMBIGUOUS',name);replayCases++;}
+const replayPositive={...replayPayload(),filters:'317',total_experts:1,expert_name:{317:'Justin Boone'}};assert.equal((await runReplay(replayPositive)).outcome,'EXACT_INDIVIDUAL_FILTER');replayCases++;
+for(const filters of [[317],{317:true},null]){assert.equal((await runReplay({...replayPositive,filters})).outcome,'AMBIGUOUS');replayCases++;}
+const parentApp=execFileSync('git',['show',replay.sourceHead+':app.js'],{encoding:'utf8'});
+const networkBlock=s=>s.slice(s.indexOf('  for(const candidate of [\'AVAILABILITY\''),s.indexOf('  const [available,filtered]=result.requests'));
+assert.equal(networkBlock(app),networkBlock(parentApp),'exact request construction/transport/two-request loop unchanged');
+assert.equal(fs.readFileSync('_worker.js','utf8').replace(/\r\n/g,'\n'),execFileSync('git',['show',replay.sourceHead+':_worker.js'],{encoding:'utf8'}),'proxy unchanged');
+console.log('RC4230_REAL_PARENT_REPLAY_PASS '+replayCases+' cases; 2026-10-08; 67 mapped QB rows; all broad filter variants NEGATIVE; exact parent request/proxy parity');
 
 // Exact inverse proof pins every unmodified runtime byte, including all consumers/normal traffic.
 for(const file of RUNTIME_FILES){const actual=fs.readFileSync(file,'utf8').replace(/\r\n/g,'\n'),baseline=execFileSync('git',['show','a7f27740d33a7a39127d51515cc2fd8c3d9f28ff:'+file],{encoding:'utf8'});assert.equal(rc4229HistoricalRuntime(file,actual),baseline,file+' exact bounded delta');}

@@ -8,6 +8,13 @@ assert.equal(correction.baseHead,'fdab8774d63ea8e3ea142395f6f752f12168d90b');ass
 for(const p of RUNTIME_FILES){assert.equal(blob(read(p)),f.runtimeBlobs[p]);assert.equal(rc4230FunctionalRuntime(read(p)),historical(p),'approved functional bytes '+p);assert.equal(blob(historical(p)),f.functionalBlobs[p]);}
 for(const p of ['app.js','index.html','sw.js','manifest.webmanifest'])assert.deepEqual([...new Set(read(p).match(/v11\.8\.0-rc4\.\d+/g))],[f.version]);
 for(const p of f.consensusCorrections){const prior=execFileSync('git',['show','b960186b389ab9beca1308769edf20abfd08b744:'+p.file],{encoding:'utf8'});assert(prior.includes(p.old));assert(read(p.file).includes(p.value));if(p.file!=='app.js')assert.equal(read(p.file).replace(p.value,p.old),prior,'exact rejection-precedence delta');}
+// One-time carry-forward is pinned to this parent evidence and these exact parser bytes.
+const carry=f.parserOnlyEvidenceCarryForward,evidence=JSON.parse(read(carry.evidenceFile));
+assert.equal(carry.sourceHead,'5a09c23499933933249ad62406fdbaf3796ccac8');assert.equal(evidence.sourceHead,carry.sourceHead);assert.equal(blob(read(carry.evidenceFile)),carry.evidenceBlob);assert.equal(blob(read('app.js')),carry.correctedAppBlob);
+assert.equal(carry.scope,'ONE_TIME_EXACT_PARSER_BYTES_ONLY');assert.equal(carry.diagnosticOutcome,'FILTER_NOT_HONORED');assert.equal(carry.acceptedConclusion,'CONCLUSIVE_ROUTE_UNUSABLE');assert.equal(carry.expertUnavailableClaim,false);assert.equal(carry.acceptanceProven,false);assert.equal(carry.newLivePreviewRequired,false);
+for(const key of ['requestBehaviorMustMatchSourceHead','exactHeadCloudRequired','localStrictRequired','postCommitReviewRequired'])assert.equal(carry[key],true);
+const parentParserApp=execFileSync('git',['show',carry.sourceHead+':app.js'],{encoding:'utf8'}),withoutParser=x=>x.slice(0,x.indexOf('function seasonConsensusFilterShape'))+'PARSER'+x.slice(x.indexOf('// RC4229 nested route shape research:'));assert.equal(withoutParser(read('app.js')),withoutParser(parentParserApp),'only consensus response parser/classification changed');
+console.log('RC4230_ONE_TIME_CARRY_FORWARD_PASS pinned parent/evidence/parser; negative route-unusable only; exact-head cloud still required');
 const d=loadAuthority(),old=rc4229AuthorityBeforeBinding(d);assert.deepEqual(validateAuthority(d),[]);
 assert.deepEqual(validateRc4230ProductionIdentity(d),[]);
 // Mutate every component independently, bypassing fixture equality entirely.
