@@ -8,7 +8,7 @@
   "functionalHead": "5be01f00c74f7b611058130f6a84c2a2c2c76aba",
   "branch": "codex/rc4230-acquisition-contract-stabilization",
   "gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
-  "unpublished": true,
+  "unpublished": false,
   "merged": false,
   "deployed": false,
   "physicalAccepted": false,
@@ -344,7 +344,7 @@
       "file": "PITTI_CURRENT_STATE.json",
       "path": "handoff.resume",
       "old": "RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance.",
-      "value": "RC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim."
+      "value": "RC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance."
     },
     {
       "file": "PITTI_CURRENT_STATE.json",
@@ -356,19 +356,19 @@
       "file": "PITTI_CURRENT_STATE.json",
       "path": "exactNextAction",
       "old": "RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance.",
-      "value": "RC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim."
+      "value": "RC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance."
     },
     {
       "file": "PITTI_CURRENT_STATE.json",
       "path": "gate",
       "old": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-      "value": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING"
+      "value": "RC4230_MERGE_AUTHORIZATION_REQUIRED"
     },
     {
       "file": "PITTI_CURRENT_STATE.json",
       "path": "nextGate",
       "old": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-      "value": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING"
+      "value": "RC4230_MERGE_AUTHORIZATION_REQUIRED"
     },
     {
       "file": "PITTI_CURRENT_STATE.json",
@@ -379,7 +379,7 @@
       },
       "value": {
         "status": "RELEASE_CANDIDATE_UNMERGED",
-        "nextGate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING"
+        "nextGate": "RC4230_MERGE_AUTHORIZATION_REQUIRED"
       }
     },
     {
@@ -416,7 +416,7 @@
       "file": "PITTI_EXECUTION_LOCK.json",
       "path": "handoff.resume",
       "old": "RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance.",
-      "value": "RC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim."
+      "value": "RC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance."
     },
     {
       "file": "PITTI_EXECUTION_LOCK.json",
@@ -428,19 +428,19 @@
       "file": "PITTI_EXECUTION_LOCK.json",
       "path": "exactNextAction",
       "old": "RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance.",
-      "value": "RC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim."
+      "value": "RC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance."
     },
     {
       "file": "PITTI_EXECUTION_LOCK.json",
       "path": "gate",
       "old": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-      "value": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING"
+      "value": "RC4230_MERGE_AUTHORIZATION_REQUIRED"
     },
     {
       "file": "PITTI_EXECUTION_LOCK.json",
       "path": "nextGate",
       "old": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-      "value": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING"
+      "value": "RC4230_MERGE_AUTHORIZATION_REQUIRED"
     },
     {
       "file": "PITTI_EXECUTION_LOCK.json",
@@ -451,7 +451,7 @@
       },
       "value": {
         "status": "RELEASE_CANDIDATE_UNMERGED",
-        "nextGate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING"
+        "nextGate": "RC4230_MERGE_AUTHORIZATION_REQUIRED"
       }
     },
     {
@@ -482,19 +482,19 @@
       "file": "PITTI_COMMAND_CONTRACTS.json",
       "path": "exactNextAction",
       "old": "RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance.",
-      "value": "RC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim."
+      "value": "RC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance."
     },
     {
       "file": "PITTI_COMMAND_CONTRACTS.json",
       "path": "currentGate",
       "old": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-      "value": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING"
+      "value": "RC4230_MERGE_AUTHORIZATION_REQUIRED"
     },
     {
       "file": "PITTI_COMMAND_CONTRACTS.json",
       "path": "currentResearchGate",
       "old": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-      "value": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING"
+      "value": "RC4230_MERGE_AUTHORIZATION_REQUIRED"
     },
     {
       "file": "PITTI_HANDOFF_SEAL.json",
@@ -518,7 +518,7 @@
       "file": "PITTI_HANDOFF_SEAL.json",
       "path": "exact_gate",
       "old": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-      "value": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING"
+      "value": "RC4230_MERGE_AUTHORIZATION_REQUIRED"
     },
     {
       "file": "PITTI_CURRENT_STATE.json",
@@ -588,38 +588,38 @@
         "base": "5be01f00c74f7b611058130f6a84c2a2c2c76aba",
         "canonical_base": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
         "status": "RELEASE_CANDIDATE_UNMERGED",
-        "pr": null,
-        "pr_state": null,
+        "pr": 233,
+        "pr_state": "OPEN",
         "merged": false,
-        "published_head": null,
+        "published_head": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
         "merge_commit": null,
         "production_deployment": null,
         "production_proven": false,
         "physical_accepted": false,
         "physical_status": "PENDING_NOT_ACCEPTED",
-        "gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
-        "next_gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
-        "head_sha": null,
-        "tree_sha": null,
-        "head_binding": "CURRENT_GIT_HEAD_AFTER_LOCAL_COMMIT",
+        "gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+        "next_gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+        "head_sha": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
+        "tree_sha": "84b35c52bbda421a5c36de2f1fb3d57dd04431a3",
+        "head_binding": "VERIFIED_EXTERNAL_RECEIPT_HEAD_NOT_AUTHORITY_SUCCESSOR",
         "functional_head": "5be01f00c74f7b611058130f6a84c2a2c2c76aba",
         "publication_authorized": false,
         "merge_after_exact_head_ci_authorized": false,
-        "exact_head_rule": "Machine-read final release HEAD/tree after commit. Functional Strict 310/310 applies only to 5be01f00c74f7b611058130f6a84c2a2c2c76aba. Fresh exact-head cloud CI AND real Week-5 PR-preview audit acceptance are required before separate merge authorization.",
+        "exact_head_rule": "Receipt binds CI/cloud PASS only to 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. All technical pre-merge gates for that runtime are satisfied. Authority-only successors still require exact-head CI/cloud; merge remains separately unauthorized.",
         "scope": "DIAGNOSTIC_ONLY_RELEASE_BINDING",
-        "published": false,
+        "published": true,
         "deployed": false,
         "adapter_implemented": false,
-        "exact_head_ci": "PENDING",
-        "cloud_validation": "PENDING",
+        "exact_head_ci": "PASS",
+        "cloud_validation": "PASS",
         "preview_audit": {
           "required": true,
-          "status": "PENDING",
+          "status": "SATISFIED_ONE_TIME_PARSER_REPLAY",
           "season": 2026,
           "week": 5,
           "environment": "CLOUDFLARE_PR_PREVIEW",
           "exact_head_bound": true,
-          "acceptance_proven": false,
+          "acceptance_proven": true,
           "requirements": [
             "control advertises or explicitly excludes configured ID317",
             "filtered ID317 response",
@@ -628,15 +628,32 @@
             "depth and Sleeper mapping",
             "directory corroboration with no identity overclaim"
           ],
-          "merge_eligible": false,
+          "merge_eligible": true,
           "accepted_conclusions": [
             "STRUCTURAL_CANDIDATE",
-            "CONCLUSIVE_UNAVAILABLE"
+            "CONCLUSIVE_UNAVAILABLE",
+            "CONCLUSIVE_ROUTE_UNUSABLE"
           ],
           "ambiguous_acceptable": false,
-          "acceptance_rule": "Fresh exact-head Week-5 live control and filtered evidence: context, target, chronology/depth/mapping structurally proven OR conclusive context/target unavailable or unusable with filtered response characterized. AMBIGUOUS is not accepted. No adapter, identity overclaim, persistence or consumption. Separate merge authorization remains required."
+          "acceptance_rule": "ONE_TIME exact parent evidence and pinned parser replay; unchanged requests/proxy; child exact-head cloud PASS. FILTER_NOT_HONORED proves route unusable, not expert unavailable. No generic cross-head bypass.",
+          "accepted_conclusion": "CONCLUSIVE_ROUTE_UNUSABLE",
+          "diagnostic_outcome": "FILTER_NOT_HONORED",
+          "expertUnavailableClaim": false,
+          "new_live_preview_required": false,
+          "source_head": "5a09c23499933933249ad62406fdbaf3796ccac8",
+          "validated_child_head": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
+          "validated_child_tree": "84b35c52bbda421a5c36de2f1fb3d57dd04431a3",
+          "request_behavior_unchanged": true,
+          "parser_blob": "9df4c855f9a964c8e730a399dbaa9874a37c81de",
+          "evidence_blob": "bcb4fb41b235474f0ccb54516fd70b5c6136e69c"
         },
-        "merge_eligible": false
+        "merge_eligible": true,
+        "cloud_strict": "314/314 PASS",
+        "merge_authorized": false,
+        "expert_unavailable_claim": false,
+        "persistence_enabled": false,
+        "consumer_enabled": false,
+        "evidence_source": "CURRENT_USER_VERIFIED_EXTERNAL_RECEIPT"
       }
     },
     {
@@ -677,38 +694,38 @@
         "base": "5be01f00c74f7b611058130f6a84c2a2c2c76aba",
         "canonical_base": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
         "status": "RELEASE_CANDIDATE_UNMERGED",
-        "pr": null,
-        "pr_state": null,
+        "pr": 233,
+        "pr_state": "OPEN",
         "merged": false,
-        "published_head": null,
+        "published_head": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
         "merge_commit": null,
         "production_deployment": null,
         "production_proven": false,
         "physical_accepted": false,
         "physical_status": "PENDING_NOT_ACCEPTED",
-        "gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
-        "next_gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
-        "head_sha": null,
-        "tree_sha": null,
-        "head_binding": "CURRENT_GIT_HEAD_AFTER_LOCAL_COMMIT",
+        "gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+        "next_gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+        "head_sha": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
+        "tree_sha": "84b35c52bbda421a5c36de2f1fb3d57dd04431a3",
+        "head_binding": "VERIFIED_EXTERNAL_RECEIPT_HEAD_NOT_AUTHORITY_SUCCESSOR",
         "functional_head": "5be01f00c74f7b611058130f6a84c2a2c2c76aba",
         "publication_authorized": false,
         "merge_after_exact_head_ci_authorized": false,
-        "exact_head_rule": "Machine-read final release HEAD/tree after commit. Functional Strict 310/310 applies only to 5be01f00c74f7b611058130f6a84c2a2c2c76aba. Fresh exact-head cloud CI AND real Week-5 PR-preview audit acceptance are required before separate merge authorization.",
+        "exact_head_rule": "Receipt binds CI/cloud PASS only to 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. All technical pre-merge gates for that runtime are satisfied. Authority-only successors still require exact-head CI/cloud; merge remains separately unauthorized.",
         "scope": "DIAGNOSTIC_ONLY_RELEASE_BINDING",
-        "published": false,
+        "published": true,
         "deployed": false,
         "adapter_implemented": false,
-        "exact_head_ci": "PENDING",
-        "cloud_validation": "PENDING",
+        "exact_head_ci": "PASS",
+        "cloud_validation": "PASS",
         "preview_audit": {
           "required": true,
-          "status": "PENDING",
+          "status": "SATISFIED_ONE_TIME_PARSER_REPLAY",
           "season": 2026,
           "week": 5,
           "environment": "CLOUDFLARE_PR_PREVIEW",
           "exact_head_bound": true,
-          "acceptance_proven": false,
+          "acceptance_proven": true,
           "requirements": [
             "control advertises or explicitly excludes configured ID317",
             "filtered ID317 response",
@@ -717,15 +734,32 @@
             "depth and Sleeper mapping",
             "directory corroboration with no identity overclaim"
           ],
-          "merge_eligible": false,
+          "merge_eligible": true,
           "accepted_conclusions": [
             "STRUCTURAL_CANDIDATE",
-            "CONCLUSIVE_UNAVAILABLE"
+            "CONCLUSIVE_UNAVAILABLE",
+            "CONCLUSIVE_ROUTE_UNUSABLE"
           ],
           "ambiguous_acceptable": false,
-          "acceptance_rule": "Fresh exact-head Week-5 live control and filtered evidence: context, target, chronology/depth/mapping structurally proven OR conclusive context/target unavailable or unusable with filtered response characterized. AMBIGUOUS is not accepted. No adapter, identity overclaim, persistence or consumption. Separate merge authorization remains required."
+          "acceptance_rule": "ONE_TIME exact parent evidence and pinned parser replay; unchanged requests/proxy; child exact-head cloud PASS. FILTER_NOT_HONORED proves route unusable, not expert unavailable. No generic cross-head bypass.",
+          "accepted_conclusion": "CONCLUSIVE_ROUTE_UNUSABLE",
+          "diagnostic_outcome": "FILTER_NOT_HONORED",
+          "expertUnavailableClaim": false,
+          "new_live_preview_required": false,
+          "source_head": "5a09c23499933933249ad62406fdbaf3796ccac8",
+          "validated_child_head": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
+          "validated_child_tree": "84b35c52bbda421a5c36de2f1fb3d57dd04431a3",
+          "request_behavior_unchanged": true,
+          "parser_blob": "9df4c855f9a964c8e730a399dbaa9874a37c81de",
+          "evidence_blob": "bcb4fb41b235474f0ccb54516fd70b5c6136e69c"
         },
-        "merge_eligible": false
+        "merge_eligible": true,
+        "cloud_strict": "314/314 PASS",
+        "merge_authorized": false,
+        "expert_unavailable_claim": false,
+        "persistence_enabled": false,
+        "consumer_enabled": false,
+        "evidence_source": "CURRENT_USER_VERIFIED_EXTERNAL_RECEIPT"
       }
     },
     {
@@ -766,38 +800,38 @@
         "base": "5be01f00c74f7b611058130f6a84c2a2c2c76aba",
         "canonical_base": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
         "status": "RELEASE_CANDIDATE_UNMERGED",
-        "pr": null,
-        "pr_state": null,
+        "pr": 233,
+        "pr_state": "OPEN",
         "merged": false,
-        "published_head": null,
+        "published_head": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
         "merge_commit": null,
         "production_deployment": null,
         "production_proven": false,
         "physical_accepted": false,
         "physical_status": "PENDING_NOT_ACCEPTED",
-        "gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
-        "next_gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
-        "head_sha": null,
-        "tree_sha": null,
-        "head_binding": "CURRENT_GIT_HEAD_AFTER_LOCAL_COMMIT",
+        "gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+        "next_gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+        "head_sha": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
+        "tree_sha": "84b35c52bbda421a5c36de2f1fb3d57dd04431a3",
+        "head_binding": "VERIFIED_EXTERNAL_RECEIPT_HEAD_NOT_AUTHORITY_SUCCESSOR",
         "functional_head": "5be01f00c74f7b611058130f6a84c2a2c2c76aba",
         "publication_authorized": false,
         "merge_after_exact_head_ci_authorized": false,
-        "exact_head_rule": "Machine-read final release HEAD/tree after commit. Functional Strict 310/310 applies only to 5be01f00c74f7b611058130f6a84c2a2c2c76aba. Fresh exact-head cloud CI AND real Week-5 PR-preview audit acceptance are required before separate merge authorization.",
+        "exact_head_rule": "Receipt binds CI/cloud PASS only to 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. All technical pre-merge gates for that runtime are satisfied. Authority-only successors still require exact-head CI/cloud; merge remains separately unauthorized.",
         "scope": "DIAGNOSTIC_ONLY_RELEASE_BINDING",
-        "published": false,
+        "published": true,
         "deployed": false,
         "adapter_implemented": false,
-        "exact_head_ci": "PENDING",
-        "cloud_validation": "PENDING",
+        "exact_head_ci": "PASS",
+        "cloud_validation": "PASS",
         "preview_audit": {
           "required": true,
-          "status": "PENDING",
+          "status": "SATISFIED_ONE_TIME_PARSER_REPLAY",
           "season": 2026,
           "week": 5,
           "environment": "CLOUDFLARE_PR_PREVIEW",
           "exact_head_bound": true,
-          "acceptance_proven": false,
+          "acceptance_proven": true,
           "requirements": [
             "control advertises or explicitly excludes configured ID317",
             "filtered ID317 response",
@@ -806,15 +840,32 @@
             "depth and Sleeper mapping",
             "directory corroboration with no identity overclaim"
           ],
-          "merge_eligible": false,
+          "merge_eligible": true,
           "accepted_conclusions": [
             "STRUCTURAL_CANDIDATE",
-            "CONCLUSIVE_UNAVAILABLE"
+            "CONCLUSIVE_UNAVAILABLE",
+            "CONCLUSIVE_ROUTE_UNUSABLE"
           ],
           "ambiguous_acceptable": false,
-          "acceptance_rule": "Fresh exact-head Week-5 live control and filtered evidence: context, target, chronology/depth/mapping structurally proven OR conclusive context/target unavailable or unusable with filtered response characterized. AMBIGUOUS is not accepted. No adapter, identity overclaim, persistence or consumption. Separate merge authorization remains required."
+          "acceptance_rule": "ONE_TIME exact parent evidence and pinned parser replay; unchanged requests/proxy; child exact-head cloud PASS. FILTER_NOT_HONORED proves route unusable, not expert unavailable. No generic cross-head bypass.",
+          "accepted_conclusion": "CONCLUSIVE_ROUTE_UNUSABLE",
+          "diagnostic_outcome": "FILTER_NOT_HONORED",
+          "expertUnavailableClaim": false,
+          "new_live_preview_required": false,
+          "source_head": "5a09c23499933933249ad62406fdbaf3796ccac8",
+          "validated_child_head": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
+          "validated_child_tree": "84b35c52bbda421a5c36de2f1fb3d57dd04431a3",
+          "request_behavior_unchanged": true,
+          "parser_blob": "9df4c855f9a964c8e730a399dbaa9874a37c81de",
+          "evidence_blob": "bcb4fb41b235474f0ccb54516fd70b5c6136e69c"
         },
-        "merge_eligible": false
+        "merge_eligible": true,
+        "cloud_strict": "314/314 PASS",
+        "merge_authorized": false,
+        "expert_unavailable_claim": false,
+        "persistence_enabled": false,
+        "consumer_enabled": false,
+        "evidence_source": "CURRENT_USER_VERIFIED_EXTERNAL_RECEIPT"
       }
     },
     {
@@ -855,38 +906,38 @@
         "base": "5be01f00c74f7b611058130f6a84c2a2c2c76aba",
         "canonical_base": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
         "status": "RELEASE_CANDIDATE_UNMERGED",
-        "pr": null,
-        "pr_state": null,
+        "pr": 233,
+        "pr_state": "OPEN",
         "merged": false,
-        "published_head": null,
+        "published_head": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
         "merge_commit": null,
         "production_deployment": null,
         "production_proven": false,
         "physical_accepted": false,
         "physical_status": "PENDING_NOT_ACCEPTED",
-        "gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
-        "next_gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
-        "head_sha": null,
-        "tree_sha": null,
-        "head_binding": "CURRENT_GIT_HEAD_AFTER_LOCAL_COMMIT",
+        "gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+        "next_gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+        "head_sha": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
+        "tree_sha": "84b35c52bbda421a5c36de2f1fb3d57dd04431a3",
+        "head_binding": "VERIFIED_EXTERNAL_RECEIPT_HEAD_NOT_AUTHORITY_SUCCESSOR",
         "functional_head": "5be01f00c74f7b611058130f6a84c2a2c2c76aba",
         "publication_authorized": false,
         "merge_after_exact_head_ci_authorized": false,
-        "exact_head_rule": "Machine-read final release HEAD/tree after commit. Functional Strict 310/310 applies only to 5be01f00c74f7b611058130f6a84c2a2c2c76aba. Fresh exact-head cloud CI AND real Week-5 PR-preview audit acceptance are required before separate merge authorization.",
+        "exact_head_rule": "Receipt binds CI/cloud PASS only to 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. All technical pre-merge gates for that runtime are satisfied. Authority-only successors still require exact-head CI/cloud; merge remains separately unauthorized.",
         "scope": "DIAGNOSTIC_ONLY_RELEASE_BINDING",
-        "published": false,
+        "published": true,
         "deployed": false,
         "adapter_implemented": false,
-        "exact_head_ci": "PENDING",
-        "cloud_validation": "PENDING",
+        "exact_head_ci": "PASS",
+        "cloud_validation": "PASS",
         "preview_audit": {
           "required": true,
-          "status": "PENDING",
+          "status": "SATISFIED_ONE_TIME_PARSER_REPLAY",
           "season": 2026,
           "week": 5,
           "environment": "CLOUDFLARE_PR_PREVIEW",
           "exact_head_bound": true,
-          "acceptance_proven": false,
+          "acceptance_proven": true,
           "requirements": [
             "control advertises or explicitly excludes configured ID317",
             "filtered ID317 response",
@@ -895,15 +946,32 @@
             "depth and Sleeper mapping",
             "directory corroboration with no identity overclaim"
           ],
-          "merge_eligible": false,
+          "merge_eligible": true,
           "accepted_conclusions": [
             "STRUCTURAL_CANDIDATE",
-            "CONCLUSIVE_UNAVAILABLE"
+            "CONCLUSIVE_UNAVAILABLE",
+            "CONCLUSIVE_ROUTE_UNUSABLE"
           ],
           "ambiguous_acceptable": false,
-          "acceptance_rule": "Fresh exact-head Week-5 live control and filtered evidence: context, target, chronology/depth/mapping structurally proven OR conclusive context/target unavailable or unusable with filtered response characterized. AMBIGUOUS is not accepted. No adapter, identity overclaim, persistence or consumption. Separate merge authorization remains required."
+          "acceptance_rule": "ONE_TIME exact parent evidence and pinned parser replay; unchanged requests/proxy; child exact-head cloud PASS. FILTER_NOT_HONORED proves route unusable, not expert unavailable. No generic cross-head bypass.",
+          "accepted_conclusion": "CONCLUSIVE_ROUTE_UNUSABLE",
+          "diagnostic_outcome": "FILTER_NOT_HONORED",
+          "expertUnavailableClaim": false,
+          "new_live_preview_required": false,
+          "source_head": "5a09c23499933933249ad62406fdbaf3796ccac8",
+          "validated_child_head": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
+          "validated_child_tree": "84b35c52bbda421a5c36de2f1fb3d57dd04431a3",
+          "request_behavior_unchanged": true,
+          "parser_blob": "9df4c855f9a964c8e730a399dbaa9874a37c81de",
+          "evidence_blob": "bcb4fb41b235474f0ccb54516fd70b5c6136e69c"
         },
-        "merge_eligible": false
+        "merge_eligible": true,
+        "cloud_strict": "314/314 PASS",
+        "merge_authorized": false,
+        "expert_unavailable_claim": false,
+        "persistence_enabled": false,
+        "consumer_enabled": false,
+        "evidence_source": "CURRENT_USER_VERIFIED_EXTERNAL_RECEIPT"
       }
     },
     {
@@ -944,38 +1012,38 @@
         "base": "5be01f00c74f7b611058130f6a84c2a2c2c76aba",
         "canonical_base": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
         "status": "RELEASE_CANDIDATE_UNMERGED",
-        "pr": null,
-        "pr_state": null,
+        "pr": 233,
+        "pr_state": "OPEN",
         "merged": false,
-        "published_head": null,
+        "published_head": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
         "merge_commit": null,
         "production_deployment": null,
         "production_proven": false,
         "physical_accepted": false,
         "physical_status": "PENDING_NOT_ACCEPTED",
-        "gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
-        "next_gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
-        "head_sha": null,
-        "tree_sha": null,
-        "head_binding": "CURRENT_GIT_HEAD_AFTER_LOCAL_COMMIT",
+        "gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+        "next_gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+        "head_sha": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
+        "tree_sha": "84b35c52bbda421a5c36de2f1fb3d57dd04431a3",
+        "head_binding": "VERIFIED_EXTERNAL_RECEIPT_HEAD_NOT_AUTHORITY_SUCCESSOR",
         "functional_head": "5be01f00c74f7b611058130f6a84c2a2c2c76aba",
         "publication_authorized": false,
         "merge_after_exact_head_ci_authorized": false,
-        "exact_head_rule": "Machine-read final release HEAD/tree after commit. Functional Strict 310/310 applies only to 5be01f00c74f7b611058130f6a84c2a2c2c76aba. Fresh exact-head cloud CI AND real Week-5 PR-preview audit acceptance are required before separate merge authorization.",
+        "exact_head_rule": "Receipt binds CI/cloud PASS only to 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. All technical pre-merge gates for that runtime are satisfied. Authority-only successors still require exact-head CI/cloud; merge remains separately unauthorized.",
         "scope": "DIAGNOSTIC_ONLY_RELEASE_BINDING",
-        "published": false,
+        "published": true,
         "deployed": false,
         "adapter_implemented": false,
-        "exact_head_ci": "PENDING",
-        "cloud_validation": "PENDING",
+        "exact_head_ci": "PASS",
+        "cloud_validation": "PASS",
         "preview_audit": {
           "required": true,
-          "status": "PENDING",
+          "status": "SATISFIED_ONE_TIME_PARSER_REPLAY",
           "season": 2026,
           "week": 5,
           "environment": "CLOUDFLARE_PR_PREVIEW",
           "exact_head_bound": true,
-          "acceptance_proven": false,
+          "acceptance_proven": true,
           "requirements": [
             "control advertises or explicitly excludes configured ID317",
             "filtered ID317 response",
@@ -984,9 +1052,32 @@
             "depth and Sleeper mapping",
             "directory corroboration with no identity overclaim"
           ],
-          "merge_eligible": false
+          "merge_eligible": true,
+          "accepted_conclusions": [
+            "STRUCTURAL_CANDIDATE",
+            "CONCLUSIVE_UNAVAILABLE",
+            "CONCLUSIVE_ROUTE_UNUSABLE"
+          ],
+          "accepted_conclusion": "CONCLUSIVE_ROUTE_UNUSABLE",
+          "diagnostic_outcome": "FILTER_NOT_HONORED",
+          "expertUnavailableClaim": false,
+          "new_live_preview_required": false,
+          "source_head": "5a09c23499933933249ad62406fdbaf3796ccac8",
+          "validated_child_head": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
+          "validated_child_tree": "84b35c52bbda421a5c36de2f1fb3d57dd04431a3",
+          "request_behavior_unchanged": true,
+          "parser_blob": "9df4c855f9a964c8e730a399dbaa9874a37c81de",
+          "evidence_blob": "bcb4fb41b235474f0ccb54516fd70b5c6136e69c",
+          "acceptance_rule": "ONE_TIME exact parent evidence and pinned parser replay; unchanged requests/proxy; child exact-head cloud PASS. FILTER_NOT_HONORED proves route unusable, not expert unavailable. No generic cross-head bypass.",
+          "ambiguous_acceptable": false
         },
-        "merge_eligible": false
+        "merge_eligible": true,
+        "cloud_strict": "314/314 PASS",
+        "merge_authorized": false,
+        "expert_unavailable_claim": false,
+        "persistence_enabled": false,
+        "consumer_enabled": false,
+        "evidence_source": "CURRENT_USER_VERIFIED_EXTERNAL_RECEIPT"
       }
     },
     {
@@ -1009,18 +1100,16 @@
       "value": {
         "status": "RELEASE_CANDIDATE_UNMERGED",
         "branch": "codex/rc4230-acquisition-contract-stabilization",
-        "published_branch": null,
-        "current_gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
+        "published_branch": "codex/rc4230-acquisition-contract-stabilization",
+        "current_gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
         "physical_gate": "RC4230_ANDROID_ACCEPTANCE_PENDING",
         "physical_executable": false,
         "canonical_main": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
         "canonical_tree": "7c6984ea77f70fd56a261110225476047d93fdd1",
         "sequence": [
-          "RC4230_RELEASE_BOUND_HEAD_ADVERSARIAL_REVIEW_BEFORE_PUBLICATION",
-          "EXPLICIT_PUBLICATION_AUTHORIZATION",
-          "EXACT_HEAD_CI_AND_CLOUD_PASS",
-          "REAL_WEEK5_PR_PREVIEW_ACQUISITION_AUDIT_PASS",
-          "SEPARATE_MERGE_AUTHORIZATION"
+          "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+          "RC4230_SEPARATE_MERGE_AUTHORIZATION",
+          "RC4230_POSTMERGE_PRODUCTION_VERIFICATION"
         ],
         "exact_head_rule": "Machine-read final release HEAD/tree after commit; prior functional Strict 310/310 certifies only 5be01f00c74f7b611058130f6a84c2a2c2c76aba. Fresh exact-head cloud required; separate publication authorization.",
         "preview_audit": {
@@ -1069,18 +1158,16 @@
       "value": {
         "status": "RELEASE_CANDIDATE_UNMERGED",
         "branch": "codex/rc4230-acquisition-contract-stabilization",
-        "published_branch": null,
-        "current_gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
+        "published_branch": "codex/rc4230-acquisition-contract-stabilization",
+        "current_gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
         "physical_gate": "RC4230_ANDROID_ACCEPTANCE_PENDING",
         "physical_executable": false,
         "canonical_main": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
         "canonical_tree": "7c6984ea77f70fd56a261110225476047d93fdd1",
         "sequence": [
-          "RC4230_RELEASE_BOUND_HEAD_ADVERSARIAL_REVIEW_BEFORE_PUBLICATION",
-          "EXPLICIT_PUBLICATION_AUTHORIZATION",
-          "EXACT_HEAD_CI_AND_CLOUD_PASS",
-          "REAL_WEEK5_PR_PREVIEW_ACQUISITION_AUDIT_PASS",
-          "SEPARATE_MERGE_AUTHORIZATION"
+          "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+          "RC4230_SEPARATE_MERGE_AUTHORIZATION",
+          "RC4230_POSTMERGE_PRODUCTION_VERIFICATION"
         ],
         "exact_head_rule": "Machine-read final release HEAD/tree after commit; prior functional Strict 310/310 certifies only 5be01f00c74f7b611058130f6a84c2a2c2c76aba. Fresh exact-head cloud required; separate publication authorization.",
         "preview_audit": {
@@ -1129,18 +1216,16 @@
       "value": {
         "status": "RELEASE_CANDIDATE_UNMERGED",
         "branch": "codex/rc4230-acquisition-contract-stabilization",
-        "published_branch": null,
-        "current_gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
+        "published_branch": "codex/rc4230-acquisition-contract-stabilization",
+        "current_gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
         "physical_gate": "RC4230_ANDROID_ACCEPTANCE_PENDING",
         "physical_executable": false,
         "canonical_main": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
         "canonical_tree": "7c6984ea77f70fd56a261110225476047d93fdd1",
         "sequence": [
-          "RC4230_RELEASE_BOUND_HEAD_ADVERSARIAL_REVIEW_BEFORE_PUBLICATION",
-          "EXPLICIT_PUBLICATION_AUTHORIZATION",
-          "EXACT_HEAD_CI_AND_CLOUD_PASS",
-          "REAL_WEEK5_PR_PREVIEW_ACQUISITION_AUDIT_PASS",
-          "SEPARATE_MERGE_AUTHORIZATION"
+          "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+          "RC4230_SEPARATE_MERGE_AUTHORIZATION",
+          "RC4230_POSTMERGE_PRODUCTION_VERIFICATION"
         ],
         "exact_head_rule": "Machine-read final release HEAD/tree after commit; prior functional Strict 310/310 certifies only 5be01f00c74f7b611058130f6a84c2a2c2c76aba. Fresh exact-head cloud required; separate publication authorization.",
         "preview_audit": {
@@ -1189,18 +1274,16 @@
       "value": {
         "status": "RELEASE_CANDIDATE_UNMERGED",
         "branch": "codex/rc4230-acquisition-contract-stabilization",
-        "published_branch": null,
-        "current_gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
+        "published_branch": "codex/rc4230-acquisition-contract-stabilization",
+        "current_gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
         "physical_gate": "RC4230_ANDROID_ACCEPTANCE_PENDING",
         "physical_executable": false,
         "canonical_main": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
         "canonical_tree": "7c6984ea77f70fd56a261110225476047d93fdd1",
         "sequence": [
-          "RC4230_RELEASE_BOUND_HEAD_ADVERSARIAL_REVIEW_BEFORE_PUBLICATION",
-          "EXPLICIT_PUBLICATION_AUTHORIZATION",
-          "EXACT_HEAD_CI_AND_CLOUD_PASS",
-          "REAL_WEEK5_PR_PREVIEW_ACQUISITION_AUDIT_PASS",
-          "SEPARATE_MERGE_AUTHORIZATION"
+          "RC4230_MERGE_AUTHORIZATION_REQUIRED",
+          "RC4230_SEPARATE_MERGE_AUTHORIZATION",
+          "RC4230_POSTMERGE_PRODUCTION_VERIFICATION"
         ],
         "exact_head_rule": "Machine-read final release HEAD/tree after commit; prior functional Strict 310/310 certifies only 5be01f00c74f7b611058130f6a84c2a2c2c76aba. Fresh exact-head cloud required; separate publication authorization.",
         "preview_audit": {
@@ -1268,7 +1351,7 @@
       "file": "PITTI_CURRENT_STATE.json",
       "path": "runtime.season_candidate",
       "old": "v11.8.0-rc4.229 LOCAL / UNPUBLISHED / DIAGNOSTIC ONLY",
-      "value": "v11.8.0-rc4.230 LOCAL / UNPUBLISHED / DIAGNOSTIC ONLY"
+      "value": "v11.8.0-rc4.230 PUBLISHED / UNMERGED / DIAGNOSTIC ONLY"
     },
     {
       "file": "PITTI_CURRENT_STATE.json",
@@ -1343,7 +1426,7 @@
         "classification": "RC4230_NOT_PHYSICALLY_ACCEPTED",
         "proven": false,
         "executable": false,
-        "prerequisite_gate": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING",
+        "prerequisite_gate": "RC4230_MERGE_AUTHORIZATION_REQUIRED",
         "canonical_main": "a7f27740d33a7a39127d51515cc2fd8c3d9f28ff",
         "agent_physical_test": false
       }
@@ -1456,19 +1539,19 @@
       "file": "PITTI_COMMAND_CONTRACTS.json",
       "path": "currentBoundary.nextGate",
       "old": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-      "value": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING"
+      "value": "RC4230_MERGE_AUTHORIZATION_REQUIRED"
     },
     {
       "file": "PITTI_COMMAND_CONTRACTS.json",
       "path": "currentBoundary.currentResearchGate",
       "old": "RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-      "value": "RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING"
+      "value": "RC4230_MERGE_AUTHORIZATION_REQUIRED"
     },
     {
       "file": "PITTI_COMMAND_CONTRACTS.json",
       "path": "currentBoundary.exactNextAction",
       "old": "RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance.",
-      "value": "RC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim."
+      "value": "RC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance."
     },
     {
       "file": "PITTI_COMMAND_CONTRACTS.json",
@@ -1536,7 +1619,7 @@
       "file": "PITTI_HANDOFF_SEAL.json",
       "path": "note",
       "old": "RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance.",
-      "value": "RC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim."
+      "value": "RC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance."
     },
     {
       "file": "PITTI_HANDOFF_SEAL.json",
@@ -1560,7 +1643,7 @@
       "file": "PITTI_HANDOFF_SEAL.json",
       "path": "branch_locks.current_physical_acceptance",
       "old": "BLOCKED_BY_RC4229_DIAGNOSTIC_EXACT_HEAD_CLOUD_VALIDATION_PENDING",
-      "value": "BLOCKED_BY_RC4230_EXACT_HEAD_CLOUD_AND_PR_PREVIEW_AUDIT_PENDING"
+      "value": "BLOCKED_BY_RC4230_MERGE_AUTHORIZATION_REQUIRED"
     },
     {
       "file": "PITTI_HANDOFF_SEAL.json",
@@ -1620,7 +1703,7 @@
       "file": "PITTI_EXECUTION_LOCK.json",
       "path": "authority.failClosedRecovery",
       "old": "v11.8.0-rc4.228 Production 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 / tree 2580f9e87715b8cc7e92c6d53189b5e9a6a798ba / deployment ab7a9b02-d8e1-4244-969d-9ec3254798d4 DEPLOYED_SUCCESS; PR231 MERGED. User explicit rc4.228 audit observed nested rankings; no individual adapter or physical acceptance proven. RC4.229 local diagnostic release candidate; separate publication authorization and exact-head cloud validation required. Production rc4.228 8baff6f6ec20c098ac47212dc7bd0d6e0e4a8447 is deployed. Fresh explicit rc4.229 real route audit remains pending; no adapter or physical acceptance. Library mirror remains historical/unverified; no persistent writeback claim. never claim a newer Library generation persisted unless files.list proves it.",
-      "value": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; reviewed PR head c5612d947512ebdb6dc8ec632c5cbbda4b883132; postmerge 8/8 SUCCESS. Physical acceptance unproven. Candidate v11.8.0-rc4.230 / generation 20261006T0836Z-v306 remains UNMERGED / UNPUBLISHED / UNDEPLOYED; bind candidate HEAD/tree via runtimeCandidate.head_binding CURRENT_GIT_HEAD_AFTER_LOCAL_COMMIT. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 PR-preview acquisition audit acceptance are required before separate merge authorization. Preview acceptance PENDING; no adapter or physical acceptance claim. Library mirror remains historical/unverified; no persistent writeback claim; never claim a newer Library generation persisted unless files.list proves it."
+      "value": "v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; reviewed PR head c5612d947512ebdb6dc8ec632c5cbbda4b883132; postmerge 8/8 SUCCESS. Physical acceptance unproven. RC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production identity as above; no adapter, persistence, consumer or physical acceptance. Library mirror remains historical/unverified; no persistent writeback claim; never claim a newer Library generation persisted unless files.list proves it."
     },
     {
       "file": "PITTI_EXECUTION_LOCK.json",
@@ -1670,27 +1753,27 @@
     },
     {
       "file": "PITTI_NEW_CHAT_BOOTSTRAP.md",
-      "documentPrefix": "# RC4.230 release binding — 20261006T0836Z-v306\n\nGeneration: `20261006T0836Z-v306`\nHandoff generation: `20261006T0836Z-v306`\n\nRC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim.\n\nv11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.\n\nCandidate v11.8.0-rc4.230: UNMERGED / UNPUBLISHED / UNDEPLOYED; preview acceptance PENDING.\n\n---\n\n## Historical v305 checkpoint (superseded current fields)\n\n"
+      "documentPrefix": "# RC4.230 release binding — 20261006T0836Z-v306\n\nGeneration: `20261006T0836Z-v306`\nHandoff generation: `20261006T0836Z-v306`\n\nRC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance.\n\nv11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.\n\nCandidate v11.8.0-rc4.230: PUBLISHED / UNMERGED / UNDEPLOYED; one-time evidence acceptance SATISFIED; merge NOT AUTHORIZED.\n\n---\n\n## Historical v305 checkpoint (superseded current fields)\n\n"
     },
     {
       "file": "NEW_CHAT_HANDOFF_CURRENT.md",
-      "documentPrefix": "# RC4.230 release binding — 20261006T0836Z-v306\n\nGeneration: `20261006T0836Z-v306`\nHandoff generation: `20261006T0836Z-v306`\n\nRC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim.\n\nv11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.\n\nCandidate v11.8.0-rc4.230: UNMERGED / UNPUBLISHED / UNDEPLOYED; preview acceptance PENDING.\n\n---\n\n## Historical v305 checkpoint (superseded current fields)\n\n"
+      "documentPrefix": "# RC4.230 release binding — 20261006T0836Z-v306\n\nGeneration: `20261006T0836Z-v306`\nHandoff generation: `20261006T0836Z-v306`\n\nRC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance.\n\nv11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.\n\nCandidate v11.8.0-rc4.230: PUBLISHED / UNMERGED / UNDEPLOYED; one-time evidence acceptance SATISFIED; merge NOT AUTHORIZED.\n\n---\n\n## Historical v305 checkpoint (superseded current fields)\n\n"
     },
     {
       "file": "HANDOFF_COMPLETENESS_MATRIX.md",
-      "documentPrefix": "# RC4.230 release binding — 20261006T0836Z-v306\n\nGeneration: `20261006T0836Z-v306`\nHandoff generation: `20261006T0836Z-v306`\n\nRC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim.\n\nv11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.\n\nCandidate v11.8.0-rc4.230: UNMERGED / UNPUBLISHED / UNDEPLOYED; preview acceptance PENDING.\n\n---\n\n## Historical v305 checkpoint (superseded current fields)\n\n"
+      "documentPrefix": "# RC4.230 release binding — 20261006T0836Z-v306\n\nGeneration: `20261006T0836Z-v306`\nHandoff generation: `20261006T0836Z-v306`\n\nRC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance.\n\nv11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.\n\nCandidate v11.8.0-rc4.230: PUBLISHED / UNMERGED / UNDEPLOYED; one-time evidence acceptance SATISFIED; merge NOT AUTHORIZED.\n\n---\n\n## Historical v305 checkpoint (superseded current fields)\n\n"
     },
     {
       "file": "PITTI_AUTO_PREFLIGHT.md",
-      "documentPrefix": "# RC4.230 release binding — 20261006T0836Z-v306\n\nGeneration: `20261006T0836Z-v306`\nHandoff generation: `20261006T0836Z-v306`\n\nRC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim.\n\nv11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.\n\nCandidate v11.8.0-rc4.230: UNMERGED / UNPUBLISHED / UNDEPLOYED; preview acceptance PENDING.\n\n---\n\n## Historical v305 checkpoint (superseded current fields)\n\n"
+      "documentPrefix": "# RC4.230 release binding — 20261006T0836Z-v306\n\nGeneration: `20261006T0836Z-v306`\nHandoff generation: `20261006T0836Z-v306`\n\nRC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance.\n\nv11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.\n\nCandidate v11.8.0-rc4.230: PUBLISHED / UNMERGED / UNDEPLOYED; one-time evidence acceptance SATISFIED; merge NOT AUTHORIZED.\n\n---\n\n## Historical v305 checkpoint (superseded current fields)\n\n"
     },
     {
       "file": "PITTI_PROJECT_STATE.md",
-      "documentPrefix": "# RC4.230 release binding — 20261006T0836Z-v306\n\nGeneration: `20261006T0836Z-v306`\nHandoff generation: `20261006T0836Z-v306`\n\nRC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim.\n\nv11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.\n\nCandidate v11.8.0-rc4.230: UNMERGED / UNPUBLISHED / UNDEPLOYED; preview acceptance PENDING.\n\n---\n\n## Historical v305 checkpoint (superseded current fields)\n\n"
+      "documentPrefix": "# RC4.230 release binding — 20261006T0836Z-v306\n\nGeneration: `20261006T0836Z-v306`\nHandoff generation: `20261006T0836Z-v306`\n\nRC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance.\n\nv11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.\n\nCandidate v11.8.0-rc4.230: PUBLISHED / UNMERGED / UNDEPLOYED; one-time evidence acceptance SATISFIED; merge NOT AUTHORIZED.\n\n---\n\n## Historical v305 checkpoint (superseded current fields)\n\n"
     },
     {
       "file": "README.md",
-      "documentPrefix": "# v11.8.0-rc4.230 release binding — 20261006T0836Z-v306\n\nGeneration: `20261006T0836Z-v306`\nHandoff generation: `20261006T0836Z-v306`\n\nRC4.230 local unmerged/unpublished release candidate. Separate publication authorization, exact-head CI/cloud PASS and real Week-5 Cloudflare PR-preview acquisition audit PASS are mandatory before requesting merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff. No adapter or physical acceptance claim.\n\nv11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.\n\nCandidate v11.8.0-rc4.230: UNMERGED / UNPUBLISHED / UNDEPLOYED; preview acceptance PENDING.\n\n---\n\n## Historical v305 checkpoint (superseded current fields)\n\n"
+      "documentPrefix": "# v11.8.0-rc4.230 release binding — 20261006T0836Z-v306\n\nGeneration: `20261006T0836Z-v306`\nHandoff generation: `20261006T0836Z-v306`\n\nRC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance.\n\nv11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.\n\nCandidate v11.8.0-rc4.230: PUBLISHED / UNMERGED / UNDEPLOYED; one-time evidence acceptance SATISFIED; merge NOT AUTHORIZED.\n\n---\n\n## Historical v305 checkpoint (superseded current fields)\n\n"
     },
     {
       "file": "PITTI_CURRENT_STATE.json",
@@ -1730,6 +1813,9 @@
     "postCommitReviewRequired": true,
     "newLivePreviewRequired": false,
     "scope": "ONE_TIME_EXACT_PARSER_BYTES_ONLY",
-    "acceptanceProven": false
-  }
+    "acceptanceProven": true,
+    "validatedChildHead": "0af2fe5736d77e4bdba14d3e03cb4e7057092da2",
+    "validatedChildTree": "84b35c52bbda421a5c36de2f1fb3d57dd04431a3"
+  },
+  "generationDecision": "KEEP_V306_EXISTING_RC4230_RELEASE_CONTRACT_NO_GENERATION_INCREMENT_REQUIRED"
 }
