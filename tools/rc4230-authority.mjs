@@ -1,3 +1,4 @@
+import {validateRc4230Postmerge} from './rc4230-postmerge-authority.mjs';
 import {rc4230Binding,rc4229AuthorityBeforeBinding} from './rc4230-release-baseline.mjs';
 import {validateRc4229Authority} from './rc4229-authority.mjs';
 // User-verified Production receipt, independent of release reconstruction fixtures.
@@ -18,6 +19,7 @@ export function validateRc4230ProductionIdentity(d){
   return errors;
 }
 export function validateRc4230Authority(d){
+  if(d['PITTI_CURRENT_STATE.json']?.authority?.rc4230_postmerge)return validateRc4230Postmerge(d,validateRc4230Authority);
   const f=rc4230Binding(),errors=validateRc4230ProductionIdentity(d);
   for(const e of f.patch){
     if(e.documentPrefix){if(!d[e.file]?.startsWith(e.documentPrefix))errors.push(e.file+': rc4230 prefix drift');continue;}

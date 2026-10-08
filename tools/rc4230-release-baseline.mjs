@@ -1,3 +1,4 @@
+import {rc4230PremergeAuthority} from './rc4230-postmerge-authority.mjs';
 import fs from 'node:fs';
 export const rc4230Binding=()=>JSON.parse(fs.readFileSync(new URL('./fixtures/rc4230/release-binding.json',import.meta.url)));
 export const rc4230FunctionalRuntime=text=>{
@@ -7,6 +8,7 @@ export const rc4230FunctionalRuntime=text=>{
   return text.replaceAll('v11.8.0-rc4.230','v11.8.0-rc4.229');
 };
 export function rc4229AuthorityBeforeBinding(d){
+  d=rc4230PremergeAuthority(d);
   if(d['PITTI_CURRENT_STATE.json']?.authority?.source_candidate!=='v11.8.0-rc4.230')return d;
   const copy=structuredClone(d),f=rc4230Binding();
   for(const e of f.patch){
