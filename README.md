@@ -1,3 +1,12 @@
+# v11.8.0-rc4.230 canonical postmerge authority — 20261008T1818Z-v307
+
+Generation: `20261008T1818Z-v307`
+Handoff generation: `20261008T1818Z-v307`
+
+RC4.230 PR233 MERGED at d304b9f31547eb34fc7eb0037fab640497ed3360 / cebf9854f4e00422361d19eea557549c395f3988. Seven postmerge workflows PASS; Cloud Strict 314/314 PASS; Pages SUCCESS deployment b9f13bd5-6aa8-4688-a183-893aec8af333. Source Production proven; physical acceptance UNPROVEN. FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE; no adapter/persistence/consumer. No new Preview/provider audit. Publish authority-only branch, then external PR creation and exact-head CI; no further merge/deploy authorization.
+
+The following v306 release checkpoint is historical/superseded.
+
 # v11.8.0-rc4.230 release binding — 20261006T0836Z-v306
 
 Generation: `20261006T0836Z-v306`

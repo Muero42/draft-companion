@@ -1,3 +1,4 @@
+import {rc4230PremergeAuthority,rc4230PostmergeBinding} from './rc4230-postmerge-authority.mjs';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import assert from 'node:assert/strict';import crypto from 'node:crypto';import {execFileSync} from 'node:child_process';
 import {RUNTIME_FILES} from './runtime-files.mjs';import {loadAuthority,validateAuthority} from './postmerge-authority-contract.mjs';import {rc4230Binding,rc4230FunctionalRuntime,rc4229AuthorityBeforeBinding} from './rc4230-release-baseline.mjs';
 import {validateRc4230ProductionIdentity} from './rc4230-authority.mjs';
@@ -15,7 +16,7 @@ assert.equal(carry.scope,'ONE_TIME_EXACT_PARSER_BYTES_ONLY');assert.equal(carry.
 for(const key of ['requestBehaviorMustMatchSourceHead','exactHeadCloudRequired','localStrictRequired','postCommitReviewRequired'])assert.equal(carry[key],true);
 const parentParserApp=execFileSync('git',['show',carry.sourceHead+':app.js'],{encoding:'utf8'}),withoutParser=x=>x.slice(0,x.indexOf('function seasonConsensusFilterShape'))+'PARSER'+x.slice(x.indexOf('// RC4229 nested route shape research:'));assert.equal(withoutParser(read('app.js')),withoutParser(parentParserApp),'only consensus response parser/classification changed');
 console.log('RC4230_ONE_TIME_CARRY_FORWARD_PASS pinned parent/evidence/parser; negative route-unusable only; exact-head cloud still required');
-const d=loadAuthority(),old=rc4229AuthorityBeforeBinding(d);assert.deepEqual(validateAuthority(d),[]);
+const postmerge=loadAuthority(),d=rc4230PremergeAuthority(postmerge),old=rc4229AuthorityBeforeBinding(d);assert.deepEqual(validateAuthority(d),[]);
 assert.deepEqual(validateRc4230ProductionIdentity(d),[]);
 // Mutate every component independently, bypassing fixture equality entirely.
 let lineageNegatives=0;
@@ -41,6 +42,13 @@ assert.equal(production.version,'v11.8.0-rc4.229');assert.equal(production.sourc
 assert.equal(c.runtime.ci.strict,'307/307 PASS');assert.equal(c.runtime.ci.checks,'8/8 SUCCESS');assert.equal(c.runtime_candidate.published,true);assert.equal(c.runtime_candidate.deployed,false);assert.equal(c.runtime_candidate.merged,false);assert.equal(c.runtime_candidate.preview_audit.week,5);assert.equal(c.runtime_candidate.preview_audit.environment,'CLOUDFLARE_PR_PREVIEW');
 for(const mutate of [x=>x.runtime_candidate.preview_audit.required=false,x=>x.runtime_candidate.preview_audit.acceptance_proven=false,x=>x.runtime_candidate.merge_eligible=false,x=>x.runtime_candidate.exact_head_ci='PENDING',x=>x.runtime_candidate.cloud_validation='PENDING',x=>x.runtime_candidate.published=false,x=>x.runtime_candidate.merged=true,x=>x.runtime_candidate.deployed=true,x=>x.runtime_candidate.adapter_implemented=true,x=>x.runtime.production_deployment.version='v11.8.0-rc4.230',x=>x.runtime.production_deployment.device_acceptance_proven=true]){const bad=structuredClone(d);mutate(bad['PITTI_CURRENT_STATE.json']);assert(validateAuthority(bad).length,'overclaim rejected');}
 assert.equal(execFileSync('git',['ls-files','.pitti-cloud-output'],{encoding:'utf8'}).trim(),'');
+// Canonical postmerge layer preserves the exact previous checkpoint and runtime.
+assert.deepEqual(validateAuthority(postmerge),[]);const pm=rc4230PostmergeBinding();
+for(const p of ['PITTI_CURRENT_STATE.json','PITTI_EXECUTION_LOCK.json','PITTI_COMMAND_CONTRACTS.json','PITTI_HANDOFF_SEAL.json'])assert.deepEqual(d[p],JSON.parse(execFileSync('git',['show',pm.main+':'+p],{encoding:'utf8'})),'exact premerge authority reconstruction');
+for(const p of RUNTIME_FILES)assert.equal(read(p),execFileSync('git',['show',pm.main+':'+p],{encoding:'utf8'}),'canonical runtime unchanged');
+assert.match(pm.generation,/^20261008T\d{4}Z-v307$/);assert.equal(postmerge['PITTI_CURRENT_STATE.json'].handoff_generation,pm.generation);
+let postmergeNegatives=0;for(const [file,path]of [['PITTI_CURRENT_STATE.json','runtime_candidate'],['PITTI_EXECUTION_LOCK.json','runtimeCandidate'],['PITTI_COMMAND_CONTRACTS.json','currentBoundary.runtimeCandidate'],['PITTI_HANDOFF_SEAL.json','runtime_candidate']])for(const mutate of [x=>x.merge_commit='WRONG',x=>x.canonical_tree='WRONG',x=>x.production_deployment.deployment_id='WRONG',x=>x.postmerge_ci='FAIL',x=>x.cloudflare_status='FAIL',x=>x.physical_accepted=true,x=>x.adapter_implemented=true,x=>x.persistence_enabled=true,x=>x.consumer_enabled=true,x=>x.pr_state='OPEN',x=>x.production_deployment.version='v11.8.0-rc4.229']){const bad=structuredClone(postmerge);let x=bad[file];for(const k of path.split('.'))x=x[k];mutate(x);assert(validateAuthority(bad).length);postmergeNegatives++;}
+console.log('RC4230_POSTMERGE_PASS '+postmergeNegatives+' negatives; exact18 canonical blobs; v307; v306 reconstructed; physical unproven');
 // Authority-only reconciliation must leave every runtime blob identical to the verified published head.
 for(const p of RUNTIME_FILES)assert.equal(read(p),execFileSync('git',['show','0af2fe5736d77e4bdba14d3e03cb4e7057092da2:'+p],{encoding:'utf8'}),'published runtime unchanged '+p);
 assert.equal(f.generation,'20261006T0836Z-v306');assert.equal(f.generationDecision,'KEEP_V306_EXISTING_RC4230_RELEASE_CONTRACT_NO_GENERATION_INCREMENT_REQUIRED');
