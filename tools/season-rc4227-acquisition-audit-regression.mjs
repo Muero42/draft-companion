@@ -1,10 +1,11 @@
+import {rc4229HistoricalRuntime} from './rc4230-diagnostic-baseline.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import vm from 'node:vm';
 import * as decision from '../season-decision-engine-v1.mjs';
 import evidence from '../weekly-evidence-v2.js';
 
-const app=fs.readFileSync('app.js','utf8'),now=Date.parse('2026-10-04T08:00:00Z'),secret='SECRET_SENTINEL_NEVER_EXPORT';
+const app=rc4229HistoricalRuntime('app.js',fs.readFileSync('app.js','utf8').replace(/\r\n/g,'\n')),now=Date.parse('2026-10-04T08:00:00Z'),secret='SECRET_SENTINEL_NEVER_EXPORT';
 const norm=s=>String(s).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/[^a-z0-9]+/g,' ').trim();
 const source={schema:'pitti.season-decision-sources.v1',season:2026,week:4,verifiedAt:now,directories:{}},players={};
 const fpId=(position,i)=>1000+['QB','RB','WR','TE','K','DST'].indexOf(position)*100+i;
@@ -12,8 +13,10 @@ let id=100;
 for(const position of decision.POSITIONS)source.directories[position]={season:2026,week:4,position,verifiedAt:now,experts:decision.CORE[position].map(name=>({id:String(++id),name,sourceUpdatedAt:now-3600000}))};
 const singleton=(position,expert)=>({season:2026,week:4,position_id:position,scoring:'HALF',ranking_type_name:'weekly',filters:expert.id,total_experts:1,expert_name:{[expert.id]:expert.name},players:Array.from({length:decision.POLICY.depth[position]},(_,i)=>({fpid:fpId(position,i),name:`${position} ${i}`,position_id:position,team_id:'BUF',rank_ecr:i+1,rank_min:i+1,rank_max:i+1,rank_ave:i+1}))});
 for(const position of [...decision.POSITIONS,'K','DST'])for(let i=0;i<(evidence.MIN_COUNTS[position]);i++)players[position+i]={full_name:`${position} ${i}`,position:position==='DST'?'DEF':position,team:'BUF',fantasy_data_id:fpId(position,i)};
+// Imported decision code shares the VM's logical clock through its explicit time seam.
+const timedDecision={...decision,individualPayloadReason:(payload,context)=>decision.individualPayloadReason(payload,{...context,now})};
 const context=()=>{
-  const calls=[],box={Date:class extends Date{static now(){return now}},PittiSeasonDecisionV1:decision,PittiWeeklyEvidenceV2:evidence,APP_VERSION:'local-diagnostic-candidate',SEASON_WEEKLY_SELECTED_EXPERTS:decision.CORE,WEEKLY_PROJECTION_POSITIONS:decision.POSITIONS,SEASON_PROJECTION_POSITIONS:[...decision.POSITIONS,'K','DST'],WEEKLY_PROJECTION_MIN_COUNTS:decision.POLICY.depth,normalizedExpertName:norm,els:{apiKey:{value:secret},season:{value:'2026'}},lastDraftContext:{players},seasonUiYield:async()=>{},currentSleeperNflWeek:async()=>4,jf:async()=>source,diagnosticRetryAfter:x=>x==null?null:x/1000};
+  const calls=[],box={Date:class extends Date{static now(){return now}},PittiSeasonDecisionV1:timedDecision,PittiWeeklyEvidenceV2:evidence,APP_VERSION:'local-diagnostic-candidate',SEASON_WEEKLY_SELECTED_EXPERTS:decision.CORE,WEEKLY_PROJECTION_POSITIONS:decision.POSITIONS,SEASON_PROJECTION_POSITIONS:[...decision.POSITIONS,'K','DST'],WEEKLY_PROJECTION_MIN_COUNTS:decision.POLICY.depth,normalizedExpertName:norm,els:{apiKey:{value:secret},season:{value:'2026'}},lastDraftContext:{players},seasonUiYield:async()=>{},currentSleeperNflWeek:async()=>4,jf:async()=>source,diagnosticRetryAfter:x=>x==null?null:x/1000};
   box.fpProxyRequest=async(path,options)=>{calls.push({path,options});const q=new URL(path,'https://fixture.invalid').searchParams,position=q.get('position');if(path.includes('consensus-rankings'))return{ok:true,status:200,bodyState:'JSON',data:singleton(position,source.directories[position].experts[0])};return{ok:true,status:200,bodyState:'JSON',data:{season:2026,week:4,updated:'10/04',players:Array.from({length:evidence.MIN_COUNTS[position]},(_,i)=>({fpid:fpId(position,i),name:`${position} ${i}`,position_id:position,team_id:'BUF',stats:{points_half:10}}))}};};
   vm.createContext(box);
   vm.runInContext(app.slice(app.indexOf('function weeklyProjectionMetadata('),app.indexOf('function weeklyProjectionFailure('))+app.slice(app.indexOf('// Bounded RC4.227 diagnosis only:'),app.indexOf('function slugifyExpert(')),box);

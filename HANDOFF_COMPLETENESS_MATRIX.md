@@ -1,3 +1,18 @@
+# RC4.230 release binding — 20261006T0836Z-v306
+
+Generation: `20261006T0836Z-v306`
+Handoff generation: `20261006T0836Z-v306`
+
+RC4.230 published PR233 OPEN; exact-head CI/cloud 314/314 PASS at 0af2fe5736d77e4bdba14d3e03cb4e7057092da2 / tree 84b35c52bbda421a5c36de2f1fb3d57dd04431a3. One-time parent 5a09c23499933933249ad62406fdbaf3796ccac8 live evidence replay satisfies diagnostic gate: FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE, not expert unavailable. No new live Preview required. Separate merge authorization REQUIRED and NOT granted. The authority-only successor requires its own exact-head CI/cloud before merge authorization. Production remains rc4.229 a7f27740d33a7a39127d51515cc2fd8c3d9f28ff; no adapter, persistence, consumer or physical acceptance.
+
+v11.8.0-rc4.229 Production a7f27740d33a7a39127d51515cc2fd8c3d9f28ff / tree 7c6984ea77f70fd56a261110225476047d93fdd1 / deployment 0951da55-4845-49ec-ada3-550922c071e7 DEPLOYED_SUCCESS; PR232 MERGED; postmerge 8/8 SUCCESS, isolated Strict 307/307 PASS. Physical acceptance unproven.
+
+Candidate v11.8.0-rc4.230: PUBLISHED / UNMERGED / UNDEPLOYED; one-time evidence acceptance SATISFIED; merge NOT AUTHORIZED.
+
+---
+
+## Historical v305 checkpoint (superseded current fields)
+
 Generation: `20261006T0620Z-v305`
 Handoff generation: `20261006T0620Z-v305`
 

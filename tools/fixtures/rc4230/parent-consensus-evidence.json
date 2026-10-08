@@ -1,0 +1,29 @@
+{
+  "schema": "pitti.rc4230.parser-only-evidence.v1",
+  "sourceHead": "5a09c23499933933249ad62406fdbaf3796ccac8",
+  "source": "USER_SUPPLIED_REAL_PARENT_PREVIEW_SEMANTICS_NOT_RAW_RESPONSE",
+  "capturedDate": "2026-10-08",
+  "now": "2026-10-08T12:00:00Z",
+  "context": {
+    "year": 2026,
+    "week": 5,
+    "position_id": "QB",
+    "scoring": "HALF",
+    "ranking_type_name": "weekly"
+  },
+  "totalExperts": 16,
+  "sourceRows": 67,
+  "mappedRows": 67,
+  "availabilityContains317": true,
+  "expertPub317Present": true,
+  "exactIndividualIdentity": false,
+  "expectedOutcome": "FILTER_NOT_HONORED",
+  "filterVariants": [
+    "NULL",
+    "ABSENT",
+    "MALFORMED_OBJECT",
+    "MALFORMED_ARRAY",
+    "UNKNOWN_STRING",
+    "WRONG_ID"
+  ]
+}

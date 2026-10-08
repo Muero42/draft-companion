@@ -17,9 +17,9 @@ export function individualPayloadReason(payload,{season,week,position,expertId,e
   if(String(payload?.position??payload?.position_id)!==position)return 'WRONG_POSITION';
   if(payload?.scoring!=='HALF')return 'WRONG_SCORING';
   if(payload?.ranking_type_name!=='weekly')return 'WRONG_RANKING_TYPE';
+  if(String(payload.filters)!==String(expertId))return 'FILTER_NOT_HONORED';
   if(ids.length!==1||ids[0]!==String(expertId)||names[expertId]!==expertName)return 'EXPERT_IDENTITY_MISMATCH';
   if(Number(payload.total_experts)!==1)return 'TOTAL_EXPERTS_NOT_ONE';
-  if(String(payload.filters)!==String(expertId))return 'FILTER_NOT_HONORED';
   if(!finite(sourceUpdatedAt)||sourceUpdatedAt>now||now-sourceUpdatedAt>72*3600000)return 'STALE_SOURCE';
   if(!Array.isArray(payload.players))return 'MISSING_PLAYERS';
   if(payload.players.length<POLICY.depth[position])return 'INSUFFICIENT_DEPTH';

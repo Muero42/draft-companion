@@ -2,7 +2,7 @@ import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePol
 import * as SeasonDecision from './season-decision-engine-v1.mjs';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,adaptBooneTradeEvidence,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
 globalThis.PittiSeasonDecisionV1=SeasonDecision;
-const APP_VERSION='v11.8.0-rc4.229';
+const APP_VERSION='v11.8.0-rc4.230';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -1042,18 +1042,91 @@ async function runSeasonAcquisitionAudit(){
     }
     // RC4228 explicit-only route research; never publishes evidence.
     report.individualRankRouteResearch=await seasonIndividualRankRouteResearch({...context,source,blocked:stopAll||stopExperts||stopProjections});
+    report.consensusFilterResearch=await seasonConsensusFilterResearch({...context,source,blocked:stopAll||stopExperts||stopProjections||report.individualRankRouteResearch.requests.some(r=>[401,403,429].includes(r.httpStatus))});
     seasonAcquisitionAuditRetryAt=Math.max(seasonAcquisitionAuditRetryAt,Date.now()+15*60000);
     return report;
   })();seasonAcquisitionAuditFlight=flight;try{return await flight;}finally{if(seasonAcquisitionAuditFlight===flight)seasonAcquisitionAuditFlight=null;}
 }
 // BEGIN RC4228 DIAGNOSTIC ONLY
+// RC4230 consensus contract: https://api.fantasypros.com/public/v2/docs/
+// Diagnostic only. Availability requires the documented included/excluded/last_update shape.
+let seasonConsensusFilterRetryAt=0;
+function seasonConsensusFilterShape(payload,{season,week}){
+  const object=x=>x&&typeof x==='object'&&!Array.isArray(x),integer=x=>typeof x==='number'&&Number.isSafeInteger(x)?x:typeof x==='string'&&/^\d+$/.test(x)?Number(x):null;
+  const names=payload?.expert_name,ids=object(names)?Object.keys(names):[],namesValid=object(names)&&ids.length<=2000&&ids.every(id=>/^\d+$/.test(id)&&typeof names[id]==='string'&&names[id].trim());
+  const exactName=namesValid&&Object.hasOwn(names,'317')&&normalizedExpertName(names['317'])===normalizedExpertName('Justin Boone');
+  const identityConflict=namesValid&&ids.some(id=>id==='317'?!exactName:normalizedExpertName(names[id])===normalizedExpertName('Justin Boone'));
+  const normalizedPosition=v=>typeof v==='string'?v.trim().toUpperCase():null,canonicalSeason=integer(payload?.season??payload?.year),canonicalPosition=normalizedPosition(payload?.position??payload?.position_id);
+  const contextProven=canonicalSeason===season&&integer(payload?.week)===week&&canonicalPosition==='QB'&&payload?.scoring==='HALF'&&payload?.ranking_type_name==='weekly'&&(!Object.hasOwn(payload,'year')||integer(payload.year)===season)&&(!Object.hasOwn(payload,'position_id')||normalizedPosition(payload.position_id)==='QB');
+  const api=globalThis.PittiWeeklyEvidenceV2,now=Date.now(),time=api?.sourceTime?.(payload||{},{season,verifiedAt:now,allowSeasonDateInference:true});
+  const parsed=time?.sourcePublishedAt?Date.parse(time.sourcePublishedAt):time?.sourcePublishedDate?Date.parse(time.sourcePublishedDate):NaN,stamp=integer(payload?.last_updated_ts),epoch=stamp===null?NaN:stamp*1000;
+  const sourceAt=Number.isFinite(parsed)?parsed:Number.isFinite(epoch)&&Math.abs(epoch)<=8640000000000000?epoch:NaN,age=now-sourceAt,chronologyConflict=Number.isFinite(parsed)&&Number.isFinite(epoch)&&(time?.sourcePublishedAt?Math.abs(parsed-epoch)>1000:Math.floor(parsed/86400000)!==Math.floor(epoch/86400000));
+  const fresh=Number.isFinite(age)&&age>=0&&age<=36*3600000&&!chronologyConflict;
+  const availability=payload?.experts_available,list=x=>Array.isArray(x)&&x.length<=2000&&x.every(n=>Number.isSafeInteger(n)&&n>0)&&new Set(x).size===x.length;
+  const availabilityLists=object(availability)&&list(availability.included)&&list(availability.excluded)&&(!Object.hasOwn(availability,'ineligible')||list(availability.ineligible));
+  const all=availabilityLists?[...availability.included,...availability.excluded,...(availability.ineligible||[])]:[];
+  const availabilityAge=now-integer(availability?.last_update)*1000;
+  const availabilityValid=!!availabilityLists&&Number.isSafeInteger(availability.total)&&availability.total===all.length&&new Set(all).size===all.length&&integer(availability.last_update)!==null&&availabilityAge>=0&&availabilityAge<=36*3600000;
+  const filters=payload?.filters,filterExact=(typeof filters==='string'||typeof filters==='number')&&String(filters)==='317',filterKnown=filters==null||(typeof filters==='number'&&Number.isSafeInteger(filters)&&filters>0)||(typeof filters==='string'&&/^\d+(?::\d+)*$/.test(filters));
+  const rows=Array.isArray(payload?.players)?payload.players:[],index=api?.sleeperIndexes?.(lastDraftContext?.players||{}),mapped=new Set();let numericRows=0;
+  for(const row of rows.slice(0,2000)){if(row&&typeof row==='object'&&(row.position_id??row.player_position_id)==='QB'&&Number.isInteger(Number(row.rank_ecr))&&Number(row.rank_ecr)>0){numericRows++;const m=index?api.mapFantasyProsPlayer(row,index):null;if(m?.ok&&m.player.position==='QB')mapped.add(m.player.id);}}
+  const sufficient=rows.length<=2000&&numericRows>=24&&mapped.size>=24*.7&&mapped.size>=numericRows*.7;
+  const strict=globalThis.PittiSeasonDecisionV1?.individualPayloadReason?.(payload,{season,week,position:'QB',expertId:'317',expertName:'Justin Boone',sourceUpdatedAt:sourceAt,now})??(typeof globalThis.PittiSeasonDecisionV1?.individualPayloadReason==='function'?null:'DECISION_ENGINE_MODULE_UNAVAILABLE');
+  return {season:canonicalSeason,week:integer(payload?.week),position:canonicalPosition==='QB'?'QB':null,scoring:payload?.scoring==='HALF'?'HALF':null,rankingType:payload?.ranking_type_name==='weekly'?'weekly':null,metadataValid:(names===undefined||namesValid)&&integer(payload?.total_experts)!==null&&integer(payload?.total_experts)>=0,contextProven,chronologyStatus:chronologyConflict?'CONFLICT':!Number.isFinite(age)?'MISSING_OR_UNPARSABLE':age<0?'FUTURE':fresh?'FRESH':'STALE',sourceDate:Number.isFinite(sourceAt)?new Date(sourceAt).toISOString().slice(0,10):null,filtersEcho:filterExact?'317':filters==null?'ABSENT_OR_NULL':filterKnown?'OTHER_IDS':'UNKNOWN',filterKnown,totalExperts:integer(payload?.total_experts),containsRequestedExpert317:namesValid&&Object.hasOwn(names,'317'),exactNormalizedJustinBoone:!!exactName,individualIdentityBound:!!exactName&&ids.length===1,identityConflict:!!identityConflict,namesValid:!!namesValid,expertPub317Present:object(payload?.expert_pub)&&Object.hasOwn(payload.expert_pub,'317'),availabilityMetadataPresent:payload!=null&&Object.hasOwn(payload,'experts_available'),availabilityValid,availabilityContains317:availabilityValid?availability.included.includes(317):null,availabilityExcluded317:availabilityValid?availability.excluded.includes(317)||(availability.ineligible||[]).includes(317):null,sourceRows:rows.length,numericRows,mappedRows:mapped.size,sufficientDepthAndMapping:sufficient,existingStrictRejection:strict,strictAccepted:false,adapterImplemented:false};
+}
+async function seasonConsensusFilterResearch({season,week,source,blocked=false}){
+  const result={schema:'pitti.consensus-filter-research.v1',status:'DIAGNOSTIC_ONLY',season,week,position:'QB',scoring:'HALF',requestedExpertId:'317',strictAccepted:false,adapterImplemented:false,outcome:'AMBIGUOUS',requests:[]};
+  if(blocked||Date.now()<seasonConsensusFilterRetryAt){result.reason='BATCH_STOPPED_OR_BACKOFF';return result;}
+  const identity=seasonIndividualDiagnosticDirectoryIdentity(source,{season,week});
+  if(identity==='CONFLICT'){result.reason='DIRECTORY_IDENTITY_CONFLICT';return result;}
+  seasonConsensusFilterRetryAt=Date.now()+15*60000;
+  for(const candidate of ['AVAILABILITY','FILTERED_317']){
+    const entry={candidate,httpStatus:null,bodyState:null};result.requests.push(entry);
+    try{
+      const suffix=candidate==='AVAILABILITY'?'experts=available':'filters=317&experts=show';
+      const response=await fpProxyRequest(`/nfl/${season}/consensus-rankings?week=${week}&position=QB&scoring=HALF&${suffix}`,{timeoutMs:8000,preserveMalformed:true});
+      entry.httpStatus=Number.isInteger(response.status)?response.status:null;entry.bodyState=['JSON','INVALID_JSON','EMPTY'].includes(response.bodyState)?response.bodyState:'UNKNOWN';
+      entry.rejectionReason=seasonAcquisitionHttpReason(response);entry.retryAfterSeconds=diagnosticRetryAfter(response.retryAfterMs);
+      if(response.status===200&&entry.bodyState==='JSON')Object.assign(entry,seasonConsensusFilterShape(response.data,{season,week}));
+      if([401,403,429].includes(response.status)){seasonConsensusFilterRetryAt=Math.max(seasonConsensusFilterRetryAt,Date.now()+Math.max(response.retryAfterMs||0,response.status===429?15*60000:3600000));break;}
+    }catch(error){entry.rejectionReason=seasonAcquisitionHttpReason(null,error);break;}
+    await seasonUiYield();
+  }
+  const [available,filtered]=result.requests,valid=r=>r?.httpStatus===200&&r.bodyState==='JSON'&&!r.rejectionReason&&r.contextProven&&r.metadataValid&&r.chronologyStatus==='FRESH'&&!r.identityConflict;
+  if(!valid(available)||!valid(filtered)||!available.availabilityValid)return result;
+  if(filtered.availabilityMetadataPresent&&(!filtered.availabilityValid||filtered.availabilityContains317!==available.availabilityContains317))return result;
+  const bound=filtered.filtersEcho==='317'&&filtered.totalExperts===1&&filtered.individualIdentityBound;
+  if(!available.availabilityContains317){
+    if(!filtered.filterKnown)return result;
+    if(filtered.containsRequestedExpert317||filtered.filtersEcho==='317'||available.containsRequestedExpert317)return result;
+    if(identity==='MATCH')result.outcome='EXPERT_NOT_AVAILABLE_FOR_CONTEXT';
+  }else if(bound&&filtered.sufficientDepthAndMapping&&filtered.existingStrictRejection===null)result.outcome='EXACT_INDIVIDUAL_FILTER';
+  else if(filtered.filtersEcho!=='317'&&filtered.totalExperts>1&&!filtered.individualIdentityBound&&filtered.sufficientDepthAndMapping)result.outcome='FILTER_NOT_HONORED';
+  return result;
+}
 // RC4229 nested route shape research: no evidence publication or adapter.
+// RC4230 configured diagnostic target; directory is corroboration, never an acquisition prerequisite.
+function seasonIndividualDiagnosticDirectoryIdentity(source,{season,week,now=Date.now()}){
+  const directory=source?.directories?.QB;
+  if(source?.schema!=='pitti.season-decision-sources.v1'||source.season!==season||source.week!==week||!Number.isFinite(source.verifiedAt)||source.verifiedAt>now||now-source.verifiedAt>3600000||directory?.position!=='QB'||directory.season!==season||directory.week!==week||!Number.isFinite(directory.verifiedAt)||directory.verifiedAt>now||now-directory.verifiedAt>3600000)return 'UNRESOLVED';
+  const targetName=normalizedExpertName('Justin Boone');
+  let match=false;
+  // Inspect qualified raw rows BEFORE normal directory uniqueness filtering.
+  for(const row of Array.isArray(directory.experts)?directory.experts:[]){
+    const id=String(row?.id??''),name=typeof row?.name==='string'?row.name.trim():'';
+    if(!/^\d+$/.test(id)||!name)continue;
+    const normalizedName=normalizedExpertName(name);
+    if((id==='317'&&normalizedName!==targetName)||(normalizedName===targetName&&id!=='317'))return 'CONFLICT';
+    if(id==='317'&&normalizedName===targetName)match=true;
+  }
+  return match?'MATCH':'UNRESOLVED';
+}
 let seasonIndividualRouteRetryAt=0;
 async function seasonIndividualRankRouteResearch({season,week,source,blocked=false}){
-  const result={schema:'pitti.individual-rank-route-research.v2',status:'DIAGNOSTIC_ONLY',requestedExpertId:'317',requestedExpertName:'Justin Boone',position:'QB',requests:[],adapterImplemented:false,outcome:'FILTERED_CONTEXT_AMBIGUOUS'};
+  const directoryIdentityStatus=seasonIndividualDiagnosticDirectoryIdentity(source,{season,week});
+  const result={identityBasis:'CONFIGURED_DIAGNOSTIC_TARGET',directoryIdentityStatus,directoryIdentityProven:directoryIdentityStatus==='MATCH',strictAccepted:false,secretSafety:'ALLOWLIST_ONLY_NO_KEYS_HEADERS_TOKENS_OR_RAW_BODIES',schema:'pitti.individual-rank-route-research.v2',status:'DIAGNOSTIC_ONLY',requestedExpertId:'317',requestedExpertName:'Justin Boone',position:'QB',requests:[],adapterImplemented:false,outcome:'FILTERED_CONTEXT_AMBIGUOUS'};
   if(blocked||Date.now()<seasonIndividualRouteRetryAt){result.reason='BATCH_STOPPED_OR_BACKOFF';return result;}
-  const expert=seasonAcquisitionDirectory(source,'QB',{season,week}).find(e=>String(e.id)==='317'&&e.name==='Justin Boone');
-  if(!expert){result.reason='DIRECTORY_ID_UNRESOLVED';return result;}
+  if(directoryIdentityStatus==='CONFLICT'){result.reason='DIRECTORY_IDENTITY_CONFLICT';return result;}
   // Reserve backoff before awaiting: even concurrent explicit calls cannot multiply probes.
   seasonIndividualRouteRetryAt=Date.now()+15*60000;
   for(const candidate of ['UNFILTERED_CONTROL','FILTERED_317']){
@@ -1072,41 +1145,85 @@ async function seasonIndividualRankRouteResearch({season,week,source,blocked=fal
     await seasonUiYield();
   }
   const [control,filtered]=result.requests;
-  if(control?.httpStatus===200&&control.contextProven&&control.metadataUnambiguous&&!control.expert317Present)result.outcome='EXPERT_NOT_ADVERTISED_FOR_CONTEXT';
-  else if(control?.httpStatus===200&&control.contextProven&&control.metadataUnambiguous&&control.expert317Present&&filtered?.httpStatus===200&&!['MALFORMED_PAYLOAD','HTTP_200'].includes(filtered.rejectionReason)){
-    if(filtered.playersCount===0)result.outcome='FILTERED_RESPONSE_EMPTY_OR_UNUSABLE';
+  if(control?.httpStatus===200&&control.bodyState==='JSON'&&control.contextProven&&control.expectedContextAbsent&&filtered?.httpStatus===200&&filtered.bodyState==='JSON')result.outcome='EXPECTED_CONTEXT_NOT_ADVERTISED';
+  else if(control?.httpStatus===200&&control.contextProven&&control.metadataUnambiguous&&!control.expert317Present)result.outcome='EXPERT_NOT_ADVERTISED_FOR_CONTEXT';
+  else if(control?.httpStatus===200&&control.contextProven&&control.metadataUnambiguous&&control.expert317Present&&filtered?.httpStatus===200&&filtered.bodyState==='JSON'&&filtered.playersArrayPresent&&!['MALFORMED_PAYLOAD','HTTP_200'].includes(filtered.rejectionReason)){
+    // Empty canonical responses have no rank rows: use the same-context control only for
+    // negative availability proof, never for a positive candidate or row freshness.
+    // Missing row chronology remains visible and inconclusive, including empty results.
+    const canonicalEmptyProof=result.directoryIdentityProven&&control.bodyState==='JSON'&&control.playersArrayPresent&&control.metadataTopologyComplete&&control.expertCountConsistent&&control.availabilityRankContextProven&&control.canonicalAvailabilityContext&&filtered.canonicalAvailabilityContext&&filtered.expert317Present&&control.relevantExpertCount===filtered.relevantExpertCount&&JSON.stringify(control.expertMetadataPaths)===JSON.stringify(filtered.expertMetadataPaths)&&control.freshChronology;
+    if(filtered.playersCount===0&&filtered.contextProven&&filtered.metadataUnambiguous&&filtered.expertCountConsistent&&filtered.metadataTopologyComplete&&filtered.freshChronology&&(filtered.canonicalAvailabilityContext?canonicalEmptyProof:filtered.expert317Only))result.outcome='FILTERED_RESPONSE_EMPTY_OR_UNUSABLE';
     else if(filtered.contextProven&&filtered.metadataUnambiguous&&filtered.expert317Only&&filtered.expertCountConsistent&&filtered.rankContextProven){
-      if(filtered.numericRows===0)result.outcome='FILTERED_RESPONSE_EMPTY_OR_UNUSABLE';
-      else if(filtered.sufficientDepthAndMapping&&filtered.freshChronology)result.outcome='FILTERED_STRUCTURAL_CANDIDATE';
+      if(filtered.numericRows===0&&filtered.metadataTopologyComplete&&(!filtered.canonicalAvailabilityContext||(filtered.freshChronology&&filtered.rankTopologyComplete&&result.directoryIdentityProven)))result.outcome='FILTERED_RESPONSE_EMPTY_OR_UNUSABLE';
+      else if(filtered.sufficientDepthAndMapping&&filtered.freshChronology&&(!filtered.canonicalAvailabilityContext||filtered.availabilityRankContextProven))result.outcome='FILTERED_STRUCTURAL_CANDIDATE';
     }
   }
+  if((control?.canonicalAvailabilityContext&&!control.availabilityRankContextProven)||result.requests.some(r=>r.topologyTruncated||(r.canonicalAvailabilityContext&&(!r.metadataTopologyComplete||r.canonicalTopologyConflict))))result.outcome='FILTERED_CONTEXT_AMBIGUOUS';
   return result;
 }
-function seasonIndividualRankRouteShape(payload,{season,week}){
+function seasonIndividualRankRouteShape(payload,{season,week,position='QB',scoring='HALF'}){
   const integer=v=>typeof v==='number'&&Number.isSafeInteger(v)?v:typeof v==='string'&&/^\d{1,6}$/.test(v)?Number(v):null;
-  const target=`WK${week}-HALF`,allowed=k=>/^(WK\d{1,2}-(STD|HALF|PPR)|STD|HALF|PPR|QB|RB|WR|TE|ALL|FLX|OP|K|DST|ECR|ECR_MIN|ECR_MAX|ECR_AVG|ECR_STD)$/.test(k);
+  const target=`WK${week}-${scoring}`,neutralPosition=['QB','K','DST'].includes(position),allowed=k=>/^(WK\d{1,2}-(STD|HALF|PPR)|STD|HALF|PPR|QB|RB|WR|TE|ALL|FLX|OP|K|DST|ECR|ECR_MIN|ECR_MAX|ECR_AVG|ECR_STD)$/.test(k);
+  // Observational inventory; numeric wrappers never establish target context.
+  function inventory(root,kind){
+    const entries=[],profile={knownDimensionKeyCount:0,numericKeyCount:0,otherKeyCount:0,topologyTruncated:false};let nodes=0,malformed=false,numericWrappers=0;
+    const object=v=>v&&typeof v==='object'&&!Array.isArray(v);
+    function walk(v,path,depth){
+      if(++nodes>512||depth>5||entries.length>=64){profile.topologyTruncated=true;return;}
+      const keys=object(v)?Object.keys(v):[];
+      const numericMap=keys.length>0&&keys.every(k=>/^\d{1,6}$/.test(k))&&keys.every(k=>v[k]===true||v[k]===1);
+      if(Array.isArray(v)||numericMap||!object(v)){
+        if(!path.length){malformed=true;return;}
+        if(kind==='expert'){
+          const ids=Array.isArray(v)&&v.length<=2000?v.map(integer):numericMap&&keys.length<=2000?keys.map(integer):null;
+          if(numericMap)profile.numericKeyCount+=Math.min(keys.length,2000);
+          const valid=ids!==null&&ids.every(id=>id!==null&&id>0)&&new Set(ids).size===ids.length;
+          entries.push({path:path.join('.'),validExpertCount:valid?ids.length:null,containsConfiguredExpert317:valid&&ids.includes(317)});if(!valid)malformed=true;
+          if((Array.isArray(v)&&v.length>2000)||keys.length>2000)profile.topologyTruncated=true;
+        }else{const valid=kind==='count'?integer(v)!==null&&integer(v)>=0:typeof v==='number'&&Number.isFinite(v);entries.push({path:path.join('.'),valid});if(!valid)malformed=true;}
+        return;
+      }
+      if(keys.length>128){profile.topologyTruncated=true;return;}
+      if(!keys.length&&path.length)malformed=true;
+      for(const key of keys){if(allowed(key)){profile.knownDimensionKeyCount++;walk(v[key],[...path,key],depth+1);}else if(/^\d{1,6}$/.test(key)){profile.numericKeyCount++;numericWrappers++;walk(v[key],path,depth+1);}else profile.otherKeyCount++;}
+    }
+    if(object(root))walk(root,[],0);else malformed=true;
+    return {entries,profile,complete:!malformed&&!profile.topologyTruncated&&profile.otherKeyCount===0&&numericWrappers===0};
+  }
+  const expertInventory=inventory(payload?.ecr_experts,'expert'),countInventory=inventory(payload?.experts,'count'),rankInventory=new Map();
+  let topologyTruncated=expertInventory.profile.topologyTruncated||countInventory.profile.topologyTruncated;
   // Only documented dimension labels are traversed/exported; arbitrary key names never escape.
-  function dimensions(root){const found=[];let visited=0,truncated=false;
-    function walk(value,path,depth){if(++visited>512||depth>5){truncated=true;return;}if(path.includes(target)&&path.includes('QB')){if(path.length!==2){truncated=true;return;}found.push({path,value});return;}
+  function dimensions(root,dimension=target){const found=[];let visited=0,truncated=false;
+    function walk(value,path,depth){if(++visited>512||depth>5){truncated=true;return;}if(path.includes(dimension)&&path.includes(position)){if(path.length!==2){truncated=true;return;}found.push({path,value});return;}
       if(!value||typeof value!=='object'||Array.isArray(value))return;const keys=Object.keys(value);if(keys.length>128){truncated=true;return;}for(const key of keys)if(allowed(key))walk(value[key],[...path,key],depth+1);
     }walk(root,[],0);return {found,truncated};
   }
-  const metadata=dimensions(payload?.ecr_experts),counts=dimensions(payload?.experts),rows=Array.isArray(payload?.players)?payload.players:[];
+  // Top-level season/week binds plain scoring dimensions. Never merge conflicting aliases.
+  function contextualDimensions(root,availability=false){
+    const nested=dimensions(root),plain=dimensions(root,scoring);
+    const direct={found:[...nested.found,...plain.found],truncated:nested.truncated||plain.truncated};
+    if(direct.found.length||!availability||!neutralPosition)return direct;
+    const neutral=dimensions(root,'STD');
+    return {found:neutral.found,truncated:direct.truncated||neutral.truncated};
+  }
+  const metadata=contextualDimensions(payload?.ecr_experts,true),counts=contextualDimensions(payload?.experts,true),rows=Array.isArray(payload?.players)?payload.players:[];
   let ids=null;if(metadata.found.length===1){const value=metadata.found[0].value;
     if(Array.isArray(value)&&value.length<=2000){const parsed=value.map(integer);if(parsed.every(v=>v!==null&&v>0)&&new Set(parsed).size===parsed.length)ids=parsed;}
-    else if(value&&typeof value==='object'&&!Array.isArray(value)){const keys=Object.keys(value);if(keys.length<=2000&&keys.every(k=>integer(k)>0)&&keys.every(k=>value[k]===true||value[k]===1))ids=keys.map(integer);}
+    else if(value&&typeof value==='object'&&!Array.isArray(value)){const keys=Object.keys(value);if(keys.length>0&&keys.length<=2000&&keys.every(k=>integer(k)>0)&&keys.every(k=>value[k]===true||value[k]===1))ids=keys.map(integer);}
   }
-  const api=globalThis.PittiWeeklyEvidenceV2,engine=globalThis.PittiSeasonDecisionV1,index=api?.sleeperIndexes?.(lastDraftContext?.players||{}),mapped=new Set(),paths=new Set(),metrics=new Set(),rowKeys=new Set();let numericRows=0,ambiguousRows=0,contextRows=0;
+  const api=globalThis.PittiWeeklyEvidenceV2,engine=globalThis.PittiSeasonDecisionV1,index=api?.sleeperIndexes?.(lastDraftContext?.players||{}),mapped=new Set(),paths=new Set(),metrics=new Set(),rowKeys=new Set();let numericRows=0,ambiguousRows=0,contextRows=0,rankTopologyComplete=true;
   for(const row of rows.slice(0,2000)){
+    const observed=inventory(row?.rank?.ECR,'rank');topologyTruncated||=observed.profile.topologyTruncated;rankTopologyComplete&&=observed.complete&&!observed.entries.some(x=>x.path.split('.').some(k=>/^WK/.test(k)&&!k.startsWith(`WK${week}-`)));
+    for(const path of new Set(observed.entries.map(x=>x.path))){if(!rankInventory.has(path)&&rankInventory.size>=64){topologyTruncated=true;continue;}rankInventory.set(path,(rankInventory.get(path)||0)+1);}
     for(const key of ['id','fpid','player_id','player_name','name','position_id','team_id','rank'])if(row&&Object.hasOwn(row,key))rowKeys.add(key);
     for(const key of ['ECR','ECR_MIN','ECR_MAX','ECR_AVG','ECR_STD'])if(row?.rank&&Object.hasOwn(row.rank,key))metrics.add(key);
-    const ranks=dimensions(row?.rank?.ECR);for(const x of ranks.found)paths.add(['rank','ECR',...x.path].join('.'));
+    const ranks=contextualDimensions(row?.rank?.ECR);for(const x of ranks.found)paths.add(['rank','ECR',...x.path].join('.'));
     if(ranks.truncated||ranks.found.length!==1){if(ranks.found.length>1||ranks.truncated)ambiguousRows++;continue;}
     contextRows++;const rank=ranks.found[0].value;
     if(typeof rank!=='number'||!Number.isFinite(rank)||rank<=0)continue;numericRows++;
     // Diagnostic-only schema bridge; original mapping validator and all consuming lanes stay untouched.
     const m=index?api.mapFantasyProsPlayer({fpid:row.id??row.fpid??row.player_id,name:row.player_name??row.name,position_id:row.position_id,team_id:row.team_id},index):null;
-    if(m?.ok&&m.player.position==='QB')mapped.add(m.player.id);
+    if(m?.ok&&m.player.position===position)mapped.add(m.player.id);
   }
   const normalizedSeason=integer(payload?.season),normalizedWeek=integer(payload?.week),contextProven=normalizedSeason===season&&normalizedWeek===week;
   const metadataUnambiguous=!metadata.truncated&&metadata.found.length===1&&ids!==null;
@@ -1114,8 +1231,14 @@ function seasonIndividualRankRouteShape(payload,{season,week}){
   const chronology=api?.sourceTime?.(payload||{},{season,verifiedAt:Date.now(),allowSeasonDateInference:true});
   const time=chronology?.sourcePublishedAt?Date.parse(chronology.sourcePublishedAt):chronology?.sourcePublishedDate?Date.parse(chronology.sourcePublishedDate):NaN;
   const age=Date.now()-time,freshChronology=Number.isFinite(age)&&age>=0&&age<=36*3600000;
-  const depth=engine?.POLICY?.depth?.QB,sufficientDepthAndMapping=Number.isInteger(depth)&&rows.length<=2000&&numericRows>=depth&&mapped.size>=depth*.7&&mapped.size>=numericRows*.7&&ambiguousRows===0;
-  return {season:normalizedSeason,week:normalizedWeek,topLevelKeys:['season','week','experts','players','ecr_experts'].filter(k=>payload&&Object.hasOwn(payload,k)),playersCount:rows.length,ecrExpertsExists:!!payload&&Object.hasOwn(payload,'ecr_experts'),expert317Present:ids?.includes(317)===true,expert317Only:ids?.length===1&&ids[0]===317,relevantExpertCount:ids?.length??null,expertMetadataPaths:metadata.found.slice(0,4).map(x=>['ecr_experts',...x.path].join('.')),playerRowKeys:[...rowKeys],rankMetricNames:[...metrics],rankDimensionPaths:[...paths].slice(0,4),numericRows,mappedRows:mapped.size,contextProven,metadataUnambiguous,expertCountConsistent,rankContextProven:rows.length>0&&contextRows===rows.length&&ambiguousRows===0,sufficientDepthAndMapping,freshChronology,strictAccepted:false,rejectionReason:contextProven?null:'FILTERED_CONTEXT_AMBIGUOUS'};
+  const chronologyStatus=!Number.isFinite(age)?'MISSING_OR_UNPARSABLE':age<0?'FUTURE':freshChronology?'FRESH':'STALE';
+  topologyTruncated||=rows.length>2000;
+  const expectedPath=p=>[target,scoring,...(neutralPosition?['STD']:[])].some(d=>p===d+'.'+position||p===position+'.'+d);
+  const ordinaryContext=p=>/^(WK\d{1,2}-(STD|HALF|PPR)|STD|HALF|PPR)\.(QB|RB|WR|TE|ALL|FLX|OP|K|DST)$/.test(p)||/^(QB|RB|WR|TE|ALL|FLX|OP|K|DST)\.(WK\d{1,2}-(STD|HALF|PPR)|STD|HALF|PPR)$/.test(p);
+  const canonicalTopologyConflict=[...expertInventory.entries,...countInventory.entries].some(x=>!ordinaryContext(x.path)||x.path.split('.').some(k=>/^WK/.test(k)&&!k.startsWith(`WK${week}-`)))||counts.found.length===1&&metadata.found.length===1&&counts.found[0].path.join('.')!==metadata.found[0].path.join('.');
+  const expectedContextAbsent=expertInventory.complete&&countInventory.complete&&[...expertInventory.entries,...countInventory.entries].every(x=>ordinaryContext(x.path))&&!expertInventory.entries.some(x=>expectedPath(x.path))&&!countInventory.entries.some(x=>expectedPath(x.path));
+  const depth=engine?.POLICY?.depth?.[position],sufficientDepthAndMapping=Number.isInteger(depth)&&rows.length<=2000&&numericRows>=depth&&mapped.size>=depth*.7&&mapped.size>=numericRows*.7&&ambiguousRows===0;
+  return {rankTopologyComplete,canonicalTopologyConflict,availabilityRankContextProven:contextProven&&rankTopologyComplete&&numericRows>0&&ambiguousRows===0,canonicalAvailabilityContext:metadata.found.length===1&&metadata.found[0].path.some(k=>['STD','HALF','PPR'].includes(k)),playersArrayPresent:Array.isArray(payload?.players),metadataTopologyComplete:expertInventory.complete&&countInventory.complete,availableExpertDimensionPaths:expertInventory.entries,availableCountDimensionPaths:countInventory.entries,availableRankDimensionPaths:[...rankInventory].map(([path,rows])=>({path,rows})),expertTopologyProfile:expertInventory.profile,countTopologyProfile:countInventory.profile,topologyTruncated,expectedContextAbsent,chronologyStatus,chronologyFields:['last_updated','updated','updated_at','as_of','date'].filter(k=>payload&&Object.hasOwn(payload,k)),season:normalizedSeason,week:normalizedWeek,topLevelKeys:['season','week','experts','players','ecr_experts'].filter(k=>payload&&Object.hasOwn(payload,k)),playersCount:rows.length,ecrExpertsExists:!!payload&&Object.hasOwn(payload,'ecr_experts'),expert317Present:ids?.includes(317)===true,expert317Only:ids?.length===1&&ids[0]===317,relevantExpertCount:ids?.length??null,expertMetadataPaths:metadata.found.slice(0,4).map(x=>['ecr_experts',...x.path].join('.')),playerRowKeys:[...rowKeys],rankMetricNames:[...metrics],rankDimensionPaths:[...paths].slice(0,4),numericRows,mappedRows:mapped.size,contextProven,metadataUnambiguous,expertCountConsistent,rankContextProven:rows.length>0&&contextRows===rows.length&&ambiguousRows===0,sufficientDepthAndMapping,freshChronology,strictAccepted:false,rejectionReason:contextProven?null:'FILTERED_CONTEXT_AMBIGUOUS'};
 }
 // END RC4228 DIAGNOSTIC ONLY
 function slugifyExpert(name){
@@ -5181,7 +5304,16 @@ function seasonDataDiagnostic(){
 }
 async function copySeasonDataDiagnostic(){const output=JSON.stringify(seasonDataDiagnostic()),area=$('seasonDiagnosticOutput'),status=$('seasonDiagnosticStatus');try{await navigator.clipboard.writeText(output);if(status)status.textContent='Diagnose kopiert · keine Schlüssel oder Zugangsdaten.';}catch{if(area){area.hidden=false;area.value=output;area.select();}if(status)status.textContent='Diagnose markieren und kopieren · keine Zugangsdaten.';}}
 const seasonDiagnosticButton=$('seasonDiagnosticCopyBtn');if(seasonDiagnosticButton)seasonDiagnosticButton.onclick=copySeasonDataDiagnostic;
-const seasonAcquisitionAuditButton=$('seasonAcquisitionAuditBtn');if(seasonAcquisitionAuditButton)seasonAcquisitionAuditButton.onclick=async()=>{const status=$('seasonDiagnosticStatus'),area=$('seasonDiagnosticOutput');seasonAcquisitionAuditButton.disabled=true;try{if(status)status.textContent='Begrenzte Akquisitionsdiagnose läuft …';const report=await runSeasonAcquisitionAudit();if(area){area.hidden=false;area.value=JSON.stringify(report);}if(status)status.textContent='Akquisitionsdiagnose bereit · keine Zugangsdaten oder Rohantworten.';}catch{if(status)status.textContent='Akquisitionsdiagnose nicht verfügbar · keine Zugangsdaten ausgegeben.';}finally{seasonAcquisitionAuditButton.disabled=false;}};
+// RC4230 separate copy of the already-produced acquisition report; never acquire on copy.
+let lastSeasonAcquisitionReportText=null;
+async function copySeasonAcquisitionDiagnostic(){
+  if(lastSeasonAcquisitionReportText===null)return;
+  const output=lastSeasonAcquisitionReportText,area=$('seasonDiagnosticOutput'),status=$('seasonDiagnosticStatus');
+  try{await navigator.clipboard.writeText(output);if(output!==lastSeasonAcquisitionReportText)return;if(status)status.textContent='Akquisitionsdiagnose kopiert · keine Zugangsdaten.';}
+  catch{if(output!==lastSeasonAcquisitionReportText)return;if(area){area.hidden=false;area.value=output;area.select();}if(status)status.textContent='Akquisitionsdiagnose markieren und kopieren · keine Zugangsdaten.';}
+}
+const seasonAcquisitionCopyButton=$('seasonAcquisitionCopyBtn');if(seasonAcquisitionCopyButton)seasonAcquisitionCopyButton.onclick=copySeasonAcquisitionDiagnostic;
+const seasonAcquisitionAuditButton=$('seasonAcquisitionAuditBtn');if(seasonAcquisitionAuditButton)seasonAcquisitionAuditButton.onclick=async()=>{const status=$('seasonDiagnosticStatus'),area=$('seasonDiagnosticOutput');seasonAcquisitionAuditButton.disabled=true;lastSeasonAcquisitionReportText=null;if(seasonAcquisitionCopyButton)seasonAcquisitionCopyButton.disabled=true;if(area){area.value='';area.hidden=true;}try{if(status)status.textContent='Begrenzte Akquisitionsdiagnose läuft …';const report=await runSeasonAcquisitionAudit();if(report?.schema!=='pitti.season-acquisition-audit.v1')throw new Error('INVALID_ACQUISITION_REPORT');lastSeasonAcquisitionReportText=JSON.stringify(report);if(seasonAcquisitionCopyButton)seasonAcquisitionCopyButton.disabled=false;if(area){area.hidden=false;area.value=lastSeasonAcquisitionReportText;}if(status)status.textContent='Akquisitionsdiagnose bereit · keine Zugangsdaten oder Rohantworten.';}catch{if(status)status.textContent='Akquisitionsdiagnose nicht verfügbar · keine Zugangsdaten ausgegeben.';}finally{seasonAcquisitionAuditButton.disabled=false;}};
 
 if(els.seasonRefreshEvidenceBtn)els.seasonRefreshEvidenceBtn.onclick=()=>void Promise.all([refreshSeasonRankings({force:true,trigger:'manual'}),refreshTradeValues({force:true,trigger:'manual'})]);
 for(const el of [els.season,els.scoring])el?.addEventListener('change',()=>{renderSeasonRankingFreshness('Saison-/Scoring-Kontext geändert · alter Weekly-Evidence-Snapshot ist für diesen Kontext ungültig.');if(lastDraftContext?.players)void refreshSeasonRankings({force:true,trigger:'context-change'});});
