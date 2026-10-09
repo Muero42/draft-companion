@@ -9,6 +9,7 @@ tests.set('tools/weekly-evidence-v2-regression.mjs',['tools/weekly-evidence-v2-r
 tests.set('backup self-test',['tools/audit-v45-backup.mjs','--self-test']);
 tests.set('cloud foundation regression',['tools/cloud-foundation-regression.mjs']);
 tests.set('cloud security regression',['tools/cloud-security-regression.mjs']);
+tests.set('cloud workflow contract',['tools/cloud-workflow-check.mjs']);
 for(const f of [...fs.readdirSync('.').filter(f=>f.endsWith('.js')),...fs.readdirSync('tools').filter(f=>f.endsWith('.mjs')).map(f=>'tools/'+f)])tests.set('--check '+f,['--check',f]);
 const results=[];
 for(const [name,args] of tests){const r=spawnSync(process.execPath,args,{encoding:'utf8',timeout:120000,maxBuffer:8*1024*1024,env:{...process.env,PITTI_SKIP_SEAL_INTEGRITY:'0',PITTI_CANDIDATE_PREFLIGHT:candidatePreflight?'1':'0'}});const status=r.status===0?'PASS':'FAIL';results.push({name,status,output:r.stdout+r.stderr});console.log(status+' '+name);if(status==='FAIL')console.error(r.stdout+r.stderr);}

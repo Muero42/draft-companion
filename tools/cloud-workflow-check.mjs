@@ -1,4 +1,5 @@
 import fs from 'node:fs';import assert from 'node:assert/strict';import YAML from 'yaml';
+import {assertCloudInstallContract} from './cloud-install-contract.mjs';
 const dir='.github/workflows',all=Object.fromEntries(fs.readdirSync(dir).filter(f=>/\.ya?ml$/.test(f)).map(f=>{const d=YAML.parseDocument(fs.readFileSync(dir+'/'+f,'utf8'),{uniqueKeys:true});assert.deepEqual(d.errors,[],f+' YAML errors');return[f,d.toJS()];}));
 const w=all['pitti-cloud-auto.yml'];assert.deepEqual(Object.keys(w.on),['workflow_dispatch']);
 for(const key of ['task_id','task_prompt','expected_main_sha','allowed_scope','max_attempts','authorization_reference'])assert(w.on.workflow_dispatch.inputs[key]);
@@ -24,7 +25,7 @@ const validationCheckout=validationJob.steps.find(s=>s.uses?.startsWith('actions
 assert.equal(validationCheckout.with.ref,'${{ github.event.pull_request.head.sha || github.sha }}');
 assert.equal(validationCheckout.with['persist-credentials'],false);
 const validationScript=validationJob.steps.map(s=>s.run||'').join('\n');
-assert(validationScript.includes('sudo apt-get install --yes bubblewrap'));
+assertCloudInstallContract(validation,fs.readFileSync('tools/cloud-apt-bootstrap.mjs','utf8'));
 assert(validationScript.includes('sudo --preserve-env=PATH node tools/cloud-security-regression.mjs'));
 assert(validationScript.includes('test "$(git rev-parse HEAD)" = "$EXPECTED_HEAD"'));
 assert(validationScript.includes('node tools/cloud-isolated-validation.mjs'));
