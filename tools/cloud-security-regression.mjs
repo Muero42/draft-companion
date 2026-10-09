@@ -1,6 +1,25 @@
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import assert from 'node:assert/strict';import {spawnSync} from 'node:child_process';
 import {APT_BOUNDS, bootstrap, replaceAzureMirror} from './cloud-apt-bootstrap.mjs';
+import {assertCloudInstallContract, REQUIRED_INSTALL_SCRIPT} from './cloud-install-contract.mjs';
 let count=0;const test=(name,fn)=>{fn();count++;console.log('PASS '+name);};
+const installFixture=()=>({jobs:{'cloud-validation':{steps:[{name:'Install pinned project, Chromium and mandatory isolation','timeout-minutes':12,env:{PLAYWRIGHT_BROWSERS_PATH:'${{ runner.temp }}/pitti-playwright'},run:REQUIRED_INSTALL_SCRIPT},{name:'Complete exact-head cloud validation'}]}}});
+const bootstrapSource=fs.readFileSync('tools/cloud-apt-bootstrap.mjs','utf8');
+test('installation contract accepts reviewed bootstrap and LF/CRLF',()=>{assertCloudInstallContract(installFixture(),bootstrapSource);assertCloudInstallContract(installFixture(),bootstrapSource.replace(/\r?\n/g,'\r\n'));});
+for(const [name,mutate] of [
+  ['removed bootstrap',s=>{s.run=s.run.split('\n').slice(1).join('\n');}],
+  ['substituted bootstrap',s=>{s.run=s.run.replace('cloud-apt-bootstrap','other-bootstrap');}],
+  ['ignored failure',s=>{s.run=s.run.replace('bootstrap.mjs','bootstrap.mjs || true');}],
+  ['early exit',s=>{s.run='exit 0\n'+s.run;}],
+  ['missing Chromium',s=>{s.run=s.run.replace('npx --no-install playwright install --with-deps chromium','');}],
+  ['missing dependencies',s=>{s.run=s.run.replace('--with-deps ','');}],
+  ['missing security probe',s=>{s.run=s.run.replace('sudo --preserve-env=PATH node tools/cloud-security-regression.mjs','');}],
+  ['conditional install',s=>{s.if='${{ false }}';}],
+  ['continue on error',s=>{s['continue-on-error']=true;}],
+  ['unsafe shell',s=>{s.shell='bash {0}';}],
+  ['removed time bound',s=>{delete s['timeout-minutes'];}]
+])test('installation contract rejects '+name,()=>{const w=installFixture();mutate(w.jobs['cloud-validation'].steps[0]);assert.throws(()=>assertCloudInstallContract(w,bootstrapSource));});
+test('installation contract rejects inherited bypass and wrong order',()=>{for(const key of ['defaults','env','if','continue-on-error'])for(const level of ['workflow','job']){const w=installFixture();(level==='job'?w.jobs['cloud-validation']:w)[key]={};assert.throws(()=>assertCloudInstallContract(w,bootstrapSource));}const w=installFixture();w.jobs['cloud-validation'].steps.reverse();assert.throws(()=>assertCloudInstallContract(w,bootstrapSource));});
+test('installation contract rejects bootstrap weakening even with expected command text retained',()=>{for(const source of ['',bootstrapSource.replace("'bubblewrap'","'curl'"),bootstrapSource.replace('if (second !== 0)','if (false)'),bootstrapSource.replace('https://archive.ubuntu.com','http://archive.ubuntu.com'),bootstrapSource+'\nprocess.exit(0);\n'])assert.throws(()=>assertCloudInstallContract(installFixture(),source));});
 test('APT fallback preserves suites, components, signatures and unrelated sources',()=>{
   const source='Types: deb\nURIs: http://azure.archive.ubuntu.com/ubuntu/\nSuites: noble noble-updates noble-security\nComponents: main universe\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n\ndeb [arch=amd64 signed-by=/key] https://azure.archive.ubuntu.com/ubuntu noble main\n# http://azure.archive.ubuntu.com/ubuntu\nURIs: https://security.ubuntu.com/ubuntu/ https://azure.archive.ubuntu.com.evil/ubuntu/\n';
   assert.equal(replaceAzureMirror(source),source.replace('URIs: http://azure.archive.ubuntu.com/ubuntu/','URIs: https://archive.ubuntu.com/ubuntu/').replace('] https://azure.archive.ubuntu.com/ubuntu ','] https://archive.ubuntu.com/ubuntu/ '));
