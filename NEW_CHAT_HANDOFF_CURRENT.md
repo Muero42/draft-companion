@@ -1,3 +1,13 @@
+# RC4.231 local lifecycle repair — 20261009T2010Z-v308
+
+Generation: `20261009T2010Z-v308`
+Handoff generation: `20261009T2010Z-v308`
+
+Local rc4.231 lifecycle repair; stop after tested local commit. Publication, PR, merge, deployment and physical acceptance require separate authorization. Android invalidation trigger unproven; rc4.230 loading/navigation acceptance preserved.
+Canonical main baseline: `171933ed024525e5c3bb7df864ab07d3bc27bb82`; diagnostic parent: `3e352462b534a9b0a9233664ec4239e6a676b535`. Candidate: `v11.8.0-rc4.231`, unpublished, unmerged, undeployed, no physical acceptance. Historical rc4.230 parser-only carry-forward does not certify this successor.
+
+The following checkpoint is historical/superseded for active candidate fields.
+
 # RC4.230 canonical postmerge authority — 20261008T1818Z-v307
 
 Generation: `20261008T1818Z-v307`

@@ -1,8 +1,9 @@
+import {rc4230RuntimeBeforeRepair,rc4230AuthorityBeforeRepair} from './rc4231-release-baseline.mjs';
 import {rc4230PremergeAuthority,rc4230PostmergeBinding} from './rc4230-postmerge-authority.mjs';
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import assert from 'node:assert/strict';import crypto from 'node:crypto';import {execFileSync} from 'node:child_process';
 import {RUNTIME_FILES} from './runtime-files.mjs';import {loadAuthority,validateAuthority} from './postmerge-authority-contract.mjs';import {rc4230Binding,rc4230FunctionalRuntime,rc4229AuthorityBeforeBinding} from './rc4230-release-baseline.mjs';
 import {validateRc4230ProductionIdentity} from './rc4230-authority.mjs';
-const f=rc4230Binding(),read=p=>fs.readFileSync(p,'utf8').replace(/\r\n/g,'\n'),historical=p=>execFileSync('git',['show',f.functionalHead+':'+p],{encoding:'utf8'}),blob=s=>{const b=Buffer.from(s);return crypto.createHash('sha1').update(Buffer.from('blob '+b.length+'\0')).update(b).digest('hex');};
+const f=rc4230Binding(),read=p=>rc4230RuntimeBeforeRepair(fs.readFileSync(p,'utf8').replace(/\r\n/g,'\n')),historical=p=>execFileSync('git',['show',f.functionalHead+':'+p],{encoding:'utf8'}),blob=s=>{const b=Buffer.from(s);return crypto.createHash('sha1').update(Buffer.from('blob '+b.length+'\0')).update(b).digest('hex');};
 assert.equal(RUNTIME_FILES.length,18);
 const correction=f.diagnosticCorrection,baseApp=execFileSync('git',['show','fdab8774d63ea8e3ea142395f6f752f12168d90b:app.js'],{encoding:'utf8'});
 assert.equal(correction.baseHead,'fdab8774d63ea8e3ea142395f6f752f12168d90b');assert(baseApp.includes(correction.old));assert(read('app.js').includes(correction.value));assert.equal(f.consensusCorrections.filter(p=>p.file==='app.js').reduce((text,p)=>text.replace(p.value,p.old),read('app.js')).replace(correction.value,correction.old),baseApp,'only diagnostic block changed from reviewed release');
@@ -16,7 +17,7 @@ assert.equal(carry.scope,'ONE_TIME_EXACT_PARSER_BYTES_ONLY');assert.equal(carry.
 for(const key of ['requestBehaviorMustMatchSourceHead','exactHeadCloudRequired','localStrictRequired','postCommitReviewRequired'])assert.equal(carry[key],true);
 const parentParserApp=execFileSync('git',['show',carry.sourceHead+':app.js'],{encoding:'utf8'}),withoutParser=x=>x.slice(0,x.indexOf('function seasonConsensusFilterShape'))+'PARSER'+x.slice(x.indexOf('// RC4229 nested route shape research:'));assert.equal(withoutParser(read('app.js')),withoutParser(parentParserApp),'only consensus response parser/classification changed');
 console.log('RC4230_ONE_TIME_CARRY_FORWARD_PASS pinned parent/evidence/parser; negative route-unusable only; exact-head cloud still required');
-const postmerge=loadAuthority(),d=rc4230PremergeAuthority(postmerge),old=rc4229AuthorityBeforeBinding(d);assert.deepEqual(validateAuthority(d),[]);
+const postmerge=rc4230AuthorityBeforeRepair(loadAuthority()),d=rc4230PremergeAuthority(postmerge),old=rc4229AuthorityBeforeBinding(d);assert.deepEqual(validateAuthority(d),[]);
 assert.deepEqual(validateRc4230ProductionIdentity(d),[]);
 // Mutate every component independently, bypassing fixture equality entirely.
 let lineageNegatives=0;

@@ -1,7 +1,9 @@
 import {rc4230PremergeAuthority} from './rc4230-postmerge-authority.mjs';
+import {rc4230RuntimeBeforeRepair} from './rc4231-release-baseline.mjs';
 import fs from 'node:fs';
 export const rc4230Binding=()=>JSON.parse(fs.readFileSync(new URL('./fixtures/rc4230/release-binding.json',import.meta.url)));
 export const rc4230FunctionalRuntime=text=>{
+  text=rc4230RuntimeBeforeRepair(text);
   const binding=rc4230Binding(),correction=binding.diagnosticCorrection;
   for(const patch of binding.consensusCorrections||[])if(text.includes(patch.value))text=text.replace(patch.value,patch.old);
   if(correction&&text.includes(correction.value))text=text.replace(correction.value,correction.old);
