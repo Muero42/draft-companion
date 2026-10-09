@@ -1,6 +1,8 @@
 import fs from 'node:fs';
+import {rc4230AuthorityBeforeRepair} from './rc4231-release-baseline.mjs';
 export const rc4230PostmergeBinding=()=>JSON.parse(fs.readFileSync(new URL('./fixtures/rc4230/postmerge-authority.json',import.meta.url)));
 export function rc4230PremergeAuthority(d){
+  d=rc4230AuthorityBeforeRepair(d);
   if(!d['PITTI_CURRENT_STATE.json']?.authority?.rc4230_postmerge)return d;
   const copy=structuredClone(d),f=rc4230PostmergeBinding();
   for(const e of [...f.patch].reverse()){

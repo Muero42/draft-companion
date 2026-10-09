@@ -2,7 +2,7 @@ import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePol
 import * as SeasonDecision from './season-decision-engine-v1.mjs';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,adaptBooneTradeEvidence,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
 globalThis.PittiSeasonDecisionV1=SeasonDecision;
-const APP_VERSION='v11.8.0-rc4.230';
+const APP_VERSION='v11.8.0-rc4.231';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2258,19 +2258,27 @@ function seasonRosterShell(season,players){
   return rows;
 }
 let seasonRenderQueued=false,seasonRenderRunning=false,seasonRenderRevision=0;
-function seasonClearDecisionSurfaces(){
+function seasonClearDecisionSurfaces(message='HOLD · Berechnung ausstehend oder überholt; keine Aktion freigegeben.'){
   lastPostDraftPairs=[];
   for(const [status,list] of [[els.rosterBenchStatus,els.rosterBenchList],[els.rosterFaStatus,els.rosterFaList],[els.tradeStatus,els.tradeList],[els.waiverStatus,els.waiverList],[els.seasonActionStatus,els.seasonActionList]]){
     if(list)list.innerHTML='';
-    if(status){status.className='notice warn';status.textContent='HOLD · Berechnung ausstehend oder überholt; keine Aktion freigegeben.';}
+    if(status){status.className='notice warn';status.textContent=message;}
   }
 }
 function seasonRenderPassCurrent(c,revision,deadline){
   if(lastDraftContext===c&&seasonRenderRevision===revision&&Date.now()<deadline)return true;
-  seasonClearDecisionSurfaces();return false;
+  seasonClearDecisionSurfaces();
+  if(lastDraftContext===c&&seasonRenderRevision===revision&&Date.now()>=deadline){
+    // One expiry retry per externally requested generation; never reuse old results.
+    const retry=seasonRenderPassCurrent.expiryRetry;
+    if(retry?.context!==c||retry.revision!==revision){
+      seasonRenderPassCurrent.expiryRetry={context:c,revision};seasonRenderQueued=true;
+    }else seasonClearDecisionSurfaces('HOLD · Evidenz während der Berechnung erneut abgelaufen; bitte aktualisieren. Keine Aktion freigegeben.');
+  }
+  return false;
 }
-function queueSeasonRerender(){
-  seasonRenderQueued=true;seasonRenderRevision++;
+function queueSeasonRerender(resume=false){
+  seasonRenderQueued=true;if(!resume)seasonRenderRevision++;
   seasonClearDecisionSurfaces();
   if(seasonRenderRunning)return;
   seasonRenderRunning=true;
@@ -2341,9 +2349,9 @@ function renderSeasonLiveStateFreshness(note=''){
   if(typeof renderSeasonDataCompactHeader==='function')renderSeasonDataCompactHeader();
 }
 async function bootstrapSeasonWorkspace({force=false}={}){
-  if(seasonBootstrapBusy||seasonLiveRefreshPromise){if(force&&els.seasonLiveStateStatus)els.seasonLiveStateStatus.textContent='Kader-Aktualisierung läuft bereits …';return{ok:false,busy:true};}
+  if(seasonBootstrapBusy||seasonLiveRefreshPromise||seasonRenderRunning){if(force&&els.seasonLiveStateStatus)els.seasonLiveStateStatus.textContent='Kader-Aktualisierung läuft bereits …';return{ok:false,busy:true};}
   if(!navigator.onLine){if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice warn';els.seasonLiveStateStatus.textContent='Offline · letzter erfolgreicher Live-Kader bleibt sichtbar.';}return{ok:false,offline:true};}
-  seasonBootstrapBusy=true;
+  seasonBootstrapBusy=true;seasonRenderRunning=true;
   const bootstrapWatchdogToken=seasonBootstrapWatchdogArm();
   if(els.seasonRefreshLiveBtn){els.seasonRefreshLiveBtn.disabled=true;els.seasonRefreshLiveBtn.textContent='Kader lädt …';}
   if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice';els.seasonLiveStateStatus.textContent='Live-Kader wird direkt von Sleeper geladen …';}
@@ -2418,7 +2426,7 @@ async function bootstrapSeasonWorkspace({force=false}={}){
     if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice bad';els.seasonLiveStateStatus.textContent='Kader-Aktualisierung fehlgeschlagen · '+reason;}
     return{ok:false,error:reason};
   }finally{
-    seasonBootstrapBusy=false;seasonRenderRunning=false;if(seasonRenderQueued)queueSeasonRerender();
+    seasonBootstrapBusy=false;seasonRenderRunning=false;if(seasonRenderQueued)queueSeasonRerender(true);
     if(els.seasonRefreshLiveBtn){els.seasonRefreshLiveBtn.disabled=false;els.seasonRefreshLiveBtn.textContent='Kader aktualisieren';}
     seasonBootstrapWatchdogClear(bootstrapWatchdogToken);
     renderSeasonLiveStateFreshness(els.seasonLiveStateStatus?.textContent||'');
