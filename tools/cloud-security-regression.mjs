@@ -1,5 +1,35 @@
 import fs from 'node:fs';import os from 'node:os';import path from 'node:path';import assert from 'node:assert/strict';import {spawnSync} from 'node:child_process';
+import {APT_BOUNDS, bootstrap, replaceAzureMirror} from './cloud-apt-bootstrap.mjs';
 let count=0;const test=(name,fn)=>{fn();count++;console.log('PASS '+name);};
+test('APT fallback preserves suites, components, signatures and unrelated sources',()=>{
+  const source='Types: deb\nURIs: http://azure.archive.ubuntu.com/ubuntu/\nSuites: noble noble-updates noble-security\nComponents: main universe\nSigned-By: /usr/share/keyrings/ubuntu-archive-keyring.gpg\n\ndeb [arch=amd64 signed-by=/key] https://azure.archive.ubuntu.com/ubuntu noble main\n# http://azure.archive.ubuntu.com/ubuntu\nURIs: https://security.ubuntu.com/ubuntu/ https://azure.archive.ubuntu.com.evil/ubuntu/\n';
+  assert.equal(replaceAzureMirror(source),source.replace('URIs: http://azure.archive.ubuntu.com/ubuntu/','URIs: https://archive.ubuntu.com/ubuntu/').replace('] https://azure.archive.ubuntu.com/ubuntu ','] https://archive.ubuntu.com/ubuntu/ '));
+});
+test('APT bounds reject partial updates without weakening authentication',()=>{
+  assert.equal(APT_BOUNDS,'Acquire::Retries "0";\nAcquire::http::Timeout "15";\nAcquire::https::Timeout "15";\nAPT::Update::Error-Mode "any";\n');
+});
+function aptScenario(statuses, available=true) {
+  const calls=[];let fallbacks=0,error;
+  try{bootstrap({run:(command,args)=>{calls.push([command,...args]);assert(statuses.length,'unexpected retry');return statuses.shift();},fallback:()=>{fallbacks++;return available;}});}catch(e){error=e;}
+  for(const call of calls){assert.equal(call[0],'timeout');assert.equal(call[1],'--kill-after=15s');assert.equal(call[3],'apt-get');assert.deepEqual(call.slice(2),call[4]==='update'?['120s','apt-get','update','--error-on=any']:['180s','apt-get','install','--yes','bubblewrap']);}
+  return {calls,fallbacks,error};
+}
+test('APT success still installs mandatory bubblewrap without fallback',()=>{const r=aptScenario([0,0]);assert.equal(r.calls.length,2);assert.equal(r.fallbacks,0);assert.equal(r.error,undefined);});
+test('APT timeout gets exactly one full HTTPS update and install retry',()=>{const r=aptScenario([124,0,0]);assert.equal(r.calls.length,3);assert.equal(r.fallbacks,1);assert.equal(r.error,undefined);});
+test('APT package acquisition failure also requires successful fresh update and install',()=>{const r=aptScenario([0,100,0,0]);assert.equal(r.calls.length,4);assert.equal(r.fallbacks,1);assert.equal(r.error,undefined);});
+test('APT fallback failure or unsupported source blocks validation',()=>{for(const statuses of [[100,100],[100,0,100],[124,137]]){const r=aptScenario(statuses);assert(r.error);assert.equal(r.fallbacks,1);}const r=aptScenario([100],false);assert(r.error);assert.equal(r.calls.length,1);});
+test('cloud installation keeps mandatory isolation, pinned install and Chromium in fail-fast order',()=>{
+  const validation=fs.readFileSync('.github/workflows/pitti-cloud-validation.yml','utf8').replace(/\r\n/g,'\n');
+  const install=validation.slice(validation.indexOf('      - name: Install pinned project'),validation.indexOf('      - name: Complete exact-head'));
+  assert(install.includes('timeout-minutes: 12'));
+  assert.equal(install.slice(install.indexOf('        run: |')).trimEnd(),`        run: |
+          sudo --preserve-env=PATH node tools/cloud-apt-bootstrap.mjs
+          sudo --preserve-env=PATH node tools/cloud-security-regression.mjs
+          npm ci --ignore-scripts
+          npx --no-install playwright install --with-deps chromium`);
+  assert(!validation.includes('continue-on-error:'));
+  assert(validation.includes('node tools/cloud-isolated-validation.mjs'));
+});
 const workflow=fs.readFileSync('.github/workflows/pitti-cloud-auto.yml','utf8'),validator=fs.readFileSync('tools/cloud-isolated-validation.mjs','utf8'),controller=fs.readFileSync('tools/cloud-run.mjs','utf8'),contract=fs.readFileSync('tools/cloud-contract.mjs','utf8');
 test('each Codex action is the final explicit job step',()=>{for(const [start,end] of [['  implement:','  validate:'],['  independent-review:','  review-receipt:']]){const block=workflow.slice(workflow.indexOf(start),workflow.indexOf(end));assert(block.trimEnd().endsWith(`codex-args: '["--ephemeral"]'`));}});
 test('model transfers only schema-bound payload',()=>{assert(workflow.includes('steps.codex.outputs.final-message'));assert(workflow.includes('cloud-implementation.schema.json'));assert(!workflow.includes('implementation-${{ github.run_id }}'));});

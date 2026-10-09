@@ -10,7 +10,7 @@
     ".github/CODEOWNERS": "88de8f04e880884168066c366f51223c8ba3cb01",
     ".github/workflows/package-rc461.yml": "b2fc45e59e66bc7f4a48323348bfe5d958a18ba0",
     ".github/workflows/pitti-cloud-auto.yml": "64c4e24d410a013ee6dccc19cb194d1118d5b2c4",
-    ".github/workflows/pitti-cloud-validation.yml": "1813c27b2fc8315b25ec721cdafb7e937e91c6de",
+    ".github/workflows/pitti-cloud-validation.yml": "907072b2bd5b23707778bf080a8d8bb58fa88225",
     ".github/workflows/pitti-project-guardrails.yml": "1f5a34dfd4cdd602428484a7bb079a23faa52002",
     ".github/workflows/rc461-live-surface-v3.yml": "16dc0ef016091321acba5f6734656f6ecc79d691",
     ".github/workflows/rc462-decision-ui.yml": "01db49b3f06bd9993ea4e54d980ff6203af16123",
@@ -158,7 +158,7 @@
     "tools/cloud-isolated-validation.mjs": "b341d722749c3046d8e234d90e7e31f5fc2bf1fb",
     "tools/cloud-review.schema.json": "c4a5fa3df0b0b759b9ae9e8aa284e92c2c588edb",
     "tools/cloud-run.mjs": "3c003c096966149402f37050ef69a23f7c2478f1",
-    "tools/cloud-security-regression.mjs": "41b95833fb9a9705026a9c32e394f59b7c160edd",
+    "tools/cloud-security-regression.mjs": "5d3f77917d8560738902c57b01552d99a090fdb3",
     "tools/cloud-validate.mjs": "bb3c3c2ad584f5875fc3d2752f277dbad438f726",
     "tools/cloud-workflow-check.mjs": "89013cc87179d7f40f389e882a16df6eb06bdd5d",
     "tools/fixtures/rc4222/espn-week4.json": "288ee18db632b6ac61ea4244092c3b3a35b47c1d",
@@ -266,7 +266,8 @@
     "weekly-evidence-v2.js": "13e3d1b94e978c2f63baa4cf1d2f1ca8c251f414",
     "tools/fixtures/rc4230/parent-consensus-evidence.json": "bcb4fb41b235474f0ccb54516fd70b5c6136e69c",
     "tools/rc4230-postmerge-authority.mjs": "620b071c0b73e7e4b1e60210eca7ed74ac291bff",
-    "tools/fixtures/rc4230/postmerge-authority.json": "d4e90ee8b58b6661e17102a6bc5ae2fddc234b47"
+    "tools/fixtures/rc4230/postmerge-authority.json": "d4e90ee8b58b6661e17102a6bc5ae2fddc234b47",
+    "tools/cloud-apt-bootstrap.mjs": "137c97b4a8af42337526c820dcff0e875601274a"
   },
   "branch_locks": {
     "source_baseline": "v11.8.0-rc4.230 Production d304b9f31547eb34fc7eb0037fab640497ed3360 / tree cebf9854f4e00422361d19eea557549c395f3988 / deployment b9f13bd5-6aa8-4688-a183-893aec8af333 DEPLOYED_SUCCESS; PR233 MERGED; postmerge 7/7 SUCCESS; Strict 314/314 PASS; physical acceptance UNPROVEN.",
