@@ -1,12 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-10-09T20:10:37Z",
+  "updatedAt": "2026-10-10T13:02:51Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Local rc4.231 lifecycle repair; stop after tested local commit. Publication, PR, merge, deployment and physical acceptance require separate authorization. Android invalidation trigger unproven; rc4.230 loading/navigation acceptance preserved. Library mirror is historical; never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Local rc4.232 render diagnostics only. Root cause of Android terminal HOLD remains unproven. Stop after the tested local commit; separate authorization required for publication, CI orchestration, merge, deployment or device capture. No provider rerun, evidence relaxation or scoring change. Library mirror is historical; never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
@@ -112,7 +112,7 @@
     ]
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.231",
+    "appVersion": "v11.8.0-rc4.232",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
@@ -503,12 +503,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "LOCAL_REPAIR_CANDIDATE",
-    "nextGate": "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED"
+    "status": "LOCAL_DIAGNOSTIC_CANDIDATE",
+    "nextGate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED"
   },
   "status": "RELEASE_CANDIDATE_UNMERGED",
-  "gate": "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
-  "nextGate": "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
+  "gate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
+  "nextGate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -517,7 +517,7 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20261009T2010Z-v308",
+    "generation": "20261010T1302Z-v309",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -543,7 +543,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20261009T2010Z-v308",
+  "handoff_generation": "20261010T1302Z-v309",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -578,38 +578,38 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20261009T2010Z-v308",
+  "handoffGeneration": "20261010T1302Z-v309",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-10-09T20:10:37Z",
+  "updated_at": "2026-10-10T13:02:51Z",
   "exactNextAction": "RC4.230 PR233 MERGED at d304b9f31547eb34fc7eb0037fab640497ed3360 / cebf9854f4e00422361d19eea557549c395f3988. Seven postmerge workflows PASS; Cloud Strict 314/314 PASS; Pages SUCCESS deployment b9f13bd5-6aa8-4688-a183-893aec8af333. Source Production proven; physical acceptance UNPROVEN. FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE; no adapter/persistence/consumer. No new Preview/provider audit. Publish authority-only branch, then external PR creation and exact-head CI; no further merge/deploy authorization.",
   "failClosedRecovery": "PR207 Production trade-rationale physical PASS is current: neutral \"Roster-Fit verbessert\" physically observed on the concrete Pickens-for-Bowers offer; unsupported RB-need claim absent; Boone 251/251 and no-auto-send preserved. Broad ECR, selected PITTI Panel and full game-context were not reaccepted; Team Total remains fail-closed. Library mirror remains stale; never claim a newer Library generation persisted unless files.list proves it.",
   "authorityContinuation": {
     "status": "LOCAL_UNPUBLISHED",
-    "branch": "codex/rc4231-decision-lifecycle-repair",
-    "current_gate": "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
+    "branch": "codex/rc4232-render-diagnostics",
+    "current_gate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
     "physical_executable": false,
     "canonical_main": "171933ed024525e5c3bb7df864ab07d3bc27bb82",
     "canonical_tree": "c7b39f7122a0f13b76d06061a3fe426e78d82969",
     "sequence": [
-      "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED"
+      "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED"
     ],
-    "exact_head_rule": "Local rc4.231 lifecycle repair; stop after tested local commit. Publication, PR, merge, deployment and physical acceptance require separate authorization. Android invalidation trigger unproven; rc4.230 loading/navigation acceptance preserved."
+    "exact_head_rule": "Local rc4.232 render diagnostics only. Root cause of Android terminal HOLD remains unproven. Stop after the tested local commit; separate authorization required for publication, CI orchestration, merge, deployment or device capture. No provider rerun, evidence relaxation or scoring change."
   },
   "runtimeCandidate": {
-    "version": "v11.8.0-rc4.231",
-    "branch": "codex/rc4231-decision-lifecycle-repair",
-    "base": "3e352462b534a9b0a9233664ec4239e6a676b535",
+    "version": "v11.8.0-rc4.232",
+    "branch": "codex/rc4232-render-diagnostics",
+    "base": "52e441b620cd4c3ca8972f21067e7cd6386b61e5",
     "canonical_base": "171933ed024525e5c3bb7df864ab07d3bc27bb82",
     "status": "LOCAL_UNPUBLISHED",
     "head_binding": "LOCAL_COMMIT_HEAD_AFTER_VALIDATION",
     "head_sha": null,
     "tree_sha": null,
-    "gate": "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
-    "next_gate": "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
+    "gate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
+    "next_gate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
     "exact_head_ci": "NOT_RUN",
     "cloud_validation": "NOT_RUN",
     "parser_carry_forward_applies": false,
-    "scope": "BOUNDED_DECISION_LIFECYCLE_REPAIR",
+    "scope": "DIAGNOSTIC_ONLY_MEMORY_TRACE",
     "published": false,
     "merged": false,
     "deployed": false,

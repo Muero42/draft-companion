@@ -1,3 +1,13 @@
+# RC4.232 local render diagnostics — 20261010T1302Z-v309
+
+Generation: `20261010T1302Z-v309`
+Handoff generation: `20261010T1302Z-v309`
+
+Local rc4.232 render diagnostics only. Root cause of Android terminal HOLD remains unproven. Stop after the tested local commit; separate authorization required for publication, CI orchestration, merge, deployment or device capture. No provider rerun, evidence relaxation or scoring change.
+Parent: `52e441b620cd4c3ca8972f21067e7cd6386b61e5`. Last supplied canonical main: `171933ed024525e5c3bb7df864ab07d3bc27bb82`; no fresh remote/deployment parity claim. Candidate `v11.8.0-rc4.232` is unpublished, unmerged, undeployed and not physically accepted. rc4.231 USER_REPORTED_PARTIAL_PASS roster/projections/Start-Sit; persistent generic HOLD on Waiver and Trades after loading; repair NOT physically accepted; exact deployed commit not verified.
+
+The following checkpoint is historical/superseded for active candidate fields.
+
 # RC4.231 local lifecycle repair — 20261009T2010Z-v308
 
 Generation: `20261009T2010Z-v308`
