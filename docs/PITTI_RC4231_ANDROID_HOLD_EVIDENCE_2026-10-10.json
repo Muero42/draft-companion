@@ -1,0 +1,42 @@
+{
+  "schema": "pitti.user-physical-observation.v1",
+  "observedDate": "2026-10-10",
+  "timezone": "Europe/Berlin",
+  "evidenceSource": "CURRENT_USER_REPORT_NO_SCREENSHOTS_ATTACHED",
+  "installed_android": "v11.8.0-rc4.231",
+  "latest_android_observed": "v11.8.0-rc4.231",
+  "latest_device_evidence": {
+    "version": "v11.8.0-rc4.231",
+    "acceptance": "PARTIAL_PASS",
+    "positiveScope": [
+      "User reports version visible on Android",
+      "Roster including Jeremiyah Love displayed",
+      "Projections and matchups visible",
+      "Start/Sit displays Aktuelle Aufstellung geprüft"
+    ],
+    "waiverTradesRepairAccepted": false,
+    "terminalStateAfterLoading": {
+      "waiver": "HOLD · Berechnung ausstehend oder überholt; keine Aktion freigegeben.",
+      "trades": "HOLD · Berechnung ausstehend oder überholt; keine Aktion freigegeben.",
+      "userConfirmation": "bei beiden"
+    },
+    "classification": "SHARED_GENERIC_HOLD_PERSISTS_ON_BOTH_SURFACES",
+    "androidTriggerProven": false,
+    "initialRecommendationsAuthoritative": "UNPROVEN"
+  },
+  "preservedPriorObservation": "rc4.230 loading approximately six seconds and usable navigation; do not reopen the resolved freeze issue.",
+  "localInspection": {
+    "head": "a2480df7a09dafed20b1df7618a225fb22171e5e",
+    "tree": "e73c6c3efdd5637eb26cb5d31920f12c0294ccc5",
+    "localOriginMain": "171933ed024525e5c3bb7df864ab07d3bc27bb82",
+    "entryWorktree": "CLEAN",
+    "guardrail": "PASS_WITHOUT_BYPASS",
+    "deployedCommitParity": "UNVERIFIED; Android version text does not establish exact served commit/tree",
+    "checkpointReconciliation": "This user observation supersedes prior no-device-observation wording for the stated scope only. Sealed v308 publication/production fields are historical local-checkpoint evidence, not a fresh remote observation.",
+    "finding": "Generic HOLD is written by the shared queue/abort path. A queued pass can also exit before domain surfaces on invalid context shape, or throw before runSeasonSurface and be caught only by the outer queue logger. Those are possible paths, not proven Android causes. The repeated-expiry retry-limit path has distinct wording, so this message alone does not establish that limit was reached.",
+    "existingDiagnostic": "seasonDataDiagnostic exposes weekly validity/coverage, game context, Boone status, cached player decisions and trade funnel freshness, but no render-abort reason/revision history.",
+    "runtimeChanged": false
+  },
+  "nextSafeGate": "Obtain the existing Daten-Diagnose kopieren output from Season-Daten und Details while both surfaces remain in the terminal HOLD. Use that snapshot to separate missing/stale evidence and stale trade computation before selecting a bounded runtime instrumentation or repair package. Do not invoke API diagnostizieren or the acquisition audit; copying the existing data diagnostic makes no provider requests.",
+  "boundaries": "No push, PR, merge, deployment, provider acquisition rerun, device automation, cache clearing, evidence-validation relaxation or speculative projection adjustment. Full Strict was not rerun for this observation-only file; the earlier 323/323 result remains scoped to its validated runtime and release bindings."
+}
