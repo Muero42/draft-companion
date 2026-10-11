@@ -2,7 +2,7 @@ import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePol
 import * as SeasonDecision from './season-decision-engine-v1.mjs';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,adaptBooneTradeEvidence,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
 globalThis.PittiSeasonDecisionV1=SeasonDecision;
-const APP_VERSION='v11.8.0-rc4.233';
+const APP_VERSION='v11.8.0-rc4.234';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2276,7 +2276,7 @@ seasonRenderPassCurrent.diagnostic=(()=>{
     events.push({sequence:++sequence,at:now,event,pass,stage,lastCompletedStage,
       trigger:choose(detail.trigger,['live','weekly','game','trade-values','watcher','decision-sources','expiry','bootstrap-handoff','unspecified']),
       reason:choose(detail.reason,['CONTEXT_REPLACED','REVISION_CHANGED','DEADLINE_EXPIRED','CONTEXT_INCOMPLETE','SUPERSEDED','UNEXPECTED_ERROR','TRANSACTIONS_UPDATED']),
-      errorType:choose(detail.errorType,['Error','TypeError','RangeError','ReferenceError','SyntaxError']),
+      errorType:choose(detail.errorType,['Error','TypeError','RangeError','ReferenceError','SyntaxError','QuotaExceededError']),
       workspace:choose(detail.workspace,['draft','roster','waiver','trade','live']),
       revision:seasonRenderRevision,passRevision:number(detail.revision),contextId:contextId(c),passContextId:contextId(detail.context),
       deadlineAt:number(detail.deadline),liveAgeMs:Number.isFinite(c?.season?.generated_at)?now-c.season.generated_at:null,
@@ -2448,11 +2448,12 @@ async function bootstrapSeasonWorkspace({force=false}={}){
     if(!current())return{ok:false,skipped:'render-superseded'};
     updateStatus();renderSeasonRankingFreshness();
     scheduleSeasonDecisionExpiry();
-    seasonRenderPassCurrent.diagnostic?.record('PASS_DONE',{stage:'bootstrap',context:renderContext,revision:renderRevision});
     localStorage.setItem('v118_seasonBootstrapAt',String(Date.now()));
     if(els.seasonLiveStateStatus){els.seasonLiveStateStatus.className='notice ok';els.seasonLiveStateStatus.textContent='Live-Kader direkt von Sleeper aktualisiert.';}
+    seasonRenderPassCurrent.diagnostic?.record('PASS_DONE',{stage:'bootstrap',context:renderContext,revision:renderRevision});
     return{ok:true};
   }catch(e){
+    seasonRenderPassCurrent.diagnostic?.record('ERROR',{stage:'bootstrap',reason:'UNEXPECTED_ERROR',errorType:e?.name});
     const reason=stage+' · '+(e?.message||String(e));console.error('PITTI season bootstrap failed',stage,e);
     if(els.rosterStatus){els.rosterStatus.className='notice warn';els.rosterStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+esc(reason)+' · keine FA-Aktion freigegeben.';}
     if(els.waiverStatus){els.waiverStatus.className='notice bad';els.waiverStatus.textContent='Season Auto-Sync FAIL-CLOSED · '+reason+' · keine Aktion freigegeben.';els.waiverList.innerHTML='';}

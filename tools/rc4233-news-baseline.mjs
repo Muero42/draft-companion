@@ -1,9 +1,11 @@
+import {beforeBootstrapRuntime,beforeBootstrapAuthority} from './rc4234-bootstrap-baseline.mjs';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 export const newsBinding=()=>JSON.parse(fs.readFileSync(new URL('./fixtures/rc4233/release-binding.json',import.meta.url)));
 export const newsBlob=text=>{const b=Buffer.from(text.replace(/\r\n/g,'\n'));return crypto.createHash('sha1').update(Buffer.from(`blob ${b.length}\0`)).update(b).digest('hex')};
 export function beforeNewsRuntime(text){
+  text=beforeBootstrapRuntime(text);
   const f=newsBinding();
   // Other files and already reconstructed historical layers remain unchanged.
   for(const p of [...f.runtimePatches].reverse()){
@@ -14,6 +16,7 @@ export function beforeNewsRuntime(text){
   return text.replaceAll(f.version,'v11.8.0-rc4.232');
 }
 export function beforeNewsAuthority(d){
+  d=beforeBootstrapAuthority(d);
   if(d['PITTI_CURRENT_STATE.json']?.authority?.source_candidate!=='v11.8.0-rc4.233')return d;
   const copy=structuredClone(d),f=newsBinding();
   for(const e of [...f.patch].reverse()){

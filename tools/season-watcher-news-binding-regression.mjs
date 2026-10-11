@@ -1,10 +1,11 @@
+import {beforeBootstrapRuntime,beforeBootstrapAuthority} from './rc4234-bootstrap-baseline.mjs';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import {execFileSync} from 'node:child_process';
 import {RUNTIME_FILES} from './runtime-files.mjs';
 import {loadAuthority,validateAuthority} from './postmerge-authority-contract.mjs';
 import {newsBinding,newsBlob,beforeNewsRuntime,beforeNewsAuthority} from './rc4233-news-baseline.mjs';
-const f=newsBinding(),read=p=>fs.readFileSync(p,'utf8').replace(/\r\n/g,'\n');
+const f=newsBinding(),read=p=>beforeBootstrapRuntime(fs.readFileSync(p,'utf8').replace(/\r\n/g,'\n'));
 const historical=p=>execFileSync('git',['show',f.parent+':'+p],{encoding:'utf8'}).replace(/\r\n/g,'\n');
 assert.equal(f.parent,'0966857e48d3e0267e65c14db8b0b51a1d443306');
 assert.equal(f.version,'v11.8.0-rc4.233');assert.equal(f.generation,'20261011T0758Z-v310');
@@ -18,7 +19,7 @@ for(const p of RUNTIME_FILES){
 }
 assert.deepEqual(changed,['index.html','app.js','manifest.webmanifest','sw.js']);
 for(const p of changed.filter(p=>p!=='app.js'))assert.equal(read(p).replaceAll(f.version,'v11.8.0-rc4.232'),historical(p),p+' version only');
-const d=loadAuthority();assert.deepEqual(validateAuthority(d),[]);
+const d=beforeBootstrapAuthority(loadAuthority());assert.deepEqual(validateAuthority(d),[]);
 const old=beforeNewsAuthority(d);assert.deepEqual(validateAuthority(old),[]);
 for(const [p,v]of Object.entries(old))assert.deepEqual(typeof v==='string'?v.replace(/\r\n/g,'\n'):v,p.endsWith('.json')?JSON.parse(historical(p)):historical(p),p+' authority reconstruction');
 assert.deepEqual(d['PITTI_COMMAND_CONTRACTS.json'].codexBudgetGuard,old['PITTI_COMMAND_CONTRACTS.json'].codexBudgetGuard);

@@ -1,3 +1,13 @@
+# RC4.234 local bootstrap diagnostic repair — 20261011T1433Z-v311
+
+Generation: `20261011T1433Z-v311`
+Handoff generation: `20261011T1433Z-v311`
+
+Local rc4.234 bootstrap diagnostic repair: record sanitized bootstrap exceptions and mark completion only after fallible completion work. Preserve rc4.233 Watcher news bridge and all decision validation. Android HOLD root cause remains unproven. Local validation and one commit only; no push, PR, merge, deployment or physical acceptance.
+Parent: `c4ca793288d728f84f92e0319d18e9bb4f1373a0`; supplied main: `f65cfa891ba2cb64999bfa1fc7855bea8024778a`. Candidate `v11.8.0-rc4.234` is local and unpublished. No fresh remote/deployment or device claim.
+
+The following checkpoint is historical for active candidate fields.
+
 # Watcher news bridge — local v11.8.0-rc4.233 candidate
 
 Handoff generation: `20261011T0758Z-v310`

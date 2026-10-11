@@ -58,6 +58,33 @@ for(const warm of [false,true]){
 }
 console.log('DIAGNOSIS_REPRODUCED: released cold/warm expiry clears board without replacement pass or expiry timer.');
 app=candidate;
+// Bootstrap failures must never leave a successful completion marker. Exercise
+// the real bootstrap, including failures before PASS_START and after the lanes.
+for(const warm of [false,true])for(const failure of ['roster','status','quota','none']){
+  const f=fixture({warm}),trace=f.box.seasonRenderPassCurrent.diagnostic;
+  const secret='BOOTSTRAP_PRIVATE_MESSAGE_NOT_FOR_TRACE';
+  if(failure==='roster')f.box.seasonLineupHtml=()=>{throw new TypeError(secret)};
+  if(failure==='status')f.box.updateStatus=()=>{throw new TypeError(secret)};
+  f.box.localStorage.setItem=()=>{
+    assert(!trace.snapshot().events.some(e=>e.event==='PASS_DONE'&&e.stage==='bootstrap'),'no success before persistence');
+    if(failure==='quota')throw Object.assign(new Error(secret),{name:'QuotaExceededError'});
+  };
+  const result=await f.box.bootstrapSeasonWorkspace();await settle(f);
+  const snapshot=trace.snapshot(),events=snapshot.events;
+  assert(!JSON.stringify(snapshot).includes(secret),'no raw exception messages');
+  assert.equal(snapshot.running,false);assert.equal(f.box.seasonBootstrapBusy,false);
+  if(failure==='none'){
+    assert.equal(result.ok,true);assert.equal(events.at(-1).event,'PASS_DONE');
+    assert.equal(events.filter(e=>e.event==='PASS_DONE'&&e.stage==='bootstrap').length,1);
+    assert(!events.some(e=>e.event==='ERROR'));
+  }else{
+    assert.equal(result.ok,false);assert.equal(f.els.waiverList.innerHTML,'');assert.equal(f.els.tradeList.innerHTML,'');
+    assert(!events.some(e=>e.event==='PASS_DONE'&&e.stage==='bootstrap'));
+    const error=events.at(-1);assert.equal(error.event,'ERROR');assert.equal(error.stage,'bootstrap');
+    assert.equal(error.reason,'UNEXPECTED_ERROR');assert.equal(error.errorType,failure==='quota'?'QuotaExceededError':'TypeError');
+  }
+}
+console.log('BOOTSTRAP_DIAGNOSTIC_PASS: eight cold/warm early, late, quota and success cases; sanitized failure, no premature completion.');
 for(const warm of [false,true])for(const mode of ['fresh','missing','expired','weekly','trade','expiry']){
   const f=fixture({warm,missing:mode==='missing',expired:mode==='expired',expiry:mode==='expiry',completion:mode});
   await f.box.bootstrapSeasonWorkspace();await settle(f);
