@@ -2,7 +2,7 @@ import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePol
 import * as SeasonDecision from './season-decision-engine-v1.mjs';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,adaptBooneTradeEvidence,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
 globalThis.PittiSeasonDecisionV1=SeasonDecision;
-const APP_VERSION='v11.8.0-rc4.232';
+const APP_VERSION='v11.8.0-rc4.233';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -4430,10 +4430,10 @@ function appendResearchEvidence(input){
   Object.assign(e,{eventKey:String(input.eventKey||''),status:String(input.status||'UNKNOWN'),sourceUrl:String(input.sourceUrl||''),sourceTier:Number.isInteger(input.sourceTier)?input.sourceTier:null,verified:input.verified===true,verifiedAt:Number(input.verifiedAt||0),conflict:input.conflict===true});
   const events=loadResearchEvents();if(events.some(x=>evidenceIdentity(x)===evidenceIdentity(e)))return {added:false,event:e};events.push(e);const saved=saveResearchEvents(events);if(!saved.ok)return {added:false,event:e,storageFull:true,error:saved.error};updateResearchCacheStatus();return {added:true,event:e,compacted:saved.compacted,quotaRecovered:saved.quotaRecovered};
 }
-function researchEventsAt(cutoff=Infinity){return loadResearchEvents().filter(e=>Number(e.sourcePublishedAt||e.observedAt||0)<=cutoff)}
+function researchEventsAt(cutoff=Infinity){return loadResearchEvents().filter(e=>Number(e.sourcePublishedAt||e.observedAt||0)<=cutoff&&(!e.payload?.watcherNews||(Number(e.observedAt)<=cutoff&&Number(e.payload.sourceUpdatedAt)<=cutoff)))}
 function researchPlayerState(p,cutoff=Infinity){const key=norm(p.name),pid=String(p.id||'');return researchEventsAt(cutoff).filter(e=>(pid&&e.playerId===pid)||e.playerKey===key).sort((a,b)=>a.sourcePublishedAt-b.sourcePublishedAt)}
-function actionableResearchEvents(p,cutoff=Infinity){return researchPlayerState(p,cutoff).filter(e=>!e.critical||e.freshnessVerified===true)}
-function researchHint(p,cutoff=Infinity){const all=researchPlayerState(p,cutoff),ev=actionableResearchEvents(p,cutoff);if(!all.length)return '';const rejected=all.length-ev.length;if(!ev.length)return rejected?`${rejected} kritische Meldung(en) wegen ungeprüfter Ereignis-Aktualität ignoriert`:'';const latest=ev[ev.length-1],age=Math.round((Date.now()-Number(latest.sourcePublishedAt||latest.observedAt))/3600000),flags=[...new Set(ev.flatMap(x=>x.flags||[]))].slice(-4).join(', '),suffix=rejected?` · ${rejected} stale/unverifiziert ignoriert`:'';return flags?`${flags}${age<48?` · Cache ${age}h`:' · Cache veraltet'}${suffix}`:`${ev.length} Evidence-Event(s)${suffix}`}
+function actionableResearchEvents(p,cutoff=Infinity){return researchPlayerState(p,cutoff).filter(e=>!e.payload?.requiresEvaluation&&(!e.critical||e.freshnessVerified===true))}
+function researchHint(p,cutoff=Infinity){const all=researchPlayerState(p,cutoff),ev=actionableResearchEvents(p,cutoff);if(!all.length)return '';const pending=all.filter(e=>e.payload?.requiresEvaluation).length;if(pending)return `${pending} Nachrichtenhinweis(e) zur Bewertung vorhanden`;const rejected=all.length-ev.length;if(!ev.length)return rejected?`${rejected} kritische Meldung(en) wegen ungeprüfter Ereignis-Aktualität ignoriert`:'';const latest=ev[ev.length-1],age=Math.round((Date.now()-Number(latest.sourcePublishedAt||latest.observedAt))/3600000),flags=[...new Set(ev.flatMap(x=>x.flags||[]))].slice(-4).join(', '),suffix=rejected?` · ${rejected} stale/unverifiziert ignoriert`:'';return flags?`${flags}${age<48?` · Cache ${age}h`:' · Cache veraltet'}${suffix}`:`${ev.length} Evidence-Event(s)${suffix}`}
 function updateResearchCacheStatus(){if(!els.researchCacheStatus)return;const e=loadResearchEvents();const players=new Set(e.map(x=>x.playerId||x.playerKey).filter(Boolean));els.researchCacheStatus.textContent=e.length?`${e.length} Evidence-Events · ${players.size} Spieler · append-only`:'Noch keine versionierte Evidence gespeichert.'}
 const WATCHER_FEED_URL='https://pitti-watcher.tim-muero.workers.dev/companion-feed';
 const WATCHER_SYNC_META_KEY='v118_watcherFeedMeta';
@@ -4452,14 +4452,17 @@ async function syncWatcherFeed(){
     if(!r.ok)throw new Error(`HTTP ${r.status}`);
     const v=await r.json();
     if(!['draft-companion.watcher-feed.v1','draft-companion.watcher-feed.v2'].includes(v?.schema))throw new Error('Feed-Schema nicht verfügbar');
+    let newsAdded=0;
+    for(const input of watcherNewsInputs(v.newsEvidence)){if(appendResearchEvidence(input).added)newsAdded++;}
+    if(newsAdded)queueSeasonRerender(false,'watcher-news');
     const gate=String(v?.gate?.overall||'UNKNOWN'),isV2=v.schema==='draft-companion.watcher-feed.v2';
     const market=String(v?.gate?.market||'UNKNOWN'),playerState=String(v?.gate?.player_state_status||'UNKNOWN');
     const healthyMarket=!isV2||market==='PASS',healthyPlayerState=!isV2||playerState==='PASS';
     if(isV2&&gate==='PASS'&&!healthyMarket&&!healthyPlayerState)throw new Error('Watcher v2 Gate inkonsistent: overall PASS ohne gesunde Sub-Lane');
     if(gate!=='PASS'){
       store.set(WATCHER_SYNC_META_KEY,{at:Date.now(),gate,watcherVersion:v?.watcherVersion||null,added:0});
-      if(els.watcherSyncStatus){els.watcherSyncStatus.className=gate==='FAIL'?'notice bad':'notice warn';els.watcherSyncStatus.textContent=`Pitti Watcher: ${gate} · automatische Research-Ingestion bleibt AUS.`}
-      return{ok:false,gate,added:0};
+      if(els.watcherSyncStatus){els.watcherSyncStatus.className=gate==='FAIL'?'notice bad':'notice warn';els.watcherSyncStatus.textContent=`Pitti Watcher: ${gate} · Markt/Spielerstatus pausiert · Nachrichten ${v.newsEvidence?.status||'DISABLED'}: ${newsAdded} neue Prüfhinweise.`}
+      return{ok:false,gate,added:0,newsAdded};
     }
     if(v.seasonEvidence?.schema==='pitti.season-evidence.v1'){
       if(healthyPlayerState){
@@ -4488,11 +4491,28 @@ async function syncWatcherFeed(){
     if(added>0){updateResearchCacheStatus();queueSeasonRerender(false,'watcher');}
     const health=isV2&&(!healthyMarket||!healthyPlayerState)?`TEILWEISE VERFÜGBAR · Markt ${market} · Player-State ${playerState}`:'PASS';
     if(els.watcherSyncStatus){els.watcherSyncStatus.className=storageFull||health!=='PASS'?'notice warn':'notice ok';els.watcherSyncStatus.textContent=storageFull?`Pitti Watcher: ${health} · lokaler Evidence-Speicher voll; bestehender Cache bleibt erhalten, neue Events werden nicht persistiert.`:`Pitti Watcher: ${health} · ${added} neue Evidence-Events${quotaRecovered?' · Cache automatisch kompaktiert':''} · kritische State-Deltas ohne Quellenchronologie bleiben nicht-actionable (${rejectedCritical}).`}
-    return{ok:true,gate,added,rejectedCritical,storageFull,quotaRecovered};
+    if(els.watcherSyncStatus&&v.newsEvidence?.status)els.watcherSyncStatus.textContent+=` · Nachrichten ${v.newsEvidence.status}: ${newsAdded} neue Prüfhinweise`;
+    return{ok:true,gate,added,rejectedCritical,storageFull,quotaRecovered,newsAdded};
   }catch(e){
     if(els.watcherSyncStatus){els.watcherSyncStatus.className='notice warn';els.watcherSyncStatus.textContent=`Pitti Watcher nicht automatisch verfügbar (${e?.name==='AbortError'?'Timeout':e.message}). Bestehender Cache bleibt unverändert.`}
     return{ok:false,gate:'UNAVAILABLE',added:0};
   }finally{clearTimeout(t)}
+}
+function watcherNewsInputs(news,now=Date.now()){
+  if(news?.schema!=='pitti.news-evidence.v1'||news.status!=='PASS'||!Array.isArray(news.events)||news.events.length>50)return [];
+  const result=[];
+  for(const e of news.events){
+    if(!e||!/^\d+$/.test(e.playerId)||!/^\d+$/.test(e.articleId)||!/^[a-f0-9]{64}$/.test(e.version)||e.classification!=='REPORT_REQUIRES_EVALUATION')continue;
+    if(typeof e.headline!=='string'||!e.headline.trim()||e.headline.length>300)continue;
+    const times=[e.sourcePublishedAt,e.sourceUpdatedAt,e.observedAt];
+    if(times.some(t=>!Number.isSafeInteger(t)||t<=0||t>now)||e.sourcePublishedAt>e.sourceUpdatedAt||e.sourceUpdatedAt>e.observedAt||now-e.sourcePublishedAt>2*86400000)continue;
+    let url;try{url=new URL(e.sourceUrl);}catch{continue;}
+    if(url.protocol!=='https:'||url.hostname!=='www.espn.com'||url.username||url.password)continue;
+    result.push({id:`watcher_news_${e.version}`,playerId:e.playerId,evidenceType:'WATCHER_NEWS_REPORT',sourceId:`ESPN:${e.articleId}:${e.version}`,sourceUrl:url.href,
+      observedAt:e.observedAt,sourcePublishedAt:e.sourcePublishedAt,eventOccurredAt:0,sourceOriginality:'publisher_report',confidence:0,verified:false,status:'REQUIRES_EVALUATION',
+      flags:['Nachrichtenhinweis – Bewertung offen'],payload:{watcherNews:true,requiresEvaluation:true,headline:e.headline,sourceUpdatedAt:e.sourceUpdatedAt,articleId:e.articleId}});
+  }
+  return result;
 }
 /*
  * rc4.18 — Research Residual Shadow v2.

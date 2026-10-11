@@ -1,9 +1,11 @@
+import {beforeNewsRuntime,beforeNewsAuthority} from './rc4233-news-baseline.mjs';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 export const rc4232Binding=()=>JSON.parse(fs.readFileSync(new URL('./fixtures/rc4232/release-binding.json',import.meta.url)));
 // Exact inverses only. Historical contracts still validate their original bytes;
 // season-rc4232-release-binding-regression independently verifies the new delta.
 export function rc4231RuntimeBeforeDiagnostic(text){
+  text=beforeNewsRuntime(text);
   const f=rc4232Binding();
   for(const p of [...f.runtimePatches].reverse()){
     if(!text.includes(p.value))continue;
@@ -13,6 +15,7 @@ export function rc4231RuntimeBeforeDiagnostic(text){
   return text.replaceAll(f.version,'v11.8.0-rc4.231');
 }
 export function rc4231AuthorityBeforeDiagnostic(d){
+  d=beforeNewsAuthority(d);
   if(d['PITTI_CURRENT_STATE.json']?.authority?.source_candidate!=='v11.8.0-rc4.232')return d;
   const copy=structuredClone(d),f=rc4232Binding();
   for(const e of [...f.patch].reverse()){

@@ -1,8 +1,9 @@
+import {beforeNewsRuntime,beforeNewsAuthority} from './rc4233-news-baseline.mjs';
 import fs from 'node:fs';import crypto from 'node:crypto';import assert from 'node:assert/strict';import {execFileSync} from 'node:child_process';
 import {RUNTIME_FILES} from './runtime-files.mjs';
 import {loadAuthority,validateAuthority} from './postmerge-authority-contract.mjs';
 import {rc4232Binding,rc4231RuntimeBeforeDiagnostic,rc4231AuthorityBeforeDiagnostic} from './rc4232-release-baseline.mjs';
-const read=p=>fs.readFileSync(p,'utf8').replace(/\r\n/g,'\n'),f=rc4232Binding(),historical=p=>execFileSync('git',['show',f.parent+':'+p],{encoding:'utf8'}).replace(/\r\n/g,'\n');
+const read=p=>beforeNewsRuntime(fs.readFileSync(p,'utf8').replace(/\r\n/g,'\n')),f=rc4232Binding(),historical=p=>execFileSync('git',['show',f.parent+':'+p],{encoding:'utf8'}).replace(/\r\n/g,'\n');
 const blob=s=>{const b=Buffer.from(s);return crypto.createHash('sha1').update(Buffer.from('blob '+b.length+'\0')).update(b).digest('hex')};
 assert.equal(f.version,'v11.8.0-rc4.232');assert.equal(f.generation,'20261010T1302Z-v309');
 assert.equal(f.baselineHead,'171933ed024525e5c3bb7df864ab07d3bc27bb82');assert.equal(f.parent,'52e441b620cd4c3ca8972f21067e7cd6386b61e5');
@@ -18,7 +19,7 @@ for(const p of RUNTIME_FILES){
 assert.deepEqual(changed,['index.html','app.js','manifest.webmanifest','sw.js']);
 for(const p of changed.filter(p=>p!=='app.js'))assert.equal(read(p).replaceAll(f.version,'v11.8.0-rc4.231'),historical(p),p+' version only');
 for(const p of changed)assert.deepEqual([...new Set(read(p).match(/v11\.8\.0-rc4\.\d+/g))],[f.version]);
-const d=loadAuthority();assert.deepEqual(validateAuthority(d),[]);
+const d=beforeNewsAuthority(loadAuthority());assert.deepEqual(validateAuthority(d),[]);
 const previous=rc4231AuthorityBeforeDiagnostic(d);assert.deepEqual(validateAuthority(previous),[]);
 for(const p of Object.keys(previous))assert.deepEqual(typeof previous[p]==='string'?previous[p].replace(/\r\n/g,'\n'):previous[p],p.endsWith('.json')?JSON.parse(historical(p)):historical(p),p+' exact previous authority reconstruction');
 for(const k of ['auto','autoBlock','codexBudgetGuard'])assert.deepEqual(d['PITTI_COMMAND_CONTRACTS.json'][k],previous['PITTI_COMMAND_CONTRACTS.json'][k],k+' permission boundary');

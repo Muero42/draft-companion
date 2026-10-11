@@ -1,13 +1,13 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20261010T1302Z-v309",
-  "updated_at": "2026-10-10T13:02:51Z",
+  "handoff_generation": "20261011T0758Z-v310",
+  "updated_at": "2026-10-11T07:58:54Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.232",
+    "source_candidate": "v11.8.0-rc4.233",
     "git_identity_rule": "Canonical main identity and candidate containment are freshly verified externally; no commit or mutable PR state is immutable checkpoint authority.",
     "reconciled_base_main": "d304b9f31547eb34fc7eb0037fab640497ed3360",
     "postmerge": {
@@ -2035,14 +2035,21 @@
       "baselineHead": "171933ed024525e5c3bb7df864ab07d3bc27bb82",
       "releaseScope": "LOCAL_ONLY",
       "androidTriggerProven": false
+    },
+    "rc4233_local_news": {
+      "generation": "20261011T0758Z-v310",
+      "parent": "0966857e48d3e0267e65c14db8b0b51a1d443306",
+      "releaseScope": "LOCAL_ONLY",
+      "newsSourceActivated": false,
+      "backgroundPushProven": false
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.211",
-    "season_candidate": "v11.8.0-rc4.232",
-    "candidate_branch": "codex/rc4232-render-diagnostics",
+    "season_candidate": "v11.8.0-rc4.233",
+    "candidate_branch": "codex/rc4233-watcher-news-bridge",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.232",
+    "test_challenger": "v11.8.0-rc4.233",
     "ci": {
       "head": "d304b9f31547eb34fc7eb0037fab640497ed3360",
       "strict": "314/314 PASS",
@@ -2050,7 +2057,7 @@
       "cloud_validation": "PASS"
     },
     "android_accepted": "v11.8.0-rc4.211",
-    "preview_candidate": "v11.8.0-rc4.232",
+    "preview_candidate": "v11.8.0-rc4.233",
     "android_authority": "rc4.231 USER_REPORTED_PARTIAL_PASS roster/projections/Start-Sit; persistent generic HOLD on Waiver and Trades after loading; repair NOT physically accepted; exact deployed commit not verified.",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
@@ -2144,11 +2151,11 @@
     },
     "package_reference_scope": "rc4.230 local diagnostic runtime identity; no archive, publication or deployment claim",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.232",
+      "version": "v11.8.0-rc4.233",
       "files": 18,
       "sha256": null,
       "status": "LOCAL_CANDIDATE_NOT_PUBLISHED",
-      "source_scope": "DIAGNOSTIC_ONLY_MEMORY_TRACE",
+      "source_scope": "NEWS_EVIDENCE_INGESTION_REVIEW_ONLY",
       "runtime_identity_head": null,
       "head_binding": "LOCAL_COMMIT_HEAD_AFTER_VALIDATION"
     },
@@ -2227,11 +2234,11 @@
       }
     },
     "current_physical_acceptance": {
-      "version": "v11.8.0-rc4.232",
+      "version": "v11.8.0-rc4.233",
       "acceptance": "PENDING",
       "proven": false,
       "executable": false,
-      "prerequisite_gate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
+      "prerequisite_gate": "RC4233_LOCAL_NEWS_BRIDGE_PUBLICATION_NOT_AUTHORIZED",
       "scope": "NO_RC4232_PHYSICAL_EVIDENCE"
     },
     "accepted_android_scope": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
@@ -2336,8 +2343,8 @@
     "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
-    "status": "LOCAL_DIAGNOSTIC_CANDIDATE",
-    "nextGate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED"
+    "status": "LOCAL_NEWS_BRIDGE_CANDIDATE",
+    "nextGate": "RC4233_LOCAL_NEWS_BRIDGE_PUBLICATION_NOT_AUTHORIZED"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -2399,7 +2406,7 @@
     }
   },
   "handoff": {
-    "generation": "20261010T1302Z-v309",
+    "generation": "20261011T0758Z-v310",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -2410,9 +2417,9 @@
     "readiness_scope": "STRUCTURAL_HANDOFF_ONLY_NOT_DEVICE_ACCEPTANCE"
   },
   "status": "RELEASE_CANDIDATE_UNMERGED",
-  "gate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
-  "nextGate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
-  "handoffGeneration": "20261010T1302Z-v309",
+  "gate": "RC4233_LOCAL_NEWS_BRIDGE_PUBLICATION_NOT_AUTHORIZED",
+  "nextGate": "RC4233_LOCAL_NEWS_BRIDGE_PUBLICATION_NOT_AUTHORIZED",
+  "handoffGeneration": "20261011T0758Z-v310",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -4056,20 +4063,20 @@
     "season_exception_weakens_draft_rule": false
   },
   "candidate_work": {
-    "version": "v11.8.0-rc4.232",
-    "branch": "codex/rc4232-render-diagnostics",
-    "base": "52e441b620cd4c3ca8972f21067e7cd6386b61e5",
+    "version": "v11.8.0-rc4.233",
+    "branch": "codex/rc4233-watcher-news-bridge",
+    "base": "0966857e48d3e0267e65c14db8b0b51a1d443306",
     "canonical_base": "171933ed024525e5c3bb7df864ab07d3bc27bb82",
     "status": "LOCAL_UNPUBLISHED",
     "head_binding": "LOCAL_COMMIT_HEAD_AFTER_VALIDATION",
     "head_sha": null,
     "tree_sha": null,
-    "gate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
-    "next_gate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
+    "gate": "RC4233_LOCAL_NEWS_BRIDGE_PUBLICATION_NOT_AUTHORIZED",
+    "next_gate": "RC4233_LOCAL_NEWS_BRIDGE_PUBLICATION_NOT_AUTHORIZED",
     "exact_head_ci": "NOT_RUN",
     "cloud_validation": "NOT_RUN",
     "parser_carry_forward_applies": false,
-    "scope": "DIAGNOSTIC_ONLY_MEMORY_TRACE",
+    "scope": "NEWS_EVIDENCE_INGESTION_REVIEW_ONLY",
     "published": false,
     "merged": false,
     "deployed": false,
@@ -4080,9 +4087,12 @@
     "merge_authorized": false,
     "adapter_implemented": false,
     "persistence_enabled": false,
-    "consumer_enabled": false
+    "consumer_enabled": false,
+    "news_bridge_implemented": true,
+    "news_source_activated": false,
+    "background_push_proven": false
   },
-  "updatedAt": "2026-10-10T13:02:51Z",
+  "updatedAt": "2026-10-11T07:58:54Z",
   "exactNextAction": "RC4.230 PR233 MERGED at d304b9f31547eb34fc7eb0037fab640497ed3360 / cebf9854f4e00422361d19eea557549c395f3988. Seven postmerge workflows PASS; Cloud Strict 314/314 PASS; Pages SUCCESS deployment b9f13bd5-6aa8-4688-a183-893aec8af333. Source Production proven; physical acceptance UNPROVEN. FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE; no adapter/persistence/consumer. No new Preview/provider audit. Publish authority-only branch, then external PR creation and exact-head CI; no further merge/deploy authorization.",
   "week4_season_readiness": {
     "classification": "WEEK4_SEASON_READY_LOCAL_CANDIDATE",
@@ -4145,31 +4155,31 @@
   },
   "authority_continuation": {
     "status": "LOCAL_UNPUBLISHED",
-    "branch": "codex/rc4232-render-diagnostics",
-    "current_gate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
+    "branch": "codex/rc4233-watcher-news-bridge",
+    "current_gate": "RC4233_LOCAL_NEWS_BRIDGE_PUBLICATION_NOT_AUTHORIZED",
     "physical_executable": false,
     "canonical_main": "171933ed024525e5c3bb7df864ab07d3bc27bb82",
     "canonical_tree": "c7b39f7122a0f13b76d06061a3fe426e78d82969",
     "sequence": [
-      "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED"
+      "RC4233_LOCAL_NEWS_BRIDGE_PUBLICATION_NOT_AUTHORIZED"
     ],
-    "exact_head_rule": "Local rc4.232 render diagnostics only. Root cause of Android terminal HOLD remains unproven. Stop after the tested local commit; separate authorization required for publication, CI orchestration, merge, deployment or device capture. No provider rerun, evidence relaxation or scoring change."
+    "exact_head_rule": "Local rc4.233 Watcher news bridge: timestamped publisher reports become non-actionable Companion review evidence. Existing rc4.232 diagnostics and unresolved Android HOLD remain preserved. No source activation, push, publication, merge or deployment authorization. Complete focused and full local validation, then stop after local commits. Library mirror is historical; never claim a newer Library generation persisted unless files.list proves it."
   },
   "runtime_candidate": {
-    "version": "v11.8.0-rc4.232",
-    "branch": "codex/rc4232-render-diagnostics",
-    "base": "52e441b620cd4c3ca8972f21067e7cd6386b61e5",
+    "version": "v11.8.0-rc4.233",
+    "branch": "codex/rc4233-watcher-news-bridge",
+    "base": "0966857e48d3e0267e65c14db8b0b51a1d443306",
     "canonical_base": "171933ed024525e5c3bb7df864ab07d3bc27bb82",
     "status": "LOCAL_UNPUBLISHED",
     "head_binding": "LOCAL_COMMIT_HEAD_AFTER_VALIDATION",
     "head_sha": null,
     "tree_sha": null,
-    "gate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
-    "next_gate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
+    "gate": "RC4233_LOCAL_NEWS_BRIDGE_PUBLICATION_NOT_AUTHORIZED",
+    "next_gate": "RC4233_LOCAL_NEWS_BRIDGE_PUBLICATION_NOT_AUTHORIZED",
     "exact_head_ci": "NOT_RUN",
     "cloud_validation": "NOT_RUN",
     "parser_carry_forward_applies": false,
-    "scope": "DIAGNOSTIC_ONLY_MEMORY_TRACE",
+    "scope": "NEWS_EVIDENCE_INGESTION_REVIEW_ONLY",
     "published": false,
     "merged": false,
     "deployed": false,
@@ -4180,7 +4190,10 @@
     "merge_authorized": false,
     "adapter_implemented": false,
     "persistence_enabled": false,
-    "consumer_enabled": false
+    "consumer_enabled": false,
+    "news_bridge_implemented": true,
+    "news_source_activated": false,
+    "background_push_proven": false
   },
   "recovery_rc4219": {
     "case": "BRANCH_CREATED_ONLY_NO_MATERIAL_WORK",

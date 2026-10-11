@@ -1,3 +1,11 @@
+# Watcher news bridge — local v11.8.0-rc4.233 candidate
+
+Handoff generation: `20261011T0758Z-v310`
+Generation: `20261011T0758Z-v310`
+Gate: `RC4233_LOCAL_NEWS_BRIDGE_PUBLICATION_NOT_AUTHORIZED`
+
+Local rc4.233 Watcher news bridge: timestamped publisher reports become non-actionable Companion review evidence. Existing rc4.232 diagnostics and unresolved Android HOLD remain preserved. No source activation, push, publication, merge or deployment authorization. Complete focused and full local validation, then stop after local commits. Library mirror is historical; never claim a newer Library generation persisted unless files.list proves it.
+
 # RC4.232 local render diagnostics — 20261010T1302Z-v309
 
 Generation: `20261010T1302Z-v309`
