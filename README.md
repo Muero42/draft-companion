@@ -1,3 +1,31 @@
+# RC4.234 local bootstrap diagnostic repair — 20261011T1433Z-v311
+
+Generation: `20261011T1433Z-v311`
+Handoff generation: `20261011T1433Z-v311`
+
+Local rc4.234 bootstrap diagnostic repair: record sanitized bootstrap exceptions and mark completion only after fallible completion work. Preserve rc4.233 Watcher news bridge and all decision validation. Android HOLD root cause remains unproven. Local validation and one commit only; no push, PR, merge, deployment or physical acceptance.
+Parent: `c4ca793288d728f84f92e0319d18e9bb4f1373a0`; supplied main: `f65cfa891ba2cb64999bfa1fc7855bea8024778a`. Candidate `v11.8.0-rc4.234` is local and unpublished. No fresh remote/deployment or device claim.
+
+The following checkpoint is historical for active candidate fields.
+
+# Watcher news bridge — local v11.8.0-rc4.233 candidate
+
+Handoff generation: `20261011T0758Z-v310`
+Generation: `20261011T0758Z-v310`
+Gate: `RC4233_LOCAL_NEWS_BRIDGE_PUBLICATION_NOT_AUTHORIZED`
+
+Local rc4.233 Watcher news bridge: timestamped publisher reports become non-actionable Companion review evidence. Existing rc4.232 diagnostics and unresolved Android HOLD remain preserved. No source activation, push, publication, merge or deployment authorization. Complete focused and full local validation, then stop after local commits. Library mirror is historical; never claim a newer Library generation persisted unless files.list proves it.
+
+# RC4.232 local render diagnostics — 20261010T1302Z-v309
+
+Generation: `20261010T1302Z-v309`
+Handoff generation: `20261010T1302Z-v309`
+
+Local rc4.232 render diagnostics only. Root cause of Android terminal HOLD remains unproven. Stop after the tested local commit; separate authorization required for publication, CI orchestration, merge, deployment or device capture. No provider rerun, evidence relaxation or scoring change.
+Parent: `52e441b620cd4c3ca8972f21067e7cd6386b61e5`. Last supplied canonical main: `171933ed024525e5c3bb7df864ab07d3bc27bb82`; no fresh remote/deployment parity claim. Candidate `v11.8.0-rc4.232` is unpublished, unmerged, undeployed and not physically accepted. rc4.231 USER_REPORTED_PARTIAL_PASS roster/projections/Start-Sit; persistent generic HOLD on Waiver and Trades after loading; repair NOT physically accepted; exact deployed commit not verified.
+
+The following checkpoint is historical/superseded for active candidate fields.
+
 # RC4.231 local lifecycle repair — 20261009T2010Z-v308
 
 Generation: `20261009T2010Z-v308`

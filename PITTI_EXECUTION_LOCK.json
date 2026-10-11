@@ -1,12 +1,12 @@
 {
   "schema": "pitti.execution-lock.v1",
-  "updatedAt": "2026-10-09T20:10:37Z",
+  "updatedAt": "2026-10-11T14:33:03Z",
   "authority": {
     "libraryCheckpoint": "/Pitti/PITTI_PROJECT_STATE.md",
     "repoPreflight": "PITTI_AUTO_PREFLIGHT.md",
     "rule": "Before PITTI AUTO or handoff: read checkpoint, verify actual branch/build/artifacts/runtime, fail closed on contradiction, then repair checkpoints immediately. Chat memory is never authoritative.",
     "libraryMirrorStatus": "STALE_PERSISTENT_WRITEBACK_BLOCKED_CONTAINER_SESSION_EXPIRED",
-    "failClosedRecovery": "Local rc4.231 lifecycle repair; stop after tested local commit. Publication, PR, merge, deployment and physical acceptance require separate authorization. Android invalidation trigger unproven; rc4.230 loading/navigation acceptance preserved. Library mirror is historical; never claim a newer Library generation persisted unless files.list proves it.",
+    "failClosedRecovery": "Local rc4.234 bootstrap diagnostic repair: record sanitized bootstrap exceptions and mark completion only after fallible completion work. Preserve rc4.233 Watcher news bridge and all decision validation. Android HOLD root cause remains unproven. Local validation and one commit only; no push, PR, merge, deployment or physical acceptance. Library mirror is historical; never claim a newer Library generation persisted unless files.list proves it.",
     "currentHandoff": "NEW_CHAT_HANDOFF_CURRENT.md",
     "handoffRule": "New chat must verify PITTI_COMMAND_CONTRACTS + PITTI_CURRENT_STATE + PITTI_HANDOFF_SEAL generation/integrity, then PREFLIGHT + EXECUTION_LOCK + PROJECT_STATE to EOF + CURRENT HANDOFF + bootstrap/matrix; repo EOF/lock/device facts override stale Library mirror.",
     "deviceEvidenceCheckpointRule": "After every user-supplied physical device screenshot/version observation, checkpoint installed_android/latest_android_observed/latest_device_evidence before any further code, CI, candidate wording, or promotion decision.",
@@ -112,7 +112,7 @@
     ]
   },
   "runtime": {
-    "appVersion": "v11.8.0-rc4.231",
+    "appVersion": "v11.8.0-rc4.234",
     "decisionKernelCommit": "9ba6db89fc1e7550052a7526bd0c68d6cc7459dc",
     "productionPanel": "v4 PRIMARY / v5 CHALLENGER / v3 failsafe",
     "productionPanelMustRemainSelectable": true,
@@ -503,12 +503,12 @@
     "oldWrOnlyRejectionSemanticsAreAuthority": false
   },
   "currentWork": {
-    "status": "LOCAL_REPAIR_CANDIDATE",
-    "nextGate": "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED"
+    "status": "LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_CANDIDATE",
+    "nextGate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED"
   },
   "status": "RELEASE_CANDIDATE_UNMERGED",
-  "gate": "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
-  "nextGate": "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
+  "gate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED",
+  "nextGate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED",
   "deploymentUpdateContract": {
     "canonicalPath": "verified candidate -> full package/re-extract PASS -> main promotion -> gh-pages byte parity -> Android/PWA refresh",
     "doNotRegressTo": "gh-pages-only deployment while main remains stale",
@@ -517,7 +517,7 @@
     "userWorkMinimization": "Assistant performs verification autonomously within the currently user-authorized work package. Merge and deployment require that package's explicit authorization; device refresh/observation remains physical user evidence."
   },
   "handoff": {
-    "generation": "20261009T2010Z-v308",
+    "generation": "20261011T1433Z-v311",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -543,7 +543,7 @@
     },
     "sourceResearchFrozen": true
   },
-  "handoff_generation": "20261009T2010Z-v308",
+  "handoff_generation": "20261011T1433Z-v311",
   "statusCommandContract": {
     "meaning": "STATUS returns current known state only; MUST NOT start work, poll CI, call tools, or advance AUTO."
   },
@@ -578,38 +578,38 @@
     "latestBackupReturnMeanBrier": 0.0907
   },
   "rootCauseDiscipline": "Historical rc4.157 render-path root cause: live-surface-v3.css hid coachSectionCard while live-surface-v3.js rendered the old expert line. That fix is preserved in accepted rc4.158; this is historical provenance, not current authority.",
-  "handoffGeneration": "20261009T2010Z-v308",
+  "handoffGeneration": "20261011T1433Z-v311",
   "qb_policy_reference": "PITTI_CURRENT_STATE.json:qb_policy",
-  "updated_at": "2026-10-09T20:10:37Z",
+  "updated_at": "2026-10-11T14:33:03Z",
   "exactNextAction": "RC4.230 PR233 MERGED at d304b9f31547eb34fc7eb0037fab640497ed3360 / cebf9854f4e00422361d19eea557549c395f3988. Seven postmerge workflows PASS; Cloud Strict 314/314 PASS; Pages SUCCESS deployment b9f13bd5-6aa8-4688-a183-893aec8af333. Source Production proven; physical acceptance UNPROVEN. FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE; no adapter/persistence/consumer. No new Preview/provider audit. Publish authority-only branch, then external PR creation and exact-head CI; no further merge/deploy authorization.",
   "failClosedRecovery": "PR207 Production trade-rationale physical PASS is current: neutral \"Roster-Fit verbessert\" physically observed on the concrete Pickens-for-Bowers offer; unsupported RB-need claim absent; Boone 251/251 and no-auto-send preserved. Broad ECR, selected PITTI Panel and full game-context were not reaccepted; Team Total remains fail-closed. Library mirror remains stale; never claim a newer Library generation persisted unless files.list proves it.",
   "authorityContinuation": {
     "status": "LOCAL_UNPUBLISHED",
-    "branch": "codex/rc4231-decision-lifecycle-repair",
-    "current_gate": "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
+    "branch": "codex/rc4234-bootstrap-diagnostic-repair",
+    "current_gate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED",
     "physical_executable": false,
-    "canonical_main": "171933ed024525e5c3bb7df864ab07d3bc27bb82",
-    "canonical_tree": "c7b39f7122a0f13b76d06061a3fe426e78d82969",
+    "canonical_main": "f65cfa891ba2cb64999bfa1fc7855bea8024778a",
+    "canonical_tree": "e73c6c3efdd5637eb26cb5d31920f12c0294ccc5",
     "sequence": [
-      "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED"
+      "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED"
     ],
-    "exact_head_rule": "Local rc4.231 lifecycle repair; stop after tested local commit. Publication, PR, merge, deployment and physical acceptance require separate authorization. Android invalidation trigger unproven; rc4.230 loading/navigation acceptance preserved."
+    "exact_head_rule": "Local rc4.234 bootstrap diagnostic repair: record sanitized bootstrap exceptions and mark completion only after fallible completion work. Preserve rc4.233 Watcher news bridge and all decision validation. Android HOLD root cause remains unproven. Local validation and one commit only; no push, PR, merge, deployment or physical acceptance."
   },
   "runtimeCandidate": {
-    "version": "v11.8.0-rc4.231",
-    "branch": "codex/rc4231-decision-lifecycle-repair",
-    "base": "3e352462b534a9b0a9233664ec4239e6a676b535",
-    "canonical_base": "171933ed024525e5c3bb7df864ab07d3bc27bb82",
+    "version": "v11.8.0-rc4.234",
+    "branch": "codex/rc4234-bootstrap-diagnostic-repair",
+    "base": "c4ca793288d728f84f92e0319d18e9bb4f1373a0",
+    "canonical_base": "f65cfa891ba2cb64999bfa1fc7855bea8024778a",
     "status": "LOCAL_UNPUBLISHED",
     "head_binding": "LOCAL_COMMIT_HEAD_AFTER_VALIDATION",
     "head_sha": null,
     "tree_sha": null,
-    "gate": "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
-    "next_gate": "RC4231_LOCAL_REPAIR_EXTERNAL_PUBLICATION_NOT_AUTHORIZED",
+    "gate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED",
+    "next_gate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED",
     "exact_head_ci": "NOT_RUN",
     "cloud_validation": "NOT_RUN",
     "parser_carry_forward_applies": false,
-    "scope": "BOUNDED_DECISION_LIFECYCLE_REPAIR",
+    "scope": "BOOTSTRAP_DIAGNOSTIC_REPAIR_ONLY",
     "published": false,
     "merged": false,
     "deployed": false,
@@ -620,6 +620,9 @@
     "merge_authorized": false,
     "adapter_implemented": false,
     "persistence_enabled": false,
-    "consumer_enabled": false
+    "consumer_enabled": false,
+    "news_bridge_implemented": true,
+    "news_source_activated": false,
+    "background_push_proven": false
   }
 }

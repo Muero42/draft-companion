@@ -1,0 +1,47 @@
+{
+  "schema": "pitti.local-validation-receipt.v1",
+  "version": "v11.8.0-rc4.232",
+  "generation": "20261010T1302Z-v309",
+  "parent": "52e441b620cd4c3ca8972f21067e7cd6386b61e5",
+  "baseline": "171933ed024525e5c3bb7df864ab07d3bc27bb82",
+  "scope": "LOCAL_ONLY_NO_CI_DEPLOYMENT_OR_DEVICE_CLAIM",
+  "strict": {
+    "command": "node tools/strict-suite.mjs .rc4232-strict-results.json",
+    "runs": 1,
+    "passed": 328,
+    "total": 328,
+    "failures": []
+  },
+  "focused": "PASS lifecycle, bounded memory trace, async ordering, error/preflight/domain isolation, freshness aborts, retry cap, secret safety, copy export, navigation, live refresh, directory, residual interaction, rc4219 adversarial and historical/current release bindings",
+  "adversarialReview": "LOCAL_SELF_REVIEW_PASS; no independent reviewer claim",
+  "runtimeBlobs": {
+    "index.html": "42346774ca741164ca741703072836e8f7b8a6fc",
+    "app.js": "84b0d9c60876c924f0d47719bfc00908669ef849",
+    "season-decision-engine-v1.mjs": "74e905636ad702561ed78f15e1a94ab27f4461ad",
+    "decision-policy.js": "d2e2f58b020e3c5c3f4c42c717677a4e81f0833a",
+    "weekly-evidence-v2.js": "13e3d1b94e978c2f63baa4cf1d2f1ca8c251f414",
+    "lineup-start-sit-v2.js": "bb9f7b08a6eb895f42f34abf8c2eb074a581a0e6",
+    "game-context-v1.js": "e3101c8cb6213b48d1a4032c31bf0ffa2ae3689e",
+    "boone-trade-values-v1.mjs": "0f517562a594f8362fa64e024a53e378d377cbac",
+    "styles.css": "19b36d1fad8d67d28e8f01a8440015b73202d667",
+    "manifest.webmanifest": "e368622711f5f6f14321ed01ea89ee4f93bc7715",
+    "sw.js": "41caed826b89e7c2a27dcce1a8918157c59cdf3a",
+    "_worker.js": "93205052cce488f99083e0bf7f27ad6bc75f4be3",
+    "icon.svg": "14c9ef925901ed72ed38f30a512157e2d8c67f51",
+    "live-surface-v3.js": "23e0e2d34da2f392d1448cf0ef2de3282d6dc6f8",
+    "live-surface-v3.css": "800dfa60dc708196306642a145633086934a323a",
+    "expert-board-export.js": "86f9ab6deac3729328ae3506d6d04f940b733e90",
+    "expert-v2-board.js": "6920163c56e93306f9ab49ae7619ade724703830",
+    "expert-v3-board.js": "b8e869f5384e5dc2a0f353e632ecfabf7958debd"
+  },
+  "bindingSha256": "389aeec96acd0c888a041eadddfdae2a795f72eddcd6cf05fec0b7f8fd89ea2e",
+  "sealSha256": "2be5cfda707239e036873e52c7c9eef8bf10614c96bc11769ef794510e0aa575",
+  "package": {
+    "files": 18,
+    "reextract": "PASS",
+    "sha256": "45d06a4cb7f9566daaa6f55bf10ba4a7e04aa605fa81a2b770135b303150f404",
+    "scope": "RUN_SCOPED_PACKAGED_ONLY_NOT_DEPLOYED"
+  },
+  "receiptScope": "Derived test output only; written after validation without changing any tested runtime, binding, seal or executable file",
+  "nextGate": "RC4232_LOCAL_DIAGNOSTIC_EXTERNAL_PUBLICATION_NOT_AUTHORIZED"
+}

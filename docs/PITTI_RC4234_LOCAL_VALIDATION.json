@@ -1,0 +1,57 @@
+{
+  "schema": "pitti.local-validation-receipt.v1",
+  "version": "v11.8.0-rc4.234",
+  "generation": "20261011T1433Z-v311",
+  "parent": "c4ca793288d728f84f92e0319d18e9bb4f1373a0",
+  "baseline": "f65cfa891ba2cb64999bfa1fc7855bea8024778a",
+  "scope": "LOCAL_ONLY_NO_CI_DEPLOYMENT_OR_DEVICE_CLAIM",
+  "strict": {
+    "command": "node tools/strict-suite.mjs .rc4234-strict-results.json",
+    "runs": 1,
+    "passed": 336,
+    "total": 336,
+    "failures": []
+  },
+  "focused": "PASS eight new cold/warm bootstrap failures/success; existing lifecycle/trace; rc4234 and rc4233 bindings; guardrails; postmerge authority",
+  "adversarialReview": {
+    "type": "SEPARATE_AGENT_FOCUSED_FOLLOWUP",
+    "result": "PASS_PRIOR_P2_ADDRESSED",
+    "executed": [
+      "season-decision-lifecycle-regression.mjs",
+      "season-render-diagnostic-regression.mjs"
+    ],
+    "scope": "Working runtime/test diff versus rc4233 parent; release layer statically reviewed before final seal validation",
+    "limits": "Not human review or final commit review; setup outside try and finally cleanup exceptions are not universally traced"
+  },
+  "runtimeBlobs": {
+    "index.html": "c18847d2cb485d2ff1a4693985ddb6cf1946fe4c",
+    "app.js": "20b3bdfa9c80eca1bbee3d9b5dbdac1b731d67a8",
+    "season-decision-engine-v1.mjs": "74e905636ad702561ed78f15e1a94ab27f4461ad",
+    "decision-policy.js": "d2e2f58b020e3c5c3f4c42c717677a4e81f0833a",
+    "weekly-evidence-v2.js": "13e3d1b94e978c2f63baa4cf1d2f1ca8c251f414",
+    "lineup-start-sit-v2.js": "bb9f7b08a6eb895f42f34abf8c2eb074a581a0e6",
+    "game-context-v1.js": "e3101c8cb6213b48d1a4032c31bf0ffa2ae3689e",
+    "boone-trade-values-v1.mjs": "0f517562a594f8362fa64e024a53e378d377cbac",
+    "styles.css": "19b36d1fad8d67d28e8f01a8440015b73202d667",
+    "manifest.webmanifest": "37ab9689be3654bd4e90c2456fd946d199eceb39",
+    "sw.js": "0bcfa13420f1e7ad5bde7e4dc0ace3d154a31e20",
+    "_worker.js": "93205052cce488f99083e0bf7f27ad6bc75f4be3",
+    "icon.svg": "14c9ef925901ed72ed38f30a512157e2d8c67f51",
+    "live-surface-v3.js": "23e0e2d34da2f392d1448cf0ef2de3282d6dc6f8",
+    "live-surface-v3.css": "800dfa60dc708196306642a145633086934a323a",
+    "expert-board-export.js": "86f9ab6deac3729328ae3506d6d04f940b733e90",
+    "expert-v2-board.js": "6920163c56e93306f9ab49ae7619ade724703830",
+    "expert-v3-board.js": "b8e869f5384e5dc2a0f353e632ecfabf7958debd"
+  },
+  "bindingSha256": "9b22e86ec40c6ce86caa7d41eabf7e0cf99bf9868fdb774c57ad2067fcf149a9",
+  "sealSha256": "f0c3a3ddeb24649fa987c552189ba3af09e13e89f4c20c03be3b540d68378426",
+  "package": {
+    "files": 18,
+    "reextract": "PASS",
+    "sha256": "d6e5fd7e8850d080d20c590eae38c3436701d516b0995ed7473a97ba47d87509",
+    "scope": "RUN_SCOPED_PACKAGED_ONLY_NOT_DEPLOYED"
+  },
+  "receiptScope": "Derived after tests; no tested runtime, binding, seal or executable changed",
+  "preexistingUntracked": "Six watcher-news logs remain untouched; tracked candidate can be clean without claiming entire worktree clean",
+  "nextGate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED"
+}
