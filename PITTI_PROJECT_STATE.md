@@ -1,3 +1,13 @@
+# RC4.235 local game-context revision repair — 20261011T2214Z-v312
+
+Generation: `20261011T2214Z-v312`
+Handoff generation: `20261011T2214Z-v312`
+
+Local rc4.235 game-context revision repair: retain existing still-fresh snapshot bytes and decision revision only when all decision content and nested source chronology are identical. Preserve fail-closed invalidation on changed data, expiry and source failure. Preserve rc4.231–rc4.234 and News Bridge. One tested local commit only; no push, PR, merge, deployment, News, Outbox or alert activation.
+Parent and verified main: `e1c9af929e9c0080321e0e44876852e848942114`. Candidate `v11.8.0-rc4.235` is local and unpublished. Production rc4.234 is user-reported; exact main tree matches rc4.234. No independent deployment/device acceptance claim.
+
+The following checkpoint is historical for active candidate fields.
+
 # RC4.234 local bootstrap diagnostic repair — 20261011T1433Z-v311
 
 Generation: `20261011T1433Z-v311`

@@ -1,13 +1,13 @@
 {
   "schema": "pitti.current-state.v1",
-  "handoff_generation": "20261011T1433Z-v311",
-  "updated_at": "2026-10-11T14:33:03Z",
+  "handoff_generation": "20261011T2214Z-v312",
+  "updated_at": "2026-10-11T22:14:48Z",
   "mode": "POST_DRAFT_SEASON_COMPANION",
   "authority": {
     "repo": "Muero42/draft-companion",
     "branch": "DYNAMIC_VERIFICATION_REQUIRED",
     "source_of_truth": "current Sleeper league state; draft roster is immutable historical baseline",
-    "source_candidate": "v11.8.0-rc4.234",
+    "source_candidate": "v11.8.0-rc4.235",
     "git_identity_rule": "Canonical main identity and candidate containment are freshly verified externally; no commit or mutable PR state is immutable checkpoint authority.",
     "reconciled_base_main": "d304b9f31547eb34fc7eb0037fab640497ed3360",
     "postmerge": {
@@ -2049,14 +2049,21 @@
       "baselineHead": "f65cfa891ba2cb64999bfa1fc7855bea8024778a",
       "scope": "BOOTSTRAP_DIAGNOSTIC_REPAIR_ONLY",
       "androidTriggerProven": false
+    },
+    "rc4235_game_revision": {
+      "version": "v11.8.0-rc4.235",
+      "parent": "e1c9af929e9c0080321e0e44876852e848942114",
+      "scope": "GAME_CONTEXT_REVISION_REPAIR_ONLY",
+      "productionBaseline": "USER_REPORTED_RC4234_MAIN_TREE_VERIFIED",
+      "androidAcceptance": false
     }
   },
   "runtime": {
     "accepted_android": "v11.8.0-rc4.211",
-    "season_candidate": "v11.8.0-rc4.234",
-    "candidate_branch": "codex/rc4234-bootstrap-diagnostic-repair",
+    "season_candidate": "v11.8.0-rc4.235",
+    "candidate_branch": "codex/rc4235-game-context-revision-repair",
     "android_acceptance_pending": true,
-    "test_challenger": "v11.8.0-rc4.234",
+    "test_challenger": "v11.8.0-rc4.235",
     "ci": {
       "head": "d304b9f31547eb34fc7eb0037fab640497ed3360",
       "strict": "314/314 PASS",
@@ -2064,7 +2071,7 @@
       "cloud_validation": "PASS"
     },
     "android_accepted": "v11.8.0-rc4.211",
-    "preview_candidate": "v11.8.0-rc4.234",
+    "preview_candidate": "v11.8.0-rc4.235",
     "android_authority": "rc4.231 USER_REPORTED_PARTIAL_PASS roster/projections/Start-Sit; persistent generic HOLD on Waiver and Trades after loading; repair NOT physically accepted; exact deployed commit not verified.",
     "latest_package_sha256": null,
     "package_reference_run": "RUN_AND_ENVIRONMENT_SCOPED_ARCHIVE_SHA_NONCANONICAL",
@@ -2158,11 +2165,11 @@
     },
     "package_reference_scope": "rc4.230 local diagnostic runtime identity; no archive, publication or deployment claim",
     "local_candidate_package": {
-      "version": "v11.8.0-rc4.234",
+      "version": "v11.8.0-rc4.235",
       "files": 18,
       "sha256": null,
       "status": "LOCAL_CANDIDATE_NOT_PUBLISHED",
-      "source_scope": "BOOTSTRAP_DIAGNOSTIC_REPAIR_ONLY",
+      "source_scope": "GAME_CONTEXT_REVISION_REPAIR_ONLY",
       "runtime_identity_head": null,
       "head_binding": "LOCAL_COMMIT_HEAD_AFTER_VALIDATION"
     },
@@ -2241,12 +2248,12 @@
       }
     },
     "current_physical_acceptance": {
-      "version": "v11.8.0-rc4.234",
+      "version": "v11.8.0-rc4.235",
       "acceptance": "PENDING",
       "proven": false,
       "executable": false,
-      "prerequisite_gate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED",
-      "scope": "NO_RC4234_PHYSICAL_EVIDENCE"
+      "prerequisite_gate": "RC4235_LOCAL_GAME_CONTEXT_REVISION_REPAIR_PUBLICATION_NOT_AUTHORIZED",
+      "scope": "NO_RC4235_PHYSICAL_EVIDENCE"
     },
     "accepted_android_scope": "HISTORICAL_ONLY: RC4.211_PR205_PRODUCTION_BOONE_PHYSICAL_PASS_251_251_TRADE_CONSUMER on tree 8825347883a2eee0fd53f7d45514580b246de08e; current Production tree e496f5b8190b48c7a475bdba768b968575d40ca2 has the trade-rationale UI repair and awaits physical canary.",
     "androidAuthority": "rc4.231 USER_REPORTED_PARTIAL_PASS roster/projections/Start-Sit; persistent generic HOLD on Waiver and Trades after loading; repair NOT physically accepted; exact deployed commit not verified.",
@@ -2350,8 +2357,8 @@
     "faab_basis": "Recommendation percentages use original league FAAB budget; displayed units use the same basis and are capped by actual remaining FAAB."
   },
   "currentWork": {
-    "status": "LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_CANDIDATE",
-    "nextGate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED"
+    "status": "LOCAL_GAME_CONTEXT_REVISION_REPAIR_CANDIDATE",
+    "nextGate": "RC4235_LOCAL_GAME_CONTEXT_REVISION_REPAIR_PUBLICATION_NOT_AUTHORIZED"
   },
   "invariants": {
     "league": "10-team Half-PPR 1QB",
@@ -2413,7 +2420,7 @@
     }
   },
   "handoff": {
-    "generation": "20261011T1433Z-v311",
+    "generation": "20261011T2214Z-v312",
     "status": "PASS",
     "ready": true,
     "secondPass": true,
@@ -2424,9 +2431,9 @@
     "readiness_scope": "STRUCTURAL_HANDOFF_ONLY_NOT_DEVICE_ACCEPTANCE"
   },
   "status": "RELEASE_CANDIDATE_UNMERGED",
-  "gate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED",
-  "nextGate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED",
-  "handoffGeneration": "20261011T1433Z-v311",
+  "gate": "RC4235_LOCAL_GAME_CONTEXT_REVISION_REPAIR_PUBLICATION_NOT_AUTHORIZED",
+  "nextGate": "RC4235_LOCAL_GAME_CONTEXT_REVISION_REPAIR_PUBLICATION_NOT_AUTHORIZED",
+  "handoffGeneration": "20261011T2214Z-v312",
   "codex": {
     "status": "HISTORICAL_AUDIT_RECORD",
     "local_expected_path": "C:\\Users\\timmu\\Documents\\PITTI-Codex",
@@ -4070,20 +4077,20 @@
     "season_exception_weakens_draft_rule": false
   },
   "candidate_work": {
-    "version": "v11.8.0-rc4.234",
-    "branch": "codex/rc4234-bootstrap-diagnostic-repair",
-    "base": "c4ca793288d728f84f92e0319d18e9bb4f1373a0",
-    "canonical_base": "f65cfa891ba2cb64999bfa1fc7855bea8024778a",
+    "version": "v11.8.0-rc4.235",
+    "branch": "codex/rc4235-game-context-revision-repair",
+    "base": "e1c9af929e9c0080321e0e44876852e848942114",
+    "canonical_base": "e1c9af929e9c0080321e0e44876852e848942114",
     "status": "LOCAL_UNPUBLISHED",
     "head_binding": "LOCAL_COMMIT_HEAD_AFTER_VALIDATION",
     "head_sha": null,
     "tree_sha": null,
-    "gate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED",
-    "next_gate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED",
+    "gate": "RC4235_LOCAL_GAME_CONTEXT_REVISION_REPAIR_PUBLICATION_NOT_AUTHORIZED",
+    "next_gate": "RC4235_LOCAL_GAME_CONTEXT_REVISION_REPAIR_PUBLICATION_NOT_AUTHORIZED",
     "exact_head_ci": "NOT_RUN",
     "cloud_validation": "NOT_RUN",
     "parser_carry_forward_applies": false,
-    "scope": "BOOTSTRAP_DIAGNOSTIC_REPAIR_ONLY",
+    "scope": "GAME_CONTEXT_REVISION_REPAIR_ONLY",
     "published": false,
     "merged": false,
     "deployed": false,
@@ -4099,7 +4106,7 @@
     "news_source_activated": false,
     "background_push_proven": false
   },
-  "updatedAt": "2026-10-11T14:33:03Z",
+  "updatedAt": "2026-10-11T22:14:48Z",
   "exactNextAction": "RC4.230 PR233 MERGED at d304b9f31547eb34fc7eb0037fab640497ed3360 / cebf9854f4e00422361d19eea557549c395f3988. Seven postmerge workflows PASS; Cloud Strict 314/314 PASS; Pages SUCCESS deployment b9f13bd5-6aa8-4688-a183-893aec8af333. Source Production proven; physical acceptance UNPROVEN. FILTER_NOT_HONORED / CONCLUSIVE_ROUTE_UNUSABLE; no adapter/persistence/consumer. No new Preview/provider audit. Publish authority-only branch, then external PR creation and exact-head CI; no further merge/deploy authorization.",
   "week4_season_readiness": {
     "classification": "WEEK4_SEASON_READY_LOCAL_CANDIDATE",
@@ -4162,31 +4169,31 @@
   },
   "authority_continuation": {
     "status": "LOCAL_UNPUBLISHED",
-    "branch": "codex/rc4234-bootstrap-diagnostic-repair",
-    "current_gate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED",
+    "branch": "codex/rc4235-game-context-revision-repair",
+    "current_gate": "RC4235_LOCAL_GAME_CONTEXT_REVISION_REPAIR_PUBLICATION_NOT_AUTHORIZED",
     "physical_executable": false,
-    "canonical_main": "f65cfa891ba2cb64999bfa1fc7855bea8024778a",
-    "canonical_tree": "e73c6c3efdd5637eb26cb5d31920f12c0294ccc5",
+    "canonical_main": "e1c9af929e9c0080321e0e44876852e848942114",
+    "canonical_tree": "637854eb4dac4f7206387e80ea9c72a859675bea",
     "sequence": [
-      "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED"
+      "RC4235_LOCAL_GAME_CONTEXT_REVISION_REPAIR_PUBLICATION_NOT_AUTHORIZED"
     ],
-    "exact_head_rule": "Local rc4.234 bootstrap diagnostic repair: record sanitized bootstrap exceptions and mark completion only after fallible completion work. Preserve rc4.233 Watcher news bridge and all decision validation. Android HOLD root cause remains unproven. Local validation and one commit only; no push, PR, merge, deployment or physical acceptance."
+    "exact_head_rule": "Local rc4.235 game-context revision repair: retain existing still-fresh snapshot bytes and decision revision only when all decision content and nested source chronology are identical. Preserve fail-closed invalidation on changed data, expiry and source failure. Preserve rc4.231–rc4.234 and News Bridge. One tested local commit only; no push, PR, merge, deployment, News, Outbox or alert activation."
   },
   "runtime_candidate": {
-    "version": "v11.8.0-rc4.234",
-    "branch": "codex/rc4234-bootstrap-diagnostic-repair",
-    "base": "c4ca793288d728f84f92e0319d18e9bb4f1373a0",
-    "canonical_base": "f65cfa891ba2cb64999bfa1fc7855bea8024778a",
+    "version": "v11.8.0-rc4.235",
+    "branch": "codex/rc4235-game-context-revision-repair",
+    "base": "e1c9af929e9c0080321e0e44876852e848942114",
+    "canonical_base": "e1c9af929e9c0080321e0e44876852e848942114",
     "status": "LOCAL_UNPUBLISHED",
     "head_binding": "LOCAL_COMMIT_HEAD_AFTER_VALIDATION",
     "head_sha": null,
     "tree_sha": null,
-    "gate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED",
-    "next_gate": "RC4234_LOCAL_BOOTSTRAP_DIAGNOSTIC_REPAIR_PUBLICATION_NOT_AUTHORIZED",
+    "gate": "RC4235_LOCAL_GAME_CONTEXT_REVISION_REPAIR_PUBLICATION_NOT_AUTHORIZED",
+    "next_gate": "RC4235_LOCAL_GAME_CONTEXT_REVISION_REPAIR_PUBLICATION_NOT_AUTHORIZED",
     "exact_head_ci": "NOT_RUN",
     "cloud_validation": "NOT_RUN",
     "parser_carry_forward_applies": false,
-    "scope": "BOOTSTRAP_DIAGNOSTIC_REPAIR_ONLY",
+    "scope": "GAME_CONTEXT_REVISION_REPAIR_ONLY",
     "published": false,
     "merged": false,
     "deployed": false,
