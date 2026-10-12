@@ -2,7 +2,7 @@ import {USER_DRAFT_QB_LIMIT,userDraftStrategyExcluded,safetyPromotionEligiblePol
 import * as SeasonDecision from './season-decision-engine-v1.mjs';
 import {CACHE_KEY as BOONE_TRADE_VALUE_CACHE_KEY,validateBooneTradeValueSnapshot,adaptBooneTradeEvidence,atomicWriteBooneTradeValues} from './boone-trade-values-v1.mjs';
 globalThis.PittiSeasonDecisionV1=SeasonDecision;
-const APP_VERSION='v11.8.0-rc4.234';
+const APP_VERSION='v11.8.0-rc4.235';
 const $=id=>document.getElementById(id);
 const ids=['onlineState','rankingAge','adpCount','qualityMini','seasonLiveStateAge','seasonLiveStateStatus','seasonRankingAge','seasonRankingStatus','apiQuickStatus','qualityStatus','panelSummary','dataSection','draftSection','coachSection','loadExpertsBtn','applyPresetBtn','loadAllRanksBtn','refreshAllBtn','expertDeltaBtn','presetStatus','panelStatus','adpFile','adpStatus','adpHelper','draftInput','slot','topN','snapshotMode','draftMode','replayCutoff','managerMap','stressMode','modeStatus','simulateBtn','simulationStatus','simulationResults','strategyMode','strategyStatus','refreshBtn','copyBtn','shareBtn','autoRefresh','draftStatus','draftSummary','teamSummary','favoritesBlock','coachList','snapshot','emptyCoach','logDecisionBtn','clearLogBtn','mockReview','decisionLog','apiKey','toggleKeyBtn','clearKeyBtn','season','scoring','activePanel','diagnoseBtn','diagnosticCopyBtn','diagnostic','expertSearch','expertsList','savePanelBtn','newPanelBtn','renamePanelBtn','deletePanelBtn','qbPanel','rbPanel','wrPanel','tePanel','backupBtn','restoreFile','decisionEvidenceBtn','decisionEvidenceStatus','clearDraftDataBtn','researchCacheStatus','watcherSyncStatus','rosterStatus','rosterSummary','rosterList','rosterBenchStatus','rosterBenchList','rosterFaStatus','rosterFaList','tradeStatus','tradeList','waiverStatus','waiverList','seasonActionStatus','seasonActionList','fpHandoff','fpOpenBtn','fpSetupBtn','fpImportFile','fpStatus','queueBtn','mockViewBtn','liveViewBtn','livePreviewCutoff','livePreviewBtn','livePreviewExitBtn','livePreviewStatus','liveLockStatus','expertProfile','analysisExpertProfile','analysisExpertAuditStatus','expertV3AuditBtn','expertV3AuditStatus','liveManagerModeControl','liveManagerGrid','liveManagerApply','liveManagerModeStatus'];
 const els=Object.fromEntries(ids.map(id=>[id,$(id)]));
@@ -2270,7 +2270,7 @@ seasonRenderPassCurrent.diagnostic=(()=>{
   const contextId=c=>{if(!c||typeof c!=='object')return null;if(!contexts.has(c))contexts.set(c,++contextSequence);return contexts.get(c);};
   const record=(event,detail={})=>{try{
     const now=Date.now(),c=typeof lastDraftContext==='undefined'?null:lastDraftContext;
-    event=choose(event,['REQUEST','PASS_START','STAGE_START','STAGE_DONE','STAGE_ERROR','ABORT','EXPIRY_RETRY','RETRY_LIMIT','PASS_DONE','DRAIN_END','ERROR','DIRECT_RENDER','NAVIGATION']);if(!event)return;
+    event=choose(event,['REQUEST','PASS_START','STAGE_START','STAGE_DONE','STAGE_ERROR','ABORT','EXPIRY_RETRY','RETRY_LIMIT','PASS_DONE','DRAIN_END','ERROR','DIRECT_RENDER','NAVIGATION','GAME_UNCHANGED']);if(!event)return;
     const stage=choose(detail.stage,['bootstrap','queue','preflight','roster','lineup','fa','trade','waiver','action']);
     if(event==='PASS_START'){pass++;lastCompletedStage=null;}if(event==='STAGE_DONE')lastCompletedStage=stage;
     events.push({sequence:++sequence,at:now,event,pass,stage,lastCompletedStage,
@@ -5480,11 +5480,28 @@ function renderSeasonRankingFreshness(note=''){
   renderSeasonDataCompactHeader();
 }
 let seasonGameContextFlight=null;
+function seasonGameContextEquivalent(previous,next,context,now=Date.now()){
+ const api=globalThis.PittiGameContextV1;
+ // Ignore only locally generated acquisition identity, never nested source
+ // timestamps/provenance. Retain the old bytes and deadlines on equivalence.
+ const fresh=s=>api?.validateSnapshot?.(s,context,now)?.ok===true&&s.games.every(g=>
+  Number.isFinite(g.verifiedAt)&&g.verifiedAt<=now&&Number.isFinite(g.expiresAt)&&g.expiresAt>now&&
+  !(g.gameState==='PREGAME'&&Date.parse(g.kickoffAt)<=now)&&
+  [g.weather,g.vegas].every(e=>e?.status!=='VERIFIED'||Number.isFinite(e.verifiedAt)&&e.verifiedAt<=now&&Number.isFinite(e.expiresAt)&&e.expiresAt>now));
+ if(!fresh(previous)||!fresh(next)||next.verifiedAt<previous.verifiedAt||next.expiresAt<previous.expiresAt)return false;
+ const content=s=>JSON.stringify({...s,snapshotId:null,verifiedAt:null,expiresAt:null,games:s.games.map(g=>({...g,verifiedAt:null,expiresAt:null}))});
+ return content(previous)===content(next)&&next.games.every((g,i)=>g.verifiedAt>=previous.games[i].verifiedAt&&g.expiresAt>=previous.games[i].expiresAt);
+}
 async function refreshSeasonGameContext({season,week}){
  const api=globalThis.PittiGameContextV1;if(!api)return;const previous=store.get(api.CACHE_KEY,null);const statusRefresh=previous?.games?.some(g=>!g.gameState||g.gameState==='LIVE'||g.gameState==='PREGAME'&&Date.now()>=Date.parse(g.kickoffAt));if(api.validateSnapshot(previous,{season,week})?.ok&&previous.games.every(g=>g.gameState)&&Date.now()-previous.verifiedAt<(statusRefresh?60000:15*60000))return previous;
- const key=season+'|'+week;if(seasonGameContextFlight?.key===key)return seasonGameContextFlight.promise;
- const flight={key,promise:null};flight.promise=(async()=>{
- try{const r=await fetch('/api/nfl-week-context?season='+season+'&week='+week,{cache:'no-store'}),p=await r.json();if(seasonEvidenceContext().season!==season||seasonEvidenceContext().week!==week)return;const snapshot=r.ok?api.buildSnapshot({...p,verifiedAt:Date.now()}):api.failureSnapshot({season,week,reason:p.failureType||'UPSTREAM_UNAVAILABLE'});persistSeasonWeeklyMetadata(api.CACHE_KEY,snapshot);queueSeasonRerender(false,'game');return snapshot;}catch{if(seasonEvidenceContext().season===season&&seasonEvidenceContext().week===week)persistSeasonWeeklyMetadata(api.CACHE_KEY,api.failureSnapshot({season,week,reason:'CONTEXT_FETCH_FAILED'}));}
+ const key=season+'|'+week,context=lastDraftContext,current=()=>lastDraftContext===context&&seasonEvidenceContext().season===season&&seasonEvidenceContext().week===week;
+ if(seasonGameContextFlight?.key===key&&seasonGameContextFlight.context===context)return seasonGameContextFlight.promise;
+ const flight={key,context,promise:null};flight.promise=(async()=>{
+ try{const r=await fetch('/api/nfl-week-context?season='+season+'&week='+week,{cache:'no-store'}),p=await r.json();if(!current())return;
+  const snapshot=r.ok?api.buildSnapshot({...p,verifiedAt:Date.now()}):api.failureSnapshot({season,week,reason:p.failureType||'UPSTREAM_UNAVAILABLE'}),retained=store.get(api.CACHE_KEY,null);
+  if(seasonGameContextEquivalent(retained,snapshot,{season,week})){seasonRenderPassCurrent.diagnostic?.record('GAME_UNCHANGED',{trigger:'game'});return retained;}
+  persistSeasonWeeklyMetadata(api.CACHE_KEY,snapshot);queueSeasonRerender(false,'game');return snapshot;
+ }catch{if(current()){persistSeasonWeeklyMetadata(api.CACHE_KEY,api.failureSnapshot({season,week,reason:'CONTEXT_FETCH_FAILED'}));queueSeasonRerender(false,'game');}}
  })();seasonGameContextFlight=flight;try{return await flight.promise;}finally{if(seasonGameContextFlight===flight)seasonGameContextFlight=null;}
 }
 async function refreshSeasonDstProjections({season,week}){

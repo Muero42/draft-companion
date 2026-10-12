@@ -45,7 +45,7 @@ const context={
 };
 context.globalThis=context;
 vm.createContext(context);
-vm.runInContext(acquisitionSource+'\n'+sourceOf('refreshSeasonGameContext',{async:true}),context);vm.runInContext(sourceOf('refreshSeasonRankings',{async:true}),context);
+vm.runInContext(acquisitionSource+'\n'+sourceOf('seasonGameContextEquivalent')+'\n'+sourceOf('refreshSeasonGameContext',{async:true}),context);vm.runInContext(sourceOf('refreshSeasonRankings',{async:true}),context);
 
 const result=await context.refreshSeasonRankings({force:true,trigger:'quota-regression'});
 assert.equal(writes,2,'projection-stage and final snapshots must both be persisted');

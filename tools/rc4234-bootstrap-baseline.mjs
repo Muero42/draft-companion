@@ -1,9 +1,11 @@
+import {beforeGameRefreshRuntime,beforeGameRefreshAuthority} from './rc4235-game-refresh-baseline.mjs';
 import fs from 'node:fs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 export const bootstrapBinding=()=>JSON.parse(fs.readFileSync(new URL('./fixtures/rc4234/release-binding.json',import.meta.url)));
 export const bootstrapBlob=text=>{const b=Buffer.from(text.replace(/\r\n/g,'\n'));return crypto.createHash('sha1').update(Buffer.from(`blob ${b.length}\0`)).update(b).digest('hex')};
 export function beforeBootstrapRuntime(text){
+  text=beforeGameRefreshRuntime(text);
   const f=bootstrapBinding();
   // Other files and already reconstructed historical layers remain unchanged.
   for(const p of [...f.runtimePatches].reverse()){
@@ -14,6 +16,7 @@ export function beforeBootstrapRuntime(text){
   return text.replaceAll(f.version,'v11.8.0-rc4.233');
 }
 export function beforeBootstrapAuthority(d){
+  d=beforeGameRefreshAuthority(d);
   if(d['PITTI_CURRENT_STATE.json']?.authority?.source_candidate!=='v11.8.0-rc4.234')return d;
   const copy=structuredClone(d),f=bootstrapBinding();
   for(const e of [...f.patch].reverse()){

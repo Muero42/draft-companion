@@ -51,7 +51,7 @@ vm.createContext(context);
 vm.runInContext(acquisitionSource+'\n'+[
   sourceOf('persistSeasonProjectionRetryAfter'),
   sourceOf('persistSeasonWeeklyMetadata'),
-  sourceOf('refreshSeasonGameContext',{async:true}),sourceOf('refreshSeasonRankings',{async:true})
+  sourceOf('seasonGameContextEquivalent')+'\n'+sourceOf('refreshSeasonGameContext',{async:true}),sourceOf('refreshSeasonRankings',{async:true})
 ].join('\n'),context);
 
 const result=await context.refreshSeasonRankings({force:true,trigger:'metadata-quota-regression'});
